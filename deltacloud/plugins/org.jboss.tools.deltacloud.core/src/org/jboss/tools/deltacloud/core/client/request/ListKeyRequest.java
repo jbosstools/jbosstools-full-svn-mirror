@@ -14,22 +14,23 @@ import java.net.URL;
 
 import org.jboss.tools.deltacloud.core.client.utils.UrlBuilder;
 
+
 /**
- * Creates a key on the deltacloud server
+ * List a key with a given name that is available on the deltacloud server
  * 
  * @author André Dietisheim
  */
-public class CreateKeyRequest extends AbstractDeltaCloudRequest {
+public class ListKeyRequest extends AbstractDeltaCloudRequest {
 	
-	private String keyName;
+	private String name;
 
-	public CreateKeyRequest(URL baseUrl, String keyName) {
-		super(baseUrl, HttpMethod.POST);
-		this.keyName = keyName;
+	public ListKeyRequest(URL baseUrl, String name) {
+		super(baseUrl, HttpMethod.GET);
+		this.name = name;
 	}
 
 	@Override
 	protected String doCreateUrl(UrlBuilder urlBuilder) {
-		return urlBuilder.path("keys").parameter("name", keyName).toString();
+		return urlBuilder.path("keys").path(name).toString();
 	}
 }

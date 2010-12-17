@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.regex.PatternSyntaxException;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.jboss.tools.deltacloud.core.client.DeltaCloudAuthException;
+import org.jboss.tools.deltacloud.core.client.DeltaCloudAuthClientException;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl.DeltaCloudServerType;
@@ -147,7 +147,7 @@ public class DeltaCloud extends ObservablePojo {
 			throws DeltaCloudException {
 		try {
 			return new DeltaCloudClientImpl(url, username, password);
-		} catch (MalformedURLException e) {
+		} catch (Exception e) {
 			throw new DeltaCloudException(MessageFormat.format("Could not access cloud at {0}", url), e);
 		}
 	}
@@ -589,11 +589,11 @@ public class DeltaCloud extends ObservablePojo {
 			return true;
 		} catch (DeltaCloudNotFoundClientException e) {
 			return true;
-		} catch (DeltaCloudAuthException e) {
+		} catch (DeltaCloudAuthClientException e) {
 			return false;
-		} catch(DeltaCloudClientException e){
+		} catch (DeltaCloudClientException e) {
 			throw new DeltaCloudException("Could not connection to ", e);
 		}
-		
+
 	}
 }

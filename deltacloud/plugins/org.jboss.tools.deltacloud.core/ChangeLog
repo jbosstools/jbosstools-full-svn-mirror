@@ -1,3 +1,8 @@
+2010-12-17  André Dietisheim  <adietish@redhat.com>
+
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClientImpl.java (createKey): 
+	[JBIDE-7371] added #createKey method that now returns a key instance
+
 2010-12-16  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/client/request/ListKeysRequest.java: 

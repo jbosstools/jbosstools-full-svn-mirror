@@ -13,21 +13,21 @@ package org.jboss.tools.deltacloud.core.client;
 /**
  * @author Andre Dietisheim
  */
-public class DeltaCloudAuthException extends DeltaCloudClientException {
+public class DeltaCloudAuthClientException extends DeltaCloudClientException {
 
 	private static final long serialVersionUID = 1L;
 	
-	public DeltaCloudAuthException(String message, Throwable cause)
+	public DeltaCloudAuthClientException(String message, Throwable cause)
 	{
 		super(message, cause);
 	}
 	
-	public DeltaCloudAuthException(Throwable cause)
+	public DeltaCloudAuthClientException(Throwable cause)
 	{
 		super(cause);
 	}
 	
-	public DeltaCloudAuthException(String message)
+	public DeltaCloudAuthClientException(String message)
 	{
 		super(message);
 	}

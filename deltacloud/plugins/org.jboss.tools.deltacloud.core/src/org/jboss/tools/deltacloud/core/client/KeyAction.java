@@ -8,28 +8,31 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.deltacloud.core.client.request;
-
-import java.net.URL;
-
-import org.jboss.tools.deltacloud.core.client.utils.UrlBuilder;
+package org.jboss.tools.deltacloud.core.client;
 
 /**
- * Creates a key on the deltacloud server
+ * An action that is executable on a deltacloud key
  * 
  * @author André Dietisheim
  */
-public class CreateKeyRequest extends AbstractDeltaCloudRequest {
-	
-	private String keyName;
+public class KeyAction extends AbstractDeltaCloudResourceAction implements IKeyAction {
 
-	public CreateKeyRequest(URL baseUrl, String keyName) {
-		super(baseUrl, HttpMethod.POST);
-		this.keyName = keyName;
+	private Key key;
+
+	protected KeyAction() {
+	}
+
+	protected KeyAction(String name, Key key, String url, String method) {
+		super(name, url, method);
+		this.key = key;
+	}
+
+	protected void setKey(Key key) {
+		this.key = key;
 	}
 
 	@Override
-	protected String doCreateUrl(UrlBuilder urlBuilder) {
-		return urlBuilder.path("keys").parameter("name", keyName).toString();
+	public Key getKey() {
+		return key;
 	}
 }

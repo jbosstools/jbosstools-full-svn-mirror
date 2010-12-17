@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
+import org.jboss.tools.deltacloud.core.client.IInstanceAction;
 import org.jboss.tools.deltacloud.core.client.Instance;
 import org.jboss.tools.deltacloud.core.client.Instance.InstanceState;
 import org.jboss.tools.deltacloud.core.client.InstanceAction;
@@ -56,9 +57,9 @@ public class DeltaCloudInstance extends AbstractDeltaCloudElement {
 
 	public enum Action {
 
-		START(InstanceAction.START),
-		STOP(InstanceAction.STOP),
-		REBOOT(InstanceAction.REBOOT),
+		START(IInstanceAction.START),
+		STOP(IInstanceAction.STOP),
+		REBOOT(IInstanceAction.REBOOT),
 		DESTROY(InstanceAction.DESTROY);
 
 		private String name;

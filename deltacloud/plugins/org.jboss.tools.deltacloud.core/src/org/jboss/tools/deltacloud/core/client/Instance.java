@@ -185,15 +185,15 @@ public class Instance extends DeltaCloudObject {
 	}
 
 	public boolean canStart() {
-		return getAction(InstanceAction.START) != null;
+		return getAction(IInstanceAction.START) != null;
 	}
 	
 	public boolean canStop() {
-		return getAction(InstanceAction.STOP) != null;
+		return getAction(IInstanceAction.STOP) != null;
 	}
 
 	public boolean canReboot() {
-		return getAction(InstanceAction.REBOOT) != null;
+		return getAction(IInstanceAction.REBOOT) != null;
 	}
 
 	public boolean canDestroy() {
@@ -213,11 +213,11 @@ public class Instance extends DeltaCloudObject {
 	}
 
 	public boolean start(DeltaCloudClient client) throws DeltaCloudClientException {
-		return ((InternalDeltaCloudClient) client).performInstanceAction(getAction(InstanceAction.START));
+		return ((InternalDeltaCloudClient) client).performInstanceAction(getAction(IInstanceAction.START));
 	}
 
 	public boolean stop(DeltaCloudClient client) throws DeltaCloudClientException {
-		return ((InternalDeltaCloudClient) client).performInstanceAction(getAction(InstanceAction.STOP));
+		return ((InternalDeltaCloudClient) client).performInstanceAction(getAction(IInstanceAction.STOP));
 	}
 
 	public boolean destroy(DeltaCloudClient client) throws DeltaCloudClientException {
@@ -225,7 +225,7 @@ public class Instance extends DeltaCloudObject {
 	}
 
 	public boolean reboot(DeltaCloudClient client) throws DeltaCloudClientException {
-		return ((InternalDeltaCloudClient) client).performInstanceAction(getAction(InstanceAction.REBOOT));
+		return ((InternalDeltaCloudClient) client).performInstanceAction(getAction(IInstanceAction.REBOOT));
 	}
 
 	@Override

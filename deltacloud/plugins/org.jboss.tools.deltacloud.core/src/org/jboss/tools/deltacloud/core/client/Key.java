@@ -10,7 +10,9 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.core.client;
 
-import javax.xml.bind.annotation.XmlElement;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.List;
 
 /**
  * @author Andre Dietisheim
@@ -19,20 +21,63 @@ public class Key extends DeltaCloudObject {
 
 	private static final long serialVersionUID = 1L;
 
-	public static enum InstanceState {
-		RUNNING, STOPPED, PENDING, TERMINATED, BOGUS
-	};
+	private URL url;
+	private String id;
+	private String pem;
+	private String fingerPrint;
+	private String state;
+	private List<KeyAction> actions;
 
-	@XmlElement
-	private String name;
-
-	public String getName() {
-		return name;
+	public String getId() {
+		return id;
 	}
 
-	@SuppressWarnings("unused")
-	private void setName(String name) {
-		this.name = name;
+	protected void setUrl(String url) throws MalformedURLException {
+		this.url = new URL(url);
 	}
-	
+
+	protected void setUrl(URL url) {
+		this.url = url;
+	}
+
+	protected void setId(String id) {
+		this.id = id;
+	}
+
+	protected void setPem(String pem) {
+		this.pem = pem;
+	}
+
+	protected void setFingerPrint(String fingerPrint) {
+		this.fingerPrint = fingerPrint;
+	}
+
+	protected void setState(String state) {
+		this.state = state;
+	}
+
+	protected void setActions(List<KeyAction> actions) {
+		this.actions = actions;
+	}
+
+	public URL getUrl() {
+		return url;
+	}
+
+	public String getFingerPrint() {
+		return fingerPrint;
+	}
+
+	public String getPem() {
+		return pem;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public List<KeyAction> getActions() {
+		return actions;
+	}
+
 }

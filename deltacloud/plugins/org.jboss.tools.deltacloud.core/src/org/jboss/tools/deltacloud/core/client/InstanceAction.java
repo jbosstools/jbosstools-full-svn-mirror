@@ -10,7 +10,6 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core.client;
 
-import org.jboss.tools.deltacloud.core.client.request.DeltaCloudRequest.HttpMethod;
 
 /**
  * An action that is executable on an instance
@@ -21,47 +20,30 @@ import org.jboss.tools.deltacloud.core.client.request.DeltaCloudRequest.HttpMeth
  * @see DeltaCloudClient#performInstanceAction(String, String);
  *
  */
-public class InstanceAction {
+public class InstanceAction extends AbstractDeltaCloudResourceAction implements IInstanceAction {
 
-	public static final String START = "start";
-	public static final String STOP = "stop";
-	public static final String DESTROY = "destroy";
-	public static final String REBOOT = "reboot";
-
-	private String name;
-	private String url;
-	private HttpMethod method;
 	private Instance instance;
 
-	protected InstanceAction(String name, String url, String method, Instance instance) {
-		this(name, url, HttpMethod.valueOf(method.toUpperCase()), instance);
+	protected InstanceAction() {
+		super();
 	}
 
-	protected InstanceAction(String name, String url, HttpMethod method, Instance instance) {
-		this.name = name;
-		this.url = url;
-		this.method = method;
+	protected InstanceAction(String name, String url, String method, Instance instance) {
+		super(name, url, method);
 		this.instance = instance;
 	}
 
-	public String getName() {
-		return name;
+	protected void setInstance(Instance instance) {
+		this.instance = instance;
 	}
 
-	public String getUrl() {
-		return url;
-	}
-
-	public HttpMethod getMethod() {
-		return method;
+	@Override
+	public Instance getInstance() {
+		return instance;
 	}
 
 	@Override
 	public String toString() {
-		return "InstanceAction [name=" + name + ", url=" + url + ", method=" + method + "]";
-	}
-
-	public Instance getInstance() {
-		return instance;
+		return "InstanceAction [name=" + getName() + ", url=" + getUrl() + ", method=" + getMethod() + "]";
 	}
 }

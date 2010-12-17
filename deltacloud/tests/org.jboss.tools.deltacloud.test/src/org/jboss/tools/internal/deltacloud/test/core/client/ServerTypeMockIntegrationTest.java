@@ -57,22 +57,27 @@ public class ServerTypeMockIntegrationTest {
 		assertEquals(DeltaCloudClientImpl.DeltaCloudServerType.MOCK, testSetup.getClient().getServerType());
 	}
 
-/**
+	/**
 	 * 
 	 * #getServerType reports {@link DeltaCloudClient.DeltaCloudType#UNKNOWN) if it queries a fake server that responds with a unknown answer.
 	 * 
 	 * @throws IOException
 	 *             Signals that an I/O exception has occurred.
+	 * @throws DeltaCloudClientException 
 	 */
 	@Test
-	public void reportsUnknownUrl() throws IOException {
-		ServerFake serverFake = new ServerFake(new URL(MockIntegrationTestContext.SERVERFAKE_URL).getPort(),
-				"<dummy></dummy>");
+	public void reportsUnknownUrl() throws IOException, DeltaCloudClientException {
+		ServerFake serverFake =
+				new ServerFake(
+						new URL(MockIntegrationTestContext.SERVERFAKE_URL).getPort(),
+						"<dummy></dummy>");
 		serverFake.start();
 		try {
-			assertEquals(DeltaCloudClientImpl.DeltaCloudServerType.UNKNOWN, new DeltaCloudClientImpl(
-					MockIntegrationTestContext.SERVERFAKE_URL, MockIntegrationTestContext.DELTACLOUD_USER,
-					MockIntegrationTestContext.DELTACLOUD_PASSWORD).getServerType());
+			assertEquals(
+					DeltaCloudClientImpl.DeltaCloudServerType.UNKNOWN,
+					new DeltaCloudClientImpl(
+							MockIntegrationTestContext.SERVERFAKE_URL, MockIntegrationTestContext.DELTACLOUD_USER,
+							MockIntegrationTestContext.DELTACLOUD_PASSWORD).getServerType());
 		} finally {
 			serverFake.stop();
 		}
@@ -101,7 +106,8 @@ public class ServerTypeMockIntegrationTest {
 						@Override
 						public HttpMethod getHttpMethod() {
 							return HttpMethod.GET;
-						} }
+						}
+					}
 					);
 					return Collections.emptyList();
 				}
