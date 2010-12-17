@@ -23,26 +23,6 @@
 		</profile>
 
 		<profile>
-			<id>archives</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-				<property>
-					<name>as-bootstrap</name>
-				</property>
-			</activation>
-			<modules>
-				<module>../archives</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>archives-bootstrap</id>
-			<modules>
-				<module>../archives</module>
-			</modules>
-		</profile>
-
-		<profile>
 			<id>as</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
@@ -58,7 +38,6 @@
 		<profile>
 			<id>as-bootstrap</id>
 			<modules>
-				<module>../archives</module>
 				<module>../as</module>
 			</modules>
 		</profile>
@@ -100,23 +79,6 @@
 
 
 		<profile>
-			<id>xulrunner</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<modules>
-				<module>../xulrunner</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>xulrunner-bootstrap</id>
-			<modules>
-				<module>../xulrunner</module>
-			</modules>
-		</profile>
-
-		<profile>
 			<id>vpe</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
@@ -131,7 +93,6 @@
 			<modules>
 				<module>../common</module>
 				<module>../jst</module>
-				<module>../xulrunner</module>
 				<module>../vpe</module>
 			</modules>
 		</profile>
@@ -151,7 +112,6 @@
 			<modules>
 				<module>../common</module>
 				<module>../jst</module>
-				<module>../xulrunner</module>
 				<module>../vpe</module>
 				<module>../jsf</module>
 			</modules>
@@ -210,23 +170,6 @@
 		</profile>
 
 		<profile>
-			<id>workingset</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<modules>
-				<module>../portlet</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>workingset-bootstrap</id>
-			<modules>
-				<module>../workingset</module>
-			</modules>
-		</profile>
-
-		<profile>
 			<id>struts</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
@@ -241,7 +184,6 @@
 			<modules>
 				<module>../common</module>
 				<module>../jst</module>
-				<module>../xulrunner</module>
 				<module>../vpe</module>
 				<module>../struts</module>
 			</modules>
@@ -282,42 +224,6 @@
 		</profile>
 
 		<profile>
-			<id>cdi</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<modules>
-				<module>../cdi</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>cdi-bootstrap</id>
-			<modules>
-				<module>../common</module>
-				<module>../jst</module>
-				<module>../cdi</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>birt</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<modules>
-				<module>../birt</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>birt-bootstrap</id>
-			<modules>
-				<module>../birt</module>
-			</modules>
-		</profile>
-
-		<profile>
 			<id>seam</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
@@ -330,12 +236,10 @@
 		<profile>
 			<id>seam-bootstrap</id>
 			<modules>
-				<module>../archives</module>
 				<module>../as</module>
 				<module>../hibernatetools</module>
 				<module>../common</module>
 				<module>../jst</module>
-				<module>../xulrunner</module>
 				<module>../vpe</module>
 				<module>../jsf</module>
 				<module>../seam</module>
@@ -391,26 +295,6 @@
 			<modules>
 				<module>../common</module>
 				<module>../ws</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>gwt</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<modules>
-				<module>../gwt</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>deltacloud</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<modules>
-				<module>../deltacloud</module>
 			</modules>
 		</profile>
 
