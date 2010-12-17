@@ -17,14 +17,14 @@ public class DeltaCloudAuthException extends DeltaCloudClientException {
 
 	private static final long serialVersionUID = 1L;
 	
-	public DeltaCloudAuthException(String message, Throwable clause)
+	public DeltaCloudAuthException(String message, Throwable cause)
 	{
-		super(message, clause);
+		super(message, cause);
 	}
 	
-	public DeltaCloudAuthException(Throwable clause)
+	public DeltaCloudAuthException(Throwable cause)
 	{
-		super(clause);
+		super(cause);
 	}
 	
 	public DeltaCloudAuthException(String message)
