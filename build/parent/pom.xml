@@ -35,6 +35,8 @@
 			repo w/o having to edit here. See local.target profile below for more information. -->
 		<target.platform.site>file://home/hudson/static_build_env/jbds/target-platform/e361-wtp322.target/
 		</target.platform.site>
+		<jbosstools.update.site>http://download.jboss.org/jbosstools/updates/nightly/trunk</jbosstools.update.site>
+		<jbosstools-target-platform-repo>http://download.jboss.org/jbosstools/updates/target-platform/latest/</jbosstools-target-platform-repo>
 	</properties>
 
 	<build>
@@ -342,8 +344,7 @@
 			<repositories>
 				<repository>
 					<id>jbosstools-target-platform-repo</id>
-					<url>http://download.jboss.org/jbosstools/updates/target-platform/latest/
-					</url>
+					<url>${jbosstools-target-platform-repo}</url>
 					<layout>p2</layout>
 					<snapshots>
 						<enabled>true</enabled>
@@ -742,10 +743,8 @@
 				</file>
 			</activation>
 			<properties>
-				<requirements.root>${basedir}/../../../requirements
-				</requirements.root>
-				<requirement.build.root>${requirements.root}/target
-				</requirement.build.root>
+				<requirements.root>${basedir}/../../../requirements</requirements.root>
+				<requirement.build.root>${requirements.root}/target</requirement.build.root>
 			</properties>
 			<build>
 				<plugins>
@@ -804,8 +803,7 @@
 			<repositories>
 				<repository>
 					<id>jbosstools-nightly-trunk</id>
-					<url>http://download.jboss.org/jbosstools/updates/nightly/trunk/
-					</url>
+					<url>${jbosstools.update.site}</url>
 					<layout>p2</layout>
 					<snapshots>
 						<enabled>true</enabled>
