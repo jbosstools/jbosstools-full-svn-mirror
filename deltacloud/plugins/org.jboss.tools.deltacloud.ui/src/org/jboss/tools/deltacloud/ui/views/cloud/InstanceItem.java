@@ -29,8 +29,9 @@ public class InstanceItem extends DeltaCloudViewItem<DeltaCloudInstance> {
 		DeltaCloudInstance instance = getModel();
 		StringBuilder sb = new StringBuilder();
 		if (instance != null) {
+			sb.append(instance.getGivenName());
 			if (instance.getName() != null) {
-				sb.append(instance.getName());
+				sb.append(" [").append(instance.getName()).append("]");
 			}
 			if (instance.getId() != null) {
 				sb.append(" [").append(instance.getId()).append("] ");
