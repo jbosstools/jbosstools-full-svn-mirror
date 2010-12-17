@@ -49,9 +49,9 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 	private final static String CREATE_SERVER_PREF_KEY = "org.jboss.tools.deltacloud.integration.wizard.RSEandASWizard.CREATE_SERVER_PREF_KEY";
 
 	public RSEandASWizardPage() {
-		super("Blah Wizard Page");
-		setTitle("Blah Title");
-		setDescription("Blah Desc");
+		super("Create RSE Connection and Server");
+		setTitle("Create RSE Connection and Server");
+		setDescription("Here you can choose to create a matching RSE connection and a Server adapter");
 	}
 
 	public void createControl(Composite parent) {
@@ -98,6 +98,7 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 	}
 
 	public AbstractInstanceJob getPerformFinishJob(final DeltaCloudInstance instance) {
+		System.out.println(instance.getHostName());
 		IEclipsePreferences prefs = new InstanceScope().getNode(DeltaCloudIntegrationPlugin.PLUGIN_ID);
 		prefs.putBoolean(CREATE_RSE_PREF_KEY, createRSE.getSelection());
 		prefs.putBoolean(CREATE_SERVER_PREF_KEY, createServer.getSelection());

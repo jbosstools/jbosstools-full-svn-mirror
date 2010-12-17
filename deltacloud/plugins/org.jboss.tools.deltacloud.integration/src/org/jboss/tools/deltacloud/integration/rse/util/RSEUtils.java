@@ -69,7 +69,6 @@ public class RSEUtils {
 		Assert.isLegal(instance != null, "Cannot get hostname: instance is not defined");
 
 		String hostName = instance.getHostName();
-		System.out.println(instance.getHostName());
 		Assert.isTrue(hostName != null && hostName.length() > 0,
 				MessageFormat.format("Cannot get host name: not defined for instance {0}", instance.getName()));
 		return hostName;
