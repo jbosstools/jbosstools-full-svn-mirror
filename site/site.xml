@@ -18,18 +18,10 @@
 		<category name="AllTools" />
 		<category name="WebTools" />
 	</feature>
-	<feature url="features/org.jboss.ide.eclipse.archives.feature_0.0.0.jar" id="org.jboss.ide.eclipse.archives.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="GeneralTools" />
-	</feature>
 	<feature url="features/org.hibernate.eclipse.feature_0.0.0.jar" id="org.hibernate.eclipse.feature" version="0.0.0">
 		<category name="AllTools" />
 		<category name="WebTools" />
 		<category name="DataTools" />
-		<category name="GeneralTools" />
-	</feature>
-	<feature url="features/org.jboss.ide.eclipse.freemarker.feature_0.0.0.jar" id="org.jboss.ide.eclipse.freemarker.feature" version="0.0.0">
-		<category name="AllTools" />
 		<category name="GeneralTools" />
 	</feature>
 	<feature url="features/org.jboss.tools.struts.feature_0.0.0.jar" id="org.jboss.tools.struts.feature" version="0.0.0">
@@ -40,24 +32,11 @@
 		<category name="AllTools" />
 		<category name="SOATools" />
 	</feature>
-	<feature url="features/org.jboss.tools.portlet.feature_0.0.0.jar" id="org.jboss.tools.portlet.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="WebTools" />
-	</feature>
 	<feature url="features/org.jboss.tools.tptp.feature_0.0.0.jar" id="org.jboss.tools.tptp.feature" version="0.0.0">
 		<category name="TestPerfTools" />
 	</feature>
-	<feature url="features/org.jboss.tools.smooks.feature_0.0.0.jar" id="org.jboss.tools.smooks.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="SOATools" />
-		<category name="DataTools" />
-		<category name="GeneralTools" />
-	</feature>
 
 	<!-- only in JBT -->
-	<feature url="features/org.jboss.tools.birt.feature_0.0.0.jar" id="org.jboss.tools.birt.feature" version="0.0.0">
-		<category name="ReportTools" />
-	</feature>
 	<feature url="features/org.jboss.tools.maven.feature_0.0.0.jar" id="org.jboss.tools.maven.feature" version="0.0.0">
 		<category name="MavenTools" />
 	</feature>
@@ -67,13 +46,7 @@
 	<feature url="features/org.jboss.tools.maven.jsf.feature_0.0.0.jar" id="org.jboss.tools.maven.jsf.feature" version="0.0.0">
 		<category name="MavenTools" />
 	</feature>
-	<feature url="features/org.jboss.tools.maven.cdi.feature_0.0.0.jar" id="org.jboss.tools.maven.cdi.feature" version="0.0.0">
-		<category name="MavenTools" />
-	</feature>
 	<feature url="features/org.jboss.tools.maven.hibernate.feature_0.0.0.jar" id="org.jboss.tools.maven.hibernate.feature" version="0.0.0">
-		<category name="MavenTools" />
-	</feature>
-	<feature url="features/org.jboss.tools.maven.portlet.feature_0.0.0.jar" id="org.jboss.tools.maven.portlet.feature" version="0.0.0">
 		<category name="MavenTools" />
 	</feature>
 
