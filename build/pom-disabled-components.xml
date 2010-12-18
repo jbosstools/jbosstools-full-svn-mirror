@@ -60,25 +60,6 @@
 		</profile>
 
 		<profile>
-			<id>jst</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<modules>
-				<module>../jst</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>jst-bootstrap</id>
-			<modules>
-				<module>../common</module>
-				<module>../jst</module>
-			</modules>
-		</profile>
-
-
-		<profile>
 			<id>vpe</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
@@ -92,7 +73,6 @@
 			<id>vpe-bootstrap</id>
 			<modules>
 				<module>../common</module>
-				<module>../jst</module>
 				<module>../vpe</module>
 			</modules>
 		</profile>
@@ -111,26 +91,8 @@
 			<id>jsf-bootstrap</id>
 			<modules>
 				<module>../common</module>
-				<module>../jst</module>
 				<module>../vpe</module>
 				<module>../jsf</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>freemarker</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<modules>
-				<module>../freemarker</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>freemarker-bootstrap</id>
-			<modules>
-				<module>../freemarker</module>
 			</modules>
 		</profile>
 
@@ -147,25 +109,7 @@
 		<profile>
 			<id>hibernatetools-bootstrap</id>
 			<modules>
-				<module>../freemarker</module>
 				<module>../hibernatetools</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>portlet</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<modules>
-				<module>../portlet</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>portlet-bootstrap</id>
-			<modules>
-				<module>../portlet</module>
 			</modules>
 		</profile>
 
@@ -183,7 +127,6 @@
 			<id>struts-bootstrap</id>
 			<modules>
 				<module>../common</module>
-				<module>../jst</module>
 				<module>../vpe</module>
 				<module>../struts</module>
 			</modules>
@@ -207,23 +150,6 @@
 		</profile>
 
 		<profile>
-			<id>smooks</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<modules>
-				<module>../smooks</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>smooks-bootstrap</id>
-			<modules>
-				<module>../smooks</module>
-			</modules>
-		</profile>
-
-		<profile>
 			<id>seam</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
@@ -239,7 +165,6 @@
 				<module>../as</module>
 				<module>../hibernatetools</module>
 				<module>../common</module>
-				<module>../jst</module>
 				<module>../vpe</module>
 				<module>../jsf</module>
 				<module>../seam</module>
