@@ -52,6 +52,9 @@ import org.eclipse.bpel.ui.details.providers.PartnerLinkTreeContentProvider;
 import org.eclipse.bpel.ui.details.providers.PartnerRoleFilter;
 import org.eclipse.bpel.ui.details.providers.WSDLFaultContentProvider;
 import org.eclipse.bpel.ui.details.tree.ITreeNode;
+import org.eclipse.bpel.ui.details.tree.OperationTreeNode;
+import org.eclipse.bpel.ui.details.tree.PartnerLinkTreeNode;
+import org.eclipse.bpel.ui.details.tree.TreeNode;
 import org.eclipse.bpel.ui.dialogs.PartnerLinkRoleSelectorDialog;
 import org.eclipse.bpel.ui.dialogs.PartnerLinkTypeSelectorDialog;
 import org.eclipse.bpel.ui.proposal.providers.ModelContentProposalProvider;
@@ -89,6 +92,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.forms.events.HyperlinkAdapter;
 import org.eclipse.ui.forms.events.HyperlinkEvent;
@@ -132,6 +136,8 @@ public class InvokeImplSection extends BPELPropertySection {
 	private Composite faultComposite;
 	private Label faultLabel;
 	private Text faultText;
+	// https://issues.jboss.org/browse/JBIDE-7861
+	private boolean ignoreQuickPickSelection = false;
 	
 	private IControlContentAdapter fTextContentAdapter = new TextContentAdapter() {
 		@Override
@@ -1154,7 +1160,12 @@ public class InvokeImplSection extends BPELPropertySection {
 		quickPickTreeViewer.addSelectionChangedListener( new ISelectionChangedListener () {
 
 			public void selectionChanged(SelectionChangedEvent event) {
-				quickPickSelectionChanged ( event.getSelection() );
+				// https://issues.jboss.org/browse/JBIDE-7861
+				// ignore if the selection event came from updateQuickPickSelection()
+				if (ignoreQuickPickSelection)		
+					ignoreQuickPickSelection = false;
+				else
+					quickPickSelectionChanged ( event.getSelection() );
 				
 			}
 			
@@ -1189,7 +1200,9 @@ public class InvokeImplSection extends BPELPropertySection {
 			partnerName.setText(EMPTY_STRING); 			
 		} else {
 			ILabeledElement labeledElement = BPELUtil.adapt(partnerLink, ILabeledElement.class);
-			partnerName.setText(labeledElement.getLabel(partnerLink));			
+			// https://issues.jboss.org/browse/JBIDE-7861
+			partnerName.setText(labeledElement.getLabel(partnerLink));
+			updateQuickPickSelection(partnerLink);
 		}
 	}
 	
@@ -1268,6 +1281,41 @@ public class InvokeImplSection extends BPELPropertySection {
 		}
 	}
 	
+	// https://issues.jboss.org/browse/JBIDE-7861
+	// update the Quick Pick tree with currently selected model object
+	private void updateQuickPickSelection(Object model) {
+		
+		ignoreQuickPickSelection = true;
+		
+		TreeItem[] items = quickPickTree.getItems();
+		for (int i=0; i<items.length; ++i) {
+			if ( updateQuickPickSelection(model, items[i]))
+				break;
+		}
+	}
+	
+	private boolean updateQuickPickSelection(Object model, TreeItem item)
+	{
+		Object data = item.getData();
+		if ( data instanceof TreeNode ) {
+			Object obj = ((TreeNode)data).getModelObject();
+			if (obj instanceof PartnerLink) {
+				PartnerLink partnerLink = ModelHelper.getPartnerLink(getInput());
+				if (obj!=partnerLink)
+					return false;
+			}
+			if (model==obj) {
+				quickPickTree.setSelection(item);
+				return true;
+			}
+			TreeItem[] items = item.getItems();
+			for (int i=0; i<items.length; ++i) {
+				if ( updateQuickPickSelection(model, items[i]))
+					return true;;
+			}
+		}
+		return false;
+	}
 	
 	private  void updatePortTypeWidgets() {
 		if (interfaceName == null) {
@@ -1291,6 +1339,8 @@ public class InvokeImplSection extends BPELPropertySection {
 		Operation operation = ModelHelper.getOperation(getInput());
 		if (operation != null) {
 			operationText.setText( operation.getName() );
+			// https://issues.jboss.org/browse/JBIDE-7861
+			updateQuickPickSelection(operation);
 		} else {
 			operationText.setText ( EMPTY_STRING );
 		}
@@ -1370,10 +1420,11 @@ public class InvokeImplSection extends BPELPropertySection {
 		PortType portType = ModelHelper.getPortType( model );
 		
 		List<Command> cmdList = basicCommandList( model , IGNORE_PARTNER_LINK, null );		
+		Operation op = null;
 		
 		if (text.length() > 0) {
 			
-			Operation op = (Operation) ModelHelper.findElementByName(
+			op = (Operation) ModelHelper.findElementByName(
 					portType , 
 					text,
 					Operation.class);
@@ -1386,12 +1437,23 @@ public class InvokeImplSection extends BPELPropertySection {
 					}						
 				});
 				cmd.setNewValue(op);
+				// https://issues.jboss.org/browse/JBIDE-7861
+				// set new operation in the command list
+				for (int i=0; i<cmdList.size(); ++i) {
+					if ( cmdList.get(i) instanceof SetOperationCommand) {
+						cmdList.set(i, cmd);
+						break;
+					}
+				}
 			} 		
 		}
 		
 		CompoundCommand cmd = new CompoundCommand();
 		cmd.getCommands().addAll( cmdList );
 		getCommandFramework().execute ( cmd );
+		
+		if (op!=null)
+			updateQuickPickSelection(op);
 	}
 
 //	void findAndSetOrCreateVariable (String text, int direction) {
@@ -1485,19 +1547,24 @@ public class InvokeImplSection extends BPELPropertySection {
 			pl = (PartnerLink) ModelHelper.findElementByName(ModelHelper.getContainingScope(model),
 					name, PartnerLink.class);
 			// does not exist
-			if (pl == null) {			
-				createPartnerLink ( ModelHelper.getContainingScope(model), name );						
+			if (pl == null) {
+				// https://issues.jboss.org/browse/JBIDE-7861
+				pl = createPartnerLink ( ModelHelper.getContainingScope(model), name );						
+				if (pl!=null)
+					updateQuickPickSelection(pl);
 				return ;			
 			}			
 		}
 		
 		CompoundCommand cmd = new CompoundCommand();
 		cmd.getCommands().addAll( basicCommandList(model, pl, null));
-		getCommandFramework().execute ( cmd );		
+		getCommandFramework().execute ( cmd );
 		
+		if (pl!=null)
+			updateQuickPickSelection(pl);
 	}
 	
-	private void createPartnerLink ( EObject ref , String name ) {
+	private PartnerLink createPartnerLink ( EObject ref , String name ) {
 		PartnerLink pl = BPELFactory.eINSTANCE.createPartnerLink();
 		
 		if (name == null) {
@@ -1513,14 +1580,14 @@ public class InvokeImplSection extends BPELPropertySection {
 				BPELUtil.getNCNameValidator());
 		
 		if (nameDialog.open() == Window.CANCEL) {
-			return ;
+			return null;
 		}		
 		
 		PartnerLinkTypeSelectorDialog dialog = new PartnerLinkTypeSelectorDialog(
 				partnerName.getShell(),
 				getInput());
 		if (dialog.open() == Window.CANCEL) {
-			return ;
+			return  null;
 		}
 		Object result = dialog.getFirstResult();
 		PartnerLinkType plt = null;
@@ -1539,7 +1606,7 @@ public class InvokeImplSection extends BPELPropertySection {
 				roleDialog.setTitle(Messages.PartnerRoleSelectorDialog_Title_MyRole);
 			}
 			if (roleDialog.open() == Window.CANCEL){
-				return;
+				return  null;
 			}
 			if (isInvoke){
 				pl.setPartnerRole(list.get(roleDialog.getSelectedRole()));
@@ -1569,6 +1636,8 @@ public class InvokeImplSection extends BPELPropertySection {
 		// TODO: Is there any way to refresh quick pick without this hack?
 		quickPickTreeViewer.setInput ( null );
 		updateQuickPickWidgets();
+		
+		return pl;
 	}
 	
 	/** 
@@ -1613,6 +1682,10 @@ public class InvokeImplSection extends BPELPropertySection {
 //		org.eclipse.bpel.ui.details.tree.PartTreeNode@33910a
 //		org.eclipse.bpel.ui.details.tree.XSDElementDeclarationTreeNode@1e96ffd
 //		
+		
+		// https://issues.jboss.org/browse/JBIDE-7861
+		if (ignoreQuickPickSelection)
+			return;
 		
 		EObject input = getInput();
 		List cmdList = basicCommandList( input , null, null);
