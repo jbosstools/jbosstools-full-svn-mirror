@@ -326,8 +326,12 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 			 * author Denis Maliarevich.
 			 */
 			container.setMaximizedControl(null);
-			if (sourceContent != null)
+			if (sourceContent != null) {
 				sourceContent.setVisible(true);
+				if (sourceEditor != null) {
+                    activeEditor = sourceEditor;
+                }
+			}
 			if (visualContent != null)
 				visualContent.setVisible(true);
 			if (previewContent != null) {
@@ -351,6 +355,9 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 			setVerticalToolbarVisible(false);
 			if (sourceContent != null) {
 				sourceContent.setVisible(true);
+				if (sourceEditor != null) {
+                    activeEditor = sourceEditor;
+                }
 				/*
 				 * Fixes https://jira.jboss.org/jira/browse/JBIDE-3140
 				 * author Denis Maliarevich.
@@ -396,6 +403,9 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 			if (previewContent != null) {
 				previewWebBrowser.rebuildDom();
 				previewContent.setVisible(true);
+                if (previewWebBrowser != null) {
+                    activeEditor = previewWebBrowser;
+                }
 				container.setMaximizedControl(previewContent);
 			}
 			break;
