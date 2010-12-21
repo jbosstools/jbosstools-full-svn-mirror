@@ -95,6 +95,16 @@
                 </listitem>
 		<listitem>
 		   <para>
+		      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7675">JBIDE-7675</ulink>: The quick fix for the error <errorname>Bean class has more than one constructor annotated @Inject</errorname> has been updated to show the various injected constructors. It then asks the user to select only one constructor, removing the <property>@Inject</property> annotation from all others.
+		   </para>
+		</listitem>
+		<listitem>
+		   <para>
+		      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7673">JBIDE-7673</ulink>: The quick fix for the error <errorname>There are multiple disposer methods for a single producer method</errorname> has been updated to show the various disposer methods. It then asks the user to select only one method, removing the <property>@Disposes</property> annotation from all others.
+		   </para>
+		</listitem>
+		<listitem>
+		   <para>
 		      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7672">JBIDE-7672</ulink>: The quick fix for session bean and EJB non-static methods has been updated. This update ensures that when the method is annotated with <property>@Disposes</property> or <property>@Observes</property> respectively, the quick fix changes the method to correctly be, a business method. 
 		   </para>
 		</listitem>
