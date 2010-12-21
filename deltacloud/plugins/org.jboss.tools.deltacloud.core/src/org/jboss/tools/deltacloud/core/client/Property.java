@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlElement;
 /**
  * @author Martyn Taylor
  */
-public class Property extends DeltaCloudObject {
+public class Property extends AbstractDeltaCloudObject {
 	
 	private static final long serialVersionUID = 1L;
 

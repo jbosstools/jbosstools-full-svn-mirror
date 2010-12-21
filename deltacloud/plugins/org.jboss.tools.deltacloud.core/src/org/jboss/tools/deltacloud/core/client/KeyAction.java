@@ -10,6 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core.client;
 
+
+
 /**
  * An action that is executable on a deltacloud key
  * 
@@ -19,15 +21,11 @@ public class KeyAction extends AbstractDeltaCloudResourceAction implements IKeyA
 
 	private Key key;
 
-	protected KeyAction() {
+	public KeyAction() {
+		super();
 	}
 
-	protected KeyAction(String name, Key key, String url, String method) {
-		super(name, url, method);
-		this.key = key;
-	}
-
-	protected void setKey(Key key) {
+	public void setKey(Key key) {
 		this.key = key;
 	}
 

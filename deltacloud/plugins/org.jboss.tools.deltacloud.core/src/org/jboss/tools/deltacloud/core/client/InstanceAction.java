@@ -28,12 +28,7 @@ public class InstanceAction extends AbstractDeltaCloudResourceAction implements 
 		super();
 	}
 
-	protected InstanceAction(String name, String url, String method, Instance instance) {
-		super(name, url, method);
-		this.instance = instance;
-	}
-
-	protected void setInstance(Instance instance) {
+	public void setInstance(Instance instance) {
 		this.instance = instance;
 	}
 

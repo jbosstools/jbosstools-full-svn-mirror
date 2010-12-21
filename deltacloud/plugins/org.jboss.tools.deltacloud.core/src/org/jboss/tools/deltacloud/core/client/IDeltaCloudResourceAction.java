@@ -10,7 +10,6 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core.client;
 
-import org.jboss.tools.deltacloud.core.client.request.DeltaCloudRequest.HttpMethod;
 
 /**
  * @author André Dietisheim

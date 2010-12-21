@@ -10,30 +10,39 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core.client;
 
-import org.jboss.tools.deltacloud.core.client.request.DeltaCloudRequest.HttpMethod;
 
 /**
  * An action that is executable on a deltacloud resource
  * 
  * @author André Dietisheim
- *
  */
 public abstract class AbstractDeltaCloudResourceAction implements IDeltaCloudResourceAction {
-	
+
 	private String name;
 	private String url;
 	private HttpMethod method;
 
 	protected AbstractDeltaCloudResourceAction() {
 	}
-	
-	protected AbstractDeltaCloudResourceAction(String name, String url, String method) {
-		this.url = url;
-		this.method = HttpMethod.valueOf(method.toUpperCase());
-		this.name = name;
+
+	@Override
+	public HttpMethod getMethod() {
+		return method;
 	}
 
-	protected void setName(String name) {
+	public void setMethodString(String method) {
+		this.method = HttpMethod.valueOf(method.toUpperCase());
+	}
+
+	public void setMethod(HttpMethod method) {
+		this.method = method;
+	}
+
+	public void setMethod(String method) {
+		this.method = HttpMethod.valueOf(method.toUpperCase());
+	}
+
+	public void setName(String name) {
 		this.name = name;
 	}
 
@@ -42,26 +51,12 @@ public abstract class AbstractDeltaCloudResourceAction implements IDeltaCloudRes
 		return name;
 	}
 
-	protected void setUrl(String url) {
+	public void setUrl(String url) {
 		this.url = url;
 	}
 
 	@Override
 	public String getUrl() {
 		return url;
-	}
-
-	protected void setMethod(HttpMethod method) {
-		this.method = method;
-	}
-
-	protected void setMethod(String method) {
-		this.method = HttpMethod.valueOf(method.toUpperCase());
-	}
-	
-	
-	@Override
-	public HttpMethod getMethod() {
-		return method;
 	}
 }

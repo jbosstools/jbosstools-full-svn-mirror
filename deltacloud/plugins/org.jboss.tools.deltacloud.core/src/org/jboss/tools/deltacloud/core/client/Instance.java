@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlElement;
  * @author Martyn Taylor
  * @author Andre Dietisheim
  */
-public class Instance extends DeltaCloudObject {
+public class Instance extends AbstractDeltaCloudObject {
 
 	private static final long serialVersionUID = 1L;
 

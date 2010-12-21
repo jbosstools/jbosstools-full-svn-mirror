@@ -14,49 +14,46 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * @author Andre Dietisheim
  */
-public class Key extends DeltaCloudObject {
+@XmlRootElement
+public class Key extends AbstractDeltaCloudObject {
 
 	private static final long serialVersionUID = 1L;
 
 	private URL url;
-	private String id;
 	private String pem;
-	private String fingerPrint;
+	private String fingerprint;
 	private String state;
 	private List<KeyAction> actions;
 
-	public String getId() {
-		return id;
+	public Key() {
 	}
 
-	protected void setUrl(String url) throws MalformedURLException {
-		this.url = new URL(url);
-	}
-
-	protected void setUrl(URL url) {
+	public void setUrl(URL url) {
 		this.url = url;
 	}
 
-	protected void setId(String id) {
-		this.id = id;
+	public void setUrl(String url) throws MalformedURLException {
+		this.url = new URL(url);
 	}
 
-	protected void setPem(String pem) {
+	public void setPem(String pem) {
 		this.pem = pem;
 	}
 
-	protected void setFingerPrint(String fingerPrint) {
-		this.fingerPrint = fingerPrint;
+	public void setFingerprint(String fingerprint) {
+		this.fingerprint = fingerprint;
 	}
 
-	protected void setState(String state) {
+	public void setState(String state) {
 		this.state = state;
 	}
 
-	protected void setActions(List<KeyAction> actions) {
+	public void setActions(List<KeyAction> actions) {
 		this.actions = actions;
 	}
 
@@ -64,8 +61,8 @@ public class Key extends DeltaCloudObject {
 		return url;
 	}
 
-	public String getFingerPrint() {
-		return fingerPrint;
+	public String getFingerprint() {
+		return fingerprint;
 	}
 
 	public String getPem() {
@@ -79,5 +76,4 @@ public class Key extends DeltaCloudObject {
 	public List<KeyAction> getActions() {
 		return actions;
 	}
-
 }

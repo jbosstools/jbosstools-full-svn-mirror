@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * @author Martyn Taylor
  */
-public class HardwareProfile extends DeltaCloudObject
+public class HardwareProfile extends AbstractDeltaCloudObject
 {
 	private static final long serialVersionUID = 1L;
 

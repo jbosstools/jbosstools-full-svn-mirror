@@ -8,23 +8,8 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.deltacloud.core.client.request;
+package org.jboss.tools.deltacloud.core.client;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
-import org.jboss.tools.deltacloud.core.client.HttpMethod;
-
-/**
- * @author André Dietisheim
- */
-public interface DeltaCloudRequest {
-
-	public static final char PATH_SEPARATOR = '/';
-	public static final char PARAMETER_SEPARATOR = '?';
-	public static final String API_PATH_SEGMENT = "api";
-
-	public URL getUrl() throws MalformedURLException;
-
-	public HttpMethod getHttpMethod();
+public enum HttpMethod {
+	GET, POST, PUT, DELETE, HEAD;
 }

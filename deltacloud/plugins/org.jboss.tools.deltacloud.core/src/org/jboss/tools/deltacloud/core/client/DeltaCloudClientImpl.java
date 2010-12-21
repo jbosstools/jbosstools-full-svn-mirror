@@ -38,7 +38,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -54,7 +53,6 @@ import org.jboss.tools.deltacloud.core.client.request.CreateInstanceRequest;
 import org.jboss.tools.deltacloud.core.client.request.CreateKeyRequest;
 import org.jboss.tools.deltacloud.core.client.request.DeleteKeyRequest;
 import org.jboss.tools.deltacloud.core.client.request.DeltaCloudRequest;
-import org.jboss.tools.deltacloud.core.client.request.DeltaCloudRequest.HttpMethod;
 import org.jboss.tools.deltacloud.core.client.request.ListHardwareProfileRequest;
 import org.jboss.tools.deltacloud.core.client.request.ListHardwareProfilesRequest;
 import org.jboss.tools.deltacloud.core.client.request.ListImageRequest;
@@ -67,6 +65,8 @@ import org.jboss.tools.deltacloud.core.client.request.ListRealmRequest;
 import org.jboss.tools.deltacloud.core.client.request.ListRealmsRequest;
 import org.jboss.tools.deltacloud.core.client.request.PerformInstanceActionRequest;
 import org.jboss.tools.deltacloud.core.client.request.TypeRequest;
+import org.jboss.tools.deltacloud.core.client.unmarshal.KeyUnmarshaller;
+import org.jboss.tools.deltacloud.core.client.unmarshal.KeysUnmarshaller;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -127,7 +127,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		}
 	}
 
-	protected String sendRequest(DeltaCloudRequest deltaCloudRequest) throws DeltaCloudClientException {
+	protected InputStream request(DeltaCloudRequest deltaCloudRequest) throws DeltaCloudClientException {
 		DefaultHttpClient httpClient = new DefaultHttpClient();
 		try {
 			URL url = deltaCloudRequest.getUrl();
@@ -136,7 +136,10 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 			HttpUriRequest request = createRequest(deltaCloudRequest);
 			HttpResponse httpResponse = httpClient.execute(request);
 			throwOnHttpErrors(deltaCloudRequest.getUrl(), httpResponse);
-			return getResponse(httpResponse.getEntity());
+			if (httpResponse.getEntity() == null) {
+				return null;
+			}
+			return httpResponse.getEntity().getContent();
 		} catch (DeltaCloudClientException e) {
 			throw e;
 		} catch (IOException e) {
@@ -145,6 +148,18 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 			throw new DeltaCloudClientException(e);
 		} finally {
 			httpClient.getConnectionManager().shutdown();
+		}
+	}
+
+	protected String requestStringResponse(DeltaCloudRequest deltaCloudRequest) throws DeltaCloudClientException {
+		try {
+			InputStream inputStream = request(deltaCloudRequest);
+			if (inputStream == null) {
+				return null;
+			}
+			return getResponse(inputStream);
+		} catch (IOException e) {
+			throw new DeltaCloudClientException(e);
 		}
 	}
 
@@ -167,12 +182,12 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		}
 	}
 
-	private String getResponse(HttpEntity entity) throws IOException,
+	private String getResponse(InputStream inputStream) throws IOException,
 			DeltaCloudClientException {
-		if (entity == null) {
+		if (inputStream == null) {
 			return null;
 		}
-		String xml = readInputStreamToString(entity.getContent());
+		String xml = readInputStreamToString(inputStream);
 		logger.debug("Response:\n" + xml);
 		return xml;
 	}
@@ -249,7 +264,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	public DeltaCloudServerType getServerType() {
 		DeltaCloudServerType serverType = DeltaCloudServerType.UNKNOWN;
 		try {
-			String apiResponse = sendRequest(new TypeRequest(baseUrl));
+			String apiResponse = requestStringResponse(new TypeRequest(baseUrl));
 			Document document = getDocument(apiResponse);
 			NodeList elements = document.getElementsByTagName(DOCUMENT_ELEMENT_API);
 			if (elements.getLength() > 0) {
@@ -269,7 +284,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	@Override
 	public Instance createInstance(String imageId) throws DeltaCloudClientException {
 		try {
-			return buildInstance(sendRequest(new CreateInstanceRequest(baseUrl, imageId)));
+			return buildInstance(requestStringResponse(new CreateInstanceRequest(baseUrl, imageId)));
 		} catch (DeltaCloudClientException e) {
 			throw e;
 		} catch (Exception e) {
@@ -292,7 +307,8 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	public Instance createInstance(String imageId, String profileId, String realmId, String name, String keyname,
 			String memory, String storage) throws DeltaCloudClientException {
 		try {
-			return buildInstance(sendRequest(new CreateInstanceRequest(baseUrl, imageId, profileId, realmId, name,
+			return buildInstance(requestStringResponse(new CreateInstanceRequest(baseUrl, imageId, profileId, realmId,
+					name,
 					keyname, memory, storage)));
 		} catch (DeltaCloudClientException e) {
 			throw e;
@@ -304,7 +320,8 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	@Override
 	public HardwareProfile listProfile(String profileId) throws DeltaCloudClientException {
 		try {
-			return buildDeltaCloudObject(HardwareProfile.class, sendRequest(new ListHardwareProfileRequest(baseUrl,
+			return buildDeltaCloudObject(HardwareProfile.class, requestStringResponse(new ListHardwareProfileRequest(
+					baseUrl,
 					profileId)));
 		} catch (DeltaCloudClientException e) {
 			throw e;
@@ -326,7 +343,8 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 
 	@Override
 	public Image listImages(String imageId) throws DeltaCloudClientException {
-		return JAXB.unmarshal(new StringReader(sendRequest(new ListImageRequest(baseUrl, imageId))), Image.class);
+		return JAXB.unmarshal(new StringReader(requestStringResponse(new ListImageRequest(baseUrl, imageId))),
+				Image.class);
 	}
 
 	@Override
@@ -336,10 +354,10 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 
 	@Override
 	public Instance listInstances(String instanceId) throws DeltaCloudClientException {
-		// return JAXB.unmarshal(new StringReader(sendRequest(new
+		// return JAXB.unmarshal(new StringReader(request(new
 		// ListInstanceRequest(baseUrl, instanceId))), Instance.class);
 		try {
-			return buildInstance(sendRequest(new ListInstanceRequest(baseUrl, instanceId)));
+			return buildInstance(requestStringResponse(new ListInstanceRequest(baseUrl, instanceId)));
 		} catch (DeltaCloudClientException e) {
 			throw e;
 		} catch (Exception e) {
@@ -354,14 +372,16 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 
 	@Override
 	public Realm listRealms(String realmId) throws DeltaCloudClientException {
-		return JAXB.unmarshal(new StringReader(sendRequest(new ListRealmRequest(baseUrl, realmId))), Realm.class);
+		return JAXB.unmarshal(new StringReader(requestStringResponse(new ListRealmRequest(baseUrl, realmId))),
+				Realm.class);
 	}
 
 	public Key createKey(String keyname) throws DeltaCloudClientException {
 		try {
-			String response = sendRequest(new CreateKeyRequest(baseUrl, keyname));
-			Key key = new Key();
-			return updatekey(getDocument(response), key);
+			CreateKeyRequest keyRequest = new CreateKeyRequest(baseUrl, keyname);
+			InputStream inputStream = request(keyRequest);
+			Key key = new KeyUnmarshaller().unmarshall(inputStream, new Key());
+			return key;
 		} catch (DeltaCloudClientException e) {
 			throw e;
 		} catch (Exception e) {
@@ -369,52 +389,20 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		}
 	}
 
-	private Key updatekey(Document document, Key key) throws Exception {
-		key.setId(getAttributeValues(document, "key", "id").get(0)); //$NON-NLS-1$ //$NON-NLS-2$
-		key.setUrl(getAttributeValues(document, "key", "href").get(0)); //$NON-NLS-1$ //$NON-NLS-2$
-		key.setState(getFirstElementTextValue(document, "state")); //$NON-NLS-1$
-		key.setFingerPrint(getFirstElementTextValue(document, "fingerprint")); //$NON-NLS-1$
-		key.setPem(getFirstElementTextValue(document, "pem")); //$NON-NLS-1$
-		key.setActions(createKeyActions(key, document));
-		return key;
-	}
-
 	public void createKey(String keyname, String keyStoreLocation) throws DeltaCloudClientException {
 		Key key = createKey(keyname);
-		throw new UnsupportedOperationException("not implemented yet");
-		// try {
-		// String key = trimKey(getKey(xml));
-		// File keyFile = createKeyFile(keyname, keyStoreLocation);
-		// storeKey(key, keyFile);
-		// } catch (Exception e) {
-		// throw new DeltaCloudClientException(e);
-		// }
+		try {
+			File keyFile = createKeyFile(keyname, keyStoreLocation);
+			storeKey(key.getPem(), keyFile);
+		} catch (Exception e) {
+			throw new DeltaCloudClientException(e);
+		}
 	}
 
 	private void storeKey(String key, File keyFile) throws IOException {
 		FileWriter w = new FileWriter(keyFile);
 		w.write(key);
 		w.close();
-	}
-
-	private String trimKey(List<String> keyText) throws IOException {
-		StringBuffer sb = new StringBuffer();
-		String line;
-		BufferedReader reader = new BufferedReader(new StringReader(keyText.get(0)));
-		while ((line = reader.readLine()) != null) {
-			// We must trim off the white-space from the xml
-			// Complete white-space lines are to be ignored.
-			String trimmedLine = line.trim();
-			if (trimmedLine.length() > 0) {
-				sb.append(trimmedLine).append("\n");
-			}
-		}
-		return sb.toString();
-	}
-
-	private List<String> getKey(String xml) throws ParserConfigurationException, SAXException, IOException {
-		List<String> keyText = getElementTextValues(getDocument(xml), PEM_FILE_SUFFIX); //$NON-NLS-1$
-		return keyText;
 	}
 
 	private File createKeyFile(String keyname, String keyStoreLocation) throws IOException {
@@ -432,18 +420,19 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	}
 
 	public void deleteKey(String keyname) throws DeltaCloudClientException {
-		sendRequest(new DeleteKeyRequest(baseUrl, keyname));
+		requestStringResponse(new DeleteKeyRequest(baseUrl, keyname));
 	}
 
 	public List<Key> listKeys() throws DeltaCloudClientException {
-		String xml = sendRequest(new ListKeysRequest(baseUrl));
-		Key key = JAXB.unmarshal(new StringReader(xml), Key.class);
-		throw new UnsupportedOperationException();
+		InputStream inputStream = request(new ListKeysRequest(baseUrl));
+		List<Key> keys = new ArrayList<Key>();
+		new KeysUnmarshaller().unmarshall(inputStream, keys);
+		return keys;
 	}
 
 	public Key listKey(String name) throws DeltaCloudClientException {
-		String xml = sendRequest(new ListKeyRequest(baseUrl, name));
-		Key key = JAXB.unmarshal(new StringReader(xml), Key.class);
+		InputStream inputStream = request(new ListKeyRequest(baseUrl, name));
+		Key key = new KeyUnmarshaller().unmarshall(inputStream, new Key());
 		return key;
 	}
 
@@ -475,21 +464,6 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 				InstanceAction action = new InstanceAction();
 				setActionProperties(action, node);
 				action.setInstance(instance);
-				actions.add(action);
-			}
-		});
-		return actions;
-	}
-
-	private List<KeyAction> createKeyActions(final Key key, Document document) throws Exception {
-		final List<KeyAction> actions = new ArrayList<KeyAction>();
-		forEachNode(document, "link", new INodeVisitor() {
-
-			@Override
-			public void visit(Node node) throws Exception {
-				KeyAction action = new KeyAction();
-				setActionProperties(action, node);
-				action.setKey(key);
 				actions.add(action);
 			}
 		});
@@ -584,14 +558,6 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		return values;
 	}
 
-	private String getFirstElementTextValue(Document document, String elementName) {
-		List<String> values = getElementTextValues(document, elementName);
-		if (values.size() == 0) {
-			return null;
-		}
-		return values.get(0);
-	}
-
 	private List<String> getElementTextValues(Document document, String elementName) {
 		NodeList elements = document.getElementsByTagName(elementName);
 		ArrayList<String> values = new ArrayList<String>();
@@ -675,11 +641,11 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		return href.substring(href.lastIndexOf("/") + 1, href.length());
 	}
 
-	private <T extends DeltaCloudObject> List<T> listDeltaCloudObjects(Class<T> clazz,
+	private <T extends AbstractDeltaCloudObject> List<T> listDeltaCloudObjects(Class<T> clazz,
 			AbstractListObjectsRequest request, String elementName)
 			throws DeltaCloudClientException {
 		try {
-			Document document = getDocument(sendRequest(request));
+			Document document = getDocument(requestStringResponse(request));
 			ArrayList<T> dco = new ArrayList<T>();
 			NodeList nodeList = document.getElementsByTagName(elementName);
 			for (int i = 0; i < nodeList.getLength(); i++) {
@@ -714,7 +680,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	public boolean performInstanceAction(InstanceAction action) throws DeltaCloudClientException {
 		if (action != null) {
 			try {
-				String response = sendRequest(
+				String response = requestStringResponse(
 						new PerformInstanceActionRequest(new URL(action.getUrl()),
 								action.getMethod()));
 				if (!InstanceAction.DESTROY.equals(action.getName())) {

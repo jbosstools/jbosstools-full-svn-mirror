@@ -13,6 +13,7 @@ package org.jboss.tools.deltacloud.core.client.request;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.jboss.tools.deltacloud.core.client.HttpMethod;
 import org.jboss.tools.deltacloud.core.client.utils.UrlBuilder;
 
 /**

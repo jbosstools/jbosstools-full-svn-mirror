@@ -8,27 +8,15 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.deltacloud.core.client.request;
+package org.jboss.tools.deltacloud.core.client.unmarshal;
 
-import java.net.URL;
-
-import org.jboss.tools.deltacloud.core.client.HttpMethod;
-import org.jboss.tools.deltacloud.core.client.utils.UrlBuilder;
-
+import java.io.InputStream;
 
 /**
- * A request for the type of deltacloud server.
- * 
  * @author André Dietisheim
  */
-public class TypeRequest extends AbstractDeltaCloudRequest {
+public interface IDeltaCloudObjectUnmarshaller<DELTACLOUDOBJECT> {
 
-	public TypeRequest(URL baseUrl) {
-		super(baseUrl, HttpMethod.GET);
-	}
+	public DELTACLOUDOBJECT unmarshall(InputStream inputStream);
 
-	@Override
-	protected String doCreateUrl(UrlBuilder urlBuilder) {
-		return urlBuilder.parameter("format", "xml").toString();
-	}
 }

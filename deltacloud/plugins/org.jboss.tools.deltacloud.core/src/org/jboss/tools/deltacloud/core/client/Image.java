@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.XmlElement;
 /**
  * @author Martyn Taylor
  */
-public class Image extends DeltaCloudObject
+public class Image extends AbstractDeltaCloudObject
 {	
 	private static final long serialVersionUID = 1L;
 
@@ -69,8 +69,7 @@ public class Image extends DeltaCloudObject
 		return name;
 	}
 
-	public String getDescription()
-	{
+	public String getDescription() {
 		return description;
 	}
 

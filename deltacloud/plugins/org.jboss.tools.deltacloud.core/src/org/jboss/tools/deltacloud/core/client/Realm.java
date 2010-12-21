@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.XmlElement;
 /**
  * @author Martyn Taylor
  */
-public class Realm extends DeltaCloudObject
+public class Realm extends AbstractDeltaCloudObject
 {
 	private static final long serialVersionUID = 1L;
 
@@ -88,6 +88,4 @@ public class Realm extends DeltaCloudObject
 		s += "Limit:\t\t" + getLimit() + "\n";
 		return s;
 	}
-	
-	
 }

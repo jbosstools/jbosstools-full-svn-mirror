@@ -138,6 +138,16 @@ public interface DeltaCloudClient {
 	 */
 	public void createKey(String keyname, String keystoreLocation) throws DeltaCloudClientException;
 
+	/**
+	 * Creates a key for a given name on the deltacloud server.
+	 * 
+	 * @param keyname
+	 *            the name of the key to retrieve from the server
+	 * @param keyStoreLocation
+	 *            the path to the file to store the key in
+	 * @throws DeltaCloudClientException
+	 *             the delta cloud client exception
+	 */
 	public Key createKey(String keyname) throws DeltaCloudClientException;
 
 	/**
@@ -148,6 +158,14 @@ public interface DeltaCloudClient {
 	 */
 	public void deleteKey(String keyname) throws DeltaCloudClientException;
 
+	/**
+	 * Lists all keys available on the deltacloud server this client is
+	 * connected to.
+	 * 
+	 * @return the keys that are available
+	 * @throws DeltaCloudClientException
+	 * 
+	 */
 	public List<Key> listKeys() throws DeltaCloudClientException;
 
 	/**
