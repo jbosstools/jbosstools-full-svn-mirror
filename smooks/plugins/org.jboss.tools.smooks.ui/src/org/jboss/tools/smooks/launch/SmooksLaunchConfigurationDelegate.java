@@ -79,7 +79,10 @@ public class SmooksLaunchConfigurationDelegate extends JUnitLaunchConfigurationD
 
 		launchMetadata.setSmooksConfig(project.findMember(smooksConfigName));
 		
-		if(!launchMetadata.isValidSmooksConfig()) {
+		if(SmooksInputType.INPUT_TYPE_JAVA.equals(launchMetadata.getInputType())) {
+			displayError(smooksConfigName, Messages.SmooksLaunchConfigurationDelegate_Error_Java_Unsupported);
+			return;
+		} else if(!launchMetadata.isValidSmooksConfig()) {
 			displayError(smooksConfigName, launchMetadata.getErrorMessage());
 			return;
 		} else {

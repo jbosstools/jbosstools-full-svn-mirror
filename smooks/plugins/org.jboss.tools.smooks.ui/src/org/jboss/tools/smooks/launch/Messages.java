@@ -11,6 +11,7 @@ public class Messages extends NLS {
 	public static String SmooksLaunchConfigurationDelegate_Error_missing_artifact;
 	public static String SmooksLaunchConfigurationDelegate_Error_missing_artifact2;
 	public static String SmooksLaunchConfigurationDelegate_Error_Title;
+	public static String SmooksLaunchConfigurationDelegate_Error_Java_Unsupported;
 	public static String SmooksLauncher_Error_Do_Not_Support_Java_Inputs;
 	public static String SmooksLauncher_Templating_To_StreamResult;
 	public static String SmooksLauncher_Java_Mapping_Results;
