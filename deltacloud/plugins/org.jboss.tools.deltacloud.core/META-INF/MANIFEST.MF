@@ -13,6 +13,7 @@ Bundle-ActivationPolicy: lazy
 Export-Package: org.jboss.tools.deltacloud.core;x-friends:="org.jboss.tools.deltacloud.ui,org.jboss.tools.deltacloud.test,org.jboss.tools.deltacloud.integration",
  org.jboss.tools.deltacloud.core.client;x-friends:="org.jboss.tools.deltacloud.test,org.jboss.tools.deltacloud.ui",
  org.jboss.tools.deltacloud.core.client.request;x-friends:="org.jboss.tools.deltacloud.test",
+ org.jboss.tools.deltacloud.core.client.unmarshal;x-friends:="org.jboss.tools.deltacloud.test",
  org.jboss.tools.deltacloud.core.job,
  org.jboss.tools.internal.deltacloud.core.observable;x-friends:="org.jboss.tools.deltacloud.ui"
 Bundle-ClassPath: .,
@@ -23,5 +24,4 @@ Bundle-ClassPath: .,
  lib/httpcore-4.0.1.jar,
  lib/httpcore-nio-4.0.1.jar,
  lib/httpmime-4.0.1.jar,
- lib/log4j-1.2.14.jar,
- lib/deltacloudclient-1.0.jar
+ lib/log4j-1.2.14.jar
