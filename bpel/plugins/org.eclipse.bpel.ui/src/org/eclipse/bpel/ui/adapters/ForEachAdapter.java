@@ -12,6 +12,7 @@ package org.eclipse.bpel.ui.adapters;
 
 import org.eclipse.bpel.model.BPELPackage;
 import org.eclipse.bpel.model.ForEach;
+import org.eclipse.bpel.model.Scope;
 import org.eclipse.bpel.ui.adapters.delegates.ActivityContainer;
 import org.eclipse.bpel.ui.editparts.OutlineTreeEditPart;
 import org.eclipse.bpel.ui.editparts.SequenceEditPart;
@@ -55,4 +56,15 @@ public class ForEachAdapter extends ContainerActivityAdapter implements IAnnotat
 			Messages.ForEachAdapter_1, AnnotationHelper.getAnnotation(obj.getStartCounterValue()),
 			};
 	}
+
+	@Override
+	public boolean canAddObject(Object object, Object child, Object insertBefore) {
+		ForEach forEach = (ForEach)object;
+		if (forEach.getActivity()==null && child instanceof Scope) {
+			return getContainerDelegate(object).canAddObject(object, child, insertBefore);
+		}
+		else
+			return false;
+	}
+
 }
