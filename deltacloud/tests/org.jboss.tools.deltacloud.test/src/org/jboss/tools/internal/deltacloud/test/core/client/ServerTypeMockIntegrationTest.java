@@ -22,6 +22,7 @@ import java.util.List;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudNotFoundClientException;
+import org.jboss.tools.deltacloud.core.client.HttpMethod;
 import org.jboss.tools.deltacloud.core.client.Image;
 import org.jboss.tools.deltacloud.core.client.request.DeltaCloudRequest;
 import org.jboss.tools.internal.deltacloud.test.context.MockIntegrationTestContext;
@@ -96,7 +97,7 @@ public class ServerTypeMockIntegrationTest {
 			DeltaCloudClientImpl errorClient = new DeltaCloudClientImpl(MockIntegrationTestContext.DELTACLOUD_URL) {
 				@Override
 				public List<Image> listImages() throws DeltaCloudClientException {
-					sendRequest(new DeltaCloudRequest() {
+					requestStringResponse(new DeltaCloudRequest() {
 
 						@Override
 						public URL getUrl() throws MalformedURLException {
