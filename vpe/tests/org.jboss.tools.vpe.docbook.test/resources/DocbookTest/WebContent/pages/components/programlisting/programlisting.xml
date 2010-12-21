@@ -14,7 +14,12 @@
 </programlisting>
 
 <programlisting id="programlisting02">
-	<![CDATA[
-<emphasis>tags</emphasis>     &entities;   "]".
-	]]>
+<![CDATA[
+This is a programlisting so white       space and line
+breaks are significant.  But it is also a CDATA
+section so <emphasis>tags</emphasis> and &entities;
+are not recognized.  The only markup that is recognized
+is the end-of-section marker, which is two
+"]"'s in a row followed by a >.
+]]>
 </programlisting>

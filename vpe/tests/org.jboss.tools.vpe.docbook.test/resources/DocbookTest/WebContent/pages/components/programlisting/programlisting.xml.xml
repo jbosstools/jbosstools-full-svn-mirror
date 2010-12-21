@@ -1,8 +1,8 @@
 <tests>
 	<test id="programlisting01">
 		<PRE>
+			<SPAN/>
 			<SPAN>
-				<SPAN>
 (define (node-list-filter-by-gi nodelist gilist)
 	;; Returns the node-list that contains every element of the original
 	;; nodelist whose gi is in gilist
@@ -13,15 +13,20 @@
 	    	(loop (node-list result (node-list-first nl)) 
 		  		(node-list-rest nl))
 	    	(loop result (node-list-rest nl))))))
-	    		</SPAN>
 			</SPAN>
 		</PRE>
 	</test>
 	<test id="programlisting02">
 		<PRE>
 			<SPAN/>
-&lt;emphasis&gt;tags&lt;/emphasis&gt;     &amp;entities;   "]".
+This is a programlisting so white       space and line
+breaks are significant.  But it is also a CDATA
+section so &lt;emphasis&gt;tags&lt;/emphasis&gt; and &amp;entities;
+are not recognized.  The only markup that is recognized
+is the end-of-section marker, which is two
+"]"'s in a row followed by a &gt;.
 			<SPAN/>
-	</PRE>
+			<BR/>
+		</PRE>
 	</test>
 </tests>
