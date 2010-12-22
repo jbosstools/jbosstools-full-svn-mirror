@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.internal.deltacloud.test;
 
+import org.jboss.tools.internal.deltacloud.test.core.client.KeyDomUnmarshallingTest;
 import org.jboss.tools.internal.deltacloud.test.core.job.CloudSchedulingRulesTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -19,8 +20,8 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-	CloudSchedulingRulesTest.class
+	CloudSchedulingRulesTest.class,
+	KeyDomUnmarshallingTest.class
 })
 public class DeltaCloudTestSuite {
-
 }
