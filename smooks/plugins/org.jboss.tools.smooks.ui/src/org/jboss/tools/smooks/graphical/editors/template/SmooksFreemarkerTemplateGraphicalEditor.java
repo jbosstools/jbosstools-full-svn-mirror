@@ -33,6 +33,7 @@ import org.jboss.tools.smooks.graphical.editors.autolayout.IAutoLayout;
 import org.jboss.tools.smooks.graphical.editors.editparts.freemarker.FreemarkerAutoLayout;
 import org.jboss.tools.smooks.graphical.editors.model.IValidatableModel;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataContianerModel;
+import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTemplateConnection;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTemplateGraphicalModel;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.IFreemarkerTemplateModel;
 import org.jboss.tools.smooks.graphical.editors.process.TaskType;
@@ -113,7 +114,7 @@ public class SmooksFreemarkerTemplateGraphicalEditor extends SmooksGraphicalEdit
 							TreeNodeModel connectionTarget = freemarkerModel.getModelNode(mapping.getMappingNode());
 							
 							if(connectionSource != null && connectionTarget != null) {
-								TreeNodeConnection connection = new TreeNodeConnection(connectionSource, connectionTarget);
+								TreeNodeConnection connection = new FreemarkerTemplateConnection(connectionSource, connectionTarget);
 								
 								connectionSource.getSourceConnections().add(connection);
 								connectionSource.fireConnectionChanged();
