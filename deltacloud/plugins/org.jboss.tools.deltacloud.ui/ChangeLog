@@ -1,5 +1,11 @@
 2010-12-22  adietisheim  <adietisheim@adietisheim-thinkpad>
 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/FindImagePageLabelAndContentProvider.java: 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/FindImagePage.java 
+	(.doRun):
+	(createControl): 
+	[JBIDE-7981] created a image- and label-provider that is unique to the find image page 
+	(since the ImageViewLabelAndContentProvider adds items asyncronously and does not fit in the wizard page)
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java 
 	(bindProfileCombo): 
 	[JBIDE-7983] do not report an error if no hardware profiles are available and no profile is selected therefore.

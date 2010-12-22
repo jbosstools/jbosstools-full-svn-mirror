@@ -342,4 +342,4 @@ public class FindImagePage extends WizardPage {
 			}
 		});
 	}
-}
+} 
