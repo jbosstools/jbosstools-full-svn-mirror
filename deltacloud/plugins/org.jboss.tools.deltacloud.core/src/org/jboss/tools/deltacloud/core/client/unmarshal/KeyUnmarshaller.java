@@ -39,7 +39,7 @@ public class KeyUnmarshaller extends AbstractDOMUnmarshaller<Key> {
 			key.setState(getFirstElementText("state", element));
 			key.setFingerprint(getFirstElementText("fingerprint", element));
 			key.setPem(trimPem(getPem(element))); //$NON-NLS-1$
-			key.setActions(getKeyActions(element));
+			key.setActions(getKeyActions(element, key));
 		}
 		return key;
 	}
@@ -73,7 +73,7 @@ public class KeyUnmarshaller extends AbstractDOMUnmarshaller<Key> {
 	}
 
 
-	private List<KeyAction> getKeyActions(Element keyElement) throws DeltaCloudClientException {
+	private List<KeyAction> getKeyActions(Element keyElement, Key key) throws DeltaCloudClientException {
 		if (keyElement == null) {
 			return null;
 		}
@@ -83,6 +83,7 @@ public class KeyUnmarshaller extends AbstractDOMUnmarshaller<Key> {
 			Node linkNode = nodeList.item(i);
 			KeyAction keyAction = createKeyAction(linkNode);
 			if (keyAction != null) {
+				keyAction.setKey(key);
 				actions.add(keyAction);
 			}
 		}
