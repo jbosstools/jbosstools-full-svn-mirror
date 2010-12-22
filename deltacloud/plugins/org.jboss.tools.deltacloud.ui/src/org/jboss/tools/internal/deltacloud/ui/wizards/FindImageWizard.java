@@ -32,7 +32,6 @@ public class FindImageWizard extends Wizard {
 	
 	@Override
 	public void addPages() {
-		// TODO Auto-generated method stub
 		mainPage = new FindImagePage(cloud);
 		addPage(mainPage);
 	}
