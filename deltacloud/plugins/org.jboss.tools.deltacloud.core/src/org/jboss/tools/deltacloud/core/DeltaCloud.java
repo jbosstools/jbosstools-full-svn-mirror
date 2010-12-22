@@ -72,12 +72,13 @@ public class DeltaCloud extends ObservablePojo {
 	}
 
 	public DeltaCloud(String name, String url, String username, Driver driver, String imageFilterRules,
-			String instanceFilterRules) throws DeltaCloudException {
+			String instanceFilterRules)
+			throws DeltaCloudException {
 		this(name, url, username, null, driver, imageFilterRules, instanceFilterRules);
 	}
 
-	public DeltaCloud(String name, String url, String username, String password,
-			Driver driver, String imageFilterRules, String instanceFilterRules) throws DeltaCloudException {
+	public DeltaCloud(String name, String url, String username, String password, Driver driver,
+			String imageFilterRules, String instanceFilterRules) throws DeltaCloudException {
 		this.url = url;
 		this.name = name;
 		this.username = username;
@@ -114,8 +115,7 @@ public class DeltaCloud extends ObservablePojo {
 		return true;
 	}
 
-	private boolean updateConnectionProperties(String url, String username, String password)
-			throws DeltaCloudException {
+	private boolean updateConnectionProperties(String url, String username, String password) throws DeltaCloudException {
 		boolean changed = false;
 		if (!equals(this.url, url)) {
 			this.url = url;
@@ -205,9 +205,8 @@ public class DeltaCloud extends ObservablePojo {
 		if (!rules.equals(ruleString)) {
 			// TODO: remove notification with all instanceRepo, replace by
 			// notifying the changed instance
-			firePropertyChange(PROP_INSTANCES,
-					getInstancesRepository().get(),
-					getInstancesRepository().get());
+			firePropertyChange(
+					PROP_INSTANCES, getInstancesRepository().get(), getInstancesRepository().get());
 		}
 	}
 
@@ -236,9 +235,7 @@ public class DeltaCloud extends ObservablePojo {
 		if (!rules.equals(ruleString)) {
 			// TODO: remove notification with all instanceRepo, replace by
 			// notifying the changed instance
-			firePropertyChange(PROP_IMAGES,
-					getImagesRepository().get(),
-					getImagesRepository().get());
+			firePropertyChange(PROP_IMAGES, getImagesRepository().get(), getImagesRepository().get());
 		}
 	}
 
@@ -265,8 +262,8 @@ public class DeltaCloud extends ObservablePojo {
 	 * @throws DeltaCloudException
 	 */
 	public void loadChildren() throws DeltaCloudException {
-		DeltaCloudMultiException multiException = new DeltaCloudMultiException(MessageFormat.format(
-				"Could not load children of cloud {0}", getName()));
+		DeltaCloudMultiException multiException = new DeltaCloudMultiException(
+				MessageFormat.format("Could not load children of cloud {0}", getName()));
 		clearImages();
 		clearInstances();
 		try {
@@ -292,7 +289,8 @@ public class DeltaCloud extends ObservablePojo {
 
 			@Override
 			public boolean matchesState(DeltaCloudInstance instance, DeltaCloudInstance.State instanceState) {
-				return expectedState != null && expectedState.equals(instanceState);
+				return expectedState != null
+						&& expectedState.equals(instanceState);
 			}
 		};
 		return waitForState(instanceId, stateMatcher, pm);
@@ -333,8 +331,8 @@ public class DeltaCloud extends ObservablePojo {
 			// notifying the changed instance
 			firePropertyChange(PROP_INSTANCES, oldInstances, repo.get());
 		} catch (DeltaCloudClientException e) {
-			throw new DeltaCloudException(MessageFormat.format("Could not load instanceRepo of cloud {0}: {1}",
-						getName(), e.getMessage()), e);
+			throw new DeltaCloudException(MessageFormat.format(
+					"Could not load instanceRepo of cloud {0}: {1}", getName(), e.getMessage()), e);
 		}
 	}
 
@@ -349,9 +347,7 @@ public class DeltaCloud extends ObservablePojo {
 	private void clearInstances() {
 		// TODO: remove notification with all instanceRepo, replace by
 		// notifying the changed instance
-		firePropertyChange(PROP_INSTANCES,
-				getInstancesRepository().get(),
-				getInstancesRepository().clear());
+		firePropertyChange(PROP_INSTANCES, getInstancesRepository().get(), getInstancesRepository().clear());
 	}
 
 	private DeltaCloudInstancesRepository getInstancesRepository() {
@@ -478,12 +474,10 @@ public class DeltaCloud extends ObservablePojo {
 				DeltaCloudHardwareProfile profile = new DeltaCloudHardwareProfile(i.next());
 				profiles.add(profile);
 			}
+			return profiles.toArray(new DeltaCloudHardwareProfile[profiles.size()]);
 		} catch (DeltaCloudClientException e) {
 			throw new DeltaCloudException(MessageFormat.format("Could not list profiles on cloud {0}", name), e);
 		}
-		DeltaCloudHardwareProfile[] profileArray = new DeltaCloudHardwareProfile[profiles.size()];
-		profileArray = profiles.toArray(profileArray);
-		return profileArray;
 	}
 
 	/**
@@ -506,8 +500,8 @@ public class DeltaCloud extends ObservablePojo {
 			firePropertyChange(PROP_IMAGES, oldImages, repo.get());
 		} catch (DeltaCloudClientException e) {
 			clearImages();
-			throw new DeltaCloudException(MessageFormat.format("Could not load images of cloud {0}: {1}",
-						getName(), e.getMessage()), e);
+			throw new DeltaCloudException(
+					MessageFormat.format("Could not load images of cloud {0}: {1}", getName(), e.getMessage()), e);
 		}
 
 	}
@@ -566,7 +560,8 @@ public class DeltaCloud extends ObservablePojo {
 			return Driver.valueOf(serverType);
 		} catch (Exception e) {
 			// TODO internationalize strings
-			throw new DeltaCloudException("Could not determine the driver of the server on url " + url, e);
+			throw new DeltaCloudException(
+					"Could not determine the driver of the server on url " + url, e);
 		}
 	}
 
