@@ -28,7 +28,6 @@ import org.jboss.tools.internal.deltacloud.ui.preferences.TextPreferenceValue;
 /**
  * @author Jeff Johnston
  * @author Andre Dietisheim
- *
  */
 public class NewCloudConnectionWizard extends Wizard implements INewWizard, CloudConnection {
 

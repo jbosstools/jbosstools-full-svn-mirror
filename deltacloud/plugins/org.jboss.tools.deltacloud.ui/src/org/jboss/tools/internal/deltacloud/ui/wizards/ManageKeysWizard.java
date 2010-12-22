@@ -13,6 +13,9 @@ package org.jboss.tools.internal.deltacloud.ui.wizards;
 import org.eclipse.jface.wizard.Wizard;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 
+/**
+ * @author Jeff Johnston
+ */
 public class ManageKeysWizard extends Wizard {
 
 	private DeltaCloud cloud;

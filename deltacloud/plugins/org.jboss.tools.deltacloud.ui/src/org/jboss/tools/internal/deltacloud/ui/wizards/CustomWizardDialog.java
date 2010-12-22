@@ -17,6 +17,9 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
+/**
+ * @author Jeff Johnston
+ */
 public class CustomWizardDialog extends WizardDialog {
 
 	private String finishText;
