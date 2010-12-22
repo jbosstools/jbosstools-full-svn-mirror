@@ -11,6 +11,7 @@
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
 import java.text.MessageFormat;
+import java.util.Collection;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -46,7 +47,6 @@ import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob;
 import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob.CLOUDELEMENT;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
-import org.jboss.tools.deltacloud.ui.views.cloudelements.ImageViewLabelAndContentProvider;
 import org.jboss.tools.deltacloud.ui.views.cloudelements.TableViewerColumnComparator;
 
 /**
@@ -80,7 +80,6 @@ public class FindImagePage extends WizardPage {
 
 		@Override
 		public void modifyText(ModifyEvent e) {
-			// TODO Auto-generated method stub
 			validate();
 		}
 
@@ -123,9 +122,10 @@ public class FindImagePage extends WizardPage {
 	}
 
 	public String getImageId() {
-		if (selectedElement != null)
-			return selectedElement.getId();
-		return "";
+		if (selectedElement == null) {
+			return null;
+		}
+		return selectedElement.getId();
 	}
 
 	private void validate() {
@@ -155,7 +155,7 @@ public class FindImagePage extends WizardPage {
 				filter = new ImageFilter(cloud);
 				filter.setRules(newRules);
 				oldRules = newRules;
-				asyncSetImagesToViewer();
+				asyncSetImagesToViewer(filter);
 			}
 		}
 		setPageComplete(isComplete && !hasError);
@@ -216,15 +216,15 @@ public class FindImagePage extends WizardPage {
 		Table table = viewer.getTable();
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
-		ImageViewLabelAndContentProvider contentProvider = new ImageViewLabelAndContentProvider();
+		FindImagePageLabelAndContentProvider contentProvider = new FindImagePageLabelAndContentProvider();
 		viewer.setContentProvider(contentProvider);
 		viewer.setLabelProvider(contentProvider);
 		TableViewerColumnComparator comparator = new TableViewerColumnComparator();
 		viewer.setComparator(comparator);
 
-		for (int i = 0; i < ImageViewLabelAndContentProvider.Column.getSize(); ++i) {
-			ImageViewLabelAndContentProvider.Column c =
-					ImageViewLabelAndContentProvider.Column.getColumn(i);
+		for (int i = 0; i < FindImagePageLabelAndContentProvider.Column.getSize(); ++i) {
+			FindImagePageLabelAndContentProvider.Column c =
+					FindImagePageLabelAndContentProvider.Column.getColumn(i);
 			TableColumn tc = new TableColumn(table, SWT.NONE);
 			if (i == 0)
 				table.setSortColumn(tc);
@@ -315,14 +315,15 @@ public class FindImagePage extends WizardPage {
 		validate();
 	}
 
-	private void asyncSetImagesToViewer() {
+	private void asyncSetImagesToViewer(final IImageFilter filter) {
 		new AbstractCloudElementJob(
 				MessageFormat.format("Get images from cloud {0}", cloud.getName()), cloud, CLOUDELEMENT.IMAGES) {
 
 			@Override
 			protected IStatus doRun(IProgressMonitor monitor) throws DeltaCloudException {
 				try {
-					setViewerInput(cloud.getImages());
+					Collection<DeltaCloudImage> filteredImages = filter.filter(cloud.getImages());
+					setViewerInput(filteredImages.toArray(new DeltaCloudImage[] {}));
 					return Status.OK_STATUS;
 				} catch (DeltaCloudException e) {
 					setViewerInput(new DeltaCloudImage[] {});

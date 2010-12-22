@@ -60,7 +60,6 @@ import org.jboss.tools.deltacloud.core.Driver;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.MandatoryStringValidator;
 import org.jboss.tools.internal.deltacloud.ui.utils.DataBindingUtils;
-import org.jboss.tools.internal.deltacloud.ui.utils.DeltaCloudObjectLabelUtils;
 
 /**
  * @author Jeff Jonston
@@ -460,8 +459,8 @@ public class NewInstancePage extends WizardPage {
 		@Override
 		public Object convert(Object fromObject) {
 			Assert.isLegal(fromObject instanceof String);
+			String id = (String) fromObject;
 			DeltaCloudImage image = null;
-			String id = DeltaCloudObjectLabelUtils.getId((String) fromObject);
 			if (id != null) {
 				image = getImage(id);
 			}
@@ -492,7 +491,7 @@ public class NewInstancePage extends WizardPage {
 		public Object convert(Object fromObject) {
 			if (fromObject instanceof DeltaCloudImage) {
 				DeltaCloudImage image = (DeltaCloudImage) fromObject;
-				return DeltaCloudObjectLabelUtils.getLabel(image);
+				return image.getId();
 			} else {
 				return "";
 			}
