@@ -259,8 +259,8 @@ public class NewInstancePage extends WizardPage {
 
 							@Override
 							public IStatus validate(Object value) {
-								if (value == null
-										|| (value instanceof Integer && ((Integer) value) < 0)) {
+								if (areRealmsAvailable() &&
+										!isValidComboIndex(value)) {
 									// TODO: internationalize strings
 									return ValidationStatus.error("You must select a realm.");
 								}
@@ -303,7 +303,7 @@ public class NewInstancePage extends WizardPage {
 
 			@Override
 			public void handleChange(ChangeEvent event) {
-				realmCombo.setEnabled(model.getFilteredProfiles().size() > 0);
+				realmCombo.setEnabled(areRealmsAvailable());
 			}
 		}, realmsObservable, container);
 
@@ -320,8 +320,8 @@ public class NewInstancePage extends WizardPage {
 
 							@Override
 							public IStatus validate(Object value) {
-								if (value == null
-										|| (value instanceof Integer && ((Integer) value) < 0)) {
+								if (areProfilesAvailable() &&
+										!isValidComboIndex(value)) {
 									// TODO: internationalize strings
 									return ValidationStatus.error("You must select a hardware profile.");
 								}
@@ -355,7 +355,6 @@ public class NewInstancePage extends WizardPage {
 							}
 						}
 						));
-
 		// bind combo enablement
 		IObservableList filteredProfilesObservable =
 				BeanProperties.list(NewInstanceModel.PROPERTY_FILTERED_PROFILES).observe(model);
@@ -364,9 +363,22 @@ public class NewInstancePage extends WizardPage {
 
 					@Override
 					public void handleChange(ChangeEvent event) {
-						profileCombo.setEnabled(model.getFilteredProfiles().size() > 0);
+						profileCombo.setEnabled(areProfilesAvailable());
 					}
 				}, filteredProfilesObservable, container);
+	}
+
+	private boolean isValidComboIndex(Object index) {
+		return index != null
+				&& (index instanceof Integer && ((Integer) index) >= 0);
+	}
+
+	private boolean areProfilesAvailable() {
+		return model.getFilteredProfiles().size() > 0;
+	}
+
+	private boolean areRealmsAvailable() {
+		return model.getRealms().size() > 0;
 	}
 
 	private void bindProfilePages(Combo hardwareCombo, final Map<String, ProfilePage> profilePages,
@@ -467,7 +479,6 @@ public class NewInstancePage extends WizardPage {
 			imageObservable.setValue(image);
 			return image;
 		}
-
 
 		private DeltaCloudImage getImage(String id) {
 			try {

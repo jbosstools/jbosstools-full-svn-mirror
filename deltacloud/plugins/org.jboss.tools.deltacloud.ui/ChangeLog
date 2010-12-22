@@ -1,5 +1,8 @@
 2010-12-22  adietisheim  <adietisheim@adietisheim-thinkpad>
 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java 
+	(bindProfileCombo): 
+	[JBIDE-7983] do not report an error if no hardware profiles are available and no profile is selected therefore.
 	* src/org/jboss/tools/deltacloud/ui/views/cloud/ImageItem.java: 
 	* src/org/jboss/tools/internal/deltacloud/ui/utils/DeltaCloudObjectLabelUtils.java (getLabel): 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java (ImageLabel2DeltaCloudImageConverter.convert): 
