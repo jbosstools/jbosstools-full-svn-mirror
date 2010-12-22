@@ -51,6 +51,7 @@ import org.jboss.tools.deltacloud.ui.views.cloudelements.TableViewerColumnCompar
 
 /**
  * @author Jeff Johnston
+ * @author André Dietisheim
  */
 public class FindImagePage extends WizardPage {
 
