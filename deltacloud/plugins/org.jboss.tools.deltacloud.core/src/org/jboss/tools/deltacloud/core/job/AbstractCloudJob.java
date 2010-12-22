@@ -47,7 +47,7 @@ public abstract class AbstractCloudJob extends ChainedJob {
 		} catch (Exception e) {
 			// TODO: internationalize strings
 			return StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID,
-					MessageFormat.format("Could not {0}", getName()));
+					MessageFormat.format("Could not {0}", getName()), e);
 		} finally {
 			monitor.done();
 			Job.getJobManager().endRule(rule);
