@@ -250,7 +250,17 @@ public class NewInstancePage extends WizardPage {
 	}
 
 	private void bindRealmCombo(final Combo realmCombo, DataBindingContext dbc) {
-		dbc.bindValue(
+		// realm combo enablement
+		IObservableList realmsObservable = BeanProperties.list(NewInstanceModel.PROPERTY_REALMS).observe(model);
+		DataBindingUtils.addChangeListener(new IChangeListener() {
+
+			@Override
+			public void handleChange(ChangeEvent event) {
+				realmCombo.setEnabled(areRealmsAvailable());
+			}
+		}, realmsObservable, container);
+
+		Binding selectedRealmBinding = dbc.bindValue(
 				WidgetProperties.singleSelectionIndex().observe(realmCombo),
 				BeanProperties.value(NewInstanceModel.class, NewInstanceModel.PROPERTY_SELECTED_REALM_INDEX)
 						.observe(model),
@@ -296,22 +306,24 @@ public class NewInstancePage extends WizardPage {
 							}
 						}
 						));
-
-		// realm combo enablement
-		IObservableList realmsObservable = BeanProperties.list(NewInstanceModel.PROPERTY_REALMS).observe(model);
-		DataBindingUtils.addChangeListener(new IChangeListener() {
-
-			@Override
-			public void handleChange(ChangeEvent event) {
-				realmCombo.setEnabled(areRealmsAvailable());
-			}
-		}, realmsObservable, container);
-
+		ControlDecorationSupport.create(selectedRealmBinding, SWT.LEFT | SWT.TOP);
 	}
 
 	private void bindProfileCombo(final Combo profileCombo, DataBindingContext dbc) {
+		// bind combo enablement
+		IObservableList filteredProfilesObservable =
+				BeanProperties.list(NewInstanceModel.PROPERTY_FILTERED_PROFILES).observe(model);
+		DataBindingUtils.addChangeListener(
+				new IChangeListener() {
+
+					@Override
+					public void handleChange(ChangeEvent event) {
+						profileCombo.setEnabled(areProfilesAvailable());
+					}
+				}, filteredProfilesObservable, container);
+
 		// bind selected combo item
-		dbc.bindValue(
+		Binding selectedProfileBinding = dbc.bindValue(
 				WidgetProperties.singleSelectionIndex().observe(profileCombo),
 				BeanProperties.value(NewInstanceModel.class, NewInstanceModel.PROPERTY_SELECTED_PROFILE_INDEX).observe(
 						model),
@@ -355,30 +367,23 @@ public class NewInstancePage extends WizardPage {
 							}
 						}
 						));
-		// bind combo enablement
-		IObservableList filteredProfilesObservable =
-				BeanProperties.list(NewInstanceModel.PROPERTY_FILTERED_PROFILES).observe(model);
-		DataBindingUtils.addChangeListener(
-				new IChangeListener() {
-
-					@Override
-					public void handleChange(ChangeEvent event) {
-						profileCombo.setEnabled(areProfilesAvailable());
-					}
-				}, filteredProfilesObservable, container);
+		ControlDecorationSupport.create(selectedProfileBinding, SWT.LEFT | SWT.TOP);
 	}
 
 	private boolean isValidComboIndex(Object index) {
 		return index != null
-				&& (index instanceof Integer && ((Integer) index) >= 0);
+				&& index instanceof Integer
+				&& ((Integer) index) > 0;
 	}
 
 	private boolean areProfilesAvailable() {
-		return model.getFilteredProfiles().size() > 0;
+		return model.getFilteredProfiles() != null
+				&& model.getFilteredProfiles().size() > 0;
 	}
 
 	private boolean areRealmsAvailable() {
-		return model.getRealms().size() > 0;
+		return model.getRealms() != null
+				&& model.getRealms().size() > 0;
 	}
 
 	private void bindProfilePages(Combo hardwareCombo, final Map<String, ProfilePage> profilePages,
