@@ -85,8 +85,6 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	private static final Pattern ELEMENT_TEXTVALUE_REGEX = Pattern
 			.compile("[^\n\t ]+[^\n]+");
 
-	private DocumentBuilder documentBuilder;
-
 	public static enum DeltaCloudServerType {
 		UNKNOWN, MOCK, EC2
 	}
@@ -94,6 +92,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	private URL baseUrl;
 	private String username;
 	private String password;
+	private DocumentBuilderFactory documentBuilderFactory;
 
 	public DeltaCloudClientImpl(String url) throws MalformedURLException,
 			DeltaCloudClientException {
@@ -105,7 +104,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		this.baseUrl = createUrl(url);
 		this.username = username;
 		this.password = password;
-		documentBuilder = createDocumentBuilder();
+		this.documentBuilderFactory = DocumentBuilderFactory.newInstance();
 	}
 
 	private URL createUrl(String url) throws DeltaCloudClientException {
@@ -114,16 +113,6 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		} catch (MalformedURLException e) {
 			throw new DeltaCloudClientException(MessageFormat.format(
 					"Could not create url for {0}", url), e);
-		}
-	}
-
-	private DocumentBuilder createDocumentBuilder()
-			throws DeltaCloudClientException {
-		try {
-			return DocumentBuilderFactory.newInstance().newDocumentBuilder();
-		} catch (ParserConfigurationException e) {
-			throw new DeltaCloudClientException(
-					"Could not create document builder", e);
 		}
 	}
 
@@ -327,9 +316,9 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 			String realmId, String name, String keyname, String memory,
 			String storage) throws DeltaCloudClientException {
 		try {
-			return buildInstance(requestStringResponse(new CreateInstanceRequest(
-					baseUrl, imageId, profileId, realmId, name, keyname,
-					memory, storage)));
+			String response = requestStringResponse(
+					new CreateInstanceRequest(baseUrl, imageId, profileId, realmId, name, keyname, memory, storage));
+			return buildInstance(response);
 		} catch (DeltaCloudClientException e) {
 			throw e;
 		} catch (Exception e) {
@@ -338,12 +327,10 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	}
 
 	@Override
-	public HardwareProfile listProfile(String profileId)
-			throws DeltaCloudClientException {
+	public HardwareProfile listProfile(String profileId) throws DeltaCloudClientException {
 		try {
 			return buildDeltaCloudObject(HardwareProfile.class,
-					requestStringResponse(new ListHardwareProfileRequest(
-							baseUrl, profileId)));
+					requestStringResponse(new ListHardwareProfileRequest(baseUrl, profileId)));
 		} catch (DeltaCloudClientException e) {
 			throw e;
 		} catch (Exception e) {
@@ -352,8 +339,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	}
 
 	@Override
-	public List<HardwareProfile> listProfiles()
-			throws DeltaCloudClientException {
+	public List<HardwareProfile> listProfiles() throws DeltaCloudClientException {
 		return listDeltaCloudObjects(HardwareProfile.class,
 				new ListHardwareProfilesRequest(baseUrl), "hardware_profile");
 	}
@@ -373,8 +359,8 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 
 	@Override
 	public List<Instance> listInstances() throws DeltaCloudClientException {
-		return listDeltaCloudObjects(Instance.class, new ListInstancesRequest(
-				baseUrl), "instance");
+		return listDeltaCloudObjects(Instance.class,
+				new ListInstancesRequest(baseUrl), "instance");
 	}
 
 	@Override
@@ -394,8 +380,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 
 	@Override
 	public List<Realm> listRealms() throws DeltaCloudClientException {
-		return listDeltaCloudObjects(Realm.class,
-				new ListRealmsRequest(baseUrl), "realm");
+		return listDeltaCloudObjects(Realm.class, new ListRealmsRequest(baseUrl), "realm");
 	}
 
 	@Override
@@ -696,7 +681,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 			String elementName) throws DeltaCloudClientException {
 		try {
 			Document document = getDocument(requestStringResponse(request));
-			ArrayList<T> dco = new ArrayList<T>();
+			List<T> dco = new ArrayList<T>();
 			NodeList nodeList = document.getElementsByTagName(elementName);
 			for (int i = 0; i < nodeList.getLength(); i++) {
 				dco.add(buildDeltaCloudObject(clazz, nodeToString(nodeList.item(i))));
@@ -710,9 +695,9 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		}
 	}
 
-	private Document getDocument(String response)
-			throws ParserConfigurationException, SAXException, IOException {
+	private Document getDocument(String response) throws ParserConfigurationException, SAXException, IOException {
 		InputSource is = new InputSource(new StringReader(response));
+		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 		Document document = documentBuilder.parse(is);
 		return document;
 	}
@@ -729,8 +714,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		}
 	}
 
-	public boolean performInstanceAction(InstanceAction action)
-			throws DeltaCloudClientException {
+	public boolean performInstanceAction(InstanceAction action) throws DeltaCloudClientException {
 		if (action != null) {
 			try {
 				String response = requestStringResponse(new PerformInstanceActionRequest(
@@ -739,9 +723,9 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 					updateInstance(response, action.getInstance());
 				}
 			} catch (MalformedURLException e) {
-				throw new DeltaCloudClientException(MessageFormat.format(
-						"Could not perform action {0} on instance {1}",
-						action.getName(), action.getInstance().getName()), e);
+				throw new DeltaCloudClientException(
+						MessageFormat.format("Could not perform action {0} on instance {1}", action.getName(), action
+								.getInstance().getName()), e);
 			} catch (DeltaCloudClientException e) {
 				throw e;
 			} catch (Exception e) {
@@ -759,8 +743,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 			t.transform(new DOMSource(node), new StreamResult(writer));
 			return writer.toString();
 		} catch (TransformerException e) {
-			throw new DeltaCloudClientException(
-					"Error transforming node to string", e);
+			throw new DeltaCloudClientException("Error transforming node to string", e);
 		}
 	}
 
