@@ -39,7 +39,7 @@ public class InstanceView extends AbstractCloudElementTableView<DeltaCloudInstan
 	protected ITableContentAndLabelProvider getContentAndLabelProvider() {
 		return new InstanceViewLabelAndContentProvider();
 	}
-	
+
 	@Override
 	protected void refreshToolbarCommandStates() {
 		IEvaluationService evaluationService = (IEvaluationService) PlatformUI.getWorkbench().getService(
@@ -49,10 +49,12 @@ public class InstanceView extends AbstractCloudElementTableView<DeltaCloudInstan
 		evaluationService.requestEvaluation("org.jboss.tools.deltacloud.ui.commands.canReboot");
 		evaluationService.requestEvaluation("org.jboss.tools.deltacloud.ui.commands.canDestroy");
 	}
-	
+
 	@Override
 	protected void addPropertyChangeListener(DeltaCloud cloud) {
-		super.addPropertyChangeListener(cloud);
-		cloud.addPropertyChangeListener(DeltaCloud.PROP_INSTANCES, this);
+		if (cloud != null) {
+			super.addPropertyChangeListener(cloud);
+			cloud.addPropertyChangeListener(DeltaCloud.PROP_INSTANCES, this);
+		}
 	}
 }

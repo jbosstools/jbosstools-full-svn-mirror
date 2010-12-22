@@ -1,5 +1,7 @@
 2010-12-22  adietisheim  <adietisheim@adietisheim-thinkpad>
 
+	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/InstanceView.java (addPropertyChangeListener): 
+	[JBIDE-7959] added guard to avoid NPE when adding property change listener to current cloud
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ProfilePage.java 
 	(setCPU): 
 	(setMemody): 
