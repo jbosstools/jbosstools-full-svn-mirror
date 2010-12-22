@@ -1,3 +1,8 @@
+2010-12-22  adietisheim  <adietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/deltacloud/core/FieldMatcher.java (FieldMatcher): 
+	[JBIDE-7981] set filter to filter in case insensitive manner
+	 
 2010-12-21  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/client/unmarshal/KeysUnmarshaller.java: 
