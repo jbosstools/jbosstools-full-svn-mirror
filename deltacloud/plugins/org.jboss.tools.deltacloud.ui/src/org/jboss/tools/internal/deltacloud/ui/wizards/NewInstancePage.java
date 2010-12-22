@@ -13,6 +13,8 @@ package org.jboss.tools.internal.deltacloud.ui.wizards;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
@@ -60,6 +62,7 @@ import org.jboss.tools.deltacloud.core.Driver;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.MandatoryStringValidator;
 import org.jboss.tools.internal.deltacloud.ui.utils.DataBindingUtils;
+import org.jboss.tools.internal.deltacloud.ui.utils.DeltaCloudObjectLabelUtils;
 
 /**
  * @author Jeff Jonston
@@ -430,23 +433,14 @@ public class NewInstancePage extends WizardPage {
 
 	private IObservableValue bindImage(Text imageText, DataBindingContext dbc) {
 		UpdateValueStrategy widgetToModelUpdateStrategy = new UpdateValueStrategy();
-		ImageConverter imageConverter = new ImageConverter();
+		ImageLabel2DeltaCloudImageConverter imageConverter = new ImageLabel2DeltaCloudImageConverter();
 		widgetToModelUpdateStrategy.setConverter(imageConverter);
 		widgetToModelUpdateStrategy.setAfterGetValidator(
 				new MandatoryStringValidator(WizardMessages.getString(MUST_ENTER_IMAGE_ID)));
-		widgetToModelUpdateStrategy.setAfterConvertValidator(new ImageValidator());
+		widgetToModelUpdateStrategy.setAfterConvertValidator(new DeltaCloudImageValidator());
 
 		UpdateValueStrategy modelToTextUpdateStrategy = new UpdateValueStrategy();
-		modelToTextUpdateStrategy.setConverter(new Converter(DeltaCloudImage.class, String.class) {
-			@Override
-			public Object convert(Object fromObject) {
-				if (fromObject instanceof DeltaCloudImage) {
-					return ((DeltaCloudImage) fromObject).getName();
-				} else {
-					return "";
-				}
-			}
-		});
+		modelToTextUpdateStrategy.setConverter(new DeltaCloudImage2LabelConverter());
 
 		Binding imageBinding = dbc.bindValue(
 				WidgetProperties.text(SWT.Modify).observeDelayed(IMAGE_CHECK_DELAY, imageText),
@@ -457,34 +451,34 @@ public class NewInstancePage extends WizardPage {
 		return imageConverter.getImageObservable();
 	}
 
-	private class ImageValidator implements IValidator {
+	private class ImageLabel2DeltaCloudImageConverter extends Converter {
 
-		@Override
-		public IStatus validate(Object value) {
-			if (value instanceof DeltaCloudImage) {
-				return ValidationStatus.ok();
-			} else {
-				return ValidationStatus.error(WizardMessages.getFormattedString(
-						IMAGE_ID_NOT_FOUND, imageText.getText()));
-			}
-		}
-	}
-
-	private class ImageConverter extends Converter {
+		private final Pattern IMAGE_ID_PATTERN = Pattern.compile("[^\\[]*\\[(.*)\\]");
 
 		private WritableValue imageObservable = new WritableValue();
 
-		public ImageConverter() {
+		public ImageLabel2DeltaCloudImageConverter() {
 			super(String.class, DeltaCloudImage.class);
 		}
 
 		@Override
 		public Object convert(Object fromObject) {
 			Assert.isLegal(fromObject instanceof String);
-			String id = (String) fromObject;
-			DeltaCloudImage image = getImage(id);
+			String id = getId((String) fromObject);
+			DeltaCloudImage image = null;
+			if (id != null) {
+				image = getImage(id);
+			}
 			imageObservable.setValue(image);
 			return image;
+		}
+
+		private String getId(String imageLabel) {
+			Matcher matcher = IMAGE_ID_PATTERN.matcher(imageLabel);
+			if (matcher.find()) {
+				return matcher.group(1);
+			}
+			return null;
 		}
 
 		private DeltaCloudImage getImage(String id) {
@@ -497,6 +491,35 @@ public class NewInstancePage extends WizardPage {
 
 		public IObservableValue getImageObservable() {
 			return imageObservable;
+		}
+	}
+
+	private class DeltaCloudImage2LabelConverter extends Converter {
+		private DeltaCloudImage2LabelConverter() {
+			super(DeltaCloudImage.class, String.class);
+		}
+
+		@Override
+		public Object convert(Object fromObject) {
+			if (fromObject instanceof DeltaCloudImage) {
+				DeltaCloudImage image = (DeltaCloudImage) fromObject;
+				return DeltaCloudObjectLabelUtils.getLabel(image);
+			} else {
+				return "";
+			}
+		}
+	}
+
+	private class DeltaCloudImageValidator implements IValidator {
+
+		@Override
+		public IStatus validate(Object value) {
+			if (value instanceof DeltaCloudImage) {
+				return ValidationStatus.ok();
+			} else {
+				return ValidationStatus.error(WizardMessages.getFormattedString(
+						IMAGE_ID_NOT_FOUND, imageText.getText()));
+			}
 		}
 	}
 

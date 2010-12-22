@@ -14,6 +14,7 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.ui.views.cloud.property.ImagePropertySource;
+import org.jboss.tools.internal.deltacloud.ui.utils.DeltaCloudObjectLabelUtils;
 
 /**
  * @author Jeff Johnston
@@ -26,7 +27,7 @@ public class ImageItem extends DeltaCloudViewItem<DeltaCloudImage> {
 	}
 	
 	public String getName() {
-		return getModel().getName();
+		return DeltaCloudObjectLabelUtils.getLabel(getModel());
 	}
 	
 	@Override

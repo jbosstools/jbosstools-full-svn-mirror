@@ -1,5 +1,9 @@
 2010-12-22  adietisheim  <adietisheim@adietisheim-thinkpad>
 
+	* src/org/jboss/tools/deltacloud/ui/views/cloud/ImageItem.java: 
+	* src/org/jboss/tools/internal/deltacloud/ui/utils/DeltaCloudObjectLabelUtils.java (getLabel): 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java (ImageLabel2DeltaCloudImageConverter.convert): 
+	[JBIDE-7980] extracted image label construction to central class, displaying now "image name [image id]"
 	* src/org/jboss/tools/deltacloud/ui/views/cloud/InstanceItem.java (getName): 
 	[JBIDE-7977] checking null on given name
 
