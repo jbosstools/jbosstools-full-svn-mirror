@@ -1,5 +1,7 @@
 2010-12-22  adietisheim  <adietisheim@adietisheim-thinkpad>
 
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClientImpl.java (DeltaCloudClientImpl): 
+	[JBIDE-7981] need to create a documentbuilder on each new parsing to avoid threads using the same builder.
 	* src/org/jboss/tools/deltacloud/core/FieldMatcher.java (FieldMatcher): 
 	[JBIDE-7981] set filter to filter in case insensitive manner
 	 
