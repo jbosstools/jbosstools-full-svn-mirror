@@ -468,14 +468,11 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	private Instance updateInstance(String xml, Instance instance)
 			throws Exception {
 		Document document = getDocument(xml);
-		instance.setImageId(getIdFromHref(getAttributeValues(document,
-				"image", "href").get(0))); //$NON-NLS-1$ //$NON-NLS-2$
-		instance.setProfileId(getIdFromHref(getAttributeValues(document,
-				"hardware_profile", "href").get(0))); //$NON-NLS-1$ //$NON-NLS-2$
+		instance.setImageId(getIdFromHref(getAttributeValues(document, "image", "href").get(0))); //$NON-NLS-1$ //$NON-NLS-2$
+		instance.setProfileId(getIdFromHref(getAttributeValues(document, "hardware_profile", "href").get(0))); //$NON-NLS-1$ //$NON-NLS-2$
 		getProfileProperties(instance,
 				getPropertyNodes(document, "hardware_profile")); //$NON-NLS-1$
-		instance.setRealmId(getIdFromHref(getAttributeValues(document,
-				"realm", "href").get(0))); //$NON-NLS-1$ //$NON-NLS-2$
+		instance.setRealmId(getIdFromHref(getAttributeValues(document, "realm", "href").get(0))); //$NON-NLS-1$ //$NON-NLS-2$
 		instance.setState(getElementTextValues(document, "state").get(0)); //$NON-NLS-1$
 		getAuthentication(document, instance);
 		instance.setActions(createInstanceActions(instance, document));
@@ -702,8 +699,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 			ArrayList<T> dco = new ArrayList<T>();
 			NodeList nodeList = document.getElementsByTagName(elementName);
 			for (int i = 0; i < nodeList.getLength(); i++) {
-				dco.add(buildDeltaCloudObject(clazz,
-						nodeToString(nodeList.item(i))));
+				dco.add(buildDeltaCloudObject(clazz, nodeToString(nodeList.item(i))));
 			}
 			return dco;
 		} catch (DeltaCloudClientException e) {
