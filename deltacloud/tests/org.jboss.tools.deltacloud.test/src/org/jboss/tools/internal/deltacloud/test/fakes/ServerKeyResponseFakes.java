@@ -51,7 +51,8 @@ public class ServerKeyResponseFakes {
 							+ "1wkG4gTjHkfEhCs05/+PZ4rFG15nVpv06e/a3nXtyDQ77qH3irRPsLZDp/CWFdt=Poe4NLX46gE"
 							+ "nU07L+ueqgZUa8Tq6A9oG7QUyjtJh4ZxkShYkIullvUksW0yppaIeB32Xxw2XVEtdu/v=rFHSHh"
 							+ "HwoZ1A/=ku7ICdMg5gD6U+Zg0YlxniHDaSJ8A6kdt2iUaPaZQQcH8T4yh90CKHhbl5NzhxAu3Jz"
-							+ "dc=oRQqdzizw9UrN84wEmQ6r9hDHUq2x14PR=xBzwLGzR2dh73GdjxF5OmOrp3m4yCkw-----END RSA PRIVATE KEY-----";
+							+ "dc=oRQqdzizw9UrN84wEmQ6r9hDHUq2x14PR=xBzwLGzR2dh73GdjxF5OmOrp3m4yCkw"
+							+ "-----END RSA PRIVATE KEY-----";
 		public static final String keyResponse = getKeyResponseXML(id, fingerprint, pem, url, method, name);
 	}
 
