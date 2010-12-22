@@ -46,7 +46,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.Path;
 import org.jboss.tools.deltacloud.core.client.request.AbstractListObjectsRequest;
 import org.jboss.tools.deltacloud.core.client.request.CreateInstanceRequest;
@@ -86,8 +85,6 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	private static final Pattern ELEMENT_TEXTVALUE_REGEX = Pattern
 			.compile("[^\n\t ]+[^\n]+");
 
-	public static Logger logger = Logger.getLogger(DeltaCloudClientImpl.class);
-
 	private DocumentBuilder documentBuilder;
 
 	public static enum DeltaCloudServerType {
@@ -105,9 +102,6 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 
 	public DeltaCloudClientImpl(String url, String username, String password)
 			throws DeltaCloudClientException {
-
-		logger.debug("Creating new Delta Cloud Client for Server: " + url);
-
 		this.baseUrl = createUrl(url);
 		this.username = username;
 		this.password = password;
@@ -139,7 +133,6 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		try {
 			URL url = deltaCloudRequest.getUrl();
 			addCredentials(url, httpClient, username, password);
-			logger.debug("Sending Request to: " + url);
 			HttpUriRequest request = createRequest(deltaCloudRequest);
 			HttpResponse httpResponse = httpClient.execute(request);
 			throwOnHttpErrors(deltaCloudRequest.getUrl(), httpResponse);
@@ -202,7 +195,6 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 			return null;
 		}
 		String xml = readInputStreamToString(inputStream);
-		logger.debug("Response:\n" + xml);
 		return xml;
 	}
 
