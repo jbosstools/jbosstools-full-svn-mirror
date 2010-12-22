@@ -210,7 +210,7 @@ public class NewInstanceModel extends ObservablePojo {
 
 	private void asyncGetProfiles() {
 		// TODO: internationalize strings
-		new AbstractCloudElementJob("Get Profiles", cloud, CLOUDELEMENT.PROFILES) {
+		new AbstractCloudElementJob("Get profiles", cloud, CLOUDELEMENT.PROFILES) {
 			protected IStatus doRun(IProgressMonitor monitor) throws Exception {
 				try {
 					List<DeltaCloudHardwareProfile> profiles = Arrays.asList(cloud.getProfiles());
@@ -221,7 +221,7 @@ public class NewInstanceModel extends ObservablePojo {
 				} catch (DeltaCloudException e) {
 					// TODO: internationalize strings
 					return StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID,
-							MessageFormat.format("Could not get allProfiles from cloud {0}", cloud.getName()));
+							MessageFormat.format("Could not get profiles from cloud {0}", cloud.getName()));
 				}
 			}
 		}.schedule();
