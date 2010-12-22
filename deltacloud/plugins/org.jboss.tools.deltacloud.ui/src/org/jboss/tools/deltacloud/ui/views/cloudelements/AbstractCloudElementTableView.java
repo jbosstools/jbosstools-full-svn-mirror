@@ -80,7 +80,7 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 	private TextPreferenceValue lastSelectedCloudPref;
 	private Composite container;
 
-	private ModifyListener cloudCloudModifyListener = new ModifyListener() {
+	private ModifyListener currentCloudModifyListener = new ModifyListener() {
 
 		@Override
 		public void modifyText(ModifyEvent e) {
@@ -114,7 +114,8 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 			// only
 			DeltaCloud cloud = UIUtils.getFirstAdaptedElement(selection, DeltaCloud.class);
 			if (isNewCloud(cloud)) {
-				currentCloudSelector.select(getCloudIndex(cloud, getClouds()));
+				int index = getCloudIndex(cloud, getClouds());
+				currentCloudSelector.select(index);
 			}
 		}
 	};
@@ -240,9 +241,7 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 	protected abstract ITableContentAndLabelProvider getContentAndLabelProvider();
 
 	private void setViewerInput(DeltaCloud cloud) {
-		if (currentCloud != null) {
-			viewer.setInput(currentCloud);
-		}
+		viewer.setInput(cloud);
 	}
 
 	/**
@@ -273,7 +272,9 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 
 	private int getCloudIndex(String cloudName, DeltaCloud[] clouds) {
 		int index = 0;
-		if (cloudName != null && clouds.length > 0) {
+		if (cloudName != null
+				&& cloudName.length() > 0
+				&& clouds.length > 0) {
 			for (int i = 0; i < clouds.length; i++) {
 				DeltaCloud cloud = clouds[i];
 				if (cloudName != null && cloudName.equals(cloud.getName())) {
@@ -322,7 +323,7 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 		currentCloudSelectorLabel.setText(CVMessages.getString(CLOUD_SELECTOR_LABEL));
 
 		this.currentCloudSelector = new Combo(parent, SWT.BORDER | SWT.READ_ONLY);
-		currentCloudSelector.addModifyListener(cloudCloudModifyListener);
+		currentCloudSelector.addModifyListener(currentCloudModifyListener);
 		// Following is a kludge so that on Linux the Combo is read-only but
 		// has a white background.
 		currentCloudSelector.addVerifyListener(new VerifyListener() {
@@ -341,10 +342,10 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 	protected abstract String getViewID();
 
 	private void initCloudSelector(String cloudNameToSelect, Combo cloudSelector, DeltaCloud[] clouds) {
-		if (clouds.length > 0
-				&& cloudNameToSelect != null && cloudNameToSelect.length() > 0) {
-			cloudSelector.setItems(toCloudNames(clouds));
-			cloudSelector.select(getCloudIndex(cloudNameToSelect, clouds));
+		if (clouds.length > 0) {
+			setCloudSelectorItems(toCloudNames(clouds), cloudSelector);
+			int index = getCloudIndex(cloudNameToSelect, clouds);
+			cloudSelector.select(index);
 		}
 	}
 
@@ -361,29 +362,26 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 		int index = getCloudIndex(cloud, clouds);
 		if (index >= 0) {
 			int selectionIndex = currentCloudSelector.getSelectionIndex();
-			currentCloudSelector.removeModifyListener(cloudCloudModifyListener);
+			currentCloudSelector.removeModifyListener(currentCloudModifyListener);
 			currentCloudSelector.setItem(index, cloud.getName());
 			currentCloudSelector.select(selectionIndex);
-			currentCloudSelector.addModifyListener(cloudCloudModifyListener);
+			currentCloudSelector.addModifyListener(currentCloudModifyListener);
 		}
 		container.layout(true, true);
 	}
 
 	public void cloudsChanged(int type, DeltaCloud cloud) {
-		switch (type) {
-		case IDeltaCloudManagerListener.ADD_EVENT:
-			addPropertyChangeListener(cloud);
-			break;
-		case IDeltaCloudManagerListener.REMOVE_EVENT:
-			removePropertyChangeListener(cloud);
-			break;
-		}
-
 		DeltaCloud[] clouds = getClouds();
-		int index = getCloudIndex(currentCloud, getClouds());
+		switch (type) {
+		case IDeltaCloudManagerListener.REMOVE_EVENT:
+			onCloudRemoved(cloud, clouds);
+			break;
+		default:
+		}
+		
+		int index = getCloudIndex(currentCloud, clouds);
 		String[] cloudNames = toCloudNames(clouds);
 		setCloudSelectorItems(cloudNames, currentCloudSelector);
-		this.currentCloud = getCloud(index, clouds);
 
 		if (cloudNames.length > 0) {
 			currentCloudSelector.setText(cloudNames[index]);
@@ -393,6 +391,13 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 			setViewerInput(null);
 		}
 		container.layout(true, true);
+	}
+
+	private void onCloudRemoved(DeltaCloud cloud, DeltaCloud[] clouds) {
+		if (cloud == currentCloud) {
+			removePropertyChangeListener(cloud);
+			this.currentCloud = getCloud(0, clouds);
+		}
 	}
 
 	protected void addPropertyChangeListener(DeltaCloud cloud) {
@@ -418,9 +423,9 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 	}
 
 	private void setCloudSelectorItems(String[] cloudNames, Combo cloudSelector) {
-		cloudSelector.removeModifyListener(cloudCloudModifyListener);
+		cloudSelector.removeModifyListener(currentCloudModifyListener);
 		cloudSelector.setItems(cloudNames);
-		cloudSelector.addModifyListener(cloudCloudModifyListener);
+		cloudSelector.addModifyListener(currentCloudModifyListener);
 	}
 
 	/**

@@ -125,6 +125,10 @@ public class InstanceViewLabelAndContentProvider extends
 
 	@Override
 	protected void asyncAddCloudElements(final DeltaCloud cloud) {
+		if (cloud == null) {
+			clearTableViewer();
+			return;
+		}
 		new AbstractCloudElementJob(
 				MessageFormat.format("Get instances from cloud {0}", cloud.getName()), cloud, CLOUDELEMENT.INSTANCES) {
 
@@ -132,7 +136,6 @@ public class InstanceViewLabelAndContentProvider extends
 			protected IStatus doRun(IProgressMonitor monitor) throws DeltaCloudException {
 				try {
 					addToViewer(cloud.getInstances());
-					;
 					return Status.OK_STATUS;
 				} catch (DeltaCloudException e) {
 					throw e;

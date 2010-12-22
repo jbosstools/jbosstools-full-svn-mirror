@@ -36,16 +36,17 @@ public abstract class AbstractCloudElementViewLabelAndContentProvider<CLOUDELEME
 	private DeltaCloud currentCloud;
 	private ICloudElementFilter<CLOUDELEMENT> localFilter;
 	private TableViewer viewer;
-	
+
 	@Override
 	public Object[] getElements(Object input) {
 		/*
 		 * items are added in asynchronous manner.
 		 * 
 		 * @see #inputChanged
+		 * 
 		 * @see #asyncAddCloudElements
 		 */
-		return new Object[]{};
+		return new Object[] {};
 	}
 
 	public void setFilter(ICloudElementFilter<CLOUDELEMENT> filter) {
@@ -54,7 +55,7 @@ public abstract class AbstractCloudElementViewLabelAndContentProvider<CLOUDELEME
 
 	@Override
 	public void inputChanged(final Viewer viewer, Object oldInput, Object newInput) {
-		if (!(newInput instanceof DeltaCloud)) {
+		if (!(newInput instanceof DeltaCloud || newInput != null)) {
 			return;
 		}
 		Assert.isLegal(viewer instanceof TableViewer);
@@ -64,7 +65,7 @@ public abstract class AbstractCloudElementViewLabelAndContentProvider<CLOUDELEME
 		addPropertyChangeListener(currentCloud);
 		asyncAddCloudElements(currentCloud);
 	}
-	
+
 	protected void updateCloudElements(CLOUDELEMENT[] elements, DeltaCloud cloud) {
 		if (isCurrentCloud(cloud)) {
 			addToViewer(elements);
@@ -83,7 +84,7 @@ public abstract class AbstractCloudElementViewLabelAndContentProvider<CLOUDELEME
 			@Override
 			public void run() {
 				try {
-					viewer.refresh();
+					clearTableViewer();
 					Object[] elements = filter(getFilter(currentCloud), cloudElements);
 					viewer.add(elements);
 				} catch (DeltaCloudException e) {
@@ -126,6 +127,10 @@ public abstract class AbstractCloudElementViewLabelAndContentProvider<CLOUDELEME
 		if (cloud != null) {
 			cloud.removePropertyChangeListener(this);
 		}
+	}
+
+	protected void clearTableViewer() {
+		viewer.refresh();
 	}
 
 	protected abstract ICloudElementFilter<CLOUDELEMENT> getCloudFilter(DeltaCloud cloud);

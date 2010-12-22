@@ -1,5 +1,13 @@
 2010-12-22  adietisheim  <adietisheim@adietisheim-thinkpad>
 
+	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/InstanceViewLabelAndContentProvider.java (asyncAddCloudElements): 
+	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/ImageViewLabelAndContentProvider.java (asyncAddCloudElements): 
+	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/AbstractCloudElementViewLabelAndContentProvider.java (inputChanged): 
+	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/AbstractCloudElementTableView.java 
+	(setViewerInput): 
+	(cloudsChanged): 
+	[JBIDE-7959] now null is accepted to clear table view (needed when disconnecting last cloud)
+	[JBIDE-7959] now handling case where current cloud is being removed
 	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/InstanceView.java (addPropertyChangeListener): 
 	[JBIDE-7959] added guard to avoid NPE when adding property change listener to current cloud
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ProfilePage.java 

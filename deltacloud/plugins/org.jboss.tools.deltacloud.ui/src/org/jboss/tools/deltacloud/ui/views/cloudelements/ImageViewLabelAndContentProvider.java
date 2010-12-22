@@ -100,15 +100,19 @@ public class ImageViewLabelAndContentProvider extends AbstractCloudElementViewLa
 
 	@Override
 	protected void asyncAddCloudElements(final DeltaCloud cloud) {
+		if (cloud == null) {
+			clearTableViewer();
+			return;
+		}
 		new AbstractCloudElementJob(
 				MessageFormat.format("Get images from cloud {0}", cloud.getName()), cloud, CLOUDELEMENT.IMAGES) {
 
 			@Override
 			protected IStatus doRun(IProgressMonitor monitor) throws DeltaCloudException {
 				try {
-					addToViewer(cloud.getImages());;
+					addToViewer(cloud.getImages());
 					return Status.OK_STATUS;
-				} catch(DeltaCloudException e) {
+				} catch (DeltaCloudException e) {
 					throw e;
 				}
 			}
@@ -123,12 +127,12 @@ public class ImageViewLabelAndContentProvider extends AbstractCloudElementViewLa
 			updateCloudElements(images, cloud);
 		}
 	}
-	
+
 	@Override
 	public void addPropertyChangeListener(DeltaCloud cloud) {
 		cloud.addPropertyChangeListener(DeltaCloud.PROP_IMAGES, this);
 	}
-	
+
 	protected DeltaCloudImage[] getCloudElements(DeltaCloud cloud) throws DeltaCloudException {
 		return cloud.getImages();
 	}
