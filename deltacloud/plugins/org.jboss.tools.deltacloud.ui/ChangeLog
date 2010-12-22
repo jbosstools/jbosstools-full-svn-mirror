@@ -1,5 +1,10 @@
 2010-12-22  adietisheim  <adietisheim@adietisheim-thinkpad>
 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ProfilePage.java 
+	(setCPU): 
+	(setMemody): 
+	(setStorage): 
+	[JBIDE-7984] added guard to avoid NPE
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/FindImagePageLabelAndContentProvider.java: 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/FindImagePage.java 
 	(.doRun):

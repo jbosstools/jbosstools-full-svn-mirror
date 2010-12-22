@@ -102,13 +102,13 @@ public class ProfilePage {
 		memoryLabel.setText(WizardMessages.getString(MEMORY_LABEL));
 		storageLabel = new Label(container, SWT.NULL);
 		storageLabel.setText(WizardMessages.getString(STORAGE_LABEL));
-		
+
 		FormData fd = new FormData();
 		fd.left = new FormAttachment(0, 0);
 		fd.top = new FormAttachment(0, 0);
 		cpuLabel.setLayoutData(fd);
 		DeltaCloudHardwareProperty cpuProperty = profile.getNamedProperty("cpu"); //$NON-NLS-1$
-		setCPU(cpuProperty.getValue()); 
+		setCPU(cpuProperty);
 		Control cpuControl = createCpuControls(cpuProperty, storageLabel, container);
 
 		fd = new FormData();
@@ -116,7 +116,7 @@ public class ProfilePage {
 		fd.top = new FormAttachment(cpuLabel, 8);
 		memoryLabel.setLayoutData(fd);
 		DeltaCloudHardwareProperty memoryProperty = profile.getNamedProperty("memory"); //$NON-NLS-1$
-		setMemody(memoryProperty.getValue());
+		setMemody(memoryProperty);
 		Control memoryControl = createMemoyControl(cpuControl, memoryProperty, storageLabel, container);
 
 		fd = new FormData();
@@ -124,7 +124,7 @@ public class ProfilePage {
 		fd.top = new FormAttachment(memoryControl, 8);
 		storageLabel.setLayoutData(fd);
 		DeltaCloudHardwareProperty storageProperty = profile.getNamedProperty("storage"); //$NON-NLS-1$
-		setStorage(storageProperty.getValue());
+		setStorage(storageProperty);
 		createStorageControls(memoryControl, memoryProperty, storageProperty, storageLabel, container);
 	}
 
@@ -230,7 +230,8 @@ public class ProfilePage {
 		return storageControl;
 	}
 
-	private Control createMemoyControl(Control cpuControl, DeltaCloudHardwareProperty memoryProperty, Label storageLabel, Composite container) {
+	private Control createMemoyControl(Control cpuControl, DeltaCloudHardwareProperty memoryProperty,
+			Label storageLabel, Composite container) {
 		Control memoryControl = null;
 		if (memoryProperty != null) {
 			if (memoryProperty.getKind() == DeltaCloudHardwareProperty.Kind.FIXED) {
@@ -391,10 +392,12 @@ public class ProfilePage {
 		container.setVisible(visible);
 	}
 
-	private void setCPU(String value) {
-		this.cpu = value;
+	private void setCPU(DeltaCloudHardwareProperty property) {
+		if (property != null) {
+			this.cpu = property.getValue();
+		}
 	}
-	
+
 	public String getCPU() {
 		if (cpu != null && !cpu.equals(cpuDefaultValue)) {
 			return cpu;
@@ -402,8 +405,10 @@ public class ProfilePage {
 		return null;
 	}
 
-	private void setMemody(String value) {
-		this.memory = value;
+	private void setMemody(DeltaCloudHardwareProperty property) {
+		if (property != null) {
+			this.memory = property.getValue();
+		}
 	}
 
 	public String getMemory() {
@@ -413,17 +418,19 @@ public class ProfilePage {
 		return null;
 	}
 
-	private void setStorage(String value) {
-		this.storage = value;
+	private void setStorage(DeltaCloudHardwareProperty property) {
+		if (property != null) {
+			this.storage = property.getValue();
+		}
 	}
-	
+
 	public String getStorage() {
 		if (storage != null && !storage.equals(storageDefaultValue)) {
 			return storage;
 		}
 		return null;
 	}
-	
+
 	public Composite getControl() {
 		return container;
 	}
