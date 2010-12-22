@@ -25,7 +25,7 @@
             <itemizedlist>
 	       <listitem>
 		  <para>
-		     <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7897">JBIDE-7897</ulink>: Stereotypes that were declared with <property>@Target(type)</property> annotation could not be applied to steretypes where the <property>@Target</property> annotaiton only accepted values of <property>type, method, field</property>, <property>method</property>, <property>field</property> or <property>method, field</property>. This has been corrected for this release. A stereotype allows a developer to use the same recurring bean role within a framework.
+		     <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7897">JBIDE-7897</ulink>: Stereotypes that were declared with <property>@Target(type)</property> annotation could not be applied to stereotypes where the <property>@Target</property> annotation only accepted values of <property>type, method, field</property>, <property>method</property>, <property>field</property> or <property>method, field</property>. This has been corrected for this release. A stereotype allows a developer to use the same recurring bean role within a framework.
 		  </para>
 	       </listitem>
 	       <listitem>
@@ -53,7 +53,7 @@
 							</listitem>
 							<listitem>
 								<para>
-									Select the <option>Dynamic Web Project</option> opion from the <option>Web</option> group, and click the <guibutton>Next</guibutton> button.
+									Select the <option>Dynamic Web Project</option> option from the <option>Web</option> group, and click the <guibutton>Next</guibutton> button.
 								</para>
 							</listitem>
 							<listitem>
@@ -1178,7 +1178,7 @@
             <itemizedlist>
 	       <listitem>
 		  <para>
-		     <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7830">JBIDE-7830</ulink>: The wizard that would display available attributes for JSP and HTML tags has been updated to improve usability. In the past the wizard would show a complete list of attributes for a tag, in one list. This could potentially overwhelm a user with options and make it hard to define the necessary attribute items for a tag. This update for the wizard ensures that required and preferable attributes are seperated from the others by placing them under a <guilabel>General</guilabel> tab, with the rest being listed under the <guilabel>Advanced</guilabel> tab. 
+		     <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7830">JBIDE-7830</ulink>: The wizard that would display available attributes for JSP and HTML tags has been updated to improve usability. In the past the wizard would show a complete list of attributes for a tag, in one list. This could potentially overwhelm a user with options and make it hard to define the necessary attribute items for a tag. This update for the wizard ensures that required and preferable attributes are separated from the others by placing them under a <guilabel>General</guilabel> tab, with the rest being listed under the <guilabel>Advanced</guilabel> tab. 
 		  </para>
 	       </listitem>
                 <!-- These two issues only in release notes for JBT -->
