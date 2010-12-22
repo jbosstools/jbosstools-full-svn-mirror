@@ -45,4 +45,20 @@ public class DeltaCloudObjectLabelUtils {
 		}
 		return sb.toString();
 	}
+
+	public static String getId(String imageLabel) {
+		if (imageLabel == null) {
+			return null;
+		}
+		int idStart = imageLabel.indexOf('[');
+		if (idStart == -1) {
+			return imageLabel;
+		}
+		int idStop = imageLabel.indexOf(']');
+		if (idStop == -1) {
+			return imageLabel.substring(idStart + 1);
+		} 
+		return imageLabel.substring(idStart + 1, idStop);
+	}
+
 }

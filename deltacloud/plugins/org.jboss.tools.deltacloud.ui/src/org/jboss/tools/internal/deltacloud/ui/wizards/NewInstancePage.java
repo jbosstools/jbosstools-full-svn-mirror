@@ -13,8 +13,6 @@ package org.jboss.tools.internal.deltacloud.ui.wizards;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
@@ -453,8 +451,6 @@ public class NewInstancePage extends WizardPage {
 
 	private class ImageLabel2DeltaCloudImageConverter extends Converter {
 
-		private final Pattern IMAGE_ID_PATTERN = Pattern.compile("[^\\[]*\\[(.*)\\]");
-
 		private WritableValue imageObservable = new WritableValue();
 
 		public ImageLabel2DeltaCloudImageConverter() {
@@ -464,8 +460,8 @@ public class NewInstancePage extends WizardPage {
 		@Override
 		public Object convert(Object fromObject) {
 			Assert.isLegal(fromObject instanceof String);
-			String id = getId((String) fromObject);
 			DeltaCloudImage image = null;
+			String id = DeltaCloudObjectLabelUtils.getId((String) fromObject);
 			if (id != null) {
 				image = getImage(id);
 			}
@@ -473,13 +469,6 @@ public class NewInstancePage extends WizardPage {
 			return image;
 		}
 
-		private String getId(String imageLabel) {
-			Matcher matcher = IMAGE_ID_PATTERN.matcher(imageLabel);
-			if (matcher.find()) {
-				return matcher.group(1);
-			}
-			return null;
-		}
 
 		private DeltaCloudImage getImage(String id) {
 			try {
