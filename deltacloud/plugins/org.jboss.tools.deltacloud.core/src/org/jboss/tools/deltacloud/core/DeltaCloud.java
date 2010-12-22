@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.core;
 
-import java.net.MalformedURLException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
