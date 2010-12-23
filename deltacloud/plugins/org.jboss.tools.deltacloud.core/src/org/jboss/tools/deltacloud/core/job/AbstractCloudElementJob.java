@@ -19,7 +19,7 @@ import org.jboss.tools.deltacloud.core.DeltaCloud;
 public abstract class AbstractCloudElementJob extends AbstractCloudJob {
 
 	public static enum CLOUDELEMENT {
-		IMAGES, INSTANCES, PROFILES, REALMS
+		IMAGES, INSTANCES, PROFILES, REALMS, KEYS
 	}
 
 	private CLOUDELEMENT cloudElement;

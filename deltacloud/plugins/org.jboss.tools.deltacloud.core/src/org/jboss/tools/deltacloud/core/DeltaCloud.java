@@ -26,6 +26,7 @@ import org.jboss.tools.deltacloud.core.client.HardwareProfile;
 import org.jboss.tools.deltacloud.core.client.Image;
 import org.jboss.tools.deltacloud.core.client.Instance;
 import org.jboss.tools.deltacloud.core.client.InternalDeltaCloudClient;
+import org.jboss.tools.deltacloud.core.client.Key;
 import org.jboss.tools.deltacloud.core.client.Realm;
 import org.jboss.tools.internal.deltacloud.core.observable.ObservablePojo;
 
@@ -407,11 +408,36 @@ public class DeltaCloud extends ObservablePojo {
 		return deltaCloudImage;
 	}
 
+	public DeltaCloudKey[] getKeys() throws DeltaCloudException {
+		List<DeltaCloudKey> keys = new ArrayList<DeltaCloudKey>();
+		try {
+			for (Key key : client.listKeys()) {
+				DeltaCloudKey deltaCloudKey = new DeltaCloudKey(key, this);
+				keys.add(deltaCloudKey);
+			}
+			return keys.toArray(new DeltaCloudKey[] {});
+		} catch (DeltaCloudClientException e) {
+			// TODO: internationalize strings
+			throw new DeltaCloudException(MessageFormat.format("Cloud not get keys from cloud \"{0}\"", getName()), e);
+		}
+	}
+
 	public void createKey(String keyname, String keystoreLocation) throws DeltaCloudException {
 		try {
 			client.createKey(keyname, keystoreLocation);
 		} catch (DeltaCloudClientException e) {
 			throw new DeltaCloudException(e);
+		}
+	}
+
+	public DeltaCloudKey createKey(String id) throws DeltaCloudException {
+		try {
+			Key key = client.createKey(id);
+			return new DeltaCloudKey(key, this);
+		} catch (DeltaCloudClientException e) {
+			// TODO: internationalize strings
+			throw new DeltaCloudException(
+					MessageFormat.format("Could not create key \"{0}\" on cloud \"{1}\"", id, getName()), e);
 		}
 	}
 
