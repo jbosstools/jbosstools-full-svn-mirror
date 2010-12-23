@@ -189,23 +189,6 @@
 		</profile>
 
 		<profile>
-			<id>tptp</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<modules>
-				<module>../tptp</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>tptp-bootstrap</id>
-			<modules>
-				<module>../tptp</module>
-			</modules>
-		</profile>
-
-		<profile>
 			<id>ws</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
@@ -223,16 +206,6 @@
 			</modules>
 		</profile>
 
-		<profile>
-			<id>runtime</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<modules>
-				<module>../runtime</module>
-			</modules>
-		</profile>
-		
 		<profile>
 			<id>site</id>
 			<activation>
