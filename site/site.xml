@@ -32,9 +32,6 @@
 		<category name="AllTools" />
 		<category name="SOATools" />
 	</feature>
-	<feature url="features/org.jboss.tools.tptp.feature_0.0.0.jar" id="org.jboss.tools.tptp.feature" version="0.0.0">
-		<category name="TestPerfTools" />
-	</feature>
 
 	<!-- only in JBT -->
 	<feature url="features/org.jboss.tools.maven.feature_0.0.0.jar" id="org.jboss.tools.maven.feature" version="0.0.0">
@@ -48,10 +45,6 @@
 	</feature>
 	<feature url="features/org.jboss.tools.maven.hibernate.feature_0.0.0.jar" id="org.jboss.tools.maven.hibernate.feature" version="0.0.0">
 		<category name="MavenTools" />
-	</feature>
-
-	<feature url="features/org.jboss.tools.runtime.feature_0.0.0.jar" id="org.jboss.tools.runtime.feature" version="0.0.0">
-		<category name="AllTools" />
 	</feature>
 
 	<!-- categories - see also ../../../common/aggregateRepos.*.properties -->
