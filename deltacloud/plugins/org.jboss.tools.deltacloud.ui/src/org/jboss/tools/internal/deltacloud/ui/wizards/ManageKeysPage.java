@@ -10,305 +10,305 @@
  ******************************************************************************/
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
-import java.io.File;
-import java.io.FilenameFilter;
+import java.lang.reflect.InvocationTargetException;
+import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 
-import org.eclipse.core.runtime.preferences.InstanceScope;
-import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.FormAttachment;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
+import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
+import org.jboss.tools.deltacloud.core.DeltaCloudKey;
+import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob;
+import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob.CLOUDELEMENT;
 import org.jboss.tools.deltacloud.ui.Activator;
-import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
+import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
-import org.osgi.service.prefs.Preferences;
 
 /**
  * @author Jeff Johnston
+ * @author André Dietisheim
  */
 public class ManageKeysPage extends WizardPage {
 
 	private final static String NAME = "ManageKeys.name"; //$NON-NLS-1$
 	private final static String TITLE = "ManageKeys.title"; //$NON-NLS-1$
 	private final static String DESC = "ManageKeys.desc"; //$NON-NLS-1$
-	private final static String DIR_LABEL = "Directory.label"; //$NON-NLS-1$
-	private final static String BROWSE_LABEL = "BrowseButton.label"; //$NON-NLS-1$
 	private final static String NEW = "NewButton.label"; //$NON-NLS-1$
 	private final static String DELETE = "DeleteButton.label"; //$NON-NLS-1$
 	private final static String CREATE_KEY_TITLE = "CreateKey.title"; //$NON-NLS-1$
 	private final static String CREATE_KEY_MSG = "CreateKey.msg"; //$NON-NLS-1$
 	private final static String CONFIRM_KEY_DELETE_TITLE = "ConfirmKeyDelete.title"; //$NON-NLS-1$
 	private final static String CONFIRM_KEY_DELETE_MSG = "ConfirmKeyDelete.msg"; //$NON-NLS-1$
-	
-	private final static String INVALID_DIRECTORY = "ErrorInvalidDirectory.text"; //$NON-NLS-1$
-	
+
 	private DeltaCloud cloud;
-	private String fileExtension;
-	private String currFile;
-	
-	private Text directory;
-	private List fileList;
-	
-	private ModifyListener dirListener = new ModifyListener() {
+	private List keyList;
+	private java.util.List<DeltaCloudKey> keys;
+	private DeltaCloudKey selectedKey;
+
+	private class UniqueKeyIdConstraint implements IInputValidator {
 
 		@Override
-		public void modifyText(ModifyEvent e) {
-			// TODO Auto-generated method stub
-			validateDirectory();
-		}
-		
-	};
-	
-	private SelectionListener browseButtonListener = new SelectionAdapter() {
-		
-		@Override
-		public void widgetSelected(SelectionEvent e) {
-			Display display = Display.getDefault();
-			Shell shell = new Shell(display);
-			DirectoryDialog d = new DirectoryDialog(shell);
-			String text = d.open();
-			if (text != null)
-				directory.setText(text);
-		}
+		public String isValid(String keyId) {
+			if (keys == null
+						|| keyId == null) {
+				return null;
+			}
 
-	};
-
-	private SelectionListener createButtonListener = new SelectionAdapter() {
-		
-		@Override
-		public void widgetSelected(SelectionEvent e) {
-			Display display = Display.getDefault();
-			Shell shell = new Shell(display);
-			String directoryText = directory.getText();
-			InputDialog d = new InputDialog(shell, WizardMessages.getString(CREATE_KEY_TITLE),
-					WizardMessages.getString(CREATE_KEY_MSG),
-					"",
-					null);
-			d.setBlockOnOpen(true);
-			d.create();
-			int retcode = d.open();
-			if (retcode == InputDialog.OK) {
-				String keyname = d.getValue();
-				try {
-					cloud.createKey(keyname, directoryText);
-					loadFileList();
-				} catch (DeltaCloudException dce) {
-					MessageDialog.openError(getShell(), null, dce.getLocalizedMessage());
+			for (DeltaCloudKey key : keys) {
+				if (keyId.equals(key.getId())) {
+					// TODO: internationalize string
+					return "Key id is already used, please choose another id.";
 				}
 			}
+			return null;
 		}
+	}
 
-	};
+	private SelectionListener keyListListener = new SelectionAdapter() {
 
-	private SelectionListener fileListListener = new SelectionAdapter() {
-		
 		@Override
 		public void widgetSelected(SelectionEvent e) {
-			currFile = fileList.getSelection()[0];
-			setPageComplete(isKeySelected());
+			String selectedKeyName = keyList.getItem(keyList.getSelectionIndex());
+			selectedKey = getKey(selectedKeyName);
+			setPageComplete(selectedKey != null);
 		}
 	};
 
-	private FilenameFilter extensionFilter = new FilenameFilter() {
-
-		@Override
-		public boolean accept(File arg0, String arg1) {
-			if (arg1.endsWith(fileExtension))
-				return true;
-			return false;
-		}
-		
-	};
-	
-	public ManageKeysPage(DeltaCloud cloud, String fileExtension) {
+	public ManageKeysPage(DeltaCloud cloud) {
 		super(WizardMessages.getString(NAME));
 		this.cloud = cloud;
-		this.fileExtension = fileExtension;
 		setDescription(WizardMessages.getString(DESC));
 		setTitle(WizardMessages.getString(TITLE));
 		setImageDescriptor(SWTImagesFactory.DESC_DELTA_LARGE);
 		setPageComplete(false);
 	}
-	
-	public String getCurrFile() {
-		return currFile;
+
+	public DeltaCloudKey getKey() {
+		return selectedKey;
 	}
-	
-	private void validateDirectory() {
-		boolean hasError = false;
-		
-		if (directory.getText().length() > 0) {
-			File f = new File(directory.getText());
-			if (!f.exists() || !f.isDirectory()) {
-				hasError = true;
-				setErrorMessage(WizardMessages.getString(INVALID_DIRECTORY));
-			} else {
-				Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
-				try {
-					prefs.put(IDeltaCloudPreferenceConstants.DEFAULT_KEY_DIR, directory.getText());
-				} catch(Exception e) {
-					// do nothing
-				}
-				loadFileList();
-			}
-		}
-		if (!hasError) {
-			setErrorMessage(null);
-		}
-		setPageComplete(!hasError && isKeySelected());
-	}
-	
-	private boolean isKeySelected() {
-		return fileList.getSelectionCount() == 1;
-	}
-	
-	private void loadFileList() {
-		File dir = new File(directory.getText());
-		if (dir.exists() && dir.isDirectory()) {
-			File[] files = dir.listFiles(extensionFilter);
-			Arrays.sort(files, new Comparator<File>() {
-				@Override
-				public int compare(File arg0, File arg1) {
-					String name0 = arg0.getName();
-					String name1 = arg1.getName();
-					return name0.compareTo(name1);
-				}
-			});
-			fileList.removeAll();
-			for (File f : files) {
-				fileList.add(f.getName());
-			}
-		}
-	}
-	
+
 	@Override
 	public void createControl(Composite parent) {
 		setPageComplete(false);
 		final Composite container = new Composite(parent, SWT.NULL);
-		FormLayout layout = new FormLayout();
-		layout.marginHeight = 5;
-		layout.marginWidth = 5;
-		container.setLayout(layout);		
+		GridLayoutFactory.fillDefaults().numColumns(4).equalWidth(false).applyTo(container);
 
-		Label dirLabel = new Label(container, SWT.NULL);
-		dirLabel.setText(WizardMessages.getString(DIR_LABEL));
-		
-		directory = new Text(container, SWT.BORDER | SWT.SINGLE);
-		Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
-		String defaultDir = prefs.get(IDeltaCloudPreferenceConstants.DEFAULT_KEY_DIR, System.getProperty("user.home"));
-		directory.setText(defaultDir);
-		directory.addModifyListener(dirListener);
-		
-		Button browseButton = new Button(container, SWT.NULL);
-		browseButton.setText(WizardMessages.getString(BROWSE_LABEL));
-		browseButton.addSelectionListener(browseButtonListener);
-	
-		fileList = new List(container, SWT.BORDER | SWT.SINGLE | SWT.V_SCROLL);
-		fileList.addSelectionListener(fileListListener);
-		
+		keyList = new List(container, SWT.BORDER | SWT.SINGLE | SWT.V_SCROLL);
+		keyList.addSelectionListener(keyListListener);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).span(4, 5).applyTo(keyList);
+
+		Button refreshButton = new Button(container, SWT.NULL);
+		refreshButton.setText("Refresh keys");
+		refreshButton.addSelectionListener(onRefreshPressed());
+		GridDataFactory.fillDefaults().applyTo(refreshButton);
+
+		Label dummyLabel = new Label(container, SWT.NULL);
+		GridDataFactory.fillDefaults().grab(true, false).applyTo(dummyLabel);
+
 		Button createButton = new Button(container, SWT.NULL);
+		// TODO: internationalize string
 		createButton.setText(WizardMessages.getString(NEW));
-		createButton.addSelectionListener(createButtonListener);
-		
+		createButton.addSelectionListener(onNewPressed());
+		GridDataFactory.fillDefaults().applyTo(createButton);
+
 		Button deleteButton = new Button(container, SWT.NULL);
 		deleteButton.setText(WizardMessages.getString(DELETE));
-		deleteButton.addSelectionListener(new SelectionAdapter() {
+		deleteButton.addSelectionListener(onDeletePressed());
+		GridDataFactory.fillDefaults().applyTo(deleteButton);
+
+		setControl(container);
+		asyncGetKeys(cloud);
+		setPageComplete(false);
+	}
+
+	private SelectionAdapter onDeletePressed() {
+		return new SelectionAdapter() {
 			@Override
-			public void widgetSelected(SelectionEvent e) {
-				final String keyName = fileList.getSelection()[0];
-				boolean confirmed = MessageDialog.openConfirm(getShell(), 
+			public void widgetSelected(SelectionEvent event) {
+				boolean confirmed = MessageDialog.openConfirm(getShell(),
 						WizardMessages.getString(CONFIRM_KEY_DELETE_TITLE),
-						WizardMessages.getFormattedString(CONFIRM_KEY_DELETE_MSG, keyName));
+						WizardMessages.getFormattedString(CONFIRM_KEY_DELETE_MSG, selectedKey.getId()));
 				if (confirmed) {
-					try {
-						cloud.deleteKey(keyName.substring(0, keyName.length() - fileExtension.length()));
-						File f = new File(directory.getText());
-						File[] files = f.listFiles(new FilenameFilter() {
-							@Override
-							public boolean accept(File dir, String name) {
-								return name.equals(keyName);
-							}
-						});
-						if (files.length == 1) {
-							if (files[0].delete())
-								fileList.remove(fileList.getSelectionIndex());
-						}
-					} catch (DeltaCloudException dce) {
-						MessageDialog.openError(getShell(), null, dce.getLocalizedMessage());
-					}
+					deleteKey(selectedKey);
 				}
 			}
-		});
-		
-		Point p1 = dirLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-		Point p2 = directory.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-		Point p3 = browseButton.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-		int centering = (p2.y - p1.y + 1) / 2;
-		int centering2 = (p3.y - p2.y + 1) / 2;
+		};
+	}
 
-		FormData f = new FormData();
-		f.left = new FormAttachment(0, 5);
-		f.top = new FormAttachment(0, 5 + centering + centering2);
-		dirLabel.setLayoutData(f);
-		
-		f = new FormData();
-		f.right = new FormAttachment(100, -10);
-		f.top = new FormAttachment(0, 5);
-		browseButton.setLayoutData(f);
-		
-		f = new FormData();
-		f.left = new FormAttachment(dirLabel, 5);
-		f.top = new FormAttachment(0, 5 + centering2);
-		f.right = new FormAttachment(browseButton, -10);
-		directory.setLayoutData(f);
-		
-		f = new FormData();
-        int widthHint = convertHorizontalDLUsToPixels(IDialogConstants.BUTTON_WIDTH);
-        Point minSize = deleteButton.computeSize(SWT.DEFAULT, SWT.DEFAULT, true);
-        f.width = Math.max(widthHint, minSize.x);
-        f.right = new FormAttachment(100, -20);
-        f.bottom = new FormAttachment(100, -10);
-        deleteButton.setLayoutData(f);
-        
-        f = new FormData();
-        minSize = deleteButton.computeSize(SWT.DEFAULT, SWT.DEFAULT, true);
-        f.width = Math.max(widthHint, minSize.x);
-        f.right = new FormAttachment(deleteButton, -10);
-        f.bottom = new FormAttachment(100, -10);
-        createButton.setLayoutData(f);
-        
-        f = new FormData();
-        f.top = new FormAttachment(directory, 10);
-        f.left = new FormAttachment(0, 0);
-        f.right = new FormAttachment(100, 0);
-        f.bottom = new FormAttachment(createButton, -10);
-        fileList.setLayoutData(f);
-	
-        setControl(container);
-		loadFileList();
-		validateDirectory();
+	private SelectionListener onRefreshPressed() {
+		return new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				asyncGetKeys(cloud);
+			}
+		};
+	}
+
+	private SelectionListener onNewPressed() {
+		return new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				Display display = Display.getDefault();
+				Shell shell = new Shell(display);
+				// String directoryText = directory.getText();
+				InputDialog d = new InputDialog(shell, WizardMessages.getString(CREATE_KEY_TITLE),
+						WizardMessages.getString(CREATE_KEY_MSG), "", new UniqueKeyIdConstraint());
+				d.setBlockOnOpen(true);
+				d.create();
+				if (d.open() == InputDialog.OK) {
+					String keyId = d.getValue();
+					createkey(keyId);
+				}
+			}
+		};
+	}
+
+	private void asyncGetKeys(final DeltaCloud cloud) {
+		// TODO: internationalize strings
+		new AbstractCloudElementJob("get keys", cloud, CLOUDELEMENT.KEYS) {
+
+			protected IStatus doRun(IProgressMonitor monitor) throws Exception {
+				try {
+					keys = new ArrayList<DeltaCloudKey>();
+					keys.addAll(Arrays.asList(cloud.getKeys()));
+					setKeysToList(keys);
+					return Status.OK_STATUS;
+				} catch (DeltaCloudException e) {
+					// TODO: internationalize strings
+					return StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID,
+							MessageFormat.format("Could not get keys from cloud {0}", cloud.getName()), e);
+				}
+			}
+
+		}.schedule();
+	}
+
+	private String[] toKeyIds(java.util.List<DeltaCloudKey> keys) {
+		ArrayList<String> keyId = new ArrayList<String>();
+		for (DeltaCloudKey key : keys) {
+			keyId.add(key.getId());
+		}
+		return keyId.toArray(new String[keyId.size()]);
+	}
+
+	private void setKeysToList(java.util.List<DeltaCloudKey> keys) {
+		final String[] keyIds = toKeyIds(keys);
+		keyList.getDisplay().asyncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				if (keyIds.length == 0) {
+					keyList.setItems(new String[] { "There are no keys..." });
+				} else {
+					keyList.setItems(keyIds);
+				}
+				keyList.setEnabled(keyIds.length > 0);
+			}
+		});
+	}
+
+	private DeltaCloudKey getKey(String keyId) {
+		if (keys == null
+				|| keyId == null) {
+			return null;
+		}
+		DeltaCloudKey matchingKey = null;
+		for (DeltaCloudKey key : keys) {
+			if (keyId.equals(key.getId())) {
+				matchingKey = key;
+				break;
+			}
+		}
+		return matchingKey;
+	}
+
+	private void createkey(final String keyId) {
+		try {
+			getWizard().getContainer().run(true, true, new IRunnableWithProgress() {
+
+				@Override
+				public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+					try {
+						DeltaCloudKey key = cloud.createKey(keyId);
+						keys.add(key);
+						setKeysToList(keys);
+						setSelection(key);
+					} catch (Exception e) {
+						throw new InvocationTargetException(e);
+					}
+				}
+			});
+		} catch (Exception e) {
+			// TODO: internationalize strings
+			ErrorUtils.handleError(
+					"Error",
+					MessageFormat.format("Error", "Could not create key \"{0}\"", keyId), e,
+					getShell());
+		}
+	}
+
+	private void deleteKey(final DeltaCloudKey key) {
+		try {
+			getWizard().getContainer().run(true, true, new IRunnableWithProgress() {
+
+				@Override
+				public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+					try {
+						cloud.deleteKey(key.getId());
+						keys.remove(key);
+						getShell().getDisplay().syncExec(new Runnable() {
+							
+							@Override
+							public void run() {
+								keyList.remove(key.getId());
+							}
+						});
+					} catch (Exception e) {
+						throw new InvocationTargetException(e);
+					}
+				}
+			});
+		} catch (Exception e) {
+			// TODO: internationalize strings
+			ErrorUtils.handleError(
+					"Error",
+					MessageFormat.format("Error", "Could not create key \"{0}\"", key.getId()), e,
+					getShell());
+		}
+	}
+
+	private void setSelection(final DeltaCloudKey key) {
+		getShell().getDisplay().syncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				keyList.setSelection(new String[] { key.getId() });
+				keyList.showSelection();
+			}
+		});
 	}
 
 }

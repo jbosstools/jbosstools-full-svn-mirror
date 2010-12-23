@@ -55,6 +55,7 @@ import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudHardwareProfile;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
+import org.jboss.tools.deltacloud.core.DeltaCloudKey;
 import org.jboss.tools.deltacloud.core.DeltaCloudRealm;
 import org.jboss.tools.deltacloud.core.Driver;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
@@ -106,14 +107,14 @@ public class NewInstancePage extends WizardPage {
 
 		public void widgetSelected(SelectionEvent event) {
 			Shell shell = getShell();
-			ManageKeysWizard wizard = new ManageKeysWizard(cloud, ".pem"); //$NON-NLS-1$
+			ManageKeysWizard wizard = new ManageKeysWizard(cloud); //$NON-NLS-1$
 			WizardDialog dialog = new CustomWizardDialog(shell, wizard,
 					IDialogConstants.OK_LABEL);
 			dialog.create();
 			dialog.open();
-			String keyname = wizard.getKeyName();
-			if (keyname != null) {
-				keyText.setText(keyname);
+			DeltaCloudKey key = wizard.getKey();
+			if (key != null) {
+				keyText.setText(key.getId());
 			}
 		}
 	};
