@@ -10,20 +10,21 @@
  ******************************************************************************/
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
-import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
+import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.UpdateListStrategy;
+import org.eclipse.core.databinding.UpdateSetStrategy;
+import org.eclipse.core.databinding.UpdateValueStrategy;
+import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.core.databinding.conversion.Converter;
+import org.eclipse.core.runtime.Assert;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
-import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -35,15 +36,11 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
-import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
-import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudKey;
-import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob;
-import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob.CLOUDELEMENT;
-import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
+import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.BoundObjectPresentConverter;
 
 /**
  * @author Jeff Johnston
@@ -61,21 +58,51 @@ public class ManageKeysPage extends WizardPage {
 	private final static String CONFIRM_KEY_DELETE_TITLE = "ConfirmKeyDelete.title"; //$NON-NLS-1$
 	private final static String CONFIRM_KEY_DELETE_MSG = "ConfirmKeyDelete.msg"; //$NON-NLS-1$
 
-	private DeltaCloud cloud;
 	private List keyList;
-	private java.util.List<DeltaCloudKey> keys;
-	private DeltaCloudKey selectedKey;
+	private ManageKeysPageModel model;
+
+	private class Key2IdConverter extends Converter {
+
+		public Key2IdConverter() {
+			super(Object.class, String.class);
+		}
+
+		@Override
+		public Object convert(Object fromObject) {
+			if (fromObject == null) {
+				return null;
+			}
+			Assert.isTrue(fromObject instanceof DeltaCloudKey);
+			return ((DeltaCloudKey) fromObject).getId();
+		}
+
+	}
+
+	private class Id2KeyConverter extends Converter {
+
+		public Id2KeyConverter() {
+			super(String.class, DeltaCloudKey.class);
+		}
+
+		@Override
+		public Object convert(Object fromObject) {
+			if (fromObject == null) {
+				return null;
+			}
+			Assert.isTrue(fromObject instanceof String);
+			return model.getKey((String) fromObject);
+		}
+	}
 
 	private class UniqueKeyIdConstraint implements IInputValidator {
 
 		@Override
 		public String isValid(String keyId) {
-			if (keys == null
-						|| keyId == null) {
+			if (keyId == null) {
 				return null;
 			}
 
-			for (DeltaCloudKey key : keys) {
+			for (DeltaCloudKey key : model.getKeys()) {
 				if (keyId.equals(key.getId())) {
 					// TODO: internationalize string
 					return "Key id is already used, please choose another id.";
@@ -85,19 +112,9 @@ public class ManageKeysPage extends WizardPage {
 		}
 	}
 
-	private SelectionListener keyListListener = new SelectionAdapter() {
-
-		@Override
-		public void widgetSelected(SelectionEvent e) {
-			String selectedKeyName = keyList.getItem(keyList.getSelectionIndex());
-			selectedKey = getKey(selectedKeyName);
-			setPageComplete(selectedKey != null);
-		}
-	};
-
 	public ManageKeysPage(DeltaCloud cloud) {
 		super(WizardMessages.getString(NAME));
-		this.cloud = cloud;
+		this.model = new ManageKeysPageModel(cloud);
 		setDescription(WizardMessages.getString(DESC));
 		setTitle(WizardMessages.getString(TITLE));
 		setImageDescriptor(SWTImagesFactory.DESC_DELTA_LARGE);
@@ -105,20 +122,23 @@ public class ManageKeysPage extends WizardPage {
 	}
 
 	public DeltaCloudKey getKey() {
-		return selectedKey;
+		return model.getSelectedKey();
 	}
 
 	@Override
 	public void createControl(Composite parent) {
-		setPageComplete(false);
-		final Composite container = new Composite(parent, SWT.NULL);
+		DataBindingContext dbc = new DataBindingContext();
+		// WizardPageSupport.create(this, dbc);
+
+		bindWizardComplete(dbc);
+		Composite container = new Composite(parent, SWT.NULL);
 		GridLayoutFactory.fillDefaults().numColumns(4).equalWidth(false).applyTo(container);
 
-		keyList = new List(container, SWT.BORDER | SWT.SINGLE | SWT.V_SCROLL);
-		keyList.addSelectionListener(keyListListener);
+		this.keyList = createKeyList(dbc, container);
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.FILL).grab(true, true).span(4, 5).applyTo(keyList);
 
 		Button refreshButton = new Button(container, SWT.NULL);
+		// TODO: Internationalize strings
 		refreshButton.setText("Refresh keys");
 		refreshButton.addSelectionListener(onRefreshPressed());
 		GridDataFactory.fillDefaults().applyTo(refreshButton);
@@ -127,19 +147,82 @@ public class ManageKeysPage extends WizardPage {
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(dummyLabel);
 
 		Button createButton = new Button(container, SWT.NULL);
-		// TODO: internationalize string
 		createButton.setText(WizardMessages.getString(NEW));
 		createButton.addSelectionListener(onNewPressed());
 		GridDataFactory.fillDefaults().applyTo(createButton);
 
-		Button deleteButton = new Button(container, SWT.NULL);
-		deleteButton.setText(WizardMessages.getString(DELETE));
-		deleteButton.addSelectionListener(onDeletePressed());
+		Button deleteButton = createDeleteButton(container, dbc);
 		GridDataFactory.fillDefaults().applyTo(deleteButton);
 
 		setControl(container);
-		asyncGetKeys(cloud);
-		setPageComplete(false);
+	}
+
+	private Button createDeleteButton(Composite container, DataBindingContext dbc) {
+		Button deleteButton = new Button(container, SWT.NULL);
+		deleteButton.setText(WizardMessages.getString(DELETE));
+		deleteButton.addSelectionListener(onDeletePressed());
+		// bind enablement
+		dbc.bindValue(
+				WidgetProperties.enabled().observe(deleteButton),
+				BeanProperties.value(ManageKeysPageModel.PROP_SELECTED_KEY).observe(model),
+				new UpdateValueStrategy(UpdateSetStrategy.POLICY_NEVER),
+				new UpdateValueStrategy().setConverter(new BoundObjectPresentConverter()));
+		return deleteButton;
+	}
+
+	private void bindWizardComplete(DataBindingContext dbc) {
+		dbc.bindValue(
+				BeanProperties.value("pageComplete").observe(this),
+				BeanProperties.value(ManageKeysPageModel.PROP_SELECTED_KEY).observe(model),
+				new UpdateValueStrategy(UpdateSetStrategy.POLICY_NEVER),
+				new UpdateValueStrategy().setConverter(new BoundObjectPresentConverter()));
+	}
+
+	private List createKeyList(DataBindingContext dbc, Composite container) {
+		final List keyList = new List(container, SWT.BORDER | SWT.SINGLE | SWT.V_SCROLL);
+		// bind items
+		dbc.bindList(
+				WidgetProperties.items().observe(keyList),
+				BeanProperties.list(ManageKeysPageModel.PROP_KEYS).observe(model),
+				new UpdateListStrategy(UpdateSetStrategy.POLICY_NEVER),
+				new UpdateListStrategy().setConverter(new Key2IdConverter()));
+		// bind selected key
+		dbc.bindValue(WidgetProperties.selection().observe(keyList),
+				BeanProperties.value(ManageKeysPageModel.PROP_SELECTED_KEY).observe(model),
+				new UpdateValueStrategy().setConverter(new Id2KeyConverter()),
+				new UpdateValueStrategy().setConverter(new Key2IdConverter()));
+		bindKeyListEnablement(keyList, dbc);
+		return keyList;
+	}
+
+	private void bindKeyListEnablement(final List keyList, DataBindingContext dbc) {
+		dbc.bindValue(WidgetProperties.enabled().observe(keyList),
+				BeanProperties.value(ManageKeysPageModel.PROP_KEYS).observe(model),
+				new UpdateValueStrategy(UpdateSetStrategy.POLICY_NEVER),
+				new UpdateValueStrategy().setConverter(new Converter(java.util.List.class, Boolean.class) {
+
+					@SuppressWarnings("rawtypes")
+					@Override
+					public Object convert(Object fromObject) {
+						if (fromObject == null) {
+							System.err.println("key list enablement = false");
+							return false;
+						}
+						System.err.println("key list enablement = " + (((java.util.List) fromObject).size() > 0));
+						return ((java.util.List) fromObject).size() > 0;
+					}
+				}));
+		// BeanProperties.value(ManageKeysPageModel.PROP_KEYS).observe(model).addValueChangeListener(
+		// new IValueChangeListener() {
+		//
+		// @Override
+		// public void handleValueChange(ValueChangeEvent event) {
+		// @SuppressWarnings("rawtypes")
+		// boolean keysPresent = ((java.util.List)
+		// event.diff.getNewValue()).size() > 0;
+		// keyList.setEnabled(keysPresent);
+		// }
+		// });
 	}
 
 	private SelectionAdapter onDeletePressed() {
@@ -148,9 +231,9 @@ public class ManageKeysPage extends WizardPage {
 			public void widgetSelected(SelectionEvent event) {
 				boolean confirmed = MessageDialog.openConfirm(getShell(),
 						WizardMessages.getString(CONFIRM_KEY_DELETE_TITLE),
-						WizardMessages.getFormattedString(CONFIRM_KEY_DELETE_MSG, selectedKey.getId()));
+						WizardMessages.getFormattedString(CONFIRM_KEY_DELETE_MSG, model.getSelectedKey().getId()));
 				if (confirmed) {
-					deleteKey(selectedKey);
+					deleteKey();
 				}
 			}
 		};
@@ -161,7 +244,7 @@ public class ManageKeysPage extends WizardPage {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				asyncGetKeys(cloud);
+				model.refreshKeys();
 			}
 		};
 	}
@@ -180,87 +263,15 @@ public class ManageKeysPage extends WizardPage {
 				d.create();
 				if (d.open() == InputDialog.OK) {
 					String keyId = d.getValue();
-					createkey(keyId);
+					createKey(keyId);
 				}
 			}
 		};
 	}
 
-	private void asyncGetKeys(final DeltaCloud cloud) {
-		// TODO: internationalize strings
-		new AbstractCloudElementJob("get keys", cloud, CLOUDELEMENT.KEYS) {
-
-			protected IStatus doRun(IProgressMonitor monitor) throws Exception {
-				try {
-					keys = new ArrayList<DeltaCloudKey>();
-					keys.addAll(Arrays.asList(cloud.getKeys()));
-					setKeysToList(keys);
-					return Status.OK_STATUS;
-				} catch (DeltaCloudException e) {
-					// TODO: internationalize strings
-					return StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID,
-							MessageFormat.format("Could not get keys from cloud {0}", cloud.getName()), e);
-				}
-			}
-
-		}.schedule();
-	}
-
-	private String[] toKeyIds(java.util.List<DeltaCloudKey> keys) {
-		ArrayList<String> keyId = new ArrayList<String>();
-		for (DeltaCloudKey key : keys) {
-			keyId.add(key.getId());
-		}
-		return keyId.toArray(new String[keyId.size()]);
-	}
-
-	private void setKeysToList(java.util.List<DeltaCloudKey> keys) {
-		final String[] keyIds = toKeyIds(keys);
-		keyList.getDisplay().asyncExec(new Runnable() {
-
-			@Override
-			public void run() {
-				if (keyIds.length == 0) {
-					keyList.setItems(new String[] { "There are no keys..." });
-				} else {
-					keyList.setItems(keyIds);
-				}
-				keyList.setEnabled(keyIds.length > 0);
-			}
-		});
-	}
-
-	private DeltaCloudKey getKey(String keyId) {
-		if (keys == null
-				|| keyId == null) {
-			return null;
-		}
-		DeltaCloudKey matchingKey = null;
-		for (DeltaCloudKey key : keys) {
-			if (keyId.equals(key.getId())) {
-				matchingKey = key;
-				break;
-			}
-		}
-		return matchingKey;
-	}
-
-	private void createkey(final String keyId) {
+	private void createKey(final String keyId) {
 		try {
-			getWizard().getContainer().run(true, true, new IRunnableWithProgress() {
-
-				@Override
-				public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-					try {
-						DeltaCloudKey key = cloud.createKey(keyId);
-						keys.add(key);
-						setKeysToList(keys);
-						setSelection(key);
-					} catch (Exception e) {
-						throw new InvocationTargetException(e);
-					}
-				}
-			});
+			model.createKey(keyId);
 		} catch (Exception e) {
 			// TODO: internationalize strings
 			ErrorUtils.handleError(
@@ -270,45 +281,15 @@ public class ManageKeysPage extends WizardPage {
 		}
 	}
 
-	private void deleteKey(final DeltaCloudKey key) {
+	private void deleteKey() {
 		try {
-			getWizard().getContainer().run(true, true, new IRunnableWithProgress() {
-
-				@Override
-				public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
-					try {
-						cloud.deleteKey(key.getId());
-						keys.remove(key);
-						getShell().getDisplay().syncExec(new Runnable() {
-							
-							@Override
-							public void run() {
-								keyList.remove(key.getId());
-							}
-						});
-					} catch (Exception e) {
-						throw new InvocationTargetException(e);
-					}
-				}
-			});
+			model.deleteSelectedKey();
 		} catch (Exception e) {
 			// TODO: internationalize strings
 			ErrorUtils.handleError(
 					"Error",
-					MessageFormat.format("Error", "Could not create key \"{0}\"", key.getId()), e,
+					MessageFormat.format("Error", "Could not create key \"{0}\"", model.getSelectedKey().getId()), e,
 					getShell());
 		}
 	}
-
-	private void setSelection(final DeltaCloudKey key) {
-		getShell().getDisplay().syncExec(new Runnable() {
-
-			@Override
-			public void run() {
-				keyList.setSelection(new String[] { key.getId() });
-				keyList.showSelection();
-			}
-		});
-	}
-
 }

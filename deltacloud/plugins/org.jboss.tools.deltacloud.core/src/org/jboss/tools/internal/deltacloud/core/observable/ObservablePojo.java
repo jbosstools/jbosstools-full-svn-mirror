@@ -30,6 +30,10 @@ public abstract class ObservablePojo {
 		propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
 	}
 	
+    public void fireIndexedPropertyChange(String propertyName, int index, Object oldValue, Object newValue) {
+    	propertyChangeSupport.fireIndexedPropertyChange(propertyName, index, oldValue, newValue);
+    }
+	
 	public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
 		propertyChangeSupport.addPropertyChangeListener(propertyName, listener);
 	}

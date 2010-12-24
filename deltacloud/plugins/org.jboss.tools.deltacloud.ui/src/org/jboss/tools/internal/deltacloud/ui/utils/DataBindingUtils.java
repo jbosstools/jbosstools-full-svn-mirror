@@ -15,6 +15,8 @@ import java.util.Collection;
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.observable.IChangeListener;
 import org.eclipse.core.databinding.observable.IObservable;
+import org.eclipse.core.databinding.observable.list.IListChangeListener;
+import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.IValueChangeListener;
 import org.eclipse.swt.events.DisposeEvent;
@@ -95,4 +97,27 @@ public class DataBindingUtils {
 		});
 	}
 
+	/**
+	 * Adds the given value change listener to the given observable. Listens for
+	 * disposal of the given control and removes the listener when it gets
+	 * disposed.
+	 * 
+	 * @param listener
+	 *            the listener to add to the given observable
+	 * @param observable
+	 *            the observable to add the listener to
+	 * @param control
+	 *            the control to listen to disposal to
+	 */
+	public static void addListChangeListener(final IListChangeListener listener, final IObservableList observable,
+			Control control) {
+		observable.addListChangeListener(listener);
+		control.addDisposeListener(new DisposeListener() {
+
+			@Override
+			public void widgetDisposed(DisposeEvent e) {
+				observable.removeListChangeListener(listener);
+			}
+		});
+	}
 }
