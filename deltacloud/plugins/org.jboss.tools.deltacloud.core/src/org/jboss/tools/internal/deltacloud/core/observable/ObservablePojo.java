@@ -25,8 +25,7 @@ public abstract class ObservablePojo {
 		this.propertyChangeSupport = new PropertyChangeSupport(this);
 	}
 
-	public void firePropertyChange(String propertyName, 
-			Object oldValue, Object newValue) {
+	public void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
 		propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
 	}
 	

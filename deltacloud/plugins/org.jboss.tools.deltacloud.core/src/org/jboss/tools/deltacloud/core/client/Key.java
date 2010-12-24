@@ -19,7 +19,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * @author Andre Dietisheim
  */
-@XmlRootElement
 public class Key extends AbstractDeltaCloudObject {
 
 	private static final long serialVersionUID = 1L;
