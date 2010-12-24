@@ -205,10 +205,8 @@ public class ManageKeysPage extends WizardPage {
 					@Override
 					public Object convert(Object fromObject) {
 						if (fromObject == null) {
-							System.err.println("key list enablement = false");
 							return false;
 						}
-						System.err.println("key list enablement = " + (((java.util.List) fromObject).size() > 0));
 						return ((java.util.List) fromObject).size() > 0;
 					}
 				}));

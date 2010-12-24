@@ -25,12 +25,12 @@ import org.jboss.tools.deltacloud.core.DeltaCloudKey;
 import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob;
 import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob.CLOUDELEMENT;
 import org.jboss.tools.deltacloud.ui.Activator;
-import org.jboss.tools.internal.deltacloud.core.observable.ObservablePojo;
+import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.ObservableUIPojo;
 
 /**
  * @author André Dietisheim
  */
-public class ManageKeysPageModel extends ObservablePojo {
+public class ManageKeysPageModel extends ObservableUIPojo {
 
 	public static final String PROP_SELECTED_KEY = "selectedKey";
 	public static final String PROP_KEYS = "keys";
@@ -101,10 +101,10 @@ public class ManageKeysPageModel extends ObservablePojo {
 		return keys;
 	}
 
-	public void setKeys(List<DeltaCloudKey> keys) {
-		firePropertyChange(PROP_KEYS, this.keys, this.keys = keys);
+	public void setKeys(List<DeltaCloudKey> newKeys) {
+		firePropertyChange(PROP_KEYS, keys, keys = newKeys);
 	}
-	
+
 	public DeltaCloudKey getKey(String keyId) {
 		if (keys == null
 				|| keyId == null) {

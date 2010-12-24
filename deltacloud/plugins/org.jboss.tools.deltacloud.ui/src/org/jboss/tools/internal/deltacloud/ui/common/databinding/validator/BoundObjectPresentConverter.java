@@ -23,8 +23,6 @@ public class BoundObjectPresentConverter extends Converter {
 
 	@Override
 	public Object convert(Object fromObject) {
-		System.err.println("returning = " + (fromObject != null));
 		return fromObject != null;
 	}
-
 }
