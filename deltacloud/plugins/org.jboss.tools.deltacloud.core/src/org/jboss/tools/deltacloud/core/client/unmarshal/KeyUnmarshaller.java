@@ -66,7 +66,8 @@ public class KeyUnmarshaller extends AbstractDOMUnmarshaller<Key> {
 			// Complete white-space lines are to be ignored.
 			String trimmedLine = line.trim();
 			if (trimmedLine.length() > 0) {
-				sb.append(trimmedLine).append('\n');
+//				sb.append(trimmedLine).append('\n');
+				sb.append(trimmedLine);
 			}
 		}
 		return sb.toString();
