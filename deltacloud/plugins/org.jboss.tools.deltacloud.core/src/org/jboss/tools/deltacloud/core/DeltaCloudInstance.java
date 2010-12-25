@@ -105,10 +105,16 @@ public class DeltaCloudInstance extends AbstractDeltaCloudElement {
 		return State.valueOf(instance.getState().name());
 	}
 
-	public String getKey() {
-		return instance.getKey();
+	public DeltaCloudKey getKey() throws DeltaCloudException {
+		// TODO: cache keys locally
+		DeltaCloud cloud = getDeltaCloud();
+		return cloud.getKey(instance.getKeyId());
 	}
 
+	public String getKeyId() {
+		return instance.getKeyId();
+	}
+	
 	public List<Action> getActions() {
 		List<Action> actions = new ArrayList<Action>();
 		for (InstanceAction action : instance.getActions()) {
@@ -189,7 +195,7 @@ public class DeltaCloudInstance extends AbstractDeltaCloudElement {
 				.append("name: ").append(getName())
 				.append("hostName: ").append(getHostName())
 				.append("imageId: ").append(getImageId())
-				.append("key: ").append(getKey())
+				.append("key: ").append(getKeyId())
 				.append("ownerId: ").append(getOwnerId())
 				.append("profileId: ").append(getProfileId())
 				.append("realmId: ").append(getRealmId())

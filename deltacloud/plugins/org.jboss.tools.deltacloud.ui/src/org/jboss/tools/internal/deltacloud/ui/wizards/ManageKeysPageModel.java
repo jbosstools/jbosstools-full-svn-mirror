@@ -61,12 +61,13 @@ public class ManageKeysPageModel extends ObservableUIPojo {
 		setSelectedKey(index - 1);
 	}
 
-	public void createKey(String keyId) throws DeltaCloudException {
+	public DeltaCloudKey createKey(String keyId) throws DeltaCloudException {
 		DeltaCloudKey key = cloud.createKey(keyId);
 		keys.add(key);
 		int index = keys.indexOf(key);
 		fireIndexedPropertyChange(PROP_KEYS, index, null, key);
 		setSelectedKey(key);
+		return key;
 	}
 
 	public DeltaCloudKey getSelectedKey() {

@@ -23,22 +23,22 @@ import java.util.regex.PatternSyntaxException;
  */
 public class InstanceFilter extends AbstractCloudElementFilter<DeltaCloudInstance> implements IInstanceFilter {
 
-	public InstanceFilter(DeltaCloud cloud) {
-		super(cloud);
-	}
-
 	private IFieldMatcher imageIdRule;
 	private IFieldMatcher realmRule;
 	private IFieldMatcher profileRule;
 	private IFieldMatcher ownerIdRule;
 	private IFieldMatcher keyNameRule;
+
+	public InstanceFilter(DeltaCloud cloud) {
+		super(cloud);
+	}
 	
 	@Override
 	public boolean matches(DeltaCloudInstance instance) {
 		return super.matches(instance) &&
 		imageIdRule.matches(instance.getImageId()) &&
 		ownerIdRule.matches(instance.getOwnerId()) &&
-		keyNameRule.matches(instance.getKey()) &&
+		keyNameRule.matches(instance.getKeyId()) &&
 		realmRule.matches(instance.getRealmId()) &&
 		profileRule.matches(instance.getProfileId());
 	}

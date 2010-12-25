@@ -15,11 +15,9 @@ import java.util.List;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
-import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
 import org.jboss.tools.deltacloud.ui.views.cloud.InstanceItem;
-import org.jboss.tools.internal.deltacloud.ui.utils.CloudViewElementUtils;
 
 public class InstancePropertySource implements IPropertySource {
 
@@ -44,10 +42,8 @@ public class InstancePropertySource implements IPropertySource {
 
 	private IPropertyDescriptor[] propertyDescriptors;
 	private DeltaCloudInstance instance;
-	private DeltaCloud cloud;
 
 	public InstancePropertySource(InstanceItem element, Object o) {
-		cloud = CloudViewElementUtils.getCloud(element);
 		instance = (DeltaCloudInstance) o;
 	}
 
@@ -134,7 +130,7 @@ public class InstancePropertySource implements IPropertySource {
 		// a mock and then refresh the instance? investigate what are the
 		// consequences of uncommenting this stuff here
 		// try {
-		key = instance.getKey();
+		key = instance.getKeyId();
 		// if (!cloud.getType().equals(DeltaCloud.MOCK_TYPE)) {
 		// if (instance.getState().equals(DeltaCloudInstance.State.RUNNING) &&
 		// (key == null || key.length() == 0)) {

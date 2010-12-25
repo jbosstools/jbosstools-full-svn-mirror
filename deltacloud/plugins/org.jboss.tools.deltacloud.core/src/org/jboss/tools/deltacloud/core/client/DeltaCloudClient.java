@@ -125,20 +125,6 @@ public interface DeltaCloudClient {
 			String memory, String storage) throws DeltaCloudClientException;
 
 	/**
-	 * Creates a key for a given name on the deltacloud server and stores it in
-	 * the file at the given path. The file gets created if the file path does
-	 * not exist yet.
-	 * 
-	 * @param keyname
-	 *            the name of the key to retrieve from the server
-	 * @param keyStoreLocation
-	 *            the path to the file to store the key in
-	 * @throws DeltaCloudClientException
-	 *             the delta cloud client exception
-	 */
-	public void createKey(String keyname, String keystoreLocation) throws DeltaCloudClientException;
-
-	/**
 	 * Creates a key for a given name on the deltacloud server.
 	 * 
 	 * @param keyname
@@ -172,5 +158,5 @@ public interface DeltaCloudClient {
 	 * Returns a key with the given name if it is available on the server.
 	 * Throws a DeltaCloudException if it is not available.
 	 */
-	public Key listKey(String name) throws DeltaCloudClientException;
+	public Key listKey(String id) throws DeltaCloudClientException;
 }

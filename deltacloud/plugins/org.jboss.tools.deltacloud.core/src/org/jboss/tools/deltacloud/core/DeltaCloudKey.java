@@ -41,4 +41,10 @@ public class DeltaCloudKey extends AbstractDeltaCloudElement {
 	public String getPem() {
 		return key.getPem();
 	}
+
+	@Override
+	public String toString() {
+		return "DeltaCloudKey [key=" + key + "]";
+	}
+
 }

@@ -237,7 +237,7 @@ public class NewInstancePage extends WizardPage {
 		bindProfileCombo(hardwareCombo, dbc);
 		bindProfilePages(hardwareCombo, profilePages, dbc);
 		// key
-		bindText(keyText, NewInstancePageModel.PROPERTY_KEYNAME, WizardMessages.getString(MUST_ENTER_A_KEYNAME), dbc);
+		bindText(keyText, NewInstancePageModel.PROPERTY_KEYID, WizardMessages.getString(MUST_ENTER_A_KEYNAME), dbc);
 	}
 
 	private void bindArchLabel(IObservableValue imageObservable, DataBindingContext dbc) {

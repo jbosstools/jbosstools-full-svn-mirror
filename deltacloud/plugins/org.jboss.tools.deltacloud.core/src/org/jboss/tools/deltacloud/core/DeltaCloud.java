@@ -422,11 +422,13 @@ public class DeltaCloud extends ObservablePojo {
 		}
 	}
 
-	public void createKey(String keyname, String keystoreLocation) throws DeltaCloudException {
+	public DeltaCloudKey getKey(String keyId) throws DeltaCloudException {
 		try {
-			client.createKey(keyname, keystoreLocation);
+			Key key = client.listKey(keyId);
+			return new DeltaCloudKey(key, this);
 		} catch (DeltaCloudClientException e) {
-			throw new DeltaCloudException(e);
+			// TODO: internationalize strings
+			throw new DeltaCloudException(MessageFormat.format("Could not get key \"{0}\" from cloud \"{1}\"", keyId, getName()), e);
 		}
 	}
 
@@ -547,11 +549,11 @@ public class DeltaCloud extends ObservablePojo {
 	}
 
 	public DeltaCloudInstance createInstance(String name, String imageId, String realmId, String profileId,
-			String keyname, String memory, String storage) throws DeltaCloudException {
+			String keyId, String memory, String storage) throws DeltaCloudException {
 		try {
 			Instance instance = null;
-			if (keyname != null) {
-				instance = client.createInstance(imageId, profileId, realmId, name, keyname, memory, storage);
+			if (keyId != null) {
+				instance = client.createInstance(imageId, profileId, realmId, name, keyId, memory, storage);
 			} else {
 				instance = client.createInstance(imageId, profileId, realmId, name, memory, storage);
 			}

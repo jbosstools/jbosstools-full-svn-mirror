@@ -31,7 +31,7 @@ public class NewInstancePageModel extends ObservableUIPojo {
 	public static final String PROPERTY_ARCH = "arch"; //$NON-NLS-1$
 	public static final String PROPERTY_REALMS = "realms"; //$NON-NLS-1$
 	public static final String PROPERTY_SELECTED_REALM_INDEX = "selectedRealmIndex"; //$NON-NLS-1$
-	public static final String PROPERTY_KEYNAME = "keyname"; //$NON-NLS-1$
+	public static final String PROPERTY_KEYID = "keyId"; //$NON-NLS-1$
 	public static final String PROP_PROFILE = "profile"; //$NON-NLS-1$
 	public static final String PROP_ALL_PROFILES = "allProfiles"; //$NON-NLS-1$
 	public static final String PROP_FILTERED_PROFILES = "filteredProfiles"; //$NON-NLS-1$
@@ -40,7 +40,7 @@ public class NewInstancePageModel extends ObservableUIPojo {
 	private String name;
 	private DeltaCloudImage image;
 	private String arch;
-	private String keyname;
+	private String keyId;
 	private DeltaCloudRealm selectedRealm;
 	private List<DeltaCloudRealm> realms = new ArrayList<DeltaCloudRealm>();
 	private DeltaCloudHardwareProfile selectedProfile;
@@ -51,7 +51,7 @@ public class NewInstancePageModel extends ObservableUIPojo {
 	private String memory;
 
 	protected NewInstancePageModel(String keyname, DeltaCloudImage image) {
-		this.keyname = keyname;
+		this.keyId = keyname;
 		this.image = image;
 	}
 
@@ -169,12 +169,12 @@ public class NewInstancePageModel extends ObservableUIPojo {
 		return selectedProfile.getId();
 	}
 
-	public String getKeyname() {
-		return keyname;
+	public String getKeyId() {
+		return keyId;
 	}
 
 	public void setKeyname(String keyname) {
-		getPropertyChangeSupport().firePropertyChange(PROPERTY_KEYNAME, this.keyname, this.keyname = keyname);
+		getPropertyChangeSupport().firePropertyChange(PROPERTY_KEYID, this.keyId, this.keyId = keyname);
 	}
 
 	public String getArch() {

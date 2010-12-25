@@ -14,8 +14,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
 /**
  * @author Andre Dietisheim
  */
@@ -75,4 +73,11 @@ public class Key extends AbstractDeltaCloudObject {
 	public List<KeyAction> getActions() {
 		return actions;
 	}
+
+	@Override
+	public String toString() {
+		return "Key [url=" + url + ", pem=" + pem + ", fingerprint=" + fingerprint + ", state=" + state + ", actions="
+				+ actions + ", toString()=" + super.toString() + "]";
+	}
+
 }

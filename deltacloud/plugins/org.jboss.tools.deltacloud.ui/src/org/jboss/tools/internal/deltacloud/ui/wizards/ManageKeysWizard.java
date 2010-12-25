@@ -48,5 +48,4 @@ public class ManageKeysWizard extends Wizard {
 		this.key = mainPage.getKey();
 		return true;
 	}
-
 }

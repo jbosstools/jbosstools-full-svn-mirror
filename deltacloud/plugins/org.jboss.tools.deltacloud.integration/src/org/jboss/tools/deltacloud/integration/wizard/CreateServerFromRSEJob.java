@@ -36,6 +36,7 @@ public class CreateServerFromRSEJob extends ChainedJob {
 	private String name;
 	private String[] data;
 	private IHost host;
+	
 	public CreateServerFromRSEJob(String type, String[] data, String name) {
 		super("Create Server From RSE Host");
 		this.data = data;

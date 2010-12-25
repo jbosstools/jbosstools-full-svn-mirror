@@ -45,7 +45,7 @@ public class Instance extends AbstractDeltaCloudObject {
 
 	private String realmId;
 
-	private String keyname;
+	private String keyId;
 
 	@XmlElement
 	private InstanceState state;
@@ -107,14 +107,14 @@ public class Instance extends AbstractDeltaCloudObject {
 		}
 	}
 
-	public void setKey(String keyname) {
-		this.keyname = keyname;
+	protected void setKeyId(String keyId) {
+		this.keyId = keyId;
 	}
-
-	public String getKey() {
-		return keyname;
+	
+	public String getKeyId() {
+		return keyId;
 	}
-
+	
 	protected void setPrivateAddresses(AddressList privateAddresses) {
 		this.privateAddresses = privateAddresses;
 	}

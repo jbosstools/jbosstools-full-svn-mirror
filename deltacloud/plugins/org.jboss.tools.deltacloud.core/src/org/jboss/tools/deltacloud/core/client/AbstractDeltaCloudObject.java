@@ -17,6 +17,7 @@ import javax.xml.bind.annotation.XmlAttribute;
  * @author André Dietisheim
  */
 public abstract class AbstractDeltaCloudObject {
+
 	protected String id;
 
 	public void setId(String id) {
@@ -27,4 +28,10 @@ public abstract class AbstractDeltaCloudObject {
 	public String getId() {
 		return id;
 	}
+
+	@Override
+	public String toString() {
+		return "AbstractDeltaCloudObject [id=" + id + "]";
+	}
+
 }

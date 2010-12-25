@@ -87,12 +87,13 @@ public class NewInstanceWizard extends Wizard {
 		String memory = model.getMemory();
 		String storage = model.getStorage();
 
-		String keyname = model.getKeyname();
+		String keyId = model.getKeyId();
+
 		String name = utf8Encode(model.getName());
 
 		// Save persistent settings for this particular cloud
 		cloud.setLastImageId(imageId);
-		cloud.setLastKeyname(keyname);
+		cloud.setLastKeyname(keyId);
 
 		Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
 
@@ -119,7 +120,7 @@ public class NewInstanceWizard extends Wizard {
 					prefs.putBoolean(IDeltaCloudPreferenceConstants.DONT_CONFIRM_CREATE_INSTANCE, true);
 				}
 			}
-			instance = cloud.createInstance(name, imageId, realmId, profileId, keyname, memory, storage);
+			instance = cloud.createInstance(name, imageId, realmId, profileId, keyId, memory, storage);
 			if (instance != null) {
 				result = true;
 			}

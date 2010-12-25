@@ -11,8 +11,6 @@
 package org.jboss.tools.deltacloud.core.client;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -46,7 +44,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.eclipse.core.runtime.Path;
 import org.jboss.tools.deltacloud.core.client.request.AbstractListObjectsRequest;
 import org.jboss.tools.deltacloud.core.client.request.CreateInstanceRequest;
 import org.jboss.tools.deltacloud.core.client.request.CreateKeyRequest;
@@ -78,7 +75,6 @@ import org.xml.sax.SAXException;
  */
 public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 
-	private static final String PEM_FILE_SUFFIX = "pem";
 	private static final String DOCUMENT_ELEMENT_DRIVER = "driver";
 	private static final String DOCUMENT_ELEMENT_API = "api";
 
@@ -299,26 +295,28 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	}
 
 	@Override
-	public Instance createInstance(String imageId, String profileId,
-			String realmId, String name) throws DeltaCloudClientException {
-		return createInstance(imageId, profileId, realmId, name, null, null,
-				null);
-	}
-
-	public Instance createInstance(String imageId, String profileId,
-			String realmId, String name, String memory, String storage)
+	public Instance createInstance(String imageId, String profileId, String realmId, String name)
 			throws DeltaCloudClientException {
-		return createInstance(imageId, profileId, realmId, name, null, memory,
-				storage);
+		return createInstance(imageId, profileId, realmId, name, null, null, null);
 	}
 
-	public Instance createInstance(String imageId, String profileId,
-			String realmId, String name, String keyname, String memory,
+	public Instance createInstance(String imageId, String profileId, String realmId, String name, String memory,
 			String storage) throws DeltaCloudClientException {
+		return createInstance(imageId, profileId, realmId, name, null, memory, storage);
+	}
+
+	public Instance createInstance(String imageId, String profileId, String realmId, String name, String keyId,
+			String memory, String storage) throws DeltaCloudClientException {
 		try {
 			String response = requestStringResponse(
-					new CreateInstanceRequest(baseUrl, imageId, profileId, realmId, name, keyname, memory, storage));
-			return buildInstance(response);
+					new CreateInstanceRequest(baseUrl, imageId, profileId, realmId, name, keyId, memory, storage));
+			Instance instance = buildInstance(response);
+			// TODO: WORKAROUND for https://issues.apache.org/jira/browse/DTACLOUD-11
+			if (keyId != null) {
+				instance.setKeyId(keyId);
+			}
+			// TODO: WORKAROUND for https://issues.apache.org/jira/browse/DTACLOUD-11
+			return instance;
 		} catch (DeltaCloudClientException e) {
 			throw e;
 		} catch (Exception e) {
@@ -403,36 +401,6 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		}
 	}
 
-	public void createKey(String keyname, String keyStoreLocation)
-			throws DeltaCloudClientException {
-		Key key = createKey(keyname);
-		try {
-			File keyFile = createKeyFile(keyname, keyStoreLocation);
-			storeKey(key.getPem(), keyFile);
-		} catch (Exception e) {
-			throw new DeltaCloudClientException(e);
-		}
-	}
-
-	private void storeKey(String key, File keyFile) throws IOException {
-		FileWriter w = new FileWriter(keyFile);
-		w.write(key);
-		w.close();
-	}
-
-	private File createKeyFile(String keyname, String keyStoreLocation)
-			throws IOException {
-		File keyFile = Path.fromOSString(keyStoreLocation).append(keyname)
-				.append(".").append(PEM_FILE_SUFFIX).toFile(); //$NON-NLS-1$
-		if (!keyFile.exists()) {
-			keyFile.createNewFile();
-		}
-		keyFile.setReadable(false, false);
-		keyFile.setWritable(true, true);
-		keyFile.setReadable(true, true);
-		return keyFile;
-	}
-
 	public void deleteKey(String keyname) throws DeltaCloudClientException {
 		requestStringResponse(new DeleteKeyRequest(baseUrl, keyname));
 	}
@@ -444,8 +412,8 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		return keys;
 	}
 
-	public Key listKey(String name) throws DeltaCloudClientException {
-		InputStream inputStream = request(new ListKeyRequest(baseUrl, name));
+	public Key listKey(String id) throws DeltaCloudClientException {
+		InputStream inputStream = request(new ListKeyRequest(baseUrl, id));
 		Key key = new KeyUnmarshaller().unmarshall(inputStream, new Key());
 		return key;
 	}
@@ -459,12 +427,12 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 				getPropertyNodes(document, "hardware_profile")); //$NON-NLS-1$
 		instance.setRealmId(getIdFromHref(getAttributeValues(document, "realm", "href").get(0))); //$NON-NLS-1$ //$NON-NLS-2$
 		instance.setState(getElementTextValues(document, "state").get(0)); //$NON-NLS-1$
-		getAuthentication(document, instance);
+		updateKeyname(document, instance);
 		instance.setActions(createInstanceActions(instance, document));
-		instance.setPublicAddresses(new AddressList(getElementTextValues(
-				document, "public_addresses")));
-		instance.setPrivateAddresses(new AddressList(getElementTextValues(
-				document, "private_addresses")));
+		instance.setPublicAddresses(
+				new AddressList(getElementTextValues(document, "public_addresses")));
+		instance.setPrivateAddresses(
+				new AddressList(getElementTextValues(document, "private_addresses")));
 		return instance;
 	}
 
@@ -621,7 +589,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		return values;
 	}
 
-	private void getAuthentication(Document document, Instance instance) {
+	private void updateKeyname(Document document, Instance instance) {
 		NodeList elements = document.getElementsByTagName("authentication");
 		for (int i = 0; i < elements.getLength(); i++) {
 			Node element = elements.item(i);
@@ -636,7 +604,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 						for (int k = 0; k < loginChildren.getLength(); ++k) {
 							Node loginChild = loginChildren.item(k);
 							if (loginChild.getNodeName().equals("keyname")) { //$NON-NLS-1$
-								instance.setKey(loginChild.getTextContent());
+								instance.setKeyId(loginChild.getTextContent());
 							}
 						}
 					}
