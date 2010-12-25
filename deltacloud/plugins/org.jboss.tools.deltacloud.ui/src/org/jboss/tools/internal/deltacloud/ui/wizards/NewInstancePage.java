@@ -90,7 +90,7 @@ public class NewInstancePage extends WizardPage {
 	private static final String IMAGE_ID_NOT_FOUND = "ErrorImageIdNotFound.text"; //$NON-NLS-1$
 
 	private Composite container;
-	private NewInstanceModel model;
+	private NewInstancePageModel model;
 	private DeltaCloud cloud;
 	private Label arch;
 	private Text nameText;
@@ -138,7 +138,7 @@ public class NewInstancePage extends WizardPage {
 		super(WizardMessages.getString(NAME));
 		this.cloud = cloud;
 		String defaultKeyname = cloud.getLastKeyname();
-		model = new NewInstanceModel(cloud, defaultKeyname, image); //$NON-NLS-1$
+		model = new NewInstancePageModel(cloud, defaultKeyname, image); //$NON-NLS-1$
 		setDescription(WizardMessages.getString(DESCRIPTION));
 		setTitle(WizardMessages.getString(TITLE));
 		setImageDescriptor(SWTImagesFactory.DESC_DELTA_LARGE);
@@ -219,7 +219,7 @@ public class NewInstancePage extends WizardPage {
 	private void bindWidgets(DataBindingContext dbc, Composite container) {
 
 		// name
-		bindText(nameText, NewInstanceModel.PROPERTY_NAME, WizardMessages.getString(MUST_ENTER_A_NAME), dbc);
+		bindText(nameText, NewInstancePageModel.PROPERTY_NAME, WizardMessages.getString(MUST_ENTER_A_NAME), dbc);
 		// image
 		IObservableValue imageObservable = bindImage(imageText, dbc);
 		// arch label
@@ -228,7 +228,7 @@ public class NewInstancePage extends WizardPage {
 		bindProfileCombo(hardwareCombo, dbc);
 		bindProfilePages(hardwareCombo, profilePages, dbc);
 		// key
-		bindText(keyText, NewInstanceModel.PROPERTY_KEYNAME, WizardMessages.getString(MUST_ENTER_A_KEYNAME), dbc);
+		bindText(keyText, NewInstancePageModel.PROPERTY_KEYNAME, WizardMessages.getString(MUST_ENTER_A_KEYNAME), dbc);
 	}
 
 	private void bindArchLabel(IObservableValue imageObservable, DataBindingContext dbc) {
@@ -251,19 +251,27 @@ public class NewInstancePage extends WizardPage {
 	}
 
 	private void bindRealmCombo(final Combo realmCombo, DataBindingContext dbc) {
-		// realm combo enablement
-		IObservableList realmsObservable = BeanProperties.list(NewInstanceModel.PROPERTY_REALMS).observe(model);
-		DataBindingUtils.addChangeListener(new IChangeListener() {
+		dbc.bindList(WidgetProperties.items().observe(realmCombo),
+				BeanProperties.list(NewInstancePageModel.PROPERTY_REALMS).observe(model),
+				new UpdateListStrategy(UpdateListStrategy.POLICY_NEVER),
+				new UpdateListStrategy().setConverter(
+						new Converter(Object.class, String.class) {
 
-			@Override
-			public void handleChange(ChangeEvent event) {
-				realmCombo.setEnabled(areRealmsAvailable());
-			}
-		}, realmsObservable, container);
+							@Override
+							public Object convert(Object fromObject) {
+								Assert.isTrue(fromObject instanceof DeltaCloudRealm);
+								DeltaCloudRealm realm = (DeltaCloudRealm) fromObject;
+								return new StringBuilder()
+										.append(realm.getId())
+										.append(" [").append(realm.getName()).append("]") //$NON-NLS-1$ $NON-NLS-2$ 
+										.toString();
+							}
+						}
+						));
 
 		Binding selectedRealmBinding = dbc.bindValue(
 				WidgetProperties.singleSelectionIndex().observe(realmCombo),
-				BeanProperties.value(NewInstanceModel.class, NewInstanceModel.PROPERTY_SELECTED_REALM_INDEX)
+				BeanProperties.value(NewInstancePageModel.class, NewInstancePageModel.PROPERTY_SELECTED_REALM_INDEX)
 						.observe(model),
 				new UpdateValueStrategy()
 						.setAfterGetValidator(new IValidator() {
@@ -290,72 +298,23 @@ public class NewInstancePage extends WizardPage {
 							}
 						}));
 
-		dbc.bindList(WidgetProperties.items().observe(realmCombo),
-				BeanProperties.list(NewInstanceModel.PROPERTY_REALMS).observe(model),
-				new UpdateListStrategy(UpdateListStrategy.POLICY_NEVER),
-				new UpdateListStrategy().setConverter(
-						new Converter(Object.class, String.class) {
+		// realm combo enablement
+		IObservableList realmsObservable = BeanProperties.list(NewInstancePageModel.PROPERTY_REALMS).observe(model);
+		DataBindingUtils.addChangeListener(new IChangeListener() {
 
-							@Override
-							public Object convert(Object fromObject) {
-								Assert.isTrue(fromObject instanceof DeltaCloudRealm);
-								DeltaCloudRealm realm = (DeltaCloudRealm) fromObject;
-								return new StringBuilder()
-										.append(realm.getId())
-										.append(" [").append(realm.getName()).append("]") //$NON-NLS-1$ $NON-NLS-2$ 
-										.toString();
-							}
-						}
-						));
+			@Override
+			public void handleChange(ChangeEvent event) {
+				realmCombo.setEnabled(areRealmsAvailable());
+			}
+		}, realmsObservable, container);
+
 		ControlDecorationSupport.create(selectedRealmBinding, SWT.LEFT | SWT.TOP);
 	}
 
 	private void bindProfileCombo(final Combo profileCombo, DataBindingContext dbc) {
-		// bind combo enablement
-		IObservableList filteredProfilesObservable =
-				BeanProperties.list(NewInstanceModel.PROPERTY_FILTERED_PROFILES).observe(model);
-		DataBindingUtils.addChangeListener(
-				new IChangeListener() {
-
-					@Override
-					public void handleChange(ChangeEvent event) {
-						profileCombo.setEnabled(areProfilesAvailable());
-					}
-				}, filteredProfilesObservable, container);
-
-		// bind selected combo item
-		Binding selectedProfileBinding = dbc.bindValue(
-				WidgetProperties.singleSelectionIndex().observe(profileCombo),
-				BeanProperties.value(NewInstanceModel.class, NewInstanceModel.PROPERTY_SELECTED_PROFILE_INDEX).observe(
-						model),
-				new UpdateValueStrategy()
-						.setAfterGetValidator(new IValidator() {
-
-							@Override
-							public IStatus validate(Object value) {
-								if (areProfilesAvailable() &&
-										!isValidComboIndex(value)) {
-									// TODO: internationalize strings
-									return ValidationStatus.error("You must select a hardware profile.");
-								}
-								return ValidationStatus.ok();
-							}
-						}),
-				new UpdateValueStrategy()
-						.setAfterGetValidator(new IValidator() {
-
-							@Override
-							public IStatus validate(Object value) {
-								if (value == null) {
-									ValidationStatus.error("You must select a hardware profile");
-								}
-								return ValidationStatus.ok();
-							}
-						}));
-
 		// bind combo items
 		dbc.bindList(WidgetProperties.items().observe(profileCombo),
-				BeanProperties.list(NewInstanceModel.PROPERTY_FILTERED_PROFILES).observe(model),
+				BeanProperties.list(NewInstancePageModel.PROPERTY_FILTERED_PROFILES).observe(model),
 				new UpdateListStrategy(UpdateListStrategy.POLICY_NEVER),
 				new UpdateListStrategy().setConverter(
 						new Converter(Object.class, String.class) {
@@ -368,16 +327,62 @@ public class NewInstancePage extends WizardPage {
 							}
 						}
 						));
+
+		// bind selected combo item
+		Binding selectedProfileBinding = dbc.bindValue(
+				WidgetProperties.singleSelectionIndex().observe(profileCombo),
+				BeanProperties.value(NewInstancePageModel.class, NewInstancePageModel.PROPERTY_SELECTED_PROFILE_INDEX)
+						.observe(
+								model),
+				new UpdateValueStrategy()
+						.setAfterGetValidator(new IValidator() {
+
+							@Override
+							public IStatus validate(Object value) {
+								if (// areProfilesAvailable() &&
+								!isValidComboIndex(value)) {
+									// TODO: internationalize strings
+									return ValidationStatus.error("You must select a hardware profile.");
+								}
+								return ValidationStatus.ok();
+							}
+						}),
+				new UpdateValueStrategy()
+						.setAfterGetValidator(new IValidator() {
+
+							@Override
+							public IStatus validate(Object value) {
+								if (isValidComboIndex(value)) {
+									ValidationStatus.error("You must select a hardware profile");
+								}
+								return ValidationStatus.ok();
+							}
+						}));
+
+		// bind combo enablement
+		IObservableList filteredProfilesObservable =
+				BeanProperties.list(NewInstancePageModel.PROPERTY_FILTERED_PROFILES).observe(model);
+		DataBindingUtils.addChangeListener(
+				new IChangeListener() {
+
+					@Override
+					public void handleChange(ChangeEvent event) {
+						profileCombo.setEnabled(areProfilesAvailable());
+					}
+				}, filteredProfilesObservable, container);
+
 		ControlDecorationSupport.create(selectedProfileBinding, SWT.LEFT | SWT.TOP);
 	}
 
 	private boolean isValidComboIndex(Object index) {
 		return index != null
 				&& index instanceof Integer
-				&& ((Integer) index) > 0;
+				&& ((Integer) index) >= 0;
 	}
 
 	private boolean areProfilesAvailable() {
+		System.err.println("NewInstancePage#areProfilesAvailable" + model.getFilteredProfiles() != null
+				&& model.getFilteredProfiles().size() > 0);
 		return model.getFilteredProfiles() != null
 				&& model.getFilteredProfiles().size() > 0;
 	}
@@ -391,7 +396,8 @@ public class NewInstancePage extends WizardPage {
 			DataBindingContext dbc) {
 		// bind all profiles
 		IObservable allProfilesObservable =
-				BeanProperties.list(NewInstanceModel.class, NewInstanceModel.PROPERTY_ALL_PROFILES).observe(model);
+				BeanProperties.list(NewInstancePageModel.class, NewInstancePageModel.PROPERTY_ALL_PROFILES).observe(
+						model);
 		DataBindingUtils.addChangeListener(new IChangeListener() {
 
 			@Override
@@ -402,8 +408,9 @@ public class NewInstancePage extends WizardPage {
 
 		// bind selected profile
 		IObservableValue selectedProfileIndexObservable =
-				BeanProperties.value(NewInstanceModel.class, NewInstanceModel.PROPERTY_SELECTED_PROFILE_INDEX).observe(
-						model);
+				BeanProperties.value(NewInstancePageModel.class, NewInstancePageModel.PROPERTY_SELECTED_PROFILE_INDEX)
+						.observe(
+								model);
 		DataBindingUtils.addChangeListener(new IChangeListener() {
 
 			@Override
@@ -439,7 +446,7 @@ public class NewInstancePage extends WizardPage {
 	private void bindText(Text text, String property, String errorMessage, DataBindingContext dbc) {
 		Binding textBinding = dbc.bindValue(
 				WidgetProperties.text(SWT.Modify).observe(text),
-				BeanProperties.value(NewInstanceModel.class, property).observe(model),
+				BeanProperties.value(NewInstancePageModel.class, property).observe(model),
 				new UpdateValueStrategy().setBeforeSetValidator(
 						new MandatoryStringValidator(errorMessage)),
 				null);
@@ -459,7 +466,7 @@ public class NewInstancePage extends WizardPage {
 
 		Binding imageBinding = dbc.bindValue(
 				WidgetProperties.text(SWT.Modify).observeDelayed(IMAGE_CHECK_DELAY, imageText),
-				BeanProperties.value(NewInstanceModel.class, NewInstanceModel.PROPERTY_IMAGE).observe(model),
+				BeanProperties.value(NewInstancePageModel.class, NewInstancePageModel.PROPERTY_IMAGE).observe(model),
 				widgetToModelUpdateStrategy,
 				modelToTextUpdateStrategy);
 		ControlDecorationSupport.create(imageBinding, SWT.LEFT | SWT.TOP);
@@ -528,7 +535,7 @@ public class NewInstancePage extends WizardPage {
 		}
 	}
 
-	public NewInstanceModel getModel() {
+	public NewInstancePageModel getModel() {
 		return model;
 	}
 }

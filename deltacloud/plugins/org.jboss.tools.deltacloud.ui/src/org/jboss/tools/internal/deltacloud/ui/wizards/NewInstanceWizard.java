@@ -76,7 +76,7 @@ public class NewInstanceWizard extends Wizard {
 
 	@Override
 	public boolean performFinish() {
-		NewInstanceModel model = mainPage.getModel();
+		NewInstancePageModel model = mainPage.getModel();
 
 		DeltaCloudImage image = model.getImage();
 		Assert.isTrue(image != null);

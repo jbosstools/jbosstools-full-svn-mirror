@@ -28,13 +28,13 @@ import org.jboss.tools.deltacloud.core.DeltaCloudRealm;
 import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob;
 import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob.CLOUDELEMENT;
 import org.jboss.tools.deltacloud.ui.Activator;
-import org.jboss.tools.internal.deltacloud.core.observable.ObservablePojo;
+import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.ObservableUIPojo;
 
 /**
  * @author Jeff Jonhston
  * @author André Dietisheim
  */
-public class NewInstanceModel extends ObservablePojo {
+public class NewInstancePageModel extends ObservableUIPojo {
 
 	public static final String PROPERTY_URL = "url"; //$NON-NLS-1$
 	public static final String PROPERTY_NAME = "name"; //$NON-NLS-1$
@@ -62,7 +62,7 @@ public class NewInstanceModel extends ObservablePojo {
 	private String storage;
 	private String memory;
 
-	protected NewInstanceModel(DeltaCloud cloud, String keyname, DeltaCloudImage image) {
+	protected NewInstancePageModel(DeltaCloud cloud, String keyname, DeltaCloudImage image) {
 		this.cloud = cloud;
 		this.keyname = keyname;
 		this.image = image;
@@ -90,9 +90,14 @@ public class NewInstanceModel extends ObservablePojo {
 
 	public void setSelectedRealmIndex(int index) {
 		if (realms.size() > index) {
+			int oldIndex = -1;
+			if (selectedRealm != null 
+					&& realms.size() > 0) {
+				oldIndex = realms.indexOf(selectedRealm);
+			}
 			DeltaCloudRealm deltaCloudRealm = realms.get(index);
 			setSelectedRealm(deltaCloudRealm);
-			firePropertyChange(PROPERTY_SELECTED_REALM_INDEX, null, index);
+			firePropertyChange(PROPERTY_SELECTED_REALM_INDEX, oldIndex, index);
 		}
 	}
 
@@ -150,9 +155,14 @@ public class NewInstanceModel extends ObservablePojo {
 
 	public void setSelectedProfileIndex(int index) {
 		if (filteredProfiles.size() > index) {
+			int oldIndex = -1;
+			if (selectedProfile != null 
+					&& filteredProfiles.size() > 0) {
+				oldIndex = filteredProfiles.indexOf(selectedProfile);
+			}
 			DeltaCloudHardwareProfile hardwareProfile = filteredProfiles.get(index);
 			setSelectedProfile(hardwareProfile);
-			firePropertyChange(PROPERTY_SELECTED_PROFILE_INDEX, null, index);
+			firePropertyChange(PROPERTY_SELECTED_PROFILE_INDEX, oldIndex, index);
 		}
 	}
 

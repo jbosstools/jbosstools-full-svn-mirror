@@ -1,3 +1,12 @@
+2010-12-25  adietisheim  <adietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePageModel.java: 
+	[JBIDE-8000] switched to observable pojo that notifies in UI thread only
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java 
+	(bindRealmCombo): 
+	(bindProfileCombo): 
+	[JBIDE-8000] corrected binding order (first bind items, then selected item, then enablement)
+
 2010-12-23  adietisheim  <adietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java: 
