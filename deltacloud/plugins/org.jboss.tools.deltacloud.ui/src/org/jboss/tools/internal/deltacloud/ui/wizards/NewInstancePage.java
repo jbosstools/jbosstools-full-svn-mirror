@@ -10,8 +10,12 @@
  *******************************************************************************/
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.databinding.Binding;
@@ -30,7 +34,9 @@ import org.eclipse.core.databinding.observable.value.WritableValue;
 import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.core.databinding.validation.ValidationStatus;
 import org.eclipse.core.runtime.Assert;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.databinding.fieldassist.ControlDecorationSupport;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.wizard.WizardPageSupport;
@@ -51,13 +57,16 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudHardwareProfile;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.DeltaCloudKey;
 import org.jboss.tools.deltacloud.core.DeltaCloudRealm;
-import org.jboss.tools.deltacloud.core.Driver;
+import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob;
+import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob.CLOUDELEMENT;
+import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.MandatoryStringValidator;
 import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.SelectedComboItemValidator;
@@ -139,7 +148,7 @@ public class NewInstancePage extends WizardPage {
 		super(WizardMessages.getString(NAME));
 		this.cloud = cloud;
 		String defaultKeyname = cloud.getLastKeyname();
-		model = new NewInstancePageModel(cloud, defaultKeyname, image); //$NON-NLS-1$
+		model = new NewInstancePageModel(defaultKeyname, image); //$NON-NLS-1$
 		setDescription(WizardMessages.getString(DESCRIPTION));
 		setTitle(WizardMessages.getString(TITLE));
 		setImageDescriptor(SWTImagesFactory.DESC_DELTA_LARGE);
@@ -152,6 +161,8 @@ public class NewInstancePage extends WizardPage {
 		this.container = createWidgets(parent);
 		setControl(container);
 		bindWidgets(dbc, container);
+		asyncGetProfiles(model, cloud);
+		asyncGetRealms(model, cloud);
 	}
 
 	private Composite createWidgets(Composite parent) {
@@ -196,9 +207,6 @@ public class NewInstancePage extends WizardPage {
 		Button keyManageButton = new Button(container, SWT.NULL);
 		keyManageButton.setText(WizardMessages.getString(MANAGE_BUTTON_LABEL));
 		keyManageButton.addSelectionListener(manageListener);
-		if (Driver.MOCK.equals(cloud.getDriver())) {
-			keyManageButton.setEnabled(false);
-		}
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).applyTo(keyManageButton);
 
 		Label hardwareLabel = new Label(container, SWT.NULL);
@@ -490,4 +498,40 @@ public class NewInstancePage extends WizardPage {
 	public NewInstancePageModel getModel() {
 		return model;
 	}
+
+	private void asyncGetProfiles(final NewInstancePageModel model, final DeltaCloud cloud) {
+		// TODO: internationalize strings
+		new AbstractCloudElementJob("Get profiles", cloud, CLOUDELEMENT.PROFILES) {
+			protected IStatus doRun(IProgressMonitor monitor) throws Exception {
+				try {
+					List<DeltaCloudHardwareProfile> profiles = Arrays.asList(cloud.getProfiles());
+					model.setAllProfiles(profiles);
+					return Status.OK_STATUS;
+				} catch (DeltaCloudException e) {
+					// TODO: internationalize strings
+					return StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID,
+							MessageFormat.format("Could not get profiles from cloud {0}", cloud.getName()));
+				}
+			}
+		}.schedule();
+	}
+
+	private void asyncGetRealms(final NewInstancePageModel model, final DeltaCloud cloud) {
+		// TODO: internationalize strings
+		new AbstractCloudElementJob("Get realms", cloud, CLOUDELEMENT.REALMS) {
+			protected IStatus doRun(IProgressMonitor monitor) throws Exception {
+				try {
+					List<DeltaCloudRealm> allRealms = new ArrayList<DeltaCloudRealm>();
+					allRealms.addAll(Arrays.asList(cloud.getRealms()));
+					model.setRealms(allRealms);
+					return Status.OK_STATUS;
+				} catch (DeltaCloudException e) {
+					// TODO: internationalize strings
+					return StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID,
+							MessageFormat.format("Could not get realms from cloud {0}", cloud.getName()));
+				}
+			}
+		}.schedule();
+	}
+
 }
