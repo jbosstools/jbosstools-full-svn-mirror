@@ -43,10 +43,10 @@ public class NewInstancePageModel extends ObservableUIPojo {
 	public static final String PROPERTY_REALMS = "realms"; //$NON-NLS-1$
 	public static final String PROPERTY_SELECTED_REALM_INDEX = "selectedRealmIndex"; //$NON-NLS-1$
 	public static final String PROPERTY_KEYNAME = "keyname"; //$NON-NLS-1$
-	public static final String PROPERTY_PROFILE = "profile"; //$NON-NLS-1$
-	public static final String PROPERTY_ALL_PROFILES = "allProfiles"; //$NON-NLS-1$
-	public static final String PROPERTY_FILTERED_PROFILES = "filteredProfiles"; //$NON-NLS-1$
-	public static final String PROPERTY_SELECTED_PROFILE_INDEX = "selectedProfileIndex"; //$NON-NLS-1$
+	public static final String PROP_PROFILE = "profile"; //$NON-NLS-1$
+	public static final String PROP_ALL_PROFILES = "allProfiles"; //$NON-NLS-1$
+	public static final String PROP_FILTERED_PROFILES = "filteredProfiles"; //$NON-NLS-1$
+	public static final String PROP_SELECTED_PROFILE_INDEX = "selectedProfileIndex"; //$NON-NLS-1$
 
 	private String name;
 	private DeltaCloudImage image;
@@ -125,7 +125,7 @@ public class NewInstancePageModel extends ObservableUIPojo {
 	}
 
 	private void setAllProfiles(List<DeltaCloudHardwareProfile> profiles) {
-		getPropertyChangeSupport().firePropertyChange(PROPERTY_ALL_PROFILES, this.allProfiles, this.allProfiles = profiles);
+		getPropertyChangeSupport().firePropertyChange(PROP_ALL_PROFILES, this.allProfiles, this.allProfiles = profiles);
 	}
 
 	public List<DeltaCloudHardwareProfile> getAllProfiles() {
@@ -133,7 +133,7 @@ public class NewInstancePageModel extends ObservableUIPojo {
 	}
 
 	private void setFilteredProfiles(List<DeltaCloudHardwareProfile> profiles) {
-		getPropertyChangeSupport().firePropertyChange(PROPERTY_FILTERED_PROFILES, this.filteredProfiles, this.filteredProfiles = profiles);
+		getPropertyChangeSupport().firePropertyChange(PROP_FILTERED_PROFILES, this.filteredProfiles, this.filteredProfiles = profiles);
 	}
 
 	public List<DeltaCloudHardwareProfile> getFilteredProfiles() {
@@ -162,7 +162,7 @@ public class NewInstancePageModel extends ObservableUIPojo {
 			}
 			DeltaCloudHardwareProfile hardwareProfile = filteredProfiles.get(index);
 			setSelectedProfile(hardwareProfile);
-			firePropertyChange(PROPERTY_SELECTED_PROFILE_INDEX, oldIndex, index);
+			firePropertyChange(PROP_SELECTED_PROFILE_INDEX, oldIndex, index);
 		}
 	}
 

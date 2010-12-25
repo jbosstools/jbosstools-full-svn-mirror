@@ -295,7 +295,7 @@ public class NewInstancePage extends WizardPage {
 	private void bindProfileCombo(final Combo profileCombo, DataBindingContext dbc) {
 		// bind combo items
 		dbc.bindList(WidgetProperties.items().observe(profileCombo),
-				BeanProperties.list(NewInstancePageModel.PROPERTY_FILTERED_PROFILES).observe(model),
+				BeanProperties.list(NewInstancePageModel.PROP_FILTERED_PROFILES).observe(model),
 				new UpdateListStrategy(UpdateListStrategy.POLICY_NEVER),
 				new UpdateListStrategy().setConverter(
 						new Converter(Object.class, String.class) {
@@ -313,7 +313,7 @@ public class NewInstancePage extends WizardPage {
 		Binding selectedProfileBinding = dbc.bindValue(
 				WidgetProperties.singleSelectionIndex().observe(profileCombo),
 				BeanProperties
-						.value(NewInstancePageModel.class, NewInstancePageModel.PROPERTY_SELECTED_PROFILE_INDEX)
+						.value(NewInstancePageModel.class, NewInstancePageModel.PROP_SELECTED_PROFILE_INDEX)
 						.observe(model),
 				new UpdateValueStrategy()
 						.setAfterGetValidator(new SelectedComboItemValidator("You must select a hardware profile.")),
@@ -322,7 +322,7 @@ public class NewInstancePage extends WizardPage {
 
 		// bind combo enablement
 		IObservableList filteredProfilesObservable =
-				BeanProperties.list(NewInstancePageModel.PROPERTY_FILTERED_PROFILES).observe(model);
+				BeanProperties.list(NewInstancePageModel.PROP_FILTERED_PROFILES).observe(model);
 		DataBindingUtils.addChangeListener(
 				new IChangeListener() {
 
@@ -349,7 +349,7 @@ public class NewInstancePage extends WizardPage {
 			DataBindingContext dbc) {
 		// bind all profiles
 		IObservable allProfilesObservable =
-				BeanProperties.list(NewInstancePageModel.class, NewInstancePageModel.PROPERTY_ALL_PROFILES).observe(
+				BeanProperties.list(NewInstancePageModel.class, NewInstancePageModel.PROP_ALL_PROFILES).observe(
 						model);
 		DataBindingUtils.addChangeListener(new IChangeListener() {
 
@@ -362,7 +362,7 @@ public class NewInstancePage extends WizardPage {
 		// bind selected profile page
 		IObservableValue selectedProfileIndexObservable =
 				BeanProperties
-						.value(NewInstancePageModel.class, NewInstancePageModel.PROPERTY_SELECTED_PROFILE_INDEX)
+						.value(NewInstancePageModel.class, NewInstancePageModel.PROP_SELECTED_PROFILE_INDEX)
 						.observe(model);
 		DataBindingUtils.addChangeListener(new IChangeListener() {
 
