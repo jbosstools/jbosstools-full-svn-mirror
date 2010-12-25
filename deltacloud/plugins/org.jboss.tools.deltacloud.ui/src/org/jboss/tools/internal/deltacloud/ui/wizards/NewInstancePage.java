@@ -60,6 +60,7 @@ import org.jboss.tools.deltacloud.core.DeltaCloudRealm;
 import org.jboss.tools.deltacloud.core.Driver;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.MandatoryStringValidator;
+import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.SelectedComboItemValidator;
 import org.jboss.tools.internal.deltacloud.ui.utils.DataBindingUtils;
 
 /**
@@ -274,29 +275,9 @@ public class NewInstancePage extends WizardPage {
 				BeanProperties.value(NewInstancePageModel.class, NewInstancePageModel.PROPERTY_SELECTED_REALM_INDEX)
 						.observe(model),
 				new UpdateValueStrategy()
-						.setAfterGetValidator(new IValidator() {
-
-							@Override
-							public IStatus validate(Object value) {
-								if (areRealmsAvailable() &&
-										!isValidComboIndex(value)) {
-									// TODO: internationalize strings
-									return ValidationStatus.error("You must select a realm.");
-								}
-								return ValidationStatus.ok();
-							}
-						}),
+						.setAfterGetValidator(new SelectedComboItemValidator("You must select a realm.")),
 				new UpdateValueStrategy()
-						.setAfterGetValidator(new IValidator() {
-
-							@Override
-							public IStatus validate(Object value) {
-								if (value == null) {
-									ValidationStatus.error("You must select a realm");
-								}
-								return ValidationStatus.ok();
-							}
-						}));
+						.setAfterGetValidator(new SelectedComboItemValidator("You must select a realm.")));
 
 		// realm combo enablement
 		IObservableList realmsObservable = BeanProperties.list(NewInstancePageModel.PROPERTY_REALMS).observe(model);
@@ -331,33 +312,13 @@ public class NewInstancePage extends WizardPage {
 		// bind selected combo item
 		Binding selectedProfileBinding = dbc.bindValue(
 				WidgetProperties.singleSelectionIndex().observe(profileCombo),
-				BeanProperties.value(NewInstancePageModel.class, NewInstancePageModel.PROPERTY_SELECTED_PROFILE_INDEX)
-						.observe(
-								model),
+				BeanProperties
+						.value(NewInstancePageModel.class, NewInstancePageModel.PROPERTY_SELECTED_PROFILE_INDEX)
+						.observe(model),
 				new UpdateValueStrategy()
-						.setAfterGetValidator(new IValidator() {
-
-							@Override
-							public IStatus validate(Object value) {
-								if (// areProfilesAvailable() &&
-								!isValidComboIndex(value)) {
-									// TODO: internationalize strings
-									return ValidationStatus.error("You must select a hardware profile.");
-								}
-								return ValidationStatus.ok();
-							}
-						}),
+						.setAfterGetValidator(new SelectedComboItemValidator("You must select a hardware profile.")),
 				new UpdateValueStrategy()
-						.setAfterGetValidator(new IValidator() {
-
-							@Override
-							public IStatus validate(Object value) {
-								if (isValidComboIndex(value)) {
-									ValidationStatus.error("You must select a hardware profile");
-								}
-								return ValidationStatus.ok();
-							}
-						}));
+						.setAfterGetValidator(new SelectedComboItemValidator("You must select a hardware profile.")));
 
 		// bind combo enablement
 		IObservableList filteredProfilesObservable =
@@ -374,15 +335,7 @@ public class NewInstancePage extends WizardPage {
 		ControlDecorationSupport.create(selectedProfileBinding, SWT.LEFT | SWT.TOP);
 	}
 
-	private boolean isValidComboIndex(Object index) {
-		return index != null
-				&& index instanceof Integer
-				&& ((Integer) index) >= 0;
-	}
-
 	private boolean areProfilesAvailable() {
-		System.err.println("NewInstancePage#areProfilesAvailable" + model.getFilteredProfiles() != null
-				&& model.getFilteredProfiles().size() > 0);
 		return model.getFilteredProfiles() != null
 				&& model.getFilteredProfiles().size() > 0;
 	}
@@ -406,20 +359,19 @@ public class NewInstancePage extends WizardPage {
 			}
 		}, allProfilesObservable, container);
 
-		// bind selected profile
+		// bind selected profile page
 		IObservableValue selectedProfileIndexObservable =
-				BeanProperties.value(NewInstancePageModel.class, NewInstancePageModel.PROPERTY_SELECTED_PROFILE_INDEX)
-						.observe(
-								model);
+				BeanProperties
+						.value(NewInstancePageModel.class, NewInstancePageModel.PROPERTY_SELECTED_PROFILE_INDEX)
+						.observe(model);
 		DataBindingUtils.addChangeListener(new IChangeListener() {
 
 			@Override
 			public void handleChange(ChangeEvent event) {
 				ProfilePage profilePage = profilePages.get(model.getProfileId());
 				selectProfilePage(profilePages, profilePage);
-
 			}
-		}, selectedProfileIndexObservable, container);
+		}, selectedProfileIndexObservable, hardwareCombo);
 	}
 
 	private void createProfilePages(Collection<DeltaCloudHardwareProfile> profiles) {
