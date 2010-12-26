@@ -31,6 +31,9 @@ public class CreateKeyRequest extends AbstractDeltaCloudRequest {
 
 	@Override
 	protected String doCreateUrl(UrlBuilder urlBuilder) {
-		return urlBuilder.path("keys").parameter("name", keyName).toString();
+		return urlBuilder.path("keys")
+		.parameter("name", keyName)
+		.parameter("commit", "create")
+		.toString();
 	}
 }

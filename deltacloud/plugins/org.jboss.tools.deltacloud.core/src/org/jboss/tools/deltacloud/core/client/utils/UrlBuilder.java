@@ -33,11 +33,11 @@ public class UrlBuilder {
 
 	public UrlBuilder() {
 	}
-	
+
 	public UrlBuilder(URL baseUrl) {
 		urlStringBuilder.append(baseUrl.toString());
 	}
-	
+
 	/**
 	 * adds a host to .
 	 * 
@@ -86,11 +86,14 @@ public class UrlBuilder {
 		}
 		return this;
 	}
-	
+
 	public UrlBuilder parameter(String name, String value) {
-		appendParameterDelimiter();
-		urlStringBuilder.append(name).append(PARAMETER_NAME_VALUE_DELIMITER).append(value);
+		if (value != null) {
+			appendParameterDelimiter();
+			urlStringBuilder.append(name).append(PARAMETER_NAME_VALUE_DELIMITER).append(value);
+		}
 		return this;
+
 	}
 
 	private void appendParameterDelimiter() {
@@ -108,13 +111,13 @@ public class UrlBuilder {
 		}
 		return this;
 	}
-	
+
 	public UrlBuilder parameter(String parameter) {
 		appendParameterDelimiter();
 		urlStringBuilder.append(parameter);
 		return this;
 	}
-	
+
 	public URL toUrl() throws MalformedURLException {
 		return new URL(urlStringBuilder.toString());
 	}
