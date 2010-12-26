@@ -50,8 +50,8 @@ public class NewInstancePageModel extends ObservableUIPojo {
 	private String storage;
 	private String memory;
 
-	protected NewInstancePageModel(String keyname, DeltaCloudImage image) {
-		this.keyId = keyname;
+	protected NewInstancePageModel(String keyId, DeltaCloudImage image) {
+		this.keyId = keyId;
 		this.image = image;
 	}
 
@@ -173,8 +173,8 @@ public class NewInstancePageModel extends ObservableUIPojo {
 		return keyId;
 	}
 
-	public void setKeyname(String keyname) {
-		getPropertyChangeSupport().firePropertyChange(PROPERTY_KEYID, this.keyId, this.keyId = keyname);
+	public void setKeyId(String keyId) {
+		getPropertyChangeSupport().firePropertyChange(PROPERTY_KEYID, this.keyId, this.keyId = keyId);
 	}
 
 	public String getArch() {
