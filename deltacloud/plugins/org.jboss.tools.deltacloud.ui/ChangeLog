@@ -1,4 +1,4 @@
-2010-12-27  adietisheim  <adietisheim@adietisheim-thinkpad>
+2010-12-27  adietisheim  <adietish@redhat.com>
 
 	* META-INF/MANIFEST.MF:
 	[JBIDE-7760] added dependency to org.eclipse.jsch.core (which holds the ssh preferences) 
@@ -9,7 +9,7 @@
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/PemFileManager.java: 
 	[JBIDE-7763] adding/removing the key to/from the ssh preferences (Network Connections -> SSH2 -> Private keys)
 
-2010-12-25  adietisheim  <adietisheim@adietisheim-thinkpad>
+2010-12-25  adietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePageModel.java: 
 	[JBIDE-8000] switched to observable pojo that notifies in UI thread only
@@ -18,14 +18,14 @@
 	(bindProfileCombo): 
 	[JBIDE-8000] corrected binding order (first bind items, then selected item, then enablement)
 
-2010-12-23  adietisheim  <adietisheim@adietisheim-thinkpad>
+2010-12-23  adietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java: 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ManageKeysWizard.java: 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ManageKeysPage.java: 
 	[JBIDE-7763] revamped the whole manage keys page to deal with keys on the server (list, refresh, create, delete)
 
-2010-12-22  adietisheim  <adietisheim@adietisheim-thinkpad>
+2010-12-22  adietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/InstanceViewLabelAndContentProvider.java (asyncAddCloudElements): 
 	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/ImageViewLabelAndContentProvider.java (asyncAddCloudElements): 
@@ -313,7 +313,7 @@
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/EditCloudConnectionWizard.java (performTest): 
 	fixed NPE
 
-2010-11-24  adietisheim  <adietisheim@adietisheim-thinkpad>
+2010-11-24  adietisheim  <adietish@redhat.com>
 slide
 	* src/org/jboss/tools/deltacloud/ui/views/InstanceView.java (.modifyText): 
 	[JBIDE-7694] removed refresh(es) of tableViewer (setInput should be enough), 
