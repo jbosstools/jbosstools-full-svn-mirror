@@ -1,3 +1,8 @@
+2010-12-27  adietisheim  <adietisheim@adietisheim-thinkpad>
+
+	* META-INF/MANIFEST.MF: 
+	[JBIDE-7763] added RSE dependencies
+
 2010-12-09  André Dietisheim  <adietish@redhat.com>
 
 	* create new empty plugin
