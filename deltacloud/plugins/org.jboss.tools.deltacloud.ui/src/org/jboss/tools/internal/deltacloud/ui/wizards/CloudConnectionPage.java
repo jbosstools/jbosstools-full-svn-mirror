@@ -65,7 +65,7 @@ import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.Compo
 import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.MandatoryStringValidator;
 import org.jboss.tools.internal.deltacloud.ui.common.swt.JFaceUtils;
 import org.jboss.tools.internal.deltacloud.ui.preferences.IPreferenceKeys;
-import org.jboss.tools.internal.deltacloud.ui.preferences.TextPreferenceValue;
+import org.jboss.tools.internal.deltacloud.ui.preferences.StringPreferenceValue;
 
 /**
  * @author Jeff Jonhston
@@ -329,7 +329,7 @@ public class CloudConnectionPage extends WizardPage {
 						.setAfterGetValidator(new MandatoryStringValidator(WizardMessages.getString(MUST_ENTER_A_URL))),
 						null);
 
-		String url = new TextPreferenceValue(IPreferenceKeys.LAST_URL, Activator.getDefault())
+		String url = new StringPreferenceValue(IPreferenceKeys.LAST_URL, Activator.PLUGIN_ID)
 				.get(urlText.getText());
 		urlText.setText(url);
 

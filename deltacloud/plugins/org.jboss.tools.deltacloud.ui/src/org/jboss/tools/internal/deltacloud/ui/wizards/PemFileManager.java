@@ -17,16 +17,30 @@ import java.io.IOException;
 import org.eclipse.core.runtime.Path;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudKey;
+import org.jboss.tools.internal.deltacloud.ui.preferences.StringEntriesPreferenceValue;
 
 /**
  * @author André Dietisheim
  */
-public class PemFileFactory {
+public class PemFileManager {
 
 	private static final String PEM_FILE_SUFFIX = "pem";
+	private static final String PLUGIN_ID = "org.eclipse.jsch.core";
+	private static final String KEY_PRIVATEKEY = "PRIVATEKEY";
+	
+	private static StringEntriesPreferenceValue sshPrivateKeyPreference =
+			new StringEntriesPreferenceValue(",", KEY_PRIVATEKEY, PLUGIN_ID);
 
 	public static File create(DeltaCloudKey key) throws DeltaCloudException {
-		return create(key, getKeyStorePath());
+		File file = create(key, getKeyStorePath());
+		sshPrivateKeyPreference.add(file.getName());
+		return file;
+	}
+
+	public static void delete(DeltaCloudKey key) throws DeltaCloudException {
+		File file = getFile(key.getId(), getKeyStorePath());
+		delete(file);
+		sshPrivateKeyPreference.remove(file.getName());
 	}
 
 	private static String getKeyStorePath() throws DeltaCloudException {
@@ -43,8 +57,9 @@ public class PemFileFactory {
 
 	private static File create(DeltaCloudKey key, String keyStorePath) throws DeltaCloudException {
 		try {
-			File keyFile = createFile(key.getId(), keyStorePath);
+			File keyFile = create(getFile(key.getId(), keyStorePath), keyStorePath);
 			save(key.getPem(), keyFile);
+			keyFile.setWritable(false, false);
 			return keyFile;
 		} catch (Exception e) {
 			throw new DeltaCloudException(e);
@@ -59,20 +74,36 @@ public class PemFileFactory {
 		}
 	}
 
-	private static File createFile(String keyname, String keyStoreLocation)
+	private static File create(File file, String keyStoreLocation)
 			throws IOException {
+		if (!file.exists()) {
+			file.createNewFile();
+		}
+		file.setReadable(false, false);
+		file.setWritable(true, true);
+		file.setReadable(true, true);
+		return file;
+	}
+
+	private static File getFile(String keyId, String keyStoreLocation) {
 		File keyFile =
 				Path.fromOSString(keyStoreLocation)
-						.append(keyname)
+						.append(keyId)
 						.addFileExtension(PEM_FILE_SUFFIX) //$NON-NLS-1$
 						.toFile();
-		if (!keyFile.exists()) {
-			keyFile.createNewFile();
-		}
-		keyFile.setReadable(false, false);
-		keyFile.setWritable(true, true);
-		keyFile.setReadable(true, true);
 		return keyFile;
+	}
+
+	private static void delete(File file) throws DeltaCloudException {
+		try {
+			if (file == null
+					|| !file.exists()) {
+				return;
+			}
+			file.delete();
+		} catch (Exception e) {
+			throw new DeltaCloudException(e);
+		}
 	}
 
 }

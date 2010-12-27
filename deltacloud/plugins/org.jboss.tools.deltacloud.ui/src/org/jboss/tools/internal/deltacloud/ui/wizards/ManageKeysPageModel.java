@@ -40,7 +40,7 @@ public class ManageKeysPageModel extends ObservableUIPojo {
 	private List<DeltaCloudKey> keys = new ArrayList<DeltaCloudKey>();
 	private DeltaCloud cloud;
 	private DeltaCloudKey selectedKey;
-
+	
 	public ManageKeysPageModel(DeltaCloud cloud) {
 		this.cloud = cloud;
 		asyncGetKeys(cloud);
@@ -58,16 +58,17 @@ public class ManageKeysPageModel extends ObservableUIPojo {
 		int index = keys.indexOf(selectedKey);
 		keys.remove(selectedKey);
 		fireIndexedPropertyChange(PROP_KEYS, index, selectedKey, null);
+		PemFileManager.delete(selectedKey);
 		setSelectedKey(index - 1);
 	}
 
-	public DeltaCloudKey createKey(String keyId) throws DeltaCloudException {
+	public void createKey(String keyId) throws DeltaCloudException {
 		DeltaCloudKey key = cloud.createKey(keyId);
 		keys.add(key);
 		int index = keys.indexOf(key);
 		fireIndexedPropertyChange(PROP_KEYS, index, null, key);
 		setSelectedKey(key);
-		return key;
+		PemFileManager.create(key);
 	}
 
 	public DeltaCloudKey getSelectedKey() {

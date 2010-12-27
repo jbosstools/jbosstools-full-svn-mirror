@@ -1,3 +1,14 @@
+2010-12-27  adietisheim  <adietisheim@adietisheim-thinkpad>
+
+	* META-INF/MANIFEST.MF:
+	[JBIDE-7760] added dependency to org.eclipse.jsch.core (which holds the ssh preferences) 
+	* src/org/jboss/tools/internal/deltacloud/ui/preferences/StringEntriesPreferenceValue.java: 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ManageKeysPageModel.java 
+	(createKey): 
+	(deleteSelectedKey): 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/PemFileManager.java: 
+	[JBIDE-7763] adding/removing the key to/from the ssh preferences (Network Connections -> SSH2 -> Private keys)
+
 2010-12-25  adietisheim  <adietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePageModel.java: 

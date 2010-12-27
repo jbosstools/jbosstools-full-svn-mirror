@@ -269,9 +269,7 @@ public class ManageKeysPage extends WizardPage {
 
 	private void createKey(final String keyId) {
 		try {
-			DeltaCloudKey key = model.createKey(keyId);
-// I guess that the launch job stores the key in the appropriate place already
-			PemFileFactory.create(key);
+			model.createKey(keyId);
 		} catch (Exception e) {
 			// TODO: internationalize strings
 			ErrorUtils.handleError(

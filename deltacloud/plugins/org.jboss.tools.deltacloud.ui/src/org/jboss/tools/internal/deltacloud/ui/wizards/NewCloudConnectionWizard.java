@@ -23,7 +23,7 @@ import org.jboss.tools.deltacloud.core.Driver;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.internal.deltacloud.ui.preferences.IPreferenceKeys;
-import org.jboss.tools.internal.deltacloud.ui.preferences.TextPreferenceValue;
+import org.jboss.tools.internal.deltacloud.ui.preferences.StringPreferenceValue;
 
 /**
  * @author Jeff Johnston
@@ -106,7 +106,7 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 		String name = mainPage.getModel().getName();
 		String url = mainPage.getModel().getUrl();
 
-		new TextPreferenceValue(IPreferenceKeys.LAST_URL, Activator.getDefault())
+		new StringPreferenceValue(IPreferenceKeys.LAST_URL, Activator.PLUGIN_ID)
 				.store(url);
 
 		String username = mainPage.getModel().getUsername();

@@ -52,7 +52,7 @@ import org.jboss.tools.deltacloud.core.IInstanceFilter;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
-import org.jboss.tools.internal.deltacloud.ui.preferences.TextPreferenceValue;
+import org.jboss.tools.internal.deltacloud.ui.preferences.StringPreferenceValue;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 
 /**
@@ -77,7 +77,7 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 	private Label currentCloudSelectorLabel;
 	private TableViewer viewer;
 	private DeltaCloud currentCloud;
-	private TextPreferenceValue lastSelectedCloudPref;
+	private StringPreferenceValue lastSelectedCloudPref;
 	private Composite container;
 
 	private ModifyListener currentCloudModifyListener = new ModifyListener() {
@@ -144,7 +144,7 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 	};
 
 	public AbstractCloudElementTableView() {
-		lastSelectedCloudPref = new TextPreferenceValue(getSelectedCloudPrefsKey(), Activator.getDefault());
+		lastSelectedCloudPref = new StringPreferenceValue(getSelectedCloudPrefsKey(), Activator.PLUGIN_ID);
 	}
 
 	private boolean isNewCloud(DeltaCloud cloud) {
