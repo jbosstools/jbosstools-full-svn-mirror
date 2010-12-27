@@ -1,3 +1,8 @@
+2010-12-27  adietisheim  <adietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (isValid): 
+	[JBIDE-7864] added isValid property tester to offer "launch instance" on valid clouds only
+
 2010-12-23  adietisheim  <adietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/deltacloud/core/job/AbstractCloudElementJob.java (CLOUDELEMENT.KEYS): 

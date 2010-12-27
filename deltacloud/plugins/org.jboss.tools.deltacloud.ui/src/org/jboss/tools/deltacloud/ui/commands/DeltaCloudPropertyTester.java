@@ -26,6 +26,7 @@ import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 public class DeltaCloudPropertyTester extends PropertyTester {
 
 	private static final String PROPERTY_HAS_IMAGES = "hasImages";
+	private static final String PROPERTY_IS_VALID = "isValid";
 
 	@Override
 	public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
@@ -37,6 +38,11 @@ public class DeltaCloudPropertyTester extends PropertyTester {
 		if (PROPERTY_HAS_IMAGES.equals(property)) {
 			return equalsExpectedValue(getImages(cloud), true);
 		}
+
+		if (PROPERTY_IS_VALID.equals(property)) {
+			return equalsExpectedValue(isValid(cloud), true);
+		}
+
 		return false;
 	}
 
@@ -52,6 +58,17 @@ public class DeltaCloudPropertyTester extends PropertyTester {
 		Assert.isTrue(expectedValue instanceof Boolean);
 		Boolean expectedBoolean = (Boolean) expectedValue;
 		return expectedBoolean.equals(images.length > 0);
+	}
+
+	private boolean isValid(DeltaCloud cloud) {
+		return cloud != null
+				&& cloud.isValid();
+	}
+
+	private boolean equalsExpectedValue(boolean value, Object expectedValue) {
+		Assert.isTrue(expectedValue instanceof Boolean);
+		Boolean expectedBoolean = (Boolean) expectedValue;
+		return expectedBoolean.equals(value);
 	}
 
 }

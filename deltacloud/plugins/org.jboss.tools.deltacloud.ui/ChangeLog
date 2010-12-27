@@ -1,3 +1,12 @@
+2010-12-27  adietisheim  <adietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CloudConnectionPage.java (createControl): 
+	* src/org/jboss/tools/deltacloud/ui/commands/DeltaCloudPropertyTester.java 
+	(PROPERTY_IS_VALID): 
+	(test): 
+	(isValid): 
+	[JBIDE-7864] added isValid property tester to offer "launch instance" on valid clouds only
+
 2010-12-27  adietisheim  <adietish@redhat.com>
 
 	* META-INF/MANIFEST.MF:

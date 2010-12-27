@@ -172,6 +172,11 @@ public class DeltaCloud extends ObservablePojo {
 		return driver;
 	}
 
+	public boolean isValid() {
+		return driver != null
+				&& driver != Driver.UNKNOWN;
+	}
+
 	public String getLastImageId() {
 		return lastImageId;
 	}
@@ -428,7 +433,8 @@ public class DeltaCloud extends ObservablePojo {
 			return new DeltaCloudKey(key, this);
 		} catch (DeltaCloudClientException e) {
 			// TODO: internationalize strings
-			throw new DeltaCloudException(MessageFormat.format("Could not get key \"{0}\" from cloud \"{1}\"", keyId, getName()), e);
+			throw new DeltaCloudException(MessageFormat.format("Could not get key \"{0}\" from cloud \"{1}\"", keyId,
+					getName()), e);
 		}
 	}
 

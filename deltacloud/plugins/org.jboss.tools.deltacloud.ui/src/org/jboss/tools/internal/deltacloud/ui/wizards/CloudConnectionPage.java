@@ -94,7 +94,7 @@ public class CloudConnectionPage extends WizardPage {
 	private static final String MUST_ENTER_A_NAME = "ErrorMustNameConnection.text"; //$NON-NLS-1$
 	private static final String MUST_ENTER_A_URL = "ErrorMustProvideUrl.text"; //$NON-NLS-1$;
 
-	private CloudConnectionModel connectionModel;
+	private CloudConnectionPageModel connectionModel;
 	private CloudConnection cloudConnection;
 
 	private Listener linkListener = new Listener() {
@@ -241,7 +241,7 @@ public class CloudConnectionPage extends WizardPage {
 	 * name the connection had before editing.
 	 * 
 	 * @see IValidator
-	 * @see CloudConnectionModel#getInitialName()
+	 * @see CloudConnectionPageModel#getInitialName()
 	 * @see DeltaCloudManager#findCloud(String)
 	 * 
 	 */
@@ -272,7 +272,7 @@ public class CloudConnectionPage extends WizardPage {
 		setDescription(WizardMessages.getString(DESCRIPTION));
 		setTitle(WizardMessages.getString(TITLE));
 		setImageDescriptor(SWTImagesFactory.DESC_DELTA_LARGE);
-		this.connectionModel = new CloudConnectionModel();
+		this.connectionModel = new CloudConnectionPageModel();
 		this.cloudConnection = cloudConnection;
 	}
 
@@ -283,12 +283,11 @@ public class CloudConnectionPage extends WizardPage {
 				initial.getPassword(), initial.getDriver(), connection);
 	}
 
-	public CloudConnectionPage(String pageName, String defaultName, String defaultUrl,
-			String defaultUsername, String defaultPassword, Driver defaultDriver,
-			CloudConnection cloudConnection) throws MalformedURLException {
+	public CloudConnectionPage(String pageName, String defaultName, String defaultUrl, String defaultUsername,
+			String defaultPassword, Driver defaultDriver, CloudConnection cloudConnection) throws MalformedURLException {
 		super(pageName);
-		this.connectionModel = new CloudConnectionModel(defaultName, defaultUrl, defaultUsername, defaultPassword,
-				defaultDriver);
+		this.connectionModel =
+				new CloudConnectionPageModel(defaultName, defaultUrl, defaultUsername, defaultPassword, defaultDriver);
 		this.cloudConnection = cloudConnection;
 		setDescription(WizardMessages.getString(DESCRIPTION));
 		setTitle(WizardMessages.getString(TITLE));
@@ -324,20 +323,21 @@ public class CloudConnectionPage extends WizardPage {
 		dbc.bindValue(
 				WidgetProperties.text(SWT.Modify).observe(urlText),
 				BeanProperties.value(
-						CloudConnectionModel.class, CloudConnectionModel.PROPERTY_URL).observe(connectionModel),
+						CloudConnectionPageModel.class, CloudConnectionPageModel.PROPERTY_URL).observe(connectionModel),
 				new UpdateValueStrategy()
 						.setAfterGetValidator(new MandatoryStringValidator(WizardMessages.getString(MUST_ENTER_A_URL))),
 						null);
-
-		String url = new StringPreferenceValue(IPreferenceKeys.LAST_URL, Activator.PLUGIN_ID)
-				.get(urlText.getText());
-		urlText.setText(url);
 
 		// cloud type
 		Label typeLabel = new Label(container, SWT.NULL);
 		typeLabel.setText(WizardMessages.getString(CLOUDTYPE_LABEL));
 		Label computedTypeLabel = new Label(container, SWT.NULL);
 		Binding urlTypeBinding = bindCloudType(dbc, urlText, computedTypeLabel);
+
+		// set url from preferences
+		String url =
+				new StringPreferenceValue(IPreferenceKeys.LAST_URL, Activator.PLUGIN_ID).get(urlText.getText());
+		urlText.setText(url);
 
 		// username
 		Label usernameLabel = new Label(container, SWT.NULL);
@@ -346,7 +346,7 @@ public class CloudConnectionPage extends WizardPage {
 		IObservableValue usernameObservable = WidgetProperties.text(SWT.Modify).observe(usernameText);
 		dbc.bindValue(
 				usernameObservable,
-				BeanProperties.value(CloudConnectionModel.class, CloudConnectionModel.PROPERTY_USERNAME)
+				BeanProperties.value(CloudConnectionPageModel.class, CloudConnectionPageModel.PROPERTY_USERNAME)
 						.observe(connectionModel));
 
 		// password
@@ -356,8 +356,9 @@ public class CloudConnectionPage extends WizardPage {
 		ISWTObservableValue passwordTextObservable = WidgetProperties.text(SWT.Modify).observe(passwordText);
 		dbc.bindValue(
 				passwordTextObservable,
-				BeanProperties.value(CloudConnectionModel.class, CloudConnectionModel.PROPERTY_PASSWORD).observe(
-						connectionModel));
+				BeanProperties.value(CloudConnectionPageModel.class, CloudConnectionPageModel.PROPERTY_PASSWORD)
+						.observe(
+								connectionModel));
 		// test button
 		final Button testButton = new Button(container, SWT.NULL);
 		testButton.setText(WizardMessages.getString(TESTBUTTON_LABEL));
@@ -507,9 +508,8 @@ public class CloudConnectionPage extends WizardPage {
 
 		// bind url to cloud type in model
 		Binding urlTypeBinding = dbc.bindValue(
-				WidgetProperties.text(SWT.Modify).observeDelayed(CLOUDTYPE_CHECK_DELAY,
-						urlText),
-				BeanProperties.value(CloudConnectionModel.PROPERTY_DRIVER).observe(connectionModel),
+				WidgetProperties.text(SWT.Modify).observeDelayed(CLOUDTYPE_CHECK_DELAY, urlText),
+				BeanProperties.value(CloudConnectionPageModel.PROPERTY_DRIVER).observe(connectionModel),
 				updateStrategy,
 				new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER));
 		/*
@@ -542,7 +542,7 @@ public class CloudConnectionPage extends WizardPage {
 	private void bindName(DataBindingContext dbc, final Text nameText) {
 		Binding nameTextBinding = dbc.bindValue(
 				WidgetProperties.text(SWT.Modify).observe(nameText),
-				BeanProperties.value(CloudConnectionModel.class, CloudConnectionModel.PROPERTY_NAME)
+				BeanProperties.value(CloudConnectionPageModel.class, CloudConnectionPageModel.PROPERTY_NAME)
 						.observe(connectionModel),
 				new UpdateValueStrategy().setBeforeSetValidator(
 						new CompositeValidator(
@@ -552,7 +552,7 @@ public class CloudConnectionPage extends WizardPage {
 		ControlDecorationSupport.create(nameTextBinding, SWT.LEFT | SWT.TOP);
 	}
 
-	public CloudConnectionModel getModel() {
+	public CloudConnectionPageModel getModel() {
 		return connectionModel;
 	}
 }
