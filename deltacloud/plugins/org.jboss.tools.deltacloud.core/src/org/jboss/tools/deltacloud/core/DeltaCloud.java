@@ -590,7 +590,7 @@ public class DeltaCloud extends ObservablePojo {
 
 	public static Driver getServerDriver(String url) throws DeltaCloudException {
 		try {
-			DeltaCloudServerType serverType = new DeltaCloudClientImpl(url, "", "").getServerType();
+			DeltaCloudServerType serverType = new DeltaCloudClientImpl(url).getServerType();
 			return Driver.valueOf(serverType);
 		} catch (Exception e) {
 			// TODO internationalize strings
@@ -620,7 +620,7 @@ public class DeltaCloud extends ObservablePojo {
 		} catch (DeltaCloudAuthClientException e) {
 			return false;
 		} catch (DeltaCloudClientException e) {
-			throw new DeltaCloudException("Could not connection to ", e);
+			throw new DeltaCloudException(MessageFormat.format("Could not connection to cloud \"{0}\" at \"{1}\"", name, url), e);
 		}
 
 	}

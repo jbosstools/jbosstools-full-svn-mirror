@@ -20,6 +20,7 @@ import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeanProperties;
+import org.eclipse.core.databinding.conversion.Converter;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.IValueChangeListener;
 import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
@@ -267,6 +268,23 @@ public class CloudConnectionPage extends WizardPage {
 		}
 	}
 
+	private static class TrimTrailingSlashConverter extends Converter {
+
+		public TrimTrailingSlashConverter() {
+			super(String.class, String.class);
+		}
+
+		@Override
+		public Object convert(Object fromObject) {
+			Assert.isLegal(fromObject instanceof String);
+			String url = (String) fromObject;
+			if (url.charAt(url.length() - 1) == '/') {
+				return url.substring(0, url.length() - 1);
+			}
+			return url;
+		}
+	}
+
 	public CloudConnectionPage(String pageName, CloudConnection cloudConnection) {
 		super(pageName);
 		setDescription(WizardMessages.getString(DESCRIPTION));
@@ -325,7 +343,8 @@ public class CloudConnectionPage extends WizardPage {
 				BeanProperties.value(
 						CloudConnectionPageModel.class, CloudConnectionPageModel.PROPERTY_URL).observe(connectionModel),
 				new UpdateValueStrategy()
-						.setAfterGetValidator(new MandatoryStringValidator(WizardMessages.getString(MUST_ENTER_A_URL))),
+						.setAfterGetValidator(new MandatoryStringValidator(WizardMessages.getString(MUST_ENTER_A_URL)))
+						.setConverter(new TrimTrailingSlashConverter()),
 						null);
 
 		// cloud type

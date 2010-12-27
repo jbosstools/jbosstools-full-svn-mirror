@@ -31,7 +31,7 @@ import org.jboss.tools.internal.deltacloud.ui.preferences.StringPreferenceValue;
  */
 public class NewCloudConnectionWizard extends Wizard implements INewWizard, CloudConnection {
 
-	private static final String MAINPAGE_NAME = "NewCloudConnection.name"; //$NON-NLS-1$
+	private static final String MAINPAGE_NAME = "CloudConnection.name"; //$NON-NLS-1$
 	protected CloudConnectionPage mainPage;
 	protected DeltaCloud initialCloud;
 	private String pageTitle;
@@ -82,7 +82,7 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 	}
 
 	public boolean performTest() {
-		String name = mainPage.getName();
+		String name = mainPage.getModel().getName();
 		String url = mainPage.getModel().getUrl();
 		String username = mainPage.getModel().getUsername();
 		String password = mainPage.getModel().getPassword();
@@ -90,7 +90,7 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 			DeltaCloud newCloud = new DeltaCloud(name, url, username, password);
 			return newCloud.testCredentials();
 		} catch (DeltaCloudException e) {
-			ErrorUtils.handleError(WizardMessages.getString("CloudConnectionAuthError.title"),
+			ErrorUtils.handleErrorAsync(WizardMessages.getString("CloudConnectionAuthError.title"),
 							WizardMessages.getFormattedString("CloudConnectionAuthError.message", url), e, getShell());
 			return true;
 		}

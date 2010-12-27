@@ -95,8 +95,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		this(url, null, null);
 	}
 
-	public DeltaCloudClientImpl(String url, String username, String password)
-			throws DeltaCloudClientException {
+	public DeltaCloudClientImpl(String url, String username, String password) throws DeltaCloudClientException {
 		this.baseUrl = createUrl(url);
 		this.username = username;
 		this.password = password;
@@ -262,16 +261,13 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		try {
 			String apiResponse = requestStringResponse(new TypeRequest(baseUrl));
 			Document document = getDocument(apiResponse);
-			NodeList elements = document
-					.getElementsByTagName(DOCUMENT_ELEMENT_API);
+			NodeList elements = document.getElementsByTagName(DOCUMENT_ELEMENT_API);
 			if (elements.getLength() > 0) {
 				Node n = elements.item(0);
-				Node driver = n.getAttributes().getNamedItem(
-						DOCUMENT_ELEMENT_DRIVER);
+				Node driver = n.getAttributes().getNamedItem(DOCUMENT_ELEMENT_DRIVER);
 				if (driver != null) {
 					String driverValue = driver.getNodeValue();
-					serverType = DeltaCloudServerType.valueOf(driverValue
-							.toUpperCase());
+					serverType = DeltaCloudServerType.valueOf(driverValue.toUpperCase());
 				}
 			}
 		} catch (Exception e) {
@@ -311,11 +307,13 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 			String response = requestStringResponse(
 					new CreateInstanceRequest(baseUrl, imageId, profileId, realmId, name, keyId, memory, storage));
 			Instance instance = buildInstance(response);
-			// TODO: WORKAROUND for https://issues.apache.org/jira/browse/DTACLOUD-11
+			// TODO: WORKAROUND for
+			// https://issues.apache.org/jira/browse/DTACLOUD-11
 			if (keyId != null) {
 				instance.setKeyId(keyId);
 			}
-			// TODO: WORKAROUND for https://issues.apache.org/jira/browse/DTACLOUD-11
+			// TODO: WORKAROUND for
+			// https://issues.apache.org/jira/browse/DTACLOUD-11
 			return instance;
 		} catch (DeltaCloudClientException e) {
 			throw e;
