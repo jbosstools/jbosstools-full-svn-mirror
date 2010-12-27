@@ -56,7 +56,7 @@ public class TextPreferenceValue {
 
 	}
 
-	private Preferences getPreferences() {
+	protected Preferences getPreferences() {
 		return new InstanceScope().getNode(plugin.getBundle().getSymbolicName());
 	}
 }
