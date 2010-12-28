@@ -8,24 +8,23 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/ 
-
-package org.jboss.tools.jsf.ui.preferences;
+package org.jboss.tools.jst.web.ui.internal.preferences;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.preferences.IWorkbenchPreferenceContainer;
 import org.jboss.tools.common.ui.preferences.SeverityPreferencePage;
-import org.jboss.tools.jsf.JSFModelPlugin;
+import org.jboss.tools.jst.web.kb.WebKbPlugin;
 
 /**
  * @author Viacheslav Kabanovich
  */
-public class JSFValidatorPreferencePage extends SeverityPreferencePage {
-	public static final String PREF_ID = "org.jboss.tools.jsf.ui.preferences.JSFValidatorPreferencePage"; //$NON-NLS-1$
-	public static final String PROP_ID = "org.jboss.tools.jsf.ui.propertyPages.JSFValidatorPreferencePage"; //$NON-NLS-1$
+public class ELValidatorPreferencePage extends SeverityPreferencePage {
+	public static final String PREF_ID = "org.jboss.tools.jst.web.ui.preferences.ELValidatorPreferencePage"; //$NON-NLS-1$
+	public static final String PROP_ID = "org.jboss.tools.jst.web.ui.properties.ELValidatorPreferencePage"; //$NON-NLS-1$
 
-	public JSFValidatorPreferencePage() {
-		setPreferenceStore(JSFModelPlugin.getDefault().getPreferenceStore());
-		setTitle(JSFSeverityPreferencesMessages.JSF_VALIDATOR_PREFERENCE_PAGE_JSF_VALIDATOR);
+	public ELValidatorPreferencePage() {
+		setPreferenceStore(WebKbPlugin.getDefault().getPreferenceStore());
+		setTitle(ELSeverityPreferencesMessages.JSF_VALIDATOR_PREFERENCE_PAGE_JSF_VALIDATOR);
 	}
 
 	@Override
@@ -41,7 +40,7 @@ public class JSFValidatorPreferencePage extends SeverityPreferencePage {
 	@Override
 	public void createControl(Composite parent) {
 		IWorkbenchPreferenceContainer container = (IWorkbenchPreferenceContainer) getContainer();
-		fConfigurationBlock = new JSFValidatorConfigurationBlock(getNewStatusChangedListener(), getProject(), container);
+		fConfigurationBlock = new ELValidatorConfigurationBlock(getNewStatusChangedListener(), getProject(), container);
 
 		super.createControl(parent);
 	}

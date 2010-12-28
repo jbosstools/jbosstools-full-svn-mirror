@@ -9,16 +9,16 @@
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
 
-package org.jboss.tools.jsf.ui.preferences;
+package org.jboss.tools.jst.web.ui.internal.preferences;
 
 import org.eclipse.osgi.util.NLS;
 
 /**
  * @author Viacheslav Kabanovich
  */
-public class JSFSeverityPreferencesMessages extends NLS {
+public class ELSeverityPreferencesMessages extends NLS {
 
-	private static final String BUNDLE_NAME = "org.jboss.tools.jsf.ui.preferences.JSFSeverityPreferencesMessages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.jboss.tools.jst.web.ui.internal.preferences.ELSeverityPreferencesMessages"; //$NON-NLS-1$
 
 	public static String JSF_VALIDATOR_CONFIGURATION_BLOCK_JSF_VALIDATOR_CONFIGURATION_BLOCK;
 	public static String JSF_VALIDATOR_PREFERENCE_PAGE_JSF_VALIDATOR;
@@ -36,6 +36,6 @@ public class JSFSeverityPreferencesMessages extends NLS {
 	public static String JSFValidatorConfigurationBlock_pb_unpairedGetterOrSetter_label;
 
 	static {
-		NLS.initializeMessages(BUNDLE_NAME, JSFSeverityPreferencesMessages.class);
+		NLS.initializeMessages(BUNDLE_NAME, ELSeverityPreferencesMessages.class);
 	}
 }

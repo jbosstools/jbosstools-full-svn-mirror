@@ -33,7 +33,7 @@
             name="%PreferencePage_VpeEditor">
       </page>
       <page
-            category="org.jboss.tools.common.model.ui"
+            category="org.jboss.tools.el.ui"
             class="org.jboss.tools.vpe.editor.preferences.ELVariablesPreferencePage"
             id="org.jboss.tools.common.xstudio.elvariables"
             name="%PreferencePage_ElVariables">
