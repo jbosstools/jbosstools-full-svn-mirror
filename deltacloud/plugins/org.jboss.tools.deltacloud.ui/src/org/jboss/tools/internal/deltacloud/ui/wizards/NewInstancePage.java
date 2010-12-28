@@ -79,6 +79,7 @@ import org.jboss.tools.internal.deltacloud.ui.utils.DataBindingUtils;
 public class NewInstancePage extends WizardPage {
 
 	private static final int IMAGE_CHECK_DELAY = 500;
+	private static final int KEY_CHECK_DELAY = 500;
 
 	private final static String NAME = "NewInstance.name"; //$NON-NLS-1$
 	private final static String DESCRIPTION = "NewInstance.desc"; //$NON-NLS-1$
@@ -229,15 +230,12 @@ public class NewInstancePage extends WizardPage {
 
 		// name
 		bindText(nameText, NewInstancePageModel.PROPERTY_NAME, WizardMessages.getString(MUST_ENTER_A_NAME), dbc);
-		// image
 		IObservableValue imageObservable = bindImage(imageText, dbc);
-		// arch label
 		bindArchLabel(imageObservable, dbc);
 		bindRealmCombo(realmCombo, dbc);
 		bindProfileCombo(hardwareCombo, dbc);
 		bindProfilePages(hardwareCombo, profilePages, dbc);
-		// key
-		bindText(keyText, NewInstancePageModel.PROPERTY_KEYID, WizardMessages.getString(MUST_ENTER_A_KEYNAME), dbc);
+		bindKey(keyText, dbc);
 	}
 
 	private void bindArchLabel(IObservableValue imageObservable, DataBindingContext dbc) {
@@ -400,6 +398,43 @@ public class NewInstancePage extends WizardPage {
 			model.setCpu(profilePage.getCPU());
 			model.setStorage(profilePage.getStorage());
 			model.setMemory(profilePage.getMemory());
+		}
+	}
+
+	private void bindKey(Text text, DataBindingContext dbc) {
+		Binding textBinding = dbc.bindValue(
+				WidgetProperties.text(SWT.Modify).observeDelayed(KEY_CHECK_DELAY, text),
+				BeanProperties.value(NewInstancePageModel.class, NewInstancePageModel.PROPERTY_KEYID).observe(model),
+				new UpdateValueStrategy()
+						.setBeforeSetValidator(
+								new MandatoryStringValidator(WizardMessages.getString(MUST_ENTER_A_KEYNAME)))
+						.setBeforeSetValidator(
+								new KeyValidator()),
+
+				null);
+		ControlDecorationSupport.create(textBinding, SWT.LEFT | SWT.TOP);
+	}
+
+	private class KeyValidator implements IValidator {
+
+		@Override
+		public IStatus validate(Object value) {
+			if (value instanceof String
+					&& ((String) value).length() > 0) {
+				if (doesKeyExist((String) value)) {
+					return ValidationStatus.ok();
+				}
+			}
+			return ValidationStatus.error(MessageFormat.format(
+					"The key is not known to cloud \"{0}\"", cloud.getName()));
+		}
+
+		private boolean doesKeyExist(String keyId) {
+			try {
+				return cloud.getKey(keyId) != null;
+			} catch (DeltaCloudException e) {
+				return false;
+			}
 		}
 	}
 
