@@ -78,8 +78,8 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	private static final String DOCUMENT_ELEMENT_DRIVER = "driver";
 	private static final String DOCUMENT_ELEMENT_API = "api";
 
-	private static final Pattern ELEMENT_TEXTVALUE_REGEX = Pattern
-			.compile("[^\n\t ]+[^\n]+");
+	private static final Pattern ELEMENT_TEXTVALUE_REGEX =
+			Pattern.compile("[^\n\t ]+[^\n]+");
 
 	public static enum DeltaCloudServerType {
 		UNKNOWN, MOCK, EC2
@@ -308,12 +308,12 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 					new CreateInstanceRequest(baseUrl, imageId, profileId, realmId, name, keyId, memory, storage));
 			Instance instance = buildInstance(response);
 			// TODO: WORKAROUND for
-			// https://issues.apache.org/jira/browse/DTACLOUD-11
+			// https://issues.jboss.org/browse/JBIDE-8005
 			if (keyId != null) {
 				instance.setKeyId(keyId);
 			}
 			// TODO: WORKAROUND for
-			// https://issues.apache.org/jira/browse/DTACLOUD-11
+			// https://issues.jboss.org/browse/JBIDE-8005
 			return instance;
 		} catch (DeltaCloudClientException e) {
 			throw e;
@@ -365,8 +365,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		// return JAXB.unmarshal(new StringReader(request(new
 		// ListInstanceRequest(baseUrl, instanceId))), Instance.class);
 		try {
-			return buildInstance(requestStringResponse(new ListInstanceRequest(
-					baseUrl, instanceId)));
+			return buildInstance(requestStringResponse(new ListInstanceRequest(baseUrl, instanceId)));
 		} catch (DeltaCloudClientException e) {
 			throw e;
 		} catch (Exception e) {

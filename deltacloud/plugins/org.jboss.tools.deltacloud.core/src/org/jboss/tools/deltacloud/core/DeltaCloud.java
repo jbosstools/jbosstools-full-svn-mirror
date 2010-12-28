@@ -85,7 +85,7 @@ public class DeltaCloud extends ObservablePojo {
 		this.username = username;
 		this.driver = driver;
 		this.passwordStore = createSecurePasswordStore(name, username, password);
-		this.client = createClient(name, url, username, passwordStore.getPassword());
+		this.client = createClient(url, username, passwordStore.getPassword());
 		imageFilter = createImageFilter(imageFilterRules);
 		instanceFilter = createInstanceFilter(instanceFilterRules);
 	}
@@ -102,7 +102,7 @@ public class DeltaCloud extends ObservablePojo {
 		}
 
 		if (connectionPropertiesChanged) {
-			client = createClient(name, url, username, password);
+			client = createClient(url, username, password);
 			loadChildren();
 		}
 	}
@@ -143,7 +143,7 @@ public class DeltaCloud extends ObservablePojo {
 		return new SecurePasswordStore(new DeltaCloudPasswordStorageKey(name, username), password);
 	}
 
-	protected InternalDeltaCloudClient createClient(String name, String url, String username, String password)
+	protected InternalDeltaCloudClient createClient(String url, String username, String password)
 			throws DeltaCloudException {
 		try {
 			return new DeltaCloudClientImpl(url, username, password);

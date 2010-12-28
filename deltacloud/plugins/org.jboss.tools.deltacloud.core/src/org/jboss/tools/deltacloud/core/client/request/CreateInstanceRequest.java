@@ -26,7 +26,7 @@ public class CreateInstanceRequest extends AbstractDeltaCloudRequest {
 	private String profileId;
 	private String realmId;
 	private String name;
-	private String keyName;
+	private String keyname;
 	private String memory;
 	private String storage;
 
@@ -35,13 +35,13 @@ public class CreateInstanceRequest extends AbstractDeltaCloudRequest {
 	}
 
 	public CreateInstanceRequest(URL baseUrl, String imageId, String profileId, String realmId, String name,
-			String keyname, String memory, String storage) {
+			String keyId, String memory, String storage) {
 		super(baseUrl, HttpMethod.POST);
 		this.imageId = imageId;
 		this.profileId = profileId;
 		this.realmId = realmId;
 		this.name = name;
-		this.keyName = keyname;
+		this.keyname = keyId;
 		this.memory = memory;
 		this.storage = storage;
 	}
@@ -49,13 +49,13 @@ public class CreateInstanceRequest extends AbstractDeltaCloudRequest {
 	@Override
 	protected String doCreateUrl(UrlBuilder urlBuilder) {
 		return urlBuilder.path("instances")
+				.parameter("keyname", keyname)
 				.parameter("image_id", imageId)
 				.parameter("hwp_id", profileId)
 				.parameter("realm_id", realmId)
 				.parameter("name", name)
 				.parameter("hwp_memory", memory)
 				.parameter("hwp_storage", storage)
-				.parameter("keyname", keyName)
 				.parameter("commit", "create")
 				.toString();
 	}
