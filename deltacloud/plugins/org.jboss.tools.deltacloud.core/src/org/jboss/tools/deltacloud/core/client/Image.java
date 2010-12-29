@@ -31,7 +31,7 @@ public class Image extends AbstractDeltaCloudObject
 	@XmlElement
 	private String architecture;
 	
-	private Image()
+	protected Image()
 	{
 	}
 		

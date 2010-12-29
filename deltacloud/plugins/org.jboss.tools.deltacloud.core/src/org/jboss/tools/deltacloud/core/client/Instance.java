@@ -61,13 +61,11 @@ public class Instance extends AbstractDeltaCloudObject {
 	public Instance() {
 	}
 
-	@SuppressWarnings("unused")
-	private void setOwnerId(String ownerId) {
+	protected void setOwnerId(String ownerId) {
 		this.ownerId = ownerId;
 	}
 
-	@SuppressWarnings("unused")
-	private void setName(String name) {
+	protected void setName(String name) {
 		this.name = name;
 	}
 
