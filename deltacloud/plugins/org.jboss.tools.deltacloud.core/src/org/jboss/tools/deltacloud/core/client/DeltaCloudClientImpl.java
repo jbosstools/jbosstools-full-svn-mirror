@@ -280,8 +280,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	public Instance createInstance(String imageId)
 			throws DeltaCloudClientException {
 		try {
-			return buildInstance(requestStringResponse(new CreateInstanceRequest(
-					baseUrl, imageId)));
+			return buildInstance(requestStringResponse(new CreateInstanceRequest(baseUrl, imageId)));
 		} catch (DeltaCloudClientException e) {
 			throw e;
 		} catch (Exception e) {
@@ -415,13 +414,13 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		return key;
 	}
 
-	private Instance updateInstance(String xml, Instance instance)
-			throws Exception {
+	private Instance updateInstance(String xml, Instance instance) throws Exception {
 		Document document = getDocument(xml);
+		instance.setName(getElementTextValues(document, "name").get(0));
+		instance.setOwnerId(getElementTextValues(document, "owner_id").get(0));
 		instance.setImageId(getIdFromHref(getAttributeValues(document, "image", "href").get(0))); //$NON-NLS-1$ //$NON-NLS-2$
 		instance.setProfileId(getIdFromHref(getAttributeValues(document, "hardware_profile", "href").get(0))); //$NON-NLS-1$ //$NON-NLS-2$
-		getProfileProperties(instance,
-				getPropertyNodes(document, "hardware_profile")); //$NON-NLS-1$
+		updateProfileProperties(instance, getPropertyNodes(document, "hardware_profile")); //$NON-NLS-1$
 		instance.setRealmId(getIdFromHref(getAttributeValues(document, "realm", "href").get(0))); //$NON-NLS-1$ //$NON-NLS-2$
 		instance.setState(getElementTextValues(document, "state").get(0)); //$NON-NLS-1$
 		updateKeyname(document, instance);
@@ -433,9 +432,37 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		return instance;
 	}
 
+	private void updateProfileProperties(Instance instance,
+			List<Node> propertyNodes) {
+		if (propertyNodes != null) {
+			for (Iterator<Node> i = propertyNodes.iterator(); i.hasNext();) {
+				Node n = i.next();
+				NamedNodeMap attrs = n.getAttributes();
+				String name = attrs.getNamedItem("name").getNodeValue(); //$NON-NLS-1$
+				if (name.equals("memory")) { //$NON-NLS-1$
+					String memory = attrs.getNamedItem("value").getNodeValue(); //$NON-NLS-1$
+					if (attrs.getNamedItem("unit") != null) { //$NON-NLS-1$
+						memory += " " + attrs.getNamedItem("unit").getNodeValue(); //$NON-NLS-1$
+					}
+					instance.setMemory(memory);
+				} else if (name.equals("storage")) { //$NON-NLS-1$
+					String storage = attrs.getNamedItem("value").getNodeValue(); //$NON-NLS-1$
+					if (attrs.getNamedItem("unit") != null) { //$NON-NLS-1$
+						storage += " " + attrs.getNamedItem("unit").getNodeValue(); //$NON-NLS-1$
+					}
+					instance.setStorage(storage);
+				} else if (name.equals("cpu")) { //$NON-NLS-1$
+					String cpu = attrs.getNamedItem("value").getNodeValue(); //$NON-NLS-1$
+					instance.setCPU(cpu);
+				}
+			}
+		}
+	}
+
 	private Instance buildInstance(String xml) throws Exception {
-		Instance instance = JAXB.unmarshal(new StringReader(xml),
-				Instance.class);
+		// Instance instance = JAXB.unmarshal(new
+		// StringReader(xml),Instance.class);
+		Instance instance = new Instance();
 		return updateInstance(xml, instance);
 	}
 
@@ -610,40 +637,12 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		}
 	}
 
-	private void getProfileProperties(Instance instance,
-			List<Node> propertyNodes) {
-		if (propertyNodes != null) {
-			for (Iterator<Node> i = propertyNodes.iterator(); i.hasNext();) {
-				Node n = i.next();
-				NamedNodeMap attrs = n.getAttributes();
-				String name = attrs.getNamedItem("name").getNodeValue(); //$NON-NLS-1$
-				if (name.equals("memory")) { //$NON-NLS-1$
-					String memory = attrs.getNamedItem("value").getNodeValue(); //$NON-NLS-1$
-					if (attrs.getNamedItem("unit") != null) { //$NON-NLS-1$
-						memory += " " + attrs.getNamedItem("unit").getNodeValue(); //$NON-NLS-1$
-					}
-					instance.setMemory(memory);
-				} else if (name.equals("storage")) { //$NON-NLS-1$
-					String storage = attrs.getNamedItem("value").getNodeValue(); //$NON-NLS-1$
-					if (attrs.getNamedItem("unit") != null) { //$NON-NLS-1$
-						storage += " " + attrs.getNamedItem("unit").getNodeValue(); //$NON-NLS-1$
-					}
-					instance.setStorage(storage);
-				} else if (name.equals("cpu")) { //$NON-NLS-1$
-					String cpu = attrs.getNamedItem("value").getNodeValue(); //$NON-NLS-1$
-					instance.setCPU(cpu);
-				}
-			}
-		}
-	}
-
 	private String getIdFromHref(String href) {
 		return href.substring(href.lastIndexOf("/") + 1, href.length());
 	}
 
-	private <T extends AbstractDeltaCloudObject> List<T> listDeltaCloudObjects(
-			Class<T> clazz, AbstractListObjectsRequest request,
-			String elementName) throws DeltaCloudClientException {
+	private <T extends AbstractDeltaCloudObject> List<T> listDeltaCloudObjects(Class<T> clazz,
+			AbstractListObjectsRequest request, String elementName) throws DeltaCloudClientException {
 		try {
 			Document document = getDocument(requestStringResponse(request));
 			List<T> dco = new ArrayList<T>();
@@ -668,8 +667,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	}
 
 	@SuppressWarnings("unchecked")
-	private <T extends Object> T buildDeltaCloudObject(Class<T> clazz,
-			String node) throws Exception {
+	private <T extends Object> T buildDeltaCloudObject(Class<T> clazz, String node) throws Exception {
 		if (clazz.equals(Instance.class)) {
 			return (T) buildInstance(node);
 		} else if (clazz.equals(HardwareProfile.class)) {
