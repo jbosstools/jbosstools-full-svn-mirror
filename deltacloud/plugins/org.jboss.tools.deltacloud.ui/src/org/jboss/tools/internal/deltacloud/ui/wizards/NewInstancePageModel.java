@@ -152,7 +152,6 @@ public class NewInstancePageModel extends ObservableUIPojo {
 			}
 			DeltaCloudHardwareProfile hardwareProfile = filteredProfiles.get(index);
 			setSelectedProfile(hardwareProfile);
-			System.err.println("firing oldIndex = " + oldIndex + " newIndex = " + index);
 			firePropertyChange(PROP_SELECTED_PROFILE_INDEX, oldIndex, index);
 		}
 	}
