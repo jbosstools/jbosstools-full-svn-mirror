@@ -26,8 +26,8 @@ public class DeltaCloudPasswordStorageKey implements IStorageKey {
 	private String userName;
 
 	public DeltaCloudPasswordStorageKey(String cloudName, String userName) {
-		this.userName = userName;
-		this.cloudName = cloudName;
+		this.userName = EncodingUtils.encodeBase64(userName.getBytes());
+		this.cloudName = EncodingUtils.encodeBase64(cloudName.getBytes());
 	}
 
 	@Override

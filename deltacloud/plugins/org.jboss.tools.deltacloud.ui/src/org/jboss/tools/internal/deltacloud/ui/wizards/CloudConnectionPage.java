@@ -376,8 +376,7 @@ public class CloudConnectionPage extends WizardPage {
 		dbc.bindValue(
 				passwordTextObservable,
 				BeanProperties.value(CloudConnectionPageModel.class, CloudConnectionPageModel.PROPERTY_PASSWORD)
-						.observe(
-								connectionModel));
+						.observe(connectionModel));
 		// test button
 		final Button testButton = new Button(container, SWT.NULL);
 		testButton.setText(WizardMessages.getString(TESTBUTTON_LABEL));

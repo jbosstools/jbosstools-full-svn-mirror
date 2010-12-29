@@ -15,6 +15,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +37,8 @@ import org.w3c.dom.NodeList;
  * @author André Dietisheim
  */
 public class DeltaCloudManager {
+
+	private static final String USERNAME_ENCODING = "UTF8";
 
 	private static final DeltaCloudManager INSTANCE = new DeltaCloudManager();
 
@@ -83,7 +87,7 @@ public class DeltaCloudManager {
 			NamedNodeMap attrs = n.getAttributes();
 			name = attrs.getNamedItem("name").getNodeValue(); // $NON-NLS-1$
 			String url = attrs.getNamedItem("url").getNodeValue(); // $NON-NLS-1$
-			String username = attrs.getNamedItem("username").getNodeValue(); // $NON-NLS-1$
+			String username = URLEncoder.encode(attrs.getNamedItem("username").getNodeValue(), USERNAME_ENCODING); // $NON-NLS-1$
 			Driver driver = Driver.checkedValueOf(attrs.getNamedItem("type").getNodeValue()); // $NON-NLS-1$
 			String imageFilterRules = getImageFilterRules(attrs.getNamedItem("imagefilter")); // $NON-NLS-1$
 			String instanceFilterRules = getInstanceFilterRules(attrs.getNamedItem("instancefilter")); // $NON-NLS-1$
@@ -145,9 +149,11 @@ public class DeltaCloudManager {
 		}
 	}
 
-	private String createCloudXML(DeltaCloud d) {
-		return "<cloud name=\"" + d.getName() + "\" url=\"" //$NON-NLS-1$ //$NON-NLS-2$ 
-				+ d.getURL() + "\" username=\"" + d.getUsername() + //$NON-NLS-1$ //$NON-NLS-2$ 
+	private String createCloudXML(DeltaCloud d) throws UnsupportedEncodingException {
+		String username = URLEncoder.encode(d.getUsername(), USERNAME_ENCODING);
+		return "<cloud name=\"" + d.getName() + //$NON-NLS-1$ 
+				"\" url=\"" + d.getURL() + //$NON-NLS-2$ 
+				"\" username=\"" + username + //$NON-NLS-1$ //$NON-NLS-2$ 
 				"\" type=\"" + d.getDriver() + //$NON-NLS-1$ //$NON-NLS-2$
 				"\" imagefilter=\"" + d.getImageFilter() + //$NON-NLS-1$ //$NON-NLS-2$
 				"\" instancefilter=\"" + d.getInstanceFilter() + //$NON-NLS-1$ //$NON-NLS-2$

@@ -60,9 +60,9 @@ public abstract class DeltaCloudViewItem<DELTACLOUDITEM> implements IAdaptable, 
 			@Override
 			public void run() {
 				viewer.remove(children.toArray());
+				children.clear();
 			}
 		});
-		children.clear();
 	}
 
 	public boolean hasChildren() {
@@ -74,32 +74,29 @@ public abstract class DeltaCloudViewItem<DELTACLOUDITEM> implements IAdaptable, 
 	}
 
 	public void addChild(final DeltaCloudViewItem<?> element) {
-		children.add(element);
-
-		getDisplay().asyncExec(new Runnable() {
+		getDisplay().syncExec(new Runnable() {
 			@Override
 			public void run() {
 				viewer.add(DeltaCloudViewItem.this, element);
+				children.add(element);
 			}
 		});
 	}
 
 	public void addChildren(final DeltaCloudViewItem<?>[] elements) {
-		for (DeltaCloudViewItem<?> element : elements) {
-			children.add(element);
-		}
-
-		getDisplay().asyncExec(new Runnable() {
+		getDisplay().syncExec(new Runnable() {
 			@Override
 			public void run() {
 				viewer.add(DeltaCloudViewItem.this, elements);
+				for (DeltaCloudViewItem<?> element : elements) {
+					children.add(element);
+				}
 			}
 		});
 	}
 
 	public void removeChild(final DeltaCloudViewItem<?> element) {
-
-		getDisplay().asyncExec(new Runnable() {
+		getDisplay().syncExec(new Runnable() {
 			@Override
 			public void run() {
 				if (element != null) {
@@ -111,7 +108,7 @@ public abstract class DeltaCloudViewItem<DELTACLOUDITEM> implements IAdaptable, 
 	}
 
 	protected void expand() {
-		getDisplay().asyncExec(new Runnable() {
+		getDisplay().syncExec(new Runnable() {
 
 			@Override
 			public void run() {
@@ -138,7 +135,7 @@ public abstract class DeltaCloudViewItem<DELTACLOUDITEM> implements IAdaptable, 
 
 	private void initDisposeListener(Viewer viewer) {
 		final Control control = viewer.getControl();
-		control.getDisplay().asyncExec(new Runnable() {
+		control.getDisplay().syncExec(new Runnable() {
 
 			@Override
 			public void run() {

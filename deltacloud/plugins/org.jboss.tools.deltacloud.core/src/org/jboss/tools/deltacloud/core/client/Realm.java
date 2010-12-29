@@ -15,36 +15,30 @@ import javax.xml.bind.annotation.XmlElement;
 /**
  * @author Martyn Taylor
  */
-public class Realm extends AbstractDeltaCloudObject
-{
+public class Realm extends AbstractDeltaCloudObject {
 	private static final long serialVersionUID = 1L;
 
 	public static enum RealmState {
 		AVAILABLE, UNAVAILABLE, UNKNOWN
 	}
-	
+
 	@XmlElement
 	private String name;
-	
+
 	@XmlElement
 	private RealmState state;
-	
+
 	@XmlElement
 	private int limit;
-		
-	private Realm() 
-	{
+
+	protected Realm() {
 	}
 
-	@SuppressWarnings("unused")
-	private void setName(String name)
-	{
+	protected void setName(String name) {
 		this.name = name;
 	}
 
-	@SuppressWarnings("unused")
-	private void setState(String state)
-	{
+	protected void setState(String state) {
 		try {
 			this.state = RealmState.valueOf(state);
 		} catch (Exception e) {
@@ -52,38 +46,39 @@ public class Realm extends AbstractDeltaCloudObject
 		}
 	}
 
-	@SuppressWarnings("unused")
-	private void setLimit(int limit)
-	{
+	protected void setLimit(int limit) {
 		this.limit = limit;
 	}
 
-	public static long getSerialversionuid()
-	{
+	protected void setLimit(String limit) {
+		try {
+			this.limit = Integer.parseInt(limit);
+		} catch (Exception e) {
+			this.limit = -1;
+		}
+	}
+
+	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
-	public String getName()
-	{
+	public String getName() {
 		return name;
 	}
 
-	public RealmState getState()
-	{
+	public RealmState getState() {
 		return state;
 	}
-	
-	public int getLimit()
-	{
+
+	public int getLimit() {
 		return limit;
 	}
-	
+
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		String s = "";
 		s += "Realm:\t\t" + getId() + "\n";
-		s += "Name\t\t" + getName()+ "\n";
+		s += "Name\t\t" + getName() + "\n";
 		s += "State:\t\t" + getState() + "\n";
 		s += "Limit:\t\t" + getLimit() + "\n";
 		return s;

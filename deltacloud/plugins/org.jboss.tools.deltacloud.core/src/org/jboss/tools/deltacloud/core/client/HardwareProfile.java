@@ -22,10 +22,14 @@ public class HardwareProfile extends AbstractDeltaCloudObject
 
 	private List<Property> properties;
 	
-	private HardwareProfile()
+	protected HardwareProfile()
 	{	
 	}
 
+	protected void setProperties(List<Property> properties) {
+		this.properties = properties;
+	}
+	
 	public List<Property> getProperties() {
 		if (properties == null)
 			properties = new ArrayList<Property>();
