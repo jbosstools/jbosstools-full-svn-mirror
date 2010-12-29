@@ -77,6 +77,15 @@ public abstract class AbstractDeltaCloudObjectRepository<E extends IDeltaCloudEl
 		}
 	}
 
+	public int indexOf(E object) {
+		try {
+			lock();
+			return objects.indexOf(object);
+		} finally {
+			unlock();
+		}
+	}
+	
 	protected E getById(C criteria) {
 		try {
 			lock();

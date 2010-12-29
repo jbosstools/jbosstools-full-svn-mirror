@@ -532,6 +532,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 
 	private Instance updateInstance(String xml, Instance instance) throws Exception {
 		Document document = getDocument(xml);
+		instance.setId(getAttributeValues(document, "instance", "id").get(0));
 		instance.setName(getElementTextValues(document, "name").get(0));
 		instance.setOwnerId(getElementTextValues(document, "owner_id").get(0));
 		instance.setImageId(getIdFromHref(getAttributeValues(document, "image", "href").get(0))); //$NON-NLS-1$ //$NON-NLS-2$
