@@ -534,7 +534,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		Document document = getDocument(xml);
 		instance.setId(getAttributeValues(document, "instance", "id").get(0));
 		instance.setName(getElementTextValues(document, "name").get(0));
-		instance.setOwnerId(getElementTextValues(document, "owner_id").get(0));
+		updateOwnerId(instance, document);
 		instance.setImageId(getIdFromHref(getAttributeValues(document, "image", "href").get(0))); //$NON-NLS-1$ //$NON-NLS-2$
 		instance.setProfileId(getIdFromHref(getAttributeValues(document, "hardware_profile", "href").get(0))); //$NON-NLS-1$ //$NON-NLS-2$
 		updateProfileProperties(instance, getPropertyNodes(document, "hardware_profile")); //$NON-NLS-1$
@@ -547,6 +547,13 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		instance.setPrivateAddresses(
 				new AddressList(getElementTextValues(document, "private_addresses")));
 		return instance;
+	}
+
+	private void updateOwnerId(Instance instance, Document document) {
+		List<String> values = getElementTextValues(document, "owner_id");
+		if (values.size() > 0) {
+			instance.setOwnerId(values.get(0));
+		}
 	}
 
 	private void updateProfileProperties(Instance instance,
