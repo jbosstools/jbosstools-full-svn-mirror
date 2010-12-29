@@ -304,7 +304,7 @@ public class DeltaCloud extends ObservablePojo {
 
 	public DeltaCloudInstance waitForState(String instanceId, IInstanceStateMatcher stateMatcher, IProgressMonitor pm)
 			throws InterruptedException, DeltaCloudException {
-		DeltaCloudInstance instance = instanceRepo.getById(instanceId);
+		DeltaCloudInstance instance = getInstancesRepository().getById(instanceId);
 		if (instance != null) {
 			while (!pm.isCanceled()) {
 				if (stateMatcher.matchesState(instance, instance.getState())
@@ -473,7 +473,7 @@ public class DeltaCloud extends ObservablePojo {
 
 	public boolean performInstanceAction(String instanceId, DeltaCloudInstance.Action action)
 			throws DeltaCloudException {
-		return performInstanceAction(instanceRepo.getById(instanceId), action);
+		return performInstanceAction(getInstancesRepository().getById(instanceId), action);
 	}
 
 	protected boolean performInstanceAction(DeltaCloudInstance instance, DeltaCloudInstance.Action action)
