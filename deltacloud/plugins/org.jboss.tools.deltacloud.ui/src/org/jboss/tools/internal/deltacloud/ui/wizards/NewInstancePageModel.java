@@ -68,9 +68,10 @@ public class NewInstancePageModel extends ObservableUIPojo {
 	}
 
 	public void setImage(DeltaCloudImage image) {
+		firePropertyChange(PROPERTY_IMAGE, this.image, this.image = image);
 		List<DeltaCloudHardwareProfile> filteredProfiles = filterProfiles(image, allProfiles);
 		setFilteredProfiles(filteredProfiles);
-		firePropertyChange(PROPERTY_IMAGE, this.image, this.image = image);
+		setArch(image.getArchitecture());
 	}
 
 	public void setSelectedRealmIndex(int index) {
@@ -120,8 +121,7 @@ public class NewInstancePageModel extends ObservableUIPojo {
 	}
 
 	private void setFilteredProfiles(List<DeltaCloudHardwareProfile> profiles) {
-		firePropertyChange(PROP_FILTERED_PROFILES, this.filteredProfiles,
-				this.filteredProfiles = profiles);
+		firePropertyChange(PROP_FILTERED_PROFILES, this.filteredProfiles, this.filteredProfiles = profiles);
 		setSelectedProfileIndex(0);
 	}
 
