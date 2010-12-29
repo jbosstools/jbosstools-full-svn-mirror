@@ -465,7 +465,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 			throws ParserConfigurationException, SAXException, IOException, DeltaCloudClientException {
 		Document document = getDocument(getResponse(inputStream));
 		List<Realm> realms = new ArrayList<Realm>();
-		NodeList elements = document.getElementsByTagName("realms");
+		NodeList elements = document.getElementsByTagName("realm");
 		for (int i = 0; i < elements.getLength(); i++) {
 			Realm realm = createRealm((Element) elements.item(i));
 			realms.add(realm);
