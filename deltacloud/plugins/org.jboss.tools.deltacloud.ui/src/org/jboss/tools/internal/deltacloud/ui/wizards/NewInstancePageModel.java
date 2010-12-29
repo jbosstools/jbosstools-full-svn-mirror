@@ -60,7 +60,7 @@ public class NewInstancePageModel extends ObservableUIPojo {
 	}
 
 	public void setName(String name) {
-		getPropertyChangeSupport().firePropertyChange(PROPERTY_NAME, this.name, this.name = name);
+		firePropertyChange(PROPERTY_NAME, this.name, this.name = name);
 	}
 
 	public DeltaCloudImage getImage() {
@@ -70,13 +70,13 @@ public class NewInstancePageModel extends ObservableUIPojo {
 	public void setImage(DeltaCloudImage image) {
 		List<DeltaCloudHardwareProfile> filteredProfiles = filterProfiles(image, allProfiles);
 		setFilteredProfiles(filteredProfiles);
-		getPropertyChangeSupport().firePropertyChange(PROPERTY_IMAGE, this.image, this.image = image);
+		firePropertyChange(PROPERTY_IMAGE, this.image, this.image = image);
 	}
 
 	public void setSelectedRealmIndex(int index) {
 		if (realms.size() > index) {
 			int oldIndex = -1;
-			if (selectedRealm != null 
+			if (selectedRealm != null
 					&& realms.size() > 0) {
 				oldIndex = realms.indexOf(selectedRealm);
 			}
@@ -102,7 +102,7 @@ public class NewInstancePageModel extends ObservableUIPojo {
 	}
 
 	protected void setRealms(List<DeltaCloudRealm> realms) {
-		getPropertyChangeSupport().firePropertyChange(PROPERTY_REALMS, this.realms, this.realms = realms);
+		firePropertyChange(PROPERTY_REALMS, this.realms, this.realms = realms);
 		setSelectedRealmIndex(0);
 	}
 
@@ -111,9 +111,8 @@ public class NewInstancePageModel extends ObservableUIPojo {
 	}
 
 	protected void setAllProfiles(List<DeltaCloudHardwareProfile> profiles) {
-		getPropertyChangeSupport().firePropertyChange(PROP_ALL_PROFILES, this.allProfiles, this.allProfiles = profiles);
+		firePropertyChange(PROP_ALL_PROFILES, this.allProfiles, this.allProfiles = profiles);
 		setFilteredProfiles(filterProfiles(image, profiles));
-		setSelectedProfileIndex(0);
 	}
 
 	public List<DeltaCloudHardwareProfile> getAllProfiles() {
@@ -121,14 +120,17 @@ public class NewInstancePageModel extends ObservableUIPojo {
 	}
 
 	private void setFilteredProfiles(List<DeltaCloudHardwareProfile> profiles) {
-		getPropertyChangeSupport().firePropertyChange(PROP_FILTERED_PROFILES, this.filteredProfiles, this.filteredProfiles = profiles);
+		firePropertyChange(PROP_FILTERED_PROFILES, this.filteredProfiles,
+				this.filteredProfiles = profiles);
+		setSelectedProfileIndex(0);
 	}
 
 	public List<DeltaCloudHardwareProfile> getFilteredProfiles() {
 		return filteredProfiles;
 	}
 
-	private List<DeltaCloudHardwareProfile> filterProfiles(DeltaCloudImage image, Collection<DeltaCloudHardwareProfile> profiles) {
+	private List<DeltaCloudHardwareProfile> filterProfiles(DeltaCloudImage image,
+			Collection<DeltaCloudHardwareProfile> profiles) {
 		List<DeltaCloudHardwareProfile> filteredProfiles = new ArrayList<DeltaCloudHardwareProfile>();
 		for (DeltaCloudHardwareProfile p : profiles) {
 			if (p.getArchitecture() == null
@@ -144,17 +146,22 @@ public class NewInstancePageModel extends ObservableUIPojo {
 	public void setSelectedProfileIndex(int index) {
 		if (filteredProfiles.size() > index) {
 			int oldIndex = -1;
-			if (selectedProfile != null 
+			if (selectedProfile != null
 					&& filteredProfiles.size() > 0) {
 				oldIndex = filteredProfiles.indexOf(selectedProfile);
 			}
 			DeltaCloudHardwareProfile hardwareProfile = filteredProfiles.get(index);
 			setSelectedProfile(hardwareProfile);
+			System.err.println("firing oldIndex = " + oldIndex + " newIndex = " + index);
 			firePropertyChange(PROP_SELECTED_PROFILE_INDEX, oldIndex, index);
 		}
 	}
 
 	public int getSelectedProfileIndex() {
+		if (filteredProfiles == null ||
+				filteredProfiles.size() <= 0) {
+			return -1;
+		}
 		return filteredProfiles.indexOf(selectedProfile);
 	}
 
@@ -192,7 +199,7 @@ public class NewInstancePageModel extends ObservableUIPojo {
 	public void setCpu(String cpu) {
 		this.cpu = cpu;
 	}
-	
+
 	public String getCpu() {
 		return this.cpu;
 	}
