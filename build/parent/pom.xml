@@ -825,6 +825,27 @@
 				</repository>
 			</repositories>
 		</profile>
+		
+		<profile>
+			<id>jbosstools-nightly-staging-composite-trunk</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<repositories>
+				<repository>
+					<id>jbosstools-nightly-staging-composite-trunk</id>
+					<url>http://download.jboss.org/jbosstools/builds/staging/_composite_/trunk/ </url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+			</repositories>
+		</profile>
+		
 		<profile>
 			<!-- this plugin is available from https://github.com/nickboldt/maven-plugins/tree/master/unique-GAV-plugin/ -->
 			<id>GAV</id>
