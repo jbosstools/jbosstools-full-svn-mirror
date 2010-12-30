@@ -11,7 +11,6 @@
 </properties>
 <children size="27">
 
-<child location="http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.nightly/all/repo/"/>
 <child location="http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--archives/all/repo/"/>
 <child location="http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--birt/all/repo/"/>
 <child location="http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--bpel/all/repo/"/>
