@@ -554,20 +554,20 @@ public class DeltaCloud extends ObservablePojo {
 		}
 	}
 
-	public DeltaCloudInstance createInstance(String name, String imageId, String realmId, String profileId,
+	public DeltaCloudInstance createInstance(String alias, String imageId, String realmId, String profileId,
 			String keyId, String memory, String storage) throws DeltaCloudException {
 		try {
 			Instance instance = null;
 			if (keyId != null) {
-				instance = client.createInstance(imageId, profileId, realmId, name, keyId, memory, storage);
+				instance = client.createInstance(imageId, profileId, realmId, alias, keyId, memory, storage);
 			} else {
-				instance = client.createInstance(imageId, profileId, realmId, name, memory, storage);
+				instance = client.createInstance(imageId, profileId, realmId, alias, memory, storage);
 			}
 			if (instance != null) {
 				DeltaCloudInstancesRepository repo = getInstancesRepository();
 				DeltaCloudInstance[] instances = repo.get();
 				DeltaCloudInstance deltaCloudInstance = repo.add(instance, this);
-				deltaCloudInstance.setGivenName(name);
+				deltaCloudInstance.setAlias(alias);
 				// TODO: remove notification with all instanceRepo, replace by
 				// notifying the changed instance
 				firePropertyChange(PROP_INSTANCES, instances, repo.get());

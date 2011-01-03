@@ -1,3 +1,11 @@
+2011-01-03  adietisheim  <adietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (createInstance): 
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudInstance.java 
+	(getAlias): 
+	(setAlias): 
+	[JBIDE-7294] implementing alias support
+	
 2010-12-27  adietisheim  <adietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (isValid): 

@@ -74,7 +74,7 @@ public class DeltaCloudInstance extends AbstractDeltaCloudElement {
 	}
 
 	private Instance instance;
-	private String givenName;
+	private String alias;
 
 	public DeltaCloudInstance(DeltaCloud cloud, Instance instance) {
 		super(cloud);
@@ -85,12 +85,12 @@ public class DeltaCloudInstance extends AbstractDeltaCloudElement {
 		return instance.getName();
 	}
 
-	public String getGivenName() {
-		return givenName;
+	public String getAlias() {
+		return alias;
 	}
 
-	public void setGivenName(String name) {
-		givenName = name;
+	public void setAlias(String alias) {
+		this.alias = alias;
 	}
 
 	public String getId() {
@@ -191,7 +191,7 @@ public class DeltaCloudInstance extends AbstractDeltaCloudElement {
 		builder.append(" [");
 		appendActions(builder);
 		builder.append("id: ").append(getId())
-				.append("givenName: ").append(givenName)
+				.append("givenName: ").append(alias)
 				.append("name: ").append(getName())
 				.append("hostName: ").append(getHostName())
 				.append("imageId: ").append(getImageId())
