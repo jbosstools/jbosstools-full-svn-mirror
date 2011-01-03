@@ -50,6 +50,9 @@ public class CreateInstanceRequest extends AbstractDeltaCloudRequest {
 	protected String doCreateUrl(UrlBuilder urlBuilder) {
 		return urlBuilder.path("instances")
 				.parameter("keyname", keyname)
+				// WORKAROUND for JBIDE-8005, STEAM-303
+				.parameter("key_name", keyname)
+				// WORKAROUND for JBIDE-8005, STEAM-303
 				.parameter("image_id", imageId)
 				.parameter("hwp_id", profileId)
 				.parameter("realm_id", realmId)
