@@ -33,8 +33,8 @@ public class DeltaCloudObjectLabelUtils {
 	public static String getLabel(DeltaCloudInstance instance) {
 		StringBuilder sb = new StringBuilder();
 		if (instance != null) {
-			if (instance.getGivenName() != null) {
-				sb.append(instance.getGivenName()).append(' ');
+			if (instance.getAlias() != null) {
+				sb.append(instance.getAlias()).append(' ');
 			}
 			if (instance.getName() != null) {
 				sb.append('[').append(instance.getName()).append(']');
