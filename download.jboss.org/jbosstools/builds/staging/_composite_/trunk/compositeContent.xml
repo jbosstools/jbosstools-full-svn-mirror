@@ -7,12 +7,12 @@
      get new time w/ 
       date +%s000
 -->
-<property name='p2.timestamp' value='1292656235000'/>
+<property name='p2.timestamp' value='1294074932000'/>
 </properties>
-<children size='25'>
+<children size='34'>
 
-<child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.nightly/all/repo/'/>
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--archives/all/repo/'/>
+<child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--as/all/repo/'/>
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--birt/all/repo/'/>
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--bpel/all/repo/'/>
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--cdi/all/repo/'/>
@@ -25,21 +25,34 @@
 
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--freemarker/all/repo/'/>
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--gwt/all/repo/'/>
+<child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--hibernatetools/all/repo/'/>
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--jbpm/all/repo/'/>
-<child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--jst/all/repo/'/>
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--jmx/all/repo/'/>
 
+<child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--jsf/all/repo/'/>
+<child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--jst/all/repo/'/>
+<child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--maven/all/repo/'/>
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--modeshape/all/repo/'/>
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--portlet/all/repo/'/>
+
+<child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--runtime/all/repo/'/>
+<child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--seam/all/repo/'/>
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--smooks/all/repo/'/>
+<child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--struts/all/repo/'/>
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--tests/all/repo/'/>
+
+<child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--tptp/all/repo/'/>
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--usage/all/repo/'/>
+<child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--vpe/all/repo/'/>
 
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-pi4soa-3.1_trunk/all/repo/'/>
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-teiid-designer-7.1_trunk/all/repo/'/>
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-drools-5.2_trunk/all/repo/'/>
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-savara-1.1_trunk/tools/'/>
 <child location='http://download.jboss.org/jbosstools/builds/staging/xulrunner-1.9.1.2/all/repo/'/>
+
+<!-- TO BE REMOVED WHEN NO LONGER NEEDED -->
+<child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.nightly/all/repo/'/>
 
 </children>
 </repository>
