@@ -46,10 +46,11 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 
 	private Button createRSE, createServer;
 	private Group serverDetailsGroup;
-	private Button autoScanCheck, hardCodeServerDetails, deployOnlyRadio, addLocalRuntimeButton;
+	private Button autoScanCheck, hardCodeServerDetails, deployOnlyRadio, 
+					addLocalRuntimeButton, autoAddLocalRuntimeButton;
 	private Text remoteDetailsLoc, serverHomeText, serverConfigText, deployFolderText;
-	private Label serverHome, serverConfig, localRuntimeLabel, deployFolder;
-	private Combo localRuntimeCombo;
+	private Label serverHome, serverConfig, localRuntimeLabel, autoLocalRuntimeLabel, deployFolder;
+	private Combo autoLocalRuntimeCombo,localRuntimeCombo;
 	
 	private final static String CREATE_RSE_PREF_KEY = "org.jboss.tools.deltacloud.integration.wizard.RSEandASWizard.CREATE_RSE_PREF_KEY";
 	private final static String CREATE_SERVER_PREF_KEY = "org.jboss.tools.deltacloud.integration.wizard.RSEandASWizard.CREATE_SERVER_PREF_KEY";
@@ -86,10 +87,27 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 		remoteDetailsLoc.setLayoutData(UIUtils.createFormData(autoScanCheck,5,null,0,0,INDENTATION,100,-5));
 		remoteDetailsLoc.setText("/etc/sysconfig/jboss-eap");
 		
+		autoLocalRuntimeLabel = new Label(g, SWT.NONE);
+		autoLocalRuntimeLabel.setText("Local Runtime: ");
+		autoLocalRuntimeLabel.setLayoutData(UIUtils.createFormData(remoteDetailsLoc, 7, null, 0, 0, INDENTATION, null, 0 ));
+		
+		autoAddLocalRuntimeButton = new Button(g, SWT.DEFAULT);
+		autoAddLocalRuntimeButton.setText("Configure Runtimes...");
+		autoAddLocalRuntimeButton.setLayoutData(UIUtils.createFormData(remoteDetailsLoc, 7, null, 0, null, 0, 100, -5));
+		autoAddLocalRuntimeButton.addSelectionListener(new SelectionListener() {
+			public void widgetSelected(SelectionEvent e) {
+				configureRuntimesPressed();
+			}
+			public void widgetDefaultSelected(SelectionEvent e) {
+			}
+		});
+		autoLocalRuntimeCombo = new Combo(g, SWT.NONE);
+		autoLocalRuntimeCombo.setLayoutData(UIUtils.createFormData(remoteDetailsLoc, 5, null, 0, autoLocalRuntimeLabel, 5, autoAddLocalRuntimeButton, -5));
+		
 		
 		hardCodeServerDetails = new Button(g, SWT.RADIO);
 		hardCodeServerDetails.setText("Set remote server details manually");
-		hardCodeServerDetails.setLayoutData(UIUtils.createFormData(remoteDetailsLoc,5,null,0,0,5,null,0));
+		hardCodeServerDetails.setLayoutData(UIUtils.createFormData(autoLocalRuntimeCombo,5,null,0,0,5,null,0));
 
 		serverHome = new Label(g, SWT.NONE);
 		serverHome.setText("JBoss Server Home: ");
@@ -173,6 +191,7 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 			}
 		}
 		localRuntimeCombo.setItems((String[]) names.toArray(new String[names.size()]));
+		autoLocalRuntimeCombo.setItems((String[]) names.toArray(new String[names.size()]));
 	}
 	
 	protected void configureRuntimesPressed() {
@@ -199,8 +218,8 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 		boolean enabled = createServer.getSelection();
 		boolean enabled2 = false;
 		serverDetailsGroup.setEnabled(enabled);
-		autoScanCheck.setEnabled(enabled2);
-		remoteDetailsLoc.setEnabled(enabled2);
+		autoScanCheck.setEnabled(enabled);
+		remoteDetailsLoc.setEnabled(enabled);
 		hardCodeServerDetails.setEnabled(enabled);
 		serverHomeText.setEnabled(enabled);
 		serverConfigText.setEnabled(enabled);
@@ -209,6 +228,8 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 		deployFolder.setEnabled(enabled);
 		deployFolderText.setEnabled(enabled);
 		deployOnlyRadio.setEnabled(enabled);
+		localRuntimeLabel.setEnabled(enabled);
+		localRuntimeCombo.setEnabled(enabled);
 		System.out.println(deployFolderText.getEditable());
 	}
 	
@@ -233,7 +254,9 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 				data = new String[]{deployFolderText.getText()};
 			} else if( autoScanCheck.getSelection()) {
 				type = CreateServerFromRSEJob.CHECK_SERVER_FOR_DETAILS;
-				data = new String[]{remoteDetailsLoc.getText()};
+				int index = autoLocalRuntimeCombo.getSelectionIndex();
+				String rtId = localRuntimes.get(index).getId();
+				data = new String[]{remoteDetailsLoc.getText(), rtId};
 			} else if( hardCodeServerDetails.getSelection()) {
 				type = CreateServerFromRSEJob.SET_DETAILS_NOW;
 				int index = localRuntimeCombo.getSelectionIndex();

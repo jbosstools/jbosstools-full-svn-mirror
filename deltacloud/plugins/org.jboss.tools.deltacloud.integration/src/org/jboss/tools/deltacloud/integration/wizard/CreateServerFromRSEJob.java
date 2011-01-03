@@ -10,11 +10,28 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.integration.wizard;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.util.Iterator;
+import java.util.Properties;
+
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.rse.core.RSECorePlugin;
 import org.eclipse.rse.core.model.IHost;
+import org.eclipse.rse.core.subsystems.ISubSystem;
+import org.eclipse.rse.services.clientserver.messages.SystemMessageException;
+import org.eclipse.rse.subsystems.files.core.subsystems.IRemoteFileSubSystem;
 import org.eclipse.wst.server.core.IRuntime;
 import org.eclipse.wst.server.core.IRuntimeType;
 import org.eclipse.wst.server.core.IRuntimeWorkingCopy;
@@ -68,9 +85,101 @@ public class CreateServerFromRSEJob extends ChainedJob {
 		server = RSEUtils.setServerToRSEMode(server, host);
 		return server;
 	}
-	protected IServer createServerCheckRemoteDetails() {
+	
+	protected IRemoteFileSubSystem findRemoteFileSubSystem() {
+		ISubSystem[] systems = RSECorePlugin.getTheSystemRegistry().getSubSystems(host);
+		for( int i = 0; i < systems.length; i++ ) {
+			if(systems[i] instanceof IRemoteFileSubSystem ) {
+				return (IRemoteFileSubSystem)systems[i];
+			}
+		}
 		return null;
 	}
+	
+	protected void verifySystemConnected(IRemoteFileSubSystem system) {
+		if (!system.isConnected()) {
+		    try {
+		    	system.connect(new NullProgressMonitor(), false);
+		    } catch (Exception e) {
+		    	e.printStackTrace();
+		    }
+		}
+	}
+	
+	protected String loadRemoteFileData(IRemoteFileSubSystem system) {
+		IPath p = new Path(data[0]);
+		IPath remoteParent = p.removeLastSegments(1);
+		String remoteFile = p.lastSegment();
+		try {
+			Writer writer = new StringWriter();
+			char[] buffer = new char[1024];
+			
+			InputStream is = system.getInputStream(remoteParent.toOSString(), remoteFile, false, new NullProgressMonitor());
+			Reader reader = new BufferedReader(new InputStreamReader(is));
+			int n;
+			try {
+				while ((n = reader.read(buffer)) != -1) {
+					writer.write(buffer, 0, n);
+				}
+				return writer.toString();
+			} finally {
+				is.close();
+			}
+		} catch(SystemMessageException sme) {
+			sme.getCause().printStackTrace();
+		} catch(IOException ioe) {
+			ioe.printStackTrace();
+		}
+		return null;
+	}
+	
+	protected Properties turnRemoteFileIntoProperties(String content) {
+		Properties p = new Properties();
+		String[] byLine = content.split("\n");
+		String line, key, val;
+		int eqIn;
+		for( int i = 0; i < byLine.length; i++ ) {
+			line = byLine[i].trim();
+			eqIn = line.indexOf("=");
+			if( eqIn != -1 ) {
+				key = line.substring(0, eqIn);
+				val = line.substring(eqIn+1);
+				while(val.contains("$")) {
+					String tmpKey;
+					Iterator j = p.keySet().iterator();
+					while(j.hasNext()) {
+						tmpKey = j.next().toString();
+						val = val.replace("$" + tmpKey, p.getProperty(tmpKey));
+					}
+				}
+				p.put(key, val);
+			}
+		}
+		return p;
+	}
+	
+	protected IServer createServerCheckRemoteDetails() throws CoreException {
+		IRemoteFileSubSystem system = findRemoteFileSubSystem();
+		if( system != null ) {
+			verifySystemConnected(system);
+			String contents = loadRemoteFileData(system);
+			Properties props = turnRemoteFileIntoProperties(contents);
+			String home = (String) props.get("JBOSS_HOME");
+			String config = (String) props.get("JBOSS_CONFIG");
+			
+			if( home != null && config != null ) {
+				System.out.println(home + ", " + config);
+				String rtId = data[1];
+				IRuntime runtime = ServerCore.findRuntime(rtId);
+				IServer newServer = null;
+				newServer = ServerCreationUtils.createServer2(name, runtime);
+				newServer = RSEUtils.setServerToRSEMode(newServer, host, home, config);
+				return newServer;
+			}
+		}
+		return null;
+	}
+	
 	protected IServer createServerSetDetailsNow() throws CoreException {
 		String home = data[0];
 		String config = data[1];
