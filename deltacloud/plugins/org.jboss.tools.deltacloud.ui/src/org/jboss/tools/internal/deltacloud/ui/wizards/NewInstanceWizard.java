@@ -32,6 +32,10 @@ import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
 import org.jboss.tools.deltacloud.ui.INewInstanceWizardPage;
 import org.osgi.service.prefs.Preferences;
 
+/**
+ * @author Jeff Johnston
+ * @author André Dieitsheim
+ */
 public class NewInstanceWizard extends Wizard {
 
 	private final static String CREATE_INSTANCE_FAILURE_TITLE = "CreateInstanceError.title"; //$NON-NLS-1$
