@@ -291,22 +291,16 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 
 	}
 
-	@Override
-	public Instance createInstance(String imageId, String profileId, String realmId, String name)
-			throws DeltaCloudClientException {
-		return createInstance(imageId, profileId, realmId, name, null, null, null);
-	}
-
-	public Instance createInstance(String imageId, String profileId, String realmId, String name, String memory,
+	public Instance createInstance(String imageId, String profileId, String realmId, String memory,
 			String storage) throws DeltaCloudClientException {
-		return createInstance(imageId, profileId, realmId, name, null, memory, storage);
+		return createInstance(imageId, profileId, realmId, null, memory, storage);
 	}
 
-	public Instance createInstance(String imageId, String profileId, String realmId, String name, String keyId,
+	public Instance createInstance(String imageId, String profileId, String realmId, String keyId,
 			String memory, String storage) throws DeltaCloudClientException {
 		try {
 			String response = requestStringResponse(
-					new CreateInstanceRequest(baseUrl, imageId, profileId, realmId, name, keyId, memory, storage));
+					new CreateInstanceRequest(baseUrl, imageId, profileId, realmId, keyId, memory, storage));
 			Instance instance = buildInstance(response);
 			// TODO: WORKAROUND for
 			// https://issues.jboss.org/browse/JBIDE-8005

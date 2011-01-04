@@ -76,7 +76,7 @@ public class DeltaCloudInstance extends AbstractDeltaCloudElement {
 	private Instance instance;
 	private String alias;
 
-	public DeltaCloudInstance(DeltaCloud cloud, Instance instance) {
+	public DeltaCloudInstance(Instance instance, DeltaCloud cloud) {
 		super(cloud);
 		this.instance = instance;
 	}

@@ -8,21 +8,26 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.deltacloud.core;
-
+package org.jboss.tools.deltacloud.core.client.utils;
 
 /**
  * @author André Dietisheim
  */
-public class DeltaCloudInstancesRepository extends AbstractDeltaCloudObjectRepository<DeltaCloudInstance, String> {
+public class StringUtils {
 
-	public DeltaCloudInstancesRepository() {
-		super(DeltaCloudInstance.class);
+	public static String null2EmptyString(String stringValue) {
+		if (stringValue == null) {
+			return "";
+		}
+		return stringValue;
 	}
 
-	@Override
-	protected boolean matches(String id, DeltaCloudInstance instance) {
-		return instance != null
-					&& id.equals(instance.getId());
+	public static String emptyString2Null(String stringValue) {
+		if (stringValue != null 
+				&& stringValue.length() == 0) {
+			return null;
+		}
+		return stringValue;
 	}
+
 }

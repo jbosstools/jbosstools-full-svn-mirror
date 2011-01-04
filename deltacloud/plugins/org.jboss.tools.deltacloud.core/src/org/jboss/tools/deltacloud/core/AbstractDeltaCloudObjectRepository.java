@@ -37,7 +37,7 @@ public abstract class AbstractDeltaCloudObjectRepository<E extends IDeltaCloudEl
 	public E[] add(E object) {
 		try {
 			lock();
-			objects.add(object);
+			this.objects.add(object);
 			return get();
 		} finally {
 			unlock();
@@ -48,7 +48,7 @@ public abstract class AbstractDeltaCloudObjectRepository<E extends IDeltaCloudEl
 		try {
 			lock();
 			for (E object : objects) {
-				objects.add(object);
+				this.objects.add(object);
 			}
 			return get();
 		} finally {
@@ -59,7 +59,7 @@ public abstract class AbstractDeltaCloudObjectRepository<E extends IDeltaCloudEl
 	public E[] clear() {
 		try {
 			lock();
-			objects.clear();
+			this.objects.clear();
 			return get();
 		} finally {
 			unlock();
@@ -70,7 +70,7 @@ public abstract class AbstractDeltaCloudObjectRepository<E extends IDeltaCloudEl
 		try {
 			lock();
  			@SuppressWarnings("unchecked")
-			E[] objectArray = (E[]) objects.toArray((E[]) Array.newInstance(typeClass, objects.size()));
+			E[] objectArray = (E[]) this.objects.toArray((E[]) Array.newInstance(typeClass, objects.size()));
 			return objectArray;
 		} finally {
 			unlock();

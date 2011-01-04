@@ -10,19 +10,12 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core;
 
-
 /**
  * @author André Dietisheim
  */
-public class DeltaCloudInstancesRepository extends AbstractDeltaCloudObjectRepository<DeltaCloudInstance, String> {
+public interface IInstanceAliasMapping {
 
-	public DeltaCloudInstancesRepository() {
-		super(DeltaCloudInstance.class);
-	}
-
-	@Override
-	protected boolean matches(String id, DeltaCloudInstance instance) {
-		return instance != null
-					&& id.equals(instance.getId());
-	}
+	public boolean matches(DeltaCloudInstance instance);
+	
+	public String getAlias();
 }

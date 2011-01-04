@@ -25,12 +25,14 @@ public class DeltaCloudImagesRepository extends AbstractDeltaCloudObjectReposito
 		super(DeltaCloudImage.class);
 	}
 
+	// TODO: move to DeltaCloudImageFactory
 	public DeltaCloudImage add(Image image, DeltaCloud cloud) {
 		DeltaCloudImage deltaCloudImage = new DeltaCloudImage(image, cloud);
 		add(deltaCloudImage);
 		return deltaCloudImage;
 	}
 
+	// TODO: move to DeltaCloudImageFactory
 	public Collection<DeltaCloudImage> add(Collection<Image> imagesToAdd, DeltaCloud cloud) {
 		List<DeltaCloudImage> deltaCloudImages = new ArrayList<DeltaCloudImage>();
 		for (Image image : imagesToAdd) {

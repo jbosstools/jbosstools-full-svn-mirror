@@ -1,3 +1,18 @@
+2011-01-04  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudInstancesRepository.java: 
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (loadInstances): 
+	[JBIDE-7294] added factory for DeltaCloudInstance instances, removed functionality from DeltaCloudInstanceRepository
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClient.java (createInstance): 
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClientImpl.java (createInstance): 
+	* src/org/jboss/tools/deltacloud/core/client/request/CreateInstanceRequest.java (doCreateUrl): 
+	[JBIDE-7294] removed name parameter from request since DeltaCloud does not honor the name you choose
+	* src/org/jboss/tools/deltacloud/core/IInstanceAliasMapping.java: 
+	* src/org/jboss/tools/deltacloud/core/InstanceAliasMapping.java: 
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudInstance.java 
+	(setAlias): 
+	(getAlias): 
+
 2011-01-03  adietisheim  <adietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (createInstance): 

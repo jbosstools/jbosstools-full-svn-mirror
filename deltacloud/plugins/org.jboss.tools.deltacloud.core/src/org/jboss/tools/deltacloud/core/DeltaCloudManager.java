@@ -19,13 +19,16 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.ListenerList;
+import org.jboss.tools.deltacloud.core.client.utils.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -37,8 +40,6 @@ import org.w3c.dom.NodeList;
  * @author André Dietisheim
  */
 public class DeltaCloudManager {
-
-	private static final String USERNAME_ENCODING = "UTF8";
 
 	private static final DeltaCloudManager INSTANCE = new DeltaCloudManager();
 
@@ -61,7 +62,7 @@ public class DeltaCloudManager {
 				Document d = db.parse(cloudFile);
 				Element element = d.getDocumentElement();
 				// Get the stored configuration data
-				NodeList cloudNodes = element.getElementsByTagName("cloud"); // $NON-NLS-1$
+				NodeList cloudNodes = element.getElementsByTagName(DeltaCloudXMLBuilder.TAG_CLOUD); // $NON-NLS-1$
 				for (int x = 0; x < cloudNodes.getLength(); ++x) {
 					Node n = cloudNodes.item(x);
 					try {
@@ -80,20 +81,24 @@ public class DeltaCloudManager {
 		}
 	}
 
+	// TODO: move to unmarshaler component
 	private DeltaCloud loadCloud(Node n, List<DeltaCloud> clouds) throws DeltaCloudException {
 		String name = "<UNKNOWN>";
 		try {
 			DeltaCloud cloud = null;
 			NamedNodeMap attrs = n.getAttributes();
-			name = attrs.getNamedItem("name").getNodeValue(); // $NON-NLS-1$
-			String url = attrs.getNamedItem("url").getNodeValue(); // $NON-NLS-1$
-			String username = URLEncoder.encode(attrs.getNamedItem("username").getNodeValue(), USERNAME_ENCODING); // $NON-NLS-1$
-			Driver driver = Driver.checkedValueOf(attrs.getNamedItem("type").getNodeValue()); // $NON-NLS-1$
+			name = attrs.getNamedItem(DeltaCloudXMLBuilder.ATTR_NAME).getNodeValue(); // $NON-NLS-1$
+			String url = getNodeValue(attrs.getNamedItem(DeltaCloudXMLBuilder.ATTR_URL)); // $NON-NLS-1$
+			String username = URLEncoder.encode(
+					attrs.getNamedItem(DeltaCloudXMLBuilder.ATTR_USERNAME).getNodeValue(),
+					DeltaCloudXMLBuilder.ENCODING); // $NON-NLS-1$
+			Driver driver = Driver.checkedValueOf(attrs.getNamedItem(DeltaCloudXMLBuilder.ATTR_TYPE).getNodeValue()); // $NON-NLS-1$
 			String imageFilterRules = getImageFilterRules(attrs.getNamedItem("imagefilter")); // $NON-NLS-1$
 			String instanceFilterRules = getInstanceFilterRules(attrs.getNamedItem("instancefilter")); // $NON-NLS-1$
-			String lastKeyName = getLastKeyName(attrs.getNamedItem("lastkeyname")); // $NON-NLS-1$
-			String lastImageId = getLastKeyName(attrs.getNamedItem("lastimage")); // $NON-NLS-1$
-			cloud = new DeltaCloud(name, url, username, driver, imageFilterRules, instanceFilterRules);
+			String lastKeyName = getNodeValue(attrs.getNamedItem(DeltaCloudXMLBuilder.ATTR_LASTKEYNAME)); // $NON-NLS-1$
+			String lastImageId = getNodeValue(attrs.getNamedItem(DeltaCloudXMLBuilder.ATTR_LASTIMAGE)); // $NON-NLS-1$
+			Collection<IInstanceAliasMapping> aliasMappings = getInstanceMappings(n);
+			cloud = new DeltaCloud(name, url, username, driver, imageFilterRules, instanceFilterRules, aliasMappings);
 			clouds.add(cloud);
 			cloud.setLastImageId(lastImageId);
 			cloud.setLastKeyname(lastKeyName);
@@ -106,12 +111,44 @@ public class DeltaCloudManager {
 		}
 	}
 
-	private String getLastKeyName(Node lastKeyNameNode) {
-		String lastKeyName = "";
-		if (lastKeyNameNode != null) {
-			lastKeyName = lastKeyNameNode.getNodeValue();
+	// TODO: move to unmarshaler component
+	private Collection<IInstanceAliasMapping> getInstanceMappings(Node n) {
+		Assert.isLegal(n instanceof Element);
+		Collection<IInstanceAliasMapping> aliasMappings = new ArrayList<IInstanceAliasMapping>();
+		Element element = (Element) n;
+		NodeList instanceNodes = element.getElementsByTagName(DeltaCloudXMLBuilder.TAG_INSTANCE);
+		for (int i = 0; i < instanceNodes.getLength(); i++) {
+			IInstanceAliasMapping aliasMapping = createInstanceAliasMapping(instanceNodes, i);
+			if (aliasMapping != null) {
+				aliasMappings.add(aliasMapping);
+			}
 		}
-		return lastKeyName;
+		return aliasMappings;
+	}
+
+	private IInstanceAliasMapping createInstanceAliasMapping(NodeList instanceNodes, int i) {
+		IInstanceAliasMapping aliasMapping = null;
+		Node instanceNode = instanceNodes.item(i);
+		NamedNodeMap attributes = instanceNode.getAttributes();
+		Node idNode = attributes.getNamedItem(DeltaCloudXMLBuilder.ATTR_ID);
+		String id = null;
+		if (idNode != null) {
+			id = idNode.getNodeValue();
+			attributes = instanceNode.getAttributes();
+			Node aliasNode = attributes.getNamedItem(DeltaCloudXMLBuilder.ATTR_ALIAS);
+			if (aliasNode != null) {
+				String alias = StringUtils.emptyString2Null(aliasNode.getNodeValue());
+				aliasMapping = new InstanceAliasMapping(id, alias);
+			}
+		}
+		return aliasMapping;
+	}
+
+	private String getNodeValue(Node node) {
+		if (node != null) {
+			return node.getNodeValue();
+		}
+		return null;
 	}
 
 	private String getInstanceFilterRules(Node instanceFilterNode) {
@@ -130,36 +167,60 @@ public class DeltaCloudManager {
 		return imageFilterRules;
 	}
 
+	// TODO: move to marshaler component
 	public void saveClouds() throws DeltaCloudException {
 		try {
 			File cloudFile = getOrCreateCloudFile();
-			if (cloudFile.exists()) {
-				PrintWriter p = new PrintWriter(new BufferedWriter(new FileWriter(cloudFile)));
-				p.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"); //$NON-NLS-1$
-				p.println("<clouds>"); // $NON-NLS-1$
-				for (DeltaCloud d : clouds) {
-					p.println(createCloudXML(d)); //$NON-NLS-1$
-				}
-				p.println("</clouds>"); //$NON-NLS-1$
-				p.close();
+			PrintWriter p = new PrintWriter(new BufferedWriter(new FileWriter(cloudFile)));
+			DeltaCloudXMLBuilder.xmlHeader(p);
+			DeltaCloudXMLBuilder.tag(DeltaCloudXMLBuilder.TAG_CLOUDS, p);
+			DeltaCloudXMLBuilder.closeTag(p);
+			for (DeltaCloud d : clouds) {
+				printCloud(d, p);
 			}
+			DeltaCloudXMLBuilder.endTag(DeltaCloudXMLBuilder.TAG_CLOUDS, p);
+			p.close();
 		} catch (Exception e) {
 			// TODO: internationalize strings
 			throw new DeltaCloudException("Could not save clouds", e);
 		}
 	}
 
-	private String createCloudXML(DeltaCloud d) throws UnsupportedEncodingException {
-		String username = URLEncoder.encode(d.getUsername(), USERNAME_ENCODING);
-		return "<cloud name=\"" + d.getName() + //$NON-NLS-1$ 
-				"\" url=\"" + d.getURL() + //$NON-NLS-2$ 
-				"\" username=\"" + username + //$NON-NLS-1$ //$NON-NLS-2$ 
-				"\" type=\"" + d.getDriver() + //$NON-NLS-1$ //$NON-NLS-2$
-				"\" imagefilter=\"" + d.getImageFilter() + //$NON-NLS-1$ //$NON-NLS-2$
-				"\" instancefilter=\"" + d.getInstanceFilter() + //$NON-NLS-1$ //$NON-NLS-2$
-				"\" lastkeyname=\"" + d.getLastKeyname() + //$NON-NLS-1$ //$NON-NLS-2$
-				"\" lastimage=\"" + d.getLastImageId() + //$NON-NLS-1$ //$NON-NLS-2$
-				"\"/>";
+	// TODO: move to marshaler component
+	private void printCloud(DeltaCloud d, PrintWriter printWriter) throws UnsupportedEncodingException,
+			DeltaCloudException {
+		String username = URLEncoder.encode(d.getUsername(), DeltaCloudXMLBuilder.ENCODING);
+		DeltaCloudXMLBuilder.tag(DeltaCloudXMLBuilder.TAG_CLOUD, printWriter);
+		DeltaCloudXMLBuilder.attribute(DeltaCloudXMLBuilder.ATTR_NAME, d.getName(), printWriter);
+		DeltaCloudXMLBuilder.attribute(DeltaCloudXMLBuilder.ATTR_URL, d.getURL(), printWriter);
+		DeltaCloudXMLBuilder.attribute(DeltaCloudXMLBuilder.ATTR_USERNAME, username, printWriter);
+		DeltaCloudXMLBuilder.attribute(DeltaCloudXMLBuilder.ATTR_TYPE, d.getDriver().toString(), printWriter);
+		DeltaCloudXMLBuilder.attribute(
+				DeltaCloudXMLBuilder.ATTR_IMAGEFILTER, d.getImageFilter().toString(), printWriter);
+		DeltaCloudXMLBuilder.attribute(
+				DeltaCloudXMLBuilder.ATTR_INSTANCEFILTER, d.getInstanceFilter().toString(), printWriter);
+		DeltaCloudXMLBuilder.attribute(DeltaCloudXMLBuilder.ATTR_LASTKEYNAME, d.getLastKeyname(), printWriter);
+		DeltaCloudXMLBuilder.attribute(DeltaCloudXMLBuilder.ATTR_LASTIMAGE, d.getLastImageId(), printWriter);
+		DeltaCloudXMLBuilder.closeTag(printWriter);
+		printInstances(d, printWriter);
+		DeltaCloudXMLBuilder.endTag(DeltaCloudXMLBuilder.TAG_CLOUD, printWriter);
+	}
+
+	// TODO: move to marshaler component
+	private void printInstances(DeltaCloud d, PrintWriter printWriter) {
+		try {
+			for (DeltaCloudInstance instance : d.getInstances()) {
+				DeltaCloudXMLBuilder.tag(DeltaCloudXMLBuilder.TAG_INSTANCE, printWriter);
+				DeltaCloudXMLBuilder.attribute(DeltaCloudXMLBuilder.ATTR_ID, instance.getId(), printWriter);
+				DeltaCloudXMLBuilder.attribute(
+								DeltaCloudXMLBuilder.ATTR_ALIAS, StringUtils.null2EmptyString(instance.getAlias()),
+						printWriter);
+				DeltaCloudXMLBuilder.closeTag(printWriter);
+				DeltaCloudXMLBuilder.endTag(DeltaCloudXMLBuilder.TAG_INSTANCE, printWriter);
+			}
+		} catch (DeltaCloudException e) {
+			// ignore
+		}
 	}
 
 	private File getOrCreateCloudFile() throws IOException {
@@ -228,4 +289,7 @@ public class DeltaCloudManager {
 		}
 	}
 
+	public void dispose() throws DeltaCloudException {
+		saveClouds();
+	}
 }

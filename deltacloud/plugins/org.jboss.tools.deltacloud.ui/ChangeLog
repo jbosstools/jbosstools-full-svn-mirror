@@ -1,3 +1,12 @@
+2011-01-04  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePageModel.java 
+	(PROPERTY_ALIAS): 
+	(getAlias): 
+	(setAlias): 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstanceWizard.java (performFinish): 
+	[JBIDE-7294] added alias support to NewInstanceWizard
+
 2010-12-27  adietisheim  <adietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CloudConnectionPage.java (createControl): 

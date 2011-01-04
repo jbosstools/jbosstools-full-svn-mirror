@@ -90,10 +90,8 @@ public class NewInstanceWizard extends Wizard {
 		String realmId = model.getRealmId();
 		String memory = model.getMemory();
 		String storage = model.getStorage();
-
 		String keyId = model.getKeyId();
-
-		String name = utf8Encode(model.getName());
+		String alias = utf8Encode(model.getAlias());
 
 		// Save persistent settings for this particular cloud
 		cloud.setLastImageId(imageId);
@@ -124,11 +122,12 @@ public class NewInstanceWizard extends Wizard {
 					prefs.putBoolean(IDeltaCloudPreferenceConstants.DONT_CONFIRM_CREATE_INSTANCE, true);
 				}
 			}
-			instance = cloud.createInstance(name, imageId, realmId, profileId, keyId, memory, storage);
+			instance = cloud.createInstance(alias, imageId, realmId, profileId, keyId, memory, storage);
 			if (instance != null) {
 				result = true;
 			}
-			if (instance != null && instance.getState().equals(DeltaCloudInstance.State.PENDING)) {
+			if (instance != null 
+					&& instance.getState().equals(DeltaCloudInstance.State.PENDING)) {
 				// TODO use chained job? Maybe. But chainedJob needs to be moved
 				ChainedJob first =
 						new InstanceStateJob(
@@ -154,7 +153,7 @@ public class NewInstanceWizard extends Wizard {
 			ErrorUtils.handleError(
 					WizardMessages.getString(CREATE_INSTANCE_FAILURE_TITLE),
 					WizardMessages.getFormattedString(CREATE_INSTANCE_FAILURE_MSG,
-							new String[] { name, imageId, realmId, profileId }),
+							new String[] { alias, imageId, realmId, profileId }),
 					e, getShell());
 		}
 		return result;

@@ -26,7 +26,7 @@ import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.Obser
 public class NewInstancePageModel extends ObservableUIPojo {
 
 	public static final String PROPERTY_URL = "url"; //$NON-NLS-1$
-	public static final String PROPERTY_NAME = "name"; //$NON-NLS-1$
+	public static final String PROPERTY_ALIAS = "alias"; //$NON-NLS-1$
 	public static final String PROPERTY_IMAGE = "image"; //$NON-NLS-1$
 	public static final String PROPERTY_ARCH = "arch"; //$NON-NLS-1$
 	public static final String PROPERTY_REALMS = "realms"; //$NON-NLS-1$
@@ -37,7 +37,7 @@ public class NewInstancePageModel extends ObservableUIPojo {
 	public static final String PROP_FILTERED_PROFILES = "filteredProfiles"; //$NON-NLS-1$
 	public static final String PROP_SELECTED_PROFILE_INDEX = "selectedProfileIndex"; //$NON-NLS-1$
 
-	private String name;
+	private String alias;
 	private DeltaCloudImage image;
 	private String arch;
 	private String keyId;
@@ -55,12 +55,12 @@ public class NewInstancePageModel extends ObservableUIPojo {
 		this.image = image;
 	}
 
-	public String getName() {
-		return name;
+	public String getAlias() {
+		return alias;
 	}
 
-	public void setName(String name) {
-		firePropertyChange(PROPERTY_NAME, this.name, this.name = name);
+	public void setAlias(String alias) {
+		firePropertyChange(PROPERTY_ALIAS, this.alias, this.alias = alias);
 	}
 
 	public DeltaCloudImage getImage() {

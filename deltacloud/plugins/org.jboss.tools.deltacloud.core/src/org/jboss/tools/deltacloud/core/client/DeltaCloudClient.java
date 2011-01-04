@@ -115,14 +115,11 @@ public interface DeltaCloudClient {
 	 * @return
 	 * @throws DeltaCloudClientException
 	 */
-	public Instance createInstance(String imageId, String flavor, String realm, String name)
+	public Instance createInstance(String imageId, String profileId, String realmId, String memory, String storage)
 			throws DeltaCloudClientException;
 
-	public Instance createInstance(String imageId, String profileId, String realmId, String name, String memory,
+	public Instance createInstance(String imageId, String profileId, String realmId, String keyname, String memory,
 			String storage) throws DeltaCloudClientException;
-
-	public Instance createInstance(String imageId, String profileId, String realmId, String name, String keyname,
-			String memory, String storage) throws DeltaCloudClientException;
 
 	/**
 	 * Creates a key for a given name on the deltacloud server.

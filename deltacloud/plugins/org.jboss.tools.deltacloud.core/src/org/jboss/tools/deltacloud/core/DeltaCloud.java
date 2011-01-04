@@ -12,6 +12,7 @@ package org.jboss.tools.deltacloud.core;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.PatternSyntaxException;
@@ -58,36 +59,40 @@ public class DeltaCloud extends ObservablePojo {
 	private IInstanceFilter instanceFilter;
 
 	private SecurePasswordStore passwordStore;
+	private Collection<IInstanceAliasMapping> instanceAliasMappings;
 
 	public static interface IInstanceStateMatcher {
 		public boolean matchesState(DeltaCloudInstance instance, DeltaCloudInstance.State instanceState);
 	}
-
+	
 	public DeltaCloud(String name, String url, String username, String passwd) throws DeltaCloudException {
 		this(name, url, username, passwd, null);
 	}
 
 	public DeltaCloud(String name, String url, String username, String password, Driver driver)
 			throws DeltaCloudException {
-		this(name, url, username, password, driver, IImageFilter.ALL_STRING, IInstanceFilter.ALL_STRING);
+		this(name, url, username, password, driver, IImageFilter.ALL_STRING, IInstanceFilter.ALL_STRING, null);
 	}
 
 	public DeltaCloud(String name, String url, String username, Driver driver, String imageFilterRules,
-			String instanceFilterRules)
-			throws DeltaCloudException {
-		this(name, url, username, null, driver, imageFilterRules, instanceFilterRules);
+			String instanceFilterRules, Collection<IInstanceAliasMapping> instanceAliasMappings) throws DeltaCloudException {
+		this(name, url, username, null, driver, imageFilterRules, instanceFilterRules, instanceAliasMappings);
 	}
 
 	public DeltaCloud(String name, String url, String username, String password, Driver driver,
-			String imageFilterRules, String instanceFilterRules) throws DeltaCloudException {
+			String imageFilterRules, String instanceFilterRules, Collection<IInstanceAliasMapping> instanceAliasMappings) throws DeltaCloudException {
 		this.url = url;
 		this.name = name;
 		this.username = username;
 		this.driver = driver;
 		this.passwordStore = createSecurePasswordStore(name, username, password);
 		this.client = createClient(url, username, passwordStore.getPassword());
-		imageFilter = createImageFilter(imageFilterRules);
-		instanceFilter = createInstanceFilter(instanceFilterRules);
+		this.imageFilter = createImageFilter(imageFilterRules);
+		this.instanceFilter = createInstanceFilter(instanceFilterRules);
+		if (instanceAliasMappings == null) {
+			instanceAliasMappings = new ArrayList<IInstanceAliasMapping>();
+		}
+		this.instanceAliasMappings = instanceAliasMappings;
 	}
 
 	public void update(String name, String url, String username, String password, Driver driver)
@@ -332,7 +337,9 @@ public class DeltaCloud extends ObservablePojo {
 			clearInstances();
 			DeltaCloudInstancesRepository repo = getInstancesRepository();
 			DeltaCloudInstance[] oldInstances = repo.get();
-			repo.add(client.listInstances(), this);
+			List<Instance> instances = client.listInstances();
+			Collection<DeltaCloudInstance> deltaCloudInstances = DeltaCloudInstanceFactory.create(instances, this, instanceAliasMappings);
+			repo.add(deltaCloudInstances);
 			// TODO: remove notification with all instanceRepo, replace by
 			// notifying the changed instance
 			firePropertyChange(PROP_INSTANCES, oldInstances, repo.get());
@@ -559,15 +566,15 @@ public class DeltaCloud extends ObservablePojo {
 		try {
 			Instance instance = null;
 			if (keyId != null) {
-				instance = client.createInstance(imageId, profileId, realmId, alias, keyId, memory, storage);
+				instance = client.createInstance(imageId, profileId, realmId, keyId, memory, storage);
 			} else {
-				instance = client.createInstance(imageId, profileId, realmId, alias, memory, storage);
+				instance = client.createInstance(imageId, profileId, realmId, memory, storage);
 			}
 			if (instance != null) {
 				DeltaCloudInstancesRepository repo = getInstancesRepository();
 				DeltaCloudInstance[] instances = repo.get();
-				DeltaCloudInstance deltaCloudInstance = repo.add(instance, this);
-				deltaCloudInstance.setAlias(alias);
+				DeltaCloudInstance deltaCloudInstance = DeltaCloudInstanceFactory.create(instance, this, alias);
+				repo.add(deltaCloudInstance);
 				// TODO: remove notification with all instanceRepo, replace by
 				// notifying the changed instance
 				firePropertyChange(PROP_INSTANCES, instances, repo.get());
@@ -620,7 +627,8 @@ public class DeltaCloud extends ObservablePojo {
 		} catch (DeltaCloudAuthClientException e) {
 			return false;
 		} catch (DeltaCloudClientException e) {
-			throw new DeltaCloudException(MessageFormat.format("Could not connection to cloud \"{0}\" at \"{1}\"", name, url), e);
+			throw new DeltaCloudException(MessageFormat.format("Could not connection to cloud \"{0}\" at \"{1}\"",
+					name, url), e);
 		}
 
 	}

@@ -38,7 +38,7 @@ public class CloudSchedulingRulesTest {
 	public void setUp() throws DeltaCloudException {
 		this.cloudFake = new DeltaCloudFake();
 		this.instanceFake = new Instance();
-		this.deltaCloudInstanceFake = new DeltaCloudInstance(cloudFake, instanceFake);
+		this.deltaCloudInstanceFake = new DeltaCloudInstance(instanceFake, cloudFake);
 	}
 
 	@Test

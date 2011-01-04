@@ -230,7 +230,7 @@ public class NewInstancePage extends WizardPage {
 	private void bindWidgets(DataBindingContext dbc, Composite container) {
 
 		// name
-		bindText(nameText, NewInstancePageModel.PROPERTY_NAME, WizardMessages.getString(MUST_ENTER_A_NAME), dbc);
+		bindText(nameText, NewInstancePageModel.PROPERTY_ALIAS, WizardMessages.getString(MUST_ENTER_A_NAME), dbc);
 		IObservableValue imageObservable = bindImage(imageText, dbc);
 		bindArchLabel(arch, imageObservable, dbc);
 		bindRealmCombo(realmCombo, dbc);
