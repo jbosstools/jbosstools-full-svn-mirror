@@ -96,7 +96,8 @@ if [[ $z != "" ]] && [[ -f $z ]] ; then
         for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done
 
 	# copy into workspace for access by bucky aggregator (same name every time)
-	rsync -aq $z ${z}.MD5 ${STAGINGDIR}/all/${SNAPNAME}
+	rsync -aq $z ${STAGINGDIR}/all/${SNAPNAME}
+	rsync -aq ${z}.MD5 ${STAGINGDIR}/all/${SNAPNAME}.MD5
 fi
 z=""
 
@@ -113,7 +114,8 @@ for z in $(find ${WORKSPACE}/sources/*/site/target -type f -name "site*.zip" | s
 		# generate MD5 sum for zip (file contains only the hash, not the hash + filename)
 	        for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done
         
-		rsync -aq $z ${z}.MD5 ${STAGINGDIR}/${y}${SUFFNAME}
+		rsync -aq $z ${STAGINGDIR}/${y}${SUFFNAME}
+		rsync -aq ${z}.MD5 ${STAGINGDIR}/${y}${SUFFNAME}.MD5
 	fi
 done
 
@@ -128,7 +130,8 @@ if [[ ! -f ${STAGINGDIR}/all/${SNAPNAME} ]]; then
                 	# generate MD5 sum for zip (file contains only the hash, not the hash + filename)
 	                for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done
 
-			rsync -aq $z ${z}.MD5 ${STAGINGDIR}/all/${SNAPNAME}
+			rsync -aq $z ${STAGINGDIR}/all/${SNAPNAME}
+			rsync -aq ${z}.MD5 ${STAGINGDIR}/all/${SNAPNAME}.MD5
 		fi
 	done
 fi
