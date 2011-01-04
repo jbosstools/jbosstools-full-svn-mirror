@@ -53,10 +53,9 @@ public class DeltaCloudManager {
 	private void loadClouds() throws DeltaCloudException {
 		this.clouds = new ArrayList<DeltaCloud>(); // clear present clouds
 		DeltaCloudMultiException connectionException = new DeltaCloudMultiException("Could not load some clouds");
-		IPath stateLocation = Activator.getDefault().getStateLocation();
-		File cloudFile = stateLocation.append(CLOUDFILE_NAME).toFile();
-		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		try {
+			File cloudFile = getOrCreateCloudFile();
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder db = dbf.newDocumentBuilder();
 			if (cloudFile.exists()) {
 				Document d = db.parse(cloudFile);
