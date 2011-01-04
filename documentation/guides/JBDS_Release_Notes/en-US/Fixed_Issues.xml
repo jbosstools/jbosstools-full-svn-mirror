@@ -450,6 +450,14 @@
         <title>Hibernate</title>
         <para>
             <itemizedlist>
+								<listitem>
+                    <para>
+                        <ulink url="https://issues.jboss.org/browse/JBIDE-7990">JBIDE-7990</ulink>: The <guilabel>Properties</guilabel> View was empty when a <guilabel>Configuration</guilabel> node was selected in the <guilabel>Hibernate Configurations</guilabel> View. The properties defined in the XML configuration file were expected to be shown in the <guilabel>Properties</guilabel> View.
+                    </para>
+										<para>
+											The expect behavior has been implemented by listing the properties and values defined in the Hibernate XML configuration file in the <guilabel>Properties</guilabel> View.
+										</para>
+                </listitem>
                 <listitem>
                     <para>
                         <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6988">JBIDE-6988</ulink>: Console configuration would not take into account the schema and catalog being specified for a JPA project. This meant that if two schemas existed for one database when a user opened the created console configuration, it would error indicating there was two database schemas. The expected result is that the schema that has been set for the project would be used.
