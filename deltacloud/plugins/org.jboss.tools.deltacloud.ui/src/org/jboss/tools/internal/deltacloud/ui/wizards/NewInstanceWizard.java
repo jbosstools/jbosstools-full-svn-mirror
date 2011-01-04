@@ -114,8 +114,9 @@ public class NewInstanceWizard extends Wizard {
 								false, null, null);
 				int retCode = dialog.getReturnCode();
 				boolean toggleState = dialog.getToggleState();
-				if (retCode == Dialog.CANCEL)
+				if (retCode == Dialog.CANCEL) {
 					return true;
+				}
 				// If warning turned off by user, set the preference for future
 				// usage
 				if (toggleState) {
