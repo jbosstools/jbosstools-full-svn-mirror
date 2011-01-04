@@ -22,7 +22,12 @@
     <formalpara>
       <title>Contexts and Dependency Injection (CDI)</title>
         <para>
-            <itemizedlist>
+        	<itemizedlist>
+	      		<listitem>
+							<para>
+								<ulink url="https://issues.jboss.org/browse/JBIDE-7891">JBIDE-7897</ulink>: Weld is now used in place of Seam for Contexts and Dependency Injection, and this change is reflected in the icons and banners shown in the CDI wizards, which now display the Weld icon instead of the Seam icon.
+							</para>
+						</listitem>
 	       <listitem>
 		  <para>
 		     <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7897">JBIDE-7897</ulink>: Stereotypes that were declared with <property>@Target(type)</property> annotation could not be applied to stereotypes where the <property>@Target</property> annotation only accepted values of <property>type, method, field</property>, <property>method</property>, <property>field</property> or <property>method, field</property>. This has been corrected for this release. A stereotype allows a developer to use the same recurring bean role within a framework.
@@ -965,11 +970,17 @@
         <title>Visual Page Editor</title>
         <para>
             <itemizedlist>
-				<listitem>
-                    <para>
-						<ulink url="https://jira.jboss.org/browse/JBIDE-7674">JBIDE-7674</ulink>: If a non-static field of a session bean class is annotated <property>@Produces</property>, <productname>CDI Tools</productname> detects the problem and treats it as a definition error in accordance with <ulink url="http://docs.jboss.org/cdi/spec/1.0/html/implementation.html#d0e2226">JSR-299 §3.4.2</ulink>. If this situation is encountered, a new <guilabel>Quick Fix</guilabel> has been implemented that provides a way to make such a field <code>static</code>. 
-                    </para>
-                </listitem>
+							<listitem>
+								<para>
+									<ulink url="https://issues.jboss.org/browse/JBIDE-7875">JBIDE-7875</ulink>: It is recommended that developers create an Annotation Literal class for every qualifier in their public API. However, writing these classes by hand can be time consuming. To address this the new <guilabel>Annotation Literal Type</guilabel> wizard provides a streamlined way to create these classes.
+								</para>
+							</listitem>
+
+							<listitem>
+              	<para>
+									<ulink url="https://jira.jboss.org/browse/JBIDE-7674">JBIDE-7674</ulink>: If a non-static field of a session bean class is annotated <property>@Produces</property>, <productname>CDI Tools</productname> detects the problem and treats it as a definition error in accordance with <ulink url="http://docs.jboss.org/cdi/spec/1.0/html/implementation.html#d0e2226">JSR-299 §3.4.2</ulink>. If this situation is encountered, a new <guilabel>Quick Fix</guilabel> has been implemented that provides a way to make such a field <code>static</code>. 
+                </para>
+							</listitem>
                 <listitem>
                     <para>
                         <ulink url="https://jira.jboss.org/browse/JBIDE-7771">JBIDE-7771</ulink>: In previous versions the HQL <guilabel>Query Parameters</guilabel> view showed only the first entry from a list of parameter values. To view the full list of parameters the ellipsis button in the <guilabel>Value</guilabel> field had to be clicked to display the <guilabel>Parameter Values</guilabel> dialog. The new <guilabel>Query Parameters</guilabel> view shows all parameters separated by the pipe (|) character when the <guilabel>Value</guilabel> field is not being edited, and reverts back to showing only the first parameter when the <guilabel>Value</guilabel> field is being edited.
