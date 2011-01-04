@@ -38,7 +38,6 @@ public abstract class CloudElementCategoryItem<CLOUDELEMENT> extends DeltaCloudV
 	public Object[] getChildren() {
 		if (!initialized.get()) {
 			asyncAddCloudElements();
-			initialized.set(true);
 		}
 		return super.getChildren();
 	}

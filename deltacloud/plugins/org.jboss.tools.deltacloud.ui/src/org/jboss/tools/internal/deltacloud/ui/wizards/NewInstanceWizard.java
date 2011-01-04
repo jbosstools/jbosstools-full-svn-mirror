@@ -91,7 +91,7 @@ public class NewInstanceWizard extends Wizard {
 		String memory = model.getMemory();
 		String storage = model.getStorage();
 		String keyId = model.getKeyId();
-		String alias = utf8Encode(model.getAlias());
+		String name = utf8Encode(model.getName());
 
 		// Save persistent settings for this particular cloud
 		cloud.setLastImageId(imageId);
@@ -122,7 +122,7 @@ public class NewInstanceWizard extends Wizard {
 					prefs.putBoolean(IDeltaCloudPreferenceConstants.DONT_CONFIRM_CREATE_INSTANCE, true);
 				}
 			}
-			instance = cloud.createInstance(alias, imageId, realmId, profileId, keyId, memory, storage);
+			instance = cloud.createInstance(name, imageId, realmId, profileId, keyId, memory, storage);
 			if (instance != null) {
 				result = true;
 			}
@@ -153,7 +153,7 @@ public class NewInstanceWizard extends Wizard {
 			ErrorUtils.handleError(
 					WizardMessages.getString(CREATE_INSTANCE_FAILURE_TITLE),
 					WizardMessages.getFormattedString(CREATE_INSTANCE_FAILURE_MSG,
-							new String[] { alias, imageId, realmId, profileId }),
+							new String[] { name, imageId, realmId, profileId }),
 					e, getShell());
 		}
 		return result;

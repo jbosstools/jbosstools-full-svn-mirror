@@ -54,6 +54,7 @@ public class ImagesCategoryItem extends CloudElementCategoryItem<DeltaCloudImage
 					DeltaCloudImage[] images = getCloud().getImages();
 					clearChildren();
 					addChildren(images);
+					initialized.set(true);
 					expand();
 					return Status.OK_STATUS;
 				} catch(DeltaCloudException e) {

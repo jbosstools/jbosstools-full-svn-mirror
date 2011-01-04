@@ -115,10 +115,10 @@ public interface DeltaCloudClient {
 	 * @return
 	 * @throws DeltaCloudClientException
 	 */
-	public Instance createInstance(String imageId, String profileId, String realmId, String memory, String storage)
+	public Instance createInstance(String name, String imageId, String profileId, String realmId, String memory, String storage)
 			throws DeltaCloudClientException;
 
-	public Instance createInstance(String imageId, String profileId, String realmId, String keyname, String memory,
+	public Instance createInstance(String name, String imageId, String profileId, String realmId, String keyname, String memory,
 			String storage) throws DeltaCloudClientException;
 
 	/**

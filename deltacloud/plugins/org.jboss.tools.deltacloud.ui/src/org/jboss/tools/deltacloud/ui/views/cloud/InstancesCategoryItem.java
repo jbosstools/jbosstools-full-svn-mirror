@@ -55,6 +55,7 @@ public class InstancesCategoryItem extends CloudElementCategoryItem<DeltaCloudIn
 					DeltaCloudInstance[] instances = getCloud().getInstances();
 					clearChildren();
 					addChildren(instances);
+					initialized.set(true);
 					expand();
 					return Status.OK_STATUS;
 				} catch (DeltaCloudException e) {

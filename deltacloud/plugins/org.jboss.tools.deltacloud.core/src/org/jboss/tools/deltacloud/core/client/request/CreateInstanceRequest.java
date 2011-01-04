@@ -22,6 +22,7 @@ import org.jboss.tools.deltacloud.core.client.utils.UrlBuilder;
  */
 public class CreateInstanceRequest extends AbstractDeltaCloudRequest {
 
+	private String name;
 	private String imageId;
 	private String profileId;
 	private String realmId;
@@ -30,12 +31,13 @@ public class CreateInstanceRequest extends AbstractDeltaCloudRequest {
 	private String storage;
 
 	public CreateInstanceRequest(URL baseUrl, String imageId) {
-		this(baseUrl, imageId, null, null, null, null, null);
+		this(baseUrl, imageId, null, null, null, null, null, null);
 	}
 
-	public CreateInstanceRequest(URL baseUrl, String imageId, String profileId, String realmId, 
+	public CreateInstanceRequest(URL baseUrl, String name, String imageId, String profileId, String realmId, 
 			String keyId, String memory, String storage) {
 		super(baseUrl, HttpMethod.POST);
+		this.name = name;
 		this.imageId = imageId;
 		this.profileId = profileId;
 		this.realmId = realmId;
@@ -51,6 +53,7 @@ public class CreateInstanceRequest extends AbstractDeltaCloudRequest {
 				// WORKAROUND for JBIDE-8005, STEAM-303
 				.parameter("key_name", keyname)
 				// WORKAROUND for JBIDE-8005, STEAM-303
+				.parameter("name", name)
 				.parameter("image_id", imageId)
 				.parameter("hwp_id", profileId)
 				.parameter("realm_id", realmId)
