@@ -307,10 +307,14 @@
 	   <title>Deltacloud</title>
 	   <para>
 	      <itemizedlist>
-		 <listitem>
-		    <para>
-		    <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6837">JBIDE-6837</ulink>: Deltacloud tooling has been added for this release.
-		 </para>
+					<listitem>
+				    <para>
+		    			<ulink url="https://issues.jboss.org/browse/JBIDE-7911">JBIDE-7911</ulink>: Support for DeltaCloud Server 0.1.2 has been added.
+					 </para>
+				 <listitem>
+		    	<para>
+			    	<ulink url="http://jira.jboss.com/jira/browse/JBIDE-6837">JBIDE-6837</ulink>: Deltacloud tooling has been added for this release.
+		 			</para>
 	      </listitem>
 	   </itemizedlist>
 	</para>
