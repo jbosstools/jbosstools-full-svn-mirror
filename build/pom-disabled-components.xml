@@ -43,23 +43,6 @@
 		</profile>
 
 		<profile>
-			<id>common</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<modules>
-				<module>../common</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>common-bootstrap</id>
-			<modules>
-				<module>../common</module>
-			</modules>
-		</profile>
-
-		<profile>
 			<id>vpe</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
@@ -72,7 +55,6 @@
 		<profile>
 			<id>vpe-bootstrap</id>
 			<modules>
-				<module>../common</module>
 				<module>../vpe</module>
 			</modules>
 		</profile>
@@ -90,26 +72,8 @@
 		<profile>
 			<id>jsf-bootstrap</id>
 			<modules>
-				<module>../common</module>
 				<module>../vpe</module>
 				<module>../jsf</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>hibernatetools</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<modules>
-				<module>../hibernatetools</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>hibernatetools-bootstrap</id>
-			<modules>
-				<module>../hibernatetools</module>
 			</modules>
 		</profile>
 
@@ -126,7 +90,6 @@
 		<profile>
 			<id>struts-bootstrap</id>
 			<modules>
-				<module>../common</module>
 				<module>../vpe</module>
 				<module>../struts</module>
 			</modules>
@@ -163,8 +126,6 @@
 			<id>seam-bootstrap</id>
 			<modules>
 				<module>../as</module>
-				<module>../hibernatetools</module>
-				<module>../common</module>
 				<module>../vpe</module>
 				<module>../jsf</module>
 				<module>../seam</module>
@@ -185,24 +146,6 @@
 			<id>maven-bootstrap</id>
 			<modules>
 				<module>../maven</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>ws</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<modules>
-				<module>../ws</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>ws-bootstrap</id>
-			<modules>
-				<module>../common</module>
-				<module>../ws</module>
 			</modules>
 		</profile>
 
