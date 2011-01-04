@@ -121,13 +121,15 @@ done
 if [[ ! -f ${STAGINGDIR}/all/${SNAPNAME} ]]; then
 	for z in $(find ${WORKSPACE} -maxdepth 5 -mindepth 3 -name "*Update*.zip" | sort | tail -1); do 
 		#echo "$z ..."
-		mkdir -p ${STAGINGDIR}/all
-		unzip -u -o -q -d ${STAGINGDIR}/all/ $z
+		if [[ -f $z ]]; then
+			mkdir -p ${STAGINGDIR}/all
+			unzip -u -o -q -d ${STAGINGDIR}/all/ $z
 
-                # generate MD5 sum for zip (file contains only the hash, not the hash + filename)
-                for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done
+                	# generate MD5 sum for zip (file contains only the hash, not the hash + filename)
+	                for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done
 
-		rsync -aq $z ${z}.MD5 ${STAGINGDIR}/all/${SNAPNAME}
+			rsync -aq $z ${z}.MD5 ${STAGINGDIR}/all/${SNAPNAME}
+		fi
 	done
 fi
 
