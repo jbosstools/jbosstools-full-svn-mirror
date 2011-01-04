@@ -319,6 +319,11 @@
 	      <itemizedlist>
 					<listitem>
 				    <para>
+		    			<ulink url="https://issues.jboss.org/browse/JBIDE-7554">JBIDE-7554</ulink>: When the <guilabel>Cloud Viewer</guilabel> View was refreshed there was previously no indication that the View was being repopulated. This made it difficult to judge the progress of the refresh operation. To address this the list of instances and images are cleared from the <guilabel>Cloud Viewer</guilabel> View before they are refreshed, and a pop-up progress dialog box is now displayed.
+						</para>
+					<listitem>
+					<listitem>
+				    <para>
 		    			<ulink url="https://issues.jboss.org/browse/JBIDE-7569">JBIDE-7569</ulink>: When expanding the <guilabel>Instances</guilabel> tree in the <guilabel>Cloud Viewer</guilabel> View, there was no indication that the tree was currently being populated. To indicate that the tree is being populated a temporary entry labeled <guilabel>Loading...</guilabel> will now be visible while no instances have been added.
 						</para>
 					<listitem>
