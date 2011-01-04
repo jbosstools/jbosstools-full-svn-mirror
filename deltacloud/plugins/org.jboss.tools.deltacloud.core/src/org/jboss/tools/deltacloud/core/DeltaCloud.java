@@ -411,7 +411,8 @@ public class DeltaCloud extends ObservablePojo {
 		if (deltaCloudImage == null) {
 			try {
 				Image image = client.listImages(id);
-				deltaCloudImage = images.add(image, this);
+				deltaCloudImage = DeltaCloudImageFactory.create(image, this);
+				images.add(deltaCloudImage);
 			} catch (DeltaCloudClientException e) {
 				throw new DeltaCloudException(MessageFormat.format("Cloud not find image with id \"{0}\"", id), e);
 			}
@@ -535,7 +536,8 @@ public class DeltaCloud extends ObservablePojo {
 			clearImages();
 			DeltaCloudImagesRepository repo = getImagesRepository();
 			DeltaCloudImage[] oldImages = repo.get();
-			repo.add(client.listImages(), this);
+			Collection<DeltaCloudImage> deltaCloudImages = DeltaCloudImageFactory.create(client.listImages(), this);
+			repo.add(deltaCloudImages);
 			// TODO: remove notification with all instanceRepo, replace by
 			// notifying the changed instance
 			firePropertyChange(PROP_IMAGES, oldImages, repo.get());

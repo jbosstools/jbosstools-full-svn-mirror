@@ -10,11 +10,6 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import org.jboss.tools.deltacloud.core.client.Image;
 
 /**
  * @author André Dietisheim
@@ -23,23 +18,6 @@ public class DeltaCloudImagesRepository extends AbstractDeltaCloudObjectReposito
 
 	public DeltaCloudImagesRepository() {
 		super(DeltaCloudImage.class);
-	}
-
-	// TODO: move to DeltaCloudImageFactory
-	public DeltaCloudImage add(Image image, DeltaCloud cloud) {
-		DeltaCloudImage deltaCloudImage = new DeltaCloudImage(image, cloud);
-		add(deltaCloudImage);
-		return deltaCloudImage;
-	}
-
-	// TODO: move to DeltaCloudImageFactory
-	public Collection<DeltaCloudImage> add(Collection<Image> imagesToAdd, DeltaCloud cloud) {
-		List<DeltaCloudImage> deltaCloudImages = new ArrayList<DeltaCloudImage>();
-		for (Image image : imagesToAdd) {
-			DeltaCloudImage deltaCloudImage = add(image, cloud);
-			deltaCloudImages.add(deltaCloudImage);
-		}
-		return deltaCloudImages;
 	}
 
 	@Override

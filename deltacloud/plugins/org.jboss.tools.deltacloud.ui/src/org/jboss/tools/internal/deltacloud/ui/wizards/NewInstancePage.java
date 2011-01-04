@@ -408,6 +408,7 @@ public class NewInstancePage extends WizardPage {
 								new MandatoryStringValidator(WizardMessages.getString(MUST_ENTER_A_KEYNAME)))
 						.setBeforeSetValidator(
 								new KeyValidator()),
+								// TODO: internationalize strings
 
 				null);
 		ControlDecorationSupport.create(textBinding, SWT.LEFT | SWT.TOP);
