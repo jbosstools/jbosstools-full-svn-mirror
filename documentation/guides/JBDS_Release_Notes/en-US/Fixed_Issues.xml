@@ -22,7 +22,24 @@
     <formalpara>
       <title>Contexts and Dependency Injection (CDI)</title>
         <para>
-        	<itemizedlist>
+					<itemizedlist>
+							<listitem>
+								<para>
+									<ulink url="https://issues.jboss.org/browse/JBIDE-7875">JBIDE-7875</ulink>: It is recommended that developers create an Annotation Literal class for every qualifier in their public API. However, writing these classes by hand can be time consuming. To address this the new <guilabel>Annotation Literal Type</guilabel> wizard provides a streamlined way to create these classes. This wizard can be accessed by selecting <menuchoice>
+                            <guimenuitem>File</guimenuitem>
+                            <guimenuitem>New</guimenuitem>
+                            <guimenuitem>Other</guimenuitem>
+                            <guimenuitem>CDI (Context and Dependency Injection)</guimenuitem>
+                            <guimenuitem>Annotation Literal Type</guimenuitem>
+                        </menuchoice>.
+								</para>
+							</listitem>
+							<listitem>
+              	<para>
+									<ulink url="https://jira.jboss.org/browse/JBIDE-7674">JBIDE-7674</ulink>: If a non-static field of a session bean class is annotated <property>@Produces</property>, <productname>CDI Tools</productname> detects the problem and treats it as a definition error in accordance with <ulink url="http://docs.jboss.org/cdi/spec/1.0/html/implementation.html#d0e2226">JSR-299 §3.4.2</ulink>. If this situation is encountered, a new <guilabel>Quick Fix</guilabel> has been implemented that provides a way to make such a field <code>static</code>. 
+                </para>
+							</listitem>
+        	
 						<listitem>
 							<para>
 								<ulink url="https://issues.jboss.org/browse/JBIDE-7802">JBIDE-7802</ulink>: Previously CDI related wizards (such as <guilabel>Injection Scoped Bean</guilabel>) could not be found in the <guilabel>New</guilabel> wizard by searching for the keyword "CDI". This issue has been resolved, resulting in CDI related wizards being listed against the search keyword "CDI".
@@ -490,6 +507,11 @@
         <title>Hibernate</title>
         <para>
             <itemizedlist>
+								<listitem>
+                    <para>
+                        <ulink url="https://jira.jboss.org/browse/JBIDE-7771">JBIDE-7771</ulink>: In previous versions the HQL <guilabel>Query Parameters</guilabel> view showed only the first entry from a list of parameter values. To view the full list of parameters the ellipsis button in the <guilabel>Value</guilabel> field had to be clicked to display the <guilabel>Parameter Values</guilabel> dialog. The new <guilabel>Query Parameters</guilabel> view shows all parameters separated by the pipe (|) character when the <guilabel>Value</guilabel> field is not being edited, and reverts back to showing only the first parameter when the <guilabel>Value</guilabel> field is being edited.
+                    </para>
+                </listitem>
 								<listitem>
                     <para>
                         <ulink url="https://issues.jboss.org/browse/JBIDE-7990">JBIDE-7990</ulink>: The <guilabel>Properties</guilabel> View was empty when a <guilabel>Configuration</guilabel> node was selected in the <guilabel>Hibernate Configurations</guilabel> View. The properties defined in the XML configuration file were expected to be shown in the <guilabel>Properties</guilabel> View.
@@ -1001,22 +1023,6 @@
         <title>Visual Page Editor</title>
         <para>
             <itemizedlist>
-							<listitem>
-								<para>
-									<ulink url="https://issues.jboss.org/browse/JBIDE-7875">JBIDE-7875</ulink>: It is recommended that developers create an Annotation Literal class for every qualifier in their public API. However, writing these classes by hand can be time consuming. To address this the new <guilabel>Annotation Literal Type</guilabel> wizard provides a streamlined way to create these classes.
-								</para>
-							</listitem>
-
-							<listitem>
-              	<para>
-									<ulink url="https://jira.jboss.org/browse/JBIDE-7674">JBIDE-7674</ulink>: If a non-static field of a session bean class is annotated <property>@Produces</property>, <productname>CDI Tools</productname> detects the problem and treats it as a definition error in accordance with <ulink url="http://docs.jboss.org/cdi/spec/1.0/html/implementation.html#d0e2226">JSR-299 §3.4.2</ulink>. If this situation is encountered, a new <guilabel>Quick Fix</guilabel> has been implemented that provides a way to make such a field <code>static</code>. 
-                </para>
-							</listitem>
-                <listitem>
-                    <para>
-                        <ulink url="https://jira.jboss.org/browse/JBIDE-7771">JBIDE-7771</ulink>: In previous versions the HQL <guilabel>Query Parameters</guilabel> view showed only the first entry from a list of parameter values. To view the full list of parameters the ellipsis button in the <guilabel>Value</guilabel> field had to be clicked to display the <guilabel>Parameter Values</guilabel> dialog. The new <guilabel>Query Parameters</guilabel> view shows all parameters separated by the pipe (|) character when the <guilabel>Value</guilabel> field is not being edited, and reverts back to showing only the first parameter when the <guilabel>Value</guilabel> field is being edited.
-                    </para>
-                </listitem>
                 <listitem>
                     <para>
                         <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7434">JBIDE-7434</ulink>: Templates with support for RichFaces 4.0 have been added to the Visual Page Editor.
