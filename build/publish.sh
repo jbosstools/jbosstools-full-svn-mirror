@@ -92,8 +92,11 @@ if [[ $z != "" ]] && [[ -f $z ]] ; then
 	mkdir -p ${STAGINGDIR}/all/repo
 	unzip -u -o -q -d ${STAGINGDIR}/all/repo $z
 
+	# generate MD5 sum for zip (file contains only the hash, not the hash + filename)
+        for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done
+
 	# copy into workspace for access by bucky aggregator (same name every time)
-	rsync -aq $z ${STAGINGDIR}/all/${SNAPNAME}
+	rsync -aq $z ${z}.MD5 ${STAGINGDIR}/all/${SNAPNAME}
 fi
 z=""
 
@@ -106,7 +109,11 @@ for z in $(find ${WORKSPACE}/sources/*/site/target -type f -name "site*.zip" | s
 		mkdir -p ${STAGINGDIR}/$y
 		unzip -u -o -q -d ${STAGINGDIR}/$y $z
 		# copy into workspace for access by bucky aggregator (same name every time)
-		rsync -aq $z ${STAGINGDIR}/${y}${SUFFNAME}
+
+		# generate MD5 sum for zip (file contains only the hash, not the hash + filename)
+	        for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done
+        
+		rsync -aq $z ${z}.MD5 ${STAGINGDIR}/${y}${SUFFNAME}
 	fi
 done
 
@@ -116,7 +123,11 @@ if [[ ! -f ${STAGINGDIR}/all/${SNAPNAME} ]]; then
 		#echo "$z ..."
 		mkdir -p ${STAGINGDIR}/all
 		unzip -u -o -q -d ${STAGINGDIR}/all/ $z
-		rsync -aq $z ${STAGINGDIR}/all/${SNAPNAME}
+
+                # generate MD5 sum for zip (file contains only the hash, not the hash + filename)
+                for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done
+
+		rsync -aq $z ${z}.MD5 ${STAGINGDIR}/all/${SNAPNAME}
 	done
 fi
 
@@ -132,7 +143,10 @@ popd
 if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]] && [[ -d ${WORKSPACE}/sources/aggregate/site/zips ]]; then
 	mkdir -p ${STAGINGDIR}/components
 	for z in $(find ${WORKSPACE}/sources/aggregate/site/zips -name "*Update*.zip") $(find ${WORKSPACE}/sources/aggregate/site/zips -name "*Sources*.zip"); do
-		mv $z ${STAGINGDIR}/components
+		# generate MD5 sum for zip (file contains only the hash, not the hash + filename)
+                for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done
+
+		mv $z ${z}.MD5 ${STAGINGDIR}/components
 	done
 fi
 
