@@ -30,4 +30,9 @@ Has 'new_and_noteworthy' tag but not documented as it is a sub-task of a JIRA al
 
 NOTFOUND_JBIDE-6575
 
+To quote Andre "Unfortunately this bug showed up again (is a regression) since the current version of the deltacloud tools does not offer this action for the "Cloud Viewer" any more."
+
+NOTFOUND_JBIDE-7761
+
+
 Still to be documented:

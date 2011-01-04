@@ -338,20 +338,16 @@
 				    <para>
 		    			<ulink url="https://issues.jboss.org/browse/JBIDE-7554">JBIDE-7554</ulink>: When the <guilabel>Cloud Viewer</guilabel> View was refreshed there was previously no indication that the View was being repopulated. This made it difficult to judge the progress of the refresh operation. To address this the list of instances and images are cleared from the <guilabel>Cloud Viewer</guilabel> View before they are refreshed, and a pop-up progress dialog box is now displayed.
 						</para>
-					<listitem>
+					</listitem>
 					<listitem>
 				    <para>
 		    			<ulink url="https://issues.jboss.org/browse/JBIDE-7569">JBIDE-7569</ulink>: When expanding the <guilabel>Instances</guilabel> tree in the <guilabel>Cloud Viewer</guilabel> View, there was no indication that the tree was currently being populated. To indicate that the tree is being populated a temporary entry labeled <guilabel>Loading...</guilabel> will now be visible while no instances have been added.
 						</para>
-					<listitem>
-					<listitem>
-				    <para>
-		    			<ulink url="https://issues.jboss.org/browse/JBIDE-7761">JBIDE-7761</ulink>: The <guilabel>Show in Remote System Explorer</guilabel> option is now available in the <guilabel>Cloud Viewer</guilabel> View context menu.
-						</para>
-					<listitem>
+					</listitem>
 					<listitem>
 				    <para>
-		    			<ulink url="https://issues.jboss.org/browse/JBIDE-7774">JBIDE-7774</ulink>: The <guilabel>Deltacloud Cloud Connection</guilabel> wizard, accessible by selecting 								<menuchoice>
+		    			<ulink url="https://issues.jboss.org/browse/JBIDE-7774">JBIDE-7774</ulink>: The <guilabel>Deltacloud Cloud Connection</guilabel> wizard, accessible by selecting 
+							<menuchoice>
 								<guimenuitem>File</guimenuitem>
 								<guimenuitem>New</guimenuitem>
 								<guimenuitem>Other</guimenuitem>
@@ -359,7 +355,7 @@
 								<guimenuitem>Cloud Connection</guimenuitem>
 							</menuchoice>, will now display the last used URL.
 					 </para>
-				 <listitem>
+				 </listitem>
 					<listitem>
 				    <para>
 		    			<ulink url="https://issues.jboss.org/browse/JBIDE-7911">JBIDE-7911</ulink>: Support for Deltacloud Server 0.1.2 has been added.
@@ -787,6 +783,16 @@
         <title>JBoss Application Server</title>
         <para>
             <itemizedlist>
+							<listitem>
+						    <para>
+				    			<ulink url="https://issues.jboss.org/browse/JBIDE-7019">JBIDE-7019</ulink>: A <guibutton>Test</guibutton> button has been added to the <guilabel>Server Behaviour</guilabel> section in the JBoss Application Server configuration Editor which will verify that:
+									<orderedlist>
+										<listitem><para>The RSE connection works,</para></listitem>
+										<listitem><para>The server home folder exists,</para></listitem>
+										<listitem><para>The serverHome/server/{configName} folder exists.</para></listitem>
+									</orderedlist>									
+								</para>
+							</listitem>
                 <listitem>
                     <para>
                         <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6973">JBIDE-6973</ulink>: A HTTP poller has been added for JBoss servers to detect if the server is running. This added feature will be useful for remote and local servers, being less resource-intensive than polling with JMX.
@@ -862,17 +868,17 @@
 			</itemizedlist>
 		</para>
 	</formalpara> -->
-	<formalpara>
+		<formalpara>
         <title>Seam</title>
-        <para>
-            <itemizedlist>
-				<listitem>
-                    <para>
-                        <ulink url="https://jira.jboss.org/browse/JBIDE-7616">JBIDE-7616</ulink>: In previous versions the <productname>Seam Validator</productname> did not take into account <property>@Import</property> annotations when resolving context variable names for bijections. This resulted in the generation of <errorname>unknown context variable name</errorname> warnings when an unqualified context variable name was used in the injection.
-                    </para>
-					<para>
-						The <productname>Seam Validator</productname> resolving mechanism has now been fixed to take <property>@Import</property> annotations into account.
-					</para>
+        	<para>
+          	<itemizedlist>
+							<listitem>
+              	<para>
+              		<ulink url="https://jira.jboss.org/browse/JBIDE-7616">JBIDE-7616</ulink>: In previous versions the <productname>Seam Validator</productname> did not take into account <property>@Import</property> annotations when resolving context variable names for bijections. This resulted in the generation of <errorname>unknown context variable name</errorname> warnings when an unqualified context variable name was used in the injection.
+              	</para>
+								<para>
+									The <productname>Seam Validator</productname> resolving mechanism has now been fixed to take <property>@Import</property> annotations into account.
+								</para>
                 </listitem>
                 <listitem>
                     <para>
