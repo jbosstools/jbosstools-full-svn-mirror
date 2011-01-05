@@ -216,9 +216,10 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 
 	private void refreshServerWidgets() {
 		boolean enabled = createServer.getSelection();
-		boolean enabled2 = false;
 		serverDetailsGroup.setEnabled(enabled);
 		autoScanCheck.setEnabled(enabled);
+		autoLocalRuntimeLabel.setEnabled(enabled);
+		autoLocalRuntimeCombo.setEnabled(enabled);
 		remoteDetailsLoc.setEnabled(enabled);
 		hardCodeServerDetails.setEnabled(enabled);
 		serverHomeText.setEnabled(enabled);

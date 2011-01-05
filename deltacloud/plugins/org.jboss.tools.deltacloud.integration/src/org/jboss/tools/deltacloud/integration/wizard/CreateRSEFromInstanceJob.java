@@ -13,11 +13,13 @@ package org.jboss.tools.deltacloud.integration.wizard;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.rse.core.model.IHost;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.internal.progress.ProgressManagerUtil;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.core.job.AbstractInstanceJob;
 import org.jboss.tools.deltacloud.integration.Messages;
@@ -45,6 +47,7 @@ public class CreateRSEFromInstanceJob extends AbstractInstanceJob {
 		String hostname = RSEUtils.createHostName(instance);
 		if (hostname != null && hostname.length() > 0 && isAutoconnect()) {
 			try {
+				monitor.beginTask("Create RSE Server", 100);
 				String connectionName = RSEUtils.createConnectionName(instance);
 				IHost host = RSEUtils.createHost(connectionName,
 						RSEUtils.createHostName(instance),
@@ -53,7 +56,10 @@ public class CreateRSEFromInstanceJob extends AbstractInstanceJob {
 				if( nextJob2 != null && nextJob2 instanceof CreateServerFromRSEJob) {
 					((CreateServerFromRSEJob)nextJob2).setHost(host);
 				}
-				RSEUtils.connect(connectionName, RSEUtils.getConnectorService(host));
+				monitor.worked(10);
+				
+				SubProgressMonitor submon = new SubProgressMonitor(monitor, 90);
+				RSEUtils.connect(RSEUtils.getConnectorService(host), 90000, submon);
 			} catch (Exception e) {
 				return ErrorUtils.handleError(Messages.ERROR,
 						NLS.bind(Messages.COULD_NOT_LAUNCH_RSE_EXPLORER2, instance.getName()),

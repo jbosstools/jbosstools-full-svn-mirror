@@ -96,6 +96,38 @@ public class RSEUtils {
 		return services[0];
 	}
 
+	public static IStatus connect(IConnectorService service, IProgressMonitor monitor) throws Exception {
+		monitor.worked(1);
+		service.connect(monitor);
+		monitor.done();
+		return Status.OK_STATUS;
+	}
+	
+	public static IStatus connect(IConnectorService service, int timeout, IProgressMonitor monitor)  {
+		monitor.beginTask("Connecting to remote server", timeout);
+		monitor.setTaskName("Connecting to remote server");
+		IStatus status = null;
+		int count = 0;
+		while( status == null && count < timeout) {
+			try {
+				status = connect(service, monitor);
+				monitor.done();
+				return status;
+			} catch(Exception e) {
+				System.out.println("Exception " + e.getMessage() + " at timeout " + count);
+				count += 1000;
+				monitor.worked(1000);
+				try {
+					Thread.sleep(1000);
+				} catch(InterruptedException ie) {
+				}
+			}
+		}
+		monitor.done();
+		return status;
+	}
+		
+	
 	public static Job connect(String connectionName, final IConnectorService service)
 			throws Exception {
 		// TODO: internationalize strings
@@ -107,11 +139,9 @@ public class RSEUtils {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
 				try {
-					monitor.worked(1);
-					service.connect(monitor);
-					monitor.done();
-					return Status.OK_STATUS;
-				} catch (Exception e) {
+					return connect(service, monitor);
+				} catch(Exception e) {
+					e.printStackTrace();
 					// odd behavior: service reports connection failure even if things seem to work (view opens up with connection in it)
 					// ignore errors since things work
 					//
