@@ -12,7 +12,6 @@ package org.jboss.tools.internal.deltacloud.ui.wizards;
 
 import org.eclipse.jface.wizard.Wizard;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
-import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 
 /**
@@ -47,11 +46,11 @@ public class ImageFilterWizard extends Wizard {
 		String descRule = mainPage.getDescRule();
 
 		try {
-			cloud.updateImageFilter(nameRule + ";" + //$NON-NLS-1$
+			cloud.updateImageFilter(
+					nameRule + ";" + //$NON-NLS-1$
 					idRule + ";" + //$NON-NLS-1$
 					archRule + ";" + //$NON-NLS-1$
 					descRule);
-			DeltaCloudManager.getDefault().saveClouds();
 		} catch (Exception e) {
 			// TODO: internationalize strings
 			ErrorUtils.handleError(

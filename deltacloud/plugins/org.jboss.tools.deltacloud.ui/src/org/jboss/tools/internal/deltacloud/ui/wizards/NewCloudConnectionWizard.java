@@ -116,7 +116,6 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 		try {
 			DeltaCloud newCloud = new DeltaCloud(name, url, username, password, driver);
 			DeltaCloudManager.getDefault().addCloud(newCloud);
-			DeltaCloudManager.getDefault().saveClouds();
 		} catch (Exception e) {
 			// TODO internationalize strings
 			ErrorUtils

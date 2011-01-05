@@ -167,7 +167,7 @@ public class DeltaCloudManager {
 	}
 
 	// TODO: move to marshaler component
-	public void saveClouds() throws DeltaCloudException {
+	protected void saveClouds() throws DeltaCloudException {
 		try {
 			File cloudFile = getOrCreateCloudFile();
 			PrintWriter p = new PrintWriter(new BufferedWriter(new FileWriter(cloudFile)));
@@ -209,13 +209,14 @@ public class DeltaCloudManager {
 	private void printInstances(DeltaCloud d, PrintWriter printWriter) {
 		try {
 			for (DeltaCloudInstance instance : d.getInstances()) {
-				DeltaCloudXMLBuilder.tag(DeltaCloudXMLBuilder.TAG_INSTANCE, printWriter);
-				DeltaCloudXMLBuilder.attribute(DeltaCloudXMLBuilder.ATTR_ID, instance.getId(), printWriter);
-				DeltaCloudXMLBuilder.attribute(
-								DeltaCloudXMLBuilder.ATTR_ALIAS, StringUtils.null2EmptyString(instance.getAlias()),
-						printWriter);
-				DeltaCloudXMLBuilder.closeTag(printWriter);
-				DeltaCloudXMLBuilder.endTag(DeltaCloudXMLBuilder.TAG_INSTANCE, printWriter);
+				String alias = instance.getAlias();
+				if (alias != null) {
+					DeltaCloudXMLBuilder.tag(DeltaCloudXMLBuilder.TAG_INSTANCE, printWriter);
+					DeltaCloudXMLBuilder.attribute(DeltaCloudXMLBuilder.ATTR_ID, instance.getId(), printWriter);
+					DeltaCloudXMLBuilder.attribute(DeltaCloudXMLBuilder.ATTR_ALIAS, alias, printWriter);
+					DeltaCloudXMLBuilder.closeTag(printWriter);
+					DeltaCloudXMLBuilder.endTag(DeltaCloudXMLBuilder.TAG_INSTANCE, printWriter);
+				}
 			}
 		} catch (DeltaCloudException e) {
 			// ignore

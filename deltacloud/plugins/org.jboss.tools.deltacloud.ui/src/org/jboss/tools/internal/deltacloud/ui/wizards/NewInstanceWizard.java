@@ -23,7 +23,6 @@ import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
-import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.core.job.InstanceStateJob;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.DeltacloudUIExtensionManager;
@@ -56,6 +55,11 @@ public class NewInstanceWizard extends Wizard {
 
 	public NewInstanceWizard(DeltaCloud cloud) {
 		this.cloud = cloud;
+		try {
+			this.image = cloud.getLastImage();
+		} catch (DeltaCloudException e) {
+			// ignore
+		}
 	}
 
 	public NewInstanceWizard(DeltaCloud cloud, DeltaCloudImage image) {
@@ -102,7 +106,6 @@ public class NewInstanceWizard extends Wizard {
 		boolean result = false;
 		Exception e = null;
 		try {
-			DeltaCloudManager.getDefault().saveClouds();
 			boolean dontShowDialog = prefs.getBoolean(IDeltaCloudPreferenceConstants.DONT_CONFIRM_CREATE_INSTANCE,
 					false);
 			if (!dontShowDialog) {
@@ -126,26 +129,26 @@ public class NewInstanceWizard extends Wizard {
 			instance = cloud.createInstance(name, imageId, realmId, profileId, keyId, memory, storage);
 			if (instance != null) {
 				result = true;
-			}
-			if (instance != null 
-					&& instance.getState().equals(DeltaCloudInstance.State.PENDING)) {
-				// TODO use chained job? Maybe. But chainedJob needs to be moved
-				ChainedJob first =
-						new InstanceStateJob(
-								WizardMessages.getFormattedString(STARTING_INSTANCE_TITLE, instance.getName()),
-								instance,
-								DeltaCloudInstance.State.RUNNING);
-				first.setUser(true);
-				ChainedJob last = first;
-				ChainedJob temp;
-				for (int i = 0; i < additionalPages.length; i++) {
-					temp = additionalPages[i].getPerformFinishJob(instance);
-					if (temp != null) {
-						last.setNextJob(temp);
-						last = temp;
+				if (instance.getState().equals(DeltaCloudInstance.State.PENDING)) {
+					// TODO use chained job? Maybe. But chainedJob needs to be
+					// moved
+					ChainedJob first =
+							new InstanceStateJob(
+									WizardMessages.getFormattedString(STARTING_INSTANCE_TITLE, instance.getName()),
+									instance,
+									DeltaCloudInstance.State.RUNNING);
+					first.setUser(true);
+					ChainedJob last = first;
+					ChainedJob temp;
+					for (int i = 0; i < additionalPages.length; i++) {
+						temp = additionalPages[i].getPerformFinishJob(instance);
+						if (temp != null) {
+							last.setNextJob(temp);
+							last = temp;
+						}
 					}
+					first.schedule();
 				}
-				first.schedule();
 			}
 		} catch (DeltaCloudException ex) {
 			e = ex;

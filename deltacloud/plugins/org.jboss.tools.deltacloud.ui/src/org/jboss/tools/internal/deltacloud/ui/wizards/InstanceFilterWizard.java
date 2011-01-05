@@ -13,7 +13,6 @@ package org.jboss.tools.internal.deltacloud.ui.wizards;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.swt.widgets.Display;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
-import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 
 /**
@@ -57,7 +56,6 @@ public class InstanceFilterWizard extends Wizard {
 					keyNameRule + ";" + //$NON-NLS-1$
 					realmRule + ";" + //$NON-NLS-1$
 					profileRule);
-			DeltaCloudManager.getDefault().saveClouds();
 		} catch (Exception e) {
 			// TODO: internationalize strings
 			ErrorUtils.handleError(

@@ -38,7 +38,6 @@ import org.jboss.tools.internal.deltacloud.core.observable.ObservablePojo;
 public class DeltaCloud extends ObservablePojo {
 
 	public static final String PROP_INSTANCES = "instances";
-	public static final String PROP_INSTANCES_ADDED = "instancesAdded";
 	public static final String PROP_INSTANCES_REMOVED = "instancesRemoved";
 	public static final String PROP_IMAGES = "images";
 	public static final String PROP_NAME = "name";
@@ -102,14 +101,17 @@ public class DeltaCloud extends ObservablePojo {
 		boolean nameChanged = updateName(name);
 		boolean connectionPropertiesChanged = updateConnectionProperties(url, username, password);
 
-		if (nameChanged || connectionPropertiesChanged) {
-			this.passwordStore.update(new DeltaCloudPasswordStorageKey(name, username), password);
-		}
-
 		if (connectionPropertiesChanged) {
 			client = createClient(url, username, password);
 			loadChildren();
 		}
+
+		if (nameChanged || connectionPropertiesChanged) {
+			this.passwordStore.update(new DeltaCloudPasswordStorageKey(name, username), password);
+			// TODO: move to notification based approach
+			DeltaCloudManager.getDefault().saveClouds();
+		}
+
 	}
 
 	private boolean updateName(String name) {
@@ -218,6 +220,7 @@ public class DeltaCloud extends ObservablePojo {
 			// notifying the changed instance
 			firePropertyChange(
 					PROP_INSTANCES, getInstancesRepository().get(), getInstancesRepository().get());
+			DeltaCloudManager.getDefault().saveClouds();
 		}
 	}
 
@@ -247,6 +250,8 @@ public class DeltaCloud extends ObservablePojo {
 			// TODO: remove notification with all instanceRepo, replace by
 			// notifying the changed instance
 			firePropertyChange(PROP_IMAGES, getImagesRepository().get(), getImagesRepository().get());
+			// TODO: move to notification based approach
+			DeltaCloudManager.getDefault().saveClouds();
 		}
 	}
 
@@ -580,7 +585,8 @@ public class DeltaCloud extends ObservablePojo {
 				// TODO: remove notification with all instanceRepo, replace by
 				// notifying the changed instance
 				firePropertyChange(PROP_INSTANCES, instances, repo.get());
-				firePropertyChange(PROP_INSTANCES_ADDED, null, deltaCloudInstance);
+				// TODO: move to notification based approach
+				DeltaCloudManager.getDefault().saveClouds();
 				return deltaCloudInstance;
 			}
 		} catch (DeltaCloudClientException e) {
