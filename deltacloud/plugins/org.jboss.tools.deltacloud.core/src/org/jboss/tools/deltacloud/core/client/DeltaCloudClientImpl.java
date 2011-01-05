@@ -279,8 +279,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	}
 
 	@Override
-	public Instance createInstance(String imageId)
-			throws DeltaCloudClientException {
+	public Instance createInstance(String imageId) throws DeltaCloudClientException {
 		try {
 			return buildInstance(requestStringResponse(new CreateInstanceRequest(baseUrl, imageId)));
 		} catch (DeltaCloudClientException e) {
@@ -383,11 +382,9 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		property.setKind(kind);
 		if (Kind.RANGE.toString().equals(property.getKind())) {
 			setRange(element, property);
-		}
-		else if (Kind.ENUM.toString().equals(property.getKind())) {
+		} else if (Kind.ENUM.toString().equals(property.getKind())) {
 			setEnum(element, property);
-		}
-		else if (Kind.FIXED.toString().equals(property.getKind())) {
+		} else if (Kind.FIXED.toString().equals(property.getKind())) {
 			// no special treatement
 		}
 		return property;
@@ -406,7 +403,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		Element enumElement = (Element) node;
 		NodeList nodeList = enumElement.getElementsByTagName("entry");
 		ArrayList<String> enumValues = new ArrayList<String>();
-		for (int i = 0; i< nodeList.getLength(); i++) {
+		for (int i = 0; i < nodeList.getLength(); i++) {
 			Node entryNode = nodeList.item(i);
 			Assert.isTrue(entryNode instanceof Element);
 			Element entryElement = (Element) entryNode;
