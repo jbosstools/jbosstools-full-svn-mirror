@@ -14,7 +14,6 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.ui.views.cloud.property.InstancePropertySource;
-import org.jboss.tools.internal.deltacloud.ui.utils.DeltaCloudObjectLabelUtils;
 
 /**
  * @author Jeff Johnston
@@ -27,7 +26,23 @@ public class InstanceItem extends DeltaCloudViewItem<DeltaCloudInstance> {
 	}
 
 	public String getName() {
-		return DeltaCloudObjectLabelUtils.getLabel(getModel());
+		DeltaCloudInstance instance = getModel();
+		StringBuilder sb = new StringBuilder();
+		if (instance != null) {
+			String alias = instance.getAlias();
+			if (alias != null) {
+				sb.append(alias).append(' ');
+			} else {
+				String name = instance.getName();
+				if (name != null) {
+					sb.append(name);
+				}
+			}
+			if (instance.getId() != null) {
+				sb.append('[').append(instance.getId()).append(']');
+			}
+		}
+		return sb.toString();
 	}
 
 	@Override
