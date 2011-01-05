@@ -7,9 +7,9 @@
      get new time w/ 
       date +%s000
 -->
-<property name='p2.timestamp' value='1294074932000'/>
+<property name='p2.timestamp' value='1294205432000'/>
 </properties>
-<children size='34'>
+<children size='33'>
 
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--archives/all/repo/'/>
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--as/all/repo/'/>
@@ -50,9 +50,6 @@
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-drools-5.2_trunk/all/repo/'/>
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-savara-1.1_trunk/tools/'/>
 <child location='http://download.jboss.org/jbosstools/builds/staging/xulrunner-1.9.1.2/all/repo/'/>
-
-<!-- TO BE REMOVED WHEN NO LONGER NEEDED -->
-<child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.nightly/all/repo/'/>
 
 </children>
 </repository>
