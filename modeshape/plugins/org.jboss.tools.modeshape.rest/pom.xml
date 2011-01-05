@@ -14,6 +14,17 @@
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>org.sonatype.tycho</groupId>
+				<artifactId>maven-osgi-compiler-plugin</artifactId>
+				<version>${tychoVersion}</version>
+				<!-- not strictly needed but this suppresses warnings when compiling 
+					that the default value (1.5) is being overwritten by the value in the MANIFEST.MF -->
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
 				<version>1.4</version>
 				<executions>
@@ -21,13 +32,10 @@
 						<phase>validate</phase>
 						<configuration>
 							<tasks>
-								<!-- JBDS-1343 uncomment this to pull a fresh copy of the jar from this or another location as needed -->
-								<!--
-								<delete file="modeshape-client.jar" quiet="true" />
-								<get
-									src="http://jawa05.englab.brq.redhat.com/candidate/SOA-5.1-ER3/JBDS/modeshape-client.jar"
-									dest="modeshape-client.jar" usetimestamp="true" />
-								-->
+								<!-- JBDS-1343 uncomment this to pull a fresh copy of the jar from 
+									this or another location as needed -->
+								<!-- <delete file="modeshape-client.jar" quiet="true" /> <get src="http://jawa05.englab.brq.redhat.com/candidate/SOA-5.1-ER3/JBDS/modeshape-client.jar" 
+									dest="modeshape-client.jar" usetimestamp="true" /> -->
 							</tasks>
 						</configuration>
 						<goals>
