@@ -6,37 +6,6 @@
       JBoss Tools 3.2.0 Update Site / p2 Repo
    	</description>
 
-	<feature url="features/org.jboss.tools.richfaces.feature_0.0.0.jar" id="org.jboss.tools.richfaces.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="WebTools" />
-	</feature>
-	<feature url="features/org.jboss.tools.seam.feature_0.0.0.jar" id="org.jboss.tools.seam.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="WebTools" />
-	</feature>
-	<feature url="features/org.jboss.ide.eclipse.as.feature_0.0.0.jar" id="org.jboss.ide.eclipse.as.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="WebTools" />
-	</feature>
-	<feature url="features/org.jboss.tools.struts.feature_0.0.0.jar" id="org.jboss.tools.struts.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="WebTools" />
-	</feature>
-
-	<!-- only in JBT -->
-	<feature url="features/org.jboss.tools.maven.feature_0.0.0.jar" id="org.jboss.tools.maven.feature" version="0.0.0">
-		<category name="MavenTools" />
-	</feature>
-	<feature url="features/org.jboss.tools.maven.seam.feature_0.0.0.jar" id="org.jboss.tools.maven.seam.feature" version="0.0.0">
-		<category name="MavenTools" />
-	</feature>
-	<feature url="features/org.jboss.tools.maven.jsf.feature_0.0.0.jar" id="org.jboss.tools.maven.jsf.feature" version="0.0.0">
-		<category name="MavenTools" />
-	</feature>
-	<feature url="features/org.jboss.tools.maven.hibernate.feature_0.0.0.jar" id="org.jboss.tools.maven.hibernate.feature" version="0.0.0">
-		<category name="MavenTools" />
-	</feature>
-
 	<!-- categories - see also ../../../common/aggregateRepos.*.properties -->
 	<category-def name="SDKTools" label="JBoss Tools SDK">
 		<description>JBoss Tools SDK contains plugins where an SDK package
