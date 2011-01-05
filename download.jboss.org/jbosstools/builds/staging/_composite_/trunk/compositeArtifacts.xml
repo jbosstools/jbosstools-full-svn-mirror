@@ -7,9 +7,9 @@
      get new time w/ 
       date +%s000
 -->
-<property name='p2.timestamp' value='1294205432000'/>
+<property name='p2.timestamp' value='1294205433000'/>
 </properties>
-<children size='33'>
+<children size='34'>
 
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--archives/all/repo/'/>
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--as/all/repo/'/>
@@ -44,6 +44,7 @@
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--tptp/all/repo/'/>
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--usage/all/repo/'/>
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--vpe/all/repo/'/>
+<child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--ws/all/repo/'/>
 
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-pi4soa-3.1_trunk/all/repo/'/>
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-teiid-designer-7.1_trunk/all/repo/'/>
