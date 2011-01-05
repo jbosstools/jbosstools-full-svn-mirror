@@ -624,6 +624,22 @@
             </itemizedlist>
         </para>
     </formalpara>
+
+		
+		<formalpara>
+			<title>JBoss Enterprise Portal Platform</title>
+			<para>
+	      <itemizedlist>
+					<listitem>
+						<para>
+            	<ulink url="https://issues.jboss.org/browse/JBIDE-6382">JBIDE-6382</ulink>: Previously when creating a Dynamic Web Project targeting the EPP 5.x runtime, and then modifying the project to include support for Richfaces, the resulting project did not reference any Richfaces libraries. This forced the developer to manually reference the Richfaces library files. More information on this bug can be found in <ulink url="https://issues.jboss.org/browse/JBIDE-7702">JBIDE-7702</ulink>. In this version when creating a Dynamic Web Project targeting the EPP 5.x runtime that references the Portletbridge and Seam libraries, the Portletbridge and Richfaces libraries are automatically referenced by the resulting project from the appropriate directories in the EPP distribution. This new process is described in <ulink url="https://issues.jboss.org/browse/JBDS-1410">JBDS-1410</ulink>.
+            </para>
+          </listitem>
+				</itemizedlist>
+			</para>
+		</formalpara>
+
+
     <formalpara>
         <title>JavaServer Faces (JSF)</title>
         <para>
