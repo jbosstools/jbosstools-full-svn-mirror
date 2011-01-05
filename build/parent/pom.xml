@@ -177,6 +177,20 @@
 					<parallel>true</parallel>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.sonatype.tycho</groupId>
+				<artifactId>maven-osgi-compiler-plugin</artifactId>
+				<version>${tychoVersion}</version>
+				<!-- not strictly needed but this suppresses warnings when compiling 
+					that the default value (1.5) is being overwritten by the value in the MANIFEST.MF. 
+					You can use this in your plugins or their aggregator pom.xml files to set 
+					this for your plugins -->
+				<configuration>
+					<!-- <source>1.6</source> -->
+					<!-- <target>1.6</target> -->
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 
@@ -825,7 +839,7 @@
 				</repository>
 			</repositories>
 		</profile>
-		
+
 		<profile>
 			<id>jbosstools-nightly-staging-composite-trunk</id>
 			<activation>
@@ -845,7 +859,7 @@
 				</repository>
 			</repositories>
 		</profile>
-		
+
 		<profile>
 			<!-- this plugin is available from https://github.com/nickboldt/maven-plugins/tree/master/unique-GAV-plugin/ -->
 			<id>GAV</id>
