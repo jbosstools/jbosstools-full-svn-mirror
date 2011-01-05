@@ -336,6 +336,11 @@
 	      <itemizedlist>
 					<listitem>
 				    <para>
+		    			<ulink url="https://issues.jboss.org/browse/JBIDE-7186">JBIDE-7186</ulink>: Previously when publishing to a remote server the progress bar and percentage indicator provided insufficient information on the actions that were being undertaken during what could be a time consuming process. In this version the progress monitor now shows more detailed information such as the name of the individual file that is being uploaded or the name of the directory that is currently being created.
+						</para>
+					</listitem>
+					<listitem>
+				    <para>
 		    			<ulink url="https://issues.jboss.org/browse/JBIDE-7554">JBIDE-7554</ulink>: When the <guilabel>Cloud Viewer</guilabel> View was refreshed there was previously no indication that the View was being repopulated. This made it difficult to judge the progress of the refresh operation. To address this the list of instances and images are cleared from the <guilabel>Cloud Viewer</guilabel> View before they are refreshed, and a pop-up progress dialog box is now displayed.
 						</para>
 					</listitem>
