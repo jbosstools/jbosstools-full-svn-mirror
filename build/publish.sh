@@ -141,18 +141,32 @@ pushd ${WORKSPACE}/sources
 mkdir -p ${STAGINGDIR}/all
 zip ${STAGINGDIR}/all/${SRCSNAME} -q -r * -x documentation\* -x download.jboss.org\* -x requirements\* \
   -x workingset\* -x labs\* -x build\* -x \*test\* -x \*target\* -x \*.class -x \*.svn\* -x \*classes\* -x \*bin\* -x \*.zip \
-  -x \*docs\* -x \*reference\* -x \*releng\*
+  -x \*docs\* -x \*reference\* -x \*releng\* -x \*.git\*
 popd
 
 # collect component zips from upstream aggregated build jobs
 if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]] && [[ -d ${WORKSPACE}/sources/aggregate/site/zips ]]; then
 	mkdir -p ${STAGINGDIR}/components
-	for z in $(find ${WORKSPACE}/sources/aggregate/site/zips -name "*Update*.zip") $(find ${WORKSPACE}/sources/aggregate/site/zips -name "*Sources*.zip"); do
+	for z in $(find ${WORKSPACE}/sources/aggregate/site/zips -name "*Update*.zip"); do
 		# generate MD5 sum for zip (file contains only the hash, not the hash + filename)
-                for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done
-
+		for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done
 		mv $z ${z}.MD5 ${STAGINGDIR}/components
 	done
+	
+	# unpack component source zips
+	for z in $(find ${WORKSPACE}/sources/aggregate/site/zips -name "*Sources*.zip"); do
+		unzip -q -d ${STAGINGDIR}/all/sources $z
+	done
+	# add component sources into sources zip
+	pushd ${STAGINGDIR}/all/sources
+	zip ${STAGINGDIR}/all/${SRCSNAME} -q -r * -x documentation\* -x download.jboss.org\* -x requirements\* \
+	  -x workingset\* -x labs\* -x build\* -x \*test\* -x \*target\* -x \*.class -x \*.svn\* -x \*classes\* -x \*bin\* -x \*.zip \
+	  -x \*docs\* -x \*reference\* -x \*releng\* -x \*.git\*
+	popd
+	rm -fr ${STAGINGDIR}/all/sources
+	
+	z=${STAGINGDIR}/all/${SRCSNAME}
+	for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done
 fi
 
 # generate list of zips in this job
