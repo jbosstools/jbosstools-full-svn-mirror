@@ -17,7 +17,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -174,16 +173,11 @@ public class InstanceMockIntegrationTest {
 	private InstanceAction createInstanceAction(String name, String url, HttpMethod method, Instance instance)
 			throws IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException,
 			SecurityException, NoSuchMethodException {
-		Constructor<InstanceAction> constructor = (Constructor<InstanceAction>) InstanceAction.class
-				.getDeclaredConstructor(String.class, String.class, HttpMethod.class, Instance.class);
-		constructor.setAccessible(true);
-		InstanceAction instanceAction = constructor.newInstance(
-				name,
-				url,
-				method,
-				instance
-				);
-		return instanceAction;
+		InstanceAction action = new InstanceAction();
+		action.setName(name);
+		action.setMethod(method);
+		action.setOwner(instance);
+		return action;
 	}
 
 	@SuppressWarnings("unused")
