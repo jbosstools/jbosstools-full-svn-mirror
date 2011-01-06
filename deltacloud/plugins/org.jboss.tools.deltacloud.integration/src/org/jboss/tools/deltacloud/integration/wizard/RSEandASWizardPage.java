@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.rse.core.model.IHost;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -30,10 +31,8 @@ import org.eclipse.wst.server.core.IRuntime;
 import org.eclipse.wst.server.core.ServerCore;
 import org.eclipse.wst.server.ui.ServerUIUtil;
 import org.jboss.ide.eclipse.as.core.util.IJBossToolingConstants;
-import org.jboss.tools.deltacloud.core.DeltaCloudException;
+import org.jboss.tools.common.jobs.ChainedJob;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
-import org.jboss.tools.deltacloud.core.DeltaCloudKey;
-import org.jboss.tools.deltacloud.core.job.AbstractInstanceJob;
 import org.jboss.tools.deltacloud.integration.DeltaCloudIntegrationPlugin;
 import org.jboss.tools.deltacloud.ui.INewInstanceWizardPage;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
@@ -43,7 +42,6 @@ import org.osgi.service.prefs.BackingStoreException;
  * @author Rob Stryker
  */
 public class RSEandASWizardPage extends WizardPage implements INewInstanceWizardPage {
-
 	private Button createRSE, createServer;
 	private Group serverDetailsGroup;
 	private Button autoScanCheck, hardCodeServerDetails, deployOnlyRadio, 
@@ -60,6 +58,14 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 		setTitle("Create RSE Connection and Server");
 		setDescription("Here you can choose to create a matching RSE connection and a Server adapter");
 	}
+	
+	private IHost initialHost;
+	public RSEandASWizardPage(IHost host) {
+		this();
+		this.initialHost = host;
+	}
+
+	
 
 	public void createControl(Composite parent) {
 		Composite c2 = new Composite(parent, SWT.NONE);
@@ -82,6 +88,7 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 		autoScanCheck = new Button(g, SWT.RADIO);
 		autoScanCheck.setText("Determine server details from this remote file:");
 		autoScanCheck.setLayoutData(UIUtils.createFormData(0,5,null,0,0,5,null,0));
+		autoScanCheck.setSelection(true);
 		
 		remoteDetailsLoc = new Text(g, SWT.BORDER);
 		remoteDetailsLoc.setLayoutData(UIUtils.createFormData(autoScanCheck,5,null,0,0,INDENTATION,100,-5));
@@ -151,7 +158,6 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 		deployFolderText = new Text(g, SWT.BORDER);
 		deployFolderText.setText("/path/to/deploy");
 		deployFolderText.setLayoutData(UIUtils.createFormData(deployOnlyRadio, 5, null, 0, deployFolder, 5, 100, -5));
-		deployOnlyRadio.setSelection(true);
 		
 		
 		IEclipsePreferences prefs = new InstanceScope().getNode(DeltaCloudIntegrationPlugin.PLUGIN_ID);
@@ -160,6 +166,11 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 		initServer = prefs.getBoolean(CREATE_SERVER_PREF_KEY, true);
 		createRSE.setSelection(initRSE);
 		createServer.setSelection(initServer);
+		if( initialHost != null ) {
+			createRSE.setEnabled(false);
+			createRSE.setSelection(true);
+			createServer.setSelection(true);
+		}
 
 		SelectionListener listener = new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
@@ -215,6 +226,10 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 	}
 
 	private void refreshServerWidgets() {
+		if( initialHost != null ) {
+			createRSE.setEnabled(false);
+		}
+		
 		boolean enabled = createServer.getSelection();
 		serverDetailsGroup.setEnabled(enabled);
 		autoScanCheck.setEnabled(enabled);
@@ -231,10 +246,9 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 		deployOnlyRadio.setEnabled(enabled);
 		localRuntimeLabel.setEnabled(enabled);
 		localRuntimeCombo.setEnabled(enabled);
-		System.out.println(deployFolderText.getEditable());
 	}
 	
-	public AbstractInstanceJob getPerformFinishJob(final DeltaCloudInstance instance) {
+	public ChainedJob getPerformFinishJob(final DeltaCloudInstance instance) {
 		IEclipsePreferences prefs = new InstanceScope().getNode(DeltaCloudIntegrationPlugin.PLUGIN_ID);
 		prefs.putBoolean(CREATE_RSE_PREF_KEY, createRSE.getSelection());
 		prefs.putBoolean(CREATE_SERVER_PREF_KEY, createServer.getSelection());
@@ -265,7 +279,9 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 				data = new String[]{serverHomeText.getText(), serverConfigText.getText(), rtId};
 			}
 			if( type != null && data != null ) {
-				CreateServerFromRSEJob job2 = new CreateServerFromRSEJob(type, data, instance.getImageId());
+				CreateServerFromRSEJob job2 = new CreateServerFromRSEJob(type, data, instance);
+				if( initialHost == null )
+					return job2;
 				j.setNextJob(job2);
 			}
 		}
