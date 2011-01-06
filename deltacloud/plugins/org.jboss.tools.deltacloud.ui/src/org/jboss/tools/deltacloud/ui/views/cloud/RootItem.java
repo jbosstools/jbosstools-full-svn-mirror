@@ -78,5 +78,6 @@ public class RootItem extends DeltaCloudViewItem<DeltaCloudManager> implements I
 			removeChild(getCloudViewElement(cloud));
 			break;
 		}
+		refresh();
 	}
 }
