@@ -25,10 +25,10 @@ import org.w3c.dom.NodeList;
  *
  * @param <DELTACLOUDOBJECT>
  */
-public abstract class AbstractDOMActionAwareUnmarshaller<DELTACLOUDOBJECT, ACTION extends AbstractDeltaCloudResourceAction<DELTACLOUDOBJECT>> extends AbstractDOMUnmarshaller<DELTACLOUDOBJECT>{
+public abstract class AbstractActionAwareUnmarshaller<DELTACLOUDOBJECT, ACTION extends AbstractDeltaCloudResourceAction<DELTACLOUDOBJECT>> extends AbstractDOMUnmarshaller<DELTACLOUDOBJECT>{
 
 	private String actionElementName;
-	public AbstractDOMActionAwareUnmarshaller(String tagName, Class<DELTACLOUDOBJECT> type, String actionElementName) {
+	public AbstractActionAwareUnmarshaller(String tagName, Class<DELTACLOUDOBJECT> type, String actionElementName) {
 		super(tagName, type);
 		this.actionElementName = actionElementName;
 	}

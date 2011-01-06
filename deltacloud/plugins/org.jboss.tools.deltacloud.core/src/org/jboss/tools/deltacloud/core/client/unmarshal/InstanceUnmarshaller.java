@@ -24,7 +24,7 @@ import org.w3c.dom.NodeList;
 /**
  * @author André Dietisheim
  */
-public class InstanceUnmarshaller extends AbstractDOMActionAwareUnmarshaller<Instance, InstanceAction> {
+public class InstanceUnmarshaller extends AbstractActionAwareUnmarshaller<Instance, InstanceAction> {
 
 	public InstanceUnmarshaller() {
 		super("instance", Instance.class, "link");

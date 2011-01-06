@@ -10,38 +10,23 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core.client.unmarshal;
 
-import java.util.List;
-
+import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.jboss.tools.deltacloud.core.client.Key;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 /**
  * @author André Dietisheim
  */
-@SuppressWarnings("rawtypes")
-public class KeysUnmarshaller extends AbstractDOMUnmarshaller<List> {
+public class KeysUnmarshaller extends AbstractDeltaCloudObjectsUnmarshaller<Key> {
 
 	public KeysUnmarshaller() {
-		super("keys", List.class);
+		super("keys", "key");
 	}
 
-	@SuppressWarnings("unchecked")
-	protected List doUnmarshall(Element element, List keys) throws Exception {
-		if (element != null) {
-			NodeList nodeList = element.getElementsByTagName("key");
-			if (nodeList != null
-					&& nodeList.getLength() > 0) {
-				for (int i = 0; i < nodeList.getLength(); i++) {
-					Node node = nodeList.item(i);
-					if (node instanceof Element) {
-						Key key = new KeyUnmarshaller().unmarshall((Element) node, new Key());
-						keys.add(key);
-					}
-				}
-			}
-		}
-		return keys;
+	@Override
+	protected Key unmarshallChild(Node node) throws DeltaCloudClientException {
+		Key key = new KeyUnmarshaller().unmarshall((Element) node, new Key());
+		return key;
 	}
 }

@@ -13,7 +13,7 @@ package org.jboss.tools.internal.deltacloud.test.fakes;
 /**
  * @author André Dietisheim
  */
-public class ServerKeyResponseFakes {
+public class KeyResponseFakes {
 
 	public static class KeyActionResponse {
 		public static final String url = "http://localhost:3001/api/keys/test1292840175447";

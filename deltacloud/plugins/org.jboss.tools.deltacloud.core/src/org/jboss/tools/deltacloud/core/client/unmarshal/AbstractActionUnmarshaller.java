@@ -16,8 +16,7 @@ import org.w3c.dom.Element;
 /**
  * @author André Dietisheim
  */
-public class AbstractActionUnmarshaller
-<ACTION extends AbstractDeltaCloudResourceAction> extends AbstractDOMUnmarshaller<ACTION> {
+public class AbstractActionUnmarshaller <ACTION extends AbstractDeltaCloudResourceAction<OWNER>, OWNER> extends AbstractDOMUnmarshaller<ACTION> {
 
 	public AbstractActionUnmarshaller(Class<ACTION> actionClass) {
 		super("link", actionClass);

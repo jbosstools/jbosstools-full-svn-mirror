@@ -22,7 +22,7 @@ import org.w3c.dom.Element;
 /**
  * @author André Dietisheim
  */
-public class KeyUnmarshaller extends AbstractDOMActionAwareUnmarshaller<Key, KeyAction> {
+public class KeyUnmarshaller extends AbstractActionAwareUnmarshaller<Key, KeyAction> {
 
 	public KeyUnmarshaller() {
 		super("key", Key.class, "link");

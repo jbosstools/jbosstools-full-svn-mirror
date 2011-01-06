@@ -10,12 +10,13 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core.client.unmarshal;
 
+import org.jboss.tools.deltacloud.core.client.Key;
 import org.jboss.tools.deltacloud.core.client.KeyAction;
 
 /**
  * @author André Dietisheim
  */
-public class KeyActionUnmarshaller extends AbstractActionUnmarshaller<KeyAction> {
+public class KeyActionUnmarshaller extends AbstractActionUnmarshaller<KeyAction, Key> {
 
 	public KeyActionUnmarshaller() {
 		super(KeyAction.class);

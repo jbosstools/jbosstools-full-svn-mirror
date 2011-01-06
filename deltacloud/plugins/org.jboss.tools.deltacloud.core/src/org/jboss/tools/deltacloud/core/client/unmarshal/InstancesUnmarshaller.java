@@ -10,15 +10,23 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core.client.unmarshal;
 
+import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.jboss.tools.deltacloud.core.client.Instance;
-import org.jboss.tools.deltacloud.core.client.InstanceAction;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 /**
  * @author André Dietisheim
  */
-public class InstanceActionUnmarshaller extends AbstractActionUnmarshaller<InstanceAction, Instance> {
+public class InstancesUnmarshaller extends AbstractDeltaCloudObjectsUnmarshaller<Instance> {
 
-	public InstanceActionUnmarshaller() {
-		super(InstanceAction.class);
+	public InstancesUnmarshaller() {
+		super("instances", "instance");
+	}
+
+	@Override
+	protected Instance unmarshallChild(Node node) throws DeltaCloudClientException {
+		Instance instance = new InstanceUnmarshaller().unmarshall((Element) node, new Instance());
+		return instance;
 	}
 }

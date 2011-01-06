@@ -15,6 +15,8 @@ import static org.junit.Assert.assertNotNull;
 
 import java.io.ByteArrayInputStream;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
@@ -23,8 +25,10 @@ import org.jboss.tools.deltacloud.core.client.Instance;
 import org.jboss.tools.deltacloud.core.client.InstanceAction;
 import org.jboss.tools.deltacloud.core.client.unmarshal.InstanceActionUnmarshaller;
 import org.jboss.tools.deltacloud.core.client.unmarshal.InstanceUnmarshaller;
-import org.jboss.tools.internal.deltacloud.test.fakes.ServerInstanceResponseFakes.InstanceActionResponse;
-import org.jboss.tools.internal.deltacloud.test.fakes.ServerInstanceResponseFakes.InstanceResponse;
+import org.jboss.tools.deltacloud.core.client.unmarshal.InstancesUnmarshaller;
+import org.jboss.tools.internal.deltacloud.test.fakes.InstanceResponseFakes.InstanceActionResponse;
+import org.jboss.tools.internal.deltacloud.test.fakes.InstanceResponseFakes.InstanceResponse;
+import org.jboss.tools.internal.deltacloud.test.fakes.InstanceResponseFakes.InstancesResponse;
 import org.junit.Test;
 
 /**
@@ -33,7 +37,7 @@ import org.junit.Test;
 public class InstanceDomUnmarshallingTest {
 
 	@Test
-	public void keyActionMayBeUnmarshalled() throws MalformedURLException, JAXBException, DeltaCloudClientException {
+	public void instanceActionMayBeUnmarshalled() throws MalformedURLException, JAXBException, DeltaCloudClientException {
 		InstanceAction instanceAction = new InstanceAction();
 		ByteArrayInputStream inputStream = new ByteArrayInputStream(InstanceActionResponse.response.getBytes());
 		new InstanceActionUnmarshaller().unmarshall(inputStream, instanceAction);
@@ -46,7 +50,7 @@ public class InstanceDomUnmarshallingTest {
 	@Test
 	public void instanceMayBeUnmarshalled() throws DeltaCloudClientException {
 		Instance instance = new Instance();
-		ByteArrayInputStream inputStream = new ByteArrayInputStream(InstanceResponse.instanceResponse.getBytes());
+		ByteArrayInputStream inputStream = new ByteArrayInputStream(InstanceResponse.response.getBytes());
 		new InstanceUnmarshaller().unmarshall(inputStream, instance);
 		assertNotNull(instance);
 		assertEquals(InstanceResponse.id1, instance.getId());
@@ -66,4 +70,22 @@ public class InstanceDomUnmarshallingTest {
 		assertEquals(InstanceResponse.privateAddress1, instance.getPrivateAddresses().get(0));
 		
 	}
+
+	@Test
+	public void instancesMayBeUnmarshalled() throws MalformedURLException, JAXBException, DeltaCloudClientException {
+		ByteArrayInputStream inputStream = new ByteArrayInputStream(InstancesResponse.response.getBytes());
+		List<Instance> instances = new ArrayList<Instance>();
+		new InstancesUnmarshaller().unmarshall(inputStream, instances);
+		assertEquals(2, instances.size());
+
+		Instance instance = instances.get(0);
+		assertEquals(InstancesResponse.id1, instance.getId());
+		assertEquals(InstancesResponse.name1, instance.getName());
+
+		instance = instances.get(1);
+		assertEquals(InstancesResponse.id2, instance.getId());
+		assertEquals(InstancesResponse.name2, instance.getName());
+		assertEquals(2, instance.getActions().size());
+	}
+
 }
