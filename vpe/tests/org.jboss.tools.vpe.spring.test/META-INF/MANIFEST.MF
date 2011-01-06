@@ -13,7 +13,6 @@ Require-Bundle: org.eclipse.ui,
  org.jboss.tools.vpe.spring;bundle-version="3.1.0",
  org.jboss.tools.vpe.jsp;bundle-version="3.1.0",
  org.jboss.tools.vpe.html;bundle-version="3.1.0",
- org.jboss.tools.jsf.vpe.jstl;bundle-version="3.1.0",
  org.jboss.tools.vpe.base.test;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Export-Package: org.jboss.tools.vpe.spring.test
