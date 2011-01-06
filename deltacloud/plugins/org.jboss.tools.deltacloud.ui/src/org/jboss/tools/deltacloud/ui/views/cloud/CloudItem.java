@@ -11,6 +11,7 @@
 package org.jboss.tools.deltacloud.ui.views.cloud;
 
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.ui.views.properties.IPropertySource;
@@ -21,13 +22,14 @@ import org.jboss.tools.deltacloud.ui.views.cloud.property.CloudPropertySource;
  * @author Jeff Johnston
  * @author Andre Dietisheim
  */
-public class CloudItem extends DeltaCloudViewItem<DeltaCloud> {
+public class CloudItem extends DeltaCloudViewItem<DeltaCloud> implements PropertyChangeListener {
 
 	private TreeViewer viewer;
 
 	protected CloudItem(DeltaCloud model, DeltaCloudViewItem<?> parent, TreeViewer viewer) {
 		super(model, parent, viewer);
 		this.viewer = viewer;
+		model.addPropertyChangeListener(DeltaCloud.PROP_NAME, this);
 	}
 
 	public String getName() {
@@ -40,13 +42,13 @@ public class CloudItem extends DeltaCloudViewItem<DeltaCloud> {
 	}
 
 	@Override
-	public synchronized Object[] getChildren() {
-		if (!initialized.get()) {
-			DeltaCloud cloud = (DeltaCloud) getModel();
-			children.add(new InstancesCategoryItem(cloud, this, viewer));
-			children.add(new ImagesCategoryItem(cloud, this, viewer));
+	public Object[] getChildren() {
+		if (!areChildrenInitialized()) {
+			DeltaCloud cloud = getModel();
+			addChild(new InstancesCategoryItem(cloud, this, viewer));
+			addChild(new ImagesCategoryItem(cloud, this, viewer));
+			setChildrenInitialized(true);
 		}
-		initialized.set(true);
 		return super.getChildren();
 	}
 
@@ -57,11 +59,6 @@ public class CloudItem extends DeltaCloudViewItem<DeltaCloud> {
 
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
-		viewer.update(this, new String[]{DeltaCloud.PROP_NAME});
-	}
-
-	@Override
-	protected void addPropertyChangeListener(DeltaCloud cloud) {
-		cloud.addPropertyChangeListener(DeltaCloud.PROP_NAME, this);
+		viewer.update(this, new String[] { DeltaCloud.PROP_NAME });
 	}
 }

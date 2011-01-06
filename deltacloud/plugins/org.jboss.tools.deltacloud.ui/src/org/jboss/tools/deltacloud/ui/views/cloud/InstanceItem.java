@@ -51,7 +51,7 @@ public class InstanceItem extends DeltaCloudViewItem<DeltaCloudInstance> {
 	}
 
 	@Override
-	protected void addPropertyChangeListener(DeltaCloudInstance object) {
-		// do nothing
+	public boolean hasChildren() {
+		return false;
 	}
 }

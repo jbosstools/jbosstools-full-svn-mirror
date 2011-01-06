@@ -43,7 +43,7 @@ public class RootItem extends DeltaCloudViewItem<DeltaCloudManager> implements I
 
 	@Override
 	public Object[] getChildren() {
-		if (!initialized.get()) {
+		if (!areChildrenInitialized()) {
 			DeltaCloudManager m = DeltaCloudManager.getDefault();
 			try {
 				addClouds(m.getClouds());
@@ -51,7 +51,7 @@ public class RootItem extends DeltaCloudViewItem<DeltaCloudManager> implements I
 				// TODO: internationalize strings
 				ErrorUtils.handleError("Error", "Could not get clouds", e, Display.getDefault().getActiveShell());
 			} finally {
-				initialized.set(true);
+				setChildrenInitialized(true);
 			}
 		}
 		return super.getChildren();
@@ -59,23 +59,9 @@ public class RootItem extends DeltaCloudViewItem<DeltaCloudManager> implements I
 
 	private void addClouds(DeltaCloud[] clouds) {
 		for (DeltaCloud cloud : clouds) {
-			addCloud(cloud);
+			CloudItem cloudItem = new CloudItem(cloud, this, getViewer());
+			addChild(cloudItem);
 		}
-	}
-
-	private void addCloud(DeltaCloud cloud) {
-		CloudItem e = new CloudItem(cloud, this, viewer);
-		children.add(e);
-	}
-
-	private DeltaCloudViewItem<?> getCloudViewElement(DeltaCloud cloudToMatch) {
-		for (DeltaCloudViewItem<?> cloudElement : children) {
-			DeltaCloud cloud = (DeltaCloud) cloudElement.getModel();
-			if (cloudToMatch.equals(cloud)) {
-				return cloudElement;
-			}
-		}
-		return null;
 	}
 
 	@Override
@@ -86,16 +72,11 @@ public class RootItem extends DeltaCloudViewItem<DeltaCloudManager> implements I
 	public void cloudsChanged(int type, DeltaCloud cloud) {
 		switch (type) {
 		case IDeltaCloudManagerListener.ADD_EVENT:
-			addChild(new CloudItem(cloud, this, viewer));
+			addChild(new CloudItem(cloud, this, getViewer()));
 			break;
 		case IDeltaCloudManagerListener.REMOVE_EVENT:
 			removeChild(getCloudViewElement(cloud));
 			break;
 		}
-	}
-
-	@Override
-	protected void addPropertyChangeListener(DeltaCloudManager object) {
-		// do nothing
 	}
 }

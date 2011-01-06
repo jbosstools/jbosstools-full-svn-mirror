@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.ui.views.cloud;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import org.eclipse.jface.viewers.TreeViewer;
@@ -21,8 +22,8 @@ import org.jboss.tools.deltacloud.core.DeltaCloudException;
  * @author Jeff Johnston
  * @author Andre Dietisheim
  */
-public abstract class CloudElementCategoryItem<CLOUDELEMENT> extends DeltaCloudViewItem<DeltaCloud> implements
-		PropertyChangeListener {
+public abstract class CloudElementCategoryItem<CLOUDELEMENT> extends DeltaCloudViewItem<DeltaCloud>
+		implements PropertyChangeListener {
 
 	protected CloudElementCategoryItem(DeltaCloud model, DeltaCloudViewItem<?> parent, TreeViewer viewer) {
 		super(model, parent, viewer);
@@ -30,23 +31,21 @@ public abstract class CloudElementCategoryItem<CLOUDELEMENT> extends DeltaCloudV
 	}
 
 	@Override
-	public boolean hasChildren() {
-		return true;
-	}
-
-	@Override
 	public Object[] getChildren() {
-		if (!initialized.get()) {
-			asyncAddCloudElements();
+		if (!areChildrenInitialized()) {
+			asyncLoadCloudElements();
+			setChildrenInitialized(true);
 		}
 		return super.getChildren();
 	}
 
 	protected void setLoadingIndicator() {
-		children.add(new LoadingItem(this, viewer));
+		clearChildren();
+		addChild(new LoadingItem(this, getViewer()));
+//		refresh();
 	}
 
-	protected abstract void asyncAddCloudElements();
+	protected abstract void asyncLoadCloudElements();
 
 	protected void addChildren(CLOUDELEMENT[] modelElements) {
 		if (modelElements.length > NumericFoldingItem.FOLDING_SIZE) {
@@ -61,7 +60,7 @@ public abstract class CloudElementCategoryItem<CLOUDELEMENT> extends DeltaCloudV
 		int max = NumericFoldingItem.FOLDING_SIZE;
 		int length = modelElements.length;
 		while (length > NumericFoldingItem.FOLDING_SIZE) {
-			NumericFoldingItem f = new NumericFoldingItem(min, max, this, viewer);
+			NumericFoldingItem f = new NumericFoldingItem(min, max, this, getViewer());
 			addChild(f);
 			f.addChildren(getElements(modelElements, min, max));
 			min += NumericFoldingItem.FOLDING_SIZE;
@@ -69,22 +68,17 @@ public abstract class CloudElementCategoryItem<CLOUDELEMENT> extends DeltaCloudV
 			length -= NumericFoldingItem.FOLDING_SIZE;
 		}
 		if (length > 0) {
-			NumericFoldingItem f = new NumericFoldingItem(min, max, this, viewer);
+			NumericFoldingItem f = new NumericFoldingItem(min, max, this, getViewer());
 			addChild(f);
 			f.addChildren(getElements(modelElements, min, min + length));
 		}
 	}
 
 	protected void onCloudElementsChanged(DeltaCloud cloud, CLOUDELEMENT[] cloudElements) throws DeltaCloudException {
-		try {
-			clearChildren();
-			initialized.set(false);
-			final CLOUDELEMENT[] filteredElements = filter(cloudElements);
-			addChildren(filteredElements);
-			expand();
-		} finally {
-			initialized.set(true);
-		}
+		clearChildren();
+		addChildren(filter(cloudElements));
+		refresh();
+		expand();
 	}
 
 	protected abstract CLOUDELEMENT[] filter(CLOUDELEMENT[] cloudElements) throws DeltaCloudException;
@@ -98,4 +92,18 @@ public abstract class CloudElementCategoryItem<CLOUDELEMENT> extends DeltaCloudV
 	}
 
 	protected abstract void addPropertyChangeListener(DeltaCloud cloud);
+
+	protected void removePropertyChangeListener(DeltaCloud cloud) {
+		if (cloud != null) {
+			cloud.removePropertyChangeListener(this);
+		}
+	}
+
+	@Override
+	public abstract void propertyChange(PropertyChangeEvent evt);
+
+	@Override
+	protected void dispose() {
+		removePropertyChangeListener(getModel());
+	}
 }

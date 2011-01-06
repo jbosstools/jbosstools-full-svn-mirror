@@ -43,7 +43,7 @@ public class ImagesCategoryItem extends CloudElementCategoryItem<DeltaCloudImage
 	}
 
 	@Override
-	protected void asyncAddCloudElements() {
+	protected void asyncLoadCloudElements() {
 		setLoadingIndicator();
 		new AbstractCloudElementJob(
 				MessageFormat.format("Get images from cloud {0}", getModel().getName()), getModel(), CLOUDELEMENT.IMAGES) {
@@ -51,11 +51,7 @@ public class ImagesCategoryItem extends CloudElementCategoryItem<DeltaCloudImage
 			@Override
 			protected IStatus doRun(IProgressMonitor monitor) throws DeltaCloudException {
 				try {
-					DeltaCloudImage[] images = getCloud().getImages();
-					clearChildren();
-					addChildren(images);
-					initialized.set(true);
-					expand();
+					getCloud().getImages();
 					return Status.OK_STATUS;
 				} catch(DeltaCloudException e) {
 					clearChildren();
@@ -69,14 +65,13 @@ public class ImagesCategoryItem extends CloudElementCategoryItem<DeltaCloudImage
 	protected DeltaCloudViewItem<?>[] getElements(DeltaCloudImage[] modelElements, int startIndex, int stopIndex) {
 		DeltaCloudViewItem<?>[] elements = new DeltaCloudViewItem[stopIndex - startIndex];
 		for (int i = startIndex; i < stopIndex; ++i) {
-			elements[i - startIndex] = new ImageItem(modelElements[i], this, viewer);
+			elements[i - startIndex] = new ImageItem(modelElements[i], this, getViewer());
 		}
 		return elements;
 	}
 
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
-		super.propertyChange(event);
 		DeltaCloud cloud = (DeltaCloud) event.getSource();
 		DeltaCloudImage[] newImages = (DeltaCloudImage[]) event.getNewValue();
 		try {
@@ -86,7 +81,7 @@ public class ImagesCategoryItem extends CloudElementCategoryItem<DeltaCloudImage
 			ErrorUtils.handleError(
 					"Error",
 					MessageFormat.format("Could not display new images from cloud \"{0}\"", cloud.getName()), e,
-					viewer.getControl().getShell());
+					getViewer().getControl().getShell());
 		}
 	}
 

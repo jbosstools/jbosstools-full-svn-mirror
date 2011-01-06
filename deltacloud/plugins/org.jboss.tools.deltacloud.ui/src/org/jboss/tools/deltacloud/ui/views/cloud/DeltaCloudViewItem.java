@@ -10,13 +10,11 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.ui.views.cloud;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -26,47 +24,58 @@ import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.views.properties.IPropertySource;
+import org.jboss.tools.deltacloud.core.DeltaCloud;
 
 /**
  * @author Jeff Johnston
  * @author Andre Dietisheim
  */
-public abstract class DeltaCloudViewItem<DELTACLOUDITEM> implements IAdaptable, PropertyChangeListener {
+public abstract class DeltaCloudViewItem<DELTACLOUDITEM> implements IAdaptable {
 
 	private DELTACLOUDITEM model;
 	private DeltaCloudViewItem<?> parent;
-	protected List<DeltaCloudViewItem<?>> children =
-			Collections.synchronizedList(new ArrayList<DeltaCloudViewItem<?>>());
-	protected TreeViewer viewer;
-	protected AtomicBoolean initialized = new AtomicBoolean();
+	private List<DeltaCloudViewItem<?>> children = new ArrayList<DeltaCloudViewItem<?>>();
+	private TreeViewer viewer;
+	private AtomicBoolean initialized = new AtomicBoolean();
+	private Lock childrenLock = new ReentrantLock();
 
 	protected DeltaCloudViewItem(DELTACLOUDITEM model, DeltaCloudViewItem<?> parent, TreeViewer viewer) {
 		this.model = model;
 		this.parent = parent;
 		this.viewer = viewer;
 		initDisposeListener(viewer);
-		addPropertyChangeListener(model);
 	}
 
 	public abstract String getName();
 
 	public Object[] getChildren() {
-		return children.toArray();
+		try {
+			childrenLock.lock();
+			return children.toArray();
+		} finally {
+			childrenLock.unlock();
+		}
 	}
 
 	protected void clearChildren() {
-		getDisplay().syncExec(new Runnable() {
-
-			@Override
-			public void run() {
-				viewer.remove(children.toArray());
-				children.clear();
-			}
-		});
+		try {
+			childrenLock.lock();
+			children.clear();
+		} finally {
+			childrenLock.unlock();
+		}
 	}
 
 	public boolean hasChildren() {
-		return children.size() > 0;
+		try {
+			childrenLock.lock();
+			if (areChildrenInitialized()) {
+				return children.size() > 0;
+			}
+			return true;
+		} finally {
+			childrenLock.unlock();
+		}
 	}
 
 	public Object getParent() {
@@ -74,37 +83,47 @@ public abstract class DeltaCloudViewItem<DELTACLOUDITEM> implements IAdaptable, 
 	}
 
 	public void addChild(final DeltaCloudViewItem<?> element) {
-		getDisplay().syncExec(new Runnable() {
-			@Override
-			public void run() {
-				viewer.add(DeltaCloudViewItem.this, element);
-				children.add(element);
-			}
-		});
+		try {
+			childrenLock.lock();
+			children.add(element);
+		} finally {
+			childrenLock.unlock();
+		}
 	}
 
 	public void addChildren(final DeltaCloudViewItem<?>[] elements) {
-		getDisplay().syncExec(new Runnable() {
-			@Override
-			public void run() {
-				viewer.add(DeltaCloudViewItem.this, elements);
-				for (DeltaCloudViewItem<?> element : elements) {
-					children.add(element);
-				}
+		try {
+			childrenLock.lock();
+			for (DeltaCloudViewItem<?> element : elements) {
+				children.add(element);
 			}
-		});
+		} finally {
+			childrenLock.unlock();
+		}
 	}
 
 	public void removeChild(final DeltaCloudViewItem<?> element) {
-		getDisplay().syncExec(new Runnable() {
-			@Override
-			public void run() {
-				if (element != null) {
-					int index = children.indexOf(element);
-					viewer.remove(DeltaCloudViewItem.this, index);
+		try {
+			childrenLock.lock();
+			children.remove(element);
+		} finally {
+			childrenLock.unlock();
+		}
+	}
+
+	protected DeltaCloudViewItem<?> getCloudViewElement(DeltaCloud cloudToMatch) {
+		try {
+			childrenLock.lock();
+			for (DeltaCloudViewItem<?> cloudElement : children) {
+				DeltaCloud cloud = (DeltaCloud) cloudElement.getModel();
+				if (cloudToMatch.equals(cloud)) {
+					return cloudElement;
 				}
 			}
-		});
+			return null;
+		} finally {
+			childrenLock.unlock();
+		}
 	}
 
 	protected void expand() {
@@ -117,8 +136,26 @@ public abstract class DeltaCloudViewItem<DELTACLOUDITEM> implements IAdaptable, 
 		});
 	}
 
+	protected void refresh() {
+		getDisplay().syncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				viewer.refresh();
+			}
+		});
+	}
+
 	public DELTACLOUDITEM getModel() {
 		return model;
+	}
+
+	protected void setChildrenInitialized(boolean initialized) {
+		this.initialized.set(initialized);
+	}
+
+	protected boolean areChildrenInitialized() {
+		return initialized.get();
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -154,27 +191,10 @@ public abstract class DeltaCloudViewItem<DELTACLOUDITEM> implements IAdaptable, 
 		return viewer.getControl().getDisplay();
 	}
 
+	protected TreeViewer getViewer() {
+		return viewer;
+	}
+
 	protected void dispose() {
-		removePropertyChangeListener(getModel());
 	}
-
-	public void propertyChange(PropertyChangeEvent event) {
-		// do nothing
-	}
-
-	protected void removePropertyChangeListener(DELTACLOUDITEM model) {
-		if (model != null) {
-			try {
-				Method method = model.getClass()
-						.getMethod("removePropertyChangeListener", PropertyChangeListener.class);
-				if (method != null) {
-					method.invoke(model, this);
-				}
-			} catch (Exception e) {
-				// ignore
-			}
-		}
-	}
-
-	protected abstract void addPropertyChangeListener(DELTACLOUDITEM object);
 }

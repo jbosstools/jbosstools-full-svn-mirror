@@ -13,6 +13,7 @@ package org.jboss.tools.deltacloud.ui.views.cloud;
 import java.beans.PropertyChangeEvent;
 import java.text.MessageFormat;
 
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -43,7 +44,7 @@ public class InstancesCategoryItem extends CloudElementCategoryItem<DeltaCloudIn
 	}
 
 	@Override
-	protected void asyncAddCloudElements() {
+	protected void asyncLoadCloudElements() {
 		setLoadingIndicator();
 		new AbstractCloudElementJob(
 				MessageFormat.format("Get instances from cloud {0}", getModel().getName()), getModel(),
@@ -52,11 +53,7 @@ public class InstancesCategoryItem extends CloudElementCategoryItem<DeltaCloudIn
 			@Override
 			protected IStatus doRun(IProgressMonitor monitor) throws DeltaCloudException {
 				try {
-					DeltaCloudInstance[] instances = getCloud().getInstances();
-					clearChildren();
-					addChildren(instances);
-					initialized.set(true);
-					expand();
+					getCloud().getInstances();
 					return Status.OK_STATUS;
 				} catch (DeltaCloudException e) {
 					clearChildren();
@@ -71,7 +68,7 @@ public class InstancesCategoryItem extends CloudElementCategoryItem<DeltaCloudIn
 	protected DeltaCloudViewItem<?>[] getElements(DeltaCloudInstance[] modelElements, int startIndex, int stopIndex) {
 		DeltaCloudViewItem<?>[] elements = new DeltaCloudViewItem[stopIndex - startIndex];
 		for (int i = startIndex; i < stopIndex; ++i) {
-			elements[i - startIndex] = new InstanceItem(modelElements[i], this, viewer);
+			elements[i - startIndex] = new InstanceItem(modelElements[i], this, getViewer());
 		}
 		return elements;
 	}
@@ -83,6 +80,7 @@ public class InstancesCategoryItem extends CloudElementCategoryItem<DeltaCloudIn
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
 		DeltaCloud cloud = (DeltaCloud) event.getSource();
+		Assert.isTrue(cloud == getModel());
 		DeltaCloudInstance[] newInstances = (DeltaCloudInstance[]) event.getNewValue();
 		try {
 			onCloudElementsChanged(cloud, newInstances);
@@ -91,7 +89,7 @@ public class InstancesCategoryItem extends CloudElementCategoryItem<DeltaCloudIn
 			ErrorUtils.handleError(
 					"Error",
 					MessageFormat.format("Could not display new instances from cloud \"{0}\"", cloud.getName()), e,
-					viewer.getControl().getShell());
+					getViewer().getControl().getShell());
 		}
 	}
 

@@ -45,7 +45,8 @@ public class ImageItem extends DeltaCloudViewItem<DeltaCloudImage> {
 	}
 
 	@Override
-	protected void addPropertyChangeListener(DeltaCloudImage object) {
-		// do nothing
+	public boolean hasChildren() {
+		return false;
 	}
+
 }

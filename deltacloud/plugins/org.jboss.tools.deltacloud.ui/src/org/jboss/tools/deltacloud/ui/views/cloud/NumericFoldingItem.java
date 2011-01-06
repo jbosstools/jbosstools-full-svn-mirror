@@ -53,10 +53,4 @@ public class NumericFoldingItem extends DeltaCloudViewItem<Object> {
 	public IPropertySource getPropertySource() {
 		return null;
 	}
-
-	@Override
-	protected void addPropertyChangeListener(Object object) {
-		// do nothing
-	}
-
 }

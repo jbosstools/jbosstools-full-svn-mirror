@@ -30,13 +30,13 @@ public class LoadingItem extends DeltaCloudViewItem<Object> {
 	}
 
 	@Override
-	public String getName() {
-		// TODO: internationalize strings
-		return "Loading...";
+	public boolean hasChildren() {
+		return false;
 	}
 
 	@Override
-	protected void addPropertyChangeListener(Object object) {
-		// do nothing
+	public String getName() {
+		// TODO: internationalize strings
+		return "Loading...";
 	}
 }
