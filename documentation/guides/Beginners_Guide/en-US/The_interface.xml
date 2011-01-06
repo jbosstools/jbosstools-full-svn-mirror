@@ -211,10 +211,10 @@
 				</listitem>
 				<listitem>
 					<para>
-						Click the <guibutton>Next &gt;</guibutton> button to display the <guilabel>Runtime Information</guilabel> for the server you are about to add. If all the information is correct click the <guibutton>Finish</guibutton> button.
+						If all the information is correct click the <guibutton>Finish</guibutton> button.
 					</para>
 					<para>
-						If you need to change any information click the <guibutton>&lt; Back</guibutton> button until you reach the screen with the information that needs to be altered and then navigate back to the <guilabel>Runtime Information</guilabel> screen and click the <guibutton>Finish</guibutton> button.
+						If you need to change any information click the <guibutton>&lt; Back</guibutton> button until you reach the screen with the information that needs to be altered and then navigate back to the <guilabel>JBoss RunTime</guilabel> screen and click the <guibutton>Finish</guibutton> button.
 					</para>
 				</listitem>
 			</orderedlist>
