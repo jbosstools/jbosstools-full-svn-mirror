@@ -13,7 +13,6 @@ package org.jboss.tools.deltacloud.ui.views.cloud;
 import java.beans.PropertyChangeEvent;
 import java.text.MessageFormat;
 
-import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -53,7 +52,8 @@ public class InstancesCategoryItem extends CloudElementCategoryItem<DeltaCloudIn
 			@Override
 			protected IStatus doRun(IProgressMonitor monitor) throws DeltaCloudException {
 				try {
-					getCloud().getInstances();
+					DeltaCloudInstance[] instances = getCloud().getInstances();
+					replaceCloudElements(getModel(), instances);
 					return Status.OK_STATUS;
 				} catch (DeltaCloudException e) {
 					clearChildren();
@@ -80,10 +80,10 @@ public class InstancesCategoryItem extends CloudElementCategoryItem<DeltaCloudIn
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
 		DeltaCloud cloud = (DeltaCloud) event.getSource();
-		Assert.isTrue(cloud == getModel());
 		DeltaCloudInstance[] newInstances = (DeltaCloudInstance[]) event.getNewValue();
 		try {
-			onCloudElementsChanged(cloud, newInstances);
+			System.err.println("images updated");
+			replaceCloudElements(cloud, newInstances);
 		} catch (DeltaCloudException e) {
 			// TODO: internationalize strings
 			ErrorUtils.handleError(

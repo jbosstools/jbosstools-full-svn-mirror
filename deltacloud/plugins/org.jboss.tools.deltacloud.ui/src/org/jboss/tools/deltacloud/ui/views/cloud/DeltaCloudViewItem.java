@@ -187,14 +187,14 @@ public abstract class DeltaCloudViewItem<DELTACLOUDITEM> implements IAdaptable {
 		});
 	}
 
+	protected void dispose() {
+	}
+
 	protected Display getDisplay() {
 		return viewer.getControl().getDisplay();
 	}
 
 	protected TreeViewer getViewer() {
 		return viewer;
-	}
-
-	protected void dispose() {
 	}
 }

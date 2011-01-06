@@ -51,7 +51,8 @@ public class ImagesCategoryItem extends CloudElementCategoryItem<DeltaCloudImage
 			@Override
 			protected IStatus doRun(IProgressMonitor monitor) throws DeltaCloudException {
 				try {
-					getCloud().getImages();
+					DeltaCloudImage[] images = getCloud().getImages();
+					replaceCloudElements(getModel(), images);
 					return Status.OK_STATUS;
 				} catch(DeltaCloudException e) {
 					clearChildren();
@@ -75,7 +76,8 @@ public class ImagesCategoryItem extends CloudElementCategoryItem<DeltaCloudImage
 		DeltaCloud cloud = (DeltaCloud) event.getSource();
 		DeltaCloudImage[] newImages = (DeltaCloudImage[]) event.getNewValue();
 		try {
-			onCloudElementsChanged(cloud, newImages);
+			System.err.println("images updated");
+			replaceCloudElements(cloud, newImages);
 		} catch (DeltaCloudException e) {
 			// TODO: internationalize strings
 			ErrorUtils.handleError(

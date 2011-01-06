@@ -42,27 +42,26 @@ public abstract class CloudElementCategoryItem<CLOUDELEMENT> extends DeltaCloudV
 	protected void setLoadingIndicator() {
 		clearChildren();
 		addChild(new LoadingItem(this, getViewer()));
-//		refresh();
 	}
 
 	protected abstract void asyncLoadCloudElements();
 
-	protected void addChildren(CLOUDELEMENT[] modelElements) {
-		if (modelElements.length > NumericFoldingItem.FOLDING_SIZE) {
-			addFoldedChildren(modelElements);
+	protected void addChildren(CLOUDELEMENT[] cloudElements) {
+		if (cloudElements.length > NumericFoldingItem.FOLDING_SIZE) {
+			addFoldedChildren(cloudElements);
 		} else {
-			addChildren(getElements(modelElements, 0, modelElements.length));
+			addChildren(getElements(cloudElements, 0, cloudElements.length));
 		}
 	}
 
-	protected void addFoldedChildren(CLOUDELEMENT[] modelElements) {
+	protected void addFoldedChildren(CLOUDELEMENT[] cloudElements) {
 		int min = 0;
 		int max = NumericFoldingItem.FOLDING_SIZE;
-		int length = modelElements.length;
+		int length = cloudElements.length;
 		while (length > NumericFoldingItem.FOLDING_SIZE) {
 			NumericFoldingItem f = new NumericFoldingItem(min, max, this, getViewer());
 			addChild(f);
-			f.addChildren(getElements(modelElements, min, max));
+			f.addChildren(getElements(cloudElements, min, max));
 			min += NumericFoldingItem.FOLDING_SIZE;
 			max += NumericFoldingItem.FOLDING_SIZE;
 			length -= NumericFoldingItem.FOLDING_SIZE;
@@ -70,13 +69,14 @@ public abstract class CloudElementCategoryItem<CLOUDELEMENT> extends DeltaCloudV
 		if (length > 0) {
 			NumericFoldingItem f = new NumericFoldingItem(min, max, this, getViewer());
 			addChild(f);
-			f.addChildren(getElements(modelElements, min, min + length));
+			f.addChildren(getElements(cloudElements, min, min + length));
 		}
 	}
 
-	protected void onCloudElementsChanged(DeltaCloud cloud, CLOUDELEMENT[] cloudElements) throws DeltaCloudException {
+	protected void replaceCloudElements(DeltaCloud cloud, CLOUDELEMENT[] cloudElements) throws DeltaCloudException {
 		clearChildren();
 		addChildren(filter(cloudElements));
+		setChildrenInitialized(true); // unrequested update
 		refresh();
 		expand();
 	}

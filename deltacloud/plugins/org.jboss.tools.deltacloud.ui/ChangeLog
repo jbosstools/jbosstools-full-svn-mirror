@@ -1,3 +1,12 @@
+2011-01-06  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/deltacloud/ui/views/cloud/ImagesCategoryItem.java (.doRun): 
+	* src/org/jboss/tools/deltacloud/ui/views/cloud/InstancesCategoryItem.java (.doRun): 
+	* src/org/jboss/tools/deltacloud/ui/views/cloud/CloudElementCategoryItem.java 
+	(getChildren): 
+	(replaceCloudElements): 
+	[JBIDE-8061] now adding children in background thread, relying on property update for refresh only
+
 2011-01-05  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.properties: 
