@@ -76,7 +76,6 @@ public class ImagesCategoryItem extends CloudElementCategoryItem<DeltaCloudImage
 		DeltaCloud cloud = (DeltaCloud) event.getSource();
 		DeltaCloudImage[] newImages = (DeltaCloudImage[]) event.getNewValue();
 		try {
-			System.err.println("images updated");
 			replaceCloudElements(cloud, newImages);
 		} catch (DeltaCloudException e) {
 			// TODO: internationalize strings
