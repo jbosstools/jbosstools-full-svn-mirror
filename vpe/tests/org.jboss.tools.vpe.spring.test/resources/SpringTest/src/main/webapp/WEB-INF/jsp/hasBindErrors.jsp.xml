@@ -1,68 +1,46 @@
 <tests>
 	<test id="formBeanErrors">
-		<DIV ID="formBeanErrors">
-			<DIV STYLE="border: 1px solid red; width: 300px;">
-				<H2>
+<DIV ID="formBeanErrors" STYLE="-moz-user-modify: read-write;">
+	<DIV
+		STYLE="border: 1px solid red; width: 300px; -moz-user-modify: read-write;">
+		<H2 STYLE="-moz-user-modify: read-write;">
+			<SPAN CLASS="vpe-text">
+				Errors for all bean fields
+			</SPAN>
+		</H2>
+		<DIV CLASS="error" STYLE="-moz-user-modify: read-write;">
+			<UL STYLE="-moz-user-modify: read-write;">
+				<LI STYLE="-moz-user-modify: read-write;">
 					<SPAN CLASS="vpe-text">
-						Errors for all bean fields
+						${error.defaultMessage}
 					</SPAN>
-				</H2>
-				<DIV CLASS="error">
-					<UL>
-						<SPAN CLASS="vpe-text">
-							<LI>
-								<SPAN CLASS="vpe-text">
-									${error.defaultMessage}
-								</SPAN>
-							</LI>
-							<LI>
-								<SPAN CLASS="vpe-text">
-									${error.defaultMessage}
-								</SPAN>
-							</LI>
-							<LI>
-								<SPAN CLASS="vpe-text">
-									${error.defaultMessage}
-								</SPAN>
-							</LI>
-						</SPAN>
-					</UL>
-				</DIV>
-			</DIV>
+				</LI>
+			</UL>
 		</DIV>
+	</DIV>
+</DIV>
 	</test>
 	<test id="userErrors">
-		<DIV ID="userErrors">
-			<DIV STYLE="border: 1px solid red; width: 300px;">
-				<H2>
-					<SPAN CLASS="vpe-text">
-						Errors for all user fields only
-					</SPAN>
-				</H2>
-				<DIV CLASS="error">
-					<UL>
+<DIV ID="userErrors" STYLE="-moz-user-modify: read-write;">
+	<DIV
+		STYLE="border: 1px solid red; width: 300px; -moz-user-modify: read-write;">
+		<H2 STYLE="-moz-user-modify: read-write;">
+			<SPAN CLASS="vpe-text">
+				Errors for all user fields only
+			</SPAN>
+		</H2>
+		<DIV CLASS="error" STYLE="-moz-user-modify: read-write;">
+			<UL STYLE="-moz-user-modify: read-write;">
+				<SPAN CLASS="vpe-text" STYLE="-moz-user-modify: read-write;">
+					<LI STYLE="-moz-user-modify: read-write;">
 						<SPAN CLASS="vpe-text">
-							<SPAN CLASS="vpe-text">
-								<LI>
-									<SPAN CLASS="vpe-text">
-										${error}
-									</SPAN>
-								</LI>
-								<LI>
-									<SPAN CLASS="vpe-text">
-										${error}
-									</SPAN>
-								</LI>
-								<LI>
-									<SPAN CLASS="vpe-text">
-										${error}
-									</SPAN>
-								</LI>
-							</SPAN>
+							${error}
 						</SPAN>
-					</UL>
-				</DIV>
-			</DIV>
+					</LI>
+				</SPAN>
+			</UL>
 		</DIV>
+	</DIV>
+</DIV>
 	</test>
 </tests>

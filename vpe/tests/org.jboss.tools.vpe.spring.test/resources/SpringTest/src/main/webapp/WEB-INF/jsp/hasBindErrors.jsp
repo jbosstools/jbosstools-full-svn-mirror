@@ -20,9 +20,7 @@
 			<h2>Errors for all bean fields</h2>
 			<div class="error">
 				<ul>
-					<c:forEach var="error" items="${errors.allErrors}">
 						<li>${error.defaultMessage}</li>
-					</c:forEach>
 				</ul>
 			</div>
 		</div>
@@ -36,9 +34,7 @@
 			<div class="error">
 				<ul>
 					<spring:bind path="formBean.user.*">
-						<c:forEach var="error" items="${status.errorMessages}">
 							<li>${error}</li>
-						</c:forEach>
 					</spring:bind>
 				</ul>
 			</div>
