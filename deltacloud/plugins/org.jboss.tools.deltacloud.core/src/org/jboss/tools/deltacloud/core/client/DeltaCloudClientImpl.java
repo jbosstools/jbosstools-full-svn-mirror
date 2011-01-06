@@ -10,9 +10,7 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.core.client;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -63,6 +61,7 @@ import org.jboss.tools.deltacloud.core.client.request.ListRealmsRequest;
 import org.jboss.tools.deltacloud.core.client.request.PerformInstanceActionRequest;
 import org.jboss.tools.deltacloud.core.client.request.TypeRequest;
 import org.jboss.tools.deltacloud.core.client.unmarshal.InstanceUnmarshaller;
+import org.jboss.tools.deltacloud.core.client.unmarshal.InstancesUnmarshaller;
 import org.jboss.tools.deltacloud.core.client.unmarshal.KeyUnmarshaller;
 import org.jboss.tools.deltacloud.core.client.unmarshal.KeysUnmarshaller;
 import org.w3c.dom.Document;
@@ -423,8 +422,10 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 
 	@Override
 	public List<Instance> listInstances() throws DeltaCloudClientException {
-		return listDeltaCloudObjects(Instance.class,
-				new ListInstancesRequest(baseUrl), "instance");
+		InputStream inputStream = request(new ListInstancesRequest(baseUrl));
+		List<Instance> instances = new ArrayList<Instance>();
+		new InstancesUnmarshaller().unmarshall(inputStream, instances);
+		return instances;
 	}
 
 	@Override
@@ -523,11 +524,6 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 
 	private Instance buildInstance(InputStream inputStream) throws Exception {
 		return updateInstance(inputStream, new Instance());
-	}
-
-	private Instance buildInstance(String response) throws Exception {
-		InputStream inputStream = new BufferedInputStream(new ByteArrayInputStream(response.getBytes()));
-		return buildInstance(inputStream);
 	}
 
 	private HardwareProfile buildHardwareProfile(String xml)
@@ -629,9 +625,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 
 	@SuppressWarnings("unchecked")
 	private <T extends Object> T buildDeltaCloudObject(Class<T> clazz, String node) throws Exception {
-		if (clazz.equals(Instance.class)) {
-			return (T) buildInstance(node);
-		} else if (clazz.equals(HardwareProfile.class)) {
+		if (clazz.equals(HardwareProfile.class)) {
 			return (T) buildHardwareProfile(node);
 		} else {
 			return JAXB.unmarshal(new StringReader(node), clazz);

@@ -31,7 +31,7 @@ public class CreateInstanceRequest extends AbstractDeltaCloudRequest {
 	private String storage;
 
 	public CreateInstanceRequest(URL baseUrl, String imageId) {
-		this(baseUrl, imageId, null, null, null, null, null, null);
+		this(baseUrl, null, imageId, null, null, null, null, null);
 	}
 
 	public CreateInstanceRequest(URL baseUrl, String name, String imageId, String profileId, String realmId, 
