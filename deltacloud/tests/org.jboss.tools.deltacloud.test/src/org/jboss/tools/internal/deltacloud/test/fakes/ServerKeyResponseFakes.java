@@ -19,7 +19,7 @@ public class ServerKeyResponseFakes {
 		public static final String url = "http://localhost:3001/api/keys/test1292840175447";
 		public static final String method = "delete";
 		public static final String name = "destroy";
-		public static final String keyActionResponse = getKeyActionXML(url, method, name);
+		public static final String keyActionResponse = ServerResponseFakes.getActionXML(url, method, name);
 	}
 
 	public static class KeyResponse {
@@ -82,18 +82,11 @@ public class ServerKeyResponseFakes {
 							+ "</keys>";
 	}
 
-	private static final String getKeyActionXML(String url, String method, String name) {
-		return "<link "
-				+ "method='" + method + "' "
-				+ "href='" + url + "' "
-				+ "rel='" + name + "' />";
-	}
-
 	private static final String getKeyResponseXML(String id, String fingerprint, String pem, String url, String method,
 			String name) {
 		return "<key href='" + url + "' id='" + id + "' type='key'>"
 				+ "<actions>"
-				+ getKeyActionXML(url, method, name)
+				+ ServerResponseFakes.getActionXML(url, method, name)
 				+ "</actions>"
 				+ "<fingerprint>" + fingerprint + "</fingerprint>"
 				+ "<pem><pem>" + pem + "</pem></pem>"

@@ -8,16 +8,17 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.deltacloud.core.client.unmarshal;
-
-import org.jboss.tools.deltacloud.core.client.KeyAction;
+package org.jboss.tools.internal.deltacloud.test.fakes;
 
 /**
  * @author André Dietisheim
  */
-public class KeyActionUnmarshaller extends AbstractActionUnmarshaller<KeyAction> {
+public class ServerResponseFakes {
 
-	public KeyActionUnmarshaller() {
-		super(KeyAction.class);
+	public static final String getActionXML(String url, String method, String name) {
+		return "<link "
+				+ "method='" + method + "' "
+				+ "href='" + url + "' "
+				+ "rel='" + name + "' />";
 	}
 }

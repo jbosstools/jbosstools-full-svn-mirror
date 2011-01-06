@@ -71,6 +71,14 @@ public abstract class AbstractDOMUnmarshaller<DELTACLOUDOBJECT> {
 
 	protected abstract DELTACLOUDOBJECT doUnmarshall(Element element, DELTACLOUDOBJECT resource) throws Exception;
 
+	protected String getFirstElementAttributeText(String elementName, String attributeId, Element element) {
+		Element firstElement = getFirstElement(elementName, element);
+		if (firstElement == null) {
+			return null;
+		}
+		return firstElement.getAttribute(attributeId);
+	}
+
 	protected String getFirstElementText(String elementName, Element element) {
 		Element firstElement = getFirstElement(elementName, element);
 		if (firstElement == null) {

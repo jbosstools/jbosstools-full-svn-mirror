@@ -10,12 +10,10 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core.client;
 
-public interface IInstanceAction extends IDeltaCloudResourceAction {
+public interface IInstanceAction extends IDeltaCloudResourceAction<Instance> {
 
 	public static final String START = "start";
 	public static final String STOP = "stop";
 	public static final String REBOOT = "reboot";
-
-	public Instance getInstance();
 
 }

@@ -46,6 +46,7 @@ public class DeltaCloudManager {
 	public final static String CLOUDFILE_NAME = "clouds.xml"; //$NON-NLS-1$
 	private List<DeltaCloud> clouds;
 	private ListenerList cloudManagerListeners;
+	private boolean loaded = false;
 
 	private DeltaCloudManager() {
 	}
@@ -75,6 +76,8 @@ public class DeltaCloudManager {
 			connectionException.addError(e);
 		}
 
+		loaded = true;
+		
 		if (!connectionException.isEmpty()) {
 			throw connectionException;
 		}
@@ -168,6 +171,10 @@ public class DeltaCloudManager {
 
 	// TODO: move to marshaler component
 	protected void saveClouds() throws DeltaCloudException {
+		if (!loaded) {
+			return;
+		}
+
 		try {
 			File cloudFile = getOrCreateCloudFile();
 			PrintWriter p = new PrintWriter(new BufferedWriter(new FileWriter(cloudFile)));

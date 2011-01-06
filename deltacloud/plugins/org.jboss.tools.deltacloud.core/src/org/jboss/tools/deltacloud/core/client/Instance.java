@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlElement;
  * @author Martyn Taylor
  * @author Andre Dietisheim
  */
-public class Instance extends AbstractDeltaCloudObject {
+public class Instance extends AbstractDeltaCloudActionAwareObject<InstanceAction> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -50,8 +50,6 @@ public class Instance extends AbstractDeltaCloudObject {
 	@XmlElement
 	private InstanceState state;
 
-	private List<InstanceAction> actions;
-
 	@XmlElement(name = "public_addresses")
 	private AddressList publicAddresses;
 
@@ -61,19 +59,19 @@ public class Instance extends AbstractDeltaCloudObject {
 	public Instance() {
 	}
 
-	protected void setOwnerId(String ownerId) {
+	public void setOwnerId(String ownerId) {
 		this.ownerId = ownerId;
 	}
 
-	protected void setName(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 
-	protected void setImageId(String imageId) {
+	public void setImageId(String imageId) {
 		this.imageId = imageId;
 	}
 
-	protected void setProfileId(String profileId) {
+	public void setProfileId(String profileId) {
 		this.profileId = profileId;
 	}
 
@@ -89,15 +87,11 @@ public class Instance extends AbstractDeltaCloudObject {
 		this.cpu = cpu;
 	}
 
-	protected void setRealmId(String realmId) {
+	public void setRealmId(String realmId) {
 		this.realmId = realmId;
 	}
 
-	protected void setActions(List<InstanceAction> actions) {
-		this.actions = actions;
-	}
-
-	protected void setState(String state) {
+	public void setState(String state) {
 		try {
 			this.state = InstanceState.valueOf(state);
 		} catch (Exception e) {
@@ -105,19 +99,19 @@ public class Instance extends AbstractDeltaCloudObject {
 		}
 	}
 
-	protected void setKeyId(String keyId) {
+	public void setKeyId(String keyId) {
 		this.keyId = keyId;
 	}
-	
+
 	public String getKeyId() {
 		return keyId;
 	}
-	
-	protected void setPrivateAddresses(AddressList privateAddresses) {
+
+	public void setPrivateAddresses(AddressList privateAddresses) {
 		this.privateAddresses = privateAddresses;
 	}
 
-	protected void setPublicAddresses(AddressList publicAddresses) {
+	public void setPublicAddresses(AddressList publicAddresses) {
 		this.publicAddresses = publicAddresses;
 	}
 
@@ -157,13 +151,9 @@ public class Instance extends AbstractDeltaCloudObject {
 		return state;
 	}
 
-	public List<InstanceAction> getActions() {
-		return actions;
-	}
-
 	public List<String> getActionNames() {
 		ArrayList<String> names = new ArrayList<String>();
-		for (InstanceAction action : actions) {
+		for (InstanceAction action : getActions()) {
 			names.add(action.getName());
 		}
 		return names;
@@ -174,7 +164,7 @@ public class Instance extends AbstractDeltaCloudObject {
 			return null;
 		}
 
-		for (InstanceAction action : actions) {
+		for (InstanceAction action : getActions()) {
 			if (name.equals(action.getName())) {
 				return action;
 			}
@@ -185,7 +175,7 @@ public class Instance extends AbstractDeltaCloudObject {
 	public boolean canStart() {
 		return getAction(IInstanceAction.START) != null;
 	}
-	
+
 	public boolean canStop() {
 		return getAction(IInstanceAction.STOP) != null;
 	}
@@ -244,11 +234,14 @@ public class Instance extends AbstractDeltaCloudObject {
 		}
 		s += "State:\t\t" + getState() + "\n";
 
-		for (int i = 0; i < actions.size(); i++) {
-			if (i == 0) {
-				s += "Actions:\t" + actions.get(i) + "\n";
-			} else {
-				s += "\t\t" + actions.get(i) + "\n";
+		List<InstanceAction> actions = getActions();
+		if (actions != null) {
+			for (int i = 0; i < actions.size(); i++) {
+				if (i == 0) {
+					s += "Actions:\t" + actions.get(i) + "\n";
+				} else {
+					s += "\t\t" + actions.get(i) + "\n";
+				}
 			}
 		}
 

@@ -14,7 +14,7 @@ package org.jboss.tools.deltacloud.core.client;
 /**
  * @author André Dietisheim
  */
-public interface IDeltaCloudResourceAction {
+public interface IDeltaCloudResourceAction<OWNER> {
 
 	public static final String DESTROY = "destroy";
 
@@ -23,5 +23,7 @@ public interface IDeltaCloudResourceAction {
 	public String getUrl();
 
 	public HttpMethod getMethod();
+	
+	public OWNER getOwner();
 
 }

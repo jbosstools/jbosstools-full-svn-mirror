@@ -8,13 +8,16 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.deltacloud.core.client;
+package org.jboss.tools.deltacloud.core.client.unmarshal;
+
+import org.jboss.tools.deltacloud.core.client.InstanceAction;
 
 /**
  * @author André Dietisheim
  */
-public interface IKeyAction extends IDeltaCloudResourceAction {
+public class InstanceActionUnmarshaller extends AbstractActionUnmarshaller<InstanceAction> {
 
-	public Key getKey();
-
+	public InstanceActionUnmarshaller() {
+		super(InstanceAction.class);
+	}
 }

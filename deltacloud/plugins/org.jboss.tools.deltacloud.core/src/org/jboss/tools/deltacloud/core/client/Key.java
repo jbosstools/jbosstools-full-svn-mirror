@@ -12,12 +12,11 @@ package org.jboss.tools.deltacloud.core.client;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
 
 /**
  * @author Andre Dietisheim
  */
-public class Key extends AbstractDeltaCloudObject {
+public class Key extends AbstractDeltaCloudActionAwareObject<KeyAction> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -25,7 +24,6 @@ public class Key extends AbstractDeltaCloudObject {
 	private String pem;
 	private String fingerprint;
 	private String state;
-	private List<KeyAction> actions;
 
 	public Key() {
 	}
@@ -50,10 +48,6 @@ public class Key extends AbstractDeltaCloudObject {
 		this.state = state;
 	}
 
-	public void setActions(List<KeyAction> actions) {
-		this.actions = actions;
-	}
-
 	public URL getUrl() {
 		return url;
 	}
@@ -70,14 +64,10 @@ public class Key extends AbstractDeltaCloudObject {
 		return state;
 	}
 
-	public List<KeyAction> getActions() {
-		return actions;
-	}
-
 	@Override
 	public String toString() {
 		return "Key [url=" + url + ", pem=" + pem + ", fingerprint=" + fingerprint + ", state=" + state + ", actions="
-				+ actions + ", toString()=" + super.toString() + "]";
+				+ getActions() + ", toString()=" + super.toString() + "]";
 	}
 
 }

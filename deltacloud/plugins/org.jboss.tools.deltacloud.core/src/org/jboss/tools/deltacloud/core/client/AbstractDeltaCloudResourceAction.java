@@ -16,11 +16,12 @@ package org.jboss.tools.deltacloud.core.client;
  * 
  * @author André Dietisheim
  */
-public abstract class AbstractDeltaCloudResourceAction implements IDeltaCloudResourceAction {
+public abstract class AbstractDeltaCloudResourceAction<OWNER> implements IDeltaCloudResourceAction<OWNER> {
 
 	private String name;
 	private String url;
 	private HttpMethod method;
+	private OWNER owner;
 
 	protected AbstractDeltaCloudResourceAction() {
 	}
@@ -58,5 +59,13 @@ public abstract class AbstractDeltaCloudResourceAction implements IDeltaCloudRes
 	@Override
 	public String getUrl() {
 		return url;
+	}
+
+	public void setOwner(OWNER owner) {
+		this.owner = owner;
+	}
+
+	public OWNER getOwner() {
+		return owner;
 	}
 }

@@ -28,6 +28,7 @@ import org.jboss.tools.deltacloud.core.client.KeyAction;
 import org.jboss.tools.deltacloud.core.client.unmarshal.KeyActionUnmarshaller;
 import org.jboss.tools.deltacloud.core.client.unmarshal.KeyUnmarshaller;
 import org.jboss.tools.deltacloud.core.client.unmarshal.KeysUnmarshaller;
+import org.jboss.tools.internal.deltacloud.test.fakes.ServerKeyResponseFakes;
 import org.jboss.tools.internal.deltacloud.test.fakes.ServerKeyResponseFakes.KeyActionResponse;
 import org.jboss.tools.internal.deltacloud.test.fakes.ServerKeyResponseFakes.KeyResponse;
 import org.jboss.tools.internal.deltacloud.test.fakes.ServerKeyResponseFakes.KeysResponse;
@@ -55,7 +56,7 @@ public class KeyDomUnmarshallingTest {
 		ByteArrayInputStream inputStream = new ByteArrayInputStream(KeyResponse.keyResponse.getBytes());
 		new KeyUnmarshaller().unmarshall(inputStream, key);
 		assertNotNull(key);
-		assertEquals(org.jboss.tools.internal.deltacloud.test.fakes.ServerKeyResponseFakes.KeyResponse.id, key.getId());
+		assertEquals(ServerKeyResponseFakes.KeyResponse.id, key.getId());
 		assertEquals(KeyResponse.fingerprint, key.getFingerprint());
 		assertEquals(new URL(KeyResponse.url), key.getUrl());
 		assertEquals(KeyResponse.pem, key.getPem());

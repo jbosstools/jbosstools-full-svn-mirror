@@ -20,21 +20,9 @@ package org.jboss.tools.deltacloud.core.client;
  * @see DeltaCloudClient#performInstanceAction(String, String);
  *
  */
-public class InstanceAction extends AbstractDeltaCloudResourceAction implements IInstanceAction {
+public class InstanceAction extends AbstractDeltaCloudResourceAction<Instance> implements IInstanceAction {
 
-	private Instance instance;
-
-	protected InstanceAction() {
-		super();
-	}
-
-	public void setInstance(Instance instance) {
-		this.instance = instance;
-	}
-
-	@Override
-	public Instance getInstance() {
-		return instance;
+	public InstanceAction() {
 	}
 
 	@Override

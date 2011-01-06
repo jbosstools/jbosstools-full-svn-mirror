@@ -13,23 +13,19 @@ package org.jboss.tools.deltacloud.core.client.unmarshal;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.jboss.tools.deltacloud.core.client.Key;
 import org.jboss.tools.deltacloud.core.client.KeyAction;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 /**
  * @author André Dietisheim
  */
-public class KeyUnmarshaller extends AbstractDOMUnmarshaller<Key> {
+public class KeyUnmarshaller extends AbstractDOMActionAwareUnmarshaller<Key, KeyAction> {
 
 	public KeyUnmarshaller() {
-		super("key", Key.class);
+		super("key", Key.class, "link");
 	}
 
 	protected Key doUnmarshall(Element element, Key key) throws Exception {
@@ -39,7 +35,7 @@ public class KeyUnmarshaller extends AbstractDOMUnmarshaller<Key> {
 			key.setState(getFirstElementText("state", element));
 			key.setFingerprint(getFirstElementText("fingerprint", element));
 			key.setPem(trimPem(getPem(element))); //$NON-NLS-1$
-			key.setActions(getKeyActions(element, key));
+			key.setActions(getActions(element, key));
 		}
 		return key;
 	}
@@ -50,7 +46,6 @@ public class KeyUnmarshaller extends AbstractDOMUnmarshaller<Key> {
 			return getFirstElementText("pem", pemElement);
 		}
 		return null;
-
 	}
 	
 	private String trimPem(String pem) throws IOException {
@@ -72,31 +67,10 @@ public class KeyUnmarshaller extends AbstractDOMUnmarshaller<Key> {
 		return sb.toString();
 	}
 
-
-	private List<KeyAction> getKeyActions(Element keyElement, Key key) throws DeltaCloudClientException {
-		if (keyElement == null) {
-			return null;
-		}
-		List<KeyAction> actions = new ArrayList<KeyAction>();
-		NodeList nodeList = keyElement.getElementsByTagName("link");
-		for (int i = 0; i < nodeList.getLength(); i++) {
-			Node linkNode = nodeList.item(i);
-			KeyAction keyAction = createKeyAction(linkNode);
-			if (keyAction != null) {
-				keyAction.setKey(key);
-				actions.add(keyAction);
-			}
-		}
-		return actions;
-	}
-
-	private KeyAction createKeyAction(Node node) throws DeltaCloudClientException {
-		if (!(node instanceof Element)) {
-			return null;
-		}
+	@Override
+	protected KeyAction unmarshallAction(Element element) throws DeltaCloudClientException {
 		KeyAction keyAction = new KeyAction();
-		new KeyActionUnmarshaller().unmarshall((Element) node, keyAction);
+		new KeyActionUnmarshaller().unmarshall(element, keyAction);
 		return keyAction;
 	}
-
 }

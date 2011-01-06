@@ -11,39 +11,21 @@
 package org.jboss.tools.deltacloud.core.client;
 
 import java.util.List;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlList;
-import javax.xml.bind.annotation.XmlType;
 
 /**
  * @author Martyn Taylor
  * @author André Dietisheim
  */
-@XmlType
-public class AddressList
-{
-	private static final long serialVersionUID = 1L;
+public abstract class AbstractDeltaCloudActionAwareObject<ACTION> extends AbstractDeltaCloudObject {
 
-	@XmlElement
-	@XmlList
-	private List<String> addresses;
+	private List<ACTION> actions;
 
-	public AddressList()
-	{
-	}
-	
-	public AddressList(List<String> addresses)
-	{
-		setAddress(addresses);
+	public void setActions(List<ACTION> actions) {
+		this.actions = actions;
 	}
 
-	protected void setAddress(List<String> addresses)
-	{
-		this.addresses = addresses;
+	public List<ACTION> getActions() {
+		return actions;
 	}
 
-	public List<String> getAddress()
-	{
-		return addresses;
-	}
 }

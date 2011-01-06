@@ -17,20 +17,9 @@ package org.jboss.tools.deltacloud.core.client;
  * 
  * @author André Dietisheim
  */
-public class KeyAction extends AbstractDeltaCloudResourceAction implements IKeyAction {
-
-	private Key key;
+public class KeyAction extends AbstractDeltaCloudResourceAction<Key> {
 
 	public KeyAction() {
 		super();
-	}
-
-	public void setKey(Key key) {
-		this.key = key;
-	}
-
-	@Override
-	public Key getKey() {
-		return key;
 	}
 }
