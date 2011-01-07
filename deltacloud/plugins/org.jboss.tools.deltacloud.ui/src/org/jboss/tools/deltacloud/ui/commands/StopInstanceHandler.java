@@ -61,22 +61,22 @@ public class StopInstanceHandler extends AbstractInstanceHandler {
 	private void stopWithDialog(IStructuredSelection selection) {
 		List<DeltaCloudInstance> deltaCloudInstances = UIUtils.adapt((List<DeltaCloudInstance>) selection.toList(),
 				DeltaCloudInstance.class);
-		List<DeltaCloudInstance> runningInstances = getRunningInstances(deltaCloudInstances);
+		List<DeltaCloudInstance> stoppableInstances = getStoppableInstances(deltaCloudInstances);
 		DeltaCloudInstanceDialog dialog = new DeltaCloudInstanceDialog(
 					UIUtils.getActiveShell()
-					, runningInstances
+					, stoppableInstances
 					, CVMessages.getString(STOP_INSTANCES_DIALOG_TITLE)
 					, CVMessages.getString(STOP_INSTANCES_DIALOG_MSG));
-		dialog.setInitialElementSelections(runningInstances);
+		dialog.setInitialElementSelections(stoppableInstances);
 		if (Dialog.OK == dialog.open()) {
 			stopInstances(dialog.getResult());
 		}
 	}
 
-	private List<DeltaCloudInstance> getRunningInstances(List<DeltaCloudInstance> deltaCloudInstances) {
+	private List<DeltaCloudInstance> getStoppableInstances(List<DeltaCloudInstance> deltaCloudInstances) {
 		ArrayList<DeltaCloudInstance> stoppedInstances = new ArrayList<DeltaCloudInstance>();
 		for (DeltaCloudInstance instance : deltaCloudInstances) {
-			if (instance.isRunning()) {
+			if (instance.canStop()) {
 				stoppedInstances.add(instance);
 			}
 		}

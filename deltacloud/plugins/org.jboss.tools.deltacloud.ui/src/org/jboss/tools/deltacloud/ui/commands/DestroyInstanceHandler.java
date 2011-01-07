@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.ui.commands;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
@@ -59,16 +60,28 @@ public class DestroyInstanceHandler extends AbstractInstanceHandler {
 	private void destroyWithDialog(IStructuredSelection selection) {
 		List<DeltaCloudInstance> deltaCloudInstances = 
 			UIUtils.adapt((List<DeltaCloudInstance>) selection.toList(),DeltaCloudInstance.class);
+		List<DeltaCloudInstance> destroyableInstances = getDestroyableInstances(deltaCloudInstances);
 		DeltaCloudInstanceDialog dialog = new DeltaCloudInstanceDialog(
 					UIUtils.getActiveShell()
-					, deltaCloudInstances
+					, destroyableInstances
 					, CVMessages.getString(DESTROY_INSTANCE_TITLE)
 					, CVMessages.getString(DESTROY_INSTANCE_MSG));
-		dialog.setInitialElementSelections(deltaCloudInstances);
+		dialog.setInitialElementSelections(destroyableInstances);
 		if (Dialog.OK == dialog.open()) {
 			destroyInstances(dialog.getResult());
 		}
 	}
+	
+	private List<DeltaCloudInstance> getDestroyableInstances(List<DeltaCloudInstance> deltaCloudInstances) {
+		ArrayList<DeltaCloudInstance> stoppedInstances = new ArrayList<DeltaCloudInstance>();
+		for (DeltaCloudInstance instance : deltaCloudInstances) {
+			if (instance.canDestroy()) {
+				stoppedInstances.add(instance);
+			}
+		}
+		return stoppedInstances;
+	}
+
 
 	private void destroyInstances(Object[] cvInstances) {
 		for (int i = 0; i < cvInstances.length; i++) {
