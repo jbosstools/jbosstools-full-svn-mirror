@@ -4,7 +4,7 @@
 	<property name="COMPONENT" value="drools" />
 
 	<!-- https://jira.jboss.org/browse/JBIDE-7344 from JBoss Tools 3.2.0.Beta2 onward, use this: -->
-	<property name="drools.zip" value="drools-5.2.0.SNAPSHOT-eclipse-all.zip" />
+	<property name="drools.zip" value="drools-5.2.0-SNAPSHOT-eclipse-all.zip" />
 	<property name="drools.URL" value="http://hudson.qa.jboss.com/hudson/job/drools-stable-tag/lastStableBuild/artifact/trunk/target" />
 
 	<!-- or use Drools' latest nightly from trunk -->
@@ -45,28 +45,24 @@
 	</condition>
 	<!-- if can't calculate where build/build.xml is located, must pass in path from parent when calling this script -->
 
-	<target name="custom.build"
-	        description="fetch latest drools from their Hudson build + selectively unpack it"
-	        depends="init"
-	>
-		<get src="${drools.URL}/${drools.zip}"
-		     dest="${WORKINGDIR}/${COMPONENT}/${drools.zip}"
-		     usetimestamp="true"
-		/>
+	<target name="custom.build" description="fetch latest drools from their Hudson build + selectively unpack it" depends="init">
+		<get src="${drools.URL}/${drools.zip}" dest="${WORKINGDIR}/${COMPONENT}/${drools.zip}" usetimestamp="true" />
 		<unzip src="${WORKINGDIR}/${COMPONENT}/${drools.zip}" dest="${WORKINGDIR}/${COMPONENT}" overwrite="true" />
+		<move todir="${WORKINGDIR}/${COMPONENT}/plugins">
+			<fileset dir="${WORKINGDIR}/${COMPONENT}/drools-update-site/plugins" />
+		</move>
+		<move todir="${WORKINGDIR}/${COMPONENT}/features">
+			<fileset dir="${WORKINGDIR}/${COMPONENT}/drools-update-site/features" />
+		</move>
+		<delete dir="${WORKINGDIR}/${COMPONENT}/drools-update-site" />
 		<!-- <delete file="${WORKINGDIR}/${COMPONENT}/${drools.zip}" quiet="true"/> -->
 
 		<ant antfile="${build.xml}" target="unjarPlugins">
 			<property name="COMPONENT" value="${COMPONENT}" />
 		</ant>
 
-		<delete dir="${WORKINGDIR}/${COMPONENT}"
-		        quiet="true"
-		        includes="
-			LICENSE-ASL-2.0.txt, README_DEPENDENCIES.txt, 
-			plugins/*.jar
-			"
-		/>
+		<delete dir="${WORKINGDIR}/${COMPONENT}" quiet="true" includes="LICENSE-ASL-2.0.txt, 
+			README_DEPENDENCIES.txt, ReadMeDroolsEclipse.txt, plugins/*.jar" />
 
 		<ant antfile="${build.xml}" target="renameFeatures">
 			<property name="COMPONENT" value="${COMPONENT}" />
