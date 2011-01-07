@@ -156,6 +156,7 @@ if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]] && [[ -d ${WORKSPACE}/sources/agg
 	# unpack component source zips
 	for z in $(find ${WORKSPACE}/sources/aggregate/site/zips -name "*Sources*.zip"); do
 		zn=${z%*-Sources*.zip}; zn=${zn#*--};
+		mkdir -p ${STAGINGDIR}/all/sources/${zn}/
 		unzip -qq -o -d ${STAGINGDIR}/all/sources/${zn}/ $z
 	done
 	# add component sources into sources zip
