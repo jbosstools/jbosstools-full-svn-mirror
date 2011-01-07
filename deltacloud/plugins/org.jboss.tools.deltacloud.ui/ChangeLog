@@ -1,3 +1,9 @@
+2011-01-07  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* plugin.xml: 
+	* src/org/jboss/tools/deltacloud/ui/commands/RefreshCloudHandler.java (execute): 
+	[JBIDE-7916] added ability to refresh several clouds
+
 2011-01-06  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/deltacloud/ui/views/cloud/ImagesCategoryItem.java (.doRun): 

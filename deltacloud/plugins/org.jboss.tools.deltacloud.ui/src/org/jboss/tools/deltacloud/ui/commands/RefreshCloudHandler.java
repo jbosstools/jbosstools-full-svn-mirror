@@ -10,6 +10,9 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.ui.commands;
 
+import java.util.Collection;
+import java.util.Collections;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -17,6 +20,8 @@ import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
@@ -32,26 +37,35 @@ public class RefreshCloudHandler extends AbstractHandler implements IHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		DeltaCloud cloud = getDeltaCloud(event);
-		if (cloud != null) {
-			refresh(cloud);
-		}
-
+		// first try selected item
+		Collection<DeltaCloud> clouds = getSelectedClouds(HandlerUtil.getCurrentSelection(event));
+		if (!clouds.isEmpty()) {
+			refresh(clouds);
+		} else {
+			// no item selected: try active part
+			refresh(UIUtils.adapt(HandlerUtil.getActivePart(event), DeltaCloud.class));
+		}			
 		return Status.OK_STATUS;
 	}
 
-	private DeltaCloud getDeltaCloud(ExecutionEvent event) {
-		DeltaCloud cloud = null;
-		// first try selected item
-		cloud = UIUtils.getFirstAdaptedElement(HandlerUtil.getCurrentSelection(event), DeltaCloud.class);
-		if (cloud == null) {
-			// no item selected: try active part
-			cloud = UIUtils.adapt(HandlerUtil.getActivePart(event), DeltaCloud.class);
+	private Collection<DeltaCloud> getSelectedClouds(ISelection selection) {
+		if (!(selection instanceof IStructuredSelection)) {
+			return Collections.emptyList();
 		}
-		return cloud;
+		
+		return UIUtils.adapt(((IStructuredSelection) selection).toList(), DeltaCloud.class);
 	}
 
-	protected void refresh(final DeltaCloud cloud) {
+	private void refresh(Collection<DeltaCloud> clouds) {
+		for (DeltaCloud cloud : clouds) {
+			refresh(cloud);
+		}
+	}
+
+	private void refresh(final DeltaCloud cloud) {
+		if (cloud == null) {
+			return;
+		}
 		// TODO: internationalize strings
 		new AbstractCloudJob("Refreshing images and instances on " + cloud.getName(), cloud) {
 
