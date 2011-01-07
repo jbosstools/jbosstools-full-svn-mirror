@@ -1262,12 +1262,19 @@
     <formalpara>
         <title>General Issues</title>
         <para>
-            <itemizedlist>
-	       <listitem>
-		  <para>
-		     <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7830">JBIDE-7830</ulink>: The wizard that would display available attributes for JSP and HTML tags has been updated to improve usability. In the past the wizard would show a complete list of attributes for a tag, in one list. This could potentially overwhelm a user with options and make it hard to define the necessary attribute items for a tag. This update for the wizard ensures that required and preferable attributes are separated from the others by placing them under a <guilabel>General</guilabel> tab, with the rest being listed under the <guilabel>Advanced</guilabel> tab. 
-		  </para>
-	       </listitem>
+        	<itemizedlist>
+        	
+        	<listitem>
+        			<para>
+        				<ulink url="https://issues.jboss.org/browse/JBDS-1150">JBDS-1150</ulink>: The Java Virtual Machine used by the JBoss Developer Studio installer will also be used as the default VM for JBDS. This can casuse problems if a 64 bit Java VM is used to install a 32 bit JBDS distribution, as the two are incompatible. This can be fixed by editing the <filename>eclipse.ini</filename> file and modifying the <property>vm</property> argument, or by using the appropiate Java VM when installing JBDS.
+        			</para>
+        		</listitem>
+        	
+        		<listitem>
+        			<para>
+        				<ulink url="http://jira.jboss.com/jira/browse/JBIDE-7830">JBIDE-7830</ulink>: The wizard that would display available attributes for JSP and HTML tags has been updated to improve usability. In the past the wizard would show a complete list of attributes for a tag, in one list. This could potentially overwhelm a user with options and make it hard to define the necessary attribute items for a tag. This update for the wizard ensures that required and preferable attributes are separated from the others by placing them under a <guilabel>General</guilabel> tab, with the rest being listed under the <guilabel>Advanced</guilabel> tab. 
+        			</para>
+        		</listitem>
                 <!-- These two issues only in release notes for JBT -->
                 <!--	   <listitem>
 			      <para>
