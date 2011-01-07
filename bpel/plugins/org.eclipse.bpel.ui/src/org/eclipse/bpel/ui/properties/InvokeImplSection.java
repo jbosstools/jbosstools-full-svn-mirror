@@ -1832,7 +1832,16 @@ public class InvokeImplSection extends BPELPropertySection {
 	
 	private Variable findVariable ( EObject input, Message msg , PartnerLink pl ) {
 		
-		Variable list[] = ModelHelper.getVariablesOfType( input, msg );			
+		Variable list[] = null;
+		
+		// https://issues.jboss.org/browse/JBIDE-8048
+		// this property section is also used by OnEvent
+		if (input instanceof OnEvent) {
+			OnEvent oe = (OnEvent)input;
+			list = new Variable[] { oe.getVariable() };
+		}
+		else
+			list = ModelHelper.getVariablesOfType( input, msg );			
 				
 		if ( list.length == 1 ) {
 			return list[0];			

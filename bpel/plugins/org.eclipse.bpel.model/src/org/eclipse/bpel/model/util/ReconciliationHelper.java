@@ -211,6 +211,10 @@ public class ReconciliationHelper {
 			reader.xml2Target((Target)element, changedElement);
 		} else if (element instanceof Targets){
 			reader.xml2Targets((Targets)element, changedElement);
+		} else if (element instanceof CompensationHandler){
+			// https://issues.jboss.org/browse/JBIDE-8048
+			// this was left out inadevertently
+			reader.xml2CompensationHandler((CompensationHandler)element, changedElement);
 		} else {
 			System.err.println("Cannot reconcile: " + element.getClass());
 //			throw new NotImplementedException(element.getClass().toString());
@@ -683,8 +687,29 @@ public class ReconciliationHelper {
 				return;
 			}
 			if (parseElement == null) {
-				System.err.println("trying to replace attribute on null element:" + element.getClass());
-				return;
+				// https://issues.jboss.org/browse/JBIDE-8048
+				// Hack to allow setting an implicit variable's attributes for OnEvent, Catch.
+				// These are not real Variable objects (i.e. they are not XML elements like
+				// real <variable>'s). To do this right, we really should define an
+				// ImplicitVariable model object instead of reusing Variable objects inside
+				// OnEvent and Catch...
+				EObject parent = element.eContainer();
+				if (parent instanceof OnEvent || parent instanceof Catch) {
+					// ignore attempts to set attributes on the parent that aren't in the model
+					for ( EStructuralFeature feature : parent.eClass().getEAllStructuralFeatures()) {
+						if ( feature.getName().equals(attributeName)) {
+							parseElement = ((ExtensibleElement)parent).getElement();
+							break;
+						}
+					}
+				}
+				if (parseElement == null) {
+					System.err.println("trying to replace attribute " + "\"" + attributeName + "\"" +
+							" on null element " + element.getClass() + " contained in " +
+							(element.eContainer() == null ? null : element.eContainer().getClass())
+					);
+					return;
+				}
 			}
 			
 			// This is a problem in eclipse3.6, if we use parseElement.getAttribute(attributeName) and the attribute is not in the parseElement,
@@ -742,10 +767,6 @@ public class ReconciliationHelper {
 	
 	public static void replaceAttribute(WSDLElement element, String attributeName, QName attributeValue) {
 		if (isLoading(element)) {
-			return;
-		}
-		if (element.getElement() == null) {
-			System.err.println("trying to replace attribute on null element: " + element.getClass());
 			return;
 		}
 		replaceAttribute(element, attributeName, attributeValue == null ? null : ElementFactory.getInstance().createName(element, attributeValue));

@@ -64,6 +64,8 @@ import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Point;
@@ -379,6 +381,20 @@ public class InvokeVariableSection extends BPELPropertySection {
 				}
 			}
 		});
+		
+		// https://issues.jboss.org/browse/JBIDE-8048
+		// do the same thing when variable name widget loses focus
+		inputVariableText.addFocusListener(new FocusListener() {
+
+			public void focusGained(FocusEvent arg0) {
+			}
+
+			public void focusLost(FocusEvent arg0) {
+				findAndSetOrCreateVariable(inputVariableText.getText(),
+						isInvoke() ? ModelHelper.OUTGOING
+								: ModelHelper.INCOMING);
+			}
+		});
 
 		data = new FlatFormData();
 		data.right = new FlatFormAttachment(100, 0);
@@ -417,6 +433,11 @@ public class InvokeVariableSection extends BPELPropertySection {
 		FlatFormData data;
 
 		final Composite composite = this.outputVariableComposite = createFlatFormComposite(parent);
+		if (isReceive()) {
+			// https://issues.jboss.org/browse/JBIDE-8048
+			// don't even bother creating widgets we will never use
+			return composite;
+		}
 
 		data = new FlatFormData();
 		if (top == null) {
@@ -1019,7 +1040,9 @@ public class InvokeVariableSection extends BPELPropertySection {
 	}
 
 	private boolean isReceive() {
-		return getInput() instanceof Receive || getInput() instanceof OnMessage;
+		// https://issues.jboss.org/browse/JBIDE-8048
+		// OnEvent is also a type of Receive
+		return getInput() instanceof Receive || getInput() instanceof OnMessage || getInput() instanceof OnEvent;
 	}
 
 	/**
@@ -1078,6 +1101,11 @@ public class InvokeVariableSection extends BPELPropertySection {
 	private void updateInputVariableWidgets() {
 
 		inputVariableComposite.setVisible(!isReply());
+		if (getInput() instanceof OnEvent) {
+			// https://issues.jboss.org/browse/JBIDE-8048
+			// hide the proposal drop-down button - user must enter variable name
+			inputVariableButton.setVisible(false);
+		}
 
 		if (isReply())
 			return;

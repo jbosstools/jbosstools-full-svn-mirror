@@ -25,6 +25,7 @@ import org.eclipse.bpel.model.From;
 import org.eclipse.bpel.model.Query;
 import org.eclipse.bpel.model.To;
 import org.eclipse.bpel.model.Variable;
+import org.eclipse.bpel.model.impl.VariableImpl;
 import org.eclipse.bpel.model.messageproperties.Property;
 import org.eclipse.bpel.model.util.BPELConstants;
 import org.eclipse.bpel.model.util.BPELUtils;
@@ -59,6 +60,7 @@ import org.eclipse.xsd.XSDAttributeDeclaration;
 import org.eclipse.xsd.XSDElementDeclaration;
 import org.eclipse.xsd.XSDNamedComponent;
 import org.eclipse.xsd.XSDTypeDefinition;
+import org.eclipse.xsd.impl.XSDTypeDefinitionImpl;
 
 /**
  * An AssignCategory presenting a tree from which the user can select any of: -
@@ -493,7 +495,7 @@ public class VariablePartAssignCategory extends AssignCategoryBase {
 		if (query == null)
 			return;
 		Variable var = side.getVariable();
-		if (isInitializerExist(var, side))
+		if (needInitializer(var, side))
 			return;
 		if (MessageDialog
 				.openQuestion(
@@ -508,7 +510,7 @@ public class VariablePartAssignCategory extends AssignCategoryBase {
 		}
 	}
 
-	private boolean isInitializerExist(Variable var, IVirtualCopyRuleSide side) {
+	private boolean needInitializer(Variable var, IVirtualCopyRuleSide side) {
 		Assign a = (Assign) ((To) side.getCopyRuleSide()).getContainer()
 				.getContainer();
 		EList<Copy> list = a.getCopy();
@@ -527,6 +529,50 @@ public class VariablePartAssignCategory extends AssignCategoryBase {
 			if (p.equals(side.getPart()))
 				return true;
 		}
+		
+		// https://issues.jboss.org/browse/JBIDE-8048
+		// check if initialization is possible: this is not possible if the
+		// variable is implicit (e.g. in a ForEach or OnEvent)
+		String rootElement = null;
+		String uriWSDL = null;
+
+		// Variable is defined using "messageType"
+		Message msg = var.getMessageType();
+		if (msg != null && !msg.eIsProxy()) {
+			// https://jira.jboss.org/browse/JBIDE-6697
+			// from eclipse.org/bpel rev 1.17 on 7/23/2010 3:13AM bugzilla 302943 by gqian: apply the patch from bugzilla
+			if (side.getPart() != null) {
+				XSDElementDeclaration declaration = side.getPart().getElementDeclaration();
+				if (declaration != null) {
+					uriWSDL = declaration.getSchema().getSchemaLocation();
+					rootElement = declaration.getName();
+				}
+			}
+		}
+
+		// can we construct an initializer for this variable?
+		// Variable is defined using "type"
+		XSDTypeDefinitionImpl type = (XSDTypeDefinitionImpl)var.getType();
+		if (type != null && !type.eIsProxy()) {
+			QName qname = new QName(type.getTargetNamespace(), type.getName());
+			rootElement = qname.getLocalPart();
+			uriWSDL = type.eResource().getURI().toString();
+		}
+
+		// Variable is defined using "element"
+		XSDElementDeclaration element = var.getXSDElement();
+		if (element != null && !element.eIsProxy()) {
+			QName qname = new QName(element.getTargetNamespace(), element
+					.getName());
+			rootElement = qname.getLocalPart();
+			uriWSDL = element.eResource().getURI().toString();
+		}
+
+		// Incomplete variable definition
+		if (rootElement == null || uriWSDL == null) {
+			return true;
+		}
+		
 		return false;
 	}
 

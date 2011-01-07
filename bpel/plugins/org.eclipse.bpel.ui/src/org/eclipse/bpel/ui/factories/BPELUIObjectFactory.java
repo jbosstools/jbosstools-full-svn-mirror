@@ -276,7 +276,10 @@ public class BPELUIObjectFactory extends AbstractUIObjectFactory {
 			Sequence sequence = BPELFactory.eINSTANCE.createSequence();
 			sequence.getActivities().add(
 					BPELFactory.eINSTANCE.createCompensate());
-			sequence.getActivities().add(BPELFactory.eINSTANCE.createRethrow());
+			// https://issues.jboss.org/browse/JBIDE-8048
+			// don't generate a rethrow for CompensationHandlers
+			if (result instanceof CatchAll || result instanceof Catch)
+				sequence.getActivities().add(BPELFactory.eINSTANCE.createRethrow());
 
 			if (result instanceof Catch) {
 				Catch _catch = (Catch) result;

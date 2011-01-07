@@ -13,8 +13,11 @@ package org.eclipse.bpel.ui.details.providers;
 import java.util.List;
 
 import org.eclipse.bpel.model.Invoke;
+import org.eclipse.bpel.model.OnEvent;
+import org.eclipse.bpel.model.PartnerLink;
 import org.eclipse.bpel.model.Receive;
 import org.eclipse.bpel.model.Reply;
+import org.eclipse.bpel.model.partnerlinktype.Role;
 import org.eclipse.wst.wsdl.PortType;
 
 /**
@@ -52,6 +55,20 @@ public class OperationContentProvider extends AbstractContentProvider  {
 		if (input instanceof Invoke) {
 			Invoke invoke = (Invoke) input;
 			collectElements ( invoke.getPortType(), list );
+			return ;
+		}
+		
+		// https://issues.jboss.org/browse/JBIDE-8048
+		// for event handlers, the operation comes from partnerlink role
+		if (input instanceof OnEvent) {
+			OnEvent onEvent = (OnEvent) input;
+			PartnerLink partnerLink = onEvent.getPartnerLink();
+			if (partnerLink != null) {
+				Role myRole = partnerLink.getMyRole();
+				if (myRole != null) {
+					collectElements ( myRole.getPortType(), list );
+				}
+			}
 			return ;
 		}
 	}

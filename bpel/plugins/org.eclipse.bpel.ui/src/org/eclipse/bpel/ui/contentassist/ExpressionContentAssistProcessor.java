@@ -107,6 +107,7 @@ public class ExpressionContentAssistProcessor
 		static final int PROPTYPE_VARIABLE = 1;
 		static final int PROPTYPE_FUNCTION = 2;
 		static final int PROPTYPE_OPERATOR = 4;
+		static final int PROPTYPE_ELEMENT = 8;
 		
 		ProposalType(int type, String beginsWith) {
 			theType = type;
@@ -117,6 +118,7 @@ public class ExpressionContentAssistProcessor
 		boolean isFunction() { return ((theType & PROPTYPE_FUNCTION) == PROPTYPE_FUNCTION); }
 		boolean isOperator() { return ((theType & PROPTYPE_OPERATOR) == PROPTYPE_OPERATOR); }
 		boolean isVariableAndFunction() { return ((theType & (PROPTYPE_VARIABLE | PROPTYPE_FUNCTION)) == (PROPTYPE_VARIABLE | PROPTYPE_FUNCTION)); }
+		boolean isElement() { return ((theType & PROPTYPE_ELEMENT) == PROPTYPE_ELEMENT); }
 	}
 	
 	// helper class for defining expression types within xpath expression... used by XPathStack
@@ -134,6 +136,7 @@ public class ExpressionContentAssistProcessor
 		static final int EXPRTYPE_NEW_EXPRESSION = 8;
 		static final int EXPRTYPE_FUNCTION_ARGUMENTS = 9;
 		static final int EXPRTYPE_FUNCTION_ARGUMENT_SEPARATOR = 10;
+		static final int EXPRTYPE_ELEMENT = 11;
 		
 		static final int CLASS_NUMERIC = 100;
 		static final int CLASS_BOOLEAN = 101;
@@ -219,6 +222,9 @@ public class ExpressionContentAssistProcessor
 								theCallStack.push(new ExpressionType(ExpressionType.CLASS_NUMERIC, EMPTY_STRING));
 								theTopOfStackExprType = ExpressionType.CLASS_NUMERIC;
 							}
+						}
+						else if (currChar == '/' ) {
+							return parseElement();
 						}
 						else {
 							theStatus = -1;
@@ -406,6 +412,71 @@ public class ExpressionContentAssistProcessor
 					return proceed;
 			}
 			return proceed;
+		}
+		
+		private boolean parseElement() throws BadLocationException {
+			theIndex++; // move past / token
+			String variable = DIVIDE;
+			char nextChar;
+			while (theIndex < theOffset) {
+				nextChar = theDocument.getChar(theIndex);
+				if (isLocationPathCharacter(nextChar)) {
+					variable = variable + nextChar;
+				}
+				else if (nextChar == '[') {
+					theCallStack.push(new ExpressionType(ExpressionType.EXPRTYPE_ELEMENT, variable));
+					theCallStack.push(new ExpressionType(ExpressionType.EXPRTYPE_NEW_EXPRESSION, OPEN_BRACKET));
+					theIndex++;
+					boolean proceed = parseBooleanExpression();
+					if (proceed) {
+						nextChar = theDocument.getChar(theIndex);
+						if (nextChar == ']') {
+							try {
+								ExpressionType tempExpr = theCallStack.pop();
+								while (tempExpr.theType != ExpressionType.EXPRTYPE_NEW_EXPRESSION) {
+									// continue popping until we find a new expression type
+									tempExpr = theCallStack.pop();
+								}
+								if (tempExpr != null) {
+									if (tempExpr.theGrammar.compareTo(CLOSE_BRACKET) == 0) {
+										return true;
+									}
+								}
+							}
+							catch (EmptyStackException e) {
+								theStatus = -1;
+								return false;
+							}
+						}
+						else {
+							// in error ... maybe throw something here
+							theStatus = -1;
+							return false;
+						}
+					}
+					else {
+						return proceed;
+					}						
+				}
+				else {
+					theCallStack.push(new ExpressionType(ExpressionType.EXPRTYPE_ELEMENT, variable));
+					theTopOfStackExprType = ExpressionType.EXPRTYPE_ELEMENT;
+					theIndex--;
+					return true;
+				}
+				theIndex++;
+			}
+			
+			if (theIndex >= theOffset) {
+				theCallStack.push(new ExpressionType(ExpressionType.EXPRTYPE_ELEMENT, variable));
+				theStatus = 1;
+				return false;
+				//return new ProposalType(ProposalType.PROPTYPE_VARIABLE, variable);
+			}
+
+			// shouldn't get here
+			theStatus = -1;
+			return false;
 		}
 		
 		// parse word found in numeric expression
@@ -814,6 +885,9 @@ public class ExpressionContentAssistProcessor
 						return (new ProposalType(0, EMPTY_STRING));
 					}
 					return new ProposalType(ProposalType.PROPTYPE_OPERATOR, EMPTY_STRING);
+
+				case ExpressionType.EXPRTYPE_ELEMENT:
+					return new ProposalType(ProposalType.PROPTYPE_ELEMENT, EMPTY_STRING);
 					
 				default:
 					return (new ProposalType(0, EMPTY_STRING)); 
@@ -831,7 +905,13 @@ public class ExpressionContentAssistProcessor
 		tempContext = startOfFunction(viewer, offset);
 		if (tempContext != null) {
 			return new ProposalType(ProposalType.PROPTYPE_FUNCTION, tempContext);
-		}			
+		}
+		
+		tempContext = startOfElement(viewer, offset);
+		if (tempContext != null) {
+			return new ProposalType(ProposalType.PROPTYPE_ELEMENT, tempContext);
+		}
+		
 		return new ProposalType(ProposalType.PROPTYPE_FUNCTION | ProposalType.PROPTYPE_VARIABLE, EMPTY_STRING); 
 	}
 	
@@ -851,13 +931,13 @@ public class ExpressionContentAssistProcessor
 		String varlinkStart = EMPTY_STRING; 
 		
 		if (propType.isVariableAndFunction()) {
-			theToggle = (theToggle+1) % 4;
+			theToggle = (theToggle+1) % 5;
 			funcStart = propType.theBeginsWith;
 			varlinkStart = propType.theBeginsWith;
 		}
 		else if (propType.isVariable()) {
 			if (toggle)
-				theToggle = (theToggle+1) % 4;
+				theToggle = (theToggle+1) % 5;
 			else
 				theToggle = 0;
 			funcStart = EMPTY_STRING; 
@@ -865,7 +945,7 @@ public class ExpressionContentAssistProcessor
 		}
 		else if (propType.isFunction()) {
 			if (toggle)
-				theToggle = (theToggle+1) % 4;
+				theToggle = (theToggle+1) % 5;
 			else
 				theToggle = 1;
 			funcStart = propType.theBeginsWith;
@@ -873,12 +953,21 @@ public class ExpressionContentAssistProcessor
 		}
 		else if (propType.isOperator()) {
 			if (toggle)
-				theToggle = (theToggle+1) % 4;
+				theToggle = (theToggle+1) % 5;
 			else
 				theToggle = 2;
 			funcStart = EMPTY_STRING; 
 			varlinkStart = EMPTY_STRING; 
 		}
+		else if (propType.isElement()) {
+			if (toggle)
+				theToggle = (theToggle+1) % 5;
+			else
+				theToggle = 3;
+			funcStart = EMPTY_STRING; 
+			varlinkStart = EMPTY_STRING; 
+		}
+		
 		
 		switch (theToggle) {
 		case 0:
@@ -901,6 +990,9 @@ public class ExpressionContentAssistProcessor
 				theContentAssistant.setStatusMessage(Messages.getString("ExpressionContentAssistProcessor.49")); //$NON-NLS-1$
 			//return generateTemplateProposals(tempStart, offset);
 			return (fXpathTemplates.computeCompletionProposals(viewer, offset));
+
+		case 4:
+			return generateVariableProposals(varlinkStart, offset);
 		}
 
 		return null;
@@ -1315,5 +1407,306 @@ public class ExpressionContentAssistProcessor
 	
 	private boolean isClosingExpressionCharacter(char c) {		
 		return (RESERVED_CLOSING_EXPR_CHARS.indexOf(c) > -1);
-	}	
+	}
+		
+	// simple form of determining if message part or XSD Element is located at offset
+	String startOfElement(ITextViewer viewer, int offset) {
+		int startPosition = offset-1;
+		char currChar;
+		String context = EMPTY_STRING; 
+		IDocument document = viewer.getDocument();
+
+		try {
+			while (startPosition >= 0) {
+				currChar = document.getChar(startPosition);
+				
+				if (currChar == '/')
+					return context;
+				
+				if (!(Character.isLetterOrDigit(currChar) 
+						|| currChar == '.' || currChar == '@' || currChar == '_'))
+					return null;
+				
+				context = currChar + context;
+				startPosition--;
+			}
+		}
+		catch (Exception e) {
+			System.out.println(e.toString());
+		}
+		return null;
+	}
+	
+	/**
+	 * From model, determine list of XSD elements or message parts the user may want to choose from.
+	 */
+	
+	ICompletionProposal[] generateElementProposals(String context, int offset) {
+		boolean seekChildren = false;
+
+		String context2;
+		if ((context.length() > 0) && (context.charAt(0) == '/'))
+			context2 = context.substring(1);
+		else
+			context2 = context;
+			
+		int slash = context2.indexOf('/');
+		int dot = context2.indexOf('.');
+		int at = context2.indexOf('@');
+		
+		if ((slash > -1) || (dot > -1) || (at > -1))
+			seekChildren = true;
+		
+		Variable[] variables = BPELUtil.getVisibleVariables((EObject)theModel);
+		ArrayList<ICompletionProposal> results = new ArrayList<ICompletionProposal>();
+		CompletionProposal prop = null;
+		String name;
+		Variable currVar = null;
+		XSDTypeDefinition currXsdType = null;
+		Message currMsg = null;
+		XSDElementDeclaration currXsdElem = null;
+
+		Image varImg = BPELUIPlugin.INSTANCE.getImage(IBPELUIConstants.ICON_VARIABLE_16);
+		Image partImg = BPELUIPlugin.INSTANCE.getImage(IBPELUIConstants.ICON_PART_16);
+		Image elementImg = BPELUIPlugin.INSTANCE.getImage(IBPELUIConstants.ICON_XSD_ELEMENT_DECLARATION_16);
+		Image attrImg = BPELUIPlugin.INSTANCE.getImage(IBPELUIConstants.ICON_XSD_ATTRIBUTE_DECLARATION_16);
+		try
+		{
+			if (seekChildren) {
+				// walk down path
+				int index = 0;
+				int level = 0;
+				int token = -1;
+				char t = 0;
+				String levelName;
+	
+				while (index < context2.length()) {
+					t = context2.charAt(index);
+					if ((t == '.') || (t == '/')) {
+						levelName = context2.substring(token+1, index);
+						/*
+						// check for namespace
+						int ns = levelName.indexOf(':');
+						if (ns > -1) {
+							levelNSPrefix = levelName.substring(0, ns);
+							levelName = levelName.substring(ns+1);
+						}
+						else
+							levelNSPrefix = null;
+						 */
+						
+						// find variable
+						if (level == 0) {
+							for (int i=0; i<variables.length; i++) {
+								if (levelName.compareTo(variables[i].getName()) == 0) {
+									currVar = variables[i]; 
+									currXsdType = currVar.getType();
+									currMsg = currVar.getMessageType();
+									currXsdElem = currVar.getXSDElement();
+									
+									level++;
+									break;
+								}
+							}
+							if (currVar == null)
+								break;
+						}
+						// traverse down
+						else {
+							boolean childFound = false;
+							if (context2.charAt(token) == '.') {
+								if (currMsg != null) {								
+									if (currMsg.getParts() != null) {	
+										for(Object next : currMsg.getParts().values()) {
+											Part item = (Part) next ;
+											if (levelName.compareTo(item.getName()) == 0) {
+												currXsdType = item.getTypeDefinition();
+												currMsg = item.getEMessage();
+												currXsdElem = item.getElementDeclaration();
+												childFound = true;
+												break;
+											}
+										}
+									}
+								}
+								if (!childFound)
+									break;
+							}
+							// search for child objects
+							else if (context2.charAt(token) == '/') {
+								if (currXsdType == null) {
+									if (currXsdElem != null) {
+										currXsdType = currXsdElem.getTypeDefinition();
+									}
+								}
+								if (currXsdType instanceof XSDComplexTypeDefinition) {
+									XSDComplexTypeDefinition xsdcomplex = (XSDComplexTypeDefinition)currXsdType;
+									
+									for(Object next : XSDUtils.getChildElements(xsdcomplex)) {
+										XSDElementDeclaration elem = ((XSDElementDeclaration)next).getResolvedElementDeclaration();
+										String elemName = elem.getName();
+										if (elem.getTargetNamespace() != null) {
+											String elemNSPrefix = getNamespacePrefix(currVar, elem.getTargetNamespace());
+											if (elemNSPrefix != null) {
+												elemName = elemNSPrefix + COLON + elemName;
+											}
+										}
+	
+										if (levelName.compareTo(elemName) == 0) {
+											currXsdType = elem.getTypeDefinition();
+											currXsdElem = null;
+											currMsg = null;
+											//currXsdElem = elem.getResolvedElementDeclaration();
+											childFound = true;
+											break;
+										}
+									}
+								}
+								else if (currXsdType instanceof XSDSimpleTypeDefinition) {
+									XSDSimpleTypeDefinition xsdsimple = (XSDSimpleTypeDefinition)currXsdType;
+									//currXsdType = xsdsimple.getBaseType();
+									//XSDSimpleTypeDefinition tempsimple = xsdsimple.getBaseTypeDefinition();
+									//org.eclipse.xsd.XSDParticle temppart = xsdsimple.getComplexType();
+									//XSDSimpleTypeDefinition tempsimple2 = xsdsimple.getItemTypeDefinition();
+									String tempname = xsdsimple.getName();
+									if (levelName.compareTo(tempname) == 0) {
+										childFound = true;
+									}
+								}
+								if (!childFound)
+									break;
+							}
+						}	
+						token = index;							
+					}
+					else if (t == '@')
+						token = index;
+					
+					index++;
+				}
+				// determine if last character is a special character if above is successful
+				if (index == context2.length()) {
+					// looking for parts, attributes or elements?
+					String beginsWith;
+					if ((index-1) == token)
+						beginsWith = EMPTY_STRING;
+					else
+						beginsWith = context2.substring(token+1);
+					
+					if ((context2.charAt(token) == '/') || (context2.charAt(token) == '@')) {
+						if (currXsdType == null) {
+							if (currXsdElem != null) {
+								currXsdType = currXsdElem.getTypeDefinition();
+							}
+						}					
+						if (currXsdType instanceof XSDComplexTypeDefinition) {
+							XSDComplexTypeDefinition xsdcomplex = (XSDComplexTypeDefinition)currXsdType;
+							@SuppressWarnings("rawtypes")
+							Iterator eaIter;
+							if (context2.charAt(token) == '/')
+								eaIter = XSDUtils.getXSDElementsAndAttributes(xsdcomplex).iterator();
+							else
+								eaIter = XSDUtils.getChildAttributes(xsdcomplex).iterator();
+							Image img = null;
+							String tempReplName = null;
+							String tempDispName = null;
+							String namespace = null;
+							String nsprefix = null;
+							while (eaIter.hasNext()) {
+								Object tempEA = eaIter.next();
+	
+								if (tempEA instanceof XSDAttributeDeclaration) {
+									XSDAttributeDeclaration attr = (XSDAttributeDeclaration)tempEA;
+									tempReplName = AT + attr.getName();
+									tempDispName = attr.getName();
+									namespace = attr.getTargetNamespace();
+									if ((namespace != null) && (namespace.length() > 0)) {
+										nsprefix = getNamespacePrefix(currVar, namespace);
+										tempReplName = AT + nsprefix + COLON + attr.getName();
+										tempDispName = nsprefix + COLON + tempDispName;
+									}								
+									img = attrImg;
+								}
+								else if (tempEA instanceof XSDElementDeclaration) {
+									XSDElementDeclaration elem = ((XSDElementDeclaration)tempEA).getResolvedElementDeclaration();
+									tempReplName = elem.getName();
+									tempDispName = tempReplName;
+									namespace = elem.getTargetNamespace();
+									if ((namespace != null) && (namespace.length() > 0)) {
+										nsprefix = getNamespacePrefix(currVar, namespace);
+										tempReplName = nsprefix + COLON + tempDispName;
+										tempDispName = tempReplName;
+									}
+									img = elementImg;
+								}
+								if (tempReplName != null) {
+									if ((beginsWith.length() == 0) || (tempDispName != null && tempDispName.startsWith(beginsWith))) {
+										int replOffset = offset-beginsWith.length();
+										int replLen = beginsWith.length();
+										if (context2.charAt(token) == '@') {
+											replOffset--;
+											replLen++;
+										}
+											
+										prop = new CompletionProposal(tempReplName, replOffset, replLen,
+												tempReplName.length(), img, tempDispName + "   " , //$NON-NLS-1$
+												null, null);
+										results.add(prop);
+									}
+								}
+								tempReplName = null;
+								tempDispName = null;
+							}
+						}
+//						else if (currXsdType instanceof XSDSimpleTypeDefinition) {
+//							XSDSimpleTypeDefinition simple = (XSDSimpleTypeDefinition)currXsdType;
+//							// do nothing?
+//						}
+					}
+					// search for parts
+					else if (context2.charAt(token) == '.') {
+						if (currMsg != null) {
+							if (currMsg.getParts() != null) {
+								for(Object next : currMsg.getParts().values() ) {													
+									Part item = (Part) next;
+									if ((beginsWith.length() == 0) || (item.getName().startsWith(beginsWith))) {
+										prop = new CompletionProposal(item.getName(), offset-beginsWith.length(), beginsWith.length(),
+												item.getName().length(), partImg, item.getName() + "   " , //$NON-NLS-1$
+												null, null);
+										results.add(prop);			
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			//variables
+			else {
+				for (Variable v : variables) {			
+					name = v.getName();			
+					if (name.startsWith(context2)) {
+						prop = new CompletionProposal(DIVIDE + name, offset-context.length(), context.length(),
+								name.length()+1, varImg, name + "   " , //$NON-NLS-1$
+								null, null);
+						results.add(prop);
+					}
+				}
+			}
+		}
+		catch(IllegalArgumentException ex)
+		{
+			results.toArray(EMPTY_COMPLETION_PROPOSALS);
+		}
+		
+		if (results.size() < 1) {
+			return new ICompletionProposal [] {
+						new CompletionProposal(EMPTY_STRING, offset, 0, 
+								0, null, Messages.getString("ExpressionContentAssistProcessor.31"), //$NON-NLS-1$
+								null, null) };
+		}
+		
+		return results.toArray(EMPTY_COMPLETION_PROPOSALS);
+	}
+	
 }
