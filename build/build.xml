@@ -2,7 +2,7 @@
 	<!-- ****************************** Configuration ****************************** -->
 
 	<!-- default maven version -->
-	<property name="maven.version" value="3.0" />
+	<property name="maven.version" value="3.0.1" />
 
 	<!-- set name of component(s) to build+test, IN ORDER; if no subcomponents, use "." -->
 	<property name="COMPONENTS"
@@ -1361,6 +1361,15 @@ To force a build of unchanged components, use -Dbuild.if.sources.unchanged=true<
 		               replace="\1"
 		               override="true"
 		/>
+		<!-- <echo level="debug">artifact.id = ${artifact.id}</echo> -->
+		<propertyregex property="artifact.id"
+		               defaultvalue="${artifact.id}"
+		               input="${artifact.id}"
+		               regexp="([^_]+)_(\d+\.\d+\.\d+\.\d+)\.jar"
+		               replace="\1"
+		               override="true"
+		/>
+		<echo level="verbose">artifact.id = ${artifact.id}</echo>
 		<var name="artifactJar" unset="true" />
 	</target>
 
@@ -1720,7 +1729,15 @@ Cannot deploy - sourceDir not found in
 		<property name="get.artifact.id.expected.drools/plugins/org.drools.eclipse.task_5.1.0.jar"
 		          value="org.drools.eclipse.task"
 		/>
-
+		<property name="get.artifact.id.expected.drools/plugins/org.drools.eclipse.task_5.2.0.201101062302.jar"
+		          value="org.drools.eclipse.task"
+		/>
+		<property name="get.artifact.id.expected.drools/plugins/org.drools.eclipse_5.2.0.201101062302.jar"
+				  value="org.drools.eclipse"
+		/>
+		<property name="get.artifact.id.expected.drools/plugins/org.guvnor.tools_5.2.0.201101062302.jar"
+				  value="org.guvnor.tools"
+		/>
 	</target>
 
 	<target name="test.all">
