@@ -1,6 +1,11 @@
 2011-01-07  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* plugin.xml: 
+	* src/org/jboss/tools/deltacloud/ui/commands/RebootInstanceHandler.java 
+	(rebootWithDialog): 
+	(getRunningInstances): 
+	[JBIDE-7557] implemented capability to stop the running instances out of a bunch of instances (running and stopped ones) 
+	* plugin.xml: 
 	* src/org/jboss/tools/deltacloud/ui/commands/StopInstanceHandler.java 
 	(stopWithDialog): 
 	(getRunningInstances): 

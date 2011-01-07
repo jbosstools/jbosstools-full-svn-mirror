@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.ui.commands;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
@@ -60,17 +61,28 @@ public class RebootInstanceHandler extends AbstractInstanceHandler {
 	@SuppressWarnings("unchecked")
 	private void rebootWithDialog(IStructuredSelection selection) {
 		List<DeltaCloudInstance> deltaCloudInstances = UIUtils.adapt((List<DeltaCloudInstance>) selection.toList(), DeltaCloudInstance.class);
+		List<DeltaCloudInstance> rebootableInstances = getRebootableInstances(deltaCloudInstances);
 		DeltaCloudInstanceDialog dialog = new DeltaCloudInstanceDialog(
 					UIUtils.getActiveShell()
-					, deltaCloudInstances
+					, rebootableInstances
 					, CVMessages.getString(REBOOT_INSTANCE_TITLE)
 					, CVMessages.getString(REBOOT_INSTANCE_MSG));
-		dialog.setInitialElementSelections(deltaCloudInstances);
+		dialog.setInitialElementSelections(rebootableInstances);
 		if (Dialog.OK == dialog.open()) {
 			rebootInstances(dialog.getResult());
 		}
 	}
 
+	private List<DeltaCloudInstance> getRebootableInstances(List<DeltaCloudInstance> deltaCloudInstances) {
+		ArrayList<DeltaCloudInstance> stoppedInstances = new ArrayList<DeltaCloudInstance>();
+		for (DeltaCloudInstance instance : deltaCloudInstances) {
+			if (instance.canReboot()) {
+				stoppedInstances.add(instance);
+			}
+		}
+		return stoppedInstances;
+	}
+	
 	private void rebootInstances(Object[] deltaCloudInstances) {
 		for (int i = 0; i < deltaCloudInstances.length; i++) {
 			rebootInstance((DeltaCloudInstance) deltaCloudInstances[i]);
