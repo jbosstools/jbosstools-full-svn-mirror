@@ -579,9 +579,9 @@
          </command>
          <command
                commandId="org.eclipse.ui.edit.delete"
-               label="%command.disconnectcloud.label"
+               label="%command.deletecloud.label"
                style="push"
-               tooltip="%command.disconnectcloud.tooltip">
+               tooltip="%command.deletecloud.tooltip">
          </command>
          <command
                commandId="org.eclipse.ui.file.refresh"
