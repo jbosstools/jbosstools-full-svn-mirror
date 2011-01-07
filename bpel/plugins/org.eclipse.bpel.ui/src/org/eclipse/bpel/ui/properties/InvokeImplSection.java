@@ -176,20 +176,13 @@ public class InvokeImplSection extends BPELPropertySection {
 
 	private static List<String> getVariablesNamesInUse(EObject parent) {
 		List<String> variablesNames = new ArrayList<String>();
-		Variables variables;
-		for (;parent != null; parent = parent.eContainer()) {
-			if (parent instanceof Process) {
-				variables = ((Process)parent).getVariables();
-			} else if (parent instanceof Scope) {
-				variables = ((Scope)parent).getVariables();
-			} else {
-				continue;
-			}
-			EList<Variable> variableList = variables.getChildren();
-			for (Variable var : variableList) {
-				variablesNames.add(var.getName());
-			}			
-		}
+		// https://issues.jboss.org/browse/JBIDE-8042
+		// grab all visible variables, not just Process and Scope variables
+		// NOTE: this includes implicit variables defined in ForEach
+		Variable[] variables = BPELUtil.getVisibleVariables((EObject)parent);
+		for (Variable var : variables) {
+			variablesNames.add(var.getName());
+		}			
 
 		return variablesNames;
 	}
