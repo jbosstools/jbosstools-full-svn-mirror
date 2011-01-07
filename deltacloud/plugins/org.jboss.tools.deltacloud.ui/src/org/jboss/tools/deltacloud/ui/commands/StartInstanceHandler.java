@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.ui.commands;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
@@ -61,15 +62,26 @@ public class StartInstanceHandler extends AbstractInstanceHandler {
 	@SuppressWarnings("unchecked")
 	private void startWithDialog(IStructuredSelection selection) {
 		List<DeltaCloudInstance> deltaCloudInstances =  UIUtils.adapt((List<DeltaCloudInstance>) selection.toList(), DeltaCloudInstance.class);
+		List<DeltaCloudInstance> stoppedInstances = getStoppedInstances(deltaCloudInstances);
 		DeltaCloudInstanceDialog dialog = new DeltaCloudInstanceDialog(
 					UIUtils.getActiveShell()
-					, deltaCloudInstances
+					, stoppedInstances
 					, CVMessages.getString(START_INSTANCES_DIALOG_TITLE)
 					, CVMessages.getString(START_INSTANCES_DIALOG_MSG));
-		dialog.setInitialElementSelections(deltaCloudInstances);
+		dialog.setInitialElementSelections(stoppedInstances);
 		if (Dialog.OK == dialog.open()) {
 			startInstances(dialog.getResult());
 		}
+	}
+
+	private List<DeltaCloudInstance> getStoppedInstances(List<DeltaCloudInstance> deltaCloudInstances) {
+		ArrayList<DeltaCloudInstance> stoppedInstances = new ArrayList<DeltaCloudInstance>();
+		for (DeltaCloudInstance instance : deltaCloudInstances) {
+			if (instance.isStopped()) {
+				stoppedInstances.add(instance);
+			}
+		}
+		return stoppedInstances;
 	}
 
 	private void startInstances(Object[] deltaCloudInstances) {

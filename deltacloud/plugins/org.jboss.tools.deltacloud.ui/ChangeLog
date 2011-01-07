@@ -1,5 +1,10 @@
 2011-01-07  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
+	* src/org/jboss/tools/deltacloud/ui/commands/StartInstanceHandler.java 
+	(startWithDialog): 
+	(getStoppedInstances): 
+	[JBIDE-7557] implemented capability to start the stopped instances out of a bunch of instances (running and stopped ones) 
+		
 	* plugin.xml: 
 	* src/org/jboss/tools/deltacloud/ui/commands/RefreshCloudHandler.java (execute): 
 	[JBIDE-7916] added ability to refresh several clouds
