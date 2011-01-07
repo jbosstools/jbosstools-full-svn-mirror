@@ -56,7 +56,7 @@
 		<!-- <delete file="${WORKINGDIR}/${COMPONENT}/${drools.zip}" quiet="true"/> -->
 
 		<delete dir="${WORKINGDIR}/${COMPONENT}/drools-update-site" quiet="true" />
-		<delete dir="${WORKINGDIR}/${COMPONENT}" quiet="true" includes="ReadMeDroolsEclipse.txt" />
+		<delete dir="${WORKINGDIR}/${COMPONENT}" quiet="true" includes="ReadMeDroolsEclipse.txt, LICENSE-ASL-2.0.txt" />
 
 	</target>
 
