@@ -27,6 +27,7 @@ import org.eclipse.bpel.validator.model.IFunctionMeta;
 import org.eclipse.bpel.validator.model.IModelQuery;
 import org.eclipse.bpel.validator.model.INode;
 import org.eclipse.bpel.validator.model.NodeAttributeValueFilter;
+import org.eclipse.bpel.validator.model.NodeNameFilter;
 import org.eclipse.bpel.validator.model.Selector;
 import org.eclipse.bpel.validator.model.UndefinedNode;
 import org.eclipse.bpel.validator.model.XNotImplemented;
@@ -216,16 +217,34 @@ public class ModelQueryImpl  implements IModelQuery {
 		
 		IFilter<INode> aFilterByName = new NodeAttributeValueFilter(IConstants.AT_NAME, name );
 		IFilter<INode> aFilterByFaultVariable = new NodeAttributeValueFilter(IConstants.AT_FAULT_VARIABLE, name );
-		
+		IFilter<INode> aFilterByVariable = new NodeAttributeValueFilter(IConstants.AT_VARIABLE, name );
+		IFilter<INode> aFilterByCounterName = new NodeAttributeValueFilter(IConstants.AT_COUNTER_NAME, name );
+		IFilter<INode> nFilterForEach = new NodeNameFilter(IConstants.ND_FOR_EACH);
+
 		while (context != null) {				
 			if (Filters.SCOPE_OR_PROCESS.select (context) ) {
+				// select variables defined in a scope or process
 				INode var = mSelector.selectNode(context,IConstants.ND_VARIABLES,IConstants.ND_VARIABLE,aFilterByName);								
 				if (var != null) {
 					return var;
 				}
+				// select catch name defined in faultHandlers
 				var = mSelector.selectNode(context,IConstants.ND_FAULT_HANDLERS,IConstants.ND_CATCH,aFilterByFaultVariable);								
 				if (var != null) {
 					return var;
+				}
+				// https://issues.jboss.org/browse/JBIDE-8044
+				// select variable defined in onEvent of eventHandlers
+				var = mSelector.selectNode(context,IConstants.ND_EVENT_HANDLERS,IConstants.ND_ON_EVENT,aFilterByVariable);								
+				if (var != null) {
+					return var;
+				}
+				// select counterName defined in forEach
+				INode parent = mSelector.selectParent(context,nFilterForEach);
+				if (parent != null) {
+					if (aFilterByCounterName.select(parent)) {
+						return parent;
+					}
 				}
 			}
 			context = context.parentNode();

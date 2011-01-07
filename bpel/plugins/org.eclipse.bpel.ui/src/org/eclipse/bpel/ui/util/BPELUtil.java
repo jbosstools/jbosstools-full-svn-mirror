@@ -1394,11 +1394,13 @@ public class BPELUtil {
 							}
 							return true;
 						}
-					});		
-			returnObjects.remove(0);	//remove the scope containing the compensate			
+					});
+			// https://issues.jboss.org/browse/JBIDE-8044
+			if (!returnObjects.isEmpty())
+				returnObjects.remove(0);	//remove the scope containing the compensate			
 			return returnObjects;
-			}
-			throw new IllegalArgumentException();			
+		}
+		throw new IllegalArgumentException();			
 	}
 	
 	public static Object resolveXSDObject(Object xsdObject) {
@@ -1721,13 +1723,14 @@ public class BPELUtil {
 	
 	public static void openEditor(EObject modelObject, BPELEditor editor) {
 		try {
+			// https://issues.jboss.org/browse/JBIDE-8044
+			Assert.isNotNull(modelObject);
+			Assert.isNotNull(modelObject.eResource());
 			// https://jira.jboss.org/browse/JBIDE-7351
 			// try to resolve proxies here, otherwise we don't know editor input
 			if (modelObject.eIsProxy()) {
 				modelObject = EmfModelQuery.resolveProxy(editor.getProcess(), modelObject);
 			}
-			Assert.isNotNull(modelObject);
-			Assert.isNotNull(modelObject.eResource());
 			IFile file = BPELUtil.getFileFromURI(modelObject.eResource().getURI());
 			IDE.openEditor(editor.getSite().getWorkbenchWindow().getActivePage(), file);	
 		} catch (PartInitException ex) {
