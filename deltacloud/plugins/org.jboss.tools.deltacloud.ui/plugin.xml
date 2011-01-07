@@ -127,7 +127,7 @@
 		</enabledWhen>
       </handler>
       <handler
-            class="org.jboss.tools.deltacloud.ui.commands.DisconnectCloudHandler"
+            class="org.jboss.tools.deltacloud.ui.commands.DeleteCloudHandler"
             commandId="org.eclipse.ui.edit.delete">
 		<enabledWhen>
 			<with
