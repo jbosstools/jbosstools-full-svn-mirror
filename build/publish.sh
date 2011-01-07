@@ -139,6 +139,11 @@ fi
 # create sources zip
 pushd ${WORKSPACE}/sources
 mkdir -p ${STAGINGDIR}/all
+if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]] && [[ -d ${WORKSPACE}/sources/aggregate/site/zips ]]; then
+	srczipname=${SRCSNAME/-Sources-/-Additional-Sources-}
+else
+	srczipname=${SRCSNAME}
+fi
 zip ${STAGINGDIR}/all/${SRCSNAME} -q -r * -x documentation\* -x download.jboss.org\* -x requirements\* \
   -x workingset\* -x labs\* -x build\* -x \*test\* -x \*target\* -x \*.class -x \*.svn\* -x \*classes\* -x \*bin\* -x \*.zip \
   -x \*docs\* -x \*reference\* -x \*releng\* -x \*.git\*
