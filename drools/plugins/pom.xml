@@ -7,10 +7,15 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<modules>
+		<!-- these four plugins are built upstream -->
+		<!--
 		<module>org.drools.eclipse</module>
 		<module>org.drools.eclipse.task</module>
 		<module>org.eclipse.webdav</module>
 		<module>org.guvnor.tools</module>
+		-->
+
+		<!-- not published to JBoss Tools (yet?) -->
 		<module>org.jboss.tools.flow.ruleflow</module>
 	</modules>
 </project>
