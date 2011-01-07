@@ -45,37 +45,23 @@
 	</condition>
 	<!-- if can't calculate where build/build.xml is located, must pass in path from parent when calling this script -->
 
-	<target name="custom.build" description="fetch latest drools from their Hudson build + selectively unpack it" depends="init">
+	<target name="custom.build" description="fetch latest drools from their Hudson build + selectively unpack it" depends="init,clean">
 		<get src="${drools.URL}/${drools.zip}" dest="${WORKINGDIR}/${COMPONENT}/${drools.zip}" usetimestamp="true" />
 		<unzip src="${WORKINGDIR}/${COMPONENT}/${drools.zip}" dest="${WORKINGDIR}/${COMPONENT}" overwrite="true" />
-		<move todir="${WORKINGDIR}/${COMPONENT}/plugins">
-			<fileset dir="${WORKINGDIR}/${COMPONENT}/drools-update-site/plugins" />
+		<move todir="${WORKINGDIR}/${COMPONENT}/site/target/site">
+			<fileset dir="${WORKINGDIR}/${COMPONENT}/drools-update-site" />
 		</move>
-		<move todir="${WORKINGDIR}/${COMPONENT}/features">
-			<fileset dir="${WORKINGDIR}/${COMPONENT}/drools-update-site/features" />
-		</move>
-		<delete dir="${WORKINGDIR}/${COMPONENT}/drools-update-site" />
+		<zip basedir="${WORKINGDIR}/${COMPONENT}/site/target/site" destfile="${WORKINGDIR}/${COMPONENT}/site/target/site_assembly.zip" />
+		<zip basedir="${WORKINGDIR}/${COMPONENT}/site/target/site" destfile="${WORKINGDIR}/${COMPONENT}/site/target/site.zip" includes="LICENSE-ASL-2.0.txt, site.xml" />
 		<!-- <delete file="${WORKINGDIR}/${COMPONENT}/${drools.zip}" quiet="true"/> -->
 
-		<ant antfile="${build.xml}" target="unjarPlugins">
-			<property name="COMPONENT" value="${COMPONENT}" />
-		</ant>
+		<delete dir="${WORKINGDIR}/${COMPONENT}/drools-update-site" quiet="true" />
+		<delete dir="${WORKINGDIR}/${COMPONENT}" quiet="true" includes="ReadMeDroolsEclipse.txt" />
 
-		<delete dir="${WORKINGDIR}/${COMPONENT}" quiet="true" includes="LICENSE-ASL-2.0.txt, 
-			README_DEPENDENCIES.txt, ReadMeDroolsEclipse.txt, plugins/*.jar" />
+	</target>
 
-		<ant antfile="${build.xml}" target="renameFeatures">
-			<property name="COMPONENT" value="${COMPONENT}" />
-		</ant>
-
-		<ant antfile="${build.xml}" target="snapshot2qualifier">
-			<property name="COMPONENT" value="${COMPONENT}" />
-		</ant>
-
-		<ant antfile="${build.xml}" target="genBuildProperties">
-			<property name="COMPONENT" value="${COMPONENT}" />
-		</ant>
-
+	<target name="clean">
+		<delete dir="${WORKINGDIR}/${COMPONENT}/site/target" quiet="yes" includeemptydirs="true" />
 	</target>
 
 	<target name="init">
