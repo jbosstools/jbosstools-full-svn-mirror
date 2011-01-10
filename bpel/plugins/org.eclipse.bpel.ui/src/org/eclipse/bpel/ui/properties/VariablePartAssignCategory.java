@@ -25,7 +25,6 @@ import org.eclipse.bpel.model.From;
 import org.eclipse.bpel.model.Query;
 import org.eclipse.bpel.model.To;
 import org.eclipse.bpel.model.Variable;
-import org.eclipse.bpel.model.impl.VariableImpl;
 import org.eclipse.bpel.model.messageproperties.Property;
 import org.eclipse.bpel.model.util.BPELConstants;
 import org.eclipse.bpel.model.util.BPELUtils;
@@ -495,18 +494,18 @@ public class VariablePartAssignCategory extends AssignCategoryBase {
 		if (query == null)
 			return;
 		Variable var = side.getVariable();
-		if (needInitializer(var, side))
-			return;
-		if (MessageDialog
-				.openQuestion(
-						PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-								.getShell(),
-						"Initializer",
-						NLS
-								.bind(
-										"Variable {0} doesn't have initializer. Should it be generated?",
-										(new Object[] { var.getName() })))) {
-			initTargetVariable(var, side);
+		if (needInitializer(var, side)) {
+			if (MessageDialog
+					.openQuestion(
+							PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+									.getShell(),
+							"Initializer",
+							NLS
+									.bind(
+											"Variable {0} doesn't have initializer. Should it be generated?",
+											(new Object[] { var.getName() })))) {
+				initTargetVariable(var, side);
+			}
 		}
 	}
 
@@ -527,7 +526,7 @@ public class VariablePartAssignCategory extends AssignCategoryBase {
 			if (p == null)
 				continue;
 			if (p.equals(side.getPart()))
-				return true;
+				return false;
 		}
 		
 		// https://issues.jboss.org/browse/JBIDE-8048
@@ -570,10 +569,10 @@ public class VariablePartAssignCategory extends AssignCategoryBase {
 
 		// Incomplete variable definition
 		if (rootElement == null || uriWSDL == null) {
-			return true;
+			return false;
 		}
 		
-		return false;
+		return true;
 	}
 
 	private void initTargetVariable(Variable var, IVirtualCopyRuleSide side) {
