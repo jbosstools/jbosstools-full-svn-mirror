@@ -187,7 +187,7 @@ done
 echo ""  >> ${STAGINGDIR}/logs/${METAFILE}
 
 # generate md5sums in a single file 
-md5sumsFile=${STAGINGDIR}/all/${JOB_NAME}-md5sums-${BUILD_ID}-H${BUILD_NUMBER}.txt
+md5sumsFile=${STAGINGDIR}/logs/${JOB_NAME}-md5sums-${BUILD_ID}-H${BUILD_NUMBER}.txt
 echo "# Update Site Zips" > ${md5sumsFile}
 echo "# ----------------" >> ${md5sumsFile}
 md5sum $(find . -name "*Update*.zip" | egrep -v "aggregate-Sources|nightly-Update") >> ${md5sumsFile}
