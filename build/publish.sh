@@ -159,9 +159,10 @@ if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]] && [[ -d ${WORKSPACE}/sources/agg
 		mv $z ${z}.MD5 ${STAGINGDIR}/components
 	done
 	
-	# unpack component source zips
+	# unpack component source zips like jbosstools-pi4soa-3.1_trunk-Sources-SNAPSHOT.zip or jbosstools-3.2_trunk.component--ws-Sources-SNAPSHOT.zip
 	for z in $(find ${WORKSPACE}/sources/aggregate/site/zips -name "*Sources*.zip"); do
-		zn=${z%*-Sources*.zip}; zn=${zn#*--};
+		zn=${z%*-Sources*.zip}; zn=${zn#*--}; zn=${zn##*/}; zn=${zn#jbosstools-}; 
+		# zn=${zn%_trunk}; zn=${zn%_stable_branch};
 		mkdir -p ${STAGINGDIR}/all/sources/${zn}/
 		unzip -qq -o -d ${STAGINGDIR}/all/sources/${zn}/ $z
 	done
