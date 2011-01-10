@@ -282,3 +282,9 @@ fi
 if [[ -d ${WORKSPACE}/m2-repo/org/jboss/tools ]]; then
 	rm -rf ${WORKSPACE}/m2-repo/org/jboss/tools
 fi
+
+# publish updated log
+bl=${STAGINGDIR}/logs/BUILDLOG.txt
+wget -q http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/${BUILD_NUMBER}/consoleText -O ${bl}
+date; rsync -arzq --delete ${STAGINGDIR}/logs/BUILDLOG.txt $DESTINATION/builds/staging/${JOB_NAME}/logs/
+
