@@ -70,6 +70,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.commands.Command;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.events.SelectionEvent;
@@ -526,12 +527,17 @@ public class FaultCatchNameSection extends BPELPropertySection {
 						variable = BPELFactory.eINSTANCE.createVariable();
 					    _catch.setFaultVariable(variable);
 					}
+					// https://issues.jboss.org/browse/JBIDE-8045
+					// Data caught by fault handler can be either a Message Type
+					// or an XSD Element.
 					if (type instanceof Message) {
-						variable.setMessageType((Message)type);
-					} else {
-						variable.setMessageType(null);
+					    _catch.setFaultMessageType((Message)type);
+						_catch.setFaultElement(null);
 					}
-				    _catch.setFaultMessageType(variable.getMessageType());
+					else if (type instanceof XSDElementDeclaration) {
+					    _catch.setFaultMessageType(null);
+						_catch.setFaultElement((XSDElementDeclaration)type);
+					}
 				}
 			});
 			getCommandFramework().execute(wrapInShowContextCommand(command));
@@ -562,9 +568,17 @@ public class FaultCatchNameSection extends BPELPropertySection {
 			if (!command.isEmpty()) getCommandFramework().execute(wrapInShowContextCommand(command));
 
 		}
-		public void selectXSDType(XSDTypeDefinition xsdType) { store(xsdType); }
-		public void selectXSDElement(XSDElementDeclaration xsdElement) { }
-		public void selectMessageType(Message message) { store(message); }
+		// https://issues.jboss.org/browse/JBIDE-8045
+		public void selectXSDType(XSDTypeDefinition xsdType) {
+			MessageDialog.openError(null, Messages.SelectionAndCreationDialog_Error_2,
+					Messages.FaultCatchNameSection_Error_Invalid_Type);
+		}
+		public void selectXSDElement(XSDElementDeclaration xsdElement) {
+			store(xsdElement);
+		}
+		public void selectMessageType(Message message) {
+			store(message); 
+		}
 	}
 	
 	protected void createVariableWidgets(Composite parent) {
@@ -713,6 +727,10 @@ public class FaultCatchNameSection extends BPELPropertySection {
 		}
 		if (_catch.getFaultMessageType() != null) {
 			variableTypeSelector.setVariableType(_catch.getFaultMessageType());
+		}
+		// https://issues.jboss.org/browse/JBIDE-8045
+		if (_catch.getFaultElement() != null) {
+			variableTypeSelector.setVariableType(_catch.getFaultElement());
 		}
 	}
 	

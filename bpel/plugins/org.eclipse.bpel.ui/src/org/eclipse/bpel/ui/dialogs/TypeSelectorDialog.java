@@ -93,7 +93,7 @@ public class TypeSelectorDialog extends BrowseSelectorDialog {
 	// https://jira.jboss.org/browse/JBIDE-7107
 	// set by caller if a selection from the lower tree (typically message parts or XSD elements)
 	// are required before "OK" button can be enabled.
-	protected boolean requireLowerTreeSelection = true;
+	protected boolean requireLowerTreeSelection = false;
 	
 	
 	/**
@@ -316,4 +316,15 @@ public class TypeSelectorDialog extends BrowseSelectorDialog {
 		return true;
 	}
 			
+	
+	/**
+	 * https://issues.jboss.org/browse/JBIDE-8045
+	 * Enable or disable lower tree selection required flag (see this.requireLowerTreeSelection)
+	 * 
+	 * @param enabled
+	 */
+	public void setRequireLowerTreeSelection(boolean enabled)
+	{
+		this.requireLowerTreeSelection = enabled;
+	}
 }

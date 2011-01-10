@@ -349,6 +349,7 @@ public final class Messages extends NLS {
 	public static String FaultCatchNameDetails_Namespace__21;
 	public static String FaultCatchNameDetails_User_defined_15;
 	public static String FaultCatchNameSection_Variable_Name_3;
+	public static String FaultCatchNameSection_Error_Invalid_Type;
 	public static String FaultHandlerAdapter_Fault_Handlers_1;
 	public static String FaultThrowNameDetails_Built_in_14;
 	public static String FaultThrowNameDetails_Fault_Name__16;
