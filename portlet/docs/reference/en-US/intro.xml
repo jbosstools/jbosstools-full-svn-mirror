@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="intro" xreflabel="intro">
+<chapter id="intro">
     <?dbhtml filename="intro.html"?>
     <title>Introduction</title>
 
@@ -22,7 +22,7 @@
     		<ulink url="http://www.jcp.org/en/jsr/detail?id=286">JSR-286 Portlet Specification (Portlet 2.0)</ulink> and works with 
     		<ulink url="http://www.jboss.org/portletbridge/">JBoss Portlet Bridge</ulink> for supporting Portlets 
     		in JSF/Seam applications. To enable these features, you need to add the JBoss Portlet facet to a new or an existing web project 
-    		(see <link linkend="portlet_tools_tasks">JBoss Portlet Tools Tasks</link>). The project could be a non-WTP project, but you should know that 
+    		(see <xref linkend="portlet_tools_tasks"/>). The project could be a non-WTP project, but you should know that 
     		if it does not have the proper portlet API jar's the generated classes will have compile errors.</para>
         
     	<para>The next table lists key features supplied by <property>JBoss Portlet Tools</property>.</para>
@@ -53,7 +53,7 @@
                         	<para><property>JBoss Portlet Tools</property> provides the Java, JSF and Seam Portlet facets that could be enabled for a Web project.</para>
                         </entry>
                         <entry>
-                        	<link linkend="portlet_tools_tasks">JBoss Portlet Tools Tasks</link>
+                        	<xref linkend="portlet_tools_tasks"/>
                         </entry>
                     </row>
 
@@ -67,7 +67,7 @@
                             portlets</para>
                         </entry>
                         <entry>
-                        	<link linkend="java_portlet_wizard">Java Portlet Wizard</link>
+                        	<xref linkend="java_portlet_wizard"/>
                         </entry>
                     </row>
 
@@ -79,7 +79,7 @@
                             <para>This wizard helps create JSF/Seam portlets</para>
                         </entry>
                         <entry>
-                        	<link linkend="jsf_seam_portlet_wizard">JSF/Seam Portlet Wizard</link>
+                        	<xref linkend="jsf_seam_portlet_wizard"/>
                         </entry>
                     </row>
                 </tbody>

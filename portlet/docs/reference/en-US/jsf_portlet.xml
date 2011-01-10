@@ -13,12 +13,12 @@
     	<orderedlist>
     		<listitem>
     			<para>Create a dynamic Web project with the <emphasis><property>JavaServer Faces</property></emphasis>
-    				and <emphasis><property>JBoss JSF Portlet</property></emphasis> facets enabled (
-    				<link linkend="create_dyn_web_proj_jsf">the steps to proceed</link>)</para>    			
+    				and <emphasis><property>JBoss JSF Portlet</property></emphasis> facets enabled (see
+    				<xref linkend="create_dyn_web_proj_jsf"/>)</para>    			
     		</listitem>
     		<listitem><para>Or create a JSF project using the wizard JBoss JSF Tools provides, then enable 
-    			JSF and JBoss Portlet facets and add JBoss Portlet capabilities (
-    			<link linkend="create_jsf_proj">the steps to proceed</link>)</para></listitem>
+    			JSF and JBoss Portlet facets and add JBoss Portlet capabilities (see 
+    			<xref linkend="create_jsf_proj"/>)</para></listitem>
     	</orderedlist>
     	
     	<para>Refer to the further sections for the procedures on how to do this.</para>
@@ -33,11 +33,11 @@
     				<para>Start the <emphasis><property>Dynamic Web Project</property></emphasis> wizard navigating to
     					<emphasis><property>File &gt; New &gt; Other &gt; Web &gt; Dynamic Web Project</property>.</emphasis></para>
     				
-    				<tip>
+    				<note>
     					<title>Tip:</title>
     					<para>You can also select  the <property>Java EE</property> perspective and then go to 
     						<emphasis><property>File &gt; New &gt; Dynamic Web Project</property>.</emphasis></para>
-    				</tip>
+    				</note>
     				
     				<figure>
     					<title>Setting the JSF Configuration</title>
@@ -51,7 +51,7 @@
     			
     			<listitem>
     				<para>Specify the project name and set the target runtime to <property>JBoss Portal</property> by following the points 3, 4 and 5 in the 
-    					<link linkend="jboss_core_portlet">&quot;Creating a Web Project with JBoss Portlet Capabilities&quot;</link> procedure.</para>
+    					<xref linkend="jboss_core_portlet"/> procedure.</para>
     			</listitem>
     			
     			<listitem>
@@ -87,11 +87,11 @@
     					</mediaobject>
     				</figure>
     				
-    				<tip>
+    				<note>
     					<title>Tip:</title>
     					<para>All types of the portlet implementation library are described more closely in the wiki article at: 
     						<ulink url="http://www.jboss.org/community/wiki/PortletFacetLibraries">http://www.jboss.org/community/wiki/PortletFacetLibraries</ulink>.</para>
-    				</tip>
+    				</note>
     			</listitem>
     			
     			<listitem>
@@ -122,11 +122,11 @@
     					</mediaobject>
     				</figure>
     				
-    				<tip>
+    				<note>
     					<title>Tip:</title>
     					<para>On this page, it is also possible to add the RichFaces libraries from the RichFaces distribution by checking 
     						<emphasis><property>Add/Change Richfaces Libraries</property>.</emphasis></para>
-    				</tip>
+    				</note>
     				
     				<note>
     					<title>Note:</title>
@@ -149,7 +149,7 @@
     		<para>How to organize a JSF project you can find out in the JSF Tools User Guide. Just
     			remember to point the target runtime to <property>JBoss Portal</property> directory location (see 
     			how it is done for a dynamic Web project: steps 3, 4 and 5 in the 
-    			<link linkend="jboss_core_portlet">&quot;Creating a Web Project with JBoss Portlet Capabilities&quot;</link> procedure).</para>
+    			<xref linkend="jboss_core_portlet"/> procedure).</para>
     		
     		<figure>
     			<title>Creating New JSF Project</title>
@@ -189,7 +189,7 @@
     			
     			<listitem>
     				<para>Complete all wizard pages the same way as described in the steps 5, 6, 7 of the 
-    					<link linkend="jboss_core_portlet">&quot;Creating a Dynamic Web Project with the JBoss Portlet Capabilities&quot;</link> procedure.
+    					<xref linkend="jboss_core_portlet"/> procedure.
     				Hit <emphasis><property>OK</property>.</emphasis></para>
     			</listitem>
     			
@@ -213,7 +213,7 @@
     				<property>Create Portlet</property> wizard by navigating to <emphasis>
     					<property>New > Other > JBoss Tools Web > Portlet > JSF/Seam
     					Portlet</property></emphasis> on the context menu of the project (for information about the wizard options, see 
-    				<link linkend="jsf_seam_portlet_wizard">&quot;JSF/Seam Portlet Wizard&quot;</link> in the guide reference).</para>
+    				<xref linkend="jsf_seam_portlet_wizard"/> in the guide reference).</para>
     			
     			<figure>
     				<title>Calling New Portlet Wizard</title>
@@ -224,12 +224,12 @@
     				</mediaobject>
     			</figure>
     			
-    			<tip>
+    			<note>
     				<title>Tip:</title>
     				<para>As you see, the JSF and Seam Portlet wizards are merged into one. We have set the JSF
     					configuration for the project, so the default values in this wizard will be set as for a JSF
     					portlet.</para>
-    			</tip>
+    			</note>
     		</listitem>
     		
     		<listitem>
@@ -238,7 +238,7 @@
     		</listitem>
     		
     		<listitem>
-    			<para>Complete the steps described in the <link linkend="deploying_to_portal">&quot;Deploying a Portlet to JBoss Portal&quot;</link> procedure to
+    			<para>Complete the steps described in the <xref linkend="deploying_to_portal"/> procedure to
     			deploy a JSF portlet to <property>JBoss Portal</property>. Just use the other URL to see it in the browser: 
     				<emphasis>http://localhost:8080/portal/portal/default/JSFPortlet</emphasis>.</para>
     			

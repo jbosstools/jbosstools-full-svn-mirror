@@ -124,7 +124,7 @@
 						<emphasis>
 							<property>JBoss Portlets</property></emphasis> facets will be hidden on this page.</para>
 					<para>To make them always visible no matter what the runtime is set, you should enable the appropriate option in 
-						<link linkend="preferences">JBoss Portlet Preferences</link>.</para>
+						<xref linkend="preferences"/>.</para>
 				</note>
 			</listitem>
 			
@@ -195,7 +195,7 @@
 			
 			<listitem>
 				<para>The <property>Create Portlet</property> wizard starts (for information about the wizard options, see 
-					<link linkend="java_portlet_wizard">&quot;Java Portlet Wizard&quot;</link> in the guide reference). 
+					<xref linkend="java_portlet_wizard"/> in the guide reference). 
 					The wizard fills in the <emphasis><property>Project</property></emphasis> and <emphasis>
 						<property>Source Folder</property></emphasis> fields for you. You should specify a Java package and a class name 
 					(for instance, <emphasis>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="reference" xreflabel="reference">
+<chapter id="reference">
 	<?dbhtml filename="reference.html"?>
 	<title>Reference</title>
 	
@@ -55,8 +55,8 @@
 		<title>Wizards</title>
 		<para>This section describes the <property>JBoss Portlet Tools</property> wizards:</para>
 		<itemizedlist>
-			<listitem><para><link linkend="java_portlet_wizard">Java Portlet wizard</link></para></listitem>
-			<listitem><para><link linkend="jsf_seam_portlet_wizard">JSF/Seam Portlet wizard</link></para></listitem>
+			<listitem><para><xref linkend="java_portlet_wizard"/></para></listitem>
+			<listitem><para><xref linkend="jsf_seam_portlet_wizard"/></para></listitem>
 		</itemizedlist>
 		
 		<section id="java_portlet_wizard">
