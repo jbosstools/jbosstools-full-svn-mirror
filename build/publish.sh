@@ -148,6 +148,7 @@ zip ${STAGINGDIR}/all/${srczipname} -q -r * -x hudson_workspace\* -x documentati
   -x workingset\* -x labs\* -x build\* -x \*test\* -x \*target\* -x \*.class -x \*.svn\* -x \*classes\* -x \*bin\* -x \*.zip \
   -x \*docs\* -x \*reference\* -x \*releng\* -x \*.git\*
 popd
+z=${STAGINGDIR}/all/${srczipname}; for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done
 
 # collect component zips from upstream aggregated build jobs
 if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]] && [[ -d ${WORKSPACE}/sources/aggregate/site/zips ]]; then
@@ -172,8 +173,7 @@ if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]] && [[ -d ${WORKSPACE}/sources/agg
 	popd
 	rm -fr ${STAGINGDIR}/all/sources
 	
-	z=${STAGINGDIR}/all/${SRCSNAME}
-	for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done
+	z=${STAGINGDIR}/all/${SRCSNAME}; for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done
 fi
 
 # generate list of zips in this job
