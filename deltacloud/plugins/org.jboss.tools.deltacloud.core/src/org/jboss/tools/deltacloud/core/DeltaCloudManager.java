@@ -24,6 +24,7 @@ import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IPath;
@@ -34,6 +35,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 /**
  * @author Jeff Johnston
@@ -55,31 +57,38 @@ public class DeltaCloudManager {
 		this.clouds = new ArrayList<DeltaCloud>(); // clear present clouds
 		DeltaCloudMultiException connectionException = new DeltaCloudMultiException("Could not load some clouds");
 		try {
-			File cloudFile = getOrCreateCloudFile();
-			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-			DocumentBuilder db = dbf.newDocumentBuilder();
-			if (cloudFile.exists()) {
-				Document d = db.parse(cloudFile);
-				Element element = d.getDocumentElement();
-				// Get the stored configuration data
-				NodeList cloudNodes = element.getElementsByTagName(DeltaCloudXMLBuilder.TAG_CLOUD); // $NON-NLS-1$
-				for (int x = 0; x < cloudNodes.getLength(); ++x) {
-					Node n = cloudNodes.item(x);
-					try {
-						loadCloud(n, clouds);
-					} catch (DeltaCloudException e) {
-						connectionException.addError(e);
-					}
-				}
+			File cloudFile = getCloudFile();
+			if (!cloudFile.exists()) {
+				cloudFile.createNewFile();
+			} else {
+				doLoadClouds(connectionException, cloudFile);
 			}
 		} catch (Exception e) {
 			connectionException.addError(e);
 		}
 
 		loaded = true;
-		
+
 		if (!connectionException.isEmpty()) {
 			throw connectionException;
+		}
+	}
+
+	private void doLoadClouds(DeltaCloudMultiException connectionException, File cloudFile)
+			throws ParserConfigurationException, SAXException, IOException {
+		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+		DocumentBuilder db = dbf.newDocumentBuilder();
+		Document d = db.parse(cloudFile);
+		Element element = d.getDocumentElement();
+		// Get the stored configuration data
+		NodeList cloudNodes = element.getElementsByTagName(DeltaCloudXMLBuilder.TAG_CLOUD); // $NON-NLS-1$
+		for (int x = 0; x < cloudNodes.getLength(); ++x) {
+			Node n = cloudNodes.item(x);
+			try {
+				loadCloud(n, clouds);
+			} catch (DeltaCloudException e) {
+				connectionException.addError(e);
+			}
 		}
 	}
 
@@ -176,7 +185,7 @@ public class DeltaCloudManager {
 		}
 
 		try {
-			File cloudFile = getOrCreateCloudFile();
+			File cloudFile = getCloudFile();
 			PrintWriter p = new PrintWriter(new BufferedWriter(new FileWriter(cloudFile)));
 			DeltaCloudXMLBuilder.xmlHeader(p);
 			DeltaCloudXMLBuilder.tag(DeltaCloudXMLBuilder.TAG_CLOUDS, p);
@@ -230,14 +239,9 @@ public class DeltaCloudManager {
 		}
 	}
 
-	private File getOrCreateCloudFile() throws IOException {
+	private File getCloudFile() throws IOException {
 		IPath stateLocation = Activator.getDefault().getStateLocation();
-		File cloudFile = stateLocation.append(CLOUDFILE_NAME).toFile();
-		if (!cloudFile.exists()) {
-			// try to create a new cloud storage file
-			cloudFile.createNewFile();
-		}
-		return cloudFile;
+		return stateLocation.append(CLOUDFILE_NAME).toFile();
 	}
 
 	public static DeltaCloudManager getDefault() {
