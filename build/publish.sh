@@ -144,7 +144,7 @@ if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]] && [[ -d ${WORKSPACE}/sources/agg
 else
 	srczipname=${SRCSNAME}
 fi
-zip ${STAGINGDIR}/all/${srczipname} -q -r * -x documentation\* -x download.jboss.org\* -x requirements\* \
+zip ${STAGINGDIR}/all/${srczipname} -q -r * -x hudson_workspace\* -x documentation\* -x download.jboss.org\* -x requirements\* \
   -x workingset\* -x labs\* -x build\* -x \*test\* -x \*target\* -x \*.class -x \*.svn\* -x \*classes\* -x \*bin\* -x \*.zip \
   -x \*docs\* -x \*reference\* -x \*releng\* -x \*.git\*
 popd
@@ -166,7 +166,7 @@ if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]] && [[ -d ${WORKSPACE}/sources/agg
 	done
 	# add component sources into sources zip
 	pushd ${STAGINGDIR}/all/sources
-	zip ${STAGINGDIR}/all/${SRCSNAME} -q -r * -x documentation\* -x download.jboss.org\* -x requirements\* \
+	zip ${STAGINGDIR}/all/${SRCSNAME} -q -r * -x hudson_workspace\* -x documentation\* -x download.jboss.org\* -x requirements\* \
 	  -x workingset\* -x labs\* -x build\* -x \*test\* -x \*target\* -x \*.class -x \*.svn\* -x \*classes\* -x \*bin\* -x \*.zip \
 	  -x \*docs\* -x \*reference\* -x \*releng\* -x \*.git\*
 	popd
