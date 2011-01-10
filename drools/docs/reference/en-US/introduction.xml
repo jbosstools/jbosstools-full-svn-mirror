@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="introduction" xreflabel="introduction">
+<chapter id="introduction">
     <title>Introduction</title>
 
     <section id="whatisDrools">
@@ -58,8 +58,7 @@
                                 with Drools</para>
                         </entry>
                         <entry>
-                            <link linkend="sample_drools_project">Creating a Sample Drools
-                                Project</link>
+                            <xref linkend="sample_drools_project"/>
                         </entry>
                     </row>
 
@@ -73,12 +72,10 @@
                                 Decision Table and Business rule</para>
                         </entry>
                         <entry>
-                            <link linkend="creating_rule">Creating a New Rule</link>
-                            <!--link linkend="creating_dsl">Creating a New DSL</link>
-                            <link linkend="creating_decision_table">Creating a New Decision
-                                Table</link>
-                            <link linkend="creating_business_rule">Creating a New Business
-                                Rule</link-->
+                            <xref linkend="creating_rule"/>
+                            <!--xref linkend="creating_dsl"/>
+                            <xref linkend="creating_decision_table"/>
+                            <xref linkend="creating_business_rule"/-->
                         </entry>
                     </row>
 
@@ -91,7 +88,7 @@
                                 assistance and synchronizing with the Outline view</para>
                         </entry>
                         <entry>
-                            <link linkend="textual_rule_editor">The Rule Editor</link>
+                            <xref linkend="textual_rule_editor"/>
                         </entry>
                     </row>
 
@@ -104,7 +101,7 @@
                                 language to the rule language</para>
                         </entry>
                         <entry>
-                            <link linkend="dsl_editor">The Domain Specific Language Editor</link>
+                            <xref linkend="dsl_editor"/>
                         </entry>
                     </row>
 
@@ -130,7 +127,7 @@
                                 process (a rule flow)</para>
                         </entry>
                         <entry>
-                            <link linkend="ruleflow_editor">The Rule Flow Graphical Editor</link>
+                            <xref linkend="ruleflow_editor"/>
                         </entry>
                     </row>
 

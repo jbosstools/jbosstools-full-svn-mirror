@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="debugging_rules" xreflabel="debugging_rules">
+<chapter id="debugging_rules">
 	<chapterinfo>
 		<keywordset>
 			<keyword>JBoss Tools</keyword>
@@ -35,12 +35,12 @@
 			<listitem>
 				<para>Double-click the ruler in the <property>Rule editor</property> at the line
 					where you want to add a breakpoint.</para>
-				<tip>
+				<note>
 					<title>Tip:</title>
 					<para>Note that rule breakpoints can only be created in the consequence of a
 						rule. Double-clicking on a line where no breakpoint is allowed will do
 						nothing.</para>
-				</tip>
+				</note>
 				<para>A breakpoint can be removed by double-clicking the ruler once more. </para>
 			</listitem>
 
@@ -115,10 +115,10 @@
 			</mediaobject>
 		</figure>
 
-		<tip>
+		<note>
 			<title>Tip:</title>
 			<para>Remember to change the name of your debug configuration to something meaningful.</para>
-		</tip>
+		</note>
 		
 		<para>Next
 			click the <emphasis>

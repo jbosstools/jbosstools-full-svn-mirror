@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="editors" xreflabel="editors">
+<chapter id="editors">
     <chapterinfo>
         <keywordset>
             <keyword>JBoss Tools</keyword>
@@ -56,7 +56,7 @@
                                 targeted: is it for the "condition" part of the rule ,"consequence" part, etc.</para></listitem>
                         </itemizedlist>
                          By clicking on some row's header you can sort the lines in the table according to the clicked row.
-                         By double clicking on the line <link linkend="edit_wizard">Edit language mapping Wizard</link> will be open. 
+                         By double clicking on the line <xref linkend="edit_wizard"/> will be open. 
                         </entry>
                     </row> 
                     <row>
@@ -84,11 +84,11 @@
                         <entry><itemizedlist>
                             <listitem><para><emphasis>Edit</emphasis> :by clicking the button users can edit
                                 selected in the table of language message mappings lines.For more information look
-                                 <link linkend="edit_wizard">Edit language mapping Wizard</link>section.</para></listitem>
+                                 <xref linkend="edit_wizard"/> section.</para></listitem>
                             <listitem><para><emphasis>Remove</emphasis> :if you click the button the selected mapping line will be deleted. </para></listitem>
                             <listitem><para><emphasis>Add</emphasis> :with this button you can add new mapping lines to the table.For more information look 
-                                 <link linkend="add_wizard">Add language mapping Wizard</link>section. </para></listitem>
-                            <listitem><para><emphasis>Sort</emphasis> : please, for more information go <link linkend="sort">here</link></para></listitem>
+                                 <xref linkend="add_wizard"/> section. </para></listitem>
+                            <listitem><para><emphasis>Sort</emphasis> : please, for more information see <xref linkend="sort"/></para></listitem>
                             <listitem><para><emphasis>Copy</emphasis> :with this button you can add new mapping lines to the table
                                 in which all the information will be copied from the selected mapping line.</para></listitem>
                         </itemizedlist>
@@ -102,7 +102,7 @@
             <para>This wizard can be opened by double clicking some line 
                 in the table of language message mappings or by clicking the <emphasis>Edit</emphasis> button.</para>
             <para>On the picture below you can see all the options,Edit language mapping Wizard allow to change.</para>
-            <para>Their names as well as the meaning of the options are correspond to the <link linkend="rows">rows</link> of the table.</para>
+            <para>Their names as well as the meaning of the options are correspond to the <xref linkend="rows"/> of the table.</para>
             <figure>
                 <title>Edit language mapping Wizard</title>
                 <mediaobject>
@@ -115,7 +115,7 @@
         </section>
         <section id="add_wizard">
             <title>Add language mapping Wizard</title>
-            <para>This wizard is equal to <link linkend="edit_wizard">Edit language mapping Wizard</link>.
+            <para>This wizard is equal to <xref linkend="edit_wizard"/>.
             It can be opened by clicking the <emphasis>Add</emphasis> button.
             </para>
             <para>The only difference is that instead of editing the information you should enter new one.</para>
@@ -376,26 +376,25 @@
         <itemizedlist>
             <listitem>
                 <para>
-                    <link linkend="rules_editor_content_assist">Content Assist</link>
+                    <xref linkend="rules_editor_content_assist"/>
                 </para>
             </listitem>
 
             <listitem>
                 <para>
-                    <link linkend="rules_editor_code_folding">Code Folding</link>
+                    <xref linkend="rules_editor_code_folding"/>
                 </para>
             </listitem>
 
             <!--      <listitem>
                 <para>
-                    <link linkend="rules_editor_error_reporting">Error Reporting</link>
+                    <xref linkend="rules_editor_error_reporting"/>
                 </para>
             </listitem>-->
 
             <listitem>
                 <para>
-                    <link linkend="rules_editor_sync_with_outline">Synchronization with Outline
-                        View</link>
+                    <xref linkend="rules_editor_sync_with_outline"/>
                 </para>
             </listitem>
         </itemizedlist>

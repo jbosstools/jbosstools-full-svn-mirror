@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="create_new" xreflabel="create_new">
+<chapter id="create_new">
     
     <chapterinfo>
         <keywordset>
@@ -33,8 +33,8 @@
             <property>.dsl</property>
         </emphasis> file. Then hit <emphasis>
             <property>Finish</property>
-        </emphasis> to create a file and open it in the <link linkend="dsl_editor">DSL
-            editor</link>.</para>
+        </emphasis> to create a file and open it in the <xref linkend="dsl_editor">DSL
+            editor</xref>.</para>
         
         <figure>
             <title>New DSL Wizard</title>
@@ -56,7 +56,7 @@
         
         <para>To create a rule this way, use the wizard menu. It will create an instance of a <emphasis>
             <property>.brl</property>
-        </emphasis> file and open it in the <link linkend="guided_editor">Guided editor</link>.
+        </emphasis> file and open it in the <xref linkend="guided_editor">Guided editor</xref>.
             The <property>Guided editor</property> works based on a <emphasis>
                 <property>.package</property>
             </emphasis> file in the same directory as the <emphasis>

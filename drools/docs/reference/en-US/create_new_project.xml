@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="create_new_project" xreflabel="create_new_project">
+<chapter id="create_new_project">
     <chapterinfo>
         <keywordset>
             <keyword>JBoss Tools</keyword>
@@ -154,11 +154,11 @@
             are also added to the classpath in a custom classpath container called <property>Drools
                 Library</property>.</para>
 
-        <tip>
+        <note>
             <title>Tip:</title>
             <para>Rules do not have to be kept in Java projects at all, this is just a convenience
                 for people who are already using eclipse as their Java IDE.</para>
-        </tip>
+        </note>
 
     </section>
 
