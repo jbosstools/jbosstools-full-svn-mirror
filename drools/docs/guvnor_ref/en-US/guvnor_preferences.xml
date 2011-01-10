@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<chapter id="guvnor_preferences" xreflabel="guvnor_preferences">
+<chapter id="guvnor_preferences">
     <?dbhtml filename="guvnor_preferences.html"?>
     <chapterinfo>
         <keywordset>
@@ -15,8 +15,8 @@
         <title>Guvnor Repository Exploring Perspective</title>
        
         <para>The <property>Guvnor Repository Exploring perspective</property> contains two views
-            supplied by <property>EGT</property> – <link linkend="guvnor_repositories_view">Guvnor Repositories view</link> and
-            <link linkend="guvnor_history_view">Guvnor Resource History view</link>, that will be the center of most interactions
+            supplied by <property>EGT</property> – <xref linkend="guvnor_repositories_view"/> and
+            <xref linkend="guvnor_history_view"/>, that will be the center of most interactions
             with Guvnor, and Eclipse standard views such as <property>Properties</property> and
             <property>Resource Navigator</property> that are also useful.</para>
         
@@ -108,7 +108,7 @@
             <emphasis>
                 <property>Port</property>,</emphasis> and <emphasis>
                     <property>Repository</property>
-                </emphasis> fields (See the <link linkend="guvnor_preferences">“Guvnor Preferences”</link> section below for 			details about how to
+                </emphasis> fields (See the <xref linkend="guvnor_preferences"/> section below for 			details about how to
             change these default values.) Of course, any of these fields can be edited by typing in
             the corresponding text box. Drag-and-drop or paste into the <emphasis>
                 <property>Location</property>
@@ -140,11 +140,11 @@
         <para>If authentication fails, the <property>EGT</property> will retry once and then issue
             an authentication failure error.</para>
         
-        <tip>
+        <note>
             <title>Tip:</title>
             <para>If an authentication failure error occurs, you can retry the same operation and
                 supply different authentication information.</para>
-        </tip>
+        </note>
         
         <para>Note that the <property>EGT</property> calls the Guvnor repository at various times,
             such as when determining if resource updates are available. Thus if you use session
@@ -184,7 +184,7 @@
         
         <para>The first page of the wizard asks for the selection of the source Guvnor repository
             and gives the choice to create a new Guvnor repository connection (in which case the
-            second page is the same as the <link linkend="guvnor_connection_wizard">Guvnor Connection wizard</link>).</para>
+            second page is the same as the <xref linkend="guvnor_connection_wizard"/>).</para>
         
         <figure>
             <title>Resource from Guvnor Wizard</title>
@@ -250,7 +250,7 @@
         
         <itemizedlist>
             <listitem>
-                <para>create a new Guvnor repository connection. How to do this is describe above in the <link linkend="connection_wizard">&quot;Guvnor Connection Wizard&quot;</link> section.</para>
+                <para>create a new Guvnor repository connection. How to do this is describe above in the <xref linkend="connection_wizard"/> section.</para>
             </listitem>
             
             <listitem>
@@ -345,8 +345,7 @@
             <property>Show History</property>
         </emphasis> actions in either the local <emphasis>
             <property>Guvnor</property></emphasis> context menu or in the context menu for
-            a Guvnor repository file in the <link linkend="guvnor_repositories_view">Guvnor
-                Repositories view</link>. Once this action is performed, the <property>Guvnor
+            a Guvnor repository file in the <xref linkend="guvnor_repositories_view"/>. Once this action is performed, the <property>Guvnor
                     Resource History view</property> updates to show the revision history:</para>
         
         <figure>

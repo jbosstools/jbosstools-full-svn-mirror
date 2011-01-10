@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<chapter id="functionality_overview" xreflabel="functionality_overview">
+<chapter id="functionality_overview">
     <?dbhtml filename="functionality_overview.html"?>
     <chapterinfo>
         <keywordset>
@@ -14,11 +14,10 @@
    
    <section >
        <title>Creating a New Guvnor Connection</title>
-       <para>As mentioned in the <link linkend="introduction">&quot;Introduction&quot;</link>, the main purpose
+       <para>As mentioned in the <xref linkend="introduction"/>, the main purpose
            of the <property>EGT</property> is to allow development using resources held in a Guvnor
            repository. The first task is to make a connection to a Guvnor repository. 
-           This is handled by the <link linkend="connection_wizard">Guvnor Connection
-               wizard</link>. </para>
+           This is handled by the <xref linkend="connection_wizard"/>. </para>
    </section>
     
     <section id="local_copies">
@@ -28,11 +27,10 @@
 
         <orderedlist>
             <listitem>
-                <para>Drag-and-drop from the <link linkend="guvnor_repositories_view">Guvnor Repositories view</link></para>
+                <para>Drag-and-drop from the <xref linkend="guvnor_repositories_view"/></para>
             </listitem>
             <listitem>
-                <para>Using the <link linkend="resources_from_guvnor">Resource from Guvnor
-                        wizard</link>, as described further in this document</para>
+                <para>Using the <xref linkend="resources_from_guvnor"/>, as described further in this document</para>
             </listitem>
         </orderedlist>
 
@@ -62,8 +60,7 @@
            above you can see the <emphasis>
                 <property>Dummy rule.drl</property></emphasis> file with the decoration in the <property>Resource Navigator</property>. The Guvnor icon decorator is on the top right of the file image, and the Guvnor
             revision details are appended to the file name. (The presence/location of these can be
-            changed in the <link linkend="resource_decoration_preferences">Guvnor
-            Preferences</link>.)</para>
+            changed in the <xref linkend="resource_decoration_preferences"/>.)</para>
 
         <para>Here we see that, <emphasis><property>Dummy rule.drl</property></emphasis> is associated with a Guvnor repository
             resource and the local copy is based on revision 0, with a <code>02-10-2008, 4:21:53</code> date/time
@@ -96,42 +93,42 @@
         <itemizedlist>
             <listitem>
                 <para>
-                    <link linkend="update_action">Update</link>
+                    <xref linkend="update_action"/>
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <link linkend="add_action">Add</link>
+                    <xref linkend="add_action"/>
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <link linkend="commit_action">Commit</link>
+                    <xref linkend="commit_action"/>
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <link linkend="show_history_action">Show History</link>
+                    <xref linkend="show_history_action"/>
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <link linkend="compare_with_version">Compare with Version</link>
+                    <xref linkend="compare_with_version"/>
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <link linkend="switch_to_version">Switch to Version</link>
+                    <xref linkend="switch_to_version"/>
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <link linkend="delete_action">Delete</link>
+                    <xref linkend="delete_action"/>
                 </para>
             </listitem>
             <listitem>
                 <para>
-                    <link linkend="disconnect_action">Disconnect</link>
+                    <xref linkend="disconnect_action"/>
                 </para>
             </listitem>
         </itemizedlist>
@@ -157,7 +154,7 @@
                     <property>Update</property>
                 </emphasis> action replaces the local file contents with the current contents from
                 the Guvnor repository master copies (equivalent to <emphasis>
-                    <link linkend="switch_to_version">Switch to version</link>
+                    <xref linkend="switch_to_version"/>
                 </emphasis> for the latest version).</para>
         </section>
 
@@ -182,8 +179,7 @@
 
             <para>The first page of the wizard asks for the selection of the target Guvnor
                 repository and gives the choice to create a new Guvnor repository connection (in
-                which case the second page is the same as the <link linkend="guvnor_connection_wizard"
-                    >Guvnor Connection wizard</link>). Once the target Guvnor repository is chosen,
+                which case the second page is the same as the <xref linkend="guvnor_connection_wizard"/>). Once the target Guvnor repository is chosen,
                 the wizard then asks for the folder location to add the selection files:</para>
 
 	   <figure>
@@ -247,7 +243,7 @@
             <para>The <emphasis>
                     <property>Show History</property>
                 </emphasis> action is enabled for one Guvnor repository associated file and causes
-                the <link linkend="guvnor_history_view">Guvnor Resource History view</link> to be
+                the <xref linkend="guvnor_history_view"/> to be
                 populated with revision history for the selected file.</para>
         </section>
 
