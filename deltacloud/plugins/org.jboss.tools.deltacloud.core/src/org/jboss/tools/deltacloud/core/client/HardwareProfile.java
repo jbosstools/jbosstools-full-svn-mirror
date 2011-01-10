@@ -13,30 +13,38 @@ package org.jboss.tools.deltacloud.core.client;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jboss.tools.deltacloud.core.client.Property.Names;
+
 /**
  * @author Martyn Taylor
+ * @author André Dietisheim
  */
-public class HardwareProfile extends AbstractDeltaCloudObject
-{
+public class HardwareProfile extends AbstractDeltaCloudObject {
 	private static final long serialVersionUID = 1L;
 
 	private List<Property> properties;
-	
-	protected HardwareProfile()
-	{	
+
+	public HardwareProfile() {
 	}
 
-	protected void setProperties(List<Property> properties) {
+	public void setProperties(List<Property> properties) {
 		this.properties = properties;
 	}
-	
+
 	public List<Property> getProperties() {
 		if (properties == null)
 			properties = new ArrayList<Property>();
 		return properties;
 	}
-	
-	private Property getNamedProperty(String name) {
+
+	public Property getNamedProperty(Names nameEnum) {
+		if (nameEnum == null) {
+			return null;
+		}
+		return getNamedProperty(nameEnum.name().toLowerCase());
+	}
+
+	public Property getNamedProperty(String name) {
 		if (properties != null) {
 			for (Property p : properties) {
 				if (p.getName().equals(name))
@@ -45,43 +53,37 @@ public class HardwareProfile extends AbstractDeltaCloudObject
 		}
 		return null;
 	}
-	
-	public String getArchitecture()
-	{
-		Property p = getNamedProperty("architecture");
+
+	public String getArchitecture() {
+		Property p = getNamedProperty(Property.Names.ARCHITECTURE);
 		if (p != null)
 			return p.getValue();
 		return null;
 	}
 
-	public String getMemory()
-	{
+	public String getMemory() {
 		Property p = getNamedProperty("memory");
 		if (p != null)
 			return p.toString();
 		return null;
 	}
-	
-	public String getStorage()
-	{
+
+	public String getStorage() {
 		Property p = getNamedProperty("storage");
 		if (p != null)
 			return p.toString();
 		return null;
 	}
 
-	public String getCPU()
-	{
+	public String getCPU() {
 		Property p = getNamedProperty("cpu");
 		if (p != null)
 			return p.getValue();
 		return null;
 	}
-	
-	
+
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		String s = "";
 		s += "Hardware-profile:\t\t" + getId() + "\n";
 		for (Property p : properties) {

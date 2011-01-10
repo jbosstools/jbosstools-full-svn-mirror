@@ -41,10 +41,13 @@ public abstract class AbstractDOMUnmarshaller<DELTACLOUDOBJECT> {
 		this.tagName = tagName;
 	}
 
-	public DELTACLOUDOBJECT unmarshall(InputStream inputStream, DELTACLOUDOBJECT resource) throws DeltaCloudClientException {
+	public DELTACLOUDOBJECT unmarshall(InputStream inputStream, DELTACLOUDOBJECT deltacloudObject) throws DeltaCloudClientException {
 		try {
 			Element element = getFirstElement(tagName, getDocument(inputStream));
-			return unmarshall(element, resource);
+			if (element == null) {
+				return null;
+			}
+			return unmarshall(element, deltacloudObject);
 		} catch (Exception e) {
 			// TODO: internationalize strings
 			throw new DeltaCloudClientException(

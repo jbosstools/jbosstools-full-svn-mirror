@@ -42,7 +42,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.eclipse.core.runtime.Assert;
-import org.jboss.tools.deltacloud.core.DeltaCloudHardwareProperty.Kind;
 import org.jboss.tools.deltacloud.core.client.request.AbstractListObjectsRequest;
 import org.jboss.tools.deltacloud.core.client.request.CreateInstanceRequest;
 import org.jboss.tools.deltacloud.core.client.request.CreateKeyRequest;
@@ -60,6 +59,7 @@ import org.jboss.tools.deltacloud.core.client.request.ListRealmRequest;
 import org.jboss.tools.deltacloud.core.client.request.ListRealmsRequest;
 import org.jboss.tools.deltacloud.core.client.request.PerformInstanceActionRequest;
 import org.jboss.tools.deltacloud.core.client.request.TypeRequest;
+import org.jboss.tools.deltacloud.core.client.unmarshal.HardwareProfilesUnmarshaller;
 import org.jboss.tools.deltacloud.core.client.unmarshal.InstanceUnmarshaller;
 import org.jboss.tools.deltacloud.core.client.unmarshal.InstancesUnmarshaller;
 import org.jboss.tools.deltacloud.core.client.unmarshal.KeyUnmarshaller;
@@ -326,85 +326,14 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	@Override
 	public List<HardwareProfile> listProfiles() throws DeltaCloudClientException {
 		try {
-			return buildProfiles(request(new ListHardwareProfilesRequest(baseUrl)));
+			InputStream response = request(new ListHardwareProfilesRequest(baseUrl));
+			List<HardwareProfile> profiles = new ArrayList<HardwareProfile>();
+			new HardwareProfilesUnmarshaller().unmarshall(response, profiles);
+			return profiles;
 		} catch (Exception e) {
 			throw new DeltaCloudClientException(MessageFormat.format("could not get realms on cloud at \"{0}\"",
 					baseUrl), e);
 		}
-	}
-
-	private List<HardwareProfile> buildProfiles(InputStream inputStream)
-			throws ParserConfigurationException, SAXException, IOException, DeltaCloudClientException {
-		Document document = getDocument(getResponse(inputStream));
-		List<HardwareProfile> profiles = new ArrayList<HardwareProfile>();
-		NodeList elements = document.getElementsByTagName("hardware_profile");
-		for (int i = 0; i < elements.getLength(); i++) {
-			HardwareProfile profile = createProfile(elements.item(i));
-			profiles.add(profile);
-		}
-		return profiles;
-	}
-
-	private HardwareProfile createProfile(Node node) {
-		Assert.isLegal(node instanceof Element);
-		Element element = (Element) node;
-		HardwareProfile profile = new HardwareProfile();
-		profile.setId(element.getAttribute("id"));
-		profile.setProperties(createProperties(element.getElementsByTagName("property")));
-		return profile;
-	}
-
-	private List<Property> createProperties(NodeList propertiesList) {
-		List<Property> properties = new ArrayList<Property>();
-		for (int i = 0; i < propertiesList.getLength(); i++) {
-			Property property = createProperty(propertiesList.item(i));
-			properties.add(property);
-		}
-		return properties;
-	}
-
-	private Property createProperty(Node node) {
-		Assert.isTrue(node instanceof Element);
-		Element element = (Element) node;
-		Property property = new Property();
-		property.setName(element.getAttribute("name"));
-		property.setId(element.getAttribute("id"));
-		property.setUnit(element.getAttribute("unit"));
-		property.setValue(element.getAttribute("value"));
-		String kind = element.getAttribute("kind");
-		Assert.isTrue(kind != null);
-		kind = kind.toUpperCase();
-		property.setKind(kind);
-		if (Kind.RANGE.toString().equals(property.getKind())) {
-			setRange(element, property);
-		} else if (Kind.ENUM.toString().equals(property.getKind())) {
-			setEnum(element, property);
-		} else if (Kind.FIXED.toString().equals(property.getKind())) {
-			// no special treatement
-		}
-		return property;
-	}
-
-	private void setRange(Element propertyElement, Property property) {
-		Node node = propertyElement.getElementsByTagName("range").item(0);
-		Assert.isLegal(node instanceof Element);
-		Element rangeElement = (Element) node;
-		property.setRange(rangeElement.getAttribute("first"), rangeElement.getAttribute("last"));
-	}
-
-	private void setEnum(Element propertyElement, Property property) {
-		Node node = propertyElement.getElementsByTagName("enum").item(0);
-		Assert.isLegal(node instanceof Element);
-		Element enumElement = (Element) node;
-		NodeList nodeList = enumElement.getElementsByTagName("entry");
-		ArrayList<String> enumValues = new ArrayList<String>();
-		for (int i = 0; i < nodeList.getLength(); i++) {
-			Node entryNode = nodeList.item(i);
-			Assert.isTrue(entryNode instanceof Element);
-			Element entryElement = (Element) entryNode;
-			enumValues.add(entryElement.getAttribute("value"));
-		}
-		property.setEnums(enumValues);
 	}
 
 	@Override
