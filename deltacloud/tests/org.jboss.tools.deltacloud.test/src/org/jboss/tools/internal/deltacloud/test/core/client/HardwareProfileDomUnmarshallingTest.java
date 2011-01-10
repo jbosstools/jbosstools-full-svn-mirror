@@ -15,6 +15,8 @@ import static org.junit.Assert.assertNotNull;
 
 import java.io.ByteArrayInputStream;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
@@ -22,8 +24,10 @@ import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.jboss.tools.deltacloud.core.client.HardwareProfile;
 import org.jboss.tools.deltacloud.core.client.Property;
 import org.jboss.tools.deltacloud.core.client.unmarshal.HardwareProfileUnmarshaller;
+import org.jboss.tools.deltacloud.core.client.unmarshal.HardwareProfilesUnmarshaller;
 import org.jboss.tools.internal.deltacloud.test.fakes.HardwareProfileResponseFakes.HardwareProfile1Response;
 import org.jboss.tools.internal.deltacloud.test.fakes.HardwareProfileResponseFakes.HardwareProfile2Response;
+import org.jboss.tools.internal.deltacloud.test.fakes.HardwareProfileResponseFakes.HardwareProfilesResponse;
 import org.junit.Test;
 
 /**
@@ -31,6 +35,15 @@ import org.junit.Test;
  */
 public class HardwareProfileDomUnmarshallingTest {
 
+	@Test
+	public void HardwareProfilesCanBeUnmarshalled() throws MalformedURLException, JAXBException,
+			DeltaCloudClientException {
+		List<HardwareProfile> profiles = new ArrayList<HardwareProfile>();
+		ByteArrayInputStream inputStream = new ByteArrayInputStream(HardwareProfilesResponse.response.getBytes());
+		new HardwareProfilesUnmarshaller().unmarshall(inputStream, profiles);
+		assertEquals(2, profiles.size());
+	}
+	
 	@Test
 	public void fixedPropertyHardwareProfileMayBeUnmarshalled() throws MalformedURLException, JAXBException,
 			DeltaCloudClientException {
