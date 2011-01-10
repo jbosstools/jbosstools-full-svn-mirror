@@ -6,29 +6,41 @@
 <section id="sect-Cloud_Tools_Reference_Guide-Tasks-connecting_to_a_deltacloud_server">
 	<title>Connecting to a Deltacloud server</title>
 	<para>
-	    Ensure the <guilabel>Deltacloud</guilabel> perspective is open in your workspace. To open the perspective navigate to <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Open Perspective</guimenuitem><guimenuitem>Other</guimenuitem></menuchoice> and then select <guilabel>Deltacloud</guilabel> from the perspective options and click <guibutton>OK</guibutton>.
+	    Ensure the <guilabel>Deltacloud</guilabel> perspective is open in your workspace. To open the perspective navigate to <menuchoice><guimenuitem>Window</guimenuitem>
+			<guimenuitem>Open Perspective</guimenuitem>
+			<guimenuitem>Other</guimenuitem>
+		</menuchoice> and then select <guilabel>Deltacloud</guilabel> from the perspective options and click <guibutton>OK</guibutton>.
 	</para>
 	<figure id="selecting_the_deltacloud_perspective">
-	   <title>Selecting the Deltacloud perspective</title>
-	    <mediaobject>
-	       <imageobject>
-		  <imagedata fileref="images/Deltacloud-open_perspective.png"/>
-	       </imageobject>
-	    </mediaobject>
-        </figure>
+		<title>Selecting the Deltacloud perspective</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/Deltacloud-open_perspective.png"/>
+			</imageobject>
+		</mediaobject>
+	</figure>
 	<para>
-	    To setup a connection to a Deltacloud server select <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>New</guimenuitem><guimenuitem>Other</guimenuitem></menuchoice>. From the <guilabel>New</guilabel> dialog select <menuchoice><guimenuitem>Deltacloud</guimenuitem><guimenuitem>Cloud Connection</guimenuitem></menuchoice> and press <guibutton>Next</guibutton>.
-        </para>
+	    To setup a connection to a Deltacloud server select 
+	    <menuchoice>
+	    	<guimenuitem>File</guimenuitem>
+	    	<guimenuitem>New</guimenuitem>
+	    	<guimenuitem>Other</guimenuitem>
+	    </menuchoice>. From the <guilabel>New</guilabel> dialog select 
+	    <menuchoice>
+	    	<guimenuitem>Deltacloud</guimenuitem>
+	    	<guimenuitem>Cloud Connection</guimenuitem>
+	    </menuchoice> and press <guibutton>Next</guibutton>.
+  </para>
 	<para>
-	   <figure id="opening_the_cloud_connection_wizard">
-	      <title>Opening the cloud connection wizard</title>
-	      <mediaobject>
-		 <imageobject>
-		    <imagedata fileref="images/Deltacloud-cloud_connection_wizard.png"/>
-		 </imageobject>
-	      </mediaobject>
-	   </figure>
-        </para>
+		<figure id="opening_the_cloud_connection_wizard">
+			<title>Opening the cloud connection wizard</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Deltacloud-cloud_connection_wizard.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+	</para>
 	<para>
 	    The <guilabel>Cloud Connection</guilabel> dialog requires a cloud name, URL, username and password to create a connection. Once you specify the URL of a cloud server the <guilabel>Type</guilabel> field will automatically inform you of the cloud type. If you are connecting to an EC2 cloud type, use your <emphasis>Access ID</emphasis> for the <guilabel>Username</guilabel> field and your <emphasis>Access Secret Key</emphasis> for the <guilabel>Password</guilabel> field.
         </para>
@@ -36,19 +48,19 @@
 	    Once all fields are filled in correctly, click the <guibutton>Finish</guibutton> button.
         </para>
 	<note>
-	    <para>
+		<para>
 	    The default URL for a local Deltacloud server is <ulink url="http://localhost:3001">http://localhost:3001</ulink>.
 	    </para>
-  </note>
+	</note>
 	<para>
 		<figure id="creating_the_connection">
-	   	<title>Creating the connection</title>
-	    <mediaobject>
-	    	<imageobject>
-		    	<imagedata fileref="images/Deltacloud-cloud_connection_wizard_2.png"/>
-		    </imageobject>
-	    </mediaobject>
-	  </figure>
+			<title>Creating the connection</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Deltacloud-cloud_connection_wizard_2.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
 	</para>
 	<para>
 	   Your new cloud connection will appear in the <guilabel>Cloud Viewer</guilabel> using the name you specified in the connection wizard. For information on using your new cloud server connection see <xref linkend="sect-Cloud_Tools_Reference_Guide-Tasks-using_the_deltacloud_perspective"/>.
