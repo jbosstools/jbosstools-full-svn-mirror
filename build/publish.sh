@@ -144,7 +144,7 @@ if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]] && [[ -d ${WORKSPACE}/sources/agg
 else
 	srczipname=${SRCSNAME}
 fi
-zip ${STAGINGDIR}/all/${SRCSNAME} -q -r * -x documentation\* -x download.jboss.org\* -x requirements\* \
+zip ${STAGINGDIR}/all/${srczipname} -q -r * -x documentation\* -x download.jboss.org\* -x requirements\* \
   -x workingset\* -x labs\* -x build\* -x \*test\* -x \*target\* -x \*.class -x \*.svn\* -x \*classes\* -x \*bin\* -x \*.zip \
   -x \*docs\* -x \*reference\* -x \*releng\* -x \*.git\*
 popd
@@ -186,21 +186,30 @@ for z in $(find ${STAGINGDIR} -name "*Update*.zip") $(find ${STAGINGDIR} -name "
 done
 echo ""  >> ${STAGINGDIR}/logs/${METAFILE}
 
+# generate md5sums in a single file 
+md5sumsFile=${STAGINGDIR}/all/${JOB_NAME}-md5sums-${BUILD_ID}-H${BUILD_NUMBER}.txt
+echo "# Update Site Zips" > ${md5sumsFile}
+echo "# ----------------" >> ${md5sumsFile}
+md5sum $(find . -name "*Update*.zip" | egrep -v "aggregate-Sources|nightly-Update") >> ${md5sumsFile}
+echo "  " >> ${md5sumsFile}
+echo "# Source Zips" >> ${md5sumsFile}
+echo "# -----------" >> ${md5sumsFile}
+md5sum $(find . -name "*Source*.zip" | egrep -v "aggregate-Sources|nightly-Update") >> ${md5sumsFile}
+echo " " >> ${md5sumsFile}
+
 # generate HTML snippet, download-snippet.html, for inclusion on jboss.org
-#if [[ ${RELEASE} == "Yes" ]]; then
-	mkdir -p ${STAGINGDIR}/logs
-	ANT_PARAMS=" -DZIPSUFFIX=${ZIPSUFFIX} -DJOB_NAME=${JOB_NAME} -Dinput.dir=${STAGINGDIR} -Doutput.dir=${STAGINGDIR}/logs -DWORKSPACE=${WORKSPACE}"
+mkdir -p ${STAGINGDIR}/logs
+ANT_PARAMS=" -DZIPSUFFIX=${ZIPSUFFIX} -DJOB_NAME=${JOB_NAME} -Dinput.dir=${STAGINGDIR} -Doutput.dir=${STAGINGDIR}/logs -DWORKSPACE=${WORKSPACE}"
 	# no longer using upstream continuous or nightly build in aggregation
 	#if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]]; then # reuse snippet from upstream build
 	#	ANT_PARAMS="${ANT_PARAMS} -Dtemplate.file=http://download.jboss.org/jbosstools/builds/staging/${JOB_NAME/.aggregate/.continuous}/logs/download-snippet.html"
 	#fi
-	for buildxml in ${WORKSPACE}/build/results/build.xml ${WORKSPACE}/sources/build/results/build.xml ${WORKSPACE}/sources/results/build.xml; do
-		if [[ -f ${buildxml} ]]; then
-			ANT_SCRIPT=${buildxml}
-		fi
-	done
-	ant -f ${ANT_SCRIPT} ${ANT_PARAMS}
-#fi
+for buildxml in ${WORKSPACE}/build/results/build.xml ${WORKSPACE}/sources/build/results/build.xml ${WORKSPACE}/sources/results/build.xml; do
+	if [[ -f ${buildxml} ]]; then
+		ANT_SCRIPT=${buildxml}
+	fi
+done
+ant -f ${ANT_SCRIPT} ${ANT_PARAMS}
 
 # ${bl} is full build log; see above
 mkdir -p ${STAGINGDIR}/logs
@@ -265,19 +274,6 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 	fi
 fi
 date
-
-# generate md5sums in a single file 
-if [[ ${RELEASE} == "Yes" ]]; then
-	md5sumsFile=${STAGINGDIR}/all/${JOB_NAME}-md5sums-${BUILD_ID}-H${BUILD_NUMBER}.txt
-	echo "# Update Site Zips" > ${md5sumsFile}
-	echo "# ----------------" >> ${md5sumsFile}
-	md5sum $(find . -name "*Update*.zip" | egrep -v "aggregate-Sources|nightly-Update") >> ${md5sumsFile}
-	echo "  " >> ${md5sumsFile}
-	echo "# Source Zips" >> ${md5sumsFile}
-	echo "# -----------" >> ${md5sumsFile}
-	md5sum $(find . -name "*Source*.zip" | egrep -v "aggregate-Sources|nightly-Update") >> ${md5sumsFile}
-	echo " " >> ${md5sumsFile}
-fi
 
 # purge org.jboss.tools metadata from local m2 repo (assumes job is configured with -Dmaven.repo.local=${WORKSPACE}/m2-repo)
 if [[ -d ${WORKSPACE}/m2-repo/org/jboss/tools ]]; then
