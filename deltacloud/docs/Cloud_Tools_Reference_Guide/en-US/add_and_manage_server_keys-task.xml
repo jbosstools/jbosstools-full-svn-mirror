@@ -6,7 +6,7 @@
 <section id="sect-Cloud_Tools_Reference_Guide-Tasks-add_and_manage_server_keys">
 	<title>Add and manage server keys</title>
 	<para>
-	    To access Deltacloud servers, key file authentication is used. Each key represents the person accessing the server and informs the server of their authorisation level.
+	    To access Deltacloud servers, key file authentication is used. Each key represents the person accessing the server and informs the server of their authorization level.
 	</para>
 	<para>
 	    Each unique user requires an individual key file and each file must be specified in the SSH2 private keys list prior to performing the ssh connection. To access the SSH2 private keys list navigate to <menuchoice>
@@ -25,6 +25,11 @@
 	      </imageobject>
 	   </mediaobject>
 	</figure>
+	<para>
+		Keys are also imported when launching a new instance. Refer to <xref linkend="sect-Cloud_Tools_Reference_Guide-Tasks-using_the_deltacloud_perspective"/> for more information.
+	</para>
+	
+	
 </section>
 
 
