@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <!DOCTYPE bookinfo PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
-<!ENTITY % BOOK_ENTITIES SYSTEM "Document_Conventions.ent">
+<!ENTITY % BOOK_ENTITIES SYSTEM "JBoss_Developer_Studio_Documentation_Typographic_Conventions.ent">
 %BOOK_ENTITIES;
 ]>
 <bookinfo id="book-Document_Conventions-Document_Conventions">
@@ -12,7 +12,7 @@
 	<pubsnumber>0</pubsnumber>
 	<abstract>
 		<para>
-			This book lists the document conventions used by the JBoss Developer Studio documentation.
+			This book lists the document typographic conventions used by the JBoss Developer Studio documentation.
 		</para>
 	</abstract>
 	<corpauthor>
