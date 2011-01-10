@@ -408,7 +408,7 @@
         </section>
         <section id="createruntime">
             <title>Creating JBoss BPEL Server</title>
-            <para>Suppose you have installed the <property>JBoss BPEL Runtime-RiftSaw</property> as it was described <link linkend="installRuntime">before</link>, now you can create a server for JBoss BPEL runtime.</para>
+            <para>Suppose you have installed the <property>JBoss BPEL Runtime-RiftSaw</property> as it was described in <xref linkend="installRuntime"/>, now you can create a server for JBoss BPEL runtime.</para>
             <itemizedlist>
                 <listitem>
                     <para>Open the <property>Servers</property> view by selecting 
