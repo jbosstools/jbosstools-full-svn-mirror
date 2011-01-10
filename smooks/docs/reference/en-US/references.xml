@@ -17,8 +17,8 @@
             you should left click smooks configuration file and select:<emphasis>Open With->Smooks Configuration Editor</emphasis>.</para>
         <para>The Process tab has two sections:</para>
         <itemizedlist>
-            <listitem><para><link linkend="processing_task_section">Processing Task section</link></para></listitem>
-            <listitem><para><link linkend="selected_task_details">Selected Task Details section</link></para></listitem>
+            <listitem><para><xref linkend="processing_task_section"/></para></listitem>
+            <listitem><para><xref linkend="selected_task_details"/></para></listitem>
         </itemizedlist>
         <para>You can see them on the picture below.</para>
         <figure>
@@ -451,7 +451,7 @@
             </section>
             <section><title>Selected Task Details section for Template Task.</title>
                 <para>Selected Task Details section for this task is presented by the graf,
-                    that is similar to the one in the <link linkend="mapping_task">previous section</link>.
+                    that is similar to the <xref linkend="mapping_task"/>.
                 </para>
                 <figure>
                     <title>Selected Task Details Section for Template Task.</title>
@@ -461,8 +461,7 @@
                         </imageobject>
                     </mediaobject>
                 </figure>
-                <para>Popup menu similar to the one in <link linkend="popup">Selected Task Details section
-                    for Java Mapping Task</link> is also available here.</para>
+                <para>Popup menu similar to <xref linkend="popup"/>.</para>
             </section>
         </section>
         
@@ -555,7 +554,7 @@
             </table>
         </section> 
     </section>
-    <section id="smooksformeditor_sourcetab" xreflabel="Smooks Source Tab">
+    <section id="smooksformeditor_sourcetab">
         
         <title>Source Tab</title>
         <para>This section provides information about Smooks Source Editor Page.</para>
@@ -734,7 +733,7 @@
                 Smooks configuration file.
                 You can call it from the popup menu when <property>Java Mapping</property> item in Processing
                 Task section is selected by following <emphasis>Add Task > Apply Template</emphasis>
-                (see <link linkend="apply_templ">Apply Template configuration</link> picture).</para>
+                (see <xref linkend="apply_templ"/> picture).</para>
             <para>The wizard consists of several pages:</para>
             
             <orderedlist>

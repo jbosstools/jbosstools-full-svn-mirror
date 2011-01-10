@@ -164,7 +164,7 @@
     <section>
         <title>Apply Template Task</title>
         
-        <para>The "Apply Template" task works very similarly to the <link linkend="mapping">"Java Mapping" task</link>, where you map between an input model and an output model.
+        <para>The "Apply Template" task works very similarly to the <xref linkend="mapping"/>, where you map between an input model and an output model.
             Select the <emphasis>Java Mapping</emphasis> task you want to use as the input model in the Process Map pane and click the plus (+) sign to the right of the icon.
         </para>
         <figure id="apply_templ">

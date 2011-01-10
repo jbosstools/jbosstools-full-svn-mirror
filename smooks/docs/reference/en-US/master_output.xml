@@ -1070,7 +1070,7 @@
             </table>
         </section> 
     </section>
-    <section id="smooksformeditor_sourcetab" xreflabel="Smooks Source Tab">
+    <section id="smooksformeditor_sourcetab">
         
         <title>Source Tab</title>
         <para>This section provides information about Smooks Source Editor Page.</para>
