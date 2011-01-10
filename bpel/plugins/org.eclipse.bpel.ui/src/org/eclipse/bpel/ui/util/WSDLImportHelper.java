@@ -334,8 +334,9 @@ public class WSDLImportHelper {
 		// BaseURI source = new BaseURI(sourceURI);
 		// return source.getRelativeURI(targetURI);
 		// TODO: this is probably bogus.
+		// https://issues.jboss.org/browse/JBIDE-8087
 		String result = targetURI.deresolve(sourceURI, true, true, true)
-				.toFileString();
+				.toString();
 		// When absolute URLs
 		return (result == null ? targetURI.toString() : result);
 	}
