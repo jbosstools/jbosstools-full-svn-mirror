@@ -34,7 +34,6 @@ public abstract class AbstractCloudElementFilter<CLOUDELEMENT extends IDeltaClou
 		this.cloud = cloud;
 	}
 
-
 	public Collection<CLOUDELEMENT> filter(CLOUDELEMENT[] cloudElements) throws DeltaCloudException {
 		List<CLOUDELEMENT> filteredElements = new ArrayList<CLOUDELEMENT>();
 		for (CLOUDELEMENT cloudElement : cloudElements) {
