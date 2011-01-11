@@ -5,9 +5,9 @@
   <title>Update Guide</title>
   <subtitle>Updating from 3.0 to 3.0.x</subtitle>
   <productname>JBoss Developer Studio</productname>
-  <productnumber>3.0</productnumber>
-  <edition>3.0.1</edition>
-  <pubsnumber>0</pubsnumber>
+  <productnumber>4.0</productnumber>
+  <edition>4.0.0</edition>
+  <pubsnumber>4</pubsnumber>
   <abstract>
     <para>
       The Update Guide explains how to upgrade from the JBoss Developer Studio 3.0
