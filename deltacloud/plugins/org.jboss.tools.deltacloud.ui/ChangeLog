@@ -1,3 +1,8 @@
+2011-01-11  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/deltacloud/ui/views/cloud/ImagesCategoryItem.java (filter): 
+	[JBIDE-8080] fixed bug when filtering images: returned array that is too large
+
 2011-01-07  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* plugin.xml: 

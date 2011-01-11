@@ -12,6 +12,7 @@ package org.jboss.tools.deltacloud.ui.views.cloud;
 
 import java.beans.PropertyChangeEvent;
 import java.text.MessageFormat;
+import java.util.Collection;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -90,7 +91,8 @@ public class ImagesCategoryItem extends CloudElementCategoryItem<DeltaCloudImage
 	protected DeltaCloudImage[] filter(DeltaCloudImage[] images) throws DeltaCloudException {
 		DeltaCloud cloud = getModel();
 		IImageFilter f = cloud.getImageFilter();
-		return f.filter(images).toArray(new DeltaCloudImage[images.length]);
+		Collection<DeltaCloudImage> filteredImages = f.filter(images);
+		return filteredImages.toArray(new DeltaCloudImage[filteredImages.size()]);
 	}
 
 	@Override
