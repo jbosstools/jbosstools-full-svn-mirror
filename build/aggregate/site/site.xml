@@ -3,7 +3,7 @@
 	<!-- This file is only used when building with Tycho.
 		If building with Ant (trunk/build/build.xml), see category.*.xml -->
 	<description>
-      JBoss Tools 3.2.0 Update Site / p2 Repo
+      JBoss Tools 3.2 Updates
    	</description>
 
 	<!-- only in JBDS -->
