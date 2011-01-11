@@ -34,7 +34,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.eclipse.core.runtime.Assert;
 import org.jboss.tools.deltacloud.core.client.request.CreateInstanceRequest;
 import org.jboss.tools.deltacloud.core.client.request.CreateKeyRequest;
 import org.jboss.tools.deltacloud.core.client.request.DeleteKeyRequest;
@@ -59,8 +58,9 @@ import org.jboss.tools.deltacloud.core.client.unmarshal.InstanceUnmarshaller;
 import org.jboss.tools.deltacloud.core.client.unmarshal.InstancesUnmarshaller;
 import org.jboss.tools.deltacloud.core.client.unmarshal.KeyUnmarshaller;
 import org.jboss.tools.deltacloud.core.client.unmarshal.KeysUnmarshaller;
+import org.jboss.tools.deltacloud.core.client.unmarshal.RealmUnmarshaller;
+import org.jboss.tools.deltacloud.core.client.unmarshal.RealmsUnmarshaller;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
@@ -111,7 +111,8 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		} catch (DeltaCloudClientException e) {
 			throw e;
 		} catch (MalformedURLException e) {
-			throw new DeltaCloudClientException(MessageFormat.format("Could not connect to \"{0}\". The url is invalid.", deltaCloudRequest.toString()), e);
+			throw new DeltaCloudClientException(MessageFormat.format(
+					"Could not connect to \"{0}\". The url is invalid.", deltaCloudRequest.toString()), e);
 		} catch (IOException e) {
 			throw new DeltaCloudClientException(e);
 		} catch (Exception e) {
@@ -360,46 +361,21 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	@Override
 	public List<Realm> listRealms() throws DeltaCloudClientException {
 		try {
-			return buildRealms(request(new ListRealmsRequest(baseUrl)));
+			InputStream inputStream = request(new ListRealmsRequest(baseUrl));
+			List<Realm> realms = new ArrayList<Realm>();
+			new RealmsUnmarshaller().unmarshall(inputStream, realms);
+			return realms;
 		} catch (Exception e) {
-			throw new DeltaCloudClientException(MessageFormat.format("could not get realms on cloud at \"{0}\"",
-					baseUrl), e);
+			throw new DeltaCloudClientException(
+					MessageFormat.format("could not get realms on cloud at \"{0}\"", baseUrl), e);
 		}
-	}
-
-	private List<Realm> buildRealms(InputStream inputStream)
-			throws ParserConfigurationException, SAXException, IOException, DeltaCloudClientException {
-		Document document = getDocument(getResponse(inputStream));
-		List<Realm> realms = new ArrayList<Realm>();
-		NodeList elements = document.getElementsByTagName("realm");
-		for (int i = 0; i < elements.getLength(); i++) {
-			Realm realm = createRealm((Element) elements.item(i));
-			realms.add(realm);
-		}
-		return realms;
-	}
-
-	private Realm createRealm(Node node) {
-		Assert.isLegal(node instanceof Element);
-		Realm realm = new Realm();
-		updateRealm(realm, (Element) node);
-		return realm;
-	}
-
-	private Realm updateRealm(Realm realm, Element element) {
-		realm.setId(element.getAttribute("id"));
-		realm.setName(element.getElementsByTagName("name").item(0).getTextContent());
-		realm.setLimit(element.getElementsByTagName("limit").item(0).getTextContent());
-		realm.setState(element.getElementsByTagName("state").item(0).getTextContent());
-
-		return realm;
 	}
 
 	@Override
 	public Realm listRealms(String realmId) throws DeltaCloudClientException {
 		try {
-			Document document = getDocument(getResponse(request(new ListRealmRequest(baseUrl, realmId))));
-			return createRealm((Element) document.getElementsByTagName("realm").item(0));
+			InputStream response = request(new ListRealmRequest(baseUrl, realmId));
+			return new RealmUnmarshaller().unmarshall(response, new Realm());
 		} catch (Exception e) {
 			throw new DeltaCloudClientException(
 					MessageFormat.format("could not get realms on cloud at \"{0}\"", baseUrl), e);

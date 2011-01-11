@@ -10,68 +10,61 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.core.client;
 
-import javax.xml.bind.annotation.XmlElement;
-
 /**
  * @author Martyn Taylor
+ * @author André Dietisheim
  */
 public class Realm extends AbstractDeltaCloudObject {
 	private static final long serialVersionUID = 1L;
+
+	public static final int LIMIT_DEFAULT = -1;
+
+	private String name;
+	private RealmState state;
+	private int limit;
 
 	public static enum RealmState {
 		AVAILABLE, UNAVAILABLE, UNKNOWN
 	}
 
-	@XmlElement
-	private String name;
-
-	@XmlElement
-	private RealmState state;
-
-	@XmlElement
-	private int limit;
-
-	protected Realm() {
+	public Realm() {
 	}
 
-	protected void setName(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 
-	protected void setState(String state) {
-		try {
-			this.state = RealmState.valueOf(state);
-		} catch (Exception e) {
-			this.state = RealmState.UNKNOWN;
-		}
-	}
 
-	protected void setLimit(int limit) {
+	public void setLimit(int limit) {
 		this.limit = limit;
 	}
 
-	protected void setLimit(String limit) {
+	public void setLimit(String limit) {
 		try {
 			this.limit = Integer.parseInt(limit);
 		} catch (Exception e) {
-			this.limit = -1;
+			this.limit = LIMIT_DEFAULT;
 		}
 	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	
+	public int getLimit() {
+		return limit;
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public RealmState getState() {
-		return state;
+	public void setState(String state) {
+		try {
+			this.state = RealmState.valueOf(state.toUpperCase());
+		} catch (Exception e) {
+			this.state = RealmState.UNKNOWN;
+		}
 	}
 
-	public int getLimit() {
-		return limit;
+	public RealmState getState() {
+		return state;
 	}
 
 	@Override

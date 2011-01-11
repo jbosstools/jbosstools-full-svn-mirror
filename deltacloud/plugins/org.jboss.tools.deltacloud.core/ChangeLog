@@ -1,5 +1,8 @@
 2011-01-11  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClientImpl.java 
+	(listRealms): 
+	[JBIDE-7935] moved realms unmarshalling to separate classes (and added tests).
 	* src/org/jboss/tools/deltacloud/core/client/request/TypeRequest.java: 
 	* src/org/jboss/tools/deltacloud/core/client/request/PerformInstanceActionRequest.java: 
 	* src/org/jboss/tools/deltacloud/core/client/request/ListRealmsRequest.java: 
