@@ -10,11 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core.client.request;
 
-import java.net.URL;
-
 import org.jboss.tools.deltacloud.core.client.HttpMethod;
 import org.jboss.tools.deltacloud.core.client.utils.UrlBuilder;
-
 
 /**
  * Performs an action on a instance on the deltacloud server
@@ -23,7 +20,7 @@ import org.jboss.tools.deltacloud.core.client.utils.UrlBuilder;
  */
 public class PerformInstanceActionRequest extends AbstractDeltaCloudRequest {
 	
-	public PerformInstanceActionRequest(URL url, HttpMethod httpMethod) {
+	public PerformInstanceActionRequest(String url, HttpMethod httpMethod) {
 		super(url, httpMethod);
 	}
 
@@ -33,7 +30,7 @@ public class PerformInstanceActionRequest extends AbstractDeltaCloudRequest {
 	}
 	
 	@Override
-	protected UrlBuilder createUrlBuilder(URL baseURL) {
+	protected UrlBuilder createUrlBuilder(String baseURL) {
 		return new UrlBuilder(baseURL);
 	}
 

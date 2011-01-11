@@ -10,11 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core.client.request;
 
-import java.net.URL;
-
 import org.jboss.tools.deltacloud.core.client.HttpMethod;
 import org.jboss.tools.deltacloud.core.client.utils.UrlBuilder;
-
 
 /**
  * Lists images, instances, realms or profiles on the deltacloud server. 
@@ -30,7 +27,7 @@ public abstract class AbstractListObjectsRequest extends AbstractDeltaCloudReque
 	
 	private String objectType;
 
-	public AbstractListObjectsRequest(URL baseUrl, String objectType) {
+	public AbstractListObjectsRequest(String baseUrl, String objectType) {
 		super(baseUrl, HttpMethod.GET);
 		this.objectType = objectType;
 	}

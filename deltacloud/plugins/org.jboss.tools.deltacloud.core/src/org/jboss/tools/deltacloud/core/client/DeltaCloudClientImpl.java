@@ -74,14 +74,14 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	private static final String DOCUMENT_ELEMENT_DRIVER = "driver";
 	private static final String DOCUMENT_ELEMENT_API = "api";
 
-	public static enum DeltaCloudServerType {
-		UNKNOWN, MOCK, EC2
-	}
-
-	private URL baseUrl;
+	private String baseUrl;
 	private String username;
 	private String password;
 	private DocumentBuilderFactory documentBuilderFactory;
+
+	public static enum DeltaCloudServerType {
+		UNKNOWN, MOCK, EC2
+	}
 
 	public DeltaCloudClientImpl(String url) throws MalformedURLException,
 			DeltaCloudClientException {
@@ -89,19 +89,10 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	}
 
 	public DeltaCloudClientImpl(String url, String username, String password) throws DeltaCloudClientException {
-		this.baseUrl = createUrl(url);
+		this.baseUrl = url;
 		this.username = username;
 		this.password = password;
 		this.documentBuilderFactory = DocumentBuilderFactory.newInstance();
-	}
-
-	private URL createUrl(String url) throws DeltaCloudClientException {
-		try {
-			return new URL(url);
-		} catch (MalformedURLException e) {
-			throw new DeltaCloudClientException(MessageFormat.format(
-					"Could not create url for {0}", url), e);
-		}
 	}
 
 	protected InputStream request(DeltaCloudRequest deltaCloudRequest)
@@ -119,12 +110,12 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 			return httpResponse.getEntity().getContent();
 		} catch (DeltaCloudClientException e) {
 			throw e;
+		} catch (MalformedURLException e) {
+			throw new DeltaCloudClientException(MessageFormat.format("Could not connect to \"{0}\". The url is invalid.", deltaCloudRequest.toString()), e);
 		} catch (IOException e) {
 			throw new DeltaCloudClientException(e);
 		} catch (Exception e) {
 			throw new DeltaCloudClientException(e);
-		} finally {
-			// httpClient.getConnectionManager().shutdown();
 		}
 	}
 
@@ -455,15 +446,11 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	public boolean performInstanceAction(InstanceAction action) throws DeltaCloudClientException {
 		if (action != null) {
 			try {
-				InputStream inputStream = request(new PerformInstanceActionRequest(
-						new URL(action.getUrl()), action.getMethod()));
+				InputStream inputStream = request(
+						new PerformInstanceActionRequest(action.getUrl(), action.getMethod()));
 				if (!InstanceAction.DESTROY.equals(action.getName())) {
 					new InstanceUnmarshaller().unmarshall(inputStream, action.getOwner());
 				}
-			} catch (MalformedURLException e) {
-				throw new DeltaCloudClientException(
-						MessageFormat.format("Could not perform action {0} on instance {1}", action.getName(), action
-								.getOwner().getName()), e);
 			} catch (DeltaCloudClientException e) {
 				throw e;
 			} catch (Exception e) {

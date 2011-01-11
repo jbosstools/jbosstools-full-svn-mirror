@@ -10,8 +10,6 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core.client.request;
 
-import java.net.URL;
-
 import org.jboss.tools.deltacloud.core.client.HttpMethod;
 import org.jboss.tools.deltacloud.core.client.utils.UrlBuilder;
 
@@ -30,11 +28,11 @@ public class CreateInstanceRequest extends AbstractDeltaCloudRequest {
 	private String memory;
 	private String storage;
 
-	public CreateInstanceRequest(URL baseUrl, String imageId) {
+	public CreateInstanceRequest(String baseUrl, String imageId) {
 		this(baseUrl, null, imageId, null, null, null, null, null);
 	}
 
-	public CreateInstanceRequest(URL baseUrl, String name, String imageId, String profileId, String realmId, 
+	public CreateInstanceRequest(String baseUrl, String name, String imageId, String profileId, String realmId, 
 			String keyId, String memory, String storage) {
 		super(baseUrl, HttpMethod.POST);
 		this.name = name;

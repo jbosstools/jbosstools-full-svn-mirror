@@ -10,9 +10,6 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core.client.request;
 
-import java.net.URL;
-
-
 /**
  * Lists realms on the deltacloud server. 
  * 
@@ -20,7 +17,7 @@ import java.net.URL;
  */
 public class ListRealmsRequest extends AbstractListObjectsRequest {
 	
-	public ListRealmsRequest(URL baseUrl) {
+	public ListRealmsRequest(String baseUrl) {
 		super(baseUrl, "realms");
 	}
 }

@@ -10,11 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core.client.request;
 
-import java.net.URL;
-
 import org.jboss.tools.deltacloud.core.client.HttpMethod;
 import org.jboss.tools.deltacloud.core.client.utils.UrlBuilder;
-
 
 /**
  * A request for a hardware profile on a deltacloud server.
@@ -31,7 +28,7 @@ public class ListHardwareProfileRequest extends AbstractDeltaCloudRequest {
 	 * @param baseUrl the base url
 	 * @param imageId 
 	 */
-	public ListHardwareProfileRequest(URL baseUrl, String profileId) {
+	public ListHardwareProfileRequest(String baseUrl, String profileId) {
 		super(baseUrl, HttpMethod.GET);
 		this.profileId = profileId;
 	}

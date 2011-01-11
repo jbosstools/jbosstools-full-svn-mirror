@@ -10,11 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core.client.request;
 
-import java.net.URL;
-
 import org.jboss.tools.deltacloud.core.client.HttpMethod;
 import org.jboss.tools.deltacloud.core.client.utils.UrlBuilder;
-
 
 /**
  * List a key with a given name that is available on the deltacloud server
@@ -25,7 +22,7 @@ public class ListKeyRequest extends AbstractDeltaCloudRequest {
 	
 	private String name;
 
-	public ListKeyRequest(URL baseUrl, String name) {
+	public ListKeyRequest(String baseUrl, String name) {
 		super(baseUrl, HttpMethod.GET);
 		this.name = name;
 	}

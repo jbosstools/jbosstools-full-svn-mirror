@@ -34,6 +34,10 @@ public class UrlBuilder {
 	public UrlBuilder() {
 	}
 
+	public UrlBuilder(String baseUrl) {
+		urlStringBuilder.append(baseUrl);
+	}
+
 	public UrlBuilder(URL baseUrl) {
 		urlStringBuilder.append(baseUrl.toString());
 	}
@@ -123,10 +127,6 @@ public class UrlBuilder {
 	}
 
 	public String toString() {
-		try {
-			return toUrl().toString();
-		} catch (MalformedURLException e) {
-			throw new RuntimeException(e.getMessage(), e);
-		}
+		return urlStringBuilder.toString();
 	}
 }

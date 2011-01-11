@@ -10,11 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core.client.request;
 
-import java.net.URL;
-
 import org.jboss.tools.deltacloud.core.client.HttpMethod;
 import org.jboss.tools.deltacloud.core.client.utils.UrlBuilder;
-
 
 /**
  * Lists a realm on the deltacloud server
@@ -25,7 +22,7 @@ public class ListRealmRequest extends AbstractDeltaCloudRequest {
 	
 	private String realmId;
 
-	public ListRealmRequest(URL baseUrl, String realmId) {
+	public ListRealmRequest(String baseUrl, String realmId) {
 		super(baseUrl, HttpMethod.GET);
 		this.realmId = realmId;
 	}

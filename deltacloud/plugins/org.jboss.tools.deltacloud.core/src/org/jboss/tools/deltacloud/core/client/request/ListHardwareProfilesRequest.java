@@ -10,9 +10,6 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core.client.request;
 
-import java.net.URL;
-
-
 /**
  * Lists profiles on the deltacloud server. 
  * 
@@ -20,7 +17,7 @@ import java.net.URL;
  */
 public class ListHardwareProfilesRequest extends AbstractListObjectsRequest {
 	
-	public ListHardwareProfilesRequest(URL baseUrl) {
+	public ListHardwareProfilesRequest(String baseUrl) {
 		super(baseUrl, "hardware_profiles");
 	}
 }

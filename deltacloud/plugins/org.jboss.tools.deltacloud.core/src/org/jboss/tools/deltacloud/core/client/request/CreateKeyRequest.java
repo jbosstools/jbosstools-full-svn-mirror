@@ -10,8 +10,6 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core.client.request;
 
-import java.net.URL;
-
 import org.jboss.tools.deltacloud.core.client.HttpMethod;
 import org.jboss.tools.deltacloud.core.client.utils.UrlBuilder;
 
@@ -24,7 +22,7 @@ public class CreateKeyRequest extends AbstractDeltaCloudRequest {
 	
 	private String keyName;
 
-	public CreateKeyRequest(URL baseUrl, String keyName) {
+	public CreateKeyRequest(String baseUrl, String keyName) {
 		super(baseUrl, HttpMethod.POST);
 		this.keyName = keyName;
 	}

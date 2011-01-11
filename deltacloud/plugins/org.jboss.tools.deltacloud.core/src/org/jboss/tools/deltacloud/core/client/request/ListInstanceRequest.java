@@ -10,11 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core.client.request;
 
-import java.net.URL;
-
 import org.jboss.tools.deltacloud.core.client.HttpMethod;
 import org.jboss.tools.deltacloud.core.client.utils.UrlBuilder;
-
 
 /**
  * Lists an instance on the deltacloud server
@@ -25,7 +22,7 @@ public class ListInstanceRequest extends AbstractDeltaCloudRequest {
 	
 	private String instanceId;
 
-	public ListInstanceRequest(URL baseUrl, String instanceId) {
+	public ListInstanceRequest(String baseUrl, String instanceId) {
 		super(baseUrl, HttpMethod.GET);
 		this.instanceId = instanceId;
 	}

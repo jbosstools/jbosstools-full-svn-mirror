@@ -10,11 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core.client.request;
 
-import java.net.URL;
-
 import org.jboss.tools.deltacloud.core.client.HttpMethod;
 import org.jboss.tools.deltacloud.core.client.utils.UrlBuilder;
-
 
 /**
  * Deletes a key on the deltacloud server
@@ -25,7 +22,7 @@ public class DeleteKeyRequest extends AbstractDeltaCloudRequest {
 	
 	private String keyName;
 
-	public DeleteKeyRequest(URL baseUrl, String keyName) {
+	public DeleteKeyRequest(String baseUrl, String keyName) {
 		super(baseUrl, HttpMethod.DELETE);
 		this.keyName = keyName;
 	}

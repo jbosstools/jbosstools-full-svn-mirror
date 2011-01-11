@@ -1,5 +1,30 @@
 2011-01-11  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
+	* src/org/jboss/tools/deltacloud/core/client/request/TypeRequest.java: 
+	* src/org/jboss/tools/deltacloud/core/client/request/PerformInstanceActionRequest.java: 
+	* src/org/jboss/tools/deltacloud/core/client/request/ListRealmsRequest.java: 
+	* src/org/jboss/tools/deltacloud/core/client/request/ListRealmRequest.java: 
+	* src/org/jboss/tools/deltacloud/core/client/request/ListKeysRequest.java: 
+	* src/org/jboss/tools/deltacloud/core/client/request/ListKeyRequest.java: 
+	* src/org/jboss/tools/deltacloud/core/client/request/ListInstancesRequest.java: 
+	* src/org/jboss/tools/deltacloud/core/client/request/ListInstanceRequest.java: 
+	* src/org/jboss/tools/deltacloud/core/client/request/ListImagesRequest.java: 
+	* src/org/jboss/tools/deltacloud/core/client/request/ListImageRequest.java: 
+	* src/org/jboss/tools/deltacloud/core/client/request/ListHardwareProfilesRequest.java: 
+	* src/org/jboss/tools/deltacloud/core/client/request/ListHardwareProfileRequest.java: 
+	* src/org/jboss/tools/deltacloud/core/client/request/DeleteKeyRequest.java: 
+	* src/org/jboss/tools/deltacloud/core/client/request/CreateKeyRequest.java: 
+	* src/org/jboss/tools/deltacloud/core/client/request/CreateInstanceRequest.java: 
+	* src/org/jboss/tools/deltacloud/core/client/request/AbstractListObjectsRequest.java: 
+	* src/org/jboss/tools/deltacloud/core/client/request/AbstractDeltaCloudRequest.java: 
+	(urlString): 
+	(url): 
+	(getUrl): 
+	(toString): 
+	(getUrlString): 
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClientImpl.java 
+	(request): 
+	[JBIDE-7695] delayed URL creation to request time. Gained capability to store invalid urls and report them at request time.
 	* src/org/jboss/tools/deltacloud/core/client/unmarshal/ImagesUnmarshaller.java: 
 	* src/org/jboss/tools/deltacloud/core/client/unmarshal/ImageUnmarshaller.java: 
 	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClientImpl.java 

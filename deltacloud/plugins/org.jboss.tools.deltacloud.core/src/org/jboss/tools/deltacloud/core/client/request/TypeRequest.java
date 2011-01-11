@@ -10,11 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core.client.request;
 
-import java.net.URL;
-
 import org.jboss.tools.deltacloud.core.client.HttpMethod;
 import org.jboss.tools.deltacloud.core.client.utils.UrlBuilder;
-
 
 /**
  * A request for the type of deltacloud server.
@@ -23,7 +20,7 @@ import org.jboss.tools.deltacloud.core.client.utils.UrlBuilder;
  */
 public class TypeRequest extends AbstractDeltaCloudRequest {
 
-	public TypeRequest(URL baseUrl) {
+	public TypeRequest(String baseUrl) {
 		super(baseUrl, HttpMethod.GET);
 	}
 

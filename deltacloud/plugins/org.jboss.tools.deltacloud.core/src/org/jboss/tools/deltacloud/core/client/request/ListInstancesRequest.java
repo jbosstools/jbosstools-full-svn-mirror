@@ -10,9 +10,6 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core.client.request;
 
-import java.net.URL;
-
-
 /**
  * Lists instances on the deltacloud server.
  *  
@@ -20,7 +17,7 @@ import java.net.URL;
  */
 public class ListInstancesRequest extends AbstractListObjectsRequest {
 	
-	public ListInstancesRequest(URL baseUrl) {
+	public ListInstancesRequest(String baseUrl) {
 		super(baseUrl, "instances");
 	}
 }

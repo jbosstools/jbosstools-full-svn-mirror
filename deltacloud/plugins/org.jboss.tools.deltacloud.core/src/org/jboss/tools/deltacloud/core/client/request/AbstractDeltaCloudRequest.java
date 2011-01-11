@@ -21,28 +21,40 @@ import org.jboss.tools.deltacloud.core.client.utils.UrlBuilder;
  */
 public abstract class AbstractDeltaCloudRequest implements DeltaCloudRequest {
 		
+	private String urlString;
 	private URL url;
 	private HttpMethod httpMethod;
 	private UrlBuilder urlBuilder;
 
-	protected AbstractDeltaCloudRequest(URL baseURL, HttpMethod httpMethod) {
+	protected AbstractDeltaCloudRequest(String baseURL, HttpMethod httpMethod) {
 		this.httpMethod = httpMethod;
 		this.urlBuilder = createUrlBuilder(baseURL);
 	}
 
 	protected abstract String doCreateUrl(UrlBuilder urlBuilder);
 
-	protected UrlBuilder createUrlBuilder(URL baseURL) {
-		return new UrlBuilder(baseURL).path(API_PATH_SEGMENT);
+	protected UrlBuilder createUrlBuilder(String baseUrl) {
+		return new UrlBuilder(baseUrl).path(API_PATH_SEGMENT);
 	}
 	
 	public URL getUrl() throws MalformedURLException {
 		if (url == null) {
-			this.url = new URL(doCreateUrl(urlBuilder));
+			this.url = new URL(getUrlString());
 		}
 		return url;
 	}
 
+	protected String getUrlString() {
+		if (urlString == null) {
+			this.urlString = doCreateUrl(urlBuilder);
+		}
+		return urlString;
+	}
+
+	public String toString() {
+		return getUrlString();
+	}
+	
 	public HttpMethod getHttpMethod() {
 		return httpMethod;
 	}

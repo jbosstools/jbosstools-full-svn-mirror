@@ -10,8 +10,6 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core.client.request;
 
-import java.net.URL;
-
 import org.jboss.tools.deltacloud.core.client.HttpMethod;
 import org.jboss.tools.deltacloud.core.client.utils.UrlBuilder;
 
@@ -25,7 +23,7 @@ public class ListImageRequest extends AbstractDeltaCloudRequest {
 	
 	private String imageId;
 
-	public ListImageRequest(URL baseUrl, String imageId) {
+	public ListImageRequest(String baseUrl, String imageId) {
 		super(baseUrl, HttpMethod.GET);
 		this.imageId = imageId;
 	}

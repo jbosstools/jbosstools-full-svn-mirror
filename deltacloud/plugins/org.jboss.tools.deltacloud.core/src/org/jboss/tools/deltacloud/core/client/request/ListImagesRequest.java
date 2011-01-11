@@ -10,9 +10,6 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core.client.request;
 
-import java.net.URL;
-
-
 /**
  * Lists images on the deltacloud server. 
  * 
@@ -20,7 +17,7 @@ import java.net.URL;
  */
 public class ListImagesRequest extends AbstractListObjectsRequest {
 	
-	public ListImagesRequest(URL baseUrl) {
+	public ListImagesRequest(String baseUrl) {
 		super(baseUrl, "images");
 	}
 }
