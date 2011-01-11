@@ -17,6 +17,8 @@ import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.rse.core.model.IHost;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FormLayout;
@@ -181,11 +183,25 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 				handleSelection(e.widget);
 			}
 		};
-		
+		ModifyListener modListener = new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				verifyPageComplete();
+			}
+		};
 		fillRuntimeTypeCombo();
 		refreshServerWidgets();
+		verifyPageComplete();
 		createRSE.addSelectionListener(listener);
 		createServer.addSelectionListener(listener);
+		autoScanCheck.addSelectionListener(listener);
+		hardCodeServerDetails.addSelectionListener(listener);
+		deployOnlyRadio.addSelectionListener(listener);
+		remoteDetailsLoc.addModifyListener(modListener);
+		serverHomeText.addModifyListener(modListener);
+		serverConfigText.addModifyListener(modListener); 
+		deployFolderText.addModifyListener(modListener);
+		autoLocalRuntimeCombo.addModifyListener(modListener);
+		localRuntimeCombo.addModifyListener(modListener);
 		setControl(c2);
 	}
 
@@ -223,8 +239,25 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 		if( w == createServer ) {
 			refreshServerWidgets();
 		}
+		verifyPageComplete();
 	}
 
+	private void verifyPageComplete() {
+		boolean complete = true;
+		if( createServer.getSelection()) {
+			if( deployOnlyRadio.getSelection()) {
+				complete = !deployFolderText.getText().equals("");
+			} else if( autoScanCheck.getSelection()) {
+				int index = autoLocalRuntimeCombo.getSelectionIndex();
+				complete = index != -1 && !remoteDetailsLoc.getText().equals("");
+			} else if( hardCodeServerDetails.getSelection()) {
+				int index = localRuntimeCombo.getSelectionIndex();
+				complete = index != -1 && !serverHomeText.getText().equals("") && !serverConfigText.getText().equals("");
+			}
+		}
+		setPageComplete(complete);
+	}
+	
 	private void refreshServerWidgets() {
 		if( initialHost != null ) {
 			createRSE.setEnabled(false);

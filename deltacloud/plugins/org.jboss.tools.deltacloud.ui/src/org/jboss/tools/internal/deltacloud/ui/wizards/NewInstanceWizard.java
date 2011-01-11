@@ -79,7 +79,8 @@ public class NewInstanceWizard extends Wizard {
 
 	@Override
 	public boolean canFinish() {
-		return mainPage.isPageComplete();
+		//return mainPage.isPageComplete();
+		return super.canFinish();
 	}
 
 	@Override
