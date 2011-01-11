@@ -1,3 +1,12 @@
+2011-01-11  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/deltacloud/core/client/unmarshal/ImagesUnmarshaller.java: 
+	* src/org/jboss/tools/deltacloud/core/client/unmarshal/ImageUnmarshaller.java: 
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClientImpl.java 
+	(listImages): 
+	(listImages): 
+	[JBIDE-7935] moved image unmarshalling to its own class (and created tests for it)
+
 2011-01-10  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/deltacloud/core/client/unmarshal/HardwareProfileUnmarshaller.java: 

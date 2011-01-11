@@ -1,3 +1,10 @@
+2011-01-11  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/internal/deltacloud/test/core/client/ImageDomUnmarshallingTest.java: 
+	[JBIDE-7935] created tests for image unmarshalling
+	* src/org/jboss/tools/internal/deltacloud/test/core/client/InstanceDomUnmarshallingTest.java: 
+	[JBIDE-7935] created tests for instance unmarshalling
+
 2010-12-15  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/internal/deltacloud/test/core/job/SchedulingRulesTest.java: 

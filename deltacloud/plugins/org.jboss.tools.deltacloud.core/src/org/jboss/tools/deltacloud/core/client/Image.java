@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.core.client;
 
-import javax.xml.bind.annotation.XmlElement;
 
 /**
  * @author Martyn Taylor
@@ -19,42 +18,34 @@ public class Image extends AbstractDeltaCloudObject
 {	
 	private static final long serialVersionUID = 1L;
 
-	@XmlElement(name="owner_id")
 	private String ownerId;
 	
-	@XmlElement
 	private String name;
 	
-	@XmlElement
 	private String description;
 	
-	@XmlElement
 	private String architecture;
 	
-	protected Image()
+	public Image()
 	{
 	}
 		
-	@SuppressWarnings("unused")
-	private void setOwnerId(String ownerId)
+	public void setOwnerId(String ownerId)
 	{
 		this.ownerId = ownerId;
 	}
 
-	@SuppressWarnings("unused")
-	private void setName(String name)
+	public void setName(String name)
 	{
 		this.name = name;
 	}
 
-	@SuppressWarnings("unused")
-	private void setDescription(String description)
+	public void setDescription(String description)
 	{
 		this.description = description;
 	}
 
-	@SuppressWarnings("unused")
-	private void setArchitecture(String architecture)
+	public void setArchitecture(String architecture)
 	{
 		this.architecture = architecture;
 	}

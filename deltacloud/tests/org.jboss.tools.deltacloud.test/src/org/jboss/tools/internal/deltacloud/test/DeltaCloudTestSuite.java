@@ -11,6 +11,7 @@
 package org.jboss.tools.internal.deltacloud.test;
 
 import org.jboss.tools.internal.deltacloud.test.core.client.HardwareProfileDomUnmarshallingTest;
+import org.jboss.tools.internal.deltacloud.test.core.client.ImageDomUnmarshallingTest;
 import org.jboss.tools.internal.deltacloud.test.core.client.InstanceDomUnmarshallingTest;
 import org.jboss.tools.internal.deltacloud.test.core.client.KeyDomUnmarshallingTest;
 import org.jboss.tools.internal.deltacloud.test.core.job.CloudSchedulingRulesTest;
@@ -25,6 +26,7 @@ import org.junit.runners.Suite;
 	CloudSchedulingRulesTest.class,
 	KeyDomUnmarshallingTest.class,
 	InstanceDomUnmarshallingTest.class,
+	ImageDomUnmarshallingTest.class,
 	HardwareProfileDomUnmarshallingTest.class})
 public class DeltaCloudTestSuite {
 }

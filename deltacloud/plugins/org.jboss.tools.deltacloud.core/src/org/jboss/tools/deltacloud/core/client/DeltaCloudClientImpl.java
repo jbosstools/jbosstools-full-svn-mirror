@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
-import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.UnknownHostException;
@@ -23,15 +22,9 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.JAXB;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.auth.AuthScope;
@@ -42,7 +35,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.eclipse.core.runtime.Assert;
-import org.jboss.tools.deltacloud.core.client.request.AbstractListObjectsRequest;
 import org.jboss.tools.deltacloud.core.client.request.CreateInstanceRequest;
 import org.jboss.tools.deltacloud.core.client.request.CreateKeyRequest;
 import org.jboss.tools.deltacloud.core.client.request.DeleteKeyRequest;
@@ -59,7 +51,10 @@ import org.jboss.tools.deltacloud.core.client.request.ListRealmRequest;
 import org.jboss.tools.deltacloud.core.client.request.ListRealmsRequest;
 import org.jboss.tools.deltacloud.core.client.request.PerformInstanceActionRequest;
 import org.jboss.tools.deltacloud.core.client.request.TypeRequest;
+import org.jboss.tools.deltacloud.core.client.unmarshal.HardwareProfileUnmarshaller;
 import org.jboss.tools.deltacloud.core.client.unmarshal.HardwareProfilesUnmarshaller;
+import org.jboss.tools.deltacloud.core.client.unmarshal.ImageUnmarshaller;
+import org.jboss.tools.deltacloud.core.client.unmarshal.ImagesUnmarshaller;
 import org.jboss.tools.deltacloud.core.client.unmarshal.InstanceUnmarshaller;
 import org.jboss.tools.deltacloud.core.client.unmarshal.InstancesUnmarshaller;
 import org.jboss.tools.deltacloud.core.client.unmarshal.KeyUnmarshaller;
@@ -276,7 +271,8 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	@Override
 	public Instance createInstance(String imageId) throws DeltaCloudClientException {
 		try {
-			return buildInstance(request(new CreateInstanceRequest(baseUrl, imageId)));
+			InputStream response = request(new CreateInstanceRequest(baseUrl, imageId));
+			return new InstanceUnmarshaller().unmarshall(response, new Instance());
 		} catch (DeltaCloudClientException e) {
 			throw e;
 		} catch (Exception e) {
@@ -293,9 +289,9 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	public Instance createInstance(String name, String imageId, String profileId, String realmId, String keyId,
 			String memory, String storage) throws DeltaCloudClientException {
 		try {
-			InputStream inputStream = request(
+			InputStream response = request(
 					new CreateInstanceRequest(baseUrl, name, imageId, profileId, realmId, keyId, memory, storage));
-			Instance instance = buildInstance(inputStream);
+			Instance instance = new InstanceUnmarshaller().unmarshall(response, new Instance());
 			// TODO: WORKAROUND for
 			// https://issues.jboss.org/browse/JBIDE-8005
 			if (keyId != null) {
@@ -314,8 +310,8 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	@Override
 	public HardwareProfile listProfile(String profileId) throws DeltaCloudClientException {
 		try {
-			return buildDeltaCloudObject(HardwareProfile.class,
-					requestStringResponse(new ListHardwareProfileRequest(baseUrl, profileId)));
+			InputStream response = request(new ListHardwareProfileRequest(baseUrl, profileId));
+			return new HardwareProfileUnmarshaller().unmarshall(response, new HardwareProfile());
 		} catch (DeltaCloudClientException e) {
 			throw e;
 		} catch (Exception e) {
@@ -338,15 +334,16 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 
 	@Override
 	public List<Image> listImages() throws DeltaCloudClientException {
-		return listDeltaCloudObjects(Image.class,
-				new ListImagesRequest(baseUrl), "image");
+		InputStream response = request(new ListImagesRequest(baseUrl));
+		List<Image> images = new ArrayList<Image>();
+		new ImagesUnmarshaller().unmarshall(response, images);
+		return images;
 	}
 
 	@Override
 	public Image listImages(String imageId) throws DeltaCloudClientException {
-		return JAXB.unmarshal(new StringReader(
-				requestStringResponse(new ListImageRequest(baseUrl, imageId))),
-				Image.class);
+		InputStream response = request(new ListImageRequest(baseUrl, imageId));
+		return new ImageUnmarshaller().unmarshall(response, new Image());
 	}
 
 	@Override
@@ -360,7 +357,8 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	@Override
 	public Instance listInstances(String instanceId) throws DeltaCloudClientException {
 		try {
-			return buildInstance(request(new ListInstanceRequest(baseUrl, instanceId)));
+			InputStream response = request(new ListInstanceRequest(baseUrl, instanceId));
+			return new InstanceUnmarshaller().unmarshall(response, new Instance());
 		} catch (DeltaCloudClientException e) {
 			throw e;
 		} catch (Exception e) {
@@ -447,118 +445,11 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		return key;
 	}
 
-	private Instance updateInstance(InputStream inputStream, Instance instance) throws Exception {
-		return new InstanceUnmarshaller().unmarshall(inputStream, instance);
-	}
-
-	private Instance buildInstance(InputStream inputStream) throws Exception {
-		return updateInstance(inputStream, new Instance());
-	}
-
-	private HardwareProfile buildHardwareProfile(String xml)
-			throws DeltaCloudClientException {
-		try {
-			HardwareProfile profile = JAXB.unmarshal(new StringReader(xml),
-					HardwareProfile.class);
-
-			Document document = getDocument(xml);
-
-			List<Node> nodes = getPropertyNodes(document, "hardware_profile"); //$NON-NLS-1$
-
-			for (Node n : nodes) {
-				Property p = new Property();
-				p.setName(n.getAttributes().getNamedItem("name").getNodeValue()); //$NON-NLS-1$
-				p.setValue(n.getAttributes()
-						.getNamedItem("value").getNodeValue()); //$NON-NLS-1$
-				p.setUnit(n.getAttributes().getNamedItem("unit").getNodeValue()); //$NON-NLS-1$
-				p.setKind(n.getAttributes().getNamedItem("kind").getNodeValue()); //$NON-NLS-1$
-				if (p.getKind().equals("range")) { //$NON-NLS-1$
-					NodeList children = n.getChildNodes();
-					for (int i = 0; i < children.getLength(); ++i) {
-						Node child = children.item(i);
-						if (child.getNodeName().equals("range")) { //$NON-NLS-1$
-							String first = child.getAttributes()
-									.getNamedItem("first").getNodeValue(); //$NON-NLS-1$
-							String last = child.getAttributes()
-									.getNamedItem("last").getNodeValue(); //$NON-NLS-1$
-							p.setRange(first, last);
-						}
-					}
-				} else if (p.getKind().equals("enum")) { //$NON-NLS-1$
-					ArrayList<String> enums = new ArrayList<String>();
-					NodeList children = n.getChildNodes();
-					for (int i = 0; i < children.getLength(); ++i) {
-						Node child = children.item(i);
-						if (child.getNodeName().equals("enum")) { //$NON-NLS-1$
-							NodeList enumChildren = child.getChildNodes();
-							for (int j = 0; j < enumChildren.getLength(); ++j) {
-								Node enumChild = enumChildren.item(j);
-								if (enumChild.getNodeName().equals("entry")) {
-									enums.add(enumChild
-											.getAttributes()
-											.getNamedItem("value").getNodeValue()); //$NON-NLS-1$
-								}
-							}
-						}
-					}
-					p.setEnums(enums);
-				}
-				profile.getProperties().add(p);
-			}
-			return profile;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	private List<Node> getPropertyNodes(Document document, String elementName) {
-		NodeList elements = document.getElementsByTagName(elementName);
-		ArrayList<Node> values = new ArrayList<Node>();
-		for (int i = 0; i < elements.getLength(); i++) {
-			NodeList children = elements.item(i).getChildNodes();
-			for (int j = 0; j < children.getLength(); ++j) {
-				Node child = children.item(j);
-				if (child.getNodeName().equals("property")) { //$NON-NLS-1$
-					values.add(child);
-				}
-			}
-		}
-		return values;
-	}
-
-	private <T extends AbstractDeltaCloudObject> List<T> listDeltaCloudObjects(Class<T> clazz,
-			AbstractListObjectsRequest request, String elementName) throws DeltaCloudClientException {
-		try {
-			Document document = getDocument(requestStringResponse(request));
-			List<T> dco = new ArrayList<T>();
-			NodeList nodeList = document.getElementsByTagName(elementName);
-			for (int i = 0; i < nodeList.getLength(); i++) {
-				dco.add(buildDeltaCloudObject(clazz, nodeToString(nodeList.item(i))));
-			}
-			return dco;
-		} catch (DeltaCloudClientException e) {
-			throw e;
-		} catch (Exception e) {
-			throw new DeltaCloudClientException(MessageFormat.format(
-					"Could not list object of type {0}", clazz), e);
-		}
-	}
-
 	private Document getDocument(String response) throws ParserConfigurationException, SAXException, IOException {
 		InputSource is = new InputSource(new StringReader(response));
 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 		Document document = documentBuilder.parse(is);
 		return document;
-	}
-
-	@SuppressWarnings("unchecked")
-	private <T extends Object> T buildDeltaCloudObject(Class<T> clazz, String node) throws Exception {
-		if (clazz.equals(HardwareProfile.class)) {
-			return (T) buildHardwareProfile(node);
-		} else {
-			return JAXB.unmarshal(new StringReader(node), clazz);
-		}
 	}
 
 	public boolean performInstanceAction(InstanceAction action) throws DeltaCloudClientException {
@@ -567,7 +458,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 				InputStream inputStream = request(new PerformInstanceActionRequest(
 						new URL(action.getUrl()), action.getMethod()));
 				if (!InstanceAction.DESTROY.equals(action.getName())) {
-					updateInstance(inputStream, action.getOwner());
+					new InstanceUnmarshaller().unmarshall(inputStream, action.getOwner());
 				}
 			} catch (MalformedURLException e) {
 				throw new DeltaCloudClientException(
@@ -581,16 +472,5 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 			return true;
 		}
 		return false;
-	}
-
-	private String nodeToString(Node node) throws DeltaCloudClientException {
-		try {
-			StringWriter writer = new StringWriter();
-			Transformer t = TransformerFactory.newInstance().newTransformer();
-			t.transform(new DOMSource(node), new StreamResult(writer));
-			return writer.toString();
-		} catch (TransformerException e) {
-			throw new DeltaCloudClientException("Error transforming node to string", e);
-		}
 	}
 }
