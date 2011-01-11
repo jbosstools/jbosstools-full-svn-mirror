@@ -12,7 +12,7 @@
 		<title>The Cloud Viewer</title>
 		
 		<para>
-	  	The <guilabel>Cloud Viewer</guilabel> view lists the servers you are connected to, the instances running on each server and the images available on each server. Right-clicking (or control-clicking on Mac OS) on a cloud connection presents you with options to disconnect from a cloud using the <guimenuitem>Disconnect Cloud</guimenuitem> option or reload the the cloud view with the <guimenuitem>Refresh View</guimenuitem> option. 
+	  	The <guilabel>Cloud Viewer</guilabel> view lists the servers you are connected to, the instances running on each server and the images available on each server. Right-clicking (or control-clicking on Mac OS) on a cloud connection presents you with options to delete a cloud using the <guimenuitem>Delete Cloud</guimenuitem> option or reload the the cloud view with the <guimenuitem>Refresh View</guimenuitem> option. 
 	  </para>
 	  
 	  <para>   
