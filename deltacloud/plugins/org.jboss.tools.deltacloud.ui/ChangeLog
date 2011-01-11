@@ -1,5 +1,7 @@
 2011-01-11  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
+	* src/org/jboss/tools/deltacloud/ui/views/cloud/InstancesCategoryItem.java (filter): 
+	[JBIDE-8091] fixed bug when filtering instances: returned array that is too large
 	* src/org/jboss/tools/deltacloud/ui/views/cloud/ImagesCategoryItem.java (filter): 
 	[JBIDE-8080] fixed bug when filtering images: returned array that is too large
 

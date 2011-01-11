@@ -12,6 +12,7 @@ package org.jboss.tools.deltacloud.ui.views.cloud;
 
 import java.beans.PropertyChangeEvent;
 import java.text.MessageFormat;
+import java.util.Collection;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -96,6 +97,7 @@ public class InstancesCategoryItem extends CloudElementCategoryItem<DeltaCloudIn
 	protected DeltaCloudInstance[] filter(DeltaCloudInstance[] instances) throws DeltaCloudException {
 		DeltaCloud cloud = getModel();
 		IInstanceFilter f = cloud.getInstanceFilter();
-		return f.filter(instances).toArray(new DeltaCloudInstance[instances.length]);
+		Collection<DeltaCloudInstance> filteredInstances = f.filter(instances);
+		return filteredInstances.toArray(new DeltaCloudInstance[filteredInstances.size()]);
 	}
 }
