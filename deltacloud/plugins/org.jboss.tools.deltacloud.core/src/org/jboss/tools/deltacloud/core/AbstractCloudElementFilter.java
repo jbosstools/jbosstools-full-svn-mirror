@@ -65,7 +65,7 @@ public abstract class AbstractCloudElementFilter<CLOUDELEMENT extends IDeltaClou
 	protected IFieldMatcher createRule(Iterator<String> rulesIterator) {
 		Assert.isLegal(rulesIterator.hasNext());
 		String expression = rulesIterator.next();
-		if (expression.equals(ALL_MATCHER_EXPRESSION)) { //$NON-NLS-1$
+		if (expression.equals(ALL_MATCHER_EXPRESSION)) { 
 			return new AllFieldMatcher();
 		} else {
 			return new FieldMatcher(expression);
