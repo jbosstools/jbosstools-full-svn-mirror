@@ -8,12 +8,12 @@
 			<keyword>Exadel Studio Pro</keyword>
 		</keywordset>
 	</chapterinfo>
-
+	
 	<title>Introduction </title>
 	<para>
-		This document is intended to help you to easily migrate from 3.0x to 4.0 <property>JBoss Developer Studio</property>. It also describes some popular issues that can appear while the process of migration, as well as the methods of their solving. 
+		This document is intended to help you to easily migrate from <property>JBoss Developer Studio</property> 3.0x to 4.0. It also describes some common issues that can occur in the migration process, along with their solutions.
 	</para>
-
+	
 	<section>
 		<title>Other relevant resources on the topic</title>
 		<para>All JBoss Developer Studio release documentation you can find at <ulink url="http://www.redhat.com/docs/en-US/JBoss_Developer_Studio/">http://www.redhat.com/docs/en-US/JBoss_Developer_Studio</ulink> in the corresponding release directory.</para>
