@@ -3,7 +3,7 @@
 <chapter id="chap-Beginners_Guide-Java_Web_EE_and_Standard_Edition_SE_Plug_Ins">
 	<title>Java Web (EE) and Standard Edition (SE) Plug-Ins</title>
 	<para>
-		Included <application>JBoss Developer Studio</application> Java plug-ins are detailed.
+		This chapter provides details on the Java plug-ins that are included in <application>JBoss Developer Studio</application>.
 	</para>
 	<section id="sect-Beginners_Guide-Java_Web_EE_and_Standard_Edition_SE_Plug_Ins-Visual_Web_Tools">
 		<title>Visual Web Tools</title>
@@ -15,10 +15,10 @@
 				<term>Visual Page Editor</term>
 				<listitem>
 					<para>
-						The Visual Page Editor allows an application to be developed alongside a visual preview. The application can be viewed either as the source code, as a preview of the application, or both simultaneously in a split-screen presentation. The Visual Page Editor can be used for developing an application using technologies such as JavaServer Faces (<acronym>JSF</acronym>), JavaServer Pages (<acronym>JSP</acronym>), Struts, and Hypertext Markup Language (<acronym>HTML</acronym>). The Visual Page Editor also features a graphical toolbar for in-line styling.
+						The Visual Page Editor allows an application to be developed in conjunction with a real time visual preview. The application can be viewed either as the source code, as a preview of the application, or both simultaneously in a split-screen presentation. The Visual Page Editor can be used for developing an application using technologies such as JavaServer Faces (<acronym>JSF</acronym>), JavaServer Pages (<acronym>JSP</acronym>), Struts, and Hypertext Markup Language (<acronym>HTML</acronym>). The Visual Page Editor also features a graphical toolbar for in-line styling.
 					</para>
 					<figure id="figu-Beginners_Guide-Visual_Web_Tools-Visual_Page_Editor">
-						<title>Visual Page Editor</title> 
+						<title>Visual Page Editor</title>
 						<mediaobject>
 							<imageobject>
 								<imagedata fileref="images/figu-Beginners_Guide-Visual_Web_Tools-Visual_Page_Editor.png" format="PNG" />
@@ -31,7 +31,7 @@
 						</mediaobject>
 					</figure>
 					<para>
-						Refer to the <ulink url="http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/4.0/html-single/Visual_Web_Tools_Reference_Guide/index.html#jbds_editors">Editors</ulink> chapter of <citetitle pubwork="book">Visual Web Tools Reference Guide</citetitle> for full details.
+						Refer to the <ulink url="http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/4.0/html-single/Visual_Web_Tools_Reference_Guide/index.html#jbds_editors">Editors</ulink> chapter of <citetitle pubwork="book">Visual Web Tools Reference Guide</citetitle> for more details.
 					</para>
 				</listitem>
 			</varlistentry>
@@ -39,7 +39,7 @@
 				<term>JBoss Tools Palette</term>
 				<listitem>
 					<para>
-						The JBoss Tools Palette provides access to tag libraries for creating <acronym>JSP</acronym> and <acronym>JSF</acronym> pages. Tags can be quickly inserted into pages from a number of included libraries:
+						The JBoss Tools Palette provides access to a library of tags used when creating <acronym>JSP</acronym> and <acronym>JSF</acronym> pages. Tags can be quickly inserted into pages from a number of libraries including:
 					</para>
 					<itemizedlist>
 						<listitem>
@@ -100,7 +100,7 @@
 						</mediaobject>
 					</figure>
 					<para>
-						Refer to the <citetitle pubwork="chapter">JBoss Tools Palette</citetitle> chapter of <citetitle pubwork="book">Visual Web Tools Reference Guide</citetitle> for full details.
+						Refer to the <citetitle pubwork="chapter">JBoss Tools Palette</citetitle> chapter of the <citetitle pubwork="book">Visual Web Tools Reference Guide</citetitle> for more details.
 					</para>
 				</listitem>
 			</varlistentry>
@@ -108,7 +108,7 @@
 				<term>Web Projects View</term>
 				<listitem>
 					<para>
-						The Web Projects View is an additional view. It enhances project authoring with a number of features:
+						The Web Projects View is an additional view. It enhances project authoring with a number of features including:
 					</para>
 					<itemizedlist>
 						<listitem>
@@ -118,37 +118,37 @@
 						</listitem>
 						<listitem>
 							<para>
-								Selected items can be dragged and dropped into <acronym>JSP</acronym> and other <acronym>JSF</acronym> compatible pages:
+								Selected items can be dragged and dropped into <acronym>JSP</acronym> and other <acronym>JSF</acronym> compatible pages including:
 							</para>
 							<itemizedlist>
 								<listitem>
 									<para>
-										<acronym>JSF</acronym> managed bean attributes
+										<acronym>JSF</acronym> managed bean attributes.
 									</para>
 								</listitem>
 								<listitem>
 									<para>
-										<acronym>JSF</acronym> navigation rule outcomes
+										<acronym>JSF</acronym> navigation rule outcomes.
 									</para>
 								</listitem>
 								<listitem>
 									<para>
-										Property file values
+										Property file values.
 									</para>
 								</listitem>
 								<listitem>
 									<para>
-										Tag library files
+										Tag library files.
 									</para>
 								</listitem>
 								<listitem>
 									<para>
-										Tags from tag libraries
+										Tags from tag libraries.
 									</para>
 								</listitem>
 								<listitem>
 									<para>
-										<acronym>JSP</acronym> page links
+										<acronym>JSP</acronym> page links.
 									</para>
 								</listitem>
 							</itemizedlist>
@@ -183,7 +183,7 @@
 						</mediaobject>
 					</figure>
 					<para>
-						Refer to the <citetitle pubwork="chapter">Web Projects View</citetitle> chapter of <citetitle pubwork="book">Visual Web Tools Reference Guide</citetitle> for full details.
+						Refer to the <citetitle pubwork="chapter">Web Projects View</citetitle> chapter of the <citetitle pubwork="book">Visual Web Tools Reference Guide</citetitle> for more details.
 					</para>
 				</listitem>
 			</varlistentry>
@@ -194,7 +194,7 @@
 						OpenOn provides an easy method for switching directly from one project resource to another without navigating through the <guilabel>Package Explorer</guilabel> view. Pressing <keycap>F3</keycap> or <keycombo><keycap>Ctrl</keycap><mousebutton>click</mousebutton></keycombo> when a reference to another file is highlighted will open the file in the editor.
 					</para>
 					<para>
-						Refer to the <citetitle pubwork="chapter">Editors</citetitle> chapter of <citetitle pubwork="book">Visual Web Tools Reference Guide</citetitle> for full details.
+						Refer to the <citetitle pubwork="chapter">Editors</citetitle> chapter of the <citetitle pubwork="book">Visual Web Tools Reference Guide</citetitle> for more details.
 					</para>
 				</listitem>
 			</varlistentry>
@@ -202,7 +202,7 @@
 				<term>Content Assist</term>
 				<listitem>
 					<para>
-						Content Assist displays context-specific code completion suggestions while typing, speeding up development and reducing typing errors. Content Assist is supported in a number of contexts:
+						Content Assist displays context-specific code completion suggestions while typing, speeding up development and reducing typing errors. Content Assist is supported in the following contexts:
 					</para>
 					<para>
 						The suggestion list can be displayed by pressing <keycombo><keycap>Ctrl</keycap><keycap>Space</keycap></keycombo>, and the highlighted entry can be selected and inserted by pressing <keycap>Enter</keycap>.
@@ -232,7 +232,7 @@
 						Properties, managed bean attributes, navigation rules, tag library file declarations, and <acronym>JSP</acronym> pages can all be dragged from the <guilabel>Web Projects</guilabel> view and dropped into the editor to add content.
 					</para>
 					<para>
-						Refer to the <citetitle pubwork="chapter">Web Projects View</citetitle> chapter of <citetitle pubwork="book">Visual Web Tools Reference Guide</citetitle> for full details.
+						Refer to the <citetitle pubwork="chapter">Web Projects View</citetitle> chapter of the <citetitle pubwork="book">Visual Web Tools Reference Guide</citetitle> for more details.
 					</para>
 				</listitem>
 			</varlistentry>
@@ -243,7 +243,7 @@
 						RichFaces and Ajax4jsf tag libraries can be used from the JBoss Tools Palette, and RichFaces components are rendered in the Visual Page Editor.
 					</para>
 					<para>
-						Refer to the <citetitle pubwork="chapter">Editors</citetitle> chapter of <citetitle pubwork="book">Visual Web Tools Reference Guide</citetitle> for full details.
+						Refer to the <citetitle pubwork="chapter">Editors</citetitle> chapter of the <citetitle pubwork="book">Visual Web Tools Reference Guide</citetitle> for more details.
 					</para>
 				</listitem>
 			</varlistentry>
@@ -253,32 +253,32 @@
 	<section id="sect-Beginners_Guide-Java_Web_EE_and_Standard_Edition_SE_Plug_Ins-Seam_Development_Tools">
 		<title>Seam Development Tools</title>
 		<para>
-			<application>JBoss Seam</application> combines several technologies to reduce the complexity of developing modern Web 2.0 applications:
+			<application>JBoss Seam</application> combines several technologies to reduce the complexity of developing modern Web 2.0 applications including:
 		</para>
 		<itemizedlist>
 			<listitem>
 				<para>
-					Enterprise Java Beans (<acronym>EJB3</acronym>)
+					Enterprise Java Beans (<acronym>EJB3</acronym>).
 				</para>
 			</listitem>
 			<listitem>
 				<para>
-					JavaServer Faces (<acronym>JSF</acronym>)
+					JavaServer Faces (<acronym>JSF</acronym>).
 				</para>
 			</listitem>
 			<listitem>
 				<para>
-					Asynchronous JavaScript and <acronym>XML</acronym> (Ajax)
+					Asynchronous JavaScript and <acronym>XML</acronym> (Ajax).
 				</para>
 			</listitem>
 			<listitem>
 				<para>
-					Java Portlets
+					Java Portlets.
 				</para>
 			</listitem>
 			<listitem>
 				<para>
-					Business Process Management (<acronym>BPM</acronym>)
+					Business Process Management (<acronym>BPM</acronym>).
 				</para>
 			</listitem>
 		</itemizedlist>
@@ -286,14 +286,14 @@
 			<application>Seam</application> provides an interface to these different technologies through simple <emphasis>Plain Old Java Objects</emphasis> (<acronym>POJO</acronym>), user interface components, and <acronym>XML</acronym>. <application>Seam</application> does not distinguish between presentation-tier components and business logic components in an effort to present a simple, unified component model for the Java Enterprise Edition platform. Seam also provides mechanisms to manage application states across multiple workspaces, methods to manage workflow and pageflow through <acronym>jBPM</acronym>, and comprehensive integrated testing features.
 		</para>
 		<para>
-			The Seam Development Tools in the <application>JBoss Developer Studio</application> allow for easy <application>Seam</application> application development:
+			The Seam Development Tools in <application>JBoss Developer Studio</application> allow for easy <application>Seam</application> application development with a number of features including:
 		</para>
 		<variablelist>
 			<varlistentry>
 				<term>New Seam Project wizard</term>
 				<listitem>
 					<para>
-						The New Seam Project wizard allows the details of the Seam project to be configured, including target runtimes, target servers, project facets, and web module settings, then generates all the necessary files for a Seam project.
+						The New Seam Project wizard allows the details of the Seam project to be configured, including target runtimes, target servers, project facets, and web module settings. It then generates all the necessary files for a Seam project.
 					</para>
 					<figure id="figu-Beginners_Guide-Seam_Development_Tools-New_Seam_Project_wizard">
 						<title>New Seam Project wizard</title>
@@ -314,7 +314,7 @@
 				<term>Other Seam wizards</term>
 				<listitem>
 					<para>
-						Wizards are also included for creating new Seam Actions, new Seam Forms, new Seam Conversations, and new Seam Entities.
+						Wizards are also included for creating new Seam Actions, Seam Forms, Seam Conversations, and Seam Entities.
 					</para>
 				</listitem>
 			</varlistentry>
@@ -322,7 +322,7 @@
 				<term>Entity generation</term>
 				<listitem>
 					<para>
-						Another wizard exists for generating Seam entities. The wizard produces a set of <acronym>CRUD</acronym> (create-read-update-delete) Seam components and web pages. These can be generated by reverse-engineering an existing database, or by using existing entities in the application.
+						Another wizard exists for generating Seam entities. The wizard produces a set of <acronym>CRUD</acronym> (create-read-update-delete) Seam components and web pages. These can be generated by reverse-engineering an existing database, or by using the existing entities in the application.
 					</para>
 				</listitem>
 			</varlistentry>
@@ -330,7 +330,7 @@
 				<term>Editors and views</term>
 				<listitem>
 					<para>
-						There are a number of editors available in the <application>JBoss Developer Studio</application> for working with Seam in addition to the Visual Page Editor:
+						There are a number of editors available in the <application>JBoss Developer Studio</application> for working with Seam in addition to the Visual Page Editor including:
 					</para>
 					<variablelist>
 						<varlistentry>
@@ -363,7 +363,7 @@
 											<imagedata fileref="images/figu-Beginners_Guide-Seam_Development_Tools-Seam_Pages_Editor_graphical_view.png" format="PNG" />
 										</imageobject>
 										<textobject>
-										<phrase>
+											<phrase>
 												The graphical view of the Seam Pages Editor, representing the project page-flow and exception handling.
 										</phrase>
 										</textobject>
@@ -375,7 +375,7 @@
 							<term>Seam Components Editor</term>
 							<listitem>
 								<para>
-									The Seam Components Editor is used for editing the <filename>components.xml</filename> file. The file can be edited through two views, the tree view and the source view, which operate similarly to the views in the Seam Pages Editor.
+									The Seam Components Editor is used for editing the <filename>components.xml</filename> file. The file can be edited through two views: the tree view and the source view, which operate similarly to the views in the Seam Pages Editor.
 								</para>
 								<figure id="figu-Beginners_Guide-Seam_Development_Tools-Seam_Components_Editor">
 									<title>Seam Components Editor</title>
@@ -384,7 +384,7 @@
 											<imagedata fileref="images/figu-Beginners_Guide-Seam_Development_Tools-Seam_Components_Editor.png" format="PNG" />
 										</imageobject>
 										<textobject>
-										<phrase>
+											<phrase>
 												The Seam Components Editor, displaying the components in a hierarchical tree.
 										</phrase>
 										</textobject>
@@ -394,12 +394,13 @@
 						</varlistentry>
 					</variablelist>
 					<para>
-						The Seam Editors feature Content Assist and OpenOn; for more details on these technologies refer to <xref linkend="sect-Beginners_Guide-Java_Web_EE_and_Standard_Edition_SE_Plug_Ins-Visual_Web_Tools" />. Seam Editors also feature validation tools to highlight potential issues with the application.
+						The Seam Editors implement Content Assist and OpenOn; for more details on these technologies refer to <xref linkend="sect-Beginners_Guide-Java_Web_EE_and_Standard_Edition_SE_Plug_Ins-Visual_Web_Tools" />. Seam Editors also feature validation tools to highlight potential issues with the application.
 					</para>
 				</listitem>
 			</varlistentry>
 			<varlistentry>
-				<term><acronym>CRUD</acronym> database applications</term>
+				<term>
+					<acronym>CRUD</acronym> database applications</term>
 				<listitem>
 					<para>
 						<acronym>CRUD</acronym> refers to the four basic <acronym>SQL</acronym> commands: <code>create</code>, <code>read</code>, <code>update</code>, and <code>delete</code>. A <acronym>CRUD</acronym> database application uses forms to retrieve data from and submit data to a database.
@@ -419,17 +420,18 @@
 			</varlistentry>
 		</variablelist>
 		<para>
-			Refer to the <citetitle pubwork="book">Seam Development Tools Reference Guide</citetitle> for full details.
+			Refer to the <citetitle pubwork="book">Seam Development Tools Reference Guide</citetitle> for more details.
 		</para>
 	</section>
 	
 	<section id="sect-Beginners_Guide-Java_Web_EE_and_Standard_Edition_SE_Plug_Ins-Hibernate_Tools">
 		<title>Hibernate Tools</title>
 		<para>
-			<application>Hibernate</application> is an object-relational mapping (<acronym>ORM</acronym>) library, used for mapping an object-oriented domain model to a relational database.<!-- It replaces persistence-related database accesses with high-level object-handling functions to solve problems relating to object-relational impedance mismatch.--> <application>Hibernate</application> also serves as a query service, allowing queries to be expressed in native <acronym>SQL</acronym> (Structured Query Language), an extension of <acronym>SQL</acronym> named <emphasis>Hibernate Query Language</emphasis> (<acronym>HQL</acronym>), or an object-oriented Criteria and Example <acronym>API</acronym> (Application Programming Interface).
+			<application>Hibernate</application> is an object-relational mapping (<acronym>ORM</acronym>) library, used for mapping an object-oriented domain model to a relational database.<!-- It replaces persistence-related database accesses with high-level object-handling functions to solve problems relating to object-relational impedance mismatch.-->
+			<application>Hibernate</application> also serves as a query service, allowing queries to be expressed in native <acronym>SQL</acronym> (Structured Query Language), an extension of <acronym>SQL</acronym> named <emphasis>Hibernate Query Language</emphasis> (<acronym>HQL</acronym>), or an object-oriented Criteria and Example <acronym>API</acronym> (Application Programming Interface).
 		</para>
 		<para>
-			Hibernate Tools in the <application>JBoss Developer Studio</application> provides several features to aid in developing with <application>Hibernate</application>:
+			Hibernate Tools in <application>JBoss Developer Studio</application> provides several features to aid in developing with <application>Hibernate</application> including:
 		</para>
 		<variablelist>
 			<varlistentry>
@@ -478,7 +480,8 @@
 				</listitem>
 			</varlistentry>
 			<varlistentry>
-				<term><application>Apache Ant</application> Task</term>
+				<term>
+					<application>Apache Ant</application> Task</term>
 				<listitem>
 					<para>
 						<application>Apache Ant</application> is a tool for automating software build processes. Hibernate Tools includes an Apache Ant Task for generating schema, mapping, and Java code related to the build process.
@@ -487,7 +490,7 @@
 			</varlistentry>
 		</variablelist>
 		<para>
-			Refer to the <citetitle pubwork="book">Hibernate Tools Reference</citetitle> for full details.
+			Refer to the <citetitle pubwork="book">Hibernate Tools Reference</citetitle> for more details.
 		</para>
 	</section>
 	
@@ -516,7 +519,7 @@
 			Click the <guibutton>Modify...</guibutton> button and enable portlets for the creation of <application>JBoss Portal</application> applications through this wizard.
 		</para>
 		<para>
-			Refer to the <citetitle pubwork="book">JBoss Portal Tools Reference Guide</citetitle> for full details.
+			Refer to the <citetitle pubwork="book">JBoss Portal Tools Reference Guide</citetitle> for more details.
 		</para>
 	</section>
 	
@@ -533,7 +536,7 @@
 				<term>MBean Explorer</term>
 				<listitem>
 					<para>
-						The MBean Explorer lists a connection's Managed Beans, domains, attributes, and operations in a hierarchical tree. Items in the tree can be filtered, expanded, and collapsed, and double-clicking on any item will open the item in the MBean Editor.
+						The MBean Explorer lists a connection's Managed Beans, domains, attributes, and operations in a hierarchical tree. Items in the tree can be filtered, expanded, and collapsed, and double-clicking on any item will open it in the MBean Editor.
 					</para>
 					<figure id="figu-Beginners_Guide-JMX_Tools-MBean_Explorer">
 						<title>MBean Explorer</title>
@@ -569,7 +572,7 @@
 						</listitem>
 						<listitem>
 							<para>
-								the Notifications page, which allows the Managed Bean to be subscribed to, and which notifications are received
+								the Notifications page, which allows the Managed Bean to be subscribed to, and which notifications are received;
 							</para>
 						</listitem>
 						<listitem>
@@ -595,7 +598,7 @@
 			</varlistentry>
 		</variablelist>
 		<para>
-			Refer to the <citetitle pubwork="book">JMX Tools Reference Guide</citetitle> for full details.
+			Refer to the <citetitle pubwork="book">JMX Tools Reference Guide</citetitle> for more details.
 		</para>
 	</section>
 	
@@ -615,7 +618,7 @@
 			</listitem>
 			<listitem>
 				<para>
-					Pre-configured templates are included and the functionality to create your own.
+					Pre-configured templates are included, along with the ability to create your own.
 				</para>
 			</listitem>
 			<listitem>
@@ -630,12 +633,12 @@
 			</listitem>
 			<listitem>
 				<para>
-					Constant validation checking no matter how you are currently interacting with the code, ensures you are always aware of any errors during the development process.
+					Constant validation checking no matter how you are currently interacting with the code, which ensures you are always aware of any errors during the development process.
 				</para>
 			</listitem>
 			<listitem>
 				<para>
-					Three views are provided for interacting with the code: Diagram view, Tree view and Source view. Synchronization between the views ensures you are always working on the newest version.
+					Three views are provided for interacting with the code: the Diagram view, Tree view and Source view. Synchronization between the views ensures you are always working on the newest version.
 				</para>
 				<figure id="figu-Beginners_Guide-JSF_Tools-Diagram_view">
 					<title>Diagram view</title>
@@ -671,7 +674,7 @@
 	<section id="sect-Beginners_Guide-Java_Web_EE_and_Standard_Edition_SE_Plug_Ins-JBoss_AS_Tools">
 		<title>JBoss AS Tools</title>
 		<para>
-			The JBoss <acronym>AS</acronym> Tools consists of a number of additional views for managing an installed JBoss Server through the JBoss <acronym>AS</acronym> (Application Server) perspective. These additional views include the standard Console and Properties views, and the Servers view. The Servers view allows installed servers to be configured, monitored, and managed.
+			The JBoss <acronym>AS</acronym> Tools consist of a number of additional views for managing an installed JBoss Server through the JBoss <acronym>AS</acronym> (Application Server) perspective. These additional views include the standard Console and Properties views, and the Servers view. The Servers view allows installed servers to be configured, monitored, and managed.
 		</para>
 		<figure id="figu-Beginners_Guide-JBoss_AS_Tools-Servers_view">
 			<title>Servers view</title>
@@ -687,7 +690,7 @@
 			</mediaobject>
 		</figure>
 		<para>
-			Refer to the <citetitle pubwork="book">JBoss Server Manager Reference Guide</citetitle> for full details.
+			Refer to the <citetitle pubwork="book">JBoss Server Manager Reference Guide</citetitle> for more details.
 		</para>
 	</section>
 	
@@ -710,7 +713,7 @@
 			</mediaobject>
 		</figure>
 		<para>
-			Refer to the <citetitle pubwork="book">JBoss Server Manager Reference Guide</citetitle> for full details.
+			Refer to the <citetitle pubwork="book">JBoss Server Manager Reference Guide</citetitle> for more details.
 		</para>
 	</section>
 
