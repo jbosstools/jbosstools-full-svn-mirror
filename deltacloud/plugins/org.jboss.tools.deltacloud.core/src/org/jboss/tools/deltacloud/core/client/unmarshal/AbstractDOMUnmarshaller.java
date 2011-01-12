@@ -14,6 +14,8 @@ package org.jboss.tools.deltacloud.core.client.unmarshal;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.MessageFormat;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -33,6 +35,8 @@ import org.xml.sax.SAXException;
  */
 public abstract class AbstractDOMUnmarshaller<DELTACLOUDOBJECT> {
 
+	private Pattern STRIP_REGEXP = Pattern.compile("[^\n \t]+");
+	
 	private Class<DELTACLOUDOBJECT> type;
 	private String tagName;
 
@@ -114,6 +118,17 @@ public abstract class AbstractDOMUnmarshaller<DELTACLOUDOBJECT> {
 			return attribute.getTextContent();
 		}
 		return null;
+	}
+
+	protected String stripText(String textContent) {
+		if (textContent == null || textContent.length() == 0) {
+			return textContent;
+		}
+		Matcher matcher = STRIP_REGEXP.matcher(textContent);
+		if (!matcher.matches()) {
+			return null;
+		}
+		return matcher.group();
 	}
 
 }
