@@ -186,7 +186,7 @@ ${install}
 		<exec executable="${p2.director.install.path}/eclipse"
 		      failonerror="true"
 		      dir="${p2.director.install.path}"
-		      timeout="900000"
+		      timeout="1200000"
 		      taskname="p2.dir"
 		>
 			<!-- deprecated application for Eclipse 3.4: org.eclipse.equinox.p2.director.app.application -->
