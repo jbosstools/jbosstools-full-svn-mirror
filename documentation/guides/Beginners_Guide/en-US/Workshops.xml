@@ -3,7 +3,7 @@
 <chapter id="chap-Beginners_Guide-Worshops">
 	<title>Workshops</title>
 	<para>
-		Follow the instructions in these workshops to broaden your knowledge and understanding of the <application>JBoss Developer Studio</application>.
+		Follow the instructions in these workshops to broaden your knowledge and understanding of <application>JBoss Developer Studio</application>.
 	</para>
 	<section id="sect-Beginners_Guide-Workshops-RESTEasy">
 		<title>RESTEasy</title>
@@ -17,7 +17,7 @@
 				<itemizedlist>
 					<listitem>
 						<para>
-							<application>JBoss Developer Studio 3.0</application>
+							<application>JBoss Developer Studio 4.0</application>
 						</para>
 					</listitem>
 					<listitem>
@@ -32,20 +32,21 @@
 					</listitem>
 					<listitem>
 						<para>
-							<application>REST Client</application> <application>Firefox</application> plug-in available from <ulink url="https://addons.mozilla.org/en-US/firefox/addon/9780">https://addons.mozilla.org/en-US/firefox/addon/9780</ulink>
+							<application>REST Client</application>
+							<application>Firefox</application> plug-in available from <ulink url="https://addons.mozilla.org/en-US/firefox/addon/9780">https://addons.mozilla.org/en-US/firefox/addon/9780</ulink>
 						</para>
 					</listitem>
 				</itemizedlist>
 			</para>
 		</formalpara>
 		<para>
-			Make sure the <application>JBoss Developer Studio</application> is open with the application server running. For the purpose of simplicity it will be assumed for the rest of the workshop that you are running the <application>JBoss Enterprise Application Platform 5</application>, however the steps will be the same if you are using the <application>JBoss Service Orientated Architecture Platform 5</application>.
+			Make sure <application>JBoss Developer Studio</application> is open with the application server running. For simplicity it will be assumed for the rest of the workshop that you are running the <application>JBoss Enterprise Application Platform 5</application>, however the steps will be the same if you are using the <application>JBoss Service Orientated Architecture Platform 5</application>.
 		</para>
 		<para>
-			In the <application>JBoss Developer Studio</application> navigate to <menuchoice><guimenuitem>Help</guimenuitem><guimenuitem>Project Example</guimenuitem></menuchoice>.
+			In <application>JBoss Developer Studio</application> navigate to <menuchoice><guimenuitem>Help</guimenuitem><guimenuitem>Project Example</guimenuitem></menuchoice>.
 		</para>
 		<figure id="figu-Beginners_Guide-Workshops-Project_Example_Menu">
-			<title>Project Example Menu</title> 
+			<title>Project Example Menu</title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/Project_Example_menu.png" format="PNG" />
@@ -58,10 +59,10 @@
 			</mediaobject>
 		</figure>
 		<para>
-			In the <guimenuitem>Project Example</guimenuitem> menu dialog box, scroll to <menuchoice><guimenuitem>RESTEasy</guimenuitem><guimenuitem>RESTEasy Simple Example</guimenuitem></menuchoice> and click <guibutton>Finish</guibutton>.
+			In the <guimenuitem>Project Example</guimenuitem> menu dialog box, scroll to <menuchoice><guimenuitem>RESTEasy</guimenuitem><guimenuitem>RESTEasy Simple Example</guimenuitem></menuchoice> and click the <guibutton>Finish</guibutton> button.
 		</para>
 		<figure id="figu-Beginners_Guide-Workshops-RESTEasy_Simple_Example">
-			<title>RESTEasy Simple Example</title> 
+			<title>RESTEasy Simple Example</title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/Project_Example_RESTEasy.png" format="PNG" />
@@ -74,10 +75,10 @@
 			</mediaobject>
 		</figure>
 		<para>
-			There may be two issues to fix before you can continue. The description for each of these will be  <guilabel>Target runtime JBoss 4.2.2 Runtime is not defined</guilabel> and <guilabel>Java compiler level does not match the version of the installed Java project facet</guilabel>. If they do not appear skip to <xref linkend="figu-Beginners_Guide-Workshops-Completed_fixing_the_issues"/>. If they do appear, the following steps will resolve these issues.  
+			There may be two issues to fix before you can continue. The description for these issues are <guilabel>Target runtime JBoss 4.2.2 Runtime is not defined</guilabel> and <guilabel>Java compiler level does not match the version of the installed Java project facet</guilabel>. If they do not appear skip to <xref linkend="figu-Beginners_Guide-Workshops-Completed_fixing_the_issues"/>. If they do appear, the following steps will resolve these issues.  
 		</para>
 		<figure id="figu-Beginners_Guide-Workshops-Quick_Fixes">
-			<title>Quick Fixes</title> 
+			<title>Quick Fixes</title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/Project_Example_Quick_Fix.png" format="PNG" />
@@ -93,7 +94,7 @@
 			To fix the first issue with the description <guilabel>Target runtime JBoss 4.2.2 Runtime is not defined</guilabel> click on this description and then click the <guibutton>Quick Fix</guibutton> button.
 		</para>
 		<figure id="figu-Beginners_Guide-Workshops-Fixing_the_first_issue">
-			<title>Fixing the first issue</title> 
+			<title>Fixing the first issue</title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/Project_Example_Quick_Fix_2.png" format="PNG" />
@@ -106,13 +107,13 @@
 			</mediaobject>
 		</figure>
 		<para>
-			The next dialog box will display two runtime issues to fix, however by fixing the second one labeled as <guilabel>Configure Targeted Runtimes</guilabel> both issues will be corrected.
+			The next dialog box will display two runtime issues to fix, however by fixing the second one, labeled as <guilabel>Configure Targeted Runtimes</guilabel>, both issues will be corrected.
 		</para>
 		<para>
 			Select the issue called <guilabel>Configure Targeted Runtimes</guilabel> and click the <guibutton>Finish</guibutton> button.
 		</para>
 		<figure id="figu-Beginners_Guide-Workshops-Runtime_issues">
-			<title>Runtime issues</title> 
+			<title>Runtime issues</title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/Project_Example_Quick_Fix_Runtime.png" format="PNG" />
@@ -125,18 +126,18 @@
 			</mediaobject>
 		</figure>
 		<para>
-			A large dialog box will open with a long list of property categories on the left hand side. Navigate down to and click on the <guimenuitem>Targeted Runtimes</guimenuitem> property title. To the right of the menu where the <guilabel>JBoss 4.2.2 Runtime</guilabel> box is selected, deselect it and then select the name of your <application>JBoss Enterprise Application Platform 5</application> runtime. 
+			A large dialog box will open displaying a long list of property categories on the left hand side. Navigate down to and click on the <guimenuitem>Targeted Runtimes</guimenuitem> property title. To the right of the menu where the <guilabel>JBoss 4.2.2 Runtime</guilabel> box is selected, deselect it and then select the name of your <application>JBoss Enterprise Application Platform 5</application> runtime. 
 		</para>
 		<para>
 			Once the <application>JBoss Enterprise Application Platform 5</application> is selected and the old runtime deselected, click the <guibutton>Apply</guibutton> button and then the <guibutton>OK</guibutton> button.
 		</para>
 		<note>
 			<para>
-				In <xref linkend="figu-Beginners_Guide-Workshops-Selecting_the_correct_runtime"/>, the runtime that will be used is the one called <guilabel>JBoss EAP 5.0 Runtime Server</guilabel>, though the name will depend on what you called it when you configured the server for use with the <application>JBoss Developer Studio</application>.
+				In <xref linkend="figu-Beginners_Guide-Workshops-Selecting_the_correct_runtime"/>, the runtime that will be used is the one called <guilabel>JBoss EAP 5.0 Runtime Server</guilabel>, though the name will depend on what you called it when you configured the server for use with <application>JBoss Developer Studio</application>.
 			</para>
 		</note>
 		<figure id="figu-Beginners_Guide-Workshops-Selecting_the_correct_runtime">
-			<title>Selecting the correct runtime</title> 
+			<title>Selecting the correct runtime</title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/Project_Examples_Quick_Fix_Targeted_Runtimes.png" format="PNG" />
@@ -149,7 +150,7 @@
 			</mediaobject>
 		</figure>
 		<para>
-			To fix the second issue with the description <guilabel>Java compiler level does not match the version of the installed Java project facet</guilabel> click on this description and then click the <guibutton>Quick Fix</guibutton> button.
+			To fix the second issue with the description <guilabel>Java compiler level does not match the version of the installed Java project facet</guilabel>, click on its description and then click the <guibutton>Quick Fix</guibutton> button.
 		</para>
 		<para>
 			After clicking the <guibutton>Quick Fix</guibutton> button the Java compiler issue should disappear because the <application>JBoss Developer Studio</application> has made the necessary changes in the background to fix it.
@@ -158,7 +159,7 @@
 			The <guilabel>Quick Fix</guilabel> dialog box should now be empty. Click the <guibutton>Finish</guibutton> button.
 		</para>
 		<figure id="figu-Beginners_Guide-Workshops-Completed_fixing_the_issues">
-			<title>Completed fixing the issues</title> 
+			<title>Completed fixing the issues</title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/Project_Examples_RESTEasy_Quick_Fix_Finish.png" format="PNG" />
@@ -171,10 +172,10 @@
 			</mediaobject>
 		</figure>
 		<para>
-			To add the project to the <application>JBoss Enterprise Application Platform 5</application> server right click on the server name in the <guimenuitem>Servers</guimenuitem> tab in the bottom section of your workbench. Click on the <guimenuitem>Add and Remove...</guimenuitem> option.
+			To add the project to the <application>JBoss Enterprise Application Platform 5</application> server right click (or Control-click on Mac OS) on the server name in the <guimenuitem>Servers</guimenuitem> view in the bottom section of your workbench. Click on the <guimenuitem>Add and Remove...</guimenuitem> option.
 		</para>
 		<figure id="figu-Beginners_Guide-Workshops-About_to_add_the_project_to_the_server">
-			<title>About to add the project to the server</title> 
+			<title>About to add the project to the server</title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/Project_Examples_RESTEasy_Add_to_Server.png" format="PNG" />
@@ -190,7 +191,7 @@
 			From the <guilabel>Add and Remove</guilabel> dialog box ensure the box labeled <guilabel>If server is started, publish changes immediately</guilabel> is ticked. In the left-hand menu, highlight the project you just created called <guilabel>simple</guilabel> by clicking on it. 
 		</para>
 		<figure id="figu-Beginners_Guide-Workshops-Add_project_to_server">
-			<title>Add project to server</title> 
+			<title>Add project to server</title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/Project_Examples_RESTEasy_Add_simple_to_server.png" format="PNG" />
@@ -209,10 +210,12 @@
 			Your RESTEasy project has now been deployed onto your server. We will now test the application by using the REST Client plug-in within the Firefox web browser.
 		</para>
 		<para>
-			Open your Firefox web browser and navigate to <menuchoice><guimenuitem>Tools</guimenuitem><guimenuitem>REST Client</guimenuitem></menuchoice>.
+			Open your Firefox web browser and navigate to <menuchoice><guimenuitem>Tools</guimenuitem>
+				<guimenuitem>REST Client</guimenuitem>
+			</menuchoice>.
 		</para>
 		<figure id="figu-Beginners_Guide-Workshops-Selecting_the_REST_Client">
-			<title>Selecting the REST Client</title> 
+			<title>Selecting the REST Client</title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/Project_Examples_RESTEasy_RESTClient_selection.png" format="PNG" />
@@ -230,7 +233,7 @@
 		<para>
 			Select <guimenuitem>POST</guimenuitem> from the <guilabel>Method</guilabel> drop-down menu, copy <ulink url="http://localhost:8080/simple/rest-services/customers">http://localhost:8080/simple/rest-services/customers</ulink> into the drop-down menu beside the <guilabel>Method</guilabel> and paste the following into the <guilabel>Request Body</guilabel>:
 		</para>
-<screen>&lt;customer&gt;&lt;first-name&gt;Bill&lt;/first-name&gt;&lt;last-name&gt;Burke&lt;/last-name&gt;&lt;street&gt;256 Clarendon Street&lt;/street&gt;&lt;city&gt;Boston&lt;/city&gt;&lt;state&gt;MA&lt;/state&gt;&lt;zip&gt;02115&lt;/zip&gt;&lt;country&gt;USA&lt;/country&gt;&lt;/customer&gt;</screen>
+		<screen>&lt;customer&gt;&lt;first-name&gt;Bill&lt;/first-name&gt;&lt;last-name&gt;Burke&lt;/last-name&gt;&lt;street&gt;256 Clarendon Street&lt;/street&gt;&lt;city&gt;Boston&lt;/city&gt;&lt;state&gt;MA&lt;/state&gt;&lt;zip&gt;02115&lt;/zip&gt;&lt;country&gt;USA&lt;/country&gt;&lt;/customer&gt;</screen>
 		<para>
 			The XML for the <guilabel>Request Body</guilabel> must not contain any spaces between XML tags to avoid exceptions occurring at the server end.
 		</para>
@@ -238,7 +241,7 @@
 			Click the <guibutton>Send</guibutton> button to add the customer information.
 		</para>
 		<figure id="figu-Beginners_Guide-Workshops-Adding_a_customer">
-			<title>Adding a customer</title> 
+			<title>Adding a customer</title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/Project_Examples_RESTEasy_RESTClient_Input.png" format="PNG" />
@@ -257,7 +260,7 @@
 			Click the <guibutton>Send</guibutton> button to retrieve the information. Select the <guilabel>Response Body</guilabel> tab beneath the <guilabel>Request Body</guilabel> section to view the returned information. 
 		</para>
 		<figure id="figu-Beginners_Guide-Workshops-Retrieving_customer_information">
-			<title>Retrieving customer information</title> 
+			<title>Retrieving customer information</title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/Project_Examples_RESTEasy_RESTClient_GET_1.png" format="PNG" />
@@ -270,7 +273,7 @@
 			</mediaobject>
 		</figure>
 		<para>
-			We have added a customer and retrieved their information, now we will update their information. To achieve this change the <guilabel>Method</guilabel> to being <guimenuitem>PUT</guimenuitem> and copy the following into the <guilabel>Request Body</guilabel> (overwriting anything that may be in the <guilabel>Request Body</guilabel> already):
+			We have added a customer and retrieved their information; now we will update their information. To achieve this change the <guilabel>Method</guilabel> to <guimenuitem>PUT</guimenuitem> and copy the following into the <guilabel>Request Body</guilabel> (overwriting anything that may be in the <guilabel>Request Body</guilabel> already):
 		</para>
 		<screen>&lt;customer&gt;&lt;first-name&gt;Gary&lt;/first-name&gt;&lt;last-name&gt;Lamperillo&lt;/last-name&gt;&lt;street&gt;256 Clarendon Street&lt;/street&gt;&lt;city&gt;Venice&lt;/city&gt;&lt;state&gt;CA&lt;/state&gt;&lt;zip&gt;90291&lt;/zip&gt;&lt;country&gt;USA&lt;/country&gt;&lt;/customer&gt;</screen>
 		<para>
@@ -283,7 +286,7 @@
 			Click the <guibutton>Send</guibutton> button to update the information.
 		</para>
 		<figure id="figu-Beginners_Guide-Workshops-Updating_customer_information">
-			<title>Updating customer information</title> 
+			<title>Updating customer information</title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/Project_Examples_RESTEasy_RESTClient_PUT.png" format="PNG" />
@@ -302,7 +305,7 @@
 			Select the <guilabel>Response Body</guilabel> tab beneath the <guilabel>Request Body</guilabel> section to view the returned information. 
 		</para>
 		<figure id="figu-Beginners_Guide-Workshops-Retreiving_updated_customer_information">
-			<title>Retrieving updated customer information</title> 
+			<title>Retrieving updated customer information</title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/Project_Examples_RESTEasy_RESTClient_GET_2.png" format="PNG" />
@@ -373,7 +376,7 @@
 	<section id="sect-Beginners_Guide-Workshops-Seam">
 		<title>Seam</title>
 		<para>
-			The <application>JBoss Enterprise Application Platform </application> book titled the <emphasis>Seam Reference Guide</emphasis> contains an example of how to setup Seam for use with the <application>JBoss Developer Studio</application>. This workshop can be found here: <ulink url="http://www.redhat.com/docs/en-US/JBoss_Enterprise_Application_Platform/5.0.0/html-single/Seam_Reference_Guide/index.html#gettingstartedwithjbosstools">Getting Started with Seam, using JBoss Tools</ulink>.
+			The <application>JBoss Enterprise Application Platform </application> book titled the <emphasis>Seam Reference Guide</emphasis> contains an example of how to setup Seam for use with  <application>JBoss Developer Studio</application>. This workshop can be found here: <ulink url="http://www.redhat.com/docs/en-US/JBoss_Enterprise_Application_Platform/5.0.0/html-single/Seam_Reference_Guide/index.html#gettingstartedwithjbosstools">Getting Started with Seam, using JBoss Tools</ulink>.
 		</para>
 	</section>
 </chapter>
