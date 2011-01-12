@@ -17,7 +17,7 @@ if [[ ! ${WORKSPACE} ]]; then
 fi
 
 # create working dir (if not already present in Hudson)
-mkdir -p sources; cd sources
+mkdir -p ${WORKSPACE}/sources; cd ${WORKSPACE}/sources
 
 # fetch drools-eclipse sources into child folder, "sources/drools"
 if [[ ! -d drools ]]; then svn co https://anonsvn.jboss.org/repos/labs/labs/jbossrules/trunk/drools-eclipse drools; fi
