@@ -10,7 +10,7 @@ fi
 
 # first, make sure JBT parent pom is built + installed into local ~/.m2 repo (?)
 
-mkdir sources; cd sources
+mkdir -p sources; cd sources
 
 # fetch drools-eclipse sources into child folder, "drools"
 if [[ ! -d drools ]]; then svn co https://anonsvn.jboss.org/repos/labs/labs/jbossrules/trunk/drools-eclipse drools; fi
