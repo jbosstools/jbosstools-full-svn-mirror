@@ -116,4 +116,11 @@ public abstract class AbstractDOMUnmarshaller<DELTACLOUDOBJECT> {
 		return null;
 	}
 
+	protected String stripText(String textContent) {
+		if (textContent == null || textContent.length() == 0) {
+			return textContent;
+		}
+		return textContent.trim();
+	}
+
 }

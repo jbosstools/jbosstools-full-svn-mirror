@@ -94,7 +94,7 @@ public class StringUtils {
 	public static String toString(InputStream inputStream) throws IOException {
 		StringBuilder builder = new StringBuilder();
 		for(int character = -1; (character = inputStream.read()) != -1; ) {
-			builder.append(character);
+			builder.append((char) character);
 		}
 		return builder.toString();
 	}
