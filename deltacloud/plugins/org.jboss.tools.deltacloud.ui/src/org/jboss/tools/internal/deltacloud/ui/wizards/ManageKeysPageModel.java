@@ -18,6 +18,7 @@ import java.util.List;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
@@ -40,14 +41,10 @@ public class ManageKeysPageModel extends ObservableUIPojo {
 	private List<DeltaCloudKey> keys = new ArrayList<DeltaCloudKey>();
 	private DeltaCloud cloud;
 	private DeltaCloudKey selectedKey;
-	
+
 	public ManageKeysPageModel(DeltaCloud cloud) {
 		this.cloud = cloud;
-		asyncGetKeys(cloud);
-	}
-
-	public void refreshKeys() {
-		asyncGetKeys(cloud);
+		// asyncGetKeys(cloud);
 	}
 
 	public void deleteSelectedKey() throws DeltaCloudException {
@@ -69,6 +66,10 @@ public class ManageKeysPageModel extends ObservableUIPojo {
 		fireIndexedPropertyChange(PROP_KEYS, index, null, key);
 		setSelectedKey(key);
 		PemFileManager.create(key);
+	}
+
+	public Job refreshKeys() {
+		return asyncGetKeys();
 	}
 
 	public DeltaCloudKey getSelectedKey() {
@@ -99,12 +100,28 @@ public class ManageKeysPageModel extends ObservableUIPojo {
 		setSelectedKey(key);
 	}
 
+	/**
+	 * Sets the currently selected key or the the first key (in the available
+	 * keys) as selected key.
+	 */
+	public void setSelectedKey() {
+		DeltaCloudKey key = getSelectedKey();
+		if (key == null) {
+System.err.println("selected key = 0");
+			setSelectedKey(0);
+		} else {
+System.err.println("selected key = " + key);
+			setSelectedKey(key);
+		}
+	}
+
 	public List<DeltaCloudKey> getKeys() {
 		return keys;
 	}
 
 	public void setKeys(List<DeltaCloudKey> newKeys) {
-		firePropertyChange(PROP_KEYS, keys, keys = newKeys);
+		firePropertyChange(PROP_KEYS, this.keys, this.keys = newKeys);
+		setSelectedKey();
 	}
 
 	public DeltaCloudKey getKey(String keyId) {
@@ -122,25 +139,24 @@ public class ManageKeysPageModel extends ObservableUIPojo {
 		return matchingKey;
 	}
 
-	private void asyncGetKeys(final DeltaCloud cloud) {
-		// TODO: internationalize strings
-		new AbstractCloudElementJob("get keys", cloud, CLOUDELEMENT.KEYS) {
+	private Job asyncGetKeys() {
+		Job job = new AbstractCloudElementJob("Get keys", cloud, CLOUDELEMENT.KEYS) {
 
 			protected IStatus doRun(IProgressMonitor monitor) throws Exception {
 				try {
-					List<DeltaCloudKey> newKeys = new ArrayList<DeltaCloudKey>();
-					newKeys.addAll(Arrays.asList(cloud.getKeys()));
+					java.util.List<DeltaCloudKey> newKeys = new ArrayList<DeltaCloudKey>();
+					newKeys.addAll(Arrays.asList(getCloud().getKeys()));
 					setKeys(newKeys);
-					setSelectedKey(null);
 					return Status.OK_STATUS;
 				} catch (DeltaCloudException e) {
 					// TODO: internationalize strings
 					return StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID,
-							MessageFormat.format("Could not get keys from cloud {0}", cloud.getName()), e);
+							MessageFormat.format("Could not get keys from cloud {0}", getCloud().getName()), e);
 				}
 			}
 
-		}.schedule();
+		};
+		job.schedule();
+		return job;
 	}
-
 }

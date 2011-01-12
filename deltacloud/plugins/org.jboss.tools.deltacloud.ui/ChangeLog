@@ -1,3 +1,9 @@
+2011-01-12  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ManageKeysPageModel.java (asyncGetKeys): 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ManageKeysPage.java (refreshKeys):
+	[JBIDE-8081] refreshing keys now uses the wizards progress monitor and disables the widgets while refreshing is running 
+
 2011-01-11  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/deltacloud/ui/views/cloud/InstancesCategoryItem.java (filter): 

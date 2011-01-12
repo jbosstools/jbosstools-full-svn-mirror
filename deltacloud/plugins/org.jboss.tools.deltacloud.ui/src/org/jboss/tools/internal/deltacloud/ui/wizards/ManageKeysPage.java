@@ -19,6 +19,7 @@ import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.databinding.conversion.Converter;
 import org.eclipse.core.runtime.Assert;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
@@ -41,6 +42,7 @@ import org.jboss.tools.deltacloud.core.DeltaCloudKey;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.BoundObjectPresentConverter;
+import org.jboss.tools.internal.deltacloud.ui.utils.WizardUtils;
 
 /**
  * @author Jeff Johnston
@@ -121,6 +123,15 @@ public class ManageKeysPage extends WizardPage {
 		setPageComplete(false);
 	}
 
+	private void refreshKeys() {
+		try {
+			Job job = model.refreshKeys();
+			WizardUtils.runInWizard(job, getContainer());
+		} catch (Exception e) {
+			// ignore since the job will report its failure
+		}
+	}
+
 	public DeltaCloudKey getKey() {
 		return model.getSelectedKey();
 	}
@@ -155,6 +166,8 @@ public class ManageKeysPage extends WizardPage {
 		GridDataFactory.fillDefaults().applyTo(deleteButton);
 
 		setControl(container);
+
+		refreshKeys();
 	}
 
 	private Button createDeleteButton(Composite container, DataBindingContext dbc) {
@@ -191,36 +204,7 @@ public class ManageKeysPage extends WizardPage {
 				BeanProperties.value(ManageKeysPageModel.PROP_SELECTED_KEY).observe(model),
 				new UpdateValueStrategy().setConverter(new Id2KeyConverter()),
 				new UpdateValueStrategy().setConverter(new Key2IdConverter()));
-		bindKeyListEnablement(keyList, dbc);
 		return keyList;
-	}
-
-	private void bindKeyListEnablement(final List keyList, DataBindingContext dbc) {
-		dbc.bindValue(WidgetProperties.enabled().observe(keyList),
-				BeanProperties.value(ManageKeysPageModel.PROP_KEYS).observe(model),
-				new UpdateValueStrategy(UpdateSetStrategy.POLICY_NEVER),
-				new UpdateValueStrategy().setConverter(new Converter(java.util.List.class, Boolean.class) {
-
-					@SuppressWarnings("rawtypes")
-					@Override
-					public Object convert(Object fromObject) {
-						if (fromObject == null) {
-							return false;
-						}
-						return ((java.util.List) fromObject).size() > 0;
-					}
-				}));
-		// BeanProperties.value(ManageKeysPageModel.PROP_KEYS).observe(model).addValueChangeListener(
-		// new IValueChangeListener() {
-		//
-		// @Override
-		// public void handleValueChange(ValueChangeEvent event) {
-		// @SuppressWarnings("rawtypes")
-		// boolean keysPresent = ((java.util.List)
-		// event.diff.getNewValue()).size() > 0;
-		// keyList.setEnabled(keysPresent);
-		// }
-		// });
 	}
 
 	private SelectionAdapter onDeletePressed() {
@@ -242,7 +226,7 @@ public class ManageKeysPage extends WizardPage {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				model.refreshKeys();
+				refreshKeys();
 			}
 		};
 	}

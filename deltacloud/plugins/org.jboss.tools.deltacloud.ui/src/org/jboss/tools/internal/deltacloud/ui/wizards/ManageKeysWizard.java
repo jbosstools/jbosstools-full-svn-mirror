@@ -48,4 +48,10 @@ public class ManageKeysWizard extends Wizard {
 		this.key = mainPage.getKey();
 		return true;
 	}
+
+	@Override
+	public boolean needsProgressMonitor() {
+		return true;
+	}
+
 }
