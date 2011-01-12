@@ -14,7 +14,12 @@ import org.eclipse.jface.wizard.IWizardPage;
 import org.jboss.tools.common.jobs.ChainedJob;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 
+/**
+ * @author Rob Stryker
+ */
 public interface INewInstanceWizardPage extends IWizardPage {
+
 	public static final String NEW_INSTANCE_FAMILY = "newInstanceFamily";
+
 	public ChainedJob getPerformFinishJob(DeltaCloudInstance addedInstance);
 }
