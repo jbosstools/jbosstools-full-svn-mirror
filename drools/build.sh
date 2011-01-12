@@ -1,17 +1,25 @@
 #!/bin/bash
 
+if [[ -f /opt/maven3/bin/mvn ]] && [[ -f /usr/bin/Xvfb ]]; then
+	alias mvn3='kill -9 `cat /tmp/.X4-lock`; rm -fr /tmp/.X4-lock; /usr/bin/Xvfb :4 -ac 2>&1 1>/dev/null & DISPLAY=:4 /opt/maven3/bin/mvn'
+elif [[ -f /qa/tools/opt/maven-3.0.1/bin/mvn ]]; then
+	alias mvn3='/qa/tools/opt/maven-3.0.1/bin/mvn'
+else
+	for d in $(whereis mvn | grep 3); do e=$(echo $d | grep -v ".bat" | grep 3); if [[ $e ]] && [[ -x $d ]]; then alias mvn3=$d; break; fi; done
+fi
+
 # first, make sure JBT parent pom is built + installed into local ~/.m2 repo (?)
 
 mkdir drools-eclipse; cd drools-eclipse
 
-# fetch drools-eclipse sources into child folder, "drools"
+if [[ ! -d drools-eclipse # fetch drools-eclipse sources into child folder, "drools"
 svn co https://anonsvn.jboss.org/repos/labs/labs/jbossrules/trunk/drools-eclipse drools
 
 # fetch Drools' parent pom into root folder, "drools-eclipse"
 rm -fr pom.xml; wget https://anonsvn.jboss.org/repos/labs/labs/jbossrules/trunk/pom.xml
 
-# build w/ maven using Drools' parent pom (will fail with missing deps)
-kill -9 `cat /tmp/.X4-lock`; rm -fr /tmp/.X4-lock; Xvfb :4 -ac 2>&1 1>/dev/null & DISPLAY=:4 /opt/maven3/bin/mvn -B -fn clean install -f drools/pom.xml
+# build w/ maven using Drools' parent pom (will fail with missing deps); suppress logged output
+mvn3 -B -fn -q clean install -f drools/pom.xml -Dmaven.repo.local=${WORKSPACE}/m2-repository 2>&1 1>/dev/null
 
 # fetch JBT parent pom into root folder, "drools-eclipse"
 rm -fr pom.xml; wget http://anonsvn.jboss.org/repos/jbosstools/trunk/build/pom.xml
@@ -36,5 +44,5 @@ echo "
 </project>" >> drools/pom.xml
 
 # build w/ maven using JBT parent pom (will pass - all deps available now)
-kill -9 `cat /tmp/.X4-lock`; rm -fr /tmp/.X4-lock; Xvfb :4 -ac 2>&1 1>/dev/null & DISPLAY=:4 /opt/maven3/bin/mvn -B -fae clean install -f drools/pom.xml
+mvn3 -B -fae clean install -f drools/pom.xml -Dmaven.repo.local=${WORKSPACE}/m2-repository
 
