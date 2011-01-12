@@ -3,15 +3,15 @@
 <chapter id="chap-Beginners_Guide-Service_Oriented_Architecture_Development">
 	<title>Service-Oriented Architecture Development</title>
 	<para>
-		Included <application>JBoss Developer Studio</application> plug-ins for development on Service-Oriented Architecture (SOA) are detailed.
+		This chapter provides details on the Service-Oriented Architecture (<acronym>SOA</acronym>) plug-ins that are included in <application>JBoss Developer Studio</application>.
 	</para>
 	<section id="sect-Beginners_Guide-Service_Oriented_Architecture_Development-jBPM_Tools">
 		<title>jBPM Tools</title>
 		<para>
-			jBPM is a workflow tool for framework control over business processes and languages.
+			jBPM is a workflow tool providing control over business processes and languages.
 		</para>
 		<para>
-			jBPM supports the jBPM Process Definition Language (jPDL) and includes a perspective for easy creation and manipulation using the jPDL. Through this view you can add states, transitions and other processes and waypoints in order to create your own business workflow. Refer to the <ulink url="http://www.redhat.com/docs/en-US/JBoss_Developer_Studio/3.0/jBPM_Tools_Reference_Guide/html_single/index.html#minimal_process_definition">A Minimal Process Definition</ulink> section of the <citetitle pubwork="chapter">Creating an Empty Process Definition</citetitle> chapter within the <citetitle pubwork="book">jBPM Tools Reference Guide</citetitle> for more details.
+			jBPM supports the jBPM Process Definition Language (<acronym>jPDL</acronym>) and includes a perspective for easy creation and manipulation using the jPDL. Through this view you can add states, transitions and other processes and waypoints in order to create your own business workflow. Refer to the <ulink url="http://www.redhat.com/docs/en-US/JBoss_Developer_Studio/3.0/jBPM_Tools_Reference_Guide/html_single/index.html#minimal_process_definition">A Minimal Process Definition</ulink> section of the <citetitle pubwork="chapter">Creating an Empty Process Definition</citetitle> chapter within the <citetitle pubwork="book">jBPM Tools Reference Guide</citetitle> for more details.
 		</para>
 	<!--	<para>
 			Refer to the <citetitle pubwork="book">jBPM Tools Reference Guide</citetitle> for further details.
@@ -21,7 +21,7 @@
 	<section id="sect-Beginners_Guide-Service_Oriented_Architecture_Development-ESB_Editor">
 		<title>ESB Editor</title>
 		<para>
-			The Enterprise Service Bus (ESB) is an abstraction layer that interacts with the messaging system in a Service-Oriented Architecture (SOA).
+			The Enterprise Service Bus (<acronym>ESB</acronym> is an abstraction layer that interacts with the messaging system in a Service-Oriented Architecture (<acronym>SOA</acronym>).
 		</para>
 		<figure id="figu-Beginners_Guide-ESB_Editor-ESB_Editor">
 			<title>ESB Editor</title>
@@ -32,12 +32,12 @@
 			</mediaobject>
 		</figure>
 		<para>
-			The <application>JBoss Developer Studio</application> includes a tool called the ESB file Editor. Through the use of this tool you can develop an application that will utilize the advantages of ESB technology. Features of the ESB Editor include:
+			<application>JBoss Developer Studio</application> includes a tool called the ESB file Editor. Through the use of this tool you can develop an application that will that will take advantage of the features in ESB. Features of the ESB Editor include:
 		</para>
 		<formalpara id="form-Beginners_Guide-ESB_Editor-ESB_syntax_validation">
 			<title>ESB syntax validation</title>
 			<para>
-				Contextual error checking is provided constantly, with error checking on incorrect or incomplete tags also included when using the Source viewer.
+				Constant contextual error checking is provided, with error checking on incorrect or incomplete tags also included when using the Source viewer.
 			</para>
 		</formalpara>
 		<formalpara id="form-Beginners_Guide-ESB_Editor-XML_schema_support">
@@ -49,20 +49,20 @@
 		<formalpara id="form-Beginners_Guide-ESB_Editor-ESB_XML_content_assistance">
 			<title>ESB XML content assistance</title>
 			<para>
-				Content Assist enables you to write code fast and with accuracy when using the Source mode.
+				Content Assist enables you to write code fast and with a higher degree of accuracy when using the Source mode.
 			</para>
 		</formalpara>
 		<formalpara id="form-Beginners_Guide-ESB_Editor-Synchronized_source_and_visual_editing">
 			<title>Synchronized source and visual editing</title>
 			<para>
-				The ESB Editor gives you the choice of using a graphical view (Tree), a code view (Source) or both when developing your ESB applications. With both instances open at once, the changes made to one can be directly viewable in the other, ensuring that you are always working with the most current version of your application no matter your choice.
+				The ESB Editor gives you the choice of using a graphical view (Tree), a code view (Source), or both when developing your ESB applications. With both instances open at once, the changes made to one are instantly visible in the other, ensuring that you are always working with the most current version of your application.
 			</para>
 		</formalpara>
 		<para>
 			Refer to the <ulink url="http://www.redhat.com/docs/en-US/JBoss_Developer_Studio/3.0/ESB_Tools_Reference_Guide/html_single/index.html#esb_editor">ESB Editor</ulink> chapter of the <citetitle pubwork="book">ESB Tools Reference Guide</citetitle> for further information.
 		</para>
 		<para>
-			JBoss ESB intergrates component messaging into the JBoss Service-Oriented Architecture, serving as an integral part of JBoss middleware suite. For information on how to use and configure JBoss ESB with the JBoss Service-Oriented Architecture refer to the <ulink url="http://www.redhat.com/docs/en-US/JBoss_Developer_Studio/3.0/ESB_Tools_Reference_Guide/html_single/index.html#using_SOA">Using and Configuring SOA Platform</ulink> chapter of the <citetitle pubwork="book">ESB Tools Reference Guide</citetitle>.
+			JBoss ESB integrates component messaging into the JBoss Service-Oriented Architecture, serving as an integral part of the JBoss middleware suite. For information on how to use and configure JBoss ESB with the JBoss Service-Oriented Architecture refer to the <ulink url="http://www.redhat.com/docs/en-US/JBoss_Developer_Studio/3.0/ESB_Tools_Reference_Guide/html_single/index.html#using_SOA">Using and Configuring SOA Platform</ulink> chapter of the <citetitle pubwork="book">ESB Tools Reference Guide</citetitle>.
 		</para>
 	</section>
 	
@@ -72,7 +72,7 @@
 			JBoss Web Services is an integral part of the JBoss Application Server and JBoss Enterprise Application Platform, providing a standard means of working reliably between different software applications.
 		</para>
 		<para>
-			A Web Service defines a collection of technologies that provide protocols and standards for the exchange of data between applications. You can create a Web Service for your application server through the use of wizards in the <application>JBoss Developer Studio</application>. For further details refer to the <ulink url="http://www.redhat.com/docs/en-US/JBoss_Developer_Studio/3.0/JBoss_Web_Services_User_Guide/html_single/index.html#topdownwebservice">Creating a Web Service using JBossWS runtime</ulink> chapter of the <citetitle pubwork="book">JBoss WS User Guide</citetitle>
+			A Web Service defines a collection of technologies that provide protocols and standards for the exchange of data between applications. You can create a Web Service for your application server through the use of wizards in <application>JBoss Developer Studio</application>. For further details refer to the <ulink url="http://www.redhat.com/docs/en-US/JBoss_Developer_Studio/3.0/JBoss_Web_Services_User_Guide/html_single/index.html#topdownwebservice">Creating a Web Service using JBossWS runtime</ulink> chapter of the <citetitle pubwork="book">JBoss WS User Guide</citetitle>
 		</para>
 		<figure id="figu-Beginners_Guide-Web_Services_Tools-Example_of_a_Web_Services_wizard">
 			<title>Example of a Web Services wizard</title>
@@ -83,7 +83,7 @@
 			</mediaobject>
 		</figure>
 		<para>
-			Web Services Tools also includes the ability to create a Web Service client through the use of a Web Services Description Language (WSDL) document. This can be useful if you already have a predefined service that you wish to recreate, or you wish to use one as a template for you to work with. Refer to the <citetitle pubwork="chapter">Creating a Web Service Client from a WSDL Document using JBoss WS</citetitle> chapter of the <citetitle pubwork="book">JBoss WS User Guide</citetitle> for more details.
+			Web Services Tools also includes the ability to create a Web Service client through the use of a Web Services Description Language (WSDL) document. This can be useful if you already have a predefined service that you wish to recreate, or you wish to use one as a template. Refer to the <citetitle pubwork="chapter">Creating a Web Service Client from a WSDL Document using JBoss WS</citetitle> chapter of the <citetitle pubwork="book">JBoss WS User Guide</citetitle> for more details.
 		</para>
 		<figure id="figu-Beginners_Guide-Web_Services_Tools-Web_Services_client_creation">
 			<title>Web Services client creation</title>
@@ -98,10 +98,10 @@
 	<section id="sect-Beginners_Guide-Service_Oriented_Architecture_Development-Drools_Tools">
 		<title>Drools Tools</title>
 		<para>
-			Drools is a Business Rule Management System (BRMS) that uses an enhanced implementation of the Rete algorithm to become a forward chaining inference based rules engine (production rule system). Refer to the <citetitle pubwork="chapter">The Rule Engine</citetitle> chapter of the JBoss Enterprise SOA <citetitle pubwork="book">JBoss Rules Reference Guide</citetitle> for more details.
+			Drools is a Business Rule Management System (<acronym>BRMS</acronym>) that uses an enhanced implementation of the Rete algorithm to provide a forward chaining inference based rules engine (production rule system). Refer to the <citetitle pubwork="chapter">The Rule Engine</citetitle> chapter of the JBoss Enterprise SOA <citetitle pubwork="book">JBoss Rules Reference Guide</citetitle> for more details.
 		</para>
 		<para>
-			Drools Tools includes wizards for creating new Drools projects and resources. The resources that can be created include a new rule, domain specific language, decision table and business rule. After these have been created there are numerous editors included to assist you with the rest of the development. Included editors are The Rule editor, The Domain Specific Language editor, The Rule Flow graphical editor and The Guided editor that provides a Graphical User Interface (GUI). Refer to the <ulink url="http://www.redhat.com/docs/en-US/JBoss_Developer_Studio/3.0/Drools_Tools_Reference_Guide/html_single/index.html">Drools Tools Reference Guide</ulink> for more details.
+			Drools Tools includes wizards for creating new Drools projects and resources. The resources that can be created include a new rule, domain specific language, decision table and business rule. After these have been created there are numerous editors included to assist you with the rest of the development. Included editors are the Rule editor, the Domain Specific Language editor, the Rule Flow graphical editor and the Guided editor. Refer to the <ulink url="http://www.redhat.com/docs/en-US/JBoss_Developer_Studio/3.0/Drools_Tools_Reference_Guide/html_single/index.html">Drools Tools Reference Guide</ulink> for more details.
 		</para>
 		<figure id="figu-Beginners_Guide-Drools_Tools-Rule_text_editor">
 			<title>Rule text editor</title>
@@ -124,15 +124,15 @@
 	<section id="sect-Beginners_Guide-Service_Oriented_Architecture_Development-Eclipse_Guvnor_Tools">
 		<title>Eclipse Guvnor Tools</title>
 		<para>
-			Eclipse Guvnor Tools work with Drools Guvnor through rich web based GUIs and editors to provide a centralized repository for a vast quantity of rules. You can store versions of rules, models, functions, processes and other Drools generated components that all relate to executeable knowledge bases. Access to the Guvnor is controlled, allowing you to lock down access and restrict features so domain experts (non programmers) can view and edit rules without being exposed to all the features at once.
+			Eclipse Guvnor Tools work with Drools Guvnor through rich web based GUIs and editors to provide a centralized repository for a vast quantity of rules. You can store versions of rules, models, functions, processes and other Drools generated components that all relate to executable knowledge bases. Access to the Guvnor is controlled, allowing you to lock down access and restrict features so domain experts (non programmers) can view and edit rules without being exposed to all the features at once.
 		</para>
 		<para>
-			The tools included for Eclipse Guvnor are outlined as follows:
+			The tools included for Eclipse Guvnor include:
 		</para>
 		<formalpara id="form-Beginners_Guide-Eclipse_Guvnor_Tools-Guvnor_Connection_Wizard">
 			<title>Guvnor Connection Wizard</title>
 			<para>
-				The Guvnor Connection Wizard is used to create a connection to a Guvnor repository. This wizard can be started by following the menu items <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>New</guimenuitem><guimenuitem>Other</guimenuitem><guimenuitem>Guvnor</guimenuitem><guimenuitem>Guvnor repository location</guimenuitem></menuchoice>, through the Guvnor Repositories View and other locations throughout Eclipse Guvnor Tools. Refer to the <citetitle pubwork="section">Guvnor Connection Wizard</citetitle> section of the <citetitle pubwork="chapter">Functionality Overview</citetitle> chapter within the <citetitle pubwork="book">Eclipse Guvnor Tools Reference Guide</citetitle> for more details.
+				The Guvnor Connection Wizard is used to create a connection to a Guvnor repository. This wizard can be started by selecting <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>New</guimenuitem><guimenuitem>Other</guimenuitem><guimenuitem>Guvnor</guimenuitem><guimenuitem>Guvnor repository location</guimenuitem></menuchoice>, through the Guvnor Repositories View and other locations throughout Eclipse Guvnor Tools. Refer to the <citetitle pubwork="section">Guvnor Connection Wizard</citetitle> section of the <citetitle pubwork="chapter">Functionality Overview</citetitle> chapter within the <citetitle pubwork="book">Eclipse Guvnor Tools Reference Guide</citetitle> for more details.
 			</para>
 		</formalpara>
 		<figure id="figu-Beginners_Guide-Eclipse_Guvnor_Tools-Guvnor_connection_wizard">
@@ -160,7 +160,7 @@
 		<formalpara id="form-Beginners_Guide-Eclipse_Guvnor_Tools-Guvnor_Resource_History_View">
 			<title>Guvnor Resource History View</title>
 			<para>
-				The task of the Guvnor Resource History View is to display the revision history details for files that are both locally stored and within Guvnor repositories. Refer to the <citetitle pubwork="section">Guvnor Resource History View</citetitle> section of the <citetitle pubwork="chapter">Functionality Overview</citetitle> chapter within the <citetitle pubwork="book">Eclipse Guvnor Tools Reference Guide</citetitle> for more details.
+				The Guvnor Resource History View displays the revision history details for files that are both locally stored and within Guvnor repositories. Refer to the <citetitle pubwork="section">Guvnor Resource History View</citetitle> section of the <citetitle pubwork="chapter">Functionality Overview</citetitle> chapter within the <citetitle pubwork="book">Eclipse Guvnor Tools Reference Guide</citetitle> for more details.
 			</para>
 		</formalpara>
 		<figure id="figu-Beginners_Guide-Eclipse_Guvnor_Tools-Guvnor_resource_history_view">
@@ -174,7 +174,7 @@
 		<formalpara id="form-Beginners_Guide-Eclipse_Guvnor_Tools-Guvnor_Resource_Importing_Wizard">
 			<title>Guvnor Resource Importing Wizard</title>
 			<para>
-				The Guvnor Resource Importing Wizard assists with the copying of one or more files from a Guvnor repository to the local workspace (while keeping file association with the Guvnor repository). This wizard can be started by following the menu items <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>Import</guimenuitem><guimenuitem>Guvnor</guimenuitem><guimenuitem>Resource from Guvnor</guimenuitem></menuchoice>. Refer to the <citetitle pubwork="section">Importing Guvnor Repository Resources</citetitle> section of the <citetitle pubwork="chapter">Functionality Overview</citetitle> chapter within the <citetitle pubwork="book">Eclipse Guvnor Tools Reference Guide</citetitle> for more details.
+				The Guvnor Resource Importing Wizard assists with copying one or more files from a Guvnor repository to the local workspace (while keeping file association with the Guvnor repository). This wizard can be started by selecting <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>Import</guimenuitem><guimenuitem>Guvnor</guimenuitem><guimenuitem>Resource from Guvnor</guimenuitem></menuchoice>. Refer to the <citetitle pubwork="section">Importing Guvnor Repository Resources</citetitle> section of the <citetitle pubwork="chapter">Functionality Overview</citetitle> chapter within the <citetitle pubwork="book">Eclipse Guvnor Tools Reference Guide</citetitle> for more details.
 			</para>
 		</formalpara>
 		<figure id="figu-Beginners_Guide-Eclipse_Guvnor_Tools-Guvnor_resource_importing_wizard">
@@ -188,7 +188,7 @@
 		<formalpara id="form-Beginners_Guide-Eclipse_Guvnor_Tools-Actions_for_Local_Guvnor_Resources">
 			<title>Actions for Local Guvnor Resources</title>
 			<para>
-				Through Eclipse Guvnor Tools a variety of actions can be performed on a file. Those actions are:
+				A variety of actions can be performed on a file through Eclipse Guvnor Tools. Those actions are:
 			</para>
 		</formalpara>
 		<itemizedlist>
