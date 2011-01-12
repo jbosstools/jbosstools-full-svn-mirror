@@ -14,8 +14,6 @@ package org.jboss.tools.deltacloud.core.client.unmarshal;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.MessageFormat;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -30,13 +28,11 @@ import org.xml.sax.SAXException;
 
 /**
  * @author André Dietisheim
- *
+ * 
  * @param <DELTACLOUDOBJECT>
  */
 public abstract class AbstractDOMUnmarshaller<DELTACLOUDOBJECT> {
 
-	private Pattern STRIP_REGEXP = Pattern.compile("[^\n \t]+");
-	
 	private Class<DELTACLOUDOBJECT> type;
 	private String tagName;
 
@@ -45,7 +41,8 @@ public abstract class AbstractDOMUnmarshaller<DELTACLOUDOBJECT> {
 		this.tagName = tagName;
 	}
 
-	public DELTACLOUDOBJECT unmarshall(InputStream inputStream, DELTACLOUDOBJECT deltacloudObject) throws DeltaCloudClientException {
+	public DELTACLOUDOBJECT unmarshall(InputStream inputStream, DELTACLOUDOBJECT deltacloudObject)
+			throws DeltaCloudClientException {
 		try {
 			Element element = getFirstElement(tagName, getDocument(inputStream));
 			if (element == null) {
@@ -60,7 +57,8 @@ public abstract class AbstractDOMUnmarshaller<DELTACLOUDOBJECT> {
 
 	}
 
-	protected Document getDocument(InputStream inputStream) throws ParserConfigurationException, SAXException, IOException {
+	protected Document getDocument(InputStream inputStream) throws ParserConfigurationException, SAXException,
+			IOException {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder documentBuilder = factory.newDocumentBuilder();
 		return documentBuilder.parse(inputStream);
@@ -124,11 +122,7 @@ public abstract class AbstractDOMUnmarshaller<DELTACLOUDOBJECT> {
 		if (textContent == null || textContent.length() == 0) {
 			return textContent;
 		}
-		Matcher matcher = STRIP_REGEXP.matcher(textContent);
-		if (!matcher.matches()) {
-			return null;
-		}
-		return matcher.group();
+		return textContent.trim();
 	}
 
 }
