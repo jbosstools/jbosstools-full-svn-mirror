@@ -146,7 +146,7 @@ else
 fi
 zip ${STAGINGDIR}/all/${srczipname} -q -r * -x hudson_workspace\* -x documentation\* -x download.jboss.org\* -x requirements\* \
   -x workingset\* -x labs\* -x build\* -x \*test\* -x \*target\* -x \*.class -x \*.svn\* -x \*classes\* -x \*bin\* -x \*.zip \
-  -x \*docs\* -x \*reference\* -x \*releng\* -x \*.git\*
+  -x \*docs\* -x \*reference\* -x \*releng\* -x \*.git\* -x \*/lib/\*.jar
 popd
 z=${STAGINGDIR}/all/${srczipname}; for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done
 
@@ -170,7 +170,7 @@ if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]] && [[ -d ${WORKSPACE}/sources/agg
 	pushd ${STAGINGDIR}/all/sources
 	zip ${STAGINGDIR}/all/${SRCSNAME} -q -r * -x hudson_workspace\* -x documentation\* -x download.jboss.org\* -x requirements\* \
 	  -x workingset\* -x labs\* -x build\* -x \*test\* -x \*target\* -x \*.class -x \*.svn\* -x \*classes\* -x \*bin\* -x \*.zip \
-	  -x \*docs\* -x \*reference\* -x \*releng\* -x \*.git\*
+	  -x \*docs\* -x \*reference\* -x \*releng\* -x \*.git\* -x \*/lib/\*.jar
 	popd
 	rm -fr ${STAGINGDIR}/all/sources
 	
