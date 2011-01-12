@@ -10,8 +10,10 @@
  *******************************************************************************/
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.text.MessageFormat;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.preferences.InstanceScope;
@@ -77,11 +79,11 @@ public class NewInstanceWizard extends Wizard {
 		}
 	}
 
-	@Override
-	public boolean canFinish() {
-		//return mainPage.isPageComplete();
-		return super.canFinish();
-	}
+	// @Override
+	// public boolean canFinish() {
+	// //return mainPage.isPageComplete();
+	// return super.canFinish();
+	// }
 
 	@Override
 	public boolean performFinish() {
@@ -160,8 +162,23 @@ public class NewInstanceWizard extends Wizard {
 					WizardMessages.getFormattedString(CREATE_INSTANCE_FAILURE_MSG,
 							new String[] { name, imageId, realmId, profileId }),
 					e, getShell());
+		} else {
+			addToSshPrefs(keyId);
 		}
+
 		return result;
+	}
+
+	private void addToSshPrefs(String keyId) {
+		try {
+			File pemFile = PemFileManager.getFile(keyId, SshPrivateKeysPreferences.getKeyStorePath());
+			if (pemFile != null) {
+				SshPrivateKeysPreferences.add(pemFile.getName());
+			}
+		} catch (DeltaCloudException e) {
+			ErrorUtils.handleError("Error",
+					MessageFormat.format("Could not add key \"{0}\" to ssh preferences", keyId), e, getShell());
+		}
 	}
 
 	private String utf8Encode(String string) {

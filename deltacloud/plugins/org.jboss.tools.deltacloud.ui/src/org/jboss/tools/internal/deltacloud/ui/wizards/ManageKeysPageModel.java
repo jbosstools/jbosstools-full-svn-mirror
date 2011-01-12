@@ -55,7 +55,7 @@ public class ManageKeysPageModel extends ObservableUIPojo {
 		int index = keys.indexOf(selectedKey);
 		keys.remove(selectedKey);
 		fireIndexedPropertyChange(PROP_KEYS, index, selectedKey, null);
-		PemFileManager.delete(selectedKey);
+		PemFileManager.delete(selectedKey, SshPrivateKeysPreferences.getKeyStorePath());
 		setSelectedKey(index - 1);
 	}
 
@@ -65,7 +65,7 @@ public class ManageKeysPageModel extends ObservableUIPojo {
 		int index = keys.indexOf(key);
 		fireIndexedPropertyChange(PROP_KEYS, index, null, key);
 		setSelectedKey(key);
-		PemFileManager.create(key);
+		PemFileManager.create(key, SshPrivateKeysPreferences.getKeyStorePath());
 	}
 
 	public Job refreshKeys() {
@@ -107,10 +107,10 @@ public class ManageKeysPageModel extends ObservableUIPojo {
 	public void setSelectedKey() {
 		DeltaCloudKey key = getSelectedKey();
 		if (key == null) {
-System.err.println("selected key = 0");
+			System.err.println("selected key = 0");
 			setSelectedKey(0);
 		} else {
-System.err.println("selected key = " + key);
+			System.err.println("selected key = " + key);
 			setSelectedKey(key);
 		}
 	}

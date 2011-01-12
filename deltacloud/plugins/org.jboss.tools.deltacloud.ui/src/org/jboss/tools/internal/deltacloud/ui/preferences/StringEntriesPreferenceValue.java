@@ -48,13 +48,33 @@ public class StringEntriesPreferenceValue extends AbstractPreferenceValue<String
 		return prefValues;
 	}
 
+	/**
+	 * Adds the given string value to this preference value(s). Duplicate values
+	 * are not added
+	 * 
+	 * @param value
+	 *            the value to add
+	 */
 	public void add(String value) {
-		StringBuilder builder = new StringBuilder(doGet());
-		if (builder.length() > 0) {
-			builder.append(delimiter);
+		String currentValues = doGet();
+		StringBuilder builder = new StringBuilder(currentValues);
+		if (!contains(value, currentValues)) {
+			if (hasValues(currentValues)) {
+				builder.append(delimiter);
+			}
+			builder.append(value);
+			doStore(builder.toString());
 		}
-		builder.append(value);
-		doStore(builder.toString());
+	}
+
+	private boolean contains(String value, String currentValues) {
+		return currentValues != null
+				&& currentValues.length() > 0
+				&& currentValues.indexOf(value) >= 0;
+	}
+
+	private boolean hasValues(String currentValues) {
+		return currentValues != null && currentValues.length() >= 0;
 	}
 
 	/**

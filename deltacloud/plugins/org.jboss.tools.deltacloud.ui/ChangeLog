@@ -1,5 +1,10 @@
 2011-01-12  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstanceWizard.java 
+	(performFinish): 
+	(addToSshPrefs): 
+	[JBIDE-8096] adding the key that was selected to launch the instance to the ssh-prefs 
+	(was: key was added when creating it, now: adding it when it gets selected)
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ManageKeysPageModel.java (asyncGetKeys): 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ManageKeysPage.java (refreshKeys):
 	[JBIDE-8081] refreshing keys now uses the wizards progress monitor and disables the widgets while refreshing is running 

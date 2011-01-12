@@ -13,11 +13,12 @@ package org.jboss.tools.internal.deltacloud.ui.wizards;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.MessageFormat;
 
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.Path;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudKey;
-import org.jboss.tools.internal.deltacloud.ui.preferences.StringEntriesPreferenceValue;
 
 /**
  * @author André Dietisheim
@@ -25,38 +26,25 @@ import org.jboss.tools.internal.deltacloud.ui.preferences.StringEntriesPreferenc
 public class PemFileManager {
 
 	private static final String PEM_FILE_SUFFIX = "pem";
-	private static final String PLUGIN_ID = "org.eclipse.jsch.core";
-	private static final String KEY_PRIVATEKEY = "PRIVATEKEY";
-	
-	private static StringEntriesPreferenceValue sshPrivateKeyPreference =
-			new StringEntriesPreferenceValue(",", KEY_PRIVATEKEY, PLUGIN_ID);
 
-	public static File create(DeltaCloudKey key) throws DeltaCloudException {
-		File file = create(key, getKeyStorePath());
-		sshPrivateKeyPreference.add(file.getName());
-		return file;
-	}
-
-	public static void delete(DeltaCloudKey key) throws DeltaCloudException {
-		File file = getFile(key.getId(), getKeyStorePath());
-		delete(file);
-		sshPrivateKeyPreference.remove(file.getName());
-	}
-
-	private static String getKeyStorePath() throws DeltaCloudException {
-		// TODO: replace by code that queries the RSE preferences for its key
-		// location setting
-		String userHomePath = System.getProperty("user.home");
-		if (userHomePath == null) {
-			throw new DeltaCloudException("Could not determine path to save pem file to");
-		}
-		return new StringBuilder(userHomePath)
-				.append(File.separatorChar).append(".ssh").append(File.separatorChar)
-				.toString();
-	}
-
-	private static File create(DeltaCloudKey key, String keyStorePath) throws DeltaCloudException {
+	public static void delete(DeltaCloudKey key, String keyStorePath) throws DeltaCloudException {
 		try {
+			Assert.isLegal(key != null);
+			Assert.isLegal(keyStorePath != null && keyStorePath.length() > 0);
+
+			File file = getFile(key.getId(), keyStorePath);
+			delete(file);
+		} catch (DeltaCloudException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new DeltaCloudException(MessageFormat.format("Coud not delete key \"{0}\"", key.getName()), e);
+		}
+	}
+
+	public static File create(DeltaCloudKey key, String keyStorePath) throws DeltaCloudException {
+		try {
+			Assert.isLegal(key != null);
+			Assert.isLegal(keyStorePath != null && keyStorePath.length() > 0);
 			File keyFile = create(getFile(key.getId(), keyStorePath), keyStorePath);
 			save(key.getPem(), keyFile);
 			keyFile.setWritable(false, false);
@@ -85,7 +73,7 @@ public class PemFileManager {
 		return file;
 	}
 
-	private static File getFile(String keyId, String keyStoreLocation) {
+	public static File getFile(String keyId, String keyStoreLocation) {
 		File keyFile =
 				Path.fromOSString(keyStoreLocation)
 						.append(keyId)
