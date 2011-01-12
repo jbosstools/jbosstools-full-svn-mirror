@@ -483,6 +483,9 @@
 				name="instances"
 				visible="true" />
 			<separator
+				name="additions"
+				visible="true" />
+			<separator
 				name="connections"
 				visible="true" />
 			<separator
