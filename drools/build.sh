@@ -10,18 +10,18 @@ fi
 
 # first, make sure JBT parent pom is built + installed into local ~/.m2 repo (?)
 
-mkdir drools-eclipse; cd drools-eclipse
+mkdir sources; cd sources
 
 if [[ ! -d drools-eclipse # fetch drools-eclipse sources into child folder, "drools"
 svn co https://anonsvn.jboss.org/repos/labs/labs/jbossrules/trunk/drools-eclipse drools
 
-# fetch Drools' parent pom into root folder, "drools-eclipse"
+# fetch Drools' parent pom into root folder, "sources"
 rm -fr pom.xml; wget https://anonsvn.jboss.org/repos/labs/labs/jbossrules/trunk/pom.xml
 
 # build w/ maven using Drools' parent pom (will fail with missing deps); suppress logged output
 mvn3 -B -fn -q clean install -f drools/pom.xml -Dmaven.repo.local=${WORKSPACE}/m2-repository 2>&1 1>/dev/null
 
-# fetch JBT parent pom into root folder, "drools-eclipse"
+# fetch JBT parent pom into root folder, "sources"
 rm -fr pom.xml; wget http://anonsvn.jboss.org/repos/jbosstools/trunk/build/pom.xml
 
 # add missing pom instructions into root pom
