@@ -44,6 +44,9 @@ import org.osgi.service.prefs.BackingStoreException;
  * @author Rob Stryker
  */
 public class RSEandASWizardPage extends WizardPage implements INewInstanceWizardPage {
+	private final static String CREATE_RSE_PREF_KEY = "org.jboss.tools.deltacloud.integration.wizard.RSEandASWizard.CREATE_RSE_PREF_KEY";
+	private final static String CREATE_SERVER_PREF_KEY = "org.jboss.tools.deltacloud.integration.wizard.RSEandASWizard.CREATE_SERVER_PREF_KEY";
+
 	private Button createRSE, createServer;
 	private Group serverDetailsGroup;
 	private Button autoScanCheck, hardCodeServerDetails, deployOnlyRadio, 
@@ -51,9 +54,9 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 	private Text remoteDetailsLoc, serverHomeText, serverConfigText, deployFolderText;
 	private Label serverHome, serverConfig, localRuntimeLabel, autoLocalRuntimeLabel, deployFolder;
 	private Combo autoLocalRuntimeCombo,localRuntimeCombo;
-	
-	private final static String CREATE_RSE_PREF_KEY = "org.jboss.tools.deltacloud.integration.wizard.RSEandASWizard.CREATE_RSE_PREF_KEY";
-	private final static String CREATE_SERVER_PREF_KEY = "org.jboss.tools.deltacloud.integration.wizard.RSEandASWizard.CREATE_SERVER_PREF_KEY";
+
+	private IHost initialHost;
+	private ArrayList<IRuntime> localRuntimes = new ArrayList<IRuntime>();
 
 	public RSEandASWizardPage() {
 		super("Create RSE Connection and Server");
@@ -61,13 +64,10 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 		setDescription("Here you can choose to create a matching RSE connection and a Server adapter");
 	}
 	
-	private IHost initialHost;
 	public RSEandASWizardPage(IHost host) {
 		this();
 		this.initialHost = host;
 	}
-
-	
 
 	public void createControl(Composite parent) {
 		Composite c2 = new Composite(parent, SWT.NONE);
@@ -205,7 +205,6 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 		setControl(c2);
 	}
 
-	private ArrayList<IRuntime> localRuntimes = new ArrayList<IRuntime>();
 	private void fillRuntimeTypeCombo() {
 		localRuntimes.clear();
 		IRuntime[] rts = ServerCore.getRuntimes();
