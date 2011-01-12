@@ -10,6 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core.client.utils;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -89,5 +91,11 @@ public class StringUtils {
 		return stringValue;
 	}
 
-
+	public static String toString(InputStream inputStream) throws IOException {
+		StringBuilder builder = new StringBuilder();
+		for(int character = -1; (character = inputStream.read()) != -1; ) {
+			builder.append(character);
+		}
+		return builder.toString();
+	}
 }
