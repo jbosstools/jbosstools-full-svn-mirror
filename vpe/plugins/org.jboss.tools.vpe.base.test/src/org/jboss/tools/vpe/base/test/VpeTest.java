@@ -23,6 +23,7 @@ import org.eclipse.core.runtime.ILogListener;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
@@ -276,6 +277,15 @@ public class VpeTest extends TestCase implements ILogListener {
 				.openEditor(input, getEditorID(), true);
 
 		assertNotNull(part);
+		// It is needed to fix issues related with deferred messages processing like
+		// java.lang.NullPointerException
+		//		at org.eclipse.wst.sse.ui.internal.style.SemanticHighlightingReconciler.reconcile(SemanticHighlightingReconciler.java:115)
+		//		at org.eclipse.wst.sse.ui.internal.reconcile.DocumentRegionProcessor.endProcessing(DocumentRegionProcessor.java:119)
+		//		at org.eclipse.wst.sse.ui.internal.reconcile.DirtyRegionProcessor.run(DirtyRegionProcessor.java:682)
+		//		at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+		// it happen because test goes so fast and editor is got closed until deferred events are processed
+		while (Display.getCurrent().readAndDispatch());
+
 		return part;
 
 	}
