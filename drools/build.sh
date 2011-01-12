@@ -9,8 +9,11 @@ else
 	for d in $(whereis mvn | grep 3); do e=$(echo $d | grep -v ".bat" | grep 3); if [[ $e ]] && [[ -x $d ]]; then mvn3=$d; break; fi; done
 fi
 
+devnull="2>&1 1>/dev/null"
 if [[ ! ${WORKSPACE} ]]; then
 	WORKSPACE=.
+	devnull=""
+	BUILD_NUMBER=000
 fi
 
 # create working dir (if not already present in Hudson)
@@ -23,7 +26,7 @@ if [[ ! -d drools ]]; then svn co https://anonsvn.jboss.org/repos/labs/labs/jbos
 rm -fr pom.xml; wget https://anonsvn.jboss.org/repos/labs/labs/jbossrules/trunk/pom.xml
 
 # build w/ maven using Drools' parent pom (will fail with missing deps); suppress logged output
-$mvn3 -B -fn -q clean install -f drools/pom.xml -Dmaven.repo.local=${WORKSPACE}/m2-repository 2>&1 1>/dev/null
+$mvn3 -B -fn clean install -f drools/pom.xml -Dmaven.repo.local=${WORKSPACE}/m2-repository $devnull
 
 # fetch JBT parent pom into root folder, "sources"
 rm -fr pom.xml; wget http://anonsvn.jboss.org/repos/jbosstools/trunk/build/pom.xml
@@ -37,7 +40,7 @@ echo "
 		<groupId>org.sonatype.tycho</groupId>
 		<artifactId>maven-osgi-packaging-plugin</artifactId>
 		<configuration>
-			<format>'v'yyyyMMdd-HHmm</format>
+			<format>'v'yyyyMMdd-HHmm'-H${BUILD_NUMBER}</format>
 			<archiveSite>true</archiveSite>
 		</configuration>
 	</plugin>
