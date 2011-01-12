@@ -28,7 +28,7 @@ import org.xml.sax.SAXException;
 
 /**
  * @author André Dietisheim
- * 
+ *
  * @param <DELTACLOUDOBJECT>
  */
 public abstract class AbstractDOMUnmarshaller<DELTACLOUDOBJECT> {
@@ -41,8 +41,7 @@ public abstract class AbstractDOMUnmarshaller<DELTACLOUDOBJECT> {
 		this.tagName = tagName;
 	}
 
-	public DELTACLOUDOBJECT unmarshall(InputStream inputStream, DELTACLOUDOBJECT deltacloudObject)
-			throws DeltaCloudClientException {
+	public DELTACLOUDOBJECT unmarshall(InputStream inputStream, DELTACLOUDOBJECT deltacloudObject) throws DeltaCloudClientException {
 		try {
 			Element element = getFirstElement(tagName, getDocument(inputStream));
 			if (element == null) {
@@ -57,8 +56,7 @@ public abstract class AbstractDOMUnmarshaller<DELTACLOUDOBJECT> {
 
 	}
 
-	protected Document getDocument(InputStream inputStream) throws ParserConfigurationException, SAXException,
-			IOException {
+	protected Document getDocument(InputStream inputStream) throws ParserConfigurationException, SAXException, IOException {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder documentBuilder = factory.newDocumentBuilder();
 		return documentBuilder.parse(inputStream);

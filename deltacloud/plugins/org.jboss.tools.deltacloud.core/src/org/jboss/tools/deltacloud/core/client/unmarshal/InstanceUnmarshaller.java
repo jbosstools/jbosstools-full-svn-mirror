@@ -56,7 +56,7 @@ public class InstanceUnmarshaller extends AbstractActionAwareUnmarshaller<Instan
 					Node addressNode = addressList.item(i);
 					if (addressNode != null) {
 						String address = stripText(addressNode.getTextContent());
-						if (address != null) {
+						if (address != null && address.length() > 0) {
 							addresses.add(address);
 						}
 					}
