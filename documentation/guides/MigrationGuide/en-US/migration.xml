@@ -1,43 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="jsf_struts" xreflabel="jsf_struts">
-    <?dbhtml filename="jsf_struts.html"?>
-    <chapterinfo>
-        <keywordset>
-            <keyword>JBoss Developer Studio</keyword>
-            <keyword>JBDS</keyword>
-            <keyword>Exadel Studio Pro</keyword>
-            <keyword>Migration</keyword>
-        </keywordset>
-    </chapterinfo>
-    
-    <title>Migration Process</title>
-    <para>This chapter describes the JBoss Developer Studio migration from version
-        2.1 to 3.0.</para>
-    <section id="migration">  
-	    <title>How to migrate the JBoss Developer Studio from 2.1 to 3.0</title> 
-        <para></para>
-        <para>To migrate from 2.1 to 3.0 you have to perform a new install of the JBoss Developer Studio 3.0 and undertake all the steps of the
-            installation process that is fully described in 
-	    <ulink url="http://www.redhat.com/docs/en-US/JBoss_Developer_Studio/3.0/Getting_Started_Guide/html_single/index.html">Getting Started with JBoss Developer Studio</ulink> guide.</para>
-        <figure>
-            <title>Process of JBDS 3.0 installation </title>
-            
-            <mediaobject>
-                <imageobject>
-                    <imagedata fileref="images/jbds2.png" />
-                </imageobject>
-            </mediaobject>
-        </figure>
-        <para>Since JBoss Developer Studio 3.0 uses a new version of Eclipse, an update from within Eclipse cannot be performed as it was when upgrading from JBoss Developer Studio 2.0 to 2.1.</para>
-        <para>When the installation process is complete you can point to your old workspace directory and continue working with your projects created using previous JBoss Developer Studio versions, or create a new one and import old projects into the new workspace.
-        </para>
-        
-        <note>
-            <title>Note:</title>
-            <para>In JBDS 3.0, Linux users no longer need to install the library <filename>libstdc+.so.5</filename>. This library is no longer required and can be removed from the system. 
-            </para>
-        </note>
-    </section>
+<chapter id="chap-update_site_configuration">
+	<?dbhtml filename="update_site_configuration.html"?>
+	<chapterinfo>
+		<keywordset>
+			<keyword>JBoss Developer Studio</keyword>
+			<keyword>Eclipse</keyword>
+			<keyword>Java</keyword>
+			<keyword>JBoss</keyword>
+		</keywordset>
+	</chapterinfo>
+	
+	<title>Migration Process</title>
+	
+	<section id="sect-eclipse-versions">
+		<title>JBoss Developer Studio Eclipse Versions</title> 
+		<para>
+			JBoss Developer Studio (JBDS) 3.0x is based on Eclipse 3.5, while JBDS 4.0 is based on Eclipse 3.6. This prevents a direct upgrade from JBDS 3.0x to 4.0.			
+		</para>
+		
+		<para>
+			Workspaces created with JBDS 3.0x can generally be opened in JBDS 4.0, however this is not guaranteed be the case. Always backup your existing workspaces (see <xref linkend="sect-backup-workspace"/> for more information) before attempting to use them with JBDS 4.0.
+		</para>
+		
+		<note>
+			<title>Tip</title>
+			<para>
+					It is possible to run JBDS 3.0x and 4.0 side by side if they have been installed into separate directories.
+				</para>
+		</note>
+	</section>
+	
+	<section id="sect-backup-workspace">
+		<title>Back Up Existing Workspaces</title> 
+		<para>
+			It is recommended that existing workspaces created with JBDS 3.0x are backed up before attempting use them with JBDS 4.0. This can be done by copying the workspace directory to a backup location, or compressing it as an archive. 
+		</para>
+		<para>To find the location of your workspace directory select <menuchoice><guimenuitem>File</guimenuitem>
+				<guimenuitem>Switch Workspace</guimenuitem></menuchoice>. The resulting list will show you the location of previously used workspaces.
+		</para>
+		
+		<figure id="figure-switch-workspace">
+			<title>Finding Workspace Directories</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/switchworkspace.png" format="PNG"/>
+				</imageobject>
+				<textobject>
+					<para>Workspace Directory List</para>
+				</textobject>
+			</mediaobject>
+		</figure>
+	</section>
 
-    
 </chapter>
