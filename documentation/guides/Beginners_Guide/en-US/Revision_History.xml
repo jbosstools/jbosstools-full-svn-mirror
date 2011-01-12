@@ -5,6 +5,20 @@
 	<simpara>
 		<revhistory>
 			<revision>
+				<revnumber>2</revnumber>
+				<date>Wed Jan 12 2011</date>
+				<author>
+					<firstname>Matthew</firstname>
+					<surname>Casperson</surname>
+					<email>mcaspers@redhat.com</email>
+				</author>
+				<revdescription>
+					<simplelist>
+						<member>Review and editing</member>
+					</simplelist>
+				</revdescription>
+			</revision>		
+			<revision>
 				<revnumber>1</revnumber>
 				<date>Mon Feb 22 2010</date>
 				<author>
