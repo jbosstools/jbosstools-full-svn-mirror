@@ -40,21 +40,7 @@
    <extension point="org.eclipse.ui.menus">
       <menuContribution
             allPopups="true"
-            locationURI="popup:org.jboss.tools.deltacloud.ui.views.InstanceView?after=additions">	
-         <command
-               commandId="org.jboss.tools.deltacloud.integration.rse.showremotesysexplorer"
-               disabledIcon="icons/system_viewd.gif"
-               icon="icons/system_view.gif"
-               label="%command.showInRemoteSysExplorer"
-               style="push"
-               tooltip="%command.showInRemoteSysExplorer.tooltip">
-         </command>
-      </menuContribution>
-   </extension>
-   <extension point="org.eclipse.ui.menus">
-      <menuContribution
-            allPopups="true"
-            locationURI="popup:org.jboss.tools.deltacloud.ui.views.DeltaCloudView?after=additions">	
+            locationURI="popup:org.jboss.tools.deltacloud.ui.views.InstanceView?after=instances">	
          <command
                commandId="org.jboss.tools.deltacloud.integration.rse.showremotesysexplorer"
                disabledIcon="icons/system_viewd.gif"
