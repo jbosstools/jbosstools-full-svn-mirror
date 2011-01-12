@@ -107,10 +107,8 @@ public class ManageKeysPageModel extends ObservableUIPojo {
 	public void setSelectedKey() {
 		DeltaCloudKey key = getSelectedKey();
 		if (key == null) {
-			System.err.println("selected key = 0");
 			setSelectedKey(0);
 		} else {
-			System.err.println("selected key = " + key);
 			setSelectedKey(key);
 		}
 	}
