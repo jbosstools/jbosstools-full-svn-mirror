@@ -24,7 +24,7 @@
 			<enabledWhen>
 				<with
 					variable="selection">
-					<count value="+" />
+					<count value="1" />
 				</with>
 			</enabledWhen>
       </handler>
@@ -51,9 +51,10 @@
          </command>
       </menuContribution>
    </extension>
-   <menuContribution
+   <extension point="org.eclipse.ui.menus">
+      <menuContribution
             allPopups="true"
-            locationURI="toolbar:org.jboss.tools.deltacloud.ui.views.InstanceView?after=instances">
+            locationURI="popup:org.jboss.tools.deltacloud.ui.views.DeltaCloudView?after=additions">	
          <command
                commandId="org.jboss.tools.deltacloud.integration.rse.showremotesysexplorer"
                disabledIcon="icons/system_viewd.gif"
@@ -62,7 +63,8 @@
                style="push"
                tooltip="%command.showInRemoteSysExplorer.tooltip">
          </command>
-   </menuContribution>
+      </menuContribution>
+   </extension>
    <extension
          point="org.jboss.tools.deltacloud.ui.newInstanceWizardPage">
       <page
