@@ -3,14 +3,14 @@
 ]>
 <bookinfo>
 	<title>Update Guide</title>
-	<subtitle>Updating from 3.0x to 4.0</subtitle>
+	<subtitle>Updating from 3.0 to 3.0.x</subtitle>
 	<productname>JBoss Developer Studio</productname>
 	<productnumber>4.0</productnumber>
 	<edition>4.0.0</edition>
 	<pubsnumber>5</pubsnumber>
 	<abstract>
 		<para>
-      The Update Guide explains how to upgrade from JBoss Developer Studio 3.0x to JBoss Developer Studio 4.0
+      The Update Guide explains how to upgrade from JBoss Developer Studio 3.0 to JBoss Developer Studio 3.0.x
     </para>
 	</abstract>
 	<corpauthor>

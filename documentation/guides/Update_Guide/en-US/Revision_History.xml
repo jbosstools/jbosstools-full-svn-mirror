@@ -7,20 +7,6 @@
 		<revhistory>
 			<revision>
 				<revnumber>1</revnumber>
-				<date>Wed Jan 12 2011</date>
-				<author>
-					<firstname>Matthew</firstname>
-					<surname>Casperson</surname>
-					<email>mcaspers@redhat.com</email>
-				</author>
-				<revdescription>
-					<simplelist>
-						<member>Rewrote documentation for JBDS 3.0x to 4.0 update procedure</member>
-					</simplelist>
-				</revdescription>
-			</revision>
-			<revision>
-				<revnumber>1</revnumber>
 				<date>Wed Jun 09 2010</date>
 				<author>
 					<firstname>Isaac</firstname>
