@@ -106,6 +106,9 @@ public class CreateServerFromRSEJob extends ChainedJob {
 	}
 	
 	protected IRemoteFileSubSystem findRemoteFileSubSystem() {
+		if (host == null) {
+			return null;
+		}
 		ISubSystem[] systems = RSECorePlugin.getTheSystemRegistry().getSubSystems(host);
 		for( int i = 0; i < systems.length; i++ ) {
 			if(systems[i] instanceof IRemoteFileSubSystem ) {
