@@ -74,7 +74,7 @@ public class StringEntriesPreferenceValue extends AbstractPreferenceValue<String
 	}
 
 	private boolean hasValues(String currentValues) {
-		return currentValues != null && currentValues.length() >= 0;
+		return currentValues != null && currentValues.length() > 0;
 	}
 
 	/**
