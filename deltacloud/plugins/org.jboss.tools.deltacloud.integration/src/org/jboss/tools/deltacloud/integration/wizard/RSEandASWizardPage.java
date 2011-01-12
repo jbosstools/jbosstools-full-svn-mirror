@@ -312,8 +312,10 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 			}
 			if( type != null && data != null ) {
 				CreateServerFromRSEJob job2 = new CreateServerFromRSEJob(type, data, instance);
-				if( initialHost == null )
+				if( initialHost != null ) {
+					job2.setHost(initialHost);
 					return job2;
+				}
 				j.setNextJob(job2);
 			}
 		}
