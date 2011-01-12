@@ -1,6 +1,6 @@
 <project default="install">
-	<!-- 
-	
+	<target name="help">
+		<echo>
 		REQUIRMENTS:
 		
 		This script requires Ant-Contrib. If missing, it will attempt to download 
@@ -18,20 +18,25 @@
 		
 		otherRepos - csv list of local, zipped, or remote update sites from which to install 
 			prereqs (eg., BIRT, Maven); may want these sites: 
-			http://download.eclipse.org/releases/galileo/,\
-			http://download.eclipse.org/birt/update-site/2.5/,\
-			http://download.jboss.org/jbosstools/updates/m2eclipse/0.10/
-			# http://m2eclipse.sonatype.org/update-dev
+			http://download.jboss.org/jbosstools/updates/target-platform/latest/
+			http://download.eclipse.org/releases/helios/,\
+			http://download.eclipse.org/birt/update-site/2.6/,\
+			http://m2eclipse.sonatype.org/sites/m2e/,\
+			http://m2eclipse.sonatype.org/sites/m2e-extras/,\
+			http://subclipse.tigris.org/update_1.6.x,\
+			http://dl.google.com/eclipse/plugin/3.6/
 			
 		RUNNING THIS SCRIPT:
 		
 		/path/to/eclipse-dir/eclipse -consolelog -nosplash -data /tmp \
       		-application org.eclipse.ant.core.antRunner \
       		-f /path/to/installJBossTools.xml \
+      			-DotherRepos=http://download.jboss.org/jbosstools/updates/target-platform/latest/
 			-DsourceZip=/path/to/JBossTools-Update-3.1.0.v200909102049M-H274-M3.zip \
 			-DtargetDir=/path/to/eclipse-dir \
 			-Dinstall=org.jboss.tools.jmx.sdk.feature.feature.group
-	-->
+</echo>
+	</target>
 
 	<property name="install" value="" />
 	<property name="otherRepos" value="" />

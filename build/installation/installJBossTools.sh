@@ -25,7 +25,8 @@ exit
       -f installJBossTools.xml \
 	-DsourceZip=/home/nboldt/eclipse/36clean/jbosstools-3.2.0.M2.aggregate-Update-2010-09-08_17-17-54-H243a.zip \
 	-DtargetDir=/home/nboldt/eclipse/36clean/eclipse \
-	-DotherRepos=http://download.eclipse.org/releases/helios/,\
+	-DotherRepos=http://download.jboss.org/jbosstools/updates/target-platform/latest/,\
+http://download.eclipse.org/releases/helios/,\
 http://download.eclipse.org/birt/update-site/2.6/,\
 http://m2eclipse.sonatype.org/sites/m2e/,\
 http://m2eclipse.sonatype.org/sites/m2e-extras/,\
