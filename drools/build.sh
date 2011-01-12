@@ -51,6 +51,9 @@ echo "
 # build w/ maven using JBT parent pom (will pass - all deps available now)
 $mvn3 -B -fae clean install -f drools/pom.xml -Dmaven.repo.local=${WORKSPACE}/m2-repository
 
+#revert inserted code
+mv -f drools/pom.xml_ORIG drools/pom.xml
+
 # restore from before (running JBT Drools tests)
 if [[ -f pom_drools.xml ]]; then
 	mv pom_drools.xml pom.xml
