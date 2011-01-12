@@ -27,7 +27,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.rse.core.RSECorePlugin;
 import org.eclipse.rse.core.model.IHost;
@@ -52,6 +51,9 @@ import org.jboss.tools.common.jobs.ChainedJob;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.integration.DeltaCloudIntegrationPlugin;
 
+/**
+ * @author Rob Stryker
+ */
 public class CreateServerFromRSEJob extends ChainedJob {
 	public static final String JBOSS_HOME_KEY = "JBOSS_HOME";
 	public static final String JBOSS_CONFIG_KEY = "JBOSS_CONFIG";
