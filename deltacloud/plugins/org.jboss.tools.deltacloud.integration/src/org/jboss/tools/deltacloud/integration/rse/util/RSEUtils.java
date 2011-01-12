@@ -108,13 +108,12 @@ public class RSEUtils {
 		monitor.setTaskName("Connecting to remote server");
 		IStatus status = null;
 		int count = 0;
-		while( status == null && count < timeout) {
+		while( status == null && count < timeout && !monitor.isCanceled()) {
 			try {
 				status = connect(service, monitor);
 				monitor.done();
 				return status;
 			} catch(Exception e) {
-				System.out.println("Exception " + e.getMessage() + " at timeout " + count);
 				count += 1000;
 				monitor.worked(1000);
 				try {
