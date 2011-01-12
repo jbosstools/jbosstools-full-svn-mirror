@@ -12,8 +12,11 @@ fi
 
 mkdir sources; cd sources
 
-if [[ ! -d drools-eclipse # fetch drools-eclipse sources into child folder, "drools"
-svn co https://anonsvn.jboss.org/repos/labs/labs/jbossrules/trunk/drools-eclipse drools
+# fetch drools-eclipse sources into child folder, "drools"
+if [[ ! -d drools ]]; then svn co https://anonsvn.jboss.org/repos/labs/labs/jbossrules/trunk/drools-eclipse drools; fi
+
+# store pom.xml from trunk/drools/ for later use (running tests)
+mv pom.xml pom_drools.xml
 
 # fetch Drools' parent pom into root folder, "sources"
 rm -fr pom.xml; wget https://anonsvn.jboss.org/repos/labs/labs/jbossrules/trunk/pom.xml
@@ -45,4 +48,7 @@ echo "
 
 # build w/ maven using JBT parent pom (will pass - all deps available now)
 mvn3 -B -fae clean install -f drools/pom.xml -Dmaven.repo.local=${WORKSPACE}/m2-repository
+
+# recover pom.xml from trunk/drools/ for running tests
+mv pom_drools.xml pom.xml
 
