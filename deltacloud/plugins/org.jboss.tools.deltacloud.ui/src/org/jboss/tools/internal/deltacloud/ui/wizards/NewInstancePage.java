@@ -190,7 +190,6 @@ public class NewInstancePage extends WizardPage {
 		archLabel.setText(WizardMessages.getString(ARCH_LABEL));
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(archLabel);
 		arch = new Label(container, SWT.NULL);
-		arch.setBackground(arch.getDisplay().getSystemColor(SWT.COLOR_RED));
 		GridDataFactory.fillDefaults().span(2, 1).align(SWT.FILL, SWT.CENTER).applyTo(arch);
 
 		Label realmLabel = new Label(container, SWT.NULL);
