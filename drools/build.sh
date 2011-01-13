@@ -33,6 +33,7 @@ if [[ ! -d ${WORKSPACE}/sources/drools ]]; then svn co https://anonsvn.jboss.org
 cd ${WORKSPACE}/sources/drools/org.drools.eclipse
 rm -fr ${WORKSPACE}/sources/drools/org.drools.eclipse/JBIDE-1484_MANIFEST.MF.patch
 wget -nc http://anonsvn.jboss.org/repos/jbosstools/trunk/drools/JBIDE-1484_MANIFEST.MF.patch
+rm -fr META-INF/MANIFEST.MF.rej; svn revert META-INF/MANIFEST.MF
 patch ${WORKSPACE}/sources/drools/org.drools.eclipse/META-INF/MANIFEST.MF JBIDE-1484_MANIFEST.MF.patch
 cd ${WORKSPACE}/sources
 
