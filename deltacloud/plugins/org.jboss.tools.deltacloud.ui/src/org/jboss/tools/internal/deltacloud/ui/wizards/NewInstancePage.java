@@ -21,6 +21,7 @@ import java.util.Map;
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateListStrategy;
+import org.eclipse.core.databinding.UpdateSetStrategy;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.databinding.conversion.Converter;
@@ -29,8 +30,6 @@ import org.eclipse.core.databinding.observable.IChangeListener;
 import org.eclipse.core.databinding.observable.IObservable;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.core.databinding.observable.value.IValueChangeListener;
-import org.eclipse.core.databinding.observable.value.ValueChangeEvent;
 import org.eclipse.core.databinding.observable.value.WritableValue;
 import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.core.databinding.validation.ValidationStatus;
@@ -191,7 +190,7 @@ public class NewInstancePage extends WizardPage {
 		archLabel.setText(WizardMessages.getString(ARCH_LABEL));
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(archLabel);
 		arch = new Label(container, SWT.NULL);
-		GridDataFactory.fillDefaults().span(2,1).align(SWT.FILL, SWT.CENTER).applyTo(arch);
+		GridDataFactory.fillDefaults().span(2, 1).align(SWT.FILL, SWT.CENTER).applyTo(arch);
 
 		Label realmLabel = new Label(container, SWT.NULL);
 		realmLabel.setText(WizardMessages.getString(REALM_LABEL));
@@ -239,20 +238,20 @@ public class NewInstancePage extends WizardPage {
 		bindKey(keyText, dbc);
 	}
 
-	private void bindArchLabel(final Label architecture, IObservableValue imageObservable, DataBindingContext dbc) {
-		DataBindingUtils.addValueChangeListener(new IValueChangeListener() {
-			
-			@Override
-			public void handleValueChange(ValueChangeEvent event) {
-				Object newValue = event.diff.getNewValue();
-				if (newValue == null 
-						|| !(newValue instanceof DeltaCloudImage)) {
-					return;
-				}
-				DeltaCloudImage image = (DeltaCloudImage) newValue;
-				architecture.setText(image.getArchitecture());
-			}
-		}, imageObservable, architecture);	
+	private void bindArchLabel(final Label architectureLabel, IObservableValue imageObservable, DataBindingContext dbc) {
+		dbc.bindValue(WidgetProperties.text().observe(architectureLabel),
+				imageObservable,
+				new UpdateValueStrategy(UpdateSetStrategy.POLICY_NEVER),
+				new UpdateValueStrategy().setConverter(new Converter(DeltaCloudImage.class, String.class) {
+
+					@Override
+					public Object convert(Object fromObject) {
+						if (!(fromObject instanceof DeltaCloudImage)) {
+							return null;
+						}
+						return ((DeltaCloudImage) fromObject).getArchitecture();
+					}
+				}));
 	}
 
 	private void bindRealmCombo(final Combo realmCombo, DataBindingContext dbc) {
