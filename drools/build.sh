@@ -9,6 +9,8 @@ else
 	for d in $(whereis mvn | grep 3); do e=$(echo $d | grep -v ".bat" | grep 3); if [[ $e ]] && [[ -x $d ]]; then mvn3=$d; break; fi; done
 fi
 
+echo "Using mvn3 = $mvn3"
+
 devnull="2>&1 1>/dev/null"
 if [[ ! ${WORKSPACE} ]]; then
 	WORKSPACE=.
@@ -19,21 +21,26 @@ fi
 # create working dir (if not already present in Hudson)
 mkdir -p ${WORKSPACE}/sources; cd ${WORKSPACE}/sources
 
+# store JBT's drools pom.xml (for running JBT Drools tests)
+if [[ -f ${WORKSPACE}/sources/pom.xml ]]; then
+        mv pom.xml pom_drools.xml
+fi
+
 # fetch drools-eclipse sources into child folder, "sources/drools"
-if [[ ! -d drools ]]; then svn co https://anonsvn.jboss.org/repos/labs/labs/jbossrules/trunk/drools-eclipse drools; fi
+if [[ ! -d ${WORKSPACE}/sources/drools ]]; then svn co https://anonsvn.jboss.org/repos/labs/labs/jbossrules/trunk/drools-eclipse drools; fi
 
 # fetch Drools' parent pom into root folder, "sources"
-rm -fr pom.xml; wget https://anonsvn.jboss.org/repos/labs/labs/jbossrules/trunk/pom.xml
+rm -fr ${WORKSPACE}/sources/pom.xml; wget https://anonsvn.jboss.org/repos/labs/labs/jbossrules/trunk/pom.xml
 
 # build w/ maven using Drools' parent pom (will fail with missing deps); suppress logged output
-$mvn3 -B -fn clean install -f drools/pom.xml -Dmaven.repo.local=${WORKSPACE}/m2-repository $devnull
+$mvn3 -B -fn clean install -f ${WORKSPACE}/sources/drools/pom.xml -Dmaven.repo.local=${WORKSPACE}/m2-repository $devnull
 
 # fetch JBT parent pom into root folder, "sources"
-rm -fr pom.xml; wget http://anonsvn.jboss.org/repos/jbosstools/trunk/build/pom.xml
+rm -fr ${WORKSPACE}/sources/pom.xml; wget http://anonsvn.jboss.org/repos/jbosstools/trunk/build/pom.xml
 
-# add missing pom instructions into root pom
-mv drools/pom.xml drools/pom.xml_ORIG
-head -n -4 drools/pom.xml_ORIG > drools/pom.xml
+# add missing pom instructions into Drools' root pom
+mv ${WORKSPACE}/sources/drools/pom.xml ${WORKSPACE}/sources/drools/pom.xml_ORIG
+head -n -4 ${WORKSPACE}/sources/drools/pom.xml_ORIG > ${WORKSPACE}/sources/drools/pom.xml
 echo "
      <!-- added by nboldt to fix packaging and artifact naming -->
  	<plugin>
@@ -46,15 +53,16 @@ echo "
 	</plugin>
     </plugins>
   </build>
-</project>" >> drools/pom.xml
+</project>" >> ${WORKSPACE}/sources/drools/pom.xml
 
 # build w/ maven using JBT parent pom (will pass - all deps available now)
-$mvn3 -B -fae clean install -f drools/pom.xml -Dmaven.repo.local=${WORKSPACE}/m2-repository
+$mvn3 -B -fae clean install -f ${WORKSPACE}/sources/drools/pom.xml -Dmaven.repo.local=${WORKSPACE}/m2-repository
 
 #revert inserted code
-mv -f drools/pom.xml_ORIG drools/pom.xml
+mv -f ${WORKSPACE}/sources/pom.xml_ORIG ${WORKSPACE}/sources/pom.xml
 
 # restore from before (running JBT Drools tests)
 if [[ -f pom_drools.xml ]]; then
 	mv pom_drools.xml pom.xml
 fi
+
