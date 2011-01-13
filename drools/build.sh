@@ -31,18 +31,19 @@ if [[ ! -d ${WORKSPACE}/sources/drools ]]; then svn co https://anonsvn.jboss.org
 
 # JBIDE-1484: patch org.drools.eclipse/META-INF/MANIFEST.MF
 cd ${WORKSPACE}/sources/drools/org.drools.eclipse
-wget http://anonsvn.jboss.org/repos/jbosstools/trunk/drools/JBIDE-1484_MANIFEST.MF.patch
+rm -fr ${WORKSPACE}/sources/drools/org.drools.eclipse/JBIDE-1484_MANIFEST.MF.patch
+wget -nc http://anonsvn.jboss.org/repos/jbosstools/trunk/drools/JBIDE-1484_MANIFEST.MF.patch
 patch ${WORKSPACE}/sources/drools/org.drools.eclipse/META-INF/MANIFEST.MF JBIDE-1484_MANIFEST.MF.patch
 cd ${WORKSPACE}/sources
 
 # fetch Drools' parent pom into root folder, "sources"
-rm -fr ${WORKSPACE}/sources/pom.xml; wget https://anonsvn.jboss.org/repos/labs/labs/jbossrules/trunk/pom.xml
+rm -fr ${WORKSPACE}/sources/pom.xml; wget -nc https://anonsvn.jboss.org/repos/labs/labs/jbossrules/trunk/pom.xml
 
 # build w/ maven using Drools' parent pom (will fail with missing deps); suppress logged output
 $mvn3 -B -fn clean install -f ${WORKSPACE}/sources/drools/pom.xml -Dmaven.repo.local=${WORKSPACE}/m2-repository $devnull
 
 # fetch JBT parent pom into root folder, "sources"
-rm -fr ${WORKSPACE}/sources/pom.xml; wget http://anonsvn.jboss.org/repos/jbosstools/trunk/build/pom.xml
+rm -fr ${WORKSPACE}/sources/pom.xml; wget -nc http://anonsvn.jboss.org/repos/jbosstools/trunk/build/pom.xml
 
 # add missing pom instructions into Drools' root pom
 mv ${WORKSPACE}/sources/drools/pom.xml ${WORKSPACE}/sources/drools/pom.xml_ORIG
