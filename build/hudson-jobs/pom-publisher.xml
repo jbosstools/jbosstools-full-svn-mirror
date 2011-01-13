@@ -62,17 +62,18 @@ To run, make sure that JAVA_HOME is set to the path where you imported the cert,
 					<buildURL>https://svn.jboss.org/repos/jbosstools/trunk/build</buildURL>
 					<branchOrTag>branches/jbosstools-3.2.0.CR1</branchOrTag>
 					<!-- then many identically configured components -->
-					<componentJobNamePrefix>jbosstools-</componentJobNamePrefix>
+					<componentJobNamePrefix>jbosstools-3.2_trunk.component--</componentJobNamePrefix>
 					<components>TESTING</components>
 					<!-- 
-					<components>archives, as, birt, bpel, bpmn, cdi, common,
+					<components>jmx, archives, as, birt, bpel, bpmn, cdi, common,
 						deltacloud, esb, examples, flow, freemarker, gwt, hibernatetools,
 						jbpm, jmx, jsf, jst, maven, modeshape, portlet, profiler, runtime,
 						seam, smooks, struts, tptp, usage, vpe, ws</components>
 					 -->
 
 					<componentJobNameSuffix>_trunk</componentJobNameSuffix>
-					<componentJobNameSuffix2>_stable_build</componentJobNameSuffix2>
+					<!--  if provide a suffix2, we'll attempt to copy jobs using the branchOrTag replacement for trunk -->
+					<componentJobNameSuffix2>_stable_branch</componentJobNameSuffix2>
 					<!-- then some special-case components (not in JBT tree) -->
 					<!--
 					<properties>
