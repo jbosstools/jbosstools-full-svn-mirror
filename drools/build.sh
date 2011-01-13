@@ -29,6 +29,12 @@ fi
 # fetch drools-eclipse sources into child folder, "sources/drools"
 if [[ ! -d ${WORKSPACE}/sources/drools ]]; then svn co https://anonsvn.jboss.org/repos/labs/labs/jbossrules/trunk/drools-eclipse drools; fi
 
+# JBIDE-1484: patch org.drools.eclipse/META-INF/MANIFEST.MF
+cd ${WORKSPACE}/sources/drools/org.drools.eclipse
+wget http://anonsvn.jboss.org/repos/jbosstools/trunk/drools/JBIDE-1484_MANIFEST.MF.patch
+patch ${WORKSPACE}/sources/drools/org.drools.eclipse/META-INF/MANIFEST.MF JBIDE-1484_MANIFEST.MF.patch
+cd ${WORKSPACE}/sources
+
 # fetch Drools' parent pom into root folder, "sources"
 rm -fr ${WORKSPACE}/sources/pom.xml; wget https://anonsvn.jboss.org/repos/labs/labs/jbossrules/trunk/pom.xml
 
