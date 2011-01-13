@@ -47,7 +47,7 @@ echo "
 		<groupId>org.sonatype.tycho</groupId>
 		<artifactId>maven-osgi-packaging-plugin</artifactId>
 		<configuration>
-			<format>'v'yyyyMMdd-HHmm'-H${BUILD_NUMBER}</format>
+			<format>'v'yyyyMMdd-HHmm'-H${BUILD_NUMBER}'</format>
 			<archiveSite>true</archiveSite>
 		</configuration>
 	</plugin>
