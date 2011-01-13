@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="getting_started" xreflabel="getting_started">
+<chapter id="getting_started">
  <?dbhtml filename="getting_started.html"?>
  <chapterinfo>
   <keywordset>
@@ -343,13 +343,13 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    </mediaobject>
   </figure>
 
-  <tip>
+  <note>
    <title>Tip:</title>
    <para>By selecting <emphasis>
      <property>Default Java VM</property>
     </emphasis> you set default Java VM of your system (to verify your Java environment, type
     &quot;java -version&quot; in console).</para>
-  </tip>
+  </note>
 
   <para>Selecting <emphasis>
     <property>Specific Java VM</property>
@@ -561,11 +561,11 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    </itemizedlist>
    <para>The current version of JBoss Tools (3.1.0.GA) targets at Eclipse 3.5.2 Galileo JEE Bundle which is available from <ulink url="http://www.eclipse.org/downloads/">eclipse.org</ulink>.</para>
 
-   <tip>
+   <note>
     <title>Tip:</title>
     <para>We recommend you do not use Eclipse.org update site to go from old version of Eclipse to new one.
     	Instead we suggest that you download the full binary from <ulink url="http://www.eclipse.org/downloads/">here</ulink>.</para>
-   </tip>
+   </note>
 
    <para>If you can only use Eclipse 3.3 use <ulink url="http://www.jboss.org/tools/download.html">JBoss Tools 2.1.2</ulink>, but
     JBoss Tools 2.x will not have any of the new features.</para>
