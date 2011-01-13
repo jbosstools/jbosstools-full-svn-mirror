@@ -88,9 +88,7 @@
         <title>Java Mapping Task</title>
         
         <para>
-            If you decide to do Java Mapping, you need to make sure that your Input reader has been set up and you have some sample data specified.
-            Then you should select <emphasis>Input Task</emphasis> in the Process tab and click the plus (+) sign to the right of the icon.
-            Select <emphasis>Java Mapping</emphasis> from the popup menu and it will appear to the right, connected to <emphasis>Input Task</emphasis>. Then select <emphasis>Java Mapping</emphasis> task.
+            If you decide to do Java Mapping, you need to make sure that your Input reader has been set up and you have some sample data specified. Then you should select <emphasis>Input Task</emphasis> in the Process tab and click the plus (+) sign to the right of the icon. Select <emphasis>Java Mapping</emphasis> from the popup menu and it will appear to the right, connected to <emphasis>Input Task</emphasis>. Then select <emphasis>Java Mapping</emphasis> task.
         </para>
         <figure>
             <title>Java Mapping configuration</title>
@@ -100,9 +98,7 @@
                 </imageobject>
             </mediaobject>
         </figure>
-        <para>Another method of adding <emphasis>Java Mapping</emphasis> element 
-            to the canvas in the Processing Tasks section is to right click Input Task
-            element and select <emphasis>Java Mapping</emphasis> in the popup menu. </para>
+        <para>Another method of adding a <emphasis>Java Mapping</emphasis> element to the canvas in the Processing Tasks section is to right click on the Input Task element and select <emphasis>Java Mapping</emphasis> in the popup menu. </para>
         <figure>
             <title>Java Mapping configuration</title>
             <mediaobject>
@@ -112,7 +108,7 @@
             </mediaobject>
         </figure>  
         <para>
-            Right-click on the canvas in an empty space and select "Add ->Java Class".
+            Right-click on the canvas in an empty space and select <menuchoice><guimenuitem>Add</guimenuitem><guimenuitem>Java Class</guimenuitem></menuchoice>.
         </para>
         <figure>
             <title>Java Mapping configuration</title>
@@ -123,14 +119,7 @@
             </mediaobject>
         </figure>
         <para>
-            <emphasis>Java Bean Creation</emphasis> wizard appears.
-            Specify a unique identifier for the new class, the class path. 
-            If the Java class is specified, you'll see a list of the properties in the box below.
-            Click <emphasis>Finish</emphasis> when you're done.
-            Now with the input and output models on the canvas, you can click and drag 
-            from the various input elements to corresponding output elements. 
-            Make sure to connect collection elements to corresponding collection elements.
-            Finally your mapping should look nearly like the one on the picture below.
+            This will display the <emphasis>Java Bean Creation</emphasis> wizard. Specify a unique identifier for the new class and the class path. If the Java class is specified, you'll see a list of the properties in the box below. Click the <guibutton>Finish</guibutton> button when you're done. Now, with the input and output models on the canvas, you can click and drag from the various input elements to corresponding output elements. Make sure to connect collection elements to corresponding collection elements. Finally your mapping should look something like the one on the picture below.
         </para>
         <figure>
             <title>Final Mapping schema</title>
@@ -140,17 +129,14 @@
                 </imageobject>
             </mediaobject>
         </figure>
-        <para>For details, also see the movie,
-            <ulink url="http://www.screencast.com/users/tfennelly/folders/Camtasia/media/a6648ba3-953f-40bf-8241-570306fba776">"XML to Java"</ulink>.
+        <para>The movie <ulink url="http://www.screencast.com/users/tfennelly/folders/Camtasia/media/a6648ba3-953f-40bf-8241-570306fba776">"XML to Java"</ulink> has more information on this process.
         </para>
-        <para>If you are interested in transforming EDI to Java, please, follow the 
-            <ulink url="http://www.screencast.com/users/tfennelly/folders/Camtasia/media/a72704fb-ff74-4d5d-9869-9092611f52c2">link</ulink>.</para>
+        <para>If you are interested in transforming EDI to Java you can find more information <ulink url="http://www.screencast.com/users/tfennelly/folders/Camtasia/media/a72704fb-ff74-4d5d-9869-9092611f52c2">here</ulink>.</para>
     </section>
     <section>
         <title>Apply Template Task</title>
         
-        <para>The "Apply Template" task works very similarly to the <xref linkend="mapping"/>, where you map between an input model and an output model.
-            Select the <emphasis>Java Mapping</emphasis> task you want to use as the input model in the Process Map pane and click the plus (+) sign to the right of the icon.
+        <para>The "Apply Template" task works very similarly to the section <xref linkend="mapping"/>, where you define a mapping between an input model and an output model. Select the <emphasis>Java Mapping</emphasis> task you want to use as the input model in the Process Map pane and click the plus (+) sign to the right of the icon.
         </para>
         <figure id="apply_templ">
             <title>Apply Template configuration</title>
@@ -161,8 +147,7 @@
             </mediaobject>
         </figure>
         <para>
-            The <property>Message Type Selection</property> wizard will appear.
-            In our example we will transfer our data to csv output format,so you should select <emphasis><property>CSV</property></emphasis> and click <property>Next</property>.</para>
+            This will display the <property>Message Type Selection</property> wizard. In our example we will transfer our data to csv output format, so you should select <emphasis><property>CSV</property></emphasis> and click the <guibutton>Next</guibutton> button.</para>
         <figure>
             <title>Message Type Selection</title>
             <mediaobject>
@@ -172,7 +157,7 @@
             </mediaobject>
         </figure>
         <para>
-            On the next wizard page put the following string into the Fields,select <property>Output Fields Names</property> and click <property>Finish</property>.</para>
+            On the next wizard page put the following string into the Fields, select <property>Output Fields Names</property> and click the <property>Finish</property> button.</para>
         <figure>
             <title>CSV output message configuration</title>
             <mediaobject>
@@ -182,15 +167,9 @@
             </mediaobject>
         </figure>     
         <para>
-            After these steps <property>"Apply Template"</property>
-            task will appear to the right, connected to the task you created it from.
-            To continue the process of configuration you should click on it and find <emphasis>CSV Template</emphasis> 
-            item with entered fields on the canvas.Now  you can click and drag from various 
-            input elements to corresponding output elements
-            in the template. Make sure to connect collection elements to the c
-            orresponding <emphasis>csv-record</emphasis>.
-            In our example we transfer into CSV output only the elements 
-            of <property>orderItems</property> collection (see the picture below): 
+            After these steps the <property>"Apply Template"</property> task will appear to the right, connected to the task you created it from. To continue the configuration processyou should click on it and find the <emphasis>CSV Template</emphasis> item with entered fields on the canvas. Now you can click and drag from various input elements to corresponding output elements
+            in the template. Make sure to connect collection elements to the corresponding <emphasis>csv-record</emphasis>. In our example output only the elements 
+            of <property>orderItems</property> collection to the CSV format (see the picture below): 
         </para>
         <figure>
             <title>Relations between input and output models</title>
@@ -204,11 +183,7 @@
     <section>
         <title>Smooks Configuration testing using Smooks Run Configuration</title>
         
-        <para>This option is intended to view the results of Smooks transforming procedure.
-            To do the testing you should select your <emphasis>Smooks Configuration file</emphasis> you want to transfer in the Project Navigator or open it in 
-            the Smooks Configuration Editor and then select "Run As..." from the <emphasis><property>Run</property></emphasis>
-            toolbar button
-            or <emphasis><property>Run->Smooks Run Configuration</property></emphasis> option in the top menu bar. And Smooks Configuration file will be run automatically. 
+        <para>This option is used to view the results of Smooks transforming procedure. To do the testing you should select your <emphasis>Smooks Configuration file</emphasis> you want to transfer in the Project Navigator or open it in the Smooks Configuration Editor and then select "Run As..." from the <emphasis><property>Run</property></emphasis> toolbar button or select the <emphasis><property>Run->Smooks Run Configuration</property></emphasis> option in the top menu bar. The Smooks Configuration file will then be run automatically. 
         </para>
         <figure>
             <title>Smooks Configuration testing</title>
@@ -218,9 +193,7 @@
                 </imageobject>
             </mediaobject>
         </figure>
-        <para>If any errors or warnings appear, they will pop up in a dialog.
-            The output of the test will appear in the Console view.
-                 In our case the following streaming output will appear:</para>
+        <para>Any errors or warnings will appear in a pop up dialog. The output of the test will appear in the Console view. In our case the following streaming output will appear:</para>
         <programlisting role="JAVA"><![CDATA[[Stream Templating Result ...]
     |--
     |"productId","quantity","price"
