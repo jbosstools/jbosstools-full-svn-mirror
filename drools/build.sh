@@ -51,6 +51,7 @@ echo "
 			<archiveSite>true</archiveSite>
 		</configuration>
 	</plugin>
+
     </plugins>
   </build>
 </project>" >> ${WORKSPACE}/sources/drools/pom.xml
