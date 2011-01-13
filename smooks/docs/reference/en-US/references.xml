@@ -596,8 +596,7 @@
         <section>
             <title>Decode Configuration</title>
             <para>Smooks tools support decode parameter configuration through the Decode tab in <emphasis> <property>Properties View</property></emphasis> activated by clicking the connection between input model and bean items. </para>
-            <para>On the picture below you can see an example of decode configurations
-                for mapping some <property>Input Model</property> Item to <property>Date</property> format:</para>
+            <para>On the picture below you can see an example of decode configurations for mapping an <property>Input Model</property> Item to a <property>Date</property> format:</para>
             <figure>
                 <title>Decode Configuration tab in Properties View</title>
                 <mediaobject>
@@ -629,26 +628,19 @@
                         
                         <row>
                             <entry>Decoder Parameters</entry>
-                            <entry>For most of decoders <emphasis><property>Decoder Parametres table</property></emphasis> is empty.
-                                But some of the decoders require additional configuration
-                                (like Date decoder on the picture above),so you should configure them
-                                by editing the corresponding line in the <property>Value</property> row.
-                                For example for Date Decoder:
+                            <entry>For most of decoders the <emphasis><property>Decoder Parameters table</property></emphasis> is empty. But some of the decoders require additional configuration
+                                (like Date decoder on the picture above), so you should configure them by editing the corresponding line in the <property>Value</property> row. For example, for the Date Decoder:
                                 <itemizedlist>
                                     <listitem><para><property>format</property> - Date format string.</para></listitem>
-                                    <listitem><para><property>locale country</property> - ISO Country Code.
-                                        Upper case two-letter code defined by ISO-3166. </para></listitem>
-                                    <listitem><para><property>locale language</property> - ISO Language Code.
-                                        Lower case two-letter code defined by ISO-639. </para></listitem>
+                                    <listitem><para><property>locale country</property> - ISO Country Code. Upper case two-letter code defined by ISO-3166. </para></listitem>
+                                    <listitem><para><property>locale language</property> - ISO Language Code. Lower case two-letter code defined by ISO-639. </para></listitem>
                                 </itemizedlist>
                             </entry>
                         </row>
                     </tbody>
                 </tgroup>
             </table>
-            <para>The <property>Decoder Parameters</property>  section for <property>EnumDecoder</property>
-                quite differs from other types of decoders.
-                See the picture below:</para>
+            <para>The <property>Decoder Parameters</property> section for <property>EnumDecoder</property> quite differs from other types of decoders. See the picture below:</para>
             <figure>
                 <title>EnumDecoder in Properties View</title>
                 <mediaobject>
@@ -659,25 +651,16 @@
             </figure>
             <para>The Decoder Parameters section for EnumDecoder in Properties View consists of 2 rows:</para>
             <itemizedlist>
-                <listitem><para><property>From Data Value</property>  - The lines in this row are editable.
-                    You can change them according to the names of enum types you used in input file. 
+                <listitem><para><property>From Data Value</property>  - The lines in this row are editable. You can change them according to the names of enum types you used in input file. 
                 </para></listitem>
-                <listitem><para><property>To Enum Value</property> - The lines in this row are not editable.
-                    Here a set of all constants declared in mapped Enum type is listed.
-                    The user is responsible for correspondence between the values in these two rows. </para></listitem>
+                <listitem><para><property>To Enum Value</property> - The lines in this row are not editable. Here a set of all constants declared in mapped Enum type is listed. The user is responsible for correspondence between the values in these two rows. </para></listitem>
             </itemizedlist>
             
-            <para>For more information about different decoder parametres read <ulink url="http://www.smooks.org/mediawiki/index.php?title=Main_Page">
-                Smooks Technology Documentation</ulink>.</para>
+            <para>For more information about different decoder parameters read the <ulink url="http://www.smooks.org/mediawiki/index.php?title=Main_Page">Smooks Technology Documentation</ulink>.</para>
         </section>
         <section>
             <title>Apply Template Wizard</title>
-            <para>The <property>Apply Template Wizard</property> 
-                helps you to add a new <property>Apply Template Task</property> to 
-                Smooks configuration file.
-                You can call it from the popup menu when <property>Java Mapping</property> item in Processing
-                Task section is selected by following <emphasis>Add Task > Apply Template</emphasis>
-                (see <xref linkend="apply_templ"/> picture).</para>
+            <para>The <property>Apply Template Wizard</property> helps you to add a new <property>Apply Template Task</property> to the Smooks configuration file. You can call it from the popup menu when the <property>Java Mapping</property> item in the Processing Task section is selected by following <menuchoice><guimenuitem>Add Task</guimenuitem><guimenuitem>Apply Template/guimenuitem></menuchoice> (see <xref linkend="apply_templ"/> picture).</para>
             <para>The wizard consists of several pages:</para>
             
             <orderedlist>
@@ -697,8 +680,7 @@
                 </listitem>
                 <listitem><para>The second page is specific for each of the output message formats:</para>
                     <itemizedlist>
-                        <listitem><para>If the <property>CSV</property> output message type was selected at
-                            the previous step the second wizard page will be the following :</para>
+                        <listitem><para>If the <property>CSV</property> output message type was selected in the previous step the second wizard page will be the following :</para>
                             <figure>
                                 <title>CSV:The second page of Apply Template Wizard</title>
                                 <mediaobject>
@@ -743,7 +725,7 @@
                                         
                                         <row>
                                             <entry>Output Field name</entry>
-                                            <entry>Click the checkbox if you want the output csv message also include field names.</entry>
+                                            <entry>Click the checkbox if you want the output CSV message to also include field names.</entry>
                                             <entry></entry>
                                         </row> 
                                         
@@ -752,9 +734,7 @@
                             </table>
                         </listitem>
                         <listitem>
-                            <para>The following second wizard page will appear 
-                                if <property>XML</property> output message type was selected at
-                                the previous step:</para>
+                            <para>The following second wizard page will appear if the <property>XML</property> output message type was selected in the previous step:</para>
                             <figure>
                                 <title>Apply Template Wizard. Second Page Options if XML output format is selected.</title>
                                 <mediaobject>
@@ -763,10 +743,8 @@
                                     </imageobject>
                                 </mediaobject>
                             </figure>
-                            <para>Here you should firstly select XSD or Sample XML format of output template and then
-                                click <property>Browse File System</property>
-                                or <property>Browse Workspace</property> button depending on what 
-                                browse type you want to use.For example, if you click <property>Browse Workspace</property>
+                            <para>Here you should first select the XSD or Sample XML output template format and then click the <property>Browse File System</property>
+                                or the <property>Browse Workspace</property> button depending on what browse type you want to use. For example, if you click <property>Browse Workspace</property>
                                 the following view will appear:
                             </para>
                             <figure>
@@ -777,10 +755,9 @@
                                     </imageobject>
                                 </mediaobject>
                             </figure>
-                            <para>In the workspace you should select the template you 
-                                want to use and click <property>Ok</property>.
+                            <para>In the workspace you should select the template you want to use and click the <guibutton>OK</guibutton> button.
                             </para>
-                            <para>If you selected XSD format after adjusting the template path you should click Load button: 
+                            <para>If you selected XSD format after adjusting the template path you should click the <guibutton>Load</guibutton> button: 
                             </para> 
                             <figure>
                                 <title>Load Button</title>
@@ -790,8 +767,7 @@
                                     </imageobject>
                                 </mediaobject>
                             </figure>
-                            <para>After that it is necessary to select in the <property>Select Root Element
-                            </property> the root node for the template and click <property>Finish</property>.</para>
+                            <para>After that it is necessary to select the root node for the template in the <property>Select Root Element</property>. Then click the <guibutton>Finish</guibutton> button.</para>
                             <figure>
                                 <title>Load Button</title>
                                 <mediaobject>
@@ -800,9 +776,7 @@
                                     </imageobject>
                                 </mediaobject>
                             </figure>                           
-                            <para>If you have chosen Sample XML option after selecting
-                                the template xml file destination you should only
-                                click <property>Finish</property>: 
+                            <para>If you have chosen Sample XML option after selecting the template XML file destination you should only click the <guibutton>Finish</guibutton> button: 
                             </para>
                             <figure>
                                 <title>Load Button</title>
