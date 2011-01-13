@@ -31,6 +31,11 @@
           </imageobject>
         </mediaobject>
       </figure>
+      <note>
+      	<title>Tip</title>
+      	<para>You may need to set the runDBServer.sh executable flag with the following command:</para>
+      	<screen>chmod +x runDBServer.sh</screen>
+      </note>
     </section>
     <section id="create_deploy_seam">
       <title>Create and deploy Seam Web Project</title>
@@ -246,9 +251,32 @@
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam15.png"/>
           </imageobject>
-        </inlinemediaobject> ) in the <property>Servers</property>.</para>
+        </inlinemediaobject> ) in the <property>Servers</property> view.</para>
       <para>Then run the project by selecting the project and use <emphasis><property>Run As... >
             Run on Server</property>.</emphasis></para>
+            
+      <figure>
+        <title>&quot;worskhop&quot; Run As</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam15a.png"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+      
+      <para>
+      	Select the server you want to run the project on, and click the <guibutton>Finish</guibutton> button.
+      </para>
+      
+      <figure>
+        <title>&quot;worskhop&quot; Run On Server</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="images/first_seam/first_seam15b.png"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+      
       <note>
         <title>Note:</title>
         <para>If the project does not show up, then you can use a normal browser and use <emphasis>
@@ -278,7 +306,7 @@
           <property>New Seam project wizard</property> could have been changed to something
         different from <emphasis>
           <property>org.domain.workshop.session</property>. </emphasis> Also, notice that there is a
-        default <property>Authenticator. java</property> file. This is where custom security logic
+        default <filename>Authenticator.java</filename> file. This is where custom security logic
         can be added. Seam has a nice declarative security model that we will explore in a bit more
         detail later on. The <emphasis>
           <property>src/main</property>
@@ -347,7 +375,7 @@
       <programlisting><![CDATA[public void myAction() {
 Calendar cal = Calendar.getInstance();
 log.info("myAction.myAction() action called");
-facesMessages.add("MyAction Executed on:" + cal.getTime());
+statusMessages.add("MyAction Executed on:" + cal.getTime());
 }]]></programlisting>
       <para>You also need to import the <property>java.util.Calendar</property> class by clicking
             <emphasis><property>CTRL + Shift + O</property>.</emphasis></para>
@@ -364,6 +392,12 @@ facesMessages.add("MyAction Executed on:" + cal.getTime());
           </imageobject>
         </mediaobject>
       </figure>
+      
+      <note>
+      	<title>Tip</title>
+      	<para>You may have to refresh the project to see the new files.</para>
+      </note>
+      
       <para>The test case simulates a Seam component/method execution for the <property
           >MyAction.myAction()</property> logic.</para>
       <para>To run the test case, right click on <property>MyActionTest.xml</property> and click

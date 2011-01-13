@@ -201,12 +201,10 @@
 			<itemizedlist>
 				<listitem>
 					<para>Select <property>Servers</property> by selecting <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Show View</guimenuitem><guimenuitem>Other</guimenuitem><guimenuitem>Server</guimenuitem><guimenuitem>Servers</guimenuitem></menuchoice>.
-						</emphasis>
 					</para>
 				</listitem>
 				<listitem>
 					<para>Right click anywhere in this view and select <menuchoice><guimenuitem>New</guimenuitem><guimenuitem>Server</guimenuitem></menuchoice>.
-						</emphasis>
 					</para>
 				</listitem>
 				<listitem>
