@@ -3,16 +3,7 @@
   <actions/>
   <description>Nightly build using Tycho, monitoring SVN every 6 hrs for changes. 
 
-&lt;h3&gt;REQUIRES JDK6&lt;/h3&gt;
-
-&lt;p&gt;Results:
-&lt;ul&gt;
-
-&lt;li&gt;Aggregate update sites: &lt;a href="http://download.jboss.org/jbosstools/updates/nightly/"&gt;http://download.jboss.org/jbosstools/updates/nightly/&lt;/a&gt; :: &lt;a href="http://download.jboss.org/jbosstools/updates/nightly/trunk/"&gt;latest from trunk&lt;/a&gt;
-&lt;li&gt;Aggregate builds: &lt;a href="http://download.jboss.org/jbosstools/builds/nightly/"&gt;http://download.jboss.org/jbosstools/builds/nightly/&lt;/a&gt; :: &lt;a href="http://download.jboss.org/jbosstools/builds/nightly/latestBuild.html"&gt;latest from trunk&lt;/a&gt;
-
-&lt;ul&gt;&lt;li&gt;Component builds: &lt;a href="http://download.jboss.org/jbosstools/builds/staging/"&gt;http://download.jboss.org/jbosstools/builds/staging/&lt;/a&gt;&lt;/ul&gt;
-&lt;/ul&gt;
+<h2><a style="color:#FF9933" href="http://download.jboss.org/jbosstools/builds/cascade/trunk.html">Build Job Cascade &amp; Results</a></h2>
 
 </description>
   <logRotator>
@@ -71,12 +62,12 @@ osgi-test:test :: just (re-)run test(s)
   <scm class="hudson.scm.SubversionSCM">
     <locations>
       <hudson.scm.SubversionSCM_-ModuleLocation>
-        <remote>https://svn.jboss.org/repos/jbosstools/trunk/TESTING</remote>
+        <remote>http://svn.jboss.org/repos/jbosstools/trunk/TESTING</remote>
         <local>sources</local>
       </hudson.scm.SubversionSCM_-ModuleLocation>
       <hudson.scm.SubversionSCM_-ModuleLocation>
 
-        <remote>https://svn.jboss.org/repos/jbosstools/trunk/build</remote>
+        <remote>http://svn.jboss.org/repos/jbosstools/trunk/build</remote>
       </hudson.scm.SubversionSCM_-ModuleLocation>
     </locations>
     <useUpdate>true</useUpdate>
