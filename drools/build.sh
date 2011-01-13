@@ -23,7 +23,7 @@ mkdir -p ${WORKSPACE}/sources; cd ${WORKSPACE}/sources
 
 # store JBT's drools pom.xml (for running JBT Drools tests)
 if [[ -f ${WORKSPACE}/sources/pom.xml ]]; then
-        mv pom.xml pom_drools.xml
+        mv ${WORKSPACE}/sources/pom.xml ${WORKSPACE}/sources/pom_drools.xml
 fi
 
 # fetch drools-eclipse sources into child folder, "sources/drools"
@@ -59,10 +59,10 @@ echo "
 $mvn3 -B -fae clean install -f ${WORKSPACE}/sources/drools/pom.xml -Dmaven.repo.local=${WORKSPACE}/m2-repository
 
 #revert inserted code
-mv -f ${WORKSPACE}/sources/pom.xml_ORIG ${WORKSPACE}/sources/pom.xml
+mv -f ${WORKSPACE}/sources/drools/pom.xml_ORIG ${WORKSPACE}/sources/drools/pom.xml
 
 # restore from before (running JBT Drools tests)
-if [[ -f pom_drools.xml ]]; then
-	mv pom_drools.xml pom.xml
+if [[ -f ${WORKSPACE}/sources/pom_drools.xml ]]; then
+	mv ${WORKSPACE}/sources/pom_drools.xml ${WORKSPACE}/sources/pom.xml
 fi
 
