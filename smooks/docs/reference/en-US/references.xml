@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="reference">
+<chapter id="references">
     <?dbhtml filename="reference.html"?>
     <chapterinfo>
         <keywordset>
@@ -660,7 +660,7 @@
         </section>
         <section>
             <title>Apply Template Wizard</title>
-            <para>The <property>Apply Template Wizard</property> helps you to add a new <property>Apply Template Task</property> to the Smooks configuration file. You can call it from the popup menu when the <property>Java Mapping</property> item in the Processing Task section is selected by following <menuchoice><guimenuitem>Add Task</guimenuitem><guimenuitem>Apply Template/guimenuitem></menuchoice> (see <xref linkend="apply_templ"/> picture).</para>
+            <para>The <property>Apply Template Wizard</property> helps you to add a new <property>Apply Template Task</property> to the Smooks configuration file. You can call it from the popup menu when the <property>Java Mapping</property> item in the Processing Task section is selected by following <menuchoice><guimenuitem>Add Task</guimenuitem><guimenuitem>Apply Template</guimenuitem></menuchoice> (see <xref linkend="apply_templ"/> picture).</para>
             <para>The wizard consists of several pages:</para>
             
             <orderedlist>
