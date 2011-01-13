@@ -858,21 +858,12 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
  <section id="Upgrading">
   <?dbhtml filename="Upgrading.html"?>
   <title>Upgrading</title>
-  <para>As opposed to upgrading your JBDS from 2.0 to 2.1 using the update site, 
-        to upgrade your JBDS from 2.1 to 3.0 you have to uninstall your 2.1 version and install the new one
-        because of some platform change.</para>
-<!--
-  <para>Now it&apos;s possible to upgrade from JBDS 2.0 to 2.1 using the update site 
-        which is available at <ulink url="is available at 
-        http://devstudio.jboss.com/updates/2.1">http://devstudio.jboss.com/updates/2.1</ulink>. 
- 		     This is described more fully in the 
- 		     <ulink url="http://www.jboss.com/products/devstudio/update/">JBDS Update Guide</ulink>.</para> 
+  <para>Because JBDS 3.0x and 4.0 use different versions of Eclipse, it is not possible to directly upgrade from an older version to JBDS 4.0.</para>
   <note>
-   <title>Note:</title>
-   <para>You <emphasis><property>CAN NOT</property></emphasis> upgrade from 2.1 to 3.0 using update site because of some platform change. 
-         Full installation is required.</para>
-  </note> 
--->  
+  	<title>Tip</title>
+  	<para>It is possible to run JBDS 3.0x and 4.0 side by side, as long as they have been installed into separate directories.</para>
+  </note>
+
  </section>
 
  <section id="Uninstalling">
@@ -901,7 +892,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
     <caption>Usage plug-in pop-up</caption>
   </mediaobject>
    <para>
-      Once enabled, the plug-in will remain active until turned off. To turn the active plug-in off, navigate to <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Preferences</guimenuitem><guimenuitem>JBoss Tools</guimenuitem><guimenuitem>Usage Reporting Preferences</guimenuitem></menuchoice>.
+      Once enabled, the plug-in will remain active until turned off. To turn the active plug-in off, navigate to <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Preferences</guimenuitem><guimenuitem>JBoss Tools</guimenuitem><guimenuitem>Usage Reporting</guimenuitem></menuchoice>.
    </para>
    <para>
      The gathered data allows JBoss to see how the tools are being used and where they are being used geographically. Currently we are looking into the operating systems being used, screen resolution and how often the tooling environment is started. In the future geographic information will assist in focussing translation resources to areas where the developer environment is most used.
