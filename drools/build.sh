@@ -13,7 +13,7 @@ echo "Using mvn3 = $mvn3"
 
 devnull="2>&1 1>/dev/null"
 if [[ ! ${WORKSPACE} ]]; then
-	WORKSPACE=.
+	WORKSPACE=`pwd`
 	devnull=""
 	BUILD_NUMBER=000
 fi
