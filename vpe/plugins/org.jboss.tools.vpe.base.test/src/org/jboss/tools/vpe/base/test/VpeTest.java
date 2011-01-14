@@ -121,20 +121,6 @@ public class VpeTest extends TestCase implements ILogListener {
 	 */
 	@Override
 	protected void tearDown() throws Exception {
-//Has been commented by Maksim Areshkau,
-//this lines was a fix for JBIDE-6197 and not needed under eclipse 3.6		
-//		boolean isJobsCheck = true;
-//		while (isJobsCheck) {
-//			isJobsCheck = false;
-//			Job[] jobs = Job.getJobManager().find(null);
-//			for (Job job : jobs) {
-//				if (job instanceof StructuredRegionProcessor) {
-//					TestUtil.delay(50);
-//					isJobsCheck = true;
-//					break;
-//				}
-//			}
-//		}
 
 		closeEditors();
 
@@ -192,16 +178,10 @@ public class VpeTest extends TestCase implements ILogListener {
 	 * close all opened editors.
 	 */
 	protected void closeEditors() {
-
-		// wait
-		// TestUtil.waitForJobs();
-		IWorkbenchPage page = PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow().getActivePage();
-		IWorkbenchPart part = page.getActivePart();
-		page.activate(part);
-		// close
+		// clean up defrerred events 
+		while (Display.getCurrent().readAndDispatch());
+		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 		page.closeAllEditors(false);
-
 	}
 
 	/**
