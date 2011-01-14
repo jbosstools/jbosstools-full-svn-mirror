@@ -14,7 +14,7 @@
 	<properties>
 		<!--tychoVersion>0.10.0-SNAPSHOT</tychoVersion -->
 		<tychoVersion>0.10.0</tychoVersion>
-		<scmBranch>trunk</scmBranch>
+		<scmBranch>branches/jbosstools-3.2.0.CR1</scmBranch>
 		<BUILD_ALIAS>CR1</BUILD_ALIAS>
 		<memoryOptions1>-Xms512m -Xmx1024m -XX:PermSize=256m</memoryOptions1>
 		<memoryOptions2>-XX:MaxPermSize=256m</memoryOptions2>
@@ -35,7 +35,7 @@
 			repo w/o having to edit here. See local.target profile below for more information. -->
 		<target.platform.site>file://home/hudson/static_build_env/jbds/target-platform/e361-wtp322.target/
 		</target.platform.site>
-		<jbosstools.update.site>http://download.jboss.org/jbosstools/updates/nightly/trunk</jbosstools.update.site>
+		<jbosstools.update.site>http://download.jboss.org/jbosstools/updates/nightly/3.2_stable_branch/</jbosstools.update.site>
 		<jbosstools-target-platform-repo>http://download.jboss.org/jbosstools/updates/target-platform/latest/</jbosstools-target-platform-repo>
 	</properties>
 
@@ -828,7 +828,7 @@
 				</repository>
 				<repository>
 					<id>jbosstools-nightly-staging-composite-trunk</id>
-					<url>http://download.jboss.org/jbosstools/builds/staging/_composite_/trunk/ </url>
+					<url>http://download.jboss.org/jbosstools/builds/staging/_composite_/3.2_stable_branch/</url>
 					<layout>p2</layout>
 					<snapshots>
 						<enabled>true</enabled>
@@ -848,7 +848,7 @@
 			<repositories>
 				<repository>
 					<id>jbosstools-nightly-staging-composite-trunk</id>
-					<url>http://download.jboss.org/jbosstools/builds/staging/_composite_/trunk/ </url>
+					<url>http://download.jboss.org/jbosstools/builds/staging/_composite_/3.2_stable_branch/</url>
 					<layout>p2</layout>
 					<snapshots>
 						<enabled>true</enabled>

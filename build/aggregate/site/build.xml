@@ -314,7 +314,7 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 		<property name="isTest" value="true" />
 		<antcall target="collect.zips">
 			<param name="inputRepos" value="1" />
-			<param name="inputRepo1" value="http://download.jboss.org/jbosstools/builds/staging/_composite_/trunk" />
+			<param name="inputRepo1" value="http://download.jboss.org/jbosstools/builds/staging/_composite_/3.2_stable_branch" />
 		</antcall>
 	</target>
 
@@ -330,11 +330,11 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 		<property name="isTest" value="true" />
 		<antcall target="collect.zips">
 			<param name="inputRepos" value="1,2,3,4,5" />
-			<param name="inputRepo1" value="http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--tests" />
-			<param name="inputRepo2" value="http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--common/all/repo" />
-			<param name="inputRepo3" value="http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--jmx/all/repo/" />
-			<param name="inputRepo4" value="http://download.jboss.org/jbosstools/builds/staging/jbosstools-savara-1.1_trunk/tools/" />
-			<param name="inputRepo5" value="http://download.jboss.org/jbosstools/builds/staging/jbosstools-savara-1.1_trunk/tools" />
+			<param name="inputRepo1" value="http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_stable_branch.component--tests" />
+			<param name="inputRepo2" value="http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_stable_branch.component--common/all/repo" />
+			<param name="inputRepo3" value="http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_stable_branch.component--jmx/all/repo/" />
+			<param name="inputRepo4" value="http://download.jboss.org/jbosstools/builds/staging/jbosstools-savara-1.1_stable_branch/tools/" />
+			<param name="inputRepo5" value="http://download.jboss.org/jbosstools/builds/staging/jbosstools-savara-1.1_stable_branch/tools" />
 		</antcall>
 	</target>
 
@@ -342,7 +342,7 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 		<property name="isTest" value="true" />
 		<antcall target="collect.zips">
 			<param name="inputRepos" value="1,2" />
-			<param name="inputRepo2" value="http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--NO_SUCH_COMPONENT" />
+			<param name="inputRepo2" value="http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_stable_branch.component--NO_SUCH_COMPONENT" />
 		</antcall>
 	</target>
 
