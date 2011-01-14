@@ -86,10 +86,19 @@
 
         <para>Now, we will guide you through the steps on how to do this.</para>
         <itemizedlist>
+        		<listitem>
+        			<para>First a folder called <filename>pages</filename> needs to be created under the <filter>WebContent</filter> folder. To do this right click on the <filter>WebContent</filter> folder in the Package Explorer view and select New > Folder. Set the <guilabel>Folder Name</guilabel> to <filename>pages</filename> and click the <guibutton>Finish</guibutton> button.</para>
+        		</listitem>
+        		<figure>
+            <title>Create pages folder</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/rad_jsf_application/rad_jsf_application_2a.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
             <listitem>
-                <para>Open <emphasis>
-                        <property>faces-config.xml</property>
-                    </emphasis> file</para>
+                <para>Open the <filename>faces-config.xml</filename> file.</para>
             </listitem>
             <listitem>
                 <para>Right click anywhere on the diagram mode</para>
