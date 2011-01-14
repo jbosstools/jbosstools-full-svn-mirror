@@ -285,5 +285,5 @@ fi
 # publish updated log
 bl=${STAGINGDIR}/logs/BUILDLOG.txt
 wget -q http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/${BUILD_NUMBER}/consoleText -O ${bl}
-date; rsync -arzq --delete ${STAGINGDIR}/logs/BUILDLOG.txt $DESTINATION/builds/staging/${JOB_NAME}/logs/
+date; rsync -arzq --delete ${STAGINGDIR}/logs $DESTINATION/builds/staging/${JOB_NAME}/
 
