@@ -85,6 +85,7 @@ echo "BUILD_NUMBER = ${BUILD_NUMBER}" >> ${STAGINGDIR}/logs/${METAFILE}
 echo "BUILD_ID = ${BUILD_ID}" >> ${STAGINGDIR}/logs/${METAFILE}
 echo "WORKSPACE = ${WORKSPACE}" >> ${STAGINGDIR}/logs/${METAFILE}
 echo "HUDSON_SLAVE = $(uname -a)" >> ${STAGINGDIR}/logs/${METAFILE}
+cp ${STAGINGDIR}/logs/${METAFILE} ${STAGINGDIR}/logs/build.properties
 
 #echo "$z ..."
 if [[ $z != "" ]] && [[ -f $z ]] ; then
