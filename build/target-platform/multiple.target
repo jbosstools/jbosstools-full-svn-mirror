@@ -219,7 +219,7 @@
 			<repository location="http://download.eclipse.org/webtools/repository/helios/"/>
 		</location>
 		<location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
-			<repository location="http://download.jboss.org/jbosstools/builds/staging/_composite_/trunk/"/>
+			<repository location="http://download.jboss.org/jbosstools/builds/staging/_composite_/3.2_stable_branch/"/>
 		</location>
 		<location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
 			<unit id="com.google.gdt.eclipse.suite.e36.feature.feature.group" version="1.4.2.v201012211742"/>
