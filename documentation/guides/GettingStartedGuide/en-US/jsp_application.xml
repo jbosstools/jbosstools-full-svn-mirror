@@ -217,11 +217,7 @@
 		<section id="DeployTheProject">
 			<?dbhtml filename="DeployTheProject.html"?>
 			<title>Deploying the project</title>
-			<para>While creating any web project you could experience a pain writing ant scripts and
-				managing the packaging even when writing the most trivial web applications. With
-				<property>JBoss Developer Studio</property> you are saved from such a pain. All
-				you need is to start <property>JBoss Server</property> and launch your application
-				in your favorite browser.</para>
+			<para>Writing ant scripts and	managing the packaging can be quite a complicated and time consuming task for even the most trivial web applications. However, <property>JBoss Developer Studio</property> relieves you of this burden. All you need is to start <property>JBoss Server</property> and launch your application in your favorite browser.</para>
 			<para>You can also create a war archive with JBDS&apos;s Archive Tools
 				and export it to any web server.</para>
 			<section id="WarConfig">
@@ -239,8 +235,7 @@
 						<para>Select a project in Package Explorer you want to be archived</para>
 					</listitem>
 				</itemizedlist>
-				<para>In <property>Project Archives</property> you will see available archive types
-					for the project:</para>
+				<para>In <property>Project Archives</property> you will see the that the project is now listed:</para>
 				<figure>
 					<title>Project Archives</title>
 					<mediaobject>
@@ -249,13 +244,17 @@
 						</imageobject>
 					</mediaobject>
 				</figure>
-				<itemizedlist>
-					<listitem>
-						<para>Click, for example, <emphasis>
-							<property>WAR</property>
-						</emphasis> option to create war archive</para>
-					</listitem>
-				</itemizedlist>
+				<para>Right click on the project and select the type of archive you want to create. In this case we will create a WAR archive.</para>
+				
+				<figure>
+					<title>Project Archives</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/jsp_application/jsp_application_8a.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+				
 				<para>In the <property>New WAR</property> dialog you can see automatically selected
 					default values.</para>
 				<figure>
