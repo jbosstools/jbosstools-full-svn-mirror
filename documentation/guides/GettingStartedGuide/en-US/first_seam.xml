@@ -682,6 +682,20 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
         </emphasis> and insert/update/delete/query a few records. There is quite a bit of AJAX in
         this application, but which we will explore further later on in the lab. For now, take note
         of the page tabs, required field logic and data table sorting in the list pages. </para>
+        
+      <note>
+      	<title>Tip</title>
+      	<para>
+      		If you see the error <emphasis>java.lang.ClassNotFoundException: org.jboss.seam.servlet.SeamListener</emphasis> in the console output from the Application Server, you may need to copy the <filename>jboss-seam.jar</filename> file from the <filename>lib</filename> subdirectoy in the Seam library (which can be downloaded from <ulink url="http://seamframework.org/Seam2/Seam2DistributionDownloads">here</ulink>) into the <filename>/server/default/deploy/workshop.war/WEB-INF/lib/</filename> subdirectory in your Application Server (where "default" refers to the server profile that you are using).
+      	</para>
+      </note>
+      <note>
+      	<title>Tip</title>
+      	<para>
+      		If you see the error <emphasis>Could not instantiate Seam component: org.jboss.seam.security.ruleBasedPermissionResolver</emphasis>, copy the <filename>mvel2.jar</filename> file from the Seam library to the same destination directory mentioned in the tip above.
+      	</para>
+      </note>
+        
       <figure>
         <title>CustomersList.xhtml in the Editor</title>
         <mediaobject>
