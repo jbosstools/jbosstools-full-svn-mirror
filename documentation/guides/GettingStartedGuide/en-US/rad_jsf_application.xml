@@ -114,7 +114,7 @@
                 <para>Type <emphasis>
                         <property>pages/inputnumber</property>
                     </emphasis> as the value for <emphasis>
-                        <property>From-view-id</property>
+                        <property>From View ID</property>
                     </emphasis></para>
             </listitem>
             <listitem>
@@ -126,7 +126,7 @@
                 <para>In the same way create another jsf view. Type <emphasis>
                         <property>pages/success</property>
                     </emphasis> as the value for <emphasis>
-                        <property>From-view-id</property>
+                        <property>From View ID</property>
                     </emphasis></para>
             </listitem>
             <listitem>
