@@ -309,8 +309,7 @@
 						</para>
 					</listitem>
 				</itemizedlist>
-				<para>Via <property>Project Archives</property> view you could now edit your
-					archive, add new folders, publish to server, and so on:</para>
+				<para>Via <property>Project Archives</property> view you could now rebuild the archive:</para>
 				<figure>
 					<title>Configure Archive</title>
 					<mediaobject>
