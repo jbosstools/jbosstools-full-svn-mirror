@@ -192,16 +192,10 @@ public class VpeTest extends TestCase implements ILogListener {
 	 * close all opened editors.
 	 */
 	protected void closeEditors() {
-
-		// wait
-		// TestUtil.waitForJobs();
-		IWorkbenchPage page = PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow().getActivePage();
-		IWorkbenchPart part = page.getActivePart();
-		page.activate(part);
-		// close
+		// clean up defrerred events 
+		while (Display.getCurrent().readAndDispatch());
+		IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 		page.closeAllEditors(false);
-
 	}
 
 	/**
