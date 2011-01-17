@@ -63,7 +63,7 @@ public class DeltaCloud extends ObservablePojo {
 	public static interface IInstanceStateMatcher {
 		public boolean matchesState(DeltaCloudInstance instance, DeltaCloudInstance.State instanceState);
 	}
-	
+
 	public DeltaCloud(String name, String url, String username, String passwd) throws DeltaCloudException {
 		this(name, url, username, passwd, null);
 	}
@@ -74,12 +74,14 @@ public class DeltaCloud extends ObservablePojo {
 	}
 
 	public DeltaCloud(String name, String url, String username, Driver driver, String imageFilterRules,
-			String instanceFilterRules, Collection<IInstanceAliasMapping> instanceAliasMappings) throws DeltaCloudException {
+			String instanceFilterRules, Collection<IInstanceAliasMapping> instanceAliasMappings)
+			throws DeltaCloudException {
 		this(name, url, username, null, driver, imageFilterRules, instanceFilterRules, instanceAliasMappings);
 	}
 
 	public DeltaCloud(String name, String url, String username, String password, Driver driver,
-			String imageFilterRules, String instanceFilterRules, Collection<IInstanceAliasMapping> instanceAliasMappings) throws DeltaCloudException {
+			String imageFilterRules, String instanceFilterRules, Collection<IInstanceAliasMapping> instanceAliasMappings)
+			throws DeltaCloudException {
 		this.url = url;
 		this.name = name;
 		this.username = username;
@@ -88,9 +90,6 @@ public class DeltaCloud extends ObservablePojo {
 		this.client = createClient(url, username, passwordStore.getPassword());
 		this.imageFilter = createImageFilter(imageFilterRules);
 		this.instanceFilter = createInstanceFilter(instanceFilterRules);
-		if (instanceAliasMappings == null) {
-			instanceAliasMappings = new ArrayList<IInstanceAliasMapping>();
-		}
 		this.instanceAliasMappings = instanceAliasMappings;
 	}
 
@@ -343,7 +342,8 @@ public class DeltaCloud extends ObservablePojo {
 			DeltaCloudInstancesRepository repo = getInstancesRepository();
 			DeltaCloudInstance[] oldInstances = repo.get();
 			List<Instance> instances = client.listInstances();
-			Collection<DeltaCloudInstance> deltaCloudInstances = DeltaCloudInstanceFactory.create(instances, this, instanceAliasMappings);
+			Collection<DeltaCloudInstance> deltaCloudInstances =
+					DeltaCloudInstanceFactory.create(instances, this, instanceAliasMappings);
 			repo.add(deltaCloudInstances);
 			// TODO: remove notification with all instanceRepo, replace by
 			// notifying the changed instance

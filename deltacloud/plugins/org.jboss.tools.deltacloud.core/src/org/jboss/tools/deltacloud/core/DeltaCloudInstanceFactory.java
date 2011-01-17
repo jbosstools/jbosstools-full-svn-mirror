@@ -53,8 +53,11 @@ public class DeltaCloudInstanceFactory {
 		return deltaCloudInstances;
 	}
 
-	private static void setAlias(DeltaCloudInstance instance, Collection<IInstanceAliasMapping> instanceMappings) {
-		for (IInstanceAliasMapping aliasMapping : instanceMappings) {
+	private static void setAlias(DeltaCloudInstance instance, Collection<IInstanceAliasMapping> aliasMappings) {
+		if (aliasMappings == null || aliasMappings.size() == 0) {
+			return;
+		}
+		for (IInstanceAliasMapping aliasMapping : aliasMappings) {
 			if (aliasMapping.matches(instance)) {
 				instance.setAlias(aliasMapping.getAlias());
 			}
