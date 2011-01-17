@@ -357,7 +357,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 
   <note>
    <title>Note:</title>
-   <para>JBoss Developer Studio 4.0 comes integrated with JBoss EAP 5.0 that requires JDK 6.0 to run 
+   <para>JBoss Developer Studio 4.0 comes integrated with JBoss EAP 5.1 that requires JDK 6.0 to run 
          and &quot;gij&quot; isn&apos;t available on every platform.</para>
   </note>
 
@@ -368,8 +368,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
     		<property>Yes</property></emphasis>   to use it in JBoss Developer Studio.</para>
     	<note>
     		<title>Note:</title>
-    	 <para>Like in the previous version of JBDS, JBDS 4.0.0.GA comes integrated with JBoss EAP 5.0 
-    	       that supports EAP 5 adapter and Seam 2.2.</para>
+    	 <para>Like in the previous version of JBDS, JBDS 4.0.0.GA comes integrated with JBoss EAP 5.1 that supports EAP 5 adapter and Seam 2.2.</para>
     	</note>
     	
     	<para>This step lets you configure locally available JBoss Application Servers: </para> 
