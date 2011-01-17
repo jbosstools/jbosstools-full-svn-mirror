@@ -396,7 +396,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 	}
 
 	public void deleteKey(String keyname) throws DeltaCloudClientException {
-		requestStringResponse(new DeleteKeyRequest(baseUrl, keyname));
+		request(new DeleteKeyRequest(baseUrl, keyname));
 	}
 
 	public List<Key> listKeys() throws DeltaCloudClientException {

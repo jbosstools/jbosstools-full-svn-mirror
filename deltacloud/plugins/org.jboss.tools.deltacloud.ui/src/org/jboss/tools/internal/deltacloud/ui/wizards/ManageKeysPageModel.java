@@ -10,22 +10,15 @@
  ******************************************************************************/
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
-import java.text.MessageFormat;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
-import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudKey;
-import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob;
-import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob.CLOUDELEMENT;
-import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.ObservableUIPojo;
 
 /**
@@ -37,39 +30,69 @@ public class ManageKeysPageModel extends ObservableUIPojo {
 	public static final String PROP_KEYS = "keys";
 	public static final String PROP_KEYS_ADDED = "keyAdded";
 	public static final String PROP_KEYS_REMOVED = "keyRemoved";
+	public static final String PROP_KEY_STORE_PATH = "keyStorePath";
 
 	private List<DeltaCloudKey> keys = new ArrayList<DeltaCloudKey>();
 	private DeltaCloud cloud;
 	private DeltaCloudKey selectedKey;
+	private String keyStorePath;
 
 	public ManageKeysPageModel(DeltaCloud cloud) {
 		this.cloud = cloud;
-		// asyncGetKeys(cloud);
+		this.keyStorePath = initKeyStorePath();
 	}
 
-	public void deleteSelectedKey() throws DeltaCloudException {
+	private String initKeyStorePath() {
+		try {
+			return SshPrivateKeysPreferences.getSshKeyDirectory();
+		} catch (FileNotFoundException e) {
+			return null;
+		}
+	}
+
+	public DeltaCloudKey deleteSelectedKey() throws DeltaCloudException {
 		if (selectedKey == null) {
-			return;
+			return null;
 		}
 		cloud.deleteKey(selectedKey.getId());
 		int index = keys.indexOf(selectedKey);
 		keys.remove(selectedKey);
 		fireIndexedPropertyChange(PROP_KEYS, index, selectedKey, null);
-		PemFileManager.delete(selectedKey, SshPrivateKeysPreferences.getKeyStorePath());
+		DeltaCloudKey key = selectedKey;
 		setSelectedKey(index - 1);
+		return key;
 	}
 
-	public void createKey(String keyId) throws DeltaCloudException {
+	public void removeKeyLocally(DeltaCloudKey key) throws DeltaCloudException, FileNotFoundException {
+		if (key == null) {
+			return;
+		}
+
+		String keyStorePath = getKeyStorePath();
+		if (keyStorePath != null && keyStorePath.length() > 0) {
+			File pemFile = PemFileManager.delete(key, keyStorePath);
+			SshPrivateKeysPreferences.remove(pemFile.getAbsolutePath());
+		}
+	}
+
+	public DeltaCloudKey createKey(String keyId) throws DeltaCloudException {
 		DeltaCloudKey key = cloud.createKey(keyId);
 		keys.add(key);
 		int index = keys.indexOf(key);
 		fireIndexedPropertyChange(PROP_KEYS, index, null, key);
 		setSelectedKey(key);
-		PemFileManager.create(key, SshPrivateKeysPreferences.getKeyStorePath());
+		return key;
 	}
 
-	public Job refreshKeys() {
-		return asyncGetKeys();
+	public void storeKeyLocally(DeltaCloudKey key) throws DeltaCloudException, FileNotFoundException {
+		File pemFile = PemFileManager.create(key, getKeyStorePath());
+		SshPrivateKeysPreferences.add(pemFile.getAbsolutePath());
+	}
+
+	public void refreshKeys() throws DeltaCloudException {
+		java.util.List<DeltaCloudKey> newKeys = new ArrayList<DeltaCloudKey>();
+		newKeys.addAll(Arrays.asList(cloud.getKeys()));
+		setKeys(newKeys);
 	}
 
 	public DeltaCloudKey getSelectedKey() {
@@ -119,7 +142,13 @@ public class ManageKeysPageModel extends ObservableUIPojo {
 
 	public void setKeys(List<DeltaCloudKey> newKeys) {
 		firePropertyChange(PROP_KEYS, this.keys, this.keys = newKeys);
-		setSelectedKey();
+		/*
+		 * need to reset selection since widget looses selection (when items are
+		 * set) and property may not fire if no change in selection
+		 */
+		DeltaCloudKey key = getSelectedKey();
+		setSelectedKey(null);
+		setSelectedKey(key);
 	}
 
 	public DeltaCloudKey getKey(String keyId) {
@@ -137,24 +166,17 @@ public class ManageKeysPageModel extends ObservableUIPojo {
 		return matchingKey;
 	}
 
-	private Job asyncGetKeys() {
-		Job job = new AbstractCloudElementJob("Get keys", cloud, CLOUDELEMENT.KEYS) {
-
-			protected IStatus doRun(IProgressMonitor monitor) throws Exception {
-				try {
-					java.util.List<DeltaCloudKey> newKeys = new ArrayList<DeltaCloudKey>();
-					newKeys.addAll(Arrays.asList(getCloud().getKeys()));
-					setKeys(newKeys);
-					return Status.OK_STATUS;
-				} catch (DeltaCloudException e) {
-					// TODO: internationalize strings
-					return StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID,
-							MessageFormat.format("Could not get keys from cloud {0}", getCloud().getName()), e);
-				}
-			}
-
-		};
-		job.schedule();
-		return job;
+	public String getKeyStorePath() {
+		return keyStorePath;
 	}
+
+	public void setKeyStorePath(String keyStorePath) {
+		System.err.println(keyStorePath);
+		firePropertyChange(PROP_KEY_STORE_PATH, this.keyStorePath, this.keyStorePath = keyStorePath);
+	}
+
+	public DeltaCloud getCloud() {
+		return cloud;
+	}
+
 }

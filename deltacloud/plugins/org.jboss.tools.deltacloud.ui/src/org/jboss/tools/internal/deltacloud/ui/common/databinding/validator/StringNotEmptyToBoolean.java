@@ -15,14 +15,15 @@ import org.eclipse.core.databinding.conversion.Converter;
 /**
  * @author André Dietisheim
  */
-public class BoundObjectPresentConverter extends Converter {
+public class StringNotEmptyToBoolean extends Converter {
 
-	public BoundObjectPresentConverter() {
-		super(Object.class, Boolean.class);
+	public StringNotEmptyToBoolean() {
+		super(String.class, Boolean.class);
 	}
 
 	@Override
 	public Object convert(Object fromObject) {
-		return fromObject != null;
+		return fromObject != null
+				&& !((String) fromObject).isEmpty();
 	}
 }
