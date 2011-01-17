@@ -1,5 +1,8 @@
 2011-01-17  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
+	* src/org/jboss/tools/internal/deltacloud/ui/utils/WizardUtils.java (nextPageOrFinish): 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ManageKeysPage.java (onKeyDoubleclick): 
+	[JBIDE-8126] close manage keys dialog on double click on a key
 	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/InstanceViewLabelAndContentProvider.java: 
 	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/ImageViewLabelAndContentProvider.java: 
 	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/AbstractCloudElementViewLabelAndContentProvider.java: 
