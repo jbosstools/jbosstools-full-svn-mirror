@@ -12,9 +12,6 @@ package org.jboss.tools.deltacloud.ui.views.cloudelements;
 
 import java.beans.PropertyChangeEvent;
 import java.text.MessageFormat;
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -26,72 +23,24 @@ import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.ICloudElementFilter;
 import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob;
 import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob.CLOUDELEMENT;
+import org.jboss.tools.deltacloud.ui.views.Columns;
+import org.jboss.tools.deltacloud.ui.views.DeltaCloudImageColumns;
 
 /**
  * @author Jeff Johnston
  * @author André Dietisheim
  */
-public class ImageViewLabelAndContentProvider extends AbstractCloudElementViewLabelAndContentProvider<DeltaCloudImage>
-		implements ITableContentAndLabelProvider {
+public class ImageViewLabelAndContentProvider extends AbstractSelectableCloudViewLabelAndContentProvider<DeltaCloudImage>
+		implements ITableContentAndLabelProvider<DeltaCloudImage> {
 
-	public enum Column {
-		NAME(0, 20),
-		ID(1, 20),
-		ARCH(2, 20),
-		DESC(3, 40);
-
-		private int column;
-		private int weight;
-		private static final Map<Integer, Column> lookup = new HashMap<Integer, Column>();
-
-		static {
-			for (Column c : EnumSet.allOf(Column.class))
-				lookup.put(c.getColumnNumber(), c);
-		}
-
-		private Column(int column, int weight) {
-			this.column = column;
-			this.weight = weight;
-		}
-
-		public int getColumnNumber() {
-			return column;
-		}
-
-		public int getWeight() {
-			return weight;
-		}
-
-		public static Column getColumn(int number) {
-			return lookup.get(number);
-		}
-
-		public static int getSize() {
-			return lookup.size();
-		}
-
-	};
-
+	@Override
+	public Columns<DeltaCloudImage> createColumns() {
+		return new DeltaCloudImageColumns();
+	}
+	
 	@Override
 	public Image getColumnImage(Object element, int columnIndex) {
 		return null;
-	}
-
-	@Override
-	public String getColumnText(Object element, int columnIndex) {
-		Column c = Column.getColumn(columnIndex);
-		DeltaCloudImage i = (DeltaCloudImage) element;
-		switch (c) {
-		case NAME:
-			return i.getName();
-		case ID:
-			return i.getId();
-		case ARCH:
-			return i.getArchitecture();
-		case DESC:
-			return i.getDescription();
-		}
-		return "";
 	}
 
 	protected ICloudElementFilter<DeltaCloudImage> getCloudFilter(DeltaCloud cloud) {
