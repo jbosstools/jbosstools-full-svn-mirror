@@ -581,6 +581,7 @@ public class DeltaCloud extends ObservablePojo {
 				DeltaCloudInstancesRepository repo = getInstancesRepository();
 				DeltaCloudInstance[] instances = repo.get();
 				DeltaCloudInstance deltaCloudInstance = DeltaCloudInstanceFactory.create(instance, this, name);
+				instanceAliasMappings.add(new InstanceAliasMapping(instance.getId(), name));
 				repo.add(deltaCloudInstance);
 				// TODO: remove notification with all instanceRepo, replace by
 				// notifying the changed instance
