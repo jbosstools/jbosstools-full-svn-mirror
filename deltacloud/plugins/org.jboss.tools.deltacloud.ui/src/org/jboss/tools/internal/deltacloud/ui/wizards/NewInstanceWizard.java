@@ -140,7 +140,7 @@ public class NewInstanceWizard extends Wizard {
 						.openWarning(
 								getShell(),
 								"Instance key is not private key",
-								"The instance key is not a key that's know as private key to the ssh-subsystem. If the instance key is what you need to connect to you instance, you'll have to download it and add it to the private keys in the SSH preferences.");
+								"The instance key is not a key that's know as private key to the ssh-subsystem. If you need this key to connect to your instance, you'll have to download it and add it to the private keys in the SSH preferences.");
 			}
 		} catch (FileNotFoundException e) {
 
