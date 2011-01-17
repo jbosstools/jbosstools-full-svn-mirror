@@ -14,20 +14,19 @@
  <section id="intro1">
   <title>What is JBDS?</title>
   <para><property>JBoss Developer Studio</property> is a set of eclipse-based development tools that
-   are pre-configured for JBoss Enterprise Middleware Platforms and Red Hat Enterprise Linux.
+   have been pre-configured for JBoss Enterprise Middleware Platforms and Red Hat Enterprise Linux.
    Developers are not required to use <property>JBoss Developer Studio</property> to develop on
    JBoss Enterprise Middleware and/or Red Hat Linux. But, many find these pre-configured tools offer
-   significant time-savings and value, making them more productive and speeding time to deployment.</para>
-  <para>This guide covers the first steps to get started working with <property>JBoss Developer
-    Studio</property>. You will learn how to install and configure necessary software for your OS
-   (currently Linux, Microsoft Windows or Mac OSX).</para>
-  <para>Thus this guide will provide you with detailed info on how to start JDK, JBDS and JBoss
+   significant time-savings and value, making them more pra JSPoductive reducing deployment times.</para>
+  <para>This guide covers the first steps required to get started with <property>JBoss Developer
+    Studio</property>. You will learn how to install and configure the software necessary for your OS
+   (currently Linux, Microsoft Windows or Mac OSX), including detailed information on how to install, configure and use JDK, JBDS and JBoss
    Tools.</para>
  </section>
 
 <section>
 	<title>Key Features of JBoss Developer Studio  and Requirements</title>
- <para>For a start, we propose you to look through the table of main features of JBoss Developer Studio:</para>
+ <para>The table below lists the main features of JBoss Developer Studio:</para>
 
  <table>
   
@@ -70,7 +69,7 @@
     
     <row>
      <entry><para>JBoss Tools Palette</para></entry>
-     <entry><para>The JBoss Tools Palette contains a developer’s project tag libraries and enables inserting tags into a JSP with one click. The Tools Palette supports custom and 3rd party tags.</para></entry>
+     <entry><para>The JBoss Tools Palette contains a developer’s project tag libraries and enables inserting tags into a JSP file with one click. The Tools Palette supports custom and 3rd party tags.</para></entry>
     </row>
     
     <row>
@@ -297,8 +296,8 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   <para>This chapter will provide you with detailed information on how to install <property>JBoss
     Developer Studio</property>.</para>
 
-  <para>JBDS comes with a simple installer, bundled with tested/pre-configured versions of Eclipse,
-   WTP, JBossEAP, Seam, and SpringIDE. Thus, to start perform the next steps:</para>
+  <para>JBDS comes with a simple installer, bundled with tested and pre-configured versions of Eclipse,
+   WTP, JBossEAP, Seam, and SpringIDE. The following steps show you how to install JBDS:</para>
 
   <itemizedlist>
    <listitem>
@@ -307,7 +306,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
      website</ulink>.</para>
    </listitem>
    <listitem>
-    <para>Then run in console:</para>
+    <para>Run the following command in a terminal window:</para>
     <programlisting role="JAVA"><![CDATA[java -jar jbdevstudio-eap-linux-gtk-4.0.0.GA.jar
 ]]></programlisting>
    </listitem>
@@ -326,23 +325,14 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   </figure>
 
   <itemizedlist>
+  	<listitem>
+  		<para>Provide the installation path</para>
+  	</listitem>
    <listitem>
-    <para>Provide the installation path</para>
-   </listitem>
-   <listitem>
-    <para>Select Java VM</para>
+    <para>Select the appropriate Java Virtual Machine</para>
    </listitem>
   </itemizedlist>
-
-  <figure>
-   <title>Select Java VM</title>
-   <mediaobject>
-    <imageobject>
-     <imagedata fileref="images/getting_started/getting_started_2.png"/>
-    </imageobject>
-   </mediaobject>
-  </figure>
-
+  
   <note>
    <title>Tip:</title>
    <para>By selecting <emphasis>
@@ -361,11 +351,20 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
          and &quot;gij&quot; isn&apos;t available on every platform.</para>
   </note>
 
+  <figure>
+   <title>Select Java VM</title>
+   <mediaobject>
+    <imageobject>
+     <imagedata fileref="images/getting_started/getting_started_2.png"/>
+    </imageobject>
+   </mediaobject>
+  </figure>
+
   <itemizedlist>
    <listitem>
-    <para>Installation process includes <ulink url="http://www.jboss.com/products/platforms/application">JBoss Enterprise Application
+    <para>As part of the installation you can choose to install <ulink url="http://www.jboss.com/products/platforms/application">JBoss Enterprise Application
     	Platform</ulink>. Select  <emphasis>
-    		<property>Yes</property></emphasis>   to use it in JBoss Developer Studio.</para>
+    		<property>Yes</property></emphasis> to use it in JBoss Developer Studio.</para>
     	<note>
     		<title>Note:</title>
     	 <para>Like in the previous version of JBDS, JBDS 4.0.0.GA comes integrated with JBoss EAP 5.1 that supports EAP 5 adapter and Seam 2.2.</para>
@@ -385,7 +384,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   </figure>
 
 <itemizedlist>
- <listitem><para>You can fill the list automatically using the <emphasis><property>Find</property></emphasis> button: click <emphasis><property>Find</property></emphasis>, select a folder where search of available JBoss Application Servers should be started and click on <guibutton>OK</guibutton> button: </para> </listitem>
+ <listitem><para>You can fill the list automatically using the <guibutton>Find</guibutton> button. When the <guibutton>Find</guibutton> button is clicked you are propmpted to select the folder from which to search for available JBoss Application Servers. Click the <guibutton>OK</guibutton> button to select the chosen folder. </para> </listitem>
 </itemizedlist>
   
   <figure>
@@ -399,13 +398,12 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   <para/>
   
   <itemizedlist>
-   <listitem><para> All available servers in the selected directory  will be added to the list with the following information specified: Name, Type, Version and Location.  
+   <listitem><para> All available servers in the selected directory  will be added to the list with the following details: Name, Type, Version and Location.  
    </para></listitem>
   </itemizedlist>
   
   <itemizedlist>
-   <listitem><para>You can also add servers one by one using the 
-    <emphasis><property>Add</property></emphasis> button:</para>
+   <listitem><para>You can also add servers one by one using the <guibutton>Add</guibutton> button:</para>
    </listitem>
   </itemizedlist>
  
@@ -419,7 +417,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   </figure>
   <para/>
 
-<para>Click on <emphasis><property>Browse</property></emphasis> and select the server location. Fields Name, Type and Version will be filled in automatically:</para>
+<para>Click on the <guibutton>Browse</guibutton> button and select the server location. Fields Name, Type and Version will be filled in automatically:</para>
   
   <figure>
    <title>Specify Server Location</title>
@@ -432,11 +430,9 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   <para/>
   
   
-  <para>Click the <guibutton>OK</guibutton> button. The server is added to the list with the details on its type, version and location.</para>
-  
-  
-  
-  <para>The <emphasis><property>Remove</property></emphasis> button will the remove the selected server from the list. If necessary, you can edit the server details clicking on the <emphasis><property>Edit</property></emphasis> button:</para>
+  <para>When you click the <guibutton>OK</guibutton> button the server will be added to the list with the details on its type, version and location.</para>
+
+  <para>The <guibutton>Remove</guibutton> button will the remove the selected server from the list. If necessary, you can edit the server details clicking on the <guibutton>Edit</guibutton> button:</para>
   
   <figure>
    <title>Edit Server</title>
@@ -457,12 +453,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 
   <itemizedlist>
    <listitem>
-    <para>Click <emphasis><property>Next</property></emphasis>. Check your installation paths and see the components to install. If you'd like to change
-     something, press the <emphasis>
-      <property>Previous</property>
-     </emphasis> button. Click <emphasis>
-      <property>Next</property>
-     </emphasis> to start installation. </para>
+    <para>Click the <guibutton>Next</guibutton> button to bring up a summary page where you can check your installation paths and see the components that will be installed. If you'd like to change something, press the <guibutton>Previous</guibutton> button. Click the <guibutton>Next</guibutton> button to start installation. </para>
    </listitem>
   </itemizedlist>
 
@@ -484,14 +475,14 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   <title>JBoss Developer Studio and JBoss Tools</title>
 
   <para>This section highlights the differences between <property>JBoss Developer
-   Studio</property> and <property>JBoss Tools</property>, and provides the steps on <property>JBoss
-    Tools</property> installation as well.</para>
+   Studio</property> and <property>JBoss Tools</property>, and provides the steps on the <property>JBoss
+    Tools</property> installation process.</para>
 
   <section id="WhatDifferenceBetweenJBDSAndJBossTools">
    <title>What is the difference?</title>
 
    <para><property>JBoss Tools</property> is a component of <property>JBoss Developer
-    Studio</property>, which is designed to be an easy-to-install Eclipse based IDE fully configured and ready
+    Studio</property>, which is designed to be an easy-to-install Eclipse based IDE, fully configured and ready
     to run with the bundled <property>JBoss Enterprise Application Platform</property>.</para>
 
    <para>In short <property>JBoss Tools</property> are just a set of Eclipse plugins and
@@ -522,10 +513,9 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 
   <section id="JBossToolsInstall">
    <title>JBoss Tools Installation and Update</title>
-   <para>Here, let&apos;s consider the installation of the <property>JBoss Tools</property>
-    modules.</para>
+   <para>This section covers the installation of the <property>JBoss Tools</property> modules.</para>
    <para><property>JBoss Tools</property> is an umbrella project for the JBoss developed plugins
-    that will make it into <property>JBoss Developer Studio</property>. The JBoss Tools modules are:</para>
+    that are part of <property>JBoss Developer Studio</property>. The JBoss Tools modules are:</para>
    <itemizedlist>
     <listitem>
      <para>JBoss AS Tools</para>
@@ -562,7 +552,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 
    <itemizedlist>
     <listitem>
-    	<para>Get Eclipse and Web Tools (make sure you have the 
+    	<para>A copy of Eclipse and Web Tools (make sure you have the 
     		<ulink url="http://www.jboss.org/community/wiki/MatrixofsupportedplatformsruntimesandtechnologiesinJBossToolsJBDS">appropriate version of Eclipse</ulink>).</para>
     </listitem>
    </itemizedlist>
@@ -595,7 +585,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
     <title>Installation From Update Site</title>
    
    
-   <para>Instead of downloading installation/updating manually, it&apos;s also possible to
+   <para>Instead of downloading installation and updating manually, it&apos;s also possible to
     get the latest release of <property>JBoss Tools</property> from one of our update sites: 
     <itemizedlist id="sites">
      <listitem>
@@ -615,29 +605,28 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 <itemizedlist>
  <note>
   <title>Note:</title>
-  <para>During the JBT installation/updating process using some of Jboss 
-   update sites <emphasis>No repository found containing...</emphasis> error
-   can appear.It is a Eclipse P2 bug.To work around it try:1.Restart your Eclipse. 2.   
-   Add the update site again. 3. 
-   Do the update again.</para>
+  <para>During the JBT installation and updating process using some of Jboss 
+   update sites the <emphasis>No repository found containing...</emphasis> error
+   can appear. This is an Eclipse P2 bug. To work around it try: 1.Restarting Eclipse. 2.   
+   Add the update site again. 3. Performing the update again.</para>
  </note>
- <para>To install/update Jboss Tools from one of the update sites you should follow the steps:</para>
+ <para>To install and/or update JBoss Tools from one of the update sites you should follow the steps:</para>
  <listitem><para>First, download the correct version of Eclipse 
   for your platform which is compatible with the version of JBoss
-  Tools you plan to install.For example if you want to install
-  3.1.0.GA Eclipse 3.6.1 Helios JEE Bundle is required.</para></listitem>
+  Tools you plan to install. For example if you want to install
+  3.2.0.GA Eclipse 3.6.1 Helios JEE Bundle is required.</para></listitem>
  <listitem><para>If you do not already have Java 5 or 6 installed and in your path,
   download and install it.</para></listitem>
  <listitem><para>When Eclipse is started, go to <itemizedlist>
-  <listitem><para><menuchoice><guimenuitem>Help</guimenuitem><guimenuitem>Software Updates...</guimenuitem><guimenuitem>Available Software</guimenuitem><guimenuitem>Manage Sites...</guimenuitem><guimenuitem>Add...</guimenuitem></menuchoice><emphasis>(Eclipse 3.4)</emphasis></para></listitem>
-  <listitem><para><menuchoice><guimenuitem>Help</guimenuitem><guimenuitem>Install New Software</guimenuitem><guimenuitem>Add...</guimenuitem></menuchoice><emphasis>(Eclipse 3.5, 3.6)</emphasis></para></listitem>
+  <listitem><para><menuchoice><guimenuitem>Help</guimenuitem><guimenuitem>Software Updates...</guimenuitem><guimenuitem>Available Software</guimenuitem><guimenuitem>Manage Sites...</guimenuitem><guimenuitem>Add...</guimenuitem></menuchoice><emphasis> (Eclipse 3.4)</emphasis></para></listitem>
+  <listitem><para><menuchoice><guimenuitem>Help</guimenuitem><guimenuitem>Install New Software</guimenuitem><guimenuitem>Add...</guimenuitem></menuchoice><emphasis> (Eclipse 3.5, 3.6)</emphasis></para></listitem>
  </itemizedlist>
  </para></listitem>
  <listitem><para>After clicking the <guibutton>Add</guibutton> button the <property>Add Site</property> View should appear.
   In the <property>Location</property> field you should paste one of the update sites described
-  <link linkend="sites">above</link>.On some platforms,
+  <link linkend="sites">above</link>. On some platforms,
   you can also drag and drop the link from your browser directly into Eclipse. In the <property>Name</property> field you can enter any name you like.
-  In the end press the <property>OK</property> button.</para>
+  In the end press the <guibutton>OK</guibutton> button.</para>
   <figure>
    <title>Add Update Site</title>
    <mediaobject>
@@ -669,18 +658,17 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
     </imageobject>
    </mediaobject>
   </figure> 
-  <para>If some of them are missing an error message will appear and
+  <para>If some of the dependencies are missing an error message will appear and
    the installation process will be terminated.
   </para>
   <note>
    <title>Note:</title>
    <para>Sometimes when a user changes the list of plugins for download and clicks
-    <guibutton>Next</guibutton>, after required dependences check, 
-    the list of missing dependencies of the previous attempt is showed. 
-    In this case the completely close of the <emphasis>Install New Software</emphasis> dialog can help.</para>
+    <guibutton>Next</guibutton>, after the required dependences have been checked, 
+    the list of missing dependencies from the previous attempt is showed. 
+    In this case completely closing the <emphasis>Install New Software</emphasis> dialog can help.</para>
   </note>
-  <para>If JBoss Tools are already installed on your Eclipse and you are doing updating but not 
-  installation the following messages will appear in your <emphasis>Details</emphasis> section.
+  <para>If JBoss Tools are already installed on your Eclipse and you are performing an update (and not installing new components) the following messages may appear in your <emphasis>Details</emphasis> section.
   Ignore them and press the <guibutton>Next</guibutton> button.</para>
   <figure>
    <title>Possible messages</title>
@@ -691,7 +679,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    </mediaobject>
   </figure>
  </listitem>
- <listitem><para>When you click the <guibutton>Finish</guibutton> button the Installation/Updating process will commence.</para></listitem>
+ <listitem><para>When you click the <guibutton>Finish</guibutton> button the Installation and/or Updating process will commence.</para></listitem>
  <listitem><para>Once the installation is complete, restart Eclipse when prompted.</para>
   <figure>
    <title>Message dialog</title>
@@ -703,7 +691,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   </figure> 
  </listitem>
  <listitem><para>After fetching all the features and plugins for installation,
-  you may be prompted that your selection contains unsigned jars.
+  you may be warned that your selection contains unsigned jars.
   This is normal, simply accept the warning and continue. </para>
   <figure>
    <title>Warning Message</title>
@@ -727,9 +715,8 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
  <section>
   <title>Installation From Zip file</title>
   
-  <para>Now you can install JBoss Tools using Eclipse P2 update manager and a common zip file which is 
-   one installer for all platforms.</para>
-   <para>You can download Jboss Tools in a zip file from one of the pages below:</para>
+  <para>It is also possible to install JBoss Tools using the Eclipse P2 update manager and a common zip file which provides a single installer for all platforms.</para>
+   <para>You can download JBoss Tools in a zip file from one of the pages below:</para>
   <itemizedlist id="zip_sites">
    <listitem>
     <para>Stable Releases: <ulink url="http://www.jboss.org/tools/download/stable.html"
@@ -748,7 +735,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
  <itemizedlist>
   <listitem><para>When Eclipse is started, go to <menuchoice><guimenuitem>Help</guimenuitem><guimenuitem>Install New Software...</guimenuitem><guimenuitem>Add...</guimenuitem><guimenuitem>Archive...</guimenuitem></menuchoice></para></listitem>
   <listitem><para>Browse for the update site zip. In the <emphasis>Name</emphasis> field you can write any name you like.
-   In the end press the <guibutton>OK</guibutton> button.</para>
+   Then click the <guibutton>OK</guibutton> button.</para>
    <figure>
     <title>Installation from a zip file</title>
     <mediaobject>
@@ -758,7 +745,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
     </mediaobject>
    </figure> 
   </listitem>
-  <listitem><para>All the other steps are the same as it was described in the <link linkend="from_point">
+  <listitem><para>The remaining steps are the same as described in the section <link linkend="from_point">
    Installation From Update Site section</link>. </para>
   </listitem> 
  </itemizedlist>
@@ -819,8 +806,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 
   <itemizedlist>
    <listitem>
-    <para>to get short description of perspectives that JBDS offers for more productive
-    development</para>
+    <para>to get short descriptions of the perspectives that JBDS provides</para>
    </listitem>
   </itemizedlist>
 
@@ -848,9 +834,9 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    </mediaobject>
   </figure>
 
-  <para>Start work with <property>JBoss Developer Studio</property> by clicking on <emphasis>
+  <para>You can start working with <property>JBoss Developer Studio</property> by clicking on <emphasis>
     <property>Workbench</property>
-   </emphasis> button or simply close the Welcome page.</para>
+   </emphasis> button or simply closing the Welcome page.</para>
 
  </section>
 
@@ -873,8 +859,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
     <para>Make sure <property>JBoss Developer Studio</property> is not running</para>
    </listitem>
    <listitem>
-    <para>Uninstall your current version of <property>JBoss Developer Studio</property> by running
-     Uninstaller</para>
+    <para>Uninstall your current version of <property>JBoss Developer Studio</property> by running the Uninstaller</para>
    </listitem>
   </itemizedlist>
  </section>
@@ -884,12 +869,16 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    <para>
       The JBoss Developer Studio now includes a usage plug-in that anonymously reports information back to JBoss. The plug-in is not enabled by default. To enable, make sure the <guilabel>Report usage of JBoss Tools to JBoss Tools team.</guilabel> box is ticked.
   </para>
-  <mediaobject>
-    <imageobject>
+  
+  <figure>
+    <title>Usage plug-in pop-up</title>
+    <mediaobject>
+     <imageobject>
       <imagedata fileref="images/getting_started/usage_plug-in_1_JBDS.png"/>
-    </imageobject>
-    <caption>Usage plug-in pop-up</caption>
-  </mediaobject>
+     </imageobject>
+    </mediaobject>
+   </figure> 
+
    <para>
       Once enabled, the plug-in will remain active until turned off. To turn the active plug-in off, navigate to <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Preferences</guimenuitem><guimenuitem>JBoss Tools</guimenuitem><guimenuitem>Usage Reporting</guimenuitem></menuchoice>.
    </para>
@@ -900,7 +889,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
      The plug-in uses Google Analytics to track and report data by acting as if you were visiting the site http://jboss.org/tools/usage/. To view the type of information being collected, refer to <xref linkend="Collected_usage_information_guide"/>.
    </para>
    <para>
-     To view the sourcecode of the usage plug-in visit <ulink url="http://anonsvn.jboss.org/repos/jbosstools/trunk/usage/">http://anonsvn.jboss.org/repos/jbosstools/trunk/usage/</ulink>.
+     To view the source code of the usage plug-in visit <ulink url="http://anonsvn.jboss.org/repos/jbosstools/trunk/usage/">http://anonsvn.jboss.org/repos/jbosstools/trunk/usage/</ulink>.
    </para>
       <section id="Collected_usage_information_guide">
 	 <title>Collected usage information guide</title>
