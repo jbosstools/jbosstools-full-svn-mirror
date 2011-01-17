@@ -42,7 +42,7 @@
       <para>Minimize the terminal window and run the <property>JBoss Developer Studio</property>
         from Applications Menu or from the desktop icon.</para>
       <para>First of all you get the Workspace Launcher. Change the default workspace location if
-        it's needed. Click on <property>Ok</property>. </para>
+        it's needed. Click the <guibutton>OK</guibutton> button. </para>
       <figure>
         <title>Workspace Launcher Dialog</title>
         <mediaobject>
@@ -97,11 +97,7 @@
           </imageobject>
         </mediaobject>
       </figure>
-      <para>Click on <emphasis>
-          <property>Ok</property>
-        </emphasis> and then <emphasis>
-          <property>Next</property>
-        </emphasis> to proceed further.</para>
+      <para>Click the <guibutton>OK</guibutton> and then the <guibutton>Next</guibutton> button to proceed further.</para>
       <para>A dynamic web application contains both web pages and <property>Java</property> code.
         The next wizard will ask you where you want to store Java files.</para>
       <figure>
@@ -135,9 +131,7 @@
             server.</para>
         </listitem>
         <listitem>
-          <para>Click <emphasis>
-              <property>Next</property>
-            </emphasis></para>
+          <para>Click the <guibutton>Next</guibutton> button</para>
         </listitem>
       </itemizedlist>
       <figure>
@@ -187,14 +181,19 @@
       </figure>
       <para>Try click on <property>Test Connection</property> button. It probably won’t work. This
         happens if the hsql jdbc driver is not exactly the same. This can be worked around by
-        modifying the HSQLDB database driver settings. To modify the settings, click the Edit Driver Definition Driver(
-            <inlinemediaobject><imageobject>
+        modifying the HSQLDB database driver settings. To modify the settings, click the <guibutton>Edit Driver Definition Driver</guibutton> button.
+      </para>
+      <figure>
+        <title>Driver Details</title>
+        <mediaobject>
+          <imageobject>
             <imagedata fileref="images/first_seam/first_seam9_1.png"/>
           </imageobject>
-        </inlinemediaobject>) .</para>
+        </mediaobject>
+      </figure>
       <para>The proper Driver JAR File should be listed under <property>Jar List</property>. Select
-        the hsqldb.jar file found in the jbdevstudio/jboss-eap/jboss-as/common/lib/ directory and
-        click <property>Ok</property>.</para>
+        the hsqldb.jar file found in the <filename>jbdevstudio/jboss-eap/jboss-as/common/lib/</filename> directory and
+        click the <guibutton>OK</guibutton> button.</para>
       <figure>
         <title>Driver Details</title>
         <mediaobject>
@@ -204,7 +203,7 @@
         </mediaobject>
       </figure>
       <para>Now, the <property>Test Connection</property> should succeed. After testing the
-        connection, click <emphasis><property>Ok</property></emphasis>.</para>
+        connection, click the <guibutton>OK</guibutton> button.</para>
       <figure>
         <title>Connection Testing</title>
         <mediaobject>
@@ -231,7 +230,7 @@
           it should be "MyProject-test".</para>
       </note>
       
-      <para>Click on <property>Finish</property> button. Now, there should be a new Seam project
+      <para>Click on <guibutton>Finish</guibutton> button. Now, there should be a new Seam project
         called “workshop” listed in Package Explorer view.</para>
       <figure>
         <title>&quot;worskhop&quot; Project in the Package Explorer</title>
@@ -252,8 +251,7 @@
             <imagedata fileref="images/first_seam/first_seam15.png"/>
           </imageobject>
         </inlinemediaobject> ) in the <property>Servers</property> view.</para>
-      <para>Then run the project by selecting the project and use <emphasis><property>Run As... >
-            Run on Server</property>.</emphasis></para>
+      <para>Then run the project by selecting the project and use <menuchoice><guimenuitem>Run As...</guimenuitem><guimenuitem>Run on Server</guimenuitem></menuchoice>.</para>
             
       <figure>
         <title>&quot;worskhop&quot; Run As</title>
@@ -356,12 +354,10 @@
       with some custom business logic and some GUI changes.</para>
     <section id="create_seam_action">
       <title>Create a New Seam Action</title>
-      <para>Go to main menu bar and click on <emphasis>
-          <property>File > New > New Seam Action</property>
-        </emphasis> to start the New Seam Action wizard.</para>
+      <para>Go to main menu bar and click on <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>New</guimenuitem><guimenuitem>New Seam Action</guimenuitem></menuchoice> to start the New Seam Action wizard.</para>
       <para>Specify a <property>Seam component name</property> (e.g., &quot;myAction&quot;). The
         other properties will be auto-completed for you so there is no need to change them. Click on
-          <property>Finish</property>.</para>
+          the <guibutton>Finish</guibutton> button.</para>
       <figure>
         <title>New Seam Action Wizard</title>
         <mediaobject>
@@ -400,10 +396,7 @@ statusMessages.add("MyAction Executed on:" + cal.getTime());
       
       <para>The test case simulates a Seam component/method execution for the <property
           >MyAction.myAction()</property> logic.</para>
-      <para>To run the test case, right click on <property>MyActionTest.xml</property> and click
-          <emphasis>
-          <property>Run As > TestNG Suite</property>
-        </emphasis> or use the <property>Run As...</property> toolbar shortcut as shown
+      <para>To run the test case, right click on <property>MyActionTest.xml</property> and click <menuchoice><guimenuitem>Run As</guimenuitem><guimenuitem>TestNG Suite</guimenuitem></menuchoice> or use the <guibutton>Run As...</guibutton> toolbar shortcut as shown
         below.</para>
       <figure>
         <title>TestNG Running</title>
@@ -423,9 +416,7 @@ statusMessages.add("MyAction Executed on:" + cal.getTime());
         </mediaobject>
       </figure>
       <para>Now, it’s safe to test the new Seam Action in a web browser. The fastest way to do that
-        is to right click on <property>myAction.xhtml</property> and use <emphasis>
-          <property>Run As... > Run On Server</property>
-        </emphasis> which will show the appropriate url in the browser. Alternatively you can
+        is to right click on <property>myAction.xhtml</property> and use <menuchoice><guimenuitem>Run As...</guimenuitem><guimenuitem>Run On Server</guimenuitem></menuchoice> which will show the appropriate url in the browser. Alternatively you can
         manually enter <emphasis>
           <property>http://localhost:8080/workshop/myAction.seam</property>
         </emphasis> into a browser.</para>
@@ -579,8 +570,7 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
     <section id="database_connectivity">
       <title>Database Connectivity Setup</title>
       <para>The workshop data can be browsed inside of JBoss Developer Studio.</para>
-      <para>To open the Data Source Explorer, click on <emphasis><property>Window > Open Perspective
-            > Other > Database Development</property>.</emphasis></para>
+      <para>To open the Data Source Explorer, click on <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Open Perspective</guimenuitem><guimenuitem>Other</guimenuitem><guimenuitem>Database Development</guimenuitem></menuchoice>.</para>
       <para>In the Data Source Explorer, expand a <property>Databases</property> node and select a
           <property>Default</property> database. Right click on it, select <property
           >Connect</property> from the context menu.</para>
@@ -604,9 +594,7 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
           </imageobject>
         </mediaobject>
       </figure>
-      <para>Right click on <property>CUSTOMERS</property>, select <emphasis>
-          <property>Data > Sample Contents</property>
-        </emphasis> to view the data in the table.</para>
+      <para>Right click on <property>CUSTOMERS</property>, select <menuchoice><guimenuitem>Data</guimenuitem><guimenuitem>Sample Contents</guimenuitem></menuchoice> to view the data in the table.</para>
       <para>There should be a SQL Results view on the workbench, but it could be hidden. Click on
         the <property>&quot;Result1&quot;</property> tab in the right side and you should see the
         data in the CUSTOMERS table.</para>
@@ -620,8 +608,9 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
       </figure>
       <note>
         <title>Note:</title>
-        <para>If you can’t find the SQL Results view tab, click on <emphasis><property>Window > Show
-              View > Other > SQL Development > SQL Results</property>.</emphasis></para>
+        <para>
+        	If you can’t find the SQL Results view tab, click on <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Show View</guimenuitem><guimenuitem>Other</guimenuitem><guimenuitem>SQL Development</guimenuitem><guimenuitem>SQL Results</guimenuitem></menuchoice>.
+        </para>
       </note>
       <para>Congratulations! You just connected to the workshop database and queried the content
         using Database Explorer tools.</para>
@@ -637,9 +626,7 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
           perspective</property>, and then right-click the project and select <emphasis><property
             >New > Seam Generate Entities</property>.</emphasis></para>
       <para>&quot;workshop&quot; project in the <property>Seam Generate Entities wizard</property>
-        will be selected automatically. There is no need to change something more, click <emphasis>
-          <property>Next</property>
-        </emphasis> to proceed further.</para>
+        will be selected automatically. There is no need to change something more, click the <guibutton>Next</guibutton> button to proceed further.</para>
       <figure>
         <title>Generate Seam Entities</title>
         <mediaobject>

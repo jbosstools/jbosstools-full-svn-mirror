@@ -716,7 +716,7 @@ public class NumberBean
 				</listitem>
 
 				<listitem>
-					<para>Select <emphasis> the second column in the <property>value</property> row.</para>
+					<para>Select the second column in the <property>value</property> row.</para>
 				</listitem>
 				<listitem>
 					<para>Click <property>...</property> button next to the value field</para>
@@ -742,7 +742,6 @@ public class NumberBean
 					<para>Select <emphasis>
                             <property>how_to_play</property>
 						</emphasis> value and click the <guibutton>OK</guibutton>. Then click the <guibutton>Finish</guibutton> button.
-						</emphasis>
 						<figure>
 							<title>Selecting Value</title>
 							<mediaobject>
@@ -1056,7 +1055,7 @@ public class NumberBean
 				</para>
 			</listitem>
 			<listitem>
-				<para>Type <emphasis><property>index</property></emphasis> for name field and click the <guibutton>Next</guibutton> button.
+				<para>Type <emphasis><property>index</property></emphasis> for name field and click the <guibutton>Next</guibutton> button.</para>
 			</listitem>
 			<listitem>
 				<para>Untick the <guilabel>Use JSP Template</guilabel> check box and click the <guibutton>Finish</guibutton> button.</para>
