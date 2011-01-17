@@ -12,10 +12,13 @@ package org.jboss.tools.deltacloud.ui.views.cloudelements;
 
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITableLabelProvider;
+import org.jboss.tools.deltacloud.ui.views.Columns;
 
 /**
  * @author Andre Dietisheim
  */
-public interface ITableContentAndLabelProvider extends IStructuredContentProvider, ITableLabelProvider{
+public interface ITableContentAndLabelProvider<MODEL> extends IStructuredContentProvider, ITableLabelProvider{
 
+	public Columns<MODEL> getColumns();
+	
 }

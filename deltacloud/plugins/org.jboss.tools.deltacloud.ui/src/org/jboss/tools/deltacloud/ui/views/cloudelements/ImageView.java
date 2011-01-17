@@ -35,7 +35,7 @@ public class ImageView extends AbstractCloudElementTableView<DeltaCloudImage> {
 	}
 
 	@Override
-	protected ITableContentAndLabelProvider getContentAndLabelProvider() {
+	protected ITableContentAndLabelProvider<DeltaCloudImage> getContentAndLabelProvider() {
 		return new ImageViewLabelAndContentProvider();
 	}
 

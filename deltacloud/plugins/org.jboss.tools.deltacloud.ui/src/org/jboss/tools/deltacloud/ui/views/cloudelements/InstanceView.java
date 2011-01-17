@@ -36,7 +36,7 @@ public class InstanceView extends AbstractCloudElementTableView<DeltaCloudInstan
 	}
 
 	@Override
-	protected ITableContentAndLabelProvider getContentAndLabelProvider() {
+	protected ITableContentAndLabelProvider<DeltaCloudInstance> getContentAndLabelProvider() {
 		return new InstanceViewLabelAndContentProvider();
 	}
 

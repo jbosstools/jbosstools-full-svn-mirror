@@ -47,6 +47,9 @@ import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob;
 import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob.CLOUDELEMENT;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
+import org.jboss.tools.deltacloud.ui.views.Columns;
+import org.jboss.tools.deltacloud.ui.views.Columns.Column;
+import org.jboss.tools.deltacloud.ui.views.cloudelements.ITableContentAndLabelProvider;
 import org.jboss.tools.deltacloud.ui.views.cloudelements.TableViewerColumnComparator;
 
 /**
@@ -216,22 +219,12 @@ public class FindImagePage extends WizardPage {
 		Table table = viewer.getTable();
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
-		FindImagePageLabelAndContentProvider contentProvider = new FindImagePageLabelAndContentProvider();
-		viewer.setContentProvider(contentProvider);
-		viewer.setLabelProvider(contentProvider);
+		FindImagePageLabelAndContentProvider provider = new FindImagePageLabelAndContentProvider();
+		viewer.setContentProvider(provider);
+		viewer.setLabelProvider(provider);
 		TableViewerColumnComparator comparator = new TableViewerColumnComparator();
 		viewer.setComparator(comparator);
-
-		for (int i = 0; i < FindImagePageLabelAndContentProvider.Column.getSize(); ++i) {
-			FindImagePageLabelAndContentProvider.Column c =
-					FindImagePageLabelAndContentProvider.Column.getColumn(i);
-			TableColumn tc = new TableColumn(table, SWT.NONE);
-			if (i == 0)
-				table.setSortColumn(tc);
-			tc.setText(CVMessages.getString(c.name()));
-			tableLayout.setColumnData(tc, new ColumnWeightData(c.getWeight(), true));
-			tc.addSelectionListener(new ColumnListener(i, viewer));
-		}
+		createColumns(provider, tableLayout, table);
 		table.setSortDirection(SWT.NONE);
 
 		Point p1 = nameLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
@@ -300,6 +293,21 @@ public class FindImagePage extends WizardPage {
 		validate();
 	}
 
+	private void createColumns(ITableContentAndLabelProvider<DeltaCloudImage> provider, TableColumnLayout tableLayout,
+			Table table) {
+		Columns<DeltaCloudImage> columns = provider.getColumns();
+		for (int i = 0; i < columns.getSize(); ++i) {
+			Column<DeltaCloudImage> c = columns.getColumn(i);
+			TableColumn tc = new TableColumn(table, SWT.NONE);
+			if (i == 0) {
+				table.setSortColumn(tc);
+			}
+			tc.setText(CVMessages.getString(c.getName()));
+			tableLayout.setColumnData(tc, new ColumnWeightData(c.getWeight(), true));
+			tc.addSelectionListener(new ColumnListener(i, viewer));
+		}
+	}
+
 	private void hookSelection() {
 		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
 			@Override
@@ -342,4 +350,4 @@ public class FindImagePage extends WizardPage {
 			}
 		});
 	}
-} 
+}

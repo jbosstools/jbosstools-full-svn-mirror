@@ -52,6 +52,8 @@ import org.jboss.tools.deltacloud.core.IInstanceFilter;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
+import org.jboss.tools.deltacloud.ui.views.Columns;
+import org.jboss.tools.deltacloud.ui.views.Columns.Column;
 import org.jboss.tools.internal.deltacloud.ui.preferences.StringPreferenceValue;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 
@@ -227,10 +229,10 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 		Table table = viewer.getTable();
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
-		ITableContentAndLabelProvider provider = getContentAndLabelProvider();
+		ITableContentAndLabelProvider<CLOUDELEMENT> provider = getContentAndLabelProvider();
 		viewer.setContentProvider(provider);
 		viewer.setLabelProvider(provider);
-		createColumns(tableLayout, table);
+		createColumns(provider, tableLayout, table);
 
 		viewer.setComparator(new TableViewerColumnComparator());
 		table.setSortDirection(SWT.NONE);
@@ -238,8 +240,8 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 		return viewer;
 	}
 
-	protected abstract ITableContentAndLabelProvider getContentAndLabelProvider();
-
+	protected abstract ITableContentAndLabelProvider<CLOUDELEMENT> getContentAndLabelProvider();
+	
 	private void setViewerInput(DeltaCloud cloud) {
 		viewer.setInput(cloud);
 	}
@@ -304,15 +306,16 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 		return clouds[cloudIndex];
 	}
 
-	private void createColumns(TableColumnLayout tableLayout, Table table) {
-		for (int i = 0; i < InstanceViewLabelAndContentProvider.Column.getSize(); ++i) {
-			InstanceViewLabelAndContentProvider.Column c =
-					InstanceViewLabelAndContentProvider.Column.getColumn(i);
+	private void createColumns(ITableContentAndLabelProvider<CLOUDELEMENT> provider, TableColumnLayout tableLayout, Table table) {
+		Columns<CLOUDELEMENT> columns = provider.getColumns();
+		
+		for (int i = 0; i < columns.getSize(); ++i) {
+			Column<CLOUDELEMENT> c = columns.getColumn(i);
 			TableColumn tc = new TableColumn(table, SWT.NONE);
 			if (i == 0) {
 				table.setSortColumn(tc);
 			}
-			tc.setText(CVMessages.getString(c.name()));
+			tc.setText(CVMessages.getString(c.getName()));
 			tableLayout.setColumnData(tc, new ColumnWeightData(c.getWeight(), true));
 			tc.addSelectionListener(new ColumnListener(i));
 		}
