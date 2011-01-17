@@ -11,13 +11,12 @@
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.text.MessageFormat;
+import java.io.FileNotFoundException;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.wizard.Wizard;
 import org.jboss.tools.common.jobs.ChainedJob;
@@ -98,59 +97,23 @@ public class NewInstanceWizard extends Wizard {
 		String memory = model.getMemory();
 		String storage = model.getStorage();
 		String keyId = model.getKeyId();
-		String name = utf8Encode(model.getName());
+		String name = model.getName();
 
 		// Save persistent settings for this particular cloud
 		cloud.setLastImageId(imageId);
 		cloud.setLastKeyname(keyId);
 
-		Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
-
 		boolean result = false;
 		Exception e = null;
 		try {
-			boolean dontShowDialog = prefs.getBoolean(IDeltaCloudPreferenceConstants.DONT_CONFIRM_CREATE_INSTANCE,
-					false);
-			if (!dontShowDialog) {
-				MessageDialogWithToggle dialog =
-						MessageDialogWithToggle.openOkCancelConfirm(getShell(),
-								WizardMessages.getString(CONFIRM_CREATE_TITLE),
-								WizardMessages.getString(CONFIRM_CREATE_MSG),
-								WizardMessages.getString(DONT_SHOW_THIS_AGAIN_MSG),
-								false, null, null);
-				int retCode = dialog.getReturnCode();
-				boolean toggleState = dialog.getToggleState();
-				if (retCode == Dialog.CANCEL) {
-					return true;
-				}
-				// If warning turned off by user, set the preference for future
-				// usage
-				if (toggleState) {
-					prefs.putBoolean(IDeltaCloudPreferenceConstants.DONT_CONFIRM_CREATE_INSTANCE, true);
-				}
-			}
-			instance = cloud.createInstance(name, imageId, realmId, profileId, keyId, memory, storage);
-			if (instance != null) {
-				result = true;
-				if (instance.getState().equals(DeltaCloudInstance.State.PENDING)) {
-					// TODO use chained job? Maybe. But chainedJob needs to be
-					// moved
-					ChainedJob first =
-							new InstanceStateJob(
-									WizardMessages.getFormattedString(STARTING_INSTANCE_TITLE, instance.getName()),
-									instance,
-									DeltaCloudInstance.State.RUNNING);
-					first.setUser(true);
-					ChainedJob last = first;
-					ChainedJob temp;
-					for (int i = 0; i < additionalPages.length; i++) {
-						temp = additionalPages[i].getPerformFinishJob(instance);
-						if (temp != null) {
-							last.setNextJob(temp);
-							last = temp;
-						}
+			if (isProceed()) {
+				warnSshPrivateKey(keyId);
+				instance = cloud.createInstance(name, imageId, realmId, profileId, keyId, memory, storage);
+				if (instance != null) {
+					result = true;
+					if (instance.getState().equals(DeltaCloudInstance.State.PENDING)) {
+						scheduleJobs();
 					}
-					first.schedule();
 				}
 			}
 		} catch (DeltaCloudException ex) {
@@ -162,32 +125,67 @@ public class NewInstanceWizard extends Wizard {
 					WizardMessages.getFormattedString(CREATE_INSTANCE_FAILURE_MSG,
 							new String[] { name, imageId, realmId, profileId }),
 					e, getShell());
-		} else {
-			addToSshPrefs(keyId);
 		}
 
 		return result;
 	}
 
-	private void addToSshPrefs(String keyId) {
+	private void warnSshPrivateKey(String keyId) {
 		try {
-			File pemFile = PemFileManager.getFile(keyId, SshPrivateKeysPreferences.getKeyStorePath());
-			if (pemFile != null) {
-				SshPrivateKeysPreferences.add(pemFile.getName());
+			File file = PemFileManager.getFile(keyId, SshPrivateKeysPreferences.getSshKeyDirectory());
+			boolean isKnowPrivateKey = SshPrivateKeysPreferences.contains(file.getAbsolutePath());
+
+			if (!isKnowPrivateKey) {
+				MessageDialog
+						.openWarning(
+								getShell(),
+								"Instance key is not private key",
+								"The instance key is not a key that's know as private key to the ssh-subsystem. If the instance key is what you need to connect to you instance, you'll have to download it and add it to the private keys in the SSH preferences.");
 			}
-		} catch (DeltaCloudException e) {
-			ErrorUtils.handleError("Error",
-					MessageFormat.format("Could not add key \"{0}\" to ssh preferences", keyId), e, getShell());
+		} catch (FileNotFoundException e) {
+
 		}
 	}
 
-	private String utf8Encode(String string) {
-		try {
-			return URLEncoder.encode(string, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			// TODO: implement proper handling
-			return "";
-		} //$NON-NLS-1$
+	private void scheduleJobs() {
+		ChainedJob first =
+				new InstanceStateJob(
+						WizardMessages.getFormattedString(STARTING_INSTANCE_TITLE, instance.getName()),
+						instance,
+						DeltaCloudInstance.State.RUNNING);
+		first.setUser(true);
+		ChainedJob last = first;
+		ChainedJob temp;
+		for (int i = 0; i < additionalPages.length; i++) {
+			temp = additionalPages[i].getPerformFinishJob(instance);
+			if (temp != null) {
+				last.setNextJob(temp);
+				last = temp;
+			}
+		}
+		first.schedule();
 	}
 
+	private boolean isProceed() {
+		boolean proceed = true;
+		Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
+		boolean dontShowDialog =
+				prefs.getBoolean(IDeltaCloudPreferenceConstants.DONT_CONFIRM_CREATE_INSTANCE, false);
+		if (!dontShowDialog) {
+			MessageDialogWithToggle dialog =
+					MessageDialogWithToggle.openOkCancelConfirm(getShell(),
+							WizardMessages.getString(CONFIRM_CREATE_TITLE),
+							WizardMessages.getString(CONFIRM_CREATE_MSG),
+							WizardMessages.getString(DONT_SHOW_THIS_AGAIN_MSG),
+							false, null, null);
+			proceed = dialog.getReturnCode() == Dialog.OK;
+			boolean toggleState = dialog.getToggleState();
+			// If warning turned off by user, set the preference for future
+			// usage
+			if (toggleState) {
+				prefs.putBoolean(IDeltaCloudPreferenceConstants.DONT_CONFIRM_CREATE_INSTANCE, true);
+			}
+		}
+		return proceed;
+	}
 }

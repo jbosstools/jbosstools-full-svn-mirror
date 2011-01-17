@@ -10,7 +10,12 @@
  ******************************************************************************/
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+
+import org.eclipse.core.runtime.Platform;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
+import org.jboss.tools.deltacloud.core.client.utils.StringUtils;
 import org.jboss.tools.internal.deltacloud.ui.preferences.StringEntriesPreferenceValue;
 import org.jboss.tools.internal.deltacloud.ui.preferences.StringPreferenceValue;
 
@@ -23,10 +28,13 @@ public class SshPrivateKeysPreferences {
 	/**
 	 * Preference keys defined by org.eclipse.jsch.
 	 * 
-	 * these keys are replicates from org.eclipse.jsch.internal.core.IConstants 
+	 * these keys are replicates from org.eclipse.jsch.internal.core.IConstants
 	 */
 	private static final String PRIVATEKEY = "PRIVATEKEY";
 	private static final String SSH2HOME = "SSH2HOME";
+
+	private static final String SSH_USERHOME = ".ssh";
+	private static final String SSH_USERHOME_WIN32 = "ssh";
 
 	private static StringEntriesPreferenceValue sshPrivateKeyPreference =
 			new StringEntriesPreferenceValue(",", PRIVATEKEY, PLUGIN_ID);
@@ -43,6 +51,21 @@ public class SshPrivateKeysPreferences {
 	}
 
 	/**
+	 * Adds the given keyName to the ssh-preferences
+	 * 
+	 * @param keyName
+	 *            the name of the key to add
+	 */
+	public static boolean contains(String keyName) {
+		for (String privateKey : sshPrivateKeyPreference.get()) {
+			if (privateKey.equals(keyName)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
 	 * Removes the given keyName from the ssh-preferences
 	 * 
 	 * @param keyName
@@ -52,17 +75,37 @@ public class SshPrivateKeysPreferences {
 		sshPrivateKeyPreference.remove(keyName);
 	}
 
-	public static String getKeyStorePath() throws DeltaCloudException {
-		// TODO: replace by code that queries the RSE preferences for its key
-		// location setting
-//		String userHomePath = System.getProperty("user.home");
-//		if (userHomePath == null) {
-//			throw new DeltaCloudException("Could not determine path to save pem file to");
-//		}
-//		return new StringBuilder(userHomePath)
-//				.append(File.separatorChar).append(".ssh").append(File.separatorChar)
-//				.toString();
-		return sshHome.get();
+	/**
+	 * Returns the path to the folder that ssh keys get stored to. It either
+	 * gets the preferences value from org.eclipse.jsch or uses a ssh folder in
+	 * the user home. This code was built according to what
+	 * org.eclipse.jsch.internal.core.PreferenceInitializer is doing.
+	 * 
+	 * @return the directory to store or load the ssh keys from
+	 * @throws DeltaCloudException
+	 *             if the directory could not be determined
+	 */
+	public static String getSshKeyDirectory() throws FileNotFoundException {
+		String sshHomePath = sshHome.get();
+		if (StringUtils.isEmpty(sshHomePath)) {
+			sshHomePath = getSshSystemHome();
+		}
+
+		if (StringUtils.isEmpty(sshHomePath)) {
+			throw new FileNotFoundException("Could not determine path to ssh keys directory.");
+		}
+		return sshHomePath;
 	}
 
+	private static String getSshSystemHome() {
+		String userHomePath = System.getProperty("user.home");
+		StringBuilder builder = new StringBuilder(userHomePath);
+		builder.append(File.separatorChar);
+		if (Platform.getOS().equals(Platform.OS_WIN32)) {
+			builder.append(SSH_USERHOME_WIN32); //$NON-NLS-1$
+		} else {
+			builder.append(SSH_USERHOME);
+		}
+		return builder.toString();
+	}
 }

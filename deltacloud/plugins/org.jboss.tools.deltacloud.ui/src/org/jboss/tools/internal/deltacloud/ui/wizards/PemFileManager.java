@@ -27,13 +27,14 @@ public class PemFileManager {
 
 	private static final String PEM_FILE_SUFFIX = "pem";
 
-	public static void delete(DeltaCloudKey key, String keyStorePath) throws DeltaCloudException {
+	public static File delete(DeltaCloudKey key, String keyStorePath) throws DeltaCloudException {
 		try {
 			Assert.isLegal(key != null);
 			Assert.isLegal(keyStorePath != null && keyStorePath.length() > 0);
 
 			File file = getFile(key.getId(), keyStorePath);
 			delete(file);
+			return file;
 		} catch (DeltaCloudException e) {
 			throw e;
 		} catch (Exception e) {
@@ -44,8 +45,8 @@ public class PemFileManager {
 	public static File create(DeltaCloudKey key, String keyStorePath) throws DeltaCloudException {
 		try {
 			Assert.isLegal(key != null);
-			Assert.isLegal(keyStorePath != null && keyStorePath.length() > 0);
-			File keyFile = create(getFile(key.getId(), keyStorePath), keyStorePath);
+			Assert.isLegal(keyStorePath != null && keyStorePath.length() > 0, "key store path is not set.");
+			File keyFile = create(getFile(key.getId(), keyStorePath));
 			save(key.getPem(), keyFile);
 			keyFile.setWritable(false, false);
 			return keyFile;
@@ -62,11 +63,12 @@ public class PemFileManager {
 		}
 	}
 
-	private static File create(File file, String keyStoreLocation)
-			throws IOException {
-		if (!file.exists()) {
-			file.createNewFile();
+	private static File create(File file) throws IOException {
+		if (file.exists()) {
+			throw new IllegalStateException(
+					MessageFormat.format("File \"{0}\" already exists.", file.getAbsolutePath()));
 		}
+		file.createNewFile();
 		file.setReadable(false, false);
 		file.setWritable(true, true);
 		file.setReadable(true, true);
@@ -77,9 +79,14 @@ public class PemFileManager {
 		File keyFile =
 				Path.fromOSString(keyStoreLocation)
 						.append(keyId)
-						.addFileExtension(PEM_FILE_SUFFIX) //$NON-NLS-1$
+						.addFileExtension(PEM_FILE_SUFFIX)
 						.toFile();
 		return keyFile;
+	}
+
+	public static boolean exists(String keyId, String keyStoreLocation) {
+		File file = getFile(keyId, keyStoreLocation);
+		return file != null && file.exists();
 	}
 
 	private static void delete(File file) throws DeltaCloudException {

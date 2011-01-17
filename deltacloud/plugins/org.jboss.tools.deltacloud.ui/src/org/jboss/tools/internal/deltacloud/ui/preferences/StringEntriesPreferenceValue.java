@@ -85,17 +85,21 @@ public class StringEntriesPreferenceValue extends AbstractPreferenceValue<String
 	 *            the values
 	 */
 	public void remove(String... valuesToRemove) {
+		boolean removed = false;
 		String[] currentValues = get();
 		if (valuesToRemove != null) {
 			for (int i = 0; i < currentValues.length; i++) {
 				for (String valueToRemove : valuesToRemove) {
 					if (valueToRemove.equals(currentValues[i])) {
 						currentValues[i] = null;
+						removed = true;
 					}
 				}
 			}
 		}
-		store(currentValues);
+		if (removed) {
+			store(currentValues);
+		}
 	}
 
 	/**
