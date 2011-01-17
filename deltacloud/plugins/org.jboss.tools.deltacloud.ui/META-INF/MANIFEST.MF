@@ -25,4 +25,5 @@ Require-Bundle: org.jboss.tools.common;bundle-version="[3.2.0,4.0.0)",
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Export-Package: org.jboss.tools.deltacloud.ui,
+ org.jboss.tools.deltacloud.ui.wizard,
  org.jboss.tools.internal.deltacloud.ui.utils

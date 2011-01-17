@@ -17,6 +17,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.wizard.WizardPage;
+import org.jboss.tools.deltacloud.ui.wizard.INewInstanceWizardPage;
 
 
 public class DeltacloudUIExtensionManager {

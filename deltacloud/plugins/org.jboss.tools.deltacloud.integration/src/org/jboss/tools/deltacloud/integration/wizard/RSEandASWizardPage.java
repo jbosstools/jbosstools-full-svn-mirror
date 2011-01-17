@@ -36,7 +36,7 @@ import org.jboss.ide.eclipse.as.core.util.IJBossToolingConstants;
 import org.jboss.tools.common.jobs.ChainedJob;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.integration.DeltaCloudIntegrationPlugin;
-import org.jboss.tools.deltacloud.ui.INewInstanceWizardPage;
+import org.jboss.tools.deltacloud.ui.wizard.INewInstanceWizardPage;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 import org.osgi.service.prefs.BackingStoreException;
 

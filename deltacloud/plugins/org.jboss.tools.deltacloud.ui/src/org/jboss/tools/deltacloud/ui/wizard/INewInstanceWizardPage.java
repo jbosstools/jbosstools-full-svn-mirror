@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat Incorporated - initial API and implementation
  *******************************************************************************/
-package org.jboss.tools.deltacloud.ui;
+package org.jboss.tools.deltacloud.ui.wizard;
 
 import org.eclipse.jface.wizard.IWizardPage;
 import org.jboss.tools.common.jobs.ChainedJob;
