@@ -36,7 +36,7 @@ public class DeltaCloudInstanceColumns extends Columns<DeltaCloudInstance> {
 
 					@Override
 					public String getColumnText(DeltaCloudInstance image) {
-						return image.getId();
+						return image.getAlias();
 					}
 				},
 				new Column<DeltaCloudInstance>("STATUS", 20) {
