@@ -1266,6 +1266,12 @@
         	
         	<listitem>
         		<para>
+        			<ulink url="https://issues.jboss.org/browse/TOOLSDOC-134">TOOLSDOC-134</ulink>: Common typographical conventions that were listed at the beginning of each JBoss Developer Studio book have been moved into a seperate book called Document Conventions. JBoss Developer Studio books now link to the Document Conventions book in their preface.
+        		</para>
+        	</listitem>
+
+        	<listitem>
+        		<para>
         			<ulink url="https://issues.jboss.org/browse/JBIDE-7527">JBIDE-7527</ulink>: The the new JBoss Tools Runtime Detection feature provides a way for JBoss runtime components such as jBPM, Drools, JBoss Server and Seam to be discovered when a workspace is created or when Eclipse is started. These runtime components can be found within a user definable list of directories, which can be defined in <menuchoice><guimenuitem>Preferences</guimenuitem><guimenuitem>JBoss Tools</guimenuitem><guimenuitem>JBoss Tools Runtime Detection</guimenuitem></menuchoice>.
         		</para>
         	</listitem>
