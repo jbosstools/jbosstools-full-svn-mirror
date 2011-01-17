@@ -91,6 +91,11 @@ public class StringUtils {
 		return stringValue;
 	}
 
+	public static boolean isEmpty(String stringValue) {
+		return stringValue == null || stringValue.isEmpty();
+	}
+	
+	
 	public static String toString(InputStream inputStream) throws IOException {
 		StringBuilder builder = new StringBuilder();
 		for(int character = -1; (character = inputStream.read()) != -1; ) {
