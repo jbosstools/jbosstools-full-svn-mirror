@@ -894,7 +894,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
       <section id="Collected_usage_information_guide">
 	 <title>Collected usage information guide</title>
 	 <para>
-	    Outlined is the information type being reported and the Goolge Analytics fieds implemented to gather this information.
+	    Below you will find an outline of the information that is reported and the Goolge Analytics fields that are used to gather this information.
 	 </para>
 	 <variablelist>
 	    <varlistentry>
@@ -1000,9 +1000,9 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
  <section id="Support">
   <?dbhtml filename="Support.html"?>
   <title>Support</title>
-  <para>If you have comments or questions, you can discuss them at our <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss
+  <para>If you have comments or questions, you can discuss them on our <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss
     Developer Studio Forum</ulink>.</para>
-  <para>When writing to the forum for questions, please include the following information:</para>
+  <para>When posting questions to the forum, please include the following information:</para>
   <orderedlist>
    <listitem>
     <para>JBoss Developer Studio version</para>
@@ -1015,7 +1015,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
    </listitem>
   </orderedlist>
 
-  <para><property>JBDS</property> subscribers can get necessary support on our <ulink url="https://network.jboss.com/jbossnetwork/login.html">Support Portal</ulink>.</para>
+  <para><property>JBDS</property> subscribers can get additional support on our <ulink url="https://network.jboss.com/jbossnetwork/login.html">Support Portal</ulink>.</para>
  </section>
 
 
