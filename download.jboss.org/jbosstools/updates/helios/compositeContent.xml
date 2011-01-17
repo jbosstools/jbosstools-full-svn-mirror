@@ -10,6 +10,6 @@
 <property name='p2.timestamp' value='1295284436000'/>
 </properties>
 <children size='1'>
-<child location='http://download.jboss.org/jbosstools/updates/requirements/helios/'/>
+<child location='http://download.jboss.org/jbosstools/updates/target-platform/latest/'/>
 </children>
 </repository>
