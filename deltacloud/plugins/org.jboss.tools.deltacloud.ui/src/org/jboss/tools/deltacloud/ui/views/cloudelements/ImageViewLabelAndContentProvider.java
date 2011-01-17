@@ -99,32 +99,36 @@ public class ImageViewLabelAndContentProvider extends AbstractCloudElementViewLa
 	}
 
 	@Override
-	protected void asyncAddCloudElements(final DeltaCloud cloud) {
+	protected void asyncGetCloudElements(final DeltaCloud cloud) {
 		if (cloud == null) {
 			clearTableViewer();
 			return;
 		}
-		new AbstractCloudElementJob(
-				MessageFormat.format("Get images from cloud {0}", cloud.getName()), cloud, CLOUDELEMENT.IMAGES) {
+		if (isCurrentCloud(cloud)) {
+			new AbstractCloudElementJob(
+					MessageFormat.format("Get images from cloud {0}", cloud.getName()), cloud, CLOUDELEMENT.IMAGES) {
 
-			@Override
-			protected IStatus doRun(IProgressMonitor monitor) throws DeltaCloudException {
-				try {
-					addToViewer(cloud.getImages());
-					return Status.OK_STATUS;
-				} catch (DeltaCloudException e) {
-					throw e;
+				@Override
+				protected IStatus doRun(IProgressMonitor monitor) throws DeltaCloudException {
+					try {
+						setCloudElements(cloud.getImages());
+						return Status.OK_STATUS;
+					} catch (DeltaCloudException e) {
+						throw e;
+					}
 				}
-			}
-		}.schedule();
+			}.schedule();
+		}
 	}
 
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
 		if (DeltaCloud.PROP_IMAGES.equals(event.getPropertyName())) {
 			DeltaCloud cloud = (DeltaCloud) event.getSource();
-			DeltaCloudImage[] images = (DeltaCloudImage[]) event.getNewValue();
-			updateCloudElements(images, cloud);
+			if (isCurrentCloud(cloud)) {
+				DeltaCloudImage[] images = (DeltaCloudImage[]) event.getNewValue();
+				setCloudElements(images);
+			}
 		}
 	}
 

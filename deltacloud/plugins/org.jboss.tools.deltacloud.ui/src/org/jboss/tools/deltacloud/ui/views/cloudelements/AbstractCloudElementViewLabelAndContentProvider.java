@@ -11,12 +11,14 @@
 package org.jboss.tools.deltacloud.ui.views.cloudelements;
 
 import java.beans.PropertyChangeListener;
+import java.text.MessageFormat;
+import java.util.Collections;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.jface.viewers.BaseLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.swt.widgets.Display;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.ICloudElementFilter;
@@ -37,25 +39,24 @@ public abstract class AbstractCloudElementViewLabelAndContentProvider<CLOUDELEME
 	private ICloudElementFilter<CLOUDELEMENT> localFilter;
 	private TableViewer viewer;
 
+	private AtomicReference<CLOUDELEMENT[]> elementsReference = new AtomicReference<CLOUDELEMENT[]>();
+
 	@Override
 	public Object[] getElements(Object input) {
-		/*
-		 * items are added in asynchronous manner.
-		 * 
-		 * @see #inputChanged
-		 * 
-		 * @see #asyncAddCloudElements
-		 */
-		return new Object[] {};
-	}
-
-	public void setFilter(ICloudElementFilter<CLOUDELEMENT> filter) {
-		this.localFilter = filter;
+		try {
+			return filter(getFilter(currentCloud), elementsReference.get());
+		} catch (DeltaCloudException e) {
+			ErrorUtils.handleError(
+					"Error", MessageFormat.format(
+							"Could not filter the elements for cloud \"{0}\"", currentCloud.getName()),
+					e, viewer.getControl().getDisplay().getActiveShell());
+			return new Object[] {};
+		}
 	}
 
 	@Override
 	public void inputChanged(final Viewer viewer, Object oldInput, Object newInput) {
-		if (!(newInput instanceof DeltaCloud || newInput != null)) {
+		if (!(newInput instanceof DeltaCloud)) {
 			return;
 		}
 		Assert.isLegal(viewer instanceof TableViewer);
@@ -63,39 +64,53 @@ public abstract class AbstractCloudElementViewLabelAndContentProvider<CLOUDELEME
 		removeListener(currentCloud);
 		this.currentCloud = (DeltaCloud) newInput;
 		addPropertyChangeListener(currentCloud);
-		asyncAddCloudElements(currentCloud);
+		asyncGetCloudElements(currentCloud);
 	}
 
-	protected void updateCloudElements(CLOUDELEMENT[] elements, DeltaCloud cloud) {
-		if (isCurrentCloud(cloud)) {
-			addToViewer(elements);
-		}
+	protected void setCloudElements(CLOUDELEMENT[] elements) {
+		this.elementsReference.set(elements);
+		refreshViewer();
 	}
 
-	private boolean isCurrentCloud(final DeltaCloud cloud) {
+	private void refreshViewer() {
+		viewer.getControl().getDisplay().asyncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				viewer.refresh();
+			}
+		});
+	}
+
+	protected boolean isCurrentCloud(final DeltaCloud cloud) {
 		return cloud != null
 				&& currentCloud != null
 				&& cloud.getName().equals(currentCloud.getName());
 	}
 
-	protected void addToViewer(final CLOUDELEMENT[] cloudElements) {
-		viewer.getControl().getDisplay().asyncExec(new Runnable() {
+	// protected void addToViewer(final CLOUDELEMENT[] cloudElements) {
+	// viewer.getControl().getDisplay().asyncExec(new Runnable() {
+	//
+	// @Override
+	// public void run() {
+	// try {
+	// clearTableViewer();
+	// Object[] elements = filter(getFilter(currentCloud), cloudElements);
+	// viewer.add(elements);
+	// } catch (DeltaCloudException e) {
+	// // TODO: internationalize strings
+	// ErrorUtils.handleError(
+	// "Error", "Could not filter the elements for cloud " +
+	// currentCloud.getName(),
+	// e, Display.getDefault().getActiveShell());
+	//
+	// }
+	// }
+	// });
+	// }
 
-			@Override
-			public void run() {
-				try {
-					clearTableViewer();
-					Object[] elements = filter(getFilter(currentCloud), cloudElements);
-					viewer.add(elements);
-				} catch (DeltaCloudException e) {
-					// TODO: internationalize strings
-					ErrorUtils.handleError(
-							"Error", "Could not filter the elements for cloud " + currentCloud.getName(),
-							e, Display.getDefault().getActiveShell());
-
-				}
-			}
-		});
+	public void setFilter(ICloudElementFilter<CLOUDELEMENT> filter) {
+		this.localFilter = filter;
 	}
 
 	private ICloudElementFilter<CLOUDELEMENT> getFilter(DeltaCloud cloud) {
@@ -130,12 +145,12 @@ public abstract class AbstractCloudElementViewLabelAndContentProvider<CLOUDELEME
 	}
 
 	protected void clearTableViewer() {
-		viewer.refresh();
+		viewer.setInput(Collections.emptyList());
 	}
 
 	protected abstract ICloudElementFilter<CLOUDELEMENT> getCloudFilter(DeltaCloud cloud);
 
-	protected abstract void asyncAddCloudElements(DeltaCloud cloud);
+	protected abstract void asyncGetCloudElements(DeltaCloud cloud);
 
 	protected abstract void addPropertyChangeListener(DeltaCloud cloud);
 }
