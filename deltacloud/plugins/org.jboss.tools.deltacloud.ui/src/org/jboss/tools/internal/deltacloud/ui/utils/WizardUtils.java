@@ -18,7 +18,9 @@ import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.IWizardContainer;
+import org.eclipse.jface.wizard.IWizardPage;
 
 /**
  * @author André Dietisheim
@@ -39,7 +41,7 @@ public class WizardUtils {
 	 *             the invocation target exception
 	 * @throws InterruptedException
 	 *             the interrupted exception
-	 *             
+	 * 
 	 * @author André Dietisheim
 	 */
 	public static void runInWizard(final Job job, IWizardContainer container) throws InvocationTargetException,
@@ -61,5 +63,23 @@ public class WizardUtils {
 				monitor.done();
 			}
 		});
+	}
+
+	/**
+	 * Flips to the next wizard page or finishes the current wizard.
+	 * 
+	 * @param wizardPage
+	 *            the wizard page this call is executed in
+	 */
+	public static void nextPageOrFinish(IWizardPage wizardPage) {
+		IWizard wizard = wizardPage.getWizard();
+		if (wizardPage.canFlipToNextPage()) {
+			IWizardPage nextPage = wizard.getNextPage(wizardPage);
+			wizard.getContainer().showPage(nextPage);
+		} else if (wizard.canFinish()) {
+			if (wizard.performFinish()) {
+				wizard.getContainer().getShell().close();
+			}
+		}
 	}
 }

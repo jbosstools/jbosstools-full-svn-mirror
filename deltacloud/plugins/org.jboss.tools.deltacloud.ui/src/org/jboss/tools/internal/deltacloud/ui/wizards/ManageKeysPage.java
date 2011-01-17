@@ -42,9 +42,11 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.jboss.tools.common.log.StatusFactory;
@@ -266,6 +268,9 @@ public class ManageKeysPage extends WizardPage {
 				BeanProperties.value(ManageKeysPageModel.PROP_SELECTED_KEY).observe(model),
 				new UpdateValueStrategy().setConverter(new Id2KeyConverter()),
 				new UpdateValueStrategy().setConverter(new Key2IdConverter()));
+
+		keyList.addListener(SWT.MouseDoubleClick, onKeyDoubleclick());
+
 		return keyList;
 	}
 
@@ -293,6 +298,16 @@ public class ManageKeysPage extends WizardPage {
 		};
 	}
 
+	private Listener onKeyDoubleclick() {
+		return new Listener() {
+
+			@Override
+			public void handleEvent(Event event) {
+				WizardUtils.nextPageOrFinish(ManageKeysPage.this);
+			}
+		};
+	}
+	
 	private void refreshKeys() {
 		Job job = new AbstractCloudElementJob("Get keys", model.getCloud(), CLOUDELEMENT.KEYS) {
 
