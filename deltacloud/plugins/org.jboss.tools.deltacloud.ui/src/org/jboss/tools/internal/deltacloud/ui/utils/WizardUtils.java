@@ -41,7 +41,7 @@ public class WizardUtils {
 	 *             the invocation target exception
 	 * @throws InterruptedException
 	 *             the interrupted exception
-	 *             
+	 * 
 	 * @author André Dietisheim
 	 */
 	public static void runInWizard(final Job job, IWizardContainer container) throws InvocationTargetException,
@@ -67,16 +67,19 @@ public class WizardUtils {
 
 	/**
 	 * Flips to the next wizard page or finishes the current wizard.
-	 *
-	 * @param wizardPage the wizard page this call is executed in
+	 * 
+	 * @param wizardPage
+	 *            the wizard page this call is executed in
 	 */
 	public static void nextPageOrFinish(IWizardPage wizardPage) {
 		IWizard wizard = wizardPage.getWizard();
 		if (wizardPage.canFlipToNextPage()) {
 			IWizardPage nextPage = wizard.getNextPage(wizardPage);
 			wizard.getContainer().showPage(nextPage);
-		 } else if (wizard.canFinish()) {
-			 wizard.getContainer().getShell().close();
-		 }
+		} else if (wizard.canFinish()) {
+			if (wizard.performFinish()) {
+				wizard.getContainer().getShell().close();
+			}
+		}
 	}
 }
