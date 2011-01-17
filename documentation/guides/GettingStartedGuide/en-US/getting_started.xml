@@ -385,7 +385,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   </figure>
 
 <itemizedlist>
- <listitem><para>You can fill the list automatically using the <emphasis><property>Find</property></emphasis> button: click <emphasis><property>Find</property></emphasis>, select a folder where search of available JBoss Application Servers should be started and click on <emphasis><property>Ok</property></emphasis>: </para> </listitem>
+ <listitem><para>You can fill the list automatically using the <emphasis><property>Find</property></emphasis> button: click <emphasis><property>Find</property></emphasis>, select a folder where search of available JBoss Application Servers should be started and click on <guibutton>OK</guibutton> button: </para> </listitem>
 </itemizedlist>
   
   <figure>
@@ -432,7 +432,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   <para/>
   
   
-  <para>Click on <emphasis><property>Ok</property></emphasis>. The server is added to the list with the details on its type, version and location.</para>
+  <para>Click the <guibutton>OK</guibutton> button. The server is added to the list with the details on its type, version and location.</para>
   
   
   
@@ -636,7 +636,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
  <listitem><para>After clicking the <guibutton>Add</guibutton> button the <property>Add Site</property> View should appear.
   In the <property>Location</property> field you should paste one of the update sites described
   <link linkend="sites">above</link>.On some platforms,
-  you can also drag and drop the link from your browser directly into Eclipse.In <property>Name</property> you can write any name you like.
+  you can also drag and drop the link from your browser directly into Eclipse. In the <property>Name</property> field you can enter any name you like.
   In the end press the <property>OK</property> button.</para>
   <figure>
    <title>Add Update Site</title>
@@ -675,7 +675,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
   <note>
    <title>Note:</title>
    <para>Sometimes when a user changes the list of plugins for download and clicks
-    <emphasis>Next</emphasis>, after required dependences check, 
+    <guibutton>Next</guibutton>, after required dependences check, 
     the list of missing dependencies of the previous attempt is showed. 
     In this case the completely close of the <emphasis>Install New Software</emphasis> dialog can help.</para>
   </note>

@@ -22,11 +22,7 @@
 		&quot;Hello World!&quot; on the page.</para>
 	<para>We&apos;ll assume that you have already launched <property>JBoss Developer
 		Studio</property> and also that the <property>Web Development</property> perspective is the
-		current perspective. If not, make it active by selecting <emphasis>
-			<property>Window &gt; Open Perspective &gt; Web Development</property>
-		</emphasis> from the menu bar or by selecting <emphasis>
-			<property>Window &gt; Open Perspective &gt; Other...</property>
-		</emphasis> from the menu bar and then selecting Web Development from the Select Perspective
+		current perspective. If not, make it active by selecting <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Open Perspective</guimenuitem><guimenuitem>Web Development</guimenuitem></menuchoice> from the menu bar or by selecting <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Open Perspective</guimenuitem><guimenuitem>Other...</guimenuitem></menuchoice> from the menu bar and then selecting Web Development from the Select Perspective
 		dialog box.</para>
 	
 	<section id="SettingUpTheProject">
@@ -37,19 +33,13 @@
 			necessary steps on how to do this.</para>
 		<itemizedlist>
 			<listitem>
-				<para>Go to the menu bar and select <emphasis>
-					<property>File &gt; New &gt; Other...</property>
-				</emphasis></para>
+				<para>Go to the menu bar and select <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>New</guimenuitem><guimenuitem>Other...</guimenuitem></menuchoice></para>
 			</listitem>
 			<listitem>
-				<para>Select <emphasis>
-					<property>Web &gt; Dynamic Web Project</property>
-				</emphasis> in the New Project dialog box</para>
+				<para>Select <menuchoice><guimenuitem>Web</guimenuitem><guimenuitem>Dynamic Web Project</guimenuitem></menuchoice> in the New Project dialog box</para>
 			</listitem>
 			<listitem>
-				<para>Click <emphasis>
-					<property>Next</property>
-				</emphasis>
+				<para>Click the <guibutton>Next</guibutton> button
 				</para>
 			</listitem>
 			<listitem>
@@ -58,9 +48,7 @@
 			<listitem>
 				<para>Then select <emphasis>
 					<property>Minimal Configuration</property>
-				</emphasis> from the list of possible configurations and click <emphasis>
-					<property>Finish</property>
-				</emphasis></para>
+				</emphasis> from the list of possible configurations and click the <guibutton>Finish</guibutton> button.</para>
 			</listitem>
 		</itemizedlist>
 		<figure>
@@ -94,13 +82,10 @@
 			<emphasis>&quot;Hello World!&quot;</emphasis> message.</para>
 		<itemizedlist>
 			<listitem>
-				<para>Right click <emphasis><property>WebContent &gt; New &gt;
-					JSP</property>. </emphasis></para>
+				<para>Right click <menuchoice><guimenuitem>WebContent</guimenuitem><guimenuitem>New</guimenuitem><guimenuitem>JSP</guimenuitem></menuchoice>.</para>
 			</listitem>
 			<listitem>
-				<para>Type &quot;hello.jsp&quot; for a file name and click the <emphasis>
-					<property>Next</property>
-				</emphasis> button.</para>
+				<para>Type &quot;hello.jsp&quot; for a file name and click the <guibutton>Next</guibutton> button.</para>
 			</listitem>
 		</itemizedlist>
 		<para>In the next window you can choose a template for your jsp page and see its preview.</para>
@@ -108,9 +93,7 @@
 			<listitem>
 				<para>Select <emphasis>
 					<property>New JSP File (xhtml)</property>
-				</emphasis> template and click <emphasis>
-					<property>Finish</property>
-				</emphasis> button.</para>
+				</emphasis> template and click the <guibutton>Finish</guibutton> button.</para>
 			</listitem>
 		</itemizedlist>
 		<figure>
@@ -226,10 +209,8 @@
 				<para>Project archives managing is available through Project Archives view.</para>
 				<itemizedlist>
 					<listitem>
-						<para>Select <emphasis>
-							<property>Window &gt; Show view &gt; Other &gt; JBoss
-								Tools &gt; Project archives</property>
-						</emphasis> from menu bar</para>
+						<para>Select <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Show view</guimenuitem><guimenuitem>Other</guimenuitem><guimenuitem>JBoss
+								Tools</guimenuitem><guimenuitem>Project archives</guimenuitem></menuchoice> from the menu bar</para>
 					</listitem>
 					<listitem>
 						<para>Select a project in Package Explorer you want to be archived</para>
@@ -267,9 +248,7 @@
 				</figure>
 				<itemizedlist>
 					<listitem>
-						<para>Click <emphasis>
-							<property>Next</property>
-						</emphasis> to see a stub archive configuration for your project: <figure>
+						<para>Click the <guibutton>Next</guibutton> button to see a stub archive configuration for your project: <figure>
 							<title>Stub Archive Configuration</title>
 							<mediaobject>
 								<imageobject>
@@ -282,8 +261,7 @@
 						</para>
 					</listitem>
 					<listitem>
-						<para>Click <emphasis>
-							<property>Finish</property>. </emphasis> The
+						<para>Click the <guibutton>Finish</guibutton> button. The
 							<emphasis>.war</emphasis> file will appear in <property>Package
 								Explorer</property> and also in <property>Project Archives</property>
 							view as structure tree: <figure>

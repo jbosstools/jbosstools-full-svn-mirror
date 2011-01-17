@@ -35,12 +35,7 @@
             project wizard and predefined templates. Follow the next steps:</para>
 		<itemizedlist>
 			<listitem>
-				<para>In Web Projects (if it is not open select <emphasis>
-                        <property>Window &gt; Show View &gt; Others &gt; JBoss Tools Web
-                            &gt; Web Projects</property>
-					</emphasis>) click <emphasis>
-                        <property>Create New JSF Project</property>
-					</emphasis> button. <figure>
+				<para>In Web Projects (if it is not open select <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Show View</guimenuitem><guimenuitem>Others</guimenuitem><guimenuitem>JBoss Tools Web</guimenuitem><guimenuitem>Web Projects</guimenuitem></menuchoice>) click <guibutton>Create New JSF Project</guibutton> button. <figure>
                         <title>Create New JSF Project</title>
 						<mediaobject>
 							<imageobject>
@@ -57,15 +52,13 @@
 				</para>
 			</listitem>
 			<listitem>
-				<para>Leave everything else as it is and click <emphasis>
-                        <property>Finish</property>
-					</emphasis>
+				<para>Leave everything else as it is and click the <guibutton>Finish</guibutton> button
 				</para>
 			</listitem>
 		</itemizedlist>
 		<para>Our project will appear in Project Explorer and Web Projects. As you can see
             JBoss Developer Studio has created for us the whole skeleton for the project with all
-            needed libraries, faces-config.xml and web.xml files.</para>
+            needed libraries, <filename>faces-config.xml</filename> and <filename>web.xml</filename> files.</para>
 		<figure>
 			<title>New JSF Project</title>
 			<mediaobject>
@@ -90,7 +83,7 @@
 		<para>Now, we will guide you through the steps on how to do this.</para>
 		<itemizedlist>
 			<listitem>
-				<para>First a folder called <filename>pages</filename> needs to be created under the <filename>WebContent</filename> folder. To do this right click on the <filename>WebContent</filename> folder in the Package Explorer view and select New > Folder. Set the <guilabel>Folder Name</guilabel> to <filename>pages</filename> and click the <guibutton>Finish</guibutton> button.</para>
+				<para>First a folder called <filename>pages</filename> needs to be created under the <filename>WebContent</filename> folder. To do this right click on the <filename>WebContent</filename> folder in the Package Explorer view and select <menuchoice><guimenuitem>New</guimenuitem><guimenuitem>Folder</guimenuitem></menuchoice>. Set the <guilabel>Folder Name</guilabel> to <filename>pages</filename> and click the <guibutton>Finish</guibutton> button.</para>
 				<para>
 					<figure>
 						<title>Create pages folder</title>
@@ -133,10 +126,7 @@
 				</para>
 			</listitem>
 			<listitem>
-				<para>Leave everything else as is and click <emphasis>
-                        <property>Finish</property>
-					</emphasis>
-				</para>
+				<para>Leave everything else as is and click the <guibutton>Finish</guibutton> button</para>
 			</listitem>
 			<listitem>
 				<para>In the same way create another jsf view. Type <emphasis>
@@ -147,9 +137,7 @@
 				</para>
 			</listitem>
 			<listitem>
-				<para>Select <emphasis>
-                        <property>File &gt; Save</property>
-					</emphasis>
+				<para>Select <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>Save</guimenuitem></menuchoice>
 				</para>
 			</listitem>
 		</itemizedlist>
@@ -202,9 +190,7 @@
 		</figure>
 		<itemizedlist>
 			<listitem>
-				<para>Select <emphasis>
-                        <property>File &gt; Save</property>
-					</emphasis> from the menu bar</para>
+				<para>Select <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>Save</guimenuitem></menuchoice> from the menu bar</para>
 			</listitem>
 		</itemizedlist>
 	</section>
@@ -229,17 +215,13 @@
 			<listitem>
 				<para>Right click <emphasis>
                         <property>JavaSource</property>
-					</emphasis> folder and select <emphasis>
-                        <property>New &gt; Folder</property>
-					</emphasis>
+					</emphasis> folder and select <menuchoice><guimenuitem>New</guimenuitem><guimenuitem>Folder</guimenuitem></menuchoice>
 				</para>
 			</listitem>
 			<listitem>
 				<para>Type <emphasis>
                         <property>game</property>
-					</emphasis> for Folder name and click <emphasis>
-                        <property>Finish</property>
-					</emphasis>
+					</emphasis> for Folder name and click the <guibutton>Finish</guibutton> button
 				</para>
 			</listitem>
 		</itemizedlist>
@@ -248,17 +230,12 @@
 			<listitem>
 				<para>Right click on <emphasis>
                         <property>game folder</property>
-					</emphasis> and select <emphasis>
-                        <property>New &gt; Properties File</property>
-					</emphasis>
+					</emphasis> and select <menuchoice><guimenuitem>New</guimenuitem><guimenuitem>Properties File</guimenuitem></menuchoice>
 				</para>
 			</listitem>
 			<listitem>
-				<para>Type <emphasis>
-                        <property>messages</property>
-					</emphasis> as the value for &quot;name&quot; attribute and click <emphasis>
-                        <property>Finish</property>
-					</emphasis>
+				<para>
+					Type <emphasis><property>messages</property></emphasis> as the value for &quot;name&quot; attribute and click the <guibutton>Finish</guibutton> button
 				</para>
 			</listitem>
 		</itemizedlist>
@@ -274,9 +251,7 @@
 		</figure>
 		<itemizedlist>
 			<listitem>
-				<para>Click <emphasis>
-                        <property>Add</property>
-					</emphasis> button for adding new attribute to your resource file</para>
+				<para>Click the <guibutton>Add</guibutton> button for adding new attribute to your resource file</para>
 			</listitem>
 			<listitem>
 				<para>Type <emphasis role="italic">
@@ -286,9 +261,7 @@
 					</emphasis> for value</para>
 			</listitem>
 			<listitem>
-				<para>Click <emphasis>
-                        <property>Finish</property>
-					</emphasis>
+				<para>Click the <guibutton>Finish</guibutton> button
 				</para>
 			</listitem>
 			<listitem>
@@ -303,9 +276,7 @@ tryagain_bigger=Oops..incorrect guess. Please try a bigger number.
 ]]></programlisting>
 		<itemizedlist>
 			<listitem>
-				<para>Click <emphasis>
-                        <property>File &gt; Save</property>
-					</emphasis> from the menu bar</para>
+				<para>Click <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>Save</guimenuitem></menuchoice> from the menu bar</para>
 			</listitem>
 		</itemizedlist>
 		<para>Your .properties file should now look like follows:</para>
@@ -318,17 +289,8 @@ tryagain_bigger=Oops..incorrect guess. Please try a bigger number.
 			</mediaobject>
 		</figure>
 		<para>
-			<emphasis>
-				<property>Up</property>
-			</emphasis>
-            and <emphasis>
-                <property>Down</property>
-			</emphasis> buttons allow you to move you attribute on the list. For delete the attribute, choose it and press <emphasis>
-                <property>Delete</property>
-			</emphasis> button.</para>
-		<para>If you want to change a value or a name of your attribute, click on it and than on <emphasis>
-            <property>Edit</property>
-			</emphasis> button.</para>
+				The <guibutton>Up</guibutton> and <guibutton>Down</guibutton> buttons allow you to move you attribute on the list. For delete the attribute, choose it and press the <guibutton>Delete</guibutton> button.</para>
+		<para>If you want to change a value or a name of your attribute, click on it and then click the <guibutton>Edit</guibutton> button.</para>
 
 		<para>If the .properties file is rather big and there are a lot of entries in it, you can use filtering and regular expressions to find the necessary ones. The Filter and Regular Expressions Search is implemented by an expandable panel, closed by default: </para>
 		<para>When "Expression" is not selected (as by default), filter is case insensitive. When "Expression" is selected, filter uses regular expressions which are case sensitive</para>
@@ -369,10 +331,7 @@ tryagain_bigger=Oops..incorrect guess. Please try a bigger number.
 				</para>
 			</listitem>
 			<listitem>
-				<para>Select <emphasis>
-                        <property>New &gt; Class</property>
-					</emphasis>
-				</para>
+				<para>Select <menuchoice><guimenuitem>New</guimenuitem><guimenuitem>Class</guimenuitem></menuchoice></para>
 			</listitem>
 			<listitem>
 				<para>Type <emphasis>
@@ -396,17 +355,13 @@ tryagain_bigger=Oops..incorrect guess. Please try a bigger number.
 					</emphasis> in Package Explorer</para>
 			</listitem>
 			<listitem>
-				<para>Select <emphasis>
-                        <property>Source &gt; Generate Getters and Setters...</property>
-					</emphasis>
+				<para>Select <menuchoice><guimenuitem>Source</guimenuitem><guimenuitem>Generate Getters and Setters...</guimenuitem></menuchoice>
 				</para>
 			</listitem>
 			<listitem>
 				<para>Check <emphasis>
                         <property>userNumber</property>
-					</emphasis> box and click <emphasis>
-                        <property>OK</property>
-					</emphasis>
+					</emphasis> box and click the <guibutton>OK</guibutton> button
 					<figure>
 						<title>Generate Getters and Setters</title>
 						<mediaobject>
@@ -553,11 +508,11 @@ public class NumberBean
 	<section id="EditingFacesConfig">
 		<?dbhtml filename="EditingFacesConfig.html"?>
 		<title>Editing faces-config.xml File</title>
-		<para>In this section you know about faces-config.xml file.</para>
+		<para>In this section you know about <filename>faces-config.xml</filename> file.</para>
 		<para>This file holds two navigation rules and defines the backing bean used.</para>
 		<itemizedlist>
 			<listitem>
-				<para>Open faces-config.xml file in a source mode</para>
+				<para>Open <filename>faces-config.xml</filename> file in a source mode</para>
 			</listitem>
 			<listitem>
 				<para>Add here one more navigation rule and a managed bean declarations that the
@@ -615,14 +570,12 @@ public class NumberBean
 		<section id="EditingInputjsp">
 			<?dbhtml filename="EditingInputjsp.html"?>
 			<title>Editing inputnumber.jsp page</title>
-			<para>First, let&apos;s dwell on how to edit inputnumber.jsp.</para>
+			<para>First, let&apos;s dwell on how to edit <filename>inputnumber.jsp</filename>.</para>
 			<para>On this page we will have an output text component displaying a message, a text
                 field for user&apos;s number entering and a button for input submission.</para>
 			<itemizedlist>
 				<listitem>
-					<para>Open inputnumber.jsp by double-clicking on the <emphasis>
-                            <property>/pages/inputnumber. jsp</property>
-						</emphasis> icon</para>
+					<para>Open <filename>inputnumber.jsp</filename> by double-clicking on the <filename>/pages/inputnumber. jsp</filename> icon</para>
 				</listitem>
 			</itemizedlist>
 			<para>The Visual Page Editor will open in a screen split between source code along the
@@ -672,9 +625,7 @@ public class NumberBean
 				<listitem>
 					<para>Type <emphasis>
                             <property>inputNumbers</property>
-						</emphasis> and click <emphasis>
-                            <property>Finish</property>
-						</emphasis>
+						</emphasis> and click the <guibutton>Finish</guibutton> button
 					</para>
 				</listitem>
 			</itemizedlist>
@@ -687,7 +638,7 @@ public class NumberBean
 					</imageobject>
 				</mediaobject>
 			</figure>
-			<para>First let&apos;s declare the properties file in inputnumber.jsp page using the
+			<para>First let&apos;s declare the properties file in the <filename>inputnumber.jsp</filename> page using the
                 loadBundle JSF tag.</para>
 			<itemizedlist>
 				<listitem>
@@ -719,7 +670,7 @@ public class NumberBean
 					<para>Select the second column in the <property>value</property> row.</para>
 				</listitem>
 				<listitem>
-					<para>Click <property>...</property> button next to the value field</para>
+					<para>Click the <guibutton>...</guibutton> button next to the value field</para>
 				</listitem>
 			</itemizedlist>
 			<para>JBDS will nicely propose you to choose within available values:</para>
@@ -733,9 +684,7 @@ public class NumberBean
 			</figure>
 			<itemizedlist>
 				<listitem>
-					<para>Expand <emphasis>
-                            <property>Resource Bundles &gt; msg</property>
-						</emphasis>
+					<para>Expand <menuchoice><guimenuitem>Resource Bundles</guimenuitem><guimenuitem>msg</guimenuitem></menuchoice> 
 					</para>
 				</listitem>
 				<listitem>
@@ -771,9 +720,7 @@ public class NumberBean
                          component to make a new line.</para>
 				</listitem>
 				<listitem>
-					<para>Click <emphasis>
-                            <property>Save</property>
-						</emphasis> button.</para>
+					<para>Click the <guibutton>Save</guibutton> button.</para>
 				</listitem>
 				<listitem>
 					<para>On the Palette click on <emphasis>
@@ -788,9 +735,7 @@ public class NumberBean
                         component to make a new line</para>
 				</listitem>
 				<listitem>
-					<para>Click <emphasis>
-                            <property>Save</property>
-						</emphasis> button</para>
+					<para>Click the <guibutton>Save</guibutton> button</para>
 				</listitem>
 				<listitem>
 					<para>On the Palette click on <emphasis>
@@ -804,20 +749,16 @@ public class NumberBean
                     header</para>
 				</listitem>
 				<listitem>
-					<para>Click <property>...</property> button next to the value field</para>
+					<para>Click the <guibutton>...</guibutton> button next to the value field</para>
 				</listitem>
 				<listitem>
-					<para>Expand <emphasis>
-                            <property>Managed Beans &gt; NumberBean</property>
-						</emphasis>
+					<para>Expand <menuchoice><guimenuitem>Managed Beans</guimenuitem><guimenuitem>NumberBean</guimenuitem></menuchoice> 				
 					</para>
 				</listitem>
 				<listitem>
 					<para>Select <emphasis>
                             <property>userNumber</property>
-						</emphasis> value and click <emphasis>
-                            <property>Ok</property>
-						</emphasis>
+						</emphasis> value and click the <guibutton>OK</guibutton> button
 					</para>
 				</listitem>
 				<listitem>
@@ -843,7 +784,7 @@ public class NumberBean
                     header</para>
 				</listitem>
 				<listitem>
-					<para>Click <property>...</property> button next to the value field</para>
+					<para>Click <guibutton>...</guibutton> button next to the value field</para>
 				</listitem>
 				<listitem>
 					<para>Expand <emphasis>
@@ -863,10 +804,8 @@ public class NumberBean
 			</figure>
 			<itemizedlist>
 				<listitem>
-					<para>Click <emphasis>
-                            <property>Ok</property>, </emphasis> then click <emphasis>
-                            <property>Finish</property>
-						</emphasis>
+					<para>Click the <guibutton>OK</guibutton> button, then click the <guibutton>Finish</guibutton> button
+
 					</para>
 				</listitem>
 				<listitem>
@@ -884,9 +823,7 @@ public class NumberBean
 ]]></programlisting>
 			<itemizedlist>
 				<listitem>
-					<para>Click <emphasis>
-                            <property>Save</property>
-						</emphasis> button</para>
+					<para>Click the <guibutton>Save</guibutton> button</para>
 				</listitem>
 				<listitem>
 					<para>Again select <emphasis>
@@ -906,19 +843,15 @@ public class NumberBean
                     header</para>
 				</listitem>
 				<listitem>
-					<para>Click <property>...</property> button next to the value field</para>
+					<para>Click <guibutton>...</guibutton> button next to the value field</para>
 				</listitem>
 				<listitem>
-					<para>Expand <emphasis>
-                            <property>Resource Bundles &gt; msg</property>
-						</emphasis> and select <emphasis>
+					<para>Expand <menuchoice><guimenuitem>Resource Bundles</guimenuitem><guimenuitem>msg</guimenuitem></menuchoice> and select <emphasis>
                             <property>makeguess_button</property>
 						</emphasis> as a value</para>
 				</listitem>
 				<listitem>
-					<para>Click <emphasis>
-                            <property>Ok</property>
-						</emphasis>
+					<para>Click the <guibutton>OK</guibutton> button
 					</para>
 				</listitem>
 				<listitem>
@@ -930,12 +863,10 @@ public class NumberBean
 				<listitem>
 					<para>Type <emphasis>
                             <property>#{NumberBean.checkGuess}</property>
-						</emphasis> in text field</para>
+						</emphasis> in the text field</para>
 				</listitem>
 				<listitem>
-					<para>Click <emphasis>
-                            <property>Finish</property>
-						</emphasis>
+					<para>Click the <guibutton>Finish</guibutton> button
 					</para>
 				</listitem>
 				<listitem>
@@ -948,7 +879,7 @@ public class NumberBean
                          components to place them on different lines</para>
 				</listitem>
 			</itemizedlist>
-			<para>inputnumber.jsp page should look like this:</para>
+			<para><filename>inputnumber.jsp</filename> page should look like this:</para>
 			<programlisting role="XML"><![CDATA[<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="f"  uri="http://java.sun.com/jsf/core"%>
 <%@ taglib prefix="h"  uri="http://java.sun.com/jsf/html"%>
@@ -981,7 +912,7 @@ public class NumberBean
 		<section id="EditingSuccessJsp">
 			<?dbhtml filename="EditingSuccessJsp.html"?>
 			<title>Editing success.jsp page</title>
-			<para>In the same way like inputnumber.jsp, edit success.jsp page. Its whole source
+			<para>In the same way like <filename>inputnumber.jsp</filename>, edit <filename>success.jsp</filename> page. Its whole source
                 should be the next:</para>
 			<programlisting role="XML"><![CDATA[<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h" %>
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f" %>
@@ -1016,7 +947,7 @@ public class NumberBean
 					</imageobject>
 				</mediaobject>
 			</figure>
-			<para>This page, success.jsp, is shown if you correctly guessed the number. The
+			<para>This page, <filename>success.jsp</filename>, is shown if you correctly guessed the number. The
                 <code>&lt;h:outputFormat&gt;</code>
                 tag will get the value of success_text from the properties file. The {0}
                 in success_text will be substituted for by the value of the value attribute within
@@ -1044,14 +975,12 @@ public class NumberBean
 	<section id="CreatingIndexjsp">
 		<?dbhtml filename="CreatingIndexjsp.html"?>
 		<title>Creating index.jsp page</title>
-		<para>Now you know how to create index.jsp page.</para>
-		<para>The index.jsp page is the entry point of our application. It&apos;s just
-            forwarding to inputnumber.jsp page.</para>
+		<para>Now you know how to create <filename>index.jsp</filename> page.</para>
+		<para>The <filename>index.jsp</filename> page is the entry point of our application. It&apos;s just
+            forwarding to <filename>inputnumber.jsp</filename> page.</para>
 		<itemizedlist>
 			<listitem>
-				<para>Right click <emphasis>
-                        <property>WebContent &gt; New &gt; JSP File</property>
-					</emphasis>
+				<para>Right click <menuchoice><guimenuitem>WebContent</guimenuitem><guimenuitem>New</guimenuitem><guimenuitem>JSP File</guimenuitem></menuchoice>
 				</para>
 			</listitem>
 			<listitem>
@@ -1074,7 +1003,7 @@ public class NumberBean
 ]]></programlisting>
 		<para>Note the <emphasis>.jsf</emphasis> extension of a page. It means that we trigger the
             JSF controller servlet to handle the page according the servlet mapping in the
-            faces-config.xml file.</para>
+            <filename>faces-config.xml</filename> file.</para>
 	</section>
 	<section id="RunningTheApplication33">
 		<?dbhtml filename="RunningTheApplication33.html"?>
@@ -1082,17 +1011,10 @@ public class NumberBean
 		<para>Finally, we have all the pieces needed to run the application.</para>
 		<itemizedlist>
 			<listitem>
-				<para>Start up JBoss server by clicking on the <emphasis>
-                        <property>Start</property>
-					</emphasis> icon in <property>Servers</property>. (If JBoss is already running, stop it by
-                    clicking on the red icon and then start it again. After the messages in the
-                    Console tabbed view stop scrolling, JBoss is available)</para>
+				<para>Start up JBoss server by clicking on the the <guibutton>Start</guibutton> icon in the <property>Servers</property> view. (If JBoss is already running, stop it by clicking on the red icon and then start it again. After the messages in the Console tabbed view stop scrolling, JBoss is available)</para>
 			</listitem>
 			<listitem>
-				<para>Right-click on project <emphasis>
-                        <property>Run AS &gt; Run on Server</property>
-					</emphasis>
-				</para>
+				<para>Right-click on project <menuchoice><guimenuitem>Run AS</guimenuitem><guimenuitem>Run on Server</guimenuitem></menuchoice></para>
 			</listitem>
 			<listitem>
 				<para>Play with the application by entering correct as well as incorrect
