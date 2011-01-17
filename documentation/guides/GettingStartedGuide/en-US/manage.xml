@@ -20,8 +20,7 @@
             Developer Studio</property>, you should already have a JBoss EAP 5.1 Server installed and defined. To run JBoss AS you need you will need to have JDK 6 installed.</para>
 	<note>
 		<title>Note:</title>
-		<para>You can leave  <property>JDK 1.5</property> configuration for <property>JBDS</property> and set <property>JDK 6</property> as <property>JRE</property> only for <property>JBoss EAP Server</property>. For this you need on <emphasis><property>Windows > Preferences</property>
-			</emphasis> menu click <menuchoice><guimenuitem>Server</guimenuitem><guimenuitem>Runtime Environments</guimenuitem></menuchoice>. On the opened preference page you should select <property>JBoss EAP Runtime</property> and click <property>Edit</property>. In <property>Edit Server Runtime Environment</property> dialog you can configure <property>Jave Runtime Environment</property> by clicking <property>JRE</property> button.   </para>
+		<para>You can leave  <property>JDK 1.5</property> configuration for <property>JBDS</property> and set <property>JDK 6</property> as <property>JRE</property> only for <property>JBoss EAP Server</property>. For this you need to select <menuchoice><guimenuitem>Windows</guimenuitem><guimenuitem>Preferences</guimenuitem></menuchoice>, and then click <menuchoice><guimenuitem>Server</guimenuitem><guimenuitem>Runtime Environments</guimenuitem></menuchoice>. On the opened preference page you should select <property>JBoss EAP Runtime</property> and click <property>Edit</property>. In <property>Edit Server Runtime Environment</property> dialog you can configure <property>Jave Runtime Environment</property> by clicking <property>JRE</property> button.   </para>
 	</note>
 
 	<section id="JBossbundled">
@@ -53,12 +52,7 @@
 				<listitem>
 					<para>To launch the server click the green-with-white-arrow icon on the
                             <property>Servers</property> or right click server name in
-                        this view and select <emphasis>
-                            <property>Start</property>
-						</emphasis>. If this view is not open, select <emphasis>
-                            <property>Window &gt; Show View &gt; Other &gt; Server
-                                &gt; Servers</property>
-						</emphasis>
+                        this view and click the <guibutton>Start</guibutton> button. If this view is not open, select <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Show View</guimenuitem><guimenuitem>Other</guimenuitem><guimenuitem>Server</guimenuitem><guimenuitem>Servers</guimenuitem></menuchoice>
 					</para>
 				</listitem>
 			</itemizedlist>
@@ -208,9 +202,7 @@
 					</para>
 				</listitem>
 				<listitem>
-					<para>Select <emphasis>
-                            <property>JBoss Community &gt; JBoss 4.2 Server</property>
-						</emphasis>
+					<para>Select <menuchoice><guimenuitem>JBoss Community</guimenuitem><guimenuitem>JBoss 4.2 Server</guimenuitem></menuchoice>
 					</para>
 				</listitem>
 			</itemizedlist>
@@ -282,9 +274,7 @@
 			<itemizedlist>
 				<listitem>
 					<para>In the last wizard&apos;s dialog modify the projects that are
-                        configured on the server and click <emphasis>
-                            <property>Finish</property>
-						</emphasis>.</para>
+                        configured on the server and click the <guibutton>Finish</guibutton> button.</para>
 				</listitem>
 			</itemizedlist>
 			<figure>
