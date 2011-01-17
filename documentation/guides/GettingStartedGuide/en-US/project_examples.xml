@@ -44,10 +44,10 @@
         <para>When the <property>Add</property> button is pressed the
             <property>Add Project Example Site</property> dialog is displayed. The dialog contains 2 
             input fields: <property>Name</property> where you need to specify the name of the new entry and <property>URL</property> 
-           that has to point to the xml file that contains example project(s) properties. 
-           In more detail the structure of the xml file is discussed further in the chapter of the guide.
-           Alternatively, if the xml is stored on your local machine, you can hit the <property>Browse</property> button to select the file in the file system.</para>
-        <para>Here is an example of the xml file that holds  project example settings:</para>
+           that has to point to the XML file that contains example project(s) properties. 
+           The structure of the XML file is discussed in more detail in a later chapter of this guide.
+           Alternatively, if the XML is stored on your local machine, you can hit the <property>Browse</property> button to select the file in the file system.</para>
+        <para>Here is an example of the XML file that holds  project example settings:</para>
     
     <programlisting role="XML"><![CDATA[<projects>
     <project>
