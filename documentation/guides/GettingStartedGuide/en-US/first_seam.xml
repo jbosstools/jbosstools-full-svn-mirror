@@ -9,19 +9,18 @@
     </keywordset>
   </chapterinfo>
   <title>Write Your First Project with JBoss Developer Studio</title>
-  <para>This chapter is a set of hands-on labs. You get step-by-step information about how the JBoss
+  <para>This chapter is a set of hands-on labs. You get step-by-step information about how JBoss
     Developer Studio can be used during the development process.</para>
   <section id="create_seam_application">
     <title>Create a Seam Application</title>
-    <para>In this section you get to know how to create a Seam project in JBDS, how to start the
-      server and what a structure your project has after creating.</para>
+    <para>In this section you will learn how to create a Seam project in JBDS, how to start the
+      server and what structure your project has after it is created.</para>
     <section id="start_dev_db">
       <title>Start Development Database</title>
-      <para>Before opening the JBoss Developer studio you need to download and start <ulink
+      <para>Before opening the JBoss Developer studio you need to download and start the <ulink
           url="http://docs.jboss.org/tools/resources/GSG_database.zip">Workshop Database</ulink>
         .</para>
-      <para>To start the database just run <property>./runDBServer.sh</property> or <property
-          >runDBServer.bat</property> from the database directory.</para>
+      <para>To start the database just run <filename>./runDBServer.sh</filename> or <filename>runDBServer.bat</filename> from the database directory.</para>
       <para>The end result should be a console window that looks like:</para>
       <figure>
         <title>Starting DataBase</title>
@@ -33,15 +32,15 @@
       </figure>
       <note>
       	<title>Tip</title>
-      	<para>You may need to set the runDBServer.sh executable flag with the following command:</para>
+      	<para>You may need to set the <filename>runDBServer.sh</filename> executable flag with the following command:</para>
       	<screen>chmod +x runDBServer.sh</screen>
       </note>
     </section>
     <section id="create_deploy_seam">
       <title>Create and deploy Seam Web Project</title>
-      <para>Minimize the terminal window and run the <property>JBoss Developer Studio</property>
+      <para>Minimize the terminal window and run <property>JBoss Developer Studio</property>
         from Applications Menu or from the desktop icon.</para>
-      <para>First of all you get the Workspace Launcher. Change the default workspace location if
+      <para>First you will see the Workspace Launcher. Change the default workspace location if
         it's needed. Click the <guibutton>OK</guibutton> button. </para>
       <figure>
         <title>Workspace Launcher Dialog</title>
@@ -52,14 +51,14 @@
         </mediaobject>
       </figure>
       <para>After startup, you see the welcome page. You could read how to work with welcome pages
-        in <link linkend="Welcome">previous</link> chapter. Now select <property>Create
-          New...</property> icon and then press on <property>Create Seam Project</property>
+        in <link linkend="Welcome">previous</link> chapter. Now select <guibutton>Create
+          New...</guibutton> icon and then press on <guibutton>Create Seam Project</guibutton>
         link.</para>
       <para>The <property>New Seam Project wizard</property> is started. You need to enter a name
-        (e.g., &quot;workshop&quot;) and a location directory for your new project. The wizard has
+        (e.g., &quot;workshop&quot;) and a location for your new project. The wizard has
         an option for selecting the actual Server (and not just WTP runtime) that will be used for
-        the project. This allows the wizard to correctly identify where the needed datasource and
-        driver libraries need to go.</para>
+        the project. This allows the wizard to correctly identify where the desitination folder for the required datasource and
+        driver libraries.</para>
       <figure>
         <title>New Seam Project Wizard</title>
         <mediaobject>
@@ -69,9 +68,7 @@
         </mediaobject>
       </figure>
       <para>All settings are already specified here, you can just modify the Configuration. Click on
-        the <emphasis>
-          <property>Modify...</property>
-        </emphasis> button to configure your custom facets pattern:</para>
+        the <guibutton>Modify...</guibutton> button to configure your custom facet options:</para>
       <figure id="ProjectFacetsSpecifyingScreen">
         <title>Project Facets Specifying</title>
         <mediaobject>
@@ -81,7 +78,7 @@
         </mediaobject>
       </figure>
       <para>On the whole the dialog allows to select the "features" you want to use in your project.
-        Doing this <property>JBoss Developer Studio</property> setups the appropriate tooling for
+        <property>JBoss Developer Studio</property> will then setup the appropriate tooling for
         your project. Since JBoss Seam integrates all popular Java EE frameworks, you can select any
         combination of technologies from the list. Here, for the default configuration, Dynamic Web
         Module, Java, JavaServer Faces (JSF), and Seam Facet are already selected for a typical
@@ -97,7 +94,7 @@
           </imageobject>
         </mediaobject>
       </figure>
-      <para>Click the <guibutton>OK</guibutton> and then the <guibutton>Next</guibutton> button to proceed further.</para>
+      <para>Click the <guibutton>OK</guibutton> and then the <guibutton>Next</guibutton> button to proceed to the next step.</para>
       <para>A dynamic web application contains both web pages and <property>Java</property> code.
         The next wizard will ask you where you want to store Java files.</para>
       <figure>
@@ -153,11 +150,11 @@
           </imageobject>
         </mediaobject>
       </figure>
-      <para>Next <property>Database</property> section is a little tricky. The <property>Connection
+      <para>The <property>Database</property> section is a little tricky. The <property>Connection
           Profile</property> needs to be edited so that the new project works properly with the
         external HSQLDB server. By default the project wizard tries to use the JBoss embedded
         HSQLDB, but the tutorial uses an external database to replicate a more real world
-        development scenario. Click on <property>Edit</property> to modify the Connection
+        development scenario. Click on the <guibutton>Edit</guibutton> button to modify the Connection
         Profile.</para>
       <figure>
         <title>DataBase Setting</title>
@@ -179,8 +176,8 @@
           </imageobject>
         </mediaobject>
       </figure>
-      <para>Try click on <property>Test Connection</property> button. It probably won’t work. This
-        happens if the hsql jdbc driver is not exactly the same. This can be worked around by
+      <para>Click the <guibutton>Test Connection</guibutton> button. At this point it probably won’t work. This
+        happens if the HSQL JDBC driver is not exactly the same. This can be solved by
         modifying the HSQLDB database driver settings. To modify the settings, click the <guibutton>Edit Driver Definition Driver</guibutton> button.
       </para>
       <figure>
@@ -192,7 +189,7 @@
         </mediaobject>
       </figure>
       <para>The proper Driver JAR File should be listed under <property>Jar List</property>. Select
-        the hsqldb.jar file found in the <filename>jbdevstudio/jboss-eap/jboss-as/common/lib/</filename> directory and
+        the <filename>hsqldb.jar</filename> file found in the <filename>jbdevstudio/jboss-eap/jboss-as/common/lib/</filename> directory and
         click the <guibutton>OK</guibutton> button.</para>
       <figure>
         <title>Driver Details</title>

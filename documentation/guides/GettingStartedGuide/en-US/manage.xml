@@ -16,11 +16,10 @@
 	<para>In this chapter we&apos;ll focus more on how to operate the <property>JBoss
             AS</property> from <property>JBoss Developer Studio</property>.</para>
 	<para>
-		<property>JBoss Developer Studio 4.0.0.GA</property> is shipped with <property>JBoss EAP 5.1</property>. When you followed the default installation of <property>JBoss
-            Developer Studio</property>, you should already have a JBoss EAP 5.1 Server installed and defined. To run JBoss AS you need you will need to have JDK 6 installed.</para>
+		<property>JBoss Developer Studio 4.0.0.GA</property> ships with <property>JBoss EAP 5.1</property>. When you followed the default installation of <property>JBoss Developer Studio</property>, you should already have a JBoss EAP 5.1 Server installed and defined. To run JBoss AS you need you will need to have JDK 6 installed.</para>
 	<note>
 		<title>Note:</title>
-		<para>You can leave  <property>JDK 1.5</property> configuration for <property>JBDS</property> and set <property>JDK 6</property> as <property>JRE</property> only for <property>JBoss EAP Server</property>. For this you need to select <menuchoice><guimenuitem>Windows</guimenuitem><guimenuitem>Preferences</guimenuitem></menuchoice>, and then click <menuchoice><guimenuitem>Server</guimenuitem><guimenuitem>Runtime Environments</guimenuitem></menuchoice>. On the opened preference page you should select <property>JBoss EAP Runtime</property> and click <property>Edit</property>. In <property>Edit Server Runtime Environment</property> dialog you can configure <property>Jave Runtime Environment</property> by clicking <property>JRE</property> button.   </para>
+		<para>You can leave  <property>JDK 1.5</property> configuration for <property>JBDS</property> and set <property>JDK 6</property> as <property>JRE</property> only for <property>JBoss EAP Server</property>. For this you need to select <menuchoice><guimenuitem>Windows</guimenuitem><guimenuitem>Preferences</guimenuitem></menuchoice>, and then click <menuchoice><guimenuitem>Server</guimenuitem><guimenuitem>Runtime Environments</guimenuitem></menuchoice>. On the opened preference page you should select <property>JBoss EAP Runtime</property> and clicking the <guibutton>Edit</guibutton> button. In <property>Edit Server Runtime Environment</property> dialog you can configure <property>Jave Runtime Environment</property> by clicking the <guibutton>JRE</guibutton> button.   </para>
 	</note>
 
 	<section id="JBossbundled">
@@ -50,9 +49,7 @@
 
 			<itemizedlist>
 				<listitem>
-					<para>To launch the server click the green-with-white-arrow icon on the
-                            <property>Servers</property> or right click server name in
-                        this view and click the <guibutton>Start</guibutton> button. If this view is not open, select <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Show View</guimenuitem><guimenuitem>Other</guimenuitem><guimenuitem>Server</guimenuitem><guimenuitem>Servers</guimenuitem></menuchoice>
+					<para>To launch the server click the green-with-white-arrow icon in the <property>Servers</property> view or right click server name in this view and click the <guibutton>Start</guibutton> button. If this view is not open, select <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Show View</guimenuitem><guimenuitem>Other</guimenuitem><guimenuitem>Server</guimenuitem><guimenuitem>Servers</guimenuitem></menuchoice>
 					</para>
 				</listitem>
 			</itemizedlist>
@@ -76,9 +73,7 @@
 					</imageobject>
 				</mediaobject>
 			</figure>
-			<para>When the server is started you should see <emphasis>
-                    <property>Started</property>
-				</emphasis> in the square brackets right next its name in <property>Servers</property>.</para>
+			<para>When the server is started you should see <emphasis><property>Started</property></emphasis> in the square brackets right next its name in the <property>Servers</property> view.</para>
 
 			<figure>
 				<title>Server is Started</title>
@@ -103,11 +98,7 @@
 		<section id="StoppingJBoss">
 			<?dbhtml filename="StoppingJBoss.html"?>
 			<title>Stopping JBoss Server</title>
-			<para>To stop the server, click the <emphasis>
-                    <property>Stop</property>
-				</emphasis> icon in <property>Servers</property> or right click the server
-                name and press <emphasis>
-                    <property>Stop</property>. </emphasis>
+			<para>To stop the server, click the the <guibutton>Stop</guibutton> button icon in <property>Servers</property> or right click the server name and press <guimenuitem>Stop</guimenuitem>.
 			</para>
 
 			<figure>
@@ -139,7 +130,7 @@
 			</figure>
 
 			<para>Here you can specify some common settings: host name, server name, runtime as well
-                as settings related to the publishing, timeouts and server ports.</para>
+                as settings related to publishing, timeouts and server ports.</para>
 
 		</section>
 	</section>
@@ -169,7 +160,7 @@
 				<title>Note:</title>
 				<para>The installation of JBoss server into a directory that has a name containing
                     spaces provokes problems in some situations with Sun-based VMs. Try to avoid
-                    using installation folders that have spaces in their names.</para>
+                    using installation folders that contain spaces in their names.</para>
 			</note>
 
 			<para>There is no requirement for root access to run JBoss Server on UNIX/Linux systems
@@ -178,11 +169,11 @@
 			<itemizedlist>
 				<listitem>
 					<para>After you have the binary archive you want to install, use the JDK jar
-                        tool (or any other ZIP extraction tool) to extract the jboss-4.2.3.GA.zip
-                        archive contents into a location of your choice. The jboss-4.2.3.GA.tgz
+                        tool (or any other ZIP extraction tool) to extract the <filename>jboss-4.2.3.GA.zip</filename>
+                        archive contents into a location of your choice. The <filename>jboss-4.2.3.GA.tgz</filename>
                         archive is a gzipped tar file that requires a gnutar compatible tar which
                         can handle the long pathnames in the archive. The extraction process will
-                        create a jboss-4.2.3.GA directory. </para>
+                        create a <filename>jboss-4.2.3.GA</filename> directory. </para>
 				</listitem>
 			</itemizedlist>
 		</section>
@@ -190,11 +181,10 @@
 		<section id="AddingJBossServer">
 			<?dbhtml filename="AddingJBossServer.html"?>
 			<title>Adding and Configuring JBoss Server</title>
-			<para>Now we should add just installed server into server manager in <property>JBoss
-                    Developer Studio</property>.</para>
+			<para>Now we should add the just installed server into server manager in <property>JBoss Developer Studio</property>.</para>
 			<itemizedlist>
 				<listitem>
-					<para>Select <property>Servers</property> by selecting <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Show View</guimenuitem><guimenuitem>Other</guimenuitem><guimenuitem>Server</guimenuitem><guimenuitem>Servers</guimenuitem></menuchoice>.
+					<para>Select the <property>Servers</property> view by selecting <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Show View</guimenuitem><guimenuitem>Other</guimenuitem><guimenuitem>Server</guimenuitem><guimenuitem>Servers</guimenuitem></menuchoice>.
 					</para>
 				</listitem>
 				<listitem>
@@ -218,28 +208,19 @@
 			<note>
 				<title>Note:</title>
 
-				<para>Now in the <property>New Server wizard</property> there is a separation
-                    between the .org servers (the <emphasis>
-                        <property>JBoss Community</property>
-					</emphasis> category) and product server that comes bundled with JBoss EAP (the
-                    <emphasis>
-                        <property>JBoss Enterprise Middleware</property>
-					</emphasis> category).</para>
+				<para>Now in the <property>New Server wizard</property> there is a separation between the .org servers (the <emphasis><property>JBoss Community</property></emphasis> category) and product server that comes bundled with JBoss EAP (the <emphasis><property>JBoss Enterprise Middleware</property></emphasis> category).</para>
 			</note>
 
 			<itemizedlist>
 				<listitem>
-					<para>To create a new runtime, which Jboss AS 4.2 matches to, click <emphasis>
-                            <property>Next</property>
-						</emphasis>
+					<para>To create a new runtime, which Jboss AS 4.2 matches to, click the <guibutton>Next</guibutton> button
 					</para>
 				</listitem>
 			</itemizedlist>
 
 			<itemizedlist>
 				<listitem>
-					<para>In the next step make <property>JBoss Developer Studio</property> to know
-                        where you have installed the Server and define JRE.</para>
+					<para>In the next step you need to specify the location of the Server and define JRE to be used.</para>
 				</listitem>
 			</itemizedlist>
 			<figure>
