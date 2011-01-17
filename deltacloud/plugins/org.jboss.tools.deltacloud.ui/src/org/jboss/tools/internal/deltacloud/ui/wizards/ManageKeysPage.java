@@ -10,7 +10,9 @@
  ******************************************************************************/
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
+import java.io.File;
 import java.text.MessageFormat;
+import java.util.Arrays;
 
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
@@ -28,22 +30,25 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.databinding.fieldassist.ControlDecorationSupport;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
-import org.eclipse.jface.dialogs.IInputValidator;
-import org.eclipse.jface.dialogs.InputDialog;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.layout.FormLayout;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DirectoryDialog;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
@@ -60,6 +65,7 @@ import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.ObjectNotNullToBoolean;
 import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.ValidWritableFilePathValidator;
+import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 import org.jboss.tools.internal.deltacloud.ui.utils.WizardUtils;
 
 /**
@@ -113,24 +119,6 @@ public class ManageKeysPage extends WizardPage {
 		}
 	}
 
-	private class UniqueKeyIdConstraint implements IInputValidator {
-
-		@Override
-		public String isValid(String keyId) {
-			if (keyId == null) {
-				return null;
-			}
-
-			for (DeltaCloudKey key : model.getKeys()) {
-				if (keyId.equals(key.getId())) {
-					// TODO: internationalize string
-					return "Key id is already used, please choose another id.";
-				}
-			}
-			return null;
-		}
-	}
-
 	public ManageKeysPage(DeltaCloud cloud) {
 		super(WizardMessages.getString(NAME));
 		this.model = new ManageKeysPageModel(cloud);
@@ -172,25 +160,7 @@ public class ManageKeysPage extends WizardPage {
 		Button deleteButton = createDeleteButton(container, dbc);
 		GridDataFactory.fillDefaults().applyTo(deleteButton);
 
-		Group localStorageGroup = new Group(container, SWT.BORDER);
-		localStorageGroup.setText("Local Keystore");
-		GridDataFactory.fillDefaults().span(4, 1).applyTo(localStorageGroup);
-		GridLayoutFactory.fillDefaults()
-				.numColumns(2).extendedMargins(10, 10, 10, 14).applyTo(localStorageGroup);
-
-		Text keyStoreText = new Text(localStorageGroup, SWT.BORDER);
-		bindKeyStoreText(keyStoreText, dbc);
-		GridDataFactory.fillDefaults()
-				.grab(true, false).align(SWT.FILL, SWT.CENTER).applyTo(keyStoreText);
-		addKeyStoreLocationDecoration(keyStoreText, dbc);
-
-		Button keyStoreBrowseButton = new Button(localStorageGroup, SWT.None);
-		keyStoreBrowseButton.addSelectionListener(onKeyStoreLocationBrowse());
-		keyStoreBrowseButton.setText("Choose...");
-		GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.CENTER);
-
 		setControl(container);
-
 		refreshKeys();
 	}
 
@@ -330,26 +300,114 @@ public class ManageKeysPage extends WizardPage {
 
 	private SelectionListener onNewPressed() {
 		return new SelectionAdapter() {
-
-			@Override
 			public void widgetSelected(SelectionEvent event) {
-				Display display = Display.getDefault();
-				Shell shell = new Shell(display);
-				// String directoryText = directory.getText();
-				InputDialog d = new InputDialog(shell, WizardMessages.getString(CREATE_KEY_TITLE),
-						WizardMessages.getString(CREATE_KEY_MSG), "", new UniqueKeyIdConstraint());
-				d.setBlockOnOpen(true);
-				d.create();
-				if (d.open() == InputDialog.OK) {
-					String keyId = d.getValue();
+				java.util.List<DeltaCloudKey> keys = model.getKeys();
+				String[] keys2 = new String[keys.size()];
+				for( int i = 0; i < keys2.length; i++ ) {
+					keys2[i] = keys.get(i).getId();
+				}
+				AddKeyDialog dialog = new AddKeyDialog(getShell(), keys2);
+				if(dialog.open() == Dialog.OK) {
+					String keyId = dialog.getKeyId();
 					DeltaCloudKey key = createKey(keyId);
-					storeKeyLocally(key);
+					if( dialog.shouldPersist() ) {
+						storeKeyLocally(key, dialog.getFolder());
+					}
 				}
 			}
-
 		};
 	}
 
+	private class AddKeyDialog extends TitleAreaDialog {
+		private String[] existingKeys;
+		private Text pemText, nameText;
+		private Button persist;
+		private String pem, name;
+		private boolean persistBool;
+		public AddKeyDialog(Shell parentShell, String[] existingKeys) {
+			super(parentShell);
+			this.existingKeys = existingKeys;
+		}
+		
+		protected Control createDialogArea(Composite parent) {
+			// create the top level composite for the dialog area
+			Composite composite = new Composite(parent, SWT.NONE);
+			composite.setLayoutData(new GridData(GridData.FILL_BOTH));
+			composite.setFont(parent.getFont());
+			composite.setLayout(new FormLayout());
+			Label titleBarSeparator = new Label(composite, SWT.HORIZONTAL | SWT.SEPARATOR);
+			titleBarSeparator.setLayoutData(UIUtils.createFormData(0,0,null,0,0,0,100,0));
+
+			setTitle(WizardMessages.getString(CREATE_KEY_TITLE));
+			Label nameLabel = new Label(composite, SWT.NONE);
+			nameLabel.setText("Key ID: ");
+			nameLabel.setLayoutData(UIUtils.createFormData(0,7,null,0,0,5,null,0));
+			nameText = new Text(composite, SWT.BORDER);
+			nameText.setLayoutData(UIUtils.createFormData(0,5,null,0,nameLabel, 5, 100, -5));
+			
+			persist = new Button(composite, SWT.CHECK);
+			persist.setText("Save key in folder: ");
+			persist.setLayoutData(UIUtils.createFormData(nameText, 8, null, 0, 0,5,null,0));
+			
+			Button browse = new Button(composite, SWT.DEFAULT);
+			browse.setText("Browse...");
+			browse.setLayoutData(UIUtils.createFormData(nameText, 5, null, 0, null, 0, 100, -5));
+			browse.addSelectionListener(new SelectionAdapter() {
+				public void widgetSelected(SelectionEvent e) {
+					DirectoryDialog dialog = new DirectoryDialog(getShell(), SWT.NONE);
+					dialog.setFilterPath(model.getKeyStorePath());
+					dialog.setText("Choose a directory to store new keys");
+					String keyStorePath = dialog.open();
+					pemText.setText(keyStorePath);
+				}
+			});
+			
+			
+			pemText = new Text(composite, SWT.BORDER);
+			pemText.setLayoutData(UIUtils.createFormData(nameText,5,null,0,persist, 5, browse, -5));
+			init();
+			ModifyListener listener = new ModifyListener() {
+				public void modifyText(ModifyEvent e) {
+					verify();
+				}
+			};
+			nameText.addModifyListener(listener);
+			pemText.addModifyListener(listener);
+			persist.addSelectionListener(new SelectionAdapter(){
+				public void widgetSelected(SelectionEvent e) {
+					verify();
+				}
+			});
+			return composite;
+		}
+		private void init() {
+			persist.setSelection(true);
+			pemText.setText(model.getInitialKeyStorePath());
+			verify();
+		}
+		private void verify() {
+			persistBool = persist.getSelection();
+			pem = pemText.getText();
+			name = nameText.getText();
+			if( !(new File(pem).exists())) {
+				setErrorMessage("Key folder does not exist.");
+			} else if( Arrays.asList(existingKeys).contains(name)){
+				setErrorMessage("Key id is already used, please choose another id.");
+			} else {
+				setErrorMessage(null);
+			}
+		}
+		public String getKeyId() {
+			return name;
+		}
+		public String getFolder() {
+			return pem;
+		}
+		public boolean shouldPersist() {
+			return persistBool;
+		}
+	}
+	
 	private DeltaCloudKey createKey(final String keyId) {
 		final DeltaCloudKey[] keyHolder = new DeltaCloudKey[1];
 		try {
@@ -372,15 +430,10 @@ public class ManageKeysPage extends WizardPage {
 		return keyHolder[0];
 	}
 
-	private void storeKeyLocally(DeltaCloudKey key) {
+	private void storeKeyLocally(DeltaCloudKey key, String pemFolder) {
 		try {
 			if (key != null) {
-				boolean store = MessageDialog.openConfirm(getShell(),
-						"Confirm to store the new key",
-						"Do you want to store the key locally and add it to the private keys?");
-				if (store) {
-					model.storeKeyLocally(key);
-				}
+				model.storeKeyLocally(key, pemFolder);
 			}
 		} catch (Exception e) {
 			ErrorUtils.handleError("Error", MessageFormat.format(
