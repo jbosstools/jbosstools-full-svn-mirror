@@ -124,32 +124,37 @@ public class InstanceViewLabelAndContentProvider extends
 	}
 
 	@Override
-	protected void asyncAddCloudElements(final DeltaCloud cloud) {
+	protected void asyncGetCloudElements(final DeltaCloud cloud) {
 		if (cloud == null) {
 			clearTableViewer();
 			return;
 		}
-		new AbstractCloudElementJob(
-				MessageFormat.format("Get instances from cloud {0}", cloud.getName()), cloud, CLOUDELEMENT.INSTANCES) {
+		if (isCurrentCloud(cloud)) {
+			new AbstractCloudElementJob(
+					MessageFormat.format("Get instances from cloud {0}", cloud.getName()), cloud,
+					CLOUDELEMENT.INSTANCES) {
 
-			@Override
-			protected IStatus doRun(IProgressMonitor monitor) throws DeltaCloudException {
-				try {
-					addToViewer(cloud.getInstances());
-					return Status.OK_STATUS;
-				} catch (DeltaCloudException e) {
-					throw e;
+				@Override
+				protected IStatus doRun(IProgressMonitor monitor) throws DeltaCloudException {
+					try {
+						setCloudElements(cloud.getInstances());
+						return Status.OK_STATUS;
+					} catch (DeltaCloudException e) {
+						throw e;
+					}
 				}
-			}
-		}.schedule();
+			}.schedule();
+		}
 	}
 
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
 		if (DeltaCloud.PROP_INSTANCES.equals(event.getPropertyName())) {
 			DeltaCloud cloud = (DeltaCloud) event.getSource();
-			DeltaCloudInstance[] instances = (DeltaCloudInstance[]) event.getNewValue();
-			updateCloudElements(instances, cloud);
+			if (isCurrentCloud(cloud)) {
+				DeltaCloudInstance[] instances = (DeltaCloudInstance[]) event.getNewValue();
+				setCloudElements(instances);
+			}
 		}
 	}
 
