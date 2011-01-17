@@ -29,7 +29,7 @@ import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.DeltacloudUIExtensionManager;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
-import org.jboss.tools.deltacloud.ui.INewInstanceWizardPage;
+import org.jboss.tools.deltacloud.ui.wizard.INewInstanceWizardPage;
 import org.osgi.service.prefs.Preferences;
 
 /**

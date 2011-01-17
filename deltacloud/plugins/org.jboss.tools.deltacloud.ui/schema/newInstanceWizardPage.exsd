@@ -64,7 +64,7 @@
                   
                </documentation>
                <appinfo>
-                  <meta.attribute kind="java" basedOn=":org.jboss.tools.deltacloud.ui.INewInstanceWizardPage"/>
+                  <meta.attribute kind="java" basedOn=":org.jboss.tools.deltacloud.ui.wizard.INewInstanceWizardPage"/>
                </appinfo>
             </annotation>
          </attribute>
