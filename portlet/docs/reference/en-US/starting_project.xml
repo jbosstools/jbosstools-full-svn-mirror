@@ -56,11 +56,8 @@
 			</listitem>
 			
 			<listitem>
-				<para>At this point a new JBoss Server instance will be created. On the next page you can verify the
-				runtime information defined. If something is incorrect, press <emphasis>
-					<property>Back</property>
-					</emphasis> to return to the previous wizard page. Click <emphasis>
-					<property>Finish</property>.</emphasis>
+				<para>
+					At this point a new JBoss Server instance will be created. On the next page you can verify the runtime information and configuration. If something is incorrect, press the <guibutton>Back</guibutton> button to return to the previous wizard page. Click the <guibutton>Finish</guibutton> button.
 				</para>
 				
 				<figure>
@@ -74,11 +71,9 @@
 			</listitem>
 			
 			<listitem>
-				<para>Click <emphasis>
-				<property>Modify</property>
-					</emphasis> in the <emphasis><property>Configuration</property>
-					</emphasis> area to enable
-				a portlet facet for the project.</para>
+				<para>
+					Click the <guibutton>Modify</guibutton> button in the <emphasis><property>Configuration</property></emphasis> area to enable a portlet facet for the project.
+				</para>
 				
 				<figure>
 					<title>Setting the Project Configuration</title>
@@ -91,11 +86,7 @@
 			</listitem>
 			
 			<listitem>
-				<para>In the <property>Project Facets</property> dialog, check <emphasis>
-				<property>JBoss Core Portlet</property>
-					</emphasis> and press <emphasis>
-				<property>OK</property>
-					</emphasis>.</para>
+				<para>In the <property>Project Facets</property> dialog, check <emphasis><property>JBoss Core Portlet</property></emphasis> and click the  <guibutton>OK</guibutton> button.</para>
 				
 				<figure>
 					<title>Enabling the JBoss Core Portlet Facet</title>
@@ -108,27 +99,23 @@
 				
 				<note>
 					<title>Note:</title>
-					<para>If the portlet libraries aren&apos;t available in the runtime you targeted,
-						<emphasis>
-							<property>JBoss Portlets</property>
-						</emphasis> facets will be hidden on this page.</para>
-					<para>To make them always visible no matter what the runtime is set, you should enable the appropriate option in 
-						<xref linkend="preferences"/>.</para>
+					<para>
+						If the portlet libraries aren&apos;t available in the runtime you targeted, <emphasis><property>JBoss Portlets</property></emphasis> facets will be hidden on this page.
+					</para>
+					<para>To make them always visible no matter what the runtime is set, you should enable the appropriate option in <xref linkend="preferences"/>.</para>
 				</note>
 			</listitem>
 			
 			<listitem>
-				<para>The <property>Java</property> and <property>Web Module</property> pages are for configuring Java and Web modules in the project. 
-					Here all values are set, so leave everything as it is.</para>
+				<para>
+					The <property>Java</property> and <property>Web Module</property> pages are for configuring Java and Web modules in the project. Here the default values are fine, so leave everything as it is.
+				</para>
 			</listitem>
 			
 			<listitem>
-				<para>The last wizard page will ask you to add JBoss Portlet capabilities to the
-					project. Select <emphasis>
-						<property>Portlet Target Runtime Provider</property>
-					</emphasis> and click <emphasis>
-							<property>Finish</property>
-					</emphasis> to complete the project creation.</para>
+				<para>
+					The last wizard page will ask you to add JBoss Portlet capabilities to the project. Select <emphasis><property>Portlet Target Runtime Provider</property></emphasis> and click the <guibutton>Finish</guibutton> button to complete the project creation.
+				</para>
 				
 				<figure>
 					<title>Including the Portlet Libraries Provided by Target Runtime</title>
@@ -152,7 +139,7 @@
 		<para>As the result, <property>JBoss Portlet Tools</property> adds <emphasis>
 			<property>JBoss Core Portlet</property>
 			</emphasis> facet to the project,
-			creates an empty <literal>portlet.xml</literal> file and adds the JBoss Portlet library to the project classpath.</para>
+			creates an empty <filename>portlet.xml</filename> file and adds the JBoss Portlet library to the project classpath.</para>
 		
 		<figure>
 			<title>Portlet Project Structure Overview</title>
@@ -167,14 +154,15 @@
 	<section id="adding_java_portlet">
 		<title>Adding a Java Portlet to a Web Project</title>
 
-		<para>At the previous section you have created a web project with JBoss Portlet capabilities.  
-        	The next steps will show you how to add a new Java portlet to the project.</para>
+		<para>
+			At the previous section you have created a web project with JBoss Portlet capabilities. The next steps will show you how to add a new Java portlet to the project.
+		</para>
 		
 		<orderedlist>
 			<listitem>
-				<para>Right-click the project and follow to <emphasis>
-				<property>New &gt; Other &gt; JBoss Tools Web &gt; Portlet &gt; Java
-					Portlet</property>.</emphasis>
+				<para>
+					Right-click the project and select <menuchoice><guimenuitem>New</guimenuitem><guimenuitem>Other</guimenuitem><guimenuitem>JBoss Tools Web</guimenuitem><guimenuitem>Portlet</guimenuitem><guimenuitem>Java
+					Portlet</guimenuitem></menuchoice>.
 				</para>
 				
 				<figure>
@@ -188,19 +176,7 @@
 			</listitem>
 			
 			<listitem>
-				<para>The <property>Create Portlet</property> wizard starts (for information about the wizard options, see 
-					<xref linkend="java_portlet_wizard"/> in the guide reference). 
-					The wizard fills in the <emphasis><property>Project</property>
-					</emphasis> and <emphasis>
-						<property>Source Folder</property>
-					</emphasis> fields for you. You should specify a Java package and a class name 
-					(for instance, <emphasis>
-						<property>org.example</property>
-					</emphasis> and <emphasis>
-							<property>TestPortlet</property>
-					</emphasis>). Then click <emphasis>
-								<property>Next</property>
-					</emphasis>.</para>
+				<para>The <property>Create Portlet</property> wizard starts (for information about the wizard options, see <xref linkend="java_portlet_wizard"/> in the guide reference). The wizard fills in the <emphasis><property>Project</property></emphasis> and <emphasis><property>Source Folder</property></emphasis> fields for you. You should specify a Java package and a class name (for instance, <emphasis><property>org.example</property></emphasis> and <emphasis><property>TestPortlet</property></emphasis>). Then click the <guibutton>Next</guibutton> button.</para>
 				
 				<figure>
 					<title>Specifying Class File Destination</title>
@@ -213,14 +189,15 @@
 			</listitem>
 			
 			<listitem>
-				<para>You may leave the next three pages with default values, on the last one hit <emphasis>
-				<property>Finish</property>.</emphasis>
+				<para>
+					You may leave the next three pages with default values, on the last one click the <guibutton>Finish</guibutton> button.
 				</para>
 			</listitem>
 		</orderedlist>
 
-		<para>Once a Java portlet is created, new resources are added to the project structure: a Java portlet class (<literal>TestPortlet.java</literal>), 
-        	<literal>default-object.xml</literal> and <literal>portlet-instances.xml</literal> files and the <literal>portlet.xml</literal> descriptor is updated as well.</para>
+		<para>
+			Once a Java portlet is created, new resources are added to the project structure: a Java portlet class (<filename>TestPortlet.java</filename>), <filename>default-object.xml</filename> and <filename>portlet-instances.xml</filename> files and the <filename>portlet.xml</filename> descriptor is updated as well.
+		</para>
 
 		<figure>
 			<title>Structure of the Project with a Java Portlet</title>
@@ -231,7 +208,7 @@
 			</mediaobject>
 		</figure>
     	
-		<para>Thus, now the project is ready to be built and deployed.</para>
+		<para>Now the project is ready to be built and deployed.</para>
 	</section>
 
 	<section id="deploying_to_portal">
@@ -241,9 +218,9 @@
     	
 		<orderedlist>
 			<listitem>
-				<para>Right-click the project and do <emphasis>
-    			<property>Run As &gt; Run On Server</property>.
-    			</emphasis> The <property>Run On Server</property> wizard starts.</para>
+				<para>
+					Right-click the project and select <menuchoice><guimenuitem>Run As</guimenuitem><guimenuitem>Run On Server</guimenuitem></menuchoice>. The <guilabel>Run On Server</guilabel> wizard starts.
+				</para>
     			
 				<figure>
 					<title>Running the Java Portlet on Server</title>
@@ -257,15 +234,13 @@
     		
 			<listitem>
 				<para>Select <emphasis><property>JBoss Portal 2.7 Server</property>
-					</emphasis> created before and click <emphasis><property>Next</property>.</emphasis>
+					</emphasis> created before and click the <guibutton>Next</guibutton> button.
 				</para>
 			</listitem>
     		
 			<listitem>
-				<para>On the <emphasis>
-    			<property>Add and Remove</property>
-					</emphasis> page move the created project to the right and click <emphasis>
-    			<property>Finish</property>.</emphasis>
+				<para>
+					On the <emphasis><property>Add and Remove</property></emphasis> page move the created project to the right and click <guilabel>Finish</guilabel>.
 				</para>
     			
 				<figure>
@@ -277,13 +252,11 @@
 					</mediaobject>
 				</figure>
     			
-				<para>It will deploy the portlet application and start <property>JBoss
-    				AS</property>.</para>
+				<para>It will deploy the portlet application and start <property>JBoss AS</property>.</para>
 			</listitem>
     		
 			<listitem>
-				<para>Use the <emphasis>http://localhost:8080/portal/portal/default/default</emphasis> URL to see your
-    			portlet in the browser.</para>
+				<para>Use the <emphasis>http://localhost:8080/portal/portal/default/default</emphasis> URL to see your portlet in the browser.</para>
     			
 				<figure>
 					<title>Java Portlet in the Browser Window</title>
