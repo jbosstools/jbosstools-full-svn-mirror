@@ -1,3 +1,1 @@
-Instead of mirroring Helios, instead we're providing a target platform repo here:
-
-http://download.jboss.org/jbosstools/updates/target-platform/latest/
+Instead of mirroring Helios here, this site is now a no-op empty placeholder. 
