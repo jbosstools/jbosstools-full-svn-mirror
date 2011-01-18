@@ -78,7 +78,7 @@
 				</listitem>
     			
 				<listitem>
-					<para>On the <property>JBoss Portlet Capabilities</property> page, select <emphasis><property>Portlet Target Runtime Provider</property></emphasis> and click the <guibutton>Next</guibutton> button.</emphasis>
+					<para>On the <property>JBoss Portlet Capabilities</property> page, select <emphasis><property>Portlet Target Runtime Provider</property></emphasis> and click the <guibutton>Next</guibutton> button.
 					</para>
     				
 					<figure>
