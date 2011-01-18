@@ -14,8 +14,7 @@
         <title>Wizards</title>
         <section>
             <title>New BPEL project Wizard</title>
-            <para>This wizard helps to create new BPEL project.It is available with clicking
-                <property>File->New->Other->BPEL project</property> in the menu bar.</para>
+            <para>This wizard helps to create new BPEL project. It is available by selecting <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>New</guimenuitem><guimenuitem>Other</guimenuitem><guimenuitem>BPEL project</guimenuitem></menuchoice> in the menu bar.</para>
             <figure>
                 <title>New BPEL Project Wizard</title>
                 <mediaobject>
@@ -28,7 +27,7 @@
             <itemizedlist>
                 <listitem><para>On the page you can adjust the name of the project and the directory where it will be created.</para>
                     <para>If "<property>Use default</property>" option is checked the output directory will be the workspace,
-                        othervise the user should specify it by himself using <property>Browse</property> button.</para>
+                        otherwise the user should specify it by himself using <guibutton>Browse</guibutton> button.</para>
                     <figure>
                         <title>New BPEL Project Wizard</title>
                         <mediaobject>
@@ -42,8 +41,7 @@
         </section>
         <section>
             <title>Apache ODE Deployment Descriptor Wizard</title>
-            <para>Using this wizard user can create ODE deployment descriptor (deploy.xml) and place it in the temporary directory.It is available with clicking
-                <property>File->New->Other->Apache ODE Deployment Descriptor Wizard</property> in the menu bar.</para>
+            <para>Using this wizard user can create ODE deployment descriptor (<filename>deploy.xml</filename>) and place it in the temporary directory.It is available by selecting <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>New</guimenuitem><guimenuitem>Other</guimenuitem><guimenuitem>Apache ODE Deployment Descriptor Wizard</guimenuitem></menuchoice> in the menu bar.</para>
             <figure>
                 <title>New BPEL Project Wizard</title>
                 <mediaobject>
@@ -52,15 +50,14 @@
                     </imageobject>
                 </mediaobject>
             </figure>
-            <para>On the page you can adjust the name of the deployment descriptor and
-                the directory where it will be created.Note,that you should use <property>
-                    /PROJECT_NAME/bpelContent</property> directory as an output one.</para>
+            <para>
+            	On the page you can adjust the name of the deployment descriptor and the directory where it will be created.Note,that you should use <filename>/PROJECT_NAME/bpelContent</filename> directory as an output one.
+            </para>
                                    
         </section>
         <section>
             <title>New BPEL Process file Wizard</title>
-            <para>Using <property>New BPEL Process file Wizard</property>
-                user can create BPEL process file and WSDL file if it is necessary.
+            <para>Using the <property>New BPEL Process file Wizard</property> it is possible to create a BPEL process file and a WSDL file.
             The wizard includes several pages:</para>
             <itemizedlist>
                 <listitem><para>The first page has the following options to set:</para>
@@ -185,8 +182,7 @@
                 </listitem>
             </itemizedlist>
             <note>
-                <para>Process files that are used in the BPEL project must be under the <property>bpelContent</property> folder. Only in this case 
-                    these files can be deployed to JBoss server.
+                <para>Process files that are used in the BPEL project must be under the <property>bpelContent</property> folder. Only in this case these files can be deployed to JBoss server.
                 </para>
             </note>
         </section>
@@ -196,9 +192,8 @@
         <section>
             <title>Business Process Editor</title>
             <para>Business Process Editor is intended to facilitate the process of changing and 
-                adding new logic to BPEL process file.You can open <emphasis>.bpel</emphasis> 
-                in this editor by right click the file in the project explorer and selecting  
-                <property>Open With...->Business Process Editor</property>
+                adding new logic to BPEL process file. You can open <emphasis>.bpel</emphasis> 
+                in this editor by right click the file in the project explorer and selecting <menuchoice><guimenuitem>Open With...</guimenuitem><guimenuitem>Business Process Editor</guimenuitem></menuchoice>
             </para>
             <figure>
                 <title>Business Process Editor</title>
@@ -233,11 +228,9 @@
                            </imageobject>
                        </mediaobject>
                    </figure>
-                   <para>The <property>Palette</property> represents  different elements of the BPEL activities
-                       organized into functional categories.
-                       Using it the user can easily add new elements to the sequence activity.
-                       To do this,he should just click the required element and then drug
-                       and drop it to the place on the Visual Pane where it should be added.</para>
+                   <para>
+                   	The <property>Palette</property> represents different elements of the BPEL activities organized into functional categories. Using it the developer can easily add new elements to the sequence activity. To do this, click the required element and then drag and drop it to the place on the Visual Pane where it should be added.
+                   </para>
                </listitem>
                <listitem><para>Behavior Components View:</para>
                   <figure>
@@ -250,7 +243,7 @@
                   </figure>
                    <para>Execution behavior components are grouped into the <property>
                        Behavior Components View</property>.
-                       The view is also fully syncronized with Properties view where you can customize all
+                       The view is also fully synchronized with Properties view where you can customize all
                        the properties of the component.</para>
                    <figure>
                        <title>Process Structure View of Business Process Editor</title>
@@ -260,13 +253,11 @@
                            </imageobject>
                        </mediaobject>
                    </figure>                  
-                   <para>To add an element to some component group click plus(<inlinemediaobject>
+                   <para>To add an element to some component group click the plus (<inlinemediaobject>
                        <imageobject>
                            <imagedata fileref="images/reference/bpel_ref_10.png"/>
                        </imageobject>
-                   </inlinemediaobject>) icon,
-                       for its deleting you should click the element and
-                       use its <property>Delete</property> option in the popup menu.</para>  
+                   </inlinemediaobject>) icon, and to delete it click the element and use select the <guilabel>Delete</guilabel> option in the popup menu.</para>  
                </listitem>
              
            </itemizedlist>
@@ -275,8 +266,7 @@
        </section>
             <section>
                 <title>Source tab</title>
-                <para>Source tab can be used for editing BPEL process file directly.
-                    The validation of file structure is also available.
+                <para>Source tab can be used for editing BPEL process file directly. It is also possible to validate the file structure.
                  </para>
                 <figure>
                     <title>Validation error in Source tab</title>
@@ -286,8 +276,7 @@
                         </imageobject>
                     </mediaobject>
                 </figure>
-                <para>If the user wants to disable/unable validation he can do it by following
-                    <property>Window->Preferences->Validation</property>.</para>
+                <para>If the user wants to disable/unable validation he can do it by selecting <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Preferences</guimenuitem><guimenuitem>Validation</guimenuitem></menuchoice>.</para>
                 <figure>
                     <title>Validation configuration</title>
                     <mediaobject>
@@ -300,10 +289,7 @@
        </section>
       <section>
           <title>ODE Deployment Descriptor Editor</title>
-          <para>To deploy your process in Ode you need to create a
-              simple deployment descriptor with basic information and
-              <property>ODE Deployment Descriptor Editor</property> facilitates the process of descriptor configuration.
-              You can see how the descriptor file,opened in the editor looks like on the picture below:
+          <para>To deploy your process in ODE you need to create a simple deployment descriptor with basic information, using the <property>ODE Deployment Descriptor Editor</property> to facilitate the process of descriptor configuration. You can see how the descriptor file opened in the editor looks like in the picture below:
           </para>
           <figure>
               <title>ODE Deployment Descriptor Editor</title>
@@ -313,8 +299,7 @@
                   </imageobject>
               </mediaobject>
           </figure> 
-          <para>The table below describes the configuration options of the
-              ODE Deployment Descriptor Editor:</para>
+          <para>The table below describes the configuration options of the ODE Deployment Descriptor Editor:</para>
           <table>
               <title>ODE Deployment Descriptor Editor.Options.</title>   
               <tgroup cols="3">
@@ -352,19 +337,13 @@
                           
                       </row> 
                       <row><entry>Run this process in memory</entry>
-                          <entry>for performance purposes,
-                              you can define the process as being 
-                              executed only in-memory.</entry>
+                          <entry>for performance purposes, you can define the process as being executed only in-memory.</entry>
                       </row>
                       
                       <row>
                           <entry>Inbound Interfaces(Services)</entry>
                           <entry>Associated Port</entry>
-                          <entry>Click Associated Port and the dropdown list with all available port names will appear.
-                              Select the one you need ,other fields will be filled automatically.
-                              This action configure the services
-                              provided by the process and 
-                              bind each service to an endpoint
+                          <entry>Click Associated Port and the dropdown list with all available port names will appear. Select the one you need, and the other fields will be filled automatically. This action configure the services provided by the process and binds each service to an endpoint
                           </entry>
                           
                       </row> 
@@ -372,10 +351,7 @@
                       <row>
                           <entry>Outbound Interfaces(Invokes)</entry>
                           <entry>Associated Port</entry>
-                          <entry>Click Associated Port and the dropdown list with all available port names will appear.
-                              Select the one you need, other fields will be filled automatically.
-                              This action configure the services
-                              invoked by the process</entry>
+                          <entry>Click Associated Port and the dropdown list with all available port names will appear. Select the one you need, and the other fields will be filled automatically. This action configure the services invoked by the process</entry>
                       </row>
                       <row>
                           <entry>Process-level Monitoring Events</entry>
@@ -404,17 +380,13 @@
                               </listitem>
                           </itemizedlist>
                           </entry>
-                          <entry>Using ODE's deployment descriptor, it's also 
-                              possible to make events generation to 
-                              filtrate which ones get created.
-                              All option  just duplicates the default behaviour,
-                              when nothing is specified in the deployment.</entry>
+                          <entry>Using ODE's deployment descriptor, it's also possible to make events generation to filter which ones get created.
+                              All the options simply revert to the default behavior when nothing is specified in the deployment.</entry>
                       </row>
                       <row>
                           <entry>Scope-level Monitoring Events</entry>
                           <entry>Scope</entry>
-                          <entry>This section makes it possible to
-                              define filtering for each scope of your process.
+                          <entry>This section makes it possible to define filtering for each scope of your process.
                               </entry>
                       </row>
                   </tbody>
