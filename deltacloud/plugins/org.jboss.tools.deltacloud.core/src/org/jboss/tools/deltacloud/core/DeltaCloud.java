@@ -38,7 +38,6 @@ import org.jboss.tools.internal.deltacloud.core.observable.ObservablePojo;
 public class DeltaCloud extends ObservablePojo {
 
 	public static final String PROP_INSTANCES = "instances";
-	public static final String PROP_INSTANCES_REMOVED = "instancesRemoved";
 	public static final String PROP_IMAGES = "images";
 	public static final String PROP_NAME = "name";
 
@@ -501,7 +500,6 @@ public class DeltaCloud extends ObservablePojo {
 			if (result) {
 				if (DeltaCloudInstance.Action.DESTROY.equals(action)) {
 					repo.remove(instance);
-					firePropertyChange(PROP_INSTANCES_REMOVED, null, instance);
 				}
 				// TODO: remove notification with all instanceRepo, replace by
 				// notifying the changed instance
