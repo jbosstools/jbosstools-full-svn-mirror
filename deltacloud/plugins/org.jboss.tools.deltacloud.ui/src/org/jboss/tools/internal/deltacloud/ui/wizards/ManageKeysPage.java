@@ -14,21 +14,17 @@ import java.io.File;
 import java.text.MessageFormat;
 import java.util.Arrays;
 
-import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.UpdateListStrategy;
 import org.eclipse.core.databinding.UpdateSetStrategy;
 import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeanProperties;
 import org.eclipse.core.databinding.conversion.Converter;
-import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.core.databinding.observable.value.WritableValue;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.jface.databinding.fieldassist.ControlDecorationSupport;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -64,7 +60,6 @@ import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.ObjectNotNullToBoolean;
-import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.ValidWritableFilePathValidator;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 import org.jboss.tools.internal.deltacloud.ui.utils.WizardUtils;
 
@@ -80,7 +75,6 @@ public class ManageKeysPage extends WizardPage {
 	private final static String NEW = "NewButton.label"; //$NON-NLS-1$
 	private final static String DELETE = "DeleteButton.label"; //$NON-NLS-1$
 	private final static String CREATE_KEY_TITLE = "CreateKey.title"; //$NON-NLS-1$
-	private final static String CREATE_KEY_MSG = "CreateKey.msg"; //$NON-NLS-1$
 	private final static String CONFIRM_KEY_DELETE_TITLE = "ConfirmKeyDelete.title"; //$NON-NLS-1$
 	private final static String CONFIRM_KEY_DELETE_MSG = "ConfirmKeyDelete.msg"; //$NON-NLS-1$
 
@@ -164,43 +158,11 @@ public class ManageKeysPage extends WizardPage {
 		refreshKeys();
 	}
 
-	private void addKeyStoreLocationDecoration(Text keyStoreText, DataBindingContext dbc) {
-		IObservableValue observable = new WritableValue();
-		Binding binding = dbc.bindValue(
-					WidgetProperties.text(SWT.Modify).observe(keyStoreText),
-					observable,
-					new UpdateValueStrategy().setBeforeSetValidator(new ValidWritableFilePathValidator()),
-					new UpdateValueStrategy().setBeforeSetValidator(new ValidWritableFilePathValidator()));
-		ControlDecorationSupport.create(binding, SWT.LEFT | SWT.TOP);
-	}
-
 	private Button createNewButton(Composite container, DataBindingContext dbc) {
 		Button newButton = new Button(container, SWT.NULL);
 		newButton.setText(WizardMessages.getString(NEW));
 		newButton.addSelectionListener(onNewPressed());
 		return newButton;
-	}
-
-	private void bindKeyStoreText(Text keyStoreText, DataBindingContext dbc) {
-		dbc.bindValue(
-				WidgetProperties.text(SWT.Modify).observe(keyStoreText),
-				BeanProperties.value(ManageKeysPageModel.PROP_KEY_STORE_PATH).observe(model));
-	}
-
-	private SelectionListener onKeyStoreLocationBrowse() {
-		return new SelectionAdapter() {
-
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				DirectoryDialog dialog = new DirectoryDialog(getShell(), SWT.NONE);
-				dialog.setFilterPath(model.getKeyStorePath());
-				dialog.setText("Choose a directory to store new keys");
-				String keyStorePath = dialog.open();
-				if (keyStorePath != null && keyStorePath.length() > 0) {
-					model.setKeyStorePath(keyStorePath);
-				}
-			}
-		};
 	}
 
 	private Button createDeleteButton(Composite container, DataBindingContext dbc) {
@@ -362,15 +324,17 @@ public class ManageKeysPage extends WizardPage {
 				}
 			});
 			
-			
 			pemText = new Text(composite, SWT.BORDER);
 			pemText.setLayoutData(UIUtils.createFormData(nameText,5,null,0,persist, 5, browse, -5));
+
 			init();
+			
 			ModifyListener listener = new ModifyListener() {
 				public void modifyText(ModifyEvent e) {
 					verify();
 				}
 			};
+			
 			nameText.addModifyListener(listener);
 			pemText.addModifyListener(listener);
 			persist.addSelectionListener(new SelectionAdapter(){
@@ -378,31 +342,40 @@ public class ManageKeysPage extends WizardPage {
 					verify();
 				}
 			});
+			
 			return composite;
 		}
+		
 		private void init() {
 			persist.setSelection(true);
 			pemText.setText(model.getInitialKeyStorePath());
 			verify();
 		}
+		
 		private void verify() {
 			persistBool = persist.getSelection();
 			pem = pemText.getText();
 			name = nameText.getText();
-			if( !(new File(pem).exists())) {
+			File pemFolder = new File(pem);
+			if( !pemFolder.exists()) {
 				setErrorMessage("Key folder does not exist.");
+			} else if( !pemFolder.canWrite()) {
+				setErrorMessage("Key folder is not writable.");
 			} else if( Arrays.asList(existingKeys).contains(name)){
 				setErrorMessage("Key id is already used, please choose another id.");
 			} else {
 				setErrorMessage(null);
 			}
 		}
+		
 		public String getKeyId() {
 			return name;
 		}
+		
 		public String getFolder() {
 			return pem;
 		}
+		
 		public boolean shouldPersist() {
 			return persistBool;
 		}
