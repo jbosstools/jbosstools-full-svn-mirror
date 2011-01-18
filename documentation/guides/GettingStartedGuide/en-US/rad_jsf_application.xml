@@ -317,7 +317,7 @@ tryagain_bigger=Oops..incorrect guess. Please try a bigger number.
 		<para>JBDS allows to quickly generate getters and setters for java bean.</para>
 		<itemizedlist>
 			<listitem>
-				<para>Right click the <filename>NumberBean.java</filename> file </emphasis> in the Package Explorer view</para>
+				<para>Right click the <filename>NumberBean.java</filename> file in the Package Explorer view</para>
 			</listitem>
 			<listitem>
 				<para>Select <menuchoice><guimenuitem>Source</guimenuitem><guimenuitem>Generate Getters and Setters...</guimenuitem></menuchoice>
