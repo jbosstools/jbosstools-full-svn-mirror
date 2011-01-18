@@ -66,7 +66,6 @@ import org.jboss.tools.internal.deltacloud.ui.utils.WizardUtils;
 /**
  * @author Jeff Johnston
  * @author André Dietisheim
- * @author Rob Stryker
  */
 public class ManageKeysPage extends WizardPage {
 
@@ -165,7 +164,6 @@ public class ManageKeysPage extends WizardPage {
 		newButton.addSelectionListener(onNewPressed());
 		return newButton;
 	}
-
 
 	private Button createDeleteButton(Composite container, DataBindingContext dbc) {
 		Button deleteButton = new Button(container, SWT.NULL);
@@ -326,15 +324,17 @@ public class ManageKeysPage extends WizardPage {
 				}
 			});
 			
-			
 			pemText = new Text(composite, SWT.BORDER);
 			pemText.setLayoutData(UIUtils.createFormData(nameText,5,null,0,persist, 5, browse, -5));
+
 			init();
+			
 			ModifyListener listener = new ModifyListener() {
 				public void modifyText(ModifyEvent e) {
 					verify();
 				}
 			};
+			
 			nameText.addModifyListener(listener);
 			pemText.addModifyListener(listener);
 			persist.addSelectionListener(new SelectionAdapter(){
@@ -342,31 +342,40 @@ public class ManageKeysPage extends WizardPage {
 					verify();
 				}
 			});
+			
 			return composite;
 		}
+		
 		private void init() {
 			persist.setSelection(true);
 			pemText.setText(model.getInitialKeyStorePath());
 			verify();
 		}
+		
 		private void verify() {
 			persistBool = persist.getSelection();
 			pem = pemText.getText();
 			name = nameText.getText();
-			if( !(new File(pem).exists())) {
+			File pemFolder = new File(pem);
+			if( !pemFolder.exists()) {
 				setErrorMessage("Key folder does not exist.");
+			} else if( !pemFolder.canWrite()) {
+				setErrorMessage("Key folder is not writable.");
 			} else if( Arrays.asList(existingKeys).contains(name)){
 				setErrorMessage("Key id is already used, please choose another id.");
 			} else {
 				setErrorMessage(null);
 			}
 		}
+		
 		public String getKeyId() {
 			return name;
 		}
+		
 		public String getFolder() {
 			return pem;
 		}
+		
 		public boolean shouldPersist() {
 			return persistBool;
 		}
