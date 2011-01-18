@@ -12,8 +12,7 @@
     </chapterinfo>
     <title>Project Examples</title>
     
-    <para><emphasis><property>JBoss Developer Studio</property></emphasis> provides an option to download and import a ready-made 
-    project that you can explore and derive some useful technology implementation lessons from. </para>
+    <para><emphasis><property>JBoss Developer Studio</property></emphasis> provides an option to download and import a ready-made  project that you can explore learn from. </para>
     
     <para>
         To adjust the settings of the Project Examples feature you need to navigate to <menuchoice><guimenuitem>Windows</guimenuitem><guimenuitem>Preferences</guimenuitem><guimenuitem>JBoss Tools</guimenuitem><guimenuitem>Project Examples</guimenuitem></menuchoice>. </para>
@@ -27,26 +26,19 @@
         </mediaobject>
     </figure>
     
-    <para>The <property>Show experimental sites</property> checkbox serves to enable/disable representing the user sites in the <property>Project Example</property> dialog (<menuchoice><guimenuitem>Help</guimenuitem><guimenuitem>Project Examples</guimenuitem></menuchoice>).  </para>
+    <para>The <property>Show experimental sites</property> checkbox serves to enable or disable user sites in the <property>Project Example</property> dialog (<menuchoice><guimenuitem>Help</guimenuitem><guimenuitem>Project Examples</guimenuitem></menuchoice>).  </para>
 
     
     <section id="UserSites">
         <title>User Sites</title>
         <para>
-            As you can see from the  <emphasis role="bold">Project Examples Preferences</emphasis> image you can add a custom project example that can be provided by anyone. 
-            This feature can, for example, facilitate project testing.
+            As you can see from the <emphasis role="bold">Project Examples Preferences</emphasis> image you can add a custom project example that can be provided by anyone. This feature can, for example, facilitate project testing.
             
         </para>
         <para>
-            In oder to add a new project example you need to select the <property>User sites</property>
-            option and press the <property>Add</property> button to the right.
+            In oder to add a new project example you need to select the <property>User sites</property> option and press the <guibutton>Add</guibutton> button to the right.
         </para>
-        <para>When the <property>Add</property> button is pressed the
-            <property>Add Project Example Site</property> dialog is displayed. The dialog contains 2 
-            input fields: <property>Name</property> where you need to specify the name of the new entry and <property>URL</property> 
-           that has to point to the XML file that contains example project(s) properties. 
-           The structure of the XML file is discussed in more detail in a later chapter of this guide.
-           Alternatively, if the XML is stored on your local machine, you can hit the <property>Browse</property> button to select the file in the file system.</para>
+        <para>When the <guibutton>Add</guibutton> button is pressed the <property>Add Project Example Site</property> dialog is displayed. The dialog contains two input fields: <property>Name</property>, where you need to specify the name of the new entry and <property>URL</property>,which has to point to the XML file that contains example project(s) properties. The structure of the XML file is discussed in more detail in a later chapter of this guide. Alternatively, if the XML is stored on your local machine, you can hit the <guibutton>Browse</guibutton> button to select the file in the file system.</para>
         <para>Here is an example of the XML file that holds  project example settings:</para>
     
     <programlisting role="XML"><![CDATA[<projects>
@@ -67,12 +59,9 @@
 </projects>
 ]]></programlisting> 
         
-        <para>Once you define the location of the xml file with projects settings you will see a new user site entry added. 
-            Please note  now if you select the entry you can edit and remove it with the corresponding buttons to the right. 
-            You can not do such operations with the <property>Plugin provides sites</property>.</para>
+        <para>Once you define the location of the XML file with projects settings you will see a new user site entry added. Please note now if you select the entry you can edit and remove it with the corresponding buttons to the right. You can not perform such operations with the <property>Plugin provides sites</property>.</para>
         
-        <para>When the user sites location is set up you can download and install the project(s). 
-            Please see the next chapter of the guide. </para>
+        <para>When the user sites location is set up you can download and install the project(s). Please see the next chapter of the guide for more details.</para>
     </section>
     
     
@@ -80,12 +69,14 @@
     <section id="DownloadingProjectExample">
         <title>Downloading a Project Example</title>
         
-        <para>To download a project example and  start working with it you need to take a few steps:</para>
+        <para>To download a project example and start working with it you need to perform a few steps:</para>
         <itemizedlist>
             <listitem>
                 <para>Go to the menu bar and select <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>New</guimenuitem><guimenuitem>Other...</guimenuitem></menuchoice></para></listitem>
             
-            <listitem><para>Select <menuchoice><guimenuitem>Jboss Tools</guimenuitem><guimenuitem>Project Examples</guimenuitem></menuchoice> (You can also call the <emphasis><property>Project Examples</property></emphasis> from menu bar: <menuchoice><guimenuitem>Help</guimenuitem><guimenuitem> Project Examples...</guimenuitem></menuchoice> or directly from 
+            <listitem>
+            	<para>
+            		Select <menuchoice><guimenuitem>Jboss Tools</guimenuitem><guimenuitem>Project Examples</guimenuitem></menuchoice> (You can also select <guimenuitem>Project Examples</guimenuitem> from menu bar: <menuchoice><guimenuitem>Help</guimenuitem><guimenuitem> Project Examples...</guimenuitem></menuchoice> or directly by selecting 
             <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>New</guimenuitem><guimenuitem>Example...</guimenuitem></menuchoice> menu )</para></listitem>
             
             
@@ -101,11 +92,11 @@
         </figure>
         
         <para>
-            Alternatively, you should navigate to <menuchoice><guimenuitem>New</guimenuitem><guimenuitem>Other...</guimenuitem></menuchoice>, scroll down to find the <property>JBoss Tools</property> option (or just type in the first letters of the word &quot;JBoss&quot; for quick search), expand the option and select <property>Project Examples</property>, click <property>Next</property>.
+            Alternatively, you should navigate to <menuchoice><guimenuitem>New</guimenuitem><guimenuitem>Other...</guimenuitem></menuchoice>, scroll down to find the <guilabel>JBoss Tools</guilabel> option (or just type in the first letters of the word &quot;JBoss&quot; for quick search), expand the option and select <guilabel>Project Examples</guilabel>, and click the <guibutton>Next</guibutton> button.
         </para>
         <itemizedlist>
-            <listitem><para>Now in the <property>New Project Example</property> dialog you can select a project you would like to explore and a site to download it from</para>
-                <para>Project Examples Wizard  provides a filter field to more easily locate the project examples you want, so you can type in the project you would like to explore in the field.</para></listitem>
+            <listitem><para>Now in the <guilabel>New Project Example</guilabel> dialog you can select a project you would like to explore and a site to download it from</para>
+                <para>The <guilabel>Project Examples Wizard</guilabel> provides a filter field to more easily locate the project examples you want, so you can type in the project you would like to explore in the field.</para></listitem>
             
         </itemizedlist>
         
@@ -121,7 +112,7 @@
         
         
         <para>Some project examples have dependencies which could not be automatically configured.
-            In such cases you will receive the message prompted about detected requirements (see the figure below).</para>
+            In these cases you will receive a message prompt listing the detected requirements (see the figure below).</para>
  
         <figure>
             <title>Prompt about Project Example Requirements</title>
@@ -132,8 +123,7 @@
             </mediaobject>
         </figure>
         
-        <para>You should click the <guibutton>Details</guibutton> button to see the list of requirements 
-            and make fixes.</para>
+        <para>You should click the <guibutton>Details</guibutton> button to see the list of requirements and make any necessary fixes.</para>
         
         <figure>
             <title>Requirements Details Dialog</title>
@@ -144,7 +134,7 @@
             </mediaobject>
         </figure>
         
-        <para>If you have previously specified user sites (see the <link linkend="UserSites">User Sites</link> chapter) they also will be  displayed in the list of project examples  in the category that was defined in the xml file with user sites settings.  </para>
+        <para>If you have previously specified user sites (see the <link linkend="UserSites">User Sites</link> chapter) they also will be  displayed in the list of project examples in the category that was defined in the XML file with user sites settings.  </para>
        <figure>
            <title>User Site</title>
            <mediaobject>
@@ -161,23 +151,20 @@
         <note>
             <title>Note:</title>
             <para>
-                The <emphasis><property>Show the Quick Fix Dialog</property></emphasis> option is described in the <link linkend="QuickFixes">Quick Fixes</link> section.
+                The <guilabel>Show the Quick Fix Dialog</guilabel> option is described in the <link linkend="QuickFixes">Quick Fixes</link> section.
             </para>
         </note>
         
         <itemizedlist>
-            <listitem><para>Press the <guibutton>Finish</guibutton> button to start downloading the project from the repository
-            </para></listitem>
-            
+            <listitem>
+            	<para>Press the <guibutton>Finish</guibutton> button to start downloading the project from the repository</para>
+            </listitem>            
         </itemizedlist>
         
-        <para>When downloading is finished the project will be imported automatically and you will be able to see it in the Package Explorer.</para>
+        <para>When downloading is finished the project will be imported automatically and you will be able to see it in the the <guilabel>Package Explorer</guilabel> view.</para>
         
-        <para>Now you can run the application on the server.
+        <para>Now you can run the application on the server.</para>
         
-        </para>
-  
-       
         <figure>
             <title>Seam Demo Application run on the Server</title>
             <mediaobject>
@@ -196,19 +183,17 @@
 ...
 <nature>org.jboss.tools.jst.web.kb.kbnature</nature>
 ]]></programlisting> 
-        <para>It is needed for correct work of <property>Code Assist</property> and <property>JSF EL Validation</property>.</para>
+        <para>It is needed for <property>Code Assist</property> and <property>JSF EL Validation</property> to function correctly.</para>
     </section>
     
     <section id="QuickFixes">
         <title>Quick Fixes</title>
         <para>
-            Project Examples Wizard has an option for making quick fixes 
-            for the imported project to easily fix possible issues like  missing servers, Seam runtimes etc.
+            The <guilabel>Project Examples Wizard</guilabel> has an option for making quick fixes for the imported project to easily fix possible issues like  missing servers, Seam runtimes etc.
         </para>
 
-        <para>To enable quick fixing option you need to check the
-            <emphasis><property>Show the Quick Fix dialog</property></emphasis> while choosing the <link linkend="DownloadingProjectExample">Project Example</link>.</para>
-        <para>When the project you selected is downloaded it will be checked for missing dependences and if there are some you will see a dialog listing the problems.</para>
+        <para>To enable the quick fix option you need to check the <guilabel>Show the Quick Fix dialog</guilabel> while choosing the <link linkend="DownloadingProjectExample">Project Example</link>.</para>
+        <para>When the project you selected is downloaded it will be checked for missing dependences and if any are detected you will see a dialog listing the problems.</para>
         <figure>
             <title>Quick Fix Dialog box</title>
             <mediaobject>
@@ -221,7 +206,7 @@
         
         <itemizedlist>
             <listitem><para>Select the problem from the list</para></listitem>
-            <listitem><para>Click <guibutton>Quick Fix</guibutton> button</para></listitem>
+            <listitem><para>Click the <guibutton>Quick Fix</guibutton> button</para></listitem>
         </itemizedlist>
         
         <para>You will be offered a solution or a number of solutions to the problem.</para>
@@ -234,11 +219,11 @@
                 </imageobject>
             </mediaobject>
         </figure>
-        <para>In this case (see the image above), when the <guibutton>Finish</guibutton> button is pressed, Seam Settings dialog box will be displayed where you need to provide a path to the Seam environment to fix the issue.</para>
+        <para>In this case (see the image above), when the <guibutton>Finish</guibutton> button is pressed, the Seam Settings dialog box will be displayed where you need to provide a path to the Seam environment in order to fix the issue.</para>
         
         <para>When the problem is fixed you will be returned to the Quick Fix dialog box with the remaining problems to be fixed.</para>
         
-        <para>There is a possibility to fix problems before downloading. When the project example is selected you will see warning message on the <property>New Project Example</property> dialog.</para>
+        <para>You can also fix problems before downloading. When the project example is selected you will see warning message on the <guilabel>New Project Example</guilabel> dialog.</para>
         
         <figure>
             <title>Requirements warning in the Project Example wizard</title>
@@ -251,8 +236,8 @@
         
         <para>To fix the problem immediately you need to:</para>
         <itemizedlist>
-            <listitem><para>Click the <guibutton>Details...</guibutton> button in the <property>New Project Example</property> dialog</para></listitem>
-            <listitem><para>Select the problem from the list in the <property>Requirement details</property> dialog box</para></listitem>
+            <listitem><para>Click the <guibutton>Details...</guibutton> button in the <guilabel>New Project Example</guilabel> dialog</para></listitem>
+            <listitem><para>Select the problem from the list in the <guilabel>Requirement details</guilabel> dialog box</para></listitem>
             <listitem><para>Click the <guibutton>Fix</guibutton> button</para></listitem>
         </itemizedlist>
         
