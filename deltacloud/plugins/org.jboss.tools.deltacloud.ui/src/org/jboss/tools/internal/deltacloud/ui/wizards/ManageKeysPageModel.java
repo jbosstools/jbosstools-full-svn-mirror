@@ -54,13 +54,13 @@ public class ManageKeysPageModel extends ObservableUIPojo {
 		if (selectedKey == null) {
 			return null;
 		}
-		cloud.deleteKey(selectedKey.getId());
-		int index = keys.indexOf(selectedKey);
-		keys.remove(selectedKey);
-		fireIndexedPropertyChange(PROP_KEYS, index, selectedKey, null);
-		DeltaCloudKey key = selectedKey;
+		DeltaCloudKey keyToDelete = selectedKey;
+		cloud.deleteKey(keyToDelete.getId());
+		int index = keys.indexOf(keyToDelete);
+		keys.remove(keyToDelete);
+		fireIndexedPropertyChange(PROP_KEYS, index, keyToDelete, null);
 		setSelectedKey(index - 1);
-		return key;
+		return keyToDelete;
 	}
 
 	public void removeKeyLocally(DeltaCloudKey key) throws DeltaCloudException, FileNotFoundException {
