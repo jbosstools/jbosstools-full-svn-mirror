@@ -378,7 +378,7 @@ statusMessages.add("MyAction Executed on:" + cal.getTime());
       	<para>You may have to refresh the project to see the new files.</para>
       </note>
       
-      <para>The test case simulates a Seam component or method execution for the <property>MyAction.myAction()</property> logic.</para>
+      <para>The test case simulates a Seam method execution for the <property>MyAction.myAction()</property> logic.</para>
       <para>To run the test case, right click on <filename>MyActionTest.xml</filename> and click <menuchoice><guimenuitem>Run As</guimenuitem><guimenuitem>TestNG Suite</guimenuitem></menuchoice> or use the <guibutton>Run As...</guibutton> toolbar shortcut as shown below.</para>
       <figure>
         <title>TestNG Running</title>
@@ -398,7 +398,7 @@ statusMessages.add("MyAction Executed on:" + cal.getTime());
         </mediaobject>
       </figure>
       <para>Now, it’s safe to test the new Seam Action in a web browser. The fastest way to do that
-        is to right click on <property>myAction.xhtml</property> and use <menuchoice><guimenuitem>Run As...</guimenuitem><guimenuitem>Run On Server</guimenuitem></menuchoice> which will show the appropriate url in the browser. Alternatively you can
+        is to right click on <filename>myAction.xhtml</filename> and use <menuchoice><guimenuitem>Run As...</guimenuitem><guimenuitem>Run On Server</guimenuitem></menuchoice> which will show the appropriate URL in the browser. Alternatively you can
         manually enter <emphasis>
           <property>http://localhost:8080/workshop/myAction.seam</property>
         </emphasis> into a browser.</para>
@@ -415,10 +415,10 @@ statusMessages.add("MyAction Executed on:" + cal.getTime());
       <title>Modify Seam Action User Interface</title>
       <para>Browse to <emphasis>
           <property>http://localhost:8080/workshop/myAction.seam</property>
-        </emphasis> and click on <property>myAction</property>. This executes the “myAction” method.
+        </emphasis> and click on the <guibutton>myAction</guibutton> button. This executes the “myAction” method.
         This looks pretty good, but we could make this page look a little better.</para>
       <para>Open <emphasis>
-          <property>WebContent/myAction.xhtml</property>
+          <filename>WebContent/myAction.xhtml</filename>
         </emphasis> in JBoss Developer Studio to use the nice facelets editor.</para>
       <figure>
         <title>Open Seam Action with Editor </title>
@@ -439,9 +439,7 @@ statusMessages.add("MyAction Executed on:" + cal.getTime());
         </mediaobject>
       </figure>
       <para>Change the <property>value</property> of the button to something different. If desired,
-        you can change any other text on the page. Then, type <emphasis>
-          <property>CTRL + S</property>
-        </emphasis> to save the facelet.</para>
+        you can change any other text on the page. Then, type <keycombo><keycap>CTRL</keycap><keycap>S</keycap></keycombo> to save the facelet.</para>
       <figure>
         <title>Attributes Dialog</title>
         <mediaobject>
@@ -453,8 +451,7 @@ statusMessages.add("MyAction Executed on:" + cal.getTime());
       <para>Refresh <emphasis>
           <property>http://localhost:8080/workshop/myAction.seam</property>
         </emphasis> and now you should see your changes.</para>
-      <para>Notice that you did not have to publish the application. JBoss Developer Studio
-        auto-published it for you.</para>
+      <para>Notice that you did not have to publish the application. JBoss Developer Studio auto-published it for you.</para>
       <figure>
         <title>Seam Action Is Modified</title>
         <mediaobject>
@@ -467,15 +464,15 @@ statusMessages.add("MyAction Executed on:" + cal.getTime());
   </section>
   <section id="declarative_security">
     <title>Declarative Security</title>
-    <para>In this section you will see how it’s easy to secure the facelets and facelet components
+    <para>In this section you will see how easy it is to secure the facelets and facelet components
       in Seam. Let’s go ahead and secure the action button, then we will secure the entire
       page.</para>
     <section id="edit_login">
       <title>Edit Login Authentication Logic</title>
-      <para>There is a class called <property>Authenticator.java</property>. The login page will
+      <para>There is a class called <filename>Authenticator.java</filename>. The login page will
         execute the <property>Authenticator.authenticate()</property> method by default, so we’ll
         start by viewing the authentication logic.</para>
-      <para>Open <property>Authenticator.java</property> in JBoss Developer Studio and you will see that it contains the
+      <para>Open <filename>Authenticator.java</filename> in JBoss Developer Studio and you will see that it contains the
           <property>authenticate()</property> method with this code:</para>
       <programlisting><![CDATA[public boolean authenticate()
     {
@@ -493,7 +490,7 @@ statusMessages.add("MyAction Executed on:" + cal.getTime());
     </section>
     <section id="secure_seam_page">
       <title>Secure Seam Page Component</title>
-      <para>Open <property>myAction.xhtml</property> and add a new secured command button:</para>
+      <para>Open <filename>myAction.xhtml</filename> and add a new secured command button:</para>
       <programlisting><![CDATA[<h:commandButton id="myActionSecured"
 value="Secured Action Button"
 action="#{myAction.myAction}"
@@ -523,7 +520,7 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
       <para>The user is logged in as <property>&quot;admin&quot;</property>. Securing components is
         easy but securing pages is pretty simple as well. </para>
       <para>Open <emphasis>
-          <property>WebContent/WEB-INF/pages.xml</property>
+          <filename>WebContent/WEB-INF/pages.xml</filename>
         </emphasis>. Then add this markup directly underneath the &lt;pages&gt; element:</para>
       <programlisting><![CDATA[<page view-id="/myAction.xhtml" login-required="true"/>]]></programlisting>
       <para>Refresh <emphasis>
@@ -553,9 +550,8 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
       <title>Database Connectivity Setup</title>
       <para>The workshop data can be browsed inside of JBoss Developer Studio.</para>
       <para>To open the Data Source Explorer, click on <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Open Perspective</guimenuitem><guimenuitem>Other</guimenuitem><guimenuitem>Database Development</guimenuitem></menuchoice>.</para>
-      <para>In the Data Source Explorer, expand a <property>Databases</property> node and select a
-          <property>Default</property> database. Right click on it, select <property
-          >Connect</property> from the context menu.</para>
+      <para>In the Data Source Explorer, expand the <property>Databases</property> node and select the
+          <property>Default</property> database. Right click on it, select <guimenuitem>Connect</guimenuitem> from the context menu.</para>
       <figure>
         <title>Data Source Explorer</title>
         <mediaobject>
@@ -601,14 +597,13 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
   <section id="db_programming">
     <title>Database Programming</title>
     <para>Now, it’s time to reverse engineer the workshop database into a fully functioning Seam
-      CRUD(Create Read Update Delete) application.</para>
+      CRUD (Create Read Update Delete) application.</para>
     <section id="reverse_engineer_crud">
       <title>Reverse Engineer CRUD from a Running Database</title>
-      <para>In <property>JBoss Developer Studio</property>, switch to <property>Seam
-          perspective</property>, and then right-click the project and select <emphasis><property
-            >New > Seam Generate Entities</property>.</emphasis></para>
-      <para>&quot;workshop&quot; project in the <property>Seam Generate Entities wizard</property>
-        will be selected automatically. There is no need to change something more, click the <guibutton>Next</guibutton> button to proceed further.</para>
+      <para>In <property>JBoss Developer Studio</property>, switch to the <property>Seam
+          perspective</property>, and then right-click the project and select <menuchoice><guimenuitem>New</guimenuitem><guimenuitem>Seam Generate Entities</guimenuitem></menuchoice>.</para>
+      <para>The &quot;workshop&quot; project in the <property>Seam Generate Entities wizard</property>
+        will be selected automatically. There is no need to change something more, click the <guibutton>Next</guibutton> button to proceed to the next step.</para>
       <figure>
         <title>Generate Seam Entities</title>
         <mediaobject>
@@ -637,7 +632,7 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
           </imageobject>
         </mediaobject>
       </figure>
-      <para>There are also <emphasis>
+      <para>There is also the <emphasis>
           <property>org.domain.workshop.entity</property>
         </emphasis> package that contains the JPA classes. These are the entity beans that are
         mapped to database tables. Note that you can use Seam refactoring tools with Seam components.
@@ -655,13 +650,13 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
       <note>
       	<title>Tip</title>
       	<para>
-      		If you see the error <emphasis>java.lang.ClassNotFoundException: org.jboss.seam.servlet.SeamListener</emphasis> in the console output from the Application Server, you may need to copy the <filename>jboss-seam.jar</filename> file from the <filename>lib</filename> subdirectoy in the Seam library (which can be downloaded from <ulink url="http://seamframework.org/Seam2/Seam2DistributionDownloads">here</ulink>) into the <filename>/server/default/deploy/workshop.war/WEB-INF/lib/</filename> subdirectory in your Application Server (where "default" refers to the server profile that you are using).
+      		If you see the error <code>java.lang.ClassNotFoundException: org.jboss.seam.servlet.SeamListener</code> in the console output from the Application Server, you may need to copy the <filename>jboss-seam.jar</filename> file from the <filename>lib</filename> subdirectoy in the Seam library (which can be downloaded from <ulink url="http://seamframework.org/Seam2/Seam2DistributionDownloads">here</ulink>) into the <filename>/server/default/deploy/workshop.war/WEB-INF/lib/</filename> subdirectory in your Application Server (where "default" refers to the server profile that you are using).
       	</para>
       </note>
       <note>
       	<title>Tip</title>
       	<para>
-      		If you see the error <emphasis>Could not instantiate Seam component: org.jboss.seam.security.ruleBasedPermissionResolver</emphasis>, copy the <filename>mvel2.jar</filename> file from the Seam library to the same destination directory mentioned in the tip above.
+      		If you see the error <code>Could not instantiate Seam component: org.jboss.seam.security.ruleBasedPermissionResolver</code>, copy the <filename>mvel2.jar</filename> file from the Seam library to the same destination directory mentioned in the tip above.
       	</para>
       </note>
         
@@ -673,15 +668,14 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
           </imageobject>
         </mediaobject>
       </figure>
-      <para>Congratulations! You now have a fully functioning CRUD application that is already AJAX
-        enabled.</para>
+      <para>Congratulations! You now have a fully functioning CRUD application that is AJAX enabled.</para>
     </section>
     <section id="use_hibernate_tools">
       <title>Use Hibernate Tools to Query Data via JPA</title>
       <para>Now, it&apos;s time to write some JPA queries using the Hibernate perspective in
           <property>JBoss Developer Studio</property>.</para>
       <para>In the upper right corner of the workbench there is a small icon (see the figure below),
-        click on it and choose <property>Hibernate</property>.</para>
+        click on it and select <guimenuitem>Hibernate</guimenuitem>.</para>
       <figure>
         <title>Hibernate Perspective</title>
         <mediaobject>
@@ -701,8 +695,8 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
           </imageobject>
         </mediaobject>
       </figure>
-      <para>Right click on the <property>Session Factory</property> and select <property>HQL
-          Editor</property>. This will open a JPA query scratch pad window.</para>
+      <para>Right click on the <property>Session Factory</property> and select <guimenuitem>HQL
+          Editor</guimenuitem>. This will open a JPA query scratch pad window.</para>
       <para>Write your query and click on the &quot;Hibernate Dynamic SQL Preview&quot; tab. You
         should see the SQL that will be executed if this JPA query is run.</para>
       <figure>
@@ -714,7 +708,7 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
         </mediaobject>
       </figure>
       <para>Run the query by clicking on the green run icon.</para>
-      <para>The results are listed in the &quot;Hibernate Query Result&quot; tab. There is a
+      <para>The results are listed in the &quot;Hibernate Query Result&quot; view. There is a
         &quot;Properties&quot; tab in the workbench that can be used to see a specific JPA result.
         These results represent the JPA objects because our query did not specify column
         names.</para>
@@ -766,7 +760,7 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
       <para>Now, it’s time to view the data model for the workshop database.</para>
       <para>In the Hibernate Configurations view, select &quot;workshop&quot; project and expand the
           <property>Configuration</property> node. Select the <property>Customers</property> entity,
-        right click on it, choose <property>Mapping Diagram</property>.</para>
+        right click on it, choose <guimenuitem>Mapping Diagram</guimenuitem>.</para>
       <figure>
         <title>Mapping Diagram Opening</title>
         <mediaobject>
@@ -794,9 +788,7 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
         <property>inputNumberSlider</property> to the Order Details edit screen.</para>
     <section id="add_richfaces">
       <title>Add a Richfaces component to the CRUD Application</title>
-      <para>Switch to Seam perspective, open <emphasis>
-          <property>WebContent/OrderdetailsEdit.xhtml</property>
-        </emphasis> in JBoss Developer Studio.</para>
+      <para>Switch to Seam perspective, and open <filename>WebContent/OrderdetailsEdit.xhtml</filename> in JBoss Developer Studio.</para>
       <para>Change the form field values using the visual editor. Seam has generated the form field
         names that match the database column names. This is not ideal for business users.</para>
       <figure>
