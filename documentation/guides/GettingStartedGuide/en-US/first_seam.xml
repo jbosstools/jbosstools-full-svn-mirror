@@ -199,7 +199,7 @@
           </imageobject>
         </mediaobject>
       </figure>
-      <para>Now, the <property>Test Connection</property> should succeed. After testing the
+      <para>Now, the <guibutton>Test Connection</guibutton> should succeed. After testing the
         connection, click the <guibutton>OK</guibutton> button.</para>
       <figure>
         <title>Connection Testing</title>
@@ -209,8 +209,7 @@
           </imageobject>
         </mediaobject>
       </figure>
-      <para>You can leave the <property>Code Generation</property> section as is. It refers to Java
-      packages in which the generated code will be placed.</para>
+      <para>You can leave the <property>Code Generation</property> section as is. It refers to Java packages in which the generated code will be placed.</para>
       
       <figure>
         <title>Code Generation Setting</title>
@@ -227,8 +226,7 @@
           it should be "MyProject-test".</para>
       </note>
       
-      <para>Click on <guibutton>Finish</guibutton> button. Now, there should be a new Seam project
-        called “workshop” listed in Package Explorer view.</para>
+      <para>Click on <guibutton>Finish</guibutton> button. Now, there should be a new Seam project called “workshop” listed in the Package Explorer view.</para>
       <figure>
         <title>&quot;worskhop&quot; Project in the Package Explorer</title>
         <mediaobject>
@@ -240,15 +238,14 @@
     </section>
     <section id="start_JBossAS">
       <title>Start JBoss Application Server</title>
-      <para>The complete information on how to manage JBoss AS from JBoss Developer Studio you can
-        read in a <link linkend="manage">corresponding chapter</link>.</para>
+      <para>The complete information on how to manage JBoss AS from JBoss Developer Studio can be found in the <link linkend="manage">corresponding chapter</link>.</para>
       <para>Now you just need to start the server by clicking on the Start the server icon (
           <inlinemediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam15.png"/>
           </imageobject>
         </inlinemediaobject> ) in the <property>Servers</property> view.</para>
-      <para>Then run the project by selecting the project and use <menuchoice><guimenuitem>Run As...</guimenuitem><guimenuitem>Run on Server</guimenuitem></menuchoice>.</para>
+      <para>Then run the project by selecting the project then selecting <menuchoice><guimenuitem>Run As...</guimenuitem><guimenuitem>Run on Server</guimenuitem></menuchoice>.</para>
             
       <figure>
         <title>&quot;worskhop&quot; Run As</title>
@@ -276,7 +273,7 @@
         <title>Note:</title>
         <para>If the project does not show up, then you can use a normal browser and use <emphasis>
             <property>http://localhost:8080/workshop/home.seam</property>
-          </emphasis> as the url.</para>
+          </emphasis> as the URL.</para>
       </note>
       <para>Your project looks like this:</para>
       <figure>
@@ -292,20 +289,15 @@
       <title>Workshop Project Code Overview</title>
       <para>Now let's examine the project and its structure. Go back to the Package Explorer view in
         JBoss Developer Studio.</para>
-      <para>It seems like it&apos;s not much for project but this shell application contains a login
+      <para>It seems like it&apos;s not much for a project but this shell application contains a login
         screen with default login logic, a menu template that can be further modified, and other
         layout templates.</para>
-      <para>It&apos;s important to note that the business logic will reside in the <emphasis>
-          <property>src/hot</property>
-        </emphasis> folder, by default. And, the package naming conventions that were used in
-          <property>New Seam project wizard</property> could have been changed to something
+      <para>It&apos;s important to note that the business logic will reside in the <filename>src/hot</filename> folder, by default. And, the package naming conventions that were used in <property>New Seam project wizard</property> could have been changed to something
         different from <emphasis>
           <property>org.domain.workshop.session</property>. </emphasis> Also, notice that there is a
         default <filename>Authenticator.java</filename> file. This is where custom security logic
-        can be added. Seam has a nice declarative security model that we will explore in a bit more
-        detail later on. The <emphasis>
-          <property>src/main</property>
-        </emphasis> folder is a model directory. It stores the project&apos;s JPA entity
+        can be added. Seam has a nice declarative security model that we will explore in more
+        detail later on. The <filename>src/main</filename> folder is a model directory. It stores the project&apos;s JPA entity
         beans.</para>
       <figure>
         <title>Project Structure</title>
@@ -316,9 +308,8 @@
         </mediaobject>
       </figure>
       <para>The view tier of the application is also important. Seam uses facelets and there is a
-        built-in facelets GUI editor that has some nice WYSIWYG and component drag/drop
-        functionality. Try this out by opening <property>home.xhtml</property> from <property
-          >WebContent</property> folder.</para>
+        built-in facelets GUI editor that includes nice WYSIWYG and component drag/drop
+        functionality. Try this out by opening <filename>home.xhtml</filename> from <filename>WebContent</filename> folder.</para>
       <figure>
         <title>Facelets GUI Editor</title>
         <mediaobject>
@@ -327,26 +318,22 @@
           </imageobject>
         </mediaobject>
       </figure>
-      <para>Notice that the templates reside in the <emphasis>
-          <property>WebContent/layout</property>
-        </emphasis> folder. There is a stylesheet in the <emphasis>
-          <property>WebContent/stylesheet</property>
-        </emphasis> folder. There is also a login and default error page. The Facelet editor will be
+      <para>Notice that the templates reside in the <filename>WebContent/layout</filename> folder. There is a stylesheet in the <filename>WebContent/stylesheet</filename> folder. There is also a login and default error page. The Facelet editor will be
         explored in more detail later in the lab.</para>
-      <para>The project already has a datasource that was created per the Seam project wizard
-        database settings. And, obviously all of the Seam specific configuration files and JAR
-        dependencies are included and placed in the proper locations. On last noteworthy line item
-        is related to the build script. There isn’t a build script because the Eclipse WTP(Web Tools
+      <para>The project already has a datasource that was created via the Seam project wizard
+        database settings. All of the Seam specific configuration files and JAR
+        dependencies are included and located in their proper locations. On last noteworthy line item
+        is related to the build script. There isn’t a build script because the Eclipse WTP (Web Tools
         Project) plugin is used to publish web application changes. As you can see, JBoss Developer
         Studio is removing a great deal of complexity from the enterprise Java project
-        setup/deployment process. The end result is a developer that is writing code, not spending
-        days/weeks trying to figure out how to get a decent development environment and project
+        setup and deployment process. The end result is the developer is writing code, not spending
+        time trying to figure out how to get a decent development environment and project
         build process.</para>
     </section>
   </section>
   <section id="seam_action_dev">
     <title>Seam Action Development</title>
-    <para>Now, it’s time to write some code. The good news is that JBoss Developer Studio can also
+    <para>Now it’s time to write some code. The good news is that JBoss Developer Studio can also
       help out in this respect. In this section, we will create a new Seam Action POJO and facelet
       with some custom business logic and some GUI changes.</para>
     <section id="create_seam_action">
@@ -363,7 +350,7 @@
           </imageobject>
         </mediaobject>
       </figure>
-      <para>Now, open the <property>MyAction.java</property> file and replace the
+      <para>Now, open the <filename>MyAction.java</filename> file and replace the
         &quot;myAction&quot; method with this logic:</para>
       <programlisting><![CDATA[public void myAction() {
 Calendar cal = Calendar.getInstance();
@@ -371,7 +358,7 @@ log.info("myAction.myAction() action called");
 statusMessages.add("MyAction Executed on:" + cal.getTime());
 }]]></programlisting>
       <para>You also need to import the <property>java.util.Calendar</property> class by clicking
-            <emphasis><property>CTRL + Shift + O</property>.</emphasis></para>
+           <keycombo><keycap>CTRL</keycap><keycap>Shift</keycap><keycap>O</keycap></keycombo>.</para>
     </section>
     <section id="test_seam_action">
       <title>Test Seam Action</title>
@@ -391,10 +378,8 @@ statusMessages.add("MyAction Executed on:" + cal.getTime());
       	<para>You may have to refresh the project to see the new files.</para>
       </note>
       
-      <para>The test case simulates a Seam component/method execution for the <property
-          >MyAction.myAction()</property> logic.</para>
-      <para>To run the test case, right click on <property>MyActionTest.xml</property> and click <menuchoice><guimenuitem>Run As</guimenuitem><guimenuitem>TestNG Suite</guimenuitem></menuchoice> or use the <guibutton>Run As...</guibutton> toolbar shortcut as shown
-        below.</para>
+      <para>The test case simulates a Seam component or method execution for the <property>MyAction.myAction()</property> logic.</para>
+      <para>To run the test case, right click on <filename>MyActionTest.xml</filename> and click <menuchoice><guimenuitem>Run As</guimenuitem><guimenuitem>TestNG Suite</guimenuitem></menuchoice> or use the <guibutton>Run As...</guibutton> toolbar shortcut as shown below.</para>
       <figure>
         <title>TestNG Running</title>
         <mediaobject>
