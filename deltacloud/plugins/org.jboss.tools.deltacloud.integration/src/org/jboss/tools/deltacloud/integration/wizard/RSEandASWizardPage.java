@@ -290,6 +290,9 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 			// ignore
 		}
 
+		if( !createRSE.getSelection()) 
+			return null;
+		
 		CreateRSEFromInstanceJob j = 
 			new CreateRSEFromInstanceJob(instance, INewInstanceWizardPage.NEW_INSTANCE_FAMILY);
 
