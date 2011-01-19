@@ -25,7 +25,7 @@
 					<itemizedlist>
 						<listitem>
 							<para>
-								<ulink url="https://issues.jboss.org/browse/JBIDE-8124">JBIDE-8124</ulink>: The <guilabel>New CDI Bean</guilabel> wizard has been added to provide a convenient way to create new CDI Java classes with the <code>@Named</code>, <scope>@Scope</scope> and <code>@Qualifier</code> annotations. The wizard can be accessed by selecting <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>New</guimenuitem><guimenuitem>Other</guimenuitem><guimenuitem>CDI (Context and Dependency Injection)</guimenuitem><guimenuitem>Bean</guimenuitem></menuchoice>.
+								<ulink url="https://issues.jboss.org/browse/JBIDE-8124">JBIDE-8124</ulink>: The <guilabel>New CDI Bean</guilabel> wizard has been added to provide a convenient way to create new CDI Java classes with the <code>@Named</code>, <code>@Scope</code> and <code>@Qualifier</code> annotations. The wizard can be accessed by selecting <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>New</guimenuitem><guimenuitem>Other</guimenuitem><guimenuitem>CDI (Context and Dependency Injection)</guimenuitem><guimenuitem>Bean</guimenuitem></menuchoice>.
 							</para>
 						</listitem>					
 							<listitem>
