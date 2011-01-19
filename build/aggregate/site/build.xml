@@ -207,8 +207,11 @@ DEST = ${aggegate.zips.dir}/@{zipPath}
 				<echo file="${update.site.source.dir}/content.xml" append="true">  &lt;/references>
 &lt;/repository>
 </echo>
+				<copy file="${update.site.source.dir}/content.xml" tofile="${update.site.source.dir}/content.old.xml" overwrite="true" />
+				<xslt style="remove-uncategorized.xsl" in="${update.site.source.dir}/content.old.xml" out="${update.site.source.dir}/content.xml" />
 				<zip destfile="${update.site.source.dir}/content.jar" basedir="${update.site.source.dir}" includes="content.xml" />
 				<delete file="${update.site.source.dir}/content.xml" />
+				<delete file="${update.site.source.dir}/content.old.xml" />
 			</then>
 		</if>
 	</target>
