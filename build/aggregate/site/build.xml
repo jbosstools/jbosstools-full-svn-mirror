@@ -207,9 +207,6 @@ DEST = ${aggegate.zips.dir}/@{zipPath}
 				<echo file="${update.site.source.dir}/content.xml" append="true">  &lt;/references>
 &lt;/repository>
 </echo>
-				
-				<xslt style="remove-uncategorized.xsl" in="${update.site.source.dir}/content.xml" out="${update.site.source.dir}/content.new.xml" />
-				<move file="${update.site.source.dir}/content.new.xml" tofile="${update.site.source.dir}/content.xml" overwrite="true" />
 				<zip destfile="${update.site.source.dir}/content.jar" basedir="${update.site.source.dir}" includes="content.xml" />
 				<delete file="${update.site.source.dir}/content.xml" />
 			</then>
@@ -357,13 +354,4 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 		<delete dir="${aggegate.zips.dir}" quiet="true" />
 	</target>
 
-	<target name="remove-uncategorized" >
-		<!-- content.jar - full path to content.jar -->
-		<property name="content.jar" value="/home/eskimo/Temp/content.jar" />
-		<mkdir dir="${java.io.tmpdir}/content"/>
-		<unzip src="${content.jar}" dest="${java.io.tmpdir}/content" />
-		
-		<xslt style="remove-uncategorized.xsl" in="${java.io.tmpdir}/content/content.xml" out="${java.io.tmpdir}/content/content.xml">
-		</xslt>		
-	</target>
 </project>
