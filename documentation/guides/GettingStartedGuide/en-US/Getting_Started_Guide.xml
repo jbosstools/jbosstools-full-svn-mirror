@@ -4,6 +4,8 @@
 <book>
 <xi:include href="Book_Info.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
 <xi:include href="Preface.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
+<xi:include href="introduction.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
+<xi:include href="installation.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
 <xi:include href="getting_started.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
 <xi:include href="manage.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
 <xi:include href="first_seam.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
