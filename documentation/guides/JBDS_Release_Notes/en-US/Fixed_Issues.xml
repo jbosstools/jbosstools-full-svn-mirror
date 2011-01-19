@@ -334,6 +334,11 @@
 	   <title>Deltacloud</title>
 	   <para>
 	      <itemizedlist>
+	      	<listitem>
+	      		<para>
+	      			<ulink url="https://issues.jboss.org/browse/JBIDE-7761">JBIDE-7761</ulink>: The <guimenuitem>Show in Remote System Explorer...</guimenuitem> option is now available in the Cloud View context menu.
+	      		</para>
+	      	</listitem>
 					<listitem>
 				    <para>
 		    			<ulink url="https://issues.jboss.org/browse/JBIDE-7186">JBIDE-7186</ulink>: Previously when publishing to a remote server the progress bar and percentage indicator provided insufficient information on the actions that were being undertaken during what could be a time consuming process. In this version the progress monitor now shows more detailed information such as the name of the individual file that is being uploaded or the name of the directory that is currently being created.
