@@ -42,6 +42,8 @@
 		</taskdef>
 	</target>
 
+	<target name="custom.build" description="aggregate update site extras" depends="init,check.target,add.associate.sites,add.web.content,pack.zip,collect.zips,collect.metadata,create.summary.file" />
+
 	<!-- = = = = = = = = = = = = = = = = =
           macrodef: fetchZipsFromList - given a list of zips in zip.list.txt, fetch those zips           
          = = = = = = = = = = = = = = = = = -->
@@ -62,6 +64,16 @@
 				<arg line="${location.cleaned}/logs/zip.list.txt -q --no-clobber" />
 			</exec>
 			<!--get src="${location.cleaned}/logs/zip.list.txt" dest="${aggegate.zips.dir}/zip.list.txt" ignoreerrors="true" /-->
+
+			<!-- get the SVN_REVISION.txt (or .xml) file, as ${aggegate.zips.dir}/SVN_REVISION.txt -->
+			<var name="svnRevTXT" value="${aggegate.zips.dir}/SVN_REVISION.txt" />
+			<var name="svnRevXML" value="${aggegate.zips.dir}/SVN_REVISION.xml" />
+			<exec executable="wget" dir="${aggegate.zips.dir}" failonerror="false" failifexecutionfails="true" resultproperty="wget.return" outputproperty="null">
+				<arg line="${location.cleaned}/logs/SVN_REVISION.txt -q --no-clobber" />
+			</exec>
+			<exec executable="wget" dir="${aggegate.zips.dir}" failonerror="false" failifexecutionfails="true" resultproperty="wget.return" outputproperty="null">
+				<arg line="${location.cleaned}/logs/SVN_REVISION.xml -q --no-clobber" />
+			</exec>
 			<if>
 				<and>
 					<equals arg1="${wget.return}" arg2="0" />
@@ -78,10 +90,12 @@
 							<for list="${ALL_ZIPS}" delimiter=", " keepgoing="true" param="zipPath">
 								<sequential>
 									<propertyregex override="true" property="relativePath" defaultvalue="" input="@{zipPath}" regexp="(.+)/([^/]+.zip)" replace="\1" />
+									<propertyregex override="true" property="svnrevPath" defaultvalue="" input="@{zipPath}" regexp=".zip" replace=".SVN_REVISION" />
 									<mkdir dir="${aggegate.zips.dir}/${relativePath}" />
 									<!-- fetch zips to local dir -->
 									<echo level="verbose">repoNum = @{repoNum}
 relativePath = ${relativePath}
+svnrevPath = ${svnrevPath}
 zipPath = @{zipPath}
 DEST = ${aggegate.zips.dir}/@{zipPath}
 </echo>
@@ -96,7 +110,6 @@ DEST = ${aggegate.zips.dir}/@{zipPath}
 											<exec executable="wget" dir="${aggegate.zips.dir}" failonerror="false" failifexecutionfails="false" resultproperty="wget.return" outputproperty="null">
 												<arg line="${location.cleaned}/@{zipPath} -q --no-clobber" />
 											</exec>
-											<!--get src="${location.cleaned}/@{zipPath}" dest="${aggegate.zips.dir}/@{zipPath}" /-->
 											<if>
 												<not>
 													<equals arg1="${wget.return}" arg2="0" />
@@ -107,9 +120,23 @@ DEST = ${aggegate.zips.dir}/@{zipPath}
 											</if>
 										</else>
 									</if>
+									<if>
+										<available file="${svnRevTXT}" type="file" />
+										<then>
+											<copy file="${svnRevTXT}" tofile="${aggegate.zips.dir}/${svnrevPath}.txt" />
+										</then>
+									</if>
+									<if>
+										<available file="${svnRevXML}" type="file" />
+										<then>
+											<copy file="${svnRevXML}" tofile="${aggegate.zips.dir}/${svnrevPath}.xml" />
+										</then>
+									</if>
+
 								</sequential>
 							</for>
 							<var name="relativePath" unset="true" />
+							<var name="svnrevPath" unset="true" />
 						</then>
 					</if>
 					<var unset="true" name="ALL_ZIPS" />
@@ -120,6 +147,8 @@ DEST = ${aggegate.zips.dir}/@{zipPath}
 				</else>
 			</if>
 			<var name="location.cleaned" unset="true" />
+			<delete file="${svnRevFile}" quiet="true" />
+			<var name="svnRevFile" unset="true" />
 		</sequential>
 	</macrodef>
 
@@ -308,8 +337,6 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 		</for>
 	</target>
 
-	<target name="custom.build" description="aggregate update site extras" depends="init,check.target,add.associate.sites,add.web.content,pack.zip,collect.zips" />
-
 	<target name="test.collect.zips.from.metadata" depends="init">
 		<property name="isTest" value="true" />
 		<antcall target="collect.zips">
@@ -352,6 +379,22 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 
 	<target name="test.collect.zips.with.error" depends="test.collect.zips.from.metadata.with.errors,test.collect.zips.from.list.with.errors">
 		<delete dir="${aggegate.zips.dir}" quiet="true" />
+	</target>
+
+	<target name="collect.metadata" description="collect svn revision files + other metadata (JOB_NAME BUILD_ID, BUILD_NUMBER, WORKSPACE, HUDSON_SLAVE)">
+		<!-- TODO: write this method -->
+	</target>
+
+	<target name="create.summary.file" description="create summary file with list of generated files, sizes, and SVN revisions all linked and ordered by source build job">
+		<!-- TODO: write this method -->
+	</target>
+
+	<target name="test.create.summary.file" depends="test.collect.zips">
+		<property name="isTest" value="true" />
+		<antcall target="collect.metadata">
+		</antcall>
+		<antcall target="create.summary.file">
+		</antcall>
 	</target>
 
 </project>
