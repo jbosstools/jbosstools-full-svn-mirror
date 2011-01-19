@@ -55,7 +55,7 @@ wget -q http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/${BUILD_NUMBER}/consol
 # JBDS-1361 - fetch XML and then sed it into plain text
 rl=${STAGINGDIR}/logs/SVN_REVISION
 rm -f ${rl}.txt ${rl}.xml
-wget -q --no-clobber -O ${rl}.xml "http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/${BUILD_NUMBER}/api/xml?depth=1&xpath=//build[1]/changeSet"
+wget -q --no-clobber -O ${rl}.xml "http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/api/xml?depth=1&xpath=//build[1]/changeSet"
 sed -e "s#<module>\(http[^<>]\+\)</module><revision>\([0-9]\+\)</revision>#\1\@\2\n#g" ${rl}.xml | \
    sed -e "s#<kind>\([^<>]\+\)</kind>#\1\n#g" | sed -e "s#<[^<>]\+>##g" > ${rl}.txt
 
