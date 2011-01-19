@@ -59,21 +59,28 @@
 			<!-- fetch zip.list.txt file, if available -->
 			<var unset="true" name="ALL_ZIPS" />
 			<var unset="true" name="wget.return" />
-			<!-- quieter output and return code check w/ wget instead of <get> -->
 			<exec executable="wget" dir="${aggegate.zips.dir}" failonerror="false" failifexecutionfails="true" resultproperty="wget.return" outputproperty="null">
 				<arg line="${location.cleaned}/logs/zip.list.txt -q --no-clobber" />
 			</exec>
-			<!--get src="${location.cleaned}/logs/zip.list.txt" dest="${aggegate.zips.dir}/zip.list.txt" ignoreerrors="true" /-->
 
-			<!-- get the SVN_REVISION.txt (or .xml) file, as ${aggegate.zips.dir}/SVN_REVISION.txt -->
+			<echo level="verbose">Fetch SVN_REVISION.txt if it exists (return 8 if not found)</echo>
 			<var name="svnRevTXT" value="${aggegate.zips.dir}/SVN_REVISION.txt" />
-			<var name="svnRevXML" value="${aggegate.zips.dir}/SVN_REVISION.xml" />
 			<exec executable="wget" dir="${aggegate.zips.dir}" failonerror="false" failifexecutionfails="true" resultproperty="wget.return" outputproperty="null">
 				<arg line="${location.cleaned}/logs/SVN_REVISION.txt -q --no-clobber" />
 			</exec>
+
+			<echo level="verbose">Fetch SVN_REVISION.xml if it exists (return 8 if not found)</echo>
+			<var name="svnRevXML" value="${aggegate.zips.dir}/SVN_REVISION.xml" />
 			<exec executable="wget" dir="${aggegate.zips.dir}" failonerror="false" failifexecutionfails="true" resultproperty="wget.return" outputproperty="null">
 				<arg line="${location.cleaned}/logs/SVN_REVISION.xml -q --no-clobber" />
 			</exec>
+
+			<echo level="verbose">Fetch build.properties if it exists (return 8 if not found)</echo>
+			<var name="buildProperties" value="${aggegate.zips.dir}/build.properties" />
+			<exec executable="wget" dir="${aggegate.zips.dir}" failonerror="false" failifexecutionfails="true" resultproperty="wget.return" outputproperty="null">
+				<arg line="${location.cleaned}/logs/build.properties -q --no-clobber" />
+			</exec>
+
 			<if>
 				<and>
 					<equals arg1="${wget.return}" arg2="0" />
@@ -90,12 +97,19 @@
 							<for list="${ALL_ZIPS}" delimiter=", " keepgoing="true" param="zipPath">
 								<sequential>
 									<propertyregex override="true" property="relativePath" defaultvalue="" input="@{zipPath}" regexp="(.+)/([^/]+.zip)" replace="\1" />
+
 									<propertyregex override="true" property="svnrevPath" defaultvalue="" input="@{zipPath}" regexp=".zip" replace=".SVN_REVISION" />
+									<propertyregex override="true" property="svnrevPath" defaultvalue="${svnrevPath}" input="${svnrevPath}" regexp="-Sources-|-Update-" replace="-" />
+
+									<propertyregex override="true" property="buildPropertiesPath" defaultvalue="" input="@{zipPath}" regexp=".zip" replace=".build.properties" />
+									<propertyregex override="true" property="buildPropertiesPath" defaultvalue="${buildPropertiesPath}" input="${buildPropertiesPath}" regexp="-Sources-|-Update-" replace="-" />
+
 									<mkdir dir="${aggegate.zips.dir}/${relativePath}" />
 									<!-- fetch zips to local dir -->
 									<echo level="verbose">repoNum = @{repoNum}
 relativePath = ${relativePath}
 svnrevPath = ${svnrevPath}
+buildPropertiesPath = ${buildPropertiesPath}
 zipPath = @{zipPath}
 DEST = ${aggegate.zips.dir}/@{zipPath}
 </echo>
@@ -120,6 +134,8 @@ DEST = ${aggegate.zips.dir}/@{zipPath}
 											</if>
 										</else>
 									</if>
+									
+									<!-- rename the svn and build properties files so they align with the zip names -->
 									<if>
 										<available file="${svnRevTXT}" type="file" />
 										<then>
@@ -132,11 +148,17 @@ DEST = ${aggegate.zips.dir}/@{zipPath}
 											<copy file="${svnRevXML}" tofile="${aggegate.zips.dir}/${svnrevPath}.xml" />
 										</then>
 									</if>
-
+									<if>
+										<available file="${buildProperties}" type="file" />
+										<then>
+											<copy file="${buildProperties}" tofile="${aggegate.zips.dir}/${buildPropertiesPath}.txt" />
+										</then>
+									</if>
 								</sequential>
 							</for>
 							<var name="relativePath" unset="true" />
 							<var name="svnrevPath" unset="true" />
+							<var name="buildPropertiesPath" unset="true" />
 						</then>
 					</if>
 					<var unset="true" name="ALL_ZIPS" />
@@ -147,7 +169,9 @@ DEST = ${aggegate.zips.dir}/@{zipPath}
 				</else>
 			</if>
 			<var name="location.cleaned" unset="true" />
-			<delete file="${svnRevFile}" quiet="true" />
+			<delete file="${svnRevXML}" quiet="true" />
+			<delete file="${svnRevTXT}" quiet="true" />
+			<delete file="${buildProperties}" quiet="true" />
 			<var name="svnRevFile" unset="true" />
 		</sequential>
 	</macrodef>
@@ -353,15 +377,26 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 		</antcall>
 	</target>
 
-	<target name="test.collect.zips.from.list" depends="init">
+	<target name="test.collect.zips.from.list.xml" depends="init">
+		<property name="isTest" value="true" />
+		<antcall target="collect.zips">
+			<param name="inputRepos" value="1,2,3" />
+			<param name="inputRepo1" value="http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--smooks" />
+			<param name="inputRepo2" value="http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--modeshape" />
+			<param name="inputRepo3" value="http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--deltacloud" />
+		</antcall>
+	</target>
+
+	<target name="test.collect.zips.from.list.txt" depends="init">
 		<property name="isTest" value="true" />
 		<antcall target="collect.zips">
 			<param name="inputRepos" value="1,2,3,4,5" />
-			<param name="inputRepo1" value="http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--tests" />
+			<param name="inputRepo1" value="http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--tests/" />
 			<param name="inputRepo2" value="http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--common/all/repo" />
 			<param name="inputRepo3" value="http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--jmx/all/repo/" />
 			<param name="inputRepo4" value="http://download.jboss.org/jbosstools/builds/staging/jbosstools-savara-1.1_trunk/tools/" />
 			<param name="inputRepo5" value="http://download.jboss.org/jbosstools/builds/staging/jbosstools-savara-1.1_trunk/tools" />
+
 		</antcall>
 	</target>
 
@@ -373,7 +408,7 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 		</antcall>
 	</target>
 
-	<target name="test.collect.zips" depends="test.collect.zips.from.metadata,test.collect.zips.from.list">
+	<target name="test.collect.zips" depends="test.collect.zips.from.metadata,test.collect.zips.from.list.txt,test.collect.zips.from.list.xml">
 		<delete dir="${aggegate.zips.dir}" quiet="true" />
 	</target>
 
@@ -381,7 +416,7 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 		<delete dir="${aggegate.zips.dir}" quiet="true" />
 	</target>
 
-	<target name="collect.metadata" description="collect svn revision files + other metadata (JOB_NAME BUILD_ID, BUILD_NUMBER, WORKSPACE, HUDSON_SLAVE)">
+	<target name="collect.metadata" description="collect svn revision files + other metadata (JOB_NAME, BUILD_ID, BUILD_NUMBER, WORKSPACE, HUDSON_SLAVE)">
 		<!-- TODO: write this method -->
 	</target>
 
