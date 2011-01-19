@@ -22,7 +22,12 @@
     <formalpara>
       <title>Contexts and Dependency Injection (CDI)</title>
         <para>
-					<itemizedlist>
+					<itemizedlist>					
+						<listitem>
+							<para>
+								<ulink url="https://issues.jboss.org/browse/JBIDE-7796">JBIDE-7796</ulink>: Previously the CDI Bean XML schemas were accessing them from the Internet by default. This could cause delays as the files are downloaded. Now the CDI Bean XML schemas are included in the <guilabel>XML Catalog</guilabel>. You can access the <guilabel>XML Catalog</guilabel> by selecting <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Preferences</guimenuitem><guimenuitem>XML</guimenuitem><guimenuitem>XML Catalog</guimenuitem></menuchoice>.
+							</para>
+						</listitem>
 						<listitem>
 							<para>
 								<ulink url="https://issues.jboss.org/browse/JBIDE-8124">JBIDE-8124</ulink>: The <guilabel>New CDI Bean</guilabel> wizard has been added to provide a convenient way to create new CDI Java classes with the <code>@Named</code>, <code>@Scope</code> and <code>@Qualifier</code> annotations. The wizard can be accessed by selecting <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>New</guimenuitem><guimenuitem>Other</guimenuitem><guimenuitem>CDI (Context and Dependency Injection)</guimenuitem><guimenuitem>Bean</guimenuitem></menuchoice>.
