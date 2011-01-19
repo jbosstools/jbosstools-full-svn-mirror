@@ -336,7 +336,7 @@
 	      <itemizedlist>
 	      	<listitem>
 	      		<para>
-	      			<ulink url="https://issues.jboss.org/browse/JBIDE-7761">JBIDE-7761</ulink>: The <guimenuitem>Show in Remote System Explorer...</guimenuitem> option is now available in the Cloud View context menu.
+	      			<ulink url="https://issues.jboss.org/browse/JBIDE-7761">JBIDE-7761</ulink>: The <guimenuitem>Show in Remote System Explorer...</guimenuitem> option is now available in the <guilabel>Cloud Viewer<guilabel> context menu.
 	      		</para>
 	      	</listitem>
 					<listitem>
