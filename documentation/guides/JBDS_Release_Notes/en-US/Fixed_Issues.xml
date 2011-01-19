@@ -25,7 +25,7 @@
 					<itemizedlist>					
 						<listitem>
 							<para>
-								<ulink url="https://issues.jboss.org/browse/JBIDE-7796">JBIDE-7796</ulink>: Previously the CDI Bean XML schemas were accessing them from the Internet by default. This could cause delays as the files are downloaded. Now the CDI Bean XML schemas are included in the <guilabel>XML Catalog</guilabel>. You can access the <guilabel>XML Catalog</guilabel> by selecting <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Preferences</guimenuitem><guimenuitem>XML</guimenuitem><guimenuitem>XML Catalog</guimenuitem></menuchoice>.
+								<ulink url="https://issues.jboss.org/browse/JBIDE-7796">JBIDE-7796</ulink>: Previously the CDI Bean XML schemas were accessed from the Internet by default. This could cause delays as the files were downloaded. Now the CDI Bean XML schemas are included in the <guilabel>XML Catalog</guilabel>. You can access the <guilabel>XML Catalog</guilabel> by selecting <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Preferences</guimenuitem><guimenuitem>XML</guimenuitem><guimenuitem>XML Catalog</guimenuitem></menuchoice>.
 							</para>
 						</listitem>
 						<listitem>
