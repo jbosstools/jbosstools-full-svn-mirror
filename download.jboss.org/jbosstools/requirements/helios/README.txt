@@ -1,4 +1,4 @@
-Total of 24 req'd tgzs/zips/jars.
+Total of 25 req'd tgzs/zips/jars.
 
 BIRT 2.6 -> http://www.eclipse.org/downloads/download.php?file=/birt/downloads/build_list.php 
 ->
@@ -99,4 +99,13 @@ Spring IDE 2.5
 #    cd ~/eclipse/36clean; \
 #    zip -r9 ~/tru/download.jboss.org/jbosstools/requirements/helios/spring-ide-2.5.1.201011101000-RELEASE.zip \
 #    $(find . -mindepth 3 -maxdepth 3 -name "???.spring*")
+
+# Denis created an update site version, which is spring-ide-Update-2.5.1.201011101000-RELEASE.zip
+# Not sure how, exactly. 
+
+TestNG
+# Built from ~/tru/product/extras/site/pom.xml, then repackaged to include only the testng plugin + feature (exclude all else): testng-eclipse-5.14.6.20110119.zip
+
+# Denis created an update site version, which is testng-eclipse-Update-5.14.6.20110119_1050.zip
+# Not sure how, exactly.
 
