@@ -71,7 +71,7 @@
 		<itemizedlist>
 			<listitem>
 				<para>
-					Select the main class of your application. Right click it and select <menuchoice><guimenuitem>Debug As</guimenuitem><guimenuitem></guimenuitem>Drools Application</menuchoice>.
+					Select the main class of your application. Right click it and select <menuchoice><guimenuitem>Debug As</guimenuitem><guimenuitem>Drools Application</guimenuitem></menuchoice>.
 				</para>
 			</listitem>
 		</itemizedlist>
