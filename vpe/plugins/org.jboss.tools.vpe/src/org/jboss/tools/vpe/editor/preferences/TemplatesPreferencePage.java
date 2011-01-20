@@ -10,22 +10,12 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.preferences;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
-
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jface.viewers.ColumnLayoutData;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.SWTException;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -35,7 +25,6 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
@@ -117,7 +106,19 @@ public class TemplatesPreferencePage extends PreferencePage implements
 		/*
 		 * Fill the table with stored tags
 		 */
-		VpeImportExportWizardsUtils.updateTagsTable(tagsTable, tagsList, true);
+		VpeImportExportWizardsUtils.updateTagsTable(tagsTable, tagsList, true);		
+
+		/*
+		 * Add selection listener to the table
+		 */
+		Listener tableItemSelectionListener = new Listener() {			
+			@Override
+			public void handleEvent(Event event) {
+				editButton.setEnabled(true);
+				removeButton.setEnabled(true);
+			}
+		};
+		tagsTable.addListener(SWT.Selection, tableItemSelectionListener);
 		
 		/*
 		 * Add buttons
@@ -141,6 +142,8 @@ public class TemplatesPreferencePage extends PreferencePage implements
 		importButton = new Button(composite, SWT.BUTTON1);
 		importButton.setLayoutData(new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1));
 		importButton.setText(VpeUIMessages.TemplatesPreferencePage_Import);
+		
+		evaluateButtonsEnabling();
 		
 		/*
 		 * Adding event listeners to the buttons
@@ -175,6 +178,7 @@ public class TemplatesPreferencePage extends PreferencePage implements
 				 */
 				tagsList.add(data);
 				tagListWasChanged = true;
+				evaluateButtonsEnabling();
 			}
 		} else if (source == editButton) {
 			/*
@@ -206,9 +210,13 @@ public class TemplatesPreferencePage extends PreferencePage implements
 				tagsTable.remove(selectIndex);
 				tagsList.remove(selectIndex);
 				tagListWasChanged = true;
+				if (selectIndex == 0 && !tagsList.isEmpty()) {
+					tagsTable.setSelection(selectIndex);
+				}
 				if (selectIndex > 0) {
 					tagsTable.setSelection(selectIndex - 1);
 				}
+				evaluateButtonsEnabling();
 			}
 		} else if (source == exportButton) {
 			/*
@@ -230,6 +238,7 @@ public class TemplatesPreferencePage extends PreferencePage implements
 			 * Re-initialize tags list from the file
 			 */
 			tagsList.addAll(dlg.getImportedList());
+			evaluateButtonsEnabling();
 		} else {
 			/*
 			 * Handle default event
@@ -276,5 +285,24 @@ public class TemplatesPreferencePage extends PreferencePage implements
 		VpeImportExportWizardsUtils.updateTagsTable(tagsTable, tagsList, true);
 	}
 	
-	
+	private void evaluateButtonsEnabling() {
+		
+		boolean editButtonEnabling = false;
+		boolean removeButtonEnabling = false;
+		boolean exportButtonEnabling = false;
+		
+		if (!tagsList.isEmpty()) {
+			
+			exportButtonEnabling = true;
+			
+			if (tagsTable.getSelection().length != 0) {
+				editButtonEnabling = true;
+				removeButtonEnabling = true;
+			}
+		}
+		
+		editButton.setEnabled(editButtonEnabling);
+		removeButton.setEnabled(removeButtonEnabling);
+		exportButton.setEnabled(exportButtonEnabling);
+	}
 }
