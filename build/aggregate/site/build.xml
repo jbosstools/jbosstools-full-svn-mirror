@@ -96,7 +96,7 @@
 							<var name="relativePath" unset="true" />
 							<for list="${ALL_ZIPS}" delimiter=", " keepgoing="true" param="zipPath">
 								<sequential>
-									<propertyregex override="true" property="relativePath" defaultvalue="" input="@{zipPath}" regexp="(.+)/([^/]+.zip)" replace="\1" />
+									<propertyregex override="true" property="relativePath" defaultvalue="" input="@{zipPath}" regexp="(.+)/([^/]+\.zip)" replace="\1" />
 
 									<propertyregex override="true" property="svnrevPath" defaultvalue="" input="@{zipPath}" regexp=".zip" replace=".SVN_REVISION" />
 									<propertyregex override="true" property="svnrevPath" defaultvalue="${svnrevPath}" input="${svnrevPath}" regexp="-Sources-|-Update-" replace="-" />
@@ -104,6 +104,8 @@
 									<propertyregex override="true" property="buildPropertiesPath" defaultvalue="" input="@{zipPath}" regexp=".zip" replace=".build.properties" />
 									<propertyregex override="true" property="buildPropertiesPath" defaultvalue="${buildPropertiesPath}" input="${buildPropertiesPath}" regexp="-Sources-|-Update-" replace="-" />
 
+									<propertyregex override="true" property="filePrefix" defaultvalue="@{zipPath}" input="@{zipPath}" regexp="(.+)/([^/]+)\.zip" replace="\2.build.properties" />
+									
 									<mkdir dir="${aggregate.zips.dir}/${relativePath}" />
 									<!-- fetch zips to local dir -->
 									<echo level="verbose">repoNum = @{repoNum}
@@ -117,7 +119,8 @@ DEST = ${aggregate.zips.dir}/@{zipPath}
 									<if>
 										<isset property="isTest" />
 										<then>
-											<touch file="${aggregate.zips.dir}/@{zipPath}" />
+											<!-- create a fake file of variable length (rather than using touch for zero-length one) -->
+											<echo file="${aggregate.zips.dir}/@{zipPath}">${aggregate.zips.dir}/@{zipPath}</echo>
 										</then>
 										<else>
 											<var name="wget.return" unset="true" />
@@ -134,6 +137,27 @@ DEST = ${aggregate.zips.dir}/@{zipPath}
 											</if>
 										</else>
 									</if>
+
+									<!-- set variable for filename -->
+									<echo file="${aggregate.zips.dir}/build.properties.file.txt" append="true">${filePrefix}.filename = @{zipPath}
+</echo>
+									<!-- set variable for filesize in Kb -->
+									<length file="${aggregate.zips.dir}/@{zipPath}" property="fs.length.b" />
+									<math operand2="${fs.length.b}" operation="/" operand1="1024" result="fs.length.kb" datatype="float" />
+									<!-- <math operand2="${fs.length.b}" operation="/" operand1="1048576" result="fs.length.mb" datatype="float"/> -->
+									<echo level="verbose">${aggregate.zips.dir}/@{zipPath}: ${fs.length.kb} Kb, ${fs.length.mb} Mb</echo>
+									<echo file="${aggregate.zips.dir}/build.properties.file.txt" append="true">${filePrefix}.filesize = ${fs.length.kb} Kb
+</echo>
+									<var name="fs.length.b" unset="true" />
+									<var name="fs.length.kb" unset="true" />
+
+									<!-- set variable for filemd5 -->
+									<checksum file="${aggregate.zips.dir}/@{zipPath}" property="${filePrefix}.filemd5" />
+									<propertycopy from="${filePrefix}.filemd5" property="tempmd5" />
+									<echo file="${aggregate.zips.dir}/build.properties.file.txt" append="true">${filePrefix}.filemd5 = ${tempmd5}
+</echo>
+									<var name="${filePrefix}.filemd5" unset="true" />
+									<var name="tempmd5" unset="true" />
 
 									<!-- rename the svn and build properties files so they align with the zip names -->
 									<if>
@@ -414,8 +438,17 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 		<delete dir="${aggregate.zips.dir}" quiet="true" />
 	</target>
 
-	<target name="collect.metadata" description="collect svn revision info + other metadata (JOB_NAME, BUILD_ID, BUILD_NUMBER, WORKSPACE, HUDSON_SLAVE)">
+	<target name="collect.metadata" description="collect svn revision info + other metadata (JOB_NAME, BUILD_ID, BUILD_NUMBER, WORKSPACE, HUDSON_SLAVE), zip file names+sizes+md5sums">
 		<property name="aggregate.zips.dir" value="${output.dir}/zips" />
+
+		<!-- load file properties (name, size, md5sum) -->
+		<if>
+			<available file="${aggregate.zips.dir}/build.properties.file.txt" type="file" />
+			<then>
+				<property file="${aggregate.zips.dir}/build.properties.file.txt" />
+			</then>
+		</if>
+
 		<!-- for all build.properties.txt files in zips/ folder -->
 		<for param="propsfile">
 			<path>
@@ -540,7 +573,7 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 
 		</for>
 		<!-- dump properties to an XML file, filtering for only those properties we care about -->
-		<echoproperties format="xml" destfile="${aggregate.zips.dir}/allprops.xml">
+		<echoproperties format="xml" destfile="${aggregate.zips.dir}/build.properties.all.xml">
 			<propertyset>
 				<propertyref regex=".*\.build\.properties" />
 			</propertyset>
