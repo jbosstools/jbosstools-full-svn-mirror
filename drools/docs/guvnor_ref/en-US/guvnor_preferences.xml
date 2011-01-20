@@ -95,7 +95,7 @@
 		</figure>
 
 		<para>
-			Default values appear in the <guilabel>Location</guilabel>,</guilabel>Port</guilabel> and <guilabel>Repository</guilabel> fields (See the <xref linkend="guvnor_preferences"/> section below for details about how to change these default values.) Of course, any of these fields can be edited by typing in the corresponding text box. Drag-and-drop or paste into the <guilabel>Location</guilabel> field of a typical Guvnor repository URL such as:
+			Default values appear in the <guilabel>Location</guilabel>,<guilabel>Port</guilabel> and <guilabel>Repository</guilabel> fields (See the <xref linkend="guvnor_preferences"/> section below for details about how to change these default values.) Of course, any of these fields can be edited by typing in the corresponding text box. Drag-and-drop or paste into the <guilabel>Location</guilabel> field of a typical Guvnor repository URL such as:
 		</para>
 
 		<para>

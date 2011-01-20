@@ -236,9 +236,9 @@
 				</mediaobject>
 			</figure>
 
-			<guilabel>
+			<para>
 				This editor uses Eclipse-standard comparison techniques to show the differences in the two versions. In cases where there are no differences, the editor will not open, rather a dialog saying that there are no differences will appear.
-			</guilabel>
+			</para>
 			<figure>
 				<title>Alert Dialog</title>
 				<mediaobject>
