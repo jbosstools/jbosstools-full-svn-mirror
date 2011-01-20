@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../whatsnew.css" />
+<title>CDI tools 3.2.0.CR1 What's New</title>
+</head>
+<body>
+<h1>CDI tools 3.2.0.CR1 What's New</h1>
+
+<p align="right"><a href="../index.html">&lt; Main Index</a><!--  <a
+	href="../seam/seam-news-3.2.0.M2.html">Seam Tools News &gt;</a> --> <a
+	href="../bpel/bpel-news-1.1.0.CR1.html">BPEL Tools News &gt;</a></p>
+
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+	<tr>
+		<td colspan="2">
+		<hr />
+		<h3>Wizards</h3>
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+			<p><b>New CDI Bean Wizard</b></p>
+		</td>
+        <td align="top">
+			<p>New CDI Bean wizard is now avaliable.</p>
+			<img src="images/3.2.0.CR1/new_bean.png"/>
+			<p><small><a
+				href="https://jira.jboss.org/browse/JBIDE-8124">Related Jira</a></small></p>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+			<p><b>New Annotation Literal Wizard</b></p>
+		</td>
+        <td align="top">
+			<p>New Annotation Literal wizard for selected qualifier:</p>
+			<img src="images/3.2.0.CR1/annotation_literal.png"/>
+			<p><small><a
+				href="https://jira.jboss.org/browse/JBIDE-7875">Related Jira</a></small></p>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+			<p><b>New beans.xml Wizard</b></p>
+		</td>
+        <td align="top">
+			<p>New beans.xml wizard is now available:</p>
+			<img src="images/3.2.0.CR1/beans_xml.png"/>
+			<p><small><a
+				href="https://jira.jboss.org/browse/JBIDE-7842">Related Jira</a></small></p>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+			<p><b>Keywords for CDI Wizards</b></p>
+		</td>
+        <td align="top">
+			<p>Now it's possible to open CDI wizards using keywords such as <i>cdi, bean</i>, etc.:</p>
+			<img src="images/3.2.0.CR1/keywords.png"/>
+			<p><small><a
+				href="https://jira.jboss.org/browse/JBIDE-7802">Related Jira</a></small></p>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+			<p><b>CDI Configuration Preset.</b></p>
+		</td>
+        <td align="top">
+			<p>New CDI configuration preset for Dynamic Web Project wizard is now available.</p>
+			<img src="images/3.2.0.CR1/cdi.png"/>
+			<p><small><a
+				href="https://jira.jboss.org/browse/JBIDE-7823"">Related Jira</a></small></p>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+			<p><b>CDI Facet Install Page.</b></p>
+		</td>
+        <td align="top">
+			<p>There is no need to create a beans.xml file manually anymore when CDI facet is installed.</p>
+			<img src="images/3.2.0.CR1/cdiFacet.png"/>
+			<p><small><a
+				href="https://jira.jboss.org/browse/JBIDE-7803">Related Jira</a></small></p>
+		</td>
+	</tr>
+
+	<tr>
+		<td colspan="2">
+		<hr />
+		<h3>Project Validation</h3>
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+		<p><b>CDI deployment problems validation.</b></p>
+		</td>
+		<td valign="top">
+		<p>The following CDI deployment problems described in JSR-299 Specification are now validated:
+		   <ul>- Inconsistent specialization (JSR-299 §5.1.3);</ul>
+		   <ul>- Ambiguous EL names (JSR-299 §5.3.1);</ul>
+		   <ul>- Unproxyable bean types (JSR-299 §5.4.1);</ul>
+		   <ul>- Decorator resolution (JSR-299 §8.3);</ul>
+    	</p>
+    	<img src="images/3.2.0.CR1/validation.png"/>
+		  <p>Notice that the validator warning/error reference the section of
+		the JSR-299 specification it relates to.</p>
+		<p><small><a
+			href="https://jira.jboss.org/browse/JBIDE-6575">Related Jira</a></small></p>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+		<p><b>CDI annotation types validation.</b></p>
+		</td>
+		<td valign="top">
+		<p>There are also a few new validation rules for @Target for CDI annotations:
+		   <ul>- Interceptor binding types declared @Target(TYPE) may not be applied to interceptor binding types declared @Target({TYPE, METHOD}) (JSR-299 §9.1.1);</ul>
+		   <ul>- If a stereotype declares interceptor bindings, it must be defined as @Target(TYPE) (JSR-299 §9.1.2);</ul>
+		   <ul>- Stereotypes declared @Target(TYPE) may not be applied to stereotypes declared @Target({TYPE, METHOD, FIELD}), @Target(METHOD), @Target(FIELD) or @Target({METHOD, FIELD}). (JSR-299 §2.7.1.5);</ul>
+    	</p>
+    	<img src="images/3.2.0.CR1/target_validation.png"/>
+		<p><small><a
+			href="https://jira.jboss.org/browse/JBIDE-7895">Related Jira 1</a>,
+            <a href="https://jira.jboss.org/browse/JBIDE-7894">Related Jira 2</a>,
+            <a href="https://jira.jboss.org/browse/JBIDE-7897">Related Jira 3</a></small></p>
+		</td>
+	</tr>
+
+	<tr>
+		<td colspan="2">
+		<hr />
+		<h3>Quick Fixes</h3>
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+		<p><b>Non-static method of a session bean is annotated @Produces, and the method is not a business method of the session bean</b></p>
+		</td>
+		<td valign="top">
+		<p>A few Quick Fixes for non-business methods of a session bean class which are annotated @Produces are now avaliable.</p>
+		<img src="images/3.2.0.CR1/NonBusinessProducer.png"/><br/><br/>
+		<img src="images/3.2.0.CR1/NonBusinessProducer2.png"/>
+		<p><small><a
+			href="https://jira.jboss.org/browse/JBIDE-7669">Related Jira</a></small></p>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+		<p><b>Non-static field of a session bean is annotated @Produces</b></p>
+		</td>
+		<td valign="top">
+		<p>If a non-static field of a session bean class is annotated @Produces then this field can be made static via Quick Fix menu</p>
+		<img src="images/3.2.0.CR1/MakeFieldStaticNew.png"/>
+		<p><small><a
+			href="https://jira.jboss.org/browse/JBIDE-7674">Related Jira</a></small></p>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+		<p><b>Bean class has more than one constructor annotated @Inject</b></p>
+		</td>
+		<td valign="top">
+		<p>If a bean class has more than one constructor annotated @Inject then the annotation can be removed from duplicated injected constructors via Quick Fix menu</p>
+		<img src="images/3.2.0.CR1/DeleteAllInjectedConstructors1.png"/>
+		<p><small><a
+			href="https://jira.jboss.org/browse/JBIDE-7675">Related Jira</a></small></p>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+		<p><b>Multiple disposer methods for a single producer method</b></p>
+		</td>
+		<td valign="top">
+		<p>If there are multiple disposer methods for a single producer method then @Disposes annotation can be removed from all the duplicated methods except the seleceted one via Quick Fix menu</p>
+		<img src="images/3.2.0.CR1/DeleteDisposerAnnotations1.png"/>
+		<p><small><a
+			href="https://jira.jboss.org/browse/JBIDE-7673">Related Jira</a></small></p>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+		<p><b>Non-static method of a session bean has a parameter annotated @Disposes/@Observes</b></p>
+		</td>
+		<td valign="top">
+		<p>If a non-static method of a session bean class has a parameter annotated @Disposes/@Observes then this method can be made a business method of the session bean via Quick Fix menu</p>
+		<img src="images/3.2.0.CR1/NonBusinessMethodWithDisposerParameter2.png"/>
+		<p><small><a
+			href="https://jira.jboss.org/browse/JBIDE-7672">Related Jira</a></small></p>
+		</td>
+	</tr>
+
+	<tr>
+		<td colspan="2">
+		<hr />
+		</td>
+	</tr>
+
+</table>
+
+</body>
+
+</html>
