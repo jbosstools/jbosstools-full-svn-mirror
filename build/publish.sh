@@ -59,12 +59,9 @@ wget -q --no-clobber -O ${rl}.xml "http://hudson.qa.jboss.com/hudson/job/${JOB_N
 sed -e "s#<module>\(http[^<>]\+\)</module><revision>\([0-9]\+\)</revision>#\1\@\2\n#g" ${rl}.xml | sed -e "s#<[^<>]\+>##g" > ${rl}.txt
 
 METAFILE="${BUILD_ID}-H${BUILD_NUMBER}.txt"
-if [[ ${SVN_REVISION} ]]; then
-	METAFILE="${BUILD_ID}-H${BUILD_NUMBER}-r${SVN_REVISION}.txt"
-	echo "SVN_REVISION = ${SVN_REVISION}" > ${STAGINGDIR}/logs/${METAFILE}
-else
-	echo -n "" > ${STAGINGDIR}/logs/${METAFILE}
-fi
+touch ${STAGINGDIR}/logs/${METAFILE}
+METAFILE=build.properties
+
 echo "JOB_NAME = ${JOB_NAME}" >> ${STAGINGDIR}/logs/${METAFILE}
 echo "BUILD_NUMBER = ${BUILD_NUMBER}" >> ${STAGINGDIR}/logs/${METAFILE}
 echo "BUILD_ID = ${BUILD_ID}" >> ${STAGINGDIR}/logs/${METAFILE}
@@ -72,7 +69,6 @@ echo "WORKSPACE = ${WORKSPACE}" >> ${STAGINGDIR}/logs/${METAFILE}
 echo "HUDSON_SLAVE = $(uname -a)" >> ${STAGINGDIR}/logs/${METAFILE}
 echo "RELEASE = ${RELEASE}" >> ${STAGINGDIR}/logs/${METAFILE}
 echo "ZIPSUFFIX = ${ZIPSUFFIX}" >> ${STAGINGDIR}/logs/${METAFILE}
-cp ${STAGINGDIR}/logs/${METAFILE} ${STAGINGDIR}/logs/build.properties
 
 #echo "$z ..."
 if [[ $z != "" ]] && [[ -f $z ]] ; then
@@ -138,6 +134,8 @@ zip ${STAGINGDIR}/all/${srczipname} -q -r * -x hudson_workspace\* -x documentati
 popd
 z=${STAGINGDIR}/all/${srczipname}; for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done
 
+mkdir -p ${STAGINGDIR}/logs
+
 # collect component zips from upstream aggregated build jobs
 if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]] && [[ -d ${WORKSPACE}/sources/aggregate/site/zips ]]; then
 	mkdir -p ${STAGINGDIR}/components
@@ -163,11 +161,15 @@ if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]] && [[ -d ${WORKSPACE}/sources/agg
 	rm -fr ${STAGINGDIR}/all/sources
 	
 	z=${STAGINGDIR}/all/${SRCSNAME}; for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done
+
+	# JBIDE-7444 get aggregate metadata xml properties file
+	if [[ -f ${WORKSPACE}/sources/aggregate/site/zips/build.properties.all.xml ]]; then
+		rsync -aq ${WORKSPACE}/sources/aggregate/site/zips/build.properties.all.xml ${STAGINGDIR}/logs/
+	fi
 fi
 
 # generate list of zips in this job
 METAFILE=zip.list.txt
-mkdir -p ${STAGINGDIR}/logs
 echo "ALL_ZIPS = \\" >> ${STAGINGDIR}/logs/${METAFILE}
 for z in $(find ${STAGINGDIR} -name "*Update*.zip") $(find ${STAGINGDIR} -name "*Sources*.zip"); do
 	# list zips in staging dir
@@ -176,7 +178,7 @@ done
 echo ""  >> ${STAGINGDIR}/logs/${METAFILE}
 
 # generate md5sums in a single file 
-md5sumsFile=${STAGINGDIR}/logs/${JOB_NAME}-md5sums-${BUILD_ID}-H${BUILD_NUMBER}.txt
+md5sumsFile=${STAGINGDIR}/logs/md5sums.txt
 echo "# Update Site Zips" > ${md5sumsFile}
 echo "# ----------------" >> ${md5sumsFile}
 md5sum $(find . -name "*Update*.zip" | egrep -v "aggregate-Sources|nightly-Update") >> ${md5sumsFile}
@@ -186,6 +188,7 @@ echo "# -----------" >> ${md5sumsFile}
 md5sum $(find . -name "*Source*.zip" | egrep -v "aggregate-Sources|nightly-Update") >> ${md5sumsFile}
 echo " " >> ${md5sumsFile}
 
+# TODO: JBIDE-7045 this is obsolete - replace it with xslt'd transform of build.properties.all.xml (agg site overall metadata)
 # generate HTML snippet, download-snippet.html, for inclusion on jboss.org
 mkdir -p ${STAGINGDIR}/logs
 ANT_PARAMS=" -DZIPSUFFIX=${ZIPSUFFIX} -DJOB_NAME=${JOB_NAME} -Dinput.dir=${STAGINGDIR} -Doutput.dir=${STAGINGDIR}/logs -DWORKSPACE=${WORKSPACE}"
