@@ -116,6 +116,9 @@
 	<feature url="features/org.jboss.tools.maven.portlet.feature_0.0.0.jar" id="org.jboss.tools.maven.portlet.feature" version="0.0.0">
 		<category name="MavenTools" />
 	</feature>
+	<feature url="features/org.jboss.tools.maven.project.examples.feature_0.0.0.jar" id="org.jboss.tools.maven.project.examples.feature" version="0.0.0">
+		<category name="MavenTools" />
+	</feature>
 	<feature url="features/org.jboss.tools.jbpm4.feature_0.0.0.jar" id="org.jboss.tools.jbpm4.feature" version="0.0.0">
 		<category name="AllTools" />
 		<category name="SOATools" />
