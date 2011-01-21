@@ -146,10 +146,10 @@ DEST = ${aggregate.zips.dir}/@{zipPath}
 </echo>
 											<!-- set variable for filesize in Kb -->
 											<length file="${aggregate.zips.dir}/@{zipPath}" property="fs.length.b" />
-											<math operand2="${fs.length.b}" operation="/" operand1="1024" result="fs.length.kb" datatype="float" />
+											<!-- <math operand2="${fs.length.b}" operation="/" operand1="1024" result="fs.length.kb" datatype="float" /> -->
 											<!-- <math operand2="${fs.length.b}" operation="/" operand1="1048576" result="fs.length.mb" datatype="float"/> -->
-											<echo level="verbose">${aggregate.zips.dir}/@{zipPath}: ${fs.length.kb} Kb, ${fs.length.mb} Mb</echo>
-											<echo file="${aggregate.zips.dir}/build.properties.file.txt" append="true">${filePrefix}.filesize = ${fs.length.kb} Kb
+											<!-- <echo level="verbose">${aggregate.zips.dir}/@{zipPath}: ${fs.length.kb} Kb, ${fs.length.mb} Mb</echo> -->
+											<echo file="${aggregate.zips.dir}/build.properties.file.txt" append="true">${filePrefix}.filesize = ${fs.length.b}
 </echo>
 											<var name="fs.length.b" unset="true" />
 											<var name="fs.length.kb" unset="true" />
