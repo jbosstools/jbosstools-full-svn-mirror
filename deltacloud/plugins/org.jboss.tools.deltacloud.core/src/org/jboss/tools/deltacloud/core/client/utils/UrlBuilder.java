@@ -24,7 +24,7 @@ import java.util.Collection;
  * @author André Dietisheim
  */
 public class UrlBuilder {
-	private static final String URL_ENCODING = "UTF8";
+	private static final String URL_ENCODING = "UTF-8";
 	private static final String HOST_PROTOCOL_DELIMITER = ":";
 	private static final String HTTP_PROTOCOL_PREFIX = "http://";
 	private static final char PARAMETER_URL_DELIMITER = '?';
