@@ -74,12 +74,11 @@ public class WizardUtils {
 	 * <p>
 	 * Furhtermore it updates the models and targets of the given data binding
 	 * context. This might be necessary if the given job will change widget
-	 * enablements in the calling wizard page. The reason for this being needed
-	 * is that the runner saves the widget enablement state when before it
-	 * executes the given runnable. It the restores those states of all widgets
-	 * in the calling page once he finished the given runnable. It may therefore
-	 * restore incorrect states since the job changed those enablements while
-	 * the runner was executing the job. 
+	 * enablements in the calling wizard page. The reason for is that the runner
+	 * saves the widget enablement states when it's up to execute the runnable.
+	 * It then restores those states once he finished executing the runnable. It
+	 * may therefore restore incorrect states since the job changed the
+	 * enablements when it was run.
 	 * 
 	 * @param job
 	 *            the job
