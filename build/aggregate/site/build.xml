@@ -60,25 +60,25 @@
 			<var unset="true" name="ALL_ZIPS" />
 			<var unset="true" name="wget.return" />
 			<exec executable="wget" dir="${aggregate.zips.dir}" failonerror="false" failifexecutionfails="false" resultproperty="wget.return" outputproperty="null">
-				<arg line="${location.cleaned}/logs/zip.list.txt -q --no-clobber" />
+				<arg line="${location.cleaned}/logs/zip.list.txt -q --no-clobber --tries=3" />
 			</exec>
 
 			<echo level="verbose">Fetch SVN_REVISION.txt if it exists (return 8 if not found)</echo>
 			<var name="svnRevTXT" value="${aggregate.zips.dir}/SVN_REVISION.txt" />
 			<exec executable="wget" dir="${aggregate.zips.dir}" failonerror="false" failifexecutionfails="false" resultproperty="wget.return" outputproperty="null">
-				<arg line="${location.cleaned}/logs/SVN_REVISION.txt -q --no-clobber" />
+				<arg line="${location.cleaned}/logs/SVN_REVISION.txt -q --no-clobber --tries=3" />
 			</exec>
 
 			<echo level="verbose">Fetch SVN_REVISION.xml if it exists (return 8 if not found)</echo>
 			<var name="svnRevXML" value="${aggregate.zips.dir}/SVN_REVISION.xml" />
 			<exec executable="wget" dir="${aggregate.zips.dir}" failonerror="false" failifexecutionfails="false" resultproperty="wget.return" outputproperty="null">
-				<arg line="${location.cleaned}/logs/SVN_REVISION.xml -q --no-clobber" />
+				<arg line="${location.cleaned}/logs/SVN_REVISION.xml -q --no-clobber --tries=3" />
 			</exec>
 
 			<echo level="verbose">Fetch build.properties if it exists (return 8 if not found)</echo>
 			<var name="buildProperties" value="${aggregate.zips.dir}/build.properties" />
 			<exec executable="wget" dir="${aggregate.zips.dir}" failonerror="false" failifexecutionfails="false" resultproperty="wget.return" outputproperty="null">
-				<arg line="${location.cleaned}/logs/build.properties -q --no-clobber" />
+				<arg line="${location.cleaned}/logs/build.properties -q --no-clobber --tries=3" />
 			</exec>
 
 			<if>
@@ -115,7 +115,7 @@ buildPropertiesPath = ${buildPropertiesPath}
 zipPath = @{zipPath}
 DEST = ${aggregate.zips.dir}/@{zipPath}
 </echo>
-									<echo> Zip URL = ${location.cleaned}/@{zipPath}</echo>
+									<echo level="verbose"> Zip URL = ${location.cleaned}/@{zipPath}</echo>
 									<if>
 										<isset property="isTest" />
 										<then>
@@ -125,14 +125,14 @@ DEST = ${aggregate.zips.dir}/@{zipPath}
 										<else>
 											<var name="wget.return" unset="true" />
 											<exec executable="wget" dir="${aggregate.zips.dir}/${relativePath}" failonerror="false" failifexecutionfails="false" resultproperty="wget.return" outputproperty="null">
-												<arg line="${location.cleaned}/@{zipPath} -q --no-clobber" />
+												<arg line="${location.cleaned}/@{zipPath} -q --no-clobber --tries=3" />
 											</exec>
 											<if>
 												<not>
 													<equals arg1="${wget.return}" arg2="0" />
 												</not>
 												<then>
-													<echo> ** Error [${wget.return}] ** Could not wget ${location.cleaned}/@{zipPath}</echo>
+													<echo> ** Error(@{i}) [${wget.return}] ** Could not wget ${location.cleaned}/@{zipPath}</echo>
 												</then>
 											</if>
 										</else>
@@ -210,11 +210,12 @@ DEST = ${aggregate.zips.dir}/@{zipPath}
 	<macrodef name="fetchZipsFromMetadata">
 		<attribute name="repo" default="" />
 		<sequential>
-			<echo level="verbose">repo = @{repo}</echo>
-			<!-- if no zip.list.txt from the inputRepo, then fetch from @{repo}/compositeArtifacts.xml instead -->
+			<var name="location.cleaned" value="@{repo}" />
+			<echo level="verbose">repo = ${location.cleaned}</echo>
+			<!-- if no zip.list.txt from the inputRepo, then fetch from ${location.cleaned}/compositeArtifacts.xml instead -->
 			<var name="wget.return" unset="true" />
 			<exec executable="wget" dir="${aggregate.zips.dir}" failonerror="false" failifexecutionfails="false" resultproperty="wget.return" outputproperty="null">
-				<arg line="@{repo}/compositeArtifacts.xml -q --no-clobber" />
+				<arg line="${location.cleaned}/compositeArtifacts.xml -q --no-clobber --tries=3" />
 			</exec>
 			<if>
 				<and>
@@ -235,7 +236,7 @@ DEST = ${aggregate.zips.dir}/@{zipPath}
 					<delete file="${aggregate.zips.dir}/compositeArtifacts.xml" quiet="true" />
 				</then>
 				<else>
-					<echo> ** Error [${wget.return}] ** Could not wget @{repo}/compositeArtifacts.xml</echo>
+					<echo> ** Error [${wget.return}] ** Could not wget ${location.cleaned}/compositeArtifacts.xml</echo>
 				</else>
 			</if>
 		</sequential>
@@ -411,10 +412,11 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 	<target name="test.collect.zips.from.list.xml" depends="init">
 		<property name="isTest" value="true" />
 		<antcall target="collect.zips">
-			<param name="inputRepos" value="1,2,3" />
+			<param name="inputRepos" value="1,2,3,4" />
 			<param name="inputRepo1" value="http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--smooks" />
 			<param name="inputRepo2" value="http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--modeshape" />
 			<param name="inputRepo3" value="http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--deltacloud" />
+			<param name="inputRepo4" value="http://download.jboss.org/jbosstools/builds/staging/xulrunner-1.9.1.2" />
 		</antcall>
 	</target>
 
