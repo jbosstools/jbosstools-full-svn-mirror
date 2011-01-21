@@ -124,7 +124,7 @@ DEST = ${aggregate.zips.dir}/@{zipPath}
 										</then>
 										<else>
 											<var name="wget.return" unset="true" />
-											<exec executable="wget" dir="${aggregate.zips.dir}" failonerror="false" failifexecutionfails="false" resultproperty="wget.return" outputproperty="null">
+											<exec executable="wget" dir="${aggregate.zips.dir}/${relativePath}" failonerror="false" failifexecutionfails="false" resultproperty="wget.return" outputproperty="null">
 												<arg line="${location.cleaned}/@{zipPath} -q --no-clobber" />
 											</exec>
 											<if>
