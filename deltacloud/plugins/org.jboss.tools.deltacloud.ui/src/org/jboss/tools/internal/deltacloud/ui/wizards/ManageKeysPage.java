@@ -79,6 +79,7 @@ public class ManageKeysPage extends WizardPage {
 	private final static String CONFIRM_KEY_DELETE_MSG = "ConfirmKeyDelete.msg"; //$NON-NLS-1$
 
 	private ManageKeysPageModel model;
+	private DataBindingContext dbc;
 
 	private class Key2IdConverter extends Converter {
 
@@ -124,7 +125,7 @@ public class ManageKeysPage extends WizardPage {
 
 	@Override
 	public void createControl(Composite parent) {
-		DataBindingContext dbc = new DataBindingContext();
+		this.dbc = new DataBindingContext();
 		// WizardPageSupport.create(this, dbc);
 		bindWizardComplete(dbc);
 
@@ -184,6 +185,11 @@ public class ManageKeysPage extends WizardPage {
 				BeanProperties.value(ManageKeysPageModel.PROP_SELECTED_KEY).observe(model),
 				new UpdateValueStrategy(UpdateSetStrategy.POLICY_NEVER),
 				new UpdateValueStrategy().setConverter(new ObjectNotNullToBoolean()));
+	}
+
+	@Override
+	public void setPageComplete(boolean complete) {
+		super.setPageComplete(complete);
 	}
 
 	private List createKeyList(DataBindingContext dbc, Composite container) {
@@ -254,7 +260,7 @@ public class ManageKeysPage extends WizardPage {
 			}
 		};
 		try {
-			WizardUtils.runInWizard(job, getContainer());
+			WizardUtils.runInWizard(job, getContainer(), dbc);
 		} catch (Exception e) {
 			// ignore since the job will report its failure
 		}
@@ -396,7 +402,7 @@ public class ManageKeysPage extends WizardPage {
 					}
 				}
 			};
-			WizardUtils.runInWizard(job, getContainer());
+			WizardUtils.runInWizard(job, getContainer(), dbc);
 		} catch (Exception e) {
 			// ignore
 		}
@@ -447,7 +453,9 @@ public class ManageKeysPage extends WizardPage {
 					}
 				}
 			};
-			WizardUtils.runInWizard(job, getContainer());
+			WizardUtils.runInWizard(job, getContainer(), dbc);
+//			// WORKAROUND (wizard runnable service always reenables OK-button)
+//			setPageComplete(isPageComplete());
 		} catch (Exception e) {
 			// ignore
 		}

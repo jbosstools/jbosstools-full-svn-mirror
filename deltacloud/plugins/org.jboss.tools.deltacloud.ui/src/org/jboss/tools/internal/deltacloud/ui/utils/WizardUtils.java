@@ -13,6 +13,7 @@ package org.jboss.tools.internal.deltacloud.ui.utils;
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.CountDownLatch;
 
+import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
@@ -43,6 +44,9 @@ public class WizardUtils {
 	 *             the interrupted exception
 	 * 
 	 * @author André Dietisheim
+	 * 
+	 * @see IWizardContainer#run(boolean, boolean, IRunnableWithProgress)
+	 * @see Job
 	 */
 	public static void runInWizard(final Job job, IWizardContainer container) throws InvocationTargetException,
 			InterruptedException {
@@ -63,6 +67,35 @@ public class WizardUtils {
 				monitor.done();
 			}
 		});
+	}
+
+	/**
+	 * Runs the given job in the given wizard container.
+	 * <p>
+	 * Furhtermore it updates the models and targets of the given data binding
+	 * context. This might be necessary if the given job will change widget
+	 * enablements in the calling wizard page. The reason for is that the runner
+	 * saves the widget enablement states when it's up to execute the runnable.
+	 * It then restores those states once he finished executing the runnable. It
+	 * may therefore restore incorrect states since the job changed the
+	 * enablements when it was run.
+	 * 
+	 * @param job
+	 *            the job
+	 * @param container
+	 *            the container
+	 * @param dbc
+	 *            the dbc
+	 * @throws InvocationTargetException
+	 *             the invocation target exception
+	 * @throws InterruptedException
+	 *             the interrupted exception
+	 */
+	public static void runInWizard(final Job job, IWizardContainer container, final DataBindingContext dbc)
+			throws InvocationTargetException, InterruptedException {
+		runInWizard(job, container);
+		dbc.updateTargets();
+		dbc.updateModels();
 	}
 
 	/**
