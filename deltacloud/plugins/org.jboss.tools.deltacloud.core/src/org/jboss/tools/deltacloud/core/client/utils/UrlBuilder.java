@@ -11,15 +11,20 @@
 
 package org.jboss.tools.deltacloud.core.client.utils;
 
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Collection;
 
 /**
  * A builder for an url. Currently no state checking is done, the user is
  * responsible to build something that makes sense.
+ * 
+ * @author André Dietisheim
  */
 public class UrlBuilder {
+	private static final String URL_ENCODING = "UTF8";
 	private static final String HOST_PROTOCOL_DELIMITER = ":";
 	private static final String HTTP_PROTOCOL_PREFIX = "http://";
 	private static final char PARAMETER_URL_DELIMITER = '?';
@@ -97,7 +102,14 @@ public class UrlBuilder {
 			urlStringBuilder.append(name).append(PARAMETER_NAME_VALUE_DELIMITER).append(value);
 		}
 		return this;
+	}
 
+	public UrlBuilder urlEncodedParameter(String name, String value) {
+		try {
+			return parameter(name, URLEncoder.encode(value, URL_ENCODING));
+		} catch (UnsupportedEncodingException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	private void appendParameterDelimiter() {
