@@ -1,6 +1,9 @@
 <?xml version='1.0' encoding='utf-8' ?>
 
+<!-- Modify the title tag to change which book will be built -->
+
 <articleinfo>
+	<!-- <title>4.0.0 Release Notes</title> -->
 	<title>Release Notes</title>
 	<subtitle>Information about the changes made for this release of the JBoss Developer Studio.</subtitle>
 	<productname>JBoss Developer Studio</productname>
