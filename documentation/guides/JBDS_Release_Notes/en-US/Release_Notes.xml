@@ -8,7 +8,7 @@
 <!--	<xi:include href="New_Features.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include> -->
 	<xi:include href="Component_Versions.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
 <!--	<xi:include href="Updating_to_the_new_Web_Tools_Platform_packages.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include> -->
-	<xi:include href="4_0_0_Fixed_Issues.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
+	<xi:include href="Fixed_Issues_4_0_0.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
 <!--	<xi:include href="Fixed_Issues_4_0_1.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include> -->
 <!--	<xi:include href="Known_Issues.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include> -->
 	<xi:include href="Revision_History.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
