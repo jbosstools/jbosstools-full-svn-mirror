@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Language" content="en-us" />
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<link rel="stylesheet" href="../whatsnew.css" />
+		<title>What's New</title>
+	</head>
+	<body>
+		<h1>Deltacloud Development Tools 0.0.1.CR1 What's New</h1>
+		
+		<p align="right"><a href="../index.html">&lt; Main Index</a> <a
+			 href="../gwt/gwt-news-1.0.0.Beta2.html">GWT Integration
+			&gt;</a>
+		</p> 
+		<table border="0" cellpadding="10" cellspacing="0" width="80%"> 
+			<tr>
+				<td colspan="2"> 
+					<h3>General</h3>
+					<hr /> 
+				</td>
+			</tr> 
+			<tr> 
+				<td valign="top" align="left">
+					<a name="itemname3" id="itemname3"></a>
+					<b>Deltacloud Tools</b>
+				</td>
+				<td valign="top">
+					A lot of work was dedicated to improve user experience for Deltacloud tools. 
+					We fixed a lot of bugs and we now enable you to deploy web applications to cloud instances.
+				</td>
+			</tr>
+			<tr> 
+				<td valign="top" align="left">
+					<a name="itemname3" id="itemname3"></a>
+					<b>Deltacloud Server</b>
+				</td>
+				<td valign="top">
+					We updated the tools to be able to work against the latest Deltacloud server that's available in binary form. The tools currently work well against a Deltacloud server running version 0.1.2.
+					<br/><br/>Related Jiras: 
+					<a href="https://issues.jboss.org/browse/JBIDE-7911">JBIDE-7911</a>,  
+				</td>
+			</tr>
+			<tr> 
+				<td valign="top" align="left">
+					<a name="itemname3" id="itemname3"></a>
+					<b>Key Management</b>
+				</td>
+				<td valign="top">
+					The keys are now managed on the server. You may list and choose among the keys that are available on the Deltacloud server. 
+					In consequence we now create and delete keys on the server.<br />
+					We now also add new keys to the ssh preferences automatically, you do not have to add them manually. The benefit is pretty clear: 
+					If your instance runs an ssh-daemon that accepts the instance key to log you in, you wont need any further steps to
+					connect  by ssh. Create a key, launch the instance and open up an SSH shell to it.   <br/><br/>
+					<img src="images/deltacloud-keymanagement.png"/>
+					<br/>Related Jiras 
+					<a href="http://jira.jboss.org/browse/JBIDE-7763">JBIDE-7763</a>, 
+					<a href="http://jira.jboss.org/browse/JBIDE-8186">JBIDE-8186</a>, 
+					<a href="http://jira.jboss.org/browse/JBIDE-8126">JBIDE-8126</a>, 
+					<a href="http://jira.jboss.org/browse/JBIDE-8110">JBIDE-8110</a>, 
+					<a href="http://jira.jboss.org/browse/JBIDE-8096">JBIDE-8096</a>,
+					<a href="http://jira.jboss.org/browse/JBIDE-8081">JBIDE-8081</a>,
+					<a href="http://jira.jboss.org/browse/JBIDE-8005">JBIDE-8005</a>,
+					<a href="http://jira.jboss.org/browse/JBIDE-7979">JBIDE-7979</a>,
+					<a href="http://jira.jboss.org/browse/JBIDE-7598">JBIDE-7598</a>,
+				</td>
+			</tr>
+			<tr> 
+				<td valign="top" align="left">
+					<a name="itemname3" id="itemname3"></a>
+					<b>Instance view</b>
+				</td>
+				<td valign="top">
+						We added a columns that shows the ID of the instances that are available on a cloud. 
+					<br/><br/>Related Jiras: 
+					<a href="https://issues.jboss.org/browse/JBIDE-8183">JBIDE-8183</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7926">JBIDE-7926</a>
+				</td>
+			</tr>
+			<tr> 
+				<td valign="top" align="left">
+					<a name="itemname3" id="itemname3"></a>
+					<b>Image view</b>
+				</td>
+				<td valign="top">
+						We added architecture and description columns to the image view. 
+						<br/><br/>Related Jiras: 
+						<a href="https://issues.jboss.org/browse/JBIDE-8134">JBIDE-8134</a>,  
+				</td>
+			</tr>
+			<tr> 
+				<td valign="top" align="left">
+					<a name="itemname3" id="itemname3"></a>
+					<b>Launch instances</b>
+				</td>
+				<td valign="top">
+					The major improvement we introduced with CR1 is that you now also get a server adapter that allows you to deploy web applications to you instance. 
+					We introduced a second page to the wizard that launches instances. It allows you to explicitly create an Eclipse Remote System Explorer (RSE). RSE allows you 
+					to browse the filesystem on your instance and to open up an ssh terminal to it. Even more important this page offers an option to create a (WTP) server adapter.
+					You'll be able to deploy any WTP compliant web project to you instance with it. 
+					We also fixed a lot of bugs an improved overall stability.<br/><br/>
+					<img src="images/deltacloud-create-serveradapter.png" />
+					<br />Related Jiras: <br />
+					<a href="https://issues.jboss.org/browse/JBIDE-7763">JBIDE-7763</a>,  
+					<a href="https://issues.jboss.org/browse/JBIDE-8185">JBIDE-8185</a>,  
+					<a href="https://issues.jboss.org/browse/JBIDE-8144">JBIDE-8144</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-8099">JBIDE-8099</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-8095">JBIDE-8095</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-8082">JBIDE-8082</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-8083">JBIDE-8083</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7917">JBIDE-7917</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7912">JBIDE-7912</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7882">JBIDE-7882</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7834">JBIDE-7834</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7642">JBIDE-7642</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-8020">JBIDE-8020</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-8022">JBIDE-8022</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-8021">JBIDE-8021</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-8038">JBIDE-8038</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-8000">JBIDE-8000</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7984">JBIDE-7984</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7980">JBIDE-7980</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7918">JBIDE-7918</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7917">JBIDE-7917</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7818">JBIDE-7818</a>
+				</td>
+			</tr>
+			<tr> 
+				<td valign="top" align="left">
+					<a name="itemname3" id="itemname3"></a>
+					<b>Instance Alias</b>
+				</td>
+				<td valign="top">
+					EC2 in particular does not allow you to name instances. 
+					The deltacloud server therefore does not store names for instances that are launched on EC2. We work around this issue by giving you the possibilty to store an alias locally. 
+					<br/><br/>Related Jiras: 
+					<a href="https://issues.jboss.org/browse/JBIDE-8135">JBIDE-8135</a>,  
+					<a href="https://issues.jboss.org/browse/JBIDE-8129">JBIDE-8129</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-8051">JBIDE-8051</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7959">JBIDE-7959</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7294">JBIDE-7294</a>
+				</td>
+			</tr>
+			<tr> 
+				<td valign="top" align="left">
+					<a name="itemname3" id="itemname3"></a>
+					<b>Multi-selection</b>
+				</td>
+				<td valign="top">
+					Previous versions of the Deltacloud tools were not considering multiple selected items. We now execute most actions on all the items that you select.   
+					<br/><br/>Related Jiras: 
+					<a href="https://issues.jboss.org/browse/JBIDE-7557">JBIDE-7557</a>,  
+					<a href="https://issues.jboss.org/browse/JBIDE-7916">JBIDE-7916</a>,  
+					<a href="https://issues.jboss.org/browse/JBIDE-7688">JBIDE-7688</a>  
+				</td>
+			</tr>
+			<tr> 
+				<td valign="top" align="left">
+					<a name="itemname3" id="itemname3"></a>
+					<b>Background operations</b>
+				</td>
+				<td valign="top">
+						We now moved most costy operations (loading from the server etc.) to background jobs. The UI therefore feels much more fluid and does not block  any more.
+					<br/><br/>Related Jiras: 
+					<a href="https://issues.jboss.org/browse/JBIDE-7813">JBIDE-7813</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7554">JBIDE-7554</a>
+				</td>
+			</tr>
+			<tr> 
+				<td valign="top" align="left">
+					<a name="itemname3" id="itemname3"></a>
+					<b>Various bugs</b>
+				</td>
+				<td valign="top">
+					We fixed a lot of individual bugs and improved the overall experience in using the Deltacloud tools.  
+					<br/><br/>Related Jiras: <br/>
+					<a href="https://issues.jboss.org/browse/JBIDE-8111">JBIDE-8111</a>,  
+					<a href="https://issues.jboss.org/browse/JBIDE-8104">JBIDE-8104</a>,  
+					<a href="https://issues.jboss.org/browse/JBIDE-8091">JBIDE-8091</a>,  
+					<a href="https://issues.jboss.org/browse/JBIDE-7935">JBIDE-7935</a>,  
+					<a href="https://issues.jboss.org/browse/JBIDE-7695">JBIDE-7695</a>,  
+					<a href="https://issues.jboss.org/browse/JBIDE-7954">JBIDE-7954</a>,  
+					<a href="https://issues.jboss.org/browse/JBIDE-7459">JBIDE-7459</a>,  
+					<a href="https://issues.jboss.org/browse/JBIDE-7371">JBIDE-7371</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-8061">JBIDE-8061</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-8052">JBIDE-8052</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-8006">JBIDE-8006</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-8007">JBIDE-8007</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7986">JBIDE-7986</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-8014">JBIDE-8014</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7977">JBIDE-7977</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7880">JBIDE-7880</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7872">JBIDE-7872</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7864">JBIDE-7864</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7863">JBIDE-7863</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7856">JBIDE-7856</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7853">JBIDE-7853</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7852">JBIDE-7852</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7849">JBIDE-7849</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7848">JBIDE-7848</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7847">JBIDE-7847</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7836">JBIDE-7836</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7819">JBIDE-7819</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7790">JBIDE-7790</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7738">JBIDE-7738</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7731">JBIDE-7731</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7714">JBIDE-7714</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7697">JBIDE-7697</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7695">JBIDE-7695</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7682">JBIDE-7682</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7594">JBIDE-7594</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7592">JBIDE-7592</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7543">JBIDE-7543</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7522">JBIDE-7522</a>
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>
