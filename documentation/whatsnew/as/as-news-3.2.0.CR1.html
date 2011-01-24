@@ -1,0 +1,103 @@
+<html>
+
+<head>
+<link rel="stylesheet" href="../whatsnew.css">
+<title>JBoss AS Tools 3.2.0.CR1 News</title>
+</head>
+
+<body>
+
+<h1>JBoss AS Tools 3.2.0.CR1 - New and Noteworthy</h1>
+
+  <p align="right"><a href="../index.html">&lt; Main Index</a> <a href="../hibernate/hibernate-news-3.4.0.CR1.html">Hibernate Tools &gt;</a></p>
+
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>Server</h3>
+      <hr/>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="left">
+      <p align="right">
+	<b>SCP / SSH Server Deprecated</b></td>
+    <td valign="top" width="90%">
+      <p></p>
+         The SCP / SSH server was determined to not be the quality we were 
+         looking for in terms of feature completion. The normal server types
+         and deploy-only servers had more features via the RSE extensions, 
+         and use of RSE is now encouraged for all your remote-system deployment needs. 
+      <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-7412">Related jira</a></small></p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="left">
+      <p align="right">
+	<b>Remote Launch / Remote Stop fixed</b></td>
+    <td valign="top" width="90%">
+      <p></p>
+         Remote launch and remote stop previously were blocking jobs which made it difficult to use the workspace. They have been properly placed in the background and should no longer block other workspace activities. 
+      <p></p>
+      Remote stop also did not function properly due to the remote shell exiting before the command was fully processed by the remote server. This also has been fixed. 
+      <p><small>
+         <a href="https://jira.jboss.org/jira/browse/JBIDE-7579">Related jira</a>
+         <a href="https://jira.jboss.org/jira/browse/JBIDE-7753">Related jira</a>
+      </small></p>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="left">
+      <p align="right">
+	<b>Logging changes</b></td>
+    <td valign="top" width="90%">
+      <p></p>
+         Some issues were not being logged in the Server Log View. If a remote file copy failed, the issue was not logged. If the start and stop of the remote deployment scanner failed, this also was not logged. Both issues should be fixed now. 
+      <p><img src="images/nANDn_3.2.0.cr1.alsoLog.gif"/></p>
+      <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-7814">Related jira</a></small></p>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="left">
+      <p align="right">
+	<b>Server UI / Workflow Issues</b></td>
+    <td valign="top">
+      <p>
+        The deploy-only server now has deploy folders duplicated on the first page
+        of the server editor. This allows users to more quickly edit remote or
+        local deployment folders without having to switch to the second page of the 
+        server editor. This is visible only when using RSE-enabled deploy only servers. </p>
+       <p><img src="images/nANDn.3.2.0.CR1.deployOnlyServerEditor.gif"/></p>
+      <p>
+        RSE options have also been added to the New Server Wizard so that
+        users can quickly create an RSE server, instead of create a local server
+        and then change it to RSE.</p>
+      <p><img src="images/nANDn.3.2.0.cr1.serverWizardRSEPage.gif"/></p>
+     <p></p>
+      <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-6920">related jira</a></small></p>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+    </td>
+  </tr>
+
+</table>
+
+</body>
+
+</html>
+
+
