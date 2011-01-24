@@ -93,6 +93,39 @@
       <hr/>
     </td>
   </tr>
+  
+  <tr>
+    <td valign="top" align="left">
+      <p align="right">
+	<b>JBoss Runtime detection</b></td>
+    <td valign="top" width="90%">
+      <p>
+         The JBoss Runtime Detection plugin simplifies creating Eclipse runtimes.
+         Currently the user can find JBoss AS, Seam, Drools and jBPM runtime. It is also possible to add other 
+         runtime detectors using the org.jboss.tools.runtime.core.runtimeDetectors
+         extension point. 
+      </p>
+      <p>The user can define runtime paths by selecting Window>Preferences>JBoss Tools>JBoss Tools Runtime Detection. 
+      </p>
+      <p><img src="images/runtimeDetection.png"/></p>
+      <p>
+      The user can enable separate runtimes.
+      </br>
+      When starting JBoss Tools in a new workspace, runtime paths are scanned for enabled runtimes and can be created by the user.
+       Scanning can be done every time when starting Eclipse.
+      </p>
+      <p>It is performed using the Search button.</p> 
+      <p><img src="images/runtimeDetection1.png"/></p>
+      <p>The user selects runtimes he wants to create and clicks the OK button to create them.</p>
+      
+      <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-7527">JBIDE-7527</a></small></p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <hr/>
+    </td>
+  </tr>
 
 </table>
 
