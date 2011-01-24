@@ -17,25 +17,68 @@
 	<tr>
 		<td colspan="2">
 		<hr />
-		<h3>General</h3>
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>ODE Deployment Descriptor</b></td>
+		<td valign="top">The name of the deployment descriptor has been changed from bpel-deploy.xml to simply deploy.xml
+		so that it is now consistent with the ODE and Riftsaw deployment framework.
+		The "New ODE Deployment Descriptor" wizard now looks like this:<br /><br />
+		<img src="images/ODE-Deployment-Descriptor-Wizard.png" style=" width : 500px;" /><br />
+		
+		<br />See <a href="https://jira.jboss.org/jira/browse/JBIDE-7334">JBIDE-7334</a> for details.
+		</td>
+	</tr>
+
+
+	<tr>
+		<td colspan="2">
 		<hr />
 		</td>
 	</tr>
 	<tr>
-		<td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>BPEL
-		Editor</b></td>
-		<td valign="top">The following issues were fixed.
-		<ol>
-<a href="https://jira.jboss.org/jira/browse/JBIDE-6879">JBIDE-6879</a>  BPEL deployer should not be using PublishCopyUtili.java in JBoss as.core package <br></br>
-<a href="https://jira.jboss.org/jira/browse/JBIDE-7334">JBIDE-7334</a>  Change the bpeldeploy.xml to deploy.xml <br></br>
-<a href="https://jira.jboss.org/jira/browse/JBIDE-7786">JBIDE-7786</a>  Unable to associate BPEL project with SOA 5.1 runtime. <br></br>
-<a href="https://jira.jboss.org/jira/browse/JBIDE-7861">JBIDE-7861</a>  Unable to define invoke, receive, reply atributes by entering data without the use of "Quick Pick" or "Content Assist". <br></br>
-<a href="https://jira.jboss.org/jira/browse/JBIDE-8042">JBIDE-8042</a>  BPEL validator does not recognize counter variable inside forEach. <br></br>
-<a href="https://jira.jboss.org/jira/browse/JBIDE-8044">JBIDE-8044</a>  ArrayIndexOutOfBoundsException when adding compensateScope activity. <br></br>
-<a href="https://jira.jboss.org/jira/browse/JBIDE-8048">JBIDE-8048</a>  OnEvent Handler throws NPE when selecting PartnerLink and Operation in Properties tab <br></br>
-<a href="https://jira.jboss.org/jira/browse/JBIDE-8087">JBIDE-8087</a>  Incorrect imports in artifacts WSDL. <br></br>
+		<td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Quick-Pick Properties</b></td>
+		<td valign="top">The "Quick Pick" and comboboxes in the Properties/Detail tab of some of the activities are now synchronized;
+		For example, when a Receive Operation or Partner Link is selected from the comboboxes, the Quick Pick selection is also updated.<br /><br />
+		<img src="images/Receive-Properties.png" style=" width : 600px;" /><br />
+		
+		<br />See <a href="https://jira.jboss.org/jira/browse/JBIDE-7861">JBIDE-7861</a> for details.
+		</td>
 	</tr>
 
+
+	<tr>
+		<td colspan="2">
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>ForEach Counter Variables</b></td>
+		<td valign="top">Counter variables defined in a ForEach activity were not accessible in Assign activities. This has now been fixed.<br /><br />
+		<img src="images/forEachVariable.png" style=" width : 800px;" /><br />
+		
+		<br />See <a href="https://jira.jboss.org/jira/browse/JBIDE-7861">JBIDE-7861</a> for details.
+		</td>
+	</tr>
+	
+
+	<tr>
+		<td colspan="2">
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Handler Windows</b></td>
+		<td valign="top">Several bugs in the Event, Termination, Compensation and Fault Handler windows have been fixed.<br /><br />
+		<img src="images/Handlers.png" style=" width : 700px;" /><br />
+		
+		<br />See
+		<a href="https://jira.jboss.org/jira/browse/JBIDE-8044">JBIDE-8044</a> and
+		<a href="https://jira.jboss.org/jira/browse/JBIDE-8048">JBIDE-8048</a>
+		for more information.
+		</td>
+	</tr>
+	
 </table>
 
 </body>
