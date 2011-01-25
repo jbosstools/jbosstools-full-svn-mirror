@@ -23,33 +23,33 @@ import org.eclipse.ui.handlers.HandlerUtil;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 import org.jboss.tools.internal.deltacloud.ui.utils.WizardUtils;
-import org.jboss.tools.internal.deltacloud.ui.wizards.InstanceFilterWizard;
+import org.jboss.tools.internal.deltacloud.ui.wizards.ManageKeysWizard;
 
 /**
  * @author Andre Dietisheim
  */
-public class FilterInstancesHandler extends AbstractHandler implements IHandler {
+public class ManageKeysHandler extends AbstractHandler implements IHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
-			DeltaCloud deltaCloud = UIUtils.getFirstAdaptedElement(selection, DeltaCloud.class);
-			createInstancesFilter(deltaCloud, HandlerUtil.getActiveShell(event));
+			DeltaCloud cloud = UIUtils.getFirstAdaptedElement(selection, DeltaCloud.class);
+			createImagesFilter(cloud, HandlerUtil.getActiveShell(event));
 		}
 
 		return Status.OK_STATUS;
 	}
 
-	private void createInstancesFilter(final DeltaCloud cloud, final Shell shell) {
+	private void createImagesFilter(final DeltaCloud cloud, final Shell shell) {
 		if (cloud != null) {
-			Display.getDefault().asyncExec(new Runnable() {
+				Display.getDefault().asyncExec(new Runnable() {
+					@Override
+					public void run() {
+						WizardUtils.openWizardDialog(new ManageKeysWizard(cloud), shell);
+					}
+				});
 
-				@Override
-				public void run() {
-					WizardUtils.openWizardDialog(new InstanceFilterWizard(cloud), shell);
-				}
-			});
 		}
 	}
 }

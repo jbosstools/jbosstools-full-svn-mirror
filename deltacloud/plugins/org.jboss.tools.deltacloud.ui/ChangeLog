@@ -1,3 +1,23 @@
+2011-01-25  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* plugin.xml: 
+	* plugin.properties: 
+	* src/org/jboss/tools/deltacloud/ui/commands/ManageKeysHandler.java: 
+	[JBIDE-7772] added command, handler, plugin.xml-declaration and icosn for managing keys in the 
+	context-menu of the cloud viewer
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstanceWizard.java: 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ManageKeysWizard.java: 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/InstanceFilterWizard.java: 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ImageFilterWizard.java: 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/AbstractDeltaCloudWizard.java: 
+	[JBIDE-7772] extracted common wizard code & moved it to AbstractDeltaCloudWizard  
+	* src/org/jboss/tools/deltacloud/ui/commands/NewConnectionHandler.java: 
+	* src/org/jboss/tools/deltacloud/ui/commands/ManageKeysHandler.java (.run): 	
+	* src/org/jboss/tools/deltacloud/ui/commands/FilterInstancesHandler.java (.run): 
+	* src/org/jboss/tools/deltacloud/ui/commands/FilterImagesHandler.java (.run): 
+	* src/org/jboss/tools/internal/deltacloud/ui/utils/WizardUtils.java (openWizardDialog): 
+	[JBIDE-7772] extracted common handler code & moved it to WizardUtils 
+
 2011-01-17  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/internal/deltacloud/ui/utils/WizardUtils.java (nextPageOrFinish): 

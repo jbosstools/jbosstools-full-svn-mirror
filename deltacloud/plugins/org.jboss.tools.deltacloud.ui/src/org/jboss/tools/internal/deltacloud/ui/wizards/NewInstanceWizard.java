@@ -18,7 +18,6 @@ import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
-import org.eclipse.jface.wizard.Wizard;
 import org.jboss.tools.common.jobs.ChainedJob;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
@@ -36,7 +35,7 @@ import org.osgi.service.prefs.Preferences;
  * @author Jeff Johnston
  * @author André Dieitsheim
  */
-public class NewInstanceWizard extends Wizard {
+public class NewInstanceWizard extends AbstractDeltaCloudWizard {
 
 	private final static String CREATE_INSTANCE_FAILURE_TITLE = "CreateInstanceError.title"; //$NON-NLS-1$
 	private final static String CREATE_INSTANCE_FAILURE_MSG = "CreateInstanceError.msg"; //$NON-NLS-1$
@@ -47,7 +46,6 @@ public class NewInstanceWizard extends Wizard {
 
 	protected NewInstancePage mainPage;
 	protected INewInstanceWizardPage[] additionalPages;
-	protected DeltaCloud cloud;
 	protected DeltaCloudInstance instance;
 	/**
 	 * Initial image, may be null
@@ -55,7 +53,7 @@ public class NewInstanceWizard extends Wizard {
 	private DeltaCloudImage image;
 
 	public NewInstanceWizard(DeltaCloud cloud) {
-		this.cloud = cloud;
+		super(cloud);
 		try {
 			this.image = cloud.getLastImage();
 		} catch (DeltaCloudException e) {
@@ -70,7 +68,7 @@ public class NewInstanceWizard extends Wizard {
 
 	@Override
 	public void addPages() {
-		mainPage = new NewInstancePage(cloud, image);
+		mainPage = new NewInstancePage(getDeltaCloud(), image);
 		addPage(mainPage);
 		additionalPages = DeltacloudUIExtensionManager.getDefault().loadNewInstanceWizardPages();
 		for (int i = 0; i < additionalPages.length; i++) {
@@ -100,6 +98,7 @@ public class NewInstanceWizard extends Wizard {
 		String name = model.getName();
 
 		// Save persistent settings for this particular cloud
+		DeltaCloud cloud = getDeltaCloud();
 		cloud.setLastImageId(imageId);
 		cloud.setLastKeyname(keyId);
 

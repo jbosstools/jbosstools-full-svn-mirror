@@ -10,26 +10,24 @@
  ******************************************************************************/
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
-import org.eclipse.jface.wizard.Wizard;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 
 /**
  * @author Jeff Johnston
  */
-public class ImageFilterWizard extends Wizard {
+public class ImageFilterWizard extends AbstractDeltaCloudWizard {
 
-	private DeltaCloud cloud;
 	private ImageFilterPage mainPage;
 
 	public ImageFilterWizard(DeltaCloud cloud) {
-		this.cloud = cloud;
+		super(cloud);
 	}
 
 	@Override
 	public void addPages() {
 		// TODO Auto-generated method stub
-		mainPage = new ImageFilterPage(cloud);
+		mainPage = new ImageFilterPage(getDeltaCloud());
 		addPage(mainPage);
 	}
 
@@ -46,7 +44,7 @@ public class ImageFilterWizard extends Wizard {
 		String descRule = mainPage.getDescRule();
 
 		try {
-			cloud.updateImageFilter(
+			getDeltaCloud().updateImageFilter(
 					nameRule + ";" + //$NON-NLS-1$
 					idRule + ";" + //$NON-NLS-1$
 					archRule + ";" + //$NON-NLS-1$
@@ -55,7 +53,7 @@ public class ImageFilterWizard extends Wizard {
 			// TODO: internationalize strings
 			ErrorUtils.handleError(
 					"Error",
-					"Cloud not get update filters on cloud " + cloud.getName(), e, getShell());
+					"Cloud not get update filters on cloud " + getDeltaCloud().getName(), e, getShell());
 		}
 
 		return true;

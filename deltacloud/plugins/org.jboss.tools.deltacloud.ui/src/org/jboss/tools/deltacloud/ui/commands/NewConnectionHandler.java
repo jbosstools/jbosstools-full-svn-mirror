@@ -14,9 +14,9 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
+import org.jboss.tools.internal.deltacloud.ui.utils.WizardUtils;
 import org.jboss.tools.internal.deltacloud.ui.wizards.NewCloudConnectionWizard;
 
 /**
@@ -26,13 +26,8 @@ public class NewConnectionHandler extends AbstractHandler implements IHandler {
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		NewCloudConnectionWizard wizard = new NewCloudConnectionWizard();
-		wizard.init(PlatformUI.getWorkbench(), new StructuredSelection());
-		WizardDialog dialog = new WizardDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
-				wizard);
-		dialog.create();
-		dialog.open();
-		
+		Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+		WizardUtils.openWizardDialog(new NewCloudConnectionWizard(), shell);
 		return Status.OK_STATUS;
 	}
 }

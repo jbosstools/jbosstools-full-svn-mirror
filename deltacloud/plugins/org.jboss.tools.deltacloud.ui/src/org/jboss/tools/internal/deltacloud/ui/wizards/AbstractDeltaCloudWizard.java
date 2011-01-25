@@ -10,46 +10,21 @@
  ******************************************************************************/
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
+import org.eclipse.jface.wizard.Wizard;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
-import org.jboss.tools.deltacloud.core.DeltaCloudKey;
 
 /**
- * @author Jeff Johnston
  * @author André Dietisheim
  */
-public class ManageKeysWizard extends AbstractDeltaCloudWizard {
+public abstract class AbstractDeltaCloudWizard extends Wizard {
 
-	private ManageKeysPage mainPage;
-	private DeltaCloudKey key;
+	private DeltaCloud cloud;
 
-	public ManageKeysWizard(DeltaCloud cloud) {
-		super(cloud);
+	public AbstractDeltaCloudWizard(DeltaCloud cloud) {
+		this.cloud = cloud;
 	}
-
-	public DeltaCloudKey getKey() {
-		return key;
+	
+	protected DeltaCloud getDeltaCloud() {
+		return cloud;
 	}
-
-	@Override
-	public void addPages() {
-		mainPage = new ManageKeysPage(getDeltaCloud());
-		addPage(mainPage);
-	}
-
-	@Override
-	public boolean canFinish() {
-		return mainPage.isPageComplete();
-	}
-
-	@Override
-	public boolean performFinish() {
-		this.key = mainPage.getKey();
-		return true;
-	}
-
-	@Override
-	public boolean needsProgressMonitor() {
-		return true;
-	}
-
 }

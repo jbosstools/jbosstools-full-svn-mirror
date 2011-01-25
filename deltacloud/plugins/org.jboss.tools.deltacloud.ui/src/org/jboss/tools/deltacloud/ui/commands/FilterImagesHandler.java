@@ -17,13 +17,12 @@ import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.wizard.IWizard;
-import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
+import org.jboss.tools.internal.deltacloud.ui.utils.WizardUtils;
 import org.jboss.tools.internal.deltacloud.ui.wizards.ImageFilterWizard;
 
 /**
@@ -47,10 +46,7 @@ public class FilterImagesHandler extends AbstractHandler implements IHandler {
 				Display.getDefault().asyncExec(new Runnable() {
 					@Override
 					public void run() {
-						IWizard wizard = new ImageFilterWizard(cloud);
-						WizardDialog dialog = new WizardDialog(shell, wizard);
-						dialog.create();
-						dialog.open();
+						WizardUtils.openWizardDialog(new ImageFilterWizard(cloud), shell);
 					}
 				});
 

@@ -22,6 +22,8 @@ import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.IWizardContainer;
 import org.eclipse.jface.wizard.IWizardPage;
+import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.swt.widgets.Shell;
 
 /**
  * @author André Dietisheim
@@ -114,5 +116,11 @@ public class WizardUtils {
 				wizard.getContainer().getShell().close();
 			}
 		}
+	}
+	
+	public static void openWizardDialog(IWizard wizard, Shell shell) {
+		WizardDialog dialog = new WizardDialog(shell, wizard);
+		dialog.create();
+		dialog.open();
 	}
 }
