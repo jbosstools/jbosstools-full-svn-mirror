@@ -9,6 +9,9 @@ import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Set;
+import java.util.StringTokenizer;
+import java.util.jar.Attributes;
+import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -19,6 +22,7 @@ import org.eclipse.core.resources.ProjectScope;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
@@ -29,6 +33,7 @@ import org.eclipse.jst.j2ee.commonarchivecore.internal.helpers.ArchiveManifest;
 import org.eclipse.jst.j2ee.commonarchivecore.internal.helpers.ArchiveManifestImpl;
 import org.eclipse.jst.j2ee.commonarchivecore.internal.util.ArchiveUtil;
 import org.eclipse.jst.j2ee.internal.project.J2EEProjectUtilities;
+import org.eclipse.jst.j2ee.model.IModelProvider;
 import org.eclipse.ui.dialogs.IOverwriteQuery;
 import org.eclipse.ui.wizards.datatransfer.FileSystemStructureProvider;
 import org.eclipse.ui.wizards.datatransfer.ImportOperation;
@@ -37,6 +42,7 @@ import org.eclipse.wst.common.componentcore.ComponentCore;
 import org.eclipse.wst.common.componentcore.resources.IVirtualComponent;
 import org.eclipse.wst.common.componentcore.resources.IVirtualFolder;
 import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
+import org.eclipse.wst.common.project.facet.core.FacetedProjectFramework;
 import org.eclipse.wst.common.project.facet.core.IFacetedProject;
 import org.eclipse.wst.common.project.facet.core.IProjectFacet;
 import org.eclipse.wst.common.project.facet.core.IProjectFacetVersion;
@@ -47,7 +53,10 @@ import org.eclipse.wst.common.project.facet.core.events.IProjectFacetActionEvent
 import org.eclipse.wst.server.core.IRuntime;
 import org.jboss.ide.eclipse.as.core.server.IJBossServerConstants;
 import org.jboss.ide.eclipse.as.core.server.IJBossServerRuntime;
+import org.jboss.tools.portlet.core.IJBossWebUtil;
 import org.jboss.tools.portlet.core.IPortletConstants;
+import org.jboss.tools.portlet.core.JBossWebUtil;
+import org.jboss.tools.portlet.core.JBossWebUtil25;
 import org.jboss.tools.portlet.core.Messages;
 import org.jboss.tools.portlet.core.PortletCoreActivator;
 import org.jboss.tools.portlet.core.libprov.AbstractLibraryProviderInstallOperationConfig;
@@ -55,7 +64,9 @@ import org.jboss.tools.portlet.core.libprov.JSFPortletbridgeRuntimeLibraryProvid
 
 public class PortletPostInstallListener implements IFacetedProjectListener {
 
-	private static final IProjectFacet seamFacet = ProjectFacetsManager.getProjectFacet("jst.seam"); //$NON-NLS-1$
+	private static final String JST_SEAM_FACET = "jst.seam"; //$NON-NLS-1$
+	
+	private static final IProjectFacet seamFacet = ProjectFacetsManager.getProjectFacet(JST_SEAM_FACET);
 	private static final IOverwriteQuery OVERWRITE_NONE_QUERY = new IOverwriteQuery()
     {
       public String queryOverwrite(String pathString)
@@ -136,9 +147,158 @@ public class PortletPostInstallListener implements IFacetedProjectListener {
 			else if (richfacesFromServerRuntime) {
 				addLibrariesFromServerRuntime(facetedProject);
 			}
+			configureWebApp(facetedProject.getProject(), new NullProgressMonitor());
 		}
 	}
 
+	private void configureWebApp(final IProject project,
+			final IProgressMonitor monitor) {
+		final IModelProvider provider = PortletCoreActivator
+				.getModelProvider(project);
+		IPath modelPath = new Path("WEB-INF").append("web.xml"); //$NON-NLS-1$ //$NON-NLS-2$
+		boolean exists = project.getProjectRelativePath().append(modelPath)
+				.toFile().exists();
+		if (PortletCoreActivator.isWebApp25(provider.getModelObject()) && !exists) {
+			modelPath = IModelProvider.FORCESAVE;
+		}
+		provider.modify(new Runnable() {
+			public void run() {
+				IJBossWebUtil util = null;
+
+				if (PortletCoreActivator.isWebApp25(provider.getModelObject())) {
+					util = new JBossWebUtil25();
+				} else {
+					util = new JBossWebUtil();
+				}
+				if (addRichfacesLibraries(project)) {
+					
+					String name = "org.ajax4jsf.VIEW_HANDLERS"; //$NON-NLS-1$
+					String value = "org.jboss.portletbridge.application.FaceletPortletViewHandler"; //$NON-NLS-1$
+					String description = null;
+					util.configureContextParam(project, monitor, name, value,
+						description);
+
+					name = "javax.portlet.faces.renderPolicy"; //$NON-NLS-1$
+					value = "ALWAYS_DELEGATE"; //$NON-NLS-1$
+					util.configureContextParam(project, monitor, name, value,
+						description);
+
+					// RichFaces settings
+
+					int portletBridgeVersion = getPortletBridgeVersion(project);
+					if (portletBridgeVersion <= 1) {
+						value = "NONE"; //$NON-NLS-1$
+					} else {
+						value = "ALL"; //$NON-NLS-1$
+					}
+					name = "org.richfaces.LoadStyleStrategy"; //$NON-NLS-1$
+					util.configureContextParam(project, monitor, name, value,
+						description);
+
+					name = "org.richfaces.LoadScriptStrategy"; //$NON-NLS-1$
+					
+					util.configureContextParam(project, monitor, name, value,
+						description);
+
+					name = "org.ajax4jsf.RESOURCE_URI_PREFIX"; //$NON-NLS-1$
+					value = "rfRes"; //$NON-NLS-1$
+					util.configureContextParam(project, monitor, name, value,
+						description);
+
+					String displayName = "Ajax4jsf Filter"; //$NON-NLS-1$
+					String filterName = "ajax4jsf"; //$NON-NLS-1$
+					String className = "org.ajax4jsf.Filter"; //$NON-NLS-1$
+					util.configureFilter(project, monitor, filterName, className,
+						displayName, description);
+
+					String servletName = util.findJsfServlet(provider
+						.getModelObject());
+					if (servletName == null) {
+						RuntimeException e = new RuntimeException(
+							Messages.JSFPortletFacetInstallDelegate_Cannot_find_the_JSF_servlet);
+						PortletCoreActivator.log(e);
+						throw e;
+					}
+					util.configureFilterMapping(project, monitor, filterName,
+						servletName);
+				} else {
+					String name = "javax.portlet.faces.renderPolicy"; //$NON-NLS-1$
+					String value = "NEVER_DELEGATE"; //$NON-NLS-1$
+					String description = null;
+					util.configureContextParam(project, monitor, name, value,
+						description);
+				}
+			}
+		}, modelPath);
+	}
+
+	protected int getPortletBridgeVersion(IProject project) {
+		if (project == null || !project.isOpen()) {
+			return 0;
+		}
+		IVirtualComponent component = ComponentCore.createComponent(project);
+		IVirtualFolder rootFolder = component.getRootFolder();
+		IContainer folder = rootFolder.getUnderlyingFolder();
+		IContainer webinf = folder.getFolder(new Path(IPortletConstants.WEB_INF_LIB));
+		String libResource = webinf.getLocation().toOSString();
+		File libFile = new File(libResource);
+		if (!libFile.exists()) {
+			return 0;
+		}
+		File[] files = libFile.listFiles(new FilenameFilter() {
+			
+			public boolean accept(File dir, String name) {
+				if (name != null && name.startsWith("portletbridge-api")  //$NON-NLS-1$
+						&& name.endsWith(".jar")) { //$NON-NLS-1$
+					return true;
+				}
+				return false;
+			}
+		});
+		if (files == null || files.length <= 0) {
+			return 0;
+		}
+		File jarFile = files[0];
+		if(jarFile.isFile()) {
+			try {
+				JarFile jar = new JarFile(jarFile);
+				Attributes attributes = jar.getManifest().getMainAttributes();
+				String versionString = attributes.getValue("Implementation-Version"); //$NON-NLS-1$
+				if (versionString != null && versionString.trim().length() > 0) {
+					StringTokenizer tokenizer = new StringTokenizer(versionString,"."); //$NON-NLS-1$
+					if (tokenizer.hasMoreTokens()) {
+						String firstNumber = tokenizer.nextToken();
+						int version = 0;
+						try {
+							version = new Integer(firstNumber).intValue();
+						} catch (NumberFormatException e) {
+							// ignore
+						}
+						return version;
+					}
+				}
+				
+			} catch (IOException e) {
+				return 0;
+			}
+		}
+		return 0;
+	}
+
+	private boolean addRichfacesLibraries(IProject project) {
+		boolean isSeamFacet = false;
+		try {
+			isSeamFacet = FacetedProjectFramework.hasProjectFacet(project,
+					JST_SEAM_FACET);
+		} catch (CoreException e) {
+			PortletCoreActivator.log(e);
+		}
+		if (isSeamFacet) {
+			return true;
+		}
+		return richfacesCapabilities;
+	}
+	
 	private void addLibrariesFromServerRuntime(IFacetedProject facetedProject) {
 		final boolean isSeamProject = facetedProject.hasProjectFacet(seamFacet);
 		final boolean addRichfacesFromRichfacesRuntime = richfacesCapabilities && IPortletConstants.LIBRARIES_PROVIDED_BY_RICHFACES.equals(richfacesType) && !isEPP;

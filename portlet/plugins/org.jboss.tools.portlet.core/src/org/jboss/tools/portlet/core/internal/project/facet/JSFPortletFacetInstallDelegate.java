@@ -10,62 +10,32 @@
  ************************************************************************************/
 package org.jboss.tools.portlet.core.internal.project.facet;
 
-import java.io.File;
-import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.jdt.core.IClasspathAttribute;
-import org.eclipse.jdt.core.IClasspathEntry;
-import org.eclipse.jdt.core.IJavaProject;
-import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jdt.core.JavaModelException;
-import org.eclipse.jst.common.project.facet.core.libprov.ILibraryProvider;
 import org.eclipse.jst.common.project.facet.core.libprov.LibraryInstallDelegate;
-import org.eclipse.jst.j2ee.classpathdep.ClasspathDependencyUtil;
-import org.eclipse.jst.j2ee.classpathdep.IClasspathDependencyConstants;
 import org.eclipse.jst.j2ee.model.IModelProvider;
-import org.eclipse.jst.javaee.web.WebApp;
-import org.eclipse.jst.javaee.web.WebAppVersionType;
 import org.eclipse.jst.jsf.facesconfig.emf.ApplicationType;
 import org.eclipse.jst.jsf.facesconfig.emf.FacesConfigFactory;
 import org.eclipse.jst.jsf.facesconfig.emf.FacesConfigType;
 import org.eclipse.jst.jsf.facesconfig.emf.StateManagerType;
 import org.eclipse.jst.jsf.facesconfig.emf.ViewHandlerType;
 import org.eclipse.jst.jsf.facesconfig.util.FacesConfigArtifactEdit;
-import org.eclipse.ui.wizards.datatransfer.FileSystemStructureProvider;
-import org.eclipse.ui.wizards.datatransfer.ImportOperation;
-import org.eclipse.wst.common.componentcore.ComponentCore;
-import org.eclipse.wst.common.componentcore.datamodel.properties.IFacetDataModelProperties;
-import org.eclipse.wst.common.componentcore.resources.IVirtualComponent;
-import org.eclipse.wst.common.componentcore.resources.IVirtualFile;
 import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
-import org.eclipse.wst.common.project.facet.core.FacetedProjectFramework;
 import org.eclipse.wst.common.project.facet.core.IDelegate;
-import org.eclipse.wst.common.project.facet.core.IFacetedProjectWorkingCopy;
 import org.eclipse.wst.common.project.facet.core.IProjectFacetVersion;
-import org.eclipse.wst.server.core.IRuntime;
-import org.jboss.ide.eclipse.as.core.server.IJBossServerConstants;
-import org.jboss.ide.eclipse.as.core.server.IJBossServerRuntime;
-import org.jboss.tools.portlet.core.IJBossWebUtil;
 import org.jboss.tools.portlet.core.IPortletConstants;
 import org.jboss.tools.portlet.core.JBossWebUtil;
 import org.jboss.tools.portlet.core.JBossWebUtil25;
 import org.jboss.tools.portlet.core.Messages;
 import org.jboss.tools.portlet.core.PortletCoreActivator;
-import org.jboss.tools.portlet.core.libprov.AbstractLibraryProviderInstallOperationConfig;
-import org.jboss.tools.portlet.core.libprov.JSFPortletbridgeRuntimeLibraryProviderInstallOperationConfig;
 
 /**
  * @author snjeza
@@ -73,7 +43,6 @@ import org.jboss.tools.portlet.core.libprov.JSFPortletbridgeRuntimeLibraryProvid
  */
 public class JSFPortletFacetInstallDelegate implements IDelegate {
 
-	private static final String JST_SEAM_FACET = "jst.seam"; //$NON-NLS-1$
 	private static final String ORG_JBOSS_PORTLET_STATE_MANAGER = "org.jboss.portletbridge.application.PortletStateManager"; //$NON-NLS-1$
 	private static final String ORG_JBOSS_PORTLET_VIEW_HANDLER = "org.jboss.portletbridge.application.PortletViewHandler"; //$NON-NLS-1$
 
@@ -120,13 +89,8 @@ public class JSFPortletFacetInstallDelegate implements IDelegate {
 
 			configureFacesConfig(project, monitor, config);
 
-			//configureClassPath(project, monitor, config);
-			
 			//Configure libraries
-			( (LibraryInstallDelegate) config.getProperty( IPortletConstants.JSFPORTLET_LIBRARY_PROVIDER_DELEGATE ) ).execute( new NullProgressMonitor() );
-			
-
-			configureWebApp(project, monitor, config);
+			( (LibraryInstallDelegate) config.getProperty( IPortletConstants.JSFPORTLET_LIBRARY_PROVIDER_DELEGATE ) ).execute( monitor );
 			
 			if (monitor != null) {
 				monitor.worked(1);
@@ -247,294 +211,10 @@ public class JSFPortletFacetInstallDelegate implements IDelegate {
 	private String getFacesConfigFile(IProject project, IProgressMonitor monitor) {
 		final IModelProvider provider = PortletCoreActivator
 				.getModelProvider(project);
-		if (isWebApp25(provider.getModelObject())) {
+		if (PortletCoreActivator.isWebApp25(provider.getModelObject())) {
 			return new JBossWebUtil25().getFacesConfig(project, monitor);
 		}
 		return new JBossWebUtil().getFacesConfig(project, monitor);
-	}
-
-	private void configureWebApp(final IProject project,
-			final IProgressMonitor monitor, final IDataModel config) {
-		final IModelProvider provider = PortletCoreActivator
-				.getModelProvider(project);
-		IPath modelPath = new Path("WEB-INF").append("web.xml"); //$NON-NLS-1$ //$NON-NLS-2$
-		boolean exists = project.getProjectRelativePath().append(modelPath)
-				.toFile().exists();
-		if (isWebApp25(provider.getModelObject()) && !exists) {
-			modelPath = IModelProvider.FORCESAVE;
-		}
-		provider.modify(new Runnable() {
-			public void run() {
-				IJBossWebUtil util = null;
-
-				if (isWebApp25(provider.getModelObject())) {
-					util = new JBossWebUtil25();
-				} else {
-					util = new JBossWebUtil();
-				}
-				if (addRichfacesLibraries(config, project)) {
-					
-					String name = "org.ajax4jsf.VIEW_HANDLERS"; //$NON-NLS-1$
-					String value = "org.jboss.portletbridge.application.FaceletPortletViewHandler"; //$NON-NLS-1$
-					String description = null;
-					util.configureContextParam(project, monitor, name, value,
-						description);
-
-					name = "javax.portlet.faces.renderPolicy"; //$NON-NLS-1$
-					value = "ALWAYS_DELEGATE"; //$NON-NLS-1$
-					util.configureContextParam(project, monitor, name, value,
-						description);
-
-				// RichFaces settings
-
-				
-					name = "org.richfaces.LoadStyleStrategy"; //$NON-NLS-1$
-					value = "NONE"; //$NON-NLS-1$
-					util.configureContextParam(project, monitor, name, value,
-						description);
-
-					name = "org.richfaces.LoadScriptStrategy"; //$NON-NLS-1$
-					value = "NONE"; //$NON-NLS-1$
-					util.configureContextParam(project, monitor, name, value,
-						description);
-
-					name = "org.ajax4jsf.RESOURCE_URI_PREFIX"; //$NON-NLS-1$
-					value = "rfRes"; //$NON-NLS-1$
-					util.configureContextParam(project, monitor, name, value,
-						description);
-
-					String displayName = "Ajax4jsf Filter"; //$NON-NLS-1$
-					String filterName = "ajax4jsf"; //$NON-NLS-1$
-					String className = "org.ajax4jsf.Filter"; //$NON-NLS-1$
-					util.configureFilter(project, monitor, filterName, className,
-						displayName, description);
-
-					String servletName = util.findJsfServlet(provider
-						.getModelObject());
-					if (servletName == null) {
-						RuntimeException e = new RuntimeException(
-							Messages.JSFPortletFacetInstallDelegate_Cannot_find_the_JSF_servlet);
-						PortletCoreActivator.log(e);
-						throw e;
-					}
-					util.configureFilterMapping(project, monitor, filterName,
-						servletName);
-				} else {
-					String name = "javax.portlet.faces.renderPolicy"; //$NON-NLS-1$
-					String value = "NEVER_DELEGATE"; //$NON-NLS-1$
-					String description = null;
-					util.configureContextParam(project, monitor, name, value,
-						description);
-				}
-			}
-		}, modelPath);
-	}
-
-	private boolean addRichfacesLibraries(IDataModel config, IProject project) {
-		LibraryInstallDelegate libraryDelegate = ( (LibraryInstallDelegate) config.getProperty( IPortletConstants.JSFPORTLET_LIBRARY_PROVIDER_DELEGATE ) );
-		if (libraryDelegate != null) {
-			ILibraryProvider libraryProvider = libraryDelegate
-					.getLibraryProvider();
-			String providerId = libraryProvider.getId();
-			if (PortletCoreActivator.JSFPORTLETBRIDGE_LIBRARY_PROVIDER.equals(providerId)
-					|| PortletCoreActivator.JSFPORTLET_LIBRARY_PROVIDER.equals(providerId)) {
-				AbstractLibraryProviderInstallOperationConfig libraryConfig = (AbstractLibraryProviderInstallOperationConfig) libraryDelegate.getLibraryProviderOperationConfig(libraryProvider);
-				
-				boolean isSeamFacet = false;
-				try {
-					isSeamFacet = FacetedProjectFramework.hasProjectFacet(project, JST_SEAM_FACET);
-				} catch (CoreException e) {
-					PortletCoreActivator.log(e);
-				}
-				if (isSeamFacet) {
-					return true;
-				}
-				if (libraryConfig.isAddRichfacesCapabilities()) {
-					return true;
-				}
-			}
-			
-		}
-		return false;
-	}
-	
-	private void configureClassPath(final IProject project,
-			final IProgressMonitor monitor, IDataModel config)
-			throws JavaModelException {
-		
-		String implementationLibrary = config.getStringProperty(IPortletConstants.IMPLEMENTATION_LIBRARY);
-		boolean isEPP = config.getBooleanProperty(IPortletConstants.IS_EPP);
-
-		if (IPortletConstants.LIBRARIES_PROVIDED_BY_PORTLETBRIDGE.equals(implementationLibrary) || isEPP) {
-			addLibrariesFromPortletBridgeRuntime(project,monitor,config);
-		} else if (IPortletConstants.LIBRARIES_PROVIDED_BY_SERVER_RUNTIME.equals(implementationLibrary)) {
-			addLibrariesFromServerRuntime(project,monitor,config);
-		} else if (IPortletConstants.USER_LIBRARY.equals(implementationLibrary)) {
-			addUserLibrary(project,monitor,config);
-		}
-		
-	}
-
-	private void addUserLibrary(IProject project, IProgressMonitor monitor,
-			IDataModel config) throws JavaModelException {
-		String userLibraryName = config.getStringProperty(IPortletConstants.USER_LIBRARY_NAME);
-		IPath containerPath = new Path(JavaCore.USER_LIBRARY_CONTAINER_ID).append(userLibraryName);
-		IJavaProject javaProject = JavaCore.create(project);
-		IClasspathAttribute dependencyAttribute = JavaCore.newClasspathAttribute(
-				IClasspathDependencyConstants.CLASSPATH_COMPONENT_DEPENDENCY,
-				ClasspathDependencyUtil.getDefaultRuntimePath(
-						true).toString());
-		IClasspathEntry[] oldClasspathEntries = javaProject.getRawClasspath();
-		IClasspathEntry[] newClasspathEntries = null;
-		for (int i = 0; i < oldClasspathEntries.length; i++) {
-			IClasspathEntry entry = oldClasspathEntries[i];
-			if (entry.getEntryKind() == IClasspathEntry.CPE_CONTAINER &&
-					containerPath.equals(entry.getPath())) {
-				LinkedHashMap<String, IClasspathAttribute> attrs = new LinkedHashMap<String, IClasspathAttribute>();
-		        for(IClasspathAttribute attr : entry.getExtraAttributes()) {
-		          attrs.put(attr.getName(), attr);
-		        }
-		        attrs.put(dependencyAttribute.getName(), dependencyAttribute);
-		        IClasspathAttribute[] newAttrs = attrs.values().toArray(new IClasspathAttribute[attrs.size()]);
-		        entry = JavaCore.newContainerEntry(entry.getPath(), entry.getAccessRules(), newAttrs, entry.isExported());
-		        oldClasspathEntries[i] = entry;
-		        newClasspathEntries = oldClasspathEntries;
-				break;
-			}
-		}
-		if (newClasspathEntries == null) {
-			newClasspathEntries = new IClasspathEntry[oldClasspathEntries.length + 1];
-			for (int i = 0; i < oldClasspathEntries.length; i++) {
-				newClasspathEntries[i] = oldClasspathEntries[i];
-			}
-			IClasspathEntry newClasspath = JavaCore.newContainerEntry(containerPath, null,
-					new IClasspathAttribute[] { dependencyAttribute }, true);
-			newClasspathEntries[oldClasspathEntries.length] = newClasspath;
-		}
-		javaProject.setRawClasspath(newClasspathEntries, monitor);
-	}
-
-	private void addLibrariesFromServerRuntime(IProject project,
-			IProgressMonitor monitor, IDataModel config) {
-		IFacetedProjectWorkingCopy fpwc = (IFacetedProjectWorkingCopy) config.getProperty(IFacetDataModelProperties.FACETED_PROJECT_WORKING_COPY);
-		
-		org.eclipse.wst.common.project.facet.core.runtime.IRuntime facetRuntime = fpwc.getPrimaryRuntime();
-		IRuntime runtime = PortletCoreActivator.getRuntime(facetRuntime);
-		IJBossServerRuntime jbossRuntime = (IJBossServerRuntime)runtime.loadAdapter(IJBossServerRuntime.class, new NullProgressMonitor());
-		if (jbossRuntime != null) {
-			// JBoss Portal server
-			IPath jbossLocation = runtime.getLocation();
-			IPath configPath = jbossLocation.append(IJBossServerConstants.SERVER).append(jbossRuntime.getJBossConfiguration());
-			IPath portletLib = configPath.append(IPortletConstants.PORTLET_SAR_LIB);
-			File portletLibFile = portletLib.toFile();
-			String[] files = getPortletbridgeLibraries(portletLibFile);
-			if (files == null) {
-				portletLib = configPath.append(IPortletConstants.PORTLET_SAR_HA_LIB);
-				portletLibFile = portletLib.toFile();
-				files = getPortletbridgeLibraries(portletLibFile);
-					
-			}
-			if (files != null) {
-				try {
-					List<File> filesToImport = new ArrayList<File>();
-
-					for (int i = 0; i < files.length; i++) {
-						filesToImport.add(new File(portletLibFile, files[i]));
-					}
-					IVirtualComponent component = ComponentCore
-							.createComponent(project);
-					IVirtualFile libVirtualFile = component.getRootFolder()
-							.getFile(IPortletConstants.WEB_INF_LIB);
-
-					IFile folder = libVirtualFile.getUnderlyingFile();
-
-					File sourceFolder = new File(portletLib.toOSString());
-					ImportOperation importOperation = new ImportOperation(
-							folder.getFullPath(), sourceFolder,
-							FileSystemStructureProvider.INSTANCE,
-							PortletCoreActivator.OVERWRITE_ALL_QUERY,
-							filesToImport);
-					importOperation.setCreateContainerStructure(false);
-					importOperation.run(monitor);
-				} catch (Exception e) {
-					PortletCoreActivator
-					.log(e, Messages.JSFPortletFacetInstallDelegate_Error_loading_classpath_container);
-				}
-			}
-		}
-		
-	}
-
-	private String[] getPortletbridgeLibraries(File file) {
-		if (file != null && file.isDirectory()) {
-			String[] list = file.list(new FilenameFilter() {
-
-				public boolean accept(File dir, String name) {
-					if ("portletbridge-api.jar".equals(name) || //$NON-NLS-1$
-							"portletbridge-impl.jar".equals(name)) { //$NON-NLS-1$
-						return true;
-					}
-					return false;
-				}
-				
-			});
-			return list;
-		}
-		return null;
-	}
-	private void addLibrariesFromPortletBridgeRuntime(IProject project,
-			IProgressMonitor monitor, IDataModel config) {
-		try {
-
-			String pbRuntime = config
-					.getStringProperty(IPortletConstants.PORTLET_BRIDGE_RUNTIME);
-			if (pbRuntime != null && pbRuntime.trim().length() > 0) {
-				pbRuntime = pbRuntime.trim();
-				File pbFolder = new File(pbRuntime);
-				if (pbFolder.exists() && pbFolder.isDirectory()) {
-					String[] fileList = pbFolder.list(new FilenameFilter() {
-
-						public boolean accept(File dir, String name) {
-							if (name.startsWith("portletbridge") || name.endsWith(".jar")) { //$NON-NLS-1$ //$NON-NLS-2$
-								return true;
-							}
-							return false;
-						}
-
-					});
-
-					List<File> filesToImport = new ArrayList<File>();
-
-					for (int i = 0; i < fileList.length; i++) {
-						filesToImport.add(new File(pbRuntime, fileList[i]));
-					}
-					IVirtualComponent component = ComponentCore
-							.createComponent(project);
-					IVirtualFile libVirtualFile = component.getRootFolder()
-							.getFile(IPortletConstants.WEB_INF_LIB);
-
-					IFile folder = libVirtualFile.getUnderlyingFile();
-
-					ImportOperation importOperation = new ImportOperation(
-							folder.getFullPath(), pbFolder,
-							FileSystemStructureProvider.INSTANCE,
-							PortletCoreActivator.OVERWRITE_ALL_QUERY,
-							filesToImport);
-					importOperation.setCreateContainerStructure(false);
-					importOperation.run(monitor);
-				}
-			}
-		} catch (Exception e) {
-			PortletCoreActivator
-					.log(e, Messages.JSFPortletFacetInstallDelegate_Error_loading_classpath_container);
-		}
-	}
-
-	private boolean isWebApp25(final Object webApp) {
-		if (webApp instanceof WebApp
-				&& ((WebApp) webApp).getVersion() == WebAppVersionType._25_LITERAL)
-			return true;
-		return false;
 	}
 	
 	private class FacesState {

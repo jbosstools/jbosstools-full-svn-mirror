@@ -21,6 +21,8 @@ import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jst.j2ee.model.IModelProvider;
 import org.eclipse.jst.j2ee.model.ModelProviderManager;
+import org.eclipse.jst.javaee.web.WebApp;
+import org.eclipse.jst.javaee.web.WebAppVersionType;
 import org.eclipse.ui.dialogs.IOverwriteQuery;
 import org.eclipse.wst.common.componentcore.ComponentCore;
 import org.eclipse.wst.common.project.facet.core.IFacetedProjectBase;
@@ -336,5 +338,12 @@ public class PortletCoreActivator extends Plugin {
 			return location;
 		}
 		return null;
+	}
+	
+	public static boolean isWebApp25(final Object webApp) {
+		if (webApp instanceof WebApp
+				&& ((WebApp) webApp).getVersion() == WebAppVersionType._25_LITERAL)
+			return true;
+		return false;
 	}
 }
