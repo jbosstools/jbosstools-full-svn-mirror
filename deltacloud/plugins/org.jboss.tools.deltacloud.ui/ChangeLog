@@ -1,3 +1,9 @@
+2011-01-26  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnectionWizard.java 
+	(performTest): 
+	[JBIDE-8250] all error-responses from server indicate that the credentials test failed (was: only 403 was a connection error).
+
 2011-01-25  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* plugin.xml: 
