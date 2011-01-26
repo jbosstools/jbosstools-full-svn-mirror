@@ -11,7 +11,6 @@
 package org.jboss.tools.deltacloud.core.client;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -61,7 +60,6 @@ import org.jboss.tools.deltacloud.core.client.unmarshal.KeyUnmarshaller;
 import org.jboss.tools.deltacloud.core.client.unmarshal.KeysUnmarshaller;
 import org.jboss.tools.deltacloud.core.client.unmarshal.RealmUnmarshaller;
 import org.jboss.tools.deltacloud.core.client.unmarshal.RealmsUnmarshaller;
-import org.jboss.tools.deltacloud.core.client.utils.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -140,7 +138,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		int statusCode = httpResponse.getStatusLine().getStatusCode();
 		if (HttpStatusCode.OK.isStatus(statusCode)) {
 			return;
-		} else if (HttpStatusCode.FORBIDDEN.isStatus(statusCode)) {
+		} else if (HttpStatusCode.UNAUTHORIZED.isStatus(statusCode)) {
 			throw new DeltaCloudAuthClientException(
 					MessageFormat
 							.format("The server reported an authorization error \"{0}\" on requesting \"{1}\"",

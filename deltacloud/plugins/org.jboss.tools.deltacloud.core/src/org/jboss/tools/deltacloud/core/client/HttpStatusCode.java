@@ -15,7 +15,7 @@ package org.jboss.tools.deltacloud.core.client;
  */
 public enum HttpStatusCode {
 
-	OK(200), NOT_FOUND(404), FORBIDDEN(403);
+	OK(200), NOT_FOUND(404), FORBIDDEN(403), UNAUTHORIZED(401);
 	
 	private int code;
 	
