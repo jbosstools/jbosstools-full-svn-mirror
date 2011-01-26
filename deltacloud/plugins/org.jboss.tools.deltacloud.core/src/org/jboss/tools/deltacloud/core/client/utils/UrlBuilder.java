@@ -99,17 +99,9 @@ public class UrlBuilder {
 	public UrlBuilder parameter(String name, String value) {
 		if (value != null) {
 			appendParameterDelimiter();
-			urlStringBuilder.append(name).append(PARAMETER_NAME_VALUE_DELIMITER).append(value);
+			urlStringBuilder.append(name).append(PARAMETER_NAME_VALUE_DELIMITER).append(urlEncode(value));
 		}
 		return this;
-	}
-
-	public UrlBuilder urlEncodedParameter(String name, String value) {
-		try {
-			return parameter(name, URLEncoder.encode(value, URL_ENCODING));
-		} catch (UnsupportedEncodingException e) {
-			throw new RuntimeException(e);
-		}
 	}
 
 	private void appendParameterDelimiter() {
@@ -130,10 +122,18 @@ public class UrlBuilder {
 
 	public UrlBuilder parameter(String parameter) {
 		appendParameterDelimiter();
-		urlStringBuilder.append(parameter);
+		urlStringBuilder.append(urlEncode(parameter));
 		return this;
 	}
 
+	private String urlEncode(String value) {
+		try {
+			return URLEncoder.encode(value, URL_ENCODING);
+		} catch (UnsupportedEncodingException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
 	public URL toUrl() throws MalformedURLException {
 		return new URL(urlStringBuilder.toString());
 	}
