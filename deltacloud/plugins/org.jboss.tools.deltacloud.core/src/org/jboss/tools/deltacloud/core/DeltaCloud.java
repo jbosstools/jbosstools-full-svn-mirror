@@ -51,7 +51,7 @@ public class DeltaCloud extends ObservablePojo {
 
 	private InternalDeltaCloudClient client;
 
-	private DeltaCloudImagesRepository images;
+	private DeltaCloudImagesRepository imagesRepo;
 	private DeltaCloudInstancesRepository instanceRepo;
 
 	private IImageFilter imageFilter;
@@ -355,15 +355,15 @@ public class DeltaCloud extends ObservablePojo {
 	}
 
 	private void clearImages() {
-		if (images != null) {
+		if (imagesRepo != null) {
 			// TODO: remove notification with all instanceRepo, replace by
 			// notifying the changed instance
-			firePropertyChange(PROP_IMAGES, images.get(), images.clear());
+			firePropertyChange(PROP_IMAGES, imagesRepo.get(), imagesRepo.clear());
 		}
 	}
 
 	public boolean imagesLoaded() {
-		return images == null ? false : true;
+		return imagesRepo == null ? false : true;
 	}
 
 	public boolean instancesLoaded() {
@@ -397,17 +397,17 @@ public class DeltaCloud extends ObservablePojo {
 	}
 
 	private DeltaCloudImagesRepository getImagesRepository() {
-		if (images == null) {
-			images = new DeltaCloudImagesRepository();
+		if (imagesRepo == null) {
+			imagesRepo = new DeltaCloudImagesRepository();
 		}
-		return images;
+		return imagesRepo;
 	}
 
 	public DeltaCloudImage[] getImages() throws DeltaCloudException {
-		if (images == null) {
+		if (imagesRepo == null) {
 			loadImages();
 		}
-		return images.get();
+		return imagesRepo.get();
 	}
 
 	/**
@@ -425,7 +425,7 @@ public class DeltaCloud extends ObservablePojo {
 			try {
 				Image image = client.listImages(id);
 				deltaCloudImage = DeltaCloudImageFactory.create(image, this);
-				images.add(deltaCloudImage);
+				imagesRepo.add(deltaCloudImage);
 			} catch (DeltaCloudClientException e) {
 				throw new DeltaCloudException(MessageFormat.format("Cloud not find image with id \"{0}\"", id), e);
 			}
