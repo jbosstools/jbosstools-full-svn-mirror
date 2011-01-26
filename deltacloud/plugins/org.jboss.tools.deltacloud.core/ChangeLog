@@ -1,3 +1,9 @@
+2011-01-27  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/deltacloud/core/client/HttpStatusCode.java (UNAUTHORIZED): 
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClientImpl.java (throwOnHttpErrors): 
+	[JBIDE-8250] authorization error is status code 401 (was: 403)
+	
 2011-01-11  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClientImpl.java 
