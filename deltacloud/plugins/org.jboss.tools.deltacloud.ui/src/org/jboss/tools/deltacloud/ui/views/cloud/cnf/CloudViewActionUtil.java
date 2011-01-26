@@ -149,7 +149,7 @@ public class CloudViewActionUtil {
 	}
 
 	public static List<DeltaCloudInstance> getCloudInstances(ISelection selection) {
-		if( selection instanceof DeltaCloudInstance ) {
+		if( selection instanceof IStructuredSelection ) {
 			IStructuredSelection s2 = (IStructuredSelection)selection;
 			List<DeltaCloudInstance> instances = UIUtils.adapt(s2.toList(),DeltaCloudInstance.class);
 			return instances;
