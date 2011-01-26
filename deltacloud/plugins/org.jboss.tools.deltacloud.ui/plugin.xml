@@ -16,6 +16,14 @@
             id="org.jboss.tools.deltacloud.ui.views.CloudView">
       </view>
       <view
+            name="CloudViewerName2"
+            icon="icons/delta.gif"
+            category="org.jboss.tools.deltacloud.ui"
+            class="org.jboss.tools.deltacloud.ui.views.cloud.cnf.CloudNavigator"
+            id="org.jboss.tools.deltacloud.ui.views.CloudView2">
+      </view>
+      
+      <view
             category="org.jboss.tools.deltacloud.ui"
             class="org.jboss.tools.deltacloud.ui.views.cloudelements.InstanceView"
             icon="icons/delta.gif"
@@ -842,6 +850,66 @@
               type="org.jboss.tools.deltacloud.core.DeltaCloudImage">
         </adapter>
      </factory>
+  </extension>
+  <extension
+        point="org.eclipse.ui.navigator.navigatorContent">
+     <navigatorContent
+           activeByDefault="true"
+           contentProvider="org.jboss.tools.deltacloud.ui.views.cloud.cnf.CloudContentProvider"
+           icon="icons/delta.gif"
+           id="org.jboss.tools.deltacloud.ui.cloudContentRoot"
+           labelProvider="org.jboss.tools.deltacloud.ui.views.cloud.cnf.CloudLabelProvider"
+           name="DeltaClouds"
+           priority="higher">
+        <triggerPoints>
+           <or>
+              <instanceof
+                    value="java.lang.Object">
+              </instanceof>
+           </or>
+        </triggerPoints>
+        <possibleChildren>
+           <or>
+              <instanceof
+                    value="java.lang.Object">
+              </instanceof>
+           </or></possibleChildren>
+     </navigatorContent>
+     <actionProvider
+           class="org.jboss.tools.deltacloud.ui.views.cloud.cnf.CloudViewActionProvider"
+           id="org.jboss.tools.deltacloud.ui.views.cloud.cnf.CloudViewActionProvider"
+           priority="higher">
+        <enablement>
+           <or>
+              <instanceof
+                    value="java.lang.Object">
+              </instanceof>
+           </or>
+        </enablement>
+     </actionProvider>
+  </extension>
+  <extension
+        point="org.eclipse.ui.navigator.viewer">
+     <viewer
+           viewerId="org.jboss.tools.deltacloud.ui.views.CloudView2">
+     </viewer>
+     <viewerContentBinding
+           viewerId="org.jboss.tools.deltacloud.ui.views.CloudView2">
+        <includes>
+           <contentExtension
+                 isRoot="true"
+                 pattern="org.jboss.tools.deltacloud.ui.cloudContentRoot">
+           </contentExtension>
+        </includes>
+     </viewerContentBinding>
+     <viewerActionBinding
+           viewerId="org.jboss.tools.deltacloud.ui.views.CloudView2">
+        <includes>
+           <actionExtension
+                 pattern="org.jboss.tools.deltacloud.ui.views.cloud.cnf.CloudViewActionProvider">
+           </actionExtension>
+        </includes>
+     </viewerActionBinding>
   </extension>
 
 </plugin>

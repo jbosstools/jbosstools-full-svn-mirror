@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.ui.commands;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -44,5 +45,14 @@ public class DeltaCloudInstanceDialog extends ListSelectionDialog {
 				, new DeltaCloudInstanceNameProvider()
 				, message);
 		setTitle(title);
+	}
+	
+	public DeltaCloudInstance[] getResult2() {
+		ArrayList<DeltaCloudInstance> result = new ArrayList<DeltaCloudInstance>();
+		Object[] supArr = super.getResult();
+		for( int i = 0; i < supArr.length; i++ ) {
+			result.add((DeltaCloudInstance)supArr[i]);
+		}
+		return result.toArray(new DeltaCloudInstance[result.size()]);
 	}
 }
