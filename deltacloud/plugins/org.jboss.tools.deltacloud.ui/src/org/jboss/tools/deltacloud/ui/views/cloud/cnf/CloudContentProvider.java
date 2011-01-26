@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.Display;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
+import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.core.job.LoadCloudImagesJob;
 import org.jboss.tools.deltacloud.core.job.LoadCloudInstancesJob;
@@ -195,6 +196,8 @@ public class CloudContentProvider implements ITreeContentProvider {
 	}
 	public boolean hasChildren(Object element) {
 		if( element instanceof DelayObject ) 
+			return false;
+		if( element instanceof DeltaCloudInstance )
 			return false;
 		return true;
 	}
