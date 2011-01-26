@@ -20,7 +20,7 @@
 			prereqs (eg., BIRT, Maven); may want these sites: 
 			http://download.jboss.org/jbosstools/updates/target-platform/latest/
 			http://download.eclipse.org/releases/helios/,\
-			http://download.eclipse.org/birt/update-site/2.6/,\
+			http://download.eclipse.org//birt/update-site/2.6/,\
 			http://m2eclipse.sonatype.org/sites/m2e/,\
 			http://m2eclipse.sonatype.org/sites/m2e-extras/,\
 			http://subclipse.tigris.org/update_1.6.x,\
