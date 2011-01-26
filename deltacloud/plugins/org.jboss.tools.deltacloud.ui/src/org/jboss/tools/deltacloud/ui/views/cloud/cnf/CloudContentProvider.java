@@ -49,17 +49,12 @@ public class CloudContentProvider implements ITreeContentProvider {
 		return clouds;
 	}
 
-	public abstract static class CategoryContent implements IAdaptable{
-		protected String name; 
-		protected DeltaCloud cloud;
-		public CategoryContent(String name, DeltaCloud cloud) {
-			this.name = name;
-			this.cloud = cloud;
+	public abstract static class CloudAdaptable implements IAdaptable {
+		private DeltaCloud cloud;
+		public CloudAdaptable(DeltaCloud dc) {
+			this.cloud = dc;
 		}
 		public DeltaCloud getCloud(){ return cloud; }
-		public String getName(){ return name;}
-		public abstract Job getFetchChildrenJob(TreeViewer viewer);
-		public abstract Object[] getChildren() throws Exception ;
 		public Object getAdapter(Class adapter) {
 			if( adapter == DeltaCloud.class )
 				return cloud;
@@ -67,15 +62,26 @@ public class CloudContentProvider implements ITreeContentProvider {
 		}
 	}
 	
+	public abstract static class CategoryContent extends CloudAdaptable {
+		protected String name; 
+		public CategoryContent(String name, DeltaCloud cloud) {
+			super(cloud);
+			this.name = name;
+		}
+		public String getName(){ return name;}
+		public abstract Job getFetchChildrenJob(TreeViewer viewer);
+		public abstract Object[] getChildren() throws Exception ;
+	}
+	
 	public static class InstancesCategory extends CategoryContent {
 		public InstancesCategory(String name, DeltaCloud cloud) {
 			super(name, cloud);
 		}
 		public Job getFetchChildrenJob(TreeViewer viewer) {
-			return new LoadCloudInstancesJob(cloud,refreshParentRunnable(viewer, this) );
+			return new LoadCloudInstancesJob(getCloud(),refreshParentRunnable(viewer, this) );
 		}
 		public Object[] getChildren() throws Exception {
-			return cloud.instancesLoaded() ? cloud.getInstances() : null;
+			return getCloud().instancesLoaded() ? getCloud().getInstances() : null;
 		}
 	}
 
@@ -84,19 +90,19 @@ public class CloudContentProvider implements ITreeContentProvider {
 			super(name, cloud);
 		}
 		public Job getFetchChildrenJob(TreeViewer viewer) {
-			return new LoadCloudImagesJob(cloud,refreshParentRunnable(viewer, this) );
+			return new LoadCloudImagesJob(getCloud(),refreshParentRunnable(viewer, this) );
 		}
 		public Object[] getChildren() throws Exception {
-			if( !cloud.imagesLoaded() )
+			if( !getCloud().imagesLoaded() )
 				return null;
-			DeltaCloudImage[] images = cloud.getImages();
+			DeltaCloudImage[] images = getCloud().getImages();
 			int numPages = images.length / ImagesPager.PER_PAGE;
 			if( images.length != 0 && 
 					images.length % ImagesPager.PER_PAGE != 0)
 				numPages++;
 			ImagesPager[] pages = new ImagesPager[numPages];
 			for( int i = 0; i < numPages; i++ ) {
-				pages[i] = new ImagesPager(cloud, i);
+				pages[i] = new ImagesPager(getCloud(), i);
 			}
 			return pages;
 		}
