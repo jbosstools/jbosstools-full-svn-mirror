@@ -362,6 +362,14 @@ public class DeltaCloud extends ObservablePojo {
 		}
 	}
 
+	public boolean imagesLoaded() {
+		return images == null ? false : true;
+	}
+
+	public boolean instancesLoaded() {
+		return instanceRepo == null ? false : true;
+	}
+
 	private void clearInstances() {
 		// TODO: remove notification with all instanceRepo, replace by
 		// notifying the changed instance

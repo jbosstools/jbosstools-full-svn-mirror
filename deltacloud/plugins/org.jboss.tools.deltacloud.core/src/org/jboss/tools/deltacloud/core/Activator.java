@@ -11,11 +11,14 @@
 package org.jboss.tools.deltacloud.core;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
+import org.jboss.tools.common.log.StatusFactory;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -81,5 +84,14 @@ public class Activator extends Plugin {
 			status = new Status(IStatus.ERROR, PLUGIN_ID, IStatus.OK, e.getMessage(), e);
 		log(status);
 	}
-
+	public static IStatus createMultiStatus(DeltaCloudMultiException throwable) {
+		List<IStatus> states = new ArrayList<IStatus>(throwable.getThrowables().size());
+		for (Throwable childThrowable : throwable.getThrowables()) {
+			IStatus status = StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID, childThrowable.getMessage(),
+					childThrowable);
+			states.add(status);
+		}
+		return StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID, throwable.getMessage(), throwable,
+				states.toArray(new IStatus[states.size()]));
+	}
 }
