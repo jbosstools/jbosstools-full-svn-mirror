@@ -10,21 +10,14 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.core.client;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.StringReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.auth.AuthScope;
@@ -34,6 +27,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.jboss.tools.deltacloud.core.client.API.Driver;
 import org.jboss.tools.deltacloud.core.client.request.CreateInstanceRequest;
 import org.jboss.tools.deltacloud.core.client.request.CreateKeyRequest;
 import org.jboss.tools.deltacloud.core.client.request.DeleteKeyRequest;
@@ -50,6 +44,7 @@ import org.jboss.tools.deltacloud.core.client.request.ListRealmRequest;
 import org.jboss.tools.deltacloud.core.client.request.ListRealmsRequest;
 import org.jboss.tools.deltacloud.core.client.request.PerformInstanceActionRequest;
 import org.jboss.tools.deltacloud.core.client.request.TypeRequest;
+import org.jboss.tools.deltacloud.core.client.unmarshal.APIUnmarshaller;
 import org.jboss.tools.deltacloud.core.client.unmarshal.HardwareProfileUnmarshaller;
 import org.jboss.tools.deltacloud.core.client.unmarshal.HardwareProfilesUnmarshaller;
 import org.jboss.tools.deltacloud.core.client.unmarshal.ImageUnmarshaller;
@@ -60,28 +55,15 @@ import org.jboss.tools.deltacloud.core.client.unmarshal.KeyUnmarshaller;
 import org.jboss.tools.deltacloud.core.client.unmarshal.KeysUnmarshaller;
 import org.jboss.tools.deltacloud.core.client.unmarshal.RealmUnmarshaller;
 import org.jboss.tools.deltacloud.core.client.unmarshal.RealmsUnmarshaller;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 /**
  * @author Andre Dietisheim (based on prior implementation by Martyn Taylor)
  */
 public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 
-	private static final String DOCUMENT_ELEMENT_DRIVER = "driver";
-	private static final String DOCUMENT_ELEMENT_API = "api";
-
 	private String baseUrl;
 	private String username;
 	private String password;
-	private DocumentBuilderFactory documentBuilderFactory;
-
-	public static enum DeltaCloudServerType {
-		UNKNOWN, MOCK, EC2
-	}
 
 	public DeltaCloudClientImpl(String url) throws MalformedURLException,
 			DeltaCloudClientException {
@@ -92,7 +74,6 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		this.baseUrl = url;
 		this.username = username;
 		this.password = password;
-		this.documentBuilderFactory = DocumentBuilderFactory.newInstance();
 	}
 
 	protected InputStream request(DeltaCloudRequest deltaCloudRequest)
@@ -120,19 +101,6 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		}
 	}
 
-	protected String requestStringResponse(DeltaCloudRequest deltaCloudRequest)
-			throws DeltaCloudClientException {
-		try {
-			InputStream inputStream = request(deltaCloudRequest);
-			if (inputStream == null) {
-				return null;
-			}
-			return getResponse(inputStream);
-		} catch (IOException e) {
-			throw new DeltaCloudClientException(e);
-		}
-	}
-
 	private void throwOnHttpErrors(URL requestUrl, HttpResponse httpResponse)
 			throws DeltaCloudClientException {
 		int statusCode = httpResponse.getStatusLine().getStatusCode();
@@ -156,15 +124,6 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 									httpResponse.getStatusLine()
 											.getReasonPhrase(), requestUrl));
 		}
-	}
-
-	private String getResponse(InputStream inputStream) throws IOException,
-			DeltaCloudClientException {
-		if (inputStream == null) {
-			return null;
-		}
-		String xml = readInputStreamToString(inputStream);
-		return xml;
 	}
 
 	/**
@@ -216,50 +175,15 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		return httpClient;
 	}
 
-	private static String readInputStreamToString(InputStream is)
-			throws DeltaCloudClientException {
+	public Driver getServerType() {
 		try {
-			try {
-				if (is != null) {
-					StringBuilder sb = new StringBuilder();
-					String line = null;
-
-					BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-					while ((line = reader.readLine()) != null) {
-						sb.append(line).append("\n");
-					}
-					return sb.toString();
-				}
-			} finally {
-				is.close();
-			}
-		} catch (Exception e) {
-			throw new DeltaCloudClientException(
-					"Error converting Response to String", e);
+			InputStream response = request(new TypeRequest(baseUrl));
+			API api = new APIUnmarshaller().unmarshall(response, new API());
+			return api.getDriver();
+		} catch (DeltaCloudClientException e) {
+			return Driver.UNKNOWN;
 		}
-		return "";
 	}
-
-	public DeltaCloudServerType getServerType() {
-		DeltaCloudServerType serverType = DeltaCloudServerType.UNKNOWN;
-		try {
-			String apiResponse = requestStringResponse(new TypeRequest(baseUrl));
-			Document document = getDocument(apiResponse);
-			NodeList elements = document.getElementsByTagName(DOCUMENT_ELEMENT_API);
-			if (elements.getLength() > 0) {
-				Node n = elements.item(0);
-				Node driver = n.getAttributes().getNamedItem(DOCUMENT_ELEMENT_DRIVER);
-				if (driver != null) {
-					String driverValue = driver.getNodeValue();
-					serverType = DeltaCloudServerType.valueOf(driverValue.toUpperCase());
-				}
-			}
-		} catch (Exception e) {
-			serverType = DeltaCloudServerType.UNKNOWN;
-		}
-		return serverType;
-	}
-
 	@Override
 	public Instance createInstance(String imageId) throws DeltaCloudClientException {
 		try {
@@ -410,13 +334,6 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		InputStream inputStream = request(new ListKeyRequest(baseUrl, id));
 		Key key = new KeyUnmarshaller().unmarshall(inputStream, new Key());
 		return key;
-	}
-
-	private Document getDocument(String response) throws ParserConfigurationException, SAXException, IOException {
-		InputSource is = new InputSource(new StringReader(response));
-		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-		Document document = documentBuilder.parse(is);
-		return document;
 	}
 
 	public boolean performInstanceAction(InstanceAction action) throws DeltaCloudClientException {

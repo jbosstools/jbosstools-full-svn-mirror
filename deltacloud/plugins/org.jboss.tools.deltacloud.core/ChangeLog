@@ -1,5 +1,11 @@
 2011-01-27  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClientImpl.java (getServerType): 
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (getDriver): 
+	[JBIDE-8250] 
+	- renamed Driver to DeltaCloudDriver, renamed ServerType to Driver
+	- moved driver unmarshalling to APIUnmarshaller
+	- added tests for APIUnmarshaller
 	* src/org/jboss/tools/deltacloud/core/client/HttpStatusCode.java (UNAUTHORIZED): 
 	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClientImpl.java (throwOnHttpErrors): 
 	[JBIDE-8250] authorization error is status code 401 (was: 403)

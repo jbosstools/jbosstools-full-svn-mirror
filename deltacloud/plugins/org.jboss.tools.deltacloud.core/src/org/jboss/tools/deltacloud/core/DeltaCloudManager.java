@@ -103,7 +103,7 @@ public class DeltaCloudManager {
 			String username = URLEncoder.encode(
 					attrs.getNamedItem(DeltaCloudXMLBuilder.ATTR_USERNAME).getNodeValue(),
 					DeltaCloudXMLBuilder.ENCODING); // $NON-NLS-1$
-			Driver driver = Driver.checkedValueOf(attrs.getNamedItem(DeltaCloudXMLBuilder.ATTR_TYPE).getNodeValue()); // $NON-NLS-1$
+			DeltaCloudDriver driver = DeltaCloudDriver.checkedValueOf(attrs.getNamedItem(DeltaCloudXMLBuilder.ATTR_TYPE).getNodeValue()); // $NON-NLS-1$
 			String imageFilterRules = getImageFilterRules(attrs.getNamedItem("imagefilter")); // $NON-NLS-1$
 			String instanceFilterRules = getInstanceFilterRules(attrs.getNamedItem("instancefilter")); // $NON-NLS-1$
 			String lastKeyName = getNodeValue(attrs.getNamedItem(DeltaCloudXMLBuilder.ATTR_LASTKEYNAME)); // $NON-NLS-1$

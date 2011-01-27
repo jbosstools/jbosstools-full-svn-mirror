@@ -19,6 +19,7 @@ import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 
+import org.jboss.tools.deltacloud.core.client.API.Driver;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudNotFoundClientException;
@@ -55,7 +56,7 @@ public class ServerTypeMockIntegrationTest {
 
 	@Test
 	public void recognizesDeltaCloud() throws IOException {
-		assertEquals(DeltaCloudClientImpl.DeltaCloudServerType.MOCK, testSetup.getClient().getServerType());
+		assertEquals(Driver.MOCK, testSetup.getClient().getServerType());
 	}
 
 	/**
@@ -75,7 +76,7 @@ public class ServerTypeMockIntegrationTest {
 		serverFake.start();
 		try {
 			assertEquals(
-					DeltaCloudClientImpl.DeltaCloudServerType.UNKNOWN,
+					Driver.UNKNOWN,
 					new DeltaCloudClientImpl(
 							MockIntegrationTestContext.SERVERFAKE_URL, MockIntegrationTestContext.DELTACLOUD_USER,
 							MockIntegrationTestContext.DELTACLOUD_PASSWORD).getServerType());
@@ -97,7 +98,7 @@ public class ServerTypeMockIntegrationTest {
 			DeltaCloudClientImpl errorClient = new DeltaCloudClientImpl(MockIntegrationTestContext.DELTACLOUD_URL) {
 				@Override
 				public List<Image> listImages() throws DeltaCloudClientException {
-					requestStringResponse(new DeltaCloudRequest() {
+					request(new DeltaCloudRequest() {
 
 						@Override
 						public URL getUrl() throws MalformedURLException {

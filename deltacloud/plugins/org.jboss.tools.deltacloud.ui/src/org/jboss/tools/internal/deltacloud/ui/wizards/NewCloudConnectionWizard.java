@@ -19,7 +19,7 @@ import org.eclipse.ui.IWorkbench;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
-import org.jboss.tools.deltacloud.core.Driver;
+import org.jboss.tools.deltacloud.core.DeltaCloudDriver;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.internal.deltacloud.ui.preferences.IPreferenceKeys;
@@ -111,7 +111,7 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 
 		String username = mainPage.getModel().getUsername();
 		String password = mainPage.getModel().getPassword();
-		Driver driver = mainPage.getModel().getDriver();
+		DeltaCloudDriver driver = mainPage.getModel().getDriver();
 
 		try {
 			DeltaCloud newCloud = new DeltaCloud(name, url, username, password, driver);

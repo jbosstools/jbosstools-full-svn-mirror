@@ -13,7 +13,7 @@ package org.jboss.tools.internal.deltacloud.ui.wizards;
 import java.text.MessageFormat;
 
 import org.jboss.tools.deltacloud.core.DeltaCloud;
-import org.jboss.tools.deltacloud.core.Driver;
+import org.jboss.tools.deltacloud.core.DeltaCloudDriver;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 
 /**
@@ -34,7 +34,7 @@ public class EditCloudConnectionWizard extends NewCloudConnectionWizard {
 		String url = mainPage.getModel().getUrl();
 		String username = mainPage.getModel().getUsername();
 		String password = mainPage.getModel().getPassword();
-		Driver driver = mainPage.getModel().getDriver();
+		DeltaCloudDriver driver = mainPage.getModel().getDriver();
 		try {
 			initialCloud.update(name, url, username, password, driver);
 		} catch (Exception e) {

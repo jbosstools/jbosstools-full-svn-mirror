@@ -12,7 +12,7 @@ package org.jboss.tools.internal.deltacloud.ui.wizards;
 
 import java.net.MalformedURLException;
 
-import org.jboss.tools.deltacloud.core.Driver;
+import org.jboss.tools.deltacloud.core.DeltaCloudDriver;
 import org.jboss.tools.internal.deltacloud.core.observable.ObservablePojo;
 
 /**
@@ -35,18 +35,18 @@ public class CloudConnectionPageModel extends ObservablePojo {
 	private String username;
 
 	private String password;
-	private Driver driver;
+	private DeltaCloudDriver driver;
 	private String initialName;
 
 	public CloudConnectionPageModel() {
-		this("", "", "", "", Driver.UNKNOWN);
+		this("", "", "", "", DeltaCloudDriver.UNKNOWN);
 	}
 
 	public CloudConnectionPageModel(String name, String url, String username, String password) throws MalformedURLException {
-		this(name, url, username, password, Driver.UNKNOWN);
+		this(name, url, username, password, DeltaCloudDriver.UNKNOWN);
 	}
 
-	public CloudConnectionPageModel(String name, String url, String username, String password, Driver driver) {
+	public CloudConnectionPageModel(String name, String url, String username, String password, DeltaCloudDriver driver) {
 		this.name = name;
 		this.initialName = name;
 			this.url = url;
@@ -91,11 +91,11 @@ public class CloudConnectionPageModel extends ObservablePojo {
 		firePropertyChange(PROPERTY_URL, this.url, this.url = url);
 	}
 
-	public Driver getDriver() {
+	public DeltaCloudDriver getDriver() {
 		return driver;
 	}
 
-	public void setDriver(Driver driver) {
+	public void setDriver(DeltaCloudDriver driver) {
 		firePropertyChange(PROPERTY_DRIVER, this.driver, this.driver = driver);
 	}
 }

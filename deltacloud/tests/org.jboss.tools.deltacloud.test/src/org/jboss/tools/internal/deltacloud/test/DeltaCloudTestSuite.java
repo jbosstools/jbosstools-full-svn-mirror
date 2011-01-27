@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.internal.deltacloud.test;
 
+import org.jboss.tools.internal.deltacloud.test.core.client.APIDomUnmarshallingTest;
 import org.jboss.tools.internal.deltacloud.test.core.client.HardwareProfileDomUnmarshallingTest;
 import org.jboss.tools.internal.deltacloud.test.core.client.ImageDomUnmarshallingTest;
 import org.jboss.tools.internal.deltacloud.test.core.client.InstanceDomUnmarshallingTest;
@@ -29,6 +30,7 @@ import org.junit.runners.Suite;
 	InstanceDomUnmarshallingTest.class,
 	ImageDomUnmarshallingTest.class,
 	HardwareProfileDomUnmarshallingTest.class,
+	APIDomUnmarshallingTest.class,
 	RealmDomUnmarshallingTest.class})
 public class DeltaCloudTestSuite {
 }

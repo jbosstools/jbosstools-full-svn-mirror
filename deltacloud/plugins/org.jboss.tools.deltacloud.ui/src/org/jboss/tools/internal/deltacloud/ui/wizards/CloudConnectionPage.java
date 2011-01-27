@@ -56,10 +56,9 @@ import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.PlatformUI;
 import org.jboss.tools.common.log.LogHelper;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
+import org.jboss.tools.deltacloud.core.DeltaCloudDriver;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
-import org.jboss.tools.deltacloud.core.Driver;
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl.DeltaCloudServerType;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.CompositeValidator;
@@ -126,12 +125,12 @@ public class CloudConnectionPage extends WizardPage {
 
 		private Label typeLabel;
 
-		public DeltaCloudTypeLabelAdapter(Driver cloudType, Label typeLabel) {
+		public DeltaCloudTypeLabelAdapter(DeltaCloudDriver cloudType, Label typeLabel) {
 			this.typeLabel = typeLabel;
 			init(cloudType);
 		}
 
-		private void init(Driver cloudType) {
+		private void init(DeltaCloudDriver cloudType) {
 			setLabelText(cloudType);
 		}
 
@@ -142,7 +141,7 @@ public class CloudConnectionPage extends WizardPage {
 		}
 
 		private void setLabelText(Object cloudType) {
-			if (cloudType != null && !Driver.UNKNOWN.equals(cloudType)) {
+			if (cloudType != null && !DeltaCloudDriver.UNKNOWN.equals(cloudType)) {
 				typeLabel.setText(cloudType.toString());
 			} else {
 				typeLabel.setText("?"); // $NON-NLS-1$
@@ -302,7 +301,7 @@ public class CloudConnectionPage extends WizardPage {
 	}
 
 	public CloudConnectionPage(String pageName, String defaultName, String defaultUrl, String defaultUsername,
-			String defaultPassword, Driver defaultDriver, CloudConnection cloudConnection) throws MalformedURLException {
+			String defaultPassword, DeltaCloudDriver defaultDriver, CloudConnection cloudConnection) throws MalformedURLException {
 		super(pageName);
 		this.connectionModel =
 				new CloudConnectionPageModel(defaultName, defaultUrl, defaultUsername, defaultPassword, defaultDriver);
@@ -540,8 +539,8 @@ public class CloudConnectionPage extends WizardPage {
 		 */
 		IObservableValue cloudTypeObservable = urlToCloudTypeConverter.getCloudTypeObservable();
 		Object value = cloudTypeObservable.getValue();
-		Assert.isTrue(value == null || value instanceof Driver);
-		DeltaCloudTypeLabelAdapter cloudTypeAdapter = new DeltaCloudTypeLabelAdapter((Driver) value, typeLabel);
+		Assert.isTrue(value == null || value instanceof DeltaCloudDriver);
+		DeltaCloudTypeLabelAdapter cloudTypeAdapter = new DeltaCloudTypeLabelAdapter((DeltaCloudDriver) value, typeLabel);
 		cloudTypeObservable.addValueChangeListener(cloudTypeAdapter);
 		ControlDecorationSupport.create(urlTypeBinding, SWT.LEFT | SWT.TOP);
 

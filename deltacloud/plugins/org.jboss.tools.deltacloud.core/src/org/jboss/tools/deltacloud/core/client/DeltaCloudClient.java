@@ -12,7 +12,7 @@ package org.jboss.tools.deltacloud.core.client;
 
 import java.util.List;
 
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl.DeltaCloudServerType;
+import org.jboss.tools.deltacloud.core.client.API.Driver;
 
 /**
  * @author Martyn Taylor
@@ -27,7 +27,7 @@ public interface DeltaCloudClient {
 	 * 
 	 * @see DeltaCloudServerType
 	 */
-	public DeltaCloudServerType getServerType();
+	public Driver getServerType();
 
 	/**
 	 * Returns a list of Delta Cloud Realms

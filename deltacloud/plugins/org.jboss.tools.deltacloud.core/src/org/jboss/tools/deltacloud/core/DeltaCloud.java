@@ -18,10 +18,10 @@ import java.util.List;
 import java.util.regex.PatternSyntaxException;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.jboss.tools.deltacloud.core.client.API.Driver;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudAuthClientException;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl;
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl.DeltaCloudServerType;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudNotFoundClientException;
 import org.jboss.tools.deltacloud.core.client.HardwareProfile;
 import org.jboss.tools.deltacloud.core.client.Image;
@@ -45,7 +45,7 @@ public class DeltaCloud extends ObservablePojo {
 	private String name;
 	private String username;
 	private String url;
-	private Driver driver;
+	private DeltaCloudDriver driver;
 	private String lastKeyname = "";
 	private String lastImageId = "";
 
@@ -68,18 +68,18 @@ public class DeltaCloud extends ObservablePojo {
 		this(name, url, username, passwd, null);
 	}
 
-	public DeltaCloud(String name, String url, String username, String password, Driver driver)
+	public DeltaCloud(String name, String url, String username, String password, DeltaCloudDriver driver)
 			throws DeltaCloudException {
 		this(name, url, username, password, driver, IImageFilter.ALL_STRING, IInstanceFilter.ALL_STRING, new ArrayList<IInstanceAliasMapping>());
 	}
 
-	public DeltaCloud(String name, String url, String username, Driver driver, String imageFilterRules,
+	public DeltaCloud(String name, String url, String username, DeltaCloudDriver driver, String imageFilterRules,
 			String instanceFilterRules, Collection<IInstanceAliasMapping> instanceAliasMappings)
 			throws DeltaCloudException {
 		this(name, url, username, null, driver, imageFilterRules, instanceFilterRules, instanceAliasMappings);
 	}
 
-	public DeltaCloud(String name, String url, String username, String password, Driver driver,
+	public DeltaCloud(String name, String url, String username, String password, DeltaCloudDriver driver,
 			String imageFilterRules, String instanceFilterRules, Collection<IInstanceAliasMapping> instanceAliasMappings)
 			throws DeltaCloudException {
 		this.url = url;
@@ -93,7 +93,7 @@ public class DeltaCloud extends ObservablePojo {
 		this.instanceAliasMappings = instanceAliasMappings;
 	}
 
-	public void update(String name, String url, String username, String password, Driver driver)
+	public void update(String name, String url, String username, String password, DeltaCloudDriver driver)
 			throws DeltaCloudException {
 		this.driver = driver;
 
@@ -174,13 +174,13 @@ public class DeltaCloud extends ObservablePojo {
 		return passwordStore.getPassword();
 	}
 
-	public Driver getDriver() {
+	public DeltaCloudDriver getDriver() {
 		return driver;
 	}
 
 	public boolean isValid() {
 		return driver != null
-				&& driver != Driver.UNKNOWN;
+				&& driver != DeltaCloudDriver.UNKNOWN;
 	}
 
 	public String getLastImageId() {
@@ -612,10 +612,10 @@ public class DeltaCloud extends ObservablePojo {
 		return name;
 	}
 
-	public static Driver getServerDriver(String url) throws DeltaCloudException {
+	public static DeltaCloudDriver getServerDriver(String url) throws DeltaCloudException {
 		try {
-			DeltaCloudServerType serverType = new DeltaCloudClientImpl(url).getServerType();
-			return Driver.valueOf(serverType);
+			Driver driver = new DeltaCloudClientImpl(url).getServerType();
+			return DeltaCloudDriver.valueOf(driver);
 		} catch (Exception e) {
 			// TODO internationalize strings
 			throw new DeltaCloudException(

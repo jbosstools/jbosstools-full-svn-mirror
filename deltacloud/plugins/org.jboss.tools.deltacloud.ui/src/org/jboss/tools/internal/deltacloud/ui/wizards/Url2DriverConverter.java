@@ -16,7 +16,7 @@ import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.WritableValue;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
-import org.jboss.tools.deltacloud.core.Driver;
+import org.jboss.tools.deltacloud.core.DeltaCloudDriver;
 
 /**
  * A class that converts an url (string) to a DeltaCloudType (enum). The state
@@ -34,22 +34,22 @@ public class Url2DriverConverter extends Converter {
 	IObservableValue cloudTypeObservable = new WritableValue();
 
 	public Url2DriverConverter() {
-		super(String.class, Driver.class);
+		super(String.class, DeltaCloudDriver.class);
 	}
 
 	@Override
 	public Object convert(Object fromObject) {
 		String deltaCloudUrl = (String) fromObject;
-		Driver cloudType = getCloudType(deltaCloudUrl);
+		DeltaCloudDriver cloudType = getCloudType(deltaCloudUrl);
 		cloudTypeObservable.setValue(cloudType);
 		return cloudType;
 	}
 
-	private Driver getCloudType(String url) {
+	private DeltaCloudDriver getCloudType(String url) {
 		try {
 			return DeltaCloud.getServerDriver(url);
 		} catch (DeltaCloudException e) {
-			return Driver.UNKNOWN;
+			return DeltaCloudDriver.UNKNOWN;
 		}
 	}
 

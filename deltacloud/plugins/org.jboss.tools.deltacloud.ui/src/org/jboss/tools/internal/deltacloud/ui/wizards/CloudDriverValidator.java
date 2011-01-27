@@ -13,7 +13,7 @@ package org.jboss.tools.internal.deltacloud.ui.wizards;
 import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.core.databinding.validation.ValidationStatus;
 import org.eclipse.core.runtime.IStatus;
-import org.jboss.tools.deltacloud.core.Driver;
+import org.jboss.tools.deltacloud.core.DeltaCloudDriver;
 
 /**
  * @author André Dietisheim
@@ -23,7 +23,7 @@ public class CloudDriverValidator implements IValidator {
 	@Override
 	public IStatus validate(Object value) {
 		if (value != null
-				&& !Driver.UNKNOWN.equals(value)) {
+				&& !DeltaCloudDriver.UNKNOWN.equals(value)) {
 			return ValidationStatus.ok();
 		} else {
 			return ValidationStatus.warning(WizardMessages.getString("IllegalCloudUrl.msg")); //$NON-NLS-1$
