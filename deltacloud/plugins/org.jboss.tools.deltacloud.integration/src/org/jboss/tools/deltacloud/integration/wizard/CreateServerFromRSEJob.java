@@ -105,7 +105,8 @@ public class CreateServerFromRSEJob extends ChainedJob {
 		return server;
 	}
 	
-	protected IRemoteFileSubSystem findRemoteFileSubSystem() {
+	// TODO move to util class
+	public static IRemoteFileSubSystem findRemoteFileSubSystem(IHost host) {
 		if (host == null) {
 			return null;
 		}
@@ -117,8 +118,11 @@ public class CreateServerFromRSEJob extends ChainedJob {
 		}
 		return null;
 	}
-	
-	protected void verifySystemConnected(IRemoteFileSubSystem system) {
+	protected IRemoteFileSubSystem findRemoteFileSubSystem() {
+		return findRemoteFileSubSystem(host);
+	}
+	// TODO move to utility class
+	public static void verifySystemConnected(IRemoteFileSubSystem system) {
 		if (!system.isConnected()) {
 		    try {
 		    	system.connect(new NullProgressMonitor(), false);
