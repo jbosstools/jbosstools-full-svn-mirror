@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -403,7 +405,7 @@ public class NewInstancePage extends WizardPage {
 				WidgetProperties.text(SWT.Modify).observeDelayed(KEY_CHECK_DELAY, text),
 				BeanProperties.value(NewInstancePageModel.class, NewInstancePageModel.PROPERTY_KEYID).observe(model),
 				new UpdateValueStrategy()
-						.setBeforeSetValidator(
+						.setAfterGetValidator(
 								new MandatoryStringValidator(WizardMessages.getString(MUST_ENTER_A_KEYNAME)))
 						.setBeforeSetValidator(
 								new KeyValidator()),
@@ -420,11 +422,25 @@ public class NewInstancePage extends WizardPage {
 			if (value instanceof String
 					&& ((String) value).length() > 0) {
 				if (doesKeyExist((String) value)) {
+					if (!isKeyKnowToSsh((String) value)) {
+						return ValidationStatus
+								.warning(
+								"Key is not known to the ssh subsystem (SSH2 preferenes, private keys). ");
+					}
 					return ValidationStatus.ok();
 				}
 			}
 			return ValidationStatus.error(MessageFormat.format(
 					"The key is not known to cloud \"{0}\"", cloud.getName()));
+		}
+
+		private boolean isKeyKnowToSsh(String keyId) {
+			try {
+				File file = PemFileManager.getFile(keyId, SshPrivateKeysPreferences.getSshKeyDirectory());
+				return SshPrivateKeysPreferences.contains(file.getAbsolutePath());
+			} catch (FileNotFoundException e) {
+				return false;
+			}
 		}
 
 		private boolean doesKeyExist(String keyId) {

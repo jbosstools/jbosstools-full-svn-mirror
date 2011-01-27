@@ -10,13 +10,9 @@
  *******************************************************************************/
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.jboss.tools.common.jobs.ChainedJob;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
@@ -106,7 +102,6 @@ public class NewInstanceWizard extends AbstractDeltaCloudWizard {
 		Exception e = null;
 		try {
 			if (isProceed()) {
-				warnSshPrivateKey(keyId);
 				instance = cloud.createInstance(name, imageId, realmId, profileId, keyId, memory, storage);
 				if (instance != null) {
 					result = true;
@@ -127,23 +122,6 @@ public class NewInstanceWizard extends AbstractDeltaCloudWizard {
 		}
 
 		return result;
-	}
-
-	private void warnSshPrivateKey(String keyId) {
-		try {
-			File file = PemFileManager.getFile(keyId, SshPrivateKeysPreferences.getSshKeyDirectory());
-			boolean isKnowPrivateKey = SshPrivateKeysPreferences.contains(file.getAbsolutePath());
-
-			if (!isKnowPrivateKey) {
-				MessageDialog
-						.openWarning(
-								getShell(),
-								"Instance key is not private key",
-						"The instance key you have chosen is not known as private key to the ssh subsystem. If you need this key to connect to your instance, you'll have to download it and add it to the private keys in the SSH preferences.");
-			}
-		} catch (FileNotFoundException e) {
-
-		}
 	}
 
 	private void scheduleJobs() {
