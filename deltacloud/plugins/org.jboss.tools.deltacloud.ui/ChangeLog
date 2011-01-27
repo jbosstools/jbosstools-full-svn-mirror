@@ -4,7 +4,8 @@
 	(KeyValidator.validate): 
 	(KeyValidator.isKeyKnowToSsh): 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstanceWizard.java (performFinish):
-	[JBIDE-8254] replaced the warning dialog by a similar decoration to the key text field. Warning is displayed in the title area and in the tooltip of the decoration
+	[JBIDE-8254] replaced the warning dialog by a similar decoration to the key text field. 
+	Warning is displayed in the title area and in the tooltip of the decoration
 
 2011-01-26  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
