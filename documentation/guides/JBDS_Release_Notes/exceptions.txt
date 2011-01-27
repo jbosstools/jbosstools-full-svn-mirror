@@ -25,6 +25,7 @@ NOTFOUND_JBIDE-6412
 NOTFOUND_JBIDE-6376
 NOTFOUND_JBIDE-6293
 NOTFOUND_JBIDE-5960
+NOTFOUND_JBIDE-7186
 
 Has 'new_and_noteworthy' tag but not documented as it is a sub-task of a JIRA already in the Release Notes:
 
