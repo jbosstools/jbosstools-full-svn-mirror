@@ -31,9 +31,7 @@ public class ErrorUtils {
 	}
 
 	private static void log(IStatus status) {
-		if (Activator.getDefault().isDebugging()) {
-			Activator.log(status);
-		}
+		Activator.log(status);
 	}
 
 	/**
