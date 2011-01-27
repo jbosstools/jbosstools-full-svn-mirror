@@ -494,6 +494,7 @@
 			<modules>
 				<module>../tests</module>
 				<module>../common</module>
+				<module>../as</module>
 				<module>../ws</module>
 			</modules>
 		</profile>
@@ -548,6 +549,7 @@
 			<id>jbpm-bootstrap</id>
 			<modules>
 				<module>../tests</module>
+				<module>../flow</module>
 				<module>../jbpm</module>
 			</modules>
 		</profile>
@@ -568,6 +570,14 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<modules>
+				<module>../deltacloud</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>deltacloud-bootstrap</id>
+			<modules>
+				<module>../as</module>
 				<module>../deltacloud</module>
 			</modules>
 		</profile>
