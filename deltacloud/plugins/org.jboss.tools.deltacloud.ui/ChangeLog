@@ -1,5 +1,11 @@
 2011-01-27  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/SshPrivateKeysPreferences.java 
+	(contains): 
+	(getAbsoluteKeyPath): 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java 
+	(KeyValidator.isKeyKnowToSsh): 
+	[JBIDE-8253] checking relative ssh private key entries now, too
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java 
 	(KeyValidator.validate): 
 	(KeyValidator.isKeyKnowToSsh): 

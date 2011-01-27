@@ -437,7 +437,7 @@ public class NewInstancePage extends WizardPage {
 		private boolean isKeyKnowToSsh(String keyId) {
 			try {
 				File file = PemFileManager.getFile(keyId, SshPrivateKeysPreferences.getSshKeyDirectory());
-				return SshPrivateKeysPreferences.contains(file.getAbsolutePath());
+				return SshPrivateKeysPreferences.contains(file);
 			} catch (FileNotFoundException e) {
 				return false;
 			}
