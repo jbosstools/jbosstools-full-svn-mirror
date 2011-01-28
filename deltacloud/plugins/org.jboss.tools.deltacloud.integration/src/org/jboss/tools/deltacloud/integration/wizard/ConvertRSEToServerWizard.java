@@ -26,7 +26,7 @@ public class ConvertRSEToServerWizard extends Wizard {
 		if( j != null ) {
 			j.schedule();
 		}
-		return false;
+		return true;
 	}
 	public void addPages() {
 		page1 = new RSEandASWizardPage(host);
