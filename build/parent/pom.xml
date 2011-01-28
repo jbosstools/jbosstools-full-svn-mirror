@@ -491,18 +491,6 @@
 					</releases>
 				</repository>
 				<repository>
-					<id>jboss-drools-nightly</id>
-					<url>http://download.jboss.org/jbosstools/builds/staging/jbosstools-drools/all/repo/
-					</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<repository>
 					<id>swtbot-helios</id>
 					<url>http://download.eclipse.org/technology/swtbot/helios/dev-build/update-site/
 					</url>
@@ -826,26 +814,6 @@
 						<enabled>true</enabled>
 					</releases>
 				</repository>
-				<repository>
-					<id>jbosstools-nightly-staging-composite-trunk</id>
-					<url>http://download.jboss.org/jbosstools/builds/staging/_composite_/trunk/ </url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-			</repositories>
-		</profile>
-
-		<profile>
-			<id>jbosstools-nightly-staging-composite-trunk</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<repositories>
 				<repository>
 					<id>jbosstools-nightly-staging-composite-trunk</id>
 					<url>http://download.jboss.org/jbosstools/builds/staging/_composite_/trunk/ </url>
