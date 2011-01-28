@@ -26,6 +26,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
+import org.jboss.tools.jst.css.CSSPlugin;
+import org.jboss.tools.jst.css.dialog.common.Util;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
 import org.jboss.tools.vpe.editor.toolbar.SplitToolBar;
@@ -169,7 +171,17 @@ public class TextFormattingToolBar extends SplitToolBar {
 		listener = new ForegroundColorFormatController(formatControllerManager, item);
 		item.addListener(SWT.Selection, listener);
 //		itemDescriptors.add(new ToolItemDescriptor(item, true, listener, true));
-
+		
+		/*
+		 * Fixes https://issues.jboss.org/browse/JBIDE-8220
+		 * CSSStyleDialog should be on the Formatting toolbar.
+		 */
+		item = createToolItem(toolBar, SWT.CHECK, 
+				CSSPlugin.getImageDescriptor(Util.IMAGE_COLORLARGE_FILE_LOCATION).createImage(), 
+				VpeUIMessages.EDIT_STYLE_ATTRIBUTE);
+		listener = new StyleFormatController(formatControllerManager, item);
+		item.addListener(SWT.Selection, listener);
+		
 //		sep = new ToolItem(horBar, SWT.SEPARATOR);
 //
 //		item = createToolItem(horBar, SWT.PUSH, "icons/left.gif", VpeToolbarFormatMessages.getInstance().getString(ALIGN_LEFT_KEY));

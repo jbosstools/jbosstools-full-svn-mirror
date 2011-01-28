@@ -62,6 +62,7 @@ public final class VpeUIMessages extends NLS {
 	public static String ITALIC;
 	public static String UNDERLINE;
 	public static String FOREGROUND_COLOR;
+	public static String EDIT_STYLE_ATTRIBUTE;
 	public static String VPE_UPDATE_JOB_TITLE;
 	public static String VPE_VISUAL_REFRESH_JOB;
 	public static String VpeDnD_PLACE_AFTER_INSIDE;

@@ -24,4 +24,7 @@
 	<vpe:format type="ForegroundColorFormat">
 		<vpe:formatAttribute type="style" />
 	</vpe:format>
+	<vpe:format type="StyleFormat">
+		<vpe:formatAttribute type="style" />
+	</vpe:format>
 </vpe:textFormatting>
