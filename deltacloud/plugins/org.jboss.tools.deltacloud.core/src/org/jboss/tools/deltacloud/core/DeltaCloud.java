@@ -350,7 +350,7 @@ public class DeltaCloud extends ObservablePojo {
 			firePropertyChange(PROP_INSTANCES, oldInstances, repo.get());
 		} catch (DeltaCloudClientException e) {
 			throw new DeltaCloudException(MessageFormat.format(
-					"Could not load instanceRepo of cloud {0}: {1}", getName(), e.getMessage()), e);
+					"Could not load instances of cloud {0}: {1}", getName(), e.getMessage()), e);
 		}
 	}
 
