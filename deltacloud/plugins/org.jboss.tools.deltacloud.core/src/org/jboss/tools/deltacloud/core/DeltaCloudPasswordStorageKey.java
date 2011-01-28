@@ -10,7 +10,6 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core;
 
-import org.eclipse.equinox.security.storage.EncodingUtils;
 import org.jboss.tools.deltacloud.core.SecurePasswordStore.IStorageKey;
 
 /**
@@ -21,23 +20,24 @@ import org.jboss.tools.deltacloud.core.SecurePasswordStore.IStorageKey;
  */
 public class DeltaCloudPasswordStorageKey implements IStorageKey {
 
-	private static final String PREFERNCES_BASEKEY = Activator.PLUGIN_ID.replace('.', '/');
+	private static final char SEPARATOR = '/';
+	
+	private static final String PREFERNCES_BASEKEY = Activator.PLUGIN_ID.replace('.', SEPARATOR);
 	private String cloudName;
 	private String userName;
 
 	public DeltaCloudPasswordStorageKey(String cloudName, String userName) {
-		this.userName = EncodingUtils.encodeBase64(userName.getBytes());
-		this.cloudName = EncodingUtils.encodeBase64(cloudName.getBytes());
+		this.userName = userName;
+		this.cloudName = userName;
 	}
 
 	@Override
 	public String getKey() {
-		String key = new StringBuilder(PREFERNCES_BASEKEY)
+		return new StringBuilder(PREFERNCES_BASEKEY)
 				.append(cloudName)
-				.append('/') //$NON-NLS-1$
+				.append(SEPARATOR)
 				.append(userName)
 				.toString();
-		return EncodingUtils.encodeSlashes(key);
 	}
 
 	@Override
