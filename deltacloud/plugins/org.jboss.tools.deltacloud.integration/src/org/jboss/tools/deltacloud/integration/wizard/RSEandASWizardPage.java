@@ -210,6 +210,8 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 		IRuntime[] rts = ServerCore.getRuntimes();
 		ArrayList<String> names = new ArrayList<String>();
 		for( int i = 0; i < rts.length; i++ ) {
+			if( rts[i].getRuntimeType() == null )
+				continue;
 			if( rts[i].getRuntimeType().getId().startsWith("org.jboss.") 
 					&& !rts[i].getRuntimeType().getId().equals(IJBossToolingConstants.DEPLOY_ONLY_RUNTIME)) {
 				localRuntimes.add(rts[i]);
