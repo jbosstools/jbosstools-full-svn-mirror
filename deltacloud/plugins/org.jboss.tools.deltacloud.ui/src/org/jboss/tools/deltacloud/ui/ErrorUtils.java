@@ -63,11 +63,6 @@ public class ErrorUtils {
 	}
 
 	private static void openErrorDialog(final String title, String message, final IStatus status, final Shell shell) {
-		// Display.getDefault().syncExec(new Runnable() {
-		// public void run() {
-		// ErrorDialog.openError(shell, title, status.getMessage(), status);
-		// }
-		// });
 		ErrorDialog.openError(shell, title, message, status);
 	}
 
