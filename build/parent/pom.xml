@@ -15,7 +15,7 @@
 		<!--tychoVersion>0.10.0-SNAPSHOT</tychoVersion -->
 		<tychoVersion>0.10.0</tychoVersion>
 		<scmBranch>branches/jbosstools-3.2.x</scmBranch>
-		<BUILD_ALIAS>CR1</BUILD_ALIAS>
+		<BUILD_ALIAS>CR2</BUILD_ALIAS>
 		<memoryOptions1>-Xms512m -Xmx1024m -XX:PermSize=256m</memoryOptions1>
 		<memoryOptions2>-XX:MaxPermSize=256m</memoryOptions2>
 		<systemProperties></systemProperties>
