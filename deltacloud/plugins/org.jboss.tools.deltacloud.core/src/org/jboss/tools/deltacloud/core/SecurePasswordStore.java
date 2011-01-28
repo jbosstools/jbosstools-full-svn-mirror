@@ -10,17 +10,27 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
+import org.eclipse.equinox.security.storage.EncodingUtils;
 import org.eclipse.equinox.security.storage.ISecurePreferences;
 import org.eclipse.equinox.security.storage.SecurePreferencesFactory;
 import org.eclipse.equinox.security.storage.StorageException;
 
 /**
  * @author Andre Dietisheim
+ * 
+ *         TODO: replace DeltaCloudException by SecurePasswordStoreException
+ *         (decouple from Deltacloud)
  */
 public class SecurePasswordStore {
 
+	private static final String ENCODING = "UTF-8";
+
 	public static interface IStorageKey {
 		public String getKey();
+
 		public boolean equals(IStorageKey key);
 	}
 
@@ -43,13 +53,13 @@ public class SecurePasswordStore {
 		} else {
 			try {
 				return this.password = getFromPreferences(storageKey);
-			} catch (StorageException e) {
+			} catch (Exception e) {
 				// TODO: internationalize strings
 				throw new DeltaCloudException("Could get password", e);
 			}
 		}
 	}
-	
+
 	public void setPassword(String password) throws DeltaCloudException {
 		update(storageKey, password);
 	}
@@ -72,32 +82,44 @@ public class SecurePasswordStore {
 	}
 
 	public void remove() throws DeltaCloudException {
-		ISecurePreferences node = getNode(storageKey);
-		if (node == null) {
-			// TODO: internationalize strings
-			throw new DeltaCloudException("Could not remove password");
+		try {
+			ISecurePreferences node = getNode(storageKey);
+			if (node == null) {
+				// TODO: internationalize strings
+				throw new DeltaCloudException("Could not remove password");
+			}
+			node.clear();
+		} catch (Exception e) {
+			throw new DeltaCloudException("Could not remove password", e);
 		}
-		node.clear();
 	}
 
-	private String getFromPreferences(IStorageKey key) throws StorageException {
+	private String getFromPreferences(IStorageKey key) throws StorageException, UnsupportedEncodingException {
 		ISecurePreferences node = getNode(key);
 		String password = node.get("password", null); //$NON-NLS-1$
-		return password;
+		if (password == null) {
+			return null;
+		}
+		return EncodingUtils.encodeBase64(password.getBytes());
 	}
 
 	private void storeInPreferences(String password, IStorageKey key) throws DeltaCloudException {
 		try {
 			ISecurePreferences node = getNode(key);
-			node.put("password", password, true /* encrypt */); //$NON-NLS-1$
-		} catch (StorageException e) {
+			node.put("password", EncodingUtils.encodeBase64(password.getBytes()), true /* encrypt */); //$NON-NLS-1$
+		} catch (Exception e) {
 			// TODO: internationalize string
 			throw new DeltaCloudException("Could not store password", e);
 		}
 	}
 
-	private ISecurePreferences getNode(IStorageKey key) {
+	private ISecurePreferences getNode(IStorageKey key) throws UnsupportedEncodingException {
+		if (key == null) {
+			return null;
+		}
+
 		ISecurePreferences root = SecurePreferencesFactory.getDefault();
-		return root.node(key.getKey());
+		String keyString = URLEncoder.encode(key.getKey(), ENCODING);
+		return root.node(keyString);
 	}
 }
