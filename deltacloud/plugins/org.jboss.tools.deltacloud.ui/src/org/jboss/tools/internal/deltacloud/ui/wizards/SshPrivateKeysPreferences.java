@@ -50,12 +50,6 @@ public class SshPrivateKeysPreferences {
 		sshPrivateKeyPreference.add(keyName);
 	}
 
-	/**
-	 * Checks if the given key is cotained in the ssh-preferences
-	 * 
-	 * @param keyName
-	 *            the name of the key to add
-	 */
 	public static boolean contains(File key) {
 		if (key == null) {
 			return false;
@@ -82,7 +76,7 @@ public class SshPrivateKeysPreferences {
 		}
 		return keyName;
 	}
-
+	
 	/**
 	 * Removes the given keyName from the ssh-preferences
 	 * 

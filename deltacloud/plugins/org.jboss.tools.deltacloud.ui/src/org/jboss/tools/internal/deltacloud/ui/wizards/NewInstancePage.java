@@ -409,8 +409,6 @@ public class NewInstancePage extends WizardPage {
 								new MandatoryStringValidator(WizardMessages.getString(MUST_ENTER_A_KEYNAME)))
 						.setBeforeSetValidator(
 								new KeyValidator()),
-								// TODO: internationalize strings
-
 				null);
 		ControlDecorationSupport.create(textBinding, SWT.LEFT | SWT.TOP);
 	}
@@ -425,7 +423,7 @@ public class NewInstancePage extends WizardPage {
 					if (!isKeyKnowToSsh((String) value)) {
 						return ValidationStatus
 								.warning(
-								"Key is not known to the ssh subsystem (SSH2 preferenes, private keys). ");
+								"Key not found under SSH preferences, might be needed for login after launch.");
 					}
 					return ValidationStatus.ok();
 				}
