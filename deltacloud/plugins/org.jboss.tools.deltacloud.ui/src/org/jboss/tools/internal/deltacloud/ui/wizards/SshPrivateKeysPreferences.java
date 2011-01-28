@@ -49,32 +49,9 @@ public class SshPrivateKeysPreferences {
 	public static void add(String keyName) {
 		sshPrivateKeyPreference.add(keyName);
 	}
-
-	public static boolean contains(File key) {
-		if (key == null) {
-			return false;
-		}
-
-		String keyPath = key.getAbsolutePath();
-		for (String privateKey : sshPrivateKeyPreference.get()) {
-			if (keyPath.equals(getAbsoluteKeyPath(privateKey))) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private static String getAbsoluteKeyPath(String keyName) {
-		try {
-			if (keyName != null && !keyName.startsWith(File.separator)) {
-				StringBuilder builder = new StringBuilder(getSshKeyDirectory());
-				builder.append(File.separatorChar).append(keyName);
-				return builder.toString();
-			}
-		} catch (FileNotFoundException e) {
-			// ignore
-		}
-		return keyName;
+	
+	public static String[] getKeys() {
+		return sshPrivateKeyPreference.get();
 	}
 	
 	/**

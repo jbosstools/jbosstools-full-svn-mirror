@@ -11,7 +11,6 @@
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -432,13 +431,18 @@ public class NewInstancePage extends WizardPage {
 					"The key is not known to cloud \"{0}\"", cloud.getName()));
 		}
 
-		private boolean isKeyKnowToSsh(String keyId) {
-			try {
-				File file = PemFileManager.getFile(keyId, SshPrivateKeysPreferences.getSshKeyDirectory());
-				return SshPrivateKeysPreferences.contains(file);
-			} catch (FileNotFoundException e) {
+		private boolean isKeyKnowToSsh(String keyName) {
+			if (keyName == null) {
 				return false;
 			}
+			for (String key :SshPrivateKeysPreferences.getKeys()) {
+				File file = new File(key);
+				if (file.getName().equals(keyName) 
+						|| file.getName().startsWith(keyName + ".")) {
+					return true;
+				}
+			}
+			return false;
 		}
 
 		private boolean doesKeyExist(String keyId) {
