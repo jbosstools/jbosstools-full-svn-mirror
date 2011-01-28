@@ -25,15 +25,15 @@ import org.jboss.tools.deltacloud.core.DeltaCloudMultiException;
 public class ErrorUtils {
 	public static IStatus handleError(final String title, final String message, Throwable e, final Shell shell) {
 		IStatus status = createStatus(e);
+		log(message, status);
 		openErrorDialog(title, message, status, shell);
-		log(status);
 		return status;
 	}
 
-	private static void log(IStatus status) {
-		if (Activator.getDefault().isDebugging()) {
-			Activator.log(status);
-		}
+	private static void log(String message, IStatus status) {
+		// need to wrap the status so that we log the message, too
+		IStatus wrapperStatus = StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID, message, null, status);
+		Activator.log(wrapperStatus);
 	}
 
 	/**
@@ -45,15 +45,13 @@ public class ErrorUtils {
 	 * @param shell
 	 * @return
 	 */
-	public static IStatus handleErrorAsync(final String title, final String message, final Throwable e,
+	public static void handleErrorAsync(final String title, final String message, final Throwable e,
 			final Shell shell) {
-		IStatus status = createStatus(e);
 		shell.getDisplay().asyncExec(new Runnable() {
 			public void run() {
 				handleError(title, message, e, shell);
 			}
 		});
-		return status;
 	}
 
 	private static IStatus createStatus(Throwable e) {
@@ -65,11 +63,6 @@ public class ErrorUtils {
 	}
 
 	private static void openErrorDialog(final String title, String message, final IStatus status, final Shell shell) {
-		// Display.getDefault().syncExec(new Runnable() {
-		// public void run() {
-		// ErrorDialog.openError(shell, title, status.getMessage(), status);
-		// }
-		// });
 		ErrorDialog.openError(shell, title, message, status);
 	}
 
