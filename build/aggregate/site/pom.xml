@@ -1,6 +1,6 @@
 <project
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.jboss.tools</groupId>
@@ -33,11 +33,11 @@
 						<configuration>
 							<quiet>true</quiet>
 							<tasks>
-								<property name="inputRepo1" value="${inputRepo1}" />
-								<property name="inputRepos" value="${inputRepos}" />
+								<property name="inputRepo1" value="${inputRepo1}"/>
+								<property name="inputRepos" value="${inputRepos}"/>
 
 								<!-- called AFTER generating update site + zip to add in extra content -->
-								<ant antfile="build.xml" />
+								<ant antfile="build.xml"/>
 							</tasks>
 
 						</configuration>
@@ -55,6 +55,11 @@
 					<dependency>
 						<groupId>org.apache.ant</groupId>
 						<artifactId>ant</artifactId>
+						<version>1.7.1</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.ant</groupId>
+						<artifactId>ant-nodeps</artifactId>
 						<version>1.7.1</version>
 					</dependency>
 					<dependency>
