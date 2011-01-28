@@ -50,7 +50,7 @@ fi
 # note the job name, build number, SVN rev, and build ID of the latest snapshot zip
 mkdir -p ${STAGINGDIR}/logs
 bl=${STAGINGDIR}/logs/BUILDLOG.txt
-rm -fr ${bl}; wget -q http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/${BUILD_NUMBER}/consoleText -O ${bl} --timeout=900 --wait=10 --random-wait --tries=10 --retry-connrefused --no-check-certificate
+rm -f ${bl}; wget -q http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/${BUILD_NUMBER}/consoleText -O ${bl} --timeout=900 --wait=10 --random-wait --tries=10 --retry-connrefused --no-check-certificate
 
 # JBDS-1361 - fetch XML and then sed it into plain text
 rl=${STAGINGDIR}/logs/SVN_REVISION
@@ -274,7 +274,7 @@ fi
 
 # publish updated log
 bl=${STAGINGDIR}/logs/BUILDLOG.txt
-rm -fr ${bl}; wget -q http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/${BUILD_NUMBER}/consoleText -O ${bl} --timeout=900 --wait=10 --random-wait --tries=10 --retry-connrefused --no-check-certificate
+rm -f ${bl}; wget -q http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/${BUILD_NUMBER}/consoleText -O ${bl} --timeout=900 --wait=10 --random-wait --tries=10 --retry-connrefused --no-check-certificate
 
 date; rsync -arzq --delete ${STAGINGDIR}/logs $DESTINATION/builds/staging/${JOB_NAME}/
 
