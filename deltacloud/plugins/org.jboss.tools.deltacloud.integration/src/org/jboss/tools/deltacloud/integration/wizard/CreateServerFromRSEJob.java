@@ -221,15 +221,13 @@ public class CreateServerFromRSEJob extends ChainedJob {
 			}
 			
 			// Handle the case in which the file doesn't exist, or home / config are null
-			final IServer[] result = new IServer[]{null};
 			final Properties props2 = props;
 			final Exception ce2 = ce;
-			Display.getDefault().syncExec(new Runnable(){
+			Display.getDefault().asyncExec(new Runnable(){
 				public void run() {
-					result[0] = handleRemoteFileIncomplete(host, props2, ce2);
+					handleRemoteFileIncomplete(host, props2, ce2);
 				}
 			});
-			return result[0];
 		}
 		return null;
 	}
