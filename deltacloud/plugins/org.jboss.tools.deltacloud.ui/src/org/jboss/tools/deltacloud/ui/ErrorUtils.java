@@ -25,13 +25,15 @@ import org.jboss.tools.deltacloud.core.DeltaCloudMultiException;
 public class ErrorUtils {
 	public static IStatus handleError(final String title, final String message, Throwable e, final Shell shell) {
 		IStatus status = createStatus(e);
-		log(status);
+		log(message, status);
 		openErrorDialog(title, message, status, shell);
 		return status;
 	}
 
-	private static void log(IStatus status) {
-		Activator.log(status);
+	private static void log(String message, IStatus status) {
+		// need to wrap the status so that we log the message, too
+		IStatus wrapperStatus = StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID, message, null, status);
+		Activator.log(wrapperStatus);
 	}
 
 	/**
@@ -43,15 +45,13 @@ public class ErrorUtils {
 	 * @param shell
 	 * @return
 	 */
-	public static IStatus handleErrorAsync(final String title, final String message, final Throwable e,
+	public static void handleErrorAsync(final String title, final String message, final Throwable e,
 			final Shell shell) {
-		IStatus status = createStatus(e);
 		shell.getDisplay().asyncExec(new Runnable() {
 			public void run() {
 				handleError(title, message, e, shell);
 			}
 		});
-		return status;
 	}
 
 	private static IStatus createStatus(Throwable e) {
