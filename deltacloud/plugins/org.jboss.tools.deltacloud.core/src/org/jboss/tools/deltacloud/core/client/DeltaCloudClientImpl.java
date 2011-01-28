@@ -138,7 +138,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		int statusCode = httpResponse.getStatusLine().getStatusCode();
 		if (HttpStatusCode.OK.isStatus(statusCode)) {
 			return;
-		} else if (HttpStatusCode.FORBIDDEN.isStatus(statusCode)) {
+		} else if (HttpStatusCode.UNAUTHORIZED.isStatus(statusCode)) {
 			throw new DeltaCloudAuthClientException(
 					MessageFormat
 							.format("The server reported an authorization error \"{0}\" on requesting \"{1}\"",

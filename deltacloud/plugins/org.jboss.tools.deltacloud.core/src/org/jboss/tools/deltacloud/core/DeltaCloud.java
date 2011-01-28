@@ -636,7 +636,7 @@ public class DeltaCloud extends ObservablePojo {
 		} catch (DeltaCloudAuthClientException e) {
 			return false;
 		} catch (DeltaCloudClientException e) {
-			throw new DeltaCloudException(MessageFormat.format("Could not connection to cloud \"{0}\" at \"{1}\"",
+			throw new DeltaCloudException(MessageFormat.format("Could not connect to cloud \"{0}\" at \"{1}\"",
 					name, url), e);
 		}
 

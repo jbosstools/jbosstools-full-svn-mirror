@@ -92,7 +92,7 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 		} catch (DeltaCloudException e) {
 			ErrorUtils.handleErrorAsync(WizardMessages.getString("CloudConnectionAuthError.title"),
 							WizardMessages.getFormattedString("CloudConnectionAuthError.message", url), e, getShell());
-			return true;
+			return false;
 		}
 	}
 
