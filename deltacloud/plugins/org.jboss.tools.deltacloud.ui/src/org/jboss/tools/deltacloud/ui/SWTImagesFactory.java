@@ -34,7 +34,8 @@ public class SWTImagesFactory {
 	}	
 	private static final String NAME_PREFIX= Activator.PLUGIN_ID + '.';
 	private static final int NAME_PREFIX_LENGTH= NAME_PREFIX.length();
-	public static final String IMG_CLOUD= NAME_PREFIX + "cloud.gif"; //$NON-NLS-1$
+	public static final String IMG_CLOUD= NAME_PREFIX + "delta.png"; //$NON-NLS-1$
+//	public static final String IMG_CLOUD= NAME_PREFIX + "cloud.gif"; //$NON-NLS-1$
 	public static final String IMG_COLLAPSE_ALL= NAME_PREFIX + "collapseall.gif"; //$NON-NLS-1$
 	public static final String IMG_DELTA= NAME_PREFIX + "delta.gif"; //$NON-NLS-1$
 	public static final String IMG_DELTA_LARGE= NAME_PREFIX + "delta-large.gif"; //$NON-NLS-1$

@@ -10,14 +10,14 @@
       </category>
       <view
             name="%CloudViewerName"
-            icon="icons/delta.gif"
+            icon="icons/delta.png"
             category="org.jboss.tools.deltacloud.ui"
             class="org.jboss.tools.deltacloud.ui.views.cloud.DeltaCloudView"
             id="org.jboss.tools.deltacloud.ui.views.CloudView">
       </view>
       <view
             name="CloudViewerName2"
-            icon="icons/delta.gif"
+            icon="icons/delta.png"
             category="org.jboss.tools.deltacloud.ui"
             class="org.jboss.tools.deltacloud.ui.views.cloud.cnf.CloudNavigator"
             id="org.jboss.tools.deltacloud.ui.views.CloudView2">
@@ -26,14 +26,14 @@
       <view
             category="org.jboss.tools.deltacloud.ui"
             class="org.jboss.tools.deltacloud.ui.views.cloudelements.InstanceView"
-            icon="icons/delta.gif"
+            icon="icons/delta.png"
             id="org.jboss.tools.deltacloud.ui.views.InstanceView"
             name="%InstanceViewer.name">
       </view>
       <view
             category="org.jboss.tools.deltacloud.ui"
             class="org.jboss.tools.deltacloud.ui.views.cloudelements.ImageView"
-            icon="icons/delta.gif"
+            icon="icons/delta.png"
             id="org.jboss.tools.deltacloud.ui.views.ImageView"
             name="%ImageViewer.name"
             restorable="true">
@@ -89,7 +89,7 @@
       <wizard
             category="org.jboss.tools.deltacloud.ui.wizard.category"
             class="org.jboss.tools.internal.deltacloud.ui.wizards.NewCloudConnectionWizard"
-            icon="icons/delta.gif"
+            icon="icons/delta.png"
             id="org.jboss.tools.deltacloud.ui.connection.wizard"
             name="%NewWizard.name">
       </wizard>
@@ -98,7 +98,7 @@
          point="org.eclipse.ui.perspectives">
       <perspective
             class="org.jboss.tools.deltacloud.ui.DeltaCloudPerspective"
-            icon="icons/delta.gif"
+            icon="icons/delta.png"
             id="org.jboss.tools.deltacloud.ui.perspective"
             name="%DeltaCloudPerspective.name">
       </perspective>
@@ -856,7 +856,7 @@
      <navigatorContent
            activeByDefault="true"
            contentProvider="org.jboss.tools.deltacloud.ui.views.cloud.cnf.CloudContentProvider"
-           icon="icons/delta.gif"
+           icon="icons/delta.png"
            id="org.jboss.tools.deltacloud.ui.cloudContentRoot"
            labelProvider="org.jboss.tools.deltacloud.ui.views.cloud.cnf.CloudLabelProvider"
            name="DeltaClouds"
