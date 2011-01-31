@@ -91,7 +91,7 @@
                                         <itemizedlist>
                                             <listitem><para><emphasis>Asynchronous BPEL Process</emphasis>  - 
                                                 generates the basis of orchestration logic:  receive and reply activities
-                                                are included into the process;client WSDL is generated, 
+                                                are included into the process; client WSDL is generated, 
                                                 service is defined in the <property>parentlink</property> of the process.
                                                 The caller is notified asynchronously when the process completes.
                                             </para></listitem>
