@@ -30,10 +30,10 @@ import org.jboss.tools.internal.deltacloud.ui.preferences.StringEntriesPreferenc
  */
 public class DeltaCloudUIUtils {
 
-	public static ContentProposalAdapter createPreferencesProposalAdapter(final Text text, String preferencesKey) {
+	public static ContentProposalAdapter addPreferencesProposalAdapter(final Text text, String preferencesKey) {
 		final ControlDecoration decoration = createContenAssistDecoration(text);
-		final StringEntriesPreferenceValue preferencesValues = new StringEntriesPreferenceValue(",", preferencesKey,
-				Activator.PLUGIN_ID);
+		final StringEntriesPreferenceValue preferencesValues =
+				new StringEntriesPreferenceValue(",", preferencesKey, Activator.PLUGIN_ID);
 		SimpleContentProposalProvider proposalProvider = new SimpleContentProposalProvider(preferencesValues.get());
 		proposalProvider.setFiltering(true);
 		text.addFocusListener(new FocusAdapter() {
@@ -52,8 +52,8 @@ public class DeltaCloudUIUtils {
 
 		});
 		KeyStroke keyStroke = KeyStroke.getInstance(SWT.CONTROL, ' ');
-		ContentProposalAdapter proposalAdapter = new ContentProposalAdapter(text, new TextContentAdapter(),
-				proposalProvider, keyStroke, null);
+		ContentProposalAdapter proposalAdapter =
+				new ContentProposalAdapter(text, new TextContentAdapter(), proposalProvider, keyStroke, null);
 		proposalAdapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
 		return proposalAdapter;
 	}
