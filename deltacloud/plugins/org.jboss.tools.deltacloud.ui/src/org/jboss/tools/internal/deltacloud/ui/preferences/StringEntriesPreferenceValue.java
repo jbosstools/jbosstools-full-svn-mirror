@@ -113,6 +113,10 @@ public class StringEntriesPreferenceValue extends AbstractPreferenceValue<String
 		doStore(concatenate(currentValues));
 	}
 
+	public void store() {
+		store(null);
+	}
+	
 	protected String concatenate(String[] values) {
 		StringBuilder builder = new StringBuilder();
 		for (int i = 0; i < values.length; i++) {
