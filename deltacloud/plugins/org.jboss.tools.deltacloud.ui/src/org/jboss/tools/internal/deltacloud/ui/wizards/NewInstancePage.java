@@ -212,7 +212,7 @@ public class NewInstancePage extends WizardPage {
 		keyLabel.setText(WizardMessages.getString(KEY_LABEL));
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(keyLabel);
 		keyText = new Text(container, SWT.BORDER | SWT.SINGLE);
-		DeltaCloudUIUtils.createPreferencesProposalAdapter(nameText, KEY_PROPOSAL_KEY);
+		DeltaCloudUIUtils.createPreferencesProposalAdapter(keyText, KEY_PROPOSAL_KEY);
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).applyTo(keyText);
 		Button keyManageButton = new Button(container, SWT.NULL);
 		keyManageButton.setText(WizardMessages.getString(MANAGE_BUTTON_LABEL));
