@@ -23,7 +23,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 import org.jboss.tools.deltacloud.ui.Activator;
-import org.jboss.tools.internal.deltacloud.ui.preferences.StringEntriesPreferenceValue;
+import org.jboss.tools.internal.deltacloud.ui.preferences.StringsPreferenceValue;
 
 /**
  * @author André Dietisheim
@@ -33,8 +33,8 @@ public class DeltaCloudUIUtils {
 	public static ContentProposalAdapter addPreferencesProposalAdapter(final Text text, String preferencesKey) {
 		final ControlDecoration decoration = createContenAssistDecoration(text);
 
-		final StringEntriesPreferenceValue preferencesValues =
-				new StringEntriesPreferenceValue(",", preferencesKey, Activator.PLUGIN_ID);
+		final StringsPreferenceValue preferencesValues =
+				new StringsPreferenceValue(',', preferencesKey, Activator.PLUGIN_ID);
 		SimpleContentProposalProvider proposalProvider = new SimpleContentProposalProvider(preferencesValues.get());
 		proposalProvider.setFiltering(true);
 		text.addFocusListener(new FocusAdapter() {

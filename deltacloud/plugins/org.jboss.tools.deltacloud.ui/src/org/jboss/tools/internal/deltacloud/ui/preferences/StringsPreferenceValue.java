@@ -10,16 +10,22 @@
  ******************************************************************************/
 package org.jboss.tools.internal.deltacloud.ui.preferences;
 
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+
 /**
+ * A class that offers access to a collection of values that is stored in the
+ * preferences under a single key.
+ * 
  * @author Andre Dietisheim
  */
-public class StringEntriesPreferenceValue extends AbstractPreferenceValue<String[]> {
+public class StringsPreferenceValue extends AbstractPreferenceValue<String[]> {
 
 	private String delimiter;
 
-	public StringEntriesPreferenceValue(String delimiter, String prefsKey, String pluginId) {
+	public StringsPreferenceValue(char delimiter, String prefsKey, String pluginId) {
 		super(prefsKey, pluginId);
-		this.delimiter = delimiter;
+		this.delimiter = new StringBuilder(delimiter).append("|||").toString();
 	}
 
 	public String[] get() {
@@ -29,8 +35,17 @@ public class StringEntriesPreferenceValue extends AbstractPreferenceValue<String
 	public String[] get(String[] currentValues) {
 
 		String string = doGet(null);
-		String[] prefValues = string.split(delimiter);
+		String[] prefValues = split(string);
 		return overrideValues(currentValues, prefValues);
+	}
+
+	private String[] split(String string) {
+		ArrayList<String> values = new ArrayList<String>();
+		StringTokenizer tokenizer = new StringTokenizer(string, delimiter);
+		while (tokenizer.hasMoreTokens()) {
+			values.add(tokenizer.nextToken());
+		}
+		return values.toArray(new String[values.size()]);
 	}
 
 	private String[] overrideValues(String[] newValues, String[] prefValues) {
@@ -50,7 +65,7 @@ public class StringEntriesPreferenceValue extends AbstractPreferenceValue<String
 
 	/**
 	 * Adds the given string value to this preference value(s). Duplicate values
-	 * are not added
+	 * are not added.
 	 * 
 	 * @param value
 	 *            the value to add
@@ -116,7 +131,7 @@ public class StringEntriesPreferenceValue extends AbstractPreferenceValue<String
 	public void store() {
 		store(null);
 	}
-	
+
 	protected String concatenate(String[] values) {
 		StringBuilder builder = new StringBuilder();
 		for (int i = 0; i < values.length; i++) {

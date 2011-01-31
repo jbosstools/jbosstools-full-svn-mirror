@@ -16,8 +16,8 @@ import java.io.FileNotFoundException;
 import org.eclipse.core.runtime.Platform;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.client.utils.StringUtils;
-import org.jboss.tools.internal.deltacloud.ui.preferences.StringEntriesPreferenceValue;
 import org.jboss.tools.internal.deltacloud.ui.preferences.StringPreferenceValue;
+import org.jboss.tools.internal.deltacloud.ui.preferences.StringsPreferenceValue;
 
 /**
  * @author André Dietisheim
@@ -36,8 +36,8 @@ public class SshPrivateKeysPreferences {
 	private static final String SSH_USERHOME = ".ssh";
 	private static final String SSH_USERHOME_WIN32 = "ssh";
 
-	private static StringEntriesPreferenceValue sshPrivateKeyPreference =
-			new StringEntriesPreferenceValue(",", PRIVATEKEY, PLUGIN_ID);
+	private static StringsPreferenceValue sshPrivateKeyPreference =
+			new StringsPreferenceValue(',', PRIVATEKEY, PLUGIN_ID);
 	private static StringPreferenceValue sshHome = new StringPreferenceValue(SSH2HOME, PLUGIN_ID);
 
 	/**
