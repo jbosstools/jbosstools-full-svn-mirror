@@ -15,6 +15,7 @@ import java.text.MessageFormat;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
@@ -28,11 +29,14 @@ import org.eclipse.rse.core.model.IHost;
 import org.eclipse.rse.core.model.ISystemRegistry;
 import org.eclipse.rse.core.model.SystemStartHere;
 import org.eclipse.rse.core.subsystems.IConnectorService;
+import org.eclipse.rse.core.subsystems.ISubSystem;
+import org.eclipse.rse.subsystems.files.core.subsystems.IRemoteFileSubSystem;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PartInitException;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.integration.DeltaCloudIntegrationPlugin;
 import org.jboss.tools.deltacloud.integration.Messages;
+import org.jboss.tools.deltacloud.integration.wizard.CreateServerFromRSEJob;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 
 /**
@@ -84,7 +88,7 @@ public class RSEUtils {
 		Assert.isLegal(systemRegistry != null, "Cannot create Host: system registry is not defined");
 
 		IHost host = systemRegistry.createHost(systemType, connectionName, hostname, null);
-		host.setDefaultUserId("root"); //$NON-NLS-1$
+		host.setDefaultUserId("jboss"); //$NON-NLS-1$
 		return host;
 	}
 
@@ -94,6 +98,10 @@ public class RSEUtils {
 			return null;
 		}
 		return services[0];
+	}
+
+	public static void verifySystemConnected(IRemoteFileSubSystem system) {
+		CreateServerFromRSEJob.verifySystemConnected(system);
 	}
 
 	public static IStatus connect(IConnectorService service, IProgressMonitor monitor) throws Exception {
@@ -187,4 +195,9 @@ public class RSEUtils {
 			}
 		});
 	}
+	
+	public static IRemoteFileSubSystem findRemoteFileSubSystem(IHost host) {
+		return CreateServerFromRSEJob.findRemoteFileSubSystem(host);
+	}
+
 }

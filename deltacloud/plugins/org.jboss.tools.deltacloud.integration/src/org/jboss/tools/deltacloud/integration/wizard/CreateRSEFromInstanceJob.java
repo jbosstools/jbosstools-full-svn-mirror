@@ -12,14 +12,17 @@ package org.jboss.tools.deltacloud.integration.wizard;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.rse.core.model.IHost;
+import org.eclipse.rse.core.subsystems.IConnectorService;
+import org.eclipse.rse.services.clientserver.messages.SystemMessageException;
+import org.eclipse.rse.subsystems.files.core.subsystems.IRemoteFileSubSystem;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.internal.progress.ProgressManagerUtil;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.core.job.AbstractInstanceJob;
 import org.jboss.tools.deltacloud.integration.Messages;
@@ -59,6 +62,7 @@ public class CreateRSEFromInstanceJob extends AbstractInstanceJob {
 				monitor.worked(10);
 				
 				SubProgressMonitor submon = new SubProgressMonitor(monitor, 90);
+				initialConnect(host);
 				RSEUtils.connect(RSEUtils.getConnectorService(host), 90000, submon);
 			} catch (Exception e) {
 				return ErrorUtils.handleError(Messages.ERROR,
@@ -68,6 +72,16 @@ public class CreateRSEFromInstanceJob extends AbstractInstanceJob {
 		}
 		return Status.OK_STATUS;
 	}
+	
+	private void initialConnect(IHost host) {
+		try {
+			IRemoteFileSubSystem system = RSEUtils.findRemoteFileSubSystem(host);
+			system.connect(new NullProgressMonitor(), true);
+		} catch(Exception e) {
+			// ignore, expected, the server probably isn't up yet. 
+		}
+	}
+	
 	private boolean isAutoconnect() {
 		Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
 		boolean autoConnect = prefs.getBoolean(IDeltaCloudPreferenceConstants.AUTO_CONNECT_INSTANCE, true);
