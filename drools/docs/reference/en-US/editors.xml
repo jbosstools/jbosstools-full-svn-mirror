@@ -69,16 +69,16 @@
 					</row>
 					<row>
 						<entry>Expression</entry>
-						<entry>Shows the language expression of the selected table line(language message mapping).</entry>
+						<entry>Shows the language expression of the selected table line (language message mapping).</entry>
 					</row>
 
 					<row>
 						<entry>Mapping</entry>
-						<entry>Shows the rule of language mapping for the selected table line(language message mapping).</entry>
+						<entry>Shows the rule of language mapping for the selected table line (language message mapping).</entry>
 					</row>
 					<row>
 						<entry>Object</entry>
-						<entry>Shows the object for the selected table line(language message mapping)</entry>
+						<entry>Shows the object for the selected table line (language message mapping)</entry>
 					</row>
 
 					<row>
@@ -102,7 +102,7 @@
 								</listitem>
 								<listitem>
 									<para>
-										<emphasis>Add</emphasis>: with this button you can add new mapping lines to the table.For more information look at the <xref linkend="add_wizard"/> section. 
+										<emphasis>Add</emphasis>: with this button you can add new mapping lines to the table. For more information look at the <xref linkend="add_wizard"/> section. 
 									</para>
 								</listitem>
 								<listitem>
@@ -351,7 +351,7 @@
 							</entry>
 							<entry>Gateway[converge]</entry>
 							<entry>
-								Allows you to synchronize multiple branches. A <property>Gateway[diverge]</property> node should have two or more incoming connections and one outgoing connection.
+								Allows you to synchronize multiple branches. A <property>Gateway[converge]</property> node should have two or more incoming connections and one outgoing connection.
 							</entry>
 						</row>
 						<row>

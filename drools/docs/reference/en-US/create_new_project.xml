@@ -9,7 +9,7 @@
 
 	<title>Creating a New Drools Project</title>
 
-	<para>In this chapter will cover the steps required to setup an executable sample Drools project in which rules can be used.</para>
+	<para>This chapter will cover the steps required to setup an executable sample Drools project in which rules can be used.</para>
 
 	<section id="sample_drools_project">
 		<title>Creating a Sample Drools Project</title>

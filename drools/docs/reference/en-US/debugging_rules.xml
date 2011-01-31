@@ -14,10 +14,10 @@
 	<section id="creating_breakpoints">
 		<title>Creating Breakpoints</title>
 		
-		<para>this section will focus on how to add breakpoints in the consequences of your rules.</para>
+		<para>This section will focus on how to add breakpoints in the consequences of your rules.</para>
 		
 		<para>
-			Whenever such a breakpoint is encountered during the execution of the rules, the execution is halted. It is possible to then inspect the variables known at that point and use any of the default debugging actions to decide what should happen next (step over, continue, etc). To inspect the content of the working memory and agenda the Debug views can be used.
+			Whenever such a breakpoint is encountered during the execution of the rules, the execution is halted. Once the execution is halted, it's possible to inspect the variables known at that point and use any of the default debugging actions to decide what should happen next (step over, continue, etc). To inspect the content of the working memory and agenda the Debug views can be used.
 		</para>
 		
 		<para>
@@ -42,7 +42,7 @@
 			
 			<listitem>
 				<para>
-					Right-click the ruler. Select the <guimenuitem>Toggle Breakpoint</guimenuitem> action in the context menu. Clicking the action will add a breakpoint at the selected line or remove it if there is one already.
+					Right-click the ruler. Select the <guimenuitem>Toggle Breakpoint</guimenuitem> action in the context menu. Choosing this action will add a breakpoint at the selected line or remove it if there is one already.
 				</para>
 			</listitem>
 		</itemizedlist>
