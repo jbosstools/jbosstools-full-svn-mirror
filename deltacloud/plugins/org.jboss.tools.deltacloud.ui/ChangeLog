@@ -1,3 +1,8 @@
+2011-01-31  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CloudConnectionPage.java (createControl): 
+	[JBIDE-8259] added content proposals for cloud name, cloud url, username
+
 2011-01-27  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/SshPrivateKeysPreferences.java 
