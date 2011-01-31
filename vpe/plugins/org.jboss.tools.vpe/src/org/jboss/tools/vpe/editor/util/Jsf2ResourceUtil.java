@@ -25,24 +25,34 @@ import org.w3c.dom.Node;
  * @author mareshkau
  */
 public class Jsf2ResourceUtil {
+	
 	private static final Pattern resourcePatternWithSinglCoat = Pattern
 			.compile("[#\\$]\\{\\s*resource\\s*\\[\\s*'(.*)'\\s*\\]\\s*\\}"); //$NON-NLS-1$
 	private static final Pattern resourcePatternWithDoableCoat = Pattern
 			.compile("[#\\$]\\{\\s*resource\\s*\\[\\s*\"(.*)\"\\s*\\]\\s*\\}"); //$NON-NLS-1$
 	private static final Pattern jsfExternalContextPath = Pattern
 			.compile("^\\s*(\\#|\\$)\\{facesContext.externalContext.requestContextPath\\}"); //$NON-NLS-1$
+	private static final Pattern jsfRequestContextPath = Pattern
+			.compile("^\\s*(\\#|\\$)\\{request.contextPath\\}"); //$NON-NLS-1$
+	
 	/**
-	 * Check if node contains attributes like this src="#{facesContext.externalContext.requestContextPath}/images/sample.gif"
+	 * Check if node contains attributes like this src=
+	 * "#{facesContext.externalContext.requestContextPath}/images/sample.gif"
+	 * or like #{request.contextPath}/css/style.css
+	 * 
 	 * @param sourceNode
-	 * @return true if node contains #{facesContext.externalContext.requestContextPath}/images/sample.gif
+	 * @return true if node contains
+	 *         #{facesContext.externalContext.requestContextPath}/images/sample.gif
+	 *         or #{request.contextPath}/css/style.css
 	 * @author mareshkau, fix for https://jira.jboss.org/jira/browse/JBIDE-5985
 	 */
-	public static boolean isContainJSFExternalContextPath(Node sourceNode) {
+	public static boolean isContainJSFContextPath(Node sourceNode) {
 		boolean result = false;
 		if (sourceNode.getNodeType() == Node.TEXT_NODE) {
 			String textValue = sourceNode.getNodeValue();
 			if (textValue != null) {
-				if (Jsf2ResourceUtil.isExternalContextPathString(textValue)) {
+				if (Jsf2ResourceUtil.isExternalContextPathString(textValue) ||
+						Jsf2ResourceUtil.isRequestContextPathString(textValue)) {
 					result = true;
 				}
 			}
@@ -50,17 +60,19 @@ public class Jsf2ResourceUtil {
 			final NamedNodeMap nodeMap = sourceNode.getAttributes();
 			if ((nodeMap != null) && (nodeMap.getLength() > 0)) {
 				for (int i = 0; i < nodeMap.getLength(); i++) {
-					if (Jsf2ResourceUtil
-							.isExternalContextPathString(((Attr) nodeMap
-									.item(i)).getValue())) {
+					Attr nodeAttr = (Attr) nodeMap.item(i);
+					String attrValue = nodeAttr.getValue();
+					if (Jsf2ResourceUtil.isExternalContextPathString(attrValue)
+							|| Jsf2ResourceUtil
+									.isRequestContextPathString(attrValue)) {
 						result = true;
-
 					}
 				}
 			}
 		}
 		return result;
 	}
+	
 	/**
 	 * Checks string for jsf declaration
 	 * @param attributeValue
@@ -75,6 +87,17 @@ public class Jsf2ResourceUtil {
 			result = true;
 		}
 		return result;
+	}
+	
+	/**
+	 * Checks string for request.contextPath declaration
+	 * @param attributeValue
+	 * @return true if string contains #{request.contextPath}
+	 */
+	public static boolean isRequestContextPathString(String attributeValue) {
+		Matcher requestContextPathMatcher = jsfRequestContextPath
+				.matcher(attributeValue);
+		return requestContextPathMatcher.find();
 	}
 
 	/**
@@ -150,6 +173,7 @@ public class Jsf2ResourceUtil {
 		}
 		return result;
 	}
+	
 	/**
 	 * Replaced "^\\s*(\\#|\\$)\\{facesContext.externalContext.requestContextPath\\}" with ""
 	 * @param value
@@ -157,5 +181,14 @@ public class Jsf2ResourceUtil {
 	 */
 	public static String processExternalContextPath(String value) {
 		return value.replaceFirst("^\\s*(\\#|\\$)\\{facesContext.externalContext.requestContextPath\\}", ""); //$NON-NLS-1$ //$NON-NLS-2$
+	}
+	
+	/**
+	 * Replaced "^\\s*(\\#|\\$)\\{request.contextPath\\}" with ""
+	 * @param value
+	 * @return value with replaced "^\\s*(\\#|\\$)\\{request.contextPath\\}"
+	 */
+	public static String processRequestContextPath(String value) {
+		return value.replaceFirst(jsfRequestContextPath.pattern(), ""); //$NON-NLS-1$
 	}
 }
