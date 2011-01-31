@@ -74,10 +74,10 @@ import org.jboss.tools.internal.deltacloud.ui.utils.DeltaCloudUIUtils;
  */
 public class CloudConnectionPage extends WizardPage {
 
+	private static final String NAME_PROPOSAL_KEY = "cloud/name";
 	private static final String USERNAME_PROPOSAL_KEY = "cloud/username";
-
 	private static final String URL_PROPOSAL_KEY = "cloud/url";
-
+	
 	private static final int CLOUDTYPE_CHECK_DELAY = 1000;
 
 	private static final String DESCRIPTION = "CloudConnection.desc"; //$NON-NLS-1$
@@ -334,7 +334,7 @@ public class CloudConnectionPage extends WizardPage {
 		Label nameLabel = new Label(container, SWT.NULL);
 		nameLabel.setText(WizardMessages.getString(NAME_LABEL));
 		Text nameText = new Text(container, SWT.BORDER | SWT.SINGLE);
-		DeltaCloudUIUtils.createPreferencesProposalAdapter(nameText, NAME_PROPOSAL_KEY());
+		DeltaCloudUIUtils.createPreferencesProposalAdapter(nameText, NAME_PROPOSAL_KEY);
 		bindName(dbc, nameText);
 
 		// url
@@ -485,10 +485,6 @@ public class CloudConnectionPage extends WizardPage {
 		ec2pwLink.setLayoutData(f);
 
 		setControl(container);
-	}
-
-	private String NAME_PROPOSAL_KEY() {
-		return "cloud/name";
 	}
 
 	/**

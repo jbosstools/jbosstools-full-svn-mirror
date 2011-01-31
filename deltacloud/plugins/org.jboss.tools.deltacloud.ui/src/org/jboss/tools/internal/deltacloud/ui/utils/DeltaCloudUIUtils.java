@@ -15,8 +15,8 @@ import org.eclipse.jface.fieldassist.ContentProposalAdapter;
 import org.eclipse.jface.fieldassist.SimpleContentProposalProvider;
 import org.eclipse.jface.fieldassist.TextContentAdapter;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.widgets.Text;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.internal.deltacloud.ui.preferences.StringEntriesPreferenceValue;
@@ -30,16 +30,15 @@ public class DeltaCloudUIUtils {
 		final StringEntriesPreferenceValue preferencesValues = new StringEntriesPreferenceValue(",", preferencesKey, Activator.PLUGIN_ID);
 		SimpleContentProposalProvider proposalProvider = new SimpleContentProposalProvider(preferencesValues.get());
 		proposalProvider.setFiltering(true);
-		text.addDisposeListener(new DisposeListener() {
-			
+		text.addFocusListener(new FocusAdapter() {
+
 			@Override
-			public void widgetDisposed(DisposeEvent e) {
-				String currentValue = text.getText();
-				preferencesValues.add(currentValue);
+			public void focusLost(FocusEvent e) {
+				preferencesValues.add(text.getText());
 				preferencesValues.store();
 			}
-		});
 
+		});
 		KeyStroke keyStroke = KeyStroke.getInstance(SWT.CONTROL, ' ');
 		ContentProposalAdapter proposalAdapter = new ContentProposalAdapter(text, new TextContentAdapter(), proposalProvider, keyStroke, null);
 		proposalAdapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
