@@ -14,7 +14,6 @@ It will create the weld-jsf-login project in your workspace.
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.60</property>
-				<property name="eclipse-projects">weld-jsf-login</property>
 				<property name="description">This project example requires JBoss AS 6.0</property>
 			</fix>
 		</fixes>
@@ -36,7 +35,6 @@ It will create the weld-jsf-login project in your workspace.
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.60</property>
-				<property name="eclipse-projects">weld-jsf-login</property>
 				<property name="description">This project example requires JBoss AS 6.0</property>
 			</fix>
 		</fixes>
@@ -59,7 +57,6 @@ It will create the weld-jsf-numberguess project in your workspace.
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.60</property>
-				<property name="eclipse-projects">weld-jsf-numberguess</property>
 				<property name="description">This project example requires JBoss AS 6.0</property>
 			</fix>
 		</fixes>
@@ -82,7 +79,6 @@ It will create the weld-jsf-pastecode project in your workspace.
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.60</property>
-				<property name="eclipse-projects">weld-jsf-pastecode</property>
 				<property name="description">This project example requires JBoss AS 6.0</property>
 			</fix>
 		</fixes>
@@ -104,7 +100,6 @@ It will create the weld-jsf-permalink project in your workspace.
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.60</property>
-				<property name="eclipse-projects">weld-jsf-permalink</property>
 				<property name="description">This project example requires JBoss AS 6.0</property>
 			</fix>
 		</fixes>
@@ -126,7 +121,6 @@ It will create the weld-jsf-translator-parent,weld-jsf-translator-ear,weld-jsf-t
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.60</property>
-				<property name="eclipse-projects">weld-jsf-translator-war</property>
 				<property name="description">This project example requires JBoss AS 6.0</property>
 			</fix>
 		</fixes>
