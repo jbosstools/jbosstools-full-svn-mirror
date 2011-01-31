@@ -342,7 +342,7 @@ public class CloudConnectionPage extends WizardPage {
 		urlLabel.setText(WizardMessages.getString(URL_LABEL));
 		Point p1 = urlLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		Text urlText = new Text(container, SWT.BORDER | SWT.SINGLE);
-		DeltaCloudUIUtils.createPreferencesProposalAdapter(nameText, URL_PROPOSAL_KEY);
+		DeltaCloudUIUtils.createPreferencesProposalAdapter(urlText, URL_PROPOSAL_KEY);
 		dbc.bindValue(
 				WidgetProperties.text(SWT.Modify).observe(urlText),
 				BeanProperties.value(
@@ -367,7 +367,7 @@ public class CloudConnectionPage extends WizardPage {
 		Label usernameLabel = new Label(container, SWT.NULL);
 		usernameLabel.setText(WizardMessages.getString(USERNAME_LABEL));
 		Text usernameText = new Text(container, SWT.BORDER | SWT.SINGLE);
-		DeltaCloudUIUtils.createPreferencesProposalAdapter(nameText, USERNAME_PROPOSAL_KEY);
+		DeltaCloudUIUtils.createPreferencesProposalAdapter(usernameText, USERNAME_PROPOSAL_KEY);
 		IObservableValue usernameObservable = WidgetProperties.text(SWT.Modify).observe(usernameText);
 		dbc.bindValue(
 				usernameObservable,
