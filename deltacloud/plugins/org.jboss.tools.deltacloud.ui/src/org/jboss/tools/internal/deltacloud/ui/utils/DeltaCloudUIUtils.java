@@ -46,6 +46,7 @@ public class DeltaCloudUIUtils {
 			@Override
 			public void focusLost(FocusEvent e) {
 				decoration.hide();
+				
 				preferencesValues.add(text.getText());
 				preferencesValues.store();
 			}
