@@ -9,7 +9,7 @@
 	    Ensure the <guilabel>Deltacloud</guilabel> perspective is open in your workspace. To open the perspective navigate to <menuchoice><guimenuitem>Window</guimenuitem>
 			<guimenuitem>Open Perspective</guimenuitem>
 			<guimenuitem>Other</guimenuitem>
-		</menuchoice> and then select <guilabel>Deltacloud</guilabel> from the perspective options and click <guibutton>OK</guibutton>.
+		</menuchoice> and then select <guilabel>Deltacloud</guilabel> from the perspective options and click the <guibutton>OK</guibutton> button.
 	</para>
 	<figure id="selecting_the_deltacloud_perspective">
 		<title>Selecting the Deltacloud perspective</title>
