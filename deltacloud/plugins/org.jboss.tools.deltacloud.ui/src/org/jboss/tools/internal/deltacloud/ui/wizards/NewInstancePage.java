@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
+import java.io.File;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -403,12 +404,10 @@ public class NewInstancePage extends WizardPage {
 				WidgetProperties.text(SWT.Modify).observeDelayed(KEY_CHECK_DELAY, text),
 				BeanProperties.value(NewInstancePageModel.class, NewInstancePageModel.PROPERTY_KEYID).observe(model),
 				new UpdateValueStrategy()
-						.setBeforeSetValidator(
+						.setAfterGetValidator(
 								new MandatoryStringValidator(WizardMessages.getString(MUST_ENTER_A_KEYNAME)))
 						.setBeforeSetValidator(
 								new KeyValidator()),
-								// TODO: internationalize strings
-
 				null);
 		ControlDecorationSupport.create(textBinding, SWT.LEFT | SWT.TOP);
 	}
@@ -420,6 +419,11 @@ public class NewInstancePage extends WizardPage {
 			if (value instanceof String
 					&& ((String) value).length() > 0) {
 				if (doesKeyExist((String) value)) {
+					if (!isKeyKnownToSsh((String) value)) {
+						return ValidationStatus
+								.warning(
+								"Key not found under SSH preferences, might be needed for login after launch.");
+					}
 					return ValidationStatus.ok();
 				}
 			}
@@ -427,6 +431,20 @@ public class NewInstancePage extends WizardPage {
 					"The key is not known to cloud \"{0}\"", cloud.getName()));
 		}
 
+		private boolean isKeyKnownToSsh(String keyName) {
+			if (keyName == null) {
+				return false;
+			}
+			for (String key :SshPrivateKeysPreferences.getKeys()) {
+				File file = new File(key);
+				if (file.getName().equals(keyName) 
+						|| file.getName().startsWith(keyName + ".")) {
+					return true;
+				}
+			}
+			return false;
+		}
+		
 		private boolean doesKeyExist(String keyId) {
 			try {
 				return cloud.getKey(keyId) != null;

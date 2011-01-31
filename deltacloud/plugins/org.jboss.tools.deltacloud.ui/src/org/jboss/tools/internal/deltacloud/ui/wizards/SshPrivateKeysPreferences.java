@@ -49,20 +49,9 @@ public class SshPrivateKeysPreferences {
 	public static void add(String keyName) {
 		sshPrivateKeyPreference.add(keyName);
 	}
-
-	/**
-	 * Adds the given keyName to the ssh-preferences
-	 * 
-	 * @param keyName
-	 *            the name of the key to add
-	 */
-	public static boolean contains(String keyName) {
-		for (String privateKey : sshPrivateKeyPreference.get()) {
-			if (privateKey.equals(keyName)) {
-				return true;
-			}
-		}
-		return false;
+	
+	public static String[] getKeys() {
+		return sshPrivateKeyPreference.get();
 	}
 	
 	/**
