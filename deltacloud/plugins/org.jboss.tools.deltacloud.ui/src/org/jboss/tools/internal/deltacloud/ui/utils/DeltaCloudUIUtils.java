@@ -32,6 +32,7 @@ public class DeltaCloudUIUtils {
 
 	public static ContentProposalAdapter addPreferencesProposalAdapter(final Text text, String preferencesKey) {
 		final ControlDecoration decoration = createContenAssistDecoration(text);
+
 		final StringEntriesPreferenceValue preferencesValues =
 				new StringEntriesPreferenceValue(",", preferencesKey, Activator.PLUGIN_ID);
 		SimpleContentProposalProvider proposalProvider = new SimpleContentProposalProvider(preferencesValues.get());
