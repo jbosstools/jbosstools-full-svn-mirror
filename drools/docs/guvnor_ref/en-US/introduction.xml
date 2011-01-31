@@ -115,7 +115,7 @@
 		<itemizedlist>
 			<listitem>
 				<para>
-					Eclipse 3.4.x with Jboss Tools bundle of Eclipse plugins installed. How to install JBoss Tools onto Eclipse you can find in the JBoss Tools Installation section.
+					Eclipse IDE with installed JBoss Tools plugins. How to install JBoss Tools onto Eclipse you can find in the JBoss Tools Installation section.
 				</para>
 			</listitem>
 
