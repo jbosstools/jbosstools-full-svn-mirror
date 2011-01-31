@@ -10,34 +10,38 @@
  ******************************************************************************/
 package org.jboss.tools.internal.deltacloud.ui.utils;
 
+import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.fieldassist.ContentProposalAdapter;
+import org.eclipse.jface.fieldassist.SimpleContentProposalProvider;
 import org.eclipse.jface.fieldassist.TextContentAdapter;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.widgets.Text;
 import org.jboss.tools.deltacloud.ui.Activator;
-import org.jboss.tools.internal.deltacloud.ui.wizards.PreferencesContentProposalProvider;
+import org.jboss.tools.internal.deltacloud.ui.preferences.StringEntriesPreferenceValue;
 
 /**
  * @author André Dietisheim
  */
 public class DeltaCloudUIUtils {
 
-	private static char[] ACTIVATION_CHARS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ:.,-".toCharArray();
-	
 	public static ContentProposalAdapter createPreferencesProposalAdapter(final Text text, String preferencesKey) {
-		final PreferencesContentProposalProvider proposalProvider = new PreferencesContentProposalProvider(preferencesKey, Activator.PLUGIN_ID);
+		final StringEntriesPreferenceValue preferencesValues = new StringEntriesPreferenceValue(",", preferencesKey, Activator.PLUGIN_ID);
+		SimpleContentProposalProvider proposalProvider = new SimpleContentProposalProvider(preferencesValues.get());
 		proposalProvider.setFiltering(true);
 		text.addDisposeListener(new DisposeListener() {
 			
 			@Override
 			public void widgetDisposed(DisposeEvent e) {
 				String currentValue = text.getText();
-				proposalProvider.add(currentValue);
-				proposalProvider.save();
+				preferencesValues.add(currentValue);
+				preferencesValues.store();
 			}
 		});
-		ContentProposalAdapter proposalAdapter = new ContentProposalAdapter(text, new TextContentAdapter(), proposalProvider, null, ACTIVATION_CHARS);
+
+		KeyStroke keyStroke = KeyStroke.getInstance(SWT.CONTROL, ' ');
+		ContentProposalAdapter proposalAdapter = new ContentProposalAdapter(text, new TextContentAdapter(), proposalProvider, keyStroke, null);
 		proposalAdapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
 		return proposalAdapter;
 	}
