@@ -819,7 +819,13 @@
         <title>JBoss Application Server</title>
         <para>
             <itemizedlist>
-							<listitem>
+            	<listitem>
+                    <para>
+                        <ulink url="https://issues.jboss.org/browse/JBIDE-7412">JBIDE-7412</ulink>: The Eclipse server editor has been modified to present only the relevant options in the <guilabel>Server Behaviour</guilabel> section, depending on the value selected in the combobox. When you select <guilabel>Local</guilabel> from the combobox, no additional options are presented in the <guilabel>Server Behaviour</guilabel> section. When you select <guilabel>Remote System Deployment</guilabel> from the combobox a number of options are made available in the <guilabel>Server Behaviour</guilabel> section. Selecting either <guilabel>Local</guilabel> or <guilabel>Remote System Deployment</guilabel> will also now enable or disable the appropriate options in the <guilabel>Deployment</guilabel> tab.
+                    </para>
+                </listitem>
+            
+            	<listitem>
 						    <para>
 				    			<ulink url="https://issues.jboss.org/browse/JBIDE-7019">JBIDE-7019</ulink>: A <guibutton>Test</guibutton> button has been added to the <guilabel>Server Behaviour</guilabel> section in the JBoss Application Server configuration Editor which will verify that:
 									<orderedlist>
