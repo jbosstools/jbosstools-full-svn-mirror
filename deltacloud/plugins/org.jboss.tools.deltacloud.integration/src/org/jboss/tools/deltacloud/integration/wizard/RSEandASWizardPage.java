@@ -94,7 +94,7 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 		
 		remoteDetailsLoc = new Text(g, SWT.BORDER);
 		remoteDetailsLoc.setLayoutData(UIUtils.createFormData(autoScanCheck,5,null,0,0,INDENTATION,100,-5));
-		remoteDetailsLoc.setText("/etc/sysconfig/jboss-eap");
+		remoteDetailsLoc.setText("./.jboss");
 		
 		autoLocalRuntimeLabel = new Label(g, SWT.NONE);
 		autoLocalRuntimeLabel.setText("Local Runtime: ");
