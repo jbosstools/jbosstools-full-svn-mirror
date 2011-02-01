@@ -30,11 +30,11 @@ public class EditCloudConnectionWizard extends NewCloudConnectionWizard {
 
 	@Override
 	public boolean performFinish() {
-		String name = mainPage.getModel().getName();
-		String url = mainPage.getModel().getUrl();
-		String username = mainPage.getModel().getUsername();
-		String password = mainPage.getModel().getPassword();
-		DeltaCloudDriver driver = mainPage.getModel().getDriver();
+		String name = mainPage.getConnectionName();
+		String url = mainPage.getUrl();
+		String username = mainPage.getUsername();
+		String password = mainPage.getPassword();
+		DeltaCloudDriver driver = mainPage.getDriver();
 		try {
 			initialCloud.update(name, url, username, password, driver);
 		} catch (Exception e) {

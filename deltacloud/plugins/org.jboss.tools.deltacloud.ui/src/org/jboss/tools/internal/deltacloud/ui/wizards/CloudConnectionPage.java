@@ -77,7 +77,7 @@ public class CloudConnectionPage extends WizardPage {
 	private static final String NAME_PROPOSAL_KEY = "cloud/name";
 	private static final String USERNAME_PROPOSAL_KEY = "cloud/username";
 	private static final String URL_PROPOSAL_KEY = "cloud/url";
-	
+
 	private static final int CLOUDTYPE_CHECK_DELAY = 1000;
 
 	private static final String DESCRIPTION = "CloudConnection.desc"; //$NON-NLS-1$
@@ -306,7 +306,8 @@ public class CloudConnectionPage extends WizardPage {
 	}
 
 	public CloudConnectionPage(String pageName, String defaultName, String defaultUrl, String defaultUsername,
-			String defaultPassword, DeltaCloudDriver defaultDriver, CloudConnection cloudConnection) throws MalformedURLException {
+			String defaultPassword, DeltaCloudDriver defaultDriver, CloudConnection cloudConnection)
+			throws MalformedURLException {
 		super(pageName);
 		this.connectionModel =
 				new CloudConnectionPageModel(defaultName, defaultUrl, defaultUsername, defaultPassword, defaultDriver);
@@ -547,7 +548,8 @@ public class CloudConnectionPage extends WizardPage {
 		IObservableValue cloudTypeObservable = urlToCloudTypeConverter.getCloudTypeObservable();
 		Object value = cloudTypeObservable.getValue();
 		Assert.isTrue(value == null || value instanceof DeltaCloudDriver);
-		DeltaCloudTypeLabelAdapter cloudTypeAdapter = new DeltaCloudTypeLabelAdapter((DeltaCloudDriver) value, typeLabel);
+		DeltaCloudTypeLabelAdapter cloudTypeAdapter = new DeltaCloudTypeLabelAdapter((DeltaCloudDriver) value,
+				typeLabel);
 		cloudTypeObservable.addValueChangeListener(cloudTypeAdapter);
 		ControlDecorationSupport.create(urlTypeBinding, SWT.LEFT | SWT.TOP);
 
@@ -576,7 +578,23 @@ public class CloudConnectionPage extends WizardPage {
 		ControlDecorationSupport.create(nameTextBinding, SWT.LEFT | SWT.TOP);
 	}
 
-	public CloudConnectionPageModel getModel() {
-		return connectionModel;
+	public String getUrl() {
+		return connectionModel.getUrl();
+	}
+
+	public String getConnectionName() {
+		return connectionModel.getName();
+	}
+
+	public String getUsername() {
+		return connectionModel.getUsername();
+	}
+
+	public String getPassword() {
+		return connectionModel.getPassword();
+	}
+
+	public DeltaCloudDriver getDriver() {
+		return connectionModel.getDriver();
 	}
 }

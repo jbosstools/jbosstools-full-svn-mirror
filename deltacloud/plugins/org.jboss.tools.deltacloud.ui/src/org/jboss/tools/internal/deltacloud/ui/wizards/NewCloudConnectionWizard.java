@@ -17,9 +17,9 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
+import org.jboss.tools.deltacloud.core.DeltaCloudDriver;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
-import org.jboss.tools.deltacloud.core.DeltaCloudDriver;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.internal.deltacloud.ui.preferences.IPreferenceKeys;
@@ -82,10 +82,10 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 	}
 
 	public boolean performTest() {
-		String name = mainPage.getModel().getName();
-		String url = mainPage.getModel().getUrl();
-		String username = mainPage.getModel().getUsername();
-		String password = mainPage.getModel().getPassword();
+		String name = mainPage.getConnectionName();
+		String url = mainPage.getUrl();
+		String username = mainPage.getUsername();
+		String password = mainPage.getPassword();
 		try {
 			DeltaCloud newCloud = new DeltaCloud(name, url, username, password);
 			return newCloud.testCredentials();
@@ -103,15 +103,15 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 
 	@Override
 	public boolean performFinish() {
-		String name = mainPage.getModel().getName();
-		String url = mainPage.getModel().getUrl();
+		String name = mainPage.getConnectionName();
+		String url = mainPage.getUrl();
 
 		new StringPreferenceValue(IPreferenceKeys.LAST_URL, Activator.PLUGIN_ID)
 				.store(url);
 
-		String username = mainPage.getModel().getUsername();
-		String password = mainPage.getModel().getPassword();
-		DeltaCloudDriver driver = mainPage.getModel().getDriver();
+		String username = mainPage.getUsername();
+		String password = mainPage.getPassword();
+		DeltaCloudDriver driver = mainPage.getDriver();
 
 		try {
 			DeltaCloud newCloud = new DeltaCloud(name, url, username, password, driver);
