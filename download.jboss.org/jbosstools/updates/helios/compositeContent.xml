@@ -7,10 +7,11 @@
      get new time w/ 
       date +%s000
 -->
-<property name='p2.timestamp' value='1295908416000'/>
+<property name='p2.timestamp' value='1296603724000'/>
 </properties>
-<children size='2'>
+<children size='3'>
 <child location='http://download.jboss.org/jbosstools/updates/requirements/helios/201006230900/'/>
 <child location='http://download.jboss.org/jbosstools/updates/requirements/orbit/R20100519200754/'/>
+<child location='http://download.eclipse.org//birt/update-site/2.6/'/>
 </children>
 </repository>
