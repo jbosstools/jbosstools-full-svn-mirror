@@ -81,11 +81,12 @@ public class BrowserPlugin extends BaseUIPlugin {
 	}
 	
 	public void earlyStartup() {
-		/* init xulrunner path for */ 
 		try {
-			String xulRunnerPath = XulRunnerBrowser.getXulRunnerPath();
+			/* init xulrunner path  */ 
+			XulRunnerBrowser.getXulRunnerPath();
+//			String xulRunnerPath = XulRunnerBrowser.getXulRunnerPath();
 //			if ("true".equals(Platform.getDebugOption(PLUGIN_ID + "/debug/earlyStartup"))) { //$NON-NLS-1$ //$NON-NLS-2$
-				logInfo(MessageFormat.format("earlyStartup: XULRunner path is: {0}",xulRunnerPath)); //$NON-NLS-1$
+//				logInfo(MessageFormat.format("earlyStartup: XULRunner path is: {0}",xulRunnerPath)); //$NON-NLS-1$
 //			}
 		} catch (XulRunnerException e) {
 			logError(e);
