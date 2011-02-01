@@ -23,16 +23,29 @@
                     </imageobject>
                 </mediaobject>
             </figure>
-            <para>It consists of only one page:</para>
+            <para>It consists of two pages:</para>
             <itemizedlist>
-                <listitem><para>On the page you can adjust the name of the project and the directory where it will be created.</para>
-                    <para>If "<property>Use default</property>" option is checked the output directory will be the workspace,
-                        otherwise the user should specify it by himself using <guibutton>Browse</guibutton> button.</para>
+                <listitem>
+                	<para>On the page you can adjust the name of the project and the directory where it will be created.</para>
+                  <para>
+                  	If "<property>Use default</property>" option is checked the output directory will be the workspace, otherwise the user should specify it by himself using <guibutton>Browse</guibutton> button.
+                  </para>
                     <figure>
                         <title>New BPEL Project Wizard</title>
                         <mediaobject>
                             <imageobject>
                                 <imagedata fileref="images/reference/bpel_ref_2.png"/>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>
+                </listitem>
+                <listitem>
+                	<para>On the second page you can specify the name of the Content Folder.</para>                  
+                    <figure>
+                        <title>New BPEL Project Wizard</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/reference/bpel_ref_2a.png"/>
                             </imageobject>
                         </mediaobject>
                     </figure>
