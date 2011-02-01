@@ -526,7 +526,7 @@
 	<section id="sect-Beginners_Guide-Java_Web_EE_and_Standard_Edition_SE_Plug_Ins-JMX_Tools">
 		<title>JMX Tools</title>
 		<para>
-			Java Management Extensions (<acronym>JMX</acronym>) is a Java tool-set for managing and monitoring applications, connected devices, and service-oriented networks. A managed resource is represented by a dynamic object called a <emphasis>Managed Bean</emphasis> (or <emphasis>MBean</emphasis>, which is a JavaBean with a dependency injection.
+			Java Management Extensions (<acronym>JMX</acronym>) is a Java tool-set for managing and monitoring applications, connected devices, and service-oriented networks. A managed resource is represented by a dynamic object called a <emphasis>Managed Bean</emphasis> or <emphasis>MBean</emphasis>, which is a JavaBean with a dependency injection.
 		</para>
 		<para>
 			The <acronym>JMX</acronym> Tools consists of the <emphasis>MBean Explorer</emphasis> and the <emphasis>MBean Editor</emphasis>.
