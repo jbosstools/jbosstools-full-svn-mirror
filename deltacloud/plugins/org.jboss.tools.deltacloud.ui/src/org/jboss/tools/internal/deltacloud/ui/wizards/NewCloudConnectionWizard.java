@@ -142,7 +142,7 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 		};
 		try {
 			WizardUtils.runInWizard(job, getContainer());
-			return job.getResult().getCode() != IStatus.ERROR;
+			return job.getResult() != null && job.getResult().getCode() != IStatus.ERROR;
 		} catch (Exception e) {
 			return false;
 		}

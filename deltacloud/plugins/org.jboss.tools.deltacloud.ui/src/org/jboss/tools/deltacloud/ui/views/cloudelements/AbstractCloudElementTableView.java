@@ -241,7 +241,7 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 	}
 
 	protected abstract ITableContentAndLabelProvider<CLOUDELEMENT> getContentAndLabelProvider();
-	
+
 	private void setViewerInput(DeltaCloud cloud) {
 		viewer.setInput(cloud);
 	}
@@ -306,9 +306,10 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 		return clouds[cloudIndex];
 	}
 
-	private void createColumns(ITableContentAndLabelProvider<CLOUDELEMENT> provider, TableColumnLayout tableLayout, Table table) {
+	private void createColumns(ITableContentAndLabelProvider<CLOUDELEMENT> provider, TableColumnLayout tableLayout,
+			Table table) {
 		Columns<CLOUDELEMENT> columns = provider.getColumns();
-		
+
 		for (int i = 0; i < columns.getSize(); ++i) {
 			Column<CLOUDELEMENT> c = columns.getColumn(i);
 			TableColumn tc = new TableColumn(table, SWT.NONE);
@@ -373,27 +374,33 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 		container.layout(true, true);
 	}
 
-	public void cloudsChanged(int type, DeltaCloud cloud) {
-		DeltaCloud[] clouds = getClouds();
-		switch (type) {
-		case IDeltaCloudManagerListener.REMOVE_EVENT:
-			onCloudRemoved(cloud, clouds);
-			break;
-		default:
-		}
-		
-		int index = getCloudIndex(currentCloud, clouds);
-		String[] cloudNames = toCloudNames(clouds);
-		setCloudSelectorItems(cloudNames, currentCloudSelector);
+	public void cloudsChanged(final int type, final DeltaCloud cloud) {
+		UIUtils.getActiveShell().getDisplay().syncExec(new Runnable() {
 
-		if (cloudNames.length > 0) {
-			currentCloudSelector.setText(cloudNames[index]);
-			setViewerInput(currentCloud);
-		} else {
-			currentCloudSelector.setText("");
-			setViewerInput(null);
+			@Override
+			public void run() {
+				DeltaCloud[] clouds = getClouds();
+				switch (type) {
+				case IDeltaCloudManagerListener.REMOVE_EVENT:
+					onCloudRemoved(cloud, clouds);
+					break;
+				default:
+				}
+
+			int index = getCloudIndex(currentCloud, clouds);
+			String[] cloudNames = toCloudNames(clouds);
+			setCloudSelectorItems(cloudNames, currentCloudSelector);
+
+			if (cloudNames.length > 0) {
+				currentCloudSelector.setText(cloudNames[index]);
+				setViewerInput(currentCloud);
+			} else {
+				currentCloudSelector.setText("");
+				setViewerInput(null);
+			}
+			container.layout(true, true);
 		}
-		container.layout(true, true);
+		});
 	}
 
 	private void onCloudRemoved(DeltaCloud cloud, DeltaCloud[] clouds) {

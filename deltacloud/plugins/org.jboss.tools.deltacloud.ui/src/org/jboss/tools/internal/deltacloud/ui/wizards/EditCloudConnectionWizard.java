@@ -62,7 +62,7 @@ public class EditCloudConnectionWizard extends NewCloudConnectionWizard {
 		};
 		try {
 			WizardUtils.runInWizard(job, getContainer());
-			return job.getResult().getCode() != IStatus.ERROR;
+			return job.getResult() != null && job.getResult().getCode() != IStatus.ERROR;
 		} catch (Exception e) {
 			return false;
 		}
