@@ -98,7 +98,7 @@
 		<section id="StoppingJBoss">
 			<?dbhtml filename="StoppingJBoss.html"?>
 			<title>Stopping JBoss Server</title>
-			<para>To stop the server, click the the <guibutton>Stop</guibutton> button icon in <property>Servers</property> or right click the server name and press <guimenuitem>Stop</guimenuitem>.
+			<para>To stop the server, click the <guibutton>Stop</guibutton> button icon in <property>Servers</property> or right click the server name and press <guimenuitem>Stop</guimenuitem>.
 			</para>
 
 			<figure>

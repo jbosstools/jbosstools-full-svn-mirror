@@ -20,7 +20,7 @@
 		<section id="InstallJDK50onLinux">
 			<title>Installing and Configuring 32-bit Sun JDK 5.0 on Linux</title>
 			<para>To install 32-bit Sun JDK 5.0 on Linux and configure it, you should follow the next steps:</para>
-			<itemizedlist>
+			<itemizedlist>                     
 				<listitem>
 					<para>
 						Download the <ulink url="http://java.sun.com/javase/downloads/index_jdk5.jsp">Sun JDK 5.0 (Java 2 Development Kit)</ulink> from Sun&apos;s website. Choose &quot;JDK 5.0 Update &lt;x&gt;&quot; (where &quot;x&quot; is the latest update number) for download and then select &quot;Red Hat Package Manager in self-extracting&quot; file for Linux. Read the instructions on Sun&apos;s website for installing the JDK.
@@ -251,7 +251,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 		<itemizedlist>
 			<listitem>
 				<para>
-					You can fill the list automatically using the <guibutton>Find</guibutton> button. When the <guibutton>Find</guibutton> button is clicked you are propmpted to select the folder from which to search for available JBoss Application Servers. Click the <guibutton>OK</guibutton> button to select the chosen folder. 
+					You can fill the list automatically using the <guibutton>Find</guibutton> button. When the <guibutton>Find</guibutton> button is clicked you are prompted to select the folder from which to search for available JBoss Application Servers. Click the <guibutton>OK</guibutton> button to select the chosen folder. 
 				</para>
 			</listitem>
 		</itemizedlist>
@@ -567,7 +567,7 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 						<note>
 							<title>Note:</title>
 							<para>
-								Sometimes when a user changes the list of plugins for download and clicks the <guibutton>Next</guibutton> button, after the required dependences have been checked, the list of missing dependencies from the previous attempt is showed. In this case completely closing the <emphasis>Install New Software</emphasis> dialog can help.
+								Sometimes when a user changes the list of plugins for download and clicks the <guibutton>Next</guibutton> button, after the required dependencies have been checked, the list of missing dependencies from the previous attempt is showed. In this case completely closing the <emphasis>Install New Software</emphasis> dialog can help.
 							</para>
 						</note>
 						<para>

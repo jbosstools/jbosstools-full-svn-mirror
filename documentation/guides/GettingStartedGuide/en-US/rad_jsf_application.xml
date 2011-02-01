@@ -731,7 +731,7 @@ public class NumberBean
 					<para>Again select <emphasis><property>Visual</property></emphasis> mode</para>
 				</listitem>
 				<listitem>
-					<para>On the Palette, click on <emphasis><property>commandButton</property>, </emphasis> drag the cursor over tothe editor, and drop it inside the editor after the <code>inputText</code> component.</para>
+					<para>On the Palette, click on <emphasis><property>commandButton</property>, </emphasis> drag the cursor over to the editor, and drop it inside the editor after the <code>inputText</code> component.</para>
 				</listitem>
 				<listitem>
 					<para>In the editing dialog select the <emphasis><property>value</property></emphasis> row and click on the second column</para>
@@ -880,7 +880,7 @@ public class NumberBean
 		<para>Finally, we have all the pieces needed to run the application.</para>
 		<itemizedlist>
 			<listitem>
-				<para>Start up JBoss server by clicking on the the <guibutton>Start</guibutton> icon in the <property>Servers</property> view. (If the JBoss Server is already running, stop it by clicking on the red icon and then start it again. After the messages in the Console tabbed view stop scrolling, JBoss is available)</para>
+				<para>Start up JBoss server by clicking on the <guibutton>Start</guibutton> icon in the <property>Servers</property> view. (If the JBoss Server is already running, stop it by clicking on the red icon and then start it again. After the messages in the Console tabbed view stop scrolling, JBoss is available)</para>
 			</listitem>
 			<listitem>
 				<para>Right-click on the project and select <menuchoice><guimenuitem>Run As</guimenuitem><guimenuitem>Run on Server</guimenuitem></menuchoice></para>

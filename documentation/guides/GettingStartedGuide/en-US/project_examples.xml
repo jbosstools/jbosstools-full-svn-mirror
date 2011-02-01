@@ -161,7 +161,7 @@
             </listitem>            
         </itemizedlist>
         
-        <para>When downloading is finished the project will be imported automatically and you will be able to see it in the the <guilabel>Package Explorer</guilabel> view.</para>
+        <para>When downloading is finished the project will be imported automatically and you will be able to see it in the <guilabel>Package Explorer</guilabel> view.</para>
         
         <para>Now you can run the application on the server.</para>
         

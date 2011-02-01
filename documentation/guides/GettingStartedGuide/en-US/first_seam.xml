@@ -23,7 +23,7 @@
       <para>To start the database just run <filename>./runDBServer.sh</filename> or <filename>runDBServer.bat</filename> from the database directory.</para>
       <para>The end result should be a console window that looks like:</para>
       <figure>
-        <title>Starting DataBase</title>
+        <title>Starting the Database</title>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam1.png"/>
@@ -57,7 +57,7 @@
       <para>The <property>New Seam Project wizard</property> is started. You need to enter a name
         (e.g., &quot;workshop&quot;) and a location for your new project. The wizard has
         an option for selecting the actual Server (and not just WTP runtime) that will be used for
-        the project. This allows the wizard to correctly identify where the desitination folder for the required datasource and
+        the project. This allows the wizard to correctly identify where the destination folder for the required datasource and
         driver libraries.</para>
       <figure>
         <title>New Seam Project Wizard</title>
@@ -228,7 +228,7 @@
       
       <para>Click on <guibutton>Finish</guibutton> button. Now, there should be a new Seam project called “workshop” listed in the Package Explorer view.</para>
       <figure>
-        <title>&quot;worskhop&quot; Project in the Package Explorer</title>
+        <title>&quot;workshop&quot; Project in the Package Explorer</title>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam14.png"/>
@@ -248,7 +248,7 @@
       <para>Then run the project by selecting the project then selecting <menuchoice><guimenuitem>Run As...</guimenuitem><guimenuitem>Run on Server</guimenuitem></menuchoice>.</para>
             
       <figure>
-        <title>&quot;worskhop&quot; Run As</title>
+        <title>&quot;workshop&quot; Run As</title>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam15a.png"/>
@@ -261,7 +261,7 @@
       </para>
       
       <figure>
-        <title>&quot;worskhop&quot; Run On Server</title>
+        <title>&quot;workshop&quot; Run On Server</title>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam15b.png"/>

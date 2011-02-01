@@ -358,7 +358,7 @@
 				<listitem>
 					<para>Click the <guibutton>Run</guibutton> icon or right click your project folder and select <menuchoice><guimenuitem>Run As</guimenuitem><guimenuitem>Run on Server</guimenuitem></menuchoice>. If you
 						haven&apos;t made any changes in the <filename>web.xml</filename> file or cleared it out you can launch the application by right
-						clicking the the <filename>hello.jsp</filename> page and selecting <guimenuitem>Run on the Server</guimenuitem>( 
+						clicking the <filename>hello.jsp</filename> page and selecting <guimenuitem>Run on the Server</guimenuitem>( 
 						<inlinemediaobject>
 							<imageobject>
 								<imagedata fileref="images/jsp_application/jsp_application_16.png"/>
