@@ -26,7 +26,7 @@
             <para>It consists of two pages:</para>
             <itemizedlist>
                 <listitem>
-                	<para>On the page you can adjust the name of the project and the directory where it will be created.</para>
+                	<para>On the first page you can adjust the name of the project and the directory where it will be created.</para>
                   <para>
                   	If "<property>Use default</property>" option is checked the output directory will be the workspace, otherwise the user should specify it by himself using <guibutton>Browse</guibutton> button.
                   </para>
