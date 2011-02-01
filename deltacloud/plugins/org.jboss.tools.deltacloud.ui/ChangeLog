@@ -1,3 +1,13 @@
+2011-02-01  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnectionWizard.java 
+	(performFinish): 
+	(createCloud): 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/EditCloudConnectionWizard.java 
+	(performFinish): 
+	(editCloud): 
+	[JBIDE-8148] moved cloud creation and cloud edit to background jobs
+
 2011-01-31  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CloudConnectionPage.java (createControl): 

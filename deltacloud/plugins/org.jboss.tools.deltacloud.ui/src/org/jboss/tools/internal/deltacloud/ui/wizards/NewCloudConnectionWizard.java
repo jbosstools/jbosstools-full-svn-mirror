@@ -12,10 +12,15 @@ package org.jboss.tools.internal.deltacloud.ui.wizards;
 
 import java.text.MessageFormat;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
+import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudDriver;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
@@ -24,6 +29,7 @@ import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.internal.deltacloud.ui.preferences.IPreferenceKeys;
 import org.jboss.tools.internal.deltacloud.ui.preferences.StringPreferenceValue;
+import org.jboss.tools.internal.deltacloud.ui.utils.WizardUtils;
 
 /**
  * @author Jeff Johnston
@@ -103,24 +109,42 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 
 	@Override
 	public boolean performFinish() {
-		String name = mainPage.getConnectionName();
-		String url = mainPage.getUrl();
+		final String name = mainPage.getConnectionName();
+		final String url = mainPage.getUrl();
 
 		new StringPreferenceValue(IPreferenceKeys.LAST_URL, Activator.PLUGIN_ID)
 				.store(url);
 
-		String username = mainPage.getUsername();
-		String password = mainPage.getPassword();
-		DeltaCloudDriver driver = mainPage.getDriver();
+		final String username = mainPage.getUsername();
+		final String password = mainPage.getPassword();
+		final DeltaCloudDriver driver = mainPage.getDriver();
 
+		return createCloud(name, url, username, password, driver);
+	}
+
+	private boolean createCloud(final String name, final String url, final String username, final String password,
+			final DeltaCloudDriver driver)  {
+		Job job = new Job(MessageFormat.format("Create cloud \"{0}\"", name)) {
+
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				try {
+					DeltaCloud newCloud = new DeltaCloud(name, url, username, password, driver);
+					DeltaCloudManager.getDefault().addCloud(newCloud);
+					return Status.OK_STATUS;
+				} catch (Exception e) {
+					// TODO internationalize strings
+					return StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID,
+							MessageFormat.format("Could not create cloud {0}", name), e);
+				}
+			}
+
+		};
 		try {
-			DeltaCloud newCloud = new DeltaCloud(name, url, username, password, driver);
-			DeltaCloudManager.getDefault().addCloud(newCloud);
+			WizardUtils.runInWizard(job, getContainer());
+			return job.getResult().getCode() != IStatus.ERROR;
 		} catch (Exception e) {
-			// TODO internationalize strings
-			ErrorUtils
-					.handleError("Error", MessageFormat.format("Could not create cloud {0}", name), e, getShell());
+			return false;
 		}
-		return true;
 	}
 }
