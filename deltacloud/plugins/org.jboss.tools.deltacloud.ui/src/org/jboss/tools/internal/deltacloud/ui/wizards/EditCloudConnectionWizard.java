@@ -16,10 +16,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudDriver;
-import org.jboss.tools.deltacloud.ui.Activator;
+import org.jboss.tools.deltacloud.core.job.AbstractCloudJob;
 import org.jboss.tools.internal.deltacloud.ui.utils.WizardUtils;
 
 /**
@@ -41,26 +40,20 @@ public class EditCloudConnectionWizard extends NewCloudConnectionWizard {
 		String username = mainPage.getUsername();
 		String password = mainPage.getPassword();
 		DeltaCloudDriver driver = mainPage.getDriver();
-		return editCloud(name, url, username, password, driver);
+		return editCloud(initialCloud, name, url, username, password, driver);
 	}
 
-	private boolean editCloud(final String name, final String url, final String username, final String password,
-			final DeltaCloudDriver driver)  {
-		Job job = new Job(MessageFormat.format("Create cloud \"{0}\"", name)) {
+	private boolean editCloud(final DeltaCloud cloud, final String name, final String url, final String username,
+			final String password, final DeltaCloudDriver driver) {
+		try {
+			Job job = new AbstractCloudJob(MessageFormat.format("Edit cloud \"{0}\"", cloud), cloud) {
 
-			@Override
-			protected IStatus run(IProgressMonitor monitor) {
-				try {
+				@Override
+				protected IStatus doRun(IProgressMonitor monitor) throws Exception {
 					initialCloud.update(name, url, username, password, driver);
 					return Status.OK_STATUS;
-				} catch (Exception e) {
-					// TODO internationalize strings
-					return StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID,
-							MessageFormat.format("Could not edit create cloud {0}", name), e);
 				}
-			}
-		};
-		try {
+			};
 			WizardUtils.runInWizard(job, getContainer());
 			return job.getResult() != null && job.getResult().getCode() != IStatus.ERROR;
 		} catch (Exception e) {
