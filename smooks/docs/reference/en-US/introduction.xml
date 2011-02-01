@@ -166,14 +166,6 @@
 			</listitem>
 		</itemizedlist>
 		
-		<figure>
-			<title>Smooks Form editor</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/introduction/introduction2.png" scale="90"/>
-				</imageobject>
-			</mediaobject>
-		</figure>
 		<!-- <para>The easiest way to use the Smooks Configuration Editor is to create a project
 			(Java project, an ESB project, etc.), right-click on it and select <property>New -> Other</property>
 			to open the New wizard. Drill into <property>Smooks -> Smooks Configuration File</property>
