@@ -29,23 +29,12 @@ import org.jboss.tools.vpe.xulrunner.XulRunnerException;
 import org.jboss.tools.vpe.xulrunner.browser.XulRunnerBrowser;
 import org.jboss.tools.vpe.xulrunner.util.XPCOM;
 import org.mozilla.interfaces.nsIBaseWindow;
-import org.mozilla.interfaces.nsIClipboardDragDropHookList;
-import org.mozilla.interfaces.nsIComponentManager;
 import org.mozilla.interfaces.nsIDOMDocument;
-import org.mozilla.interfaces.nsIDOMDocumentRange;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
-import org.mozilla.interfaces.nsIDOMRange;
 import org.mozilla.interfaces.nsIDOMWindow;
-import org.mozilla.interfaces.nsIDocShell;
-import org.mozilla.interfaces.nsIDragService;
-import org.mozilla.interfaces.nsIDragSession;
-import org.mozilla.interfaces.nsIInterfaceRequestor;
-import org.mozilla.interfaces.nsISelection;
-import org.mozilla.interfaces.nsIServiceManager;
 import org.mozilla.interfaces.nsISupports;
 import org.mozilla.interfaces.nsITooltipListener;
-import org.mozilla.interfaces.nsITransferable;
 import org.mozilla.xpcom.XPCOMException;
 
 /**
@@ -92,7 +81,6 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	 * xpcom flasher component which used to draw lines
 	 */
 	private Flasher flasher;
-	private nsIDocShell docShell = null;
 
 	/**
 	 * RegExp for find expression 'display : none' in style string
@@ -213,32 +201,6 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 
 	}
 
-	public boolean isMozillaDragFlavor() {
-
-		nsIDragSession dragSession = getCurrentDragSession();
-		if (dragSession != null) {
-			nsITransferable transferable = createTransferable();
-			if (transferable != null) {
-				// transferable.flavorsTransferableCanImport();
-
-				transferable.addDataFlavor(TRANS_FLAVOR_kURLDataMime);
-				transferable.addDataFlavor(TRANS_FLAVOR_kFileMime);
-				transferable.addDataFlavor(TRANS_FLAVOR_kURLMime);
-				transferable.addDataFlavor(TRANS_FLAVOR_kUnicodeMime);
-				dragSession.getData(transferable, 0);
-
-				// transferable.flavorsTransferableCanImport();
-				String[] flavors = new String[] { null };
-				nsISupports[] data = new nsISupports[] { null };
-				long[] length = new long[] { 0 };
-				transferable.getAnyTransferData(flavors, data, length);
-
-				return length[0] > 0;
-			}
-		}
-		return false;
-	}
-
 	public void onElementResize(nsIDOMElement element, int handle, int top,
 			int left, int width, int height) {
 	}
@@ -279,76 +241,9 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 		addResizerListener();
 	}
 
-	public nsIDragSession getCurrentDragSession() {
-		nsIServiceManager serviceManager = getServiceManager();
-		nsIDragService dragService = (nsIDragService) serviceManager
-				.getServiceByContractID(XPCOM.NS_DRAGSERVICE_CONTRACTID,
-						nsIDragService.NS_IDRAGSERVICE_IID);
-
-		return dragService.getCurrentSession();
-	}
-
-	public nsIClipboardDragDropHookList getClipboardDragDropHookList() {
-		nsIDocShell docShell = getDocShell();
-
-		if (docShell != null) {
-			nsIClipboardDragDropHookList hookList = XPCOM.queryInterface(docShell, nsIClipboardDragDropHookList.class);
-			return hookList;
-		}
-		return null;
-	}
-
-	public nsIDocShell getDocShell() {
-		if (docShell == null) {
-			nsIInterfaceRequestor interfaceRequestor = XPCOM.queryInterface(getWebBrowser(), nsIInterfaceRequestor.class);
-			docShell = (nsIDocShell) interfaceRequestor
-					.getInterface(nsIDocShell.NS_IDOCSHELL_IID);
-		}
-
-		return docShell;
-	}
-
 	public nsIDOMDocument getDOMDocument() {
 		nsIDOMWindow domWindow = getWebBrowser().getContentDOMWindow();
 		return domWindow.getDocument();
-	}
-
-	public nsIDOMDocumentRange getDOMDocumentRange() {
-		return XPCOM.queryInterface(getDOMDocument(), nsIDOMDocumentRange.class);
-	}
-
-	public nsIDOMRange createDOMRange() {
-		return getDOMDocumentRange().createRange();
-	}
-
-	public void showDragCaret(nsIDOMNode node, long offcet) {
-		// TODO Sergey Vasilyev figure out with caret
-		System.out
-				.println("Show drag caret for " + node.getNodeName() + ":" + offcet); //$NON-NLS-1$ //$NON-NLS-2$
-	}
-
-	public void hideDragCaret() {
-		// TODO Sergey Vasilyev figure out with caret
-		System.out.println("Hide drag caret"); //$NON-NLS-1$
-	}
-
-	public nsITransferable createTransferable() {
-		nsIComponentManager componentManager = getComponentManager();
-		return (nsITransferable) componentManager.createInstanceByContractID(
-				XPCOM.NS_TRANSFERABLE_CONTRACTID, this,
-				nsITransferable.NS_ITRANSFERABLE_IID);
-	}
-
-	/**
-	 * Returns selection controller which used in selection functionality
-	 * 
-	 * @return
-	 */
-	public nsISelection getSelection() {
-
-		nsIDOMWindow domWindow = getWebBrowser().getContentDOMWindow();
-		nsISelection selection = domWindow.getSelection();
-		return selection;
 	}
 
 	/**
