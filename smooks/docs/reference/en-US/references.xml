@@ -71,6 +71,7 @@
                                 <itemizedlist>
                                     <listitem><para>System</para></listitem>
                                     <listitem><para>Simple</para></listitem>
+                                    <listitem><para>IBus (Inteligent Input Bus)</para></listitem>                                    
                                     <listitem><para>Amharic(EZ+)</para></listitem>
                                     <listitem><para>Cedilla</para></listitem>
                                     <listitem><para>Cyrillic</para></listitem>
@@ -84,6 +85,7 @@
                                     <listitem><para>Tigrigna-Ethiopian(EZ+)</para></listitem>
                                     <listitem><para>Vietnamese</para></listitem>
                                     <listitem><para>X input Method</para></listitem>
+                                    <listitem><para>None</para></listitem>                                    
                                 </itemizedlist>
                             </entry>
                             <entry>System</entry>
