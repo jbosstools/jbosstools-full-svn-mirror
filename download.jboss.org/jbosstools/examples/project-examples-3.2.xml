@@ -1,21 +1,55 @@
-<projects>	
-	<project>
-		<category>Teiid Designer</category>
-		<name>Parts</name>
-		<included-projects>
-		PartsProject
-		</included-projects>		
-		<shortDescription>Parts Model Project Set Example</shortDescription>
-		<description>
-		This is a simple Teiid Designer model project that demonstrates how a view model can be used to create a virtual 
-		relational table that joins multiple physical relational tables. The project also contains a Virtual Database (VDB) which
-		contains the project's models, and in a runtime environment, would also contain the needed connection information for the
-		physical sources. VDBs are used by Teiid to access federated data.
-		</description>
-		<size>22645</size>
-		<url>
-			http://anonsvn.jboss.org/repos/jbosstools/workspace/dflorian/teiid-designer/parts_modelProjectSet.zip
-		</url>
-		<perspectiveId>modelerPerspective</perspectiveId>
-	</project>
+<projects>  
+    <project>
+        <category>Teiid Designer</category>
+        <name>Parts</name>
+        <included-projects>
+        PartsProject
+        </included-projects>        
+        <shortDescription>Parts Model Project Set Example</shortDescription>
+        <description>
+        This is a simple Teiid Designer model project that demonstrates how a view model can be used to create a virtual 
+        relational table that joins multiple physical relational tables. The project also contains a Virtual Database (VDB) which
+        contains the project's models, and in a runtime environment, would also contain the needed connection information for the
+        physical sources. VDBs are used by Teiid to access federated data.
+        </description>
+        <size>22645</size>
+        <url>
+            http://anonsvn.jboss.org/repos/jbosstools/workspace/dflorian/teiid-designer/parts_modelProjectSet.zip
+        </url>
+        <perspectiveId>modelerPerspective</perspectiveId>
+    </project>
+    <project>
+        <category>Teiid Designer</category>
+        <name>Portfolio</name>
+        <included-projects>
+        Portfolio
+        </included-projects>        
+        <shortDescription>Portfolio Web Service Project Set Example</shortDescription>
+        <description>
+        This is a Teiid Designer model project that demonstrates how to expose any Teiid data source as a web service. The example will walk through 
+        the steps of creating the data sources, creating the VDB and generating/deploying the JbossWS-CXF web service war.
+        </description>
+        <size>22645</size>
+        <url>
+            http://anonsvn.jboss.org/repos/jbosstools/workspace/dflorian/teiid-designer/PortfolioWebServiceProject.zip
+        </url>
+        <perspectiveId>modelerPerspective</perspectiveId>
+    </project>
+    <project>
+        <category>Teiid Designer</category>
+        <name>US States</name>
+        <included-projects>
+        US_States,StateService,StateServiceEAR
+        </included-projects>        
+        <shortDescription>US States SOAP Service Project Set Example</shortDescription>
+        <description>
+        This is a Teiid Designer model project that demonstrates how to consume a sample SOAP service as a source of data. The example provides the
+        sample SOAP Service and a Teiid Designer project set that executes the service and transforms the responses to relational results.
+        </description>
+        <size>56033</size>
+        <url>
+            http://anonsvn.jboss.org/repos/jbosstools/workspace/jdoyle/teiid-designer/StateServiceExampleProject.zip
+        </url>
+        <perspectiveId>modelerPerspective</perspectiveId>
+    </project>  
 </projects>
