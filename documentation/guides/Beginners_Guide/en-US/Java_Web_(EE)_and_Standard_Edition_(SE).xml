@@ -562,17 +562,17 @@
 					<itemizedlist>
 						<listitem>
 							<para>
-								the Attributes page, which allows the attributes of the Managed Bean to be viewed edited;
+								the Attributes page, which allows the attributes of the Managed Bean to be viewed and edited.
 							</para>
 						</listitem>
 						<listitem>
 							<para>
-								the Operations page, which allows the operations of the Managed Bean to be viewed and edited;
+								the Operations page, which allows the operations of the Managed Bean to be viewed and edited.
 							</para>
 						</listitem>
 						<listitem>
 							<para>
-								the Notifications page, which allows the Managed Bean to be subscribed to, and which notifications are received;
+								the Notifications page, which allows the Managed Bean to be subscribed to, and which notifications are received.
 							</para>
 						</listitem>
 						<listitem>
