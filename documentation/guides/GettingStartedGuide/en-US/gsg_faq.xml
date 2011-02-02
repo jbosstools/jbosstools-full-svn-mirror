@@ -21,7 +21,7 @@
 
 		<orderedlist>
 			<listitem>
-				<para>On Red Hat based Linux distributions install the xpLib.i386 package</para>
+				<para>On Red Hat based Linux distributions install the libXp.i386 package</para>
 			</listitem>
 			<listitem>
 				<para>Type</para>
@@ -37,14 +37,14 @@
 				<para>Open the JBDS perspective. If you see the Help view open, close it and restart JBDS</para>
 			</listitem>
 			<listitem>
-				<para> If it doesn't help and you use Fedora Core Linux and Eclipse Version: 3.4.1,the issue can be produced because libswt-xulrunner-gtk-3449.so file doesn't present in eclipse-swt-3.4.1-5.fc10.x86_64.rpm/eclipse/plugins/org.eclipse.swt.gtk.linux.x86_64_3.4.1.v3449c.jar. To add this file to eclipse you should: 
+				<para> If it doesn't help and you use Fedora with Eclipse Version: 3.4.1, the issue can be produced because the <filename>libswt-xulrunner-gtk-3449.so</filename> file doesn't present in <filename>eclipse-swt-3.4.1-5.fc10.x86_64.rpm/eclipse/plugins/org.eclipse.swt.gtk.linux.x86_64_3.4.1.v3449c.jar</filename>. To add this file to eclipse you should: 
             </para>
 				<itemizedlist>
 					<listitem>
-						<para>Decompress eclipse/plugins/org.eclipse.swt.gtk.linux.x86_3.4.1.v3449c.jar form eclipse-SDK-3.4.1-linux-gtk-x86_64.tar.gz</para>
+						<para>Decompress <filename>eclipse/plugins/org.eclipse.swt.gtk.linux.x86_3.4.1.v3449c.jar</filename> form <filename>eclipse-SDK-3.4.1-linux-gtk-x86_64.tar.gz</filename></para>
 					</listitem>
 					<listitem>
-						<para>Copy <property>libswt-xulrunner-gtk-3449.so</property> file to your Fedora Eclipse location.</para>
+						<para>Copy <filename>libswt-xulrunner-gtk-3449.so</filename> file to your Fedora Eclipse location.</para>
 					</listitem>
 
 					<listitem>
@@ -123,9 +123,9 @@ If you are sure that your project does not need JSF capabilities, just disable t
 	</section>
 
 	<section id="question_3">
-		<title>I have an existing Seam 1.2.1 project. Can I migrate/import the project to a JBDS Seam project?</title>
+		<title>I have an existing Seam 1.2.1 project. Can I migrate or import the project into a JBDS Seam project?</title>
 
-		<para>We highly recommend you to create Seam 1.2.1 project using the <property>JBDS</property>. In other case try to do manually:</para>
+		<para>Use the following steps to manually transfer an existing Seam 1.2.1 project into a new JBDS Seam project:</para>
 
 		<itemizedlist>
 			<listitem>
@@ -156,7 +156,7 @@ If you are sure that your project does not need JSF capabilities, just disable t
 	</section>
 
 	<section id="question_5">
-		<title>Can I import a .war file?</title>
+		<title>Can I import a WAR file?</title>
 
 		<para>Yes. Select <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>Import</guimenuitem><guimenuitem>Web</guimenuitem><guimenuitem>WAR file</guimenuitem></menuchoice> then follow importing steps.</para>
 	</section>
@@ -195,7 +195,7 @@ If you are sure that your project does not need JSF capabilities, just disable t
 			</listitem>
 
 			<listitem>
-				<para>Point to the<filename>build.xml</filename> file of any chosen project by clicking the <guibutton>Browse</guibutton> button</para>
+				<para>Point to the <filename>build.xml</filename> file of any chosen project by clicking the <guibutton>Browse</guibutton> button</para>
 			</listitem>
 
 			<listitem>
