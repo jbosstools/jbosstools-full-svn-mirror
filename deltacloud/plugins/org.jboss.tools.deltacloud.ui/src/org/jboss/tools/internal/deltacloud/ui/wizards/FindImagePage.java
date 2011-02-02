@@ -33,7 +33,9 @@ import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
@@ -51,6 +53,7 @@ import org.jboss.tools.deltacloud.ui.views.Columns;
 import org.jboss.tools.deltacloud.ui.views.Columns.Column;
 import org.jboss.tools.deltacloud.ui.views.cloudelements.ITableContentAndLabelProvider;
 import org.jboss.tools.deltacloud.ui.views.cloudelements.TableViewerColumnComparator;
+import org.jboss.tools.internal.deltacloud.ui.utils.WizardUtils;
 
 /**
  * @author Jeff Johnston
@@ -226,7 +229,8 @@ public class FindImagePage extends WizardPage {
 		viewer.setComparator(comparator);
 		createColumns(provider, tableLayout, table);
 		table.setSortDirection(SWT.NONE);
-
+		viewer.getTable().addListener(SWT.MouseDoubleClick, onImageDoubleclick());
+		
 		Point p1 = nameLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		Point p2 = nameText.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		int centering = (p2.y - p1.y + 1) / 2;
@@ -350,4 +354,15 @@ public class FindImagePage extends WizardPage {
 			}
 		});
 	}
+
+	private Listener onImageDoubleclick() {
+		return new Listener() {
+
+			@Override
+			public void handleEvent(Event event) {
+				WizardUtils.nextPageOrFinish(FindImagePage.this);
+			}
+		};
+	}
+
 }
