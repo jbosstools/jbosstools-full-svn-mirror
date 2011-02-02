@@ -160,13 +160,13 @@ public class TextFormattingToolBar extends SplitToolBar {
 
 //		itemDescriptors.add(new ToolItemDescriptor(sep, false, null, true));
 
-		item = createToolItem(toolBar, SWT.CHECK,
+		item = createToolItem(toolBar, SWT.PUSH,
 				createImage("icons/background.gif"), VpeUIMessages.BACKGROUND_COLOR); //$NON-NLS-1$
 		listener = new BackgroundColorFormatController(formatControllerManager, item);
 		item.addListener(SWT.Selection, listener);
 //		itemDescriptors.add(new ToolItemDescriptor(item, true, listener, true));
 
-		item = createToolItem(toolBar, SWT.CHECK,
+		item = createToolItem(toolBar, SWT.PUSH,
 				createImage("icons/foreground.gif"), VpeUIMessages.FOREGROUND_COLOR); //$NON-NLS-1$
 		listener = new ForegroundColorFormatController(formatControllerManager, item);
 		item.addListener(SWT.Selection, listener);
@@ -176,7 +176,7 @@ public class TextFormattingToolBar extends SplitToolBar {
 		 * Fixes https://issues.jboss.org/browse/JBIDE-8220
 		 * CSSStyleDialog should be on the Formatting toolbar.
 		 */
-		item = createToolItem(toolBar, SWT.CHECK, 
+		item = createToolItem(toolBar, SWT.PUSH, 
 				CSSPlugin.getImageDescriptor(Util.IMAGE_COLORLARGE_FILE_LOCATION).createImage(), 
 				VpeUIMessages.EDIT_STYLE_ATTRIBUTE);
 		listener = new StyleFormatController(formatControllerManager, item);
