@@ -46,7 +46,7 @@ public class EditCloudConnectionWizard extends NewCloudConnectionWizard {
 	private boolean editCloud(final DeltaCloud cloud, final String name, final String url, final String username,
 			final String password, final DeltaCloudDriver driver) {
 		try {
-			Job job = new AbstractCloudJob(MessageFormat.format("Edit cloud \"{0}\"", cloud), cloud) {
+			Job job = new AbstractCloudJob(MessageFormat.format("Edit cloud \"{0}\"", cloud.getName()), cloud) {
 
 				@Override
 				protected IStatus doRun(IProgressMonitor monitor) throws Exception {
