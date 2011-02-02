@@ -15,6 +15,7 @@ import java.text.MessageFormat;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.Job;
@@ -119,6 +120,9 @@ public class RSEUtils {
 				status = connect(service, monitor);
 				monitor.done();
 				return status;
+			} catch(OperationCanceledException oce) {
+				monitor.done();
+				return Status.CANCEL_STATUS;
 			} catch(Exception e) {
 				count += 1000;
 				monitor.worked(1000);
