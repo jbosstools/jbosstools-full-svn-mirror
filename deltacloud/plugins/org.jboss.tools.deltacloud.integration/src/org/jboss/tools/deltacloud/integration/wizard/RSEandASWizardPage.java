@@ -44,6 +44,9 @@ import org.osgi.service.prefs.BackingStoreException;
  * @author Rob Stryker
  */
 public class RSEandASWizardPage extends WizardPage implements INewInstanceWizardPage {
+	private static final boolean DEFALUT_CREATE_RSE = true;
+	private static final boolean DETAULT_CREATE_SERVERADAPTER = false;
+	
 	private final static String CREATE_RSE_PREF_KEY = "org.jboss.tools.deltacloud.integration.wizard.RSEandASWizard.CREATE_RSE_PREF_KEY";
 	private final static String CREATE_SERVER_PREF_KEY = "org.jboss.tools.deltacloud.integration.wizard.RSEandASWizard.CREATE_SERVER_PREF_KEY";
 
@@ -164,8 +167,8 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 		
 		IEclipsePreferences prefs = new InstanceScope().getNode(DeltaCloudIntegrationPlugin.PLUGIN_ID);
 		boolean initRSE, initServer;
-		initRSE = prefs.getBoolean(CREATE_RSE_PREF_KEY, true);
-		initServer = prefs.getBoolean(CREATE_SERVER_PREF_KEY, true);
+		initRSE = prefs.getBoolean(CREATE_RSE_PREF_KEY, DEFALUT_CREATE_RSE);
+		initServer = prefs.getBoolean(CREATE_SERVER_PREF_KEY, DETAULT_CREATE_SERVERADAPTER);
 		createRSE.setSelection(initRSE);
 		createServer.setSelection(initServer);
 		if( initialHost != null ) {
