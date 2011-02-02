@@ -119,7 +119,7 @@ public class MozillaPreview extends MozillaEditor {
 	//TODO Max Areshkau logic error (we should first call buildDom and only then we can call rebuildDom)
 	public void buildDom() {
 		BundleMap bundle = new BundleMap();
-		bundle.init(getSourceEditor());
+		bundle.init(getSourceEditor().getEditorInput());
 		//Fix for https://jira.jboss.org/jira/browse/JBIDE-5639 - mareshkau
 		// in preview should be closer to view in browser. So all
 		// bundles should be showed as messages, no as el.
