@@ -188,7 +188,7 @@ public class NewInstancePage extends WizardPage {
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(imageLabel);
 		this.imageText = new Text(container, SWT.BORDER | SWT.SINGLE);
 		ContentProposalFactory.addPreferencesProposalAdapter(imageText, IMAGE_PROPOSAL_KEY);
-		GridDataFactory.fillDefaults().grab(true, false).applyTo(imageText);
+		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.CENTER).applyTo(imageText);
 		Button findImageButton = new Button(container, SWT.NULL);
 		findImageButton.setText(WizardMessages.getString(FIND_BUTTON_LABEL));
 		findImageButton.addSelectionListener(findImageButtonListener);
