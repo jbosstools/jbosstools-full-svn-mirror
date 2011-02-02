@@ -1,3 +1,8 @@
+2011-02-02  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java (createWidgets): 
+	[JBIDE-8309] fixed layout for image text field
+
 2011-01-17  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/InstanceViewLabelAndContentProvider.java: 
