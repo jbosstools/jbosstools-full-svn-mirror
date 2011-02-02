@@ -1,3 +1,8 @@
+2011-02-02  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/deltacloud/integration/wizard/RSEandASWizardPage.java (createControl): 
+	[JBIDE-8299] corrected creation style to fix mac os bug
+
 2011-02-01  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/deltacloud/integration/wizard/RSEandASWizardPage.java 

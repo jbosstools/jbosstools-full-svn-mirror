@@ -113,7 +113,7 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 			public void widgetDefaultSelected(SelectionEvent e) {
 			}
 		});
-		autoLocalRuntimeCombo = new Combo(g, SWT.NONE);
+		autoLocalRuntimeCombo = new Combo(g, SWT.READ_ONLY);
 		autoLocalRuntimeCombo.setLayoutData(UIUtils.createFormData(remoteDetailsLoc, 5, null, 0, autoLocalRuntimeLabel, 5, autoAddLocalRuntimeButton, -5));
 		
 		
@@ -149,7 +149,7 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 			public void widgetDefaultSelected(SelectionEvent e) {
 			}
 		});
-		localRuntimeCombo = new Combo(g, SWT.NONE);
+		localRuntimeCombo = new Combo(g, SWT.READ_ONLY);
 		localRuntimeCombo.setLayoutData(UIUtils.createFormData(serverConfigText, 5, null, 0, serverHome, 5, addLocalRuntimeButton, -5));
 		
 		
