@@ -31,12 +31,13 @@ public class StyleFormatController extends AttributeFormatController {
 	public static final String TYPE = "StyleFormat"; //$NON-NLS-1$
 	
 	protected ToolItem toolItem;
-	private String styleString = null;
+	private String styleString;
 	
 	public StyleFormatController(FormatControllerManager manager, ToolItem toolItem) {
 		super(manager);
 		this.toolItem = toolItem;
 		setToolbarItemEnabled(false);
+		styleString = null;
 	}
 
 	@Override
@@ -51,6 +52,10 @@ public class StyleFormatController extends AttributeFormatController {
 
 	@Override
 	public void handleEvent(Event event) {
+		/*
+		 * Reset values from previous execution
+		 */
+		styleString = null;
 		String baseStyle = ""; //$NON-NLS-1$
 		Node node = manager.getCurrentSelectedNode();
 		/*
