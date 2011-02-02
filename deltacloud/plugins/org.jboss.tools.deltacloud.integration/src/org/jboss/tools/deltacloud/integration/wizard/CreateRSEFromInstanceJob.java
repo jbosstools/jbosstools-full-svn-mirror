@@ -63,7 +63,7 @@ public class CreateRSEFromInstanceJob extends AbstractInstanceJob {
 				
 				SubProgressMonitor submon = new SubProgressMonitor(monitor, 90);
 				initialConnect(host);
-				RSEUtils.connect(RSEUtils.getConnectorService(host), 90000, submon);
+				return RSEUtils.connect(RSEUtils.getConnectorService(host), 90000, submon);
 			} catch (Exception e) {
 				return ErrorUtils.handleError(Messages.ERROR,
 						NLS.bind(Messages.COULD_NOT_LAUNCH_RSE_EXPLORER2, instance.getName()),
