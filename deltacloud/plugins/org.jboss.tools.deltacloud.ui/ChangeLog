@@ -1,8 +1,9 @@
 2011-02-03  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/deltacloud/ui/views/DeltaCloudInstanceColumns.java (DeltaCloudInstanceColumns): 
-	[JBIDE-8319] added columns imageId, ownerId, key, realm and profile to instance view 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/WizardMessages.properties: 
+	[JBIDE-8319] added columns imageId, ownerId, key, realm and profile to instance view. 
+	Made that labels in filter dialog match the column names. 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/InstanceFilterPage.java: 
 	[JBIDE-8187] added capability to filter for instance alias
 
