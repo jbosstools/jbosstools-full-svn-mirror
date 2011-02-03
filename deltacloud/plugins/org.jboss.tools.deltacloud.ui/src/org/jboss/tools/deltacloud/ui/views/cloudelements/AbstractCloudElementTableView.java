@@ -46,6 +46,7 @@ import org.eclipse.ui.part.ViewPart;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
+import org.jboss.tools.deltacloud.core.ICloudElementFilter;
 import org.jboss.tools.deltacloud.core.IDeltaCloudElement;
 import org.jboss.tools.deltacloud.core.IDeltaCloudManagerListener;
 import org.jboss.tools.deltacloud.core.IInstanceFilter;
@@ -77,10 +78,12 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 
 	private Combo currentCloudSelector;
 	private Label currentCloudSelectorLabel;
+	private Label filteredLabel;
+	private Composite container;
 	private TableViewer viewer;
 	private DeltaCloud currentCloud;
+
 	private StringPreferenceValue lastSelectedCloudPref;
-	private Composite container;
 
 	private ModifyListener currentCloudModifyListener = new ModifyListener() {
 
@@ -101,6 +104,7 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 
 					@Override
 					public void run() {
+						updateFilteredLabel();
 						setViewerInput(currentCloud);
 					}
 				});
@@ -173,9 +177,10 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 		createCloudSelector(container);
 		initCloudSelector(lastSelectedCloudPref.get(), currentCloudSelector, clouds);
 
-		Label filterLabel = new Label(container, SWT.NULL);
-		filterLabel.setText(CVMessages.getString(FILTERED_LABEL));
-		filterLabel.setToolTipText(CVMessages.getString(FILTERED_TOOLTIP));
+		this.filteredLabel = new Label(container, SWT.NULL);
+		filteredLabel.setText(CVMessages.getString(FILTERED_LABEL));
+		filteredLabel.setToolTipText(CVMessages.getString(FILTERED_TOOLTIP));
+		updateFilteredLabel();
 
 		Composite tableArea = new Composite(container, SWT.NULL);
 		viewer = createTableViewer(tableArea);
@@ -183,7 +188,7 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 		currentCloud = getCloud(currentCloudSelector.getSelectionIndex(), clouds);
 		addPropertyChangeListener(currentCloud);
 		setViewerInput(currentCloud);
-		setFilterLabelVisible(currentCloud, filterLabel);
+		setFilterLabelVisible(currentCloud, filteredLabel);
 
 		Point p1 = currentCloudSelectorLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		Point p2 = currentCloudSelector.computeSize(SWT.DEFAULT, SWT.DEFAULT);
@@ -202,7 +207,7 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 		f = new FormData();
 		f.top = new FormAttachment(0, 5 + centering);
 		f.right = new FormAttachment(100, -10);
-		filterLabel.setLayoutData(f);
+		filteredLabel.setLayoutData(f);
 
 		f = new FormData();
 		f.top = new FormAttachment(currentCloudSelector, 8);
@@ -210,7 +215,7 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 		f.right = new FormAttachment(100, 0);
 		f.bottom = new FormAttachment(100, 0);
 		tableArea.setLayoutData(f);
-		
+
 		// Create the help context id for the viewer's control
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(viewer.getControl(), "org.jboss.tools.deltacloud.ui.viewer");
 		hookContextMenu(viewer.getControl());
@@ -458,4 +463,21 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 			return super.getAdapter(adapter);
 		}
 	}
+
+	protected void updateFilteredLabel() {
+		filteredLabel.getDisplay().syncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				boolean visible = false;
+				if (currentCloud != null) {
+					ICloudElementFilter<CLOUDELEMENT> filter = getFilter(currentCloud);
+					visible = filter.isFiltering();
+				}
+				filteredLabel.setVisible(visible);
+			}
+		});
+	}
+
+	protected abstract ICloudElementFilter<CLOUDELEMENT> getFilter(DeltaCloud cloud);
 }

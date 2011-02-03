@@ -116,8 +116,8 @@ public abstract class AbstractCloudElementFilter<CLOUDELEMENT extends IDeltaClou
 	}
 
 	public boolean isFiltering() {
-		return idRule.isMatchesAll()
-		&& nameRule.isMatchesAll();
+		return !idRule.isMatchesAll()
+		|| !nameRule.isMatchesAll();
 	}
 
 }

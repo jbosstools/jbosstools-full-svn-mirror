@@ -34,4 +34,6 @@ public interface ICloudElementFilter<CLOUDELEMENT extends IDeltaCloudElement> {
 	public IFieldMatcher getNameRule();
 
 	public IFieldMatcher getIdRule();
+
+	public boolean isFiltering();
 }
