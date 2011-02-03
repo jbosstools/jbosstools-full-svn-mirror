@@ -23,6 +23,7 @@ import org.jboss.tools.common.el.core.ELReferenceList;
 import org.jboss.tools.common.el.core.GlobalELReferenceList;
 import org.jboss.tools.common.resref.core.ResourceReference;
 import org.jboss.tools.jst.jsp.bundle.BundleMap;
+import org.jboss.tools.jst.jsp.bundle.BundleMapUtil;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.w3c.dom.Attr;
 import org.w3c.dom.NamedNodeMap;
@@ -184,7 +185,7 @@ public final class ElService implements IELService {
         final IFile file = (IFile) pageContext.getVisualBuilder().getCurrentIncludeInfo().getStorage();
 
         if (((this.isAvailable(file) && this.isAvailableForNode(sourceNode, file))) 
-        		|| isInResourcesBundle(pageContext, sourceNode)){
+        		|| BundleMapUtil.isInResourcesBundle(pageContext.getBundle(), sourceNode)){
             rst = true;
         }else if(Jsf2ResourceUtil.isContainJSFContextPath(sourceNode)){
         	rst = true;
@@ -230,66 +231,6 @@ public final class ElService implements IELService {
     	}
 		return false;
     }
-    /**
-     *
-     * @param pageContext
-     * @param sourceNode
-     * @return
-     */
-    public boolean isInResourcesBundle(VpePageContext pageContext, Node sourceNode) {
-        boolean rst = findInResourcesBundle(pageContext, sourceNode);
-        return rst;
-    }
-
-
-    /**
-     * @param pageContext
-     * @param sourceNode
-     * @return
-     */
-    private boolean findInResourcesBundle(VpePageContext pageContext, Node sourceNode) {
-        boolean rst = false;
-
-        BundleMap bundleMap = pageContext.getBundle();
-        if (bundleMap != null) {
-            String textValue = null;
-
-            if (sourceNode.getNodeType() == Node.TEXT_NODE) {
-                textValue = sourceNode.getNodeValue();
-
-                if ((textValue != null) && TextUtil.isContainsEl(textValue)) {
-                    final String newValue = bundleMap.getBundleValue(textValue);
-
-                    if (!textValue.equals(newValue)) {
-                        rst = true;
-                    }
-                }
-            }
-
-            if (!rst) {
-                final NamedNodeMap nodeMap = sourceNode.getAttributes();
-
-                if (nodeMap != null && nodeMap.getLength() > 0) {
-                    for (int i = 0; i < nodeMap.getLength(); i++) {
-                        final Attr attr = (Attr) nodeMap.item(i);
-                        final String value = attr.getValue();
-
-                        if (value != null && TextUtil.isContainsEl(value)) {
-                            final String value2 = bundleMap.getBundleValue(value);
-
-                            if (!value2.equals(value)) {
-                                rst = true;
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return rst;
-    }
-
-
 
     /**
      * Checks if is available for node.

@@ -13,6 +13,7 @@ package org.jboss.tools.vpe.editor.util;
 
 
 import org.eclipse.core.resources.IFile;
+import org.jboss.tools.jst.jsp.bundle.BundleMap;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.w3c.dom.Node;
 
@@ -67,16 +68,5 @@ public interface IELService {
      * @return true, if is cloneable node
      */
     public boolean isELNode(VpePageContext pageContext, Node sourceNode);
-
-
-    /**
-     * Checks if is in resources bundle.
-     *
-     * @param sourceNode the source node
-     * @param pageContext the page context
-     *
-     * @return true, if is in resources bundle
-     */
-    boolean isInResourcesBundle(VpePageContext pageContext, Node sourceNode);
 
 }
