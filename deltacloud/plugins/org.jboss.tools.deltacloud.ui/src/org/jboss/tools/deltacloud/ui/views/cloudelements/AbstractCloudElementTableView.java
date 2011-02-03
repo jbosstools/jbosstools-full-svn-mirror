@@ -210,7 +210,7 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 		f.right = new FormAttachment(100, 0);
 		f.bottom = new FormAttachment(100, 0);
 		tableArea.setLayoutData(f);
-
+		
 		// Create the help context id for the viewer's control
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(viewer.getControl(), "org.jboss.tools.deltacloud.ui.viewer");
 		hookContextMenu(viewer.getControl());
@@ -223,20 +223,17 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 	private TableViewer createTableViewer(Composite tableArea) {
 		TableColumnLayout tableLayout = new TableColumnLayout();
 		tableArea.setLayout(tableLayout);
-
-		TableViewer viewer = new TableViewer(tableArea,
-				SWT.FULL_SELECTION | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER | SWT.MULTI);
+		TableViewer viewer = new TableViewer(
+				tableArea, SWT.FULL_SELECTION | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER | SWT.MULTI);
 		Table table = viewer.getTable();
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
 		ITableContentAndLabelProvider<CLOUDELEMENT> provider = getContentAndLabelProvider();
 		viewer.setContentProvider(provider);
 		viewer.setLabelProvider(provider);
-		createColumns(provider, tableLayout, table);
-
+		createColumns(provider.getColumns(), tableLayout, table);
 		viewer.setComparator(new TableViewerColumnComparator());
 		table.setSortDirection(SWT.NONE);
-
 		return viewer;
 	}
 
@@ -306,18 +303,15 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 		return clouds[cloudIndex];
 	}
 
-	private void createColumns(ITableContentAndLabelProvider<CLOUDELEMENT> provider, TableColumnLayout tableLayout,
-			Table table) {
-		Columns<CLOUDELEMENT> columns = provider.getColumns();
-
+	private void createColumns(Columns<CLOUDELEMENT> columns, TableColumnLayout tableLayout, Table table) {
 		for (int i = 0; i < columns.getSize(); ++i) {
 			Column<CLOUDELEMENT> c = columns.getColumn(i);
 			TableColumn tc = new TableColumn(table, SWT.NONE);
 			if (i == 0) {
 				table.setSortColumn(tc);
 			}
-			tc.setText(c.getName());
 			tableLayout.setColumnData(tc, new ColumnWeightData(c.getWeight(), true));
+			tc.setText(c.getName());
 			tc.addSelectionListener(new ColumnListener(i));
 		}
 	}
