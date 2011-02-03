@@ -100,7 +100,7 @@ public class SecurePasswordStore {
 		if (password == null) {
 			return null;
 		}
-		return EncodingUtils.encodeBase64(password.getBytes());
+		return new String(EncodingUtils.decodeBase64(password));
 	}
 
 	private void storeInPreferences(String password, IStorageKey key) throws DeltaCloudException {

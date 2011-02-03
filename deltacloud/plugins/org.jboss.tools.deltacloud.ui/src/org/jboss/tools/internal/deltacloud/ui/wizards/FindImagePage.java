@@ -39,7 +39,6 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
-import org.jboss.tools.deltacloud.core.AllImageFilter;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
@@ -120,7 +119,7 @@ public class FindImagePage extends WizardPage {
 	public FindImagePage(DeltaCloud cloud) {
 		super(WizardMessages.getString(NAME));
 		this.cloud = cloud;
-		filter = new AllImageFilter(cloud);
+		filter = new ImageFilter(cloud);
 		setDescription(WizardMessages.getString(DESC));
 		setTitle(WizardMessages.getString(TITLE));
 		setImageDescriptor(SWTImagesFactory.DESC_DELTA_LARGE);
@@ -158,8 +157,7 @@ public class FindImagePage extends WizardPage {
 					+ desc + "*"; //$NON-NLS-1$
 
 			if (!newRules.equals(oldRules)) {
-				filter = new ImageFilter(cloud);
-				filter.setRules(newRules);
+				filter = new ImageFilter(newRules, cloud);
 				oldRules = newRules;
 				asyncSetImagesToViewer(filter);
 			}

@@ -18,12 +18,12 @@ import java.util.regex.PatternSyntaxException;
  * @author Jeff Johnston
  * @author André Dietisheim
  */
-public class FieldMatcher implements IFieldMatcher {
+public class StringMatcher implements IFieldMatcher {
 
 	private String rule;
 	private Pattern pattern;
 
-	public FieldMatcher(String rule) throws PatternSyntaxException {
+	public StringMatcher(String rule) throws PatternSyntaxException {
 		this.rule = rule;
 		String regexRule = transform(rule);
 		pattern = Pattern.compile(regexRule, Pattern.CASE_INSENSITIVE);
@@ -47,6 +47,9 @@ public class FieldMatcher implements IFieldMatcher {
 
 	@Override
 	public boolean matches(String input) {
+		if (input == null) {
+			return false;
+		}
 		Matcher m = pattern.matcher(input);
 		return m.matches();
 	}

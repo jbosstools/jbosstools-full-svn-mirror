@@ -11,7 +11,6 @@
 package org.jboss.tools.deltacloud.core;
 
 import java.util.Iterator;
-import java.util.regex.PatternSyntaxException;
 
 /**
  * A filter that may be applied on DeltaCloudImages
@@ -24,39 +23,57 @@ import java.util.regex.PatternSyntaxException;
 public class ImageFilter extends AbstractCloudElementFilter<DeltaCloudImage> implements IImageFilter {
 
 	private IFieldMatcher archRule;
+	private IFieldMatcher descRule;
 
 	public ImageFilter(DeltaCloud cloud) {
-		super(cloud);
+		super(new AllMatcher(), new AllMatcher(), cloud);
+		setRules(new AllMatcher(), new AllMatcher());
 	}
 
-	private IFieldMatcher descRule;
-	
+	public ImageFilter(String rules, DeltaCloud cloud) {
+		super(cloud);
+		setRules(rules);
+	}
+
+	public ImageFilter(String nameRule, String idRule, String archRule, String descRule, DeltaCloud cloud) {
+		super(nameRule, idRule, cloud);
+		setRules(archRule, descRule);
+	}
+
+	@Override
+	protected Iterator<String> setRules(String rules) {
+		Iterator<String> rulesIterator = super.setRules(rules);
+		setRules(createRule(rulesIterator), createRule(rulesIterator));
+		return rulesIterator;
+	}
+
+	private void setRules(String archRule, String descRule) {
+		setRules(createRule(archRule), createRule(descRule));
+	}
+
+	private void setRules(IFieldMatcher archMatcher, IFieldMatcher descMatcher) {
+		this.archRule = archMatcher;
+		this.descRule = descMatcher;
+	}
+
 	@Override
 	public boolean matches(DeltaCloudImage image) {
 		return super.matches(image) &&
-		archRule.matches(image.getArchitecture()) &&
-		descRule.matches(image.getDescription());
+				archRule.matches(image.getArchitecture()) &&
+				descRule.matches(image.getDescription());
 	}
 
 	@Override
-	public void setRules(String ruleString) throws PatternSyntaxException {
-		// TODO: replace filter passing (;-delimited string) by list
-		Iterator<String> rulesIterator = super.setRules(ruleString, getRulesIterator(ruleString));		
-		this.archRule = createRule(rulesIterator);
-		this.descRule = createRule(rulesIterator);
-	}
-	
-	@Override
 	public String toString() {
-		return super.toString()  //$NON-NLS-1$
-		+ archRule + ";"  //$NON-NLS-1$
-		+ descRule; //$NON-NLS-1$
+		return super.toString() //$NON-NLS-1$
+				+ archRule + EXPRESSION_DELIMITER //$NON-NLS-1$
+				+ descRule; //$NON-NLS-1$
 	}
-	
+
 	public IFieldMatcher getArchRule() {
 		return archRule;
 	}
-	
+
 	public IFieldMatcher getDescRule() {
 		return descRule;
 	}

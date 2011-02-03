@@ -44,11 +44,7 @@ public class ImageFilterWizard extends AbstractDeltaCloudWizard {
 		String descRule = mainPage.getDescRule();
 
 		try {
-			getDeltaCloud().updateImageFilter(
-					nameRule + ";" + //$NON-NLS-1$
-					idRule + ";" + //$NON-NLS-1$
-					archRule + ";" + //$NON-NLS-1$
-					descRule);
+			getDeltaCloud().updateImageFilter(nameRule, idRule, archRule, descRule);
 		} catch (Exception e) {
 			// TODO: internationalize strings
 			ErrorUtils.handleError(

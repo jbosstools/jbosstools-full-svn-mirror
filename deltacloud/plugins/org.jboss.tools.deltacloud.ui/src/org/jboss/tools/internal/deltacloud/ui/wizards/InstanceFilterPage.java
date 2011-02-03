@@ -10,21 +10,23 @@
  ******************************************************************************/
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
+import org.eclipse.core.runtime.Assert;
+import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.FormAttachment;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
+import org.jboss.tools.deltacloud.core.ICloudElementFilter;
+import org.jboss.tools.deltacloud.core.IFieldMatcher;
+import org.jboss.tools.deltacloud.core.IInstanceFilter;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 
 /**
@@ -40,30 +42,33 @@ public class InstanceFilterPage extends WizardPage {
 	private final static String INVALID_SEMICOLON = "ErrorFilterSemicolon.msg"; //$NON-NLS-1$
 	private final static String NAME_LABEL = "Name.label"; //$NON-NLS-1$
 	private final static String ID_LABEL = "Id.label"; //$NON-NLS-1$
+	private final static String ALIAS_LABEL = "Alias.label"; //$NON-NLS-1$
 	private final static String OWNER_ID_LABEL = "OwnerId.label"; //$NON-NLS-1$
 	private final static String IMAGE_ID_LABEL = "ImageId.label"; //$NON-NLS-1$
 	private final static String KEYNAME_LABEL = "Key.label"; //$NON-NLS-1$
 	private final static String REALM_LABEL = "Realm.label"; //$NON-NLS-1$
 	private final static String PROFILE_LABEL = "Profile.label"; //$NON-NLS-1$
 	private final static String DEFAULT_LABEL = "DefaultButton.label"; //$NON-NLS-1$
-	
+
 	private DeltaCloud cloud;
 	private Text nameText;
 	private Text idText;
+	private Text aliasText;
 	private Text imageIdText;
 	private Text ownerIdText;
-	private Text keyNameText;
+	private Text keyIdText;
 	private Text realmText;
 	private Text profileText;
-	
+
 	private Button defaultName;
 	private Button defaultId;
+	private Button defaultAlias;
 	private Button defaultImageId;
 	private Button defaultOwnerId;
 	private Button defaultKeyId;
 	private Button defaultRealm;
 	private Button defaultProfile;
-	
+
 	public InstanceFilterPage(DeltaCloud cloud) {
 		super(WizardMessages.getString(NAME));
 		this.cloud = cloud;
@@ -72,35 +77,39 @@ public class InstanceFilterPage extends WizardPage {
 		setImageDescriptor(SWTImagesFactory.DESC_DELTA_LARGE);
 		setPageComplete(false);
 	}
-	
+
 	public String getNameRule() {
 		return nameText.getText();
 	}
-	
+
 	public String getIdRule() {
 		return idText.getText();
 	}
-	
+
+	public String getAliasRule() {
+		return aliasText.getText();
+	}
+
 	public String getImageIdRule() {
 		return imageIdText.getText();
 	}
-	
+
 	public String getOwnerIdRule() {
 		return ownerIdText.getText();
 	}
-	
+
 	public String getKeyNameRule() {
-		return keyNameText.getText();
+		return keyIdText.getText();
 	}
-	
+
 	public String getRealmRule() {
 		return realmText.getText();
 	}
-	
+
 	public String getProfileRule() {
 		return profileText.getText();
 	}
-	
+
 	private ModifyListener Listener = new ModifyListener() {
 
 		@Override
@@ -109,54 +118,74 @@ public class InstanceFilterPage extends WizardPage {
 			validate();
 		}
 	};
-	
-	private SelectionAdapter ButtonListener = new SelectionAdapter() {
+
+	private SelectionAdapter buttonListener = new SelectionAdapter() {
 		@Override
 		public void widgetSelected(SelectionEvent e) {
-			Button b = (Button)e.widget;
-			if (b == defaultName)
-				nameText.setText("*"); //$NON-NLS-1$
-			else if (b == defaultId)
-				idText.setText("*"); //$NON-NLS-1$
-			else if (b == defaultImageId)
-				imageIdText.setText("*"); //$NON-NLS-1$
-			else if (b == defaultOwnerId)
-				ownerIdText.setText("*"); //$NON-NLS-1$
-			else if (b == defaultKeyId)
-				keyNameText.setText("*"); //$NON-NLS-1$
-			else if (b == defaultRealm)
-				realmText.setText("*"); //$NON-NLS-1$
-			else if (b == defaultProfile)
-				profileText.setText("*"); //$NON-NLS-1$			
+			Button b = (Button) e.widget;
+			Text text = getTextWidget(b);
+			if (text != null) {
+				text.setText(ICloudElementFilter.ALL_MATCHER_EXPRESSION);
+			}
 		}
-	
+
+		private Text getTextWidget(Button button) {
+			Text text = null;
+			if (button == defaultName) {
+				text = nameText;
+			}
+			else if (button == defaultId) {
+				text = idText;
+			}
+			else if (button == defaultAlias) {
+				text = aliasText;
+			}
+			else if (button == defaultImageId) {
+				text = imageIdText;
+			}
+			else if (button == defaultOwnerId) {
+				text = ownerIdText;
+			}
+			else if (button == defaultKeyId) {
+				text = keyIdText;
+			}
+			else if (button == defaultRealm) {
+				text = realmText;
+			}
+			else if (button == defaultProfile) {
+				text = profileText;
+			}
+			return text;
+		}
 	};
-	
+
 	private void validate() {
 		boolean complete = true;
 		boolean error = false;
-	
+
 		if (nameText.getText().length() == 0 ||
 				idText.getText().length() == 0 ||
+				aliasText.getText().length() == 0 ||
 				imageIdText.getText().length() == 0 ||
 				ownerIdText.getText().length() == 0 ||
-				keyNameText.getText().length() == 0 ||
+				keyIdText.getText().length() == 0 ||
 				realmText.getText().length() == 0 ||
 				profileText.getText().length() == 0) {
-			
+
 			setErrorMessage(WizardMessages.getString(EMPTY_RULE));
 			error = true;
 		} else if (nameText.getText().contains(";") ||
 				idText.getText().contains(";") ||
+				aliasText.getText().contains(";") ||
 				imageIdText.getText().contains(";") ||
 				ownerIdText.getText().contains(";") ||
-				keyNameText.getText().contains(";") ||
+				keyIdText.getText().contains(";") ||
 				realmText.getText().contains(";") ||
 				profileText.getText().contains(";")) {
 			setErrorMessage(WizardMessages.getString(INVALID_SEMICOLON));
 			error = true;
 		}
-		
+
 		if (!error)
 			setErrorMessage(null);
 		setPageComplete(complete && !error);
@@ -165,215 +194,93 @@ public class InstanceFilterPage extends WizardPage {
 	@Override
 	public void createControl(Composite parent) {
 		final Composite container = new Composite(parent, SWT.NULL);
-		FormLayout layout = new FormLayout();
-		layout.marginHeight = 5;
-		layout.marginWidth = 5;
-		container.setLayout(layout);		
-
+		GridLayoutFactory.fillDefaults().numColumns(3).spacing(8, 4).applyTo(container);
+		
 		Label label = new Label(container, SWT.NULL);
 		label.setText(WizardMessages.getString(FILTER_LABEL));
+		GridDataFactory.fillDefaults().span(3, 1).align(SWT.LEFT, SWT.CENTER).indent(0, 14).hint(SWT.DEFAULT, 30).applyTo(label);
 		
-		Label nameLabel = new Label(container, SWT.NULL);
-		nameLabel.setText(WizardMessages.getString(NAME_LABEL));
-		
-		nameText = new Text(container, SWT.BORDER | SWT.SINGLE);
-		nameText.setText(cloud.getInstanceFilter().getNameRule().toString());
-		nameText.addModifyListener(Listener);
-		
-		defaultName = new Button(container, SWT.NULL);
-		defaultName.setText(WizardMessages.getString(DEFAULT_LABEL));
-		defaultName.addSelectionListener(ButtonListener);
+		IInstanceFilter filter = cloud.getInstanceFilter();
 
-		Label idLabel = new Label(container, SWT.NULL);
-		idLabel.setText(WizardMessages.getString(ID_LABEL));
+		Label nameLabel = createRuleLabel(WizardMessages.getString(NAME_LABEL), container);
+		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(nameLabel);
+		this.nameText = createRuleText(filter.getNameRule(), container);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(nameText);
+		this.defaultName = createDefaultRuleButton(container);
+		GridDataFactory.fillDefaults().align(SWT.RIGHT, SWT.CENTER).applyTo(defaultName);
 
-		idText = new Text(container, SWT.BORDER | SWT.SINGLE);
-		idText.setText(cloud.getInstanceFilter().getIdRule().toString());
-		idText.addModifyListener(Listener);
+		Label aliasLabel = createRuleLabel(WizardMessages.getString(ALIAS_LABEL), container);
+		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(aliasLabel);
+		this.aliasText = createRuleText(filter.getAliasRule(), container);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(aliasText);
+		this.defaultAlias = createDefaultRuleButton(container);
+		GridDataFactory.fillDefaults().align(SWT.RIGHT, SWT.CENTER).applyTo(defaultAlias);
 
-		defaultId = new Button(container, SWT.NULL);
-		defaultId.setText(WizardMessages.getString(DEFAULT_LABEL));
-		defaultId.addSelectionListener(ButtonListener);
+		Label idLabel = createRuleLabel(WizardMessages.getString(ID_LABEL), container);
+		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(idLabel);
+		this.idText = createRuleText(filter.getIdRule(), container);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(idText);
+		this.defaultId = createDefaultRuleButton(container);
+		GridDataFactory.fillDefaults().align(SWT.RIGHT, SWT.CENTER).applyTo(defaultId);
 
-		Label imageIdLabel = new Label(container, SWT.NULL);
-		imageIdLabel.setText(WizardMessages.getString(IMAGE_ID_LABEL));
-		
-		imageIdText = new Text(container, SWT.BORDER | SWT.SINGLE);
-		imageIdText.setText(cloud.getInstanceFilter().getImageIdRule().toString());
-		imageIdText.addModifyListener(Listener);
-		
-		defaultImageId = new Button(container, SWT.NULL);
-		defaultImageId.setText(WizardMessages.getString(DEFAULT_LABEL));
-		defaultImageId.addSelectionListener(ButtonListener);
+		Label imageIdLabel = createRuleLabel(WizardMessages.getString(IMAGE_ID_LABEL), container);
+		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(imageIdLabel);
+		this.imageIdText = createRuleText(filter.getImageIdRule(), container);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(imageIdText);
+		this.defaultImageId = createDefaultRuleButton(container);
+		GridDataFactory.fillDefaults().align(SWT.RIGHT, SWT.CENTER).applyTo(defaultImageId);
 
-		Label ownerIdLabel = new Label(container, SWT.NULL);
-		ownerIdLabel.setText(WizardMessages.getString(OWNER_ID_LABEL));
+		Label ownerIdLabel = createRuleLabel(WizardMessages.getString(OWNER_ID_LABEL), container);
+		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(ownerIdLabel);
+		this.ownerIdText = createRuleText(filter.getOwnerIdRule(), container);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(ownerIdText);
+		this.defaultOwnerId = createDefaultRuleButton(container);
+		GridDataFactory.fillDefaults().align(SWT.RIGHT, SWT.CENTER).applyTo(defaultOwnerId);
 
-		ownerIdText = new Text(container, SWT.BORDER | SWT.SINGLE);
-		ownerIdText.setText(cloud.getInstanceFilter().getOwnerIdRule().toString());
-		ownerIdText.addModifyListener(Listener);
-		
-		defaultOwnerId = new Button(container, SWT.NULL);
-		defaultOwnerId.setText(WizardMessages.getString(DEFAULT_LABEL));
-		defaultOwnerId.addSelectionListener(ButtonListener);
+		Label keyNameLabel = createRuleLabel(WizardMessages.getString(KEYNAME_LABEL), container);
+		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(keyNameLabel);
+		this.keyIdText = createRuleText(filter.getKeyNameRule(), container);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(keyIdText);
+		this.defaultKeyId = createDefaultRuleButton(container);
+		GridDataFactory.fillDefaults().align(SWT.RIGHT, SWT.CENTER).applyTo(defaultKeyId);
 
-		Label keyNameLabel = new Label(container, SWT.NULL);
-		keyNameLabel.setText(WizardMessages.getString(KEYNAME_LABEL));
+		Label realmLabel = createRuleLabel(WizardMessages.getString(REALM_LABEL), container);
+		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(realmLabel);
+		this.realmText = createRuleText(filter.getKeyNameRule(), container);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(realmText);
+		this.defaultRealm = createDefaultRuleButton(container);
+		GridDataFactory.fillDefaults().align(SWT.RIGHT, SWT.CENTER).applyTo(defaultRealm);
 
-		keyNameText = new Text(container, SWT.BORDER | SWT.SINGLE);
-		keyNameText.setText(cloud.getInstanceFilter().getKeyNameRule().toString());
-		keyNameText.addModifyListener(Listener);
-		
-		defaultKeyId = new Button(container, SWT.NULL);
-		defaultKeyId.setText(WizardMessages.getString(DEFAULT_LABEL));
-		defaultKeyId.addSelectionListener(ButtonListener);
-
-		Label realmLabel = new Label(container, SWT.NULL);
-		realmLabel.setText(WizardMessages.getString(REALM_LABEL));
-
-		realmText = new Text(container, SWT.BORDER | SWT.SINGLE);
-		realmText.setText(cloud.getInstanceFilter().getRealmRule().toString());
-		realmText.addModifyListener(Listener);
-		
-		defaultRealm = new Button(container, SWT.NULL);
-		defaultRealm.setText(WizardMessages.getString(DEFAULT_LABEL));
-		defaultRealm.addSelectionListener(ButtonListener);
-		
-		Label profileLabel = new Label(container, SWT.NULL);
-		profileLabel.setText(WizardMessages.getString(PROFILE_LABEL));
-
-		profileText = new Text(container, SWT.BORDER | SWT.SINGLE);
-		profileText.setText(cloud.getInstanceFilter().getProfileRule().toString());
-		profileText.addModifyListener(Listener);
-		
-		defaultProfile = new Button(container, SWT.NULL);
-		defaultProfile.setText(WizardMessages.getString(DEFAULT_LABEL));
-		defaultProfile.addSelectionListener(ButtonListener);
-		
-		Point p1 = label.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-		Point p2 = nameText.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-		Point p3 = defaultName.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-		int centering = (p2.y - p1.y + 1) / 2;
-		int centering2 = (p3.y - p2.y + 1) / 2;
-
-		FormData f = new FormData();
-		f.top = new FormAttachment(0);
-		label.setLayoutData(f);
-		
-		f = new FormData();
-		f.top = new FormAttachment(label, 11 + centering + centering2);
-		f.left = new FormAttachment(0, 0);
-		nameLabel.setLayoutData(f);
-		
-		f = new FormData();
-		f.top = new FormAttachment(label, 11);
-		f.right = new FormAttachment(100);
-		defaultName.setLayoutData(f);
-		
-		f = new FormData();
-		f.top = new FormAttachment(label, 11 + centering2);
-		f.left = new FormAttachment(profileLabel, 5);
-		f.right = new FormAttachment(defaultName, -10);
-		nameText.setLayoutData(f);
-		
-		f = new FormData();
-		f.top = new FormAttachment(nameLabel, 11 + centering + centering2);
-		f.left = new FormAttachment(0, 0);
-		idLabel.setLayoutData(f);
-		
-		f = new FormData();
-		f.top = new FormAttachment(nameLabel, 11);
-		f.right = new FormAttachment(100);
-		defaultId.setLayoutData(f);
-
-		f = new FormData();
-		f.top = new FormAttachment(nameLabel, 11 + centering2);
-		f.left = new FormAttachment(profileLabel, 5);
-		f.right = new FormAttachment(defaultId, -10);
-		idText.setLayoutData(f);
-
-		f = new FormData();
-		f.top = new FormAttachment(idLabel, 11 + centering + centering2);
-		f.left = new FormAttachment(0, 0);
-		imageIdLabel.setLayoutData(f);
-		
-		f = new FormData();
-		f.top = new FormAttachment(idLabel, 11);
-		f.right = new FormAttachment(100);
-		defaultImageId.setLayoutData(f);
-
-		f = new FormData();
-		f.top = new FormAttachment(idLabel, 11 + centering2);
-		f.left = new FormAttachment(profileLabel, 5);
-		f.right = new FormAttachment(defaultImageId, -10);
-		imageIdText.setLayoutData(f);
-		
-		f = new FormData();
-		f.top = new FormAttachment(imageIdLabel, 11 + centering + centering2);
-		f.left = new FormAttachment(0, 0);
-		ownerIdLabel.setLayoutData(f);
-		
-		f = new FormData();
-		f.top = new FormAttachment(imageIdLabel, 11);
-		f.right = new FormAttachment(100);
-		defaultOwnerId.setLayoutData(f);
-
-		f = new FormData();
-		f.top = new FormAttachment(imageIdLabel, 11 + centering2);
-		f.left = new FormAttachment(profileLabel, 5);
-		f.right = new FormAttachment(defaultOwnerId, -10);
-		ownerIdText.setLayoutData(f);
-
-		f = new FormData();
-		f.top = new FormAttachment(ownerIdLabel, 11 + centering + centering2);
-		f.left = new FormAttachment(0, 0);
-		keyNameLabel.setLayoutData(f);
-		
-		f = new FormData();
-		f.top = new FormAttachment(ownerIdLabel, 11);
-		f.right = new FormAttachment(100);
-		defaultKeyId.setLayoutData(f);
-
-		f = new FormData();
-		f.top = new FormAttachment(ownerIdLabel, 11 + centering2);
-		f.left = new FormAttachment(profileLabel, 5);
-		f.right = new FormAttachment(defaultKeyId, -10);
-		keyNameText.setLayoutData(f);
-		
-		f = new FormData();
-		f.top = new FormAttachment(keyNameLabel, 11 + centering + centering2);
-		f.left = new FormAttachment(0, 0);
-		realmLabel.setLayoutData(f);
-		
-		f = new FormData();
-		f.top = new FormAttachment(keyNameLabel, 11);
-		f.right = new FormAttachment(100);
-		defaultRealm.setLayoutData(f);
-
-		f = new FormData();
-		f.top = new FormAttachment(keyNameLabel, 11 + centering2);
-		f.left = new FormAttachment(profileLabel, 5);
-		f.right = new FormAttachment(defaultRealm, -10);
-		realmText.setLayoutData(f);
-
-		f = new FormData();
-		f.top = new FormAttachment(realmLabel, 11 + centering + centering2);
-		f.left = new FormAttachment(0, 0);
-		profileLabel.setLayoutData(f);
-		
-		f = new FormData();
-		f.top = new FormAttachment(realmLabel, 11);
-		f.right = new FormAttachment(100);
-		defaultProfile.setLayoutData(f);
-
-		f = new FormData();
-		f.top = new FormAttachment(realmLabel, 11 + centering2);
-		f.left = new FormAttachment(profileLabel, 5);
-		f.right = new FormAttachment(defaultProfile, -10);
-		profileText.setLayoutData(f);
+		Label profileLabel = createRuleLabel(WizardMessages.getString(PROFILE_LABEL), container);
+		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(profileLabel);
+		this.profileText = createRuleText(filter.getProfileRule(), container);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(profileText);
+		this.defaultProfile = createDefaultRuleButton(container);
+		GridDataFactory.fillDefaults().align(SWT.RIGHT, SWT.CENTER).applyTo(defaultProfile);
 
 		setControl(container);
 		setPageComplete(true);
 	}
 
+	private Label createRuleLabel(String text, Composite container) {
+		Label label = new Label(container, SWT.NULL);
+		label.setText(text);
+		return label;
+	}
+
+	private Button createDefaultRuleButton(final Composite container) {
+		Button button = new Button(container, SWT.NULL);
+		button.setText(WizardMessages.getString(DEFAULT_LABEL));
+		button.addSelectionListener(buttonListener);
+		return button;
+	}
+
+	private Text createRuleText(IFieldMatcher rule, final Composite container) {
+		Assert.isNotNull(rule, "Rule may not be null");
+		
+		Text text = new Text(container, SWT.BORDER | SWT.SINGLE);
+		text.setText(rule.toString());
+		text.addModifyListener(Listener);
+		return text;
+	}
 }

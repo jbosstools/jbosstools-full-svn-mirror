@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.regex.PatternSyntaxException;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.jboss.tools.deltacloud.core.client.API.Driver;
@@ -70,7 +69,8 @@ public class DeltaCloud extends ObservablePojo {
 
 	public DeltaCloud(String name, String url, String username, String password, DeltaCloudDriver driver)
 			throws DeltaCloudException {
-		this(name, url, username, password, driver, IImageFilter.ALL_STRING, IInstanceFilter.ALL_STRING, new ArrayList<IInstanceAliasMapping>());
+		this(name, url, username, password, driver, IImageFilter.ALL_STRING, IInstanceFilter.ALL_STRING,
+				new ArrayList<IInstanceAliasMapping>());
 	}
 
 	public DeltaCloud(String name, String url, String username, DeltaCloudDriver driver, String imageFilterRules,
@@ -88,8 +88,8 @@ public class DeltaCloud extends ObservablePojo {
 		this.driver = driver;
 		this.passwordStore = createSecurePasswordStore(name, username, password);
 		this.client = createClient(url, username, passwordStore.getPassword());
-		this.imageFilter = createImageFilter(imageFilterRules);
-		this.instanceFilter = createInstanceFilter(instanceFilterRules);
+		this.imageFilter = new ImageFilter(instanceFilterRules, this);
+		this.instanceFilter = new InstanceFilter(instanceFilterRules, this);
 		this.instanceAliasMappings = instanceAliasMappings;
 	}
 
@@ -211,62 +211,27 @@ public class DeltaCloud extends ObservablePojo {
 		return instanceFilter;
 	}
 
-	public void updateInstanceFilter(String ruleString) throws Exception {
-		String rules = getInstanceFilter().toString();
-		instanceFilter = createInstanceFilter(ruleString);
-		if (!rules.equals(ruleString)) {
-			// TODO: remove notification with all instanceRepo, replace by
-			// notifying the changed instance
-			firePropertyChange(
+	public void updateInstanceFilter(String nameRule, String idRule, String aliasRule, String imageIdRule,
+			String ownerIdRule, String keyNameRule, String realmRule, String profileRule) throws Exception {
+		instanceFilter =
+				new InstanceFilter(nameRule, idRule, aliasRule, imageIdRule, ownerIdRule, keyNameRule, realmRule,
+						profileRule, this);
+		firePropertyChange(
 					PROP_INSTANCES, getInstancesRepository().get(), getInstancesRepository().get());
-			DeltaCloudManager.getDefault().saveClouds();
-		}
-	}
-
-	private IInstanceFilter createInstanceFilter(String ruleString) {
-		IInstanceFilter instanceFilter = null;
-		if (IInstanceFilter.ALL_STRING.equals(ruleString)) {
-			instanceFilter = new AllInstanceFilter(this);
-		} else {
-			try {
-				instanceFilter = new InstanceFilter(this);
-				instanceFilter.setRules(ruleString);
-			} catch (PatternSyntaxException e) {
-				instanceFilter.setRules(IInstanceFilter.ALL_STRING);
-			}
-		}
-		return instanceFilter;
+		DeltaCloudManager.getDefault().saveClouds();
 	}
 
 	public IImageFilter getImageFilter() {
 		return imageFilter;
 	}
 
-	public void updateImageFilter(String ruleString) throws Exception {
-		String rules = getImageFilter().toString();
-		this.imageFilter = createImageFilter(ruleString);
-		if (!rules.equals(ruleString)) {
-			// TODO: remove notification with all instanceRepo, replace by
-			// notifying the changed instance
-			firePropertyChange(PROP_IMAGES, getImagesRepository().get(), getImagesRepository().get());
-			// TODO: move to notification based approach
-			DeltaCloudManager.getDefault().saveClouds();
-		}
-	}
-
-	private IImageFilter createImageFilter(String ruleString) {
-		IImageFilter imageFilter = null;
-		if (IImageFilter.ALL_STRING.equals(ruleString)) {
-			imageFilter = new AllImageFilter(this);
-		} else {
-			try {
-				imageFilter = new ImageFilter(this);
-				imageFilter.setRules(ruleString);
-			} catch (PatternSyntaxException e) {
-				imageFilter.setRules(IImageFilter.ALL_STRING);
-			}
-		}
-		return imageFilter;
+	public void updateImageFilter(String nameRule, String idRule, String archRule, String descRule) throws Exception {
+		this.imageFilter = new ImageFilter(nameRule, idRule, archRule, descRule, this);
+		// TODO: remove notification with all instanceRepo, replace by
+		// notifying the changed instance
+		firePropertyChange(PROP_IMAGES, getImagesRepository().get(), getImagesRepository().get());
+		// TODO: move to notification based approach
+		DeltaCloudManager.getDefault().saveClouds();
 	}
 
 	/**

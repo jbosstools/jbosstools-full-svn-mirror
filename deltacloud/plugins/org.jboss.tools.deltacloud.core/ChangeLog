@@ -1,3 +1,10 @@
+2011-02-03  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/deltacloud/core/ImageFilter.java: 
+	* src/org/jboss/tools/deltacloud/core/InstanceFilter.java: 
+	* src/org/jboss/tools/deltacloud/core/AbstractCloudElementFilter.java:
+	[JBIDE-8187] added capability to filter for instance alias 
+
 2011-01-27  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClientImpl.java (getServerType): 

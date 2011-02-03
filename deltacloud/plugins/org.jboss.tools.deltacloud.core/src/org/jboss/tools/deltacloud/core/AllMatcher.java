@@ -1,6 +1,6 @@
 package org.jboss.tools.deltacloud.core;
 
-public class AllFieldMatcher implements IFieldMatcher {
+public class AllMatcher implements IFieldMatcher {
 
 	@Override
 	public boolean matches(String input) {

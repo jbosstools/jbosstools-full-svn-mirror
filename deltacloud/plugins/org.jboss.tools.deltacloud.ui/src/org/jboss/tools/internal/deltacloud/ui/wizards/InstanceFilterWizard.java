@@ -20,47 +20,43 @@ import org.jboss.tools.deltacloud.ui.ErrorUtils;
 public class InstanceFilterWizard extends AbstractDeltaCloudWizard {
 
 	private InstanceFilterPage mainPage;
-	
+
 	public InstanceFilterWizard(DeltaCloud cloud) {
 		super(cloud);
 	}
-	
+
 	@Override
 	public void addPages() {
 		mainPage = new InstanceFilterPage(getDeltaCloud());
 		addPage(mainPage);
 	}
-	
+
 	@Override
 	public boolean canFinish() {
 		return mainPage.isPageComplete();
 	}
-	
+
 	@Override
 	public boolean performFinish() {
 		String nameRule = mainPage.getNameRule();
 		String idRule = mainPage.getIdRule();
+		String aliasRule = mainPage.getAliasRule();
 		String imageIdRule = mainPage.getImageIdRule();
 		String ownerIdRule = mainPage.getOwnerIdRule();
 		String keyNameRule = mainPage.getKeyNameRule();
 		String realmRule = mainPage.getRealmRule();
 		String profileRule = mainPage.getProfileRule();
-		
+
 		try {
-			getDeltaCloud().updateInstanceFilter(nameRule + ";" + //$NON-NLS-1$
-					idRule + ";" + //$NON-NLS-1$
-					imageIdRule + ";" + //$NON-NLS-1$
-					ownerIdRule + ";" + //$NON-NLS-1$
-					keyNameRule + ";" + //$NON-NLS-1$
-					realmRule + ";" + //$NON-NLS-1$
-					profileRule);
+			getDeltaCloud().updateInstanceFilter(
+					nameRule, idRule, aliasRule, imageIdRule, ownerIdRule, keyNameRule, realmRule, profileRule);
 		} catch (Exception e) {
 			// TODO: internationalize strings
 			ErrorUtils.handleError(
 					"Error",
 					"Could not update filters", e, Display.getDefault().getActiveShell());
 		}
-		
+
 		return true;
 	}
 

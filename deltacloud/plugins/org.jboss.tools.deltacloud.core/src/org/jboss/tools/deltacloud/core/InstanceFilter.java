@@ -11,7 +11,6 @@
 package org.jboss.tools.deltacloud.core;
 
 import java.util.Iterator;
-import java.util.regex.PatternSyntaxException;
 
 /**
  * A filter that may be applied on DeltaCloudInstances
@@ -23,6 +22,7 @@ import java.util.regex.PatternSyntaxException;
  */
 public class InstanceFilter extends AbstractCloudElementFilter<DeltaCloudInstance> implements IInstanceFilter {
 
+	private IFieldMatcher aliasRule;
 	private IFieldMatcher imageIdRule;
 	private IFieldMatcher realmRule;
 	private IFieldMatcher profileRule;
@@ -30,42 +30,83 @@ public class InstanceFilter extends AbstractCloudElementFilter<DeltaCloudInstanc
 	private IFieldMatcher keyNameRule;
 
 	public InstanceFilter(DeltaCloud cloud) {
-		super(cloud);
+		this(new AllMatcher(), new AllMatcher(), new AllMatcher(), new AllMatcher(), new AllMatcher(),
+				new AllMatcher(), new AllMatcher(), new AllMatcher(), cloud);
 	}
-	
-	@Override
-	public boolean matches(DeltaCloudInstance instance) {
-		return super.matches(instance) &&
-		imageIdRule.matches(instance.getImageId()) &&
-		ownerIdRule.matches(instance.getOwnerId()) &&
-		keyNameRule.matches(instance.getKeyId()) &&
-		realmRule.matches(instance.getRealmId()) &&
-		profileRule.matches(instance.getProfileId());
+
+	public InstanceFilter(IFieldMatcher nameMatcher, IFieldMatcher idMatcher, IFieldMatcher aliasMatcher,
+			IFieldMatcher imageIdMatcher, IFieldMatcher realmMatcher, IFieldMatcher profileMatcher,
+			IFieldMatcher ownerIdMatcher, IFieldMatcher keyMatcher, DeltaCloud cloud) {
+		super(nameMatcher, idMatcher, cloud);
+		setRules(aliasMatcher, imageIdMatcher, realmMatcher, profileMatcher, ownerIdMatcher,
+				keyMatcher);
+	}
+
+	public InstanceFilter(String rulesString, DeltaCloud cloud) {
+		super(cloud);
+		setRules(rulesString);
+	}
+
+	public InstanceFilter(String nameRule, String idRule, String aliasRule, String imageIdRule,
+			String ownerIdRule, String keyNameRule, String realmRule, String profileRule, DeltaCloud cloud) {
+		super(nameRule, idRule, cloud);
+		setRules(aliasRule, imageIdRule, ownerIdRule, keyNameRule, realmRule, profileRule);
 	}
 
 	@Override
-	public void setRules(String ruleString) throws PatternSyntaxException {
-		Iterator<String> rulesIterator = super.setRules(ruleString, getRulesIterator(ruleString));
-		this.imageIdRule = createRule(rulesIterator);
-		this.ownerIdRule = createRule(rulesIterator);
-		this.keyNameRule = createRule(rulesIterator);
-		this.realmRule = createRule(rulesIterator);
-		this.profileRule = createRule(rulesIterator);
+	protected Iterator<String> setRules(String rules) {
+		Iterator<String> rulesIterator = super.setRules(rules);
+		setRules(createRule(rulesIterator), createRule(rulesIterator), createRule(rulesIterator),
+				createRule(rulesIterator), createRule(rulesIterator), createRule(rulesIterator));
+		return rulesIterator;
 	}
-	
+
+	private void setRules(String aliasRule, String imageIdRule, String ownerIdRule, String keyNameRule,
+			String realmRule, String profileRule) {
+		setRules(createRule(aliasRule), createRule(imageIdRule), createRule(ownerIdRule), createRule(keyNameRule),
+				createRule(realmRule), createRule(profileRule));
+	}
+
+	private void setRules(IFieldMatcher aliasMatcher, IFieldMatcher imageIdMatcher, IFieldMatcher realmMatcher,
+			IFieldMatcher profileMatcher, IFieldMatcher ownerIdMatcher, IFieldMatcher keyNameMatcher) {
+		this.aliasRule = aliasMatcher;
+		this.imageIdRule = imageIdMatcher;
+		this.ownerIdRule = ownerIdMatcher;
+		this.keyNameRule = keyNameMatcher;
+		this.realmRule = realmMatcher;
+		this.profileRule = profileMatcher;
+	}
+
+	@Override
+	public boolean matches(DeltaCloudInstance instance) {
+		return super.matches(instance) &&
+				aliasRule.matches(instance.getAlias()) &&
+				imageIdRule.matches(instance.getImageId()) &&
+				ownerIdRule.matches(instance.getOwnerId()) &&
+				keyNameRule.matches(instance.getKeyId()) &&
+				realmRule.matches(instance.getRealmId()) &&
+				profileRule.matches(instance.getProfileId());
+	}
+
 	@Override
 	public String toString() {
 		return super.toString()
-		+ imageIdRule + ";" //$NON-NLS-1$
-		+ ownerIdRule + ";" //$NON-NLS-1$
-		+ keyNameRule + ";" //$NON-NLS-1$
-		+ realmRule + ";" //$NON-NLS-1$
-		+ profileRule; //$NON-NLS-1$
+				+ aliasRule + EXPRESSION_DELIMITER
+				+ imageIdRule + EXPRESSION_DELIMITER
+				+ ownerIdRule + EXPRESSION_DELIMITER
+				+ keyNameRule + EXPRESSION_DELIMITER
+				+ realmRule + EXPRESSION_DELIMITER
+				+ profileRule; //$NON-NLS-1$
 	}
 
 	@Override
 	public IFieldMatcher getImageIdRule() {
 		return imageIdRule;
+	}
+
+	@Override
+	public IFieldMatcher getAliasRule() {
+		return aliasRule;
 	}
 
 	@Override

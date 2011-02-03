@@ -16,6 +16,7 @@ package org.jboss.tools.deltacloud.core;
  */
 public interface IInstanceFilter extends ICloudElementFilter<DeltaCloudInstance> {
 	
+	public IFieldMatcher getAliasRule();
 	public IFieldMatcher getImageIdRule();
 	public IFieldMatcher getOwnerIdRule();
 	public IFieldMatcher getKeyNameRule();

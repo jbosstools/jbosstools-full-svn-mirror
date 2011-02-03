@@ -37,8 +37,6 @@ public interface ICloudElementFilter<CLOUDELEMENT extends IDeltaCloudElement> {
 
 	public Collection<CLOUDELEMENT> filter(CLOUDELEMENT[] cloudElements) throws DeltaCloudException;
 
-	public void setRules(String ruleString);
-
 	public IFieldMatcher getNameRule();
 
 	public IFieldMatcher getIdRule();

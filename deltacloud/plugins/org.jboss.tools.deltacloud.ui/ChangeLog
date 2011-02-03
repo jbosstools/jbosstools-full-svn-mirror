@@ -1,3 +1,9 @@
+2011-02-03  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/WizardMessages.properties: 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/InstanceFilterPage.java: 
+	[JBIDE-8187] added capability to filter for instance alias
+
 2011-02-02  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/FindImagePage.java 
