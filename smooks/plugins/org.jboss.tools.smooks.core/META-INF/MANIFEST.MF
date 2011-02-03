@@ -48,3 +48,4 @@ Export-Package: org.jboss.tools.smooks,
  org.jboss.tools.smooks.model.smooks.provider,
  org.jboss.tools.smooks.model.smooks.util
 Bundle-Localization: plugin
+Bundle-Vendor: %Bundle-Vendor.0
