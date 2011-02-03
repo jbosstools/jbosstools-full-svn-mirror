@@ -88,7 +88,7 @@ public class DeltaCloud extends ObservablePojo {
 		this.driver = driver;
 		this.passwordStore = createSecurePasswordStore(name, username, password);
 		this.client = createClient(url, username, passwordStore.getPassword());
-		this.imageFilter = new ImageFilter(instanceFilterRules, this);
+		this.imageFilter = new ImageFilter(imageFilterRules, this);
 		this.instanceFilter = new InstanceFilter(instanceFilterRules, this);
 		this.instanceAliasMappings = instanceAliasMappings;
 	}
