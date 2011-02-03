@@ -246,7 +246,7 @@ public class InstanceFilterPage extends WizardPage {
 
 		Label realmLabel = createRuleLabel(WizardMessages.getString(REALM_LABEL), container);
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(realmLabel);
-		this.realmText = createRuleText(filter.getKeyNameRule(), container);
+		this.realmText = createRuleText(filter.getRealmRule(), container);
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(realmText);
 		this.defaultRealm = createDefaultRuleButton(container);
 		GridDataFactory.fillDefaults().align(SWT.RIGHT, SWT.CENTER).applyTo(defaultRealm);
