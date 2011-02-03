@@ -19,7 +19,7 @@ import org.eclipse.ui.views.properties.IPropertySource;
  */
 public class NumericFoldingItem extends DeltaCloudViewItem<Object> {
 
-	public static int FOLDING_SIZE = 50;
+	public static final int FOLDING_SIZE = 50;
 	private Object min;
 	private int max;
 
