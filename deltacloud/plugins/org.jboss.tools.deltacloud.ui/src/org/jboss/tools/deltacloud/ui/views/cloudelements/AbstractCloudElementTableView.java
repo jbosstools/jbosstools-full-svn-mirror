@@ -295,7 +295,7 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 		}
 
 		IInstanceFilter filter = currentCloud.getInstanceFilter();
-		filterLabel.setVisible(!filter.toString().equals(IInstanceFilter.ALL_STRING));
+		filterLabel.setVisible(!filter.isFiltering());
 	}
 
 	private DeltaCloud getCloud(int cloudIndex, DeltaCloud[] clouds) {
@@ -375,7 +375,7 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 	}
 
 	public void cloudsChanged(final int type, final DeltaCloud cloud) {
-		UIUtils.getActiveShell().getDisplay().syncExec(new Runnable() {
+		viewer.getControl().getDisplay().syncExec(new Runnable() {
 
 			@Override
 			public void run() {
