@@ -300,23 +300,23 @@ public class NewJBPMProjectWizard extends BasicNewResourceWizard {
      * Create the sample process file.
      */
     private void createProcess(IJavaProject project, IProgressMonitor monitor) throws CoreException {
-	    String fileName = "org/jboss/tools/jbpm/wizard/project/sample.bpmn2.template";
+	    String fileName = "org/jboss/tools/jbpm/wizard/project/sample.bpmn.template";
         IFolder folder = project.getProject().getFolder("src/main/resources");
-        IFile file = folder.getFile("sample.bpmn2");
+        IFile file = folder.getFile("sample.bpmn");
         InputStream inputstream = getClass().getClassLoader().getResourceAsStream(fileName);
         if (!file.exists()) {
             file.create(inputstream, true, monitor);
         } else {
             file.setContents(inputstream, true, false, monitor);
         }
-	    fileName = "org/jboss/tools/jbpm/wizard/project/sample.prd.template";
-        file = folder.getFile("sample.prd");
-        inputstream = getClass().getClassLoader().getResourceAsStream(fileName);
-        if (!file.exists()) {
-            file.create(inputstream, true, monitor);
-        } else {
-            file.setContents(inputstream, true, false, monitor);
-        }
+//	    fileName = "org/jboss/tools/jbpm/wizard/project/sample.prd.template";
+//        file = folder.getFile("sample.prd");
+//        inputstream = getClass().getClassLoader().getResourceAsStream(fileName);
+//        if (!file.exists()) {
+//            file.create(inputstream, true, monitor);
+//        } else {
+//            file.setContents(inputstream, true, false, monitor);
+//        }
     }
 
     /**
