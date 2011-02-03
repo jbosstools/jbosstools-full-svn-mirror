@@ -312,6 +312,7 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 			}
 			tableLayout.setColumnData(tc, new ColumnWeightData(c.getWeight(), true));
 			tc.setText(c.getName());
+			tc.setMoveable(true);
 			tc.addSelectionListener(new ColumnListener(i));
 		}
 	}
