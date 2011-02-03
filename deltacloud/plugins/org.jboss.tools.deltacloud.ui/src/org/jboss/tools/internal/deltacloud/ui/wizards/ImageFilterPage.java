@@ -25,6 +25,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
+import org.jboss.tools.deltacloud.core.ICloudElementFilter;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 
 /**
@@ -43,18 +44,18 @@ public class ImageFilterPage extends WizardPage {
 	private final static String ARCH_LABEL = "Arch.label"; //$NON-NLS-1$
 	private final static String DESC_LABEL = "Desc.label"; //$NON-NLS-1$
 	private final static String DEFAULT_LABEL = "DefaultButton.label"; //$NON-NLS-1$
-	
+
 	private DeltaCloud cloud;
 	private Text nameText;
 	private Text idText;
 	private Text archText;
 	private Text descText;
-	
+
 	private Button defaultName;
 	private Button defaultId;
 	private Button defaultArch;
 	private Button defaultDesc;
-	
+
 	public ImageFilterPage(DeltaCloud cloud) {
 		super(WizardMessages.getString(NAME));
 		this.cloud = cloud;
@@ -63,23 +64,23 @@ public class ImageFilterPage extends WizardPage {
 		setImageDescriptor(SWTImagesFactory.DESC_DELTA_LARGE);
 		setPageComplete(false);
 	}
-	
+
 	public String getNameRule() {
 		return nameText.getText();
 	}
-	
+
 	public String getIdRule() {
 		return idText.getText();
 	}
-	
+
 	public String getArchRule() {
 		return archText.getText();
 	}
-	
+
 	public String getDescRule() {
 		return descText.getText();
 	}
-	
+
 	private ModifyListener Listener = new ModifyListener() {
 
 		@Override
@@ -88,32 +89,45 @@ public class ImageFilterPage extends WizardPage {
 			validate();
 		}
 	};
-	
+
 	private SelectionAdapter ButtonListener = new SelectionAdapter() {
 		@Override
 		public void widgetSelected(SelectionEvent e) {
-			Button b = (Button)e.widget;
-			if (b == defaultName)
-				nameText.setText("*"); //$NON-NLS-1$
-			else if (b == defaultId)
-				idText.setText("*"); //$NON-NLS-1$
-			else if (b == defaultArch)
-				archText.setText("*"); //$NON-NLS-1$
-			else if (b == defaultDesc)
-				descText.setText("*"); //$NON-NLS-1$
+			Button b = (Button) e.widget;
+			Text text = getTextWidget(b);
+			if (text != null) {
+				text.setText(ICloudElementFilter.ALL_MATCHER_EXPRESSION);
+			}
 		}
-	
+
+		private Text getTextWidget(Button button) {
+			Text text = null;
+			if (button == defaultName) {
+				text = nameText;
+			}
+			else if (button == defaultId) {
+				text = idText;
+			}
+			else if (button == defaultArch) {
+				text = archText;
+			}
+			else if (button == defaultDesc) {
+				text = descText;
+			}
+			return text;
+		}
+
 	};
-	
+
 	private void validate() {
 		boolean complete = true;
 		boolean error = false;
-	
+
 		if (nameText.getText().length() == 0 ||
 				idText.getText().length() == 0 ||
 				archText.getText().length() == 0 ||
 				descText.getText().length() == 0) {
-			
+
 			setErrorMessage(WizardMessages.getString(EMPTY_RULE));
 			error = true;
 		} else if (nameText.getText().contains(";") ||
@@ -123,7 +137,7 @@ public class ImageFilterPage extends WizardPage {
 			setErrorMessage(WizardMessages.getString(INVALID_SEMICOLON));
 			error = true;
 		}
-		
+
 		if (!error)
 			setErrorMessage(null);
 		setPageComplete(complete && !error);
@@ -135,18 +149,18 @@ public class ImageFilterPage extends WizardPage {
 		FormLayout layout = new FormLayout();
 		layout.marginHeight = 5;
 		layout.marginWidth = 5;
-		container.setLayout(layout);		
+		container.setLayout(layout);
 
 		Label label = new Label(container, SWT.NULL);
 		label.setText(WizardMessages.getString(FILTER_LABEL));
-		
+
 		Label nameLabel = new Label(container, SWT.NULL);
 		nameLabel.setText(WizardMessages.getString(NAME_LABEL));
-		
+
 		nameText = new Text(container, SWT.BORDER | SWT.SINGLE);
 		nameText.setText(cloud.getImageFilter().getNameRule().toString());
 		nameText.addModifyListener(Listener);
-		
+
 		defaultName = new Button(container, SWT.NULL);
 		defaultName.setText(WizardMessages.getString(DEFAULT_LABEL));
 		defaultName.addSelectionListener(ButtonListener);
@@ -164,11 +178,11 @@ public class ImageFilterPage extends WizardPage {
 
 		Label archLabel = new Label(container, SWT.NULL);
 		archLabel.setText(WizardMessages.getString(ARCH_LABEL));
-		
+
 		archText = new Text(container, SWT.BORDER | SWT.SINGLE);
 		archText.setText(cloud.getImageFilter().getArchRule().toString());
 		archText.addModifyListener(Listener);
-		
+
 		defaultArch = new Button(container, SWT.NULL);
 		defaultArch.setText(WizardMessages.getString(DEFAULT_LABEL));
 		defaultArch.addSelectionListener(ButtonListener);
@@ -179,7 +193,7 @@ public class ImageFilterPage extends WizardPage {
 		descText = new Text(container, SWT.BORDER | SWT.SINGLE);
 		descText.setText(cloud.getImageFilter().getDescRule().toString());
 		descText.addModifyListener(Listener);
-		
+
 		defaultDesc = new Button(container, SWT.NULL);
 		defaultDesc.setText(WizardMessages.getString(DEFAULT_LABEL));
 		defaultDesc.addSelectionListener(ButtonListener);
@@ -193,28 +207,28 @@ public class ImageFilterPage extends WizardPage {
 		FormData f = new FormData();
 		f.top = new FormAttachment(0);
 		label.setLayoutData(f);
-		
+
 		f = new FormData();
 		f.top = new FormAttachment(label, 11 + centering + centering2);
 		f.left = new FormAttachment(0, 0);
 		nameLabel.setLayoutData(f);
-		
+
 		f = new FormData();
 		f.top = new FormAttachment(label, 11);
 		f.right = new FormAttachment(100);
 		defaultName.setLayoutData(f);
-		
+
 		f = new FormData();
 		f.top = new FormAttachment(label, 11 + centering2);
 		f.left = new FormAttachment(archLabel, 5);
 		f.right = new FormAttachment(defaultName, -10);
 		nameText.setLayoutData(f);
-		
+
 		f = new FormData();
 		f.top = new FormAttachment(nameLabel, 11 + centering + centering2);
 		f.left = new FormAttachment(0, 0);
 		idLabel.setLayoutData(f);
-		
+
 		f = new FormData();
 		f.top = new FormAttachment(nameLabel, 11);
 		f.right = new FormAttachment(100);
@@ -230,7 +244,7 @@ public class ImageFilterPage extends WizardPage {
 		f.top = new FormAttachment(idLabel, 11 + centering + centering2);
 		f.left = new FormAttachment(0, 0);
 		archLabel.setLayoutData(f);
-		
+
 		f = new FormData();
 		f.top = new FormAttachment(idLabel, 11);
 		f.right = new FormAttachment(100);
@@ -241,12 +255,12 @@ public class ImageFilterPage extends WizardPage {
 		f.left = new FormAttachment(archLabel, 5);
 		f.right = new FormAttachment(defaultArch, -10);
 		archText.setLayoutData(f);
-		
+
 		f = new FormData();
 		f.top = new FormAttachment(archLabel, 11 + centering + centering2);
 		f.left = new FormAttachment(0, 0);
 		descLabel.setLayoutData(f);
-		
+
 		f = new FormData();
 		f.top = new FormAttachment(archLabel, 11);
 		f.right = new FormAttachment(100);
