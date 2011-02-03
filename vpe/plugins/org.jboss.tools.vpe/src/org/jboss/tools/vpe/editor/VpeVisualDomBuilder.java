@@ -1088,14 +1088,8 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	}
 
 	public void setSelectionRectangle(/* nsIDOMElement */nsIDOMNode visualElement) {
-		setSelectionRectangle(visualElement, true);
-	}
-
-	void setSelectionRectangle(/* nsIDOMElement */nsIDOMNode visualElement,
-			boolean scroll) {
 		int resizerConstrains = getResizerConstrains(visualElement);
-		visualEditor.setSelectionRectangle(visualElement, resizerConstrains,
-				scroll);
+		visualEditor.setSelectionRectangle(visualElement, resizerConstrains);
 	}
 
     /**

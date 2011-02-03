@@ -278,8 +278,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	 * @param resizerConstrains
 	 * @param scroll
 	 */
-	public void setSelectionRectangle(nsIDOMNode node, int resizerConstrains,
-			boolean scroll) {
+	public void setSelectionRectangle(nsIDOMNode node, int resizerConstrains) {
 		if (getFlasher() == null) {
 			return;
 		}
@@ -289,24 +288,22 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 		if (element != null) {
 			repaint();
 
-			if (scroll) {
-				scrollToElement(element);
-				scrollRegtangleFlag = true;
-			}
+			scrollToElement(element);
+			scrollRegtangleFlag = true;
 
-			if (checkVisibility(element)) {
-				if ((element.getAttribute(VPE_INVISIBLE_ELEMENT) == null)
+			if (isVisible(element)) {
+				if (element.getAttribute(VPE_INVISIBLE_ELEMENT) == null
 						|| (!element.getAttribute(VPE_INVISIBLE_ELEMENT)
 								.equals(Boolean.TRUE.toString()))) {
-
 					getFlasher().setColor(FLASHER_VISUAL_ELEMENT_COLOR);
 				} else {
 					getFlasher().setColor(FLASHER_HIDDEN_ELEMENT_COLOR);
 				}
+				
 				drawElementOutline(element);
 			} else {
 				getFlasher().setColor(FLASHER_HIDDEN_ELEMENT_COLOR);
-				nsIDOMElement domElement = findVisbleParentElement(element);
+				nsIDOMElement domElement = findVisibleParentElement(element);
 
 				if (domElement != null) {
 					drawElementOutline(domElement);
@@ -371,12 +368,10 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	 * @return {@code false} for hidden elements and {@code true}
 	 * for visible elements
 	 */
-	private boolean checkVisibility(nsIDOMNode node) {
+	private boolean isVisible(nsIDOMNode node) {
 		nsIDOMElement domElement;
 		try {
-
 			domElement = XPCOM.queryInterface(node, nsIDOMElement.class);
-
 		} catch (XPCOMException exception) {
 			// if we can cast it's is invisible elenebt
 			return false;
@@ -396,27 +391,25 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	 * 
 	 * @return nearest visible node or null if can't find
 	 */
-	private nsIDOMElement findVisbleParentElement(nsIDOMElement element) {
+	private nsIDOMElement findVisibleParentElement(nsIDOMElement element) {
 
 		nsIDOMElement parentElement;
 
 		try {
-
 			parentElement = XPCOM.queryInterface(element.getParentNode(), nsIDOMElement.class);
 		} catch (XPCOMException ex) {
 			// if parent node isn't nsIDOMElement just return null;
 			return null;
 		}
-		while (parentElement != null && !checkVisibility(parentElement)) {
-			if (checkVisibility(parentElement)) {
-
+		
+		while (parentElement != null && !isVisible(parentElement)) {
+			if (isVisible(parentElement)) {
 				return parentElement;
 			} else {
-
 				parentElement = XPCOM.queryInterface(parentElement.getParentNode(), nsIDOMElement.class);
-
 			}
 		}
+		
 		return parentElement;
 	}
 
@@ -455,54 +448,32 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	}
 
 	public void showSelectionRectangle() {
-
-		// (queryInterface(getWebBrowser(), nsIBaseWindow.class)).repaint(false);
-
-		if (getLastSelectedElement() != null) {
+		nsIDOMElement element = getLastSelectedElement();
+		if (element != null) {
 			if (scrollRegtangleFlag) {
+				scrollToElement(element);
 				scrollRegtangleFlag = false;
-
-				scrollToElement(getLastSelectedElement());
 			}
-			// checks visibility of element
-			if (checkVisibility(getLastSelectedElement())) {
 
-				if ((getLastSelectedElement().getAttribute(
-						VPE_INVISIBLE_ELEMENT) == null)
-						|| (!getLastSelectedElement().getAttribute(
-								VPE_INVISIBLE_ELEMENT).equals(
-										Boolean.TRUE.toString()))) {
-
+			if (isVisible(element)) {
+				if (element.getAttribute(VPE_INVISIBLE_ELEMENT) == null
+						|| (!element.getAttribute(VPE_INVISIBLE_ELEMENT)
+								.equals(Boolean.TRUE.toString()))) {
 					getFlasher().setColor(FLASHER_VISUAL_ELEMENT_COLOR);
 				} else {
-
 					getFlasher().setColor(FLASHER_HIDDEN_ELEMENT_COLOR);
 				}
-
-				drawElementOutline(getLastSelectedElement());
+				
+				drawElementOutline(element);
 			} else {
-
 				getFlasher().setColor(FLASHER_HIDDEN_ELEMENT_COLOR);
-				nsIDOMElement domElement = findVisbleParentElement(getLastSelectedElement());
+				nsIDOMElement domElement = findVisibleParentElement(element);
 
 				if (domElement != null) {
 					drawElementOutline(domElement);
 				}
 			}
 		}
-		// else
-		// if(getIFlasher()!=null&&Platform.OS_MACOSX.equals(Platform.getOS())){
-		// //Max Areshkau (bug on Mac OS X, when we switch to preview from other
-		// view, selection rectangle doesn't disappear
-		// //TODO Max Areshkau (may be exist passability not draw selection on
-		// resize event when we switches to other view)
-		// try {
-		// (queryInterface(getWebBrowser(), nsIBaseWindow.class)).repaint(true);
-		// } catch(XPCOMException ex) {
-		// //just ignore its
-		//				BrowserPlugin.getDefault().logInfo("repaint failed", ex); //$NON-NLS-1$
-		// }
-		// }
 	}
 
 	/**

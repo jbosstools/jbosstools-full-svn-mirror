@@ -956,8 +956,8 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 //		getContentAreaEventListener().setVisualEditor(null);
 	}
 
-	public void setSelectionRectangle(/*nsIDOMElement*/nsIDOMNode element, int resizerConstrains, boolean scroll) {
-		xulRunnerEditor.setSelectionRectangle(element, resizerConstrains, scroll);
+	public void setSelectionRectangle(/*nsIDOMElement*/nsIDOMNode element, int resizerConstrains) {
+		xulRunnerEditor.setSelectionRectangle(element, resizerConstrains);
 	}
 
 	/**
