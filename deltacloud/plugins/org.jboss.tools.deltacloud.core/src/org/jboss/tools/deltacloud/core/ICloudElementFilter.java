@@ -29,13 +29,6 @@ public interface ICloudElementFilter<CLOUDELEMENT extends IDeltaCloudElement> {
 
 	public static final String ALL_MATCHER_EXPRESSION = "*"; //$NON-NLS-1$
 
-	public static final String ALL_STRING =
-			ALL_MATCHER_EXPRESSION + EXPRESSION_DELIMITER // alias
-					+ ALL_MATCHER_EXPRESSION + EXPRESSION_DELIMITER // name
-					+ ALL_MATCHER_EXPRESSION + EXPRESSION_DELIMITER // id
-					+ ALL_MATCHER_EXPRESSION + EXPRESSION_DELIMITER // arch
-					+ ALL_MATCHER_EXPRESSION; // desc
-
 	public Collection<CLOUDELEMENT> filter(CLOUDELEMENT[] cloudElements) throws DeltaCloudException;
 
 	public IFieldMatcher getNameRule();

@@ -44,6 +44,9 @@ public abstract class AbstractCloudElementFilter<CLOUDELEMENT extends IDeltaClou
 	}
 
 	protected Iterator<String> setRules(String rules) {
+		if (rules == null) {
+			return emptyRulesIterator();
+		}
 		Iterator<String> rulesIterator = Arrays.asList(rules.split(EXPRESSION_DELIMITER)).iterator();
 		setRules(createRule(rulesIterator), createRule(rulesIterator));
 		return rulesIterator;
@@ -94,8 +97,8 @@ public abstract class AbstractCloudElementFilter<CLOUDELEMENT extends IDeltaClou
 	
 	@Override
 	public String toString() {
-		return nameRule + ";" //$NON-NLS-1$ 
-				+ idRule + ";"; //$NON-NLS-1$
+		return nameRule + EXPRESSION_DELIMITER 
+				+ idRule + EXPRESSION_DELIMITER;
 	}
 
 	@Override
@@ -107,4 +110,14 @@ public abstract class AbstractCloudElementFilter<CLOUDELEMENT extends IDeltaClou
 	public IFieldMatcher getIdRule() {
 		return idRule;
 	}
+
+	protected Iterator<String> emptyRulesIterator() {
+		return new ArrayList<String>().iterator();
+	}
+
+	public boolean isFiltering() {
+		return idRule.isMatchesAll()
+		&& nameRule.isMatchesAll();
+	}
+
 }

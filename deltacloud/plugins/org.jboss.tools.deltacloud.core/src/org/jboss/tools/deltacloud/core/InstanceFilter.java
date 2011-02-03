@@ -127,4 +127,14 @@ public class InstanceFilter extends AbstractCloudElementFilter<DeltaCloudInstanc
 	public IFieldMatcher getRealmRule() {
 		return realmRule;
 	}
+
+	public boolean isFiltering() {
+		return super.isFiltering()
+				&& aliasRule.isMatchesAll()
+				&& imageIdRule.isMatchesAll()
+				&& keyNameRule.isMatchesAll()
+				&& ownerIdRule.isMatchesAll()
+				&& profileRule.isMatchesAll()
+				&& realmRule.isMatchesAll();
+	}
 }

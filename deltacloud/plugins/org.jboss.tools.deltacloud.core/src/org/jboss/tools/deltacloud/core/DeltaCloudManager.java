@@ -105,7 +105,7 @@ public class DeltaCloudManager {
 					DeltaCloudXMLBuilder.ENCODING); // $NON-NLS-1$
 			DeltaCloudDriver driver = DeltaCloudDriver.checkedValueOf(attrs.getNamedItem(DeltaCloudXMLBuilder.ATTR_TYPE).getNodeValue()); // $NON-NLS-1$
 			String imageFilterRules = getImageFilterRules(attrs.getNamedItem("imagefilter")); // $NON-NLS-1$
-			String instanceFilterRules = getInstanceFilterRules(attrs.getNamedItem("instancefilter")); // $NON-NLS-1$
+			String instanceFilterRules = getNodeValue(attrs.getNamedItem("instancefilter")); // $NON-NLS-1$
 			String lastKeyName = getNodeValue(attrs.getNamedItem(DeltaCloudXMLBuilder.ATTR_LASTKEYNAME)); // $NON-NLS-1$
 			String lastImageId = getNodeValue(attrs.getNamedItem(DeltaCloudXMLBuilder.ATTR_LASTIMAGE)); // $NON-NLS-1$
 			Collection<IInstanceAliasMapping> aliasMappings = getInstanceMappings(n);
@@ -162,16 +162,8 @@ public class DeltaCloudManager {
 		return null;
 	}
 
-	private String getInstanceFilterRules(Node instanceFilterNode) {
-		String instanceFilterRules = IInstanceFilter.ALL_STRING;
-		if (instanceFilterNode != null) {
-			instanceFilterRules = instanceFilterNode.getNodeValue();
-		}
-		return instanceFilterRules;
-	}
-
 	private String getImageFilterRules(Node imageFilterNode) {
-		String imageFilterRules = IImageFilter.ALL_STRING;
+		String imageFilterRules = null;
 		if (imageFilterNode != null) {
 			imageFilterRules = imageFilterNode.getNodeValue();
 		}

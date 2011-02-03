@@ -77,4 +77,10 @@ public class ImageFilter extends AbstractCloudElementFilter<DeltaCloudImage> imp
 	public IFieldMatcher getDescRule() {
 		return descRule;
 	}
+
+	public boolean isFiltering() {
+		return super.isFiltering()
+				&& archRule.isMatchesAll()
+				&& descRule.isMatchesAll();
+	}
 }

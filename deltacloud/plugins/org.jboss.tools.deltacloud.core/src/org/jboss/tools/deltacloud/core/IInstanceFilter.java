@@ -22,4 +22,5 @@ public interface IInstanceFilter extends ICloudElementFilter<DeltaCloudInstance>
 	public IFieldMatcher getKeyNameRule();
 	public IFieldMatcher getRealmRule();
 	public IFieldMatcher getProfileRule();
+	public boolean isFiltering();
 }

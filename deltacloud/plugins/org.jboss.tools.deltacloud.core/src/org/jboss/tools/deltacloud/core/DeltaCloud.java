@@ -69,8 +69,7 @@ public class DeltaCloud extends ObservablePojo {
 
 	public DeltaCloud(String name, String url, String username, String password, DeltaCloudDriver driver)
 			throws DeltaCloudException {
-		this(name, url, username, password, driver, IImageFilter.ALL_STRING, IInstanceFilter.ALL_STRING,
-				new ArrayList<IInstanceAliasMapping>());
+		this(name, url, username, password, driver, null, null, new ArrayList<IInstanceAliasMapping>());
 	}
 
 	public DeltaCloud(String name, String url, String username, DeltaCloudDriver driver, String imageFilterRules,
