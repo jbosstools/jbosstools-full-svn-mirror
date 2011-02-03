@@ -97,10 +97,6 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	// private nsIDOMElement lastSelectedElement;
 	private nsIDOMNode lastSelectedNode;
 	private int lastResizerConstrains;
-	/**
-	 * Scroll selection into view flag
-	 */
-	private boolean scrollRegtangleFlag = false;
 
 	private Listener eventListenet = new Listener() {
 
@@ -282,35 +278,14 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 		if (getFlasher() == null) {
 			return;
 		}
+		setLastSelectedNode(node);
 
-		nsIDOMElement element = getSelectedElementForNode(node);
-
+		nsIDOMElement element = getLastSelectedElement();
 		if (element != null) {
 			repaint();
-
-			scrollToElement(element);
-			scrollRegtangleFlag = true;
-
-			if (isVisible(element)) {
-				if (element.getAttribute(VPE_INVISIBLE_ELEMENT) == null
-						|| (!element.getAttribute(VPE_INVISIBLE_ELEMENT)
-								.equals(Boolean.TRUE.toString()))) {
-					getFlasher().setColor(FLASHER_VISUAL_ELEMENT_COLOR);
-				} else {
-					getFlasher().setColor(FLASHER_HIDDEN_ELEMENT_COLOR);
-				}
-				
-				drawElementOutline(element);
-			} else {
-				getFlasher().setColor(FLASHER_HIDDEN_ELEMENT_COLOR);
-				nsIDOMElement domElement = findVisibleParentElement(element);
-
-				if (domElement != null) {
-					drawElementOutline(domElement);
-				}
-			}
-
+			scrollToElement(element);			
 		}
+		showSelectionRectangle();
 
 		if (xulRunnerVpeResizer != null) {
 			if (element != null && resizerConstrains != 0) {
@@ -320,8 +295,6 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 			}
 		}
 
-		// setLastSelectedElement(element);
-		setLastSelectedNode(node);
 		lastResizerConstrains = resizerConstrains;
 		
 		fireSelectionListeners();
@@ -450,11 +423,6 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	public void showSelectionRectangle() {
 		nsIDOMElement element = getLastSelectedElement();
 		if (element != null) {
-			if (scrollRegtangleFlag) {
-				scrollToElement(element);
-				scrollRegtangleFlag = false;
-			}
-
 			if (isVisible(element)) {
 				if (element.getAttribute(VPE_INVISIBLE_ELEMENT) == null
 						|| (!element.getAttribute(VPE_INVISIBLE_ELEMENT)
@@ -468,7 +436,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 			} else {
 				getFlasher().setColor(FLASHER_HIDDEN_ELEMENT_COLOR);
 				nsIDOMElement domElement = findVisibleParentElement(element);
-
+	
 				if (domElement != null) {
 					drawElementOutline(domElement);
 				}
