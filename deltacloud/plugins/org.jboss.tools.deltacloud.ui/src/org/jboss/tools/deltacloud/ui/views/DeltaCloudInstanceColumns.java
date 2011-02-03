@@ -25,28 +25,63 @@ public class DeltaCloudInstanceColumns extends Columns<DeltaCloudInstance> {
 	@SuppressWarnings("unchecked")
 	public DeltaCloudInstanceColumns() {
 		super(
-				new Column<DeltaCloudInstance>("NAME", 20) {
+				new Column<DeltaCloudInstance>("DeltaCloudElementColumn.name.label", 20) {
 
 					@Override
 					public String getColumnText(DeltaCloudInstance image) {
 						return image.getName();
 					}
 				},
-				new Column<DeltaCloudInstance>("ALIAS", 20) {
+				new Column<DeltaCloudInstance>("DeltaCloudElementColumn.alias.label", 20) {
 
 					@Override
 					public String getColumnText(DeltaCloudInstance image) {
 						return image.getAlias();
 					}
 				},
-				new Column<DeltaCloudInstance>("ID", 20) {
+				new Column<DeltaCloudInstance>("DeltaCloudElementColumn.id.label", 20) {
 
 					@Override
 					public String getColumnText(DeltaCloudInstance image) {
 						return image.getId();
 					}
 				},
-				new Column<DeltaCloudInstance>("STATUS", 20) {
+				new Column<DeltaCloudInstance>("DeltaCloudElementColumn.imageId.label", 20) {
+
+					@Override
+					public String getColumnText(DeltaCloudInstance image) {
+						return image.getImageId();
+					}
+				},
+				new Column<DeltaCloudInstance>("DeltaCloudElementColumn.ownerId.label", 20) {
+
+					@Override
+					public String getColumnText(DeltaCloudInstance image) {
+						return image.getOwnerId();
+					}
+				},
+				new Column<DeltaCloudInstance>("DeltaCloudElementColumn.keyId.label", 20) {
+
+					@Override
+					public String getColumnText(DeltaCloudInstance image) {
+						return image.getKeyId();
+					}
+				},
+				new Column<DeltaCloudInstance>("DeltaCloudElementColumn.realm.label", 20) {
+
+					@Override
+					public String getColumnText(DeltaCloudInstance image) {
+						return image.getRealmId();
+					}
+				},
+				new Column<DeltaCloudInstance>("DeltaCloudElementColumn.profile.label", 20) {
+
+					@Override
+					public String getColumnText(DeltaCloudInstance image) {
+						return image.getProfileId();
+					}
+				},
+				new Column<DeltaCloudInstance>("DeltaCloudElementColumn.state.label", 20) {
 
 					@Override
 					public Image getColumnImage(DeltaCloudInstance instance) {
@@ -68,7 +103,8 @@ public class DeltaCloudInstanceColumns extends Columns<DeltaCloudInstance> {
 						return image.getState().toString();
 					}
 				},
-				new Column<DeltaCloudInstance>("HOSTNAME", 40) {
+				
+				new Column<DeltaCloudInstance>("DeltaCloudElementColumn.hostname.label", 40) {
 					@Override
 					public String getColumnText(DeltaCloudInstance image) {
 						return image.getHostName();

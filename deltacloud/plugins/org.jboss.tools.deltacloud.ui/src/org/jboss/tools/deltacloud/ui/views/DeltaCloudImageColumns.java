@@ -20,28 +20,28 @@ public class DeltaCloudImageColumns extends Columns<DeltaCloudImage> {
 	@SuppressWarnings("unchecked")
 	public DeltaCloudImageColumns() {
 		super(
-				new Column<DeltaCloudImage>("NAME", 20) {
+				new Column<DeltaCloudImage>("DeltaCloudElementColumn.name.label", 20) {
 
 					@Override
 					public String getColumnText(DeltaCloudImage image) {
 						return image.getName();
 					}
 				},
-				new Column<DeltaCloudImage>("ID", 20) {
+				new Column<DeltaCloudImage>("DeltaCloudElementColumn.id.label", 20) {
 
 					@Override
 					public String getColumnText(DeltaCloudImage image) {
 						return image.getId();
 					}
 				},
-				new Column<DeltaCloudImage>("ARCH", 20) {
+				new Column<DeltaCloudImage>("DeltaCloudElementColumn.architecture.label", 20) {
 
 					@Override
 					public String getColumnText(DeltaCloudImage image) {
 						return image.getArchitecture();
 					}
 				},
-				new Column<DeltaCloudImage>("DESC", 40) {
+				new Column<DeltaCloudImage>("DeltaCloudElementColumn.description.label", 40) {
 					@Override
 					public String getColumnText(DeltaCloudImage image) {
 						return image.getDescription();

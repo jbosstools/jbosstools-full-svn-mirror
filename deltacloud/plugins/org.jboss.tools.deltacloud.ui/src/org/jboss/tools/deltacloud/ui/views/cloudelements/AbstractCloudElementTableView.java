@@ -316,7 +316,7 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 			if (i == 0) {
 				table.setSortColumn(tc);
 			}
-			tc.setText(CVMessages.getString(c.getName()));
+			tc.setText(c.getName());
 			tableLayout.setColumnData(tc, new ColumnWeightData(c.getWeight(), true));
 			tc.addSelectionListener(new ColumnListener(i));
 		}
