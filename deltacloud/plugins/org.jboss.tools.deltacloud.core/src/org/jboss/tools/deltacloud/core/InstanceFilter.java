@@ -24,10 +24,10 @@ public class InstanceFilter extends AbstractCloudElementFilter<DeltaCloudInstanc
 
 	private IFieldMatcher aliasRule;
 	private IFieldMatcher imageIdRule;
-	private IFieldMatcher realmRule;
-	private IFieldMatcher profileRule;
 	private IFieldMatcher ownerIdRule;
 	private IFieldMatcher keyNameRule;
+	private IFieldMatcher realmRule;
+	private IFieldMatcher profileRule;
 
 	public InstanceFilter(DeltaCloud cloud) {
 		this(new AllMatcher(), new AllMatcher(), new AllMatcher(), new AllMatcher(), new AllMatcher(),
@@ -35,11 +35,10 @@ public class InstanceFilter extends AbstractCloudElementFilter<DeltaCloudInstanc
 	}
 
 	public InstanceFilter(IFieldMatcher nameMatcher, IFieldMatcher idMatcher, IFieldMatcher aliasMatcher,
-			IFieldMatcher imageIdMatcher, IFieldMatcher realmMatcher, IFieldMatcher profileMatcher,
-			IFieldMatcher ownerIdMatcher, IFieldMatcher keyMatcher, DeltaCloud cloud) {
+			IFieldMatcher imageIdMatcher, IFieldMatcher ownerIdMatcher, IFieldMatcher keyMatcher,
+			IFieldMatcher realmMatcher, IFieldMatcher profileMatcher, DeltaCloud cloud) {
 		super(nameMatcher, idMatcher, cloud);
-		setRules(aliasMatcher, imageIdMatcher, realmMatcher, profileMatcher, ownerIdMatcher,
-				keyMatcher);
+		setRules(aliasMatcher, imageIdMatcher, ownerIdMatcher, keyMatcher, realmMatcher, profileMatcher);
 	}
 
 	public InstanceFilter(String rulesString, DeltaCloud cloud) {
@@ -67,12 +66,12 @@ public class InstanceFilter extends AbstractCloudElementFilter<DeltaCloudInstanc
 				createRule(realmRule), createRule(profileRule));
 	}
 
-	private void setRules(IFieldMatcher aliasMatcher, IFieldMatcher imageIdMatcher, IFieldMatcher realmMatcher,
-			IFieldMatcher profileMatcher, IFieldMatcher ownerIdMatcher, IFieldMatcher keyNameMatcher) {
+	private void setRules(IFieldMatcher aliasMatcher, IFieldMatcher imageIdMatcher, IFieldMatcher ownerIdMatcher,
+			IFieldMatcher keyNameMatcher, IFieldMatcher realmMatcher, IFieldMatcher profileMatcher) {
 		this.aliasRule = aliasMatcher;
 		this.imageIdRule = imageIdMatcher;
-		this.ownerIdRule = ownerIdMatcher;
 		this.keyNameRule = keyNameMatcher;
+		this.ownerIdRule = ownerIdMatcher;
 		this.realmRule = realmMatcher;
 		this.profileRule = profileMatcher;
 	}
