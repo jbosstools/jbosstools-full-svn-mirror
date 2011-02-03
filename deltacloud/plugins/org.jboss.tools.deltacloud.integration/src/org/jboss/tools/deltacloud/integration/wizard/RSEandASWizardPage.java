@@ -248,17 +248,25 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 
 	private void verifyPageComplete() {
 		boolean complete = true;
+		String error = null;
 		if( createServer.getSelection()) {
 			if( deployOnlyRadio.getSelection()) {
 				complete = !deployFolderText.getText().equals("");
+				if( !complete ) 
+					error = "The deploy folder must not be empty";
 			} else if( autoScanCheck.getSelection()) {
 				int index = autoLocalRuntimeCombo.getSelectionIndex();
 				complete = index != -1 && !remoteDetailsLoc.getText().equals("");
+				if( !complete ) 
+					error = "Please select a local runtime. The created server will be of the same version as the local runtime.";
 			} else if( hardCodeServerDetails.getSelection()) {
 				int index = localRuntimeCombo.getSelectionIndex();
 				complete = index != -1 && !serverHomeText.getText().equals("") && !serverConfigText.getText().equals("");
+				if( !complete ) 
+					error = "Please select a local runtime. The created server will be of the same version as the local runtime.";
 			}
 		}
+		setErrorMessage(error);
 		setPageComplete(complete);
 	}
 	
