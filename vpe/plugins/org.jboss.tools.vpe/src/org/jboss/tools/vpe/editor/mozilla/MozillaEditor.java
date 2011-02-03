@@ -1004,10 +1004,10 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	 */
 	public void onReloadWindow() {
 		detachMozillaEventAdapter();
-		xulRunnerEditor.removeResizerListener();
+		xulRunnerEditor.removeResizeListener();
 		contentArea = findContentArea();
 		attachMozillaEventAdapter();
-		xulRunnerEditor.addResizerListener();
+		xulRunnerEditor.addResizeListener();
 		controller.reinit();
 	}
 	

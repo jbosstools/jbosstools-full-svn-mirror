@@ -23,22 +23,26 @@ public class XulRunnerPreview extends XulRunnerEditor {
 		this.mozillaPreview = mozillaPreview;
 	}
 
+	@Override
 	public void onLoadWindow() {
 		super.onLoadWindow();
 		mozillaPreview.onLoadWindow();
 	}
 	
+	@Override
 	public void onShowTooltip(int x, int y, String text) {
 		if (mozillaPreview != null && mozillaPreview.getTooltipListener() != null) {
 			mozillaPreview.getTooltipListener().onShowTooltip(x, y, text);
 		}
 	}
+	@Override
 	public void onHideTooltip() {
 		if (mozillaPreview != null && mozillaPreview.getTooltipListener() != null) {
 			mozillaPreview.getTooltipListener().onHideTooltip();
 		}
 	}
 	
+	@Override
 	public void onDispose() {
 		if (mozillaPreview != null) {
 			mozillaPreview.detachMozillaEventAdapter();

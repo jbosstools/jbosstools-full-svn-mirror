@@ -24,6 +24,7 @@ public class XulRunnerEditor2 extends XulRunnerEditor {
 		this.mozillaEditor = mozillaEditor;
 	}
 
+	@Override
 	public void onLoadWindow() {
 		if (mozillaEditor == null) {
 			return;
@@ -40,21 +41,25 @@ public class XulRunnerEditor2 extends XulRunnerEditor {
 		}
 
 	}
+	@Override
 	public void onElementResize(nsIDOMElement element, int constrains, int top, int left, int width, int height) {
 		if (mozillaEditor != null && mozillaEditor.getResizeListener() != null) {
 			mozillaEditor.getResizeListener().elementResized(element, constrains, top, left, width, height);
 		}
 	}
+	@Override
 	public void onShowTooltip(int x, int y, String text) {
 		if (mozillaEditor != null && mozillaEditor.getTooltipListener() != null) {
 			mozillaEditor.getTooltipListener().onShowTooltip(x, y, text);
 		}
 	}
+	@Override
 	public void onHideTooltip() {
 		if (mozillaEditor != null && mozillaEditor.getTooltipListener() != null) {
 			mozillaEditor.getTooltipListener().onHideTooltip();
 		}
 	}
+	@Override
 	public void onDispose() {
 		if (mozillaEditor != null) {
 			mozillaEditor.tearDownEditor();

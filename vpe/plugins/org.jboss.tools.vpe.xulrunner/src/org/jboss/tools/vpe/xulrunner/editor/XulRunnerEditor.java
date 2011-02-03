@@ -144,9 +144,9 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 						nsITooltipListener.NS_ITOOLTIPLISTENER_IID);
 				removeProgressListener(XulRunnerEditor.this);
 
-				if (resizeListener != null)
-					getIXulRunnerVpeResizer().removeResizeListener(
-							resizeListener);
+				if (resizeListener != null) {
+					getIXulRunnerVpeResizer().removeResizeListener(resizeListener);
+				}
 				xulRunnerVpeResizer.dispose();
 				xulRunnerVpeResizer = null;
 				resizeListener = null;
@@ -206,17 +206,17 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	}
 
 	/**
-	 * Removes resizer listener
+	 * Removes resize listener
 	 */
-	public void removeResizerListener() {
+	public void removeResizeListener() {
 		if (resizeListener != null)
 			getIXulRunnerVpeResizer().removeResizeListener(resizeListener);
 	}
 
 	/**
-	 * Add Resizer Listener
+	 * Add Resize Listener
 	 */
-	public void addResizerListener() {
+	public void addResizeListener() {
 		if (getIXulRunnerVpeResizer() != null) {
 			getIXulRunnerVpeResizer().init(getDOMDocument());
 			getIXulRunnerVpeResizer().addResizeListener(resizeListener);
@@ -238,7 +238,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	}
 	
 	public void onLoadWindow() {
-		addResizerListener();
+		addResizeListener();
 	}
 
 	public nsIDOMDocument getDOMDocument() {
@@ -252,8 +252,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	 * @return
 	 */
 	public nsIDOMElement getLastSelectedElement() {
-
-		return getElement(lastSelectedNode);
+		return getSelectedElementForNode(lastSelectedNode);
 	}
 
 	public nsIDOMNode getLastSelectedNode() {
@@ -282,72 +281,13 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	public void setSelectionRectangle(nsIDOMNode node, int resizerConstrains,
 			boolean scroll) {
 		if (getFlasher() == null) {
-
 			return;
 		}
 
-		nsIDOMElement element = getElement(node);
+		nsIDOMElement element = getSelectedElementForNode(node);
 
-		// See https://jira.jboss.org/jira/browse/JBIDE-5117. We make
-		// unnecessary redrawing of previously selected component in VE
-		// which happens in drawElementOutline(nsIDOMElement domElement)
-		// method and call IFlasher.drawElementOutline(nsIDOMElement domElement)
-		// twice for different elements without browser repainting. So, for some
-		// conflicts in Mozilla browser border above TR element wasn't
-		// repainted.
-
-		// if (getLastSelectedElement() != null) {
-		//			
-		// scrollRegtangleFlag = scroll && node != null;
-		//			
-		// try {
-		// ((nsIBaseWindow) getWebBrowser().queryInterface(
-		// nsIBaseWindow.NS_IBASEWINDOW_IID)).repaint(true);
-		// } catch (XPCOMException ex) {
-		// // just ignore its
-		//				BrowserPlugin.getDefault().logInfo("repaint failed", ex); //$NON-NLS-1$
-		// }
-		// if(checkVisability(getLastSelectedElement())){
-		//				
-		// if((getLastSelectedElement().getAttribute(VPEFLASHERCOLORATTRIBUTE)==null)||
-		// (!getLastSelectedElement().getAttribute(VPEFLASHERCOLORATTRIBUTE).equals(flasherHiddentElementColor)))
-		// {
-		//				
-		// getIFlasher().setColor(flasherVisialElementColor);
-		// } else{
-		// getIFlasher().setColor(flasherHiddentElementColor);
-		// }
-		//					
-		// drawElementOutline(getLastSelectedElement());
-		//
-		// }else {
-		//				
-		// getIFlasher().setColor(flasherHiddentElementColor);
-		// nsIDOMElement domElement =
-		// findVisbleParentElement(getLastSelectedElement());
-		//				
-		// if(domElement!=null) {
-		//			
-		// drawElementOutline(domElement);
-		// }
-		//				
-		// }
-		// try {
-		// ((nsIBaseWindow) getWebBrowser().queryInterface(
-		// nsIBaseWindow.NS_IBASEWINDOW_IID)).repaint(true);
-		// } catch (XPCOMException ex) {
-		// // just ignore its
-		//				BrowserPlugin.getDefault().logInfo("repaint failed", ex); //$NON-NLS-1$
-		// }
-
-		// } else
 		if (element != null) {
-			try {
-				XPCOM.queryInterface(getWebBrowser(), nsIBaseWindow.class).repaint(true);
-			} catch (XPCOMException ex) {
-				// just ignore its
-				BrowserPlugin.getDefault().logInfo("repaint failed", ex); //$NON-NLS-1$
-			}
+			repaint();
 
 			if (scroll) {
 				scrollToElement(element);
@@ -388,6 +328,20 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 		lastResizerConstrains = resizerConstrains;
 		
 		fireSelectionListeners();
+	}
+
+	/**
+	 * Forcible repaints current XULRunner window.
+	 * 
+	 * If an exception occurs during repaint, it will be logged.
+	 */
+	private void repaint() {
+		try {
+			XPCOM.queryInterface(getWebBrowser(), nsIBaseWindow.class).repaint(true);
+		} catch (XPCOMException ex) {
+			// just ignore it
+			BrowserPlugin.getDefault().logInfo("repaint failed", ex); //$NON-NLS-1$
+		}
 	}
 
 	/**
@@ -510,7 +464,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 
 				scrollToElement(getLastSelectedElement());
 			}
-			// checks visability of element
+			// checks visibility of element
 			if (checkVisibility(getLastSelectedElement())) {
 
 				if ((getLastSelectedElement().getAttribute(
@@ -562,27 +516,19 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	}
 
 	/**
-	 * get nsIDomElement from nsIDomNode
+	 * Returns the element to be selected for the given {@code node}.
 	 * 
-	 * if node is nsIDomElement - return it
-	 * 
-	 * if node is text node - return it's
-	 * 
-	 * parent else return null
-	 * 
-	 * @param node
-	 * @return
+	 * If node is an element, then returns it as is.
+	 * If node is a text node, then returns its parent
+	 * Else returns null;
 	 */
-	private nsIDOMElement getElement(nsIDOMNode node) {
-
+	private nsIDOMElement getSelectedElementForNode(nsIDOMNode node) {
 		if (node != null) {
-
 			if (node.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
 				return XPCOM.queryInterface(node, nsIDOMElement.class);
 			} else if (node.getNodeType() == nsIDOMNode.TEXT_NODE) {
 				return XPCOM.queryInterface(node.getParentNode(), nsIDOMElement.class);
 			}
-
 		}
 
 		return null;
