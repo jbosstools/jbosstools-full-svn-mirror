@@ -23,12 +23,16 @@ import org.eclipse.jface.action.IContributionManager;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.dialogs.IDialogSettings;
+import org.eclipse.jface.fieldassist.ControlDecoration;
+import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Control;
@@ -371,5 +375,19 @@ public class UIUtils {
 			return data;
 		}
 
+	public static ControlDecoration createErrorDecoration(String errorText, Control control) {
+		return createDecoration(errorText, FieldDecorationRegistry.DEC_ERROR, control);
+	}
+	
+	public static ControlDecoration createDecoration(String text, String imageKey, Control control) {
+		ControlDecoration decoration = new ControlDecoration(control, SWT.LEFT | SWT.TOP);
+		Image errorImage = FieldDecorationRegistry.getDefault()
+				.getFieldDecoration(imageKey).getImage();
+		decoration.setImage(errorImage);
+		decoration.setDescriptionText(text);
+		decoration.setShowHover(true);
+		decoration.hide();
+		return decoration;
+	}
 
 }

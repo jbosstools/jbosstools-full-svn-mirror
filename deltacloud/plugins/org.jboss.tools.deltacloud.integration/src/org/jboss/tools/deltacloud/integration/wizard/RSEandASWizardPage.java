@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.fieldassist.ControlDecoration;
-import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.rse.core.model.IHost;
 import org.eclipse.swt.SWT;
@@ -23,12 +22,10 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -110,7 +107,7 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 		remoteDetailsLoc = new Text(g, SWT.BORDER);
 		remoteDetailsLoc.setLayoutData(UIUtils.createFormData(autoScanCheck, 5, null, 0, 0, INDENTATION, 100, -5));
 		remoteDetailsLoc.setText("./.jboss");
-		this.remoteDetailsLocDeco = createErrorDecoration(REMOTE_DETAILS_LOC_ERROR, remoteDetailsLoc);
+		this.remoteDetailsLocDeco = UIUtils.createErrorDecoration(REMOTE_DETAILS_LOC_ERROR, remoteDetailsLoc);
 
 		autoLocalRuntimeLabel = new Label(g, SWT.NONE);
 		autoLocalRuntimeLabel.setText("Local Runtime: ");
@@ -131,7 +128,7 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 		autoLocalRuntimeCombo = new Combo(g, SWT.READ_ONLY);
 		autoLocalRuntimeCombo.setLayoutData(UIUtils.createFormData(remoteDetailsLoc, 5, null, 0, autoLocalRuntimeLabel,
 				10, autoAddLocalRuntimeButton, -5));
-		this.autoLocalRuntimeDeco = createErrorDecoration(SELECT_RUNTIME_ERROR, autoLocalRuntimeCombo);
+		this.autoLocalRuntimeDeco = UIUtils.createErrorDecoration(SELECT_RUNTIME_ERROR, autoLocalRuntimeCombo);
 
 		hardCodeServerDetails = new Button(g, SWT.RADIO);
 		hardCodeServerDetails.setText("Set remote server details manually");
@@ -143,7 +140,7 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 		serverHomeText = new Text(g, SWT.BORDER);
 		serverHomeText.setLayoutData(UIUtils.createFormData(hardCodeServerDetails, 5, null, 0, serverHome, 10, 100, -5));
 		serverHomeText.setText("/etc/jboss/jboss-as");
-		this.serverHomeDeco = createErrorDecoration(SERVER_HOME_ERROR, serverHomeText);
+		this.serverHomeDeco = UIUtils.createErrorDecoration(SERVER_HOME_ERROR, serverHomeText);
 
 		serverConfig = new Label(g, SWT.NONE);
 		serverConfig.setText("Configuration: ");
@@ -151,7 +148,7 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 		serverConfigText = new Text(g, SWT.BORDER);
 		serverConfigText.setLayoutData(UIUtils.createFormData(serverHomeText, 5, null, 0, serverHome, 10, 100, -5));
 		serverConfigText.setText("default");
-		this.serverConfigDeco = createErrorDecoration(SERVER_CONFIG_ERROR, serverConfigText);
+		this.serverConfigDeco = UIUtils.createErrorDecoration(SERVER_CONFIG_ERROR, serverConfigText);
 
 		localRuntimeLabel = new Label(g, SWT.NONE);
 		localRuntimeLabel.setText("Local Runtime: ");
@@ -171,7 +168,7 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 		localRuntimeCombo = new Combo(g, SWT.READ_ONLY);
 		localRuntimeCombo.setLayoutData(UIUtils.createFormData(serverConfigText, 5, null, 0, serverHome, 10,
 				addLocalRuntimeButton, -5));
-		this.localRuntimeDeco = createErrorDecoration(SELECT_RUNTIME_ERROR, localRuntimeCombo);
+		this.localRuntimeDeco = UIUtils.createErrorDecoration(SELECT_RUNTIME_ERROR, localRuntimeCombo);
 
 		deployOnlyRadio = new Button(g, SWT.RADIO);
 		deployOnlyRadio.setText("Use a deploy-only server adapter");
@@ -183,8 +180,11 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 		deployFolderText = new Text(g, SWT.BORDER);
 		deployFolderText.setText("/path/to/deploy");
 		deployFolderText.setLayoutData(UIUtils.createFormData(deployOnlyRadio, 5, null, 0, deployFolder, 10, 100, -5));
-		this.deployFolderDeco = createErrorDecoration(DEPLOY_FOLDER_NOT_EMPTY, deployFolderText);
+		this.deployFolderDeco = UIUtils.createErrorDecoration(DEPLOY_FOLDER_NOT_EMPTY, deployFolderText);
 
+		Label dummyLabel = new Label(g, SWT.NONE);
+		dummyLabel.setLayoutData(UIUtils.createFormData(deployOnlyRadio, 5, null, 0, deployFolderText, 10, 100, -5));
+		
 		IEclipsePreferences prefs = new InstanceScope().getNode(DeltaCloudIntegrationPlugin.PLUGIN_ID);
 		boolean initRSE, initServer;
 		initRSE = prefs.getBoolean(CREATE_RSE_PREF_KEY, DEFALUT_CREATE_RSE);
@@ -226,17 +226,6 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 		autoLocalRuntimeCombo.addModifyListener(modListener);
 		localRuntimeCombo.addModifyListener(modListener);
 		setControl(c2);
-	}
-
-	private ControlDecoration createErrorDecoration(String errorText, Control control) {
-		ControlDecoration decoration = new ControlDecoration(control, SWT.LEFT | SWT.TOP);
-		Image errorImage = FieldDecorationRegistry.getDefault()
-				.getFieldDecoration(FieldDecorationRegistry.DEC_ERROR).getImage();
-		decoration.setImage(errorImage);
-		decoration.setDescriptionText(errorText);
-		decoration.setShowHover(true);
-		decoration.hide();
-		return decoration;
 	}
 
 	private void fillRuntimeTypeCombo() {
