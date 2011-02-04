@@ -47,13 +47,19 @@ public class Factory implements IFactory<Validator> {
 	
 	public Validator create(QName qname) {
 			
-		// Bugzilla 324165
-		// https://issues.jboss.org/browse/JBIDE-6825
-		// handle unknown BPEL elements
-		Validator validator = createValidator ( qname.getLocalPart() );
-		if (validator==null)
-			validator = new UnknownElementValidator();
-		return validator;
+		String nsURI = qname.getNamespaceURI();
+		
+		if (nsURI.equals(IConstants.XMLNS_BPEL) || nsURI.equals(IConstants.XMLNS_BPEL20_OLD)) {
+			// Bugzilla 324165
+			// https://issues.jboss.org/browse/JBIDE-6825
+			// handle unknown BPEL elements
+			Validator validator = createValidator ( qname.getLocalPart() );
+			if (validator==null)
+				validator = new UnknownElementValidator();
+			return validator;
+		}
+		
+		return null;	
 	}
 	
 	@SuppressWarnings("nls")
