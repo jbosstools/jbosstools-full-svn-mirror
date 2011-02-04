@@ -12,8 +12,8 @@ package org.jboss.tools.deltacloud.core;
 
 public interface IDeltaCloudManagerListener {
 	
-	public static int ADD_EVENT = 1;
-	public static int REMOVE_EVENT = 2;
+	public final static int ADD_EVENT = 1;
+	public final static int REMOVE_EVENT = 2;
 	
 	void cloudsChanged(int type, DeltaCloud cloud);
 }
