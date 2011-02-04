@@ -10,14 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
-import org.eclipse.core.runtime.Assert;
 import org.eclipse.jface.fieldassist.ControlDecoration;
-import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
@@ -27,30 +21,23 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
-import org.jboss.tools.deltacloud.core.ICloudElementFilter;
-import org.jboss.tools.deltacloud.core.IFieldMatcher;
 import org.jboss.tools.deltacloud.core.IImageFilter;
-import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 
 /**
  * @author Jeff Johnston
  */
-public class ImageFilterPage extends WizardPage {
+public class ImageFilterPage extends AbstractFilterPage {
 
 	private final static String NAME = "ImageFilter.name"; //$NON-NLS-1$
 	private final static String TITLE = "ImageFilter.title"; //$NON-NLS-1$
 	private final static String DESC = "ImageFilter.desc"; //$NON-NLS-1$
 	private final static String FILTER_LABEL = "ImageFilter.label"; //$NON-NLS-1$
-	private final static String EMPTY_RULE = "ErrorFilterEmptyRule.msg"; //$NON-NLS-1$
-	private final static String INVALID_SEMICOLON = "ErrorFilterSemicolon.msg"; //$NON-NLS-1$
 	private final static String NAME_LABEL = "Name.label"; //$NON-NLS-1$
 	private final static String ID_LABEL = "Id.label"; //$NON-NLS-1$
 	private final static String ARCH_LABEL = "Arch.label"; //$NON-NLS-1$
 	private final static String DESC_LABEL = "Desc.label"; //$NON-NLS-1$
-	private final static String DEFAULT_LABEL = "DefaultButton.label"; //$NON-NLS-1$
 
-	private DeltaCloud cloud;
 	private Text nameText;
 	private ControlDecoration nameDecoration;
 	private Button defaultName;
@@ -65,11 +52,7 @@ public class ImageFilterPage extends WizardPage {
 	private Button defaultDesc;
 
 	public ImageFilterPage(DeltaCloud cloud) {
-		super(WizardMessages.getString(NAME));
-		this.cloud = cloud;
-		setDescription(WizardMessages.getString(DESC));
-		setTitle(WizardMessages.getString(TITLE));
-		setImageDescriptor(SWTImagesFactory.DESC_DELTA_LARGE);
+		super(WizardMessages.getString(NAME), WizardMessages.getString(TITLE), WizardMessages.getString(DESC), cloud);
 		setPageComplete(false);
 	}
 
@@ -89,44 +72,23 @@ public class ImageFilterPage extends WizardPage {
 		return descText.getText();
 	}
 
-	private ModifyListener textListener = new ModifyListener() {
-
-		@Override
-		public void modifyText(ModifyEvent e) {
-			validate();
+	@Override
+	protected Text getTextWidget(Button button) {
+		Text text = null;
+		if (button == defaultName) {
+			text = nameText;
+		} else if (button == defaultId) {
+			text = idText;
+		} else if (button == defaultArch) {
+			text = archText;
+		} else if (button == defaultDesc) {
+			text = descText;
 		}
-	};
+		return text;
+	}
 
-	private SelectionAdapter buttonListener = new SelectionAdapter() {
-		@Override
-		public void widgetSelected(SelectionEvent e) {
-			Button b = (Button) e.widget;
-			Text text = getTextWidget(b);
-			if (text != null) {
-				text.setText(ICloudElementFilter.ALL_MATCHER_EXPRESSION);
-			}
-		}
-
-		private Text getTextWidget(Button button) {
-			Text text = null;
-			if (button == defaultName) {
-				text = nameText;
-			}
-			else if (button == defaultId) {
-				text = idText;
-			}
-			else if (button == defaultArch) {
-				text = archText;
-			}
-			else if (button == defaultDesc) {
-				text = descText;
-			}
-			return text;
-		}
-
-	};
-
-	private void validate() {
+	@Override
+	protected void validate() {
 		nameDecoration.hide();
 		idDecoration.hide();
 		archDecoration.hide();
@@ -139,24 +101,6 @@ public class ImageFilterPage extends WizardPage {
 		setPageComplete(error == null);
 		setErrorMessage(error);
 	}
-	
-	private String validate(Text text, ControlDecoration decoration, String formError) {
-		String error = null;
-		if (text.getText().length() == 0) {
-			error = WizardMessages.getString(EMPTY_RULE);
-		} else if (text.getText().contains(ICloudElementFilter.EXPRESSION_DELIMITER)) {
-			error = WizardMessages.getString(INVALID_SEMICOLON);
-		}
-		if (error != null) {
-			decoration.setDescriptionText(error);
-			decoration.show();
-			setPageComplete(false);
-			setErrorMessage(error);
-			return error;
-		} else {
-			return formError;
-		}
-	}
 
 	@Override
 	public void createControl(Composite parent) {
@@ -166,7 +110,7 @@ public class ImageFilterPage extends WizardPage {
 		layout.marginWidth = 5;
 		container.setLayout(layout);
 
-		IImageFilter filter = cloud.getImageFilter();
+		IImageFilter filter = getDeltaCloud().getImageFilter();
 
 		Label label = new Label(container, SWT.NULL);
 		label.setText(WizardMessages.getString(FILTER_LABEL));
@@ -268,27 +212,4 @@ public class ImageFilterPage extends WizardPage {
 		setControl(container);
 		setPageComplete(true);
 	}
-
-	private Label createRuleLabel(String text, Composite container) {
-		Label label = new Label(container, SWT.NULL);
-		label.setText(text);
-		return label;
-	}
-
-	private Button createDefaultRuleButton(final Composite container) {
-		Button button = new Button(container, SWT.NULL);
-		button.setText(WizardMessages.getString(DEFAULT_LABEL));
-		button.addSelectionListener(buttonListener);
-		return button;
-	}
-
-	private Text createRuleText(IFieldMatcher rule, final Composite container) {
-		Assert.isNotNull(rule, "Rule may not be null");
-
-		Text text = new Text(container, SWT.BORDER | SWT.SINGLE);
-		text.setText(rule.toString());
-		text.addModifyListener(textListener);
-		return text;
-	}
-
 }
