@@ -293,19 +293,15 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 					deployFolderDeco.show();
 				}
 			} else if (autoScanCheck.getSelection()) {
-				if (autoLocalRuntimeCombo.getSelectionIndex() < 0) {
-					autoLocalRuntimeDeco.show();
-					error = SELECT_RUNTIME_ERROR;
-				}
 				if (remoteDetailsLoc.getText().equals("")) {
 					remoteDetailsLocDeco.show();
 					error = REMOTE_DETAILS_LOC_ERROR;
 				}
-			} else if (hardCodeServerDetails.getSelection()) {
-				if (localRuntimeCombo.getSelectionIndex() < 0) {
-					localRuntimeDeco.show();
+				if (autoLocalRuntimeCombo.getSelectionIndex() < 0) {
+					autoLocalRuntimeDeco.show();
 					error = SELECT_RUNTIME_ERROR;
 				}
+			} else if (hardCodeServerDetails.getSelection()) {
 				if (serverHomeText.getText().equals("")) {
 					serverHomeDeco.show();
 					error = SERVER_HOME_ERROR;
@@ -313,6 +309,10 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 				if (serverConfigText.getText().equals("")) {
 					serverConfigDeco.show();
 					error = SERVER_CONFIG_ERROR;
+				}
+				if (localRuntimeCombo.getSelectionIndex() < 0) {
+					localRuntimeDeco.show();
+					error = SELECT_RUNTIME_ERROR;
 				}
 			}
 		}
