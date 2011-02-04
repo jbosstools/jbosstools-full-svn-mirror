@@ -31,10 +31,10 @@ public class BPELConstants {
 	
 	
 	/** The default query language */
-	static final String XMLNS_XPATH_QUERY_LANGUAGE_2007 = "urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0";
+	public static final String XMLNS_XPATH_QUERY_LANGUAGE_2007 = "urn:oasis:names:tc:wsbpel:2.0:sublang:xpath1.0";
 
 	/** The "old" default query language */
-	static final String XMLNS_XPATH_QUERY_LANGUAGE_2004 = "http://www.w3.org/TR/1999/REC-xpath-19991116";
+	public static final String XMLNS_XPATH_QUERY_LANGUAGE_2004 = "http://www.w3.org/TR/1999/REC-xpath-19991116";
 
 	/** The current query language */
 	public static final String XMLNS_XPATH_QUERY_LANGUAGE = XMLNS_XPATH_QUERY_LANGUAGE_2007;
