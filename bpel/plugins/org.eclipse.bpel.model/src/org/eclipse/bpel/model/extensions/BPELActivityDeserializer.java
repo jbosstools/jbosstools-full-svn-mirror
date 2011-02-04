@@ -31,6 +31,9 @@ public interface BPELActivityDeserializer {
 	/**
 	 * This method deserializes elements into instances of classes
 	 * which implement the Activity interface.
+	 * https://bugs.eclipse.org/bugs/show_bug.cgi?id=334424
+	 * https://issues.jboss.org/browse/JBIDE-8132
+	 * Client needs to use the activity if not null
 	 */
-	public Activity unmarshall(QName elementType, Node node, Process process, Map nsMap, ExtensionRegistry extReg, URI uri, BPELReader bpelReader);	
+	public Activity unmarshall(QName elementType, Node node, Activity activity, Process process, Map nsMap, ExtensionRegistry extReg, URI uri, BPELReader bpelReader);	
 }

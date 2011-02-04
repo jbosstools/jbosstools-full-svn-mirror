@@ -1758,10 +1758,12 @@ public class ReconciliationBPELReader extends BPELReader implements
 			activity = xml2Rethrow(activity, activityElement);
 		} else if (localName.equals("extensionActivity")) {
 			// extensionActivity is a special case. It does not have any
-			// standard
-			// attributes or elements, nor is it an extensible element.
-			// Return immediately.
-			activity = xml2ExtensionActivity(activityElement);
+			// standard attributes or elements, nor is it an extensible
+			// element. Return immediately.
+			// https://bugs.eclipse.org/bugs/show_bug.cgi?id=334424
+			// https://issues.jboss.org/browse/JBIDE-8132
+			// Need to pass the activity in to the deserializer
+			activity = xml2ExtensionActivity(activity,activityElement);
 			return activity;
 		} else if (localName.equals("opaqueActivity")) {
 			activity = xml2OpaqueActivity(activity, activityElement);
@@ -2691,7 +2693,8 @@ public class ReconciliationBPELReader extends BPELReader implements
 	 * Converts an XML extensionactivity element to a BPEL ExtensionActivity
 	 * object.
 	 */
-	protected Activity xml2ExtensionActivity(Element extensionActivityElement) {
+	protected Activity xml2ExtensionActivity(Activity extensionActivity,
+			Element extensionActivityElement) {
 		// Do not call setStandardAttributes here because
 		// extensionActivityElement
 		// doesn't have them.
@@ -2711,13 +2714,15 @@ public class ReconciliationBPELReader extends BPELReader implements
 			if (deserializer != null) {
 				// Deserialize the DOM element and return the new Activity
 				Map<String, String> nsMap = getAllNamespacesForElement(child);
-				Activity activity = deserializer.unmarshall(qname, child,
-						process, nsMap, extensionRegistry, getResource()
+				// https://bugs.eclipse.org/bugs/show_bug.cgi?id=334424
+				// https://issues.jboss.org/browse/JBIDE-8132
+				// pass the activity that was already created to the serializer
+				extensionActivity = deserializer.unmarshall(qname, child,
+						extensionActivity, process, nsMap, extensionRegistry, getResource()
 								.getURI(), this);
 
-				// Now let's do the standard attributes and elements
-				setStandardAttributes(child, activity);
-				setStandardElements(child, activity);
+				setStandardAttributes(child, extensionActivity);
+				setStandardElements(child, extensionActivity);
 
 				// Don't do extensibility because extensionActivity is not
 				// extensible.
@@ -2728,9 +2733,9 @@ public class ReconciliationBPELReader extends BPELReader implements
 				// The created Activity that extends from ExtensioActivity
 				// should get the
 				// whole <extensionActivity>-DOM-Fragment, this is done here.
-				activity.setElement(extensionActivityElement);
+				extensionActivity.setElement(extensionActivityElement);
 
-				return activity;
+				return extensionActivity;
 			}
 		}
 		// Fallback is to create a new extensionActivity.

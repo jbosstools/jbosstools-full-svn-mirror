@@ -2355,6 +2355,7 @@ public class BPELReader implements ErrorHandler {
 	protected Activity xml2ExtensionActivity(Element extensionActivityElement) {
 		// Do not call setStandardAttributes here because extensionActivityElement
 		// doesn't have them.
+		Activity extensionActivity = BPELFactory.eINSTANCE.createExtensionActivity();
 
 		// Find the child element.
 		List<Element> nodeList = getChildElements(extensionActivityElement);
@@ -2370,10 +2371,12 @@ public class BPELReader implements ErrorHandler {
 			if (deserializer != null) {
 				// Deserialize the DOM element and return the new Activity
 				Map<String,String> nsMap = getAllNamespacesForElement(child);
-				Activity activity = deserializer.unmarshall(qname,child,process,nsMap,extensionRegistry,getResource().getURI(), this);
+				// https://bugs.eclipse.org/bugs/show_bug.cgi?id=334424
+				// https://issues.jboss.org/browse/JBIDE-8132
+				extensionActivity = deserializer.unmarshall(qname,child,extensionActivity,process,nsMap,extensionRegistry, getResource().getURI(), this);
 				// Now let's do the standard attributes and elements
-				setStandardAttributes(child, activity);
-				setStandardElements(child, activity);
+				setStandardAttributes(child, extensionActivity);
+				setStandardElements(child, extensionActivity);
 				
 				// Don't do extensibility because extensionActivity is not extensible.
 				// If individual extensionActivity subclasses are actually extensible, they
@@ -2381,17 +2384,16 @@ public class BPELReader implements ErrorHandler {
 				
 				// The created Activity that extends from ExtensioActivity should get the
 				// whole <extensionActivity>-DOM-Fragment, this is done here.
-				activity.setElement(extensionActivityElement);
- 				return activity;
+				extensionActivity.setElement(extensionActivityElement);
+ 				return extensionActivity;
 			}
 		}
 		// Fallback is to create a new extensionActivity.
-		// https://jira.jboss.org/browse/JBIDE-6917
-		Activity activity = BPELFactory.eINSTANCE.createExtensionActivity();
-		setStandardAttributes(extensionActivityElement, activity);
-		setStandardElements(extensionActivityElement, activity);
-		activity.setElement(extensionActivityElement);
-		return activity;
+		// Bugzilla 324115
+		setStandardAttributes(extensionActivityElement, extensionActivity);
+		setStandardElements(extensionActivityElement, extensionActivity);
+		extensionActivity.setElement(extensionActivityElement);
+		return extensionActivity;
 	}
 
 	

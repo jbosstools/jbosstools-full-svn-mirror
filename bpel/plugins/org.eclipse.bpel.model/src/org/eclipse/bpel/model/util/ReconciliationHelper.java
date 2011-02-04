@@ -215,6 +215,10 @@ public class ReconciliationHelper {
 			// https://issues.jboss.org/browse/JBIDE-8048
 			// this was left out inadevertently
 			reader.xml2CompensationHandler((CompensationHandler)element, changedElement);
+		} else if (element instanceof ExtensibleElement){
+			// https://bugs.eclipse.org/bugs/show_bug.cgi?id=334424
+			// https://issues.jboss.org/browse/JBIDE-8132
+			reader.xml2ExtensibleElement((ExtensibleElement)element, changedElement);
 		} else {
 			System.err.println("Cannot reconcile: " + element.getClass());
 //			throw new NotImplementedException(element.getClass().toString());
