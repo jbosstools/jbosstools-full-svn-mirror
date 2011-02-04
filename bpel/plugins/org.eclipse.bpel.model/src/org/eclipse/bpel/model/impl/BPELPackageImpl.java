@@ -3448,6 +3448,10 @@ public class BPELPackageImpl extends EPackageImpl implements BPELPackage {
 		createEReference(onEventEClass, ON_EVENT__OPERATION);
 		createEReference(onEventEClass, ON_EVENT__PORT_TYPE);
 		createEReference(onEventEClass, ON_EVENT__MESSAGE_TYPE);
+		// https://bugs.eclipse.org/bugs/show_bug.cgi?id=336003
+		// https://issues.jboss.org/browse/JBIDE-8305
+		// "element" attribute was missing from original model
+		createEReference(onEventEClass, ON_EVENT__XSD_ELEMENT);
 		createEReference(onEventEClass, ON_EVENT__CORRELATION_SETS);
 		createEReference(onEventEClass, ON_EVENT__FROM_PARTS);
 		createEReference(onEventEClass, ON_EVENT__MESSAGE_EXCHANGE);

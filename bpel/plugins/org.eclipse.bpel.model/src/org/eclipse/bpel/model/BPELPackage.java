@@ -4936,6 +4936,17 @@ public interface BPELPackage extends EPackage {
 	 */
 	int ON_EVENT__MESSAGE_TYPE = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 6;
 
+	// https://bugs.eclipse.org/bugs/show_bug.cgi?id=336003
+	// https://issues.jboss.org/browse/JBIDE-8305
+	// "element" attribute was missing from original model
+	/**
+	 * The feature id for the '<em><b>XSD Element</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ON_EVENT__XSD_ELEMENT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 7;
 	/**
 	 * The feature id for the '<em><b>Correlation Sets</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
@@ -4943,7 +4954,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_EVENT__CORRELATION_SETS = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 7;
+	int ON_EVENT__CORRELATION_SETS = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 8;
 
 	/**
 	 * The feature id for the '<em><b>From Parts</b></em>' containment reference.
@@ -4952,7 +4963,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_EVENT__FROM_PARTS = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 8;
+	int ON_EVENT__FROM_PARTS = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 9;
 
 	/**
 	 * The feature id for the '<em><b>Message Exchange</b></em>' reference.
@@ -4961,7 +4972,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_EVENT__MESSAGE_EXCHANGE = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 9;
+	int ON_EVENT__MESSAGE_EXCHANGE = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 10;
 
 	/**
 	 * The number of structural features of the '<em>On Event</em>' class.
@@ -4970,7 +4981,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_EVENT_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 10;
+	int ON_EVENT_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 11;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.

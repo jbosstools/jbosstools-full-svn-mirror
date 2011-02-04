@@ -17,6 +17,7 @@ package org.eclipse.bpel.model;
 import org.eclipse.wst.wsdl.Message;
 import org.eclipse.wst.wsdl.Operation;
 import org.eclipse.wst.wsdl.PortType;
+import org.eclipse.xsd.XSDElementDeclaration;
 
 /**
  * <!-- begin-user-doc -->
@@ -223,6 +224,34 @@ public interface OnEvent extends ExtensibleElement {
 	 */
 	void setMessageType(Message value);
 
+	// https://bugs.eclipse.org/bugs/show_bug.cgi?id=336003
+	// https://issues.jboss.org/browse/JBIDE-8305
+	// "element" attribute was missing from original model
+	/**
+	 * Returns the value of the '<em><b>XSD Element</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>XSD Element</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>XSDElementDeclaration Type</em>' reference.
+	 * @see #setXSDElement(XSDElementDeclaration)
+	 * @see org.eclipse.bpel.model.BPELPackage#getOnEvent_XSDElement()
+	 * @model required="true"
+	 * @generated
+	 */
+	XSDElementDeclaration getXSDElement();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.bpel.model.OnEvent#getXSDElement <em>XSDElementDeclaration Type</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>XSDElementDeclaration Type</em>' reference.
+	 * @see #getXSDElement()
+	 * @generated
+	 */
+	void setXSDElement(XSDElementDeclaration value);
 	/**
 	 * Returns the value of the '<em><b>Correlation Sets</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
