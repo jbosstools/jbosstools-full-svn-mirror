@@ -2078,6 +2078,13 @@ public class BPELWriter {
 			onEventElement.setAttribute("messageType", qNameToString(onEvent,
 					onEvent.getMessageType().getQName()));
 		}
+		// https://bugs.eclipse.org/bugs/show_bug.cgi?id=336003
+		// https://issues.jboss.org/browse/JBIDE-8305
+		// "element" attribute was missing from original model
+		if (onEvent.getXSDElement() != null) {
+			onEventElement.setAttribute("element",
+					onEvent.getXSDElement().getQName());
+		}
 		if (onEvent.getCorrelationSets() != null) {
 			onEventElement.appendChild(correlationSets2XML(onEvent
 					.getCorrelationSets()));

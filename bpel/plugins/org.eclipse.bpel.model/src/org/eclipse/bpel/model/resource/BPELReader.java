@@ -831,6 +831,20 @@ public class BPELReader implements ErrorHandler {
 			onEvent.setMessageType(messageType);
 		}
 
+		// https://bugs.eclipse.org/bugs/show_bug.cgi?id=336003
+		// https://issues.jboss.org/browse/JBIDE-8305
+		// "element" attribute was missing from original model
+		// Set xsd element
+		if (activityElement.hasAttribute("element")) {
+			QName qName = BPELUtils.createAttributeValue(activityElement,
+					"element");
+			XSDElementDeclaration element = new XSDElementDeclarationProxy(
+					getResource().getURI(), qName);
+			onEvent.setXSDElement(element);
+		} else {
+			onEvent.setXSDElement(null);
+		}
+
 		// Set correlations
 		Element correlationsElement = getBPELChildElementByLocalName(activityElement, "correlations");
 		if (correlationsElement != null) {
