@@ -100,7 +100,7 @@
 						</mediaobject>
 					</figure>
 					<para>
-						Refer to the <citetitle pubwork="chapter">JBoss Tools Palette</citetitle> chapter of the <citetitle pubwork="book">Visual Web Tools Reference Guide</citetitle> for more details.
+						Refer to the <ulink url="http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/4.0/html-single/Visual_Web_Tools_Reference_Guide/index.html#palette">JBoss Tools Palette</ulink> chapter of the <citetitle pubwork="book">Visual Web Tools Reference Guide</citetitle> for more details.
 					</para>
 				</listitem>
 			</varlistentry>
@@ -183,7 +183,7 @@
 						</mediaobject>
 					</figure>
 					<para>
-						Refer to the <citetitle pubwork="chapter">Web Projects View</citetitle> chapter of the <citetitle pubwork="book">Visual Web Tools Reference Guide</citetitle> for more details.
+						Refer to the <ulink url="http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/4.0/html-single/Visual_Web_Tools_Reference_Guide/index.html#web_projects">Web Projects View</ulink> chapter of the <citetitle pubwork="book">Visual Web Tools Reference Guide</citetitle> for more details.
 					</para>
 				</listitem>
 			</varlistentry>
@@ -194,7 +194,7 @@
 						OpenOn provides an easy method for switching directly from one project resource to another without navigating through the <guilabel>Package Explorer</guilabel> view. Pressing <keycap>F3</keycap> or <keycombo><keycap>Ctrl</keycap><mousebutton>click</mousebutton></keycombo> when a reference to another file is highlighted will open the file in the editor.
 					</para>
 					<para>
-						Refer to the <citetitle pubwork="chapter">Editors</citetitle> chapter of the <citetitle pubwork="book">Visual Web Tools Reference Guide</citetitle> for more details.
+						Refer to the <ulink url="http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/4.0/html-single/Visual_Web_Tools_Reference_Guide/index.html#jbds_editors">Editors</ulink> chapter of the <citetitle pubwork="book">Visual Web Tools Reference Guide</citetitle> for more details.
 					</para>
 				</listitem>
 			</varlistentry>
@@ -221,7 +221,7 @@
 						</mediaobject>
 					</figure>
 					<para>
-						Refer to the <citetitle pubwork="chapter">Editors</citetitle> chapter of <citetitle pubwork="book">Visual Web Tools Reference Guide</citetitle> for full details.
+						Refer to the <ulink url="http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/4.0/html-single/Visual_Web_Tools_Reference_Guide/index.html#jbds_editors">Editors</ulink> chapter of <citetitle pubwork="book">Visual Web Tools Reference Guide</citetitle> for full details.
 					</para>
 				</listitem>
 			</varlistentry>
@@ -232,7 +232,7 @@
 						Properties, managed bean attributes, navigation rules, tag library file declarations, and <acronym>JSP</acronym> pages can all be dragged from the <guilabel>Web Projects</guilabel> view and dropped into the editor to add content.
 					</para>
 					<para>
-						Refer to the <citetitle pubwork="chapter">Web Projects View</citetitle> chapter of the <citetitle pubwork="book">Visual Web Tools Reference Guide</citetitle> for more details.
+						Refer to the <ulink url="http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/4.0/html-single/Visual_Web_Tools_Reference_Guide/index.html#web_projects">Web Projects View</ulink> chapter of the <citetitle pubwork="book">Visual Web Tools Reference Guide</citetitle> for more details.
 					</para>
 				</listitem>
 			</varlistentry>
@@ -243,7 +243,7 @@
 						RichFaces and Ajax4jsf tag libraries can be used from the JBoss Tools Palette, and RichFaces components are rendered in the Visual Page Editor.
 					</para>
 					<para>
-						Refer to the <citetitle pubwork="chapter">Editors</citetitle> chapter of the <citetitle pubwork="book">Visual Web Tools Reference Guide</citetitle> for more details.
+						Refer to the <ulink url="http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/4.0/html-single/Visual_Web_Tools_Reference_Guide/index.html#jbds_editors">Editors</ulink> chapter of the <citetitle pubwork="book">Visual Web Tools Reference Guide</citetitle> for more details.
 					</para>
 				</listitem>
 			</varlistentry>
@@ -420,7 +420,7 @@
 			</varlistentry>
 		</variablelist>
 		<para>
-			Refer to the <citetitle pubwork="book">Seam Development Tools Reference Guide</citetitle> for more details.
+			Refer to the <ulink url="http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/4.0/html-single/Seam_Developer_Tools_Reference_Guide/index.html">Seam Development Tools Reference Guide</ulink> for more details.
 		</para>
 	</section>
 	
@@ -490,7 +490,7 @@
 			</varlistentry>
 		</variablelist>
 		<para>
-			Refer to the <citetitle pubwork="book">Hibernate Tools Reference</citetitle> for more details.
+			Refer to the <ulink url="http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/4.0/html-single/Hibernate_Tools_Reference_Guide/index.html">Hibernate Tools Reference</ulink> for more details.
 		</para>
 	</section>
 	
@@ -519,7 +519,7 @@
 			Click the <guibutton>Modify...</guibutton> button and enable portlets for the creation of <application>JBoss Portal</application> applications through this wizard.
 		</para>
 		<para>
-			Refer to the <citetitle pubwork="book">JBoss Portal Tools Reference Guide</citetitle> for more details.
+			Refer to the <ulink url="http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/4.0/html-single/JBoss_Portlet_Tools_User_Guide/index.html">JBoss Portal Tools Reference Guide</ulink> for more details.
 		</para>
 	</section>
 	
@@ -598,7 +598,7 @@
 			</varlistentry>
 		</variablelist>
 		<para>
-			Refer to the <citetitle pubwork="book">JMX Tools Reference Guide</citetitle> for more details.
+			Refer to the <ulink url="http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/4.0/html-single/JMX_Tools_Reference_Guide/index.html">JMX Tools Reference Guide</ulink> for more details.
 		</para>
 	</section>
 	
@@ -667,7 +667,7 @@
 			</listitem>
 		</itemizedlist>
 		<para>
-			Refer to the <citetitle pubwork="book">JSF Tools Reference Guide</citetitle> for more details.
+			Refer to the <ulink url="http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/4.0/html-single/JSF_Tools_Reference_Guide/index.html">JSF Tools Reference Guide</ulink> for more details.
 		</para>
 	</section>
 	
@@ -690,7 +690,7 @@
 			</mediaobject>
 		</figure>
 		<para>
-			Refer to the <citetitle pubwork="book">JBoss Server Manager Reference Guide</citetitle> for more details.
+			Refer to the <ulink url="http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/4.0/html-single/JBoss_Server_Manager_Reference_Guide/index.html">JBoss Server Manager Reference Guide</ulink> for more details.
 		</para>
 	</section>
 	
@@ -713,7 +713,7 @@
 			</mediaobject>
 		</figure>
 		<para>
-			Refer to the <citetitle pubwork="book">JBoss Server Manager Reference Guide</citetitle> for more details.
+			Refer to the <ulink url="http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/4.0/html-single/JBoss_Server_Manager_Reference_Guide/index.html">JBoss Server Manager Reference Guide</ulink> for more details.
 		</para>
 	</section>
 

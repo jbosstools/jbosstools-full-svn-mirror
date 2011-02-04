@@ -8,13 +8,13 @@
 	<section id="sect-Beginners_Guide-The_interface-Eclipse">
 		<title>Eclipse</title>
 		<para>
-			Eclipse provides a container for all development work  <application>JBoss Developer Studio</application>. It provides control over the application server, the applications on it and provides an interface through which you can develop your own applications.
+			Eclipse provides a container for all development work performed with <application>JBoss Developer Studio</application>. It provides control over the application server, the applications on it and provides an interface through which you can develop your own applications.
 		</para>
 		<para>
 			Eclipse is started by double-clicking on the <filename>jbdevstudio</filename> executable in your installation directory.
 		</para>
 		<para>
-			Following this you will be asked to specify a workspace. A workspace is the location on your computer where your files relating to the multiple sessions will be stored. If you wish to change your workspace location after this step you can do so by selecting <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>Switch Workspace</guimenuitem><guimenuitem>Other...</guimenuitem></menuchoice>.
+			Following this you will be asked to specify a workspace. A workspace is the location on your computer where your files relating to your Eclipse projects be stored. If you wish to change your workspace location after this step you can do so by selecting <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>Switch Workspace</guimenuitem><guimenuitem>Other...</guimenuitem></menuchoice>.
 		</para>
 		<figure id="figu-Beginners_Guide-Eclipse-Eclipse_Workspace_launcher">
 			<title>Eclipse Workspace launcher</title>
@@ -25,7 +25,7 @@
 			</mediaobject>
 		</figure>
 		<para>
-			After selecting the location of the workspace, you will be greeted with the <guilabel>Welcome</guilabel> screen. This screen provides a few pathway options, including the <guilabel>Getting Started</guilabel> link to a selection of documentation, an option to create a new project with the <guilabel>Create New...</guilabel> option and an option to skip straight to your <guilabel>Workbench</guilabel>.
+			After selecting the location of the workspace, you will be greeted with the <guilabel>Welcome</guilabel> screen. This screen provides a few pathway options, including the <guilabel>Getting Started</guilabel> link, which will take you to a page that provides some JBDS documentation, an option to create a new project with the <guilabel>Create New...</guilabel> option and an option to skip straight to your <guilabel>Workbench</guilabel>.
 		</para>
 		<figure id="figu-Beginners_Guide-Eclipse-Eclipse_welcome_screen">
 			<title>Eclipse welcome screen</title>
@@ -47,7 +47,7 @@
 			</mediaobject>
 		</figure>
 		<para>
-			In the bottom left hand corner of the screen is a button with an icon displaying a white column with a blue bar and a yellow plus sign beside it. Clicking on this button will open a menu of different views and windows.
+			In the bottom left hand corner of the screen is a button with an icon displaying a white column with a blue bar and a yellow plus sign beside it. Clicking on this button will open a menu listing a number of different views and windows.
 		</para>
 		<figure id="figu-Beginners_Guide-Eclipse-Views_button">
 			<title>Views button</title>
@@ -58,10 +58,10 @@
 			</mediaobject>
 		</figure>
 		<para>
-			The window that may be of most use to you can be found by following: <menuchoice><guimenuitem>Other...</guimenuitem><guimenuitem>JBoss Tools Web</guimenuitem><guimenuitem>JBoss Tools Palette</guimenuitem></menuchoice>. This option opens a perspective that includes the tools provided by <application>JBoss Developer Studio</application>.
+			The window that may be of most use to you can be found by selecting <menuchoice><guimenuitem>Other...</guimenuitem><guimenuitem>JBoss Tools Web</guimenuitem><guimenuitem>JBoss Tools Palette</guimenuitem></menuchoice>. This option opens a perspective that includes the tools provided by <application>JBoss Developer Studio</application>.
 		</para>
 		<para>
-			Refer to the <citetitle pubwork="section">Welcome to JBoss Developer Studio</citetitle> section of the <citetitle pubwork="book">Getting Started with JBoss Developer Studio</citetitle> guide for further details.
+			Refer to the <ulink url="http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/4.0/html-single/Getting_Started_Guide/index.html#Welcome">Welcome to JBoss Developer Studio</ulink> section of the <citetitle pubwork="book">Getting Started with JBoss Developer Studio</citetitle> guide for further details.
 		</para>
 	</section>
 	
@@ -148,7 +148,7 @@
 				</mediaobject>
 			</figure>
 			<para>
-				Refer to the <citetitle pubwork="chapter">Manage JBoss AS from JBoss Developer Studio</citetitle> chapter of the <citetitle pubwork="book">Getting Started with JBoss Developer Studio</citetitle> guide for further details.
+				Refer to the <ulink url="http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/4.0/html-single/Getting_Started_Guide/index.html#manage">Manage JBoss AS from JBoss Developer Studio</ulink> chapter of the <citetitle pubwork="book">Getting Started with JBoss Developer Studio</citetitle> guide for further details.
 			</para>
 		</section>
 		

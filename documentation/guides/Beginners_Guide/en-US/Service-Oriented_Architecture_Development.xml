@@ -14,7 +14,7 @@
 			jBPM supports the jBPM Process Definition Language (<acronym>jPDL</acronym>) and includes a perspective for easy creation and manipulation using the jPDL. Through this view you can add states, transitions and other processes and waypoints in order to create your own business workflow. Refer to the <ulink url="http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/4.0/html-single/jBPM_Tools_Reference_Guide/index.html#minimal_process_definition">A Minimal Process Definition</ulink> section of the <citetitle pubwork="chapter">Creating an Empty Process Definition</citetitle> chapter within the <citetitle pubwork="book">jBPM Tools Reference Guide</citetitle> for more details.
 		</para>
 	<!--	<para>
-			Refer to the <citetitle pubwork="book">jBPM Tools Reference Guide</citetitle> for further details.
+			Refer to the <ulink url="http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/4.0/html-single/jBPM_Tools_Reference_Guide/index.html">jBPM Tools Reference Guide</ulink> for further details.
 		</para> -->
 	</section>
 	
@@ -83,7 +83,7 @@
 			</mediaobject>
 		</figure>
 		<para>
-			Web Services Tools also includes the ability to create a Web Service client through the use of a Web Services Description Language (WSDL) document. This can be useful if you already have a predefined service that you wish to recreate, or you wish to use one as a template. Refer to the <citetitle pubwork="chapter">Creating a Web Service Client from a WSDL Document using JBoss WS</citetitle> chapter of the <citetitle pubwork="book">JBoss WS User Guide</citetitle> for more details.
+			Web Services Tools also includes the ability to create a Web Service client through the use of a Web Services Description Language (WSDL) document. This can be useful if you already have a predefined service that you wish to recreate, or you wish to use one as a template. Refer to the <ulink url="http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/4.0/html-single/JBoss_Web_Services_User_Guide/index.html#client">Creating a Web Service Client from a WSDL Document using JBoss WS</ulink> chapter of the <citetitle pubwork="book">JBoss WS User Guide</citetitle> for more details.
 		</para>
 		<figure id="figu-Beginners_Guide-Web_Services_Tools-Web_Services_client_creation">
 			<title>Web Services client creation</title>
@@ -132,7 +132,7 @@
 		<formalpara id="form-Beginners_Guide-Eclipse_Guvnor_Tools-Guvnor_Connection_Wizard">
 			<title>Guvnor Connection Wizard</title>
 			<para>
-				The Guvnor Connection Wizard is used to create a connection to a Guvnor repository. This wizard can be started by selecting <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>New</guimenuitem><guimenuitem>Other</guimenuitem><guimenuitem>Guvnor</guimenuitem><guimenuitem>Guvnor repository location</guimenuitem></menuchoice>, through the Guvnor Repositories View and other locations throughout Eclipse Guvnor Tools. Refer to the <citetitle pubwork="section">Guvnor Connection Wizard</citetitle> section of the <citetitle pubwork="chapter">Functionality Overview</citetitle> chapter within the <citetitle pubwork="book">Eclipse Guvnor Tools Reference Guide</citetitle> for more details.
+				The Guvnor Connection Wizard is used to create a connection to a Guvnor repository. This wizard can be started by selecting <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>New</guimenuitem><guimenuitem>Other</guimenuitem><guimenuitem>Guvnor</guimenuitem><guimenuitem>Guvnor repository location</guimenuitem></menuchoice>, through the Guvnor Repositories View and other locations throughout Eclipse Guvnor Tools. Refer to the <ulink url="http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/4.0/html-single/Eclipse_Guvnor_Tools_Reference_Guide/index.html#connection_wizard">Guvnor Connection Wizard</ulink> section of the <citetitle pubwork="chapter">Functionality Overview</citetitle> chapter within the <citetitle pubwork="book">Eclipse Guvnor Tools Reference Guide</citetitle> for more details.
 			</para>
 		</formalpara>
 		<figure id="figu-Beginners_Guide-Eclipse_Guvnor_Tools-Guvnor_connection_wizard">
@@ -146,7 +146,7 @@
 		<formalpara id="form-Beginners_Guide-Eclipse_Guvnor_Tools-The_Guvnor_Repositories_View">
 			<title>The Guvnor Repositories View</title>
 			<para>
-				The Guvnor Repositories View tool displays the contents of a repository using a tree structure. From within this tool you can create a new Guvnor repository connection, remove a Guvnor repository connection, refresh the tree display and expand or condense the tree layout. Refer to the <citetitle pubwork="section">Guvnor Repositories View</citetitle> section of the <citetitle pubwork="chapter">Functionality Overview</citetitle> chapter within the <citetitle pubwork="book">Eclipse Guvnor Tools Reference Guide</citetitle> for more details.
+				The Guvnor Repositories View tool displays the contents of a repository using a tree structure. From within this tool you can create a new Guvnor repository connection, remove a Guvnor repository connection, refresh the tree display and expand or condense the tree layout. Refer to the <ulink url="http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/4.0/html-single/Eclipse_Guvnor_Tools_Reference_Guide/index.html#guvnor_repositories_view">Guvnor Repositories View</ulink> section of the <citetitle pubwork="chapter">Functionality Overview</citetitle> chapter within the <citetitle pubwork="book">Eclipse Guvnor Tools Reference Guide</citetitle> for more details.
 			</para>
 		</formalpara>
 		<figure id="figu-Beginners_Guide-Eclipse_Guvnor_Tools-Guvnor_repository_view">
@@ -160,7 +160,7 @@
 		<formalpara id="form-Beginners_Guide-Eclipse_Guvnor_Tools-Guvnor_Resource_History_View">
 			<title>Guvnor Resource History View</title>
 			<para>
-				The Guvnor Resource History View displays the revision history details for files that are both locally stored and within Guvnor repositories. Refer to the <citetitle pubwork="section">Guvnor Resource History View</citetitle> section of the <citetitle pubwork="chapter">Functionality Overview</citetitle> chapter within the <citetitle pubwork="book">Eclipse Guvnor Tools Reference Guide</citetitle> for more details.
+				The Guvnor Resource History View displays the revision history details for files that are both locally stored and within Guvnor repositories. Refer to the <ulink url="http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/4.0/html-single/Eclipse_Guvnor_Tools_Reference_Guide/index.html#guvnor_history_view">Guvnor Resource History View</ulink> section of the <citetitle pubwork="chapter">Functionality Overview</citetitle> chapter within the <citetitle pubwork="book">Eclipse Guvnor Tools Reference Guide</citetitle> for more details.
 			</para>
 		</formalpara>
 		<figure id="figu-Beginners_Guide-Eclipse_Guvnor_Tools-Guvnor_resource_history_view">
@@ -174,7 +174,7 @@
 		<formalpara id="form-Beginners_Guide-Eclipse_Guvnor_Tools-Guvnor_Resource_Importing_Wizard">
 			<title>Guvnor Resource Importing Wizard</title>
 			<para>
-				The Guvnor Resource Importing Wizard assists with copying one or more files from a Guvnor repository to the local workspace (while keeping file association with the Guvnor repository). This wizard can be started by selecting <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>Import</guimenuitem><guimenuitem>Guvnor</guimenuitem><guimenuitem>Resource from Guvnor</guimenuitem></menuchoice>. Refer to the <citetitle pubwork="section">Importing Guvnor Repository Resources</citetitle> section of the <citetitle pubwork="chapter">Functionality Overview</citetitle> chapter within the <citetitle pubwork="book">Eclipse Guvnor Tools Reference Guide</citetitle> for more details.
+				The Guvnor Resource Importing Wizard assists with copying one or more files from a Guvnor repository to the local workspace (while keeping file association with the Guvnor repository). This wizard can be started by selecting <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>Import</guimenuitem><guimenuitem>Guvnor</guimenuitem><guimenuitem>Resource from Guvnor</guimenuitem></menuchoice>. <!--Refer to the <citetitle pubwork="section">Importing Guvnor Repository Resources</citetitle> section of the <citetitle pubwork="chapter">Functionality Overview</citetitle> chapter within the <citetitle pubwork="book">Eclipse Guvnor Tools Reference Guide</citetitle> for more details.-->
 			</para>
 		</formalpara>
 		<figure id="figu-Beginners_Guide-Eclipse_Guvnor_Tools-Guvnor_resource_importing_wizard">
@@ -233,9 +233,9 @@
 				</para>
 			</listitem>
 		</itemizedlist>
-		<para>
+		<!--para>
 			Refer to the <citetitle pubwork="section">Actions for Local Guvnor Resources</citetitle> section of the <citetitle pubwork="chapter">Functionality Overview</citetitle> chapter within the <citetitle pubwork="book">Eclipse Guvnor Tools Reference Guide</citetitle> for more details.
-		</para>
+		</para-->
 	</section>
 	
 	
