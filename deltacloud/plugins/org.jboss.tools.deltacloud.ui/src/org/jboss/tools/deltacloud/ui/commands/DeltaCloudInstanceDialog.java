@@ -18,7 +18,7 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.dialogs.ListSelectionDialog;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
-import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
+import org.jboss.tools.internal.deltacloud.ui.utils.WorkbenchUtils;
 
 /**
  * A dialog that allows the user to select CVInstanceElements
@@ -29,7 +29,7 @@ public class DeltaCloudInstanceDialog extends ListSelectionDialog {
 
 	private static class DeltaCloudInstanceNameProvider extends LabelProvider {
 		public String getText(Object element) {
-			DeltaCloudInstance instance = UIUtils.adapt(element, DeltaCloudInstance.class);
+			DeltaCloudInstance instance = WorkbenchUtils.adapt(element, DeltaCloudInstance.class);
 			if (instance != null) {
 				return instance.getName();
 			} else {

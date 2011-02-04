@@ -26,7 +26,7 @@ import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.core.job.DestroyCloudInstanceJob;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
-import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
+import org.jboss.tools.internal.deltacloud.ui.utils.WorkbenchUtils;
 
 /**
  * @author Andre Dietisheim
@@ -41,7 +41,7 @@ public class DestroyInstanceHandler extends AbstractInstanceHandler {
 		try {
 			if (selection instanceof IStructuredSelection) {
 				if (isSingleInstanceSelected(selection)) {
-					DeltaCloudInstance cvInstance = UIUtils.getFirstAdaptedElement(selection, DeltaCloudInstance.class);
+					DeltaCloudInstance cvInstance = WorkbenchUtils.getFirstAdaptedElement(selection, DeltaCloudInstance.class);
 					destroyInstance(cvInstance);
 				} else {
 					destroyWithDialog((IStructuredSelection) selection);
@@ -59,10 +59,10 @@ public class DestroyInstanceHandler extends AbstractInstanceHandler {
 	@SuppressWarnings("unchecked")
 	private void destroyWithDialog(IStructuredSelection selection) {
 		List<DeltaCloudInstance> deltaCloudInstances = 
-			UIUtils.adapt((List<DeltaCloudInstance>) selection.toList(),DeltaCloudInstance.class);
+			WorkbenchUtils.adapt((List<DeltaCloudInstance>) selection.toList(),DeltaCloudInstance.class);
 		List<DeltaCloudInstance> destroyableInstances = getDestroyableInstances(deltaCloudInstances);
 		DeltaCloudInstanceDialog dialog = new DeltaCloudInstanceDialog(
-					UIUtils.getActiveShell()
+				WorkbenchUtils.getActiveShell()
 					, destroyableInstances
 					, CVMessages.getString(DESTROY_INSTANCE_TITLE)
 					, CVMessages.getString(DESTROY_INSTANCE_MSG));

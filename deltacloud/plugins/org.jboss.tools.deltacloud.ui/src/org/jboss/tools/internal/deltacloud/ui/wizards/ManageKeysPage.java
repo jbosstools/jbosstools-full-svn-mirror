@@ -60,7 +60,7 @@ import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.ObjectNotNullToBoolean;
-import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
+import org.jboss.tools.internal.deltacloud.ui.utils.LayoutUtils;
 import org.jboss.tools.internal.deltacloud.ui.utils.WizardUtils;
 
 /**
@@ -304,22 +304,22 @@ public class ManageKeysPage extends WizardPage {
 			composite.setFont(parent.getFont());
 			composite.setLayout(new FormLayout());
 			Label titleBarSeparator = new Label(composite, SWT.HORIZONTAL | SWT.SEPARATOR);
-			titleBarSeparator.setLayoutData(UIUtils.createFormData(0,0,null,0,0,0,100,0));
+			titleBarSeparator.setLayoutData(LayoutUtils.createFormData(0,0,null,0,0,0,100,0));
 
 			setTitle(WizardMessages.getString(CREATE_KEY_TITLE));
 			Label nameLabel = new Label(composite, SWT.NONE);
 			nameLabel.setText("Key ID: ");
-			nameLabel.setLayoutData(UIUtils.createFormData(0,7,null,0,0,5,null,0));
+			nameLabel.setLayoutData(LayoutUtils.createFormData(0,7,null,0,0,5,null,0));
 			nameText = new Text(composite, SWT.BORDER);
-			nameText.setLayoutData(UIUtils.createFormData(0,5,null,0,nameLabel, 5, 100, -5));
+			nameText.setLayoutData(LayoutUtils.createFormData(0,5,null,0,nameLabel, 5, 100, -5));
 			
 			persist = new Button(composite, SWT.CHECK);
 			persist.setText("Save key in folder: ");
-			persist.setLayoutData(UIUtils.createFormData(nameText, 8, null, 0, 0,5,null,0));
+			persist.setLayoutData(LayoutUtils.createFormData(nameText, 8, null, 0, 0,5,null,0));
 			
 			Button browse = new Button(composite, SWT.DEFAULT);
 			browse.setText("Browse...");
-			browse.setLayoutData(UIUtils.createFormData(nameText, 5, null, 0, null, 0, 100, -5));
+			browse.setLayoutData(LayoutUtils.createFormData(nameText, 5, null, 0, null, 0, 100, -5));
 			browse.addSelectionListener(new SelectionAdapter() {
 				public void widgetSelected(SelectionEvent e) {
 					DirectoryDialog dialog = new DirectoryDialog(getShell(), SWT.NONE);
@@ -331,7 +331,7 @@ public class ManageKeysPage extends WizardPage {
 			});
 			
 			pemText = new Text(composite, SWT.BORDER);
-			pemText.setLayoutData(UIUtils.createFormData(nameText,5,null,0,persist, 5, browse, -5));
+			pemText.setLayoutData(LayoutUtils.createFormData(nameText,5,null,0,persist, 5, browse, -5));
 
 			init();
 			

@@ -36,7 +36,7 @@ import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.integration.DeltaCloudIntegrationPlugin;
 import org.jboss.tools.deltacloud.integration.Messages;
 import org.jboss.tools.deltacloud.integration.wizard.CreateServerFromRSEJob;
-import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
+import org.jboss.tools.internal.deltacloud.ui.utils.WorkbenchUtils;
 
 /**
  * @author André Dietisheim
@@ -182,14 +182,14 @@ public class RSEUtils {
 			@Override
 			public void run() {
 				try {
-					UIUtils.showView(VIEW_REMOTESYSEXPLORER_ID);
+					WorkbenchUtils.showView(VIEW_REMOTESYSEXPLORER_ID);
 				} catch (PartInitException e) {
 					// I have no idea wtf is wrong here
 					// but my dev environment will not let me use common classes
 //					IStatus status = StatusFactory.getInstance(IStatus.ERROR, 
 //							DeltaCloudIntegrationPlugin.PLUGIN_ID, e.getMessage(), e);
 					Status status = new Status(IStatus.ERROR, DeltaCloudIntegrationPlugin.PLUGIN_ID, e.getMessage(), e);
-					ErrorDialog.openError(UIUtils.getActiveShell(),
+					ErrorDialog.openError(WorkbenchUtils.getActiveShell(),
 								Messages.ERROR,
 								Messages.COULD_NOT_LAUNCH_RSE_EXPLORER,
 							status);

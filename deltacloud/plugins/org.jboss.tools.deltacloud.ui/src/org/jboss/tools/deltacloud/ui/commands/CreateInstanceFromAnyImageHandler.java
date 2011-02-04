@@ -21,7 +21,7 @@ import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
-import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
+import org.jboss.tools.internal.deltacloud.ui.utils.WorkbenchUtils;
 import org.jboss.tools.internal.deltacloud.ui.wizards.NewInstanceWizard;
 
 /**
@@ -34,9 +34,9 @@ public class CreateInstanceFromAnyImageHandler extends AbstractHandler implement
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
-			DeltaCloud cloud = UIUtils.getFirstAdaptedElement(selection, DeltaCloud.class);
+			DeltaCloud cloud = WorkbenchUtils.getFirstAdaptedElement(selection, DeltaCloud.class);
 			IWizard wizard = new NewInstanceWizard(cloud);
-			WizardDialog dialog = new WizardDialog(UIUtils.getActiveWorkbenchWindow().getShell(),
+			WizardDialog dialog = new WizardDialog(WorkbenchUtils.getActiveWorkbenchWindow().getShell(),
 						wizard);
 			dialog.create();
 			dialog.open();

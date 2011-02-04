@@ -56,7 +56,7 @@ import org.jboss.tools.deltacloud.ui.views.CVMessages;
 import org.jboss.tools.deltacloud.ui.views.Columns;
 import org.jboss.tools.deltacloud.ui.views.Columns.Column;
 import org.jboss.tools.internal.deltacloud.ui.preferences.StringPreferenceValue;
-import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
+import org.jboss.tools.internal.deltacloud.ui.utils.WorkbenchUtils;
 
 /**
  * A common superclass for viewers that operate on IDeltaCloudElements
@@ -118,7 +118,7 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 		public void selectionChanged(IWorkbenchPart part, ISelection selection) {
 			// we want to listen to selection changes in the deltacloud view
 			// only
-			DeltaCloud cloud = UIUtils.getFirstAdaptedElement(selection, DeltaCloud.class);
+			DeltaCloud cloud = WorkbenchUtils.getFirstAdaptedElement(selection, DeltaCloud.class);
 			if (isNewCloud(cloud)) {
 				int index = getCloudIndex(cloud, getClouds());
 				currentCloudSelector.select(index);
@@ -339,8 +339,8 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 	}
 
 	private void hookContextMenu(Control control) {
-		IMenuManager contextMenu = UIUtils.createContextMenu(control);
-		UIUtils.registerContributionManager(UIUtils.getContextMenuId(getViewID()), contextMenu, control);
+		IMenuManager contextMenu = WorkbenchUtils.createContextMenu(control);
+		WorkbenchUtils.registerContributionManager(WorkbenchUtils.getContextMenuId(getViewID()), contextMenu, control);
 	}
 
 	protected abstract String getViewID();

@@ -28,7 +28,7 @@ import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudMultiException;
 import org.jboss.tools.deltacloud.core.job.AbstractCloudJob;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
-import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
+import org.jboss.tools.internal.deltacloud.ui.utils.WorkbenchUtils;
 
 /**
  * @author Andre Dietisheim
@@ -43,7 +43,7 @@ public class RefreshCloudHandler extends AbstractHandler implements IHandler {
 			refresh(clouds);
 		} else {
 			// no item selected: try active part
-			refresh(UIUtils.adapt(HandlerUtil.getActivePart(event), DeltaCloud.class));
+			refresh(WorkbenchUtils.adapt(HandlerUtil.getActivePart(event), DeltaCloud.class));
 		}			
 		return Status.OK_STATUS;
 	}
@@ -53,7 +53,7 @@ public class RefreshCloudHandler extends AbstractHandler implements IHandler {
 			return Collections.emptyList();
 		}
 		
-		return UIUtils.adapt(((IStructuredSelection) selection).toList(), DeltaCloud.class);
+		return WorkbenchUtils.adapt(((IStructuredSelection) selection).toList(), DeltaCloud.class);
 	}
 
 	private void refresh(Collection<DeltaCloud> clouds) {

@@ -1,3 +1,15 @@
+2011-02-04  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/deltacloud/ui/commands/StopInstanceHandler.java 
+	(stopInstances): 
+	(stopInstances): 
+	[JBIDE-8295] added confirmatino dialog when stopping instances
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ImageFilterPage.java 
+	(validate): 
+	(validate): 
+	(createControl): 
+	[JBIDE-8332] added field decorations to FilterImage- and FilterInstance-dialogs
+
 2011-02-03  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/InstanceView.java (propertyChange): 

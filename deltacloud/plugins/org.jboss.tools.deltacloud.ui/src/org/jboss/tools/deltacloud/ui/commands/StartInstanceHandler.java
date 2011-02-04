@@ -26,7 +26,7 @@ import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
-import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
+import org.jboss.tools.internal.deltacloud.ui.utils.WorkbenchUtils;
 
 /**
  * @author Andre Dietisheim
@@ -44,7 +44,7 @@ public class StartInstanceHandler extends AbstractInstanceHandler {
 		try {
 			if (selection instanceof IStructuredSelection) {
 				if (isSingleInstanceSelected(selection)) {
-					DeltaCloudInstance cvinstance = UIUtils.getFirstAdaptedElement(selection, DeltaCloudInstance.class);
+					DeltaCloudInstance cvinstance = WorkbenchUtils.getFirstAdaptedElement(selection, DeltaCloudInstance.class);
 					startInstance(cvinstance);
 				} else {
 					startWithDialog((IStructuredSelection) selection);
@@ -61,10 +61,10 @@ public class StartInstanceHandler extends AbstractInstanceHandler {
 
 	@SuppressWarnings("unchecked")
 	private void startWithDialog(IStructuredSelection selection) {
-		List<DeltaCloudInstance> deltaCloudInstances =  UIUtils.adapt((List<DeltaCloudInstance>) selection.toList(), DeltaCloudInstance.class);
+		List<DeltaCloudInstance> deltaCloudInstances =  WorkbenchUtils.adapt((List<DeltaCloudInstance>) selection.toList(), DeltaCloudInstance.class);
 		List<DeltaCloudInstance> stoppedInstances = getStoppedInstances(deltaCloudInstances);
 		DeltaCloudInstanceDialog dialog = new DeltaCloudInstanceDialog(
-					UIUtils.getActiveShell()
+				WorkbenchUtils.getActiveShell()
 					, stoppedInstances
 					, CVMessages.getString(START_INSTANCES_DIALOG_TITLE)
 					, CVMessages.getString(START_INSTANCES_DIALOG_MSG));

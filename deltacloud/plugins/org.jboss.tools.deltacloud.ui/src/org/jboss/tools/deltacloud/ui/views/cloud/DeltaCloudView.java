@@ -25,7 +25,7 @@ import org.eclipse.ui.views.properties.tabbed.ITabbedPropertySheetPageContributo
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
 import org.jboss.tools.deltacloud.ui.views.cloud.property.CVPropertySheetPage;
-import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
+import org.jboss.tools.internal.deltacloud.ui.utils.WorkbenchUtils;
 
 public class DeltaCloudView extends ViewPart implements ITabbedPropertySheetPageContributor {
 
@@ -63,8 +63,8 @@ public class DeltaCloudView extends ViewPart implements ITabbedPropertySheetPage
 	}
 
 	private void hookContextMenu(Control control) {
-		IMenuManager contextMenu = UIUtils.createContextMenu(control);
-		UIUtils.registerContributionManager(UIUtils.getContextMenuId(ID), contextMenu, control);
+		IMenuManager contextMenu = WorkbenchUtils.createContextMenu(control);
+		WorkbenchUtils.registerContributionManager(WorkbenchUtils.getContextMenuId(ID), contextMenu, control);
 	}
 
 	private void contributeToActionBars() {

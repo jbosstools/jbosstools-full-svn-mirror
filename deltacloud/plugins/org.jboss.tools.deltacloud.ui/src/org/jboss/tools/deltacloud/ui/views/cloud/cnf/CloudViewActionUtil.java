@@ -26,7 +26,7 @@ import org.jboss.tools.deltacloud.core.job.RefreshCloudJob;
 import org.jboss.tools.deltacloud.ui.commands.DeleteCloudHandler.DeleteCloudsDialog;
 import org.jboss.tools.deltacloud.ui.commands.DeltaCloudInstanceDialog;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
-import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
+import org.jboss.tools.internal.deltacloud.ui.utils.WorkbenchUtils;
 import org.jboss.tools.internal.deltacloud.ui.wizards.NewInstanceWizard;
 
 public class CloudViewActionUtil {
@@ -87,7 +87,7 @@ public class CloudViewActionUtil {
 		if(instances.length > 1 ) {
 			List<DeltaCloudInstance> list = Arrays.asList(instances);
 			DeltaCloudInstanceDialog dialog = new DeltaCloudInstanceDialog(
-					UIUtils.getActiveShell(), list,
+					WorkbenchUtils.getActiveShell(), list,
 					dialogTitle, dialogMsg);
 			dialog.setInitialElementSelections(list);
 			if (Dialog.OK == dialog.open()) {
@@ -151,15 +151,15 @@ public class CloudViewActionUtil {
 	public static List<DeltaCloudInstance> getCloudInstances(ISelection selection) {
 		if( selection instanceof IStructuredSelection ) {
 			IStructuredSelection s2 = (IStructuredSelection)selection;
-			List<DeltaCloudInstance> instances = UIUtils.adapt(s2.toList(),DeltaCloudInstance.class);
+			List<DeltaCloudInstance> instances = WorkbenchUtils.adapt(s2.toList(),DeltaCloudInstance.class);
 			return instances;
 		}
-		return Collections.EMPTY_LIST;
+		return Collections.emptyList();
 	}
 	
 	public static void showCreateInstanceWizard(Shell shell, ISelection selection) {
-		DeltaCloudImage deltaCloudImage = UIUtils.getFirstAdaptedElement(selection, DeltaCloudImage.class);
-		DeltaCloud deltaCloud = UIUtils.getFirstAdaptedElement(selection, DeltaCloud.class);
+		DeltaCloudImage deltaCloudImage = WorkbenchUtils.getFirstAdaptedElement(selection, DeltaCloudImage.class);
+		DeltaCloud deltaCloud = WorkbenchUtils.getFirstAdaptedElement(selection, DeltaCloud.class);
 		IWizard wizard = new NewInstanceWizard(deltaCloud, deltaCloudImage);
 		WizardDialog dialog = new WizardDialog(shell, wizard);
 		dialog.create();
@@ -197,7 +197,7 @@ public class CloudViewActionUtil {
 		List<?> selectedElements = ((IStructuredSelection) selection).toList();
 		Set<DeltaCloud> selectedClouds = new HashSet<DeltaCloud>();
 		for (Object element : selectedElements) {
-			DeltaCloud deltaCloud = UIUtils.adapt(element, DeltaCloud.class);
+			DeltaCloud deltaCloud = WorkbenchUtils.adapt(element, DeltaCloud.class);
 			if (deltaCloud != null) {
 				selectedClouds.add(deltaCloud);
 			}

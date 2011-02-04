@@ -38,6 +38,7 @@ import org.jboss.tools.common.jobs.ChainedJob;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.integration.DeltaCloudIntegrationPlugin;
 import org.jboss.tools.deltacloud.ui.wizard.INewInstanceWizardPage;
+import org.jboss.tools.internal.deltacloud.ui.utils.LayoutUtils;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 import org.osgi.service.prefs.BackingStoreException;
 
@@ -86,37 +87,37 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 		c2.setLayout(new FormLayout());
 		createRSE = new Button(c2, SWT.CHECK);
 		createRSE.setText("Create RSE Connection");
-		createRSE.setLayoutData(UIUtils.createFormData(0, 5, null, 0, 0, 5, 100, -5));
+		createRSE.setLayoutData(LayoutUtils.createFormData(0, 5, null, 0, 0, 5, 100, -5));
 		createServer = new Button(c2, SWT.CHECK);
 		createServer.setText("Create Server Adapter");
-		createServer.setLayoutData(UIUtils.createFormData(createRSE, 5, null, 0, 0, 5, 100, -5));
+		createServer.setLayoutData(LayoutUtils.createFormData(createRSE, 5, null, 0, 0, 5, 100, -5));
 
 		Group g = new Group(c2, SWT.SHADOW_IN);
 		serverDetailsGroup = g;
 		g.setLayout(new FormLayout());
-		g.setLayoutData(UIUtils.createFormData(createServer, 5, null, 0, 0, 5, 100, -5));
+		g.setLayoutData(LayoutUtils.createFormData(createServer, 5, null, 0, 0, 5, 100, -5));
 		g.setText("Server Details");
 
 		final int INDENTATION = 40;
 
 		autoScanCheck = new Button(g, SWT.RADIO);
 		autoScanCheck.setText("Determine server details from this remote file:");
-		autoScanCheck.setLayoutData(UIUtils.createFormData(0, 5, null, 0, 0, 5, null, 0));
+		autoScanCheck.setLayoutData(LayoutUtils.createFormData(0, 5, null, 0, 0, 5, null, 0));
 		autoScanCheck.setSelection(true);
 
 		remoteDetailsLoc = new Text(g, SWT.BORDER);
-		remoteDetailsLoc.setLayoutData(UIUtils.createFormData(autoScanCheck, 5, null, 0, 0, INDENTATION, 100, -5));
+		remoteDetailsLoc.setLayoutData(LayoutUtils.createFormData(autoScanCheck, 5, null, 0, 0, INDENTATION, 100, -5));
 		remoteDetailsLoc.setText("./.jboss");
 		this.remoteDetailsLocDeco = UIUtils.createErrorDecoration(REMOTE_DETAILS_LOC_ERROR, remoteDetailsLoc);
 
 		autoLocalRuntimeLabel = new Label(g, SWT.NONE);
 		autoLocalRuntimeLabel.setText("Local Runtime: ");
-		autoLocalRuntimeLabel.setLayoutData(UIUtils.createFormData(remoteDetailsLoc, 7, null, 0, 0, INDENTATION, null,
+		autoLocalRuntimeLabel.setLayoutData(LayoutUtils.createFormData(remoteDetailsLoc, 7, null, 0, 0, INDENTATION, null,
 				0));
 
 		autoAddLocalRuntimeButton = new Button(g, SWT.DEFAULT);
 		autoAddLocalRuntimeButton.setText("Configure Runtimes...");
-		autoAddLocalRuntimeButton.setLayoutData(UIUtils.createFormData(remoteDetailsLoc, 7, null, 0, null, 0, 100, -5));
+		autoAddLocalRuntimeButton.setLayoutData(LayoutUtils.createFormData(remoteDetailsLoc, 7, null, 0, null, 0, 100, -5));
 		autoAddLocalRuntimeButton.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
 				configureRuntimesPressed();
@@ -126,37 +127,37 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 			}
 		});
 		autoLocalRuntimeCombo = new Combo(g, SWT.READ_ONLY);
-		autoLocalRuntimeCombo.setLayoutData(UIUtils.createFormData(remoteDetailsLoc, 5, null, 0, autoLocalRuntimeLabel,
+		autoLocalRuntimeCombo.setLayoutData(LayoutUtils.createFormData(remoteDetailsLoc, 5, null, 0, autoLocalRuntimeLabel,
 				10, autoAddLocalRuntimeButton, -5));
 		this.autoLocalRuntimeDeco = UIUtils.createErrorDecoration(SELECT_RUNTIME_ERROR, autoLocalRuntimeCombo);
 
 		hardCodeServerDetails = new Button(g, SWT.RADIO);
 		hardCodeServerDetails.setText("Set remote server details manually");
-		hardCodeServerDetails.setLayoutData(UIUtils.createFormData(autoLocalRuntimeCombo, 5, null, 0, 0, 10, null, 0));
+		hardCodeServerDetails.setLayoutData(LayoutUtils.createFormData(autoLocalRuntimeCombo, 5, null, 0, 0, 10, null, 0));
 
 		serverHome = new Label(g, SWT.NONE);
 		serverHome.setText("JBoss Server Home: ");
-		serverHome.setLayoutData(UIUtils.createFormData(hardCodeServerDetails, 7, null, 0, 0, INDENTATION, null, 0));
+		serverHome.setLayoutData(LayoutUtils.createFormData(hardCodeServerDetails, 7, null, 0, 0, INDENTATION, null, 0));
 		serverHomeText = new Text(g, SWT.BORDER);
-		serverHomeText.setLayoutData(UIUtils.createFormData(hardCodeServerDetails, 5, null, 0, serverHome, 10, 100, -5));
+		serverHomeText.setLayoutData(LayoutUtils.createFormData(hardCodeServerDetails, 5, null, 0, serverHome, 10, 100, -5));
 		serverHomeText.setText("/etc/jboss/jboss-as");
 		this.serverHomeDeco = UIUtils.createErrorDecoration(SERVER_HOME_ERROR, serverHomeText);
 
 		serverConfig = new Label(g, SWT.NONE);
 		serverConfig.setText("Configuration: ");
-		serverConfig.setLayoutData(UIUtils.createFormData(serverHomeText, 7, null, 0, 0, INDENTATION, null, 0));
+		serverConfig.setLayoutData(LayoutUtils.createFormData(serverHomeText, 7, null, 0, 0, INDENTATION, null, 0));
 		serverConfigText = new Text(g, SWT.BORDER);
-		serverConfigText.setLayoutData(UIUtils.createFormData(serverHomeText, 5, null, 0, serverHome, 10, 100, -5));
+		serverConfigText.setLayoutData(LayoutUtils.createFormData(serverHomeText, 5, null, 0, serverHome, 10, 100, -5));
 		serverConfigText.setText("default");
 		this.serverConfigDeco = UIUtils.createErrorDecoration(SERVER_CONFIG_ERROR, serverConfigText);
 
 		localRuntimeLabel = new Label(g, SWT.NONE);
 		localRuntimeLabel.setText("Local Runtime: ");
-		localRuntimeLabel.setLayoutData(UIUtils.createFormData(serverConfigText, 7, null, 0, 0, INDENTATION, null, 0));
+		localRuntimeLabel.setLayoutData(LayoutUtils.createFormData(serverConfigText, 7, null, 0, 0, INDENTATION, null, 0));
 
 		addLocalRuntimeButton = new Button(g, SWT.DEFAULT);
 		addLocalRuntimeButton.setText("Configure Runtimes...");
-		addLocalRuntimeButton.setLayoutData(UIUtils.createFormData(serverConfigText, 7, null, 0, null, 0, 100, -5));
+		addLocalRuntimeButton.setLayoutData(LayoutUtils.createFormData(serverConfigText, 7, null, 0, null, 0, 100, -5));
 		addLocalRuntimeButton.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
 				configureRuntimesPressed();
@@ -166,24 +167,24 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 			}
 		});
 		localRuntimeCombo = new Combo(g, SWT.READ_ONLY);
-		localRuntimeCombo.setLayoutData(UIUtils.createFormData(serverConfigText, 5, null, 0, serverHome, 10,
+		localRuntimeCombo.setLayoutData(LayoutUtils.createFormData(serverConfigText, 5, null, 0, serverHome, 10,
 				addLocalRuntimeButton, -5));
 		this.localRuntimeDeco = UIUtils.createErrorDecoration(SELECT_RUNTIME_ERROR, localRuntimeCombo);
 
 		deployOnlyRadio = new Button(g, SWT.RADIO);
 		deployOnlyRadio.setText("Use a deploy-only server adapter");
-		deployOnlyRadio.setLayoutData(UIUtils.createFormData(localRuntimeCombo, 5, null, 0, 0, 5, null, 0));
+		deployOnlyRadio.setLayoutData(LayoutUtils.createFormData(localRuntimeCombo, 5, null, 0, 0, 5, null, 0));
 
 		deployFolder = new Label(g, SWT.NONE);
 		deployFolder.setText("Deploy Folder: ");
-		deployFolder.setLayoutData(UIUtils.createFormData(deployOnlyRadio, 7, null, 0, 0, INDENTATION, null, 0));
+		deployFolder.setLayoutData(LayoutUtils.createFormData(deployOnlyRadio, 7, null, 0, 0, INDENTATION, null, 0));
 		deployFolderText = new Text(g, SWT.BORDER);
 		deployFolderText.setText("/path/to/deploy");
-		deployFolderText.setLayoutData(UIUtils.createFormData(deployOnlyRadio, 5, null, 0, deployFolder, 10, 100, -5));
+		deployFolderText.setLayoutData(LayoutUtils.createFormData(deployOnlyRadio, 5, null, 0, deployFolder, 10, 100, -5));
 		this.deployFolderDeco = UIUtils.createErrorDecoration(DEPLOY_FOLDER_NOT_EMPTY, deployFolderText);
 
 		Label dummyLabel = new Label(g, SWT.NONE);
-		dummyLabel.setLayoutData(UIUtils.createFormData(deployOnlyRadio, 5, null, 0, deployFolderText, 10, 100, -5));
+		dummyLabel.setLayoutData(LayoutUtils.createFormData(deployOnlyRadio, 5, null, 0, deployFolderText, 10, 100, -5));
 		
 		IEclipsePreferences prefs = new InstanceScope().getNode(DeltaCloudIntegrationPlugin.PLUGIN_ID);
 		boolean initRSE, initServer;

@@ -38,7 +38,7 @@ import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
-import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
+import org.jboss.tools.internal.deltacloud.ui.utils.WorkbenchUtils;
 
 /**
  * @author Andre Dietisheim
@@ -138,7 +138,7 @@ public class DeleteCloudHandler extends AbstractHandler implements IHandler {
 		DeltaCloud deltaCloud = null;
 		if (selectedElements.size() > 0) {
 			Object object = selectedElements.get(0);
-			deltaCloud = UIUtils.adapt(object, DeltaCloud.class);
+			deltaCloud = WorkbenchUtils.adapt(object, DeltaCloud.class);
 		}
 		return deltaCloud;
 	}
@@ -146,7 +146,7 @@ public class DeleteCloudHandler extends AbstractHandler implements IHandler {
 	private Collection<DeltaCloud> getSelectedClouds(List<?> selectedElements) {
 		Set<DeltaCloud> selectedClouds = new HashSet<DeltaCloud>();
 		for (Object element : selectedElements) {
-			DeltaCloud deltaCloud = UIUtils.adapt(element, DeltaCloud.class);
+			DeltaCloud deltaCloud = WorkbenchUtils.adapt(element, DeltaCloud.class);
 			if (deltaCloud != null) {
 				selectedClouds.add(deltaCloud);
 			}

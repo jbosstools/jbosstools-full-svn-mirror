@@ -13,7 +13,7 @@ package org.jboss.tools.deltacloud.ui.commands;
 import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.core.runtime.Assert;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
-import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
+import org.jboss.tools.internal.deltacloud.ui.utils.WorkbenchUtils;
 
 /**
  * A property tester for the command framework that answers if the given
@@ -31,7 +31,7 @@ public class DeltaCloudInstancePropertyTester extends PropertyTester {
 
 	@Override
 	public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
-		DeltaCloudInstance instance = UIUtils.adapt(receiver, DeltaCloudInstance.class);
+		DeltaCloudInstance instance = WorkbenchUtils.adapt(receiver, DeltaCloudInstance.class);
 		if (instance == null) {
 			return false;
 		}

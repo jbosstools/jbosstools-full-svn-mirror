@@ -23,7 +23,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
-import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
+import org.jboss.tools.internal.deltacloud.ui.utils.WorkbenchUtils;
 import org.jboss.tools.internal.deltacloud.ui.wizards.NewInstanceWizard;
 
 /**
@@ -35,7 +35,7 @@ public class CreateInstanceFromSpecificImageHandler extends AbstractHandler impl
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
-			DeltaCloudImage deltaCloudImage = UIUtils.getFirstAdaptedElement(selection, DeltaCloudImage.class);
+			DeltaCloudImage deltaCloudImage = WorkbenchUtils.getFirstAdaptedElement(selection, DeltaCloudImage.class);
 			createInstance(deltaCloudImage, HandlerUtil.getActiveShell(event));
 		}
 

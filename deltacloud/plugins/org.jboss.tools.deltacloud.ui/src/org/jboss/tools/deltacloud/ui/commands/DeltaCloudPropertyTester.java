@@ -15,7 +15,7 @@ import org.eclipse.core.runtime.Assert;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
-import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
+import org.jboss.tools.internal.deltacloud.ui.utils.WorkbenchUtils;
 
 /**
  * A property tester for the command framework that answers if the given
@@ -30,7 +30,7 @@ public class DeltaCloudPropertyTester extends PropertyTester {
 
 	@Override
 	public boolean test(Object receiver, String property, Object[] args, Object expectedValue) {
-		DeltaCloud cloud = UIUtils.adapt(receiver, DeltaCloud.class);
+		DeltaCloud cloud = WorkbenchUtils.adapt(receiver, DeltaCloud.class);
 		if (cloud == null) {
 			return false;
 		}

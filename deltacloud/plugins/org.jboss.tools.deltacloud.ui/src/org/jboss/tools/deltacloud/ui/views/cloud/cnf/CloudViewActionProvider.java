@@ -1,7 +1,5 @@
 package org.jboss.tools.deltacloud.ui.views.cloud.cnf;
 
-import java.io.ObjectInputStream.GetField;
-
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IMenuManager;
@@ -24,7 +22,7 @@ import org.eclipse.ui.navigator.ICommonViewerWorkbenchSite;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
-import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
+import org.jboss.tools.internal.deltacloud.ui.utils.WorkbenchUtils;
 import org.jboss.tools.internal.deltacloud.ui.wizards.EditCloudConnectionWizard;
 import org.jboss.tools.internal.deltacloud.ui.wizards.ImageFilterWizard;
 import org.jboss.tools.internal.deltacloud.ui.wizards.InstanceFilterWizard;
@@ -146,7 +144,7 @@ public class CloudViewActionProvider extends CommonActionProvider {
 		
 		editConnectionAction = new Action() {
 			public void run() {
-				DeltaCloud cloud = UIUtils.getFirstAdaptedElement(getSelection(), DeltaCloud.class);
+				DeltaCloud cloud = WorkbenchUtils.getFirstAdaptedElement(getSelection(), DeltaCloud.class);
 				if (cloud != null) {
 					IWizard wizard = new EditCloudConnectionWizard(cloud);
 					WizardDialog dialog = new WizardDialog(shell, wizard);
@@ -219,7 +217,7 @@ public class CloudViewActionProvider extends CommonActionProvider {
 		
 		filterImageAction = new Action() {
 			public void run() {
-				DeltaCloud cloud = UIUtils.getFirstAdaptedElement(getSelection(), DeltaCloud.class);
+				DeltaCloud cloud = WorkbenchUtils.getFirstAdaptedElement(getSelection(), DeltaCloud.class);
 				if( cloud != null ) {
 					IWizard wizard = new ImageFilterWizard(cloud);
 					WizardDialog dialog = new WizardDialog(shell, wizard);
@@ -233,7 +231,7 @@ public class CloudViewActionProvider extends CommonActionProvider {
 		
 		filterInstanceAction = new Action() {
 			public void run() {
-				DeltaCloud cloud = UIUtils.getFirstAdaptedElement(getSelection(), DeltaCloud.class);
+				DeltaCloud cloud = WorkbenchUtils.getFirstAdaptedElement(getSelection(), DeltaCloud.class);
 				if( cloud != null ) {
 					IWizard wizard = new InstanceFilterWizard(cloud);
 					WizardDialog dialog = new WizardDialog(shell, wizard);

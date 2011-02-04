@@ -13,7 +13,7 @@ package org.jboss.tools.deltacloud.ui.adapter;
 import org.eclipse.core.runtime.IAdapterFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
-import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
+import org.jboss.tools.internal.deltacloud.ui.utils.WorkbenchUtils;
 
 public class DeltaCloudInstanceAdapterFactory implements IAdapterFactory {
 
@@ -28,7 +28,7 @@ public class DeltaCloudInstanceAdapterFactory implements IAdapterFactory {
 		if (adaptableObject instanceof DeltaCloudInstance) {
 			return ((DeltaCloudInstance) adaptableObject).getDeltaCloud();
 		} else {
-			return UIUtils.adapt(adaptableObject, DeltaCloud.class);
+			return WorkbenchUtils.adapt(adaptableObject, DeltaCloud.class);
 		}
 	}
 

@@ -24,8 +24,10 @@ import org.eclipse.ui.handlers.HandlerUtil;
 import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.ui.Activator;
+import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
+import org.jboss.tools.internal.deltacloud.ui.utils.WorkbenchUtils;
 
 /**
  * @author Andre Dietisheim
@@ -43,7 +45,8 @@ public class StopInstanceHandler extends AbstractInstanceHandler {
 		try {
 			if (selection instanceof IStructuredSelection) {
 				if (isSingleInstanceSelected(selection)) {
-					DeltaCloudInstance instance = UIUtils.getFirstAdaptedElement(selection, DeltaCloudInstance.class);
+					DeltaCloudInstance instance = WorkbenchUtils.getFirstAdaptedElement(selection,
+							DeltaCloudInstance.class);
 					stopInstance(instance);
 				} else {
 					stopWithDialog((IStructuredSelection) selection);
@@ -59,11 +62,12 @@ public class StopInstanceHandler extends AbstractInstanceHandler {
 
 	@SuppressWarnings("unchecked")
 	private void stopWithDialog(IStructuredSelection selection) {
-		List<DeltaCloudInstance> deltaCloudInstances = UIUtils.adapt((List<DeltaCloudInstance>) selection.toList(),
+		List<DeltaCloudInstance> deltaCloudInstances = WorkbenchUtils.adapt(
+				(List<DeltaCloudInstance>) selection.toList(),
 				DeltaCloudInstance.class);
 		List<DeltaCloudInstance> stoppableInstances = getStoppableInstances(deltaCloudInstances);
 		DeltaCloudInstanceDialog dialog = new DeltaCloudInstanceDialog(
-					UIUtils.getActiveShell()
+				WorkbenchUtils.getActiveShell()
 					, stoppableInstances
 					, CVMessages.getString(STOP_INSTANCES_DIALOG_TITLE)
 					, CVMessages.getString(STOP_INSTANCES_DIALOG_MSG));
@@ -84,19 +88,41 @@ public class StopInstanceHandler extends AbstractInstanceHandler {
 	}
 
 	private void stopInstances(Object[] deltaCloudInstances) {
-		for (int i = 0; i < deltaCloudInstances.length; i++) {
-			stopInstance((DeltaCloudInstance) deltaCloudInstances[i]);
+		if (askUserToConfirm()) {
+			for (int i = 0; i < deltaCloudInstances.length; i++) {
+				stopInstance((DeltaCloudInstance) deltaCloudInstances[i]);
+			}
 		}
 	}
 
 	private void stopInstance(DeltaCloudInstance instance) {
 		if (instance != null) {
-			executeInstanceAction(
-					instance
-					, DeltaCloudInstance.Action.STOP
-					, DeltaCloudInstance.State.STOPPED
-					, CVMessages.getString(STOPPING_INSTANCE_TITLE)
-					, CVMessages.getFormattedString(STOPPING_INSTANCE_MSG, new String[] { instance.getName() }));
+			if (askUserToConfirm()) {
+				doStopInstance(instance);
+			}
 		}
 	}
+
+	private void doStopInstance(DeltaCloudInstance instance) {
+		if (instance != null) {
+			executeInstanceAction(
+						instance
+						, DeltaCloudInstance.Action.STOP
+						, DeltaCloudInstance.State.STOPPED
+						, CVMessages.getString(STOPPING_INSTANCE_TITLE)
+						, CVMessages.getFormattedString(STOPPING_INSTANCE_MSG, new String[] { instance.getName() }));
+		}
+	}
+
+	private boolean askUserToConfirm() {
+		return UIUtils
+				.openConfirmationDialog(
+						"Confirm instance stop",
+						"You are about to stop a running system(s), that might be in production. Are you sure that you want to stop the given instance(s)?",
+						"Don't warn me again",
+						IDeltaCloudPreferenceConstants.DONT_CONFIRM_CREATE_INSTANCE,
+						Activator.PLUGIN_ID,
+						WorkbenchUtils.getActiveShell());
+	}
+
 }

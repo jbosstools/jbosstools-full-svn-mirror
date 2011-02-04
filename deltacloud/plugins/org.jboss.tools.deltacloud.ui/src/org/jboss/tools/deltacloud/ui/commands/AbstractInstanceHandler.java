@@ -18,7 +18,7 @@ import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.core.client.utils.StringUtils;
 import org.jboss.tools.deltacloud.core.client.utils.StringUtils.IElementFormatter;
 import org.jboss.tools.deltacloud.core.job.InstanceActionJob;
-import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
+import org.jboss.tools.internal.deltacloud.ui.utils.WorkbenchUtils;
 
 /**
  * A base handler that instance related handler may extend
@@ -36,7 +36,7 @@ public abstract class AbstractInstanceHandler extends AbstractHandler implements
 	}
 
 	protected boolean isSingleInstanceSelected(ISelection selection) {
-		return UIUtils.isSingleSelection(selection, DeltaCloudInstance.class);
+		return WorkbenchUtils.isSingleSelection(selection, DeltaCloudInstance.class);
 	}
 
 	@SuppressWarnings("unchecked")

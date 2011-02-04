@@ -25,7 +25,7 @@ import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
-import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
+import org.jboss.tools.internal.deltacloud.ui.utils.WorkbenchUtils;
 
 /**
  * @author Andre Dietisheim
@@ -44,7 +44,7 @@ public class RebootInstanceHandler extends AbstractInstanceHandler {
 		try {
 			if (selection instanceof IStructuredSelection) {
 				if (isSingleInstanceSelected(selection)) {
-					DeltaCloudInstance cvInstance = UIUtils.getFirstAdaptedElement(selection, DeltaCloudInstance.class);
+					DeltaCloudInstance cvInstance = WorkbenchUtils.getFirstAdaptedElement(selection, DeltaCloudInstance.class);
 					rebootInstance(cvInstance);
 				} else {
 					rebootWithDialog((IStructuredSelection) selection);
@@ -60,10 +60,10 @@ public class RebootInstanceHandler extends AbstractInstanceHandler {
 
 	@SuppressWarnings("unchecked")
 	private void rebootWithDialog(IStructuredSelection selection) {
-		List<DeltaCloudInstance> deltaCloudInstances = UIUtils.adapt((List<DeltaCloudInstance>) selection.toList(), DeltaCloudInstance.class);
+		List<DeltaCloudInstance> deltaCloudInstances = WorkbenchUtils.adapt((List<DeltaCloudInstance>) selection.toList(), DeltaCloudInstance.class);
 		List<DeltaCloudInstance> rebootableInstances = getRebootableInstances(deltaCloudInstances);
 		DeltaCloudInstanceDialog dialog = new DeltaCloudInstanceDialog(
-					UIUtils.getActiveShell()
+				WorkbenchUtils.getActiveShell()
 					, rebootableInstances
 					, CVMessages.getString(REBOOT_INSTANCE_TITLE)
 					, CVMessages.getString(REBOOT_INSTANCE_MSG));

@@ -21,8 +21,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
-import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 import org.jboss.tools.internal.deltacloud.ui.utils.WizardUtils;
+import org.jboss.tools.internal.deltacloud.ui.utils.WorkbenchUtils;
 import org.jboss.tools.internal.deltacloud.ui.wizards.InstanceFilterWizard;
 
 /**
@@ -34,7 +34,7 @@ public class FilterInstancesHandler extends AbstractHandler implements IHandler 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
-			DeltaCloud deltaCloud = UIUtils.getFirstAdaptedElement(selection, DeltaCloud.class);
+			DeltaCloud deltaCloud = WorkbenchUtils.getFirstAdaptedElement(selection, DeltaCloud.class);
 			createInstancesFilter(deltaCloud, HandlerUtil.getActiveShell(event));
 		}
 

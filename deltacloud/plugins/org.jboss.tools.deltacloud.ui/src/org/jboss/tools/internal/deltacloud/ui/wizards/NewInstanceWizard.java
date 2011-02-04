@@ -11,9 +11,6 @@
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
 import org.eclipse.core.runtime.Assert;
-import org.eclipse.core.runtime.preferences.InstanceScope;
-import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.jboss.tools.common.jobs.ChainedJob;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
@@ -25,7 +22,7 @@ import org.jboss.tools.deltacloud.ui.DeltacloudUIExtensionManager;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
 import org.jboss.tools.deltacloud.ui.wizard.INewInstanceWizardPage;
-import org.osgi.service.prefs.Preferences;
+import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 
 /**
  * @author Jeff Johnston
@@ -101,7 +98,11 @@ public class NewInstanceWizard extends AbstractDeltaCloudWizard {
 		boolean result = false;
 		Exception e = null;
 		try {
-			if (isProceed()) {
+			if (UIUtils.openConfirmationDialog(
+					WizardMessages.getString(CONFIRM_CREATE_TITLE), WizardMessages.getString(CONFIRM_CREATE_MSG),
+					WizardMessages.getString(DONT_SHOW_THIS_AGAIN_MSG),
+					IDeltaCloudPreferenceConstants.DONT_CONFIRM_CREATE_INSTANCE, Activator.PLUGIN_ID, getShell())) {
+
 				instance = cloud.createInstance(name, imageId, realmId, profileId, keyId, memory, storage);
 				if (instance != null) {
 					result = true;
@@ -141,28 +142,5 @@ public class NewInstanceWizard extends AbstractDeltaCloudWizard {
 			}
 		}
 		first.schedule();
-	}
-
-	private boolean isProceed() {
-		boolean proceed = true;
-		Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
-		boolean dontShowDialog =
-				prefs.getBoolean(IDeltaCloudPreferenceConstants.DONT_CONFIRM_CREATE_INSTANCE, false);
-		if (!dontShowDialog) {
-			MessageDialogWithToggle dialog =
-					MessageDialogWithToggle.openOkCancelConfirm(getShell(),
-							WizardMessages.getString(CONFIRM_CREATE_TITLE),
-							WizardMessages.getString(CONFIRM_CREATE_MSG),
-							WizardMessages.getString(DONT_SHOW_THIS_AGAIN_MSG),
-							false, null, null);
-			proceed = dialog.getReturnCode() == Dialog.OK;
-			boolean toggleState = dialog.getToggleState();
-			// If warning turned off by user, set the preference for future
-			// usage
-			if (toggleState) {
-				prefs.putBoolean(IDeltaCloudPreferenceConstants.DONT_CONFIRM_CREATE_INSTANCE, true);
-			}
-		}
-		return proceed;
 	}
 }
