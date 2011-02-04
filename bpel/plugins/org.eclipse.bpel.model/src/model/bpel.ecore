@@ -460,8 +460,8 @@
         eType="ecore:EClass platform:/plugin/org.eclipse.wst.wsdl/model/WSDL.ecore#//Operation"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="portType" lowerBound="1"
         eType="ecore:EClass platform:/plugin/org.eclipse.wst.wsdl/model/WSDL.ecore#//PortType"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="messageType" lowerBound="1"
-        eType="ecore:EClass platform:/plugin/org.eclipse.wst.wsdl/model/WSDL.ecore#//Message"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="messageType" eType="ecore:EClass platform:/plugin/org.eclipse.wst.wsdl/model/WSDL.ecore#//Message"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="xsdElement" eType="ecore:EClass platform:/plugin/org.eclipse.xsd/model/XSD.ecore#//XSDElementDeclaration"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="correlationSets" eType="#//CorrelationSets"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="fromParts" eType="#//FromParts"
