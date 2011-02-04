@@ -10,6 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
+import org.eclipse.core.runtime.Assert;
+import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -26,7 +28,10 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.ICloudElementFilter;
+import org.jboss.tools.deltacloud.core.IFieldMatcher;
+import org.jboss.tools.deltacloud.core.IImageFilter;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
+import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 
 /**
  * @author Jeff Johnston
@@ -47,13 +52,16 @@ public class ImageFilterPage extends WizardPage {
 
 	private DeltaCloud cloud;
 	private Text nameText;
-	private Text idText;
-	private Text archText;
-	private Text descText;
-
+	private ControlDecoration nameDecoration;
 	private Button defaultName;
+	private Text idText;
+	private ControlDecoration idDecoration;
 	private Button defaultId;
+	private Text archText;
+	private ControlDecoration archDecoration;
 	private Button defaultArch;
+	private Text descText;
+	private ControlDecoration descDecoration;
 	private Button defaultDesc;
 
 	public ImageFilterPage(DeltaCloud cloud) {
@@ -81,16 +89,15 @@ public class ImageFilterPage extends WizardPage {
 		return descText.getText();
 	}
 
-	private ModifyListener Listener = new ModifyListener() {
+	private ModifyListener textListener = new ModifyListener() {
 
 		@Override
 		public void modifyText(ModifyEvent e) {
-			// TODO Auto-generated method stub
 			validate();
 		}
 	};
 
-	private SelectionAdapter ButtonListener = new SelectionAdapter() {
+	private SelectionAdapter buttonListener = new SelectionAdapter() {
 		@Override
 		public void widgetSelected(SelectionEvent e) {
 			Button b = (Button) e.widget;
@@ -120,27 +127,35 @@ public class ImageFilterPage extends WizardPage {
 	};
 
 	private void validate() {
-		boolean complete = true;
-		boolean error = false;
-
-		if (nameText.getText().length() == 0 ||
-				idText.getText().length() == 0 ||
-				archText.getText().length() == 0 ||
-				descText.getText().length() == 0) {
-
-			setErrorMessage(WizardMessages.getString(EMPTY_RULE));
-			error = true;
-		} else if (nameText.getText().contains(";") ||
-				idText.getText().contains(";") ||
-				archText.getText().contains(";") ||
-				descText.getText().contains(";")) {
-			setErrorMessage(WizardMessages.getString(INVALID_SEMICOLON));
-			error = true;
+		nameDecoration.hide();
+		idDecoration.hide();
+		archDecoration.hide();
+		descDecoration.hide();
+		String error = null;
+		error = validate(nameText, nameDecoration, error);
+		error = validate(idText, idDecoration, error);
+		error = validate(archText, archDecoration, error);
+		error = validate(descText, descDecoration, error);
+		setPageComplete(error == null);
+		setErrorMessage(error);
+	}
+	
+	private String validate(Text text, ControlDecoration decoration, String formError) {
+		String error = null;
+		if (text.getText().length() == 0) {
+			error = WizardMessages.getString(EMPTY_RULE);
+		} else if (text.getText().contains(ICloudElementFilter.EXPRESSION_DELIMITER)) {
+			error = WizardMessages.getString(INVALID_SEMICOLON);
 		}
-
-		if (!error)
-			setErrorMessage(null);
-		setPageComplete(complete && !error);
+		if (error != null) {
+			decoration.setDescriptionText(error);
+			decoration.show();
+			setPageComplete(false);
+			setErrorMessage(error);
+			return error;
+		} else {
+			return formError;
+		}
 	}
 
 	@Override
@@ -151,52 +166,30 @@ public class ImageFilterPage extends WizardPage {
 		layout.marginWidth = 5;
 		container.setLayout(layout);
 
+		IImageFilter filter = cloud.getImageFilter();
+
 		Label label = new Label(container, SWT.NULL);
 		label.setText(WizardMessages.getString(FILTER_LABEL));
 
-		Label nameLabel = new Label(container, SWT.NULL);
-		nameLabel.setText(WizardMessages.getString(NAME_LABEL));
+		Label nameLabel = createRuleLabel(WizardMessages.getString(NAME_LABEL), container);
+		this.nameText = createRuleText(filter.getNameRule(), container);
+		this.nameDecoration = UIUtils.createErrorDecoration("", nameText);
+		this.defaultName = createDefaultRuleButton(container);
 
-		nameText = new Text(container, SWT.BORDER | SWT.SINGLE);
-		nameText.setText(cloud.getImageFilter().getNameRule().toString());
-		nameText.addModifyListener(Listener);
+		Label idLabel = createRuleLabel(WizardMessages.getString(ID_LABEL), container);
+		this.idText = createRuleText(filter.getIdRule(), container);
+		this.idDecoration = UIUtils.createErrorDecoration("", idText);
+		this.defaultId = createDefaultRuleButton(container);
 
-		defaultName = new Button(container, SWT.NULL);
-		defaultName.setText(WizardMessages.getString(DEFAULT_LABEL));
-		defaultName.addSelectionListener(ButtonListener);
+		Label archLabel = createRuleLabel(WizardMessages.getString(ARCH_LABEL), container);
+		this.archText = createRuleText(filter.getArchRule(), container);
+		this.archDecoration = UIUtils.createErrorDecoration(WizardMessages.getString(""), archText);
+		this.defaultArch = createDefaultRuleButton(container);
 
-		Label idLabel = new Label(container, SWT.NULL);
-		idLabel.setText(WizardMessages.getString(ID_LABEL));
-
-		idText = new Text(container, SWT.BORDER | SWT.SINGLE);
-		idText.setText(cloud.getImageFilter().getIdRule().toString());
-		idText.addModifyListener(Listener);
-
-		defaultId = new Button(container, SWT.NULL);
-		defaultId.setText(WizardMessages.getString(DEFAULT_LABEL));
-		defaultId.addSelectionListener(ButtonListener);
-
-		Label archLabel = new Label(container, SWT.NULL);
-		archLabel.setText(WizardMessages.getString(ARCH_LABEL));
-
-		archText = new Text(container, SWT.BORDER | SWT.SINGLE);
-		archText.setText(cloud.getImageFilter().getArchRule().toString());
-		archText.addModifyListener(Listener);
-
-		defaultArch = new Button(container, SWT.NULL);
-		defaultArch.setText(WizardMessages.getString(DEFAULT_LABEL));
-		defaultArch.addSelectionListener(ButtonListener);
-
-		Label descLabel = new Label(container, SWT.NULL);
-		descLabel.setText(WizardMessages.getString(DESC_LABEL));
-
-		descText = new Text(container, SWT.BORDER | SWT.SINGLE);
-		descText.setText(cloud.getImageFilter().getDescRule().toString());
-		descText.addModifyListener(Listener);
-
-		defaultDesc = new Button(container, SWT.NULL);
-		defaultDesc.setText(WizardMessages.getString(DEFAULT_LABEL));
-		defaultDesc.addSelectionListener(ButtonListener);
+		Label descLabel = createRuleLabel(WizardMessages.getString(DESC_LABEL), container);
+		this.descText = createRuleText(filter.getDescRule(), container);
+		this.descDecoration = UIUtils.createErrorDecoration("", descText);
+		this.defaultDesc = createDefaultRuleButton(container);
 
 		Point p1 = label.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		Point p2 = nameText.computeSize(SWT.DEFAULT, SWT.DEFAULT);
@@ -274,6 +267,28 @@ public class ImageFilterPage extends WizardPage {
 
 		setControl(container);
 		setPageComplete(true);
+	}
+
+	private Label createRuleLabel(String text, Composite container) {
+		Label label = new Label(container, SWT.NULL);
+		label.setText(text);
+		return label;
+	}
+
+	private Button createDefaultRuleButton(final Composite container) {
+		Button button = new Button(container, SWT.NULL);
+		button.setText(WizardMessages.getString(DEFAULT_LABEL));
+		button.addSelectionListener(buttonListener);
+		return button;
+	}
+
+	private Text createRuleText(IFieldMatcher rule, final Composite container) {
+		Assert.isNotNull(rule, "Rule may not be null");
+
+		Text text = new Text(container, SWT.BORDER | SWT.SINGLE);
+		text.setText(rule.toString());
+		text.addModifyListener(textListener);
+		return text;
 	}
 
 }
