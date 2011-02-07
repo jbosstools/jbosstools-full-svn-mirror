@@ -80,9 +80,9 @@ import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
  */
 public class NewInstancePage extends WizardPage {
 
-	private static final String NAME_PROPOSAL_KEY = "instance/name";
-	private static final String IMAGE_PROPOSAL_KEY = "instance/image";
-	private static final String KEY_PROPOSAL_KEY = "instance/key";
+	private static final String NAME_PROPOSAL_KEY = "instance_ame";
+	private static final String IMAGE_PROPOSAL_KEY = "instance_image";
+	private static final String KEY_PROPOSAL_KEY = "instance_key";
 
 	private static final int IMAGE_CHECK_DELAY = 500;
 	private static final int KEY_CHECK_DELAY = 500;
@@ -180,14 +180,14 @@ public class NewInstancePage extends WizardPage {
 		nameLabel.setText(WizardMessages.getString(NAME_LABEL));
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(nameLabel);
 		this.nameText = new Text(container, SWT.BORDER | SWT.SINGLE);
-		UIUtils.addPreferencesProposalAdapter(nameText, NAME_PROPOSAL_KEY);
+		UIUtils.createPreferencesProposalAdapter(nameText, NAME_PROPOSAL_KEY);
 		GridDataFactory.fillDefaults().span(2, 1).grab(true, false).applyTo(nameText);
 
 		Label imageLabel = new Label(container, SWT.NULL);
 		imageLabel.setText(WizardMessages.getString(IMAGE_LABEL));
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(imageLabel);
 		this.imageText = new Text(container, SWT.BORDER | SWT.SINGLE);
-		UIUtils.addPreferencesProposalAdapter(imageText, IMAGE_PROPOSAL_KEY);
+		UIUtils.createPreferencesProposalAdapter(imageText, IMAGE_PROPOSAL_KEY);
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.CENTER).applyTo(imageText);
 		Button findImageButton = new Button(container, SWT.NULL);
 		findImageButton.setText(WizardMessages.getString(FIND_BUTTON_LABEL));
@@ -212,7 +212,7 @@ public class NewInstancePage extends WizardPage {
 		keyLabel.setText(WizardMessages.getString(KEY_LABEL));
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(keyLabel);
 		keyText = new Text(container, SWT.BORDER | SWT.SINGLE);
-		UIUtils.addPreferencesProposalAdapter(keyText, KEY_PROPOSAL_KEY);
+		UIUtils.createPreferencesProposalAdapter(keyText, KEY_PROPOSAL_KEY);
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).applyTo(keyText);
 		Button keyManageButton = new Button(container, SWT.NULL);
 		keyManageButton.setText(WizardMessages.getString(MANAGE_BUTTON_LABEL));

@@ -36,7 +36,7 @@ import org.osgi.service.prefs.Preferences;
  */
 public class UIUtils {
 
-	public static ContentProposalAdapter addPreferencesProposalAdapter(final Text text, String preferencesKey) {
+	public static ContentProposalAdapter createPreferencesProposalAdapter(final Text text, String preferencesKey) {
 		final ControlDecoration decoration = createContenAssistDecoration(text);
 
 		final StringsPreferenceValue preferencesValues =
@@ -53,9 +53,11 @@ public class UIUtils {
 			@Override
 			public void focusLost(FocusEvent e) {
 				decoration.hide();
-				
-				preferencesValues.add(text.getText());
-				preferencesValues.store();
+				String value = text.getText();
+				if (value != null && value.length() > 0) {
+					preferencesValues.add(text.getText());
+					preferencesValues.store();
+				}
 			}
 
 		});
@@ -76,7 +78,7 @@ public class UIUtils {
 		decoration.hide();
 		return decoration;
 	}
-	
+
 	public static ControlDecoration createErrorDecoration(String errorText, Control control) {
 		return createDecoration(errorText, FieldDecorationRegistry.DEC_ERROR, control);
 	}
@@ -94,7 +96,8 @@ public class UIUtils {
 
 	/**
 	 * Opens a confirmation dialog that offers a checkbox that allows the user
-	 * to turn further aksing off. The checkbox state is stored to the preferences
+	 * to turn further aksing off. The checkbox state is stored to the
+	 * preferences
 	 * 
 	 * @param title
 	 *            dialog title
