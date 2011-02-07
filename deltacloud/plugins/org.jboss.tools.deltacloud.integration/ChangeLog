@@ -1,3 +1,8 @@
+2011-02-07  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/deltacloud/integration/wizard/RSEandASWizardPage.java (createControl): 
+	[JBIDE-8341] added history proposals to text fields when launching a new instance
+
 2011-02-02  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/deltacloud/integration/wizard/RSEandASWizardPage.java (createControl): 

@@ -20,6 +20,7 @@ import org.eclipse.rse.core.model.IHost;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FormLayout;
@@ -46,6 +47,11 @@ import org.osgi.service.prefs.BackingStoreException;
  * @author Rob Stryker
  */
 public class RSEandASWizardPage extends WizardPage implements INewInstanceWizardPage {
+	private static final String SERVER_DETAILS_PROPOSAL_KEY = "server_details";
+	private static final String SERVER_HOME_PROPOSAL_KEY = "server_home";
+	private static final String SERVER_CONFIG_PROPOSAL_KEY = "server_config";
+	private static final String SERVER_DEPLOY_PROPOSAL_KEY = "server_deploy";
+
 	private static final String SELECT_RUNTIME_ERROR = "Please select a local runtime. The created server will be of the same version as the local runtime.";
 	private static final String DEPLOY_FOLDER_NOT_EMPTY = "The deploy folder must not be empty";
 	private final static String REMOTE_DETAILS_LOC_ERROR = "You must fill in a path to fetch the server configuration from";
@@ -109,6 +115,7 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 		remoteDetailsLoc.setLayoutData(LayoutUtils.createFormData(autoScanCheck, 5, null, 0, 0, INDENTATION, 100, -5));
 		remoteDetailsLoc.setText("./.jboss");
 		this.remoteDetailsLocDeco = UIUtils.createErrorDecoration(REMOTE_DETAILS_LOC_ERROR, remoteDetailsLoc);
+		UIUtils.createPreferencesProposalAdapter(remoteDetailsLoc, SERVER_DETAILS_PROPOSAL_KEY);
 
 		autoLocalRuntimeLabel = new Label(g, SWT.NONE);
 		autoLocalRuntimeLabel.setText("Local Runtime: ");
@@ -142,6 +149,7 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 		serverHomeText.setLayoutData(LayoutUtils.createFormData(hardCodeServerDetails, 5, null, 0, serverHome, 10, 100, -5));
 		serverHomeText.setText("/etc/jboss/jboss-as");
 		this.serverHomeDeco = UIUtils.createErrorDecoration(SERVER_HOME_ERROR, serverHomeText);
+		UIUtils.createPreferencesProposalAdapter(serverHomeText, SERVER_HOME_PROPOSAL_KEY);
 
 		serverConfig = new Label(g, SWT.NONE);
 		serverConfig.setText("Configuration: ");
@@ -150,6 +158,7 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 		serverConfigText.setLayoutData(LayoutUtils.createFormData(serverHomeText, 5, null, 0, serverHome, 10, 100, -5));
 		serverConfigText.setText("default");
 		this.serverConfigDeco = UIUtils.createErrorDecoration(SERVER_CONFIG_ERROR, serverConfigText);
+		UIUtils.createPreferencesProposalAdapter(serverConfigText, SERVER_CONFIG_PROPOSAL_KEY);
 
 		localRuntimeLabel = new Label(g, SWT.NONE);
 		localRuntimeLabel.setText("Local Runtime: ");
@@ -158,12 +167,9 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 		addLocalRuntimeButton = new Button(g, SWT.DEFAULT);
 		addLocalRuntimeButton.setText("Configure Runtimes...");
 		addLocalRuntimeButton.setLayoutData(LayoutUtils.createFormData(serverConfigText, 7, null, 0, null, 0, 100, -5));
-		addLocalRuntimeButton.addSelectionListener(new SelectionListener() {
+		addLocalRuntimeButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				configureRuntimesPressed();
-			}
-
-			public void widgetDefaultSelected(SelectionEvent e) {
 			}
 		});
 		localRuntimeCombo = new Combo(g, SWT.READ_ONLY);
@@ -182,6 +188,7 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 		deployFolderText.setText("/path/to/deploy");
 		deployFolderText.setLayoutData(LayoutUtils.createFormData(deployOnlyRadio, 5, null, 0, deployFolder, 10, 100, -5));
 		this.deployFolderDeco = UIUtils.createErrorDecoration(DEPLOY_FOLDER_NOT_EMPTY, deployFolderText);
+		UIUtils.createPreferencesProposalAdapter(deployFolderText, SERVER_DEPLOY_PROPOSAL_KEY);
 
 		Label dummyLabel = new Label(g, SWT.NONE);
 		dummyLabel.setLayoutData(LayoutUtils.createFormData(deployOnlyRadio, 5, null, 0, deployFolderText, 10, 100, -5));
