@@ -432,16 +432,6 @@ public interface VpeTemplate {
 	public boolean canModify();
 	
 	public void setModify(boolean modify);
-	
-	/**
-	 * open bundle
-	 * 
-	 * @param pageContext
-	 * @param visualNod
-	 * @return
-	 */
-	public boolean openBundle(VpePageContext pageContext,
-			nsIDOMNode visualNode, VpeElementMapping elementMapping);
 
 	/**
 	 * 

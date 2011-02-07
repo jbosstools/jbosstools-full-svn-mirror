@@ -112,7 +112,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 					 */
 					if (getBrowser() != null && !getBrowser().isDisposed()) {
 						showResizer();
-						showSelectionRectangle();
+						redrawSelectionRectangle();
 					}
 				}
 			});
@@ -255,18 +255,6 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 		return lastSelectedNode;
 	}
 
-	// /**
-	// * Function created to restore functionality of MozillaBrowser
-	// * @return
-	// */
-	// private void setLastSelectedElement(nsIDOMElement lastSelectedElement) {
-	// this.lastSelectedElement = lastSelectedElement;
-	// }
-
-	private void setLastSelectedNode(nsIDOMNode lastSelectedNode) {
-		this.lastSelectedNode = lastSelectedNode;
-	}
-
 	/**
 	 * Draws rectangle around the element.
 	 * 
@@ -278,14 +266,14 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 		if (getFlasher() == null) {
 			return;
 		}
-		setLastSelectedNode(node);
+		this.lastSelectedNode = node;
 
 		nsIDOMElement element = getLastSelectedElement();
 		if (element != null) {
 			repaint();
 			scrollToElement(element);			
 		}
-		showSelectionRectangle();
+		redrawSelectionRectangle();
 
 		if (xulRunnerVpeResizer != null) {
 			if (element != null && resizerConstrains != 0) {
@@ -420,7 +408,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 		}
 	}
 
-	public void showSelectionRectangle() {
+	public void redrawSelectionRectangle() {
 		nsIDOMElement element = getLastSelectedElement();
 		if (element != null) {
 			if (isVisible(element)) {
@@ -515,7 +503,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	private class VisualPaintListener implements PaintListener {
 
 		public void paintControl(PaintEvent e) {
-			showSelectionRectangle();
+			redrawSelectionRectangle();
 		}
 
 	}

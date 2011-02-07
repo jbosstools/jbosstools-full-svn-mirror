@@ -89,10 +89,8 @@ public class SelectionManager implements ISelectionManager {
 			selectionLength = NodesManagingUtil.getNodeLength(selectionData.getSourceNode());
 		}
 		/*************** Apply selection to views *****************************/
-		// set source selection
 		SelectionUtil.setSourceSelection(getPageContext(), selectionData.getSourceNode(),
 				selectionOffset, selectionLength);
-		// paint visual selection
 		getPageContext().getVisualBuilder().setSelectionRectangle(
 				selectionData.getVisualNode());
 	}
@@ -113,11 +111,9 @@ public class SelectionManager implements ISelectionManager {
 			selectionLength = NodesManagingUtil.getNodeLength(selectionData.getSourceNode());
 		}
 		/*************** Apply selection to views *****************************/
-		SelectionUtil.clearSelection(selectionController);
 		SelectionUtil.setSourceSelection(getPageContext(),
 				selectionData.getSourceNode(),
 				selectionOffset, selectionLength);
-		// paint selection rectangle
 		getPageContext().getVisualBuilder().setSelectionRectangle(
 				selectionData.getVisualNode());
 	}

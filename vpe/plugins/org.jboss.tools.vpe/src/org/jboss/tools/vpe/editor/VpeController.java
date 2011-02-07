@@ -2355,7 +2355,7 @@ public class VpeController implements INodeAdapter,
 		Display.getDefault().asyncExec(new Thread() {
 			public void run() {
 				if (getXulRunnerEditor() != null)
-					getXulRunnerEditor().showSelectionRectangle();
+					getXulRunnerEditor().redrawSelectionRectangle();
 			}
 		});
 	}

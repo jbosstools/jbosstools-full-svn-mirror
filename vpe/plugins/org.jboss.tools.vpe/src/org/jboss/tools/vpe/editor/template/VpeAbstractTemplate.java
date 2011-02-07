@@ -1405,36 +1405,6 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 * org.mozilla.interfaces.nsIDOMNode,
 	 * org.jboss.tools.vpe.editor.mapping.VpeElementMapping)
 	 */
-	/**
-	 * Open bundle.
-	 * 
-	 * @param visualNode the visual node
-	 * @param pageContext the page context
-	 * @param elementMapping the element mapping
-	 * 
-	 * @return true, if open bundle
-	 */
-	public boolean openBundle(VpePageContext pageContext,
-			nsIDOMNode visualNode, VpeElementMapping elementMapping) {
-
-		nsIDOMNode lastSelectedNode = SelectionUtil
-				.getLastSelectedNode(pageContext);
-
-		if (elementMapping == null)
-			return false;
-
-		NodeData nodeData = getNodeData(lastSelectedNode, elementMapping
-				.getElementData(), pageContext.getDomMapping());
-
-		if (nodeData != null && nodeData.getSourceNode() != null
-				&& nodeData.getSourceNode().getNodeValue() != null)
-			return pageContext.getBundle().openBundle(
-					nodeData.getSourceNode().getNodeValue(),
-					VpeNodesManagingUtil.getPageLocale(pageContext, nodeData
-							.getSourceNode()));
-
-		return false;
-	}
 	
 	public boolean isInvisible() {
 		return invisible;
