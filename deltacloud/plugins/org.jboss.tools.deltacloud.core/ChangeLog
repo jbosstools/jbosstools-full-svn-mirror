@@ -1,3 +1,8 @@
+2011-02-07  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (waitForState): 
+	[JBIDE-8343] increased wait delay for refreshing instance, waiting before refreshing (was: refreshed first and waited afterwards)
+
 2011-02-03  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/deltacloud/core/ImageFilter.java: 
