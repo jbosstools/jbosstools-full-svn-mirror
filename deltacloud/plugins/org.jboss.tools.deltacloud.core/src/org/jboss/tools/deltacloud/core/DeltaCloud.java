@@ -451,7 +451,7 @@ public class DeltaCloud extends ObservablePojo {
 			return deltaCloudInstance;
 		} catch (DeltaCloudClientException e) {
 			// TODO : internationalize strings
-			throw new DeltaCloudException(MessageFormat.format("Coud not refresh instance \"{0}\"",
+			throw new DeltaCloudException(MessageFormat.format("Could not refresh instance \"{0}\"",
 					deltaCloudInstance.getId()), e);
 		}
 	}
