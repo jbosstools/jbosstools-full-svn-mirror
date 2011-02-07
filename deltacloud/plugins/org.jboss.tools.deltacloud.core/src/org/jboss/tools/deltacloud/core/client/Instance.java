@@ -13,8 +13,6 @@ package org.jboss.tools.deltacloud.core.client;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlElement;
-
 /**
  * @author Martyn Taylor
  * @author Andre Dietisheim
@@ -27,10 +25,8 @@ public class Instance extends AbstractDeltaCloudActionAwareObject<InstanceAction
 		RUNNING, STOPPED, PENDING, TERMINATED, BOGUS
 	};
 
-	@XmlElement(name = "owner_id")
 	private String ownerId;
 
-	@XmlElement
 	private String name;
 
 	private String imageId;
@@ -47,13 +43,10 @@ public class Instance extends AbstractDeltaCloudActionAwareObject<InstanceAction
 
 	private String keyId;
 
-	@XmlElement
 	private InstanceState state;
 
-	@XmlElement(name = "public_addresses")
 	private AddressList publicAddresses;
 
-	@XmlElement(name = "private_addresses")
 	private AddressList privateAddresses;
 
 	public Instance() {
