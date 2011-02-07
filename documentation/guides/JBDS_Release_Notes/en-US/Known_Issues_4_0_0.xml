@@ -32,7 +32,7 @@
 				</listitem>
 				<listitem>
 					<para>
-						<ulink url="https://issues.jboss.org/browse/JBDS-1266">JBDS-1266</ulink>: The credentials used when testing the jBPM deployment process are cached, and and are used in place of any additional credentials that are specifed.
+						<ulink url="https://issues.jboss.org/browse/JBDS-1266">JBDS-1266</ulink>: The credentials used when testing the jBPM deployment process are cached, and are used in place of any additional credentials that are specifed.
            </para>
 				</listitem>
 				<listitem>
