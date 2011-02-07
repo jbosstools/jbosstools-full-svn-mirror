@@ -80,7 +80,7 @@ import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
  */
 public class NewInstancePage extends WizardPage {
 
-	private static final String NAME_PROPOSAL_KEY = "instance_ame";
+	private static final String NAME_PROPOSAL_KEY = "instance_name";
 	private static final String IMAGE_PROPOSAL_KEY = "instance_image";
 	private static final String KEY_PROPOSAL_KEY = "instance_key";
 
