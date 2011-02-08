@@ -79,4 +79,16 @@ public class StringsPreferenceValueTest {
 		stringValues.add(DELIMITER + "");
 		assertEquals(2, stringValues.get().length);
 	}
+
+	@Test
+	public void delimiterValueIsReturnedCorrectly() {
+		stringValues.add("11");
+		assertEquals(1, stringValues.get().length);
+		String delimiterValue = DELIMITER + "";
+		stringValues.add(delimiterValue);
+		String[] values = stringValues.get();
+		assertEquals(2, values.length);
+		values[1] = delimiterValue;
+	}
+
 }
