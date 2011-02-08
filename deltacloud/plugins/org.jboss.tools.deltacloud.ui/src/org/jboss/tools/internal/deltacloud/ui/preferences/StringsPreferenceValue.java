@@ -10,6 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.internal.deltacloud.ui.preferences;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
@@ -22,10 +24,16 @@ import java.util.StringTokenizer;
 public class StringsPreferenceValue extends AbstractPreferenceValue<String[]> {
 
 	private String delimiter;
+	private String escapedDelimiter;
 
 	public StringsPreferenceValue(char delimiter, String prefsKey, String pluginId) {
 		super(prefsKey, pluginId);
 		this.delimiter = String.valueOf(delimiter);
+		try {
+			this.escapedDelimiter = URLEncoder.encode(String.valueOf(delimiter), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// cannot happen since we use a fixed, known encoding
+		}
 	}
 
 	public String[] get() {
@@ -43,7 +51,9 @@ public class StringsPreferenceValue extends AbstractPreferenceValue<String[]> {
 		ArrayList<String> values = new ArrayList<String>();
 		StringTokenizer tokenizer = new StringTokenizer(string, delimiter);
 		while (tokenizer.hasMoreTokens()) {
-			values.add(tokenizer.nextToken());
+			String value = tokenizer.nextToken();
+			String unescapedValue = unescapeDelimiterCharacter(value);
+			values.add(unescapedValue);
 		}
 		return values.toArray(new String[values.size()]);
 	}
@@ -73,6 +83,7 @@ public class StringsPreferenceValue extends AbstractPreferenceValue<String[]> {
 	public void add(String value) {
 		String currentValues = doGet();
 		StringBuilder builder = new StringBuilder(currentValues);
+		value = escapeDelimiterCharacter(value);
 		if (!contains(value, currentValues)) {
 			if (hasValues(currentValues)) {
 				builder.append(delimiter);
@@ -80,6 +91,36 @@ public class StringsPreferenceValue extends AbstractPreferenceValue<String[]> {
 			builder.append(value);
 			doStore(builder.toString());
 		}
+	}
+
+	private String escapeDelimiterCharacter(String value) {
+		if (value == null || value.length() == 0) {
+			return value;
+		}
+
+		int index = value.indexOf(delimiter);
+		if (index < 0) {
+			return value;
+		}
+		StringBuilder builder = new StringBuilder(value.substring(0, index));
+		builder.append(escapedDelimiter);
+		builder.append(value.substring(index + 1));
+		return builder.toString();
+	}
+
+	private String unescapeDelimiterCharacter(String value) {
+		if (value == null || value.length() == 0) {
+			return value;
+		}
+
+		int index = value.indexOf(escapedDelimiter);
+		if (index < 0) {
+			return value;
+		}
+		StringBuilder builder = new StringBuilder(value.substring(0, index));
+		builder.append(delimiter);
+		builder.append(value.substring(index + 1));
+		return builder.toString();
 	}
 
 	private boolean contains(String value, String currentValues) {
