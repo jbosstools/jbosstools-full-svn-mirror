@@ -13,12 +13,10 @@ package org.jboss.tools.deltacloud.core;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jboss.tools.deltacloud.core.client.Action;
+import org.jboss.tools.deltacloud.core.client.DeltaCloudClient;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
-import org.jboss.tools.deltacloud.core.client.IInstanceAction;
 import org.jboss.tools.deltacloud.core.client.Instance;
-import org.jboss.tools.deltacloud.core.client.Instance.InstanceState;
-import org.jboss.tools.deltacloud.core.client.InstanceAction;
-import org.jboss.tools.deltacloud.core.client.InternalDeltaCloudClient;
 
 /**
  * An instance that may be reached on a DeltaCloud instance. Wraps Instance from
@@ -34,14 +32,14 @@ public class DeltaCloudInstance extends AbstractDeltaCloudElement {
 
 	public enum State {
 
-		PENDING(Instance.InstanceState.PENDING.name()),
-		RUNNING(Instance.InstanceState.RUNNING.name()),
-		STOPPED(Instance.InstanceState.STOPPED.name()),
-		TERMINATED(Instance.InstanceState.TERMINATED.name()),
-		BOGUS(Instance.InstanceState.BOGUS.name());
+		PENDING(Instance.State.PENDING.name()),
+		RUNNING(Instance.State.RUNNING.name()),
+		STOPPED(Instance.State.STOPPED.name()),
+		TERMINATED(Instance.State.TERMINATED.name()),
+		BOGUS(Instance.State.BOGUS.name());
 
 		private String name;
-
+		
 		private State(String name) {
 			this.name = name;
 		}
@@ -52,24 +50,6 @@ public class DeltaCloudInstance extends AbstractDeltaCloudElement {
 
 		public boolean equals(String state) {
 			return name.equals(state);
-		}
-	}
-
-	public enum Action {
-
-		START(IInstanceAction.START),
-		STOP(IInstanceAction.STOP),
-		REBOOT(IInstanceAction.REBOOT),
-		DESTROY(InstanceAction.DESTROY);
-
-		private String name;
-
-		private Action(String name) {
-			this.name = name;
-		}
-
-		public String getName() {
-			return name;
 		}
 	}
 
@@ -115,10 +95,10 @@ public class DeltaCloudInstance extends AbstractDeltaCloudElement {
 		return instance.getKeyId();
 	}
 	
-	public List<Action> getActions() {
-		List<Action> actions = new ArrayList<Action>();
-		for (InstanceAction action : instance.getActions()) {
-			actions.add(Action.valueOf(action.getName()));
+	public List<DeltaCloudResourceAction> getActions() {
+		List<DeltaCloudResourceAction> actions = new ArrayList<DeltaCloudResourceAction>();
+		for (Action<Instance> action : instance.getActions()) {
+			actions.add(DeltaCloudResourceAction.valueOf(action.getName()));
 		}
 		return actions;
 	}
@@ -140,7 +120,7 @@ public class DeltaCloudInstance extends AbstractDeltaCloudElement {
 	}
 
 	public boolean isStopped() {
-		return instance.getState() == InstanceState.STOPPED;
+		return instance.isStopped();
 	}
 
 	public boolean canStart() {
@@ -176,13 +156,13 @@ public class DeltaCloudInstance extends AbstractDeltaCloudElement {
 		return hostName;
 	}
 
-	protected boolean performInstanceAction(Action action, InternalDeltaCloudClient client)
+	protected boolean performAction(DeltaCloudResourceAction action, DeltaCloudClient client)
 			throws DeltaCloudClientException {
-		InstanceAction instanceAction = instance.getAction(action.getName());
+		Action<Instance> instanceAction = instance.getAction(action.getName());
 		if (instanceAction == null) {
 			return false;
 		}
-		return client.performInstanceAction(instanceAction);
+		return client.performAction(instanceAction);
 	}
 
 	@Override
@@ -206,11 +186,15 @@ public class DeltaCloudInstance extends AbstractDeltaCloudElement {
 
 	private StringBuilder appendActions(StringBuilder builder) {
 		builder.append(" actions: [");
-		for (Action action : getActions()) {
+		for (DeltaCloudResourceAction action : getActions()) {
 			builder.append("action: ")
 					.append(action.getName());
 		}
 		builder.append("] ");
 		return builder;
+	}
+
+	public boolean isInState(State state) {
+		return getState() == state;
 	}
 }

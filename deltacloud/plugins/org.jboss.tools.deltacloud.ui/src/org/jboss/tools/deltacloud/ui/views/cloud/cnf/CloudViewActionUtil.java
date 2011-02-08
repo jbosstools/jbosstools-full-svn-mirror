@@ -21,6 +21,7 @@ import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
+import org.jboss.tools.deltacloud.core.DeltaCloudResourceAction;
 import org.jboss.tools.deltacloud.core.job.InstanceActionJob;
 import org.jboss.tools.deltacloud.core.job.RefreshCloudJob;
 import org.jboss.tools.deltacloud.ui.commands.DeleteCloudHandler.DeleteCloudsDialog;
@@ -51,7 +52,7 @@ public class CloudViewActionUtil {
 		handleInstanceAction(
 				instances,
 				START_INSTANCES_DIALOG_TITLE_VAL, START_INSTANCES_DIALOG_MSG_VAL, 
-				DeltaCloudInstance.Action.START, DeltaCloudInstance.State.RUNNING, 
+				DeltaCloudResourceAction.START, DeltaCloudInstance.State.RUNNING, 
 				STARTING_INSTANCE_MSG_KEY);
 	}
 	
@@ -60,7 +61,7 @@ public class CloudViewActionUtil {
 		handleInstanceAction(
 				instances,
 				STOP_INSTANCES_DIALOG_TITLE_VAL, STOP_INSTANCES_DIALOG_MSG_VAL, 
-				DeltaCloudInstance.Action.STOP, DeltaCloudInstance.State.STOPPED, 
+				DeltaCloudResourceAction.STOP, DeltaCloudInstance.State.STOPPED, 
 				STOPPING_INSTANCE_MSG_KEY);
 	}
 	
@@ -69,7 +70,7 @@ public class CloudViewActionUtil {
 		handleInstanceAction(
 				instances,
 				REBOOT_INSTANCE_TITLE_VAL, REBOOT_INSTANCE_MSG_VAL, 
-				DeltaCloudInstance.Action.REBOOT, DeltaCloudInstance.State.RUNNING, 
+				DeltaCloudResourceAction.REBOOT, DeltaCloudInstance.State.RUNNING, 
 				REBOOTING_INSTANCE_MSG_KEY);
 	}
 	public static void destroyInstances(ISelection selection) {
@@ -77,12 +78,12 @@ public class CloudViewActionUtil {
 		handleInstanceAction(
 				instances,
 				DESTROY_INSTANCE_TITLE_VAL, DESTROY_INSTANCE_MSG_VAL, 
-				DeltaCloudInstance.Action.DESTROY, DeltaCloudInstance.State.TERMINATED, 
+				DeltaCloudResourceAction.DESTROY, DeltaCloudInstance.State.TERMINATED, 
 				DESTROYING_INSTANCE_MSG_KEY);
 	}
 	
 	protected static void handleInstanceAction(DeltaCloudInstance[] instances, 
-			String dialogTitle, String dialogMsg, DeltaCloudInstance.Action action,
+			String dialogTitle, String dialogMsg, DeltaCloudResourceAction action,
 			DeltaCloudInstance.State expectedState, String unformattedJobName) {
 		if(instances.length > 1 ) {
 			List<DeltaCloudInstance> list = Arrays.asList(instances);
@@ -105,7 +106,7 @@ public class CloudViewActionUtil {
 
 	}
 	
-	protected static void executeInstanceAction(DeltaCloudInstance instance, DeltaCloudInstance.Action action,
+	protected static void executeInstanceAction(DeltaCloudInstance instance, DeltaCloudResourceAction action,
 			DeltaCloudInstance.State expectedState, String jobName) {
 		if (instance != null) {
 			new InstanceActionJob(jobName, instance, action, expectedState).schedule();

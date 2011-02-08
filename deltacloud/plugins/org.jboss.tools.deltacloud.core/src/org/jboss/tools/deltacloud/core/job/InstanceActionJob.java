@@ -14,18 +14,18 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
-import org.jboss.tools.deltacloud.core.DeltaCloudInstance.Action;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance.State;
+import org.jboss.tools.deltacloud.core.DeltaCloudResourceAction;
 
 /**
  * @author André Dietisheim
  */
 public class InstanceActionJob extends InstanceStateJob {
 
-	private Action action;
+	private DeltaCloudResourceAction action;
 
 	public InstanceActionJob(String name, DeltaCloudInstance instance, 
-			Action action, State expectedState) {
+			DeltaCloudResourceAction action, State expectedState) {
 		super(name, instance, expectedState);
 		this.action = action;
 	}
@@ -38,7 +38,7 @@ public class InstanceActionJob extends InstanceStateJob {
 		return Status.OK_STATUS;
 	}
 
-	protected Action getAction() {
+	protected DeltaCloudResourceAction getAction() {
 		return action;
 	}
 

@@ -55,7 +55,7 @@ public class ManageKeysPageModel extends ObservableUIPojo {
 			return null;
 		}
 		DeltaCloudKey keyToDelete = selectedKey;
-		cloud.deleteKey(keyToDelete.getId());
+		cloud.delete(keyToDelete);
 		int index = keys.indexOf(keyToDelete);
 		keys.remove(keyToDelete);
 		fireIndexedPropertyChange(PROP_KEYS, index, keyToDelete, null);

@@ -56,6 +56,7 @@ public class CloudContentProvider implements ITreeContentProvider {
 			this.cloud = dc;
 		}
 		public DeltaCloud getCloud(){ return cloud; }
+		@SuppressWarnings("rawtypes")
 		public Object getAdapter(Class adapter) {
 			if( adapter == DeltaCloud.class )
 				return cloud;

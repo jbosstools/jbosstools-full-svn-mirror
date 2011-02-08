@@ -14,7 +14,7 @@ package org.jboss.tools.deltacloud.core.client.unmarshal;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jboss.tools.deltacloud.core.client.AbstractDeltaCloudResourceAction;
+import org.jboss.tools.deltacloud.core.client.Action;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -25,7 +25,7 @@ import org.w3c.dom.NodeList;
  *
  * @param <DELTACLOUDOBJECT>
  */
-public abstract class AbstractActionAwareUnmarshaller<DELTACLOUDOBJECT, ACTION extends AbstractDeltaCloudResourceAction<DELTACLOUDOBJECT>> extends AbstractDOMUnmarshaller<DELTACLOUDOBJECT>{
+public abstract class AbstractActionAwareUnmarshaller<DELTACLOUDOBJECT> extends AbstractDOMUnmarshaller<DELTACLOUDOBJECT>{
 
 	private String actionElementName;
 	public AbstractActionAwareUnmarshaller(String tagName, Class<DELTACLOUDOBJECT> type, String actionElementName) {
@@ -33,15 +33,15 @@ public abstract class AbstractActionAwareUnmarshaller<DELTACLOUDOBJECT, ACTION e
 		this.actionElementName = actionElementName;
 	}
 
-	protected List<ACTION> getActions(Element element, DELTACLOUDOBJECT owner) throws DeltaCloudClientException {
+	protected List<Action<DELTACLOUDOBJECT>> getActions(Element element, DELTACLOUDOBJECT owner) throws DeltaCloudClientException {
 		if (element == null) {
 			return null;
 		}
-		List<ACTION> actions = new ArrayList<ACTION>();
+		List<Action<DELTACLOUDOBJECT>> actions = new ArrayList<Action<DELTACLOUDOBJECT>>();
 		NodeList nodeList = element.getElementsByTagName(actionElementName);
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			Node linkNode = nodeList.item(i);
-			ACTION action = createAction(linkNode);
+			Action<DELTACLOUDOBJECT> action = createAction(linkNode);
 			if (action != null) {
 				action.setOwner(owner);
 				actions.add(action);
@@ -50,12 +50,12 @@ public abstract class AbstractActionAwareUnmarshaller<DELTACLOUDOBJECT, ACTION e
 		return actions;
 	}
 
-	protected ACTION createAction(Node node) throws DeltaCloudClientException {
+	protected Action<DELTACLOUDOBJECT> createAction(Node node) throws DeltaCloudClientException {
 		if (!(node instanceof Element)) {
 			return null;
 		}
 		return unmarshallAction((Element) node);
 	}
 	
-	protected abstract ACTION unmarshallAction(Element element) throws DeltaCloudClientException;
+	protected abstract Action<DELTACLOUDOBJECT> unmarshallAction(Element element) throws DeltaCloudClientException;
 }

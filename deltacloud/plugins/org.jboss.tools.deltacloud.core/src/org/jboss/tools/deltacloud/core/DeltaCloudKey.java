@@ -17,6 +17,7 @@ import org.jboss.tools.deltacloud.core.client.Key;
  */
 public class DeltaCloudKey extends AbstractDeltaCloudElement {
 
+	
 	private Key key;
 
 	public DeltaCloudKey(Key key, DeltaCloud cloud) {
@@ -41,10 +42,13 @@ public class DeltaCloudKey extends AbstractDeltaCloudElement {
 	public String getPem() {
 		return key.getPem();
 	}
-
+	
 	@Override
 	public String toString() {
 		return "DeltaCloudKey [key=" + key + "]";
 	}
 
+	protected Key getKey() {
+		return key;
+	}
 }

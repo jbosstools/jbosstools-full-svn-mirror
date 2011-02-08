@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.XmlAttribute;
  * @author Martyn Taylor
  * @author André Dietisheim
  */
-public abstract class AbstractDeltaCloudObject {
+public abstract class IdAware {
 
 	protected String id;
 
@@ -31,7 +31,7 @@ public abstract class AbstractDeltaCloudObject {
 
 	@Override
 	public String toString() {
-		return "AbstractDeltaCloudObject [id=" + id + "]";
+		return "IdAware [id=" + id + "]";
 	}
 
 }

@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.internal.deltacloud.test.core.client;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
@@ -20,6 +21,7 @@ import java.util.List;
 
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
+import org.jboss.tools.deltacloud.core.client.Action;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClient;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl;
@@ -89,8 +91,8 @@ public class KeyMockIntegrationTest {
 		Key key = client.createKey(id);
 		assertNotNull(key);
 		assertEquals(id, key.getId());
-		client.deleteKey(id);
-		client.listKey(id);
+		key.destroy(client);
+		client.listKey(key.getId());
 	}
 
 	/**
@@ -155,7 +157,9 @@ public class KeyMockIntegrationTest {
 
 	private void quietlyDeleteKey(String id) {
 		try {
-			testSetup.getClient().deleteKey(id);
+			DeltaCloudClient client = testSetup.getClient();
+			Key key = client.listKey(id);
+			key.destroy(client);
 		} catch (Exception e) {
 			// ignore
 		}

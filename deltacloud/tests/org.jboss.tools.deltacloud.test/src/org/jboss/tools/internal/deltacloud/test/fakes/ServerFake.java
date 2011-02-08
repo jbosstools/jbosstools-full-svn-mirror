@@ -19,7 +19,7 @@ import java.util.concurrent.Executors;
 
 public class ServerFake {
 
-	public static final int DEFAULT_PORT = 3002;
+	public static final int DEFAULT_PORT = 3003;
 	private ExecutorService executor;
 	private int port;
 	private String response;

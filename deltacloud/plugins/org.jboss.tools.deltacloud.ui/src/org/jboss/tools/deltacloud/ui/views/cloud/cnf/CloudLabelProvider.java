@@ -16,7 +16,6 @@ import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
-import org.jboss.tools.deltacloud.ui.views.cloud.ImageItem;
 import org.jboss.tools.deltacloud.ui.views.cloud.cnf.CloudContentProvider.CategoryContent;
 import org.jboss.tools.deltacloud.ui.views.cloud.cnf.CloudContentProvider.DelayObject;
 import org.jboss.tools.deltacloud.ui.views.cloud.cnf.CloudContentProvider.ImagesPager;

@@ -15,6 +15,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
+import org.jboss.tools.deltacloud.core.DeltaCloudResourceAction;
 
 /**
  * @author André Dietisheim
@@ -22,7 +23,7 @@ import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 public class DestroyCloudInstanceJob extends InstanceActionJob {
 
 	public DestroyCloudInstanceJob(String name, DeltaCloudInstance instance) {
-		super(name, instance, DeltaCloudInstance.Action.DESTROY, DeltaCloudInstance.State.TERMINATED);
+		super(name, instance, DeltaCloudResourceAction.DESTROY, DeltaCloudInstance.State.TERMINATED);
 	}
 
 	@Override

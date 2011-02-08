@@ -134,14 +134,6 @@ public interface DeltaCloudClient {
 	public Key createKey(String keyname) throws DeltaCloudClientException;
 
 	/**
-	 * Deletes the key with the given name on the deltacloud server
-	 * 
-	 * @param keyname
-	 * @throws DeltaCloudClientException
-	 */
-	public void deleteKey(String keyname) throws DeltaCloudClientException;
-
-	/**
 	 * Lists all keys available on the deltacloud server this client is
 	 * connected to.
 	 * 
@@ -156,4 +148,14 @@ public interface DeltaCloudClient {
 	 * Throws a DeltaCloudException if it is not available.
 	 */
 	public Key listKey(String id) throws DeltaCloudClientException;
+	
+	/**
+	 * Performs the given action.
+	 *
+	 * @param action the action to execute
+	 * @return true, if successful
+	 * 
+	 * @see Action
+	 */
+	public boolean performAction(Action<?> action) throws DeltaCloudClientException;
 }

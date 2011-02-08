@@ -19,7 +19,7 @@ import org.jboss.tools.deltacloud.core.client.Property.Names;
  * @author Martyn Taylor
  * @author André Dietisheim
  */
-public class HardwareProfile extends AbstractDeltaCloudObject {
+public class HardwareProfile extends IdAware {
 	private static final long serialVersionUID = 1L;
 
 	private List<Property> properties;

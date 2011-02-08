@@ -13,7 +13,7 @@ package org.jboss.tools.deltacloud.core.client;
 /**
  * @author Andre Dietisheim
  */
-public class API extends AbstractDeltaCloudActionAwareObject<KeyAction> {
+public class API extends IdAware {
 
 	private static final long serialVersionUID = 1L;
 

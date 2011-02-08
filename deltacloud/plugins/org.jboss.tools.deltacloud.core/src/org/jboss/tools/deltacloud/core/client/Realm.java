@@ -14,7 +14,7 @@ package org.jboss.tools.deltacloud.core.client;
  * @author Martyn Taylor
  * @author André Dietisheim
  */
-public class Realm extends AbstractDeltaCloudObject {
+public class Realm extends IdAware {
 	private static final long serialVersionUID = 1L;
 
 	public static final int LIMIT_DEFAULT = -1;

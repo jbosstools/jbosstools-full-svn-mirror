@@ -14,15 +14,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
 
+import org.jboss.tools.deltacloud.core.client.Action;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.jboss.tools.deltacloud.core.client.Key;
-import org.jboss.tools.deltacloud.core.client.KeyAction;
 import org.w3c.dom.Element;
 
 /**
  * @author André Dietisheim
  */
-public class KeyUnmarshaller extends AbstractActionAwareUnmarshaller<Key, KeyAction> {
+public class KeyUnmarshaller extends AbstractActionAwareUnmarshaller<Key> {
 
 	public KeyUnmarshaller() {
 		super("key", Key.class, "link");
@@ -68,9 +68,9 @@ public class KeyUnmarshaller extends AbstractActionAwareUnmarshaller<Key, KeyAct
 	}
 
 	@Override
-	protected KeyAction unmarshallAction(Element element) throws DeltaCloudClientException {
-		KeyAction keyAction = new KeyAction();
-		new KeyActionUnmarshaller().unmarshall(element, keyAction);
+	protected Action<Key> unmarshallAction(Element element) throws DeltaCloudClientException {
+		Action<Key> keyAction = new Action<Key>();
+		new ActionUnmarshaller<Key>().unmarshall(element, keyAction);
 		return keyAction;
 	}
 }

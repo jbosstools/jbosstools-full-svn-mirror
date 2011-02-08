@@ -10,25 +10,38 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core.client.request;
 
+import org.jboss.tools.deltacloud.core.client.Action;
 import org.jboss.tools.deltacloud.core.client.HttpMethod;
 import org.jboss.tools.deltacloud.core.client.utils.UrlBuilder;
 
 /**
- * Deletes a key on the deltacloud server
+ * Performs an action on a resource of the deltacloud server. The typical
+ * actions are
+ * <ul>
+ * <li>START</li>
+ * <li>STOP</li>
+ * <li>DESTROY</li>
+ * <li>REBOOT</li>
+ * </ul>
  * 
  * @author André Dietisheim
+ * 
+ * @see Action
  */
-public class DeleteKeyRequest extends AbstractDeltaCloudRequest {
-	
-	private String keyName;
+public class PerformActionRequest extends AbstractDeltaCloudRequest {
 
-	public DeleteKeyRequest(String baseUrl, String keyName) {
-		super(baseUrl, HttpMethod.DELETE);
-		this.keyName = keyName;
+	public PerformActionRequest(String url, HttpMethod httpMethod) {
+		super(url, httpMethod);
 	}
 
 	@Override
 	protected String doCreateUrl(UrlBuilder urlBuilder) {
-		return urlBuilder.path("keys").path(keyName).toString();
+		return urlBuilder.toString();
 	}
+
+	@Override
+	protected UrlBuilder createUrlBuilder(String baseURL) {
+		return new UrlBuilder(baseURL);
+	}
+
 }

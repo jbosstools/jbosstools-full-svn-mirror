@@ -12,21 +12,35 @@ package org.jboss.tools.deltacloud.core.client;
 
 
 /**
- * An action that is executable on an instance
- * 
- * @author Martin Taylor
  * @author André Dietisheim
- * @see Instance
- * @see DeltaCloudClient#performInstanceAction(String, String);
  *
+ * @param <OWNER>
  */
-public class InstanceAction extends AbstractDeltaCloudResourceAction<Instance> implements IInstanceAction {
+public class StateAware<OWNER> extends ActionAware<OWNER> {
 
-	public InstanceAction() {
+	public static enum State {
+		RUNNING, STOPPED, PENDING, TERMINATED, BOGUS
+	};
+
+	private State state;
+
+	public void setState(String state) {
+		try {
+			this.state = State.valueOf(state);
+		} catch (Exception e) {
+			this.state = State.BOGUS;
+		}
 	}
 
-	@Override
-	public String toString() {
-		return "InstanceAction [name=" + getName() + ", url=" + getUrl() + ", method=" + getMethod() + "]";
+	public State getState() {
+		return state;
+	}
+
+	public boolean isRunning() {
+		return getState() == State.RUNNING;
+	}
+
+	public boolean isStopped() {
+		return getState() == State.STOPPED;
 	}
 }

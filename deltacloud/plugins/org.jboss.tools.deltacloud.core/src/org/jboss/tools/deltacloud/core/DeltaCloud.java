@@ -17,15 +17,16 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.jboss.tools.deltacloud.core.DeltaCloudInstance.State;
 import org.jboss.tools.deltacloud.core.client.API.Driver;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudAuthClientException;
+import org.jboss.tools.deltacloud.core.client.DeltaCloudClient;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudNotFoundClientException;
 import org.jboss.tools.deltacloud.core.client.HardwareProfile;
 import org.jboss.tools.deltacloud.core.client.Image;
 import org.jboss.tools.deltacloud.core.client.Instance;
-import org.jboss.tools.deltacloud.core.client.InternalDeltaCloudClient;
 import org.jboss.tools.deltacloud.core.client.Key;
 import org.jboss.tools.deltacloud.core.client.Realm;
 import org.jboss.tools.internal.deltacloud.core.observable.ObservablePojo;
@@ -37,7 +38,7 @@ import org.jboss.tools.internal.deltacloud.core.observable.ObservablePojo;
 public class DeltaCloud extends ObservablePojo {
 
 	private static final int WAIT_FOR_STATE_DELAY = 2000;
-	
+
 	public static final String PROP_INSTANCES = "instances";
 	public static final String PROP_INSTANCES_REMOVED = "instancesRemoved";
 	public static final String PROP_IMAGES = "images";
@@ -50,7 +51,7 @@ public class DeltaCloud extends ObservablePojo {
 	private String lastKeyname = "";
 	private String lastImageId = "";
 
-	private InternalDeltaCloudClient client;
+	private DeltaCloudClient client;
 
 	private DeltaCloudImagesRepository imagesRepo;
 	private DeltaCloudInstancesRepository instanceRepo;
@@ -60,10 +61,6 @@ public class DeltaCloud extends ObservablePojo {
 
 	private SecurePasswordStore passwordStore;
 	private Collection<IInstanceAliasMapping> instanceAliasMappings;
-
-	public static interface IInstanceStateMatcher {
-		public boolean matchesState(DeltaCloudInstance instance, DeltaCloudInstance.State instanceState);
-	}
 
 	public DeltaCloud(String name, String url, String username, String passwd) throws DeltaCloudException {
 		this(name, url, username, passwd, null);
@@ -150,7 +147,7 @@ public class DeltaCloud extends ObservablePojo {
 		return new SecurePasswordStore(new DeltaCloudPasswordStorageKey(name, username), password);
 	}
 
-	protected InternalDeltaCloudClient createClient(String url, String username, String password)
+	protected DeltaCloudClient createClient(String url, String username, String password)
 			throws DeltaCloudException {
 		try {
 			return new DeltaCloudClientImpl(url, username, password);
@@ -263,29 +260,17 @@ public class DeltaCloud extends ObservablePojo {
 		}
 	}
 
-	public DeltaCloudInstance waitForState(String instanceId, final DeltaCloudInstance.State expectedState,
+	public DeltaCloudInstance waitForState(String instanceId, DeltaCloudInstance.State expectedState,
 			IProgressMonitor pm)
-			throws InterruptedException, DeltaCloudException {
-		IInstanceStateMatcher stateMatcher = new IInstanceStateMatcher() {
-
-			@Override
-			public boolean matchesState(DeltaCloudInstance instance, DeltaCloudInstance.State instanceState) {
-				return expectedState != null
-						&& expectedState.equals(instanceState);
-			}
-		};
-		return waitForState(instanceId, stateMatcher, pm);
-	}
-
-	public DeltaCloudInstance waitForState(String instanceId, IInstanceStateMatcher stateMatcher, IProgressMonitor pm)
 			throws InterruptedException, DeltaCloudException {
 		DeltaCloudInstance instance = getInstancesRepository().getById(instanceId);
 		if (instance != null) {
 			while (!pm.isCanceled()) {
 				Thread.sleep(WAIT_FOR_STATE_DELAY);
 				instance = refreshInstance(instance);
-				if (stateMatcher.matchesState(instance, instance.getState())
-						|| instance.getState().equals(DeltaCloudInstance.State.TERMINATED)) {
+				State state = instance.getState();
+				if (state == expectedState
+						|| instance.isInState(DeltaCloudInstance.State.TERMINATED)) {
 					return instance;
 				}
 			}
@@ -436,11 +421,12 @@ public class DeltaCloud extends ObservablePojo {
 		}
 	}
 
-	public void deleteKey(String keyname) throws DeltaCloudException {
+	public boolean delete(DeltaCloudKey deltaCloudKey) throws DeltaCloudException {
+		Key key = deltaCloudKey.getKey();
 		try {
-			client.deleteKey(keyname);
+			return key.destroy(client);
 		} catch (DeltaCloudClientException e) {
-			throw new DeltaCloudException(e);
+			throw new DeltaCloudException(MessageFormat.format("Could not delete key \"{0}\"", key.getId()), e);
 		}
 	}
 
@@ -458,12 +444,12 @@ public class DeltaCloud extends ObservablePojo {
 		}
 	}
 
-	public boolean performInstanceAction(String instanceId, DeltaCloudInstance.Action action)
+	public boolean performInstanceAction(String instanceId, DeltaCloudResourceAction action)
 			throws DeltaCloudException {
-		return performInstanceAction(getInstancesRepository().getById(instanceId), action);
+		return performAction(getInstancesRepository().getById(instanceId), action);
 	}
 
-	protected boolean performInstanceAction(DeltaCloudInstance instance, DeltaCloudInstance.Action action)
+	protected boolean performAction(DeltaCloudInstance instance, DeltaCloudResourceAction action)
 			throws DeltaCloudException {
 		try {
 			if (instance == null) {
@@ -471,9 +457,9 @@ public class DeltaCloud extends ObservablePojo {
 			}
 			DeltaCloudInstancesRepository repo = getInstancesRepository();
 			DeltaCloudInstance[] instances = repo.get();
-			boolean result = instance.performInstanceAction(action, client);
+			boolean result = instance.performAction(action, client);
 			if (result) {
-				if (DeltaCloudInstance.Action.DESTROY.equals(action)) {
+				if (DeltaCloudResourceAction.DESTROY.equals(action)) {
 					repo.remove(instance);
 					firePropertyChange(PROP_INSTANCES_REMOVED, null, instance);
 				}

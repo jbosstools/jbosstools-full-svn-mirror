@@ -23,6 +23,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
+import org.jboss.tools.deltacloud.core.DeltaCloudResourceAction;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
@@ -107,7 +108,7 @@ public class StopInstanceHandler extends AbstractInstanceHandler {
 		if (instance != null) {
 			executeInstanceAction(
 						instance
-						, DeltaCloudInstance.Action.STOP
+						, DeltaCloudResourceAction.STOP
 						, DeltaCloudInstance.State.STOPPED
 						, CVMessages.getString(STOPPING_INSTANCE_TITLE)
 						, CVMessages.getFormattedString(STOPPING_INSTANCE_MSG, new String[] { instance.getName() }));

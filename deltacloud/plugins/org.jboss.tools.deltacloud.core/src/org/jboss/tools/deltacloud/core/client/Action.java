@@ -10,23 +10,23 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core.client;
 
-
 /**
- * An action that is executable on a deltacloud resource
+ * An action that may be performed on a resource
  * 
  * @author André Dietisheim
  */
-public abstract class AbstractDeltaCloudResourceAction<OWNER> implements IDeltaCloudResourceAction<OWNER> {
+public class Action<OWNER> {
+
+	public static final String START_NAME = "start";
+	public static final String STOP_NAME = "stop";
+	public static final String REBOOT_NAME = "reboot";
+	public static final String DESTROY_NAME = "destroy";
 
 	private String name;
 	private String url;
 	private HttpMethod method;
 	private OWNER owner;
 
-	protected AbstractDeltaCloudResourceAction() {
-	}
-
-	@Override
 	public HttpMethod getMethod() {
 		return method;
 	}
@@ -47,7 +47,6 @@ public abstract class AbstractDeltaCloudResourceAction<OWNER> implements IDeltaC
 		this.name = name;
 	}
 
-	@Override
 	public String getName() {
 		return name;
 	}
@@ -56,7 +55,6 @@ public abstract class AbstractDeltaCloudResourceAction<OWNER> implements IDeltaC
 		this.url = url;
 	}
 
-	@Override
 	public String getUrl() {
 		return url;
 	}
@@ -67,5 +65,21 @@ public abstract class AbstractDeltaCloudResourceAction<OWNER> implements IDeltaC
 
 	public OWNER getOwner() {
 		return owner;
+	}
+
+	public boolean isStart() {
+		return START_NAME.equals(getName());
+	}
+
+	public boolean isStop() {
+		return STOP_NAME.equals(getName());
+	}
+
+	public boolean isReboot() {
+		return REBOOT_NAME.equals(getName());
+	}
+
+	public boolean isDestroy() {
+		return DESTROY_NAME.equals(getName());
 	}
 }

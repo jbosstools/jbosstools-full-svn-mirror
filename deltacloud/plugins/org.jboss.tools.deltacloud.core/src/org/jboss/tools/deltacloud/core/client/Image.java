@@ -14,7 +14,7 @@ package org.jboss.tools.deltacloud.core.client;
 /**
  * @author Martyn Taylor
  */
-public class Image extends AbstractDeltaCloudObject
+public class Image extends IdAware
 {	
 	private static final long serialVersionUID = 1L;
 

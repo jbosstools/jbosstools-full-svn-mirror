@@ -30,7 +30,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.jboss.tools.deltacloud.core.client.API.Driver;
 import org.jboss.tools.deltacloud.core.client.request.CreateInstanceRequest;
 import org.jboss.tools.deltacloud.core.client.request.CreateKeyRequest;
-import org.jboss.tools.deltacloud.core.client.request.DeleteKeyRequest;
 import org.jboss.tools.deltacloud.core.client.request.DeltaCloudRequest;
 import org.jboss.tools.deltacloud.core.client.request.ListHardwareProfileRequest;
 import org.jboss.tools.deltacloud.core.client.request.ListHardwareProfilesRequest;
@@ -42,7 +41,7 @@ import org.jboss.tools.deltacloud.core.client.request.ListKeyRequest;
 import org.jboss.tools.deltacloud.core.client.request.ListKeysRequest;
 import org.jboss.tools.deltacloud.core.client.request.ListRealmRequest;
 import org.jboss.tools.deltacloud.core.client.request.ListRealmsRequest;
-import org.jboss.tools.deltacloud.core.client.request.PerformInstanceActionRequest;
+import org.jboss.tools.deltacloud.core.client.request.PerformActionRequest;
 import org.jboss.tools.deltacloud.core.client.request.TypeRequest;
 import org.jboss.tools.deltacloud.core.client.unmarshal.APIUnmarshaller;
 import org.jboss.tools.deltacloud.core.client.unmarshal.HardwareProfileUnmarshaller;
@@ -59,7 +58,7 @@ import org.jboss.tools.deltacloud.core.client.unmarshal.RealmsUnmarshaller;
 /**
  * @author Andre Dietisheim (based on prior implementation by Martyn Taylor)
  */
-public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
+public class DeltaCloudClientImpl implements DeltaCloudClient {
 
 	private String baseUrl;
 	private String username;
@@ -184,6 +183,7 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 			return Driver.UNKNOWN;
 		}
 	}
+
 	@Override
 	public Instance createInstance(String imageId) throws DeltaCloudClientException {
 		try {
@@ -319,10 +319,6 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		}
 	}
 
-	public void deleteKey(String keyname) throws DeltaCloudClientException {
-		request(new DeleteKeyRequest(baseUrl, keyname));
-	}
-
 	public List<Key> listKeys() throws DeltaCloudClientException {
 		InputStream inputStream = request(new ListKeysRequest(baseUrl));
 		List<Key> keys = new ArrayList<Key>();
@@ -336,14 +332,10 @@ public class DeltaCloudClientImpl implements InternalDeltaCloudClient {
 		return key;
 	}
 
-	public boolean performInstanceAction(InstanceAction action) throws DeltaCloudClientException {
+	public boolean performAction(Action<?> action) throws DeltaCloudClientException {
 		if (action != null) {
 			try {
-				InputStream inputStream = request(
-						new PerformInstanceActionRequest(action.getUrl(), action.getMethod()));
-				if (!InstanceAction.DESTROY.equals(action.getName())) {
-					new InstanceUnmarshaller().unmarshall(inputStream, action.getOwner());
-				}
+				request(new PerformActionRequest(action.getUrl(), action.getMethod()));
 			} catch (DeltaCloudClientException e) {
 				throw e;
 			} catch (Exception e) {

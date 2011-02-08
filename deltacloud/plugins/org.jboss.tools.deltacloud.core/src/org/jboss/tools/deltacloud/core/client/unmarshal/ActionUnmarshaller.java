@@ -10,20 +10,21 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core.client.unmarshal;
 
-import org.jboss.tools.deltacloud.core.client.AbstractDeltaCloudResourceAction;
+import org.jboss.tools.deltacloud.core.client.Action;
 import org.w3c.dom.Element;
 
 /**
  * @author André Dietisheim
  */
-public class AbstractActionUnmarshaller <ACTION extends AbstractDeltaCloudResourceAction<OWNER>, OWNER> extends AbstractDOMUnmarshaller<ACTION> {
+public class ActionUnmarshaller<OWNER> extends AbstractDOMUnmarshaller<Action<OWNER>> {
 
-	public AbstractActionUnmarshaller(Class<ACTION> actionClass) {
-		super("link", actionClass);
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public ActionUnmarshaller() {
+		super("link", (Class) Action.class);
 	}
 
 	@Override
-	protected ACTION doUnmarshall(Element element, ACTION action) throws Exception {
+	protected Action<OWNER> doUnmarshall(Element element, Action<OWNER> action) throws Exception {
 		if (element != null) {
 			action.setMethod(getAttributeText("method", element));
 			action.setName(getAttributeText("rel", element));

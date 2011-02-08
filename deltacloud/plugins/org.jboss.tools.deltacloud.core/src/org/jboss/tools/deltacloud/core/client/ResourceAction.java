@@ -11,15 +11,20 @@
 package org.jboss.tools.deltacloud.core.client;
 
 
-
 /**
- * An action that is executable on a deltacloud key
- * 
  * @author André Dietisheim
  */
-public class KeyAction extends AbstractDeltaCloudResourceAction<Key> {
+public interface ResourceAction<OWNER> {
 
-	public KeyAction() {
-		super();
-	}
+	public static final String DESTROY = "destroy";
+
+	public String getName();
+
+	public String getUrl();
+
+	public HttpMethod getMethod();
+	
+	public OWNER getOwner();
+
+	public boolean isDestroy();
 }

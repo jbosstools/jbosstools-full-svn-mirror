@@ -10,7 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.internal.deltacloud.test.fakes;
 
-import org.jboss.tools.deltacloud.core.client.Instance.InstanceState;
+import org.jboss.tools.deltacloud.core.client.StateAware.State;
 
 /**
  * @author André Dietisheim
@@ -33,7 +33,7 @@ public class InstanceResponseFakes {
 		public static final String image1Id = "ami-7d07ec14";
 		public static final String realm1Url = "http://try.steamcannon.org/deltacloud/api/realms/us-east-1a";
 		public static final String realm1Id = "us-east-1a";
-		public static final InstanceState state = InstanceState.RUNNING;
+		public static final State state = State.RUNNING;
 		public static final String hardwareProfile1Url = "http://try.steamcannon.org/deltacloud/api/hardware_profiles/m1.small";
 		public static final String hardwareProfile1Id = "m1.small";
 		public static final String keyname1 = "ad10";
@@ -57,7 +57,7 @@ public class InstanceResponseFakes {
 		public static final String image1Id = "ami-7d07ec14";
 		public static final String realm1Url = "http://try.steamcannon.org/deltacloud/api/realms/us-east-1a";
 		public static final String realm1Id = "us-east-1a";
-		public static final InstanceState state = InstanceState.RUNNING;
+		public static final State state = State.RUNNING;
 		public static final String hardwareProfile1Url = "http://try.steamcannon.org/deltacloud/api/hardware_profiles/m1.small";
 		public static final String hardwareProfile1Id = "m1.small";
 		public static final String keyname1 = "ad10";
@@ -74,7 +74,7 @@ public class InstanceResponseFakes {
 		public static final String image2Id = "ami-7d07ec14";
 		public static final String realm2Url = "http://try.steamcannon.org/deltacloud/api/realms/us-east-2a";
 		public static final String realm2Id = "us-east-2a";
-		public static final InstanceState state2 = InstanceState.STOPPED;
+		public static final State state2 = State.STOPPED;
 		public static final String hardwareProfile2Url = "http://try.steamcannon.org/deltacloud/api/hardware_profiles/m1.large";
 		public static final String hardwareProfile2Id = "m1.large";
 		public static final String keyname2 = "ad11";
@@ -96,7 +96,7 @@ public class InstanceResponseFakes {
 	}
 
 	private static final String getInstanceResponseXML(String url, String id, String name, String owner,
-			String imageUrl, String imageId, String realmUrl, String realmId, InstanceState state,
+			String imageUrl, String imageId, String realmUrl, String realmId, State state,
 			String hardwareProfileUrl, String hardwareProfileId, String keyname, String actionName1,
 			String actionName2, String publicAddress, String privateAddress) {
 		return "<instance href=\""

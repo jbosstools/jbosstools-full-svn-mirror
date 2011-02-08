@@ -20,10 +20,10 @@ import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
+import org.jboss.tools.deltacloud.core.client.Action;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.jboss.tools.deltacloud.core.client.Instance;
-import org.jboss.tools.deltacloud.core.client.InstanceAction;
-import org.jboss.tools.deltacloud.core.client.unmarshal.InstanceActionUnmarshaller;
+import org.jboss.tools.deltacloud.core.client.unmarshal.ActionUnmarshaller;
 import org.jboss.tools.deltacloud.core.client.unmarshal.InstanceUnmarshaller;
 import org.jboss.tools.deltacloud.core.client.unmarshal.InstancesUnmarshaller;
 import org.jboss.tools.internal.deltacloud.test.fakes.InstanceResponseFakes.InstanceActionResponse;
@@ -38,9 +38,9 @@ public class InstanceDomUnmarshallingTest {
 
 	@Test
 	public void instanceActionMayBeUnmarshalled() throws MalformedURLException, JAXBException, DeltaCloudClientException {
-		InstanceAction instanceAction = new InstanceAction();
+		Action<Instance> instanceAction = new Action<Instance>();
 		ByteArrayInputStream inputStream = new ByteArrayInputStream(InstanceActionResponse.response.getBytes());
-		new InstanceActionUnmarshaller().unmarshall(inputStream, instanceAction);
+		new ActionUnmarshaller<Instance>().unmarshall(inputStream, instanceAction);
 		assertNotNull(instanceAction);
 		assertEquals(InstanceActionResponse.name, instanceAction.getName());
 		assertEquals(InstanceActionResponse.url, instanceAction.getUrl().toString());

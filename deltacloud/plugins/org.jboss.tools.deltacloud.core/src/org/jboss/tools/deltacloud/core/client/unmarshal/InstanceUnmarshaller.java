@@ -13,10 +13,10 @@ package org.jboss.tools.deltacloud.core.client.unmarshal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jboss.tools.deltacloud.core.client.Action;
 import org.jboss.tools.deltacloud.core.client.AddressList;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.jboss.tools.deltacloud.core.client.Instance;
-import org.jboss.tools.deltacloud.core.client.InstanceAction;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -24,7 +24,7 @@ import org.w3c.dom.NodeList;
 /**
  * @author André Dietisheim
  */
-public class InstanceUnmarshaller extends AbstractActionAwareUnmarshaller<Instance, InstanceAction> {
+public class InstanceUnmarshaller extends AbstractActionAwareUnmarshaller<Instance> {
 
 	public InstanceUnmarshaller() {
 		super("instance", Instance.class, "link");
@@ -79,9 +79,9 @@ public class InstanceUnmarshaller extends AbstractActionAwareUnmarshaller<Instan
 	}
 
 	@Override
-	protected InstanceAction unmarshallAction(Element element) throws DeltaCloudClientException {
-		InstanceAction action = new InstanceAction();
-		new InstanceActionUnmarshaller().unmarshall(element, action);
+	protected Action<Instance> unmarshallAction(Element element) throws DeltaCloudClientException {
+		Action<Instance> action = new Action<Instance>();
+		new ActionUnmarshaller<Instance>().unmarshall(element, action);
 		return action;
 	}
 }

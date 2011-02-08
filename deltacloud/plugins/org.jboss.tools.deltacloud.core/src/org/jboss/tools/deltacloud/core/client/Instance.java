@@ -10,20 +10,15 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.core.client;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Martyn Taylor
  * @author Andre Dietisheim
  */
-public class Instance extends AbstractDeltaCloudActionAwareObject<InstanceAction> {
+public class Instance extends StateAware<Instance> {
 
 	private static final long serialVersionUID = 1L;
-
-	public static enum InstanceState {
-		RUNNING, STOPPED, PENDING, TERMINATED, BOGUS
-	};
 
 	private String ownerId;
 
@@ -42,8 +37,6 @@ public class Instance extends AbstractDeltaCloudActionAwareObject<InstanceAction
 	private String realmId;
 
 	private String keyId;
-
-	private InstanceState state;
 
 	private AddressList publicAddresses;
 
@@ -82,14 +75,6 @@ public class Instance extends AbstractDeltaCloudActionAwareObject<InstanceAction
 
 	public void setRealmId(String realmId) {
 		this.realmId = realmId;
-	}
-
-	public void setState(String state) {
-		try {
-			this.state = InstanceState.valueOf(state);
-		} catch (Exception e) {
-			this.state = InstanceState.BOGUS;
-		}
 	}
 
 	public void setKeyId(String keyId) {
@@ -140,73 +125,12 @@ public class Instance extends AbstractDeltaCloudActionAwareObject<InstanceAction
 		return realmId;
 	}
 
-	public InstanceState getState() {
-		return state;
-	}
-
-	public List<String> getActionNames() {
-		ArrayList<String> names = new ArrayList<String>();
-		for (InstanceAction action : getActions()) {
-			names.add(action.getName());
-		}
-		return names;
-	}
-
-	public InstanceAction getAction(String name) {
-		if (name == null) {
-			return null;
-		}
-
-		for (InstanceAction action : getActions()) {
-			if (name.equals(action.getName())) {
-				return action;
-			}
-		}
-		return null;
-	}
-
-	public boolean canStart() {
-		return getAction(IInstanceAction.START) != null;
-	}
-
-	public boolean canStop() {
-		return getAction(IInstanceAction.STOP) != null;
-	}
-
-	public boolean canReboot() {
-		return getAction(IInstanceAction.REBOOT) != null;
-	}
-
-	public boolean canDestroy() {
-		return getAction(InstanceAction.DESTROY) != null;
-	}
-
-	public boolean isRunning() {
-		return getState() == InstanceState.RUNNING;
-	}
-
 	public List<String> getPublicAddresses() {
 		return publicAddresses.getAddress();
 	}
 
 	public List<String> getPrivateAddresses() {
 		return privateAddresses.getAddress();
-	}
-
-	public boolean start(DeltaCloudClient client) throws DeltaCloudClientException {
-		return ((InternalDeltaCloudClient) client).performInstanceAction(getAction(IInstanceAction.START));
-	}
-
-	public boolean stop(DeltaCloudClient client) throws DeltaCloudClientException {
-		return ((InternalDeltaCloudClient) client).performInstanceAction(getAction(IInstanceAction.STOP));
-	}
-
-	public boolean destroy(DeltaCloudClient client) throws DeltaCloudClientException {
-		return ((InternalDeltaCloudClient) client).performInstanceAction(getAction(InstanceAction.DESTROY));
-	}
-
-	public boolean reboot(DeltaCloudClient client) throws DeltaCloudClientException {
-		return ((InternalDeltaCloudClient) client).performInstanceAction(getAction(IInstanceAction.REBOOT));
 	}
 
 	@Override
@@ -227,7 +151,7 @@ public class Instance extends AbstractDeltaCloudActionAwareObject<InstanceAction
 		}
 		s += "State:\t\t" + getState() + "\n";
 
-		List<InstanceAction> actions = getActions();
+		List<Action<Instance>> actions = getActions();
 		if (actions != null) {
 			for (int i = 0; i < actions.size(); i++) {
 				if (i == 0) {

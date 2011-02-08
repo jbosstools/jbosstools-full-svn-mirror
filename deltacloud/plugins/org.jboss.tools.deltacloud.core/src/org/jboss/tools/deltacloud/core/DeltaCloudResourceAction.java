@@ -8,17 +8,30 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.deltacloud.core.client.unmarshal;
+package org.jboss.tools.deltacloud.core;
 
-import org.jboss.tools.deltacloud.core.client.Instance;
-import org.jboss.tools.deltacloud.core.client.InstanceAction;
+import org.jboss.tools.deltacloud.core.client.Action;
+
 
 /**
+ * @author Jeff Johnston
  * @author André Dietisheim
  */
-public class InstanceActionUnmarshaller extends AbstractActionUnmarshaller<InstanceAction, Instance> {
+public enum DeltaCloudResourceAction {
 
-	public InstanceActionUnmarshaller() {
-		super(InstanceAction.class);
+	START(Action.START_NAME),
+	STOP(Action.STOP_NAME),
+	REBOOT(Action.REBOOT_NAME),
+	DESTROY(Action.DESTROY_NAME);
+
+	private String name;
+
+	private DeltaCloudResourceAction(String name) {
+		this.name = name;
 	}
+
+	public String getName() {
+		return name;
+	}
+
 }

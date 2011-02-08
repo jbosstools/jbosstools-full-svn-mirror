@@ -21,11 +21,11 @@ import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
+import org.jboss.tools.deltacloud.core.client.Action;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.jboss.tools.deltacloud.core.client.HttpMethod;
 import org.jboss.tools.deltacloud.core.client.Key;
-import org.jboss.tools.deltacloud.core.client.KeyAction;
-import org.jboss.tools.deltacloud.core.client.unmarshal.KeyActionUnmarshaller;
+import org.jboss.tools.deltacloud.core.client.unmarshal.ActionUnmarshaller;
 import org.jboss.tools.deltacloud.core.client.unmarshal.KeyUnmarshaller;
 import org.jboss.tools.deltacloud.core.client.unmarshal.KeysUnmarshaller;
 import org.jboss.tools.internal.deltacloud.test.fakes.KeyResponseFakes;
@@ -41,9 +41,9 @@ public class KeyDomUnmarshallingTest {
 
 	@Test
 	public void keyActionMayBeUnmarshalled() throws MalformedURLException, JAXBException, DeltaCloudClientException {
-		KeyAction keyAction = new KeyAction();
+		Action<Key> keyAction = new Action<Key>();
 		ByteArrayInputStream inputStream = new ByteArrayInputStream(KeyActionResponse.keyActionResponse.getBytes());
-		new KeyActionUnmarshaller().unmarshall(inputStream, keyAction);
+		new ActionUnmarshaller<Key>().unmarshall(inputStream, keyAction);
 		assertNotNull(keyAction);
 		assertEquals(KeyActionResponse.name, keyAction.getName());
 		assertEquals(KeyActionResponse.url, keyAction.getUrl().toString());
@@ -61,7 +61,7 @@ public class KeyDomUnmarshallingTest {
 		assertEquals(new URL(KeyResponse.url), key.getUrl());
 		assertEquals(KeyResponse.pem, key.getPem());
 		assertEquals(1, key.getActions().size());
-		KeyAction action = key.getActions().get(0);
+		Action<Key> action = key.getActions().get(0);
 		assertNotNull(action);
 		assertEquals(KeyResponse.url, action.getUrl().toString());
 		assertEquals(KeyResponse.name, action.getName());
@@ -80,7 +80,7 @@ public class KeyDomUnmarshallingTest {
 		assertEquals(new URL(KeysResponse.url1), key.getUrl());
 		assertEquals(KeysResponse.pem1, key.getPem());
 		assertEquals(1, key.getActions().size());
-		KeyAction action = key.getActions().get(0);
+		Action<Key> action = key.getActions().get(0);
 		assertNotNull(action);
 		assertEquals(KeysResponse.url1, action.getUrl().toString());
 		assertEquals(KeysResponse.name1, action.getName());

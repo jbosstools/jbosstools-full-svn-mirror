@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * @author Martyn Taylor
  */
-public class Property extends AbstractDeltaCloudObject {
+public class Property extends IdAware {
 
 	private static final long serialVersionUID = 1L;
 

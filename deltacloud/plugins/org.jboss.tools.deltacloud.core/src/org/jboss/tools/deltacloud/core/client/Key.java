@@ -16,7 +16,7 @@ import java.net.URL;
 /**
  * @author Andre Dietisheim
  */
-public class Key extends AbstractDeltaCloudActionAwareObject<KeyAction> {
+public class Key extends StateAware<Key> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -44,10 +44,6 @@ public class Key extends AbstractDeltaCloudActionAwareObject<KeyAction> {
 		this.fingerprint = fingerprint;
 	}
 
-	public void setState(String state) {
-		this.state = state;
-	}
-
 	public URL getUrl() {
 		return url;
 	}
@@ -58,10 +54,6 @@ public class Key extends AbstractDeltaCloudActionAwareObject<KeyAction> {
 
 	public String getPem() {
 		return pem;
-	}
-
-	public String getState() {
-		return state;
 	}
 
 	@Override
