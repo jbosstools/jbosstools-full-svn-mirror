@@ -25,7 +25,7 @@ public class StringsPreferenceValue extends AbstractPreferenceValue<String[]> {
 
 	public StringsPreferenceValue(char delimiter, String prefsKey, String pluginId) {
 		super(prefsKey, pluginId);
-		this.delimiter = new StringBuilder(delimiter).append("|||").toString();
+		this.delimiter = String.valueOf(delimiter);
 	}
 
 	public String[] get() {
