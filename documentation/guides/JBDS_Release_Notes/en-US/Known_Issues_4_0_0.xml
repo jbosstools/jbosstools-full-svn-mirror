@@ -12,6 +12,16 @@
 			<itemizedlist>
 				<listitem>
 					<para>
+						<ulink url="https://issues.jboss.org/browse/JBDS-1273">JBDS-1273</ulink>: Smooks Editor does not support mapping to Virtual Models.
+           </para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="https://issues.jboss.org/browse/JBRULES-2884">JBRULES-2884</ulink>: JavaDoc and source locations can not be specified for a Drools classpath container.
+           </para>
+				</listitem>
+				<listitem>
+					<para>
 						<ulink url="https://issues.jboss.org/browse/JBDS-1554">JBDS-1554</ulink>: The new project wizards do not display their associated Eclipse perspective.
            </para>
 				</listitem>
