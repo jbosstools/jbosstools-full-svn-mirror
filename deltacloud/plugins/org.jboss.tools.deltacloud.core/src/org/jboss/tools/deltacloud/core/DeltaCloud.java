@@ -37,7 +37,7 @@ import org.jboss.tools.internal.deltacloud.core.observable.ObservablePojo;
  */
 public class DeltaCloud extends ObservablePojo {
 
-	private static final int WAIT_FOR_STATE_DELAY = 2000;
+	private static final int WAIT_FOR_STATE_DELAY = 4000;
 
 	public static final String PROP_INSTANCES = "instances";
 	public static final String PROP_INSTANCES_REMOVED = "instancesRemoved";
