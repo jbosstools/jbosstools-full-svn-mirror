@@ -225,8 +225,8 @@ public class ElementPlacer {
 				Node nextInnerChild = innerChild;
 				while (nextInnerChild != null) {
 					boolean textNodeIsWhitespaceOnly = false;
-					if (nextInnerChild.getNodeType() == Node.TEXT_NODE) {
-						String content = nextInnerChild.getTextContent();
+					if (nextInnerChild instanceof Text) {
+						String content = ((Text)nextInnerChild).getData();
 						textNodeIsWhitespaceOnly = (content==null || content.trim().isEmpty());
 					}
 					if (textNodeIsWhitespaceOnly) {
