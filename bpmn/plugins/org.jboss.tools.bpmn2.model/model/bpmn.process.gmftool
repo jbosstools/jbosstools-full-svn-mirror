@@ -14,16 +14,52 @@
           stack="true">
         <tools
             xsi:type="gmftool:CreationTool"
-            title="User Task"/>
+            title="User Task">
+          <smallIcon
+              xsi:type="gmftool:BundleImage"
+              path="icons/obj16/tasks_16px_user.png"
+              bundle="org.jboss.tools.bpmn2.process.diagram"/>
+          <largeIcon
+              xsi:type="gmftool:BundleImage"
+              path="icons/obj32/tasks_32px_user.png"
+              bundle="org.jboss.tools.bpmn2.process.diagram"/>
+        </tools>
         <tools
             xsi:type="gmftool:CreationTool"
-            title="Service Task"/>
+            title="Service Task">
+          <smallIcon
+              xsi:type="gmftool:BundleImage"
+              path="icons/obj16/tasks_16px_service.png"
+              bundle="org.jboss.tools.bpmn2.process.diagram"/>
+          <largeIcon
+              xsi:type="gmftool:BundleImage"
+              path="icons/obj32/tasks_32px_service.png"
+              bundle="org.jboss.tools.bpmn2.process.diagram"/>
+        </tools>
         <tools
             xsi:type="gmftool:CreationTool"
-            title="Script Task"/>
+            title="Script Task">
+          <smallIcon
+              xsi:type="gmftool:BundleImage"
+              path="icons/obj16/tasks_16px_script.png"
+              bundle="org.jboss.tools.bpmn2.process.diagram"/>
+          <largeIcon
+              xsi:type="gmftool:BundleImage"
+              path="icons/obj32/tasks_32px_service.png"
+              bundle="org.jboss.tools.bpmn2.process.diagram"/>
+        </tools>
         <tools
             xsi:type="gmftool:CreationTool"
-            title="Sub-Process"/>
+            title="Sub-Process">
+          <smallIcon
+              xsi:type="gmftool:BundleImage"
+              path="icons/obj16/activity_16px_subprocess.png"
+              bundle="org.jboss.tools.bpmn2.process.diagram"/>
+          <largeIcon
+              xsi:type="gmftool:BundleImage"
+              path="icons/obj32/activity_32px_subprocess.png"
+              bundle="org.jboss.tools.bpmn2.process.diagram"/>
+        </tools>
       </tools>
       <tools
           xsi:type="gmftool:ToolGroup"
@@ -32,10 +68,28 @@
           stack="true">
         <tools
             xsi:type="gmftool:CreationTool"
-            title="Exclusive"/>
+            title="Exclusive">
+          <smallIcon
+              xsi:type="gmftool:BundleImage"
+              path="icons/obj16/gateways_16px_exclusive.png"
+              bundle="org.jboss.tools.bpmn2.process.diagram"/>
+          <largeIcon
+              xsi:type="gmftool:BundleImage"
+              path="icons/obj32/gateways_32px_exclusive.png"
+              bundle="org.jboss.tools.bpmn2.process.diagram"/>
+        </tools>
         <tools
             xsi:type="gmftool:CreationTool"
-            title="Parallel"/>
+            title="Parallel">
+          <smallIcon
+              xsi:type="gmftool:BundleImage"
+              path="icons/obj16/gateways_16px_parallel.png"
+              bundle="org.jboss.tools.bpmn2.process.diagram"/>
+          <largeIcon
+              xsi:type="gmftool:BundleImage"
+              path="icons/obj32/gateways_32px_parallel.png"
+              bundle="org.jboss.tools.bpmn2.process.diagram"/>
+        </tools>
       </tools>
       <tools
           xsi:type="gmftool:ToolGroup"
@@ -46,10 +100,28 @@
             stack="true">
           <tools
               xsi:type="gmftool:CreationTool"
-              title="Start"/>
+              title="Start">
+            <smallIcon
+                xsi:type="gmftool:BundleImage"
+                path="icons/obj16/events_16px_start_none.png"
+                bundle="org.jboss.tools.bpmn2.process.diagram"/>
+            <largeIcon
+                xsi:type="gmftool:BundleImage"
+                path="icons/obj32/events_32px_start_none.png"
+                bundle="org.jboss.tools.bpmn2.process.diagram"/>
+          </tools>
           <tools
               xsi:type="gmftool:CreationTool"
-              title="Message Start"/>
+              title="Message Start">
+            <smallIcon
+                xsi:type="gmftool:BundleImage"
+                path="icons/obj16/events_16px_start_message.png"
+                bundle="org.jboss.tools.bpmn2.process.diagram"/>
+            <largeIcon
+                xsi:type="gmftool:BundleImage"
+                path="icons/obj32/events_32px_start_message.png"
+                bundle="org.jboss.tools.bpmn2.process.diagram"/>
+          </tools>
         </tools>
         <tools
             xsi:type="gmftool:ToolGroup"
@@ -57,17 +129,53 @@
             stack="true">
           <tools
               xsi:type="gmftool:CreationTool"
-              title="Message Catch"/>
+              title="Message Catch">
+            <smallIcon
+                xsi:type="gmftool:BundleImage"
+                path="icons/obj16/events_16px_intermediate_message_catch.png"
+                bundle="org.jboss.tools.bpmn2.process.diagram"/>
+            <largeIcon
+                xsi:type="gmftool:BundleImage"
+                path="icons/obj32/events_32px_intermediate_message_catch.png"
+                bundle="org.jboss.tools.bpmn2.process.diagram"/>
+          </tools>
           <tools
               xsi:type="gmftool:CreationTool"
-              title="Message Throw"/>
+              title="Message Throw">
+            <smallIcon
+                xsi:type="gmftool:BundleImage"
+                path="icons/obj16/events_16px_intermediate_message_throw.png"
+                bundle="org.jboss.tools.bpmn2.process.diagram"/>
+            <largeIcon
+                xsi:type="gmftool:BundleImage"
+                path="icons/obj32/events_32px_intermediate_message_throw.png"
+                bundle="org.jboss.tools.bpmn2.process.diagram"/>
+          </tools>
           <tools
               xsi:type="gmftool:CreationTool"
               title="Timer Catch"
-              description=""/>
+              description="">
+            <smallIcon
+                xsi:type="gmftool:BundleImage"
+                path="icons/obj16/events_16px_intermediate_timer_catch.png"
+                bundle="org.jboss.tools.bpmn2.process.diagram"/>
+            <largeIcon
+                xsi:type="gmftool:BundleImage"
+                path="icons/obj32/events_32px_intermediate_timer_catch.png"
+                bundle="org.jboss.tools.bpmn2.process.diagram"/>
+          </tools>
           <tools
               xsi:type="gmftool:CreationTool"
-              title="Error Catch"/>
+              title="Error Catch">
+            <smallIcon
+                xsi:type="gmftool:BundleImage"
+                path="icons/obj16/events_16px_intermediate_error_catch.png"
+                bundle="org.jboss.tools.bpmn2.process.diagram"/>
+            <largeIcon
+                xsi:type="gmftool:BundleImage"
+                path="icons/obj32/events_32px_intermediate_error_catch.png"
+                bundle="org.jboss.tools.bpmn2.process.diagram"/>
+          </tools>
         </tools>
         <tools
             xsi:type="gmftool:ToolGroup"
@@ -75,13 +183,40 @@
             stack="true">
           <tools
               xsi:type="gmftool:CreationTool"
-              title="End"/>
+              title="End">
+            <smallIcon
+                xsi:type="gmftool:BundleImage"
+                path="icons/obj16/events_16px_end_none.png"
+                bundle="org.jboss.tools.bpmn2.process.diagram"/>
+            <largeIcon
+                xsi:type="gmftool:BundleImage"
+                path="icons/obj32/events_32px_end_none.png"
+                bundle="org.jboss.tools.bpmn2.process.diagram"/>
+          </tools>
           <tools
               xsi:type="gmftool:CreationTool"
-              title="Message End"/>
+              title="Message End">
+            <smallIcon
+                xsi:type="gmftool:BundleImage"
+                path="icons/obj16/events_16px_end_message.png"
+                bundle="org.jboss.tools.bpmn2.process.diagram"/>
+            <largeIcon
+                xsi:type="gmftool:BundleImage"
+                path="icons/obj32/events_32px_end_message.png"
+                bundle="org.jboss.tools.bpmn2.process.diagram"/>
+          </tools>
           <tools
               xsi:type="gmftool:CreationTool"
-              title="Terminate"/>
+              title="Terminate">
+            <smallIcon
+                xsi:type="gmftool:BundleImage"
+                path="icons/obj16/events_16px_end_terminate.png"
+                bundle="org.jboss.tools.bpmn2.process.diagram"/>
+            <largeIcon
+                xsi:type="gmftool:BundleImage"
+                path="icons/obj32/events_32px_end_terminate.png"
+                bundle="org.jboss.tools.bpmn2.process.diagram"/>
+          </tools>
         </tools>
       </tools>
       <tools

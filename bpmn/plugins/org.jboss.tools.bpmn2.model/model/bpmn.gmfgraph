@@ -60,475 +60,79 @@
     <descriptors
         name="StartEventFigureDescriptor">
       <actualFigure
-          xsi:type="gmfgraph:Rectangle"
+          xsi:type="gmfgraph:SVGFigure"
           name="StartEventFigure"
-          outline="false"
-          fill="false">
-        <layout
-            xsi:type="gmfgraph:StackLayout"/>
-        <children
-            xsi:type="gmfgraph:Ellipse"
-            name="Circle"/>
-      </actualFigure>
+          documentURI="platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/events_48px_start_none.svg"/>
     </descriptors>
     <descriptors
         name="EndEventFigureDescriptor">
       <actualFigure
-          xsi:type="gmfgraph:Rectangle"
+          xsi:type="gmfgraph:SVGFigure"
           name="EndEventFigure"
-          outline="false"
-          fill="false">
-        <layout
-            xsi:type="gmfgraph:StackLayout"/>
-        <children
-            xsi:type="gmfgraph:Ellipse"
-            name="Circle"
-            lineWidth="3"/>
-      </actualFigure>
+          documentURI="platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/events_48px_end_none.svg"/>
     </descriptors>
     <descriptors
         name="ExclusiveGatewayFigureDescriptor">
       <actualFigure
-          xsi:type="gmfgraph:Rectangle"
+          xsi:type="gmfgraph:SVGFigure"
           name="ExclusiveGatewayFigure"
-          outline="false"
-          fill="false">
-        <layout
-            xsi:type="gmfgraph:StackLayout"/>
-        <children
-            xsi:type="gmfgraph:Polygon"
-            name="Diamond">
-          <template
-              x="15"/>
-          <template
-              y="15"/>
-          <template
-              x="15"
-              y="30"/>
-          <template
-              x="30"
-              y="15"/>
-        </children>
-      </actualFigure>
+          documentURI="platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/gateways_48px_exclusive.svg"/>
     </descriptors>
     <descriptors
         name="ParallelGatewayFigureDescriptor">
       <actualFigure
-          xsi:type="gmfgraph:Rectangle"
+          xsi:type="gmfgraph:SVGFigure"
           name="ParallelGatewayFigure"
-          outline="false"
-          fill="false">
-        <layout
-            xsi:type="gmfgraph:StackLayout"/>
-        <children
-            xsi:type="gmfgraph:Polygon"
-            name="Diamond">
-          <template
-              x="15"/>
-          <template
-              y="15"/>
-          <template
-              x="15"
-              y="30"/>
-          <template
-              x="30"
-              y="15"/>
-        </children>
-        <children
-            xsi:type="gmfgraph:Polyline"
-            name="Vertical">
-          <template
-              x="15"
-              y="8"/>
-          <template
-              x="15"
-              y="22"/>
-        </children>
-        <children
-            xsi:type="gmfgraph:Polyline"
-            name="Horizontal">
-          <template
-              x="8"
-              y="15"/>
-          <template
-              x="22"
-              y="15"/>
-        </children>
-      </actualFigure>
+          documentURI="platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/gateways_48px_parallel.svg"/>
     </descriptors>
     <descriptors
         name="MessageStartEventFigureDescriptor">
       <actualFigure
-          xsi:type="gmfgraph:Rectangle"
+          xsi:type="gmfgraph:SVGFigure"
           name="MessageStartEventFigure"
-          outline="false"
-          fill="false">
-        <layout
-            xsi:type="gmfgraph:StackLayout"/>
-        <children
-            xsi:type="gmfgraph:Ellipse"
-            name="Circle">
-          <layout
-              xsi:type="gmfgraph:StackLayout"/>
-          <insets
-              top="6"
-              left="5"
-              bottom="6"
-              right="5"/>
-          <children
-              xsi:type="gmfgraph:Rectangle"
-              name="Rectangle">
-            <layout
-                xsi:type="gmfgraph:StackLayout"/>
-            <children
-                xsi:type="gmfgraph:Polyline"
-                name="WhiteEnvelope">
-              <template/>
-              <template
-                  x="4"
-                  y="4"/>
-              <template
-                  x="5"
-                  y="4"/>
-              <template
-                  x="9"/>
-            </children>
-          </children>
-        </children>
-      </actualFigure>
+          documentURI="platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/events_48px_start_message.svg"/>
     </descriptors>
     <descriptors
         name="MessageEndEventFigureDescriptor">
       <actualFigure
-          xsi:type="gmfgraph:Rectangle"
+          xsi:type="gmfgraph:SVGFigure"
           name="MessageEndEventFigure"
-          outline="false"
-          fill="false">
-        <layout
-            xsi:type="gmfgraph:StackLayout"/>
-        <children
-            xsi:type="gmfgraph:Ellipse"
-            name="Circle"
-            lineWidth="3">
-          <layout
-              xsi:type="gmfgraph:StackLayout"/>
-          <insets
-              top="6"
-              left="5"
-              bottom="6"
-              right="5"/>
-          <children
-              xsi:type="gmfgraph:Rectangle"
-              name="Rectangle">
-            <layout
-                xsi:type="gmfgraph:StackLayout"/>
-            <backgroundColor
-                xsi:type="gmfgraph:ConstantColor"
-                value="lightGray"/>
-            <children
-                xsi:type="gmfgraph:Polyline"
-                name="BlackEnvelope">
-              <foregroundColor
-                  xsi:type="gmfgraph:ConstantColor"/>
-              <template/>
-              <template
-                  x="4"
-                  y="4"/>
-              <template
-                  x="5"
-                  y="4"/>
-              <template
-                  x="9"/>
-            </children>
-          </children>
-        </children>
-      </actualFigure>
+          documentURI="platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/events_48px_end_message.svg"/>
     </descriptors>
     <descriptors
         name="TerminateEndEventFigureDescriptor">
       <actualFigure
-          xsi:type="gmfgraph:Rectangle"
+          xsi:type="gmfgraph:SVGFigure"
           name="TerminateEndEventFigure"
-          outline="false"
-          fill="false">
-        <layout
-            xsi:type="gmfgraph:StackLayout"/>
-        <children
-            xsi:type="gmfgraph:Ellipse"
-            name="Circle"
-            lineWidth="3">
-          <layout
-              xsi:type="gmfgraph:StackLayout"/>
-          <insets
-              top="6"
-              left="6"
-              bottom="6"
-              right="6"/>
-          <children
-              xsi:type="gmfgraph:Ellipse"
-              name="Circle">
-            <backgroundColor
-                xsi:type="gmfgraph:ConstantColor"
-                value="lightGray"/>
-          </children>
-        </children>
-      </actualFigure>
+          documentURI="platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/events_48px_end_terminate.svg"/>
     </descriptors>
     <descriptors
         name="MessageCatchIntermediateEventFigureDescriptor">
       <actualFigure
-          xsi:type="gmfgraph:Rectangle"
-          name="MessageCatchIntermediageEventFigure"
-          outline="false"
-          fill="false">
-        <layout
-            xsi:type="gmfgraph:StackLayout"/>
-        <children
-            xsi:type="gmfgraph:Ellipse"
-            name="OuterCircle">
-          <layout
-              xsi:type="gmfgraph:StackLayout"/>
-          <insets
-              top="2"
-              left="2"
-              bottom="2"
-              right="2"/>
-          <children
-              xsi:type="gmfgraph:Ellipse"
-              name="InnerCircle">
-            <layout
-                xsi:type="gmfgraph:StackLayout"/>
-            <insets
-                top="4"
-                left="3"
-                bottom="4"
-                right="3"/>
-            <children
-                xsi:type="gmfgraph:Rectangle"
-                name="Rectangle">
-              <layout
-                  xsi:type="gmfgraph:StackLayout"/>
-              <children
-                  xsi:type="gmfgraph:Polyline"
-                  name="Envelope">
-                <template/>
-                <template
-                    x="4"
-                    y="4"/>
-                <template
-                    x="5"
-                    y="4"/>
-                <template
-                    x="9"/>
-              </children>
-            </children>
-          </children>
-        </children>
-      </actualFigure>
+          xsi:type="gmfgraph:SVGFigure"
+          name="MessageCatchIntermediateEventFigure"
+          documentURI="platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/events_48px_intermediate_message_catch.svg"/>
     </descriptors>
     <descriptors
         name="MessageThrowIntermediateEventFigureDescriptor">
       <actualFigure
-          xsi:type="gmfgraph:Rectangle"
+          xsi:type="gmfgraph:SVGFigure"
           name="MessageThrowIntermediateEventFigure"
-          outline="false"
-          fill="false">
-        <layout
-            xsi:type="gmfgraph:StackLayout"/>
-        <children
-            xsi:type="gmfgraph:Ellipse"
-            name="OuterCircle">
-          <layout
-              xsi:type="gmfgraph:StackLayout"/>
-          <insets
-              top="2"
-              left="2"
-              bottom="2"
-              right="2"/>
-          <children
-              xsi:type="gmfgraph:Ellipse"
-              name="InnerCircle">
-            <layout
-                xsi:type="gmfgraph:StackLayout"/>
-            <insets
-                top="4"
-                left="3"
-                bottom="4"
-                right="3"/>
-            <children
-                xsi:type="gmfgraph:Rectangle"
-                name="Rectangle">
-              <layout
-                  xsi:type="gmfgraph:StackLayout"/>
-              <backgroundColor
-                  xsi:type="gmfgraph:ConstantColor"
-                  value="lightGray"/>
-              <children
-                  xsi:type="gmfgraph:Polyline"
-                  name="Envelope">
-                <foregroundColor
-                    xsi:type="gmfgraph:ConstantColor"/>
-                <template/>
-                <template
-                    x="4"
-                    y="4"/>
-                <template
-                    x="5"
-                    y="4"/>
-                <template
-                    x="9"/>
-              </children>
-            </children>
-          </children>
-        </children>
-      </actualFigure>
+          documentURI="platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/events_48px_intermediate_message_throw.svg"/>
     </descriptors>
     <descriptors
         name="TimerCatchIntermediateEventFigureDescriptor">
       <actualFigure
-          xsi:type="gmfgraph:Rectangle"
+          xsi:type="gmfgraph:SVGFigure"
           name="TimerCatchIntermediateEventFigure"
-          outline="false"
-          fill="false">
-        <layout
-            xsi:type="gmfgraph:StackLayout"/>
-        <children
-            xsi:type="gmfgraph:Ellipse"
-            name="OuterCircle">
-          <layout
-              xsi:type="gmfgraph:StackLayout"/>
-          <insets
-              top="2"
-              left="2"
-              bottom="2"
-              right="2"/>
-          <children
-              xsi:type="gmfgraph:Ellipse"
-              name="InnerCircle">
-            <layout
-                xsi:type="gmfgraph:StackLayout"/>
-            <insets
-                top="3"
-                left="3"
-                bottom="3"
-                right="3"/>
-            <children
-                xsi:type="gmfgraph:Ellipse"
-                name="Clock"/>
-            <children
-                xsi:type="gmfgraph:Polyline"
-                name="Twelve">
-              <template
-                  x="4"/>
-              <template
-                  x="4"
-                  y="2"/>
-            </children>
-            <children
-                xsi:type="gmfgraph:Polyline"
-                name="Three">
-              <template
-                  x="7"
-                  y="4"/>
-              <template
-                  x="9"
-                  y="4"/>
-            </children>
-            <children
-                xsi:type="gmfgraph:Polyline"
-                name="Six">
-              <template
-                  x="4"
-                  y="7"/>
-              <template
-                  x="4"
-                  y="9"/>
-            </children>
-            <children
-                xsi:type="gmfgraph:Polyline"
-                name="Nine">
-              <template
-                  y="4"/>
-              <template
-                  x="2"
-                  y="4"/>
-            </children>
-            <children
-                xsi:type="gmfgraph:Polyline"
-                name="Big">
-              <template
-                  x="4"
-                  y="4"/>
-              <template
-                  x="6"
-                  y="1"/>
-            </children>
-            <children
-                xsi:type="gmfgraph:Polyline"
-                name="Small">
-              <template
-                  x="4"
-                  y="4"/>
-              <template
-                  x="7"
-                  y="7"/>
-            </children>
-          </children>
-        </children>
-      </actualFigure>
+          documentURI="platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/events_48px_intermediate_timer_catch.svg"/>
     </descriptors>
     <descriptors
         name="ErrorCatchIntermediateEventFigureDescriptor">
       <actualFigure
-          xsi:type="gmfgraph:Rectangle"
+          xsi:type="gmfgraph:SVGFigure"
           name="ErrorCatchIntermediateEventFigure"
-          outline="false"
-          fill="false">
-        <layout
-            xsi:type="gmfgraph:StackLayout"/>
-        <children
-            xsi:type="gmfgraph:Ellipse"
-            name="OuterCircle">
-          <layout
-              xsi:type="gmfgraph:StackLayout"/>
-          <insets
-              top="2"
-              left="2"
-              bottom="2"
-              right="2"/>
-          <children
-              xsi:type="gmfgraph:Ellipse"
-              name="InnerCircle">
-            <layout
-                xsi:type="gmfgraph:StackLayout"/>
-            <insets
-                top="3"
-                left="3"
-                bottom="3"
-                right="3"/>
-            <children
-                xsi:type="gmfgraph:Polygon"
-                name="Flash">
-              <template
-                  y="9"/>
-              <template
-                  x="3"/>
-              <template
-                  x="7"
-                  y="6"/>
-              <template
-                  x="10"
-                  y="1"/>
-              <template
-                  x="7"
-                  y="10"/>
-              <template
-                  x="3"
-                  y="3"/>
-            </children>
-          </children>
-        </children>
-      </actualFigure>
+          documentURI="platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/events_48px_intermediate_error_catch.svg"/>
     </descriptors>
     <descriptors
         name="DataObjectFigureDescriptor">
@@ -631,8 +235,6 @@
       <accessors
           figure="//@figures.0/@descriptors.18/@actualFigure"/>
     </descriptors>
-    <descriptors
-        name="EventBasedGatewayFigureDescriptor"/>
   </figures>
   <nodes
       name="UserTask"
@@ -650,8 +252,8 @@
     <facets
         xsi:type="gmfgraph:DefaultSizeFacet">
       <defaultSize
-          dx="20"
-          dy="20"/>
+          dx="48"
+          dy="48"/>
     </facets>
   </nodes>
   <nodes
@@ -661,8 +263,8 @@
     <facets
         xsi:type="gmfgraph:DefaultSizeFacet">
       <defaultSize
-          dx="20"
-          dy="20"/>
+          dx="48"
+          dy="48"/>
     </facets>
   </nodes>
   <nodes
@@ -672,8 +274,8 @@
     <facets
         xsi:type="gmfgraph:DefaultSizeFacet">
       <defaultSize
-          dx="31"
-          dy="31"/>
+          dx="48"
+          dy="48"/>
     </facets>
   </nodes>
   <nodes
@@ -683,8 +285,8 @@
     <facets
         xsi:type="gmfgraph:DefaultSizeFacet">
       <defaultSize
-          dx="31"
-          dy="31"/>
+          dx="48"
+          dy="48"/>
     </facets>
   </nodes>
   <nodes
@@ -694,8 +296,8 @@
     <facets
         xsi:type="gmfgraph:DefaultSizeFacet">
       <defaultSize
-          dx="20"
-          dy="20"/>
+          dx="48"
+          dy="48"/>
     </facets>
   </nodes>
   <nodes
@@ -705,8 +307,8 @@
     <facets
         xsi:type="gmfgraph:DefaultSizeFacet">
       <defaultSize
-          dx="20"
-          dy="20"/>
+          dx="48"
+          dy="48"/>
     </facets>
   </nodes>
   <nodes
@@ -716,8 +318,8 @@
     <facets
         xsi:type="gmfgraph:DefaultSizeFacet">
       <defaultSize
-          dx="20"
-          dy="20"/>
+          dx="48"
+          dy="48"/>
     </facets>
   </nodes>
   <nodes
@@ -727,8 +329,8 @@
     <facets
         xsi:type="gmfgraph:DefaultSizeFacet">
       <defaultSize
-          dx="20"
-          dy="20"/>
+          dx="48"
+          dy="48"/>
     </facets>
   </nodes>
   <nodes
@@ -738,8 +340,8 @@
     <facets
         xsi:type="gmfgraph:DefaultSizeFacet">
       <defaultSize
-          dx="20"
-          dy="20"/>
+          dx="48"
+          dy="48"/>
     </facets>
   </nodes>
   <nodes
@@ -749,8 +351,8 @@
     <facets
         xsi:type="gmfgraph:DefaultSizeFacet">
       <defaultSize
-          dx="20"
-          dy="20"/>
+          dx="48"
+          dy="48"/>
     </facets>
   </nodes>
   <nodes
@@ -760,8 +362,8 @@
     <facets
         xsi:type="gmfgraph:DefaultSizeFacet">
       <defaultSize
-          dx="20"
-          dy="20"/>
+          dx="48"
+          dy="48"/>
     </facets>
   </nodes>
   <nodes

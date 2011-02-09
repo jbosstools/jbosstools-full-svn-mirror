@@ -51,6 +51,9 @@
             xsi:type="gmfgen:DefaultSizeAttributes"
             width="240"
             height="240"/>
+        <attributes
+            xsi:type="gmfgen:StyleAttributes"
+            fixedForeground="true"/>
       </viewmap>
       <modelFacet>
         <metaClass
@@ -92,6 +95,10 @@
             xsi:type="gmfgen:DefaultSizeAttributes"
             width="80"
             height="40"/>
+        <attributes
+            xsi:type="gmfgen:StyleAttributes"
+            fixedForeground="true"
+            fixedBackground="true"/>
       </viewmap>
       <modelFacet>
         <metaClass
@@ -152,6 +159,10 @@
             xsi:type="gmfgen:DefaultSizeAttributes"
             width="80"
             height="40"/>
+        <attributes
+            xsi:type="gmfgen:StyleAttributes"
+            fixedForeground="true"
+            fixedBackground="true"/>
       </viewmap>
       <modelFacet>
         <metaClass
@@ -207,13 +218,13 @@
       <viewmap
           xsi:type="gmfgen:InnerClassViewmap"
           className="StartEventFigureDescriptor"
-          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class StartEventFigureDescriptor extends org.eclipse.draw2d.RectangleFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public StartEventFigureDescriptor() {&#xA;&#x9;&#x9;this.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#x9;&#x9;this.setFill(false);&#xA;this.setOutline(false);&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;org.eclipse.draw2d.Ellipse circle0 = new org.eclipse.draw2d.Ellipse();&#xA;&#xA;this.add(circle0);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
+          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class StartEventFigureDescriptor extends org.eclipse.gmf.runtime.lite.svg.SVGFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public StartEventFigureDescriptor() {&#xA;&#x9;&#x9;&#x9;&#x9;this.setURI(&quot;platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/events_48px_start_none.svg&quot;);&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
         <attributes
             xsi:type="gmfgen:ResizeConstraints"/>
         <attributes
             xsi:type="gmfgen:DefaultSizeAttributes"
-            width="20"
-            height="20"/>
+            width="48"
+            height="48"/>
       </viewmap>
       <modelFacet
           modelElementSelector="//@expressionProviders/@providers.0/@expressions.2">
@@ -251,13 +262,13 @@
       <viewmap
           xsi:type="gmfgen:InnerClassViewmap"
           className="MessageStartEventFigureDescriptor"
-          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class MessageStartEventFigureDescriptor extends org.eclipse.draw2d.RectangleFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public MessageStartEventFigureDescriptor() {&#xA;&#x9;&#x9;this.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#x9;&#x9;this.setFill(false);&#xA;this.setOutline(false);&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;org.eclipse.draw2d.Ellipse circle0 = new org.eclipse.draw2d.Ellipse();&#xA;&#xA;circle0.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(6)&#xA;, getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(6)&#xA;, getMapMode().DPtoLP(5)&#xA;));&#xA;&#xA;this.add(circle0);&#xA;circle0.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#xA;&#xA;org.eclipse.draw2d.RectangleFigure rectangle1 = new org.eclipse.draw2d.RectangleFigure();&#xA;&#xA;circle0.add(rectangle1);&#xA;rectangle1.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#xA;&#xA;org.eclipse.draw2d.PolylineShape whiteEnvelope2 = new org.eclipse.draw2d.PolylineShape();&#xA;whiteEnvelope2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(0)&#xA;, getMapMode().DPtoLP(0)&#xA;));&#xA;whiteEnvelope2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(4)&#xA;, getMapMode().DPtoLP(4)&#xA;));&#xA;whiteEnvelope2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(4)&#xA;));&#xA;whiteEnvelope2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(9)&#xA;, getMapMode().DPtoLP(0)&#xA;));&#xA;&#xA;rectangle1.add(whiteEnvelope2);&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
+          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class MessageStartEventFigureDescriptor extends org.eclipse.gmf.runtime.lite.svg.SVGFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public MessageStartEventFigureDescriptor() {&#xA;&#x9;&#x9;&#x9;&#x9;this.setURI(&quot;platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/events_48px_start_message.svg&quot;);&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
         <attributes
             xsi:type="gmfgen:ResizeConstraints"/>
         <attributes
             xsi:type="gmfgen:DefaultSizeAttributes"
-            width="20"
-            height="20"/>
+            width="48"
+            height="48"/>
       </viewmap>
       <modelFacet
           modelElementSelector="//@expressionProviders/@providers.0/@expressions.4">
@@ -301,13 +312,13 @@
       <viewmap
           xsi:type="gmfgen:InnerClassViewmap"
           className="EndEventFigureDescriptor"
-          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class EndEventFigureDescriptor extends org.eclipse.draw2d.RectangleFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public EndEventFigureDescriptor() {&#xA;&#x9;&#x9;this.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#x9;&#x9;this.setFill(false);&#xA;this.setOutline(false);&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;org.eclipse.draw2d.Ellipse circle0 = new org.eclipse.draw2d.Ellipse();&#xA;circle0.setLineWidth(3);&#xA;&#xA;this.add(circle0);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
+          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class EndEventFigureDescriptor extends org.eclipse.gmf.runtime.lite.svg.SVGFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public EndEventFigureDescriptor() {&#xA;&#x9;&#x9;&#x9;&#x9;this.setURI(&quot;platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/events_48px_end_none.svg&quot;);&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
         <attributes
             xsi:type="gmfgen:ResizeConstraints"/>
         <attributes
             xsi:type="gmfgen:DefaultSizeAttributes"
-            width="20"
-            height="20"/>
+            width="48"
+            height="48"/>
       </viewmap>
       <modelFacet
           modelElementSelector="//@expressionProviders/@providers.0/@expressions.7">
@@ -345,13 +356,13 @@
       <viewmap
           xsi:type="gmfgen:InnerClassViewmap"
           className="ExclusiveGatewayFigureDescriptor"
-          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class ExclusiveGatewayFigureDescriptor extends org.eclipse.draw2d.RectangleFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public ExclusiveGatewayFigureDescriptor() {&#xA;&#x9;&#x9;this.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#x9;&#x9;this.setFill(false);&#xA;this.setOutline(false);&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;org.eclipse.draw2d.PolygonShape diamond0 = new org.eclipse.draw2d.PolygonShape();&#xA;diamond0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(15)&#xA;, getMapMode().DPtoLP(0)&#xA;));&#xA;diamond0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(0)&#xA;, getMapMode().DPtoLP(15)&#xA;));&#xA;diamond0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(15)&#xA;, getMapMode().DPtoLP(30)&#xA;));&#xA;diamond0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(30)&#xA;, getMapMode().DPtoLP(15)&#xA;));&#xA;diamond0.setFill(true);&#xA;&#xA;this.add(diamond0);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
+          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class ExclusiveGatewayFigureDescriptor extends org.eclipse.gmf.runtime.lite.svg.SVGFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public ExclusiveGatewayFigureDescriptor() {&#xA;&#x9;&#x9;&#x9;&#x9;this.setURI(&quot;platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/gateways_48px_exclusive.svg&quot;);&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
         <attributes
             xsi:type="gmfgen:ResizeConstraints"/>
         <attributes
             xsi:type="gmfgen:DefaultSizeAttributes"
-            width="31"
-            height="31"/>
+            width="48"
+            height="48"/>
       </viewmap>
       <modelFacet>
         <metaClass
@@ -388,13 +399,13 @@
       <viewmap
           xsi:type="gmfgen:InnerClassViewmap"
           className="ParallelGatewayFigureDescriptor"
-          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class ParallelGatewayFigureDescriptor extends org.eclipse.draw2d.RectangleFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public ParallelGatewayFigureDescriptor() {&#xA;&#x9;&#x9;this.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#x9;&#x9;this.setFill(false);&#xA;this.setOutline(false);&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;org.eclipse.draw2d.PolygonShape diamond0 = new org.eclipse.draw2d.PolygonShape();&#xA;diamond0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(15)&#xA;, getMapMode().DPtoLP(0)&#xA;));&#xA;diamond0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(0)&#xA;, getMapMode().DPtoLP(15)&#xA;));&#xA;diamond0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(15)&#xA;, getMapMode().DPtoLP(30)&#xA;));&#xA;diamond0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(30)&#xA;, getMapMode().DPtoLP(15)&#xA;));&#xA;diamond0.setFill(true);&#xA;&#xA;this.add(diamond0);&#xA;&#xA;&#xA;&#xA;org.eclipse.draw2d.PolylineShape vertical0 = new org.eclipse.draw2d.PolylineShape();&#xA;vertical0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(15)&#xA;, getMapMode().DPtoLP(8)&#xA;));&#xA;vertical0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(15)&#xA;, getMapMode().DPtoLP(22)&#xA;));&#xA;&#xA;this.add(vertical0);&#xA;&#xA;&#xA;&#xA;org.eclipse.draw2d.PolylineShape horizontal0 = new org.eclipse.draw2d.PolylineShape();&#xA;horizontal0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(8)&#xA;, getMapMode().DPtoLP(15)&#xA;));&#xA;horizontal0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(22)&#xA;, getMapMode().DPtoLP(15)&#xA;));&#xA;&#xA;this.add(horizontal0);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
+          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class ParallelGatewayFigureDescriptor extends org.eclipse.gmf.runtime.lite.svg.SVGFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public ParallelGatewayFigureDescriptor() {&#xA;&#x9;&#x9;&#x9;&#x9;this.setURI(&quot;platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/gateways_48px_parallel.svg&quot;);&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
         <attributes
             xsi:type="gmfgen:ResizeConstraints"/>
         <attributes
             xsi:type="gmfgen:DefaultSizeAttributes"
-            width="31"
-            height="31"/>
+            width="48"
+            height="48"/>
       </viewmap>
       <modelFacet>
         <metaClass
@@ -431,13 +442,13 @@
       <viewmap
           xsi:type="gmfgen:InnerClassViewmap"
           className="MessageEndEventFigureDescriptor"
-          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class MessageEndEventFigureDescriptor extends org.eclipse.draw2d.RectangleFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public MessageEndEventFigureDescriptor() {&#xA;&#x9;&#x9;this.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#x9;&#x9;this.setFill(false);&#xA;this.setOutline(false);&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;org.eclipse.draw2d.Ellipse circle0 = new org.eclipse.draw2d.Ellipse();&#xA;circle0.setLineWidth(3);&#xA;&#xA;circle0.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(6)&#xA;, getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(6)&#xA;, getMapMode().DPtoLP(5)&#xA;));&#xA;&#xA;this.add(circle0);&#xA;circle0.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#xA;&#xA;org.eclipse.draw2d.RectangleFigure rectangle1 = new org.eclipse.draw2d.RectangleFigure();&#xA;&#x9;rectangle1.setBackgroundColor(org.eclipse.draw2d.ColorConstants.lightGray);&#xA;&#xA;circle0.add(rectangle1);&#xA;rectangle1.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#xA;&#xA;org.eclipse.draw2d.PolylineShape blackEnvelope2 = new org.eclipse.draw2d.PolylineShape();&#xA;blackEnvelope2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(0)&#xA;, getMapMode().DPtoLP(0)&#xA;));&#xA;blackEnvelope2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(4)&#xA;, getMapMode().DPtoLP(4)&#xA;));&#xA;blackEnvelope2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(4)&#xA;));&#xA;blackEnvelope2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(9)&#xA;, getMapMode().DPtoLP(0)&#xA;));&#xA;&#x9;blackEnvelope2.setForegroundColor(org.eclipse.draw2d.ColorConstants.white);&#xA;&#xA;rectangle1.add(blackEnvelope2);&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
+          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class MessageEndEventFigureDescriptor extends org.eclipse.gmf.runtime.lite.svg.SVGFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public MessageEndEventFigureDescriptor() {&#xA;&#x9;&#x9;&#x9;&#x9;this.setURI(&quot;platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/events_48px_end_message.svg&quot;);&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
         <attributes
             xsi:type="gmfgen:ResizeConstraints"/>
         <attributes
             xsi:type="gmfgen:DefaultSizeAttributes"
-            width="20"
-            height="20"/>
+            width="48"
+            height="48"/>
       </viewmap>
       <modelFacet
           modelElementSelector="//@expressionProviders/@providers.0/@expressions.11">
@@ -481,13 +492,13 @@
       <viewmap
           xsi:type="gmfgen:InnerClassViewmap"
           className="TerminateEndEventFigureDescriptor"
-          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class TerminateEndEventFigureDescriptor extends org.eclipse.draw2d.RectangleFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public TerminateEndEventFigureDescriptor() {&#xA;&#x9;&#x9;this.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#x9;&#x9;this.setFill(false);&#xA;this.setOutline(false);&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;org.eclipse.draw2d.Ellipse circle0 = new org.eclipse.draw2d.Ellipse();&#xA;circle0.setLineWidth(3);&#xA;&#xA;circle0.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(6)&#xA;, getMapMode().DPtoLP(6)&#xA;, getMapMode().DPtoLP(6)&#xA;, getMapMode().DPtoLP(6)&#xA;));&#xA;&#xA;this.add(circle0);&#xA;circle0.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#xA;&#xA;org.eclipse.draw2d.Ellipse circle1 = new org.eclipse.draw2d.Ellipse();&#xA;&#x9;circle1.setBackgroundColor(org.eclipse.draw2d.ColorConstants.lightGray);&#xA;&#xA;circle0.add(circle1);&#xA;&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
+          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class TerminateEndEventFigureDescriptor extends org.eclipse.gmf.runtime.lite.svg.SVGFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public TerminateEndEventFigureDescriptor() {&#xA;&#x9;&#x9;&#x9;&#x9;this.setURI(&quot;platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/events_48px_end_terminate.svg&quot;);&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
         <attributes
             xsi:type="gmfgen:ResizeConstraints"/>
         <attributes
             xsi:type="gmfgen:DefaultSizeAttributes"
-            width="20"
-            height="20"/>
+            width="48"
+            height="48"/>
       </viewmap>
       <modelFacet
           modelElementSelector="//@expressionProviders/@providers.0/@expressions.14">
@@ -531,11 +542,13 @@
       <viewmap
           xsi:type="gmfgen:InnerClassViewmap"
           className="MessageCatchIntermediateEventFigureDescriptor"
-          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class MessageCatchIntermediateEventFigureDescriptor extends org.eclipse.draw2d.RectangleFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public MessageCatchIntermediateEventFigureDescriptor() {&#xA;&#x9;&#x9;this.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#x9;&#x9;this.setFill(false);&#xA;this.setOutline(false);&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;org.eclipse.draw2d.Ellipse outerCircle0 = new org.eclipse.draw2d.Ellipse();&#xA;&#xA;outerCircle0.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(2)&#xA;, getMapMode().DPtoLP(2)&#xA;, getMapMode().DPtoLP(2)&#xA;, getMapMode().DPtoLP(2)&#xA;));&#xA;&#xA;this.add(outerCircle0);&#xA;outerCircle0.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#xA;&#xA;org.eclipse.draw2d.Ellipse innerCircle1 = new org.eclipse.draw2d.Ellipse();&#xA;&#xA;innerCircle1.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(4)&#xA;, getMapMode().DPtoLP(3)&#xA;, getMapMode().DPtoLP(4)&#xA;, getMapMode().DPtoLP(3)&#xA;));&#xA;&#xA;outerCircle0.add(innerCircle1);&#xA;innerCircle1.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#xA;&#xA;org.eclipse.draw2d.RectangleFigure rectangle2 = new org.eclipse.draw2d.RectangleFigure();&#xA;&#xA;innerCircle1.add(rectangle2);&#xA;rectangle2.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#xA;&#xA;org.eclipse.draw2d.PolylineShape envelope3 = new org.eclipse.draw2d.PolylineShape();&#xA;envelope3.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(0)&#xA;, getMapMode().DPtoLP(0)&#xA;));&#xA;envelope3.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(4)&#xA;, getMapMode().DPtoLP(4)&#xA;));&#xA;envelope3.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(4)&#xA;));&#xA;envelope3.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(9)&#xA;, getMapMode().DPtoLP(0)&#xA;));&#xA;&#xA;rectangle2.add(envelope3);&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
+          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class MessageCatchIntermediateEventFigureDescriptor extends org.eclipse.gmf.runtime.lite.svg.SVGFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public MessageCatchIntermediateEventFigureDescriptor() {&#xA;&#x9;&#x9;&#x9;&#x9;this.setURI(&quot;platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/events_48px_intermediate_message_catch.svg&quot;);&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
+        <attributes
+            xsi:type="gmfgen:ResizeConstraints"/>
         <attributes
             xsi:type="gmfgen:DefaultSizeAttributes"
-            width="20"
-            height="20"/>
+            width="48"
+            height="48"/>
       </viewmap>
       <modelFacet
           modelElementSelector="//@expressionProviders/@providers.0/@expressions.17">
@@ -579,13 +592,13 @@
       <viewmap
           xsi:type="gmfgen:InnerClassViewmap"
           className="MessageThrowIntermediateEventFigureDescriptor"
-          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class MessageThrowIntermediateEventFigureDescriptor extends org.eclipse.draw2d.RectangleFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public MessageThrowIntermediateEventFigureDescriptor() {&#xA;&#x9;&#x9;this.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#x9;&#x9;this.setFill(false);&#xA;this.setOutline(false);&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;org.eclipse.draw2d.Ellipse outerCircle0 = new org.eclipse.draw2d.Ellipse();&#xA;&#xA;outerCircle0.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(2)&#xA;, getMapMode().DPtoLP(2)&#xA;, getMapMode().DPtoLP(2)&#xA;, getMapMode().DPtoLP(2)&#xA;));&#xA;&#xA;this.add(outerCircle0);&#xA;outerCircle0.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#xA;&#xA;org.eclipse.draw2d.Ellipse innerCircle1 = new org.eclipse.draw2d.Ellipse();&#xA;&#xA;innerCircle1.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(4)&#xA;, getMapMode().DPtoLP(3)&#xA;, getMapMode().DPtoLP(4)&#xA;, getMapMode().DPtoLP(3)&#xA;));&#xA;&#xA;outerCircle0.add(innerCircle1);&#xA;innerCircle1.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#xA;&#xA;org.eclipse.draw2d.RectangleFigure rectangle2 = new org.eclipse.draw2d.RectangleFigure();&#xA;&#x9;rectangle2.setBackgroundColor(org.eclipse.draw2d.ColorConstants.lightGray);&#xA;&#xA;innerCircle1.add(rectangle2);&#xA;rectangle2.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#xA;&#xA;org.eclipse.draw2d.PolylineShape envelope3 = new org.eclipse.draw2d.PolylineShape();&#xA;envelope3.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(0)&#xA;, getMapMode().DPtoLP(0)&#xA;));&#xA;envelope3.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(4)&#xA;, getMapMode().DPtoLP(4)&#xA;));&#xA;envelope3.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(4)&#xA;));&#xA;envelope3.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(9)&#xA;, getMapMode().DPtoLP(0)&#xA;));&#xA;&#x9;envelope3.setForegroundColor(org.eclipse.draw2d.ColorConstants.white);&#xA;&#xA;rectangle2.add(envelope3);&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
+          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class MessageThrowIntermediateEventFigureDescriptor extends org.eclipse.gmf.runtime.lite.svg.SVGFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public MessageThrowIntermediateEventFigureDescriptor() {&#xA;&#x9;&#x9;&#x9;&#x9;this.setURI(&quot;platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/events_48px_intermediate_message_throw.svg&quot;);&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
         <attributes
             xsi:type="gmfgen:ResizeConstraints"/>
         <attributes
             xsi:type="gmfgen:DefaultSizeAttributes"
-            width="20"
-            height="20"/>
+            width="48"
+            height="48"/>
       </viewmap>
       <modelFacet
           modelElementSelector="//@expressionProviders/@providers.0/@expressions.20">
@@ -629,13 +642,13 @@
       <viewmap
           xsi:type="gmfgen:InnerClassViewmap"
           className="TimerCatchIntermediateEventFigureDescriptor"
-          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class TimerCatchIntermediateEventFigureDescriptor extends org.eclipse.draw2d.RectangleFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public TimerCatchIntermediateEventFigureDescriptor() {&#xA;&#x9;&#x9;this.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#x9;&#x9;this.setFill(false);&#xA;this.setOutline(false);&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;org.eclipse.draw2d.Ellipse outerCircle0 = new org.eclipse.draw2d.Ellipse();&#xA;&#xA;outerCircle0.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(2)&#xA;, getMapMode().DPtoLP(2)&#xA;, getMapMode().DPtoLP(2)&#xA;, getMapMode().DPtoLP(2)&#xA;));&#xA;&#xA;this.add(outerCircle0);&#xA;outerCircle0.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#xA;&#xA;org.eclipse.draw2d.Ellipse innerCircle1 = new org.eclipse.draw2d.Ellipse();&#xA;&#xA;innerCircle1.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(3)&#xA;, getMapMode().DPtoLP(3)&#xA;, getMapMode().DPtoLP(3)&#xA;, getMapMode().DPtoLP(3)&#xA;));&#xA;&#xA;outerCircle0.add(innerCircle1);&#xA;innerCircle1.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#xA;&#xA;org.eclipse.draw2d.Ellipse clock2 = new org.eclipse.draw2d.Ellipse();&#xA;&#xA;innerCircle1.add(clock2);&#xA;&#xA;&#xA;&#xA;org.eclipse.draw2d.PolylineShape twelve2 = new org.eclipse.draw2d.PolylineShape();&#xA;twelve2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(4)&#xA;, getMapMode().DPtoLP(0)&#xA;));&#xA;twelve2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(4)&#xA;, getMapMode().DPtoLP(2)&#xA;));&#xA;&#xA;innerCircle1.add(twelve2);&#xA;&#xA;&#xA;&#xA;org.eclipse.draw2d.PolylineShape three2 = new org.eclipse.draw2d.PolylineShape();&#xA;three2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(7)&#xA;, getMapMode().DPtoLP(4)&#xA;));&#xA;three2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(9)&#xA;, getMapMode().DPtoLP(4)&#xA;));&#xA;&#xA;innerCircle1.add(three2);&#xA;&#xA;&#xA;&#xA;org.eclipse.draw2d.PolylineShape six2 = new org.eclipse.draw2d.PolylineShape();&#xA;six2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(4)&#xA;, getMapMode().DPtoLP(7)&#xA;));&#xA;six2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(4)&#xA;, getMapMode().DPtoLP(9)&#xA;));&#xA;&#xA;innerCircle1.add(six2);&#xA;&#xA;&#xA;&#xA;org.eclipse.draw2d.PolylineShape nine2 = new org.eclipse.draw2d.PolylineShape();&#xA;nine2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(0)&#xA;, getMapMode().DPtoLP(4)&#xA;));&#xA;nine2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(2)&#xA;, getMapMode().DPtoLP(4)&#xA;));&#xA;&#xA;innerCircle1.add(nine2);&#xA;&#xA;&#xA;&#xA;org.eclipse.draw2d.PolylineShape big2 = new org.eclipse.draw2d.PolylineShape();&#xA;big2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(4)&#xA;, getMapMode().DPtoLP(4)&#xA;));&#xA;big2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(6)&#xA;, getMapMode().DPtoLP(1)&#xA;));&#xA;&#xA;innerCircle1.add(big2);&#xA;&#xA;&#xA;&#xA;org.eclipse.draw2d.PolylineShape small2 = new org.eclipse.draw2d.PolylineShape();&#xA;small2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(4)&#xA;, getMapMode().DPtoLP(4)&#xA;));&#xA;small2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(7)&#xA;, getMapMode().DPtoLP(7)&#xA;));&#xA;&#xA;innerCircle1.add(small2);&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
+          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class TimerCatchIntermediateEventFigureDescriptor extends org.eclipse.gmf.runtime.lite.svg.SVGFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public TimerCatchIntermediateEventFigureDescriptor() {&#xA;&#x9;&#x9;&#x9;&#x9;this.setURI(&quot;platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/events_48px_intermediate_timer_catch.svg&quot;);&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
         <attributes
             xsi:type="gmfgen:ResizeConstraints"/>
         <attributes
             xsi:type="gmfgen:DefaultSizeAttributes"
-            width="20"
-            height="20"/>
+            width="48"
+            height="48"/>
       </viewmap>
       <modelFacet
           modelElementSelector="//@expressionProviders/@providers.0/@expressions.23">
@@ -745,6 +758,9 @@
             xsi:type="gmfgen:DefaultSizeAttributes"
             width="120"
             height="20"/>
+        <attributes
+            xsi:type="gmfgen:StyleAttributes"
+            fixedForeground="true"/>
       </viewmap>
       <modelFacet>
         <metaClass
@@ -805,6 +821,10 @@
             xsi:type="gmfgen:DefaultSizeAttributes"
             width="80"
             height="40"/>
+        <attributes
+            xsi:type="gmfgen:StyleAttributes"
+            fixedForeground="true"
+            fixedBackground="true"/>
       </viewmap>
       <modelFacet>
         <metaClass
@@ -864,6 +884,10 @@
             xsi:type="gmfgen:DefaultSizeAttributes"
             width="80"
             height="40"/>
+        <attributes
+            xsi:type="gmfgen:StyleAttributes"
+            fixedForeground="true"
+            fixedBackground="true"/>
       </viewmap>
       <modelFacet>
         <metaClass
@@ -923,6 +947,10 @@
             xsi:type="gmfgen:DefaultSizeAttributes"
             width="80"
             height="40"/>
+        <attributes
+            xsi:type="gmfgen:StyleAttributes"
+            fixedForeground="true"
+            fixedBackground="true"/>
       </viewmap>
       <modelFacet>
         <metaClass
@@ -977,13 +1005,13 @@
       <viewmap
           xsi:type="gmfgen:InnerClassViewmap"
           className="StartEventFigureDescriptor"
-          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class StartEventFigureDescriptor extends org.eclipse.draw2d.RectangleFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public StartEventFigureDescriptor() {&#xA;&#x9;&#x9;this.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#x9;&#x9;this.setFill(false);&#xA;this.setOutline(false);&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;org.eclipse.draw2d.Ellipse circle0 = new org.eclipse.draw2d.Ellipse();&#xA;&#xA;this.add(circle0);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
+          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class StartEventFigureDescriptor extends org.eclipse.gmf.runtime.lite.svg.SVGFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public StartEventFigureDescriptor() {&#xA;&#x9;&#x9;&#x9;&#x9;this.setURI(&quot;platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/events_48px_start_none.svg&quot;);&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
         <attributes
             xsi:type="gmfgen:ResizeConstraints"/>
         <attributes
             xsi:type="gmfgen:DefaultSizeAttributes"
-            width="20"
-            height="20"/>
+            width="48"
+            height="48"/>
       </viewmap>
       <modelFacet
           modelElementSelector="//@expressionProviders/@providers.0/@expressions.2">
@@ -1020,13 +1048,13 @@
       <viewmap
           xsi:type="gmfgen:InnerClassViewmap"
           className="MessageStartEventFigureDescriptor"
-          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class MessageStartEventFigureDescriptor extends org.eclipse.draw2d.RectangleFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public MessageStartEventFigureDescriptor() {&#xA;&#x9;&#x9;this.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#x9;&#x9;this.setFill(false);&#xA;this.setOutline(false);&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;org.eclipse.draw2d.Ellipse circle0 = new org.eclipse.draw2d.Ellipse();&#xA;&#xA;circle0.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(6)&#xA;, getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(6)&#xA;, getMapMode().DPtoLP(5)&#xA;));&#xA;&#xA;this.add(circle0);&#xA;circle0.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#xA;&#xA;org.eclipse.draw2d.RectangleFigure rectangle1 = new org.eclipse.draw2d.RectangleFigure();&#xA;&#xA;circle0.add(rectangle1);&#xA;rectangle1.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#xA;&#xA;org.eclipse.draw2d.PolylineShape whiteEnvelope2 = new org.eclipse.draw2d.PolylineShape();&#xA;whiteEnvelope2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(0)&#xA;, getMapMode().DPtoLP(0)&#xA;));&#xA;whiteEnvelope2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(4)&#xA;, getMapMode().DPtoLP(4)&#xA;));&#xA;whiteEnvelope2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(4)&#xA;));&#xA;whiteEnvelope2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(9)&#xA;, getMapMode().DPtoLP(0)&#xA;));&#xA;&#xA;rectangle1.add(whiteEnvelope2);&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
+          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class MessageStartEventFigureDescriptor extends org.eclipse.gmf.runtime.lite.svg.SVGFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public MessageStartEventFigureDescriptor() {&#xA;&#x9;&#x9;&#x9;&#x9;this.setURI(&quot;platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/events_48px_start_message.svg&quot;);&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
         <attributes
             xsi:type="gmfgen:ResizeConstraints"/>
         <attributes
             xsi:type="gmfgen:DefaultSizeAttributes"
-            width="20"
-            height="20"/>
+            width="48"
+            height="48"/>
       </viewmap>
       <modelFacet
           modelElementSelector="//@expressionProviders/@providers.0/@expressions.4">
@@ -1069,13 +1097,13 @@
       <viewmap
           xsi:type="gmfgen:InnerClassViewmap"
           className="EndEventFigureDescriptor"
-          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class EndEventFigureDescriptor extends org.eclipse.draw2d.RectangleFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public EndEventFigureDescriptor() {&#xA;&#x9;&#x9;this.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#x9;&#x9;this.setFill(false);&#xA;this.setOutline(false);&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;org.eclipse.draw2d.Ellipse circle0 = new org.eclipse.draw2d.Ellipse();&#xA;circle0.setLineWidth(3);&#xA;&#xA;this.add(circle0);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
+          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class EndEventFigureDescriptor extends org.eclipse.gmf.runtime.lite.svg.SVGFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public EndEventFigureDescriptor() {&#xA;&#x9;&#x9;&#x9;&#x9;this.setURI(&quot;platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/events_48px_end_none.svg&quot;);&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
         <attributes
             xsi:type="gmfgen:ResizeConstraints"/>
         <attributes
             xsi:type="gmfgen:DefaultSizeAttributes"
-            width="20"
-            height="20"/>
+            width="48"
+            height="48"/>
       </viewmap>
       <modelFacet
           modelElementSelector="//@expressionProviders/@providers.0/@expressions.7">
@@ -1112,13 +1140,13 @@
       <viewmap
           xsi:type="gmfgen:InnerClassViewmap"
           className="ExclusiveGatewayFigureDescriptor"
-          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class ExclusiveGatewayFigureDescriptor extends org.eclipse.draw2d.RectangleFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public ExclusiveGatewayFigureDescriptor() {&#xA;&#x9;&#x9;this.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#x9;&#x9;this.setFill(false);&#xA;this.setOutline(false);&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;org.eclipse.draw2d.PolygonShape diamond0 = new org.eclipse.draw2d.PolygonShape();&#xA;diamond0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(15)&#xA;, getMapMode().DPtoLP(0)&#xA;));&#xA;diamond0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(0)&#xA;, getMapMode().DPtoLP(15)&#xA;));&#xA;diamond0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(15)&#xA;, getMapMode().DPtoLP(30)&#xA;));&#xA;diamond0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(30)&#xA;, getMapMode().DPtoLP(15)&#xA;));&#xA;diamond0.setFill(true);&#xA;&#xA;this.add(diamond0);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
+          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class ExclusiveGatewayFigureDescriptor extends org.eclipse.gmf.runtime.lite.svg.SVGFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public ExclusiveGatewayFigureDescriptor() {&#xA;&#x9;&#x9;&#x9;&#x9;this.setURI(&quot;platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/gateways_48px_exclusive.svg&quot;);&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
         <attributes
             xsi:type="gmfgen:ResizeConstraints"/>
         <attributes
             xsi:type="gmfgen:DefaultSizeAttributes"
-            width="31"
-            height="31"/>
+            width="48"
+            height="48"/>
       </viewmap>
       <modelFacet>
         <metaClass
@@ -1154,13 +1182,13 @@
       <viewmap
           xsi:type="gmfgen:InnerClassViewmap"
           className="ParallelGatewayFigureDescriptor"
-          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class ParallelGatewayFigureDescriptor extends org.eclipse.draw2d.RectangleFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public ParallelGatewayFigureDescriptor() {&#xA;&#x9;&#x9;this.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#x9;&#x9;this.setFill(false);&#xA;this.setOutline(false);&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;org.eclipse.draw2d.PolygonShape diamond0 = new org.eclipse.draw2d.PolygonShape();&#xA;diamond0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(15)&#xA;, getMapMode().DPtoLP(0)&#xA;));&#xA;diamond0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(0)&#xA;, getMapMode().DPtoLP(15)&#xA;));&#xA;diamond0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(15)&#xA;, getMapMode().DPtoLP(30)&#xA;));&#xA;diamond0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(30)&#xA;, getMapMode().DPtoLP(15)&#xA;));&#xA;diamond0.setFill(true);&#xA;&#xA;this.add(diamond0);&#xA;&#xA;&#xA;&#xA;org.eclipse.draw2d.PolylineShape vertical0 = new org.eclipse.draw2d.PolylineShape();&#xA;vertical0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(15)&#xA;, getMapMode().DPtoLP(8)&#xA;));&#xA;vertical0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(15)&#xA;, getMapMode().DPtoLP(22)&#xA;));&#xA;&#xA;this.add(vertical0);&#xA;&#xA;&#xA;&#xA;org.eclipse.draw2d.PolylineShape horizontal0 = new org.eclipse.draw2d.PolylineShape();&#xA;horizontal0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(8)&#xA;, getMapMode().DPtoLP(15)&#xA;));&#xA;horizontal0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(22)&#xA;, getMapMode().DPtoLP(15)&#xA;));&#xA;&#xA;this.add(horizontal0);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
+          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class ParallelGatewayFigureDescriptor extends org.eclipse.gmf.runtime.lite.svg.SVGFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public ParallelGatewayFigureDescriptor() {&#xA;&#x9;&#x9;&#x9;&#x9;this.setURI(&quot;platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/gateways_48px_parallel.svg&quot;);&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
         <attributes
             xsi:type="gmfgen:ResizeConstraints"/>
         <attributes
             xsi:type="gmfgen:DefaultSizeAttributes"
-            width="31"
-            height="31"/>
+            width="48"
+            height="48"/>
       </viewmap>
       <modelFacet>
         <metaClass
@@ -1196,13 +1224,13 @@
       <viewmap
           xsi:type="gmfgen:InnerClassViewmap"
           className="MessageEndEventFigureDescriptor"
-          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class MessageEndEventFigureDescriptor extends org.eclipse.draw2d.RectangleFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public MessageEndEventFigureDescriptor() {&#xA;&#x9;&#x9;this.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#x9;&#x9;this.setFill(false);&#xA;this.setOutline(false);&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;org.eclipse.draw2d.Ellipse circle0 = new org.eclipse.draw2d.Ellipse();&#xA;circle0.setLineWidth(3);&#xA;&#xA;circle0.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(6)&#xA;, getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(6)&#xA;, getMapMode().DPtoLP(5)&#xA;));&#xA;&#xA;this.add(circle0);&#xA;circle0.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#xA;&#xA;org.eclipse.draw2d.RectangleFigure rectangle1 = new org.eclipse.draw2d.RectangleFigure();&#xA;&#x9;rectangle1.setBackgroundColor(org.eclipse.draw2d.ColorConstants.lightGray);&#xA;&#xA;circle0.add(rectangle1);&#xA;rectangle1.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#xA;&#xA;org.eclipse.draw2d.PolylineShape blackEnvelope2 = new org.eclipse.draw2d.PolylineShape();&#xA;blackEnvelope2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(0)&#xA;, getMapMode().DPtoLP(0)&#xA;));&#xA;blackEnvelope2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(4)&#xA;, getMapMode().DPtoLP(4)&#xA;));&#xA;blackEnvelope2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(4)&#xA;));&#xA;blackEnvelope2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(9)&#xA;, getMapMode().DPtoLP(0)&#xA;));&#xA;&#x9;blackEnvelope2.setForegroundColor(org.eclipse.draw2d.ColorConstants.white);&#xA;&#xA;rectangle1.add(blackEnvelope2);&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
+          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class MessageEndEventFigureDescriptor extends org.eclipse.gmf.runtime.lite.svg.SVGFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public MessageEndEventFigureDescriptor() {&#xA;&#x9;&#x9;&#x9;&#x9;this.setURI(&quot;platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/events_48px_end_message.svg&quot;);&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
         <attributes
             xsi:type="gmfgen:ResizeConstraints"/>
         <attributes
             xsi:type="gmfgen:DefaultSizeAttributes"
-            width="20"
-            height="20"/>
+            width="48"
+            height="48"/>
       </viewmap>
       <modelFacet
           modelElementSelector="//@expressionProviders/@providers.0/@expressions.11">
@@ -1245,13 +1273,13 @@
       <viewmap
           xsi:type="gmfgen:InnerClassViewmap"
           className="TerminateEndEventFigureDescriptor"
-          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class TerminateEndEventFigureDescriptor extends org.eclipse.draw2d.RectangleFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public TerminateEndEventFigureDescriptor() {&#xA;&#x9;&#x9;this.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#x9;&#x9;this.setFill(false);&#xA;this.setOutline(false);&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;org.eclipse.draw2d.Ellipse circle0 = new org.eclipse.draw2d.Ellipse();&#xA;circle0.setLineWidth(3);&#xA;&#xA;circle0.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(6)&#xA;, getMapMode().DPtoLP(6)&#xA;, getMapMode().DPtoLP(6)&#xA;, getMapMode().DPtoLP(6)&#xA;));&#xA;&#xA;this.add(circle0);&#xA;circle0.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#xA;&#xA;org.eclipse.draw2d.Ellipse circle1 = new org.eclipse.draw2d.Ellipse();&#xA;&#x9;circle1.setBackgroundColor(org.eclipse.draw2d.ColorConstants.lightGray);&#xA;&#xA;circle0.add(circle1);&#xA;&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
+          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class TerminateEndEventFigureDescriptor extends org.eclipse.gmf.runtime.lite.svg.SVGFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public TerminateEndEventFigureDescriptor() {&#xA;&#x9;&#x9;&#x9;&#x9;this.setURI(&quot;platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/events_48px_end_terminate.svg&quot;);&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
         <attributes
             xsi:type="gmfgen:ResizeConstraints"/>
         <attributes
             xsi:type="gmfgen:DefaultSizeAttributes"
-            width="20"
-            height="20"/>
+            width="48"
+            height="48"/>
       </viewmap>
       <modelFacet
           modelElementSelector="//@expressionProviders/@providers.0/@expressions.14">
@@ -1294,11 +1322,13 @@
       <viewmap
           xsi:type="gmfgen:InnerClassViewmap"
           className="MessageCatchIntermediateEventFigureDescriptor"
-          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class MessageCatchIntermediateEventFigureDescriptor extends org.eclipse.draw2d.RectangleFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public MessageCatchIntermediateEventFigureDescriptor() {&#xA;&#x9;&#x9;this.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#x9;&#x9;this.setFill(false);&#xA;this.setOutline(false);&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;org.eclipse.draw2d.Ellipse outerCircle0 = new org.eclipse.draw2d.Ellipse();&#xA;&#xA;outerCircle0.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(2)&#xA;, getMapMode().DPtoLP(2)&#xA;, getMapMode().DPtoLP(2)&#xA;, getMapMode().DPtoLP(2)&#xA;));&#xA;&#xA;this.add(outerCircle0);&#xA;outerCircle0.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#xA;&#xA;org.eclipse.draw2d.Ellipse innerCircle1 = new org.eclipse.draw2d.Ellipse();&#xA;&#xA;innerCircle1.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(4)&#xA;, getMapMode().DPtoLP(3)&#xA;, getMapMode().DPtoLP(4)&#xA;, getMapMode().DPtoLP(3)&#xA;));&#xA;&#xA;outerCircle0.add(innerCircle1);&#xA;innerCircle1.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#xA;&#xA;org.eclipse.draw2d.RectangleFigure rectangle2 = new org.eclipse.draw2d.RectangleFigure();&#xA;&#xA;innerCircle1.add(rectangle2);&#xA;rectangle2.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#xA;&#xA;org.eclipse.draw2d.PolylineShape envelope3 = new org.eclipse.draw2d.PolylineShape();&#xA;envelope3.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(0)&#xA;, getMapMode().DPtoLP(0)&#xA;));&#xA;envelope3.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(4)&#xA;, getMapMode().DPtoLP(4)&#xA;));&#xA;envelope3.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(4)&#xA;));&#xA;envelope3.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(9)&#xA;, getMapMode().DPtoLP(0)&#xA;));&#xA;&#xA;rectangle2.add(envelope3);&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
+          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class MessageCatchIntermediateEventFigureDescriptor extends org.eclipse.gmf.runtime.lite.svg.SVGFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public MessageCatchIntermediateEventFigureDescriptor() {&#xA;&#x9;&#x9;&#x9;&#x9;this.setURI(&quot;platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/events_48px_intermediate_message_catch.svg&quot;);&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
+        <attributes
+            xsi:type="gmfgen:ResizeConstraints"/>
         <attributes
             xsi:type="gmfgen:DefaultSizeAttributes"
-            width="20"
-            height="20"/>
+            width="48"
+            height="48"/>
       </viewmap>
       <modelFacet
           modelElementSelector="//@expressionProviders/@providers.0/@expressions.17">
@@ -1341,13 +1371,13 @@
       <viewmap
           xsi:type="gmfgen:InnerClassViewmap"
           className="MessageThrowIntermediateEventFigureDescriptor"
-          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class MessageThrowIntermediateEventFigureDescriptor extends org.eclipse.draw2d.RectangleFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public MessageThrowIntermediateEventFigureDescriptor() {&#xA;&#x9;&#x9;this.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#x9;&#x9;this.setFill(false);&#xA;this.setOutline(false);&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;org.eclipse.draw2d.Ellipse outerCircle0 = new org.eclipse.draw2d.Ellipse();&#xA;&#xA;outerCircle0.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(2)&#xA;, getMapMode().DPtoLP(2)&#xA;, getMapMode().DPtoLP(2)&#xA;, getMapMode().DPtoLP(2)&#xA;));&#xA;&#xA;this.add(outerCircle0);&#xA;outerCircle0.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#xA;&#xA;org.eclipse.draw2d.Ellipse innerCircle1 = new org.eclipse.draw2d.Ellipse();&#xA;&#xA;innerCircle1.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(4)&#xA;, getMapMode().DPtoLP(3)&#xA;, getMapMode().DPtoLP(4)&#xA;, getMapMode().DPtoLP(3)&#xA;));&#xA;&#xA;outerCircle0.add(innerCircle1);&#xA;innerCircle1.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#xA;&#xA;org.eclipse.draw2d.RectangleFigure rectangle2 = new org.eclipse.draw2d.RectangleFigure();&#xA;&#x9;rectangle2.setBackgroundColor(org.eclipse.draw2d.ColorConstants.lightGray);&#xA;&#xA;innerCircle1.add(rectangle2);&#xA;rectangle2.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#xA;&#xA;org.eclipse.draw2d.PolylineShape envelope3 = new org.eclipse.draw2d.PolylineShape();&#xA;envelope3.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(0)&#xA;, getMapMode().DPtoLP(0)&#xA;));&#xA;envelope3.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(4)&#xA;, getMapMode().DPtoLP(4)&#xA;));&#xA;envelope3.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(4)&#xA;));&#xA;envelope3.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(9)&#xA;, getMapMode().DPtoLP(0)&#xA;));&#xA;&#x9;envelope3.setForegroundColor(org.eclipse.draw2d.ColorConstants.white);&#xA;&#xA;rectangle2.add(envelope3);&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
+          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class MessageThrowIntermediateEventFigureDescriptor extends org.eclipse.gmf.runtime.lite.svg.SVGFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public MessageThrowIntermediateEventFigureDescriptor() {&#xA;&#x9;&#x9;&#x9;&#x9;this.setURI(&quot;platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/events_48px_intermediate_message_throw.svg&quot;);&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
         <attributes
             xsi:type="gmfgen:ResizeConstraints"/>
         <attributes
             xsi:type="gmfgen:DefaultSizeAttributes"
-            width="20"
-            height="20"/>
+            width="48"
+            height="48"/>
       </viewmap>
       <modelFacet
           modelElementSelector="//@expressionProviders/@providers.0/@expressions.20">
@@ -1390,13 +1420,13 @@
       <viewmap
           xsi:type="gmfgen:InnerClassViewmap"
           className="TimerCatchIntermediateEventFigureDescriptor"
-          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class TimerCatchIntermediateEventFigureDescriptor extends org.eclipse.draw2d.RectangleFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public TimerCatchIntermediateEventFigureDescriptor() {&#xA;&#x9;&#x9;this.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#x9;&#x9;this.setFill(false);&#xA;this.setOutline(false);&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;org.eclipse.draw2d.Ellipse outerCircle0 = new org.eclipse.draw2d.Ellipse();&#xA;&#xA;outerCircle0.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(2)&#xA;, getMapMode().DPtoLP(2)&#xA;, getMapMode().DPtoLP(2)&#xA;, getMapMode().DPtoLP(2)&#xA;));&#xA;&#xA;this.add(outerCircle0);&#xA;outerCircle0.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#xA;&#xA;org.eclipse.draw2d.Ellipse innerCircle1 = new org.eclipse.draw2d.Ellipse();&#xA;&#xA;innerCircle1.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(3)&#xA;, getMapMode().DPtoLP(3)&#xA;, getMapMode().DPtoLP(3)&#xA;, getMapMode().DPtoLP(3)&#xA;));&#xA;&#xA;outerCircle0.add(innerCircle1);&#xA;innerCircle1.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#xA;&#xA;org.eclipse.draw2d.Ellipse clock2 = new org.eclipse.draw2d.Ellipse();&#xA;&#xA;innerCircle1.add(clock2);&#xA;&#xA;&#xA;&#xA;org.eclipse.draw2d.PolylineShape twelve2 = new org.eclipse.draw2d.PolylineShape();&#xA;twelve2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(4)&#xA;, getMapMode().DPtoLP(0)&#xA;));&#xA;twelve2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(4)&#xA;, getMapMode().DPtoLP(2)&#xA;));&#xA;&#xA;innerCircle1.add(twelve2);&#xA;&#xA;&#xA;&#xA;org.eclipse.draw2d.PolylineShape three2 = new org.eclipse.draw2d.PolylineShape();&#xA;three2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(7)&#xA;, getMapMode().DPtoLP(4)&#xA;));&#xA;three2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(9)&#xA;, getMapMode().DPtoLP(4)&#xA;));&#xA;&#xA;innerCircle1.add(three2);&#xA;&#xA;&#xA;&#xA;org.eclipse.draw2d.PolylineShape six2 = new org.eclipse.draw2d.PolylineShape();&#xA;six2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(4)&#xA;, getMapMode().DPtoLP(7)&#xA;));&#xA;six2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(4)&#xA;, getMapMode().DPtoLP(9)&#xA;));&#xA;&#xA;innerCircle1.add(six2);&#xA;&#xA;&#xA;&#xA;org.eclipse.draw2d.PolylineShape nine2 = new org.eclipse.draw2d.PolylineShape();&#xA;nine2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(0)&#xA;, getMapMode().DPtoLP(4)&#xA;));&#xA;nine2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(2)&#xA;, getMapMode().DPtoLP(4)&#xA;));&#xA;&#xA;innerCircle1.add(nine2);&#xA;&#xA;&#xA;&#xA;org.eclipse.draw2d.PolylineShape big2 = new org.eclipse.draw2d.PolylineShape();&#xA;big2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(4)&#xA;, getMapMode().DPtoLP(4)&#xA;));&#xA;big2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(6)&#xA;, getMapMode().DPtoLP(1)&#xA;));&#xA;&#xA;innerCircle1.add(big2);&#xA;&#xA;&#xA;&#xA;org.eclipse.draw2d.PolylineShape small2 = new org.eclipse.draw2d.PolylineShape();&#xA;small2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(4)&#xA;, getMapMode().DPtoLP(4)&#xA;));&#xA;small2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(7)&#xA;, getMapMode().DPtoLP(7)&#xA;));&#xA;&#xA;innerCircle1.add(small2);&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
+          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class TimerCatchIntermediateEventFigureDescriptor extends org.eclipse.gmf.runtime.lite.svg.SVGFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public TimerCatchIntermediateEventFigureDescriptor() {&#xA;&#x9;&#x9;&#x9;&#x9;this.setURI(&quot;platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/events_48px_intermediate_timer_catch.svg&quot;);&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
         <attributes
             xsi:type="gmfgen:ResizeConstraints"/>
         <attributes
             xsi:type="gmfgen:DefaultSizeAttributes"
-            width="20"
-            height="20"/>
+            width="48"
+            height="48"/>
       </viewmap>
       <modelFacet
           modelElementSelector="//@expressionProviders/@providers.0/@expressions.23">
@@ -1439,13 +1469,13 @@
       <viewmap
           xsi:type="gmfgen:InnerClassViewmap"
           className="ErrorCatchIntermediateEventFigureDescriptor"
-          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class ErrorCatchIntermediateEventFigureDescriptor extends org.eclipse.draw2d.RectangleFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public ErrorCatchIntermediateEventFigureDescriptor() {&#xA;&#x9;&#x9;this.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#x9;&#x9;this.setFill(false);&#xA;this.setOutline(false);&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;org.eclipse.draw2d.Ellipse outerCircle0 = new org.eclipse.draw2d.Ellipse();&#xA;&#xA;outerCircle0.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(2)&#xA;, getMapMode().DPtoLP(2)&#xA;, getMapMode().DPtoLP(2)&#xA;, getMapMode().DPtoLP(2)&#xA;));&#xA;&#xA;this.add(outerCircle0);&#xA;outerCircle0.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#xA;&#xA;org.eclipse.draw2d.Ellipse innerCircle1 = new org.eclipse.draw2d.Ellipse();&#xA;&#xA;innerCircle1.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(3)&#xA;, getMapMode().DPtoLP(3)&#xA;, getMapMode().DPtoLP(3)&#xA;, getMapMode().DPtoLP(3)&#xA;));&#xA;&#xA;outerCircle0.add(innerCircle1);&#xA;innerCircle1.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#xA;&#xA;org.eclipse.draw2d.PolygonShape flash2 = new org.eclipse.draw2d.PolygonShape();&#xA;flash2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(0)&#xA;, getMapMode().DPtoLP(9)&#xA;));&#xA;flash2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(3)&#xA;, getMapMode().DPtoLP(0)&#xA;));&#xA;flash2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(7)&#xA;, getMapMode().DPtoLP(6)&#xA;));&#xA;flash2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(10)&#xA;, getMapMode().DPtoLP(1)&#xA;));&#xA;flash2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(7)&#xA;, getMapMode().DPtoLP(10)&#xA;));&#xA;flash2.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(3)&#xA;, getMapMode().DPtoLP(3)&#xA;));&#xA;flash2.setFill(true);&#xA;&#xA;innerCircle1.add(flash2);&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
+          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class ErrorCatchIntermediateEventFigureDescriptor extends org.eclipse.gmf.runtime.lite.svg.SVGFigure {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public ErrorCatchIntermediateEventFigureDescriptor() {&#xA;&#x9;&#x9;&#x9;&#x9;this.setURI(&quot;platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/events_48px_intermediate_error_catch.svg&quot;);&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
         <attributes
             xsi:type="gmfgen:ResizeConstraints"/>
         <attributes
             xsi:type="gmfgen:DefaultSizeAttributes"
-            width="20"
-            height="20"/>
+            width="48"
+            height="48"/>
       </viewmap>
       <modelFacet
           modelElementSelector="//@expressionProviders/@providers.0/@expressions.26">
@@ -1553,6 +1583,9 @@
             xsi:type="gmfgen:DefaultSizeAttributes"
             width="120"
             height="20"/>
+        <attributes
+            xsi:type="gmfgen:StyleAttributes"
+            fixedForeground="true"/>
       </viewmap>
       <modelFacet>
         <metaClass
@@ -1614,6 +1647,9 @@
             xsi:type="gmfgen:DefaultSizeAttributes"
             width="240"
             height="240"/>
+        <attributes
+            xsi:type="gmfgen:StyleAttributes"
+            fixedForeground="true"/>
       </viewmap>
       <modelFacet>
         <metaClass
@@ -1654,6 +1690,10 @@
             xsi:type="gmfgen:DefaultSizeAttributes"
             width="80"
             height="40"/>
+        <attributes
+            xsi:type="gmfgen:StyleAttributes"
+            fixedForeground="true"
+            fixedBackground="true"/>
       </viewmap>
       <modelFacet>
         <metaClass
@@ -1707,7 +1747,11 @@
       <viewmap
           xsi:type="gmfgen:InnerClassViewmap"
           className="SequenceFlowFigureDescriptor"
-          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class SequenceFlowFigureDescriptor extends org.eclipse.gmf.runtime.draw2d.ui.figures.PolylineConnectionEx {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public SequenceFlowFigureDescriptor() {&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;setTargetDecoration(createTargetDecoration());&#xA;&#x9;}&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.draw2d.RotatableDecoration createTargetDecoration() {&#xA;&#x9;&#x9;org.eclipse.draw2d.PolygonDecoration df = new org.eclipse.draw2d.PolygonDecoration();&#xA;df.setFill(true);&#xA;org.eclipse.draw2d.geometry.PointList pl = new org.eclipse.draw2d.geometry.PointList();&#xA;pl.addPoint(getMapMode().DPtoLP(0)&#xA;, getMapMode().DPtoLP(0)&#xA;);&#xA;pl.addPoint(getMapMode().DPtoLP(-1)&#xA;, getMapMode().DPtoLP(1)&#xA;);&#xA;pl.addPoint(getMapMode().DPtoLP(-1)&#xA;, getMapMode().DPtoLP(-1)&#xA;);&#xA;pl.addPoint(getMapMode().DPtoLP(0)&#xA;, getMapMode().DPtoLP(0)&#xA;);&#xA;df.setTemplate(pl);&#xA;df.setScale(getMapMode().DPtoLP(7)&#xA;, getMapMode().DPtoLP(3)&#xA;);&#xA;&#x9;&#x9;return df;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;"/>
+          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class SequenceFlowFigureDescriptor extends org.eclipse.gmf.runtime.draw2d.ui.figures.PolylineConnectionEx {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public SequenceFlowFigureDescriptor() {&#xA;&#x9;&#x9;&#xA;&#x9;&#x9;setTargetDecoration(createTargetDecoration());&#xA;&#x9;}&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.draw2d.RotatableDecoration createTargetDecoration() {&#xA;&#x9;&#x9;org.eclipse.draw2d.PolygonDecoration df = new org.eclipse.draw2d.PolygonDecoration();&#xA;df.setFill(true);&#xA;org.eclipse.draw2d.geometry.PointList pl = new org.eclipse.draw2d.geometry.PointList();&#xA;pl.addPoint(getMapMode().DPtoLP(0)&#xA;, getMapMode().DPtoLP(0)&#xA;);&#xA;pl.addPoint(getMapMode().DPtoLP(-1)&#xA;, getMapMode().DPtoLP(1)&#xA;);&#xA;pl.addPoint(getMapMode().DPtoLP(-1)&#xA;, getMapMode().DPtoLP(-1)&#xA;);&#xA;pl.addPoint(getMapMode().DPtoLP(0)&#xA;, getMapMode().DPtoLP(0)&#xA;);&#xA;df.setTemplate(pl);&#xA;df.setScale(getMapMode().DPtoLP(7)&#xA;, getMapMode().DPtoLP(3)&#xA;);&#xA;&#x9;&#x9;return df;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
+        <attributes
+            xsi:type="gmfgen:StyleAttributes"
+            fixedForeground="true"/>
+      </viewmap>
       <modelFacet
           xsi:type="gmfgen:TypeLinkModelFacet">
         <metaClass
@@ -1746,7 +1790,11 @@
       <viewmap
           xsi:type="gmfgen:InnerClassViewmap"
           className="AssociationFigureDescriptor"
-          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class AssociationFigureDescriptor extends org.eclipse.gmf.runtime.draw2d.ui.figures.PolylineConnectionEx {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public AssociationFigureDescriptor() {&#xA;&#x9;&#x9;this.setLineStyle(org.eclipse.draw2d.Graphics.LINE_DOT);&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;"/>
+          classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class AssociationFigureDescriptor extends org.eclipse.gmf.runtime.draw2d.ui.figures.PolylineConnectionEx {&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public AssociationFigureDescriptor() {&#xA;&#x9;&#x9;this.setLineStyle(org.eclipse.draw2d.Graphics.LINE_DOT);&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;}&#xA;&#xA;">
+        <attributes
+            xsi:type="gmfgen:StyleAttributes"
+            fixedForeground="true"/>
+      </viewmap>
       <modelFacet
           xsi:type="gmfgen:TypeLinkModelFacet">
         <metaClass
@@ -1780,18 +1828,26 @@
           <entries
               xsi:type="gmfgen:ToolEntry"
               title="User Task"
+              largeIconPath="/org.jboss.tools.bpmn2.process.diagram/icons/obj32/tasks_32px_user.png"
+              smallIconPath="/org.jboss.tools.bpmn2.process.diagram/icons/obj16/tasks_16px_user.png"
               genNodes="//@diagram/@topLevelNodes.0 //@diagram/@childNodes.1"/>
           <entries
               xsi:type="gmfgen:ToolEntry"
               title="Service Task"
+              largeIconPath="/org.jboss.tools.bpmn2.process.diagram/icons/obj32/tasks_32px_service.png"
+              smallIconPath="/org.jboss.tools.bpmn2.process.diagram/icons/obj16/tasks_16px_service.png"
               genNodes="//@diagram/@topLevelNodes.1 //@diagram/@childNodes.2"/>
           <entries
               xsi:type="gmfgen:ToolEntry"
               title="Script Task"
+              largeIconPath="/org.jboss.tools.bpmn2.process.diagram/icons/obj32/tasks_32px_service.png"
+              smallIconPath="/org.jboss.tools.bpmn2.process.diagram/icons/obj16/tasks_16px_script.png"
               genNodes="//@diagram/@childNodes.15 //@diagram/@topLevelNodes.16"/>
           <entries
               xsi:type="gmfgen:ToolEntry"
               title="Sub-Process"
+              largeIconPath="/org.jboss.tools.bpmn2.process.diagram/icons/obj32/activity_32px_subprocess.png"
+              smallIconPath="/org.jboss.tools.bpmn2.process.diagram/icons/obj16/activity_16px_subprocess.png"
               genNodes="//@diagram/@topLevelNodes.15 //@diagram/@childNodes.0"/>
         </entries>
         <entries
@@ -1802,10 +1858,14 @@
           <entries
               xsi:type="gmfgen:ToolEntry"
               title="Exclusive"
+              largeIconPath="/org.jboss.tools.bpmn2.process.diagram/icons/obj32/gateways_32px_exclusive.png"
+              smallIconPath="/org.jboss.tools.bpmn2.process.diagram/icons/obj16/gateways_16px_exclusive.png"
               genNodes="//@diagram/@topLevelNodes.5 //@diagram/@childNodes.6"/>
           <entries
               xsi:type="gmfgen:ToolEntry"
               title="Parallel"
+              largeIconPath="/org.jboss.tools.bpmn2.process.diagram/icons/obj32/gateways_32px_parallel.png"
+              smallIconPath="/org.jboss.tools.bpmn2.process.diagram/icons/obj16/gateways_16px_parallel.png"
               genNodes="//@diagram/@topLevelNodes.6 //@diagram/@childNodes.7"/>
         </entries>
         <entries
@@ -1818,10 +1878,14 @@
             <entries
                 xsi:type="gmfgen:ToolEntry"
                 title="Start"
+                largeIconPath="/org.jboss.tools.bpmn2.process.diagram/icons/obj32/events_32px_start_none.png"
+                smallIconPath="/org.jboss.tools.bpmn2.process.diagram/icons/obj16/events_16px_start_none.png"
                 genNodes="//@diagram/@topLevelNodes.2 //@diagram/@childNodes.3"/>
             <entries
                 xsi:type="gmfgen:ToolEntry"
                 title="Message Start"
+                largeIconPath="/org.jboss.tools.bpmn2.process.diagram/icons/obj32/events_32px_start_message.png"
+                smallIconPath="/org.jboss.tools.bpmn2.process.diagram/icons/obj16/events_16px_start_message.png"
                 genNodes="//@diagram/@topLevelNodes.3 //@diagram/@childNodes.4"/>
           </entries>
           <entries
@@ -1831,19 +1895,27 @@
             <entries
                 xsi:type="gmfgen:ToolEntry"
                 title="Message Catch"
+                largeIconPath="/org.jboss.tools.bpmn2.process.diagram/icons/obj32/events_32px_intermediate_message_catch.png"
+                smallIconPath="/org.jboss.tools.bpmn2.process.diagram/icons/obj16/events_16px_intermediate_message_catch.png"
                 genNodes="//@diagram/@topLevelNodes.9 //@diagram/@childNodes.10"/>
             <entries
                 xsi:type="gmfgen:ToolEntry"
                 title="Message Throw"
+                largeIconPath="/org.jboss.tools.bpmn2.process.diagram/icons/obj32/events_32px_intermediate_message_throw.png"
+                smallIconPath="/org.jboss.tools.bpmn2.process.diagram/icons/obj16/events_16px_intermediate_message_throw.png"
                 genNodes="//@diagram/@topLevelNodes.10 //@diagram/@childNodes.11"/>
             <entries
                 xsi:type="gmfgen:ToolEntry"
                 title="Timer Catch"
                 description=""
+                largeIconPath="/org.jboss.tools.bpmn2.process.diagram/icons/obj32/events_32px_intermediate_timer_catch.png"
+                smallIconPath="/org.jboss.tools.bpmn2.process.diagram/icons/obj16/events_16px_intermediate_timer_catch.png"
                 genNodes="//@diagram/@topLevelNodes.11 //@diagram/@childNodes.12"/>
             <entries
                 xsi:type="gmfgen:ToolEntry"
                 title="Error Catch"
+                largeIconPath="/org.jboss.tools.bpmn2.process.diagram/icons/obj32/events_32px_intermediate_error_catch.png"
+                smallIconPath="/org.jboss.tools.bpmn2.process.diagram/icons/obj16/events_16px_intermediate_error_catch.png"
                 genNodes="//@diagram/@topLevelNodes.12"/>
           </entries>
           <entries
@@ -1853,14 +1925,20 @@
             <entries
                 xsi:type="gmfgen:ToolEntry"
                 title="End"
+                largeIconPath="/org.jboss.tools.bpmn2.process.diagram/icons/obj32/events_32px_end_none.png"
+                smallIconPath="/org.jboss.tools.bpmn2.process.diagram/icons/obj16/events_16px_end_none.png"
                 genNodes="//@diagram/@topLevelNodes.4 //@diagram/@childNodes.5"/>
             <entries
                 xsi:type="gmfgen:ToolEntry"
                 title="Message End"
+                largeIconPath="/org.jboss.tools.bpmn2.process.diagram/icons/obj32/events_32px_end_message.png"
+                smallIconPath="/org.jboss.tools.bpmn2.process.diagram/icons/obj16/events_16px_end_message.png"
                 genNodes="//@diagram/@topLevelNodes.7 //@diagram/@childNodes.8"/>
             <entries
                 xsi:type="gmfgen:ToolEntry"
                 title="Terminate"
+                largeIconPath="/org.jboss.tools.bpmn2.process.diagram/icons/obj32/events_32px_end_terminate.png"
+                smallIconPath="/org.jboss.tools.bpmn2.process.diagram/icons/obj16/events_16px_end_terminate.png"
                 genNodes="//@diagram/@topLevelNodes.8 //@diagram/@childNodes.9"/>
           </entries>
         </entries>
@@ -1899,31 +1977,34 @@
     </palette>
     <preferencePages
         xsi:type="gmfgen:GenStandardPreferencePage"
-        iD="org.eclipse.bpmn2.diagram.general"
+        iD="org.jboss.tools.bpmn2.process.diagram.general"
         name="bpmn2 Diagram">
       <children
           xsi:type="gmfgen:GenStandardPreferencePage"
-          iD="org.eclipse.bpmn2.diagram.appearance"
+          iD="org.jboss.tools.bpmn2.process.diagram.appearance"
           name="Appearance"
           kind="Appearance"/>
       <children
           xsi:type="gmfgen:GenStandardPreferencePage"
-          iD="org.eclipse.bpmn2.diagram.connections"
+          iD="org.jboss.tools.bpmn2.process.diagram.connections"
           name="Connections"
           kind="Connections"/>
       <children
           xsi:type="gmfgen:GenStandardPreferencePage"
-          iD="org.eclipse.bpmn2.diagram.printing"
+          iD="org.jboss.tools.bpmn2.process.diagram.printing"
           name="Printing"
           kind="Printing"/>
       <children
           xsi:type="gmfgen:GenStandardPreferencePage"
-          iD="org.eclipse.bpmn2.diagram.rulersAndGrid"
+          iD="org.jboss.tools.bpmn2.process.diagram.rulersAndGrid"
           name="Rulers And Grid"
           kind="RulersAndGrid"/>
     </preferencePages>
   </diagram>
-  <plugin>
+  <plugin
+      iD="org.jboss.tools.bpmn2.process.diagram"
+      name="Bpmn2 Process Plugin"
+      activatorClassName="Bpmn2ProcessDiagramEditorPlugin">
     <requiredPlugins>org.eclipse.draw2d</requiredPlugins>
     <requiredPlugins>org.eclipse.gmf.runtime.draw2d.ui</requiredPlugins>
   </plugin>

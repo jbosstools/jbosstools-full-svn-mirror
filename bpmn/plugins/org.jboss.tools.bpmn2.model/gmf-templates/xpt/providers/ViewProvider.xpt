@@ -251,7 +251,7 @@ public class «notationViewProviderClassName»«EXPAND extendsList»«EXPAND imp
 «IF viewmap.canUseShapeStyle()-»
 		org.eclipse.gmf.runtime.notation.Shape node = org.jboss.tools.bpmn2.gmf.notation.BpmnNotationFactory.INSTANCE.createShape();
 «ELSE-»
-		org.eclipse.gmf.runtime.notation.Node node = org.eclipse.gmf.runtime.notation.NotationFactory.eINSTANCE.createNode();
+		org.eclipse.gmf.runtime.notation.Shape node = org.jboss.tools.bpmn2.gmf.notation.BpmnNotationFactory.INSTANCE.createShape();
 		node.getStyles().add(org.eclipse.gmf.runtime.notation.NotationFactory.eINSTANCE.createDescriptionStyle());«REM»FIXME Contionally add this style, whether toolsmith needs Notes or not«ENDREM»
 		«EXPAND xpt::diagram::views::Utils::addFontLineFillStylesConditionally('node.getStyles()') FOR viewmap-»
 «ENDIF-»
