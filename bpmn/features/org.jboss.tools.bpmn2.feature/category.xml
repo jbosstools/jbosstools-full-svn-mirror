@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/org.eclipse.bpmn2.feature_1.0.0.qualifier.jar" id="org.eclipse.bpmn2.feature" version="1.0.0.qualifier">
+      <category name="org.jboss.tools.bpmn2"/>
+   </feature>
+   <category-def name="org.jboss.tools.bpmn2" label="BPMN 2 Tools"/>
+</site>
