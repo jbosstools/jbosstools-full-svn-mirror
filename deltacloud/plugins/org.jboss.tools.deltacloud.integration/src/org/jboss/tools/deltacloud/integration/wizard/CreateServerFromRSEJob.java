@@ -84,7 +84,6 @@ public class CreateServerFromRSEJob extends ChainedJob {
 	}
 	
 	protected IStatus run(IProgressMonitor monitor) {
-		System.out.println(imageId);
 		try {
 			IServer result = null;
 			if( type.equals(CREATE_DEPLOY_ONLY_SERVER) ) {
