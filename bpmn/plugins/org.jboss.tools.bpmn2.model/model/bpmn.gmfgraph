@@ -8,27 +8,57 @@
     <descriptors
         name="TaskFigureDescriptor">
       <actualFigure
-          xsi:type="gmfgraph:RoundedRectangle"
-          name="TaskFigure">
+          xsi:type="gmfgraph:Rectangle"
+          name="TaskFigure"
+          outline="false"
+          fill="false">
         <layout
             xsi:type="gmfgraph:StackLayout"/>
-        <minimumSize
-            dx="80"
-            dy="40"/>
-        <preferredSize
-            dx="80"
-            dy="40"/>
-        <insets
-            top="5"
-            left="5"
-            bottom="5"
-            right="5"/>
         <children
-            xsi:type="gmfgraph:Label"
-            name="Name"/>
+            xsi:type="gmfgraph:RoundedRectangle"
+            name=""
+            lineWidth="2"
+            cornerWidth="15"
+            cornerHeight="15">
+          <layout
+              xsi:type="gmfgraph:StackLayout"/>
+          <foregroundColor
+              xsi:type="gmfgraph:RGBColor"
+              green="100"
+              blue="185"/>
+          <backgroundColor
+              xsi:type="gmfgraph:RGBColor"
+              red="215"
+              green="235"
+              blue="255"/>
+          <insets
+              top="5"
+              left="5"
+              bottom="5"
+              right="5"/>
+          <children
+              xsi:type="gmfgraph:Label"
+              name="icon"
+              text="icon"/>
+          <children
+              xsi:type="gmfgraph:Rectangle"
+              outline="false"
+              fill="false">
+            <layout
+                xsi:type="gmfgraph:CustomLayout"
+                qualifiedClassName="org.jboss.tools.bpmn2.gmf.layout.CenteredLabelLayout"/>
+            <children
+                xsi:type="gmfgraph:Label"
+                name="Name">
+              <font
+                  xsi:type="gmfgraph:BasicFont"
+                  height="14"/>
+            </children>
+          </children>
+        </children>
       </actualFigure>
       <accessors
-          figure="//@figures.0/@descriptors.0/@actualFigure/@children.0"/>
+          figure="//@figures.0/@descriptors.0/@actualFigure/@children.0/@children.1/@children.0"/>
     </descriptors>
     <descriptors
         name="SequenceFlowFigureDescriptor">
@@ -246,6 +276,9 @@
       name="ScriptTask"
       figure="TaskFigureDescriptor"/>
   <nodes
+      name="BusinessRuleTask"
+      figure="TaskFigureDescriptor"/>
+  <nodes
       name="StartEvent"
       figure="StartEventFigureDescriptor"
       resizeConstraint="NONE">
@@ -391,15 +424,6 @@
       name="Association"
       figure="AssociationFigureDescriptor"/>
   <labels
-      name="RoundedRectangleLabel"
-      figure="TaskFigureDescriptor"
-      accessor="//@figures.0/@descriptors.0/@accessors.0"/>
-  <labels
-      name="Element Name"
-      figure="TextAnnotationFigureDescriptor"
-      elementIcon="false"
-      accessor="//@figures.0/@descriptors.17/@accessors.0"/>
-  <labels
       name="DataObjectLabel"
       figure="DataObjectLabelFigureDescriptor"
       elementIcon="false"/>
@@ -408,4 +432,9 @@
       figure="TextAnnotationFigureDescriptor"
       elementIcon="false"
       accessor="//@figures.0/@descriptors.17/@accessors.0"/>
+  <labels
+      name="TaskFigureNameLabel"
+      figure="TaskFigureDescriptor"
+      elementIcon="false"
+      accessor="//@figures.0/@descriptors.0/@accessors.0"/>
 </gmfgraph:Canvas>

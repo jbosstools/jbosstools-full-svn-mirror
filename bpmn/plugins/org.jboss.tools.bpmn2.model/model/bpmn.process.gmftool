@@ -50,6 +50,17 @@
         </tools>
         <tools
             xsi:type="gmftool:CreationTool"
+            title="Business Rule Task"
+            description="">
+          <smallIcon
+              xsi:type="gmftool:BundleImage"
+              path="icons/obj16/tasks_16px_business_rule.png"/>
+          <largeIcon
+              xsi:type="gmftool:BundleImage"
+              path="icons/obj32/tasks_32px_business_rule.png"/>
+        </tools>
+        <tools
+            xsi:type="gmftool:CreationTool"
             title="Sub-Process">
           <smallIcon
               xsi:type="gmftool:BundleImage"

@@ -26,7 +26,7 @@
       <labelMappings
           xsi:type="gmfmap:FeatureLabelMapping">
         <diagramLabel
-            href="bpmn.gmfgraph#RoundedRectangleLabel"/>
+            href="bpmn.gmfgraph#TaskFigureNameLabel"/>
         <features
             href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElement/name"/>
       </labelMappings>
@@ -35,6 +35,38 @@
           href="bpmn.process.gmftool#//@palette/@tools.0/@tools.0/@tools.0"/>
       <diagramNode
           href="bpmn.gmfgraph#UserTask"/>
+    </ownedChild>
+  </nodes>
+  <nodes>
+    <containmentFeature
+        href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
+    <ownedChild>
+      <domainMetaElement
+          href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//ScriptTask"/>
+      <domainInitializer
+          xsi:type="gmfmap:FeatureSeqInitializer">
+        <initializers
+            xsi:type="gmfmap:FeatureValueSpec">
+          <feature
+              xsi:type="ecore:EAttribute"
+              href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//BaseElement/id"/>
+          <value
+              body="EcoreUtil.generateUUID()"
+              language="java"/>
+        </initializers>
+      </domainInitializer>
+      <labelMappings
+          xsi:type="gmfmap:FeatureLabelMapping">
+        <diagramLabel
+            href="bpmn.gmfgraph#TaskFigureNameLabel"/>
+        <features
+            href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElement/name"/>
+      </labelMappings>
+      <tool
+          xsi:type="gmftool:CreationTool"
+          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.0/@tools.2"/>
+      <diagramNode
+          href="bpmn.gmfgraph#ScriptTask"/>
     </ownedChild>
   </nodes>
   <nodes>
@@ -58,7 +90,7 @@
       <labelMappings
           xsi:type="gmfmap:FeatureLabelMapping">
         <diagramLabel
-            href="bpmn.gmfgraph#RoundedRectangleLabel"/>
+            href="bpmn.gmfgraph#TaskFigureNameLabel"/>
         <features
             href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElement/name"/>
       </labelMappings>
@@ -67,6 +99,38 @@
           href="bpmn.process.gmftool#//@palette/@tools.0/@tools.0/@tools.1"/>
       <diagramNode
           href="bpmn.gmfgraph#ServiceTask"/>
+    </ownedChild>
+  </nodes>
+  <nodes>
+    <containmentFeature
+        href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
+    <ownedChild>
+      <domainMetaElement
+          href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//BusinessRuleTask"/>
+      <domainInitializer
+          xsi:type="gmfmap:FeatureSeqInitializer">
+        <initializers
+            xsi:type="gmfmap:FeatureValueSpec">
+          <feature
+              xsi:type="ecore:EAttribute"
+              href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//BaseElement/id"/>
+          <value
+              body="EcoreUtil.generateUUID()"
+              language="java"/>
+        </initializers>
+      </domainInitializer>
+      <labelMappings
+          xsi:type="gmfmap:FeatureLabelMapping">
+        <diagramLabel
+            href="bpmn.gmfgraph#TaskFigureNameLabel"/>
+        <features
+            href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElement/name"/>
+      </labelMappings>
+      <tool
+          xsi:type="gmftool:CreationTool"
+          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.0/@tools.3"/>
+      <diagramNode
+          href="bpmn.gmfgraph#BusinessRuleTask"/>
     </ownedChild>
   </nodes>
   <nodes>
@@ -139,6 +203,154 @@
         href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
     <ownedChild>
       <domainMetaElement
+          href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//IntermediateCatchEvent"/>
+      <domainSpecialization
+          body="getEventDefinitions().size() == 1 &amp;&amp; getEventDefinitions().get(0) instanceof MessageEventDefinition"
+          language="java"/>
+      <domainInitializer
+          xsi:type="gmfmap:FeatureSeqInitializer">
+        <initializers
+            xsi:type="gmfmap:FeatureValueSpec">
+          <feature
+              xsi:type="ecore:EAttribute"
+              href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//BaseElement/id"/>
+          <value
+              body="EcoreUtil.generateUUID()"
+              language="java"/>
+        </initializers>
+        <initializers
+            xsi:type="gmfmap:FeatureValueSpec">
+          <feature
+              xsi:type="ecore:EReference"
+              href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//CatchEvent/eventDefinitions"/>
+          <value
+              body="getEventDefinitions().add(Bpmn2Factory.INSTANCE.createMessageEventDefinition());"
+              language="java"/>
+        </initializers>
+      </domainInitializer>
+      <tool
+          xsi:type="gmftool:CreationTool"
+          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.2/@tools.1/@tools.0"/>
+      <diagramNode
+          href="bpmn.gmfgraph#MessageCatchIntermediateEvent"/>
+    </ownedChild>
+  </nodes>
+  <nodes>
+    <containmentFeature
+        href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
+    <ownedChild>
+      <domainMetaElement
+          href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//IntermediateCatchEvent"/>
+      <domainSpecialization
+          body="getEventDefinitions().size() == 1 &amp;&amp; getEventDefinitions().get(0) instanceof TimerEventDefinition"
+          language="java"/>
+      <domainInitializer
+          xsi:type="gmfmap:FeatureSeqInitializer">
+        <initializers
+            xsi:type="gmfmap:FeatureValueSpec">
+          <feature
+              xsi:type="ecore:EAttribute"
+              href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//BaseElement/id"/>
+          <value
+              body="EcoreUtil.generateUUID()"
+              language="java"/>
+        </initializers>
+        <initializers
+            xsi:type="gmfmap:FeatureValueSpec">
+          <feature
+              xsi:type="ecore:EReference"
+              href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//CatchEvent/eventDefinitions"/>
+          <value
+              body="getEventDefinitions().add(Bpmn2Factory.INSTANCE.createTimerEventDefinition());"
+              language="java"/>
+        </initializers>
+      </domainInitializer>
+      <tool
+          xsi:type="gmftool:CreationTool"
+          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.2/@tools.1/@tools.2"/>
+      <diagramNode
+          href="bpmn.gmfgraph#TimerCatchIntermediateEvent"/>
+    </ownedChild>
+  </nodes>
+  <nodes>
+    <containmentFeature
+        href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
+    <ownedChild>
+      <domainMetaElement
+          href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//IntermediateCatchEvent"/>
+      <domainSpecialization
+          body="getEventDefinitions().size() == 1 &amp;&amp; getEventDefinitions().get(0) instanceof ErrorEventDefinition"
+          language="java"/>
+      <domainInitializer
+          xsi:type="gmfmap:FeatureSeqInitializer">
+        <initializers
+            xsi:type="gmfmap:FeatureValueSpec">
+          <feature
+              xsi:type="ecore:EAttribute"
+              href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//BaseElement/id"/>
+          <value
+              body="EcoreUtil.generateUUID()"
+              language="java"/>
+        </initializers>
+        <initializers
+            xsi:type="gmfmap:FeatureValueSpec">
+          <feature
+              xsi:type="ecore:EReference"
+              href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//CatchEvent/eventDefinitions"/>
+          <value
+              body="getEventDefinitions().add(Bpmn2Factory.INSTANCE.createErrorEventDefinition());"
+              language="java"/>
+        </initializers>
+      </domainInitializer>
+      <tool
+          xsi:type="gmftool:CreationTool"
+          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.2/@tools.1/@tools.3"/>
+      <diagramNode
+          href="bpmn.gmfgraph#ErrorCatchIntermediateEvent"/>
+    </ownedChild>
+  </nodes>
+  <nodes>
+    <containmentFeature
+        href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
+    <ownedChild>
+      <domainMetaElement
+          href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//IntermediateThrowEvent"/>
+      <domainSpecialization
+          body="getEventDefinitions().size() == 1 &amp;&amp; getEventDefinitions().get(0) instanceof MessageEventDefinition"
+          language="java"/>
+      <domainInitializer
+          xsi:type="gmfmap:FeatureSeqInitializer">
+        <initializers
+            xsi:type="gmfmap:FeatureValueSpec">
+          <feature
+              xsi:type="ecore:EAttribute"
+              href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//BaseElement/id"/>
+          <value
+              body="EcoreUtil.generateUUID()"
+              language="java"/>
+        </initializers>
+        <initializers
+            xsi:type="gmfmap:FeatureValueSpec">
+          <feature
+              xsi:type="ecore:EReference"
+              href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//ThrowEvent/eventDefinitions"/>
+          <value
+              body="getEventDefinitions().add(Bpmn2Factory.INSTANCE.createTerminateEventDefinition());"
+              language="java"/>
+        </initializers>
+      </domainInitializer>
+      <tool
+          xsi:type="gmftool:CreationTool"
+          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.2/@tools.1/@tools.1"/>
+      <diagramNode
+          href="bpmn.gmfgraph#MessageThrowIntermediateEvent"/>
+    </ownedChild>
+  </nodes>
+  <nodes>
+    <containmentFeature
+        href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
+    <ownedChild>
+      <domainMetaElement
           href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//EndEvent"/>
       <domainSpecialization
           body="getEventDefinitions().isEmpty()"
@@ -160,56 +372,6 @@
           href="bpmn.process.gmftool#//@palette/@tools.0/@tools.2/@tools.2/@tools.0"/>
       <diagramNode
           href="bpmn.gmfgraph#EndEvent"/>
-    </ownedChild>
-  </nodes>
-  <nodes>
-    <containmentFeature
-        href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
-    <ownedChild>
-      <domainMetaElement
-          href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//ExclusiveGateway"/>
-      <domainInitializer
-          xsi:type="gmfmap:FeatureSeqInitializer">
-        <initializers
-            xsi:type="gmfmap:FeatureValueSpec">
-          <feature
-              xsi:type="ecore:EAttribute"
-              href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//BaseElement/id"/>
-          <value
-              body="EcoreUtil.generateUUID()"
-              language="java"/>
-        </initializers>
-      </domainInitializer>
-      <tool
-          xsi:type="gmftool:CreationTool"
-          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.1/@tools.0"/>
-      <diagramNode
-          href="bpmn.gmfgraph#ExclusiveGateway"/>
-    </ownedChild>
-  </nodes>
-  <nodes>
-    <containmentFeature
-        href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
-    <ownedChild>
-      <domainMetaElement
-          href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//ParallelGateway"/>
-      <domainInitializer
-          xsi:type="gmfmap:FeatureSeqInitializer">
-        <initializers
-            xsi:type="gmfmap:FeatureValueSpec">
-          <feature
-              xsi:type="ecore:EAttribute"
-              href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//BaseElement/id"/>
-          <value
-              body="EcoreUtil.generateUUID()"
-              language="java"/>
-        </initializers>
-      </domainInitializer>
-      <tool
-          xsi:type="gmftool:CreationTool"
-          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.1/@tools.1"/>
-      <diagramNode
-          href="bpmn.gmfgraph#ParallelGateway"/>
     </ownedChild>
   </nodes>
   <nodes>
@@ -291,10 +453,7 @@
         href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
     <ownedChild>
       <domainMetaElement
-          href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//IntermediateCatchEvent"/>
-      <domainSpecialization
-          body="getEventDefinitions().size() == 1 &amp;&amp; getEventDefinitions().get(0) instanceof MessageEventDefinition"
-          language="java"/>
+          href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//ExclusiveGateway"/>
       <domainInitializer
           xsi:type="gmfmap:FeatureSeqInitializer">
         <initializers
@@ -306,21 +465,12 @@
               body="EcoreUtil.generateUUID()"
               language="java"/>
         </initializers>
-        <initializers
-            xsi:type="gmfmap:FeatureValueSpec">
-          <feature
-              xsi:type="ecore:EReference"
-              href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//CatchEvent/eventDefinitions"/>
-          <value
-              body="getEventDefinitions().add(Bpmn2Factory.INSTANCE.createMessageEventDefinition());"
-              language="java"/>
-        </initializers>
       </domainInitializer>
       <tool
           xsi:type="gmftool:CreationTool"
-          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.2/@tools.1/@tools.0"/>
+          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.1/@tools.0"/>
       <diagramNode
-          href="bpmn.gmfgraph#MessageCatchIntermediateEvent"/>
+          href="bpmn.gmfgraph#ExclusiveGateway"/>
     </ownedChild>
   </nodes>
   <nodes>
@@ -328,10 +478,7 @@
         href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
     <ownedChild>
       <domainMetaElement
-          href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//IntermediateThrowEvent"/>
-      <domainSpecialization
-          body="getEventDefinitions().size() == 1 &amp;&amp; getEventDefinitions().get(0) instanceof MessageEventDefinition"
-          language="java"/>
+          href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//ParallelGateway"/>
       <domainInitializer
           xsi:type="gmfmap:FeatureSeqInitializer">
         <initializers
@@ -343,21 +490,12 @@
               body="EcoreUtil.generateUUID()"
               language="java"/>
         </initializers>
-        <initializers
-            xsi:type="gmfmap:FeatureValueSpec">
-          <feature
-              xsi:type="ecore:EReference"
-              href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//ThrowEvent/eventDefinitions"/>
-          <value
-              body="getEventDefinitions().add(Bpmn2Factory.INSTANCE.createTerminateEventDefinition());"
-              language="java"/>
-        </initializers>
       </domainInitializer>
       <tool
           xsi:type="gmftool:CreationTool"
-          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.2/@tools.1/@tools.1"/>
+          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.1/@tools.1"/>
       <diagramNode
-          href="bpmn.gmfgraph#MessageThrowIntermediateEvent"/>
+          href="bpmn.gmfgraph#ParallelGateway"/>
     </ownedChild>
   </nodes>
   <nodes>
@@ -365,10 +503,7 @@
         href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
     <ownedChild>
       <domainMetaElement
-          href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//IntermediateCatchEvent"/>
-      <domainSpecialization
-          body="getEventDefinitions().size() == 1 &amp;&amp; getEventDefinitions().get(0) instanceof TimerEventDefinition"
-          language="java"/>
+          href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//SubProcess"/>
       <domainInitializer
           xsi:type="gmfmap:FeatureSeqInitializer">
         <initializers
@@ -380,58 +515,102 @@
               body="EcoreUtil.generateUUID()"
               language="java"/>
         </initializers>
-        <initializers
-            xsi:type="gmfmap:FeatureValueSpec">
-          <feature
-              xsi:type="ecore:EReference"
-              href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//CatchEvent/eventDefinitions"/>
-          <value
-              body="getEventDefinitions().add(Bpmn2Factory.INSTANCE.createTimerEventDefinition());"
-              language="java"/>
-        </initializers>
       </domainInitializer>
       <tool
           xsi:type="gmftool:CreationTool"
-          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.2/@tools.1/@tools.2"/>
+          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.0/@tools.4"/>
       <diagramNode
-          href="bpmn.gmfgraph#TimerCatchIntermediateEvent"/>
-    </ownedChild>
-  </nodes>
-  <nodes>
-    <containmentFeature
-        href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
-    <ownedChild>
-      <domainMetaElement
-          href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//IntermediateCatchEvent"/>
-      <domainSpecialization
-          body="getEventDefinitions().size() == 1 &amp;&amp; getEventDefinitions().get(0) instanceof ErrorEventDefinition"
-          language="java"/>
-      <domainInitializer
-          xsi:type="gmfmap:FeatureSeqInitializer">
-        <initializers
-            xsi:type="gmfmap:FeatureValueSpec">
-          <feature
-              xsi:type="ecore:EAttribute"
-              href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//BaseElement/id"/>
-          <value
-              body="EcoreUtil.generateUUID()"
-              language="java"/>
-        </initializers>
-        <initializers
-            xsi:type="gmfmap:FeatureValueSpec">
-          <feature
-              xsi:type="ecore:EReference"
-              href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//CatchEvent/eventDefinitions"/>
-          <value
-              body="getEventDefinitions().add(Bpmn2Factory.INSTANCE.createErrorEventDefinition());"
-              language="java"/>
-        </initializers>
-      </domainInitializer>
-      <tool
-          xsi:type="gmftool:CreationTool"
-          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.2/@tools.1/@tools.3"/>
-      <diagramNode
-          href="bpmn.gmfgraph#ErrorCatchIntermediateEvent"/>
+          href="bpmn.gmfgraph#ExpandedSubprocess"/>
+      <children
+          referencedChild="//@nodes.0/@ownedChild">
+        <containmentFeature
+            href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
+      </children>
+      <children
+          referencedChild="//@nodes.1/@ownedChild">
+        <containmentFeature
+            href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
+      </children>
+      <children
+          referencedChild="//@nodes.2/@ownedChild">
+        <containmentFeature
+            href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
+      </children>
+      <children
+          referencedChild="//@nodes.3/@ownedChild">
+        <containmentFeature
+            href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
+      </children>
+      <children
+          referencedChild="//@nodes.4/@ownedChild">
+        <containmentFeature
+            href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
+      </children>
+      <children
+          referencedChild="//@nodes.5/@ownedChild">
+        <containmentFeature
+            href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
+      </children>
+      <children
+          referencedChild="//@nodes.6/@ownedChild">
+        <containmentFeature
+            href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
+      </children>
+      <children
+          referencedChild="//@nodes.7/@ownedChild">
+        <containmentFeature
+            href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
+      </children>
+      <children
+          referencedChild="//@nodes.8/@ownedChild">
+        <containmentFeature
+            href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
+      </children>
+      <children
+          referencedChild="//@nodes.9/@ownedChild">
+        <containmentFeature
+            href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
+      </children>
+      <children
+          referencedChild="//@nodes.10/@ownedChild">
+        <containmentFeature
+            href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
+      </children>
+      <children
+          referencedChild="//@nodes.11/@ownedChild">
+        <containmentFeature
+            href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
+      </children>
+      <children
+          referencedChild="//@nodes.12/@ownedChild">
+        <containmentFeature
+            href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
+      </children>
+      <children
+          referencedChild="//@nodes.13/@ownedChild">
+        <containmentFeature
+            href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
+      </children>
+      <children
+          referencedChild="//@nodes.14/@ownedChild">
+        <containmentFeature
+            href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
+      </children>
+      <children
+          referencedChild="//@nodes.15/@ownedChild">
+        <containmentFeature
+            href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
+      </children>
+      <children
+          referencedChild="//@nodes.16/@ownedChild">
+        <containmentFeature
+            href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
+      </children>
+      <children
+          referencedChild="//@nodes.17/@ownedChild">
+        <containmentFeature
+            href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//SubProcess/artifacts"/>
+      </children>
     </ownedChild>
   </nodes>
   <nodes>
@@ -499,148 +678,6 @@
           href="bpmn.process.gmftool#//@palette/@tools.0/@tools.3/@tools.1"/>
       <diagramNode
           href="bpmn.gmfgraph#TextAnnotation"/>
-    </ownedChild>
-  </nodes>
-  <nodes>
-    <containmentFeature
-        href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
-    <ownedChild>
-      <domainMetaElement
-          href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//SubProcess"/>
-      <domainInitializer
-          xsi:type="gmfmap:FeatureSeqInitializer">
-        <initializers
-            xsi:type="gmfmap:FeatureValueSpec">
-          <feature
-              xsi:type="ecore:EAttribute"
-              href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//BaseElement/id"/>
-          <value
-              body="EcoreUtil.generateUUID()"
-              language="java"/>
-        </initializers>
-      </domainInitializer>
-      <tool
-          xsi:type="gmftool:CreationTool"
-          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.0/@tools.3"/>
-      <diagramNode
-          href="bpmn.gmfgraph#ExpandedSubprocess"/>
-      <children
-          referencedChild="//@nodes.15/@ownedChild">
-        <containmentFeature
-            href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
-      </children>
-      <children
-          referencedChild="//@nodes.0/@ownedChild">
-        <containmentFeature
-            href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
-      </children>
-      <children
-          referencedChild="//@nodes.1/@ownedChild">
-        <containmentFeature
-            href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
-      </children>
-      <children
-          referencedChild="//@nodes.2/@ownedChild">
-        <containmentFeature
-            href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
-      </children>
-      <children
-          referencedChild="//@nodes.3/@ownedChild">
-        <containmentFeature
-            href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
-      </children>
-      <children
-          referencedChild="//@nodes.4/@ownedChild">
-        <containmentFeature
-            href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
-      </children>
-      <children
-          referencedChild="//@nodes.5/@ownedChild">
-        <containmentFeature
-            href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
-      </children>
-      <children
-          referencedChild="//@nodes.6/@ownedChild">
-        <containmentFeature
-            href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
-      </children>
-      <children
-          referencedChild="//@nodes.7/@ownedChild">
-        <containmentFeature
-            href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
-      </children>
-      <children
-          referencedChild="//@nodes.8/@ownedChild">
-        <containmentFeature
-            href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
-      </children>
-      <children
-          referencedChild="//@nodes.9/@ownedChild">
-        <containmentFeature
-            href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
-      </children>
-      <children
-          referencedChild="//@nodes.10/@ownedChild">
-        <containmentFeature
-            href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
-      </children>
-      <children
-          referencedChild="//@nodes.11/@ownedChild">
-        <containmentFeature
-            href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
-      </children>
-      <children
-          referencedChild="//@nodes.9/@ownedChild">
-        <containmentFeature
-            href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
-      </children>
-      <children
-          referencedChild="//@nodes.13/@ownedChild">
-        <containmentFeature
-            href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
-      </children>
-      <children
-          referencedChild="//@nodes.14/@ownedChild">
-        <containmentFeature
-            href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//SubProcess/artifacts"/>
-      </children>
-      <children
-          referencedChild="//@nodes.16/@ownedChild">
-        <containmentFeature
-            href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
-      </children>
-    </ownedChild>
-  </nodes>
-  <nodes>
-    <containmentFeature
-        href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElementsContainer/flowElements"/>
-    <ownedChild>
-      <domainMetaElement
-          href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//ScriptTask"/>
-      <domainInitializer
-          xsi:type="gmfmap:FeatureSeqInitializer">
-        <initializers
-            xsi:type="gmfmap:FeatureValueSpec">
-          <feature
-              xsi:type="ecore:EAttribute"
-              href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//BaseElement/id"/>
-          <value
-              body="EcoreUtil.generateUUID()"
-              language="java"/>
-        </initializers>
-      </domainInitializer>
-      <labelMappings
-          xsi:type="gmfmap:FeatureLabelMapping">
-        <diagramLabel
-            href="bpmn.gmfgraph#RoundedRectangleLabel"/>
-        <features
-            href="../../org.eclipse.bpmn2/model/BPMN20.ecore#//FlowElement/name"/>
-      </labelMappings>
-      <tool
-          xsi:type="gmftool:CreationTool"
-          href="bpmn.process.gmftool#//@palette/@tools.0/@tools.0/@tools.2"/>
-      <diagramNode
-          href="bpmn.gmfgraph#ScriptTask"/>
     </ownedChild>
   </nodes>
   <links>
