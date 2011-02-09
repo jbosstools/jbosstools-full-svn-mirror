@@ -80,7 +80,7 @@ public class Bpmn2VisualIDRegistry {
 	/**
 	 * @generated
 	 */
-	private static final String DEBUG_KEY = "org.eclipse.bpmn2.diagram/debug/visualID"; //$NON-NLS-1$
+	private static final String DEBUG_KEY = "org.jboss.tools.bpmn2.process.diagram/debug/visualID"; //$NON-NLS-1$
 
 	/**
 	 * @generated
@@ -121,7 +121,7 @@ public class Bpmn2VisualIDRegistry {
 		} catch (NumberFormatException e) {
 			if (Boolean.TRUE.toString().equalsIgnoreCase(
 					Platform.getDebugOption(DEBUG_KEY))) {
-				Bpmn2DiagramEditorPlugin.getInstance().logError(
+				Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 						"Unable to parse view type as a visualID number: "
 								+ type);
 			}

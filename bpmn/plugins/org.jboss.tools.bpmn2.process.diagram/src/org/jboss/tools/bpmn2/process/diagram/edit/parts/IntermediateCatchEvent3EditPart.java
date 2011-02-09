@@ -27,6 +27,7 @@ import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.emf.type.core.IElementType;
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
+import org.eclipse.gmf.runtime.lite.svg.SVGFigure;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.graphics.Color;
 import org.jboss.tools.bpmn2.process.diagram.edit.policies.IntermediateCatchEvent3ItemSemanticEditPolicy;
@@ -115,7 +116,7 @@ public class IntermediateCatchEvent3EditPart extends ShapeNodeEditPart {
 	 * @generated
 	 */
 	protected NodeFigure createNodePlate() {
-		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(20, 20);
+		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(48, 48);
 		return result;
 	}
 
@@ -568,59 +569,13 @@ public class IntermediateCatchEvent3EditPart extends ShapeNodeEditPart {
 	/**
 	 * @generated
 	 */
-	public class ErrorCatchIntermediateEventFigureDescriptor extends
-			RectangleFigure {
+	public class ErrorCatchIntermediateEventFigureDescriptor extends SVGFigure {
 
 		/**
 		 * @generated
 		 */
 		public ErrorCatchIntermediateEventFigureDescriptor() {
-			this.setLayoutManager(new StackLayout());
-			this.setFill(false);
-			this.setOutline(false);
-			createContents();
-		}
-
-		/**
-		 * @generated
-		 */
-		private void createContents() {
-
-			Ellipse outerCircle0 = new Ellipse();
-
-			outerCircle0.setBorder(new MarginBorder(getMapMode().DPtoLP(2),
-					getMapMode().DPtoLP(2), getMapMode().DPtoLP(2),
-					getMapMode().DPtoLP(2)));
-
-			this.add(outerCircle0);
-			outerCircle0.setLayoutManager(new StackLayout());
-
-			Ellipse innerCircle1 = new Ellipse();
-
-			innerCircle1.setBorder(new MarginBorder(getMapMode().DPtoLP(3),
-					getMapMode().DPtoLP(3), getMapMode().DPtoLP(3),
-					getMapMode().DPtoLP(3)));
-
-			outerCircle0.add(innerCircle1);
-			innerCircle1.setLayoutManager(new StackLayout());
-
-			PolygonShape flash2 = new PolygonShape();
-			flash2.addPoint(new Point(getMapMode().DPtoLP(0), getMapMode()
-					.DPtoLP(9)));
-			flash2.addPoint(new Point(getMapMode().DPtoLP(3), getMapMode()
-					.DPtoLP(0)));
-			flash2.addPoint(new Point(getMapMode().DPtoLP(7), getMapMode()
-					.DPtoLP(6)));
-			flash2.addPoint(new Point(getMapMode().DPtoLP(10), getMapMode()
-					.DPtoLP(1)));
-			flash2.addPoint(new Point(getMapMode().DPtoLP(7), getMapMode()
-					.DPtoLP(10)));
-			flash2.addPoint(new Point(getMapMode().DPtoLP(3), getMapMode()
-					.DPtoLP(3)));
-			flash2.setFill(true);
-
-			innerCircle1.add(flash2);
-
+			this.setURI("platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/events_48px_intermediate_error_catch.svg");
 		}
 
 	}

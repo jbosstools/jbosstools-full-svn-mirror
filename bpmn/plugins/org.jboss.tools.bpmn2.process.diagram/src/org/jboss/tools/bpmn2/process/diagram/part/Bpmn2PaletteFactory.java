@@ -190,9 +190,10 @@ public class Bpmn2PaletteFactory {
 		NodeToolEntry entry = new NodeToolEntry(
 				Messages.UserTask1CreationTool_title, null, types);
 		entry.setId("createUserTask1CreationTool"); //$NON-NLS-1$
-		entry.setSmallIcon(Bpmn2ElementTypes
-				.getImageDescriptor(Bpmn2ElementTypes.UserTask_2001));
-		entry.setLargeIcon(entry.getSmallIcon());
+		entry.setSmallIcon(Bpmn2ProcessDiagramEditorPlugin
+				.findImageDescriptor("/org.jboss.tools.bpmn2.process.diagram/icons/obj16/tasks_16px_user.png")); //$NON-NLS-1$
+		entry.setLargeIcon(Bpmn2ProcessDiagramEditorPlugin
+				.findImageDescriptor("/org.jboss.tools.bpmn2.process.diagram/icons/obj32/tasks_32px_user.png")); //$NON-NLS-1$
 		return entry;
 	}
 
@@ -206,9 +207,10 @@ public class Bpmn2PaletteFactory {
 		NodeToolEntry entry = new NodeToolEntry(
 				Messages.ServiceTask2CreationTool_title, null, types);
 		entry.setId("createServiceTask2CreationTool"); //$NON-NLS-1$
-		entry.setSmallIcon(Bpmn2ElementTypes
-				.getImageDescriptor(Bpmn2ElementTypes.ServiceTask_2002));
-		entry.setLargeIcon(entry.getSmallIcon());
+		entry.setSmallIcon(Bpmn2ProcessDiagramEditorPlugin
+				.findImageDescriptor("/org.jboss.tools.bpmn2.process.diagram/icons/obj16/tasks_16px_service.png")); //$NON-NLS-1$
+		entry.setLargeIcon(Bpmn2ProcessDiagramEditorPlugin
+				.findImageDescriptor("/org.jboss.tools.bpmn2.process.diagram/icons/obj32/tasks_32px_service.png")); //$NON-NLS-1$
 		return entry;
 	}
 
@@ -222,9 +224,10 @@ public class Bpmn2PaletteFactory {
 		NodeToolEntry entry = new NodeToolEntry(
 				Messages.ScriptTask3CreationTool_title, null, types);
 		entry.setId("createScriptTask3CreationTool"); //$NON-NLS-1$
-		entry.setSmallIcon(Bpmn2ElementTypes
-				.getImageDescriptor(Bpmn2ElementTypes.ScriptTask_3016));
-		entry.setLargeIcon(entry.getSmallIcon());
+		entry.setSmallIcon(Bpmn2ProcessDiagramEditorPlugin
+				.findImageDescriptor("/org.jboss.tools.bpmn2.process.diagram/icons/obj16/tasks_16px_script.png")); //$NON-NLS-1$
+		entry.setLargeIcon(Bpmn2ProcessDiagramEditorPlugin
+				.findImageDescriptor("/org.jboss.tools.bpmn2.process.diagram/icons/obj32/tasks_32px_service.png")); //$NON-NLS-1$
 		return entry;
 	}
 
@@ -238,9 +241,10 @@ public class Bpmn2PaletteFactory {
 		NodeToolEntry entry = new NodeToolEntry(
 				Messages.SubProcess4CreationTool_title, null, types);
 		entry.setId("createSubProcess4CreationTool"); //$NON-NLS-1$
-		entry.setSmallIcon(Bpmn2ElementTypes
-				.getImageDescriptor(Bpmn2ElementTypes.SubProcess_2016));
-		entry.setLargeIcon(entry.getSmallIcon());
+		entry.setSmallIcon(Bpmn2ProcessDiagramEditorPlugin
+				.findImageDescriptor("/org.jboss.tools.bpmn2.process.diagram/icons/obj16/activity_16px_subprocess.png")); //$NON-NLS-1$
+		entry.setLargeIcon(Bpmn2ProcessDiagramEditorPlugin
+				.findImageDescriptor("/org.jboss.tools.bpmn2.process.diagram/icons/obj32/activity_32px_subprocess.png")); //$NON-NLS-1$
 		return entry;
 	}
 
@@ -286,9 +290,10 @@ public class Bpmn2PaletteFactory {
 		NodeToolEntry entry = new NodeToolEntry(
 				Messages.Exclusive1CreationTool_title, null, types);
 		entry.setId("createExclusive1CreationTool"); //$NON-NLS-1$
-		entry.setSmallIcon(Bpmn2ElementTypes
-				.getImageDescriptor(Bpmn2ElementTypes.ExclusiveGateway_2005));
-		entry.setLargeIcon(entry.getSmallIcon());
+		entry.setSmallIcon(Bpmn2ProcessDiagramEditorPlugin
+				.findImageDescriptor("/org.jboss.tools.bpmn2.process.diagram/icons/obj16/gateways_16px_exclusive.png")); //$NON-NLS-1$
+		entry.setLargeIcon(Bpmn2ProcessDiagramEditorPlugin
+				.findImageDescriptor("/org.jboss.tools.bpmn2.process.diagram/icons/obj32/gateways_32px_exclusive.png")); //$NON-NLS-1$
 		return entry;
 	}
 
@@ -302,9 +307,10 @@ public class Bpmn2PaletteFactory {
 		NodeToolEntry entry = new NodeToolEntry(
 				Messages.Parallel2CreationTool_title, null, types);
 		entry.setId("createParallel2CreationTool"); //$NON-NLS-1$
-		entry.setSmallIcon(Bpmn2ElementTypes
-				.getImageDescriptor(Bpmn2ElementTypes.ParallelGateway_2006));
-		entry.setLargeIcon(entry.getSmallIcon());
+		entry.setSmallIcon(Bpmn2ProcessDiagramEditorPlugin
+				.findImageDescriptor("/org.jboss.tools.bpmn2.process.diagram/icons/obj16/gateways_16px_parallel.png")); //$NON-NLS-1$
+		entry.setLargeIcon(Bpmn2ProcessDiagramEditorPlugin
+				.findImageDescriptor("/org.jboss.tools.bpmn2.process.diagram/icons/obj32/gateways_32px_parallel.png")); //$NON-NLS-1$
 		return entry;
 	}
 
@@ -318,9 +324,10 @@ public class Bpmn2PaletteFactory {
 		NodeToolEntry entry = new NodeToolEntry(
 				Messages.Start1CreationTool_title, null, types);
 		entry.setId("createStart1CreationTool"); //$NON-NLS-1$
-		entry.setSmallIcon(Bpmn2ElementTypes
-				.getImageDescriptor(Bpmn2ElementTypes.StartEvent_2003));
-		entry.setLargeIcon(entry.getSmallIcon());
+		entry.setSmallIcon(Bpmn2ProcessDiagramEditorPlugin
+				.findImageDescriptor("/org.jboss.tools.bpmn2.process.diagram/icons/obj16/events_16px_start_none.png")); //$NON-NLS-1$
+		entry.setLargeIcon(Bpmn2ProcessDiagramEditorPlugin
+				.findImageDescriptor("/org.jboss.tools.bpmn2.process.diagram/icons/obj32/events_32px_start_none.png")); //$NON-NLS-1$
 		return entry;
 	}
 
@@ -334,9 +341,10 @@ public class Bpmn2PaletteFactory {
 		NodeToolEntry entry = new NodeToolEntry(
 				Messages.MessageStart2CreationTool_title, null, types);
 		entry.setId("createMessageStart2CreationTool"); //$NON-NLS-1$
-		entry.setSmallIcon(Bpmn2ElementTypes
-				.getImageDescriptor(Bpmn2ElementTypes.StartEvent_2007));
-		entry.setLargeIcon(entry.getSmallIcon());
+		entry.setSmallIcon(Bpmn2ProcessDiagramEditorPlugin
+				.findImageDescriptor("/org.jboss.tools.bpmn2.process.diagram/icons/obj16/events_16px_start_message.png")); //$NON-NLS-1$
+		entry.setLargeIcon(Bpmn2ProcessDiagramEditorPlugin
+				.findImageDescriptor("/org.jboss.tools.bpmn2.process.diagram/icons/obj32/events_32px_start_message.png")); //$NON-NLS-1$
 		return entry;
 	}
 
@@ -350,9 +358,10 @@ public class Bpmn2PaletteFactory {
 		NodeToolEntry entry = new NodeToolEntry(
 				Messages.MessageCatch1CreationTool_title, null, types);
 		entry.setId("createMessageCatch1CreationTool"); //$NON-NLS-1$
-		entry.setSmallIcon(Bpmn2ElementTypes
-				.getImageDescriptor(Bpmn2ElementTypes.IntermediateCatchEvent_2010));
-		entry.setLargeIcon(entry.getSmallIcon());
+		entry.setSmallIcon(Bpmn2ProcessDiagramEditorPlugin
+				.findImageDescriptor("/org.jboss.tools.bpmn2.process.diagram/icons/obj16/events_16px_intermediate_message_catch.png")); //$NON-NLS-1$
+		entry.setLargeIcon(Bpmn2ProcessDiagramEditorPlugin
+				.findImageDescriptor("/org.jboss.tools.bpmn2.process.diagram/icons/obj32/events_32px_intermediate_message_catch.png")); //$NON-NLS-1$
 		return entry;
 	}
 
@@ -366,9 +375,10 @@ public class Bpmn2PaletteFactory {
 		NodeToolEntry entry = new NodeToolEntry(
 				Messages.MessageThrow2CreationTool_title, null, types);
 		entry.setId("createMessageThrow2CreationTool"); //$NON-NLS-1$
-		entry.setSmallIcon(Bpmn2ElementTypes
-				.getImageDescriptor(Bpmn2ElementTypes.IntermediateThrowEvent_2011));
-		entry.setLargeIcon(entry.getSmallIcon());
+		entry.setSmallIcon(Bpmn2ProcessDiagramEditorPlugin
+				.findImageDescriptor("/org.jboss.tools.bpmn2.process.diagram/icons/obj16/events_16px_intermediate_message_throw.png")); //$NON-NLS-1$
+		entry.setLargeIcon(Bpmn2ProcessDiagramEditorPlugin
+				.findImageDescriptor("/org.jboss.tools.bpmn2.process.diagram/icons/obj32/events_32px_intermediate_message_throw.png")); //$NON-NLS-1$
 		return entry;
 	}
 
@@ -383,9 +393,10 @@ public class Bpmn2PaletteFactory {
 				Messages.TimerCatch3CreationTool_title,
 				Messages.TimerCatch3CreationTool_desc, types);
 		entry.setId("createTimerCatch3CreationTool"); //$NON-NLS-1$
-		entry.setSmallIcon(Bpmn2ElementTypes
-				.getImageDescriptor(Bpmn2ElementTypes.IntermediateCatchEvent_2012));
-		entry.setLargeIcon(entry.getSmallIcon());
+		entry.setSmallIcon(Bpmn2ProcessDiagramEditorPlugin
+				.findImageDescriptor("/org.jboss.tools.bpmn2.process.diagram/icons/obj16/events_16px_intermediate_timer_catch.png")); //$NON-NLS-1$
+		entry.setLargeIcon(Bpmn2ProcessDiagramEditorPlugin
+				.findImageDescriptor("/org.jboss.tools.bpmn2.process.diagram/icons/obj32/events_32px_intermediate_timer_catch.png")); //$NON-NLS-1$
 		return entry;
 	}
 
@@ -399,9 +410,10 @@ public class Bpmn2PaletteFactory {
 				Collections
 						.singletonList(Bpmn2ElementTypes.IntermediateCatchEvent_2013));
 		entry.setId("createErrorCatch4CreationTool"); //$NON-NLS-1$
-		entry.setSmallIcon(Bpmn2ElementTypes
-				.getImageDescriptor(Bpmn2ElementTypes.IntermediateCatchEvent_2013));
-		entry.setLargeIcon(entry.getSmallIcon());
+		entry.setSmallIcon(Bpmn2ProcessDiagramEditorPlugin
+				.findImageDescriptor("/org.jboss.tools.bpmn2.process.diagram/icons/obj16/events_16px_intermediate_error_catch.png")); //$NON-NLS-1$
+		entry.setLargeIcon(Bpmn2ProcessDiagramEditorPlugin
+				.findImageDescriptor("/org.jboss.tools.bpmn2.process.diagram/icons/obj32/events_32px_intermediate_error_catch.png")); //$NON-NLS-1$
 		return entry;
 	}
 
@@ -415,9 +427,10 @@ public class Bpmn2PaletteFactory {
 		NodeToolEntry entry = new NodeToolEntry(
 				Messages.End1CreationTool_title, null, types);
 		entry.setId("createEnd1CreationTool"); //$NON-NLS-1$
-		entry.setSmallIcon(Bpmn2ElementTypes
-				.getImageDescriptor(Bpmn2ElementTypes.EndEvent_2004));
-		entry.setLargeIcon(entry.getSmallIcon());
+		entry.setSmallIcon(Bpmn2ProcessDiagramEditorPlugin
+				.findImageDescriptor("/org.jboss.tools.bpmn2.process.diagram/icons/obj16/events_16px_end_none.png")); //$NON-NLS-1$
+		entry.setLargeIcon(Bpmn2ProcessDiagramEditorPlugin
+				.findImageDescriptor("/org.jboss.tools.bpmn2.process.diagram/icons/obj32/events_32px_end_none.png")); //$NON-NLS-1$
 		return entry;
 	}
 
@@ -431,9 +444,10 @@ public class Bpmn2PaletteFactory {
 		NodeToolEntry entry = new NodeToolEntry(
 				Messages.MessageEnd2CreationTool_title, null, types);
 		entry.setId("createMessageEnd2CreationTool"); //$NON-NLS-1$
-		entry.setSmallIcon(Bpmn2ElementTypes
-				.getImageDescriptor(Bpmn2ElementTypes.EndEvent_2008));
-		entry.setLargeIcon(entry.getSmallIcon());
+		entry.setSmallIcon(Bpmn2ProcessDiagramEditorPlugin
+				.findImageDescriptor("/org.jboss.tools.bpmn2.process.diagram/icons/obj16/events_16px_end_message.png")); //$NON-NLS-1$
+		entry.setLargeIcon(Bpmn2ProcessDiagramEditorPlugin
+				.findImageDescriptor("/org.jboss.tools.bpmn2.process.diagram/icons/obj32/events_32px_end_message.png")); //$NON-NLS-1$
 		return entry;
 	}
 
@@ -447,9 +461,10 @@ public class Bpmn2PaletteFactory {
 		NodeToolEntry entry = new NodeToolEntry(
 				Messages.Terminate3CreationTool_title, null, types);
 		entry.setId("createTerminate3CreationTool"); //$NON-NLS-1$
-		entry.setSmallIcon(Bpmn2ElementTypes
-				.getImageDescriptor(Bpmn2ElementTypes.EndEvent_2009));
-		entry.setLargeIcon(entry.getSmallIcon());
+		entry.setSmallIcon(Bpmn2ProcessDiagramEditorPlugin
+				.findImageDescriptor("/org.jboss.tools.bpmn2.process.diagram/icons/obj16/events_16px_end_terminate.png")); //$NON-NLS-1$
+		entry.setLargeIcon(Bpmn2ProcessDiagramEditorPlugin
+				.findImageDescriptor("/org.jboss.tools.bpmn2.process.diagram/icons/obj32/events_32px_end_terminate.png")); //$NON-NLS-1$
 		return entry;
 	}
 

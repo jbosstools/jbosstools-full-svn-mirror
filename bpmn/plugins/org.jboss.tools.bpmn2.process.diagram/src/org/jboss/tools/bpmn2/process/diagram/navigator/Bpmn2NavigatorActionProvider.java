@@ -24,6 +24,7 @@ import org.eclipse.ui.part.FileEditorInput;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ProcessEditPart;
 import org.jboss.tools.bpmn2.process.diagram.part.Bpmn2DiagramEditor;
 import org.jboss.tools.bpmn2.process.diagram.part.Bpmn2DiagramEditorPlugin;
+import org.jboss.tools.bpmn2.process.diagram.part.Bpmn2ProcessDiagramEditorPlugin;
 import org.jboss.tools.bpmn2.process.diagram.part.Bpmn2VisualIDRegistry;
 import org.jboss.tools.bpmn2.process.diagram.part.Messages;
 
@@ -145,7 +146,7 @@ public class Bpmn2NavigatorActionProvider extends CommonActionProvider {
 			try {
 				page.openEditor(editorInput, Bpmn2DiagramEditor.ID);
 			} catch (PartInitException e) {
-				Bpmn2DiagramEditorPlugin.getInstance().logError(
+				Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 						"Exception while openning diagram", e); //$NON-NLS-1$
 			}
 		}

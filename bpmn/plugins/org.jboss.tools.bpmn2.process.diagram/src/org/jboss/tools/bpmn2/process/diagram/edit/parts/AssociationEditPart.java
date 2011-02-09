@@ -1,5 +1,6 @@
 package org.jboss.tools.bpmn2.process.diagram.edit.parts;
 
+import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Connection;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.PolylineShape;

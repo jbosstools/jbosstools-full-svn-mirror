@@ -92,14 +92,14 @@ public class Bpmn2DiagramEditor extends DiagramDocumentEditor implements
 	 * @generated
 	 */
 	protected PreferencesHint getPreferencesHint() {
-		return Bpmn2DiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT;
+		return Bpmn2ProcessDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT;
 	}
 
 	/**
 	 * @generated
 	 */
 	public String getContributorId() {
-		return Bpmn2DiagramEditorPlugin.ID;
+		return Bpmn2ProcessDiagramEditorPlugin.ID;
 	}
 
 	/**
@@ -122,14 +122,15 @@ public class Bpmn2DiagramEditor extends DiagramDocumentEditor implements
 		}
 		return super.getAdapter(type);
 	}
-	
+
 	/**
 	 * @generated
 	 */
 	protected IDocumentProvider getDocumentProvider(IEditorInput input) {
 		if (input instanceof IFileEditorInput
 				|| input instanceof URIEditorInput) {
-			return Bpmn2DiagramEditorPlugin.getInstance().getDocumentProvider();
+			return Bpmn2ProcessDiagramEditorPlugin.getInstance()
+					.getDocumentProvider();
 		}
 		return super.getDocumentProvider(input);
 	}
@@ -152,7 +153,7 @@ public class Bpmn2DiagramEditor extends DiagramDocumentEditor implements
 	protected void setDocumentProvider(IEditorInput input) {
 		if (input instanceof IFileEditorInput
 				|| input instanceof URIEditorInput) {
-			setDocumentProvider(Bpmn2DiagramEditorPlugin.getInstance()
+			setDocumentProvider(Bpmn2ProcessDiagramEditorPlugin.getInstance()
 					.getDocumentProvider());
 		} else {
 			super.setDocumentProvider(input);
@@ -297,8 +298,9 @@ public class Bpmn2DiagramEditor extends DiagramDocumentEditor implements
 		getSite().registerContextMenu(ActionIds.DIAGRAM_EDITOR_CONTEXT_MENU,
 				provider, getDiagramGraphicalViewer());
 	}
-	
+
 	private FormToolkit formToolkit;
+
 	public FormToolkit getFormToolkit() {
 		if (formToolkit == null) {
 			formToolkit = new FormToolkit(getSite().getShell().getDisplay());

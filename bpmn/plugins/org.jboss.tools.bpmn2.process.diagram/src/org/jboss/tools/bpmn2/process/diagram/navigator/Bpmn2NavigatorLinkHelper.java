@@ -22,6 +22,7 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.navigator.ILinkHelper;
 import org.eclipse.ui.part.FileEditorInput;
 import org.jboss.tools.bpmn2.process.diagram.part.Bpmn2DiagramEditorPlugin;
+import org.jboss.tools.bpmn2.process.diagram.part.Bpmn2ProcessDiagramEditorPlugin;
 
 /**
  * @generated
@@ -53,8 +54,9 @@ public class Bpmn2NavigatorLinkHelper implements ILinkHelper {
 	 * @generated
 	 */
 	public IStructuredSelection findSelection(IEditorInput anInput) {
-		IDiagramDocument document = Bpmn2DiagramEditorPlugin.getInstance()
-				.getDocumentProvider().getDiagramDocument(anInput);
+		IDiagramDocument document = Bpmn2ProcessDiagramEditorPlugin
+				.getInstance().getDocumentProvider()
+				.getDiagramDocument(anInput);
 		if (document == null) {
 			return StructuredSelection.EMPTY;
 		}

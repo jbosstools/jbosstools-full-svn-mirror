@@ -3,6 +3,7 @@ package org.jboss.tools.bpmn2.process.diagram.preferences;
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.jboss.tools.bpmn2.process.diagram.part.Bpmn2DiagramEditorPlugin;
+import org.jboss.tools.bpmn2.process.diagram.part.Bpmn2ProcessDiagramEditorPlugin;
 
 /**
  * @generated
@@ -26,6 +27,7 @@ public class DiagramPreferenceInitializer extends AbstractPreferenceInitializer 
 	 * @generated
 	 */
 	protected IPreferenceStore getPreferenceStore() {
-		return Bpmn2DiagramEditorPlugin.getInstance().getPreferenceStore();
+		return Bpmn2ProcessDiagramEditorPlugin.getInstance()
+				.getPreferenceStore();
 	}
 }

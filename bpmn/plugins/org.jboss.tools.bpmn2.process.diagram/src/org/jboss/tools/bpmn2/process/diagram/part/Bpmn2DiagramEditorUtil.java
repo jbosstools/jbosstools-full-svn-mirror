@@ -110,7 +110,7 @@ public class Bpmn2DiagramEditorUtil {
 		try {
 			file.setCharset("UTF-8", new NullProgressMonitor()); //$NON-NLS-1$
 		} catch (CoreException e) {
-			Bpmn2DiagramEditorPlugin.getInstance().logError(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 					"Unable to set charset for file " + file.getFullPath(), e); //$NON-NLS-1$
 		}
 	}
@@ -149,7 +149,7 @@ public class Bpmn2DiagramEditorUtil {
 	 * @generated
 	 */
 	public static void runWizard(Shell shell, Wizard wizard, String settingsKey) {
-		IDialogSettings pluginDialogSettings = Bpmn2DiagramEditorPlugin
+		IDialogSettings pluginDialogSettings = Bpmn2ProcessDiagramEditorPlugin
 				.getInstance().getDialogSettings();
 		IDialogSettings wizardDialogSettings = pluginDialogSettings
 				.getSection(settingsKey);

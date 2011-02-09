@@ -27,6 +27,7 @@ import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.emf.type.core.IElementType;
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
+import org.eclipse.gmf.runtime.lite.svg.SVGFigure;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.graphics.Color;
 import org.jboss.tools.bpmn2.process.diagram.edit.policies.IntermediateCatchEvent2ItemSemanticEditPolicy;
@@ -115,7 +116,7 @@ public class IntermediateCatchEvent2EditPart extends ShapeNodeEditPart {
 	 * @generated
 	 */
 	protected NodeFigure createNodePlate() {
-		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(20, 20);
+		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(48, 48);
 		return result;
 	}
 
@@ -568,94 +569,13 @@ public class IntermediateCatchEvent2EditPart extends ShapeNodeEditPart {
 	/**
 	 * @generated
 	 */
-	public class TimerCatchIntermediateEventFigureDescriptor extends
-			RectangleFigure {
+	public class TimerCatchIntermediateEventFigureDescriptor extends SVGFigure {
 
 		/**
 		 * @generated
 		 */
 		public TimerCatchIntermediateEventFigureDescriptor() {
-			this.setLayoutManager(new StackLayout());
-			this.setFill(false);
-			this.setOutline(false);
-			createContents();
-		}
-
-		/**
-		 * @generated
-		 */
-		private void createContents() {
-
-			Ellipse outerCircle0 = new Ellipse();
-
-			outerCircle0.setBorder(new MarginBorder(getMapMode().DPtoLP(2),
-					getMapMode().DPtoLP(2), getMapMode().DPtoLP(2),
-					getMapMode().DPtoLP(2)));
-
-			this.add(outerCircle0);
-			outerCircle0.setLayoutManager(new StackLayout());
-
-			Ellipse innerCircle1 = new Ellipse();
-
-			innerCircle1.setBorder(new MarginBorder(getMapMode().DPtoLP(3),
-					getMapMode().DPtoLP(3), getMapMode().DPtoLP(3),
-					getMapMode().DPtoLP(3)));
-
-			outerCircle0.add(innerCircle1);
-			innerCircle1.setLayoutManager(new StackLayout());
-
-			Ellipse clock2 = new Ellipse();
-
-			innerCircle1.add(clock2);
-
-			PolylineShape twelve2 = new PolylineShape();
-			twelve2.addPoint(new Point(getMapMode().DPtoLP(4), getMapMode()
-					.DPtoLP(0)));
-			twelve2.addPoint(new Point(getMapMode().DPtoLP(4), getMapMode()
-					.DPtoLP(2)));
-
-			innerCircle1.add(twelve2);
-
-			PolylineShape three2 = new PolylineShape();
-			three2.addPoint(new Point(getMapMode().DPtoLP(7), getMapMode()
-					.DPtoLP(4)));
-			three2.addPoint(new Point(getMapMode().DPtoLP(9), getMapMode()
-					.DPtoLP(4)));
-
-			innerCircle1.add(three2);
-
-			PolylineShape six2 = new PolylineShape();
-			six2.addPoint(new Point(getMapMode().DPtoLP(4), getMapMode()
-					.DPtoLP(7)));
-			six2.addPoint(new Point(getMapMode().DPtoLP(4), getMapMode()
-					.DPtoLP(9)));
-
-			innerCircle1.add(six2);
-
-			PolylineShape nine2 = new PolylineShape();
-			nine2.addPoint(new Point(getMapMode().DPtoLP(0), getMapMode()
-					.DPtoLP(4)));
-			nine2.addPoint(new Point(getMapMode().DPtoLP(2), getMapMode()
-					.DPtoLP(4)));
-
-			innerCircle1.add(nine2);
-
-			PolylineShape big2 = new PolylineShape();
-			big2.addPoint(new Point(getMapMode().DPtoLP(4), getMapMode()
-					.DPtoLP(4)));
-			big2.addPoint(new Point(getMapMode().DPtoLP(6), getMapMode()
-					.DPtoLP(1)));
-
-			innerCircle1.add(big2);
-
-			PolylineShape small2 = new PolylineShape();
-			small2.addPoint(new Point(getMapMode().DPtoLP(4), getMapMode()
-					.DPtoLP(4)));
-			small2.addPoint(new Point(getMapMode().DPtoLP(7), getMapMode()
-					.DPtoLP(7)));
-
-			innerCircle1.add(small2);
-
+			this.setURI("platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/events_48px_intermediate_timer_catch.svg");
 		}
 
 	}

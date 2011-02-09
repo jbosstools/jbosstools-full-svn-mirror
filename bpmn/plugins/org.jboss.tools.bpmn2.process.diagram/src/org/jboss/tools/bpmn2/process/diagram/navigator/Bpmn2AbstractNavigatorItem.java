@@ -17,7 +17,7 @@ public abstract class Bpmn2AbstractNavigatorItem extends PlatformObject {
 		final Class[] supportedTypes = new Class[] { ITabbedPropertySheetPageContributor.class };
 		final ITabbedPropertySheetPageContributor propertySheetPageContributor = new ITabbedPropertySheetPageContributor() {
 			public String getContributorId() {
-				return "org.eclipse.bpmn2.diagram"; //$NON-NLS-1$
+				return "org.jboss.tools.bpmn2.process.diagram"; //$NON-NLS-1$
 			}
 		};
 		Platform.getAdapterManager().registerAdapters(

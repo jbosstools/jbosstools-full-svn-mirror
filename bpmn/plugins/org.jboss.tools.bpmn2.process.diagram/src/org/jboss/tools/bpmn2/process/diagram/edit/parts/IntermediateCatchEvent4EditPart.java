@@ -8,6 +8,7 @@ import org.eclipse.draw2d.Ellipse;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.MarginBorder;
 import org.eclipse.draw2d.PolylineShape;
+import org.eclipse.draw2d.PositionConstants;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.Shape;
 import org.eclipse.draw2d.StackLayout;
@@ -18,6 +19,7 @@ import org.eclipse.gef.Request;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.editpolicies.LayoutEditPolicy;
 import org.eclipse.gef.editpolicies.NonResizableEditPolicy;
+import org.eclipse.gef.editpolicies.ResizableEditPolicy;
 import org.eclipse.gef.requests.CreateRequest;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeNodeEditPart;
@@ -25,6 +27,7 @@ import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.emf.type.core.IElementType;
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
+import org.eclipse.gmf.runtime.lite.svg.SVGFigure;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.graphics.Color;
 import org.jboss.tools.bpmn2.process.diagram.edit.policies.IntermediateCatchEvent4ItemSemanticEditPolicy;
@@ -113,7 +116,19 @@ public class IntermediateCatchEvent4EditPart extends ShapeNodeEditPart {
 	 * @generated
 	 */
 	protected NodeFigure createNodePlate() {
-		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(20, 20);
+		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(48, 48);
+		return result;
+	}
+
+	/**
+	 * @generated
+	 */
+	public EditPolicy getPrimaryDragEditPolicy() {
+		EditPolicy result = super.getPrimaryDragEditPolicy();
+		if (result instanceof ResizableEditPolicy) {
+			ResizableEditPolicy ep = (ResizableEditPolicy) result;
+			ep.setResizeDirections(PositionConstants.NONE);
+		}
 		return result;
 	}
 
@@ -555,58 +570,13 @@ public class IntermediateCatchEvent4EditPart extends ShapeNodeEditPart {
 	 * @generated
 	 */
 	public class MessageCatchIntermediateEventFigureDescriptor extends
-			RectangleFigure {
+			SVGFigure {
 
 		/**
 		 * @generated
 		 */
 		public MessageCatchIntermediateEventFigureDescriptor() {
-			this.setLayoutManager(new StackLayout());
-			this.setFill(false);
-			this.setOutline(false);
-			createContents();
-		}
-
-		/**
-		 * @generated
-		 */
-		private void createContents() {
-
-			Ellipse outerCircle0 = new Ellipse();
-
-			outerCircle0.setBorder(new MarginBorder(getMapMode().DPtoLP(2),
-					getMapMode().DPtoLP(2), getMapMode().DPtoLP(2),
-					getMapMode().DPtoLP(2)));
-
-			this.add(outerCircle0);
-			outerCircle0.setLayoutManager(new StackLayout());
-
-			Ellipse innerCircle1 = new Ellipse();
-
-			innerCircle1.setBorder(new MarginBorder(getMapMode().DPtoLP(4),
-					getMapMode().DPtoLP(3), getMapMode().DPtoLP(4),
-					getMapMode().DPtoLP(3)));
-
-			outerCircle0.add(innerCircle1);
-			innerCircle1.setLayoutManager(new StackLayout());
-
-			RectangleFigure rectangle2 = new RectangleFigure();
-
-			innerCircle1.add(rectangle2);
-			rectangle2.setLayoutManager(new StackLayout());
-
-			PolylineShape envelope3 = new PolylineShape();
-			envelope3.addPoint(new Point(getMapMode().DPtoLP(0), getMapMode()
-					.DPtoLP(0)));
-			envelope3.addPoint(new Point(getMapMode().DPtoLP(4), getMapMode()
-					.DPtoLP(4)));
-			envelope3.addPoint(new Point(getMapMode().DPtoLP(5), getMapMode()
-					.DPtoLP(4)));
-			envelope3.addPoint(new Point(getMapMode().DPtoLP(9), getMapMode()
-					.DPtoLP(0)));
-
-			rectangle2.add(envelope3);
-
+			this.setURI("platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/events_48px_intermediate_message_catch.svg");
 		}
 
 	}

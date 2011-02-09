@@ -26,6 +26,7 @@ import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.emf.type.core.IElementType;
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
+import org.eclipse.gmf.runtime.lite.svg.SVGFigure;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.graphics.Color;
 import org.jboss.tools.bpmn2.process.diagram.edit.policies.ParallelGatewayItemSemanticEditPolicy;
@@ -114,7 +115,7 @@ public class ParallelGatewayEditPart extends ShapeNodeEditPart {
 	 * @generated
 	 */
 	protected NodeFigure createNodePlate() {
-		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(31, 31);
+		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(48, 48);
 		return result;
 	}
 
@@ -567,52 +568,13 @@ public class ParallelGatewayEditPart extends ShapeNodeEditPart {
 	/**
 	 * @generated
 	 */
-	public class ParallelGatewayFigureDescriptor extends RectangleFigure {
+	public class ParallelGatewayFigureDescriptor extends SVGFigure {
 
 		/**
 		 * @generated
 		 */
 		public ParallelGatewayFigureDescriptor() {
-			this.setLayoutManager(new StackLayout());
-			this.setFill(false);
-			this.setOutline(false);
-			createContents();
-		}
-
-		/**
-		 * @generated
-		 */
-		private void createContents() {
-
-			PolygonShape diamond0 = new PolygonShape();
-			diamond0.addPoint(new Point(getMapMode().DPtoLP(15), getMapMode()
-					.DPtoLP(0)));
-			diamond0.addPoint(new Point(getMapMode().DPtoLP(0), getMapMode()
-					.DPtoLP(15)));
-			diamond0.addPoint(new Point(getMapMode().DPtoLP(15), getMapMode()
-					.DPtoLP(30)));
-			diamond0.addPoint(new Point(getMapMode().DPtoLP(30), getMapMode()
-					.DPtoLP(15)));
-			diamond0.setFill(true);
-
-			this.add(diamond0);
-
-			PolylineShape vertical0 = new PolylineShape();
-			vertical0.addPoint(new Point(getMapMode().DPtoLP(15), getMapMode()
-					.DPtoLP(8)));
-			vertical0.addPoint(new Point(getMapMode().DPtoLP(15), getMapMode()
-					.DPtoLP(22)));
-
-			this.add(vertical0);
-
-			PolylineShape horizontal0 = new PolylineShape();
-			horizontal0.addPoint(new Point(getMapMode().DPtoLP(8), getMapMode()
-					.DPtoLP(15)));
-			horizontal0.addPoint(new Point(getMapMode().DPtoLP(22),
-					getMapMode().DPtoLP(15)));
-
-			this.add(horizontal0);
-
+			this.setURI("platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/gateways_48px_parallel.svg");
 		}
 
 	}

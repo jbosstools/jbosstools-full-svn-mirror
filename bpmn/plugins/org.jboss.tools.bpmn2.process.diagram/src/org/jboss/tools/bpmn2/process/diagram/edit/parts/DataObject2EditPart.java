@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.PolygonShape;
 import org.eclipse.draw2d.PositionConstants;

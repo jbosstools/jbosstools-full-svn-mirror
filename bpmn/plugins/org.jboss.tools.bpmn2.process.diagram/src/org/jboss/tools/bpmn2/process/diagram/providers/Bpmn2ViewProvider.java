@@ -444,6 +444,9 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 	public Node createUserTask_2001(EObject domainElement, View containerView,
 			int index, boolean persisted, PreferencesHint preferencesHint) {
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
+		node.getStyles()
+				.add(NotationFactory.eINSTANCE.createDescriptionStyle());
+		node.getStyles().add(NotationFactory.eINSTANCE.createFontStyle());
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry.getType(UserTaskEditPart.VISUAL_ID));
 		ViewUtil.insertChildView(containerView, node, index, persisted);
@@ -452,12 +455,6 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 		// initializeFromPreferences 
 		final IPreferenceStore prefStore = (IPreferenceStore) preferencesHint
 				.getPreferenceStore();
-
-		org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(
-				prefStore, IPreferenceConstants.PREF_LINE_COLOR);
-		ViewUtil.setStructuralFeatureValue(node,
-				NotationPackage.eINSTANCE.getLineStyle_LineColor(),
-				FigureUtilities.RGBToInteger(lineRGB));
 		FontStyle nodeFontStyle = (FontStyle) node
 				.getStyle(NotationPackage.Literals.FONT_STYLE);
 		if (nodeFontStyle != null) {
@@ -472,11 +469,6 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 			nodeFontStyle.setFontColor(FigureUtilities.RGBToInteger(fontRGB)
 					.intValue());
 		}
-		org.eclipse.swt.graphics.RGB fillRGB = PreferenceConverter.getColor(
-				prefStore, IPreferenceConstants.PREF_FILL_COLOR);
-		ViewUtil.setStructuralFeatureValue(node,
-				NotationPackage.eINSTANCE.getFillStyle_FillColor(),
-				FigureUtilities.RGBToInteger(fillRGB));
 		Node label5001 = createLabel(node,
 				Bpmn2VisualIDRegistry.getType(UserTaskNameEditPart.VISUAL_ID));
 		return node;
@@ -489,6 +481,9 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 			View containerView, int index, boolean persisted,
 			PreferencesHint preferencesHint) {
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
+		node.getStyles()
+				.add(NotationFactory.eINSTANCE.createDescriptionStyle());
+		node.getStyles().add(NotationFactory.eINSTANCE.createFontStyle());
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry
 				.getType(ServiceTaskEditPart.VISUAL_ID));
@@ -498,12 +493,6 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 		// initializeFromPreferences 
 		final IPreferenceStore prefStore = (IPreferenceStore) preferencesHint
 				.getPreferenceStore();
-
-		org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(
-				prefStore, IPreferenceConstants.PREF_LINE_COLOR);
-		ViewUtil.setStructuralFeatureValue(node,
-				NotationPackage.eINSTANCE.getLineStyle_LineColor(),
-				FigureUtilities.RGBToInteger(lineRGB));
 		FontStyle nodeFontStyle = (FontStyle) node
 				.getStyle(NotationPackage.Literals.FONT_STYLE);
 		if (nodeFontStyle != null) {
@@ -518,11 +507,6 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 			nodeFontStyle.setFontColor(FigureUtilities.RGBToInteger(fontRGB)
 					.intValue());
 		}
-		org.eclipse.swt.graphics.RGB fillRGB = PreferenceConverter.getColor(
-				prefStore, IPreferenceConstants.PREF_FILL_COLOR);
-		ViewUtil.setStructuralFeatureValue(node,
-				NotationPackage.eINSTANCE.getFillStyle_FillColor(),
-				FigureUtilities.RGBToInteger(fillRGB));
 		Node label5002 = createLabel(node,
 				Bpmn2VisualIDRegistry
 						.getType(ServiceTaskNameEditPart.VISUAL_ID));
@@ -1065,6 +1049,10 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 			View containerView, int index, boolean persisted,
 			PreferencesHint preferencesHint) {
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
+		node.getStyles()
+				.add(NotationFactory.eINSTANCE.createDescriptionStyle());
+		node.getStyles().add(NotationFactory.eINSTANCE.createFontStyle());
+		node.getStyles().add(NotationFactory.eINSTANCE.createFillStyle());
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry
 				.getType(TextAnnotationEditPart.VISUAL_ID));
@@ -1074,12 +1062,6 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 		// initializeFromPreferences 
 		final IPreferenceStore prefStore = (IPreferenceStore) preferencesHint
 				.getPreferenceStore();
-
-		org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(
-				prefStore, IPreferenceConstants.PREF_LINE_COLOR);
-		ViewUtil.setStructuralFeatureValue(node,
-				NotationPackage.eINSTANCE.getLineStyle_LineColor(),
-				FigureUtilities.RGBToInteger(lineRGB));
 		FontStyle nodeFontStyle = (FontStyle) node
 				.getStyle(NotationPackage.Literals.FONT_STYLE);
 		if (nodeFontStyle != null) {
@@ -1112,6 +1094,10 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 			View containerView, int index, boolean persisted,
 			PreferencesHint preferencesHint) {
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
+		node.getStyles()
+				.add(NotationFactory.eINSTANCE.createDescriptionStyle());
+		node.getStyles().add(NotationFactory.eINSTANCE.createFontStyle());
+		node.getStyles().add(NotationFactory.eINSTANCE.createFillStyle());
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry
 				.getType(SubProcessEditPart.VISUAL_ID));
@@ -1121,12 +1107,6 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 		// initializeFromPreferences 
 		final IPreferenceStore prefStore = (IPreferenceStore) preferencesHint
 				.getPreferenceStore();
-
-		org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(
-				prefStore, IPreferenceConstants.PREF_LINE_COLOR);
-		ViewUtil.setStructuralFeatureValue(node,
-				NotationPackage.eINSTANCE.getLineStyle_LineColor(),
-				FigureUtilities.RGBToInteger(lineRGB));
 		FontStyle nodeFontStyle = (FontStyle) node
 				.getStyle(NotationPackage.Literals.FONT_STYLE);
 		if (nodeFontStyle != null) {
@@ -1156,6 +1136,9 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 			View containerView, int index, boolean persisted,
 			PreferencesHint preferencesHint) {
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
+		node.getStyles()
+				.add(NotationFactory.eINSTANCE.createDescriptionStyle());
+		node.getStyles().add(NotationFactory.eINSTANCE.createFontStyle());
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry
 				.getType(ScriptTaskEditPart.VISUAL_ID));
@@ -1165,12 +1148,6 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 		// initializeFromPreferences 
 		final IPreferenceStore prefStore = (IPreferenceStore) preferencesHint
 				.getPreferenceStore();
-
-		org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(
-				prefStore, IPreferenceConstants.PREF_LINE_COLOR);
-		ViewUtil.setStructuralFeatureValue(node,
-				NotationPackage.eINSTANCE.getLineStyle_LineColor(),
-				FigureUtilities.RGBToInteger(lineRGB));
 		FontStyle nodeFontStyle = (FontStyle) node
 				.getStyle(NotationPackage.Literals.FONT_STYLE);
 		if (nodeFontStyle != null) {
@@ -1185,11 +1162,6 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 			nodeFontStyle.setFontColor(FigureUtilities.RGBToInteger(fontRGB)
 					.intValue());
 		}
-		org.eclipse.swt.graphics.RGB fillRGB = PreferenceConverter.getColor(
-				prefStore, IPreferenceConstants.PREF_FILL_COLOR);
-		ViewUtil.setStructuralFeatureValue(node,
-				NotationPackage.eINSTANCE.getFillStyle_FillColor(),
-				FigureUtilities.RGBToInteger(fillRGB));
 		Node label5009 = createLabel(node,
 				Bpmn2VisualIDRegistry.getType(ScriptTaskNameEditPart.VISUAL_ID));
 		return node;
@@ -1202,6 +1174,10 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 			View containerView, int index, boolean persisted,
 			PreferencesHint preferencesHint) {
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
+		node.getStyles()
+				.add(NotationFactory.eINSTANCE.createDescriptionStyle());
+		node.getStyles().add(NotationFactory.eINSTANCE.createFontStyle());
+		node.getStyles().add(NotationFactory.eINSTANCE.createFillStyle());
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry
 				.getType(SubProcess2EditPart.VISUAL_ID));
@@ -1210,12 +1186,6 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 		// initializeFromPreferences 
 		final IPreferenceStore prefStore = (IPreferenceStore) preferencesHint
 				.getPreferenceStore();
-
-		org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(
-				prefStore, IPreferenceConstants.PREF_LINE_COLOR);
-		ViewUtil.setStructuralFeatureValue(node,
-				NotationPackage.eINSTANCE.getLineStyle_LineColor(),
-				FigureUtilities.RGBToInteger(lineRGB));
 		FontStyle nodeFontStyle = (FontStyle) node
 				.getStyle(NotationPackage.Literals.FONT_STYLE);
 		if (nodeFontStyle != null) {
@@ -1244,6 +1214,9 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 	public Node createUserTask_3002(EObject domainElement, View containerView,
 			int index, boolean persisted, PreferencesHint preferencesHint) {
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
+		node.getStyles()
+				.add(NotationFactory.eINSTANCE.createDescriptionStyle());
+		node.getStyles().add(NotationFactory.eINSTANCE.createFontStyle());
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry.getType(UserTask2EditPart.VISUAL_ID));
 		ViewUtil.insertChildView(containerView, node, index, persisted);
@@ -1251,12 +1224,6 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 		// initializeFromPreferences 
 		final IPreferenceStore prefStore = (IPreferenceStore) preferencesHint
 				.getPreferenceStore();
-
-		org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(
-				prefStore, IPreferenceConstants.PREF_LINE_COLOR);
-		ViewUtil.setStructuralFeatureValue(node,
-				NotationPackage.eINSTANCE.getLineStyle_LineColor(),
-				FigureUtilities.RGBToInteger(lineRGB));
 		FontStyle nodeFontStyle = (FontStyle) node
 				.getStyle(NotationPackage.Literals.FONT_STYLE);
 		if (nodeFontStyle != null) {
@@ -1271,11 +1238,6 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 			nodeFontStyle.setFontColor(FigureUtilities.RGBToInteger(fontRGB)
 					.intValue());
 		}
-		org.eclipse.swt.graphics.RGB fillRGB = PreferenceConverter.getColor(
-				prefStore, IPreferenceConstants.PREF_FILL_COLOR);
-		ViewUtil.setStructuralFeatureValue(node,
-				NotationPackage.eINSTANCE.getFillStyle_FillColor(),
-				FigureUtilities.RGBToInteger(fillRGB));
 		Node label5005 = createLabel(node,
 				Bpmn2VisualIDRegistry.getType(UserTaskName2EditPart.VISUAL_ID));
 		return node;
@@ -1288,6 +1250,9 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 			View containerView, int index, boolean persisted,
 			PreferencesHint preferencesHint) {
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
+		node.getStyles()
+				.add(NotationFactory.eINSTANCE.createDescriptionStyle());
+		node.getStyles().add(NotationFactory.eINSTANCE.createFontStyle());
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry
 				.getType(ServiceTask2EditPart.VISUAL_ID));
@@ -1296,12 +1261,6 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 		// initializeFromPreferences 
 		final IPreferenceStore prefStore = (IPreferenceStore) preferencesHint
 				.getPreferenceStore();
-
-		org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(
-				prefStore, IPreferenceConstants.PREF_LINE_COLOR);
-		ViewUtil.setStructuralFeatureValue(node,
-				NotationPackage.eINSTANCE.getLineStyle_LineColor(),
-				FigureUtilities.RGBToInteger(lineRGB));
 		FontStyle nodeFontStyle = (FontStyle) node
 				.getStyle(NotationPackage.Literals.FONT_STYLE);
 		if (nodeFontStyle != null) {
@@ -1316,11 +1275,6 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 			nodeFontStyle.setFontColor(FigureUtilities.RGBToInteger(fontRGB)
 					.intValue());
 		}
-		org.eclipse.swt.graphics.RGB fillRGB = PreferenceConverter.getColor(
-				prefStore, IPreferenceConstants.PREF_FILL_COLOR);
-		ViewUtil.setStructuralFeatureValue(node,
-				NotationPackage.eINSTANCE.getFillStyle_FillColor(),
-				FigureUtilities.RGBToInteger(fillRGB));
 		Node label5006 = createLabel(node,
 				Bpmn2VisualIDRegistry
 						.getType(ServiceTaskName2EditPart.VISUAL_ID));
@@ -1809,6 +1763,10 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 			View containerView, int index, boolean persisted,
 			PreferencesHint preferencesHint) {
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
+		node.getStyles()
+				.add(NotationFactory.eINSTANCE.createDescriptionStyle());
+		node.getStyles().add(NotationFactory.eINSTANCE.createFontStyle());
+		node.getStyles().add(NotationFactory.eINSTANCE.createFillStyle());
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry
 				.getType(TextAnnotation2EditPart.VISUAL_ID));
@@ -1817,12 +1775,6 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 		// initializeFromPreferences 
 		final IPreferenceStore prefStore = (IPreferenceStore) preferencesHint
 				.getPreferenceStore();
-
-		org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(
-				prefStore, IPreferenceConstants.PREF_LINE_COLOR);
-		ViewUtil.setStructuralFeatureValue(node,
-				NotationPackage.eINSTANCE.getLineStyle_LineColor(),
-				FigureUtilities.RGBToInteger(lineRGB));
 		FontStyle nodeFontStyle = (FontStyle) node
 				.getStyle(NotationPackage.Literals.FONT_STYLE);
 		if (nodeFontStyle != null) {
@@ -1855,6 +1807,9 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 			View containerView, int index, boolean persisted,
 			PreferencesHint preferencesHint) {
 		Shape node = BpmnNotationFactory.INSTANCE.createShape();
+		node.getStyles()
+				.add(NotationFactory.eINSTANCE.createDescriptionStyle());
+		node.getStyles().add(NotationFactory.eINSTANCE.createFontStyle());
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry
 				.getType(ScriptTask2EditPart.VISUAL_ID));
@@ -1863,12 +1818,6 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 		// initializeFromPreferences 
 		final IPreferenceStore prefStore = (IPreferenceStore) preferencesHint
 				.getPreferenceStore();
-
-		org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(
-				prefStore, IPreferenceConstants.PREF_LINE_COLOR);
-		ViewUtil.setStructuralFeatureValue(node,
-				NotationPackage.eINSTANCE.getLineStyle_LineColor(),
-				FigureUtilities.RGBToInteger(lineRGB));
 		FontStyle nodeFontStyle = (FontStyle) node
 				.getStyle(NotationPackage.Literals.FONT_STYLE);
 		if (nodeFontStyle != null) {
@@ -1883,11 +1832,6 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 			nodeFontStyle.setFontColor(FigureUtilities.RGBToInteger(fontRGB)
 					.intValue());
 		}
-		org.eclipse.swt.graphics.RGB fillRGB = PreferenceConverter.getColor(
-				prefStore, IPreferenceConstants.PREF_FILL_COLOR);
-		ViewUtil.setStructuralFeatureValue(node,
-				NotationPackage.eINSTANCE.getFillStyle_FillColor(),
-				FigureUtilities.RGBToInteger(fillRGB));
 		Node label5010 = createLabel(node,
 				Bpmn2VisualIDRegistry
 						.getType(ScriptTaskName2EditPart.VISUAL_ID));
@@ -1956,7 +1900,8 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 	public Edge createAssociation_4002(EObject domainElement,
 			View containerView, int index, boolean persisted,
 			PreferencesHint preferencesHint) {
-		Connector edge = NotationFactory.eINSTANCE.createConnector();
+		Edge edge = NotationFactory.eINSTANCE.createEdge();
+		edge.getStyles().add(NotationFactory.eINSTANCE.createRoutingStyle());
 		edge.getStyles().add(NotationFactory.eINSTANCE.createFontStyle());
 		RelativeBendpoints bendpoints = NotationFactory.eINSTANCE
 				.createRelativeBendpoints();
@@ -1973,12 +1918,6 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 		// initializePreferences
 		final IPreferenceStore prefStore = (IPreferenceStore) preferencesHint
 				.getPreferenceStore();
-
-		org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(
-				prefStore, IPreferenceConstants.PREF_LINE_COLOR);
-		ViewUtil.setStructuralFeatureValue(edge,
-				NotationPackage.eINSTANCE.getLineStyle_LineColor(),
-				FigureUtilities.RGBToInteger(lineRGB));
 		FontStyle edgeFontStyle = (FontStyle) edge
 				.getStyle(NotationPackage.Literals.FONT_STYLE);
 		if (edgeFontStyle != null) {

@@ -87,7 +87,7 @@ public class Bpmn2CreationWizard extends Wizard implements INewWizard {
 		this.workbench = workbench;
 		this.selection = selection;
 		setWindowTitle(Messages.Bpmn2CreationWizardTitle);
-		setDefaultPageImageDescriptor(Bpmn2DiagramEditorPlugin
+		setDefaultPageImageDescriptor(Bpmn2ProcessDiagramEditorPlugin
 				.getBundledImageDescriptor("icons/wizban/NewBpmn2Wizard.gif")); //$NON-NLS-1$
 		setNeedsProgressMonitor(true);
 	}
@@ -136,7 +136,7 @@ public class Bpmn2CreationWizard extends Wizard implements INewWizard {
 						Messages.Bpmn2CreationWizardCreationError, null,
 						((CoreException) e.getTargetException()).getStatus());
 			} else {
-				Bpmn2DiagramEditorPlugin.getInstance().logError(
+				Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 						"Error creating diagram", e.getTargetException()); //$NON-NLS-1$
 			}
 			return false;

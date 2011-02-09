@@ -53,6 +53,7 @@ import org.jboss.tools.bpmn2.process.diagram.edit.parts.TextAnnotationEditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.UserTask2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.UserTaskEditPart;
 import org.jboss.tools.bpmn2.process.diagram.part.Bpmn2DiagramEditorPlugin;
+import org.jboss.tools.bpmn2.process.diagram.part.Bpmn2ProcessDiagramEditorPlugin;
 
 /**
  * @generated
@@ -83,179 +84,179 @@ public class Bpmn2ElementTypes {
 	/**
 	 * @generated
 	 */
-	public static final IElementType Process_1000 = getElementType("org.eclipse.bpmn2.diagram.Process_1000"); //$NON-NLS-1$
+	public static final IElementType Process_1000 = getElementType("org.jboss.tools.bpmn2.process.diagram.Process_1000"); //$NON-NLS-1$
 	/**
 	 * @generated
 	 */
-	public static final IElementType UserTask_2001 = getElementType("org.eclipse.bpmn2.diagram.UserTask_2001"); //$NON-NLS-1$
+	public static final IElementType UserTask_2001 = getElementType("org.jboss.tools.bpmn2.process.diagram.UserTask_2001"); //$NON-NLS-1$
 	/**
 	 * @generated
 	 */
-	public static final IElementType ServiceTask_2002 = getElementType("org.eclipse.bpmn2.diagram.ServiceTask_2002"); //$NON-NLS-1$
+	public static final IElementType ServiceTask_2002 = getElementType("org.jboss.tools.bpmn2.process.diagram.ServiceTask_2002"); //$NON-NLS-1$
 	/**
 	 * @generated
 	 */
-	public static final IElementType StartEvent_2003 = getElementType("org.eclipse.bpmn2.diagram.StartEvent_2003"); //$NON-NLS-1$
+	public static final IElementType StartEvent_2003 = getElementType("org.jboss.tools.bpmn2.process.diagram.StartEvent_2003"); //$NON-NLS-1$
 
 	/**
 	 * @generated
 	 */
-	public static final IElementType StartEvent_2007 = getElementType("org.eclipse.bpmn2.diagram.StartEvent_2007"); //$NON-NLS-1$
+	public static final IElementType StartEvent_2007 = getElementType("org.jboss.tools.bpmn2.process.diagram.StartEvent_2007"); //$NON-NLS-1$
 
 	/**
 	 * @generated
 	 */
-	public static final IElementType EndEvent_2004 = getElementType("org.eclipse.bpmn2.diagram.EndEvent_2004"); //$NON-NLS-1$
+	public static final IElementType EndEvent_2004 = getElementType("org.jboss.tools.bpmn2.process.diagram.EndEvent_2004"); //$NON-NLS-1$
 
 	/**
 	 * @generated
 	 */
-	public static final IElementType ExclusiveGateway_2005 = getElementType("org.eclipse.bpmn2.diagram.ExclusiveGateway_2005"); //$NON-NLS-1$
+	public static final IElementType ExclusiveGateway_2005 = getElementType("org.jboss.tools.bpmn2.process.diagram.ExclusiveGateway_2005"); //$NON-NLS-1$
 
 	/**
 	 * @generated
 	 */
-	public static final IElementType ParallelGateway_2006 = getElementType("org.eclipse.bpmn2.diagram.ParallelGateway_2006"); //$NON-NLS-1$
+	public static final IElementType ParallelGateway_2006 = getElementType("org.jboss.tools.bpmn2.process.diagram.ParallelGateway_2006"); //$NON-NLS-1$
 
 	/**
 	 * @generated
 	 */
-	public static final IElementType EndEvent_2008 = getElementType("org.eclipse.bpmn2.diagram.EndEvent_2008"); //$NON-NLS-1$
+	public static final IElementType EndEvent_2008 = getElementType("org.jboss.tools.bpmn2.process.diagram.EndEvent_2008"); //$NON-NLS-1$
 
 	/**
 	 * @generated
 	 */
-	public static final IElementType EndEvent_2009 = getElementType("org.eclipse.bpmn2.diagram.EndEvent_2009"); //$NON-NLS-1$
+	public static final IElementType EndEvent_2009 = getElementType("org.jboss.tools.bpmn2.process.diagram.EndEvent_2009"); //$NON-NLS-1$
 
 	/**
 	 * @generated
 	 */
-	public static final IElementType IntermediateCatchEvent_2010 = getElementType("org.eclipse.bpmn2.diagram.IntermediateCatchEvent_2010"); //$NON-NLS-1$
+	public static final IElementType IntermediateCatchEvent_2010 = getElementType("org.jboss.tools.bpmn2.process.diagram.IntermediateCatchEvent_2010"); //$NON-NLS-1$
 
 	/**
 	 * @generated
 	 */
-	public static final IElementType IntermediateThrowEvent_2011 = getElementType("org.eclipse.bpmn2.diagram.IntermediateThrowEvent_2011"); //$NON-NLS-1$
+	public static final IElementType IntermediateThrowEvent_2011 = getElementType("org.jboss.tools.bpmn2.process.diagram.IntermediateThrowEvent_2011"); //$NON-NLS-1$
 
 	/**
 	 * @generated
 	 */
-	public static final IElementType IntermediateCatchEvent_2012 = getElementType("org.eclipse.bpmn2.diagram.IntermediateCatchEvent_2012"); //$NON-NLS-1$
+	public static final IElementType IntermediateCatchEvent_2012 = getElementType("org.jboss.tools.bpmn2.process.diagram.IntermediateCatchEvent_2012"); //$NON-NLS-1$
 
 	/**
 	 * @generated
 	 */
-	public static final IElementType IntermediateCatchEvent_2013 = getElementType("org.eclipse.bpmn2.diagram.IntermediateCatchEvent_2013"); //$NON-NLS-1$
+	public static final IElementType IntermediateCatchEvent_2013 = getElementType("org.jboss.tools.bpmn2.process.diagram.IntermediateCatchEvent_2013"); //$NON-NLS-1$
 
 	/**
 	 * @generated
 	 */
-	public static final IElementType DataObject_2014 = getElementType("org.eclipse.bpmn2.diagram.DataObject_2014"); //$NON-NLS-1$
+	public static final IElementType DataObject_2014 = getElementType("org.jboss.tools.bpmn2.process.diagram.DataObject_2014"); //$NON-NLS-1$
 
 	/**
 	 * @generated
 	 */
-	public static final IElementType TextAnnotation_2015 = getElementType("org.eclipse.bpmn2.diagram.TextAnnotation_2015"); //$NON-NLS-1$
+	public static final IElementType TextAnnotation_2015 = getElementType("org.jboss.tools.bpmn2.process.diagram.TextAnnotation_2015"); //$NON-NLS-1$
 
 	/**
 	 * @generated
 	 */
-	public static final IElementType SubProcess_2016 = getElementType("org.eclipse.bpmn2.diagram.SubProcess_2016"); //$NON-NLS-1$
+	public static final IElementType SubProcess_2016 = getElementType("org.jboss.tools.bpmn2.process.diagram.SubProcess_2016"); //$NON-NLS-1$
 
 	/**
 	 * @generated
 	 */
-	public static final IElementType ScriptTask_2017 = getElementType("org.eclipse.bpmn2.diagram.ScriptTask_2017"); //$NON-NLS-1$
+	public static final IElementType ScriptTask_2017 = getElementType("org.jboss.tools.bpmn2.process.diagram.ScriptTask_2017"); //$NON-NLS-1$
 
 	/**
 	 * @generated
 	 */
-	public static final IElementType SubProcess_3001 = getElementType("org.eclipse.bpmn2.diagram.SubProcess_3001"); //$NON-NLS-1$
+	public static final IElementType SubProcess_3001 = getElementType("org.jboss.tools.bpmn2.process.diagram.SubProcess_3001"); //$NON-NLS-1$
 
 	/**
 	 * @generated
 	 */
-	public static final IElementType UserTask_3002 = getElementType("org.eclipse.bpmn2.diagram.UserTask_3002"); //$NON-NLS-1$
+	public static final IElementType UserTask_3002 = getElementType("org.jboss.tools.bpmn2.process.diagram.UserTask_3002"); //$NON-NLS-1$
 
 	/**
 	 * @generated
 	 */
-	public static final IElementType ServiceTask_3004 = getElementType("org.eclipse.bpmn2.diagram.ServiceTask_3004"); //$NON-NLS-1$
+	public static final IElementType ServiceTask_3004 = getElementType("org.jboss.tools.bpmn2.process.diagram.ServiceTask_3004"); //$NON-NLS-1$
 
 	/**
 	 * @generated
 	 */
-	public static final IElementType StartEvent_3003 = getElementType("org.eclipse.bpmn2.diagram.StartEvent_3003"); //$NON-NLS-1$
+	public static final IElementType StartEvent_3003 = getElementType("org.jboss.tools.bpmn2.process.diagram.StartEvent_3003"); //$NON-NLS-1$
 
 	/**
 	 * @generated
 	 */
-	public static final IElementType StartEvent_3005 = getElementType("org.eclipse.bpmn2.diagram.StartEvent_3005"); //$NON-NLS-1$
+	public static final IElementType StartEvent_3005 = getElementType("org.jboss.tools.bpmn2.process.diagram.StartEvent_3005"); //$NON-NLS-1$
 
 	/**
 	 * @generated
 	 */
-	public static final IElementType EndEvent_3006 = getElementType("org.eclipse.bpmn2.diagram.EndEvent_3006"); //$NON-NLS-1$
+	public static final IElementType EndEvent_3006 = getElementType("org.jboss.tools.bpmn2.process.diagram.EndEvent_3006"); //$NON-NLS-1$
 
 	/**
 	 * @generated
 	 */
-	public static final IElementType ExclusiveGateway_3007 = getElementType("org.eclipse.bpmn2.diagram.ExclusiveGateway_3007"); //$NON-NLS-1$
+	public static final IElementType ExclusiveGateway_3007 = getElementType("org.jboss.tools.bpmn2.process.diagram.ExclusiveGateway_3007"); //$NON-NLS-1$
 
 	/**
 	 * @generated
 	 */
-	public static final IElementType ParallelGateway_3008 = getElementType("org.eclipse.bpmn2.diagram.ParallelGateway_3008"); //$NON-NLS-1$
+	public static final IElementType ParallelGateway_3008 = getElementType("org.jboss.tools.bpmn2.process.diagram.ParallelGateway_3008"); //$NON-NLS-1$
 
 	/**
 	 * @generated
 	 */
-	public static final IElementType EndEvent_3009 = getElementType("org.eclipse.bpmn2.diagram.EndEvent_3009"); //$NON-NLS-1$
+	public static final IElementType EndEvent_3009 = getElementType("org.jboss.tools.bpmn2.process.diagram.EndEvent_3009"); //$NON-NLS-1$
 
 	/**
 	 * @generated
 	 */
-	public static final IElementType EndEvent_3010 = getElementType("org.eclipse.bpmn2.diagram.EndEvent_3010"); //$NON-NLS-1$
+	public static final IElementType EndEvent_3010 = getElementType("org.jboss.tools.bpmn2.process.diagram.EndEvent_3010"); //$NON-NLS-1$
 
 	/**
 	 * @generated
 	 */
-	public static final IElementType IntermediateCatchEvent_3011 = getElementType("org.eclipse.bpmn2.diagram.IntermediateCatchEvent_3011"); //$NON-NLS-1$
+	public static final IElementType IntermediateCatchEvent_3011 = getElementType("org.jboss.tools.bpmn2.process.diagram.IntermediateCatchEvent_3011"); //$NON-NLS-1$
 
 	/**
 	 * @generated
 	 */
-	public static final IElementType IntermediateThrowEvent_3012 = getElementType("org.eclipse.bpmn2.diagram.IntermediateThrowEvent_3012"); //$NON-NLS-1$
+	public static final IElementType IntermediateThrowEvent_3012 = getElementType("org.jboss.tools.bpmn2.process.diagram.IntermediateThrowEvent_3012"); //$NON-NLS-1$
 
 	/**
 	 * @generated
 	 */
-	public static final IElementType IntermediateCatchEvent_3013 = getElementType("org.eclipse.bpmn2.diagram.IntermediateCatchEvent_3013"); //$NON-NLS-1$
+	public static final IElementType IntermediateCatchEvent_3013 = getElementType("org.jboss.tools.bpmn2.process.diagram.IntermediateCatchEvent_3013"); //$NON-NLS-1$
 
 	/**
 	 * @generated
 	 */
-	public static final IElementType DataObject_3014 = getElementType("org.eclipse.bpmn2.diagram.DataObject_3014"); //$NON-NLS-1$
+	public static final IElementType DataObject_3014 = getElementType("org.jboss.tools.bpmn2.process.diagram.DataObject_3014"); //$NON-NLS-1$
 
 	/**
 	 * @generated
 	 */
-	public static final IElementType TextAnnotation_3015 = getElementType("org.eclipse.bpmn2.diagram.TextAnnotation_3015"); //$NON-NLS-1$
+	public static final IElementType TextAnnotation_3015 = getElementType("org.jboss.tools.bpmn2.process.diagram.TextAnnotation_3015"); //$NON-NLS-1$
 
 	/**
 	 * @generated
 	 */
-	public static final IElementType ScriptTask_3016 = getElementType("org.eclipse.bpmn2.diagram.ScriptTask_3016"); //$NON-NLS-1$
+	public static final IElementType ScriptTask_3016 = getElementType("org.jboss.tools.bpmn2.process.diagram.ScriptTask_3016"); //$NON-NLS-1$
 
 	/**
 	 * @generated
 	 */
-	public static final IElementType SequenceFlow_4001 = getElementType("org.eclipse.bpmn2.diagram.SequenceFlow_4001"); //$NON-NLS-1$
+	public static final IElementType SequenceFlow_4001 = getElementType("org.jboss.tools.bpmn2.process.diagram.SequenceFlow_4001"); //$NON-NLS-1$
 
 	/**
 	 * @generated
 	 */
-	public static final IElementType Association_4002 = getElementType("org.eclipse.bpmn2.diagram.Association_4002"); //$NON-NLS-1$
+	public static final IElementType Association_4002 = getElementType("org.jboss.tools.bpmn2.process.diagram.Association_4002"); //$NON-NLS-1$
 
 	/**
 	 * @generated
@@ -293,7 +294,7 @@ public class Bpmn2ElementTypes {
 		if (element instanceof EClass) {
 			EClass eClass = (EClass) element;
 			if (!eClass.isAbstract()) {
-				return Bpmn2DiagramEditorPlugin.getInstance()
+				return Bpmn2ProcessDiagramEditorPlugin.getInstance()
 						.getItemImageDescriptor(
 								eClass.getEPackage().getEFactoryInstance()
 										.create(eClass));

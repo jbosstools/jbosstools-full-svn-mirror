@@ -68,7 +68,7 @@ public class DiagramEditorContextMenuProvider extends
 						}
 					});
 		} catch (Exception e) {
-			Bpmn2DiagramEditorPlugin.getInstance().logError(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 					"Error building context menu", e);
 		}
 	}

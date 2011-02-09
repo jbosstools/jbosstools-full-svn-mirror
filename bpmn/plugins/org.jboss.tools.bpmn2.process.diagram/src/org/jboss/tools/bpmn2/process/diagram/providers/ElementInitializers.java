@@ -22,6 +22,7 @@ import org.eclipse.bpmn2.TextAnnotation;
 import org.eclipse.bpmn2.UserTask;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.jboss.tools.bpmn2.process.diagram.part.Bpmn2DiagramEditorPlugin;
+import org.jboss.tools.bpmn2.process.diagram.part.Bpmn2ProcessDiagramEditorPlugin;
 
 /**
  * @generated
@@ -40,7 +41,7 @@ public class ElementInitializers {
 			Object value_0 = id_UserTask_2001(instance);
 			instance.setId((String) value_0);
 		} catch (RuntimeException e) {
-			Bpmn2DiagramEditorPlugin.getInstance().logError(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 					"Element initialization failed", e); //$NON-NLS-1$						
 		}
 	}
@@ -53,7 +54,7 @@ public class ElementInitializers {
 			Object value_0 = id_ServiceTask_2002(instance);
 			instance.setId((String) value_0);
 		} catch (RuntimeException e) {
-			Bpmn2DiagramEditorPlugin.getInstance().logError(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 					"Element initialization failed", e); //$NON-NLS-1$						
 		}
 	}
@@ -66,7 +67,7 @@ public class ElementInitializers {
 			Object value_0 = id_StartEvent_2003(instance);
 			instance.setId((String) value_0);
 		} catch (RuntimeException e) {
-			Bpmn2DiagramEditorPlugin.getInstance().logError(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 					"Element initialization failed", e); //$NON-NLS-1$						
 		}
 	}
@@ -86,7 +87,7 @@ public class ElementInitializers {
 				instance.getEventDefinitions().add((EventDefinition) value_1);
 			}
 		} catch (RuntimeException e) {
-			Bpmn2DiagramEditorPlugin.getInstance().logError(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 					"Element initialization failed", e); //$NON-NLS-1$						
 		}
 	}
@@ -99,7 +100,7 @@ public class ElementInitializers {
 			Object value_0 = id_EndEvent_2004(instance);
 			instance.setId((String) value_0);
 		} catch (RuntimeException e) {
-			Bpmn2DiagramEditorPlugin.getInstance().logError(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 					"Element initialization failed", e); //$NON-NLS-1$						
 		}
 	}
@@ -112,7 +113,7 @@ public class ElementInitializers {
 			Object value_0 = id_ExclusiveGateway_2005(instance);
 			instance.setId((String) value_0);
 		} catch (RuntimeException e) {
-			Bpmn2DiagramEditorPlugin.getInstance().logError(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 					"Element initialization failed", e); //$NON-NLS-1$						
 		}
 	}
@@ -125,7 +126,7 @@ public class ElementInitializers {
 			Object value_0 = id_ParallelGateway_2006(instance);
 			instance.setId((String) value_0);
 		} catch (RuntimeException e) {
-			Bpmn2DiagramEditorPlugin.getInstance().logError(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 					"Element initialization failed", e); //$NON-NLS-1$						
 		}
 	}
@@ -145,7 +146,7 @@ public class ElementInitializers {
 				instance.getEventDefinitions().add((EventDefinition) value_1);
 			}
 		} catch (RuntimeException e) {
-			Bpmn2DiagramEditorPlugin.getInstance().logError(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 					"Element initialization failed", e); //$NON-NLS-1$						
 		}
 	}
@@ -165,7 +166,7 @@ public class ElementInitializers {
 				instance.getEventDefinitions().add((EventDefinition) value_1);
 			}
 		} catch (RuntimeException e) {
-			Bpmn2DiagramEditorPlugin.getInstance().logError(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 					"Element initialization failed", e); //$NON-NLS-1$						
 		}
 	}
@@ -185,7 +186,7 @@ public class ElementInitializers {
 				instance.getEventDefinitions().add((EventDefinition) value_1);
 			}
 		} catch (RuntimeException e) {
-			Bpmn2DiagramEditorPlugin.getInstance().logError(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 					"Element initialization failed", e); //$NON-NLS-1$						
 		}
 	}
@@ -205,7 +206,7 @@ public class ElementInitializers {
 				instance.getEventDefinitions().add((EventDefinition) value_1);
 			}
 		} catch (RuntimeException e) {
-			Bpmn2DiagramEditorPlugin.getInstance().logError(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 					"Element initialization failed", e); //$NON-NLS-1$						
 		}
 	}
@@ -225,7 +226,7 @@ public class ElementInitializers {
 				instance.getEventDefinitions().add((EventDefinition) value_1);
 			}
 		} catch (RuntimeException e) {
-			Bpmn2DiagramEditorPlugin.getInstance().logError(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 					"Element initialization failed", e); //$NON-NLS-1$						
 		}
 	}
@@ -245,7 +246,7 @@ public class ElementInitializers {
 				instance.getEventDefinitions().add((EventDefinition) value_1);
 			}
 		} catch (RuntimeException e) {
-			Bpmn2DiagramEditorPlugin.getInstance().logError(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 					"Element initialization failed", e); //$NON-NLS-1$						
 		}
 	}
@@ -258,7 +259,7 @@ public class ElementInitializers {
 			Object value_0 = id_DataObject_2014(instance);
 			instance.setId((String) value_0);
 		} catch (RuntimeException e) {
-			Bpmn2DiagramEditorPlugin.getInstance().logError(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 					"Element initialization failed", e); //$NON-NLS-1$						
 		}
 	}
@@ -271,7 +272,7 @@ public class ElementInitializers {
 			Object value_0 = id_TextAnnotation_2015(instance);
 			instance.setId((String) value_0);
 		} catch (RuntimeException e) {
-			Bpmn2DiagramEditorPlugin.getInstance().logError(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 					"Element initialization failed", e); //$NON-NLS-1$						
 		}
 	}
@@ -284,7 +285,7 @@ public class ElementInitializers {
 			Object value_0 = id_SubProcess_2016(instance);
 			instance.setId((String) value_0);
 		} catch (RuntimeException e) {
-			Bpmn2DiagramEditorPlugin.getInstance().logError(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 					"Element initialization failed", e); //$NON-NLS-1$						
 		}
 	}
@@ -297,7 +298,7 @@ public class ElementInitializers {
 			Object value_0 = id_ScriptTask_2017(instance);
 			instance.setId((String) value_0);
 		} catch (RuntimeException e) {
-			Bpmn2DiagramEditorPlugin.getInstance().logError(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 					"Element initialization failed", e); //$NON-NLS-1$						
 		}
 	}
@@ -310,7 +311,7 @@ public class ElementInitializers {
 			Object value_0 = id_SubProcess_3001(instance);
 			instance.setId((String) value_0);
 		} catch (RuntimeException e) {
-			Bpmn2DiagramEditorPlugin.getInstance().logError(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 					"Element initialization failed", e); //$NON-NLS-1$						
 		}
 	}
@@ -323,7 +324,7 @@ public class ElementInitializers {
 			Object value_0 = id_UserTask_3002(instance);
 			instance.setId((String) value_0);
 		} catch (RuntimeException e) {
-			Bpmn2DiagramEditorPlugin.getInstance().logError(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 					"Element initialization failed", e); //$NON-NLS-1$						
 		}
 	}
@@ -336,7 +337,7 @@ public class ElementInitializers {
 			Object value_0 = id_ServiceTask_3004(instance);
 			instance.setId((String) value_0);
 		} catch (RuntimeException e) {
-			Bpmn2DiagramEditorPlugin.getInstance().logError(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 					"Element initialization failed", e); //$NON-NLS-1$						
 		}
 	}
@@ -349,7 +350,7 @@ public class ElementInitializers {
 			Object value_0 = id_StartEvent_3003(instance);
 			instance.setId((String) value_0);
 		} catch (RuntimeException e) {
-			Bpmn2DiagramEditorPlugin.getInstance().logError(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 					"Element initialization failed", e); //$NON-NLS-1$						
 		}
 	}
@@ -369,7 +370,7 @@ public class ElementInitializers {
 				instance.getEventDefinitions().add((EventDefinition) value_1);
 			}
 		} catch (RuntimeException e) {
-			Bpmn2DiagramEditorPlugin.getInstance().logError(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 					"Element initialization failed", e); //$NON-NLS-1$						
 		}
 	}
@@ -382,7 +383,7 @@ public class ElementInitializers {
 			Object value_0 = id_EndEvent_3006(instance);
 			instance.setId((String) value_0);
 		} catch (RuntimeException e) {
-			Bpmn2DiagramEditorPlugin.getInstance().logError(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 					"Element initialization failed", e); //$NON-NLS-1$						
 		}
 	}
@@ -395,7 +396,7 @@ public class ElementInitializers {
 			Object value_0 = id_ExclusiveGateway_3007(instance);
 			instance.setId((String) value_0);
 		} catch (RuntimeException e) {
-			Bpmn2DiagramEditorPlugin.getInstance().logError(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 					"Element initialization failed", e); //$NON-NLS-1$						
 		}
 	}
@@ -408,7 +409,7 @@ public class ElementInitializers {
 			Object value_0 = id_ParallelGateway_3008(instance);
 			instance.setId((String) value_0);
 		} catch (RuntimeException e) {
-			Bpmn2DiagramEditorPlugin.getInstance().logError(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 					"Element initialization failed", e); //$NON-NLS-1$						
 		}
 	}
@@ -428,7 +429,7 @@ public class ElementInitializers {
 				instance.getEventDefinitions().add((EventDefinition) value_1);
 			}
 		} catch (RuntimeException e) {
-			Bpmn2DiagramEditorPlugin.getInstance().logError(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 					"Element initialization failed", e); //$NON-NLS-1$						
 		}
 	}
@@ -448,7 +449,7 @@ public class ElementInitializers {
 				instance.getEventDefinitions().add((EventDefinition) value_1);
 			}
 		} catch (RuntimeException e) {
-			Bpmn2DiagramEditorPlugin.getInstance().logError(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 					"Element initialization failed", e); //$NON-NLS-1$						
 		}
 	}
@@ -468,7 +469,7 @@ public class ElementInitializers {
 				instance.getEventDefinitions().add((EventDefinition) value_1);
 			}
 		} catch (RuntimeException e) {
-			Bpmn2DiagramEditorPlugin.getInstance().logError(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 					"Element initialization failed", e); //$NON-NLS-1$						
 		}
 	}
@@ -488,7 +489,7 @@ public class ElementInitializers {
 				instance.getEventDefinitions().add((EventDefinition) value_1);
 			}
 		} catch (RuntimeException e) {
-			Bpmn2DiagramEditorPlugin.getInstance().logError(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 					"Element initialization failed", e); //$NON-NLS-1$						
 		}
 	}
@@ -508,7 +509,7 @@ public class ElementInitializers {
 				instance.getEventDefinitions().add((EventDefinition) value_1);
 			}
 		} catch (RuntimeException e) {
-			Bpmn2DiagramEditorPlugin.getInstance().logError(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 					"Element initialization failed", e); //$NON-NLS-1$						
 		}
 	}
@@ -521,7 +522,7 @@ public class ElementInitializers {
 			Object value_0 = id_DataObject_3014(instance);
 			instance.setId((String) value_0);
 		} catch (RuntimeException e) {
-			Bpmn2DiagramEditorPlugin.getInstance().logError(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 					"Element initialization failed", e); //$NON-NLS-1$						
 		}
 	}
@@ -534,7 +535,7 @@ public class ElementInitializers {
 			Object value_0 = id_TextAnnotation_3015(instance);
 			instance.setId((String) value_0);
 		} catch (RuntimeException e) {
-			Bpmn2DiagramEditorPlugin.getInstance().logError(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 					"Element initialization failed", e); //$NON-NLS-1$						
 		}
 	}
@@ -547,7 +548,7 @@ public class ElementInitializers {
 			Object value_0 = id_ScriptTask_3016(instance);
 			instance.setId((String) value_0);
 		} catch (RuntimeException e) {
-			Bpmn2DiagramEditorPlugin.getInstance().logError(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 					"Element initialization failed", e); //$NON-NLS-1$						
 		}
 	}
@@ -560,7 +561,7 @@ public class ElementInitializers {
 			Object value_0 = id_SequenceFlow_4001(instance);
 			instance.setId((String) value_0);
 		} catch (RuntimeException e) {
-			Bpmn2DiagramEditorPlugin.getInstance().logError(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 					"Element initialization failed", e); //$NON-NLS-1$						
 		}
 	}
@@ -573,7 +574,7 @@ public class ElementInitializers {
 			Object value_0 = id_Association_4002(instance);
 			instance.setId((String) value_0);
 		} catch (RuntimeException e) {
-			Bpmn2DiagramEditorPlugin.getInstance().logError(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 					"Element initialization failed", e); //$NON-NLS-1$						
 		}
 	}
@@ -993,11 +994,11 @@ public class ElementInitializers {
 	 * @generated
 	 */
 	public static ElementInitializers getInstance() {
-		ElementInitializers cached = Bpmn2DiagramEditorPlugin.getInstance()
-				.getElementInitializers();
+		ElementInitializers cached = Bpmn2ProcessDiagramEditorPlugin
+				.getInstance().getElementInitializers();
 		if (cached == null) {
-			Bpmn2DiagramEditorPlugin.getInstance().setElementInitializers(
-					cached = new ElementInitializers());
+			Bpmn2ProcessDiagramEditorPlugin.getInstance()
+					.setElementInitializers(cached = new ElementInitializers());
 		}
 		return cached;
 	}

@@ -66,7 +66,7 @@
    <extension point="org.eclipse.ui.popupMenus" id="init-diagram-action">
       <?gmfgen generated="true"?>
       <objectContribution
-            id="org.eclipse.bpmn2.diagram.InitDiagram"
+            id="org.jboss.tools.bpmn2.process.diagram.InitDiagram"
             nameFilter="*.jbpmn"
             objectClass="org.eclipse.core.resources.IFile">
          <action
@@ -74,7 +74,7 @@
                class="org.jboss.tools.bpmn2.process.diagram.part.Bpmn2InitDiagramFileAction"
                menubarPath="additions"
                enablesFor="1"
-               id="org.eclipse.bpmn2.diagram.InitDiagramAction">
+               id="org.jboss.tools.bpmn2.process.diagram.InitDiagramAction">
          </action>
       </objectContribution>
    </extension>
@@ -127,32 +127,32 @@
    <extension point="org.eclipse.ui.preferencePages" id="prefpages">
       <?gmfgen generated="true"?>
       <page
-            id="org.eclipse.bpmn2.diagram.general"
-            name="%prefpage.org.eclipse.bpmn2.diagram.general"
+            id="org.jboss.tools.bpmn2.process.diagram.general"
+            name="%prefpage.org.jboss.tools.bpmn2.process.diagram.general"
             class="org.jboss.tools.bpmn2.process.diagram.preferences.DiagramGeneralPreferencePage">
       </page>
       <page
-            id="org.eclipse.bpmn2.diagram.appearance"
-            name="%prefpage.org.eclipse.bpmn2.diagram.appearance"
-            category="org.eclipse.bpmn2.diagram.general"
+            id="org.jboss.tools.bpmn2.process.diagram.appearance"
+            name="%prefpage.org.jboss.tools.bpmn2.process.diagram.appearance"
+            category="org.jboss.tools.bpmn2.process.diagram.general"
             class="org.jboss.tools.bpmn2.process.diagram.preferences.DiagramAppearancePreferencePage">
       </page>
       <page
-            id="org.eclipse.bpmn2.diagram.connections"
-            name="%prefpage.org.eclipse.bpmn2.diagram.connections"
-            category="org.eclipse.bpmn2.diagram.general"
+            id="org.jboss.tools.bpmn2.process.diagram.connections"
+            name="%prefpage.org.jboss.tools.bpmn2.process.diagram.connections"
+            category="org.jboss.tools.bpmn2.process.diagram.general"
             class="org.jboss.tools.bpmn2.process.diagram.preferences.DiagramConnectionsPreferencePage">
       </page>
       <page
-            id="org.eclipse.bpmn2.diagram.printing"
-            name="%prefpage.org.eclipse.bpmn2.diagram.printing"
-            category="org.eclipse.bpmn2.diagram.general"
+            id="org.jboss.tools.bpmn2.process.diagram.printing"
+            name="%prefpage.org.jboss.tools.bpmn2.process.diagram.printing"
+            category="org.jboss.tools.bpmn2.process.diagram.general"
             class="org.jboss.tools.bpmn2.process.diagram.preferences.DiagramPrintingPreferencePage">
       </page>
       <page
-            id="org.eclipse.bpmn2.diagram.rulersAndGrid"
-            name="%prefpage.org.eclipse.bpmn2.diagram.rulersAndGrid"
-            category="org.eclipse.bpmn2.diagram.general"
+            id="org.jboss.tools.bpmn2.process.diagram.rulersAndGrid"
+            name="%prefpage.org.jboss.tools.bpmn2.process.diagram.rulersAndGrid"
+            category="org.jboss.tools.bpmn2.process.diagram.general"
             class="org.jboss.tools.bpmn2.process.diagram.preferences.DiagramRulersAndGridPreferencePage">
       </page>
    </extension>
@@ -160,7 +160,7 @@
    <extension point="org.eclipse.ui.views.properties.tabbed.propertyContributor" id="prop-contrib">
       <?gmfgen generated="true"?>
       <propertyContributor
-            contributorId="org.eclipse.bpmn2.diagram"
+            contributorId="org.jboss.tools.bpmn2.process.diagram"
             labelProvider="org.jboss.tools.bpmn2.process.diagram.sheet.Bpmn2SheetLabelProvider">
          <propertyCategory category="domain"/>
          <propertyCategory category="visual"/>
@@ -170,7 +170,7 @@
 
    <extension point="org.eclipse.ui.views.properties.tabbed.propertyTabs" id="proptabs">
       <?gmfgen generated="true"?>   
-      <propertyTabs contributorId="org.eclipse.bpmn2.diagram">
+      <propertyTabs contributorId="org.jboss.tools.bpmn2.process.diagram">
          <propertyTab
              category="visual"
              id="property.tab.AppearancePropertySection"
@@ -187,7 +187,7 @@
    </extension>
 
    <extension point="org.eclipse.ui.views.properties.tabbed.propertyTabs" id="bpmnTabs">
-      <propertyTabs contributorId="org.eclipse.bpmn2.diagram">
+      <propertyTabs contributorId="org.jboss.tools.bpmn2.process.diagram">
           <propertyTab
              category="domain"
              id="property.tab.bpmn"
@@ -197,7 +197,7 @@
 
    <extension point="org.eclipse.ui.views.properties.tabbed.propertySections" id="propsections">
       <?gmfgen generated="true"?>   
-      <propertySections contributorId="org.eclipse.bpmn2.diagram">
+      <propertySections contributorId="org.jboss.tools.bpmn2.process.diagram">
          <propertySection id="property.section.ConnectorAppearancePropertySection" 
             filter="org.eclipse.gmf.runtime.diagram.ui.properties.filters.ConnectionEditPartPropertySectionFilter" 
             class="org.eclipse.gmf.runtime.diagram.ui.properties.sections.appearance.ConnectionAppearancePropertySection" 
@@ -221,7 +221,7 @@
          <propertySection
             id="property.section.domain" 
             tab="property.tab.domain"
-            class="org.jboss.tools.bpmn2.process.diagram.sheet.Bpmn2PropertySectionBis">
+            class="org.jboss.tools.bpmn2.process.diagram.sheet.Bpmn2PropertySection">
             <input type="org.eclipse.gmf.runtime.notation.View"/>
             <input type="org.eclipse.gef.EditPart"/>
             <input type="org.jboss.tools.bpmn2.process.diagram.navigator.Bpmn2AbstractNavigatorItem"/>
@@ -230,7 +230,7 @@
    </extension>
 
    <extension point="org.eclipse.ui.views.properties.tabbed.propertySections" id="bpmnSection">
-      <propertySections contributorId="org.eclipse.bpmn2.diagram">
+      <propertySections contributorId="org.jboss.tools.bpmn2.process.diagram">
          <propertySection
             id="property.section.bpmn" 
             tab="property.tab.bpmn"
@@ -319,7 +319,7 @@
       <?gmfgen generated="true"?>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <metamodelType
-               id="org.eclipse.bpmn2.diagram.Process_1000"
+               id="org.jboss.tools.bpmn2.process.diagram.Process_1000"
                name="%metatype.name.Process_1000"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
                eclass="Process"
@@ -329,7 +329,7 @@
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <metamodelType
-               id="org.eclipse.bpmn2.diagram.UserTask_2001"
+               id="org.jboss.tools.bpmn2.process.diagram.UserTask_2001"
                name="%metatype.name.UserTask_2001"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
                eclass="UserTask"
@@ -339,7 +339,7 @@
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <metamodelType
-               id="org.eclipse.bpmn2.diagram.ServiceTask_2002"
+               id="org.jboss.tools.bpmn2.process.diagram.ServiceTask_2002"
                name="%metatype.name.ServiceTask_2002"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
                eclass="ServiceTask"
@@ -349,7 +349,7 @@
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <metamodelType
-               id="org.eclipse.bpmn2.diagram.StartEvent_2003"
+               id="org.jboss.tools.bpmn2.process.diagram.StartEvent_2003"
                name="%metatype.name.StartEvent_2003"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
                eclass="StartEvent"
@@ -359,16 +359,16 @@
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <specializationType
-               id="org.eclipse.bpmn2.diagram.StartEvent_2007"
+               id="org.jboss.tools.bpmn2.process.diagram.StartEvent_2007"
                name="%metatype.name.StartEvent_2007"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
-            <specializes id="org.eclipse.bpmn2.diagram.StartEvent_2003"/>
+            <specializes id="org.jboss.tools.bpmn2.process.diagram.StartEvent_2003"/>
             <param name="semanticHint" value="2007"/>
          </specializationType>
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <metamodelType
-               id="org.eclipse.bpmn2.diagram.EndEvent_2004"
+               id="org.jboss.tools.bpmn2.process.diagram.EndEvent_2004"
                name="%metatype.name.EndEvent_2004"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
                eclass="EndEvent"
@@ -378,7 +378,7 @@
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <metamodelType
-               id="org.eclipse.bpmn2.diagram.ExclusiveGateway_2005"
+               id="org.jboss.tools.bpmn2.process.diagram.ExclusiveGateway_2005"
                name="%metatype.name.ExclusiveGateway_2005"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
                eclass="ExclusiveGateway"
@@ -388,7 +388,7 @@
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <metamodelType
-               id="org.eclipse.bpmn2.diagram.ParallelGateway_2006"
+               id="org.jboss.tools.bpmn2.process.diagram.ParallelGateway_2006"
                name="%metatype.name.ParallelGateway_2006"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
                eclass="ParallelGateway"
@@ -398,25 +398,25 @@
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <specializationType
-               id="org.eclipse.bpmn2.diagram.EndEvent_2008"
+               id="org.jboss.tools.bpmn2.process.diagram.EndEvent_2008"
                name="%metatype.name.EndEvent_2008"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
-            <specializes id="org.eclipse.bpmn2.diagram.EndEvent_2004"/>
+            <specializes id="org.jboss.tools.bpmn2.process.diagram.EndEvent_2004"/>
             <param name="semanticHint" value="2008"/>
          </specializationType>
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <specializationType
-               id="org.eclipse.bpmn2.diagram.EndEvent_2009"
+               id="org.jboss.tools.bpmn2.process.diagram.EndEvent_2009"
                name="%metatype.name.EndEvent_2009"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
-            <specializes id="org.eclipse.bpmn2.diagram.EndEvent_2004"/>
+            <specializes id="org.jboss.tools.bpmn2.process.diagram.EndEvent_2004"/>
             <param name="semanticHint" value="2009"/>
          </specializationType>
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <metamodelType
-               id="org.eclipse.bpmn2.diagram.IntermediateCatchEvent_2010"
+               id="org.jboss.tools.bpmn2.process.diagram.IntermediateCatchEvent_2010"
                name="%metatype.name.IntermediateCatchEvent_2010"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
                eclass="IntermediateCatchEvent"
@@ -426,7 +426,7 @@
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <metamodelType
-               id="org.eclipse.bpmn2.diagram.IntermediateThrowEvent_2011"
+               id="org.jboss.tools.bpmn2.process.diagram.IntermediateThrowEvent_2011"
                name="%metatype.name.IntermediateThrowEvent_2011"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
                eclass="IntermediateThrowEvent"
@@ -436,25 +436,25 @@
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <specializationType
-               id="org.eclipse.bpmn2.diagram.IntermediateCatchEvent_2012"
+               id="org.jboss.tools.bpmn2.process.diagram.IntermediateCatchEvent_2012"
                name="%metatype.name.IntermediateCatchEvent_2012"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
-            <specializes id="org.eclipse.bpmn2.diagram.IntermediateCatchEvent_2010"/>
+            <specializes id="org.jboss.tools.bpmn2.process.diagram.IntermediateCatchEvent_2010"/>
             <param name="semanticHint" value="2012"/>
          </specializationType>
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <specializationType
-               id="org.eclipse.bpmn2.diagram.IntermediateCatchEvent_2013"
+               id="org.jboss.tools.bpmn2.process.diagram.IntermediateCatchEvent_2013"
                name="%metatype.name.IntermediateCatchEvent_2013"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
-            <specializes id="org.eclipse.bpmn2.diagram.IntermediateCatchEvent_2010"/>
+            <specializes id="org.jboss.tools.bpmn2.process.diagram.IntermediateCatchEvent_2010"/>
             <param name="semanticHint" value="2013"/>
          </specializationType>
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <metamodelType
-               id="org.eclipse.bpmn2.diagram.DataObject_2014"
+               id="org.jboss.tools.bpmn2.process.diagram.DataObject_2014"
                name="%metatype.name.DataObject_2014"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
                eclass="DataObject"
@@ -464,7 +464,7 @@
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <metamodelType
-               id="org.eclipse.bpmn2.diagram.TextAnnotation_2015"
+               id="org.jboss.tools.bpmn2.process.diagram.TextAnnotation_2015"
                name="%metatype.name.TextAnnotation_2015"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
                eclass="TextAnnotation"
@@ -474,7 +474,7 @@
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <metamodelType
-               id="org.eclipse.bpmn2.diagram.SubProcess_2016"
+               id="org.jboss.tools.bpmn2.process.diagram.SubProcess_2016"
                name="%metatype.name.SubProcess_2016"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
                eclass="SubProcess"
@@ -484,151 +484,151 @@
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <specializationType
-               id="org.eclipse.bpmn2.diagram.ScriptTask_2017"
+               id="org.jboss.tools.bpmn2.process.diagram.ScriptTask_2017"
                name="%metatype.name.ScriptTask_2017"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
-            <specializes id="org.eclipse.bpmn2.diagram.ScriptTask_3016"/>
+            <specializes id="org.jboss.tools.bpmn2.process.diagram.ScriptTask_3016"/>
             <param name="semanticHint" value="2017"/>
          </specializationType>
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <specializationType
-               id="org.eclipse.bpmn2.diagram.SubProcess_3001"
+               id="org.jboss.tools.bpmn2.process.diagram.SubProcess_3001"
                name="%metatype.name.SubProcess_3001"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
-            <specializes id="org.eclipse.bpmn2.diagram.SubProcess_2016"/>
+            <specializes id="org.jboss.tools.bpmn2.process.diagram.SubProcess_2016"/>
             <param name="semanticHint" value="3001"/>
          </specializationType>
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <specializationType
-               id="org.eclipse.bpmn2.diagram.UserTask_3002"
+               id="org.jboss.tools.bpmn2.process.diagram.UserTask_3002"
                name="%metatype.name.UserTask_3002"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
-            <specializes id="org.eclipse.bpmn2.diagram.UserTask_2001"/>
+            <specializes id="org.jboss.tools.bpmn2.process.diagram.UserTask_2001"/>
             <param name="semanticHint" value="3002"/>
          </specializationType>
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <specializationType
-               id="org.eclipse.bpmn2.diagram.ServiceTask_3004"
+               id="org.jboss.tools.bpmn2.process.diagram.ServiceTask_3004"
                name="%metatype.name.ServiceTask_3004"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
-            <specializes id="org.eclipse.bpmn2.diagram.ServiceTask_2002"/>
+            <specializes id="org.jboss.tools.bpmn2.process.diagram.ServiceTask_2002"/>
             <param name="semanticHint" value="3004"/>
          </specializationType>
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <specializationType
-               id="org.eclipse.bpmn2.diagram.StartEvent_3003"
+               id="org.jboss.tools.bpmn2.process.diagram.StartEvent_3003"
                name="%metatype.name.StartEvent_3003"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
-            <specializes id="org.eclipse.bpmn2.diagram.StartEvent_2003"/>
+            <specializes id="org.jboss.tools.bpmn2.process.diagram.StartEvent_2003"/>
             <param name="semanticHint" value="3003"/>
          </specializationType>
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <specializationType
-               id="org.eclipse.bpmn2.diagram.StartEvent_3005"
+               id="org.jboss.tools.bpmn2.process.diagram.StartEvent_3005"
                name="%metatype.name.StartEvent_3005"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
-            <specializes id="org.eclipse.bpmn2.diagram.StartEvent_2003"/>
+            <specializes id="org.jboss.tools.bpmn2.process.diagram.StartEvent_2003"/>
             <param name="semanticHint" value="3005"/>
          </specializationType>
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <specializationType
-               id="org.eclipse.bpmn2.diagram.EndEvent_3006"
+               id="org.jboss.tools.bpmn2.process.diagram.EndEvent_3006"
                name="%metatype.name.EndEvent_3006"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
-            <specializes id="org.eclipse.bpmn2.diagram.EndEvent_2004"/>
+            <specializes id="org.jboss.tools.bpmn2.process.diagram.EndEvent_2004"/>
             <param name="semanticHint" value="3006"/>
          </specializationType>
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <specializationType
-               id="org.eclipse.bpmn2.diagram.ExclusiveGateway_3007"
+               id="org.jboss.tools.bpmn2.process.diagram.ExclusiveGateway_3007"
                name="%metatype.name.ExclusiveGateway_3007"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
-            <specializes id="org.eclipse.bpmn2.diagram.ExclusiveGateway_2005"/>
+            <specializes id="org.jboss.tools.bpmn2.process.diagram.ExclusiveGateway_2005"/>
             <param name="semanticHint" value="3007"/>
          </specializationType>
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <specializationType
-               id="org.eclipse.bpmn2.diagram.ParallelGateway_3008"
+               id="org.jboss.tools.bpmn2.process.diagram.ParallelGateway_3008"
                name="%metatype.name.ParallelGateway_3008"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
-            <specializes id="org.eclipse.bpmn2.diagram.ParallelGateway_2006"/>
+            <specializes id="org.jboss.tools.bpmn2.process.diagram.ParallelGateway_2006"/>
             <param name="semanticHint" value="3008"/>
          </specializationType>
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <specializationType
-               id="org.eclipse.bpmn2.diagram.EndEvent_3009"
+               id="org.jboss.tools.bpmn2.process.diagram.EndEvent_3009"
                name="%metatype.name.EndEvent_3009"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
-            <specializes id="org.eclipse.bpmn2.diagram.EndEvent_2004"/>
+            <specializes id="org.jboss.tools.bpmn2.process.diagram.EndEvent_2004"/>
             <param name="semanticHint" value="3009"/>
          </specializationType>
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <specializationType
-               id="org.eclipse.bpmn2.diagram.EndEvent_3010"
+               id="org.jboss.tools.bpmn2.process.diagram.EndEvent_3010"
                name="%metatype.name.EndEvent_3010"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
-            <specializes id="org.eclipse.bpmn2.diagram.EndEvent_2004"/>
+            <specializes id="org.jboss.tools.bpmn2.process.diagram.EndEvent_2004"/>
             <param name="semanticHint" value="3010"/>
          </specializationType>
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <specializationType
-               id="org.eclipse.bpmn2.diagram.IntermediateCatchEvent_3011"
+               id="org.jboss.tools.bpmn2.process.diagram.IntermediateCatchEvent_3011"
                name="%metatype.name.IntermediateCatchEvent_3011"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
-            <specializes id="org.eclipse.bpmn2.diagram.IntermediateCatchEvent_2010"/>
+            <specializes id="org.jboss.tools.bpmn2.process.diagram.IntermediateCatchEvent_2010"/>
             <param name="semanticHint" value="3011"/>
          </specializationType>
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <specializationType
-               id="org.eclipse.bpmn2.diagram.IntermediateThrowEvent_3012"
+               id="org.jboss.tools.bpmn2.process.diagram.IntermediateThrowEvent_3012"
                name="%metatype.name.IntermediateThrowEvent_3012"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
-            <specializes id="org.eclipse.bpmn2.diagram.IntermediateThrowEvent_2011"/>
+            <specializes id="org.jboss.tools.bpmn2.process.diagram.IntermediateThrowEvent_2011"/>
             <param name="semanticHint" value="3012"/>
          </specializationType>
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <specializationType
-               id="org.eclipse.bpmn2.diagram.IntermediateCatchEvent_3013"
+               id="org.jboss.tools.bpmn2.process.diagram.IntermediateCatchEvent_3013"
                name="%metatype.name.IntermediateCatchEvent_3013"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
-            <specializes id="org.eclipse.bpmn2.diagram.IntermediateCatchEvent_2010"/>
+            <specializes id="org.jboss.tools.bpmn2.process.diagram.IntermediateCatchEvent_2010"/>
             <param name="semanticHint" value="3013"/>
          </specializationType>
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <specializationType
-               id="org.eclipse.bpmn2.diagram.DataObject_3014"
+               id="org.jboss.tools.bpmn2.process.diagram.DataObject_3014"
                name="%metatype.name.DataObject_3014"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
-            <specializes id="org.eclipse.bpmn2.diagram.DataObject_2014"/>
+            <specializes id="org.jboss.tools.bpmn2.process.diagram.DataObject_2014"/>
             <param name="semanticHint" value="3014"/>
          </specializationType>
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <specializationType
-               id="org.eclipse.bpmn2.diagram.TextAnnotation_3015"
+               id="org.jboss.tools.bpmn2.process.diagram.TextAnnotation_3015"
                name="%metatype.name.TextAnnotation_3015"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
-            <specializes id="org.eclipse.bpmn2.diagram.TextAnnotation_2015"/>
+            <specializes id="org.jboss.tools.bpmn2.process.diagram.TextAnnotation_2015"/>
             <param name="semanticHint" value="3015"/>
          </specializationType>
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <metamodelType
-               id="org.eclipse.bpmn2.diagram.ScriptTask_3016"
+               id="org.jboss.tools.bpmn2.process.diagram.ScriptTask_3016"
                name="%metatype.name.ScriptTask_3016"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
                eclass="ScriptTask"
@@ -638,7 +638,7 @@
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <metamodelType
-               id="org.eclipse.bpmn2.diagram.SequenceFlow_4001"
+               id="org.jboss.tools.bpmn2.process.diagram.SequenceFlow_4001"
                name="%metatype.name.SequenceFlow_4001"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
                eclass="SequenceFlow"
@@ -648,7 +648,7 @@
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <metamodelType
-               id="org.eclipse.bpmn2.diagram.Association_4002"
+               id="org.jboss.tools.bpmn2.process.diagram.Association_4002"
                name="%metatype.name.Association_4002"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
                eclass="Association"
@@ -660,59 +660,59 @@
 
    <extension point="org.eclipse.gmf.runtime.emf.type.core.elementTypeBindings" id="element-types-bindings">
       <?gmfgen generated="true"?>
-      <clientContext id="org.eclipse.bpmn2.diagram.TypeContext">
+      <clientContext id="org.jboss.tools.bpmn2.process.diagram.TypeContext">
          <enablement>
             <test
                property="org.eclipse.gmf.runtime.emf.core.editingDomain"
-               value="org.eclipse.bpmn2.diagram.EditingDomain"/>
+               value="org.jboss.tools.bpmn2.process.diagram.EditingDomain"/>
          </enablement>
       </clientContext> 
-      <binding context="org.eclipse.bpmn2.diagram.TypeContext">
-         <elementType ref="org.eclipse.bpmn2.diagram.Process_1000"/>
-         <elementType ref="org.eclipse.bpmn2.diagram.UserTask_2001"/>
-         <elementType ref="org.eclipse.bpmn2.diagram.ServiceTask_2002"/>
-         <elementType ref="org.eclipse.bpmn2.diagram.StartEvent_2003"/>
-         <elementType ref="org.eclipse.bpmn2.diagram.StartEvent_2007"/>
-         <elementType ref="org.eclipse.bpmn2.diagram.EndEvent_2004"/>
-         <elementType ref="org.eclipse.bpmn2.diagram.ExclusiveGateway_2005"/>
-         <elementType ref="org.eclipse.bpmn2.diagram.ParallelGateway_2006"/>
-         <elementType ref="org.eclipse.bpmn2.diagram.EndEvent_2008"/>
-         <elementType ref="org.eclipse.bpmn2.diagram.EndEvent_2009"/>
-         <elementType ref="org.eclipse.bpmn2.diagram.IntermediateCatchEvent_2010"/>
-         <elementType ref="org.eclipse.bpmn2.diagram.IntermediateThrowEvent_2011"/>
-         <elementType ref="org.eclipse.bpmn2.diagram.IntermediateCatchEvent_2012"/>
-         <elementType ref="org.eclipse.bpmn2.diagram.IntermediateCatchEvent_2013"/>
-         <elementType ref="org.eclipse.bpmn2.diagram.DataObject_2014"/>
-         <elementType ref="org.eclipse.bpmn2.diagram.TextAnnotation_2015"/>
-         <elementType ref="org.eclipse.bpmn2.diagram.SubProcess_2016"/>
-         <elementType ref="org.eclipse.bpmn2.diagram.ScriptTask_2017"/>
-         <elementType ref="org.eclipse.bpmn2.diagram.SubProcess_3001"/>
-         <elementType ref="org.eclipse.bpmn2.diagram.UserTask_3002"/>
-         <elementType ref="org.eclipse.bpmn2.diagram.ServiceTask_3004"/>
-         <elementType ref="org.eclipse.bpmn2.diagram.StartEvent_3003"/>
-         <elementType ref="org.eclipse.bpmn2.diagram.StartEvent_3005"/>
-         <elementType ref="org.eclipse.bpmn2.diagram.EndEvent_3006"/>
-         <elementType ref="org.eclipse.bpmn2.diagram.ExclusiveGateway_3007"/>
-         <elementType ref="org.eclipse.bpmn2.diagram.ParallelGateway_3008"/>
-         <elementType ref="org.eclipse.bpmn2.diagram.EndEvent_3009"/>
-         <elementType ref="org.eclipse.bpmn2.diagram.EndEvent_3010"/>
-         <elementType ref="org.eclipse.bpmn2.diagram.IntermediateCatchEvent_3011"/>
-         <elementType ref="org.eclipse.bpmn2.diagram.IntermediateThrowEvent_3012"/>
-         <elementType ref="org.eclipse.bpmn2.diagram.IntermediateCatchEvent_3013"/>
-         <elementType ref="org.eclipse.bpmn2.diagram.DataObject_3014"/>
-         <elementType ref="org.eclipse.bpmn2.diagram.TextAnnotation_3015"/>
-         <elementType ref="org.eclipse.bpmn2.diagram.ScriptTask_3016"/>
-         <elementType ref="org.eclipse.bpmn2.diagram.SequenceFlow_4001"/>
-         <elementType ref="org.eclipse.bpmn2.diagram.Association_4002"/>
+      <binding context="org.jboss.tools.bpmn2.process.diagram.TypeContext">
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.Process_1000"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.UserTask_2001"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.ServiceTask_2002"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.StartEvent_2003"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.StartEvent_2007"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.EndEvent_2004"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.ExclusiveGateway_2005"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.ParallelGateway_2006"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.EndEvent_2008"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.EndEvent_2009"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.IntermediateCatchEvent_2010"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.IntermediateThrowEvent_2011"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.IntermediateCatchEvent_2012"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.IntermediateCatchEvent_2013"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.DataObject_2014"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.TextAnnotation_2015"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.SubProcess_2016"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.ScriptTask_2017"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.SubProcess_3001"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.UserTask_3002"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.ServiceTask_3004"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.StartEvent_3003"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.StartEvent_3005"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.EndEvent_3006"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.ExclusiveGateway_3007"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.ParallelGateway_3008"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.EndEvent_3009"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.EndEvent_3010"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.IntermediateCatchEvent_3011"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.IntermediateThrowEvent_3012"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.IntermediateCatchEvent_3013"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.DataObject_3014"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.TextAnnotation_3015"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.ScriptTask_3016"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.SequenceFlow_4001"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.Association_4002"/>
          <advice ref="org.eclipse.gmf.runtime.diagram.core.advice.notationDepdendents"/>
       </binding>
    </extension>
 	   <extension point="org.eclipse.core.expressions.propertyTesters" id="navigator-proptest.isURIEditorInput">
       <?gmfgen generated="true"?>
        <propertyTester
-           id="org.eclipse.bpmn2.diagram.URIEditorInputPropertyTester"
+           id="org.jboss.tools.bpmn2.process.diagram.URIEditorInputPropertyTester"
            type="org.eclipse.emf.common.ui.URIEditorInput"
-           namespace="org.eclipse.bpmn2.diagram"
+           namespace="org.jboss.tools.bpmn2.process.diagram"
            properties="isURIEditorInput"
            class="org.jboss.tools.bpmn2.process.diagram.part.Bpmn2UriEditorInputTester">
        </propertyTester>
@@ -722,14 +722,14 @@
       <?gmfgen generated="true"?>
       <viewerContentBinding viewerId="org.eclipse.ui.navigator.ProjectExplorer">
          <includes>
-            <contentExtension pattern="org.eclipse.bpmn2.diagram.resourceContent"/>
-			<contentExtension pattern="org.eclipse.bpmn2.diagram.domainResourceContent"/>
-            <contentExtension pattern="org.eclipse.bpmn2.diagram.navigatorLinkHelper"/>
+            <contentExtension pattern="org.jboss.tools.bpmn2.process.diagram.resourceContent"/>
+			<contentExtension pattern="org.jboss.tools.bpmn2.process.diagram.domainResourceContent"/>
+            <contentExtension pattern="org.jboss.tools.bpmn2.process.diagram.navigatorLinkHelper"/>
          </includes>
       </viewerContentBinding>
       <viewerActionBinding viewerId="org.eclipse.ui.navigator.ProjectExplorer">
          <includes>
-            <actionExtension pattern="org.eclipse.bpmn2.diagram.navigatorActionProvider"/>
+            <actionExtension pattern="org.jboss.tools.bpmn2.process.diagram.navigatorActionProvider"/>
          </includes>
       </viewerActionBinding>
    </extension>
@@ -737,7 +737,7 @@
    <extension point="org.eclipse.ui.navigator.navigatorContent" id="navigator-content">
       <?gmfgen generated="true"?>
       <navigatorContent
-            id="org.eclipse.bpmn2.diagram.resourceContent" 
+            id="org.jboss.tools.bpmn2.process.diagram.resourceContent" 
             name="%navigatorContentName" 
             priority="normal" 
             contentProvider="org.jboss.tools.bpmn2.process.diagram.navigator.Bpmn2NavigatorContentProvider" 
@@ -759,7 +759,7 @@
             </or>
          </possibleChildren>
          <commonSorter 
-               id="org.eclipse.bpmn2.diagram.navigatorSorter" 
+               id="org.jboss.tools.bpmn2.process.diagram.navigatorSorter" 
                class="org.jboss.tools.bpmn2.process.diagram.navigator.Bpmn2NavigatorSorter">
             <parentExpression>
                <or>
@@ -773,7 +773,7 @@
          </commonSorter>
       </navigatorContent>
       <navigatorContent
-            id="org.eclipse.bpmn2.diagram.domainResourceContent" 
+            id="org.jboss.tools.bpmn2.process.diagram.domainResourceContent" 
             name="%domainNavigatorContentName" 
             priority="normal" 
             contentProvider="org.jboss.tools.bpmn2.process.diagram.navigator.Bpmn2DomainNavigatorContentProvider" 
@@ -794,7 +794,7 @@
          </possibleChildren>
       </navigatorContent>
       <actionProvider
-            id="org.eclipse.bpmn2.diagram.navigatorActionProvider"
+            id="org.jboss.tools.bpmn2.process.diagram.navigatorActionProvider"
             class="org.jboss.tools.bpmn2.process.diagram.navigator.Bpmn2NavigatorActionProvider">
          <enablement>
             <or>
@@ -807,12 +807,12 @@
 	   <extension point="org.eclipse.ui.navigator.linkHelper" id="navigator-linkhelper">
       <?gmfgen generated="true"?>
       <linkHelper
-            id="org.eclipse.bpmn2.diagram.navigatorLinkHelper"
+            id="org.jboss.tools.bpmn2.process.diagram.navigatorLinkHelper"
             class="org.jboss.tools.bpmn2.process.diagram.navigator.Bpmn2NavigatorLinkHelper">
          <editorInputEnablement>
             <and>
                <instanceof value="org.eclipse.emf.common.ui.URIEditorInput"/>
-               <test property="org.eclipse.bpmn2.diagram.isURIEditorInput"/>
+               <test property="org.jboss.tools.bpmn2.process.diagram.isURIEditorInput"/>
             </and>
          </editorInputEnablement>
          <selectionEnablement>
@@ -846,7 +846,7 @@
       <menuContribution locationURI="toolbar:org.eclipse.ui.main.toolbar?after=">
       </menuContribution -->
       <menuContribution locationURI="popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu">
-         <command commandId="org.eclipse.bpmn2.diagram.LoadResourceAction">
+         <command commandId="org.jboss.tools.bpmn2.process.diagram.LoadResourceAction">
             <visibleWhen>
                <and>
                   <with variable="activePartId"><equals value="org.jboss.tools.bpmn2.process.diagram.part.Bpmn2DiagramEditorID"/></with>
@@ -862,7 +862,7 @@
    <extension point="org.eclipse.ui.commands" id="menu-commands">
       <?gmfgen generated="true"?>
       <category id="org.jboss.tools.bpmn2.process.diagram.part.Bpmn2DiagramEditorID" name="%cmdcategory.name" description="%cmdcategory.desc"/>
-      <command id="org.eclipse.bpmn2.diagram.LoadResourceAction"
+      <command id="org.jboss.tools.bpmn2.process.diagram.LoadResourceAction"
          name="Load Resource"
          categoryId="org.jboss.tools.bpmn2.process.diagram.part.Bpmn2DiagramEditorID"
          defaultHandler="org.jboss.tools.bpmn2.process.diagram.part.LoadResourceAction"/>

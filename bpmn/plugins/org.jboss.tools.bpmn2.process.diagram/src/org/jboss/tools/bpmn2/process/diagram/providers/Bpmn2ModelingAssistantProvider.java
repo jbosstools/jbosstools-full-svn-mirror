@@ -55,6 +55,7 @@ import org.jboss.tools.bpmn2.process.diagram.edit.parts.TextAnnotationEditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.UserTask2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.UserTaskEditPart;
 import org.jboss.tools.bpmn2.process.diagram.part.Bpmn2DiagramEditorPlugin;
+import org.jboss.tools.bpmn2.process.diagram.part.Bpmn2ProcessDiagramEditorPlugin;
 import org.jboss.tools.bpmn2.process.diagram.part.Messages;
 
 /**
@@ -887,7 +888,7 @@ public class Bpmn2ModelingAssistantProvider extends ModelingAssistantProvider {
 	protected EObject selectElement(EObject[] elements) {
 		Shell shell = Display.getCurrent().getActiveShell();
 		ILabelProvider labelProvider = new AdapterFactoryLabelProvider(
-				Bpmn2DiagramEditorPlugin.getInstance()
+				Bpmn2ProcessDiagramEditorPlugin.getInstance()
 						.getItemProvidersAdapterFactory());
 		ElementListSelectionDialog dialog = new ElementListSelectionDialog(
 				shell, labelProvider);

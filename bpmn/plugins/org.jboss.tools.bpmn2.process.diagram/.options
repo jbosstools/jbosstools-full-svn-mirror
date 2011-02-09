@@ -1,7 +1,7 @@
-# Tracing options for the org.eclipse.bpmn2.diagram plug-in
+# Tracing options for the org.jboss.tools.bpmn2.process.diagram plug-in
 
 # Common issues
-org.eclipse.bpmn2.diagram/debug=false
+org.jboss.tools.bpmn2.process.diagram/debug=false
 
 # Visual IDs
-org.eclipse.bpmn2.diagram/debug/visualID=false
+org.jboss.tools.bpmn2.process.diagram/debug/visualID=false

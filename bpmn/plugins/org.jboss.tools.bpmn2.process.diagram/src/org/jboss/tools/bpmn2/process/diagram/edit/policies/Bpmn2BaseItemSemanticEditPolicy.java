@@ -38,6 +38,7 @@ import org.eclipse.gmf.runtime.emf.type.core.requests.SetRequest;
 import org.eclipse.gmf.runtime.notation.View;
 import org.jboss.tools.bpmn2.process.diagram.edit.helpers.Bpmn2BaseEditHelper;
 import org.jboss.tools.bpmn2.process.diagram.part.Bpmn2DiagramEditorPlugin;
+import org.jboss.tools.bpmn2.process.diagram.part.Bpmn2ProcessDiagramEditorPlugin;
 import org.jboss.tools.bpmn2.process.diagram.part.Bpmn2VisualIDRegistry;
 import org.jboss.tools.bpmn2.process.diagram.providers.Bpmn2ElementTypes;
 
@@ -303,10 +304,10 @@ public class Bpmn2BaseItemSemanticEditPolicy extends SemanticEditPolicy {
 	 * @generated
 	 */
 	public static LinkConstraints getLinkConstraints() {
-		LinkConstraints cached = Bpmn2DiagramEditorPlugin.getInstance()
+		LinkConstraints cached = Bpmn2ProcessDiagramEditorPlugin.getInstance()
 				.getLinkConstraints();
 		if (cached == null) {
-			Bpmn2DiagramEditorPlugin.getInstance().setLinkConstraints(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().setLinkConstraints(
 					cached = new LinkConstraints());
 		}
 		return cached;

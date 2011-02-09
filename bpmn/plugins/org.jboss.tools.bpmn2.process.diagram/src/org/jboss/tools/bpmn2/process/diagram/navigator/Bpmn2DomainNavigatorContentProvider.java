@@ -18,6 +18,7 @@ import org.eclipse.ui.IMemento;
 import org.eclipse.ui.navigator.ICommonContentExtensionSite;
 import org.eclipse.ui.navigator.ICommonContentProvider;
 import org.jboss.tools.bpmn2.process.diagram.part.Bpmn2DiagramEditorPlugin;
+import org.jboss.tools.bpmn2.process.diagram.part.Bpmn2ProcessDiagramEditorPlugin;
 
 /**
  * @generated
@@ -60,7 +61,7 @@ public class Bpmn2DomainNavigatorContentProvider implements
 	 */
 	public Bpmn2DomainNavigatorContentProvider() {
 		myAdapterFctoryContentProvier = new AdapterFactoryContentProvider(
-				Bpmn2DiagramEditorPlugin.getInstance()
+				Bpmn2ProcessDiagramEditorPlugin.getInstance()
 						.getItemProvidersAdapterFactory());
 		TransactionalEditingDomain editingDomain = GMFEditingDomainFactory.INSTANCE
 				.createEditingDomain();

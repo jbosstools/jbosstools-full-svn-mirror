@@ -87,10 +87,10 @@ public class ModelElementSelectionPage extends WizardPage {
 		layoutData.widthHint = 300;
 		modelViewer.getTree().setLayoutData(layoutData);
 		modelViewer.setContentProvider(new AdapterFactoryContentProvider(
-				Bpmn2DiagramEditorPlugin.getInstance()
+				Bpmn2ProcessDiagramEditorPlugin.getInstance()
 						.getItemProvidersAdapterFactory()));
 		modelViewer.setLabelProvider(new AdapterFactoryLabelProvider(
-				Bpmn2DiagramEditorPlugin.getInstance()
+				Bpmn2ProcessDiagramEditorPlugin.getInstance()
 						.getItemProvidersAdapterFactory()));
 		if (selectedModelElement != null) {
 			modelViewer.setInput(selectedModelElement.eResource());

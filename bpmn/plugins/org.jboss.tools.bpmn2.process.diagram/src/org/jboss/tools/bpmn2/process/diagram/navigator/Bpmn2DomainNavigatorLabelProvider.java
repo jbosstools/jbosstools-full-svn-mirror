@@ -7,6 +7,7 @@ import org.eclipse.ui.IMemento;
 import org.eclipse.ui.navigator.ICommonContentExtensionSite;
 import org.eclipse.ui.navigator.ICommonLabelProvider;
 import org.jboss.tools.bpmn2.process.diagram.part.Bpmn2DiagramEditorPlugin;
+import org.jboss.tools.bpmn2.process.diagram.part.Bpmn2ProcessDiagramEditorPlugin;
 
 /**
  * @generated
@@ -17,7 +18,7 @@ public class Bpmn2DomainNavigatorLabelProvider implements ICommonLabelProvider {
 	 * @generated
 	 */
 	private AdapterFactoryLabelProvider myAdapterFactoryLabelProvider = new AdapterFactoryLabelProvider(
-			Bpmn2DiagramEditorPlugin.getInstance()
+			Bpmn2ProcessDiagramEditorPlugin.getInstance()
 					.getItemProvidersAdapterFactory());
 
 	/**

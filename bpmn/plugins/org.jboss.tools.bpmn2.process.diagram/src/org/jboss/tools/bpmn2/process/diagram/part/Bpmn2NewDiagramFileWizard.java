@@ -130,10 +130,12 @@ public class Bpmn2NewDiagramFileWizard extends Wizard {
 					return CommandResult
 							.newErrorCommandResult(Messages.Bpmn2NewDiagramFileWizard_IncorrectRootError);
 				}
-				Diagram diagram = ViewService.createDiagram(
-						diagramRootElementSelectionPage.getModelElement(),
-						ProcessEditPart.MODEL_ID,
-						Bpmn2DiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT);
+				Diagram diagram = ViewService
+						.createDiagram(
+								diagramRootElementSelectionPage
+										.getModelElement(),
+								ProcessEditPart.MODEL_ID,
+								Bpmn2ProcessDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT);
 				diagramResource.getContents().add(diagram);
 				diagramResource.getContents().add(diagram.getElement());
 				return CommandResult.newOKCommandResult();
@@ -145,13 +147,13 @@ public class Bpmn2NewDiagramFileWizard extends Wizard {
 			diagramResource.save(Bpmn2DiagramEditorUtil.getSaveOptions());
 			Bpmn2DiagramEditorUtil.openDiagram(diagramResource);
 		} catch (ExecutionException e) {
-			Bpmn2DiagramEditorPlugin.getInstance().logError(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 					"Unable to create model and diagram", e); //$NON-NLS-1$
 		} catch (IOException ex) {
-			Bpmn2DiagramEditorPlugin.getInstance().logError(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 					"Save operation failed for: " + diagramModelURI, ex); //$NON-NLS-1$
 		} catch (PartInitException ex) {
-			Bpmn2DiagramEditorPlugin.getInstance().logError(
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 					"Unable to open editor", ex); //$NON-NLS-1$
 		}
 		return true;
@@ -185,10 +187,13 @@ public class Bpmn2NewDiagramFileWizard extends Wizard {
 				setErrorMessage(Messages.Bpmn2NewDiagramFileWizard_RootSelectionPageNoSelectionMessage);
 				return false;
 			}
-			boolean result = ViewService.getInstance().provides(
-					new CreateDiagramViewOperation(new EObjectAdapter(
-							selectedModelElement), ProcessEditPart.MODEL_ID,
-							Bpmn2DiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT));
+			boolean result = ViewService
+					.getInstance()
+					.provides(
+							new CreateDiagramViewOperation(
+									new EObjectAdapter(selectedModelElement),
+									ProcessEditPart.MODEL_ID,
+									Bpmn2ProcessDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT));
 			setErrorMessage(result ? null
 					: Messages.Bpmn2NewDiagramFileWizard_RootSelectionPageInvalidSelectionMessage);
 			return result;

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.eclipse.draw2d.Ellipse;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.PositionConstants;
 import org.eclipse.draw2d.RectangleFigure;
@@ -24,6 +23,7 @@ import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.emf.type.core.IElementType;
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
+import org.eclipse.gmf.runtime.lite.svg.SVGFigure;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.graphics.Color;
 import org.jboss.tools.bpmn2.process.diagram.edit.policies.StartEvent3ItemSemanticEditPolicy;
@@ -112,7 +112,7 @@ public class StartEvent3EditPart extends ShapeNodeEditPart {
 	 * @generated
 	 */
 	protected NodeFigure createNodePlate() {
-		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(20, 20);
+		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(48, 48);
 		return result;
 	}
 
@@ -565,27 +565,13 @@ public class StartEvent3EditPart extends ShapeNodeEditPart {
 	/**
 	 * @generated
 	 */
-	public class StartEventFigureDescriptor extends RectangleFigure {
+	public class StartEventFigureDescriptor extends SVGFigure {
 
 		/**
 		 * @generated
 		 */
 		public StartEventFigureDescriptor() {
-			this.setLayoutManager(new StackLayout());
-			this.setFill(false);
-			this.setOutline(false);
-			createContents();
-		}
-
-		/**
-		 * @generated
-		 */
-		private void createContents() {
-
-			Ellipse circle0 = new Ellipse();
-
-			this.add(circle0);
-
+			this.setURI("platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/events_48px_start_none.svg");
 		}
 
 	}

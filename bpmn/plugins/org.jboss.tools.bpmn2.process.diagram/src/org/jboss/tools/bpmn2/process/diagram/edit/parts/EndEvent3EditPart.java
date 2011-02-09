@@ -26,6 +26,7 @@ import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.emf.type.core.IElementType;
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
+import org.eclipse.gmf.runtime.lite.svg.SVGFigure;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.graphics.Color;
 import org.jboss.tools.bpmn2.process.diagram.edit.policies.EndEvent3ItemSemanticEditPolicy;
@@ -114,7 +115,7 @@ public class EndEvent3EditPart extends ShapeNodeEditPart {
 	 * @generated
 	 */
 	protected NodeFigure createNodePlate() {
-		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(20, 20);
+		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(48, 48);
 		return result;
 	}
 
@@ -567,38 +568,13 @@ public class EndEvent3EditPart extends ShapeNodeEditPart {
 	/**
 	 * @generated
 	 */
-	public class TerminateEndEventFigureDescriptor extends RectangleFigure {
+	public class TerminateEndEventFigureDescriptor extends SVGFigure {
 
 		/**
 		 * @generated
 		 */
 		public TerminateEndEventFigureDescriptor() {
-			this.setLayoutManager(new StackLayout());
-			this.setFill(false);
-			this.setOutline(false);
-			createContents();
-		}
-
-		/**
-		 * @generated
-		 */
-		private void createContents() {
-
-			Ellipse circle0 = new Ellipse();
-			circle0.setLineWidth(3);
-
-			circle0.setBorder(new MarginBorder(getMapMode().DPtoLP(6),
-					getMapMode().DPtoLP(6), getMapMode().DPtoLP(6),
-					getMapMode().DPtoLP(6)));
-
-			this.add(circle0);
-			circle0.setLayoutManager(new StackLayout());
-
-			Ellipse circle1 = new Ellipse();
-			circle1.setBackgroundColor(ColorConstants.lightGray);
-
-			circle0.add(circle1);
-
+			this.setURI("platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/events_48px_end_terminate.svg");
 		}
 
 	}

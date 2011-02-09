@@ -70,7 +70,7 @@ public class Bpmn2DocumentProvider extends AbstractDocumentProvider implements
 			throw new CoreException(
 					new Status(
 							IStatus.ERROR,
-							Bpmn2DiagramEditorPlugin.ID,
+							Bpmn2ProcessDiagramEditorPlugin.ID,
 							0,
 							NLS.bind(
 									Messages.Bpmn2DocumentProvider_IncorrectInputError,
@@ -97,7 +97,7 @@ public class Bpmn2DocumentProvider extends AbstractDocumentProvider implements
 			throw new CoreException(
 					new Status(
 							IStatus.ERROR,
-							Bpmn2DiagramEditorPlugin.ID,
+							Bpmn2ProcessDiagramEditorPlugin.ID,
 							0,
 							NLS.bind(
 									Messages.Bpmn2DocumentProvider_IncorrectInputError,
@@ -160,7 +160,8 @@ public class Bpmn2DocumentProvider extends AbstractDocumentProvider implements
 	private TransactionalEditingDomain createEditingDomain() {
 		TransactionalEditingDomain editingDomain = DiagramEditingDomainFactory
 				.getInstance().createEditingDomain();
-		editingDomain.setID("org.eclipse.bpmn2.diagram.EditingDomain"); //$NON-NLS-1$
+		editingDomain
+				.setID("org.jboss.tools.bpmn2.process.diagram.EditingDomain"); //$NON-NLS-1$
 		final NotificationFilter diagramResourceModifiedFilter = NotificationFilter
 				.createNotifierFilter(editingDomain.getResourceSet())
 				.and(NotificationFilter.createEventTypeFilter(Notification.ADD))
@@ -257,7 +258,7 @@ public class Bpmn2DocumentProvider extends AbstractDocumentProvider implements
 					thrownExcp = new CoreException(
 							new Status(
 									IStatus.ERROR,
-									Bpmn2DiagramEditorPlugin.ID,
+									Bpmn2ProcessDiagramEditorPlugin.ID,
 									0,
 									msg != null ? msg
 											: Messages.Bpmn2DocumentProvider_DiagramLoadingError,
@@ -269,7 +270,7 @@ public class Bpmn2DocumentProvider extends AbstractDocumentProvider implements
 			throw new CoreException(
 					new Status(
 							IStatus.ERROR,
-							Bpmn2DiagramEditorPlugin.ID,
+							Bpmn2ProcessDiagramEditorPlugin.ID,
 							0,
 							NLS.bind(
 									Messages.Bpmn2DocumentProvider_IncorrectInputError,
@@ -359,7 +360,7 @@ public class Bpmn2DocumentProvider extends AbstractDocumentProvider implements
 				try {
 					updateCache(element);
 				} catch (CoreException ex) {
-					Bpmn2DiagramEditorPlugin.getInstance().logError(
+					Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 							Messages.Bpmn2DocumentProvider_isModifiable, ex);
 					// Error message to log was initially taken from org.eclipse.gmf.runtime.diagram.ui.resources.editor.ide.internal.l10n.EditorMessages.StorageDocumentProvider_isModifiable
 				}
@@ -385,7 +386,7 @@ public class Bpmn2DocumentProvider extends AbstractDocumentProvider implements
 				try {
 					updateCache(element);
 				} catch (CoreException ex) {
-					Bpmn2DiagramEditorPlugin.getInstance().logError(
+					Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
 							Messages.Bpmn2DocumentProvider_isModifiable, ex);
 					// Error message to log was initially taken from org.eclipse.gmf.runtime.diagram.ui.resources.editor.ide.internal.l10n.EditorMessages.StorageDocumentProvider_isModifiable
 				}
@@ -583,7 +584,7 @@ public class Bpmn2DocumentProvider extends AbstractDocumentProvider implements
 				throw new CoreException(
 						new Status(
 								IStatus.ERROR,
-								Bpmn2DiagramEditorPlugin.ID,
+								Bpmn2ProcessDiagramEditorPlugin.ID,
 								IResourceStatus.OUT_OF_SYNC_LOCAL,
 								Messages.Bpmn2DocumentProvider_UnsynchronizedFileSaveError,
 								null));
@@ -609,7 +610,7 @@ public class Bpmn2DocumentProvider extends AbstractDocumentProvider implements
 						} catch (IOException e) {
 							fireElementStateChangeFailed(element);
 							throw new CoreException(new Status(IStatus.ERROR,
-									Bpmn2DiagramEditorPlugin.ID,
+									Bpmn2ProcessDiagramEditorPlugin.ID,
 									EditorStatusCodes.RESOURCE_FAILURE,
 									e.getLocalizedMessage(), null));
 						}
@@ -639,7 +640,7 @@ public class Bpmn2DocumentProvider extends AbstractDocumentProvider implements
 				throw new CoreException(
 						new Status(
 								IStatus.ERROR,
-								Bpmn2DiagramEditorPlugin.ID,
+								Bpmn2ProcessDiagramEditorPlugin.ID,
 								0,
 								NLS.bind(
 										Messages.Bpmn2DocumentProvider_IncorrectInputError,
@@ -653,7 +654,7 @@ public class Bpmn2DocumentProvider extends AbstractDocumentProvider implements
 				throw new CoreException(
 						new Status(
 								IStatus.ERROR,
-								Bpmn2DiagramEditorPlugin.ID,
+								Bpmn2ProcessDiagramEditorPlugin.ID,
 								0,
 								"Incorrect document used: " + document + " instead of org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.IDiagramDocument", null)); //$NON-NLS-1$ //$NON-NLS-2$
 			}
@@ -678,12 +679,12 @@ public class Bpmn2DocumentProvider extends AbstractDocumentProvider implements
 			} catch (ExecutionException e) {
 				fireElementStateChangeFailed(element);
 				throw new CoreException(new Status(IStatus.ERROR,
-						Bpmn2DiagramEditorPlugin.ID, 0,
+						Bpmn2ProcessDiagramEditorPlugin.ID, 0,
 						e.getLocalizedMessage(), null));
 			} catch (IOException e) {
 				fireElementStateChangeFailed(element);
 				throw new CoreException(new Status(IStatus.ERROR,
-						Bpmn2DiagramEditorPlugin.ID, 0,
+						Bpmn2ProcessDiagramEditorPlugin.ID, 0,
 						e.getLocalizedMessage(), null));
 			}
 			newResource.unload();
@@ -700,7 +701,7 @@ public class Bpmn2DocumentProvider extends AbstractDocumentProvider implements
 			try {
 				file.refreshLocal(IResource.DEPTH_INFINITE, monitor);
 			} catch (CoreException ex) {
-				Bpmn2DiagramEditorPlugin
+				Bpmn2ProcessDiagramEditorPlugin
 						.getInstance()
 						.logError(
 								Messages.Bpmn2DocumentProvider_handleElementContentChanged,

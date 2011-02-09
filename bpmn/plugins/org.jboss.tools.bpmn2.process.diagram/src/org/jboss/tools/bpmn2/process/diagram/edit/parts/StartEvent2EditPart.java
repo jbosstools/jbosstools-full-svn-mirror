@@ -29,6 +29,7 @@ import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.emf.type.core.IElementType;
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
+import org.eclipse.gmf.runtime.lite.svg.SVGFigure;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.graphics.Color;
 import org.jboss.tools.bpmn2.process.diagram.edit.policies.StartEvent2ItemSemanticEditPolicy;
@@ -117,7 +118,7 @@ public class StartEvent2EditPart extends ShapeNodeEditPart {
 	 * @generated
 	 */
 	protected NodeFigure createNodePlate() {
-		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(20, 20);
+		DefaultSizeNodeFigure result = new DefaultSizeNodeFigure(48, 48);
 		return result;
 	}
 
@@ -570,49 +571,13 @@ public class StartEvent2EditPart extends ShapeNodeEditPart {
 	/**
 	 * @generated
 	 */
-	public class MessageStartEventFigureDescriptor extends RectangleFigure {
+	public class MessageStartEventFigureDescriptor extends SVGFigure {
 
 		/**
 		 * @generated
 		 */
 		public MessageStartEventFigureDescriptor() {
-			this.setLayoutManager(new StackLayout());
-			this.setFill(false);
-			this.setOutline(false);
-			createContents();
-		}
-
-		/**
-		 * @generated
-		 */
-		private void createContents() {
-
-			Ellipse circle0 = new Ellipse();
-
-			circle0.setBorder(new MarginBorder(getMapMode().DPtoLP(6),
-					getMapMode().DPtoLP(5), getMapMode().DPtoLP(6),
-					getMapMode().DPtoLP(5)));
-
-			this.add(circle0);
-			circle0.setLayoutManager(new StackLayout());
-
-			RectangleFigure rectangle1 = new RectangleFigure();
-
-			circle0.add(rectangle1);
-			rectangle1.setLayoutManager(new StackLayout());
-
-			PolylineShape whiteEnvelope2 = new PolylineShape();
-			whiteEnvelope2.addPoint(new Point(getMapMode().DPtoLP(0),
-					getMapMode().DPtoLP(0)));
-			whiteEnvelope2.addPoint(new Point(getMapMode().DPtoLP(4),
-					getMapMode().DPtoLP(4)));
-			whiteEnvelope2.addPoint(new Point(getMapMode().DPtoLP(5),
-					getMapMode().DPtoLP(4)));
-			whiteEnvelope2.addPoint(new Point(getMapMode().DPtoLP(9),
-					getMapMode().DPtoLP(0)));
-
-			rectangle1.add(whiteEnvelope2);
-
+			this.setURI("platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/events_48px_start_message.svg");
 		}
 
 	}
