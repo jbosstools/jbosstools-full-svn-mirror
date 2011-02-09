@@ -17,6 +17,7 @@ import org.eclipse.gmf.runtime.notation.Node;
 import org.eclipse.gmf.runtime.notation.View;
 import org.jboss.tools.bpmn2.process.diagram.edit.commands.AssociationCreateCommand;
 import org.jboss.tools.bpmn2.process.diagram.edit.commands.AssociationReorientCommand;
+import org.jboss.tools.bpmn2.process.diagram.edit.commands.BusinessRuleTask2CreateCommand;
 import org.jboss.tools.bpmn2.process.diagram.edit.commands.DataObject2CreateCommand;
 import org.jboss.tools.bpmn2.process.diagram.edit.commands.EndEvent4CreateCommand;
 import org.jboss.tools.bpmn2.process.diagram.edit.commands.EndEvent5CreateCommand;
@@ -24,6 +25,7 @@ import org.jboss.tools.bpmn2.process.diagram.edit.commands.EndEvent6CreateComman
 import org.jboss.tools.bpmn2.process.diagram.edit.commands.ExclusiveGateway2CreateCommand;
 import org.jboss.tools.bpmn2.process.diagram.edit.commands.IntermediateCatchEvent4CreateCommand;
 import org.jboss.tools.bpmn2.process.diagram.edit.commands.IntermediateCatchEvent5CreateCommand;
+import org.jboss.tools.bpmn2.process.diagram.edit.commands.IntermediateCatchEvent6CreateCommand;
 import org.jboss.tools.bpmn2.process.diagram.edit.commands.IntermediateThrowEvent2CreateCommand;
 import org.jboss.tools.bpmn2.process.diagram.edit.commands.ParallelGateway2CreateCommand;
 import org.jboss.tools.bpmn2.process.diagram.edit.commands.ScriptTask2CreateCommand;
@@ -36,6 +38,7 @@ import org.jboss.tools.bpmn2.process.diagram.edit.commands.SubProcess2CreateComm
 import org.jboss.tools.bpmn2.process.diagram.edit.commands.TextAnnotation2CreateCommand;
 import org.jboss.tools.bpmn2.process.diagram.edit.commands.UserTask2CreateCommand;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.AssociationEditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.BusinessRuleTask2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.DataObject2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.EndEvent4EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.EndEvent5EditPart;
@@ -43,6 +46,7 @@ import org.jboss.tools.bpmn2.process.diagram.edit.parts.EndEvent6EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ExclusiveGateway2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEvent4EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEvent5EditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEvent6EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateThrowEvent2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ParallelGateway2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ScriptTask2EditPart;
@@ -73,14 +77,17 @@ public class SubProcess2ItemSemanticEditPolicy extends
 	 * @generated
 	 */
 	protected Command getCreateCommand(CreateElementRequest req) {
-		if (Bpmn2ElementTypes.SubProcess_3001 == req.getElementType()) {
-			return getGEFWrapper(new SubProcess2CreateCommand(req));
-		}
 		if (Bpmn2ElementTypes.UserTask_3002 == req.getElementType()) {
 			return getGEFWrapper(new UserTask2CreateCommand(req));
 		}
+		if (Bpmn2ElementTypes.ScriptTask_3016 == req.getElementType()) {
+			return getGEFWrapper(new ScriptTask2CreateCommand(req));
+		}
 		if (Bpmn2ElementTypes.ServiceTask_3004 == req.getElementType()) {
 			return getGEFWrapper(new ServiceTask2CreateCommand(req));
+		}
+		if (Bpmn2ElementTypes.BusinessRuleTask_3017 == req.getElementType()) {
+			return getGEFWrapper(new BusinessRuleTask2CreateCommand(req));
 		}
 		if (Bpmn2ElementTypes.StartEvent_3003 == req.getElementType()) {
 			return getGEFWrapper(new StartEvent3CreateCommand(req));
@@ -88,14 +95,24 @@ public class SubProcess2ItemSemanticEditPolicy extends
 		if (Bpmn2ElementTypes.StartEvent_3005 == req.getElementType()) {
 			return getGEFWrapper(new StartEvent4CreateCommand(req));
 		}
+		if (Bpmn2ElementTypes.IntermediateCatchEvent_3011 == req
+				.getElementType()) {
+			return getGEFWrapper(new IntermediateCatchEvent4CreateCommand(req));
+		}
+		if (Bpmn2ElementTypes.IntermediateCatchEvent_3013 == req
+				.getElementType()) {
+			return getGEFWrapper(new IntermediateCatchEvent5CreateCommand(req));
+		}
+		if (Bpmn2ElementTypes.IntermediateCatchEvent_3018 == req
+				.getElementType()) {
+			return getGEFWrapper(new IntermediateCatchEvent6CreateCommand(req));
+		}
+		if (Bpmn2ElementTypes.IntermediateThrowEvent_3012 == req
+				.getElementType()) {
+			return getGEFWrapper(new IntermediateThrowEvent2CreateCommand(req));
+		}
 		if (Bpmn2ElementTypes.EndEvent_3006 == req.getElementType()) {
 			return getGEFWrapper(new EndEvent4CreateCommand(req));
-		}
-		if (Bpmn2ElementTypes.ExclusiveGateway_3007 == req.getElementType()) {
-			return getGEFWrapper(new ExclusiveGateway2CreateCommand(req));
-		}
-		if (Bpmn2ElementTypes.ParallelGateway_3008 == req.getElementType()) {
-			return getGEFWrapper(new ParallelGateway2CreateCommand(req));
 		}
 		if (Bpmn2ElementTypes.EndEvent_3009 == req.getElementType()) {
 			return getGEFWrapper(new EndEvent5CreateCommand(req));
@@ -103,26 +120,20 @@ public class SubProcess2ItemSemanticEditPolicy extends
 		if (Bpmn2ElementTypes.EndEvent_3010 == req.getElementType()) {
 			return getGEFWrapper(new EndEvent6CreateCommand(req));
 		}
-		if (Bpmn2ElementTypes.IntermediateCatchEvent_3011 == req
-				.getElementType()) {
-			return getGEFWrapper(new IntermediateCatchEvent4CreateCommand(req));
+		if (Bpmn2ElementTypes.ExclusiveGateway_3007 == req.getElementType()) {
+			return getGEFWrapper(new ExclusiveGateway2CreateCommand(req));
 		}
-		if (Bpmn2ElementTypes.IntermediateThrowEvent_3012 == req
-				.getElementType()) {
-			return getGEFWrapper(new IntermediateThrowEvent2CreateCommand(req));
+		if (Bpmn2ElementTypes.ParallelGateway_3008 == req.getElementType()) {
+			return getGEFWrapper(new ParallelGateway2CreateCommand(req));
 		}
-		if (Bpmn2ElementTypes.IntermediateCatchEvent_3013 == req
-				.getElementType()) {
-			return getGEFWrapper(new IntermediateCatchEvent5CreateCommand(req));
+		if (Bpmn2ElementTypes.SubProcess_3001 == req.getElementType()) {
+			return getGEFWrapper(new SubProcess2CreateCommand(req));
 		}
 		if (Bpmn2ElementTypes.DataObject_3014 == req.getElementType()) {
 			return getGEFWrapper(new DataObject2CreateCommand(req));
 		}
 		if (Bpmn2ElementTypes.TextAnnotation_3015 == req.getElementType()) {
 			return getGEFWrapper(new TextAnnotation2CreateCommand(req));
-		}
-		if (Bpmn2ElementTypes.ScriptTask_3016 == req.getElementType()) {
-			return getGEFWrapper(new ScriptTask2CreateCommand(req));
 		}
 		return super.getCreateCommand(req);
 	}
@@ -190,52 +201,6 @@ public class SubProcess2ItemSemanticEditPolicy extends
 		for (Iterator<?> nit = view.getChildren().iterator(); nit.hasNext();) {
 			Node node = (Node) nit.next();
 			switch (Bpmn2VisualIDRegistry.getVisualID(node)) {
-			case SubProcess2EditPart.VISUAL_ID:
-				for (Iterator<?> it = node.getTargetEdges().iterator(); it
-						.hasNext();) {
-					Edge incomingLink = (Edge) it.next();
-					if (Bpmn2VisualIDRegistry.getVisualID(incomingLink) == SequenceFlowEditPart.VISUAL_ID) {
-						DestroyElementRequest r = new DestroyElementRequest(
-								incomingLink.getElement(), false);
-						cmd.add(new DestroyElementCommand(r));
-						cmd.add(new DeleteCommand(getEditingDomain(),
-								incomingLink));
-						continue;
-					}
-					if (Bpmn2VisualIDRegistry.getVisualID(incomingLink) == AssociationEditPart.VISUAL_ID) {
-						DestroyElementRequest r = new DestroyElementRequest(
-								incomingLink.getElement(), false);
-						cmd.add(new DestroyElementCommand(r));
-						cmd.add(new DeleteCommand(getEditingDomain(),
-								incomingLink));
-						continue;
-					}
-				}
-				for (Iterator<?> it = node.getSourceEdges().iterator(); it
-						.hasNext();) {
-					Edge outgoingLink = (Edge) it.next();
-					if (Bpmn2VisualIDRegistry.getVisualID(outgoingLink) == SequenceFlowEditPart.VISUAL_ID) {
-						DestroyElementRequest r = new DestroyElementRequest(
-								outgoingLink.getElement(), false);
-						cmd.add(new DestroyElementCommand(r));
-						cmd.add(new DeleteCommand(getEditingDomain(),
-								outgoingLink));
-						continue;
-					}
-					if (Bpmn2VisualIDRegistry.getVisualID(outgoingLink) == AssociationEditPart.VISUAL_ID) {
-						DestroyElementRequest r = new DestroyElementRequest(
-								outgoingLink.getElement(), false);
-						cmd.add(new DestroyElementCommand(r));
-						cmd.add(new DeleteCommand(getEditingDomain(),
-								outgoingLink));
-						continue;
-					}
-				}
-				cmd.add(new DestroyElementCommand(new DestroyElementRequest(
-						getEditingDomain(), node.getElement(), false))); // directlyOwned: true
-				// don't need explicit deletion of node as parent's view deletion would clean child views as well 
-				// cmd.add(new org.eclipse.gmf.runtime.diagram.core.commands.DeleteCommand(getEditingDomain(), node));
-				break;
 			case UserTask2EditPart.VISUAL_ID:
 				for (Iterator<?> it = node.getTargetEdges().iterator(); it
 						.hasNext();) {
@@ -282,7 +247,99 @@ public class SubProcess2ItemSemanticEditPolicy extends
 				// don't need explicit deletion of node as parent's view deletion would clean child views as well 
 				// cmd.add(new org.eclipse.gmf.runtime.diagram.core.commands.DeleteCommand(getEditingDomain(), node));
 				break;
+			case ScriptTask2EditPart.VISUAL_ID:
+				for (Iterator<?> it = node.getTargetEdges().iterator(); it
+						.hasNext();) {
+					Edge incomingLink = (Edge) it.next();
+					if (Bpmn2VisualIDRegistry.getVisualID(incomingLink) == SequenceFlowEditPart.VISUAL_ID) {
+						DestroyElementRequest r = new DestroyElementRequest(
+								incomingLink.getElement(), false);
+						cmd.add(new DestroyElementCommand(r));
+						cmd.add(new DeleteCommand(getEditingDomain(),
+								incomingLink));
+						continue;
+					}
+					if (Bpmn2VisualIDRegistry.getVisualID(incomingLink) == AssociationEditPart.VISUAL_ID) {
+						DestroyElementRequest r = new DestroyElementRequest(
+								incomingLink.getElement(), false);
+						cmd.add(new DestroyElementCommand(r));
+						cmd.add(new DeleteCommand(getEditingDomain(),
+								incomingLink));
+						continue;
+					}
+				}
+				for (Iterator<?> it = node.getSourceEdges().iterator(); it
+						.hasNext();) {
+					Edge outgoingLink = (Edge) it.next();
+					if (Bpmn2VisualIDRegistry.getVisualID(outgoingLink) == SequenceFlowEditPart.VISUAL_ID) {
+						DestroyElementRequest r = new DestroyElementRequest(
+								outgoingLink.getElement(), false);
+						cmd.add(new DestroyElementCommand(r));
+						cmd.add(new DeleteCommand(getEditingDomain(),
+								outgoingLink));
+						continue;
+					}
+					if (Bpmn2VisualIDRegistry.getVisualID(outgoingLink) == AssociationEditPart.VISUAL_ID) {
+						DestroyElementRequest r = new DestroyElementRequest(
+								outgoingLink.getElement(), false);
+						cmd.add(new DestroyElementCommand(r));
+						cmd.add(new DeleteCommand(getEditingDomain(),
+								outgoingLink));
+						continue;
+					}
+				}
+				cmd.add(new DestroyElementCommand(new DestroyElementRequest(
+						getEditingDomain(), node.getElement(), false))); // directlyOwned: true
+				// don't need explicit deletion of node as parent's view deletion would clean child views as well 
+				// cmd.add(new org.eclipse.gmf.runtime.diagram.core.commands.DeleteCommand(getEditingDomain(), node));
+				break;
 			case ServiceTask2EditPart.VISUAL_ID:
+				for (Iterator<?> it = node.getTargetEdges().iterator(); it
+						.hasNext();) {
+					Edge incomingLink = (Edge) it.next();
+					if (Bpmn2VisualIDRegistry.getVisualID(incomingLink) == SequenceFlowEditPart.VISUAL_ID) {
+						DestroyElementRequest r = new DestroyElementRequest(
+								incomingLink.getElement(), false);
+						cmd.add(new DestroyElementCommand(r));
+						cmd.add(new DeleteCommand(getEditingDomain(),
+								incomingLink));
+						continue;
+					}
+					if (Bpmn2VisualIDRegistry.getVisualID(incomingLink) == AssociationEditPart.VISUAL_ID) {
+						DestroyElementRequest r = new DestroyElementRequest(
+								incomingLink.getElement(), false);
+						cmd.add(new DestroyElementCommand(r));
+						cmd.add(new DeleteCommand(getEditingDomain(),
+								incomingLink));
+						continue;
+					}
+				}
+				for (Iterator<?> it = node.getSourceEdges().iterator(); it
+						.hasNext();) {
+					Edge outgoingLink = (Edge) it.next();
+					if (Bpmn2VisualIDRegistry.getVisualID(outgoingLink) == SequenceFlowEditPart.VISUAL_ID) {
+						DestroyElementRequest r = new DestroyElementRequest(
+								outgoingLink.getElement(), false);
+						cmd.add(new DestroyElementCommand(r));
+						cmd.add(new DeleteCommand(getEditingDomain(),
+								outgoingLink));
+						continue;
+					}
+					if (Bpmn2VisualIDRegistry.getVisualID(outgoingLink) == AssociationEditPart.VISUAL_ID) {
+						DestroyElementRequest r = new DestroyElementRequest(
+								outgoingLink.getElement(), false);
+						cmd.add(new DestroyElementCommand(r));
+						cmd.add(new DeleteCommand(getEditingDomain(),
+								outgoingLink));
+						continue;
+					}
+				}
+				cmd.add(new DestroyElementCommand(new DestroyElementRequest(
+						getEditingDomain(), node.getElement(), false))); // directlyOwned: true
+				// don't need explicit deletion of node as parent's view deletion would clean child views as well 
+				// cmd.add(new org.eclipse.gmf.runtime.diagram.core.commands.DeleteCommand(getEditingDomain(), node));
+				break;
+			case BusinessRuleTask2EditPart.VISUAL_ID:
 				for (Iterator<?> it = node.getTargetEdges().iterator(); it
 						.hasNext();) {
 					Edge incomingLink = (Edge) it.next();
@@ -420,99 +477,191 @@ public class SubProcess2ItemSemanticEditPolicy extends
 				// don't need explicit deletion of node as parent's view deletion would clean child views as well 
 				// cmd.add(new org.eclipse.gmf.runtime.diagram.core.commands.DeleteCommand(getEditingDomain(), node));
 				break;
+			case IntermediateCatchEvent4EditPart.VISUAL_ID:
+				for (Iterator<?> it = node.getTargetEdges().iterator(); it
+						.hasNext();) {
+					Edge incomingLink = (Edge) it.next();
+					if (Bpmn2VisualIDRegistry.getVisualID(incomingLink) == SequenceFlowEditPart.VISUAL_ID) {
+						DestroyElementRequest r = new DestroyElementRequest(
+								incomingLink.getElement(), false);
+						cmd.add(new DestroyElementCommand(r));
+						cmd.add(new DeleteCommand(getEditingDomain(),
+								incomingLink));
+						continue;
+					}
+					if (Bpmn2VisualIDRegistry.getVisualID(incomingLink) == AssociationEditPart.VISUAL_ID) {
+						DestroyElementRequest r = new DestroyElementRequest(
+								incomingLink.getElement(), false);
+						cmd.add(new DestroyElementCommand(r));
+						cmd.add(new DeleteCommand(getEditingDomain(),
+								incomingLink));
+						continue;
+					}
+				}
+				for (Iterator<?> it = node.getSourceEdges().iterator(); it
+						.hasNext();) {
+					Edge outgoingLink = (Edge) it.next();
+					if (Bpmn2VisualIDRegistry.getVisualID(outgoingLink) == SequenceFlowEditPart.VISUAL_ID) {
+						DestroyElementRequest r = new DestroyElementRequest(
+								outgoingLink.getElement(), false);
+						cmd.add(new DestroyElementCommand(r));
+						cmd.add(new DeleteCommand(getEditingDomain(),
+								outgoingLink));
+						continue;
+					}
+					if (Bpmn2VisualIDRegistry.getVisualID(outgoingLink) == AssociationEditPart.VISUAL_ID) {
+						DestroyElementRequest r = new DestroyElementRequest(
+								outgoingLink.getElement(), false);
+						cmd.add(new DestroyElementCommand(r));
+						cmd.add(new DeleteCommand(getEditingDomain(),
+								outgoingLink));
+						continue;
+					}
+				}
+				cmd.add(new DestroyElementCommand(new DestroyElementRequest(
+						getEditingDomain(), node.getElement(), false))); // directlyOwned: true
+				// don't need explicit deletion of node as parent's view deletion would clean child views as well 
+				// cmd.add(new org.eclipse.gmf.runtime.diagram.core.commands.DeleteCommand(getEditingDomain(), node));
+				break;
+			case IntermediateCatchEvent5EditPart.VISUAL_ID:
+				for (Iterator<?> it = node.getTargetEdges().iterator(); it
+						.hasNext();) {
+					Edge incomingLink = (Edge) it.next();
+					if (Bpmn2VisualIDRegistry.getVisualID(incomingLink) == SequenceFlowEditPart.VISUAL_ID) {
+						DestroyElementRequest r = new DestroyElementRequest(
+								incomingLink.getElement(), false);
+						cmd.add(new DestroyElementCommand(r));
+						cmd.add(new DeleteCommand(getEditingDomain(),
+								incomingLink));
+						continue;
+					}
+					if (Bpmn2VisualIDRegistry.getVisualID(incomingLink) == AssociationEditPart.VISUAL_ID) {
+						DestroyElementRequest r = new DestroyElementRequest(
+								incomingLink.getElement(), false);
+						cmd.add(new DestroyElementCommand(r));
+						cmd.add(new DeleteCommand(getEditingDomain(),
+								incomingLink));
+						continue;
+					}
+				}
+				for (Iterator<?> it = node.getSourceEdges().iterator(); it
+						.hasNext();) {
+					Edge outgoingLink = (Edge) it.next();
+					if (Bpmn2VisualIDRegistry.getVisualID(outgoingLink) == SequenceFlowEditPart.VISUAL_ID) {
+						DestroyElementRequest r = new DestroyElementRequest(
+								outgoingLink.getElement(), false);
+						cmd.add(new DestroyElementCommand(r));
+						cmd.add(new DeleteCommand(getEditingDomain(),
+								outgoingLink));
+						continue;
+					}
+					if (Bpmn2VisualIDRegistry.getVisualID(outgoingLink) == AssociationEditPart.VISUAL_ID) {
+						DestroyElementRequest r = new DestroyElementRequest(
+								outgoingLink.getElement(), false);
+						cmd.add(new DestroyElementCommand(r));
+						cmd.add(new DeleteCommand(getEditingDomain(),
+								outgoingLink));
+						continue;
+					}
+				}
+				cmd.add(new DestroyElementCommand(new DestroyElementRequest(
+						getEditingDomain(), node.getElement(), false))); // directlyOwned: true
+				// don't need explicit deletion of node as parent's view deletion would clean child views as well 
+				// cmd.add(new org.eclipse.gmf.runtime.diagram.core.commands.DeleteCommand(getEditingDomain(), node));
+				break;
+			case IntermediateCatchEvent6EditPart.VISUAL_ID:
+				for (Iterator<?> it = node.getTargetEdges().iterator(); it
+						.hasNext();) {
+					Edge incomingLink = (Edge) it.next();
+					if (Bpmn2VisualIDRegistry.getVisualID(incomingLink) == SequenceFlowEditPart.VISUAL_ID) {
+						DestroyElementRequest r = new DestroyElementRequest(
+								incomingLink.getElement(), false);
+						cmd.add(new DestroyElementCommand(r));
+						cmd.add(new DeleteCommand(getEditingDomain(),
+								incomingLink));
+						continue;
+					}
+					if (Bpmn2VisualIDRegistry.getVisualID(incomingLink) == AssociationEditPart.VISUAL_ID) {
+						DestroyElementRequest r = new DestroyElementRequest(
+								incomingLink.getElement(), false);
+						cmd.add(new DestroyElementCommand(r));
+						cmd.add(new DeleteCommand(getEditingDomain(),
+								incomingLink));
+						continue;
+					}
+				}
+				for (Iterator<?> it = node.getSourceEdges().iterator(); it
+						.hasNext();) {
+					Edge outgoingLink = (Edge) it.next();
+					if (Bpmn2VisualIDRegistry.getVisualID(outgoingLink) == SequenceFlowEditPart.VISUAL_ID) {
+						DestroyElementRequest r = new DestroyElementRequest(
+								outgoingLink.getElement(), false);
+						cmd.add(new DestroyElementCommand(r));
+						cmd.add(new DeleteCommand(getEditingDomain(),
+								outgoingLink));
+						continue;
+					}
+					if (Bpmn2VisualIDRegistry.getVisualID(outgoingLink) == AssociationEditPart.VISUAL_ID) {
+						DestroyElementRequest r = new DestroyElementRequest(
+								outgoingLink.getElement(), false);
+						cmd.add(new DestroyElementCommand(r));
+						cmd.add(new DeleteCommand(getEditingDomain(),
+								outgoingLink));
+						continue;
+					}
+				}
+				cmd.add(new DestroyElementCommand(new DestroyElementRequest(
+						getEditingDomain(), node.getElement(), false))); // directlyOwned: true
+				// don't need explicit deletion of node as parent's view deletion would clean child views as well 
+				// cmd.add(new org.eclipse.gmf.runtime.diagram.core.commands.DeleteCommand(getEditingDomain(), node));
+				break;
+			case IntermediateThrowEvent2EditPart.VISUAL_ID:
+				for (Iterator<?> it = node.getTargetEdges().iterator(); it
+						.hasNext();) {
+					Edge incomingLink = (Edge) it.next();
+					if (Bpmn2VisualIDRegistry.getVisualID(incomingLink) == SequenceFlowEditPart.VISUAL_ID) {
+						DestroyElementRequest r = new DestroyElementRequest(
+								incomingLink.getElement(), false);
+						cmd.add(new DestroyElementCommand(r));
+						cmd.add(new DeleteCommand(getEditingDomain(),
+								incomingLink));
+						continue;
+					}
+					if (Bpmn2VisualIDRegistry.getVisualID(incomingLink) == AssociationEditPart.VISUAL_ID) {
+						DestroyElementRequest r = new DestroyElementRequest(
+								incomingLink.getElement(), false);
+						cmd.add(new DestroyElementCommand(r));
+						cmd.add(new DeleteCommand(getEditingDomain(),
+								incomingLink));
+						continue;
+					}
+				}
+				for (Iterator<?> it = node.getSourceEdges().iterator(); it
+						.hasNext();) {
+					Edge outgoingLink = (Edge) it.next();
+					if (Bpmn2VisualIDRegistry.getVisualID(outgoingLink) == SequenceFlowEditPart.VISUAL_ID) {
+						DestroyElementRequest r = new DestroyElementRequest(
+								outgoingLink.getElement(), false);
+						cmd.add(new DestroyElementCommand(r));
+						cmd.add(new DeleteCommand(getEditingDomain(),
+								outgoingLink));
+						continue;
+					}
+					if (Bpmn2VisualIDRegistry.getVisualID(outgoingLink) == AssociationEditPart.VISUAL_ID) {
+						DestroyElementRequest r = new DestroyElementRequest(
+								outgoingLink.getElement(), false);
+						cmd.add(new DestroyElementCommand(r));
+						cmd.add(new DeleteCommand(getEditingDomain(),
+								outgoingLink));
+						continue;
+					}
+				}
+				cmd.add(new DestroyElementCommand(new DestroyElementRequest(
+						getEditingDomain(), node.getElement(), false))); // directlyOwned: true
+				// don't need explicit deletion of node as parent's view deletion would clean child views as well 
+				// cmd.add(new org.eclipse.gmf.runtime.diagram.core.commands.DeleteCommand(getEditingDomain(), node));
+				break;
 			case EndEvent4EditPart.VISUAL_ID:
-				for (Iterator<?> it = node.getTargetEdges().iterator(); it
-						.hasNext();) {
-					Edge incomingLink = (Edge) it.next();
-					if (Bpmn2VisualIDRegistry.getVisualID(incomingLink) == SequenceFlowEditPart.VISUAL_ID) {
-						DestroyElementRequest r = new DestroyElementRequest(
-								incomingLink.getElement(), false);
-						cmd.add(new DestroyElementCommand(r));
-						cmd.add(new DeleteCommand(getEditingDomain(),
-								incomingLink));
-						continue;
-					}
-					if (Bpmn2VisualIDRegistry.getVisualID(incomingLink) == AssociationEditPart.VISUAL_ID) {
-						DestroyElementRequest r = new DestroyElementRequest(
-								incomingLink.getElement(), false);
-						cmd.add(new DestroyElementCommand(r));
-						cmd.add(new DeleteCommand(getEditingDomain(),
-								incomingLink));
-						continue;
-					}
-				}
-				for (Iterator<?> it = node.getSourceEdges().iterator(); it
-						.hasNext();) {
-					Edge outgoingLink = (Edge) it.next();
-					if (Bpmn2VisualIDRegistry.getVisualID(outgoingLink) == SequenceFlowEditPart.VISUAL_ID) {
-						DestroyElementRequest r = new DestroyElementRequest(
-								outgoingLink.getElement(), false);
-						cmd.add(new DestroyElementCommand(r));
-						cmd.add(new DeleteCommand(getEditingDomain(),
-								outgoingLink));
-						continue;
-					}
-					if (Bpmn2VisualIDRegistry.getVisualID(outgoingLink) == AssociationEditPart.VISUAL_ID) {
-						DestroyElementRequest r = new DestroyElementRequest(
-								outgoingLink.getElement(), false);
-						cmd.add(new DestroyElementCommand(r));
-						cmd.add(new DeleteCommand(getEditingDomain(),
-								outgoingLink));
-						continue;
-					}
-				}
-				cmd.add(new DestroyElementCommand(new DestroyElementRequest(
-						getEditingDomain(), node.getElement(), false))); // directlyOwned: true
-				// don't need explicit deletion of node as parent's view deletion would clean child views as well 
-				// cmd.add(new org.eclipse.gmf.runtime.diagram.core.commands.DeleteCommand(getEditingDomain(), node));
-				break;
-			case ExclusiveGateway2EditPart.VISUAL_ID:
-				for (Iterator<?> it = node.getTargetEdges().iterator(); it
-						.hasNext();) {
-					Edge incomingLink = (Edge) it.next();
-					if (Bpmn2VisualIDRegistry.getVisualID(incomingLink) == SequenceFlowEditPart.VISUAL_ID) {
-						DestroyElementRequest r = new DestroyElementRequest(
-								incomingLink.getElement(), false);
-						cmd.add(new DestroyElementCommand(r));
-						cmd.add(new DeleteCommand(getEditingDomain(),
-								incomingLink));
-						continue;
-					}
-					if (Bpmn2VisualIDRegistry.getVisualID(incomingLink) == AssociationEditPart.VISUAL_ID) {
-						DestroyElementRequest r = new DestroyElementRequest(
-								incomingLink.getElement(), false);
-						cmd.add(new DestroyElementCommand(r));
-						cmd.add(new DeleteCommand(getEditingDomain(),
-								incomingLink));
-						continue;
-					}
-				}
-				for (Iterator<?> it = node.getSourceEdges().iterator(); it
-						.hasNext();) {
-					Edge outgoingLink = (Edge) it.next();
-					if (Bpmn2VisualIDRegistry.getVisualID(outgoingLink) == SequenceFlowEditPart.VISUAL_ID) {
-						DestroyElementRequest r = new DestroyElementRequest(
-								outgoingLink.getElement(), false);
-						cmd.add(new DestroyElementCommand(r));
-						cmd.add(new DeleteCommand(getEditingDomain(),
-								outgoingLink));
-						continue;
-					}
-					if (Bpmn2VisualIDRegistry.getVisualID(outgoingLink) == AssociationEditPart.VISUAL_ID) {
-						DestroyElementRequest r = new DestroyElementRequest(
-								outgoingLink.getElement(), false);
-						cmd.add(new DestroyElementCommand(r));
-						cmd.add(new DeleteCommand(getEditingDomain(),
-								outgoingLink));
-						continue;
-					}
-				}
-				cmd.add(new DestroyElementCommand(new DestroyElementRequest(
-						getEditingDomain(), node.getElement(), false))); // directlyOwned: true
-				// don't need explicit deletion of node as parent's view deletion would clean child views as well 
-				// cmd.add(new org.eclipse.gmf.runtime.diagram.core.commands.DeleteCommand(getEditingDomain(), node));
-				break;
-			case ParallelGateway2EditPart.VISUAL_ID:
 				for (Iterator<?> it = node.getTargetEdges().iterator(); it
 						.hasNext();) {
 					Edge incomingLink = (Edge) it.next();
@@ -650,7 +799,7 @@ public class SubProcess2ItemSemanticEditPolicy extends
 				// don't need explicit deletion of node as parent's view deletion would clean child views as well 
 				// cmd.add(new org.eclipse.gmf.runtime.diagram.core.commands.DeleteCommand(getEditingDomain(), node));
 				break;
-			case IntermediateCatchEvent4EditPart.VISUAL_ID:
+			case ExclusiveGateway2EditPart.VISUAL_ID:
 				for (Iterator<?> it = node.getTargetEdges().iterator(); it
 						.hasNext();) {
 					Edge incomingLink = (Edge) it.next();
@@ -696,7 +845,7 @@ public class SubProcess2ItemSemanticEditPolicy extends
 				// don't need explicit deletion of node as parent's view deletion would clean child views as well 
 				// cmd.add(new org.eclipse.gmf.runtime.diagram.core.commands.DeleteCommand(getEditingDomain(), node));
 				break;
-			case IntermediateThrowEvent2EditPart.VISUAL_ID:
+			case ParallelGateway2EditPart.VISUAL_ID:
 				for (Iterator<?> it = node.getTargetEdges().iterator(); it
 						.hasNext();) {
 					Edge incomingLink = (Edge) it.next();
@@ -742,7 +891,7 @@ public class SubProcess2ItemSemanticEditPolicy extends
 				// don't need explicit deletion of node as parent's view deletion would clean child views as well 
 				// cmd.add(new org.eclipse.gmf.runtime.diagram.core.commands.DeleteCommand(getEditingDomain(), node));
 				break;
-			case IntermediateCatchEvent5EditPart.VISUAL_ID:
+			case SubProcess2EditPart.VISUAL_ID:
 				for (Iterator<?> it = node.getTargetEdges().iterator(); it
 						.hasNext();) {
 					Edge incomingLink = (Edge) it.next();
@@ -834,52 +983,6 @@ public class SubProcess2ItemSemanticEditPolicy extends
 				for (Iterator<?> it = node.getSourceEdges().iterator(); it
 						.hasNext();) {
 					Edge outgoingLink = (Edge) it.next();
-					if (Bpmn2VisualIDRegistry.getVisualID(outgoingLink) == AssociationEditPart.VISUAL_ID) {
-						DestroyElementRequest r = new DestroyElementRequest(
-								outgoingLink.getElement(), false);
-						cmd.add(new DestroyElementCommand(r));
-						cmd.add(new DeleteCommand(getEditingDomain(),
-								outgoingLink));
-						continue;
-					}
-				}
-				cmd.add(new DestroyElementCommand(new DestroyElementRequest(
-						getEditingDomain(), node.getElement(), false))); // directlyOwned: true
-				// don't need explicit deletion of node as parent's view deletion would clean child views as well 
-				// cmd.add(new org.eclipse.gmf.runtime.diagram.core.commands.DeleteCommand(getEditingDomain(), node));
-				break;
-			case ScriptTask2EditPart.VISUAL_ID:
-				for (Iterator<?> it = node.getTargetEdges().iterator(); it
-						.hasNext();) {
-					Edge incomingLink = (Edge) it.next();
-					if (Bpmn2VisualIDRegistry.getVisualID(incomingLink) == SequenceFlowEditPart.VISUAL_ID) {
-						DestroyElementRequest r = new DestroyElementRequest(
-								incomingLink.getElement(), false);
-						cmd.add(new DestroyElementCommand(r));
-						cmd.add(new DeleteCommand(getEditingDomain(),
-								incomingLink));
-						continue;
-					}
-					if (Bpmn2VisualIDRegistry.getVisualID(incomingLink) == AssociationEditPart.VISUAL_ID) {
-						DestroyElementRequest r = new DestroyElementRequest(
-								incomingLink.getElement(), false);
-						cmd.add(new DestroyElementCommand(r));
-						cmd.add(new DeleteCommand(getEditingDomain(),
-								incomingLink));
-						continue;
-					}
-				}
-				for (Iterator<?> it = node.getSourceEdges().iterator(); it
-						.hasNext();) {
-					Edge outgoingLink = (Edge) it.next();
-					if (Bpmn2VisualIDRegistry.getVisualID(outgoingLink) == SequenceFlowEditPart.VISUAL_ID) {
-						DestroyElementRequest r = new DestroyElementRequest(
-								outgoingLink.getElement(), false);
-						cmd.add(new DestroyElementCommand(r));
-						cmd.add(new DeleteCommand(getEditingDomain(),
-								outgoingLink));
-						continue;
-					}
 					if (Bpmn2VisualIDRegistry.getVisualID(outgoingLink) == AssociationEditPart.VISUAL_ID) {
 						DestroyElementRequest r = new DestroyElementRequest(
 								outgoingLink.getElement(), false);

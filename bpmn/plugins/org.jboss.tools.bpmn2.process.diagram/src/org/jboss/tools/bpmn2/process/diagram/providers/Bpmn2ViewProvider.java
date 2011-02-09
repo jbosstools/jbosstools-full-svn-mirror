@@ -43,6 +43,10 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.FontData;
 import org.jboss.tools.bpmn2.gmf.notation.BpmnNotationFactory;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.AssociationEditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.BusinessRuleTask2EditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.BusinessRuleTaskEditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.BusinessRuleTaskName2EditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.BusinessRuleTaskNameEditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.DataObject2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.DataObjectEditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.DataObjectName2EditPart;
@@ -59,6 +63,7 @@ import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEvent2E
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEvent3EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEvent4EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEvent5EditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEvent6EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEventEditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateThrowEvent2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateThrowEventEditPart;
@@ -181,38 +186,41 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 				}
 				switch (visualID) {
 				case UserTaskEditPart.VISUAL_ID:
+				case ScriptTaskEditPart.VISUAL_ID:
 				case ServiceTaskEditPart.VISUAL_ID:
+				case BusinessRuleTaskEditPart.VISUAL_ID:
 				case StartEventEditPart.VISUAL_ID:
+				case IntermediateCatchEventEditPart.VISUAL_ID:
+				case IntermediateThrowEventEditPart.VISUAL_ID:
 				case EndEventEditPart.VISUAL_ID:
 				case ExclusiveGatewayEditPart.VISUAL_ID:
 				case ParallelGatewayEditPart.VISUAL_ID:
-				case IntermediateCatchEventEditPart.VISUAL_ID:
-				case IntermediateThrowEventEditPart.VISUAL_ID:
-				case DataObjectEditPart.VISUAL_ID:
-				case TextAnnotationEditPart.VISUAL_ID:
 				case SubProcessEditPart.VISUAL_ID:
-				case ScriptTask2EditPart.VISUAL_ID:
-				case StartEvent2EditPart.VISUAL_ID:
-				case EndEvent2EditPart.VISUAL_ID:
-				case EndEvent3EditPart.VISUAL_ID:
-				case IntermediateCatchEvent2EditPart.VISUAL_ID:
-				case IntermediateCatchEvent3EditPart.VISUAL_ID:
-				case ScriptTaskEditPart.VISUAL_ID:
-				case SubProcess2EditPart.VISUAL_ID:
-				case UserTask2EditPart.VISUAL_ID:
-				case ServiceTask2EditPart.VISUAL_ID:
-				case StartEvent3EditPart.VISUAL_ID:
-				case StartEvent4EditPart.VISUAL_ID:
-				case EndEvent4EditPart.VISUAL_ID:
-				case ExclusiveGateway2EditPart.VISUAL_ID:
-				case ParallelGateway2EditPart.VISUAL_ID:
-				case EndEvent5EditPart.VISUAL_ID:
-				case EndEvent6EditPart.VISUAL_ID:
-				case IntermediateCatchEvent4EditPart.VISUAL_ID:
-				case IntermediateThrowEvent2EditPart.VISUAL_ID:
-				case IntermediateCatchEvent5EditPart.VISUAL_ID:
 				case DataObject2EditPart.VISUAL_ID:
 				case TextAnnotation2EditPart.VISUAL_ID:
+				case StartEvent2EditPart.VISUAL_ID:
+				case IntermediateCatchEvent2EditPart.VISUAL_ID:
+				case IntermediateCatchEvent3EditPart.VISUAL_ID:
+				case EndEvent2EditPart.VISUAL_ID:
+				case EndEvent3EditPart.VISUAL_ID:
+				case DataObjectEditPart.VISUAL_ID:
+				case TextAnnotationEditPart.VISUAL_ID:
+				case UserTask2EditPart.VISUAL_ID:
+				case ScriptTask2EditPart.VISUAL_ID:
+				case ServiceTask2EditPart.VISUAL_ID:
+				case BusinessRuleTask2EditPart.VISUAL_ID:
+				case StartEvent3EditPart.VISUAL_ID:
+				case StartEvent4EditPart.VISUAL_ID:
+				case IntermediateCatchEvent4EditPart.VISUAL_ID:
+				case IntermediateCatchEvent5EditPart.VISUAL_ID:
+				case IntermediateCatchEvent6EditPart.VISUAL_ID:
+				case IntermediateThrowEvent2EditPart.VISUAL_ID:
+				case EndEvent4EditPart.VISUAL_ID:
+				case EndEvent5EditPart.VISUAL_ID:
+				case EndEvent6EditPart.VISUAL_ID:
+				case ExclusiveGateway2EditPart.VISUAL_ID:
+				case ParallelGateway2EditPart.VISUAL_ID:
+				case SubProcess2EditPart.VISUAL_ID:
 					if (domainElement == null
 							|| visualID != Bpmn2VisualIDRegistry
 									.getNodeVisualID(op.getContainerView(),
@@ -226,38 +234,41 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 			}
 		}
 		return UserTaskEditPart.VISUAL_ID == visualID
+				|| ScriptTaskEditPart.VISUAL_ID == visualID
 				|| ServiceTaskEditPart.VISUAL_ID == visualID
+				|| BusinessRuleTaskEditPart.VISUAL_ID == visualID
 				|| StartEventEditPart.VISUAL_ID == visualID
 				|| StartEvent2EditPart.VISUAL_ID == visualID
-				|| EndEventEditPart.VISUAL_ID == visualID
-				|| ExclusiveGatewayEditPart.VISUAL_ID == visualID
-				|| ParallelGatewayEditPart.VISUAL_ID == visualID
-				|| EndEvent2EditPart.VISUAL_ID == visualID
-				|| EndEvent3EditPart.VISUAL_ID == visualID
 				|| IntermediateCatchEventEditPart.VISUAL_ID == visualID
-				|| IntermediateThrowEventEditPart.VISUAL_ID == visualID
 				|| IntermediateCatchEvent2EditPart.VISUAL_ID == visualID
 				|| IntermediateCatchEvent3EditPart.VISUAL_ID == visualID
+				|| IntermediateThrowEventEditPart.VISUAL_ID == visualID
+				|| EndEventEditPart.VISUAL_ID == visualID
+				|| EndEvent2EditPart.VISUAL_ID == visualID
+				|| EndEvent3EditPart.VISUAL_ID == visualID
+				|| ExclusiveGatewayEditPart.VISUAL_ID == visualID
+				|| ParallelGatewayEditPart.VISUAL_ID == visualID
+				|| SubProcessEditPart.VISUAL_ID == visualID
 				|| DataObjectEditPart.VISUAL_ID == visualID
 				|| TextAnnotationEditPart.VISUAL_ID == visualID
-				|| SubProcessEditPart.VISUAL_ID == visualID
-				|| ScriptTaskEditPart.VISUAL_ID == visualID
-				|| SubProcess2EditPart.VISUAL_ID == visualID
 				|| UserTask2EditPart.VISUAL_ID == visualID
+				|| ScriptTask2EditPart.VISUAL_ID == visualID
 				|| ServiceTask2EditPart.VISUAL_ID == visualID
+				|| BusinessRuleTask2EditPart.VISUAL_ID == visualID
 				|| StartEvent3EditPart.VISUAL_ID == visualID
 				|| StartEvent4EditPart.VISUAL_ID == visualID
+				|| IntermediateCatchEvent4EditPart.VISUAL_ID == visualID
+				|| IntermediateCatchEvent5EditPart.VISUAL_ID == visualID
+				|| IntermediateCatchEvent6EditPart.VISUAL_ID == visualID
+				|| IntermediateThrowEvent2EditPart.VISUAL_ID == visualID
 				|| EndEvent4EditPart.VISUAL_ID == visualID
-				|| ExclusiveGateway2EditPart.VISUAL_ID == visualID
-				|| ParallelGateway2EditPart.VISUAL_ID == visualID
 				|| EndEvent5EditPart.VISUAL_ID == visualID
 				|| EndEvent6EditPart.VISUAL_ID == visualID
-				|| IntermediateCatchEvent4EditPart.VISUAL_ID == visualID
-				|| IntermediateThrowEvent2EditPart.VISUAL_ID == visualID
-				|| IntermediateCatchEvent5EditPart.VISUAL_ID == visualID
+				|| ExclusiveGateway2EditPart.VISUAL_ID == visualID
+				|| ParallelGateway2EditPart.VISUAL_ID == visualID
+				|| SubProcess2EditPart.VISUAL_ID == visualID
 				|| DataObject2EditPart.VISUAL_ID == visualID
-				|| TextAnnotation2EditPart.VISUAL_ID == visualID
-				|| ScriptTask2EditPart.VISUAL_ID == visualID;
+				|| TextAnnotation2EditPart.VISUAL_ID == visualID;
 	}
 
 	/**
@@ -317,35 +328,23 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 		case UserTaskEditPart.VISUAL_ID:
 			return createUserTask_2001(domainElement, containerView, index,
 					persisted, preferencesHint);
+		case ScriptTaskEditPart.VISUAL_ID:
+			return createScriptTask_2017(domainElement, containerView, index,
+					persisted, preferencesHint);
 		case ServiceTaskEditPart.VISUAL_ID:
 			return createServiceTask_2002(domainElement, containerView, index,
 					persisted, preferencesHint);
+		case BusinessRuleTaskEditPart.VISUAL_ID:
+			return createBusinessRuleTask_2018(domainElement, containerView,
+					index, persisted, preferencesHint);
 		case StartEventEditPart.VISUAL_ID:
 			return createStartEvent_2003(domainElement, containerView, index,
 					persisted, preferencesHint);
 		case StartEvent2EditPart.VISUAL_ID:
 			return createStartEvent_2007(domainElement, containerView, index,
 					persisted, preferencesHint);
-		case EndEventEditPart.VISUAL_ID:
-			return createEndEvent_2004(domainElement, containerView, index,
-					persisted, preferencesHint);
-		case ExclusiveGatewayEditPart.VISUAL_ID:
-			return createExclusiveGateway_2005(domainElement, containerView,
-					index, persisted, preferencesHint);
-		case ParallelGatewayEditPart.VISUAL_ID:
-			return createParallelGateway_2006(domainElement, containerView,
-					index, persisted, preferencesHint);
-		case EndEvent2EditPart.VISUAL_ID:
-			return createEndEvent_2008(domainElement, containerView, index,
-					persisted, preferencesHint);
-		case EndEvent3EditPart.VISUAL_ID:
-			return createEndEvent_2009(domainElement, containerView, index,
-					persisted, preferencesHint);
 		case IntermediateCatchEventEditPart.VISUAL_ID:
 			return createIntermediateCatchEvent_2010(domainElement,
-					containerView, index, persisted, preferencesHint);
-		case IntermediateThrowEventEditPart.VISUAL_ID:
-			return createIntermediateThrowEvent_2011(domainElement,
 					containerView, index, persisted, preferencesHint);
 		case IntermediateCatchEvent2EditPart.VISUAL_ID:
 			return createIntermediateCatchEvent_2012(domainElement,
@@ -353,35 +352,71 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 		case IntermediateCatchEvent3EditPart.VISUAL_ID:
 			return createIntermediateCatchEvent_2013(domainElement,
 					containerView, index, persisted, preferencesHint);
+		case IntermediateThrowEventEditPart.VISUAL_ID:
+			return createIntermediateThrowEvent_2011(domainElement,
+					containerView, index, persisted, preferencesHint);
+		case EndEventEditPart.VISUAL_ID:
+			return createEndEvent_2004(domainElement, containerView, index,
+					persisted, preferencesHint);
+		case EndEvent2EditPart.VISUAL_ID:
+			return createEndEvent_2008(domainElement, containerView, index,
+					persisted, preferencesHint);
+		case EndEvent3EditPart.VISUAL_ID:
+			return createEndEvent_2009(domainElement, containerView, index,
+					persisted, preferencesHint);
+		case ExclusiveGatewayEditPart.VISUAL_ID:
+			return createExclusiveGateway_2005(domainElement, containerView,
+					index, persisted, preferencesHint);
+		case ParallelGatewayEditPart.VISUAL_ID:
+			return createParallelGateway_2006(domainElement, containerView,
+					index, persisted, preferencesHint);
+		case SubProcessEditPart.VISUAL_ID:
+			return createSubProcess_2016(domainElement, containerView, index,
+					persisted, preferencesHint);
 		case DataObjectEditPart.VISUAL_ID:
 			return createDataObject_2014(domainElement, containerView, index,
 					persisted, preferencesHint);
 		case TextAnnotationEditPart.VISUAL_ID:
 			return createTextAnnotation_2015(domainElement, containerView,
 					index, persisted, preferencesHint);
-		case SubProcessEditPart.VISUAL_ID:
-			return createSubProcess_2016(domainElement, containerView, index,
-					persisted, preferencesHint);
-		case ScriptTaskEditPart.VISUAL_ID:
-			return createScriptTask_2017(domainElement, containerView, index,
-					persisted, preferencesHint);
-		case SubProcess2EditPart.VISUAL_ID:
-			return createSubProcess_3001(domainElement, containerView, index,
-					persisted, preferencesHint);
 		case UserTask2EditPart.VISUAL_ID:
 			return createUserTask_3002(domainElement, containerView, index,
+					persisted, preferencesHint);
+		case ScriptTask2EditPart.VISUAL_ID:
+			return createScriptTask_3016(domainElement, containerView, index,
 					persisted, preferencesHint);
 		case ServiceTask2EditPart.VISUAL_ID:
 			return createServiceTask_3004(domainElement, containerView, index,
 					persisted, preferencesHint);
+		case BusinessRuleTask2EditPart.VISUAL_ID:
+			return createBusinessRuleTask_3017(domainElement, containerView,
+					index, persisted, preferencesHint);
 		case StartEvent3EditPart.VISUAL_ID:
 			return createStartEvent_3003(domainElement, containerView, index,
 					persisted, preferencesHint);
 		case StartEvent4EditPart.VISUAL_ID:
 			return createStartEvent_3005(domainElement, containerView, index,
 					persisted, preferencesHint);
+		case IntermediateCatchEvent4EditPart.VISUAL_ID:
+			return createIntermediateCatchEvent_3011(domainElement,
+					containerView, index, persisted, preferencesHint);
+		case IntermediateCatchEvent5EditPart.VISUAL_ID:
+			return createIntermediateCatchEvent_3013(domainElement,
+					containerView, index, persisted, preferencesHint);
+		case IntermediateCatchEvent6EditPart.VISUAL_ID:
+			return createIntermediateCatchEvent_3018(domainElement,
+					containerView, index, persisted, preferencesHint);
+		case IntermediateThrowEvent2EditPart.VISUAL_ID:
+			return createIntermediateThrowEvent_3012(domainElement,
+					containerView, index, persisted, preferencesHint);
 		case EndEvent4EditPart.VISUAL_ID:
 			return createEndEvent_3006(domainElement, containerView, index,
+					persisted, preferencesHint);
+		case EndEvent5EditPart.VISUAL_ID:
+			return createEndEvent_3009(domainElement, containerView, index,
+					persisted, preferencesHint);
+		case EndEvent6EditPart.VISUAL_ID:
+			return createEndEvent_3010(domainElement, containerView, index,
 					persisted, preferencesHint);
 		case ExclusiveGateway2EditPart.VISUAL_ID:
 			return createExclusiveGateway_3007(domainElement, containerView,
@@ -389,30 +424,15 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 		case ParallelGateway2EditPart.VISUAL_ID:
 			return createParallelGateway_3008(domainElement, containerView,
 					index, persisted, preferencesHint);
-		case EndEvent5EditPart.VISUAL_ID:
-			return createEndEvent_3009(domainElement, containerView, index,
+		case SubProcess2EditPart.VISUAL_ID:
+			return createSubProcess_3001(domainElement, containerView, index,
 					persisted, preferencesHint);
-		case EndEvent6EditPart.VISUAL_ID:
-			return createEndEvent_3010(domainElement, containerView, index,
-					persisted, preferencesHint);
-		case IntermediateCatchEvent4EditPart.VISUAL_ID:
-			return createIntermediateCatchEvent_3011(domainElement,
-					containerView, index, persisted, preferencesHint);
-		case IntermediateThrowEvent2EditPart.VISUAL_ID:
-			return createIntermediateThrowEvent_3012(domainElement,
-					containerView, index, persisted, preferencesHint);
-		case IntermediateCatchEvent5EditPart.VISUAL_ID:
-			return createIntermediateCatchEvent_3013(domainElement,
-					containerView, index, persisted, preferencesHint);
 		case DataObject2EditPart.VISUAL_ID:
 			return createDataObject_3014(domainElement, containerView, index,
 					persisted, preferencesHint);
 		case TextAnnotation2EditPart.VISUAL_ID:
 			return createTextAnnotation_3015(domainElement, containerView,
 					index, persisted, preferencesHint);
-		case ScriptTask2EditPart.VISUAL_ID:
-			return createScriptTask_3016(domainElement, containerView, index,
-					persisted, preferencesHint);
 		}
 		// can't happen, provided #provides(CreateNodeViewOperation) is correct
 		return null;
@@ -447,6 +467,7 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 		node.getStyles()
 				.add(NotationFactory.eINSTANCE.createDescriptionStyle());
 		node.getStyles().add(NotationFactory.eINSTANCE.createFontStyle());
+		node.getStyles().add(NotationFactory.eINSTANCE.createFillStyle());
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry.getType(UserTaskEditPart.VISUAL_ID));
 		ViewUtil.insertChildView(containerView, node, index, persisted);
@@ -469,8 +490,58 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 			nodeFontStyle.setFontColor(FigureUtilities.RGBToInteger(fontRGB)
 					.intValue());
 		}
-		Node label5001 = createLabel(node,
+		org.eclipse.swt.graphics.RGB fillRGB = PreferenceConverter.getColor(
+				prefStore, IPreferenceConstants.PREF_FILL_COLOR);
+		ViewUtil.setStructuralFeatureValue(node,
+				NotationPackage.eINSTANCE.getFillStyle_FillColor(),
+				FigureUtilities.RGBToInteger(fillRGB));
+		Node label5009 = createLabel(node,
 				Bpmn2VisualIDRegistry.getType(UserTaskNameEditPart.VISUAL_ID));
+		return node;
+	}
+
+	/**
+	 * @generated
+	 */
+	public Node createBusinessRuleTask_2018(EObject domainElement,
+			View containerView, int index, boolean persisted,
+			PreferencesHint preferencesHint) {
+		Shape node = BpmnNotationFactory.INSTANCE.createShape();
+		node.getStyles()
+				.add(NotationFactory.eINSTANCE.createDescriptionStyle());
+		node.getStyles().add(NotationFactory.eINSTANCE.createFontStyle());
+		node.getStyles().add(NotationFactory.eINSTANCE.createFillStyle());
+		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
+		node.setType(Bpmn2VisualIDRegistry
+				.getType(BusinessRuleTaskEditPart.VISUAL_ID));
+		ViewUtil.insertChildView(containerView, node, index, persisted);
+		node.setElement(domainElement);
+		stampShortcut(containerView, node);
+		// initializeFromPreferences 
+		final IPreferenceStore prefStore = (IPreferenceStore) preferencesHint
+				.getPreferenceStore();
+		FontStyle nodeFontStyle = (FontStyle) node
+				.getStyle(NotationPackage.Literals.FONT_STYLE);
+		if (nodeFontStyle != null) {
+			FontData fontData = PreferenceConverter.getFontData(prefStore,
+					IPreferenceConstants.PREF_DEFAULT_FONT);
+			nodeFontStyle.setFontName(fontData.getName());
+			nodeFontStyle.setFontHeight(fontData.getHeight());
+			nodeFontStyle.setBold((fontData.getStyle() & SWT.BOLD) != 0);
+			nodeFontStyle.setItalic((fontData.getStyle() & SWT.ITALIC) != 0);
+			org.eclipse.swt.graphics.RGB fontRGB = PreferenceConverter
+					.getColor(prefStore, IPreferenceConstants.PREF_FONT_COLOR);
+			nodeFontStyle.setFontColor(FigureUtilities.RGBToInteger(fontRGB)
+					.intValue());
+		}
+		org.eclipse.swt.graphics.RGB fillRGB = PreferenceConverter.getColor(
+				prefStore, IPreferenceConstants.PREF_FILL_COLOR);
+		ViewUtil.setStructuralFeatureValue(node,
+				NotationPackage.eINSTANCE.getFillStyle_FillColor(),
+				FigureUtilities.RGBToInteger(fillRGB));
+		Node label5013 = createLabel(node,
+				Bpmn2VisualIDRegistry
+						.getType(BusinessRuleTaskNameEditPart.VISUAL_ID));
 		return node;
 	}
 
@@ -484,6 +555,7 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 		node.getStyles()
 				.add(NotationFactory.eINSTANCE.createDescriptionStyle());
 		node.getStyles().add(NotationFactory.eINSTANCE.createFontStyle());
+		node.getStyles().add(NotationFactory.eINSTANCE.createFillStyle());
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry
 				.getType(ServiceTaskEditPart.VISUAL_ID));
@@ -507,7 +579,12 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 			nodeFontStyle.setFontColor(FigureUtilities.RGBToInteger(fontRGB)
 					.intValue());
 		}
-		Node label5002 = createLabel(node,
+		org.eclipse.swt.graphics.RGB fillRGB = PreferenceConverter.getColor(
+				prefStore, IPreferenceConstants.PREF_FILL_COLOR);
+		ViewUtil.setStructuralFeatureValue(node,
+				NotationPackage.eINSTANCE.getFillStyle_FillColor(),
+				FigureUtilities.RGBToInteger(fillRGB));
+		Node label5012 = createLabel(node,
 				Bpmn2VisualIDRegistry
 						.getType(ServiceTaskNameEditPart.VISUAL_ID));
 		return node;
@@ -1139,6 +1216,7 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 		node.getStyles()
 				.add(NotationFactory.eINSTANCE.createDescriptionStyle());
 		node.getStyles().add(NotationFactory.eINSTANCE.createFontStyle());
+		node.getStyles().add(NotationFactory.eINSTANCE.createFillStyle());
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry
 				.getType(ScriptTaskEditPart.VISUAL_ID));
@@ -1162,7 +1240,12 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 			nodeFontStyle.setFontColor(FigureUtilities.RGBToInteger(fontRGB)
 					.intValue());
 		}
-		Node label5009 = createLabel(node,
+		org.eclipse.swt.graphics.RGB fillRGB = PreferenceConverter.getColor(
+				prefStore, IPreferenceConstants.PREF_FILL_COLOR);
+		ViewUtil.setStructuralFeatureValue(node,
+				NotationPackage.eINSTANCE.getFillStyle_FillColor(),
+				FigureUtilities.RGBToInteger(fillRGB));
+		Node label5011 = createLabel(node,
 				Bpmn2VisualIDRegistry.getType(ScriptTaskNameEditPart.VISUAL_ID));
 		return node;
 	}
@@ -1217,6 +1300,7 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 		node.getStyles()
 				.add(NotationFactory.eINSTANCE.createDescriptionStyle());
 		node.getStyles().add(NotationFactory.eINSTANCE.createFontStyle());
+		node.getStyles().add(NotationFactory.eINSTANCE.createFillStyle());
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry.getType(UserTask2EditPart.VISUAL_ID));
 		ViewUtil.insertChildView(containerView, node, index, persisted);
@@ -1238,7 +1322,12 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 			nodeFontStyle.setFontColor(FigureUtilities.RGBToInteger(fontRGB)
 					.intValue());
 		}
-		Node label5005 = createLabel(node,
+		org.eclipse.swt.graphics.RGB fillRGB = PreferenceConverter.getColor(
+				prefStore, IPreferenceConstants.PREF_FILL_COLOR);
+		ViewUtil.setStructuralFeatureValue(node,
+				NotationPackage.eINSTANCE.getFillStyle_FillColor(),
+				FigureUtilities.RGBToInteger(fillRGB));
+		Node label5010 = createLabel(node,
 				Bpmn2VisualIDRegistry.getType(UserTaskName2EditPart.VISUAL_ID));
 		return node;
 	}
@@ -1253,6 +1342,7 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 		node.getStyles()
 				.add(NotationFactory.eINSTANCE.createDescriptionStyle());
 		node.getStyles().add(NotationFactory.eINSTANCE.createFontStyle());
+		node.getStyles().add(NotationFactory.eINSTANCE.createFillStyle());
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry
 				.getType(ServiceTask2EditPart.VISUAL_ID));
@@ -1275,9 +1365,58 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 			nodeFontStyle.setFontColor(FigureUtilities.RGBToInteger(fontRGB)
 					.intValue());
 		}
-		Node label5006 = createLabel(node,
+		org.eclipse.swt.graphics.RGB fillRGB = PreferenceConverter.getColor(
+				prefStore, IPreferenceConstants.PREF_FILL_COLOR);
+		ViewUtil.setStructuralFeatureValue(node,
+				NotationPackage.eINSTANCE.getFillStyle_FillColor(),
+				FigureUtilities.RGBToInteger(fillRGB));
+		Node label5015 = createLabel(node,
 				Bpmn2VisualIDRegistry
 						.getType(ServiceTaskName2EditPart.VISUAL_ID));
+		return node;
+	}
+
+	/**
+	 * @generated
+	 */
+	public Node createBusinessRuleTask_3017(EObject domainElement,
+			View containerView, int index, boolean persisted,
+			PreferencesHint preferencesHint) {
+		Shape node = BpmnNotationFactory.INSTANCE.createShape();
+		node.getStyles()
+				.add(NotationFactory.eINSTANCE.createDescriptionStyle());
+		node.getStyles().add(NotationFactory.eINSTANCE.createFontStyle());
+		node.getStyles().add(NotationFactory.eINSTANCE.createFillStyle());
+		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
+		node.setType(Bpmn2VisualIDRegistry
+				.getType(BusinessRuleTask2EditPart.VISUAL_ID));
+		ViewUtil.insertChildView(containerView, node, index, persisted);
+		node.setElement(domainElement);
+		// initializeFromPreferences 
+		final IPreferenceStore prefStore = (IPreferenceStore) preferencesHint
+				.getPreferenceStore();
+		FontStyle nodeFontStyle = (FontStyle) node
+				.getStyle(NotationPackage.Literals.FONT_STYLE);
+		if (nodeFontStyle != null) {
+			FontData fontData = PreferenceConverter.getFontData(prefStore,
+					IPreferenceConstants.PREF_DEFAULT_FONT);
+			nodeFontStyle.setFontName(fontData.getName());
+			nodeFontStyle.setFontHeight(fontData.getHeight());
+			nodeFontStyle.setBold((fontData.getStyle() & SWT.BOLD) != 0);
+			nodeFontStyle.setItalic((fontData.getStyle() & SWT.ITALIC) != 0);
+			org.eclipse.swt.graphics.RGB fontRGB = PreferenceConverter
+					.getColor(prefStore, IPreferenceConstants.PREF_FONT_COLOR);
+			nodeFontStyle.setFontColor(FigureUtilities.RGBToInteger(fontRGB)
+					.intValue());
+		}
+		org.eclipse.swt.graphics.RGB fillRGB = PreferenceConverter.getColor(
+				prefStore, IPreferenceConstants.PREF_FILL_COLOR);
+		ViewUtil.setStructuralFeatureValue(node,
+				NotationPackage.eINSTANCE.getFillStyle_FillColor(),
+				FigureUtilities.RGBToInteger(fillRGB));
+		Node label5016 = createLabel(node,
+				Bpmn2VisualIDRegistry
+						.getType(BusinessRuleTaskName2EditPart.VISUAL_ID));
 		return node;
 	}
 
@@ -1708,6 +1847,49 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 	/**
 	 * @generated
 	 */
+	public Node createIntermediateCatchEvent_3018(EObject domainElement,
+			View containerView, int index, boolean persisted,
+			PreferencesHint preferencesHint) {
+		Shape node = BpmnNotationFactory.INSTANCE.createShape();
+		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
+		node.setType(Bpmn2VisualIDRegistry
+				.getType(IntermediateCatchEvent6EditPart.VISUAL_ID));
+		ViewUtil.insertChildView(containerView, node, index, persisted);
+		node.setElement(domainElement);
+		// initializeFromPreferences 
+		final IPreferenceStore prefStore = (IPreferenceStore) preferencesHint
+				.getPreferenceStore();
+
+		org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(
+				prefStore, IPreferenceConstants.PREF_LINE_COLOR);
+		ViewUtil.setStructuralFeatureValue(node,
+				NotationPackage.eINSTANCE.getLineStyle_LineColor(),
+				FigureUtilities.RGBToInteger(lineRGB));
+		FontStyle nodeFontStyle = (FontStyle) node
+				.getStyle(NotationPackage.Literals.FONT_STYLE);
+		if (nodeFontStyle != null) {
+			FontData fontData = PreferenceConverter.getFontData(prefStore,
+					IPreferenceConstants.PREF_DEFAULT_FONT);
+			nodeFontStyle.setFontName(fontData.getName());
+			nodeFontStyle.setFontHeight(fontData.getHeight());
+			nodeFontStyle.setBold((fontData.getStyle() & SWT.BOLD) != 0);
+			nodeFontStyle.setItalic((fontData.getStyle() & SWT.ITALIC) != 0);
+			org.eclipse.swt.graphics.RGB fontRGB = PreferenceConverter
+					.getColor(prefStore, IPreferenceConstants.PREF_FONT_COLOR);
+			nodeFontStyle.setFontColor(FigureUtilities.RGBToInteger(fontRGB)
+					.intValue());
+		}
+		org.eclipse.swt.graphics.RGB fillRGB = PreferenceConverter.getColor(
+				prefStore, IPreferenceConstants.PREF_FILL_COLOR);
+		ViewUtil.setStructuralFeatureValue(node,
+				NotationPackage.eINSTANCE.getFillStyle_FillColor(),
+				FigureUtilities.RGBToInteger(fillRGB));
+		return node;
+	}
+
+	/**
+	 * @generated
+	 */
 	public Node createDataObject_3014(EObject domainElement,
 			View containerView, int index, boolean persisted,
 			PreferencesHint preferencesHint) {
@@ -1810,6 +1992,7 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 		node.getStyles()
 				.add(NotationFactory.eINSTANCE.createDescriptionStyle());
 		node.getStyles().add(NotationFactory.eINSTANCE.createFontStyle());
+		node.getStyles().add(NotationFactory.eINSTANCE.createFillStyle());
 		node.setLayoutConstraint(BpmnNotationFactory.INSTANCE.createBounds());
 		node.setType(Bpmn2VisualIDRegistry
 				.getType(ScriptTask2EditPart.VISUAL_ID));
@@ -1832,7 +2015,12 @@ public class Bpmn2ViewProvider extends AbstractProvider implements
 			nodeFontStyle.setFontColor(FigureUtilities.RGBToInteger(fontRGB)
 					.intValue());
 		}
-		Node label5010 = createLabel(node,
+		org.eclipse.swt.graphics.RGB fillRGB = PreferenceConverter.getColor(
+				prefStore, IPreferenceConstants.PREF_FILL_COLOR);
+		ViewUtil.setStructuralFeatureValue(node,
+				NotationPackage.eINSTANCE.getFillStyle_FillColor(),
+				FigureUtilities.RGBToInteger(fillRGB));
+		Node label5014 = createLabel(node,
 				Bpmn2VisualIDRegistry
 						.getType(ScriptTaskName2EditPart.VISUAL_ID));
 		return node;

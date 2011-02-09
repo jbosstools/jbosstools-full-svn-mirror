@@ -17,6 +17,8 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.graphics.Image;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.AssociationEditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.BusinessRuleTask2EditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.BusinessRuleTaskEditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.DataObject2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.DataObjectEditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.EndEvent2EditPart;
@@ -31,6 +33,7 @@ import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEvent2E
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEvent3EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEvent4EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEvent5EditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEvent6EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEventEditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateThrowEvent2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateThrowEventEditPart;
@@ -89,6 +92,11 @@ public class Bpmn2ElementTypes {
 	 * @generated
 	 */
 	public static final IElementType UserTask_2001 = getElementType("org.jboss.tools.bpmn2.process.diagram.UserTask_2001"); //$NON-NLS-1$
+	/**
+	 * @generated
+	 */
+	public static final IElementType BusinessRuleTask_2018 = getElementType("org.jboss.tools.bpmn2.process.diagram.BusinessRuleTask_2018"); //$NON-NLS-1$
+
 	/**
 	 * @generated
 	 */
@@ -186,6 +194,11 @@ public class Bpmn2ElementTypes {
 	/**
 	 * @generated
 	 */
+	public static final IElementType BusinessRuleTask_3017 = getElementType("org.jboss.tools.bpmn2.process.diagram.BusinessRuleTask_3017"); //$NON-NLS-1$
+
+	/**
+	 * @generated
+	 */
 	public static final IElementType StartEvent_3003 = getElementType("org.jboss.tools.bpmn2.process.diagram.StartEvent_3003"); //$NON-NLS-1$
 
 	/**
@@ -232,6 +245,11 @@ public class Bpmn2ElementTypes {
 	 * @generated
 	 */
 	public static final IElementType IntermediateCatchEvent_3013 = getElementType("org.jboss.tools.bpmn2.process.diagram.IntermediateCatchEvent_3013"); //$NON-NLS-1$
+
+	/**
+	 * @generated
+	 */
+	public static final IElementType IntermediateCatchEvent_3018 = getElementType("org.jboss.tools.bpmn2.process.diagram.IntermediateCatchEvent_3018"); //$NON-NLS-1$
 
 	/**
 	 * @generated
@@ -373,8 +391,14 @@ public class Bpmn2ElementTypes {
 
 			elements.put(UserTask_2001, Bpmn2Package.eINSTANCE.getUserTask());
 
+			elements.put(ScriptTask_2017,
+					Bpmn2Package.eINSTANCE.getScriptTask());
+
 			elements.put(ServiceTask_2002,
 					Bpmn2Package.eINSTANCE.getServiceTask());
+
+			elements.put(BusinessRuleTask_2018,
+					Bpmn2Package.eINSTANCE.getBusinessRuleTask());
 
 			elements.put(StartEvent_2003,
 					Bpmn2Package.eINSTANCE.getStartEvent());
@@ -382,23 +406,8 @@ public class Bpmn2ElementTypes {
 			elements.put(StartEvent_2007,
 					Bpmn2Package.eINSTANCE.getStartEvent());
 
-			elements.put(EndEvent_2004, Bpmn2Package.eINSTANCE.getEndEvent());
-
-			elements.put(ExclusiveGateway_2005,
-					Bpmn2Package.eINSTANCE.getExclusiveGateway());
-
-			elements.put(ParallelGateway_2006,
-					Bpmn2Package.eINSTANCE.getParallelGateway());
-
-			elements.put(EndEvent_2008, Bpmn2Package.eINSTANCE.getEndEvent());
-
-			elements.put(EndEvent_2009, Bpmn2Package.eINSTANCE.getEndEvent());
-
 			elements.put(IntermediateCatchEvent_2010,
 					Bpmn2Package.eINSTANCE.getIntermediateCatchEvent());
-
-			elements.put(IntermediateThrowEvent_2011,
-					Bpmn2Package.eINSTANCE.getIntermediateThrowEvent());
 
 			elements.put(IntermediateCatchEvent_2012,
 					Bpmn2Package.eINSTANCE.getIntermediateCatchEvent());
@@ -406,25 +415,40 @@ public class Bpmn2ElementTypes {
 			elements.put(IntermediateCatchEvent_2013,
 					Bpmn2Package.eINSTANCE.getIntermediateCatchEvent());
 
+			elements.put(IntermediateThrowEvent_2011,
+					Bpmn2Package.eINSTANCE.getIntermediateThrowEvent());
+
+			elements.put(EndEvent_2004, Bpmn2Package.eINSTANCE.getEndEvent());
+
+			elements.put(EndEvent_2008, Bpmn2Package.eINSTANCE.getEndEvent());
+
+			elements.put(EndEvent_2009, Bpmn2Package.eINSTANCE.getEndEvent());
+
+			elements.put(ExclusiveGateway_2005,
+					Bpmn2Package.eINSTANCE.getExclusiveGateway());
+
+			elements.put(ParallelGateway_2006,
+					Bpmn2Package.eINSTANCE.getParallelGateway());
+
+			elements.put(SubProcess_2016,
+					Bpmn2Package.eINSTANCE.getSubProcess());
+
 			elements.put(DataObject_2014,
 					Bpmn2Package.eINSTANCE.getDataObject());
 
 			elements.put(TextAnnotation_2015,
 					Bpmn2Package.eINSTANCE.getTextAnnotation());
 
-			elements.put(SubProcess_2016,
-					Bpmn2Package.eINSTANCE.getSubProcess());
-
-			elements.put(ScriptTask_2017,
-					Bpmn2Package.eINSTANCE.getScriptTask());
-
-			elements.put(SubProcess_3001,
-					Bpmn2Package.eINSTANCE.getSubProcess());
-
 			elements.put(UserTask_3002, Bpmn2Package.eINSTANCE.getUserTask());
+
+			elements.put(ScriptTask_3016,
+					Bpmn2Package.eINSTANCE.getScriptTask());
 
 			elements.put(ServiceTask_3004,
 					Bpmn2Package.eINSTANCE.getServiceTask());
+
+			elements.put(BusinessRuleTask_3017,
+					Bpmn2Package.eINSTANCE.getBusinessRuleTask());
 
 			elements.put(StartEvent_3003,
 					Bpmn2Package.eINSTANCE.getStartEvent());
@@ -432,7 +456,23 @@ public class Bpmn2ElementTypes {
 			elements.put(StartEvent_3005,
 					Bpmn2Package.eINSTANCE.getStartEvent());
 
+			elements.put(IntermediateCatchEvent_3011,
+					Bpmn2Package.eINSTANCE.getIntermediateCatchEvent());
+
+			elements.put(IntermediateCatchEvent_3013,
+					Bpmn2Package.eINSTANCE.getIntermediateCatchEvent());
+
+			elements.put(IntermediateCatchEvent_3018,
+					Bpmn2Package.eINSTANCE.getIntermediateCatchEvent());
+
+			elements.put(IntermediateThrowEvent_3012,
+					Bpmn2Package.eINSTANCE.getIntermediateThrowEvent());
+
 			elements.put(EndEvent_3006, Bpmn2Package.eINSTANCE.getEndEvent());
+
+			elements.put(EndEvent_3009, Bpmn2Package.eINSTANCE.getEndEvent());
+
+			elements.put(EndEvent_3010, Bpmn2Package.eINSTANCE.getEndEvent());
 
 			elements.put(ExclusiveGateway_3007,
 					Bpmn2Package.eINSTANCE.getExclusiveGateway());
@@ -440,27 +480,14 @@ public class Bpmn2ElementTypes {
 			elements.put(ParallelGateway_3008,
 					Bpmn2Package.eINSTANCE.getParallelGateway());
 
-			elements.put(EndEvent_3009, Bpmn2Package.eINSTANCE.getEndEvent());
-
-			elements.put(EndEvent_3010, Bpmn2Package.eINSTANCE.getEndEvent());
-
-			elements.put(IntermediateCatchEvent_3011,
-					Bpmn2Package.eINSTANCE.getIntermediateCatchEvent());
-
-			elements.put(IntermediateThrowEvent_3012,
-					Bpmn2Package.eINSTANCE.getIntermediateThrowEvent());
-
-			elements.put(IntermediateCatchEvent_3013,
-					Bpmn2Package.eINSTANCE.getIntermediateCatchEvent());
+			elements.put(SubProcess_3001,
+					Bpmn2Package.eINSTANCE.getSubProcess());
 
 			elements.put(DataObject_3014,
 					Bpmn2Package.eINSTANCE.getDataObject());
 
 			elements.put(TextAnnotation_3015,
 					Bpmn2Package.eINSTANCE.getTextAnnotation());
-
-			elements.put(ScriptTask_3016,
-					Bpmn2Package.eINSTANCE.getScriptTask());
 
 			elements.put(SequenceFlow_4001,
 					Bpmn2Package.eINSTANCE.getSequenceFlow());
@@ -486,38 +513,41 @@ public class Bpmn2ElementTypes {
 			KNOWN_ELEMENT_TYPES = new HashSet<IElementType>();
 			KNOWN_ELEMENT_TYPES.add(Process_1000);
 			KNOWN_ELEMENT_TYPES.add(UserTask_2001);
+			KNOWN_ELEMENT_TYPES.add(ScriptTask_2017);
 			KNOWN_ELEMENT_TYPES.add(ServiceTask_2002);
+			KNOWN_ELEMENT_TYPES.add(BusinessRuleTask_2018);
 			KNOWN_ELEMENT_TYPES.add(StartEvent_2003);
 			KNOWN_ELEMENT_TYPES.add(StartEvent_2007);
-			KNOWN_ELEMENT_TYPES.add(EndEvent_2004);
-			KNOWN_ELEMENT_TYPES.add(ExclusiveGateway_2005);
-			KNOWN_ELEMENT_TYPES.add(ParallelGateway_2006);
-			KNOWN_ELEMENT_TYPES.add(EndEvent_2008);
-			KNOWN_ELEMENT_TYPES.add(EndEvent_2009);
 			KNOWN_ELEMENT_TYPES.add(IntermediateCatchEvent_2010);
-			KNOWN_ELEMENT_TYPES.add(IntermediateThrowEvent_2011);
 			KNOWN_ELEMENT_TYPES.add(IntermediateCatchEvent_2012);
 			KNOWN_ELEMENT_TYPES.add(IntermediateCatchEvent_2013);
+			KNOWN_ELEMENT_TYPES.add(IntermediateThrowEvent_2011);
+			KNOWN_ELEMENT_TYPES.add(EndEvent_2004);
+			KNOWN_ELEMENT_TYPES.add(EndEvent_2008);
+			KNOWN_ELEMENT_TYPES.add(EndEvent_2009);
+			KNOWN_ELEMENT_TYPES.add(ExclusiveGateway_2005);
+			KNOWN_ELEMENT_TYPES.add(ParallelGateway_2006);
+			KNOWN_ELEMENT_TYPES.add(SubProcess_2016);
 			KNOWN_ELEMENT_TYPES.add(DataObject_2014);
 			KNOWN_ELEMENT_TYPES.add(TextAnnotation_2015);
-			KNOWN_ELEMENT_TYPES.add(SubProcess_2016);
-			KNOWN_ELEMENT_TYPES.add(ScriptTask_2017);
-			KNOWN_ELEMENT_TYPES.add(SubProcess_3001);
 			KNOWN_ELEMENT_TYPES.add(UserTask_3002);
+			KNOWN_ELEMENT_TYPES.add(ScriptTask_3016);
 			KNOWN_ELEMENT_TYPES.add(ServiceTask_3004);
+			KNOWN_ELEMENT_TYPES.add(BusinessRuleTask_3017);
 			KNOWN_ELEMENT_TYPES.add(StartEvent_3003);
 			KNOWN_ELEMENT_TYPES.add(StartEvent_3005);
+			KNOWN_ELEMENT_TYPES.add(IntermediateCatchEvent_3011);
+			KNOWN_ELEMENT_TYPES.add(IntermediateCatchEvent_3013);
+			KNOWN_ELEMENT_TYPES.add(IntermediateCatchEvent_3018);
+			KNOWN_ELEMENT_TYPES.add(IntermediateThrowEvent_3012);
 			KNOWN_ELEMENT_TYPES.add(EndEvent_3006);
-			KNOWN_ELEMENT_TYPES.add(ExclusiveGateway_3007);
-			KNOWN_ELEMENT_TYPES.add(ParallelGateway_3008);
 			KNOWN_ELEMENT_TYPES.add(EndEvent_3009);
 			KNOWN_ELEMENT_TYPES.add(EndEvent_3010);
-			KNOWN_ELEMENT_TYPES.add(IntermediateCatchEvent_3011);
-			KNOWN_ELEMENT_TYPES.add(IntermediateThrowEvent_3012);
-			KNOWN_ELEMENT_TYPES.add(IntermediateCatchEvent_3013);
+			KNOWN_ELEMENT_TYPES.add(ExclusiveGateway_3007);
+			KNOWN_ELEMENT_TYPES.add(ParallelGateway_3008);
+			KNOWN_ELEMENT_TYPES.add(SubProcess_3001);
 			KNOWN_ELEMENT_TYPES.add(DataObject_3014);
 			KNOWN_ELEMENT_TYPES.add(TextAnnotation_3015);
-			KNOWN_ELEMENT_TYPES.add(ScriptTask_3016);
 			KNOWN_ELEMENT_TYPES.add(SequenceFlow_4001);
 			KNOWN_ELEMENT_TYPES.add(Association_4002);
 		}
@@ -533,70 +563,76 @@ public class Bpmn2ElementTypes {
 			return Process_1000;
 		case UserTaskEditPart.VISUAL_ID:
 			return UserTask_2001;
+		case ScriptTaskEditPart.VISUAL_ID:
+			return ScriptTask_2017;
 		case ServiceTaskEditPart.VISUAL_ID:
 			return ServiceTask_2002;
+		case BusinessRuleTaskEditPart.VISUAL_ID:
+			return BusinessRuleTask_2018;
 		case StartEventEditPart.VISUAL_ID:
 			return StartEvent_2003;
 		case StartEvent2EditPart.VISUAL_ID:
 			return StartEvent_2007;
-		case EndEventEditPart.VISUAL_ID:
-			return EndEvent_2004;
-		case ExclusiveGatewayEditPart.VISUAL_ID:
-			return ExclusiveGateway_2005;
-		case ParallelGatewayEditPart.VISUAL_ID:
-			return ParallelGateway_2006;
-		case EndEvent2EditPart.VISUAL_ID:
-			return EndEvent_2008;
-		case EndEvent3EditPart.VISUAL_ID:
-			return EndEvent_2009;
 		case IntermediateCatchEventEditPart.VISUAL_ID:
 			return IntermediateCatchEvent_2010;
-		case IntermediateThrowEventEditPart.VISUAL_ID:
-			return IntermediateThrowEvent_2011;
 		case IntermediateCatchEvent2EditPart.VISUAL_ID:
 			return IntermediateCatchEvent_2012;
 		case IntermediateCatchEvent3EditPart.VISUAL_ID:
 			return IntermediateCatchEvent_2013;
+		case IntermediateThrowEventEditPart.VISUAL_ID:
+			return IntermediateThrowEvent_2011;
+		case EndEventEditPart.VISUAL_ID:
+			return EndEvent_2004;
+		case EndEvent2EditPart.VISUAL_ID:
+			return EndEvent_2008;
+		case EndEvent3EditPart.VISUAL_ID:
+			return EndEvent_2009;
+		case ExclusiveGatewayEditPart.VISUAL_ID:
+			return ExclusiveGateway_2005;
+		case ParallelGatewayEditPart.VISUAL_ID:
+			return ParallelGateway_2006;
+		case SubProcessEditPart.VISUAL_ID:
+			return SubProcess_2016;
 		case DataObjectEditPart.VISUAL_ID:
 			return DataObject_2014;
 		case TextAnnotationEditPart.VISUAL_ID:
 			return TextAnnotation_2015;
-		case SubProcessEditPart.VISUAL_ID:
-			return SubProcess_2016;
-		case ScriptTaskEditPart.VISUAL_ID:
-			return ScriptTask_2017;
-		case SubProcess2EditPart.VISUAL_ID:
-			return SubProcess_3001;
 		case UserTask2EditPart.VISUAL_ID:
 			return UserTask_3002;
+		case ScriptTask2EditPart.VISUAL_ID:
+			return ScriptTask_3016;
 		case ServiceTask2EditPart.VISUAL_ID:
 			return ServiceTask_3004;
+		case BusinessRuleTask2EditPart.VISUAL_ID:
+			return BusinessRuleTask_3017;
 		case StartEvent3EditPart.VISUAL_ID:
 			return StartEvent_3003;
 		case StartEvent4EditPart.VISUAL_ID:
 			return StartEvent_3005;
+		case IntermediateCatchEvent4EditPart.VISUAL_ID:
+			return IntermediateCatchEvent_3011;
+		case IntermediateCatchEvent5EditPart.VISUAL_ID:
+			return IntermediateCatchEvent_3013;
+		case IntermediateCatchEvent6EditPart.VISUAL_ID:
+			return IntermediateCatchEvent_3018;
+		case IntermediateThrowEvent2EditPart.VISUAL_ID:
+			return IntermediateThrowEvent_3012;
 		case EndEvent4EditPart.VISUAL_ID:
 			return EndEvent_3006;
-		case ExclusiveGateway2EditPart.VISUAL_ID:
-			return ExclusiveGateway_3007;
-		case ParallelGateway2EditPart.VISUAL_ID:
-			return ParallelGateway_3008;
 		case EndEvent5EditPart.VISUAL_ID:
 			return EndEvent_3009;
 		case EndEvent6EditPart.VISUAL_ID:
 			return EndEvent_3010;
-		case IntermediateCatchEvent4EditPart.VISUAL_ID:
-			return IntermediateCatchEvent_3011;
-		case IntermediateThrowEvent2EditPart.VISUAL_ID:
-			return IntermediateThrowEvent_3012;
-		case IntermediateCatchEvent5EditPart.VISUAL_ID:
-			return IntermediateCatchEvent_3013;
+		case ExclusiveGateway2EditPart.VISUAL_ID:
+			return ExclusiveGateway_3007;
+		case ParallelGateway2EditPart.VISUAL_ID:
+			return ParallelGateway_3008;
+		case SubProcess2EditPart.VISUAL_ID:
+			return SubProcess_3001;
 		case DataObject2EditPart.VISUAL_ID:
 			return DataObject_3014;
 		case TextAnnotation2EditPart.VISUAL_ID:
 			return TextAnnotation_3015;
-		case ScriptTask2EditPart.VISUAL_ID:
-			return ScriptTask_3016;
 		case SequenceFlowEditPart.VISUAL_ID:
 			return SequenceFlow_4001;
 		case AssociationEditPart.VISUAL_ID:

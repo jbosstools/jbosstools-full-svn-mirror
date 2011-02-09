@@ -32,6 +32,7 @@ import org.eclipse.gmf.runtime.notation.Location;
 import org.eclipse.gmf.runtime.notation.Node;
 import org.eclipse.gmf.runtime.notation.Size;
 import org.eclipse.gmf.runtime.notation.View;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.BusinessRuleTask2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.DataObject2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.EndEvent4EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.EndEvent5EditPart;
@@ -39,6 +40,7 @@ import org.jboss.tools.bpmn2.process.diagram.edit.parts.EndEvent6EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ExclusiveGateway2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEvent4EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEvent5EditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEvent6EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateThrowEvent2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ParallelGateway2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ScriptTask2EditPart;
@@ -106,22 +108,24 @@ public class SubProcessCanonicalEditPolicy extends CanonicalEditPolicy {
 	private boolean isMyDiagramElement(View view) {
 		int visualID = Bpmn2VisualIDRegistry.getVisualID(view);
 		switch (visualID) {
-		case SubProcess2EditPart.VISUAL_ID:
 		case UserTask2EditPart.VISUAL_ID:
+		case ScriptTask2EditPart.VISUAL_ID:
 		case ServiceTask2EditPart.VISUAL_ID:
+		case BusinessRuleTask2EditPart.VISUAL_ID:
 		case StartEvent3EditPart.VISUAL_ID:
 		case StartEvent4EditPart.VISUAL_ID:
+		case IntermediateCatchEvent4EditPart.VISUAL_ID:
+		case IntermediateCatchEvent5EditPart.VISUAL_ID:
+		case IntermediateCatchEvent6EditPart.VISUAL_ID:
+		case IntermediateThrowEvent2EditPart.VISUAL_ID:
 		case EndEvent4EditPart.VISUAL_ID:
-		case ExclusiveGateway2EditPart.VISUAL_ID:
-		case ParallelGateway2EditPart.VISUAL_ID:
 		case EndEvent5EditPart.VISUAL_ID:
 		case EndEvent6EditPart.VISUAL_ID:
-		case IntermediateCatchEvent4EditPart.VISUAL_ID:
-		case IntermediateThrowEvent2EditPart.VISUAL_ID:
-		case IntermediateCatchEvent5EditPart.VISUAL_ID:
+		case ExclusiveGateway2EditPart.VISUAL_ID:
+		case ParallelGateway2EditPart.VISUAL_ID:
+		case SubProcess2EditPart.VISUAL_ID:
 		case DataObject2EditPart.VISUAL_ID:
 		case TextAnnotation2EditPart.VISUAL_ID:
-		case ScriptTask2EditPart.VISUAL_ID:
 			return true;
 		}
 		return false;

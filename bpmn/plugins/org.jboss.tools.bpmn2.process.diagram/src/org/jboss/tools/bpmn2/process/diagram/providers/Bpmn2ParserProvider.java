@@ -13,6 +13,8 @@ import org.eclipse.gmf.runtime.common.ui.services.parser.ParserService;
 import org.eclipse.gmf.runtime.emf.type.core.IElementType;
 import org.eclipse.gmf.runtime.emf.ui.services.parser.ParserHintAdapter;
 import org.eclipse.gmf.runtime.notation.View;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.BusinessRuleTaskName2EditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.BusinessRuleTaskNameEditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.DataObjectName2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.DataObjectNameEditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.ScriptTaskName2EditPart;
@@ -35,37 +37,73 @@ public class Bpmn2ParserProvider extends AbstractProvider implements
 	/**
 	 * @generated
 	 */
-	private IParser userTaskName_5001Parser;
+	private IParser userTaskName_5009Parser;
 
 	/**
 	 * @generated
 	 */
-	private IParser getUserTaskName_5001Parser() {
-		if (userTaskName_5001Parser == null) {
+	private IParser getUserTaskName_5009Parser() {
+		if (userTaskName_5009Parser == null) {
 			EAttribute[] features = new EAttribute[] { Bpmn2Package.eINSTANCE
 					.getFlowElement_Name() };
 			MessageFormatParser parser = new MessageFormatParser(features);
-			userTaskName_5001Parser = parser;
+			userTaskName_5009Parser = parser;
 		}
-		return userTaskName_5001Parser;
+		return userTaskName_5009Parser;
 	}
 
 	/**
 	 * @generated
 	 */
-	private IParser serviceTaskName_5002Parser;
+	private IParser scriptTaskName_5011Parser;
 
 	/**
 	 * @generated
 	 */
-	private IParser getServiceTaskName_5002Parser() {
-		if (serviceTaskName_5002Parser == null) {
+	private IParser getScriptTaskName_5011Parser() {
+		if (scriptTaskName_5011Parser == null) {
 			EAttribute[] features = new EAttribute[] { Bpmn2Package.eINSTANCE
 					.getFlowElement_Name() };
 			MessageFormatParser parser = new MessageFormatParser(features);
-			serviceTaskName_5002Parser = parser;
+			scriptTaskName_5011Parser = parser;
 		}
-		return serviceTaskName_5002Parser;
+		return scriptTaskName_5011Parser;
+	}
+
+	/**
+	 * @generated
+	 */
+	private IParser serviceTaskName_5012Parser;
+
+	/**
+	 * @generated
+	 */
+	private IParser getServiceTaskName_5012Parser() {
+		if (serviceTaskName_5012Parser == null) {
+			EAttribute[] features = new EAttribute[] { Bpmn2Package.eINSTANCE
+					.getFlowElement_Name() };
+			MessageFormatParser parser = new MessageFormatParser(features);
+			serviceTaskName_5012Parser = parser;
+		}
+		return serviceTaskName_5012Parser;
+	}
+
+	/**
+	 * @generated
+	 */
+	private IParser businessRuleTaskName_5013Parser;
+
+	/**
+	 * @generated
+	 */
+	private IParser getBusinessRuleTaskName_5013Parser() {
+		if (businessRuleTaskName_5013Parser == null) {
+			EAttribute[] features = new EAttribute[] { Bpmn2Package.eINSTANCE
+					.getFlowElement_Name() };
+			MessageFormatParser parser = new MessageFormatParser(features);
+			businessRuleTaskName_5013Parser = parser;
+		}
+		return businessRuleTaskName_5013Parser;
 	}
 
 	/**
@@ -107,55 +145,73 @@ public class Bpmn2ParserProvider extends AbstractProvider implements
 	/**
 	 * @generated
 	 */
-	private IParser scriptTaskName_5009Parser;
+	private IParser userTaskName_5010Parser;
 
 	/**
 	 * @generated
 	 */
-	private IParser getScriptTaskName_5009Parser() {
-		if (scriptTaskName_5009Parser == null) {
+	private IParser getUserTaskName_5010Parser() {
+		if (userTaskName_5010Parser == null) {
 			EAttribute[] features = new EAttribute[] { Bpmn2Package.eINSTANCE
 					.getFlowElement_Name() };
 			MessageFormatParser parser = new MessageFormatParser(features);
-			scriptTaskName_5009Parser = parser;
+			userTaskName_5010Parser = parser;
 		}
-		return scriptTaskName_5009Parser;
+		return userTaskName_5010Parser;
 	}
 
 	/**
 	 * @generated
 	 */
-	private IParser userTaskName_5005Parser;
+	private IParser scriptTaskName_5014Parser;
 
 	/**
 	 * @generated
 	 */
-	private IParser getUserTaskName_5005Parser() {
-		if (userTaskName_5005Parser == null) {
+	private IParser getScriptTaskName_5014Parser() {
+		if (scriptTaskName_5014Parser == null) {
 			EAttribute[] features = new EAttribute[] { Bpmn2Package.eINSTANCE
 					.getFlowElement_Name() };
 			MessageFormatParser parser = new MessageFormatParser(features);
-			userTaskName_5005Parser = parser;
+			scriptTaskName_5014Parser = parser;
 		}
-		return userTaskName_5005Parser;
+		return scriptTaskName_5014Parser;
 	}
 
 	/**
 	 * @generated
 	 */
-	private IParser serviceTaskName_5006Parser;
+	private IParser serviceTaskName_5015Parser;
 
 	/**
 	 * @generated
 	 */
-	private IParser getServiceTaskName_5006Parser() {
-		if (serviceTaskName_5006Parser == null) {
+	private IParser getServiceTaskName_5015Parser() {
+		if (serviceTaskName_5015Parser == null) {
 			EAttribute[] features = new EAttribute[] { Bpmn2Package.eINSTANCE
 					.getFlowElement_Name() };
 			MessageFormatParser parser = new MessageFormatParser(features);
-			serviceTaskName_5006Parser = parser;
+			serviceTaskName_5015Parser = parser;
 		}
-		return serviceTaskName_5006Parser;
+		return serviceTaskName_5015Parser;
+	}
+
+	/**
+	 * @generated
+	 */
+	private IParser businessRuleTaskName_5016Parser;
+
+	/**
+	 * @generated
+	 */
+	private IParser getBusinessRuleTaskName_5016Parser() {
+		if (businessRuleTaskName_5016Parser == null) {
+			EAttribute[] features = new EAttribute[] { Bpmn2Package.eINSTANCE
+					.getFlowElement_Name() };
+			MessageFormatParser parser = new MessageFormatParser(features);
+			businessRuleTaskName_5016Parser = parser;
+		}
+		return businessRuleTaskName_5016Parser;
 	}
 
 	/**
@@ -197,46 +253,32 @@ public class Bpmn2ParserProvider extends AbstractProvider implements
 	/**
 	 * @generated
 	 */
-	private IParser scriptTaskName_5010Parser;
-
-	/**
-	 * @generated
-	 */
-	private IParser getScriptTaskName_5010Parser() {
-		if (scriptTaskName_5010Parser == null) {
-			EAttribute[] features = new EAttribute[] { Bpmn2Package.eINSTANCE
-					.getFlowElement_Name() };
-			MessageFormatParser parser = new MessageFormatParser(features);
-			scriptTaskName_5010Parser = parser;
-		}
-		return scriptTaskName_5010Parser;
-	}
-
-	/**
-	 * @generated
-	 */
 	protected IParser getParser(int visualID) {
 		switch (visualID) {
 		case UserTaskNameEditPart.VISUAL_ID:
-			return getUserTaskName_5001Parser();
+			return getUserTaskName_5009Parser();
+		case ScriptTaskNameEditPart.VISUAL_ID:
+			return getScriptTaskName_5011Parser();
 		case ServiceTaskNameEditPart.VISUAL_ID:
-			return getServiceTaskName_5002Parser();
+			return getServiceTaskName_5012Parser();
+		case BusinessRuleTaskNameEditPart.VISUAL_ID:
+			return getBusinessRuleTaskName_5013Parser();
 		case DataObjectNameEditPart.VISUAL_ID:
 			return getDataObjectName_5003Parser();
 		case TextAnnotationTextEditPart.VISUAL_ID:
 			return getTextAnnotationText_5004Parser();
-		case ScriptTaskNameEditPart.VISUAL_ID:
-			return getScriptTaskName_5009Parser();
 		case UserTaskName2EditPart.VISUAL_ID:
-			return getUserTaskName_5005Parser();
+			return getUserTaskName_5010Parser();
+		case ScriptTaskName2EditPart.VISUAL_ID:
+			return getScriptTaskName_5014Parser();
 		case ServiceTaskName2EditPart.VISUAL_ID:
-			return getServiceTaskName_5006Parser();
+			return getServiceTaskName_5015Parser();
+		case BusinessRuleTaskName2EditPart.VISUAL_ID:
+			return getBusinessRuleTaskName_5016Parser();
 		case DataObjectName2EditPart.VISUAL_ID:
 			return getDataObjectName_5007Parser();
 		case TextAnnotationText2EditPart.VISUAL_ID:
 			return getTextAnnotationText_5008Parser();
-		case ScriptTaskName2EditPart.VISUAL_ID:
-			return getScriptTaskName_5010Parser();
 		}
 		return null;
 	}

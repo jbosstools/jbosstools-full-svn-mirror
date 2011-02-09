@@ -52,7 +52,7 @@ public class UserTaskName2EditPart extends CompartmentEditPart implements
 	/**
 	 * @generated
 	 */
-	public static final int VISUAL_ID = 5005;
+	public static final int VISUAL_ID = 5010;
 
 	/**
 	 * @generated
@@ -175,11 +175,7 @@ public class UserTaskName2EditPart extends CompartmentEditPart implements
 	 * @generated
 	 */
 	protected Image getLabelIcon() {
-		EObject parserElement = getParserElement();
-		if (parserElement == null) {
-			return null;
-		}
-		return Bpmn2ElementTypes.getImage(parserElement.eClass());
+		return null;
 	}
 
 	/**
@@ -503,7 +499,7 @@ public class UserTaskName2EditPart extends CompartmentEditPart implements
 	 * @generated
 	 */
 	private View getFontStyleOwnerView() {
-		return getPrimaryView();
+		return (View) getModel();
 	}
 
 	/**

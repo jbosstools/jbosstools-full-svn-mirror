@@ -11,6 +11,7 @@ import org.eclipse.bpmn2.Artifact;
 import org.eclipse.bpmn2.Association;
 import org.eclipse.bpmn2.BaseElement;
 import org.eclipse.bpmn2.Bpmn2Package;
+import org.eclipse.bpmn2.BusinessRuleTask;
 import org.eclipse.bpmn2.DataObject;
 import org.eclipse.bpmn2.EndEvent;
 import org.eclipse.bpmn2.ExclusiveGateway;
@@ -33,6 +34,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.gmf.runtime.notation.View;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.AssociationEditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.BusinessRuleTask2EditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.BusinessRuleTaskEditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.DataObject2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.DataObjectEditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.EndEvent2EditPart;
@@ -47,6 +50,7 @@ import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEvent2E
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEvent3EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEvent4EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEvent5EditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEvent6EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEventEditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateThrowEvent2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateThrowEventEditPart;
@@ -109,7 +113,15 @@ public class Bpmn2DiagramUpdater {
 				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
 				continue;
 			}
+			if (visualID == ScriptTaskEditPart.VISUAL_ID) {
+				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
+				continue;
+			}
 			if (visualID == ServiceTaskEditPart.VISUAL_ID) {
+				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
+				continue;
+			}
+			if (visualID == BusinessRuleTaskEditPart.VISUAL_ID) {
 				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
 				continue;
 			}
@@ -121,31 +133,7 @@ public class Bpmn2DiagramUpdater {
 				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
 				continue;
 			}
-			if (visualID == EndEventEditPart.VISUAL_ID) {
-				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
-				continue;
-			}
-			if (visualID == ExclusiveGatewayEditPart.VISUAL_ID) {
-				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
-				continue;
-			}
-			if (visualID == ParallelGatewayEditPart.VISUAL_ID) {
-				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
-				continue;
-			}
-			if (visualID == EndEvent2EditPart.VISUAL_ID) {
-				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
-				continue;
-			}
-			if (visualID == EndEvent3EditPart.VISUAL_ID) {
-				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
-				continue;
-			}
 			if (visualID == IntermediateCatchEventEditPart.VISUAL_ID) {
-				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
-				continue;
-			}
-			if (visualID == IntermediateThrowEventEditPart.VISUAL_ID) {
 				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
 				continue;
 			}
@@ -157,7 +145,27 @@ public class Bpmn2DiagramUpdater {
 				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
 				continue;
 			}
-			if (visualID == DataObjectEditPart.VISUAL_ID) {
+			if (visualID == IntermediateThrowEventEditPart.VISUAL_ID) {
+				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
+				continue;
+			}
+			if (visualID == EndEventEditPart.VISUAL_ID) {
+				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
+				continue;
+			}
+			if (visualID == EndEvent2EditPart.VISUAL_ID) {
+				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
+				continue;
+			}
+			if (visualID == EndEvent3EditPart.VISUAL_ID) {
+				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
+				continue;
+			}
+			if (visualID == ExclusiveGatewayEditPart.VISUAL_ID) {
+				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
+				continue;
+			}
+			if (visualID == ParallelGatewayEditPart.VISUAL_ID) {
 				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
 				continue;
 			}
@@ -165,7 +173,7 @@ public class Bpmn2DiagramUpdater {
 				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
 				continue;
 			}
-			if (visualID == ScriptTaskEditPart.VISUAL_ID) {
+			if (visualID == DataObjectEditPart.VISUAL_ID) {
 				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
 				continue;
 			}
@@ -198,15 +206,19 @@ public class Bpmn2DiagramUpdater {
 			FlowElement childElement = (FlowElement) it.next();
 			int visualID = Bpmn2VisualIDRegistry.getNodeVisualID(view,
 					childElement);
-			if (visualID == SubProcess2EditPart.VISUAL_ID) {
-				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
-				continue;
-			}
 			if (visualID == UserTask2EditPart.VISUAL_ID) {
 				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
 				continue;
 			}
+			if (visualID == ScriptTask2EditPart.VISUAL_ID) {
+				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
+				continue;
+			}
 			if (visualID == ServiceTask2EditPart.VISUAL_ID) {
+				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
+				continue;
+			}
+			if (visualID == BusinessRuleTask2EditPart.VISUAL_ID) {
 				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
 				continue;
 			}
@@ -218,15 +230,23 @@ public class Bpmn2DiagramUpdater {
 				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
 				continue;
 			}
+			if (visualID == IntermediateCatchEvent4EditPart.VISUAL_ID) {
+				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
+				continue;
+			}
+			if (visualID == IntermediateCatchEvent5EditPart.VISUAL_ID) {
+				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
+				continue;
+			}
+			if (visualID == IntermediateCatchEvent6EditPart.VISUAL_ID) {
+				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
+				continue;
+			}
+			if (visualID == IntermediateThrowEvent2EditPart.VISUAL_ID) {
+				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
+				continue;
+			}
 			if (visualID == EndEvent4EditPart.VISUAL_ID) {
-				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
-				continue;
-			}
-			if (visualID == ExclusiveGateway2EditPart.VISUAL_ID) {
-				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
-				continue;
-			}
-			if (visualID == ParallelGateway2EditPart.VISUAL_ID) {
 				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
 				continue;
 			}
@@ -238,23 +258,19 @@ public class Bpmn2DiagramUpdater {
 				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
 				continue;
 			}
-			if (visualID == IntermediateCatchEvent4EditPart.VISUAL_ID) {
+			if (visualID == ExclusiveGateway2EditPart.VISUAL_ID) {
 				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
 				continue;
 			}
-			if (visualID == IntermediateThrowEvent2EditPart.VISUAL_ID) {
+			if (visualID == ParallelGateway2EditPart.VISUAL_ID) {
 				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
 				continue;
 			}
-			if (visualID == IntermediateCatchEvent5EditPart.VISUAL_ID) {
+			if (visualID == SubProcess2EditPart.VISUAL_ID) {
 				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
 				continue;
 			}
 			if (visualID == DataObject2EditPart.VISUAL_ID) {
-				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
-				continue;
-			}
-			if (visualID == ScriptTask2EditPart.VISUAL_ID) {
 				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
 				continue;
 			}
@@ -287,15 +303,19 @@ public class Bpmn2DiagramUpdater {
 			FlowElement childElement = (FlowElement) it.next();
 			int visualID = Bpmn2VisualIDRegistry.getNodeVisualID(view,
 					childElement);
-			if (visualID == SubProcess2EditPart.VISUAL_ID) {
-				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
-				continue;
-			}
 			if (visualID == UserTask2EditPart.VISUAL_ID) {
 				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
 				continue;
 			}
+			if (visualID == ScriptTask2EditPart.VISUAL_ID) {
+				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
+				continue;
+			}
 			if (visualID == ServiceTask2EditPart.VISUAL_ID) {
+				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
+				continue;
+			}
+			if (visualID == BusinessRuleTask2EditPart.VISUAL_ID) {
 				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
 				continue;
 			}
@@ -307,15 +327,23 @@ public class Bpmn2DiagramUpdater {
 				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
 				continue;
 			}
+			if (visualID == IntermediateCatchEvent4EditPart.VISUAL_ID) {
+				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
+				continue;
+			}
+			if (visualID == IntermediateCatchEvent5EditPart.VISUAL_ID) {
+				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
+				continue;
+			}
+			if (visualID == IntermediateCatchEvent6EditPart.VISUAL_ID) {
+				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
+				continue;
+			}
+			if (visualID == IntermediateThrowEvent2EditPart.VISUAL_ID) {
+				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
+				continue;
+			}
 			if (visualID == EndEvent4EditPart.VISUAL_ID) {
-				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
-				continue;
-			}
-			if (visualID == ExclusiveGateway2EditPart.VISUAL_ID) {
-				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
-				continue;
-			}
-			if (visualID == ParallelGateway2EditPart.VISUAL_ID) {
 				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
 				continue;
 			}
@@ -327,23 +355,19 @@ public class Bpmn2DiagramUpdater {
 				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
 				continue;
 			}
-			if (visualID == IntermediateCatchEvent4EditPart.VISUAL_ID) {
+			if (visualID == ExclusiveGateway2EditPart.VISUAL_ID) {
 				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
 				continue;
 			}
-			if (visualID == IntermediateThrowEvent2EditPart.VISUAL_ID) {
+			if (visualID == ParallelGateway2EditPart.VISUAL_ID) {
 				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
 				continue;
 			}
-			if (visualID == IntermediateCatchEvent5EditPart.VISUAL_ID) {
+			if (visualID == SubProcess2EditPart.VISUAL_ID) {
 				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
 				continue;
 			}
 			if (visualID == DataObject2EditPart.VISUAL_ID) {
-				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
-				continue;
-			}
-			if (visualID == ScriptTask2EditPart.VISUAL_ID) {
 				result.add(new Bpmn2NodeDescriptor(childElement, visualID));
 				continue;
 			}
@@ -370,70 +394,76 @@ public class Bpmn2DiagramUpdater {
 			return getProcess_1000ContainedLinks(view);
 		case UserTaskEditPart.VISUAL_ID:
 			return getUserTask_2001ContainedLinks(view);
+		case ScriptTaskEditPart.VISUAL_ID:
+			return getScriptTask_2017ContainedLinks(view);
 		case ServiceTaskEditPart.VISUAL_ID:
 			return getServiceTask_2002ContainedLinks(view);
+		case BusinessRuleTaskEditPart.VISUAL_ID:
+			return getBusinessRuleTask_2018ContainedLinks(view);
 		case StartEventEditPart.VISUAL_ID:
 			return getStartEvent_2003ContainedLinks(view);
 		case StartEvent2EditPart.VISUAL_ID:
 			return getStartEvent_2007ContainedLinks(view);
-		case EndEventEditPart.VISUAL_ID:
-			return getEndEvent_2004ContainedLinks(view);
-		case ExclusiveGatewayEditPart.VISUAL_ID:
-			return getExclusiveGateway_2005ContainedLinks(view);
-		case ParallelGatewayEditPart.VISUAL_ID:
-			return getParallelGateway_2006ContainedLinks(view);
-		case EndEvent2EditPart.VISUAL_ID:
-			return getEndEvent_2008ContainedLinks(view);
-		case EndEvent3EditPart.VISUAL_ID:
-			return getEndEvent_2009ContainedLinks(view);
 		case IntermediateCatchEventEditPart.VISUAL_ID:
 			return getIntermediateCatchEvent_2010ContainedLinks(view);
-		case IntermediateThrowEventEditPart.VISUAL_ID:
-			return getIntermediateThrowEvent_2011ContainedLinks(view);
 		case IntermediateCatchEvent2EditPart.VISUAL_ID:
 			return getIntermediateCatchEvent_2012ContainedLinks(view);
 		case IntermediateCatchEvent3EditPart.VISUAL_ID:
 			return getIntermediateCatchEvent_2013ContainedLinks(view);
+		case IntermediateThrowEventEditPart.VISUAL_ID:
+			return getIntermediateThrowEvent_2011ContainedLinks(view);
+		case EndEventEditPart.VISUAL_ID:
+			return getEndEvent_2004ContainedLinks(view);
+		case EndEvent2EditPart.VISUAL_ID:
+			return getEndEvent_2008ContainedLinks(view);
+		case EndEvent3EditPart.VISUAL_ID:
+			return getEndEvent_2009ContainedLinks(view);
+		case ExclusiveGatewayEditPart.VISUAL_ID:
+			return getExclusiveGateway_2005ContainedLinks(view);
+		case ParallelGatewayEditPart.VISUAL_ID:
+			return getParallelGateway_2006ContainedLinks(view);
+		case SubProcessEditPart.VISUAL_ID:
+			return getSubProcess_2016ContainedLinks(view);
 		case DataObjectEditPart.VISUAL_ID:
 			return getDataObject_2014ContainedLinks(view);
 		case TextAnnotationEditPart.VISUAL_ID:
 			return getTextAnnotation_2015ContainedLinks(view);
-		case SubProcessEditPart.VISUAL_ID:
-			return getSubProcess_2016ContainedLinks(view);
-		case ScriptTaskEditPart.VISUAL_ID:
-			return getScriptTask_2017ContainedLinks(view);
-		case SubProcess2EditPart.VISUAL_ID:
-			return getSubProcess_3001ContainedLinks(view);
 		case UserTask2EditPart.VISUAL_ID:
 			return getUserTask_3002ContainedLinks(view);
+		case ScriptTask2EditPart.VISUAL_ID:
+			return getScriptTask_3016ContainedLinks(view);
 		case ServiceTask2EditPart.VISUAL_ID:
 			return getServiceTask_3004ContainedLinks(view);
+		case BusinessRuleTask2EditPart.VISUAL_ID:
+			return getBusinessRuleTask_3017ContainedLinks(view);
 		case StartEvent3EditPart.VISUAL_ID:
 			return getStartEvent_3003ContainedLinks(view);
 		case StartEvent4EditPart.VISUAL_ID:
 			return getStartEvent_3005ContainedLinks(view);
+		case IntermediateCatchEvent4EditPart.VISUAL_ID:
+			return getIntermediateCatchEvent_3011ContainedLinks(view);
+		case IntermediateCatchEvent5EditPart.VISUAL_ID:
+			return getIntermediateCatchEvent_3013ContainedLinks(view);
+		case IntermediateCatchEvent6EditPart.VISUAL_ID:
+			return getIntermediateCatchEvent_3018ContainedLinks(view);
+		case IntermediateThrowEvent2EditPart.VISUAL_ID:
+			return getIntermediateThrowEvent_3012ContainedLinks(view);
 		case EndEvent4EditPart.VISUAL_ID:
 			return getEndEvent_3006ContainedLinks(view);
-		case ExclusiveGateway2EditPart.VISUAL_ID:
-			return getExclusiveGateway_3007ContainedLinks(view);
-		case ParallelGateway2EditPart.VISUAL_ID:
-			return getParallelGateway_3008ContainedLinks(view);
 		case EndEvent5EditPart.VISUAL_ID:
 			return getEndEvent_3009ContainedLinks(view);
 		case EndEvent6EditPart.VISUAL_ID:
 			return getEndEvent_3010ContainedLinks(view);
-		case IntermediateCatchEvent4EditPart.VISUAL_ID:
-			return getIntermediateCatchEvent_3011ContainedLinks(view);
-		case IntermediateThrowEvent2EditPart.VISUAL_ID:
-			return getIntermediateThrowEvent_3012ContainedLinks(view);
-		case IntermediateCatchEvent5EditPart.VISUAL_ID:
-			return getIntermediateCatchEvent_3013ContainedLinks(view);
+		case ExclusiveGateway2EditPart.VISUAL_ID:
+			return getExclusiveGateway_3007ContainedLinks(view);
+		case ParallelGateway2EditPart.VISUAL_ID:
+			return getParallelGateway_3008ContainedLinks(view);
+		case SubProcess2EditPart.VISUAL_ID:
+			return getSubProcess_3001ContainedLinks(view);
 		case DataObject2EditPart.VISUAL_ID:
 			return getDataObject_3014ContainedLinks(view);
 		case TextAnnotation2EditPart.VISUAL_ID:
 			return getTextAnnotation_3015ContainedLinks(view);
-		case ScriptTask2EditPart.VISUAL_ID:
-			return getScriptTask_3016ContainedLinks(view);
 		case SequenceFlowEditPart.VISUAL_ID:
 			return getSequenceFlow_4001ContainedLinks(view);
 		case AssociationEditPart.VISUAL_ID:
@@ -449,70 +479,76 @@ public class Bpmn2DiagramUpdater {
 		switch (Bpmn2VisualIDRegistry.getVisualID(view)) {
 		case UserTaskEditPart.VISUAL_ID:
 			return getUserTask_2001IncomingLinks(view);
+		case ScriptTaskEditPart.VISUAL_ID:
+			return getScriptTask_2017IncomingLinks(view);
 		case ServiceTaskEditPart.VISUAL_ID:
 			return getServiceTask_2002IncomingLinks(view);
+		case BusinessRuleTaskEditPart.VISUAL_ID:
+			return getBusinessRuleTask_2018IncomingLinks(view);
 		case StartEventEditPart.VISUAL_ID:
 			return getStartEvent_2003IncomingLinks(view);
 		case StartEvent2EditPart.VISUAL_ID:
 			return getStartEvent_2007IncomingLinks(view);
-		case EndEventEditPart.VISUAL_ID:
-			return getEndEvent_2004IncomingLinks(view);
-		case ExclusiveGatewayEditPart.VISUAL_ID:
-			return getExclusiveGateway_2005IncomingLinks(view);
-		case ParallelGatewayEditPart.VISUAL_ID:
-			return getParallelGateway_2006IncomingLinks(view);
-		case EndEvent2EditPart.VISUAL_ID:
-			return getEndEvent_2008IncomingLinks(view);
-		case EndEvent3EditPart.VISUAL_ID:
-			return getEndEvent_2009IncomingLinks(view);
 		case IntermediateCatchEventEditPart.VISUAL_ID:
 			return getIntermediateCatchEvent_2010IncomingLinks(view);
-		case IntermediateThrowEventEditPart.VISUAL_ID:
-			return getIntermediateThrowEvent_2011IncomingLinks(view);
 		case IntermediateCatchEvent2EditPart.VISUAL_ID:
 			return getIntermediateCatchEvent_2012IncomingLinks(view);
 		case IntermediateCatchEvent3EditPart.VISUAL_ID:
 			return getIntermediateCatchEvent_2013IncomingLinks(view);
+		case IntermediateThrowEventEditPart.VISUAL_ID:
+			return getIntermediateThrowEvent_2011IncomingLinks(view);
+		case EndEventEditPart.VISUAL_ID:
+			return getEndEvent_2004IncomingLinks(view);
+		case EndEvent2EditPart.VISUAL_ID:
+			return getEndEvent_2008IncomingLinks(view);
+		case EndEvent3EditPart.VISUAL_ID:
+			return getEndEvent_2009IncomingLinks(view);
+		case ExclusiveGatewayEditPart.VISUAL_ID:
+			return getExclusiveGateway_2005IncomingLinks(view);
+		case ParallelGatewayEditPart.VISUAL_ID:
+			return getParallelGateway_2006IncomingLinks(view);
+		case SubProcessEditPart.VISUAL_ID:
+			return getSubProcess_2016IncomingLinks(view);
 		case DataObjectEditPart.VISUAL_ID:
 			return getDataObject_2014IncomingLinks(view);
 		case TextAnnotationEditPart.VISUAL_ID:
 			return getTextAnnotation_2015IncomingLinks(view);
-		case SubProcessEditPart.VISUAL_ID:
-			return getSubProcess_2016IncomingLinks(view);
-		case ScriptTaskEditPart.VISUAL_ID:
-			return getScriptTask_2017IncomingLinks(view);
-		case SubProcess2EditPart.VISUAL_ID:
-			return getSubProcess_3001IncomingLinks(view);
 		case UserTask2EditPart.VISUAL_ID:
 			return getUserTask_3002IncomingLinks(view);
+		case ScriptTask2EditPart.VISUAL_ID:
+			return getScriptTask_3016IncomingLinks(view);
 		case ServiceTask2EditPart.VISUAL_ID:
 			return getServiceTask_3004IncomingLinks(view);
+		case BusinessRuleTask2EditPart.VISUAL_ID:
+			return getBusinessRuleTask_3017IncomingLinks(view);
 		case StartEvent3EditPart.VISUAL_ID:
 			return getStartEvent_3003IncomingLinks(view);
 		case StartEvent4EditPart.VISUAL_ID:
 			return getStartEvent_3005IncomingLinks(view);
+		case IntermediateCatchEvent4EditPart.VISUAL_ID:
+			return getIntermediateCatchEvent_3011IncomingLinks(view);
+		case IntermediateCatchEvent5EditPart.VISUAL_ID:
+			return getIntermediateCatchEvent_3013IncomingLinks(view);
+		case IntermediateCatchEvent6EditPart.VISUAL_ID:
+			return getIntermediateCatchEvent_3018IncomingLinks(view);
+		case IntermediateThrowEvent2EditPart.VISUAL_ID:
+			return getIntermediateThrowEvent_3012IncomingLinks(view);
 		case EndEvent4EditPart.VISUAL_ID:
 			return getEndEvent_3006IncomingLinks(view);
-		case ExclusiveGateway2EditPart.VISUAL_ID:
-			return getExclusiveGateway_3007IncomingLinks(view);
-		case ParallelGateway2EditPart.VISUAL_ID:
-			return getParallelGateway_3008IncomingLinks(view);
 		case EndEvent5EditPart.VISUAL_ID:
 			return getEndEvent_3009IncomingLinks(view);
 		case EndEvent6EditPart.VISUAL_ID:
 			return getEndEvent_3010IncomingLinks(view);
-		case IntermediateCatchEvent4EditPart.VISUAL_ID:
-			return getIntermediateCatchEvent_3011IncomingLinks(view);
-		case IntermediateThrowEvent2EditPart.VISUAL_ID:
-			return getIntermediateThrowEvent_3012IncomingLinks(view);
-		case IntermediateCatchEvent5EditPart.VISUAL_ID:
-			return getIntermediateCatchEvent_3013IncomingLinks(view);
+		case ExclusiveGateway2EditPart.VISUAL_ID:
+			return getExclusiveGateway_3007IncomingLinks(view);
+		case ParallelGateway2EditPart.VISUAL_ID:
+			return getParallelGateway_3008IncomingLinks(view);
+		case SubProcess2EditPart.VISUAL_ID:
+			return getSubProcess_3001IncomingLinks(view);
 		case DataObject2EditPart.VISUAL_ID:
 			return getDataObject_3014IncomingLinks(view);
 		case TextAnnotation2EditPart.VISUAL_ID:
 			return getTextAnnotation_3015IncomingLinks(view);
-		case ScriptTask2EditPart.VISUAL_ID:
-			return getScriptTask_3016IncomingLinks(view);
 		case SequenceFlowEditPart.VISUAL_ID:
 			return getSequenceFlow_4001IncomingLinks(view);
 		case AssociationEditPart.VISUAL_ID:
@@ -528,70 +564,76 @@ public class Bpmn2DiagramUpdater {
 		switch (Bpmn2VisualIDRegistry.getVisualID(view)) {
 		case UserTaskEditPart.VISUAL_ID:
 			return getUserTask_2001OutgoingLinks(view);
+		case ScriptTaskEditPart.VISUAL_ID:
+			return getScriptTask_2017OutgoingLinks(view);
 		case ServiceTaskEditPart.VISUAL_ID:
 			return getServiceTask_2002OutgoingLinks(view);
+		case BusinessRuleTaskEditPart.VISUAL_ID:
+			return getBusinessRuleTask_2018OutgoingLinks(view);
 		case StartEventEditPart.VISUAL_ID:
 			return getStartEvent_2003OutgoingLinks(view);
 		case StartEvent2EditPart.VISUAL_ID:
 			return getStartEvent_2007OutgoingLinks(view);
-		case EndEventEditPart.VISUAL_ID:
-			return getEndEvent_2004OutgoingLinks(view);
-		case ExclusiveGatewayEditPart.VISUAL_ID:
-			return getExclusiveGateway_2005OutgoingLinks(view);
-		case ParallelGatewayEditPart.VISUAL_ID:
-			return getParallelGateway_2006OutgoingLinks(view);
-		case EndEvent2EditPart.VISUAL_ID:
-			return getEndEvent_2008OutgoingLinks(view);
-		case EndEvent3EditPart.VISUAL_ID:
-			return getEndEvent_2009OutgoingLinks(view);
 		case IntermediateCatchEventEditPart.VISUAL_ID:
 			return getIntermediateCatchEvent_2010OutgoingLinks(view);
-		case IntermediateThrowEventEditPart.VISUAL_ID:
-			return getIntermediateThrowEvent_2011OutgoingLinks(view);
 		case IntermediateCatchEvent2EditPart.VISUAL_ID:
 			return getIntermediateCatchEvent_2012OutgoingLinks(view);
 		case IntermediateCatchEvent3EditPart.VISUAL_ID:
 			return getIntermediateCatchEvent_2013OutgoingLinks(view);
+		case IntermediateThrowEventEditPart.VISUAL_ID:
+			return getIntermediateThrowEvent_2011OutgoingLinks(view);
+		case EndEventEditPart.VISUAL_ID:
+			return getEndEvent_2004OutgoingLinks(view);
+		case EndEvent2EditPart.VISUAL_ID:
+			return getEndEvent_2008OutgoingLinks(view);
+		case EndEvent3EditPart.VISUAL_ID:
+			return getEndEvent_2009OutgoingLinks(view);
+		case ExclusiveGatewayEditPart.VISUAL_ID:
+			return getExclusiveGateway_2005OutgoingLinks(view);
+		case ParallelGatewayEditPart.VISUAL_ID:
+			return getParallelGateway_2006OutgoingLinks(view);
+		case SubProcessEditPart.VISUAL_ID:
+			return getSubProcess_2016OutgoingLinks(view);
 		case DataObjectEditPart.VISUAL_ID:
 			return getDataObject_2014OutgoingLinks(view);
 		case TextAnnotationEditPart.VISUAL_ID:
 			return getTextAnnotation_2015OutgoingLinks(view);
-		case SubProcessEditPart.VISUAL_ID:
-			return getSubProcess_2016OutgoingLinks(view);
-		case ScriptTaskEditPart.VISUAL_ID:
-			return getScriptTask_2017OutgoingLinks(view);
-		case SubProcess2EditPart.VISUAL_ID:
-			return getSubProcess_3001OutgoingLinks(view);
 		case UserTask2EditPart.VISUAL_ID:
 			return getUserTask_3002OutgoingLinks(view);
+		case ScriptTask2EditPart.VISUAL_ID:
+			return getScriptTask_3016OutgoingLinks(view);
 		case ServiceTask2EditPart.VISUAL_ID:
 			return getServiceTask_3004OutgoingLinks(view);
+		case BusinessRuleTask2EditPart.VISUAL_ID:
+			return getBusinessRuleTask_3017OutgoingLinks(view);
 		case StartEvent3EditPart.VISUAL_ID:
 			return getStartEvent_3003OutgoingLinks(view);
 		case StartEvent4EditPart.VISUAL_ID:
 			return getStartEvent_3005OutgoingLinks(view);
+		case IntermediateCatchEvent4EditPart.VISUAL_ID:
+			return getIntermediateCatchEvent_3011OutgoingLinks(view);
+		case IntermediateCatchEvent5EditPart.VISUAL_ID:
+			return getIntermediateCatchEvent_3013OutgoingLinks(view);
+		case IntermediateCatchEvent6EditPart.VISUAL_ID:
+			return getIntermediateCatchEvent_3018OutgoingLinks(view);
+		case IntermediateThrowEvent2EditPart.VISUAL_ID:
+			return getIntermediateThrowEvent_3012OutgoingLinks(view);
 		case EndEvent4EditPart.VISUAL_ID:
 			return getEndEvent_3006OutgoingLinks(view);
-		case ExclusiveGateway2EditPart.VISUAL_ID:
-			return getExclusiveGateway_3007OutgoingLinks(view);
-		case ParallelGateway2EditPart.VISUAL_ID:
-			return getParallelGateway_3008OutgoingLinks(view);
 		case EndEvent5EditPart.VISUAL_ID:
 			return getEndEvent_3009OutgoingLinks(view);
 		case EndEvent6EditPart.VISUAL_ID:
 			return getEndEvent_3010OutgoingLinks(view);
-		case IntermediateCatchEvent4EditPart.VISUAL_ID:
-			return getIntermediateCatchEvent_3011OutgoingLinks(view);
-		case IntermediateThrowEvent2EditPart.VISUAL_ID:
-			return getIntermediateThrowEvent_3012OutgoingLinks(view);
-		case IntermediateCatchEvent5EditPart.VISUAL_ID:
-			return getIntermediateCatchEvent_3013OutgoingLinks(view);
+		case ExclusiveGateway2EditPart.VISUAL_ID:
+			return getExclusiveGateway_3007OutgoingLinks(view);
+		case ParallelGateway2EditPart.VISUAL_ID:
+			return getParallelGateway_3008OutgoingLinks(view);
+		case SubProcess2EditPart.VISUAL_ID:
+			return getSubProcess_3001OutgoingLinks(view);
 		case DataObject2EditPart.VISUAL_ID:
 			return getDataObject_3014OutgoingLinks(view);
 		case TextAnnotation2EditPart.VISUAL_ID:
 			return getTextAnnotation_3015OutgoingLinks(view);
-		case ScriptTask2EditPart.VISUAL_ID:
-			return getScriptTask_3016OutgoingLinks(view);
 		case SequenceFlowEditPart.VISUAL_ID:
 			return getSequenceFlow_4001OutgoingLinks(view);
 		case AssociationEditPart.VISUAL_ID:
@@ -616,6 +658,14 @@ public class Bpmn2DiagramUpdater {
 	 * @generated
 	 */
 	public static List<Bpmn2LinkDescriptor> getUserTask_2001ContainedLinks(
+			View view) {
+		return Collections.emptyList();
+	}
+
+	/**
+	 * @generated
+	 */
+	public static List<Bpmn2LinkDescriptor> getBusinessRuleTask_2018ContainedLinks(
 			View view) {
 		return Collections.emptyList();
 	}
@@ -781,6 +831,14 @@ public class Bpmn2DiagramUpdater {
 	/**
 	 * @generated
 	 */
+	public static List<Bpmn2LinkDescriptor> getBusinessRuleTask_3017ContainedLinks(
+			View view) {
+		return Collections.emptyList();
+	}
+
+	/**
+	 * @generated
+	 */
 	public static List<Bpmn2LinkDescriptor> getStartEvent_3003ContainedLinks(
 			View view) {
 		return Collections.emptyList();
@@ -861,6 +919,14 @@ public class Bpmn2DiagramUpdater {
 	/**
 	 * @generated
 	 */
+	public static List<Bpmn2LinkDescriptor> getIntermediateCatchEvent_3018ContainedLinks(
+			View view) {
+		return Collections.emptyList();
+	}
+
+	/**
+	 * @generated
+	 */
 	public static List<Bpmn2LinkDescriptor> getDataObject_3014ContainedLinks(
 			View view) {
 		return Collections.emptyList();
@@ -904,6 +970,22 @@ public class Bpmn2DiagramUpdater {
 	public static List<Bpmn2LinkDescriptor> getUserTask_2001IncomingLinks(
 			View view) {
 		UserTask modelElement = (UserTask) view.getElement();
+		Map<EObject, Collection<EStructuralFeature.Setting>> crossReferences = EcoreUtil.CrossReferencer
+				.find(view.eResource().getResourceSet().getResources());
+		LinkedList<Bpmn2LinkDescriptor> result = new LinkedList<Bpmn2LinkDescriptor>();
+		result.addAll(getIncomingTypeModelFacetLinks_SequenceFlow_4001(
+				modelElement, crossReferences));
+		result.addAll(getIncomingTypeModelFacetLinks_Association_4002(
+				modelElement, crossReferences));
+		return result;
+	}
+
+	/**
+	 * @generated
+	 */
+	public static List<Bpmn2LinkDescriptor> getBusinessRuleTask_2018IncomingLinks(
+			View view) {
+		BusinessRuleTask modelElement = (BusinessRuleTask) view.getElement();
 		Map<EObject, Collection<EStructuralFeature.Setting>> crossReferences = EcoreUtil.CrossReferencer
 				.find(view.eResource().getResourceSet().getResources());
 		LinkedList<Bpmn2LinkDescriptor> result = new LinkedList<Bpmn2LinkDescriptor>();
@@ -1221,6 +1303,22 @@ public class Bpmn2DiagramUpdater {
 	/**
 	 * @generated
 	 */
+	public static List<Bpmn2LinkDescriptor> getBusinessRuleTask_3017IncomingLinks(
+			View view) {
+		BusinessRuleTask modelElement = (BusinessRuleTask) view.getElement();
+		Map<EObject, Collection<EStructuralFeature.Setting>> crossReferences = EcoreUtil.CrossReferencer
+				.find(view.eResource().getResourceSet().getResources());
+		LinkedList<Bpmn2LinkDescriptor> result = new LinkedList<Bpmn2LinkDescriptor>();
+		result.addAll(getIncomingTypeModelFacetLinks_SequenceFlow_4001(
+				modelElement, crossReferences));
+		result.addAll(getIncomingTypeModelFacetLinks_Association_4002(
+				modelElement, crossReferences));
+		return result;
+	}
+
+	/**
+	 * @generated
+	 */
 	public static List<Bpmn2LinkDescriptor> getStartEvent_3003IncomingLinks(
 			View view) {
 		StartEvent modelElement = (StartEvent) view.getElement();
@@ -1384,6 +1482,23 @@ public class Bpmn2DiagramUpdater {
 	/**
 	 * @generated
 	 */
+	public static List<Bpmn2LinkDescriptor> getIntermediateCatchEvent_3018IncomingLinks(
+			View view) {
+		IntermediateCatchEvent modelElement = (IntermediateCatchEvent) view
+				.getElement();
+		Map<EObject, Collection<EStructuralFeature.Setting>> crossReferences = EcoreUtil.CrossReferencer
+				.find(view.eResource().getResourceSet().getResources());
+		LinkedList<Bpmn2LinkDescriptor> result = new LinkedList<Bpmn2LinkDescriptor>();
+		result.addAll(getIncomingTypeModelFacetLinks_SequenceFlow_4001(
+				modelElement, crossReferences));
+		result.addAll(getIncomingTypeModelFacetLinks_Association_4002(
+				modelElement, crossReferences));
+		return result;
+	}
+
+	/**
+	 * @generated
+	 */
 	public static List<Bpmn2LinkDescriptor> getDataObject_3014IncomingLinks(
 			View view) {
 		DataObject modelElement = (DataObject) view.getElement();
@@ -1459,6 +1574,18 @@ public class Bpmn2DiagramUpdater {
 	public static List<Bpmn2LinkDescriptor> getUserTask_2001OutgoingLinks(
 			View view) {
 		UserTask modelElement = (UserTask) view.getElement();
+		LinkedList<Bpmn2LinkDescriptor> result = new LinkedList<Bpmn2LinkDescriptor>();
+		result.addAll(getOutgoingTypeModelFacetLinks_SequenceFlow_4001(modelElement));
+		result.addAll(getOutgoingTypeModelFacetLinks_Association_4002(modelElement));
+		return result;
+	}
+
+	/**
+	 * @generated
+	 */
+	public static List<Bpmn2LinkDescriptor> getBusinessRuleTask_2018OutgoingLinks(
+			View view) {
+		BusinessRuleTask modelElement = (BusinessRuleTask) view.getElement();
 		LinkedList<Bpmn2LinkDescriptor> result = new LinkedList<Bpmn2LinkDescriptor>();
 		result.addAll(getOutgoingTypeModelFacetLinks_SequenceFlow_4001(modelElement));
 		result.addAll(getOutgoingTypeModelFacetLinks_Association_4002(modelElement));
@@ -1698,6 +1825,18 @@ public class Bpmn2DiagramUpdater {
 	/**
 	 * @generated
 	 */
+	public static List<Bpmn2LinkDescriptor> getBusinessRuleTask_3017OutgoingLinks(
+			View view) {
+		BusinessRuleTask modelElement = (BusinessRuleTask) view.getElement();
+		LinkedList<Bpmn2LinkDescriptor> result = new LinkedList<Bpmn2LinkDescriptor>();
+		result.addAll(getOutgoingTypeModelFacetLinks_SequenceFlow_4001(modelElement));
+		result.addAll(getOutgoingTypeModelFacetLinks_Association_4002(modelElement));
+		return result;
+	}
+
+	/**
+	 * @generated
+	 */
 	public static List<Bpmn2LinkDescriptor> getStartEvent_3003OutgoingLinks(
 			View view) {
 		StartEvent modelElement = (StartEvent) view.getElement();
@@ -1809,6 +1948,19 @@ public class Bpmn2DiagramUpdater {
 	 * @generated
 	 */
 	public static List<Bpmn2LinkDescriptor> getIntermediateCatchEvent_3013OutgoingLinks(
+			View view) {
+		IntermediateCatchEvent modelElement = (IntermediateCatchEvent) view
+				.getElement();
+		LinkedList<Bpmn2LinkDescriptor> result = new LinkedList<Bpmn2LinkDescriptor>();
+		result.addAll(getOutgoingTypeModelFacetLinks_SequenceFlow_4001(modelElement));
+		result.addAll(getOutgoingTypeModelFacetLinks_Association_4002(modelElement));
+		return result;
+	}
+
+	/**
+	 * @generated
+	 */
+	public static List<Bpmn2LinkDescriptor> getIntermediateCatchEvent_3018OutgoingLinks(
 			View view) {
 		IntermediateCatchEvent modelElement = (IntermediateCatchEvent) view
 				.getElement();

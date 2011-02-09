@@ -46,13 +46,13 @@ import org.jboss.tools.bpmn2.process.diagram.providers.Bpmn2ParserProvider;
 /**
  * @generated
  */
-public class ScriptTaskName2EditPart extends CompartmentEditPart implements
-		ITextAwareEditPart {
+public class BusinessRuleTaskName2EditPart extends CompartmentEditPart
+		implements ITextAwareEditPart {
 
 	/**
 	 * @generated
 	 */
-	public static final int VISUAL_ID = 5014;
+	public static final int VISUAL_ID = 5016;
 
 	/**
 	 * @generated
@@ -77,7 +77,7 @@ public class ScriptTaskName2EditPart extends CompartmentEditPart implements
 	/**
 	 * @generated
 	 */
-	public ScriptTaskName2EditPart(View view) {
+	public BusinessRuleTaskName2EditPart(View view) {
 		super(view);
 	}
 
@@ -290,10 +290,10 @@ public class ScriptTaskName2EditPart extends CompartmentEditPart implements
 		if (parser == null) {
 			parser = Bpmn2ParserProvider
 					.getParser(
-							Bpmn2ElementTypes.ScriptTask_3016,
+							Bpmn2ElementTypes.BusinessRuleTask_3017,
 							getParserElement(),
 							Bpmn2VisualIDRegistry
-									.getType(org.jboss.tools.bpmn2.process.diagram.edit.parts.ScriptTaskName2EditPart.VISUAL_ID));
+									.getType(org.jboss.tools.bpmn2.process.diagram.edit.parts.BusinessRuleTaskName2EditPart.VISUAL_ID));
 		}
 		return parser;
 	}

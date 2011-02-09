@@ -308,7 +308,17 @@ public class Messages extends NLS {
 	/**
 	 * @generated
 	 */
-	public static String SubProcess4CreationTool_title;
+	public static String BusinessRuleTask4CreationTool_title;
+
+	/**
+	 * @generated
+	 */
+	public static String BusinessRuleTask4CreationTool_desc;
+
+	/**
+	 * @generated
+	 */
+	public static String SubProcess5CreationTool_title;
 
 	/**
 	 * @generated
@@ -508,6 +518,16 @@ public class Messages extends NLS {
 	/**
 	 * @generated
 	 */
+	public static String NavigatorGroupName_IntermediateCatchEvent_3018_incominglinks;
+
+	/**
+	 * @generated
+	 */
+	public static String NavigatorGroupName_IntermediateCatchEvent_3018_outgoinglinks;
+
+	/**
+	 * @generated
+	 */
 	public static String NavigatorGroupName_ExclusiveGateway_2005_incominglinks;
 
 	/**
@@ -539,6 +559,16 @@ public class Messages extends NLS {
 	 * @generated
 	 */
 	public static String NavigatorGroupName_EndEvent_2008_outgoinglinks;
+
+	/**
+	 * @generated
+	 */
+	public static String NavigatorGroupName_BusinessRuleTask_2018_incominglinks;
+
+	/**
+	 * @generated
+	 */
+	public static String NavigatorGroupName_BusinessRuleTask_2018_outgoinglinks;
 
 	/**
 	 * @generated
@@ -719,6 +749,16 @@ public class Messages extends NLS {
 	 * @generated
 	 */
 	public static String NavigatorGroupName_EndEvent_3009_outgoinglinks;
+
+	/**
+	 * @generated
+	 */
+	public static String NavigatorGroupName_BusinessRuleTask_3017_incominglinks;
+
+	/**
+	 * @generated
+	 */
+	public static String NavigatorGroupName_BusinessRuleTask_3017_outgoinglinks;
 
 	/**
 	 * @generated

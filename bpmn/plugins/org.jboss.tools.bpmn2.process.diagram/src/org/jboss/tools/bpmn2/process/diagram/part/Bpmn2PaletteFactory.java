@@ -69,7 +69,8 @@ public class Bpmn2PaletteFactory {
 		paletteContainer.add(createUserTask1CreationTool());
 		paletteContainer.add(createServiceTask2CreationTool());
 		paletteContainer.add(createScriptTask3CreationTool());
-		paletteContainer.add(createSubProcess4CreationTool());
+		paletteContainer.add(createBusinessRuleTask4CreationTool());
+		paletteContainer.add(createSubProcess5CreationTool());
 		return paletteContainer;
 	}
 
@@ -219,8 +220,8 @@ public class Bpmn2PaletteFactory {
 	 */
 	private ToolEntry createScriptTask3CreationTool() {
 		ArrayList<IElementType> types = new ArrayList<IElementType>(2);
-		types.add(Bpmn2ElementTypes.ScriptTask_3016);
 		types.add(Bpmn2ElementTypes.ScriptTask_2017);
+		types.add(Bpmn2ElementTypes.ScriptTask_3016);
 		NodeToolEntry entry = new NodeToolEntry(
 				Messages.ScriptTask3CreationTool_title, null, types);
 		entry.setId("createScriptTask3CreationTool"); //$NON-NLS-1$
@@ -234,13 +235,31 @@ public class Bpmn2PaletteFactory {
 	/**
 	 * @generated
 	 */
-	private ToolEntry createSubProcess4CreationTool() {
+	private ToolEntry createBusinessRuleTask4CreationTool() {
+		ArrayList<IElementType> types = new ArrayList<IElementType>(2);
+		types.add(Bpmn2ElementTypes.BusinessRuleTask_2018);
+		types.add(Bpmn2ElementTypes.BusinessRuleTask_3017);
+		NodeToolEntry entry = new NodeToolEntry(
+				Messages.BusinessRuleTask4CreationTool_title,
+				Messages.BusinessRuleTask4CreationTool_desc, types);
+		entry.setId("createBusinessRuleTask4CreationTool"); //$NON-NLS-1$
+		entry.setSmallIcon(Bpmn2ProcessDiagramEditorPlugin
+				.findImageDescriptor("icons/obj16/tasks_16px_business_rule.png")); //$NON-NLS-1$
+		entry.setLargeIcon(Bpmn2ProcessDiagramEditorPlugin
+				.findImageDescriptor("icons/obj32/tasks_32px_business_rule.png")); //$NON-NLS-1$
+		return entry;
+	}
+
+	/**
+	 * @generated
+	 */
+	private ToolEntry createSubProcess5CreationTool() {
 		ArrayList<IElementType> types = new ArrayList<IElementType>(2);
 		types.add(Bpmn2ElementTypes.SubProcess_2016);
 		types.add(Bpmn2ElementTypes.SubProcess_3001);
 		NodeToolEntry entry = new NodeToolEntry(
-				Messages.SubProcess4CreationTool_title, null, types);
-		entry.setId("createSubProcess4CreationTool"); //$NON-NLS-1$
+				Messages.SubProcess5CreationTool_title, null, types);
+		entry.setId("createSubProcess5CreationTool"); //$NON-NLS-1$
 		entry.setSmallIcon(Bpmn2ProcessDiagramEditorPlugin
 				.findImageDescriptor("/org.jboss.tools.bpmn2.process.diagram/icons/obj16/activity_16px_subprocess.png")); //$NON-NLS-1$
 		entry.setLargeIcon(Bpmn2ProcessDiagramEditorPlugin
@@ -253,13 +272,13 @@ public class Bpmn2PaletteFactory {
 	 */
 	private ToolEntry createDataObject1CreationTool() {
 		ArrayList<IElementType> types = new ArrayList<IElementType>(2);
-		types.add(Bpmn2ElementTypes.DataObject_2014);
 		types.add(Bpmn2ElementTypes.DataObject_3014);
+		types.add(Bpmn2ElementTypes.DataObject_2014);
 		NodeToolEntry entry = new NodeToolEntry(
 				Messages.DataObject1CreationTool_title, null, types);
 		entry.setId("createDataObject1CreationTool"); //$NON-NLS-1$
 		entry.setSmallIcon(Bpmn2ElementTypes
-				.getImageDescriptor(Bpmn2ElementTypes.DataObject_2014));
+				.getImageDescriptor(Bpmn2ElementTypes.DataObject_3014));
 		entry.setLargeIcon(entry.getSmallIcon());
 		return entry;
 	}
@@ -269,13 +288,13 @@ public class Bpmn2PaletteFactory {
 	 */
 	private ToolEntry createTextAnnotation2CreationTool() {
 		ArrayList<IElementType> types = new ArrayList<IElementType>(2);
-		types.add(Bpmn2ElementTypes.TextAnnotation_2015);
 		types.add(Bpmn2ElementTypes.TextAnnotation_3015);
+		types.add(Bpmn2ElementTypes.TextAnnotation_2015);
 		NodeToolEntry entry = new NodeToolEntry(
 				Messages.TextAnnotation2CreationTool_title, null, types);
 		entry.setId("createTextAnnotation2CreationTool"); //$NON-NLS-1$
 		entry.setSmallIcon(Bpmn2ElementTypes
-				.getImageDescriptor(Bpmn2ElementTypes.TextAnnotation_2015));
+				.getImageDescriptor(Bpmn2ElementTypes.TextAnnotation_3015));
 		entry.setLargeIcon(entry.getSmallIcon());
 		return entry;
 	}
@@ -404,11 +423,11 @@ public class Bpmn2PaletteFactory {
 	 * @generated
 	 */
 	private ToolEntry createErrorCatch4CreationTool() {
+		ArrayList<IElementType> types = new ArrayList<IElementType>(2);
+		types.add(Bpmn2ElementTypes.IntermediateCatchEvent_2013);
+		types.add(Bpmn2ElementTypes.IntermediateCatchEvent_3018);
 		NodeToolEntry entry = new NodeToolEntry(
-				Messages.ErrorCatch4CreationTool_title,
-				null,
-				Collections
-						.singletonList(Bpmn2ElementTypes.IntermediateCatchEvent_2013));
+				Messages.ErrorCatch4CreationTool_title, null, types);
 		entry.setId("createErrorCatch4CreationTool"); //$NON-NLS-1$
 		entry.setSmallIcon(Bpmn2ProcessDiagramEditorPlugin
 				.findImageDescriptor("/org.jboss.tools.bpmn2.process.diagram/icons/obj16/events_16px_intermediate_error_catch.png")); //$NON-NLS-1$

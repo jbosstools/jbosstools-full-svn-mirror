@@ -1,6 +1,7 @@
 package org.jboss.tools.bpmn2.process.diagram.part;
 
 import org.eclipse.bpmn2.Bpmn2Package;
+import org.eclipse.bpmn2.BusinessRuleTask;
 import org.eclipse.bpmn2.DataObject;
 import org.eclipse.bpmn2.EndEvent;
 import org.eclipse.bpmn2.ErrorEventDefinition;
@@ -22,6 +23,10 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.gmf.runtime.notation.View;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.AssociationEditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.BusinessRuleTask2EditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.BusinessRuleTaskEditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.BusinessRuleTaskName2EditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.BusinessRuleTaskNameEditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.DataObject2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.DataObjectEditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.DataObjectName2EditPart;
@@ -38,6 +43,7 @@ import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEvent2E
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEvent3EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEvent4EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEvent5EditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEvent6EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEventEditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateThrowEvent2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateThrowEventEditPart;
@@ -180,9 +186,17 @@ public class Bpmn2VisualIDRegistry {
 					domainElement.eClass())) {
 				return UserTaskEditPart.VISUAL_ID;
 			}
+			if (Bpmn2Package.eINSTANCE.getScriptTask().isSuperTypeOf(
+					domainElement.eClass())) {
+				return ScriptTaskEditPart.VISUAL_ID;
+			}
 			if (Bpmn2Package.eINSTANCE.getServiceTask().isSuperTypeOf(
 					domainElement.eClass())) {
 				return ServiceTaskEditPart.VISUAL_ID;
+			}
+			if (Bpmn2Package.eINSTANCE.getBusinessRuleTask().isSuperTypeOf(
+					domainElement.eClass())) {
+				return BusinessRuleTaskEditPart.VISUAL_ID;
 			}
 			if (Bpmn2Package.eINSTANCE.getStartEvent().isSuperTypeOf(
 					domainElement.eClass())
@@ -194,38 +208,10 @@ public class Bpmn2VisualIDRegistry {
 					&& isStartEvent_2007((StartEvent) domainElement)) {
 				return StartEvent2EditPart.VISUAL_ID;
 			}
-			if (Bpmn2Package.eINSTANCE.getEndEvent().isSuperTypeOf(
-					domainElement.eClass())
-					&& isEndEvent_2004((EndEvent) domainElement)) {
-				return EndEventEditPart.VISUAL_ID;
-			}
-			if (Bpmn2Package.eINSTANCE.getExclusiveGateway().isSuperTypeOf(
-					domainElement.eClass())) {
-				return ExclusiveGatewayEditPart.VISUAL_ID;
-			}
-			if (Bpmn2Package.eINSTANCE.getParallelGateway().isSuperTypeOf(
-					domainElement.eClass())) {
-				return ParallelGatewayEditPart.VISUAL_ID;
-			}
-			if (Bpmn2Package.eINSTANCE.getEndEvent().isSuperTypeOf(
-					domainElement.eClass())
-					&& isEndEvent_2008((EndEvent) domainElement)) {
-				return EndEvent2EditPart.VISUAL_ID;
-			}
-			if (Bpmn2Package.eINSTANCE.getEndEvent().isSuperTypeOf(
-					domainElement.eClass())
-					&& isEndEvent_2009((EndEvent) domainElement)) {
-				return EndEvent3EditPart.VISUAL_ID;
-			}
 			if (Bpmn2Package.eINSTANCE.getIntermediateCatchEvent()
 					.isSuperTypeOf(domainElement.eClass())
 					&& isIntermediateCatchEvent_2010((IntermediateCatchEvent) domainElement)) {
 				return IntermediateCatchEventEditPart.VISUAL_ID;
-			}
-			if (Bpmn2Package.eINSTANCE.getIntermediateThrowEvent()
-					.isSuperTypeOf(domainElement.eClass())
-					&& isIntermediateThrowEvent_2011((IntermediateThrowEvent) domainElement)) {
-				return IntermediateThrowEventEditPart.VISUAL_ID;
 			}
 			if (Bpmn2Package.eINSTANCE.getIntermediateCatchEvent()
 					.isSuperTypeOf(domainElement.eClass())
@@ -237,6 +223,38 @@ public class Bpmn2VisualIDRegistry {
 					&& isIntermediateCatchEvent_2013((IntermediateCatchEvent) domainElement)) {
 				return IntermediateCatchEvent3EditPart.VISUAL_ID;
 			}
+			if (Bpmn2Package.eINSTANCE.getIntermediateThrowEvent()
+					.isSuperTypeOf(domainElement.eClass())
+					&& isIntermediateThrowEvent_2011((IntermediateThrowEvent) domainElement)) {
+				return IntermediateThrowEventEditPart.VISUAL_ID;
+			}
+			if (Bpmn2Package.eINSTANCE.getEndEvent().isSuperTypeOf(
+					domainElement.eClass())
+					&& isEndEvent_2004((EndEvent) domainElement)) {
+				return EndEventEditPart.VISUAL_ID;
+			}
+			if (Bpmn2Package.eINSTANCE.getEndEvent().isSuperTypeOf(
+					domainElement.eClass())
+					&& isEndEvent_2008((EndEvent) domainElement)) {
+				return EndEvent2EditPart.VISUAL_ID;
+			}
+			if (Bpmn2Package.eINSTANCE.getEndEvent().isSuperTypeOf(
+					domainElement.eClass())
+					&& isEndEvent_2009((EndEvent) domainElement)) {
+				return EndEvent3EditPart.VISUAL_ID;
+			}
+			if (Bpmn2Package.eINSTANCE.getExclusiveGateway().isSuperTypeOf(
+					domainElement.eClass())) {
+				return ExclusiveGatewayEditPart.VISUAL_ID;
+			}
+			if (Bpmn2Package.eINSTANCE.getParallelGateway().isSuperTypeOf(
+					domainElement.eClass())) {
+				return ParallelGatewayEditPart.VISUAL_ID;
+			}
+			if (Bpmn2Package.eINSTANCE.getSubProcess().isSuperTypeOf(
+					domainElement.eClass())) {
+				return SubProcessEditPart.VISUAL_ID;
+			}
 			if (Bpmn2Package.eINSTANCE.getDataObject().isSuperTypeOf(
 					domainElement.eClass())) {
 				return DataObjectEditPart.VISUAL_ID;
@@ -245,27 +263,23 @@ public class Bpmn2VisualIDRegistry {
 					domainElement.eClass())) {
 				return TextAnnotationEditPart.VISUAL_ID;
 			}
-			if (Bpmn2Package.eINSTANCE.getSubProcess().isSuperTypeOf(
-					domainElement.eClass())) {
-				return SubProcessEditPart.VISUAL_ID;
-			}
-			if (Bpmn2Package.eINSTANCE.getScriptTask().isSuperTypeOf(
-					domainElement.eClass())) {
-				return ScriptTaskEditPart.VISUAL_ID;
-			}
 			break;
 		case SubProcessEditPart.VISUAL_ID:
-			if (Bpmn2Package.eINSTANCE.getSubProcess().isSuperTypeOf(
-					domainElement.eClass())) {
-				return SubProcess2EditPart.VISUAL_ID;
-			}
 			if (Bpmn2Package.eINSTANCE.getUserTask().isSuperTypeOf(
 					domainElement.eClass())) {
 				return UserTask2EditPart.VISUAL_ID;
 			}
+			if (Bpmn2Package.eINSTANCE.getScriptTask().isSuperTypeOf(
+					domainElement.eClass())) {
+				return ScriptTask2EditPart.VISUAL_ID;
+			}
 			if (Bpmn2Package.eINSTANCE.getServiceTask().isSuperTypeOf(
 					domainElement.eClass())) {
 				return ServiceTask2EditPart.VISUAL_ID;
+			}
+			if (Bpmn2Package.eINSTANCE.getBusinessRuleTask().isSuperTypeOf(
+					domainElement.eClass())) {
+				return BusinessRuleTask2EditPart.VISUAL_ID;
 			}
 			if (Bpmn2Package.eINSTANCE.getStartEvent().isSuperTypeOf(
 					domainElement.eClass())
@@ -277,18 +291,30 @@ public class Bpmn2VisualIDRegistry {
 					&& isStartEvent_3005((StartEvent) domainElement)) {
 				return StartEvent4EditPart.VISUAL_ID;
 			}
+			if (Bpmn2Package.eINSTANCE.getIntermediateCatchEvent()
+					.isSuperTypeOf(domainElement.eClass())
+					&& isIntermediateCatchEvent_3011((IntermediateCatchEvent) domainElement)) {
+				return IntermediateCatchEvent4EditPart.VISUAL_ID;
+			}
+			if (Bpmn2Package.eINSTANCE.getIntermediateCatchEvent()
+					.isSuperTypeOf(domainElement.eClass())
+					&& isIntermediateCatchEvent_3013((IntermediateCatchEvent) domainElement)) {
+				return IntermediateCatchEvent5EditPart.VISUAL_ID;
+			}
+			if (Bpmn2Package.eINSTANCE.getIntermediateCatchEvent()
+					.isSuperTypeOf(domainElement.eClass())
+					&& isIntermediateCatchEvent_3018((IntermediateCatchEvent) domainElement)) {
+				return IntermediateCatchEvent6EditPart.VISUAL_ID;
+			}
+			if (Bpmn2Package.eINSTANCE.getIntermediateThrowEvent()
+					.isSuperTypeOf(domainElement.eClass())
+					&& isIntermediateThrowEvent_3012((IntermediateThrowEvent) domainElement)) {
+				return IntermediateThrowEvent2EditPart.VISUAL_ID;
+			}
 			if (Bpmn2Package.eINSTANCE.getEndEvent().isSuperTypeOf(
 					domainElement.eClass())
 					&& isEndEvent_3006((EndEvent) domainElement)) {
 				return EndEvent4EditPart.VISUAL_ID;
-			}
-			if (Bpmn2Package.eINSTANCE.getExclusiveGateway().isSuperTypeOf(
-					domainElement.eClass())) {
-				return ExclusiveGateway2EditPart.VISUAL_ID;
-			}
-			if (Bpmn2Package.eINSTANCE.getParallelGateway().isSuperTypeOf(
-					domainElement.eClass())) {
-				return ParallelGateway2EditPart.VISUAL_ID;
 			}
 			if (Bpmn2Package.eINSTANCE.getEndEvent().isSuperTypeOf(
 					domainElement.eClass())
@@ -300,20 +326,17 @@ public class Bpmn2VisualIDRegistry {
 					&& isEndEvent_3010((EndEvent) domainElement)) {
 				return EndEvent6EditPart.VISUAL_ID;
 			}
-			if (Bpmn2Package.eINSTANCE.getIntermediateCatchEvent()
-					.isSuperTypeOf(domainElement.eClass())
-					&& isIntermediateCatchEvent_3011((IntermediateCatchEvent) domainElement)) {
-				return IntermediateCatchEvent4EditPart.VISUAL_ID;
+			if (Bpmn2Package.eINSTANCE.getExclusiveGateway().isSuperTypeOf(
+					domainElement.eClass())) {
+				return ExclusiveGateway2EditPart.VISUAL_ID;
 			}
-			if (Bpmn2Package.eINSTANCE.getIntermediateThrowEvent()
-					.isSuperTypeOf(domainElement.eClass())
-					&& isIntermediateThrowEvent_3012((IntermediateThrowEvent) domainElement)) {
-				return IntermediateThrowEvent2EditPart.VISUAL_ID;
+			if (Bpmn2Package.eINSTANCE.getParallelGateway().isSuperTypeOf(
+					domainElement.eClass())) {
+				return ParallelGateway2EditPart.VISUAL_ID;
 			}
-			if (Bpmn2Package.eINSTANCE.getIntermediateCatchEvent()
-					.isSuperTypeOf(domainElement.eClass())
-					&& isIntermediateCatchEvent_3013((IntermediateCatchEvent) domainElement)) {
-				return IntermediateCatchEvent5EditPart.VISUAL_ID;
+			if (Bpmn2Package.eINSTANCE.getSubProcess().isSuperTypeOf(
+					domainElement.eClass())) {
+				return SubProcess2EditPart.VISUAL_ID;
 			}
 			if (Bpmn2Package.eINSTANCE.getDataObject().isSuperTypeOf(
 					domainElement.eClass())) {
@@ -322,24 +345,24 @@ public class Bpmn2VisualIDRegistry {
 			if (Bpmn2Package.eINSTANCE.getTextAnnotation().isSuperTypeOf(
 					domainElement.eClass())) {
 				return TextAnnotation2EditPart.VISUAL_ID;
-			}
-			if (Bpmn2Package.eINSTANCE.getScriptTask().isSuperTypeOf(
-					domainElement.eClass())) {
-				return ScriptTask2EditPart.VISUAL_ID;
 			}
 			break;
 		case SubProcess2EditPart.VISUAL_ID:
-			if (Bpmn2Package.eINSTANCE.getSubProcess().isSuperTypeOf(
-					domainElement.eClass())) {
-				return SubProcess2EditPart.VISUAL_ID;
-			}
 			if (Bpmn2Package.eINSTANCE.getUserTask().isSuperTypeOf(
 					domainElement.eClass())) {
 				return UserTask2EditPart.VISUAL_ID;
 			}
+			if (Bpmn2Package.eINSTANCE.getScriptTask().isSuperTypeOf(
+					domainElement.eClass())) {
+				return ScriptTask2EditPart.VISUAL_ID;
+			}
 			if (Bpmn2Package.eINSTANCE.getServiceTask().isSuperTypeOf(
 					domainElement.eClass())) {
 				return ServiceTask2EditPart.VISUAL_ID;
+			}
+			if (Bpmn2Package.eINSTANCE.getBusinessRuleTask().isSuperTypeOf(
+					domainElement.eClass())) {
+				return BusinessRuleTask2EditPart.VISUAL_ID;
 			}
 			if (Bpmn2Package.eINSTANCE.getStartEvent().isSuperTypeOf(
 					domainElement.eClass())
@@ -351,18 +374,30 @@ public class Bpmn2VisualIDRegistry {
 					&& isStartEvent_3005((StartEvent) domainElement)) {
 				return StartEvent4EditPart.VISUAL_ID;
 			}
+			if (Bpmn2Package.eINSTANCE.getIntermediateCatchEvent()
+					.isSuperTypeOf(domainElement.eClass())
+					&& isIntermediateCatchEvent_3011((IntermediateCatchEvent) domainElement)) {
+				return IntermediateCatchEvent4EditPart.VISUAL_ID;
+			}
+			if (Bpmn2Package.eINSTANCE.getIntermediateCatchEvent()
+					.isSuperTypeOf(domainElement.eClass())
+					&& isIntermediateCatchEvent_3013((IntermediateCatchEvent) domainElement)) {
+				return IntermediateCatchEvent5EditPart.VISUAL_ID;
+			}
+			if (Bpmn2Package.eINSTANCE.getIntermediateCatchEvent()
+					.isSuperTypeOf(domainElement.eClass())
+					&& isIntermediateCatchEvent_3018((IntermediateCatchEvent) domainElement)) {
+				return IntermediateCatchEvent6EditPart.VISUAL_ID;
+			}
+			if (Bpmn2Package.eINSTANCE.getIntermediateThrowEvent()
+					.isSuperTypeOf(domainElement.eClass())
+					&& isIntermediateThrowEvent_3012((IntermediateThrowEvent) domainElement)) {
+				return IntermediateThrowEvent2EditPart.VISUAL_ID;
+			}
 			if (Bpmn2Package.eINSTANCE.getEndEvent().isSuperTypeOf(
 					domainElement.eClass())
 					&& isEndEvent_3006((EndEvent) domainElement)) {
 				return EndEvent4EditPart.VISUAL_ID;
-			}
-			if (Bpmn2Package.eINSTANCE.getExclusiveGateway().isSuperTypeOf(
-					domainElement.eClass())) {
-				return ExclusiveGateway2EditPart.VISUAL_ID;
-			}
-			if (Bpmn2Package.eINSTANCE.getParallelGateway().isSuperTypeOf(
-					domainElement.eClass())) {
-				return ParallelGateway2EditPart.VISUAL_ID;
 			}
 			if (Bpmn2Package.eINSTANCE.getEndEvent().isSuperTypeOf(
 					domainElement.eClass())
@@ -374,20 +409,17 @@ public class Bpmn2VisualIDRegistry {
 					&& isEndEvent_3010((EndEvent) domainElement)) {
 				return EndEvent6EditPart.VISUAL_ID;
 			}
-			if (Bpmn2Package.eINSTANCE.getIntermediateCatchEvent()
-					.isSuperTypeOf(domainElement.eClass())
-					&& isIntermediateCatchEvent_3011((IntermediateCatchEvent) domainElement)) {
-				return IntermediateCatchEvent4EditPart.VISUAL_ID;
+			if (Bpmn2Package.eINSTANCE.getExclusiveGateway().isSuperTypeOf(
+					domainElement.eClass())) {
+				return ExclusiveGateway2EditPart.VISUAL_ID;
 			}
-			if (Bpmn2Package.eINSTANCE.getIntermediateThrowEvent()
-					.isSuperTypeOf(domainElement.eClass())
-					&& isIntermediateThrowEvent_3012((IntermediateThrowEvent) domainElement)) {
-				return IntermediateThrowEvent2EditPart.VISUAL_ID;
+			if (Bpmn2Package.eINSTANCE.getParallelGateway().isSuperTypeOf(
+					domainElement.eClass())) {
+				return ParallelGateway2EditPart.VISUAL_ID;
 			}
-			if (Bpmn2Package.eINSTANCE.getIntermediateCatchEvent()
-					.isSuperTypeOf(domainElement.eClass())
-					&& isIntermediateCatchEvent_3013((IntermediateCatchEvent) domainElement)) {
-				return IntermediateCatchEvent5EditPart.VISUAL_ID;
+			if (Bpmn2Package.eINSTANCE.getSubProcess().isSuperTypeOf(
+					domainElement.eClass())) {
+				return SubProcess2EditPart.VISUAL_ID;
 			}
 			if (Bpmn2Package.eINSTANCE.getDataObject().isSuperTypeOf(
 					domainElement.eClass())) {
@@ -396,10 +428,6 @@ public class Bpmn2VisualIDRegistry {
 			if (Bpmn2Package.eINSTANCE.getTextAnnotation().isSuperTypeOf(
 					domainElement.eClass())) {
 				return TextAnnotation2EditPart.VISUAL_ID;
-			}
-			if (Bpmn2Package.eINSTANCE.getScriptTask().isSuperTypeOf(
-					domainElement.eClass())) {
-				return ScriptTask2EditPart.VISUAL_ID;
 			}
 			break;
 		}
@@ -419,6 +447,8 @@ public class Bpmn2VisualIDRegistry {
 				return TextAnnotationTextEditPart.VISUAL_ID;
 			} else if (domainElement instanceof ScriptTask) {
 				return ScriptTaskNameEditPart.VISUAL_ID;
+			} else if (domainElement instanceof BusinessRuleTask) {
+				return BusinessRuleTaskNameEditPart.VISUAL_ID;
 			}
 		} else if (containerElement instanceof SubProcess) {
 			if (domainElement instanceof UserTask) {
@@ -431,6 +461,8 @@ public class Bpmn2VisualIDRegistry {
 				return TextAnnotationText2EditPart.VISUAL_ID;
 			} else if (domainElement instanceof ScriptTask) {
 				return ScriptTaskName2EditPart.VISUAL_ID;
+			} else if (domainElement instanceof BusinessRuleTask) {
+				return BusinessRuleTaskName2EditPart.VISUAL_ID;
 			}
 		}
 		return -1;
@@ -461,7 +493,13 @@ public class Bpmn2VisualIDRegistry {
 			if (UserTaskEditPart.VISUAL_ID == nodeVisualID) {
 				return true;
 			}
+			if (ScriptTaskEditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
 			if (ServiceTaskEditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (BusinessRuleTaskEditPart.VISUAL_ID == nodeVisualID) {
 				return true;
 			}
 			if (StartEventEditPart.VISUAL_ID == nodeVisualID) {
@@ -470,25 +508,7 @@ public class Bpmn2VisualIDRegistry {
 			if (StartEvent2EditPart.VISUAL_ID == nodeVisualID) {
 				return true;
 			}
-			if (EndEventEditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			if (ExclusiveGatewayEditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			if (ParallelGatewayEditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			if (EndEvent2EditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			if (EndEvent3EditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
 			if (IntermediateCatchEventEditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			if (IntermediateThrowEventEditPart.VISUAL_ID == nodeVisualID) {
 				return true;
 			}
 			if (IntermediateCatchEvent2EditPart.VISUAL_ID == nodeVisualID) {
@@ -497,16 +517,31 @@ public class Bpmn2VisualIDRegistry {
 			if (IntermediateCatchEvent3EditPart.VISUAL_ID == nodeVisualID) {
 				return true;
 			}
-			if (DataObjectEditPart.VISUAL_ID == nodeVisualID) {
+			if (IntermediateThrowEventEditPart.VISUAL_ID == nodeVisualID) {
 				return true;
 			}
-			if (TextAnnotationEditPart.VISUAL_ID == nodeVisualID) {
+			if (EndEventEditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (EndEvent2EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (EndEvent3EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (ExclusiveGatewayEditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (ParallelGatewayEditPart.VISUAL_ID == nodeVisualID) {
 				return true;
 			}
 			if (SubProcessEditPart.VISUAL_ID == nodeVisualID) {
 				return true;
 			}
-			if (ScriptTaskEditPart.VISUAL_ID == nodeVisualID) {
+			if (DataObjectEditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (TextAnnotationEditPart.VISUAL_ID == nodeVisualID) {
 				return true;
 			}
 			break;
@@ -515,8 +550,74 @@ public class Bpmn2VisualIDRegistry {
 				return true;
 			}
 			break;
+		case ScriptTaskEditPart.VISUAL_ID:
+			if (ScriptTaskNameEditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			break;
 		case ServiceTaskEditPart.VISUAL_ID:
 			if (ServiceTaskNameEditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			break;
+		case BusinessRuleTaskEditPart.VISUAL_ID:
+			if (BusinessRuleTaskNameEditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			break;
+		case SubProcessEditPart.VISUAL_ID:
+			if (UserTask2EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (ScriptTask2EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (ServiceTask2EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (BusinessRuleTask2EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (StartEvent3EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (StartEvent4EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (IntermediateCatchEvent4EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (IntermediateCatchEvent5EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (IntermediateCatchEvent6EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (IntermediateThrowEvent2EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (EndEvent4EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (EndEvent5EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (EndEvent6EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (ExclusiveGateway2EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (ParallelGateway2EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (SubProcess2EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (DataObject2EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (TextAnnotation2EditPart.VISUAL_ID == nodeVisualID) {
 				return true;
 			}
 			break;
@@ -530,118 +631,79 @@ public class Bpmn2VisualIDRegistry {
 				return true;
 			}
 			break;
-		case SubProcessEditPart.VISUAL_ID:
-			if (SubProcess2EditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			if (UserTask2EditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			if (ServiceTask2EditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			if (StartEvent3EditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			if (StartEvent4EditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			if (EndEvent4EditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			if (ExclusiveGateway2EditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			if (ParallelGateway2EditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			if (EndEvent5EditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			if (EndEvent6EditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			if (IntermediateCatchEvent4EditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			if (IntermediateThrowEvent2EditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			if (IntermediateCatchEvent5EditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			if (DataObject2EditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			if (TextAnnotation2EditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			if (ScriptTask2EditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			break;
-		case ScriptTaskEditPart.VISUAL_ID:
-			if (ScriptTaskNameEditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			break;
-		case SubProcess2EditPart.VISUAL_ID:
-			if (SubProcess2EditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			if (UserTask2EditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			if (ServiceTask2EditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			if (StartEvent3EditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			if (StartEvent4EditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			if (EndEvent4EditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			if (ExclusiveGateway2EditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			if (ParallelGateway2EditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			if (EndEvent5EditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			if (EndEvent6EditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			if (IntermediateCatchEvent4EditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			if (IntermediateThrowEvent2EditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			if (IntermediateCatchEvent5EditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			if (DataObject2EditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			if (TextAnnotation2EditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			if (ScriptTask2EditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			break;
 		case UserTask2EditPart.VISUAL_ID:
 			if (UserTaskName2EditPart.VISUAL_ID == nodeVisualID) {
 				return true;
 			}
 			break;
+		case ScriptTask2EditPart.VISUAL_ID:
+			if (ScriptTaskName2EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			break;
 		case ServiceTask2EditPart.VISUAL_ID:
 			if (ServiceTaskName2EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			break;
+		case BusinessRuleTask2EditPart.VISUAL_ID:
+			if (BusinessRuleTaskName2EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			break;
+		case SubProcess2EditPart.VISUAL_ID:
+			if (UserTask2EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (ScriptTask2EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (ServiceTask2EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (BusinessRuleTask2EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (StartEvent3EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (StartEvent4EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (IntermediateCatchEvent4EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (IntermediateCatchEvent5EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (IntermediateCatchEvent6EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (IntermediateThrowEvent2EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (EndEvent4EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (EndEvent5EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (EndEvent6EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (ExclusiveGateway2EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (ParallelGateway2EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (SubProcess2EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (DataObject2EditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			if (TextAnnotation2EditPart.VISUAL_ID == nodeVisualID) {
 				return true;
 			}
 			break;
@@ -652,11 +714,6 @@ public class Bpmn2VisualIDRegistry {
 			break;
 		case TextAnnotation2EditPart.VISUAL_ID:
 			if (TextAnnotationText2EditPart.VISUAL_ID == nodeVisualID) {
-				return true;
-			}
-			break;
-		case ScriptTask2EditPart.VISUAL_ID:
-			if (ScriptTaskName2EditPart.VISUAL_ID == nodeVisualID) {
 				return true;
 			}
 			break;
@@ -829,6 +886,17 @@ public class Bpmn2VisualIDRegistry {
 			IntermediateCatchEvent domainElement) {
 		return !(domainElement.getEventDefinitions().isEmpty())
 				&& domainElement.getEventDefinitions().get(0) instanceof TimerEventDefinition;
+	}
+
+	/**
+	 * @generated
+	 */
+	private static boolean isIntermediateCatchEvent_3018(
+			IntermediateCatchEvent domainElement) {
+		// FIXME: implement this method 
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException(
+				"No java implementation provided in 'isIntermediateCatchEvent_3018' operation"); //$NON-NLS-1$
 	}
 
 }

@@ -224,7 +224,13 @@ public class StartEvent4EditPart extends ShapeNodeEditPart {
 		if (targetEditPart instanceof UserTaskEditPart) {
 			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
 		}
+		if (targetEditPart instanceof ScriptTaskEditPart) {
+			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
+		}
 		if (targetEditPart instanceof ServiceTaskEditPart) {
+			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
+		}
+		if (targetEditPart instanceof BusinessRuleTaskEditPart) {
 			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
 		}
 		if (targetEditPart instanceof StartEventEditPart) {
@@ -233,25 +239,7 @@ public class StartEvent4EditPart extends ShapeNodeEditPart {
 		if (targetEditPart instanceof StartEvent2EditPart) {
 			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
 		}
-		if (targetEditPart instanceof EndEventEditPart) {
-			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
-		}
-		if (targetEditPart instanceof ExclusiveGatewayEditPart) {
-			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
-		}
-		if (targetEditPart instanceof ParallelGatewayEditPart) {
-			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
-		}
-		if (targetEditPart instanceof EndEvent2EditPart) {
-			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
-		}
-		if (targetEditPart instanceof EndEvent3EditPart) {
-			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
-		}
 		if (targetEditPart instanceof IntermediateCatchEventEditPart) {
-			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
-		}
-		if (targetEditPart instanceof IntermediateThrowEventEditPart) {
 			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
 		}
 		if (targetEditPart instanceof IntermediateCatchEvent2EditPart) {
@@ -260,19 +248,37 @@ public class StartEvent4EditPart extends ShapeNodeEditPart {
 		if (targetEditPart instanceof IntermediateCatchEvent3EditPart) {
 			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
 		}
+		if (targetEditPart instanceof IntermediateThrowEventEditPart) {
+			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
+		}
+		if (targetEditPart instanceof EndEventEditPart) {
+			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
+		}
+		if (targetEditPart instanceof EndEvent2EditPart) {
+			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
+		}
+		if (targetEditPart instanceof EndEvent3EditPart) {
+			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
+		}
+		if (targetEditPart instanceof ExclusiveGatewayEditPart) {
+			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
+		}
+		if (targetEditPart instanceof ParallelGatewayEditPart) {
+			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
+		}
 		if (targetEditPart instanceof SubProcessEditPart) {
-			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
-		}
-		if (targetEditPart instanceof ScriptTaskEditPart) {
-			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
-		}
-		if (targetEditPart instanceof SubProcess2EditPart) {
 			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
 		}
 		if (targetEditPart instanceof UserTask2EditPart) {
 			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
 		}
+		if (targetEditPart instanceof ScriptTask2EditPart) {
+			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
+		}
 		if (targetEditPart instanceof ServiceTask2EditPart) {
+			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
+		}
+		if (targetEditPart instanceof BusinessRuleTask2EditPart) {
 			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
 		}
 		if (targetEditPart instanceof StartEvent3EditPart) {
@@ -281,13 +287,19 @@ public class StartEvent4EditPart extends ShapeNodeEditPart {
 		if (targetEditPart instanceof org.jboss.tools.bpmn2.process.diagram.edit.parts.StartEvent4EditPart) {
 			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
 		}
+		if (targetEditPart instanceof IntermediateCatchEvent4EditPart) {
+			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
+		}
+		if (targetEditPart instanceof IntermediateCatchEvent5EditPart) {
+			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
+		}
+		if (targetEditPart instanceof IntermediateCatchEvent6EditPart) {
+			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
+		}
+		if (targetEditPart instanceof IntermediateThrowEvent2EditPart) {
+			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
+		}
 		if (targetEditPart instanceof EndEvent4EditPart) {
-			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
-		}
-		if (targetEditPart instanceof ExclusiveGateway2EditPart) {
-			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
-		}
-		if (targetEditPart instanceof ParallelGateway2EditPart) {
 			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
 		}
 		if (targetEditPart instanceof EndEvent5EditPart) {
@@ -296,22 +308,25 @@ public class StartEvent4EditPart extends ShapeNodeEditPart {
 		if (targetEditPart instanceof EndEvent6EditPart) {
 			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
 		}
-		if (targetEditPart instanceof IntermediateCatchEvent4EditPart) {
+		if (targetEditPart instanceof ExclusiveGateway2EditPart) {
 			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
 		}
-		if (targetEditPart instanceof IntermediateThrowEvent2EditPart) {
+		if (targetEditPart instanceof ParallelGateway2EditPart) {
 			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
 		}
-		if (targetEditPart instanceof IntermediateCatchEvent5EditPart) {
-			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
-		}
-		if (targetEditPart instanceof ScriptTask2EditPart) {
+		if (targetEditPart instanceof SubProcess2EditPart) {
 			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
 		}
 		if (targetEditPart instanceof UserTaskEditPart) {
 			types.add(Bpmn2ElementTypes.Association_4002);
 		}
+		if (targetEditPart instanceof ScriptTaskEditPart) {
+			types.add(Bpmn2ElementTypes.Association_4002);
+		}
 		if (targetEditPart instanceof ServiceTaskEditPart) {
+			types.add(Bpmn2ElementTypes.Association_4002);
+		}
+		if (targetEditPart instanceof BusinessRuleTaskEditPart) {
 			types.add(Bpmn2ElementTypes.Association_4002);
 		}
 		if (targetEditPart instanceof StartEventEditPart) {
@@ -320,13 +335,19 @@ public class StartEvent4EditPart extends ShapeNodeEditPart {
 		if (targetEditPart instanceof StartEvent2EditPart) {
 			types.add(Bpmn2ElementTypes.Association_4002);
 		}
+		if (targetEditPart instanceof IntermediateCatchEventEditPart) {
+			types.add(Bpmn2ElementTypes.Association_4002);
+		}
+		if (targetEditPart instanceof IntermediateCatchEvent2EditPart) {
+			types.add(Bpmn2ElementTypes.Association_4002);
+		}
+		if (targetEditPart instanceof IntermediateCatchEvent3EditPart) {
+			types.add(Bpmn2ElementTypes.Association_4002);
+		}
+		if (targetEditPart instanceof IntermediateThrowEventEditPart) {
+			types.add(Bpmn2ElementTypes.Association_4002);
+		}
 		if (targetEditPart instanceof EndEventEditPart) {
-			types.add(Bpmn2ElementTypes.Association_4002);
-		}
-		if (targetEditPart instanceof ExclusiveGatewayEditPart) {
-			types.add(Bpmn2ElementTypes.Association_4002);
-		}
-		if (targetEditPart instanceof ParallelGatewayEditPart) {
 			types.add(Bpmn2ElementTypes.Association_4002);
 		}
 		if (targetEditPart instanceof EndEvent2EditPart) {
@@ -335,16 +356,13 @@ public class StartEvent4EditPart extends ShapeNodeEditPart {
 		if (targetEditPart instanceof EndEvent3EditPart) {
 			types.add(Bpmn2ElementTypes.Association_4002);
 		}
-		if (targetEditPart instanceof IntermediateCatchEventEditPart) {
+		if (targetEditPart instanceof ExclusiveGatewayEditPart) {
 			types.add(Bpmn2ElementTypes.Association_4002);
 		}
-		if (targetEditPart instanceof IntermediateThrowEventEditPart) {
+		if (targetEditPart instanceof ParallelGatewayEditPart) {
 			types.add(Bpmn2ElementTypes.Association_4002);
 		}
-		if (targetEditPart instanceof IntermediateCatchEvent2EditPart) {
-			types.add(Bpmn2ElementTypes.Association_4002);
-		}
-		if (targetEditPart instanceof IntermediateCatchEvent3EditPart) {
+		if (targetEditPart instanceof SubProcessEditPart) {
 			types.add(Bpmn2ElementTypes.Association_4002);
 		}
 		if (targetEditPart instanceof DataObjectEditPart) {
@@ -353,19 +371,16 @@ public class StartEvent4EditPart extends ShapeNodeEditPart {
 		if (targetEditPart instanceof TextAnnotationEditPart) {
 			types.add(Bpmn2ElementTypes.Association_4002);
 		}
-		if (targetEditPart instanceof SubProcessEditPart) {
-			types.add(Bpmn2ElementTypes.Association_4002);
-		}
-		if (targetEditPart instanceof ScriptTaskEditPart) {
-			types.add(Bpmn2ElementTypes.Association_4002);
-		}
-		if (targetEditPart instanceof SubProcess2EditPart) {
-			types.add(Bpmn2ElementTypes.Association_4002);
-		}
 		if (targetEditPart instanceof UserTask2EditPart) {
 			types.add(Bpmn2ElementTypes.Association_4002);
 		}
+		if (targetEditPart instanceof ScriptTask2EditPart) {
+			types.add(Bpmn2ElementTypes.Association_4002);
+		}
 		if (targetEditPart instanceof ServiceTask2EditPart) {
+			types.add(Bpmn2ElementTypes.Association_4002);
+		}
+		if (targetEditPart instanceof BusinessRuleTask2EditPart) {
 			types.add(Bpmn2ElementTypes.Association_4002);
 		}
 		if (targetEditPart instanceof StartEvent3EditPart) {
@@ -374,13 +389,19 @@ public class StartEvent4EditPart extends ShapeNodeEditPart {
 		if (targetEditPart instanceof org.jboss.tools.bpmn2.process.diagram.edit.parts.StartEvent4EditPart) {
 			types.add(Bpmn2ElementTypes.Association_4002);
 		}
+		if (targetEditPart instanceof IntermediateCatchEvent4EditPart) {
+			types.add(Bpmn2ElementTypes.Association_4002);
+		}
+		if (targetEditPart instanceof IntermediateCatchEvent5EditPart) {
+			types.add(Bpmn2ElementTypes.Association_4002);
+		}
+		if (targetEditPart instanceof IntermediateCatchEvent6EditPart) {
+			types.add(Bpmn2ElementTypes.Association_4002);
+		}
+		if (targetEditPart instanceof IntermediateThrowEvent2EditPart) {
+			types.add(Bpmn2ElementTypes.Association_4002);
+		}
 		if (targetEditPart instanceof EndEvent4EditPart) {
-			types.add(Bpmn2ElementTypes.Association_4002);
-		}
-		if (targetEditPart instanceof ExclusiveGateway2EditPart) {
-			types.add(Bpmn2ElementTypes.Association_4002);
-		}
-		if (targetEditPart instanceof ParallelGateway2EditPart) {
 			types.add(Bpmn2ElementTypes.Association_4002);
 		}
 		if (targetEditPart instanceof EndEvent5EditPart) {
@@ -389,22 +410,19 @@ public class StartEvent4EditPart extends ShapeNodeEditPart {
 		if (targetEditPart instanceof EndEvent6EditPart) {
 			types.add(Bpmn2ElementTypes.Association_4002);
 		}
-		if (targetEditPart instanceof IntermediateCatchEvent4EditPart) {
+		if (targetEditPart instanceof ExclusiveGateway2EditPart) {
 			types.add(Bpmn2ElementTypes.Association_4002);
 		}
-		if (targetEditPart instanceof IntermediateThrowEvent2EditPart) {
+		if (targetEditPart instanceof ParallelGateway2EditPart) {
 			types.add(Bpmn2ElementTypes.Association_4002);
 		}
-		if (targetEditPart instanceof IntermediateCatchEvent5EditPart) {
+		if (targetEditPart instanceof SubProcess2EditPart) {
 			types.add(Bpmn2ElementTypes.Association_4002);
 		}
 		if (targetEditPart instanceof DataObject2EditPart) {
 			types.add(Bpmn2ElementTypes.Association_4002);
 		}
 		if (targetEditPart instanceof TextAnnotation2EditPart) {
-			types.add(Bpmn2ElementTypes.Association_4002);
-		}
-		if (targetEditPart instanceof ScriptTask2EditPart) {
 			types.add(Bpmn2ElementTypes.Association_4002);
 		}
 		return types;
@@ -417,68 +435,74 @@ public class StartEvent4EditPart extends ShapeNodeEditPart {
 		LinkedList<IElementType> types = new LinkedList<IElementType>();
 		if (relationshipType == Bpmn2ElementTypes.SequenceFlow_4001) {
 			types.add(Bpmn2ElementTypes.UserTask_2001);
+			types.add(Bpmn2ElementTypes.ScriptTask_2017);
 			types.add(Bpmn2ElementTypes.ServiceTask_2002);
+			types.add(Bpmn2ElementTypes.BusinessRuleTask_2018);
 			types.add(Bpmn2ElementTypes.StartEvent_2003);
 			types.add(Bpmn2ElementTypes.StartEvent_2007);
-			types.add(Bpmn2ElementTypes.EndEvent_2004);
-			types.add(Bpmn2ElementTypes.ExclusiveGateway_2005);
-			types.add(Bpmn2ElementTypes.ParallelGateway_2006);
-			types.add(Bpmn2ElementTypes.EndEvent_2008);
-			types.add(Bpmn2ElementTypes.EndEvent_2009);
 			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_2010);
-			types.add(Bpmn2ElementTypes.IntermediateThrowEvent_2011);
 			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_2012);
 			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_2013);
+			types.add(Bpmn2ElementTypes.IntermediateThrowEvent_2011);
+			types.add(Bpmn2ElementTypes.EndEvent_2004);
+			types.add(Bpmn2ElementTypes.EndEvent_2008);
+			types.add(Bpmn2ElementTypes.EndEvent_2009);
+			types.add(Bpmn2ElementTypes.ExclusiveGateway_2005);
+			types.add(Bpmn2ElementTypes.ParallelGateway_2006);
 			types.add(Bpmn2ElementTypes.SubProcess_2016);
-			types.add(Bpmn2ElementTypes.ScriptTask_2017);
-			types.add(Bpmn2ElementTypes.SubProcess_3001);
 			types.add(Bpmn2ElementTypes.UserTask_3002);
+			types.add(Bpmn2ElementTypes.ScriptTask_3016);
 			types.add(Bpmn2ElementTypes.ServiceTask_3004);
+			types.add(Bpmn2ElementTypes.BusinessRuleTask_3017);
 			types.add(Bpmn2ElementTypes.StartEvent_3003);
 			types.add(Bpmn2ElementTypes.StartEvent_3005);
+			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_3011);
+			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_3013);
+			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_3018);
+			types.add(Bpmn2ElementTypes.IntermediateThrowEvent_3012);
 			types.add(Bpmn2ElementTypes.EndEvent_3006);
-			types.add(Bpmn2ElementTypes.ExclusiveGateway_3007);
-			types.add(Bpmn2ElementTypes.ParallelGateway_3008);
 			types.add(Bpmn2ElementTypes.EndEvent_3009);
 			types.add(Bpmn2ElementTypes.EndEvent_3010);
-			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_3011);
-			types.add(Bpmn2ElementTypes.IntermediateThrowEvent_3012);
-			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_3013);
-			types.add(Bpmn2ElementTypes.ScriptTask_3016);
+			types.add(Bpmn2ElementTypes.ExclusiveGateway_3007);
+			types.add(Bpmn2ElementTypes.ParallelGateway_3008);
+			types.add(Bpmn2ElementTypes.SubProcess_3001);
 		} else if (relationshipType == Bpmn2ElementTypes.Association_4002) {
 			types.add(Bpmn2ElementTypes.UserTask_2001);
+			types.add(Bpmn2ElementTypes.ScriptTask_2017);
 			types.add(Bpmn2ElementTypes.ServiceTask_2002);
+			types.add(Bpmn2ElementTypes.BusinessRuleTask_2018);
 			types.add(Bpmn2ElementTypes.StartEvent_2003);
 			types.add(Bpmn2ElementTypes.StartEvent_2007);
-			types.add(Bpmn2ElementTypes.EndEvent_2004);
-			types.add(Bpmn2ElementTypes.ExclusiveGateway_2005);
-			types.add(Bpmn2ElementTypes.ParallelGateway_2006);
-			types.add(Bpmn2ElementTypes.EndEvent_2008);
-			types.add(Bpmn2ElementTypes.EndEvent_2009);
 			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_2010);
-			types.add(Bpmn2ElementTypes.IntermediateThrowEvent_2011);
 			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_2012);
 			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_2013);
+			types.add(Bpmn2ElementTypes.IntermediateThrowEvent_2011);
+			types.add(Bpmn2ElementTypes.EndEvent_2004);
+			types.add(Bpmn2ElementTypes.EndEvent_2008);
+			types.add(Bpmn2ElementTypes.EndEvent_2009);
+			types.add(Bpmn2ElementTypes.ExclusiveGateway_2005);
+			types.add(Bpmn2ElementTypes.ParallelGateway_2006);
+			types.add(Bpmn2ElementTypes.SubProcess_2016);
 			types.add(Bpmn2ElementTypes.DataObject_2014);
 			types.add(Bpmn2ElementTypes.TextAnnotation_2015);
-			types.add(Bpmn2ElementTypes.SubProcess_2016);
-			types.add(Bpmn2ElementTypes.ScriptTask_2017);
-			types.add(Bpmn2ElementTypes.SubProcess_3001);
 			types.add(Bpmn2ElementTypes.UserTask_3002);
+			types.add(Bpmn2ElementTypes.ScriptTask_3016);
 			types.add(Bpmn2ElementTypes.ServiceTask_3004);
+			types.add(Bpmn2ElementTypes.BusinessRuleTask_3017);
 			types.add(Bpmn2ElementTypes.StartEvent_3003);
 			types.add(Bpmn2ElementTypes.StartEvent_3005);
+			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_3011);
+			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_3013);
+			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_3018);
+			types.add(Bpmn2ElementTypes.IntermediateThrowEvent_3012);
 			types.add(Bpmn2ElementTypes.EndEvent_3006);
-			types.add(Bpmn2ElementTypes.ExclusiveGateway_3007);
-			types.add(Bpmn2ElementTypes.ParallelGateway_3008);
 			types.add(Bpmn2ElementTypes.EndEvent_3009);
 			types.add(Bpmn2ElementTypes.EndEvent_3010);
-			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_3011);
-			types.add(Bpmn2ElementTypes.IntermediateThrowEvent_3012);
-			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_3013);
+			types.add(Bpmn2ElementTypes.ExclusiveGateway_3007);
+			types.add(Bpmn2ElementTypes.ParallelGateway_3008);
+			types.add(Bpmn2ElementTypes.SubProcess_3001);
 			types.add(Bpmn2ElementTypes.DataObject_3014);
 			types.add(Bpmn2ElementTypes.TextAnnotation_3015);
-			types.add(Bpmn2ElementTypes.ScriptTask_3016);
 		}
 		return types;
 	}
@@ -500,68 +524,74 @@ public class StartEvent4EditPart extends ShapeNodeEditPart {
 		LinkedList<IElementType> types = new LinkedList<IElementType>();
 		if (relationshipType == Bpmn2ElementTypes.SequenceFlow_4001) {
 			types.add(Bpmn2ElementTypes.UserTask_2001);
+			types.add(Bpmn2ElementTypes.ScriptTask_2017);
 			types.add(Bpmn2ElementTypes.ServiceTask_2002);
+			types.add(Bpmn2ElementTypes.BusinessRuleTask_2018);
 			types.add(Bpmn2ElementTypes.StartEvent_2003);
 			types.add(Bpmn2ElementTypes.StartEvent_2007);
-			types.add(Bpmn2ElementTypes.EndEvent_2004);
-			types.add(Bpmn2ElementTypes.ExclusiveGateway_2005);
-			types.add(Bpmn2ElementTypes.ParallelGateway_2006);
-			types.add(Bpmn2ElementTypes.EndEvent_2008);
-			types.add(Bpmn2ElementTypes.EndEvent_2009);
 			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_2010);
-			types.add(Bpmn2ElementTypes.IntermediateThrowEvent_2011);
 			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_2012);
 			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_2013);
+			types.add(Bpmn2ElementTypes.IntermediateThrowEvent_2011);
+			types.add(Bpmn2ElementTypes.EndEvent_2004);
+			types.add(Bpmn2ElementTypes.EndEvent_2008);
+			types.add(Bpmn2ElementTypes.EndEvent_2009);
+			types.add(Bpmn2ElementTypes.ExclusiveGateway_2005);
+			types.add(Bpmn2ElementTypes.ParallelGateway_2006);
 			types.add(Bpmn2ElementTypes.SubProcess_2016);
-			types.add(Bpmn2ElementTypes.ScriptTask_2017);
-			types.add(Bpmn2ElementTypes.SubProcess_3001);
 			types.add(Bpmn2ElementTypes.UserTask_3002);
+			types.add(Bpmn2ElementTypes.ScriptTask_3016);
 			types.add(Bpmn2ElementTypes.ServiceTask_3004);
+			types.add(Bpmn2ElementTypes.BusinessRuleTask_3017);
 			types.add(Bpmn2ElementTypes.StartEvent_3003);
 			types.add(Bpmn2ElementTypes.StartEvent_3005);
+			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_3011);
+			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_3013);
+			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_3018);
+			types.add(Bpmn2ElementTypes.IntermediateThrowEvent_3012);
 			types.add(Bpmn2ElementTypes.EndEvent_3006);
-			types.add(Bpmn2ElementTypes.ExclusiveGateway_3007);
-			types.add(Bpmn2ElementTypes.ParallelGateway_3008);
 			types.add(Bpmn2ElementTypes.EndEvent_3009);
 			types.add(Bpmn2ElementTypes.EndEvent_3010);
-			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_3011);
-			types.add(Bpmn2ElementTypes.IntermediateThrowEvent_3012);
-			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_3013);
-			types.add(Bpmn2ElementTypes.ScriptTask_3016);
+			types.add(Bpmn2ElementTypes.ExclusiveGateway_3007);
+			types.add(Bpmn2ElementTypes.ParallelGateway_3008);
+			types.add(Bpmn2ElementTypes.SubProcess_3001);
 		} else if (relationshipType == Bpmn2ElementTypes.Association_4002) {
 			types.add(Bpmn2ElementTypes.UserTask_2001);
+			types.add(Bpmn2ElementTypes.ScriptTask_2017);
 			types.add(Bpmn2ElementTypes.ServiceTask_2002);
+			types.add(Bpmn2ElementTypes.BusinessRuleTask_2018);
 			types.add(Bpmn2ElementTypes.StartEvent_2003);
 			types.add(Bpmn2ElementTypes.StartEvent_2007);
-			types.add(Bpmn2ElementTypes.EndEvent_2004);
-			types.add(Bpmn2ElementTypes.ExclusiveGateway_2005);
-			types.add(Bpmn2ElementTypes.ParallelGateway_2006);
-			types.add(Bpmn2ElementTypes.EndEvent_2008);
-			types.add(Bpmn2ElementTypes.EndEvent_2009);
 			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_2010);
-			types.add(Bpmn2ElementTypes.IntermediateThrowEvent_2011);
 			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_2012);
 			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_2013);
+			types.add(Bpmn2ElementTypes.IntermediateThrowEvent_2011);
+			types.add(Bpmn2ElementTypes.EndEvent_2004);
+			types.add(Bpmn2ElementTypes.EndEvent_2008);
+			types.add(Bpmn2ElementTypes.EndEvent_2009);
+			types.add(Bpmn2ElementTypes.ExclusiveGateway_2005);
+			types.add(Bpmn2ElementTypes.ParallelGateway_2006);
+			types.add(Bpmn2ElementTypes.SubProcess_2016);
 			types.add(Bpmn2ElementTypes.DataObject_2014);
 			types.add(Bpmn2ElementTypes.TextAnnotation_2015);
-			types.add(Bpmn2ElementTypes.SubProcess_2016);
-			types.add(Bpmn2ElementTypes.ScriptTask_2017);
-			types.add(Bpmn2ElementTypes.SubProcess_3001);
 			types.add(Bpmn2ElementTypes.UserTask_3002);
+			types.add(Bpmn2ElementTypes.ScriptTask_3016);
 			types.add(Bpmn2ElementTypes.ServiceTask_3004);
+			types.add(Bpmn2ElementTypes.BusinessRuleTask_3017);
 			types.add(Bpmn2ElementTypes.StartEvent_3003);
 			types.add(Bpmn2ElementTypes.StartEvent_3005);
+			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_3011);
+			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_3013);
+			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_3018);
+			types.add(Bpmn2ElementTypes.IntermediateThrowEvent_3012);
 			types.add(Bpmn2ElementTypes.EndEvent_3006);
-			types.add(Bpmn2ElementTypes.ExclusiveGateway_3007);
-			types.add(Bpmn2ElementTypes.ParallelGateway_3008);
 			types.add(Bpmn2ElementTypes.EndEvent_3009);
 			types.add(Bpmn2ElementTypes.EndEvent_3010);
-			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_3011);
-			types.add(Bpmn2ElementTypes.IntermediateThrowEvent_3012);
-			types.add(Bpmn2ElementTypes.IntermediateCatchEvent_3013);
+			types.add(Bpmn2ElementTypes.ExclusiveGateway_3007);
+			types.add(Bpmn2ElementTypes.ParallelGateway_3008);
+			types.add(Bpmn2ElementTypes.SubProcess_3001);
 			types.add(Bpmn2ElementTypes.DataObject_3014);
 			types.add(Bpmn2ElementTypes.TextAnnotation_3015);
-			types.add(Bpmn2ElementTypes.ScriptTask_3016);
 		}
 		return types;
 	}

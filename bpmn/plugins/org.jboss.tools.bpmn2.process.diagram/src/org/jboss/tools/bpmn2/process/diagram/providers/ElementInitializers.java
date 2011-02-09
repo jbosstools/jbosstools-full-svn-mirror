@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.eclipse.bpmn2.Association;
 import org.eclipse.bpmn2.Bpmn2Factory;
+import org.eclipse.bpmn2.BusinessRuleTask;
 import org.eclipse.bpmn2.DataObject;
 import org.eclipse.bpmn2.EndEvent;
 import org.eclipse.bpmn2.EventDefinition;
@@ -39,6 +40,19 @@ public class ElementInitializers {
 	public void init_UserTask_2001(UserTask instance) {
 		try {
 			Object value_0 = id_UserTask_2001(instance);
+			instance.setId((String) value_0);
+		} catch (RuntimeException e) {
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
+					"Element initialization failed", e); //$NON-NLS-1$						
+		}
+	}
+
+	/**
+	 * @generated
+	 */
+	public void init_BusinessRuleTask_2018(BusinessRuleTask instance) {
+		try {
+			Object value_0 = id_BusinessRuleTask_2018(instance);
 			instance.setId((String) value_0);
 		} catch (RuntimeException e) {
 			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
@@ -345,6 +359,19 @@ public class ElementInitializers {
 	/**
 	 * @generated
 	 */
+	public void init_BusinessRuleTask_3017(BusinessRuleTask instance) {
+		try {
+			Object value_0 = id_BusinessRuleTask_3017(instance);
+			instance.setId((String) value_0);
+		} catch (RuntimeException e) {
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
+					"Element initialization failed", e); //$NON-NLS-1$						
+		}
+	}
+
+	/**
+	 * @generated
+	 */
 	public void init_StartEvent_3003(StartEvent instance) {
 		try {
 			Object value_0 = id_StartEvent_3003(instance);
@@ -517,6 +544,26 @@ public class ElementInitializers {
 	/**
 	 * @generated
 	 */
+	public void init_IntermediateCatchEvent_3018(IntermediateCatchEvent instance) {
+		try {
+			Object value_0 = id_IntermediateCatchEvent_3018(instance);
+			instance.setId((String) value_0);
+			Object value_1 = eventDefinitions_IntermediateCatchEvent_3018(instance);
+			if (value_1 instanceof Collection) {
+				instance.getEventDefinitions().clear();
+				instance.getEventDefinitions().addAll(((Collection) value_1));
+			} else {
+				instance.getEventDefinitions().add((EventDefinition) value_1);
+			}
+		} catch (RuntimeException e) {
+			Bpmn2ProcessDiagramEditorPlugin.getInstance().logError(
+					"Element initialization failed", e); //$NON-NLS-1$						
+		}
+	}
+
+	/**
+	 * @generated
+	 */
 	public void init_DataObject_3014(DataObject instance) {
 		try {
 			Object value_0 = id_DataObject_3014(instance);
@@ -583,6 +630,13 @@ public class ElementInitializers {
 	 * @generated not
 	 */
 	private String id_UserTask_2001(UserTask self) {
+		return EcoreUtil.generateUUID();
+	}
+
+	/**
+	 * @generated not
+	 */
+	private String id_BusinessRuleTask_2018(BusinessRuleTask self) {
 		return EcoreUtil.generateUUID();
 	}
 
@@ -809,6 +863,17 @@ public class ElementInitializers {
 	}
 
 	/**
+	 * @generated
+	 */
+	private String id_BusinessRuleTask_3017(BusinessRuleTask self) {
+		// TODO: implement this method to return value  
+		// for org.eclipse.bpmn2.Bpmn2Package.eINSTANCE.getBaseElement_Id()
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException(
+				"No user java implementation provided in 'id_BusinessRuleTask_3017' operation"); //$NON-NLS-1$
+	}
+
+	/**
 	 * @generated not
 	 */
 	private String id_StartEvent_3003(StartEvent self) {
@@ -952,6 +1017,29 @@ public class ElementInitializers {
 		eventDefinition.setId(EcoreUtil.generateUUID());
 		result.add(eventDefinition);
 		return result;
+	}
+
+	/**
+	 * @generated
+	 */
+	private String id_IntermediateCatchEvent_3018(IntermediateCatchEvent self) {
+		// TODO: implement this method to return value  
+		// for org.eclipse.bpmn2.Bpmn2Package.eINSTANCE.getBaseElement_Id()
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException(
+				"No user java implementation provided in 'id_IntermediateCatchEvent_3018' operation"); //$NON-NLS-1$
+	}
+
+	/**
+	 * @generated
+	 */
+	private List eventDefinitions_IntermediateCatchEvent_3018(
+			IntermediateCatchEvent self) {
+		// TODO: implement this method to return value  
+		// for org.eclipse.bpmn2.Bpmn2Package.eINSTANCE.getCatchEvent_EventDefinitions()
+		// Ensure that you remove @generated or mark it @generated NOT
+		throw new UnsupportedOperationException(
+				"No user java implementation provided in 'eventDefinitions_IntermediateCatchEvent_3018' operation"); //$NON-NLS-1$
 	}
 
 	/**

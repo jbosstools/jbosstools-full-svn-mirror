@@ -247,7 +247,7 @@
       <viewProvider class="org.jboss.tools.bpmn2.process.diagram.providers.Bpmn2ViewProvider">
          <Priority name="Lowest"/>
          <context viewClass="org.eclipse.gmf.runtime.notation.Diagram" semanticHints="bpmn2"/>
-         <context viewClass="org.eclipse.gmf.runtime.notation.Node" semanticHints="2001,2002,2003,2007,2004,2005,2006,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,3001,3002,3004,3003,3005,3006,3007,3008,3009,3010,3011,3012,3013,3014,3015,3016"/>
+         <context viewClass="org.eclipse.gmf.runtime.notation.Node" semanticHints="2001,2017,2002,2018,2003,2007,2010,2012,2013,2011,2004,2008,2009,2005,2006,2016,2014,2015,3002,3016,3004,3017,3003,3005,3011,3013,3018,3012,3006,3009,3010,3007,3008,3001,3014,3015"/>
          <context viewClass="org.eclipse.gmf.runtime.notation.Edge" semanticHints="4001,4002"/>
       </viewProvider>
    </extension>
@@ -260,13 +260,13 @@
             <method name="getType()" value="bpmn2"/>
          </object>
          <object class="org.eclipse.gmf.runtime.notation.Node" id="generated-nodes">
-            <method name="getType()" value="2001,2002,2003,2007,2004,2005,2006,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,3001,3002,3004,3003,3005,3006,3007,3008,3009,3010,3011,3012,3013,3014,3015,3016"/>
+            <method name="getType()" value="2001,2017,2002,2018,2003,2007,2010,2012,2013,2011,2004,2008,2009,2005,2006,2016,2014,2015,3002,3016,3004,3017,3003,3005,3011,3013,3018,3012,3006,3009,3010,3007,3008,3001,3014,3015"/>
          </object>
          <object class="org.eclipse.gmf.runtime.notation.Edge" id="generated-links">
             <method name="getType()" value="4001,4002"/>
          </object>
          <object class="org.eclipse.gmf.runtime.notation.Node" id="generated-labels">
-            <method name="getType()" value="5001,5002,5003,5004,5009,5005,5006,5007,5008,5010"/>
+            <method name="getType()" value="5009,5011,5012,5013,5003,5004,5010,5014,5015,5016,5007,5008"/>
          </object>
          <object class="org.eclipse.gmf.runtime.notation.Node" id="generated-compartments">
             <method name="getType()" value=""/>
@@ -281,23 +281,24 @@
          <Priority name="Lowest"/>
          <object class="org.jboss.tools.bpmn2.process.diagram.edit.parts.ProcessEditPart" id="Process_1000"/>
          <object class="org.jboss.tools.bpmn2.process.diagram.edit.parts.UserTaskEditPart" id="UserTask_2001"/>
+         <object class="org.jboss.tools.bpmn2.process.diagram.edit.parts.ScriptTaskEditPart" id="ScriptTask_2017"/>
          <object class="org.jboss.tools.bpmn2.process.diagram.edit.parts.ServiceTaskEditPart" id="ServiceTask_2002"/>
+         <object class="org.jboss.tools.bpmn2.process.diagram.edit.parts.BusinessRuleTaskEditPart" id="BusinessRuleTask_2018"/>
          <object class="org.jboss.tools.bpmn2.process.diagram.edit.parts.StartEventEditPart" id="StartEvent_2003"/>
          <object class="org.jboss.tools.bpmn2.process.diagram.edit.parts.StartEvent2EditPart" id="StartEvent_2007"/>
-         <object class="org.jboss.tools.bpmn2.process.diagram.edit.parts.EndEventEditPart" id="EndEvent_2004"/>
-         <object class="org.jboss.tools.bpmn2.process.diagram.edit.parts.ExclusiveGatewayEditPart" id="ExclusiveGateway_2005"/>
-         <object class="org.jboss.tools.bpmn2.process.diagram.edit.parts.ParallelGatewayEditPart" id="ParallelGateway_2006"/>
-         <object class="org.jboss.tools.bpmn2.process.diagram.edit.parts.EndEvent2EditPart" id="EndEvent_2008"/>
-         <object class="org.jboss.tools.bpmn2.process.diagram.edit.parts.EndEvent3EditPart" id="EndEvent_2009"/>
          <object class="org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEventEditPart" id="IntermediateCatchEvent_2010"/>
-         <object class="org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateThrowEventEditPart" id="IntermediateThrowEvent_2011"/>
          <object class="org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEvent2EditPart" id="IntermediateCatchEvent_2012"/>
          <object class="org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEvent3EditPart" id="IntermediateCatchEvent_2013"/>
+         <object class="org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateThrowEventEditPart" id="IntermediateThrowEvent_2011"/>
+         <object class="org.jboss.tools.bpmn2.process.diagram.edit.parts.EndEventEditPart" id="EndEvent_2004"/>
+         <object class="org.jboss.tools.bpmn2.process.diagram.edit.parts.EndEvent2EditPart" id="EndEvent_2008"/>
+         <object class="org.jboss.tools.bpmn2.process.diagram.edit.parts.EndEvent3EditPart" id="EndEvent_2009"/>
+         <object class="org.jboss.tools.bpmn2.process.diagram.edit.parts.ExclusiveGatewayEditPart" id="ExclusiveGateway_2005"/>
+         <object class="org.jboss.tools.bpmn2.process.diagram.edit.parts.ParallelGatewayEditPart" id="ParallelGateway_2006"/>
+         <object class="org.jboss.tools.bpmn2.process.diagram.edit.parts.SubProcessEditPart" id="SubProcess_2016"/>
          <object class="org.jboss.tools.bpmn2.process.diagram.edit.parts.DataObjectEditPart" id="DataObject_2014"/>
          <object class="org.jboss.tools.bpmn2.process.diagram.edit.parts.TextAnnotationEditPart" id="TextAnnotation_2015"/>
-         <object class="org.jboss.tools.bpmn2.process.diagram.edit.parts.SubProcessEditPart" id="SubProcess_2016"/>
-         <object class="org.jboss.tools.bpmn2.process.diagram.edit.parts.ScriptTaskEditPart" id="ScriptTask_2017"/>
-         <context elements="Process_1000,UserTask_2001,ServiceTask_2002,StartEvent_2003,StartEvent_2007,EndEvent_2004,ExclusiveGateway_2005,ParallelGateway_2006,EndEvent_2008,EndEvent_2009,IntermediateCatchEvent_2010,IntermediateThrowEvent_2011,IntermediateCatchEvent_2012,IntermediateCatchEvent_2013,DataObject_2014,TextAnnotation_2015,SubProcess_2016,ScriptTask_2017"/>
+         <context elements="Process_1000,UserTask_2001,ScriptTask_2017,ServiceTask_2002,BusinessRuleTask_2018,StartEvent_2003,StartEvent_2007,IntermediateCatchEvent_2010,IntermediateCatchEvent_2012,IntermediateCatchEvent_2013,IntermediateThrowEvent_2011,EndEvent_2004,EndEvent_2008,EndEvent_2009,ExclusiveGateway_2005,ParallelGateway_2006,SubProcess_2016,DataObject_2014,TextAnnotation_2015"/>
       </modelingAssistantProvider>
    </extension>
 
@@ -339,12 +340,32 @@
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <metamodelType
+               id="org.jboss.tools.bpmn2.process.diagram.ScriptTask_2017"
+               name="%metatype.name.ScriptTask_2017"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
+               eclass="ScriptTask"
+               edithelper="org.jboss.tools.bpmn2.process.diagram.edit.helpers.ScriptTaskEditHelper">
+            <param name="semanticHint" value="2017"/>
+         </metamodelType>
+      </metamodel>
+      <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
+         <metamodelType
                id="org.jboss.tools.bpmn2.process.diagram.ServiceTask_2002"
                name="%metatype.name.ServiceTask_2002"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
                eclass="ServiceTask"
                edithelper="org.jboss.tools.bpmn2.process.diagram.edit.helpers.ServiceTaskEditHelper">
             <param name="semanticHint" value="2002"/>
+         </metamodelType>
+      </metamodel>
+      <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
+         <metamodelType
+               id="org.jboss.tools.bpmn2.process.diagram.BusinessRuleTask_2018"
+               name="%metatype.name.BusinessRuleTask_2018"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
+               eclass="BusinessRuleTask"
+               edithelper="org.jboss.tools.bpmn2.process.diagram.edit.helpers.BusinessRuleTaskEditHelper">
+            <param name="semanticHint" value="2018"/>
          </metamodelType>
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
@@ -368,70 +389,12 @@
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <metamodelType
-               id="org.jboss.tools.bpmn2.process.diagram.EndEvent_2004"
-               name="%metatype.name.EndEvent_2004"
-               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
-               eclass="EndEvent"
-               edithelper="org.jboss.tools.bpmn2.process.diagram.edit.helpers.EndEventEditHelper">
-            <param name="semanticHint" value="2004"/>
-         </metamodelType>
-      </metamodel>
-      <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
-         <metamodelType
-               id="org.jboss.tools.bpmn2.process.diagram.ExclusiveGateway_2005"
-               name="%metatype.name.ExclusiveGateway_2005"
-               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
-               eclass="ExclusiveGateway"
-               edithelper="org.jboss.tools.bpmn2.process.diagram.edit.helpers.ExclusiveGatewayEditHelper">
-            <param name="semanticHint" value="2005"/>
-         </metamodelType>
-      </metamodel>
-      <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
-         <metamodelType
-               id="org.jboss.tools.bpmn2.process.diagram.ParallelGateway_2006"
-               name="%metatype.name.ParallelGateway_2006"
-               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
-               eclass="ParallelGateway"
-               edithelper="org.jboss.tools.bpmn2.process.diagram.edit.helpers.ParallelGatewayEditHelper">
-            <param name="semanticHint" value="2006"/>
-         </metamodelType>
-      </metamodel>
-      <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
-         <specializationType
-               id="org.jboss.tools.bpmn2.process.diagram.EndEvent_2008"
-               name="%metatype.name.EndEvent_2008"
-               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
-            <specializes id="org.jboss.tools.bpmn2.process.diagram.EndEvent_2004"/>
-            <param name="semanticHint" value="2008"/>
-         </specializationType>
-      </metamodel>
-      <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
-         <specializationType
-               id="org.jboss.tools.bpmn2.process.diagram.EndEvent_2009"
-               name="%metatype.name.EndEvent_2009"
-               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
-            <specializes id="org.jboss.tools.bpmn2.process.diagram.EndEvent_2004"/>
-            <param name="semanticHint" value="2009"/>
-         </specializationType>
-      </metamodel>
-      <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
-         <metamodelType
                id="org.jboss.tools.bpmn2.process.diagram.IntermediateCatchEvent_2010"
                name="%metatype.name.IntermediateCatchEvent_2010"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
                eclass="IntermediateCatchEvent"
                edithelper="org.jboss.tools.bpmn2.process.diagram.edit.helpers.IntermediateCatchEventEditHelper">
             <param name="semanticHint" value="2010"/>
-         </metamodelType>
-      </metamodel>
-      <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
-         <metamodelType
-               id="org.jboss.tools.bpmn2.process.diagram.IntermediateThrowEvent_2011"
-               name="%metatype.name.IntermediateThrowEvent_2011"
-               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
-               eclass="IntermediateThrowEvent"
-               edithelper="org.jboss.tools.bpmn2.process.diagram.edit.helpers.IntermediateThrowEventEditHelper">
-            <param name="semanticHint" value="2011"/>
          </metamodelType>
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
@@ -454,22 +417,60 @@
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <metamodelType
-               id="org.jboss.tools.bpmn2.process.diagram.DataObject_2014"
-               name="%metatype.name.DataObject_2014"
+               id="org.jboss.tools.bpmn2.process.diagram.IntermediateThrowEvent_2011"
+               name="%metatype.name.IntermediateThrowEvent_2011"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
-               eclass="DataObject"
-               edithelper="org.jboss.tools.bpmn2.process.diagram.edit.helpers.DataObjectEditHelper">
-            <param name="semanticHint" value="2014"/>
+               eclass="IntermediateThrowEvent"
+               edithelper="org.jboss.tools.bpmn2.process.diagram.edit.helpers.IntermediateThrowEventEditHelper">
+            <param name="semanticHint" value="2011"/>
          </metamodelType>
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <metamodelType
-               id="org.jboss.tools.bpmn2.process.diagram.TextAnnotation_2015"
-               name="%metatype.name.TextAnnotation_2015"
+               id="org.jboss.tools.bpmn2.process.diagram.EndEvent_2004"
+               name="%metatype.name.EndEvent_2004"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
-               eclass="TextAnnotation"
-               edithelper="org.jboss.tools.bpmn2.process.diagram.edit.helpers.TextAnnotationEditHelper">
-            <param name="semanticHint" value="2015"/>
+               eclass="EndEvent"
+               edithelper="org.jboss.tools.bpmn2.process.diagram.edit.helpers.EndEventEditHelper">
+            <param name="semanticHint" value="2004"/>
+         </metamodelType>
+      </metamodel>
+      <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
+         <specializationType
+               id="org.jboss.tools.bpmn2.process.diagram.EndEvent_2008"
+               name="%metatype.name.EndEvent_2008"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
+            <specializes id="org.jboss.tools.bpmn2.process.diagram.EndEvent_2004"/>
+            <param name="semanticHint" value="2008"/>
+         </specializationType>
+      </metamodel>
+      <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
+         <specializationType
+               id="org.jboss.tools.bpmn2.process.diagram.EndEvent_2009"
+               name="%metatype.name.EndEvent_2009"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
+            <specializes id="org.jboss.tools.bpmn2.process.diagram.EndEvent_2004"/>
+            <param name="semanticHint" value="2009"/>
+         </specializationType>
+      </metamodel>
+      <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
+         <metamodelType
+               id="org.jboss.tools.bpmn2.process.diagram.ExclusiveGateway_2005"
+               name="%metatype.name.ExclusiveGateway_2005"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
+               eclass="ExclusiveGateway"
+               edithelper="org.jboss.tools.bpmn2.process.diagram.edit.helpers.ExclusiveGatewayEditHelper">
+            <param name="semanticHint" value="2005"/>
+         </metamodelType>
+      </metamodel>
+      <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
+         <metamodelType
+               id="org.jboss.tools.bpmn2.process.diagram.ParallelGateway_2006"
+               name="%metatype.name.ParallelGateway_2006"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
+               eclass="ParallelGateway"
+               edithelper="org.jboss.tools.bpmn2.process.diagram.edit.helpers.ParallelGatewayEditHelper">
+            <param name="semanticHint" value="2006"/>
          </metamodelType>
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
@@ -484,20 +485,20 @@
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <specializationType
-               id="org.jboss.tools.bpmn2.process.diagram.ScriptTask_2017"
-               name="%metatype.name.ScriptTask_2017"
+               id="org.jboss.tools.bpmn2.process.diagram.DataObject_2014"
+               name="%metatype.name.DataObject_2014"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
-            <specializes id="org.jboss.tools.bpmn2.process.diagram.ScriptTask_3016"/>
-            <param name="semanticHint" value="2017"/>
+            <specializes id="org.jboss.tools.bpmn2.process.diagram.DataObject_3014"/>
+            <param name="semanticHint" value="2014"/>
          </specializationType>
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <specializationType
-               id="org.jboss.tools.bpmn2.process.diagram.SubProcess_3001"
-               name="%metatype.name.SubProcess_3001"
+               id="org.jboss.tools.bpmn2.process.diagram.TextAnnotation_2015"
+               name="%metatype.name.TextAnnotation_2015"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
-            <specializes id="org.jboss.tools.bpmn2.process.diagram.SubProcess_2016"/>
-            <param name="semanticHint" value="3001"/>
+            <specializes id="org.jboss.tools.bpmn2.process.diagram.TextAnnotation_3015"/>
+            <param name="semanticHint" value="2015"/>
          </specializationType>
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
@@ -511,11 +512,29 @@
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <specializationType
+               id="org.jboss.tools.bpmn2.process.diagram.ScriptTask_3016"
+               name="%metatype.name.ScriptTask_3016"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
+            <specializes id="org.jboss.tools.bpmn2.process.diagram.ScriptTask_2017"/>
+            <param name="semanticHint" value="3016"/>
+         </specializationType>
+      </metamodel>
+      <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
+         <specializationType
                id="org.jboss.tools.bpmn2.process.diagram.ServiceTask_3004"
                name="%metatype.name.ServiceTask_3004"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
             <specializes id="org.jboss.tools.bpmn2.process.diagram.ServiceTask_2002"/>
             <param name="semanticHint" value="3004"/>
+         </specializationType>
+      </metamodel>
+      <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
+         <specializationType
+               id="org.jboss.tools.bpmn2.process.diagram.BusinessRuleTask_3017"
+               name="%metatype.name.BusinessRuleTask_3017"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
+            <specializes id="org.jboss.tools.bpmn2.process.diagram.BusinessRuleTask_2018"/>
+            <param name="semanticHint" value="3017"/>
          </specializationType>
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
@@ -538,29 +557,47 @@
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <specializationType
+               id="org.jboss.tools.bpmn2.process.diagram.IntermediateCatchEvent_3011"
+               name="%metatype.name.IntermediateCatchEvent_3011"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
+            <specializes id="org.jboss.tools.bpmn2.process.diagram.IntermediateCatchEvent_2010"/>
+            <param name="semanticHint" value="3011"/>
+         </specializationType>
+      </metamodel>
+      <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
+         <specializationType
+               id="org.jboss.tools.bpmn2.process.diagram.IntermediateCatchEvent_3013"
+               name="%metatype.name.IntermediateCatchEvent_3013"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
+            <specializes id="org.jboss.tools.bpmn2.process.diagram.IntermediateCatchEvent_2010"/>
+            <param name="semanticHint" value="3013"/>
+         </specializationType>
+      </metamodel>
+      <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
+         <specializationType
+               id="org.jboss.tools.bpmn2.process.diagram.IntermediateCatchEvent_3018"
+               name="%metatype.name.IntermediateCatchEvent_3018"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
+            <specializes id="org.jboss.tools.bpmn2.process.diagram.IntermediateCatchEvent_2010"/>
+            <param name="semanticHint" value="3018"/>
+         </specializationType>
+      </metamodel>
+      <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
+         <specializationType
+               id="org.jboss.tools.bpmn2.process.diagram.IntermediateThrowEvent_3012"
+               name="%metatype.name.IntermediateThrowEvent_3012"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
+            <specializes id="org.jboss.tools.bpmn2.process.diagram.IntermediateThrowEvent_2011"/>
+            <param name="semanticHint" value="3012"/>
+         </specializationType>
+      </metamodel>
+      <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
+         <specializationType
                id="org.jboss.tools.bpmn2.process.diagram.EndEvent_3006"
                name="%metatype.name.EndEvent_3006"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
             <specializes id="org.jboss.tools.bpmn2.process.diagram.EndEvent_2004"/>
             <param name="semanticHint" value="3006"/>
-         </specializationType>
-      </metamodel>
-      <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
-         <specializationType
-               id="org.jboss.tools.bpmn2.process.diagram.ExclusiveGateway_3007"
-               name="%metatype.name.ExclusiveGateway_3007"
-               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
-            <specializes id="org.jboss.tools.bpmn2.process.diagram.ExclusiveGateway_2005"/>
-            <param name="semanticHint" value="3007"/>
-         </specializationType>
-      </metamodel>
-      <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
-         <specializationType
-               id="org.jboss.tools.bpmn2.process.diagram.ParallelGateway_3008"
-               name="%metatype.name.ParallelGateway_3008"
-               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
-            <specializes id="org.jboss.tools.bpmn2.process.diagram.ParallelGateway_2006"/>
-            <param name="semanticHint" value="3008"/>
          </specializationType>
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
@@ -583,57 +620,49 @@
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <specializationType
-               id="org.jboss.tools.bpmn2.process.diagram.IntermediateCatchEvent_3011"
-               name="%metatype.name.IntermediateCatchEvent_3011"
+               id="org.jboss.tools.bpmn2.process.diagram.ExclusiveGateway_3007"
+               name="%metatype.name.ExclusiveGateway_3007"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
-            <specializes id="org.jboss.tools.bpmn2.process.diagram.IntermediateCatchEvent_2010"/>
-            <param name="semanticHint" value="3011"/>
+            <specializes id="org.jboss.tools.bpmn2.process.diagram.ExclusiveGateway_2005"/>
+            <param name="semanticHint" value="3007"/>
          </specializationType>
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <specializationType
-               id="org.jboss.tools.bpmn2.process.diagram.IntermediateThrowEvent_3012"
-               name="%metatype.name.IntermediateThrowEvent_3012"
+               id="org.jboss.tools.bpmn2.process.diagram.ParallelGateway_3008"
+               name="%metatype.name.ParallelGateway_3008"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
-            <specializes id="org.jboss.tools.bpmn2.process.diagram.IntermediateThrowEvent_2011"/>
-            <param name="semanticHint" value="3012"/>
+            <specializes id="org.jboss.tools.bpmn2.process.diagram.ParallelGateway_2006"/>
+            <param name="semanticHint" value="3008"/>
          </specializationType>
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <specializationType
-               id="org.jboss.tools.bpmn2.process.diagram.IntermediateCatchEvent_3013"
-               name="%metatype.name.IntermediateCatchEvent_3013"
+               id="org.jboss.tools.bpmn2.process.diagram.SubProcess_3001"
+               name="%metatype.name.SubProcess_3001"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
-            <specializes id="org.jboss.tools.bpmn2.process.diagram.IntermediateCatchEvent_2010"/>
-            <param name="semanticHint" value="3013"/>
-         </specializationType>
-      </metamodel>
-      <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
-         <specializationType
-               id="org.jboss.tools.bpmn2.process.diagram.DataObject_3014"
-               name="%metatype.name.DataObject_3014"
-               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
-            <specializes id="org.jboss.tools.bpmn2.process.diagram.DataObject_2014"/>
-            <param name="semanticHint" value="3014"/>
-         </specializationType>
-      </metamodel>
-      <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
-         <specializationType
-               id="org.jboss.tools.bpmn2.process.diagram.TextAnnotation_3015"
-               name="%metatype.name.TextAnnotation_3015"
-               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
-            <specializes id="org.jboss.tools.bpmn2.process.diagram.TextAnnotation_2015"/>
-            <param name="semanticHint" value="3015"/>
+            <specializes id="org.jboss.tools.bpmn2.process.diagram.SubProcess_2016"/>
+            <param name="semanticHint" value="3001"/>
          </specializationType>
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
          <metamodelType
-               id="org.jboss.tools.bpmn2.process.diagram.ScriptTask_3016"
-               name="%metatype.name.ScriptTask_3016"
+               id="org.jboss.tools.bpmn2.process.diagram.DataObject_3014"
+               name="%metatype.name.DataObject_3014"
                kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
-               eclass="ScriptTask"
-               edithelper="org.jboss.tools.bpmn2.process.diagram.edit.helpers.ScriptTaskEditHelper">
-            <param name="semanticHint" value="3016"/>
+               eclass="DataObject"
+               edithelper="org.jboss.tools.bpmn2.process.diagram.edit.helpers.DataObjectEditHelper">
+            <param name="semanticHint" value="3014"/>
+         </metamodelType>
+      </metamodel>
+      <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
+         <metamodelType
+               id="org.jboss.tools.bpmn2.process.diagram.TextAnnotation_3015"
+               name="%metatype.name.TextAnnotation_3015"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
+               eclass="TextAnnotation"
+               edithelper="org.jboss.tools.bpmn2.process.diagram.edit.helpers.TextAnnotationEditHelper">
+            <param name="semanticHint" value="3015"/>
          </metamodelType>
       </metamodel>
       <metamodel nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI">
@@ -670,38 +699,41 @@
       <binding context="org.jboss.tools.bpmn2.process.diagram.TypeContext">
          <elementType ref="org.jboss.tools.bpmn2.process.diagram.Process_1000"/>
          <elementType ref="org.jboss.tools.bpmn2.process.diagram.UserTask_2001"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.ScriptTask_2017"/>
          <elementType ref="org.jboss.tools.bpmn2.process.diagram.ServiceTask_2002"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.BusinessRuleTask_2018"/>
          <elementType ref="org.jboss.tools.bpmn2.process.diagram.StartEvent_2003"/>
          <elementType ref="org.jboss.tools.bpmn2.process.diagram.StartEvent_2007"/>
-         <elementType ref="org.jboss.tools.bpmn2.process.diagram.EndEvent_2004"/>
-         <elementType ref="org.jboss.tools.bpmn2.process.diagram.ExclusiveGateway_2005"/>
-         <elementType ref="org.jboss.tools.bpmn2.process.diagram.ParallelGateway_2006"/>
-         <elementType ref="org.jboss.tools.bpmn2.process.diagram.EndEvent_2008"/>
-         <elementType ref="org.jboss.tools.bpmn2.process.diagram.EndEvent_2009"/>
          <elementType ref="org.jboss.tools.bpmn2.process.diagram.IntermediateCatchEvent_2010"/>
-         <elementType ref="org.jboss.tools.bpmn2.process.diagram.IntermediateThrowEvent_2011"/>
          <elementType ref="org.jboss.tools.bpmn2.process.diagram.IntermediateCatchEvent_2012"/>
          <elementType ref="org.jboss.tools.bpmn2.process.diagram.IntermediateCatchEvent_2013"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.IntermediateThrowEvent_2011"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.EndEvent_2004"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.EndEvent_2008"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.EndEvent_2009"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.ExclusiveGateway_2005"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.ParallelGateway_2006"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.SubProcess_2016"/>
          <elementType ref="org.jboss.tools.bpmn2.process.diagram.DataObject_2014"/>
          <elementType ref="org.jboss.tools.bpmn2.process.diagram.TextAnnotation_2015"/>
-         <elementType ref="org.jboss.tools.bpmn2.process.diagram.SubProcess_2016"/>
-         <elementType ref="org.jboss.tools.bpmn2.process.diagram.ScriptTask_2017"/>
-         <elementType ref="org.jboss.tools.bpmn2.process.diagram.SubProcess_3001"/>
          <elementType ref="org.jboss.tools.bpmn2.process.diagram.UserTask_3002"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.ScriptTask_3016"/>
          <elementType ref="org.jboss.tools.bpmn2.process.diagram.ServiceTask_3004"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.BusinessRuleTask_3017"/>
          <elementType ref="org.jboss.tools.bpmn2.process.diagram.StartEvent_3003"/>
          <elementType ref="org.jboss.tools.bpmn2.process.diagram.StartEvent_3005"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.IntermediateCatchEvent_3011"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.IntermediateCatchEvent_3013"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.IntermediateCatchEvent_3018"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.IntermediateThrowEvent_3012"/>
          <elementType ref="org.jboss.tools.bpmn2.process.diagram.EndEvent_3006"/>
-         <elementType ref="org.jboss.tools.bpmn2.process.diagram.ExclusiveGateway_3007"/>
-         <elementType ref="org.jboss.tools.bpmn2.process.diagram.ParallelGateway_3008"/>
          <elementType ref="org.jboss.tools.bpmn2.process.diagram.EndEvent_3009"/>
          <elementType ref="org.jboss.tools.bpmn2.process.diagram.EndEvent_3010"/>
-         <elementType ref="org.jboss.tools.bpmn2.process.diagram.IntermediateCatchEvent_3011"/>
-         <elementType ref="org.jboss.tools.bpmn2.process.diagram.IntermediateThrowEvent_3012"/>
-         <elementType ref="org.jboss.tools.bpmn2.process.diagram.IntermediateCatchEvent_3013"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.ExclusiveGateway_3007"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.ParallelGateway_3008"/>
+         <elementType ref="org.jboss.tools.bpmn2.process.diagram.SubProcess_3001"/>
          <elementType ref="org.jboss.tools.bpmn2.process.diagram.DataObject_3014"/>
          <elementType ref="org.jboss.tools.bpmn2.process.diagram.TextAnnotation_3015"/>
-         <elementType ref="org.jboss.tools.bpmn2.process.diagram.ScriptTask_3016"/>
          <elementType ref="org.jboss.tools.bpmn2.process.diagram.SequenceFlow_4001"/>
          <elementType ref="org.jboss.tools.bpmn2.process.diagram.Association_4002"/>
          <advice ref="org.eclipse.gmf.runtime.diagram.core.advice.notationDepdendents"/>

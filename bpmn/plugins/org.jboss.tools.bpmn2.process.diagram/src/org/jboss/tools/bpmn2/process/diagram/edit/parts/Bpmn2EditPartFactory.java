@@ -37,11 +37,23 @@ public class Bpmn2EditPartFactory implements EditPartFactory {
 			case UserTaskNameEditPart.VISUAL_ID:
 				return new UserTaskNameEditPart(view);
 
+			case ScriptTaskEditPart.VISUAL_ID:
+				return new ScriptTaskEditPart(view);
+
+			case ScriptTaskNameEditPart.VISUAL_ID:
+				return new ScriptTaskNameEditPart(view);
+
 			case ServiceTaskEditPart.VISUAL_ID:
 				return new ServiceTaskEditPart(view);
 
 			case ServiceTaskNameEditPart.VISUAL_ID:
 				return new ServiceTaskNameEditPart(view);
+
+			case BusinessRuleTaskEditPart.VISUAL_ID:
+				return new BusinessRuleTaskEditPart(view);
+
+			case BusinessRuleTaskNameEditPart.VISUAL_ID:
+				return new BusinessRuleTaskNameEditPart(view);
 
 			case StartEventEditPart.VISUAL_ID:
 				return new StartEventEditPart(view);
@@ -49,14 +61,20 @@ public class Bpmn2EditPartFactory implements EditPartFactory {
 			case StartEvent2EditPart.VISUAL_ID:
 				return new StartEvent2EditPart(view);
 
+			case IntermediateCatchEventEditPart.VISUAL_ID:
+				return new IntermediateCatchEventEditPart(view);
+
+			case IntermediateCatchEvent2EditPart.VISUAL_ID:
+				return new IntermediateCatchEvent2EditPart(view);
+
+			case IntermediateCatchEvent3EditPart.VISUAL_ID:
+				return new IntermediateCatchEvent3EditPart(view);
+
+			case IntermediateThrowEventEditPart.VISUAL_ID:
+				return new IntermediateThrowEventEditPart(view);
+
 			case EndEventEditPart.VISUAL_ID:
 				return new EndEventEditPart(view);
-
-			case ExclusiveGatewayEditPart.VISUAL_ID:
-				return new ExclusiveGatewayEditPart(view);
-
-			case ParallelGatewayEditPart.VISUAL_ID:
-				return new ParallelGatewayEditPart(view);
 
 			case EndEvent2EditPart.VISUAL_ID:
 				return new EndEvent2EditPart(view);
@@ -64,17 +82,14 @@ public class Bpmn2EditPartFactory implements EditPartFactory {
 			case EndEvent3EditPart.VISUAL_ID:
 				return new EndEvent3EditPart(view);
 
-			case IntermediateCatchEventEditPart.VISUAL_ID:
-				return new IntermediateCatchEventEditPart(view);
+			case ExclusiveGatewayEditPart.VISUAL_ID:
+				return new ExclusiveGatewayEditPart(view);
 
-			case IntermediateThrowEventEditPart.VISUAL_ID:
-				return new IntermediateThrowEventEditPart(view);
+			case ParallelGatewayEditPart.VISUAL_ID:
+				return new ParallelGatewayEditPart(view);
 
-			case IntermediateCatchEvent2EditPart.VISUAL_ID:
-				return new IntermediateCatchEvent2EditPart(view);
-
-			case IntermediateCatchEvent3EditPart.VISUAL_ID:
-				return new IntermediateCatchEvent3EditPart(view);
+			case SubProcessEditPart.VISUAL_ID:
+				return new SubProcessEditPart(view);
 
 			case DataObjectEditPart.VISUAL_ID:
 				return new DataObjectEditPart(view);
@@ -88,23 +103,17 @@ public class Bpmn2EditPartFactory implements EditPartFactory {
 			case TextAnnotationTextEditPart.VISUAL_ID:
 				return new TextAnnotationTextEditPart(view);
 
-			case SubProcessEditPart.VISUAL_ID:
-				return new SubProcessEditPart(view);
-
-			case ScriptTaskEditPart.VISUAL_ID:
-				return new ScriptTaskEditPart(view);
-
-			case ScriptTaskNameEditPart.VISUAL_ID:
-				return new ScriptTaskNameEditPart(view);
-
-			case SubProcess2EditPart.VISUAL_ID:
-				return new SubProcess2EditPart(view);
-
 			case UserTask2EditPart.VISUAL_ID:
 				return new UserTask2EditPart(view);
 
 			case UserTaskName2EditPart.VISUAL_ID:
 				return new UserTaskName2EditPart(view);
+
+			case ScriptTask2EditPart.VISUAL_ID:
+				return new ScriptTask2EditPart(view);
+
+			case ScriptTaskName2EditPart.VISUAL_ID:
+				return new ScriptTaskName2EditPart(view);
 
 			case ServiceTask2EditPart.VISUAL_ID:
 				return new ServiceTask2EditPart(view);
@@ -112,20 +121,32 @@ public class Bpmn2EditPartFactory implements EditPartFactory {
 			case ServiceTaskName2EditPart.VISUAL_ID:
 				return new ServiceTaskName2EditPart(view);
 
+			case BusinessRuleTask2EditPart.VISUAL_ID:
+				return new BusinessRuleTask2EditPart(view);
+
+			case BusinessRuleTaskName2EditPart.VISUAL_ID:
+				return new BusinessRuleTaskName2EditPart(view);
+
 			case StartEvent3EditPart.VISUAL_ID:
 				return new StartEvent3EditPart(view);
 
 			case StartEvent4EditPart.VISUAL_ID:
 				return new StartEvent4EditPart(view);
 
+			case IntermediateCatchEvent4EditPart.VISUAL_ID:
+				return new IntermediateCatchEvent4EditPart(view);
+
+			case IntermediateCatchEvent5EditPart.VISUAL_ID:
+				return new IntermediateCatchEvent5EditPart(view);
+
+			case IntermediateCatchEvent6EditPart.VISUAL_ID:
+				return new IntermediateCatchEvent6EditPart(view);
+
+			case IntermediateThrowEvent2EditPart.VISUAL_ID:
+				return new IntermediateThrowEvent2EditPart(view);
+
 			case EndEvent4EditPart.VISUAL_ID:
 				return new EndEvent4EditPart(view);
-
-			case ExclusiveGateway2EditPart.VISUAL_ID:
-				return new ExclusiveGateway2EditPart(view);
-
-			case ParallelGateway2EditPart.VISUAL_ID:
-				return new ParallelGateway2EditPart(view);
 
 			case EndEvent5EditPart.VISUAL_ID:
 				return new EndEvent5EditPart(view);
@@ -133,14 +154,14 @@ public class Bpmn2EditPartFactory implements EditPartFactory {
 			case EndEvent6EditPart.VISUAL_ID:
 				return new EndEvent6EditPart(view);
 
-			case IntermediateCatchEvent4EditPart.VISUAL_ID:
-				return new IntermediateCatchEvent4EditPart(view);
+			case ExclusiveGateway2EditPart.VISUAL_ID:
+				return new ExclusiveGateway2EditPart(view);
 
-			case IntermediateThrowEvent2EditPart.VISUAL_ID:
-				return new IntermediateThrowEvent2EditPart(view);
+			case ParallelGateway2EditPart.VISUAL_ID:
+				return new ParallelGateway2EditPart(view);
 
-			case IntermediateCatchEvent5EditPart.VISUAL_ID:
-				return new IntermediateCatchEvent5EditPart(view);
+			case SubProcess2EditPart.VISUAL_ID:
+				return new SubProcess2EditPart(view);
 
 			case DataObject2EditPart.VISUAL_ID:
 				return new DataObject2EditPart(view);
@@ -153,12 +174,6 @@ public class Bpmn2EditPartFactory implements EditPartFactory {
 
 			case TextAnnotationText2EditPart.VISUAL_ID:
 				return new TextAnnotationText2EditPart(view);
-
-			case ScriptTask2EditPart.VISUAL_ID:
-				return new ScriptTask2EditPart(view);
-
-			case ScriptTaskName2EditPart.VISUAL_ID:
-				return new ScriptTaskName2EditPart(view);
 
 			case SequenceFlowEditPart.VISUAL_ID:
 				return new SequenceFlowEditPart(view);

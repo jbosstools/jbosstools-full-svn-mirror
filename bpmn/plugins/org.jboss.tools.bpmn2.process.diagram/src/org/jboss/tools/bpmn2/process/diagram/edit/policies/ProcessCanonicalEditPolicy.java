@@ -41,6 +41,8 @@ import org.eclipse.gmf.runtime.notation.Node;
 import org.eclipse.gmf.runtime.notation.Size;
 import org.eclipse.gmf.runtime.notation.View;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.AssociationEditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.BusinessRuleTask2EditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.BusinessRuleTaskEditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.DataObject2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.DataObjectEditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.EndEvent2EditPart;
@@ -55,6 +57,7 @@ import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEvent2E
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEvent3EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEvent4EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEvent5EditPart;
+import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEvent6EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEventEditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateThrowEvent2EditPart;
 import org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateThrowEventEditPart;
@@ -136,22 +139,23 @@ public class ProcessCanonicalEditPolicy extends CanonicalEditPolicy {
 		int visualID = Bpmn2VisualIDRegistry.getVisualID(view);
 		switch (visualID) {
 		case UserTaskEditPart.VISUAL_ID:
+		case ScriptTaskEditPart.VISUAL_ID:
 		case ServiceTaskEditPart.VISUAL_ID:
+		case BusinessRuleTaskEditPart.VISUAL_ID:
 		case StartEventEditPart.VISUAL_ID:
 		case StartEvent2EditPart.VISUAL_ID:
-		case EndEventEditPart.VISUAL_ID:
-		case ExclusiveGatewayEditPart.VISUAL_ID:
-		case ParallelGatewayEditPart.VISUAL_ID:
-		case EndEvent2EditPart.VISUAL_ID:
-		case EndEvent3EditPart.VISUAL_ID:
 		case IntermediateCatchEventEditPart.VISUAL_ID:
-		case IntermediateThrowEventEditPart.VISUAL_ID:
 		case IntermediateCatchEvent2EditPart.VISUAL_ID:
 		case IntermediateCatchEvent3EditPart.VISUAL_ID:
+		case IntermediateThrowEventEditPart.VISUAL_ID:
+		case EndEventEditPart.VISUAL_ID:
+		case EndEvent2EditPart.VISUAL_ID:
+		case EndEvent3EditPart.VISUAL_ID:
+		case ExclusiveGatewayEditPart.VISUAL_ID:
+		case ParallelGatewayEditPart.VISUAL_ID:
+		case SubProcessEditPart.VISUAL_ID:
 		case DataObjectEditPart.VISUAL_ID:
 		case TextAnnotationEditPart.VISUAL_ID:
-		case SubProcessEditPart.VISUAL_ID:
-		case ScriptTaskEditPart.VISUAL_ID:
 			return true;
 		}
 		return false;
@@ -370,10 +374,32 @@ public class ProcessCanonicalEditPolicy extends CanonicalEditPolicy {
 			}
 			break;
 		}
+		case ScriptTaskEditPart.VISUAL_ID: {
+			if (!domain2NotationMap.containsKey(view.getElement())) {
+				result.addAll(Bpmn2DiagramUpdater
+						.getScriptTask_2017ContainedLinks(view));
+			}
+			if (!domain2NotationMap.containsKey(view.getElement())
+					|| view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
+				domain2NotationMap.put(view.getElement(), view);
+			}
+			break;
+		}
 		case ServiceTaskEditPart.VISUAL_ID: {
 			if (!domain2NotationMap.containsKey(view.getElement())) {
 				result.addAll(Bpmn2DiagramUpdater
 						.getServiceTask_2002ContainedLinks(view));
+			}
+			if (!domain2NotationMap.containsKey(view.getElement())
+					|| view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
+				domain2NotationMap.put(view.getElement(), view);
+			}
+			break;
+		}
+		case BusinessRuleTaskEditPart.VISUAL_ID: {
+			if (!domain2NotationMap.containsKey(view.getElement())) {
+				result.addAll(Bpmn2DiagramUpdater
+						.getBusinessRuleTask_2018ContainedLinks(view));
 			}
 			if (!domain2NotationMap.containsKey(view.getElement())
 					|| view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
@@ -403,76 +429,10 @@ public class ProcessCanonicalEditPolicy extends CanonicalEditPolicy {
 			}
 			break;
 		}
-		case EndEventEditPart.VISUAL_ID: {
-			if (!domain2NotationMap.containsKey(view.getElement())) {
-				result.addAll(Bpmn2DiagramUpdater
-						.getEndEvent_2004ContainedLinks(view));
-			}
-			if (!domain2NotationMap.containsKey(view.getElement())
-					|| view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
-				domain2NotationMap.put(view.getElement(), view);
-			}
-			break;
-		}
-		case ExclusiveGatewayEditPart.VISUAL_ID: {
-			if (!domain2NotationMap.containsKey(view.getElement())) {
-				result.addAll(Bpmn2DiagramUpdater
-						.getExclusiveGateway_2005ContainedLinks(view));
-			}
-			if (!domain2NotationMap.containsKey(view.getElement())
-					|| view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
-				domain2NotationMap.put(view.getElement(), view);
-			}
-			break;
-		}
-		case ParallelGatewayEditPart.VISUAL_ID: {
-			if (!domain2NotationMap.containsKey(view.getElement())) {
-				result.addAll(Bpmn2DiagramUpdater
-						.getParallelGateway_2006ContainedLinks(view));
-			}
-			if (!domain2NotationMap.containsKey(view.getElement())
-					|| view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
-				domain2NotationMap.put(view.getElement(), view);
-			}
-			break;
-		}
-		case EndEvent2EditPart.VISUAL_ID: {
-			if (!domain2NotationMap.containsKey(view.getElement())) {
-				result.addAll(Bpmn2DiagramUpdater
-						.getEndEvent_2008ContainedLinks(view));
-			}
-			if (!domain2NotationMap.containsKey(view.getElement())
-					|| view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
-				domain2NotationMap.put(view.getElement(), view);
-			}
-			break;
-		}
-		case EndEvent3EditPart.VISUAL_ID: {
-			if (!domain2NotationMap.containsKey(view.getElement())) {
-				result.addAll(Bpmn2DiagramUpdater
-						.getEndEvent_2009ContainedLinks(view));
-			}
-			if (!domain2NotationMap.containsKey(view.getElement())
-					|| view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
-				domain2NotationMap.put(view.getElement(), view);
-			}
-			break;
-		}
 		case IntermediateCatchEventEditPart.VISUAL_ID: {
 			if (!domain2NotationMap.containsKey(view.getElement())) {
 				result.addAll(Bpmn2DiagramUpdater
 						.getIntermediateCatchEvent_2010ContainedLinks(view));
-			}
-			if (!domain2NotationMap.containsKey(view.getElement())
-					|| view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
-				domain2NotationMap.put(view.getElement(), view);
-			}
-			break;
-		}
-		case IntermediateThrowEventEditPart.VISUAL_ID: {
-			if (!domain2NotationMap.containsKey(view.getElement())) {
-				result.addAll(Bpmn2DiagramUpdater
-						.getIntermediateThrowEvent_2011ContainedLinks(view));
 			}
 			if (!domain2NotationMap.containsKey(view.getElement())
 					|| view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
@@ -502,6 +462,83 @@ public class ProcessCanonicalEditPolicy extends CanonicalEditPolicy {
 			}
 			break;
 		}
+		case IntermediateThrowEventEditPart.VISUAL_ID: {
+			if (!domain2NotationMap.containsKey(view.getElement())) {
+				result.addAll(Bpmn2DiagramUpdater
+						.getIntermediateThrowEvent_2011ContainedLinks(view));
+			}
+			if (!domain2NotationMap.containsKey(view.getElement())
+					|| view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
+				domain2NotationMap.put(view.getElement(), view);
+			}
+			break;
+		}
+		case EndEventEditPart.VISUAL_ID: {
+			if (!domain2NotationMap.containsKey(view.getElement())) {
+				result.addAll(Bpmn2DiagramUpdater
+						.getEndEvent_2004ContainedLinks(view));
+			}
+			if (!domain2NotationMap.containsKey(view.getElement())
+					|| view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
+				domain2NotationMap.put(view.getElement(), view);
+			}
+			break;
+		}
+		case EndEvent2EditPart.VISUAL_ID: {
+			if (!domain2NotationMap.containsKey(view.getElement())) {
+				result.addAll(Bpmn2DiagramUpdater
+						.getEndEvent_2008ContainedLinks(view));
+			}
+			if (!domain2NotationMap.containsKey(view.getElement())
+					|| view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
+				domain2NotationMap.put(view.getElement(), view);
+			}
+			break;
+		}
+		case EndEvent3EditPart.VISUAL_ID: {
+			if (!domain2NotationMap.containsKey(view.getElement())) {
+				result.addAll(Bpmn2DiagramUpdater
+						.getEndEvent_2009ContainedLinks(view));
+			}
+			if (!domain2NotationMap.containsKey(view.getElement())
+					|| view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
+				domain2NotationMap.put(view.getElement(), view);
+			}
+			break;
+		}
+		case ExclusiveGatewayEditPart.VISUAL_ID: {
+			if (!domain2NotationMap.containsKey(view.getElement())) {
+				result.addAll(Bpmn2DiagramUpdater
+						.getExclusiveGateway_2005ContainedLinks(view));
+			}
+			if (!domain2NotationMap.containsKey(view.getElement())
+					|| view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
+				domain2NotationMap.put(view.getElement(), view);
+			}
+			break;
+		}
+		case ParallelGatewayEditPart.VISUAL_ID: {
+			if (!domain2NotationMap.containsKey(view.getElement())) {
+				result.addAll(Bpmn2DiagramUpdater
+						.getParallelGateway_2006ContainedLinks(view));
+			}
+			if (!domain2NotationMap.containsKey(view.getElement())
+					|| view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
+				domain2NotationMap.put(view.getElement(), view);
+			}
+			break;
+		}
+		case SubProcessEditPart.VISUAL_ID: {
+			if (!domain2NotationMap.containsKey(view.getElement())) {
+				result.addAll(Bpmn2DiagramUpdater
+						.getSubProcess_2016ContainedLinks(view));
+			}
+			if (!domain2NotationMap.containsKey(view.getElement())
+					|| view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
+				domain2NotationMap.put(view.getElement(), view);
+			}
+			break;
+		}
 		case DataObjectEditPart.VISUAL_ID: {
 			if (!domain2NotationMap.containsKey(view.getElement())) {
 				result.addAll(Bpmn2DiagramUpdater
@@ -524,39 +561,6 @@ public class ProcessCanonicalEditPolicy extends CanonicalEditPolicy {
 			}
 			break;
 		}
-		case SubProcessEditPart.VISUAL_ID: {
-			if (!domain2NotationMap.containsKey(view.getElement())) {
-				result.addAll(Bpmn2DiagramUpdater
-						.getSubProcess_2016ContainedLinks(view));
-			}
-			if (!domain2NotationMap.containsKey(view.getElement())
-					|| view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
-				domain2NotationMap.put(view.getElement(), view);
-			}
-			break;
-		}
-		case ScriptTaskEditPart.VISUAL_ID: {
-			if (!domain2NotationMap.containsKey(view.getElement())) {
-				result.addAll(Bpmn2DiagramUpdater
-						.getScriptTask_2017ContainedLinks(view));
-			}
-			if (!domain2NotationMap.containsKey(view.getElement())
-					|| view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
-				domain2NotationMap.put(view.getElement(), view);
-			}
-			break;
-		}
-		case SubProcess2EditPart.VISUAL_ID: {
-			if (!domain2NotationMap.containsKey(view.getElement())) {
-				result.addAll(Bpmn2DiagramUpdater
-						.getSubProcess_3001ContainedLinks(view));
-			}
-			if (!domain2NotationMap.containsKey(view.getElement())
-					|| view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
-				domain2NotationMap.put(view.getElement(), view);
-			}
-			break;
-		}
 		case UserTask2EditPart.VISUAL_ID: {
 			if (!domain2NotationMap.containsKey(view.getElement())) {
 				result.addAll(Bpmn2DiagramUpdater
@@ -568,10 +572,32 @@ public class ProcessCanonicalEditPolicy extends CanonicalEditPolicy {
 			}
 			break;
 		}
+		case ScriptTask2EditPart.VISUAL_ID: {
+			if (!domain2NotationMap.containsKey(view.getElement())) {
+				result.addAll(Bpmn2DiagramUpdater
+						.getScriptTask_3016ContainedLinks(view));
+			}
+			if (!domain2NotationMap.containsKey(view.getElement())
+					|| view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
+				domain2NotationMap.put(view.getElement(), view);
+			}
+			break;
+		}
 		case ServiceTask2EditPart.VISUAL_ID: {
 			if (!domain2NotationMap.containsKey(view.getElement())) {
 				result.addAll(Bpmn2DiagramUpdater
 						.getServiceTask_3004ContainedLinks(view));
+			}
+			if (!domain2NotationMap.containsKey(view.getElement())
+					|| view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
+				domain2NotationMap.put(view.getElement(), view);
+			}
+			break;
+		}
+		case BusinessRuleTask2EditPart.VISUAL_ID: {
+			if (!domain2NotationMap.containsKey(view.getElement())) {
+				result.addAll(Bpmn2DiagramUpdater
+						.getBusinessRuleTask_3017ContainedLinks(view));
 			}
 			if (!domain2NotationMap.containsKey(view.getElement())
 					|| view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
@@ -601,32 +627,54 @@ public class ProcessCanonicalEditPolicy extends CanonicalEditPolicy {
 			}
 			break;
 		}
+		case IntermediateCatchEvent4EditPart.VISUAL_ID: {
+			if (!domain2NotationMap.containsKey(view.getElement())) {
+				result.addAll(Bpmn2DiagramUpdater
+						.getIntermediateCatchEvent_3011ContainedLinks(view));
+			}
+			if (!domain2NotationMap.containsKey(view.getElement())
+					|| view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
+				domain2NotationMap.put(view.getElement(), view);
+			}
+			break;
+		}
+		case IntermediateCatchEvent5EditPart.VISUAL_ID: {
+			if (!domain2NotationMap.containsKey(view.getElement())) {
+				result.addAll(Bpmn2DiagramUpdater
+						.getIntermediateCatchEvent_3013ContainedLinks(view));
+			}
+			if (!domain2NotationMap.containsKey(view.getElement())
+					|| view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
+				domain2NotationMap.put(view.getElement(), view);
+			}
+			break;
+		}
+		case IntermediateCatchEvent6EditPart.VISUAL_ID: {
+			if (!domain2NotationMap.containsKey(view.getElement())) {
+				result.addAll(Bpmn2DiagramUpdater
+						.getIntermediateCatchEvent_3018ContainedLinks(view));
+			}
+			if (!domain2NotationMap.containsKey(view.getElement())
+					|| view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
+				domain2NotationMap.put(view.getElement(), view);
+			}
+			break;
+		}
+		case IntermediateThrowEvent2EditPart.VISUAL_ID: {
+			if (!domain2NotationMap.containsKey(view.getElement())) {
+				result.addAll(Bpmn2DiagramUpdater
+						.getIntermediateThrowEvent_3012ContainedLinks(view));
+			}
+			if (!domain2NotationMap.containsKey(view.getElement())
+					|| view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
+				domain2NotationMap.put(view.getElement(), view);
+			}
+			break;
+		}
 		case EndEvent4EditPart.VISUAL_ID: {
 			if (!domain2NotationMap.containsKey(view.getElement())) {
 				result.addAll(Bpmn2DiagramUpdater
 						.getEndEvent_3006ContainedLinks(view));
-			}
-			if (!domain2NotationMap.containsKey(view.getElement())
-					|| view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
-				domain2NotationMap.put(view.getElement(), view);
-			}
-			break;
-		}
-		case ExclusiveGateway2EditPart.VISUAL_ID: {
-			if (!domain2NotationMap.containsKey(view.getElement())) {
-				result.addAll(Bpmn2DiagramUpdater
-						.getExclusiveGateway_3007ContainedLinks(view));
-			}
-			if (!domain2NotationMap.containsKey(view.getElement())
-					|| view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
-				domain2NotationMap.put(view.getElement(), view);
-			}
-			break;
-		}
-		case ParallelGateway2EditPart.VISUAL_ID: {
-			if (!domain2NotationMap.containsKey(view.getElement())) {
-				result.addAll(Bpmn2DiagramUpdater
-						.getParallelGateway_3008ContainedLinks(view));
 			}
 			if (!domain2NotationMap.containsKey(view.getElement())
 					|| view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
@@ -656,10 +704,10 @@ public class ProcessCanonicalEditPolicy extends CanonicalEditPolicy {
 			}
 			break;
 		}
-		case IntermediateCatchEvent4EditPart.VISUAL_ID: {
+		case ExclusiveGateway2EditPart.VISUAL_ID: {
 			if (!domain2NotationMap.containsKey(view.getElement())) {
 				result.addAll(Bpmn2DiagramUpdater
-						.getIntermediateCatchEvent_3011ContainedLinks(view));
+						.getExclusiveGateway_3007ContainedLinks(view));
 			}
 			if (!domain2NotationMap.containsKey(view.getElement())
 					|| view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
@@ -667,10 +715,10 @@ public class ProcessCanonicalEditPolicy extends CanonicalEditPolicy {
 			}
 			break;
 		}
-		case IntermediateThrowEvent2EditPart.VISUAL_ID: {
+		case ParallelGateway2EditPart.VISUAL_ID: {
 			if (!domain2NotationMap.containsKey(view.getElement())) {
 				result.addAll(Bpmn2DiagramUpdater
-						.getIntermediateThrowEvent_3012ContainedLinks(view));
+						.getParallelGateway_3008ContainedLinks(view));
 			}
 			if (!domain2NotationMap.containsKey(view.getElement())
 					|| view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
@@ -678,10 +726,10 @@ public class ProcessCanonicalEditPolicy extends CanonicalEditPolicy {
 			}
 			break;
 		}
-		case IntermediateCatchEvent5EditPart.VISUAL_ID: {
+		case SubProcess2EditPart.VISUAL_ID: {
 			if (!domain2NotationMap.containsKey(view.getElement())) {
 				result.addAll(Bpmn2DiagramUpdater
-						.getIntermediateCatchEvent_3013ContainedLinks(view));
+						.getSubProcess_3001ContainedLinks(view));
 			}
 			if (!domain2NotationMap.containsKey(view.getElement())
 					|| view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
@@ -704,17 +752,6 @@ public class ProcessCanonicalEditPolicy extends CanonicalEditPolicy {
 			if (!domain2NotationMap.containsKey(view.getElement())) {
 				result.addAll(Bpmn2DiagramUpdater
 						.getTextAnnotation_3015ContainedLinks(view));
-			}
-			if (!domain2NotationMap.containsKey(view.getElement())
-					|| view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
-				domain2NotationMap.put(view.getElement(), view);
-			}
-			break;
-		}
-		case ScriptTask2EditPart.VISUAL_ID: {
-			if (!domain2NotationMap.containsKey(view.getElement())) {
-				result.addAll(Bpmn2DiagramUpdater
-						.getScriptTask_3016ContainedLinks(view));
 			}
 			if (!domain2NotationMap.containsKey(view.getElement())
 					|| view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$

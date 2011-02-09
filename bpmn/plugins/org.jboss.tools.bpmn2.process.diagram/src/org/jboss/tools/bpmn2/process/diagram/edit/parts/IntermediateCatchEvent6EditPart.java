@@ -4,16 +4,10 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.eclipse.draw2d.ColorConstants;
-import org.eclipse.draw2d.Ellipse;
 import org.eclipse.draw2d.IFigure;
-import org.eclipse.draw2d.MarginBorder;
-import org.eclipse.draw2d.PolylineShape;
 import org.eclipse.draw2d.PositionConstants;
-import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.Shape;
 import org.eclipse.draw2d.StackLayout;
-import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.Request;
@@ -31,18 +25,18 @@ import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.lite.svg.SVGFigure;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.graphics.Color;
-import org.jboss.tools.bpmn2.process.diagram.edit.policies.IntermediateThrowEventItemSemanticEditPolicy;
+import org.jboss.tools.bpmn2.process.diagram.edit.policies.IntermediateCatchEvent6ItemSemanticEditPolicy;
 import org.jboss.tools.bpmn2.process.diagram.providers.Bpmn2ElementTypes;
 
 /**
  * @generated
  */
-public class IntermediateThrowEventEditPart extends ShapeNodeEditPart {
+public class IntermediateCatchEvent6EditPart extends ShapeNodeEditPart {
 
 	/**
 	 * @generated
 	 */
-	public static final int VISUAL_ID = 2011;
+	public static final int VISUAL_ID = 3018;
 
 	/**
 	 * @generated
@@ -57,7 +51,7 @@ public class IntermediateThrowEventEditPart extends ShapeNodeEditPart {
 	/**
 	 * @generated
 	 */
-	public IntermediateThrowEventEditPart(View view) {
+	public IntermediateCatchEvent6EditPart(View view) {
 		super(view);
 	}
 
@@ -67,7 +61,7 @@ public class IntermediateThrowEventEditPart extends ShapeNodeEditPart {
 	protected void createDefaultEditPolicies() {
 		super.createDefaultEditPolicies();
 		installEditPolicy(EditPolicyRoles.SEMANTIC_ROLE,
-				new IntermediateThrowEventItemSemanticEditPolicy());
+				new IntermediateCatchEvent6ItemSemanticEditPolicy());
 		installEditPolicy(EditPolicy.LAYOUT_ROLE, createLayoutEditPolicy());
 		// XXX need an SCR to runtime to have another abstract superclass that would let children add reasonable editpolicies
 		// removeEditPolicy(org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles.CONNECTION_HANDLES_ROLE);
@@ -103,14 +97,14 @@ public class IntermediateThrowEventEditPart extends ShapeNodeEditPart {
 	 * @generated
 	 */
 	protected IFigure createNodeShape() {
-		return primaryShape = new MessageThrowIntermediateEventFigureDescriptor();
+		return primaryShape = new ErrorCatchIntermediateEventFigureDescriptor();
 	}
 
 	/**
 	 * @generated
 	 */
-	public MessageThrowIntermediateEventFigureDescriptor getPrimaryShape() {
-		return (MessageThrowIntermediateEventFigureDescriptor) primaryShape;
+	public ErrorCatchIntermediateEventFigureDescriptor getPrimaryShape() {
+		return (ErrorCatchIntermediateEventFigureDescriptor) primaryShape;
 	}
 
 	/**
@@ -249,7 +243,7 @@ public class IntermediateThrowEventEditPart extends ShapeNodeEditPart {
 		if (targetEditPart instanceof IntermediateCatchEvent3EditPart) {
 			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
 		}
-		if (targetEditPart instanceof org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateThrowEventEditPart) {
+		if (targetEditPart instanceof IntermediateThrowEventEditPart) {
 			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
 		}
 		if (targetEditPart instanceof EndEventEditPart) {
@@ -294,7 +288,7 @@ public class IntermediateThrowEventEditPart extends ShapeNodeEditPart {
 		if (targetEditPart instanceof IntermediateCatchEvent5EditPart) {
 			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
 		}
-		if (targetEditPart instanceof IntermediateCatchEvent6EditPart) {
+		if (targetEditPart instanceof org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEvent6EditPart) {
 			types.add(Bpmn2ElementTypes.SequenceFlow_4001);
 		}
 		if (targetEditPart instanceof IntermediateThrowEvent2EditPart) {
@@ -345,7 +339,7 @@ public class IntermediateThrowEventEditPart extends ShapeNodeEditPart {
 		if (targetEditPart instanceof IntermediateCatchEvent3EditPart) {
 			types.add(Bpmn2ElementTypes.Association_4002);
 		}
-		if (targetEditPart instanceof org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateThrowEventEditPart) {
+		if (targetEditPart instanceof IntermediateThrowEventEditPart) {
 			types.add(Bpmn2ElementTypes.Association_4002);
 		}
 		if (targetEditPart instanceof EndEventEditPart) {
@@ -396,7 +390,7 @@ public class IntermediateThrowEventEditPart extends ShapeNodeEditPart {
 		if (targetEditPart instanceof IntermediateCatchEvent5EditPart) {
 			types.add(Bpmn2ElementTypes.Association_4002);
 		}
-		if (targetEditPart instanceof IntermediateCatchEvent6EditPart) {
+		if (targetEditPart instanceof org.jboss.tools.bpmn2.process.diagram.edit.parts.IntermediateCatchEvent6EditPart) {
 			types.add(Bpmn2ElementTypes.Association_4002);
 		}
 		if (targetEditPart instanceof IntermediateThrowEvent2EditPart) {
@@ -600,14 +594,13 @@ public class IntermediateThrowEventEditPart extends ShapeNodeEditPart {
 	/**
 	 * @generated
 	 */
-	public class MessageThrowIntermediateEventFigureDescriptor extends
-			SVGFigure {
+	public class ErrorCatchIntermediateEventFigureDescriptor extends SVGFigure {
 
 		/**
 		 * @generated
 		 */
-		public MessageThrowIntermediateEventFigureDescriptor() {
-			this.setURI("platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/events_48px_intermediate_message_throw.svg");
+		public ErrorCatchIntermediateEventFigureDescriptor() {
+			this.setURI("platform:/plugin/org.jboss.tools.bpmn2.process.diagram/images/events_48px_intermediate_error_catch.svg");
 		}
 
 	}
