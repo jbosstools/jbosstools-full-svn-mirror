@@ -17,7 +17,7 @@
 				</listitem>
 				<listitem>
 					<para>
-						<ulink url="https://issues.jboss.org/browse/JBRULES-2884">JBRULES-2884</ulink>: JavaDoc and source locations can not be specified for a Drools classpath container.
+						<ulink url="https://issues.jboss.org/browse/JBDS-1548">JBDS-1548</ulink>: JavaDoc and source locations can not be specified for a Drools classpath container.
            </para>
 				</listitem>
 				<listitem>
