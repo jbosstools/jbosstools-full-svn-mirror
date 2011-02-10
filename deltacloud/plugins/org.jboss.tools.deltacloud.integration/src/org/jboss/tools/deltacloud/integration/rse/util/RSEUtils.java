@@ -158,7 +158,7 @@ public class RSEUtils {
 
 	private static int getProgress(long current, long last, double scale) {
 		double progress = (current - last) * scale;
-		return (int) Math.floor(progress);
+		return (int) Math.ceil(progress);
 	}
 
 	public static Job connect(final String connectionName, final IConnectorService service)
