@@ -32,6 +32,7 @@ import org.eclipse.rse.core.subsystems.IConnectorService;
 import org.eclipse.rse.subsystems.files.core.subsystems.IRemoteFileSubSystem;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PartInitException;
+import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.integration.DeltaCloudIntegrationPlugin;
 import org.jboss.tools.deltacloud.integration.Messages;
@@ -43,6 +44,7 @@ import org.jboss.tools.internal.deltacloud.ui.utils.WorkbenchUtils;
  */
 public class RSEUtils {
 
+	private static final int RECONNECT_WAIT = 1000;
 	private static final String VIEW_REMOTESYSEXPLORER_ID = "org.eclipse.rse.ui.view.systemView";
 
 	public static IRSESystemType getSSHOnlySystemType() {
@@ -104,40 +106,62 @@ public class RSEUtils {
 	}
 
 	public static IStatus connect(IConnectorService service, IProgressMonitor monitor) throws Exception {
-		monitor.worked(1);
 		service.connect(monitor);
-		monitor.done();
 		return Status.OK_STATUS;
 	}
-	
-	public static IStatus connect(IConnectorService service, int timeout, IProgressMonitor monitor)  {
-		monitor.beginTask("Connecting to remote server", timeout);
+
+	/**
+	 * Connects to the given service with the given timeout. Progress will be
+	 * reported on the given monitor.
+	 * 
+	 * @param service
+	 *            the service to connect to
+	 * @param timeout
+	 *            the timeout to apply
+	 * @param monitor
+	 *            the monitor
+	 * @return the restult of the connection attempt
+	 */
+	public static IStatus connect(IConnectorService service, long timeout, IProgressMonitor monitor) {
+		long start = System.currentTimeMillis();
+		double scale = (double) 100 / timeout;
+		long current = start;
+		long last = start;
+		monitor.beginTask("Connecting to remote server", 100);
 		monitor.setTaskName("Connecting to remote server");
-		IStatus status = null;
-		int count = 0;
-		while( status == null && count < timeout && !monitor.isCanceled()) {
+		while (!monitor.isCanceled()) {
+			current = System.currentTimeMillis();
 			try {
-				status = connect(service, monitor);
-				monitor.done();
-				return status;
-			} catch(OperationCanceledException oce) {
+				return connect(service, monitor);
+			} catch (OperationCanceledException oce) {
 				monitor.done();
 				return Status.CANCEL_STATUS;
-			} catch(Exception e) {
-				count += 1000;
-				monitor.worked(1000);
-				try {
-					Thread.sleep(1000);
-				} catch(InterruptedException ie) {
+			} catch (Exception e) {
+				monitor.worked(getProgress(current, last, scale));
+				last = current;
+				if (current < start + timeout) {
+					try {
+						Thread.sleep(RECONNECT_WAIT);
+					} catch (InterruptedException ie) {
+						break;
+					}
+				} else {
+					monitor.done();
+					return StatusFactory.getInstance(IStatus.ERROR, DeltaCloudIntegrationPlugin.PLUGIN_ID,
+							MessageFormat.format("Could not connect to remote server {0}", service.getHostName()), e);
 				}
+
 			}
 		}
-		monitor.done();
-		return status;
+		return Status.CANCEL_STATUS;
 	}
-		
-	
-	public static Job connect(String connectionName, final IConnectorService service)
+
+	private static int getProgress(long current, long last, double scale) {
+		double progress = (current - last) * scale;
+		return (int) Math.floor(progress);
+	}
+
+	public static Job connect(final String connectionName, final IConnectorService service)
 			throws Exception {
 		// TODO: internationalize strings
 		Assert.isLegal(connectionName != null,
@@ -148,10 +172,15 @@ public class RSEUtils {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
 				try {
-					return connect(service, monitor);
-				} catch(Exception e) {
+					monitor.beginTask(NLS.bind(Messages.RSE_CONNECTING_MESSAGE, connectionName),
+							IProgressMonitor.UNKNOWN);
+					IStatus status = connect(service, monitor);
+					monitor.done();
+					return status;
+				} catch (Exception e) {
 					e.printStackTrace();
-					// odd behavior: service reports connection failure even if things seem to work (view opens up with connection in it)
+					// odd behavior: service reports connection failure even if
+					// things seem to work (view opens up with connection in it)
 					// ignore errors since things work
 					//
 					// return StatusFactory.getInstance(IStatus.ERROR,
@@ -186,8 +215,9 @@ public class RSEUtils {
 				} catch (PartInitException e) {
 					// I have no idea wtf is wrong here
 					// but my dev environment will not let me use common classes
-//					IStatus status = StatusFactory.getInstance(IStatus.ERROR, 
-//							DeltaCloudIntegrationPlugin.PLUGIN_ID, e.getMessage(), e);
+					// IStatus status = StatusFactory.getInstance(IStatus.ERROR,
+					// DeltaCloudIntegrationPlugin.PLUGIN_ID, e.getMessage(),
+					// e);
 					Status status = new Status(IStatus.ERROR, DeltaCloudIntegrationPlugin.PLUGIN_ID, e.getMessage(), e);
 					ErrorDialog.openError(WorkbenchUtils.getActiveShell(),
 								Messages.ERROR,
@@ -197,7 +227,7 @@ public class RSEUtils {
 			}
 		});
 	}
-	
+
 	public static IRemoteFileSubSystem findRemoteFileSubSystem(IHost host) {
 		return CreateServerFromRSEJob.findRemoteFileSubSystem(host);
 	}

@@ -12,7 +12,6 @@ package org.jboss.tools.deltacloud.integration.wizard;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.Job;
@@ -31,6 +30,9 @@ import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
 import org.osgi.service.prefs.Preferences;
 
 public class CreateRSEFromInstanceJob extends AbstractInstanceJob {
+	/** the timeout for trying to connect to the new instance */
+	private static final long CONNECT_TIMEOUT = 3 * 60 * 1000;
+	
 	private Job nextJob2 = null;
 	public CreateRSEFromInstanceJob(DeltaCloudInstance instance, String family) {
 		super("Create RSE Host from DeltaCloud Instance", instance, family);
@@ -58,10 +60,8 @@ public class CreateRSEFromInstanceJob extends AbstractInstanceJob {
 					((CreateServerFromRSEJob)nextJob2).setHost(host);
 				}
 				monitor.worked(10);
-				
-				SubProgressMonitor submon = new SubProgressMonitor(monitor, 90);
-				initialConnect(host);
-				return RSEUtils.connect(RSEUtils.getConnectorService(host), 90000, submon);
+				triggerCredentialsDialog(host, new SubProgressMonitor(monitor, 10));
+				return RSEUtils.connect(RSEUtils.getConnectorService(host), CONNECT_TIMEOUT, new SubProgressMonitor(monitor, 80));
 			} catch (Exception e) {
 				return ErrorUtils.handleError(Messages.ERROR,
 						NLS.bind(Messages.COULD_NOT_LAUNCH_RSE_EXPLORER2, instance.getName()),
@@ -71,12 +71,14 @@ public class CreateRSEFromInstanceJob extends AbstractInstanceJob {
 		return Status.OK_STATUS;
 	}
 	
-	private void initialConnect(IHost host) {
+	private void triggerCredentialsDialog(IHost host, IProgressMonitor monitor) {
 		try {
 			IRemoteFileSubSystem system = RSEUtils.findRemoteFileSubSystem(host);
-			system.connect(new NullProgressMonitor(), true);
+			system.connect(monitor, true /* force credentials dialog */);
 		} catch(Exception e) {
 			// ignore, expected, the server probably isn't up yet. 
+		} finally {
+			monitor.done();
 		}
 	}
 	
