@@ -1,3 +1,13 @@
+2011-02-10  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/deltacloud/integration/wizard/CreateRSEFromInstanceJob.java 
+	(runRSEJob): 
+	(CONNECT_TIMEOUT): 
+	* src/org/jboss/tools/deltacloud/integration/rse/util/RSEUtils.java 
+	(connect): 	
+	(getProgress): 
+	[JBIDE-8354] removed case where null-status was returned, decreased timeout to 3 minutes, now reporting real lapse of time (was: simple stepwise increase), 
+
 2011-02-07  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/deltacloud/integration/wizard/RSEandASWizardPage.java (createControl): 
