@@ -12,12 +12,14 @@ package org.jboss.tools.deltacloud.integration.wizard;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.rse.core.model.IHost;
+import org.eclipse.rse.services.clientserver.messages.SystemOperationFailedException;
 import org.eclipse.rse.subsystems.files.core.subsystems.IRemoteFileSubSystem;
 import org.eclipse.swt.widgets.Display;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
@@ -28,6 +30,8 @@ import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
 import org.osgi.service.prefs.Preferences;
+
+import com.jcraft.jsch.JSchException;
 
 public class CreateRSEFromInstanceJob extends AbstractInstanceJob {
 	/** the timeout for trying to connect to the new instance */
@@ -60,8 +64,11 @@ public class CreateRSEFromInstanceJob extends AbstractInstanceJob {
 					((CreateServerFromRSEJob)nextJob2).setHost(host);
 				}
 				monitor.worked(10);
-				triggerCredentialsDialog(host, new SubProgressMonitor(monitor, 10));
-				return RSEUtils.connect(RSEUtils.getConnectorService(host), CONNECT_TIMEOUT, new SubProgressMonitor(monitor, 80));
+				IStatus credentials = 
+					triggerCredentialsDialog(host, new SubProgressMonitor(monitor, 10));
+				if( credentials.isOK())
+					return RSEUtils.connect(RSEUtils.getConnectorService(host), CONNECT_TIMEOUT, new SubProgressMonitor(monitor, 80));
+				return credentials;
 			} catch (Exception e) {
 				return ErrorUtils.handleError(Messages.ERROR,
 						NLS.bind(Messages.COULD_NOT_LAUNCH_RSE_EXPLORER2, instance.getName()),
@@ -71,15 +78,25 @@ public class CreateRSEFromInstanceJob extends AbstractInstanceJob {
 		return Status.OK_STATUS;
 	}
 	
-	private void triggerCredentialsDialog(IHost host, IProgressMonitor monitor) {
+	private IStatus triggerCredentialsDialog(IHost host, IProgressMonitor monitor) {
 		try {
 			IRemoteFileSubSystem system = RSEUtils.findRemoteFileSubSystem(host);
 			system.connect(monitor, true /* force credentials dialog */);
 		} catch(Exception e) {
-			// ignore, expected, the server probably isn't up yet. 
+			if( e instanceof OperationCanceledException)
+				return Status.CANCEL_STATUS;
+			if( e instanceof SystemOperationFailedException ) {
+				Exception f = ((SystemOperationFailedException) e).getRemoteException();
+				if( f != null && f instanceof JSchException) {
+					// User selected No on accept hostkey
+					if(f.getMessage().contains("reject HostKey:"))
+						return Status.CANCEL_STATUS;
+				}
+			}
 		} finally {
 			monitor.done();
 		}
+		return Status.OK_STATUS;
 	}
 	
 	private boolean isAutoconnect() {

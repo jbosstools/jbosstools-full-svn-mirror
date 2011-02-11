@@ -29,6 +29,7 @@ import org.eclipse.rse.core.model.IHost;
 import org.eclipse.rse.core.model.ISystemRegistry;
 import org.eclipse.rse.core.model.SystemStartHere;
 import org.eclipse.rse.core.subsystems.IConnectorService;
+import org.eclipse.rse.services.clientserver.messages.SystemOperationFailedException;
 import org.eclipse.rse.subsystems.files.core.subsystems.IRemoteFileSubSystem;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PartInitException;
@@ -38,6 +39,8 @@ import org.jboss.tools.deltacloud.integration.DeltaCloudIntegrationPlugin;
 import org.jboss.tools.deltacloud.integration.Messages;
 import org.jboss.tools.deltacloud.integration.wizard.CreateServerFromRSEJob;
 import org.jboss.tools.internal.deltacloud.ui.utils.WorkbenchUtils;
+
+import com.jcraft.jsch.JSchException;
 
 /**
  * @author André Dietisheim
@@ -137,6 +140,15 @@ public class RSEUtils {
 				monitor.done();
 				return Status.CANCEL_STATUS;
 			} catch (Exception e) {
+				if( e instanceof SystemOperationFailedException) {
+					Throwable t = ((SystemOperationFailedException) e).getRemoteException();
+					if( t instanceof JSchException) {
+						// User clicked no on accept hostkey 
+						if(t.getMessage().contains("reject HostKey:"))
+							return Status.CANCEL_STATUS;
+					}
+				}
+				
 				monitor.worked(getProgress(current, last, scale));
 				last = current;
 				if (current < start + timeout) {
