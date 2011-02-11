@@ -9,7 +9,7 @@
             contributorClass="org.jboss.tools.smooks.configuration.editors.SmooksMultiPageEditorContributor"
             icon="icons/smooks-sm.gif"
             id="org.jboss.tools.smooks.configuration.editors.MultiPageEditor"
-            name="Smooks Configuration Editor">
+            name="%editor.name">
          <contentTypeBinding
                contentTypeId="org.jboss.tools.smooks.ui.smooks.contentType">
          </contentTypeBinding>
@@ -19,15 +19,18 @@
    <extension
          point="org.eclipse.ui.newWizards">
       <category
-            name="Smooks"
+            name="%category.name"
             id="org.jboss.tools.smooks.configuration">
       </category>
       <wizard
-            name="Smooks Configuration File"
+            name="%wizard.name"
             icon="icons/smooks-sm.gif"
             category="org.jboss.tools.smooks.configuration"
             class="org.jboss.tools.smooks.configuration.wizards.SmooksConfigurationFileNewWizard"
             id="org.jboss.tools.smooks.configuration.wizards.NewConfigurationFileWizard">
+         <description>
+            %wizard.description
+         </description>
       </wizard>
    </extension>
    
@@ -38,7 +41,7 @@
             describer="org.jboss.tools.smooks.configuration.editors.SmooksConfigfileContentDescriber"
             file-extensions="xml"
             id="org.jboss.tools.smooks.ui.smooks.contentType"
-            name="Smooks Configuration File"
+            name="%content-type.name"
             priority="low">
       </content-type>
       
@@ -49,11 +52,11 @@
              adaptable="false"
              class="org.jboss.tools.smooks.configuration.validate.ValidateResultLabelDecorator"
              id="org.jboss.tools.smooks.ui.configurationPage.decorator"
-             label="Smooks Configuration Page Viewer Decorator"
+             label="%decorator.label"
              lightweight="true"
              state="false">
           <description>
-             Decorate smooks configuration page viewer
+             %decorator.description
           </description>
           <enablement>
              <or>
@@ -75,7 +78,7 @@
     </extension>
     <extension
           id="problem"
-          name="Smooks Problem"
+          name="%extension.name"
           point="org.eclipse.core.resources.markers">
        <persistent
              value="true">
@@ -89,7 +92,7 @@
     </extension>
     <extension
           id="org.jboss.tools.smooks.configuration.validator"
-          name="Smooks File Validator"
+          name="%extension.name.0"
           point="org.eclipse.wst.validation.validatorV2">
        <validator
              build="true"
@@ -156,35 +159,35 @@
                 afterTab="org.jboss.tools.smooks.ui.propertySection.decodeParamTab"
                 category="properties"
                 id="org.jboss.tools.smooks.ui.propertySection.propertiesTab"
-                label="Properties">
+                label="%propertyTab.label">
           </propertyTab>
           <propertyTab
                 afterTab="org.jboss.tools.smooks.ui.propertySection.ruleBasesTab"
                 category="validation"
                 id="org.jboss.tools.smooks.ui.propertySection.validationTab"
-                label="Validation">
+                label="%propertyTab.label.0">
           </propertyTab>
           <propertyTab
                 category="validation"
                 id="org.jboss.tools.smooks.ui.propertySection.ruleBasesTab"
-                label="Rule Bases">
+                label="%propertyTab.label.1">
           </propertyTab>
           <propertyTab
                 afterTab="org.jboss.tools.smooks.ui.propertySection.csvrecordTab"
                 category="properties"
                 id="org.jboss.tools.smooks.ui.propertySection.decodeParamTab"
-                label="Decode">
+                label="%propertyTab.label.2">
           </propertyTab>
           <propertyTab
                 category="properties"
                 id="org.jboss.tools.smooks.ui.propertySection.csvrecordTab"
-                label="CSV Record Properties">
+                label="%propertyTab.label.3">
           </propertyTab>
           <propertyTab
                 afterTab="org.jboss.tools.smooks.ui.propertySection.decodeParamTab"
                 category="properties"
                 id="org.jboss.tools.smooks.ui.propertySection.mappingPathTab"
-                label="Mapping Path">
+                label="%propertyTab.label.4">
           </propertyTab>
        </propertyTabs>
     </extension>
@@ -203,7 +206,7 @@
 	<extension
        point="org.eclipse.debug.core.launchConfigurationTypes">
 	    <launchConfigurationType
-	        name="Smooks Configuration"
+	        name="%launchConfigurationType.name"
 	        delegate="org.jboss.tools.smooks.launch.SmooksLaunchConfigurationDelegate"
 	        modes="run"               
 	        id="org.jboss.tools.smooks.ui.smooksLauncher">        
