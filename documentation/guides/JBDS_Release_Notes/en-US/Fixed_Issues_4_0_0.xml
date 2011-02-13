@@ -5,9 +5,13 @@
     </title>
     
     <para>
-        Following is a list of new and noteworthy features and bug fixes in this release:
+        The following list highlights new features that have been added to this release, as well as listing some notable bug fixes. You can find a complete list of bug fixes <ulink url="https://issues.jboss.org/browse/JBIDE">here</ulink>.
     </para>
-    <formalpara>
+    <!--
+    
+    		BIRT is no longer shipped with JBDS 4.0
+    
+    		<formalpara>
         <title>BIRT</title>
         <para>
             <itemizedlist>
@@ -18,7 +22,7 @@
                 </listitem>
             </itemizedlist>
         </para>
-    </formalpara>
+    </formalpara> -->
     <formalpara>
       <title>Contexts and Dependency Injection (CDI)</title>
         <para>
@@ -476,6 +480,8 @@
             </itemizedlist>
         </para>
     </formalpara>
+    <!-- Google Web Toolkit is only shipped with JBoss.org
+    
     <formalpara>
         <title>Google Web Toolkit</title>
         <para>
@@ -518,7 +524,7 @@
                 </listitem>
             </itemizedlist>
         </para>
-    </formalpara>
+    </formalpara> -->
     <formalpara>
         <title>Hibernate</title>
         <para>
@@ -583,11 +589,12 @@
                         <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6473">JBIDE-6473</ulink>: A new Hibernate platform has been added called <emphasis>Hibernate JPA 2.0</emphasis>. This platform extends the base JPA 2.0 platform.
                     </para>
                 </listitem>
+                <!-- This issue was rolled back 
                 <listitem>
                     <para>
                         <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6423">JBIDE-6423</ulink>: A new feature that allows for code generation to be run in external processes has been added. This new feature is accessed through the <guilabel>Hibernate Code Generation Configurations</guilabel> wizard in the form of a checkbox called <guilabel>Use generation in external process</guilabel>.
                     </para>
-                </listitem>
+                </listitem> -->
                 <listitem>
                     <para>
                         <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6120">JBIDE-6120</ulink>: Superclass properties were not shown in code completion, within the <guilabel>HQLEditor</guilabel>. A new feature has been added for this release that enables superclass properties to appear when using code completion within the <guilabel>HQLEditor</guilabel>.
