@@ -107,7 +107,7 @@ public class NewInstanceWizard extends AbstractDeltaCloudWizard {
 				if (instance != null) {
 					result = true;
 					if (instance.getState().equals(DeltaCloudInstance.State.PENDING)) {
-						scheduleJobs();
+						scheduleJobs(instance);
 					}
 				}
 			}
@@ -125,10 +125,10 @@ public class NewInstanceWizard extends AbstractDeltaCloudWizard {
 		return result;
 	}
 
-	private void scheduleJobs() {
+	private void scheduleJobs(DeltaCloudInstance instance) {
 		ChainedJob first =
 				new InstanceStateJob(
-						WizardMessages.getFormattedString(STARTING_INSTANCE_TITLE, instance.getName()),
+						WizardMessages.getFormattedString(STARTING_INSTANCE_TITLE, instance.getAlias()),
 						instance,
 						DeltaCloudInstance.State.RUNNING);
 		first.setUser(true);

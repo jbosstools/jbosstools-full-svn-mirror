@@ -33,7 +33,6 @@ import org.eclipse.rse.services.clientserver.messages.SystemOperationFailedExcep
 import org.eclipse.rse.subsystems.files.core.subsystems.IRemoteFileSubSystem;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PartInitException;
-import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.integration.DeltaCloudIntegrationPlugin;
 import org.jboss.tools.deltacloud.integration.Messages;
@@ -44,10 +43,11 @@ import com.jcraft.jsch.JSchException;
 
 /**
  * @author André Dietisheim
+ * @author Rob Stryker
  */
 public class RSEUtils {
 
-	private static final int RECONNECT_WAIT = 1000;
+	private static final int RECONNECT_WAIT = 5000;
 	private static final String VIEW_REMOTESYSEXPLORER_ID = "org.eclipse.rse.ui.view.systemView";
 
 	public static IRSESystemType getSSHOnlySystemType() {
@@ -82,17 +82,17 @@ public class RSEUtils {
 		return hostName;
 	}
 
-	public static IHost createHost(String connectionName, String hostname, IRSESystemType systemType,
+	public static IHost createHost(String username, String connectionName, String hostname, IRSESystemType systemType,
 			ISystemRegistry systemRegistry) throws Exception {
 		// TODO: Internationalize strings
 		Assert.isLegal(connectionName != null && connectionName.length() > 0,
 				"Cannot create Host: connectionName is not defined");
 		Assert.isLegal(hostname != null && hostname.length() > 0, "Cannot create Host: hostname is not defined");
-		Assert.isLegal(systemType != null, "Cannot create Host: system type is not defined");
-		Assert.isLegal(systemRegistry != null, "Cannot create Host: system registry is not defined");
+		Assert.isNotNull(systemType, "Cannot create Host: system type is not defined");
+		Assert.isNotNull(systemRegistry, "Cannot create Host: system registry is not defined");
 
 		IHost host = systemRegistry.createHost(systemType, connectionName, hostname, null);
-		host.setDefaultUserId("jboss"); //$NON-NLS-1$
+		host.setDefaultUserId(username); //$NON-NLS-1$
 		return host;
 	}
 
@@ -104,18 +104,42 @@ public class RSEUtils {
 		return services[0];
 	}
 
-	public static void verifySystemConnected(IRemoteFileSubSystem system) {
-		CreateServerFromRSEJob.verifySystemConnected(system);
-	}
-
 	public static IStatus connect(IConnectorService service, IProgressMonitor monitor) throws Exception {
+		monitor.setTaskName(MessageFormat.format("Connecting to {0}...", getHostName(service)));
 		service.connect(monitor);
+		monitor.setTaskName(MessageFormat.format("Connected to {0}.", getHostName(service)));
 		return Status.OK_STATUS;
 	}
 
+	public static IStatus connect(IRemoteFileSubSystem service, IProgressMonitor monitor) throws Exception {
+		Assert.isNotNull(service, "No service defined to connect to");
+
+		String hostName = getHostName(service);
+		monitor.setTaskName(MessageFormat.format("Connecting to {0}...", hostName));
+		service.connect(monitor, false);
+		monitor.setTaskName(MessageFormat.format("Connected to server {0}.", hostName));
+		return Status.OK_STATUS;
+	}
+
+	public static String getHostName(IRemoteFileSubSystem service) {
+		String hostName = "";
+		if (service.getHost() != null) {
+			hostName = service.getHost().getName();
+		}
+		return hostName;
+	}
+
+	public static String getHostName(IConnectorService service) {
+		String hostName = "";
+		if (service.getHost() != null) {
+			hostName = service.getHost().getName();
+		}
+		return hostName;
+	}
+
 	/**
-	 * Connects to the given service with the given timeout. Progress will be
-	 * reported on the given monitor.
+	 * Tries to connects to the given service for the given time. Progress will
+	 * be reported on the given monitor.
 	 * 
 	 * @param service
 	 *            the service to connect to
@@ -124,14 +148,14 @@ public class RSEUtils {
 	 * @param monitor
 	 *            the monitor
 	 * @return the restult of the connection attempt
+	 * @throws Exception
 	 */
-	public static IStatus connect(IConnectorService service, long timeout, IProgressMonitor monitor) {
+	public static IStatus connect(IConnectorService service, long timeout, IProgressMonitor monitor) throws Exception {
 		long start = System.currentTimeMillis();
 		double scale = (double) 100 / timeout;
 		long current = start;
 		long last = start;
-		monitor.beginTask("Connecting to remote server", 100);
-		monitor.setTaskName("Connecting to remote server");
+		monitor.beginTask(MessageFormat.format("Connecting to {0}...", getHostName(service)), 100);
 		while (!monitor.isCanceled()) {
 			current = System.currentTimeMillis();
 			try {
@@ -140,15 +164,12 @@ public class RSEUtils {
 				monitor.done();
 				return Status.CANCEL_STATUS;
 			} catch (Exception e) {
-				if( e instanceof SystemOperationFailedException) {
-					Throwable t = ((SystemOperationFailedException) e).getRemoteException();
-					if( t instanceof JSchException) {
-						// User clicked no on accept hostkey 
-						if(t.getMessage().contains("reject HostKey:"))
-							return Status.CANCEL_STATUS;
-					}
+				if (didUserNotAcceptKey(e)) {
+					return Status.CANCEL_STATUS;
 				}
-				
+
+				monitor.setTaskName(
+						MessageFormat.format("Could not connect to {0}. Trying again...", getHostName(service)));
 				monitor.worked(getProgress(current, last, scale));
 				last = current;
 				if (current < start + timeout) {
@@ -159,13 +180,22 @@ public class RSEUtils {
 					}
 				} else {
 					monitor.done();
-					return StatusFactory.getInstance(IStatus.ERROR, DeltaCloudIntegrationPlugin.PLUGIN_ID,
-							MessageFormat.format("Could not connect to remote server {0}", service.getHostName()), e);
+					throw e;
 				}
-
 			}
 		}
 		return Status.CANCEL_STATUS;
+	}
+
+	private static boolean didUserNotAcceptKey(Exception e) {
+		if (e instanceof SystemOperationFailedException) {
+			Throwable t = ((SystemOperationFailedException) e).getRemoteException();
+			if (t instanceof JSchException) {
+				return t.getMessage() != null
+						&& t.getMessage().contains("reject HostKey:");
+			}
+		}
+		return false;
 	}
 
 	private static int getProgress(long current, long last, double scale) {
@@ -187,6 +217,7 @@ public class RSEUtils {
 					monitor.beginTask(NLS.bind(Messages.RSE_CONNECTING_MESSAGE, connectionName),
 							IProgressMonitor.UNKNOWN);
 					IStatus status = connect(service, monitor);
+					monitor.setTaskName(MessageFormat.format("Connected to {0}", getHostName(service)));
 					monitor.done();
 					return status;
 				} catch (Exception e) {

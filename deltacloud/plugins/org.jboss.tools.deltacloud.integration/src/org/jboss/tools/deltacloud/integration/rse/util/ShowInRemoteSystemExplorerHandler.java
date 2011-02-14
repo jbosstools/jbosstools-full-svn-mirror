@@ -38,7 +38,9 @@ public class ShowInRemoteSystemExplorerHandler extends AbstractHandler implement
 			DeltaCloudInstance instance = WorkbenchUtils.getFirstAdaptedElement(selection, DeltaCloudInstance.class);
 			try {
 				String connectionName = RSEUtils.createConnectionName(instance);
-				IHost host = RSEUtils.createHost(connectionName, 
+				IHost host = RSEUtils.createHost(
+						DeltaCloudRSEConstants.USERNAME,
+						connectionName, 
 						RSEUtils.createHostName(instance),
 						RSEUtils.getSSHOnlySystemType(), 
 						RSEUtils.getSystemRegistry());

@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.integration.wizard;
 
+import java.text.MessageFormat;
+
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
@@ -21,13 +24,13 @@ import org.eclipse.osgi.util.NLS;
 import org.eclipse.rse.core.model.IHost;
 import org.eclipse.rse.services.clientserver.messages.SystemOperationFailedException;
 import org.eclipse.rse.subsystems.files.core.subsystems.IRemoteFileSubSystem;
-import org.eclipse.swt.widgets.Display;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.core.job.AbstractInstanceJob;
+import org.jboss.tools.deltacloud.integration.DeltaCloudIntegrationPlugin;
 import org.jboss.tools.deltacloud.integration.Messages;
+import org.jboss.tools.deltacloud.integration.rse.util.DeltaCloudRSEConstants;
 import org.jboss.tools.deltacloud.integration.rse.util.RSEUtils;
 import org.jboss.tools.deltacloud.ui.Activator;
-import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
 import org.osgi.service.prefs.Preferences;
 
@@ -36,32 +39,36 @@ import com.jcraft.jsch.JSchException;
 public class CreateRSEFromInstanceJob extends AbstractInstanceJob {
 	/** the timeout for trying to connect to the new instance */
 	private static final long CONNECT_TIMEOUT = 3 * 60 * 1000;
-	
+
 	private Job nextJob2 = null;
+
 	public CreateRSEFromInstanceJob(DeltaCloudInstance instance, String family) {
 		super("Create RSE Host from DeltaCloud Instance", instance, family);
 	}
-	public IStatus doRun(IProgressMonitor monitor) {
+
+	public IStatus doRun(IProgressMonitor monitor) throws CoreException {
 		return runRSEJob(getInstance(), monitor);
 	}
-	
+
 	public void setNextJob(Job job) {
 		super.setNextJob(job);
 		this.nextJob2 = job;
 	}
-	
-	private IStatus runRSEJob(DeltaCloudInstance instance, IProgressMonitor monitor) {
+
+	private IStatus runRSEJob(DeltaCloudInstance instance, IProgressMonitor monitor) throws CoreException {
 		String hostname = RSEUtils.createHostName(instance);
 		if (hostname != null && hostname.length() > 0 && isAutoconnect()) {
 			try {
-				monitor.beginTask("Create RSE Server", 100);
+				monitor.beginTask(MessageFormat.format("Create RSE to server {0}", hostname), 100);
 				String connectionName = RSEUtils.createConnectionName(instance);
-				IHost host = RSEUtils.createHost(connectionName,
+				IHost host = RSEUtils.createHost(
+						DeltaCloudRSEConstants.USERNAME,
+						connectionName,
 						RSEUtils.createHostName(instance),
 						RSEUtils.getSSHOnlySystemType(),
 						RSEUtils.getSystemRegistry());
-				if( nextJob2 != null && nextJob2 instanceof CreateServerFromRSEJob) {
-					((CreateServerFromRSEJob)nextJob2).setHost(host);
+				if (nextJob2 != null && nextJob2 instanceof CreateServerFromRSEJob) {
+					((CreateServerFromRSEJob) nextJob2).setHost(host);
 				}
 				monitor.worked(10);
 				IStatus credentials = 
@@ -70,16 +77,17 @@ public class CreateRSEFromInstanceJob extends AbstractInstanceJob {
 					return RSEUtils.connect(RSEUtils.getConnectorService(host), CONNECT_TIMEOUT, new SubProgressMonitor(monitor, 80));
 				return credentials;
 			} catch (Exception e) {
-				return ErrorUtils.handleError(Messages.ERROR,
-						NLS.bind(Messages.COULD_NOT_LAUNCH_RSE_EXPLORER2, instance.getName()),
-						e, Display.getDefault().getActiveShell());
+				throw new CoreException(
+						new Status(IStatus.ERROR, DeltaCloudIntegrationPlugin.PLUGIN_ID,
+								NLS.bind(Messages.COULD_NOT_LAUNCH_RSE_EXPLORER2, instance.getName())));
 			}
 		}
 		return Status.OK_STATUS;
 	}
-	
+
 	private IStatus triggerCredentialsDialog(IHost host, IProgressMonitor monitor) {
 		try {
+			monitor.setTaskName(MessageFormat.format("Initiating connection to {0}...", host.getName()));
 			IRemoteFileSubSystem system = RSEUtils.findRemoteFileSubSystem(host);
 			system.connect(monitor, true /* force credentials dialog */);
 		} catch(Exception e) {
@@ -98,7 +106,7 @@ public class CreateRSEFromInstanceJob extends AbstractInstanceJob {
 		}
 		return Status.OK_STATUS;
 	}
-	
+
 	private boolean isAutoconnect() {
 		Preferences prefs = new InstanceScope().getNode(Activator.PLUGIN_ID);
 		boolean autoConnect = prefs.getBoolean(IDeltaCloudPreferenceConstants.AUTO_CONNECT_INSTANCE, true);

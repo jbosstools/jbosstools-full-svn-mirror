@@ -17,6 +17,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.text.MessageFormat;
 import java.util.Iterator;
 import java.util.Properties;
 
@@ -37,6 +38,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.wst.server.core.IRuntime;
 import org.eclipse.wst.server.core.IRuntimeType;
 import org.eclipse.wst.server.core.IRuntimeWorkingCopy;
@@ -53,6 +55,7 @@ import org.jboss.tools.deltacloud.integration.DeltaCloudIntegrationPlugin;
 
 /**
  * @author Rob Stryker
+ * @author André Dietisheim
  */
 public class CreateServerFromRSEJob extends ChainedJob {
 	public static final String JBOSS_HOME_KEY = "JBOSS_HOME";
@@ -60,18 +63,18 @@ public class CreateServerFromRSEJob extends ChainedJob {
 	public static final String CREATE_DEPLOY_ONLY_SERVER = "CREATE_DEPLOY_ONLY_SERVER";
 	public static final String CHECK_SERVER_FOR_DETAILS = "CHECK_SERVER_FOR_DETAILS";
 	public static final String SET_DETAILS_NOW = "SET_DETAILS_NOW";
-	
+
 	private String type;
 	private String[] data;
 	private IHost host;
 	private String imageId;
 	private DeltaCloudInstance instance;
-	
+
 	public CreateServerFromRSEJob(String type, String[] data, DeltaCloudInstance instance) {
 		this(type, data, instance.getImageId());
 		this.instance = instance;
 	}
-	
+
 	public CreateServerFromRSEJob(String type, String[] data, String imageId) {
 		super("Create Server From RSE Host");
 		this.data = data;
@@ -82,55 +85,62 @@ public class CreateServerFromRSEJob extends ChainedJob {
 	public void setHost(IHost host) {
 		this.host = host;
 	}
-	
+
 	protected IStatus run(IProgressMonitor monitor) {
 		try {
-			IServer result = null;
-			if( type.equals(CREATE_DEPLOY_ONLY_SERVER) ) {
-				result = createDeployOnlyServer();
-			} else if( type.equals(CHECK_SERVER_FOR_DETAILS )) {
-				result = createServerCheckRemoteDetails();
-			} else if( type.equals(SET_DETAILS_NOW)) {
-				result = createServerSetDetailsNow();
+			if (type.equals(CREATE_DEPLOY_ONLY_SERVER)) {
+				createDeployOnlyServer();
+			} else if (type.equals(CHECK_SERVER_FOR_DETAILS)) {
+				createServerCheckRemoteDetails(monitor);
+			} else if (type.equals(SET_DETAILS_NOW)) {
+				createServerSetDetailsNow();
 			}
-		} catch(CoreException ce) {
+		} catch (CoreException ce) {
 			return ce.getStatus();
 		}
+		/**
+		 * http://dev.eclipse.org/viewcvs/viewvc.cgi/org.eclipse.jface.snippets/
+		 * Eclipse%20JFace%20Snippets/org/eclipse/jface/snippets/window/
+		 * Snippet020CustomizedControlTooltips.java?view=markup
+		 */
+		final Display display = Display.getDefault();
+		display.syncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				Shell shell = display.getActiveShell();
+				ToolTip toolTip = new ToolTip(shell, SWT.ICON_INFORMATION);
+				toolTip.setMessage("heyho!");
+				toolTip.setVisible(true);
+			}
+		});
 		return Status.OK_STATUS;
 	}
+
 	protected IServer createDeployOnlyServer() throws CoreException {
 		IServer server = createDeployOnlyServerWithRuntime(data[0], data[0], imageId);
 		server = RSEUtils.setServerToRSEMode(server, host);
 		return server;
 	}
-	
+
 	// TODO move to util class
 	public static IRemoteFileSubSystem findRemoteFileSubSystem(IHost host) {
 		if (host == null) {
 			return null;
 		}
 		ISubSystem[] systems = RSECorePlugin.getTheSystemRegistry().getSubSystems(host);
-		for( int i = 0; i < systems.length; i++ ) {
-			if(systems[i] instanceof IRemoteFileSubSystem ) {
-				return (IRemoteFileSubSystem)systems[i];
+		for (int i = 0; i < systems.length; i++) {
+			if (systems[i] instanceof IRemoteFileSubSystem) {
+				return (IRemoteFileSubSystem) systems[i];
 			}
 		}
 		return null;
 	}
+
 	protected IRemoteFileSubSystem findRemoteFileSubSystem() {
 		return findRemoteFileSubSystem(host);
 	}
-	// TODO move to utility class
-	public static void verifySystemConnected(IRemoteFileSubSystem system) {
-		if (!system.isConnected()) {
-		    try {
-		    	system.connect(new NullProgressMonitor(), false);
-		    } catch (Exception e) {
-		    	e.printStackTrace();
-		    }
-		}
-	}
-	
+
 	protected String loadRemoteFileData(String path, IRemoteFileSubSystem system) throws CoreException {
 		Throwable e;
 		IPath p = new Path(path);
@@ -138,15 +148,16 @@ public class CreateServerFromRSEJob extends ChainedJob {
 		String remoteFile = p.lastSegment();
 		try {
 			boolean exists = system.getRemoteFileObject(path, new NullProgressMonitor()).exists();
-			if( !exists ) {
+			if (!exists) {
 				throw new CoreException(new Status(IStatus.ERROR, DeltaCloudIntegrationPlugin.PLUGIN_ID, 
-						"Remote file " + path + " does not exist."));
+						MessageFormat.format("Remote file {0} not found ", path)));
 			}
-			
+
 			Writer writer = new StringWriter();
 			char[] buffer = new char[1024];
-			
-			InputStream is = system.getInputStream(remoteParent.toOSString(), remoteFile, false, new NullProgressMonitor());
+
+			InputStream is = system.getInputStream(remoteParent.toOSString(), remoteFile, false,
+					new NullProgressMonitor());
 			Reader reader = new BufferedReader(new InputStreamReader(is));
 			int n;
 			try {
@@ -157,36 +168,36 @@ public class CreateServerFromRSEJob extends ChainedJob {
 			} finally {
 				is.close();
 			}
-		} catch(SystemMessageException sme) {
+		} catch (SystemMessageException sme) {
 			e = sme;
-		} catch(IOException ioe) {
+		} catch (IOException ioe) {
 			e = ioe;
 		}
-		if( e.getCause() != null )
+		if (e.getCause() != null)
 			e = e.getCause();
-		if( e != null )
-			throw new CoreException(new Status(IStatus.ERROR, DeltaCloudIntegrationPlugin.PLUGIN_ID, 
-					e.getMessage() ));
+		if (e != null)
+			throw new CoreException(new Status(IStatus.ERROR, DeltaCloudIntegrationPlugin.PLUGIN_ID,
+					e.getMessage()));
 		return null;
 	}
-	
+
 	protected Properties turnRemoteFileIntoProperties(String content) {
 		Properties p = new Properties();
-		if( content == null )
+		if (content == null)
 			return p;
 		String[] byLine = content.split("\n");
 		String line, key, val;
 		int eqIn;
-		for( int i = 0; i < byLine.length; i++ ) {
+		for (int i = 0; i < byLine.length; i++) {
 			line = byLine[i].trim();
 			eqIn = line.indexOf("=");
-			if( eqIn != -1 ) {
+			if (eqIn != -1) {
 				key = line.substring(0, eqIn);
-				val = line.substring(eqIn+1);
-				while(val.contains("$")) {
+				val = line.substring(eqIn + 1);
+				while (val.contains("$")) {
 					String tmpKey;
-					Iterator j = p.keySet().iterator();
-					while(j.hasNext()) {
+					Iterator<?> j = p.keySet().iterator();
+					while (j.hasNext()) {
 						tmpKey = j.next().toString();
 						val = val.replace("$" + tmpKey, p.getProperty(tmpKey));
 					}
@@ -196,89 +207,98 @@ public class CreateServerFromRSEJob extends ChainedJob {
 		}
 		return p;
 	}
-	
-	protected IServer createServerCheckRemoteDetails() throws CoreException {
+
+	protected void createServerCheckRemoteDetails(IProgressMonitor monitor) throws CoreException {
 		IRemoteFileSubSystem system = findRemoteFileSubSystem();
-		if( system != null ) {
-			verifySystemConnected(system);
+		if (system != null) {
+			ensureIsConnected(system, monitor);
+
 			String contents = null;
 			CoreException ce = null;
 			try {
 				contents = loadRemoteFileData(data[0], system);
-			} catch( CoreException ce2) {
+			} catch (CoreException ce2) {
 				ce = ce2;
 			}
-						
+
 			Properties props = turnRemoteFileIntoProperties(contents);
 			String home = (String) props.get(JBOSS_HOME_KEY);
 			String config = (String) props.get(JBOSS_CONFIG_KEY);
-			
-			
-			if( home != null && config != null ) {
+
+			if (home != null && config != null) {
 				String rtId = data[1];
 				IRuntime runtime = ServerCore.findRuntime(rtId);
 				IServer newServer = null;
 				newServer = ServerCreationUtils.createServer2(instance.getAlias(), runtime);
 				newServer = RSEUtils.setServerToRSEMode(newServer, host, home, config);
-				return newServer;
 			}
-			
-			// Handle the case in which the file doesn't exist, or home / config are null
+
+			// Handle the case in which the file doesn't exist, or home /
+			// config
+			// are null
 			final Properties props2 = props;
 			final Exception ce2 = ce;
-			Display.getDefault().asyncExec(new Runnable(){
+			Display.getDefault().asyncExec(new Runnable() {
 				public void run() {
 					handleRemoteFileIncomplete(host, props2, ce2);
 				}
 			});
 		}
-		return null;
 	}
-	
+
+	private void ensureIsConnected(IRemoteFileSubSystem system, IProgressMonitor monitor) throws CoreException {
+		try {
+			org.jboss.tools.deltacloud.integration.rse.util.RSEUtils.connect(system, monitor);
+		} catch (Exception e) {
+			throw new CoreException(
+					new Status(IStatus.ERROR, DeltaCloudIntegrationPlugin.PLUGIN_ID, MessageFormat.format(
+							"Could not connect to host {0}", system.getName()), e));
+		}
+	}
+
 	protected IServer handleRemoteFileIncomplete(IHost host, Properties props, Exception e) {
 		String message = "";
-		if( e != null ) { 
+		if (e != null) {
 			message = "Error reading remote file: " + data[0] + ", " + e.getMessage();
 		} else {
 			String home = (String) props.get(JBOSS_HOME_KEY);
 			String config = (String) props.get(JBOSS_CONFIG_KEY);
-			if( home == null )
+			if (home == null)
 				message += "Remote property file missing JBOSS_HOME property.\n";
-			if( config == null )
+			if (config == null)
 				message += "Remote property file missing JBOSS_CONFIG property.";
 		}
 		message += "\n\nTry again?";
-		
-        MessageBox messageBox = new MessageBox(new Shell(), SWT.ICON_WARNING | SWT.OK | SWT.CANCEL);
-        messageBox.setText("Cannot create Server"); 
-        messageBox.setMessage(message);
-        int buttonID = messageBox.open();
-        switch(buttonID) {
-          case SWT.OK:
-            // saves changes ...
-        	  ConvertRSEToServerWizard w = new ConvertRSEToServerWizard(instance, host);
-        	  new WizardDialog(new Shell(), w).open();
-        	  break;
-          case SWT.CANCEL:
-            break;
-        }
+
+		MessageBox messageBox = new MessageBox(new Shell(), SWT.ICON_WARNING | SWT.OK | SWT.CANCEL);
+		messageBox.setText("Cannot create Server");
+		messageBox.setMessage(message);
+		int buttonID = messageBox.open();
+		switch (buttonID) {
+		case SWT.OK:
+			// saves changes ...
+			ConvertRSEToServerWizard w = new ConvertRSEToServerWizard(instance, host);
+			new WizardDialog(new Shell(), w).open();
+			break;
+		case SWT.CANCEL:
+			break;
+		}
 		return null;
 	}
-	
-	protected IServer createServerSetDetailsNow() throws CoreException {
+
+	protected void createServerSetDetailsNow() throws CoreException {
 		String home = data[0];
 		String config = data[1];
 		String rtId = data[2];
 		IRuntime runtime = ServerCore.findRuntime(rtId);
 		IServer newServer = ServerCreationUtils.createServer2(instance.getAlias(), runtime);
 		newServer = RSEUtils.setServerToRSEMode(newServer, host, home, config);
-		return newServer;
 	}
-	
+
 	private static IRuntime findOrCreateStubDeployOnlyRuntime() throws CoreException {
 		IRuntime[] rts = ServerCore.getRuntimes();
-		for( int i = 0; i < rts.length; i++ ) {
-			if( rts[i].getRuntimeType().getId().equals("org.jboss.ide.eclipse.as.runtime.stripped")) {
+		for (int i = 0; i < rts.length; i++) {
+			if (rts[i].getRuntimeType().getId().equals("org.jboss.ide.eclipse.as.runtime.stripped")) {
 				return rts[i];
 			}
 		}
@@ -287,8 +307,8 @@ public class CreateServerFromRSEJob extends ChainedJob {
 		IRuntime runtime = wc.save(true, null);
 		return runtime;
 	}
-	
-	private static IServer createDeployOnlyServerWithRuntime(String deployLocation, String tempDeployLocation, 
+
+	private static IServer createDeployOnlyServerWithRuntime(String deployLocation, String tempDeployLocation,
 			String serverName) throws CoreException {
 		IRuntime rt = findOrCreateStubDeployOnlyRuntime();
 		IServerType st = ServerCore.findServerType("org.jboss.ide.eclipse.as.systemCopyServer");
