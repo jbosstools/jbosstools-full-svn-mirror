@@ -391,7 +391,7 @@ public class ManageKeysPage extends WizardPage {
 	private DeltaCloudKey createKey(final String keyId) {
 		final DeltaCloudKey[] keyHolder = new DeltaCloudKey[1];
 		try {
-			Job job = new AbstractCloudElementJob("Create key", model.getCloud(), CLOUDELEMENT.KEYS) {
+			Job job = new AbstractCloudElementJob("Create new key", model.getCloud(), CLOUDELEMENT.KEYS) {
 
 				protected IStatus doRun(IProgressMonitor monitor) throws Exception {
 					try {
