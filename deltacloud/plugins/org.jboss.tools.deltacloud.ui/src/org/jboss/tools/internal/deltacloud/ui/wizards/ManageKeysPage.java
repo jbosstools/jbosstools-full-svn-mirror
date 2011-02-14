@@ -221,7 +221,7 @@ public class ManageKeysPage extends WizardPage {
 						WizardMessages.getString(CONFIRM_KEY_DELETE_TITLE),
 						WizardMessages.getFormattedString(CONFIRM_KEY_DELETE_MSG, key.getId()));
 				if (confirmed) {
-					deleteKey(key);
+					deleteSelectedKey();
 				}
 			}
 		};
@@ -422,10 +422,10 @@ public class ManageKeysPage extends WizardPage {
 		}
 	}
 
-	private void deleteKey(final DeltaCloudKey key) {
+	private void deleteSelectedKey() {
 		try {
 			Job job = new AbstractCloudElementJob(
-					MessageFormat.format("Delete key {0}",key.getName()), 
+					MessageFormat.format("Delete key {0}",model.getSelectedKey().getName()), 
 					model.getCloud(), 
 					CLOUDELEMENT.KEYS) {
 
