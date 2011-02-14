@@ -111,7 +111,7 @@ public class StopInstanceHandler extends AbstractInstanceHandler {
 						, DeltaCloudResourceAction.STOP
 						, DeltaCloudInstance.State.STOPPED
 						, CVMessages.getString(STOPPING_INSTANCE_TITLE)
-						, CVMessages.getFormattedString(STOPPING_INSTANCE_MSG, new String[] { instance.getName() }));
+						, CVMessages.getFormattedString(STOPPING_INSTANCE_MSG, new String[] { instance.getAlias() }));
 		}
 	}
 
