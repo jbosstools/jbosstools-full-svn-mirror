@@ -106,8 +106,8 @@ public class SmooksLaunchShortcut extends JUnitLaunchShortcut {
 				RuntimeMetadata metadata = new RuntimeMetadata();
 				metadata.setSmooksConfig(elementToLaunch);
 				if(SmooksInputType.INPUT_TYPE_JAVA.equals(metadata.getInputType())) {
-					MessageDialog.openError(getShell(), Messages.SmooksLaunchShortcut_Title_Launch_Failed, Messages.SmooksLaunchConfigurationDelegate_Error_Java_Unsupported);
-					return;
+//					MessageDialog.openError(getShell(), Messages.SmooksLaunchShortcut_Title_Launch_Failed, Messages.SmooksLaunchConfigurationDelegate_Error_Java_Unsupported);
+//					return;
 				} else if (!metadata.isValidSmooksConfig()) {
 					MessageDialog.openError(getShell(), Messages.SmooksLaunchShortcut_Title_Launch_Failed, metadata.getErrorMessage());
 					return;

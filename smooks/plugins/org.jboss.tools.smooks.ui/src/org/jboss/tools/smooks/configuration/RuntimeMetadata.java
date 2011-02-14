@@ -50,7 +50,7 @@ import org.milyn.delivery.sax.SAXVisitBefore;
  * @author <a href="mailto:tom.fennelly@jboss.com">tom.fennelly@jboss.com</a>
  */
 public class RuntimeMetadata {
-
+	private String inputClassName = null;
 	private Smooks metadataExtractor;
 	private boolean isSmooksConfig;
 	private boolean isValidSmooksConfig;
@@ -70,6 +70,20 @@ public class RuntimeMetadata {
 		// Build dependency map...
 		RuntimeDependency.addDependencyChecklist(metadataExtractor);
 	}
+	
+	
+
+	public String getInputClassName() {
+		return inputClassName;
+	}
+
+
+
+	public void setInputClassName(String inputClassName) {
+		this.inputClassName = inputClassName;
+	}
+
+
 
 	public boolean isSmooksConfig() {
 		return isSmooksConfig;
@@ -188,17 +202,22 @@ public class RuntimeMetadata {
 			if (inputType != null) {
 				String inputPath = inputParams.getProperty(inputType);
 				if (inputPath != null) {
-					String resolvedFilePath;
+					String resolvedFilePath = null;
 					try {
 						resolvedFilePath = SmooksUIUtils.parseFilePath(inputPath.trim());
 					} catch (Exception e) {
 						// It's not a valid config...
 						inputFile = new File(inputPath.trim());
-						return;
+//						return;
 					}
-
-					inputFile = new File(resolvedFilePath);
-					if (SmooksModelUtils.INPUT_TYPE_JAVA.equals(inputType) || (inputFile.exists() && inputFile.isFile())) {
+					if(resolvedFilePath != null){
+						inputFile = new File(resolvedFilePath);
+					}
+					if (SmooksModelUtils.INPUT_TYPE_JAVA.equals(inputType)){
+						isValidSmooksConfig = true;
+						setInputClassName(inputPath);
+					}
+					if ((inputFile.exists() && inputFile.isFile())) {
 						isValidSmooksConfig = true;
 					}
 				}

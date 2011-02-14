@@ -80,8 +80,8 @@ public class SmooksLaunchConfigurationDelegate extends JUnitLaunchConfigurationD
 		launchMetadata.setSmooksConfig(project.findMember(smooksConfigName));
 		
 		if(SmooksInputType.INPUT_TYPE_JAVA.equals(launchMetadata.getInputType())) {
-			displayError(smooksConfigName, Messages.SmooksLaunchConfigurationDelegate_Error_Java_Unsupported);
-			return;
+//			displayError(smooksConfigName, Messages.SmooksLaunchConfigurationDelegate_Error_Java_Unsupported);
+//			return;
 		} else if(!launchMetadata.isValidSmooksConfig()) {
 			displayError(smooksConfigName, launchMetadata.getErrorMessage());
 			return;
@@ -107,6 +107,9 @@ public class SmooksLaunchConfigurationDelegate extends JUnitLaunchConfigurationD
 
 		String inputType = launchMetadata.getInputType();
 		String inputPath = launchMetadata.getInputFile().getAbsolutePath();
+		if(SmooksInputType.INPUT_TYPE_JAVA.equals(launchMetadata.getInputType())) {
+			inputPath = launchMetadata.getInputClassName();
+		}
 		String nodeTypes = launchMetadata.getNodeTypesString();
 
 		runConfig.setProgramArguments(new String[] {launchMetadata.getConfigFile().getAbsolutePath(), inputType, inputPath, nodeTypes});
@@ -155,6 +158,7 @@ public class SmooksLaunchConfigurationDelegate extends JUnitLaunchConfigurationD
 		File wsRootDir = ResourcesPlugin.getWorkspace().getRoot().getRawLocation().toFile();
 		File wsTempClasses = new File(wsRootDir, "temp/launcher/classes"); //$NON-NLS-1$		
 		
+		writeClassToFilesys(JavaGraphBuilder.class, wsTempClasses);
 		writeClassToFilesys(SmooksLauncher.class, wsTempClasses);
 		writeClassToFilesys(SmooksInputType.class, wsTempClasses);
 		writeClassToFilesys(ProcessNodeType.class, wsTempClasses);

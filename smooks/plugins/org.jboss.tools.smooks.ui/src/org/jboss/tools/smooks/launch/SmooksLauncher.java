@@ -30,6 +30,7 @@ import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
 
+import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 
 import org.jboss.tools.smooks.configuration.ProcessNodeType;
@@ -37,6 +38,7 @@ import org.jboss.tools.smooks.core.SmooksInputType;
 import org.jboss.tools.smooks.launch.serialize.ObjectSerializer;
 import org.milyn.Smooks;
 import org.milyn.payload.JavaResult;
+import org.milyn.payload.JavaSource;
 import org.milyn.payload.StringResult;
 import org.xml.sax.SAXException;
 
@@ -59,54 +61,64 @@ public class SmooksLauncher {
 		if(args.length != 4) {
 			throw new RuntimeException(localizedMessages.getProperty("SmooksLauncher_Error_Expected_Four_Args")); //$NON-NLS-1$
 		}
-		
+		Source inputSource = null;
 		if(args[1].equals(SmooksInputType.INPUT_TYPE_JAVA)) {
-			System.out.println(localizedMessages.getProperty("SmooksLauncher_Error_Do_Not_Support_Java_Inputs")); //$NON-NLS-1$
-		} else {
-			File smooksConfig = new File(args[0]);
-			File input = new File(args[2]);
-			
-			assertFile(smooksConfig, "Smooks"); //$NON-NLS-1$
-			assertFile(input, "Input"); //$NON-NLS-1$
-			
-			Smooks smooks = new Smooks(smooksConfig.toURI().getPath());
+			Class<?> clazz;
 			try {
-				Set<ProcessNodeType> processNodeTypes = SmooksLauncher.fromNodeTypeString(args[3]);
-				JavaResult javaResult = new JavaResult();
-				boolean nothingDisplayed = true;
+				clazz = Class.forName(args[2]);
+				System.out.println(clazz);
+				JavaGraphBuilder graphBuilder = new JavaGraphBuilder();
 				
-				if(processNodeTypes.contains(ProcessNodeType.TEMPLATING)) {
-					StringResult stringResult = new StringResult();
-					
-					smooks.filterSource(new StreamSource(new FileInputStream(input)), stringResult, javaResult);
-					System.out.println("[" + localizedMessages.getProperty("SmooksLauncher_Templating_To_StreamResult") + " ...]"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-					System.out.println("    |--"); //$NON-NLS-1$
-					System.out.println(indent(stringResult.toString()));
-					System.out.println("    |--\n"); //$NON-NLS-1$
-					nothingDisplayed = false;
-				} else {
-					smooks.filterSource(new StreamSource(new FileInputStream(input)), javaResult);
-				}
-
-				Collection<ObjectSerializer> serializedJavaResults = ObjectSerializer.serialize(javaResult);
-				if(!serializedJavaResults.isEmpty()) {
-					System.out.println("[" + localizedMessages.getProperty("SmooksLauncher_Java_Mapping_Results") + "...]"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-					
-					for(ObjectSerializer serializedJavaResult : serializedJavaResults) {
-						System.out.println("    |--"); //$NON-NLS-1$
-						System.out.println(indent(serializedJavaResult.getSerializedForm()));
-						System.out.println("    |--"); //$NON-NLS-1$
-					}
-					nothingDisplayed = false;
-				}
-				
-				if(nothingDisplayed) {
-					System.out.println(localizedMessages.getProperty("SmooksLauncher_Nothing_To_Display")); //$NON-NLS-1$
-				}
-			} finally {
-				smooks.close();
+				Object objectGraph = graphBuilder.buildGraph(clazz);
+				inputSource = new JavaSource(objectGraph);
+			} catch (ClassNotFoundException e) {
+				System.out.println("Class not found \n" + e.getLocalizedMessage());
 			}
-		}		
+		} else {
+			File input = new File(args[2]);
+			assertFile(input, "Input"); //$NON-NLS-1$
+			inputSource = new StreamSource(new FileInputStream(input)); 
+		}	
+		
+		File smooksConfig = new File(args[0]);
+		assertFile(smooksConfig, "Smooks"); //$NON-NLS-1$
+		Smooks smooks = new Smooks(smooksConfig.toURI().getPath());
+		try {
+			Set<ProcessNodeType> processNodeTypes = SmooksLauncher.fromNodeTypeString(args[3]);
+			JavaResult javaResult = new JavaResult();
+			boolean nothingDisplayed = true;
+			
+			if(processNodeTypes.contains(ProcessNodeType.TEMPLATING)) {
+				StringResult stringResult = new StringResult();
+				
+				smooks.filterSource(inputSource, stringResult, javaResult);
+				System.out.println("[" + localizedMessages.getProperty("SmooksLauncher_Templating_To_StreamResult") + " ...]"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				System.out.println("    |--"); //$NON-NLS-1$
+				System.out.println(indent(stringResult.toString()));
+				System.out.println("    |--\n"); //$NON-NLS-1$
+				nothingDisplayed = false;
+			} else {
+				smooks.filterSource(inputSource, javaResult);
+			}
+			System.out.println("successfully");
+			Collection<ObjectSerializer> serializedJavaResults = ObjectSerializer.serialize(javaResult);
+			if(!serializedJavaResults.isEmpty()) {
+				System.out.println("[" + localizedMessages.getProperty("SmooksLauncher_Java_Mapping_Results") + "...]"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				
+				for(ObjectSerializer serializedJavaResult : serializedJavaResults) {
+					System.out.println("    |--"); //$NON-NLS-1$
+					System.out.println(indent(serializedJavaResult.getSerializedForm()));
+					System.out.println("    |--"); //$NON-NLS-1$
+				}
+				nothingDisplayed = false;
+			}
+			
+			if(nothingDisplayed) {
+				System.out.println(localizedMessages.getProperty("SmooksLauncher_Nothing_To_Display")); //$NON-NLS-1$
+			}
+		} finally {
+			smooks.close();
+		}
 	}
 
 	private static Properties loadLocalizedMessages() {
