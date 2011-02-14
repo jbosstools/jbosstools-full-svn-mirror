@@ -376,7 +376,7 @@
 	<section id="sect-Beginners_Guide-Workshops-Seam">
 		<title>Seam</title>
 		<para>
-			The <application>JBoss Enterprise Application Platform </application> book titled the <emphasis>Seam Reference Guide</emphasis> contains an example of how to setup Seam for use with  <application>JBoss Developer Studio</application>. This workshop can be found here: <ulink url="http://www.redhat.com/docs/en-US/JBoss_Enterprise_Application_Platform/5.0.0/html-single/Seam_Reference_Guide/index.html#gettingstartedwithjbosstools">Getting Started with Seam, using JBoss Tools</ulink>.
+			The <application>JBoss Enterprise Application Platform </application> book titled the <emphasis>Seam Reference Guide</emphasis> contains an example of how to setup Seam for use with  <application>JBoss Developer Studio</application>. This workshop can be found here: <ulink url="http://docs.redhat.com/docs/en-US/JBoss_Enterprise_Application_Platform/5/html-single/Seam_Reference_Guide/index.html#gettingstartedwithjbosstools">Getting Started with Seam, using JBoss Tools</ulink>.
 		</para>
 	</section>
 </chapter>
