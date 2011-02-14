@@ -49,7 +49,7 @@ public abstract class AbstractInstanceHandler extends AbstractHandler implements
 					public String format(Object element) {
 						if (element instanceof DeltaCloudInstance) {
 							return new StringBuilder()
-									.append(((DeltaCloudInstance) element).getName())
+									.append(((DeltaCloudInstance) element).getAlias())
 									.append(",")
 									.toString();
 						} else {
