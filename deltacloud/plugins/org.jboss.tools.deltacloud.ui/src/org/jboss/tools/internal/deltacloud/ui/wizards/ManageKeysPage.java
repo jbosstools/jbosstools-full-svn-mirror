@@ -216,11 +216,12 @@ public class ManageKeysPage extends WizardPage {
 		return new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent event) {
+				DeltaCloudKey key = model.getSelectedKey();
 				boolean confirmed = MessageDialog.openConfirm(getShell(),
 						WizardMessages.getString(CONFIRM_KEY_DELETE_TITLE),
-						WizardMessages.getFormattedString(CONFIRM_KEY_DELETE_MSG, model.getSelectedKey().getId()));
+						WizardMessages.getFormattedString(CONFIRM_KEY_DELETE_MSG, key.getId()));
 				if (confirmed) {
-					deleteKey();
+					deleteKey(key);
 				}
 			}
 		};
@@ -421,9 +422,12 @@ public class ManageKeysPage extends WizardPage {
 		}
 	}
 
-	private void deleteKey() {
+	private void deleteKey(final DeltaCloudKey key) {
 		try {
-			Job job = new AbstractCloudElementJob("Delete key", model.getCloud(), CLOUDELEMENT.KEYS) {
+			Job job = new AbstractCloudElementJob(
+					MessageFormat.format("Delete key {0}",key.getName()), 
+					model.getCloud(), 
+					CLOUDELEMENT.KEYS) {
 
 				protected IStatus doRun(IProgressMonitor monitor) throws Exception {
 					try {
@@ -436,7 +440,7 @@ public class ManageKeysPage extends WizardPage {
 								public void run() {
 									isConfirmDelete[0] = MessageDialog.openConfirm(
 											getShell(),
-											"Delete key locally?",
+											MessageFormat.format("Delete key {0} locally?",key.getName()),
 											MessageFormat.format(
 													"Shall the key \"{0}\" be deleted from local key store?",
 													key.getName()));
