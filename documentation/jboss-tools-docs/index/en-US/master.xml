@@ -29,14 +29,14 @@
                 >(pdf)</ulink>
             </primaryie>
         </indexentry>
-<!--	 <indexentry>
-            <primaryie>Cloud Tools Reference Guide <ulink
-                    url="en/cloud/html/index.html">(html)</ulink>
-                <ulink url="en/cloud/html_single/index.html">(html single)</ulink>
-                <ulink url="en/cloud/pdf/Beginners_Guide.pdf"
+	 <indexentry>
+            <primaryie>DeltaCloud Tools Reference Guide <ulink
+                    url="en/deltacloud/html/index.html">(html)</ulink>
+                <ulink url="en/deltacloud/html_single/index.html">(html single)</ulink>
+                <ulink url="en/deltacloud/pdf/Beginners_Guide.pdf"
                 >(pdf)</ulink>
             </primaryie>
-        </indexentry> -->
+        </indexentry> 
         <indexentry>
             <primaryie>Seam Dev Tools Reference Guide <ulink url="en/seam/html/index.html"
                     >(html)</ulink>
@@ -170,8 +170,7 @@
             <primaryie>Exadel Studio Migration Guide <ulink
                     url="en/Exadel-migration/html/index.html">(html)</ulink>
                 <ulink url="en/Exadel-migration/html_single/index.html">(html single)</ulink>
-                <ulink url="en/Exadel-migration/pdf/Exadel_Studio_Migration_Guide.pdf"
-                >(pdf)</ulink>
+                <ulink url="en/Exadel-migration/pdf/Exadel_Studio_Migration_Guide.pdf">(pdf)</ulink>
             </primaryie>
         </indexentry>
         
@@ -179,8 +178,7 @@
             <primaryie>Smooks Reference Guide<ulink
                     url="en/jboss_smooks_plugin_ref_guide/html/index.html">(html)</ulink>
                 <ulink url="en/jboss_smooks_plugin_ref_guide/html_single/index.html">(html single)</ulink>
-                <ulink url="en/jboss_smooks_plugin_ref_guide/pdf/Smooks_Reference_Guide.pdf"
-                >(pdf)</ulink>
+                <ulink url="en/jboss_smooks_plugin_ref_guide/pdf/Smooks_Reference_Guide.pdf">(pdf)</ulink>
             </primaryie>
         </indexentry>
 
@@ -188,8 +186,7 @@
             <primaryie>BPMN Convert Reference Guide <ulink
                     url="en/jboss_bpmn_convert_ref_guide/html/index.html">(html)</ulink>
                 <ulink url="en/jboss_bpmn_convert_ref_guide/html_single/index.html">(html single)</ulink>
-                <ulink url="en/jboss_bpmn_convert_ref_guide/pdf/Converter_Reference_Guide.pdf"
-                >(pdf)</ulink>
+                <ulink url="en/jboss_bpmn_convert_ref_guide/pdf/Converter_Reference_Guide.pdf">(pdf)</ulink>
             </primaryie>
         </indexentry>
 
@@ -197,8 +194,7 @@
             <primaryie>JMX Reference Guide <ulink
                     url="en/jmx_ref_guide/html/index.html">(html)</ulink>
                 <ulink url="en/jmx_ref_guide/html_single/index.html">(html single)</ulink>
-                <ulink url="en/jmx_ref_guide/pdf/JMX_Tools_Reference_Guide.pdf"
-                >(pdf)</ulink>
+                <ulink url="en/jmx_ref_guide/pdf/JMX_Tools_Reference_Guide.pdf">(pdf)</ulink>
             </primaryie>
         </indexentry>
 
@@ -207,20 +203,17 @@
             <primaryie>JBoss BPEL User Guide<ulink
                 url="en/bpel_user_guide/html/index.html">(html)</ulink>
                 <ulink url="en/bpel_user_guide/html_single/index.html">(html single)</ulink>
-                <ulink url="en/bpel_user_guide/pdf/JBoss BPEL User Guide.pdf"
-                    >(pdf)</ulink>
+                <ulink url="en/bpel_user_guide/pdf/JBoss BPEL User Guide.pdf">(pdf)</ulink>
             </primaryie>
         </indexentry>
 
-<!--	<indexentry>
+	<indexentry>
             <primaryie>ModeShape Tools Reference Guide<ulink
                 url="en/modeshape/html/index.html">(html)</ulink>
                 <ulink url="en/modeshape/html_single/index.html">(html single)</ulink>
-                <ulink url="en/modeshape/pdf/JBoss BPEL User Guide.pdf"
-
-                    >(pdf)</ulink>
+                <ulink url="en/modeshape/pdf/JBoss BPEL User Guide.pdf">(pdf)</ulink>
             </primaryie>
-        </indexentry> -->
+        </indexentry> 
 
     </index>
 </book>
