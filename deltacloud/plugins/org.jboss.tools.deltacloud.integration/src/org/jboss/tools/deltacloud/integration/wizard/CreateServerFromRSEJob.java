@@ -206,6 +206,7 @@ public class CreateServerFromRSEJob extends ChainedJob {
 				IServer newServer = null;
 				newServer = ServerCreationUtils.createServer2(instance.getAlias(), runtime);
 				newServer = RSEUtils.setServerToRSEMode(newServer, host, home, config);
+				return;
 			}
 
 			// Handle the case in which the file doesn't exist, or home /
