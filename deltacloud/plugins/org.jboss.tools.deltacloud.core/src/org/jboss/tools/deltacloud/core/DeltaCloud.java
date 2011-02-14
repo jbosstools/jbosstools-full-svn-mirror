@@ -266,13 +266,13 @@ public class DeltaCloud extends ObservablePojo {
 		DeltaCloudInstance instance = getInstancesRepository().getById(instanceId);
 		if (instance != null) {
 			while (!pm.isCanceled()) {
-				Thread.sleep(WAIT_FOR_STATE_DELAY);
-				instance = refreshInstance(instance);
 				State state = instance.getState();
 				if (state == expectedState
 						|| instance.isInState(DeltaCloudInstance.State.TERMINATED)) {
 					return instance;
 				}
+				Thread.sleep(WAIT_FOR_STATE_DELAY);
+				instance = refreshInstance(instance);
 			}
 		}
 		return instance;
