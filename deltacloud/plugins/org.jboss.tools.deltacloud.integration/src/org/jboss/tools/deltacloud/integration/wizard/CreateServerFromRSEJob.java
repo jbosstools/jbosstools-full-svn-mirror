@@ -88,6 +88,7 @@ public class CreateServerFromRSEJob extends ChainedJob {
 
 	protected IStatus run(IProgressMonitor monitor) {
 		try {
+			monitor.setTaskName(MessageFormat.format("Creating server adapter for {0}...", getHostName()));
 			if (type.equals(CREATE_DEPLOY_ONLY_SERVER)) {
 				createDeployOnlyServer();
 			} else if (type.equals(CHECK_SERVER_FOR_DETAILS)) {
@@ -97,6 +98,8 @@ public class CreateServerFromRSEJob extends ChainedJob {
 			}
 		} catch (CoreException ce) {
 			return ce.getStatus();
+		} finally {
+			monitor.done();
 		}
 		/**
 		 * http://dev.eclipse.org/viewcvs/viewvc.cgi/org.eclipse.jface.snippets/
@@ -115,6 +118,14 @@ public class CreateServerFromRSEJob extends ChainedJob {
 			}
 		});
 		return Status.OK_STATUS;
+	}
+
+	private Object getHostName() {
+		String hostname = "";
+		if (host != null) {
+			hostname = host.getName();
+		}
+		return hostname;
 	}
 
 	protected IServer createDeployOnlyServer() throws CoreException {
