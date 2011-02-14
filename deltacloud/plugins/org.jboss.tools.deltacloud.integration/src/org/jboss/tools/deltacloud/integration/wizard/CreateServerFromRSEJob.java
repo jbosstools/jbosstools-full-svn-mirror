@@ -29,9 +29,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.wizard.WizardDialog;
-import org.eclipse.rse.core.RSECorePlugin;
 import org.eclipse.rse.core.model.IHost;
-import org.eclipse.rse.core.subsystems.ISubSystem;
 import org.eclipse.rse.services.clientserver.messages.SystemMessageException;
 import org.eclipse.rse.subsystems.files.core.subsystems.IRemoteFileSubSystem;
 import org.eclipse.swt.SWT;
@@ -118,24 +116,6 @@ public class CreateServerFromRSEJob extends ChainedJob {
 		return server;
 	}
 
-	// TODO move to util class
-	public static IRemoteFileSubSystem findRemoteFileSubSystem(IHost host) {
-		if (host == null) {
-			return null;
-		}
-		ISubSystem[] systems = RSECorePlugin.getTheSystemRegistry().getSubSystems(host);
-		for (int i = 0; i < systems.length; i++) {
-			if (systems[i] instanceof IRemoteFileSubSystem) {
-				return (IRemoteFileSubSystem) systems[i];
-			}
-		}
-		return null;
-	}
-
-	protected IRemoteFileSubSystem findRemoteFileSubSystem() {
-		return findRemoteFileSubSystem(host);
-	}
-
 	protected String loadRemoteFileData(String path, IRemoteFileSubSystem system) throws CoreException {
 		Throwable e;
 		IPath p = new Path(path);
@@ -204,7 +184,7 @@ public class CreateServerFromRSEJob extends ChainedJob {
 	}
 
 	protected void createServerCheckRemoteDetails(IProgressMonitor monitor) throws CoreException {
-		IRemoteFileSubSystem system = findRemoteFileSubSystem();
+		IRemoteFileSubSystem system = org.jboss.tools.deltacloud.integration.rse.util.RSEUtils.findRemoteFileSubSystem(host);
 		if (system != null) {
 			ensureIsConnected(system, monitor);
 

@@ -29,6 +29,7 @@ import org.eclipse.rse.core.model.IHost;
 import org.eclipse.rse.core.model.ISystemRegistry;
 import org.eclipse.rse.core.model.SystemStartHere;
 import org.eclipse.rse.core.subsystems.IConnectorService;
+import org.eclipse.rse.core.subsystems.ISubSystem;
 import org.eclipse.rse.services.clientserver.messages.SystemOperationFailedException;
 import org.eclipse.rse.subsystems.files.core.subsystems.IRemoteFileSubSystem;
 import org.eclipse.swt.widgets.Display;
@@ -36,7 +37,6 @@ import org.eclipse.ui.PartInitException;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.integration.DeltaCloudIntegrationPlugin;
 import org.jboss.tools.deltacloud.integration.Messages;
-import org.jboss.tools.deltacloud.integration.wizard.CreateServerFromRSEJob;
 import org.jboss.tools.internal.deltacloud.ui.utils.WorkbenchUtils;
 
 import com.jcraft.jsch.JSchException;
@@ -272,7 +272,15 @@ public class RSEUtils {
 	}
 
 	public static IRemoteFileSubSystem findRemoteFileSubSystem(IHost host) {
-		return CreateServerFromRSEJob.findRemoteFileSubSystem(host);
+		if (host == null) {
+			return null;
+		}
+		ISubSystem[] systems = RSECorePlugin.getTheSystemRegistry().getSubSystems(host);
+		for (int i = 0; i < systems.length; i++) {
+			if (systems[i] instanceof IRemoteFileSubSystem) {
+				return (IRemoteFileSubSystem) systems[i];
+			}
+		}
+		return null;
 	}
-
 }
