@@ -38,7 +38,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.wst.server.core.IRuntime;
 import org.eclipse.wst.server.core.IRuntimeType;
 import org.eclipse.wst.server.core.IRuntimeWorkingCopy;
@@ -101,22 +100,7 @@ public class CreateServerFromRSEJob extends ChainedJob {
 		} finally {
 			monitor.done();
 		}
-		/**
-		 * http://dev.eclipse.org/viewcvs/viewvc.cgi/org.eclipse.jface.snippets/
-		 * Eclipse%20JFace%20Snippets/org/eclipse/jface/snippets/window/
-		 * Snippet020CustomizedControlTooltips.java?view=markup
-		 */
-		final Display display = Display.getDefault();
-		display.syncExec(new Runnable() {
 
-			@Override
-			public void run() {
-				Shell shell = display.getActiveShell();
-				ToolTip toolTip = new ToolTip(shell, SWT.ICON_INFORMATION);
-				toolTip.setMessage("heyho!");
-				toolTip.setVisible(true);
-			}
-		});
 		return Status.OK_STATUS;
 	}
 
