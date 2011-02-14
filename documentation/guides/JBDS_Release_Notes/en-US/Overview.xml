@@ -20,7 +20,7 @@
 			</listitem>
 			<listitem>
 				<para>
-					<emphasis role="bold">New Hibernate Tools Features:</emphasis> Code generation settings can now be exported to an Ant build.xml file, providing a means to run them from the command line or to be included in your own build scripts. The JPA tooling also supports both JPA 1 and JPA 2.
+					<emphasis role="bold">New Hibernate Tools Features:</emphasis> Code generation settings can now be exported to an Ant build.xml file, providing a means to run them from the command line or to be included in your own build scripts. The JPA tooling supports both JPA 1 and JPA 2.
 				</para>
 			</listitem>
 			<listitem>
@@ -35,7 +35,7 @@
 			</listitem>
 			<listitem>
 				<para>
-					<emphasis role="bold">New DocBook Editor:</emphasis> The editor now also supports visual Docbook editing.
+					<emphasis role="bold">New DocBook Support:</emphasis> The editor now supports visual Docbook editing.
 				</para>
 			</listitem>
 			<listitem>
@@ -60,10 +60,10 @@
 			</listitem>
 			<listitem>
 				<para>
-					<emphasis role="bold">Improved JBoss Server Deployment and Configuration:</emphasis> The JBoss server adapter now has support for remote deployment via SSH and SCP, and the server adapter can now publish not only individual files but also individual folders. 
+					<emphasis role="bold">Improved JBoss Server Deployment and Configuration:</emphasis> The JBoss server adapter now has support for remote deployment via SSH and SCP, and the server adapter can publish individual files as well as individual folders. 
 				</para>
 				<para>
-						A new JBoss Tools Runtimes preference page is available that allow you to configure any server runtime found in a list of directories. This removes the need to manually configuring them all.
+						A new JBoss Tools Runtimes preference page is available that allows you to configure any server runtime found in a list of directories. This removes the need to manually configuring them all.
 				</para>
 			</listitem>
 			<listitem>
@@ -83,7 +83,7 @@
 			</listitem>
 			<listitem>
 				<para>
-					<emphasis role="bold">Technical Previews:</emphasis> A Technical preview of CDI and JSF 2 (including composite components, code completions and validations) tooling is included, including a JBoss AS 6 compatible server adapter. Technical previews of Servlet 3, Richfaces 4 and BPEL are also available.
+					<emphasis role="bold">Technical Previews:</emphasis> A Technical preview of CDI and JSF 2 (including composite components, code completions and validations) tooling is included, along with a JBoss AS 6 compatible server adapter. Technical previews of Servlet 3, Richfaces 4 and BPEL are also available.
 				</para>
 			</listitem>
 			<listitem>
