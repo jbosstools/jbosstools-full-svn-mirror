@@ -1,3 +1,9 @@
+2011-02-15  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/deltacloud/integration/wizard/CreateRSEFromInstanceJob.java (runRSEJob): 
+	* src/org/jboss/tools/deltacloud/integration/rse/util/RSEUtils.java (createRSEHostName): 
+	[JBIDE-8423] not failing with assertion caused exception if no hostname is provided. Just cancelling job then.
+
 2011-02-10  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/deltacloud/integration/wizard/CreateRSEFromInstanceJob.java 

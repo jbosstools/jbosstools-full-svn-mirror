@@ -21,5 +21,5 @@ public interface INewInstanceWizardPage extends IWizardPage {
 
 	public static final String NEW_INSTANCE_FAMILY = "newInstanceFamily";
 
-	public ChainedJob getPerformFinishJob(DeltaCloudInstance addedInstance);
+	public ChainedJob createPerformFinishJob(DeltaCloudInstance addedInstance);
 }

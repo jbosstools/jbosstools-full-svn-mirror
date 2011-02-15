@@ -56,25 +56,34 @@ public class CreateRSEFromInstanceJob extends AbstractInstanceJob {
 	}
 
 	private IStatus runRSEJob(DeltaCloudInstance instance, IProgressMonitor monitor) throws CoreException {
-		String hostname = RSEUtils.createHostName(instance);
-		if (hostname != null && hostname.length() > 0 && isAutoconnect()) {
+		if (monitor.isCanceled()) {
+			return Status.CANCEL_STATUS;
+		}
+
+		String hostname = RSEUtils.createRSEHostName(instance);
+		if (hostname == null || hostname.length() <= 0) {
+			return Status.CANCEL_STATUS;
+		}
+
+		if (isAutoconnect()) {
 			try {
 				monitor.beginTask(MessageFormat.format("Create RSE to server {0}", hostname), 100);
 				String connectionName = RSEUtils.createConnectionName(instance);
 				IHost host = RSEUtils.createHost(
 						DeltaCloudRSEConstants.USERNAME,
 						connectionName,
-						RSEUtils.createHostName(instance),
+						RSEUtils.createRSEHostName(instance),
 						RSEUtils.getSSHOnlySystemType(),
 						RSEUtils.getSystemRegistry());
 				if (nextJob2 != null && nextJob2 instanceof CreateServerFromRSEJob) {
 					((CreateServerFromRSEJob) nextJob2).setHost(host);
 				}
 				monitor.worked(10);
-				IStatus credentials = 
-					triggerCredentialsDialog(host, new SubProgressMonitor(monitor, 10));
-				if( credentials.isOK())
-					return RSEUtils.connect(RSEUtils.getConnectorService(host), CONNECT_TIMEOUT, new SubProgressMonitor(monitor, 80));
+				IStatus credentials =
+						triggerCredentialsDialog(host, new SubProgressMonitor(monitor, 10));
+				if (credentials.isOK())
+					return RSEUtils.connect(RSEUtils.getConnectorService(host), CONNECT_TIMEOUT,
+							new SubProgressMonitor(monitor, 80));
 				return credentials;
 			} catch (Exception e) {
 				throw new CoreException(
@@ -90,14 +99,14 @@ public class CreateRSEFromInstanceJob extends AbstractInstanceJob {
 			monitor.setTaskName(MessageFormat.format("Initiating connection to {0}...", host.getName()));
 			IRemoteFileSubSystem system = RSEUtils.findRemoteFileSubSystem(host);
 			system.connect(monitor, true /* force credentials dialog */);
-		} catch(Exception e) {
-			if( e instanceof OperationCanceledException)
+		} catch (Exception e) {
+			if (e instanceof OperationCanceledException)
 				return Status.CANCEL_STATUS;
-			if( e instanceof SystemOperationFailedException ) {
+			if (e instanceof SystemOperationFailedException) {
 				Exception f = ((SystemOperationFailedException) e).getRemoteException();
-				if( f != null && f instanceof JSchException) {
+				if (f != null && f instanceof JSchException) {
 					// User selected No on accept hostkey
-					if(f.getMessage().contains("reject HostKey:"))
+					if (f.getMessage().contains("reject HostKey:"))
 						return Status.CANCEL_STATUS;
 				}
 			}

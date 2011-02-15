@@ -340,7 +340,7 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 		localRuntimeCombo.setEnabled(enabled);
 	}
 
-	public ChainedJob getPerformFinishJob(final DeltaCloudInstance instance) {
+	public ChainedJob createPerformFinishJob(final DeltaCloudInstance instance) {
 		IEclipsePreferences prefs = new InstanceScope().getNode(DeltaCloudIntegrationPlugin.PLUGIN_ID);
 		prefs.putBoolean(CREATE_RSE_PREF_KEY, createRSE.getSelection());
 		prefs.putBoolean(CREATE_SERVER_PREF_KEY, createServer.getSelection());

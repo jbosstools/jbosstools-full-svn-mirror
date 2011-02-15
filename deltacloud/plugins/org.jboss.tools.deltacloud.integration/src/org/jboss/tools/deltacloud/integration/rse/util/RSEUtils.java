@@ -73,13 +73,19 @@ public class RSEUtils {
 		return instance.getAlias();
 	}
 
-	public static String createHostName(DeltaCloudInstance instance) {
-		Assert.isLegal(instance != null, "Cannot get hostname: instance is not defined");
-
-		String hostName = instance.getHostName();
-		Assert.isTrue(hostName != null && hostName.length() > 0,
-				MessageFormat.format("Cannot get host name: not defined for instance {0}", instance.getName()));
-		return hostName;
+	/**
+	 * Returns the RSE host name for the given instance. Returns
+	 * <code>null</code> if the instance is <code>null</null>.
+	 * 
+	 * @param instance
+	 *            the instance to use to determine the host name for RSE
+	 * @return the hostname
+	 */
+	public static String createRSEHostName(DeltaCloudInstance instance) {
+		if (instance == null) {
+			return null;
+		}
+		return instance.getHostName();
 	}
 
 	public static IHost createHost(String username, String connectionName, String hostname, IRSESystemType systemType,

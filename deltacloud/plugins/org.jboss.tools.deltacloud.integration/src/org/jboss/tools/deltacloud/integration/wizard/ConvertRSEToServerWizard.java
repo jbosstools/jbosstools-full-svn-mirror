@@ -22,7 +22,7 @@ public class ConvertRSEToServerWizard extends Wizard {
 	
 	@Override
 	public boolean performFinish() {
-		Job j = page1.getPerformFinishJob(instance);
+		Job j = page1.createPerformFinishJob(instance);
 		if( j != null ) {
 			j.schedule();
 		}

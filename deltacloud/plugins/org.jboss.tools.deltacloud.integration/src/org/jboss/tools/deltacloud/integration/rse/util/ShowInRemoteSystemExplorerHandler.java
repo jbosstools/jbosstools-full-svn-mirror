@@ -41,7 +41,7 @@ public class ShowInRemoteSystemExplorerHandler extends AbstractHandler implement
 				IHost host = RSEUtils.createHost(
 						DeltaCloudRSEConstants.USERNAME,
 						connectionName, 
-						RSEUtils.createHostName(instance),
+						RSEUtils.createRSEHostName(instance),
 						RSEUtils.getSSHOnlySystemType(), 
 						RSEUtils.getSystemRegistry());
 				Job connectJob = RSEUtils.connect(connectionName, RSEUtils.getConnectorService(host));

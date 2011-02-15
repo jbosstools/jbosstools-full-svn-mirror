@@ -135,7 +135,7 @@ public class NewInstanceWizard extends AbstractDeltaCloudWizard {
 		ChainedJob last = first;
 		ChainedJob temp;
 		for (int i = 0; i < additionalPages.length; i++) {
-			temp = additionalPages[i].getPerformFinishJob(instance);
+			temp = additionalPages[i].createPerformFinishJob(instance);
 			if (temp != null) {
 				last.setNextJob(temp);
 				last = temp;
