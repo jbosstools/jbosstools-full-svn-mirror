@@ -98,17 +98,16 @@ public class DeltaCloud extends ObservablePojo {
 		boolean nameChanged = updateName(name);
 		boolean connectionPropertiesChanged = updateConnectionProperties(url, username, password);
 
-		if (connectionPropertiesChanged) {
-			client = createClient(url, username, password);
-			loadChildren();
-		}
-
 		if (nameChanged || connectionPropertiesChanged) {
 			this.passwordStore.update(new DeltaCloudPasswordStorageKey(name, username), password);
 			// TODO: move to notification based approach
 			DeltaCloudManager.getDefault().saveClouds();
 		}
 
+		if (connectionPropertiesChanged) {
+			client = createClient(url, username, password);
+			loadChildren();
+		}
 	}
 
 	private boolean updateName(String name) {
