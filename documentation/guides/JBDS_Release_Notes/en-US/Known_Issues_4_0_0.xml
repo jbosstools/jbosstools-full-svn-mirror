@@ -22,7 +22,7 @@
 				</listitem>
 				<listitem>
 					<para>
-						<ulink url="https://issues.jboss.org/browse/JBDS-1554">JBDS-1554</ulink>: The new project wizards do not display their associated Eclipse perspective.
+						<ulink url="https://issues.jboss.org/browse/JBDS-1554">JBDS-1554</ulink>: The new project wizards do not display their associated Eclipse perspective. The workaround is to manually display the appropiate perspective by selecting <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Open Perspective</guimenuitem></menuchoice>.
            </para>
 				</listitem>
 				<listitem>
