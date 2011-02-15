@@ -95,7 +95,7 @@ public class DeltaCloud extends ObservablePojo {
 			throws DeltaCloudException {
 		this.driver = driver;
 
-		boolean nameChanged = updateName(name);
+		boolean nameChanged = updateName(name); 
 		boolean connectionPropertiesChanged = updateConnectionProperties(url, username, password);
 
 		if (nameChanged || connectionPropertiesChanged) {

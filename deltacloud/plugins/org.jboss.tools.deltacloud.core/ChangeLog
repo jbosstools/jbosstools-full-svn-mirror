@@ -1,3 +1,9 @@
+2011-02-15  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (update): 
+	[JBIDE-8420] storing credentials before loading children 
+	(was: loaded children and stored afterwards. storing was skipped since loading threw an exception)
+
 2011-02-07  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (waitForState): 
