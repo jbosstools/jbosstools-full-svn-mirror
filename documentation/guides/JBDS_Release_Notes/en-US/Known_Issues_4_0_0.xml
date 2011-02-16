@@ -37,7 +37,7 @@
 				</listitem>
 				<listitem>
 					<para>
-						<ulink url="https://issues.jboss.org/browse/JBDS-1230">JBDS-1230</ulink>: No icon is placed in the system <menuchoice><guimenuitem>Applications</guimenuitem><guimenuitem>Programming Tools</guimenuitem></menuchoice> menu when JBDS is installed under RHEL 5.4.
+						<ulink url="https://issues.jboss.org/browse/JBDS-1230">JBDS-1230</ulink>: No icon is placed in the system <menuchoice><guimenuitem>Applications</guimenuitem><guimenuitem>Programming Tools</guimenuitem></menuchoice> menu when JBDS is installed under RHEL 5.4 until the system is rebooted.
            </para>
 				</listitem>
 				<listitem>
