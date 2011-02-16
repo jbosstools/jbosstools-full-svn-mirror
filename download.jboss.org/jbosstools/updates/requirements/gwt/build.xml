@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project default="mirror">
-	<!-- run in Eclipse (to resolve p2 tasks) using these commandline options:
+	<!-- run locally in Eclipse (to resolve p2 tasks) using these commandline options:
 	
 		-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} 
 		-consoleLog -nosplash -data /tmp
 		-application org.eclipse.ant.core.antRunner
 		-f "/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/gwt/build.xml"
+		
+		or, run headless on qa01 server, where Eclipse is installed into ~/eclipse:
+		
+		export JAVA_HOME=/opt/jdk1.6.0; \
+		${JAVA_HOME}/bin/java -cp ~/eclipse/plugins/org.eclipse.equinox.launcher_*.jar \
+			org.eclipse.equinox.launcher.Main -vm ${JAVA_HOME} -consoleLog -nosplash -data /tmp \
+			-application org.eclipse.ant.core.antRunner \
+			-f ~/RHDS/updates/requirements/gwt/build.xml -Ddestination=/tmp/gwt-repo
 	-->
 	<target name="mirror">
 		<property name="URL" value="http://dl.google.com/eclipse/plugin/3.6" />
