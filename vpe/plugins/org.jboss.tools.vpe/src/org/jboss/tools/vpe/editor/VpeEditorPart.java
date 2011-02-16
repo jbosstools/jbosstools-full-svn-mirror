@@ -20,7 +20,10 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.text.IRegion;
+import org.eclipse.jface.text.TextSelection;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionProvider;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.ControlEvent;
@@ -44,6 +47,7 @@ import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.IReusableEditor;
+import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IStorageEditorInput;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPart;
@@ -94,7 +98,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 	private Composite cmpEdTl;
 	private CustomSashForm container;
 	protected EditorSettings editorSettings;
-	private StructuredTextEditor sourceEditor = null;
+	private StructuredTextEditor sourceEditor;
 	private MozillaEditor visualEditor;
 	private BundleMap bundleMap;
 	private IEditorPart activeEditor;
@@ -103,7 +107,7 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 	private XModelObject optionsObject;
 //	private SelectionBar selectionBar = new SelectionBar();
 	private ActivationListener activationListener = new ActivationListener();
-	private int visualMode = 0;
+	private int visualMode;
 	private EditorPart multiPageEditor;
 
 	private int controlCount = 0;
@@ -247,18 +251,19 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 	}
 
 	public VpeEditorPart(EditorPart multiPageEditor,
-			StructuredTextEditor textEditor, boolean visualMode, BundleMap bundleMap) {
-		sourceEditor = textEditor;
-		// this.visualMode = visualMode;
+			StructuredTextEditor textEditor, int visualMode, BundleMap bundleMap) {
+		this.sourceEditor = textEditor;
+		this.visualMode = visualMode;
 		this.bundleMap = bundleMap;
 		this.multiPageEditor = multiPageEditor;
+	}
+	
+	public VpeEditorPart() {
+		this(null, null, VISUALSOURCE_MODE, null);
 	}
 
 	public IAction getAction(String actionID) {
 		return sourceEditor.getAction(actionID);
-	}
-
-	public VpeEditorPart() {
 	}
 
 	public void doSave(IProgressMonitor monitor) {

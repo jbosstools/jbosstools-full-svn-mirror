@@ -59,9 +59,7 @@ public class SelectionManager implements ISelectionManager {
 		this.selectionController = selectionController;
 	}
 
-	/* TODO: merge this method with setSelection(nsIDOMNode visualNode, int rangeOffset) */
-	public final void setSelection(nsISelection selection) {
-		nsIDOMNode visualNode = SelectionUtil.getSelectedNode(selection);
+	public final void setSelection(nsIDOMNode visualNode, int focusOffset, int anchorOffset) {
 		if (visualNode == null) {
 			return;
 		}
@@ -81,31 +79,9 @@ public class SelectionManager implements ISelectionManager {
 		int selectionLength;
 		if (selectionData.isNodeEditable()) {
 			Point sourceSelectionRange = SelectionUtil.getSourceSelectionRange(
-					selection, selectionData.getSourceNode());
+					visualNode, focusOffset, anchorOffset, selectionData.getSourceNode());
 			selectionOffset = sourceSelectionRange.x;
 			selectionLength = sourceSelectionRange.y;
-		} else {
-			selectionOffset = 0;
-			selectionLength = NodesManagingUtil.getNodeLength(selectionData.getSourceNode());
-		}
-		/*************** Apply selection to views *****************************/
-		SelectionUtil.setSourceSelection(getPageContext(), selectionData.getSourceNode(),
-				selectionOffset, selectionLength);
-		getPageContext().getVisualBuilder().setSelectionRectangle(
-				selectionData.getVisualNode());
-	}
-
-	final public void setSelection(nsIDOMNode visualNode, int rangeOffset) {
-		SelectionData selectionData = getSelectionData(visualNode);
-		if (selectionData == null) {
-			return;
-		}
-		/*************** Calculate selection range ****************************/
-		int selectionOffset;
-		int selectionLength;
-		if (selectionData.isNodeEditable()) {
-			selectionOffset = rangeOffset;
-			selectionLength = 0;
 		} else {
 			selectionOffset = 0;
 			selectionLength = NodesManagingUtil.getNodeLength(selectionData.getSourceNode());
@@ -164,7 +140,6 @@ public class SelectionManager implements ISelectionManager {
 	 * source selection to visual selection
 	 */
 	final public void refreshVisualSelection() {
-
 		// checks for null, for case when we close editor and background
 		// update job is running
 		if (getSourceEditor().getTextViewer() == null) {

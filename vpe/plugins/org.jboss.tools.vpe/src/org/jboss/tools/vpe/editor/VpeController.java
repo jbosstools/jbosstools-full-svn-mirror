@@ -1150,7 +1150,8 @@ public class VpeController implements INodeAdapter,
 					 * <select> node to be selected on the first click.
 					 */
 					if (node != null) {
-						selectionManager.setSelection(selection);
+						selectionManager.setSelection(SelectionUtil.getSelectedNode(selection),
+								selection.getFocusOffset(), selection.getAnchorOffset());
 					}
 				}
 				// enables cursor on selection event
@@ -1219,9 +1220,12 @@ public class VpeController implements INodeAdapter,
 				if (vpeDnD.isDragIconClicked(mouseEvent)) {
 					vpeDnD.dragStart(mouseEvent);
 				} else {
+					int rangeOffset = queryInterface(mouseEvent, nsIDOMNSUIEvent.class).getRangeOffset();
+					
+					// set source selection at the point where mouse is clicked
 					selectionManager.setSelection(
-						VisualDomUtil.getTargetNode(mouseEvent),
-						queryInterface(mouseEvent, nsIDOMNSUIEvent.class).getRangeOffset());					
+							VisualDomUtil.getTargetNode(mouseEvent),
+							rangeOffset, rangeOffset);					
 				}
 			}
 		} finally {
@@ -1270,7 +1274,7 @@ public class VpeController implements INodeAdapter,
 					VpeNodeMapping toggledMapping
 							= getDomMapping().getNearNodeMapping(toggledElement);
 					if (toggledMapping != null && toggledMapping.getVisualNode() != null) {
-						selectionManager.setSelection(toggledMapping.getVisualNode(), 0);
+						selectionManager.setSelection(toggledMapping.getVisualNode(), 0, 0);
 					}
 				}
 			}

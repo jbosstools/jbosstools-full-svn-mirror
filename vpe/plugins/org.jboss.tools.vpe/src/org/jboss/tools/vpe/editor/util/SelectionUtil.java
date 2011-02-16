@@ -208,9 +208,8 @@ public class SelectionUtil {
 	 *            the selection in visual part of editor
 	 * @return source editor selection range
 	 */
-	public static Point getSourceSelectionRange(nsISelection selection,
-			Node sourceNode) {
-		nsIDOMNode focusedNode = getSelectedNode(selection);
+	public static Point getSourceSelectionRange(nsIDOMNode focusedNode,
+			int focusOffset, int anchorOffset, Node sourceNode) {
 		// gets visual selection range
 		Point sourceRange = new Point(0, 0);
 		// converts to source selection
@@ -218,9 +217,9 @@ public class SelectionUtil {
 			//fix for JBIDE-3650
 			NodeImpl nodeImpl = (NodeImpl) sourceNode;
 			sourceRange.x = TextUtil.sourcePosition(nodeImpl.getValueSource(),
-					focusedNode.getNodeValue(), selection.getFocusOffset());
+					focusedNode.getNodeValue(), focusOffset);
 			sourceRange.y = TextUtil.sourcePosition(nodeImpl.getValueSource(),
-					focusedNode.getNodeValue(), selection.getAnchorOffset())
+					focusedNode.getNodeValue(), anchorOffset)
 					- sourceRange.x;
 		}
 		return sourceRange;

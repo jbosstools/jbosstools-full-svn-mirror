@@ -19,7 +19,7 @@ import org.jboss.tools.jst.jsp.editor.IVisualEditorFactory;
 
 public class VpeEditorPartFactory implements IVisualEditorFactory {
 
-	public IVisualEditor createVisualEditor(final EditorPart multiPageEditor, StructuredTextEditor textEditor, boolean visualMode, BundleMap bundleMap) {
+	public IVisualEditor createVisualEditor(final EditorPart multiPageEditor, StructuredTextEditor textEditor, int visualMode, BundleMap bundleMap) {
 		return new VpeEditorPart(multiPageEditor, textEditor, visualMode, bundleMap) {
 			public void doSave(IProgressMonitor monitor){
 				multiPageEditor.doSave(monitor);

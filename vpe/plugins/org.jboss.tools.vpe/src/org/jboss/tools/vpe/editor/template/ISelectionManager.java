@@ -26,14 +26,7 @@ public interface ISelectionManager {
 	 * 
 	 * @param selection
 	 */
-	public void setSelection(nsISelection selection);
-
-	/**
-	 * set selection by mouse
-	 * 
-	 * @param mouseEvent
-	 */
-	public void setSelection(nsIDOMNode visualNode, int rangeOffset);
+	public void setSelection(nsIDOMNode visualNode, int focusOffset, int anchorOffset);
 
 	/**
 	 * to bring in correspondence visual selection and source selection
