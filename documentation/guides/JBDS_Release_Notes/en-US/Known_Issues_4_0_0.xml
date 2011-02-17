@@ -22,7 +22,7 @@
 				</listitem>
 				<listitem>
 					<para>
-						<ulink url="https://issues.jboss.org/browse/JBDS-1554">JBDS-1554</ulink>: The new project wizards do not display their associated Eclipse perspective. The workaround is to manually display the appropiate perspective by selecting <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Open Perspective</guimenuitem></menuchoice>. The following is a list of project types and their matching persepctives:
+						<ulink url="https://issues.jboss.org/browse/JBDS-1554">JBDS-1554</ulink>: The new project wizards do not display their associated Eclipse perspective. The workaround is to manually display the appropriate perspective by selecting <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Open Perspective</guimenuitem></menuchoice>. The following is a list of project types and their matching persepctives:
 						<itemizedlist>
 							<listitem>
 								<para>JSF Project: Web Development</para>
@@ -53,7 +53,7 @@
 				</listitem>
 				<listitem>
 					<para>
-						<ulink url="https://issues.jboss.org/browse/JBDS-1266">JBDS-1266</ulink>: The credentials used when testing the jBPM deployment process are cached, and are used in place of any additional credentials that are specifed.
+						<ulink url="https://issues.jboss.org/browse/JBDS-1266">JBDS-1266</ulink>: The credentials used when testing the jBPM deployment process are cached, and are used in place of any additional credentials that are specified.
            </para>
 				</listitem>
 				<listitem>
@@ -63,7 +63,7 @@
 				</listitem>
 				<listitem>
 					<para>
-						<ulink url="https://issues.jboss.org/browse/JBDS-1509">JBDS-1509</ulink>: JDBS thread can get caught in a loop when interacting with the new connection profile process.
+						<ulink url="https://issues.jboss.org/browse/JBDS-1509">JBDS-1509</ulink>: JBDS thread can get caught in a loop when interacting with the new connection profile process.
            </para>
 				</listitem>
 			</itemizedlist>
