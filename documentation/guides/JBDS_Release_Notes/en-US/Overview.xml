@@ -85,6 +85,9 @@
 				<para>
 					<emphasis role="bold">Technical Previews:</emphasis> A Technical preview of CDI and JSF 2 (including composite components, code completions and validations) tooling is included, along with a JBoss AS 6 compatible server adapter. Technical previews of Servlet 3, Richfaces 4 and BPEL are also available.
 				</para>
+				<para>
+					Information on how to access the tech previews can be found in the <ulink url="http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/4.0/html-single/Getting_Started_Guide/index.html#tech_previews">Getting Started Guide</ulink>.
+				</para>
 			</listitem>
 			<listitem>
 				<para>

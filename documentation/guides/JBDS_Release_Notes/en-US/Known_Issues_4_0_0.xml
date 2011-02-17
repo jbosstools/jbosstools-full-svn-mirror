@@ -22,7 +22,18 @@
 				</listitem>
 				<listitem>
 					<para>
-						<ulink url="https://issues.jboss.org/browse/JBDS-1554">JBDS-1554</ulink>: The new project wizards do not display their associated Eclipse perspective. The workaround is to manually display the appropiate perspective by selecting <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Open Perspective</guimenuitem></menuchoice>.
+						<ulink url="https://issues.jboss.org/browse/JBDS-1554">JBDS-1554</ulink>: The new project wizards do not display their associated Eclipse perspective. The workaround is to manually display the appropiate perspective by selecting <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Open Perspective</guimenuitem></menuchoice>. The following is a list of project types and their matching persepctives:
+						<itemizedlist>
+							<listitem>
+								<para>JSF Project: Web Development</para>
+							</listitem>
+							<listitem>
+								<para>Struts Project: Web Development</para>
+							</listitem>
+							<listitem>
+								<para>Seam Web Project: Seam or Web Development</para>
+							</listitem>
+						</itemizedlist>
            </para>
 				</listitem>
 				<listitem>
