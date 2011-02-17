@@ -343,8 +343,28 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 		</figure>
 
 	</section>
+	
+	<section id="tech_previews">
+		<title>Getting Access to Tech Previews</title>
+		
+		<para>
+			A number of components that are not officially supported in this release of JDBS have been made available through an additional Tech Preview Eclipse update site. To access this update site select <menuchoice><guimenuitem>Help</guimenuitem><guimenuitem>Install New Software...</guimenuitem></menuchoice> in Eclipse, click the <guibutton>Add...</guibutton> button, and in the <guilabel>Add Repository</guilabel> dialog box enter <guilabel>JBDS Tech Preview</guilabel> in the <guilabel>Name</guilabel> field and <guilabel>http://devstudio.jboss.com/updates/4.0/techpreview</guilabel> in the <guilabel>Location</guilabel> field. Click the <guibutton>OK</guibutton> button to save your changes.
+		</para>
+		
+		<para>
+			Eclipse will then list the components available on the update site, which you can select and install by following the prompts.
+		</para>
+		
+		<note>
+			<title>Note</title>
+			<para>
+				If you are prompted for credentials when accessing the Tech Preview Update Site, enter the username and password that were supplied in an email or shown in the <ulink url="http://access.redhat.com">Customer Service Portal</ulink>. If you experience any issues accessing the Tech Preview Update Site please contact technical support.  
+			</para>
+		</note>
+	
+	</section>
 
-	<section id="jbds_jbosstools">
+	<!--section id="jbds_jbosstools">
 
 		<title>JBoss Developer Studio and JBoss Tools</title>
 
@@ -412,15 +432,15 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 				<listitem>
 					<para>Smooks Tools</para>
 				</listitem>
-				<!--listitem>
+				<listitem>
 					<para>Deltacloud Tools</para>
-				</listitem-->
+				</listitem>
 			</itemizedlist>
 
-			<!--note>
+			<note>
 				<title>Note</title>
 				<para>The JBoss Tools Deltacloud component is not included with JBoss Developer Studio in this release.</para>
-			</note-->
+			</note>
 
 			<para>To install the JBoss Tools plugins for Eclipse, you need the following:</para>
 
@@ -670,5 +690,5 @@ Java HotSpot(TM) Client VM (build 1.5.0_11-b03, mixed mode, sharing)]]></program
 			</section>
 
 		</section>
-	</section>
+	</section -->
 </chapter>

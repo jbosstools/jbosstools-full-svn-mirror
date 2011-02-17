@@ -8,7 +8,7 @@
 	<productname>JBoss Developer Studio</productname>
 	<productnumber>4.0</productnumber>
 	<edition>4.0.0</edition>
-	<pubsnumber>10</pubsnumber>
+	<pubsnumber>11</pubsnumber>
 	<abstract>
 		<para>The Getting Started Guide explains the JBoss Developer Studio.</para>
 	</abstract>
@@ -25,13 +25,13 @@
 
 <!-- The following code is used to build an installation guide, which includes only the installation.xml file. To build the Installation Guide simply uncomment the following <bookinfo> tag and comment out the <bookinfo> tag above -->
 
-<!--bookinfo>
+<!--<bookinfo>
 	<title>Installation Guide</title>
 	<subtitle>Provides information on how to install JBoss Developer Studio.</subtitle>
 	<productname>JBoss Developer Studio</productname>
 	<productnumber>4.0</productnumber>
 	<edition>4.0.0</edition>
-	<pubsnumber>10</pubsnumber>
+	<pubsnumber>11</pubsnumber>
 	<abstract>
 		<para>JBoss Developer Studio Installation Guide.</para>
 	</abstract>
@@ -44,4 +44,4 @@
 	</corpauthor>
 	<xi:include href="Common_Content/Legal_Notice.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
 	<xi:include href="Author_Group.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
-</bookinfo-->
+</bookinfo>-->
