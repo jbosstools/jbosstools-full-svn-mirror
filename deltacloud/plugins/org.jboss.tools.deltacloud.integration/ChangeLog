@@ -1,3 +1,12 @@
+2011-02-18  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/deltacloud/integration/wizard/RSEandASWizardPage.java 
+	(storeSelection): 
+	(verifyPageComplete): 
+	(getSelectionIndex): 
+	(fillRuntimeTypeCombo): 
+	[JBIDE-8333] now persisting last selected realm and profile per cloud.
+	
 2011-02-15  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/deltacloud/integration/wizard/CreateRSEFromInstanceJob.java (runRSEJob): 

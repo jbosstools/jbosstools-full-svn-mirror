@@ -11,6 +11,7 @@
 package org.jboss.tools.deltacloud.integration.wizard;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
@@ -38,6 +39,7 @@ import org.jboss.ide.eclipse.as.core.util.IJBossToolingConstants;
 import org.jboss.tools.common.jobs.ChainedJob;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.integration.DeltaCloudIntegrationPlugin;
+import org.jboss.tools.deltacloud.ui.preferences.StringPreferenceValue;
 import org.jboss.tools.deltacloud.ui.wizard.INewInstanceWizardPage;
 import org.jboss.tools.internal.deltacloud.ui.utils.LayoutUtils;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
@@ -45,12 +47,16 @@ import org.osgi.service.prefs.BackingStoreException;
 
 /**
  * @author Rob Stryker
+ * @author André Dietisheim
  */
 public class RSEandASWizardPage extends WizardPage implements INewInstanceWizardPage {
 	private static final String SERVER_DETAILS_PROPOSAL_KEY = "server_details";
 	private static final String SERVER_HOME_PROPOSAL_KEY = "server_home";
 	private static final String SERVER_CONFIG_PROPOSAL_KEY = "server_config";
 	private static final String SERVER_DEPLOY_PROPOSAL_KEY = "server_deploy";
+
+	private static final String SELECTED_AUTO_LOCAL_RUNTIME_KEY = "autoruntime_selected";
+	private static final String SELECTED_MANUAL_LOCAL_RUNTIME_KEY = "manualruntime_selected";
 
 	private static final String SELECT_RUNTIME_ERROR = "Please select a local runtime. The created server will be of the same version as the local runtime.";
 	private static final String DEPLOY_FOLDER_NOT_EMPTY = "The deploy folder must not be empty";
@@ -73,7 +79,9 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 	private Text remoteDetailsLoc, serverHomeText, serverConfigText, deployFolderText;
 	private Label serverHome, serverConfig, localRuntimeLabel, autoLocalRuntimeLabel, deployFolder;
 	private Combo autoLocalRuntimeCombo, localRuntimeCombo;
-
+	private StringPreferenceValue selectedAutoRuntimePref = new StringPreferenceValue(SELECTED_AUTO_LOCAL_RUNTIME_KEY, DeltaCloudIntegrationPlugin.PLUGIN_ID);
+	private StringPreferenceValue selectedManualRuntimePref = new StringPreferenceValue(SELECTED_MANUAL_LOCAL_RUNTIME_KEY, DeltaCloudIntegrationPlugin.PLUGIN_ID);
+	
 	private IHost initialHost;
 	private ArrayList<IRuntime> localRuntimes = new ArrayList<IRuntime>();
 
@@ -119,18 +127,15 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 
 		autoLocalRuntimeLabel = new Label(g, SWT.NONE);
 		autoLocalRuntimeLabel.setText("Local Runtime: ");
-		autoLocalRuntimeLabel.setLayoutData(LayoutUtils.createFormData(remoteDetailsLoc, 7, null, 0, 0, INDENTATION, null,
-				0));
+		autoLocalRuntimeLabel.setLayoutData(
+				LayoutUtils.createFormData(remoteDetailsLoc, 7, null, 0, 0, INDENTATION, null,0));
 
 		autoAddLocalRuntimeButton = new Button(g, SWT.DEFAULT);
 		autoAddLocalRuntimeButton.setText("Configure Runtimes...");
 		autoAddLocalRuntimeButton.setLayoutData(LayoutUtils.createFormData(remoteDetailsLoc, 7, null, 0, null, 0, 100, -5));
-		autoAddLocalRuntimeButton.addSelectionListener(new SelectionListener() {
+		autoAddLocalRuntimeButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				configureRuntimesPressed();
-			}
-
-			public void widgetDefaultSelected(SelectionEvent e) {
 			}
 		});
 		autoLocalRuntimeCombo = new Combo(g, SWT.READ_ONLY);
@@ -239,7 +244,7 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 	private void fillRuntimeTypeCombo() {
 		localRuntimes.clear();
 		IRuntime[] rts = ServerCore.getRuntimes();
-		ArrayList<String> names = new ArrayList<String>();
+		List<String> names = new ArrayList<String>();
 		for (int i = 0; i < rts.length; i++) {
 			if (rts[i].getRuntimeType() == null)
 				continue;
@@ -250,9 +255,20 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 			}
 		}
 		localRuntimeCombo.setItems((String[]) names.toArray(new String[names.size()]));
+		localRuntimeCombo.select(getSelectionIndex(selectedManualRuntimePref.get(), names));
 		autoLocalRuntimeCombo.setItems((String[]) names.toArray(new String[names.size()]));
+		autoLocalRuntimeCombo.select(getSelectionIndex(selectedAutoRuntimePref.get(), names));
 	}
-
+	
+	private int getSelectionIndex(String item, List<String> items) {
+		int selectionIndex = 0;
+		int listIndex = items.indexOf(item);
+		if (listIndex >= 0) {
+			selectionIndex = listIndex;
+		}
+		return selectionIndex;
+	}
+	
 	protected void configureRuntimesPressed() {
 		ServerUIUtil.showNewRuntimeWizard(addLocalRuntimeButton.getShell(), null, null);
 		fillRuntimeTypeCombo();
@@ -313,8 +329,20 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 				}
 			}
 		}
+		storeSelection(autoLocalRuntimeCombo.getSelectionIndex(), autoLocalRuntimeCombo.getItems(), selectedAutoRuntimePref);
+		storeSelection(localRuntimeCombo.getSelectionIndex(), localRuntimeCombo.getItems(), selectedManualRuntimePref);
+
 		setErrorMessage(error);
 		setPageComplete(error == null);
+	}
+
+	private void storeSelection(int selectionIndex, String[] items, StringPreferenceValue preferenceValue) {
+		if (selectionIndex < 0 || items == null || items.length == 0) {
+			return;
+		}
+
+		String value = items[selectionIndex];
+		preferenceValue.store(value);
 	}
 
 	private void refreshServerWidgets() {
