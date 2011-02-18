@@ -1,0 +1,39 @@
+<projects>
+	
+	<project>
+		<category>Weld archetypes</category>
+		<name>jboss-javaee6-webapp</name>
+		<included-projects>jboss-javaee6-webapp</included-projects>
+		<shortDescription>Weld Java EE 6 example</shortDescription>
+		<description>
+The example demonstrates Weld Java EE 6 application.
+It will create the jboss-javaee6-webapp project in your workspace based on the org.jboss.weld.archetypes:jboss-javaee6-webapp:1.0.1.Beta2 archetype.
+		</description>
+		<size>8192</size>
+		<url/>
+		<fixes>
+			<fix type="wtpruntime">
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.60</property>
+				<property name="description">This project example requires JBoss AS 6.0</property>
+			</fix>
+		</fixes>
+		<importType>mavenArchetype</importType>
+		<importTypeDescription>The project example requires the m2eclipse-core, m2eclipse-wtp and JBoss Maven Project Examples feature.</importTypeDescription>
+		<mavenArchetype>
+			<archetypeGroupId>org.jboss.weld.archetypes</archetypeGroupId>
+			<archetypeArtifactId>jboss-javaee6-webapp</archetypeArtifactId>
+			<archetypeVersion>1.0.1.Beta2</archetypeVersion>
+			<!-- <archetypeRepository>http://repository.jboss.org/nexus/content/groups/public/</archetypeRepository>  -->
+			<groupId>org.jboss.tools.examples</groupId>
+			<artifactId>jboss-javaee6-webapp</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<javaPackage>org.jboss.tools.examples</javaPackage>
+			<!-- 
+			<properties>
+				<property name="name" value="Java EE 6 webapp project"/>
+			</properties>
+			-->
+		</mavenArchetype>
+	</project>
+	
+</projects>
