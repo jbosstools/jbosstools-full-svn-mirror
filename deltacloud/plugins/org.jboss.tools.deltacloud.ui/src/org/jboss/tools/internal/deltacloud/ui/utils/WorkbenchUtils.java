@@ -93,10 +93,10 @@ public class WorkbenchUtils {
 	 * @return the first element
 	 */
 	public static <T> T getFirstAdaptedElement(final ISelection selection, final Class<T> expectedClass) {
-		if (selection == null) {
+		if (selection == null
+				|| !(selection instanceof IStructuredSelection)) {
 			return null;
 		} else {
-			Assert.isTrue(selection instanceof IStructuredSelection);
 			Object firstElement = ((IStructuredSelection) selection).getFirstElement();
 			if (firstElement == null) {
 				return null;
