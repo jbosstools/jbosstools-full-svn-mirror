@@ -11,6 +11,7 @@
 package org.jboss.tools.vpe.editor.template;
 
 import org.eclipse.jface.text.IRegion;
+import org.eclipse.swt.graphics.Point;
 import org.jboss.tools.jst.jsp.editor.ITextFormatter;
 import org.jboss.tools.jst.jsp.selection.SourceSelection;
 import org.jboss.tools.vpe.editor.VpeSourceInnerDragInfo;
@@ -446,14 +447,13 @@ public interface VpeTemplate {
 	/**
 	 * 
 	 * @param elementMapping
-	 * @param focusPosition
-	 * @param anchorPosition
+	 * @param selectionRange
 	 * @param domMapping
 	 * @return
 	 */
 	public nsIDOMNode getVisualNodeBySourcePosition(
-			VpeElementMapping elementMapping, int focusPosition,
-			int anchorPosition, VpeDomMapping domMapping);
+			VpeElementMapping elementMapping,
+			Point selectionRange, VpeDomMapping domMapping);
 	
 	public boolean isInvisible();
 	

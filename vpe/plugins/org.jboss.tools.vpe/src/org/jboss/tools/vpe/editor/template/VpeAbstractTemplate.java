@@ -1338,15 +1338,16 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 * Gets the visual node by by source position.
 	 * 
 	 * @param domMapping the dom mapping
-	 * @param focusPosition the focus position
-	 * @param anchorPosition the anchor position
+	 * @param selectionRange the selection range
 	 * @param elementMapping the element mapping
 	 * 
 	 * @return the visual node by by source position
 	 */
+	@Override
 	public nsIDOMNode getVisualNodeBySourcePosition(
-			VpeElementMapping elementMapping, int focusPosition,
-			int anchorPosition, VpeDomMapping domMapping) {
+			VpeElementMapping elementMapping, Point selectionRange, VpeDomMapping domMapping) {
+		int focusPosition = selectionRange.x;
+		int anchorPosition = selectionRange.x + selectionRange.y;
 
 		// find focus attribute by position
 		nsIDOMNode focusNode = findNodeByPosition(elementMapping

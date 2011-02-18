@@ -90,8 +90,7 @@ public class SelectionManager implements ISelectionManager {
 		SelectionUtil.setSourceSelection(getPageContext(),
 				selectionData.getSourceNode(),
 				selectionOffset, selectionLength);
-		getPageContext().getVisualBuilder().setSelectionRectangle(
-				selectionData.getVisualNode());
+		refreshVisualNodeSelection();
 	}
 
 	private SelectionData getSelectionData(nsIDOMNode visualNode) {
@@ -136,76 +135,88 @@ public class SelectionManager implements ISelectionManager {
 	}
 
 	/**
-	 * Syncronization visual selection and source selection, actually moves
-	 * source selection to visual selection
+	 * Synchronize visual selection and source selection (move
+	 * source selection to visual selection).
 	 */
 	final public void refreshVisualSelection() {
+		refreshVisualNodeSelection();
+		refreshVisualTextSelection();
+	}
+	
+	/**
+	 * Draws selection rectangle in the Visual Part according to source selection.
+	 */
+	private void refreshVisualNodeSelection() {
 		// checks for null, for case when we close editor and background
 		// update job is running
 		if (getSourceEditor().getTextViewer() == null) {
-
 			return;
 		}
-
-		Point range = SelectionUtil
-				.getSourceSelectionRange(getSourceEditor());
-
-		if (range == null)
+		
+		Point range = SelectionUtil.getSourceSelectionRange(getSourceEditor());
+		if (range == null) {
 			return;
-
-		int focusOffcetInSourceDocument = range.x;
-
-		int anchorOffcetInSourceDocument = focusOffcetInSourceDocument
-				+ range.y;
+		}
+		
 		VpeNodeMapping nodeMapping = SelectionUtil
-				.getNodeMappingBySourceSelection(getSourceEditor(),
-						getDomMapping());
-
+				.getNodeMappingBySourceSelection(getSourceEditor(),	getDomMapping());
 		if (nodeMapping == null) {
 			return;
 		}
-
+		
 		// visual node which will be selected
-		nsIDOMNode targetVisualNode;
-
-		// int visualNodeOffcet =
-		// TextUtil.visualPosition(((Node)targetSourceNode
-		// ).getNodeValue(),offcetReferenceToSourceNode);
-
-		// if mapping is elementMapping
+		nsIDOMNode targetVisualNode;		
+		if (nodeMapping instanceof VpeElementMapping) {
+			VpeElementMapping elementMapping = (VpeElementMapping) nodeMapping;
+			targetVisualNode = elementMapping.getTemplate()
+					.getVisualNodeBySourcePosition(elementMapping,
+							range, getDomMapping());
+		} else {
+			targetVisualNode = nodeMapping.getVisualNode();
+		}
+		getPageContext().getVisualBuilder().setSelectionRectangle(
+				targetVisualNode);
+	}
+	
+	/**
+	 * Selects text in the Visual Part Visual Part according to source selection.
+	 */
+	private void refreshVisualTextSelection() {
+		// checks for null, for case when we close editor and background
+		// update job is running
+		if (getSourceEditor().getTextViewer() == null) {
+			return;
+		}
+		
+		Point range = SelectionUtil.getSourceSelectionRange(getSourceEditor());
+		if (range == null) {
+			return;
+		}
+		
+		VpeNodeMapping nodeMapping = SelectionUtil
+				.getNodeMappingBySourceSelection(getSourceEditor(),	getDomMapping());
+		if (nodeMapping == null) {
+			return;
+		}
 		
 		SelectionUtil.clearSelection(selectionController); 
 		
+		// visual node which will be selected
+		
 		if (nodeMapping instanceof VpeElementMapping) {
-
 			VpeElementMapping elementMapping = (VpeElementMapping) nodeMapping;
-
-			VpeTemplate template = elementMapping.getTemplate();
-
-			targetVisualNode = template.getVisualNodeBySourcePosition(
-					elementMapping, focusOffcetInSourceDocument,
-					anchorOffcetInSourceDocument, getDomMapping());
-
-			NodeData nodeData = template.getNodeData(targetVisualNode,
+			nsIDOMNode targetVisualNode = elementMapping.getTemplate()
+					.getVisualNodeBySourcePosition(
+							elementMapping, range, getDomMapping());
+			NodeData nodeData = elementMapping.getTemplate().getNodeData(targetVisualNode,
 					elementMapping.getElementData(), getDomMapping());
 			// we can restore cursor position only if we have nodeData and
 			// range.y==0
 			if (nodeData != null) {
 				// restore cursor position in source document
-				restoreVisualCursorPosition(template, nodeData,
-						focusOffcetInSourceDocument,
-						anchorOffcetInSourceDocument);
+				restoreVisualCursorPosition(elementMapping.getTemplate(), nodeData, range);
 			}
-		} else {
-
-			targetVisualNode = nodeMapping.getVisualNode();
-			// restore cursor position for source node
-//				restoreVisualCursorPositionForTextNode(targetVisualNode,
-//						focusOffcetInSourceDocument, model);
 		}
-		// here we restore only highlight
-		getPageContext().getVisualBuilder().setSelectionRectangle(
-				targetVisualNode);
 	}
 
 	/**
@@ -219,8 +230,7 @@ public class SelectionManager implements ISelectionManager {
 	 *            and visual node, attribute
 	 */
 	private void restoreVisualCursorPosition(VpeTemplate template,
-			NodeData nodeData, int focusOffcetInSourceDocument,
-			int anchorOffsetrInSourceDocument) {
+			NodeData nodeData, Point selectionRange) {
 
 		nsIDOMNode visualNode = nodeData.getVisualNode();
 
@@ -230,10 +240,10 @@ public class SelectionManager implements ISelectionManager {
 
 			Node targetSourceNode = nodeData.getSourceNode();
 
-			int focusOffcetReferenceToSourceNode = focusOffcetInSourceDocument
+			int focusOffcetReferenceToSourceNode = selectionRange.x
 					- NodesManagingUtil.getStartOffsetNode(targetSourceNode);
 
-			int anchorOffcetReferenceToSourceNode = anchorOffsetrInSourceDocument
+			int anchorOffcetReferenceToSourceNode = selectionRange.x + selectionRange.y
 					- NodesManagingUtil.getStartOffsetNode(targetSourceNode);
 
 			int length = visualNode.getNodeValue().length();
