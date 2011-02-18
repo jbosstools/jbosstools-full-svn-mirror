@@ -32,6 +32,8 @@ public class InstanceStateJob extends AbstractInstanceJob {
 	protected IStatus doRun(IProgressMonitor monitor) throws Exception {
 		String id = getInstance().getId();
 		getCloud().waitForState(id, expectedState, monitor);
+		if( monitor.isCanceled())
+			return Status.CANCEL_STATUS;
 		return Status.OK_STATUS;
 	}
 
