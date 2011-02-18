@@ -29,6 +29,8 @@ public class DeltaCloudXMLBuilder {
 	public static final String ATTR_INSTANCEFILTER = "instancefilter";
 	public static final String ATTR_LASTKEYNAME = "lastkeyname";
 	public static final String ATTR_LASTIMAGE = "lastimage";
+	public static final String ATTR_LASTPROFILE = "lastprofile";
+	public static final String ATTR_LASTREALM = "lastrealm";
 	
 	public static final void xmlHeader(PrintWriter printWriter) {
 		printWriter.print("<?xml version=\"1.0\" encoding=\"");

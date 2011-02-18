@@ -50,7 +50,9 @@ public class DeltaCloud extends ObservablePojo {
 	private DeltaCloudDriver driver;
 	private String lastKeyname = "";
 	private String lastImageId = "";
-
+	private String lastRealmName = "";
+	private String lastProfileId = "";
+	
 	private DeltaCloudClient client;
 
 	private DeltaCloudImagesRepository imagesRepo;
@@ -190,6 +192,22 @@ public class DeltaCloud extends ObservablePojo {
 
 	public void setLastImageId(String lastImageId) {
 		this.lastImageId = lastImageId;
+	}
+
+	public void setLastRealmName(String lastRealmName) {
+		this.lastRealmName = lastRealmName;
+	}
+
+	public String getLastRealmName() {
+		return lastRealmName;
+	}
+
+	public void setLastProfileId(String lastProfileId) {
+		this.lastProfileId = lastProfileId;
+	}
+
+	public String getLastProfileId() {
+		return lastProfileId;
 	}
 
 	private void setName(String name) {

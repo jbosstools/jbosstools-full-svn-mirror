@@ -108,11 +108,15 @@ public class DeltaCloudManager {
 			String instanceFilterRules = getNodeValue(attrs.getNamedItem("instancefilter")); // $NON-NLS-1$
 			String lastKeyName = getNodeValue(attrs.getNamedItem(DeltaCloudXMLBuilder.ATTR_LASTKEYNAME)); // $NON-NLS-1$
 			String lastImageId = getNodeValue(attrs.getNamedItem(DeltaCloudXMLBuilder.ATTR_LASTIMAGE)); // $NON-NLS-1$
+			String lastRealmName = getNodeValue(attrs.getNamedItem(DeltaCloudXMLBuilder.ATTR_LASTREALM)); // $NON-NLS-1$
+			String lastProfileId = getNodeValue(attrs.getNamedItem(DeltaCloudXMLBuilder.ATTR_LASTPROFILE)); // $NON-NLS-1$
 			Collection<IInstanceAliasMapping> aliasMappings = getInstanceMappings(n);
 			cloud = new DeltaCloud(name, url, username, driver, imageFilterRules, instanceFilterRules, aliasMappings);
 			clouds.add(cloud);
 			cloud.setLastImageId(lastImageId);
 			cloud.setLastKeyname(lastKeyName);
+			cloud.setLastRealmName(lastRealmName);
+			cloud.setLastProfileId(lastProfileId);
 			return cloud;
 		} catch (DeltaCloudException e) {
 			throw e;
@@ -208,6 +212,8 @@ public class DeltaCloudManager {
 				DeltaCloudXMLBuilder.ATTR_INSTANCEFILTER, d.getInstanceFilter().toString(), printWriter);
 		DeltaCloudXMLBuilder.attribute(DeltaCloudXMLBuilder.ATTR_LASTKEYNAME, d.getLastKeyname(), printWriter);
 		DeltaCloudXMLBuilder.attribute(DeltaCloudXMLBuilder.ATTR_LASTIMAGE, d.getLastImageId(), printWriter);
+		DeltaCloudXMLBuilder.attribute(DeltaCloudXMLBuilder.ATTR_LASTREALM, d.getLastRealmName(), printWriter);
+		DeltaCloudXMLBuilder.attribute(DeltaCloudXMLBuilder.ATTR_LASTPROFILE, d.getLastProfileId(), printWriter);
 		DeltaCloudXMLBuilder.closeTag(printWriter);
 		printInstances(d, printWriter);
 		DeltaCloudXMLBuilder.endTag(DeltaCloudXMLBuilder.TAG_CLOUD, printWriter);

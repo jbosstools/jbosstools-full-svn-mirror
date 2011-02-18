@@ -1,3 +1,17 @@
+2011-02-18  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudManager.java 
+	(loadCloud): 
+	(printCloud): 
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java 
+	(lastRealmName): 
+	(lastProfileId): 
+	(setLastProfileId): 
+	(getLastProfileId): 
+	(getLastRealmName): 
+	(setLastRealmName): 
+	[JBIDE-8333]
+
 2011-02-15  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (update): 
