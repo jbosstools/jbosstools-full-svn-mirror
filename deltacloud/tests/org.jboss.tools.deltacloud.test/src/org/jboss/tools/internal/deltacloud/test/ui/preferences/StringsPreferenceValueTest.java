@@ -12,7 +12,7 @@ package org.jboss.tools.internal.deltacloud.test.ui.preferences;
 
 import static org.junit.Assert.assertEquals;
 
-import org.jboss.tools.internal.deltacloud.ui.preferences.StringsPreferenceValue;
+import org.jboss.tools.deltacloud.ui.preferences.StringsPreferenceValue;
 import org.junit.Before;
 import org.junit.Test;
 
