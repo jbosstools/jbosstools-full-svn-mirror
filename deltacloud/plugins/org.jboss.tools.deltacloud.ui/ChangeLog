@@ -1,3 +1,12 @@
+2011-02-18  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePageModel.java 
+	(getProfileIndex): 
+	(setSelectedProfileIndex): 
+	(getRealmIndex): 
+	(setSelectedRealm): 
+	[JBIDE-8333] now persisting last selected realm and profile per cloud.
+
 2011-02-04  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/deltacloud/ui/commands/StopInstanceHandler.java 

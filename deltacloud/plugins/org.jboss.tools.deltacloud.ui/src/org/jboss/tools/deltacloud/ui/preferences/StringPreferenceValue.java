@@ -8,7 +8,8 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.internal.deltacloud.ui.preferences;
+package org.jboss.tools.deltacloud.ui.preferences;
+
 
 
 /**

@@ -28,7 +28,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
-import org.jboss.tools.internal.deltacloud.ui.preferences.StringsPreferenceValue;
+import org.jboss.tools.deltacloud.ui.preferences.StringsPreferenceValue;
 import org.osgi.service.prefs.Preferences;
 
 /**

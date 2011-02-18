@@ -27,8 +27,8 @@ import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
+import org.jboss.tools.deltacloud.ui.preferences.StringPreferenceValue;
 import org.jboss.tools.internal.deltacloud.ui.preferences.IPreferenceKeys;
-import org.jboss.tools.internal.deltacloud.ui.preferences.StringPreferenceValue;
 import org.jboss.tools.internal.deltacloud.ui.utils.WizardUtils;
 
 /**

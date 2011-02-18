@@ -52,10 +52,10 @@ import org.jboss.tools.deltacloud.core.IDeltaCloudManagerListener;
 import org.jboss.tools.deltacloud.core.IInstanceFilter;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
+import org.jboss.tools.deltacloud.ui.preferences.StringPreferenceValue;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
 import org.jboss.tools.deltacloud.ui.views.Columns;
 import org.jboss.tools.deltacloud.ui.views.Columns.Column;
-import org.jboss.tools.internal.deltacloud.ui.preferences.StringPreferenceValue;
 import org.jboss.tools.internal.deltacloud.ui.utils.WorkbenchUtils;
 
 /**

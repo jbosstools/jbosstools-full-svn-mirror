@@ -29,7 +29,7 @@ public class ImageView extends AbstractCloudElementTableView<DeltaCloudImage> {
 
 	@Override
 	protected String getSelectedCloudPrefsKey() {
-		return IDeltaCloudPreferenceConstants.LAST_CLOUD_IMAGE_VIEW;
+		return IDeltaCloudPreferenceConstants.CLOUD_LAST_IMAGE_KEY;
 	}
 
 	@Override

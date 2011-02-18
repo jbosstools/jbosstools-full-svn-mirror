@@ -30,7 +30,7 @@ import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
 public class InstanceView extends AbstractCloudElementTableView<DeltaCloudInstance> {
 
 	protected String getSelectedCloudPrefsKey() {
-		return IDeltaCloudPreferenceConstants.LAST_CLOUD_INSTANCE_VIEW;
+		return IDeltaCloudPreferenceConstants.CLOUD_LAST_INSTANCE_KEY;
 	}
 
 	@Override

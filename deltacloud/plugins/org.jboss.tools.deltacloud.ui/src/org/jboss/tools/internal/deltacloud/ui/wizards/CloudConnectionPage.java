@@ -60,12 +60,13 @@ import org.jboss.tools.deltacloud.core.DeltaCloudDriver;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.ui.Activator;
+import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
+import org.jboss.tools.deltacloud.ui.preferences.StringPreferenceValue;
 import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.CompositeValidator;
 import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.MandatoryStringValidator;
 import org.jboss.tools.internal.deltacloud.ui.common.swt.JFaceUtils;
 import org.jboss.tools.internal.deltacloud.ui.preferences.IPreferenceKeys;
-import org.jboss.tools.internal.deltacloud.ui.preferences.StringPreferenceValue;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 
 /**
@@ -73,10 +74,6 @@ import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
  * @author André Dietisheim
  */
 public class CloudConnectionPage extends WizardPage {
-
-	private static final String NAME_PROPOSAL_KEY = "cloud_name";
-	private static final String USERNAME_PROPOSAL_KEY = "cloud_username";
-	private static final String URL_PROPOSAL_KEY = "cloud_url";
 
 	private static final int CLOUDTYPE_CHECK_DELAY = 1000;
 
@@ -335,7 +332,7 @@ public class CloudConnectionPage extends WizardPage {
 		Label nameLabel = new Label(container, SWT.NULL);
 		nameLabel.setText(WizardMessages.getString(NAME_LABEL));
 		Text nameText = new Text(container, SWT.BORDER | SWT.SINGLE);
-		UIUtils.createPreferencesProposalAdapter(nameText, NAME_PROPOSAL_KEY);
+		UIUtils.createPreferencesProposalAdapter(nameText, IDeltaCloudPreferenceConstants.CLOUD_NAME_PROPOSAL_KEY);
 		bindName(dbc, nameText);
 
 		// url
@@ -343,7 +340,7 @@ public class CloudConnectionPage extends WizardPage {
 		urlLabel.setText(WizardMessages.getString(URL_LABEL));
 		Point p1 = urlLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		Text urlText = new Text(container, SWT.BORDER | SWT.SINGLE);
-		UIUtils.createPreferencesProposalAdapter(urlText, URL_PROPOSAL_KEY);
+		UIUtils.createPreferencesProposalAdapter(urlText, IDeltaCloudPreferenceConstants.CLOUD_URL_PROPOSAL_KEY);
 		dbc.bindValue(
 				WidgetProperties.text(SWT.Modify).observe(urlText),
 				BeanProperties.value(
@@ -368,7 +365,7 @@ public class CloudConnectionPage extends WizardPage {
 		Label usernameLabel = new Label(container, SWT.NULL);
 		usernameLabel.setText(WizardMessages.getString(USERNAME_LABEL));
 		Text usernameText = new Text(container, SWT.BORDER | SWT.SINGLE);
-		UIUtils.createPreferencesProposalAdapter(usernameText, USERNAME_PROPOSAL_KEY);
+		UIUtils.createPreferencesProposalAdapter(usernameText, IDeltaCloudPreferenceConstants.CLOUD_USERNAME_PROPOSAL_KEY);
 		IObservableValue usernameObservable = WidgetProperties.text(SWT.Modify).observe(usernameText);
 		dbc.bindValue(
 				usernameObservable,

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudHardwareProfile;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.DeltaCloudRealm;
@@ -49,8 +50,10 @@ public class NewInstancePageModel extends ObservableUIPojo {
 	private String cpu;
 	private String storage;
 	private String memory;
+	private DeltaCloud cloud;
 
-	protected NewInstancePageModel(String keyId, DeltaCloudImage image) {
+	protected NewInstancePageModel(String keyId, DeltaCloudImage image, DeltaCloud cloud) {
+		this.cloud = cloud;
 		this.keyId = keyId;
 		this.image = image;
 	}
@@ -74,6 +77,10 @@ public class NewInstancePageModel extends ObservableUIPojo {
 		setArch(image.getArchitecture());
 	}
 
+	public int getSelectedRealmIndex() {
+		return realms.indexOf(selectedRealm);
+	}
+
 	public void setSelectedRealmIndex(int index) {
 		if (realms.size() > index) {
 			int oldIndex = -1;
@@ -82,17 +89,34 @@ public class NewInstancePageModel extends ObservableUIPojo {
 				oldIndex = realms.indexOf(selectedRealm);
 			}
 			DeltaCloudRealm deltaCloudRealm = realms.get(index);
-			setSelectedRealm(deltaCloudRealm);
+			selectedRealm = deltaCloudRealm;
+			cloud.setLastRealmName(selectedRealm.getName());
 			firePropertyChange(PROPERTY_SELECTED_REALM_INDEX, oldIndex, index);
 		}
 	}
 
-	public int getSelectedRealmIndex() {
-		return realms.indexOf(selectedRealm);
+	private void setSelectedRealm(String name) {
+		if (realms.size() > 0) {
+			int index = getRealmIndex(name);
+			if (index >= 0) {
+				setSelectedRealmIndex(index);
+			}
+		}
 	}
 
-	public void setSelectedRealm(DeltaCloudRealm realm) {
-		selectedRealm = realm;
+	private int getRealmIndex(String name) {
+		int index = 0;
+		if (name != null
+				&& realms != null
+				&& realms.size() > 0) {
+			for (int i = 0; i < realms.size(); i++) {
+				if (name.equals(realms.get(i).getName())) {
+					index = i;
+					break;
+				}
+			}
+		}
+		return index;
 	}
 
 	public String getRealmId() {
@@ -104,14 +128,14 @@ public class NewInstancePageModel extends ObservableUIPojo {
 
 	protected void setRealms(List<DeltaCloudRealm> realms) {
 		firePropertyChange(PROPERTY_REALMS, this.realms, this.realms = realms);
-		setSelectedRealmIndex(0);
+		setSelectedRealm(cloud.getLastRealmName());
 	}
 
 	public List<DeltaCloudRealm> getRealms() {
 		return realms;
 	}
 
-	protected void setAllProfiles(List<DeltaCloudHardwareProfile> profiles) {
+	public void setAllProfiles(List<DeltaCloudHardwareProfile> profiles) {
 		firePropertyChange(PROP_ALL_PROFILES, this.allProfiles, this.allProfiles = profiles);
 		setFilteredProfiles(filterProfiles(image, profiles));
 	}
@@ -122,7 +146,7 @@ public class NewInstancePageModel extends ObservableUIPojo {
 
 	private void setFilteredProfiles(List<DeltaCloudHardwareProfile> profiles) {
 		firePropertyChange(PROP_FILTERED_PROFILES, this.filteredProfiles, this.filteredProfiles = profiles);
-		setSelectedProfileIndex(0);
+		setSelectedProfileIndex();
 	}
 
 	public List<DeltaCloudHardwareProfile> getFilteredProfiles() {
@@ -143,6 +167,24 @@ public class NewInstancePageModel extends ObservableUIPojo {
 		return filteredProfiles;
 	}
 
+	private void setSelectedProfileIndex() {
+		setSelectedProfileIndex(getProfileIndex(cloud.getLastProfileId()));
+	}
+
+	private int getProfileIndex(String selectedProfileId) {
+		int index = 0;
+		if (selectedProfileId != null 
+				&& filteredProfiles != null && filteredProfiles.size() > 0) {
+			for (int i = 0; i < filteredProfiles.size(); i++) {
+				if (selectedProfileId.equals(filteredProfiles.get(i).getId())) {
+					index = i;
+					break;
+				}
+			}
+		}
+		return index;
+	}
+
 	public void setSelectedProfileIndex(int index) {
 		if (filteredProfiles.size() > index) {
 			int oldIndex = -1;
@@ -151,8 +193,9 @@ public class NewInstancePageModel extends ObservableUIPojo {
 				oldIndex = filteredProfiles.indexOf(selectedProfile);
 			}
 			DeltaCloudHardwareProfile hardwareProfile = filteredProfiles.get(index);
-			setSelectedProfile(hardwareProfile);
+			selectedProfile = hardwareProfile;
 			firePropertyChange(PROP_SELECTED_PROFILE_INDEX, oldIndex, index);
+			cloud.setLastProfileId(hardwareProfile.getId());
 		}
 	}
 
@@ -162,10 +205,6 @@ public class NewInstancePageModel extends ObservableUIPojo {
 			return -1;
 		}
 		return filteredProfiles.indexOf(selectedProfile);
-	}
-
-	public void setSelectedProfile(DeltaCloudHardwareProfile profile) {
-		selectedProfile = profile;
 	}
 
 	public String getProfileId() {

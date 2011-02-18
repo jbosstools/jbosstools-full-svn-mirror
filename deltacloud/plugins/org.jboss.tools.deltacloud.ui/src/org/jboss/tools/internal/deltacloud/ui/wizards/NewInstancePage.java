@@ -68,6 +68,7 @@ import org.jboss.tools.deltacloud.core.DeltaCloudRealm;
 import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob;
 import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob.CLOUDELEMENT;
 import org.jboss.tools.deltacloud.ui.Activator;
+import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.MandatoryStringValidator;
 import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.SelectedComboItemValidator;
@@ -79,10 +80,6 @@ import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
  * @author André Dietisheim
  */
 public class NewInstancePage extends WizardPage {
-
-	private static final String NAME_PROPOSAL_KEY = "instance_name";
-	private static final String IMAGE_PROPOSAL_KEY = "instance_image";
-	private static final String KEY_PROPOSAL_KEY = "instance_key";
 
 	private static final int IMAGE_CHECK_DELAY = 500;
 	private static final int KEY_CHECK_DELAY = 500;
@@ -155,7 +152,7 @@ public class NewInstancePage extends WizardPage {
 		super(WizardMessages.getString(NAME));
 		this.cloud = cloud;
 		String defaultKeyname = cloud.getLastKeyname();
-		model = new NewInstancePageModel(defaultKeyname, image); //$NON-NLS-1$
+		model = new NewInstancePageModel(defaultKeyname, image, cloud); //$NON-NLS-1$
 		setDescription(WizardMessages.getString(DESCRIPTION));
 		setTitle(WizardMessages.getString(TITLE));
 		setImageDescriptor(SWTImagesFactory.DESC_DELTA_LARGE);
@@ -180,14 +177,14 @@ public class NewInstancePage extends WizardPage {
 		nameLabel.setText(WizardMessages.getString(NAME_LABEL));
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(nameLabel);
 		this.nameText = new Text(container, SWT.BORDER | SWT.SINGLE);
-		UIUtils.createPreferencesProposalAdapter(nameText, NAME_PROPOSAL_KEY);
+		UIUtils.createPreferencesProposalAdapter(nameText, IDeltaCloudPreferenceConstants.INSTANCE_NAME_PROPOSAL_KEY);
 		GridDataFactory.fillDefaults().span(2, 1).grab(true, false).applyTo(nameText);
 
 		Label imageLabel = new Label(container, SWT.NULL);
 		imageLabel.setText(WizardMessages.getString(IMAGE_LABEL));
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(imageLabel);
 		this.imageText = new Text(container, SWT.BORDER | SWT.SINGLE);
-		UIUtils.createPreferencesProposalAdapter(imageText, IMAGE_PROPOSAL_KEY);
+		UIUtils.createPreferencesProposalAdapter(imageText, IDeltaCloudPreferenceConstants.INSTANCE_IMAGE_PROPOSAL_KEY);
 		GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.CENTER).applyTo(imageText);
 		Button findImageButton = new Button(container, SWT.NULL);
 		findImageButton.setText(WizardMessages.getString(FIND_BUTTON_LABEL));
@@ -212,7 +209,7 @@ public class NewInstancePage extends WizardPage {
 		keyLabel.setText(WizardMessages.getString(KEY_LABEL));
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(keyLabel);
 		keyText = new Text(container, SWT.BORDER | SWT.SINGLE);
-		UIUtils.createPreferencesProposalAdapter(keyText, KEY_PROPOSAL_KEY);
+		UIUtils.createPreferencesProposalAdapter(keyText, IDeltaCloudPreferenceConstants.INSTANCE_KEY_PROPOSAL_KEY);
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).applyTo(keyText);
 		Button keyManageButton = new Button(container, SWT.NULL);
 		keyManageButton.setText(WizardMessages.getString(MANAGE_BUTTON_LABEL));
