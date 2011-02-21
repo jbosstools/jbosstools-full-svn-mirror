@@ -17,13 +17,7 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
-import org.eclipse.jface.text.IRegion;
-import org.eclipse.jface.text.TextSelection;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.ISelectionProvider;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.ControlEvent;
@@ -47,7 +41,6 @@ import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.IReusableEditor;
-import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IStorageEditorInput;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPart;
@@ -61,9 +54,7 @@ import org.eclipse.ui.handlers.IHandlerActivation;
 import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.part.EditorPart;
 import org.eclipse.ui.part.FileEditorInput;
-import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.IStatusField;
-import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.texteditor.ITextEditorExtension;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.eclipse.wst.sse.ui.internal.StructuredTextViewer;
@@ -89,7 +80,7 @@ import org.jboss.tools.vpe.editor.xpl.EditorSettings;
 import org.jboss.tools.vpe.editor.xpl.SashSetting;
 
 @SuppressWarnings("restriction")
-public class VpeEditorPart extends EditorPart implements ITextEditor,
+public class VpeEditorPart extends EditorPart implements 
 		ITextEditorExtension, IReusableEditor, IVisualEditor {
 	private IContextActivation fContextActivation;
 	private IHandlerActivation sourceActivation,visualActivation, jumpingActivation;
@@ -134,94 +125,6 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 		return multiPageEditor;
 	}
 
-	public void close(boolean save) {
-		if (sourceEditor != null)
-			sourceEditor.close(save);
-	}
-
-	public void doRevertToSaved() {
-		if (sourceEditor != null)
-			sourceEditor.doRevertToSaved();
-	}
-
-	public IDocumentProvider getDocumentProvider() {
-		if (sourceEditor != null)
-			return sourceEditor.getDocumentProvider();
-		else {
-			return null;
-		}
-	}
-
-	public IRegion getHighlightRange() {
-		if (sourceEditor != null)
-			return sourceEditor.getHighlightRange();
-		else {
-			return null;
-		}
-	}
-
-	public ISelectionProvider getSelectionProvider() {
-		if (sourceEditor != null)
-			return sourceEditor.getSelectionProvider();
-		else {
-			return null;
-		}
-	}
-
-	public boolean isEditable() {
-		if (sourceEditor != null)
-			return sourceEditor.isEditable();
-		else {
-			return false;
-		}
-	}
-
-	public void removeActionActivationCode(String actionId) {
-		if (sourceEditor != null)
-			sourceEditor.removeActionActivationCode(actionId);
-	}
-
-	public void resetHighlightRange() {
-		if (sourceEditor != null)
-			sourceEditor.resetHighlightRange();
-	}
-
-	public void selectAndReveal(int offset, int length) {
-		if (sourceEditor != null)
-			sourceEditor.selectAndReveal(offset, length);
-	}
-
-	public void setAction(String actionID, IAction action) {
-		if (sourceEditor != null)
-			sourceEditor.setAction(actionID, action);
-	}
-
-	public void setActionActivationCode(String actionId,
-			char activationCharacter, int activationKeyCode,
-			int activationStateMask) {
-		if (sourceEditor != null)
-			sourceEditor.setActionActivationCode(actionId, activationCharacter,
-					activationKeyCode, activationStateMask);
-	}
-
-	public void setHighlightRange(int offset, int length, boolean moveCursor) {
-		if (sourceEditor != null)
-			sourceEditor.setHighlightRange(offset, length, moveCursor);
-	}
-
-	public void showHighlightRangeOnly(boolean showHighlightRangeOnly) {
-		if (sourceEditor != null)
-			sourceEditor.showHighlightRangeOnly(showHighlightRangeOnly);
-	}
-
-	public boolean showsHighlightRangeOnly() {
-		if (sourceEditor != null)
-			return sourceEditor.showsHighlightRangeOnly();
-		else {
-			return false;
-		}
-	}
-
 	public void addRulerContextMenuListener(IMenuListener listener) {
 		if (sourceEditor != null)
 			sourceEditor.addRulerContextMenuListener(listener);
@@ -260,10 +163,6 @@ public class VpeEditorPart extends EditorPart implements ITextEditor,
 	
 	public VpeEditorPart() {
 		this(null, null, VISUALSOURCE_MODE, null);
-	}
-
-	public IAction getAction(String actionID) {
-		return sourceEditor.getAction(actionID);
 	}
 
 	public void doSave(IProgressMonitor monitor) {
