@@ -1,3 +1,8 @@
+2011-02-24  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/deltacloud/integration/rse/util/RSEUtils.java (createConnectionName): 
+	[JBIDE-8478] added fallback to instance name in case no alias is present
+
 2011-02-18  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/deltacloud/integration/wizard/RSEandASWizardPage.java 
