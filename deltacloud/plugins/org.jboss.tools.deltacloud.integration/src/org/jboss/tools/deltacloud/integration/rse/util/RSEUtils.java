@@ -70,7 +70,11 @@ public class RSEUtils {
 
 	public static String createConnectionName(DeltaCloudInstance instance) {
 		Assert.isLegal(instance != null, "Cannot create connection name: instance is not defined");
-		return instance.getAlias();
+		String connectionName = instance.getAlias();
+		if (connectionName == null || connectionName.length() == 0) {
+			connectionName = instance.getName();
+		}
+		return connectionName;
 	}
 
 	/**
