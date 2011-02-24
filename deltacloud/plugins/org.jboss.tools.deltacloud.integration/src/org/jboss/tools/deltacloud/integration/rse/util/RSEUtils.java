@@ -29,20 +29,25 @@ import org.eclipse.rse.core.model.IHost;
 import org.eclipse.rse.core.model.ISystemRegistry;
 import org.eclipse.rse.core.model.SystemStartHere;
 import org.eclipse.rse.core.subsystems.IConnectorService;
+import org.eclipse.rse.core.subsystems.ISubSystem;
+import org.eclipse.rse.services.clientserver.messages.SystemOperationFailedException;
 import org.eclipse.rse.subsystems.files.core.subsystems.IRemoteFileSubSystem;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PartInitException;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.integration.DeltaCloudIntegrationPlugin;
 import org.jboss.tools.deltacloud.integration.Messages;
-import org.jboss.tools.deltacloud.integration.wizard.CreateServerFromRSEJob;
-import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
+import org.jboss.tools.internal.deltacloud.ui.utils.WorkbenchUtils;
+
+import com.jcraft.jsch.JSchException;
 
 /**
  * @author André Dietisheim
+ * @author Rob Stryker
  */
 public class RSEUtils {
 
+	private static final int RECONNECT_WAIT = 5000;
 	private static final String VIEW_REMOTESYSEXPLORER_ID = "org.eclipse.rse.ui.view.systemView";
 
 	public static IRSESystemType getSSHOnlySystemType() {
@@ -68,26 +73,43 @@ public class RSEUtils {
 		return instance.getAlias();
 	}
 
+	@Deprecated
 	public static String createHostName(DeltaCloudInstance instance) {
-		Assert.isLegal(instance != null, "Cannot get hostname: instance is not defined");
-
-		String hostName = instance.getHostName();
-		Assert.isTrue(hostName != null && hostName.length() > 0,
-				MessageFormat.format("Cannot get host name: not defined for instance {0}", instance.getName()));
-		return hostName;
+		return createRSEHostName(instance);
+	}
+	
+	/**
+	 * Returns the RSE host name for the given instance. Returns
+	 * <code>null</code> if the instance is <code>null</null>.
+	 * 
+	 * @param instance
+	 *            the instance to use to determine the host name for RSE
+	 * @return the hostname
+	 */
+	public static String createRSEHostName(DeltaCloudInstance instance) {
+		if (instance == null) {
+			return null;
+		}
+		return instance.getHostName();
 	}
 
+	@Deprecated
 	public static IHost createHost(String connectionName, String hostname, IRSESystemType systemType,
+			ISystemRegistry systemRegistry) throws Exception {
+		return createHost("jboss", connectionName, hostname, systemType, systemRegistry);
+	}
+	
+	public static IHost createHost(String username, String connectionName, String hostname, IRSESystemType systemType,
 			ISystemRegistry systemRegistry) throws Exception {
 		// TODO: Internationalize strings
 		Assert.isLegal(connectionName != null && connectionName.length() > 0,
 				"Cannot create Host: connectionName is not defined");
 		Assert.isLegal(hostname != null && hostname.length() > 0, "Cannot create Host: hostname is not defined");
-		Assert.isLegal(systemType != null, "Cannot create Host: system type is not defined");
-		Assert.isLegal(systemRegistry != null, "Cannot create Host: system registry is not defined");
+		Assert.isNotNull(systemType, "Cannot create Host: system type is not defined");
+		Assert.isNotNull(systemRegistry, "Cannot create Host: system registry is not defined");
 
 		IHost host = systemRegistry.createHost(systemType, connectionName, hostname, null);
-		host.setDefaultUserId("jboss"); //$NON-NLS-1$
+		host.setDefaultUserId(username); //$NON-NLS-1$
 		return host;
 	}
 
@@ -99,45 +121,106 @@ public class RSEUtils {
 		return services[0];
 	}
 
-	public static void verifySystemConnected(IRemoteFileSubSystem system) {
-		CreateServerFromRSEJob.verifySystemConnected(system);
-	}
-
 	public static IStatus connect(IConnectorService service, IProgressMonitor monitor) throws Exception {
-		monitor.worked(1);
+		monitor.setTaskName(MessageFormat.format("Connecting to {0}...", getHostName(service)));
 		service.connect(monitor);
-		monitor.done();
+		monitor.setTaskName(MessageFormat.format("Connected to {0}.", getHostName(service)));
 		return Status.OK_STATUS;
 	}
-	
-	public static IStatus connect(IConnectorService service, int timeout, IProgressMonitor monitor)  {
-		monitor.beginTask("Connecting to remote server", timeout);
-		monitor.setTaskName("Connecting to remote server");
-		IStatus status = null;
-		int count = 0;
-		while( status == null && count < timeout && !monitor.isCanceled()) {
+
+	public static IStatus connect(IRemoteFileSubSystem service, IProgressMonitor monitor) throws Exception {
+		Assert.isNotNull(service, "No service defined to connect to");
+
+		String hostName = getHostName(service);
+		monitor.setTaskName(MessageFormat.format("Connecting to {0}...", hostName));
+		service.connect(monitor, false);
+		monitor.setTaskName(MessageFormat.format("Connected to server {0}.", hostName));
+		return Status.OK_STATUS;
+	}
+
+	public static String getHostName(IRemoteFileSubSystem service) {
+		String hostName = "";
+		if (service.getHost() != null) {
+			hostName = service.getHost().getName();
+		}
+		return hostName;
+	}
+
+	public static String getHostName(IConnectorService service) {
+		String hostName = "";
+		if (service.getHost() != null) {
+			hostName = service.getHost().getName();
+		}
+		return hostName;
+	}
+
+	/**
+	 * Tries to connects to the given service for the given time. Progress will
+	 * be reported on the given monitor.
+	 * 
+	 * @param service
+	 *            the service to connect to
+	 * @param timeout
+	 *            the timeout to apply
+	 * @param monitor
+	 *            the monitor
+	 * @return the restult of the connection attempt
+	 * @throws Exception
+	 */
+	public static IStatus connect(IConnectorService service, long timeout, IProgressMonitor monitor) throws Exception {
+		long start = System.currentTimeMillis();
+		double scale = (double) 100 / timeout;
+		long current = start;
+		long last = start;
+		monitor.beginTask(MessageFormat.format("Connecting to {0}...", getHostName(service)), 100);
+		while (!monitor.isCanceled()) {
+			current = System.currentTimeMillis();
 			try {
-				status = connect(service, monitor);
-				monitor.done();
-				return status;
-			} catch(OperationCanceledException oce) {
+				return connect(service, monitor);
+			} catch (OperationCanceledException oce) {
 				monitor.done();
 				return Status.CANCEL_STATUS;
-			} catch(Exception e) {
-				count += 1000;
-				monitor.worked(1000);
-				try {
-					Thread.sleep(1000);
-				} catch(InterruptedException ie) {
+			} catch (Exception e) {
+				if (didUserNotAcceptKey(e)) {
+					return Status.CANCEL_STATUS;
+				}
+
+				monitor.setTaskName(
+						MessageFormat.format("Could not connect to {0}. Trying again...", getHostName(service)));
+				monitor.worked(getProgress(current, last, scale));
+				last = current;
+				if (current < start + timeout) {
+					try {
+						Thread.sleep(RECONNECT_WAIT);
+					} catch (InterruptedException ie) {
+						break;
+					}
+				} else {
+					monitor.done();
+					throw e;
 				}
 			}
 		}
-		monitor.done();
-		return status;
+		return Status.CANCEL_STATUS;
 	}
-		
-	
-	public static Job connect(String connectionName, final IConnectorService service)
+
+	private static boolean didUserNotAcceptKey(Exception e) {
+		if (e instanceof SystemOperationFailedException) {
+			Throwable t = ((SystemOperationFailedException) e).getRemoteException();
+			if (t instanceof JSchException) {
+				return t.getMessage() != null
+						&& t.getMessage().contains("reject HostKey:");
+			}
+		}
+		return false;
+	}
+
+	private static int getProgress(long current, long last, double scale) {
+		double progress = (current - last) * scale;
+		return (int) Math.ceil(progress);
+	}
+
+	public static Job connect(final String connectionName, final IConnectorService service)
 			throws Exception {
 		// TODO: internationalize strings
 		Assert.isLegal(connectionName != null,
@@ -148,10 +231,16 @@ public class RSEUtils {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
 				try {
-					return connect(service, monitor);
-				} catch(Exception e) {
+					monitor.beginTask(NLS.bind(Messages.RSE_CONNECTING_MESSAGE, connectionName),
+							IProgressMonitor.UNKNOWN);
+					IStatus status = connect(service, monitor);
+					monitor.setTaskName(MessageFormat.format("Connected to {0}", getHostName(service)));
+					monitor.done();
+					return status;
+				} catch (Exception e) {
 					e.printStackTrace();
-					// odd behavior: service reports connection failure even if things seem to work (view opens up with connection in it)
+					// odd behavior: service reports connection failure even if
+					// things seem to work (view opens up with connection in it)
 					// ignore errors since things work
 					//
 					// return StatusFactory.getInstance(IStatus.ERROR,
@@ -182,14 +271,15 @@ public class RSEUtils {
 			@Override
 			public void run() {
 				try {
-					UIUtils.showView(VIEW_REMOTESYSEXPLORER_ID);
+					WorkbenchUtils.showView(VIEW_REMOTESYSEXPLORER_ID);
 				} catch (PartInitException e) {
 					// I have no idea wtf is wrong here
 					// but my dev environment will not let me use common classes
-//					IStatus status = StatusFactory.getInstance(IStatus.ERROR, 
-//							DeltaCloudIntegrationPlugin.PLUGIN_ID, e.getMessage(), e);
+					// IStatus status = StatusFactory.getInstance(IStatus.ERROR,
+					// DeltaCloudIntegrationPlugin.PLUGIN_ID, e.getMessage(),
+					// e);
 					Status status = new Status(IStatus.ERROR, DeltaCloudIntegrationPlugin.PLUGIN_ID, e.getMessage(), e);
-					ErrorDialog.openError(UIUtils.getActiveShell(),
+					ErrorDialog.openError(WorkbenchUtils.getActiveShell(),
 								Messages.ERROR,
 								Messages.COULD_NOT_LAUNCH_RSE_EXPLORER,
 							status);
@@ -197,9 +287,17 @@ public class RSEUtils {
 			}
 		});
 	}
-	
-	public static IRemoteFileSubSystem findRemoteFileSubSystem(IHost host) {
-		return CreateServerFromRSEJob.findRemoteFileSubSystem(host);
-	}
 
+	public static IRemoteFileSubSystem findRemoteFileSubSystem(IHost host) {
+		if (host == null) {
+			return null;
+		}
+		ISubSystem[] systems = RSECorePlugin.getTheSystemRegistry().getSubSystems(host);
+		for (int i = 0; i < systems.length; i++) {
+			if (systems[i] instanceof IRemoteFileSubSystem) {
+				return (IRemoteFileSubSystem) systems[i];
+			}
+		}
+		return null;
+	}
 }
