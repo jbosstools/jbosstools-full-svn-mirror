@@ -1466,22 +1466,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		node.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE, style);
 	}
 	
-	public nsIDOMNode getOriginalTargetNode(nsIDOMEvent event) {
-		nsIDOMNode targetNode = VisualDomUtil.getTargetNode(event);
-		if (HTML.TAG_INPUT.equalsIgnoreCase(targetNode.getNodeName())) {
-			return targetNode;
-		}
-		nsIDOMNSEvent nsEvent = queryInterface(event, nsIDOMNSEvent.class);
-		// TODO Sergey Vasilyev figure out with TmpRealOriginalTarget
-//		nsIDOMEventTarget target = nsEvent.getTmpRealOriginalTarget();	
-		nsIDOMEventTarget target = nsEvent.getOriginalTarget();
-		nsIDOMNode originalNode = queryInterface(target, nsIDOMNode.class);
-		if (VpeVisualDomBuilder.isAnonElement(originalNode)) {
-			originalNode = getLastSelectedElement(); 
-		}
-		return originalNode;
-	}
-
 	public nsIDOMText getOutputTextNode(Attr attr) {
 		Element sourceElement = attr.getOwnerElement();
 		VpeElementMapping elementMapping = domMapping

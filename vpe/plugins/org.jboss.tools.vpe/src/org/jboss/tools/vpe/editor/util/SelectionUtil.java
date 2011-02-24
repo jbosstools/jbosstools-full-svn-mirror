@@ -11,8 +11,15 @@
 
 package org.jboss.tools.vpe.editor.util;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextViewer;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.wst.sse.core.StructuredModelManager;
 import org.eclipse.wst.sse.core.internal.provisional.IStructuredModel;
@@ -225,12 +232,37 @@ public class SelectionUtil {
 		return sourceRange;
 	}
 
+	
 	public static VpeNodeMapping getNodeMappingBySourceSelection(
+			StructuredTextEditor sourceEditor, VpeDomMapping domMapping) {
+		List<VpeNodeMapping> mappings
+				= getNodeMappingsBySourceSelection(sourceEditor, domMapping);
+		if (!mappings.isEmpty()) {
+			return mappings.get(0);
+		} else {
+			return null;
+		}
+	}
+	public static List<VpeNodeMapping> getNodeMappingsBySourceSelection(
+			StructuredTextEditor sourceEditor, VpeDomMapping domMapping) {
+		List<VpeNodeMapping> nodeMappings = new ArrayList<VpeNodeMapping>();
+		for (Node node : getFocusNodesBySourceSelection(sourceEditor, domMapping)) {
+			VpeNodeMapping nodeMapping = VpeNodesManagingUtil.getNodeMapping(domMapping, node);
+			if (nodeMapping != null) {
+				nodeMappings.add(nodeMapping);
+			}
+		}
+		
+		return nodeMappings;
+	}
+	
+	private static List<Node> getFocusNodesBySourceSelection(
 			StructuredTextEditor sourceEditor, VpeDomMapping domMapping) {
 		Point range = sourceEditor.getTextViewer().getSelectedRange();
 
 		IDocument document = sourceEditor.getTextViewer().getDocument();
 
+		List<Node> focusNodes = new ArrayList<Node>();
 		IStructuredModel model = null;
 		try {
 			// gets source model for read, model should be released see
@@ -240,11 +272,8 @@ public class SelectionUtil {
 			
 			//fix for JBIDE-3805, mareshkau			
 			if(model == null) {
-				return null;
+				return Collections.emptyList();
 			}
-
-			int anchor = range.x;
-			int focus = range.x + range.y;
 
 			/*
 			 * implementation of IDOMModel's method getIndexedRegion(...) has
@@ -255,31 +284,26 @@ public class SelectionUtil {
 			 * getIndexedRegion() return "h:outputText" element. So for focus
 			 * position we choose smaller value
 			 */
-			Node focusNode = null;
-			if (anchor < focus) {
-				int tmp = focus;
-				focus = anchor;
-				anchor = tmp;
-			}
-			if (anchor == focus) {
-				// get source node by offset
-				// see JBIDE-3163
-				focusNode = getSourceNodeByPosition(model, focus);
+			int selectionStart = Math.min(range.x, range.x + range.y);
+			if (range.y == 0) {
+				/* if selection length is 0 (text cursor only), than use
+				 * custom implementation to determine node. See JBIDE-3163. */
+				Node focusNode = getSourceNodeByPosition(model, selectionStart);
+				if (focusNode != null) {
+					focusNodes.add(focusNode);
+				}
 			} else {
 				// fixed JBIDE-3388: Incorrect selection after Copy/Cut actions
-				IndexedRegion node = model.getIndexedRegion(focus);
-				if (node != null) {
-					focusNode = (Node) node;
+				ISelection selection = sourceEditor.getSelectionProvider().getSelection();
+				if (selection instanceof IStructuredSelection) {
+					Iterator iterator = ((IStructuredSelection) selection).iterator();
+					while (iterator.hasNext()) {
+						Object selectionElement = iterator.next();
+						if (selectionElement instanceof Node) {
+							focusNodes.add((Node) selectionElement);
+						}
+					}
 				}
-			}
-
-			// if focus node also contains anchor point (selected only 1
-			// element)
-			if (focusNode != null) {
-				// if (NodesManagingUtil.isNodeContainsPosition(focusNode,
-				// anchor)) {
-				return VpeNodesManagingUtil.getNodeMapping(domMapping, focusNode);
-				// }
 			}
 		} finally {
 			if (model != null) {
@@ -287,7 +311,7 @@ public class SelectionUtil {
 			}
 		}
 
-		return null;
+		return focusNodes;
 	}
 
 	public static Node getNodeBySourcePosition(

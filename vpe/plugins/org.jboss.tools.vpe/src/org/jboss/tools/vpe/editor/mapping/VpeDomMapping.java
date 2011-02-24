@@ -19,6 +19,7 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
+import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -125,20 +126,12 @@ public class VpeDomMapping {
 	public VpeNodeMapping getNearNodeMappingAtSourceNode(Node sourceNode) {
 		VpeNodeMapping nodeMapping = getNodeMappingAtSourceNode(sourceNode);
 		
-		if(nodeMapping!=null){
-			
-			if(sourceNode!=null && nodeMapping != null) {			
-				
-				nsIDOMNode nearVisualNode = nodeMapping.getVisualNode();
-				if(nearVisualNode instanceof nsIDOMElement){	
-					
-					nsIDOMElement visualElement = (nsIDOMElement) nearVisualNode;
-					visualElement.removeAttribute(XulRunnerEditor.VPE_INVISIBLE_ELEMENT);
-				}
-			}
-		}
 		while (sourceNode != null && nodeMapping == null) {
-			sourceNode = sourceNode.getParentNode();
+			if (sourceNode instanceof Attr) {
+				sourceNode = ((Attr) sourceNode).getOwnerElement();
+			} else {
+				sourceNode = sourceNode.getParentNode();
+			}
 			nodeMapping = getNodeMappingAtSourceNode(sourceNode);
 			
 			if(sourceNode!=null && nodeMapping != null) {			
@@ -150,6 +143,15 @@ public class VpeDomMapping {
 				}
 			}
 		}
+
+		if(sourceNode!=null && nodeMapping != null) {			
+			nsIDOMNode nearVisualNode = nodeMapping.getVisualNode();
+			if(nearVisualNode instanceof nsIDOMElement){			
+				nsIDOMElement visualElement = (nsIDOMElement) nearVisualNode;
+				visualElement.removeAttribute(XulRunnerEditor.VPE_INVISIBLE_ELEMENT);
+			}
+		}
+
 		return nodeMapping;
 	}
 
