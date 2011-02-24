@@ -47,8 +47,16 @@ public class CreateRSEFromInstanceJob extends AbstractInstanceJob {
 	}
 	
 	private IStatus runRSEJob(DeltaCloudInstance instance, IProgressMonitor monitor) {
+		if (monitor.isCanceled()) {
+			return Status.CANCEL_STATUS;
+		}
+		
 		String hostname = RSEUtils.createHostName(instance);
-		if (hostname != null && hostname.length() > 0 && isAutoconnect()) {
+		if (hostname == null || hostname.length() <= 0) {
+			return Status.CANCEL_STATUS;
+		}
+		
+		if (isAutoconnect()) {
 			try {
 				monitor.beginTask("Create RSE Server", 100);
 				String connectionName = RSEUtils.createConnectionName(instance);
