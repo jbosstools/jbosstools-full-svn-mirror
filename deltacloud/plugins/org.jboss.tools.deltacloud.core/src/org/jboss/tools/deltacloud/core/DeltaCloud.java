@@ -36,7 +36,7 @@ import org.jboss.tools.internal.deltacloud.core.observable.ObservablePojo;
  * @author André Dietisheim
  */
 public class DeltaCloud extends ObservablePojo {
-
+	private static final int WAIT_FOR_STATE_DELAY = 4000;
 	public static final String PROP_INSTANCES = "instances";
 	public static final String PROP_INSTANCES_REMOVED = "instancesRemoved";
 	public static final String PROP_IMAGES = "images";
@@ -315,12 +315,12 @@ public class DeltaCloud extends ObservablePojo {
 		DeltaCloudInstance instance = getInstancesRepository().getById(instanceId);
 		if (instance != null) {
 			while (!pm.isCanceled()) {
+				Thread.sleep(WAIT_FOR_STATE_DELAY);
+	 	 	 	instance = refreshInstance(instance);
 				if (stateMatcher.matchesState(instance, instance.getState())
 						|| instance.getState().equals(DeltaCloudInstance.State.TERMINATED)) {
 					return instance;
 				}
-				Thread.sleep(400);
-				instance = refreshInstance(instance);
 			}
 		}
 		return instance;
@@ -478,7 +478,7 @@ public class DeltaCloud extends ObservablePojo {
 			return deltaCloudInstance;
 		} catch (DeltaCloudClientException e) {
 			// TODO : internationalize strings
-			throw new DeltaCloudException(MessageFormat.format("Coud not refresh instance \"{0}\"",
+			throw new DeltaCloudException(MessageFormat.format("Could not refresh instance \"{0}\"",
 					deltaCloudInstance.getId()), e);
 		}
 	}
