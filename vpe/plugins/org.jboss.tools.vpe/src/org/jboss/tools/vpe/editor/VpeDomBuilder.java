@@ -47,7 +47,14 @@ public class VpeDomBuilder {
 		
 		domMapping.mapNodes(nodeMapping);
 		Node sourceNode = nodeMapping.getSourceNode();
-		if (((INodeNotifier) sourceNode).getExistingAdapter(sorceAdapter) == null) {
+		
+		
+		/* yradtsevich:
+		 * checking for ((INodeNotifier) sourceNode).getExistingAdapter(sorceAdapter) == null
+ 		 * is not used because of JBIDE-8049 (JBIDE-8051)
+ 		 * (PDT implementation of getExistingAdapter(Object type) works
+ 		 * incorrectly with non Class parameters) */
+		if (!sourceNodes.contains(sourceNode)) {
 			((INodeNotifier) sourceNode).addAdapter(sorceAdapter);
 			sourceNodes.add(sourceNode);
 		}
