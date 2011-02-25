@@ -11,6 +11,8 @@
 package org.eclipse.bpel.ui.commands;
 
 import org.eclipse.bpel.model.Activity;
+import org.eclipse.bpel.model.OpaqueActivity;
+import org.eclipse.bpel.model.Process;
 import org.eclipse.bpel.model.util.BPELUtils;
 import org.eclipse.bpel.model.util.ReconciliationHelper;
 import org.eclipse.bpel.ui.Messages;
@@ -20,7 +22,9 @@ import org.eclipse.bpel.ui.commands.util.AutoUndoCommand;
 import org.eclipse.bpel.ui.util.BPELUtil;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.ui.PlatformUI;
 import org.w3c.dom.Node;
 
 
@@ -64,6 +68,22 @@ public class InsertInContainerCommand extends AutoUndoCommand {
 	@Override
 	public boolean canDoExecute() {
 		IContainer container = BPELUtil.adapt(parent, IContainer.class);
+		
+		// https://issues.jboss.org/browse/JBIDE-8068
+		// Adding an opaque activity will make the process abstract!
+		// Make sure this is what the user had intended.
+		if (child instanceof OpaqueActivity) {
+			Process process = BPELUtils.getProcess(parent);
+			if ( !BPELUtils.isAbstractProcess(process) ) {
+				if (!MessageDialog.openQuestion(PlatformUI.getWorkbench()
+						.getActiveWorkbenchWindow().getShell(),
+						Messages.Make_Process_Abstract_Title,
+						Messages.Make_Process_Abstract_Message)) {
+					return false;
+				}
+			}
+		}
+		
 		return container.canAddObject(parent, child, before);
 	}
 

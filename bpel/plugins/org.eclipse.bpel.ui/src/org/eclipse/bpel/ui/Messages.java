@@ -690,6 +690,9 @@ public final class Messages extends NLS {
 	public static String Editor_load_error;
 	public static String Editor_design_page_error;
 	
+	public static String Make_Process_Abstract_Title;
+	public static String Make_Process_Abstract_Message;
+	
 	static {
 		
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
