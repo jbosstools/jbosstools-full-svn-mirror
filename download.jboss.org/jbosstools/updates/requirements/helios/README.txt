@@ -11,4 +11,4 @@ $ rsync -aP --delete nickb@build.eclipse.org:~/downloads/releases/helios/* /qa/s
 
 3. rsync reports.qa to download.jboss.org:
  
-$ rsync -aP --delete /qa/services/http/binaries/RHDS/updates/requirements/helios/* jbossqa@filemgmt.jboss.org:/htdocs/jbosstools/updates/requirements/helios/
+$ rsync -aP --delete /qa/services/http/binaries/RHDS/updates/requirements/helios/* tools@filemgmt.jboss.org:/downloads_htdocs/tools/updates/requirements/helios/
