@@ -431,7 +431,7 @@
 				</repository>
 				<repository>
 					<id>eclipse36</id>
-					<url>http://download.eclipse.org/eclipse/updates/3.6.x/
+					<url>http://download.eclipse.org/eclipse/updates/3.6/
 					</url>
 					<layout>p2</layout>
 					<snapshots>
