@@ -12,11 +12,11 @@
 package org.jboss.tools.modeshape.rest.wizards;
 
 import static org.jboss.tools.modeshape.rest.IUiConstants.BLANK_IMAGE;
-import static org.jboss.tools.modeshape.rest.IUiConstants.SERVER_DIALOG_HELP_CONTEXT;
+import static org.jboss.tools.modeshape.rest.IUiConstants.HelpContexts.SERVER_DIALOG_HELP_CONTEXT;
+
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.BusyIndicator;
@@ -313,7 +313,6 @@ public final class ServerPage extends WizardPage {
         StyledText st = new StyledText(pnl, SWT.READ_ONLY | SWT.MULTI | SWT.NO_FOCUS | SWT.WRAP);
         st.setText(RestClientI18n.serverPageUrlTemplateLabel.text());
         st.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
-        st.setFont(JFaceResources.getTextFont());
         st.setCaret(null);
         GridData gd = new GridData(SWT.FILL, SWT.CENTER, true, true);
         gd.grabExcessVerticalSpace = false;
@@ -466,9 +465,8 @@ public final class ServerPage extends WizardPage {
         // get the current status
         validate();
 
-        // update OK/Finish button and test button enablement
+        // update OK/Finish button
         setPageComplete(!this.status.isError());
-        this.btnTestConnection.setEnabled(isPageComplete());
 
         // update message
         if (this.status.isError()) {
@@ -489,6 +487,14 @@ public final class ServerPage extends WizardPage {
      */
     private void validate() {
         this.status = Utils.isServerValid(this.url, this.user, this.password);
+
+        // only enable test connection if URL is valid
+        if (this.status.isError()) {
+            this.btnTestConnection.setEnabled(false);
+        } else {
+            this.btnTestConnection.setEnabled(true);
+            return;
+        }
 
         // now check to see if a server is already registered
         if (this.status.isOk()) {
