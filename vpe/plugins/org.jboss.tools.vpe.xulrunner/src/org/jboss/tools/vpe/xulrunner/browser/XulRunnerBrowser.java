@@ -75,26 +75,31 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 	public static final long NS_ERROR_FAILURE = 0x80004005L;
 	private static final String XULRUNNER_ENTRY = "/xulrunner"; //$NON-NLS-1$
 
-	public static final Set<String> OFFICIALLY_SUPPORTED_PLATFORM_IDS = new HashSet<String>();
+	private static final Set<String> OFFICIALLY_SUPPORTED_PLATFORM_IDS = new HashSet<String>();
 	static {
 		Collections.addAll(OFFICIALLY_SUPPORTED_PLATFORM_IDS,
-				"carbon.macosx",    //$NON-NLS-1$
-				"cocoa.macosx",     //$NON-NLS-1$
+				"carbon.macosx.õ86",    //$NON-NLS-1$
+				"cocoa.macosx.x86",     //$NON-NLS-1$
 				"gtk.linux.x86",    //$NON-NLS-1$
 				"gtk.linux.x86_64", //$NON-NLS-1$
 				"win32.win32.x86"); //$NON-NLS-1$
 	}
-	public static final String CURRENT_PLATFORM_ID;
+	public static final String CURRENT_PLATFORM_ID = Platform.getWS() + '.'
+			+ Platform.getOS() + '.' + Platform.getOSArch();
+	
 	private static final Mozilla mozilla;
 	static {
 		StringBuffer buff = new StringBuffer();
-		buff.append(Platform.getWS())
-			.append('.').append(Platform.getOS());
+		buff.append("org.mozilla.xulrunner.") //$NON-NLS-1$
+			.append(Platform.getWS()).append('.')
+			.append(Platform.getOS());
+		
+		/* XULRunner bundle names do not have
+		 * '.x86' postfix for Mac OS X.	 */
 		if(! Platform.OS_MACOSX.equals(Platform.getOS())) {
 			buff.append('.').append(Platform.getOSArch());
 		}
-		CURRENT_PLATFORM_ID = buff.toString();
-		XULRUNNER_BUNDLE = "org.mozilla.xulrunner." + CURRENT_PLATFORM_ID; //$NON-NLS-1$
+		XULRUNNER_BUNDLE =  buff.toString();
 		mozilla = Mozilla.getInstance();
 	}
 
@@ -475,7 +480,7 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 	
 	/**
 	 * Return {@code true} if and only if the current
-	 * platform is officially supported in JBoss Tools.
+	 * platform is officially supported by the Visual Page Editor.
 	 * But {@code false} does not necessary mean that XULRunner
 	 * cannot be run on the system.
 	 * 
