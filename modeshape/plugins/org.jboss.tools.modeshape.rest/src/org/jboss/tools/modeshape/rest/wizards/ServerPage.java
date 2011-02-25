@@ -12,7 +12,7 @@
 package org.jboss.tools.modeshape.rest.wizards;
 
 import static org.jboss.tools.modeshape.rest.IUiConstants.BLANK_IMAGE;
-import static org.jboss.tools.modeshape.rest.IUiConstants.HelpContexts.SERVER_DIALOG_HELP_CONTEXT;
+import static org.jboss.tools.modeshape.rest.IUiConstants.SERVER_DIALOG_HELP_CONTEXT;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IMessageProvider;
