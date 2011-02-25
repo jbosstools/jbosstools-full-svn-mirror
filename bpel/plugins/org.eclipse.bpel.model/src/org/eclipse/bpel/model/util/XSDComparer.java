@@ -351,7 +351,9 @@ public class XSDComparer {
 			type = type.getBaseType();
 		}
 		while (!names.isEmpty()) {
-			if (s.isEmpty())
+			// https://issues.jboss.org/browse/JBIDE-8345
+			// remove dependency on Java 1.6
+			if ("".equals(s))
 				s = names.pop();
 			else
 				s = s + ":" + names.pop();
@@ -369,8 +371,10 @@ public class XSDComparer {
 			return false;
 		}
 		if (name1.equals(name2)) {
-			if (elem1.getTargetNamespace() == null || elem1.getTargetNamespace().isEmpty()
-					&& elem2.getTargetNamespace() == null || elem2.getTargetNamespace().isEmpty())
+			// https://issues.jboss.org/browse/JBIDE-8345
+			// remove dependency on Java 1.6
+			if (elem1.getTargetNamespace() == null || "".equals(elem1.getTargetNamespace())
+					&& elem2.getTargetNamespace() == null || "".equals(elem2.getTargetNamespace()))
 				return true;
 
 			if (elem1.getTargetNamespace().equals(elem2.getTargetNamespace()))
@@ -447,7 +451,9 @@ public class XSDComparer {
 	public int getMinOccurs(XSDTerm term) {
 		String smin = term.getElement().getAttribute("minOccurs");
 		int min = 1;
-		if (smin!=null && !smin.isEmpty()) {
+		// https://issues.jboss.org/browse/JBIDE-8345
+		// remove dependency on Java 1.6
+		if (smin!=null && !"".equals(smin)) {
 			try {
 				min = Integer.parseInt(smin);
 			} catch (NumberFormatException e) {
@@ -465,7 +471,9 @@ public class XSDComparer {
 	public int getMaxOccurs(XSDTerm term) {
 		String smax = term.getElement().getAttribute("maxOccurs");
 		int max = 1;
-		if (smax!=null && !smax.isEmpty()) {
+		// https://issues.jboss.org/browse/JBIDE-8345
+		// remove dependency on Java 1.6
+		if (smax!=null && !"".equals(smax)) {
 			try {
 				max = Integer.parseInt(smax);
 			} catch (NumberFormatException e) {

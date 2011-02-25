@@ -227,7 +227,9 @@ public class ElementPlacer {
 					boolean textNodeIsWhitespaceOnly = false;
 					if (nextInnerChild instanceof Text) {
 						String content = ((Text)nextInnerChild).getData();
-						textNodeIsWhitespaceOnly = (content==null || content.trim().isEmpty());
+						// https://issues.jboss.org/browse/JBIDE-8345
+						// remove dependency on Java 1.6
+						textNodeIsWhitespaceOnly = (content==null || "".equals(content.trim()));
 					}
 					if (textNodeIsWhitespaceOnly) {
 						// remove an old indentation
