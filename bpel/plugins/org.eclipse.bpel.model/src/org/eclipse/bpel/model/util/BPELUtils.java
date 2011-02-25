@@ -50,6 +50,7 @@ import org.eclipse.bpel.model.proxy.MessageProxy;
 import org.eclipse.bpel.model.proxy.OperationProxy;
 import org.eclipse.bpel.model.proxy.PortTypeProxy;
 import org.eclipse.bpel.model.reordering.IExtensibilityElementListHandler;
+import org.eclipse.bpel.model.resource.BPELReader;
 import org.eclipse.bpel.model.resource.BPELResource;
 import org.eclipse.bpel.model.resource.BPELResourceSetImpl;
 import org.eclipse.bpel.names.NCNameWordDetector;
@@ -1010,5 +1011,12 @@ public class BPELUtils {
 		}
 
 	} // copyInto(Node,Node)
-
+	
+	// https://issues.jboss.org/browse/JBIDE-8068
+	public static boolean isAbstractProcess(Process process)
+	{
+		Map<String,String>m = BPELUtils.getAllNamespacesForContext(process);
+		boolean result = m.containsValue(BPELConstants.NAMESPACE_ABSTRACT_2007);
+		return result;
+	}
 }
