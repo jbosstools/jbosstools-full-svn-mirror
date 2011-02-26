@@ -11,7 +11,7 @@
 </properties>
 <children size='4'>
 <child location='http://download.jboss.org/jbosstools/updates/requirements/indigo/'/>
-<child location='http://download.jboss.org/jbosstools/updates/requirements/orbit/S20100831105311/'/>
+<child location='http://download.jboss.org/jbosstools/updates/requirements/orbit/S20110124210048/'/>
 <child location='http://download.jboss.org/jbosstools/updates/requirements/gwt/201012211742/'/>
 <child location='http://download.eclipse.org//birt/update-site/4.0-interim/'/>
 </children>
