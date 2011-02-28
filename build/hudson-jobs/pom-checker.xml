@@ -44,13 +44,20 @@ To run, make sure that JAVA_HOME is set to the path where you imported the cert,
 	$ export JAVA_HOME=/opt/sun-java2-6.0/; mvn clean install
 -->
 					<!-- more output w/ verbose; default false -->
-					<verbose>true</verbose>
+					<verbose>false</verbose>
 
 					<!-- server and connection details -->
 					<!-- <hudsonURL>https://hudson.qa.jboss.com/hudson/</hudsonURL> -->
 					<hudsonURL>http://localhost:8080/</hudsonURL>
 					<username>SET USERNAME HERE</username>
 					<password>SET PASSWORD HERE</password>
+
+                                        <!-- to select a subset of jobs, use these filters; default none (all jobs on server!) -->
+                                        <viewFilter>view/DevStudio_Stable_Branch/</viewFilter>
+
+                                        <!-- default .* to select all -->
+                                        <regexFilter>.*</regexFilter>
+
 				</configuration>
 			</plugin>
 		</plugins>
