@@ -6,7 +6,7 @@
 			<keyword>Drools Tools</keyword>
 		</keywordset>
 	</chapterinfo>
-
+	
 	<title>Editors</title>
 	<section id="dsl_editor">
 		<title>DSL Editor</title>
@@ -14,7 +14,11 @@
 			A domain-specific language is a set of custom rules, that is created specifically to solve problems in a particular domain and is not intended to be able to solve problems outside it. A DSL's configuration is stored in plain text. 
     </para>
 		<para>
-			In Drools this configuration is presented by <filename>.dsl</filename> files that can be created selecting <menuchoice><guimenuitem>New</guimenuitem><guimenuitem>Other</guimenuitem><guimenuitem>Drools</guimenuitem><guimenuitem>Domain Specific Language</guimenuitem></menuchoice> from the projects context menu.
+			In Drools this configuration is presented by <filename>.dsl</filename> files that can be created selecting <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>New</guimenuitem>
+				<guimenuitem>Other</guimenuitem>
+				<guimenuitem>Drools</guimenuitem>
+				<guimenuitem>Domain Specific Language</guimenuitem>
+			</menuchoice> from the projects context menu.
 		</para>
 		<para>DSL Editor is a default editor for <filename>.dsl</filename> files:</para>
 		<figure>
@@ -26,12 +30,12 @@
 			</mediaobject>
 		</figure>
 		<para>In the table below all the components of the DSL Editor page are described:</para>
-		<table>
+		<table id="dsl_editor_components">
 			<title>DSL Editor Components.</title>
 			<tgroup cols="2">
 				<colspec colnum="1" align="left" colwidth="1*"/>
 				<colspec colnum="2" align="left" colwidth="3*"/>
-
+				
 				<thead>
 					<row>
 						<entry>Components</entry>
@@ -46,8 +50,9 @@
 					<row>
 						<entry>Table of language message mappings</entry>
 						<entry>The table is divided into 4 rows:
-                        <itemizedlist id="rows">
-                            <listitem><para><emphasis>Language Expression</emphasis>: expression you want to use as a rule</para>
+             	<itemizedlist id="rows">
+               	<listitem>
+               		<para><emphasis>Language Expression</emphasis>: expression you want to use as a rule</para>
 								</listitem>
 								<listitem>
 									<para>
@@ -71,7 +76,7 @@
 						<entry>Expression</entry>
 						<entry>Shows the language expression of the selected table line (language message mapping).</entry>
 					</row>
-
+					
 					<row>
 						<entry>Mapping</entry>
 						<entry>Shows the rule of language mapping for the selected table line (language message mapping).</entry>
@@ -80,9 +85,9 @@
 						<entry>Object</entry>
 						<entry>Shows the object for the selected table line (language message mapping)</entry>
 					</row>
-
-					<row>
-						<entry id="sort">Sort By</entry>
+					
+					<row id="sort" title="DSL Editor Components - Sort By">
+						<entry>Sort By</entry>
 						<entry>
 							Using this option you can change the sorting order of the language message mappings. To do this select from the drop down list the method of sorting you want and click the <guibutton>Sort</guibutton> button.
 						</entry>
@@ -107,7 +112,7 @@
 								</listitem>
 								<listitem>
 									<para>
-										<emphasis>Sort</emphasis>: please, for more information see the <xref linkend="sort"/> section.
+										<emphasis>Sort</emphasis>: please, for more information see the <emphasis>Sort By</emphasis> row above.
 									</para>
 								</listitem>
 								<listitem>
@@ -127,7 +132,7 @@
 				This wizard can be opened by double clicking some line in the table of language message mappings or by clicking the <guibutton>Edit</guibutton> button.
 			</para>
 			<para>On the picture below you can see all the options the Edit Language Mapping Wizard will allow you to change.</para>
-			<para>Their names as well as the meaning of the options are correspond to the rows of the table (see <xref linkend="rows"/>).</para>
+			<para>Their names as well as the meaning of the options are correspond to the rows of the table (see the <emphasis>Table of language message mappings</emphasis> row in <xref linkend="dsl_editor_components"/>).</para>
 			<figure>
 				<title>Edit language mapping Wizard</title>
 				<mediaobject>
@@ -160,7 +165,10 @@
 			Drools tools also provides the ability to define the order in which rules should be executed. The Ruleflow file allows you to specify the order in which rule sets should be evaluated using a flow chart. This allows you to define which rule sets should be evaluated in sequence or in parallel as well as specify the conditions under which rule sets should be evaluated.
 		</para>
 		<para>
-			Ruleflows can be set only by using the graphical flow editor which is part of the Drools plugin for Eclipse. Once you have set up a Drools project,you can start adding ruleflows. Add a ruleflow file(.rf) by clicking on the project and selecting <menuchoice><guimenuitem>New</guimenuitem><guimenuitem>Other...</guimenuitem><guimenuitem>Flow File</guimenuitem></menuchoice>:
+			Ruleflows can be set only by using the graphical flow editor which is part of the Drools plugin for Eclipse. Once you have set up a Drools project,you can start adding ruleflows. Add a ruleflow file(.rf) by clicking on the project and selecting <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>New</guimenuitem>
+				<guimenuitem>Other...</guimenuitem>
+				<guimenuitem>Flow File</guimenuitem>
+			</menuchoice>:
 		</para>
 		<figure>
 			<title>RuleFlow file creation</title>
@@ -221,7 +229,7 @@
 					<colspec colnum="1" align="left" colwidth="1*"/>
 					<colspec colnum="2" align="left" colwidth="1*"/>
 					<colspec colnum="3" align="left" colwidth="3*"/>
-
+					
 					<thead>
 						<row>
 							<entry>Component Picture</entry>
@@ -264,14 +272,14 @@
 							<entry>Use this element to join two elements on the canvas</entry>
 						</row>
 					</tbody>
-
+				
 				</tgroup>
 			</table>
 		</section>
-
+		
 		<section>
 			<title>Different types of nodes in Flow Palette</title>
-
+			
 			<para>Currently, ruleflow supports seven types of nodes. In the table below you can find information about them:</para>
 			<table>
 				<title>Flow Palette Components.Part 2.</title>
@@ -279,14 +287,14 @@
 					<colspec colnum="1" align="left" colwidth="1*"/>
 					<colspec colnum="2" align="left" colwidth="1*"/>
 					<colspec colnum="3" align="left" colwidth="3*"/>
-
+					
 					<thead>
 						<row>
 							<entry>Component Picture</entry>
 							<entry>Component Name</entry>
 							<entry>Description</entry>
 						</row>
-
+					
 					</thead>
 					<tbody>
 						<row>
@@ -380,20 +388,20 @@
 								Represents an action that should be executed in this ruleflow. An <property>Script Task</property> node should have one incoming connection and one outgoing connection. It contains the property "action" which specifies the action that should be executed. When a <property>Script Task</property> node is reached in the ruleflow, it will execute the action and continue with the next node. An action should be specified as a piece of (valid) MVEL code.
 							</entry>
 						</row>
-
+					
 					</tbody>
 				</tgroup>
 			</table>
 		</section>
 	</section>
-
+	
 	<section id="textual_rule_editor">
 		<title>The Rule Editor</title>
-
+		
 		<para>
 			The <property>Rule editor</property> works on files that have a <filename>.drl</filename> (or <filename>.rule</filename> in the case of spreading rules across multiple rule files) extension.
 		</para>
-
+		
 		<figure>
 			<title>New Rule</title>
 			<mediaobject>
@@ -402,16 +410,16 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
-
+		
 		<para>The editor follows the pattern of a normal text editor in eclipse, with all the normal features of a text editor:</para>
-
+		
 		<itemizedlist>
 			<listitem>
 				<para>
 					<xref linkend="rules_editor_content_assist"/>
 				</para>
 			</listitem>
-
+			
 			<listitem>
 				<para>
 					<xref linkend="rules_editor_code_folding"/>
@@ -423,23 +431,25 @@
                     <xref linkend="rules_editor_error_reporting"/>
                 </para>
             </listitem>-->
-
+			
 			<listitem>
 				<para>
 					<xref linkend="rules_editor_sync_with_outline"/>
 				</para>
 			</listitem>
 		</itemizedlist>
-
+		
 		<section id="rules_editor_content_assist">
 			<title>Content Assist</title>
-
+			
 			<para>
-				While working in the <property>Rule editor</property> you can get a content assistance the usual way by pressing <keycombo><keycap>Ctrl</keycap><keycap>Space</keycap></keycombo>.
+				While working in the <property>Rule editor</property> you can get a content assistance the usual way by pressing <keycombo><keycap>Ctrl</keycap>
+					<keycap>Space</keycap>
+				</keycombo>.
 			</para>
-
+			
 			<para>Content Assist shows all possible keywords for the current cursor position.</para>
-
+			
 			<figure>
 				<title>Content Assist Demonstration</title>
 				<mediaobject>
@@ -448,9 +458,9 @@
 					</imageobject>
 				</mediaobject>
 			</figure>
-
+			
 			<para>Content Assist inside of the <guilabel>Message</guilabel> suggests all available fields.</para>
-
+			
 			<figure>
 				<title>Content Assist Demonstration</title>
 				<mediaobject>
@@ -459,16 +469,16 @@
 					</imageobject>
 				</mediaobject>
 			</figure>
-
+		
 		</section>
-
+		
 		<section id="rules_editor_code_folding">
 			<title>Code Folding</title>
-
+			
 			<para>
 				Code folding is also available in the <guilabel>Rule editor</guilabel>. To hide and show sections of the file use the icons with minus and plus on the left vertical line of the editor.
 			</para>
-
+			
 			<figure>
 				<title>Code Folding</title>
 				<mediaobject>
@@ -477,21 +487,21 @@
 					</imageobject>
 				</mediaobject>
 			</figure>
-
+		
 		</section>
 
         <!--section id="rules_editor_error_reporting">
             <title>Error Reporting</title>
 
         </section-->
-
+		
 		<section id="rules_editor_sync_with_outline">
 			<title>Synchronization with Outline View</title>
-
+			
 			<para>
 				The <guilabel>Rule editor</guilabel> works in synchronization with the <guilabel>Outline view</guilabel> which shows the structure of the rules, imports in the file and also globals and functions if the file has them.
 			</para>
-
+			
 			<figure>
 				<title>Synchronization with Outline View</title>
 				<mediaobject>
@@ -500,19 +510,19 @@
 					</imageobject>
 				</mediaobject>
 			</figure>
-
+			
 			<para>
 				The view is updated on save. It provides a quick way of navigating around rules by names in a file which may have hundreds of rules. The items are sorted alphabetically by default.
 			</para>
 		</section>
-
+		
 		<section id="rete_view">
 			<title>The Rete Tree View</title>
-
+			
 			<para>
 				The <property>Rete Tree view</property> shows you the current Rete Network for your <filename>.drl</filename> file. Just click on the <guilabel>Rete Tree tab</guilabel> at the bottom of the <guilabel>Rule editor</guilabel>.
 			</para>
-
+			
 			<figure>
 				<title>Rete Tree</title>
 				<mediaobject>
@@ -521,12 +531,12 @@
 					</imageobject>
 				</mediaobject>
 			</figure>
-
+			
 			<para>
 				Afterwards you can generate the current Rete Network visualization. You can push and pull the nodes to arrange your optimal network overview.
 			</para>
 			<para>If you have a large number of nodes, select some of them with a frame. Then you can pull groups of them.</para>
-
+			
 			<figure>
 				<title>Selecting the nodes in the Rete Tree with Frame</title>
 				<mediaobject>
@@ -535,11 +545,11 @@
 					</imageobject>
 				</mediaobject>
 			</figure>
-
+			
 			<para>
 				You can zoom in and out the Rete tree in case not all nodes are shown in the current view. For this use the combo box or <guibutton>+</guibutton> and <guibutton>-</guibutton> icons on the toolbar.
 			</para>
-
+			
 			<figure>
 				<title>Rete Tree Zooming</title>
 				<mediaobject>
@@ -548,17 +558,17 @@
 					</imageobject>
 				</mediaobject>
 			</figure>
-
+			
 			<note>
 				<title>Note:</title>
-
+				
 				<para>The <property>Rete Tree view</property> works only in Drools Rule Projects, where the Drools Builder is set in the project properties.</para>
 			</note>
 			<para>
 				We hope, this guide helped you to get started with the JBoss BPMN Convert module. For additional information you are welcome on <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201">JBoss forum</ulink>.
 			</para>
 		</section>
-
+	
 	</section>
 
 </chapter>

@@ -17,7 +17,7 @@
 		<para>First, we suggest that you use <property>Drools perspective</property> which is aimed at work with Drools specific resources.</para>
 
 		<para>
-			To create a new Drools project select <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>New</guimenuitem><guimenuitem>Drools Project</guimenuitem></menuchoice>. This will open the <guilabel>New Drools Project wizard</guilabel>, as shown in the figure below.
+			To create a new Drools project select <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>New</guimenuitem><guimenuitem>Project...</guimenuitem><guimenuitem>Drools</guimenuitem><guimenuitem>Drools Project</guimenuitem></menuchoice>. This will open the <guilabel>New Drools Project wizard</guilabel>, as shown in the figure below.
 		</para>
 
 		<para>On the first page type the project name and click the <guibutton>Next</guibutton> button.</para>
