@@ -221,7 +221,7 @@ public class NewFileWizardPage1 extends WizardPage {
 		});
 
 		templateDescription = new Text(projectGroup, SWT.READ_ONLY | SWT.WRAP
-				| SWT.SCROLL_LINE);
+				| SWT.SCROLL_LINE | SWT.V_SCROLL);
 		data = new GridData(GridData.FILL_HORIZONTAL);
 		data.widthHint = SIZING_TEXT_FIELD_WIDTH;
 		data.heightHint = 60;
