@@ -37,6 +37,6 @@
 
 		</p2.mirror>
 
-		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/3.2" artifactRepository="file:${destination}/4.0" publishartifacts="true" source="${destination}/4.0" compress="${compress}" />
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/3.2" artifactRepository="file:${destination}/3.2" publishartifacts="true" source="${destination}/3.2" compress="${compress}" />
 	</target>
 </project>
