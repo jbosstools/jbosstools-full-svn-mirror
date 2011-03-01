@@ -197,9 +197,9 @@
                 </figure>                
             </listitem> 
             <listitem>
-                <para>Open the file "<property>HelloWorldArtifacts.wsdl</property>" in the "<property>HelloWorld</property>" project by double-clicking the file. Right-click the WSDL editor and select 
-                    <property>Add Service</property>. A new service should appear in the editor. Name it <property>HelloWorldProcessService</property>. It has the Port 
-                    named <property>NewPort</property>. Select it, right-click on it and rename it to <property>HelloWorldProcessPort</property> in the Properties 
+                <para>Open the file <filename>HelloWorldArtifacts.wsdl</filename> in the <filename>HelloWorld</filename> project by double-clicking the file. Right-click the WSDL editor and select 
+                    <property>Add Service</property>. A new service should appear in the editor. Name it <filename>HelloWorldProcessService</filename>. It has the Port 
+                    named <property>NewPort</property>. Select it, right-click on it and rename it to <filename>HelloWorldProcessPort</filename> in the Properties 
                     view.
                 </para>
                 <figure>
