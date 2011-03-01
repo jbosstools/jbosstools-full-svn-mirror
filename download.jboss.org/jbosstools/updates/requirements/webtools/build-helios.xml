@@ -23,7 +23,7 @@
 
 	-->
 	<target name="mirror">
-		<property name="URL" value="http://download.eclipse.org/webtools/repository/helios/" />
+		<property name="URL" value="http://download.eclipse.org/webtools/downloads/drops/R3.2.3/R-3.2.3-20110217214612/repository/"/>
 		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/webtools/" />
 		<property name="compress" value="true" />
 
