@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <chapter id="detail">
     <title>Creating and editing a BPEL project</title>
-    <para>In the chapter we describe the necessary steps to create a new BPEL project and edit the BPEL files.
+    <para>In the chapter we describe the steps required to create a new BPEL project and to edit the BPEL files.
        Here and further in the guide we will create
         a simple echo example, used to respond to a sent message with a
         modified version of the request message being returned in a response.
@@ -105,7 +105,7 @@
             </para>
         </note>
 
-       <para>Up to now, you have got a simple BPEL process as on the screen below.</para>
+       <para>This will create a simple BPEL process as shown in the image below.</para>
         <figure>
             <title>A simple BPEL Process File</title>
             <mediaobject>
@@ -130,7 +130,7 @@
             </mediaobject>
         </figure>  
         <para>In the <emphasis><property>Palette view</property></emphasis>, you can drag a BPEL element to the BPEL editor and drop it in the place you want.</para>   
-        <para>In the <emphasis><property>Properties view</property></emphasis>, you can get the information about every element of the BPEL process.
+        <para>In the <emphasis><property>Properties view</property></emphasis>, you can view the information on every element of the BPEL process.
             In the BPEL editor select any element  you want,and then
             the element's properties will be shown in the Properties view.The table below describes the tabs of the Properties view: 
         </para>

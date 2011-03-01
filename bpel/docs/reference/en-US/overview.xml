@@ -2,12 +2,12 @@
 <chapter id="overview">
 	<title>JBoss BPEL project Overview</title>
 
-	<para>JBoss BPEL is based on WS-BPEL 2.0 to provide a way to create, edit, validate and deploy BPEL files to JBoss BPEL runtime. It is based on Eclipse <ulink url="http://www.eclipse.org/bpel/">BPEL project</ulink>. </para>
+	<para>JBoss BPEL is based on WS-BPEL 2.0, and provides a way to create, edit, validate and deploy BPEL files to JBoss BPEL runtime. It is based on Eclipse <ulink url="http://www.eclipse.org/bpel/">BPEL project</ulink>. </para>
 
-	<para>It improves the Eclipse BPEL project in the following way: </para>
+	<para>It improves the Eclipse BPEL project in the following ways: </para>
 	<itemizedlist>
 		<listitem>
-			<para> Implements close integration with JBoss BPEL runtime. Adds a new project type for the deployment to JBoss BPEL runtime.</para>
+			<para> Implements close integration with JBoss BPEL runtime, and adds a new project type for the deployment to JBoss BPEL runtime.</para>
 		</listitem>
 		<listitem>
 			<para> Supports two ways of deployment. The first way is to deploy a BPEL project directly to JBoss BPEL runtime. The second way is to deploy BPEL files in JBoss ESB project to JBoss BPEL runtime. </para>
@@ -60,7 +60,7 @@
 							<para>BPEL file editor</para>
 						</entry>
 						<entry>
-							<para>The user can use the editor separately to edit a BPEL file. </para>
+							<para>The editor can be used separately to edit a BPEL file. </para>
 						</entry>
 					</row>
 					<row>
@@ -68,7 +68,7 @@
 							<para>BPEL file validator</para>
 						</entry>
 						<entry>
-							<para>The validator can provide a list of BPEL file errors to the user. </para>
+							<para>The validator provides a list of BPEL file errors to the user. </para>
 						</entry>
 					</row>
 				</tbody>
