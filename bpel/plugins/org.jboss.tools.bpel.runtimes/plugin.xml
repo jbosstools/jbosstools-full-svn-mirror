@@ -26,6 +26,8 @@
             category="org.eclipse.bpel.wizards"
             project="true"
             class="org.jboss.tools.bpel.runtimes.ui.wizards.NewBPELProjectWizard"
+            finalPerspective="org.eclipse.bpel.ui.perspective"
+            preferredPerspectives="org.eclipse.bpel.ui.perspective"
             id="org.jboss.tools.bpel.runtimes.wizards.newBPELProject">
             <description>%NEW_BPEL_PROJECT_DESCRIPTION</description>
       </wizard>
