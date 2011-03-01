@@ -8,7 +8,7 @@
         </para>
         <itemizedlist>
             <listitem>
-                <para>Create the deploy.xml by selecting 
+                <para>Create the <filename>deploy.xml</filename> by selecting dbmenu
                     <emphasis><property>New > Other... > BPEL 2.0 > Apache ODE Deployment Descriptor</property></emphasis>. Click the <property>Next</property> button. 
                 </para>
                 <figure>
@@ -84,7 +84,7 @@
             </listitem>
             <listitem>
                            
-                <para>Click the <property>Next</property> button. On the next page, you should input your <emphasis><property>JBoss As</property></emphasis> location. Then click the <property>Next</property> button and
+                <para>Click the <property>Next</property> button. On the next page, you should input your <emphasis><property>JBoss As</property></emphasis> location, and on the page after that you can specify the server behaviour. Then click the <property>Next</property> button and
                     you will get the page like this: 
                 </para>
                 <figure>

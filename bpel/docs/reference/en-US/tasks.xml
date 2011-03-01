@@ -383,7 +383,7 @@
 						</mediaobject>
 					</figure>
 				</listitem>
-				<listitem>
+				<!--listitem>
 					<para>
 						You should also change some service part configurations. To do this, click part element in the WSDL editor, then put the following data in the Properties view. 
 					</para>
@@ -395,7 +395,7 @@
 							</imageobject>
 						</mediaobject>
 					</figure>
-				</listitem>
+				</listitem-->
 			</itemizedlist>
 
 			<para>Now you have finished creating a simple BPEL process. As a next step, you can deploy the BPEL project to JBoss BPEL Runtime.</para>
