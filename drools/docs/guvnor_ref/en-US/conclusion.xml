@@ -30,19 +30,13 @@
 
 			<listitem>
 				<para>
-					<ulink url="http://www.jboss.org/tools/">JBoss Tools Home Page</ulink>
+					<ulink url="http://www.jboss.com/products/devstudio/">JBoss Developer Studio Home Page</ulink>
 				</para>
 			</listitem>
 
 			<listitem>
 				<para>
-					<ulink url="http://download.jboss.org/jbosstools/nightly-docs/">The latest JBossTools/JBDS documentation builds</ulink>
-				</para>
-			</listitem>
-
-			<listitem>
-				<para>
-					<ulink url="http://docs.jboss.org/tools/">JBossTools/JBDS release documentation</ulink>
+					<ulink url="http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/index.html">JBDS release documentation</ulink>
 				</para>
 			</listitem>
 		</itemizedlist>

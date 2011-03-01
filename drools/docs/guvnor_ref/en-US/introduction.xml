@@ -38,7 +38,7 @@
 							<para>Guvnor Repositories View</para>
 						</entry>
 						<entry>
-							<para>The purpose of the view is to enable access to Guvnor repository resources in a standard tree format</para>
+							<para>The purpose of this view is to enable access to Guvnor repository resources in a standard tree format</para>
 						</entry>
 						<entry>
 							<xref linkend="guvnor_repositories_view"/>
@@ -50,7 +50,7 @@
 							<para>Guvnor Connection Wizard</para>
 						</entry>
 						<entry>
-							<para>The wizard helps to create a connection to a Guvnor repository.</para>
+							<para>This wizard helps to create a connection to a Guvnor repository.</para>
 						</entry>
 						<entry>
 							<xref linkend="connection_wizard"/>
@@ -74,7 +74,7 @@
 							<para>Resource from Guvnor wizard</para>
 						</entry>
 						<entry>
-							<para>The wizard helps to get local copies of Guvnor repository resources.</para>
+							<para>This wizard helps to get local copies of Guvnor repository resources.</para>
 						</entry>
 						<entry>
 							<xref linkend="resources_from_guvnor"/>
@@ -102,7 +102,7 @@
 	<section id="what_is_guvnor_tools">
 		<title>What is Guvnor Tools?</title>
 		<para>
-			The <property>Guvnor repository</property> is not intended as a Source Code Management (SCM) solution, and the <property>EGT</property> is not intended to be an Eclipse “team provider” extension or replacement. Rather, the Guvnor repository is a location where certain artifacts (such as rules and SOA policy definitions) are controlled (“governed”) by policies defined by the deployment environment. The purpose of the <property>EGT</property> is then to enable access to resources held by the Guvnor repository, so they can be used in development. Thus, limited capabilities for reading, writing, adding, and removing Guvnor repository resources are provided in the <property>EGT</property>.
+			The <property>Guvnor repository</property> is not intended to be a Source Code Management (SCM) solution, and the <property>EGT</property> is not intended to be an Eclipse “team provider” extension or replacement. Rather, the Guvnor repository is a location where certain artifacts (such as rules and SOA policy definitions) are controlled (“governed”) by policies defined by the deployment environment. The purpose of the <property>EGT</property> is then to enable access to resources held by the Guvnor repository, so they can be used in development. Thus, limited capabilities for reading, writing, adding, and removing Guvnor repository resources are provided in the <property>EGT</property>.
 		</para>
 	</section>
 	<section id="how_to_start">
@@ -115,7 +115,8 @@
 		<itemizedlist>
 			<listitem>
 				<para>
-					Eclipse IDE with installed JBoss Tools plugins. How to install JBoss Tools onto Eclipse you can find in the JBoss Tools Installation section.
+					<!--Eclipse IDE with installed JBoss Tools plugins. How to install JBoss Tools onto Eclipse you can find in the JBoss Tools Installation section.-->
+					JBoss Developer Studio, which can be downloaded through the <ulink url="https://access.redhat.com">RedHat customer portal</ulink>.
 				</para>
 			</listitem>
 
@@ -127,30 +128,28 @@
 			To deploy JBoss Server with the Guvnor repository, you should download <ulink url="http://www.jboss.org/drools/downloads.html">Drools Guvnor</ulink>. When downloading you may choose either web based Guvnor to deploy to your JBoss Server or Standalone Guvnor with JBoss AS.
 		</para>
 		<para>
-			If you use JBoss AS 5 and <property>Guvnor Tools</property> doesn't work when deployed to the server, you should do the following to get Guvnor Tools running:
+			If you use JBoss AS 5 and <property>Guvnor Tools</property> doesn't work when deployed to the server, you should perform the following steps to get Guvnor Tools running:
 		</para>
 		<orderedlist>
 			<listitem>
 				<para>
-					Remove the  JBoss Security libraries (authorization-spi-2.0.2.CR6.jar, identity-*, acl-spi-2.0.2.CR6.jar) from drools WAR file (not the app server itself). The JBoss Security libraries are provided in AS 5.
+					Remove the  JBoss Security libraries (<filename>authorization-spi-2.0.2.CR6.jar</filename>, <filename>identity-*</filename>, <filename>acl-spi-2.0.2.CR6.jar</filename>) from drools WAR file (not the app server itself). The JBoss Security libraries are provided in AS 5.
 				</para>
 			</listitem>
 			<listitem>
-				<para>Remove the JAXP libraries (xercesImpl-2.8.0.jar, xml-apis-2.*)</para>
+				<para>Remove the JAXP libraries (<filename>xercesImpl-2.8.0.jar</filename>, <filename>xml-apis-2.*</filename>)</para>
 			</listitem>
 			<listitem>
-				<para>Remove the EL libraries (el-*)</para>
+				<para>Remove the EL libraries (<filename>el-*</filename>)</para>
 			</listitem>
 		</orderedlist>
 		<para>
-			After this, Guvnor should operate as normal. During deployment, you would see the following exception in the log which indicates that the experimental JBoss Security based ACL integration has defined some EJB3/JPA stuff in guvnor that has not been configured.
+			When these steps have been performed, Guvnor should operate as normal. During deployment, you would see the following exception in the log which indicates that the experimental JBoss Security based ACL integration has defined some EJB3/JPA features in guvnor that have not been configured.
 		</para>
 		<programlisting>ERROR [AbstractKernelController] Error installing to Start: name=persistence.unit:unitName=#ACL state=Create
 java.lang.RuntimeException: Specification violation [EJB3 JPA 6.2.1.2] - You have not defined a non-jta-data-source 
 for a RESOURCE_LOCAL enabled persistence context named: ACL            
     </programlisting>
-		<para>
-			Now refer to the <xref linkend="functionality_overview"/> section to find out what you can do with Guvnor and Eclipse synchronization tool.</para>
 	</section>
 
 </chapter>
