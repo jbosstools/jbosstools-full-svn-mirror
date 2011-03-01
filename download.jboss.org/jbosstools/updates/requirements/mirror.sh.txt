@@ -1,0 +1,22 @@
+#!/bin/bash
+TMP=`mktemp -d`
+destfolder=`pwd`
+scriptname=${destfolder}/build.xml
+
+if [[ $# -lt 1 ]]; then
+	echo "Usage: $0 <scriptname> <destfolder>"
+	echo "Usage: $0 - (to use defaults of build.xml and .)"
+	exit
+else
+	if [[ $1 != "-" ]]; then
+		if [[ $1 ]]; then scriptname=$1; fi
+		if [[ $2 ]]; then destfolder=$2; fi
+	fi
+fi
+export JAVA_HOME=/opt/jdk1.6.0
+${JAVA_HOME}/bin/java -cp ~/eclipse/plugins/org.eclipse.equinox.launcher_*.jar org.eclipse.equinox.launcher.Main -vm ${JAVA_HOME} -consoleLog -nosplash -data $TMP -application org.eclipse.ant.core.antRunner -f $scriptname -Ddestination=$destfolder
+
+# cleanup
+if [[ $? -eq 0 ]]; then
+	rm -fr $TMP
+fi
