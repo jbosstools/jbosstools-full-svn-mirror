@@ -7,8 +7,9 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 	<name>org.jboss.tools.deltacloud.plugins</name>
 	<packaging>pom</packaging>
 	<modules>
+                <module>org.jboss.tools.deltacloud.client</module>
+               	<module>org.jboss.tools.deltacloud.core</module>
 		<module>org.jboss.tools.deltacloud.ui</module>
-		<module>org.jboss.tools.deltacloud.core</module>
 		<module>org.jboss.tools.deltacloud.integration</module>
 		<module>org.jboss.tools.deltacloud.docs</module>
 	</modules>
