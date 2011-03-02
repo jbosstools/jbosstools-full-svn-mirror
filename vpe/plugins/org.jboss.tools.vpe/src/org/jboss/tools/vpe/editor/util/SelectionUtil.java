@@ -252,7 +252,6 @@ public class SelectionUtil {
 				nodeMappings.add(nodeMapping);
 			}
 		}
-		
 		return nodeMappings;
 	}
 	
@@ -344,9 +343,14 @@ public class SelectionUtil {
 	 *            VpePageContext object
 	 * @return nsIDOMNode the last selected node
 	 */
-	public static nsIDOMNode getLastSelectedNode(VpePageContext pageContext) {
-		return pageContext.getVisualBuilder().getXulRunnerEditor()
-				.getLastSelectedNode();
+	public static nsIDOMNode getSelectedNode(VpePageContext pageContext) {
+		nsIDOMNode domNode=null;
+		List<nsIDOMNode> selectedNodes = pageContext.getVisualBuilder().getXulRunnerEditor()
+		.getLastSelectedNodes();
+		if(selectedNodes!=null&&selectedNodes.size()>0){
+			domNode=selectedNodes.get(0);
+		}
+		return domNode;
 	}
 
 	/**

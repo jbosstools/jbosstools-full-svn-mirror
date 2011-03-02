@@ -169,7 +169,7 @@ public class KeyEventManager implements IKeyEventHandler {
 			VpeTemplate template = elementMapping.getTemplate();
 
 			nsIDOMNode visualNode = SelectionUtil
-					.getLastSelectedNode(getPageContext());
+					.getSelectedNode(getPageContext());
 
 			NodeData nodeData = template.getNodeData(visualNode, elementData,
 					domMapping);
@@ -254,7 +254,7 @@ public class KeyEventManager implements IKeyEventHandler {
 			VpeTemplate template = elementMapping.getTemplate();
 
 			nsIDOMNode visualNode = SelectionUtil
-					.getLastSelectedNode(getPageContext());
+					.getSelectedNode(getPageContext());
 
 			NodeData nodeData = template.getNodeData(visualNode, elementData,
 					domMapping);

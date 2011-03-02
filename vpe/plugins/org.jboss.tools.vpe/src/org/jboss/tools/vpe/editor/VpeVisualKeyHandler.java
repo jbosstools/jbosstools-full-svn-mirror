@@ -1759,7 +1759,7 @@ public class VpeVisualKeyHandler {
 	}
 
 	private  nsIDOMElement getSelectedNode() {
-		return	pageContext.getEditPart().getController().getXulRunnerEditor().getLastSelectedElement();
+		return	pageContext.getEditPart().getController().getXulRunnerEditor().getSelectedElement();
 	}
 	
 }

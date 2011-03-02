@@ -984,7 +984,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			toggleLookup = "true".equals(toggleLookupAttr.getNodeValue()); //$NON-NLS-1$
 		}
 
-		nsIDOMElement selectedElem = getLastSelectedElement();
+		nsIDOMElement selectedElem = getSelectedElement();
 		// Fixes JBIDE-1823 author dmaliarevich
 		if (null == selectedElem) {
 			return null;
@@ -1087,9 +1087,12 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return visualEditor.getContentArea();
 	}
 
-	public void setSelectionRectangle(/* nsIDOMElement */nsIDOMNode visualElement) {
-		int resizerConstrains = getResizerConstrains(visualElement);
-		visualEditor.setSelectionRectangle(visualElement, resizerConstrains);
+	public void setSelectionRectangle(/* nsIDOMElement */List<nsIDOMNode> visualNodes) {
+		int resizerConstrains = VpeTagDescription.RESIZE_CONSTRAINS_NONE;
+		if(visualNodes.size()==1){
+			 resizerConstrains = getResizerConstrains(visualNodes.get(0));
+		}
+		visualEditor.setSelectionRectangle(visualNodes, resizerConstrains);
 	}
 
     /**
@@ -1478,9 +1481,8 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return null;
 	}
 
-	nsIDOMElement getLastSelectedElement() {
-
-		return xulRunnerEditor.getLastSelectedElement();
+	private nsIDOMElement getSelectedElement() {
+		return xulRunnerEditor.getSelectedElement();
 	}
 
 	public void pushIncludeStack(VpeIncludeInfo includeInfo) {

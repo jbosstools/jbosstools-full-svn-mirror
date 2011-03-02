@@ -354,7 +354,7 @@ public class VpeTest extends TestCase implements ILogListener {
 
 				TestUtil.delay(50);
 
-				assertNotNull(xulRunnerEditor.getLastSelectedNode());
+				assertNotNull(xulRunnerEditor.getSelectedElement());
 
 				nsIDOMNode sample;
 				if (nodeMapping.getSourceNode().getNodeType() == Node.TEXT_NODE
@@ -366,7 +366,7 @@ public class VpeTest extends TestCase implements ILogListener {
 					sample = nodeMapping.getVisualNode();
 				}
 
-				assertEquals(sample, xulRunnerEditor.getLastSelectedNode());
+				assertEquals(sample, xulRunnerEditor.getSelectedElement());
 			}
 		}
 	}

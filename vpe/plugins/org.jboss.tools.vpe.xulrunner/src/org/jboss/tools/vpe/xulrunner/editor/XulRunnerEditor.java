@@ -12,6 +12,7 @@
 package org.jboss.tools.vpe.xulrunner.editor;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -95,7 +96,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	public static final String STYLE_ATTR = "style"; //$NON-NLS-1$
 
 	// private nsIDOMElement lastSelectedElement;
-	private nsIDOMNode lastSelectedNode;
+	private List<nsIDOMNode> selectedNodes;
 	private int lastResizerConstrains;
 
 	private Listener eventListenet = new Listener() {
@@ -242,17 +243,20 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 		return domWindow.getDocument();
 	}
 
-	/**
-	 * Function created to restore functionality of MozillaBrowser
-	 * 
-	 * @return
-	 */
-	public nsIDOMElement getLastSelectedElement() {
-		return getSelectedElementForNode(lastSelectedNode);
-	}
+//	/**
+//	 * Function created to restore functionality of MozillaBrowser
+//	 * 
+//	 * @return
+//	 */
+//	public nsIDOMElement getLastSelectedElement() {
+//		return getElementForNode(lastSelectedNode);
+//	}
 
-	public nsIDOMNode getLastSelectedNode() {
-		return lastSelectedNode;
+	public List<nsIDOMNode> getLastSelectedNodes() {
+		if(selectedNodes==null){
+			selectedNodes=Collections.<nsIDOMNode>emptyList();
+		}
+		return selectedNodes;
 	}
 
 	/**
@@ -262,26 +266,27 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	 * @param resizerConstrains
 	 * @param scroll
 	 */
-	public void setSelectionRectangle(nsIDOMNode node, int resizerConstrains) {
+	public void setSelectionRectangle(List<nsIDOMNode> nodes, int resizerConstrains) {
 		if (getFlasher() == null) {
 			return;
 		}
-		this.lastSelectedNode = node;
+		this.selectedNodes = nodes;
 
-		nsIDOMElement element = getLastSelectedElement();
-		if (element != null) {
-			repaint();
-			scrollToElement(element);			
-		}
-		redrawSelectionRectangle();
-
-		if (xulRunnerVpeResizer != null) {
-			if (element != null && resizerConstrains != 0) {
-				xulRunnerVpeResizer.show(element, resizerConstrains);
-			} else {
-				xulRunnerVpeResizer.hide();
+			nsIDOMElement element = getSelectedElement();
+			if (element != null) {
+				repaint();
+				scrollToElement(element);			
 			}
-		}
+			redrawSelectionRectangle();
+
+			if (xulRunnerVpeResizer != null) {
+				if (element != null && resizerConstrains != 0) {
+					xulRunnerVpeResizer.show(element, resizerConstrains);
+				} else {
+					xulRunnerVpeResizer.hide();
+				}
+			}
+		
 
 		lastResizerConstrains = resizerConstrains;
 		
@@ -392,9 +397,9 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	 * 
 	 */
 	public void showResizer() {
-		if (xulRunnerVpeResizer != null && getLastSelectedElement() != null
+		if (xulRunnerVpeResizer != null && getSelectedElement() != null
 				&& lastResizerConstrains != 0) {
-			xulRunnerVpeResizer.show(getLastSelectedElement(),
+			xulRunnerVpeResizer.show(getSelectedElement(),
 					lastResizerConstrains);
 		}
 	}
@@ -409,28 +414,54 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	}
 
 	public void redrawSelectionRectangle() {
-		nsIDOMElement element = getLastSelectedElement();
-		if (element != null) {
-			if (isVisible(element)) {
-				if (element.getAttribute(VPE_INVISIBLE_ELEMENT) == null
-						|| (!element.getAttribute(VPE_INVISIBLE_ELEMENT)
-								.equals(Boolean.TRUE.toString()))) {
-					getFlasher().setColor(FLASHER_VISUAL_ELEMENT_COLOR);
-				} else {
-					getFlasher().setColor(FLASHER_HIDDEN_ELEMENT_COLOR);
-				}
-				
-				drawElementOutline(element);
-			} else {
-				getFlasher().setColor(FLASHER_HIDDEN_ELEMENT_COLOR);
-				nsIDOMElement domElement = findVisibleParentElement(element);
+//		nsIDOMElement element = get SelectedElement();
+//		if (element != null) {
+//			if (isVisible(element)) {
+//				if (element.getAttribute(VPE_INVISIBLE_ELEMENT) == null
+//						|| (!element.getAttribute(VPE_INVISIBLE_ELEMENT)
+//								.equals(Boolean.TRUE.toString()))) {
+//					getFlasher().setColor(FLASHER_VISUAL_ELEMENT_COLOR);
+//				} else {
+//					getFlasher().setColor(FLASHER_HIDDEN_ELEMENT_COLOR);
+//				}			
+//				drawElementOutline(element);
+//			} else {
+//				getFlasher().setColor(FLASHER_HIDDEN_ELEMENT_COLOR);
+//				nsIDOMElement domElement = findVisibleParentElement(element);
+//				if (domElement != null) {
+//					drawElementOutline(domElement);
+//				}
+//			}
+//		}
+		List<FlasherData> flasherDatas = new ArrayList<FlasherData>();
+		for (nsIDOMNode domNode : getLastSelectedNodes()) {
+			flasherDatas.add(prepareFlasherData(domNode));
+		}
+		drawElementOutline(flasherDatas);
+	}
 	
-				if (domElement != null) {
-					drawElementOutline(domElement);
-				}
+	private FlasherData prepareFlasherData(nsIDOMNode domNode){
+		nsIDOMElement domElement = getElementForNode(domNode);
+		String selectionBorderColor = FLASHER_VISUAL_ELEMENT_COLOR;
+		if (domElement != null) {
+			if (isVisible(domElement)) {
+				if (domElement.getAttribute(VPE_INVISIBLE_ELEMENT) == null
+						|| (!domElement.getAttribute(VPE_INVISIBLE_ELEMENT)
+								.equals(Boolean.TRUE.toString()))) {
+					selectionBorderColor = FLASHER_VISUAL_ELEMENT_COLOR;
+				} else {
+					selectionBorderColor = FLASHER_HIDDEN_ELEMENT_COLOR;
+				}			
+			} else {
+				selectionBorderColor = FLASHER_HIDDEN_ELEMENT_COLOR;
+				domElement = findVisibleParentElement(domElement);
 			}
 		}
+		
+		return new FlasherData(selectionBorderColor, domElement);
 	}
+	
+	
 
 	/**
 	 * Scrools viiew to some elements
@@ -449,7 +480,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	 * If node is a text node, then returns its parent
 	 * Else returns null;
 	 */
-	private nsIDOMElement getSelectedElementForNode(nsIDOMNode node) {
+	private static nsIDOMElement getElementForNode(nsIDOMNode node) {
 		if (node != null) {
 			if (node.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
 				return XPCOM.queryInterface(node, nsIDOMElement.class);
@@ -469,8 +500,8 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	 *            arround which border will be shown
 	 * 
 	 */
-	private void drawElementOutline(nsIDOMElement element) {
-		getFlasher().drawElementOutline(element);
+	private void drawElementOutline(List<FlasherData> flasherData) {
+		getFlasher().drawElementOutline(flasherData);
 	}
 
 	/**
@@ -492,7 +523,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 
 	@Override
 	protected void onDispose() {
-		lastSelectedNode = null;
+		selectedNodes = new ArrayList<nsIDOMNode>();
 		if (flasher != null) {
 			flasher.dispose();
 			flasher = null;
@@ -507,5 +538,15 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 		}
 
 	}
-
+	/**
+	 * 
+	 * @return selected element if only one element selected in visual part
+	 */
+	public nsIDOMElement getSelectedElement(){
+		nsIDOMElement resizeElement = null;
+		if(getLastSelectedNodes()!=null&&getLastSelectedNodes().size()>0){
+			resizeElement =getElementForNode(getLastSelectedNodes().get(0));
+		}
+		return resizeElement;
+	}
 }

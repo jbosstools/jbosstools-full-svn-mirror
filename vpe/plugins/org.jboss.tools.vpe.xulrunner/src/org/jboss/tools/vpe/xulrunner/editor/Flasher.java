@@ -1,5 +1,7 @@
 package org.jboss.tools.vpe.xulrunner.editor;
 
+import java.util.List;
+
 import org.eclipse.core.runtime.Platform;
 import org.jboss.tools.vpe.xulrunner.util.XPCOM;
 import org.mozilla.interfaces.inIFlasher;
@@ -36,40 +38,55 @@ public class Flasher {
 				||IS_OPEN_JDK
 				||IS_LINUX) {
 			drawOutline = new DrawOutlineInterface() {
-				private nsIDOMElement lastBorderedElement = null;
-				public void drawElementOutline(nsIDOMElement domElement) {
-					if (this.lastBorderedElement != null
-							&& this.lastBorderedElement.getAttribute(XulRunnerEditor.STYLE_ATTR) != null) {
-						String style = this.lastBorderedElement
-								.getAttribute(PREV_STYLE_ATTR_NAME);
-						this.lastBorderedElement.removeAttribute(PREV_STYLE_ATTR_NAME);
-						this.lastBorderedElement.setAttribute(XulRunnerEditor.STYLE_ATTR, style);
-					}
-
+				private List<FlasherData> previouslyBorderedElements = null;
+				public void drawElementOutline(List<FlasherData> flasherData) {
+					clearPreviouslySelectedElements();
 					// save style for early bordered element
-					String oldstyle = domElement.getAttribute(XulRunnerEditor.STYLE_ATTR);
-					domElement.setAttribute(XulRunnerEditor.STYLE_ATTR, 
-							domElement.getAttribute(XulRunnerEditor.STYLE_ATTR) + ';'
-							+ String.format(ELEMENT_BORDER_PATTERN, iFlasher.getColor()));
-
-					this.lastBorderedElement = domElement;
-					this.lastBorderedElement.setAttribute(PREV_STYLE_ATTR_NAME,
-							oldstyle);
-					
+					saveOldStyle(flasherData);
+					this.previouslyBorderedElements  = flasherData;					
 				}
+				private void clearPreviouslySelectedElements(){
+					if(previouslyBorderedElements!=null){
+						for (FlasherData borderedData : previouslyBorderedElements) {
+							nsIDOMElement lastBorderedElement = borderedData.getElement();
+							if (lastBorderedElement != null
+									&& lastBorderedElement.getAttribute(XulRunnerEditor.STYLE_ATTR) != null) {
+								String style = lastBorderedElement
+										.getAttribute(PREV_STYLE_ATTR_NAME);
+								lastBorderedElement.removeAttribute(PREV_STYLE_ATTR_NAME);
+								lastBorderedElement.setAttribute(XulRunnerEditor.STYLE_ATTR, style);
+							}
+						}
+					}
+				}
+				
+				private void saveOldStyle(List<FlasherData> flasherData){
+					for (FlasherData flasherData2 : flasherData) {
+						nsIDOMElement domElement = flasherData2.getElement();	
+						String oldstyle = domElement.getAttribute(XulRunnerEditor.STYLE_ATTR);
+						domElement.setAttribute(XulRunnerEditor.STYLE_ATTR, 
+								domElement.getAttribute(XulRunnerEditor.STYLE_ATTR) + ';'
+								+ String.format(ELEMENT_BORDER_PATTERN, flasherData2.getSelectionColor()));
+						domElement.setAttribute(PREV_STYLE_ATTR_NAME, oldstyle);
+					}
+				}
+				
 			};
 		} else {
 			drawOutline = new DrawOutlineInterface() {			
-				public void drawElementOutline(nsIDOMElement domElement) {
-					iFlasher.drawElementOutline(domElement);
+				public void drawElementOutline(List<FlasherData> flasherData) {
+					for (FlasherData flasherData2 : flasherData) {
+						iFlasher.setColor(flasherData2.getSelectionColor());
+						iFlasher.drawElementOutline(flasherData2.getElement());
+					}
 				}
 			};
 		}
 	}
 	
-	public void drawElementOutline(nsIDOMElement domElement) {
+	public void drawElementOutline(List<FlasherData> flasherData) {
 
-		drawOutline.drawElementOutline(domElement);
+		drawOutline.drawElementOutline(flasherData);
 	}
 
 	public void scrollElementIntoView(nsIDOMElement element) {
@@ -94,6 +111,6 @@ public class Flasher {
  *
  */
 interface DrawOutlineInterface{
-	public void drawElementOutline(nsIDOMElement domElement);
+	public void drawElementOutline(List<FlasherData> flasherData);
 };
 

@@ -134,7 +134,7 @@ public class VpeDnD implements MozillaDndListener, MozillaSelectionListener, IVp
 	}
 
 	private nsIDOMElement getSelectedElement() {
-		return vpeController.getXulRunnerEditor().getLastSelectedElement();
+		return vpeController.getXulRunnerEditor().getSelectedElement();
 	}
 	
 	/**

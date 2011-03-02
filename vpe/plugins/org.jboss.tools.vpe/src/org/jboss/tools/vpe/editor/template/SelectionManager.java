@@ -11,6 +11,9 @@
 
 package org.jboss.tools.vpe.editor.template;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.eclipse.wst.xml.core.internal.document.NodeImpl;
@@ -70,7 +73,7 @@ public class SelectionManager implements ISelectionManager {
 		}
 		
 		if (selectionData.getVisualNode().getNodeType() != nsIDOMNode.TEXT_NODE
-				&& SelectionUtil.getLastSelectedNode(getPageContext())
+				&& SelectionUtil.getSelectedNode(getPageContext())
 						== selectionData.getVisualNode()) {
 			return;
 		}
@@ -158,24 +161,26 @@ public class SelectionManager implements ISelectionManager {
 			return;
 		}
 		
-		VpeNodeMapping nodeMapping = SelectionUtil
-				.getNodeMappingBySourceSelection(getSourceEditor(),	getDomMapping());
-		if (nodeMapping == null) {
+		List<VpeNodeMapping> nodeMappings = SelectionUtil
+				.getNodeMappingsBySourceSelection(getSourceEditor(),	getDomMapping());
+		if (nodeMappings == null) {
 			return;
 		}
 		
 		// visual node which will be selected
-		nsIDOMNode targetVisualNode;		
-		if (nodeMapping instanceof VpeElementMapping) {
-			VpeElementMapping elementMapping = (VpeElementMapping) nodeMapping;
-			targetVisualNode = elementMapping.getTemplate()
-					.getVisualNodeBySourcePosition(elementMapping,
-							range, getDomMapping());
-		} else {
-			targetVisualNode = nodeMapping.getVisualNode();
+		List<nsIDOMNode> targetVisualNodes = new ArrayList<nsIDOMNode>();
+		for (VpeNodeMapping nodeMapping : nodeMappings) {
+			if (nodeMapping instanceof VpeElementMapping) {
+				VpeElementMapping elementMapping = (VpeElementMapping) nodeMapping;
+				targetVisualNodes.add(elementMapping.getTemplate()
+						.getVisualNodeBySourcePosition(elementMapping,
+								range, getDomMapping()));
+			} else {
+				targetVisualNodes.add(nodeMapping.getVisualNode());
+			}
 		}
 		getPageContext().getVisualBuilder().setSelectionRectangle(
-				targetVisualNode);
+				targetVisualNodes);
 	}
 	
 	/**
