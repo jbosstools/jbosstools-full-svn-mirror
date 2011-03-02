@@ -23,14 +23,22 @@
    </requires>
 
    <plugin
-         id="org.jboss.tools.deltacloud.ui"
+         id="org.jboss.tools.deltacloud.client"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+
+   <plugin
+         id="org.jboss.tools.deltacloud.core"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.jboss.tools.deltacloud.core"
+         id="org.jboss.tools.deltacloud.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"
