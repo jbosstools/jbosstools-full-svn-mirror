@@ -395,14 +395,6 @@
 			</repositories>
 		</profile>
 
-		<!-- TODO: do we need this? -->
-		<profile>
-			<id>jbds-no-target</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-		</profile>
-
 		<!-- Time saver: to build everything from scratch (without target platform); 
 			To enable it use -P helios-no-target in command line. Do not remove repos 
 			that contains the same artefacts, it is done for purpose to make build more 
@@ -439,7 +431,7 @@
 				</repository>
 				<repository>
 					<id>eclipse36</id>
-					<url>http://download.eclipse.org/eclipse/updates/3.6.x/
+					<url>http://download.eclipse.org/eclipse/updates/3.6/
 					</url>
 					<layout>p2</layout>
 					<snapshots>
@@ -449,9 +441,6 @@
 						<enabled>true</enabled>
 					</releases>
 				</repository>
-				<!-- <repository> <id>jboss-helios</id> <url>http://download.jboss.org/jbosstools/updates/requirements/helios/ 
-					</url> <layout>p2</layout> <snapshots> <enabled>true</enabled> </snapshots> 
-					<releases> <enabled>true</enabled> </releases> </repository> -->
 				<repository>
 					<id>webtools322</id>
 					<url>http://download.eclipse.org/webtools/downloads/drops/R3.2.2/R-3.2.2-20100915173744/repository/
@@ -465,8 +454,9 @@
 					</releases>
 				</repository>
 				<repository>
-					<id>webtools32</id>
-					<url>http://download.eclipse.org/webtools/repository/helios</url>
+					<id>jboss-webtools32</id>
+					<url>http://download.jboss.org/jbosstools/updates/requirements/webtools/3.2/
+					</url>
 					<layout>p2</layout>
 					<snapshots>
 						<enabled>true</enabled>
@@ -475,12 +465,9 @@
 						<enabled>true</enabled>
 					</releases>
 				</repository>
-				<!-- <repository> <id>jboss-webtools32</id> <url>http://download.jboss.org/jbosstools/updates/requirements/webtools-3.2/ 
-					</url> <layout>p2</layout> <snapshots> <enabled>true</enabled> </snapshots> 
-					<releases> <enabled>true</enabled> </releases> </repository> -->
 				<repository>
-					<id>birt26</id>
-					<url>http://download.eclipse.org/birt/update-site/2.6/
+					<id>jboss-birt26</id>
+					<url>http://download.jboss.org/jbosstools/updates/requirements/birt/2.6/
 					</url>
 					<layout>p2</layout>
 					<snapshots>
@@ -503,8 +490,8 @@
 					</releases>
 				</repository>
 				<repository>
-					<id>swtbot-helios</id>
-					<url>http://download.eclipse.org/technology/swtbot/helios/dev-build/update-site/
+					<id>jboss-swtbot-helios</id>
+					<url>http://download.jboss.org/jbosstools/updates/requirements/swtbot/2.0.3/ 
 					</url>
 					<layout>p2</layout>
 					<snapshots>
@@ -514,9 +501,6 @@
 						<enabled>true</enabled>
 					</releases>
 				</repository>
-				<!-- repository> <id>jboss-swtbot-helios</id> <url>http://download.jboss.org/jbosstools/updates/requirements/swtbot-helios/ 
-					</url> <layout>p2</layout> <snapshots> <enabled>true</enabled> </snapshots> 
-					<releases> <enabled>true</enabled> </releases> </repository -->
 				<repository>
 					<id>m2eclipse</id>
 					<url>http://m2eclipse.sonatype.org/sites/m2e/</url>
@@ -539,21 +523,6 @@
 						<enabled>true</enabled>
 					</releases>
 				</repository>
-				<!--repository> <id>jboss-orbit</id> <url>http://download.jboss.org/jbosstools/updates/requirements/orbit/R20100519200754/ 
-					</url> <layout>p2</layout> <snapshots> <enabled>true</enabled> </snapshots> 
-					<releases> <enabled>true</enabled> </releases> </repository -->
-				<repository>
-					<id>jboss-thirdparty</id>
-					<url>http://download.jboss.org/jbosstools/updates/requirements/thirdparty/
-					</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
 				<repository>
 					<id>jboss-xulrunner-1.9.1.2</id>
 					<url>http://download.jboss.org/jbosstools/updates/requirements/xulrunner-1.9.1.2/
@@ -566,9 +535,6 @@
 						<enabled>true</enabled>
 					</releases>
 				</repository>
-				<!--repository> <id>jboss-xulrunner-1.9.2</id> <url>http://download.jboss.org/jbosstools/updates/requirements/xulrunner-1.9.2/ 
-					</url> <layout>p2</layout> <snapshots> <enabled>true</enabled> </snapshots> 
-					<releases> <enabled>true</enabled> </releases> </repository -->
 				<repository>
 					<id>google eclipse plugins</id>
 					<url>http://dl.google.com/eclipse/plugin/3.6</url>
@@ -837,25 +803,12 @@
 						<enabled>true</enabled>
 					</releases>
 				</repository>
-			</repositories>
-		</profile>
-
-		<profile>
-			<id>jbosstools-nightly-staging-composite-trunk</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<repositories>
-				<repository>
-					<id>jbosstools-nightly-staging-composite-trunk</id>
-					<url>http://download.jboss.org/jbosstools/builds/staging/_composite_/3.2_stable_branch/</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
+				<repository> 
+					<id>jboss-requirements-composite-mirror</id> 
+					<url>http://download.jboss.org/jbosstools/updates/helios/</url> 
+					<layout>p2</layout> 
+					<snapshots> <enabled>true</enabled> </snapshots> 
+					<releases> <enabled>true</enabled> </releases> 
 				</repository>
 			</repositories>
 		</profile>
