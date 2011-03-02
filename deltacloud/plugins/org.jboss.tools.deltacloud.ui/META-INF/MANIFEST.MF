@@ -22,7 +22,8 @@ Require-Bundle: org.jboss.tools.common;bundle-version="[3.2.0,4.0.0)",
  org.eclipse.equinox.security;bundle-version="[1.0.100,2.0.0)",
  org.eclipse.equinox.security.ui;bundle-version="1.0.200",
  org.eclipse.jsch.core;bundle-version="1.1.200",
- org.eclipse.ui.navigator;bundle-version="3.5.0"
+ org.eclipse.ui.navigator;bundle-version="3.5.0",
+ org.jboss.tools.deltacloud.client;bundle-version="0.1.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Export-Package: org.jboss.tools.deltacloud.ui,
