@@ -410,7 +410,7 @@
 			<itemizedlist>
 				<listitem>
 					<para>
-						Create the deploy.xml by selecting <menuchoice><guimenuitem>New</guimenuitem><guimenuitem>Other...</guimenuitem><guimenuitem>BPEL 2.0</guimenuitem><guimenuitem>Apache ODE Deployment Descriptor</guimenuitem></menuchoice>. Click the <guibutton>Next</guibutton> button. 
+						Create the <filename>deploy.xml</filename> file by selecting <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>New</guimenuitem><guimenuitem>Other...</guimenuitem><guimenuitem>BPEL 2.0</guimenuitem><guimenuitem>Apache ODE Deployment Descriptor</guimenuitem></menuchoice>. Click the <guibutton>Next</guibutton> button. 
           </para>
 					<figure>
 						<title>New BPEL Deploy file</title>
@@ -424,10 +424,10 @@
 				<listitem>
 					<para>On the next wizard page you should enter the following information:</para>
 					<para>
-						<emphasis><property>BPEL Project</property> </emphasis>: Click the <guibutton>Browse...</guibutton> button to select the BPEL project in your workspace which you want to deploy to the runtime. Please note, that you should select the <filename>bpelContent</filename> folder in your new BPEL project as a value of <property>BPEL Project</property> field because the <filename>deploy.xml</filename> should be created in this place.
+						<emphasis><property>BPEL Project</property> </emphasis>: Click the <guibutton>Browse...</guibutton> button to select the BPEL project in your workspace where you want to deploy to the runtime. Please note that you should select the <filename>bpelContent</filename> folder in your new BPEL project for the <property>BPEL Project</property> field because this is the correct location for the <filename>deploy.xml</filename> file.
 					</para>
 					<para>
-						<emphasis><property>File name</property></emphasis>: The default value is <filename>deploy.xml</filename>. Please, don't change it.
+						<emphasis><property>File name</property></emphasis>: The default value is <filename>deploy.xml</filename>. This should not be changed.
 					</para>
 					<para>Click on the <guibutton>Finish</guibutton> button to close the wizard and a new <filename>deploy.xml</filename> file will be created.</para>
 					<figure>
@@ -441,7 +441,7 @@
 				</listitem>
 				<listitem>
 					<para>
-						Double-click the <filename>deploy.xml</filename> file to open it in ODE Descriptor Deployment Editor. In the <property>Inbound Interfaces</property> section, click the <property>Associated Port</property> column and select <property>HelloWorldProcessPort</property> in the dropdown box.The <property>Related Service</property> and <property>Binding Used</property> columns should  be automatically filled in. Save the <filename>deploy.xml</filename>.
+						Double-click the <filename>deploy.xml</filename> file to open it in <guilabel>ODE Descriptor Deployment Editor</guilabel>. In the <guilabel>Inbound Interfaces</guilabel> section, click the <guilabel>Associated Port</guilabel> column and select <guilabel>HelloWorldProcessPort</guilabel> in the dropdown box.The <guilabel>Related Service</guilabel> and <guilabel>Binding Used</guilabel> columns should  be automatically filled in. Save the changes to the <filename>deploy.xml</filename> file.
           </para>
 					<figure>
 						<title>deploy.xml file editor</title>
@@ -457,17 +457,17 @@
 		<section id="createruntime">
 			<title>Creating JBoss BPEL Server</title>
 			<para>
-				Suppose you have installed the <property>JBoss BPEL Runtime-RiftSaw</property><!-- as it was described in <xref linkend="installRuntime"/>-->, now you can create a server for JBoss BPEL runtime.
+				Once you have installed the <property>JBoss BPEL Runtime-RiftSaw</property><!-- as it was described in <xref linkend="installRuntime"/>-->, you can create a server for JBoss BPEL runtime.
 			</para>
 			<itemizedlist>
 				<listitem>
 					<para>
-						Open the <property>Servers</property> view by selecting <menuchoice><guimenuitem>Windows</guimenuitem><guimenuitem>Show View</guimenuitem><guimenuitem>Other...</guimenuitem><guimenuitem>Server</guimenuitem><guimenuitem>Servers</guimenuitem></menuchoice>.
+						Open the <guilabel>Servers</guilabel> view by selecting <menuchoice><guimenuitem>Windows</guimenuitem><guimenuitem>Show View</guimenuitem><guimenuitem>Other...</guimenuitem><guimenuitem>Server</guimenuitem><guimenuitem>Servers</guimenuitem></menuchoice>.
           </para>
 				</listitem>
 				<listitem>
 					<para>
-						Right-click the Servers view and select <menuchoice><guimenuitem>New</guimenuitem><guimenuitem>Server</guimenuitem></menuchoice> to open the New Server Wizard: 
+						Right-click the <guilabel>Servers</guilabel> view and select <menuchoice><guimenuitem>New</guimenuitem><guimenuitem>Server</guimenuitem></menuchoice> to open the <guilabel>New Server</guilabel> wizard: 
           </para>
 					<figure>
 						<title>New Server Wizard</title>
@@ -479,7 +479,7 @@
 					</figure>
 				</listitem>
 				<listitem>
-					<para>Select <property>JBoss AS 5.1</property> as a server type. </para>
+					<para>Select <guilabel>JBoss AS 5.1</guilabel> as a server type. </para>
 					<note>
 						<para>Please note, that only JBoss As 5.1 or higher version supports BPEL.</para>
 					</note>
@@ -487,7 +487,7 @@
 				<listitem>
 
 					<para>
-						Click the <guibutton>Next</guibutton> button. On the next page, you should input your <emphasis><property>JBoss As</property> </emphasis> location. Then click the <guibutton>Next</guibutton> button and you will get the page like this: 
+						Click the <guibutton>Next</guibutton> button. On the next page, you should input your <productname>JBoss As</productname> location. Then click the <guibutton>Next</guibutton> button and you will get the page like this: 
 					</para>
 					<figure>
 						<title>Add resource to the server</title>
@@ -500,7 +500,7 @@
 				</listitem>
 				<listitem>
 					<para>
-						Select <property>HelloWorld</property>, then click the <guibutton>Add</guibutton> button to add the project to the server. Then click on the <guibutton>Finish</guibutton> button.
+						Select <guilabel>HelloWorld</guilabel>, then click the <guibutton>Add</guibutton> button to add the project to the server. Finally, click the <guibutton>Finish</guibutton> button.
 					</para>
 					<para>Start the server by right-clicking on the server and selecting the <guilabel>Start</guilabel> item. </para>
 
@@ -512,10 +512,10 @@
 							</imageobject>
 						</mediaobject>
 					</figure>
-					<para>If some aspects of server creation is not clear, please, read  <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/as/html_single/index.html">JBoss Server Manager Reference Guide</ulink> for more details.</para>
+					<para>Read the <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/as/html_single/index.html">JBoss Server Manager Reference Guide</ulink> for more detail on this process.</para>
 				</listitem>
 				<listitem>
-					<para>You can enter the link <ulink url="http://localhost:8080/bpel-console/app.html">http://localhost:8080/bpel-console/app.html</ulink> to the browser to get the deployed processes.</para>
+					<para>You can enter the link <ulink url="http://localhost:8080/bpel-console/app.html">http://localhost:8080/bpel-console/app.html</ulink> in your web browser to access the deployed processes.</para>
 					<figure>
 						<title>The BPEL console</title>
 						<mediaobject>
@@ -526,8 +526,9 @@
 					</figure>
 				</listitem>
 			</itemizedlist>
-			<para>If there's anything we didn't cover or you can't figure out, please feel free to visit our <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201">JBoss Tools Users Forum</ulink> to ask questions.
-                There we are also waiting for your suggestions and comments.</para>
+			<para>
+				Please visit the <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201">JBoss Tools Users Forum</ulink> for more information and assistance.
+			</para>
 		</section>
 	</section>
 </chapter>

@@ -14,7 +14,7 @@
         <title>Wizards</title>
         <section>
             <title>New BPEL project Wizard</title>
-            <para>This wizard helps to create new BPEL project. It is available by selecting <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>New</guimenuitem><guimenuitem>Other</guimenuitem><guimenuitem>BPEL project</guimenuitem></menuchoice> in the menu bar.</para>
+            <para>This wizard is provided to create a new BPEL project. It is available by selecting <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>New</guimenuitem><guimenuitem>Other</guimenuitem><guimenuitem>BPEL project</guimenuitem></menuchoice>.</para>
             <figure>
                 <title>New BPEL Project Wizard</title>
                 <mediaobject>
@@ -23,12 +23,12 @@
                     </imageobject>
                 </mediaobject>
             </figure>
-            <para>It consists of two pages:</para>
+            <para>The wizard consists of two pages:</para>
             <itemizedlist>
                 <listitem>
                 	<para>On the first page you can adjust the name of the project and the directory where it will be created.</para>
                   <para>
-                  	If "<property>Use default</property>" option is checked the output directory will be the workspace, otherwise the user should specify it by himself using <guibutton>Browse</guibutton> button.
+                  	If the <guilabel>Use default location</guilabel> option is checked the output directory will be set to the workspace, otherwise a custom location can be specified by clicking the <guibutton>Browse</guibutton> button.
                   </para>
                     <figure>
                         <title>New BPEL Project Wizard</title>
@@ -40,7 +40,7 @@
                     </figure>
                 </listitem>
                 <listitem>
-                	<para>On the second page you can specify the name of the Content Folder.</para>                  
+                	<para>On the second page you can specify the name of the <guilabel>Content Folder</guilabel>.</para>                  
                     <figure>
                         <title>New BPEL Project Wizard</title>
                         <mediaobject>
@@ -54,7 +54,7 @@
         </section>
         <section>
             <title>Apache ODE Deployment Descriptor Wizard</title>
-            <para>Using this wizard user can create ODE deployment descriptor (<filename>deploy.xml</filename>) and place it in the temporary directory.It is available by selecting <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>New</guimenuitem><guimenuitem>Other</guimenuitem><guimenuitem>Apache ODE Deployment Descriptor Wizard</guimenuitem></menuchoice> in the menu bar.</para>
+            <para>This wizard can be used to create an ODE deployment descriptor (<filename>deploy.xml</filename>) file and place it in the temporary directory. It is available by selecting <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>New</guimenuitem><guimenuitem>Other</guimenuitem><guimenuitem>Apache ODE Deployment Descriptor Wizard</guimenuitem></menuchoice>.</para>
             <figure>
                 <title>New BPEL Project Wizard</title>
                 <mediaobject>
@@ -64,16 +64,16 @@
                 </mediaobject>
             </figure>
             <para>
-            	On the page you can adjust the name of the deployment descriptor and the directory where it will be created.Note,that you should use <filename>/PROJECT_NAME/bpelContent</filename> directory as an output one.
+            		On this page you can adjust the name of the deployment descriptor and the directory where it will be created. Note that you should use <filename>/PROJECT_NAME/bpelContent</filename> directory for the output.
             </para>
                                    
         </section>
         <section>
             <title>New BPEL Process file Wizard</title>
-            <para>Using the <property>New BPEL Process file Wizard</property> it is possible to create a BPEL process file and a WSDL file.
+            <para>Using the <guilabel>New BPEL Process file Wizard</guilabel> it is possible to create a BPEL process file and a WSDL file.
             The wizard includes several pages:</para>
             <itemizedlist>
-                <listitem><para>The first page has the following options to set:</para>
+                <listitem><para>The first page includes the following options:</para>
                     <table>
                         <title>New BPEL Process file Wizard. First Page Options.</title>   
                         <tgroup cols="3">
@@ -135,7 +135,7 @@
                     </figure>
                     
                 </listitem>
-                <listitem><para>The second page has the following options to set:</para>
+                <listitem><para>The second page include the following options:</para>
                     <table>
                         <title>New BPEL Process file Wizard. Second Page Options.</title>   
                         <tgroup cols="3">
@@ -195,7 +195,7 @@
                 </listitem>
             </itemizedlist>
             <note>
-                <para>Process files that are used in the BPEL project must be under the <property>bpelContent</property> folder. Only in this case these files can be deployed to JBoss server.
+                <para>Process files that are used in the BPEL project must be under the <filename>bpelContent</filename> folder. This is necessary for the files to be deployed to a JBoss server.
                 </para>
             </note>
         </section>
@@ -204,9 +204,8 @@
         <title>Editors</title>
         <section>
             <title>Business Process Editor</title>
-            <para>Business Process Editor is intended to facilitate the process of changing and 
-                adding new logic to BPEL process file. You can open <emphasis>.bpel</emphasis> 
-                in this editor by right click the file in the project explorer and selecting <menuchoice><guimenuitem>Open With...</guimenuitem><guimenuitem>Business Process Editor</guimenuitem></menuchoice>
+            <para>
+	            	The Business Process Editor is intended to facilitate the process of changing and adding new logic to a BPEL process file. You can open <filename>.bpel</filename> files in this editor by right click the file in the <guilabel>Project Explorer</guilabel> and selecting <menuchoice><guimenuitem>Open With...</guimenuitem><guimenuitem>Business Process Editor</guimenuitem></menuchoice>.
             </para>
             <figure>
                 <title>Business Process Editor</title>
@@ -216,10 +215,10 @@
                     </imageobject>
                 </mediaobject>
             </figure>
-            <para>The editor consists of two tabs:<property>Design</property> tab and <property>Source</property> tab.</para>
+            <para>The editor consists of two tabs: the <guilabel>Design</guilabel> tab and the <guilabel>Source</guilabel> tab.</para>
        <section>
            <title>Design tab</title>
-           <para>Design tab is the main part of Business Process Editor.It consists of 3 parts:</para>
+           <para>The <guilabel>Design</guilabel> tab is the main part of the <guilabel>Business Process Editor</guilabel>. It consists of 3 parts:</para>
            <itemizedlist>
                <listitem><para>Visual Pane:</para>
                    <figure>
@@ -230,7 +229,7 @@
                            </imageobject>
                        </mediaobject>
                    </figure>
-                   <para>The Visual Pane graphically displays the order in which the activities are executed.</para>
+                   <para>The Visual Pane provides a graphical representation of the order in which the activities are executed.</para>
                </listitem>
                <listitem><para>Palette:</para>
                    <figure>
@@ -242,7 +241,7 @@
                        </mediaobject>
                    </figure>
                    <para>
-                   	The <property>Palette</property> represents different elements of the BPEL activities organized into functional categories. Using it the developer can easily add new elements to the sequence activity. To do this, click the required element and then drag and drop it to the place on the Visual Pane where it should be added.
+                   	The <guilabel>Palette</guilabel> view represents the different BPEL activities elements organized into functional categories. Using it the developer can easily add new elements to the sequence activity. To do this, click the required element and then drag and drop it to the place on the Visual Pane.
                    </para>
                </listitem>
                <listitem><para>Behavior Components View:</para>
@@ -254,10 +253,9 @@
                            </imageobject>
                        </mediaobject>
                   </figure>
-                   <para>Execution behavior components are grouped into the <property>
-                       Behavior Components View</property>.
-                       The view is also fully synchronized with Properties view where you can customize all
-                       the properties of the component.</para>
+                   <para>
+                   	Execution behavior components are grouped into the <guilabel>Behavior Components</guilabel> view. This view is also fully synchronized with <guilabel>Properties</guilabel> view where you can customize all the properties of the component.
+                   </para>
                    <figure>
                        <title>Process Structure View of Business Process Editor</title>
                        <mediaobject>
@@ -266,7 +264,7 @@
                            </imageobject>
                        </mediaobject>
                    </figure>                  
-                   <para>To add an element to some component group click the plus (<inlinemediaobject>
+                   <para>To add an element to a component group click the plus (<inlinemediaobject>
                        <imageobject>
                            <imagedata fileref="images/reference/bpel_ref_10.png"/>
                        </imageobject>
@@ -279,7 +277,7 @@
        </section>
             <section>
                 <title>Source tab</title>
-                <para>Source tab can be used for editing BPEL process file directly. It is also possible to validate the file structure.
+                <para>The <guilabel>Source</guilabel> tab can be used for directly editing BPEL process files. It is also possible to validate the file structure.
                  </para>
                 <figure>
                     <title>Validation error in Source tab</title>
@@ -289,7 +287,7 @@
                         </imageobject>
                     </mediaobject>
                 </figure>
-                <para>If the user wants to disable/unable validation he can do it by selecting <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Preferences</guimenuitem><guimenuitem>Validation</guimenuitem></menuchoice>.</para>
+                <para>Validation can be enabled or disabled by selecting <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Preferences</guimenuitem><guimenuitem>Validation</guimenuitem></menuchoice>.</para>
                 <figure>
                     <title>Validation configuration</title>
                     <mediaobject>
@@ -302,7 +300,7 @@
        </section>
       <section>
           <title>ODE Deployment Descriptor Editor</title>
-          <para>To deploy your process in ODE you need to create a simple deployment descriptor with basic information, using the <property>ODE Deployment Descriptor Editor</property> to facilitate the process of descriptor configuration. You can see how the descriptor file opened in the editor looks like in the picture below:
+          <para>To deploy your process in ODE you need to create a simple deployment descriptor with basic information, using the <property>ODE Deployment Descriptor Editor</property> to facilitate the process of descriptor configuration. You can see how the descriptor file looks when it is opened in the editor in the image below:
           </para>
           <figure>
               <title>ODE Deployment Descriptor Editor</title>

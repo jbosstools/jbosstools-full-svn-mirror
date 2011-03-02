@@ -3,7 +3,7 @@
     <?dbhtml filename="summary.html"?>
     <title>Summary</title>
     <para>
-    	This document highlights the capabilities of BPEL Tools, as well as providing the steps required to create and configure BPEL process and deployment descriptor files. If you have questions or suggestions concerned both the documentation and tools behavior, you are welcome to JBoss Tools Users forum. Please, use Jira to report bugs and requests on documentation.
+    		This document highlights the capabilities of BPEL Tools, as well as providing the steps required to create and configure BPEL process and deployment descriptor files. If you have questions or suggestions concerned both the documentation and tools behavior please visit the JBoss Tools Users forum.
     </para>
     
     <section>
