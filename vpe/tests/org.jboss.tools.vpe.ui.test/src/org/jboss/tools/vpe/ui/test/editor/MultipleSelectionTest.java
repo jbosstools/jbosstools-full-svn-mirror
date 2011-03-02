@@ -11,6 +11,7 @@
 package org.jboss.tools.vpe.ui.test.editor;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
@@ -20,7 +21,9 @@ import org.eclipse.ui.part.FileEditorInput;
 import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
 import org.jboss.tools.vpe.base.test.TestUtil;
 import org.jboss.tools.vpe.base.test.VpeTest;
+import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.ui.test.VpeUiTests;
+import org.mozilla.interfaces.nsIDOMNode;
 
 /**
  * Junit test for JBIDE-8115
@@ -30,7 +33,7 @@ import org.jboss.tools.vpe.ui.test.VpeUiTests;
  */
 public class MultipleSelectionTest extends VpeTest{
  
-	private static final String TEST_CASE="WebContent/pages/selection/jbide-8115-test-case.html"; //$NON-NLS-1$
+	private static final String TEST_CASE="selection/jbide-8115-test-case.html"; //$NON-NLS-1$
 	
 	public MultipleSelectionTest(String name) {
 		super(name);
@@ -44,7 +47,12 @@ public class MultipleSelectionTest extends VpeTest{
 		ITextViewer viewer = part.getSourceEditor().getTextViewer();
 		
 		int startSelectionOffcet = TestUtil.getLinePositionOffcet(viewer, 6, 1);
-		int endSelectionOffcet = TestUtil.getLinePositionOffcet(viewer, 9, 4);
-		viewer.setSelectedRange(startSelectionOffcet, endSelectionOffcet);
+		int length = TestUtil.getLinePositionOffcet(viewer, 9, 4)-startSelectionOffcet;
+		viewer.setSelectedRange(startSelectionOffcet, length);
+		VpeController vpeController = TestUtil.getVpeController(part);
+        vpeController.sourceSelectionChanged();
+        List<nsIDOMNode> selectedNodes = vpeController.getXulRunnerEditor().getLastSelectedNodes();
+        assertEquals("Shuld be selected ",3,selectedNodes.size()); //$NON-NLS-1$
 	}
+	
 }
