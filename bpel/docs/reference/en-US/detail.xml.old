@@ -22,8 +22,8 @@
                 </imageobject>
             </mediaobject>
         </figure>
-        <para>On this page of the <property>New BPEL Project Wizard</property> enter a project name in the <property>Project Name</property>
-            field,e.g enter <property>HelloWorld</property>.</para>
+        <para>On this page of the <guilabel>New BPEL Project</guilabel> wizard enter a project name in the <guilabel>Project Name</guilabel>
+            field, e.g <guilabel>HelloWorld</guilabel>.</para>
        
         <figure>
             <title>New BPEL Project Wizard</title>
@@ -33,7 +33,7 @@
                 </imageobject>
             </mediaobject>
         </figure>
-        <para>Click the <property>Finish</property> button. So you have created the BPEL project named <property>HelloWorld</property>. Its structure is like this: </para>
+        <para>Click the <property>Finish</property> button. This will create a BPEL project named <guilabel>HelloWorld</guilabel>. Its structure is shown in the image below: </para>
         <figure>
             <title>The BPEL Project structure</title>
             <mediaobject>
@@ -129,7 +129,7 @@
                 </imageobject>
             </mediaobject>
         </figure>  
-        <para>In the <emphasis><property>Palette view</property></emphasis>, you can drag a BPEL element to the BPEL editor and drop it in the place you want.</para>   
+        <para>In the <emphasis><property>Palette view</property></emphasis>, you can drag and drop BPEL elements to the BPEL editor.</para>   
         <para>In the <emphasis><property>Properties view</property></emphasis>, you can view the information on every element of the BPEL process.
             In the BPEL editor select any element  you want,and then
             the element's properties will be shown in the Properties view.The table below describes the tabs of the Properties view: 
@@ -150,7 +150,7 @@
                 <tbody>            
                     <row>
                         <entry><para>Description</para></entry>
-                        <entry><para>Shows the descriptive information about the element,e.g. <property>Name</property> of the element.</para></entry>   
+                        <entry><para>Shows the descriptive information about the element, e.g. the <property>Name</property> of the element.</para></entry>   
                     </row>          
                     <row>
                         <entry><para>Details</para></entry>
@@ -174,18 +174,18 @@
                 </tbody>           
             </tgroup>
         </table>
-        <para>In order to see how a simple BPEL process works in action, you should do some steps as below: </para>   
+        <para>The following steps will allow you to see a simple BPEL process in action: </para>   
         <itemizedlist>
             <listitem>
-                <para>Add an <property>Assign</property> element between the <property>receiveInput</property> element and <property>replyOutput</property> element.</para>
+                <para>Add an <guilabel>Assign</guilabel> element between the <guilabel>receiveInput</guilabel> element and <guilabel>replyOutput</guilabel> element.</para>
             </listitem>
             <listitem>
-                <para>Click the <property>Assign</property> element in the BPEL editor in order to get the properties information of it in the Properties view. 
+                <para>Click the <guilabel>Assign</guilabel> element in the BPEL editor in order to get the properties information of it in the <guilabel>Properties</guilabel> view. 
                 </para>
             </listitem>
             <listitem>
-                <para>In the <property>Details</property> section of Properties view, you should click the <property>New</property> button to add a <property>copy</property> sub-element to the element. 
-                    Assign "input->payload->input" to "output->payload->result". At this time, an "<property>initializer</property>" popup dialog appears. Click on the <property>Yes</property> button in the dialog.
+                <para>In the <guilabel>Details</guilabel> section of <guilabel>Properties</guilabel> view, you should click the <guibutton>New</guibutton> button to add a <property>copy</property> sub-element to the element. 
+                    Assign "input->payload->input" to "output->payload->result". At this time, an <guilabel>initializer</guilabel> popup dialog appears. Click on the <guibutton>Yes</guibutton> button in the dialog.
                 </para>
                 <figure>
                     <title>Add <property>Assign</property> to the process</title>

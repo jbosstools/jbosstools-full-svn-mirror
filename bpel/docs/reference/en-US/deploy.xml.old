@@ -3,13 +3,12 @@
     <title>Deploy a JBoss BPEL project to JBoss BPEL Runtime</title>
     <section id="createdeploy">
         <title>Creating a deploy.xml file</title>
-        <para>If you want to deploy a BPEL project to JBoss BPEL Runtime, you should create a deploy.xml file. 
-            JBoss tools can help you to create it:
+        <para>If you want to deploy a BPEL project to the JBoss BPEL Runtime, a deploy.xml file needs to be created. The steps below show you how to create this file in JBDS:
         </para>
         <itemizedlist>
             <listitem>
                 <para>Create the <filename>deploy.xml</filename> by selecting dbmenu
-                    <emphasis><property>New > Other... > BPEL 2.0 > Apache ODE Deployment Descriptor</property></emphasis>. Click the <property>Next</property> button. 
+                    <emphasis><property>New > Other... > BPEL 2.0 > Apache ODE Deployment Descriptor</property></emphasis>. Click the <guibutton>Next</guibutton> button. 
                 </para>
                 <figure>
                     <title>New BPEL Deploy file</title>
