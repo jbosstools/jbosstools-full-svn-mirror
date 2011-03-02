@@ -7,18 +7,18 @@
 	<para>It improves the Eclipse BPEL project in the following ways: </para>
 	<itemizedlist>
 		<listitem>
-			<para> Implements close integration with JBoss BPEL runtime, and adds a new project type for the deployment to JBoss BPEL runtime.</para>
+			<para> Implements close integration with JBoss BPEL runtime, and adds a new project type for the deployment to the JBoss BPEL runtime.</para>
 		</listitem>
 		<listitem>
-			<para> Supports two ways of deployment. The first way is to deploy a BPEL project directly to JBoss BPEL runtime. The second way is to deploy BPEL files in JBoss ESB project to JBoss BPEL runtime. </para>
+			<para> Supports two deployment methods. The first method is to deploy a BPEL project directly to the JBoss BPEL runtime. The second method is to deploy BPEL files in JBoss ESB project to the JBoss BPEL runtime. </para>
 		</listitem>
 		<listitem>
-			<para> Improves the BPEL validator and improves the quality of the Eclipse BPEL editor. </para>
+			<para>Enhances the BPEL validator and improves the quality of the Eclipse BPEL editor. </para>
 		</listitem>
 	</itemizedlist>
 
 	<para>
-		<ulink url="http://docs.oasis-open.org/wsbpel/2.0/OS/wsbpel-v2.0-OS.html">WS-BPEL 2.0</ulink> stands for Web Service Business Process Execution Language. Like EAI, BPEL is an XML-based language, but BPEL is more specific and targeted. A programmer uses BPEL to join sometimes disparate functions into an integrated process, resulting in a seamless use of the Internet to conduct business transactions ranging from simple money exchanges to complex calculations and asset reallocation.
+		<ulink url="http://docs.oasis-open.org/wsbpel/2.0/OS/wsbpel-v2.0-OS.html">WS-BPEL 2.0</ulink> stands for Web Service Business Process Execution Language. Like EAI, BPEL is an XML-based language, but BPEL is more specific and targeted. BPEL is used by developers to join sometimes disparate functions into an integrated process, resulting in a seamless use of the Internet to conduct business transactions ranging from simple money exchanges to complex calculations and asset reallocation.
    </para>
 
 	<section>
@@ -44,7 +44,7 @@
 							<para>WS-BPEL 2.0 support</para>
 						</entry>
 						<entry>
-							<para>JBoss BPEL project supports the newest WS-BPEL 2.0 specifications. </para>
+							<para>JBoss BPEL project supports the most recent WS-BPEL 2.0 specifications. </para>
 						</entry>
 					</row>
 					<row>
@@ -52,7 +52,7 @@
 							<para>Close integration with JBoss BPEL runtime</para>
 						</entry>
 						<entry>
-							<para>There are two ways to deploy BPEL files to JBoss BPEL runtime. The user can deploy a BPEL project as a whole and can deploy BPEL files in JBoss ESB project to JBoss BPEL runtime. </para>
+							<para>There are two methods to deploy BPEL files to JBoss BPEL runtime. The user can deploy a BPEL project as a whole and can deploy BPEL files in a JBoss ESB project to the JBoss BPEL runtime. </para>
 						</entry>
 					</row>
 					<row>
@@ -68,7 +68,7 @@
 							<para>BPEL file validator</para>
 						</entry>
 						<entry>
-							<para>The validator provides a list of BPEL file errors to the user. </para>
+							<para>The validator displays a list of BPEL file errors. </para>
 						</entry>
 					</row>
 				</tbody>

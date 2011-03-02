@@ -152,23 +152,23 @@
                             <tbody>
                                 <row>
                                     <entry>Service Name</entry>
-                                    <entry>Enter a wsdl service name for the BPEL process.</entry>
+                                    <entry>Enter a WDSL service name for the BPEL process.</entry>
                                     <entry>The process name</entry>
                                 </row>                                                                      
                                 <row>
                                     <entry>Port Name</entry>
-                                    <entry>Enter a wsdl port name for the BPEL process.</entry>
+                                    <entry>Enter a WDSL port name for the BPEL process.</entry>
                                     <entry>The process name + 'Port'</entry>
                                 </row> 
                                 <row>
                                     <entry>Service Address</entry>
-                                    <entry>Enter an address of the wsdl service for the BPEL process.</entry>
+                                    <entry>Enter an address of the WDSL service for the BPEL process.</entry>
                                     <entry>http://localhost:8080/ + process name </entry>
                                 </row>
 
                                 <row>
                                     <entry>Binding Protocol</entry>
-                                    <entry>Choose the binding protocal that you use in the wsdl: SOAP or HTTP</entry>
+                                    <entry>Choose the binding protocal that you use in the WDSL: SOAP or HTTP</entry>
                                     <entry>SOAP</entry>
                                 </row>                                
                             </tbody>

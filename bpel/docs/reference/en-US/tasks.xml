@@ -10,7 +10,7 @@
 		<section id="createproject">
 			<title>Creating a BPEL project</title>
 			<para>
-				Create the project by selecting <menuchoice><guimenuitem>New</guimenuitem><guimenuitem>Project...</guimenuitem><guimenuitem>BPEL 2.0</guimenuitem><guimenuitem>BPEL Project</guimenuitem></menuchoice> from the menu bar. Then click the <guibutton>Next</guibutton> button. 
+				Create the project by selecting <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>New</guimenuitem><guimenuitem>Project...</guimenuitem><guimenuitem>BPEL 2.0</guimenuitem><guimenuitem>BPEL Project</guimenuitem></menuchoice> from the menu bar. Then click the <guibutton>Next</guibutton> button. 
       </para>
 			<figure>
 				<title>New BPEL Project</title>
@@ -46,7 +46,7 @@
 		<section id="createprocess">
 			<title>Creating a BPEL process</title>
 			<para>
-				Now you should create a BPEL process. You can create it by selecting <menuchoice><guimenuitem>New</guimenuitem><guimenuitem>Others...</guimenuitem><guimenuitem>BPEL 2.0</guimenuitem><guimenuitem>New BPEL Process File</guimenuitem></menuchoice>.
+				Now you should create a BPEL process. You can create it by selecting <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>New</guimenuitem><guimenuitem>Others...</guimenuitem><guimenuitem>BPEL 2.0</guimenuitem><guimenuitem>New BPEL Process File</guimenuitem></menuchoice>.
       </para>
 			<figure>
 				<title>New BPEL Process File</title>
@@ -92,7 +92,7 @@
 							</entry>
 							<entry>
 								<para>
-									Select the necessary template for the BPEL process. When you select the template, you will see the information about the template below on the page. In our case you should select <property>Synchronous BPEL Process</property>.
+									Select the appropriate template for the BPEL process. When you select the template, you will see the information about the template below on the page. In this case you should select <guilabel>Synchronous BPEL Process</guilabel>.
 								</para>
 							</entry>
 						</row>
@@ -109,7 +109,7 @@
 					</imageobject>
 				</mediaobject>
 			</figure>
-			<para>Click the <guibutton>Next</guibutton> button. On the second page, you can custom your WSDL service details. Enter the following information:</para>
+			<para>Click the <guibutton>Next</guibutton> button. On the second page, you can customize your WSDL service details. Enter the following information:</para>
 			<table>
 
 				<title>Fields and values</title>
@@ -128,7 +128,7 @@
 								<para>Service Name</para>
 							</entry>
 							<entry>
-								<para>A wsdl service name for the BPEL process. The default is, <property moreinfo="none">HelloWorld</property>.</para>
+								<para>A wsdl service name for the BPEL process. The default value is <guilabel>HelloWorld</guilabel>.</para>
 							</entry>
 						</row>
 						<row>
@@ -136,7 +136,7 @@
 								<para>Port Name</para>
 							</entry>
 							<entry>
-								<para>A wsdl port name for the BPEL process. The default is, <property moreinfo="none">HelloWorldPort</property>.</para>
+								<para>A wsdl port name for the BPEL process. The default value is <guilabel>HelloWorldPort</guilabel>.</para>
 							</entry>
 						</row>
 						<row>
@@ -144,7 +144,7 @@
 								<para>Service Address</para>
 							</entry>
 							<entry>
-								<para>An address of the WSDL service for the BPEL process. The default is, <property moreinfo="none">http://localhost:8080/HelloWorld</property>.</para>
+								<para>An address of the WSDL service for the BPEL process. The default value is <guilabel>http://localhost:8080/HelloWorld</guilabel>.</para>
 							</entry>
 						</row>
 						<row>
@@ -152,7 +152,7 @@
 								<para>Binding Protocol</para>
 							</entry>
 							<entry>
-								<para>The binding protocal that you use in the wsdl. You can choose SOAP or HTTP. The default is, <property moreinfo="none">SOAP</property>.</para>
+								<para>The binding protocal that you use in the wsdl. You can choose SOAP or HTTP. The default value is <guilabel>SOAP</guilabel>.</para>
 							</entry>
 						</row>
 					</tbody>
@@ -177,7 +177,7 @@
         </para>
 			</note>
 
-			<para>Up to now, you have got a simple BPEL process as on the screen below.</para>
+			<para>This will create a simple BPEL process as shown in the image below.</para>
 			<figure>
 				<title>A simple BPEL Process File</title>
 				<mediaobject>
@@ -186,12 +186,11 @@
 					</imageobject>
 				</mediaobject>
 			</figure>
-			<para>The next step will show you how to edit the BPEL process file and then deploy it to JBoss server. </para>
 		</section>
 		<section id="editprocess">
 			<title>Editing a BPEL process file</title>
 			<para>
-				If the <guilabel>Properties view</guilabel> and <guilabel>Palette view</guilabel> are not opened, you can open the views by right-clicking the BPEL editor and selecting <guilabel>Show in Properties</guilabel>, <guilabel>Show Palette in Palette view</guilabel>. Then you should have the view like this: 
+				If the <guilabel>Properties view</guilabel> and <guilabel>Palette view</guilabel> are not opened, you can open the views by right-clicking the BPEL editor and selecting the <guilabel>Show in Properties</guilabel> or <guilabel>Show Palette in Palette view</guilabel> options. Then you should have the view like this: 
       </para>
 			<figure>
 				<title>The BPEL editor view</title>
@@ -203,7 +202,7 @@
 			</figure>
 			<para>In the <guilabel>Palette</guilabel> view, you can drag a BPEL element to the BPEL editor and drop it in the place you want.</para>
 			<para>
-				In the <guilabel>Properties</guilabel> view, you can get the information about every element of the BPEL process. In the BPEL editor select any element you want, and then the element's properties will be shown in the <guilabel>Properties</guilabel> view. The table below describes the tabs of the <guilabel>Properties</guilabel> view: 
+				In the <guilabel>Properties</guilabel> view, you can view the information on every element in the BPEL process. The contents of the <guilabel>Properties</guilabel> view is automatically updated as elements are selected in the BPEL editor. The table below describes the tabs shown in the <guilabel>Properties</guilabel> view: 
       </para>
 			<table>
 
@@ -258,7 +257,7 @@
 							</entry>
 							<entry>
 								<para>
-									Every BPEL element has its own sections: Correlation section, Message Exchange section, and so on. We will introduce them while using them.
+									Every BPEL element has its own sections: Correlation section, Message Exchange section, and so on. These sections will be covered in later sections.
 								</para>
 							</entry>
 						</row>
@@ -282,7 +281,7 @@
 									</imageobject>
 								</mediaobject>
 							</figure>
-								<para>Then choose <property>string</property> primitive from the list.</para>
+								<para>Then choose <guilabel>string</guilabel> primitive from the list of <guilabel>Matches</guilabel>.</para>
 							<figure>
 								<title>Edit variable in <property>process</property> file</title>
 								<mediaobject>
@@ -293,7 +292,7 @@
 							</figure>
 						</listitem>
 						<listitem>
-							<para>Select <property>xsd</property> as a namespace in the popup menu.</para>
+							<para>Select <guilabel>xsd</guilabel> as a namespace in the popup menu.</para>
 						</listitem>
 					</itemizedlist>
 
@@ -322,7 +321,7 @@
 						</mediaobject>
 					</figure>
 					<para>
-						Then you should click the <guibutton>New</guibutton> once more and select Expression to Variable (assign <code>concat($input,' World'))</code> to <property>result:string</property>. 
+						Then you should click the <guibutton>New</guibutton> button once more and select Expression to Variable (assign <code>concat($input,' World')</code>) to <guilabel>result:string</guilabel>. 
 					</para>
 					<figure>
 						<title>Add <property>Expression assign</property> to the process</title>
@@ -340,12 +339,12 @@
 			<title>Adding Service to WSDL file</title>
 			<para></para>
 			<para>
-				The <filename>HelloWorldArtifacts.wsdl</filename> file has been added a service when you create a BPEL process file. You have a default service in this WSDL file. But if you want to add a service by yourself, you can follow the steps as below: 
+				The <filename>HelloWorldArtifacts.wsdl</filename> file is added a service when you create a BPEL process file. A default service is already defined in this WSDL file. However, if you want to add your own service, follow the steps below: 
 			</para>
 			<itemizedlist>
 				<listitem>
 					<para>
-						Open the file <filename>HelloWorldArtifacts.wsdl</filename> in the "<property>HelloWorld</property>" project by double-clicking the file. Right-click the WSDL editor and select <guilabel>Add Service</guilabel>. A new service should appear in the editor. Name it <property>HelloWorldProcessService</property>. It has the Port named <property>NewPort</property>. Select it, right-click on it and rename it to <property>HelloWorldProcessPort</property> in the Properties view.
+						Open the file <filename>HelloWorldArtifacts.wsdl</filename> in the <guilabel>HelloWorld</guilabel> project by double-clicking the file. Right-click the WSDL editor and select the <guilabel>Add Service</guilabel> option. A new service should appear in the editor. Name it <guilabel>HelloWorldProcessService</guilabel>. It has the Port named <guilabel>NewPort</guilabel>. Select it, right-click on it and rename it to <guilabel>HelloWorldProcessPort</guilabel> in the <guilabel>Properties</guilabel> view.
           </para>
 					<figure>
 						<title>Add <property>Service</property> to the WSDL file</title>
@@ -358,7 +357,7 @@
 				</listitem>
 				<listitem>
 					<para>
-						Right-click somewhere in the whitespace of the WSDL editor and select <guilabel>Add Binding</guilabel>. A new Binding component will appear in the editor. Name it <property>HelloWorldSOAPBinding</property>. Select it, in the General tab of the Properties view and select <property>HelloWorld</property> as a port type in the <property>PortType</property>. Then click on the <property>Generate Binding Content...</property> button to open the  <property>Binding Wizard</property>. In the wizard, select <property>SOAP</property> as the <property>Protocol</property>. Finally, click the <guibutton>Finish</guibutton> button to close the wizard.
+						Right-click somewhere in the whitespace of the WSDL editor and select the <guilabel>Add Binding</guilabel> option. A new Binding component will appear in the editor. Name it <guilabel>HelloWorldSOAPBinding</guilabel>. Select it, and in the <guilabel>General</guilabel> tab of the <guilabel>Properties</guilabel> view and select <guilabel>HelloWorld</guilabel> as a port type in the <guilabel>PortType</guilabel> field. Then click on the <guibutton>Generate Binding Content...</guibutton> button to open the <guilabel>Binding Wizard</guilabel>. In the wizard, select <guilabel>SOAP</guilabel> as the <guilabel>Protocol</guilabel>. Finally, click the <guibutton>Finish</guibutton> button to close the wizard.
           </para>
 					<figure>
 						<title>Add a <property>Binding</property> to the WSDL file</title>
@@ -371,7 +370,7 @@
 				</listitem>
 				<listitem>
 					<para>
-						Click the <property>HelloWorldProcessPort</property> property in the General section of the Properties view, select <property>HelloWorldSOAPBinding</property> in the <property>Binding</property> combobox. In the <property>Address</property> field input <ulink url="http://localhost:8080/bpel/processes/HelloWorld?wsdl">http://localhost:8080/bpel/processes/HelloWorld?wsdl</ulink>.
+						Click the <guilabel>HelloWorldProcessPort</guilabel> property in the <guilabel>General</guilabel> section of the <guilabel>Properties</guilabel> view, select <guilabel>HelloWorldSOAPBinding</guilabel> in the <guilabel>Binding</guilabel> combobox. Enter <ulink url="http://localhost:8080/bpel/processes/HelloWorld?wsdl">http://localhost:8080/bpel/processes/HelloWorld?wsdl</ulink> in the <guilabel>Address</guilabel> field.
           </para>
 					<figure>
 						<title>Add the <property>HelloWorldSOAPBinding</property> to the <property>HelloWorldProcessPort</property>
@@ -398,8 +397,6 @@
 				</listitem-->
 			</itemizedlist>
 
-			<para>Now you have finished creating a simple BPEL process. As a next step, you can deploy the BPEL project to JBoss BPEL Runtime.</para>
-
 		</section>
 
 	</section>
@@ -408,7 +405,7 @@
 		<section id="createdeploy">
 			<title>Creating a deploy.xml file</title>
 			<para>
-				If you want to deploy a BPEL project to JBoss BPEL Runtime, you should create a <filename>bpel-deploy.xml</filename> file. JBoss tools can help you to create it:
+				If you want to deploy a BPEL project to the JBoss BPEL Runtime, a <filename>deploy.xml</filename> file needs to be created. The steps below show you how to create this file in JBDS:
       </para>
 			<itemizedlist>
 				<listitem>

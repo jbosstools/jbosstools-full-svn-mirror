@@ -3,9 +3,9 @@
 "http://www.docbook.org/xml/4.3/docbookx.dtd"
 
 [<!ENTITY  overview SYSTEM "overview.xml">
-<!ENTITY install SYSTEM "install.xml">
-<!ENTITY detail SYSTEM "detail.xml">
-<!ENTITY deploy SYSTEM "deploy.xml">
+<!--<!ENTITY install SYSTEM "install.xml">-->
+<!--<!ENTITY detail SYSTEM "detail.xml">-->
+<!--<!ENTITY deploy SYSTEM "deploy.xml">-->
 <!ENTITY reference SYSTEM "reference.xml">
 <!ENTITY summary SYSTEM "summary.xml">
 <!ENTITY tasks SYSTEM "tasks.xml">
@@ -52,5 +52,5 @@
     </abstract>
   </bookinfo>
   <toc/>
-&overview;&install;&tasks;<!--  &detail;
-        &deploy;-->&reference;&summary;</book>
+  &overview;&tasks;&reference;&summary;
+<!--&overview;&install;&tasks;&detail;&deploy;&reference;&summary;--></book>
