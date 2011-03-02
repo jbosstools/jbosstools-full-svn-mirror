@@ -1,10 +1,14 @@
 Instead of mirroring Helios here, composite a site here from:
 
-* /updates/requirements/indigo/
-* /updates/requirements/orbit/
-* /updates/requirements/gwt/
-* /updates/requirements/swtbot/2.0.3/
-* /updates/requirements/birt/4.0/
+<children size='7'>
+<child location='http://download.jboss.org/jbosstools/updates/requirements/indigo/'/>
+<child location='http://download.jboss.org/jbosstools/updates/requirements/birt/4.0/'/>
+<child location='http://download.jboss.org/jbosstools/updates/requirements/gwt/201012211742/'/>
+<child location='http://download.jboss.org/jbosstools/updates/requirements/orbit/S20110124210048/'/>
+<child location='http://download.jboss.org/jbosstools/updates/requirements/swtbot/2.0.3/'/>
+<child location='http://download.jboss.org/jbosstools/updates/requirements/webtools/3.3/'/>
+<child location='http://download.jboss.org/jbosstools/updates/requirements/xulrunner-1.9.1.2/'/>
+</children>
 
 See /updates/requirements/indigo/README.txt for how to mirror from eclipse.org to here.
-See /updates/requirements/{gwt,swtbot,birt}/build.xml for how to mirror other sites.
+See /updates/requirements/{birt,gwt,swtbot,webtools}/build.xml for how to mirror other sites.
