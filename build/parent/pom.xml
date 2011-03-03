@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jboss.tools</groupId>
 	<artifactId>org.jboss.tools.parent.pom</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.3-SNAPSHOT</version>
 	<name>JBoss Tools Parent</name>
 	<packaging>pom</packaging>
 	<modules>
@@ -14,7 +14,7 @@
 	<properties>
 		<!--tychoVersion>0.10.0-SNAPSHOT</tychoVersion -->
 		<tychoVersion>0.10.0</tychoVersion>
-		<scmBranch>trunk</scmBranch>
+		<scmBranch>branches/3.3.indigo</scmBranch>
 		<BUILD_ALIAS>Alpha1</BUILD_ALIAS>
 		<memoryOptions1>-Xms512m -Xmx1024m -XX:PermSize=256m</memoryOptions1>
 		<memoryOptions2>-XX:MaxPermSize=256m</memoryOptions2>
@@ -430,8 +430,8 @@
 					</releases>
 				</repository>
 				<repository>
-					<id>eclipse36</id>
-					<url>http://download.eclipse.org/eclipse/updates/3.6/
+					<id>eclipse37</id>
+					<url>http://download.eclipse.org/eclipse/updates/3.7milestones/
 					</url>
 					<layout>p2</layout>
 					<snapshots>
@@ -442,8 +442,8 @@
 					</releases>
 				</repository>
 				<repository>
-					<id>webtools322</id>
-					<url>http://download.eclipse.org/webtools/downloads/drops/R3.2.2/R-3.2.2-20100915173744/repository/
+					<id>jboss-webtools33</id>
+					<url>http://download.jboss.org/jbosstools/updates/requirements/webtools/3.3/
 					</url>
 					<layout>p2</layout>
 					<snapshots>
@@ -454,22 +454,8 @@
 					</releases>
 				</repository>
 				<repository>
-					<id>webtools32</id>
-					<url>http://download.eclipse.org/webtools/repository/helios</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<!-- <repository> <id>jboss-webtools32</id> <url>http://download.jboss.org/jbosstools/updates/requirements/webtools-3.2/ 
-					</url> <layout>p2</layout> <snapshots> <enabled>true</enabled> </snapshots> 
-					<releases> <enabled>true</enabled> </releases> </repository> -->
-				<repository>
-					<id>birt26</id>
-					<url>http://download.eclipse.org/birt/update-site/2.6/
+					<id>jboss-birt40</id>
+					<url>http://download.jboss.org/jbosstools/updates/requirements/birt/4.0/
 					</url>
 					<layout>p2</layout>
 					<snapshots>
@@ -480,8 +466,8 @@
 					</releases>
 				</repository>
 				<repository>
-					<id>swtbot-helios</id>
-					<url>http://download.eclipse.org/technology/swtbot/helios/dev-build/update-site/
+					<id>jboss-swtbot-helios</id>
+					<url>http://download.jboss.org/jbosstools/updates/requirements/swtbot/2.0.3/ 
 					</url>
 					<layout>p2</layout>
 					<snapshots>
@@ -491,9 +477,6 @@
 						<enabled>true</enabled>
 					</releases>
 				</repository>
-				<!-- repository> <id>jboss-swtbot-helios</id> <url>http://download.jboss.org/jbosstools/updates/requirements/swtbot-helios/ 
-					</url> <layout>p2</layout> <snapshots> <enabled>true</enabled> </snapshots> 
-					<releases> <enabled>true</enabled> </releases> </repository -->
 				<repository>
 					<id>m2eclipse</id>
 					<url>http://m2eclipse.sonatype.org/sites/m2e/</url>
@@ -508,21 +491,6 @@
 				<repository>
 					<id>m2eclipse-extras</id>
 					<url>http://m2eclipse.sonatype.org/sites/m2e-extras/</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<!--repository> <id>jboss-orbit</id> <url>http://download.jboss.org/jbosstools/updates/requirements/orbit/R20100519200754/ 
-					</url> <layout>p2</layout> <snapshots> <enabled>true</enabled> </snapshots> 
-					<releases> <enabled>true</enabled> </releases> </repository -->
-				<repository>
-					<id>jboss-thirdparty</id>
-					<url>http://download.jboss.org/jbosstools/updates/requirements/thirdparty/
-					</url>
 					<layout>p2</layout>
 					<snapshots>
 						<enabled>true</enabled>
@@ -816,7 +784,7 @@
 				</repository>
 				<repository> 
 					<id>jboss-requirements-composite-mirror</id> 
-					<url>http://download.jboss.org/jbosstools/updates/helios/</url> 
+					<url>http://download.jboss.org/jbosstools/updates/indigo/</url> 
 					<layout>p2</layout> 
 					<snapshots> <enabled>true</enabled> </snapshots> 
 					<releases> <enabled>true</enabled> </releases> 
