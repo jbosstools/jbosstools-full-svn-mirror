@@ -63,6 +63,7 @@ public class Flasher {
 				private void saveOldStyle(List<FlasherData> flasherData){
 					for (FlasherData flasherData2 : flasherData) {
 						nsIDOMElement domElement = flasherData2.getElement();	
+						if(domElement==null) continue;
 						String oldstyle = domElement.getAttribute(XulRunnerEditor.STYLE_ATTR);
 						domElement.setAttribute(XulRunnerEditor.STYLE_ATTR, 
 								domElement.getAttribute(XulRunnerEditor.STYLE_ATTR) + ';'
