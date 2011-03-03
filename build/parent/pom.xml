@@ -442,8 +442,8 @@
 					</releases>
 				</repository>
 				<repository>
-					<id>webtools322</id>
-					<url>http://download.eclipse.org/webtools/downloads/drops/R3.2.2/R-3.2.2-20100915173744/repository/
+					<id>jboss-webtools32</id>
+					<url>http://download.jboss.org/jbosstools/updates/requirements/webtools/3.2/
 					</url>
 					<layout>p2</layout>
 					<snapshots>
@@ -454,22 +454,8 @@
 					</releases>
 				</repository>
 				<repository>
-					<id>webtools32</id>
-					<url>http://download.eclipse.org/webtools/repository/helios</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<!-- <repository> <id>jboss-webtools32</id> <url>http://download.jboss.org/jbosstools/updates/requirements/webtools-3.2/ 
-					</url> <layout>p2</layout> <snapshots> <enabled>true</enabled> </snapshots> 
-					<releases> <enabled>true</enabled> </releases> </repository> -->
-				<repository>
-					<id>birt26</id>
-					<url>http://download.eclipse.org/birt/update-site/2.6/
+					<id>jboss-birt26</id>
+					<url>http://download.jboss.org/jbosstools/updates/requirements/birt/2.6/
 					</url>
 					<layout>p2</layout>
 					<snapshots>
@@ -480,8 +466,8 @@
 					</releases>
 				</repository>
 				<repository>
-					<id>swtbot-helios</id>
-					<url>http://download.eclipse.org/technology/swtbot/helios/dev-build/update-site/
+					<id>jboss-swtbot-helios</id>
+					<url>http://download.jboss.org/jbosstools/updates/requirements/swtbot/2.0.3/ 
 					</url>
 					<layout>p2</layout>
 					<snapshots>
@@ -491,9 +477,6 @@
 						<enabled>true</enabled>
 					</releases>
 				</repository>
-				<!-- repository> <id>jboss-swtbot-helios</id> <url>http://download.jboss.org/jbosstools/updates/requirements/swtbot-helios/ 
-					</url> <layout>p2</layout> <snapshots> <enabled>true</enabled> </snapshots> 
-					<releases> <enabled>true</enabled> </releases> </repository -->
 				<repository>
 					<id>m2eclipse</id>
 					<url>http://m2eclipse.sonatype.org/sites/m2e/</url>
@@ -508,21 +491,6 @@
 				<repository>
 					<id>m2eclipse-extras</id>
 					<url>http://m2eclipse.sonatype.org/sites/m2e-extras/</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<!--repository> <id>jboss-orbit</id> <url>http://download.jboss.org/jbosstools/updates/requirements/orbit/R20100519200754/ 
-					</url> <layout>p2</layout> <snapshots> <enabled>true</enabled> </snapshots> 
-					<releases> <enabled>true</enabled> </releases> </repository -->
-				<repository>
-					<id>jboss-thirdparty</id>
-					<url>http://download.jboss.org/jbosstools/updates/requirements/thirdparty/
-					</url>
 					<layout>p2</layout>
 					<snapshots>
 						<enabled>true</enabled>
