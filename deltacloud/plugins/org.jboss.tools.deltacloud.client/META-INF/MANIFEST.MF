@@ -1,10 +1,12 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Client
+Bundle-Name: DeltaCloud Client
+Bundle-Vendor: JBoss by Red Hat
 Bundle-SymbolicName: org.jboss.tools.deltacloud.client
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: org.jboss.tools.deltacloud.client.DeltaCloudClientBundle
 Bundle-ActivationPolicy: lazy
+Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ClassPath: .,
  lib/apache-mime4j-0.6.jar,
