@@ -46,8 +46,26 @@
 	</condition>
 	<!-- if can't calculate where build/build.xml is located, must pass in path from parent when calling this script -->
 
+	<target name="get.saxon" unless="saxon.jar.exists">
+		<!-- or use http://downloads.sourceforge.net/saxon/saxonhe9-3-0-4j.zip ? -->
+		<property name="SAXON_MIRROR" value="http://downloads.sourceforge.net/project/saxon/Saxon-HE/9.3/saxonhe9-3-0-4j.zip?r=http%3A%2F%2Fsaxon.sourceforge.net%2F&amp;ts=1297812383&amp;use_mirror=softlayer" />
+		<get usetimestamp="true" dest="${COMMON_TOOLS}/saxonhe9-3-0-4j.zip" src="${SAXON_MIRROR}" />
+		<mkdir dir="${java.io.tmpdir}/saxonhe9-3-0-4j.zip_" />
+		<unzip src="${COMMON_TOOLS}/saxonhe9-3-0-4j.zip" dest="${java.io.tmpdir}/saxonhe9-3-0-4j.zip_" overwrite="true" />
+		<copy file="${java.io.tmpdir}/saxonhe9-3-0-4j.zip_/saxon9he.jar" tofile="${COMMON_TOOLS}/saxon.jar" failonerror="true" />
+		<delete dir="${java.io.tmpdir}/saxonhe9-3-0-4j.zip_" includeemptydirs="true" quiet="true" />
+	</target>
+
 	<target name="init">
 		<ant antfile="${build.xml}" target="init" />
+		<taskdef resource="net/sf/antcontrib/antlib.xml">
+			<classpath>
+				<pathelement location="${COMMON_TOOLS}/ant-contrib.jar" />
+			</classpath>
+		</taskdef>
+
+		<available file="${COMMON_TOOLS}/saxon.jar" type="file" property="saxon.jar.exists" />
+		<antcall target="get.saxon" />
 
 		<macrodef name="get.size">
 			<attribute name="file" />
@@ -82,11 +100,6 @@
 				</if>
 			</sequential>
 		</macrodef>
-		<taskdef resource="net/sf/antcontrib/antlib.xml">
-			<classpath>
-				<pathelement location="${COMMON_TOOLS}/ant-contrib.jar" />
-			</classpath>
-		</taskdef>
 	</target>
 
 	<target name="build.results" depends="init">
@@ -172,7 +185,7 @@ COMPONENT = ${COMPONENT}</echo>
 				</copy>
 				<xslt in="${output.dir}/download.xml" out="${output.dir}/download-snippet.html" style="download.xsl" />
 				<xslt in="${output.dir}/download.xml" out="${output.dir}/buildResults.html" style="buildResults.xsl" />
-				<copy todir="${output.dir}" file="buildResults.css"/>
+				<copy todir="${output.dir}" file="buildResults.css" />
 				<delete file="${output.dir}/download.xml" />
 			</then>
 			<elseif>
@@ -220,6 +233,38 @@ COMPONENT = ${COMPONENT}</echo>
 	<target name="test.xslt">
 		<xslt in="download-template.xml" out="download-snippet.out.html" style="download.xsl" />
 		<xslt in="download-template.xml" out="buildResults.out.html" style="buildResults.xsl" />
+	</target>
+
+	<!-- NEW STUFF HERE -->
+
+	<target name="test.buildResults.aggregate" depends="init" description="generate buildResults.html from build properties">
+		<property name="isTest" value="true" />
+		<ant target="collect.zips" antfile="../aggregate/site/build.xml">
+			<property name="inputRepos" value="1" />
+			<property name="inputRepo1" value="http://download.jboss.org/jbosstools/builds/staging/_composite_/trunk" />
+		</ant>
+		<ant target="collect.metadata" antfile="../aggregate/site/build.xml">
+		</ant>
+		<antcall target="buildResults" />
+	</target>
+
+	<target name="test.buildResults.single" depends="init" description="generate buildResults.html from build properties">
+		<property name="isTest" value="true" />
+		<ant target="collect.zips" antfile="../aggregate/site/build.xml">
+			<property name="inputRepos" value="1" />
+			<property name="inputRepo1" value="http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--common/all/repo" />
+		</ant>
+		<ant target="collect.metadata" antfile="../aggregate/site/build.xml">
+		</ant>
+		<antcall target="buildResults" />
+	</target>
+
+	<target name="buildResults" description="generate buildResults.html from build properties" depends="init">
+
+		<delete quiet="true" file="buildResults.out.html" />
+		<xslt in="zips/build.properties.all.xml" out="buildResults.out.html" style="buildResults.xsl" force="true">
+			<classpath location="${COMMON_TOOLS}/saxon.jar" />
+		</xslt>
 	</target>
 
 </project>

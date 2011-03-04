@@ -1,8 +1,12 @@
-<xsl:stylesheet version="2.0"
-	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:saxon="http://saxon.sf.net/"
-	xmlns="http://www.w3.org/1999/xhtml" extension-element-prefixes="saxon">
-	<xsl:output method="html" indent="yes" />
-	<xsl:template match="/properties">
+<xsl:transform version="1.0"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xalan="http://xml.apache.org/xalan">
+	<xsl:output method="html" indent="yes" xalan:indent-amount="4" />
+	<xsl:template match="/projects">
+
+		<xsl:variable name="baseurl">
+			<xsl:value-of select="@baseurl" />
+		</xsl:variable>
+
 		<html>
 			<head>
 				<title>JBossTools Build Results</title>
@@ -11,6 +15,37 @@
 			<body>
 				<div id="header-blue">
 					<table width="100%" height="100%">
+						<tr>
+							<td>
+								<span id="title-blue">JBossTools Build Results</span>
+								<br />
+								<span id="buildName-blue">
+									${build-type} build
+									${jbds-build-name}
+									<span id="buildName-blue" style="font-size: x-small;">
+										[Hudson Build
+										<a id="buildName-blue" style="font-size: x-small;"
+											href="http://hudson.qa.jboss.com/hudson/view/DevStudio/job/${hudson-job-name}/${hudson-build-number}/">#${hudson-build-number},
+											${hudson-build-id}</a>
+										]
+									</span>
+									<span id="buildName-blue" style="font-size: x-small; font-style: italic;">
+										<a id="buildName-blue"
+											style="font-size: x-small; font-style: italic; color: black;"
+											href="http://hudson.jboss.org/hudson/view/JBossTools/job/${hudson-job-name}/">Public
+											Hudson Mirror</a>
+									</span>
+								</span>
+							</td>
+							<td align="right">
+								<span id="buildDate-blue">${date}</span>
+								<br />
+								<span id="buildExecTime-blue">${build-time}</span>
+								<br />
+								<a id="buildLog-blue"
+									href="http://download.jboss.org/jbosstools/builds/staging/${hudson-job-name}/logs/">Build Logs</a>
+							</td>
+						</tr>
 					</table>
 				</div>
 
@@ -71,124 +106,43 @@
 								</td>
 							</tr>
 
-							<!-- three use cases: a regular component build (as, ws, etc.), a 
-								different-SVN component build (teiid, pi4soa, savara), and a special component 
-								build (xulrunner) -->
-							<xsl:for-each
-								select="//property[contains(@name,'build.properties.JOB_NAME')]">
-								<xsl:variable name="JOB_NAME">
-									<xsl:value-of select="@value" />
+							<xsl:for-each select="project">
+								<xsl:variable name="rowColor">
+									<xsl:if test="position() mod 2 = 1">
+										#CCCCEE
+									</xsl:if>
+									<xsl:if test="position() mod 2 = 0">
+										#FFFFFF
+									</xsl:if>
+									<xsl:if test="contains(@name,'All')">
+										#CCEECC
+									</xsl:if>
+									<xsl:if test="contains(@name,'Source')">
+										#EECCCC
+									</xsl:if>
 								</xsl:variable>
-								<xsl:variable name="COMPONENT">
-									<xsl:choose>
-										<!-- property name="jbosstools-3.2_trunk.component- -ws-SNAPSHOT.build.properties.JOB_NAME" 
-											value="jbosstools-3.2_trunk.component- -ws" -->
-										<xsl:when test="contains(@value,'component--')">
-											<xsl:value-of select="substring-after(@value,'component--')" />
-										</xsl:when>
-
-										<!-- property name="jbosstools-drools-5.2_trunk-SNAPSHOT.build.properties.JOB_NAME" 
-											value="jbosstools-drools-5.2_trunk" -->
-										<xsl:when test="contains(@value, '_stable_branch')">
-											<xsl:value-of
-												select="substring-before(substring-after(@value,'jbosstools-'),'_stable_branch')" />
-										</xsl:when>
-										<xsl:when test="contains(@value, '_trunk')">
-											<xsl:value-of
-												select="substring-before(substring-after(@value,'jbosstools-'),'_trunk')" />
-										</xsl:when>
-
-										<!-- property name="xulrunner-1.9.1.2-2011-01-20_20-39-25-H36.build.properties.JOB_NAME" 
-											value="xulrunner-1.9.1.2" -->
-										<xsl:otherwise>
-											<xsl:value-of select="@value" />
-										</xsl:otherwise>
-									</xsl:choose>
-								</xsl:variable>
-
-								<tr>
-									<td colspan="2">
-										<a href="http://hudson.qa.jboss.com/hudson/job/{$JOB_NAME}/">
-											<xsl:value-of select="$COMPONENT" />
-										</a>
-									</td>
-								</tr>
-
-								<xsl:for-each
-									select="//property[contains(@name,'build.properties.filename') and contains(@name,$COMPONENT)]">
-									<xsl:variable name="rowColor">
-										<xsl:if test="position() mod 2 = 1">
-											#CCCCEE
-										</xsl:if>
-										<xsl:if test="position() mod 2 = 0">
-											#FFFFFF
-										</xsl:if>
-										<xsl:if test="contains(@name,'All')">
-											#CCEECC
-										</xsl:if>
-										<xsl:if test="contains(@name,'Source')">
-											#EECCCC
-										</xsl:if>
-									</xsl:variable>
 
 									<tr bgcolor="{$rowColor}">
-										<!-- <td> <img src="images/OK-small.png" /> </td> -->
-										<td class="downloadInfo">
-											<xsl:for-each select=".">
-												<b>
-													<xsl:variable name="filelabel">
-														<xsl:choose>
-															<!-- property name="jbosstools-3.2_trunk.component- -ws-SNAPSHOT.build.properties.JOB_NAME" 
-																value="jbosstools-3.2_trunk.component- -ws" -->
-															<xsl:when test="contains(@value,'component--')">
-																<xsl:value-of select="substring-after(@value,'component--')" />
-															</xsl:when>
-
-															<!-- property name="jbosstools-drools-5.2_trunk-SNAPSHOT.build.properties.JOB_NAME" 
-																value="jbosstools-drools-5.2_trunk" -->
-															<xsl:when test="contains(@value, '_stable_branch')">
-																<xsl:value-of
-																	select="replace(substring-after(@value,'jbosstools-'),'_stable_branch','')" />
-															</xsl:when>
-															<xsl:when test="contains(@value, '_trunk')">
-																<xsl:value-of
-																	select="replace(substring-after(@value,'jbosstools-'),'_trunk','')" />
-															</xsl:when>
-
-															<!-- property name="xulrunner-1.9.1.2-2011-01-20_20-39-25-H36.build.properties.JOB_NAME" 
-																value="xulrunner-1.9.1.2" -->
-															<xsl:otherwise>
-																<xsl:value-of select="@value" />
-															</xsl:otherwise>
-														</xsl:choose>
-													</xsl:variable>
-													<a class="allLink-blue" href="{@value}">
-														<xsl:value-of select="$filelabel" />
+									<td>
+										<img src="images/OK-small.png" />
+									</td>
+									<td class="downloadInfo">
+										<xsl:for-each select=".">
+											<b>
+												<acronym title="{@name} :: {description}">
+													<a class="allLink-blue" href="{$baseurl}/{download/@url}">
+														<xsl:value-of select="concat(@name,'  ',@version)" />
 													</a>
-													<ul>
-													<li>
-													md5:
-													<xsl:for-each
-														select="//property[contains(@name,'build.properties.filemd5') and contains(@name,$COMPONENT)]">
-														<xsl:value-of select="@value" />
-													</xsl:for-each>
-													</li><li>size:
-													<xsl:for-each
-														select="//property[contains(@name,'build.properties.filesize') and contains(@name,$COMPONENT)]">
-														<xsl:value-of select="@value" /> bytes
-													</xsl:for-each>
-													</li>
-													
-													<xsl:for-each
-														select="tokenize(//property[contains(@name,'build.properties.SVN_REVISION') and contains(@name,$COMPONENT)]/@value,',')">
-														<li>SVN: <xsl:value-of select="." /></li>
-													</xsl:for-each>
-													</ul>
-												</b>
-											</xsl:for-each>
-										</td>
-									</tr>
-								</xsl:for-each>
+												</acronym>
+												<br />
+												<a class="md5" href="{$baseurl}/{download/@url}.MD5">MD5</a>
+												| filesize:
+												<xsl:value-of select="download/@size" />
+											</b>
+											<br />
+										</xsl:for-each>
+									</td>
+								</tr>
 							</xsl:for-each>
 						</table>
 
@@ -305,5 +259,6 @@
 		</html>
 
 
+
 	</xsl:template>
-</xsl:stylesheet>
+</xsl:transform>
