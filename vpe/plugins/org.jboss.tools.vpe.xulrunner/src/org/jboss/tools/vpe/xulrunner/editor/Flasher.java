@@ -77,6 +77,7 @@ public class Flasher {
 			drawOutline = new DrawOutlineInterface() {			
 				public void drawElementOutline(List<FlasherData> flasherData) {
 					for (FlasherData flasherData2 : flasherData) {
+						if(flasherData2.getElement()==null) continue;
 						iFlasher.setColor(flasherData2.getSelectionColor());
 						iFlasher.drawElementOutline(flasherData2.getElement());
 					}
