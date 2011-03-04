@@ -5,7 +5,7 @@
 		-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} 
 		-consoleLog -nosplash -data /tmp
 		-application org.eclipse.ant.core.antRunner
-		-f "/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/swtbot/build.xml"
+		-f "/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/tptp/build.xml"
 		
 		or, run headless on qa01 server, where Eclipse is installed into ~/eclipse:
 		
@@ -13,15 +13,15 @@
 		${JAVA_HOME}/bin/java -cp ~/eclipse/plugins/org.eclipse.equinox.launcher_*.jar \
 			org.eclipse.equinox.launcher.Main -vm ${JAVA_HOME} -consoleLog -nosplash -data /tmp \
 			-application org.eclipse.ant.core.antRunner \
-			-f ~/RHDS/updates/requirements/swtbot/build.xml -Ddestination=/tmp/swtbot-repo
+			-f ~/RHDS/updates/requirements/tptp/build.xml -Ddestination=/tmp/tptp-repo
 	-->
 	<target name="mirror">
-		<property name="URL" value="http://download.eclipse.org/technology/swtbot/helios/dev-build/update-site" />
-		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/swtbot/2.0.3/" />
+		<property name="URL" value="http://download.eclipse.org/technology/tptp/helios/dev-build/update-site" />
+		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/tptp/4.7/" />
 		<property name="compress" value="true" />
 
 		<p2.mirror>
-			<repository location="file:${destination}/2.0.3/" name="SWTBot plugins for Eclipse 3.6 - 3.7" />
+			<repository location="file:${destination}/4.7/" name="TPTP plugins for Eclipse 3.6 (EOL)" />
 			<source>
 				<repository location="${URL}" />
 			</source>
@@ -29,6 +29,6 @@
 			<slicingOptions includeFeatures="true" followStrict="true" />
 		</p2.mirror>
 
-		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/2.0.3/" artifactRepository="file:${destination}/2.0.3/" publishartifacts="true" source="${destination}/2.0.3/" compress="${compress}" />
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/4.7/" artifactRepository="file:${destination}/4.7/" publishartifacts="true" source="${destination}/4.7/" compress="${compress}" />
 	</target>
 </project>
