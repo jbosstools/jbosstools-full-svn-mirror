@@ -210,7 +210,7 @@
 		</location>
 
 		<location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
-			<repository location="http://download.jboss.org/jbosstools/builds/staging/_composite_/trunk/"/>
+			<repository location="http://download.jboss.org/jbosstools/builds/staging/_composite_/3.3.indigo/"/>
 		</location>
 		<location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
 			<unit id="com.google.gdt.eclipse.suite.e36.feature.feature.group" version="1.4.2.v201012211742"/>
