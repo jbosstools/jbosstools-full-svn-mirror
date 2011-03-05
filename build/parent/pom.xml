@@ -30,7 +30,7 @@
 		<target.platform.classifier.local>local
 		</target.platform.classifier.local>
 
-		<jbosstools-nightly>http://download.jboss.org/jbosstools/updates/nightly/3.3.indigo/</jbosstools.update>
+		<jbosstools-nightly>http://download.jboss.org/jbosstools/updates/nightly/3.3.indigo/</jbosstools-nightly>
 		<jbosstools-target-site>http://download.jboss.org/jbosstools/updates/target-platform_3.3.indigo/latest/</jbosstools-target-site>
 
 		<!-- pass in your own path using -Dlocal.site=file://home/$user/trunk/build/target-platform/REPO/ -->
@@ -404,43 +404,6 @@
 						<enabled>true</enabled>
 					</releases>
 				</repository>
-				<repository>
-					<id>eclipse37</id>
-					<url>http://download.eclipse.org/eclipse/updates/3.7milestones/
-					</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<repository>
-					<id>m2eclipse</id>
-					<url>http://m2eclipse.sonatype.org/sites/m2e/</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<repository>
-					<id>m2eclipse-extras</id>
-					<url>http://m2eclipse.sonatype.org/sites/m2e-extras/</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<!--repository> <id>jboss-xulrunner-1.9.2</id> <url>http://download.jboss.org/jbosstools/updates/requirements/xulrunner-1.9.2/ 
-					</url> <layout>p2</layout> <snapshots> <enabled>true</enabled> </snapshots> 
-					<releases> <enabled>true</enabled> </releases> </repository -->
 			</repositories>
 		</profile>
 
