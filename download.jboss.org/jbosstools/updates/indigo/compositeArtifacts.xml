@@ -11,7 +11,7 @@
 </properties>
 <children size='14'>
 <child location='http://download.jboss.org/jbosstools/updates/requirements/indigo/201102040900/'/>
-<child location='http://download.jboss.org/jbosstools/updates/requirements/birt/4.0/'/>
+<child location='http://download.jboss.org/jbosstools/updates/requirements/birt/4.0M5/'/>
 <child location='http://download.jboss.org/jbosstools/updates/requirements/ecf/3.4M5/'/>
 <child location='http://download.jboss.org/jbosstools/updates/requirements/eclipse/3.7M5/'/>
 <child location='http://download.jboss.org/jbosstools/updates/requirements/emf/2.7M5/'/>
