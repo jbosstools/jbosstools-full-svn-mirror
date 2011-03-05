@@ -5,7 +5,7 @@
 		-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} 
 		-consoleLog -nosplash -data /tmp
 		-application org.eclipse.ant.core.antRunner
-		-f "/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/m2eclipse/build.xml"
+		-f "/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/emf/build.xml"
 		
 		or, run headless on qa01 server, where Eclipse is installed into ~/eclipse:
 		
@@ -13,7 +13,7 @@
 		${JAVA_HOME}/bin/java -cp ~/eclipse/plugins/org.eclipse.equinox.launcher_*.jar \
 			org.eclipse.equinox.launcher.Main -vm ${JAVA_HOME} -consoleLog -nosplash -data /tmp \
 			-application org.eclipse.ant.core.antRunner \
-			-f ~/RHDS/updates/requirements/m2eclipse/build.xml -Ddestination=/tmp/m2eclipse-repo
+			-f ~/RHDS/updates/requirements/emf/build.xml -Ddestination=/tmp/emf-repo
 	-->
 	<target name="mirror">
 		<property name="URL" value="http://download.eclipse.org/modeling/emf/emf/updates/2.7milestones/" />
