@@ -29,7 +29,6 @@
 <slicingOptions includeFeatures="true" followStrict="${followStrict}"/>
 <source>
 <repository location="http://download.jboss.org/jbosstools/updates/indigo/"/>
-<repository location="http://download.jboss.org/jbosstools/updates/helios/"/>
 </source>
 <iu id="org.eclipse.cvs.feature.group" version=""/>
 <iu id="org.eclipse.datatools.enablement.sdk.feature.feature.group" version=""/>
