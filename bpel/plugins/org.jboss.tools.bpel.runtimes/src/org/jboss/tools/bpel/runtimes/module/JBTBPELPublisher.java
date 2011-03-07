@@ -300,6 +300,14 @@ public class JBTBPELPublisher implements IJBossServerPublisher {
 		public BPELZippedPublisherUtil(IPath deployPath) {
 			this.deployPath = deployPath;
 		}
+		
+		@Override
+		// https://issues.jboss.org/browse/JBIDE-6617
+		// This was probably a typo - the actual override should have an IModule[] arg
+		public IPath getOutputFilePath(IModule[] module) {
+			return getOutputFilePath();
+		}
+
 		public IPath getOutputFilePath() {
 			return deployPath;
 		}
