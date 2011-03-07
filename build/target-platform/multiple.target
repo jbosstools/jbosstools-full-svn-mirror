@@ -84,7 +84,7 @@
 			<unit id="org.eclipse.birt.integration.wtp.feature.group" version="2.6.2.v20110215-1647-3517w3122132602758"/>
 			<unit id="org.eclipse.birt.chart.feature.group" version="2.6.2.r262_v20101008-7f9T7OFPWowQ1naKt1Wwu4"/>
 			<unit id="org.eclipse.birt.chart.integration.wtp.feature.group" version="2.6.2.v20110215-1647-3517w3122132602758"/>
-			<repository location="http://download.jboss.org/jbosstools/updates/requirements/birt/2.6/"/>
+			<repository location="http://download.jboss.org/jbosstools/updates/requirements/birt/2.6.2/"/>
 		</location>
 		<location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
 			<unit id="com.ibm.icu.base.feature.group" version="1.1.0.v20090119-79318s73533B57"/>
