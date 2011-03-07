@@ -19,8 +19,6 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.rse.core.model.IHost;
-import org.eclipse.rse.core.subsystems.IConnectorService;
-import org.eclipse.rse.services.clientserver.messages.SystemMessageException;
 import org.eclipse.rse.subsystems.files.core.subsystems.IRemoteFileSubSystem;
 import org.eclipse.swt.widgets.Display;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
@@ -51,7 +49,7 @@ public class CreateRSEFromInstanceJob extends AbstractInstanceJob {
 			return Status.CANCEL_STATUS;
 		}
 		
-		String hostname = RSEUtils.createHostName(instance);
+		String hostname = RSEUtils.createRSEHostName(instance);
 		if (hostname == null || hostname.length() <= 0) {
 			return Status.CANCEL_STATUS;
 		}
@@ -60,8 +58,10 @@ public class CreateRSEFromInstanceJob extends AbstractInstanceJob {
 			try {
 				monitor.beginTask("Create RSE Server", 100);
 				String connectionName = RSEUtils.createConnectionName(instance);
-				IHost host = RSEUtils.createHost(connectionName,
-						RSEUtils.createHostName(instance),
+				IHost host = RSEUtils.createHost(
+						"jboss",
+						connectionName,
+						RSEUtils.createRSEHostName(instance),
 						RSEUtils.getSSHOnlySystemType(),
 						RSEUtils.getSystemRegistry());
 				if( nextJob2 != null && nextJob2 instanceof CreateServerFromRSEJob) {
