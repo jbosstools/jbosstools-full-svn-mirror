@@ -20,7 +20,7 @@
         In this guide we will use the <property>Employees</property> table of the <property>DATAMODELS</property> database.      
 </para>
 
-    <tip>
+    <note>
         <title>Tip:</title>
         <para>Before performing Seam Generate Entities, you should have a connection profile
             adjusted and connected to a database. How to do this see in the <ulink
@@ -32,7 +32,7 @@
             <link linkend="birt_integration_with_seam">Adding BIRT Functionality to Standard Seam Web Project</link> chapter,
             you would have a connection profile already configured.        
                 </para>
-    </tip>
+    </note>
     </listitem>
     <listitem>
 <para>
@@ -168,11 +168,11 @@ from Employees as employees where employees.jobtitle = 'Sales Rep'
     <para>Now you can insert the  data set items of <property>HibernateDataSet</property> into the <property>employees.rptdesign</property>.</para>
     
 
-    <tip>
+    <note>
         <title>Tip:</title>
         <para>If you don&apos;t know how to do this we suggest that you refer to the <ulink
                 url="http://www.eclipse.org/birt/phoenix/tutorial/">Eclipse BIRT Tutorial</ulink>.</para>
-    </tip>
+    </note>
   
 
 <para>You can also use parameters in the query to add  dynamics to your report. In the previous example we hardcoded the selection criterion in the <code>where</code> clause. </para>
