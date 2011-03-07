@@ -11,7 +11,7 @@
 	<note>
 		<title>Tip:</title>
 		<para>
-			<ulink url="http://sourceforge.net/project/showfiles.php?group_id=22866&amp;package_id=163777">JBoss Seam 2.0.1 GA</ulink> and <ulink url="http://sourceforge.net/project/showfiles.php?group_id=22866&amp;package_id=163777">JBoss Application Server 4.2.2 GA</ulink> were used in the examples presented in this guide.
+			<ulink url="http://sourceforge.net/projects/jboss/files/JBoss%20Seam/2.2.1.Final/">JBoss Seam 2.2.1 GA</ulink> and <ulink url="http://sourceforge.net/projects/jboss/files/JBoss/JBoss-5.1.0.GA/">JBoss Application Server 5.1.0 GA</ulink> were used in the examples presented in this guide.
     </para>
 	</note>
 
