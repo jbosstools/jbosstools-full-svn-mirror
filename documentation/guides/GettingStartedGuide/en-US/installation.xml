@@ -386,7 +386,7 @@ Java HotSpot(TM) Server VM (build 19.1-b02, mixed mode)]]></programlisting>
 		<note>
 			<title>Note</title>
 			<para>
-				If you are prompted for credentials when accessing the Tech Preview Update Site, enter the username and password that were supplied in an email or shown in the <ulink url="http://access.redhat.com">Customer Service Portal</ulink>. If you experience any issues accessing the Tech Preview Update Site please contact technical support.  
+				If you are prompted for credentials when accessing the Tech Preview Update Site, enter the username and password that were supplied in an email or shown in the Update Guide available on the <ulink url="http://access.redhat.com">Customer Service Portal</ulink>. If you experience any issues accessing the Tech Preview Update Site please contact technical support.  
 			</para>
 		</note>
 	
