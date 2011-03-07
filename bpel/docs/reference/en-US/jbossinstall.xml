@@ -12,7 +12,7 @@
 				The &PLUGINNAME; plugin can be installed in Eclipse from the JBoss.org update site. JBoss Tools 3.2 requires Eclipse 3.6, which can be downloaded from the <ulink url="http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/helios/">Eclipse web site</ulink>. 				
 			</para>
 			<para>
-				To install the JBoss Tools plugins  start Eclipse, and select 	<menuchoice><guimenuitem>Help</guimenuitem><guimenuitem>Install New Software...</guimenuitem></menuchoice>
+				To install the JBoss Tools plugins start Eclipse and select	<menuchoice><guimenuitem>Help</guimenuitem><guimenuitem>Install New Software...</guimenuitem></menuchoice>
 			</para>
 		
 		<figure id="figure-install-new-software">
@@ -51,7 +51,7 @@
 		</figure>
 		
 		<para>
-			The <guilabel>JBoss.org Tools</guilabel> site will be selected in the <guilabel>Work with</guilabel> drop down list, and after a moment the list of plugins that are included with the JBoss Tools package will be listed. From this list you can individually select the &PLUGINNAME; plugin, or select the <guilabel>All JBoss Tools 3.2.0</guilabel> option to install all the plugins.
+			The <guilabel>JBoss.org Tools</guilabel> site will be selected in the <guilabel>Work with</guilabel> drop down list, and after a moment the list of plugins that are included in the JBoss Tools package will be listed. From this list you can individually select the &PLUGINNAME; plugin, or select the <guilabel>All JBoss Tools 3.2.0</guilabel> option to install all the plugins.
 		</para>
 		
 		<figure id="figure-available-software">
@@ -77,7 +77,7 @@
 		</figure>
 		
 		<para>
-			Click the <guibutton>Next</guibutton> button to install the selected plugins. You will be prompted to accept the various license agreements that cover the plugins to be installed. Review the licenses, select the <guilabel>I accept the terms of the license agreements</guilabel> option, and click the <guibutton>Finish</guibutton> button to install the plugins.
+			Click the <guibutton>Next</guibutton> button to install the selected plugins. You will be prompted to accept the various license agreements that cover the plugins that are to be installed. Review the licenses, select the <guilabel>I accept the terms of the license agreements</guilabel> option, and click the <guibutton>Finish</guibutton> button to install the plugins.
 		</para>
 		
 		<figure id="figure-license-review">
@@ -125,7 +125,7 @@
 		</figure>
 		
 		<para>
-			When Eclipse is first started with the JBoss Tools plugins installed, you may be prompted to allow or disallow anonymous statistics to be sent to the JBoss team. You can find more information on the data that is collected in the <ulink url="http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/4.0/html-single/Getting_Started_Guide/index.html#Collected_usage_information_guide">Getting Started Guide</ulink>. Click the <guibutton>Yes</guibutton> to allow the statistics to be sent, or click the <guibutton>No</guibutton> button if you prefer not to send this data. 
+			When Eclipse is first started with the JBoss Tools plugins installed, you may be prompted to allow or disallow anonymous statistics to be sent to the JBoss development team. You can find more information on the data that is sent in the <ulink url="http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/4.0/html-single/Getting_Started_Guide/index.html#Collected_usage_information_guide">Getting Started Guide</ulink>. Click the <guibutton>Yes</guibutton> to allow the statistics to be sent, or click the <guibutton>No</guibutton> button if you prefer not to send this data. 
 		</para>
 		
 		<figure id="figure-usage">
@@ -137,7 +137,7 @@
 			</mediaobject>
 		</figure>
 		
-		<para>The The &PLUGINNAME; plugin is now installed and ready to use.</para>
+		<para>The &PLUGINNAME; plugin is now installed and ready to use.</para>
 		
 	</section>
 </chapter>
