@@ -48,8 +48,17 @@
 		</figure>
 		
 		<para>
-			The <guilabel>JBoss.org Tools</guilabel> site will be selected in the <guilabel>Work with</guilabel> drop down list, and after a moment the list of plugins that are included with the JBoss Tools package will be listed. From this list you can select individual select the &PLUGINNAME; plugin, or select the <guilabel>All JBoss Tools 3.2.0</guilabel> option to install all the plugins.
+			The <guilabel>JBoss.org Tools</guilabel> site will be selected in the <guilabel>Work with</guilabel> drop down list, and after a moment the list of plugins that are included with the JBoss Tools package will be listed. From this list you can select individually select the &PLUGINNAME; plugin, or select the <guilabel>All JBoss Tools 3.2.0</guilabel> option to install all the plugins.
 		</para>
+		
+		<figure id="figure-available-software">
+			<title>Available Software</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/installineclipse3a.png" format="PNG"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
 		
 		<para>
 			Click the <guibutton>Next</guibutton> button to calculate the system requirements and dependencies (this may take a little while). You will then be given an opportunity to review the plugins that will be installed.
