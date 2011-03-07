@@ -6,7 +6,7 @@ Instead of mirroring Helios here, composite a site here from:
 <child location='http://download.jboss.org/jbosstools/updates/requirements/ecf/3.4M5/'/>
 <child location='http://download.jboss.org/jbosstools/updates/requirements/eclipse/3.7M5/'/>
 <child location='http://download.jboss.org/jbosstools/updates/requirements/emf/2.7M5/'/>
-<child location='http://download.jboss.org/jbosstools/updates/requirements/gwt/201012211742/'/>
+<child location='http://download.jboss.org/jbosstools/updates/requirements/gwt/201102111811/'/>
 <child location='http://download.jboss.org/jbosstools/updates/requirements/m2eclipse/0.12/'/>
 <child location='http://download.jboss.org/jbosstools/updates/requirements/orbit/S20110124210048/'/>
 <child location='http://download.jboss.org/jbosstools/updates/requirements/subclipse/1.6/'/>
