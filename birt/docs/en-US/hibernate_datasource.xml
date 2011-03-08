@@ -20,14 +20,9 @@
 
 			<note>
 				<title>Tip:</title>
-				<para>Before performing Seam Generate Entities, you should have a connection profile
-            adjusted and connected to a database. For on how to do this see the <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/seam/html_single/index.html#crud_database_application">CRUD Database Application</ulink> chapter of the Seam Dev Tools Reference
-                guide.</para>
 				<para>
-            If you followed the steps described in the
-            <link linkend="birt_integration_with_seam">Adding BIRT Functionality to Standard Seam Web Project</link> chapter,
-            you would have a connection profile already configured.        
-                </para>
+					Before performing Seam Generate Entities, you should have a connection profile adjusted and connected to a database. For information on how to do this see the <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/seam/html_single/index.html#crud_database_application">CRUD Database Application</ulink> chapter of the Seam Dev Tools Reference guide.
+				</para>
 			</note>
 		</listitem>
 		<listitem>
