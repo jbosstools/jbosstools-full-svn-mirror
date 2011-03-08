@@ -4,7 +4,7 @@ Instead of mirroring Helios here, composite a site here from:
 <child location='../requirements/helios/201102250900/'/>
 <child location='../requirements/birt/2.6.2/'/>
 <child location='../requirements/ecf/3.4/'/>
-<child location='../requirements/eclipse/3.6.2/'/>
+<child location='../requirements/eclipse/3.6/'/>
 <child location='../requirements/emf/2.6/'/>
 <child location='../requirements/gwt/201012211742/'/>
 <child location='../requirements/m2eclipse/0.12/'/>
