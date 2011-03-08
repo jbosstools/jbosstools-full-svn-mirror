@@ -61,6 +61,7 @@ public class NewInstanceWizard extends AbstractDeltaCloudWizard {
 
 	@Override
 	public void addPages() {
+		setWindowTitle(WizardMessages.getString("NewInstance.title"));
 		mainPage = new NewInstancePage(getDeltaCloud(), image);
 		addPage(mainPage);
 		additionalPages = DeltacloudUIExtensionManager.getDefault().loadNewInstanceWizardPages();

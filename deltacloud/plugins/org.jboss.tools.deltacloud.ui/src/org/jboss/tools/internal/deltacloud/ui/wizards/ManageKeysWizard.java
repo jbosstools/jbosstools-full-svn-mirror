@@ -32,6 +32,7 @@ public class ManageKeysWizard extends AbstractDeltaCloudWizard {
 
 	@Override
 	public void addPages() {
+		setWindowTitle(WizardMessages.getString("ManageKeys.title"));
 		mainPage = new ManageKeysPage(getDeltaCloud());
 		addPage(mainPage);
 	}

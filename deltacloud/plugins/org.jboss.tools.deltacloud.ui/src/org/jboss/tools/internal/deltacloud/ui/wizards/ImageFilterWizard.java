@@ -26,7 +26,7 @@ public class ImageFilterWizard extends AbstractDeltaCloudWizard {
 
 	@Override
 	public void addPages() {
-		// TODO Auto-generated method stub
+		setWindowTitle(WizardMessages.getString("ImageFilter.title"));
 		mainPage = new ImageFilterPage(getDeltaCloud());
 		addPage(mainPage);
 	}

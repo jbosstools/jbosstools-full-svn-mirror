@@ -72,6 +72,7 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 
 	@Override
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
+		setWindowTitle(WizardMessages.getString("NewCloudConnection.name"));
 	}
 
 	@Override

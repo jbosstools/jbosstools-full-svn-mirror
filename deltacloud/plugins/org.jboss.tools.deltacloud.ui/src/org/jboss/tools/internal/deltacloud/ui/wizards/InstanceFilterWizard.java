@@ -27,6 +27,7 @@ public class InstanceFilterWizard extends AbstractDeltaCloudWizard {
 
 	@Override
 	public void addPages() {
+		setWindowTitle(WizardMessages.getString("InstanceFilter.title"));
 		mainPage = new InstanceFilterPage(getDeltaCloud());
 		addPage(mainPage);
 	}

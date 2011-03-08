@@ -1,5 +1,12 @@
 2011-03-08  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/FindImageWizard.java (addPages): 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/InstanceFilterWizard.java (addPages): 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ImageFilterWizard.java (addPages): 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnectionWizard.java (init): 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/EditCloudConnectionWizard.java (init): 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstanceWizard.java (addPages): 
+	[JBIDE-8090] set window titles to wizards
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java (createWidgets): 
 	[JBIDE-8293] added link to SSH2 private keys in preferences
 

@@ -16,6 +16,8 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.ui.IWorkbench;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudDriver;
 import org.jboss.tools.deltacloud.core.job.AbstractCloudJob;
@@ -34,6 +36,11 @@ public class EditCloudConnectionWizard extends NewCloudConnectionWizard {
 	}
 
 	@Override
+	public void init(IWorkbench workbench, IStructuredSelection selection) {
+		setWindowTitle(WizardMessages.getString("EditCloudConnection.name"));
+	}
+
+	@Override
 	public boolean performFinish() {
 		String name = mainPage.getConnectionName();
 		String url = mainPage.getUrl();
@@ -42,6 +49,7 @@ public class EditCloudConnectionWizard extends NewCloudConnectionWizard {
 		DeltaCloudDriver driver = mainPage.getDriver();
 		return editCloud(initialCloud, name, url, username, password, driver);
 	}
+
 
 	private boolean editCloud(final DeltaCloud cloud, final String name, final String url, final String username,
 			final String password, final DeltaCloudDriver driver) {
