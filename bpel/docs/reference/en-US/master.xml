@@ -1,15 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3CR3//EN" 
-"http://www.docbook.org/xml/4.3/docbookx.dtd"
-
-[<!ENTITY  overview SYSTEM "overview.xml">
-<!--<!ENTITY install SYSTEM "install.xml">-->
-<!--<!ENTITY detail SYSTEM "detail.xml">-->
-<!--<!ENTITY deploy SYSTEM "deploy.xml">-->
-<!ENTITY reference SYSTEM "reference.xml">
-<!ENTITY summary SYSTEM "summary.xml">
-<!ENTITY tasks SYSTEM "tasks.xml">
-<!ENTITY jbossinstall SYSTEM "jbossinstall.xml">
+<!DOCTYPE Book PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+	<!ENTITY  overview SYSTEM "overview.xml">
+	<!--<!ENTITY install SYSTEM "install.xml">-->
+	<!--<!ENTITY detail SYSTEM "detail.xml">-->
+	<!--<!ENTITY deploy SYSTEM "deploy.xml">-->
+	<!ENTITY reference SYSTEM "reference.xml">
+	<!ENTITY summary SYSTEM "summary.xml">
+	<!ENTITY tasks SYSTEM "tasks.xml">
+	<!ENTITY jbossinstall SYSTEM "jbossinstall.xml">
 ]>
 <book>
   <bookinfo>
