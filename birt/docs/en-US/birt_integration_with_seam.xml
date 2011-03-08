@@ -260,7 +260,7 @@
 				<para>In the <guilabel>Servers</guilabel> view (if it is not open select <menuchoice><guimenuitem>Windows</guimenuitem><guimenuitem>Show View</guimenuitem><guimenuitem>Other</guimenuitem><guimenuitem>Server</guimenuitem><guimenuitem>Servers</guimenuitem></menuchoice>), select the server the application is deployed to and hit the <guibutton>Start</guibutton> button. </para>
 			</listitem>
 			<listitem>
-				<para>When the server is started, open your favourite browser and point it to <code>http://localhost:8080/HelloBirt/helloBirt.seam</code> .</para>
+				<para>When the server is started, open your favourite browser and point it to <ulink url="http://localhost:8080/HelloBirt/helloBirt.seam">http://localhost:8080/HelloBirt/helloBirt.seam</ulink>.</para>
 
 				
 				<figure>
