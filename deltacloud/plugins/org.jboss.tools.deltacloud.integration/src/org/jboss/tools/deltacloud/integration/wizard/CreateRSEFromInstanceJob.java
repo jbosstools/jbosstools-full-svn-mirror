@@ -43,7 +43,7 @@ public class CreateRSEFromInstanceJob extends AbstractInstanceJob {
 	private Job nextJob2 = null;
 
 	public CreateRSEFromInstanceJob(DeltaCloudInstance instance, String family) {
-		super("Create RSE Host from DeltaCloud Instance", instance, family);
+		super(MessageFormat.format("Create RSE {0}", instance.getAlias()), instance, family);
 	}
 
 	public IStatus doRun(IProgressMonitor monitor) throws CoreException {

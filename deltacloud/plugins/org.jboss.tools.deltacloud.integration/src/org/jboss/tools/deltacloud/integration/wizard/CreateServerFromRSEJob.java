@@ -81,6 +81,7 @@ public class CreateServerFromRSEJob extends ChainedJob {
 
 	public void setHost(IHost host) {
 		this.host = host;
+		setName(MessageFormat.format("Create Server {0} From RSE Host", host.getName()));
 	}
 
 	protected IStatus run(IProgressMonitor monitor) {

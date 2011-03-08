@@ -66,6 +66,9 @@ public class DeltaCloudInstance extends AbstractDeltaCloudElement {
 	}
 
 	public String getAlias() {
+		if (alias == null || alias.length() == 0) {
+			return instance.getName();
+		}
 		return alias;
 	}
 
