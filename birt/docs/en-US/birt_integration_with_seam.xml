@@ -148,11 +148,9 @@
 	<section id="integration">
 		<title>Integration with Seam</title>
 		<para>
-    In the previous section you have created a Seam project with BIRT capabilities. 
-    Now you can create a simple kick start project to see that everything is configured correctly. 
-</para>
+    		In the previous section you have created a Seam project with BIRT capabilities. Now you can create a simple kick start project to see that everything is configured correctly. 
+    </para>
 
-		
 		<orderedlist>
 			<listitem>
 				<para>
@@ -162,12 +160,12 @@
 					The report should print the data from the <code>CLASSICMODELS.CUSTOMERS</code> table of the <guilabel>BIRT Classic Models Sample Database</guilabel>, namely: 
 					<orderedlist>
 						<listitem><para>Customer number (<code>CLASSICMODELS.CUSTOMERS.CUSTOMERNAME</code>)</para></listitem>
-						<listitem><para>Contact person first name ( <code>CLASSICMODELS.CUSTOMERS.CONTACTFIRSTNAME</code>)</para></listitem>
+						<listitem><para>Contact person first name (<code>CLASSICMODELS.CUSTOMERS.CONTACTFIRSTNAME</code>)</para></listitem>
 						<listitem><para>Contact person last name (<code>CLASSICMODELS.CUSTOMERS.CONTACTLASTNAME</code>)</para></listitem>
-						<listitem><para>Contact person phone number(<code>CLASSICMODELS.CUSTOMERS.PHONE</code>)</para></listitem>
+						<listitem><para>Contact person phone number (<code>CLASSICMODELS.CUSTOMERS.PHONE</code>)</para></listitem>
 					</orderedlist>
         </para>
-				<para>The title of the report should be set via <code>reportTitle</code> parameter</para>
+				<para>The title of the report should be set via <code>reportTitle</code> parameter.</para>
 				<para>
 					As this guide is primarily focused on the BIRT integration and not the BIRT technology itself, the steps required to make the report will not be shown. For more information on creating a BIRT report file please read the <ulink url="http://eclipse.org/birt/phoenix/tutorial/">BIRT documentation</ulink>.
          </para>
