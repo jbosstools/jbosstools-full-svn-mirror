@@ -169,9 +169,12 @@
 				<para>
 					As this guide is primarily focused on the BIRT integration and not the BIRT technology itself, the steps required to make the report will not be shown. For more information on creating a BIRT report file please read the <ulink url="http://eclipse.org/birt/phoenix/tutorial/">BIRT documentation</ulink>.
          </para>
-				<para>
+				<note>
+					<title>Tip</title>
+         <para>
 					You can download the <filename>helloBirt.rptdesign</filename> file <ulink url="files/helloBirt.rptdesign">here</ulink> and copy it to the <filename>WebContent</filename> folder of your Seam project.
-				</para>			
+				</para>
+				</note>
 			</listitem>
 			
 			<listitem>
