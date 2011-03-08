@@ -154,7 +154,7 @@
 		<orderedlist>
 			<listitem>
 				<para>
-					Now create a BIRT report file and insert test data into the file. Name the report file <filename>helloBirt.rptdesign</filename>. 
+					Now create a BIRT report file and insert test data into the file. Name the report file <filename>helloBirt.rptdesign</filename> in the <filename>WebContent</filename> folder. 
 				</para>
 				<para>
 					The report should print the data from the <code>CLASSICMODELS.CUSTOMERS</code> table of the <guilabel>BIRT Classic Models Sample Database</guilabel>, namely: 
@@ -217,7 +217,7 @@
 			<listitem>
 
 				
-				<para>Create the <property>helloBirt.xhtml</property> file  in the WebContent with the following content: </para>
+				<para>Create the <filename>helloBirt.xhtml</filename> file in the <filename>WebContent</filename> folder with the following content: </para>
 				
 				<programlisting role="XML"><![CDATA[...
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
@@ -239,9 +239,9 @@
 </ui:composition>            
 ...]]></programlisting>
 				
-				<para>From this listing above you see that the title of the report is set via <emphasis role="bold"> <property>&lt;b:param&gt;</property>
-					</emphasis> by setting the parameter name and defining the <emphasis><property>&quot;value&quot;</property>
-					</emphasis> attribute with the &quot;Customers Contacts&quot; value.</para>
+				<para>
+					From this listing above you see that the title of the report is set via <code>&lt;b:param&gt;</code> by setting the parameter name and defining the <code>value</code> attribute with the <code>Customers Contacts</code> value.
+				</para>
 			
 			</listitem>
   
@@ -249,13 +249,15 @@
 
 			
 			<listitem>
-				<para>We have created a Seam  project and inserted the <property>helloBirt</property> report into the <property>helloBirt.xhtml</property> view file.</para>
+				<para>
+					We have created a Seam  project and inserted the <filename>helloBirt</filename> report into the <filename>helloBirt.xhtml</filename> view file.
+				</para>
 
 				
 				<para>To see that the application works correctly and as you expect, you need to launch it on the server.</para>
 			</listitem>
 			<listitem>
-				<para>In the <property>Servers</property> view (If it is not open navigate to <property>Windows > Show View > Other > Server > Servers</property>), select the server the application is deployed to and hit the <property>Start</property> button. </para>
+				<para>In the <guilabel>Servers</guilabel> view (if it is not open select <menuchoice><guimenuitem>Windows</guimenuitem><guimenuitem>Show View</guimenuitem><guimenuitem>Other</guimenuitem><guimenuitem>Server</guimenuitem><guimenuitem>Servers</guimenuitem></menuchoice>), select the server the application is deployed to and hit the <guibutton>Start</guibutton> button. </para>
 			</listitem>
 			<listitem>
 				<para>When the server is started, open your favourite browser and point it to <code>http://localhost:8080/HelloBirt/helloBirt.seam</code> .</para>
