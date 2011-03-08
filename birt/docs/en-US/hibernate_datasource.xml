@@ -21,7 +21,7 @@
 			<note>
 				<title>Tip:</title>
 				<para>Before performing Seam Generate Entities, you should have a connection profile
-            adjusted and connected to a database. How to do this see in the <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/seam/html_single/index.html#d0e2725">CRUD Database Application</ulink> chapter of the Seam Dev Tools Reference
+            adjusted and connected to a database. For on how to do this see the <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/seam/html_single/index.html#crud_database_application">CRUD Database Application</ulink> chapter of the Seam Dev Tools Reference
                 guide.</para>
 				<para>
             If you followed the steps described in the
