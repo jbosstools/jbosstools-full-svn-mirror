@@ -155,24 +155,30 @@
 		
 		<orderedlist>
 			<listitem>
-				<para>Now create a BIRT report file and insert  test data into the file.
-                Name the report file <property>helloBirt.rptdesign</property>, the report should print the data from the <code>CLASSICMODELS.CUSTOMERS</code> table of the <property>BIRT Classic Models Sample Database</property>, namely: customer number (<code>CLASSICMODELS.CUSTOMERS.CUSTOMERNAME</code>), 
-                contact person  first name ( <code>CLASSICMODELS.CUSTOMERS.CONTACTFIRSTNAME</code>) ,
-                contact person last name (<code>CLASSICMODELS.CUSTOMERS.CONTACTLASTNAME</code>) and 
-                contact person phone number(<code>CLASSICMODELS.CUSTOMERS.PHONE</code>).  
-            </para>
+				<para>
+					Now create a BIRT report file and insert test data into the file. Name the report file <filename>helloBirt.rptdesign</filename>. 
+				</para>
+				<para>
+					The report should print the data from the <code>CLASSICMODELS.CUSTOMERS</code> table of the <guilabel>BIRT Classic Models Sample Database</guilabel>, namely: 
+					<orderedlist>
+						<listitem><para>Customer number (<code>CLASSICMODELS.CUSTOMERS.CUSTOMERNAME</code>)</para></listitem>
+						<listitem><para>Contact person first name ( <code>CLASSICMODELS.CUSTOMERS.CONTACTFIRSTNAME</code>)</para></listitem>
+						<listitem><para>Contact person last name (<code>CLASSICMODELS.CUSTOMERS.CONTACTLASTNAME</code>)</para></listitem>
+						<listitem><para>Contact person phone number(<code>CLASSICMODELS.CUSTOMERS.PHONE</code>)</para></listitem>
+					</orderedlist>
+        </para>
 				<para>The title of the report should be set via <code>reportTitle</code> parameter</para>
 				<para>
-                    As this guide is primarily focused on the BIRT integration and not the BIRT technology itself we will not show the steps required to make the report. If you do not feel strong about creating a BIRT report file please read <ulink url="http://eclipse.org/birt/phoenix/tutorial/">BIRT documentation</ulink>.
-                  </para>
-				<para>You can download  the file <property>helloBirt.rptdesign</property>
-					<ulink url="files/helloBirt.rptdesign">here</ulink> and copy it to the WebContent folder of your Seam project.</para>
-			
+					As this guide is primarily focused on the BIRT integration and not the BIRT technology itself, the steps required to make the report will not be shown. For more information on creating a BIRT report file please read the <ulink url="http://eclipse.org/birt/phoenix/tutorial/">BIRT documentation</ulink>.
+         </para>
+				<para>
+					You can download the <filename>helloBirt.rptdesign</filename> file <ulink url="files/helloBirt.rptdesign">here</ulink> and copy it to the <filename>WebContent</filename> folder of your Seam project.
+				</para>			
 			</listitem>
 			
 			<listitem>
 				<para>
-            When you are done with the <property>helloBirt.rptdesign</property> file, you should create a <property>.xhtml</property> file that will contain the BIRT report you have just created.
+            When you are done with the <filename>helloBirt.rptdesign</filename> file, you should create a <filename>.xhtml</filename> file that will contain the BIRT report you have just created.
         </para>
 
 				
