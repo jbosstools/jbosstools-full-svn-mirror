@@ -37,14 +37,14 @@
 					<guimenuitem>Other</guimenuitem>
 					<guimenuitem>Business Intelligence and Reporting Tools</guimenuitem>
 					<guimenuitem>Report</guimenuitem>
-				</menuchoice>) to represent the data from the <property>Employees</property> table. Call the file <filename>employees.rptdesign</filename>.
+				</menuchoice>) to represent the data from the <property>Employees</property> table. Call the file <filename>employees.rptdesign</filename>, and save it in the <filename>WebContent</filename> folder.
 			</para>
 		</listitem>
 
 		<listitem>
     
 
-			<para>Now switch to the <property>BIRT Report Design</property> perspective.</para>
+			<para>Now switch to the <guilabel>BIRT Report Design</guilabel> perspective.</para>
 		</listitem>
 		<listitem>
 			<para>
