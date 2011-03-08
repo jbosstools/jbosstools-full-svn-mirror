@@ -219,8 +219,7 @@
 				
 				<para>Create the <filename>helloBirt.xhtml</filename> file in the <filename>WebContent</filename> folder with the following content: </para>
 				
-				<programlisting role="XML"><![CDATA[...
-<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+				<programlisting role="XML"><![CDATA[<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:s="http://jboss.com/products/seam/taglib"
@@ -236,8 +235,7 @@
 			</b:birt>
 		</rich:panel>
 	</ui:define>
-</ui:composition>            
-...]]></programlisting>
+</ui:composition>]]></programlisting>
 				
 				<para>
 					From this listing above you see that the title of the report is set via <code>&lt;b:param&gt;</code> by setting the parameter name and defining the <code>value</code> attribute with the <code>Customers Contacts</code> value.

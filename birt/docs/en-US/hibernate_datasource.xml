@@ -15,13 +15,13 @@
     		First, you need to reverse engineer from the database to generate Seam entities. You can perform this operation going to <menuchoice><guimenuitem>File</guimenuitem>
 					<guimenuitem>New</guimenuitem>
 					<guimenuitem>Seam Generate Entities</guimenuitem>
-				</menuchoice> in the <property>Seam perspective</property>. More details on the Seam Generate Entities please read <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/seam/html_single/index.html#generate_entities">Seam Dev Tools Reference guide</ulink>). In this guide we will use the <property>Employees</property> table of the <property>DATAMODELS</property> database.      
+				</menuchoice> in the <guilabel>Seam</guilabel> perspective. More details on the Seam Generate Entities please read <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/seam/html_single/index.html#generate_entities">Seam Developers Tools Reference guide</ulink>). In this guide we will use the <emphasis>Employees</emphasis> table of the <emphasis>DATAMODELS</emphasis> database, which can be downloaded from the <ulink url="http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/4.0/html-single/Getting_Started_Guide/index.html#create_seam_application">Getting Started Guide</ulink>.      
     	</para>
 
 			<note>
 				<title>Tip:</title>
 				<para>
-					Before performing Seam Generate Entities, you should have a connection profile adjusted and connected to a database. For information on how to do this see the <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/seam/html_single/index.html#crud_database_application">CRUD Database Application</ulink> chapter of the Seam Dev Tools Reference guide.
+					Before performing Seam Generate Entities, you should have a connection profile adjusted and connected to a database. For information on how to do this see the <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/seam/html_single/index.html#crud_database_application">CRUD Database Application</ulink> chapter of the Seam Developer Tools Reference guide.
 				</para>
 			</note>
 		</listitem>
@@ -98,8 +98,8 @@
 
 		</listitem>
 		<listitem>
-			<para>Select <property>HibernateDataSource</property> as target data source and type in the new data set name.
-        Call it <property>HibernateDataSet</property>.</para>
+			<para>Select <guilabel>HibernateDataSource</guilabel> as target data source and type in the new data set name.
+        Call it <guilabel>HibernateDataSet</guilabel>.</para>
 
 
 
@@ -118,10 +118,8 @@
 			<para>The next dialog of the wizard will help you compose a query for the new data set.</para>
 			<para>We will make a report that will print all employees in the database who has Sales Rep job title.</para>
 
-			<programlisting role="SQL"><![CDATA[...
-select jobtitle, firstname, lastname, email
-from Employees as employees where employees.jobtitle = 'Sales Rep'
-...]]></programlisting>
+			<programlisting role="SQL"><![CDATA[select jobtitle, firstname, lastname, email
+from Employees as employees where employees.jobtitle = 'Sales Rep']]></programlisting>
     
     
 
