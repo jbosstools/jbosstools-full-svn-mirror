@@ -24,12 +24,12 @@
 			</para>
     
 			<para>
-      		The data set should have at least the following data set items: product vendor, product name, quantity in stock and buy price. The data is retrieved from the database with this query :
+      		The data set should have at least the following data set items: product vendor, product name, quantity in stock and buy price. The data is retrieved from the <guilabel>Classic Models Inc. Sample Database</guilabel> with this query :
       </para>
     
 
 			<programlisting role="XML"><![CDATA[SELECT productvendor, productname, quantityinstock, buyprice 
-FROM Products as products]]></programlisting>
+FROM CLASSICMODELS.PRODUCTS as products]]></programlisting>
 		</listitem>
 		<listitem>
 			<para>Make a table in the report and put each data set item into a column.</para>
@@ -141,7 +141,7 @@ public class ReportJB implements Serializable
 </ui:composition>       
 ]]></programlisting>
 			<para>
-				The logic of the file is quite simple: when the sort order criterion is selected the value of <code>yourJavaBean.sortOrder</code> is set automatically via Ajax, and the report is ready to be generated.
+				The logic of the file is quite simple: when the sort order criterion is selected the value of <code>ReportJB.sortOrder</code> is set automatically via Ajax, and the report is ready to be generated.
 			</para>
 		</listitem>
 		<listitem>
@@ -181,10 +181,10 @@ public class ReportJB implements Serializable
  The dynamics to the report adds this line:     
   </para>
 			<programlisting role="XML"><![CDATA[
-<b:param name="sortOrder" value="#{yourJavaBean.sortOrder}" />
+<b:param name="sortOrder" value="#{ReportJB.sortOrder}" />
 ]]></programlisting>
 
-			<para>We bound the <code>sortOrder</code> report parameter to Java Bean variable <code>value=&quot;#{ReportJB.sortOrder}&quot;</code> using EL expression, and the value to the variable is assigned in the <property>Products.xhtml</property> file. </para>
+			<para>We bound the <code>sortOrder</code> report parameter to Java Bean variable <code>value=&quot;#{ReportJB.sortOrder}&quot;</code> using EL expression, and the value to the variable is assigned in the <filename>ProductsForm.xhtml</filename> file. </para>
 			<para>By default if you embed a report into HTML page the HTML-format report contains  the &lt;html&gt;,
         &lt;head&gt;, &lt;body&gt; etc., tags. However if your HTML page already has those tags, you can rid of them using the <code>embeddable=&quot;true&quot;</code> attribute of 
        
@@ -194,7 +194,7 @@ public class ReportJB implements Serializable
 		<listitem>
 			<para>Deploy the project onto the server and open your browser to see the report is successfully generated. You should navigate to 
    
-       <ulink url="http://localhost:8080/yourProjectName/ProductForm.seam">http://localhost:8080/yourProjectName/ProductForm.seam</ulink> to select the criterion and press the <property>Generate Report</property> button. You will be redirected to the  <ulink url="http://localhost:8080/HelloBirt/ProductsReport.seam">http://localhost:8080/HelloBirt/ProductsReport.seam</ulink>
+       <ulink url="http://localhost:8080/yourProjectName/ProductForm.seam">http://localhost:8080/yourProjectName/ProductForm.seam</ulink> to select the criterion and press the <property>Generate Report</property> button. You will be redirected to the  <ulink url="http://localhost:8080/yourProjectName/ProductsReport.seam">http://localhost:8080/yourProjectName/ProductsReport.seam</ulink>
 
 			</para>
 			<figure>
@@ -230,7 +230,7 @@ public class ReportJB implements Serializable
         to use the Hibernate Configuration created automatically. You can use default values for the
         Hibernate Configuration and JNDI URL within the BIRT Hibernate Data Source.</para>
 
-	<para>When using a Seam WAR project, neither HSF nor HEMF aren&apos;t bound to JNDI by
+	<para>When using a Seam WAR project, neither HSF nor HEMF are bound to JNDI by
         default. You have to do this manually. For instance, HSF can be bound to JNDI by adding the
         following property to the <emphasis>
             <property>persistence.xml</property>
