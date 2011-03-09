@@ -282,7 +282,7 @@
 								<artifact>
 									<groupId>org.jboss.tools</groupId>
 									<artifactId>org.jboss.tools.target.platform</artifactId>
-									<version>0.0.1-SNAPSHOT</version>
+									<version>0.0.3-SNAPSHOT</version>
 									<classifier>${target.platform.classifier.unified}</classifier>
 								</artifact>
 							</target>
@@ -315,7 +315,7 @@
 								<artifact>
 									<groupId>org.jboss.tools</groupId>
 									<artifactId>org.jboss.tools.target.platform</artifactId>
-									<version>0.0.1-SNAPSHOT</version>
+									<version>0.0.3-SNAPSHOT</version>
 									<classifier>${target.platform.classifier.local}</classifier>
 								</artifact>
 							</target>
