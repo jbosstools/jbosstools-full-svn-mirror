@@ -11,7 +11,8 @@
 		</keywordset>
 	</chapterinfo>
 
-	<title>Manage JBoss AS from JBoss Developer Studio</title>
+	<title condition="jbds">Manage JBoss AS from JBoss Developer Studio</title>
+	<title condition="jbt">Manage JBoss AS with JBoss Tools</title>
 
 	<para>
 		In this chapter we&apos;ll focus more on how to operate the <property>JBoss AS</property> from <property condition="jbds">JBoss Developer Studio</property><property condition="jbt">JBoss Tools</property>.
@@ -31,7 +32,8 @@
 
 	<section id="JBossbundled">
 		<?dbhtml filename="JBossbundled.html"?>
-		<title>How to Manage the JBoss AS Bundled in JBDS</title>
+		<title condition="jbds">How to Manage the JBoss AS Bundled in JBDS</title>
+		<title condition="jbt">How to Manage JBoss AS with JBoss Tools</title>
 		<para>This section covers the basics of working with the <property>JBoss Server</property>
             supported directly by <property>JBDS</property> via bundled AS plug-in. The server points to 
             the JBoss Enterprise Application Platform 5.1 Runtime shipped with <property>JBDS</property>.</para>
