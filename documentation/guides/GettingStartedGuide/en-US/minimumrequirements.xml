@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<chapter id="minimumrequirements">
+	<title>System Requirements</title>
+	<para>
+		JBoss Developer Studio is certified to run on the following platforms:
+		<itemizedlist>
+			<listitem>
+				<para>Windows XP (i386 and x86_64) running 32-bit Sun JDK 6</para>
+			</listitem>
+			<listitem>
+				<para>Windows XP (i386 and x86_64) running 64-bit Sun JDK 6 (*)</para>
+			</listitem>
+			<listitem>
+				<para>MacOS X 10.6 running 32-bit Apple JDK 6</para>
+			</listitem>
+			<listitem>
+				<para>MacOS X 10.5 running 64-bit Apple JDK 6 (*)</para>
+			</listitem>
+			<listitem>
+				<para>RHEL5 i386 running 32-bit Sun JDK 6 and OpenJDK 6</para>
+			</listitem>
+			<listitem>
+				<para>RHEL5 x86_64 running 64-bit Sun JDK 6 and OpenJDK 6</para>
+			</listitem>
+		</itemizedlist>
+	</para>
+	
+	<para> (*) The visual component of the Visual Page Editor is not supported in these configurations.</para>
+	
+	<para>
+		The minimum requirements are:
+		<itemizedlist>
+			<listitem>
+				<para>1 GB RAM</para>
+			</listitem>
+			<listitem>
+				<para>450 MB of hard disk space for the non-EAP version</para>
+			</listitem>
+			<listitem>
+				<para>800 MB of hard disk space for the EAP version</para>
+			</listitem>
+		</itemizedlist>
+	</para>
+	
+	<para>
+		The recommended requirements are:
+		<itemizedlist>
+			<listitem>
+				<para>4 GB RAM</para>
+			</listitem>
+		</itemizedlist>
+	</para>
+</chapter>
