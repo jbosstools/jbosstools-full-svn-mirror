@@ -24,7 +24,7 @@
     
    
 <para>
-    The <emphasis role="bold"> <property>&lt;b:birt&gt;</property></emphasis> component servers to integrate a BIRT report into Seam/JSF  container. 
+    The <emphasis role="bold"> <property>&lt;b:birt&gt;</property></emphasis> component servers to integrate a BIRT report into Seam or JSF container. 
     The <emphasis role="bold"> <property>&lt;b:birt&gt;</property></emphasis> tag recognizes most of the parameters described on the BIRT 
     <ulink url="http://www.eclipse.org/birt/phoenix/deploy/viewerUsage2.2.php#parameters">Report Viewer Parameters</ulink> page, though it has attributes of its own.
     
