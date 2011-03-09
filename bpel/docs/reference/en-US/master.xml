@@ -7,7 +7,7 @@
 	<!ENTITY reference SYSTEM "reference.xml">
 	<!ENTITY summary SYSTEM "summary.xml">
 	<!ENTITY tasks SYSTEM "tasks.xml">
-	<!ENTITY jbossinstall SYSTEM "jbossinstall.xml">
+	<!ENTITY install SYSTEM "install.xml">
 ]>
 <book>
   <bookinfo>
@@ -51,5 +51,5 @@
     </abstract>
   </bookinfo>
   <toc/>
-  &overview;&jbossinstall;&tasks;&reference;&summary;
+  &overview;&install;&tasks;&reference;&summary;
 <!--&overview;&install;&tasks;&detail;&deploy;&reference;&summary;--></book>

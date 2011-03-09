@@ -1,10 +1,18 @@
 <?xml version='1.0' encoding='utf-8' ?>
-<!DOCTYPE Book PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
-]>
 
 <chapter>
 	<title>Installation Instructions</title>
-	<section>
+	<section condition="jbt">
+					
+			<title>Installing JBoss Tools Plugins</title>
+	
+			<para>
+				The BPEL Tools plugin can be installed into Eclipse from the JBoss Tools update site. For more information, please read the <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/GettingStartedGuide/html_single/index.html#d0e27">Getting Started Guide</ulink>.
+			</para>
+		
+	</section>
+
+	<section condition="jbds">
 					
 			<title>Installing BPEL Tools in JBoss Developer Studio</title>
 			
@@ -17,4 +25,7 @@
 			</para>
 			
 	</section>
+
 </chapter>
+
+
