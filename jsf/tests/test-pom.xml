@@ -5,7 +5,7 @@
 	  <relativePath>../../parent-pom.xml</relativePath>
 	  <groupId>org.jboss.tools</groupId>
 	  <artifactId>org.jboss.tools.parent.pom</artifactId>
-	  <version>0.0.2-SNAPSHOT</version>
+	  <version>0.0.3-SNAPSHOT</version>
 	</parent>
 	  <groupId>org.jboss.tools.jsf.tests</groupId>
 	  <artifactId>jsf.generic.test</artifactId>
