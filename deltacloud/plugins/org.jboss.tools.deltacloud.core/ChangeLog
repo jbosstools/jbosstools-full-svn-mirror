@@ -1,3 +1,12 @@
+2011-03-09  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java 
+	(PROP_URL): 
+	(PROP_USERNAME): 
+	(updateConnectionProperties): 
+	* src/org/jboss/tools/internal/deltacloud/core/observable/ObservablePojo.java (addPropertyChangeListener): 
+	[JBIDE-7523] added change notification for username and url
+
 2011-02-18  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/deltacloud/core/DeltaCloudManager.java 
