@@ -12,6 +12,8 @@
 <!ENTITY further_reading  SYSTEM "further_reading.xml">
 <!ENTITY project_examples  SYSTEM "project_examples.xml">
 
+<!ENTITY usage_stats_intro  SYSTEM "usage_stats_jbt_intro.xml">
+
 
 <!ENTITY seamlink "../../seam/html_single/index.html">
 <!ENTITY aslink "../../as/html_single/index.html">

@@ -1,11 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Book PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" []>
 <section id="Usage_Reporting">
 		<title>Usage Reporting</title>
-		<para>
-      The JBoss Developer Studio now includes a usage plug-in that anonymously reports information back to JBoss. The plug-in is not enabled by default. To enable, make sure the <guilabel>Report usage of JBoss Tools to JBoss Tools team.</guilabel> box is ticked.
-    </para>
+		
+		<!-- JBT Intro -->
+		
+		<para condition="jbt">
+			JBoss Tools now includes a usage plug-in that anonymously reports information back to JBoss. The plug-in is not enabled by default. To enable, click the <guibutton>Yes</guibutton> button.
+		</para>
 
-		<figure>
+		<figure condition="jbt">
+			<title>Usage plug-in pop-up</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/installineclipse10.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		
+		<!-- JBDS Intro -->
+		
+		<para condition="jbds">
+			The JBoss Developer Studio now includes a usage plug-in that anonymously reports information back to JBoss. The plug-in is not enabled by default. To enable, click the <guibutton>Yes</guibutton> button.
+		</para>
+		
+		<figure condition="jbds">
 			<title>Usage plug-in pop-up</title>
 			<mediaobject>
 				<imageobject>
@@ -13,7 +32,7 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
-
+		
 		<para>
       Once enabled, the plug-in will remain active until turned off. To turn the active plug-in off, navigate to <menuchoice><guimenuitem>Window</guimenuitem>
 				<guimenuitem>Preferences</guimenuitem>
