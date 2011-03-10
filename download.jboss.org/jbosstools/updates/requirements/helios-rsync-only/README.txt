@@ -1,3 +1,7 @@
+DEPRECATED. SEE ../helios/build.xml for a better mirror method.
+
+---
+
 To rsync a mirror from eclipse.org to here, do the following:
 
 1. ssh to qa01, then sudo to hudson:
