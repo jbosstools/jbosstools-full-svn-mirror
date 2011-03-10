@@ -1,7 +1,7 @@
 Instead of mirroring Helios here, composite a site here from:
 
 <children size='14'>
-<child location='../requirements/helios/201102250900/'/>
+<child location='../requirements/helios/SR2/'/>
 <child location='../requirements/birt/2.6.2/'/>
 <child location='../requirements/ecf/3.4/'/>
 <child location='../requirements/eclipse/3.6/'/>
@@ -17,5 +17,4 @@ Instead of mirroring Helios here, composite a site here from:
 <child location='../requirements/xulrunner-1.9.1.2/'/>
 </children>
 
-See /updates/requirements/helios/README.txt for how to mirror from eclipse.org to here.
-See /updates/requirements/{birt,gwt,swtbot,webtools,...}/build.xml for how to mirror other sites.
+See /updates/requirements/{*}/build.xml for how to mirror these sites.

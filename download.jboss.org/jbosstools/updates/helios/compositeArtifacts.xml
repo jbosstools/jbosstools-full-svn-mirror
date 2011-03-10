@@ -7,10 +7,10 @@
      get new time w/ 
       date +%s000
 -->
-<property name='p2.timestamp' value='1299603042000'/>
+<property name='p2.timestamp' value='1299784094000'/>
 </properties>
 <children size='14'>
-<child location='../requirements/helios/201102250900/'/>
+<child location='../requirements/helios/SR2/'/>
 <child location='../requirements/birt/2.6.2/'/>
 <child location='../requirements/ecf/3.4/'/>
 <child location='../requirements/eclipse/3.6/'/>
