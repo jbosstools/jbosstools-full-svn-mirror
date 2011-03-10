@@ -803,13 +803,13 @@
 						<enabled>true</enabled>
 					</releases>
 				</repository>
-				<!-- repository> 
+				<repository> 
 					<id>jboss-requirements-composite-mirror</id> 
 					<url>http://download.jboss.org/jbosstools/updates/helios/</url> 
 					<layout>p2</layout> 
 					<snapshots> <enabled>true</enabled> </snapshots> 
 					<releases> <enabled>true</enabled> </releases> 
-				</repository-->
+				</repository>
 			</repositories>
 		</profile>
 
