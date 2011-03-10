@@ -78,7 +78,7 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 	private static final Set<String> OFFICIALLY_SUPPORTED_PLATFORM_IDS = new HashSet<String>();
 	static {
 		Collections.addAll(OFFICIALLY_SUPPORTED_PLATFORM_IDS,
-				"carbon.macosx.õ86",    //$NON-NLS-1$
+				"carbon.macosx.x86",    //$NON-NLS-1$
 				"cocoa.macosx.x86",     //$NON-NLS-1$
 				"gtk.linux.x86",    //$NON-NLS-1$
 				"gtk.linux.x86_64", //$NON-NLS-1$
