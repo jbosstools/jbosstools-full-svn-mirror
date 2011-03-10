@@ -31,10 +31,10 @@
 		</target.platform.classifier.local>
 
 		<jbosstools.update.site>http://download.jboss.org/jbosstools/updates/nightly/trunk</jbosstools.update.site>
-		<jbosstools-target-platform-repo>http://download.jboss.org/jbosstools/updates/target-platform/latest/</jbosstools-target-platform-repo>
+		<jbosstools-target-platform-repo>http://download.jboss.org/jbosstools/updates/target-platform_trunk/latest/</jbosstools-target-platform-repo>
 
 		<!-- pass in your own path using -Dtarget.platform.site=file://home/$user/trunk/build/target-platform/REPO/ -->
-		<target.platform.site>file://home/hudson/static_build_env/jbds/target-platform/e362-wtp323.target/</target.platform.site>
+		<target.platform.site>file://home/hudson/static_build_env/jbds/target-platform_trunk/e362-wtp323.target/</target.platform.site>
 	</properties>
 
 	<build>
