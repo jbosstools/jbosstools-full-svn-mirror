@@ -16,7 +16,7 @@ package org.jboss.tools.deltacloud.core.client;
  *
  * @param <OWNER>
  */
-public class StateAware<OWNER> extends ActionAware<OWNER> {
+public abstract class StateAware<OWNER> extends ActionAware<OWNER> {
 
 	public static enum State {
 		RUNNING, STOPPED, PENDING, TERMINATED, BOGUS

@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.core.client;
 
+import java.io.InputStream;
 import java.util.List;
 
 import org.jboss.tools.deltacloud.core.client.API.Driver;
@@ -154,8 +155,8 @@ public interface DeltaCloudClient {
 	 *
 	 * @param action the action to execute
 	 * @return true, if successful
-	 * 
+	 * @throws DeltaCloudClientException the delta cloud client exception
 	 * @see Action
 	 */
-	public boolean performAction(Action<?> action) throws DeltaCloudClientException;
+	public InputStream performAction(Action<?> action) throws DeltaCloudClientException;
 }

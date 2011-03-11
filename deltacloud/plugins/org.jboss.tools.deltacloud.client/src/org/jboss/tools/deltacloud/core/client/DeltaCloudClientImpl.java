@@ -87,7 +87,15 @@ public class DeltaCloudClientImpl implements DeltaCloudClient {
 			if (httpResponse.getEntity() == null) {
 				return null;
 			}
-			return httpResponse.getEntity().getContent();
+			InputStream in = httpResponse.getEntity().getContent();			
+//			StringWriter writer = new StringWriter();
+//			int data = -1;
+//
+//			while(((data = in.read()) != -1)) {
+//				writer.write(data);
+//			}
+//			System.err.println(writer.toString());
+			return in;
 		} catch (DeltaCloudClientException e) {
 			throw e;
 		} catch (MalformedURLException e) {
@@ -332,17 +340,17 @@ public class DeltaCloudClientImpl implements DeltaCloudClient {
 		return key;
 	}
 
-	public boolean performAction(Action<?> action) throws DeltaCloudClientException {
+	public InputStream performAction(Action<?> action) throws DeltaCloudClientException {
+		InputStream in = null;
 		if (action != null) {
 			try {
-				request(new PerformActionRequest(action.getUrl(), action.getMethod()));
+				in = request(new PerformActionRequest(action.getUrl(), action.getMethod()));
 			} catch (DeltaCloudClientException e) {
 				throw e;
 			} catch (Exception e) {
 				throw new DeltaCloudClientException(e);
 			}
-			return true;
 		}
-		return false;
+		return in;
 	}
 }

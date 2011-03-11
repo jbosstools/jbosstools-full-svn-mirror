@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.core.client;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,20 +44,37 @@ public abstract class ActionAware<OWNER> extends IdAware {
 	}
 
 	public boolean start(DeltaCloudClient client) throws DeltaCloudClientException {
-		return client.performAction(getAction(Action.START_NAME));
+		InputStream in = client.performAction(getAction(Action.START_NAME));
+		update(in);
+		return in != null;
 	}
 
 	public boolean stop(DeltaCloudClient client) throws DeltaCloudClientException {
-		return client.performAction(getAction(Action.STOP_NAME));
+		InputStream in = client.performAction(getAction(Action.STOP_NAME));
+		update(in);
+		return in != null;
 	}
 
 	public boolean destroy(DeltaCloudClient client) throws DeltaCloudClientException {
-		return client.performAction(getAction(Action.DESTROY_NAME));
+		InputStream in = client.performAction(getAction(Action.DESTROY_NAME));
+		return in != null;
 	}
 
 	public boolean reboot(DeltaCloudClient client) throws DeltaCloudClientException {
-		return client.performAction(getAction(Action.REBOOT_NAME));
+		InputStream in = client.performAction(getAction(Action.REBOOT_NAME));
+		update(in);
+		return in != null;
 	}
+
+	protected void update(InputStream in) throws DeltaCloudClientException {
+		if (in == null) {
+			return;
+		}
+		
+		doUpdate(in);
+	}
+	
+	protected abstract void doUpdate(InputStream in) throws DeltaCloudClientException;
 
 	public boolean canStart() {
 		return getAction(Action.START_NAME) != null;

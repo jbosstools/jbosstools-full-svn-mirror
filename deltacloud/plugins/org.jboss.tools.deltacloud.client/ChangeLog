@@ -1,3 +1,19 @@
+2011-03-11  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/deltacloud/core/client/StateAware.java: 
+	* src/org/jboss/tools/deltacloud/core/client/ActionAware.java 
+	(reboot): 
+	(destroy): 
+	(stop): 
+	(start): 
+	(doUpdate): 
+	(update): 
+	* src/org/jboss/tools/deltacloud/core/client/Instance.java (doUpdate): 
+	* src/org/jboss/tools/deltacloud/core/client/Key.java: (doUpdate): 
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClientImpl.java (performAction): 
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClient.java (performAction): 
+	[JBIDE-8565] refreshing instance and key after performing action
+
 2011-02-18  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/deltacloud/core/DeltaCloudManager.java 

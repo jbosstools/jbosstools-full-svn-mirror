@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.core;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class DeltaCloudInstance extends AbstractDeltaCloudElement {
 		BOGUS(Instance.State.BOGUS.name());
 
 		private String name;
-		
+
 		private State(String name) {
 			this.name = name;
 		}
@@ -97,7 +98,7 @@ public class DeltaCloudInstance extends AbstractDeltaCloudElement {
 	public String getKeyId() {
 		return instance.getKeyId();
 	}
-	
+
 	public List<DeltaCloudResourceAction> getActions() {
 		List<DeltaCloudResourceAction> actions = new ArrayList<DeltaCloudResourceAction>();
 		for (Action<Instance> action : instance.getActions()) {
@@ -145,7 +146,7 @@ public class DeltaCloudInstance extends AbstractDeltaCloudElement {
 	public boolean isRunning() {
 		return instance.isRunning();
 	}
-	
+
 	protected void setInstance(Instance instance) {
 		this.instance = instance;
 	}
@@ -165,7 +166,8 @@ public class DeltaCloudInstance extends AbstractDeltaCloudElement {
 		if (instanceAction == null) {
 			return false;
 		}
-		return client.performAction(instanceAction);
+		InputStream in = client.performAction(instanceAction);
+		return in != null;
 	}
 
 	@Override

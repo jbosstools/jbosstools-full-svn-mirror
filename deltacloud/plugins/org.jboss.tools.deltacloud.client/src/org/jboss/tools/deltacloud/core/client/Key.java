@@ -10,8 +10,11 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.core.client;
 
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import org.jboss.tools.deltacloud.core.client.unmarshal.KeyUnmarshaller;
 
 /**
  * @author Andre Dietisheim
@@ -57,9 +60,13 @@ public class Key extends StateAware<Key> {
 	}
 
 	@Override
+	protected void doUpdate(InputStream in) throws DeltaCloudClientException {
+		new KeyUnmarshaller().unmarshall(in, this);
+	}
+
+	@Override
 	public String toString() {
 		return "Key [url=" + url + ", pem=" + pem + ", fingerprint=" + fingerprint + ", state=" + state + ", actions="
 				+ getActions() + ", toString()=" + super.toString() + "]";
 	}
-
 }

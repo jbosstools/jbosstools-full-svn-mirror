@@ -10,7 +10,10 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.core.client;
 
+import java.io.InputStream;
 import java.util.List;
+
+import org.jboss.tools.deltacloud.core.client.unmarshal.InstanceUnmarshaller;
 
 /**
  * @author Martyn Taylor
@@ -133,6 +136,12 @@ public class Instance extends StateAware<Instance> {
 		return privateAddresses.getAddress();
 	}
 
+	@Override
+	protected void doUpdate(InputStream in) throws DeltaCloudClientException {
+		new InstanceUnmarshaller().unmarshall(in, this);
+	}
+
+	
 	@Override
 	public String toString() {
 		String s = "";
