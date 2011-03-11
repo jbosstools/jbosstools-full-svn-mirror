@@ -493,6 +493,8 @@ public class DeltaCloud extends ObservablePojo {
 				// TODO: remove notification with all instanceRepo, replace by
 				// notifying the changed instance
 				firePropertyChange(PROP_INSTANCES, instances, repo.get());
+//				int index = repo.indexOf(instance);
+//				fireIndexedPropertyChange(PROP_INSTANCES, index, instance, instance);
 			}
 			return result;
 		} catch (DeltaCloudClientException e) {
