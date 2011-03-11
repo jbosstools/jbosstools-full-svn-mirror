@@ -14,6 +14,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.views.properties.PropertySheetPage;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
@@ -31,7 +32,13 @@ public class CVPropertySheetPage extends PropertySheetPage {
 
 		@Override
 		public void propertyChange(PropertyChangeEvent evt) {
-			refresh();
+			Display.getDefault().syncExec(new Runnable() {
+				
+				@Override
+				public void run() {
+					refresh();
+				}
+			});
 		}
 	};
 
