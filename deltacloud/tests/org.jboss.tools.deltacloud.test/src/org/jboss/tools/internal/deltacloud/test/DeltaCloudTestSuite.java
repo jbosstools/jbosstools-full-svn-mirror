@@ -10,12 +10,6 @@
  ******************************************************************************/
 package org.jboss.tools.internal.deltacloud.test;
 
-import org.jboss.tools.internal.deltacloud.test.core.client.APIDomUnmarshallingTest;
-import org.jboss.tools.internal.deltacloud.test.core.client.HardwareProfileDomUnmarshallingTest;
-import org.jboss.tools.internal.deltacloud.test.core.client.ImageDomUnmarshallingTest;
-import org.jboss.tools.internal.deltacloud.test.core.client.InstanceDomUnmarshallingTest;
-import org.jboss.tools.internal.deltacloud.test.core.client.KeyDomUnmarshallingTest;
-import org.jboss.tools.internal.deltacloud.test.core.client.RealmDomUnmarshallingTest;
 import org.jboss.tools.internal.deltacloud.test.core.job.CloudSchedulingRulesTest;
 import org.jboss.tools.internal.deltacloud.test.ui.preferences.StringsPreferenceValueTest;
 import org.junit.runner.RunWith;
@@ -27,12 +21,6 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
 	CloudSchedulingRulesTest.class,
-	KeyDomUnmarshallingTest.class,
-	InstanceDomUnmarshallingTest.class,
-	ImageDomUnmarshallingTest.class,
-	HardwareProfileDomUnmarshallingTest.class,
-	APIDomUnmarshallingTest.class,
-	RealmDomUnmarshallingTest.class,
 	StringsPreferenceValueTest.class})
 public class DeltaCloudTestSuite {
 }

@@ -11,10 +11,6 @@
 package org.jboss.tools.internal.deltacloud.test;
 
 import org.jboss.tools.internal.deltacloud.test.core.DeltaCloudMockIntegrationTest;
-import org.jboss.tools.internal.deltacloud.test.core.client.ImageMockIntegrationTest;
-import org.jboss.tools.internal.deltacloud.test.core.client.InstanceMockIntegrationTest;
-import org.jboss.tools.internal.deltacloud.test.core.client.KeyMockIntegrationTest;
-import org.jboss.tools.internal.deltacloud.test.core.client.ServerTypeMockIntegrationTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -23,11 +19,7 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-	DeltaCloudMockIntegrationTest.class,
-	ImageMockIntegrationTest.class,
-	InstanceMockIntegrationTest.class,
-	KeyMockIntegrationTest.class,
-	ServerTypeMockIntegrationTest.class
+	DeltaCloudMockIntegrationTest.class
 })
 public class DeltaCloudIntegrationTestSuite {
 
