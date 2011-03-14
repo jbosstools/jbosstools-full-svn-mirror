@@ -27,7 +27,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.jboss.tools.deltacloud.ui.Activator;
-import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
 import org.jboss.tools.deltacloud.ui.preferences.StringsPreferenceValue;
 import org.osgi.service.prefs.Preferences;
 
@@ -128,7 +127,7 @@ public class UIUtils {
 			// If warning turned off by user, set the preference for future
 			// usage
 			if (toggleState) {
-				prefs.putBoolean(IDeltaCloudPreferenceConstants.DONT_CONFIRM_CREATE_INSTANCE, true);
+				prefs.putBoolean(preferencesKey, true);
 			}
 		}
 		return confirmed;
