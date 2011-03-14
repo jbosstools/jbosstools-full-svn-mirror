@@ -1,3 +1,28 @@
+2011-03-14  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/deltacloud/ui/views/cloud/property/CVPropertySheetPage.java 
+	(cloudPropertyListener): 
+	(selectionChanged): 
+	(addPropertyChangeListener): 
+	(removePropertyChangeListener): 
+	[JBIDE-7523] added change notification for username and url, 
+	listening to changes in DeltaCloud and refreshing properties view
+
+2011-03-08  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/FindImageWizard.java (addPages): 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/InstanceFilterWizard.java (addPages): 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ImageFilterWizard.java (addPages): 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnectionWizard.java (init): 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/EditCloudConnectionWizard.java (init): 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstanceWizard.java (addPages): 
+	[JBIDE-8090] set window titles to wizards
+
+2011-03-08  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java (createWidgets): 
+	[JBIDE-8293] added link to SSH2 private keys in preferences
+
 2011-02-02  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/FindImagePage.java (onImageDoubleclick): 
