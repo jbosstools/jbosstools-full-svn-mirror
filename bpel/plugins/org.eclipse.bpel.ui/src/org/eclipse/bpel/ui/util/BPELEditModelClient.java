@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.bpel.ui.util;
 
+import java.io.IOException;
 import java.util.Map;
 
 import javax.xml.namespace.QName;
@@ -23,12 +24,13 @@ import org.eclipse.bpel.common.ui.editmodel.IEditModelListener;
 import org.eclipse.bpel.common.ui.editmodel.ResourceInfo;
 import org.eclipse.bpel.model.Process;
 import org.eclipse.bpel.ui.IBPELUIConstants;
+import org.eclipse.bpel.ui.commands.AddImportCommand;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
-
 import org.eclipse.wst.wsdl.Definition;
 import org.eclipse.wst.wsdl.WSDLFactory;
 
@@ -97,7 +99,7 @@ public class BPELEditModelClient extends EditModelClient {
 		if (artifactsFile.exists()) {
 			artifactsResourceInfo = bpelEditModel.getResourceInfo(artifactsFile);
 		} else {
-			Resource artifactsResource = bpelEditModel.getResourceSet().createResource(
+			final Resource artifactsResource = bpelEditModel.getResourceSet().createResource(
 					URI.createPlatformResourceURI(artifactsFile.getFullPath().toString()));
 			// create an empty definition too.
 			Definition artifactsDefn = WSDLFactory.eINSTANCE.createDefinition();
@@ -105,8 +107,9 @@ public class BPELEditModelClient extends EditModelClient {
 
 			// set the target namespace based on the target namespace of the process.
 			EList bpelContents = getPrimaryResourceInfo().getResource().getContents();
+			Process process = null;
 			if (!bpelContents.isEmpty() && bpelContents.get(0) instanceof Process) {
-				Process process = (Process)bpelContents.get(0);
+				process = (Process)bpelContents.get(0);
 				// TODO: is this correct?  can we make a helper to share this with the wizard?
 				artifactsDefn.setTargetNamespace(process.getTargetNamespace()+"Artifacts"); //$NON-NLS-1$
 				artifactsDefn.setQName(new QName(artifactsDefn.getTargetNamespace(),
@@ -114,6 +117,26 @@ public class BPELEditModelClient extends EditModelClient {
 			}
 			artifactsResource.getContents().add(artifactsDefn);
 			artifactsResourceInfo = bpelEditModel.getResourceInfo(artifactsFile);
+			
+			// https://issues.jboss.org/browse/JBIDE-8075
+			// add the import if not already being imported by this process
+			AddImportCommand cmd = new AddImportCommand(process, artifactsDefn, artifactsResourceInfo);
+
+			if (cmd.canDoExecute() && cmd.wouldCreateDuplicateImport() == false) {
+				getCommandStack().execute(cmd);
+			}
+			artifactsResource.setModified(true);
+			
+			Display.getDefault().syncExec(new Runnable() {
+				public void run() {
+					try {
+						artifactsResource.save(artifactsResourceInfo.getLoadOptions());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			});
 		}
 	}
 	
