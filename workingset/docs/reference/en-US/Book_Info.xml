@@ -2,10 +2,10 @@
 <!DOCTYPE Book PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
 ]>
 <bookinfo>
-	<title>Workingset Developer Tools Reference Guide</title>
+	<title>Workingset Tools Reference Guide</title>
 	<subtitle>Provides information relating to the Workingset Developer Tools module.</subtitle>
 	<productname>JBoss Developer Studio</productname>
-	<productnumber>3.0</productnumber>
+	<productnumber>4.0</productnumber>
 	<edition>1.0</edition>
 	<pubsnumber>1</pubsnumber>
 	<abstract>
