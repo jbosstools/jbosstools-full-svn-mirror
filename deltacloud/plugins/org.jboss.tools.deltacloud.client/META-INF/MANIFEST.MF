@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: DeltaCloud Client
 Bundle-Vendor: JBoss by Red Hat
 Bundle-SymbolicName: org.jboss.tools.deltacloud.client
-Bundle-Version: 0.1.0.qualifier
+Bundle-Version: 0.2.0.qualifier
 Bundle-Activator: org.jboss.tools.deltacloud.client.DeltaCloudClientBundle
 Bundle-ActivationPolicy: lazy
 Bundle-Localization: plugin
