@@ -2,7 +2,7 @@
 <feature
       id="org.jboss.tools.deltacloud.feature"
       label="%featureName"
-      version="0.0.1.qualifier"
+      version="0.2.0.qualifier"
       provider-name="%providerName">
 
    <description>
@@ -28,7 +28,6 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
 
    <plugin
          id="org.jboss.tools.deltacloud.core"
