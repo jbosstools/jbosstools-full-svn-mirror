@@ -43,6 +43,7 @@ import org.eclipse.gef.DefaultEditDomain;
 import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gef.ui.actions.ActionRegistry;
 import org.eclipse.gef.ui.actions.GEFActionConstants;
+import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
@@ -157,12 +158,21 @@ public class ProcessContextMenuProvider extends ContextMenuProvider {
 		// TODO: need to be more selective here!  Only add actions that make sense for this
 		// context..
 		for (IAction anAction : bpelEditor.getAppendNewActions()) {
-			if (anAction != null && anAction.isEnabled()) {
-				addMenu.add(anAction);
+			if (anAction != null) {
+				// https://issues.jboss.org/browse/JBIDE-8043
+				// update the action's current selection
+				if (anAction instanceof SelectionAction)
+					((SelectionAction)anAction).update();
+				if (anAction.isEnabled())
+					addMenu.add(anAction);
 			}			
 		}
 		for (IAction anAction : bpelEditor.getInsertNewActions()) {
-			if (anAction != null && anAction.isEnabled()) {
+			if (anAction != null) {
+				// https://issues.jboss.org/browse/JBIDE-8043
+				if (anAction instanceof SelectionAction)
+					((SelectionAction)anAction).update();
+				if (anAction.isEnabled())
 				insertMenu.add(anAction);
 			}
 		}
