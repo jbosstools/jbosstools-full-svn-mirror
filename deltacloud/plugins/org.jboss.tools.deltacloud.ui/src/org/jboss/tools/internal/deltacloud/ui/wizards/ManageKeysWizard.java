@@ -34,6 +34,7 @@ public class ManageKeysWizard extends Wizard {
 
 	@Override
 	public void addPages() {
+		setWindowTitle(WizardMessages.getString("ManageKeys.title"));
 		mainPage = new ManageKeysPage(cloud);
 		addPage(mainPage);
 	}

@@ -12,6 +12,8 @@ package org.jboss.tools.internal.deltacloud.ui.wizards;
 
 import java.text.MessageFormat;
 
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.ui.IWorkbench;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.Driver;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
@@ -26,6 +28,11 @@ public class EditCloudConnectionWizard extends NewCloudConnectionWizard {
 
 	public EditCloudConnectionWizard(DeltaCloud cloud) {
 		super(WizardMessages.getString(MAINPAGE_NAME), cloud);
+	}
+
+	@Override
+	public void init(IWorkbench workbench, IStructuredSelection selection) {
+		setWindowTitle(WizardMessages.getString(MAINPAGE_NAME));
 	}
 
 	@Override

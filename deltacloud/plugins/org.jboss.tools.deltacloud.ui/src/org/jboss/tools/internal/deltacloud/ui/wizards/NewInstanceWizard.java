@@ -66,6 +66,7 @@ public class NewInstanceWizard extends Wizard {
 
 	@Override
 	public void addPages() {
+		setWindowTitle(WizardMessages.getString("NewInstance.title"));
 		mainPage = new NewInstancePage(cloud, image);
 		addPage(mainPage);
 		additionalPages = DeltacloudUIExtensionManager.getDefault().loadNewInstanceWizardPages();
@@ -128,7 +129,7 @@ public class NewInstanceWizard extends Wizard {
 	private void scheduleJobs() {
 		ChainedJob first =
 				new InstanceStateJob(
-						WizardMessages.getFormattedString(STARTING_INSTANCE_TITLE, instance.getName()),
+						WizardMessages.getFormattedString(STARTING_INSTANCE_TITLE, instance.getAlias()),
 						instance,
 						DeltaCloudInstance.State.RUNNING);
 		first.setUser(true);

@@ -32,6 +32,7 @@ public class FindImageWizard extends Wizard {
 	
 	@Override
 	public void addPages() {
+		setWindowTitle(WizardMessages.getString("FindImage.title"));
 		mainPage = new FindImagePage(cloud);
 		addPage(mainPage);
 	}

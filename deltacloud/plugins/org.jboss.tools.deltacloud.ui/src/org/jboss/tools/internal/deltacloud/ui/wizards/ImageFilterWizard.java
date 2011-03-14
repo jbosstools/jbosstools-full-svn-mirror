@@ -28,7 +28,7 @@ public class ImageFilterWizard extends Wizard {
 
 	@Override
 	public void addPages() {
-		// TODO Auto-generated method stub
+		setWindowTitle(WizardMessages.getString("ImageFilter.title"));
 		mainPage = new ImageFilterPage(cloud);
 		addPage(mainPage);
 	}

@@ -29,6 +29,7 @@ public class InstanceFilterWizard extends Wizard {
 	
 	@Override
 	public void addPages() {
+		setWindowTitle(WizardMessages.getString("InstanceFilter.title"));
 		mainPage = new InstanceFilterPage(cloud);
 		addPage(mainPage);
 	}
