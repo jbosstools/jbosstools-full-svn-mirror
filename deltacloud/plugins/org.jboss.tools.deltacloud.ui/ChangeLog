@@ -1,6 +1,8 @@
 2011-03-14  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
-	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/AbstractCloudElementTableView.java (updateCloudSelector): 
+	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/AbstractCloudElementTableView.java 
+	(updateCloudSelector) (.run):
+	[JBIDE-7862] setting all items again so that the combo shrinks to the space needed to display the largest cloud name 
 	* src/org/jboss/tools/deltacloud/ui/views/cloud/CloudItem.java (propertyChange): 
 	[JBIDE-8584] ensured updates to widgets happens in display thread
 

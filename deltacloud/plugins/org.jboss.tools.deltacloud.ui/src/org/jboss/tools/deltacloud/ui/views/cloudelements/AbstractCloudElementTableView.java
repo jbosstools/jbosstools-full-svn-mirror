@@ -13,6 +13,7 @@ package org.jboss.tools.deltacloud.ui.views.cloudelements;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.core.runtime.IAdaptable;
@@ -371,12 +372,23 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 				if (index >= 0) {
 					int selectionIndex = currentCloudSelector.getSelectionIndex();
 					currentCloudSelector.removeModifyListener(currentCloudModifyListener);
-					currentCloudSelector.setItem(index, cloud.getName());
+					/*
+					 * @see [JBIDE-7862] 
+					 * setting all items seems necessary so that the combo uses the space needed to display the largest cloud name. 
+					 * If you just replace the item that was renamed, the combo will not shrink (it would only get larger if needed).
+					 */
+					currentCloudSelector.setItems(getSelectorItems(cloud, index));
 					currentCloudSelector.select(selectionIndex);
 					currentCloudSelector.addModifyListener(currentCloudModifyListener);
 				}
 				container.layout(true, true);
 				
+			}
+			
+			private String[] getSelectorItems(final DeltaCloud cloud, final int index) {
+				List<String> names = new ArrayList<String>(Arrays.asList(currentCloudSelector.getItems()));
+				names.set(index, cloud.getName());
+				return names.toArray(new String[names.size()]);
 			}
 		});
 	}
