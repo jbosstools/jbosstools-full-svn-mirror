@@ -37,6 +37,10 @@ public abstract class ObservablePojo {
 		propertyChangeSupport.addPropertyChangeListener(propertyName, listener);
 	}
 
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
+		propertyChangeSupport.addPropertyChangeListener(listener);
+	}
+
 	public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
 		propertyChangeSupport.removePropertyChangeListener(propertyName, listener);
 	}
