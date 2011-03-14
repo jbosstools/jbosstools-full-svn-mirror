@@ -1,3 +1,9 @@
+2011-03-14  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/AbstractCloudElementTableView.java (updateCloudSelector): 
+	* src/org/jboss/tools/deltacloud/ui/views/cloud/CloudItem.java (propertyChange): 
+	[JBIDE-8584] ensured updates to widgets happens in display thread
+
 2011-03-09  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/deltacloud/ui/views/cloud/property/CVPropertySheetPage.java (selectionChanged): 
