@@ -14,6 +14,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.ui.views.cloud.property.CloudPropertySource;
@@ -59,6 +60,12 @@ public class CloudItem extends DeltaCloudViewItem<DeltaCloud> implements Propert
 
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
-		viewer.update(this, new String[] { DeltaCloud.PROP_NAME });
+		Display.getDefault().syncExec(new Runnable() {
+			
+			@Override
+			public void run() {
+				viewer.update(CloudItem.this, new String[] { DeltaCloud.PROP_NAME });
+			}
+		});
 	}
 }

@@ -360,17 +360,24 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 		}
 	}
 
-	private void updateCloudSelector(DeltaCloud cloud) {
+	private void updateCloudSelector(final DeltaCloud cloud) {
 		DeltaCloud[] clouds = getClouds();
-		int index = getCloudIndex(cloud, clouds);
-		if (index >= 0) {
-			int selectionIndex = currentCloudSelector.getSelectionIndex();
-			currentCloudSelector.removeModifyListener(currentCloudModifyListener);
-			currentCloudSelector.setItem(index, cloud.getName());
-			currentCloudSelector.select(selectionIndex);
-			currentCloudSelector.addModifyListener(currentCloudModifyListener);
-		}
-		container.layout(true, true);
+		final int index = getCloudIndex(cloud, clouds);
+		Display.getDefault().syncExec(new Runnable() {
+			
+			@Override
+			public void run() {
+				if (index >= 0) {
+					int selectionIndex = currentCloudSelector.getSelectionIndex();
+					currentCloudSelector.removeModifyListener(currentCloudModifyListener);
+					currentCloudSelector.setItem(index, cloud.getName());
+					currentCloudSelector.select(selectionIndex);
+					currentCloudSelector.addModifyListener(currentCloudModifyListener);
+				}
+				container.layout(true, true);
+				
+			}
+		});
 	}
 
 	public void cloudsChanged(int type, DeltaCloud cloud) {
