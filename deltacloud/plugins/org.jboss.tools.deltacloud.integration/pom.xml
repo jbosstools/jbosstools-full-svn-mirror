@@ -8,6 +8,6 @@
 	</parent>
 	<groupId>org.jboss.tools.deltacloud.plugins</groupId>
 	<artifactId>org.jboss.tools.deltacloud.integration</artifactId> 
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.2.0-SNAPSHOT</version>
 	<packaging>eclipse-plugin</packaging>
 </project>
