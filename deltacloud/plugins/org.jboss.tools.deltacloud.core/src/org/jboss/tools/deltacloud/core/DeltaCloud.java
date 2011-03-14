@@ -41,6 +41,8 @@ public class DeltaCloud extends ObservablePojo {
 	public static final String PROP_INSTANCES_REMOVED = "instancesRemoved";
 	public static final String PROP_IMAGES = "images";
 	public static final String PROP_NAME = "name";
+	public static final String PROP_URL = "url";
+	public static final String PROP_USERNAME = "username";
 
 	private String name;
 	private String username;
@@ -124,11 +126,11 @@ public class DeltaCloud extends ObservablePojo {
 	private boolean updateConnectionProperties(String url, String username, String password) throws DeltaCloudException {
 		boolean changed = false;
 		if (!equals(this.url, url)) {
-			this.url = url;
+			setUrl(url);
 			changed = true;
 		}
 		if (!equals(this.username, username)) {
-			this.username = username;
+			setUsername(username);
 			changed = true;
 		}
 		if (!equals(this.passwordStore.getPassword(), password)) {
@@ -161,8 +163,16 @@ public class DeltaCloud extends ObservablePojo {
 		return name;
 	}
 
+	private void setUrl(String url) {
+		firePropertyChange(PROP_URL, this.url, this.url = url);
+	}
+
 	public String getURL() {
 		return url;
+	}
+
+	private void setUsername(String username) {
+		firePropertyChange(PROP_USERNAME, this.username, this.username = username);
 	}
 
 	public String getUsername() {
