@@ -20,13 +20,12 @@ import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.rse.core.model.IHost;
 import org.eclipse.rse.subsystems.files.core.subsystems.IRemoteFileSubSystem;
-import org.eclipse.swt.widgets.Display;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.core.job.AbstractInstanceJob;
+import org.jboss.tools.deltacloud.integration.DeltaCloudIntegrationPlugin;
 import org.jboss.tools.deltacloud.integration.Messages;
 import org.jboss.tools.deltacloud.integration.rse.util.RSEUtils;
 import org.jboss.tools.deltacloud.ui.Activator;
-import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
 import org.osgi.service.prefs.Preferences;
 
@@ -73,9 +72,8 @@ public class CreateRSEFromInstanceJob extends AbstractInstanceJob {
 				initialConnect(host);
 				return RSEUtils.connect(RSEUtils.getConnectorService(host), 90000, submon);
 			} catch (Exception e) {
-				return ErrorUtils.handleError(Messages.ERROR,
-						NLS.bind(Messages.COULD_NOT_LAUNCH_RSE_EXPLORER2, instance.getName()),
-						e, Display.getDefault().getActiveShell());
+				return new Status(IStatus.ERROR, DeltaCloudIntegrationPlugin.PLUGIN_ID,
+						NLS.bind(Messages.COULD_NOT_LAUNCH_RSE_EXPLORER2, instance.getName()), e);
 			}
 		}
 		return Status.OK_STATUS;
