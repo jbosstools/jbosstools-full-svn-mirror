@@ -44,6 +44,7 @@ import org.eclipse.jface.databinding.wizard.WizardPageSupport;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
+import org.eclipse.jface.preference.PreferenceDialog;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
@@ -54,10 +55,14 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Link;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
@@ -78,6 +83,8 @@ import org.jboss.tools.internal.deltacloud.ui.utils.DataBindingUtils;
  * @author André Dietisheim
  */
 public class NewInstancePage extends WizardPage {
+
+	private static final String SSH_PREFERENCE_PAGE_ID = "org.eclipse.jsch.ui.SSHPreferences";
 
 	private static final int IMAGE_CHECK_DELAY = 500;
 	private static final int KEY_CHECK_DELAY = 500;
@@ -100,6 +107,7 @@ public class NewInstancePage extends WizardPage {
 	private static final String MUST_ENTER_IMAGE_ID = "ErrorMustProvideImageId.text"; //$NON-NLS-1$	
 	private static final String LOADING_VALUE = "Loading.value"; //$NON-NLS-1$
 	private static final String IMAGE_ID_NOT_FOUND = "ErrorImageIdNotFound.text"; //$NON-NLS-1$
+	private static final String SSH2_PREF_KEYS = "ShowSSH2Preferences.label"; //$NON-NLS-1$
 
 	private Composite container;
 	private NewInstancePageModel model;
@@ -210,6 +218,23 @@ public class NewInstancePage extends WizardPage {
 		keyManageButton.setText(WizardMessages.getString(MANAGE_BUTTON_LABEL));
 		keyManageButton.addSelectionListener(manageListener);
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).applyTo(keyManageButton);
+
+		Label dummyLabel = new Label(container, SWT.NULL);
+		dummyLabel.setVisible(false);
+		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(dummyLabel);
+
+		Link sshPrefsLink = new Link(container, SWT.NULL);
+		sshPrefsLink.setText(WizardMessages.getString(SSH2_PREF_KEYS));
+		sshPrefsLink.addListener(SWT.Selection, new Listener() {
+			
+			@Override
+			public void handleEvent(Event event) {
+				PreferenceDialog dialog = PreferencesUtil.createPreferenceDialogOn(
+						event.display.getActiveShell(), SSH_PREFERENCE_PAGE_ID, null, null);
+				dialog.open();
+			}
+		});
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).span(2, 1).applyTo(sshPrefsLink);
 
 		Label hardwareLabel = new Label(container, SWT.NULL);
 		hardwareLabel.setText(WizardMessages.getString(HARDWARE_LABEL));
