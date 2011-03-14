@@ -77,11 +77,6 @@ public class RSEUtils {
 		return connectionName;
 	}
 
-	@Deprecated
-	public static String createHostName(DeltaCloudInstance instance) {
-		return createRSEHostName(instance);
-	}
-	
 	/**
 	 * Returns the RSE host name for the given instance. Returns
 	 * <code>null</code> if the instance is <code>null</null>.
@@ -97,12 +92,6 @@ public class RSEUtils {
 		return instance.getHostName();
 	}
 
-	@Deprecated
-	public static IHost createHost(String connectionName, String hostname, IRSESystemType systemType,
-			ISystemRegistry systemRegistry) throws Exception {
-		return createHost("jboss", connectionName, hostname, systemType, systemRegistry);
-	}
-	
 	public static IHost createHost(String username, String connectionName, String hostname, IRSESystemType systemType,
 			ISystemRegistry systemRegistry) throws Exception {
 		// TODO: Internationalize strings

@@ -24,7 +24,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.integration.DeltaCloudIntegrationPlugin;
 import org.jboss.tools.deltacloud.integration.Messages;
-import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
+import org.jboss.tools.internal.deltacloud.ui.utils.WorkbenchUtils;
 
 /**
  * @author Andre Dietisheim
@@ -35,11 +35,13 @@ public class ShowInRemoteSystemExplorerHandler extends AbstractHandler implement
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
-			DeltaCloudInstance instance = UIUtils.getFirstAdaptedElement(selection, DeltaCloudInstance.class);
+			DeltaCloudInstance instance = WorkbenchUtils.getFirstAdaptedElement(selection, DeltaCloudInstance.class);
 			try {
 				String connectionName = RSEUtils.createConnectionName(instance);
-				IHost host = RSEUtils.createHost(connectionName, 
-						RSEUtils.createHostName(instance),
+				IHost host = RSEUtils.createHost(
+						"jboss",
+						connectionName, 
+						RSEUtils.createRSEHostName(instance),
 						RSEUtils.getSSHOnlySystemType(), 
 						RSEUtils.getSystemRegistry());
 				Job connectJob = RSEUtils.connect(connectionName, RSEUtils.getConnectorService(host));

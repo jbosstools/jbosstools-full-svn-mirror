@@ -17,6 +17,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.text.MessageFormat;
 import java.util.Iterator;
 import java.util.Properties;
 
@@ -81,6 +82,7 @@ public class CreateServerFromRSEJob extends ChainedJob {
 
 	public void setHost(IHost host) {
 		this.host = host;
+		setName(MessageFormat.format("Create Server {0} From RSE Host", host.getName()));
 	}
 	
 	protected IStatus run(IProgressMonitor monitor) {
