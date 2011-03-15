@@ -134,7 +134,11 @@ public class TypeSelectorDialog extends BrowseSelectorDialog {
 			showMessages = settings.getBoolean(SHOW_MESSAGES_KEY);
 		} catch (Exception ex) {
 			showMessages = false;
-		}		
+		}
+		
+		// https://issues.jboss.org/browse/JBIDE-8075
+		// enable/disable selection of Message objects
+		messageTypeProvider.setFilter(showMessages?1:0);
 	}
 	
 
@@ -198,6 +202,10 @@ public class TypeSelectorDialog extends BrowseSelectorDialog {
 			
 		case BID_MESSAGES :
 			showMessages = checked;
+			// https://issues.jboss.org/browse/JBIDE-8075
+			// enable/disable selection of Message objects
+			messageTypeProvider.setFilter(showMessages?1:0);
+			bRefresh = true;
 			break;
 							
 		default :
