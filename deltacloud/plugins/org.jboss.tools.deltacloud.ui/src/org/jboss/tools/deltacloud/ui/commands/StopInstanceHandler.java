@@ -91,7 +91,7 @@ public class StopInstanceHandler extends AbstractInstanceHandler {
 	private void stopInstances(Object[] deltaCloudInstances) {
 		if (askUserToConfirm()) {
 			for (int i = 0; i < deltaCloudInstances.length; i++) {
-				stopInstance((DeltaCloudInstance) deltaCloudInstances[i]);
+				doStopInstance((DeltaCloudInstance) deltaCloudInstances[i]);
 			}
 		}
 	}
@@ -118,9 +118,9 @@ public class StopInstanceHandler extends AbstractInstanceHandler {
 	private boolean askUserToConfirm() {
 		return UIUtils
 				.openConfirmationDialog(
-						"Confirm instance stop",
-						"You are about to stop a running system(s), that might be in production. Are you sure that you want to stop the given instance(s)?",
-						"Don't warn me again",
+						CVMessages.getString("StopInstancesConfirm.title"),
+						CVMessages.getString("StopInstancesConfirm.msg"),
+						CVMessages.getString("StopInstancesConfirmDontWarn.msg"),
 						IDeltaCloudPreferenceConstants.DONT_CONFIRM_CREATE_INSTANCE,
 						Activator.PLUGIN_ID,
 						WorkbenchUtils.getActiveShell());
