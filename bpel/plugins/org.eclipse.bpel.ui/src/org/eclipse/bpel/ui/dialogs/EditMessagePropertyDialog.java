@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.bpel.ui.dialogs;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -22,6 +23,7 @@ import org.eclipse.bpel.model.messageproperties.PropertyAlias;
 import org.eclipse.bpel.ui.BPELEditor;
 import org.eclipse.bpel.ui.IHelpContextIds;
 import org.eclipse.bpel.ui.Messages;
+import org.eclipse.bpel.ui.commands.AddImportCommand;
 import org.eclipse.bpel.ui.commands.util.AutoUndoCommand;
 import org.eclipse.bpel.ui.details.providers.ColumnTableProvider;
 import org.eclipse.bpel.ui.details.providers.ModelLabelProvider;
@@ -606,7 +608,8 @@ public class EditMessagePropertyDialog extends Dialog {
 	 */
 	protected void createProperty() {
 		URI uri = getTargetFileURI();
-		Resource resource = bpelEditor.getResourceSet().getResource(uri, true);
+		
+		final Resource resource = bpelEditor.getResourceSet().getResource(uri, true);
 		final Definition definition = (Definition) resource.getContents().get(0);
 
 		bpelEditor.getCommandFramework().execute(new AutoUndoCommand(definition) {
@@ -646,6 +649,23 @@ public class EditMessagePropertyDialog extends Dialog {
 				if (definition.getPrefix(XSDConstants.SCHEMA_FOR_SCHEMA_URI_2001) == null) {
 					// TODO: what if it already had this prefix??
 					definition.addNamespace("xs", XSDConstants.SCHEMA_FOR_SCHEMA_URI_2001); //$NON-NLS-1$
+				}
+
+				// https://issues.jboss.org/browse/JBIDE-8075
+				// create the artifacts resource if it doesn't already exist
+				if (!targetFile.exists()) {
+					// add the import if not already being imported by this process
+					AddImportCommand cmd = new AddImportCommand(bpelEditor.getProcess(), definition, null);
+					if (cmd.canDoExecute() && cmd.wouldCreateDuplicateImport() == false) {
+						bpelEditor.getCommandStack().execute(cmd);
+					}
+					try {
+						resource.setModified(true);
+						resource.save(resource.getResourceSet().getLoadOptions());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 		});
