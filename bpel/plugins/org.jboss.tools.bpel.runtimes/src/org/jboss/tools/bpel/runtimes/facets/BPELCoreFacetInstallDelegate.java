@@ -68,9 +68,11 @@ public class BPELCoreFacetInstallDelegate implements IDelegate {
 		// add natures
 		WtpUtils.addNatures(proj);
 
-		// Create the content folder
+		// Create the content folder if it doesn't already exist
+		// https://issues.jboss.org/browse/JBIDE-8508
 		IFolder bpelContent = proj.getFolder(contentRoot);
-		bpelContent.create(true,true, null);
+		if (!bpelContent.exists())
+			bpelContent.create(true,true, null);
 		
 		// create the virtual component
 		IComponentImplFactory factory = new BPELVirtualComponent();
