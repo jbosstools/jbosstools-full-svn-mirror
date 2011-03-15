@@ -10,10 +10,6 @@
 ******************************************************************************/
 package org.jboss.tools.vpe.base.test;
 
-import org.eclipse.ui.IViewReference;
-import org.eclipse.ui.PlatformUI;
-//import org.jboss.tools.vpe.ui.test.ProjectsLoader;
-
 import junit.extensions.TestSetup;
 import junit.framework.TestSuite;
 
@@ -25,7 +21,7 @@ import junit.framework.TestSuite;
  * 
  */
 public class VpeTestSetup extends TestSetup {
-	private static final String CONTENT_OUTLINE_VIEW_ID = "org.eclipse.ui.views.ContentOutline";
+
 	
 	public VpeTestSetup(TestSuite test) {
 		super(test);
@@ -36,14 +32,6 @@ public class VpeTestSetup extends TestSetup {
 	 */
 	@Override
 	protected void setUp() throws Exception {
-		//added by Maksim Areshkau, Fix for https://jira.jboss.org/jira/browse/JBIDE-5820 https://jira.jboss.org/jira/browse/JBIDE-5821
-        //remove this code when we will move on wtp 3.2
-		IViewReference[] iviewReferences= PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getViewReferences();
-        for (IViewReference iViewReference : iviewReferences) {
-        	if(VpeTestSetup.CONTENT_OUTLINE_VIEW_ID.equalsIgnoreCase(iViewReference.getId())){
-        		 PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().hideView(iViewReference);
-        	}
-		}
 	}
 
 	/* (non-Javadoc)
