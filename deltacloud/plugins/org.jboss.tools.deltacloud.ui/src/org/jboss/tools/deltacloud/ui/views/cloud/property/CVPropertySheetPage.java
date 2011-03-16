@@ -33,7 +33,7 @@ public class CVPropertySheetPage extends PropertySheetPage {
 		@Override
 		public void propertyChange(PropertyChangeEvent evt) {
 			Display.getDefault().syncExec(new Runnable() {
-				
+
 				@Override
 				public void run() {
 					refresh();
@@ -74,4 +74,8 @@ public class CVPropertySheetPage extends PropertySheetPage {
 		}
 	}
 
+	@Override
+	public void dispose() {
+		removePropertyChangeListener(deltaCloud);
+	}
 }

@@ -62,14 +62,6 @@ public class InstanceView extends AbstractCloudElementTableView<DeltaCloudInstan
 	}
 
 	@Override
-	protected void addPropertyChangeListener(DeltaCloud cloud) {
-		if (cloud != null) {
-			super.addPropertyChangeListener(cloud);
-			cloud.addPropertyChangeListener(DeltaCloud.PROP_INSTANCES, this);
-		}
-	}
-
-	@Override
 	protected ICloudElementFilter<DeltaCloudInstance> getFilter(DeltaCloud cloud) {
 		return cloud.getInstanceFilter();
 	}

@@ -56,14 +56,6 @@ public class ImageView extends AbstractCloudElementTableView<DeltaCloudImage> {
 	}
 
 	@Override
-	protected void addPropertyChangeListener(DeltaCloud cloud) {
-		if (cloud != null) {
-			super.addPropertyChangeListener(cloud);
-			cloud.addPropertyChangeListener(DeltaCloud.PROP_IMAGES, this);
-		}
-	}
-
-	@Override
 	protected ICloudElementFilter<DeltaCloudImage> getFilter(DeltaCloud cloud) {
 		return cloud.getImageFilter();
 	}

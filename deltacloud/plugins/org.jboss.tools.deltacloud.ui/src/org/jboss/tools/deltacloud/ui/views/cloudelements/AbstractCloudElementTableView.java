@@ -188,6 +188,7 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 
 		currentCloud = getCloud(currentCloudSelector.getSelectionIndex(), clouds);
 		addPropertyChangeListener(currentCloud);
+
 		setViewerInput(currentCloud);
 		setFilterLabelVisible(currentCloud, filteredLabel);
 
@@ -431,7 +432,7 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 
 	protected void addPropertyChangeListener(DeltaCloud cloud) {
 		if (cloud != null) {
-			cloud.addPropertyChangeListener(DeltaCloud.PROP_NAME, this);
+			cloud.addPropertyChangeListener(this);
 		}
 	}
 
@@ -469,6 +470,7 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 
 	@Override
 	public void dispose() {
+		removePropertyChangeListener(currentCloud);
 		getSite().getWorkbenchWindow().getSelectionService().removePostSelectionListener(workbenchSelectionListener);
 		DeltaCloudManager.getDefault().removeCloudManagerListener(this);
 		super.dispose();

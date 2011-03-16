@@ -1,3 +1,13 @@
+2011-03-16  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/InstanceView.java: 
+	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/ImageView.java: 
+	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/AbstractCloudElementTableView.java 
+	(dispose): 
+	(addPropertyChangeListener): 
+	[JBIDE-8590] removing propertyChangeListeners on disposal, 
+	registering listeners for all props only (was: several for each property)
+
 2011-03-14  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/AbstractCloudElementTableView.java 

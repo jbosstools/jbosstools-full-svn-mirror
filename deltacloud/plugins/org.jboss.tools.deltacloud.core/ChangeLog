@@ -1,3 +1,11 @@
+2011-03-16  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/internal/deltacloud/core/observable/ObservablePojo.java 
+	(contains): 
+	(addPropertyChangeListener): 
+	(addPropertyChangeListener): 
+	[JBIDE-8590] adding listeners only if they're not added yet
+
 2011-03-11  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/deltacloud/core/DeltaCloudInstance.java (performAction): 
