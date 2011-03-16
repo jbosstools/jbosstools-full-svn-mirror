@@ -330,41 +330,31 @@
       <handler
             class="org.jboss.tools.deltacloud.ui.commands.FilterImagesHandler"
             commandId="org.jboss.tools.deltacloud.ui.filterimages">
-			<activeWhen>
-               <with
-                     variable="selection">
-					<iterate operator="and">
-							<adapt
-					             type="org.jboss.tools.deltacloud.core.DeltaCloud">								
-			               	</adapt>
-	               	</iterate>
-               </with>
-			</activeWhen>
 			<enabledWhen>
-				<with
-					variable="selection">
-					<count value="+" />
-				</with>
+				<or>
+					<with
+						variable="selection">
+						<count value="1" />
+					</with>
+					<with variable="activePartId">
+          				<equals value="org.jboss.tools.deltacloud.ui.views.ImageView"/>
+       				</with>
+   				</or>
 			</enabledWhen>
       </handler>
       <handler
             class="org.jboss.tools.deltacloud.ui.commands.FilterInstancesHandler"
             commandId="org.jboss.tools.deltacloud.ui.filterinstances">
-			<activeWhen>
-               <with
-                     variable="selection">
-					<iterate operator="and">
-							<adapt
-					             type="org.jboss.tools.deltacloud.core.DeltaCloud">								
-			               	</adapt>
-	               	</iterate>
-               </with>
-			</activeWhen>
 			<enabledWhen>
-				<with
-					variable="selection">
-					<count value="+" />
-				</with>
+				<or>
+					<with
+						variable="selection">
+						<count value="1" />
+					</with>
+					<with variable="activePartId">
+          				<equals value="org.jboss.tools.deltacloud.ui.views.InstanceView"/>
+       				</with>
+   				</or>
 			</enabledWhen>
       </handler>
    </extension>

@@ -34,8 +34,14 @@ public class FilterImagesHandler extends AbstractHandler implements IHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
-			DeltaCloud cloud = WorkbenchUtils.getFirstAdaptedElement(selection, DeltaCloud.class);
-			createImagesFilter(cloud, HandlerUtil.getActiveShell(event));
+			DeltaCloud deltaCloud = WorkbenchUtils.getFirstAdaptedElement(selection, DeltaCloud.class);
+			if (deltaCloud != null) {
+				createImagesFilter(deltaCloud, HandlerUtil.getActiveShell(event));
+			} else {
+				// no item selected: try active part
+				deltaCloud = WorkbenchUtils.adapt(HandlerUtil.getActivePart(event), DeltaCloud.class);
+				createImagesFilter(deltaCloud, HandlerUtil.getActiveShell(event));
+			}
 		}
 
 		return Status.OK_STATUS;

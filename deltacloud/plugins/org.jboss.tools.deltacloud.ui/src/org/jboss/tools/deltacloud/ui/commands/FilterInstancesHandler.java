@@ -35,7 +35,13 @@ public class FilterInstancesHandler extends AbstractHandler implements IHandler 
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
 			DeltaCloud deltaCloud = WorkbenchUtils.getFirstAdaptedElement(selection, DeltaCloud.class);
-			createInstancesFilter(deltaCloud, HandlerUtil.getActiveShell(event));
+			if (deltaCloud != null) {
+				createInstancesFilter(deltaCloud, HandlerUtil.getActiveShell(event));
+			} else {
+				// no item selected: try active part
+				deltaCloud = WorkbenchUtils.adapt(HandlerUtil.getActivePart(event), DeltaCloud.class);
+				createInstancesFilter(deltaCloud, HandlerUtil.getActiveShell(event));
+			}
 		}
 
 		return Status.OK_STATUS;
