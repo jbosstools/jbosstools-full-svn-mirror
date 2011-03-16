@@ -29,7 +29,8 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
 public class DialogVariableTypeSelector extends VariableTypeSelector {
 	public DialogVariableTypeSelector(Composite parent, int style, BPELEditor bpelEditor,
 			Shell shell, Callback callback, TabbedPropertySheetWidgetFactory wf) {
-		super(parent, style, bpelEditor, wf, callback, false);
+		// https://issues.jboss.org/browse/JBIDE-8045
+		super(parent, style, bpelEditor, wf, callback);
 		this.shell = shell;
 	}
 	

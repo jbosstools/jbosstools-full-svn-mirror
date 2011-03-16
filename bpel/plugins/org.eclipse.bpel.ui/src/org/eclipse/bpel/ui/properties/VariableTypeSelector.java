@@ -33,6 +33,7 @@ import org.eclipse.bpel.ui.details.providers.ModelViewerSorter;
 import org.eclipse.bpel.ui.details.providers.OperationContentProvider;
 import org.eclipse.bpel.ui.details.providers.PortTypeContentProvider;
 import org.eclipse.bpel.ui.details.providers.VariableTypeTreeContentProvider;
+import org.eclipse.bpel.ui.dialogs.TypeSelectorDialog;
 import org.eclipse.bpel.ui.uiextensionmodel.VariableExtension;
 import org.eclipse.bpel.ui.util.BPELUtil;
 import org.eclipse.bpel.ui.util.BrowseUtil;
@@ -133,18 +134,21 @@ public class VariableTypeSelector extends Composite {
 	protected BPELEditor bpelEditor;
 	protected Callback callback;
 	protected Shell shell;
-	protected boolean allowElements = false;
 	protected boolean nullFilterAdded = false;
 	
+	protected int filter = TypeSelectorDialog.INCLUDE_ALL;
+	protected boolean requireLowerTreeSelection = false;
+
+	// https://issues.jboss.org/browse/JBIDE-8045
+	// removed unused "allowElements" param
 	public VariableTypeSelector(Composite parent, int style, BPELEditor bpelEditor,
-		TabbedPropertySheetWidgetFactory wf, Callback callback, boolean allowElements)
+		TabbedPropertySheetWidgetFactory wf, Callback callback)
 	{
 		super(parent, style);
 		this.bpelEditor = bpelEditor;
 		this.shell = bpelEditor.getSite().getShell();
 		this.wf = wf;
 		this.callback = callback;
-		this.allowElements = allowElements;
 		
 		Composite parentComposite = createComposite(this);
 		this.setLayout(new FillLayout(SWT.VERTICAL));
@@ -157,6 +161,17 @@ public class VariableTypeSelector extends Composite {
 		createDataTypeWidgets(parentComposite);
 	}
 
+	// https://issues.jboss.org/browse/JBIDE-8045
+	// new constructor to allow constraining the filter checkboxes to only those types
+	// valid for the object being defined/modified
+	public VariableTypeSelector(Composite parent, int style, BPELEditor bpelEditor,
+		TabbedPropertySheetWidgetFactory wf, Callback callback, boolean requireLowerTreeSelection, int filter)
+	{
+		this(parent, style, bpelEditor, wf, callback);
+		this.filter = filter;
+		this.requireLowerTreeSelection = requireLowerTreeSelection;
+	}
+	
 	/**
 	 * Refresh the given CComboViewer, and also make sure selectedObject is selected in it.
 	 */
@@ -661,7 +676,9 @@ public class VariableTypeSelector extends Composite {
 		dataTypeBrowseButton.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent e) {
 				
-				Object xsdType = BrowseUtil.browseForXSDTypeOrElement(bpelEditor.getProcess(), getShell());
+				// https://issues.jboss.org/browse/JBIDE-8045
+				Object xsdType = BrowseUtil.browseForVariableType(
+						bpelEditor.getProcess(), getShell(),requireLowerTreeSelection,filter);
 				if (xsdType != null) {
     				lastChangeContext = DATATYPE_BROWSE_CONTEXT;
 					if (xsdType instanceof XSDTypeDefinition) {

@@ -58,6 +58,7 @@ import org.eclipse.bpel.ui.commands.SetNameCommand;
 import org.eclipse.bpel.ui.commands.SetVariableCommand;
 import org.eclipse.bpel.ui.commands.SetVariableKindCommand;
 import org.eclipse.bpel.ui.commands.util.AutoUndoCommand;
+import org.eclipse.bpel.ui.dialogs.TypeSelectorDialog;
 import org.eclipse.bpel.ui.uiextensionmodel.VariableExtension;
 import org.eclipse.bpel.ui.util.BPELUtil;
 import org.eclipse.bpel.ui.util.BatchedMultiObjectAdapter;
@@ -609,8 +610,10 @@ public class FaultCatchNameSection extends BPELPropertySection {
 			}
 		});
 
+		// https://issues.jboss.org/browse/JBIDE-8045
 		variableTypeSelector = new VariableTypeSelector(composite, SWT.NONE, getBPELEditor(),
-			fWidgetFactory, new FaultVariableTypeCallback(), false);
+			fWidgetFactory, new FaultVariableTypeCallback(), false,
+			TypeSelectorDialog.INCLUDE_ELEMENT_DECLARATIONS | TypeSelectorDialog.INCLUDE_MESSAGE_TYPES);
 		data = new FlatFormData();
 		data.top = new FlatFormAttachment(variableNameText, IDetailsAreaConstants.VSPACE+4);
 		data.left = new FlatFormAttachment(0,0);
