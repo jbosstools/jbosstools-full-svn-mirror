@@ -56,4 +56,8 @@ public class FieldMatcher implements IFieldMatcher {
 		return rule;
 	}
 
+	public boolean isMatchesAll() {
+		return false;
+	}
+
 }

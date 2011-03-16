@@ -10,10 +10,13 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.ui.views.cloudelements;
 
+import java.beans.PropertyChangeEvent;
+
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.services.IEvaluationService;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
+import org.jboss.tools.deltacloud.core.ICloudElementFilter;
 import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
 
 /**
@@ -57,4 +60,18 @@ public class InstanceView extends AbstractCloudElementTableView<DeltaCloudInstan
 			cloud.addPropertyChangeListener(DeltaCloud.PROP_INSTANCES, this);
 		}
 	}
+	
+	@Override
+	public void propertyChange(PropertyChangeEvent event) {
+		super.propertyChange(event);
+		if (DeltaCloud.PROP_INSTANCES.equals(event.getPropertyName())) {
+			updateFilteredLabel();
+		}
+	}
+
+	@Override
+	protected ICloudElementFilter<DeltaCloudInstance> getFilter(DeltaCloud cloud) {
+		return cloud.getInstanceFilter();
+	}
+
 }

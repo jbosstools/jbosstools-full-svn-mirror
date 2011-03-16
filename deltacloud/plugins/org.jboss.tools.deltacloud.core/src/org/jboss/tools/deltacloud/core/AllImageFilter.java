@@ -10,6 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core;
 
+import java.util.regex.PatternSyntaxException;
+
 /**
  * A filter for images that matches on all elements (no criteria checked)
  * 
@@ -33,7 +35,7 @@ public class AllImageFilter extends AbstractCloudElementFilter<DeltaCloudImage> 
 	}
 
 	@Override
-	public void setRules(String ruleString) {
+	public void setRules(String rulesString) throws PatternSyntaxException {
 		// ignore, never set the rules for this filter
 	}
 
@@ -53,6 +55,10 @@ public class AllImageFilter extends AbstractCloudElementFilter<DeltaCloudImage> 
 	
 	public IFieldMatcher getDescRule() {
 		return matcher;
+	}
+
+	public boolean isFiltering() {
+		return false;
 	}
 
 	@Override

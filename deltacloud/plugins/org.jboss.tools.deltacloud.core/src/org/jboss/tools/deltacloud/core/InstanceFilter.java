@@ -31,6 +31,7 @@ public class InstanceFilter extends AbstractCloudElementFilter<DeltaCloudInstanc
 
 	public InstanceFilter(DeltaCloud cloud) {
 		super(cloud);
+		setRules(ALL_STRING);
 	}
 	
 	@Override

@@ -27,6 +27,7 @@ public class ImageFilter extends AbstractCloudElementFilter<DeltaCloudImage> imp
 
 	public ImageFilter(DeltaCloud cloud) {
 		super(cloud);
+		setRules(ALL_STRING);
 	}
 
 	private IFieldMatcher descRule;
@@ -60,4 +61,11 @@ public class ImageFilter extends AbstractCloudElementFilter<DeltaCloudImage> imp
 	public IFieldMatcher getDescRule() {
 		return descRule;
 	}
+	
+	public boolean isFiltering() {
+		return super.isFiltering()
+				|| !archRule.isMatchesAll()
+				|| !descRule.isMatchesAll();
+	}
+
 }

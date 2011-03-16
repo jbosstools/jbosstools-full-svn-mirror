@@ -16,6 +16,12 @@ package org.jboss.tools.deltacloud.core;
  */
 public interface IImageFilter extends ICloudElementFilter<DeltaCloudImage> {
 	
+	public static final String ALL_STRING =
+		ALL_MATCHER_EXPRESSION + EXPRESSION_DELIMITER // name
+				+ ALL_MATCHER_EXPRESSION + EXPRESSION_DELIMITER // id
+				+ ALL_MATCHER_EXPRESSION + EXPRESSION_DELIMITER // arch
+				+ ALL_MATCHER_EXPRESSION; // desc
+
 	public IFieldMatcher getArchRule();
 	public IFieldMatcher getDescRule();
 }

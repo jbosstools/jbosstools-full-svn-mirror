@@ -1,5 +1,7 @@
 package org.jboss.tools.deltacloud.core;
 
+import java.util.regex.PatternSyntaxException;
+
 /**
  * A filter for instances that matches on all elements (no criteria checked)
  * 
@@ -23,10 +25,9 @@ public class AllInstanceFilter extends AbstractCloudElementFilter<DeltaCloudInst
 	}
 
 	@Override
-	public void setRules(String ruleString) {
+	public void setRules(String rulesString) throws PatternSyntaxException {
 		// ignore, never set the rules for this filter
 	}
-
 	
 	@Override
 	public IFieldMatcher getNameRule() {
@@ -63,8 +64,14 @@ public class AllInstanceFilter extends AbstractCloudElementFilter<DeltaCloudInst
 		return matcher;
 	}
 
+	public boolean isFiltering() {
+		return false;
+	}
+
 	@Override
 	public String toString() {
 		return ALL_STRING;
 	}
+	
+
 }

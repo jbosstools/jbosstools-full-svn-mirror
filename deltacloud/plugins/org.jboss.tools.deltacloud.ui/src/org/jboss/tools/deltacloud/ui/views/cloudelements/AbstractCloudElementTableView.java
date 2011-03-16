@@ -47,6 +47,7 @@ import org.eclipse.ui.part.ViewPart;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
+import org.jboss.tools.deltacloud.core.ICloudElementFilter;
 import org.jboss.tools.deltacloud.core.IDeltaCloudElement;
 import org.jboss.tools.deltacloud.core.IDeltaCloudManagerListener;
 import org.jboss.tools.deltacloud.core.IInstanceFilter;
@@ -56,7 +57,7 @@ import org.jboss.tools.deltacloud.ui.views.CVMessages;
 import org.jboss.tools.deltacloud.ui.views.Columns;
 import org.jboss.tools.deltacloud.ui.views.Columns.Column;
 import org.jboss.tools.internal.deltacloud.ui.preferences.StringPreferenceValue;
-import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
+import org.jboss.tools.internal.deltacloud.ui.utils.WorkbenchUtils;
 
 /**
  * A common superclass for viewers that operate on IDeltaCloudElements
@@ -78,10 +79,12 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 
 	private Combo currentCloudSelector;
 	private Label currentCloudSelectorLabel;
+	private Label filteredLabel;
+	private Composite container;
 	private TableViewer viewer;
 	private DeltaCloud currentCloud;
+
 	private StringPreferenceValue lastSelectedCloudPref;
-	private Composite container;
 
 	private ModifyListener currentCloudModifyListener = new ModifyListener() {
 
@@ -102,6 +105,7 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 
 					@Override
 					public void run() {
+						updateFilteredLabel();
 						setViewerInput(currentCloud);
 					}
 				});
@@ -115,7 +119,7 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 		public void selectionChanged(IWorkbenchPart part, ISelection selection) {
 			// we want to listen to selection changes in the deltacloud view
 			// only
-			DeltaCloud cloud = UIUtils.getFirstAdaptedElement(selection, DeltaCloud.class);
+			DeltaCloud cloud = WorkbenchUtils.getFirstAdaptedElement(selection, DeltaCloud.class);
 			if (isNewCloud(cloud)) {
 				int index = getCloudIndex(cloud, getClouds());
 				currentCloudSelector.select(index);
@@ -174,9 +178,10 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 		createCloudSelector(container);
 		initCloudSelector(lastSelectedCloudPref.get(), currentCloudSelector, clouds);
 
-		Label filterLabel = new Label(container, SWT.NULL);
-		filterLabel.setText(CVMessages.getString(FILTERED_LABEL));
-		filterLabel.setToolTipText(CVMessages.getString(FILTERED_TOOLTIP));
+		this.filteredLabel = new Label(container, SWT.NULL);
+		filteredLabel.setText(CVMessages.getString(FILTERED_LABEL));
+		filteredLabel.setToolTipText(CVMessages.getString(FILTERED_TOOLTIP));
+		updateFilteredLabel();
 
 		Composite tableArea = new Composite(container, SWT.NULL);
 		viewer = createTableViewer(tableArea);
@@ -184,7 +189,7 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 		currentCloud = getCloud(currentCloudSelector.getSelectionIndex(), clouds);
 		addPropertyChangeListener(currentCloud);
 		setViewerInput(currentCloud);
-		setFilterLabelVisible(currentCloud, filterLabel);
+		setFilterLabelVisible(currentCloud, filteredLabel);
 
 		Point p1 = currentCloudSelectorLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		Point p2 = currentCloudSelector.computeSize(SWT.DEFAULT, SWT.DEFAULT);
@@ -203,7 +208,7 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 		f = new FormData();
 		f.top = new FormAttachment(0, 5 + centering);
 		f.right = new FormAttachment(100, -10);
-		filterLabel.setLayoutData(f);
+		filteredLabel.setLayoutData(f);
 
 		f = new FormData();
 		f.top = new FormAttachment(currentCloudSelector, 8);
@@ -224,20 +229,17 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 	private TableViewer createTableViewer(Composite tableArea) {
 		TableColumnLayout tableLayout = new TableColumnLayout();
 		tableArea.setLayout(tableLayout);
-
-		TableViewer viewer = new TableViewer(tableArea,
-				SWT.FULL_SELECTION | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER | SWT.MULTI);
+		TableViewer viewer = new TableViewer(
+				tableArea, SWT.FULL_SELECTION | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER | SWT.MULTI);
 		Table table = viewer.getTable();
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
 		ITableContentAndLabelProvider<CLOUDELEMENT> provider = getContentAndLabelProvider();
 		viewer.setContentProvider(provider);
 		viewer.setLabelProvider(provider);
-		createColumns(provider, tableLayout, table);
-
+		createColumns(provider.getColumns(), tableLayout, table);
 		viewer.setComparator(new TableViewerColumnComparator());
 		table.setSortDirection(SWT.NONE);
-
 		return viewer;
 	}
 
@@ -296,7 +298,7 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 		}
 
 		IInstanceFilter filter = currentCloud.getInstanceFilter();
-		filterLabel.setVisible(!filter.toString().equals(IInstanceFilter.ALL_STRING));
+		filterLabel.setVisible(!filter.isFiltering());
 	}
 
 	private DeltaCloud getCloud(int cloudIndex, DeltaCloud[] clouds) {
@@ -307,18 +309,16 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 		return clouds[cloudIndex];
 	}
 
-	private void createColumns(ITableContentAndLabelProvider<CLOUDELEMENT> provider, TableColumnLayout tableLayout,
-			Table table) {
-		Columns<CLOUDELEMENT> columns = provider.getColumns();
-
+	private void createColumns(Columns<CLOUDELEMENT> columns, TableColumnLayout tableLayout, Table table) {
 		for (int i = 0; i < columns.getSize(); ++i) {
 			Column<CLOUDELEMENT> c = columns.getColumn(i);
 			TableColumn tc = new TableColumn(table, SWT.NONE);
 			if (i == 0) {
 				table.setSortColumn(tc);
 			}
-			tc.setText(CVMessages.getString(c.getName()));
 			tableLayout.setColumnData(tc, new ColumnWeightData(c.getWeight(), true));
+			tc.setText(c.getName());
+			tc.setMoveable(true);
 			tc.addSelectionListener(new ColumnListener(i));
 		}
 	}
@@ -340,8 +340,8 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 	}
 
 	private void hookContextMenu(Control control) {
-		IMenuManager contextMenu = UIUtils.createContextMenu(control);
-		UIUtils.registerContributionManager(UIUtils.getContextMenuId(getViewID()), contextMenu, control);
+		IMenuManager contextMenu = WorkbenchUtils.createContextMenu(control);
+		WorkbenchUtils.registerContributionManager(WorkbenchUtils.getContextMenuId(getViewID()), contextMenu, control);
 	}
 
 	protected abstract String getViewID();
@@ -366,7 +366,7 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 		DeltaCloud[] clouds = getClouds();
 		final int index = getCloudIndex(cloud, clouds);
 		Display.getDefault().syncExec(new Runnable() {
-
+			
 			@Override
 			public void run() {
 				if (index >= 0) {
@@ -382,8 +382,9 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 					currentCloudSelector.addModifyListener(currentCloudModifyListener);
 				}
 				container.layout(true, true);
+				
 			}
-
+			
 			private String[] getSelectorItems(final DeltaCloud cloud, final int index) {
 				List<String> names = new ArrayList<String>(Arrays.asList(currentCloudSelector.getItems()));
 				names.set(index, cloud.getName());
@@ -481,4 +482,21 @@ public abstract class AbstractCloudElementTableView<CLOUDELEMENT extends IDeltaC
 			return super.getAdapter(adapter);
 		}
 	}
+
+	protected void updateFilteredLabel() {
+		filteredLabel.getDisplay().syncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				boolean visible = false;
+				if (currentCloud != null) {
+					ICloudElementFilter<CLOUDELEMENT> filter = getFilter(currentCloud);
+					visible = filter.isFiltering();
+				}
+				filteredLabel.setVisible(visible);
+			}
+		});
+	}
+
+	protected abstract ICloudElementFilter<CLOUDELEMENT> getFilter(DeltaCloud cloud);
 }

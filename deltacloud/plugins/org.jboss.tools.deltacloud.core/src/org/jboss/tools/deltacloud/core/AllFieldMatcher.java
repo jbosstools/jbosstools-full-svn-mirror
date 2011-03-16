@@ -12,4 +12,8 @@ public class AllFieldMatcher implements IFieldMatcher {
 		return "*"; //$NON-NLS-1$
 	}
 
+	public boolean isMatchesAll() {
+		return true;
+	}
+
 }
