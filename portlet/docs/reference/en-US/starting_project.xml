@@ -255,7 +255,7 @@
 			</listitem>
     		
 			<listitem>
-				<para>Use the <emphasis>http://localhost:8080/portal/portal/default/default</emphasis> URL to see your portlet in the browser.</para>
+				<para>Use the <ulink url="http://localhost:8080/portal/portal/default/default">http://localhost:8080/portal/portal/default/default</ulink> URL to see your portlet in the browser.</para>
     			
 				<figure>
 					<title>Java Portlet in the Browser Window</title>
