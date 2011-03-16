@@ -22,6 +22,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.wst.common.componentcore.ModuleCoreNature;
 
 /**
  * @author Michal Chmielewski (michal.chmielewski@oracle.com)
@@ -54,26 +55,36 @@ public NewFileWizardPage2(String pageName)
 	 */
 	public void createControl (Composite parent) {
 		
-	     Composite composite = new Composite(parent, SWT.NULL);	     
+		final NewFileWizard wiz = (NewFileWizard) getWizard();
+		Composite composite = new Composite(parent, SWT.NULL);
 
-	     initializeDialogUnits(parent);
+		initializeDialogUnits(parent);
 
-	     composite.setLayout(new GridLayout());
-        composite.setLayoutData(new GridData(GridData.FILL_BOTH));
-	     
-	     // Start Resource Variant
-         fResourceComposite = new FileSelectionGroup(composite,
-        		new Listener() {
-					public void handleEvent(Event event) {
-						IResource resource = fResourceComposite.getSelectedResource();
-						setPageComplete( resource != null && resource instanceof IContainer );
-					}        	
-        		},
-        		
-        		Messages.NewFileWizardPage2_1,
-        		Messages.NewFileWizardPage2_2 );
-                          
-         setControl( composite );
+		composite.setLayout(new GridLayout());
+		composite.setLayoutData(new GridData(GridData.FILL_BOTH));
+
+		// Start Resource Variant
+		fResourceComposite = new FileSelectionGroup(composite,
+			new Listener() {
+				public void handleEvent(Event event) {
+					IResource resource = fResourceComposite.getSelectedResource();
+					setPageComplete(resource != null && resource instanceof IContainer);
+					// https://issues.jboss.org/browse/JBIDE-8591
+					if (!ModuleCoreNature.isFlexibleProject(resource.getProject()))
+						setMessage(Messages.NewFileWizard_Not_A_Faceted_Project, WizardPage.WARNING);
+					else
+						setMessage(null);
+				
+					if (resource instanceof IContainer)
+						wiz.setBPELContainer((IContainer)resource);
+				}
+			},
+			Messages.NewFileWizardPage2_1,
+			Messages.NewFileWizardPage2_2);
+		// https://issues.jboss.org/browse/JBIDE-8591
+		// update wizard so first page gets the new resource location
+		fResourceComposite.setSelectedResource(wiz.getBPELContainer());
+		setControl(composite);
 	}
 	
 	

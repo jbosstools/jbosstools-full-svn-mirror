@@ -43,6 +43,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.internal.ide.IDEWorkbenchPlugin;
+import org.eclipse.wst.common.componentcore.ModuleCoreNature;
 
 /**
  * 
@@ -360,7 +361,13 @@ public class NewFileWizardPage1 extends WizardPage {
 		}
 
 		setErrorMessage(null);
-		setMessage(null);
+
+		// https://issues.jboss.org/browse/JBIDE-8591
+		NewFileWizard wiz = (NewFileWizard)getWizard();
+		if (!ModuleCoreNature.isFlexibleProject(wiz.getBPELContainer().getProject()))
+			setMessage(Messages.NewFileWizard_Not_A_Faceted_Project, WizardPage.WARNING);
+		else
+			setMessage(null);
 
 		String namespace = processNamespaceField.getText().trim();
 		if (namespace.length() < 1) {
@@ -457,6 +464,8 @@ public class NewFileWizardPage1 extends WizardPage {
 		super.setVisible(visible);
 		if (visible) {
 			processNameField.setFocus();
+			// https://issues.jboss.org/browse/JBIDE-8591
+			validatePage();
 		}
 	}
 
