@@ -11,6 +11,7 @@ import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.COP
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.IF_EXISTS;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.INITIAL_WINDOW_STATE;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.INSTANCE_NAME;
+import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.NAME;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.IS_JSF_PORTLET;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.IS_SEAM_PORTLET;
 import static org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties.JBOSS_APP;
@@ -81,7 +82,7 @@ public class AddJBossPortletWizardPage extends DataModelWizardPage {
 	 * @see org.eclipse.jem.util.ui.wizard.WTPWizardPage#getValidationPropertyNames()
 	 */
 	protected String[] getValidationPropertyNames() {
-		return new String[] { INSTANCE_NAME, WINDOW_NAME };
+		return new String[] { NAME, INSTANCE_NAME, WINDOW_NAME };
 	}
 
 	protected Composite createTopLevelComposite(Composite parent) {

@@ -2,12 +2,11 @@ package org.jboss.tools.portlet.ui.internal.wizard;
 
 
 
-import static org.eclipse.jst.j2ee.internal.common.operations.INewJavaClassDataModelProperties.SOURCE_FOLDER;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -26,22 +25,17 @@ import org.eclipse.jdt.core.Signature;
 import org.eclipse.jem.util.logger.proxy.Logger;
 import org.eclipse.jst.j2ee.internal.common.J2EECommonMessages;
 import org.eclipse.jst.j2ee.internal.common.operations.INewJavaClassDataModelProperties;
-import org.eclipse.jst.j2ee.internal.common.operations.NewJavaClassDataModelProvider;
 import org.eclipse.jst.j2ee.internal.project.J2EEProjectUtilities;
-import org.eclipse.jst.j2ee.internal.web.operations.INewServletClassDataModelProperties;
 import org.eclipse.jst.j2ee.internal.web.operations.NewServletClassDataModelProvider;
-import org.eclipse.jst.j2ee.internal.web.operations.NewServletClassOperation;
 import org.eclipse.jst.j2ee.internal.web.operations.NewWebClassDataModelProvider;
-import org.eclipse.jst.j2ee.internal.web.operations.WebMessages;
-import org.eclipse.jst.j2ee.web.validation.UrlPattern;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
 import org.eclipse.wst.common.frameworks.datamodel.IDataModelOperation;
-import org.eclipse.wst.common.frameworks.datamodel.IDataModelProvider;
 import org.eclipse.wst.common.frameworks.internal.plugin.WTPCommonPlugin;
 import org.jboss.tools.portlet.operations.AddPortletOperation;
 import org.jboss.tools.portlet.ui.INewPortletClassDataModelProperties;
 import org.jboss.tools.portlet.ui.Messages;
+import org.jboss.tools.portlet.ui.PortletUIActivator;
 
 /**
  * 
@@ -354,6 +348,24 @@ public class NewPortletClassDataModelProvider extends
 			return validateSuperClassName(getStringProperty(propertyName));
 		}
 
+		if (propertyName.equals(NAME)) {
+			IProject project = (IProject) getProperty(PROJECT);
+			IFile portletFile = PortletUIActivator.getPortletXmlFile(project);
+			if (portletFile == null || !portletFile.exists()) {
+				return Status.OK_STATUS;
+			}
+			Set<String> portletNames = PortletUIActivator.getPortletNames(portletFile);
+			String name = getStringProperty(NAME);
+			if (name != null) {
+				name = name.trim();
+			}
+			if (portletNames.contains(name)) {
+				IStatus status = new Status(IStatus.ERROR, PortletUIActivator.PLUGIN_ID, 
+						NLS.bind(Messages.NewPortletClassDataModelProvider_The_portlet_already_exists, name)); 
+				return status;
+			}
+			return Status.OK_STATUS;
+		}
 		if ((isJSFPortlet || isSeamPortlet) && propertyName.equals(CLASS_NAME)) {
 			if (getStringProperty(propertyName).length()!=0) {
 				return Status.OK_STATUS;

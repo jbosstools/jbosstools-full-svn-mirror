@@ -16,6 +16,7 @@ public class Messages extends NLS {
 	public static String NewJSFPortletClassWizardPage_Choose_a_Seam_portlet_class;
 	public static String NewJSFPortletClassWizardPage_New_JSF_Portlet;
 	public static String NewJSFPortletClassWizardPage_New_Seam_Portlet;
+	public static String NewPortletClassDataModelProvider_The_portlet_already_exists;
 	public static String NewPortletClassWizardPage_Choose_a_portlet_class;
 	public static String NewPortletClassWizardPage_New_Portlet;
 	public static String NewPortletClassWizardPage_Use_an_existing_Portlet_class;

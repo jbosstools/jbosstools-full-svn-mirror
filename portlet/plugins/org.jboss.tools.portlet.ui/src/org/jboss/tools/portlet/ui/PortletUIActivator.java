@@ -3,6 +3,8 @@ package org.jboss.tools.portlet.ui;
 import static org.eclipse.wst.common.componentcore.internal.operation.IArtifactEditOperationDataModelProperties.PROJECT_NAME;
 
 import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -22,11 +24,18 @@ import org.eclipse.wst.common.project.facet.core.IFacetedProjectBase;
 import org.eclipse.wst.common.project.facet.core.IProjectFacet;
 import org.eclipse.wst.common.project.facet.core.ProjectFacetsManager;
 import org.eclipse.wst.server.core.IRuntime;
+import org.eclipse.wst.sse.core.StructuredModelManager;
+import org.eclipse.wst.sse.core.internal.provisional.text.IStructuredDocumentRegion;
+import org.eclipse.wst.xml.core.internal.provisional.document.IDOMModel;
+import org.eclipse.wst.xml.core.internal.provisional.document.IDOMNode;
 import org.jboss.ide.eclipse.as.core.server.IJBossServerConstants;
 import org.jboss.ide.eclipse.as.core.server.IJBossServerRuntime;
 import org.jboss.tools.portlet.core.IPortletConstants;
 import org.jboss.tools.portlet.core.PortletCoreActivator;
 import org.osgi.framework.BundleContext;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -182,5 +191,47 @@ public class PortletUIActivator extends AbstractUIPlugin {
 		} catch (IllegalArgumentException e) {
 			return null;
 		}
+	}
+
+	public static Set<String> getPortletNames(IFile portletFile) {
+		Set<String> portletNames = new HashSet<String>();
+		if (portletFile == null || !portletFile.exists()) {
+			return portletNames;
+		}
+		IDOMModel domModel = null;
+		try {
+			domModel = (IDOMModel) StructuredModelManager.getModelManager()
+					.getModelForRead(portletFile);
+			Document document = domModel.getDocument();
+			NodeList portlets = document.getElementsByTagName("portlet-name"); //$NON-NLS-1$
+			if (portlets == null || portlets.getLength() == 0) {
+				return portletNames;
+			}
+			for (int i = 0; i < portlets.getLength(); i++) {
+				Node node = portlets.item(i);
+				NodeList children = node.getChildNodes();
+				if (children == null || children.getLength() != 1) {
+					continue;
+				}
+				Node child = children.item(0);
+				if (child == null || Node.TEXT_NODE != child.getNodeType()) {
+					continue;
+				}
+				IStructuredDocumentRegion structuredDocumentRegion = ((IDOMNode) child)
+						.getFirstStructuredDocumentRegion();
+				String value = structuredDocumentRegion.getFullText();
+				if (value == null) {
+					continue;
+				}
+				portletNames.add(value.trim());
+			}
+		} catch (Exception e) {
+			PortletCoreActivator.log(e);
+		} finally {
+			if (domModel != null) {
+				domModel.releaseFromRead();
+			}
+		}
+		return portletNames;
 	}
 }

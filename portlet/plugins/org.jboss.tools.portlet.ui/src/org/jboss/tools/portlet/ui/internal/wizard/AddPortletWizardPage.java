@@ -68,7 +68,7 @@ public class AddPortletWizardPage extends DataModelWizardPage {
 	 * @see org.eclipse.jem.util.ui.wizard.WTPWizardPage#getValidationPropertyNames()
 	 */
 	protected String[] getValidationPropertyNames() {
-		return new String[] { DISPLAY_NAME, INIT_PARAM };
+		return new String[] { NAME, DISPLAY_NAME, INIT_PARAM };
 	}
 
 	protected Composite createTopLevelComposite(Composite parent) {
