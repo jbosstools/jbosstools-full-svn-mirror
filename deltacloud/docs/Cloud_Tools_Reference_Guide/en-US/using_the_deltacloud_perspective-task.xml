@@ -52,7 +52,7 @@
 			</mediaobject>
 		</figure>
 		<para>
-			By right-clicking (or control-clicking on Mac OS) on an image in the table and selecting <guimenuitem>Launch Instance</guimenuitem>, a dialog will appear. Define the <guilabel>Name</guilabel> of the instance, the <guilabel>Realm</guilabel> the instance should appear in, select a pre-defined <guilabel>Hardware Profile</guilabel> and choose a <guilabel>Key Name</guilabel> for key file authentication. You can also change the default image by defining the value for the <guilabel>Image</guilabel> field, or by clicking the <guibutton>Find...</guibutton> button.
+			By right-clicking (or control-clicking on Mac OS) on an image in the table and selecting <guimenuitem>Launch Instance</guimenuitem>, a dialog will appear. Define the <guilabel>Name</guilabel> of the instance, the <guilabel>Realm</guilabel> the instance should appear in, select a predefined <guilabel>Hardware Profile</guilabel> and choose a <guilabel>Key Name</guilabel> for key file authentication. You can also change the default image by defining the value for the <guilabel>Image</guilabel> field, or by clicking the <guibutton>Find...</guibutton> button.
 		</para>
 		<para>
 			User authentication keys are managed for Deltacloud tooling by the <guilabel>Manage Keys</guilabel> dialog. When clicking on the <guibutton>Manage</guibutton> you will be presented with this dialog. Select one from the list or add a new one by clicking the <guibutton>New</guibutton> button. Newly created keys will also be added to the SSH2 key list if they are not already present.
@@ -70,7 +70,7 @@
 		</figure>
 		
 		<para>
-			The next wizard page allows you to explicitily create an Eclipse Remote System Explorer (RSE), which is used to browse the remote filesystem and connect to the instance via an SSH terminal.
+			The next wizard page allows you to explicitly create an Eclipse Remote System Explorer (RSE), which is used to browse the remote filesystem and connect to the instance via an SSH terminal.
 		</para>
 		
 		<para>
