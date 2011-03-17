@@ -248,7 +248,7 @@ this.queryText = this.queryText+queryString;
 	</note>
 
 	<para>
-		In conclusion, the main goal of this document is to describe the full feature set that <property>JBoss BIRT Tools</property> provide. If you have any questions, comments or suggestions on the topic, please feel free to ask in the <ulink url="http://www.jboss.org/index.html?module=bb&amp;op=viewforum&amp;f=201">JBoss Tools Forum</ulink>. You can also influence on how you want to see JBoss Tools docs infuture leaving your vote on the article <ulink url="http://www.jboss.org/community/docs/DOC-10795">Overview of the improvements required by JBossTools/JBDS Docs users</ulink>.
+		In conclusion, the main goal of this document is to describe the full feature set that <property>JBoss BIRT Tools</property> provide. If you have any questions, comments or suggestions on the topic, please feel free to ask in the <ulink url="http://www.jboss.org/index.html?module=bb&amp;op=viewforum&amp;f=201">JBoss Tools Forum</ulink>. You can also influence on how you want to see JBoss Tools docs in future leaving your vote on the article <ulink url="http://www.jboss.org/community/docs/DOC-10795">Overview of the improvements required by JBossTools/JBDS Docs users</ulink>.
 	</para>
 
 </section>
