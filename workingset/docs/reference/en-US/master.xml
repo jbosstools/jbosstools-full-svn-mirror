@@ -48,12 +48,12 @@
           <releaseinfo>
            Version: 2.1.0.GA
           </releaseinfo>
-<abstract>
+<!--<abstract>
    <title/>
        <para>
            <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/workingset/pdf/Workingset_Reference_Guide.pdf">PDF version</ulink>
        </para>
-</abstract>
+</abstract>-->
 
     </bookinfo>
 	
