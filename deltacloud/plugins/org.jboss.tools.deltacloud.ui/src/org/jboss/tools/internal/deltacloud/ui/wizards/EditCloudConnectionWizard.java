@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
-import java.text.MessageFormat;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -54,7 +52,7 @@ public class EditCloudConnectionWizard extends NewCloudConnectionWizard {
 	private boolean editCloud(final DeltaCloud cloud, final String name, final String url, final String username,
 			final String password, final DeltaCloudDriver driver) {
 		try {
-			Job job = new AbstractCloudJob(MessageFormat.format("Edit cloud \"{0}\"", cloud.getName()), cloud) {
+			Job job = new AbstractCloudJob(WizardMessages.getFormattedString("EditCloudConnection.message", cloud.getName()), cloud) {
 
 				@Override
 				protected IStatus doRun(IProgressMonitor monitor) throws Exception {

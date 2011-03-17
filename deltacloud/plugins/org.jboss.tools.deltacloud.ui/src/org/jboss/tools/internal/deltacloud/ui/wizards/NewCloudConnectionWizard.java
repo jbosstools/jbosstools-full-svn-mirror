@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
-import java.text.MessageFormat;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -125,7 +123,7 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 
 	private boolean createCloud(final String name, final String url, final String username, final String password,
 			final DeltaCloudDriver driver)  {
-		Job job = new Job(MessageFormat.format("Create cloud \"{0}\"", name)) {
+		Job job = new Job(WizardMessages.getFormattedString("CloudConnection.msg", name)) {
 
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
@@ -136,7 +134,7 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 				} catch (Exception e) {
 					// TODO internationalize strings
 					return StatusFactory.getInstance(IStatus.ERROR, Activator.PLUGIN_ID,
-							MessageFormat.format("Could not create cloud {0}", name), e);
+							WizardMessages.getFormattedString("CloudConnectionError.msg", name), e);
 				}
 			}
 
