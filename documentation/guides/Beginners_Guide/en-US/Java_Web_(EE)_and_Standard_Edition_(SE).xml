@@ -330,7 +330,7 @@
 				<term>Editors and views</term>
 				<listitem>
 					<para>
-						There are a number of editors available in the <application>JBoss Developer Studio</application> for working with Seam in addition to the Visual Page Editor including:
+						There are a number of editors available in <application>JBoss Developer Studio</application> for working with Seam in addition to the Visual Page Editor including:
 					</para>
 					<variablelist>
 						<varlistentry>
@@ -605,7 +605,7 @@
 	<section id="sect-Beginners_Guide-Java_Web_EE_and_Standard_Edition_SE_Plug_Ins-JSF_Tools">
 		<title>JSF Tools</title>
 		<para>
-			JavaServer Faces (JSF) is a Web application framework developed by Sun Microsystems© Inc. JSF Tools allows you to build JSF based applications, add JSF capabilities to existing web projects, import JSF projects and choose a JSF implementation during application development.
+			Java Server Faces (JSF) is a Web application framework developed by Sun Microsystems© Inc. JSF Tools allows you to build JSF based applications, add JSF capabilities to existing web projects, import JSF projects and choose a JSF implementation during application development.
 		</para>
 		<para>
 			The tools included are outlined as follows:
@@ -618,7 +618,7 @@
 			</listitem>
 			<listitem>
 				<para>
-					Pre-configured templates are included, along with the ability to create your own.
+					Preconfigured templates are included, along with the ability to create your own.
 				</para>
 			</listitem>
 			<listitem>
