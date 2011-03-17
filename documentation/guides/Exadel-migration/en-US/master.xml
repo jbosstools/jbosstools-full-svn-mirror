@@ -38,12 +38,12 @@
 Version: 3.0.1.GA
 </releaseinfo>
 
-<abstract>
+<!--<abstract>
    <title/>
        <para>
            <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/Exadel-migration/pdf/Exadel_Studio_Migration_Guide.pdf">PDF version</ulink>
        </para>
-</abstract>
+</abstract>-->
 
 
     </bookinfo>	
