@@ -7,7 +7,7 @@
 	
 	<section id="jboss_core_portlet">
 		<title>Creating a Web Project with JBoss Portlet Capabilities</title>
-		<para>Fallow the next procedure to create a Web project with JBoss Portlet capabilities pointed to the JBoss Portal runtime.</para>
+		<para>Follow the next procedure to create a Web project with JBoss Portlet capabilities pointed to the JBoss Portal runtime.</para>
 		
 		<orderedlist>
 			<listitem>
