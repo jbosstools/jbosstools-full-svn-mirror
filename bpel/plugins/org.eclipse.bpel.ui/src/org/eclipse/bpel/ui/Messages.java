@@ -241,6 +241,12 @@ public final class Messages extends NLS {
 	public static String BPELUtil__unknown_URI__54;
 	public static String BPELUtil_HiddenSequence_2;
 	public static String BPELUtil_Sequence_1;
+	
+	// https://issues.jboss.org/browse/JBIDE-8601
+	public static String BPELUtil__Error;
+	public static String BPELUtil_NoEditorForNullObject;
+	public static String BPELUtil_NoEditorForObject;
+
 	public static String BPELVariableAdapter_Variable_1;
 	public static String BPELXYLayoutEditPolicy_Add_Part_1;
 	public static String BPELXYLayoutEditPolicy_Move_Part_2;
