@@ -227,7 +227,7 @@
 
 			<listitem>
 				<para>
-					Refresh Guvnor repository resorces. Use the <guimenuitem>Refresh</guimenuitem> context menu item to reload the tree for the selected node.
+					Refresh Guvnor repository resources. Use the <guimenuitem>Refresh</guimenuitem> context menu item to reload the tree for the selected node.
 				</para>
 			</listitem>
 
