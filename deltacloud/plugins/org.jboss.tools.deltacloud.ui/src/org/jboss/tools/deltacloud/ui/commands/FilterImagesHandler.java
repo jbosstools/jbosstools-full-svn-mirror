@@ -35,8 +35,14 @@ public class FilterImagesHandler extends AbstractHandler implements IHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
-			DeltaCloud cloud = UIUtils.getFirstAdaptedElement(selection, DeltaCloud.class);
-			createImagesFilter(cloud, HandlerUtil.getActiveShell(event));
+			DeltaCloud deltaCloud = UIUtils.getFirstAdaptedElement(selection, DeltaCloud.class);
+			if (deltaCloud != null) {
+				createImagesFilter(deltaCloud, HandlerUtil.getActiveShell(event));
+			} else {
+				// no item selected: try active part
+				deltaCloud = UIUtils.adapt(HandlerUtil.getActivePart(event), DeltaCloud.class);
+				createImagesFilter(deltaCloud, HandlerUtil.getActiveShell(event));
+			}
 		}
 
 		return Status.OK_STATUS;
@@ -44,15 +50,15 @@ public class FilterImagesHandler extends AbstractHandler implements IHandler {
 
 	private void createImagesFilter(final DeltaCloud cloud, final Shell shell) {
 		if (cloud != null) {
-				Display.getDefault().asyncExec(new Runnable() {
-					@Override
-					public void run() {
-						IWizard wizard = new ImageFilterWizard(cloud);
-						WizardDialog dialog = new WizardDialog(shell, wizard);
-						dialog.create();
-						dialog.open();
-					}
-				});
+			Display.getDefault().asyncExec(new Runnable() {
+				@Override
+				public void run() {
+					IWizard wizard = new ImageFilterWizard(cloud);
+					WizardDialog dialog = new WizardDialog(shell, wizard);
+					dialog.create();
+					dialog.open();
+				}
+			});
 
 		}
 	}

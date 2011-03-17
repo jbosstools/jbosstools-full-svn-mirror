@@ -1,5 +1,24 @@
+2011-03-16  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/	* plugin.xml: 
+	* src/org/jboss/tools/deltacloud/ui/commands/FilterImagesHandler.java (execute): 
+	* src/org/jboss/tools/deltacloud/ui/commands/FilterInstancesHandler.java (execute): 
+	[JBIDE-8594] enabled handlers when image-/instance-view is active or cloud is selected in cloud viewer,
+	changed handlers to be able to adapt image-/instance-view to DeltaCloud instance 
+	deltacloud/ui/views/cloudelements/InstanceView.java: 
+	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/ImageView.java: 
+	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/AbstractCloudElementTableView.java 
+	(dispose): 
+	(addPropertyChangeListener): 
+	[JBIDE-8590] removing propertyChangeListeners on disposal, 
+	registering listeners for all props only (was: several for each property)
+
 2011-03-14  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
+	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/AbstractCloudElementTableView.java 
+	(updateCloudSelector) (.run):
+	[JBIDE-7862] setting all items again so that the combo shrinks to the space needed to display the largest cloud name 
+	 
 	* src/org/jboss/tools/deltacloud/ui/views/cloud/property/CVPropertySheetPage.java 
 	(cloudPropertyListener): 
 	(selectionChanged): 
