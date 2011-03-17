@@ -12,11 +12,8 @@ package org.jboss.tools.common.reporting;
 
 import java.io.File;
 
-import org.eclipse.core.internal.runtime.PlatformLogWriter;
 import org.eclipse.core.runtime.ILogListener;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.adaptor.EclipseLog;
 import org.eclipse.osgi.framework.log.FrameworkLog;
 import org.jboss.tools.common.util.FileUtil;
 import org.osgi.framework.Bundle;
@@ -29,14 +26,14 @@ public class ProblemBuffer {
 
 	ProblemBuffer() {}
 
-	/**
-	 * IProblemReporter implementation.
-	 * @param status
-	 */
-	public void writeToBuffer(IStatus status) {
-		getEclipseLog();
-		writer.logging(status, "org.jboss.tools.common"); //$NON-NLS-1$
-	}
+//	/**
+//	 * IProblemReporter implementation.
+//	 * @param status
+//	 */
+//	public void writeToBuffer(IStatus status) {
+//		getEclipseLog();
+//		writer.logging(status, "org.jboss.tools.common"); //$NON-NLS-1$
+//	}
 	
 	/**
 	 * Returns number of entries in .log file.
@@ -105,13 +102,13 @@ public class ProblemBuffer {
 	FrameworkLog log;
 	ILogListener writer;
 	
-	private FrameworkLog getEclipseLog() {
-		if(log == null) {
-			log = new EclipseLog(getLogFile());
-			writer = new PlatformLogWriter(log);
-		}
-		return log;
-	}
+//	private FrameworkLog getEclipseLog() {
+//		if(log == null) {
+//			log = new EclipseLog(getLogFile());
+//			writer = new PlatformLogWriter(log);
+//		}
+//		return log;
+//	}
 
 	private File getLogFile() {
 		Bundle b = Platform.getBundle("org.jboss.tools.common"); //$NON-NLS-1$
