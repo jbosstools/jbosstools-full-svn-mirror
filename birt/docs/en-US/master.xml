@@ -4,6 +4,7 @@
 
 [
 <!ENTITY introduction SYSTEM "introduction.xml">
+<!ENTITY jbossinstall SYSTEM "jbossinstall.xml">
 <!ENTITY birt_integration_with_seam SYSTEM "birt_integration_with_seam.xml">
 <!ENTITY hibernate_datasource SYSTEM "hibernate_datasource.xml">      
 <!ENTITY birt_reports_deployment SYSTEM "birt_reports_deployment.xml">    
@@ -76,6 +77,7 @@
  <toc/> 
     
     &introduction;
+    &jbossinstall;
     &tasks;
     &framework;
     &links;

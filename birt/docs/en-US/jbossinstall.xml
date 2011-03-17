@@ -1,6 +1,4 @@
 <?xml version='1.0' encoding='utf-8' ?>
-<!DOCTYPE Book PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
-]>
 
 <chapter>
 	<title>Installation Instructions</title>
@@ -9,7 +7,7 @@
 			<title>Installing JBoss Tools Plugins</title>
 	
 			<para>
-				The &PLUGINNAME; plugin can be installed in Eclipse from the JBoss.org update site. JBoss Tools 3.2 requires Eclipse 3.6, which can be downloaded from the <ulink url="http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/helios/">Eclipse web site</ulink>. 				
+				The plugin can be installed in Eclipse from the JBoss.org update site. JBoss Tools 3.2 requires Eclipse 3.6, which can be downloaded from the <ulink url="http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/helios/">Eclipse web site</ulink>. 				
 			</para>
 			<para>
 				To install the JBoss Tools plugins start Eclipse and select	<menuchoice><guimenuitem>Help</guimenuitem><guimenuitem>Install New Software...</guimenuitem></menuchoice>
@@ -51,7 +49,7 @@
 		</figure>
 		
 		<para>
-			The <guilabel>JBoss.org Tools</guilabel> site will be selected in the <guilabel>Work with</guilabel> drop down list, and after a moment the list of plugins that are included in the JBoss Tools package will be listed. From this list you can individually select the &PLUGINNAME; plugin, or select the <guilabel>All JBoss Tools 3.2.0</guilabel> option to install all the plugins.
+			The <guilabel>JBoss.org Tools</guilabel> site will be selected in the <guilabel>Work with</guilabel> drop down list, and after a moment the list of plugins that are included in the JBoss Tools package will be listed. From this list you can individually select the plugin, or select the <guilabel>All JBoss Tools 3.2.0</guilabel> option to install all the plugins.
 		</para>
 		
 		<figure id="figure-available-software">
@@ -137,7 +135,7 @@
 			</mediaobject>
 		</figure>
 		
-		<para>The &PLUGINNAME; plugin is now installed and ready to use.</para>
+		<para>The plugin is now installed and ready to use.</para>
 		
 	</section>
 </chapter>
