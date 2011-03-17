@@ -677,9 +677,10 @@ public class VariableTypeSelector extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				
 				// https://issues.jboss.org/browse/JBIDE-8045
-				Object xsdType = BrowseUtil.browseForVariableType(
+				Object selection[] = BrowseUtil.browseForVariableType(
 						bpelEditor.getProcess(), getShell(),requireLowerTreeSelection,filter);
-				if (xsdType != null) {
+				if (selection != null) {
+					Object xsdType = selection[0];
     				lastChangeContext = DATATYPE_BROWSE_CONTEXT;
 					if (xsdType instanceof XSDTypeDefinition) {
 						// TODO:WDG: if type is anonymous, use enclosing element 

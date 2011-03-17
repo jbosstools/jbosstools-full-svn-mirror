@@ -189,7 +189,7 @@ public class VariableTypeSection extends BPELPropertySection {
 		
 		// https://issues.jboss.org/browse/JBIDE-8045
 		variableTypeSelector = new VariableTypeSelector(composite, SWT.NONE, getBPELEditor(),
-			fWidgetFactory, new VariableTypeCallback(), true,
+			fWidgetFactory, new VariableTypeCallback(), false,
 			TypeSelectorDialog.INCLUDE_ALL);
 		FlatFormData data = new FlatFormData();
 		data.top = new FlatFormAttachment(0,0);
