@@ -168,7 +168,7 @@
 
                                 <row>
                                     <entry>Binding Protocol</entry>
-                                    <entry>Choose the binding protocal that you use in the WDSL: SOAP or HTTP</entry>
+                                    <entry>Choose the binding protocol that you use in the WDSL: SOAP or HTTP</entry>
                                     <entry>SOAP</entry>
                                 </row>                                
                             </tbody>

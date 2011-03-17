@@ -21,7 +21,7 @@
 				</mediaobject>
 			</figure>
 			<para>On this page of the <property>New BPEL Project Wizard</property> enter a project name in the <property>Project Name</property>
-                field, e.g enter <property>HelloWorld</property>.</para>
+                field, e.g. enter <property>HelloWorld</property>.</para>
 
 			<figure>
 				<title>New BPEL Project Wizard</title>
@@ -152,7 +152,7 @@
 								<para>Binding Protocol</para>
 							</entry>
 							<entry>
-								<para>The binding protocal that you use in the wsdl. You can choose SOAP or HTTP. The default value is <guilabel>SOAP</guilabel>.</para>
+								<para>The binding protocol that you use in the wsdl. You can choose SOAP or HTTP. The default value is <guilabel>SOAP</guilabel>.</para>
 							</entry>
 						</row>
 					</tbody>
@@ -160,7 +160,7 @@
 			</table>
 
 			<figure float="0">
-				<title>Create WSDL file for the BPEL Process wizardpage</title>
+				<title>Create WSDL file for the BPEL Process wizard page</title>
 				<mediaobject>
 					<imageobject>
 						<imagedata fileref="images/detail_createprocess_2a.png"></imagedata>
@@ -222,7 +222,7 @@
 								<para>Description</para>
 							</entry>
 							<entry>
-								<para>Shows the descriptive information about the element,e.g. <property>Name</property> of the element.</para>
+								<para>Shows the descriptive information about the element, e.g. <property>Name</property> of the element.</para>
 							</entry>
 						</row>
 						<row>
@@ -441,7 +441,7 @@
 				</listitem>
 				<listitem>
 					<para>
-						Double-click the <filename>deploy.xml</filename> file to open it in <guilabel>ODE Descriptor Deployment Editor</guilabel>. In the <guilabel>Inbound Interfaces</guilabel> section, click the <guilabel>Associated Port</guilabel> column and select <guilabel>HelloWorldProcessPort</guilabel> in the dropdown box.The <guilabel>Related Service</guilabel> and <guilabel>Binding Used</guilabel> columns should  be automatically filled in. Save the changes to the <filename>deploy.xml</filename> file.
+						Double-click the <filename>deploy.xml</filename> file to open it in <guilabel>ODE Descriptor Deployment Editor</guilabel>. In the <guilabel>Inbound Interfaces</guilabel> section, click the <guilabel>Associated Port</guilabel> column and select <guilabel>HelloWorldProcessPort</guilabel> in the combobox.The <guilabel>Related Service</guilabel> and <guilabel>Binding Used</guilabel> columns should  be automatically filled in. Save the changes to the <filename>deploy.xml</filename> file.
           </para>
 					<figure>
 						<title>deploy.xml file editor</title>
