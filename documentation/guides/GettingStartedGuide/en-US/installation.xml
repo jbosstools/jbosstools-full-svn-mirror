@@ -1,91 +1,122 @@
 <chapter id="installation">
-	<?dbhtml filename="getting_started.html"?>
-	<chapterinfo>
-		<keywordset>
-			<keyword>JBoss Developer Studio</keyword>
-			<keyword>Eclipse</keyword>
-			<keyword>Java</keyword>
-			<keyword>JBoss</keyword>
-		</keywordset>
-	</chapterinfo>
-	<title>Installing JBoss Developer Studio</title>
-
-	<section id="ConfigJavaEnvironment">
-		<?dbhtml filename="ConfigJavaEnvironment.html"?>
-		<title>Configuring Your Java Environment</title>
-		<para>
-			You must have a working installation of JDK before you install <property>JBoss Developer Studio</property>. Thus in this guide we will show you how to install a 32-bit Sun JDK 6 on a Linux Platform and Microsoft Windows Platform.
-		</para>
-
-		<section id="InstallJDK60onLinux">
-			<title>Installing and Configuring 32-bit Sun JDK 6 on Linux</title>
-			<para>To install 32-bit Sun JDK 6 on Linux and configure it, you should follow the next steps:</para>
-			<itemizedlist>                     
-				<listitem>
-					<para>
-						Download the <ulink url="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Sun JDK 6</ulink> from Sun&apos;s website. Click the <guibutton>Download JDK</guibutton> button for the &quot;JDK SE 6 Update &lt;x&gt;&quot; (where &quot;x&quot; is the latest update number) option, select the Linux platform, agree to license agreement, and click the <guibutton>Continue</guibutton> button. You can then download the JDK installation package.
-					</para>
-					<para>
-						You may need to set the executable flag on the downloaded file before it can be launched by running the <code>chmod +x</code> command, like so:
-						<screen>chmod +x jdk-6u24-linux-i586-rpm.bin</screen>
-					</para>
-					<para>
-						Launch the installation package, and follow the prompts to install Java JDK 6.
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						If you don&apos;t want to use SysV service scripts you can install the &quot;self-extracting file&quot; for Linux instead of choosing the &quot;RPM in self-extracting&quot; file. In that case you can skip the next step mentioned here. But it is recommended to use the SysV service scripts for production servers.
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						Download and install the appropriate -compat RPM from JPackage <ulink url="ftp://jpackage.hmdc.harvard.edu/JPackage/1.7/generic/RPMS.non-free/">here</ulink>. Please ensure you choose a matching version of the -compat package to the JDK you've installed.
-					</para>					
-				</listitem>
-				<listitem>
-					<para>
-						Create an environment variable that points to the JDK installation directory and call it JAVA_HOME. Add <emphasis><property>$JAVA_HOME/bin</property></emphasis> to the system path to be able to run java from the command line. You can do this by adding the following lines to the .bashrc file in your home directory.
-					</para>
-					<programlisting><![CDATA[#In this example /usr/java/jdk1.6.0_24 is the JDK installation directory.
+<?dbhtml filename="getting_started.html"?>
+  <chapterinfo>
+    <keywordset>
+      <keyword>JBoss Developer Studio</keyword>
+       
+      <keyword>Eclipse</keyword>
+       
+      <keyword>Java</keyword>
+       
+      <keyword>JBoss</keyword>
+    </keywordset>
+  </chapterinfo>
+   <title>Installing JBoss Developer Studio</title> 
+  <section id="ConfigJavaEnvironment">
+<?dbhtml filename="ConfigJavaEnvironment.html"?>
+    <title>Configuring Your Java Environment</title> 
+    <para>
+      You must have a working installation of JDK before you install <property>JBoss Developer Studio</property>. Thus in this guide we will show you how to install a 32-bit Sun JDK 6 on a Linux Platform and Microsoft Windows Platform.
+    </para>
+     
+    <section id="InstallJDK60onLinux">
+      <title>Installing and Configuring 32-bit Sun JDK 6 on Linux</title> 
+      <para>
+        To install 32-bit Sun JDK 6 on Linux and configure it, you should follow the next steps:
+      </para>
+       
+      <itemizedlist>
+        <listitem>
+          <para>
+            Download the <ulink url="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Sun JDK 6</ulink> from Sun&apos;s website. Click the 
+            <guibutton>
+              Download JDK
+            </guibutton>
+             button for the &quot;JDK SE 6 Update &lt;x&gt;&quot; (where &quot;x&quot; is the latest update number) option, select the Linux platform, agree to license agreement, and click the 
+            <guibutton>
+              Continue
+            </guibutton>
+             button. You can then download the JDK installation package.
+          </para>
+           
+          <para>
+            You may need to set the executable flag on the downloaded file before it can be launched by running the <code>chmod +x</code> command, like so: 
+            <screen>
+              chmod +x jdk-6u24-linux-i586-rpm.bin
+            </screen>
+          </para>
+           
+          <para>
+            Launch the installation package, and follow the prompts to install Java JDK 6.
+          </para>
+        </listitem>
+         
+        <listitem>
+          <para>
+            If you don&apos;t want to use SysV service scripts you can install the &quot;self-extracting file&quot; for Linux instead of choosing the &quot;RPM in self-extracting&quot; file. In that case you can skip the next step mentioned here. But it is recommended to use the SysV service scripts for production servers.
+          </para>
+        </listitem>
+         
+        <listitem>
+          <para>
+            Download and install the appropriate -compat RPM from JPackage <ulink url="ftp://jpackage.hmdc.harvard.edu/JPackage/1.7/generic/RPMS.non-free/">here</ulink>. Please ensure you choose a matching version of the -compat package to the JDK you've installed.
+          </para>
+        </listitem>
+         
+        <listitem>
+          <para>
+            Create an environment variable that points to the JDK installation directory and call it JAVA_HOME. Add <filename>$JAVA_HOME/bin</filename> to the system path to be able to run java from the command line. You can do this by adding the following lines to the .bashrc file in your home directory.
+          </para>
+           
+          <programlisting>
+<![CDATA[#In this example /usr/java/jdk1.6.0_24 is the JDK installation directory.
 export JAVA_HOME=/usr/java/jdk1.6.0_24
-export PATH=$PATH:$JAVA_HOME/bin]]></programlisting>
-				</listitem>
-			</itemizedlist>
-
-			<note>
-				<title>Note:</title>
-
-				<para>﻿
-					If you have JDK already installed and added in your system path, you should add <emphasis>$JAVA_HOME/bin</emphasis> before the old <emphasis>$PATH</emphasis> (not after it) so that the new version of JDK can be found first, i. e. <emphasis>export PATH=$JAVA_HOME/bin:$PATH</emphasis> This way, the machine will pick up the new JVM first. You only need to run "alternative" as a safe guard for the right JVM. 
-				</para>
-			</note>
-
-			<para>Set this variable for your account doing the installation and also for the user account that will run the server.</para>
-			<itemizedlist>
-				<listitem>
-					<para>
-						If you have more than one version of JVM installed on your machine, make sure you are using the JDK 1.6 installation as the default java and javac. You can do this using the alternatives system. The alternatives system allows different versions of Java from different sources to co-exist on your system.
-					</para>
-					<note>
-						<title>Note</title>
-						<para>
-							If the JDK is not listed by the alternatives command, you can manually add it with the following commands (substitute the location of your JDK for <filename>/usr/java/jdk1.6.0_24</filename> where appropriate):
-							<screen>sudo /usr/sbin/alternatives --install "/usr/bin/java" "java" "/usr/java/jdk1.6.0_24/bin/java" 1
-sudo /usr/sbin/alternatives --install "/usr/bin/javac" "javac" "/usr/java/jdk1.6.0_24/bin/javac" 1
-sudo /usr/sbin/alternatives --install "/usr/lib/jvm/java-1.6.0" "java_sdk_1.6.0" "/usr/java/jdk1.6.0_24" 1</screen>
-						</para>
-					</note>
-				</listitem>
-			</itemizedlist>
-			<section id="SelectAlternativesforJava">
-				<title>Select alternatives for java, javac and java_sdk_1.6.0</title>
-				<itemizedlist>
-					<listitem>
-						<para>As a root user, type the following command at the shell prompt and you should see something like this:</para>
-					</listitem>
-				</itemizedlist>
-				<programlisting><![CDATA[sudo /usr/sbin/alternatives --config java
+export PATH=$PATH:$JAVA_HOME/bin]]>
+          </programlisting>
+        </listitem>
+      </itemizedlist>
+       
+      <note>
+        <title>Note:</title> 
+        <para>
+          ﻿ If you have JDK already installed and added in your system path, you should add <filename>$JAVA_HOME/bin</filename> before the old <emphasis>$PATH</emphasis> (not after it) so that the new version of JDK can be found first, i. e. <code>export PATH=$JAVA_HOME/bin:$PATH</code> This way, the machine will pick up the new JVM first. You only need to run "alternative" as a safe guard for the right JVM.
+        </para>
+      </note>
+       
+      <para>
+        Set this variable for your account doing the installation and also for the user account that will run the server.
+      </para>
+       
+      <itemizedlist>
+        <listitem>
+          <para>
+            If you have more than one version of JVM installed on your machine, make sure you are using the JDK 1.6 installation as the default java and javac. You can do this using the alternatives system. The alternatives system allows different versions of Java from different sources to co-exist on your system.
+          </para>
+           
+          <note>
+            <title>Note</title> 
+            <para>
+              If the JDK is not listed by the alternatives command, you can manually add it with the following commands (substitute the location of your JDK for <filename>/usr/java/jdk1.6.0_24</filename> where appropriate): 
+              <screen>
+                sudo /usr/sbin/alternatives --install "/usr/bin/java" "java" "/usr/java/jdk1.6.0_24/bin/java" 1 sudo /usr/sbin/alternatives --install "/usr/bin/javac" "javac" "/usr/java/jdk1.6.0_24/bin/javac" 1 sudo /usr/sbin/alternatives --install "/usr/lib/jvm/java-1.6.0" "java_sdk_1.6.0" "/usr/java/jdk1.6.0_24" 1
+              </screen>
+            </para>
+          </note>
+        </listitem>
+      </itemizedlist>
+       
+      <section id="SelectAlternativesforJava">
+        <title>Select alternatives for java, javac and java_sdk_1.6.0</title> 
+        <itemizedlist>
+          <listitem>
+            <para>
+              As a root user, type the following command at the shell prompt and you should see something like this:
+            </para>
+          </listitem>
+        </itemizedlist>
+         
+        <programlisting>
+<![CDATA[sudo /usr/sbin/alternatives --config java
 
 There are 3 programs which provide 'java'.
 
@@ -95,16 +126,23 @@ There are 3 programs which provide 'java'.
 *  2           /usr/lib/jvm/jre-1.6.0-openjdk.x86_64/bin/java
  + 3           /usr/java/jdk1.6.0_24/bin/java
 
-Enter to keep the current selection[+], or type selection number: ]]></programlisting>
-				<para>
-					Make sure the Sun version [/usr/java/jdk1.6.0_24/bin/java in this case] is selected (marked with a &apos;+&apos; in the output), or select it by entering its number as prompted.
-				</para>
-				<itemizedlist>
-					<listitem>
-						<para>Repeat the same for javac and java_sdk_1.6.0.</para>
-					</listitem>
-				</itemizedlist>
-				<programlisting><![CDATA[sudo /usr/sbin/alternatives --config javac
+Enter to keep the current selection[+], or type selection number: ]]>
+        </programlisting>
+         
+        <para>
+          Make sure the Sun version [/usr/java/jdk1.6.0_24/bin/java in this case] is selected (marked with a &apos;+&apos; in the output), or select it by entering its number as prompted.
+        </para>
+         
+        <itemizedlist>
+          <listitem>
+            <para>
+              Repeat the same for javac and java_sdk_1.6.0.
+            </para>
+          </listitem>
+        </itemizedlist>
+         
+        <programlisting>
+<![CDATA[sudo /usr/sbin/alternatives --config javac
 
 There are 2 programs which provide 'javac'.
 
@@ -124,282 +162,370 @@ There are 2 programs which provide 'java_sdk_1.6.0'.
 *  1           /usr/lib/jvm/java-1.6.0-openjdk.x86_64
  + 2           /usr/java/jdk1.6.0_24
 
-Enter to keep the current selection[+], or type selection number: ]]></programlisting>
-				<para>You should verify that java, javac and java_sdk_1.6.0 all point to the same manufacturer and version.</para>
-				<note>
-					<title>Note:</title>
-					<para>You can always override this step by setting the JAVA_HOME environment variable as explained in the previous step.</para>
-				</note>
-				<itemizedlist>
-					<listitem>
-						<para>
-							Make sure that the java executable is in your path and that you are using an appropriate version. To verify your Java environment, type &quot;java -version&quot; at the shell prompt and you should see something like this:
-						</para>
-					</listitem>
-				</itemizedlist>
-				<programlisting><![CDATA[java -version
+Enter to keep the current selection[+], or type selection number: ]]>
+        </programlisting>
+         
+        <para>
+          You should verify that java, javac and java_sdk_1.6.0 all point to the same manufacturer and version.
+        </para>
+         
+        <note>
+          <title>Note:</title> 
+          <para>
+            You can always override this step by setting the JAVA_HOME environment variable as explained in the previous step.
+          </para>
+        </note>
+         
+        <itemizedlist>
+          <listitem>
+            <para>
+              Make sure that the java executable is in your path and that you are using an appropriate version. To verify your Java environment, type <code>java -version</code> at the shell prompt and you should see something like this:
+            </para>
+          </listitem>
+        </itemizedlist>
+         
+        <programlisting>
+<![CDATA[java -version
 java version "1.6.0_24"
 Java(TM) SE Runtime Environment (build 1.6.0_24-b07)
-Java HotSpot(TM) Server VM (build 19.1-b02, mixed mode)]]></programlisting>
-			</section>
-
-		</section>
-		<section id="InstallJDK60onWindows">
-			<title>Installing and Configuring 32-bit Sun JDK 6 on Microsoft Windows</title>
-
-			<para>To install and configure 32-bit Sun JDK 6 on Microsoft Windows, follow these steps:</para>
-			<itemizedlist>
-				<listitem>
-					<para>
-						Download the <ulink url="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Sun JDK 6</ulink> from Oracle&apos;s website. Choose &quot;JDK 6 Update &lt;x&gt;&quot; (where &quot;x&quot; is the latest update number) for download and then select your Windows Platform options to perform the installation.
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						Create an environment variable called JAVA_HOME that points to the JDK installation directory, for example: <emphasis>C:\Program Files\Java\jdk1.6.0_24\</emphasis>
-					</para>
-				</listitem>
-			</itemizedlist>
-
-			<para>In order to run java from the command line, add the <emphasis>jre\bin</emphasis> directory
-    to your path, for example:</para>
-			<para>
-				<emphasis>C:\Program Files\Java\jdk1.6.0_24\jre\bin</emphasis>
-			</para>
-			<para>To do this, open the <emphasis>
-     <property>Control Panel</property>
-				</emphasis> from the <emphasis>
-     <property>Start</property>
-				</emphasis> menu, switch to Classic View if necessary, open the System Control Panel applet (<emphasis>
-     <property>System</property>
-				</emphasis>), select the <emphasis>
-     <property>Advanced</property>
-				</emphasis> Tab, and click on the <emphasis>
-     <property>Environment Variables</property>
-				</emphasis> button.</para>
-			<para>Now, when 32-bit Sun JDK 6 has been successfully installed, we can pass on to the next
-    step.</para>
-		</section>
-
-	</section>
-
-	<section id="InstallingJBDS">
-		<?dbhtml filename="InstallingRHDS.html"?>
-		<title>JBoss Developer Studio Installation</title>
-
-		<para>This chapter will provide you with detailed information on how to install <property>JBoss Developer Studio</property>.</para>
-
-		<para>
-			JBoss Developer Studio comes with a simple installer, bundled with tested and preconfigured versions of Eclipse, WTP, JBossEAP, Seam, and SpringIDE. The following steps show you how to install JBDS:
-		</para>
-
-		<itemizedlist>
-			<listitem>
-				<para>
-					First of all you need the appropriate installation file for your platform from <ulink url="https://www.redhat.com/apps/store/developers/jboss_developer_studio.html">Red Hat website</ulink>.
-				</para>
-			</listitem>
-			<listitem>
-				<para>Run the following command in a terminal window:</para>
-				<programlisting role="JAVA"><![CDATA[java -jar jbdevstudio-eap-linux-gtk-4.0.0.GA.jar]]></programlisting>
-			</listitem>
-			<listitem>
-				<para>Follow the instructions presented by the installation wizard:</para>
-			</listitem>
-		</itemizedlist>
-
-		<figure>
-			<title>JBoss Developer Studio Installation Wizard</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/getting_started/getting_started_1.png"/>
-				</imageobject>
-			</mediaobject>
-		</figure>
-
-		<itemizedlist>
-			<listitem>
-				<para>Provide the installation path</para>
-			</listitem>
-			<listitem>
-				<para>Select the appropriate Java Virtual Machine</para>
-			</listitem>
-		</itemizedlist>
-
-		<note>
-			<title>Tip:</title>
-			<para>
-				By selecting <emphasis><property>Default Java VM</property></emphasis> you set default Java VM of your system (to verify your Java environment, type &quot;java -version&quot; in console).
-			</para>
-		</note>
-
-		<para>Selecting <emphasis>
-    <property>Specific Java VM</property>
-			</emphasis> you can provide the path to non-default Java VM.</para>
-
-		<note>
-			<title>Note:</title>
-			<para>
-				JBoss Developer Studio 4.0 comes integrated with JBoss EAP 5.1 that requires JDK 6.0 to run and &quot;gij&quot; isn&apos;t available on every platform.
-			</para>
-		</note>
-
-		<figure>
-			<title>Select Java VM</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/getting_started/getting_started_2.png"/>
-				</imageobject>
-			</mediaobject>
-		</figure>
-
-		<itemizedlist>
-			<listitem>
-				<para>
-					As part of the installation you can choose to install <ulink url="http://www.jboss.com/products/platforms/application">JBoss Enterprise Application Platform</ulink>. Select <emphasis><property>Yes</property></emphasis> to use it in JBoss Developer Studio.
-				</para>
-				<note>
-					<title>Note:</title>
-					<para>Like in the previous version of JBDS, JBDS 4.0.0.GA comes integrated with JBoss EAP 5.1 that supports EAP 5 adapter and Seam 2.2.</para>
-				</note>
-    	
-				<para>This step lets you configure locally available JBoss Application Servers: </para>
-			</listitem>
-		</itemizedlist>
-
-		<figure>
-			<title>JBoss Enterprise Application Platform Installing</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/getting_started/getting_started_3.png"/>
-				</imageobject>
-			</mediaobject>
-		</figure>
-
-		<itemizedlist>
-			<listitem>
-				<para>
-					You can fill the list automatically using the <guibutton>Find</guibutton> button. When the <guibutton>Find</guibutton> button is clicked you are prompted to select the folder from which to search for available JBoss Application Servers. Click the <guibutton>OK</guibutton> button to select the chosen folder. 
-				</para>
-			</listitem>
-		</itemizedlist>
-
-		<figure>
-			<title>Finding Servers in the Selected Directory</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/getting_started/getting_started_3_3_1.png"/>
-				</imageobject>
-			</mediaobject>
-		</figure>
-		<para/>
-
-		<itemizedlist>
-			<listitem>
-				<para> All available servers in the selected directory  will be added to the list with the following details: Name, Type, Version and Location.</para>
-			</listitem>
-		</itemizedlist>
-
-		<itemizedlist>
-			<listitem>
-				<para>You can also add servers one by one using the <guibutton>Add</guibutton> button:</para>
-			</listitem>
-		</itemizedlist>
-
-		<figure>
-			<title>Add Server to be Configured</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/getting_started/getting_started_3_1.png"/>
-				</imageobject>
-			</mediaobject>
-		</figure>
-		<para/>
-
-		<para>
-			Click on the <guibutton>Browse</guibutton> button and select the server location. Fields Name, Type and Version will be filled in automatically:
-		</para>
-
-		<figure>
-			<title>Specify Server Location</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/getting_started/getting_started_3_2.png"/>
-				</imageobject>
-			</mediaobject>
-		</figure>
-		<para/>
- 
-		<para>When you click the <guibutton>OK</guibutton> button the server will be added to the list with the details on its type, version and location.</para>
-
-		<para>
-			The <guibutton>Remove</guibutton> button will the remove the selected server from the list. If necessary, you can edit the server details clicking on the <guibutton>Edit</guibutton> button:
-		</para>
-
-		<figure>
-			<title>Edit Server</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/getting_started/getting_started_3_4.png"/>
-				</imageobject>
-			</mediaobject>
-		</figure>
-		<para/>
-    
-  <!--  <note>
+Java HotSpot(TM) Server VM (build 19.1-b02, mixed mode)]]>
+        </programlisting>
+      </section>
+    </section>
+     
+    <section id="InstallJDK60onWindows">
+      <title>Installing and Configuring 32-bit Sun JDK 6 on Microsoft Windows</title> 
+      <para>
+        To install and configure 32-bit Sun JDK 6 on Microsoft Windows, follow these steps:
+      </para>
+       
+      <itemizedlist>
+        <listitem>
+          <para>
+            Download the <ulink url="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Sun JDK 6</ulink> from Oracle&apos;s website. Choose &quot;JDK 6 Update &lt;x&gt;&quot; (where &quot;x&quot; is the latest update number) for download and then select your Windows Platform options to perform the installation.
+          </para>
+        </listitem>
+         
+        <listitem>
+          <para>
+            Create an environment variable called JAVA_HOME that points to the JDK installation directory, for example: <filename>C:\Program Files\Java\jdk1.6.0_24\</filename>
+          </para>
+        </listitem>
+      </itemizedlist>
+       
+      <para>
+        In order to run java from the command line, add the <emphasis>jre\bin</emphasis> directory to your path, for example:
+      </para>
+       
+      <para>
+        <filename>C:\Program Files\Java\jdk1.6.0_24\jre\bin</filename>
+      </para>
+       
+      <para>
+        To do this, open the <guilabel>Control Panel</guilabel> from the <guilabel>Start</guilabel> menu, switch to Classic View if necessary, open the System Control Panel applet (<guilabel>System</guilabel>), select the <guilabel>Advanced</guilabel> Tab, and click on the <guibutton>Environment Variables</guibutton> button.
+      </para>
+       
+      <para>
+        Now, when 32-bit Sun JDK 6 has been successfully installed, we can pass on to the next step.
+      </para>
+    </section>
+  </section>
+   
+  <section id="InstallingJBDS">
+<?dbhtml filename="InstallingRHDS.html"?>
+    <title>JBoss Developer Studio Installation</title> 
+    <para>
+      This chapter will provide you with detailed information on how to install <property>JBoss Developer Studio</property>.
+    </para>
+     
+    <para>
+      JBoss Developer Studio comes with a simple installer, bundled with tested and preconfigured versions of Eclipse, WTP, JBossEAP, Seam, and SpringIDE. The following steps show you how to install JBDS:
+    </para>
+     
+    <itemizedlist>
+      <listitem>
+        <para>
+          First of all you need the appropriate installation file for your platform from <ulink url="https://www.redhat.com/apps/store/developers/jboss_developer_studio.html">Red Hat website</ulink>.
+        </para>
+      </listitem>
+       
+      <listitem>
+        <para>
+          Run the following command in a terminal window:
+        </para>
+         
+        <programlisting role="JAVA">
+<![CDATA[java -jar jbdevstudio-eap-linux-gtk-4.0.0.GA.jar]]>
+        </programlisting>
+      </listitem>
+       
+      <listitem>
+        <para>
+          Follow the instructions presented by the installation wizard:
+        </para>
+      </listitem>
+    </itemizedlist>
+     
+    <figure>
+      <title>JBoss Developer Studio Installation Wizard</title> 
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/getting_started/getting_started_1.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+     
+    <itemizedlist>
+      <listitem>
+        <para>
+          Provide the installation path
+        </para>
+      </listitem>
+       
+      <listitem>
+        <para>
+          Select the appropriate Java Virtual Machine
+        </para>
+      </listitem>
+    </itemizedlist>
+     
+    <note>
+      <title>Tip:</title> 
+      <para>
+        By selecting <emphasis><property>Default Java VM</property></emphasis> you set default Java VM of your system (to verify your Java environment, type &quot;java -version&quot; in console).
+      </para>
+    </note>
+     
+    <para>
+      Selecting <emphasis> <property>Specific Java VM</property> </emphasis> you can provide the path to non-default Java VM.
+    </para>
+     
+    <note>
+      <title>Note:</title> 
+      <para>
+        JBoss Developer Studio 4.0 comes integrated with JBoss EAP 5.1 that requires JDK 6.0 to run and &quot;gij&quot; isn&apos;t available on every platform.
+      </para>
+    </note>
+     
+    <figure>
+      <title>Select Java VM</title> 
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/getting_started/getting_started_2.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+     
+    <itemizedlist>
+      <listitem>
+        <para>
+          As part of the installation you can choose to install <ulink url="http://www.jboss.com/products/platforms/application">JBoss Enterprise Application Platform</ulink>. Select <emphasis><property>Yes</property></emphasis> to use it in JBoss Developer Studio.
+        </para>
+         
+        <note>
+          <title>Note:</title> 
+          <para>
+            Like in the previous version of JBDS, JBDS 4.0.0.GA comes integrated with JBoss EAP 5.1 that supports EAP 5 adapter and Seam 2.2.
+          </para>
+        </note>
+         
+        <para>
+          This step lets you configure locally available JBoss Application Servers:
+        </para>
+      </listitem>
+    </itemizedlist>
+     
+    <figure>
+      <title>JBoss Enterprise Application Platform Installing</title> 
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/getting_started/getting_started_3.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+     
+    <itemizedlist>
+      <listitem>
+        <para>
+          You can fill the list automatically using the 
+          <guibutton>
+            Find
+          </guibutton>
+           button. When the 
+          <guibutton>
+            Find
+          </guibutton>
+           button is clicked you are prompted to select the folder from which to search for available JBoss Application Servers. Click the 
+          <guibutton>
+            OK
+          </guibutton>
+           button to select the chosen folder.
+        </para>
+      </listitem>
+    </itemizedlist>
+     
+    <figure>
+      <title>Finding Servers in the Selected Directory</title> 
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/getting_started/getting_started_3_3_1.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+     
+    <para/>
+     
+    <itemizedlist>
+      <listitem>
+        <para>
+          All available servers in the selected directory will be added to the list with the following details: Name, Type, Version and Location.
+        </para>
+      </listitem>
+    </itemizedlist>
+     
+    <itemizedlist>
+      <listitem>
+        <para>
+          You can also add servers one by one using the 
+          <guibutton>
+            Add
+          </guibutton>
+           button:
+        </para>
+      </listitem>
+    </itemizedlist>
+     
+    <figure>
+      <title>Add Server to be Configured</title> 
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/getting_started/getting_started_3_1.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+     
+    <para/>
+     
+    <para>
+      Click on the 
+      <guibutton>
+        Browse
+      </guibutton>
+       button and select the server location. Fields Name, Type and Version will be filled in automatically:
+    </para>
+     
+    <figure>
+      <title>Specify Server Location</title> 
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/getting_started/getting_started_3_2.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+     
+    <para/>
+     
+    <para>
+      When you click the 
+      <guibutton>
+        OK
+      </guibutton>
+       button the server will be added to the list with the details on its type, version and location.
+    </para>
+     
+    <para>
+      The 
+      <guibutton>
+        Remove
+      </guibutton>
+       button will the remove the selected server from the list. If necessary, you can edit the server details clicking on the 
+      <guibutton>
+        Edit
+      </guibutton>
+       button:
+    </para>
+     
+    <figure>
+      <title>Edit Server</title> 
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/getting_started/getting_started_3_4.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+     
+    <para/>
+<!--  <note>
    <title>Note:</title>
    <para>The installer installs JBoss Enterprise Application Platform for running your applications
     if you select this option during the installation process. If you want to use a different server
     than ours, you can change the setting in JBoss Developer Studio.</para>
     </note>-->
-
-		<itemizedlist>
-			<listitem>
-				<para>Click the <guibutton>Next</guibutton> button to bring up a summary page where you can check your installation paths and see the components that will be installed. If you'd like to change something, press the <guibutton>Previous</guibutton> button. Click the <guibutton>Next</guibutton> button to start installation. </para>
-			</listitem>
-		</itemizedlist>
-
-		<para/>
-
-		<figure>
-			<title>Summary Information</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/getting_started/getting_started_4.png"/>
-				</imageobject>
-			</mediaobject>
-		</figure>
-
-	</section>
-	
-	<section id="tech_previews">
-		<title>Getting Access to Tech Previews</title>
-		
-		<para>
-			A number of components that are not officially supported in this release of JDBS have been made available through an additional Tech Preview Eclipse update site. To access this update site select <menuchoice><guimenuitem>Help</guimenuitem><guimenuitem>Install New Software...</guimenuitem></menuchoice> in Eclipse, click the <guibutton>Add...</guibutton> button, and in the <guilabel>Add Repository</guilabel> dialog box enter <guilabel>JBDS Tech Preview</guilabel> in the <guilabel>Name</guilabel> field and <guilabel>http://devstudio.jboss.com/updates/4.0/techpreview</guilabel> in the <guilabel>Location</guilabel> field. Click the <guibutton>OK</guibutton> button to save your changes.
-		</para>
-		
-		<para>
-			Eclipse will then list the components available on the update site, which you can select and install by following the prompts.
-		</para>
-		
-		<note>
-			<title>Note</title>
-			<para>
-				If you are prompted for credentials when accessing the Tech Preview Update Site, enter the username and password that were supplied in an email or shown in the Update Guide available on the <ulink url="http://access.redhat.com">Customer Service Portal</ulink>. If you experience any issues accessing the Tech Preview Update Site please contact technical support.  
-			</para>
-		</note>
-	
-	</section>
-	
-	<section>
-		<title>Updating JBoss Developer Studio</title>
-		<para>
-			Updates to JBDS can be installed by selecting <menuchoice><guimenuitem>Help</guimenuitem><guimenuitem>Check For Updates</guimenuitem></menuchoice> from within Eclipse. You may be prompted for a username and password. These are the same credentials that are required to access the Tech Preview update site (see <xref linkend="tech_previews"/>).
-		</para>
-	</section>
-
-	<!--section id="jbds_jbosstools">
+    <itemizedlist>
+      <listitem>
+        <para>
+          Click the 
+          <guibutton>
+            Next
+          </guibutton>
+           button to bring up a summary page where you can check your installation paths and see the components that will be installed. If you'd like to change something, press the 
+          <guibutton>
+            Previous
+          </guibutton>
+           button. Click the 
+          <guibutton>
+            Next
+          </guibutton>
+           button to start installation.
+        </para>
+      </listitem>
+    </itemizedlist>
+     
+    <para/>
+     
+    <figure>
+      <title>Summary Information</title> 
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/getting_started/getting_started_4.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+  </section>
+   
+  <section id="tech_previews">
+    <title>Getting Access to Tech Previews</title> 
+    <para>
+      A number of components that are not officially supported in this release of JDBS have been made available through an additional Tech Preview Eclipse update site. To access this update site select <menuchoice><guimenuitem>Help</guimenuitem><guimenuitem>Install New Software...</guimenuitem></menuchoice> in Eclipse, click the 
+      <guibutton>
+        Add...
+      </guibutton>
+       button, and in the <guilabel>Add Repository</guilabel> dialog box enter <guilabel>JBDS Tech Preview</guilabel> in the <guilabel>Name</guilabel> field and <guilabel>http://devstudio.jboss.com/updates/4.0/techpreview</guilabel> in the <guilabel>Location</guilabel> field. Click the 
+      <guibutton>
+        OK
+      </guibutton>
+       button to save your changes.
+    </para>
+     
+    <para>
+      Eclipse will then list the components available on the update site, which you can select and install by following the prompts.
+    </para>
+     
+    <note>
+      <title>Note</title> 
+      <para>
+        If you are prompted for credentials when accessing the Tech Preview Update Site, enter the username and password that were supplied in an email or shown in the Update Guide available on the <ulink url="http://access.redhat.com">Customer Service Portal</ulink>. If you experience any issues accessing the Tech Preview Update Site please contact technical support.
+      </para>
+    </note>
+  </section>
+   
+  <section>
+    <title>Updating JBoss Developer Studio</title> 
+    <para>
+      Updates to JBDS can be installed by selecting <menuchoice><guimenuitem>Help</guimenuitem><guimenuitem>Check For Updates</guimenuitem></menuchoice> from within Eclipse. You may be prompted for a username and password. These are the same credentials that are required to access the Tech Preview update site (see <xref linkend="tech_previews"/>).
+    </para>
+  </section>
+<!--section id="jbds_jbosstools">
 
 		<title>JBoss Developer Studio and JBoss Tools</title>
 
