@@ -37,6 +37,7 @@ public abstract class AbstractFilterPage extends WizardPage {
 	protected final static String INVALID_SEMICOLON = "ErrorFilterSemicolon.msg"; //$NON-NLS-1$
 
 	protected final static String DEFAULT_LABEL = "DefaultButton.label"; //$NON-NLS-1$
+	protected final static String DEFAULT_ALL_LABEL = "DefaultAllButton.label"; //$NON-NLS-1$
 
 	private DeltaCloud cloud;
 
@@ -63,11 +64,14 @@ public abstract class AbstractFilterPage extends WizardPage {
 			Button b = (Button) e.widget;
 			Text text = getTextWidget(b);
 			if (text != null) {
-				text.setText(ICloudElementFilter.ALL_MATCHER_EXPRESSION);
+				resetFilter(text);
 			}
 		}
 	};
 
+	protected void resetFilter(Text text) {
+		text.setText(ICloudElementFilter.ALL_MATCHER_EXPRESSION);
+	}
 
 	protected abstract Text getTextWidget(Button button);
 	

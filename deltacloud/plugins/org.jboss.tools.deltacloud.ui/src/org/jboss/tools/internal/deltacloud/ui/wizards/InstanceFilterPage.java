@@ -14,6 +14,9 @@ import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -134,7 +137,7 @@ public class InstanceFilterPage extends AbstractFilterPage {
 		keyIdDecoration.hide();
 		realmDecoration.hide();
 		profileDecoration.hide();
-		
+
 		String error = null;
 		error = validate(nameText, nameDecoration, error);
 		error = validate(idText, idDecoration, error);
@@ -166,7 +169,7 @@ public class InstanceFilterPage extends AbstractFilterPage {
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(nameText);
 		this.nameDecoration = UIUtils.createErrorDecoration("", nameText);
 		this.defaultName = createDefaultRuleButton(container);
-		GridDataFactory.fillDefaults().align(SWT.RIGHT, SWT.CENTER).applyTo(defaultName);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).applyTo(defaultName);
 
 		Label aliasLabel = createRuleLabel(WizardMessages.getString(ALIAS_LABEL), container);
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(aliasLabel);
@@ -174,7 +177,7 @@ public class InstanceFilterPage extends AbstractFilterPage {
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(aliasText);
 		this.aliasDecoration = UIUtils.createErrorDecoration("", aliasText);
 		this.defaultAlias = createDefaultRuleButton(container);
-		GridDataFactory.fillDefaults().align(SWT.RIGHT, SWT.CENTER).applyTo(defaultAlias);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).applyTo(defaultAlias);
 
 		Label idLabel = createRuleLabel(WizardMessages.getString(ID_LABEL), container);
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(idLabel);
@@ -182,7 +185,7 @@ public class InstanceFilterPage extends AbstractFilterPage {
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(idText);
 		this.idDecoration = UIUtils.createErrorDecoration("", idText);
 		this.defaultId = createDefaultRuleButton(container);
-		GridDataFactory.fillDefaults().align(SWT.RIGHT, SWT.CENTER).applyTo(defaultId);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).applyTo(defaultId);
 
 		Label imageIdLabel = createRuleLabel(WizardMessages.getString(IMAGE_ID_LABEL), container);
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(imageIdLabel);
@@ -190,7 +193,7 @@ public class InstanceFilterPage extends AbstractFilterPage {
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(imageIdText);
 		this.imageDecoration = UIUtils.createErrorDecoration("", imageIdText);
 		this.defaultImageId = createDefaultRuleButton(container);
-		GridDataFactory.fillDefaults().align(SWT.RIGHT, SWT.CENTER).applyTo(defaultImageId);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).applyTo(defaultImageId);
 
 		Label ownerIdLabel = createRuleLabel(WizardMessages.getString(OWNER_ID_LABEL), container);
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(ownerIdLabel);
@@ -198,7 +201,7 @@ public class InstanceFilterPage extends AbstractFilterPage {
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(ownerIdText);
 		this.ownerDecoration = UIUtils.createErrorDecoration("", ownerIdText);
 		this.defaultOwnerId = createDefaultRuleButton(container);
-		GridDataFactory.fillDefaults().align(SWT.RIGHT, SWT.CENTER).applyTo(defaultOwnerId);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).applyTo(defaultOwnerId);
 
 		Label keyNameLabel = createRuleLabel(WizardMessages.getString(KEYNAME_LABEL), container);
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(keyNameLabel);
@@ -206,7 +209,7 @@ public class InstanceFilterPage extends AbstractFilterPage {
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(keyIdText);
 		this.keyIdDecoration = UIUtils.createErrorDecoration("", keyIdText);
 		this.defaultKeyId = createDefaultRuleButton(container);
-		GridDataFactory.fillDefaults().align(SWT.RIGHT, SWT.CENTER).applyTo(defaultKeyId);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).applyTo(defaultKeyId);
 
 		Label realmLabel = createRuleLabel(WizardMessages.getString(REALM_LABEL), container);
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(realmLabel);
@@ -214,7 +217,7 @@ public class InstanceFilterPage extends AbstractFilterPage {
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(realmText);
 		this.realmDecoration = UIUtils.createErrorDecoration("", realmText);
 		this.defaultRealm = createDefaultRuleButton(container);
-		GridDataFactory.fillDefaults().align(SWT.RIGHT, SWT.CENTER).applyTo(defaultRealm);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).applyTo(defaultRealm);
 
 		Label profileLabel = createRuleLabel(WizardMessages.getString(PROFILE_LABEL), container);
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(profileLabel);
@@ -222,9 +225,33 @@ public class InstanceFilterPage extends AbstractFilterPage {
 		this.profileDecoration = UIUtils.createErrorDecoration("", profileText);
 		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(profileText);
 		this.defaultProfile = createDefaultRuleButton(container);
-		GridDataFactory.fillDefaults().align(SWT.RIGHT, SWT.CENTER).applyTo(defaultProfile);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).applyTo(defaultProfile);
+
+		Label dummyLabel = new Label(container, SWT.NONE);
+		GridDataFactory.fillDefaults().span(2, 1).align(SWT.RIGHT, SWT.CENTER).applyTo(dummyLabel);
+		Button defaultAllButton = new Button(container, SWT.BORDER);
+		defaultAllButton.setText("Default All");
+		GridDataFactory.fillDefaults().indent(0, 10).align(SWT.RIGHT, SWT.BOTTOM).applyTo(defaultAllButton);
+		defaultAllButton.addSelectionListener(onDefaultAllPressed());
 
 		setControl(container);
 		setPageComplete(true);
+	}
+
+	private SelectionListener onDefaultAllPressed() {
+		return new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				resetFilter(nameText);
+				resetFilter(idText);
+				resetFilter(aliasText);
+				resetFilter(imageIdText);
+				resetFilter(ownerIdText);
+				resetFilter(keyIdText);
+				resetFilter(realmText);
+				resetFilter(profileText);
+			}
+		};
 	}
 }

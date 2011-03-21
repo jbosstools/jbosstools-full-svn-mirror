@@ -11,11 +11,12 @@
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
 import org.eclipse.jface.fieldassist.ControlDecoration;
+import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.FormAttachment;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormLayout;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -105,111 +106,69 @@ public class ImageFilterPage extends AbstractFilterPage {
 	@Override
 	public void createControl(Composite parent) {
 		final Composite container = new Composite(parent, SWT.NULL);
-		FormLayout layout = new FormLayout();
-		layout.marginHeight = 5;
-		layout.marginWidth = 5;
-		container.setLayout(layout);
+		GridLayoutFactory.fillDefaults().numColumns(3).spacing(8, 4).applyTo(container);
 
 		IImageFilter filter = getDeltaCloud().getImageFilter();
 
 		Label label = new Label(container, SWT.NULL);
 		label.setText(WizardMessages.getString(FILTER_LABEL));
+		GridDataFactory.fillDefaults().span(3, 1).align(SWT.LEFT, SWT.CENTER).indent(0, 14).hint(SWT.DEFAULT, 30)
+		.applyTo(label);
 
 		Label nameLabel = createRuleLabel(WizardMessages.getString(NAME_LABEL), container);
+		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(nameLabel);
 		this.nameText = createRuleText(filter.getNameRule(), container);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(nameText);
 		this.nameDecoration = UIUtils.createErrorDecoration("", nameText);
 		this.defaultName = createDefaultRuleButton(container);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).applyTo(defaultName);
 
 		Label idLabel = createRuleLabel(WizardMessages.getString(ID_LABEL), container);
+		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(idLabel);
 		this.idText = createRuleText(filter.getIdRule(), container);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(idText);
 		this.idDecoration = UIUtils.createErrorDecoration("", idText);
 		this.defaultId = createDefaultRuleButton(container);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).applyTo(defaultId);
 
 		Label archLabel = createRuleLabel(WizardMessages.getString(ARCH_LABEL), container);
+		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(archLabel);
 		this.archText = createRuleText(filter.getArchRule(), container);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(archText);
 		this.archDecoration = UIUtils.createErrorDecoration(WizardMessages.getString(""), archText);
 		this.defaultArch = createDefaultRuleButton(container);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).applyTo(defaultArch);
 
 		Label descLabel = createRuleLabel(WizardMessages.getString(DESC_LABEL), container);
+		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(descLabel);
 		this.descText = createRuleText(filter.getDescRule(), container);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(descText);
 		this.descDecoration = UIUtils.createErrorDecoration("", descText);
 		this.defaultDesc = createDefaultRuleButton(container);
+		GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).applyTo(defaultDesc);
 
-		Point p1 = label.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-		Point p2 = nameText.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-		Point p3 = defaultName.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-		int centering = (p2.y - p1.y + 1) / 2;
-		int centering2 = (p3.y - p2.y + 1) / 2;
-
-		FormData f = new FormData();
-		f.top = new FormAttachment(0);
-		label.setLayoutData(f);
-
-		f = new FormData();
-		f.top = new FormAttachment(label, 11 + centering + centering2);
-		f.left = new FormAttachment(0, 0);
-		nameLabel.setLayoutData(f);
-
-		f = new FormData();
-		f.top = new FormAttachment(label, 11);
-		f.right = new FormAttachment(100);
-		defaultName.setLayoutData(f);
-
-		f = new FormData();
-		f.top = new FormAttachment(label, 11 + centering2);
-		f.left = new FormAttachment(archLabel, 5);
-		f.right = new FormAttachment(defaultName, -10);
-		nameText.setLayoutData(f);
-
-		f = new FormData();
-		f.top = new FormAttachment(nameLabel, 11 + centering + centering2);
-		f.left = new FormAttachment(0, 0);
-		idLabel.setLayoutData(f);
-
-		f = new FormData();
-		f.top = new FormAttachment(nameLabel, 11);
-		f.right = new FormAttachment(100);
-		defaultId.setLayoutData(f);
-
-		f = new FormData();
-		f.top = new FormAttachment(nameLabel, 11 + centering2);
-		f.left = new FormAttachment(archLabel, 5);
-		f.right = new FormAttachment(defaultId, -10);
-		idText.setLayoutData(f);
-
-		f = new FormData();
-		f.top = new FormAttachment(idLabel, 11 + centering + centering2);
-		f.left = new FormAttachment(0, 0);
-		archLabel.setLayoutData(f);
-
-		f = new FormData();
-		f.top = new FormAttachment(idLabel, 11);
-		f.right = new FormAttachment(100);
-		defaultArch.setLayoutData(f);
-
-		f = new FormData();
-		f.top = new FormAttachment(idLabel, 11 + centering2);
-		f.left = new FormAttachment(archLabel, 5);
-		f.right = new FormAttachment(defaultArch, -10);
-		archText.setLayoutData(f);
-
-		f = new FormData();
-		f.top = new FormAttachment(archLabel, 11 + centering + centering2);
-		f.left = new FormAttachment(0, 0);
-		descLabel.setLayoutData(f);
-
-		f = new FormData();
-		f.top = new FormAttachment(archLabel, 11);
-		f.right = new FormAttachment(100);
-		defaultDesc.setLayoutData(f);
-
-		f = new FormData();
-		f.top = new FormAttachment(archLabel, 11 + centering2);
-		f.left = new FormAttachment(archLabel, 5);
-		f.right = new FormAttachment(defaultDesc, -10);
-		descText.setLayoutData(f);
+		Label dummyLabel = new Label(container, SWT.NONE);
+		GridDataFactory.fillDefaults().span(2, 1).align(SWT.RIGHT, SWT.CENTER).applyTo(dummyLabel);
+		Button defaultAllButton = new Button(container, SWT.BORDER);
+		defaultAllButton.setText("Default All");
+		GridDataFactory.fillDefaults().indent(0, 10).align(SWT.RIGHT, SWT.BOTTOM).applyTo(defaultAllButton);
+		defaultAllButton.addSelectionListener(onDefaultAllPressed());
 
 		setControl(container);
 		setPageComplete(true);
 	}
+	
+	private SelectionListener onDefaultAllPressed() {
+		return new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				resetFilter(nameText);
+				resetFilter(idText);
+				resetFilter(archText);
+				resetFilter(descText);
+			}
+		};
+	}
+
 }
