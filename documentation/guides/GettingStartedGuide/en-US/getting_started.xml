@@ -146,8 +146,7 @@
 	<section id="OtherRelevantResourcesOnTheTopic33">
 		<?dbhtml filename="OtherRelevantResourcesOnTheTopic33.html"?>
 		<title>Other relevant resources on the topic</title>
-		<para>JBDS on RedHat: <ulink url="http://www.redhat.com/developer_studio">JBoss Developer
-   Studio</ulink>
+		<para>JBDS on RedHat: <ulink url="http://www.redhat.com/developer_studio">JBoss Developer Studio</ulink>
 		</para>
 		<para>Forum: <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss Forum</ulink></para>
 		<para>Wiki: <ulink url="http://www.jboss.org/community/wiki/JBossTools">  JBossToolsWiki </ulink></para>
