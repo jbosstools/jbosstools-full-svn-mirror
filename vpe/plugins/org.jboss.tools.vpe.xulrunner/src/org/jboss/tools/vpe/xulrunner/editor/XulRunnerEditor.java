@@ -539,7 +539,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 
 	}
 	/**
-	 * 
+	 * @deprecated should be used getSelectedNodes() instead.
 	 * @return selected element if only one element selected in visual part
 	 */
 	public nsIDOMElement getSelectedElement(){
