@@ -5,16 +5,17 @@
 	<groupId>org.jboss.tools</groupId>
 	<artifactId>org.jboss.tools.build</artifactId>
 	<name>org.jboss.tools.build</name>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2</version>
 	<packaging>pom</packaging>
 
 	<profiles>
-		<!-- for bootstrapping the parent and target-platform poms via Mead, we need to be able to fetch from 
-			 this folder and run these two profiles (excluding all others)
+		<!-- for bootstrapping the parent and target-platform poms via Mead, we need to be able to fetch from this folder and run 
+			this profile (excluding all others); currently parent pom includes target-platform build too, so only need to build the parent
 			 
-			-P parent,target-platform,!libs,!tests,!jmx,!archives,!as,!common,!jst,!xulrunner,!vpe,!jsf
-			-P !freemarker,!hibernatetools,!portlet,!struts,!smooks,!cdi,!birt,!bpel,!esb,!seam,!examples
-			-P !maven,!tptp,!ws,!modeshape,!flow,!jbpm,!gwt,!deltacloud,!runtime,!usage,!aggregate-coverage
+			mvn clean install -P parent,\!libs,\!tests,\!jmx,\!archives,\!as,\!common,\!jst,\!xulrunner,\!vpe \
+			-P \!jsf,\!freemarker,\!hibernatetools,\!portlet,\!struts,\!smooks,\!cdi,\!birt,\!bpel,\!esb,\!seam,\!examples \
+			-P \!maven,\!tptp,\!ws,\!modeshape,\!flow,\!jbpm,\!gwt,\!deltacloud,\!runtime,\!usage,\!aggregate-coverage
+			
 		-->
 		<profile>
 			<id>parent</id>
@@ -25,16 +26,7 @@
 				<module>parent</module>
 			</modules>
 		</profile>
-		<profile>
-			<id>target-platform</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<modules>
-				<module>target-platform</module>
-			</modules>
-		</profile>
-
+		
 		<profile>
 			<id>libs</id>
 			<activation>
