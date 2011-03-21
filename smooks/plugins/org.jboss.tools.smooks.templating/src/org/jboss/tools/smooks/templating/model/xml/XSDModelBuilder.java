@@ -19,26 +19,17 @@
  */
 package org.jboss.tools.smooks.templating.model.xml;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.xsd.util.XSDResourceFactoryImpl;
-import org.eclipse.xsd.util.XSDResourceImpl;
-import org.eclipse.xsd.*;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.Element;
-import org.xml.sax.SAXException;
-import org.jboss.tools.smooks.templating.model.ModelBuilder;
-import org.jboss.tools.smooks.templating.model.ModelBuilderException;
-import org.jboss.tools.smooks.templating.template.xml.XMLFreeMarkerTemplateBuilder;
-
-import java.util.*;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.File;
+import java.io.InputStream;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
+import java.util.Stack;
 
 import javax.xml.XMLConstants;
 import javax.xml.transform.dom.DOMSource;
@@ -46,6 +37,37 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
+
+import org.apache.xerces.dom.DOMInputImpl;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.xsd.XSDAttributeDeclaration;
+import org.eclipse.xsd.XSDAttributeGroupContent;
+import org.eclipse.xsd.XSDAttributeUse;
+import org.eclipse.xsd.XSDAttributeUseCategory;
+import org.eclipse.xsd.XSDComplexTypeDefinition;
+import org.eclipse.xsd.XSDCompositor;
+import org.eclipse.xsd.XSDElementDeclaration;
+import org.eclipse.xsd.XSDModelGroup;
+import org.eclipse.xsd.XSDParticle;
+import org.eclipse.xsd.XSDParticleContent;
+import org.eclipse.xsd.XSDSchema;
+import org.eclipse.xsd.XSDSimpleTypeDefinition;
+import org.eclipse.xsd.XSDTypeDefinition;
+import org.eclipse.xsd.util.XSDResourceFactoryImpl;
+import org.eclipse.xsd.util.XSDResourceImpl;
+import org.jboss.tools.smooks.templating.model.ModelBuilder;
+import org.jboss.tools.smooks.templating.model.ModelBuilderException;
+import org.jboss.tools.smooks.templating.template.xml.XMLFreeMarkerTemplateBuilder;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.ls.LSInput;
+import org.w3c.dom.ls.LSResourceResolver;
+import org.xml.sax.SAXException;
 
 /**
  * XML Model Builder from an XML Schema (XSD).
@@ -60,14 +82,24 @@ public class XSDModelBuilder extends ModelBuilder {
 
     private Map<String, XSDElementDeclaration> elements = new LinkedHashMap<String, XSDElementDeclaration>();
     private Map<String, XSDTypeDefinition> types = new LinkedHashMap<String, XSDTypeDefinition>();
-    private Set<String> loadedSchemas = new HashSet<String>();
+	private ResourceSet resourceSet;
+	private Set<URI> loadedSchemas = new HashSet<URI>();
     private Stack<XSDTypeDefinition> elementExpandStack = new Stack<XSDTypeDefinition>();
     private String rootElementName;
     private Properties nsPrefixes = new Properties();
 
     public XSDModelBuilder(URI schemaURI) throws IOException, ModelBuilderException {
-        loadSchema(schemaURI);
-    }
+		this.resourceSet = createResourceSet();
+		loadSchema(schemaURI);
+	}
+
+	private ResourceSet createResourceSet() {
+		ResourceSet resourceSet = new ResourceSetImpl();
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xsd", new XSDResourceFactoryImpl()); //$NON-NLS-1$
+		Map<String, Object> options = new HashMap<String, Object>();
+		options.put(XSDResourceImpl.XSD_TRACK_LOCATION, true);
+		return resourceSet;
+	}
 
     public Set<String> getRootElementNames() {
         return Collections.unmodifiableSet(elements.keySet());
@@ -102,73 +134,108 @@ public class XSDModelBuilder extends ModelBuilder {
      * @throws SAXException Validation error.
      * @throws IOException Error reading the XSD Sources.
      */
-    public void validate(Document message) throws SAXException, IOException {
-        StreamSource[] xsdSources = new StreamSource[loadedSchemas.size()];
-        int i = 0;
+	public void validate(Document message) throws SAXException, IOException {
+		StreamSource[] xsdSources = new StreamSource[loadedSchemas.size()];
+		int i = 0;
 
-        try {
-	        for(String schemaPath : loadedSchemas) {
-	        	File schemaFile = new File(schemaPath);
-	        	
-	        	if(!schemaFile.exists()) {
-	        		throw new IOException("XSD '" + schemaFile.getAbsolutePath() + "' not found."); //$NON-NLS-1$ //$NON-NLS-2$
-	        	}
-	        	xsdSources[i] = new StreamSource(new FileInputStream(schemaFile));
-	        	i++;
-	        }
+		try {
+			for (URI schemaURI : loadedSchemas) {
+				InputStream in = resourceSet.getURIConverter().createInputStream(schemaURI);
+				if (in == null) {
+					throw new IOException("XSD '" + schemaURI + "' not found."); //$NON-NLS-1$ //$NON-NLS-2$
+				}
+				xsdSources[i] = new StreamSource(in);
+				i++;
+			}
+
+			SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+			schemaFactory.setResourceResolver(new SchemeListLSResourceResolver());
+			Schema schema = schemaFactory.newSchema(xsdSources);
+			Validator validator = schema.newValidator();
+
+			validator.validate(new DOMSource(message));
+		} finally {
+			for (StreamSource schemaStream : xsdSources) {
+				try {
+					schemaStream.getInputStream().close();
+				} catch (Exception e) {
+					// Nothing we can do...
+				}
+			}
+		}
+	}
 	
-	        SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-	        Schema schema = schemaFactory.newSchema(xsdSources);
-	        Validator validator = schema.newValidator();
+	/**
+	 * resolves a schema for a given system id on behalf of a list of schemes that were
+	 * extracted in a former step in #validate.
+	 * 
+	 * @see #validate
+	 * 
+	 */
+	public class SchemeListLSResourceResolver implements LSResourceResolver {
 
-	        validator.validate(new DOMSource(message));
-        } finally {
-	        for(StreamSource schemaStream : xsdSources) {
-	        	try {
-	        		schemaStream.getInputStream().close();
-	        	} catch(Exception e) {
-	        		// Nothing we can do...
-	        	}
-	        }        	
-        }
-    }    
+		public LSInput resolveResource(String type, String namespaceURI, String publicId, String systemId,
+				String baseURI) {
 
-    private void loadSchema(URI schemaURI) throws IOException, ModelBuilderException {
-		ResourceSet resourceSet = new ResourceSetImpl();
-		Resource resource;
-		
+			LSInput input = new DOMInputImpl();
+			try {
+				InputStream in = getLoadedSchema(systemId);
+				input.setByteStream(in);
+				return input;
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				return null;
+			}
+		}
+
+		private InputStream getLoadedSchema(String systemId) throws IOException {
+			for (URI schemaUri : loadedSchemas) {
+				String lastSegment = schemaUri.lastSegment();
+				if (systemId.equals(lastSegment)) {
+					return resourceSet.getURIConverter().createInputStream(schemaUri);
+				}
+			}
+			return null;
+		}
+
+	}
+	
+	private void loadSchema(URI schemaURI) throws IOException, ModelBuilderException {
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xsd", new XSDResourceFactoryImpl()); //$NON-NLS-1$
-		resource = resourceSet.getResource(schemaURI, true);
+		Resource resource = resourceSet.getResource(schemaURI, true);
 
-        Map<String, Object> options = new HashMap<String, Object>();
-        options.put(XSDResourceImpl.XSD_TRACK_LOCATION, true);
+		Map<String, Object> options = new HashMap<String, Object>();
+		options.put(XSDResourceImpl.XSD_TRACK_LOCATION, true);
 
-        resource.load(options);
+		resource.load(options);
 
-        if(resource.getContents().isEmpty()) {
-            throw new ModelBuilderException("Failed to load schema '" + schemaURI + "'."); //$NON-NLS-1$ //$NON-NLS-2$
-        }
+		if (resource.getContents().isEmpty()) {
+			throw new ModelBuilderException("Failed to load schema '" + schemaURI + "'."); //$NON-NLS-1$ //$NON-NLS-2$
+		}
 
-        XSDSchema schema = (XSDSchema) resource.getContents().get(0);
+		XSDSchema schema = (XSDSchema) resource.getContents().get(0);
 
-        List<XSDElementDeclaration> elementDeclarations = schema.getElementDeclarations();
-        for(XSDElementDeclaration elementDeclaration : elementDeclarations) {
-            if(!elementDeclaration.isAbstract()) {
-                elements.put(elementDeclaration.getName(), elementDeclaration);
-            }
-        }
+		List<XSDElementDeclaration> elementDeclarations = schema.getElementDeclarations();
+		for (XSDElementDeclaration elementDeclaration : elementDeclarations) {
+			if (!elementDeclaration.isAbstract()) {
+				elements.put(elementDeclaration.getName(), elementDeclaration);
+			}
+		}
 
-        EList typeDefs = schema.getTypeDefinitions();
-        for(int i = 0; i < typeDefs.size(); i++) {
-            XSDTypeDefinition type = (XSDTypeDefinition) typeDefs.get(i);
-            types.put(type.getName(), type);
-        }
-        
-        EList<Resource> schemaResources = resourceSet.getResources();
-        for(Resource schemaRes : schemaResources) {
-        	loadedSchemas.add(schemaRes.getURI().toFileString());
-        }
-    }
+		EList<XSDTypeDefinition> typeDefs = schema.getTypeDefinitions();
+		for (int i = 0; i < typeDefs.size(); i++) {
+			XSDTypeDefinition type = (XSDTypeDefinition) typeDefs.get(i);
+			types.put(type.getName(), type);
+		}
+
+		EList<Resource> schemaResources = resourceSet.getResources();
+		for (Resource schemaRes : schemaResources) {
+			loadedSchemas.add(schemaRes.getURI());
+		}
+
+		resourceSet.getResources().remove(resource);
+	}
+
 
     private void expand(XSDElementDeclaration elementDeclaration, int minOccurs, int maxOccurs, Node parent, Document document) {
         XSDTypeDefinition typeDef;
@@ -241,7 +308,7 @@ public class XSDModelBuilder extends ModelBuilder {
 
 	private void processComplexType(Document document, Element element, XSDComplexTypeDefinition complexTypeDef) {
         XSDParticle particle = complexTypeDef.getComplexType();
-        EList attributes = complexTypeDef.getAttributeContents();
+        EList<XSDAttributeGroupContent> attributes = complexTypeDef.getAttributeContents();
 
         addAttributes(element, attributes);
 
@@ -290,13 +357,13 @@ public class XSDModelBuilder extends ModelBuilder {
         }
     }
 
-    private void addAttributes(Element element, EList attributes) {
+    private void addAttributes(Element element, EList<XSDAttributeGroupContent> attributes) {
         // Add the attributes...
         if(attributes != null) {
             for(int i = 0; i < attributes.size(); i++) {
                 XSDAttributeUse attributeUse = (XSDAttributeUse) attributes.get(i);
                 XSDAttributeDeclaration attributeDecl = attributeUse.getAttributeDeclaration();
-                XSDSimpleTypeDefinition typeDef = attributeDecl.getTypeDefinition();
+//                XSDSimpleTypeDefinition typeDef = attributeDecl.getTypeDefinition();
                 String name = attributeDecl.getName();
                 String attributeNS = attributeDecl.getTargetNamespace();
                 String value = ""; //$NON-NLS-1$
