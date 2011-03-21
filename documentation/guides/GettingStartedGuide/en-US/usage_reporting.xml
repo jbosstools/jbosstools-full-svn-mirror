@@ -41,7 +41,7 @@
 			</menuchoice>.
 		</para>
 		<para>
-     The gathered data allows JBoss to see how the tools are being used and where they are being used geographically. Currently we are looking into the operating systems being used, screen resolution and how often the tooling environment is started. In the future geographic information will assist in focussing translation resources to areas where the developer environment is most used.
+     The gathered data allows JBoss to see how the tools are being used and where they are being used geographically. Currently we are looking into the operating systems being used, screen resolution and how often the tooling environment is started. In the future geographic information will assist in focusing translation resources to areas where the developer environment is most used.
     </para>
 		<para>
      The plug-in uses Google Analytics to track and report data by acting as if you were visiting the site http://jboss.org/tools/usage/. To view the type of information being collected, refer to <xref linkend="Collected_usage_information_guide"/>.

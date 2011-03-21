@@ -3,22 +3,22 @@
 ]>
 
 <bookinfo>
-	<title>Getting Started Guide</title>
-	<subtitle>Provides information on how the JBoss Developer Studio functions.</subtitle>
-	<productname>JBoss Developer Studio</productname>
-	<productnumber>4.0</productnumber>
-	<edition>4.0.0</edition>
-	<pubsnumber>12</pubsnumber>
-	<abstract>
-		<para>The Getting Started Guide explains the JBoss Developer Studio.</para>
-	</abstract>
-	<corpauthor>
-		<inlinemediaobject>
-			<imageobject>
-				<imagedata fileref="Common_Content/images/title_logo.svg" format="SVG"></imagedata>
-			</imageobject>
-		</inlinemediaobject>
-	</corpauthor>
-	<xi:include href="Common_Content/Legal_Notice.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
-	<xi:include href="Author_Group.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
+<title>Getting Started Guide</title>
+<subtitle>Provides information on how the JBoss Developer Studio functions.</subtitle>
+<productname>JBoss Developer Studio</productname>
+<productnumber>4.0</productnumber>
+<edition>4.0.0</edition>
+<pubsnumber>2</pubsnumber>
+<abstract>
+<para>The Getting Started Guide explains the JBoss Developer Studio.</para>
+</abstract>
+<corpauthor>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="Common_Content/images/title_logo.svg" format="SVG"></imagedata>
+</imageobject>
+</inlinemediaobject>
+</corpauthor>
+<xi:include href="Common_Content/Legal_Notice.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
+<xi:include href="Author_Group.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
 </bookinfo>

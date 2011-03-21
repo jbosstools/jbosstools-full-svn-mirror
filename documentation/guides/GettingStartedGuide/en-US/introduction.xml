@@ -13,7 +13,7 @@
 	<section id="intro1">
 		<title>What is JBDS?</title>
 		<para>
-			<property>JBoss Developer Studio</property> is a set of eclipse-based development tools that have been pre-configured for JBoss Enterprise Middleware Platforms and Red Hat Enterprise Linux. Developers are not required to use <property>JBoss Developer Studio</property> to develop on JBoss Enterprise Middleware and/or Red Hat Linux. But, many find these pre-configured tools offer significant time-savings and value, making them more productive and reducing deployment times.
+			<property>JBoss Developer Studio</property> is a set of Eclipse based development tools that have been pre-configured for JBoss Enterprise Middleware Platforms and Red Hat Enterprise Linux. Developers are not required to use <property>JBoss Developer Studio</property> to develop on JBoss Enterprise Middleware and/or Red Hat Linux. But, many find these preconfigured tools offer significant time-savings and value, making them more productive and reducing deployment times.
 		</para>
 		<para>
 			This guide covers the first steps required to get started with <property>JBoss Developer Studio</property>. You will learn how to install and configure the software necessary for your OS (currently Linux, Microsoft Windows or Mac OSX), including detailed information on how to install, configure and use JDK, JBDS and JBoss Tools.

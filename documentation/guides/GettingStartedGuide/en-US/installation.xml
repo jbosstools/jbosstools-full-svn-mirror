@@ -23,7 +23,7 @@
 			<itemizedlist>                     
 				<listitem>
 					<para>
-						Download the <ulink url="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Sun JDK 6</ulink> from Sun&apos;s website. Click the <guibutton>Download JDK</guibutton> button for the &quot;JDK SE 6 Update &lt;x&gt;&quot; (where &quot;x&quot; is the latest update number) option, select the Linux platform, agree to license agreement, anc click the <guibutton>Continue</guibutton> button. You can then download the JDK installation package.
+						Download the <ulink url="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Sun JDK 6</ulink> from Sun&apos;s website. Click the <guibutton>Download JDK</guibutton> button for the &quot;JDK SE 6 Update &lt;x&gt;&quot; (where &quot;x&quot; is the latest update number) option, select the Linux platform, agree to license agreement, and click the <guibutton>Continue</guibutton> button. You can then download the JDK installation package.
 					</para>
 					<para>
 						You may need to set the executable flag on the downloaded file before it can be launched by running the <code>chmod +x</code> command, like so:
@@ -190,7 +190,7 @@ Java HotSpot(TM) Server VM (build 19.1-b02, mixed mode)]]></programlisting>
 		<para>This chapter will provide you with detailed information on how to install <property>JBoss Developer Studio</property>.</para>
 
 		<para>
-			JBDS comes with a simple installer, bundled with tested and pre-configured versions of Eclipse, WTP, JBossEAP, Seam, and SpringIDE. The following steps show you how to install JBDS:
+			JBoss Developer Studio comes with a simple installer, bundled with tested and preconfigured versions of Eclipse, WTP, JBossEAP, Seam, and SpringIDE. The following steps show you how to install JBDS:
 		</para>
 
 		<itemizedlist>
@@ -395,7 +395,7 @@ Java HotSpot(TM) Server VM (build 19.1-b02, mixed mode)]]></programlisting>
 	<section>
 		<title>Updating JBoss Developer Studio</title>
 		<para>
-			Updates to JBDS can be installed by selecting <menuchoice><guimenuitem>Help</guimenuitem><guimenuitem>Check For Updates</guimenuitem></menuchoice> from withing Eclipse. You may be prompted for a username and password. These are the same credentials that are required to access the Tech Preview update site (see <xref linkend="tech_previews"/>).
+			Updates to JBDS can be installed by selecting <menuchoice><guimenuitem>Help</guimenuitem><guimenuitem>Check For Updates</guimenuitem></menuchoice> from within Eclipse. You may be prompted for a username and password. These are the same credentials that are required to access the Tech Preview update site (see <xref linkend="tech_previews"/>).
 		</para>
 	</section>
 

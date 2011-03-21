@@ -650,7 +650,7 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
       <note>
       	<title>Tip</title>
       	<para>
-      		If you see the error <code>java.lang.ClassNotFoundException: org.jboss.seam.servlet.SeamListener</code> in the console output from the Application Server, you may need to copy the <filename>jboss-seam.jar</filename> file from the <filename>lib</filename> subdirectoy in the Seam library (which can be downloaded from <ulink url="http://seamframework.org/Seam2/Seam2DistributionDownloads">here</ulink>) into the <filename>/server/default/deploy/workshop.war/WEB-INF/lib/</filename> subdirectory in your Application Server (where "default" refers to the server profile that you are using).
+      		If you see the error <code>java.lang.ClassNotFoundException: org.jboss.seam.servlet.SeamListener</code> in the console output from the Application Server, you may need to copy the <filename>jboss-seam.jar</filename> file from the <filename>lib</filename> subdirectory in the Seam library (which can be downloaded from <ulink url="http://seamframework.org/Seam2/Seam2DistributionDownloads">here</ulink>) into the <filename>/server/default/deploy/workshop.war/WEB-INF/lib/</filename> subdirectory in your Application Server (where "default" refers to the server profile that you are using).
       	</para>
       </note>
       <note>

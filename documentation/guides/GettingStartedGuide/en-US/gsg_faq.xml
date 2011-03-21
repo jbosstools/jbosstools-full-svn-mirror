@@ -165,7 +165,7 @@ If you are sure that your project does not need JSF capabilities, just disable t
 		<title>Is it possible to increase the performance of Eclipse after installing your product?</title>
 
 		<para>
-			<property>JBoss Developer Studio</property> preconfigures eclipse via the <filename>eclipse.ini</filename> file to allocate extra memory, but if you for some reason need more memory then by default, you can manually make adjustments in this file. For example:</para>
+			<property>JBoss Developer Studio</property> configures eclipse via the <filename>eclipse.ini</filename> file to allocate extra memory, but if you for some reason need more memory then by default, you can manually make adjustments in this file. For example:</para>
 		<programlisting role="XML"><![CDATA[-vmargs -Xms128m -Xmx512m -XX:MaxPermSize=128m]]></programlisting>
 	</section>
 
