@@ -9,6 +9,31 @@
 	<packaging>pom</packaging>
 
 	<profiles>
+		<!-- for bootstrapping the parent and target-platform poms via Mead, we need to be able to fetch from 
+			 this folder and run these two profiles (excluding all others)
+			 
+			-P parent,target-platform,!libs,!tests,!jmx,!archives,!as,!common,!jst,!xulrunner,!vpe,!jsf
+			-P !freemarker,!hibernatetools,!portlet,!struts,!smooks,!cdi,!birt,!bpel,!esb,!seam,!examples
+			-P !maven,!tptp,!ws,!modeshape,!flow,!jbpm,!gwt,!deltacloud,!runtime,!usage,!aggregate-coverage
+		-->
+		<profile>
+			<id>parent</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<modules>
+				<module>parent</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>target-platform</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<modules>
+				<module>target-platform</module>
+			</modules>
+		</profile>
 
 		<profile>
 			<id>libs</id>
@@ -251,7 +276,7 @@
 		<profile>
 			<id>workingset</id>
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 			</activation>
 			<modules>
 				<module>../portlet</module>
@@ -291,7 +316,7 @@
 		<profile>
 			<id>profiler</id>
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 			</activation>
 			<modules>
 				<module>../profiler</module>
@@ -615,7 +640,7 @@
 		<profile>
 			<id>site</id>
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 			</activation>
 			<modules>
 				<module>../site</module>
