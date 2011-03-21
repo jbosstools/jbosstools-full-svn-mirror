@@ -252,7 +252,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 //		return getElementForNode(lastSelectedNode);
 //	}
 
-	public List<nsIDOMNode> getLastSelectedNodes() {
+	public List<nsIDOMNode> getSelectedNodes() {
 		if(selectedNodes==null){
 			selectedNodes=Collections.<nsIDOMNode>emptyList();
 		}
@@ -434,7 +434,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 //			}
 //		}
 		List<FlasherData> flasherDatas = new ArrayList<FlasherData>();
-		for (nsIDOMNode domNode : getLastSelectedNodes()) {
+		for (nsIDOMNode domNode : getSelectedNodes()) {
 			flasherDatas.add(prepareFlasherData(domNode));
 		}
 		drawElementOutline(flasherDatas);
@@ -544,8 +544,8 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	 */
 	public nsIDOMElement getSelectedElement(){
 		nsIDOMElement resizeElement = null;
-		if(getLastSelectedNodes()!=null&&getLastSelectedNodes().size()>0){
-			resizeElement =getElementForNode(getLastSelectedNodes().get(0));
+		if(getSelectedNodes()!=null&&getSelectedNodes().size()>0){
+			resizeElement =getElementForNode(getSelectedNodes().get(0));
 		}
 		return resizeElement;
 	}

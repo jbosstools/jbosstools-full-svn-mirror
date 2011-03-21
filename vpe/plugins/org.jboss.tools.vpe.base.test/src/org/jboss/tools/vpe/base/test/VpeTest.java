@@ -379,7 +379,7 @@ public class VpeTest extends TestCase implements ILogListener {
 
 				TestUtil.delay(50);
 
-				assertNotNull(xulRunnerEditor.getSelectedElement());
+				assertNotNull(getSelectedNode(xulRunnerEditor));
 
 				nsIDOMNode sample;
 				if (nodeMapping.getSourceNode().getNodeType() == Node.TEXT_NODE
@@ -391,7 +391,7 @@ public class VpeTest extends TestCase implements ILogListener {
 					sample = nodeMapping.getVisualNode();
 				}
 
-				assertEquals(sample, xulRunnerEditor.getSelectedElement());
+				assertEquals(sample, getSelectedNode(xulRunnerEditor));
 			}
 		}
 	}
@@ -463,5 +463,13 @@ public class VpeTest extends TestCase implements ILogListener {
 	
 	protected String getEditorID(){
 		return EDITOR_ID;
+	}
+	/**
+	 * @author mareshkau
+	 * @param xulRunnerEditor
+	 * @return first node in nodes selection, if it selected
+	 */
+	protected static nsIDOMNode getSelectedNode(XulRunnerEditor xulRunnerEditor){
+		return (xulRunnerEditor.getSelectedNodes().size()>0)?xulRunnerEditor.getSelectedNodes().get(0):null;
 	}
 }

@@ -51,7 +51,7 @@ public class MultipleSelectionTest extends VpeTest{
 		viewer.setSelectedRange(startSelectionOffcet, length);
 		VpeController vpeController = TestUtil.getVpeController(part);
         vpeController.sourceSelectionChanged();
-        List<nsIDOMNode> selectedNodes = vpeController.getXulRunnerEditor().getLastSelectedNodes();
+        List<nsIDOMNode> selectedNodes = vpeController.getXulRunnerEditor().getSelectedNodes();
         assertEquals("Shuld be selected ",3,selectedNodes.size()); //$NON-NLS-1$
 	}
 	

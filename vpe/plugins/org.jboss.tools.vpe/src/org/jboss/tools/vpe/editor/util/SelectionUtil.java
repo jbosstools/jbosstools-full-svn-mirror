@@ -346,7 +346,7 @@ public class SelectionUtil {
 	public static nsIDOMNode getSelectedNode(VpePageContext pageContext) {
 		nsIDOMNode domNode=null;
 		List<nsIDOMNode> selectedNodes = pageContext.getVisualBuilder().getXulRunnerEditor()
-		.getLastSelectedNodes();
+		.getSelectedNodes();
 		if(selectedNodes!=null&&selectedNodes.size()>0){
 			domNode=selectedNodes.get(0);
 		}
