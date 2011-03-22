@@ -24,8 +24,8 @@ public class Columns<MODEL> {
 		private String name;
 		private int weight;
 
-		public Column(String name, int weight) {
-			this.name = name;
+		public Column(String nameKey, int weight) {
+			this.name = CVMessages.getString(nameKey);
 			this.weight = weight;
 		}
 

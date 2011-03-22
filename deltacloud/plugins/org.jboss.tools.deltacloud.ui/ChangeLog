@@ -1,3 +1,26 @@
+2011-03-22  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/deltacloud/ui/views/Columns.java: 
+	* src/org/jboss/tools/deltacloud/ui/views/DeltaCloudImageColumns.java: 
+	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.properties: 
+	* src/org/jboss/tools/deltacloud/ui/views/DeltaCloudInstanceColumns.java (DeltaCloudInstanceColumns): 
+	[JBIDE-8319] added missing columns, externalized column titles
+
+2011-03-21  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/deltacloud/ui/commands/CopyCVPropertySheetPageEntryHandler.java: 
+	* src/org/jboss/tools/deltacloud/ui/views/cloud/property/CVPropertySheetPage.java
+	* plugin.xml:
+	[JBIDE-8416] implemented custom property sheet page so that elements copied (to the clipboard) 
+	from it do not contain the label  
+
+2011-03-17  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/EditCloudConnectionWizard.java (performFinish): 
+	(editCloud): 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnectionWizard.java (performFinish): 
+	(createCloud): 
+
 2011-03-16  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/	* plugin.xml: 
