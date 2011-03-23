@@ -629,6 +629,7 @@
             <xsd:enumeration value="FontSizeFormat"/>
             <xsd:enumeration value="BackgroundColorFormat"/>
             <xsd:enumeration value="ForegroundColorFormat"/>
+            <xsd:enumeration value="StyleFormat"/>
         </xsd:restriction>
     </xsd:simpleType>
 <!--  -->
