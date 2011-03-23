@@ -1,5 +1,26 @@
+2011-03-23  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CloudConnectionPageModel.java 
+	(setDriverByUrl): 
+	(isKnownCloud): 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CloudConnectionPage.java 
+	(Driver2Label): 
+	(createControl): 
+	(bindTestButtonEnablement): 
+	(bindCloudType): 
+	* src/org/jboss/tools/internal/deltacloud/ui/utils/ControlDecorationAdapter.java (ControlDecorationAdapter): 
+	[JBIDE-8206] moved checking cloud type to background job
+
 2011-03-21  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/InstanceFilterPage.java 
+	(createControl): 
+	(onDefaultAllPressed): 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/ImageFilterPage.java 
+	(createControl):  
+	(onDefaultAllPressed): 
+	[JBIDE-8326] added button that resets all filters
+	
 2011-03-21  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/deltacloud/ui/commands/CopyCVPropertySheetPageEntryHandler.java: 

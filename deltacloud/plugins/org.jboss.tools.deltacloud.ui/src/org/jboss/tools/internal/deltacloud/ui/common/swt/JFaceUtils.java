@@ -19,12 +19,15 @@ import org.eclipse.swt.widgets.Control;
 public class JFaceUtils {
 
 	public static ControlDecoration createDecoration(Control control, String message) {
+		return createDecoration(control, message, FieldDecorationRegistry.DEC_ERROR);
+	}
+
+	public static ControlDecoration createDecoration(Control control, String message, String decorationId) {
 		ControlDecoration controlDecoration = new ControlDecoration(control, SWT.LEFT | SWT.TOP);
 		controlDecoration.setDescriptionText(message);
 		FieldDecoration fieldDecoration = FieldDecorationRegistry.getDefault()
-				.getFieldDecoration(FieldDecorationRegistry.DEC_ERROR);
+				.getFieldDecoration(decorationId);
 		controlDecoration.setImage(fieldDecoration.getImage());
 		return controlDecoration;
 	}
-
 }

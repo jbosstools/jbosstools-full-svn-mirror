@@ -11,14 +11,21 @@
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
 import java.net.MalformedURLException;
+import java.text.MessageFormat;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
+import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudDriver;
-import org.jboss.tools.internal.deltacloud.core.observable.ObservablePojo;
+import org.jboss.tools.deltacloud.core.DeltaCloudException;
+import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.ObservableUIPojo;
 
 /**
  * @author Andre Dietisheim
  */
-public class CloudConnectionPageModel extends ObservablePojo {
+public class CloudConnectionPageModel extends ObservableUIPojo {
 
 	public static final String PROPERTY_URL = "url"; //$NON-NLS-1$
 	public static final String PROPERTY_NAME = "name"; //$NON-NLS-1$
@@ -42,17 +49,19 @@ public class CloudConnectionPageModel extends ObservablePojo {
 		this("", "", "", "", DeltaCloudDriver.UNKNOWN);
 	}
 
-	public CloudConnectionPageModel(String name, String url, String username, String password) throws MalformedURLException {
+	public CloudConnectionPageModel(String name, String url, String username, String password)
+			throws MalformedURLException {
 		this(name, url, username, password, DeltaCloudDriver.UNKNOWN);
 	}
 
 	public CloudConnectionPageModel(String name, String url, String username, String password, DeltaCloudDriver driver) {
 		this.name = name;
 		this.initialName = name;
-			this.url = url;
+		this.url = url;
 		this.username = username;
 		this.password = password;
-		this.driver = driver;
+		// this.driver = driver;
+		setDriverByUrl(url);
 	}
 
 	public String getUsername() {
@@ -97,5 +106,42 @@ public class CloudConnectionPageModel extends ObservablePojo {
 
 	public void setDriver(DeltaCloudDriver driver) {
 		firePropertyChange(PROPERTY_DRIVER, this.driver, this.driver = driver);
+	}
+
+	/**
+	 * Sets the driver for a given cloud url. Queries the cloud at the given url
+	 * and determine its driver.
+	 * 
+	 * @param cloudUrl
+	 *            the url of the cloud to query
+	 */
+	public void setDriverByUrl(final String url) {
+		setDriver(DeltaCloudDriver.UNKNOWN);
+		new Job(MessageFormat.format("Determining driver for cloud at url {0}", url)) {
+
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				DeltaCloudDriver driver = getDriverFor(url);
+				setDriver(driver);
+				return Status.OK_STATUS;
+			}
+
+		}.schedule();
+	}
+
+	private DeltaCloudDriver getDriverFor(String url) {
+		try {
+			return DeltaCloud.getServerDriver(url);
+		} catch (DeltaCloudException e) {
+			return DeltaCloudDriver.UNKNOWN;
+		}
+	}
+
+	public boolean isKnownCloud(Object value) {
+		if (value instanceof DeltaCloudDriver) {
+			DeltaCloudDriver driver = (DeltaCloudDriver) value;
+			return driver != DeltaCloudDriver.UNKNOWN;
+		}
+		return false;
 	}
 }
