@@ -1,3 +1,8 @@
+2011-03-23  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/deltacloud/integration/wizard/RSEandASWizardPage.java: 
+	[JBIDE-8333] persisting combo states to preferences
+
 2011-02-02  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/deltacloud/integration/wizard/RSEandASWizardPage.java (createControl): 

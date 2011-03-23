@@ -36,6 +36,7 @@ import org.jboss.ide.eclipse.as.core.util.IJBossToolingConstants;
 import org.jboss.tools.common.jobs.ChainedJob;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.integration.DeltaCloudIntegrationPlugin;
+import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.wizard.INewInstanceWizardPage;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
 import org.osgi.service.prefs.BackingStoreException;
@@ -49,6 +50,9 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 	
 	private final static String CREATE_RSE_PREF_KEY = "org.jboss.tools.deltacloud.integration.wizard.RSEandASWizard.CREATE_RSE_PREF_KEY";
 	private final static String CREATE_SERVER_PREF_KEY = "org.jboss.tools.deltacloud.integration.wizard.RSEandASWizard.CREATE_SERVER_PREF_KEY";
+
+	private static final String SELECTED_AUTO_LOCAL_RUNTIME_KEY = "autoruntime_selected";
+	private static final String SELECTED_MANUAL_LOCAL_RUNTIME_KEY = "manualruntime_selected";
 
 	private Button createRSE, createServer;
 	private Group serverDetailsGroup;
@@ -221,8 +225,14 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 				names.add(rts[i].getName());
 			}
 		}
-		localRuntimeCombo.setItems((String[]) names.toArray(new String[names.size()]));
-		autoLocalRuntimeCombo.setItems((String[]) names.toArray(new String[names.size()]));
+		String[] namesArray = (String[]) names.toArray(new String[names.size()]);
+		localRuntimeCombo.setItems(namesArray);
+		localRuntimeCombo
+				.select(loadSelection(SELECTED_MANUAL_LOCAL_RUNTIME_KEY, namesArray));
+		autoLocalRuntimeCombo.setItems(namesArray);
+		autoLocalRuntimeCombo
+				.select(loadSelection(SELECTED_AUTO_LOCAL_RUNTIME_KEY, namesArray));
+
 	}
 	
 	protected void configureRuntimesPressed() {
@@ -273,8 +283,49 @@ public class RSEandASWizardPage extends WizardPage implements INewInstanceWizard
 				}
 			}
 		}
+		storeSelection(autoLocalRuntimeCombo.getSelectionIndex(),
+				autoLocalRuntimeCombo.getItems(),
+				SELECTED_AUTO_LOCAL_RUNTIME_KEY);
+		storeSelection(localRuntimeCombo.getSelectionIndex(),
+				localRuntimeCombo.getItems(), 
+				SELECTED_MANUAL_LOCAL_RUNTIME_KEY);
+		
 		setErrorMessage(error);
 		setPageComplete(complete);
+	}
+	
+	private void storeSelection(int selectionIndex, String[] items,
+			String prefsKey) {
+		if (selectionIndex < 0 || items == null || items.length == 0) {
+			return;
+		}
+
+		String value = items[selectionIndex];
+		IEclipsePreferences node = new InstanceScope()
+				.getNode(DeltaCloudIntegrationPlugin.PLUGIN_ID);
+		node.put(prefsKey, value);
+		try {
+			node.flush();
+		} catch (BackingStoreException e) {
+			ErrorUtils.handleError("Error", "Could not store selected runtime",
+					e, getShell());
+		}
+	}
+
+	private int loadSelection(String prefsKey, String[] items) {
+		int selectedIndex = -1;
+		IEclipsePreferences node = new InstanceScope()
+				.getNode(DeltaCloudIntegrationPlugin.PLUGIN_ID);
+		String selectedValue = node.get(prefsKey, null);
+		if (selectedValue != null && items != null) {
+			for (int i = 0; i < items.length; i++) {
+				if (selectedValue.equals(items[i])) {
+					selectedIndex = i;
+					break;
+				}
+			}
+		}
+		return selectedIndex;
 	}
 	
 	private void refreshServerWidgets() {
