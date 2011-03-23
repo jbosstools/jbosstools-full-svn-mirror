@@ -1,5 +1,9 @@
 2011-03-23  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
+	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.properties: 
+	* src/org/jboss/tools/deltacloud/ui/commands/StopInstanceHandler.java (doStopInstance):
+	[JBIDE-8295] asking user to confirm instance stop now 
+	
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/WizardMessages.properties: 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnectionWizard.java (createCloud): 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/EditCloudConnectionWizard.java (editCloud):

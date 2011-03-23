@@ -17,20 +17,27 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.jboss.tools.common.log.StatusFactory;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
+import org.jboss.tools.internal.deltacloud.ui.utils.WorkbenchUtils;
+import org.osgi.service.prefs.Preferences;
 
 /**
  * @author Andre Dietisheim
  */
 public class StopInstanceHandler extends AbstractInstanceHandler {
+
+	private static final String DONT_CONFIRM_CREATE_INSTANCE = "dont_confirm_create_instance"; //$NON-NLS-1$
 
 	private final static String STOPPING_INSTANCE_TITLE = "StoppingInstance.title"; //$NON-NLS-1$
 	private final static String STOPPING_INSTANCE_MSG = "StoppingInstance.msg"; //$NON-NLS-1$
@@ -84,19 +91,60 @@ public class StopInstanceHandler extends AbstractInstanceHandler {
 	}
 
 	private void stopInstances(Object[] deltaCloudInstances) {
-		for (int i = 0; i < deltaCloudInstances.length; i++) {
-			stopInstance((DeltaCloudInstance) deltaCloudInstances[i]);
+		if (askUserToConfirm()) {
+			for (int i = 0; i < deltaCloudInstances.length; i++) {
+				doStopInstance((DeltaCloudInstance) deltaCloudInstances[i]);
+			}
 		}
 	}
 
 	private void stopInstance(DeltaCloudInstance instance) {
 		if (instance != null) {
-			executeInstanceAction(
-					instance
-					, DeltaCloudInstance.Action.STOP
-					, DeltaCloudInstance.State.STOPPED
-					, CVMessages.getString(STOPPING_INSTANCE_TITLE)
-					, CVMessages.getFormattedString(STOPPING_INSTANCE_MSG, new String[] { instance.getName() }));
+			if (askUserToConfirm()) {
+				doStopInstance(instance);
+			}
 		}
+	}
+
+	private void doStopInstance(DeltaCloudInstance instance) {
+		if (instance != null) {
+			executeInstanceAction(
+						instance
+						, DeltaCloudInstance.Action.STOP
+						, DeltaCloudInstance.State.STOPPED
+						, CVMessages.getString(STOPPING_INSTANCE_TITLE)
+						, CVMessages.getFormattedString(STOPPING_INSTANCE_MSG, new String[] { instance.getAlias() }));
+		}
+	}
+	
+	private boolean askUserToConfirm() {
+		return openConfirmationDialog(
+						CVMessages.getString("StopInstancesConfirm.title"),
+						CVMessages.getString("StopInstancesConfirm.msg"),
+						CVMessages.getString("StopInstancesConfirmDontWarn.msg"),
+						DONT_CONFIRM_CREATE_INSTANCE,
+						Activator.PLUGIN_ID,
+						WorkbenchUtils.getActiveShell());
+	}
+
+	private static boolean openConfirmationDialog(String title, String message, String dontShowAgainMessage,
+			String preferencesKey, String pluginId, Shell shell) {
+		boolean confirmed = true;
+		Preferences prefs = new InstanceScope().getNode(pluginId);
+		boolean dontShowDialog =
+				prefs.getBoolean(preferencesKey, false);
+		if (!dontShowDialog) {
+			MessageDialogWithToggle dialog =
+					MessageDialogWithToggle.openOkCancelConfirm(shell, title, message, dontShowAgainMessage,
+							false, null, null);
+			confirmed = dialog.getReturnCode() == Dialog.OK;
+			boolean toggleState = dialog.getToggleState();
+			// If warning turned off by user, set the preference for future
+			// usage
+			if (toggleState) {
+				prefs.putBoolean(preferencesKey, true);
+			}
+		}
+		return confirmed;
 	}
 }
