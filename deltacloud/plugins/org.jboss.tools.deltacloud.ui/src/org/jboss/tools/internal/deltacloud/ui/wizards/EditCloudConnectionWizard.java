@@ -10,13 +10,16 @@
  *******************************************************************************/
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
-import java.text.MessageFormat;
-
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbench;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.Driver;
-import org.jboss.tools.deltacloud.ui.ErrorUtils;
+import org.jboss.tools.deltacloud.core.job.AbstractCloudJob;
+import org.jboss.tools.internal.deltacloud.ui.utils.WizardUtils;
 
 /**
  * @author Jeff Johnston
@@ -42,14 +45,25 @@ public class EditCloudConnectionWizard extends NewCloudConnectionWizard {
 		String username = mainPage.getModel().getUsername();
 		String password = mainPage.getModel().getPassword();
 		Driver driver = mainPage.getModel().getDriver();
-		try {
-			initialCloud.update(name, url, username, password, driver);
-		} catch (Exception e) {
-			// TODO internationalize strings
-			ErrorUtils.handleError("Error",
-					MessageFormat.format("Could not edit cloud \"{0}\"", initialCloud.getName()),
-					e, getShell());
-		}
-		return true;
+		return editCloud(initialCloud, name, url, username, password, driver);
 	}
+
+	private boolean editCloud(final DeltaCloud cloud, final String name, final String url, final String username,
+			final String password, final Driver driver) {
+		try {
+			Job job = new AbstractCloudJob(WizardMessages.getFormattedString("EditCloudConnection.message", cloud.getName()), cloud) {
+
+				@Override
+				protected IStatus doRun(IProgressMonitor monitor) throws Exception {
+					initialCloud.update(name, url, username, password, driver);
+					return Status.OK_STATUS;
+				}
+			};
+			WizardUtils.runInWizard(job, getContainer());
+			return job.getResult() != null && job.getResult().getCode() != IStatus.ERROR;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
 }
