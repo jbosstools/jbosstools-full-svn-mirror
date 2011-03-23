@@ -34,11 +34,15 @@ public abstract class ObservablePojo {
     }
 	
 	public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
-		propertyChangeSupport.addPropertyChangeListener(propertyName, listener);
+		if (!contains(listener)) {
+			propertyChangeSupport.addPropertyChangeListener(propertyName, listener);
+		}
 	}
 
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
-		propertyChangeSupport.addPropertyChangeListener(listener);
+		if (!contains(listener)) {
+			propertyChangeSupport.addPropertyChangeListener(listener);
+		}
 	}
 
 	public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
@@ -50,6 +54,17 @@ public abstract class ObservablePojo {
 		propertyChangeSupport.removePropertyChangeListener(listener);
 	}
 	
+    protected boolean contains(PropertyChangeListener listener) {
+    	boolean contains = false;
+    	for (PropertyChangeListener registeredListener : propertyChangeSupport.getPropertyChangeListeners()) {
+    		if (registeredListener == listener) {
+    			contains = true;
+    			break;
+    		}
+    	}
+    	return contains;
+    }
+    
 	protected PropertyChangeSupport getPropertyChangeSupport() {
 		return propertyChangeSupport;
 	}

@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.ui.views.cloudelements;
 
-import java.beans.PropertyChangeEvent;
-
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.ICloudElementFilter;
@@ -45,14 +43,6 @@ public class ImageView extends AbstractCloudElementTableView<DeltaCloudImage> {
 	@Override
 	protected void refreshToolbarCommandStates() {
 		// do nothing
-	}
-
-	@Override
-	public void propertyChange(PropertyChangeEvent event) {
-		super.propertyChange(event);
-		if (DeltaCloud.PROP_IMAGES.equals(event.getPropertyName())) {
-			updateFilteredLabel();
-		}
 	}
 
 	@Override

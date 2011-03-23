@@ -52,14 +52,6 @@ public class InstanceView extends AbstractCloudElementTableView<DeltaCloudInstan
 		evaluationService.requestEvaluation("org.jboss.tools.deltacloud.ui.commands.canReboot");
 		evaluationService.requestEvaluation("org.jboss.tools.deltacloud.ui.commands.canDestroy");
 	}
-
-	@Override
-	protected void addPropertyChangeListener(DeltaCloud cloud) {
-		if (cloud != null) {
-			super.addPropertyChangeListener(cloud);
-			cloud.addPropertyChangeListener(DeltaCloud.PROP_INSTANCES, this);
-		}
-	}
 	
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
@@ -73,5 +65,4 @@ public class InstanceView extends AbstractCloudElementTableView<DeltaCloudInstan
 	protected ICloudElementFilter<DeltaCloudInstance> getFilter(DeltaCloud cloud) {
 		return cloud.getInstanceFilter();
 	}
-
 }
