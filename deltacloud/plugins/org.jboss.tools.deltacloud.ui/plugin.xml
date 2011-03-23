@@ -324,6 +324,23 @@
 			</enabledWhen>
       </handler>
    </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+	   <!-- copy property sheet entry handler -->
+      <handler
+            class="org.jboss.tools.deltacloud.ui.commands.CopyCVPropertySheetPageEntryHandler"
+            commandId="org.eclipse.ui.edit.copy">
+		<activeWhen>
+			<with
+				variable="selection">
+					<iterate>
+	               		<instanceof
+							value="org.jboss.tools.deltacloud.ui.views.cloud.property.CVPropertySheetPage$PropertySourceContentProvider$CVPropertySheetPageEntry" />
+					</iterate>
+			</with>
+		</activeWhen>
+      </handler>
+   </extension>
    <!-- InstanceView context menu ================================== -->
    <extension point="org.eclipse.ui.menus">
       <menuContribution
@@ -675,6 +692,25 @@
  	  
 	</extension>
 
+   <!-- CVPropertySheetPage context menu ================================== -->
+   <extension point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="true"
+            locationURI="popup:org.jboss.tools.deltacloud.ui.views.CVPropertySheetPage">
+			<separator
+				name="edit"
+				visible="true" />
+	  </menuContribution>
+ 	  <!-- filter images -->
+      <menuContribution
+            allPopups="true"
+            locationURI="popup:org.jboss.tools.deltacloud.ui.views.CVPropertySheetPage?after=edit">	
+	        <!-- image commands -->
+	         <command
+	               commandId="org.eclipse.ui.edit.copy"/>
+ 	  </menuContribution>
+	</extension>
+	
 	<!-- Commands ========================================= -->
     <extension
          point="org.eclipse.ui.commands">
