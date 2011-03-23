@@ -153,7 +153,7 @@ from Employees as employees where employees.jobtitle = 'Sales Rep']]></programli
 			</note>
 
 
-			<para>You can also use parameters in the query to add  dynamics to your report. In the previous example we hardcoded the selection criterion in the <code>where</code> clause. </para>
+			<para>You can also use parameters in the query to add  dynamics to your report. In the previous example we hard coded the selection criterion in the <code>where</code> clause. </para>
 			<para>To specify the job title on-the-fly your query should look like this:</para>
 			<programlisting role="XML"><![CDATA[
 select jobtitle,firstname, lastname,email
