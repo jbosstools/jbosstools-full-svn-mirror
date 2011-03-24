@@ -7,9 +7,9 @@
      get new time w/ 
       date +%s000
 -->
-<property name='p2.timestamp' value='1299094445000'/>
+<property name='p2.timestamp' value='1300979641000'/>
 </properties>
-<children size='35'>
+<children size='34'>
 
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.3_trunk.component--archives/all/repo/'/>
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.3_trunk.component--as/all/repo/'/>
@@ -48,10 +48,9 @@
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.3_trunk.component--vpe/all/repo/'/>
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.3_trunk.component--ws/all/repo/'/>
 
-<child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-pi4soa-3.1_trunk/all/repo/'/>
+<child location='http://download.jboss.org/jbosstools/builds/staging/savara-tools-eclipse-master/all/repo/'/>
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-teiid-designer-7.4_trunk/all/repo/'/>
 <child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-drools-5.2_trunk/all/repo/'/>
-<child location='http://download.jboss.org/jbosstools/builds/staging/jbosstools-savara-1.1_trunk/tools/'/>
 <child location='http://download.jboss.org/jbosstools/builds/staging/xulrunner-1.9.1.2/all/repo/'/>
 
 </children>
