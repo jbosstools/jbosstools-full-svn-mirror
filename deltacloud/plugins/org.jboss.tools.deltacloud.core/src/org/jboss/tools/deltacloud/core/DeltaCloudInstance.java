@@ -71,6 +71,19 @@ public class DeltaCloudInstance extends AbstractDeltaCloudElement {
 		public String getName() {
 			return name;
 		}
+
+		public static Action getByName(String name) {
+			Action action = null;
+			if (name != null) {
+				for (Action availableAction : values()) {
+					if (name.equalsIgnoreCase(availableAction.name)) {
+						action = availableAction;
+						break;
+					}
+				}
+			}
+			return action;
+		}
 	}
 
 	private Instance instance;
@@ -117,15 +130,18 @@ public class DeltaCloudInstance extends AbstractDeltaCloudElement {
 	public String getKeyId() {
 		return instance.getKeyId();
 	}
-	
+
 	public List<Action> getActions() {
 		List<Action> actions = new ArrayList<Action>();
 		for (InstanceAction action : instance.getActions()) {
-			actions.add(Action.valueOf(action.getName()));
+			Action deltaCloudAction = Action.getByName(action.getName());
+			if (deltaCloudAction != null) {
+				actions.add(deltaCloudAction);
+			}
 		}
 		return actions;
 	}
-
+	
 	public String getProfileId() {
 		return instance.getProfileId();
 	}
@@ -165,7 +181,7 @@ public class DeltaCloudInstance extends AbstractDeltaCloudElement {
 	public boolean isRunning() {
 		return instance.isRunning();
 	}
-	
+
 	protected void setInstance(Instance instance) {
 		this.instance = instance;
 	}
