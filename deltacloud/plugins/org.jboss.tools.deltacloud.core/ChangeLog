@@ -1,3 +1,9 @@
+2011-03-24  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudResourceAction.java (getByName): 
+	* src/org/jboss/tools/deltacloud/core/DeltaCloudInstance.java (getActions): 
+	[JBIDE-8622] corrected retrieval of available actions for instances
+
 2011-03-16  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/internal/deltacloud/core/observable/ObservablePojo.java 

@@ -34,4 +34,16 @@ public enum DeltaCloudResourceAction {
 		return name;
 	}
 
+	public static DeltaCloudResourceAction getByName(String name) {
+		DeltaCloudResourceAction action = null;
+		if (name != null) {
+			for (DeltaCloudResourceAction availableAction : values()) {
+				if (name.equalsIgnoreCase(availableAction.name)) {
+					action = availableAction;
+					break;
+				}
+			}
+		}
+		return action;
+	}
 }

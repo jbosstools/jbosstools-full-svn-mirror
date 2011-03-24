@@ -100,11 +100,14 @@ public class DeltaCloudInstance extends AbstractDeltaCloudElement {
 	}
 
 	public List<DeltaCloudResourceAction> getActions() {
-		List<DeltaCloudResourceAction> actions = new ArrayList<DeltaCloudResourceAction>();
+		List<DeltaCloudResourceAction> deltaCloudActions = new ArrayList<DeltaCloudResourceAction>();
 		for (Action<Instance> action : instance.getActions()) {
-			actions.add(DeltaCloudResourceAction.valueOf(action.getName()));
+			DeltaCloudResourceAction deltaCloudAction = DeltaCloudResourceAction.getByName(action.getName());
+			if (deltaCloudAction != null) {
+				deltaCloudActions.add(deltaCloudAction);
+			}
 		}
-		return actions;
+		return deltaCloudActions;
 	}
 
 	public String getProfileId() {
