@@ -48,7 +48,7 @@ for f in $files; do
 	fi
 
 	if [[ -f $d/pom.xml ]]; then
-		pomVersionLine=$(cat $d/pom.xml | sed '/<parent>/,+4 d' | sed "s/\t//" | egrep "<version>" | egrep "[0-9]\.[0-9]\.[0-9]" | head -1)
+		pomVersionLine=$(cat $d/pom.xml | sed '/<parent>/,/<\/parent>/ d' | sed '/<dependency>/,/<\/dependency>/ d' | sed '/<parent>/,+4 d' | sed "s/\t//" | egrep "<version>" | egrep "[0-9]\.[0-9]\.[0-9]" | head -1)
 		pomVersion=${pomVersionLine%%</version>*}
 		if [[ ${pomVersion##*-SNAPSHOT*} == "" ]]; then # has a -SNAPSHOT suffix
 			true
