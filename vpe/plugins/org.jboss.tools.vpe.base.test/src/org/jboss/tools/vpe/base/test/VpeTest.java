@@ -71,7 +71,7 @@ public class VpeTest extends TestCase implements ILogListener {
 	static {
 		ClassLoaderUtil.init();
 		// wait for initialization
-		TestUtil.delay(3000);
+		TestUtil.delay();
 		JspEditorPlugin
 				.getDefault()
 				.getPreferenceStore()
@@ -377,7 +377,7 @@ public class VpeTest extends TestCase implements ILogListener {
 				SelectionUtil.setSourceSelection(controller.getPageContext(),
 						nodeMapping.getSourceNode(), 1, 0);
 
-				TestUtil.delay(50);
+				TestUtil.delay();
 
 				assertNotNull(getSelectedNode(xulRunnerEditor));
 

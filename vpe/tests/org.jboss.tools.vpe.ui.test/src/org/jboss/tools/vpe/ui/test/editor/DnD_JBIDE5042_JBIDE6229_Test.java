@@ -176,7 +176,7 @@ public class DnD_JBIDE5042_JBIDE6229_Test  extends VpeTest {
 					
 		eventListener.handleEvent(mouseDownEvent);
 		TestUtil.waitForJobs();
-		TestUtil.delay(100);
+		TestUtil.delay();
 		TestUtil.waitForJobs();
 	}
 

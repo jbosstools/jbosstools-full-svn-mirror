@@ -20,6 +20,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.swt.widgets.Display;
@@ -46,6 +47,10 @@ import org.w3c.dom.Node;
  */
 public class TestUtil {
 
+	/**
+	 * 
+	 */
+
 	/** The Constant COMPONENTS_PATH. */
 	public static final String COMPONENTS_PATH = "WebContent/pages/"; //$NON-NLS-1$
 
@@ -57,6 +62,7 @@ public class TestUtil {
 
 	/** The Constant MAX_IDLE. */
 	public static final long MAX_IDLE = 15*1000L;
+	private static final long STANDARD_DELAY = 50L;
 
 	/**
 	 * Gets the component path.
@@ -142,6 +148,13 @@ public class TestUtil {
 	}
 
 	/**
+	 * Process UI input but do not return for the {@link TestUtil#STANDARD_DELAY} interval.
+	 */
+	public static void delay() {
+		delay(STANDARD_DELAY);
+	}
+	
+	/**
 	 * Process UI input but do not return for the specified time interval.
 	 * 
 	 * @param waitTimeMillis the number of milliseconds
@@ -185,7 +198,7 @@ public class TestUtil {
 	public static void waitForIdle(long maxIdle) {
 		long start = System.currentTimeMillis();
 		while (!Job.getJobManager().isIdle()) {
-			delay(500);
+			delay();
 			if ( (System.currentTimeMillis()-start) > maxIdle ) {
 				Job[] jobs = Job.getJobManager().find(null);
 				StringBuffer jobsList = new StringBuffer("A long running task detected\n");

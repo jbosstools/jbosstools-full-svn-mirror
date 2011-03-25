@@ -44,7 +44,7 @@ public class CustomSashFormTest extends VpeTest {
          */
         closeEditor(part);
         TestUtil.waitForJobs();
-        TestUtil.delay(5000);
+        TestUtil.delay();
         input = new FileEditorInput(file1);
         part = openEditor(input);
         visualEditor = (VpeEditorPart) part.getVisualEditor();

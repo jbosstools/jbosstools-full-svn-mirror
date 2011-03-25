@@ -169,7 +169,7 @@ public class VpeCommandsTests extends VpeTest {
 
 			handlerService
 					.executeCommand(RotateEditorsHandler.COMMAND_ID, null);
-			TestUtil.delay(500);
+			TestUtil.delay();
 
 			int newVisualOrientation = editPart.getContainer().getOrientation();
 			String newPrefOrientation = preferences
@@ -219,7 +219,7 @@ public class VpeCommandsTests extends VpeTest {
 		assertEquals(oldPrefBorderVisibility, oldUiBorderVisibility);
 
 		handlerService.executeCommand(ShowBorderHandler.COMMAND_ID, null);
-		TestUtil.delay(500);
+		TestUtil.delay();
 
 		boolean newToogleState = ((Boolean) state.getValue()).booleanValue();
 		assertEquals(!oldToogleState, newToogleState);
@@ -261,7 +261,7 @@ public class VpeCommandsTests extends VpeTest {
 
 		handlerService
 				.executeCommand(ShowNonVisualTagsHandler.COMMAND_ID, null);
-		TestUtil.delay(500);
+		TestUtil.delay();
 
 		boolean newToogleState = ((Boolean) state.getValue()).booleanValue();
 		assertEquals(!oldToogleState, newToogleState);
@@ -302,7 +302,7 @@ public class VpeCommandsTests extends VpeTest {
 		assertEquals(oldPrefBundleAsELVisibility, oldUiBundleAsELVisibility);
 
 		handlerService.executeCommand(ShowBundleAsELHandler.COMMAND_ID, null);
-		TestUtil.delay(500);
+		TestUtil.delay();
 
 		boolean newToogleState = ((Boolean) state.getValue()).booleanValue();
 		assertEquals(!oldToogleState, newToogleState);
@@ -344,7 +344,7 @@ public class VpeCommandsTests extends VpeTest {
 
 		handlerService.executeCommand(ShowTextFormattingHandler.COMMAND_ID,
 				null);
-		TestUtil.delay(500);
+		TestUtil.delay();
 
 		boolean newToogleState = ((Boolean) state.getValue()).booleanValue();
 		assertEquals(!oldToogleState, newToogleState);
@@ -376,7 +376,7 @@ public class VpeCommandsTests extends VpeTest {
 		// Open file in the VPE
 		IEditorInput input = new FileEditorInput(fileToOpen);
 		JSPMultiPageEditor multiPageEditor = openEditor(input);
-		TestUtil.delay(500);
+		TestUtil.delay();
 		// Open the 'Visual/Source' tab
 		pageChange(multiPageEditor, 0);
 		return multiPageEditor;
@@ -392,7 +392,7 @@ public class VpeCommandsTests extends VpeTest {
 		pageChange.setAccessible(true);
 		pageChange.invoke(multiPageEditor, index);
 		multiPageEditor.pageChange(index);
-		TestUtil.delay(1500);
+		TestUtil.delay();
 	}
 
 	// checks command state

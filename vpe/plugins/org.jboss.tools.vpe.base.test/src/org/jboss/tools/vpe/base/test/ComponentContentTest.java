@@ -340,7 +340,7 @@ public abstract class ComponentContentTest extends VpeTest {
 		nsIDOMElement result = null;
 		while (result==null) {
 			result = findElementById(controller, elementId);
-			TestUtil.delay(50);
+			TestUtil.delay();
 			if (result==null && ((System.currentTimeMillis()-start) > idle) ) 
 				throw new RuntimeException("A long running task detected"); //$NON-NLS-1$
 		}
