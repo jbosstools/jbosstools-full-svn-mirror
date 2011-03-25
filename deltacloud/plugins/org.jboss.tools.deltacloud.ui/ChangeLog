@@ -1,5 +1,12 @@
 2011-03-25  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
+	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/TableViewerColumnComparator.java 
+	(switchDirection): 
+	(setSortIndicator): 
+	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/AbstractCloudElementTableView.java (ColumnListener.widgetSelected): 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/FindImagePage.java (ColumnListener.widgetSelected): 
+	[JBIDE-7551] implemented 3 sorting states and sorting arrows shown in the columns
+	
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstanceWizard.java 
 	(NewInstanceWizard): 
 	(addPages): 

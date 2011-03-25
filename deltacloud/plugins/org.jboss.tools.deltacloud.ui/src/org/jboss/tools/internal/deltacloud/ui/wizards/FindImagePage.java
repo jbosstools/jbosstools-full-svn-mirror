@@ -104,15 +104,14 @@ public class FindImagePage extends WizardPage {
 			TableViewerColumnComparator comparator = (TableViewerColumnComparator) viewer.getComparator();
 			Table t = viewer.getTable();
 			if (comparator.getColumn() == column) {
-				comparator.reverseDirection();
+				comparator.switchDirection();
 			}
 			comparator.setColumn(column);
+			comparator.setSortIndicator(viewer);
 			TableColumn tc = (TableColumn) e.getSource();
 			t.setSortColumn(tc);
-			t.setSortDirection(SWT.NONE);
 			viewer.refresh();
 		}
-
 	};
 
 	public FindImagePage(DeltaCloud cloud) {
