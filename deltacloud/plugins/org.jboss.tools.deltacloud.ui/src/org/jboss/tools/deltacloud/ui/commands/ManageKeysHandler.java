@@ -35,13 +35,13 @@ public class ManageKeysHandler extends AbstractHandler implements IHandler {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
 			DeltaCloud cloud = WorkbenchUtils.getFirstAdaptedElement(selection, DeltaCloud.class);
-			createImagesFilter(cloud, HandlerUtil.getActiveShell(event));
+			openManageKeysWizard(cloud, HandlerUtil.getActiveShell(event));
 		}
 
 		return Status.OK_STATUS;
 	}
 
-	private void createImagesFilter(final DeltaCloud cloud, final Shell shell) {
+	private void openManageKeysWizard(final DeltaCloud cloud, final Shell shell) {
 		if (cloud != null) {
 				Display.getDefault().asyncExec(new Runnable() {
 					@Override
