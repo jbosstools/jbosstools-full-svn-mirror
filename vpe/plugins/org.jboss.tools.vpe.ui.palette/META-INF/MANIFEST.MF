@@ -4,14 +4,17 @@ Bundle-ActivationPolicy: lazy
 Bundle-Name: %pluginName
 Bundle-Activator: org.jboss.tools.vpe.ui.palette.PalettePlugin
 Bundle-Vendor: %providerName
-Bundle-SymbolicName: org.jboss.tools.vpe.ui.palette
+Bundle-SymbolicName: org.jboss.tools.vpe.ui.palette;singleton:=true
 Bundle-Localization: plugin
-Export-Package: org.jboss.tools.vpe.ui.palette,org.jboss.tools.vpe.ui.palette.model
+Export-Package: org.jboss.tools.vpe.ui.palette,
+ org.jboss.tools.vpe.ui.palette.model,
+ org.jboss.tools.vpe.ui.palette.wizard
 Require-Bundle: org.eclipse.ui.ide,
  org.eclipse.jface.text,
  org.eclipse.ui,
  org.eclipse.gef,
  org.jboss.tools.common.model.ui,
-  org.jboss.tools.jst.jsp
+ org.jboss.tools.jst.web,
+ org.jboss.tools.jst.jsp
 Bundle-Version: 3.2.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
