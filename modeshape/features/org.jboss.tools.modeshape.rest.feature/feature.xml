@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.jboss.tools.modeshape.rest.feature"
+      label="%featureName"
+      version="1.0.0.qualifier"
+      provider-name="%featureProvider"
+      plugin="org.jboss.tools.modeshape.rest"
+      image="feature.png">
+
 <!-- 
   - See the COPYRIGHT.txt file distributed with this work for information
   - regarding copyright ownership.
@@ -10,14 +18,6 @@
   - See the AUTHORS.txt file in the distribution for a full listing of
   - individual contributors.
   -->
-<feature
-      id="org.jboss.tools.modeshape.rest.feature"
-      label="%featureName"
-      version="1.0.0.qualifier"
-      provider-name="%featureProvider"
-      plugin="org.jboss.tools.modeshape.rest"
-      image="feature.png">
-
    <description>
       %description
    </description>
