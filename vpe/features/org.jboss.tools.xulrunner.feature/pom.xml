@@ -8,6 +8,6 @@
 	</parent>
 	<groupId>org.jboss.tools.vpe.features</groupId>
 	<artifactId>org.jboss.tools.xulrunner.feature</artifactId> 
-	<version>1.9.12.qualifier</version>
+	<version>1.9.12-SNAPSHOT</version>
 	<packaging>eclipse-feature</packaging>
 </project>
