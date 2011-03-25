@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: jBPM Eclipse Plug-in
 Bundle-SymbolicName: org.jboss.tools.jbpm;singleton:=true
-Bundle-Version: 5.0.0.SNAPSHOT
+Bundle-Version: 5.0.0.qualifier
 Bundle-Activator: org.jboss.tools.jbpm.JBPMEclipsePlugin
 Bundle-Vendor: JBoss, a division of Red Hat
 Bundle-Localization: plugin
