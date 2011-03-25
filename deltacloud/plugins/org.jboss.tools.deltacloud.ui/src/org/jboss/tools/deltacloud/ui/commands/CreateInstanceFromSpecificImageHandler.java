@@ -45,7 +45,7 @@ public class CreateInstanceFromSpecificImageHandler extends AbstractHandler impl
 	private void createInstance(DeltaCloudImage deltaCloudImage, Shell shell) {
 		if (deltaCloudImage != null) {
 			DeltaCloud deltaCloud = deltaCloudImage.getDeltaCloud();
-			IWizard wizard = new NewInstanceWizard(deltaCloud, deltaCloudImage);
+			IWizard wizard = new NewInstanceWizard(deltaCloud, deltaCloudImage.getId());
 			WizardDialog dialog = new WizardDialog(shell, wizard);
 			dialog.create();
 			dialog.open();

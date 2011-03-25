@@ -161,7 +161,7 @@ public class CloudViewActionUtil {
 	public static void showCreateInstanceWizard(Shell shell, ISelection selection) {
 		DeltaCloudImage deltaCloudImage = WorkbenchUtils.getFirstAdaptedElement(selection, DeltaCloudImage.class);
 		DeltaCloud deltaCloud = WorkbenchUtils.getFirstAdaptedElement(selection, DeltaCloud.class);
-		IWizard wizard = new NewInstanceWizard(deltaCloud, deltaCloudImage);
+		IWizard wizard = new NewInstanceWizard(deltaCloud, deltaCloudImage.getId());
 		WizardDialog dialog = new WizardDialog(shell, wizard);
 		dialog.create();
 		dialog.open();

@@ -1,3 +1,20 @@
+2011-03-25  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstanceWizard.java 
+	(NewInstanceWizard): 
+	(addPages): 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePageModel.java 
+	(PROPERTY_IMAGE_ID): 
+	(NewInstancePageModel): 
+	(initImageId): 
+	(setImageId): 
+	(setImage): 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java 
+	(NewInstancePage): 
+	(bindImage): 
+	* src/org/jboss/tools/deltacloud/ui/commands/CreateInstanceFromSpecificImageHandler.java (createInstance): 
+	[JBIDE-8633] loading images and querying a particular image in the background now
+
 2011-03-23  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CloudConnectionPageModel.java 
