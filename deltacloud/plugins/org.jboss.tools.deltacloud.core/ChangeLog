@@ -1,5 +1,13 @@
 2011-03-24  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java 
+	(areImagesLoaded): 
+	(imagesRepo): 
+	(getImages): 
+	(getInstances): 
+	(instancesLoaded): 
+	(getImage): 
+	[JBIDE-8102] now loading all images before querying server for a single image 
 	* src/org/jboss/tools/deltacloud/core/DeltaCloudResourceAction.java (getByName): 
 	* src/org/jboss/tools/deltacloud/core/DeltaCloudInstance.java (getActions): 
 	[JBIDE-8622] corrected retrieval of available actions for instances
