@@ -2,6 +2,7 @@
 
 verbose=false
 debug=false
+quiet=false
 
 if [[ $1 ]] && [[ -d $1 ]]; then
 	basedir=$1
@@ -11,6 +12,7 @@ fi
 
 if [[ $2 == "-v" ]]; then verbose=true; fi
 if [[ $2 == "-d" ]]; then debug=true; fi
+if [[ $2 == "-q" ]]; then quiet=true; fi
 
 files=$(find . -maxdepth 5 -type f -name MANIFEST.MF | egrep -v "target|sdk")" "$(find . -maxdepth 4 -type f -name "feature.xml" | egrep -v "target|sdk")
 for f in $files; do
@@ -24,7 +26,7 @@ for f in $files; do
 			true
 		else
 			av=${artVersion%%\"*}
-			echo "[WARNING] No .qualifer in [$av] ${d}feature.xml"
+			if [[ $quiet != "true" ]]; then echo "[WARNING] No .qualifer in [$av] ${d}feature.xml"; fi
 			av=""
 			#echo "artVersion[2] = $artVersion"
 		fi
@@ -39,7 +41,7 @@ for f in $files; do
                         true
                 else
                         av=${artVersion%%\"*}
-                        echo "[WARNING] No .qualifier in [$av] ${d}"
+                        if [[ $quiet != "true" ]]; then echo "[WARNING] No .qualifier in [$av] ${d}"; fi
                         av=""
                         #echo "artVersion[2] = $artVersion"
                 fi
@@ -54,7 +56,7 @@ for f in $files; do
 			true
 		else
 			pv=${pomVersion#*<version>}
-			echo "[WARNING] No -SNAPSHOT in [$pv] ${d}pom.xml"
+			if [[ $quiet != "true" ]]; then echo "[WARNING] No -SNAPSHOT in [$pv] ${d}pom.xml"; fi
 			pv=""
 		fi
 		pomVersion=${pomVersion%%-SNAPSHOT*}
@@ -79,7 +81,7 @@ for f in $files; do
 			true
 		fi
 	else
-		echo "[WARNING] No pom.xml in $d"
+		if [[ $quiet != "true" ]]; then echo "[WARNING] No pom.xml in $d"; fi
 	fi
 done
 
