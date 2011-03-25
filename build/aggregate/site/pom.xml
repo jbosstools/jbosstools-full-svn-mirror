@@ -15,7 +15,7 @@
 	<properties>
 		<!-- add more inputRepos into the composite metadata at the URL below. Therefore need not edit this file and add dozens of URLs
 			which need to be called by Ant script later -->
-		<inputRepo1>http://download.jboss.org/jbosstools/builds/staging/_composite_/trunk/</inputRepo1>
+		<inputRepo1>http://download.jboss.org/jbosstools/builds/staging/_composite_/3.3.indigo/</inputRepo1>
 		<inputRepos>1</inputRepos>
 	</properties>
 
@@ -98,8 +98,8 @@
 			</snapshots>
 		</repository>
 		<repository>
-			<id>helios</id>
-			<url>http://download.eclipse.org/releases/helios/</url>
+			<id>jbosstools-requirements-composite-mirror</id>
+			<url>http://download.jboss.org/jbosstools/updates/indigo/</url>
 			<layout>p2</layout>
 			<snapshots>
 				<enabled>true</enabled>
