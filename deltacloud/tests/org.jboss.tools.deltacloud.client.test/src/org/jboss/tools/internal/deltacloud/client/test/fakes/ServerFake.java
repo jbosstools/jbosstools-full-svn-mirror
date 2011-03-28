@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.internal.deltacloud.test.fakes;
+package org.jboss.tools.internal.deltacloud.client.test.fakes;
 
 import java.io.IOException;
 import java.io.OutputStream;

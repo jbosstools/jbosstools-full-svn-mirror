@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.internal.deltacloud.test.context;
+package org.jboss.tools.internal.deltacloud.client.test.context;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
