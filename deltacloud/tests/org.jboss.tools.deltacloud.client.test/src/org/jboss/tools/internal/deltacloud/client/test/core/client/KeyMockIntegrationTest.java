@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.internal.deltacloud.test.core.client;
+package org.jboss.tools.internal.deltacloud.client.test.core.client;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -25,7 +25,7 @@ import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudNotFoundClientException;
 import org.jboss.tools.deltacloud.core.client.Key;
-import org.jboss.tools.internal.deltacloud.test.context.MockIntegrationTestContext;
+import org.jboss.tools.internal.deltacloud.client.test.context.MockIntegrationTestContext;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

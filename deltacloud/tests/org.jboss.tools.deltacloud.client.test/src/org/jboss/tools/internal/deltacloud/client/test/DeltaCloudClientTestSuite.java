@@ -8,14 +8,14 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.internal.deltacloud.test;
+package org.jboss.tools.internal.deltacloud.client.test;
 
-import org.jboss.tools.internal.deltacloud.test.core.client.APIDomUnmarshallingTest;
-import org.jboss.tools.internal.deltacloud.test.core.client.HardwareProfileDomUnmarshallingTest;
-import org.jboss.tools.internal.deltacloud.test.core.client.ImageDomUnmarshallingTest;
-import org.jboss.tools.internal.deltacloud.test.core.client.InstanceDomUnmarshallingTest;
-import org.jboss.tools.internal.deltacloud.test.core.client.KeyDomUnmarshallingTest;
-import org.jboss.tools.internal.deltacloud.test.core.client.RealmDomUnmarshallingTest;
+import org.jboss.tools.internal.deltacloud.client.test.core.client.APIDomUnmarshallingTest;
+import org.jboss.tools.internal.deltacloud.client.test.core.client.HardwareProfileDomUnmarshallingTest;
+import org.jboss.tools.internal.deltacloud.client.test.core.client.ImageDomUnmarshallingTest;
+import org.jboss.tools.internal.deltacloud.client.test.core.client.InstanceDomUnmarshallingTest;
+import org.jboss.tools.internal.deltacloud.client.test.core.client.KeyDomUnmarshallingTest;
+import org.jboss.tools.internal.deltacloud.client.test.core.client.RealmDomUnmarshallingTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 

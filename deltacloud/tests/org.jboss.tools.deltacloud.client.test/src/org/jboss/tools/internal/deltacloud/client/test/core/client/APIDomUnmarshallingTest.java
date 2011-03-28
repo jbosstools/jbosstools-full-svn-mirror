@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.internal.deltacloud.test.core.client;
+package org.jboss.tools.internal.deltacloud.client.test.core.client;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -20,7 +20,7 @@ import org.jboss.tools.deltacloud.core.client.API;
 import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
 import org.jboss.tools.deltacloud.core.client.API.Driver;
 import org.jboss.tools.deltacloud.core.client.unmarshal.APIUnmarshaller;
-import org.jboss.tools.internal.deltacloud.test.fakes.APIResponseFakes.APIResponse;
+import org.jboss.tools.internal.deltacloud.client.test.fakes.APIResponseFakes.APIResponse;
 import org.junit.Test;
 
 /**

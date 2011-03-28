@@ -8,12 +8,12 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.internal.deltacloud.test;
+package org.jboss.tools.internal.deltacloud.client.test;
 
-import org.jboss.tools.internal.deltacloud.test.core.client.ImageMockIntegrationTest;
-import org.jboss.tools.internal.deltacloud.test.core.client.InstanceMockIntegrationTest;
-import org.jboss.tools.internal.deltacloud.test.core.client.KeyMockIntegrationTest;
-import org.jboss.tools.internal.deltacloud.test.core.client.ServerTypeMockIntegrationTest;
+import org.jboss.tools.internal.deltacloud.client.test.core.client.ImageMockIntegrationTest;
+import org.jboss.tools.internal.deltacloud.client.test.core.client.InstanceMockIntegrationTest;
+import org.jboss.tools.internal.deltacloud.client.test.core.client.KeyMockIntegrationTest;
+import org.jboss.tools.internal.deltacloud.client.test.core.client.ServerTypeMockIntegrationTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 

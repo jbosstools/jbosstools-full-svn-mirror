@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.internal.deltacloud.test.core.client;
+package org.jboss.tools.internal.deltacloud.client.test.core.client;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -26,8 +26,8 @@ import org.jboss.tools.deltacloud.core.client.DeltaCloudNotFoundClientException;
 import org.jboss.tools.deltacloud.core.client.HttpMethod;
 import org.jboss.tools.deltacloud.core.client.Image;
 import org.jboss.tools.deltacloud.core.client.request.DeltaCloudRequest;
-import org.jboss.tools.internal.deltacloud.test.context.MockIntegrationTestContext;
-import org.jboss.tools.internal.deltacloud.test.fakes.ServerFake;
+import org.jboss.tools.internal.deltacloud.client.test.context.MockIntegrationTestContext;
+import org.jboss.tools.internal.deltacloud.client.test.fakes.ServerFake;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -108,6 +108,11 @@ public class ServerTypeMockIntegrationTest {
 						@Override
 						public HttpMethod getHttpMethod() {
 							return HttpMethod.GET;
+						}
+
+						@Override
+						public int getParametersLength() {
+							return 0;
 						}
 					}
 					);
