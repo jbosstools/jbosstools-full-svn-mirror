@@ -629,15 +629,6 @@
 			</modules>
 		</profile>
 		
-		<profile>
-			<id>site</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<modules>
-				<module>../site</module>
-			</modules>
-		</profile>
 
 		<profile>
 			<id>aggregate-coverage</id>
