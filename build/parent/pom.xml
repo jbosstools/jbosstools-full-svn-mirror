@@ -30,11 +30,11 @@
 		<target.platform.classifier.local>local
 		</target.platform.classifier.local>
 
-		<jbosstools.update.site>http://download.jboss.org/jbosstools/updates/nightly/trunk</jbosstools.update.site>
-		<jbosstools-target-platform-repo>http://download.jboss.org/jbosstools/updates/target-platform_trunk/latest/</jbosstools-target-platform-repo>
+		<jbosstools-nightly>http://download.jboss.org/jbosstools/updates/nightly/3.3.indigo/</jbosstools-nightly>
+		<jbosstools-target-site>http://download.jboss.org/jbosstools/updates/target-platform_3.3.indigo/latest/</jbosstools-target-site>
 
-		<!-- pass in your own path using -Dtarget.platform.site=file://home/$user/trunk/build/target-platform/REPO/ -->
-		<target.platform.site>file://home/hudson/static_build_env/jbds/target-platform_trunk/e362-wtp323.target/</target.platform.site>
+		<!-- pass in your own path using -Dlocal.site=file://home/$user/trunk/build/target-platform/REPO/ -->
+		<local.site>file://home/hudson/static_build_env/jbds/target-platform_3.3.indigo/e37M5-wtp33M5.target/</local.site>
 	</properties>
 
 	<build>
@@ -207,45 +207,6 @@
 	</issueManagement>
 	<profiles>
 
-		<!-- TODO: the jbosstools-nightly-trunk profile name is deprecated, but I don't want to go update 40 jobs just yet. ~ nboldt -->
-		<profile>
-			<id>jbosstools-nightly-trunk</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<repositories>
-				<repository>
-					<id>jbosstools-nightly</id>
-					<url>${jbosstools.update.site}</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<repository>
-					<id>jbosstools-nightly-staging-composite</id>
-					<url>http://download.jboss.org/jbosstools/builds/staging/_composite_/trunk/</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<repository> 
-					<id>jboss-requirements-composite-mirror</id> 
-					<url>http://download.jboss.org/jbosstools/updates/helios/</url> 
-					<layout>p2</layout> 
-					<snapshots> <enabled>true</enabled> </snapshots> 
-					<releases> <enabled>true</enabled> </releases> 
-				</repository>
-			</repositories>
-		</profile>
-
 		<profile>
 			<id>jbosstools-nightly</id>
 			<activation>
@@ -254,7 +215,7 @@
 			<repositories>
 				<repository>
 					<id>jbosstools-nightly</id>
-					<url>${jbosstools.update.site}</url>
+					<url>${jbosstools-nightly}</url>
 					<layout>p2</layout>
 					<snapshots>
 						<enabled>true</enabled>
@@ -273,7 +234,7 @@
 			<repositories>
 				<repository>
 					<id>jbosstools-nightly-staging-composite</id>
-					<url>http://download.jboss.org/jbosstools/builds/staging/_composite_/trunk/</url>
+					<url>http://download.jboss.org/jbosstools/builds/staging/_composite_/3.3.indigo/</url>
 					<layout>p2</layout>
 					<snapshots>
 						<enabled>true</enabled>
@@ -292,43 +253,12 @@
 			<repositories>
 				<repository> 
 					<id>jboss-requirements-composite-mirror</id> 
-					<url>http://download.jboss.org/jbosstools/updates/helios/</url> 
+					<url>http://download.jboss.org/jbosstools/updates/indigo/</url> 
 					<layout>p2</layout> 
 					<snapshots> <enabled>true</enabled> </snapshots> 
 					<releases> <enabled>true</enabled> </releases> 
 				</repository>
 			</repositories>
-		</profile>
-
-		<!-- TODO: remove this when no one depends on it; replace with unified.target, 
-			not multiuple.target, since no one should need to resolve against all these 
-			sites (and one site is by far faster) ! -->
-		<profile>
-			<id>helios</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<properties>
-			</properties>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.sonatype.tycho</groupId>
-						<artifactId>target-platform-configuration</artifactId>
-						<version>${tychoVersion}</version>
-						<configuration>
-							<target>
-								<artifact>
-									<groupId>org.jboss.tools</groupId>
-									<artifactId>org.jboss.tools.target.platform</artifactId>
-									<version>0.0.2-SNAPSHOT</version>
-									<classifier>${target.platform.classifier.multiple}</classifier>
-								</artifact>
-							</target>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
 		</profile>
 
 		<!-- Target platform file pointing at a single update site from which to 
@@ -368,7 +298,7 @@
 			README in target-platform/ folder for additional usage examples. You can 
 			also run `ant help`. If you want to build the target-platform/pom.xml AND 
 			generate a local repo + local.target file ALL AT THE SAME TIME, you can do: 
-			mvn clean install -Plocal -f /path/to/target-platform/pom.xml -->
+			mvn clean install -Pget.local.target -f /path/to/target-platform/pom.xml -->
 		<profile>
 			<id>local.target</id>
 			<activation>
@@ -395,31 +325,9 @@
 			</build>
 		</profile>
 
-		<!-- Time saver: to build everything from scratch from a single local repo 
-			on Hudson cluster or on local machine. Use -Dtarget.platform.site=file://path/to/your/own/repo -->
-		<profile>
-			<id>helios-local-target</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<repositories>
-				<repository>
-					<id>jbosstools-target-platform-repo</id>
-					<url>${target.platform.site}</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-			</repositories>
-		</profile>
-
 		<!-- if you have a local repo mirror of the unified.site, you can use this 
-			profile with the -Dtarget.platform.site=file://path/to/repo to resolve dependencies 
-			without needing to use a local.target file -->
+			profile with the -Dlocal.site=file://path/to/repo to resolve dependencies 
+			without needing to use a local.site file -->
 		<profile>
 			<id>local.site</id>
 			<activation>
@@ -427,29 +335,8 @@
 			</activation>
 			<repositories>
 				<repository>
-					<id>jbosstools-target-platform-repo</id>
-					<url>${target.platform.site}</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-			</repositories>
-		</profile>
-
-		<!-- TODO: remove this when no one depends on it; replace with unified.site -->
-		<profile>
-			<id>helios-remote-target</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<repositories>
-				<repository>
-					<id>jbosstools-target-platform-repo</id>
-					<url>${jbosstools-target-platform-repo}</url>
+					<id>local.site</id>
+					<url>${local.site}</url>
 					<layout>p2</layout>
 					<snapshots>
 						<enabled>true</enabled>
@@ -472,8 +359,8 @@
 			</activation>
 			<repositories>
 				<repository>
-					<id>jbosstools-target-platform-repo</id>
-					<url>${jbosstools-target-platform-repo}</url>
+					<id>jbosstools-target-site</id>
+					<url>${jbosstools-target-site}</url>
 					<layout>p2</layout>
 					<snapshots>
 						<enabled>true</enabled>
@@ -486,19 +373,18 @@
 		</profile>
 
 		<!-- Time saver: to build everything from scratch (without target platform); 
-			To enable it use -P helios-no-target in command line. Do not remove repos 
+			To enable it use -P multiple.site in command line. Do not remove repos 
 			that contains the same artefacts, it is done for purpose to make build more 
 			stable in case one of the repos is offline. -->
-		<!-- TODO: rename when no one depends on it; rename to multiple.site -->
 		<profile>
-			<id>helios-no-target</id>
+			<id>multiple.site</id>
 			<activation>
 				<activeByDefault>false</activeByDefault>
 			</activation>
 			<repositories>
 				<repository>
-					<id>jbosstools-target-platform-repo</id>
-					<url>${jbosstools-target-platform-repo}</url>
+					<id>jbosstools-target-site</id>
+					<url>${jbosstools-target-site}</url>
 					<layout>p2</layout>
 					<snapshots>
 						<enabled>true</enabled>
@@ -509,7 +395,7 @@
 				</repository>
 				<repository>
 					<id>jbosstools-requirements-composite-mirror</id>
-					<url>http://download.jboss.org/jbosstools/updates/helios/</url>
+					<url>http://download.jboss.org/jbosstools/updates/indigo/</url>
 					<layout>p2</layout>
 					<snapshots>
 						<enabled>true</enabled>
