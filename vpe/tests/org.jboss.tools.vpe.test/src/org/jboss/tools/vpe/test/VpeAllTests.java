@@ -15,7 +15,6 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.jboss.tools.vpe.base.test.VpeTestSetup;
-import org.jboss.tools.vpe.editor.template.VpeTemplateManagerTest;
 
 /**
  * Class created for run tests for org.jboss.tools.vpe plugin.
@@ -29,10 +28,8 @@ public class VpeAllTests extends TestCase{
 	public static Test suite(){
 		TestSuite suite = new TestSuite("Tests for vpe"); //$NON-NLS-1$
 		// $JUnit-BEGIN$
-		suite.addTestSuite(TemplateLoadingTest.class);
-		suite.addTestSuite(TemplateSchemeValidateTest.class);
-		suite.addTestSuite(TemplatesExpressionParsingTest.class);
-		suite.addTestSuite(VpeTemplateManagerTest.class);
+		suite.addTest(VpeAllImportantTests.suite());
+		//$JUnit-END$
 
         return new VpeTestSetup(suite);
 	}

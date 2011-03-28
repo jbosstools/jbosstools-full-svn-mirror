@@ -60,6 +60,16 @@
                </appinfo>
             </annotation>
          </attribute>
+         <attribute name="importantTestSuite" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java"/>
+               </appinfo>
+            </annotation>
+         </attribute>
          <attribute name="name" type="string">
             <annotation>
                <documentation>

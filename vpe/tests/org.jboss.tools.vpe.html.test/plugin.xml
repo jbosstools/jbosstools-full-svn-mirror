@@ -6,7 +6,8 @@
       <tests
             description="Tests for Html templates"
             name="Tests for Html templates"
-            testSuite="org.jboss.tools.vpe.html.test.HtmlAllTests"/>
+            testSuite="org.jboss.tools.vpe.html.test.HtmlAllTests"
+            importantTestSuite="org.jboss.tools.vpe.html.test.HtmlAllImportantTests"/>
       <testProject
             name="htmlTest"
             path="resources/htmlTest"/>
