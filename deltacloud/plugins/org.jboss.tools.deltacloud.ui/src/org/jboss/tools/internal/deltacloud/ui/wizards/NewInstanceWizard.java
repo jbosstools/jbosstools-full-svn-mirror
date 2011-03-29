@@ -48,38 +48,27 @@ public class NewInstanceWizard extends Wizard {
 	/**
 	 * Initial image, may be null
 	 */
-	private DeltaCloudImage image;
+	private String imageId;
 
 	public NewInstanceWizard(DeltaCloud cloud) {
 		this.cloud = cloud;
-		try {
-			this.image = cloud.getLastImage();
-		} catch (DeltaCloudException e) {
-			// ignore
-		}
 	}
 
-	public NewInstanceWizard(DeltaCloud cloud, DeltaCloudImage image) {
+	public NewInstanceWizard(DeltaCloud cloud, String imageId) {
 		this(cloud);
-		this.image = image;
+		this.imageId = imageId;
 	}
 
 	@Override
 	public void addPages() {
 		setWindowTitle(WizardMessages.getString("NewInstance.title"));
-		mainPage = new NewInstancePage(cloud, image);
+		mainPage = new NewInstancePage(cloud, imageId);
 		addPage(mainPage);
 		additionalPages = DeltacloudUIExtensionManager.getDefault().loadNewInstanceWizardPages();
 		for (int i = 0; i < additionalPages.length; i++) {
 			addPage(additionalPages[i]);
 		}
 	}
-
-	// @Override
-	// public boolean canFinish() {
-	// //return mainPage.isPageComplete();
-	// return super.canFinish();
-	// }
 
 	@Override
 	public boolean performFinish() {

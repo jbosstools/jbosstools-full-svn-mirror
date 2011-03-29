@@ -10,13 +10,21 @@
  ******************************************************************************/
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.swt.widgets.Display;
+import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudHardwareProfile;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
 import org.jboss.tools.deltacloud.core.DeltaCloudRealm;
+import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob;
+import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob.CLOUDELEMENT;
 import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.ObservableUIPojo;
 
 /**
@@ -28,6 +36,7 @@ public class NewInstancePageModel extends ObservableUIPojo {
 	public static final String PROPERTY_URL = "url"; //$NON-NLS-1$
 	public static final String PROPERTY_NAME = "name"; //$NON-NLS-1$
 	public static final String PROPERTY_IMAGE = "image"; //$NON-NLS-1$
+	public static final String PROPERTY_IMAGE_ID = "imageId"; //$NON-NLS-1$
 	public static final String PROPERTY_ARCH = "arch"; //$NON-NLS-1$
 	public static final String PROPERTY_REALMS = "realms"; //$NON-NLS-1$
 	public static final String PROPERTY_SELECTED_REALM_INDEX = "selectedRealmIndex"; //$NON-NLS-1$
@@ -39,6 +48,7 @@ public class NewInstancePageModel extends ObservableUIPojo {
 
 	private String name;
 	private DeltaCloudImage image;
+	private String imageId;
 	private String arch;
 	private String keyId;
 	private DeltaCloudRealm selectedRealm;
@@ -49,10 +59,19 @@ public class NewInstancePageModel extends ObservableUIPojo {
 	private String cpu;
 	private String storage;
 	private String memory;
+	private DeltaCloud cloud;
 
-	protected NewInstancePageModel(String keyId, DeltaCloudImage image) {
+	protected NewInstancePageModel(String keyId, String imageId, DeltaCloud cloud) {
+		this.cloud = cloud;
 		this.keyId = keyId;
-		this.image = image;
+		initImageId(imageId, cloud);
+	}
+
+	private void initImageId(String imageId, DeltaCloud cloud) {
+		if (imageId == null) {
+			imageId = cloud.getLastImageId();
+		}
+		setImageId(imageId);
 	}
 
 	public String getName() {
@@ -71,7 +90,45 @@ public class NewInstancePageModel extends ObservableUIPojo {
 		firePropertyChange(PROPERTY_IMAGE, this.image, this.image = image);
 		List<DeltaCloudHardwareProfile> filteredProfiles = filterProfiles(image, allProfiles);
 		setFilteredProfiles(filteredProfiles);
-		setArch(image.getArchitecture());
+		if (image != null) {
+			setArch(image.getArchitecture());
+		}
+	}
+
+	public String getImageId() {
+		return imageId;
+	}
+
+	public void setImageId(final String imageId) {
+		firePropertyChange(PROPERTY_IMAGE_ID, this.imageId, this.imageId = imageId);
+		if (imageId == null || imageId.length() == 0) {
+			return;
+		}
+		
+		new AbstractCloudElementJob(
+				MessageFormat.format("Getting image {0} from cloud {1}", imageId, cloud.getName()),
+				cloud, CLOUDELEMENT.IMAGES) {
+
+			@Override
+			protected IStatus doRun(IProgressMonitor monitor) throws Exception {
+				try {
+					final DeltaCloudImage image = cloud.getImage(imageId);
+					Display.getDefault().syncExec(new Runnable() {
+						
+						@Override
+						public void run() {
+							setImage(image);
+						}
+					});
+				} catch (Exception e) {
+					setImage(null);
+					// do not re-throw exception. DC server 0.1.2 return internal
+					// error 500 when requesting unknown image
+				}
+				return Status.OK_STATUS;
+			}
+
+		}.schedule();
 	}
 
 	public void setSelectedRealmIndex(int index) {

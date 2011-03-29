@@ -31,7 +31,6 @@ import org.eclipse.core.databinding.observable.IChangeListener;
 import org.eclipse.core.databinding.observable.IObservable;
 import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
-import org.eclipse.core.databinding.observable.value.WritableValue;
 import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.core.databinding.validation.ValidationStatus;
 import org.eclipse.core.runtime.Assert;
@@ -104,7 +103,6 @@ public class NewInstancePage extends WizardPage {
 	private static final String PROPERTIES_LABEL = "Properties.label"; //$NON-NLS-1$
 	private static final String MUST_ENTER_A_NAME = "ErrorMustProvideName.text"; //$NON-NLS-1$	
 	private static final String MUST_ENTER_A_KEYNAME = "ErrorMustProvideKeyName.text"; //$NON-NLS-1$	
-	private static final String MUST_ENTER_IMAGE_ID = "ErrorMustProvideImageId.text"; //$NON-NLS-1$	
 	private static final String LOADING_VALUE = "Loading.value"; //$NON-NLS-1$
 	private static final String IMAGE_ID_NOT_FOUND = "ErrorImageIdNotFound.text"; //$NON-NLS-1$
 	private static final String SSH2_PREF_KEYS = "ShowSSH2Preferences.label"; //$NON-NLS-1$
@@ -154,11 +152,11 @@ public class NewInstancePage extends WizardPage {
 		}
 	};
 
-	public NewInstancePage(DeltaCloud cloud, DeltaCloudImage image) {
+	public NewInstancePage(DeltaCloud cloud, String imageId) {
 		super(WizardMessages.getString(NAME));
 		this.cloud = cloud;
 		String defaultKeyname = cloud.getLastKeyname();
-		model = new NewInstancePageModel(defaultKeyname, image); //$NON-NLS-1$
+		model = new NewInstancePageModel(defaultKeyname, imageId, cloud); //$NON-NLS-1$
 		setDescription(WizardMessages.getString(DESCRIPTION));
 		setTitle(WizardMessages.getString(TITLE));
 		setImageDescriptor(SWTImagesFactory.DESC_DELTA_LARGE);
@@ -490,56 +488,26 @@ public class NewInstancePage extends WizardPage {
 	}
 
 	private IObservableValue bindImage(Text imageText, DataBindingContext dbc) {
-		UpdateValueStrategy widgetToModelUpdateStrategy = new UpdateValueStrategy();
-		ImageLabel2DeltaCloudImageConverter imageConverter = new ImageLabel2DeltaCloudImageConverter();
-		widgetToModelUpdateStrategy.setConverter(imageConverter);
-		widgetToModelUpdateStrategy.setAfterGetValidator(
-				new MandatoryStringValidator(WizardMessages.getString(MUST_ENTER_IMAGE_ID)));
-		widgetToModelUpdateStrategy.setAfterConvertValidator(new DeltaCloudImageValidator());
+		IObservableValue imageTextObservable = WidgetProperties.text(SWT.Modify).observeDelayed(IMAGE_CHECK_DELAY,
+				imageText);
 
-		UpdateValueStrategy modelToTextUpdateStrategy = new UpdateValueStrategy();
-		modelToTextUpdateStrategy.setConverter(new DeltaCloudImage2LabelConverter());
+		dbc.bindValue(
+				imageTextObservable,
+				BeanProperties.value(
+						NewInstancePageModel.class, NewInstancePageModel.PROPERTY_IMAGE_ID).observe(model));
 
-		Binding imageBinding = dbc.bindValue(
-				WidgetProperties.text(SWT.Modify).observeDelayed(IMAGE_CHECK_DELAY, imageText),
-				BeanProperties.value(NewInstancePageModel.class, NewInstancePageModel.PROPERTY_IMAGE).observe(model),
-				widgetToModelUpdateStrategy,
-				modelToTextUpdateStrategy);
-		ControlDecorationSupport.create(imageBinding, SWT.LEFT | SWT.TOP);
-		return imageConverter.getImageObservable();
-	}
+		IObservableValue modelImageObservable =
+				BeanProperties.value(NewInstancePageModel.PROPERTY_IMAGE).observe(model);
+		Binding modelImageBinding = dbc.bindValue(
+				imageTextObservable,
+				modelImageObservable,
+				new UpdateValueStrategy(UpdateValueStrategy.POLICY_NEVER),
+				new UpdateValueStrategy()
+						.setAfterGetValidator(new DeltaCloudImageValidator())
+						.setConverter(new DeltaCloudImage2LabelConverter()));
 
-	private class ImageLabel2DeltaCloudImageConverter extends Converter {
-
-		private WritableValue imageObservable = new WritableValue();
-
-		public ImageLabel2DeltaCloudImageConverter() {
-			super(String.class, DeltaCloudImage.class);
-		}
-
-		@Override
-		public Object convert(Object fromObject) {
-			Assert.isLegal(fromObject instanceof String);
-			String id = (String) fromObject;
-			DeltaCloudImage image = null;
-			if (id != null) {
-				image = getImage(id);
-			}
-			imageObservable.setValue(image);
-			return image;
-		}
-
-		private DeltaCloudImage getImage(String id) {
-			try {
-				return cloud.getImage(id);
-			} catch (DeltaCloudException e) {
-				return null;
-			}
-		}
-
-		public IObservableValue getImageObservable() {
-			return imageObservable;
-		}
+		ControlDecorationSupport.create(modelImageBinding, SWT.LEFT | SWT.TOP);
+		return modelImageObservable;
 	}
 
 	private class DeltaCloudImage2LabelConverter extends Converter {
