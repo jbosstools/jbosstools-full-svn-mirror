@@ -58,15 +58,17 @@ To run, make sure that JAVA_HOME is set to the path where you imported the cert,
 					<viewFilter>view/DevStudio_Trunk/</viewFilter>
 					
 					<!-- default .* to select all -->
-					<regexFilter>.*</regexFilter>
+					<!-- <regexFilter>.*</regexFilter> -->
+					<!-- <regexFilter>.*TEMPLATE.*</regexFilter> -->
+					<regexFilter>MyJobNameHere</regexFilter>
 
 					<!-- if there's an existing config.xml (not config.$timestamp.xml) then overwrite it if true -->
-					<overwriteExistingConfigXMLFile>true</overwriteExistingConfigXMLFile>
+					<overwriteExistingConfigXMLFile>false</overwriteExistingConfigXMLFile>
                     
 					<!-- either "pull" updated job config.xml file(s) from the server (default, reads only & stores a copy locally), or 
 					            "push" updates from local to the server (replacing existing job config.xml on server :: CAUTION!)
 					-->
-					<operation>push</operation>
+					<operation>pull</operation>
 
 				</configuration>
 			</plugin>
