@@ -13,7 +13,6 @@ package org.jboss.tools.internal.deltacloud.client.test.core.client;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
@@ -146,14 +145,14 @@ public class InstanceMockIntegrationTest {
 		testSetup.getClient().createInstance("dummy");
 	}
 
-	@Test
+	@Test(expected=DeltaCloudClientException.class)
 	public void canDestroy() throws DeltaCloudClientException {
 		Image image = testSetup.getFirstImage(testSetup.getClient());
 		DeltaCloudClient client = testSetup.getClient();
 		Instance instance = client.createInstance(image.getId());
 		instance.stop(client);
 		instance.destroy(client);
-		assertNull(testSetup.getInstanceById(instance.getId(), testSetup.getClient()));
+		client.listInstances(instance.getId());
 	}
 
 	@Test(expected = DeltaCloudClientException.class)

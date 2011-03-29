@@ -1,3 +1,10 @@
+2011-03-29  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClientImpl.java 
+	(request): 
+	(DeltaCloudClientImpl): 
+	[JBIDE-8635] removed http client and replaced by urlConnection
+
 2011-03-11  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/deltacloud/core/client/StateAware.java: 

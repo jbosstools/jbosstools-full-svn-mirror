@@ -10,23 +10,12 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.core.client;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.UnknownHostException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.methods.HttpDelete;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.jboss.tools.deltacloud.core.client.API.Driver;
 import org.jboss.tools.deltacloud.core.client.request.CreateInstanceRequest;
 import org.jboss.tools.deltacloud.core.client.request.CreateKeyRequest;
@@ -43,6 +32,8 @@ import org.jboss.tools.deltacloud.core.client.request.ListRealmRequest;
 import org.jboss.tools.deltacloud.core.client.request.ListRealmsRequest;
 import org.jboss.tools.deltacloud.core.client.request.PerformActionRequest;
 import org.jboss.tools.deltacloud.core.client.request.TypeRequest;
+import org.jboss.tools.deltacloud.core.client.transport.IHttpTransport;
+import org.jboss.tools.deltacloud.core.client.transport.URLConnectionTransport;
 import org.jboss.tools.deltacloud.core.client.unmarshal.APIUnmarshaller;
 import org.jboss.tools.deltacloud.core.client.unmarshal.HardwareProfileUnmarshaller;
 import org.jboss.tools.deltacloud.core.client.unmarshal.HardwareProfilesUnmarshaller;
@@ -61,125 +52,24 @@ import org.jboss.tools.deltacloud.core.client.unmarshal.RealmsUnmarshaller;
 public class DeltaCloudClientImpl implements DeltaCloudClient {
 
 	private String baseUrl;
-	private String username;
-	private String password;
+	private IHttpTransport transport;
 
-	public DeltaCloudClientImpl(String url) throws MalformedURLException,
-			DeltaCloudClientException {
+	public DeltaCloudClientImpl(String url) throws MalformedURLException, DeltaCloudClientException {
 		this(url, null, null);
 	}
 
-	public DeltaCloudClientImpl(String url, String username, String password) throws DeltaCloudClientException {
+	public DeltaCloudClientImpl(String url, String username, String password) throws MalformedURLException,
+			DeltaCloudClientException {
+		this(url, new URLConnectionTransport(username,	password));
+	}
+
+	public DeltaCloudClientImpl(String url, IHttpTransport transport) throws DeltaCloudClientException {
 		this.baseUrl = url;
-		this.username = username;
-		this.password = password;
+		this.transport = transport;
 	}
 
-	protected InputStream request(DeltaCloudRequest deltaCloudRequest)
-			throws DeltaCloudClientException {
-		DefaultHttpClient httpClient = new DefaultHttpClient();
-		try {
-			URL url = deltaCloudRequest.getUrl();
-			addCredentials(url, httpClient, username, password);
-			HttpUriRequest request = createRequest(deltaCloudRequest);
-			HttpResponse httpResponse = httpClient.execute(request);
-			throwOnHttpErrors(deltaCloudRequest.getUrl(), httpResponse);
-			if (httpResponse.getEntity() == null) {
-				return null;
-			}
-			InputStream in = httpResponse.getEntity().getContent();			
-//			StringWriter writer = new StringWriter();
-//			int data = -1;
-//
-//			while(((data = in.read()) != -1)) {
-//				writer.write(data);
-//			}
-//			System.err.println(writer.toString());
-			return in;
-		} catch (DeltaCloudClientException e) {
-			throw e;
-		} catch (MalformedURLException e) {
-			throw new DeltaCloudClientException(MessageFormat.format(
-					"Could not connect to \"{0}\". The url is invalid.", deltaCloudRequest.toString()), e);
-		} catch (IOException e) {
-			throw new DeltaCloudClientException(e);
-		} catch (Exception e) {
-			throw new DeltaCloudClientException(e);
-		}
-	}
-
-	private void throwOnHttpErrors(URL requestUrl, HttpResponse httpResponse)
-			throws DeltaCloudClientException {
-		int statusCode = httpResponse.getStatusLine().getStatusCode();
-		if (HttpStatusCode.OK.isStatus(statusCode)) {
-			return;
-		} else if (HttpStatusCode.UNAUTHORIZED.isStatus(statusCode)) {
-			throw new DeltaCloudAuthClientException(
-					MessageFormat
-							.format("The server reported an authorization error \"{0}\" on requesting \"{1}\"",
-									httpResponse.getStatusLine()
-											.getReasonPhrase(), requestUrl));
-		} else if (HttpStatusCode.NOT_FOUND.isStatus(statusCode)) {
-			throw new DeltaCloudNotFoundClientException(MessageFormat.format(
-					"The server could not find the resource \"{0}\"",
-					requestUrl));
-		} else if (HttpStatusRange.CLIENT_ERROR.isInRange(statusCode)
-				|| HttpStatusRange.SERVER_ERROR.isInRange(statusCode)) {
-			throw new DeltaCloudClientException(
-					MessageFormat
-							.format("The server reported an error \"{0}\" on requesting \"{1}\"",
-									httpResponse.getStatusLine()
-											.getReasonPhrase(), requestUrl));
-		}
-	}
-
-	/**
-	 * Returns a request instance for the given request type and url.
-	 * 
-	 * @param httpMethod
-	 *            the request type to use
-	 * @param requestUrl
-	 *            the requested url
-	 * @return the request instance
-	 * @throws MalformedURLException
-	 */
-	protected HttpUriRequest createRequest(DeltaCloudRequest deltaCloudRequest)
-			throws MalformedURLException {
-		HttpUriRequest request = null;
-		String url = deltaCloudRequest.getUrl().toString();
-		HttpMethod httpMethod = deltaCloudRequest.getHttpMethod();
-		switch (httpMethod) {
-		case POST:
-			request = new HttpPost(url);
-			break;
-		case DELETE:
-			request = new HttpDelete(url);
-			break;
-		case GET:
-		default:
-			request = new HttpGet(url);
-		}
-		request.setHeader("Accept", "application/xml;q=1");
-		return request;
-	}
-
-	/**
-	 * Adds the credentials to the given http client.
-	 * 
-	 * @param httpClient
-	 *            the http client
-	 * @return the default http client
-	 * @throws UnknownHostException
-	 */
-	private DefaultHttpClient addCredentials(URL url,
-			DefaultHttpClient httpClient, String username, String password)
-			throws UnknownHostException {
-		if (username != null && password != null) {
-			httpClient.getCredentialsProvider().setCredentials(
-					new AuthScope(url.getHost(), url.getPort()),
-					new UsernamePasswordCredentials(username, password));
-		}
-		return httpClient;
+	protected InputStream request(DeltaCloudRequest deltaCloudRequest) throws DeltaCloudClientException {
+		return transport.request(deltaCloudRequest);
 	}
 
 	public Driver getServerType() {
