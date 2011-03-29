@@ -26,8 +26,6 @@ osgi-test:test :: just (re-)run test(s)
 
 -P hudson :: enable hudson build ID in feature/plugin qualifiers
 -P coverage :: enable coverage reporting
--P hudson :: enable hudson build ID in feature/plugin qualifiers
-
 
 -Dmaven.test.skip :: skip compiling and running tests
 -Dmaven.repo.local=${WORKSPACE}/m2-repository :: path to local m2 repo
