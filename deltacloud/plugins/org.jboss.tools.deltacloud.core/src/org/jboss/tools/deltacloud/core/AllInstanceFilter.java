@@ -40,6 +40,11 @@ public class AllInstanceFilter extends AbstractCloudElementFilter<DeltaCloudInst
 	}
 
 	@Override
+	public IFieldMatcher getAliasRule() {
+		return matcher;
+	}
+
+	@Override
 	public IFieldMatcher getImageIdRule() {
 		return matcher;
 	}

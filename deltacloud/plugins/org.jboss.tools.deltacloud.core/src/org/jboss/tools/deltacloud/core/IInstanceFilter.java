@@ -19,12 +19,14 @@ public interface IInstanceFilter extends ICloudElementFilter<DeltaCloudInstance>
 	public static final String ALL_STRING =
 		ALL_MATCHER_EXPRESSION + EXPRESSION_DELIMITER // name
 				+ ALL_MATCHER_EXPRESSION + EXPRESSION_DELIMITER // id
+				+ ALL_MATCHER_EXPRESSION + EXPRESSION_DELIMITER // alias
 				+ ALL_MATCHER_EXPRESSION + EXPRESSION_DELIMITER // imageId
 				+ ALL_MATCHER_EXPRESSION + EXPRESSION_DELIMITER // ownerId
 				+ ALL_MATCHER_EXPRESSION + EXPRESSION_DELIMITER // keynameId
 				+ ALL_MATCHER_EXPRESSION + EXPRESSION_DELIMITER // realm
 				+ ALL_MATCHER_EXPRESSION;	// profile
 
+	public IFieldMatcher getAliasRule();
 	public IFieldMatcher getImageIdRule();
 	public IFieldMatcher getOwnerIdRule();
 	public IFieldMatcher getKeyNameRule();

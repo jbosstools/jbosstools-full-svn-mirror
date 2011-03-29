@@ -43,6 +43,7 @@ public class InstanceFilterWizard extends Wizard {
 	public boolean performFinish() {
 		String nameRule = mainPage.getNameRule();
 		String idRule = mainPage.getIdRule();
+		String aliasRule = mainPage.getAliasRule();
 		String imageIdRule = mainPage.getImageIdRule();
 		String ownerIdRule = mainPage.getOwnerIdRule();
 		String keyNameRule = mainPage.getKeyNameRule();
@@ -52,6 +53,7 @@ public class InstanceFilterWizard extends Wizard {
 		try {
 			cloud.updateInstanceFilter(nameRule + ";" + //$NON-NLS-1$
 					idRule + ";" + //$NON-NLS-1$
+					aliasRule + ";" + //$NON-NLS-1$
 					imageIdRule + ";" + //$NON-NLS-1$
 					ownerIdRule + ";" + //$NON-NLS-1$
 					keyNameRule + ";" + //$NON-NLS-1$

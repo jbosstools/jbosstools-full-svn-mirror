@@ -23,6 +23,7 @@ import java.util.regex.PatternSyntaxException;
  */
 public class InstanceFilter extends AbstractCloudElementFilter<DeltaCloudInstance> implements IInstanceFilter {
 
+	private IFieldMatcher aliasRule;
 	private IFieldMatcher imageIdRule;
 	private IFieldMatcher realmRule;
 	private IFieldMatcher profileRule;
@@ -37,6 +38,7 @@ public class InstanceFilter extends AbstractCloudElementFilter<DeltaCloudInstanc
 	@Override
 	public boolean matches(DeltaCloudInstance instance) {
 		return super.matches(instance) &&
+		aliasRule.matches(instance.getAlias()) &&
 		imageIdRule.matches(instance.getImageId()) &&
 		ownerIdRule.matches(instance.getOwnerId()) &&
 		keyNameRule.matches(instance.getKeyId()) &&
@@ -47,6 +49,7 @@ public class InstanceFilter extends AbstractCloudElementFilter<DeltaCloudInstanc
 	@Override
 	public void setRules(String ruleString) throws PatternSyntaxException {
 		Iterator<String> rulesIterator = super.setRules(ruleString, getRulesIterator(ruleString));
+		this.aliasRule = createRule(rulesIterator);
 		this.imageIdRule = createRule(rulesIterator);
 		this.ownerIdRule = createRule(rulesIterator);
 		this.keyNameRule = createRule(rulesIterator);
@@ -57,11 +60,17 @@ public class InstanceFilter extends AbstractCloudElementFilter<DeltaCloudInstanc
 	@Override
 	public String toString() {
 		return super.toString()
+		+ aliasRule + ";" //$NON-NLS-1$
 		+ imageIdRule + ";" //$NON-NLS-1$
 		+ ownerIdRule + ";" //$NON-NLS-1$
 		+ keyNameRule + ";" //$NON-NLS-1$
 		+ realmRule + ";" //$NON-NLS-1$
 		+ profileRule; //$NON-NLS-1$
+	}
+
+	@Override
+	public IFieldMatcher getAliasRule() {
+		return aliasRule;
 	}
 
 	@Override

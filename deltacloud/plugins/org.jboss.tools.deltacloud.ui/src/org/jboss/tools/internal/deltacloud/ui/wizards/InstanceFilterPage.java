@@ -40,6 +40,7 @@ public class InstanceFilterPage extends WizardPage {
 	private final static String INVALID_SEMICOLON = "ErrorFilterSemicolon.msg"; //$NON-NLS-1$
 	private final static String NAME_LABEL = "Name.label"; //$NON-NLS-1$
 	private final static String ID_LABEL = "Id.label"; //$NON-NLS-1$
+	private final static String ALIAS_LABEL = "Alias.label"; //$NON-NLS-1$
 	private final static String OWNER_ID_LABEL = "OwnerId.label"; //$NON-NLS-1$
 	private final static String IMAGE_ID_LABEL = "ImageId.label"; //$NON-NLS-1$
 	private final static String KEYNAME_LABEL = "Key.label"; //$NON-NLS-1$
@@ -50,6 +51,7 @@ public class InstanceFilterPage extends WizardPage {
 	private DeltaCloud cloud;
 	private Text nameText;
 	private Text idText;
+	private Text aliasText;
 	private Text imageIdText;
 	private Text ownerIdText;
 	private Text keyNameText;
@@ -58,6 +60,7 @@ public class InstanceFilterPage extends WizardPage {
 	
 	private Button defaultName;
 	private Button defaultId;
+	private Button defaultAlias;
 	private Button defaultImageId;
 	private Button defaultOwnerId;
 	private Button defaultKeyId;
@@ -81,6 +84,10 @@ public class InstanceFilterPage extends WizardPage {
 		return idText.getText();
 	}
 	
+	public String getAliasRule() {
+		return aliasText.getText();
+	}
+
 	public String getImageIdRule() {
 		return imageIdText.getText();
 	}
@@ -118,6 +125,8 @@ public class InstanceFilterPage extends WizardPage {
 				nameText.setText("*"); //$NON-NLS-1$
 			else if (b == defaultId)
 				idText.setText("*"); //$NON-NLS-1$
+			else if (b == defaultAlias) 
+				aliasText.setText("*"); //$NON-NLS-1$
 			else if (b == defaultImageId)
 				imageIdText.setText("*"); //$NON-NLS-1$
 			else if (b == defaultOwnerId)
@@ -138,6 +147,7 @@ public class InstanceFilterPage extends WizardPage {
 	
 		if (nameText.getText().length() == 0 ||
 				idText.getText().length() == 0 ||
+				aliasText.getText().length() == 0 ||
 				imageIdText.getText().length() == 0 ||
 				ownerIdText.getText().length() == 0 ||
 				keyNameText.getText().length() == 0 ||
@@ -148,6 +158,7 @@ public class InstanceFilterPage extends WizardPage {
 			error = true;
 		} else if (nameText.getText().contains(";") ||
 				idText.getText().contains(";") ||
+				aliasText.getText().contains(";") ||
 				imageIdText.getText().contains(";") ||
 				ownerIdText.getText().contains(";") ||
 				keyNameText.getText().contains(";") ||
@@ -194,6 +205,17 @@ public class InstanceFilterPage extends WizardPage {
 		defaultId = new Button(container, SWT.NULL);
 		defaultId.setText(WizardMessages.getString(DEFAULT_LABEL));
 		defaultId.addSelectionListener(ButtonListener);
+
+		Label aliasLabel = new Label(container, SWT.NULL);
+		idLabel.setText(WizardMessages.getString(ALIAS_LABEL));
+
+		aliasText = new Text(container, SWT.BORDER | SWT.SINGLE);
+		aliasText.setText(cloud.getInstanceFilter().getAliasRule().toString());
+		aliasText.addModifyListener(Listener);
+
+		defaultAlias = new Button(container, SWT.NULL);
+		defaultAlias.setText(WizardMessages.getString(DEFAULT_LABEL));
+		defaultAlias.addSelectionListener(ButtonListener);
 
 		Label imageIdLabel = new Label(container, SWT.NULL);
 		imageIdLabel.setText(WizardMessages.getString(IMAGE_ID_LABEL));
@@ -291,6 +313,22 @@ public class InstanceFilterPage extends WizardPage {
 		f.left = new FormAttachment(profileLabel, 5);
 		f.right = new FormAttachment(defaultId, -10);
 		idText.setLayoutData(f);
+
+		f = new FormData();
+		f.top = new FormAttachment(idLabel, 11 + centering + centering2);
+		f.left = new FormAttachment(0, 0);
+		aliasLabel.setLayoutData(f);
+		
+		f = new FormData();
+		f.top = new FormAttachment(idLabel, 11);
+		f.right = new FormAttachment(100);
+		defaultAlias.setLayoutData(f);
+
+		f = new FormData();
+		f.top = new FormAttachment(idLabel, 11 + centering2);
+		f.left = new FormAttachment(profileLabel, 5);
+		f.right = new FormAttachment(defaultAlias, -10);
+		aliasText.setLayoutData(f);
 
 		f = new FormData();
 		f.top = new FormAttachment(idLabel, 11 + centering + centering2);
