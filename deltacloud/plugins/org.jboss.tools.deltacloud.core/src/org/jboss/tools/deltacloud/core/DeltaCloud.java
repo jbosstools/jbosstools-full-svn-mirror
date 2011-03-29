@@ -53,8 +53,10 @@ public class DeltaCloud extends ObservablePojo {
 
 	private InternalDeltaCloudClient client;
 
-	private DeltaCloudImagesRepository images;
-	private DeltaCloudInstancesRepository instanceRepo;
+	private DeltaCloudImagesRepository images = new DeltaCloudImagesRepository();
+	private boolean imagesLoaded = false;
+	private DeltaCloudInstancesRepository instanceRepo = new DeltaCloudInstancesRepository();
+	private boolean instancesLoaded = false;
 
 	private IImageFilter imageFilter;
 	private IInstanceFilter instanceFilter;
@@ -227,7 +229,7 @@ public class DeltaCloud extends ObservablePojo {
 			// TODO: remove notification with all instanceRepo, replace by
 			// notifying the changed instance
 			firePropertyChange(
-					PROP_INSTANCES, getInstancesRepository().get(), getInstancesRepository().get());
+					PROP_INSTANCES, instanceRepo.get(), instanceRepo.get());
 			DeltaCloudManager.getDefault().saveClouds();
 		}
 	}
@@ -257,7 +259,7 @@ public class DeltaCloud extends ObservablePojo {
 		if (!rules.equals(ruleString)) {
 			// TODO: remove notification with all instanceRepo, replace by
 			// notifying the changed instance
-			firePropertyChange(PROP_IMAGES, getImagesRepository().get(), getImagesRepository().get());
+			firePropertyChange(PROP_IMAGES, images.get(), images.get());
 			// TODO: move to notification based approach
 			DeltaCloudManager.getDefault().saveClouds();
 		}
@@ -322,7 +324,7 @@ public class DeltaCloud extends ObservablePojo {
 
 	public DeltaCloudInstance waitForState(String instanceId, IInstanceStateMatcher stateMatcher, IProgressMonitor pm)
 			throws InterruptedException, DeltaCloudException {
-		DeltaCloudInstance instance = getInstancesRepository().getById(instanceId);
+		DeltaCloudInstance instance = instanceRepo.getById(instanceId);
 		if (instance != null) {
 			while (!pm.isCanceled()) {
 				Thread.sleep(WAIT_FOR_STATE_DELAY);
@@ -348,15 +350,15 @@ public class DeltaCloud extends ObservablePojo {
 	public void loadInstances() throws DeltaCloudException {
 		try {
 			clearInstances();
-			DeltaCloudInstancesRepository repo = getInstancesRepository();
-			DeltaCloudInstance[] oldInstances = repo.get();
+			DeltaCloudInstance[] oldInstances = instanceRepo.get();
 			List<Instance> instances = client.listInstances();
 			Collection<DeltaCloudInstance> deltaCloudInstances =
 					DeltaCloudInstanceFactory.create(instances, this, instanceAliasMappings);
-			repo.add(deltaCloudInstances);
+			instanceRepo.add(deltaCloudInstances);
+			instancesLoaded = true;
 			// TODO: remove notification with all instanceRepo, replace by
 			// notifying the changed instance
-			firePropertyChange(PROP_INSTANCES, oldInstances, repo.get());
+			firePropertyChange(PROP_INSTANCES, oldInstances, instanceRepo.get());
 		} catch (DeltaCloudClientException e) {
 			throw new DeltaCloudException(MessageFormat.format(
 					"Could not load instanceRepo of cloud {0}: {1}", getName(), e.getMessage()), e);
@@ -364,24 +366,17 @@ public class DeltaCloud extends ObservablePojo {
 	}
 
 	private void clearImages() {
-		if (images != null) {
-			// TODO: remove notification with all instanceRepo, replace by
-			// notifying the changed instance
-			firePropertyChange(PROP_IMAGES, images.get(), images.clear());
-		}
+		imagesLoaded = false;
+		// TODO: remove notification with all instanceRepo, replace by
+		// notifying the changed instance
+		firePropertyChange(PROP_IMAGES, images.get(), images.clear());
 	}
 
 	private void clearInstances() {
+		instancesLoaded = false;
 		// TODO: remove notification with all instanceRepo, replace by
 		// notifying the changed instance
-		firePropertyChange(PROP_INSTANCES, getInstancesRepository().get(), getInstancesRepository().clear());
-	}
-
-	private DeltaCloudInstancesRepository getInstancesRepository() {
-		if (instanceRepo == null) {
-			instanceRepo = new DeltaCloudInstancesRepository();
-		}
-		return instanceRepo;
+		firePropertyChange(PROP_INSTANCES, instanceRepo.get(), instanceRepo.clear());
 	}
 
 	/**
@@ -391,21 +386,14 @@ public class DeltaCloud extends ObservablePojo {
 	 * @throws DeltaCloudException
 	 */
 	public DeltaCloudInstance[] getInstances() throws DeltaCloudException {
-		if (instanceRepo == null) {
+		if (!instancesLoaded) {
 			loadInstances();
 		}
 		return instanceRepo.get();
 	}
 
-	private DeltaCloudImagesRepository getImagesRepository() {
-		if (images == null) {
-			images = new DeltaCloudImagesRepository();
-		}
-		return images;
-	}
-
 	public DeltaCloudImage[] getImages() throws DeltaCloudException {
-		if (images == null) {
+		if (!imagesLoaded) {
 			loadImages();
 		}
 		return images.get();
@@ -421,7 +409,8 @@ public class DeltaCloud extends ObservablePojo {
 	 * @throws DeltaCloudException
 	 */
 	public DeltaCloudImage getImage(String id) throws DeltaCloudException {
-		DeltaCloudImage deltaCloudImage = getImagesRepository().getById(id);
+		getImages(); // ensure images are loaded
+		DeltaCloudImage deltaCloudImage = images.getById(id);
 		if (deltaCloudImage == null) {
 			try {
 				Image image = client.listImages(id);
@@ -481,10 +470,10 @@ public class DeltaCloud extends ObservablePojo {
 
 	private DeltaCloudInstance refreshInstance(DeltaCloudInstance deltaCloudInstance) throws DeltaCloudException {
 		try {
-			DeltaCloudInstance[] instances = getInstancesRepository().get();
+			DeltaCloudInstance[] instances = instanceRepo.get();
 			Instance newInstance = client.listInstances(deltaCloudInstance.getId());
 			deltaCloudInstance.setInstance(newInstance);
-			firePropertyChange(PROP_INSTANCES, instances, getInstancesRepository().get());
+			firePropertyChange(PROP_INSTANCES, instances, instanceRepo.get());
 			return deltaCloudInstance;
 		} catch (DeltaCloudClientException e) {
 			// TODO : internationalize strings
@@ -495,7 +484,7 @@ public class DeltaCloud extends ObservablePojo {
 
 	public boolean performInstanceAction(String instanceId, DeltaCloudInstance.Action action)
 			throws DeltaCloudException {
-		return performInstanceAction(getInstancesRepository().getById(instanceId), action);
+		return performInstanceAction(instanceRepo.getById(instanceId), action);
 	}
 
 	protected boolean performInstanceAction(DeltaCloudInstance instance, DeltaCloudInstance.Action action)
@@ -504,17 +493,16 @@ public class DeltaCloud extends ObservablePojo {
 			if (instance == null) {
 				return false;
 			}
-			DeltaCloudInstancesRepository repo = getInstancesRepository();
-			DeltaCloudInstance[] instances = repo.get();
+			DeltaCloudInstance[] instances = instanceRepo.get();
 			boolean result = instance.performInstanceAction(action, client);
 			if (result) {
 				if (DeltaCloudInstance.Action.DESTROY.equals(action)) {
-					repo.remove(instance);
+					instanceRepo.remove(instance);
 					firePropertyChange(PROP_INSTANCES_REMOVED, null, instance);
 				}
 				// TODO: remove notification with all instanceRepo, replace by
 				// notifying the changed instance
-				firePropertyChange(PROP_INSTANCES, instances, repo.get());
+				firePropertyChange(PROP_INSTANCES, instances, instanceRepo.get());
 			}
 			return result;
 		} catch (DeltaCloudClientException e) {
@@ -548,13 +536,13 @@ public class DeltaCloud extends ObservablePojo {
 	public void loadImages() throws DeltaCloudException {
 		try {
 			clearImages();
-			DeltaCloudImagesRepository repo = getImagesRepository();
-			DeltaCloudImage[] oldImages = repo.get();
+			DeltaCloudImage[] oldImages = images.get();
 			Collection<DeltaCloudImage> deltaCloudImages = DeltaCloudImageFactory.create(client.listImages(), this);
-			repo.add(deltaCloudImages);
+			images.add(deltaCloudImages);
+			imagesLoaded = true;
 			// TODO: remove notification with all instanceRepo, replace by
 			// notifying the changed instance
-			firePropertyChange(PROP_IMAGES, oldImages, repo.get());
+			firePropertyChange(PROP_IMAGES, oldImages, images.get());
 		} catch (DeltaCloudClientException e) {
 			clearImages();
 			throw new DeltaCloudException(
@@ -587,14 +575,13 @@ public class DeltaCloud extends ObservablePojo {
 				instance = client.createInstance(name, imageId, profileId, realmId, memory, storage);
 			}
 			if (instance != null) {
-				DeltaCloudInstancesRepository repo = getInstancesRepository();
-				DeltaCloudInstance[] instances = repo.get();
+				DeltaCloudInstance[] instances = instanceRepo.get();
 				DeltaCloudInstance deltaCloudInstance = DeltaCloudInstanceFactory.create(instance, this, name);
 				instanceAliasMappings.add(new InstanceAliasMapping(instance.getId(), name));
-				repo.add(deltaCloudInstance);
+				instanceRepo.add(deltaCloudInstance);
 				// TODO: remove notification with all instanceRepo, replace by
 				// notifying the changed instance
-				firePropertyChange(PROP_INSTANCES, instances, repo.get());
+				firePropertyChange(PROP_INSTANCES, instances, instanceRepo.get());
 				// TODO: move to notification based approach
 				DeltaCloudManager.getDefault().saveClouds();
 				return deltaCloudInstance;
