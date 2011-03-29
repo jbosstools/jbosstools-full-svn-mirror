@@ -142,9 +142,8 @@
 				variable="selection">
 				<and>
 					<count value="+" />
-					<iterate operator="and">
-						<adapt
-				             type="org.jboss.tools.deltacloud.core.DeltaCloud" />
+					<iterate operator="or">
+						<instanceof value="org.jboss.tools.deltacloud.ui.views.cloud.CloudItem" />
 				    </iterate>
 				</and>
 			</with>

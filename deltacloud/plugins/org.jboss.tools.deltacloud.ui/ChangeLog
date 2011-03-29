@@ -1,3 +1,11 @@
+2011-03-29  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* plugin.xml: 
+	* src/org/jboss/tools/deltacloud/ui/commands/DeleteCloudHandler.java 
+	(getSelectedClouds): 
+	(getFirstSelectedCloud):
+	[JBIDE-8290] delete is now only available on cloud items in the cloud viewer 	 
+
 2011-03-25  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/TableViewerColumnComparator.java 
