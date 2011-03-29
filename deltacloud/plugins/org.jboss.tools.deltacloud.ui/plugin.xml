@@ -292,6 +292,32 @@
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
+	  <!-- Manage Keys command handler -->
+      <handler
+            class="org.jboss.tools.deltacloud.ui.commands.ManageKeysHandler"
+            commandId="org.jboss.tools.deltacloud.ui.managekeys">
+			<activeWhen>
+               <with
+                 variable="selection">
+					<iterate operator="and">
+						<adapt
+				             type="org.jboss.tools.deltacloud.core.DeltaCloud">
+							<test property="org.jboss.tools.deltacloud.ui.commands.isValid"
+									value="true"/>
+						</adapt>
+	               	</iterate>
+               </with>
+			</activeWhen>
+			<enabledWhen>
+				<with
+					variable="selection">
+					<count value="1" />
+				</with>
+			</enabledWhen>
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
 	   <!-- Filter handlers -->
       <handler
             class="org.jboss.tools.deltacloud.ui.commands.FilterImagesHandler"
@@ -356,6 +382,20 @@
 				name="additions"
 				visible="true" />
 	  </menuContribution>
+	<!-- manage keys command -->
+    <menuContribution
+            allPopups="true"
+            locationURI="popup:org.jboss.tools.deltacloud.ui.views.DeltaCloudView?after=keys">	
+		 <!-- connection commands -->
+         <command
+               commandId="org.jboss.tools.deltacloud.ui.managekeys"
+               icon="icons/keys.gif"
+               disabledIcon="icons/keysd.gif"
+               label="%command.managekeys.label"
+               style="push"
+               tooltip="%command.managekeys.tooltip">
+         </command>
+    </menuContribution>	
       <!-- instance commands -->
       <menuContribution
             allPopups="true"
@@ -494,6 +534,9 @@
 				visible="true" />
 			<separator
 				name="connections"
+				visible="true" />
+			<separator
+				name="keys"
 				visible="true" />
 			<separator
 				name="images"
@@ -755,6 +798,12 @@
             description="%command.destroyinstance.description"
             id="org.jboss.tools.deltacloud.ui.destroyinstance"
             name="%command.destroyinstance.name">
+      </command>
+	  <!-- manage keys command -->
+      <command
+            description="%command.managekeys.description"
+            id="org.jboss.tools.deltacloud.ui.managekeys"
+            name="%command.managekeys.name">
       </command>
 	  <!-- filter commands -->
       <command
