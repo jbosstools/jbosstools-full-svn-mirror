@@ -16,6 +16,7 @@ import org.jboss.tools.internal.deltacloud.client.test.core.client.ImageDomUnmar
 import org.jboss.tools.internal.deltacloud.client.test.core.client.InstanceDomUnmarshallingTest;
 import org.jboss.tools.internal.deltacloud.client.test.core.client.KeyDomUnmarshallingTest;
 import org.jboss.tools.internal.deltacloud.client.test.core.client.RealmDomUnmarshallingTest;
+import org.jboss.tools.internal.deltacloud.client.utils.test.UrlBuilderTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -29,6 +30,7 @@ import org.junit.runners.Suite;
 	ImageDomUnmarshallingTest.class,
 	HardwareProfileDomUnmarshallingTest.class,
 	APIDomUnmarshallingTest.class,
-	RealmDomUnmarshallingTest.class})
+	RealmDomUnmarshallingTest.class,
+	UrlBuilderTest.class})
 public class DeltaCloudClientTestSuite {
 }
