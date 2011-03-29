@@ -111,8 +111,8 @@ public class ServerTypeMockIntegrationTest {
 						}
 
 						@Override
-						public int getParametersLength() {
-							return 0;
+						public String getUrlString() {
+							return null;
 						}
 					}
 					);
