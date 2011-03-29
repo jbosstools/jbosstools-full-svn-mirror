@@ -24,7 +24,6 @@ install :: build, test, and install into m2 repo *
 osgi-test:test :: just (re-)run test(s)
 
 -Dmaven.test.skip :: skip compiling and running tests
--Dmaven.test.skip.exec :: to compile but not run tests in conjunction with integration-test or install phase
 
 -Dmaven.repo.local=${WORKSPACE}/m2-repository :: path to local m2 repo
 
@@ -38,7 +37,7 @@ osgi-test:test :: just (re-)run test(s)
 
 -q :: quieter output&lt;/pre&gt;
 </description>
-          <defaultValue>clean install -B -U -fae -e -Dmaven.repo.local=${WORKSPACE}/m2-repository -P helios-local-target,jbosstools-nightly-trunk,hudson</defaultValue>
+          <defaultValue>clean install -B -U -fae -e -Dmaven.repo.local=${WORKSPACE}/m2-repository -P hudson</defaultValue>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
