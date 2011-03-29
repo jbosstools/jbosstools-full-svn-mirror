@@ -43,9 +43,8 @@ To run, make sure that JAVA_HOME is set to the path where you imported the cert,
 
 	$ export JAVA_HOME=/opt/sun-java2-6.0/; mvn clean install
 -->
-
-					<!-- more output w/ verbose; default false -->
-					<verbose>false</verbose>
+					<!-- more output w/ verbose; default: false -->
+					<!-- <verbose>false</verbose> -->
 
 					<!-- server and connection details -->
 					<!-- <hudsonURL>https://hudson.qa.jboss.com/hudson/</hudsonURL> -->
@@ -53,26 +52,28 @@ To run, make sure that JAVA_HOME is set to the path where you imported the cert,
 					<username>SET USERNAME HERE</username>
 					<password>SET PASSWORD HERE</password>
 
-					<!-- to select a subset of jobs, use these filters; default none (all jobs on server!) -->
+					<!-- to select a subset of jobs, use these filters; default: view/myViewName/ -->
 					<!-- <viewFilter>view/DevStudio_Stable_Branch/</viewFilter> -->
-					<viewFilter>view/DevStudio_Trunk/</viewFilter>
+					<!-- <viewFilter>view/DevStudio_Trunk/</viewFilter> -->
 					
 					<!-- default .* to select all -->
-					<!-- <regexFilter>.*</regexFilter> -->
 					<!-- <regexFilter>.*TEMPLATE.*</regexFilter> -->
+					<!-- <regexFilter>.*</regexFilter> -->
 					<regexFilter>MyJobNameHere</regexFilter>
 
-					<!-- if there's an existing config.xml (not config.$timestamp.xml) then overwrite it if true -->
-					<overwriteExistingConfigXMLFile>false</overwriteExistingConfigXMLFile>
+					<!-- if there's an existing config.xml (not config.$timestamp.xml) then overwrite it if true; default false -->
+					<!-- <overwriteExistingConfigXMLFile>false</overwriteExistingConfigXMLFile> -->
                     
 					<!-- either "pull" updated job config.xml file(s) from the server (default, reads only & stores a copy locally), or 
 					            "push" updates from local to the server (replacing existing job config.xml on server :: CAUTION!)
 					-->
-					<operation>pull</operation>
+					<!-- <operation>pull</operation> -->
+					
+					<!-- if pushing, can also store a copy of the latest configuration with storeSnapshotOnPush = true; default false -->
+					<!-- <storeSnapshotOnPush>false</storeSnapshotOnPush> -->
 
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
 </project>
-
