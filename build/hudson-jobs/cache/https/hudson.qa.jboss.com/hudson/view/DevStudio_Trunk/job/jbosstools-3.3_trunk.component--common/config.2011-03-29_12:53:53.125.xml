@@ -3,7 +3,15 @@
   <actions/>
   <description>Nightly build using Tycho, monitoring SVN every 6 hrs for changes. 
 
-&lt;h2&gt;&lt;a style="color:#FF9933" href="http://download.jboss.org/jbosstools/builds/cascade/trunk.html"&gt;Build Job Cascade &amp;amp; Results&lt;/a&gt;&lt;/h2&gt;
+&lt;h3&gt;REQUIRES JDK6&lt;/h3&gt;
+
+&lt;p&gt;Results:
+&lt;ul&gt;
+&lt;li&gt;Aggregate update sites: &lt;a href="http://download.jboss.org/jbosstools/updates/nightly/"&gt;http://download.jboss.org/jbosstools/updates/nightly/&lt;/a&gt; :: &lt;a href="http://download.jboss.org/jbosstools/updates/nightly/trunk/"&gt;latest from trunk&lt;/a&gt;
+&lt;li&gt;Aggregate builds: &lt;a href="http://download.jboss.org/jbosstools/builds/nightly/"&gt;http://download.jboss.org/jbosstools/builds/nightly/&lt;/a&gt; :: &lt;a href="http://download.jboss.org/jbosstools/builds/nightly/latestBuild.html"&gt;latest from trunk&lt;/a&gt;
+&lt;ul&gt;&lt;li&gt;Component builds: &lt;a href="http://download.jboss.org/jbosstools/builds/staging/"&gt;http://download.jboss.org/jbosstools/builds/staging/&lt;/a&gt;&lt;/ul&gt;
+&lt;/ul&gt;
+
 </description>
   <logRotator>
     <daysToKeep>5</daysToKeep>
@@ -24,9 +32,13 @@ integration-test :: build and test *
 install :: build, test, and install into m2 repo *
 osgi-test:test :: just (re-)run test(s)
 
+-P helios-no-target :: don't use .target file to provision target; instead generate on the fly from MANIFEST.MF and feature.xml files
+-P galileo :: enable galileo dependencies
 -P hudson :: enable hudson build ID in feature/plugin qualifiers
+-P !helios :: disable helios target (not available)
 
 -Dmaven.test.skip :: skip compiling and running tests
+-Dmaven.test.skip.exec :: to compile but not run tests in conjunction with integration-test or install phase
 
 -Dmaven.repo.local=${WORKSPACE}/m2-repository :: path to local m2 repo
 
@@ -40,7 +52,7 @@ osgi-test:test :: just (re-)run test(s)
 
 -q :: quieter output&lt;/pre&gt;
 </description>
-          <defaultValue>clean install -B -U -fae -e -Dmaven.repo.local=${WORKSPACE}/m2-repository -P hudson</defaultValue>
+          <defaultValue>clean install -B -U -fae -e -Dmaven.repo.local=${WORKSPACE}/m2-repository -P helios-local-target,jbosstools-nightly-trunk,hudson</defaultValue>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
@@ -53,7 +65,7 @@ osgi-test:test :: just (re-)run test(s)
   <scm class="hudson.scm.SubversionSCM">
     <locations>
       <hudson.scm.SubversionSCM_-ModuleLocation>
-        <remote>http://anonsvn.jboss.org/repos/jbosstools/trunk/FIXME</remote>
+        <remote>http://anonsvn.jboss.org/repos/jbosstools/trunk/common</remote>
         <local>sources</local>
       </hudson.scm.SubversionSCM_-ModuleLocation>
       <hudson.scm.SubversionSCM_-ModuleLocation>
@@ -74,29 +86,28 @@ osgi-test:test :: just (re-)run test(s)
   </scm>
   <assignedNode>RHEL_any</assignedNode>
   <canRoam>false</canRoam>
-  <disabled>true</disabled>
+  <disabled>false</disabled>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <jdk>java16_default</jdk>
   <triggers class="vector">
     <hudson.triggers.SCMTrigger>
-      <spec>20 3,9,15,21 * * * </spec>
+      <spec>30 3,9,15,21 * * * </spec>
     </hudson.triggers.SCMTrigger>
   </triggers>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Maven>
       <targets>${MAVEN_FLAGS}</targets>
-      <mavenName>maven-3.0.1</mavenName>
+      <mavenName>maven-3.0</mavenName>
       <jvmOptions>-Xms512m -Xmx1024m -XX:PermSize=128m -XX:MaxPermSize=256m</jvmOptions>
       <pom>${WORKSPACE}/build/parent/pom.xml</pom>
       <usePrivateRepository>false</usePrivateRepository>
     </hudson.tasks.Maven>
     <hudson.tasks.Maven>
       <targets>${MAVEN_FLAGS} -DJOB_NAME=${JOB_NAME} -DBUILD_ID=${BUILD_ID} -DBUILD_NUMBER=${BUILD_NUMBER}</targets>
-      <mavenName>maven-3.0.1</mavenName>
+      <mavenName>maven-3.0</mavenName>
       <jvmOptions>-Xms512m -Xmx1024m -XX:PermSize=128m -XX:MaxPermSize=256m</jvmOptions>
-      <pom>${WORKSPACE}/sources/pom.xml</pom>
-      <usePrivateRepository>true</usePrivateRepository>
+      <usePrivateRepository>false</usePrivateRepository>
     </hudson.tasks.Maven>
     <hudson.tasks.Shell>
       <command># script here: http://anonsvn.jboss.org/repos/jbosstools/trunk/build/publish.sh
@@ -115,13 +126,14 @@ osgi-test:test :: just (re-)run test(s)
       <latestOnly>true</latestOnly>
       <zip>false</zip>
     </hudson.tasks.ArtifactArchiver>
-    <hudson.plugins.textfinder.TextFinderPublisher>
-      <fileSet>results/*/logs/ERRORLOG.txt,results/*/logs/FAIL_LOG.txt</fileSet>
-      <regexp>ERROR|AILURE</regexp>
-      <succeedIfFound>false</succeedIfFound>
-      <unstableIfFound>true</unstableIfFound>
-      <alsoCheckConsoleOutput>false</alsoCheckConsoleOutput>
-    </hudson.plugins.textfinder.TextFinderPublisher>
+    <hudson.tasks.BuildTrigger>
+      <childProjects>jbosstools-3.3_trunk.component--esb, jbosstools-3.3_trunk.component--jst</childProjects>
+      <threshold>
+        <name>UNSTABLE</name>
+        <ordinal>1</ordinal>
+        <color>YELLOW</color>
+      </threshold>
+    </hudson.tasks.BuildTrigger>
     <hudson.tasks.Mailer>
       <recipients/>
       <notifyEveryBuild>false</notifyEveryBuild>

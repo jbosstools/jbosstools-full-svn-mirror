@@ -3,8 +3,7 @@
   <actions/>
   <description>Nightly build using Tycho, monitoring SVN every 6 hrs for changes. 
 
-&lt;h2&gt;&lt;a style="color:#FF9933" href="http://download.jboss.org/jbosstools/builds/cascade/trunk.html"&gt;Build Job Cascade &amp;amp; Results&lt;/a&gt;&lt;/h2&gt;
-</description>
+&lt;h2&gt;&lt;a style="color:#FF9933" href="http://download.jboss.org/jbosstools/builds/cascade/trunk.html"&gt;Build Job Cascade &amp;amp; Results&lt;/a&gt;&lt;/h2&gt;</description>
   <logRotator>
     <daysToKeep>5</daysToKeep>
     <numToKeep>5</numToKeep>
@@ -24,9 +23,13 @@ integration-test :: build and test *
 install :: build, test, and install into m2 repo *
 osgi-test:test :: just (re-)run test(s)
 
+-P helios-no-target :: don't use .target file to provision target; instead generate on the fly from MANIFEST.MF and feature.xml files
+-P galileo :: enable galileo dependencies
 -P hudson :: enable hudson build ID in feature/plugin qualifiers
+-P !helios :: disable helios target (not available)
 
 -Dmaven.test.skip :: skip compiling and running tests
+-Dmaven.test.skip.exec :: to compile but not run tests in conjunction with integration-test or install phase
 
 -Dmaven.repo.local=${WORKSPACE}/m2-repository :: path to local m2 repo
 
@@ -40,7 +43,7 @@ osgi-test:test :: just (re-)run test(s)
 
 -q :: quieter output&lt;/pre&gt;
 </description>
-          <defaultValue>clean install -B -U -fae -e -Dmaven.repo.local=${WORKSPACE}/m2-repository -P hudson</defaultValue>
+          <defaultValue>clean install -B -U -fn -e -Dmaven.repo.local=${WORKSPACE}/m2-repository -P helios-local-target,jbosstools-nightly-trunk,hudson</defaultValue>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
@@ -53,11 +56,14 @@ osgi-test:test :: just (re-)run test(s)
   <scm class="hudson.scm.SubversionSCM">
     <locations>
       <hudson.scm.SubversionSCM_-ModuleLocation>
-        <remote>http://anonsvn.jboss.org/repos/jbosstools/trunk/FIXME</remote>
+        <remote>http://anonsvn.jboss.org/repos/jbosstools/trunk/as</remote>
         <local>sources</local>
       </hudson.scm.SubversionSCM_-ModuleLocation>
       <hudson.scm.SubversionSCM_-ModuleLocation>
         <remote>http://anonsvn.jboss.org/repos/jbosstools/trunk/build</remote>
+      </hudson.scm.SubversionSCM_-ModuleLocation>
+      <hudson.scm.SubversionSCM_-ModuleLocation>
+        <remote>http://anonsvn.jboss.org/repos/jbosstools/trunk/requirements</remote>
       </hudson.scm.SubversionSCM_-ModuleLocation>
     </locations>
     <useUpdate>true</useUpdate>
@@ -72,14 +78,14 @@ osgi-test:test :: just (re-)run test(s)
     <excludedRevprop/>
     <excludedCommitMessages/>
   </scm>
-  <assignedNode>RHEL_any</assignedNode>
+  <assignedNode>RHEL5_any</assignedNode>
   <canRoam>false</canRoam>
-  <disabled>true</disabled>
+  <disabled>false</disabled>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <jdk>java16_default</jdk>
   <triggers class="vector">
     <hudson.triggers.SCMTrigger>
-      <spec>20 3,9,15,21 * * * </spec>
+      <spec>43 2,8,14,20 * * * </spec>
     </hudson.triggers.SCMTrigger>
   </triggers>
   <concurrentBuild>false</concurrentBuild>
@@ -102,6 +108,11 @@ osgi-test:test :: just (re-)run test(s)
       <command># script here: http://anonsvn.jboss.org/repos/jbosstools/trunk/build/publish.sh
 . ${WORKSPACE}/build/publish.sh</command>
     </hudson.tasks.Shell>
+    <hudson.tasks.Ant>
+      <targets>collect.test.results.for.hudson</targets>
+      <antName>ant-1.7.x</antName>
+      <buildFile>${WORKSPACE}/build/build.xml</buildFile>
+    </hudson.tasks.Ant>
   </builders>
   <publishers>
     <hudson.tasks.junit.JUnitResultArchiver>
@@ -115,6 +126,14 @@ osgi-test:test :: just (re-)run test(s)
       <latestOnly>true</latestOnly>
       <zip>false</zip>
     </hudson.tasks.ArtifactArchiver>
+    <hudson.tasks.BuildTrigger>
+      <childProjects>jbosstools-3.3_trunk.component--ws, jbosstools-3.3_trunk.component--deltacloud, jbosstools-3.3_trunk.component--seam</childProjects>
+      <threshold>
+        <name>UNSTABLE</name>
+        <ordinal>1</ordinal>
+        <color>YELLOW</color>
+      </threshold>
+    </hudson.tasks.BuildTrigger>
     <hudson.plugins.textfinder.TextFinderPublisher>
       <fileSet>results/*/logs/ERRORLOG.txt,results/*/logs/FAIL_LOG.txt</fileSet>
       <regexp>ERROR|AILURE</regexp>

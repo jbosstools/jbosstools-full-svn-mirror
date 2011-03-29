@@ -24,8 +24,6 @@ integration-test :: build and test *
 install :: build, test, and install into m2 repo *
 osgi-test:test :: just (re-)run test(s)
 
--P hudson :: enable hudson build ID in feature/plugin qualifiers
-
 -Dmaven.test.skip :: skip compiling and running tests
 
 -Dmaven.repo.local=${WORKSPACE}/m2-repository :: path to local m2 repo
@@ -53,11 +51,14 @@ osgi-test:test :: just (re-)run test(s)
   <scm class="hudson.scm.SubversionSCM">
     <locations>
       <hudson.scm.SubversionSCM_-ModuleLocation>
-        <remote>http://anonsvn.jboss.org/repos/jbosstools/trunk/FIXME</remote>
+        <remote>http://anonsvn.jboss.org/repos/jbosstools/trunk/hibernatetools</remote>
         <local>sources</local>
       </hudson.scm.SubversionSCM_-ModuleLocation>
       <hudson.scm.SubversionSCM_-ModuleLocation>
         <remote>http://anonsvn.jboss.org/repos/jbosstools/trunk/build</remote>
+      </hudson.scm.SubversionSCM_-ModuleLocation>
+      <hudson.scm.SubversionSCM_-ModuleLocation>
+        <remote>http://anonsvn.jboss.org/repos/jbosstools/trunk/requirements</remote>
       </hudson.scm.SubversionSCM_-ModuleLocation>
     </locations>
     <useUpdate>true</useUpdate>
@@ -72,14 +73,14 @@ osgi-test:test :: just (re-)run test(s)
     <excludedRevprop/>
     <excludedCommitMessages/>
   </scm>
-  <assignedNode>RHEL_any</assignedNode>
+  <assignedNode>RHEL5_any</assignedNode>
   <canRoam>false</canRoam>
-  <disabled>true</disabled>
+  <disabled>false</disabled>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <jdk>java16_default</jdk>
   <triggers class="vector">
     <hudson.triggers.SCMTrigger>
-      <spec>20 3,9,15,21 * * * </spec>
+      <spec>05 1,7,13,19 * * * </spec>
     </hudson.triggers.SCMTrigger>
   </triggers>
   <concurrentBuild>false</concurrentBuild>
@@ -98,6 +99,11 @@ osgi-test:test :: just (re-)run test(s)
       <pom>${WORKSPACE}/sources/pom.xml</pom>
       <usePrivateRepository>true</usePrivateRepository>
     </hudson.tasks.Maven>
+    <hudson.tasks.Ant>
+      <targets>collect.test.results.for.hudson</targets>
+      <antName>ant-1.7.x</antName>
+      <buildFile>${WORKSPACE}/build/build.xml</buildFile>
+    </hudson.tasks.Ant>
     <hudson.tasks.Shell>
       <command># script here: http://anonsvn.jboss.org/repos/jbosstools/trunk/build/publish.sh
 . ${WORKSPACE}/build/publish.sh</command>
@@ -115,13 +121,14 @@ osgi-test:test :: just (re-)run test(s)
       <latestOnly>true</latestOnly>
       <zip>false</zip>
     </hudson.tasks.ArtifactArchiver>
-    <hudson.plugins.textfinder.TextFinderPublisher>
-      <fileSet>results/*/logs/ERRORLOG.txt,results/*/logs/FAIL_LOG.txt</fileSet>
-      <regexp>ERROR|AILURE</regexp>
-      <succeedIfFound>false</succeedIfFound>
-      <unstableIfFound>true</unstableIfFound>
-      <alsoCheckConsoleOutput>false</alsoCheckConsoleOutput>
-    </hudson.plugins.textfinder.TextFinderPublisher>
+    <hudson.tasks.BuildTrigger>
+      <childProjects>jbosstools-3.3_trunk.component--seam</childProjects>
+      <threshold>
+        <name>SUCCESS</name>
+        <ordinal>0</ordinal>
+        <color>BLUE</color>
+      </threshold>
+    </hudson.tasks.BuildTrigger>
     <hudson.tasks.Mailer>
       <recipients/>
       <notifyEveryBuild>false</notifyEveryBuild>

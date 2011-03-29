@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
   <actions/>
-  <description>Nightly build using Tycho, monitoring SVN every 6 hrs for changes. 
+  <description>Tycho-based build, monitoring SVN for changes. 
 
-&lt;h2&gt;&lt;a style="color:#FF9933" href="http://download.jboss.org/jbosstools/builds/cascade/trunk.html"&gt;Build Job Cascade &amp;amp; Results&lt;/a&gt;&lt;/h2&gt;
-</description>
+&lt;p&gt;&lt;i&gt;Build should take ~60min.&lt;/i&gt;
+
+&lt;h2&gt;&lt;a style="color:#FF9933" href="http://download.jboss.org/jbosstools/builds/cascade/trunk.html"&gt;Build Job Cascade &amp;amp; Results&lt;/a&gt;&lt;/h2&gt;</description>
   <logRotator>
     <daysToKeep>5</daysToKeep>
     <numToKeep>5</numToKeep>
@@ -24,9 +25,13 @@ integration-test :: build and test *
 install :: build, test, and install into m2 repo *
 osgi-test:test :: just (re-)run test(s)
 
--P hudson :: enable hudson build ID in feature/plugin qualifiers
-
 -Dmaven.test.skip :: skip compiling and running tests
+-Dmaven.test.skip.exec :: to compile but not run tests in conjunction with integration-test or install phase
+
+-P helios :: use .target file to provision target
+-P helios-no-target :: don't use .target file to provision target; instead generate on the fly from MANIFEST.MF and feature.xml files
+-P helios-local-target :: use /home/hudson/static_build_env/jbds/target-platform/e36-wtp322.target as target against which to resolve deps
+-P hudson :: add hudson job # to generated plugin/feature qualifiers
 
 -Dmaven.repo.local=${WORKSPACE}/m2-repository :: path to local m2 repo
 
@@ -40,8 +45,29 @@ osgi-test:test :: just (re-)run test(s)
 
 -q :: quieter output&lt;/pre&gt;
 </description>
-          <defaultValue>clean install -B -U -fae -e -Dmaven.repo.local=${WORKSPACE}/m2-repository -P hudson</defaultValue>
+          <defaultValue>clean install -B -U -fae -P helios-local-target,hudson -Dmaven.repo.local=${WORKSPACE}/m2-repository</defaultValue>
         </hudson.model.StringParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>RELEASE</name>
+          <description>If a release, name zip w/ timestamp and build ID; otherwise call it "SNAPSHOT"</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>No</string>
+              <string>Yes</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>update.site.description</name>
+          <description/>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>Nightly Build</string>
+              <string>Development Milestone</string>
+              <string>Stable Release</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
     <hudson.plugins.descriptionsetter.JobByDescription/>
@@ -53,11 +79,8 @@ osgi-test:test :: just (re-)run test(s)
   <scm class="hudson.scm.SubversionSCM">
     <locations>
       <hudson.scm.SubversionSCM_-ModuleLocation>
-        <remote>http://anonsvn.jboss.org/repos/jbosstools/trunk/FIXME</remote>
-        <local>sources</local>
-      </hudson.scm.SubversionSCM_-ModuleLocation>
-      <hudson.scm.SubversionSCM_-ModuleLocation>
         <remote>http://anonsvn.jboss.org/repos/jbosstools/trunk/build</remote>
+        <local>sources</local>
       </hudson.scm.SubversionSCM_-ModuleLocation>
     </locations>
     <useUpdate>true</useUpdate>
@@ -74,70 +97,47 @@ osgi-test:test :: just (re-)run test(s)
   </scm>
   <assignedNode>RHEL_any</assignedNode>
   <canRoam>false</canRoam>
-  <disabled>true</disabled>
+  <disabled>false</disabled>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <jdk>java16_default</jdk>
-  <triggers class="vector">
-    <hudson.triggers.SCMTrigger>
-      <spec>20 3,9,15,21 * * * </spec>
-    </hudson.triggers.SCMTrigger>
-  </triggers>
+  <triggers class="vector"/>
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Maven>
-      <targets>${MAVEN_FLAGS}</targets>
+      <targets>${MAVEN_FLAGS} -DJOB_NAME=${JOB_NAME} -DBUILD_ID=${BUILD_ID} -DBUILD_NUMBER=${BUILD_NUMBER}</targets>
       <mavenName>maven-3.0.1</mavenName>
       <jvmOptions>-Xms512m -Xmx1024m -XX:PermSize=128m -XX:MaxPermSize=256m</jvmOptions>
-      <pom>${WORKSPACE}/build/parent/pom.xml</pom>
+      <pom>parent/pom.xml</pom>
       <usePrivateRepository>false</usePrivateRepository>
     </hudson.tasks.Maven>
     <hudson.tasks.Maven>
       <targets>${MAVEN_FLAGS} -DJOB_NAME=${JOB_NAME} -DBUILD_ID=${BUILD_ID} -DBUILD_NUMBER=${BUILD_NUMBER}</targets>
       <mavenName>maven-3.0.1</mavenName>
       <jvmOptions>-Xms512m -Xmx1024m -XX:PermSize=128m -XX:MaxPermSize=256m</jvmOptions>
-      <pom>${WORKSPACE}/sources/pom.xml</pom>
-      <usePrivateRepository>true</usePrivateRepository>
+      <pom>aggregate/pom.xml</pom>
+      <usePrivateRepository>false</usePrivateRepository>
     </hudson.tasks.Maven>
     <hudson.tasks.Shell>
       <command># script here: http://anonsvn.jboss.org/repos/jbosstools/trunk/build/publish.sh
-. ${WORKSPACE}/build/publish.sh</command>
+# use "trunk" parameter to force results into /updates/nightly/trunk/ instead of /updates/nightly/jbosstools-3.2.0.*/
+. ${WORKSPACE}/sources/publish.sh trunk</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
-    <hudson.tasks.junit.JUnitResultArchiver>
-      <testResults>**/TEST-*.xml</testResults>
-      <keepLongStdio>false</keepLongStdio>
-      <testDataPublishers/>
-    </hudson.tasks.junit.JUnitResultArchiver>
-    <hudson.tasks.ArtifactArchiver>
-      <artifacts>**/*Update*.zip</artifacts>
-      <excludes>**/target/**</excludes>
-      <latestOnly>true</latestOnly>
-      <zip>false</zip>
-    </hudson.tasks.ArtifactArchiver>
-    <hudson.plugins.textfinder.TextFinderPublisher>
-      <fileSet>results/*/logs/ERRORLOG.txt,results/*/logs/FAIL_LOG.txt</fileSet>
-      <regexp>ERROR|AILURE</regexp>
-      <succeedIfFound>false</succeedIfFound>
-      <unstableIfFound>true</unstableIfFound>
-      <alsoCheckConsoleOutput>false</alsoCheckConsoleOutput>
-    </hudson.plugins.textfinder.TextFinderPublisher>
-    <hudson.tasks.Mailer>
-      <recipients/>
-      <notifyEveryBuild>false</notifyEveryBuild>
-      <dontNotifyOnModules>false</dontNotifyOnModules>
-      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
-      <sendToIndividuals>true</sendToIndividuals>
-    </hudson.tasks.Mailer>
+    <hudson.tasks.BuildTrigger>
+      <childProjects>devstudio-5.0_trunk.updatesite</childProjects>
+      <threshold>
+        <name>SUCCESS</name>
+        <ordinal>0</ordinal>
+        <color>BLUE</color>
+      </threshold>
+    </hudson.tasks.BuildTrigger>
     <hudson.plugins.emotional__hudson.EmotionalHudsonPublisher/>
   </publishers>
   <buildWrappers>
     <hudson.plugins.build__timeout.BuildTimeoutWrapper>
-      <timeoutMinutes>120</timeoutMinutes>
+      <timeoutMinutes>240</timeoutMinutes>
       <failBuild>false</failBuild>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
-    <hudson.plugins.xvnc.Xvnc>
-      <takeScreenshot>false</takeScreenshot>
-    </hudson.plugins.xvnc.Xvnc>
   </buildWrappers>
 </project>

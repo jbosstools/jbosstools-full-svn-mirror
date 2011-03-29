@@ -3,8 +3,7 @@
   <actions/>
   <description>Nightly build using Tycho, monitoring SVN every 6 hrs for changes. 
 
-&lt;h2&gt;&lt;a style="color:#FF9933" href="http://download.jboss.org/jbosstools/builds/cascade/trunk.html"&gt;Build Job Cascade &amp;amp; Results&lt;/a&gt;&lt;/h2&gt;
-</description>
+&lt;h2&gt;&lt;a style="color:#FF9933" href="http://download.jboss.org/jbosstools/builds/cascade/trunk.html"&gt;Build Job Cascade &amp;amp; Results&lt;/a&gt;&lt;/h2&gt;</description>
   <logRotator>
     <daysToKeep>5</daysToKeep>
     <numToKeep>5</numToKeep>
@@ -23,8 +22,6 @@ clean :: clean before building *
 integration-test :: build and test *
 install :: build, test, and install into m2 repo *
 osgi-test:test :: just (re-)run test(s)
-
--P hudson :: enable hudson build ID in feature/plugin qualifiers
 
 -Dmaven.test.skip :: skip compiling and running tests
 
@@ -53,7 +50,7 @@ osgi-test:test :: just (re-)run test(s)
   <scm class="hudson.scm.SubversionSCM">
     <locations>
       <hudson.scm.SubversionSCM_-ModuleLocation>
-        <remote>http://anonsvn.jboss.org/repos/jbosstools/trunk/FIXME</remote>
+        <remote>http://anonsvn.jboss.org/repos/jbosstools/trunk/jmx</remote>
         <local>sources</local>
       </hudson.scm.SubversionSCM_-ModuleLocation>
       <hudson.scm.SubversionSCM_-ModuleLocation>
@@ -74,7 +71,7 @@ osgi-test:test :: just (re-)run test(s)
   </scm>
   <assignedNode>RHEL_any</assignedNode>
   <canRoam>false</canRoam>
-  <disabled>true</disabled>
+  <disabled>false</disabled>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <jdk>java16_default</jdk>
   <triggers class="vector">
@@ -95,7 +92,6 @@ osgi-test:test :: just (re-)run test(s)
       <targets>${MAVEN_FLAGS} -DJOB_NAME=${JOB_NAME} -DBUILD_ID=${BUILD_ID} -DBUILD_NUMBER=${BUILD_NUMBER}</targets>
       <mavenName>maven-3.0.1</mavenName>
       <jvmOptions>-Xms512m -Xmx1024m -XX:PermSize=128m -XX:MaxPermSize=256m</jvmOptions>
-      <pom>${WORKSPACE}/sources/pom.xml</pom>
       <usePrivateRepository>true</usePrivateRepository>
     </hudson.tasks.Maven>
     <hudson.tasks.Shell>
@@ -115,13 +111,6 @@ osgi-test:test :: just (re-)run test(s)
       <latestOnly>true</latestOnly>
       <zip>false</zip>
     </hudson.tasks.ArtifactArchiver>
-    <hudson.plugins.textfinder.TextFinderPublisher>
-      <fileSet>results/*/logs/ERRORLOG.txt,results/*/logs/FAIL_LOG.txt</fileSet>
-      <regexp>ERROR|AILURE</regexp>
-      <succeedIfFound>false</succeedIfFound>
-      <unstableIfFound>true</unstableIfFound>
-      <alsoCheckConsoleOutput>false</alsoCheckConsoleOutput>
-    </hudson.plugins.textfinder.TextFinderPublisher>
     <hudson.tasks.Mailer>
       <recipients/>
       <notifyEveryBuild>false</notifyEveryBuild>
@@ -130,6 +119,14 @@ osgi-test:test :: just (re-)run test(s)
       <sendToIndividuals>true</sendToIndividuals>
     </hudson.tasks.Mailer>
     <hudson.plugins.emotional__hudson.EmotionalHudsonPublisher/>
+    <hudson.tasks.BuildTrigger>
+      <childProjects>jbosstools-3.3_trunk.component--as</childProjects>
+      <threshold>
+        <name>UNSTABLE</name>
+        <ordinal>1</ordinal>
+        <color>YELLOW</color>
+      </threshold>
+    </hudson.tasks.BuildTrigger>
   </publishers>
   <buildWrappers>
     <hudson.plugins.build__timeout.BuildTimeoutWrapper>

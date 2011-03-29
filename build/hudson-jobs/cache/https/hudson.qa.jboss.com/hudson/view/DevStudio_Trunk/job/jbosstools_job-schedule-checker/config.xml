@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <actions/>
+  <description>Check for schedule conflicts, disabled tests, build failures.</description>
+  <logRotator>
+    <daysToKeep>5</daysToKeep>
+    <numToKeep>5</numToKeep>
+    <artifactDaysToKeep>-1</artifactDaysToKeep>
+    <artifactNumToKeep>-1</artifactNumToKeep>
+  </logRotator>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>MAVEN_FLAGS</name>
+          <description/>
+          <defaultValue>clean install -B -U -fae -e -Dmaven.repo.local=${WORKSPACE}/m2-repository -DhudsonURL=https://hudson.qa.jboss.com/hudson/ -Dusername=admin -Dpassword=Che5tnuT#tR33 -DregexFilter=".*" -DviewFilter=view/DevStudio_Trunk -Dverbose=true</defaultValue>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+    <hudson.plugins.descriptionsetter.JobByDescription/>
+    <hudson.plugins.disk__usage.DiskUsageProperty/>
+    <hudson.plugins.jira.JiraProjectProperty>
+      <siteName>http://opensource.atlassian.com/projects/hibernate/</siteName>
+    </hudson.plugins.jira.JiraProjectProperty>
+    <com.coravy.hudson.plugins.github.GithubProjectProperty>
+      <projectUrl>https://github.com/nickboldt/maven-plugins/</projectUrl>
+    </com.coravy.hudson.plugins.github.GithubProjectProperty>
+  </properties>
+  <scm class="hudson.plugins.git.GitSCM">
+    <configVersion>1</configVersion>
+    <remoteRepositories>
+      <org.spearce.jgit.transport.RemoteConfig>
+        <string>origin</string>
+        <int>5</int>
+        <string>fetch</string>
+        <string>+refs/heads/*:refs/remotes/origin/*</string>
+        <string>receivepack</string>
+        <string>git-upload-pack</string>
+        <string>uploadpack</string>
+        <string>git-upload-pack</string>
+        <string>url</string>
+        <string>https://github.com/nickboldt/maven-plugins.git</string>
+        <string>tagopt</string>
+        <string/>
+      </org.spearce.jgit.transport.RemoteConfig>
+    </remoteRepositories>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>**</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <localBranch/>
+    <mergeOptions/>
+    <recursiveSubmodules>false</recursiveSubmodules>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <authorOrCommitter>false</authorOrCommitter>
+    <clean>false</clean>
+    <wipeOutWorkspace>false</wipeOutWorkspace>
+    <pruneBranches>false</pruneBranches>
+    <buildChooser class="hudson.plugins.git.util.DefaultBuildChooser"/>
+    <gitTool>Default</gitTool>
+    <browser class="hudson.plugins.git.browser.GithubWeb">
+      <url>https://github.com/nickboldt/maven-plugins/</url>
+    </browser>
+    <submoduleCfg class="list"/>
+    <relativeTargetDir/>
+    <excludedRegions/>
+    <excludedUsers/>
+  </scm>
+  <assignedNode>RHEL_any</assignedNode>
+  <canRoam>false</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <jdk>java16_default</jdk>
+  <triggers class="vector">
+    <hudson.triggers.SCMTrigger>
+      <spec>*/30 * * * *
+</spec>
+    </hudson.triggers.SCMTrigger>
+  </triggers>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Maven>
+      <targets>${MAVEN_FLAGS}</targets>
+      <mavenName>maven-3.0.1</mavenName>
+      <jvmOptions>-Xms512m -Xmx1024m -XX:PermSize=128m -XX:MaxPermSize=256m</jvmOptions>
+      <pom>hudson-job-schedule-checker-plugin/pom.xml</pom>
+      <properties># first, build the plugin + run tests</properties>
+      <usePrivateRepository>true</usePrivateRepository>
+    </hudson.tasks.Maven>
+    <hudson.tasks.Maven>
+      <targets>${MAVEN_FLAGS}</targets>
+      <mavenName>maven-3.0.1</mavenName>
+      <jvmOptions>-Xms512m -Xmx1024m -XX:PermSize=128m -XX:MaxPermSize=256m</jvmOptions>
+      <pom>hudson-job-schedule-checker-plugin/pom-checker.xml</pom>
+      <properties># next, use the plugin to generate a log of job status &amp; info</properties>
+      <usePrivateRepository>false</usePrivateRepository>
+    </hudson.tasks.Maven>
+  </builders>
+  <publishers>
+    <hudson.plugins.textfinder.TextFinderPublisher>
+      <regexp>Tests Disabled|FAIL</regexp>
+      <succeedIfFound>false</succeedIfFound>
+      <unstableIfFound>true</unstableIfFound>
+      <alsoCheckConsoleOutput>true</alsoCheckConsoleOutput>
+    </hudson.plugins.textfinder.TextFinderPublisher>
+  </publishers>
+  <buildWrappers>
+    <hudson.plugins.build__timeout.BuildTimeoutWrapper>
+      <timeoutMinutes>120</timeoutMinutes>
+      <failBuild>true</failBuild>
+    </hudson.plugins.build__timeout.BuildTimeoutWrapper>
+  </buildWrappers>
+</project>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <actions/>
+  <description>p2 mirror an update site consisting of the contents of the target platform, monitoring SVN for changes. 
+
+&lt;p&gt;Repo is created outside of Hudson workspace for reuse between multiple builds. 
+
+&lt;ul&gt;
+&lt;li&gt;/home/hudson/static_build_env/jbds/tools/sources/REPO_trunk/ (sync'd to: /home/hudson/static_build_env/jbds/target-platform_trunk/)
+&lt;li&gt;&lt;a href="http://download.jboss.org/jbosstools/updates/target-platform_trunk/latest/"&gt;http://download.jboss.org/jbosstools/updates/target-platform_trunk/latest/&lt;/a&gt; (sftp://tools@filemgmt.jboss.org/downloads_htdocs/tools/updates/target-platform_trunk/latest/)
+&lt;li&gt;&lt;a href="http://download.jboss.org/jbosstools/updates/target-platform_trunk/e362-wtp323.target.zip"&gt;http://download.jboss.org/jbosstools/updates/target-platform_trunk/e362-wtp323.target.zip&lt;/a&gt; (sftp://tools@filemgmt.jboss.org/downloads_htdocs/tools/updates/target-platform_trunk/e362-wtp323.target.zip)
+&lt;/ul&gt;
+
+&lt;h2&gt;&lt;a style="color:#FF9933" href="http://download.jboss.org/jbosstools/builds/cascade/trunk.html"&gt;Build Job Cascade &amp;amp; Results&lt;/a&gt;&lt;/h2&gt;
+
+</description>
+  <logRotator>
+    <daysToKeep>5</daysToKeep>
+    <numToKeep>5</numToKeep>
+    <artifactDaysToKeep>-1</artifactDaysToKeep>
+    <artifactNumToKeep>-1</artifactNumToKeep>
+  </logRotator>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>targetFile</name>
+          <description>target file to resolve</description>
+          <defaultValue>multiple.target</defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>repoDir</name>
+          <description>path to stage the update site</description>
+          <defaultValue>/home/hudson/static_build_env/jbds/tools/sources/REPO_3.3.indigo</defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>CLEAN</name>
+          <description>Should we purge the existing repo and start from a clean one (true), 
+or build on top of an existing one (false)?</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>false</string>
+              <string>true</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>MAVEN_FLAGS</name>
+          <description>add 'deploy' to push to nexus</description>
+          <defaultValue>clean install -B -U -fae -e -Dmaven.repo.local=${WORKSPACE}/m2-repo</defaultValue>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+    <hudson.plugins.descriptionsetter.JobByDescription/>
+    <hudson.plugins.disk__usage.DiskUsageProperty/>
+    <hudson.plugins.jira.JiraProjectProperty>
+      <siteName>http://opensource.atlassian.com/projects/hibernate/</siteName>
+    </hudson.plugins.jira.JiraProjectProperty>
+  </properties>
+  <scm class="hudson.scm.SubversionSCM">
+    <locations>
+      <hudson.scm.SubversionSCM_-ModuleLocation>
+        <remote>https://svn.jboss.org/repos/jbosstools/trunk/build</remote>
+        <local>sources</local>
+      </hudson.scm.SubversionSCM_-ModuleLocation>
+    </locations>
+    <useUpdate>true</useUpdate>
+    <doRevert>false</doRevert>
+    <browser class="hudson.scm.browsers.FishEyeSVN">
+      <url>http://fisheye.jboss.com/browse/JBossTools/</url>
+      <rootModule/>
+    </browser>
+    <excludedRegions/>
+    <includedRegions/>
+    <excludedUsers/>
+    <excludedRevprop/>
+    <excludedCommitMessages/>
+  </scm>
+  <assignedNode>RHEL5_any</assignedNode>
+  <canRoam>false</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <jdk>java16_default</jdk>
+  <triggers class="vector">
+    <hudson.triggers.SCMTrigger>
+      <spec># 4:15am every day
+15 4 * * *</spec>
+    </hudson.triggers.SCMTrigger>
+  </triggers>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command># clean up pre-existing locally before starting fresh
+repoDir=/home/hudson/static_build_env/jbds/tools/sources/REPO_3.3.indigo
+destinationPath=/home/hudson/static_build_env/jbds/target-platform_3.3.indigo
+if [[ $CLEAN == "true" ]]; then rm -fr ${repoDir} ${destinationPath}; fi
+</command>
+    </hudson.tasks.Shell>
+    <hudson.tasks.Ant>
+      <targets>build.local.target.platform.repo</targets>
+      <antName>ant-1.7.x</antName>
+      <antOpts>-Xms512m -Xmx1024m -XX:PermSize=128m -XX:MaxPermSize=256m</antOpts>
+      <buildFile>${WORKSPACE}/sources/target-platform/build.xml</buildFile>
+    </hudson.tasks.Ant>
+    <hudson.tasks.Maven>
+      <targets>${MAVEN_FLAGS} -DJOB_NAME=${JOB_NAME} -DBUILD_ID=${BUILD_ID} -DBUILD_NUMBER=${BUILD_NUMBER}</targets>
+      <mavenName>maven-3.0.1</mavenName>
+      <jvmOptions>-Xms512m -Xmx1024m -XX:PermSize=128m -XX:MaxPermSize=256m</jvmOptions>
+      <pom>${WORKSPACE}/sources/parent/pom.xml</pom>
+      <usePrivateRepository>true</usePrivateRepository>
+    </hudson.tasks.Maven>
+    <hudson.tasks.Shell>
+      <command># script here: http://anonsvn.jboss.org/repos/jbosstools/trunk/build/target-platform/publish.sh
+. ${WORKSPACE}/sources/target-platform/publish.sh -jbt_3.3.indigo</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <hudson.tasks.BuildTrigger>
+      <childProjects>devstudio-5.0_trunk.target-platform, jbosstools-3.3_trunk.component--gwt, jbosstools-3.3_trunk.component--runtime, jbosstools-3.3_trunk.component--tests, jbosstools-3.3_trunk.component--usage, jbosstools-3.3_trunk.continuous, jbosstools-3.3_trunk.tests, jbosstools-drools-5.2_trunk, jbosstools-pi4soa-3.1_trunk, jbosstools-savara-1.1_trunk, jbosstools-teiid-designer-7.4_trunk</childProjects>
+      <threshold>
+        <name>UNSTABLE</name>
+        <ordinal>1</ordinal>
+        <color>YELLOW</color>
+      </threshold>
+    </hudson.tasks.BuildTrigger>
+    <hudson.plugins.textfinder.TextFinderPublisher>
+      <regexp>ERROR|AILURE|\[exec\] Caused by:|No such file or directory|: Exception in |: Error in |\[exec\] Result: </regexp>
+      <succeedIfFound>false</succeedIfFound>
+      <unstableIfFound>false</unstableIfFound>
+      <alsoCheckConsoleOutput>true</alsoCheckConsoleOutput>
+    </hudson.plugins.textfinder.TextFinderPublisher>
+    <hudson.plugins.ws__cleanup.WsCleanup/>
+  </publishers>
+  <buildWrappers>
+    <hudson.plugins.build__timeout.BuildTimeoutWrapper>
+      <timeoutMinutes>240</timeoutMinutes>
+      <failBuild>false</failBuild>
+    </hudson.plugins.build__timeout.BuildTimeoutWrapper>
+  </buildWrappers>
+</project>
