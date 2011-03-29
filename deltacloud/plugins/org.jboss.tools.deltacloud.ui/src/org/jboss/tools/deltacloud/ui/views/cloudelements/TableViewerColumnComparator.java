@@ -15,6 +15,8 @@ import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Table;
 
 /**
  * A viewer comparator that compares labels in a column of a table.<br>
@@ -52,8 +54,29 @@ public class TableViewerColumnComparator extends ViewerComparator {
 		return column;
 	}
 
-	public void reverseDirection() {
-		direction *= -1;
+	public void switchDirection() {
+		if (direction == -1) {
+			direction = 0;
+		} else if (direction == 1) {
+			direction = -1;
+		} else if (direction == 0) {
+			direction = 1;
+		}
+	}
+
+	public void setSortIndicator(TableViewer tableViewer) {
+		Table table = tableViewer.getTable();
+		switch(direction) {
+		case -1:
+			table.setSortDirection(SWT.UP);
+			break;
+		case 0:
+			table.setSortDirection(SWT.NONE);
+			break;
+		case 1:
+			table.setSortDirection(SWT.DOWN);
+			break;
+		}
 	}
 
 	@Override

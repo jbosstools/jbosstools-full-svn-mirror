@@ -106,8 +106,9 @@ public class FindImagePage extends WizardPage {
 			TableViewerColumnComparator comparator = (TableViewerColumnComparator) viewer.getComparator();
 			Table t = viewer.getTable();
 			if (comparator.getColumn() == column) {
-				comparator.reverseDirection();
+				comparator.switchDirection();
 			}
+			comparator.setSortIndicator(viewer);
 			comparator.setColumn(column);
 			TableColumn tc = (TableColumn) e.getSource();
 			t.setSortColumn(tc);

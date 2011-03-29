@@ -1,3 +1,53 @@
+2011-03-25  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/TableViewerColumnComparator.java 
+	(switchDirection): 
+	(setSortIndicator): 
+	* src/org/jboss/tools/deltacloud/ui/views/cloudelements/AbstractCloudElementTableView.java (ColumnListener.widgetSelected): 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/FindImagePage.java (ColumnListener.widgetSelected): 
+	[JBIDE-7551] implemented 3 sorting states and sorting arrows shown in the columns
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstanceWizard.java 
+	(NewInstanceWizard): 
+	(addPages): 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePageModel.java 
+	(PROPERTY_IMAGE_ID): 
+	(NewInstancePageModel): 
+	(initImageId): 
+	(setImageId): 
+	(setImage): 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewInstancePage.java 
+	(NewInstancePage): 
+	(bindImage): 
+	* src/org/jboss/tools/deltacloud/ui/commands/CreateInstanceFromSpecificImageHandler.java (createInstance): 
+	[JBIDE-8633] loading images and querying a particular image in the background now
+
+2011-03-24  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/InstanceFilterWizard.java 
+	(performFinish): 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/InstanceFilterPage.java 
+	(getAliasRule): 
+	(aliasText): 
+	(defaultAlias): 
+	(ButtonListener): 
+	(validate): 
+	(createControl): 
+	[JBIDE-8187] added capability to filter instance on behalf of alias
+	
+2011-03-23  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CloudConnectionPageModel.java 
+	(setDriverByUrl): 
+	(isKnownCloud): 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CloudConnectionPage.java 
+	(Driver2Label): 
+	(createControl): 
+	(bindTestButtonEnablement): 
+	(bindCloudType): 
+	* src/org/jboss/tools/internal/deltacloud/ui/utils/ControlDecorationAdapter.java (ControlDecorationAdapter): 
+	[JBIDE-8206] moved checking cloud type to background job
+
 2011-03-23  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/deltacloud/ui/views/CVMessages.properties: 
