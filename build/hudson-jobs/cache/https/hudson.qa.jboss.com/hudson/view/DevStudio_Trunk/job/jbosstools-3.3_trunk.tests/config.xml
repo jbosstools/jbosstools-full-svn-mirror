@@ -25,6 +25,8 @@ integration-test :: build and test &lt;a href="http://maven.apache.org/guides/in
 install :: build, test, and install into m2 repo &lt;a href="http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html"&gt;*&lt;/a&gt;
 osgi-test:test :: just (re-)run test(s)
 
+-P hudson :: enable hudson build ID in feature/plugin qualifiers
+-P coverage :: enable coverage reporting
 -Dmaven.test.skip :: to compile but not run tests in conjunction with integration-test or install phase
 -Dmaven.repo.local=${WORKSPACE}/m2-repository :: path to local m2 repo
 -Dcoverage :: enable Emma test coverage reporting
