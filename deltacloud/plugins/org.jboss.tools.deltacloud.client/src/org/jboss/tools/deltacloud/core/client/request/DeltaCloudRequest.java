@@ -26,5 +26,7 @@ public interface DeltaCloudRequest {
 
 	public URL getUrl() throws MalformedURLException;
 
+	public String getUrlString();
+	
 	public HttpMethod getHttpMethod();
 }

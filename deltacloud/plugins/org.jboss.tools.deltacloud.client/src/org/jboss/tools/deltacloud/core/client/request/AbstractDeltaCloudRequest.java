@@ -44,13 +44,13 @@ public abstract class AbstractDeltaCloudRequest implements DeltaCloudRequest {
 		return url;
 	}
 
-	protected String getUrlString() {
+	public String getUrlString() {
 		if (urlString == null) {
 			this.urlString = doCreateUrl(urlBuilder);
 		}
 		return urlString;
 	}
-
+	
 	public String toString() {
 		return getUrlString();
 	}
