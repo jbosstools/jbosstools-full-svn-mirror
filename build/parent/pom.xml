@@ -355,47 +355,12 @@
 		<profile>
 			<id>unified.site</id>
 			<activation>
-				<activeByDefault>false</activeByDefault>
+				<activeByDefault>true</activeByDefault>
 			</activation>
 			<repositories>
 				<repository>
 					<id>jbosstools-target-site</id>
 					<url>${jbosstools-target-site}</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-			</repositories>
-		</profile>
-
-		<!-- Time saver: to build everything from scratch (without target platform); 
-			To enable it use -P multiple.site in command line. Do not remove repos 
-			that contains the same artefacts, it is done for purpose to make build more 
-			stable in case one of the repos is offline. -->
-		<profile>
-			<id>multiple.site</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<repositories>
-				<repository>
-					<id>jbosstools-target-site</id>
-					<url>${jbosstools-target-site}</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<repository>
-					<id>jbosstools-requirements-composite-mirror</id>
-					<url>http://download.jboss.org/jbosstools/updates/indigo/</url>
 					<layout>p2</layout>
 					<snapshots>
 						<enabled>true</enabled>
