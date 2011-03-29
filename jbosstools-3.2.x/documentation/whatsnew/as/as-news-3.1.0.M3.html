@@ -1,0 +1,95 @@
+<html>
+
+<head>
+<link rel="stylesheet" href="../whatsnew.css">
+<title>JBoss AS Tools 2.1.0.M3 News</title>
+</head>
+
+<body>
+
+<h1>JBoss AS Tools 3.1.0.M3 - New and Noteworthy</h1>
+
+  <p align="right"><a href="../index.html">&lt; Main Index</a> <a href="../hibernate/hibernate-news-3.3.0.M3.html">Hibernate Tools &gt;</a></p>
+
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>Server</h3>
+      <hr/>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="left">
+      <p align="right">
+	<b>Configure filesets for Servers</b></td>
+    <td valign="top">
+      <p>There is now a preference page for configuring default filesets for server types.</p>
+
+      <p><img src="../images/default_fileset_for_servers.png"/></p>
+
+      <p>This can be used to setup which files inside the server configuration you wish to have easy access from the Server view, i.e. define **/*-log4j.xml for JBoss servers if you want to easily access the logging configuration files.</p>
+
+      <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-2534">Related jira</a></small></p>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="left">
+      <p align="right">
+	<b>JBoss configuration Variable</b></td>
+    <td valign="top">
+      <p>You can now use <code>${jboss_config}</code> to refer to the selected JBoss Configuration to allow for portable filesets.</p>
+      <p><img src="../images/config_variable_in_filefilter.png"/></p>
+
+      <p>Since this variable is an Eclipse Variable it can even be
+      used in launch configurations and similar places. Here a
+      specific server/runtime needs to be named,
+      i.e. <code>${jboss_config:JMyBoss4}</code>.
+
+      <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-4680">Related jira</a></small></p>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="left">
+      <p align="right">
+	<b>Updated icons/images to new JBoss logo</b></td>
+    <td valign="top">
+      <p>The new wizards for Server types now uses the new JBoss logo</p>
+
+      <p><img src="../images/jbosslogo_server.png"/></p>
+
+      <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-4709">Related jira</a></small></p>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+    </td>
+  </tr>
+
+
+  
+</table>
+
+</body>
+
+</html>
+
+

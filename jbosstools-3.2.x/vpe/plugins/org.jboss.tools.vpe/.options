@@ -1,0 +1,19 @@
+org.jboss.tools.vpe/debug/source/mutation_event=
+org.jboss.tools.vpe/debug/source/selection_event=
+org.jboss.tools.vpe/debug/source/model_lifecycle_event=
+org.jboss.tools.vpe/debug/visual/mutation_event=
+org.jboss.tools.vpe/debug/visual/selection_event=
+org.jboss.tools.vpe/debug/visual/contextmenu_event=
+org.jboss.tools.vpe/debug/visual/mouse_event=
+org.jboss.tools.vpe/debug/visual/dragdrop_event=
+org.jboss.tools.vpe/debug/visual/key_event=
+org.jboss.tools.vpe/debug/visual/inner_dragdrop_event=
+org.jboss.tools.vpe/debug/visual/add_pseudo_element=
+org.jboss.tools.vpe/debug/visual/contextmenu/dump_source=
+org.jboss.tools.vpe/debug/visual/contextmenu/dump_selected_element=
+org.jboss.tools.vpe/debug/visual/contextmenu/dump_mapping=
+org.jboss.tools.vpe/debug/visual/dump_print_hash=
+#This may be a list, e.g.:style,class,width
+org.jboss.tools.vpe/debug/visual/ignored_attributes=
+org.jboss.tools.vpe/debug/visual/contextmenu/show_test=
+org.jboss.tools.vpe/debug/use_PrintStackTrace=

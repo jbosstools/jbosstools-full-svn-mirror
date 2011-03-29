@@ -1,0 +1,5 @@
+feature@org.jboss.tools.profiler.sdk.feature=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/profiler/features/org.jboss.tools.profiler.sdk.feature
+feature@org.jboss.tools.profiler.feature=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/profiler/features/org.jboss.tools.profiler.feature
+feature@org.jboss.tools.profiler.tests.feature=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/profiler/features/org.jboss.tools.profiler.tests.feature
+
+plugin@org.jboss.tools.profiler.ui=SVN,,http://anonsvn.jboss.org/repos,,jbosstools/trunk/profiler/plugins/org.jboss.tools.profiler.ui

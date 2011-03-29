@@ -1,0 +1,29 @@
+<tests>
+	<test id="important01">
+		<DIV ID="important01"	STYLE="border: 1px solid black; background-color: rgb(236, 243, 255);">
+			<H1>
+				<SPAN>
+					Title
+				</SPAN>
+			</H1>
+			<P>
+				<SPAN>
+					No user-servicable parts inside. Breaking this seal voids all warranties.
+				</SPAN>
+			</P>
+		</DIV>
+	</test>
+	<test id="important02">
+		<DIV ID="important02"
+			STYLE="border: 1px solid black; background-color: rgb(236, 243, 255);">
+			<H1>
+				IMPORTANT
+			</H1>
+			<P>
+				<SPAN>
+					No user-servicable parts inside. Breaking this seal voids all warranties.
+				</SPAN>
+			</P>
+		</DIV>
+	</test>
+</tests>

@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "JBoss_Tools_Reference_Guide_Template.ent">
+%BOOK_ENTITIES;
+]>
+<chapter id="hints">
+  <title>Hints</title>
+  <para>
+
+  </para>
+  <xi:include href="basic_tasks-hints.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <xi:include href="managed_beans-hints.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <xi:include href="user_interface_components-hints.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <xi:include href="state_management-hints.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <xi:include href="ajax_support-hints.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <xi:include href="another_concept-hints.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <xi:include href="placeholder_for_a_link-hints.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+</chapter>

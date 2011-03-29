@@ -1,0 +1,8 @@
+<tests>
+	<test id="input1">
+		<INPUT TYPE="text" ID="input1" VALUE="input"/>
+	</test>
+	<test id="input2">
+		<INPUT TYPE="text" DISABLED="disabled" ID="input2" VALUE="input"/>
+	</test>
+</tests>

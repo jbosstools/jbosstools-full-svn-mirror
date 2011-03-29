@@ -1,0 +1,1133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3CR3//EN"
+"http://www.docbook.org/xml/4.3/docbookx.dtd"
+
+[<!ENTITY  overview SYSTEM "overview.xml">
+<!ENTITY install SYSTEM "install.xml">
+<!ENTITY detail SYSTEM "detail.xml">
+<!ENTITY deploy SYSTEM "deploy.xml">
+<!ENTITY reference SYSTEM "reference.xml">
+<!ENTITY summary SYSTEM "summary.xml">
+<!ENTITY tasks SYSTEM "tasks.xml">
+]><book xmlns:diffmk="http://diffmk.sf.net/ns/diff">
+    
+     <bookinfo>
+         <title>JBoss BPEL User Guide</title>
+         
+         <corpauthor>
+             <inlinemediaobject>
+                 <imageobject role="fo">
+                     <imagedata fileref="images/jbosstools_logo.png" format="PNG"></imagedata>
+                 </imageobject>	
+                 <imageobject role="html">
+                     <imagedata></imagedata>
+                 </imageobject>	
+             </inlinemediaobject>           
+         </corpauthor>
+         <author><firstname>Denny</firstname><surname>Xu</surname><email>dxu@redhat.com</email></author>
+         <author><firstname>Grid</firstname><surname>Qian</surname><email>fqian@redhat.com</email></author>           
+       	     <copyright>
+	          <year>2009</year>
+	           <year>2010</year>
+	          <holder>JBoss by Red Hat</holder>
+	     </copyright>
+         <releaseinfo>
+           Version: 1.0.0.trunk
+         </releaseinfo>
+<abstract>
+   <title></title>
+       <para>
+           <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/bpel_ref_guide/pdf/BPEL_Reference_Guide.pdf">PDF version</ulink>
+       </para>
+</abstract>
+
+
+    </bookinfo>
+    
+    <toc></toc> 
+    
+<chapter id="overview" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/bpel/docs/reference/en-US/modules/overview.xml">
+   <title>JBoss BPEL project Overview</title>
+
+   <para>JBoss BPEL project is a WS-BPEL 2.0 project that gives a way to create, edit, validate and deploy BPEL files to JBoss BPEL runtime. It is based on Eclipse 
+        <ulink url="http://www.eclipse.org/bpel/">BPEL
+            project </ulink>. </para>
+   
+   <para>It improves the Eclipse BPEL project in the following way: </para>
+   <itemizedlist>
+       <listitem><para> Implements close integration with JBoss BPEL runtime. Adds a new project type for the deployment to JBoss BPEL runtime.</para></listitem>
+       <listitem><para> Supports two ways of deployment: one way is to deploy a bpel project directly to JBoss BPEL runtime. The other way is to deploy bpel files in JBoss ESB project to JBoss BPEL runtime. </para></listitem>
+       <listitem><para> Improves the BPEL validator and increases Eclipse BPEL editor's quality. </para></listitem>
+   </itemizedlist>
+   
+   <para>
+   <ulink url="http://docs.oasis-open.org/wsbpel/2.0/OS/wsbpel-v2.0-OS.html">WS-BPEL 2.0</ulink> 
+   stands for Web Service Business Process Execution Language. Like EAI, BPEL is an XML-based language,
+   but BPEL is more specific and targeted. A programmer uses BPEL to join sometimes 
+   disparate functions into an integrated process, resulting in a seamless use of the Internet to 
+   conduct business transactions ranging from simple money exchanges to complex calculations and 
+   asset reallocation.
+   </para>
+
+<section>
+    <title>Key Features of JBoss BPEL project</title>
+    <para>Let's start with looking through the table of the main features of JBoss BPEL editor project: </para>
+    
+    <table>
+        
+        <title>Key Functionality for JBoss BPEL editor project</title>
+        <tgroup cols="2">          
+            <colspec align="left" colnum="1" colwidth="2*"></colspec>
+            <colspec colnum="2" colwidth="4*"></colspec>
+            <thead>
+                <row>
+                    <entry>Feature</entry>
+                    <entry>Benefit</entry>
+                  
+                </row>
+            </thead> 
+            <tbody>            
+                <row>
+                    <entry><para>WS-BPEL 2.0 support</para></entry>
+                    <entry><para>JBoss BPEL project supports the newest WS-BPEL 2.0 specifications. </para></entry>   
+                </row>          
+                <row>
+                    <entry><para>Close integration with JBoss BPEL runtime</para></entry>
+                    <entry><para>There are two ways to deploy BPEL files to JBoss BPEL runtime.
+                        The user can deploy a BPEL project as a whole and can deploy BPEL files in
+                        JBoss ESB project to JBoss BPEL runtime. </para></entry> 
+                </row>               
+                <row>
+                    <entry><para>BPEL file editor</para></entry>
+                    <entry><para>The user can use the editor separately to edit a BPEL file. </para></entry>  
+                </row>               
+                <row>
+                    <entry><para>BPEL file validator</para></entry>
+                    <entry><para>The validator can give the error messages about BPEL files to the user. </para></entry>  
+                </row>                              
+            </tbody>           
+        </tgroup>
+    </table>
+    
+</section>
+
+</chapter>
+    
+<chapter id="install" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/bpel/docs/reference/en-US/modules/install.xml">
+    <title>Installation JBoss BPEL Tools</title>
+    <section id="installeclipse">
+        <title>Installation JBoss BPEL editor</title>
+        <para>At first, you need Eclipse 3.6. You can get it from <ulink url="http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/helios/">Eclipse Web Site</ulink>. 
+        </para>
+        <para>The JBoss BPEL editor is included into JBoss Tools. 
+            You have some methods to install JBoss Tools. 
+            See <ulink url="http://www.jboss.org/tools/download/installation.html">Installing JBoss Tools</ulink> for more information.</para>
+        <para>If you  want to install only the JBoss BPEL editor, you can install it from <ulink url="http://jboss.org/tools/download/dev.html">JBoss Tools</ulink> page separately.
+            Please, note, that only JBoss Tools 3.1 or higher version includes JBoss BPEL editor.
+        </para>
+    </section>
+    <section diffmk:change="added">
+        <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Prerequisites</diffmk:wrapper></title>
+        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">For installation and configuring BPEL engine into a JBossAS environment
+            you will need the following: </diffmk:wrapper></para>
+        <itemizedlist diffmk:change="added">
+            <listitem diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added"> JBossAS (version 5.1.0.GA or higher), 
+                available from </diffmk:wrapper><ulink diffmk:change="added" url="http://www.jboss.org/jbossas"><diffmk:wrapper diffmk:change="added">
+                http://www.jboss.org/jbossas</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></para></listitem>
+                <listitem diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">RiftSaw (version 2.1 or higher), available from </diffmk:wrapper><ulink diffmk:change="added" url="http://www.jboss.org/riftsaw"><diffmk:wrapper diffmk:change="added">http://www.jboss.org/riftsaw</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></para></listitem>
+            <listitem diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Ant, available from </diffmk:wrapper><ulink diffmk:change="added" url="http://ant.apache.org"><diffmk:wrapper diffmk:change="added">here</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></para></listitem>
+        </itemizedlist>
+        
+    </section>
+    <section id="installRuntime">
+        <title>Installation JBoss BPEL Runtime</title>
+        <itemizedlist diffmk:change="added">
+            <listitem diffmk:change="added">
+                <para><diffmk:wrapper diffmk:change="added">Unpack the JBossAS installation archive into the required location. 
+                </diffmk:wrapper></para>
+            </listitem>
+            <listitem diffmk:change="added">
+                <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Unpack the RiftSaw distribution into the location
+                    alongside the JBossAS installation:</diffmk:wrapper></para>
+                <itemizedlist diffmk:change="added">
+                    <listitem diffmk:change="added">
+                        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Edit the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">install/deployment.properties</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> file to update 
+                        the JBossAS location settings.
+                        </diffmk:wrapper></para>
+                    </listitem>
+                    <listitem diffmk:change="added">
+                        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">From the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">install</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> folder,
+                            run: </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">ant deploy -Ddatabase=hsql</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">
+                        to deploy RiftSaw to JBossAS.
+                        </diffmk:wrapper></para>
+                    </listitem>
+                </itemizedlist>
+            </listitem>
+            <listitem diffmk:change="added">
+                <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Then in the 
+                </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">${RiftSaw}/install</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> folder run the command:
+                </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">ant deploy -Ddatabase=hsql -Dws.stack=native -Dws.version=3.2.2.GA</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">  
+                It will help you to download the web service stack, and then upgrade it for JBoss AS. Anyway, you can  do it step by step by following the guide from </diffmk:wrapper> <ulink url="http://www.jboss.org/riftsaw/documentation">JBoss RiftSaw documents</ulink> or the README file in <property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">${RiftSaw}/install</diffmk:wrapper></property>
+                </para>
+            </listitem>
+                    </itemizedlist>
+        
+    </section>
+</chapter>
+    
+<chapter id="tasks" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/bpel/docs/reference/en-US/modules/tasks.xml">
+    <title><diffmk:wrapper diffmk:change="changed">Tasks</diffmk:wrapper></title>
+    <section diffmk:change="added" id="detail">
+        <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Creating and editing a BPEL project</diffmk:wrapper></title>
+        <para><diffmk:wrapper diffmk:change="added">In the chapter we describe the necessary steps to create a new BPEL project and edit the BPEL files.
+            You can get the source of the example from </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">
+            riftsaw/samples/quickstart/hello_world</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">.
+            Here and further in the guide we will create
+            a simple echo example, used to respond to a sent message with a
+            modified version of the request message being returned in a response.
+            First of all, you should create a BPEL project.
+            
+        </diffmk:wrapper></para>
+        <section diffmk:change="added" id="createproject">
+            <title>Creating a BPEL project</title>
+            <para><diffmk:wrapper diffmk:change="changed">Create the project by selecting 
+                </diffmk:wrapper><emphasis><property moreinfo="none">New &gt; Project... &gt; BPEL 2.0 &gt; BPEL Project</property></emphasis><diffmk:wrapper diffmk:change="changed"> from the menu bar.
+                Then click the </diffmk:wrapper><property moreinfo="none">Next</property><diffmk:wrapper diffmk:change="changed"> button. 
+            </diffmk:wrapper></para>
+            <figure diffmk:change="added" float="0">
+                <title>New BPEL Project</title>
+                <mediaobject diffmk:change="added">
+                    <imageobject diffmk:change="added">
+                        <imagedata fileref="images/detail_createproject_1.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para>On this page of the <property moreinfo="none">New BPEL Project Wizard</property> enter a project name in the <property moreinfo="none">Project Name</property><diffmk:wrapper diffmk:change="changed">
+                field,e.g enter </diffmk:wrapper><property moreinfo="none">HelloWorld</property>.</para>
+            
+            <figure float="0">
+                <title>New BPEL Project Wizard</title>
+                <mediaobject diffmk:change="added">
+                    <imageobject diffmk:change="added">
+                        <imagedata fileref="images/detail_createproject_2.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para>Click the <property moreinfo="none">Finish</property><diffmk:wrapper diffmk:change="changed"> button.
+                So you have created the BPEL project named </diffmk:wrapper><property moreinfo="none">HelloWorld</property><diffmk:wrapper diffmk:change="changed">.
+                Its structure is like this: </diffmk:wrapper></para>
+            <figure diffmk:change="added" float="0">
+                <title>The BPEL Project structure</title>
+                <mediaobject diffmk:change="added">
+                    <imageobject diffmk:change="added">
+                        <imagedata fileref="images/detail_createproject_3.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+        </section>
+        <section diffmk:change="added" id="createprocess">
+            <title>Creating a BPEL process</title>
+            <para><diffmk:wrapper diffmk:change="changed">Now you should create a BPEL process. You can create it by selecting 
+                </diffmk:wrapper><emphasis><property moreinfo="none">New &gt; Others... &gt; BPEL 2.0 &gt; New BPEL Process File</property></emphasis><diffmk:wrapper diffmk:change="changed">.
+            </diffmk:wrapper></para>
+            <figure diffmk:change="added" float="0">
+                <title>New BPEL Process File</title>
+                <mediaobject diffmk:change="added">
+                    <imageobject diffmk:change="added">
+                        <imagedata fileref="images/detail_createprocess_1.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para>Click the <property moreinfo="none">Next</property> button. Enter the following information:</para>
+            <table>
+                
+                <title>Fields and values</title>
+                <tgroup cols="2">          
+                    <colspec align="left" colnum="1" colwidth="2*"></colspec>
+                    <colspec colnum="2" colwidth="4*"></colspec>
+                    <thead diffmk:change="added">
+                        <row diffmk:change="added">
+                            <entry>Field</entry>
+                            <entry>Value</entry>
+                            
+                        </row>
+                    </thead> 
+                    <tbody>            
+                        <row>
+                            <entry><para>BPEL Process Name</para></entry>
+                            <entry><para>enter a process name. For example, <property moreinfo="none">HelloWorld</property>.</para></entry>   
+                        </row>          
+                        <row>
+                            <entry><para>Namespace</para></entry>
+                            <entry><para>enter or select a namespace for the BPEL process.</para></entry> 
+                        </row>               
+                        <row>
+                            <entry><para>Template</para></entry>
+                            <entry><para><diffmk:wrapper diffmk:change="added">Select the necessary template for the BPEL process.
+                                When you select the template, you will see the information 
+                                about the template below on the page.In our case you should
+                                select </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Synchronous BPEL Process</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></para></entry>  
+                        </row>               
+                        
+                    </tbody>           
+                </tgroup>
+            </table>
+            
+            <figure float="0">
+                <title>New BPEL Process File Wizard</title>
+                <mediaobject diffmk:change="added">
+                    <imageobject diffmk:change="added">
+                        <imagedata fileref="images/detail_createprocess_2.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            
+            <para>Click the <property moreinfo="none">Next</property> button. On the second page, you can custom your wsdl service details. Enter the following information:</para>
+            <table>
+                
+                <title>Fields and values</title>
+                <tgroup cols="2">          
+                    <colspec align="left" colnum="1" colwidth="2*"></colspec>
+                    <colspec colnum="2" colwidth="4*"></colspec>
+                    <thead diffmk:change="added">
+                        <row diffmk:change="added">
+                            <entry>Field</entry>
+                            <entry>Value</entry>
+                            
+                        </row>
+                    </thead> 
+                    <tbody>            
+                        <row>
+                            <entry><para>Service Name</para></entry>
+                            <entry><para>a wsdl service name for the BPEL process. The default is, <property moreinfo="none">HelloWorld</property>.</para></entry>   
+                        </row>          
+                        <row>
+                            <entry><para>Port Name</para></entry>
+                            <entry><para>a wsdl port name for the BPEL process. The default is, <property moreinfo="none">HelloWorldPort</property>.</para></entry> 
+                        </row>               
+                        <row>
+                            <entry><para>Service Address</para></entry>
+                            <entry><para>an address of the wsdl service for the BPEL process. The default is, <property moreinfo="none">http://localhost:8080/HelloWorld</property>.</para></entry> 
+                        </row>               
+                        <row>
+                            <entry><para>Binding Protocol</para></entry>
+                            <entry><para>the binding protocal that you use in the wsdl. You can choose SOAP or HTTP. The default is, <property moreinfo="none">SOAP</property>.</para></entry> 
+                        </row>                        
+                    </tbody>           
+                </tgroup>
+            </table>
+            
+            <figure float="0">
+                <title>Create WSDL file for the BPEL Process wizardpage</title>
+                <mediaobject diffmk:change="added">
+                    <imageobject diffmk:change="added">
+                        <imagedata fileref="images/detail_createprocess_2a.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            
+            <para>Click the <property moreinfo="none">Next</property> button. On the third page, you can choose a folder for the process file from the projects in your workspace. If not choose, The default folder <property moreinfo="none">HelloWorld/bpelContent</property><diffmk:wrapper diffmk:change="changed"> is selected.
+                Click </diffmk:wrapper><property moreinfo="none">Finish</property><diffmk:wrapper diffmk:change="changed">.
+            </diffmk:wrapper></para>
+            <note diffmk:change="added">
+                <para>All of your files that are used in your BPEL project must be under the <property moreinfo="none">bpelContent</property><diffmk:wrapper diffmk:change="changed"> folder of a BPEL project. Only in this case 
+                    these files can be deployed to JBoss server.
+                </diffmk:wrapper></para>
+            </note>
+            
+            <para>Up to now, you have got a simple BPEL process as on the screen below.</para>
+            <figure diffmk:change="added" float="0">
+                <title>A simple BPEL Process File</title>
+                <mediaobject diffmk:change="added">
+                    <imageobject diffmk:change="added">
+                        <imagedata fileref="images/detail_createprocess_3.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para>The next step, you can do is to edit the BPEL process file and then deploy it to JBoss server. </para>
+        </section>
+        <section diffmk:change="added" id="editprocess">
+            <title>Editing a BPEL process file</title>
+            <para>If the <emphasis><property moreinfo="none">Properties view</property></emphasis> and <emphasis><property moreinfo="none">Palette view</property></emphasis><diffmk:wrapper diffmk:change="changed"> are not opened, you can open the views by right-clicking the BPEL editor and selecting  
+                </diffmk:wrapper><property moreinfo="none">Show in Properties</property>, <property moreinfo="none">Show Palette in Palette view</property><diffmk:wrapper diffmk:change="changed">. Then you should have the view like this: 
+            </diffmk:wrapper></para>
+            <figure diffmk:change="added" float="0">
+                <title>The BPEL editor view</title>
+                <mediaobject diffmk:change="added">
+                    <imageobject diffmk:change="added">
+                        <imagedata fileref="images/detail_editprocess_1.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>  
+            <para>In the <emphasis><property moreinfo="none">Palette view</property></emphasis>, you can drag a BPEL element to the BPEL editor and drop it in the place you want.</para>   
+            <para>In the <emphasis><property moreinfo="none">Properties view</property></emphasis><diffmk:wrapper diffmk:change="changed">, you can get the information about every element of the BPEL process.
+                In the BPEL editor select any element  you want,and then
+                the element's properties will be shown in the Properties view.The table below describes the tabs of the Properties view: 
+            </diffmk:wrapper></para>
+            <table>
+                
+                <title>Tabs of the Property view</title>
+                <tgroup cols="2">          
+                    <colspec align="left" colnum="1" colwidth="2*"></colspec>
+                    <colspec colnum="2" colwidth="4*"></colspec>
+                    <thead diffmk:change="added">
+                        <row diffmk:change="added">
+                            <entry>Tab</entry>
+                            <entry>Description</entry>
+                            
+                        </row>
+                    </thead> 
+                    <tbody>            
+                        <row>
+                            <entry><para>Description</para></entry>
+                            <entry><para>Shows the descriptive information about the element,e.g. <property moreinfo="none">Name</property> of the element.</para></entry>   
+                        </row>          
+                        <row>
+                            <entry><para>Details</para></entry>
+                            <entry><para><diffmk:wrapper diffmk:change="changed">Shows the detailed and important information about the element.
+                                It is the most important section of an element.
+                                Most of the properties of an element are set in this section.</diffmk:wrapper></para></entry> 
+                        </row>               
+                        <row>
+                            <entry><para>Join Behavior</para></entry>
+                            <entry><para>Shows the <property moreinfo="none">Join Failure</property> property of the element.</para></entry>  
+                        </row>               
+                        <row>
+                            <entry><para>Documentation</para></entry>
+                            <entry><para>Shows the <property moreinfo="none">documentation</property> sub-element of an element.</para></entry>  
+                        </row> 
+                        <row>
+                            <entry><para>Other</para></entry>
+                            <entry><para><diffmk:wrapper diffmk:change="changed">Every BPEL element has its own sections: Correlation section, Message Exchange section, and so on. We will
+                                introduce them while using them.</diffmk:wrapper></para></entry>  
+                        </row> 
+                    </tbody>           
+                </tgroup>
+            </table>
+            <para>In order to see how a simple BPEL process works in action, you should do some steps as below: </para>   
+            <itemizedlist>
+                <listitem diffmk:change="added">
+                    <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Modify two variables of the process:</diffmk:wrapper></para>
+                    <itemizedlist diffmk:change="added">
+                    <listitem diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Click on the details tab of the input variable,
+                        select </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Browse...</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">.
+                        Then choose </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">string</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> primitive from the list.</diffmk:wrapper></para>
+                        <figure diffmk:change="added" float="0">
+                            <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Edit variable in </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">process</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> file</diffmk:wrapper></title>
+                            <mediaobject diffmk:change="added">
+                                <imageobject diffmk:change="added">
+                                    <imagedata diffmk:change="added" fileref="images/bpel_task_1.png"></imagedata>
+                                </imageobject>
+                            </mediaobject>
+                        </figure>   
+                    </listitem>
+                    <listitem>
+                        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Select </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">xsd</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> as a namespace in the popup menu.</diffmk:wrapper></para>
+                    </listitem>
+                </itemizedlist>
+      
+                </listitem>
+                <listitem diffmk:change="added">
+                    <para>Add an <property moreinfo="none">Assign</property> element between the <property moreinfo="none">receiveInput</property> element and <property moreinfo="none">replyOutput</property> element.</para>
+                </listitem>
+                <listitem diffmk:change="added">
+                    <para>Click the <property moreinfo="none">Assign</property><diffmk:wrapper diffmk:change="changed"> element in the BPEL editor in order to get the properties information of it in the Properties view. 
+                    </diffmk:wrapper></para>
+                </listitem>
+                <listitem diffmk:change="added">
+                    <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Set its name in the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Description</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> tab as </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">assignHelloMesg</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></para>
+                    <para>In the <property moreinfo="none">Details</property><diffmk:wrapper diffmk:change="changed"> section of Properties view,
+                        you should click the </diffmk:wrapper><property moreinfo="none">New</property> button to add a <property moreinfo="none">copy</property><diffmk:wrapper diffmk:change="changed"> sub-element to the element. 
+                        Assign "Variable to Variable"(input:string to output). At this time, an "</diffmk:wrapper><property moreinfo="none">initializer</property>" popup dialog appears. Click on the <property moreinfo="none">Yes</property><diffmk:wrapper diffmk:change="changed"> button in the dialog.
+                    </diffmk:wrapper></para>
+                    <figure diffmk:change="added" float="0">
+                        <title>Add <property moreinfo="none">Assign</property> to the process</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/bpel_task_3.png"></imagedata>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>  
+                    <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Then you should click </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">New</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> once more and select Expression to Variable
+                        (assign </diffmk:wrapper><code diffmk:change="added"><diffmk:wrapper diffmk:change="added">concat($input,' World'))</diffmk:wrapper></code><diffmk:wrapper diffmk:change="added"> to </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">result:string</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">. </diffmk:wrapper></para>
+                    <figure diffmk:change="added" float="0">
+                        <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Add </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Expression assign</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> to the process</diffmk:wrapper></title>
+                        <mediaobject diffmk:change="added">
+                            <imageobject diffmk:change="added">
+                                <imagedata diffmk:change="added" fileref="images/bpel_task_2.png"></imagedata>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>         
+                </listitem>
+                </itemizedlist>
+        </section>
+       
+         <section diffmk:change="added" id="wsdl">
+               <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Adding Service to WSDL file</diffmk:wrapper></title>
+               <para diffmk:change="added"></para>
+               <para diffmk:change="added">The HelloWorldArtifacts.wsdl has been added a service when you create a BPEL process file. You have a default service in this WSDL file. But if you want to add a service by yourself, you can follow the steps as below: </para>
+               <itemizedlist diffmk:change="added">
+                    <listitem diffmk:change="added">
+                    <para>Open the file "<property moreinfo="none">HelloWorldArtifacts.wsdl</property>" in the "<property moreinfo="none">HelloWorld</property><diffmk:wrapper diffmk:change="changed">" project by double-clicking the file. Right-click the WSDL editor and select 
+                        </diffmk:wrapper><property moreinfo="none">Add Service</property>. A new service should appear in the editor. Name it <property moreinfo="none">HelloWorldProcessService</property><diffmk:wrapper diffmk:change="changed">. It has the Port 
+                        named </diffmk:wrapper><property moreinfo="none">NewPort</property>. Select it, right-click on it and rename it to <property moreinfo="none">HelloWorldProcessPort</property><diffmk:wrapper diffmk:change="changed"> in the Properties 
+                        view.
+                    </diffmk:wrapper></para>
+                    <figure diffmk:change="added" float="0">
+                        <title>Add <property moreinfo="none">Service</property> to the WSDL file</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/detail_editprocess_3.png"></imagedata>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>                  
+                </listitem>
+                <listitem diffmk:change="added">
+                    <para><diffmk:wrapper diffmk:change="changed">Right-click somewhere in the whitespace of the WSDL editor and select 
+                        </diffmk:wrapper><property moreinfo="none">Add Binding</property>. A new Binding component will appear in the editor. Name it <property moreinfo="none">HelloWorldSOAPBinding</property><diffmk:wrapper diffmk:change="changed">. Select it, in the 
+                        General tab of the Properties view and select </diffmk:wrapper><property moreinfo="none">HelloWorld</property> as a port type in the <property moreinfo="none">PortType</property><diffmk:wrapper diffmk:change="changed">. Then click on the 
+                        </diffmk:wrapper><property moreinfo="none">Generate Binding Content...</property> button to open the  <property moreinfo="none">Binding Wizard</property>. In the wizard, select <property moreinfo="none">SOAP </property><diffmk:wrapper diffmk:change="changed"> 
+                        as the </diffmk:wrapper><property moreinfo="none">Protocol</property>. Finally, click  the <property moreinfo="none">Finish</property><diffmk:wrapper diffmk:change="changed"> button to close the wizard.
+                    </diffmk:wrapper></para>
+                    <figure diffmk:change="added" float="0">
+                        <title>Add a <property moreinfo="none">Binding</property> to the WSDL file</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/detail_editprocess_4.png"></imagedata>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>  
+                </listitem>
+                <listitem diffmk:change="added">
+                    <para>Click the <property moreinfo="none">HelloWorldProcessPort</property> property in the General section of the Properties view, select <property moreinfo="none">HelloWorldSOAPBinding</property><diffmk:wrapper diffmk:change="changed"> in
+                        the </diffmk:wrapper><property moreinfo="none">Binding</property> combobox. In the <property moreinfo="none">Address</property> field input <ulink url="http://localhost:8080/bpel/processes/HelloWorld?wsdl">http://localhost:8080/bpel/processes/HelloWorld?wsdl</ulink><diffmk:wrapper diffmk:change="changed">.
+                    </diffmk:wrapper></para>
+                    <figure diffmk:change="added" float="0">
+                        <title>Add the <property moreinfo="none">HelloWorldSOAPBinding</property> to the <property moreinfo="none">HelloWorldProcessPort</property></title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/detail_editprocess_5.png"></imagedata>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>  
+                </listitem> 
+                        <listitem diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">You should also change some service part configurations.
+                        To do this,click part element in the WSDL editor,
+                        then put the following data in the Properties view. 
+                        </diffmk:wrapper></para>
+                          <figure diffmk:change="added" float="0">
+                                <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Configuration of service part</diffmk:wrapper></title>
+                                <mediaobject diffmk:change="added">
+                                    <imageobject diffmk:change="added">
+                                        <imagedata diffmk:change="added" fileref="images/detail_editprocess_5.png"></imagedata>
+                                    </imageobject>
+                                </mediaobject>
+                            </figure>  
+                        </listitem>
+                    </itemizedlist>
+                    
+            <para>Now you have finished creating a simple BPEL process.As a next step, you can deploy the BPEL project to JBoss BPEL Runtime.</para>              
+            
+                </section>    
+         
+    </section>
+    <section diffmk:change="added" id="deploy">
+        <title>Deploy a JBoss BPEL project to JBoss BPEL Runtime</title>
+        <section diffmk:change="added" id="createdeploy">
+            <title>Creating a deploy.xml file</title>
+            <para><diffmk:wrapper diffmk:change="changed">If you want to deploy a BPEL project to JBoss BPEL Runtime, you should create a deploy.xml file. 
+                JBoss tools can help you to create it:
+            </diffmk:wrapper></para>
+            <itemizedlist diffmk:change="added">
+                <listitem diffmk:change="added">
+                    <para><diffmk:wrapper diffmk:change="changed">Create the deploy.xml by selecting 
+                        </diffmk:wrapper><emphasis><property moreinfo="none">New &gt; Other... &gt; BPEL 2.0 &gt; Apache ODE Deployment Descriptor</property></emphasis>. Click the <property moreinfo="none">Next</property><diffmk:wrapper diffmk:change="changed"> button. 
+                    </diffmk:wrapper></para>
+                    <figure diffmk:change="added" float="0">
+                        <title>New BPEL Deploy file</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/deploy_createdeploy_1.png"></imagedata>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>                
+                </listitem>
+                <listitem diffmk:change="added">
+                    <para>On the next wizard page you should enter the following information:</para>
+                    <para><emphasis><property moreinfo="none">BPEL Project</property></emphasis>: Click  the <property moreinfo="none">Browse...</property><diffmk:wrapper diffmk:change="changed"> button to select the BPEL project in your workspace which you want to deploy to the runtime.
+                        Please note, that you should select the </diffmk:wrapper><property moreinfo="none">bpelContent</property> folder in your new BPEL project as a value of <property moreinfo="none">BPEL Project</property><diffmk:wrapper diffmk:change="changed"> field because the deploy.xml should be created in this place.
+                    </diffmk:wrapper></para>
+                    <para><emphasis><property moreinfo="none">File name</property></emphasis>: The default value is deploy.xml. Please, don't change it.</para>
+                    <para>Click on <property moreinfo="none">Finish</property> button to close the wizard and a new deploy.xml file will be created.</para>
+                    <figure diffmk:change="added" float="0">
+                        <title>New BPEL Deploy file Wizard</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/deploy_createdeploy_2.png"></imagedata>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>                
+                </listitem>
+                <listitem diffmk:change="added">
+                    <para><diffmk:wrapper diffmk:change="changed">Double-click the deploy.xml file to open it in ODE Descriptor Deployment Editor.
+                        In the </diffmk:wrapper><property moreinfo="none">Inbound Interfaces</property><diffmk:wrapper diffmk:change="changed"> section, click the 
+                        </diffmk:wrapper><property moreinfo="none">Associated Port</property> column and select <property moreinfo="none">HelloWorldProcessPort</property><diffmk:wrapper diffmk:change="changed">
+                        in the dropdown box.The </diffmk:wrapper><property moreinfo="none">Related Service</property> and <property moreinfo="none">Binding Used</property><diffmk:wrapper diffmk:change="changed"> 
+                        columns should  be automatically filled in. Save the </diffmk:wrapper><emphasis><property moreinfo="none">deploy.xml</property></emphasis><diffmk:wrapper diffmk:change="changed">.
+                    </diffmk:wrapper></para>
+                    <figure diffmk:change="added" float="0">
+                        <title>deploy.xml file editor</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/deploy_createdeploy_3.png"></imagedata>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>                
+                </listitem>            
+            </itemizedlist>
+        </section>
+        <section diffmk:change="added" id="createruntime">
+            <title>Creating JBoss BPEL Server</title>
+            <para>Suppose you have installed the <property moreinfo="none">JBoss BPEL Runtime-RiftSaw</property><diffmk:wrapper diffmk:change="added"> as it was described </diffmk:wrapper><link diffmk:change="added" linkend="installRuntime"><diffmk:wrapper diffmk:change="added">before</diffmk:wrapper></link>, now you can create a server for JBoss BPEL runtime.</para>
+            <itemizedlist diffmk:change="added">
+                <listitem diffmk:change="added">
+                    <para>Open the <property moreinfo="none"><diffmk:wrapper diffmk:change="changed">Servers</diffmk:wrapper></property><diffmk:wrapper diffmk:change="changed"> view by selecting 
+                        </diffmk:wrapper><emphasis><property moreinfo="none"><diffmk:wrapper diffmk:change="changed">Windows &gt; Show View &gt; Other... &gt; Server &gt; Servers</diffmk:wrapper></property></emphasis><diffmk:wrapper diffmk:change="changed">.
+                    </diffmk:wrapper></para>                
+                </listitem>
+                <listitem diffmk:change="added">
+                    <para><diffmk:wrapper diffmk:change="changed">Right-click the Servers view and select  
+                        </diffmk:wrapper><emphasis><property moreinfo="none">New &gt; Server</property></emphasis><diffmk:wrapper diffmk:change="changed"> to open the New Server Wizard: 
+                    </diffmk:wrapper></para>
+                    <figure diffmk:change="added" float="0">
+                        <title>New Server Wizard</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/deploy_createdeploy_4.png"></imagedata>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>                
+                </listitem>
+                <listitem diffmk:change="added">
+                    <para>Select <property moreinfo="none">JBoss AS 5.1 </property>as a server type. </para>
+                    <note diffmk:change="added">
+                        <para>Please note, that only JBoss As 5.1 or higher version supports BPEL.</para>
+                    </note>
+                </listitem>
+                <listitem>
+                    
+                    <para>Click the <property moreinfo="none">Next</property> button. On the next page, you should input your <emphasis><property moreinfo="none">JBoss As</property></emphasis> location. Then click the <property moreinfo="none">Next</property><diffmk:wrapper diffmk:change="changed"> button and
+                        you will get the page like this: 
+                    </diffmk:wrapper></para>
+                    <figure diffmk:change="added" float="0">
+                        <title>Add resource to the server</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/deploy_createdeploy_5.png"></imagedata>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>                 
+                </listitem>
+                <listitem diffmk:change="added">
+                    <para>Select <property moreinfo="none">HelloWorld</property>, then click the <property moreinfo="none">Add </property><diffmk:wrapper diffmk:change="changed"> button to add the project to the server.
+                        Then click on the </diffmk:wrapper><property moreinfo="none">Finish</property><diffmk:wrapper diffmk:change="changed"> button.
+                    </diffmk:wrapper></para>
+                    <para>Start the server by right-clicking on the server and selecting the <property moreinfo="none">Start</property> item. </para> 
+                    
+                    <figure float="0">
+                        <title>The started server</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/deploy_createdeploy_6.png"></imagedata>
+                            </imageobject>
+                        </mediaobject>
+                    </figure> 
+                    <para>If some aspects of server creation is not clear, please, read  <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/as/html_single/index.html">JBoss Server Manager Reference Guide</ulink> for more details.</para>
+                </listitem>
+                <listitem diffmk:change="added">
+                    <para>You can enter the link <ulink url="http://localhost:8080/bpel-console/app.html">http://localhost:8080/bpel-console/app.html</ulink> to the browser to get the deployed processes.</para>                 
+                    <figure float="0">
+                        <title>The BPEL console</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/deploy_createdeploy_7.png"></imagedata>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>                 
+                </listitem>            
+            </itemizedlist>  
+            <para>If there's anything we didn't cover or you can't figure out, please feel free to visit our <ulink
+                url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201"
+                >JBoss Tools Users Forum</ulink> to ask questions.
+                There we are also waiting for your suggestions and comments.</para>   </section>
+    </section>
+</chapter>
+
+    <!--  &detail;
+        &deploy;-->
+    
+<chapter diffmk:change="added" id="reference" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/bpel/docs/reference/en-US/modules/reference.xml">
+    <?dbhtml filename="reference.html"?>
+    <chapterinfo diffmk:change="added">
+        <keywordset diffmk:change="added">
+            <keyword diffmk:change="added"><diffmk:wrapper diffmk:change="added">JBoss Tools</diffmk:wrapper></keyword>
+            <keyword diffmk:change="added"><diffmk:wrapper diffmk:change="added">BPEL</diffmk:wrapper></keyword>
+            <keyword diffmk:change="added"><diffmk:wrapper diffmk:change="added">JBT</diffmk:wrapper></keyword>
+        </keywordset>
+    </chapterinfo>
+    <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Reference</diffmk:wrapper></title>
+    <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">This chapter includes detailed reference information about all BPEL tools wizards and editors.</diffmk:wrapper></para>
+    <section diffmk:change="added">
+        <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Wizards</diffmk:wrapper></title>
+        <section diffmk:change="added">
+            <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">New BPEL project Wizard</diffmk:wrapper></title>
+            <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">This wizard helps to create new BPEL project.It is available with clicking
+                </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">File-&gt;New-&gt;Other-&gt;BPEL project</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> in the menu bar.</diffmk:wrapper></para>
+            <figure diffmk:change="added" float="0">
+                <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">New BPEL Project Wizard</diffmk:wrapper></title>
+                <mediaobject diffmk:change="added">
+                    <imageobject diffmk:change="added">
+                        <imagedata diffmk:change="added" fileref="images/reference/bpel_ref_1.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">It consists of only one page:</diffmk:wrapper></para>
+            <itemizedlist diffmk:change="added">
+                <listitem diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">On the page you can adjust the name of the project and the directory where it will be created.</diffmk:wrapper></para>
+                    <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">If "</diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Use default</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">" option is checked the output directory will be the workspace,
+                        othervise the user should specify it by himself using </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Browse</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> button.</diffmk:wrapper></para>
+                    <figure diffmk:change="added" float="0">
+                        <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">New BPEL Project Wizard</diffmk:wrapper></title>
+                        <mediaobject diffmk:change="added">
+                            <imageobject diffmk:change="added">
+                                <imagedata diffmk:change="added" fileref="images/reference/bpel_ref_2.png"></imagedata>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>
+                </listitem>
+            </itemizedlist>
+        </section>
+        <section diffmk:change="added">
+            <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Apache ODE Deployment Descriptor Wizard</diffmk:wrapper></title>
+            <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Using this wizard user can create ODE deployment descriptor (deploy.xml) and place it in the temporary directory.It is available with clicking
+                </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">File-&gt;New-&gt;Other-&gt;Apache ODE Deployment Descriptor Wizard</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> in the menu bar.</diffmk:wrapper></para>
+            <figure diffmk:change="added" float="0">
+                <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">New BPEL Project Wizard</diffmk:wrapper></title>
+                <mediaobject diffmk:change="added">
+                    <imageobject diffmk:change="added">
+                        <imagedata diffmk:change="added" fileref="images/deploy_createdeploy_2.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">On the page you can adjust the name of the deployment descriptor and
+                the directory where it will be created.Note,that you should use </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">
+                    /PROJECT_NAME/bpelContent</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> directory as an output one.</diffmk:wrapper></para>
+                                   
+        </section>
+        <section diffmk:change="added">
+            <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">New BPEL Process file Wizard</diffmk:wrapper></title>
+            <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Using </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">New BPEL Process file Wizard</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">
+                user can create BPEL process file and WSDL file if it is necessary.
+            The wizard includes several pages:</diffmk:wrapper></para>
+            <itemizedlist diffmk:change="added">
+                <listitem diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">The first page has the following options to set:</diffmk:wrapper></para>
+                    <table diffmk:change="added">
+                        <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">New BPEL Process file Wizard. First Page Options.</diffmk:wrapper></title>   
+                        <tgroup cols="3" diffmk:change="added">
+                            <colspec align="left" colnum="1" colwidth="1*" diffmk:change="added"></colspec>
+                            <colspec align="left" colnum="2" colwidth="3*" diffmk:change="added"></colspec>
+                            <colspec align="left" colnum="3" colwidth="1*" diffmk:change="added"></colspec>
+                            
+                            <thead diffmk:change="added">
+                                <row diffmk:change="added">
+                                    <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Option</diffmk:wrapper></entry>									
+                                    <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Description</diffmk:wrapper></entry>
+                                    <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Default</diffmk:wrapper></entry>
+                                </row>
+                            </thead>
+                            <tbody diffmk:change="added">
+                                <row diffmk:change="added">
+                                    <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Name</diffmk:wrapper></entry>
+                                    <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Enter the process name.</diffmk:wrapper></entry>
+                                    <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">no default value</diffmk:wrapper></entry>
+                                </row> 
+                              
+                                       
+                                <row diffmk:change="added">
+                                    <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Namespace</diffmk:wrapper></entry>
+                                    <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Enter the namespace url here</diffmk:wrapper></entry>
+                                    <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">no default value</diffmk:wrapper></entry>
+                                </row> 
+                                
+                                <row diffmk:change="added">
+                                    <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Template</diffmk:wrapper></entry>
+                                    <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Select one of the provided templates: 
+                                        </diffmk:wrapper><itemizedlist diffmk:change="added">
+                                            <listitem diffmk:change="added"><para diffmk:change="added"><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">Asynchronous BPEL Process</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added">  - 
+                                                generates the basis of orchestration logic:  receive and reply activities
+                                                are included into the process;client WSDL is generated, 
+                                                service is defined in the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">parentlink</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> of the process.
+                                                The caller is notified asynchronously when the process completes.
+                                            </diffmk:wrapper></para></listitem>
+                                            <listitem diffmk:change="added"><para diffmk:change="added"><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">Empty BPEL Process</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added">  - list of services participating in this BPEL process together
+                                                with the one of messages used within the process is empty.There are no any orchestration logic.</diffmk:wrapper></para></listitem>
+                                            <listitem diffmk:change="added"><para diffmk:change="added"><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">Synchronous BPEL Process</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added">  - 
+                                                similar to Asynchronous BPEL Process template except the fact that here
+                                                the caller is notified synchronously when the process completes.</diffmk:wrapper></para></listitem>
+                                        </itemizedlist></entry>
+                                    <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Asynchronous BPEL Process</diffmk:wrapper></entry>
+                               </row>
+                                <row diffmk:change="added">
+                                    <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Abstract Process</diffmk:wrapper></entry>
+                                    <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Specifies the created process as an abstract one -partially
+                                        specified processes that are not intended to be executed.</diffmk:wrapper></entry>
+                                    <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">unchecked</diffmk:wrapper></entry>
+                                </row>
+                            </tbody>
+                        </tgroup>
+                    </table>  
+                    <figure diffmk:change="added" float="0">
+                        <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">New BPEL Process file Wizard</diffmk:wrapper></title>
+                        <mediaobject diffmk:change="added">
+                            <imageobject diffmk:change="added">
+                                <imagedata diffmk:change="added" fileref="images/reference/bpel_ref_3.png"></imagedata>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>
+                    
+                </listitem>
+                
+                <listitem diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">The second page has the following options to set:</diffmk:wrapper></para>
+                    <table diffmk:change="added">
+                        <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">New BPEL Process file Wizard. Second Page Options.</diffmk:wrapper></title>   
+                        <tgroup cols="3" diffmk:change="added">
+                            <colspec align="left" colnum="1" colwidth="1*" diffmk:change="added"></colspec>
+                            <colspec align="left" colnum="2" colwidth="3*" diffmk:change="added"></colspec>
+                            <colspec align="left" colnum="3" colwidth="1*" diffmk:change="added"></colspec>
+                            
+                            <thead diffmk:change="added">
+                                <row diffmk:change="added">
+                                    <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Option</diffmk:wrapper></entry>									
+                                    <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Description</diffmk:wrapper></entry>
+                                    <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Default</diffmk:wrapper></entry>
+                                </row>
+                            </thead>
+                            <tbody diffmk:change="added">
+                                <row diffmk:change="added">
+                                    <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Service Name</diffmk:wrapper></entry>
+                                    <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Enter a wsdl service name for the BPEL process.</diffmk:wrapper></entry>
+                                    <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">The process name</diffmk:wrapper></entry>
+                                </row> 
+                                                                     
+                                <row diffmk:change="added">
+                                    <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Port Name</diffmk:wrapper></entry>
+                                    <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Enter a wsdl port name for the BPEL process.</diffmk:wrapper></entry>
+                                    <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">The process name + 'Port' </diffmk:wrapper></entry>
+                                </row> 
+
+                                <row diffmk:change="added">
+                                    <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Service Address</diffmk:wrapper></entry>
+                                    <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Enter an address of the wsdl service for the BPEL process.</diffmk:wrapper></entry>
+                                    <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">http://localhost:8080/ + process name </diffmk:wrapper></entry>
+                                </row>
+
+                                <row diffmk:change="added">
+                                    <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Binding Protocol</diffmk:wrapper></entry>
+                                    <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Choose the binding protocal that you use in the wsdl: SOAP or HTTP </diffmk:wrapper></entry>
+                                    <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">SOAP </diffmk:wrapper></entry>
+                                </row>                                
+                            </tbody>
+                        </tgroup>
+                    </table>  
+                    <figure diffmk:change="added" float="0">
+                        <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">New BPEL Process file Wizard</diffmk:wrapper></title>
+                        <mediaobject diffmk:change="added">
+                            <imageobject diffmk:change="added">
+                                <imagedata diffmk:change="added" fileref="images/reference/bpel_ref_3a.png"></imagedata>
+                            </imageobject>
+                        </mediaobject>
+                    </figure>
+                    
+                </listitem>
+                
+                
+                
+                <listitem diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">On the third page the user should select the BPEL project 
+                    and folder where the process file will be created:</diffmk:wrapper></para>
+                <figure diffmk:change="added" float="0">
+                    <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">New BPEL Process file Wizard</diffmk:wrapper></title>
+                    <mediaobject diffmk:change="added">
+                        <imageobject diffmk:change="added">
+                            <imagedata diffmk:change="added" fileref="images/reference/bpel_ref_4.png"></imagedata>
+                        </imageobject>
+                    </mediaobject>
+                </figure>
+                </listitem>
+            </itemizedlist>
+            <note diffmk:change="added">
+                <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Process files that are used in the BPEL project must be under the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">bpelContent</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> folder. Only in this case 
+                    these files can be deployed to JBoss server.
+                </diffmk:wrapper></para>
+            </note>
+        </section>
+    </section>
+    <section diffmk:change="added">
+        <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Editors</diffmk:wrapper></title>
+        <section diffmk:change="added">
+            <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Business Process Editor</diffmk:wrapper></title>
+            <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Business Process Editor is intended to facilitate the process of changing and 
+                adding new logic to BPEL process file.You can open </diffmk:wrapper><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">.bpel</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added"> 
+                in this editor by right click the file in the project explorer and selecting  
+                </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Open With...-&gt;Business Process Editor</diffmk:wrapper></property>
+            </para>
+            <figure diffmk:change="added" float="0">
+                <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Business Process Editor</diffmk:wrapper></title>
+                <mediaobject diffmk:change="added">
+                    <imageobject diffmk:change="added">
+                        <imagedata diffmk:change="added" fileref="images/reference/bpel_ref_5.png"></imagedata>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+            <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">The editor consists of two tabs:</diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Design</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> tab and </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Source</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> tab.</diffmk:wrapper></para>
+       <section diffmk:change="added">
+           <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Design tab</diffmk:wrapper></title>
+           <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Design tab is the main part of Business Process Editor.It consists of 3 parts:</diffmk:wrapper></para>
+           <itemizedlist diffmk:change="added">
+               <listitem diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Visual Pane:</diffmk:wrapper></para>
+                   <figure diffmk:change="added" float="0">
+                       <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Visual Pane of Business Process Editor</diffmk:wrapper></title>
+                       <mediaobject diffmk:change="added">
+                           <imageobject diffmk:change="added">
+                               <imagedata diffmk:change="added" fileref="images/reference/bpel_ref_6.png"></imagedata>
+                           </imageobject>
+                       </mediaobject>
+                   </figure>
+                   <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">The Visual Pane graphically displays the order in which the activities are executed.</diffmk:wrapper></para>
+               </listitem>
+               <listitem diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Palette:</diffmk:wrapper></para>
+                   <figure diffmk:change="added" float="0">
+                       <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Palette of Business Process Editor</diffmk:wrapper></title>
+                       <mediaobject diffmk:change="added">
+                           <imageobject diffmk:change="added">
+                               <imagedata diffmk:change="added" fileref="images/reference/bpel_ref_7.png"></imagedata>
+                           </imageobject>
+                       </mediaobject>
+                   </figure>
+                   <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">The </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Palette</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> represents  different elements of the BPEL activities
+                       organized into functional categories.
+                       Using it the user can easily add new elements to the sequence activity.
+                       To do this,he should just click the required element and then drug
+                       and drop it to the place on the Visual Pane where it should be added.</diffmk:wrapper></para>
+               </listitem>
+               <listitem diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Behavior Components View:</diffmk:wrapper></para>
+                  <figure diffmk:change="added" float="0">
+                      <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Behavior Components View of Business Process Editor</diffmk:wrapper></title>
+                       <mediaobject diffmk:change="added">
+                           <imageobject diffmk:change="added">
+                               <imagedata diffmk:change="added" fileref="images/reference/bpel_ref_8.png"></imagedata>
+                           </imageobject>
+                       </mediaobject>
+                  </figure>
+                   <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Execution behavior components are grouped into the </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">
+                       Behavior Components View</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">.
+                       The view is also fully syncronized with Properties view where you can customize all
+                       the properties of the component.</diffmk:wrapper></para>
+                   <figure diffmk:change="added" float="0">
+                       <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Process Structure View of Business Process Editor</diffmk:wrapper></title>
+                       <mediaobject diffmk:change="added">
+                           <imageobject diffmk:change="added">
+                               <imagedata diffmk:change="added" fileref="images/reference/bpel_ref_9.png"></imagedata>
+                           </imageobject>
+                       </mediaobject>
+                   </figure>                  
+                   <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">To add an element to some component group click plus(</diffmk:wrapper><inlinemediaobject diffmk:change="added">
+                       <imageobject diffmk:change="added">
+                           <imagedata diffmk:change="added" fileref="images/reference/bpel_ref_10.png"></imagedata>
+                       </imageobject>
+                   </inlinemediaobject><diffmk:wrapper diffmk:change="added">) icon,
+                       for its deleting you should click the element and
+                       use its </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Delete</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> option in the popup menu.</diffmk:wrapper></para>  
+               </listitem>
+             
+           </itemizedlist>
+           
+           
+       </section>
+            <section diffmk:change="added">
+                <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Source tab</diffmk:wrapper></title>
+                <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Source tab can be used for editing BPEL process file directly.
+                    The validation of file structure is also available.
+                 </diffmk:wrapper></para>
+                <figure diffmk:change="added" float="0">
+                    <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Validation error in Source tab</diffmk:wrapper></title>
+                    <mediaobject diffmk:change="added">
+                        <imageobject diffmk:change="added">
+                            <imagedata diffmk:change="added" fileref="images/reference/bpel_ref_11.png"></imagedata>
+                        </imageobject>
+                    </mediaobject>
+                </figure>
+                <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">If the user wants to disable/unable validation he can do it by following
+                    </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">Window-&gt;Preferences-&gt;Validation</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added">.</diffmk:wrapper></para>
+                <figure diffmk:change="added" float="0">
+                    <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Validation configuration</diffmk:wrapper></title>
+                    <mediaobject diffmk:change="added">
+                        <imageobject diffmk:change="added">
+                            <imagedata diffmk:change="added" fileref="images/reference/bpel_ref_12.png"></imagedata>
+                        </imageobject>
+                    </mediaobject>
+                </figure>     
+            </section>
+       </section>
+      <section diffmk:change="added">
+          <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">ODE Deployment Descriptor Editor</diffmk:wrapper></title>
+          <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">To deploy your process in Ode you need to create a
+              simple deployment descriptor with basic information and
+              </diffmk:wrapper><property diffmk:change="added" moreinfo="none"><diffmk:wrapper diffmk:change="added">ODE Deployment Descriptor Editor</diffmk:wrapper></property><diffmk:wrapper diffmk:change="added"> facilitates the process of descriptor configuration.
+              You can see how the descriptor file,opened in the editor looks like on the picture below:
+          </diffmk:wrapper></para>
+          <figure diffmk:change="added" float="0">
+              <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">ODE Deployment Descriptor Editor</diffmk:wrapper></title>
+              <mediaobject diffmk:change="added">
+                  <imageobject diffmk:change="added">
+                      <imagedata diffmk:change="added" fileref="images/reference/bpel_ref_13.png"></imagedata>
+                  </imageobject>
+              </mediaobject>
+          </figure> 
+          <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">The table below describes the configuration options of the
+              ODE Deployment Descriptor Editor:</diffmk:wrapper></para>
+          <table diffmk:change="added">
+              <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">ODE Deployment Descriptor Editor.Options.</diffmk:wrapper></title>   
+              <tgroup cols="3" diffmk:change="added">
+                  <colspec align="left" colnum="1" colwidth="1*" diffmk:change="added"></colspec>
+                  <colspec align="left" colnum="2" colwidth="3*" diffmk:change="added"></colspec>
+                  <colspec align="left" colnum="3" colwidth="1*" diffmk:change="added"></colspec>
+                  
+                  <thead diffmk:change="added">
+                      <row diffmk:change="added">
+                          <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Section</diffmk:wrapper></entry>									
+                          <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Options</diffmk:wrapper></entry>
+                          <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Description</diffmk:wrapper></entry>
+                      </row>
+                  </thead>
+                  <tbody diffmk:change="added">
+                      <row diffmk:change="added">
+                          <entry diffmk:change="added" morerows="1" valign="middle"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added"> 
+                              General</diffmk:wrapper></para></entry>
+                          
+                          <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">This process is</diffmk:wrapper></entry>
+                          <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Select one of the provided options: 
+                              </diffmk:wrapper><itemizedlist diffmk:change="added">
+                                  <listitem diffmk:change="added">
+                                      <para diffmk:change="added"><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">activated</diffmk:wrapper></emphasis> 
+                                      </para>
+                                  </listitem>
+                                  <listitem diffmk:change="added">
+                                      <para diffmk:change="added"><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">deactivated</diffmk:wrapper></emphasis></para>
+                                  </listitem>
+                                  <listitem diffmk:change="added">
+                                      <para diffmk:change="added"><emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">retired</diffmk:wrapper></emphasis> 
+                                      </para>
+                                  </listitem>
+                              </itemizedlist></entry>
+                          
+                      </row> 
+                      <row diffmk:change="added"><entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Run this process in memory</diffmk:wrapper></entry>
+                          <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">for performance purposes,
+                              you can define the process as being 
+                              executed only in-memory.</diffmk:wrapper></entry>
+                      </row>
+                      
+                      <row diffmk:change="added">
+                          <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Inbound Interfaces(Services)</diffmk:wrapper></entry>
+                          <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Associated Port</diffmk:wrapper></entry>
+                          <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Click Associated Port and the dropdown list with all available port names will appear.
+                              Select the one you need ,other fields will be filled automatically.
+                              This action configure the services
+                              provided by the process and 
+                              bind each service to an endpoint
+                          </diffmk:wrapper></entry>
+                          
+                      </row> 
+                      
+                      <row diffmk:change="added">
+                          <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Outbound Interfaces(Invokes)</diffmk:wrapper></entry>
+                          <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Associated Port</diffmk:wrapper></entry>
+                          <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Click Associated Port and the dropdown list with all available port names will appear.
+                              Select the one you need, other fields will be filled automatically.
+                              This action configure the services
+                              invoked by the process</diffmk:wrapper></entry>
+                      </row>
+                      <row diffmk:change="added">
+                          <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Process-level Monitoring Events</diffmk:wrapper></entry>
+                          <entry diffmk:change="added">  <itemizedlist diffmk:change="added">
+                              <listitem diffmk:change="added"><para diffmk:change="added">
+                                  <emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">None</diffmk:wrapper></emphasis>
+                              </para></listitem>
+                              <listitem diffmk:change="added">
+                              <para diffmk:change="added">
+                                  <emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">All</diffmk:wrapper></emphasis>
+                              </para>
+                              </listitem>
+                              <listitem diffmk:change="added">
+                              <para diffmk:change="added">
+                                  <emphasis diffmk:change="added"><diffmk:wrapper diffmk:change="added">Selected</diffmk:wrapper></emphasis><diffmk:wrapper diffmk:change="added">:
+                              </diffmk:wrapper></para>
+                                  <itemizedlist diffmk:change="added">
+                                      <listitem diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Instance life cycle</diffmk:wrapper></para></listitem>
+                                      <listitem diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Activity life cycle</diffmk:wrapper></para></listitem>
+                                      <listitem diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Data handling</diffmk:wrapper></para></listitem>
+                                      <listitem diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Scope handling</diffmk:wrapper></para></listitem>
+                                      <listitem diffmk:change="added"><para diffmk:change="added"><diffmk:wrapper diffmk:change="added">Correlation</diffmk:wrapper></para></listitem>
+                                      
+                                  </itemizedlist>
+                                  
+                              </listitem>
+                          </itemizedlist>
+                          </entry>
+                          <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Using ODE's deployment descriptor, it's also 
+                              possible to make events generation to 
+                              filtrate which ones get created.
+                              All option  just duplicates the default behaviour,
+                              when nothing is specified in the deployment.</diffmk:wrapper></entry>
+                      </row>
+                      <row diffmk:change="added">
+                          <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Scope-level Monitoring Events</diffmk:wrapper></entry>
+                          <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">Scope</diffmk:wrapper></entry>
+                          <entry diffmk:change="added"><diffmk:wrapper diffmk:change="added">This section makes it possible to
+                              define filtering for each scope of your process.
+                              </diffmk:wrapper></entry>
+                      </row>
+                  </tbody>
+              </tgroup>
+          </table>
+      </section>
+        
+    </section>
+    
+    
+</chapter>
+
+
+    
+<chapter diffmk:change="added" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/bpel/docs/reference/en-US/modules/summary.xml">
+    <?dbhtml filename="summary.html"?>
+    <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Summary</diffmk:wrapper></title>
+    <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">In conclusion, with this document you know all the capabilities of BPEL Tools 
+        and could easily start with them.
+        The chapters above walked you through the steps on how to create and configure BPEL process and 
+        deployment descriptor files.     
+        If you have questions or suggestions concerned both the documentation and tools behavior,
+        you are welcome to JBoss Tools Users forum.
+        Please, use Jira to report bugs and requests on documentation.</diffmk:wrapper></para>
+    
+    <section diffmk:change="added">
+        <title diffmk:change="added"><diffmk:wrapper diffmk:change="added">Other relevant resources on the topic</diffmk:wrapper></title>
+        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">All JBoss Developer Studio/JBoss Tools release documentation you can find at
+            </diffmk:wrapper><ulink diffmk:change="added" url="http://docs.jboss.org/tools"><diffmk:wrapper diffmk:change="added">http://docs.jboss.org/tools</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added"> in the corresponding release directory.
+        </diffmk:wrapper></para>   
+        <para diffmk:change="added"><diffmk:wrapper diffmk:change="added">The latest documentation builds are available at </diffmk:wrapper><ulink diffmk:change="added" url="http://download.jboss.org/jbosstools/nightly-docs"><diffmk:wrapper diffmk:change="added">http://download.jboss.org/jbosstools/nightly-docs</diffmk:wrapper></ulink><diffmk:wrapper diffmk:change="added">. </diffmk:wrapper></para>
+
+        </section>
+</chapter>
+
+</book>
