@@ -7,7 +7,7 @@
      get new time w/ 
       date +%s000
 -->
-<property name='p2.timestamp' value='1299603042000'/>
+<property name='p2.timestamp' value='1301500607000'/>
 </properties>
 <children size='14'>
 <child location='../requirements/indigo/201102040900/'/>
@@ -16,7 +16,7 @@
 <child location='../requirements/eclipse/3.7M5/'/>
 <child location='../requirements/emf/2.7M5/'/>
 <child location='../requirements/gwt/201102111811/'/>
-<child location='../requirements/m2eclipse/0.12/'/>
+<child location='../requirements/m2eclipse/0.13.0.201103291237/'/>
 <child location='../requirements/orbit/S20110124210048/'/>
 <child location='../requirements/subclipse/1.6/'/>
 <child location='../requirements/subversive/0.7.9_2.2.2/'/>
