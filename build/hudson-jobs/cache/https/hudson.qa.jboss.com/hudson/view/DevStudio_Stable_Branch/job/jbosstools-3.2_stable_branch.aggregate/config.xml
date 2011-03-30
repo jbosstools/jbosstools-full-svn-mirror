@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <actions/>
+  <description>Tycho-based build, monitoring SVN for changes. 
+
+&lt;p&gt;&lt;i&gt;Build should take ~30min if sources local; +30-90min for SVN checkout, and 4-6 hrs for tests.&lt;/i&gt;
+
+&lt;h2&gt;&lt;a style="color:green" href="http://download.jboss.org/jbosstools/builds/cascade/"&gt;Build Job Cascade &amp;amp; Results&lt;/a&gt;&lt;/h2&gt;
+</description>
+  <logRotator>
+    <daysToKeep>5</daysToKeep>
+    <numToKeep>5</numToKeep>
+    <artifactDaysToKeep>-1</artifactDaysToKeep>
+    <artifactNumToKeep>-1</artifactNumToKeep>
+  </logRotator>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>MAVEN_FLAGS</name>
+          <description>Pass in lifecycle phase and extra flags to Maven, such as:
+&lt;pre&gt;
+clean :: clean before building *
+integration-test :: build and test *
+install :: build, test, and install into m2 repo *
+osgi-test:test :: just (re-)run test(s)
+
+-Dmaven.test.skip :: skip compiling and running tests
+-Dmaven.test.skip.exec :: to compile but not run tests in conjunction with integration-test or install phase
+
+-P helios :: use .target file to provision target
+-P helios-no-target :: don't use .target file to provision target; instead generate on the fly from MANIFEST.MF and feature.xml files
+-P helios-local-target :: use /home/hudson/static_build_env/jbds/target-platform/e36-wtp322.target as target against which to resolve deps
+-P hudson :: add hudson job # to generated plugin/feature qualifiers
+
+-Dmaven.repo.local=${WORKSPACE}/m2-repository :: path to local m2 repo
+
+-fae :: fail at end
+-fn :: fail never
+
+-o :: offline
+-B :: batch (non-interactive) mode
+-U :: check for updates 
+-e :: if error occurs, dump stack into console
+
+-q :: quieter output&lt;/pre&gt;
+</description>
+          <defaultValue>clean install -B -U -fae -P helios-local-target,hudson -Dmaven.repo.local=${WORKSPACE}/m2-repository</defaultValue>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>RELEASE</name>
+          <description>If a release, name zip w/ timestamp and build ID; otherwise call it "SNAPSHOT"</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>Yes</string>
+              <string>No</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>update.site.description</name>
+          <description/>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>Development Milestone</string>
+              <string>Nightly Build</string>
+              <string>Stable Release</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+    <hudson.plugins.descriptionsetter.JobByDescription/>
+    <hudson.plugins.disk__usage.DiskUsageProperty/>
+    <hudson.plugins.jira.JiraProjectProperty>
+      <siteName>http://opensource.atlassian.com/projects/hibernate/</siteName>
+    </hudson.plugins.jira.JiraProjectProperty>
+  </properties>
+  <scm class="hudson.scm.SubversionSCM">
+    <locations>
+      <hudson.scm.SubversionSCM_-ModuleLocation>
+        <remote>https://svn.jboss.org/repos/jbosstools/branches/jbosstools-3.2.x/build</remote>
+        <local>sources</local>
+      </hudson.scm.SubversionSCM_-ModuleLocation>
+    </locations>
+    <useUpdate>true</useUpdate>
+    <doRevert>false</doRevert>
+    <browser class="hudson.scm.browsers.FishEyeSVN">
+      <url>http://fisheye.jboss.com/browse/JBossTools/</url>
+      <rootModule/>
+    </browser>
+    <excludedRegions/>
+    <includedRegions/>
+    <excludedUsers/>
+    <excludedRevprop/>
+    <excludedCommitMessages/>
+  </scm>
+  <assignedNode>RHEL_any</assignedNode>
+  <canRoam>false</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <jdk>java16_default</jdk>
+  <triggers class="vector"/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Maven>
+      <targets>${MAVEN_FLAGS} -DJOB_NAME=${JOB_NAME} -DBUILD_ID=${BUILD_ID} -DBUILD_NUMBER=${BUILD_NUMBER}</targets>
+      <mavenName>maven-3.0</mavenName>
+      <jvmOptions>-Xms512m -Xmx1024m -XX:PermSize=128m -XX:MaxPermSize=256m</jvmOptions>
+      <pom>parent/pom.xml</pom>
+      <usePrivateRepository>true</usePrivateRepository>
+    </hudson.tasks.Maven>
+    <hudson.tasks.Maven>
+      <targets>${MAVEN_FLAGS} -DJOB_NAME=${JOB_NAME} -DBUILD_ID=${BUILD_ID} -DBUILD_NUMBER=${BUILD_NUMBER}</targets>
+      <mavenName>maven-3.0</mavenName>
+      <jvmOptions>-Xms512m -Xmx1024m -XX:PermSize=128m -XX:MaxPermSize=256m</jvmOptions>
+      <pom>aggregate/pom.xml</pom>
+      <usePrivateRepository>true</usePrivateRepository>
+    </hudson.tasks.Maven>
+    <hudson.tasks.Shell>
+      <command># script here: http://anonsvn.jboss.org/repos/jbosstools/trunk/build/publish.sh
+# use "trunk" parameter to force results into /updates/nightly/trunk/ instead of /updates/nightly/jbosstools-3.2.0.*/
+. ${WORKSPACE}/sources/publish.sh</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <hudson.tasks.BuildTrigger>
+      <childProjects>zz_disabled_jbosstools-3.2_stable_branch.aggregate-publish, devstudio-4.0_stable_branch.updatesite</childProjects>
+      <threshold>
+        <name>SUCCESS</name>
+        <ordinal>0</ordinal>
+        <color>BLUE</color>
+      </threshold>
+    </hudson.tasks.BuildTrigger>
+    <hudson.plugins.emotional__hudson.EmotionalHudsonPublisher/>
+  </publishers>
+  <buildWrappers>
+    <hudson.plugins.build__timeout.BuildTimeoutWrapper>
+      <timeoutMinutes>240</timeoutMinutes>
+      <failBuild>false</failBuild>
+    </hudson.plugins.build__timeout.BuildTimeoutWrapper>
+  </buildWrappers>
+</project>
