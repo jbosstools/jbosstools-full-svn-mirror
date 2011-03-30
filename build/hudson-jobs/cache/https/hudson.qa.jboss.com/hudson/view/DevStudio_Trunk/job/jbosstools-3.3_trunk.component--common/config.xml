@@ -33,13 +33,11 @@ install :: build, test, and install into m2 repo *
 osgi-test:test :: just (re-)run test(s)
 
 -P hudson :: enable hudson build ID in feature/plugin qualifiers
--P coverage :: enable coverage reporting
 
 -Dmaven.test.skip :: skip compiling and running tests
 -Dmaven.repo.local=${WORKSPACE}/m2-repository :: path to local m2 repo
 
 -fae :: fail at end
--fn :: fail never
 
 -o :: offline
 -B :: batch (non-interactive) mode
@@ -48,7 +46,7 @@ osgi-test:test :: just (re-)run test(s)
 
 -q :: quieter output&lt;/pre&gt;
 </description>
-          <defaultValue>clean install -B -U -fae -e -Dmaven.repo.local=${WORKSPACE}/m2-repository -P hudson</defaultValue>
+          <defaultValue>clean install -B -U -fae -e -P hudson,jbosstools-nightly-staging-composite,unified.site,local.site -Dlocal.site=file://home/hudson/static_build_env/jbds/target-platform_3.3.indigo/e37M5-wtp33M5.target/ -Dmaven.repo.local=${WORKSPACE}/m2-repository</defaultValue>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>

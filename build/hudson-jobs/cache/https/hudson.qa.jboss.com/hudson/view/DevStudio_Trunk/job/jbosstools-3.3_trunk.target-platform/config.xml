@@ -48,7 +48,7 @@ or build on top of an existing one (false)?</description>
         <hudson.model.StringParameterDefinition>
           <name>MAVEN_FLAGS</name>
           <description>add 'deploy' to push to nexus</description>
-          <defaultValue>clean install -B -U -fae -e -Dmaven.repo.local=${WORKSPACE}/m2-repo</defaultValue>
+          <defaultValue>clean install -B -U -fae -e -Dmaven.repo.local=${WORKSPACE}/m2-repository</defaultValue>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>

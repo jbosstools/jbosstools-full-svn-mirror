@@ -27,14 +27,10 @@ osgi-test:test :: just (re-)run test(s)
 
 -P hudson :: enable hudson build ID in feature/plugin qualifiers
 -P coverage :: enable coverage reporting
+-Dcoverage :: enable Emma test coverage reporting
 -Dmaven.test.skip :: to compile but not run tests in conjunction with integration-test or install phase
 -Dmaven.repo.local=${WORKSPACE}/m2-repository :: path to local m2 repo
--Dcoverage :: enable Emma test coverage reporting
 
--P hudson :: add hudson job # to generated plugin/feature qualifiers
--P coverage :: support emma
-
--fae :: fail at end
 -fn :: fail never
 
 -o :: offline
@@ -44,7 +40,7 @@ osgi-test:test :: just (re-)run test(s)
 
 -q :: quieter output&lt;/pre&gt;
 </description>
-          <defaultValue>clean install -B -U -fn -e -P hudson,coverage -Dmaven.repo.local=${WORKSPACE}/m2-repo</defaultValue>
+          <defaultValue>clean install -B -U -fn -e -P coverage -Dcoverage -P hudson,jbosstools-nightly-staging-composite,unified.site,local.site -Dlocal.site=file://home/hudson/static_build_env/jbds/target-platform_3.3.indigo/e37M5-wtp33M5.target/ -Dmaven.repo.local=${WORKSPACE}/m2-repository</defaultValue>
         </hudson.model.StringParameterDefinition>
         <hudson.model.ChoiceParameterDefinition>
           <name>RELEASE</name>

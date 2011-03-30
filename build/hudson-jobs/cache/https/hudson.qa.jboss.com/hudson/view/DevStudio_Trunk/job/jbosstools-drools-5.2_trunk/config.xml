@@ -111,7 +111,7 @@ rm -fr ${WORKSPACE}/sources/pom.xml; wget https://anonsvn.jboss.org/repos/labs/l
 </command>
     </hudson.tasks.Shell>
     <hudson.tasks.Maven>
-      <targets>-B -fn clean install -Dmaven.repo.local=${WORKSPACE}/m2-repository -q</targets>
+      <targets>-B -fae clean install -Dmaven.repo.local=${WORKSPACE}/m2-repository -q</targets>
       <mavenName>maven-3.0.1</mavenName>
       <pom>${WORKSPACE}/sources/drools/pom.xml</pom>
       <usePrivateRepository>false</usePrivateRepository>
