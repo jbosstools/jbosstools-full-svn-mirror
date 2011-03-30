@@ -10,7 +10,7 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.eclipse.core.runtime
 Export-Package: org.jboss.tools.deltacloud.client,
  org.jboss.tools.deltacloud.core.client,
- org.jboss.tools.deltacloud.core.client.request,
+ org.jboss.tools.deltacloud.core.client.request;x-friends:="org.jboss.tools.deltacloud.client.test",
  org.jboss.tools.deltacloud.core.client.transport,
- org.jboss.tools.deltacloud.core.client.unmarshal,
+ org.jboss.tools.deltacloud.core.client.unmarshal;x-friends:="org.jboss.tools.deltacloud.client.test",
  org.jboss.tools.deltacloud.core.client.utils
