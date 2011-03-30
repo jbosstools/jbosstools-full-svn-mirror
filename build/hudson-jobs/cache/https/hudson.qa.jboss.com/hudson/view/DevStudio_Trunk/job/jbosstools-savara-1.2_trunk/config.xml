@@ -4,7 +4,8 @@
   <description>Nightly build using Tycho, monitoring SVN every 6 hrs for changes. 
 
 &lt;h3&gt;REQUIRES JDK6&lt;/h3&gt;
-</description>
+
+&lt;h2&gt;&lt;a style="color:#FF9933" href="http://download.jboss.org/jbosstools/builds/cascade/trunk.html"&gt;Build Job Cascade &amp;amp; Results&lt;/a&gt;&lt;/h2&gt;</description>
   <logRotator>
     <daysToKeep>5</daysToKeep>
     <numToKeep>5</numToKeep>

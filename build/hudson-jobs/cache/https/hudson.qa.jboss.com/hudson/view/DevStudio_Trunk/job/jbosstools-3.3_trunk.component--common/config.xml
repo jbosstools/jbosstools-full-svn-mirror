@@ -3,15 +3,7 @@
   <actions/>
   <description>Nightly build using Tycho, monitoring SVN every 6 hrs for changes. 
 
-&lt;h3&gt;REQUIRES JDK6&lt;/h3&gt;
-
-&lt;p&gt;Results:
-&lt;ul&gt;
-&lt;li&gt;Aggregate update sites: &lt;a href="http://download.jboss.org/jbosstools/updates/nightly/"&gt;http://download.jboss.org/jbosstools/updates/nightly/&lt;/a&gt; :: &lt;a href="http://download.jboss.org/jbosstools/updates/nightly/trunk/"&gt;latest from trunk&lt;/a&gt;
-&lt;li&gt;Aggregate builds: &lt;a href="http://download.jboss.org/jbosstools/builds/nightly/"&gt;http://download.jboss.org/jbosstools/builds/nightly/&lt;/a&gt; :: &lt;a href="http://download.jboss.org/jbosstools/builds/nightly/latestBuild.html"&gt;latest from trunk&lt;/a&gt;
-&lt;ul&gt;&lt;li&gt;Component builds: &lt;a href="http://download.jboss.org/jbosstools/builds/staging/"&gt;http://download.jboss.org/jbosstools/builds/staging/&lt;/a&gt;&lt;/ul&gt;
-&lt;/ul&gt;
-
+&lt;h2&gt;&lt;a style="color:#FF9933" href="http://download.jboss.org/jbosstools/builds/cascade/trunk.html"&gt;Build Job Cascade &amp;amp; Results&lt;/a&gt;&lt;/h2&gt;
 </description>
   <logRotator>
     <daysToKeep>5</daysToKeep>
@@ -120,14 +112,6 @@ osgi-test:test :: just (re-)run test(s)
       <latestOnly>true</latestOnly>
       <zip>false</zip>
     </hudson.tasks.ArtifactArchiver>
-    <hudson.tasks.BuildTrigger>
-      <childProjects>jbosstools-3.3_trunk.component--esb, jbosstools-3.3_trunk.component--jst</childProjects>
-      <threshold>
-        <name>UNSTABLE</name>
-        <ordinal>1</ordinal>
-        <color>YELLOW</color>
-      </threshold>
-    </hudson.tasks.BuildTrigger>
     <hudson.tasks.Mailer>
       <recipients/>
       <notifyEveryBuild>false</notifyEveryBuild>
@@ -136,6 +120,14 @@ osgi-test:test :: just (re-)run test(s)
       <sendToIndividuals>true</sendToIndividuals>
     </hudson.tasks.Mailer>
     <hudson.plugins.emotional__hudson.EmotionalHudsonPublisher/>
+    <hudson.tasks.BuildTrigger>
+      <childProjects>jbosstools-3.3_trunk.component--esb, jbosstools-3.3_trunk.component--jst, jbosstools-3.3_trunk.component--usage</childProjects>
+      <threshold>
+        <name>UNSTABLE</name>
+        <ordinal>1</ordinal>
+        <color>YELLOW</color>
+      </threshold>
+    </hudson.tasks.BuildTrigger>
   </publishers>
   <buildWrappers>
     <hudson.plugins.build__timeout.BuildTimeoutWrapper>

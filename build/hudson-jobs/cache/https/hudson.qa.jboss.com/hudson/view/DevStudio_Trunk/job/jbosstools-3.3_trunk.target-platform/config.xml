@@ -116,14 +116,6 @@ if [[ $CLEAN == "true" ]]; then rm -fr ${repoDir} ${destinationPath}; fi
     </hudson.tasks.Shell>
   </builders>
   <publishers>
-    <hudson.tasks.BuildTrigger>
-      <childProjects>devstudio-5.0_trunk.target-platform, jbosstools-3.3_trunk.component--gwt, jbosstools-3.3_trunk.component--runtime, jbosstools-3.3_trunk.component--tests, jbosstools-3.3_trunk.component--usage, jbosstools-3.3_trunk.continuous, jbosstools-3.3_trunk.tests, jbosstools-drools-5.2_trunk, jbosstools-pi4soa-3.1_trunk, jbosstools-savara-1.1_trunk, jbosstools-teiid-designer-7.4_trunk</childProjects>
-      <threshold>
-        <name>UNSTABLE</name>
-        <ordinal>1</ordinal>
-        <color>YELLOW</color>
-      </threshold>
-    </hudson.tasks.BuildTrigger>
     <hudson.plugins.textfinder.TextFinderPublisher>
       <regexp>ERROR|AILURE|\[exec\] Caused by:|No such file or directory|: Exception in |: Error in |\[exec\] Result: </regexp>
       <succeedIfFound>false</succeedIfFound>
@@ -131,6 +123,14 @@ if [[ $CLEAN == "true" ]]; then rm -fr ${repoDir} ${destinationPath}; fi
       <alsoCheckConsoleOutput>true</alsoCheckConsoleOutput>
     </hudson.plugins.textfinder.TextFinderPublisher>
     <hudson.plugins.ws__cleanup.WsCleanup/>
+    <hudson.tasks.BuildTrigger>
+      <childProjects>devstudio-5.0_trunk.target-platform, jbosstools-3.3_trunk.component--gwt, jbosstools-3.3_trunk.component--runtime, jbosstools-3.3_trunk.component--tests, jbosstools-3.3_trunk.continuous, jbosstools-3.3_trunk.tests, jbosstools-drools-5.2_trunk, jbosstools-pi4soa-3.1_trunk, jbosstools-savara-1.1_trunk, jbosstools-teiid-designer-7.4_trunk, jbosstools-3.3_trunk.component--forge</childProjects>
+      <threshold>
+        <name>UNSTABLE</name>
+        <ordinal>1</ordinal>
+        <color>YELLOW</color>
+      </threshold>
+    </hudson.tasks.BuildTrigger>
   </publishers>
   <buildWrappers>
     <hudson.plugins.build__timeout.BuildTimeoutWrapper>
