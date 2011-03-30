@@ -1292,7 +1292,7 @@ public final class XPCOM {
 			interfacesList.add(org.mozilla.interfaces.nsISecurityInfoProvider.class);
 			interfacesList.add(org.mozilla.interfaces.nsISecurityWarningDialogs.class);
 			interfacesList.add(org.mozilla.interfaces.nsISeekableStream.class);
-			interfacesList.add(org.mozilla.interfaces.nsISelectElement.class);
+//			interfacesList.add(org.mozilla.interfaces.nsISelectElement.class);
 			interfacesList.add(org.mozilla.interfaces.nsISelection.class);
 			interfacesList.add(org.mozilla.interfaces.nsISelection2.class);
 			interfacesList.add(org.mozilla.interfaces.nsISelectionController.class);
