@@ -30,7 +30,7 @@ import org.jboss.tools.internal.deltacloud.ui.wizards.NewInstanceWizard;
  */
 public class CreateInstanceFromAnyImageHandler extends AbstractHandler implements IHandler {
 
-	@Override
+	@Override 
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
 		DeltaCloud cloud = null;
