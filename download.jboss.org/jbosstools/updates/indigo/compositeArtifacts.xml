@@ -21,7 +21,6 @@
 <child location='../requirements/subclipse/1.6/'/>
 <child location='../requirements/subversive/0.7.9_2.2.2/'/>
 <child location='../requirements/swtbot/2.0.3/'/>
-<child location='../requirements/tptp/4.7/'/>
 <child location='../requirements/webtools/3.3M5/'/>
 <child location='../requirements/xulrunner-1.9.1.2/'/>
 </children>
