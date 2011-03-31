@@ -33,16 +33,27 @@ public class CreateInstanceFromAnyImageHandler extends AbstractHandler implement
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
-		if (selection instanceof IStructuredSelection) {
-			DeltaCloud cloud = UIUtils.getFirstAdaptedElement(selection, DeltaCloud.class);
+		DeltaCloud cloud = null;
+		cloud = getSelectedCloud(event, selection, cloud);
+		if (cloud != null) {
 			IWizard wizard = new NewInstanceWizard(cloud);
-			WizardDialog dialog = new WizardDialog(UIUtils.getActiveWorkbenchWindow().getShell(),
-						wizard);
+			WizardDialog dialog =
+					new WizardDialog(UIUtils.getActiveWorkbenchWindow().getShell(), wizard);
 			dialog.create();
 			dialog.open();
 		}
-
 		return Status.OK_STATUS;
 	}
 
+	private DeltaCloud getSelectedCloud(ExecutionEvent event, ISelection selection, DeltaCloud cloud) {
+		if (selection instanceof IStructuredSelection && !selection.isEmpty()) {
+			// try selection
+			cloud = UIUtils.getFirstAdaptedElement(selection, DeltaCloud.class);
+		} 
+		if (cloud == null) {
+			// try active part
+			cloud = UIUtils.adapt(HandlerUtil.getActivePart(event), DeltaCloud.class);
+		}
+		return cloud;
+	}
 }
