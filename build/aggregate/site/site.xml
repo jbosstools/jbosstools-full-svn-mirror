@@ -70,9 +70,6 @@
 		<category name="AllTools" />
 		<category name="WebTools" />
 	</feature>
-	<feature url="features/org.jboss.tools.tptp.feature_0.0.0.jar" id="org.jboss.tools.tptp.feature" version="0.0.0">
-		<category name="TestPerfTools" />
-	</feature>
 	<feature url="features/org.jboss.tools.smooks.feature_0.0.0.jar" id="org.jboss.tools.smooks.feature" version="0.0.0">
 		<category name="AllTools" />
 		<category name="SOATools" />

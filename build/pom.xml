@@ -14,7 +14,7 @@
 			 
 			mvn clean install -P parent,\!libs,\!tests,\!jmx,\!archives,\!as,\!common,\!jst,\!xulrunner,\!vpe \
 			-P \!jsf,\!freemarker,\!hibernatetools,\!portlet,\!struts,\!smooks,\!cdi,\!birt,\!bpel,\!esb,\!seam,\!examples \
-			-P \!maven,\!tptp,\!ws,\!modeshape,\!flow,\!jbpm,\!gwt,\!deltacloud,\!runtime,\!usage,\!aggregate-coverage
+			-P \!maven,\!ws,\!modeshape,\!flow,\!jbpm,\!gwt,\!deltacloud,\!runtime,\!usage,\!aggregate-coverage
 			
 		-->
 		<profile>
@@ -475,24 +475,6 @@
 			<modules>
 				<module>../tests</module>
 				<module>../maven</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>tptp</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<modules>
-				<module>../tptp</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>tptp-bootstrap</id>
-			<modules>
-				<module>../tests</module>
-				<module>../tptp</module>
 			</modules>
 		</profile>
 
