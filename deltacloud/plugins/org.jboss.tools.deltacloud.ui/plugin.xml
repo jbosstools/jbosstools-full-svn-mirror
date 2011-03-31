@@ -250,7 +250,7 @@
             class="org.jboss.tools.deltacloud.ui.commands.CreateInstanceFromAnyImageHandler"
             commandId="org.jboss.tools.deltacloud.ui.createinstanceFromAnyImage">
 			<enabledWhen>
-				<or>
+				<or> 
 	           		<with
 	                 	variable="selection">
 	                 	<and>
@@ -264,11 +264,11 @@
 		               		</iterate>
 		            	</and>
 	          		</with>
-	          		<with
-						variable="activePart">
-							<instanceof value="org.jboss.tools.deltacloud.ui.views.cloudelements.InstanceView" />
-					</with>
-				</or>
+	          		<with 
+						variable="activePart"> 
+							<instanceof value="org.jboss.tools.deltacloud.ui.views.cloudelements.InstanceView" /> 
+					</with> 
+				</or> 
 			</enabledWhen>
       </handler>
    </extension>

@@ -2,7 +2,7 @@
 
 	* src/org/jboss/tools/deltacloud/ui/commands/CreateInstanceFromAnyImageHandler.java: 
 	* plugin.xml: 
-	[JBIDE-8659] enabled "Launch instance" in instance view even if no instance is selected
+	[JBIDE-8660] enabled "Launch instance" in instance view even if no instance is selected
 	* plugin.xml: 
 	[JBIDE-8655] added "Launch instance" to context menu and toolbar in instance view
 
