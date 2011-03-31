@@ -11,7 +11,7 @@
     jmx,archives,as;
     bpel,smooks,freemarker,profiler,portlet,modeshape;
     xulrunner,jst,vpe,jsf;
-        drools,esb,tptp,ws;
+        drools,esb,ws;
         cdi,struts,hibernatetools,seam;
             examples,birt;
             maven"
@@ -1530,7 +1530,7 @@ Cannot deploy - sourceDir not found in
 
 		<!-- expected values for test.get.all.components -->
 		<property name="get.all.components.expected"
-		          value="tests,common,flow,jbpm,jmx,archives,as,drools,bpel,smooks,freemarker,profiler,portlet,xulrunner,jst,vpe,jsf,esb,tptp,ws,cdi,struts,hibernatetools,seam,examples,birt,maven,"
+		          value="tests,common,flow,jbpm,jmx,archives,as,drools,bpel,smooks,freemarker,profiler,portlet,xulrunner,jst,vpe,jsf,esb,ws,cdi,struts,hibernatetools,seam,examples,birt,maven,"
 		/>
 
 		<!-- expected values for test.get.feature.id -->
@@ -1650,9 +1650,6 @@ Cannot deploy - sourceDir not found in
 		/>
 		<property name="get.artifact.id.expected.esb/features/org.jboss.tools.esb.test.feature/target/org.jboss.tools.esb.test.feature-1.3.0-SNAPSHOT.jar"
 		          value="org.jboss.tools.esb.test.feature"
-		/>
-		<property name="get.artifact.id.expected.tptp/features/org.jboss.tools.tptp.feature/target/org.jboss.tools.tptp.feature-1.1.0-SNAPSHOT.jar"
-		          value="org.jboss.tools.tptp.feature"
 		/>
 		<property name="get.artifact.id.expected.ws/features/org.jboss.tools.ws.feature/target/org.jboss.tools.ws.feature-1.1.0-SNAPSHOT.jar"
 		          value="org.jboss.tools.ws.feature"
@@ -2040,7 +2037,7 @@ Cannot deploy - sourceDir not found in
 	    jmx,archives,as;
 	    drools,bpel,smooks,freemarker,profiler,portlet;
 	    xulrunner,jst,vpe,jsf;
-	        esb,tptp,ws;
+	        esb,ws;
 	        cdi,struts,hibernatetools,seam;
 	            examples,birt;
 	            maven"

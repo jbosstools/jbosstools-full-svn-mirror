@@ -39,7 +39,6 @@
 		<module>../../seam</module>
 		<module>../../examples</module>
 		<module>../../maven</module>
-		<module>../../tptp</module>
 		<module>../../ws</module>
 		<module>../../modeshape</module>
 		<module>../../flow</module>

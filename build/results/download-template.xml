@@ -150,11 +150,6 @@
  <download os="All platforms" url="${teiid-filename}" size="${teiid-filesize} MB"/>
 </project>
 
-<project name="JBoss AS TPTP Tools" version="${ZIPSUFFIX}" >
- <description>TPTP support for JBoss AS servers</description>
- <download os="All platforms" url="${tptp-filename}" size="${tptp-filesize} MB"/>
-</project>
-
 <project name="JBoss Tools Usage Reporting" version="${ZIPSUFFIX}">
  <description>JBoss Tools Usage Reporting</description>
  <download os="All platforms" url="${usage-filename}" size="${usage-filesize} MB"/>

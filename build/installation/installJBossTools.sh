@@ -43,5 +43,5 @@ exit
 ## org.jboss.tools.maven.feature.feature.group,org.jboss.tools.maven.seam.feature.feature.group,\
 ## org.jboss.tools.portlet.feature.feature.group,org.jboss.tools.profiler.feature.feature.group,\
 ## org.jboss.tools.project.examples.feature.feature.group,org.jboss.tools.richfaces.feature.feature.group,org.jboss.tools.seam.feature.feature.group,\
-## org.jboss.tools.smooks.feature.feature.group,org.jboss.tools.struts.feature.feature.group,org.jboss.tools.tptp.feature.feature.group,\
+## org.jboss.tools.smooks.feature.feature.group,org.jboss.tools.struts.feature.feature.group,\
 ## org.jboss.tools.ws.feature.feature.group,org.jboss.tools.xulrunner.feature.feature.group,org.jbpm.gd.jpdl.feature.feature.group
