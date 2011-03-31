@@ -400,6 +400,13 @@
             allPopups="true"
             locationURI="popup:org.jboss.tools.deltacloud.ui.views.InstanceView?after=instances">	
          <command
+               commandId="org.jboss.tools.deltacloud.ui.createinstanceFromAnyImage"
+               icon="icons/instance.gif"
+               label="%command.createinstance.label"
+               style="push"
+               tooltip="%command.createinstance.tooltip">
+         </command>
+         <command
                commandId="org.jboss.tools.deltacloud.ui.startinstance"
                disabledIcon="icons/rund.gif"
                icon="icons/run.gif"
@@ -468,6 +475,13 @@
       <menuContribution
             allPopups="true"
             locationURI="toolbar:org.jboss.tools.deltacloud.ui.views.InstanceView?after=instances">	
+		<command
+               commandId="org.jboss.tools.deltacloud.ui.createinstanceFromAnyImage"
+               icon="icons/instance.gif"
+               label="%command.createinstance.label"
+               style="push"
+               tooltip="%command.createinstance.tooltip">
+         </command>
          <command
                commandId="org.jboss.tools.deltacloud.ui.startinstance"
                disabledIcon="icons/rund.gif"
