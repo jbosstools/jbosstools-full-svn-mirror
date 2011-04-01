@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import javax.jcr.nodetype.NodeType;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -31,11 +32,14 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+
 import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
+
 import org.modeshape.common.util.Base64;
 import org.modeshape.common.util.CheckArg;
 import org.modeshape.common.util.Logger;
+import org.modeshape.web.jcr.rest.client.IJcrConstants;
 import org.modeshape.web.jcr.rest.client.IRestClient;
 import org.modeshape.web.jcr.rest.client.Status;
 import org.modeshape.web.jcr.rest.client.Status.Severity;
@@ -56,49 +60,41 @@ import org.w3c.dom.NodeList;
 @ThreadSafe
 public final class ServerManager implements IRestClient {
 
-    // ===========================================================================================================================
-    // Constants
-    // ===========================================================================================================================
-
     /**
      * The tag used to persist a server's login password.
      */
-    private static final String PASSWORD_TAG = "password";
+    private static final String PASSWORD_TAG = "password"; //$NON-NLS-1$
 
     /**
      * The file name used when persisting the server registry.
      */
-    private static final String REGISTRY_FILE = "serverRegistry.xml";
+    private static final String REGISTRY_FILE = "serverRegistry.xml"; //$NON-NLS-1$
 
     /**
      * The name of the system property that is set when at least one server exists. This property is used by the menus extension
      * that is responsible for showing the ModeShape context menu items.
      */
-    public static final String SERVER_EXISTS_PROPERTY = "org.jboss.tools.modeshape.rest.serverExists";
+    public static final String SERVER_EXISTS_PROPERTY = "org.jboss.tools.modeshape.rest.serverExists"; //$NON-NLS-1$
 
     /**
      * The tag used when persisting a server.
      */
-    private static final String SERVER_TAG = "server";
+    private static final String SERVER_TAG = "server"; //$NON-NLS-1$
 
     /**
      * The server collection tag used when persisting the server registry.
      */
-    private static final String SERVERS_TAG = "servers";
+    private static final String SERVERS_TAG = "servers"; //$NON-NLS-1$
 
     /**
      * The tag used to persist a server's URL.
      */
-    private static final String URL_TAG = "url";
+    private static final String URL_TAG = "url"; //$NON-NLS-1$
 
     /**
      * The tag used to persist a server's login user.
      */
-    private static final String USER_TAG = "user";
-
-    // ===========================================================================================================================
-    // Fields
-    // ===========================================================================================================================
+    private static final String USER_TAG = "user"; //$NON-NLS-1$
 
     /**
      * The listeners registered to receive {@link ServerRegistryEvent server registry events}.
@@ -131,10 +127,6 @@ public final class ServerManager implements IRestClient {
      */
     private final ReadWriteLock serverLock = new ReentrantReadWriteLock();
 
-    // ===========================================================================================================================
-    // Constructors
-    // ===========================================================================================================================
-
     /**
      * @param stateLocationPath the directory where the {@link Server} registry} is persisted (may be <code>null</code> if
      *        persistence is not desired)
@@ -142,7 +134,7 @@ public final class ServerManager implements IRestClient {
      */
     public ServerManager( String stateLocationPath,
                           IRestClient restClient ) {
-        CheckArg.isNotNull(restClient, "restClient");
+        CheckArg.isNotNull(restClient, "restClient"); //$NON-NLS-1$
 
         this.servers = new ArrayList<Server>();
         this.stateLocationPath = stateLocationPath;
@@ -160,10 +152,6 @@ public final class ServerManager implements IRestClient {
         this(stateLocationPath, new JsonRestClient());
     }
 
-    // ===========================================================================================================================
-    // Methods
-    // ===========================================================================================================================
-
     /**
      * Listeners already registered will not be added again. The new listener will receive events for all existing servers.
      * 
@@ -171,7 +159,7 @@ public final class ServerManager implements IRestClient {
      * @return <code>true</code> if listener was added
      */
     public boolean addRegistryListener( IServerRegistryListener listener ) {
-        CheckArg.isNotNull(listener, "listener");
+        CheckArg.isNotNull(listener, "listener"); //$NON-NLS-1$
         boolean result = this.listeners.addIfAbsent(listener);
 
         // inform new listener of registered servers
@@ -189,7 +177,7 @@ public final class ServerManager implements IRestClient {
      * @return a status indicating if the server was added to the registry
      */
     public Status addServer( PersistedServer server ) {
-        CheckArg.isNotNull(server, "server");
+        CheckArg.isNotNull(server, "server"); //$NON-NLS-1$
         return internalAddServer(server, true);
     }
 
@@ -200,8 +188,8 @@ public final class ServerManager implements IRestClient {
      */
     public Server findServer( String url,
                               String user ) {
-        CheckArg.isNotNull(url, "url");
-        CheckArg.isNotNull(user, "user");
+        CheckArg.isNotNull(url, "url"); //$NON-NLS-1$
+        CheckArg.isNotNull(user, "user"); //$NON-NLS-1$
 
         for (Server server : getServers()) {
             if (url.equals(server.getUrl()) && user.equals(server.getUser())) {
@@ -246,7 +234,7 @@ public final class ServerManager implements IRestClient {
      */
     @Override
     public Collection<Repository> getRepositories( Server server ) throws Exception {
-        CheckArg.isNotNull(server, "server");
+        CheckArg.isNotNull(server, "server"); //$NON-NLS-1$
 
         try {
             this.serverLock.readLock().lock();
@@ -277,6 +265,26 @@ public final class ServerManager implements IRestClient {
     }
 
     /**
+     * @param workspace the workspace whose publishing areas are being requested
+     * @return the workspace areas (never <code>null</code>)
+     * @throws Exception if there is a problem obtaining the workspace areas
+     */
+    public WorkspaceArea[] getWorkspaceAreas( Workspace workspace ) throws Exception {
+        final String path = "jcr:path"; //$NON-NLS-1$
+        final String title = "jcr:title"; //$NON-NLS-1$
+        final String statement = "SELECT [" + path + "], " + '[' + title + ']' + " FROM [mode:publishArea]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        List<QueryRow> rows = query(workspace, IJcrConstants.JCR_SQL2, statement);
+        WorkspaceArea[] workspaceAreas = new WorkspaceArea[rows.size()];
+
+        for (int numRows = rows.size(), i = 0; i < numRows; ++i) {
+            QueryRow row = rows.get(i);
+            workspaceAreas[i] = new WorkspaceArea(workspace, (String)row.getValue(path), (String)row.getValue(title));
+        }
+
+        return workspaceAreas;
+    }
+
+    /**
      * {@inheritDoc}
      * 
      * @see org.modeshape.web.jcr.rest.client.IRestClient#getWorkspaces(org.modeshape.web.jcr.rest.client.domain.Repository)
@@ -285,7 +293,7 @@ public final class ServerManager implements IRestClient {
      */
     @Override
     public Collection<Workspace> getWorkspaces( Repository repository ) throws Exception {
-        CheckArg.isNotNull(repository, "repository");
+        CheckArg.isNotNull(repository, "repository"); //$NON-NLS-1$
 
         try {
             this.serverLock.readLock().lock();
@@ -295,8 +303,7 @@ public final class ServerManager implements IRestClient {
                 return Collections.unmodifiableCollection(new ArrayList<Workspace>(workspaces));
             }
 
-            // a repository's server must be registered in order to obtain it's
-            // workspaces
+            // a repository's server must be registered in order to obtain it's workspaces
             String msg = RestClientI18n.serverManagerUnregisteredServer.text(repository.getServer().getShortDescription());
             throw new RuntimeException(msg);
         } finally {
@@ -331,7 +338,7 @@ public final class ServerManager implements IRestClient {
 
             if (serverExists == null) {
                 // value of "true" is coded in the plugin.xml as well
-                System.setProperty(SERVER_EXISTS_PROPERTY, "true");
+                System.setProperty(SERVER_EXISTS_PROPERTY, "true"); //$NON-NLS-1$
             }
 
             // let listeners know of new server
@@ -395,7 +402,7 @@ public final class ServerManager implements IRestClient {
      * @return <code>true</code> if the server has been registered
      */
     public boolean isRegistered( Server server ) {
-        CheckArg.isNotNull(server, "server");
+        CheckArg.isNotNull(server, "server"); //$NON-NLS-1$
 
         try {
             this.serverLock.readLock().lock();
@@ -471,7 +478,7 @@ public final class ServerManager implements IRestClient {
      * @see #isRegistered(Server)
      */
     public Status ping( Server server ) {
-        CheckArg.isNotNull(server, "server");
+        CheckArg.isNotNull(server, "server"); //$NON-NLS-1$
 
         try {
             this.delegate.getRepositories(server);
@@ -483,8 +490,6 @@ public final class ServerManager implements IRestClient {
 
     /**
      * {@inheritDoc}
-     * <p>
-     * Only tries to unpublish if the workspace's {@link Server server} is registered.
      * 
      * @see org.modeshape.web.jcr.rest.client.IRestClient#publish(org.modeshape.web.jcr.rest.client.domain.Workspace,
      *      java.lang.String, java.io.File)
@@ -494,14 +499,28 @@ public final class ServerManager implements IRestClient {
     public Status publish( Workspace workspace,
                            String path,
                            File file ) {
-        CheckArg.isNotNull(workspace, "workspace");
-        CheckArg.isNotNull(path, "path");
-        CheckArg.isNotNull(file, "file");
+        return publish(workspace, path, file, false);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.modeshape.web.jcr.rest.client.IRestClient#publish(org.modeshape.web.jcr.rest.client.domain.Workspace,
+     *      java.lang.String, java.io.File, boolean)
+     */
+    @Override
+    public Status publish( Workspace workspace,
+                           String path,
+                           File file,
+                           boolean version ) {
+        CheckArg.isNotNull(workspace, "workspace"); //$NON-NLS-1$
+        CheckArg.isNotNull(path, "path"); //$NON-NLS-1$
+        CheckArg.isNotNull(file, "file"); //$NON-NLS-1$
 
         Server server = workspace.getServer();
 
         if (isRegistered(server)) {
-            return this.delegate.publish(workspace, path, file);
+            return this.delegate.publish(workspace, path, file, version);
         }
 
         // server must be registered in order to publish
@@ -513,7 +532,7 @@ public final class ServerManager implements IRestClient {
      * @return <code>true</code> if listener was removed
      */
     public boolean removeRegistryListener( IServerRegistryListener listener ) {
-        CheckArg.isNotNull(listener, "listener");
+        CheckArg.isNotNull(listener, "listener"); //$NON-NLS-1$
         return this.listeners.remove(listener);
     }
 
@@ -522,7 +541,7 @@ public final class ServerManager implements IRestClient {
      * @return a status indicating if the specified server was removed from the registry (never <code>null</code>)
      */
     public Status removeServer( Server server ) {
-        CheckArg.isNotNull(server, "server");
+        CheckArg.isNotNull(server, "server"); //$NON-NLS-1$
         return internalRemoveServer(server, true);
     }
 
@@ -551,7 +570,7 @@ public final class ServerManager implements IRestClient {
                             Node userNode = attributeMap.getNamedItem(USER_TAG);
                             Node passwordNode = attributeMap.getNamedItem(PASSWORD_TAG);
                             String pswd = ((passwordNode == null) ? null : new String(Base64.decode(passwordNode.getNodeValue()),
-                                                                                      "UTF-8"));
+                                                                                      "UTF-8")); //$NON-NLS-1$
 
                             // add server to registry
                             addServer(new PersistedServer(urlNode.getNodeValue(), userNode.getNodeValue(), pswd, (pswd != null)));
@@ -599,8 +618,8 @@ public final class ServerManager implements IRestClient {
                 StreamResult resultXML = new StreamResult(new FileOutputStream(getStateFileName()));
                 TransformerFactory transFactory = TransformerFactory.newInstance();
                 Transformer transformer = transFactory.newTransformer();
-                transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-                transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+                transformer.setOutputProperty(OutputKeys.INDENT, "yes"); //$NON-NLS-1$
+                transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2"); //$NON-NLS-1$ //$NON-NLS-2$
                 transformer.transform(source, resultXML);
             } catch (Exception e) {
                 return new Status(Severity.ERROR, RestClientI18n.errorSavingServerRegistry.text(getStateFileName()), e);
@@ -637,9 +656,9 @@ public final class ServerManager implements IRestClient {
     public Status unpublish( Workspace workspace,
                              String path,
                              File file ) {
-        CheckArg.isNotNull(workspace, "workspace");
-        CheckArg.isNotNull(path, "path");
-        CheckArg.isNotNull(file, "file");
+        CheckArg.isNotNull(workspace, "workspace"); //$NON-NLS-1$
+        CheckArg.isNotNull(path, "path"); //$NON-NLS-1$
+        CheckArg.isNotNull(file, "file"); //$NON-NLS-1$
 
         Server server = workspace.getServer();
 
@@ -660,8 +679,8 @@ public final class ServerManager implements IRestClient {
      */
     public Status updateServer( Server previousServerVersion,
                                 Server newServerVersion ) {
-        CheckArg.isNotNull(previousServerVersion, "previousServerVersion");
-        CheckArg.isNotNull(newServerVersion, "newServerVersion");
+        CheckArg.isNotNull(previousServerVersion, "previousServerVersion"); //$NON-NLS-1$
+        CheckArg.isNotNull(newServerVersion, "newServerVersion"); //$NON-NLS-1$
 
         Status status = null;
 
@@ -706,18 +725,15 @@ public final class ServerManager implements IRestClient {
 
     /**
      * {@inheritDoc}
-     * <p>
-     * <strong>This method is unsupported and should not be called.</strong>
      * 
-     * @throws UnsupportedOperationException if this method is called
      * @see org.modeshape.web.jcr.rest.client.IRestClient#query(org.modeshape.web.jcr.rest.client.domain.Workspace,
      *      java.lang.String, java.lang.String)
      */
     @Override
-    public List<QueryRow> query( Workspace arg0,
-                                 String arg1,
-                                 String arg2 ) throws Exception {
-        throw new UnsupportedOperationException();
+    public List<QueryRow> query( Workspace workspace,
+                                 String language,
+                                 String statement ) throws Exception {
+        return this.delegate.query(workspace, language, statement);
     }
 
     /**
@@ -730,11 +746,11 @@ public final class ServerManager implements IRestClient {
      *      java.lang.String, java.lang.String, int, int)
      */
     @Override
-    public List<QueryRow> query( Workspace arg0,
-                                 String arg1,
-                                 String arg2,
-                                 int arg3,
-                                 int arg4 ) throws Exception {
+    public List<QueryRow> query( Workspace workspace,
+                                 String language,
+                                 String statement,
+                                 int offset,
+                                 int limit ) throws Exception {
         throw new UnsupportedOperationException();
     }
 
@@ -748,12 +764,12 @@ public final class ServerManager implements IRestClient {
      *      java.lang.String, java.lang.String, int, int, java.util.Map)
      */
     @Override
-    public List<QueryRow> query( Workspace arg0,
-                                 String arg1,
-                                 String arg2,
-                                 int arg3,
-                                 int arg4,
-                                 Map<String, String> arg5 ) throws Exception {
+    public List<QueryRow> query( Workspace workspace,
+                                 String language,
+                                 String statement,
+                                 int offset,
+                                 int limit,
+                                 Map<String, String> variables ) throws Exception {
         throw new UnsupportedOperationException();
     }
 

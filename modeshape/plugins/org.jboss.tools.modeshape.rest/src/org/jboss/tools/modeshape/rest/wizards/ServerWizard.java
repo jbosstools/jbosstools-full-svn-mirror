@@ -12,6 +12,7 @@
 package org.jboss.tools.modeshape.rest.wizards;
 
 import static org.jboss.tools.modeshape.rest.IUiConstants.WIZARD_BANNER_IMAGE;
+
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.wizard.Wizard;
 import org.jboss.tools.modeshape.rest.Activator;
@@ -24,10 +25,6 @@ import org.modeshape.web.jcr.rest.client.Status;
  * The <code>ServerWizard</code> is the wizard used to create and edit servers.
  */
 public final class ServerWizard extends Wizard {
-
-    // ===========================================================================================================================
-    // Fields
-    // ===========================================================================================================================
 
     /**
      * Non-<code>null</code> if the wizard is editing an existing server.
@@ -43,10 +40,6 @@ public final class ServerWizard extends Wizard {
      * The manager in charge of the server registry.
      */
     private final ServerManager serverManager;
-
-    // ===========================================================================================================================
-    // Constructors
-    // ===========================================================================================================================
 
     /**
      * Constructs a wizard that creates a new server.
@@ -72,12 +65,10 @@ public final class ServerWizard extends Wizard {
         this.page = new ServerPage(server);
         this.serverManager = serverManager;
         this.existingServer = server;
+
+        setDefaultPageImageDescriptor(Activator.getDefault().getImageDescriptor(WIZARD_BANNER_IMAGE));
         setWindowTitle(RestClientI18n.serverWizardEditServerTitle.text());
     }
-
-    // ===========================================================================================================================
-    // Methods
-    // ===========================================================================================================================
 
     /**
      * {@inheritDoc}

@@ -13,14 +13,10 @@ package org.jboss.tools.modeshape.rest.preferences;
 
 import static org.jboss.tools.modeshape.rest.IUiConstants.ModeShape_IMAGE_16x;
 import static org.jboss.tools.modeshape.rest.IUiConstants.HelpContexts.PREFERENCE_PAGE_HELP_CONTEXT;
-import static org.jboss.tools.modeshape.rest.IUiConstants.Preferences.ENABLE_RESOURCE_VERSIONING;
-import static org.jboss.tools.modeshape.rest.RestClientI18n.preferencePageDescription;
-import static org.jboss.tools.modeshape.rest.RestClientI18n.preferencePageEnableVersioningEditor;
-import static org.jboss.tools.modeshape.rest.RestClientI18n.preferencePageEnableVersioningEditorToolTip;
-import static org.jboss.tools.modeshape.rest.RestClientI18n.preferencePageMessage;
-import static org.jboss.tools.modeshape.rest.RestClientI18n.preferencePageTitle;
+import static org.jboss.tools.modeshape.rest.RestClientI18n.fileFiltersPreferencePageDescription;
+import static org.jboss.tools.modeshape.rest.RestClientI18n.fileFiltersPreferencePageMessage;
+import static org.jboss.tools.modeshape.rest.RestClientI18n.fileFiltersPreferencePageTitle;
 
-import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.swt.SWT;
@@ -35,14 +31,19 @@ import org.eclipse.ui.help.IWorkbenchHelpSystem;
 import org.jboss.tools.modeshape.rest.Activator;
 
 /**
- * The <code>ModeShapePreferencePage</code> is the UI for managing general ModeShape-related preferences.
+ * The <code>FileFiltersPreferencePage</code> is the UI for managing all file extension and folder name filter preferences.
  */
-public final class ModeShapePreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
+public final class FileFiltersPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
 
     /**
-     * The editor used to enable and disable versioning in ModeShape.
+     * The editor used to manage the list of filtered file extensions.
      */
-    private BooleanFieldEditor enableVersioningEditor;
+    private FilteredFileExtensionEditor extensionsEditor;
+
+    /**
+     * The editor used to manage the list of filtered folder names.
+     */
+    private FilteredFoldersEditor foldersEditor;
 
     /**
      * {@inheritDoc}
@@ -55,15 +56,21 @@ public final class ModeShapePreferencePage extends PreferencePage implements IWo
         panel.setLayout(new GridLayout(2, false));
         panel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-        // create the field editor
-        this.enableVersioningEditor = new BooleanFieldEditor(ENABLE_RESOURCE_VERSIONING,
-                                                             preferencePageEnableVersioningEditor.text(),
-                                                             panel);
-        this.enableVersioningEditor.setPreferenceStore(getPreferenceStore());
-        this.enableVersioningEditor.getDescriptionControl(panel).setToolTipText(preferencePageEnableVersioningEditorToolTip.text());
+        // create the filtered extensions editor
+        this.extensionsEditor = new FilteredFileExtensionEditor(panel);
+        this.extensionsEditor.setPreferenceStore(getPreferenceStore());
+        this.extensionsEditor.getListControl(panel).setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-        // populate the editor with current preference value
-        this.enableVersioningEditor.load();
+        // populate the extensions editor
+        this.extensionsEditor.load();
+
+        // create the filtered folders editor
+        this.foldersEditor = new FilteredFoldersEditor(panel);
+        this.foldersEditor.setPreferenceStore(getPreferenceStore());
+        this.foldersEditor.getListControl(panel).setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
+        // populate the folders editor
+        this.foldersEditor.load();
 
         // register with the help system
         IWorkbenchHelpSystem helpSystem = Activator.getDefault().getWorkbench().getHelpSystem();
@@ -79,7 +86,7 @@ public final class ModeShapePreferencePage extends PreferencePage implements IWo
      */
     @Override
     public String getDescription() {
-        return preferencePageDescription.text();
+        return fileFiltersPreferencePageDescription.text();
     }
 
     /**
@@ -99,7 +106,7 @@ public final class ModeShapePreferencePage extends PreferencePage implements IWo
      */
     @Override
     public String getMessage() {
-        return preferencePageMessage.text();
+        return fileFiltersPreferencePageMessage.text();
     }
 
     /**
@@ -119,7 +126,7 @@ public final class ModeShapePreferencePage extends PreferencePage implements IWo
      */
     @Override
     public String getTitle() {
-        return preferencePageTitle.text();
+        return fileFiltersPreferencePageTitle.text();
     }
 
     /**
@@ -139,7 +146,8 @@ public final class ModeShapePreferencePage extends PreferencePage implements IWo
      */
     @Override
     protected void performDefaults() {
-        this.enableVersioningEditor.loadDefault();
+        this.extensionsEditor.loadDefault();
+        this.foldersEditor.loadDefault();
         super.performDefaults();
     }
 
@@ -150,7 +158,8 @@ public final class ModeShapePreferencePage extends PreferencePage implements IWo
      */
     @Override
     public boolean performOk() {
-        this.enableVersioningEditor.store();
+        this.extensionsEditor.store();
+        this.foldersEditor.store();
         return super.performOk();
     }
     
@@ -164,7 +173,7 @@ public final class ModeShapePreferencePage extends PreferencePage implements IWo
         super.setVisible(visible);
         
         if (visible) {
-            this.enableVersioningEditor.setFocus();
+            this.extensionsEditor.setFocus();
         }
     }
 

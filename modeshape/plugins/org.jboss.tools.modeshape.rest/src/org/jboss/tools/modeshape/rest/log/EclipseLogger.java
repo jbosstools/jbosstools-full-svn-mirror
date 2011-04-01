@@ -12,6 +12,7 @@
 package org.jboss.tools.modeshape.rest.log;
 
 import java.text.MessageFormat;
+
 import org.eclipse.core.runtime.ILog;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
@@ -25,29 +26,13 @@ import org.slf4j.Marker;
  */
 public final class EclipseLogger implements Logger {
 
-    // ===========================================================================================================================
-    // Class Fields
-    // ===========================================================================================================================
-
     private static ILog LOGGER = Platform.getLog(Platform.getBundle(IUiConstants.PLUGIN_ID));
 
-    // ===========================================================================================================================
-    // Fields
-    // ===========================================================================================================================
-
     private String name;
-
-    // ===========================================================================================================================
-    // Constructors
-    // ===========================================================================================================================
 
     EclipseLogger( String name ) {
         this.name = name;
     }
-
-    // ===========================================================================================================================
-    // Methods
-    // ===========================================================================================================================
 
     /**
      * {@inheritDoc}
@@ -417,7 +402,7 @@ public final class EclipseLogger implements Logger {
      */
     @Override
     public boolean isDebugEnabled() {
-        return false;
+        return true;
     }
 
     /**
@@ -437,7 +422,7 @@ public final class EclipseLogger implements Logger {
      */
     @Override
     public boolean isErrorEnabled() {
-        return false;
+        return true;
     }
 
     /**
@@ -457,7 +442,7 @@ public final class EclipseLogger implements Logger {
      */
     @Override
     public boolean isInfoEnabled() {
-        return false;
+        return true;
     }
 
     /**
@@ -477,7 +462,7 @@ public final class EclipseLogger implements Logger {
      */
     @Override
     public boolean isTraceEnabled() {
-        return false;
+        return true;
     }
 
     /**
@@ -497,7 +482,7 @@ public final class EclipseLogger implements Logger {
      */
     @Override
     public boolean isWarnEnabled() {
-        return false;
+        return true;
     }
 
     /**

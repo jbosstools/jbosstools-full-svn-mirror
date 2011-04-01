@@ -13,6 +13,7 @@ package org.jboss.tools.modeshape.rest;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
@@ -35,18 +36,10 @@ import org.osgi.framework.BundleContext;
  */
 public final class Activator extends AbstractUIPlugin implements IUiConstants {
 
-    // ===========================================================================================================================
-    // Class Fields
-    // ===========================================================================================================================
-
     /**
      * The shared plugin instance.
      */
     private static Activator plugin;
-
-    // ===========================================================================================================================
-    // Class Methods
-    // ===========================================================================================================================
 
     /**
      * @return the shared instance or <code>null</code> if not constructed
@@ -54,10 +47,6 @@ public final class Activator extends AbstractUIPlugin implements IUiConstants {
     public static Activator getDefault() {
         return plugin;
     }
-
-    // ===========================================================================================================================
-    // Fields
-    // ===========================================================================================================================
 
     /**
      * The image used when the requested image cannot be found.
@@ -69,19 +58,15 @@ public final class Activator extends AbstractUIPlugin implements IUiConstants {
      */
     private ServerManager serverMgr;
 
-    // ===========================================================================================================================
-    // Methods
-    // ===========================================================================================================================
-
     /**
      * @param key the plugin relative path to the image (never <code>null</code>)
      * @return the image or an image indicating the requested image could not be found
      */
     private ImageDescriptor createImageDescriptor( String key ) {
-        CheckArg.isNotNull(key, "key");
+        CheckArg.isNotNull(key, "key"); //$NON-NLS-1$
 
         try {
-            URL url = new URL(getBundle().getEntry("/").toString() + key);
+            URL url = new URL(getBundle().getEntry("/").toString() + key); //$NON-NLS-1$
             return ImageDescriptor.createFromURL(url);
         } catch (final MalformedURLException e) {
             log(new Status(Severity.ERROR, RestClientI18n.missingImage.text(key), e));
@@ -106,7 +91,7 @@ public final class Activator extends AbstractUIPlugin implements IUiConstants {
      * @see ISharedImages
      */
     public Image getSharedImage( String imageId ) {
-        CheckArg.isNotNull(imageId, "imageId");
+        CheckArg.isNotNull(imageId, "imageId"); //$NON-NLS-1$
         Image result = PlatformUI.getWorkbench().getSharedImages().getImage(imageId);
         return ((result == null) ? getMissingImage() : result);
     }
@@ -117,7 +102,7 @@ public final class Activator extends AbstractUIPlugin implements IUiConstants {
      * @see ISharedImages
      */
     public ImageDescriptor getSharedImageDescriptor( String imageId ) {
-        CheckArg.isNotNull(imageId, "imageId");
+        CheckArg.isNotNull(imageId, "imageId"); //$NON-NLS-1$
         ImageDescriptor result = PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(imageId);
 
         if (result != null) {
@@ -208,9 +193,10 @@ public final class Activator extends AbstractUIPlugin implements IUiConstants {
      * @param status the status being logged (never <code>null</code>)
      */
     public void log( Status status ) {
-        CheckArg.isNotNull(status, "status");
+        CheckArg.isNotNull(status, "status"); //$NON-NLS-1$
         IStatus eclipseStatus = new org.eclipse.core.runtime.Status(Utils.convertSeverity(status.getSeverity()),
-                                                                    IUiConstants.PLUGIN_ID, status.getMessage(),
+                                                                    IUiConstants.PLUGIN_ID,
+                                                                    status.getMessage(),
                                                                     status.getException());
         getLog().log(eclipseStatus);
     }
@@ -222,11 +208,10 @@ public final class Activator extends AbstractUIPlugin implements IUiConstants {
      */
     @Override
     public void start( BundleContext context ) throws Exception {
-//        BasicConfigurator.configure(); // TODO how does logging get configured now
-        
         super.start(context);
         plugin = this;
 
+        // restore server registry
         this.serverMgr = new ServerManager(getStateLocation().toFile().getAbsolutePath());
         Status status = this.serverMgr.restoreState();
 
