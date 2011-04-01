@@ -36,7 +36,8 @@ public class CloudConnectionPageModel extends ObservableUIPojo {
 	public static final String UNKNOWN_TYPE_LABEL = "UnknownType.label"; //$NON-NLS-1$
 	public static final String INVALID_URL = "ErrorInvalidURL.text"; //$NON-NLS-1$
 	public static final String NONCLOUD_URL = "ErrorNonCloudURL.text"; //$NON-NLS-1$
-	private static final String HTTP_PREFIX = "http://";
+
+	private static final String HTTP_PREFIX = "http://"; //$NON-NLS-1$
 
 	private String name;
 	private String url;
