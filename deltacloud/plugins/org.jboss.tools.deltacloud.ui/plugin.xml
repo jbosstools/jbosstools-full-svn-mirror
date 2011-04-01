@@ -11,7 +11,7 @@
       <view
             name="%CloudViewerName"
             icon="icons/delta.png"
-            category="org.jboss.tools.deltacloud.ui"
+            category="org.jlboss.tools.deltacloud.ui"
             class="org.jboss.tools.deltacloud.ui.views.cloud.DeltaCloudView"
             id="org.jboss.tools.deltacloud.ui.views.CloudView">
       </view>
@@ -672,24 +672,6 @@
                label="%command.createinstance.label"
                style="push"
                tooltip="%command.createinstance.tooltip">
-            <visibleWhen
-                  checkEnabled="true">
-               <with
-                     variable="selection">
-					<iterate>
-				        <and>
-				           <instanceof
-				                 value="org.jboss.tools.deltacloud.ui.views.cloud.DeltaCloudViewItem">
-				           </instanceof>
-				           <not>
-				              <instanceof
-				                    value="org.jboss.tools.deltacloud.ui.views.cloud.ImageItem">
-				              </instanceof>
-				           </not>
-				        </and>
-	               	</iterate>
-               </with>
-            </visibleWhen>
          </command>
     </menuContribution>
     <menuContribution

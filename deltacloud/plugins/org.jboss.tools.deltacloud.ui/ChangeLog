@@ -1,5 +1,7 @@
 2011-04-01  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
+	* plugin.xml: 
+	[JBIDE-8662] removed visibility rule for "Launch instance" in cloud viewer
 	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CloudConnectionPageModel.java 
 	(prependHttp): 
 	(CloudConnectionPageModel): 
