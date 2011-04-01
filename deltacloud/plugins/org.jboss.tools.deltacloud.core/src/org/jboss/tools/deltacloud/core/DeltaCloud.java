@@ -54,14 +54,14 @@ public class DeltaCloud extends ObservablePojo {
 	private String lastImageId = "";
 	private String lastRealmName = "";
 	private String lastProfileId = "";
-	
+
 	private DeltaCloudClient client;
 
 	private DeltaCloudImagesRepository imagesRepo = new DeltaCloudImagesRepository();
 	private boolean areImagesLoaded = false;
 	private DeltaCloudInstancesRepository instancesRepo = new DeltaCloudInstancesRepository();
 	private boolean areInstancesLoaded = false;
-	
+
 	private IImageFilter imageFilter;
 	private IInstanceFilter instanceFilter;
 
@@ -101,7 +101,7 @@ public class DeltaCloud extends ObservablePojo {
 			throws DeltaCloudException {
 		this.driver = driver;
 
-		boolean nameChanged = updateName(name); 
+		boolean nameChanged = updateName(name);
 		boolean connectionPropertiesChanged = updateConnectionProperties(url, username, password);
 
 		if (nameChanged || connectionPropertiesChanged) {
@@ -189,7 +189,32 @@ public class DeltaCloud extends ObservablePojo {
 		return driver;
 	}
 
+	private void updateDriver() {
+		try {
+			DeltaCloudDriver driver = getServerDriver(url);
+			this.driver = driver;
+		} catch (DeltaCloudException e) {
+			// ignore
+		}
+	}
+
+	/**
+	 * Returns if this cloud points to a known cloud type. The implementation
+	 * checks the driver type which will be valid if the url is a valid and
+	 * known cloud. The credentials are not checked.
+	 * 
+	 * @return <code>true</code> if this cloud is a known type
+	 */
 	public boolean isValid() {
+		boolean isValid = isKnownDriver();
+		if (!isValid) {
+			updateDriver();
+			isValid = isKnownDriver();
+		}
+		return isValid;
+	}
+
+	protected boolean isKnownDriver() {
 		return driver != null
 				&& driver != DeltaCloudDriver.UNKNOWN;
 	}
@@ -484,8 +509,9 @@ public class DeltaCloud extends ObservablePojo {
 				// TODO: remove notification with all instanceRepo, replace by
 				// notifying the changed instance
 				firePropertyChange(PROP_INSTANCES, instances, repo.get());
-//				int index = repo.indexOf(instance);
-//				fireIndexedPropertyChange(PROP_INSTANCES, index, instance, instance);
+				// int index = repo.indexOf(instance);
+				// fireIndexedPropertyChange(PROP_INSTANCES, index, instance,
+				// instance);
 			}
 			return result;
 		} catch (DeltaCloudClientException e) {
