@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Require-Bundle: org.eclipse.ui,org.eclipse.core.runtime,org.jboss.ide.
+ eclipse.as.core,org.eclipse.wst.server.core;bundle-version="1.1.302",
+ org.jboss.tools.jmx.core;bundle-version="1.2.0",org.eclipse.core.reso
+ urces;bundle-version="3.7.100",org.eclipse.ui.navigator;bundle-versio
+ n="3.5.0",org.jboss.tools.jmx.ui;bundle-version="1.2.0",org.eclipse.w
+ st.server.ui;bundle-version="1.1.305",org.jboss.ide.eclipse.as.ui;bun
+ dle-version="2.2.0"
+Bundle-ActivationPolicy: lazy
+Bundle-Version: 0.9.0.v20110401-0131-M1
+Bundle-Name: Integration
+Bundle-Activator: org.jboss.ide.eclipse.as.jmx.integration.Activator
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.jboss.ide.eclipse.as.jmx.integration;singleto
+ n:=true
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+

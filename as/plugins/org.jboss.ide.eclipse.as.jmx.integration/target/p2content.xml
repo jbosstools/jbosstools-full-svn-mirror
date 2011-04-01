@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<units size='1'>
+  <unit id='org.jboss.ide.eclipse.as.jmx.integration' version='0.9.0.v20110401-0131-M1'>
+    <update id='org.jboss.ide.eclipse.as.jmx.integration' range='[0.0.0,0.9.0.v20110401-0131-M1)' severity='0'/>
+    <properties size='4'>
+      <property name='org.eclipse.equinox.p2.name' value='Integration'/>
+      <property name='maven-groupId' value='org.jboss.tools.as.plugins'/>
+      <property name='maven-artifactId' value='org.jboss.ide.eclipse.as.jmx.integration'/>
+      <property name='maven-version' value='0.9.0-SNAPSHOT'/>
+    </properties>
+    <provides size='3'>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='org.jboss.ide.eclipse.as.jmx.integration' version='0.9.0.v20110401-0131-M1'/>
+      <provided namespace='osgi.bundle' name='org.jboss.ide.eclipse.as.jmx.integration' version='0.9.0.v20110401-0131-M1'/>
+      <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+    </provides>
+    <requires size='10'>
+      <required namespace='osgi.bundle' name='org.eclipse.ui' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.core.runtime' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.jboss.ide.eclipse.as.core' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.wst.server.core' range='1.1.302'/>
+      <required namespace='osgi.bundle' name='org.jboss.tools.jmx.core' range='1.2.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.core.resources' range='3.7.100'/>
+      <required namespace='osgi.bundle' name='org.eclipse.ui.navigator' range='3.5.0'/>
+      <required namespace='osgi.bundle' name='org.jboss.tools.jmx.ui' range='1.2.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.wst.server.ui' range='1.1.305'/>
+      <required namespace='osgi.bundle' name='org.jboss.ide.eclipse.as.ui' range='2.2.0'/>
+    </requires>
+    <artifacts size='1'>
+      <artifact classifier='osgi.bundle' id='org.jboss.ide.eclipse.as.jmx.integration' version='0.9.0.v20110401-0131-M1'/>
+    </artifacts>
+    <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+    <touchpointData size='1'>
+      <instructions size='1'>
+        <instruction key='manifest'>
+          Bundle-RequiredExecutionEnvironment: JavaSE-1.6&#xA;Bundle-Name: Integration&#xA;Created-By: Apache Maven&#xA;Bundle-Activator: org.jboss.ide.eclipse.as.jmx.integration.Activator&#xA;Manifest-Version: 1.0&#xA;Bundle-ActivationPolicy: lazy&#xA;Bundle-SymbolicName: org.jboss.ide.eclipse.as.jmx.integration;singleton:=true&#xA;Bundle-ManifestVersion: 2&#xA;Build-Jdk: 1.6.0_24&#xA;Archiver-Version: Plexus Archiver&#xA;Bundle-Version: 0.9.0.v20110401-0131-M1&#xA;Built-By: rob&#xA;Require-Bundle: org.eclipse.ui,org.eclipse.core.runtime,org.jboss.ide.eclipse.as.core,org.eclipse.wst.server.core;bundle-version=&quot;1.1.302&quot;,org.jboss.tools.jmx.core;bundle-version=&quot;1.2.0&quot;,org.eclipse.core.resources;bundle-version=&quot;3.7.100&quot;,org.eclipse.ui.navigator;bundle-version=&quot;3.5.0&quot;,org.jboss.tools.jmx.ui;bundle-version=&quot;1.2.0&quot;,org.eclipse.wst.server.ui;bundle-version=&quot;1.1.305&quot;,org.jboss.ide.eclipse.as.ui;bundle-version=&quot;2.2.0&quot;&#xA;
+        </instruction>
+      </instructions>
+    </touchpointData>
+  </unit>
+</units>
