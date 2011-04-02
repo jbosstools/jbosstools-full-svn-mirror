@@ -10,10 +10,10 @@
   ******************************************************************************/
 package org.jboss.tools.vpe.docbook.test;
 
-import org.jboss.tools.vpe.ui.test.VpeTestSetup;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
+import org.jboss.tools.vpe.base.test.VpeTestSetup;
 
 /**
  * Class for testing all Docbook components
