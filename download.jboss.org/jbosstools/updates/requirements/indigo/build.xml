@@ -16,7 +16,7 @@
 			-f ~/RHDS/updates/requirements/indigo/build.xml -Ddestination=/tmp/indigo-repo
 	-->
 	<target name="mirror">
-		<property name="URL" value="http://download.eclipse.org/releases/indigo/201103180900/aggregate/" />
+		<property name="URL" value="http://download.eclipse.org/releases/indigo/" />
 
 		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/indigo/" />
 		<property name="compress" value="true" />
