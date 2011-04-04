@@ -8,8 +8,6 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>org.jboss.tools.modeshape.rest</module>
-	</modules>
-	<modules>
 		<module>org.jboss.tools.modeshape.rest.doc.user</module>
 	</modules>
 </project>
