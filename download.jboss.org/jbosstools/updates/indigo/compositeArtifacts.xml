@@ -16,7 +16,7 @@
 <child location='../requirements/emf/2.7M6/'/>
 <child location='../requirements/webtools/3.3M6/'/>
 
-<child location='../requirements/ecf/3.4/'/>
+<child location='../requirements/ecf/3.5/'/>
 <child location='../requirements/gwt/201102111811/'/>
 <child location='../requirements/m2eclipse/0.13.0.201103291237/'/>
 <child location='../requirements/orbit/S20110124210048/'/>
