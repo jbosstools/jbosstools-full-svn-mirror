@@ -32,7 +32,7 @@
 		<jbosstools-target-site>http://download.jboss.org/jbosstools/updates/target-platform_3.3.indigo/latest/</jbosstools-target-site>
 
 		<!-- pass in your own path using -Dlocal.site=file://home/$user/trunk/build/target-platform/REPO/ -->
-		<local.site>file://home/hudson/static_build_env/jbds/target-platform_3.3.indigo/e37M5-wtp33M5.target/</local.site>
+		<local.site>file://home/hudson/static_build_env/jbds/target-platform_3.3.indigo/e37M6-wtp33M6.target/</local.site>
 	</properties>
 
 	<build>
