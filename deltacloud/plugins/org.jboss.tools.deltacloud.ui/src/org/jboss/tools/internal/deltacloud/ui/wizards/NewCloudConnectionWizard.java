@@ -109,12 +109,17 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 	@Override
 	public boolean performFinish() {
 		String name = mainPage.getModel().getName();
-		String url = mainPage.getModel().getUrl();
+		new StringPreferenceValue(IPreferenceKeys.LAST_NAME, Activator.PLUGIN_ID)
+				.store(name);
 
+		String url = mainPage.getModel().getUrl();
 		new StringPreferenceValue(IPreferenceKeys.LAST_URL, Activator.PLUGIN_ID)
 				.store(url);
 
 		String username = mainPage.getModel().getUsername();
+		new StringPreferenceValue(IPreferenceKeys.LAST_USERNAME, Activator.PLUGIN_ID)
+				.store(username);
+
 		String password = mainPage.getModel().getPassword();
 		Driver driver = mainPage.getModel().getDriver();
 
@@ -122,7 +127,7 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 	}
 
 	private boolean createCloud(final String name, final String url, final String username, final String password,
-			final Driver driver)  {
+			final Driver driver) {
 		Job job = new Job(WizardMessages.getFormattedString("CloudConnection.msg", name)) {
 
 			@Override

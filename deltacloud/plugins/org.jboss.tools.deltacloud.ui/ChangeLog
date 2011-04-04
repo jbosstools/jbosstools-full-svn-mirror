@@ -1,3 +1,22 @@
+2011-04-04  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/EditCloudConnectionWizard.java (performFinish): 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/NewCloudConnectionWizard.java (performFinish): 
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CloudConnectionPage.java (createControl): 
+	* src/org/jboss/tools/internal/deltacloud/ui/preferences/IPreferenceKeys.java 
+	(LAST_NAME): 
+	(LAST_USERNAME): 
+	[JBIDE-8259] storing/restoring last used cloud name and username from preferences
+
+2011-04-01  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* plugin.xml: 
+	[JBIDE-8662] removed visibility rule for "Launch instance" in cloud viewer
+	* src/org/jboss/tools/internal/deltacloud/ui/wizards/CloudConnectionPageModel.java 
+	(prependHttp): 
+	(CloudConnectionPageModel): 
+	[JBIDE-8599] prepending "http://" if url is empty
+	
 2011-03-31  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
 	* src/org/jboss/tools/deltacloud/ui/commands/CreateInstanceFromAnyImageHandler.java: 

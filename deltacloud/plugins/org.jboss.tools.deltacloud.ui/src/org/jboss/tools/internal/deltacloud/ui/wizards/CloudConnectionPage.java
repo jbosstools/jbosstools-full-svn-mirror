@@ -316,12 +316,19 @@ public class CloudConnectionPage extends WizardPage {
 		nameLabel.setText(WizardMessages.getString(NAME_LABEL));
 		Text nameText = new Text(container, SWT.BORDER | SWT.SINGLE);
 		bindName(dbc, nameText);
+		String name = 
+			new StringPreferenceValue(IPreferenceKeys.LAST_NAME, Activator.PLUGIN_ID).get(nameText.getText());
+		
+		nameText.setText(name);
 
 		// url
 		Label urlLabel = new Label(container, SWT.NULL);
 		urlLabel.setText(WizardMessages.getString(URL_LABEL));
 		Point p1 = urlLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		Text urlText = new Text(container, SWT.BORDER | SWT.SINGLE);
+		String url =
+			new StringPreferenceValue(IPreferenceKeys.LAST_URL, Activator.PLUGIN_ID).get(urlText.getText());
+		connectionModel.setUrl(url);
 
 		dbc.bindValue(
 				WidgetProperties.text(SWT.Modify).observe(urlText),
@@ -346,12 +353,6 @@ public class CloudConnectionPage extends WizardPage {
 				new ControlDecorationAdapter(decoration, (IStatus) validationStatusProvider.getValue()),
 				typeLabelBinding.getValidationStatus(), urlText);
 
-
-		// set url from preferences
-		String url =
-				new StringPreferenceValue(IPreferenceKeys.LAST_URL, Activator.PLUGIN_ID).get(urlText.getText());
-		urlText.setText(url);
-
 		// username
 		Label usernameLabel = new Label(container, SWT.NULL);
 		usernameLabel.setText(WizardMessages.getString(USERNAME_LABEL));
@@ -361,7 +362,10 @@ public class CloudConnectionPage extends WizardPage {
 				usernameObservable,
 				BeanProperties.value(CloudConnectionPageModel.class, CloudConnectionPageModel.PROPERTY_USERNAME)
 						.observe(connectionModel));
-
+		String username = 
+			new StringPreferenceValue(IPreferenceKeys.LAST_USERNAME, Activator.PLUGIN_ID).get(usernameText.getText());
+		usernameText.setText(username);
+		
 		// password
 		Label passwordLabel = new Label(container, SWT.NULL);
 		passwordLabel.setText(WizardMessages.getString(PASSWORD_LABEL));

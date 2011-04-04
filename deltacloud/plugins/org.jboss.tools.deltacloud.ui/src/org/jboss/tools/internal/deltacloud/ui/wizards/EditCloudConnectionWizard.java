@@ -19,6 +19,9 @@ import org.eclipse.ui.IWorkbench;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.Driver;
 import org.jboss.tools.deltacloud.core.job.AbstractCloudJob;
+import org.jboss.tools.deltacloud.ui.Activator;
+import org.jboss.tools.internal.deltacloud.ui.preferences.IPreferenceKeys;
+import org.jboss.tools.internal.deltacloud.ui.preferences.StringPreferenceValue;
 import org.jboss.tools.internal.deltacloud.ui.utils.WizardUtils;
 
 /**
@@ -41,8 +44,17 @@ public class EditCloudConnectionWizard extends NewCloudConnectionWizard {
 	@Override
 	public boolean performFinish() {
 		String name = mainPage.getModel().getName();
+		new StringPreferenceValue(IPreferenceKeys.LAST_NAME, Activator.PLUGIN_ID)
+				.store(name);
+
 		String url = mainPage.getModel().getUrl();
+		new StringPreferenceValue(IPreferenceKeys.LAST_URL, Activator.PLUGIN_ID)
+				.store(url);
+
 		String username = mainPage.getModel().getUsername();
+		new StringPreferenceValue(IPreferenceKeys.LAST_USERNAME, Activator.PLUGIN_ID)
+				.store(username);
+
 		String password = mainPage.getModel().getPassword();
 		Driver driver = mainPage.getModel().getDriver();
 		return editCloud(initialCloud, name, url, username, password, driver);
