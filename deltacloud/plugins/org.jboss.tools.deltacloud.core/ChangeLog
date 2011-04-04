@@ -1,5 +1,35 @@
+2011-04-01  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java 
+	(updateDriver): 
+	(isValid): 
+	(isKnownDriver):
+	[JBIDE-8668] updating driver state on each test if  driver is UNKNOWN
+
 2011-03-24  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
 
+	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java 
+	(areImagesLoaded): 
+	(imagesRepo): 
+	(getImages): 
+	(getInstances): 
+	(instancesLoaded): 
+	(getImage): 
+	[JBIDE-8102] now loading all images before querying server for a single image
+	
+	* src/org/jboss/tools/deltacloud/core/InstanceFilter.java 
+	(matches): 
+	(aliasRule): 
+	(setRules): 
+	(toString): 
+	(getAliasRule): 
+	* src/org/jboss/tools/deltacloud/core/IInstanceFilter.java 
+	(ALL_STRING): 
+	(getAliasRule): 
+	* src/org/jboss/tools/deltacloud/core/AllInstanceFilter.java 
+	(getAliasRule): 
+	[JBIDE-8187] added capability to filter instance on behalf of alias
+	
 	* src/org/jboss/tools/deltacloud/core/DeltaCloudInstance.java 
 	(getActions): 
 	(Action.getByName): 

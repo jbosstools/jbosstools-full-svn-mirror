@@ -74,7 +74,8 @@ public class DeltaCloud extends ObservablePojo {
 
 	public DeltaCloud(String name, String url, String username, String password, Driver driver)
 			throws DeltaCloudException {
-		this(name, url, username, password, driver, IImageFilter.ALL_STRING, IInstanceFilter.ALL_STRING, new ArrayList<IInstanceAliasMapping>());
+		this(name, url, username, password, driver, IImageFilter.ALL_STRING, IInstanceFilter.ALL_STRING,
+				new ArrayList<IInstanceAliasMapping>());
 	}
 
 	public DeltaCloud(String name, String url, String username, Driver driver, String imageFilterRules,
@@ -189,7 +190,32 @@ public class DeltaCloud extends ObservablePojo {
 		return driver;
 	}
 
+	private void updateDriver() {
+		try {
+			Driver driver = getServerDriver(url);
+			this.driver = driver;
+		} catch (DeltaCloudException e) {
+			// ignore
+		}
+	}
+
+	/**
+	 * Returns if this cloud points to a known cloud type. The implementation
+	 * checks the driver type which will be valid if the url is a valid and
+	 * known cloud. The credentials are not checked.
+	 * 
+	 * @return <code>true</code> if this cloud is a known type
+	 */
 	public boolean isValid() {
+		boolean isValid = isKnownDriver();
+		if (!isValid) {
+			updateDriver();
+			isValid = isKnownDriver();
+		}
+		return isValid;
+	}
+
+	protected boolean isKnownDriver() {
 		return driver != null
 				&& driver != Driver.UNKNOWN;
 	}
@@ -328,7 +354,7 @@ public class DeltaCloud extends ObservablePojo {
 		if (instance != null) {
 			while (!pm.isCanceled()) {
 				Thread.sleep(WAIT_FOR_STATE_DELAY);
-	 	 	 	instance = refreshInstance(instance);
+				instance = refreshInstance(instance);
 				if (stateMatcher.matchesState(instance, instance.getState())
 						|| instance.getState().equals(DeltaCloudInstance.State.TERMINATED)) {
 					return instance;
@@ -416,6 +442,7 @@ public class DeltaCloud extends ObservablePojo {
 				Image image = client.listImages(id);
 				deltaCloudImage = DeltaCloudImageFactory.create(image, this);
 				images.add(deltaCloudImage);
+				updateDriver();
 			} catch (DeltaCloudClientException e) {
 				throw new DeltaCloudException(MessageFormat.format("Cloud not find image with id \"{0}\"", id), e);
 			}
