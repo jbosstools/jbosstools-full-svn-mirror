@@ -11,17 +11,11 @@
  */
 package org.jboss.tools.modeshape.rest.preferences;
 
-import static org.jboss.tools.modeshape.rest.IUiConstants.FILTERED_FOLDER_NAMES_PREFERENCE;
+import static org.jboss.tools.modeshape.rest.IUiConstants.Preferences.FILTERED_FOLDER_NAMES_PREFERENCE;
+import static org.jboss.tools.modeshape.rest.RestClientI18n.fileFiltersPreferencePageFilteredFolderNamesLabel;
 import static org.jboss.tools.modeshape.rest.RestClientI18n.newFilteredFolderNameDialogLabel;
 import static org.jboss.tools.modeshape.rest.RestClientI18n.newFilteredFolderNameDialogTitle;
-import static org.jboss.tools.modeshape.rest.RestClientI18n.preferencePageFilteredFolderNamesLabel;
-import static org.jboss.tools.modeshape.rest.preferences.PrefUtils.FOLDER_NAME_DELIMITER;
-import static org.jboss.tools.modeshape.rest.preferences.PrefUtils.FOLDER_NAME_INVALID_CHARS;
-import java.util.Arrays;
-import java.util.Set;
-import java.util.TreeSet;
-import org.eclipse.jface.preference.ListEditor;
-import org.eclipse.jface.window.Window;
+
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.widgets.Composite;
@@ -30,32 +24,20 @@ import org.jboss.tools.modeshape.rest.Utils;
 /**
  * The <code>FilteredFoldersEditor</code> is an editor for managing a set of folder names.
  */
-public final class FilteredFoldersEditor extends ListEditor implements VerifyListener {
-
-    // =======================================================================================================================
-    // Fields
-    // =======================================================================================================================
+public final class FilteredFoldersEditor extends SortedListEditor implements VerifyListener {
 
     /**
-     * The current set of folder names.
+     * The filter that removes resources, contained in specific folders, from publishing operations (never <code>null</code>).
      */
-    private final Set<String> folderNames;
-
-    // =======================================================================================================================
-    // Constructors
-    // =======================================================================================================================
+    private final PublishingFileFilter filter;
 
     /**
      * @param parent the parent control
      */
     public FilteredFoldersEditor( Composite parent ) {
-        super(FILTERED_FOLDER_NAMES_PREFERENCE, preferencePageFilteredFolderNamesLabel.text(), parent);
-        this.folderNames = new TreeSet<String>();
+        super(FILTERED_FOLDER_NAMES_PREFERENCE, fileFiltersPreferencePageFilteredFolderNamesLabel.text(), parent);
+        this.filter = new PublishingFileFilter();
     }
-
-    // =======================================================================================================================
-    // Methods
-    // =======================================================================================================================
 
     /**
      * {@inheritDoc}
@@ -64,31 +46,27 @@ public final class FilteredFoldersEditor extends ListEditor implements VerifyLis
      */
     @Override
     protected String createList( String[] items ) {
-        return Utils.combineTokens(items, FOLDER_NAME_DELIMITER);
+        return Utils.combineTokens(items, this.filter.getFolderNameDelimiter());
     }
 
     /**
      * {@inheritDoc}
      * 
-     * @see org.eclipse.jface.preference.ListEditor#getNewInputObject()
+     * @see org.jboss.tools.modeshape.rest.preferences.SortedListEditor#getNewItemDialogLabel()
      */
     @Override
-    protected String getNewInputObject() {
-        NewItemDialog dialog = new NewItemDialog(getShell(), newFilteredFolderNameDialogTitle.text(),
-                                                 newFilteredFolderNameDialogLabel.text(), this);
+    protected String getNewItemDialogLabel() {
+        return newFilteredFolderNameDialogLabel.text();
+    }
 
-        if (dialog.open() == Window.OK) {
-            String folderName = dialog.getNewItem();
-
-            // add new folder name
-            if (folderName != null) {
-                this.folderNames.add(folderName);
-                return folderName;
-            }
-        }
-
-        // user canceled dialog
-        return null;
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.jboss.tools.modeshape.rest.preferences.SortedListEditor#getNewItemDialogTitle()
+     */
+    @Override
+    protected String getNewItemDialogTitle() {
+        return newFilteredFolderNameDialogTitle.text();
     }
 
     /**
@@ -98,12 +76,7 @@ public final class FilteredFoldersEditor extends ListEditor implements VerifyLis
      */
     @Override
     protected String[] parseString( String stringList ) {
-        String[] values = Utils.getTokens(stringList, Character.toString(FOLDER_NAME_DELIMITER), true);
-
-        this.folderNames.clear();
-        this.folderNames.addAll(Arrays.asList(values));
-
-        return values;
+        return Utils.getTokens(stringList, Character.toString(this.filter.getFolderNameDelimiter()), true);
     }
 
     /**
@@ -113,7 +86,7 @@ public final class FilteredFoldersEditor extends ListEditor implements VerifyLis
      */
     @Override
     public void verifyText( VerifyEvent event ) {
-        for (char c : FOLDER_NAME_INVALID_CHARS.toCharArray()) {
+        for (char c : this.filter.getFolderNameInvalidCharacters().toCharArray()) {
             if (c == event.character) {
                 event.doit = false;
                 break;

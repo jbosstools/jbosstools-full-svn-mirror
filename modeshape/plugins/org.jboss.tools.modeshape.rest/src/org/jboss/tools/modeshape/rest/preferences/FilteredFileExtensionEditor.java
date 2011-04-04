@@ -11,17 +11,11 @@
  */
 package org.jboss.tools.modeshape.rest.preferences;
 
-import static org.jboss.tools.modeshape.rest.IUiConstants.FILTERED_FILE_EXTENSIONS_PREFERENCE;
+import static org.jboss.tools.modeshape.rest.IUiConstants.Preferences.FILTERED_FILE_EXTENSIONS_PREFERENCE;
+import static org.jboss.tools.modeshape.rest.RestClientI18n.fileFiltersPreferencePageFilteredFileExtensionsLabel;
 import static org.jboss.tools.modeshape.rest.RestClientI18n.newFilteredFileExtensionDialogLabel;
 import static org.jboss.tools.modeshape.rest.RestClientI18n.newFilteredFileExtensionDialogTitle;
-import static org.jboss.tools.modeshape.rest.RestClientI18n.preferencePageFilteredFileExtensionsLabel;
-import static org.jboss.tools.modeshape.rest.preferences.PrefUtils.FILE_EXT_DELIMITER;
-import static org.jboss.tools.modeshape.rest.preferences.PrefUtils.FILE_EXT_INVALID_CHARS;
-import java.util.Arrays;
-import java.util.Set;
-import java.util.TreeSet;
-import org.eclipse.jface.preference.ListEditor;
-import org.eclipse.jface.window.Window;
+
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.widgets.Composite;
@@ -30,32 +24,20 @@ import org.jboss.tools.modeshape.rest.Utils;
 /**
  * The <code>FilteredFileExtensionEditor</code> is an editor for managing a set of filtered file extensions.
  */
-public final class FilteredFileExtensionEditor extends ListEditor implements VerifyListener {
-
-    // =======================================================================================================================
-    // Fields
-    // =======================================================================================================================
-
+public final class FilteredFileExtensionEditor extends SortedListEditor implements VerifyListener {
+    
     /**
-     * The current set of file extensions.
+     * The filter that removes resources, with specific file extensions, from publishing operations (never <code>null</code>).
      */
-    private final Set<String> extensions;
-
-    // =======================================================================================================================
-    // Constructors
-    // =======================================================================================================================
+    private final PublishingFileFilter filter;
 
     /**
      * @param parent the parent control
      */
     public FilteredFileExtensionEditor( Composite parent ) {
-        super(FILTERED_FILE_EXTENSIONS_PREFERENCE, preferencePageFilteredFileExtensionsLabel.text(), parent);
-        this.extensions = new TreeSet<String>();
+        super(FILTERED_FILE_EXTENSIONS_PREFERENCE, fileFiltersPreferencePageFilteredFileExtensionsLabel.text(), parent);
+        this.filter = new PublishingFileFilter();
     }
-
-    // =======================================================================================================================
-    // Methods
-    // =======================================================================================================================
 
     /**
      * {@inheritDoc}
@@ -64,31 +46,27 @@ public final class FilteredFileExtensionEditor extends ListEditor implements Ver
      */
     @Override
     protected String createList( String[] items ) {
-        return Utils.combineTokens(items, FILE_EXT_DELIMITER);
+        return Utils.combineTokens(items, this.filter.getFileExtensionDelimiter());
     }
 
     /**
      * {@inheritDoc}
      * 
-     * @see org.eclipse.jface.preference.ListEditor#getNewInputObject()
+     * @see org.jboss.tools.modeshape.rest.preferences.SortedListEditor#getNewItemDialogLabel()
      */
     @Override
-    protected String getNewInputObject() {
-        NewItemDialog dialog = new NewItemDialog(getShell(), newFilteredFileExtensionDialogTitle.text(),
-                                                 newFilteredFileExtensionDialogLabel.text(), this);
+    protected String getNewItemDialogLabel() {
+        return newFilteredFileExtensionDialogLabel.text();
+    }
 
-        if (dialog.open() == Window.OK) {
-            String extension = dialog.getNewItem();
-
-            // add new extension
-            if (extension != null) {
-                this.extensions.add(extension);
-                return extension;
-            }
-        }
-
-        // user canceled dialog
-        return null;
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.jboss.tools.modeshape.rest.preferences.SortedListEditor#getNewItemDialogTitle()
+     */
+    @Override
+    protected String getNewItemDialogTitle() {
+        return newFilteredFileExtensionDialogTitle.text();
     }
 
     /**
@@ -98,12 +76,7 @@ public final class FilteredFileExtensionEditor extends ListEditor implements Ver
      */
     @Override
     protected String[] parseString( String stringList ) {
-        String[] values = Utils.getTokens(stringList, Character.toString(FILE_EXT_DELIMITER), true);
-
-        this.extensions.clear();
-        this.extensions.addAll(Arrays.asList(values));
-
-        return values;
+        return Utils.getTokens(stringList, Character.toString(this.filter.getFileExtensionDelimiter()), true);
     }
 
     /**
@@ -113,7 +86,7 @@ public final class FilteredFileExtensionEditor extends ListEditor implements Ver
      */
     @Override
     public void verifyText( VerifyEvent event ) {
-        for (char c : FILE_EXT_INVALID_CHARS.toCharArray()) {
+        for (char c : this.filter.getFileExtensionInvalidCharacters().toCharArray()) {
             if (c == event.character) {
                 event.doit = false;
                 break;

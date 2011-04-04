@@ -38,6 +38,12 @@ public final class RestClientI18n {
     public static I18n errorRestoringServerRegistry;
     public static I18n errorSavingServerRegistry;
 
+    public static I18n fileFiltersPreferencePageDescription;
+    public static I18n fileFiltersPreferencePageFilteredFileExtensionsLabel;
+    public static I18n fileFiltersPreferencePageFilteredFolderNamesLabel;
+    public static I18n fileFiltersPreferencePageMessage;
+    public static I18n fileFiltersPreferencePageTitle;
+
     public static I18n missingImage;
 
     public static I18n newFilteredFileExtensionDialogLabel;
@@ -45,12 +51,11 @@ public final class RestClientI18n {
 
     public static I18n newFilteredFolderNameDialogLabel;
     public static I18n newFilteredFolderNameDialogTitle;
+    
+    public static I18n newItemDialogValueExists;
 
     public static I18n newServerActionText;
     public static I18n newServerActionToolTip;
-
-    public static I18n prefUtilsPropertyFileNotFound;
-    public static I18n prefUtilsPropertyNotFound;
 
     public static I18n publishedLocationsDialogCopyUrlButton;
     public static I18n publishedLocationsDialogCopyUrlButtonToolTip;
@@ -68,9 +73,13 @@ public final class RestClientI18n {
     public static I18n publishingConsoleProblemCreatingHyperlinkMsg;
     public static I18n publishingConsoleFilePathNotFoundMsg;
 
+    public static I18n preferenceDefaultScopeNotFound;
+    public static I18n preferenceFileNotFound;
+    public static I18n preferenceNotFound;
+
     public static I18n preferencePageDescription;
-    public static I18n preferencePageFilteredFileExtensionsLabel;
-    public static I18n preferencePageFilteredFolderNamesLabel;
+    public static I18n preferencePageEnableVersioningEditor;
+    public static I18n preferencePageEnableVersioningEditorToolTip;
     public static I18n preferencePageMessage;
     public static I18n preferencePageTitle;
 
@@ -110,6 +119,7 @@ public final class RestClientI18n {
     public static I18n publishPageNoAvailableWorkspacesStatusMsg;
     public static I18n publishPageNoResourcesToPublishStatusMsg;
     public static I18n publishPageNoResourcesToUnpublishStatusMsg;
+    public static I18n publishPageOpenPreferencePageLink;
     public static I18n publishPagePublishOkStatusMsg;
     public static I18n publishPagePublishResourcesLabel;
     public static I18n publishPageRecurseCheckBox;
@@ -119,9 +129,12 @@ public final class RestClientI18n {
     public static I18n publishPageRepositoryToolTip;
     public static I18n publishPageServerLabel;
     public static I18n publishPageServerToolTip;
+    public static I18n publishPageUnableToObtainWorkspaceAreas;
     public static I18n publishPageUnpublishOkStatusMsg;
     public static I18n publishPageUnpublishResourcesLabel;
     public static I18n publishPageUnpublishTitle;
+    public static I18n publishPageVersionCheckBox;
+    public static I18n publishPageVersionCheckBoxToolTip;
     public static I18n publishPageWorkspaceLabel;
     public static I18n publishPageWorkspacePublishToolTip;
     public static I18n publishPageWorkspaceUnpublishToolTip;

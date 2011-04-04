@@ -12,7 +12,9 @@
 package org.jboss.tools.modeshape.rest.wizards;
 
 import static org.jboss.tools.modeshape.rest.IUiConstants.WIZARD_BANNER_IMAGE;
+
 import java.util.List;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
@@ -33,10 +35,6 @@ import org.modeshape.web.jcr.rest.client.domain.Workspace;
  */
 public final class PublishWizard extends Wizard {
 
-    // ===========================================================================================================================
-    // Fields
-    // ===========================================================================================================================
-
     /**
      * The wizard page containing all the controls that allow publishing/unpublishing of resources.
      */
@@ -52,10 +50,6 @@ public final class PublishWizard extends Wizard {
      */
     private final Type type;
 
-    // ===========================================================================================================================
-    // Constructors
-    // ===========================================================================================================================
-
     /**
      * @param type the publishing or unpublishing indicator (never <code>null</code>)
      * @param resources the resources being published or unpublished (never <code>null</code>)
@@ -65,9 +59,9 @@ public final class PublishWizard extends Wizard {
     public PublishWizard( Type type,
                           List<IResource> resources,
                           ServerManager serverManager ) throws CoreException {
-        CheckArg.isNotNull(type, "type");
-        CheckArg.isNotNull(resources, "resources");
-        CheckArg.isNotNull(serverManager, "serverManager");
+        CheckArg.isNotNull(type, "type"); //$NON-NLS-1$
+        CheckArg.isNotNull(resources, "resources"); //$NON-NLS-1$
+        CheckArg.isNotNull(serverManager, "serverManager"); //$NON-NLS-1$
 
         this.type = type;
         this.page = new PublishPage(type, resources);
@@ -77,10 +71,6 @@ public final class PublishWizard extends Wizard {
                                              : RestClientI18n.publishWizardUnpublishTitle.text());
         setDefaultPageImageDescriptor(Activator.getDefault().getImageDescriptor(WIZARD_BANNER_IMAGE));
     }
-
-    // ===========================================================================================================================
-    // Methods
-    // ===========================================================================================================================
 
     /**
      * {@inheritDoc}
@@ -141,7 +131,7 @@ public final class PublishWizard extends Wizard {
         Workspace workspace = this.page.getWorkspace();
         List<IFile> files = this.page.getFiles();
         String workspaceArea = this.page.getWorkspaceArea();
-        PublishJob job = new PublishJob(this.type, files, workspace, workspaceArea);
+        PublishJob job = new PublishJob(this.type, files, workspace, workspaceArea, this.page.isVersioning());
         job.schedule();
 
         return true;

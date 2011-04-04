@@ -12,7 +12,7 @@
 package org.jboss.tools.modeshape.rest.wizards;
 
 import static org.jboss.tools.modeshape.rest.IUiConstants.BLANK_IMAGE;
-import static org.jboss.tools.modeshape.rest.IUiConstants.SERVER_DIALOG_HELP_CONTEXT;
+import static org.jboss.tools.modeshape.rest.IUiConstants.HelpContexts.SERVER_DIALOG_HELP_CONTEXT;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IMessageProvider;
@@ -49,10 +49,6 @@ import org.modeshape.web.jcr.rest.client.domain.Server;
  */
 public final class ServerPage extends WizardPage {
 
-    // ===========================================================================================================================
-    // Fields
-    // ===========================================================================================================================
-
     /**
      * The button used to test the connection to the server. Should only be enabled when server properties are valid.
      */
@@ -88,10 +84,6 @@ public final class ServerPage extends WizardPage {
      */
     private String user;
 
-    // ===========================================================================================================================
-    // Constructors
-    // ===========================================================================================================================
-
     /**
      * Constructs a wizard page that will create a new server.
      */
@@ -116,10 +108,6 @@ public final class ServerPage extends WizardPage {
         this.password = server.getPassword();
         this.savePassword = server.isPasswordBeingPersisted();
     }
-
-    // ===========================================================================================================================
-    // Methods
-    // ===========================================================================================================================
 
     private void constructAuthenticationPanel( Composite parent ) {
         Group pnl = new Group(parent, SWT.NONE);
@@ -501,10 +489,10 @@ public final class ServerPage extends WizardPage {
             Server changedServer = getServer();
 
             // don't check if modifying existing server and identifying properties have not changed
-            if (((this.server == null) || !this.server.hasSameKey(changedServer))
-                && getServerManager().isRegistered(changedServer)) {
+            if (((this.server == null) || !this.server.hasSameKey(changedServer)) && getServerManager().isRegistered(changedServer)) {
                 this.status = new Status(Severity.ERROR,
-                                         RestClientI18n.serverExistsMsg.text(changedServer.getShortDescription()), null);
+                                         RestClientI18n.serverExistsMsg.text(changedServer.getShortDescription()),
+                                         null);
             }
         }
     }

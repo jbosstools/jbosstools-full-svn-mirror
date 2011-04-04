@@ -13,10 +13,12 @@ package org.jboss.tools.modeshape.rest.jobs;
 
 import static org.jboss.tools.modeshape.rest.IUiConstants.PLUGIN_ID;
 import static org.jboss.tools.modeshape.rest.IUiConstants.PUBLISHING_JOB_FAMILY;
+
 import java.io.File;
 import java.net.URL;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -35,10 +37,6 @@ import org.modeshape.web.jcr.rest.client.domain.Workspace;
  * The <code>PublishJob</code> publishes or unpublishes one or more files using the {@link ServerManager}.
  */
 public final class PublishJob extends Job {
-
-    // ===========================================================================================================================
-    // Constants
-    // ===========================================================================================================================
 
     /**
      * The job type.
@@ -60,10 +58,6 @@ public final class PublishJob extends Job {
      */
     private static final AtomicInteger JOB_ID = new AtomicInteger();
 
-    // ===========================================================================================================================
-    // Class Methods
-    // ===========================================================================================================================
-
     /**
      * @param type the job type (never <code>null</code>)
      * @param jobId the job identifier
@@ -71,7 +65,7 @@ public final class PublishJob extends Job {
      */
     private static String getJobName( Type type,
                                       int jobId ) {
-        CheckArg.isNotNull(type, "type");
+        CheckArg.isNotNull(type, "type"); //$NON-NLS-1$
 
         if (Type.PUBLISH == type) {
             return RestClientI18n.publishJobPublishName.text(jobId);
@@ -80,10 +74,6 @@ public final class PublishJob extends Job {
         // unpublish
         return RestClientI18n.publishJobUnpublishName.text(jobId);
     }
-
-    // ===========================================================================================================================
-    // Fields
-    // ===========================================================================================================================
 
     /**
      * The files being published or unpublished.
@@ -101,6 +91,11 @@ public final class PublishJob extends Job {
     private final Type type;
 
     /**
+     * Indicates if published resources should be versioned on the ModeShape server.
+     */
+    private final boolean version;
+
+    /**
      * The workspace to use when publishing or unpublishing.
      */
     private final Workspace workspace;
@@ -110,32 +105,31 @@ public final class PublishJob extends Job {
      */
     private final String workspaceArea;
 
-    // ===========================================================================================================================
-    // Constructors
-    // ===========================================================================================================================
-
     /**
      * @param type the job type (never <code>null</code>)
      * @param files the files being published or unpublished (never <code>null</code>)
      * @param workspace the workspace to use when publishing or unpublishing (never <code>null</code>)
      * @param workspaceArea the path segment prepended to the file project path (maybe be <code>null</code> or empty)
+     * @param version <true> if published resources should be versioned
      */
     public PublishJob( Type type,
                        List<IFile> files,
                        Workspace workspace,
-                       String workspaceArea ) {
+                       String workspaceArea,
+                       boolean version ) {
         super(getJobName(type, JOB_ID.incrementAndGet()));
 
-        CheckArg.isNotNull(files, "files");
-        CheckArg.isNotNull(workspace, "workspace");
+        CheckArg.isNotNull(files, "files"); //$NON-NLS-1$
+        CheckArg.isNotNull(workspace, "workspace"); //$NON-NLS-1$
 
         this.type = type;
         this.files = files;
         this.workspace = workspace;
+        this.version = version;
         this.jobId = JOB_ID.get();
 
         // setup the workspace area and remove trailing separator if necessary
-        String temp = ((workspaceArea == null) ? "" : workspaceArea);
+        String temp = ((workspaceArea == null) ? "" : workspaceArea); //$NON-NLS-1$
 
         if (temp.endsWith(File.separator)) {
             this.workspaceArea = temp.substring(0, (temp.length() - 1));
@@ -145,10 +139,6 @@ public final class PublishJob extends Job {
 
         setUser(true); // allow user to run in background
     }
-
-    // ===========================================================================================================================
-    // Methods
-    // ===========================================================================================================================
 
     /**
      * {@inheritDoc}
@@ -227,7 +217,7 @@ public final class PublishJob extends Job {
                 Status status = null;
 
                 if (isPublishing()) {
-                    status = getServerManager().publish(this.workspace, path, file);
+                    status = getServerManager().publish(this.workspace, path, file, this.version);
 
                     // set persistent property on resource indicating it has been published
                     if (!status.isError()) {

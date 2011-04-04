@@ -12,7 +12,8 @@
 package org.jboss.tools.modeshape.rest.views;
 
 import static org.jboss.tools.modeshape.rest.IUiConstants.COLLAPSE_ALL_IMAGE;
-import static org.jboss.tools.modeshape.rest.IUiConstants.SERVER_VIEW_HELP_CONTEXT;
+import static org.jboss.tools.modeshape.rest.IUiConstants.HelpContexts.SERVER_VIEW_HELP_CONTEXT;
+
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
@@ -53,10 +54,6 @@ import org.modeshape.web.jcr.rest.client.domain.IModeShapeObject;
  */
 public final class ServerView extends ViewPart implements IServerRegistryListener {
 
-    // ===========================================================================================================================
-    // Fields
-    // ===========================================================================================================================
-
     /**
      * Collapses all tree nodes.
      */
@@ -88,10 +85,6 @@ public final class ServerView extends ViewPart implements IServerRegistryListene
     private ReconnectToServerAction reconnectAction;
 
     private TreeViewer viewer;
-
-    // ===========================================================================================================================
-    // Methods
-    // ===========================================================================================================================
 
     private void constructActions() {
         // the collapse all action is always enabled
@@ -325,7 +318,7 @@ public final class ServerView extends ViewPart implements IServerRegistryListene
      * @param selection the current viewer selection (never <code>null</code>)
      */
     private void updateStatusLine( IStructuredSelection selection ) {
-        String msg = (selection.size() != 1 ? "" : ((IModeShapeObject)selection.getFirstElement()).getShortDescription());
+        String msg = (selection.size() != 1 ? "" : ((IModeShapeObject)selection.getFirstElement()).getShortDescription()); //$NON-NLS-1$
         getViewSite().getActionBars().getStatusLineManager().setMessage(msg);
     }
 

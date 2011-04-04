@@ -16,7 +16,9 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+
 import javax.jcr.nodetype.NodeType;
+
 import org.modeshape.web.jcr.rest.client.IRestClient;
 import org.modeshape.web.jcr.rest.client.Status;
 import org.modeshape.web.jcr.rest.client.domain.QueryRow;
@@ -78,6 +80,19 @@ public final class MockRestClient implements IRestClient {
     public Status publish( Workspace workspace,
                            String path,
                            File file ) {
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.modeshape.web.jcr.rest.client.IRestClient#publish(org.modeshape.web.jcr.rest.client.domain.Workspace,
+     *      java.lang.String, java.io.File, boolean)
+     */
+    public Status publish( Workspace workspace,
+                           String path,
+                           File file,
+                           boolean version ) {
         return null;
     }
 
