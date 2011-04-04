@@ -27,14 +27,16 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.wst.server.core.IModule;
 import org.eclipse.wst.server.core.IServer;
 import org.eclipse.wst.server.core.model.IModuleResource;
 import org.eclipse.wst.server.core.model.IModuleResourceDelta;
 import org.jboss.ide.eclipse.archives.webtools.modules.LocalZippedPublisherUtil;
 import org.jboss.ide.eclipse.as.core.JBossServerCorePlugin;
-import org.jboss.ide.eclipse.as.core.Messages;
+//import org.jboss.ide.eclipse.as.core.Messages;
 import org.jboss.ide.eclipse.as.core.extensions.events.IEventCodes;
 import org.jboss.ide.eclipse.as.core.publishers.LocalPublishMethod;
 import org.jboss.ide.eclipse.as.core.publishers.PublishUtil;
@@ -97,6 +99,20 @@ public class JBTBPELPublisher implements IJBossServerPublisher {
         	// Do nothing. This is intentional
         	publishState = IServer.PUBLISH_STATE_INCREMENTAL;
         }
+        // https://issues.jboss.org/browse/JBDS-1573
+        // hack: display a warning dialog.
+        // Deployment validation should really be handled as a WizardFragment invoked from
+        // org.eclipse.wst.server.ui.internal.wizard.ModifyModulesWizard
+        // but there is no WizardFragment extension point for this class...
+        // 
+		if (status!=null) {
+			final IStatus s = status;
+			Display.getDefault().syncExec( new Runnable() {
+				public void run() {
+					MessageDialog.openWarning(Display.getDefault().getActiveShell(), Messages.DeployError, s.getMessage());
+				}
+			});
+		}
 		return status == null ? Status.OK_STATUS : status;
 	}
 	
@@ -109,6 +125,22 @@ public class JBTBPELPublisher implements IJBossServerPublisher {
 		IPath deployPath = getDeployPath(moduleTree, ds);
 		IPath tempDeployPath = PublishUtil.getTempDeployFolder(moduleTree, ds);
 		IModuleResource[] members = PublishUtil.getResources(last);
+		// https://issues.jboss.org/browse/JBDS-1573
+		// make sure the project has a deploy.xml (bpel-deploy.xml for backward compatibility).
+		boolean hasDeployXML = false;
+		for (int i=0; i<members.length; ++i) {
+			IModuleResource res = members[i];
+			String name = res.getName();
+			if ("deploy.xml".equals(name) || "bpel-deploy.xml".equals(name)) {
+				hasDeployXML = true;
+				break;
+			}
+		}
+		if (!hasDeployXML) {
+			MultiStatus ms = new MultiStatus(JBossServerCorePlugin.PLUGIN_ID, IEventCodes.JST_PUB_FULL_FAIL, 
+					NLS.bind(Messages.MissingDeployXML, last.getName()), null);
+			return ms;
+		}
 		if( shouldZip() ) {
 			String deployRoot = PublishUtil.getDeployRootFolder(
 					moduleTree, ds, ds.getDeployFolder(),
@@ -125,7 +157,7 @@ public class JBTBPELPublisher implements IJBossServerPublisher {
 		pruneList(resultList);
 		if( resultList.size() > 0 ) {
 			MultiStatus ms = new MultiStatus(JBossServerCorePlugin.PLUGIN_ID, IEventCodes.JST_PUB_FULL_FAIL, 
-					NLS.bind(Messages.FullPublishFail, last.getName()), null);
+					NLS.bind(org.jboss.ide.eclipse.as.core.Messages.FullPublishFail, last.getName()), null);
 			for( int i = 0; i < resultList.size(); i++ )
 				ms.add(resultList.get(i));
 			return ms;

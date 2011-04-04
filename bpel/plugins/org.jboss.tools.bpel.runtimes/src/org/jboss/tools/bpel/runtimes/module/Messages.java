@@ -31,4 +31,8 @@ public class Messages extends NLS {
 	
 	// module validation
 	public static String InvalidFileExtension;
+    // https://issues.jboss.org/browse/JBDS-1573
+	// added for error dialog
+	public static String MissingDeployXML;
+	public static String DeployError;
 }
