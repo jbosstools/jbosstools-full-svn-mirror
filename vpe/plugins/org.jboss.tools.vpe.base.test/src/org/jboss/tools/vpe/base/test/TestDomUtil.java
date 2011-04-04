@@ -18,6 +18,7 @@ import java.io.FileReader;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -26,6 +27,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.jboss.tools.common.model.ui.util.StringUtil;
 import org.jboss.tools.common.model.util.XMLUtil;
 import org.jboss.tools.jst.css.common.CSSStyleManager;
 import org.jboss.tools.vpe.editor.util.Constants;
@@ -257,108 +259,139 @@ public class TestDomUtil {
 				 * compareComplexStrings(..) method.
 				 * For "style" attribute there is a separate comparison.  
 				 */
-				boolean performComplexStringsComparison = true;
-				if (HTML.ATTR_STYLE.equalsIgnoreCase(name)) {
-					String xmlAttrValue = modelAttr.getNodeValue();
-					/*
-					 * Check if it is not a regular expression.
-					 * Otherwise perform Complex Strings Comparison 
-					 * as usual.
-					 */
-					if (!(xmlAttrValue.startsWith(START_REGEX)
-							&& xmlAttrValue.endsWith(END_REGEX))) {
-						performComplexStringsComparison = false;
-						/*
-						 * Parse style attribute value
-						 */
-						Map<String, String> vpeStyle = CSSStyleManager
-								.getStyleAttributes(vpeAttr.getNodeValue());
-						Map<String, String> xmlStyle = CSSStyleManager
-								.getStyleAttributes(xmlAttrValue);
-						/*
-						 * Major condition is that
-						 * all styles from the xml file should present 
-						 * in the style attribute of the vpe element. 
-						 */
-						if (xmlStyle.size() > vpeStyle.size()) {
-							throw new DOMComparisonException(
-									"VPE element has less style parameters [" //$NON-NLS-1$
-											+ vpeStyle.size()
-											+ "] than was specified [" //$NON-NLS-1$
-											+ xmlStyle.size() + "]."  //$NON-NLS-1$ 
-											+ "\n Expected: " + xmlStyle //$NON-NLS-1$ 
-											+ "\n Was: " + vpeStyle, //$NON-NLS-1$ 
-									modelAttr); 
-						} else {
-							if ((xmlStyle.size() > 0) && (vpeStyle.size() > 0)) {
-								for (String key : xmlStyle.keySet()) {
-									if (vpeStyle.containsKey(key)) {
-										if (!xmlStyle.get(key).equalsIgnoreCase(
-												vpeStyle.get(key))) {
-											throw new DOMComparisonException(
-													"Style value for parameter [" //$NON-NLS-1$
-													+ key
-													+ "] is different. Expected [" //$NON-NLS-1$
-													+ xmlStyle.get(key)
-													+ "] but was [" //$NON-NLS-1$
-													+ vpeStyle.get(key)
-													+ "]", modelAttr); //$NON-NLS-1$
-										}
-									} else {
-										throw new DOMComparisonException(
-												"Style parameter [" //$NON-NLS-1$
-												+ key
-												+ "] is missing in the VPE element", //$NON-NLS-1$
-												modelAttr);
-									}
-								}
-							}
-						}
+				String xmlAttrValue = modelAttr.getNodeValue();
+				boolean performRegExComparison =
+						xmlAttrValue.startsWith(START_REGEX)
+							&& xmlAttrValue.endsWith(END_REGEX);
+				if (HTML.ATTR_STYLE.equalsIgnoreCase(name) && !performRegExComparison) {
+					compareStyle(modelAttr, vpeAttr);
+				} else if (performRegExComparison) {
+					compareRegExAttribute(modelAttr, vpeAttr);
+				} else { // perform simple comparison
+					String modelString = modelAttr.getNodeValue().trim();
+					String vpeString = vpeAttr.getNodeValue().trim();
+					if (!modelString.equals(vpeString)) {
+						throw new DOMComparisonException("string is\"" + vpeString //$NON-NLS-1$
+								+ "\" but must be \"" + modelString + "\"", modelAttr); //$NON-NLS-1$ //$NON-NLS-2$
 					}
-				}
-				if (performComplexStringsComparison) {
-					compareComplexAttributes(modelAttr, vpeAttr);
 				}
 			}
 		}
 	}
 
-	static private void compareComplexAttributes(Attr modelAttr, nsIDOMAttr vpeAttr)
+	private static void compareStyle(Attr modelAttr, nsIDOMAttr vpeAttr)
+			throws DOMComparisonException {
+		/*
+		 * Parse style attribute value
+		 */
+		Map<String, String> vpeStyle = CSSStyleManager
+				.getStyleAttributes(vpeAttr.getNodeValue());
+		Map<String, String> xmlStyle = CSSStyleManager
+				.getStyleAttributes(modelAttr.getNodeValue());
+		/*
+		 * Major condition is that
+		 * all styles from the xml file should present 
+		 * in the style attribute of the vpe element. 
+		 */
+		if (xmlStyle.size() > vpeStyle.size()) {
+			throw new DOMComparisonException(
+					"VPE element has less style parameters [" //$NON-NLS-1$
+							+ vpeStyle.size()
+							+ "] than was specified [" //$NON-NLS-1$
+							+ xmlStyle.size() + "]."  //$NON-NLS-1$ 
+							+ "\n Expected: " + xmlStyle //$NON-NLS-1$ 
+							+ "\n Was: " + vpeStyle, //$NON-NLS-1$ 
+					modelAttr); 
+		} else {
+			if ((xmlStyle.size() > 0) && (vpeStyle.size() > 0)) {
+				for (String key : xmlStyle.keySet()) {
+					if (vpeStyle.containsKey(key)) {
+						if (!areStylePropertiesEqual(xmlStyle.get(key), vpeStyle.get(key))) {
+							throw new DOMComparisonException(
+									"Style value for parameter [" //$NON-NLS-1$
+									+ key
+									+ "] is different. Expected [" //$NON-NLS-1$
+									+ xmlStyle.get(key)
+									+ "] but was [" //$NON-NLS-1$
+									+ vpeStyle.get(key)
+									+ "]", modelAttr); //$NON-NLS-1$
+						}
+					} else {
+						throw new DOMComparisonException(
+								"Style parameter [" //$NON-NLS-1$
+								+ key
+								+ "] is missing in the VPE element", //$NON-NLS-1$
+								modelAttr);
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Compares style properties, performing comparisons word by word.
+	 * 
+	 * So the property {@code "grey none repeat scroll 0% 0%"} will be equal
+	 * to {@code "none repeat scroll 0% 0% grey"} 
+	 */
+	private static boolean areStylePropertiesEqual(String property1, String property2) {
+		List<String> propertyParts1 = splitAndSort(property1);
+		List<String> propertyParts2 = splitAndSort(property2);
+		
+		if (propertyParts1.size() != propertyParts2.size()) {
+			return false;
+		}
+		
+		for (int i = 0; i < propertyParts1.size(); i++) {
+			if (!propertyParts1.get(i).equals(propertyParts2.get(i))) {
+				return false;
+			}
+		}
+		
+		return true;		
+	}
+	
+	private static List<String> splitAndSort(String property) {
+		List<String> propertyParts = new ArrayList<String>();
+		for (String propertyPart : property.split("[\\s]+")) {
+			if (!propertyPart.isEmpty()) {
+				propertyParts.add(propertyPart);
+			}
+		}
+		Collections.sort(propertyParts);
+		
+		return propertyParts;
+	}
+
+	static private void compareRegExAttribute(Attr modelAttr, nsIDOMAttr vpeAttr)
 			throws DOMComparisonException {
 		String modelString = modelAttr.getNodeValue().trim();
 		String vpeString = vpeAttr.getNodeValue().trim();
 
-		if (modelString.startsWith(START_REGEX)
-				&& modelString.endsWith(END_REGEX)) {
-			String regex = modelString.substring(START_REGEX.length(),
-					modelString.length() - END_REGEX.length());
-			int firstPos = regex.indexOf("url\\("); //$NON-NLS-1$
-			if (firstPos > -1) {
-				String subString = regex.substring(firstPos + 5, firstPos + 5 + 2);
-				if (!"\"?".equalsIgnoreCase(subString)) { //$NON-NLS-1$
-					String firstPart = regex.substring(0, firstPos + 5);
-					String secondPart = regex.substring(firstPos + 5, regex.length());
-					int lastPos = secondPart.indexOf("\\)"); //$NON-NLS-1$
-					if (lastPos > -1) {
-						String subs = secondPart.substring(lastPos - 2, lastPos);
-						if (!"\"?".equalsIgnoreCase(subs)) { //$NON-NLS-1$
-							String fpart = secondPart.substring(0, lastPos);
-							String spart = secondPart.substring(lastPos, secondPart.length());
-							regex = firstPart + "\"?" + fpart + "\"?" + spart; //$NON-NLS-1$ //$NON-NLS-2$
-						}
+		String regex = modelString.substring(START_REGEX.length(),
+				modelString.length() - END_REGEX.length());
+		int firstPos = regex.indexOf("url\\("); //$NON-NLS-1$
+		if (firstPos > -1) {
+			String subString = regex.substring(firstPos + 5, firstPos + 5 + 2);
+			if (!"\"?".equalsIgnoreCase(subString)) { //$NON-NLS-1$
+				String firstPart = regex.substring(0, firstPos + 5);
+				String secondPart = regex.substring(firstPos + 5, regex.length());
+				int lastPos = secondPart.indexOf("\\)"); //$NON-NLS-1$
+				if (lastPos > -1) {
+					String subs = secondPart.substring(lastPos - 2, lastPos);
+					if (!"\"?".equalsIgnoreCase(subs)) { //$NON-NLS-1$
+						String fpart = secondPart.substring(0, lastPos);
+						String spart = secondPart.substring(lastPos, secondPart.length());
+						regex = firstPart + "\"?" + fpart + "\"?" + spart; //$NON-NLS-1$ //$NON-NLS-2$
 					}
 				}
 			}
-			Matcher matcher = Pattern.compile(regex).matcher(vpeString);
-			if (!matcher.find()) {
-				throw new DOMComparisonException("string is\"" + vpeString //$NON-NLS-1$
-						+ "\" but pattern is \"" + regex + "\"", modelAttr); //$NON-NLS-1$ //$NON-NLS-2$
-			}
-		} else if (!modelString.equals(vpeString)) {
-			throw new DOMComparisonException("string is\"" + vpeString //$NON-NLS-1$
-					+ "\" but must be \"" + modelString + "\"", modelAttr); //$NON-NLS-1$ //$NON-NLS-2$
 		}
-
+		Matcher matcher = Pattern.compile(regex).matcher(vpeString);
+		if (!matcher.find()) {
+			throw new DOMComparisonException("string is\"" + vpeString //$NON-NLS-1$
+					+ "\" but pattern is \"" + regex + "\"", modelAttr); //$NON-NLS-1$ //$NON-NLS-2$
+		}
 	}
 
 	/**
