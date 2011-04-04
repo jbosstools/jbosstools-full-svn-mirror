@@ -50,7 +50,6 @@ import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.eclipse.ui.help.IWorkbenchHelpSystem;
 import org.jboss.tools.modeshape.rest.Activator;
 import org.jboss.tools.modeshape.rest.IServerRegistryListener;
-import org.jboss.tools.modeshape.rest.IUiConstants;
 import org.jboss.tools.modeshape.rest.RestClientI18n;
 import org.jboss.tools.modeshape.rest.ServerManager;
 import org.jboss.tools.modeshape.rest.ServerRegistryEvent;
@@ -534,10 +533,10 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
 			GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true);
 			gd.horizontalSpan = 2;
 			gd.minimumHeight = this.lstResources.getItemHeight() * 2; // set min
-																	  // height
+			                                                          // height
 			gd.heightHint = this.lstResources.getItemHeight() * 10; // set
-																	// preferred
-																	// height
+			                                                        // preferred
+			                                                        // height
 			this.lstResources.setLayoutData(gd);
 			final org.eclipse.swt.widgets.List finalLst = this.lstResources;
 
@@ -726,8 +725,7 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
 		// open preference page and only allow the pref page where the version
 		// setting is
 		PreferencesUtil.createPreferenceDialogOn(getShell(), MAIN_PREFERENCE_PAGE_ID,
-		        new String[] { MAIN_PREFERENCE_PAGE_ID, IUiConstants.Preferences.FILTERS_PREFERENCE_PAGE_ID }, null)
-		        .open();
+		        new String[] { MAIN_PREFERENCE_PAGE_ID }, null).open();
 	}
 
 	/**
