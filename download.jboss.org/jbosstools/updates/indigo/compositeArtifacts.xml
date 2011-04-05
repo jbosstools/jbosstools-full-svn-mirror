@@ -7,7 +7,7 @@
      get new time w/ 
       date +%s000
 -->
-<property name='p2.timestamp' value='1301891221000'/>
+<property name='p2.timestamp' value='1302020814000'/>
 </properties>
 <children size='13'>
 <child location='../requirements/indigo/201103180900-M6/'/>
