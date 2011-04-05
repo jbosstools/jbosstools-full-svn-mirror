@@ -1,0 +1,33 @@
+Revised swimlanes, as implemented in 3.2_stable_branch and 3.3_trunk jobs, 2011/04/05.
+
+------------------------
+
+In 3.2 / 3.3:
+
+maven   -> cdi  -> jst -> common -> tests
+	-> seam  -> jst -> common -> tests
+    	-> seam -> as -> archives, jmx -> tests
+        -> hibernate -> freemarker -> tests
+        -> jsf -> vpe -> jst -> common -> tests
+
+struts -> vpe -> xulrunner
+
+bpel, birt, examples, modeshape, portlet, profiler, smooks, tptp -> tests
+
+ws, deltacloud -> as -> archives, jmx -> tests
+
+jbpm -> flow -> tests 
+
+esb -> common -> tests
+
+gwt, runtime, tests, usage, drools, pi4soa, savara, teiid -> [none]
+
+------------------------
+
+New in 3.3:
+
+forge -> [none]
+
+tptp [REMOVED]
+
+------------------------

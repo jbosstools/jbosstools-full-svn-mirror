@@ -41,49 +41,33 @@
 		<li><a style="color: red"
 			href="http://hudson.qa.jboss.com/hudson/job/jbosstools-3.2_stable_branch.tests">Tests
 		build</a> (build + tests, no publish)</li>
-		<li><em><a style="color: red"
-					href="http://hudson.qa.jboss.com/hudson/job/jbosstools-3.2_stable_branch.nightly">Nightly
-				build</a> (build + tests, publish) :: disabled in favour of 30+
-				per-component jobs :: <b>deprecated</b></em></li>
-				<li><a style="color: red"
-					href="http://hudson.qa.jboss.com/hudson/view/DevStudio_Stable_Branch/">All
-				components' jobs, including JBT core + drools, teiid, pi4soa, savara</a>
-				(build, test, publish) :: <b><a style="color: red"
-					href="http://hudson.qa.jboss.com/hudson/view/DevStudio_Stable_Branch/portlet/dashboard_portlet_13/">list
-				of unstable jobs</a></b></li>
+		<li><a style="color: red"
+			href="http://hudson.qa.jboss.com/hudson/view/DevStudio_Stable_Branch/">All
+		components' jobs, including JBT core + drools, teiid, pi4soa, savara</a>
+		(build, test, publish) :: <b><a style="color: red"
+			href="http://hudson.qa.jboss.com/hudson/view/DevStudio_Stable_Branch/portlet/dashboard_portlet_13/">list
+		of unstable jobs</a></b> - <a href=swimlanes.txt>Interdependencies between jobs, aka "swimlanes"</a></li>
 		<ul>
 			<li><a style="color: red"
 						href="http://hudson.qa.jboss.com/hudson/job/jbosstools-3.2_stable_branch.aggregate">Aggregate
-					build</a> (collect components into a single update site for downstream use and publishing to sf.net)
-					<ul>
-						<li><em><a style="color: red"
-							href="http://hudson.qa.jboss.com/hudson/job/jbosstools-3.2_stable_branch.aggregate-publish">Aggregate
-						build publisher</a> (publish select pieces of aggregate site for use
-						by JBDS uberbuild) :: <b>deprecated</b></em>
-						</li>
-					</ul>
-					</li>
+					build</a> (collect components into a single update site for downstream use and publishing to sf.net)</li>
 				</ul>
 			</ul>
 					<hr />
 			<li><a style="color: red"
-				href="http://hudson.qa.jboss.com/hudson/job/devstudio-4.0_stable_branch.target-platform">Local
+				href="http://hudson.qa.jboss.com/hudson/job/devstudio-4.1_stable_branch.target-platform">Local
 			JBDS Target Platform build</a> (build + publish)
 			<ul>
 				<ul>
 				<li><a style="color: red"
-						href="http://hudson.qa.jboss.com/hudson/job/devstudio-4.0_stable_branch.updatesite">JBDS
+						href="http://hudson.qa.jboss.com/hudson/job/devstudio-4.1_stable_branch.updatesite">JBDS
 					Aggregate site build</a> (build Core [JBT + JBDS], Extras, Tech Preview
 					sites, then publish)
 				<ul>
 					<li><a style="color: red"
-							href="http://hudson.qa.jboss.com/hudson/job/devstudio-4.0_stable_branch.product">JBDS
+							href="http://hudson.qa.jboss.com/hudson/job/devstudio-4.1_stable_branch.product">JBDS
 						Product builds</a> (combine JBDS components + TP into installers,
 						publish)</li>
-						<ul><li><em><a style="color: red"
-							href="http://hudson.qa.jboss.com/hudson/job/devstudio-4.0_stable_branch.uberbuild">JBDS
-						PDE "Uberbuild" builds</a> (compile JBDS components + some aggregate
-						pieces into installers, publish) :: <b>deprecated</b></em></li></ul>
 				</ul>
 				</li>
 			</ul>
@@ -110,30 +94,22 @@
 		href="http://download.jboss.org/jbosstools/builds/nightly/3.2_stable_branch/latestBuild.html">latest
 					from trunk</a> :: <a
 						href="http://download.jboss.org/jbosstools/updates/nightly/3.2_stable_branch/">updates</a>
-					<ul><li><em>Select JBT component updates: <a href="http://download.jboss.org/jbosstools/updates/staging/">http://download.jboss.org/jbosstools/updates/staging/</a> (used by "Uberbuild") :: <b>deprecated</b></em></li></ul>
 				</ul>
 			</ul>
 		<hr />
 			<li>JBDS Target Platform build: <a style="color: red"
-				href="http://reports.qa.atl.jboss.com/binaries/RHDS/updates/jbds-target-platform/">http://reports.qa.atl.jboss.com/binaries/RHDS/updates/jbds-target-platform/</a>
+				href="http://www.qa.jboss.com/binaries/RHDS/updates/jbds-target-platform/">http://www.qa.jboss.com/binaries/RHDS/updates/jbds-target-platform/</a>
 		<ul>
 				<ul>
 					<li>JBDS Aggregate updates: <a style="color: red"
-						href="http://reports.qa.atl.jboss.com/binaries/RHDS/builds/staging/devstudio-4.0_stable_branch.updatesite/">http://reports.qa.atl.jboss.com/binaries/RHDS/builds/staging/</a>
+						href="http://www.qa.jboss.com/binaries/RHDS/builds/staging/devstudio-4.1_stable_branch.updatesite/">http://www.qa.jboss.com/binaries/RHDS/builds/staging/</a>
 					(Core [JBT + JBDS], Extras, Tech Preview)</li>
 					<ul>
 						<li>JBDS Product builds: <a style="color: red"
-							href="http://reports.qa.atl.jboss.com/binaries/RHDS/builds/staging/devstudio-4.0_stable_branch.product/builds/nightly/">http://reports.qa.atl.jboss.com/binaries/RHDS/builds/staging/</a>
+							href="http://www.qa.jboss.com/binaries/RHDS/builds/staging/devstudio-4.1_stable_branch.product/builds/nightly/">http://www.qa.jboss.com/binaries/RHDS/builds/staging/</a>
 						:: <a style="color: red"
-							href="http://reports.qa.atl.jboss.com/binaries/RHDS/builds/staging/devstudio-4.0_stable_branch.product/builds/nightly/">latest</a> :: <a style="color: red"
-							href="http://reports.qa.atl.jboss.com/binaries/RHDS/builds/staging/devstudio-4.0_stable_branch.product/updates/nightly/">updates</a></li>
-
-						<ul><li><em>JBDS "Uberbuild" builds: <a style="color: red"
-							href="http://reports.qa.atl.jboss.com/binaries/RHDS/builds/nightly/">http://reports.qa.atl.jboss.com/binaries/RHDS/builds/nightly/</a>
-						:: <a style="color: red"
-							href="http://reports.qa.atl.jboss.com/binaries/RHDS/builds/nightly/">latest</a> :: <a style="color: red"
-							href="http://reports.qa.atl.jboss.com/binaries/RHDS/updates/nightly/">updates</a>
-						:: <b>deprecated</b> </em></li></ul>
+							href="http://www.qa.jboss.com/binaries/RHDS/builds/staging/devstudio-4.1_stable_branch.product/builds/nightly/">latest</a> :: <a style="color: red"
+							href="http://www.qa.jboss.com/binaries/RHDS/builds/staging/devstudio-4.1_stable_branch.product/updates/nightly/">updates</a></li>
 			</ul>
 				</ul>
 			</ul>
@@ -142,6 +118,6 @@
 		</td>
 	</tr>
 </table>
-<p align="right"><i><small>Last updated 2011-01-17 13:19 GMT-5</small></i></p>
+<p align="right"><i><small>Last updated 2011-04-05 13:41 GMT-5</small></i></p>
 </body>
 </html>
