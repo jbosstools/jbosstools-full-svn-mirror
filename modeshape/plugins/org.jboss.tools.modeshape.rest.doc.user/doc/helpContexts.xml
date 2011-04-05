@@ -10,15 +10,15 @@
   - individual contributors.
   -->
 <contexts>
- <context id="serverViewHelpContext" title="ModeShape Server View">
-    <description>The ModeShape Server View shows all registered servers and their repositories and workspaces.</description>
-    <topic href="docs/ServerView.html"  label="Server View"/>
+ <context id="serverViewHelpContext" title="ModeShape View">
+    <description>The ModeShape View shows all registered servers and their repositories and workspaces.</description>
+    <topic href="docs/ServerView.html"  label="ModeShape View"/>
     <topic href="docs/ServerDialog.html"  label="Server Dialog"/>
  </context>
  <context id="serverDialogHelpContext" title="Server Dialog">
     <description>The ModeShape Server Dialog allows you to edit or create a server that hosts one or more repositories.</description>
     <topic href="docs/ServerDialog.html"  label="Server Dialog"/>
-    <topic href="docs/ServerView.html"  label="Server View"/>
+    <topic href="docs/ServerView.html"  label="ModeShape View"/>
  </context>
  <context id="publishDialogHelpContext" title="ModeShape Publish and Unpublish Dialog Help">
     <description>The Publish/Unpublish Dialog uploads or removes selected resources from the selected server.</description>
