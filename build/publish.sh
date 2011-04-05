@@ -28,6 +28,9 @@ SUFFNAME="-Update-${ZIPSUFFIX}.zip"
 # for JBDS, use DESTINATION=/qa/services/http/binaries/RHDS
 if [[ $DESTINATION == "" ]]; then DESTINATION="tools@filemgmt.jboss.org:/downloads_htdocs/tools"; fi
 
+# internal destination mirror, for file:// access (instead of http://)
+if [[ $INTRNALDEST == "" ]]; then INTRNALDEST="/home/hudson/static_build_env/jbds/"; fi
+
 # cleanup from last time
 rm -fr ${WORKSPACE}/results; mkdir -p ${STAGINGDIR}
 
@@ -258,6 +261,9 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 
 		# and create/replace a snapshot dir w/ static URL
 		date; rsync -arzq --delete ${STAGINGDIR} $DESTINATION/builds/staging/
+
+		# and create/replace a snapshot dir outside Hudson which is file:// accessible
+		date; rsync -arzq --delete ${STAGINGDIR} $INTRNALDEST/builds/staging/
 	fi
 
 	# extra publish step for aggregate update sites ONLY
@@ -279,6 +285,6 @@ fi
 # publish updated log
 bl=${STAGINGDIR}/logs/BUILDLOG.txt
 rm -f ${bl}; wget -q http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/${BUILD_NUMBER}/consoleText -O ${bl} --timeout=900 --wait=10 --random-wait --tries=10 --retry-connrefused --no-check-certificate
-
 date; rsync -arzq --delete ${STAGINGDIR}/logs $DESTINATION/builds/staging/${JOB_NAME}/
+date; rsync -arzq --delete ${STAGINGDIR}/logs $INTRNALDEST/builds/staging/${JOB_NAME}/
 
