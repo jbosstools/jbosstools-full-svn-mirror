@@ -94,6 +94,15 @@ public class BPELDeployableArtifactUtil {
 				
 				return facetedProject.getInstalledVersion(projectFacet).getVersionString();
 			}
+			// https://issues.jboss.org/browse/JBIDE-8533
+			// Added to support deprecated jbt.bpel.facet.core
+			if (facetedProject != null 
+					&& ProjectFacetsManager.isProjectFacetDefined(IBPELModuleFacetConstants.JBT_BPEL_PROJECT_FACET)) 
+			{
+				IProjectFacet projectFacet = ProjectFacetsManager.getProjectFacet(IBPELModuleFacetConstants.JBT_BPEL_PROJECT_FACET);
+				
+				return facetedProject.getInstalledVersion(projectFacet).getVersionString();
+			}
 		} catch (Exception e) {
 			Logger.getLogger().write(e);
 		}
