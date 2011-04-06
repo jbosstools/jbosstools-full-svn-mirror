@@ -259,11 +259,11 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 			#fi
 		fi
 
-		# and create/replace a snapshot dir w/ static URL
-		date; rsync -arzq --delete ${STAGINGDIR} $DESTINATION/builds/staging/
-
 		# and create/replace a snapshot dir outside Hudson which is file:// accessible
 		date; rsync -arzq --delete ${STAGINGDIR} $INTRNALDEST/builds/staging/
+
+		# and create/replace a snapshot dir w/ static URL
+		date; rsync -arzq --delete ${STAGINGDIR} $DESTINATION/builds/staging/
 	fi
 
 	# extra publish step for aggregate update sites ONLY
