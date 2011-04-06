@@ -1,5 +1,5 @@
-<!DOCTYPE note PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
-          "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<!DOCTYPE important PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+		"../../../dtd/docbook-4.1.2/docbookx.dtd">
 <note id="note01">
 	<title>Upcoming Changes</title>
 	<para>

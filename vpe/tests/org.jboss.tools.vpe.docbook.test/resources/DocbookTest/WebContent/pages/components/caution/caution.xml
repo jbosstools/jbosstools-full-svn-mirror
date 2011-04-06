@@ -1,5 +1,5 @@
-<!DOCTYPE caution PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
-          "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<!DOCTYPE tip PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+          "../../../dtd/docbook-4.1.2/docbookx.dtd">
 <caution id="caution01">
 	<title>No User Servicable Parts Inside</title>
 	<para> Breaking this seal voids all warranties. </para>

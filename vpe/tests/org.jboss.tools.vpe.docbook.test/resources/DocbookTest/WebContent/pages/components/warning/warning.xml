@@ -1,5 +1,5 @@
-<!DOCTYPE warning PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
-          "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<!DOCTYPE tip PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+          "../../../dtd/docbook-4.1.2/docbookx.dtd">
 <warning id="warning01">
 	<para>
 		Striking your thumb with a hammer may cause severe pain and discomfort.

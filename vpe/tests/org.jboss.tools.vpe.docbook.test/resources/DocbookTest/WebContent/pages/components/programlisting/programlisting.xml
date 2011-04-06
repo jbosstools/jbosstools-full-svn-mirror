@@ -1,5 +1,5 @@
 <!DOCTYPE tip PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
-          "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+          "../../../dtd/docbook-4.1.2/docbookx.dtd">
 <programlisting id="programlisting01">
 (define (node-list-filter-by-gi nodelist gilist)
 	;; Returns the node-list that contains every element of the original
