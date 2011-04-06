@@ -10,7 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
-import java.net.MalformedURLException;
+import java.net.URI;
 import java.text.MessageFormat;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -47,30 +47,37 @@ public class CloudConnectionPageModel extends ObservableUIPojo {
 	private DeltaCloudDriver driver;
 	private String initialName;
 
-	public CloudConnectionPageModel() {
-		this("", "", "", "", DeltaCloudDriver.UNKNOWN);
-	}
-
-	public CloudConnectionPageModel(String name, String url, String username, String password)
-			throws MalformedURLException {
+	public CloudConnectionPageModel(String name, String url, String username, String password) {
 		this(name, url, username, password, DeltaCloudDriver.UNKNOWN);
 	}
 
 	public CloudConnectionPageModel(String name, String url, String username, String password, DeltaCloudDriver driver) {
 		this.name = name;
 		this.initialName = name;
-		this.url = prependHttp(url);
+		setUrl(prependHttp(url));
 		this.username = username;
 		this.password = password;
-		// this.driver = driver;
 		setDriverByUrl(url);
 	}
 
 	private String prependHttp(String url) {
-		if (url == null || url.length() == 0) {
+		if (!startsWithScheme(url)) {
 			return HTTP_PREFIX + url;
 		} else {
-		return url; 
+			return url;
+		}
+	}
+		
+	private boolean startsWithScheme(String url) {
+		if (url == null || url.length() == 0) {
+			return false;
+		} else {
+			try {
+				String scheme = URI.create(url).getScheme();
+				return scheme != null && scheme.length() > 0;
+			} catch (IllegalArgumentException e ) {
+				return false;
+			}
 		}
 	}
 

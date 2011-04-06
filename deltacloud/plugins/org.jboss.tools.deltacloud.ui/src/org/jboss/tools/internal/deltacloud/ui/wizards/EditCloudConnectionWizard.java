@@ -19,6 +19,9 @@ import org.eclipse.ui.IWorkbench;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudDriver;
 import org.jboss.tools.deltacloud.core.job.AbstractCloudJob;
+import org.jboss.tools.deltacloud.ui.Activator;
+import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
+import org.jboss.tools.deltacloud.ui.preferences.StringPreferenceValue;
 import org.jboss.tools.internal.deltacloud.ui.utils.WizardUtils;
 
 /**
@@ -41,18 +44,24 @@ public class EditCloudConnectionWizard extends NewCloudConnectionWizard {
 	@Override
 	public boolean performFinish() {
 		String name = mainPage.getConnectionName();
+		new StringPreferenceValue(IDeltaCloudPreferenceConstants.LAST_NAME, Activator.PLUGIN_ID)
+				.store(name);
 		String url = mainPage.getUrl();
+		new StringPreferenceValue(IDeltaCloudPreferenceConstants.LAST_URL, Activator.PLUGIN_ID)
+				.store(url);
 		String username = mainPage.getUsername();
+		new StringPreferenceValue(IDeltaCloudPreferenceConstants.LAST_USERNAME, Activator.PLUGIN_ID)
+				.store(username);
 		String password = mainPage.getPassword();
 		DeltaCloudDriver driver = mainPage.getDriver();
 		return editCloud(initialCloud, name, url, username, password, driver);
 	}
 
-
 	private boolean editCloud(final DeltaCloud cloud, final String name, final String url, final String username,
 			final String password, final DeltaCloudDriver driver) {
 		try {
-			Job job = new AbstractCloudJob(WizardMessages.getFormattedString("EditCloudConnection.message", cloud.getName()), cloud) {
+			Job job = new AbstractCloudJob(WizardMessages.getFormattedString("EditCloudConnection.message",
+					cloud.getName()), cloud) {
 
 				@Override
 				protected IStatus doRun(IProgressMonitor monitor) throws Exception {

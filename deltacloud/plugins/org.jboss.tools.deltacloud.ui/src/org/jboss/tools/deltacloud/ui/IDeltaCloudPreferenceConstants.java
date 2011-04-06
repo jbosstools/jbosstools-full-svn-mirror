@@ -18,6 +18,10 @@ public interface IDeltaCloudPreferenceConstants {
 	public static final String LAST_EC2_KEYNAME = "last_ec2_keyname"; //$NON-NLS-1$
 	public static final String DEFAULT_KEY_DIR = "default_key_directory"; //$NON-NLS-1$
 
+	public static final String LAST_NAME = "org.jboss.tools.internal.deltacloud.ui.wizards.LAST_NAME";
+	public static final String LAST_URL = "org.jboss.tools.internal.deltacloud.ui.wizards.LAST_CREATED_URL";
+	public static final String LAST_USERNAME = "org.jboss.tools.internal.deltacloud.ui.wizards.LAST_USERNAME";
+
 	public static final String CLOUD_NAME_PROPOSAL_KEY = "cloud_name";//$NON-NLS-1$
 	public static final String CLOUD_USERNAME_PROPOSAL_KEY = "cloud_username";//$NON-NLS-1$
 	public static final String CLOUD_URL_PROPOSAL_KEY = "cloud_url";//$NON-NLS-1$

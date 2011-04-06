@@ -25,8 +25,8 @@ import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudManager;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.ErrorUtils;
+import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
 import org.jboss.tools.deltacloud.ui.preferences.StringPreferenceValue;
-import org.jboss.tools.internal.deltacloud.ui.preferences.IPreferenceKeys;
 import org.jboss.tools.internal.deltacloud.ui.utils.WizardUtils;
 
 /**
@@ -96,7 +96,7 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 			return newCloud.testCredentials();
 		} catch (DeltaCloudException e) {
 			ErrorUtils.handleErrorAsync(WizardMessages.getString("CloudConnectionAuthError.title"),
-							WizardMessages.getFormattedString("CloudConnectionAuthError.message", url), e, getShell());
+					WizardMessages.getFormattedString("CloudConnectionAuthError.message", url), e, getShell());
 			return false;
 		}
 	}
@@ -109,12 +109,17 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 	@Override
 	public boolean performFinish() {
 		final String name = mainPage.getConnectionName();
-		final String url = mainPage.getUrl();
+		new StringPreferenceValue(IDeltaCloudPreferenceConstants.LAST_NAME, Activator.PLUGIN_ID)
+				.store(name);
 
-		new StringPreferenceValue(IPreferenceKeys.LAST_URL, Activator.PLUGIN_ID)
+		final String url = mainPage.getUrl();
+		new StringPreferenceValue(IDeltaCloudPreferenceConstants.LAST_URL, Activator.PLUGIN_ID)
 				.store(url);
 
 		final String username = mainPage.getUsername();
+		new StringPreferenceValue(IDeltaCloudPreferenceConstants.LAST_USERNAME, Activator.PLUGIN_ID)
+		.store(username);
+
 		final String password = mainPage.getPassword();
 		final DeltaCloudDriver driver = mainPage.getDriver();
 
@@ -122,7 +127,7 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 	}
 
 	private boolean createCloud(final String name, final String url, final String username, final String password,
-			final DeltaCloudDriver driver)  {
+			final DeltaCloudDriver driver) {
 		Job job = new Job(WizardMessages.getFormattedString("CloudConnection.msg", name)) {
 
 			@Override
@@ -145,5 +150,9 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 		} catch (Exception e) {
 			return false;
 		}
+	}
+
+	public DeltaCloud getDeltaCloud() {
+		return initialCloud;
 	}
 }

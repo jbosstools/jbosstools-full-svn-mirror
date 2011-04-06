@@ -67,7 +67,6 @@ import org.jboss.tools.deltacloud.ui.preferences.StringPreferenceValue;
 import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.CompositeValidator;
 import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.MandatoryStringValidator;
 import org.jboss.tools.internal.deltacloud.ui.common.swt.JFaceUtils;
-import org.jboss.tools.internal.deltacloud.ui.preferences.IPreferenceKeys;
 import org.jboss.tools.internal.deltacloud.ui.utils.ControlDecorationAdapter;
 import org.jboss.tools.internal.deltacloud.ui.utils.DataBindingUtils;
 import org.jboss.tools.internal.deltacloud.ui.utils.UIUtils;
@@ -237,16 +236,23 @@ public class CloudConnectionPage extends WizardPage {
 		@Override
 		public IStatus validate(Object value) {
 			String connectionName = (String) value;
-			/*
-			 * keeping the same name when editing must be valid
-			 */
+
 			try {
-				if (!connectionName.equals(connectionModel.getInitialName())
-						/* all new names must be unique */
-						&& DeltaCloudManager.getDefault().findCloud(connectionName) != null) {
-					return ValidationStatus
-							.error(WizardMessages.getString(NAME_ALREADY_IN_USE));
+				/* DeltaCloud names must be unique, but
+				 * keeping the same name when editing must be valid
+				 */
+				DeltaCloud deltaCloud = DeltaCloudManager.getDefault().findCloud(connectionName);
+				if (cloudConnection.getDeltaCloud() == null) {
+					if (deltaCloud == null) {
+						return ValidationStatus.ok();
+					}
+				} else {
+					if (cloudConnection.getDeltaCloud().equals(deltaCloud)) {
+						return ValidationStatus.ok();
+					}
 				}
+				return ValidationStatus
+						.error(WizardMessages.getString(NAME_ALREADY_IN_USE));
 			} catch (DeltaCloudException e) {
 				// do nothing
 			}
@@ -276,7 +282,11 @@ public class CloudConnectionPage extends WizardPage {
 		setDescription(WizardMessages.getString(DESCRIPTION));
 		setTitle(WizardMessages.getString(TITLE));
 		setImageDescriptor(SWTImagesFactory.DESC_DELTA_LARGE);
-		this.connectionModel = new CloudConnectionPageModel();
+		this.connectionModel = new CloudConnectionPageModel(
+										new StringPreferenceValue(IDeltaCloudPreferenceConstants.LAST_NAME, Activator.PLUGIN_ID).get(null),
+										new StringPreferenceValue(IDeltaCloudPreferenceConstants.LAST_URL, Activator.PLUGIN_ID).get(null),
+										new StringPreferenceValue(IDeltaCloudPreferenceConstants.LAST_USERNAME, Activator.PLUGIN_ID).get(null), 
+										null);
 		this.cloudConnection = cloudConnection;
 	}
 
@@ -350,7 +360,7 @@ public class CloudConnectionPage extends WizardPage {
 
 		// set url from preferences
 		String url =
-				new StringPreferenceValue(IPreferenceKeys.LAST_URL, Activator.PLUGIN_ID).get(urlText.getText());
+				new StringPreferenceValue(IDeltaCloudPreferenceConstants.LAST_URL, Activator.PLUGIN_ID).get(urlText.getText());
 		urlText.setText(url);
 
 		// username
