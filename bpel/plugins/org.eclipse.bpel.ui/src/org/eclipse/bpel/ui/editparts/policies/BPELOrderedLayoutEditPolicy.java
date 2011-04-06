@@ -38,6 +38,7 @@ import org.eclipse.draw2d.ConnectionAnchor;
 import org.eclipse.draw2d.FlowLayout;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.LayoutManager;
+import org.eclipse.draw2d.OrderedLayout;
 import org.eclipse.draw2d.PolygonDecoration;
 import org.eclipse.draw2d.PolylineConnection;
 import org.eclipse.draw2d.geometry.Point;
@@ -268,6 +269,14 @@ public class BPELOrderedLayoutEditPolicy extends FlowLayoutEditPolicy {
 	@Override
 	protected EditPolicy createChildEditPolicy(EditPart child) {		
 		return null;
+	}
+	
+	// https://issues.jboss.org/browse/JBIDE-8694
+	// isHorizontal() has been deprecated in GEF 3.7
+	// See also https://bugs.eclipse.org/bugs/show_bug.cgi?id=88884 
+	@Override
+	protected boolean isLayoutHorizontal() {
+		return this.isHorizontal();
 	}
 
 	@Override
