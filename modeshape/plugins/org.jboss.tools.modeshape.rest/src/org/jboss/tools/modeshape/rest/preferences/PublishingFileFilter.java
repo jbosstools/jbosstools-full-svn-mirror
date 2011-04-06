@@ -17,6 +17,7 @@ import static org.jboss.tools.modeshape.rest.RestClientI18n.preferenceNotFound;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.jboss.tools.modeshape.rest.Activator;
 import org.modeshape.common.util.CheckArg;
@@ -55,7 +56,7 @@ public final class PublishingFileFilter {
     public boolean accept( IResource resource ) {
         CheckArg.isNotNull(resource, "resource"); //$NON-NLS-1$
 
-        if (resource instanceof IFolder) {
+        if ((resource instanceof IFolder) || (resource instanceof IProject)) {
             String name = resource.getName();
 
             // see if folder name has been filtered
@@ -83,7 +84,6 @@ public final class PublishingFileFilter {
             }
         }
 
-        // must be project
         return true;
     }
 

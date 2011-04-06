@@ -16,7 +16,9 @@ import static org.jboss.tools.modeshape.rest.IUiConstants.ModeShape_IMAGE_16x;
 import static org.jboss.tools.modeshape.rest.IUiConstants.REPOSITORY_IMAGE;
 import static org.jboss.tools.modeshape.rest.IUiConstants.SERVER_IMAGE;
 import static org.jboss.tools.modeshape.rest.IUiConstants.WORKSPACE_IMAGE;
+
 import java.util.Collection;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -46,8 +48,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.jboss.tools.modeshape.rest.Activator;
-import org.jboss.tools.modeshape.rest.RestClientI18n;
 import org.jboss.tools.modeshape.rest.PublishedResourceHelper.WorkspaceLocation;
+import org.jboss.tools.modeshape.rest.RestClientI18n;
 import org.modeshape.common.util.CheckArg;
 import org.modeshape.web.jcr.rest.client.domain.Server;
 
@@ -136,7 +138,7 @@ public final class PublishedLocationsDialog extends MessageDialog {
               RestClientI18n.publishedLocationsDialogMsg.text(file.getFullPath()), MessageDialog.INFORMATION,
               new String[] {IDialogConstants.OK_LABEL}, 0);
 
-        CheckArg.isNotNull(workspaceLocations, "workspaceLocations");
+        CheckArg.isNotNull(workspaceLocations, "workspaceLocations"); //$NON-NLS-1$
         this.workspaceLocations = workspaceLocations;
 
         // make sure dialog is resizable
@@ -185,6 +187,12 @@ public final class PublishedLocationsDialog extends MessageDialog {
         table.setLayoutData(new GridData(GridData.FILL_BOTH));
         table.setHeaderVisible(true);
         table.setLinesVisible(true);
+        
+        // set height of table
+        ((GridData)table.getLayoutData()).minimumHeight = (table.getItemHeight() * 3);
+        int locations = this.workspaceLocations.size() + 2;
+        int numRows = (locations < 6) ? locations : Math.min(locations, 12);
+        ((GridData)table.getLayoutData()).heightHint = (table.getItemHeight() * numRows);
 
         // create columns
         for (int numCols = COLUMNS.length, i = 0; i < numCols; ++i) {
@@ -347,7 +355,7 @@ public final class PublishedLocationsDialog extends MessageDialog {
 
             // should never get here
             assert false;
-            return "";
+            return ""; //$NON-NLS-1$
         }
 
         /**

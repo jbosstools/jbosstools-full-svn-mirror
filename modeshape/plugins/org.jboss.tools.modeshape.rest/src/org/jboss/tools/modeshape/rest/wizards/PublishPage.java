@@ -101,6 +101,12 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
                                           PublishingFileFilter filter ) throws CoreException {
         List<IFile> result = new ArrayList<IFile>();
 
+		if (((container instanceof IProject) && !((IProject) container).isOpen())
+		        || ((filter != null) && !filter.accept(container))) {
+			return result;
+		}
+
+		// process container members
         for (IResource member : container.members()) {
             if (recurse && (member instanceof IContainer)) {
                 // don't select closed projects
