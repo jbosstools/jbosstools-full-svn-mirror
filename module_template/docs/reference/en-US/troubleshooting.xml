@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8' ?>
+
+<chapter id="chap-template-troubleshooting">
+	<title>Troubleshooting</title>
+	<para>
+		The following sections list the error messages and warnings that may be encountered.
+	</para>
+	<section id="sect-template-troubleshooting-error_messages">
+		<title>Error messages</title>
+		<para>
+			Information concerning error messages displayed by the tool.
+		</para>
+	</section>
+	<section id="sect-template-troubleshooting-warning_messages">
+		<title>Warning messages</title>
+		<para>
+			Information concerning warning messages displayed by the tool.
+		</para>
+	</section>
+</chapter>
+

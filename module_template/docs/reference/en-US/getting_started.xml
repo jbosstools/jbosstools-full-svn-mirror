@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='utf-8' ?>
+
+<chapter id="chap-template-getting_started">
+	<title>Getting Started</title>
+	<para>
+		The following sections detail the installations required to use The Tool and provide a quick overview
+		of The Tool and its use. 
+	</para>
+	<section id="sect-template-getting_started-required_installations">
+		<title>Required installations</title>
+		<para>
+			The Tool requires the following installations to be present on the user's system:
+		</para>
+		<variablelist>
+			  	<title>Ensure that the following applications are pre-configured on your system.</title>
+				<varlistentry>
+					<term>JBoss Developer Studio x.x.</term>
+					<listitem>
+						<para>
+							<ulink url="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?downloadType=distributions&amp;product=jbossdeveloperstudio&amp;productChanged=yes">JBoss Developer Studio software downloads</ulink>					
+						</para>
+						<para>
+							<ulink url="http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/index.html">JBoss Developer Studio documentation</ulink>
+							</para>
+						</listitem>
+					</varlistentry>
+					<varlistentry>
+						<term>Java Development Kit 1.6</term>
+						<listitem>
+						<para>
+							<ulink url="https://cds.sun.com/is-bin/INTERSHOP.enfinity/WFS/CDS-CDS_Developer-Site/en_US/-/USD/ViewProductDetail-Start?ProductRef=java_ee_sdk-6u2-jdk-6u24-oth-JPR%40CDS-CDS_Developer">Java Development Kit 1.6 download</ulink>
+						</para>
+						<para>
+							<ulink url="http://java.sun.com/javase/6/webnotes/adoption/adoptionguide.html">JDK 6 Adoption Guide</ulink>
+						</para>
+					</listitem>
+				</varlistentry>
+		</variablelist>
+	</section>
+	<section id="sect-template-getting_started-quick_start">
+		<title>Quick start</title>
+		<para>
+			This section should detail a short procedure that will allow a user to become familiar with the tool interface and create a basic project.
+		</para>
+		<para>
+			To gain a greater understanding of the ideas and concepts behind the tool, see &lt;link to concepts section&gt;. For informaiton on further tasks that can be performed, see &lt;link to the tasks section&gt;.
+		</para>
+	</section>
+</chapter>
+

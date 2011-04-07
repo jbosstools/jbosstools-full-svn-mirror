@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='utf-8' ?>
+
+<chapter id="chap-template-latest_developments">
+	<title>Latest developments</title>
+	<para>
+		The following are new features added to the Tool in release x.x. 
+	</para>
+  	  <table frame='all'><title>New features</title>
+		<tgroup cols='3' align='left' colsep='1' rowsep='1'>
+		<colspec colname='c1'/>
+		<colspec colname='c2'/>
+		<colspec colname='c3'/>
+			<thead>
+				<row>
+				  <entry>Feature name</entry>
+				  <entry>Description</entry>
+				  <entry>Further information</entry>
+				</row>
+			</thead>
+			<tbody>
+				<row>
+				  <entry>Name of the feature</entry>
+				  <entry>Describe new feature, why it's been created</entry>
+				  <entry>Link to task section for new feature and concept section (if it is also a new concept)</entry>
+				</row>
+			</tbody>
+	        </tgroup>
+		
+	  </table>
+</chapter>
+

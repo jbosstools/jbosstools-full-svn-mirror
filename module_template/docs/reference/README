@@ -1,0 +1,21 @@
+Template for reference guide.
+
+How to build everything:
+ mvn install
+
+Just build just html-single:
+ mvn -Phtml-single install
+
+ Other profiles: pdf, html, eclipse
+
+ Look for other <profile>'s in parent pom.
+   
+Guidelines: 
+ use lowercase names for filenames to avoid casing issues
+ on various OS's and to make it easier to search for names/content.
+
+ Comment out chapters/sections that is not correct/actively maintained.
+
+Known issues: 
+ Translation dependds on ${docname} and other variables
+ in artifactid but that is not really supported/recommended by Maven

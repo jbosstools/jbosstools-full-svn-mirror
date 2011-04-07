@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='utf-8' ?>
+
+<chapter id="chap-template-reference">
+	<title>Reference</title>
+	<para>
+		This section should detail the actual screen and interface that a user interacts with. For instance, if a user is attempting to create a project through a wizard, then each of the screen should be available here, documenting what each section of the screen means. In this way, a user may not be wishing to undertake a perdefined task as mentioned in the task section, but still need assistance with what should go in certain fields and such.
+	</para>
+	<section id="sect-template-reference-wizards">
+		<title>Wizards</title>
+		<para>
+			Explain what a wizard is in one paragraph
+		</para>
+		<section id="sect-template-reference-wizards-wizard_one">
+			<title>Wizard one</title>
+			<para>
+				Placeholder text
+			</para>
+		</section>
+		<section id="sect-template-reference-wizards-wizard_two">
+			<title>Wizard two</title>
+			<para>
+				Placeholder text
+			</para>
+		</section>
+	</section>
+	<section id="sect-template-reference-perspectives">
+		<title>Perspectives</title>
+		<para>
+			Explain what a perspective is in one paragraph
+		</para>
+		<section id="sect-template-reference-perspectives-perspective_one">
+			<title>Perspective one</title>
+			<para>
+				Placeholder text
+			</para>
+		</section>
+		<section id="sect-template-reference-perspectives-perspective_two">
+			<title>Perspective two</title>
+			<para>
+				Placeholder text
+			</para>
+		</section>
+	</section>
+	<section id="sect-template-reference-views">
+		<title>Views</title>
+		<para>
+			Explain what a view is in one paragraph
+		</para>
+		<section id="sect-template-reference-views-view_one">
+			<title>View one</title>
+			<para>
+				Placeholder text
+			</para>
+		</section>
+		<section id="sect-template-reference-views-view_two">
+			<title>View two</title>
+			<para>
+				Placeholder text
+			</para>
+		</section>
+	</section>
+	<section id="sect-template-reference-editors">
+		<title>Views</title>
+		<para>
+			Explain what an editor is in one paragraph
+		</para>
+		<section id="sect-template-reference-editors-editor_one">
+			<title>Editor one</title>
+			<para>
+				Placeholder text
+			</para>
+		</section>
+		<section id="sect-template-reference-editors-editor_two">
+			<title>Editor two</title>
+			<para>
+				Placeholder text
+			</para>
+		</section>
+	</section>
+	<section id="sect-template-reference-preference_pages">
+		<title>Preference pages</title>
+		<para>
+			Explain what preference pages are in one paragraph
+		</para>
+		<section id="sect-template-reference-preference_pages-preference_page_one">
+			<title>Preference page one</title>
+			<para>
+				Placeholder text
+			</para>
+		</section>
+		<section id="sect-template-reference-preference_pages-preference_page_two">
+			<title>Preference page two</title>
+			<para>
+				Placeholder text
+			</para>
+		</section>
+	</section>
+	<section id="sect-template-reference-dialogs">
+		<title>Dialogs</title>
+		<para>
+			Explain what a dialog is in one paragraph
+		</para>
+		<section id="sect-template-reference-dialogs-dialog_one">
+			<title>Dialog one</title>
+			<para>
+				Placeholder text
+			</para>
+		</section>
+		<section id="sect-template-reference-dialogs-dialog_two">
+			<title>Dialog two</title>
+			<para>
+				Placeholder text
+			</para>
+		</section>
+	</section>
+	<section id="sect-template-reference-icons_and_buttons">
+		<title>Icons and Buttons</title>
+		<para>
+			Explain what icons and buttons are in one paragraph
+		</para>
+		<section id="sect-template-reference-icons_and_buttons-icons_and_buttons_set_one">
+			<title>Icons and Buttons set one</title>
+			<para>
+				Placeholder text
+			</para>
+		</section>
+		<section id="sect-template-reference-icons_and_buttons-icons_and_buttons_set_two">
+			<title>Icons and Buttons set two</title>
+			<para>
+				Placeholder text
+			</para>
+		</section>
+	</section>
+</chapter>
+

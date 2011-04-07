@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8' ?>
+
+<appendix id="appe-beginners_guide-revision_history">
+	<title>Revision History</title>
+	<simpara>
+		<revhistory>
+			<revision>
+			<!--          Incremental            -->	
+				<revnumber>0</revnumber>
+
+			<!--           Date example          -->
+			<!--	<date>Tue Apr 05 2011</date> -->
+				<date>ddd mmm dd yyyy</date>
+				<author>
+					<firstname>Your First Name</firstname>
+					<surname>Your Surname</surname>
+				</author>
+				<revdescription>
+					<simplelist>
+						<member>Description of update here (or of first creation so we know how old a book is)</member>
+					</simplelist>
+				</revdescription>
+			</revision>
+		</revhistory>
+	</simpara>
+</appendix>
+

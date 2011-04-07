@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8' ?>
+
+<chapter id="chap-template-tasks">
+	<title>Tasks</title>
+	<para>
+		This chapter discusses the numerous tasks used to achieve some of the more common goals.
+	</para>
+	<section id="sect-template-tasks-general_tasks">
+		<title>General tasks</title>
+		<para>
+			These tasks are not related to any specific concept discussed in the Concepts section.
+		</para>
+		<section id="sect-template-tasks-general_tasks-task_one">
+			<title>Task one</title>
+			<para>
+				First task in this section
+			</para>
+		</section>
+		<section id="sect-template-tasks-general_tasks-task_two">
+			<title>Task two</title>
+			<para>
+				Second task in this section
+			</para>
+		</section>
+	</section>
+	<section id="sect-template-tasks-concept_name_tasks">
+		<title>Concept name tasks</title>
+		<para>
+			These tasks are related to a specific concept discussed in the Concepts section.
+		</para>
+		<section id="sect-template-tasks-concept_name_tasks-task_one">
+			<title>Task one</title>
+			<para>
+				First task in this section
+			</para>
+		</section>
+		<section id="sect-template-tasks-concept_name_tasks-task_two">
+			<title>Task two</title>
+			<para>
+				Second task in this section
+			</para>
+		</section>
+	</section>
+</chapter>
+
