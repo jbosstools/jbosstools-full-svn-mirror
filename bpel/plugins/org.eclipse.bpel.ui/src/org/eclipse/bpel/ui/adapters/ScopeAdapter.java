@@ -24,6 +24,11 @@ import org.eclipse.bpel.model.PartnerLinks;
 import org.eclipse.bpel.model.Scope;
 import org.eclipse.bpel.model.TerminationHandler;
 import org.eclipse.bpel.model.Variables;
+import org.eclipse.bpel.ui.actions.CreateCorrelationSetAction;
+import org.eclipse.bpel.ui.actions.CreateMessageExchangeAction;
+import org.eclipse.bpel.ui.actions.CreatePartnerLinkAction;
+import org.eclipse.bpel.ui.actions.CreateVariableAction;
+import org.eclipse.bpel.ui.actions.editpart.AbstractAction;
 import org.eclipse.bpel.ui.adapters.delegates.ActivityContainer;
 import org.eclipse.bpel.ui.adapters.delegates.MultiContainer;
 import org.eclipse.bpel.ui.adapters.delegates.OptionalIndirectContainer;
@@ -150,5 +155,19 @@ public class ScopeAdapter extends ContainerActivityAdapter implements IFaultHand
 		};
 		result.setModel(model);
 		return result;
+	}
+	
+	/*
+	 * Overrides the base class actions and appends the declaration actions
+	 * @see https://issues.jboss.org/browse/JBIDE-7953
+	 */
+	@Override
+	public List<AbstractAction> getEditPartActions(final EditPart editPart) {
+		List<AbstractAction> actions = super.getEditPartActions(editPart);
+		actions.add(new CreatePartnerLinkAction(editPart));
+		actions.add(new CreateVariableAction(editPart));
+		actions.add(new CreateCorrelationSetAction(editPart));
+		actions.add(new CreateMessageExchangeAction(editPart));
+		return actions;
 	}
 }

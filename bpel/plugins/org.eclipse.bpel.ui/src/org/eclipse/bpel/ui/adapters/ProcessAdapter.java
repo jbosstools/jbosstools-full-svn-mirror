@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.bpel.ui.adapters;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.bpel.model.BPELPackage;
 import org.eclipse.bpel.model.EventHandler;
 import org.eclipse.bpel.model.FaultHandler;
@@ -17,6 +20,12 @@ import org.eclipse.bpel.model.Process;
 import org.eclipse.bpel.ui.BPELUIPlugin;
 import org.eclipse.bpel.ui.IBPELUIConstants;
 import org.eclipse.bpel.ui.Messages;
+import org.eclipse.bpel.ui.actions.CreateCorrelationSetAction;
+import org.eclipse.bpel.ui.actions.CreateMessageExchangeAction;
+import org.eclipse.bpel.ui.actions.CreateVariableAction;
+import org.eclipse.bpel.ui.actions.CreatePartnerLinkAction;
+import org.eclipse.bpel.ui.actions.editpart.AbstractAction;
+import org.eclipse.bpel.ui.actions.editpart.IEditPartAction;
 import org.eclipse.bpel.ui.adapters.delegates.ActivityContainer;
 import org.eclipse.bpel.ui.adapters.delegates.IndirectContainer;
 import org.eclipse.bpel.ui.adapters.delegates.MultiContainer;
@@ -36,7 +45,7 @@ import org.eclipse.swt.graphics.Image;
 public class ProcessAdapter extends ContainerAdapter implements INamedElement,
 	EditPartFactory, IOutlineEditPartFactory, IFaultHandlerHolder,
 	ILabeledElement, IEventHandlerHolder, ITrayEditPartFactory,
-	IExtensionFactory
+	IExtensionFactory, IEditPartActionContributor
 {
 	
 	/* IContainer delegate */
@@ -144,5 +153,19 @@ public class ProcessAdapter extends ContainerAdapter implements INamedElement,
 	
 	public EObject createExtension(EObject object) {
 		return UiextensionmodelFactory.eINSTANCE.createProcessExtension();
+	}
+
+	/*
+	 * Overrides the base class actions and appends the declaration actions
+	 * @see https://issues.jboss.org/browse/JBIDE-7953
+	 */
+	@Override
+	public List<? extends IEditPartAction> getEditPartActions(EditPart editPart) {
+		List<AbstractAction> actions = new ArrayList<AbstractAction>();
+		actions.add(new CreatePartnerLinkAction(editPart));
+		actions.add(new CreateVariableAction(editPart));
+		actions.add(new CreateCorrelationSetAction(editPart));
+		actions.add(new CreateMessageExchangeAction(editPart));
+		return actions;
 	}	
 }
