@@ -36,7 +36,6 @@ import org.eclipse.wst.server.core.model.IModuleResource;
 import org.eclipse.wst.server.core.model.IModuleResourceDelta;
 import org.jboss.ide.eclipse.archives.webtools.modules.LocalZippedPublisherUtil;
 import org.jboss.ide.eclipse.as.core.JBossServerCorePlugin;
-//import org.jboss.ide.eclipse.as.core.Messages;
 import org.jboss.ide.eclipse.as.core.extensions.events.IEventCodes;
 import org.jboss.ide.eclipse.as.core.publishers.LocalPublishMethod;
 import org.jboss.ide.eclipse.as.core.publishers.PublishUtil;
@@ -107,11 +106,15 @@ public class JBTBPELPublisher implements IJBossServerPublisher {
         // 
 		if (status!=null) {
 			final IStatus s = status;
-			Display.getDefault().syncExec( new Runnable() {
-				public void run() {
-					MessageDialog.openWarning(Display.getDefault().getActiveShell(), Messages.DeployError, s.getMessage());
-				}
-			});
+			if (!s.isOK()) {
+				Display.getDefault().syncExec(new Runnable() {
+					public void run() {
+						MessageDialog.openWarning(Display.getDefault()
+								.getActiveShell(), Messages.DeployError, s
+								.getMessage());
+					}
+				});
+			}
 		}
 		return status == null ? Status.OK_STATUS : status;
 	}
