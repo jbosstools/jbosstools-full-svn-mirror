@@ -2,13 +2,12 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3CR3//EN"
 "http://www.oasis-open.org/docbook/xml/4.3CR3/docbookx.dtd"
 
-[<!ENTITY Latest_Developments SYSTEM "Latest_Developments.xml">
-<!ENTITY Getting_Started SYSTEM "Getting_Started.xml">
-<!ENTITY Concepts SYSTEM "Concepts.xml">
-<!ENTITY Tasks SYSTEM "Tasks.xml">
-<!ENTITY Reference SYSTEM "Reference.xml">
-<!ENTITY Troubleshooting SYSTEM "Troubleshooting.xml">
-<!ENTITY Revision_History SYSTEM "Revision_History.xml">
+[<!ENTITY getting_started SYSTEM "getting_started.xml">
+<!ENTITY concepts SYSTEM "concepts.xml">
+<!ENTITY tasks SYSTEM "tasks.xml">
+<!ENTITY reference SYSTEM "reference.xml">
+<!ENTITY troubleshooting SYSTEM "troubleshooting.xml">
+<!ENTITY revision_history SYSTEM "revision_history.xml">
 ]>
 
 <book>
@@ -42,12 +41,11 @@
     </bookinfo>
     
     <toc/> 
-    &Latest_Developments; 
-    &Getting_Started;
-    &Concepts;
-    &Tasks;
-    &Reference;
-    &Troubleshooting;
-    &Revision_History;
+    &getting_started;
+    &concepts;
+    &tasks;
+    &reference;
+    &troubleshooting;
+    &revision_history;
 
 </book> 
