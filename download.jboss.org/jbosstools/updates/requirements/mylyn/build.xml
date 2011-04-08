@@ -11,7 +11,7 @@
 		
 		export JAVA_HOME=/opt/jdk1.6.0; \
 		${JAVA_HOME}/bin/java -cp ~/eclipse/plugins/org.eclipse.equinox.launcher_*.jar \
-			org.eclipse.equinox.launcher.Main -vm ${JAVA_HOME} -consoleLog -nosplash -data /tmp \
+			<iu id="org.eclipse.equinox.launcher.Main -vm ${JAVA_HOME} -consoleLog -nosplash -data /tmp \
 			-application org.eclipse.ant.core.antRunner \
 			-f ~/RHDS/updates/requirements/mylyn/build.xml -Ddestination=/tmp/mylyn-repo
 	-->
@@ -19,8 +19,8 @@
 		<!-- core mylyn, if not on Indigo site; includes Bugzilla -->
 		<property name="URL1" value="http://download.eclipse.org/mylyn/snapshots/weekly/" />
 		<!-- JIRA connector; note that Subclipse connector is on Subclipse req site, ../subclipse/ -->
-		<property name="URL2" value="http://update.atlassian.com/atlassian-eclipse-plugin/e3.6/" />
-		<property name="URL3" value="http://update.atlassian.com/atlassian-eclipse-plugin/weekly/e3.5/" />
+		<!--<property name="URL2" value="http://update.atlassian.com/atlassian-eclipse-plugin/e3.6/" /> -->
+		<property name="URL2" value="http://update.atlassian.com/atlassian-eclipse-plugin/weekly/e3.5/" />
 		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/mylyn/3.6/" />
 		<property name="compress" value="true" />
 
@@ -29,10 +29,29 @@
 			<source>
 				<repository location="${URL1}" />
 				<repository location="${URL2}" />
-				<repository location="${URL3}" />
 			</source>
 
 			<slicingOptions includeFeatures="true" followStrict="true" />
+
+			<iu id="org.eclipse.mylyn_feature" />
+			<iu id="org.eclipse.mylyn.context_feature" />
+			<iu id="org.eclipse.mylyn.wikitext_feature" />
+
+			<iu id="org.eclipse.mylyn.ide_feature" />
+			<iu id="org.eclipse.mylyn.java_feature" />
+			<iu id="org.eclipse.mylyn.pde_feature" />
+			<iu id="org.eclipse.mylyn.team_feature" />
+
+			<iu id="org.eclipse.mylyn.bugzilla_feature" />
+			<iu id="org.eclipse.mylyn.jira_feature" />
+			<iu id="org.eclipse.mylyn.git" />
+			<iu id="org.eclipse.mylyn.cvs" />
+
+			<iu id="com.atlassian.connector.eclipse" />
+			<iu id="com.atlassian.connector.eclipse.cvs" />
+			<iu id="com.atlassian.connector.eclipse.jira" />
+			<iu id="com.atlassian.connector.eclipse.subclipse" />
+			<iu id="com.atlassian.connector.eclipse.subversive" />
 		</p2.mirror>
 
 		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/3.6/" artifactRepository="file:${destination}/3.6/" publishartifacts="true" source="${destination}/3.6/" compress="${compress}" />
