@@ -33,25 +33,26 @@
 
 			<slicingOptions includeFeatures="true" followStrict="true" />
 
-			<iu id="org.eclipse.mylyn_feature" />
-			<iu id="org.eclipse.mylyn.context_feature" />
-			<iu id="org.eclipse.mylyn.wikitext_feature" />
+			<iu id="org.eclipse.mylyn_feature.feature.group" />
+			<iu id="org.eclipse.mylyn.context_feature.feature.group" />
+			<iu id="org.eclipse.mylyn.wikitext_feature.feature.group" />
 
-			<iu id="org.eclipse.mylyn.ide_feature" />
-			<iu id="org.eclipse.mylyn.java_feature" />
-			<iu id="org.eclipse.mylyn.pde_feature" />
-			<iu id="org.eclipse.mylyn.team_feature" />
+			<iu id="org.eclipse.mylyn.ide_feature.feature.group" />
+			<iu id="org.eclipse.mylyn.java_feature.feature.group" />
+			<iu id="org.eclipse.mylyn.pde_feature.feature.group" />
+			<iu id="org.eclipse.mylyn.team_feature.feature.group" />
 
-			<iu id="org.eclipse.mylyn.bugzilla_feature" />
-			<iu id="org.eclipse.mylyn.jira_feature" />
-			<iu id="org.eclipse.mylyn.git" />
-			<iu id="org.eclipse.mylyn.cvs" />
+			<iu id="org.eclipse.mylyn.bugzilla_feature.feature.group" />
+			<iu id="org.eclipse.mylyn.jira_feature.feature.group" />
+			<iu id="org.eclipse.mylyn.git.feature.group" />
+			<iu id="org.eclipse.mylyn.cvs.feature.group" />
 
-			<iu id="com.atlassian.connector.eclipse" />
-			<iu id="com.atlassian.connector.eclipse.cvs" />
-			<iu id="com.atlassian.connector.eclipse.jira" />
-			<iu id="com.atlassian.connector.eclipse.subclipse" />
-			<iu id="com.atlassian.connector.eclipse.subversive" />
+			<iu id="com.atlassian.connector.eclipse.feature.group" />
+			<iu id="com.atlassian.connector.eclipse.cvs.feature.group" />
+			<iu id="com.atlassian.connector.eclipse.jira.feature.group" />
+			<!-- these last two are described as "obsolete" on the update site --> 
+			<iu id="com.atlassian.connector.eclipse.subclipse.feature.group" />
+			<iu id="com.atlassian.connector.eclipse.subversive.feature.group" />
 		</p2.mirror>
 
 		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/3.6/" artifactRepository="file:${destination}/3.6/" publishartifacts="true" source="${destination}/3.6/" compress="${compress}" />
