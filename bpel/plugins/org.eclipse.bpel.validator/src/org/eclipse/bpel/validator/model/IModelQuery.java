@@ -10,7 +10,12 @@
  *******************************************************************************/
 package org.eclipse.bpel.validator.model;
 
+import java.util.List;
+
 import javax.xml.namespace.QName;
+
+import org.eclipse.bpel.model.Import;
+import org.eclipse.bpel.model.Process;
 
 /**
  * This interface represents the query interface that the validator uses to ask
@@ -166,4 +171,23 @@ public interface IModelQuery extends IModelQueryLookups {
     
     public QName createQName ( INode context, String name ) ;
            
+    /**
+     * Searches all imports in the given Process for conflicting XSD definitions
+     * 
+     * @param process the containing Process
+     * @param node the XSD element reference
+     * @return the list of Imports that contain conflicting definitions or null
+     * if there are no conflicts.
+     * @see https://issues.jboss.org/browse/JBIDE-8088
+     */
+    public List<Import> findConflictingXSD(Process process, INode node);
+
+    /**
+     * Returns the Process that corresponds to the given node
+     * 
+     * @param node the Process element
+     * @return the Process or null
+     * @see https://issues.jboss.org/browse/JBIDE-8088
+     */
+    public Process lookupProcess(INode node);
 }

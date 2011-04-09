@@ -15,10 +15,14 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Stack;
 
 import javax.xml.namespace.QName;
 
+import org.eclipse.bpel.model.Import;
+import org.eclipse.bpel.model.Process;
+import org.eclipse.bpel.model.util.XSDUtil;
 import org.eclipse.bpel.validator.EmfModelQuery;
 import org.eclipse.bpel.validator.model.Filters;
 import org.eclipse.bpel.validator.model.IConstants;
@@ -31,6 +35,9 @@ import org.eclipse.bpel.validator.model.NodeNameFilter;
 import org.eclipse.bpel.validator.model.Selector;
 import org.eclipse.bpel.validator.model.UndefinedNode;
 import org.eclipse.bpel.validator.model.XNotImplemented;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.xsd.XSDElementDeclaration;
+import org.eclipse.xsd.XSDTypeDefinition;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -956,6 +963,81 @@ public class ModelQueryImpl  implements IModelQuery {
     	// Return the model query object
     	return gModelQuery;
     }
+    
+    /**
+     * Searches all imports in the given Process for conflicting XSD definitions
+     * 
+     * @param process the containing Process
+     * @param node the XSD element reference
+     * @return the list of Imports that contain conflicting definitions or null
+     * if there are no conflicts.
+     * @see https://issues.jboss.org/browse/JBIDE-8088
+     */
+	@Override
+	public List<Import> findConflictingXSD(Process process, INode node) {
+
+		EObject o1 = adapt(node, EObject.class, ADAPT_HINT_NONE);
+		List<Import> imports = null;
+		List<Import> conflicts = new ArrayList<Import>();
+		QName qname = null;
+
+		if (o1 instanceof XSDTypeDefinition) {
+			qname = this.createQName(node, ((XSDTypeDefinition) o1).getName());
+			if ("".equals(qname.getNamespaceURI())) {
+				qname = new QName(((XSDTypeDefinition) o1).getTargetNamespace(), qname.getLocalPart());
+			}
+			imports = emfModelQuery.scanAllImports(process, qname, XSDUtil.XSD_TYPE_DEFINITION);
+		} else if (o1 instanceof XSDElementDeclaration) {
+			qname = this.createQName(node, ((XSDElementDeclaration) o1).getName());
+			if ("".equals(qname.getNamespaceURI())) {
+				qname = new QName(((XSDElementDeclaration) o1).getTargetNamespace(), qname.getLocalPart());
+			}
+			imports = emfModelQuery.scanAllImports(process, qname, XSDUtil.XSD_ELEMENT_DECLARATION);
+		}
+
+		if (imports != null && imports.size() > 1) {
+			EObject o2 = null;
+			o1 = null;
+			for (Import imp : imports) {
+				EObject resolvedImport = emfModelQuery.lookupImport(imp, null);
+				if (o1 == null) {
+					if (o1 instanceof XSDTypeDefinition) {
+						o1 = emfModelQuery.lookupXSDType(resolvedImport, qname);
+					} else {
+						o1 = emfModelQuery.lookupXSDElement(resolvedImport, qname);
+					}
+					conflicts.add(imp);
+				} else {
+					if (o2 instanceof XSDTypeDefinition) {
+						o2 = emfModelQuery.lookupXSDType(resolvedImport, qname);
+					} else {
+						o2 = emfModelQuery.lookupXSDElement(resolvedImport, qname);
+					}
+					if (!emfModelQuery.compatibleType(o1, o2)) {
+						conflicts.add(imp);
+					}
+				}
+			}
+		}
+		
+		return conflicts.size()>1 ? conflicts : null;
+	}
+
+
+    /**
+     * Returns the Process that corresponds to the given node
+     * 
+     * @param node the Process element
+     * @return the Process or null
+     * @see https://issues.jboss.org/browse/JBIDE-8088
+     */
+	@Override
+	public Process lookupProcess(INode node) {
+		EObject root = emfModelQuery.getRoot( adapt(node, EObject.class, ADAPT_HINT_NONE) );
+		if (root instanceof Process)
+			return (Process) root;
+		return null;
+	}
     
     
 }
