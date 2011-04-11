@@ -199,8 +199,8 @@
 
 	<project>
 		<category>BPEL</category>
-		<name>Fault Compensation</name>
-		<shortDescription>This is a fault compensation bpel example</shortDescription>
+		<name>Fault_Compensation</name>
+		<shortDescription>A Fault Compensation BPEL example</shortDescription>
 		<description>This example focuses on the Scope activity.</description>
 		<size>6000</size>
 		<url>
@@ -211,7 +211,7 @@
 	<project>
 		<category>BPEL</category>
 		<name>While_Wait</name>
-		<shortDescription>A while wait BPEL example</shortDescription>
+		<shortDescription>A While Wait BPEL example</shortDescription>
 		<description>This is a simple example used to compute the first N elements of the fibonacci sequence.</description>
 		<size>8000</size>
 		<url>
