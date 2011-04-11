@@ -18,7 +18,7 @@
 			</mediaobject>
 		</figure>
 		
-		<!-- JBDS Intro -->
+		<!-- JBoss Developer Studio Intro -->
 		
 		<para condition="jbds">
 			The JBoss Developer Studio now includes a usage plug-in that anonymously reports information back to JBoss. The plug-in is not enabled by default. To enable, click the <guibutton>Yes</guibutton> button.

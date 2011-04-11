@@ -11,12 +11,12 @@
 	<title>Introduction to JBoss Developer Studio</title>
 
 	<section id="intro1">
-		<title>What is JBDS?</title>
+		<title>What JBoss Developer Studio is</title>
 		<para>
 			<property>JBoss Developer Studio</property> is a set of Eclipse based development tools that have been pre-configured for JBoss Enterprise Middleware Platforms and Red Hat Enterprise Linux. Developers are not required to use <property>JBoss Developer Studio</property> to develop on JBoss Enterprise Middleware and/or Red Hat Linux. But, many find these preconfigured tools offer significant time-savings and value, making them more productive and reducing deployment times.
 		</para>
 		<para>
-			This guide covers the first steps required to get started with <property>JBoss Developer Studio</property>. You will learn how to install and configure the software necessary for your OS (currently Linux, Microsoft Windows or Mac OSX), including detailed information on how to install, configure and use JDK, JBDS and JBoss Tools.
+			This guide covers the first steps required to get started with <property>JBoss Developer Studio</property>. You will learn how to install and configure the software necessary for your OS (currently Linux, Microsoft Windows or Mac OSX), including detailed information on how to install, configure and use JDK, JBoss Developer Studio and JBoss Tools.
 		</para>
 	</section>
 
@@ -181,11 +181,11 @@
 		</table>
 
 		<para>
-			<property>JBDS</property> requires JDK 5+ (JDK 6 in case of EAP 5.0). Also it&apos;s important that the JVM&apos;s architecture matches the particular <property>JBDS</property> build, i.e. if you&apos;re on a 64-bit system and use the 64-bit JVM, you need the 64-bit JBDS.
+			<property>JBoss Developer Studio</property> requires JDK 5+ (JDK 6 in case of EAP 5.0). Also it&apos;s important that the JVM&apos;s architecture matches the particular <property>JBoss Developer Studio</property> build, i.e. if you&apos;re on a 64-bit system and use the 64-bit JVM, you need the 64-bit JBoss Developer Studio.
 		</para>
 	
 		<para>
-			For the 32-bit version of JBDS use the 32-bit JVM or just use <literal>-vm</literal> flag to tell JBDS to use 32-bit java if the 64-bit one is found as the default.
+			For the 32-bit version of JBoss Developer Studio use the 32-bit JVM or just use <literal>-vm</literal> flag to tell JBoss Developer Studio to use 32-bit java if the 64-bit one is found as the default.
 		</para>
 	
 		<note>

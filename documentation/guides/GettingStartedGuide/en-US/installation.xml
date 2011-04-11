@@ -231,7 +231,7 @@ Java HotSpot(TM) Server VM (build 19.1-b02, mixed mode)]]>
     </section>
   </section>
    
-  <section id="InstallingJBDS">
+  <section id="Installing_JBoss_Developer_Studio">
 <?dbhtml filename="InstallingRHDS.html"?>
     <title>JBoss Developer Studio Installation</title> 
     <para>
@@ -239,7 +239,7 @@ Java HotSpot(TM) Server VM (build 19.1-b02, mixed mode)]]>
     </para>
      
     <para>
-      JBoss Developer Studio comes with a simple installer, bundled with tested and preconfigured versions of Eclipse, WTP, JBossEAP, Seam, and SpringIDE. The following steps show you how to install JBDS:
+      JBoss Developer Studio comes with a simple installer, bundled with tested and preconfigured versions of Eclipse, WTP, JBossEAP, Seam, and SpringIDE. The following steps show you how to install JBoss Developer Studio:
     </para>
      
     <itemizedlist>
@@ -325,7 +325,7 @@ Java HotSpot(TM) Server VM (build 19.1-b02, mixed mode)]]>
         <note>
           <title>Note:</title> 
           <para>
-            Like in the previous version of JBDS, JBDS 4.0.0.GA comes integrated with JBoss EAP 5.1 that supports EAP 5 adapter and Seam 2.2.
+            Like in the previous version of JBoss Developer Studio, version 4.0.0.GA comes integrated with JBoss EAP 5.1 that supports EAP 5 adapter and Seam 2.2.
           </para>
         </note>
          
@@ -500,7 +500,7 @@ Java HotSpot(TM) Server VM (build 19.1-b02, mixed mode)]]>
       <guibutton>
         Add...
       </guibutton>
-       button, and in the <guilabel>Add Repository</guilabel> dialog box enter <guilabel>JBDS Tech Preview</guilabel> in the <guilabel>Name</guilabel> field and <guilabel>http://devstudio.jboss.com/updates/4.0/techpreview</guilabel> in the <guilabel>Location</guilabel> field. Click the 
+       button, and in the <guilabel>Add Repository</guilabel> dialog box enter <guilabel>JBoss Developer Studio Tech Preview</guilabel> in the <guilabel>Name</guilabel> field and <guilabel>http://devstudio.jboss.com/updates/4.0/techpreview</guilabel> in the <guilabel>Location</guilabel> field. Click the 
       <guibutton>
         OK
       </guibutton>
@@ -522,7 +522,7 @@ Java HotSpot(TM) Server VM (build 19.1-b02, mixed mode)]]>
   <section>
     <title>Updating JBoss Developer Studio</title> 
     <para>
-      Updates to JBDS can be installed by selecting <menuchoice><guimenuitem>Help</guimenuitem><guimenuitem>Check For Updates</guimenuitem></menuchoice> from within Eclipse. You may be prompted for a username and password. These are the same credentials that are required to access the Tech Preview update site (see <xref linkend="tech_previews"/>).
+      Updates to JBoss Developer Studio can be installed by selecting <menuchoice><guimenuitem>Help</guimenuitem><guimenuitem>Check For Updates</guimenuitem></menuchoice> from within Eclipse. You may be prompted for a username and password. These are the same credentials that are required to access the Tech Preview update site (see <xref linkend="tech_previews"/>).
     </para>
   </section>
 <!--section id="jbds_jbosstools">

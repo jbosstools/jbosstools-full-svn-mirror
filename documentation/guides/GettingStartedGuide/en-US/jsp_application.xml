@@ -267,7 +267,7 @@
       </para>
        
       <para>
-        You can also create a WAR archive with JBDS&apos;s Archive Tools and export it to any web server.
+		  You can also create a WAR archive with JBoss Developer Studio&apos;s Archive Tools and export it to any web server.
       </para>
        
       <section id="WarConfig">
@@ -395,7 +395,7 @@
 <?dbhtml filename="AutoRedeploy.html"?>
         <title>Auto redeploy</title> 
         <para>
-          When you are creating a web application and register it on <property>JBoss Server</property> it is automatically deployed into the <filename>/deploy</filename> directory of the server. JBDS comes with the feature of auto-redeploy. It means that you don&apos;t need to restart <property>JBoss Server</property>. Any changes made in the application in exploded format will trigger a redeployment on the server.
+			When you are creating a web application and register it on <property>JBoss Server</property> it is automatically deployed into the <filename>/deploy</filename> directory of the server. JBoss Developer Studio comes with the feature of auto-redeploy. It means that you don&apos;t need to restart <property>JBoss Server</property>. Any changes made in the application in exploded format will trigger a redeployment on the server.
         </para>
          
         <para>
@@ -421,7 +421,7 @@
 <?dbhtml filename="Previewtab.html"?>
       <title>JSP Page Preview</title> 
       <para>
-        <property>JBDS</property> comes with JSP design-time preview features. When designing JSP pages you can easily preview how they will look during runtime. You can even attach your stylesheet to the Preview.
+		  <property>JBoss Developer Studio</property> comes with JSP design-time preview features. When designing JSP pages you can easily preview how they will look during runtime. You can even attach your stylesheet to the Preview.
       </para>
        
       <itemizedlist>
@@ -518,7 +518,7 @@
       </figure>
        
       <para>
-        Thus with the help of this chapter you&apos;ve learnt how to organize a Dynamic Web Project with a minimal configuration, add new elements to it (in our case it&apos;s just one JSP page) and deploy and run it on the <property>JBoss Server</property> shipped with <property>JBDS</property>.
+		  Thus with the help of this chapter you&apos;ve learnt how to organize a Dynamic Web Project with a minimal configuration, add new elements to it (in our case it&apos;s just one JSP page) and deploy and run it on the <property>JBoss Server</property> shipped with <property>JBoss Developer Studio</property>.
       </para>
     </section>
   </section>

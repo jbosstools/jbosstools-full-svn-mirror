@@ -31,7 +31,7 @@
 	<section id="SettingUpTheProject12">
 		<?dbhtml filename="SettingUpTheProject12.html"?>
 		<title>Setting up the project</title>
-		<para>First, you should create a JSF 1.2 project using an integrated JBDS&apos;s new
+		<para>First, you should create a JSF 1.2 project using an integrated JBoss Developer Studio&apos;s new
             project wizard and predefined templates. Follow the next steps:</para>
 		<itemizedlist>
 			<listitem>
@@ -314,7 +314,7 @@ tryagain_bigger=Oops..incorrect guess. Please try a bigger number.
 		</itemizedlist>
 		<programlisting role="JAVA"><![CDATA[Integer userNumber;
 ]]></programlisting>
-		<para>JBDS allows to quickly generate getters and setters for java bean.</para>
+<para>JBoss Developer Studio allows to quickly generate getters and setters for java bean.</para>
 		<itemizedlist>
 			<listitem>
 				<para>Right click the <filename>NumberBean.java</filename> file in the Package Explorer view</para>
@@ -586,7 +586,7 @@ public class NumberBean
 			</itemizedlist>
 			<programlisting role="XML"><![CDATA[<f:loadBundle basename="game.messages" var="msg"/>
 ]]></programlisting>
-			<para>As always JBDS provides code assist:</para>
+<para>As always JBoss Developer Studio provides code assist:</para>
 			<figure>
 				<title>Code Assist</title>
 				<mediaobject>
@@ -610,7 +610,7 @@ public class NumberBean
 					<para>Click the <guibutton>...</guibutton> button next to the value field</para>
 				</listitem>
 			</itemizedlist>
-			<para>JBDS will display a list of possible values:</para>
+			<para>JBoss Developer Studio will display a list of possible values:</para>
 			<figure>
 				<title>Choose Value</title>
 				<mediaobject>
@@ -818,7 +818,7 @@ public class NumberBean
 </html>
 
 ]]></programlisting>
-			<para>Again you can use code assist provided by JBDS when editing jsp page:</para>
+<para>Again you can use code assist provided by JBoss Developer Studio when editing jsp page:</para>
 			<figure>
 				<title>Code Assist for &lt;f:param&gt;</title>
 				<mediaobject>

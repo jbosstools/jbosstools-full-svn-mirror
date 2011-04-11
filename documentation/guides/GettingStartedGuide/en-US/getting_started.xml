@@ -43,7 +43,7 @@
 
 		<itemizedlist>
 			<listitem>
-				<para>to create new Seam projects, jBPM Process, JSF or Struts projects using JBDS wizards</para>
+				<para>to create new Seam projects, jBPM Process, JSF or Struts projects using JBoss Developer Studio wizards</para>
 			</listitem>
 		</itemizedlist>
 
@@ -58,7 +58,7 @@
 
 		<itemizedlist>
 			<listitem>
-				<para>to get short descriptions of the perspectives that JBDS provides</para>
+				<para>to get short descriptions of the perspectives that JBoss Developer Studio provides</para>
 			</listitem>
 		</itemizedlist>
 
@@ -95,10 +95,10 @@
 	<section id="Upgrading">
 		<?dbhtml filename="Upgrading.html"?>
 		<title>Upgrading</title>
-		<para>Because JBDS 3.0x and 4.0 use different versions of Eclipse, it is not possible to directly upgrade from an older version to JBDS 4.0.</para>
+		<para>Because JBoss Developer Studio 3.0x and 4.0 use different versions of Eclipse, it is not possible to directly upgrade from an older version to JBoss Developer Studio 4.0.</para>
 		<note>
 			<title>Tip</title>
-			<para>It is possible to run JBDS 3.0x and 4.0 side by side, as long as they have been installed into separate directories.</para>
+			<para>It is possible to run JBoss Developer Studio 3.0x and 4.0 side by side, as long as they have been installed into separate directories.</para>
 		</note>
 
 	</section>
@@ -138,7 +138,7 @@
 		</orderedlist>
 
 		<para>
-			<property>JBDS</property> subscribers can get additional support on our <ulink url="https://network.jboss.com/jbossnetwork/login.html">Support Portal</ulink>.
+			<property>JBoss Developer Studio</property> subscribers can get additional support on our <ulink url="https://network.jboss.com/jbossnetwork/login.html">Support Portal</ulink>.
 		</para>
 	</section>
 
@@ -146,14 +146,15 @@
 	<section id="OtherRelevantResourcesOnTheTopic33">
 		<?dbhtml filename="OtherRelevantResourcesOnTheTopic33.html"?>
 		<title>Other relevant resources on the topic</title>
-		<para>JBDS on RedHat: <ulink url="http://www.redhat.com/developer_studio">JBoss Developer Studio</ulink>
+		<para>JBoss Developer Studio on RedHat: <ulink url="http://www.redhat.com/developer_studio">JBoss Developer Studio</ulink>
 		</para>
 		<para>Forum: <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss Forum</ulink></para>
 		<para>Wiki: <ulink url="http://www.jboss.org/community/wiki/JBossTools">  JBossToolsWiki </ulink></para>
-		<para>Subscription: <ulink url="https://www.redhat.com/apps/store/developers/jboss_developer_studio.html">JBDS Subscription</ulink></para>
+		<para>Subscription: <ulink url="https://www.redhat.com/apps/store/developers/jboss_developer_studio.html">JBoss Developer Studio Subscription</ulink>
+    </para>
 		<para>The latest documentation builds are available <ulink url="http://download.jboss.org/jbosstools/nightly-docs/">here</ulink>.</para>
 		<para>
-			<ulink url="http://www.jboss.org/community/wiki/MatrixofsupportedplatformsruntimesandtechnologiesinJBossToolsJBDS">Matrix of supported platforms, runtimes and technologies in JBossTools/JBDS</ulink>
+			<ulink url="http://www.jboss.org/community/wiki/MatrixofsupportedplatformsruntimesandtechnologiesinJBossToolsJBDS">Matrix of supported platforms, runtimes and technologies in JBossTools and JBoss Developer Studio</ulink>
 		</para>
 	</section>
 

@@ -13,7 +13,7 @@
     Developer Studio can be used during the development process.</para>
   <section id="create_seam_application">
     <title>Create a Seam Application</title>
-    <para>In this section you will learn how to create a Seam project in JBDS, how to start the
+    <para>In this section you will learn how to create a Seam project in JBoss Developer Studio, how to start the
       server and what structure your project has after it is created.</para>
     <section id="start_dev_db">
       <title>Start Development Database</title>
