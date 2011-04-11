@@ -151,4 +151,8 @@ public class NewCloudConnectionWizard extends Wizard implements INewWizard, Clou
 			return false;
 		}
 	}
+	
+	public DeltaCloud getDeltaCloud() {
+		return initialCloud;
+	}
 }

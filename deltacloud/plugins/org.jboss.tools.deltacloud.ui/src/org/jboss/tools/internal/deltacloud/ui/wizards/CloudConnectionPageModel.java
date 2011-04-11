@@ -10,7 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
-import java.net.MalformedURLException;
+import java.net.URI;
 import java.text.MessageFormat;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -37,30 +37,47 @@ public class CloudConnectionPageModel extends ObservableUIPojo {
 	public static final String INVALID_URL = "ErrorInvalidURL.text"; //$NON-NLS-1$
 	public static final String NONCLOUD_URL = "ErrorNonCloudURL.text"; //$NON-NLS-1$
 
+	private static final String HTTP_PREFIX = "http://"; //$NON-NLS-1$
+
 	private String name;
 	private String url;
 	private String username;
 
 	private String password;
 	private Driver driver;
-	private String initialName;
 
-	public CloudConnectionPageModel() {
-		this("", "", "", "", Driver.UNKNOWN);
-	}
-
-	public CloudConnectionPageModel(String name, String url, String username, String password) throws MalformedURLException {
+	public CloudConnectionPageModel(String name, String url, String username, String password){
 		this(name, url, username, password, Driver.UNKNOWN);
 	}
 
 	public CloudConnectionPageModel(String name, String url, String username, String password, Driver driver) {
 		this.name = name;
-		this.initialName = name;
-		this.url = url;
+		setUrl(prependHttp(url));
 		this.username = username;
 		this.password = password;
 		// this.driver = driver;
 		setDriverByUrl(url);
+	}
+
+	private String prependHttp(String url) {
+		if (!startsWithScheme(url)) {
+			return HTTP_PREFIX + url;
+		} else {
+			return url;
+		}
+	}
+
+	private boolean startsWithScheme(String url) {
+		if (url == null || url.length() == 0) {
+			return false;
+		} else {
+			try {
+				String scheme = URI.create(url).getScheme();
+				return scheme!=null && scheme.length() > 0;
+			} catch (IllegalArgumentException e ) {
+				return false;
+			}
+		}
 	}
 
 	public String getUsername() {
@@ -77,10 +94,6 @@ public class CloudConnectionPageModel extends ObservableUIPojo {
 
 	public void setPassword(String password) {
 		firePropertyChange(PROPERTY_PASSWORD, this.password, this.password = password);
-	}
-
-	public String getInitialName() {
-		return initialName;
 	}
 
 	public String getName() {

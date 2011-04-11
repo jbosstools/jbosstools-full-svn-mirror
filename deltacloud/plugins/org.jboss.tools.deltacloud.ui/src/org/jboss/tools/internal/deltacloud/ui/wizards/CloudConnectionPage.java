@@ -240,12 +240,19 @@ public class CloudConnectionPage extends WizardPage {
 			 * keeping the same name when editing must be valid
 			 */
 			try {
-				if (!connectionName.equals(connectionModel.getInitialName())
-						/* all new names must be unique */
-						&& DeltaCloudManager.getDefault().findCloud(connectionName) != null) {
-					return ValidationStatus
-							.error(WizardMessages.getString(NAME_ALREADY_IN_USE));
+				/* all new names must be unique */
+				DeltaCloud deltaCloud = DeltaCloudManager.getDefault().findCloud(connectionName);
+				if (cloudConnection.getDeltaCloud() == null) {
+					if (deltaCloud == null) {
+						return ValidationStatus.ok();
+					}
+				} else {
+					if (cloudConnection.getDeltaCloud().equals(deltaCloud)) {
+						return ValidationStatus.ok();
+					}
 				}
+				return ValidationStatus
+						.error(WizardMessages.getString(NAME_ALREADY_IN_USE));
 			} catch (DeltaCloudException e) {
 				// do nothing
 			}
@@ -275,7 +282,11 @@ public class CloudConnectionPage extends WizardPage {
 		setDescription(WizardMessages.getString(DESCRIPTION));
 		setTitle(WizardMessages.getString(TITLE));
 		setImageDescriptor(SWTImagesFactory.DESC_DELTA_LARGE);
-		this.connectionModel = new CloudConnectionPageModel();
+		this.connectionModel = new CloudConnectionPageModel(
+				new StringPreferenceValue(IPreferenceKeys.LAST_NAME, Activator.PLUGIN_ID).get(null),
+				new StringPreferenceValue(IPreferenceKeys.LAST_URL, Activator.PLUGIN_ID).get(null),
+				new StringPreferenceValue(IPreferenceKeys.LAST_USERNAME, Activator.PLUGIN_ID).get(null),
+				null);
 		this.cloudConnection = cloudConnection;
 	}
 
@@ -289,6 +300,10 @@ public class CloudConnectionPage extends WizardPage {
 	public CloudConnectionPage(String pageName, String defaultName, String defaultUrl, String defaultUsername,
 			String defaultPassword, Driver defaultDriver, CloudConnection cloudConnection) throws MalformedURLException {
 		super(pageName);
+		defaultName = new StringPreferenceValue(IPreferenceKeys.LAST_NAME, Activator.PLUGIN_ID).get(defaultName);
+		defaultUrl = new StringPreferenceValue(IPreferenceKeys.LAST_URL, Activator.PLUGIN_ID).get(defaultUrl);
+		defaultUsername = new StringPreferenceValue(IPreferenceKeys.LAST_USERNAME, Activator.PLUGIN_ID)
+				.get(defaultUsername);
 		this.connectionModel =
 				new CloudConnectionPageModel(defaultName, defaultUrl, defaultUsername, defaultPassword, defaultDriver);
 		this.cloudConnection = cloudConnection;
@@ -316,19 +331,12 @@ public class CloudConnectionPage extends WizardPage {
 		nameLabel.setText(WizardMessages.getString(NAME_LABEL));
 		Text nameText = new Text(container, SWT.BORDER | SWT.SINGLE);
 		bindName(dbc, nameText);
-		String name = 
-			new StringPreferenceValue(IPreferenceKeys.LAST_NAME, Activator.PLUGIN_ID).get(nameText.getText());
-		
-		nameText.setText(name);
 
 		// url
 		Label urlLabel = new Label(container, SWT.NULL);
 		urlLabel.setText(WizardMessages.getString(URL_LABEL));
 		Point p1 = urlLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
 		Text urlText = new Text(container, SWT.BORDER | SWT.SINGLE);
-		String url =
-			new StringPreferenceValue(IPreferenceKeys.LAST_URL, Activator.PLUGIN_ID).get(urlText.getText());
-		connectionModel.setUrl(url);
 
 		dbc.bindValue(
 				WidgetProperties.text(SWT.Modify).observe(urlText),
@@ -362,10 +370,11 @@ public class CloudConnectionPage extends WizardPage {
 				usernameObservable,
 				BeanProperties.value(CloudConnectionPageModel.class, CloudConnectionPageModel.PROPERTY_USERNAME)
 						.observe(connectionModel));
-		String username = 
-			new StringPreferenceValue(IPreferenceKeys.LAST_USERNAME, Activator.PLUGIN_ID).get(usernameText.getText());
+		String username =
+				new StringPreferenceValue(IPreferenceKeys.LAST_USERNAME, Activator.PLUGIN_ID).get(usernameText
+						.getText());
 		usernameText.setText(username);
-		
+
 		// password
 		Label passwordLabel = new Label(container, SWT.NULL);
 		passwordLabel.setText(WizardMessages.getString(PASSWORD_LABEL));
