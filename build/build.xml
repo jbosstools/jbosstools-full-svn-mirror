@@ -18,7 +18,7 @@
 	/>
 
 	<!-- svn root, including trunk or branch path -->
-	<property name="svn.root" value="http://anonsvn.jboss.org/repos/jbosstools/branches/jbosstools-3.2.0.CR1" />
+	<property name="svn.root" value="http://anonsvn.jboss.org/repos/jbosstools/branches/jbosstools-3.2.x" />
 
 	<!-- if true, use -Dmaven.repo.local=${COMMON_TOOLS}/m2-repository; if false, use default ~/.m2/repository; or set another path if preferred -->
 	<property name="maven.repo.local" value="true" />
@@ -26,7 +26,7 @@
 	<!-- name/version we're building -->
 	<property name="product.name" value="JBoss Tools" />
 	<property name="product.id" value="JBossTools" />
-	<property name="product.version" value="3.2.0-beta-1" />
+	<property name="product.version" value="3.2.1" />
 	<!--
 	<property name="product.name" value="JBoss Developer Studio"/>
 	<property name="product.id" value="JBDS"/>
