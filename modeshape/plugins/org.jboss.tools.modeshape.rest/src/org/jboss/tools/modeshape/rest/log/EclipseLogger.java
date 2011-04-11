@@ -26,6 +26,9 @@ import org.slf4j.Marker;
  */
 public final class EclipseLogger implements Logger {
 
+    private static boolean DEBUG_MODE = Platform.inDebugMode()
+                                        && Boolean.parseBoolean(Platform.getDebugOption(IUiConstants.PLUGIN_ID + "/debug")); //$NON-NLS-1$
+
     private static ILog LOGGER = Platform.getLog(Platform.getBundle(IUiConstants.PLUGIN_ID));
 
     private String name;
@@ -41,7 +44,7 @@ public final class EclipseLogger implements Logger {
      */
     @Override
     public void debug( String message ) {
-        if (isDebugEnabled()) info(message);
+        debug(message, (Throwable)null);
     }
 
     /**
@@ -52,7 +55,7 @@ public final class EclipseLogger implements Logger {
     @Override
     public void debug( String pattern,
                        Object arg ) {
-        if (isDebugEnabled()) info(pattern, arg);
+        debug(pattern, new Object[] { arg });
     }
 
     /**
@@ -63,7 +66,7 @@ public final class EclipseLogger implements Logger {
     @Override
     public void debug( String pattern,
                        Object[] arguments ) {
-        if (isDebugEnabled()) info(pattern, arguments);
+        debug(MessageFormat.format(pattern, arguments), arguments);
     }
 
     /**
@@ -74,7 +77,9 @@ public final class EclipseLogger implements Logger {
     @Override
     public void debug( String message,
                        Throwable e ) {
-        if (isDebugEnabled()) info(message, e);
+        if (isDebugEnabled()) {
+            info(message, e);
+        }
     }
 
     /**
@@ -97,7 +102,7 @@ public final class EclipseLogger implements Logger {
     public void debug( String pattern,
                        Object arg1,
                        Object arg2 ) {
-        if (isDebugEnabled()) info(pattern, arg1, arg2);
+        debug(pattern, new Object[] { arg1, arg2 });
     }
 
     /**
@@ -156,7 +161,7 @@ public final class EclipseLogger implements Logger {
      */
     @Override
     public void error( String message ) {
-        if (isErrorEnabled()) LOGGER.log(new Status(IStatus.ERROR, IUiConstants.PLUGIN_ID, message, null));
+        error(message, (Throwable)null);
     }
 
     /**
@@ -167,8 +172,7 @@ public final class EclipseLogger implements Logger {
     @Override
     public void error( String pattern,
                        Object arg ) {
-        if (isErrorEnabled()) LOGGER.log(new Status(IStatus.ERROR, IUiConstants.PLUGIN_ID, MessageFormat.format(pattern, arg),
-                                                    null));
+        error(pattern, new Object[] { arg });
     }
 
     /**
@@ -179,8 +183,7 @@ public final class EclipseLogger implements Logger {
     @Override
     public void error( String pattern,
                        Object[] arguments ) {
-        if (isErrorEnabled()) LOGGER.log(new Status(IStatus.ERROR, IUiConstants.PLUGIN_ID, MessageFormat.format(pattern,
-                                                                                                                arguments), null));
+        error(MessageFormat.format(pattern, arguments), (Throwable)null);
     }
 
     /**
@@ -191,7 +194,9 @@ public final class EclipseLogger implements Logger {
     @Override
     public void error( String message,
                        Throwable e ) {
-        if (isErrorEnabled()) LOGGER.log(new Status(IStatus.ERROR, IUiConstants.PLUGIN_ID, message, e));
+        if (isErrorEnabled()) {
+            LOGGER.log(new Status(IStatus.ERROR, IUiConstants.PLUGIN_ID, message, e));
+        }
     }
 
     /**
@@ -214,9 +219,7 @@ public final class EclipseLogger implements Logger {
     public void error( String pattern,
                        Object arg1,
                        Object arg2 ) {
-        if (isErrorEnabled()) LOGGER.log(new Status(IStatus.ERROR, IUiConstants.PLUGIN_ID, MessageFormat.format(pattern,
-                                                                                                                arg1,
-                                                                                                                arg2), null));
+        error(pattern, new Object[] { arg1, arg2 });
     }
 
     /**
@@ -285,7 +288,7 @@ public final class EclipseLogger implements Logger {
      */
     @Override
     public void info( String message ) {
-        if (isInfoEnabled()) LOGGER.log(new Status(IStatus.INFO, IUiConstants.PLUGIN_ID, message, null));
+        info(message, (Throwable)null);
     }
 
     /**
@@ -296,7 +299,7 @@ public final class EclipseLogger implements Logger {
     @Override
     public void info( String pattern,
                       Object arg ) {
-        if (isInfoEnabled()) LOGGER.log(new Status(IStatus.INFO, IUiConstants.PLUGIN_ID, MessageFormat.format(pattern, arg), null));
+        info(pattern, new Object[] { arg });
     }
 
     /**
@@ -307,8 +310,7 @@ public final class EclipseLogger implements Logger {
     @Override
     public void info( String pattern,
                       Object[] arguments ) {
-        if (isInfoEnabled()) LOGGER.log(new Status(IStatus.INFO, IUiConstants.PLUGIN_ID,
-                                                   MessageFormat.format(pattern, arguments), null));
+        info(MessageFormat.format(pattern, arguments), (Throwable)null);
     }
 
     /**
@@ -319,7 +321,9 @@ public final class EclipseLogger implements Logger {
     @Override
     public void info( String message,
                       Throwable e ) {
-        if (isInfoEnabled()) LOGGER.log(new Status(IStatus.INFO, IUiConstants.PLUGIN_ID, message, e));
+        if (isInfoEnabled()) {
+            LOGGER.log(new Status(IStatus.INFO, IUiConstants.PLUGIN_ID, message, e));
+        }
     }
 
     /**
@@ -342,8 +346,7 @@ public final class EclipseLogger implements Logger {
     public void info( String pattern,
                       Object arg1,
                       Object arg2 ) {
-        if (isInfoEnabled()) LOGGER.log(new Status(IStatus.INFO, IUiConstants.PLUGIN_ID,
-                                                   MessageFormat.format(pattern, arg1, arg2), null));
+        info(pattern, new Object[] { arg1, arg2 });
     }
 
     /**
@@ -402,7 +405,7 @@ public final class EclipseLogger implements Logger {
      */
     @Override
     public boolean isDebugEnabled() {
-        return true;
+        return DEBUG_MODE;
     }
 
     /**
@@ -462,7 +465,7 @@ public final class EclipseLogger implements Logger {
      */
     @Override
     public boolean isTraceEnabled() {
-        return true;
+        return isDebugEnabled();
     }
 
     /**
@@ -502,7 +505,7 @@ public final class EclipseLogger implements Logger {
      */
     @Override
     public void trace( String message ) {
-        if (isTraceEnabled()) info(message);
+        trace(message, (Throwable)null);
     }
 
     /**
@@ -513,7 +516,7 @@ public final class EclipseLogger implements Logger {
     @Override
     public void trace( String pattern,
                        Object arg ) {
-        if (isTraceEnabled()) info(pattern, arg);
+        trace(pattern, new Object[] { arg });
     }
 
     /**
@@ -524,7 +527,7 @@ public final class EclipseLogger implements Logger {
     @Override
     public void trace( String pattern,
                        Object[] arguments ) {
-        if (isTraceEnabled()) info(pattern, arguments);
+        trace(MessageFormat.format(pattern, arguments), (Throwable)null);
     }
 
     /**
@@ -535,7 +538,9 @@ public final class EclipseLogger implements Logger {
     @Override
     public void trace( String message,
                        Throwable e ) {
-        if (isTraceEnabled()) info(message, e);
+        if (isTraceEnabled()) {
+            debug(message, e);
+        }
     }
 
     /**
@@ -558,7 +563,7 @@ public final class EclipseLogger implements Logger {
     public void trace( String pattern,
                        Object arg1,
                        Object arg2 ) {
-        if (isTraceEnabled()) info(pattern, arg1, arg2);
+        trace(pattern, new Object[] { arg1, arg2 });
     }
 
     /**
@@ -617,7 +622,7 @@ public final class EclipseLogger implements Logger {
      */
     @Override
     public void warn( String message ) {
-        if (isWarnEnabled()) LOGGER.log(new Status(IStatus.WARNING, IUiConstants.PLUGIN_ID, message, null));
+        warn(message, (Throwable)null);
     }
 
     /**
@@ -628,8 +633,7 @@ public final class EclipseLogger implements Logger {
     @Override
     public void warn( String pattern,
                       Object arg ) {
-        if (isWarnEnabled()) LOGGER.log(new Status(IStatus.WARNING, IUiConstants.PLUGIN_ID, MessageFormat.format(pattern, arg),
-                                                   null));
+        warn(pattern, new Object[] { arg });
     }
 
     /**
@@ -640,8 +644,7 @@ public final class EclipseLogger implements Logger {
     @Override
     public void warn( String pattern,
                       Object[] arguments ) {
-        if (isWarnEnabled()) LOGGER.log(new Status(IStatus.WARNING, IUiConstants.PLUGIN_ID, MessageFormat.format(pattern,
-                                                                                                                 arguments), null));
+        warn(MessageFormat.format(pattern, arguments), (Throwable)null);
     }
 
     /**
@@ -652,7 +655,9 @@ public final class EclipseLogger implements Logger {
     @Override
     public void warn( String message,
                       Throwable e ) {
-        if (isWarnEnabled()) LOGGER.log(new Status(IStatus.WARNING, IUiConstants.PLUGIN_ID, message, e));
+        if (isWarnEnabled()) {
+            LOGGER.log(new Status(IStatus.WARNING, IUiConstants.PLUGIN_ID, message, e));
+        }
     }
 
     /**
@@ -675,9 +680,7 @@ public final class EclipseLogger implements Logger {
     public void warn( String pattern,
                       Object arg1,
                       Object arg2 ) {
-        if (isWarnEnabled()) LOGGER.log(new Status(IStatus.WARNING, IUiConstants.PLUGIN_ID, MessageFormat.format(pattern,
-                                                                                                                 arg1,
-                                                                                                                 arg2), null));
+        warn(pattern, new Object[] { arg1, arg2 });
     }
 
     /**
