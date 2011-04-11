@@ -50,7 +50,7 @@
 			<iu id="com.atlassian.connector.eclipse.feature.group" />
 			<iu id="com.atlassian.connector.eclipse.cvs.feature.group" />
 			<iu id="com.atlassian.connector.eclipse.jira.feature.group" />
-			<!-- these last two are described as "obsolete" on the update site --> 
+			<!-- these last two are described as "obsolete" on the update site -->
 			<iu id="com.atlassian.connector.eclipse.subclipse.feature.group" />
 			<iu id="com.atlassian.connector.eclipse.subversive.feature.group" />
 		</p2.mirror>
