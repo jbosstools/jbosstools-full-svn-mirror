@@ -196,5 +196,38 @@
 			http://anonsvn.jboss.org/repos/jbosstools/workspace/grid/bpel-examples/BluePrint5.zip
 		</url>
 	</project>
+
+	<project>
+		<category>BPEL</category>
+		<name>Fault Compensation</name>
+		<shortDescription>This is a fault compensation bpel example</shortDescription>
+		<description>This example focuses on the Scope activity.</description>
+		<size>6000</size>
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/grid/bpel-examples/Fault_Compensation.zip
+		</url>
+	</project>
+
+	<project>
+		<category>BPEL</category>
+		<name>While_Wait</name>
+		<shortDescription>A while wait BPEL example</shortDescription>
+		<description>This is a simple example used to compute the first N elements of the fibonacci sequence.</description>
+		<size>8000</size>
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/grid/bpel-examples/While_Wait.zip
+		</url>
+	</project>
+
+	<project>
+		<category>BPEL</category>
+		<name>While_Wait_WS</name>
+		<shortDescription>A Web Service project called by While_Wait example</shortDescription>
+		<description>This sample is a Web Service that is called by While_Wait example.</description>
+		<size>14000</size>
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/grid/bpel-examples/While_Wait_WS.zip
+		</url>
+	</project>
 </projects>
 
