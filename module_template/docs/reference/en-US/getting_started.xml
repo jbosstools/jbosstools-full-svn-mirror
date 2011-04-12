@@ -13,7 +13,7 @@
 		</para>
 		<variablelist>
 			  	<title>Ensure that the following applications are pre-configured on your system.</title>
-				<varlistentry>
+				<varlistentry condition="jbds">
 					<term>JBoss Developer Studio x.x.</term>
 					<listitem>
 						<para>
@@ -21,6 +21,14 @@
 						</para>
 						<para>
 							<ulink url="http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/index.html">JBoss Developer Studio documentation</ulink>
+							</para>
+						</listitem>
+					</varlistentry>
+					<varlistentry condition="jbt">
+						<term>JBoss Tools plug-in</term>
+						<listitem>
+							<para>
+								<ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/GettingStartedGuide/html_single/index.html#d0e30">Instructions on installing JBoss Tools plug-ins</ulink>		
 							</para>
 						</listitem>
 					</varlistentry>

@@ -3,13 +3,13 @@
 ]>
 <book>
 	<xi:include href="Book_Info.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
-	<xi:include href="Preface.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
-	<xi:include href="Latest_Developments.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
-	<xi:include href="Getting_Started.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
-	<xi:include href="Concepts.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
-	<xi:include href="Tasks.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
-	<xi:include href="Reference.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
-	<xi:include href="Troubleshooting.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
-	<xi:include href="Revision_History.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="preface.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="latest_developments.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="getting_started.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="concepts.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="tasks.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="reference.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="troubleshooting.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="revision_history.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 </book>
 
