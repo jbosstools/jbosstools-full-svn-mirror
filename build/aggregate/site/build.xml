@@ -488,42 +488,50 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 						</if>
 
 						<!-- TXT way: load into .SVN_REVISION -->
-						<propertycopy from="${prefix}.revision.module" property="temprm.all" override="true" />
-						<propertycopy from="${prefix}.revision.revision" property="temprr.all" override="true" />
-						<var name="i" value="0" />
-						<for list="${temprm.all}" delimiter=", " param="module">
-							<sequential>
-								<math result="i" operand1="1" operation="+" operand2="${i}" datatype="int" />
-								<var name="j" value="0" />
-								<for list="${temprr.all}" delimiter=", " param="revision">
+						<if>
+							<and>
+								<isset property="${prefix}.revision.module" />
+								<isset property="${prefix}.revision.revision" />
+							</and>
+							<then>
+								<propertycopy from="${prefix}.revision.module" property="temprm.all" override="true" />
+								<propertycopy from="${prefix}.revision.revision" property="temprr.all" override="true" />
+								<var name="i" value="0" />
+								<for list="${temprm.all}" delimiter=", " param="module">
 									<sequential>
-										<math result="j" operand1="1" operation="+" operand2="${j}" datatype="int" />
-										<if>
-											<equals arg1="${i}" arg2="${j}" />
-											<then>
-												<var name="temprr" value="@{revision}" />
+										<math result="i" operand1="1" operation="+" operand2="${i}" datatype="int" />
+										<var name="j" value="0" />
+										<for list="${temprr.all}" delimiter=", " param="revision">
+											<sequential>
+												<math result="j" operand1="1" operation="+" operand2="${j}" datatype="int" />
 												<if>
-													<isset property="${prefix}.SVN_REVISION" />
+													<equals arg1="${i}" arg2="${j}" />
 													<then>
-														<propertycopy from="${prefix}.SVN_REVISION" property="temp.all" override="true" />
-														<var name="${prefix}.SVN_REVISION" value="${temp.all},@{module}@${temprr}" />
-														<var name="temp.all" unset="true" />
+														<var name="temprr" value="@{revision}" />
+														<if>
+															<isset property="${prefix}.SVN_REVISION" />
+															<then>
+																<propertycopy from="${prefix}.SVN_REVISION" property="temp.all" override="true" />
+																<var name="${prefix}.SVN_REVISION" value="${temp.all},@{module}@${temprr}" />
+																<var name="temp.all" unset="true" />
+															</then>
+															<else>
+																<var name="${prefix}.SVN_REVISION" value="@{module}@${temprr}" />
+															</else>
+														</if>
+														<var name="temprr" unset="true" />
 													</then>
-													<else>
-														<var name="${prefix}.SVN_REVISION" value="@{module}@${temprr}" />
-													</else>
 												</if>
-												<var name="temprr" unset="true" />
-											</then>
-										</if>
+											</sequential>
+										</for>
+										<var name="j" unset="true" />
 									</sequential>
 								</for>
-								<var name="j" unset="true" />
-							</sequential>
-						</for>
-						<var name="i" unset="true" />
-						<var name="temprm.all" unset="true" />
-						<var name="temprr.all" unset="true" />
+								<var name="i" unset="true" />
+								<var name="temprm.all" unset="true" />
+								<var name="temprr.all" unset="true" />
+							</then>
+						</if>
 					</then>
 					<elseif>
 						<available file="${svnrevTXT}" type="file" />
