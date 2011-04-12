@@ -1,21 +1,46 @@
 Template for reference guide.
 
-How to build everything:
- mvn install
+MAVEN:
 
-Just build just html-single:
- mvn -Phtml-single install
+  How to build everything:
+    mvn install or mvn compile
 
- Other profiles: pdf, html, eclipse
+  Just build html-single:
+    mvn -Phtml-single install
 
- Look for other <profile>'s in parent pom.
-   
+  All profiles available: html-single, html, pdf, eclipse
+
+  Look for other <profile>'s in parent pom.
+
+PUBLICAN:
+
+  How to build everything:
+    publican build --formats=html-single,eclipse,html,pdf --langs=en-US
+
+  Just build html-single:
+    publican build --formats=html-single --langs=en-US
+
+  All profiles available: html-single, html, pdf, eclipse
+ 
+
+  
 Guidelines: 
  use lowercase names for filenames to avoid casing issues
  on various OS's and to make it easier to search for names/content.
+ EXCEPTIONS:
+	Book_Info.xml
+	Name_of_book.xml
+	Name_of_book.ent
+ The above files must be mixed case for compatability with Publican
 
- Comment out chapters/sections that is not correct/actively maintained.
+ Comment out chapters/sections that are not correct/actively maintained.
+
+ Code in template is there as a guide of which tags are to be used.
+ Before committing a revision or new content in a book, ensure it
+ is buildable in both Maven and Publican - if you can 
+ (Publican currently available for Linux and Windows 
+ - talk with irooskov@redhat.com if you can assist with testing on Mac). 
 
 Known issues: 
- Translation dependds on ${docname} and other variables
+ Translation depends on ${docname} and other variables
  in artifactid but that is not really supported/recommended by Maven

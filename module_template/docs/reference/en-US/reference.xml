@@ -3,7 +3,7 @@
 <chapter id="chap-template-reference">
 	<title>Reference</title>
 	<para>
-		This section should detail the actual screen and interface that a user interacts with. For instance, if a user is attempting to create a project through a wizard, then each of the screen should be available here, documenting what each section of the screen means. In this way, a user may not be wishing to undertake a perdefined task as mentioned in the task section, but still need assistance with what should go in certain fields and such.
+		This section should detail the actual screen and interface that a user interacts with. For instance, if a user is attempting to create a project through a wizard, then each of the screens should be available here, documenting what each section of the screen means. In this way, a user may not be wishing to undertake a pre-defined task as mentioned in the task section, but still need assistance with what should go in certain fields and such.
 	</para>
 	<section id="sect-template-reference-wizards">
 		<title>Wizards</title>
@@ -15,6 +15,23 @@
 			<para>
 				Placeholder text
 			</para>
+			<!-- ensure that all images are PNG format, with an image size of 96 pixels -->
+			<figure>
+				<title>Title of the screenshot</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/reference/wizard_one/wizard_screenshot_one.png" format="PNG"/>
+					</imageobject>
+					<textobject>
+						<phrase>Alternate text for the visually impared</phrase>
+					</textobject>
+					<caption>
+						<para>
+							Caption referring to the wizard screenshot - if necessary
+						</para>
+					</caption>
+				</mediaobject>
+			</figure>
 		</section>
 		<section id="sect-template-reference-wizards-wizard_two">
 			<title>Wizard two</title>

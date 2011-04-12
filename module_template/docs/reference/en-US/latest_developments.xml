@@ -1,5 +1,7 @@
 <?xml version='1.0' encoding='utf-8' ?>
 
+   <!-- This chapter only relates to the enterprise version (JBoss Developer Studio), as the community (JBoss Tools) already has their 'What's New' webpage for this information -->
+
 <chapter id="chap-Template-Latest_developments">
 	<title>Latest developments</title>
 	<para>
