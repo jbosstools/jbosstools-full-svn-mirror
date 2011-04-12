@@ -701,7 +701,7 @@ public class ReconciliationHelper {
 				if (parent instanceof OnEvent || parent instanceof Catch) {
 					// ignore attempts to set attributes on the parent that aren't in the model
 					for ( EStructuralFeature feature : parent.eClass().getEAllStructuralFeatures()) {
-						if ( feature.getName().equals(attributeName)) {
+						if ( attributeName.equals(feature.getName())) {
 							parseElement = ((ExtensibleElement)parent).getElement();
 							break;
 						}
