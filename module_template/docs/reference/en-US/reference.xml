@@ -66,8 +66,109 @@
 		<section id="sect-template-reference-views-view_one">
 			<title>View one</title>
 			<para>
-				Placeholder text
-			</para>
+			The <guilabel>Web Projects</guilabel> view presents each web project in a format suitable for navigating through the various attributes of a typical web project such as <guilabel>Tag Libraries</guilabel> and <guilabel>web.xml</guilabel> properties.
+		</para>
+		<figure id="figure-JBT_WebPerspective_WebProjectsView">
+			<title>Web Development Perspective - Web Projects View</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/reference/view_one/view_screenshot_one.png" format="PNG"/>
+				</imageobject>
+				<textobject>
+					<para>Web Projects View</para>
+				</textobject>
+			</mediaobject>
+		</figure>
+		<table id="table-template-reference-views-view_one_table" frame='all'>
+		<title>Web Development Perspective - Web Projects View</title>
+		<tgroup cols='3' align='left' colsep='1' rowsep='1'>
+			<colspec colname='c1' colwidth="1*"/>
+			<colspec colname='c2' colwidth="1*"/>
+			<colspec colname='c3' colwidth="3*"/>
+			<thead>
+				<row>
+					<entry>Icon</entry>
+					<entry>Action</entry>
+					<entry>Description</entry>
+				</row>
+			</thead> 
+			
+			<tbody>
+				<row>
+					<entry>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/view_one/icon-icon_one_name.png" format="PNG"/>
+							</imageobject>
+							<textobject>
+								<para>New JSF Project Icon</para>
+							</textobject>
+						</mediaobject>
+					</entry>
+					<entry>
+						<guilabel>Create New JSF Project</guilabel>
+					</entry>
+					<entry>
+						Describe what will happen upon clicking this button. If a Task is available relating to this button, use an xref tag to link to the Task.
+					</entry>
+				</row>
+				<row>
+					<entry>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/view_one/icon-icon_two_name.png" format="PNG"/>
+							</imageobject>
+							<textobject>
+								<para>Import JSF Project Icon</para>
+							</textobject>
+						</mediaobject>
+					</entry>
+					<entry>
+						<guilabel>Import JSF Project</guilabel>
+					</entry>
+					<entry>
+						Describe what will happen upon clicking this button. If a Task is available relating to this button, use an xref tag to link to the Task.
+					</entry>
+				</row>
+				<row>
+					<entry>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/view_one/icon-icon_three_name.png" format="PNG"/>
+							</imageobject>
+							<textobject>
+								<para>Create New Struts Project Icon</para>
+							</textobject>
+						</mediaobject>
+					</entry>
+					<entry>
+						<guilabel>Create New Struts Project</guilabel>
+					</entry>
+					<entry>
+						Describe what will happen upon clicking this button. If a Task is available relating to this button, use an xref tag to link to the Task.
+					</entry>
+					</row>
+					<row>
+					<entry>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/view_one/icon-icon_four_name.png" format="PNG"/>
+							</imageobject>
+							<textobject>
+								<para>Import Struts Project Icon</para>
+							</textobject>
+						</mediaobject>
+					</entry>
+					<entry>
+						<guilabel>Import Struts Project</guilabel>
+					</entry>
+					<entry>
+						Describe what will happen upon clicking this button. If a Task is available relating to this button, use an xref tag to link to the Task.
+					</entry>
+					</row>
+				</tbody>
+				</tgroup>
+			</table>
 		</section>
 		<section id="sect-template-reference-views-view_two">
 			<title>View two</title>
@@ -77,7 +178,7 @@
 		</section>
 	</section>
 	<section id="sect-template-reference-editors">
-		<title>Views</title>
+		<title>Editors</title>
 		<para>
 			Explain what an editor is in one paragraph
 		</para>

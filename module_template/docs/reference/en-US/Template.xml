@@ -13,3 +13,7 @@
 	<xi:include href="revision_history.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 </book>
 
+   <!-- 
+   Be sure to read and look at the Docbook XML for the 'Documentation Conventions' book; this will show you which callout tags are acceptable, how to correctly use programlistings etc...
+	   https://svn.jboss.org/repos/jbosstools/trunk/documentation/guides/Document_Conventions/ 
+	-->
