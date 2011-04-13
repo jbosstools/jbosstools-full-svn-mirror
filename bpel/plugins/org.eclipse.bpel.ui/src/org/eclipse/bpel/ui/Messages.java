@@ -458,6 +458,11 @@ public final class Messages extends NLS {
 	public static String InvokeImplDetails_Partner__10;
 	public static String InvokeImplDetails_Request_3_Plain;
 	public static String InvokeImplDetails_Response_4_Plain;
+	// https://issues.jboss.org/browse/JBIDE-8305
+	public static String InvokeImplDetails_MessageType;
+	public static String InvokeImplDetails_Element;
+	public static String InvokeImplDetails_MessageTypeOrElement;
+
 	public static String InvokeImplSection_None_1;
 	public static String JoinConditionSection_Create_a_New_Condition_3;
 	public static String JoinConditionSection_No_condition_specified_1;

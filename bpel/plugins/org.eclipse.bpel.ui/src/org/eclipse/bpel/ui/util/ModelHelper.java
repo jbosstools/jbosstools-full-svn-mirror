@@ -883,6 +883,13 @@ public class ModelHelper {
 		if (context instanceof PropertyAlias) {
 			return (Message)((PropertyAlias)context).getMessageType();
 		}
+		// https://issues.jboss.org/browse/JBIDE-8305
+		if (context instanceof OnEvent) {
+			return (Message)((OnEvent)context).getMessageType();
+		}
+		if (context instanceof org.eclipse.wst.wsdl.Input) {
+			return (Message)((org.eclipse.wst.wsdl.Input)context).getMessage();
+		}
 		throw new IllegalArgumentException();
 	}
 
