@@ -31,7 +31,7 @@
 				<repository location="${URL2}" />
 			</source>
 
-			<slicingOptions includeFeatures="true" followStrict="true" />
+			<slicingoptions includefeatures="true" followstrict="true" latestversiononly="true" />
 
 			<iu id="org.eclipse.mylyn_feature.feature.group" />
 			<iu id="org.eclipse.mylyn.context_feature.feature.group" />

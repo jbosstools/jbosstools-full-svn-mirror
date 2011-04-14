@@ -16,7 +16,7 @@ fi
 #export JAVA_HOME=/opt/jdk1.6.0; # old path on qa01
 export JAVA_HOME=$HOME/bin/sun-java2-6.0; # new path on dev01 - download Sun JDK 6 SE (.bin) and unpack into ~/bin/, then symlink as sun-java2-6.0
 
-${JAVA_HOME}/bin/java -cp ~/eclipse/plugins/org.eclipse.equinox.launcher_*.jar org.eclipse.equinox.launcher.Main -vm ${JAVA_HOME} -consoleLog -nosplash -data $TMP -application org.eclipse.ant.core.antRunner -f $scriptname -Ddestination=$destfolder
+${JAVA_HOME}/bin/java -cp ~/eclipse/plugins/org.eclipse.equinox.launcher_*.jar org.eclipse.equinox.launcher.Main -vm ${JAVA_HOME} -consoleLog -nosplash -data $TMP -application org.eclipse.ant.core.antRunner -f $scriptname -Ddestination=$destfolder -Declipse.p2.mirrors=false
 
 # cleanup
 if [[ $? -eq 0 ]]; then
