@@ -13,9 +13,9 @@ package org.jboss.tools.modeshape.rest.preferences;
 
 import static org.jboss.tools.modeshape.rest.IUiConstants.ModeShape_IMAGE_16x;
 import static org.jboss.tools.modeshape.rest.IUiConstants.HelpContexts.PREFERENCE_PAGE_HELP_CONTEXT;
-import static org.jboss.tools.modeshape.rest.RestClientI18n.fileFiltersPreferencePageDescription;
-import static org.jboss.tools.modeshape.rest.RestClientI18n.fileFiltersPreferencePageMessage;
-import static org.jboss.tools.modeshape.rest.RestClientI18n.fileFiltersPreferencePageTitle;
+import static org.jboss.tools.modeshape.rest.RestClientI18n.ignoredResourcesPreferencePageDescription;
+import static org.jboss.tools.modeshape.rest.RestClientI18n.ignoredResourcesPreferencePageMessage;
+import static org.jboss.tools.modeshape.rest.RestClientI18n.ignoredResourcesPreferencePageTitle;
 
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferencePage;
@@ -31,19 +31,14 @@ import org.eclipse.ui.help.IWorkbenchHelpSystem;
 import org.jboss.tools.modeshape.rest.Activator;
 
 /**
- * The <code>FileFiltersPreferencePage</code> is the UI for managing all file extension and folder name filter preferences.
+ * The <code>IgnoredResourcesPreferencePage</code> is the UI for managing all ignored file extension and folder names.
  */
-public final class FileFiltersPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
+public final class IgnoredResourcesPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
 
     /**
-     * The editor used to manage the list of filtered file extensions.
+     * The editor used to manage the list of ignored file extensions and folder names.
      */
-    private FilteredFileExtensionEditor extensionsEditor;
-
-    /**
-     * The editor used to manage the list of filtered folder names.
-     */
-    private FilteredFoldersEditor foldersEditor;
+    private IgnoredResourcesEditor ignoredResourcesEditor;
 
     /**
      * {@inheritDoc}
@@ -57,20 +52,11 @@ public final class FileFiltersPreferencePage extends PreferencePage implements I
         panel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
         // create the filtered extensions editor
-        this.extensionsEditor = new FilteredFileExtensionEditor(panel);
-        this.extensionsEditor.setPreferenceStore(getPreferenceStore());
-        this.extensionsEditor.getListControl(panel).setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        this.ignoredResourcesEditor = new IgnoredResourcesEditor(panel);
+        this.ignoredResourcesEditor.setPreferenceStore(getPreferenceStore());
 
         // populate the extensions editor
-        this.extensionsEditor.load();
-
-        // create the filtered folders editor
-        this.foldersEditor = new FilteredFoldersEditor(panel);
-        this.foldersEditor.setPreferenceStore(getPreferenceStore());
-        this.foldersEditor.getListControl(panel).setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-
-        // populate the folders editor
-        this.foldersEditor.load();
+        this.ignoredResourcesEditor.load();
 
         // register with the help system
         IWorkbenchHelpSystem helpSystem = Activator.getDefault().getWorkbench().getHelpSystem();
@@ -86,7 +72,7 @@ public final class FileFiltersPreferencePage extends PreferencePage implements I
      */
     @Override
     public String getDescription() {
-        return fileFiltersPreferencePageDescription.text();
+        return ignoredResourcesPreferencePageDescription.text();
     }
 
     /**
@@ -106,7 +92,7 @@ public final class FileFiltersPreferencePage extends PreferencePage implements I
      */
     @Override
     public String getMessage() {
-        return fileFiltersPreferencePageMessage.text();
+        return ignoredResourcesPreferencePageMessage.text();
     }
 
     /**
@@ -116,7 +102,7 @@ public final class FileFiltersPreferencePage extends PreferencePage implements I
      */
     @Override
     public IPreferenceStore getPreferenceStore() {
-        return PrefUtils.getPreferenceStore();
+        return Activator.getDefault().getPreferenceStore();
     }
 
     /**
@@ -126,7 +112,7 @@ public final class FileFiltersPreferencePage extends PreferencePage implements I
      */
     @Override
     public String getTitle() {
-        return fileFiltersPreferencePageTitle.text();
+        return ignoredResourcesPreferencePageTitle.text();
     }
 
     /**
@@ -146,8 +132,7 @@ public final class FileFiltersPreferencePage extends PreferencePage implements I
      */
     @Override
     protected void performDefaults() {
-        this.extensionsEditor.loadDefault();
-        this.foldersEditor.loadDefault();
+        this.ignoredResourcesEditor.loadDefault();
         super.performDefaults();
     }
 
@@ -158,22 +143,21 @@ public final class FileFiltersPreferencePage extends PreferencePage implements I
      */
     @Override
     public boolean performOk() {
-        this.extensionsEditor.store();
-        this.foldersEditor.store();
+        this.ignoredResourcesEditor.store();
         return super.performOk();
     }
-    
+
     /**
      * {@inheritDoc}
-     *
+     * 
      * @see org.eclipse.jface.dialogs.DialogPage#setVisible(boolean)
      */
     @Override
     public void setVisible( boolean visible ) {
         super.setVisible(visible);
-        
+
         if (visible) {
-            this.extensionsEditor.setFocus();
+            this.ignoredResourcesEditor.setFocus();
         }
     }
 

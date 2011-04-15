@@ -38,19 +38,15 @@ public final class RestClientI18n {
     public static I18n errorRestoringServerRegistry;
     public static I18n errorSavingServerRegistry;
 
-    public static I18n fileFiltersPreferencePageDescription;
-    public static I18n fileFiltersPreferencePageFilteredFileExtensionsLabel;
-    public static I18n fileFiltersPreferencePageFilteredFolderNamesLabel;
-    public static I18n fileFiltersPreferencePageMessage;
-    public static I18n fileFiltersPreferencePageTitle;
+    public static I18n ignoredResourcesPreferencePageDescription;
+    public static I18n ignoredResourcesPreferencePageLabel;
+    public static I18n ignoredResourcesPreferencePageMessage;
+    public static I18n ignoredResourcesPreferencePageTitle;
 
     public static I18n missingImage;
 
-    public static I18n newFilteredFileExtensionDialogLabel;
-    public static I18n newFilteredFileExtensionDialogTitle;
-
-    public static I18n newFilteredFolderNameDialogLabel;
-    public static I18n newFilteredFolderNameDialogTitle;
+    public static I18n newIgnoredResourceDialogLabel;
+    public static I18n newIgnoredResourceDialogTitle;
     
     public static I18n newItemDialogValueExists;
 

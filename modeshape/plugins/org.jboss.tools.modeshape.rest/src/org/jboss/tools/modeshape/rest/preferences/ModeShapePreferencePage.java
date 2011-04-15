@@ -109,7 +109,7 @@ public final class ModeShapePreferencePage extends PreferencePage implements IWo
      */
     @Override
     public IPreferenceStore getPreferenceStore() {
-        return PrefUtils.getPreferenceStore();
+        return Activator.getDefault().getPreferenceStore();
     }
 
     /**

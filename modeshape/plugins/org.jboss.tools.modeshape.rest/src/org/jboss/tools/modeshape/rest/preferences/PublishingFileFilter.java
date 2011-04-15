@@ -11,171 +11,58 @@
  */
 package org.jboss.tools.modeshape.rest.preferences;
 
-import static org.jboss.tools.modeshape.rest.IUiConstants.Preferences.FILTERED_FILE_EXTENSIONS_PREFERENCE;
-import static org.jboss.tools.modeshape.rest.IUiConstants.Preferences.FILTERED_FOLDER_NAMES_PREFERENCE;
-import static org.jboss.tools.modeshape.rest.RestClientI18n.preferenceNotFound;
-
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
-import org.jboss.tools.modeshape.rest.Activator;
 import org.modeshape.common.util.CheckArg;
-import org.modeshape.web.jcr.rest.client.Status;
-import org.modeshape.web.jcr.rest.client.Status.Severity;
 
 /**
- * The <code>PublishingFileFilter</code> is a file filter that uses the preferences when filtering files.
+ * The <code>PublishingFileFilter</code> is a resource name filter.
  */
 public final class PublishingFileFilter {
 
     /**
-     * The preference name for the delimiter that separates filtered file extensions when the preference value is stored.
+     * @param text the text being tested against the pattern (may not be <code>null</code> or empty)
+     * @param pattern the pattern used (may not be <code>null</code> or empty)
+     * @return <code>true</code> if the text is matched by the pattern
      */
-    private static final String FILE_EXT_DELIMITER_PREF_NAME = "fileExtension.delimiter"; //$NON-NLS-1$
+    public static boolean matches( String text,
+                                   String pattern ) {
+        final String regex = pattern.replace("?", ".?").replace("*", ".*?"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+        return text.matches(regex);
+    }
 
     /**
-     * The preference name for characters that are <strong>NOT</strong> allowed to appear in a file extension.
+     * The data model (never <code>null</code>).
      */
-    private static final String FILE_EXT_INVALID_CHARS_PREF_NAME = "fileExtension.invalidChars"; //$NON-NLS-1$
+    private final IgnoredResourcesModel model;
 
     /**
-     * The preference name for the delimiter that separates filtered folder names when the preference value is stored.
+     * @param model the data model (may not be <code>null</code>)
      */
-    private static final String FOLDER_NAME_DELIMITER_PREF_NAME = "folderName.delimiter"; //$NON-NLS-1$
+    public PublishingFileFilter( IgnoredResourcesModel model ) {
+        CheckArg.isNotNull(model, "model"); //$NON-NLS-1$
+        this.model = model;
+    }
 
     /**
-     * The preference name for characters that are <strong>NOT</strong> allowed to appear in a folder name.
-     */
-    private static final String FOLDER_NAME_INVALID_CHARS_PREF_NAME = "folderName.invalidChars"; //$NON-NLS-1$
-
-    /**
-     * @param resource the resource being tested (never <code>null</code>)
+     * @param resource the resource being tested (may not be <code>null</code>)
      * @return <code>true</code> if the resource should be included (i.e., it is not filtered out)
      */
     public boolean accept( IResource resource ) {
         CheckArg.isNotNull(resource, "resource"); //$NON-NLS-1$
+        final String name = resource.getName();
 
-        if ((resource instanceof IFolder) || (resource instanceof IProject)) {
-            String name = resource.getName();
-
-            // see if folder name has been filtered
-            for (String filteredName : getFilteredFolderNames()) {
-                if (filteredName.equals(name)) {
-                    return false;
-                }
-            }
-
-            // check parent
-            if (resource.getParent() != null) {
-                return accept(resource.getParent());
-            }
-        } else if (resource instanceof IFile) {
-            // see if file extension has been filtered
-            for (String extension : getFilteredFileExtensions()) {
-                if (resource.getFullPath().toString().endsWith('.' + extension)) {
-                    return false;
-                }
-            }
-
-            // check parent
-            if (resource.getParent() != null) {
-                return accept(resource.getParent());
+        for (ResourcePattern pattern : model.getPatterns()) {
+            if (pattern.isEnabled() && matches(name, pattern.getPattern())) {
+                return false;
             }
         }
-
-        return true;
-    }
-
-    /**
-     * The delimiter that separates filtered file extensions when the preference value is stored.
-     * 
-     * @return the file extension separator character
-     */
-    public char getFileExtensionDelimiter() {
-        String value = PrefUtils.getPreferenceStore().getDefaultString(FILE_EXT_DELIMITER_PREF_NAME);
-
-        if ((value != null) && (value.length() > 0)) {
-            return value.charAt(0);
+        
+        if (resource.getParent() == null) {
+            return true;
         }
 
-        // no value found so log and give a default value
-        value = ","; //$NON-NLS-1$
-        Activator.getDefault().log(new Status(Severity.ERROR, preferenceNotFound.text(FILE_EXT_DELIMITER_PREF_NAME, value), null));
-        return value.charAt(0);
-    }
-
-    /**
-     * The characters that are <strong>NOT</strong> allowed to appear in a file extension.
-     * 
-     * @return the invalid file extension characters (never <code>null</code> or empty)
-     */
-    public String getFileExtensionInvalidCharacters() {
-        String value = PrefUtils.getPreferenceStore().getDefaultString(FILE_EXT_INVALID_CHARS_PREF_NAME);
-
-        if ((value != null) && (value.length() > 0)) {
-            return value;
-        }
-
-        // no value found so log and give a default value
-        value = "*?<>|/\\:;."; //$NON-NLS-1$
-        Activator.getDefault().log(new Status(Severity.ERROR,
-                                              preferenceNotFound.text(FILE_EXT_INVALID_CHARS_PREF_NAME, value),
-                                              null));
-        return value;
-    }
-
-    /**
-     * @return the file extensions being filtered out of publishing operations (never <code>null</code> but can be empty)
-     */
-    public String[] getFilteredFileExtensions() {
-        return PrefUtils.getListPropertyValue(FILTERED_FILE_EXTENSIONS_PREFERENCE, getFileExtensionDelimiter(), true);
-    }
-
-    /**
-     * @return the folder names being filtered out of publishing operations (never <code>null</code> but can be empty)
-     */
-    public String[] getFilteredFolderNames() {
-        return PrefUtils.getListPropertyValue(FILTERED_FOLDER_NAMES_PREFERENCE, getFolderNameDelimiter(), true);
-    }
-
-    /**
-     * The delimiter that separates filtered folder names when the preference value is stored.
-     * 
-     * @return the folder name separator character
-     */
-    public char getFolderNameDelimiter() {
-        String value = PrefUtils.getPreferenceStore().getDefaultString(FOLDER_NAME_DELIMITER_PREF_NAME);
-
-        if ((value != null) && (value.length() > 0)) {
-            return value.charAt(0);
-        }
-
-        // no value found so log and give a default value
-        value = ","; //$NON-NLS-1$
-        Activator.getDefault()
-                 .log(new Status(Severity.ERROR, preferenceNotFound.text(FOLDER_NAME_DELIMITER_PREF_NAME, value), null));
-        return value.charAt(0);
-    }
-
-    /**
-     * The characters that are <strong>NOT</strong> allowed to appear in a folder name (never <code>null</code> but can be empty).
-     * 
-     * @return the invalid folder name characters (never <code>null</code> or empty)
-     */
-    public String getFolderNameInvalidCharacters() {
-        String value = PrefUtils.getPreferenceStore().getDefaultString(FOLDER_NAME_INVALID_CHARS_PREF_NAME);
-
-        if ((value != null) && (value.length() > 0)) {
-            return value;
-        }
-
-        // no value found so log and give a default value
-        value = "*?<>|/\\:;"; //$NON-NLS-1$ 
-        Activator.getDefault().log(new Status(Severity.ERROR,
-                                              preferenceNotFound.text(FOLDER_NAME_INVALID_CHARS_PREF_NAME, value),
-                                              null));
-        return value;
+        // check parents
+        return accept(resource.getParent());
     }
 
 }

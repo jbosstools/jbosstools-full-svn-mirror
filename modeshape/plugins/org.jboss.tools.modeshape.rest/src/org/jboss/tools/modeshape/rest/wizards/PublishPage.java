@@ -13,6 +13,7 @@ package org.jboss.tools.modeshape.rest.wizards;
 
 import static org.jboss.tools.modeshape.rest.IUiConstants.HelpContexts.PUBLISH_DIALOG_HELP_CONTEXT;
 import static org.jboss.tools.modeshape.rest.IUiConstants.Preferences.ENABLE_RESOURCE_VERSIONING;
+import static org.jboss.tools.modeshape.rest.IUiConstants.Preferences.IGNORED_RESOURCES_PREFERENCE;
 import static org.jboss.tools.modeshape.rest.IUiConstants.Preferences.MAIN_PREFERENCE_PAGE_ID;
 
 import java.util.ArrayList;
@@ -56,6 +57,7 @@ import org.jboss.tools.modeshape.rest.ServerRegistryEvent;
 import org.jboss.tools.modeshape.rest.WorkspaceArea;
 import org.jboss.tools.modeshape.rest.actions.NewServerAction;
 import org.jboss.tools.modeshape.rest.jobs.PublishJob.Type;
+import org.jboss.tools.modeshape.rest.preferences.IgnoredResourcesModel;
 import org.jboss.tools.modeshape.rest.preferences.PublishingFileFilter;
 import org.modeshape.common.util.CheckArg;
 import org.modeshape.web.jcr.rest.client.Status;
@@ -404,8 +406,10 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
 		this.type = type;
 		this.resources = resources;
 
-		// filter should not be cached as preferences may change
-		this.filter = (filterFiles ? new PublishingFileFilter() : null);
+        // load filter with current preference value
+        IgnoredResourcesModel model = new IgnoredResourcesModel();
+        model.load(Activator.getDefault().getPreferenceStore().getString(IGNORED_RESOURCES_PREFERENCE));
+        this.filter = (filterFiles ? new PublishingFileFilter(model) : null);
 	}
 
 	private void constructLocationPanel(Composite parent) {
