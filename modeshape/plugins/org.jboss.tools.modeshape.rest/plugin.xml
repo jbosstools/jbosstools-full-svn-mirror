@@ -209,14 +209,14 @@
       </page>
    </extension>
 
-<!-- File Filters Preference Page -->
+<!-- Ignored Resources Preference Page -->
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            name="%fileFiltersPreferencePage"
+            name="%ignoredResourcesPreferencePage"
             category="modeShapePreferencePage"
-            class="org.jboss.tools.modeshape.rest.preferences.FileFiltersPreferencePage"
-            id="modeShapeFileFiltersPreferencePage">
+            class="org.jboss.tools.modeshape.rest.preferences.IgnoredResourcesPreferencePage"
+            id="modeShapeIgnoredResourcesPreferencePage">
       </page>
 
 <!-- Preference Initializer -->

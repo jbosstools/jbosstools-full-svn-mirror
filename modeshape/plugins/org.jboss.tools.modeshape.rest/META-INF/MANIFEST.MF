@@ -20,6 +20,7 @@ Bundle-ClassPath: modeshape-client.jar,
  .
 Export-Package: javax.jcr.nodetype,
  org.jboss.tools.modeshape.rest,
+ org.jboss.tools.modeshape.rest.preferences,
  org.modeshape.common.i18n,
  org.modeshape.web.jcr.rest.client,
  org.modeshape.web.jcr.rest.client.domain

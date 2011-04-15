@@ -12,11 +12,9 @@
 package org.jboss.tools.modeshape.rest;
 
 import static org.jboss.tools.modeshape.rest.IUiConstants.PLUGIN_ID;
+
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.StringTokenizer;
-import java.util.TreeSet;
+
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
@@ -26,27 +24,6 @@ import org.modeshape.web.jcr.rest.client.Status;
 import org.modeshape.web.jcr.rest.client.Status.Severity;
 
 public final class Utils {
-
-    // ===========================================================================================================================
-    // Class Methods
-    // ===========================================================================================================================
-
-    /**
-     * @param tokens the tokens being combined into one value (never <code>null</code>)
-     * @param delimiter the character inserted to separate each token
-     * @return the tokens separated by the delimiter
-     */
-    public static String combineTokens( String[] tokens,
-                                        char delimiter ) {
-        CheckArg.isNotNull(tokens, "tokens");
-        StringBuilder value = new StringBuilder();
-
-        for (String token : tokens) {
-            value.append(token).append(delimiter);
-        }
-
-        return value.toString();
-    }
 
     /**
      * Converts the non-Eclipse status severity to an Eclipse severity level. An {@link Status.Severity#UNKNOWN unknown status} is
@@ -84,7 +61,7 @@ public final class Utils {
      * @return the Eclipse status object (never <code>null</code>)
      */
     public static IStatus convert( Status status ) {
-        CheckArg.isNotNull(status, "status");
+        CheckArg.isNotNull(status, "status"); //$NON-NLS-1$
         return new org.eclipse.core.runtime.Status(convertSeverity(status.getSeverity()), PLUGIN_ID, status.getMessage(),
                                                    status.getException());
     }
@@ -96,7 +73,7 @@ public final class Utils {
      * @return the image or <code>null</code> if no associated image for the status severity
      */
     public static Image getImage( Status status ) {
-        CheckArg.isNotNull(status, "status");
+        CheckArg.isNotNull(status, "status"); //$NON-NLS-1$
         String imageId = null;
 
         if (status.isError()) {
@@ -115,38 +92,13 @@ public final class Utils {
     }
 
     /**
-     * @param string the string whose tokens are being requested (may be <code>null</code>)
-     * @param delimiters the delimiters that separate the tokens (never <code>null</code>)
-     * @param removeDuplicates a flag indicating if duplicate tokens should be removed
-     * @return the tokens (never <code>null</code>)
-     */
-    public static String[] getTokens( String string,
-                                      String delimiters,
-                                      boolean removeDuplicates ) {
-        CheckArg.isNotNull(delimiters, "delimiters");
-
-        if (string == null) {
-            return new String[0];
-        }
-
-        Collection<String> tokens = removeDuplicates ? new TreeSet<String>() : new ArrayList<String>();
-        StringTokenizer st = new StringTokenizer(string, delimiters);
-
-        while (st.hasMoreTokens()) {
-            tokens.add(st.nextToken());
-        }
-
-        return tokens.toArray(new String[tokens.size()]);
-    }
-
-    /**
      * The image can be used to decorate an existing image.
      * 
      * @param status the status whose image overlay is being requested (never <code>null</code>)
      * @return the image descriptor or <code>null</code> if none found for the status severity
      */
     public static ImageDescriptor getOverlayImage( Status status ) {
-        CheckArg.isNotNull(status, "status");
+        CheckArg.isNotNull(status, "status"); //$NON-NLS-1$
         String imageId = null;
 
         if (status.isError()) {

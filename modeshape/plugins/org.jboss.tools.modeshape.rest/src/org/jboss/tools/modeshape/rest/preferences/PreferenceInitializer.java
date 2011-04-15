@@ -44,7 +44,7 @@ public final class PreferenceInitializer extends AbstractPreferenceInitializer {
      */
     @Override
     public void initializeDefaultPreferences() {
-        IEclipsePreferences defaultValues = new DefaultScope().getNode(PLUGIN_ID);
+        IEclipsePreferences defaultValues = DefaultScope.INSTANCE.getNode(PLUGIN_ID);
 
         if (defaultValues == null) {
             // would only happen if PLUGIN_ID is wrong

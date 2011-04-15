@@ -90,27 +90,27 @@ public interface IUiConstants {
          * The message console help context.
          */
         String MESSAGE_CONSOLE_HELP_CONTEXT = HELP_CONTEXT_PREFIX + "messageConsoleHelpContext"; //$NON-NLS-1$
-        
+
         /**
          * The preference pages help context.
          */
         String PREFERENCE_PAGE_HELP_CONTEXT = HELP_CONTEXT_PREFIX + "preferencesHelpContext"; //$NON-NLS-1$
-        
+
         /**
          * The publish and unpublish dialog help context.
          */
         String PUBLISH_DIALOG_HELP_CONTEXT = HELP_CONTEXT_PREFIX + "publishDialogHelpContext"; //$NON-NLS-1$
-        
+
         /**
          * The server wizard and dialog page help context.
          */
         String SERVER_DIALOG_HELP_CONTEXT = HELP_CONTEXT_PREFIX + "serverDialogHelpContext"; //$NON-NLS-1$
-        
+
         /**
          * The server view help context.
          */
         String SERVER_VIEW_HELP_CONTEXT = HELP_CONTEXT_PREFIX + "serverViewHelpContext"; //$NON-NLS-1$
-        
+
     }
 
     /**
@@ -122,22 +122,18 @@ public interface IUiConstants {
          * A preference that indicates if the ModeShape server should use resource versioning. If versioning is not used, only one
          * copy of the resource will be persisted.
          */
-        String ENABLE_RESOURCE_VERSIONING = "modeShape.preference.filteredFileExtensions"; //$NON-NLS-1$
+        String ENABLE_RESOURCE_VERSIONING = "modeShape.preference.enableResourceVersioning"; //$NON-NLS-1$
 
         /**
-         * A preference for a list of file extensions that will not be part of publishing operations.
+         * A preference for a list of ignored resource patterns. Files or folders whose name matches on of the patterns will not be
+         * part of publishing operations.
          */
-        String FILTERED_FILE_EXTENSIONS_PREFERENCE = "modeShape.preference.filteredFileExtensions"; //$NON-NLS-1$
+        String IGNORED_RESOURCES_PREFERENCE = "modeShape.preference.ignoredResources"; //$NON-NLS-1$
 
         /**
-         * A preference for a list of folder names whose contents will not be part of publishing operations.
+         * The ignored resources preference page ID.
          */
-        String FILTERED_FOLDER_NAMES_PREFERENCE = "modeShape.preference.filteredFolderNames"; //$NON-NLS-1$
-        
-        /**
-         * The file and folder preference page ID.
-         */
-        String FILTERS_PREFERENCE_PAGE_ID = "modeShapeFileFiltersPreferencePage"; //$NON-NLS-1$
+        String IGNORED_RESOURCES_PREFERENCE_PAGE_ID = "modeShapeIgnoredResourcesPreferencePage"; //$NON-NLS-1$
 
         /**
          * The main ModeShape preference page ID.
