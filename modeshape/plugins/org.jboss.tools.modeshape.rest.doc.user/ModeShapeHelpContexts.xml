@@ -27,9 +27,9 @@
     <topic href="doc/ModeShapePreferencesDialog.html"  label="ModeShape Preferences"/>
  </context>
  <context id="preferencesHelpContext" title="ModeShape Preference Pages Help">
-    <description>The ModeShape Preferences Dialog allows you to identify file extensions and folder names that should not be involved in publishing operations.</description>
+    <description>The ModeShape Preferences Dialog allows you to identify file and folder name patterns that should not be involved in publishing operations.</description>
     <topic href="doc/ModeShapePreferencesDialog.html"  label="ModeShape Preferences"/>
-    <topic href="doc/PublishDialog.html"  label="Publish/Unpublish Dialog"/>
+    <topic href="doc/PublishDialog.html"  label="Publishing Operations Dialog"/>
  </context>
  <context id="messageConsoleHelpContext" title="ModeShape Message Console">
     <description>The ModeShape Message Console contains the output from the publishing and unpublishing operations.</description>

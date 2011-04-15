@@ -12,14 +12,14 @@
 <h2>ModeShape Preference Pages</h2>
 
 <p>The <i>ModeShape Preference Pages</i> provide settings that allow you to personalize how ModeShape Tools' publishing operations 
-are done. A publishing operation occurs when selected files in your local workspace are either uploaded (published) or deleted 
-(unpublished) to/from a specific ModeShape repository workspace. Here's a list of the preference pages:</p>
+are done. A publishing operation occurs when selected files in your local workspace are either uploaded (published) to, or deleted 
+(unpublished) from, a specific ModeShape repository workspace. Here's a list of the ModeShape Tools preference pages:</p>
 
 <ul>
 <li><a href="#generalSettingsPrefPage">General Settings</a> - these settings control if published files should be put under 
 version control by the ModeShape server.
 </li>
-<li><a href="#fileFiltersPrefPage">File and Folder Filters</a> - these settings control which files are filtered out of your
+<li><a href="#ignoredResourcesPrefPage">Ignored Resources</a> - these settings control which files are filtered out of your
 publishing operations.
 </li>
 </ul>
@@ -33,27 +33,20 @@ by the ModeShape server. This versioning preference is used by the <a href="Publ
 
 <img src="images/GeneralPreferencePage.png" border="0" alt="">
 
-<h3><a name="fileFiltersPrefPage">File and Folder Filters Preference Page</a></h3>
+<h3><a name="ignoredResourcesPrefPage">Ignored Resources Preference Page</a></h3>
 
-<p>The <i>File and Folder Filters Preference Page</i> is where you identify the file extensions and the folder names you 
+<p>The <i>Ignored Resources Preference Page</i> is where you identify the name patterns of files and folders that you 
 <strong>do not</strong> want involved in your publishing operations.</p>
 
-<p>Here is what the <i>File and Folder Filters Preference Page</i> looks like:</p>
+<p>Here is what the <i>Ignored Resources Preference Page</i> looks like:</p>
 
-<img src="images/FileFilterPreferencePage.png" border="0" alt="">
+<img src="images/IgnoredResourcesPreferencePage.png" border="0" alt="">
 
-<p>The <i>Filtered File Extensions</i> preference provides a way to construct a list of file extensions. If a file has an extension 
-that matches one of these file extensions it will not be involved in either a publishing or unpublishing operation. To add a file 
-extension (ex., txt, jpg, class) simply click on the <code>New...</code> button to display the following dialog:</p>
+<p>If a file name matches one of these patterns, or is found in a folder whose name matches one of those patterns, it will not be 
+involved in either a publishing or unpublishing operation. To add new pattern click on the <code>New...</code> button to display 
+the following dialog:</p>
 
-<p><img src="images/NewFilteredFileExtension.png" border="0" alt=""></p>
-
-<p>The <i>Filtered Folder Names</i> preference provides a way to construct a list of folder names. If a file is contained in a 
-folder, or has an ancestor folder, with a name that matches one of these folder names it will <strong>not</strong> be involved in 
-either a publishing or unpublishing operation. To add a folder name simply click on the <code>New...</code> button to display the 
-following dialog:</p>
-
-<p><img src="images/NewFilteredFolderName.png" border="0" alt=""></p>
+<p><img src="images/NewPattern.png" border="0" alt=""></p>
 
 <h3>Related Topics</h3>
 
