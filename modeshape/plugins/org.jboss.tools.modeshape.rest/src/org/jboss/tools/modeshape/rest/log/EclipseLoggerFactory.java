@@ -13,32 +13,21 @@ package org.jboss.tools.modeshape.rest.log;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import org.slf4j.ILoggerFactory;
 import org.slf4j.Logger;
 
 public final class EclipseLoggerFactory implements ILoggerFactory {
-
-    // ===========================================================================================================================
-    // Class Fields
-    // ===========================================================================================================================
 
     /**
      * The shared instance of the factory.
      */
     static final EclipseLoggerFactory INSTANCE = new EclipseLoggerFactory();
 
-    // ===========================================================================================================================
-    // Methods
-    // ===========================================================================================================================
-
     /**
      * Map of loggers keyed by logger name.
      */
     private Map<String, Logger> loggerMap;
-
-    // ===========================================================================================================================
-    // Constructors
-    // ===========================================================================================================================
 
     /**
      * Constructs the factory.
@@ -46,10 +35,6 @@ public final class EclipseLoggerFactory implements ILoggerFactory {
     public EclipseLoggerFactory() {
         this.loggerMap = new HashMap<String, Logger>();
     }
-
-    // ===========================================================================================================================
-    // Methods
-    // ===========================================================================================================================
 
     /**
      * {@inheritDoc}

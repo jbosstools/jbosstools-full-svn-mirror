@@ -26,15 +26,26 @@ import org.slf4j.Marker;
  */
 public final class EclipseLogger implements Logger {
 
-    private static boolean DEBUG_MODE = Platform.inDebugMode()
-                                        && Boolean.parseBoolean(Platform.getDebugOption(IUiConstants.PLUGIN_ID + "/debug")); //$NON-NLS-1$
+    private static boolean initialized = false;
 
-    private static ILog LOGGER = Platform.getLog(Platform.getBundle(IUiConstants.PLUGIN_ID));
+    private static boolean DEBUG_MODE = Platform.isRunning();
+
+    private static ILog LOGGER; // will be null when platform is not running
 
     private String name;
 
     EclipseLogger( String name ) {
         this.name = name;
+
+        if (!initialized) {
+            initialized = true;
+
+            if (Platform.isRunning()) {
+                DEBUG_MODE = Platform.inDebugMode()
+                        && Boolean.parseBoolean(Platform.getDebugOption(IUiConstants.PLUGIN_ID + "/debug")); //$NON-NLS-1$
+                LOGGER = Platform.getLog(Platform.getBundle(IUiConstants.PLUGIN_ID));
+            }
+        }
     }
 
     /**
@@ -194,7 +205,7 @@ public final class EclipseLogger implements Logger {
     @Override
     public void error( String message,
                        Throwable e ) {
-        if (isErrorEnabled()) {
+        if (isErrorEnabled() && (LOGGER != null)) {
             LOGGER.log(new Status(IStatus.ERROR, IUiConstants.PLUGIN_ID, message, e));
         }
     }
@@ -321,7 +332,7 @@ public final class EclipseLogger implements Logger {
     @Override
     public void info( String message,
                       Throwable e ) {
-        if (isInfoEnabled()) {
+        if (isInfoEnabled() && (LOGGER != null)) {
             LOGGER.log(new Status(IStatus.INFO, IUiConstants.PLUGIN_ID, message, e));
         }
     }
@@ -655,7 +666,7 @@ public final class EclipseLogger implements Logger {
     @Override
     public void warn( String message,
                       Throwable e ) {
-        if (isWarnEnabled()) {
+        if (isWarnEnabled() && (LOGGER != null)) {
             LOGGER.log(new Status(IStatus.WARNING, IUiConstants.PLUGIN_ID, message, e));
         }
     }
