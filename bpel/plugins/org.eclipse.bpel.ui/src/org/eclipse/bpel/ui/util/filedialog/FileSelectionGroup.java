@@ -196,6 +196,9 @@ public class FileSelectionGroup extends Composite {
 	 * Sets the selected existing file.
 	 */
 	public void setSelectedResource(IResource resource) {
+		// https://issues.jboss.org/browse/JBIDE-8738
+		if (resource==null)
+			return;
 		selectedResource = resource;
 
 		//expand to and select the specified file

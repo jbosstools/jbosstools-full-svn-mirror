@@ -364,8 +364,11 @@ public class NewFileWizardPage1 extends WizardPage {
 
 		// https://issues.jboss.org/browse/JBIDE-8591
 		NewFileWizard wiz = (NewFileWizard)getWizard();
-		if (!ModuleCoreNature.isFlexibleProject(wiz.getBPELContainer().getProject()))
-			setMessage(Messages.NewFileWizard_Not_A_Faceted_Project, WizardPage.WARNING);
+		// https://issues.jboss.org/browse/JBIDE-8738
+		if (wiz.getBPELContainer()!=null) {
+			if (!ModuleCoreNature.isFlexibleProject(wiz.getBPELContainer().getProject()))
+				setMessage(Messages.NewFileWizard_Not_A_Faceted_Project, WizardPage.WARNING);
+		}
 		else
 			setMessage(null);
 
