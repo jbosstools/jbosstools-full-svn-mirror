@@ -1122,6 +1122,8 @@ public class SmooksGraphicalEditorPart extends GraphicalEditor implements ISelec
 	}
 
 	public boolean autoLayout(boolean animation) {
+		// disable the animation now
+		animation = false;
 		final GraphAnimation graphAnimation = new GraphAnimation();
 		HashMap<Object, Node> nodeMap = new HashMap<Object, Node>();
 		DirectedGraph directedGraph = collectionGraphInformation(nodeMap);
