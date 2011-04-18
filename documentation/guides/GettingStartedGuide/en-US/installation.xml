@@ -231,13 +231,104 @@ Java HotSpot(TM) Server VM (build 19.1-b02, mixed mode)]]>
     </section>
   </section>
    
-  <section id="Installing_JBoss_Developer_Studio">
+  <section id="Installing_JBoss_Developer_Studio" condition="jbds">
 <?dbhtml filename="InstallingRHDS.html"?>
     <title>JBoss Developer Studio Installation</title> 
     <para>
       This chapter will provide you with detailed information on how to install <property>JBoss Developer Studio</property>.
     </para>
-     
+	<section id="Installing_JBoss_Developer_Studio-Automated_Installation">
+		<title>Automated Installation</title>
+		<para>
+			Parameters for automated installation are defined in the <filename>InstallConfigRecord.xml</filename> file. Defined in this file is the path to the installation folder, the packages to be installed and the shortcuts to be created.
+		</para>
+		<para>
+			Within the <filename>InstallConfigRecord.xml</filename> file are three parameters that can be modified for specific installation options:
+		</para>
+		<itemizedlist>
+			<listitem>
+				<para>
+					<property>AutomatedInstallation/com.jboss.jbds.installer.PathInputPanel/installpath</property>: Installation folder
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<property>AutomatedInstallation/com.jboss.jbds.installer.JBossAsSelectPanel/installgroup</property>: Software components to be installed
+				</para>
+				<para>
+					Options:
+				</para>
+				<itemizedlist>
+					<listitem>
+						<para>
+							jbds: JBoss Developer Studio only installation 
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							jbosseap: JBoss Developer Studio with JBoss Enterprise Application Platform 
+						</para>
+					</listitem>
+				</itemizedlist>
+			</listitem>
+			<listitem>
+				<para>
+					<property>com.izforge.izpack.panels.ShortcutPanel</property>: Shortcut menu for installation
+				</para>
+			</listitem>
+		</itemizedlist>
+		<note>
+			<para>
+				If you change the installation folder path, you must update the <property>com.izforge.izpack.panels.ShortcutPanel</property> parameter to reflect the new path.
+			</para>
+		</note>
+		<para>
+			Once you have configured the <filename>InstallConfigRecord.xml</filename> file for your needs, the following command can be run on the command line to begin installation:
+		</para>
+<programlisting>
+java -jar /path/to/installer.jar /path/to/InstallConfigRecord.xml
+</programlisting>
+		<formalpara>
+			<title>Current limitations</title>
+			<para>
+				The following limitations currently exist when using the automated method of installation:
+			</para>
+		</formalpara>
+		<itemizedlist>
+			<listitem>
+				<para>
+					Desktop shortcuts are not supported.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Creation of shoortcuts for all users on a system has not been tested.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Automated installation does not check if the specified installation path already exists. If the path does exist, any files will be overwritten without notice.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					The Java Virtual Manchine to be used with JBoss Developer Studio is automatically chosen and cannot be specified.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					No verification exists to ensure the installer you are using is correct for your platform.
+				</para>
+			</listitem>
+		</itemizedlist>
+		<warning>
+			<para>
+				Automated installation does not check if the specified installation path already exists. If the path does exist, any files will be overwritten without notice.
+			</para>
+		</warning>
+	</section>
+	<section id="Installing_JBoss_Developer_Studio-Manual_Installation">
+		<title>Manual Installation</title>
     <para>
       JBoss Developer Studio comes with a simple installer, bundled with tested and preconfigured versions of Eclipse, WTP, JBossEAP, Seam, and SpringIDE. The following steps show you how to install JBoss Developer Studio:
     </para>
@@ -491,6 +582,7 @@ Java HotSpot(TM) Server VM (build 19.1-b02, mixed mode)]]>
         </imageobject>
       </mediaobject>
     </figure>
+</section>
   </section>
    
   <section id="tech_previews">
