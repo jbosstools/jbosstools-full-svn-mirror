@@ -34,6 +34,7 @@
 			<slicingoptions includefeatures="true" followstrict="true" latestversiononly="true" />
 
 			<iu id="org.eclipse.mylyn_feature.feature.group" />
+			<iu id="org.eclipse.mylyn.commons.feature.group" />
 			<iu id="org.eclipse.mylyn.context_feature.feature.group" />
 			<iu id="org.eclipse.mylyn.wikitext_feature.feature.group" />
 
