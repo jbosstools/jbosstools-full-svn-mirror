@@ -10,7 +10,7 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: BPELFactory.java,v 1.21 2007/11/20 14:14:22 smoser Exp $
+ * $Id: BPELFactory.java,v 1.22 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model;
 
@@ -40,7 +40,7 @@ public interface BPELFactory extends EFactory {
 	 * @return a new object of class '<em>Process</em>'.
 	 * @generated
 	 */
-	org.eclipse.bpel.model.Process createProcess();
+	Process createProcess();
 
 	/**
 	 * Returns a new object of class '<em>Partner Link</em>'.
@@ -634,7 +634,7 @@ public interface BPELFactory extends EFactory {
 	 * @return a new object of class '<em>Extensible Element</em>'.
 	 * @generated
 	 */
-	ExtensibleElement createExtensibleElement();
+	BPELExtensibleElement createBPELExtensibleElement();
 
 	/**
 	 * Returns a new object of class '<em>Validate</em>'.

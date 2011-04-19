@@ -30,6 +30,7 @@ public class AbstractAdapter implements Adapter {
 		
 	/** Makes sense only when adapters are statefull */
 	// https://jira.jboss.org/browse/JBIDE-7497
+	// Bugzilla 330519
 	// need access to this in MarkerDelegateAdapter
 	protected Object target = null;
 	

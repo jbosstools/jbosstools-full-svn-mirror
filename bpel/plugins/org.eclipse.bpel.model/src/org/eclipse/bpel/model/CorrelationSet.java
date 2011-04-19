@@ -10,7 +10,7 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: CorrelationSet.java,v 1.4 2007/12/06 20:01:24 smoser Exp $
+ * $Id: CorrelationSet.java,v 1.5 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model;
 
@@ -40,7 +40,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface CorrelationSet extends ExtensibleElement {
+public interface CorrelationSet extends BPELExtensibleElement {
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->

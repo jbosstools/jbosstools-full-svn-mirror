@@ -63,8 +63,6 @@ private static class ActivationListener implements IPartListener, IWindowListene
 	/** */
 	private IWorkbenchPart activePart = null;
 	/** */
-	private IWorkbenchWindow activeWindow = null;
-	/** */
 	private SynchronizationManager manager;
 	/** */
 	private IEditorPart editor;
@@ -123,10 +121,8 @@ public void partOpened(IWorkbenchPart part) {
  * @see org.eclipse.ui.IWindowListener#windowActivated(org.eclipse.ui.IWorkbenchWindow)
  */
 public void windowActivated(IWorkbenchWindow window) {		
-	if (!handlingActivation) {
-		activeWindow = window;
+	if (!handlingActivation)
 		handleActivated();
-	}
 }
 
 /* (non-Javadoc)
@@ -191,6 +187,7 @@ void handleActivated(ResourceInfo resourceInfo) throws CoreException, IOExceptio
 		String[] buttons = { Messages.SynchronizationManager_saveButtonLabel, IDialogConstants.CLOSE_LABEL }; 
 		
 		// https://jira.jboss.org/browse/JBIDE-7520
+		// Bugzilla 330513
 		// avoid using activeWindow to get a shell - there are cases where these
 		// error dialogs are opened before the active window has been created
 		// (e.g. resource load failures during editor startup)
@@ -226,7 +223,6 @@ void handleActivated(ResourceInfo resourceInfo) throws CoreException, IOExceptio
 		}
 	} else if (lastModified != resourceInfo.getSynchronizeStamp()) {
 		String msg = NLS.bind(Messages.SynchronizationManager_refresh_message, (new String[]{ resourceInfo.getFile().toString()})); 
-
 		boolean refresh = MessageDialog.openQuestion(
 				editor.getEditorSite().getShell(), 
 				Messages.SynchronizationManager_refresh_title,  

@@ -10,7 +10,7 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: OnEvent.java,v 1.9 2008/02/28 17:33:21 smoser Exp $
+ * $Id: OnEvent.java,v 1.11 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model;
 
@@ -34,6 +34,7 @@ import org.eclipse.xsd.XSDElementDeclaration;
  *   <li>{@link org.eclipse.bpel.model.OnEvent#getOperation <em>Operation</em>}</li>
  *   <li>{@link org.eclipse.bpel.model.OnEvent#getPortType <em>Port Type</em>}</li>
  *   <li>{@link org.eclipse.bpel.model.OnEvent#getMessageType <em>Message Type</em>}</li>
+ *   <li>{@link org.eclipse.bpel.model.OnEvent#getXSDElement <em>XSD Element</em>}</li>
  *   <li>{@link org.eclipse.bpel.model.OnEvent#getCorrelationSets <em>Correlation Sets</em>}</li>
  *   <li>{@link org.eclipse.bpel.model.OnEvent#getFromParts <em>From Parts</em>}</li>
  *   <li>{@link org.eclipse.bpel.model.OnEvent#getMessageExchange <em>Message Exchange</em>}</li>
@@ -44,7 +45,7 @@ import org.eclipse.xsd.XSDElementDeclaration;
  * @model
  * @generated
  */
-public interface OnEvent extends ExtensibleElement {
+public interface OnEvent extends BPELExtensibleElement {
 	/**
 	 * Returns the value of the '<em><b>Activity</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
@@ -209,7 +210,7 @@ public interface OnEvent extends ExtensibleElement {
 	 * @return the value of the '<em>Message Type</em>' reference.
 	 * @see #setMessageType(Message)
 	 * @see org.eclipse.bpel.model.BPELPackage#getOnEvent_MessageType()
-	 * @model required="true"
+	 * @model
 	 * @generated
 	 */
 	Message getMessageType();
@@ -225,7 +226,6 @@ public interface OnEvent extends ExtensibleElement {
 	void setMessageType(Message value);
 
 	// https://bugs.eclipse.org/bugs/show_bug.cgi?id=336003
-	// https://issues.jboss.org/browse/JBIDE-8305
 	// "element" attribute was missing from original model
 	/**
 	 * Returns the value of the '<em><b>XSD Element</b></em>' reference.
@@ -235,23 +235,24 @@ public interface OnEvent extends ExtensibleElement {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>XSDElementDeclaration Type</em>' reference.
+	 * @return the value of the '<em>XSD Element</em>' reference.
 	 * @see #setXSDElement(XSDElementDeclaration)
 	 * @see org.eclipse.bpel.model.BPELPackage#getOnEvent_XSDElement()
-	 * @model required="true"
+	 * @model
 	 * @generated
 	 */
 	XSDElementDeclaration getXSDElement();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.bpel.model.OnEvent#getXSDElement <em>XSDElementDeclaration Type</em>}' reference.
+	 * Sets the value of the '{@link org.eclipse.bpel.model.OnEvent#getXSDElement <em>XSD Element</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>XSDElementDeclaration Type</em>' reference.
+	 * @param value the new value of the '<em>XSD Element</em>' reference.
 	 * @see #getXSDElement()
 	 * @generated
 	 */
 	void setXSDElement(XSDElementDeclaration value);
+
 	/**
 	 * Returns the value of the '<em><b>Correlation Sets</b></em>' containment reference.
 	 * <!-- begin-user-doc -->

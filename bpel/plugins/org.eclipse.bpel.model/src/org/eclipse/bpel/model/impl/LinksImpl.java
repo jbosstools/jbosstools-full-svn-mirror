@@ -10,7 +10,7 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: LinksImpl.java,v 1.7 2009/04/14 10:50:36 smoser Exp $
+ * $Id: LinksImpl.java,v 1.8 2011/03/30 18:54:24 rbrodt Exp $
  */
 package org.eclipse.bpel.model.impl;
 
@@ -42,7 +42,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class LinksImpl extends ExtensibleElementImpl implements Links {
+public class LinksImpl extends BPELExtensibleElementImpl implements Links {
 	/**
 	 * The cached value of the '{@link #getChildren() <em>Children</em>}' containment reference list.
 	 * <!-- begin-user-doc -->

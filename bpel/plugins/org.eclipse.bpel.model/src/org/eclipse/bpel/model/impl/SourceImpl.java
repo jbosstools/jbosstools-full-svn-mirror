@@ -10,7 +10,7 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: SourceImpl.java,v 1.9 2009/04/14 10:50:37 smoser Exp $
+ * $Id: SourceImpl.java,v 1.10 2011/03/30 18:54:24 rbrodt Exp $
  */
 package org.eclipse.bpel.model.impl;
 
@@ -46,7 +46,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class SourceImpl extends ExtensibleElementImpl implements Source {
+public class SourceImpl extends BPELExtensibleElementImpl implements Source {
 	/**
 	 * The cached value of the '{@link #getLink() <em>Link</em>}' reference.
 	 * <!-- begin-user-doc -->

@@ -64,8 +64,6 @@ public class FlowEditPart extends CollapsableEditPart {
 
 	private FlowBorder flowBorder;
 
-	boolean useFlowLayout = false;
-
 	private EContentAdapter flowContentAdapter;
 
 	private BatchedMultiObjectAdapter flowBatchedAdapter;
@@ -236,11 +234,12 @@ public class FlowEditPart extends CollapsableEditPart {
 		getContentPane().add(child,
 				getFigure().getLayoutManager().getConstraint(child), index);
 		//https://jira.jboss.org/browse/JBIDE-6784
+		// Bugzilla 319215
 		// addChildVisual() is also called by reorderChild() to rearrange the order of children.
 		// This causes auto layout to reference a child object with a model that has no parent.
 		// The right place to auto arrange Flow children if no *.bpelex exists yet, is in
 		// BPELEditor.arrangeEditParts() after the model is loaded
-		// JBIDE-6032: force an auto layout at startup
+		// JBIDE-6032: force an auto layout at startup - this change was reverted
 //		if (getShowFreeformFlow() && getAutoLayout())
 //			doAutoLayout(false);
 	}

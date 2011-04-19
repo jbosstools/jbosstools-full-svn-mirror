@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: FromParts.java,v 1.1 2007/11/20 14:14:22 smoser Exp $
+ * $Id: FromParts.java,v 1.2 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model;
 
@@ -24,7 +24,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface FromParts extends ExtensibleElement {
+public interface FromParts extends BPELExtensibleElement {
 	/**
 	 * Returns the value of the '<em><b>Children</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.bpel.model.FromPart}.

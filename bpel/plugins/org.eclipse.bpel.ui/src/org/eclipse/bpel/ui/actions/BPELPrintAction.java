@@ -53,7 +53,7 @@ public class BPELPrintAction extends PrintAction {
 		protected void setupPrinterGraphicsFor(Graphics graphics, IFigure figure) {
 			super.setupPrinterGraphicsFor(graphics, figure);
 			
-			double dpiScale = getPrinter().getDPI().x / Display.getCurrent().getDPI().x;
+			double dpiScale = (double) getPrinter().getDPI().x / Display.getCurrent().getDPI().x;
 			
 			// put the print region in display coordinates
 			org.eclipse.draw2d.geometry.Rectangle printableRegion = getPrintRegion();
@@ -92,7 +92,7 @@ public class BPELPrintAction extends PrintAction {
 			figure.paint(g);
 			
 			
-			double dpiScale = getPrinter().getDPI().x / Display.getCurrent().getDPI().x;
+			double dpiScale = (double) getPrinter().getDPI().x / Display.getCurrent().getDPI().x;
 			
 			// put the print region in display coordinates
 			region = getPrintRegion();

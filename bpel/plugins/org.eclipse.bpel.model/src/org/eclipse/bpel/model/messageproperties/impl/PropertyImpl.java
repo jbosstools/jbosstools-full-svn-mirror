@@ -10,7 +10,7 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: PropertyImpl.java,v 1.7 2008/05/04 11:05:47 odanilov Exp $
+ * $Id: PropertyImpl.java,v 1.10 2011/03/30 18:54:26 rbrodt Exp $
  */
 package org.eclipse.bpel.model.messageproperties.impl;
 
@@ -18,7 +18,8 @@ import java.util.Collection;
 
 import javax.xml.namespace.QName;
 
-import org.eclipse.bpel.model.impl.ExtensibilityElementImpl;
+//Bugzilla 340654 - renamed to avoid confusion with WSDL's ExtensibilityElement
+import org.eclipse.bpel.model.impl.BPELExtensibilityElementImpl;
 import org.eclipse.bpel.model.messageproperties.MessagepropertiesPackage;
 import org.eclipse.bpel.model.messageproperties.Property;
 import org.eclipse.bpel.model.messageproperties.util.MessagepropertiesConstants;
@@ -30,6 +31,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.wst.wsdl.internal.impl.ExtensibilityElementImpl;
 import org.eclipse.wst.wsdl.Definition;
 import org.eclipse.wst.wsdl.internal.impl.DefinitionImpl;
 import org.eclipse.xsd.XSDElementDeclaration;
@@ -213,8 +215,7 @@ public class PropertyImpl extends ExtensibilityElementImpl implements Property {
 	public String getID() {
 		// TODO: NEW_WSDL review this
 		String namespace = getEnclosingDefinition() != null ? getEnclosingDefinition()
-				.getTargetNamespace()
-				: "";
+				.getTargetNamespace() : "";
 		String id = BPELServicesUtility.getId(new QName(namespace, getName()),
 				this);
 		return id;
@@ -228,14 +229,14 @@ public class PropertyImpl extends ExtensibilityElementImpl implements Property {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case MessagepropertiesPackage.PROPERTY__QNAME:
-				return getQName();
-			case MessagepropertiesPackage.PROPERTY__NAME:
-				return getName();
-			case MessagepropertiesPackage.PROPERTY__TYPE:
-				return getType();
-			case MessagepropertiesPackage.PROPERTY__ID:
-				return getID();
+		case MessagepropertiesPackage.PROPERTY__QNAME:
+			return getQName();
+		case MessagepropertiesPackage.PROPERTY__NAME:
+			return getName();
+		case MessagepropertiesPackage.PROPERTY__TYPE:
+			return getType();
+		case MessagepropertiesPackage.PROPERTY__ID:
+			return getID();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -248,15 +249,15 @@ public class PropertyImpl extends ExtensibilityElementImpl implements Property {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case MessagepropertiesPackage.PROPERTY__QNAME:
-				setQName((QName) newValue);
-				return;
-			case MessagepropertiesPackage.PROPERTY__NAME:
-				setName((String) newValue);
-				return;
-			case MessagepropertiesPackage.PROPERTY__TYPE:
-				setType(newValue);
-				return;
+		case MessagepropertiesPackage.PROPERTY__QNAME:
+			setQName((QName) newValue);
+			return;
+		case MessagepropertiesPackage.PROPERTY__NAME:
+			setName((String) newValue);
+			return;
+		case MessagepropertiesPackage.PROPERTY__TYPE:
+			setType(newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -269,15 +270,15 @@ public class PropertyImpl extends ExtensibilityElementImpl implements Property {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case MessagepropertiesPackage.PROPERTY__QNAME:
-				setQName(QNAME_EDEFAULT);
-				return;
-			case MessagepropertiesPackage.PROPERTY__NAME:
-				setName(NAME_EDEFAULT);
-				return;
-			case MessagepropertiesPackage.PROPERTY__TYPE:
-				setType(TYPE_EDEFAULT);
-				return;
+		case MessagepropertiesPackage.PROPERTY__QNAME:
+			setQName(QNAME_EDEFAULT);
+			return;
+		case MessagepropertiesPackage.PROPERTY__NAME:
+			setName(NAME_EDEFAULT);
+			return;
+		case MessagepropertiesPackage.PROPERTY__TYPE:
+			setType(TYPE_EDEFAULT);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -290,18 +291,18 @@ public class PropertyImpl extends ExtensibilityElementImpl implements Property {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case MessagepropertiesPackage.PROPERTY__QNAME:
-				return QNAME_EDEFAULT == null ? qName != null : !QNAME_EDEFAULT
-						.equals(qName);
-			case MessagepropertiesPackage.PROPERTY__NAME:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT
-						.equals(name);
-			case MessagepropertiesPackage.PROPERTY__TYPE:
-				return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT
-						.equals(type);
-			case MessagepropertiesPackage.PROPERTY__ID:
-				return ID_EDEFAULT == null ? getID() != null : !ID_EDEFAULT
-						.equals(getID());
+		case MessagepropertiesPackage.PROPERTY__QNAME:
+			return QNAME_EDEFAULT == null ? qName != null : !QNAME_EDEFAULT
+					.equals(qName);
+		case MessagepropertiesPackage.PROPERTY__NAME:
+			return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT
+					.equals(name);
+		case MessagepropertiesPackage.PROPERTY__TYPE:
+			return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT
+					.equals(type);
+		case MessagepropertiesPackage.PROPERTY__ID:
+			return ID_EDEFAULT == null ? getID() != null : !ID_EDEFAULT
+					.equals(getID());
 		}
 		return super.eIsSet(featureID);
 	}
@@ -361,17 +362,17 @@ public class PropertyImpl extends ExtensibilityElementImpl implements Property {
 						.hasAttribute(MessagepropertiesConstants.PROPERTY_TYPE_ATTRIBUTE)) {
 			QName qname = createQName(
 					definition,
-					element
-							.getAttribute(MessagepropertiesConstants.PROPERTY_TYPE_ATTRIBUTE));
+					element.getAttribute(MessagepropertiesConstants.PROPERTY_TYPE_ATTRIBUTE));
 			if (qname != null) {
 				XSDTypeDefinition xsdType = ((DefinitionImpl) definition)
-						.resolveTypeDefinition(qname.getNamespaceURI(), qname
-								.getLocalPart());
+						.resolveTypeDefinition(qname.getNamespaceURI(),
+								qname.getLocalPart());
 				if (xsdType != null && getType() != xsdType) {
 					setType(xsdType);
 				}
 			}
 		}
+		// https://bugs.eclipse.org/bugs/show_bug.cgi?id=330813
 		// https://jira.jboss.org/browse/JBIDE-7107
 		// added element handling
 		if (element != null
@@ -379,12 +380,11 @@ public class PropertyImpl extends ExtensibilityElementImpl implements Property {
 						.hasAttribute(MessagepropertiesConstants.PROPERTY_XSD_ELEMENT_ATTRIBUTE)) {
 			QName qname = createQName(
 					definition,
-					element
-							.getAttribute(MessagepropertiesConstants.PROPERTY_XSD_ELEMENT_ATTRIBUTE));
+					element.getAttribute(MessagepropertiesConstants.PROPERTY_XSD_ELEMENT_ATTRIBUTE));
 			if (qname != null) {
 				XSDElementDeclaration xsdElement = ((DefinitionImpl) definition)
-						.resolveElementDeclaration(qname.getNamespaceURI(), qname
-								.getLocalPart());
+						.resolveElementDeclaration(qname.getNamespaceURI(),
+								qname.getLocalPart());
 				if (xsdElement != null && getType() != xsdElement) {
 					setType(xsdElement);
 				}
@@ -417,10 +417,11 @@ public class PropertyImpl extends ExtensibilityElementImpl implements Property {
 						MessagepropertiesConstants.PROPERTY_NAME_ATTRIBUTE,
 						getName());
 			}
-			
+
 			if (eAttribute == null
 					|| eAttribute == MessagepropertiesPackage.eINSTANCE
 							.getProperty_Type()) {
+				// https://bugs.eclipse.org/bugs/show_bug.cgi?id=330813
 				// https://jira.jboss.org/browse/JBIDE-7107
 				// this is unfortunate, but the Property model object only has a "type" which serves both
 				// for "type" and "element" addressing - we just have to figure out which is which from the
@@ -429,17 +430,18 @@ public class PropertyImpl extends ExtensibilityElementImpl implements Property {
 				if (type instanceof XSDTypeDefinition) {
 					XSDTypeDefinition xsdType = (XSDTypeDefinition) type;
 					String uri = xsdType.getURI();
-					niceSetAttributeURIValue(theElement,
+					niceSetAttributeURIValue(
+							theElement,
 							MessagepropertiesConstants.PROPERTY_XSD_ELEMENT_ATTRIBUTE,
 							null);
 					niceSetAttributeURIValue(theElement,
 							MessagepropertiesConstants.PROPERTY_TYPE_ATTRIBUTE,
 							uri);
-				}
-				else if (type instanceof XSDElementDeclaration) {
+				} else if (type instanceof XSDElementDeclaration) {
 					XSDElementDeclaration xsdElement = (XSDElementDeclaration) type;
 					String uri = xsdElement.getURI();
-					niceSetAttributeURIValue(theElement,
+					niceSetAttributeURIValue(
+							theElement,
 							MessagepropertiesConstants.PROPERTY_XSD_ELEMENT_ATTRIBUTE,
 							uri);
 					niceSetAttributeURIValue(theElement,

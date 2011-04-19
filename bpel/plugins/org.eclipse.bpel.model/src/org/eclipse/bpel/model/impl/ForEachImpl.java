@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ForEachImpl.java,v 1.14 2009/04/14 10:50:37 smoser Exp $
+ * $Id: ForEachImpl.java,v 1.15 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model.impl;
 
@@ -284,8 +284,8 @@ public class ForEachImpl extends ActivityImpl implements ForEach {
 		Boolean oldParallel = parallel;
 		if (!isReconciling) {
 			ReconciliationHelper.replaceAttribute(this,
-					BPELConstants.AT_PARALLEL, BPELUtils
-							.boolean2XML(newParallel));
+					BPELConstants.AT_PARALLEL,
+					BPELUtils.boolean2XML(newParallel));
 		}
 		parallel = newParallel;
 		if (eNotificationRequired())

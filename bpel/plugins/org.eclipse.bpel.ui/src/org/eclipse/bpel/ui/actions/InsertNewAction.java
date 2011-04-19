@@ -12,7 +12,7 @@ package org.eclipse.bpel.ui.actions;
 
 import java.util.List;
 
-import org.eclipse.bpel.model.ExtensibleElement;
+import org.eclipse.bpel.model.BPELExtensibleElement;
 import org.eclipse.bpel.ui.BPELEditor;
 import org.eclipse.bpel.ui.Messages;
 import org.eclipse.bpel.ui.adapters.IContainer;
@@ -41,7 +41,7 @@ public class InsertNewAction extends SelectionAction {
 	protected Object fCachedObject;
 	
 	/** the computed selection */
-	protected ExtensibleElement fSelection;
+	protected BPELExtensibleElement fSelection;
 	protected EObject fContainer;
 	
 	@Override
@@ -132,8 +132,8 @@ public class InsertNewAction extends SelectionAction {
 			sel = part.getModel();
 		} 
 		
-		if (sel instanceof ExtensibleElement) {
-			fSelection = (ExtensibleElement) sel;
+		if (sel instanceof BPELExtensibleElement) {
+			fSelection = (BPELExtensibleElement) sel;
 		} 
 		
 		if (fSelection == null) {

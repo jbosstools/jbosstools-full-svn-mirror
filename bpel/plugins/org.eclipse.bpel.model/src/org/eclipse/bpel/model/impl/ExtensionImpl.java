@@ -10,7 +10,7 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: ExtensionImpl.java,v 1.11 2009/04/14 10:50:37 smoser Exp $
+ * $Id: ExtensionImpl.java,v 1.12 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model.impl;
 
@@ -37,7 +37,8 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class ExtensionImpl extends ExtensibleElementImpl implements Extension {
+public class ExtensionImpl extends BPELExtensibleElementImpl implements
+		Extension {
 	/**
 	 * The default value of the '{@link #getNamespace() <em>Namespace</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -148,8 +149,8 @@ public class ExtensionImpl extends ExtensibleElementImpl implements Extension {
 		Boolean oldMustUnderstand = mustUnderstand;
 		if (!isReconciling) {
 			ReconciliationHelper.replaceAttribute(this,
-					BPELConstants.AT_MUST_UNDERSTAND, BPELUtils
-							.boolean2XML(newMustUnderstand));
+					BPELConstants.AT_MUST_UNDERSTAND,
+					BPELUtils.boolean2XML(newMustUnderstand));
 		}
 		mustUnderstand = newMustUnderstand;
 		boolean oldMustUnderstandESet = mustUnderstandESet;

@@ -10,7 +10,7 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: Variable.java,v 1.5 2007/12/06 20:01:24 smoser Exp $
+ * $Id: Variable.java,v 1.6 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model;
 
@@ -38,7 +38,7 @@ import org.eclipse.xsd.XSDTypeDefinition;
  * @model
  * @generated
  */
-public interface Variable extends ExtensibleElement {
+public interface Variable extends BPELExtensibleElement {
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->

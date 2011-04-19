@@ -33,8 +33,6 @@ public class VariableTypeTreeContentProvider extends ModelTreeContentProvider {
 	boolean isPropertyTree;
 	boolean displayParticles;
 	
-	XSDSchemaContentProvider xsdContentProvider = null;
-	
 	public VariableTypeTreeContentProvider(boolean isCondensed, boolean displayParticles) {
 		super(isCondensed);
 		this.displayParticles = displayParticles;

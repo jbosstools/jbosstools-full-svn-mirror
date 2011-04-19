@@ -10,7 +10,7 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: ToImpl.java,v 1.13 2009/04/14 10:50:37 smoser Exp $
+ * $Id: ToImpl.java,v 1.14 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model.impl;
 
@@ -50,7 +50,7 @@ import org.eclipse.wst.wsdl.Part;
  *
  * @generated
  */
-public class ToImpl extends ExtensibleElementImpl implements To {
+public class ToImpl extends BPELExtensibleElementImpl implements To {
 	/**
 	 * The cached value of the '{@link #getVariable() <em>Variable</em>}' reference.
 	 * <!-- begin-user-doc -->

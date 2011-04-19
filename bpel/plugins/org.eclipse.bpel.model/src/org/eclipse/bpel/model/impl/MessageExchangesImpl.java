@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: MessageExchangesImpl.java,v 1.8 2009/04/14 10:50:36 smoser Exp $
+ * $Id: MessageExchangesImpl.java,v 1.9 2011/03/30 18:54:24 rbrodt Exp $
  */
 package org.eclipse.bpel.model.impl;
 
@@ -34,7 +34,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class MessageExchangesImpl extends ExtensibleElementImpl implements
+public class MessageExchangesImpl extends BPELExtensibleElementImpl implements
 		MessageExchanges {
 	/**
 	 * The cached value of the '{@link #getChildren() <em>Children</em>}' containment reference list.

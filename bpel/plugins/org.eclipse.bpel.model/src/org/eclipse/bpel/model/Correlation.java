@@ -10,7 +10,7 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: Correlation.java,v 1.4 2007/12/06 20:01:24 smoser Exp $
+ * $Id: Correlation.java,v 1.5 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model;
 
@@ -32,7 +32,7 @@ package org.eclipse.bpel.model;
  * @model
  * @generated
  */
-public interface Correlation extends ExtensibleElement {
+public interface Correlation extends BPELExtensibleElement {
 	/**
 	 * Returns the value of the '<em><b>Initiate</b></em>' attribute.
 	 * The default value is <code>"no"</code>.

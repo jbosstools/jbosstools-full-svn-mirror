@@ -10,14 +10,17 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: BPELAdapterFactory.java,v 1.23 2009/04/14 10:50:37 smoser Exp $
+ * $Id: BPELAdapterFactory.java,v 1.24 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model.util;
 
+import javax.wsdl.extensions.AttributeExtensible;
+import javax.wsdl.extensions.ElementExtensible;
 import javax.wsdl.extensions.ExtensibilityElement;
 
 import org.eclipse.bpel.model.Activity;
 import org.eclipse.bpel.model.Assign;
+import org.eclipse.bpel.model.BPELExtensibleElement;
 import org.eclipse.bpel.model.BPELPackage;
 import org.eclipse.bpel.model.BooleanExpression;
 import org.eclipse.bpel.model.Branches;
@@ -40,7 +43,7 @@ import org.eclipse.bpel.model.Empty;
 import org.eclipse.bpel.model.EventHandler;
 import org.eclipse.bpel.model.Exit;
 import org.eclipse.bpel.model.Expression;
-import org.eclipse.bpel.model.ExtensibleElement;
+import org.eclipse.bpel.model.BPELExtensibleElement;
 import org.eclipse.bpel.model.Extension;
 import org.eclipse.bpel.model.ExtensionActivity;
 import org.eclipse.bpel.model.Extensions;
@@ -92,6 +95,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.wst.wsdl.ExtensibleElement;
 import org.eclipse.wst.wsdl.UnknownExtensibilityElement;
 import org.eclipse.wst.wsdl.WSDLElement;
 
@@ -487,8 +491,8 @@ public class BPELAdapterFactory extends AdapterFactoryImpl {
 		}
 
 		@Override
-		public Adapter caseExtensibleElement(ExtensibleElement object) {
-			return createExtensibleElementAdapter();
+		public Adapter caseBPELExtensibleElement(BPELExtensibleElement object) {
+			return createBPELExtensibleElementAdapter();
 		}
 
 		@Override
@@ -517,9 +521,18 @@ public class BPELAdapterFactory extends AdapterFactoryImpl {
 		}
 
 		@Override
-		public Adapter caseExtensibleElement_1(
-				org.eclipse.wst.wsdl.ExtensibleElement object) {
-			return createExtensibleElement_1Adapter();
+		public Adapter caseIElementExtensible(ElementExtensible object) {
+			return createIElementExtensibleAdapter();
+		}
+
+		@Override
+		public Adapter caseIAttributeExtensible(AttributeExtensible object) {
+			return createIAttributeExtensibleAdapter();
+		}
+
+		@Override
+		public Adapter caseExtensibleElement(ExtensibleElement object) {
+			return createExtensibleElementAdapter();
 		}
 
 		@Override
@@ -1483,6 +1496,20 @@ public class BPELAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.bpel.model.BPELExtensibleElement <em>Extensible Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.bpel.model.BPELExtensibleElement
+	 * @generated
+	 */
+	public Adapter createBPELExtensibleElementAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.wst.wsdl.WSDLElement <em>Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -1497,6 +1524,34 @@ public class BPELAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link javax.wsdl.extensions.ElementExtensible <em>IElement Extensible</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see javax.wsdl.extensions.ElementExtensible
+	 * @generated
+	 */
+	public Adapter createIElementExtensibleAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link javax.wsdl.extensions.AttributeExtensible <em>IAttribute Extensible</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see javax.wsdl.extensions.AttributeExtensible
+	 * @generated
+	 */
+	public Adapter createIAttributeExtensibleAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.wst.wsdl.ExtensibleElement <em>Extensible Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -1504,20 +1559,6 @@ public class BPELAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
 	 * @see org.eclipse.wst.wsdl.ExtensibleElement
-	 * @generated
-	 */
-	public Adapter createExtensibleElement_1Adapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.bpel.model.ExtensibleElement <em>Extensible Element</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.bpel.model.ExtensibleElement
 	 * @generated
 	 */
 	public Adapter createExtensibleElementAdapter() {

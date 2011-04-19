@@ -26,15 +26,13 @@ import org.eclipse.swt.widgets.Control;
  * @author IBM
  * @author Michal Chmielewski (michal.chmielewski@oracle.com)
  * @date May 15, 2007
- *
  */
-
 public class StatusLabel2 {
 
-	final private int MAX_MESSAGES = 5;
-	final private String STATUS_MESSAGE_ID = "STATUS_MESSAGE"; //$NON-NLS-1$
-	final private String NEW_LINE = "\n"; //$NON-NLS-1$
-	final private String ETCETERA = "..."; //$NON-NLS-1$
+	final static private int MAX_MESSAGES = 5;
+	final static private String STATUS_MESSAGE_ID = "STATUS_MESSAGE"; //$NON-NLS-1$
+	final static private String NEW_LINE = "\n"; //$NON-NLS-1$
+	final static private String ETCETERA = "..."; //$NON-NLS-1$
 
 	protected DecoratedLabel label;
 	protected List<StatusMessage> statusMessageList;

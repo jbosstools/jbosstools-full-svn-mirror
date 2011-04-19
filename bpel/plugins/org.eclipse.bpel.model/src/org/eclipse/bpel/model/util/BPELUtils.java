@@ -50,7 +50,6 @@ import org.eclipse.bpel.model.proxy.MessageProxy;
 import org.eclipse.bpel.model.proxy.OperationProxy;
 import org.eclipse.bpel.model.proxy.PortTypeProxy;
 import org.eclipse.bpel.model.reordering.IExtensibilityElementListHandler;
-import org.eclipse.bpel.model.resource.BPELReader;
 import org.eclipse.bpel.model.resource.BPELResource;
 import org.eclipse.bpel.model.resource.BPELResourceSetImpl;
 import org.eclipse.bpel.names.NCNameWordDetector;
@@ -186,6 +185,8 @@ public class BPELUtils {
 	 * @throws RuntimeException
 	 *             if the prefix is already set.
 	 */
+
+	@SuppressWarnings("unchecked")
 	public static void setPrefix(EObject eObject, String namespaceURI,
 			String prefix) {
 
@@ -255,8 +256,17 @@ public class BPELUtils {
 					"eObject cannot be null in getNamespaceMap()");
 		}
 
-		INamespaceMap<String, String> nsMap = AdapterRegistry.INSTANCE.adapt(
+		INamespaceMap<String, String> nsMap = null;
+    	// Bugzilla 120110 - this eObject may not have a namespace map, but its
+		// ancestors might, so keep searching until we find one or until
+		// we run out of ancestors.
+		while (nsMap==null && eObject!=null) {
+			nsMap = AdapterRegistry.INSTANCE.adapt(
 				eObject, INamespaceMap.class);
+			if (nsMap==null)
+				eObject = eObject.eContainer();
+		}
+		
 		if (nsMap == null) {
 			throw new IllegalStateException(
 					"INamespaceMap cannot be attached to an eObject");
@@ -277,11 +287,11 @@ public class BPELUtils {
 		if (object instanceof EObject) {
 			// check if *this* is already the process object
 			if (object instanceof Process)
-				return (Process) object;
-			EObject cont = ((EObject) object).eContainer();
+				return (Process)object;
+			EObject cont = ((EObject)object).eContainer();
 			while (cont != null) {
 				if (cont.eClass() == BPELPackage.eINSTANCE.getProcess())
-					return (Process) cont;
+					return (Process)cont;
 				cont = cont.eContainer();
 			}
 		}
@@ -373,15 +383,14 @@ public class BPELUtils {
 	 * @return the node
 	 */
 
-	public static Node convertStringToNode(EObject parent, String s,
-			BPELResource bpelResource) {
+	public static Node convertStringToNode(EObject parent, String s, BPELResource bpelResource) {
 		// Create DOM document
 		DocumentBuilderFactory factory = new DocumentBuilderFactoryImpl();
 		factory.setNamespaceAware(true);
 		factory.setValidating(false);
 
 		StringBuilder namespaces = new StringBuilder();
-		Map<String, String> nsMap = getAllNamespacesForContext(parent);
+		Map<String, String> nsMap = getAllNamespacesForContext(parent);		
 		for (Entry<String, String> e : nsMap.entrySet()) {
 			String prefix = e.getKey();
 			String value = e.getValue();
@@ -397,17 +406,15 @@ public class BPELUtils {
 			namespaces.append("=\"");
 			namespaces.append(value);
 			namespaces.append("\" ");
-		}
-
+		}		
+		
 		String namespaceURI = bpelResource.getNamespaceURI();
 		if (bpelResource.getOptionUseNSPrefix()) {
 			String prefix = "bpws";
-			s = "<" + prefix + ":from xmlns:" + prefix + "=\"" + namespaceURI
-					+ "\" " + namespaces.toString() + ">" + s + "</" + prefix
-					+ ":from>";
+			s = "<" + prefix + ":from xmlns:" + prefix + "=\"" + namespaceURI + "\" "
+					+ namespaces.toString() + ">" + s + "</" + prefix + ":from>";
 		} else {
-			s = "<from xmlns=\"" + namespaceURI + "\" " + namespaces.toString()
-					+ ">" + s + "</from>";
+			s = "<from xmlns=\"" + namespaceURI + "\" " + namespaces.toString() + ">" + s + "</from>";
 		}
 
 		try {
@@ -468,9 +475,10 @@ public class BPELUtils {
 		String namespaceURI = DOMUtils.getNamespaceURIFromPrefix(element,
 				prefix);
 
-		if (prefix == null) {
+		// namespaceURI may be null. That's okay.
+		// Bugzilla 320654
+		if (prefix==null)
 			return new QName(namespaceURI, localPart);
-		}
 		return new QName(namespaceURI, localPart, prefix);
 	}
 
@@ -894,34 +902,34 @@ public class BPELUtils {
 				|| (child instanceof Expression && parent instanceof From)
 				|| (child instanceof Expression && parent instanceof To);
 	}
-
+	
 	public static boolean isActivityNode(Node node) {
 		String name = node.getLocalName();
-		return isBPELElement(node)
-				&& (BPELConstants.ND_INVOKE.equals(name)
-						|| BPELConstants.ND_ASSIGN.equals(name)
-						|| BPELConstants.ND_WHILE.equals(name)
-						|| BPELConstants.ND_REPEAT_UNTIL.equals(name)
-						|| BPELConstants.ND_RECEIVE.equals(name)
-						|| BPELConstants.ND_REPLY.equals(name)
-						|| BPELConstants.ND_THROW.equals(name)
-						|| BPELConstants.ND_WAIT.equals(name)
-						|| BPELConstants.ND_SEQUENCE.equals(name)
-						|| BPELConstants.ND_PICK.equals(name)
-						|| BPELConstants.ND_FLOW.equals(name)
-						|| BPELConstants.ND_SCOPE.equals(name)
-						|| BPELConstants.ND_COMPENSATE.equals(name)
-						|| BPELConstants.ND_RETHROW.equals(name)
-						|| BPELConstants.ND_EXIT.equals(name)
-						|| BPELConstants.ND_EXTENSION_ACTIVITY.equals(name)
-						|| BPELConstants.ND_INVOKE.equals(name)
-						|| BPELConstants.ND_FOR_EACH.equals(name)
-						|| BPELConstants.ND_IF.equals(name)
-						|| BPELConstants.ND_VALIDATE.equals(name)
-						|| BPELConstants.ND_COMPENSATE_SCOPE.equals(name)
-						|| BPELConstants.ND_EMPTY.equals(name) || BPELConstants.ND_OPAQUEACTIVITY
-						.equals(name));
-
+		return isBPELElement(node) && 
+			   (BPELConstants.ND_INVOKE.equals(name) ||
+			   BPELConstants.ND_ASSIGN.equals(name) ||
+			   BPELConstants.ND_WHILE.equals(name) ||
+			   BPELConstants.ND_REPEAT_UNTIL.equals(name) ||
+			   BPELConstants.ND_RECEIVE.equals(name) ||
+			   BPELConstants.ND_REPLY.equals(name) ||
+			   BPELConstants.ND_THROW.equals(name) ||
+			   BPELConstants.ND_WAIT.equals(name) ||
+			   BPELConstants.ND_SEQUENCE.equals(name) ||
+			   BPELConstants.ND_PICK.equals(name) ||
+			   BPELConstants.ND_FLOW.equals(name) ||
+			   BPELConstants.ND_SCOPE.equals(name) ||
+			   BPELConstants.ND_COMPENSATE.equals(name) ||
+			   BPELConstants.ND_RETHROW.equals(name) ||
+			   BPELConstants.ND_EXIT.equals(name) ||
+			   BPELConstants.ND_EXTENSION_ACTIVITY.equals(name) ||
+			   BPELConstants.ND_INVOKE.equals(name) ||
+			   BPELConstants.ND_FOR_EACH.equals(name) ||
+			   BPELConstants.ND_IF.equals(name) ||
+			   BPELConstants.ND_VALIDATE.equals(name) ||
+			   BPELConstants.ND_COMPENSATE_SCOPE.equals(name) ||
+			   BPELConstants.ND_EMPTY.equals(name) ||
+			   BPELConstants.ND_OPAQUEACTIVITY.equals(name));
+			
 	}
 
 	// TODO: (DU) This is here due to
@@ -1011,7 +1019,7 @@ public class BPELUtils {
 		}
 
 	} // copyInto(Node,Node)
-	
+
 	// https://issues.jboss.org/browse/JBIDE-8068
 	public static boolean isAbstractProcess(Process process)
 	{

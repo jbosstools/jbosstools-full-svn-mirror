@@ -10,7 +10,7 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: AssignImpl.java,v 1.10 2009/04/14 10:50:36 smoser Exp $
+ * $Id: AssignImpl.java,v 1.11 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model.impl;
 
@@ -125,8 +125,8 @@ public class AssignImpl extends ActivityImpl implements Assign {
 		Boolean oldValidate = validate;
 		if (!isReconciling) {
 			ReconciliationHelper.replaceAttribute(this,
-					BPELConstants.AT_VALIDATE, BPELUtils
-							.boolean2XML(newValidate));
+					BPELConstants.AT_VALIDATE,
+					BPELUtils.boolean2XML(newValidate));
 		}
 		validate = newValidate;
 		if (eNotificationRequired())

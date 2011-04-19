@@ -95,7 +95,10 @@ public class XSDUtil
      */
 	
     public static XSDElementDeclaration resolveElementDeclaration(XSDSchema schema, QName qname)
-    {    	
+    {
+    	// Bug 120110 - just bulletproofing :)
+    	if (schema==null)
+    		return null;
         return schema.resolveElementDeclaration(XSDNamespaceAdjust (qname.getNamespaceURI()) , qname.getLocalPart());
     }
     
@@ -109,6 +112,9 @@ public class XSDUtil
      */
     public static XSDTypeDefinition resolveTypeDefinition(XSDSchema schema, QName qname)
     {
+    	// Bug 120110 - just bulletproofing :)
+    	if (schema==null)
+    		return null;
         return schema.resolveTypeDefinition(XSDNamespaceAdjust ( qname.getNamespaceURI() ), qname.getLocalPart());
     }
     

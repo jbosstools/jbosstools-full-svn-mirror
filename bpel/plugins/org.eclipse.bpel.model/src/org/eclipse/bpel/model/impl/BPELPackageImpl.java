@@ -10,12 +10,13 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: BPELPackageImpl.java,v 1.37 2009/04/23 10:52:48 smoser Exp $
+ * $Id: BPELPackageImpl.java,v 1.40 2011/03/30 18:54:24 rbrodt Exp $
  */
 package org.eclipse.bpel.model.impl;
 
 import org.eclipse.bpel.model.Activity;
 import org.eclipse.bpel.model.Assign;
+import org.eclipse.bpel.model.BPELExtensibleElement;
 import org.eclipse.bpel.model.BPELFactory;
 import org.eclipse.bpel.model.BPELPackage;
 import org.eclipse.bpel.model.BooleanExpression;
@@ -41,7 +42,6 @@ import org.eclipse.bpel.model.EndpointReferenceRole;
 import org.eclipse.bpel.model.EventHandler;
 import org.eclipse.bpel.model.Exit;
 import org.eclipse.bpel.model.Expression;
-import org.eclipse.bpel.model.ExtensibleElement;
 import org.eclipse.bpel.model.Extension;
 import org.eclipse.bpel.model.ExtensionActivity;
 import org.eclipse.bpel.model.Extensions;
@@ -577,7 +577,7 @@ public class BPELPackageImpl extends EPackageImpl implements BPELPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass extensibleElementEClass = null;
+	private EClass bpelExtensibleElementEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -655,20 +655,10 @@ public class BPELPackageImpl extends EPackageImpl implements BPELPackage {
 	private static boolean isInited = false;
 
 	/**
-	 * Creates, registers, and initializes the <b>Package</b> for this
-	 * model, and for any others upon which it depends.  Simple
-	 * dependencies are satisfied by calling this method on all
-	 * dependent packages before doing anything else.  This method drives
-	 * initialization for interdependent packages directly, in parallel
-	 * with this package, itself.
-	 * <p>Of this package and its interdependencies, all packages which
-	 * have not yet been registered by their URI values are first created
-	 * and registered.  The packages are then initialized in two steps:
-	 * meta-model objects for all of the packages are created before any
-	 * are initialized, since one package's meta-model objects may refer to
-	 * those of another.
-	 * <p>Invocation of this method will not affect any packages that have
-	 * already been initialized.
+	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
+	 * 
+	 * <p>This method is used to initialize {@link BPELPackage#eINSTANCE} when that field is accessed.
+	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #eNS_URI
@@ -683,9 +673,8 @@ public class BPELPackageImpl extends EPackageImpl implements BPELPackage {
 
 		// Obtain or create and register package
 		BPELPackageImpl theBPELPackage = (BPELPackageImpl) (EPackage.Registry.INSTANCE
-				.getEPackage(eNS_URI) instanceof BPELPackageImpl ? EPackage.Registry.INSTANCE
-				.getEPackage(eNS_URI)
-				: new BPELPackageImpl());
+				.get(eNS_URI) instanceof BPELPackageImpl ? EPackage.Registry.INSTANCE
+				.get(eNS_URI) : new BPELPackageImpl());
 
 		isInited = true;
 
@@ -716,6 +705,8 @@ public class BPELPackageImpl extends EPackageImpl implements BPELPackage {
 		// Mark meta-data to indicate it can't be changed
 		theBPELPackage.freeze();
 
+		// Update the registry and return the package
+		EPackage.Registry.INSTANCE.put(BPELPackage.eNS_URI, theBPELPackage);
 		return theBPELPackage;
 	}
 
@@ -723,8 +714,11 @@ public class BPELPackageImpl extends EPackageImpl implements BPELPackage {
 		BPELPackage thePackage = initGen();
 
 		//TODO: handle the following test differently
-		if (!CorrelationPattern.REQUESTRESPONSE_LITERAL.getName().equals("request-response")) { //$NON-NLS-1$
-			System.err.println("BPELPackageImpl: CorrelationPattern has invalid value. Fix CorrelationPattern.REQUESTRESPONSE_LITERAL."); //$NON-NLS-1$
+		// Bugzilla 340654
+		if (!CorrelationPattern.REQUESTRESPONSE_LITERAL.getName().equals(
+				"requestresponse")) { //$NON-NLS-1$
+			System.err
+					.println("BPELPackageImpl: CorrelationPattern has invalid value. Fix CorrelationPattern.REQUESTRESPONSE_LITERAL."); //$NON-NLS-1$
 		}
 		return thePackage;
 	}
@@ -2515,7 +2509,7 @@ public class BPELPackageImpl extends EPackageImpl implements BPELPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getOnEvent_CorrelationSets() {
+	public EReference getOnEvent_XSDElement() {
 		return (EReference) onEventEClass.getEStructuralFeatures().get(7);
 	}
 
@@ -2524,7 +2518,7 @@ public class BPELPackageImpl extends EPackageImpl implements BPELPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getOnEvent_FromParts() {
+	public EReference getOnEvent_CorrelationSets() {
 		return (EReference) onEventEClass.getEStructuralFeatures().get(8);
 	}
 
@@ -2533,8 +2527,17 @@ public class BPELPackageImpl extends EPackageImpl implements BPELPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getOnEvent_MessageExchange() {
+	public EReference getOnEvent_FromParts() {
 		return (EReference) onEventEClass.getEStructuralFeatures().get(9);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getOnEvent_MessageExchange() {
+		return (EReference) onEventEClass.getEStructuralFeatures().get(10);
 	}
 
 	/**
@@ -3030,8 +3033,8 @@ public class BPELPackageImpl extends EPackageImpl implements BPELPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getExtensibleElement() {
-		return extensibleElementEClass;
+	public EClass getBPELExtensibleElement() {
+		return bpelExtensibleElementEClass;
 	}
 
 	/**
@@ -3039,9 +3042,9 @@ public class BPELPackageImpl extends EPackageImpl implements BPELPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getExtensibleElement_Documentation() {
-		return (EReference) extensibleElementEClass.getEStructuralFeatures()
-				.get(0);
+	public EReference getBPELExtensibleElement_Documentation() {
+		return (EReference) bpelExtensibleElementEClass
+				.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -3448,9 +3451,6 @@ public class BPELPackageImpl extends EPackageImpl implements BPELPackage {
 		createEReference(onEventEClass, ON_EVENT__OPERATION);
 		createEReference(onEventEClass, ON_EVENT__PORT_TYPE);
 		createEReference(onEventEClass, ON_EVENT__MESSAGE_TYPE);
-		// https://bugs.eclipse.org/bugs/show_bug.cgi?id=336003
-		// https://issues.jboss.org/browse/JBIDE-8305
-		// "element" attribute was missing from original model
 		createEReference(onEventEClass, ON_EVENT__XSD_ELEMENT);
 		createEReference(onEventEClass, ON_EVENT__CORRELATION_SETS);
 		createEReference(onEventEClass, ON_EVENT__FROM_PARTS);
@@ -3535,9 +3535,9 @@ public class BPELPackageImpl extends EPackageImpl implements BPELPackage {
 		createEAttribute(branchesEClass,
 				BRANCHES__COUNT_COMPLETED_BRANCHES_ONLY);
 
-		extensibleElementEClass = createEClass(EXTENSIBLE_ELEMENT);
-		createEReference(extensibleElementEClass,
-				EXTENSIBLE_ELEMENT__DOCUMENTATION);
+		bpelExtensibleElementEClass = createEClass(BPEL_EXTENSIBLE_ELEMENT);
+		createEReference(bpelExtensibleElementEClass,
+				BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION);
 
 		documentationEClass = createEClass(DOCUMENTATION);
 		createEAttribute(documentationEClass, DOCUMENTATION__LANG);
@@ -3598,14 +3598,16 @@ public class BPELPackageImpl extends EPackageImpl implements BPELPackage {
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		processEClass.getESuperTypes().add(this.getExtensibleElement());
-		partnerLinkEClass.getESuperTypes().add(this.getExtensibleElement());
-		faultHandlerEClass.getESuperTypes().add(this.getExtensibleElement());
-		activityEClass.getESuperTypes().add(this.getExtensibleElement());
-		correlationSetEClass.getESuperTypes().add(this.getExtensibleElement());
+		processEClass.getESuperTypes().add(this.getBPELExtensibleElement());
+		partnerLinkEClass.getESuperTypes().add(this.getBPELExtensibleElement());
+		faultHandlerEClass.getESuperTypes()
+				.add(this.getBPELExtensibleElement());
+		activityEClass.getESuperTypes().add(this.getBPELExtensibleElement());
+		correlationSetEClass.getESuperTypes().add(
+				this.getBPELExtensibleElement());
 		invokeEClass.getESuperTypes().add(this.getPartnerActivity());
-		linkEClass.getESuperTypes().add(this.getExtensibleElement());
-		catchEClass.getESuperTypes().add(this.getExtensibleElement());
+		linkEClass.getESuperTypes().add(this.getBPELExtensibleElement());
+		catchEClass.getESuperTypes().add(this.getBPELExtensibleElement());
 		replyEClass.getESuperTypes().add(this.getPartnerActivity());
 		replyEClass.getESuperTypes().add(this.getActivity());
 		partnerActivityEClass.getESuperTypes().add(this.getActivity());
@@ -3618,66 +3620,73 @@ public class BPELPackageImpl extends EPackageImpl implements BPELPackage {
 		whileEClass.getESuperTypes().add(this.getActivity());
 		pickEClass.getESuperTypes().add(this.getActivity());
 		flowEClass.getESuperTypes().add(this.getActivity());
-		onAlarmEClass.getESuperTypes().add(this.getExtensibleElement());
+		onAlarmEClass.getESuperTypes().add(this.getBPELExtensibleElement());
 		assignEClass.getESuperTypes().add(this.getActivity());
-		copyEClass.getESuperTypes().add(this.getExtensibleElement());
-		extensionEClass.getESuperTypes().add(this.getExtensibleElement());
+		copyEClass.getESuperTypes().add(this.getBPELExtensibleElement());
+		extensionEClass.getESuperTypes().add(this.getBPELExtensibleElement());
 		scopeEClass.getESuperTypes().add(this.getActivity());
 		compensateScopeEClass.getESuperTypes().add(this.getActivity());
 		compensationHandlerEClass.getESuperTypes().add(
-				this.getExtensibleElement());
-		toEClass.getESuperTypes().add(this.getExtensibleElement());
-		fromEClass.getESuperTypes().add(this.getExtensibleElement());
-		onMessageEClass.getESuperTypes().add(this.getExtensibleElement());
+				this.getBPELExtensibleElement());
+		toEClass.getESuperTypes().add(this.getBPELExtensibleElement());
+		fromEClass.getESuperTypes().add(this.getBPELExtensibleElement());
+		onMessageEClass.getESuperTypes().add(this.getBPELExtensibleElement());
 		expressionEClass.getESuperTypes().add(
 				theWSDLPackage.getExtensibilityElement());
 		booleanExpressionEClass.getESuperTypes().add(this.getExpression());
-		correlationEClass.getESuperTypes().add(this.getExtensibleElement());
-		messageExchangeEClass.getESuperTypes().add(this.getExtensibleElement());
-		eventHandlerEClass.getESuperTypes().add(this.getExtensibleElement());
-		sourceEClass.getESuperTypes().add(this.getExtensibleElement());
-		targetEClass.getESuperTypes().add(this.getExtensibleElement());
-		partnerLinksEClass.getESuperTypes().add(this.getExtensibleElement());
-		messageExchangesEClass.getESuperTypes()
-				.add(this.getExtensibleElement());
-		variablesEClass.getESuperTypes().add(this.getExtensibleElement());
-		correlationSetsEClass.getESuperTypes().add(this.getExtensibleElement());
-		linksEClass.getESuperTypes().add(this.getExtensibleElement());
-		catchAllEClass.getESuperTypes().add(this.getExtensibleElement());
-		correlationsEClass.getESuperTypes().add(this.getExtensibleElement());
-		variableEClass.getESuperTypes().add(this.getExtensibleElement());
+		correlationEClass.getESuperTypes().add(this.getBPELExtensibleElement());
+		messageExchangeEClass.getESuperTypes().add(
+				this.getBPELExtensibleElement());
+		eventHandlerEClass.getESuperTypes()
+				.add(this.getBPELExtensibleElement());
+		sourceEClass.getESuperTypes().add(this.getBPELExtensibleElement());
+		targetEClass.getESuperTypes().add(this.getBPELExtensibleElement());
+		partnerLinksEClass.getESuperTypes()
+				.add(this.getBPELExtensibleElement());
+		messageExchangesEClass.getESuperTypes().add(
+				this.getBPELExtensibleElement());
+		variablesEClass.getESuperTypes().add(this.getBPELExtensibleElement());
+		correlationSetsEClass.getESuperTypes().add(
+				this.getBPELExtensibleElement());
+		linksEClass.getESuperTypes().add(this.getBPELExtensibleElement());
+		catchAllEClass.getESuperTypes().add(this.getBPELExtensibleElement());
+		correlationsEClass.getESuperTypes()
+				.add(this.getBPELExtensibleElement());
+		variableEClass.getESuperTypes().add(this.getBPELExtensibleElement());
 		unknownExtensibilityAttributeEClass.getESuperTypes().add(
 				theWSDLPackage.getUnknownExtensibilityElement());
-		onEventEClass.getESuperTypes().add(this.getExtensibleElement());
-		importEClass.getESuperTypes().add(this.getExtensibleElement());
+		onEventEClass.getESuperTypes().add(this.getBPELExtensibleElement());
+		importEClass.getESuperTypes().add(this.getBPELExtensibleElement());
 		rethrowEClass.getESuperTypes().add(this.getActivity());
 		conditionEClass.getESuperTypes().add(this.getExpression());
-		targetsEClass.getESuperTypes().add(this.getExtensibleElement());
-		sourcesEClass.getESuperTypes().add(this.getExtensibleElement());
+		targetsEClass.getESuperTypes().add(this.getBPELExtensibleElement());
+		sourcesEClass.getESuperTypes().add(this.getBPELExtensibleElement());
 		queryEClass.getESuperTypes().add(theWSDLPackage.getWSDLElement());
 		serviceRefEClass.getESuperTypes().add(
 				theWSDLPackage.getExtensibleElement());
-		extensionsEClass.getESuperTypes().add(this.getExtensibleElement());
+		extensionsEClass.getESuperTypes().add(this.getBPELExtensibleElement());
 		extensionActivityEClass.getESuperTypes().add(this.getActivity());
-		fromPartEClass.getESuperTypes().add(this.getExtensibleElement());
-		toPartEClass.getESuperTypes().add(this.getExtensibleElement());
+		fromPartEClass.getESuperTypes().add(this.getBPELExtensibleElement());
+		toPartEClass.getESuperTypes().add(this.getBPELExtensibleElement());
 		opaqueActivityEClass.getESuperTypes().add(this.getActivity());
 		forEachEClass.getESuperTypes().add(this.getActivity());
 		repeatUntilEClass.getESuperTypes().add(this.getActivity());
 		terminationHandlerEClass.getESuperTypes().add(
-				this.getExtensibleElement());
+				this.getBPELExtensibleElement());
 		validateEClass.getESuperTypes().add(this.getActivity());
 		ifEClass.getESuperTypes().add(this.getActivity());
-		elseIfEClass.getESuperTypes().add(this.getExtensibleElement());
-		elseEClass.getESuperTypes().add(this.getExtensibleElement());
+		elseIfEClass.getESuperTypes().add(this.getBPELExtensibleElement());
+		elseEClass.getESuperTypes().add(this.getBPELExtensibleElement());
 		completionConditionEClass.getESuperTypes().add(
-				this.getExtensibleElement());
+				this.getBPELExtensibleElement());
 		branchesEClass.getESuperTypes().add(this.getExpression());
-		extensibleElementEClass.getESuperTypes().add(
+		bpelExtensibleElementEClass.getESuperTypes().add(
 				theWSDLPackage.getExtensibleElement());
+		documentationEClass.getESuperTypes().add(
+				this.getBPELExtensibleElement());
 		compensateEClass.getESuperTypes().add(this.getActivity());
-		fromPartsEClass.getESuperTypes().add(this.getExtensibleElement());
-		toPartsEClass.getESuperTypes().add(this.getExtensibleElement());
+		fromPartsEClass.getESuperTypes().add(this.getBPELExtensibleElement());
+		toPartsEClass.getESuperTypes().add(this.getBPELExtensibleElement());
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(
@@ -4634,7 +4643,12 @@ public class BPELPackageImpl extends EPackageImpl implements BPELPackage {
 				getOnEvent_MessageType(),
 				theWSDLPackage.getMessage(),
 				null,
-				"messageType", null, 1, 1, OnEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+				"messageType", null, 0, 1, OnEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(
+				getOnEvent_XSDElement(),
+				theXSDPackage.getXSDElementDeclaration(),
+				null,
+				"XSDElement", null, 0, 1, OnEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(
 				getOnEvent_CorrelationSets(),
 				this.getCorrelationSets(),
@@ -4916,14 +4930,14 @@ public class BPELPackageImpl extends EPackageImpl implements BPELPackage {
 				"countCompletedBranchesOnly", "false", 0, 1, Branches.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(
-				extensibleElementEClass,
-				ExtensibleElement.class,
-				"ExtensibleElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+				bpelExtensibleElementEClass,
+				BPELExtensibleElement.class,
+				"BPELExtensibleElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(
-				getExtensibleElement_Documentation(),
+				getBPELExtensibleElement_Documentation(),
 				this.getDocumentation(),
 				null,
-				"documentation", null, 0, 1, ExtensibleElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+				"documentation", null, 0, 1, BPELExtensibleElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(
 				documentationEClass,

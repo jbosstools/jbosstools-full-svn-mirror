@@ -10,12 +10,13 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: BPELFactoryImpl.java,v 1.23 2008/02/28 17:33:20 smoser Exp $
+ * $Id: BPELFactoryImpl.java,v 1.24 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model.impl;
 
 import org.eclipse.bpel.model.Activity;
 import org.eclipse.bpel.model.Assign;
+import org.eclipse.bpel.model.BPELExtensibleElement;
 import org.eclipse.bpel.model.BPELFactory;
 import org.eclipse.bpel.model.BPELPackage;
 import org.eclipse.bpel.model.BooleanExpression;
@@ -41,7 +42,6 @@ import org.eclipse.bpel.model.EndpointReferenceRole;
 import org.eclipse.bpel.model.EventHandler;
 import org.eclipse.bpel.model.Exit;
 import org.eclipse.bpel.model.Expression;
-import org.eclipse.bpel.model.ExtensibleElement;
 import org.eclipse.bpel.model.Extension;
 import org.eclipse.bpel.model.ExtensionActivity;
 import org.eclipse.bpel.model.Extensions;
@@ -276,8 +276,8 @@ public class BPELFactoryImpl extends EFactoryImpl implements BPELFactory {
 			return createCompletionCondition();
 		case BPELPackage.BRANCHES:
 			return createBranches();
-		case BPELPackage.EXTENSIBLE_ELEMENT:
-			return createExtensibleElement();
+		case BPELPackage.BPEL_EXTENSIBLE_ELEMENT:
+			return createBPELExtensibleElement();
 		case BPELPackage.DOCUMENTATION:
 			return createDocumentation();
 		case BPELPackage.COMPENSATE:
@@ -1043,9 +1043,9 @@ public class BPELFactoryImpl extends EFactoryImpl implements BPELFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ExtensibleElement createExtensibleElement() {
-		ExtensibleElementImpl extensibleElement = new ExtensibleElementImpl();
-		return extensibleElement;
+	public BPELExtensibleElement createBPELExtensibleElement() {
+		BPELExtensibleElementImpl bpelExtensibleElement = new BPELExtensibleElementImpl();
+		return bpelExtensibleElement;
 	}
 
 	/**

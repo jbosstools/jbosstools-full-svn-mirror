@@ -184,11 +184,13 @@ public class ParserTool {
 
 	public static Date parseDate(String dateStr) {
 		try {
-			if (dateStr.length() < 10)
+			if( dateStr == null || dateStr.length() < 10 )
 				throw new NumberFormatException("badDateTime"); //$NON-NLS-1$
+			
 			SimpleDateFormat df = new SimpleDateFormat(
 					"yyyy-MM-dd", INTERNAL_PARSE_LOCALE); //$NON-NLS-1$
-			return dateStr != null ? df.parse(dateStr) : null;
+			return df.parse( dateStr );
+			
 		} catch (Exception e) {
 			throw new NumberFormatException(e.toString());
 		}
@@ -298,12 +300,6 @@ public class ParserTool {
 					|| !Character.isDigit(source.charAt(pos + 5))) {
 				throw new NumberFormatException("badTimezone"); //$NON-NLS-1$
 			}
-
-			int hours = (source.charAt(pos + 1) - '0') * 10
-					+ source.charAt(pos + 2) - '0';
-			int mins = (source.charAt(pos + 4) - '0') * 10
-					+ source.charAt(pos + 5) - '0';
-			int milliseconds = (hours * 60 + mins) * 60 * 1000;
 
 			// subtract milliseconds from current date to obtain GMT
 			// if (source.charAt(pos)=='+') milliseconds=-milliseconds;

@@ -14,7 +14,6 @@ import java.util.Collections;
 
 import org.eclipse.bpel.model.Activity;
 import org.eclipse.bpel.model.BPELFactory;
-import org.eclipse.bpel.model.ExtensibleElement;
 import org.eclipse.bpel.model.Sequence;
 import org.eclipse.bpel.model.util.ElementFactory;
 import org.eclipse.bpel.ui.BPELEditor;
@@ -24,7 +23,6 @@ import org.eclipse.bpel.ui.util.ModelHelper;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 /**
  * An IContainer implementation for containers of a single Activity (such as While and
@@ -76,13 +74,13 @@ public class ActivityContainer extends ReferenceContainer {
 			sequence.setName(BPELUtil.getUniqueModelName(bpelEditor.getProcess(), 
 					Messages.BPELUtil_Sequence_1, Collections.singletonList(sequence)));			
 			
-			Object originalChild = getSingleChild(object);
-			Node parentNode = null;
-			if (originalChild instanceof ExtensibleElement) {
-				ExtensibleElement child = (ExtensibleElement) originalChild;
-				parentNode = child.getElement().getParentNode();
-//				removeChild(object, child);
-			}		
+//			Object originalChild = getSingleChild(object);
+//			Node parentNode = null;
+//			if (originalChild instanceof ExtensibleElement) {
+//				ExtensibleElement child = (ExtensibleElement) originalChild;
+//				parentNode = child.getElement().getParentNode();
+////				removeChild(object, child);
+//			}		
 			
 			// NOTE: its important that the implicit sequence be added to the model
 			// *before* we insert the other children in it.  Otherwise Undo/Redo

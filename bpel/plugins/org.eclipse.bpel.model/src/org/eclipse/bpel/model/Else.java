@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Else.java,v 1.4 2007/08/01 21:02:30 mchmielewski Exp $
+ * $Id: Else.java,v 1.5 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model;
 
@@ -22,7 +22,7 @@ package org.eclipse.bpel.model;
  * @model
  * @generated
  */
-public interface Else extends ExtensibleElement {
+public interface Else extends BPELExtensibleElement {
 	/**
 	 * Returns the value of the '<em><b>Activity</b></em>' containment reference.
 	 * <!-- begin-user-doc -->

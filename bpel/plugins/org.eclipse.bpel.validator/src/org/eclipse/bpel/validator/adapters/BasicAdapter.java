@@ -19,7 +19,7 @@ import java.util.List;
 
 import javax.xml.namespace.QName;
 
-import org.eclipse.bpel.model.ExtensibleElement;
+import org.eclipse.bpel.model.BPELExtensibleElement;
 import org.eclipse.bpel.model.adapters.AbstractStatefulAdapter;
 import org.eclipse.bpel.validator.Activator;
 import org.eclipse.bpel.validator.helpers.ModelQueryImpl;
@@ -162,7 +162,7 @@ public class BasicAdapter extends AbstractStatefulAdapter
 	
 	public String getAttribute (QName name) {
 
-		ExtensibleElement obj =	getTarget(getTarget(), ExtensibleElement.class);
+		BPELExtensibleElement obj =	getTarget(getTarget(), BPELExtensibleElement.class);
 		
 		// Turn to the DOM for that information
 		Element element = obj.getElement();

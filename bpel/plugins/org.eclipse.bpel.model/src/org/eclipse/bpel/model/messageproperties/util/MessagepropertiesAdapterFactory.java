@@ -10,7 +10,7 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: MessagepropertiesAdapterFactory.java,v 1.2 2007/08/01 21:02:32 mchmielewski Exp $
+ * $Id: MessagepropertiesAdapterFactory.java,v 1.3 2011/03/30 18:54:26 rbrodt Exp $
  */
 package org.eclipse.bpel.model.messageproperties.util;
 
@@ -76,7 +76,7 @@ public class MessagepropertiesAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * The switch the delegates to the <code>createXXX</code> methods.
+	 * The switch that delegates to the <code>createXXX</code> methods.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

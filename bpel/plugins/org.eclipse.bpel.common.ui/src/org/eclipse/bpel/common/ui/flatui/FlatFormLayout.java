@@ -186,17 +186,20 @@ Point layout (Composite composite, boolean move, int x, int y, int width, int he
 		/* Adjust the child's position according to its border type! */
 		int bshape = BorderShape[getBorderType(
 			(data==null)? BORDER_DEFAULT : data.borderType, child)];
-		if (move) {
-			int x1 = data.getLeftAttachment ().solveX (width) + LeftBorderSize[bshape];
-			int y1 = data.getTopAttachment ().solveX (height) + TopBorderSize[bshape];
-			int x2 = data.getRightAttachment ().solveX (width) - RightBorderSize[bshape];
-			int y2 = data.getBottomAttachment ().solveX (height) - BottomBorderSize[bshape];
-			child.setBounds (x + x1, y + y1, x2 - x1, y2 - y1);
-		} else {
-			width = Math.max (computeWidth (data), width);
-			height = Math.max (computeHeight (data), height);
+		if( data != null ) {
+			if (move) {
+				int x1 = data.getLeftAttachment ().solveX (width) + LeftBorderSize[bshape];
+				int y1 = data.getTopAttachment ().solveX (height) + TopBorderSize[bshape];
+				int x2 = data.getRightAttachment ().solveX (width) - RightBorderSize[bshape];
+				int y2 = data.getBottomAttachment ().solveX (height) - BottomBorderSize[bshape];
+				child.setBounds (x + x1, y + y1, x2 - x1, y2 - y1);
+			} else {
+				width = Math.max (computeWidth (data), width);
+				height = Math.max (computeHeight (data), height);
+			}
 		}
 	}
+	
 	return move ? null : new Point (width, height);
 }
 	

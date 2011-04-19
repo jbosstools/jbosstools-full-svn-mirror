@@ -10,7 +10,7 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: CorrelationSetImpl.java,v 1.11 2009/04/14 10:50:37 smoser Exp $
+ * $Id: CorrelationSetImpl.java,v 1.12 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model.impl;
 
@@ -43,7 +43,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  *
  * @generated
  */
-public class CorrelationSetImpl extends ExtensibleElementImpl implements
+public class CorrelationSetImpl extends BPELExtensibleElementImpl implements
 		CorrelationSet {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.

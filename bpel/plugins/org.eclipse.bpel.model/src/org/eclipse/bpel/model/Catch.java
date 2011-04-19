@@ -10,7 +10,7 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: Catch.java,v 1.4 2007/12/06 20:01:24 smoser Exp $
+ * $Id: Catch.java,v 1.5 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model;
 
@@ -39,7 +39,7 @@ import org.eclipse.xsd.XSDElementDeclaration;
  * @model
  * @generated
  */
-public interface Catch extends ExtensibleElement {
+public interface Catch extends BPELExtensibleElement {
 	/**
 	 * Returns the value of the '<em><b>Fault Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->

@@ -10,7 +10,7 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: BPELPackage.java,v 1.36 2009/04/14 10:50:37 smoser Exp $
+ * $Id: BPELPackage.java,v 1.38 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model;
 
@@ -68,6 +68,61 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 */
 	BPELPackage eINSTANCE = org.eclipse.bpel.model.impl.BPELPackageImpl.init();
+
+	/**
+	 * The meta object id for the '{@link org.eclipse.bpel.model.impl.BPELExtensibleElementImpl <em>Extensible Element</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.bpel.model.impl.BPELExtensibleElementImpl
+	 * @see org.eclipse.bpel.model.impl.BPELPackageImpl#getBPELExtensibleElement()
+	 * @generated
+	 */
+	int BPEL_EXTENSIBLE_ELEMENT = 67;
+
+	/**
+	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT = WSDLPackage.EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+
+	/**
+	 * The feature id for the '<em><b>Element</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BPEL_EXTENSIBLE_ELEMENT__ELEMENT = WSDLPackage.EXTENSIBLE_ELEMENT__ELEMENT;
+
+	/**
+	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS = WSDLPackage.EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+
+	/**
+	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION = WSDLPackage.EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Extensible Element</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT = WSDLPackage.EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.bpel.model.impl.ProcessImpl <em>Process</em>}' class.
@@ -710,23 +765,13 @@ public interface BPELPackage extends EPackage {
 	int BRANCHES = 66;
 
 	/**
-	 * The meta object id for the '{@link org.eclipse.bpel.model.impl.ExtensibleElementImpl <em>Extensible Element</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipse.bpel.model.impl.ExtensibleElementImpl
-	 * @see org.eclipse.bpel.model.impl.BPELPackageImpl#getExtensibleElement()
-	 * @generated
-	 */
-	int EXTENSIBLE_ELEMENT = 67;
-
-	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT = WSDLPackage.EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+	int PROCESS__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -735,7 +780,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXTENSIBLE_ELEMENT__ELEMENT = WSDLPackage.EXTENSIBLE_ELEMENT__ELEMENT;
+	int PROCESS__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
@@ -744,7 +789,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS = WSDLPackage.EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+	int PROCESS__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -753,52 +798,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXTENSIBLE_ELEMENT__DOCUMENTATION = WSDLPackage.EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of structural features of the '<em>Extensible Element</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EXTENSIBLE_ELEMENT_FEATURE_COUNT = WSDLPackage.EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
-
-	/**
-	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROCESS__DOCUMENTATION_ELEMENT = EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
-
-	/**
-	 * The feature id for the '<em><b>Element</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROCESS__ELEMENT = EXTENSIBLE_ELEMENT__ELEMENT;
-
-	/**
-	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROCESS__EEXTENSIBILITY_ELEMENTS = EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
-
-	/**
-	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PROCESS__DOCUMENTATION = EXTENSIBLE_ELEMENT__DOCUMENTATION;
+	int PROCESS__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -807,7 +807,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROCESS__NAME = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+	int PROCESS__NAME = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Target Namespace</b></em>' attribute.
@@ -816,7 +816,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROCESS__TARGET_NAMESPACE = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
+	int PROCESS__TARGET_NAMESPACE = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Query Language</b></em>' attribute.
@@ -825,7 +825,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROCESS__QUERY_LANGUAGE = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
+	int PROCESS__QUERY_LANGUAGE = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Expression Language</b></em>' attribute.
@@ -834,7 +834,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROCESS__EXPRESSION_LANGUAGE = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 3;
+	int PROCESS__EXPRESSION_LANGUAGE = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Suppress Join Failure</b></em>' attribute.
@@ -843,7 +843,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROCESS__SUPPRESS_JOIN_FAILURE = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 4;
+	int PROCESS__SUPPRESS_JOIN_FAILURE = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Variable Access Serializable</b></em>' attribute.
@@ -852,7 +852,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROCESS__VARIABLE_ACCESS_SERIALIZABLE = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 5;
+	int PROCESS__VARIABLE_ACCESS_SERIALIZABLE = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Partner Links</b></em>' containment reference.
@@ -861,7 +861,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROCESS__PARTNER_LINKS = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 6;
+	int PROCESS__PARTNER_LINKS = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Variables</b></em>' containment reference.
@@ -870,7 +870,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROCESS__VARIABLES = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 7;
+	int PROCESS__VARIABLES = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>Activity</b></em>' containment reference.
@@ -879,7 +879,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROCESS__ACTIVITY = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 8;
+	int PROCESS__ACTIVITY = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 8;
 
 	/**
 	 * The feature id for the '<em><b>Fault Handlers</b></em>' containment reference.
@@ -888,7 +888,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROCESS__FAULT_HANDLERS = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 9;
+	int PROCESS__FAULT_HANDLERS = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 9;
 
 	/**
 	 * The feature id for the '<em><b>Event Handlers</b></em>' containment reference.
@@ -897,7 +897,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROCESS__EVENT_HANDLERS = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 10;
+	int PROCESS__EVENT_HANDLERS = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 10;
 
 	/**
 	 * The feature id for the '<em><b>Correlation Sets</b></em>' containment reference.
@@ -906,7 +906,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROCESS__CORRELATION_SETS = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 11;
+	int PROCESS__CORRELATION_SETS = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 11;
 
 	/**
 	 * The feature id for the '<em><b>Imports</b></em>' containment reference list.
@@ -915,7 +915,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROCESS__IMPORTS = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 12;
+	int PROCESS__IMPORTS = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 12;
 
 	/**
 	 * The feature id for the '<em><b>Extensions</b></em>' containment reference.
@@ -924,7 +924,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROCESS__EXTENSIONS = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 13;
+	int PROCESS__EXTENSIONS = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 13;
 
 	/**
 	 * The feature id for the '<em><b>Exit On Standard Fault</b></em>' attribute.
@@ -933,7 +933,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROCESS__EXIT_ON_STANDARD_FAULT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 14;
+	int PROCESS__EXIT_ON_STANDARD_FAULT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 14;
 
 	/**
 	 * The feature id for the '<em><b>Message Exchanges</b></em>' containment reference.
@@ -942,7 +942,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROCESS__MESSAGE_EXCHANGES = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 15;
+	int PROCESS__MESSAGE_EXCHANGES = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 15;
 
 	/**
 	 * The feature id for the '<em><b>Abstract Process Profile</b></em>' attribute.
@@ -951,7 +951,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROCESS__ABSTRACT_PROCESS_PROFILE = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 16;
+	int PROCESS__ABSTRACT_PROCESS_PROFILE = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 16;
 
 	/**
 	 * The number of structural features of the '<em>Process</em>' class.
@@ -960,7 +960,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PROCESS_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 17;
+	int PROCESS_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 17;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
@@ -969,7 +969,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARTNER_LINK__DOCUMENTATION_ELEMENT = EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+	int PARTNER_LINK__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -978,7 +978,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARTNER_LINK__ELEMENT = EXTENSIBLE_ELEMENT__ELEMENT;
+	int PARTNER_LINK__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
@@ -987,7 +987,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARTNER_LINK__EEXTENSIBILITY_ELEMENTS = EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+	int PARTNER_LINK__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -996,7 +996,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARTNER_LINK__DOCUMENTATION = EXTENSIBLE_ELEMENT__DOCUMENTATION;
+	int PARTNER_LINK__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1005,7 +1005,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARTNER_LINK__NAME = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+	int PARTNER_LINK__NAME = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>My Role</b></em>' reference.
@@ -1014,7 +1014,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARTNER_LINK__MY_ROLE = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
+	int PARTNER_LINK__MY_ROLE = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Partner Role</b></em>' reference.
@@ -1023,7 +1023,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARTNER_LINK__PARTNER_ROLE = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
+	int PARTNER_LINK__PARTNER_ROLE = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Partner Link Type</b></em>' reference.
@@ -1032,7 +1032,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARTNER_LINK__PARTNER_LINK_TYPE = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 3;
+	int PARTNER_LINK__PARTNER_LINK_TYPE = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Initialize Partner Role</b></em>' attribute.
@@ -1041,7 +1041,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARTNER_LINK__INITIALIZE_PARTNER_ROLE = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 4;
+	int PARTNER_LINK__INITIALIZE_PARTNER_ROLE = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of structural features of the '<em>Partner Link</em>' class.
@@ -1050,7 +1050,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARTNER_LINK_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 5;
+	int PARTNER_LINK_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
@@ -1059,7 +1059,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FAULT_HANDLER__DOCUMENTATION_ELEMENT = EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+	int FAULT_HANDLER__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -1068,7 +1068,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FAULT_HANDLER__ELEMENT = EXTENSIBLE_ELEMENT__ELEMENT;
+	int FAULT_HANDLER__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
@@ -1077,7 +1077,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FAULT_HANDLER__EEXTENSIBILITY_ELEMENTS = EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+	int FAULT_HANDLER__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -1086,7 +1086,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FAULT_HANDLER__DOCUMENTATION = EXTENSIBLE_ELEMENT__DOCUMENTATION;
+	int FAULT_HANDLER__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
 
 	/**
 	 * The feature id for the '<em><b>Catch</b></em>' containment reference list.
@@ -1095,7 +1095,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FAULT_HANDLER__CATCH = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+	int FAULT_HANDLER__CATCH = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Catch All</b></em>' containment reference.
@@ -1104,7 +1104,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FAULT_HANDLER__CATCH_ALL = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
+	int FAULT_HANDLER__CATCH_ALL = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Fault Handler</em>' class.
@@ -1113,7 +1113,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FAULT_HANDLER_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
+	int FAULT_HANDLER_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
@@ -1122,7 +1122,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ACTIVITY__DOCUMENTATION_ELEMENT = EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+	int ACTIVITY__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -1131,7 +1131,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ACTIVITY__ELEMENT = EXTENSIBLE_ELEMENT__ELEMENT;
+	int ACTIVITY__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
@@ -1140,7 +1140,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ACTIVITY__EEXTENSIBILITY_ELEMENTS = EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+	int ACTIVITY__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -1149,7 +1149,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ACTIVITY__DOCUMENTATION = EXTENSIBLE_ELEMENT__DOCUMENTATION;
+	int ACTIVITY__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1158,7 +1158,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ACTIVITY__NAME = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+	int ACTIVITY__NAME = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Suppress Join Failure</b></em>' attribute.
@@ -1167,7 +1167,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ACTIVITY__SUPPRESS_JOIN_FAILURE = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
+	int ACTIVITY__SUPPRESS_JOIN_FAILURE = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Targets</b></em>' containment reference.
@@ -1176,7 +1176,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ACTIVITY__TARGETS = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
+	int ACTIVITY__TARGETS = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Sources</b></em>' containment reference.
@@ -1185,7 +1185,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ACTIVITY__SOURCES = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 3;
+	int ACTIVITY__SOURCES = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>Activity</em>' class.
@@ -1194,7 +1194,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ACTIVITY_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 4;
+	int ACTIVITY_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
@@ -1203,7 +1203,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CORRELATION_SET__DOCUMENTATION_ELEMENT = EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+	int CORRELATION_SET__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -1212,7 +1212,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CORRELATION_SET__ELEMENT = EXTENSIBLE_ELEMENT__ELEMENT;
+	int CORRELATION_SET__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
@@ -1221,7 +1221,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CORRELATION_SET__EEXTENSIBILITY_ELEMENTS = EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+	int CORRELATION_SET__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -1230,7 +1230,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CORRELATION_SET__DOCUMENTATION = EXTENSIBLE_ELEMENT__DOCUMENTATION;
+	int CORRELATION_SET__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1239,7 +1239,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CORRELATION_SET__NAME = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+	int CORRELATION_SET__NAME = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Properties</b></em>' reference list.
@@ -1248,7 +1248,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CORRELATION_SET__PROPERTIES = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
+	int CORRELATION_SET__PROPERTIES = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Correlation Set</em>' class.
@@ -1257,7 +1257,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CORRELATION_SET_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
+	int CORRELATION_SET_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
@@ -1554,7 +1554,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LINK__DOCUMENTATION_ELEMENT = EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+	int LINK__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -1563,7 +1563,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LINK__ELEMENT = EXTENSIBLE_ELEMENT__ELEMENT;
+	int LINK__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
@@ -1572,7 +1572,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LINK__EEXTENSIBILITY_ELEMENTS = EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+	int LINK__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -1581,7 +1581,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LINK__DOCUMENTATION = EXTENSIBLE_ELEMENT__DOCUMENTATION;
+	int LINK__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1590,7 +1590,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LINK__NAME = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+	int LINK__NAME = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Sources</b></em>' reference list.
@@ -1599,7 +1599,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LINK__SOURCES = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
+	int LINK__SOURCES = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Targets</b></em>' reference list.
@@ -1608,7 +1608,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LINK__TARGETS = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
+	int LINK__TARGETS = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Link</em>' class.
@@ -1617,7 +1617,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LINK_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 3;
+	int LINK_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
@@ -1626,7 +1626,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATCH__DOCUMENTATION_ELEMENT = EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+	int CATCH__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -1635,7 +1635,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATCH__ELEMENT = EXTENSIBLE_ELEMENT__ELEMENT;
+	int CATCH__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
@@ -1644,7 +1644,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATCH__EEXTENSIBILITY_ELEMENTS = EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+	int CATCH__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -1653,7 +1653,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATCH__DOCUMENTATION = EXTENSIBLE_ELEMENT__DOCUMENTATION;
+	int CATCH__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
 
 	/**
 	 * The feature id for the '<em><b>Fault Name</b></em>' attribute.
@@ -1662,7 +1662,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATCH__FAULT_NAME = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+	int CATCH__FAULT_NAME = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Fault Variable</b></em>' containment reference.
@@ -1671,7 +1671,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATCH__FAULT_VARIABLE = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
+	int CATCH__FAULT_VARIABLE = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Activity</b></em>' containment reference.
@@ -1680,7 +1680,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATCH__ACTIVITY = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
+	int CATCH__ACTIVITY = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Fault Message Type</b></em>' reference.
@@ -1689,7 +1689,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATCH__FAULT_MESSAGE_TYPE = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 3;
+	int CATCH__FAULT_MESSAGE_TYPE = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Fault Element</b></em>' reference.
@@ -1698,7 +1698,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATCH__FAULT_ELEMENT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 4;
+	int CATCH__FAULT_ELEMENT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of structural features of the '<em>Catch</em>' class.
@@ -1707,7 +1707,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATCH_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 5;
+	int CATCH_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
@@ -2787,7 +2787,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_ALARM__DOCUMENTATION_ELEMENT = EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+	int ON_ALARM__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -2796,7 +2796,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_ALARM__ELEMENT = EXTENSIBLE_ELEMENT__ELEMENT;
+	int ON_ALARM__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
@@ -2805,7 +2805,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_ALARM__EEXTENSIBILITY_ELEMENTS = EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+	int ON_ALARM__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -2814,7 +2814,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_ALARM__DOCUMENTATION = EXTENSIBLE_ELEMENT__DOCUMENTATION;
+	int ON_ALARM__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
 
 	/**
 	 * The feature id for the '<em><b>Activity</b></em>' containment reference.
@@ -2823,7 +2823,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_ALARM__ACTIVITY = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+	int ON_ALARM__ACTIVITY = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>For</b></em>' containment reference.
@@ -2832,7 +2832,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_ALARM__FOR = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
+	int ON_ALARM__FOR = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Until</b></em>' containment reference.
@@ -2841,7 +2841,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_ALARM__UNTIL = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
+	int ON_ALARM__UNTIL = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Repeat Every</b></em>' containment reference.
@@ -2850,7 +2850,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_ALARM__REPEAT_EVERY = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 3;
+	int ON_ALARM__REPEAT_EVERY = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>On Alarm</em>' class.
@@ -2859,7 +2859,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_ALARM_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 4;
+	int ON_ALARM_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
@@ -2967,7 +2967,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COPY__DOCUMENTATION_ELEMENT = EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+	int COPY__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -2976,7 +2976,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COPY__ELEMENT = EXTENSIBLE_ELEMENT__ELEMENT;
+	int COPY__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
@@ -2985,7 +2985,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COPY__EEXTENSIBILITY_ELEMENTS = EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+	int COPY__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -2994,7 +2994,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COPY__DOCUMENTATION = EXTENSIBLE_ELEMENT__DOCUMENTATION;
+	int COPY__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
 
 	/**
 	 * The feature id for the '<em><b>To</b></em>' containment reference.
@@ -3003,7 +3003,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COPY__TO = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+	int COPY__TO = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>From</b></em>' containment reference.
@@ -3012,7 +3012,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COPY__FROM = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
+	int COPY__FROM = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Keep Src Element Name</b></em>' attribute.
@@ -3021,7 +3021,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COPY__KEEP_SRC_ELEMENT_NAME = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
+	int COPY__KEEP_SRC_ELEMENT_NAME = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Ignore Missing From Data</b></em>' attribute.
@@ -3030,7 +3030,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COPY__IGNORE_MISSING_FROM_DATA = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 3;
+	int COPY__IGNORE_MISSING_FROM_DATA = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>Copy</em>' class.
@@ -3039,7 +3039,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COPY_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 4;
+	int COPY_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
@@ -3048,7 +3048,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXTENSION__DOCUMENTATION_ELEMENT = EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+	int EXTENSION__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -3057,7 +3057,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXTENSION__ELEMENT = EXTENSIBLE_ELEMENT__ELEMENT;
+	int EXTENSION__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
@@ -3066,7 +3066,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXTENSION__EEXTENSIBILITY_ELEMENTS = EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+	int EXTENSION__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -3075,7 +3075,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXTENSION__DOCUMENTATION = EXTENSIBLE_ELEMENT__DOCUMENTATION;
+	int EXTENSION__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
 
 	/**
 	 * The feature id for the '<em><b>Namespace</b></em>' attribute.
@@ -3084,7 +3084,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXTENSION__NAMESPACE = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+	int EXTENSION__NAMESPACE = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Must Understand</b></em>' attribute.
@@ -3093,7 +3093,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXTENSION__MUST_UNDERSTAND = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
+	int EXTENSION__MUST_UNDERSTAND = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Extension</em>' class.
@@ -3102,7 +3102,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXTENSION_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
+	int EXTENSION_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
@@ -3431,7 +3431,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPENSATION_HANDLER__DOCUMENTATION_ELEMENT = EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+	int COMPENSATION_HANDLER__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -3440,7 +3440,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPENSATION_HANDLER__ELEMENT = EXTENSIBLE_ELEMENT__ELEMENT;
+	int COMPENSATION_HANDLER__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
@@ -3449,7 +3449,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPENSATION_HANDLER__EEXTENSIBILITY_ELEMENTS = EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+	int COMPENSATION_HANDLER__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -3458,7 +3458,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPENSATION_HANDLER__DOCUMENTATION = EXTENSIBLE_ELEMENT__DOCUMENTATION;
+	int COMPENSATION_HANDLER__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
 
 	/**
 	 * The feature id for the '<em><b>Activity</b></em>' containment reference.
@@ -3467,7 +3467,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPENSATION_HANDLER__ACTIVITY = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+	int COMPENSATION_HANDLER__ACTIVITY = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Compensation Handler</em>' class.
@@ -3476,7 +3476,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPENSATION_HANDLER_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
+	int COMPENSATION_HANDLER_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
@@ -3485,7 +3485,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TO__DOCUMENTATION_ELEMENT = EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+	int TO__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -3494,7 +3494,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TO__ELEMENT = EXTENSIBLE_ELEMENT__ELEMENT;
+	int TO__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
@@ -3503,7 +3503,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TO__EEXTENSIBILITY_ELEMENTS = EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+	int TO__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -3512,7 +3512,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TO__DOCUMENTATION = EXTENSIBLE_ELEMENT__DOCUMENTATION;
+	int TO__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
 
 	/**
 	 * The feature id for the '<em><b>Variable</b></em>' reference.
@@ -3521,7 +3521,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TO__VARIABLE = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+	int TO__VARIABLE = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Part</b></em>' reference.
@@ -3530,7 +3530,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TO__PART = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
+	int TO__PART = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Partner Link</b></em>' reference.
@@ -3539,7 +3539,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TO__PARTNER_LINK = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
+	int TO__PARTNER_LINK = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Property</b></em>' reference.
@@ -3548,7 +3548,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TO__PROPERTY = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 3;
+	int TO__PROPERTY = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Query</b></em>' containment reference.
@@ -3557,7 +3557,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TO__QUERY = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 4;
+	int TO__QUERY = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -3566,7 +3566,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TO__EXPRESSION = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 5;
+	int TO__EXPRESSION = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The number of structural features of the '<em>To</em>' class.
@@ -3575,7 +3575,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TO_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 6;
+	int TO_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
@@ -3584,7 +3584,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FROM__DOCUMENTATION_ELEMENT = EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+	int FROM__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -3593,7 +3593,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FROM__ELEMENT = EXTENSIBLE_ELEMENT__ELEMENT;
+	int FROM__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
@@ -3602,7 +3602,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FROM__EEXTENSIBILITY_ELEMENTS = EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+	int FROM__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -3611,7 +3611,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FROM__DOCUMENTATION = EXTENSIBLE_ELEMENT__DOCUMENTATION;
+	int FROM__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
 
 	/**
 	 * The feature id for the '<em><b>Opaque</b></em>' attribute.
@@ -3620,7 +3620,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FROM__OPAQUE = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+	int FROM__OPAQUE = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Endpoint Reference</b></em>' attribute.
@@ -3629,7 +3629,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FROM__ENDPOINT_REFERENCE = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
+	int FROM__ENDPOINT_REFERENCE = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Literal</b></em>' attribute.
@@ -3638,7 +3638,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FROM__LITERAL = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
+	int FROM__LITERAL = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Unsafe Literal</b></em>' attribute.
@@ -3647,7 +3647,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FROM__UNSAFE_LITERAL = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 3;
+	int FROM__UNSAFE_LITERAL = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -3656,7 +3656,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FROM__EXPRESSION = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 4;
+	int FROM__EXPRESSION = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Service Ref</b></em>' containment reference.
@@ -3665,7 +3665,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FROM__SERVICE_REF = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 5;
+	int FROM__SERVICE_REF = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' reference.
@@ -3674,7 +3674,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FROM__TYPE = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 6;
+	int FROM__TYPE = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Variable</b></em>' reference.
@@ -3683,7 +3683,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FROM__VARIABLE = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 7;
+	int FROM__VARIABLE = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 7;
 
 	/**
 	 * The feature id for the '<em><b>Part</b></em>' reference.
@@ -3692,7 +3692,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FROM__PART = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 8;
+	int FROM__PART = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 8;
 
 	/**
 	 * The feature id for the '<em><b>Partner Link</b></em>' reference.
@@ -3701,7 +3701,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FROM__PARTNER_LINK = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 9;
+	int FROM__PARTNER_LINK = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 9;
 
 	/**
 	 * The feature id for the '<em><b>Property</b></em>' reference.
@@ -3710,7 +3710,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FROM__PROPERTY = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 10;
+	int FROM__PROPERTY = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 10;
 
 	/**
 	 * The feature id for the '<em><b>Query</b></em>' containment reference.
@@ -3719,7 +3719,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FROM__QUERY = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 11;
+	int FROM__QUERY = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 11;
 
 	/**
 	 * The number of structural features of the '<em>From</em>' class.
@@ -3728,7 +3728,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FROM_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 12;
+	int FROM_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 12;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
@@ -3737,7 +3737,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_MESSAGE__DOCUMENTATION_ELEMENT = EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+	int ON_MESSAGE__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -3746,7 +3746,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_MESSAGE__ELEMENT = EXTENSIBLE_ELEMENT__ELEMENT;
+	int ON_MESSAGE__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
@@ -3755,7 +3755,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_MESSAGE__EEXTENSIBILITY_ELEMENTS = EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+	int ON_MESSAGE__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -3764,7 +3764,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_MESSAGE__DOCUMENTATION = EXTENSIBLE_ELEMENT__DOCUMENTATION;
+	int ON_MESSAGE__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
 
 	/**
 	 * The feature id for the '<em><b>Variable</b></em>' reference.
@@ -3773,7 +3773,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_MESSAGE__VARIABLE = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+	int ON_MESSAGE__VARIABLE = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Activity</b></em>' containment reference.
@@ -3782,7 +3782,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_MESSAGE__ACTIVITY = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
+	int ON_MESSAGE__ACTIVITY = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Port Type</b></em>' reference.
@@ -3791,7 +3791,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_MESSAGE__PORT_TYPE = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
+	int ON_MESSAGE__PORT_TYPE = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Partner Link</b></em>' reference.
@@ -3800,7 +3800,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_MESSAGE__PARTNER_LINK = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 3;
+	int ON_MESSAGE__PARTNER_LINK = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Correlations</b></em>' containment reference.
@@ -3809,7 +3809,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_MESSAGE__CORRELATIONS = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 4;
+	int ON_MESSAGE__CORRELATIONS = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Operation</b></em>' reference.
@@ -3818,7 +3818,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_MESSAGE__OPERATION = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 5;
+	int ON_MESSAGE__OPERATION = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>From Parts</b></em>' containment reference.
@@ -3827,7 +3827,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_MESSAGE__FROM_PARTS = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 6;
+	int ON_MESSAGE__FROM_PARTS = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Message Exchange</b></em>' reference.
@@ -3836,7 +3836,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_MESSAGE__MESSAGE_EXCHANGE = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 7;
+	int ON_MESSAGE__MESSAGE_EXCHANGE = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 7;
 
 	/**
 	 * The number of structural features of the '<em>On Message</em>' class.
@@ -3845,7 +3845,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_MESSAGE_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 8;
+	int ON_MESSAGE_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 8;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
@@ -3998,7 +3998,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CORRELATION__DOCUMENTATION_ELEMENT = EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+	int CORRELATION__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -4007,7 +4007,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CORRELATION__ELEMENT = EXTENSIBLE_ELEMENT__ELEMENT;
+	int CORRELATION__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
@@ -4016,7 +4016,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CORRELATION__EEXTENSIBILITY_ELEMENTS = EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+	int CORRELATION__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -4025,7 +4025,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CORRELATION__DOCUMENTATION = EXTENSIBLE_ELEMENT__DOCUMENTATION;
+	int CORRELATION__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
 
 	/**
 	 * The feature id for the '<em><b>Initiate</b></em>' attribute.
@@ -4034,7 +4034,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CORRELATION__INITIATE = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+	int CORRELATION__INITIATE = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Pattern</b></em>' attribute.
@@ -4043,7 +4043,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CORRELATION__PATTERN = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
+	int CORRELATION__PATTERN = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Set</b></em>' reference.
@@ -4052,7 +4052,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CORRELATION__SET = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
+	int CORRELATION__SET = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Correlation</em>' class.
@@ -4061,7 +4061,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CORRELATION_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 3;
+	int CORRELATION_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
@@ -4070,7 +4070,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MESSAGE_EXCHANGE__DOCUMENTATION_ELEMENT = EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+	int MESSAGE_EXCHANGE__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -4079,7 +4079,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MESSAGE_EXCHANGE__ELEMENT = EXTENSIBLE_ELEMENT__ELEMENT;
+	int MESSAGE_EXCHANGE__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
@@ -4088,7 +4088,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MESSAGE_EXCHANGE__EEXTENSIBILITY_ELEMENTS = EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+	int MESSAGE_EXCHANGE__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -4097,7 +4097,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MESSAGE_EXCHANGE__DOCUMENTATION = EXTENSIBLE_ELEMENT__DOCUMENTATION;
+	int MESSAGE_EXCHANGE__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -4106,7 +4106,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MESSAGE_EXCHANGE__NAME = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+	int MESSAGE_EXCHANGE__NAME = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Message Exchange</em>' class.
@@ -4115,7 +4115,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MESSAGE_EXCHANGE_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
+	int MESSAGE_EXCHANGE_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
@@ -4124,7 +4124,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_HANDLER__DOCUMENTATION_ELEMENT = EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+	int EVENT_HANDLER__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -4133,7 +4133,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_HANDLER__ELEMENT = EXTENSIBLE_ELEMENT__ELEMENT;
+	int EVENT_HANDLER__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
@@ -4142,7 +4142,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_HANDLER__EEXTENSIBILITY_ELEMENTS = EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+	int EVENT_HANDLER__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -4151,7 +4151,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_HANDLER__DOCUMENTATION = EXTENSIBLE_ELEMENT__DOCUMENTATION;
+	int EVENT_HANDLER__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
 
 	/**
 	 * The feature id for the '<em><b>Alarm</b></em>' containment reference list.
@@ -4160,7 +4160,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_HANDLER__ALARM = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+	int EVENT_HANDLER__ALARM = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Events</b></em>' containment reference list.
@@ -4169,7 +4169,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_HANDLER__EVENTS = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
+	int EVENT_HANDLER__EVENTS = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Event Handler</em>' class.
@@ -4178,7 +4178,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EVENT_HANDLER_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
+	int EVENT_HANDLER_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
@@ -4187,7 +4187,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SOURCE__DOCUMENTATION_ELEMENT = EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+	int SOURCE__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -4196,7 +4196,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SOURCE__ELEMENT = EXTENSIBLE_ELEMENT__ELEMENT;
+	int SOURCE__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
@@ -4205,7 +4205,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SOURCE__EEXTENSIBILITY_ELEMENTS = EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+	int SOURCE__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -4214,7 +4214,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SOURCE__DOCUMENTATION = EXTENSIBLE_ELEMENT__DOCUMENTATION;
+	int SOURCE__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
 
 	/**
 	 * The feature id for the '<em><b>Link</b></em>' reference.
@@ -4223,7 +4223,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SOURCE__LINK = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+	int SOURCE__LINK = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Activity</b></em>' reference.
@@ -4232,7 +4232,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SOURCE__ACTIVITY = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
+	int SOURCE__ACTIVITY = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Transition Condition</b></em>' containment reference.
@@ -4241,7 +4241,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SOURCE__TRANSITION_CONDITION = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
+	int SOURCE__TRANSITION_CONDITION = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Source</em>' class.
@@ -4250,7 +4250,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SOURCE_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 3;
+	int SOURCE_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
@@ -4259,7 +4259,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TARGET__DOCUMENTATION_ELEMENT = EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+	int TARGET__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -4268,7 +4268,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TARGET__ELEMENT = EXTENSIBLE_ELEMENT__ELEMENT;
+	int TARGET__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
@@ -4277,7 +4277,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TARGET__EEXTENSIBILITY_ELEMENTS = EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+	int TARGET__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -4286,7 +4286,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TARGET__DOCUMENTATION = EXTENSIBLE_ELEMENT__DOCUMENTATION;
+	int TARGET__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
 
 	/**
 	 * The feature id for the '<em><b>Link</b></em>' reference.
@@ -4295,7 +4295,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TARGET__LINK = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+	int TARGET__LINK = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Activity</b></em>' reference.
@@ -4304,7 +4304,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TARGET__ACTIVITY = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
+	int TARGET__ACTIVITY = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Target</em>' class.
@@ -4313,7 +4313,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TARGET_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
+	int TARGET_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
@@ -4322,7 +4322,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARTNER_LINKS__DOCUMENTATION_ELEMENT = EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+	int PARTNER_LINKS__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -4331,7 +4331,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARTNER_LINKS__ELEMENT = EXTENSIBLE_ELEMENT__ELEMENT;
+	int PARTNER_LINKS__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
@@ -4340,7 +4340,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARTNER_LINKS__EEXTENSIBILITY_ELEMENTS = EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+	int PARTNER_LINKS__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -4349,7 +4349,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARTNER_LINKS__DOCUMENTATION = EXTENSIBLE_ELEMENT__DOCUMENTATION;
+	int PARTNER_LINKS__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
 
 	/**
 	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -4358,7 +4358,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARTNER_LINKS__CHILDREN = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+	int PARTNER_LINKS__CHILDREN = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Partner Links</em>' class.
@@ -4367,7 +4367,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int PARTNER_LINKS_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
+	int PARTNER_LINKS_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
@@ -4376,7 +4376,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MESSAGE_EXCHANGES__DOCUMENTATION_ELEMENT = EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+	int MESSAGE_EXCHANGES__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -4385,7 +4385,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MESSAGE_EXCHANGES__ELEMENT = EXTENSIBLE_ELEMENT__ELEMENT;
+	int MESSAGE_EXCHANGES__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
@@ -4394,7 +4394,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MESSAGE_EXCHANGES__EEXTENSIBILITY_ELEMENTS = EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+	int MESSAGE_EXCHANGES__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -4403,7 +4403,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MESSAGE_EXCHANGES__DOCUMENTATION = EXTENSIBLE_ELEMENT__DOCUMENTATION;
+	int MESSAGE_EXCHANGES__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
 
 	/**
 	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -4412,7 +4412,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MESSAGE_EXCHANGES__CHILDREN = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+	int MESSAGE_EXCHANGES__CHILDREN = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Message Exchanges</em>' class.
@@ -4421,7 +4421,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MESSAGE_EXCHANGES_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
+	int MESSAGE_EXCHANGES_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
@@ -4430,7 +4430,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VARIABLES__DOCUMENTATION_ELEMENT = EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+	int VARIABLES__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -4439,7 +4439,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VARIABLES__ELEMENT = EXTENSIBLE_ELEMENT__ELEMENT;
+	int VARIABLES__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
@@ -4448,7 +4448,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VARIABLES__EEXTENSIBILITY_ELEMENTS = EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+	int VARIABLES__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -4457,7 +4457,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VARIABLES__DOCUMENTATION = EXTENSIBLE_ELEMENT__DOCUMENTATION;
+	int VARIABLES__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
 
 	/**
 	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -4466,7 +4466,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VARIABLES__CHILDREN = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+	int VARIABLES__CHILDREN = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Variables</em>' class.
@@ -4475,7 +4475,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VARIABLES_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
+	int VARIABLES_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
@@ -4484,7 +4484,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CORRELATION_SETS__DOCUMENTATION_ELEMENT = EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+	int CORRELATION_SETS__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -4493,7 +4493,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CORRELATION_SETS__ELEMENT = EXTENSIBLE_ELEMENT__ELEMENT;
+	int CORRELATION_SETS__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
@@ -4502,7 +4502,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CORRELATION_SETS__EEXTENSIBILITY_ELEMENTS = EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+	int CORRELATION_SETS__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -4511,7 +4511,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CORRELATION_SETS__DOCUMENTATION = EXTENSIBLE_ELEMENT__DOCUMENTATION;
+	int CORRELATION_SETS__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
 
 	/**
 	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -4520,7 +4520,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CORRELATION_SETS__CHILDREN = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+	int CORRELATION_SETS__CHILDREN = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Correlation Sets</em>' class.
@@ -4529,7 +4529,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CORRELATION_SETS_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
+	int CORRELATION_SETS_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
@@ -4538,7 +4538,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LINKS__DOCUMENTATION_ELEMENT = EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+	int LINKS__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -4547,7 +4547,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LINKS__ELEMENT = EXTENSIBLE_ELEMENT__ELEMENT;
+	int LINKS__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
@@ -4556,7 +4556,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LINKS__EEXTENSIBILITY_ELEMENTS = EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+	int LINKS__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -4565,7 +4565,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LINKS__DOCUMENTATION = EXTENSIBLE_ELEMENT__DOCUMENTATION;
+	int LINKS__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
 
 	/**
 	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -4574,7 +4574,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LINKS__CHILDREN = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+	int LINKS__CHILDREN = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Links</em>' class.
@@ -4583,7 +4583,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int LINKS_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
+	int LINKS_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
@@ -4592,7 +4592,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATCH_ALL__DOCUMENTATION_ELEMENT = EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+	int CATCH_ALL__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -4601,7 +4601,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATCH_ALL__ELEMENT = EXTENSIBLE_ELEMENT__ELEMENT;
+	int CATCH_ALL__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
@@ -4610,7 +4610,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATCH_ALL__EEXTENSIBILITY_ELEMENTS = EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+	int CATCH_ALL__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -4619,7 +4619,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATCH_ALL__DOCUMENTATION = EXTENSIBLE_ELEMENT__DOCUMENTATION;
+	int CATCH_ALL__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
 
 	/**
 	 * The feature id for the '<em><b>Activity</b></em>' containment reference.
@@ -4628,7 +4628,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATCH_ALL__ACTIVITY = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+	int CATCH_ALL__ACTIVITY = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Catch All</em>' class.
@@ -4637,7 +4637,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATCH_ALL_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
+	int CATCH_ALL_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
@@ -4646,7 +4646,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CORRELATIONS__DOCUMENTATION_ELEMENT = EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+	int CORRELATIONS__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -4655,7 +4655,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CORRELATIONS__ELEMENT = EXTENSIBLE_ELEMENT__ELEMENT;
+	int CORRELATIONS__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
@@ -4664,7 +4664,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CORRELATIONS__EEXTENSIBILITY_ELEMENTS = EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+	int CORRELATIONS__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -4673,7 +4673,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CORRELATIONS__DOCUMENTATION = EXTENSIBLE_ELEMENT__DOCUMENTATION;
+	int CORRELATIONS__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
 
 	/**
 	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -4682,7 +4682,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CORRELATIONS__CHILDREN = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+	int CORRELATIONS__CHILDREN = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Correlations</em>' class.
@@ -4691,7 +4691,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CORRELATIONS_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
+	int CORRELATIONS_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
@@ -4700,7 +4700,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VARIABLE__DOCUMENTATION_ELEMENT = EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+	int VARIABLE__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -4709,7 +4709,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VARIABLE__ELEMENT = EXTENSIBLE_ELEMENT__ELEMENT;
+	int VARIABLE__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
@@ -4718,7 +4718,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VARIABLE__EEXTENSIBILITY_ELEMENTS = EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+	int VARIABLE__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -4727,7 +4727,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VARIABLE__DOCUMENTATION = EXTENSIBLE_ELEMENT__DOCUMENTATION;
+	int VARIABLE__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -4736,7 +4736,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VARIABLE__NAME = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+	int VARIABLE__NAME = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Message Type</b></em>' reference.
@@ -4745,7 +4745,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VARIABLE__MESSAGE_TYPE = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
+	int VARIABLE__MESSAGE_TYPE = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>XSD Element</b></em>' reference.
@@ -4754,7 +4754,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VARIABLE__XSD_ELEMENT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
+	int VARIABLE__XSD_ELEMENT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' reference.
@@ -4763,7 +4763,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VARIABLE__TYPE = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 3;
+	int VARIABLE__TYPE = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>From</b></em>' containment reference.
@@ -4772,7 +4772,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VARIABLE__FROM = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 4;
+	int VARIABLE__FROM = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of structural features of the '<em>Variable</em>' class.
@@ -4781,7 +4781,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int VARIABLE_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 5;
+	int VARIABLE_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
@@ -4844,7 +4844,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_EVENT__DOCUMENTATION_ELEMENT = EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+	int ON_EVENT__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -4853,7 +4853,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_EVENT__ELEMENT = EXTENSIBLE_ELEMENT__ELEMENT;
+	int ON_EVENT__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
@@ -4862,7 +4862,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_EVENT__EEXTENSIBILITY_ELEMENTS = EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+	int ON_EVENT__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -4871,7 +4871,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_EVENT__DOCUMENTATION = EXTENSIBLE_ELEMENT__DOCUMENTATION;
+	int ON_EVENT__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
 
 	/**
 	 * The feature id for the '<em><b>Activity</b></em>' containment reference.
@@ -4880,7 +4880,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_EVENT__ACTIVITY = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+	int ON_EVENT__ACTIVITY = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Variable</b></em>' containment reference.
@@ -4889,7 +4889,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_EVENT__VARIABLE = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
+	int ON_EVENT__VARIABLE = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Partner Link</b></em>' reference.
@@ -4898,7 +4898,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_EVENT__PARTNER_LINK = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
+	int ON_EVENT__PARTNER_LINK = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Correlations</b></em>' containment reference.
@@ -4907,7 +4907,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_EVENT__CORRELATIONS = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 3;
+	int ON_EVENT__CORRELATIONS = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Operation</b></em>' reference.
@@ -4916,7 +4916,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_EVENT__OPERATION = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 4;
+	int ON_EVENT__OPERATION = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Port Type</b></em>' reference.
@@ -4925,7 +4925,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_EVENT__PORT_TYPE = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 5;
+	int ON_EVENT__PORT_TYPE = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Message Type</b></em>' reference.
@@ -4934,10 +4934,9 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_EVENT__MESSAGE_TYPE = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 6;
+	int ON_EVENT__MESSAGE_TYPE = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 6;
 
 	// https://bugs.eclipse.org/bugs/show_bug.cgi?id=336003
-	// https://issues.jboss.org/browse/JBIDE-8305
 	// "element" attribute was missing from original model
 	/**
 	 * The feature id for the '<em><b>XSD Element</b></em>' reference.
@@ -4946,7 +4945,8 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_EVENT__XSD_ELEMENT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 7;
+	int ON_EVENT__XSD_ELEMENT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 7;
+
 	/**
 	 * The feature id for the '<em><b>Correlation Sets</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
@@ -4954,7 +4954,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_EVENT__CORRELATION_SETS = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 8;
+	int ON_EVENT__CORRELATION_SETS = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 8;
 
 	/**
 	 * The feature id for the '<em><b>From Parts</b></em>' containment reference.
@@ -4963,7 +4963,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_EVENT__FROM_PARTS = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 9;
+	int ON_EVENT__FROM_PARTS = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 9;
 
 	/**
 	 * The feature id for the '<em><b>Message Exchange</b></em>' reference.
@@ -4972,7 +4972,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_EVENT__MESSAGE_EXCHANGE = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 10;
+	int ON_EVENT__MESSAGE_EXCHANGE = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 10;
 
 	/**
 	 * The number of structural features of the '<em>On Event</em>' class.
@@ -4981,7 +4981,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ON_EVENT_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 11;
+	int ON_EVENT_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 11;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
@@ -4990,7 +4990,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int IMPORT__DOCUMENTATION_ELEMENT = EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+	int IMPORT__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -4999,7 +4999,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int IMPORT__ELEMENT = EXTENSIBLE_ELEMENT__ELEMENT;
+	int IMPORT__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
@@ -5008,7 +5008,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int IMPORT__EEXTENSIBILITY_ELEMENTS = EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+	int IMPORT__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -5017,7 +5017,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int IMPORT__DOCUMENTATION = EXTENSIBLE_ELEMENT__DOCUMENTATION;
+	int IMPORT__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
 
 	/**
 	 * The feature id for the '<em><b>Namespace</b></em>' attribute.
@@ -5026,7 +5026,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int IMPORT__NAMESPACE = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+	int IMPORT__NAMESPACE = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Location</b></em>' attribute.
@@ -5035,7 +5035,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int IMPORT__LOCATION = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
+	int IMPORT__LOCATION = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Import Type</b></em>' attribute.
@@ -5044,7 +5044,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int IMPORT__IMPORT_TYPE = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
+	int IMPORT__IMPORT_TYPE = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Import</em>' class.
@@ -5053,7 +5053,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int IMPORT_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 3;
+	int IMPORT_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
@@ -5215,7 +5215,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TARGETS__DOCUMENTATION_ELEMENT = EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+	int TARGETS__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -5224,7 +5224,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TARGETS__ELEMENT = EXTENSIBLE_ELEMENT__ELEMENT;
+	int TARGETS__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
@@ -5233,7 +5233,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TARGETS__EEXTENSIBILITY_ELEMENTS = EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+	int TARGETS__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -5242,7 +5242,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TARGETS__DOCUMENTATION = EXTENSIBLE_ELEMENT__DOCUMENTATION;
+	int TARGETS__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
 
 	/**
 	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -5251,7 +5251,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TARGETS__CHILDREN = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+	int TARGETS__CHILDREN = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Join Condition</b></em>' containment reference.
@@ -5260,7 +5260,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TARGETS__JOIN_CONDITION = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
+	int TARGETS__JOIN_CONDITION = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Targets</em>' class.
@@ -5269,7 +5269,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TARGETS_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
+	int TARGETS_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
@@ -5278,7 +5278,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SOURCES__DOCUMENTATION_ELEMENT = EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+	int SOURCES__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -5287,7 +5287,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SOURCES__ELEMENT = EXTENSIBLE_ELEMENT__ELEMENT;
+	int SOURCES__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
@@ -5296,7 +5296,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SOURCES__EEXTENSIBILITY_ELEMENTS = EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+	int SOURCES__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -5305,7 +5305,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SOURCES__DOCUMENTATION = EXTENSIBLE_ELEMENT__DOCUMENTATION;
+	int SOURCES__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
 
 	/**
 	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -5314,7 +5314,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SOURCES__CHILDREN = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+	int SOURCES__CHILDREN = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Sources</em>' class.
@@ -5323,7 +5323,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SOURCES_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
+	int SOURCES_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
@@ -5431,7 +5431,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXTENSIONS__DOCUMENTATION_ELEMENT = EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+	int EXTENSIONS__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -5440,7 +5440,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXTENSIONS__ELEMENT = EXTENSIBLE_ELEMENT__ELEMENT;
+	int EXTENSIONS__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
@@ -5449,7 +5449,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXTENSIONS__EEXTENSIBILITY_ELEMENTS = EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+	int EXTENSIONS__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -5458,7 +5458,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXTENSIONS__DOCUMENTATION = EXTENSIBLE_ELEMENT__DOCUMENTATION;
+	int EXTENSIONS__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
 
 	/**
 	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -5467,7 +5467,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXTENSIONS__CHILDREN = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+	int EXTENSIONS__CHILDREN = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Extensions</em>' class.
@@ -5476,7 +5476,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int EXTENSIONS_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
+	int EXTENSIONS_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
@@ -5566,7 +5566,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FROM_PART__DOCUMENTATION_ELEMENT = EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+	int FROM_PART__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -5575,7 +5575,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FROM_PART__ELEMENT = EXTENSIBLE_ELEMENT__ELEMENT;
+	int FROM_PART__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
@@ -5584,7 +5584,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FROM_PART__EEXTENSIBILITY_ELEMENTS = EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+	int FROM_PART__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -5593,7 +5593,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FROM_PART__DOCUMENTATION = EXTENSIBLE_ELEMENT__DOCUMENTATION;
+	int FROM_PART__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
 
 	/**
 	 * The feature id for the '<em><b>To Variable</b></em>' reference.
@@ -5602,7 +5602,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FROM_PART__TO_VARIABLE = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+	int FROM_PART__TO_VARIABLE = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Part</b></em>' reference.
@@ -5611,7 +5611,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FROM_PART__PART = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
+	int FROM_PART__PART = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>From Part</em>' class.
@@ -5620,7 +5620,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FROM_PART_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
+	int FROM_PART_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
@@ -5629,7 +5629,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TO_PART__DOCUMENTATION_ELEMENT = EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+	int TO_PART__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -5638,7 +5638,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TO_PART__ELEMENT = EXTENSIBLE_ELEMENT__ELEMENT;
+	int TO_PART__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
@@ -5647,7 +5647,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TO_PART__EEXTENSIBILITY_ELEMENTS = EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+	int TO_PART__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -5656,7 +5656,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TO_PART__DOCUMENTATION = EXTENSIBLE_ELEMENT__DOCUMENTATION;
+	int TO_PART__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
 
 	/**
 	 * The feature id for the '<em><b>From Variable</b></em>' reference.
@@ -5665,7 +5665,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TO_PART__FROM_VARIABLE = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+	int TO_PART__FROM_VARIABLE = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Part</b></em>' reference.
@@ -5674,7 +5674,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TO_PART__PART = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
+	int TO_PART__PART = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>To Part</em>' class.
@@ -5683,7 +5683,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TO_PART_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
+	int TO_PART_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
@@ -6007,7 +6007,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TERMINATION_HANDLER__DOCUMENTATION_ELEMENT = EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+	int TERMINATION_HANDLER__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -6016,7 +6016,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TERMINATION_HANDLER__ELEMENT = EXTENSIBLE_ELEMENT__ELEMENT;
+	int TERMINATION_HANDLER__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
@@ -6025,7 +6025,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TERMINATION_HANDLER__EEXTENSIBILITY_ELEMENTS = EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+	int TERMINATION_HANDLER__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -6034,7 +6034,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TERMINATION_HANDLER__DOCUMENTATION = EXTENSIBLE_ELEMENT__DOCUMENTATION;
+	int TERMINATION_HANDLER__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
 
 	/**
 	 * The feature id for the '<em><b>Activity</b></em>' containment reference.
@@ -6043,7 +6043,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TERMINATION_HANDLER__ACTIVITY = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+	int TERMINATION_HANDLER__ACTIVITY = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Termination Handler</em>' class.
@@ -6052,7 +6052,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TERMINATION_HANDLER_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
+	int TERMINATION_HANDLER_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
@@ -6268,7 +6268,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ELSE_IF__DOCUMENTATION_ELEMENT = EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+	int ELSE_IF__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -6277,7 +6277,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ELSE_IF__ELEMENT = EXTENSIBLE_ELEMENT__ELEMENT;
+	int ELSE_IF__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
@@ -6286,7 +6286,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ELSE_IF__EEXTENSIBILITY_ELEMENTS = EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+	int ELSE_IF__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -6295,7 +6295,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ELSE_IF__DOCUMENTATION = EXTENSIBLE_ELEMENT__DOCUMENTATION;
+	int ELSE_IF__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
 
 	/**
 	 * The feature id for the '<em><b>Condition</b></em>' containment reference.
@@ -6304,7 +6304,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ELSE_IF__CONDITION = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+	int ELSE_IF__CONDITION = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Activity</b></em>' containment reference.
@@ -6313,7 +6313,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ELSE_IF__ACTIVITY = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
+	int ELSE_IF__ACTIVITY = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Else If</em>' class.
@@ -6322,7 +6322,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ELSE_IF_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
+	int ELSE_IF_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
@@ -6331,7 +6331,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ELSE__DOCUMENTATION_ELEMENT = EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+	int ELSE__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -6340,7 +6340,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ELSE__ELEMENT = EXTENSIBLE_ELEMENT__ELEMENT;
+	int ELSE__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
@@ -6349,7 +6349,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ELSE__EEXTENSIBILITY_ELEMENTS = EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+	int ELSE__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -6358,7 +6358,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ELSE__DOCUMENTATION = EXTENSIBLE_ELEMENT__DOCUMENTATION;
+	int ELSE__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
 
 	/**
 	 * The feature id for the '<em><b>Activity</b></em>' containment reference.
@@ -6367,7 +6367,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ELSE__ACTIVITY = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+	int ELSE__ACTIVITY = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Else</em>' class.
@@ -6376,7 +6376,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ELSE_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
+	int ELSE_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
@@ -6385,7 +6385,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPLETION_CONDITION__DOCUMENTATION_ELEMENT = EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+	int COMPLETION_CONDITION__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -6394,7 +6394,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPLETION_CONDITION__ELEMENT = EXTENSIBLE_ELEMENT__ELEMENT;
+	int COMPLETION_CONDITION__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
@@ -6403,7 +6403,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPLETION_CONDITION__EEXTENSIBILITY_ELEMENTS = EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+	int COMPLETION_CONDITION__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -6412,7 +6412,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPLETION_CONDITION__DOCUMENTATION = EXTENSIBLE_ELEMENT__DOCUMENTATION;
+	int COMPLETION_CONDITION__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
 
 	/**
 	 * The feature id for the '<em><b>Branches</b></em>' containment reference.
@@ -6421,7 +6421,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPLETION_CONDITION__BRANCHES = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+	int COMPLETION_CONDITION__BRANCHES = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>Completion Condition</em>' class.
@@ -6430,7 +6430,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COMPLETION_CONDITION_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
+	int COMPLETION_CONDITION_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
@@ -6514,13 +6514,49 @@ public interface BPELPackage extends EPackage {
 	int BRANCHES_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DOCUMENTATION__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+
+	/**
+	 * The feature id for the '<em><b>Element</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DOCUMENTATION__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
+
+	/**
+	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DOCUMENTATION__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+
+	/**
+	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DOCUMENTATION__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
+
+	/**
 	 * The feature id for the '<em><b>Lang</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENTATION__LANG = 0;
+	int DOCUMENTATION__LANG = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Source</b></em>' attribute.
@@ -6529,7 +6565,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENTATION__SOURCE = 1;
+	int DOCUMENTATION__SOURCE = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Value</b></em>' attribute.
@@ -6538,7 +6574,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENTATION__VALUE = 2;
+	int DOCUMENTATION__VALUE = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Documentation</em>' class.
@@ -6547,7 +6583,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DOCUMENTATION_FEATURE_COUNT = 3;
+	int DOCUMENTATION_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Documentation Element</b></em>' attribute.
@@ -6647,7 +6683,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FROM_PARTS__DOCUMENTATION_ELEMENT = EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+	int FROM_PARTS__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -6656,7 +6692,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FROM_PARTS__ELEMENT = EXTENSIBLE_ELEMENT__ELEMENT;
+	int FROM_PARTS__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
@@ -6665,7 +6701,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FROM_PARTS__EEXTENSIBILITY_ELEMENTS = EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+	int FROM_PARTS__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -6674,7 +6710,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FROM_PARTS__DOCUMENTATION = EXTENSIBLE_ELEMENT__DOCUMENTATION;
+	int FROM_PARTS__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
 
 	/**
 	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -6683,7 +6719,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FROM_PARTS__CHILDREN = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+	int FROM_PARTS__CHILDREN = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>From Parts</em>' class.
@@ -6692,7 +6728,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FROM_PARTS_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
+	int FROM_PARTS_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.bpel.model.impl.ToPartsImpl <em>To Parts</em>}' class.
@@ -6711,7 +6747,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TO_PARTS__DOCUMENTATION_ELEMENT = EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
+	int TO_PARTS__DOCUMENTATION_ELEMENT = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION_ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -6720,7 +6756,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TO_PARTS__ELEMENT = EXTENSIBLE_ELEMENT__ELEMENT;
+	int TO_PARTS__ELEMENT = BPEL_EXTENSIBLE_ELEMENT__ELEMENT;
 
 	/**
 	 * The feature id for the '<em><b>EExtensibility Elements</b></em>' containment reference list.
@@ -6729,7 +6765,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TO_PARTS__EEXTENSIBILITY_ELEMENTS = EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
+	int TO_PARTS__EEXTENSIBILITY_ELEMENTS = BPEL_EXTENSIBLE_ELEMENT__EEXTENSIBILITY_ELEMENTS;
 
 	/**
 	 * The feature id for the '<em><b>Documentation</b></em>' containment reference.
@@ -6738,7 +6774,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TO_PARTS__DOCUMENTATION = EXTENSIBLE_ELEMENT__DOCUMENTATION;
+	int TO_PARTS__DOCUMENTATION = BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION;
 
 	/**
 	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -6747,7 +6783,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TO_PARTS__CHILDREN = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
+	int TO_PARTS__CHILDREN = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 0;
 
 	/**
 	 * The number of structural features of the '<em>To Parts</em>' class.
@@ -6756,7 +6792,7 @@ public interface BPELPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int TO_PARTS_FEATURE_COUNT = EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
+	int TO_PARTS_FEATURE_COUNT = BPEL_EXTENSIBLE_ELEMENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link org.eclipse.bpel.model.CorrelationPattern <em>Correlation Pattern</em>}' enum.
@@ -8901,6 +8937,17 @@ public interface BPELPackage extends EPackage {
 	EReference getOnEvent_MessageType();
 
 	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.bpel.model.OnEvent#getXSDElement <em>XSD Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>XSD Element</em>'.
+	 * @see org.eclipse.bpel.model.OnEvent#getXSDElement()
+	 * @see #getOnEvent()
+	 * @generated
+	 */
+	EReference getOnEvent_XSDElement();
+
+	/**
 	 * Returns the meta object for the containment reference '{@link org.eclipse.bpel.model.OnEvent#getCorrelationSets <em>Correlation Sets</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -9507,25 +9554,25 @@ public interface BPELPackage extends EPackage {
 	EAttribute getBranches_CountCompletedBranchesOnly();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.bpel.model.ExtensibleElement <em>Extensible Element</em>}'.
+	 * Returns the meta object for class '{@link org.eclipse.bpel.model.BPELExtensibleElement <em>Extensible Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Extensible Element</em>'.
-	 * @see org.eclipse.bpel.model.ExtensibleElement
+	 * @see org.eclipse.bpel.model.BPELExtensibleElement
 	 * @generated
 	 */
-	EClass getExtensibleElement();
+	EClass getBPELExtensibleElement();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.bpel.model.ExtensibleElement#getDocumentation <em>Documentation</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.eclipse.bpel.model.BPELExtensibleElement#getDocumentation <em>Documentation</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Documentation</em>'.
-	 * @see org.eclipse.bpel.model.ExtensibleElement#getDocumentation()
-	 * @see #getExtensibleElement()
+	 * @see org.eclipse.bpel.model.BPELExtensibleElement#getDocumentation()
+	 * @see #getBPELExtensibleElement()
 	 * @generated
 	 */
-	EReference getExtensibleElement_Documentation();
+	EReference getBPELExtensibleElement_Documentation();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.bpel.model.Validate <em>Validate</em>}'.
@@ -11393,6 +11440,14 @@ public interface BPELPackage extends EPackage {
 		EReference ON_EVENT__MESSAGE_TYPE = eINSTANCE.getOnEvent_MessageType();
 
 		/**
+		 * The meta object literal for the '<em><b>XSD Element</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ON_EVENT__XSD_ELEMENT = eINSTANCE.getOnEvent_XSDElement();
+
+		/**
 		 * The meta object literal for the '<em><b>Correlation Sets</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -11910,14 +11965,14 @@ public interface BPELPackage extends EPackage {
 				.getBranches_CountCompletedBranchesOnly();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.bpel.model.impl.ExtensibleElementImpl <em>Extensible Element</em>}' class.
+		 * The meta object literal for the '{@link org.eclipse.bpel.model.impl.BPELExtensibleElementImpl <em>Extensible Element</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.eclipse.bpel.model.impl.ExtensibleElementImpl
-		 * @see org.eclipse.bpel.model.impl.BPELPackageImpl#getExtensibleElement()
+		 * @see org.eclipse.bpel.model.impl.BPELExtensibleElementImpl
+		 * @see org.eclipse.bpel.model.impl.BPELPackageImpl#getBPELExtensibleElement()
 		 * @generated
 		 */
-		EClass EXTENSIBLE_ELEMENT = eINSTANCE.getExtensibleElement();
+		EClass BPEL_EXTENSIBLE_ELEMENT = eINSTANCE.getBPELExtensibleElement();
 
 		/**
 		 * The meta object literal for the '<em><b>Documentation</b></em>' containment reference feature.
@@ -11925,8 +11980,8 @@ public interface BPELPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference EXTENSIBLE_ELEMENT__DOCUMENTATION = eINSTANCE
-				.getExtensibleElement_Documentation();
+		EReference BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION = eINSTANCE
+				.getBPELExtensibleElement_Documentation();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.bpel.model.impl.DocumentationImpl <em>Documentation</em>}' class.

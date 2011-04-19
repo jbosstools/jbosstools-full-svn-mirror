@@ -10,7 +10,7 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: PartnerlinktypeSwitch.java,v 1.4 2007/08/01 21:02:32 mchmielewski Exp $
+ * $Id: PartnerlinktypeSwitch.java,v 1.6 2011/03/31 14:04:41 rbrodt Exp $
  */
 package org.eclipse.bpel.model.partnerlinktype.util;
 
@@ -23,6 +23,7 @@ import org.eclipse.bpel.model.partnerlinktype.*;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.wst.wsdl.WSDLElement;
 
 /**
@@ -96,34 +97,34 @@ public class PartnerlinktypeSwitch<T> {
 	 */
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-			case PartnerlinktypePackage.PARTNER_LINK_TYPE: {
-				PartnerLinkType partnerLinkType = (PartnerLinkType) theEObject;
-				T result = casePartnerLinkType(partnerLinkType);
-				if (result == null)
-					result = caseExtensibilityElement(partnerLinkType);
-				if (result == null)
-					result = caseWSDLElement(partnerLinkType);
-				if (result == null)
-					result = caseIExtensibilityElement(partnerLinkType);
-				if (result == null)
-					result = defaultCase(theEObject);
-				return result;
-			}
-			case PartnerlinktypePackage.ROLE: {
-				Role role = (Role) theEObject;
-				T result = caseRole(role);
-				if (result == null)
-					result = caseExtensibilityElement(role);
-				if (result == null)
-					result = caseWSDLElement(role);
-				if (result == null)
-					result = caseIExtensibilityElement(role);
-				if (result == null)
-					result = defaultCase(theEObject);
-				return result;
-			}
-			default:
-				return defaultCase(theEObject);
+		case PartnerlinktypePackage.PARTNER_LINK_TYPE: {
+			PartnerLinkType partnerLinkType = (PartnerLinkType) theEObject;
+			T result = casePartnerLinkType(partnerLinkType);
+			if (result == null)
+				result = caseExtensibilityElement(partnerLinkType);
+			if (result == null)
+				result = caseWSDLElement(partnerLinkType);
+			if (result == null)
+				result = caseIExtensibilityElement(partnerLinkType);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case PartnerlinktypePackage.ROLE: {
+			Role role = (Role) theEObject;
+			T result = caseRole(role);
+			if (result == null)
+				result = caseExtensibilityElement(role);
+			if (result == null)
+				result = caseWSDLElement(role);
+			if (result == null)
+				result = caseIExtensibilityElement(role);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		default:
+			return defaultCase(theEObject);
 		}
 	}
 

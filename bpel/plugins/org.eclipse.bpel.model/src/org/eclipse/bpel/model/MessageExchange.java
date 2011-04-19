@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: MessageExchange.java,v 1.5 2008/02/28 17:33:21 smoser Exp $
+ * $Id: MessageExchange.java,v 1.6 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model;
 
@@ -22,7 +22,7 @@ package org.eclipse.bpel.model;
  * @model
  * @generated
  */
-public interface MessageExchange extends ExtensibleElement {
+public interface MessageExchange extends BPELExtensibleElement {
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
 	 * The default value is <code>""</code>.

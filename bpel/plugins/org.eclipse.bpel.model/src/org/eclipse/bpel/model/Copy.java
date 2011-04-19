@@ -10,7 +10,7 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: Copy.java,v 1.6 2007/12/06 20:01:24 smoser Exp $
+ * $Id: Copy.java,v 1.7 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model;
 
@@ -33,7 +33,7 @@ package org.eclipse.bpel.model;
  * @model
  * @generated
  */
-public interface Copy extends ExtensibleElement {
+public interface Copy extends BPELExtensibleElement {
 	/**
 	 * Returns the value of the '<em><b>To</b></em>' containment reference.
 	 * <!-- begin-user-doc -->

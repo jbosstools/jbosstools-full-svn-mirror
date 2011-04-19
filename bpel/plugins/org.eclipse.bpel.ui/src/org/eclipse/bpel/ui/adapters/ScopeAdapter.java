@@ -17,7 +17,7 @@ import org.eclipse.bpel.model.BPELPackage;
 import org.eclipse.bpel.model.CompensationHandler;
 import org.eclipse.bpel.model.CorrelationSets;
 import org.eclipse.bpel.model.EventHandler;
-import org.eclipse.bpel.model.ExtensibleElement;
+import org.eclipse.bpel.model.BPELExtensibleElement;
 import org.eclipse.bpel.model.FaultHandler;
 import org.eclipse.bpel.model.MessageExchanges;
 import org.eclipse.bpel.model.PartnerLinks;
@@ -123,9 +123,9 @@ public class ScopeAdapter extends ContainerActivityAdapter implements IFaultHand
 			// these partner, varaible, and so on change
 			@SuppressWarnings("unchecked")
 			@Override
-			protected List<ExtensibleElement> getModelChildren() {
+			protected List<BPELExtensibleElement> getModelChildren() {
 				Scope  scope = (Scope)model;
-				List<ExtensibleElement> list = new ArrayList<ExtensibleElement>();
+				List<BPELExtensibleElement> list = new ArrayList<BPELExtensibleElement>();
 
 				PartnerLinks links = scope.getPartnerLinks();
 				if (links != null) {
@@ -148,7 +148,7 @@ public class ScopeAdapter extends ContainerActivityAdapter implements IFaultHand
 				}
 
 				IContainer container = new ActivityContainer(BPELPackage.eINSTANCE.getScope_Activity());
-				List<ExtensibleElement> list2 = container.getChildren(scope);
+				List<BPELExtensibleElement> list2 = container.getChildren(scope);
 				list.addAll(list2);
 				return list;
 			}

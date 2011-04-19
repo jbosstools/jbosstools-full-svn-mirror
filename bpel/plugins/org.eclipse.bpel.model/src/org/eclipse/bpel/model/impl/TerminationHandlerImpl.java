@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: TerminationHandlerImpl.java,v 1.9 2009/04/14 10:50:37 smoser Exp $
+ * $Id: TerminationHandlerImpl.java,v 1.10 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model.impl;
 
@@ -29,7 +29,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class TerminationHandlerImpl extends ExtensibleElementImpl implements
+public class TerminationHandlerImpl extends BPELExtensibleElementImpl implements
 		TerminationHandler {
 	/**
 	 * The cached value of the '{@link #getActivity() <em>Activity</em>}' containment reference.

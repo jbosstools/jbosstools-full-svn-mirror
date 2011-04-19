@@ -34,7 +34,7 @@ import org.eclipse.bpel.model.Else;
 import org.eclipse.bpel.model.ElseIf;
 import org.eclipse.bpel.model.EventHandler;
 import org.eclipse.bpel.model.Expression;
-import org.eclipse.bpel.model.ExtensibleElement;
+import org.eclipse.bpel.model.BPELExtensibleElement;
 import org.eclipse.bpel.model.Extension;
 import org.eclipse.bpel.model.Extensions;
 import org.eclipse.bpel.model.FaultHandler;
@@ -588,12 +588,12 @@ public class ElementFactory {
 	private static Document getOwnerDocument(Object parent) {
 		Document ownerDocument = null;
 		// if (!BPELUtils.isTransparentObject(parent)) {
-		if (((ExtensibleElement) parent).getElement() != null)
-			ownerDocument = ((ExtensibleElement) parent).getElement()
+		if (((BPELExtensibleElement) parent).getElement() != null)
+			ownerDocument = ((BPELExtensibleElement) parent).getElement()
 					.getOwnerDocument();
 		// } else {
 		// ownerDocument =
-		// ((ExtensibleElement)((EObject)parent).eContainer()).getElement().getOwnerDocument();
+		// ((BPELExtensibleElement)((EObject)parent).eContainer()).getElement().getOwnerDocument();
 		// }
 		return ownerDocument;
 	}

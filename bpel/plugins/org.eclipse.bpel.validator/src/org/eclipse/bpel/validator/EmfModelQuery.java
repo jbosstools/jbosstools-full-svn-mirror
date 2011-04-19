@@ -465,7 +465,7 @@ public class EmfModelQuery {
 	
 		assertTrue(eObj != null, CONTEXT_MSG );
 		EObject top = eObj;
-		while (top.eContainer() != null) {
+		while( top != null && top.eContainer() != null ) {
 			top = top.eContainer();
 		}		
 		
@@ -801,8 +801,7 @@ public class EmfModelQuery {
 		
 		if (!src.getQName().equals(dst.getQName()))
 			return false;
-		URI uri1 = src.eResource().getURI();
-		URI uri2 = dst.eResource().getURI();
+
 		if (src.eResource().getURI().equals(dst.eResource().getURI()))
 			return true;
 		

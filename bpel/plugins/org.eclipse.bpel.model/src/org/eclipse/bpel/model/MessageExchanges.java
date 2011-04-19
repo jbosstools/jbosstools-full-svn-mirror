@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: MessageExchanges.java,v 1.4 2008/02/28 17:33:21 smoser Exp $
+ * $Id: MessageExchanges.java,v 1.5 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model;
 
@@ -24,7 +24,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface MessageExchanges extends ExtensibleElement {
+public interface MessageExchanges extends BPELExtensibleElement {
 	/**
 	 * Returns the value of the '<em><b>Children</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.bpel.model.MessageExchange}.

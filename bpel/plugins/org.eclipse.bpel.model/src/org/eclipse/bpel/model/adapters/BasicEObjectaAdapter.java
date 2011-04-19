@@ -172,9 +172,9 @@ implements IProperty<String, Object>, INamespaceMap<String, String> {
 				String attr = key.equals("") ? "xmlns" : "xmlns:" + key;
 				// We only need to update attribute if something really has been changed
 				// because it causes hard reconcile process
-				if ((oldValue == null && value != null)|| !oldValue.equals(value)) {
+				if ((oldValue == null && value != null) || (oldValue != null && !oldValue.equals(value))) {
 					String attribute = element.getAttribute(attr);
-					if ((attribute == null && value != null) || !attribute.equals(value)) {
+					if ((attribute == null && value != null) || (attribute != null && !attribute.equals(value))) {
 						element.setAttribute(attr, value);
 					}
 				}

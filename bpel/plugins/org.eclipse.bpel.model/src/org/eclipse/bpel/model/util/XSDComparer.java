@@ -1,23 +1,9 @@
 /*
- * JBoss, Home of Professional Open Source
- * Copyright 2005, JBoss Inc., and individual contributors as indicated
- * by the @authors tag. See the copyright.txt in the distribution for a
- * full listing of individual contributors.
- *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
- *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software; if not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ * Copyright (c) 2010 JBoss, Inc. and others
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
  */
 package org.eclipse.bpel.model.util;
 
@@ -26,10 +12,26 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
-import javax.xml.namespace.QName;
-
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.xsd.*;
+import org.eclipse.xsd.XSDAttributeDeclaration;
+import org.eclipse.xsd.XSDAttributeGroupContent;
+import org.eclipse.xsd.XSDAttributeGroupDefinition;
+import org.eclipse.xsd.XSDAttributeUse;
+import org.eclipse.xsd.XSDComplexTypeDefinition;
+import org.eclipse.xsd.XSDConcreteComponent;
+import org.eclipse.xsd.XSDDiagnostic;
+import org.eclipse.xsd.XSDDiagnosticSeverity;
+import org.eclipse.xsd.XSDElementDeclaration;
+import org.eclipse.xsd.XSDFactory;
+import org.eclipse.xsd.XSDModelGroup;
+import org.eclipse.xsd.XSDModelGroupDefinition;
+import org.eclipse.xsd.XSDNamedComponent;
+import org.eclipse.xsd.XSDParticle;
+import org.eclipse.xsd.XSDParticleContent;
+import org.eclipse.xsd.XSDSimpleTypeDefinition;
+import org.eclipse.xsd.XSDTerm;
+import org.eclipse.xsd.XSDTypeDefinition;
+import org.eclipse.xsd.XSDWildcard;
 import org.eclipse.xsd.util.XSDConstants;
 
 /**
@@ -48,6 +50,7 @@ import org.eclipse.xsd.util.XSDConstants;
  * to force a match.
  *
  * @see https://jira.jboss.org/browse/JBIDE-7351
+ * @see https://bugs.eclipse.org/bugs/show_bug.cgi?id=330813
  * @author Bob Brodt
  * @date Oct 29, 2010
  */
@@ -351,9 +354,7 @@ public class XSDComparer {
 			type = type.getBaseType();
 		}
 		while (!names.isEmpty()) {
-			// https://issues.jboss.org/browse/JBIDE-8345
-			// remove dependency on Java 1.6
-			if ("".equals(s))
+			if (s.isEmpty())
 				s = names.pop();
 			else
 				s = s + ":" + names.pop();
@@ -371,10 +372,8 @@ public class XSDComparer {
 			return false;
 		}
 		if (name1.equals(name2)) {
-			// https://issues.jboss.org/browse/JBIDE-8345
-			// remove dependency on Java 1.6
-			if (elem1.getTargetNamespace() == null || "".equals(elem1.getTargetNamespace())
-					&& elem2.getTargetNamespace() == null || "".equals(elem2.getTargetNamespace()))
+			if (elem1.getTargetNamespace() == null || elem1.getTargetNamespace().isEmpty()
+					&& elem2.getTargetNamespace() == null || elem2.getTargetNamespace().isEmpty())
 				return true;
 
 			if (elem1.getTargetNamespace().equals(elem2.getTargetNamespace()))
@@ -451,9 +450,7 @@ public class XSDComparer {
 	public int getMinOccurs(XSDTerm term) {
 		String smin = term.getElement().getAttribute("minOccurs");
 		int min = 1;
-		// https://issues.jboss.org/browse/JBIDE-8345
-		// remove dependency on Java 1.6
-		if (smin!=null && !"".equals(smin)) {
+		if (smin!=null && !smin.isEmpty()) {
 			try {
 				min = Integer.parseInt(smin);
 			} catch (NumberFormatException e) {
@@ -471,9 +468,7 @@ public class XSDComparer {
 	public int getMaxOccurs(XSDTerm term) {
 		String smax = term.getElement().getAttribute("maxOccurs");
 		int max = 1;
-		// https://issues.jboss.org/browse/JBIDE-8345
-		// remove dependency on Java 1.6
-		if (smax!=null && !"".equals(smax)) {
+		if (smax!=null && !smax.isEmpty()) {
 			try {
 				max = Integer.parseInt(smax);
 			} catch (NumberFormatException e) {
@@ -774,9 +769,10 @@ public class XSDComparer {
 		
 		if (debug) {
 			if (term != null && type != null) {
-				String indent = "";
+				StringBuilder indent = new StringBuilder();
 				for (int i = 0; i < level; ++i)
-					indent += "    ";
+					indent.append( "    " );
+				
 				if (term instanceof XSDElementDeclaration) {
 					XSDElementDeclaration decl = (XSDElementDeclaration) term;
 					if (type instanceof XSDSimpleTypeDefinition)

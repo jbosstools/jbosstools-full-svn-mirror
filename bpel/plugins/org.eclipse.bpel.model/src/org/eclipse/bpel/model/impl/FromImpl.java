@@ -10,7 +10,7 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: FromImpl.java,v 1.14 2009/04/14 10:50:36 smoser Exp $
+ * $Id: FromImpl.java,v 1.15 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model.impl;
 
@@ -61,7 +61,7 @@ import org.eclipse.xsd.XSDTypeDefinition;
  *
  * @generated
  */
-public class FromImpl extends ExtensibleElementImpl implements From {
+public class FromImpl extends BPELExtensibleElementImpl implements From {
 	/**
 	 * The default value of the '{@link #getOpaque() <em>Opaque</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -345,7 +345,8 @@ public class FromImpl extends ExtensibleElementImpl implements From {
 	public void setEndpointReference(EndpointReferenceRole newEndpointReference) {
 		EndpointReferenceRole oldEndpointReference = endpointReference;
 		if (!isReconciling) {
-			ReconciliationHelper.replaceAttribute(this,
+			ReconciliationHelper.replaceAttribute(
+					this,
 					BPELConstants.AT_ENDPOINT_REFERENCE,
 					newEndpointReference == null ? ENDPOINT_REFERENCE_EDEFAULT
 							.toString() : newEndpointReference.toString());
@@ -612,8 +613,8 @@ public class FromImpl extends ExtensibleElementImpl implements From {
 		XSDTypeDefinition oldType = type;
 		if (!isReconciling) {
 			ReconciliationHelper.replaceAttribute(this,
-					BPELConstants.AT_XSI_TYPE, newType == null ? null : newType
-							.getName());
+					BPELConstants.AT_XSI_TYPE,
+					newType == null ? null : newType.getName());
 		}
 		type = newType;
 		if (eNotificationRequired())

@@ -15,7 +15,7 @@ import java.util.List;
 
 import org.eclipse.bpel.common.ui.layouts.AlignedFlowLayout;
 import org.eclipse.bpel.model.CompensationHandler;
-import org.eclipse.bpel.model.ExtensibleElement;
+import org.eclipse.bpel.model.BPELExtensibleElement;
 import org.eclipse.bpel.model.FaultHandler;
 import org.eclipse.bpel.ui.BPELUIPlugin;
 import org.eclipse.bpel.ui.IBPELUIConstants;
@@ -295,8 +295,8 @@ public class InvokeEditPart extends LeafEditPart implements ILayoutAware{
 	 * This includes fault handlers and compensation handlers.
 	 */
 	@Override
-	protected List<ExtensibleElement> getModelChildren() {
-    	ArrayList<ExtensibleElement> children = new ArrayList<ExtensibleElement>();
+	protected List<BPELExtensibleElement> getModelChildren() {
+    	ArrayList<BPELExtensibleElement> children = new ArrayList<BPELExtensibleElement>();
 
     	if (showFH) {
 			FaultHandler faultHandler = this.getFaultHandler();

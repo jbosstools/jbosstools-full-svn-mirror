@@ -13,7 +13,6 @@ package org.eclipse.bpel.validator.xpath;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.eclipse.bpel.validator.helpers.DOMNodeAdapter;
 import org.eclipse.bpel.validator.model.ARule;
 import org.eclipse.bpel.validator.model.INode;
 import org.eclipse.bpel.validator.model.IProblem;
@@ -71,11 +70,6 @@ public class Query extends XPathValidator {
 			
 			Object obj = mVisitor.contextPeek();
 			if (obj instanceof INode) {
-//				if(expr.getText().indexOf("receivePolicyQuote") >= 0 && 
-//						expr.getText().indexOf("policyQuoteInfo") >= 0 &&
-//						expr.getText().indexOf("ssn") > 0){
-//					int ss = 0;
-//				}
 				mVisitor.visit( expr );
 			} else {
 				problem = createError();
@@ -90,9 +84,7 @@ public class Query extends XPathValidator {
 					exprStringTrimmed,
 					toString(mNode.nodeName())
 				);	
-			
 			repointOffsets(problem, expr);
-			
 		}			
 		
 		// Don't run anything else.

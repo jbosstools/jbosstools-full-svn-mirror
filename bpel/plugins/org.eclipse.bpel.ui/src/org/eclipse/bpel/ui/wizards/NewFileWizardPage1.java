@@ -23,6 +23,7 @@ import org.eclipse.bpel.ui.BPELUIPlugin;
 import org.eclipse.bpel.ui.IBPELUIConstants;
 import org.eclipse.bpel.ui.Templates;
 import org.eclipse.bpel.ui.Templates.Template;
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.runtime.IStatus;
@@ -58,6 +59,8 @@ public class NewFileWizardPage1 extends WizardPage {
 
 	/** last namespace used in creating a project, saved in dialog settings */
 	static final String LAST_NAMESPACE_KEY = "last.namespace.used"; //$NON-NLS-1$
+
+	private IContainer mContainer;
 
 	/** Process name field */
 	private Text processNameField;
@@ -207,6 +210,7 @@ public class NewFileWizardPage1 extends WizardPage {
 
 			public void handleEvent(Event event) {
 				String val = processTemplateField.getText().trim();
+				// https://bugs.eclipse.org/bugs/show_bug.cgi?id=330813
 				// https://jira.jboss.org/browse/JBIDE-7165
 				mArgs.put(Templates.PROPERTY_NAME, val);
 				Template template = BPELUIPlugin.INSTANCE.getTemplates()
@@ -377,6 +381,10 @@ public class NewFileWizardPage1 extends WizardPage {
 			setErrorMessage(Messages.NewFileWizardPage1_11);
 			return false;
 		}
+		
+		if (mContainer!=null && mContainer.findMember(processNameField.getText()+".bpel")!=null ) { //$NON-NLS-1$
+			setMessage(Messages.NewFileWizardPage1_12,WARNING);
+		}
 
 		String bpelNamespace = (isAbstractOptionButtonChecked()) ? BPELConstants.NAMESPACE_ABSTRACT_2007
 				: BPELConstants.NAMESPACE;
@@ -404,6 +412,11 @@ public class NewFileWizardPage1 extends WizardPage {
 			page.getPortNameField().setText(processName + "Port");
 			page.getAddressField().setText(
 					"http://localhost:8080/" + processName);
+		}
+		NewFileWizardPage2 page2 = (NewFileWizardPage2) this.getWizard().getPage(
+				Messages.NewFileWizardPage2_Name);
+		if (page2 != null) {
+			page2.setProcessName(processName);
 		}
 	}
 
@@ -488,6 +501,10 @@ public class NewFileWizardPage1 extends WizardPage {
 	public Map<String, Object> getArgs() {
 
 		return mArgs;
+	}
+
+	public void setContainer(IContainer mContainer) {
+		this.mContainer = mContainer;
 	}
 
 }

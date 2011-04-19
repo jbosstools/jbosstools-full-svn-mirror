@@ -10,7 +10,7 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: InvokeImpl.java,v 1.12 2009/04/14 10:50:36 smoser Exp $
+ * $Id: InvokeImpl.java,v 1.13 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model.impl;
 
@@ -165,7 +165,8 @@ public class InvokeImpl extends PartnerActivityImpl implements Invoke {
 	public void setOutputVariable(Variable newOutputVariable) {
 		Variable oldOutputVariable = outputVariable;
 		if (!isReconciling) {
-			ReconciliationHelper.replaceAttribute(this,
+			ReconciliationHelper.replaceAttribute(
+					this,
 					BPELConstants.AT_OUTPUT_VARIABLE,
 					newOutputVariable == null ? null : newOutputVariable
 							.getName());
@@ -212,7 +213,8 @@ public class InvokeImpl extends PartnerActivityImpl implements Invoke {
 	public void setInputVariable(Variable newInputVariable) {
 		Variable oldInputVariable = inputVariable;
 		if (!isReconciling) {
-			ReconciliationHelper.replaceAttribute(this,
+			ReconciliationHelper.replaceAttribute(
+					this,
 					BPELConstants.AT_INPUT_VARIABLE,
 					newInputVariable == null ? null : newInputVariable
 							.getName());

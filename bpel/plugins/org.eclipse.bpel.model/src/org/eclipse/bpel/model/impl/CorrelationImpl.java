@@ -10,7 +10,7 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: CorrelationImpl.java,v 1.11 2009/04/23 10:52:48 smoser Exp $
+ * $Id: CorrelationImpl.java,v 1.12 2011/03/30 18:54:24 rbrodt Exp $
  */
 package org.eclipse.bpel.model.impl;
 
@@ -40,7 +40,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class CorrelationImpl extends ExtensibleElementImpl implements
+public class CorrelationImpl extends BPELExtensibleElementImpl implements
 		Correlation {
 	/**
 	 * The default value of the '{@link #getInitiate() <em>Initiate</em>}' attribute.

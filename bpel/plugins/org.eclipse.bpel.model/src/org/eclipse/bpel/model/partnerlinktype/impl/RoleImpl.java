@@ -10,13 +10,14 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: RoleImpl.java,v 1.8 2008/05/04 11:05:47 odanilov Exp $
+ * $Id: RoleImpl.java,v 1.10 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model.partnerlinktype.impl;
 
 import javax.xml.namespace.QName;
 
-import org.eclipse.bpel.model.impl.ExtensibilityElementImpl;
+//Bugzilla 340654 - renamed to avoid confusion with WSDL's ExtensibilityElement
+import org.eclipse.bpel.model.impl.BPELExtensibilityElementImpl;
 import org.eclipse.bpel.model.partnerlinktype.PartnerLinkType;
 import org.eclipse.bpel.model.partnerlinktype.PartnerlinktypePackage;
 import org.eclipse.bpel.model.partnerlinktype.Role;
@@ -28,6 +29,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.wst.wsdl.internal.impl.ExtensibilityElementImpl;
 import org.eclipse.wst.wsdl.Definition;
 import org.eclipse.wst.wsdl.PortType;
 import org.w3c.dom.Element;
@@ -193,12 +195,12 @@ public class RoleImpl extends ExtensibilityElementImpl implements Role {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case PartnerlinktypePackage.ROLE__ID:
-				return getID();
-			case PartnerlinktypePackage.ROLE__NAME:
-				return getName();
-			case PartnerlinktypePackage.ROLE__PORT_TYPE:
-				return getPortType();
+		case PartnerlinktypePackage.ROLE__ID:
+			return getID();
+		case PartnerlinktypePackage.ROLE__NAME:
+			return getName();
+		case PartnerlinktypePackage.ROLE__PORT_TYPE:
+			return getPortType();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -211,12 +213,12 @@ public class RoleImpl extends ExtensibilityElementImpl implements Role {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case PartnerlinktypePackage.ROLE__NAME:
-				setName((String) newValue);
-				return;
-			case PartnerlinktypePackage.ROLE__PORT_TYPE:
-				setPortType(newValue);
-				return;
+		case PartnerlinktypePackage.ROLE__NAME:
+			setName((String) newValue);
+			return;
+		case PartnerlinktypePackage.ROLE__PORT_TYPE:
+			setPortType(newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -229,12 +231,12 @@ public class RoleImpl extends ExtensibilityElementImpl implements Role {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case PartnerlinktypePackage.ROLE__NAME:
-				setName(NAME_EDEFAULT);
-				return;
-			case PartnerlinktypePackage.ROLE__PORT_TYPE:
-				setPortType(PORT_TYPE_EDEFAULT);
-				return;
+		case PartnerlinktypePackage.ROLE__NAME:
+			setName(NAME_EDEFAULT);
+			return;
+		case PartnerlinktypePackage.ROLE__PORT_TYPE:
+			setPortType(PORT_TYPE_EDEFAULT);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -247,15 +249,15 @@ public class RoleImpl extends ExtensibilityElementImpl implements Role {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case PartnerlinktypePackage.ROLE__ID:
-				return ID_EDEFAULT == null ? getID() != null : !ID_EDEFAULT
-						.equals(getID());
-			case PartnerlinktypePackage.ROLE__NAME:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT
-						.equals(name);
-			case PartnerlinktypePackage.ROLE__PORT_TYPE:
-				return PORT_TYPE_EDEFAULT == null ? portType != null
-						: !PORT_TYPE_EDEFAULT.equals(portType);
+		case PartnerlinktypePackage.ROLE__ID:
+			return ID_EDEFAULT == null ? getID() != null : !ID_EDEFAULT
+					.equals(getID());
+		case PartnerlinktypePackage.ROLE__NAME:
+			return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT
+					.equals(name);
+		case PartnerlinktypePackage.ROLE__PORT_TYPE:
+			return PORT_TYPE_EDEFAULT == null ? portType != null
+					: !PORT_TYPE_EDEFAULT.equals(portType);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -319,8 +321,7 @@ public class RoleImpl extends ExtensibilityElementImpl implements Role {
 			if (definition != null) {
 				QName portTypeQName = createQName(
 						definition,
-						element
-								.getAttribute(PartnerlinktypeConstants.PORT_TYPE_ATTRIBUTE));
+						element.getAttribute(PartnerlinktypeConstants.PORT_TYPE_ATTRIBUTE));
 
 				PortType newPortType = null;
 
@@ -362,10 +363,11 @@ public class RoleImpl extends ExtensibilityElementImpl implements Role {
 				PortType pt = (PortType) getPortType();
 				QName qname = (pt == null) ? null : pt.getQName();
 				if (qname != null)
-					niceSetAttributeURIValue(theElement,
-							PartnerlinktypeConstants.PORT_TYPE_ATTRIBUTE, qname
-									.getNamespaceURI()
-									+ "#" + qname.getLocalPart());
+					niceSetAttributeURIValue(
+							theElement,
+							PartnerlinktypeConstants.PORT_TYPE_ATTRIBUTE,
+							qname.getNamespaceURI() + "#"
+									+ qname.getLocalPart());
 			}
 
 		}

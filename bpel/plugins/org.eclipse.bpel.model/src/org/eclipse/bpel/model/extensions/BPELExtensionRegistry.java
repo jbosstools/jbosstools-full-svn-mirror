@@ -55,7 +55,7 @@ public class BPELExtensionRegistry extends ExtensionRegistry
 	/** 
 	 * @return Returns a singleton instance. 
 	 */
-	public static BPELExtensionRegistry getInstance() {
+	public synchronized static BPELExtensionRegistry getInstance() {
 		if (INSTANCE == null) {
 			INSTANCE = new BPELExtensionRegistry();
 			INSTANCE.setDefaultDeserializer(new BPELUnknownExtensionDeserializer());

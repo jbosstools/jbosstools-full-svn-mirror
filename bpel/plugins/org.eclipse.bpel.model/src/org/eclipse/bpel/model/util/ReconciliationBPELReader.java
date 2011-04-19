@@ -41,7 +41,7 @@ import org.eclipse.bpel.model.EndpointReferenceRole;
 import org.eclipse.bpel.model.EventHandler;
 import org.eclipse.bpel.model.Exit;
 import org.eclipse.bpel.model.Expression;
-import org.eclipse.bpel.model.ExtensibleElement;
+import org.eclipse.bpel.model.BPELExtensibleElement;
 import org.eclipse.bpel.model.Extension;
 import org.eclipse.bpel.model.Extensions;
 import org.eclipse.bpel.model.FaultHandler;
@@ -538,11 +538,10 @@ public class ReconciliationBPELReader extends BPELReader implements
 		CompensationHandler oldCompensationHandler = compensationHandler;
 
 		if (compensationHandlerElement != null && compensationHandler == null) {
-			compensationHandler = xml2CompensationHandler(compensationHandler,
-					compensationHandlerElement);
-			xml2ExtensibleElement(compensationHandler,
-					compensationHandlerElement);
-		} else if (compensationHandlerElement == null) {
+			compensationHandler = xml2CompensationHandler( null, compensationHandlerElement );
+			xml2ExtensibleElement( compensationHandler, compensationHandlerElement );
+		} 
+		else if (compensationHandlerElement == null) {
 			compensationHandler = null;
 		}
 
@@ -558,7 +557,7 @@ public class ReconciliationBPELReader extends BPELReader implements
 	 * Sets a FaultHandler element for a given extensibleElement.
 	 */
 	protected void setFaultHandler(Element element,
-			ExtensibleElement extensibleElement) {
+			BPELExtensibleElement extensibleElement) {
 		Element faultHandlerElement = ReconciliationHelper
 				.getBPELChildElementByLocalName(element, "faultHandlers");
 
@@ -571,7 +570,7 @@ public class ReconciliationBPELReader extends BPELReader implements
 		FaultHandler oldFaultHandler = faultHandler;
 
 		if (faultHandlerElement != null && faultHandler == null) {
-			faultHandler = xml2FaultHandler(faultHandler, faultHandlerElement);
+			faultHandler = xml2FaultHandler( null, faultHandlerElement );
 		} else if (faultHandlerElement == null) {
 			faultHandler = null;
 		}
@@ -589,7 +588,7 @@ public class ReconciliationBPELReader extends BPELReader implements
 	 * Sets a EventHandler element for a given extensibleElement.
 	 */
 	protected void setEventHandler(Element element,
-			ExtensibleElement extensibleElement) {
+			BPELExtensibleElement extensibleElement) {
 		Element eventHandlerElement = ReconciliationHelper
 				.getBPELChildElementByLocalName(element, "eventHandlers");
 
@@ -601,7 +600,7 @@ public class ReconciliationBPELReader extends BPELReader implements
 		EventHandler oldEventHandler = eventHandler;
 
 		if (eventHandlerElement != null && eventHandler == null) {
-			eventHandler = xml2EventHandler(eventHandler, eventHandlerElement);
+			eventHandler = xml2EventHandler( null, eventHandlerElement );
 		} else if (eventHandlerElement == null) {
 			eventHandler = null;
 		}
@@ -1376,17 +1375,23 @@ public class ReconciliationBPELReader extends BPELReader implements
 			MessageExchange messageExchange, Element messageExchangeElement) {
 		if (!messageExchangeElement.getLocalName().equals("messageExchange"))
 			return null;
-
+		
 		if (messageExchange == null) {
 			messageExchange = BPELFactory.eINSTANCE.createMessageExchange();
 			messageExchange.setElement(messageExchangeElement);
 		}
-
+		
 		// Save all the references to external namespaces
 		saveNamespacePrefix(messageExchange, messageExchangeElement);
 
 		if (messageExchangeElement == null)
 			return messageExchange;
+		
+		if (!messageExchangeElement.getLocalName().equals("messageExchange"))
+			return null;
+
+		// Save all the references to external namespaces
+		saveNamespacePrefix(messageExchange, messageExchangeElement);
 
 		// Set name
 		if (messageExchangeElement.hasAttribute("name")) {
@@ -2713,7 +2718,6 @@ public class ReconciliationBPELReader extends BPELReader implements
 		// extensionActivityElement
 		// doesn't have them.
 
-		// Find the child element.
 		List<Element> nodeList = getChildElements(extensionActivityElement);
 
 		if (nodeList.size() == 1) {
@@ -2733,8 +2737,9 @@ public class ReconciliationBPELReader extends BPELReader implements
 				// pass the activity that was already created to the serializer
 				extensionActivity = deserializer.unmarshall(qname, child,
 						extensionActivity, process, nsMap, extensionRegistry, getResource()
-								.getURI(), this);
+										.getURI(), this);
 
+				// Now let's do the standard attributes and elements
 				setStandardAttributes(child, extensionActivity);
 				setStandardElements(child, extensionActivity);
 
@@ -2752,8 +2757,8 @@ public class ReconciliationBPELReader extends BPELReader implements
 				return extensionActivity;
 			}
 		}
-		// Fallback is to create a new extensionActivity.
-		// eturn BPELFactory.eINSTANCE.createExtensionActivity();
+		
+		// TODO: do something smart here (deserializer not found?)
 		return null;
 	}
 
@@ -3153,13 +3158,14 @@ public class ReconciliationBPELReader extends BPELReader implements
 
 				case Node.TEXT_NODE:
 				case Node.CDATA_SECTION_NODE:
+					// https://bugs.eclipse.org/bugs/show_bug.cgi?id=330813
 					// https://jira.jboss.org/browse/JBIDE-7351
 					// don't display "null" for literal editor widgets
 					{
 						String data = getText(n);
 						if (data != null)
 							elementData.append(data);
-						break;
+					break;
 					}
 				}
 			}
@@ -3246,18 +3252,18 @@ public class ReconciliationBPELReader extends BPELReader implements
 				BPELExtensionDeserializer deserializer = null;
 				try {
 					deserializer = (BPELExtensionDeserializer) extensionRegistry
-							.queryDeserializer(ExtensibleElement.class, qname);
+							.queryDeserializer(BPELExtensibleElement.class, qname);
 				} catch (WSDLException e) {
 				}
 				if (deserializer != null
 						&& !(deserializer instanceof BPELUnknownExtensionDeserializer)) {
 					// Deserialize the DOM element and add the new
 					// Extensibility element to the parent
-					// ExtensibleElement
+					// BPELExtensibleElement
 					try {
 						Map<String, String> nsMap = getAllNamespacesForElement(serviceRefElement);
 						ExtensibilityElement extensibilityElement = deserializer
-								.unmarshall(ExtensibleElement.class, qname,
+								.unmarshall(BPELExtensibleElement.class, qname,
 										childElement, process, nsMap,
 										extensionRegistry, getResource()
 												.getURI(), this);
@@ -3834,7 +3840,7 @@ public class ReconciliationBPELReader extends BPELReader implements
 	 * Converts an XML extensible element to a BPEL extensible element
 	 */
 
-	protected void xml2ExtensibleElement(ExtensibleElement extensibleElement,
+	protected void xml2ExtensibleElement(BPELExtensibleElement extensibleElement,
 			Element element) {
 
 		if (extensionRegistry == null) {
@@ -3863,8 +3869,8 @@ public class ReconciliationBPELReader extends BPELReader implements
 						.getNamespaceURI();
 				if (!(BPELConstants.isBPELNamespace(namespaceURI)))
 					nodes.add(nodeList.item(i));
+				}
 			}
-		}
 
 		NamedNodeMap nodeMap = element.getAttributes();
 		for (int i = 0, n = nodeMap.getLength(); i < n; i++) {
@@ -3895,13 +3901,13 @@ public class ReconciliationBPELReader extends BPELReader implements
 		}
 	}
 
-	protected void deserialize(ExtensibleElement ee, Element elm) {
+	protected void deserialize(BPELExtensibleElement ee, Element elm) {
 
 		QName qname = new QName(elm.getNamespaceURI(), elm.getLocalName());
 		BPELExtensionDeserializer deserializer = null;
 		try {
 			deserializer = (BPELExtensionDeserializer) extensionRegistry
-					.queryDeserializer(ExtensibleElement.class, qname);
+					.queryDeserializer(BPELExtensibleElement.class, qname);
 		} catch (WSDLException e) {
 			// we don't have one.
 		}
@@ -3910,7 +3916,7 @@ public class ReconciliationBPELReader extends BPELReader implements
 		}
 		// Deserialize the DOM element and add the new Extensibility element to
 		// the parent
-		// ExtensibleElement
+		// BPELExtensibleElement
 		Map<String, String> nsMap = getAllNamespacesForElement(elm);
 		try {
 			ExtensibilityElement extensibilityElement = deserializer
@@ -3922,7 +3928,7 @@ public class ReconciliationBPELReader extends BPELReader implements
 		}
 	}
 
-	protected void deserialize(ExtensibleElement ee, Attr attr) {
+	protected void deserialize(BPELExtensibleElement ee, Attr attr) {
 
 		if (attr.getSpecified() == false) {
 			return;
@@ -3933,7 +3939,7 @@ public class ReconciliationBPELReader extends BPELReader implements
 		BPELExtensionDeserializer deserializer = null;
 		try {
 			deserializer = (BPELExtensionDeserializer) extensionRegistry
-					.queryDeserializer(ExtensibleElement.class, qname);
+					.queryDeserializer(BPELExtensibleElement.class, qname);
 		} catch (WSDLException e) {
 			// ignore
 		}
@@ -3958,12 +3964,12 @@ public class ReconciliationBPELReader extends BPELReader implements
 
 		// Deserialize the temp DOM element and add the new Extensibility
 		// element to the parent
-		// ExtensibleElement
+		// BPELExtensibleElement
 		Map<String, String> nsMap = getAllNamespacesForElement((Element) attr
 				.getParentNode());
 		try {
 			ExtensibilityElement extensibilityElement = deserializer
-					.unmarshall(ExtensibleElement.class, qname, tempElement,
+					.unmarshall(BPELExtensibleElement.class, qname, tempElement,
 							process, nsMap, extensionRegistry, getResource()
 									.getURI(), this);
 			if (extensibilityElement != null) {

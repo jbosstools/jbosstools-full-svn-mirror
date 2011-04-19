@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: CompletionConditionImpl.java,v 1.12 2009/04/14 10:50:36 smoser Exp $
+ * $Id: CompletionConditionImpl.java,v 1.13 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model.impl;
 
@@ -30,8 +30,8 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class CompletionConditionImpl extends ExtensibleElementImpl implements
-		CompletionCondition {
+public class CompletionConditionImpl extends BPELExtensibleElementImpl
+		implements CompletionCondition {
 	/**
 	 * The cached value of the '{@link #getBranches() <em>Branches</em>}' containment reference.
 	 * <!-- begin-user-doc -->

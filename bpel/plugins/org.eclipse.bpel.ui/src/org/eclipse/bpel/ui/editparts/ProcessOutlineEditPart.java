@@ -15,7 +15,7 @@ import java.util.List;
 
 import org.eclipse.bpel.model.BPELPackage;
 import org.eclipse.bpel.model.CorrelationSets;
-import org.eclipse.bpel.model.ExtensibleElement;
+import org.eclipse.bpel.model.BPELExtensibleElement;
 import org.eclipse.bpel.model.MessageExchanges;
 import org.eclipse.bpel.model.PartnerLinks;
 import org.eclipse.bpel.model.Process;
@@ -46,9 +46,9 @@ public class ProcessOutlineEditPart extends OutlineTreeEditPart {
 	}
 
 	@Override
-	protected List<ExtensibleElement> getModelChildren() {
+	protected List<BPELExtensibleElement> getModelChildren() {
 		Process process = (Process)getModel();
-		List<ExtensibleElement> list = new ArrayList<ExtensibleElement>();
+		List<BPELExtensibleElement> list = new ArrayList<BPELExtensibleElement>();
 
 		PartnerLinks links = process.getPartnerLinks();
 		if (links != null) {

@@ -78,14 +78,14 @@ public class BPELResourceImpl extends XMLResourceImpl implements BPELResource {
 		validating = true;
 	}
 
-	// https://jira.jboss.org/browse/JBIDE-6825
+	// Bugzilla 324165
 	public void setErrorHandler(ErrorHandler errorHandler)
 	{
 		this.errorHandler = errorHandler;
 		validating = true;
 	}
 
-	// https://jira.jboss.org/browse/JBIDE-6825
+	// Bugzilla 324165
 	public ErrorHandler getErrorHandler()
 	{
 		return errorHandler;

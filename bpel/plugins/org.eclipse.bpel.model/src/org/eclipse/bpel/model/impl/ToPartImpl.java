@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ToPartImpl.java,v 1.11 2009/04/14 10:50:36 smoser Exp $
+ * $Id: ToPartImpl.java,v 1.12 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model.impl;
 
@@ -39,7 +39,7 @@ import org.eclipse.wst.wsdl.Part;
  *
  * @generated
  */
-public class ToPartImpl extends ExtensibleElementImpl implements ToPart {
+public class ToPartImpl extends BPELExtensibleElementImpl implements ToPart {
 	/**
 	 * The cached value of the '{@link #getFromVariable() <em>From Variable</em>}' reference.
 	 * <!-- begin-user-doc -->

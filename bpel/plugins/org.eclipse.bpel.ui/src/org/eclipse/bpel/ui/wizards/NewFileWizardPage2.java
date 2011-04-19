@@ -32,6 +32,7 @@ import org.eclipse.wst.common.componentcore.ModuleCoreNature;
 public class NewFileWizardPage2 extends WizardPage {
 
   private FileSelectionGroup fResourceComposite;
+  private String processName;
 
 /**
  * New File Wizard, page 2.
@@ -68,7 +69,7 @@ public NewFileWizardPage2(String pageName)
 			new Listener() {
 				public void handleEvent(Event event) {
 					IResource resource = fResourceComposite.getSelectedResource();
-					setPageComplete(resource != null && resource instanceof IContainer);
+					setPageComplete(validatePage(resource));
 					// https://issues.jboss.org/browse/JBIDE-8591
 					if (!ModuleCoreNature.isFlexibleProject(resource.getProject()))
 						setMessage(Messages.NewFileWizard_Not_A_Faceted_Project, WizardPage.WARNING);
@@ -87,6 +88,19 @@ public NewFileWizardPage2(String pageName)
 		setControl(composite);
 	}
 	
+	private boolean validatePage(IResource resource){
+		boolean validate = false;
+		validate = (resource != null && resource instanceof IContainer);
+		if(validate){
+			IContainer container = (IContainer)resource;
+			if ( container.findMember(processName +".bpel") != null ) { //$NON-NLS-1$
+				setMessage(Messages.NewFileWizardPage1_12,WARNING);
+			} else {
+				setMessage(null);
+			}
+		}
+		return validate;
+	}
 	
 	/**
 	 * Return the selected resource container for the BPEL project.
@@ -100,4 +114,8 @@ public NewFileWizardPage2(String pageName)
 		}
 		return null;		
 	}	
+	
+	public void setProcessName(String processName) {
+		this.processName = processName;
+	}
 }

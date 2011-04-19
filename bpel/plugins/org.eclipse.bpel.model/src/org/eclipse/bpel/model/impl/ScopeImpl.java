@@ -10,7 +10,7 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: ScopeImpl.java,v 1.14 2009/04/14 10:50:37 smoser Exp $
+ * $Id: ScopeImpl.java,v 1.15 2011/03/30 18:54:24 rbrodt Exp $
  */
 package org.eclipse.bpel.model.impl;
 
@@ -243,8 +243,8 @@ public class ScopeImpl extends ActivityImpl implements Scope {
 		isolated = newIsolated;
 		if (!isReconciling) {
 			ReconciliationHelper.replaceAttribute(this,
-					BPELConstants.AT_ISOLATED, BPELUtils
-							.boolean2XML(newIsolated));
+					BPELConstants.AT_ISOLATED,
+					BPELUtils.boolean2XML(newIsolated));
 		}
 		boolean oldIsolatedESet = isolatedESet;
 		isolatedESet = true;
@@ -821,8 +821,8 @@ public class ScopeImpl extends ActivityImpl implements Scope {
 		Boolean oldExitOnStandardFault = exitOnStandardFault;
 		if (!isReconciling) {
 			ReconciliationHelper.replaceAttribute(this,
-					BPELConstants.AT_EXIT_ON_STANDARD_FAULT, BPELUtils
-							.boolean2XML(newExitOnStandardFault));
+					BPELConstants.AT_EXIT_ON_STANDARD_FAULT,
+					BPELUtils.boolean2XML(newExitOnStandardFault));
 		}
 		exitOnStandardFault = newExitOnStandardFault;
 		boolean oldExitOnStandardFaultESet = exitOnStandardFaultESet;
