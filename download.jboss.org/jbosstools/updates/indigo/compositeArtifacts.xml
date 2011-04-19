@@ -26,7 +26,7 @@
 <child location='../requirements/m2eclipse/0.13.0.201103291237/'/>
 <child location='../requirements/orbit/S20110124210048/'/>
 <child location='../requirements/pmd/3.2.6/'/>
-<child location='../requirements/springide/2.6.0.201103161000/'/>
+<child location='../requirements/springide/2.6.0.201103160035/'/>
 
 <child location='../requirements/subclipse/1.6/'/>
 <child location='../requirements/subversive/0.7.9_2.2.2/'/>
