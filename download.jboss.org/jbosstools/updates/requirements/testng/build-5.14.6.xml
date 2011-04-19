@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="mirror">
+	<!-- run locally in Eclipse (to resolve p2 tasks) using these commandline options:
+	
+		-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} 
+		-consoleLog -nosplash -data /tmp
+		-application org.eclipse.ant.core.antRunner
+		-f "/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/testng/build.xml"
+		
+		or, run headless on qa01 server, where Eclipse is installed into ~/eclipse:
+		
+		export JAVA_HOME=/opt/jdk1.6.0; \
+		${JAVA_HOME}/bin/java -cp ~/eclipse/plugins/org.eclipse.equinox.launcher_*.jar \
+			org.eclipse.equinox.launcher.Main -vm ${JAVA_HOME} -consoleLog -nosplash -data /tmp \
+			-application org.eclipse.ant.core.antRunner \
+			-f ~/RHDS/updates/requirements/testng/build.xml -Ddestination=/tmp/pmd-repo
+	-->
+	<target name="mirror">
+		<property name="URL" value="http://beust.com/eclipse/" />
+		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/testng/5.14.6.20110119_1050/" />
+		<property name="compress" value="true" />
+
+		<p2.mirror>
+			<repository location="file:${destination}/5.14.6.20110119_1050/" name="testng plugins for Eclipse 3.6 - 3.7" />
+			<source>
+				<repository location="${URL}" />
+			</source>
+
+			<slicingoptions includefeatures="true" followstrict="true" latestversiononly="true" />
+		</p2.mirror>
+
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/5.14.6.20110119_1050/" artifactRepository="file:${destination}/5.14.6.20110119_1050/" publishartifacts="true" source="${destination}/5.14.6.20110119_1050/" compress="${compress}" />
+	</target>
+</project>

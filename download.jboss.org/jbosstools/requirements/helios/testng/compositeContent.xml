@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?compositeMetadataRepository version='1.0.0'?>
+<repository name='JBoss Tools Requirements - Deprecated TestNG Mirror' type='org.eclipse.equinox.internal.p2.metadata.repository.CompositeMetadataRepository' version='1.0.0'>
+<properties size='2'>
+<property name='p2.compressed' value='true'/>
+<!-- 
+     get new time w/ 
+      date +%s000
+-->
+<property name='p2.timestamp' value='1303162205000'/>
+</properties>
+<children size='1'>
+<child location='../../../updates/requirements/testng/5.14.6.20110119_1050/'/>
+</children>
+</repository>
