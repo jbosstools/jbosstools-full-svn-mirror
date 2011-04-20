@@ -91,6 +91,17 @@
 			<para>
 				A new implified mapping process is supported within the Smooks Editor called <emphasis>Direct source to target mapping</emphasis>. This allows for you to skip the intermediate Java mapping step when applying a template to your data.
 			</para>
+			<para>
+				An example of the new editor performing a transformation (EDI to XML): 
+			</para>
+			<figure>
+				<title>Java Mapping configuration</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/process_page/direct_source_to_target_mapping_1.png"/>
+					</imageobject>
+				</mediaobject>
+			</figure>
 		</section>
   
     <section id="mapping">
