@@ -89,7 +89,7 @@
 		<section>
 			<title>Direct source to target mapping</title>
 			<para>
-				A new implified mapping process is supported within the Smooks Editor called <emphasis>Direct source to target mapping</emphasis>. This allows for you to skip the intermediate Java mapping step when applying a template to your data.
+				A new simplified mapping process is supported within the Smooks Editor called <emphasis>Direct source to target mapping</emphasis>. This allows for you to skip the intermediate Java mapping step when applying a template to your data.
 			</para>
 			<para>
 				An example of the new editor performing a transformation (EDI to XML): 
