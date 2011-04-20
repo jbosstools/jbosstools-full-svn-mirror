@@ -6,9 +6,8 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.jboss.tools.gwt.core.internal.GWTCoreActivator
 Bundle-Vendor: JBoss by Red Hat
 Require-Bundle: 
- org.jboss.tools.common;bundle-version="[3.2.0,4.0.0)",
  com.google.gwt.eclipse.core,
- com.google.gwt.eclipse.sdkbundle.2.1.1;resolution:=optional,
+ org.jboss.tools.common;bundle-version="[3.2.0,4.0.0)",
  org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.wst.common.project.facet.core;bundle-version="[1.4.0,2.0.0)",
  org.eclipse.core.resources;bundle-version="[3.5.0,4.0.0)",
@@ -21,8 +20,7 @@ Require-Bundle:
  org.eclipse.emf.ecore;bundle-version="[2.5.0,3.0.0)",
  org.eclipse.wst.common.modulecore;bundle-version="[1.1.301,2.0.0)",
  org.eclipse.wst.common.frameworks;bundle-version="[1.1.300,2.0.0)",
- org.jboss.tools.usage;bundle-version="1.0.0";resolution:=optional,
- com.google.gdt.eclipse.suite;bundle-version="[1.4.2,2.0.0)"
+ org.jboss.tools.usage;bundle-version="1.0.0";resolution:=optional
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.jboss.tools.gwt.core,
  org.jboss.tools.gwt.core.util
