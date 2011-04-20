@@ -106,7 +106,6 @@
   
     <section id="mapping">
         <title>Java Mapping Task</title>
-        
         <para>
             If you decide to do Java Mapping, you need to make sure that your Input reader has been set up and you have some sample data specified. Then you should select <emphasis>Input Task</emphasis> in the Process tab and click the plus (+) sign to the right of the icon. Select <emphasis>Java Mapping</emphasis> from the popup menu and it will appear to the right, connected to <emphasis>Input Task</emphasis>. Then select <emphasis>Java Mapping</emphasis> task.
         </para>
