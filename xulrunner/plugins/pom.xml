@@ -13,7 +13,6 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>org.mozilla.xpcom</module>
-		<module>org.mozilla.xulrunner.carbon.macosx</module>
 		<module>org.mozilla.xulrunner.cocoa.macosx</module>
 		<module>org.mozilla.xulrunner.gtk.linux.x86</module>
 		<module>org.mozilla.xulrunner.gtk.linux.x86_64</module>
