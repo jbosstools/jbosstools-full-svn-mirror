@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.debug.core.launchDelegates">
+      <launchDelegate
+            delegate="org.jboss.tools.profiler.internal.ui.launch.JBossProfilerLaunchDelegate"
+            id="org.jboss.tools.profiler.core.JBossProfilerDelgate"
+            modes="profile"
+            name="JBoss Profiler"
+            type="org.eclipse.jdt.launching.localJavaApplication">
+      </launchDelegate>
+      <launchDelegate
+            delegate="org.jboss.tools.profiler.internal.ui.launch.JBossProfilerLaunchDelegate"
+            id="org.jboss.tools.profiler.core.JBossProfilerDelgateJUnit"
+            modes="profile"
+            name="JBoss Profiler"
+            type="org.eclipse.jdt.junit.launchconfig">
+      </launchDelegate>
+   </extension>
+   
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTabs">
+      <tab
+            class="org.jboss.tools.profiler.internal.ui.launchtabs.JBossProfilerTab"
+            group="org.eclipse.jdt.debug.ui.launchConfigurationTabGroup.localJavaApplication"
+            id="org.jboss.tools.profiler.ui.jbossprofilertab"
+            name="JBoss Profiler">
+         <placement
+               after="org.eclipse.jdt.debug.ui.javaMainTab">
+         </placement>
+         <!--<associatedDelegate
+               delegate="org.jboss.tools.profiler.core.JBossProfilerDelgate">
+         </associatedDelegate>-->
+      </tab>
+   </extension>
+
+
+
+</plugin>

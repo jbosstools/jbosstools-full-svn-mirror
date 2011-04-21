@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.docbook.org/xml/4.3/docbookx.dtd"
+
+[
+<!ENTITY introduction SYSTEM "modules/introduction.xml">    
+<!ENTITY quickstart SYSTEM "modules/quick_start.xml">
+<!ENTITY smooksformeditor_graphicaltab SYSTEM "modules/smooksformeditor_graphicalpage.xml"> 
+<!ENTITY smooksformeditor_configurationtab SYSTEM "modules/smooksformeditor_configurationpage.xml"> 
+<!ENTITY smooksformeditor_sourcetab SYSTEM "modules/smooksformeditor_sourcepage.xml"> 
+]>
+<book>
+
+	<bookinfo>
+
+		<title>Smooks Dev Tools Reference Guide</title>
+			<corpauthor>
+				<inlinemediaobject>
+					<imageobject role="fo">
+						<imagedata format="PNG" fileref="images/jbosstools_logo.png" />
+					</imageobject>	
+					<imageobject role="html">
+						<imagedata/>
+					</imageobject>	
+				</inlinemediaobject>           
+			</corpauthor>
+		<author>
+			<firstname>Xue(Dart)</firstname>
+			<surname>Peng</surname>
+		</author>
+
+		<pubdate>November 2008</pubdate>
+		<copyright>
+			<year>2009</year>
+			<holder>JBoss by Red Hat</holder>
+		</copyright>
+		<releaseinfo>
+			Version: 1.1.0.CR1
+         </releaseinfo>
+
+		<abstract>
+			<title />
+			<para>
+				<ulink
+					url="http://download.jboss.org/jbosstools/nightly-docs/en/smooks/pdf/Smooks_Reference_Guide.pdf">PDF version</ulink>
+			</para>
+		</abstract>
+
+
+	</bookinfo>
+	<toc/>
+	&introduction;
+	&quickstart;
+	<!--&smooksformeditor_graphicaltab;-->
+	&smooksformeditor_configurationtab;
+	&smooksformeditor_sourcetab;
+</book>    

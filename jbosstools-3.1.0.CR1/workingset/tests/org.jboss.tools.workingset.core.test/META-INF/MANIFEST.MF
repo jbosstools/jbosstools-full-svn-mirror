@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Working set tests
+Bundle-SymbolicName: org.jboss.tools.workingset.core.test
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: JBoss by Red Hat
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.junit4;bundle-version="4.5.0",
+ org.jboss.tools.workingset.core;bundle-version="1.0.0",
+ org.jboss.tools.workingset.ui;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy
