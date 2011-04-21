@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<smooks-resource-list xmlns="http://www.milyn.org/xsd/smooks-1.1.xsd"
+                        xmlns:ftl="http://www.milyn.org/xsd/smooks/freemarker-1.1.xsd">
+
+    <!-- comment -->
+    <params>
+        <param name="stream.filter.type">SAX</param>
+    </params>
+    
+	<ftl:freemarker applyOnElement="root/bla/blub">
+		<ftl:template><![CDATA[${env.abc}]]></ftl:template>
+	</ftl:freemarker>
+    
+    <!-- comment -->
+	<ftl:freemarker applyOnElement="root/bla/blub">
+		<ftl:template><![CDATA[${env.def}]]></ftl:template>
+	    <param name="x">1</param>
+	    <param name="y">2</param>
+	</ftl:freemarker>
+
+    </smooks-resource-list>

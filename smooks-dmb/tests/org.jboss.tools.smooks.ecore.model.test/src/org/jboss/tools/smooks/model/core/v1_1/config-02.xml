@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<smooks-resource-list xmlns="http://www.milyn.org/xsd/smooks-1.1.xsd">
+
+    <params>
+        <param name="a">aVal</param>
+        <param type="actived"  name="b">bVal</param>
+        <param name="stream.filter.type">DOM</param>
+    </params>
+
+</smooks-resource-list>

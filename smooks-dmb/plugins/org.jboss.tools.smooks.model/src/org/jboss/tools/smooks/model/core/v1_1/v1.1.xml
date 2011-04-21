@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<smooks-resource-list xmlns="http://www.milyn.org/xsd/smooks-1.1.xsd"
+                      xmlns:jb="http://www.milyn.org/xsd/smooks/javabean-1.4.xsd"
+                      xmlns:dmb="http://www.milyn.org/xsd/smooks/dmb-1.4.xsd">
+
+    <!--
+    Main Smooks model bean.
+    -->
+    <jb:bean beanId="smooksModel" class="org.jboss.tools.smooks.model.SmooksModel" createOnElement="#document">
+        <jb:wiring property="params" beanIdRef="globalParams" />
+        <jb:wiring property="readers" beanIdRef="readers" />
+        <jb:wiring property="components" beanIdRef="components" />
+    </jb:bean>
+    <jb:bean beanId="readers" class="java.util.ArrayList" createOnElement="#document">
+        <jb:wiring beanType="org.jboss.tools.smooks.model.core.Reader" />
+    </jb:bean>
+    <jb:bean beanId="components" class="java.util.ArrayList" createOnElement="#document">
+        <jb:wiring beanType="org.jboss.tools.smooks.model.core.Component" />
+    </jb:bean>
+
+    <!-- params -->
+    <jb:bean beanId="globalParams" class="org.jboss.tools.smooks.model.core.GlobalParams" createOnElement="/smooks-resource-list/params">
+        <jb:wiring property="params" beanIdRef="paramsList" />
+    </jb:bean>
+    <jb:bean beanId="paramsList" class="java.util.ArrayList" createOnElement="/smooks-resource-list/params">
+        <jb:wiring beanIdRef="param" />
+    </jb:bean>
+    <jb:bean beanId="param" class="org.jboss.tools.smooks.model.core.Param" createOnElement="/smooks-resource-list/params/param">
+        <jb:value property="name" data="/smooks-resource-list/params/param/@name" />
+        <jb:value property="value" data="/smooks-resource-list/params/param" />
+    </jb:bean>
+
+    <!--
+    Top level writer...
+    -->
+    <dmb:writer beanId="smooksModel" class="org.milyn.javabean.dynamic.serialize.freemarker.FreeMarkerBeanWriter">
+        <param name="template">/org/jboss/tools/smooks/model/core/v1_1/v1.1.ftl</param>
+    </dmb:writer>
+
+</smooks-resource-list>

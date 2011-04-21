@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<smooks-resource-list xmlns="http://www.milyn.org/xsd/smooks-1.1.xsd"
+                      xmlns:core="http://www.milyn.org/xsd/smooks/smooks-core-1.3.xsd"
+                      xmlns:jb="http://www.milyn.org/xsd/smooks/javabean-1.4.xsd"
+                      xmlns:dmb="http://www.milyn.org/xsd/smooks/dmb-1.4.xsd">
+ 
+   <core:namespaces>
+        <!-- 
+        Need to explicitly defin the smooks v1.1 namespace because we use it in the
+        in the "param" bean selectors.  All the other configuration namespaces
+        will default to the binding namespace (in this case the freemarker-1.1 namespace).
+        The <param> element (targeted by the "param" bean config) is in the smooks-1.1 namespace
+        and so needs to be explicitly handled.
+         -->
+        <core:namespace prefix="smooks" uri="http://www.milyn.org/xsd/smooks-1.1.xsd" />
+    </core:namespaces>
+    
+    <!-- Binding configs (unmarshal)... -->
+
+    <jb:bean beanId="freemarkerTemplate" class="org.jboss.tools.smooks.model.freemarker.FreeMarkerTemplate" createOnElement="freemarker">
+        <jb:value property="template" data="freemarker/template" />
+        <jb:value property="applyOnElement" data="freemarker/@applyOnElement" />
+        <jb:value property="applyOnElementNS" data="freemarker/@applyOnElementNS" />
+        <jb:value property="applyBefore" data="freemarker/@applyBefore" />
+        <jb:wiring property="params" beanIdRef="params" />
+    </jb:bean>
+    <jb:bean beanId="params" class="org.jboss.tools.smooks.model.core.Params" createOnElement="freemarker">
+        <jb:wiring property="params" beanIdRef="paramsList" />
+    </jb:bean>
+    <jb:bean beanId="paramsList" class="java.util.ArrayList" createOnElement="freemarker">
+        <jb:wiring beanIdRef="param" />
+    </jb:bean>
+    <jb:bean beanId="param" class="org.jboss.tools.smooks.model.core.Param" createOnElement="freemarker/smooks:param">
+        <jb:value property="name" data="freemarker/smooks:param/@name" />
+        <jb:value property="value" data="freemarker/smooks:param" />
+    </jb:bean>
+
+    <!-- Writers (marshal)... -->
+
+    <dmb:writer beanId="freemarkerTemplate" class="org.milyn.javabean.dynamic.serialize.freemarker.FreeMarkerBeanWriter">
+        <param name="template">/org/jboss/tools/smooks/model/freemarker/v1_1/v1.1.ftl</param>
+    </dmb:writer>
+
+</smooks-resource-list>

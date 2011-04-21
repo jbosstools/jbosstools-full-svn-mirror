@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.jboss.tools.smooks.ecore.model/src"
+    creationSubmenus="true" modelPluginID="org.jboss.tools.smooks.model" templateDirectory="/org.jboss.tools.smooks.model/templates"
+    dynamicTemplates="true" redirection="" modelName="Smooks" modelPluginClass=""
+    rootImplementsInterface="" featureMapWrapperInternalInterface="" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="5.0" copyrightFields="false" publicConstructors="true" interfaceNamePattern="I{0}"
+    classNamePattern="{0}">
+  <foreignModel>smooks-core.ecore</foreignModel>
+  <foreignModel>smooks-javabean.ecore</foreignModel>
+  <genPackages prefix="Core" basePackage="org.jboss.tools.smooks.model" disposableProviderFactory="true"
+      adapterFactory="false" classPackageSuffix="" ecorePackage="smooks-core.ecore#/">
+    <genDataTypes ecoreDataType="smooks-core.ecore#//StreamFilterType"/>
+    <genClasses ecoreClass="smooks-core.ecore#//Param">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute smooks-core.ecore#//Param/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute smooks-core.ecore#//Param/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute smooks-core.ecore#//Param/type"/>
+    </genClasses>
+    <genClasses ecoreClass="smooks-core.ecore#//Params">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference smooks-core.ecore#//Params/params"/>
+      <genOperations ecoreOperation="smooks-core.ecore#//Params/setParam">
+        <genParameters ecoreParameter="smooks-core.ecore#//Params/setParam/name"/>
+        <genParameters ecoreParameter="smooks-core.ecore#//Params/setParam/value"/>
+      </genOperations>
+      <genOperations ecoreOperation="smooks-core.ecore#//Params/setParam.1">
+        <genParameters ecoreParameter="smooks-core.ecore#//Params/setParam.1/name"/>
+        <genParameters ecoreParameter="smooks-core.ecore#//Params/setParam.1/value"/>
+        <genParameters ecoreParameter="smooks-core.ecore#//Params/setParam.1/type"/>
+      </genOperations>
+      <genOperations ecoreOperation="smooks-core.ecore#//Params/getParam">
+        <genParameters ecoreParameter="smooks-core.ecore#//Params/getParam/name"/>
+      </genOperations>
+      <genOperations ecoreOperation="smooks-core.ecore#//Params/getParam.1">
+        <genParameters ecoreParameter="smooks-core.ecore#//Params/getParam.1/name"/>
+        <genParameters ecoreParameter="smooks-core.ecore#//Params/getParam.1/type"/>
+      </genOperations>
+      <genOperations ecoreOperation="smooks-core.ecore#//Params/getParamValue">
+        <genParameters ecoreParameter="smooks-core.ecore#//Params/getParamValue/name"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="smooks-core.ecore#//GlobalParams">
+      <genOperations ecoreOperation="smooks-core.ecore#//GlobalParams/setFilterType">
+        <genParameters ecoreParameter="smooks-core.ecore#//GlobalParams/setFilterType/filterType"/>
+      </genOperations>
+      <genOperations ecoreOperation="smooks-core.ecore#//GlobalParams/getFilterType"/>
+      <genOperations ecoreOperation="smooks-core.ecore#//GlobalParams/isDefaultSerializationOn"/>
+      <genOperations ecoreOperation="smooks-core.ecore#//GlobalParams/setDefaultSerializationOn">
+        <genParameters ecoreParameter="smooks-core.ecore#//GlobalParams/setDefaultSerializationOn/defaultSerializationOn"/>
+      </genOperations>
+    </genClasses>
+    <genClasses image="false" ecoreClass="smooks-core.ecore#//Component"/>
+  </genPackages>
+  <genPackages prefix="JavaBean" basePackage="org.jboss.tools.smooks.model" disposableProviderFactory="true"
+      adapterFactory="false" classPackageSuffix="" contentTypeIdentifier="" ecorePackage="smooks-javabean.ecore#/">
+    <genClasses ecoreClass="smooks-javabean.ecore#//DecodeParam">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute smooks-javabean.ecore#//DecodeParam/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute smooks-javabean.ecore#//DecodeParam/value"/>
+    </genClasses>
+    <genClasses ecoreClass="smooks-javabean.ecore#//Wiring">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute smooks-javabean.ecore#//Wiring/property"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute smooks-javabean.ecore#//Wiring/setterMethod"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute smooks-javabean.ecore#//Wiring/beanIdRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute smooks-javabean.ecore#//Wiring/wireOnElement"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute smooks-javabean.ecore#//Wiring/wireOnElementNS"/>
+    </genClasses>
+    <genClasses ecoreClass="smooks-javabean.ecore#//Expression">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute smooks-javabean.ecore#//Expression/property"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute smooks-javabean.ecore#//Expression/setterMethod"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute smooks-javabean.ecore#//Expression/execOnElement"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute smooks-javabean.ecore#//Expression/execOnElementNS"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute smooks-javabean.ecore#//Expression/initVal"/>
+    </genClasses>
+    <genClasses ecoreClass="smooks-javabean.ecore#//Value">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute smooks-javabean.ecore#//Value/property"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute smooks-javabean.ecore#//Value/setterMethod"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute smooks-javabean.ecore#//Value/data"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute smooks-javabean.ecore#//Value/dataNS"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute smooks-javabean.ecore#//Value/decoder"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute smooks-javabean.ecore#//Value/defaultVal"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference smooks-javabean.ecore#//Value/decodeParams"/>
+    </genClasses>
+    <genClasses ecoreClass="smooks-javabean.ecore#//Bean">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute smooks-javabean.ecore#//Bean/beanId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute smooks-javabean.ecore#//Bean/beanClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute smooks-javabean.ecore#//Bean/createOnElement"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute smooks-javabean.ecore#//Bean/createOnElementNS"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference smooks-javabean.ecore#//Bean/valueBindings"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference smooks-javabean.ecore#//Bean/wireBindings"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference smooks-javabean.ecore#//Bean/expressionBindings"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

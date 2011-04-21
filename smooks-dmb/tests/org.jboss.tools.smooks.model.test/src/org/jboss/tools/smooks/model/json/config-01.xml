@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<smooks-resource-list xmlns="http://www.milyn.org/xsd/smooks-1.1.xsd" xmlns:json="http://www.milyn.org/xsd/smooks/json-1.1.xsd">
+
+    <!--
+    Comment...
+    -->
+    <json:reader>
+    	<json:keyMap>
+			<json:key from="a" to="1" />
+			<json:key from="b" to="2" />
+			<json:key from="some&amp;key" to="someAndKey" />
+	    </json:keyMap>
+    </json:reader>
+
+</smooks-resource-list>
