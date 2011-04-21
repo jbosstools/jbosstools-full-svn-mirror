@@ -1,0 +1,11 @@
+<tests>
+	<test id="iframe">
+		<IFRAME WIDTH="468" HEIGHT="60" ALIGN="left"
+			SRC="/.*temp/ifr.html/"
+			STYLE="-moz-user-modify: read-only;">
+			<SPAN>
+				your browser doesn't support iframes
+			</SPAN>
+		</IFRAME>
+	</test>
+</tests>

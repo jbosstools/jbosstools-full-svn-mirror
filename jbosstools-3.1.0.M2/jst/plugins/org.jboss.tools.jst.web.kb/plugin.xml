@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension-point id="tagLib" name="Kb Custom Tag Lib" schema="schema/tagLib.exsd"/>
+
+   <extension
+         id="kbbuilder"
+         name="KB Builder"
+         point="org.eclipse.core.resources.builders">
+      <builder
+            hasNature="false">
+         <run
+               class="org.jboss.tools.jst.web.kb.internal.KbBuilder">
+         </run>
+      </builder>
+   </extension>
+   <extension
+         id="kbnature"
+         name="KB Project Nature"
+         point="org.eclipse.core.resources.natures">
+      <runtime>
+         <run
+               class="org.jboss.tools.jst.web.kb.internal.KbProject">
+         </run>
+      </runtime>
+      <builder
+            id="org.jboss.tools.jst.web.kb.kbbuilder">
+      </builder>
+   </extension>
+   <extension
+         point="org.jboss.tools.jst.web.kb.tagLib">
+      <tag-lib
+            location="taglibs/Ajax4jsf.xml"
+            name="JBoss Ajax4jsf"
+            uri="http://richfaces.org/a4j"/>
+      <tag-lib
+            location="taglibs/Richfaces.xml"
+            name="JBoss RichFaces"
+            uri="http://richfaces.org/rich"/>
+      <tag-lib
+            location="taglibs/JsfCore.xml"
+            name="JSF Core"
+            uri="http://java.sun.com/jsf/core"/>
+      <tag-lib
+            location="taglibs/JsfHtmlBasic.xml"
+            name="JSF HTML Basic"
+            uri="http://java.sun.com/jsf/html"/>
+      <tag-lib
+            location="taglibs/Facelets.xml"
+            name="Facelets UI"
+            uri="http://java.sun.com/jsf/facelets"/>
+      <tag-lib
+            location="taglibs/FaceletsHtml.xml"
+            name="Facelets Html"
+            uri="http://www.w3.org/1999/xhtml/facelets"/>
+      <tag-lib
+            location="taglibs/JBossSeam.xml"
+            name="JBoss Seam"
+            uri="http://jboss.com/products/seam/taglib"/>
+      <component-extension
+            location="taglibs/componentExtension.xml"/>
+   </extension>
+
+</plugin>

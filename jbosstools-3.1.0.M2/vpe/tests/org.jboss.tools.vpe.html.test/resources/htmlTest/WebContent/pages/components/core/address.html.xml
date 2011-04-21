@@ -1,0 +1,9 @@
+<tests>
+	<test id="address">
+		<ADDRESS CLASS="addressClass" DIR="ltr" ID="address" STYLE="color: red; -moz-user-modify: read-write;">
+<SPAN>
+address
+</SPAN>
+</ADDRESS>
+	</test>
+</tests>

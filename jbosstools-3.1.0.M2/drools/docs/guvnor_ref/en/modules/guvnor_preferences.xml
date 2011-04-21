@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<chapter id="guvnor_preferences" xreflabel="guvnor_preferences">
+    <?dbhtml filename="guvnor_preferences.html"?>
+    <chapterinfo>
+        <keywordset>
+            <keyword>JBoss Tools</keyword>
+            <keyword>Eclipse Guvnor Tools</keyword>
+        </keywordset>
+    </chapterinfo>
+
+    <title>Guvnor Preferences</title>
+
+    <para>The <property>EGT</property> provides a preference page in the <emphasis>
+            <property>Guvnor</property>
+        </emphasis> category:</para>
+
+	   <figure>
+		<title>Resource Selection</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/guvnor_preferences/guvnor_preferences.png"/>
+			</imageobject>
+		</mediaobject>
+	   </figure>
+
+    <para>The preferences cover two categories:</para>
+    <itemizedlist>
+        <listitem><para>Guvnor repository connections</para></listitem>
+            
+        <listitem><para>Local Guvnor
+        repository resource decorations.</para></listitem>
+     </itemizedlist>
+
+    <section id="repo_connection_preferences">
+        <title>Guvnor Repository Connection Preferences</title>
+        <para>There are two preferences that can be set for Guvnor repository connections, that are
+            used when creating new connections:</para>
+
+        <itemizedlist>
+            <listitem>
+                <para>The first is a default Guvnor repository URL template, which can make it
+                    easier to create multiple similar connections by simply changing part of the
+                    field, such as the host name.</para>
+            </listitem>
+            <listitem>
+                <para>The second is whether saving of authentication information in the Eclipse
+                    platform key-ring should be enabled by default.</para>
+            </listitem>
+        </itemizedlist>
+
+        <para>As with the Guvnor repository URL template, actually whether to save a specific
+            instance of authentication information in the Eclipse platform key-ring can be
+            determined when actually creating the connection. That is, both of these preferences are
+            simply convenience values set to reasonable defaults.</para>
+    </section>
+
+    <section id="resource_decoration_preferences">
+        <title>Local Guvnor Repository Resource Decoration Preferences</title>
+
+        <para>The second category of preferences provided by the <property>EGT</property> deals with how the decoration of
+            local resources associated with Guvnor repository resources is presented. Since the
+            Guvnor repository is not a substitute for a SCM, and since SCM tools in Eclipse tend to
+            decorate local resources, it is useful to be able to control just how the <property>EGT</property> decorate
+            its local resources to avoid messy conflicts with SCM packages.</para>
+            
+        <para>In the <emphasis>
+            <property>File Decoration</property></emphasis>
+            section of the preference page, you can choose the location (Top right, Top left, Bottom right,
+             Bottom left) of the decoration icon, or you can choose not to display it. In
+            the <emphasis>
+                <property>Text</property></emphasis> section, you can format the Guvnor metadata that is appended to the file
+                names:</para>
+        <itemizedlist>
+            <listitem>
+                <para>Whether to show an indicator (&gt;) when the local file has changes not committed back to the
+                Guvnor repository</para>
+            </listitem>
+            <listitem>
+                <para>Whether to show the revision number</para>
+            </listitem>
+            <listitem>
+                <para>Whether to show the date/time stamp</para>
+             </listitem>
+        </itemizedlist> 
+           
+        <para>Any changes to these preferences take effect immediately upon clicking the <emphasis>
+            <property>Apply</property></emphasis> and then <emphasis>
+                <property>Ok</property></emphasis> buttons.</para>
+    </section>
+</chapter>

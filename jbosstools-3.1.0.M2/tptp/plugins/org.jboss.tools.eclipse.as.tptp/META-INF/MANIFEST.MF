@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %BundleName
+Bundle-Vendor: %BundleVendor
+Bundle-SymbolicName: org.jboss.tools.eclipse.as.tptp; singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.debug.ui,
+ org.eclipse.hyades.trace.ui,
+ org.eclipse.tptp.platform.jvmti.client,
+ org.eclipse.tptp.platform.execution,
+ org.eclipse.tptp.platform.profile.server.core,
+ org.eclipse.tptp.platform.instrumentation.ui
+Bundle-ActivationPolicy: lazy
+Eclipse-LazyStart: true

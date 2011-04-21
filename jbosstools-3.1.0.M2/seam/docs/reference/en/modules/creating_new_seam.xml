@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="create_seam" xreflabel="create_seam" role="updated">
+    <?dbhtml filename="create_new_seam.html"?>
+    <chapterinfo>
+        <keywordset>
+            <keyword>JBoss Tools</keyword>
+            <keyword>Seam</keyword>
+            <keyword>JBDS</keyword>
+        </keywordset>
+    </chapterinfo>
+    <title>Creating a New Seam Project via the New Seam Project wizard</title>
+    <para>In this chapter we provide you with the necessary steps to start working with Seam
+    Framework.</para>
+    
+    <para>At first, we suggest setting the specific Seam perspective that combines a number of
+        different views and editors needed for work with resources concerned. For that select <emphasis>
+            <property>Window > Open Perspective > Other > Seam</property>
+        </emphasis> or you can also access it through the button in the right top corner.</para>
+
+    <figure>
+        <title>Seam Perspective Icon</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="images/create_new_seam/create_seam_0.png"/>
+            </imageobject>
+        </mediaobject>
+    </figure>
+    
+    <para>Also the <emphasis>
+        <property>Open Web Browser</property></emphasis> action is directly available in the <property>Seam perspective</property>.</para>
+
+    <figure>
+        <title>Embedded Web Browser Button</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="images/create_new_seam/create_seam_01.png"/>
+            </imageobject>
+        </mediaobject>
+    </figure>
+    
+    <section id="standaloneSeam" role="updated">
+        <title>Create standalone Seam Web Project</title>
+        <para>The best way to get started with Seam is to organise a simple Seam Project and
+            experiment with it by creating variations.</para>
+        <para>Thus, you should select <emphasis>
+                <property>File > New > Seam Web Project</property>
+            </emphasis> to run the <property>New Seam Project</property> wizard. The wizard form
+            allows you to create runtime and server instances in order to get started creating,
+            running, and debugging J2EE (only) applications.</para>
+        <para>Seam Web Project wizard has an option for selecting the actual Server (not just WTP
+            runtime) that will be used for the project. This allows the wizard to identify correctly
+            where the required datasource and driver libraries need to go.</para>
+        <para>Let&apos;s get through the wizard step-by-step. First, you should enter a name and
+            a location directory for your new project.</para>
+
+        <figure id="figure_create_seam1">
+            <title>New Seam Project Wizard</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/create_new_seam/create_seam_1.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>On the figure above you can see the runtime and the server already created.</para>
+
+        <para>If you need to create a new runtime, click on the <emphasis>
+                <property>New...</property>
+            </emphasis> button in the <property>Target Runtime</property> section. It brings up the
+            wizard where you can specify a new JBoss Server Runtime environment or the other type of
+            runtime appropriate for configuring your project. Let's create one more JBoss 4.2
+            Runtime. Hence, after choosing it click on <emphasis>
+                <property>Next</property>
+            </emphasis> button.</para>
+
+        <figure>
+            <title>Specifying Target Runtime</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/create_new_seam/create_seam_2.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>All what you need here is to name runtime, type the path to its install directory or
+            locate it by using <emphasis>
+                <property>Browse</property>
+            </emphasis> button, select a Java Runtime Environment, and select which configuration
+            you want.</para>
+
+        <figure>
+            <title>Specifying Target Runtime Configurations</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/create_new_seam/create_seam_3.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para> Clicking on <emphasis>
+                <property>Finish</property>
+            </emphasis> returns you to the <link linkend="figure_create_seam1">New Seam Project
+            wizard page</link>.</para>
+            
+            <para>The next step is to define a Server that you can do by clicking
+            on <emphasis>
+                <property>New...</property>
+            </emphasis> button in the <property>Target Server</property> section. In appeared
+                <property>New Server dialog</property> the last server which matches the runtime
+            will be selected.</para>
+
+        <para>All declared runtimes are listed in the combo box under the servers view. Here, you
+            can indicate a server runtime that you need. Click <emphasis>
+                <property>Add</property>
+            </emphasis> if you want to add a new Server Runtime.</para>
+
+        <figure>
+            <title>Specifying Target Server</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/create_new_seam/create_seam_4.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>Next page allows you to verify the information for chosen server. Leave everything as
+            it is and click on <emphasis>
+                <property>Next</property>
+            </emphasis>.</para>
+
+        <figure>
+            <title>Specifying Server Configurations</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/create_new_seam/create_seam_5.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>On the last wizard step you can modify your projects to configure them on the
+            Server.</para>
+
+        <figure>
+            <title>Project Modification for Configuring on the Server</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/create_new_seam/create_seam_6.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+
+        <para>Once you have the Target Server defined click on <emphasis>
+                <property>Finish</property>
+            </emphasis> button to return to the first page of the <property>New Seam Project
+                wizard</property>.</para>
+
+        <tip>
+            <title>Tip:</title>
+            <para>We suggest that you look through our <ulink url="&aslink;">AS manager
+                    guide</ulink> to find out more about runtimes and servers.</para>
+        </tip>
+
+        <figure>
+            <title>Completion of Runtime and Server Configuration</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/create_new_seam/create_seam_7.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>The last section on this wizard step is <property>Configuration</property>. Here, you
+            can select one of the pre-defined project configurations either associated with Seam
+            1.2, Seam 2.0 or with Seam 2.1. Furthermore, you can create your own configuration by
+            pressing the <emphasis>
+                <property>Modify...</property>
+            </emphasis> button. It will open the dialog which allows to configure your own set of
+            facets for adding extra functionality to your project.</para>
+
+        <para>Pass to the next section to find out more details on this dialog.</para>
+
+    </section>
+    <section id="projectFacets">
+        <title>Select the Project Facets</title>
+
+        <para>The <property>Project Facets wizard</property> allows you to enable or disable
+            specific facets which define necessary characteristics for the project. In time you
+            switch to this wizard form, all critical facets are already checked for the chosen
+            Configuration.</para>
+
+        <para>Notice that this page of the wizard also allows you to set the necessary version for
+            any facet. </para>
+
+        <figure>
+            <title>Project Facets Selection</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/create_new_seam/create_seam_8.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>Moreover, here you can specify your own preset of selected facets by checking needed
+            ones in project facets window and clicking on <emphasis>
+                <property>Save</property>
+            </emphasis> button.</para>
+
+        <figure>
+            <title>Specifying Custom Facet Preset</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/create_new_seam/create_seam_15.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>To see all available Server runtimes click on <property>Runtimes</property> tab on the
+            left. You can create a new one using the <emphasis>
+                <property>New</property>
+            </emphasis> button. If more than one runtimes are checked here, the <emphasis>
+                <property>Make Primary</property>
+            </emphasis> button won&apos;t be dimmed yet. So you can make use of it to mark
+            primary runtime.</para>
+
+        <figure>
+            <title>Runtime Manipulations</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/create_new_seam/create_seam_16.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para><emphasis>
+                <property>Ok</property>
+            </emphasis> button will bring you to the <property>Web Module</property> wizard form
+            again.</para>
+    </section>
+
+    <section id="configureWebModule">
+        <title>How to Configure Web Module Settings</title>
+
+        <para> As we deal with a Dynamic Web Application we should first specify the top level
+            directory of our application for deploying it to a server afterwards. You know, this
+            kind of application contains both Web and Java code resources. Thus, it's also important
+            to indicate the content directory as well as Java source directory. The wizard will put
+            all those values itself. So you can leave everything as it is.</para>
+
+        <figure>
+            <title>Web Module Settings</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/create_new_seam/create_seam_9.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        <para>Choose <emphasis>
+                <property>Next</property>
+            </emphasis> to switch to the next wizard form.</para>
+    </section>
+
+    <section id="addJSFCapab">
+        <title>Adding JSF Capabilities</title>
+
+        <para>This wizard helps you to add JSF capabilities into your project for representing
+            appropriate behaviours associated with JSF. </para>
+        <para>Checking <emphasis>
+                <property>Server Supplied JSF Implementation</property>
+            </emphasis> means that you will have a default JSF implementation given by
+            server.</para>
+
+        <figure>
+            <title>Adding JSF Capabilities to Web Project</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/create_new_seam/create_seam_10.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>In case when you want to use your custom JSF implementation check a lower radio
+            button. You are able to create a library of jars by clicking on <emphasis>
+                <property>New</property>
+            </emphasis> button.</para>
+        <para>Here, it's necessary to type a <property>Library Name</property>, select a
+                <property>Version Supported</property> and add proper <property>Library
+                jars</property>. Then click on <emphasis>
+                <property>Finish</property>
+            </emphasis> to complete the choice.</para>
+        <figure>
+            <title>Create JSF Implementation Library</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/create_new_seam/create_seam_17.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>In the Component Libraries section of the wizard you can also add <property>Component
+                Libraries</property> (e.g. <ulink url="http://www.jboss.org/jbossrichfaces"
+                >Richfaces</ulink>). Just click on <emphasis>
+                <property>New</property>
+            </emphasis> button. Appeared dialog will ask you to type the Library name, supported
+            version and add necessary jar's. Press <emphasis>
+                <property>Finish</property>
+            </emphasis> to complete the choice.</para>
+
+        <figure>
+            <title>Create JSF Implementation Component Library</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/create_new_seam/create_seam_18.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>The last wizard options allows to edit a path for <property>JSF Configuration
+                File</property>, a name for <property>JSF Servlet</property>, <property>JSF Servlet
+                Classname</property> and change <property>URL Mapping Patterns</property>.</para>
+
+        <figure>
+            <title>JSF Capabilities Wizard</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/create_new_seam/create_seam_19.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>Finally, as we are arranging the Seam Web project, the last step we should do is to
+            adjust project configurations associated with the Seam.</para>
+    </section>
+
+    <section id="seamFacet">
+        <title>Configure Seam Facet Settings</title>
+
+        <para>The last wizard step is related to Seam facet and allows you to do the
+            following:</para>
+        <figure>
+            <title>Seam Facet Settings</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/create_new_seam/create_seam_11.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <itemizedlist>
+            <listitem>
+                <para>Create Seam runtime and define Seam home folder.</para>
+            </listitem>
+        </itemizedlist>
+        <para>For that click on <emphasis>
+                <property>Add</property>
+            </emphasis> button in the <property>General</property> section. Notice that in this
+            wizard presented below you can create a Seam runtime only for that version which was
+            selected in the <link linkend="projectFacets">Project Facets</link> wizard (version 1.2
+            in our case).</para>
+
+        <figure>
+            <title>Seam Runtime Creation</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/create_new_seam/create_seam_12.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <itemizedlist>
+            <listitem>
+                <para>Select EAR or WAR deployment by checking a necessary radio button.</para>
+            </listitem>
+            <listitem>
+                <para>Select a <emphasis>
+                        <property>Database Type</property>
+                    </emphasis></para>
+            </listitem>
+        </itemizedlist>
+
+        <figure>
+            <title>Seam Runtime Creation</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/create_new_seam/create_seam_20.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <itemizedlist>
+            <listitem>
+                <para>and then specify a <emphasis>
+                        <property>Connection profile</property>
+                    </emphasis> appropriate for your database.</para>
+
+            </listitem>
+        </itemizedlist>
+
+        <figure>
+            <title>Connection Profile Options</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/create_new_seam/create_seam_21.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>You can edit chosen profile by using <emphasis>
+                <property>Edit</property>
+            </emphasis> button or organise a new one by clicking on <emphasis>
+                <property>New</property>
+            </emphasis> button and selecting necessary for you type of connection profile.</para>
+        <figure>
+            <title>Connection Profile Selecting</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/create_new_seam/create_seam_13.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>On the other dialog you&apos;ll be asked to enter its name and description. And
+            then you should select a proper driver and adjust connection details. Press <emphasis>
+                <property>Next</property>
+            </emphasis> to preview all the adjusted settings and complete the creation of the new
+            profile.</para>
+
+        <figure>
+            <title>Connection Details</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/create_new_seam/create_seam_22.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>The next block of settings in the Seam Facet wizard are describing a Database and a
+            connection to it.</para>
+        <para>In the <property>Code Generation</property> section the wizard have already put the
+            names for your <property>Session Bean</property>, <property>Entity Bean</property> and
+                <property>Test</property> packages. Of course, you can change them into the others
+            which you like.</para>
+
+        <figure>
+            <title>Code Generation Section</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/create_new_seam/create_seam_14.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>Click on <emphasis>
+                <property>Finish</property>
+            </emphasis> to generate a project.</para>
+
+        <para/>
+    </section>
+</chapter>

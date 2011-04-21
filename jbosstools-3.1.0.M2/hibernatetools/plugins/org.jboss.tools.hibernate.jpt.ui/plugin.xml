@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         id="org.jboss.tools.hibernate.jpt"
+         point="org.eclipse.jpt.ui.jpaPlatformUis">
+      <jpaPlatformUi
+            factoryClass="org.jboss.tools.hibernate.jpt.ui.internal.platform.HibernateJpaPlatformUiFactory"
+            jpaPlatform="hibernate"
+            id="hibernate">
+      </jpaPlatformUi>
+    </extension>
+</plugin>

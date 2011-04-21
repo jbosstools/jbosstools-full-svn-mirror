@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+   <extension point="org.eclipse.ui.preferencePages">
+      <page category="org.jboss.tools.common.model.ui" class="org.jboss.tools.common.verification.ui.vrules.preferences.VerificationPreferencePage" id="org.jboss.tools.common.verification.ui" 
+            name="%PreferencePage_Verification">
+      </page>
+   </extension>
+
+   <extension point="org.jboss.tools.common.model.specialwizard">
+      <specialwizard class="org.jboss.tools.common.verification.ui.vrules.wizard.runtime.VerifyWizard" id="org.jboss.tools.common.verification.ui.vrules.wizard.runtime.VerifyWizard">
+      </specialwizard>
+      <specialwizard class="org.jboss.tools.common.verification.ui.vrules.wizard.runtime2.VerifyWizard" id="org.jboss.tools.common.verification.ui.vrules.wizard.runtime2.VerifyWizard">
+      </specialwizard>
+      <specialwizard class="org.jboss.tools.common.verification.ui.vrules.wizard.config.VRulesConfigurationWizard" id="org.jboss.tools.common.verification.ui.vrules.wizard.config.VRulesConfigurationWizard">
+      </specialwizard>
+   </extension>
+
+   <extension
+         point="org.jboss.tools.common.model.resourceMapping">
+      <mapping
+         loader="org.jboss.tools.common.verification.ui"
+          priority="0"
+          kind="class"
+          paths=".ui.vrules."
+      />
+   </extension>
+
+   <extension
+         point="org.jboss.tools.common.model.resourceMapping">
+      <mapping
+          loader="org.jboss.tools.common.verification.ui"
+          priority="1"
+          kind="class"
+          paths=".XStudioVerificationPlugin,.ui.vrules."
+      />
+   </extension>
+
+	<extension point="org.jboss.tools.common.model.classes">
+ 		<xclass id="org.jboss.tools.common.verification.ui.vrules.wizard.runtime2.VerifyWizard"
+			class="org.jboss.tools.common.verification.ui.vrules.wizard.runtime2.VerifyWizard"/>
+		<xclass id="org.jboss.tools.common.verification.ui.vrules.wizard.runtime.VerifyWizard"
+			class="org.jboss.tools.common.verification.ui.vrules.wizard.runtime.VerifyWizard"/>
+		<xclass id="org.jboss.tools.common.verification.ui.vrules.wizard.runtime2.VerifyWizard"
+			class="org.jboss.tools.common.verification.ui.vrules.wizard.runtime2.VerifyWizard"/>
+		<xclass id="org.jboss.tools.common.verification.ui.vrules.wizard.config.VRulesConfigurationWizard"
+			class="org.jboss.tools.common.verification.ui.vrules.wizard.config.VRulesConfigurationWizard"/>
+    </extension>
+</plugin>
