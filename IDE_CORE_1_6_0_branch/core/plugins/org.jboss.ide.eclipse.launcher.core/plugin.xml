@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+     <extension
+         point="org.eclipse.debug.core.launchConfigurationTypes">
+      <launchConfigurationType
+            sourceLocatorId="org.eclipse.jdt.launching.sourceLocator.JavaSourceLookupDirector"
+            name="%org.jboss.ide.eclipse.launcher.core.configuration.jboss.JBoss24xLaunchConfigurationDelegate"
+            sourcePathComputerId="org.eclipse.jdt.launching.sourceLookup.javaSourcePathComputer"
+            delegate="org.jboss.ide.eclipse.launcher.core.configuration.jboss.JBoss24xLaunchConfigurationDelegate"
+            modes="debug"
+            id="org.jboss.ide.eclipse.launcher.configuration.jboss.JBoss24xLaunchConfigurationDelegate">
+      </launchConfigurationType>
+      <launchConfigurationType
+            sourceLocatorId="org.eclipse.jdt.launching.sourceLocator.JavaSourceLookupDirector"
+            name="%org.jboss.ide.eclipse.launcher.core.configuration.jboss.JBoss30xLaunchConfigurationDelegate"
+            sourcePathComputerId="org.eclipse.jdt.launching.sourceLookup.javaSourcePathComputer"
+            delegate="org.jboss.ide.eclipse.launcher.core.configuration.jboss.JBoss30xLaunchConfigurationDelegate"
+            modes="debug"
+            id="org.jboss.ide.eclipse.launcher.configuration.jboss.JBoss30xLaunchConfigurationDelegate">
+      </launchConfigurationType>
+      <launchConfigurationType
+            sourceLocatorId="org.eclipse.jdt.launching.sourceLocator.JavaSourceLookupDirector"
+            name="%org.jboss.ide.eclipse.launcher.core.configuration.jboss.JBoss32xLaunchConfigurationDelegate"
+            sourcePathComputerId="org.eclipse.jdt.launching.sourceLookup.javaSourcePathComputer"
+            delegate="org.jboss.ide.eclipse.launcher.core.configuration.jboss.JBoss32xLaunchConfigurationDelegate"
+            modes="debug"
+            id="org.jboss.ide.eclipse.launcher.configuration.jboss.JBoss32xLaunchConfigurationDelegate">
+      </launchConfigurationType>
+      <launchConfigurationType
+            sourceLocatorId="org.eclipse.jdt.launching.sourceLocator.JavaSourceLookupDirector"
+            name="%org.jboss.ide.eclipse.launcher.core.configuration.jboss.JBoss40xLaunchConfigurationDelegate"
+            sourcePathComputerId="org.eclipse.jdt.launching.sourceLookup.javaSourcePathComputer"
+            delegate="org.jboss.ide.eclipse.launcher.core.configuration.jboss.JBoss40xLaunchConfigurationDelegate"
+            modes="debug"
+            id="org.jboss.ide.eclipse.launcher.configuration.jboss.JBoss40xLaunchConfigurationDelegate">
+      </launchConfigurationType>
+      <launchConfigurationType
+            sourceLocatorId="org.eclipse.jdt.launching.sourceLocator.JavaSourceLookupDirector"
+            name="%org.jboss.ide.eclipse.launcher.core.configuration.RemoteServerLaunchConfigurationDelegate"
+            sourcePathComputerId="org.eclipse.jdt.launching.sourceLookup.javaSourcePathComputer"
+            delegate="org.jboss.ide.eclipse.launcher.core.configuration.RemoteServerLaunchConfigurationDelegate"
+            modes="debug"
+            id="org.jboss.ide.eclipse.launcher.configuration.RemoteServerLaunchConfigurationDelegate">
+      </launchConfigurationType>
+   </extension>
+
+</plugin>

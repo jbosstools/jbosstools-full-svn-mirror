@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+     <extension
+         id="jsp-nature"
+         name="JSP Nature"
+         point="org.eclipse.core.resources.natures">
+      <runtime>
+         <run
+               class="org.jboss.ide.eclipse.jdt.j2ee.jsp.core.JSPProjectNature">
+         </run>
+      </runtime>
+      <requires-nature
+            id="org.eclipse.jdt.core.javanature">
+      </requires-nature>
+      <builder
+            id="org.jboss.ide.eclipse.jdt.j2ee.jsp.core.jsp-builder">
+      </builder>
+   </extension>
+   <extension
+         id="jsp-builder"
+         name="JSP Builder"
+         point="org.eclipse.core.resources.builders">
+      <builder
+            hasNature="true">
+         <run
+               class="org.jboss.ide.eclipse.jdt.j2ee.jsp.core.compiler.JSPBuilder">
+         </run>
+      </builder>
+   </extension>
+
+</plugin>

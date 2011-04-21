@@ -1,0 +1,209 @@
+<chapter id="ejb.file.generation">
+	<title>Generation of the EJB related files</title>
+	
+	<para>
+		To generate the EJB related classes and descriptors, we need to create some XDoclet configurations.
+		With JBoss Eclipse IDE, you can define several XDoclet generation configurations that will be run against the project.
+	</para>
+	
+	<informaltable frame="none">
+	<tgroup cols="2" align="left" colsep="1" rowsep="1">
+		<tbody>
+			<row>
+				<entry>
+				<procedure>
+					<title>Enable XDoclet</title>
+					<step><para>Edit the project properties by right clicking on the project and select <literal>Properties</literal>.</para></step>
+					<step><para>In the property page, select <literal>XDoclet configurations</literal>.</para></step>
+					<step><para>At the top of the page there is a check-box labeld <literal>Enable XDoclet</literal>. Check this check-box.</para></step>
+				</procedure>
+				</entry>
+				<entry>
+					<mediaobject>
+						<imageobject>
+							<imagedata align="center" fileref="images/xdoclet-ejb-config-enable-xdoclet.jpg"></imagedata>
+						</imageobject>
+					</mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+				<procedure>
+					<title>XDoclet EJB Configuration Creation</title>
+					<step><para>Right-click in the upper area to pop-up the menu and choose <literal>Add</literal>. Type <literal>EJB</literal> in the dialog and click <literal>OK</literal>.</para></step>
+				</procedure>
+				<para>
+					You have created a new generation configuration named <literal>EJB</literal>.
+				</para>
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/xdoclet-ejb-config-1.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+				<procedure>
+					<title>Ejbdoclet Configuration</title>
+					<step><para>Select the <literal>EJB</literal> configuration.</para></step>
+					<step><para>In the lower-left area, right-click to popup the menu and choose <literal>Add Doclet</literal>.</para></step>
+					<step><para>A list of available doclets will appear. Choose <literal>ejbdoclet</literal> and click <literal>OK</literal>.</para></step>
+					<step><para>On the lower-right area, you see the properties of the <literal>ejbdoclet</literal>.</para>
+						<substeps>
+							<step>Set the <literal>destDir</literal> property to <literal>src</literal>.</step>
+							<step>Set the <literal>ejbSpec</literal> property to <literal>2.0</literal>.</step>
+						</substeps>
+					</step>
+				</procedure>
+				<para>
+					Our configuration now contains an <literal>ejbdoclet</literal> that will produce files in <literal>src</literal> folder and for the EJB 2.0 specifications.
+				</para>
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/xdoclet-ejb-config-2.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+					<procedure>
+					<title>Fileset Configuration</title>
+					<step>In the lower-left area, right-click on <literal>ejbdoclet</literal> to popup the menu and choose <literal>Add</literal>.</step>
+					<step>A list of available subtasks will appear. Choose <literal>fileset</literal> and click <literal>Ok</literal>.</step>
+					<step>On the lower-right area, you see the properties of the fileset.
+						<substeps>
+						
+							<step>Set the <literal>dir</literal> property to <literal>src</literal>.</step>
+							<step>Uncheck <literal>excludes</literal></step>
+							<step>Set the <literal>includes</literal> property to <literal>**/*Bean.java</literal>.</step>
+						</substeps>
+					</step>
+					</procedure>
+					<para>Our configuration now contains an <literal>ejbdoclet</literal> with a <literal>fileset</literal> that contains the <literal>src</literal> directory, and all files under it that end in <literal>Bean.java</literal>.</para>
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/xdoclet-ejb-config-3.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+					<procedure>
+						<title>Deployment Descriptor Configuration</title>
+						<step>Add a new <literal>deploymentdescriptor</literal> subtask to the <literal>ejbdoclet</literal> (see above).
+						<substeps>
+							<step>Set the <literal>destDir</literal> property to <literal>src/META-INF</literal>.</step>
+						</substeps>
+						</step>
+					</procedure>
+					<para>All of the standard EJB deployment descriptors will now be placed in the <literal>src/META-INF</literal> directory.</para>
+				</entry>
+				<entry>
+					<mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/xdoclet-ejb-config-4.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+					<procedure>
+						<title>JBoss Configuration</title>
+						<step>Add a new <literal>jboss</literal> subtask to the <literal>ejbdoclet</literal> (see above).
+						<substeps>
+							<step>Set the <literal>destDir</literal> property to <literal>src/META-INF</literal>.</step>
+							<step>Set the <literal>Version</literal> property to <literal>3.0</literal>.</step>
+						</substeps>
+						</step>
+					</procedure>
+					<para>All of the JBoss-specific deployment descriptors will now be placed in the <literal>src/META-INF</literal> directory.</para>
+				</entry>
+				<entry>
+					<mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/xdoclet-ejb-config-5.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+					<procedure>
+						<title>Package Substitution Configuration</title>
+						<step>Add a new <literal>packageSubstitution</literal> subtask to the <literal>ejbdoclet</literal> (see above).
+						<substeps>
+							<step>Set the <literal>packages</literal> property to <literal>ejb</literal>.</step>
+							<step>Set the <literal>substituteWith</literal> property to <literal>interfaces</literal>.</step>
+						</substeps>
+						</step>
+					</procedure>
+					<para>This will place our generated EJB interfaces in the <literal>tutorial.interfaces</literal> java package.</para>
+				</entry>
+				<entry>
+					<mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/xdoclet-ejb-config-6.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+					<procedure>
+						<title>Interface Configuration</title>
+						<step>Add a new <literal>remoteInterface</literal> subtask to the <literal>ejbdoclet</literal> (see above).</step>
+						<step>Add a new <literal>homeInterface</literal> subtask to the <literal>ejbdoclet</literal> (see above).</step>
+					</procedure>
+					<para>These subtasks will generate the EJB home and remote interfaces.</para>
+				</entry>
+				<entry>
+					<mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/xdoclet-ejb-config-7.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+					<para>Click <literal>OK</literal> and the XDoclet configuration for the <literal>Tutorial</literal> will be saved.
+					Once the configuration is saved, right-click on the <literal>Tutorial</literal> project and select <literal>Run XDoclet</literal>.
+					The XDoclet generation will display its output in the console. The output should look like this:</para>
+				</entry>
+				<entry>
+					<mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/xdoclet-run.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+					<para>
+						After the code generation, select the project and refresh it (you can press F5). You should have a project that looks like this.
+						Note that a <literal>tutorial.interfaces</literal> package has been created with new classes inside. There is also a <literal>META-INF</literal> folder with the deployment descriptors (both standard and jboss).
+					</para>
+				</entry>
+				<entry>
+					<mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/project-after-xdoclet.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+		</tbody>
+	</tgroup>
+	</informaltable>
+</chapter>

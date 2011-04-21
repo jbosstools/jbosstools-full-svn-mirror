@@ -1,0 +1,21 @@
+<chapter id="updateSite">
+	<title>Updating the JBossIDE Update Site</title>
+	
+	<section>
+		<title>Updating the JBossIDE Update Site</title>
+		<para>There is a script under the product builder called <literal>build-site.sh</literal> that will assemble an update site from the specified build, and upload it.
+		(Note: you will need to have ssh.publishing enabled as well as a configured a ssh private key that is authenticated with download.jboss.org)</para>
+		
+		<para>Here is the usage for the script:</para>
+<programlisting>
+$ ./build-site.sh
+Usage:
+
+  ./build-site.sh [site-type] [version] (build-type)
+    site-type:  The update site type to build. [development|stable]
+    version:    The version to build this update site from.
+    build-type: The type of build this update site is for. [release|integration|nightly] (optional: default 'release')</programlisting>
+		
+		<para>The files that are used for generating the update site can be found under <literal>builders/product/updateSite</literal></para>
+	</section>
+</chapter>

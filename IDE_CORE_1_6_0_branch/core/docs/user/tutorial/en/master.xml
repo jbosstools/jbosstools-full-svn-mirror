@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding="iso-8859-1"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3CR3//EN"
+                      "../../../../docbook-support/support/docbook-dtd/docbookx.dtd"
+[
+<!ENTITY preface SYSTEM "../../common/preface.xml">
+<!ENTITY introduction SYSTEM "../../common/introduction.xml">
+<!ENTITY tutorial-preparation SYSTEM "modules/ch2-tutorial-preparation.xml">
+<!ENTITY project	SYSTEM "modules/ch3-project.xml">
+<!ENTITY ejb SYSTEM "modules/ch4-ejb.xml">
+<!ENTITY ejb-file-generation SYSTEM "modules/ch5-ejb-file-generation.xml">
+<!ENTITY servlet SYSTEM "modules/ch6-servlet.xml">
+<!ENTITY servlet-file-generation SYSTEM "modules/ch7-servlet-file-generation.xml">
+<!ENTITY j2ee-app SYSTEM "modules/ch8-j2ee-app.xml">
+<!ENTITY packaging SYSTEM "modules/ch9-packaging.xml">
+<!ENTITY jboss-config SYSTEM "modules/ch10-jboss-config.xml">
+<!ENTITY deployment SYSTEM "modules/ch11-deployment.xml">
+<!ENTITY debugging SYSTEM "modules/ch12-debugging.xml">
+]>
+
+<book lang="en">
+
+    <bookinfo>
+        <title>JBoss Eclipse IDE Tutorial</title>
+        <subtitle>An introduction and walkthrough of JBoss Eclipse IDE</subtitle>
+        <releaseinfo>1.5.0</releaseinfo>
+    </bookinfo>
+    
+    <toc/>
+    
+&preface;
+
+&introduction; 
+
+&tutorial-preparation;
+
+&project;
+
+&ejb;
+
+&ejb-file-generation;
+
+&servlet;
+
+&servlet-file-generation;
+
+&j2ee-app;
+
+&packaging;
+
+&jboss-config;
+
+&deployment;
+
+&debugging;
+
+	<chapter id="conclusion">
+		<title>Conclusion</title>
+		
+		<para>This simple tutorial was intended to give an overview of what is possible with JBoss Eclipse IDE. We hope that it will be useful for developers who want to develop for JBoss in Eclipse</para>
+	</chapter>
+</book>

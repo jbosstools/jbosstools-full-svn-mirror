@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><toc label="JBoss Eclipse IDE Tutorial">
+    <topic label="Table of Contents" href="tutorial/en/html/index.html"/>
+    <topic label="Preface" href="tutorial/en/html/preface.html"/>
+    <topic label="Introduction to JBossIDE" href="tutorial/en/html/introduction.html"/>
+    <topic label="Tutorial Preparation" href="tutorial/en/html/tutorial.preparation.html"/>
+    <topic label="The Project" href="tutorial/en/html/the.project.html"/>
+    <topic label="The EJB" href="tutorial/en/html/the.ejb.html"/>
+    <topic label="Generation of the EJB related files" href="tutorial/en/html/ejb.file.generation.html"/>
+    <topic label="The Servlet and the Web-App" href="tutorial/en/html/servlet.html"/>
+    <topic label="Generation of the Servlet related files" href="tutorial/en/html/servlet.file.generation.html"/>
+    <topic label="The J2EE Application" href="tutorial/en/html/j2ee.app.html"/>
+    <topic label="The Packaging" href="tutorial/en/html/packaging.html"/>
+    <topic label="JBoss Configuration and Launch" href="tutorial/en/html/jboss.config.html"/>
+    <topic label="Deployment" href="tutorial/en/html/deployment.html"/>
+    <topic label="Debugging" href="tutorial/en/html/debugging.html"/>
+    <topic label="Conclusion" href="tutorial/en/html/conclusion.html"/></toc>

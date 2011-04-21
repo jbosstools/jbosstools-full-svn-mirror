@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+     <extension
+         point="org.eclipse.core.runtime.contentTypes">
+      <file-association
+            file-names="packaging-build.xml"
+            content-type="antBuildFile">
+      </file-association>
+   </extension>
+     <extension
+           id="PackagingBuilder"
+           name="JBoss Eclipse IDE Packaging Script Builder"
+           point="org.eclipse.core.resources.builders">
+        <builder hasNature="false">
+           <run class="org.jboss.ide.eclipse.packaging.core.builder.PackagingBuilder"/>
+        </builder>
+     </extension>
+
+</plugin>
