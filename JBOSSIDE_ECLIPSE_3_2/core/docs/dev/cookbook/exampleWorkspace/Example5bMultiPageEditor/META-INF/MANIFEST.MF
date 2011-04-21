@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Example5bMultiPageEditor Plug-in
+Bundle-SymbolicName: Example5bMultiPageEditor; singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: example5bMultiPageEditor.Example5bMultiPageEditorPlugin
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.ui.editors,
+ org.eclipse.ui.workbench.texteditor,
+ Example5aCustomEditor,
+ org.eclipse.jface.text,
+ org.eclipse.ui.ide
+Eclipse-AutoStart: true

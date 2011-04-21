@@ -1,0 +1,9 @@
+<project default="build.requirement">
+
+	<target name="build.requirement">
+		<ant antfile="buildDriver.xml" target="build.driver" inheritall="true">
+				  <property name="driver.properties" value="${basedir}/build.properties"/>
+				  <property name="requirement" value="webtools"/>
+		</ant>
+	</target>
+</project>

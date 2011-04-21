@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Example3Dependencies Plug-in
+Bundle-SymbolicName: Example3Dependencies
+Bundle-Version: 1.0.0
+Bundle-ClassPath: Example3Dependencies.jar,
+ qdox.jar
+Bundle-Activator: example3Dependencies.Example3DependenciesPlugin
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ Example3Z
+Eclipse-AutoStart: true

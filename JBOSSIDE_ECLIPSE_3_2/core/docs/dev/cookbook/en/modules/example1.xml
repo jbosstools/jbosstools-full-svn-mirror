@@ -1,0 +1,196 @@
+<chapter id="Example1">
+	<title>Example 1 - Getting Started</title>
+	<para>
+		This lab will help you set up the PDE (Plug-in Development Environment).
+		It will also take you through the process of generating the Hello World 
+		template, and explain the pieces of the code where applicable.</para>
+	<section>
+		<title>Configuring your PDE</title>
+		<para>Select the "Target Platform" page under Plug-in Developmeznt in 
+		the Window->Preferences dialog and verify the location of your target 
+		platform. This step sets the run-time workbench instance path, which 
+		is where your plug-in will be run when testing it. You don't need
+		to change any values here, but look around to see what is
+		available to be changed should you need it.</para>
+	</section>
+	
+	<section>
+		<title>Creating a New Plug-in Project</title>
+		<informaltable frame="none">
+			<tgroup cols="2" align="left" colsep="0" rowsep="0">
+				<tbody>
+					<row>
+						<entry valign="top">
+		<para>The first thing you should do is switch to the plug-in 
+		development perspective. To do this, select 
+		<literal>Window</literal>-&gt;<literal>Open Perspective</literal>-&gt;<literal>Other...</literal>
+		and choose Plug-in Development.</para>
+
+		<para>From here, the next step is to create a new plug-in project. 
+		<literal>Select File</literal>-&gt;<literal>New</literal>-&gt;<literal>Project...</literal>
+		and choose Plug-in Project in the list of wizards shown at right. </para>
+						
+						</entry>
+						<entry>
+			            <mediaobject>
+		    	            <imageobject>
+		        	            <imagedata align="center" fileref="images/lab1_new.gif"/>
+		            	    </imageobject>
+		            	</mediaobject>
+						</entry>
+					</row>
+					<row>
+						<entry valign="top">
+		<para> You should call your plug-in <literal>Example1HelloWorld</literal>. 
+		You can click next twice without making any changes. From here, select the
+		Hello World template.</para>							
+						</entry>
+						<entry><mediaobject><imageobject>
+							<imagedata align="center" fileref="images/lab1_new_template.gif"/>
+						</imageobject></mediaobject></entry>
+					</row>
+					
+					<row>
+						<entry valign="top">
+		<para>After expanding your project from the package manager,
+		it should look something like this.</para>
+		
+		<para>		So what has been created for us? 		</para>
+		<para>
+		First we see <literal>Example1HelloWorldPlugin.java</literal>, which 
+		is the actual plugin class first loaded by the eclipse platform. 
+		We also see a <literal>SampleAction.java</literal> as well.
+		Finally, there is the <literal>MANIFEST.MF</literal> and <literal>
+		plugin.xml</literal> files.</para>
+		
+		<para>
+			If we look at the <literal>Example1HelloWorldPlugin</literal>
+			class, we notice that it has a singleton instance which is
+			used by the platform and can be used by you as well. There's no
+			reference anywhere to the <literal>SampleAction</literal>.
+			Most of the methods completed just complete behaviors expected by
+			the eclipse platform.
+		</para>
+		
+		<para>
+			The <literal>SampleAction</literal> just pops up a dialog that 
+			says, predictably, Hello World.
+		</para>
+		
+		
+						</entry>
+						<entry><mediaobject><imageobject>
+							<imagedata align="center" fileref="images/lab1_package_explorer.gif"/>
+						</imageobject></mediaobject></entry>
+					</row>
+
+					<row>
+						<entry valign="top">
+						</entry>
+						<entry><mediaobject><imageobject>
+						</imageobject></mediaobject></entry>
+					</row>
+					
+					
+				</tbody>
+			</tgroup>
+		</informaltable>
+		
+		<para>
+			The <literal>MANIFEST.MF</literal> and <literal>
+		plugin.xml</literal> files can both be modified using the same
+		graphical editor, accessed by double-clicking on either file in the 
+		package explorer view. The plugin.xml file contains information about 
+		your plugin, how to load it, and what extensions it plans on using. 
+		
+		You can also see the raw text for each file by clicking on their respective
+		tabs inside their editor.
+		</para>
+		
+		<para>
+		You can declare your intention to use extension points through 
+		the gui interface, which will then automatically update the 
+		<literal>MANIFEST.MF</literal> and <literal>plugin.xml</literal> files.
+		</para>
+
+		<informaltable frame="none">
+			<tgroup cols="2" align="left" colsep="0" rowsep="0">
+				<tbody>
+					<row>
+						<entry valign="top">
+		
+		<para>To run this plug-in, right click on its project, and select 
+		the <literal>run as</literal>-&gt;<literal>Eclipse Application</literal>
+		menu item. This will invoke the runtime environment used to test 
+		your plug-in. When the new eclipse instance is loaded, you'll notice 
+		a <literal>Sample Menu</literal> menu with a <literal>Sample Action</literal>
+		sub-menu.</para>
+		
+		</entry>
+		<entry><mediaobject><imageobject>
+				<imagedata align="center" fileref="images/lab1_run_as.gif"/>
+		</imageobject></mediaobject></entry>
+</row></tbody></tgroup></informaltable>
+		
+	</section>
+	
+	<section>
+		<title>Exploring the Code</title>
+
+		<para>The code that links your plug-in with the top-level menu 
+		is the extension points your plug-in are using. Looking at your plug-in's 
+		<literal>plugin.xml</literal> file's <literal>Extensions</literal> tab 
+		shows you an extension to <literal>org.eclipse.ui.actionSets</literal>, 
+		which directs execution to the 
+		<literal>example1HelloWorld.actions.SampleAction</literal> action.</para>
+
+
+		<informaltable frame="none">
+			<tgroup cols="2" align="left" colsep="0" rowsep="0">
+				<tbody>
+					<row>
+						<entry valign="top">
+				<para>
+					To the right is what we see when browsing the extensions tab 
+					of the plugin. What it shows is that we have one extension to 
+					the org.eclipse.ui.actionSets extension point. That extension
+					defines a new menu, and an action to be added to that menu. 
+					The action element contains a class name field to help
+					facilitate lazy initialization.
+				</para>
+						</entry>
+						<entry><mediaobject><imageobject>
+							<imagedata align="center" fileref="images/lab1_extensions.gif"/>
+						</imageobject></mediaobject></entry>
+		</row></tbody></tgroup></informaltable>
+		
+		<para>The xml code for this is as follows:</para>
+		<programlisting>&lt;extension
+         point="org.eclipse.ui.actionSets"&gt;
+      &lt;actionSet
+            label="Sample Action Set"
+            visible="true"
+            id="Example1HelloWorld.actionSet"&gt;
+         &lt;menu
+               label="Sample &amp;Menu"
+               id="sampleMenu"&gt;
+            &lt;separator
+                  name="sampleGroup"&gt;
+            &lt;/separator&gt;
+         &lt;/menu&gt;
+         &lt;action
+               label="&amp;Sample Action"
+               icon="icons/sample.gif"
+               class="example1HelloWorld.actions.SampleAction"
+               tooltip="Hello, Eclipse world"
+               menubarPath="sampleMenu/sampleGroup"
+               toolbarPath="sampleGroup"
+               id="example1HelloWorld.actions.SampleAction"&gt;
+         &lt;/action&gt;
+      &lt;/actionSet&gt;
+   &lt;/extension&gt;</programlisting>
+		
+
+	</section>
+	
+</chapter>

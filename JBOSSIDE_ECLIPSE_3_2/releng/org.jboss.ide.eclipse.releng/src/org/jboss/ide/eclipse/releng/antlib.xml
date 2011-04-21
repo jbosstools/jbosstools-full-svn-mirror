@@ -1,0 +1,3 @@
+<antlib>
+	<taskdef resource="org/jboss/ide/eclipse/releng/tasks.properties"/>
+</antlib>

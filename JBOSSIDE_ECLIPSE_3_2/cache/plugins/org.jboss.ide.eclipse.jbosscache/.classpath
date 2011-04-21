@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="lib" path="lib/bsh-2.0b4.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging.jar"/>
+	<classpathentry kind="lib" path="lib/concurrent.jar"/>
+	<classpathentry kind="lib" path="lib/javassist.jar"/>
+	<classpathentry kind="lib" path="lib/jboss-aop.jar"/>
+	<classpathentry sourcepath="/JBossCache124" kind="lib" path="lib/jboss-cache.jar"/>
+	<classpathentry kind="lib" path="lib/jboss-common.jar"/>
+	<classpathentry kind="lib" path="lib/jboss-j2ee.jar"/>
+	<classpathentry kind="lib" path="lib/jboss-jmx.jar"/>
+	<classpathentry kind="lib" path="lib/jboss-minimal.jar"/>
+	<classpathentry kind="lib" path="lib/jboss-system.jar"/>
+	<classpathentry kind="lib" path="lib/jgroups.jar"/>
+	<classpathentry kind="lib" path="lib/jrunit.jar"/>
+	<classpathentry kind="lib" path="lib/junit.jar"/>
+	<classpathentry kind="lib" path="lib/log4j.jar"/>
+	<classpathentry kind="lib" path="lib/qdox.jar"/>
+	<classpathentry kind="lib" path="lib/trove.jar"/>
+	<classpathentry kind="lib" path="lib/hibernate-tools.jar"/>
+	<classpathentry kind="lib" path="lib/jtidy-r8-21122004.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
