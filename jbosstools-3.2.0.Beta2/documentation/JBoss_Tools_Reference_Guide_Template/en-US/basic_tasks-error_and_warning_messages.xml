@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "JBoss_Tools_Reference_Guide_Template.ent">
+%BOOK_ENTITIES;
+]>
+<section id="error_and_warning_messages-basic_tasks">
+  <title>Basic tasks</title>
+  <para>
+    The procedures listed in <xref linkend="tasks-basic_tasks"></xref> may return the following errors:
+  </para>
+  <note><title>***Design Note***</title>
+      <para>
+         Itemize according to the "Basic" tasks - not related to any specific concept discussed in the Concepts section.
+         Perhaps chunk this down into individual sections depending on the extent of the content - for Context Sensitive Help. 
+      </para>
+      <para>
+      -
+      </para>
+      <para>
+         It is unlikely that basic tasks will have any associated error or warning messages so this "Basic tasks" section could be ommitted. 
+      </para>
+  </note> 
+  <variablelist>
+   <title>Linking pages error messages</title>
+	<varlistentry>
+		<term>Attribute Cannot be resolved</term>
+		<listitem>
+			<para>
+			  An attempt was made to do things incorrectly which resulted in the error.
+			</para>
+			<para>
+			  Perform this action to rectify the error 
+			</para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>Attribute Cannot be resolved</term>
+		<listitem>
+			<para>
+			  An attempt was made to do things incorrectly which resulted in the error.
+			</para>
+			<para>
+			  Perform this action to rectify the error 
+			</para>
+		</listitem>
+	</varlistentry>
+  </variablelist>
+  <variablelist>
+  <title>Linking pages warning  messages</title>
+	<varlistentry>
+		<term>Attribute Cannot be resolved</term>
+		<listitem>
+			<para>
+			  An attempt was made to do things incorrectly which resulted in the error.
+			</para>
+			<para>
+			  Perform this action to rectify the error 
+			</para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>Attribute Cannot be resolved</term>
+		<listitem>
+			<para>
+			  An attempt was made to do things incorrectly which resulted in the error.
+			</para>
+			<para>
+			  Perform this action to rectify the error 
+			</para>
+		</listitem>
+	</varlistentry>
+  </variablelist>  
+ 
+  <para>&FEEDBACK-error_and_warning_messages-basic_tasks;</para>
+</section>

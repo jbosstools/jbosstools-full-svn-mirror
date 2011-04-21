@@ -1,0 +1,9 @@
+<tests>
+	<test id="dd">
+		<DD ID="dd" CLASS="ddClass" STYLE="color: red; -moz-user-modify: read-write;" DIR="ltr">
+<SPAN>
+some definition 1
+</SPAN>
+</DD>
+	</test>
+</tests>

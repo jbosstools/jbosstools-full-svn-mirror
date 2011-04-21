@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "JBoss_Tools_Reference_Guide_Template.ent">
+%BOOK_ENTITIES;
+]>
+<procedure id="proc-jbt-show_view"> 
+        <title>Show View</title>
+        <step>
+          <title>Access the <guilabel>Show View</guilabel> dialog</title>
+          <para>
+            Select <menuchoice><guimenu>Window</guimenu><guisubmenu>Show View</guisubmenu><guisubmenu>Other</guisubmenu></menuchoice>
+          </para>
+          <formalpara><title>Result:</title>
+          <para>
+            The <guilabel>Show View</guilabel> dialog is displayed.
+          </para>
+          </formalpara>
+            <figure id="figure-jbt-show_view_01">
+            <title>Show View</title>
+              <mediaobject>
+                <imageobject>
+                  <imagedata fileref="images/image-jbt-show_view_01.png" format="PNG"/>
+                </imageobject>
+                <textobject>
+                  <para>Show View</para>
+                </textobject>
+              </mediaobject>
+           </figure>
+           <para>&HORIZ_LINE;</para>
+        </step>
+        <step>
+          <title>Select the appropriate view</title>
+          <orderedlist numeration ="loweralpha">
+          <listitem>
+          <para>
+            Expand the relevant folder to display a list of available views 
+          </para>
+           <formalpara><title>Result:</title>
+            <para>
+             The relevant view can be selected
+            </para>
+            </formalpara>
+            <figure id="figure-jbt-show_view_02.png">
+            <title>View Selected </title>
+              <mediaobject>
+                <imageobject>
+                  <imagedata fileref="images/image-jbt-show_view_02.png" format="PNG"/>
+                </imageobject>
+                <textobject>
+                  <para>View Selected</para>
+                </textobject>
+              </mediaobject>
+           </figure>
+          </listitem>
+          <listitem>
+          <para>
+            Click the <guibutton>OK</guibutton> button to render the view.
+          </para>
+          <formalpara><title>Result:</title>
+            <para>
+              The view is added to the relevant development perspective.
+            </para>
+            </formalpara>
+            <figure id="figure-jbt-show_view_03">
+            <title>View Added</title>
+              <mediaobject>
+                <imageobject>
+                  <imagedata fileref="images/image-jbt-show_view_03.png" format="PNG"/>
+                </imageobject>
+                <textobject>
+                  <para>View Added</para>
+                </textobject>
+              </mediaobject>
+           </figure>
+          </listitem>
+          </orderedlist>
+        <para>&HORIZ_LINE;</para>
+         <note><title>***Design Note***</title>
+            <para>
+              As this is a basic task there is no corresponding section in the "Concepts" chapter. Similarly, as the "Documentation navigation" chapter is structured according to the Concepts chapter there is no link to "Related concepts, tasks and reference material". This is implemented by linking to the "Documentation navigation" chapter for concept/feature based tasks.
+            </para>
+         </note>  
+        </step>
+  </procedure>

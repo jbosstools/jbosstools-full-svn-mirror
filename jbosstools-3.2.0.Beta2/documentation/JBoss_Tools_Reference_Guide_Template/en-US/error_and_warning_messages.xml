@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "JBoss_Tools_Reference_Guide_Template.ent">
+%BOOK_ENTITIES;
+]>
+<chapter id="error_and_warning_messages">
+  <title>Error and warning messages</title>
+  <para>
+   Error and warning messages appear in the <guilabel>Error Log</guilabel> view. This view can be added to the <guilabel>Web Development</guilabel> perspective according the procedure described in <xref linkend="tasks-basic_tasks-show_view"></xref>. 
+  </para>
+  
+  <xi:include href="basic_tasks-error_and_warning_messages.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <xi:include href="managed_beans-error_and_warning_messages.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <xi:include href="user_interface_components-error_and_warning_messages.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <xi:include href="state_management-error_and_warning_messages.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <xi:include href="ajax_support-error_and_warning_messages.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <xi:include href="another_concept-error_and_warning_messages.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+</chapter>

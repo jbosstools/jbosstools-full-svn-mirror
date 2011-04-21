@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<section id="Updating-to-the-new-Web-Tools-Platform-packages">
+	<title>Updating to the new Web Tools Platform packages</title>
+	<para>
+		In order to receive the updated Web Tools Platform packages for the JBoss Developer Studio 3.0.1 (<xref linkend="Fixed_Issues-Web_Tools_Platform" />) the following location needs to be added or enabled as part of the update process: <ulink url="http://download.eclipse.org/webtools/updates/">http://download.eclipse.org/webtools/updates/</ulink>. From this location install the two patches that appear under the <guimenuitem>Patches</guimenuitem> menu and labeled as <filename>Patches 2010 04 13</filename>. 
+	</para>
+	<mediaobject>
+		<imageobject>
+			<imagedata fileref="images/WTP_Update_Site.png"/>
+		</imageobject>
+		<caption>Selecting the Web Tools Platform patches from the update site</caption>
+	</mediaobject>
+	<important>
+		<para>
+			You can only use the update method if the JBoss Developer Studio 3.0 is currently installed.
+		</para>
+		<para>
+			If the JBoss Developer Studio 3.0.1 will be a new installation, the Web Tools Platform patches are included with the install and no extra update or patches are necessary.
+		</para>
+	</important>
+</section>

@@ -1,0 +1,49 @@
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.jboss.tools</groupId>
+		<artifactId>org.jboss.tools.parent.pom</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<groupId>org.jboss.tools</groupId>
+	<artifactId>org.jboss.tools.tests.all</artifactId>
+	<name>org.jboss.tools.tests.all</name>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<modules>
+		<module>features</module>
+		<module>plugins</module>
+		<module>site</module>
+	</modules>
+	<dependencies>
+		<dependency>
+			<groupId>org.jboss.tools</groupId>
+			<artifactId>org.jboss.tools.parent.pom</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>pom</type>
+		</dependency>
+	</dependencies>
+	<repositories>
+		<repository>
+			<id>jboss-snapshots-repository</id>
+			<name>JBoss Snapshot Repository</name>
+			<url>https://repository.jboss.org/nexus/content/repositories/snapshots/</url>
+			<layout>default</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>jboss-releases-repository</id>
+			<name>JBoss Releases Repository</name>
+			<url>https://repository.jboss.org/nexus/content/repositories/releases/</url>
+			<layout>default</layout>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+	</repositories>
+</project>
+	
