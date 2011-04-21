@@ -1,0 +1,4 @@
+.rsyncexclude
+upload.sh
+.svn
+.project

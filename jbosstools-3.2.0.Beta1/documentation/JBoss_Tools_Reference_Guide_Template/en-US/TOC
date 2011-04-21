@@ -1,0 +1,146 @@
+1. Legal notices
+2. Latest developments
+
+    2.1. JSF project verification
+    2.2. New feature template
+
+3. Getting started
+
+    3.1. Required installations
+    3.2. Quick start
+
+        3.2.1. Project creation
+        3.2.2. JSF tools configuration file editor
+        3.2.3. Creating JSP pages
+        3.2.4. JSF tools quick start template
+
+4. Concepts
+
+    4.1. Managed beans
+
+        4.1.1. Managed beans and java server faces
+
+    4.2. User interface components
+
+        4.2.1. Base
+        4.2.2. Extended
+        4.2.3. Custom
+        4.2.4. Reusable
+
+    4.3. State management
+    4.4. Ajax support
+    4.5. Another concept
+
+        4.5.1. The concept and java server faces
+
+    4.6. Further resources
+
+5. Tasks
+
+    5.1. Basic tasks
+
+        5.1.1. Open web development perspective
+        5.1.2. Create faces-config file
+        5.1.3. Linking pages
+        5.1.4. Another basic task
+
+    5.2. Managed beans
+    5.3. User interface components
+
+        5.3.1. Base
+        5.3.2. Custom
+        5.3.3. Extended
+        5.3.4. Reusable
+
+    5.4. State management
+    5.5. Ajax support
+    5.6. Another concept
+
+6. Reference
+
+    6.1. Wizards
+
+        6.1.1. New JSF project wizard
+        6.1.2. New faces config wizard
+        6.1.3. Another wizard
+
+    6.2. Perspectives
+
+        6.2.1. Web development
+
+    6.3. Views
+
+        6.3.1. Web projects view
+        6.3.2. Palette view
+        6.3.3. Another view
+
+    6.4. Editors
+         6.4.1. faces-config file
+                6.4.1.1. Diagram view
+                6.4.1.2. Tree view 
+
+    6.5. Preferences Pages
+
+        6.5.1. Questionable to include preferences pages
+
+    6.6. Dialogs
+
+        6.6.1. Questionable to include dialogs
+
+    6.7. Icons and Buttons
+
+        6.7.1. Questionable to include icons
+        6.7.2. Questionable to include buttons
+
+    6.8. Developer documentation
+
+7.  Error and warning messages
+
+        7.1. Basic tasks
+        7.2. Managed beans
+        7.3. User interface components
+
+            7.3.1. Base
+            7.3.2. Custom
+            7.3.3. Extended
+            7.3.4. Reusable
+
+        7.4. State management
+        7.5. Ajax support
+        7.6. Another concept
+
+8. Hints
+
+    8.1. Basic tasks
+    8.2. Managed beans
+    8.3. User interface components
+
+        8.3.1. Base
+        8.3.2. Extended
+        8.3.3. Custom
+        8.3.4. Reusable
+
+    8.4. State management
+    8.5. Ajax support
+    8.6. Another concept
+    8.7. Placeholder for a link
+
+9. Link Sets
+
+    9.1. Wizards link sets
+    9.2. Views link sets
+
+        9.2.1. Web projects view links
+        9.2.2. Web development perspective palette view links
+        9.2.3. Template one links
+
+    9.3. Editors link sets
+
+        9.3.1. faces-config editor tree view links
+        9.3.2. faces-config diagram view links
+        9.3.3. Template two links
+
+    9.4. Perspectives link sets
+    9.5. Preferences pages link sets
+    9.6. Dialogs link sets
+    9.7. Icons and buttons link sets

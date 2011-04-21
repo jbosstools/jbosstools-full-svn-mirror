@@ -1,0 +1,172 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "JBoss_Tools_Reference_Guide_Template.ent">
+%BOOK_ENTITIES;
+]>
+
+<procedure id="proc-jsf-template_one"> 
+        <title>(New Feature) (Procedure) Name</title>
+        <note><title>***Template Description***</title>
+          <para>
+            This template forms the basis for the simplest of procedures.
+            It consists of a sequence of steps which result in a separate (new) dialog. The dialog is displayed following the relevant step.
+          </para>
+        </note>
+        <note><title>***Template instructions***</title>     
+          <para> 
+            The procedure id (and the resultant file name for the procedure) is the same as the title of the main dialog where possible. 
+            Otherwise choose a logical name describing the task or procedure.
+          </para>
+          <para>  
+              * The proc-jsf-template_one.xml filename will be changed to proc-jsf-procedure_name.xml"
+          </para>
+          <para>
+            The figure names reflect the procedure name and are numbered according to their position within the procedure:
+          </para>
+          <para>
+              * figure id="figure-jsf-procedure_name_01"
+          </para>
+        </note>   
+        <step>
+          <title>Step One Title</title>
+          <para>
+            Select <menuchoice><guimenu>Menu A</guimenu><guisubmenu>Menu B</guisubmenu><guisubmenu>Menu C</guisubmenu><guisubmenu>Menu D</guisubmenu><guimenuitem>Menu E</guimenuitem></menuchoice>
+          </para>
+          <formalpara><title>Result:</title>
+          <para>
+            A short description of the result of the action(s).
+          </para>
+          </formalpara>
+            <figure id="figure-procedure_name_one_01">
+            <title>&lt;Feature Name&gt;</title>
+              <mediaobject>
+                <imageobject>
+                  <imagedata fileref="images/image-jsf-template_one_01.png" format="PNG"/>
+                </imageobject>
+                <textobject>
+                  <para>A short statement describing the screenshot above.</para>
+                </textobject>
+              </mediaobject>
+           </figure>
+           <para>&HORIZ_LINE;</para>
+        </step>
+        <step>
+          <title>Step Two Title</title>
+          <substeps>
+            <step>
+              <para>
+                Sub step a
+              </para>            
+              <formalpara><title>Result:</title>
+              <para>
+              A short description of the result of the action(s).
+            </para>
+            </formalpara>
+            <figure id="figure-procedure_name_one_02">
+            <title>&lt;Feature Name&gt;</title>
+              <mediaobject>
+                <imageobject>
+                  <imagedata fileref="images/image-jsf-template_one_02.png" format="PNG"/>
+                </imageobject>
+                <textobject>
+                  <para>A short statement describing the screenshot above.</para>
+                </textobject>
+              </mediaobject>
+           </figure>            
+            </step>
+            <step>
+             <para>
+              Sub step b &lt;Click the <guibutton>OK</guibutton> button to complete the task&gt;.
+             </para>
+             <formalpara><title>Result:</title>
+              <para>
+                A short description of the result of the action(s).
+              </para>
+             </formalpara>
+             <figure id="figure-procedure_name_one_03">
+             <title>&lt;Feature Name&gt;</title>
+               <mediaobject>
+                 <imageobject>
+                   <imagedata fileref="images/image-jsf-template_one_03.png" format="PNG"/>
+                 </imageobject>
+                 <textobject>
+                   <para>A short statement describing the screenshot above.</para>
+                 </textobject>
+               </mediaobject>
+            </figure>            
+            </step>
+          </substeps>
+          <!-- 
+          <orderedlist numeration ="loweralpha">
+          <listitem>
+          <para>
+            Sub step a 
+          </para>
+           <formalpara><title>Result:</title>
+            <para>
+              A short description of the result of the action(s).
+            </para>
+            </formalpara>
+            <figure id="figure-procedure_name_one_02">
+            <title>&lt;Feature Name&gt;</title>
+              <mediaobject>
+                <imageobject>
+                  <imagedata fileref="images/image-jsf-template_one_02.png" format="PNG"/>
+                </imageobject>
+                <textobject>
+                  <para>A short statement describing the screenshot above.</para>
+                </textobject>
+              </mediaobject>
+           </figure>
+          </listitem>
+          <listitem>
+          <para>
+            Sub step b &lt;Click the <guibutton>OK</guibutton> button to complete the task&gt;.
+          </para>
+          <formalpara><title>Result:</title>
+            <para>
+              A short description of the result of the action(s).
+            </para>
+            </formalpara>
+            <figure id="figure-procedure_name_one_03">
+            <title>&lt;Feature Name&gt;</title>
+              <mediaobject>
+                <imageobject>
+                  <imagedata fileref="images/image-jsf-template_one_03.png" format="PNG"/>
+                </imageobject>
+                <textobject>
+                  <para>A short statement describing the screenshot above.</para>
+                </textobject>
+              </mediaobject>
+           </figure>
+          </listitem>
+          </orderedlist>
+           -->
+          <note><title>***Design Note***</title>
+            <para>
+              Link to the relevant "Documentation navigation" section which lists: 
+            </para>
+            <para>
+              * related concepts;
+            </para>
+            <para>
+              * related tasks;
+            </para>
+            <para>
+              * related reference material.
+            </para>
+            <para>
+              The navigation section acts as a single source of links related to a single task helping to minimise document maintenance.
+            </para>
+          </note>
+	       <!--  Design Notes:
+            Provide a single link to a document navigation section relating to the current task. This section will include all of the relevant concepts, tasks and references in a single table facilitating ease of maintenance.    
+           -->
+          <formalpara><title>Related material</title>
+          <para>
+            Further tasks and information relating to this task are accessible from:  <xref linkend="hints-placeholder_for_a_link"/>.
+          </para>
+          </formalpara>
+        <para>&HORIZ_LINE;</para>
+        </step>
+  </procedure>

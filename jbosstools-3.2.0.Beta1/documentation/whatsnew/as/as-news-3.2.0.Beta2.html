@@ -1,0 +1,74 @@
+<html>
+
+<head>
+<link rel="stylesheet" href="../whatsnew.css">
+<title>JBoss AS Tools 3.2.0.Beta2 News</title>
+</head>
+
+<body>
+
+<h1>JBoss AS Tools 3.2.0.Beta2 - New and Noteworthy</h1>
+
+  <p align="right"><a href="../index.html">&lt; Main Index</a> <a href="../hibernate/hibernate-news-3.4.0.Beta2.html">Hibernate Tools &gt;</a></p>
+
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>Server</h3>
+      <hr/>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="left">
+      <p align="right">
+	<b>Remote System Support Improvements</b></td>
+    <td valign="top" width="90%">
+      <p>
+        Startup of a remote server will now first check if it's already started. Many issues with workspace locking and uncancelable jobs have been found and fixed for startup and shutdown of remote servers. The RSE composites have been added to the new server wizard, to allow earlier configuration by the user. Methods to add additional hosts, or browse for folders, have also been added for convenience. Remote deployment scanner is also started and stopped during publishes, to prevent partial deployments.
+      </p>
+      <p></p>
+      <p><small>
+         <a href="https://jira.jboss.org/jira/browse/JBIDE-7608">remote startup checks remote status</a><br/>
+         <a href="https://jira.jboss.org/jira/browse/JBIDE-7188">remote startup checks remote status</a><br/>
+         <a href="https://jira.jboss.org/jira/browse/JBIDE-7251">remote startup checks remote status</a><br/>
+         <a href="https://jira.jboss.org/jira/browse/JBIDE-7579">uncancelable startup / shutdown jobs</a><br/>
+         <a href="https://jira.jboss.org/jira/browse/JBIDE-7221">rse composite added to new server wizard</a><br/>
+         <a href="https://jira.jboss.org/jira/browse/JBIDE-7018">browse remote folders / new hosts</a><br/>
+         <a href="https://jira.jboss.org/jira/browse/JBIDE-7191">remote deployment scanner start / stop</a><br/>
+      </small></p>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="left">
+      <p align="right">
+	<b>Single Folder deployment</b></td>
+    <td valign="top">
+      <p> While previously you could only mark single files as deployable, now you can do the same with folders! Woohoo! They can also be marked as zipped, but at this point, renaming the output archive is not yet possible. </p>
+      <p></p>
+      <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-7324">Make deployable for directories</a><br/>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+    </td>
+  </tr>
+
+</table>
+
+</body>
+
+</html>
+
+

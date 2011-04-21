@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE bookinfo PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "JBoss_Tools_Reference_Guide_Template.ent">
+%BOOK_ENTITIES;
+]>
+<bookinfo id="book-JBoss_Tools_Reference_Guide_Template-JBoss_Tools_Reference_Guide_Template">
+	<title>JBoss Tools Reference Guide Template</title>
+	<subtitle>A template to assist in the generation of JBoss Tools Reference Guide material.</subtitle>
+	<productname>JBoss Tools</productname>
+	<productnumber>3.2</productnumber>
+	<edition>1</edition>
+	<pubsnumber>0</pubsnumber>
+	<abstract>
+	  <para>
+	    This template has been developed to assist in the generation of JBoss Tools reference material. The design is similar to the DITA format for topic based authoring with modifications detailed in <xref linkend="template_overview"></xref>. Design notes have been included throughout the document to assist developers and writers in contributing to the material. JBoss Tools reference material will be incorporated into Eclipse help and this template is an initial step towards this goal. 
+	  </para>
+	</abstract>
+	<corpauthor>
+		<inlinemediaobject>
+			<imageobject>
+				<imagedata fileref="Common_Content/images/title_logo.svg" format="SVG" />
+			</imageobject>
+		</inlinemediaobject>
+	</corpauthor>
+	<!--FOR PUBLICAN -->
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
+      href="Common_Content/Legal_Notice.xml">
+      <!--FOR JDOCBOOK:-->
+      <xi:fallback xmlns:xi="http://www.w3.org/2001/XInclude">
+        <xi:include href="fallback_content/Legal_Notice.xml"
+           xmlns:xi="http://www.w3.org/2001/XInclude">
+        </xi:include>
+      </xi:fallback>
+    </xi:include>
+    
+    <!-- 
+	<xi:include href="Common_Content/Legal_Notice.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	-->
+	<xi:include href="Author_Group.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+</bookinfo>
+

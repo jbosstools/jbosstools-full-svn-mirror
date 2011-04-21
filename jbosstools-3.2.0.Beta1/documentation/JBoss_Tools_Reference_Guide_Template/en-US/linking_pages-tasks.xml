@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "JBoss_Tools_Reference_Guide_Template.ent">
+%BOOK_ENTITIES;
+]>
+<section id="tasks-basic_tasks-linking_pages">
+  <title>Linking pages</title>
+   <para>
+	JSF Tools provides the facility to define links between pages in a graphical manner. This provides the user with a mapping of the project showing the existing links and a simple interface to enable the user to define further links.   
+  </para>
+
+  <para>
+    Pages can be linked by defining a <literal>navigation rule</literal>. This is described in <xref linkend="proc-jsf-create_new_connection"></xref>   
+  </para>
+  <xi:include href="proc-jsf-create_new_connection.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <para>&FEEDBACK-tasks-basic_tasks-linking_pages;</para>
+</section>

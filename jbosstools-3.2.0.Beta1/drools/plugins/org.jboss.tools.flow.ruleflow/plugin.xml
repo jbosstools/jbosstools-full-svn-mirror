@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension point="org.eclipse.ui.editors">
+      <editor
+            name="RuleFlow Editor"
+            extensions="rf"
+            icon="icons/process.gif"
+            contributorClass="org.jboss.tools.flow.common.editor.GenericActionBarContributor"
+            class="org.jboss.tools.process.ruleflow.editor.RuleFlowEditor"
+            id="org.jboss.tools.process.ruleflow.editor.RuleFlowModelEditor">
+      </editor>
+   </extension>
+
+   <extension point="org.jboss.tools.flow.common.languages">
+      <language
+      		editor="org.jboss.tools.flow.ruleflow.editor"
+            id="org.jboss.tools.flow.ruleflow"
+            name="Drools Flow">
+      </language>
+   </extension>
+   
+   <extension point="org.jboss.tools.flow.common.elements">
+      <element
+            class="org.jboss.tools.process.ruleflow.model.RuleFlowProcess"
+            figure="icons/process.gif"
+            id="org.jboss.tools.flow.ruleflow.process"
+            language="org.jboss.tools.flow.ruleflow"
+            name="Process">
+         <flow acceptsElementStrategy="org.jboss.tools.process.ruleflow.strategy.ProcessAcceptsElementStrategy" />
+      </element>
+      <element
+            class="org.jboss.tools.process.ruleflow.model.node.StartNode"
+            figure="icons/start.gif"
+            id="org.jboss.tools.flow.ruleflow.start"
+            language="org.jboss.tools.flow.ruleflow"
+            name="Start">
+         <node acceptsIncomingConnectionStrategy="org.jboss.tools.process.ruleflow.strategy.StartNodeAcceptsIncomingConnectionStrategy"
+               acceptsOutgoingConnectionStrategy="org.jboss.tools.process.ruleflow.strategy.SequenceNodeAcceptsOutgoingConnectionStrategy">
+            <figure icon="icons/start.gif">
+               <rectangle></rectangle>
+            </figure>
+         </node>
+      </element>
+      <element
+            class="org.jboss.tools.process.ruleflow.model.node.SubProcessNode"
+            figure="icons/process.gif"
+            id="org.jboss.tools.flow.ruleflow.subProcess"
+            language="org.jboss.tools.flow.ruleflow"
+            name="SubProcess">
+         <node acceptsIncomingConnectionStrategy="org.jboss.tools.process.ruleflow.strategy.SequenceNodeAcceptsIncomingConnectionStrategy"
+               acceptsOutgoingConnectionStrategy="org.jboss.tools.process.ruleflow.strategy.SequenceNodeAcceptsOutgoingConnectionStrategy">
+            <figure color="255,250,205" icon="icons/process.gif">
+               <rounded-rectangle></rounded-rectangle>
+            </figure>
+         </node>
+      </element>
+      <element
+            class="org.jboss.tools.process.ruleflow.model.ConnectionImpl"
+            figure="icons/connection.gif"
+            id="org.jboss.tools.flow.ruleflow.connection"
+            language="org.jboss.tools.flow.ruleflow"
+            name="Connection">
+         <connection>
+         </connection>
+      </element>
+   </extension>
+   
+</plugin>
