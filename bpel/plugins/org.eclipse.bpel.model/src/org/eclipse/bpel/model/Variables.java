@@ -10,7 +10,7 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: Variables.java,v 1.3 2007/08/01 21:02:30 mchmielewski Exp $
+ * $Id: Variables.java,v 1.4 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model;
 
@@ -32,7 +32,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface Variables extends ExtensibleElement {
+public interface Variables extends BPELExtensibleElement {
 	/**
 	 * Returns the value of the '<em><b>Children</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.bpel.model.Variable}.

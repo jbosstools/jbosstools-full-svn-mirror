@@ -15,6 +15,7 @@ import org.eclipse.bpel.ui.util.ZoomoutToolEntry;
 import org.eclipse.gef.palette.MarqueeToolEntry;
 import org.eclipse.gef.palette.PaletteContainer;
 import org.eclipse.gef.palette.PaletteRoot;
+import org.eclipse.gef.palette.PaletteSeparator;
 import org.eclipse.gef.palette.SelectionToolEntry;
 
 /**
@@ -43,8 +44,8 @@ public class PaletteFactory implements IPaletteProvider {
 	public void contributeItems(PaletteRoot paletteRoot) {
 
 		createTopControlPaletteEntries(paletteRoot);
-		createBottomControlPaletteEntries(paletteRoot);
 		createBPELPaletteEntries(paletteRoot);
+		createBottomControlPaletteEntries(paletteRoot);
 	}
 
 	
@@ -144,13 +145,13 @@ public class PaletteFactory implements IPaletteProvider {
 				Messages.BPELEditor_Compensate_1,
 				Messages.BPELEditor_Compensate_2, provider
 						.getFactoryFor(bpelPackage.getCompensate())));
+		
 		faultCategory.add(new BPELCreationToolEntry(
 				Messages.BPELEditor_CompensateScope_1,
 				Messages.BPELEditor_CompensateScope_2, provider
 						.getFactoryFor(bpelPackage.getCompensateScope())));
-
+		
 		palette.add(faultCategory);
-
 	}
 
 	void createTopControlPaletteEntries(PaletteRoot root) {
@@ -166,16 +167,17 @@ public class PaletteFactory implements IPaletteProvider {
 		MarqueeToolEntry marqueeTool = new MarqueeToolEntry(
 				Messages.BPELEditor_Marquee_Tool);
 		controlGroup.add(marqueeTool);
-
+		
 		root.add(controlGroup);
 		root.setDefaultEntry(selectionTool);
 	}
 
 	void createBottomControlPaletteEntries(PaletteContainer palette) {
-
+		PaletteSeparator separator = new PaletteSeparator("separator");
+		palette.add(separator);
+		
 		OrderedPaletteGroup controlGroup = new OrderedPaletteGroup(
 				Messages.BPELEditor_Bottom_Control_Group_39);
-
 		controlGroup.setOrder(200);
 		controlGroup.setCategoryId("bpel.bottom.control");
 

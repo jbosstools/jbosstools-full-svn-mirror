@@ -43,7 +43,9 @@ public class XSDTypeOrElementContentProvider extends AbstractContentProvider  {
 	final public static int INCLUDE_ELEMENT_DECLARATIONS = 0x4;
 	final public static int INCLUDE_PRIMITIVES = 0x8;
 	
-	final public static int INLCUDE_ALL = 0xff;
+	// https://issues.jboss.org/browse/JBIDE-8045
+	// fix typo
+	final public static int INCLUDE_ALL = 0xff;
 	
 	static {
 		Iterator i = xsdPrimitiveTypes.iterator();
@@ -53,7 +55,7 @@ public class XSDTypeOrElementContentProvider extends AbstractContentProvider  {
 		}
 	}
 
-	private int fFilter = INLCUDE_ALL;
+	private int fFilter = INCLUDE_ALL;
 	
 
 	public void setFilter ( int filter ) {

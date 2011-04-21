@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: FromPartsImpl.java,v 1.2 2009/04/14 10:50:37 smoser Exp $
+ * $Id: FromPartsImpl.java,v 1.3 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model.impl;
 
@@ -34,7 +34,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class FromPartsImpl extends ExtensibleElementImpl implements FromParts {
+public class FromPartsImpl extends BPELExtensibleElementImpl implements
+		FromParts {
 	/**
 	 * The cached value of the '{@link #getChildren() <em>Children</em>}' containment reference list.
 	 * <!-- begin-user-doc -->

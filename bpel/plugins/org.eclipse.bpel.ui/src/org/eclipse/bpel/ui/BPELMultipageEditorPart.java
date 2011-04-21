@@ -27,7 +27,7 @@ import org.eclipse.bpel.common.ui.editmodel.IEditModelListener;
 import org.eclipse.bpel.common.ui.editmodel.ResourceInfo;
 import org.eclipse.bpel.model.Activity;
 import org.eclipse.bpel.model.CorrelationSet;
-import org.eclipse.bpel.model.ExtensibleElement;
+import org.eclipse.bpel.model.BPELExtensibleElement;
 import org.eclipse.bpel.model.Import;
 import org.eclipse.bpel.model.MessageExchange;
 import org.eclipse.bpel.model.PartnerLink;
@@ -311,8 +311,8 @@ IGotoMarker/*, CommandStackListener*/ {
 
 					if (selectedNode instanceof StartNode) {
 						selectedNodeElement = ((StartNode)selectedNode).getProcess().getElement();
-					} else if (selectedNode instanceof ExtensibleElement) {
-						selectedNodeElement = ((ExtensibleElement)selectedNode).getElement();
+					} else if (selectedNode instanceof BPELExtensibleElement) {
+						selectedNodeElement = ((BPELExtensibleElement)selectedNode).getElement();
 					}
 
 					if (selectedNodeElement != null) {

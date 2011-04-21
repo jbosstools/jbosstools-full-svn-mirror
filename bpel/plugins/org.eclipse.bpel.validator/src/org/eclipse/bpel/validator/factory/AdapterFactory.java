@@ -13,12 +13,10 @@ import org.eclipse.bpel.validator.IBPELMarker;
 import org.eclipse.bpel.validator.helpers.DOMNodeAdapter;
 import org.eclipse.bpel.validator.model.INode;
 import org.eclipse.bpel.validator.model.IProblem;
-import org.eclipse.core.internal.resources.File;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdapterFactory;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -142,6 +140,7 @@ public class AdapterFactory implements IAdapterFactory {
 			// Find the EObject reference to the emf model in the hierarchy of
 			// the
 			EObject eObj = (EObject) top.getUserData("emf.model");
+			// https://bugs.eclipse.org/bugs/show_bug.cgi?id=330813
 			// https://jira.jboss.org/browse/JBIDE-7116
 			if (eObj==null)
 				eObj = (EObject) elm.getUserData("emf.model");
@@ -179,43 +178,42 @@ public class AdapterFactory implements IAdapterFactory {
 		String msg  = problem.getAttribute(IProblem.MESSAGE);
 		String rule = problem.getAttribute(IProblem.RULE);
 
+		// https://bugs.eclipse.org/bugs/show_bug.cgi?id=330813
 		// https://jira.jboss.org/browse/JBIDE-7116
 		// fix ugliness in DEBUG mode (see "org.eclipse.bpel.validator.builder" buildCommand in .project)
 		if (rule!=null)
 			props.put("bpel.validation.rule", rule);
 		
 		if (DEBUG) {
-			String emsg = msg;
+			StringBuilder emsg = new StringBuilder( msg );
 			Throwable t = problem.getAttribute(IProblem.EXCEPTION);
 			if (rule!=null || t!=null) {
 
-				emsg += "(DEBUG: ";
-				if (rule!=null) {
-					emsg += "rule=";
-					emsg += rule;
-				}
+				emsg.append( "(DEBUG: " );
+				if (rule!=null)
+					emsg.append( "rule=" + rule );
 			
 				if (t != null) {
 					if (rule!=null)
-						emsg += "; ";
-					emsg += "stack=";
+						emsg.append( "; " );
+					emsg.append( "stack=" );
 					
 					int count = 0;
 					for(StackTraceElement e : t.getStackTrace()) {
-						emsg += "[" + count + "]";
-						emsg += e.getClassName() + ".";
-						emsg += e.getMethodName() + "@" + e.getLineNumber();
+						emsg.append( "[" + count + "]" );
+						emsg.append( e.getClassName() + "." );
+						emsg.append( e.getMethodName() + "@" + e.getLineNumber());
 						count += 1;
 						if (count > 2) {
 							break;
 						}
-						emsg += "/";
+						emsg.append( "/" );
 					}
 				}
 			
-				emsg += ")";
+				emsg.append( ")" );
 			}
-			props.put(IMarker.MESSAGE, emsg);
+			props.put(IMarker.MESSAGE, emsg.toString());
 			
 		} else {
 			props.put(IMarker.MESSAGE, msg );

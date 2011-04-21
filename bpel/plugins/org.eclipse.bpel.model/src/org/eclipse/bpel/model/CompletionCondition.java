@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: CompletionCondition.java,v 1.6 2008/05/04 11:05:46 odanilov Exp $
+ * $Id: CompletionCondition.java,v 1.7 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model;
 
@@ -22,7 +22,7 @@ package org.eclipse.bpel.model;
  * @model
  * @generated
  */
-public interface CompletionCondition extends ExtensibleElement {
+public interface CompletionCondition extends BPELExtensibleElement {
 	/**
 	 * Returns the value of the '<em><b>Branches</b></em>' containment reference.
 	 * <!-- begin-user-doc -->

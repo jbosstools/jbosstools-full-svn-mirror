@@ -70,9 +70,6 @@ public class MessageExchangeSection extends BPELPropertySection {
 	private Text   messExName;
 	private Button messExBrowseButton; 
 	
-	// object
-	EObject containMessExElement;
-	
 	private IControlContentAdapter fTextContentAdapter = new TextContentAdapter() {
 		@Override
 		public void insertControlContents(Control control, String text, int cursorPosition) {

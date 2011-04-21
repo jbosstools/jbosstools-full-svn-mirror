@@ -10,27 +10,24 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: QueryImpl.java,v 1.4 2008/05/04 11:05:47 odanilov Exp $
+ * $Id: QueryImpl.java,v 1.8 2011/03/30 18:56:31 rbrodt Exp $
  */
 package org.eclipse.bpel.model.messageproperties.impl;
 
+//Bugzilla 340654 - renamed to avoid confusion with WSDL's ExtensibilityElement
+import org.eclipse.bpel.model.impl.BPELExtensibilityElementImpl;
 import java.util.Collection;
 
 import javax.xml.namespace.QName;
 
-import org.eclipse.bpel.model.Expression;
 import org.eclipse.bpel.model.messageproperties.MessagepropertiesPackage;
 import org.eclipse.bpel.model.messageproperties.Query;
 import org.eclipse.bpel.model.messageproperties.util.MessagepropertiesConstants;
-
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.wst.wsdl.internal.impl.ExtensibilityElementImpl;
-
 import org.w3c.dom.CDATASection;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -43,7 +40,10 @@ import org.w3c.dom.Text;
  * CAUTION: We want to reuse the XPath editor for query expression, but unfortunately it requires that
  * the model object implements the Expression interface (only used in the BPEL model currently).
  * I have added the Expression methods by hand. These have essentially the same functionality as the Query
- * interface, only the names are changed. See https://jira.jboss.org/browse/JBIDE-7107
+ * interface, only the names are changed.
+ * 
+ * @see https://jira.jboss.org/browse/JBIDE-7107
+ * @see https://bugs.eclipse.org/bugs/show_bug.cgi?id=330813
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
@@ -53,9 +53,9 @@ import org.w3c.dom.Text;
  * </ul>
  * </p>
  *
- * @generated
+ * @customized
  */
-public class QueryImpl extends ExtensibilityElementImpl implements Query, Expression {
+public class QueryImpl extends BPELExtensibilityElementImpl implements Query {
 	/**
 	 * The default value of the '{@link #getQueryLanguage() <em>Query Language</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -168,10 +168,10 @@ public class QueryImpl extends ExtensibilityElementImpl implements Query, Expres
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case MessagepropertiesPackage.QUERY__QUERY_LANGUAGE:
-				return getQueryLanguage();
-			case MessagepropertiesPackage.QUERY__VALUE:
-				return getValue();
+		case MessagepropertiesPackage.QUERY__QUERY_LANGUAGE:
+			return getQueryLanguage();
+		case MessagepropertiesPackage.QUERY__VALUE:
+			return getValue();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -184,12 +184,12 @@ public class QueryImpl extends ExtensibilityElementImpl implements Query, Expres
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case MessagepropertiesPackage.QUERY__QUERY_LANGUAGE:
-				setQueryLanguage((String) newValue);
-				return;
-			case MessagepropertiesPackage.QUERY__VALUE:
-				setValue((String) newValue);
-				return;
+		case MessagepropertiesPackage.QUERY__QUERY_LANGUAGE:
+			setQueryLanguage((String) newValue);
+			return;
+		case MessagepropertiesPackage.QUERY__VALUE:
+			setValue((String) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -202,12 +202,12 @@ public class QueryImpl extends ExtensibilityElementImpl implements Query, Expres
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case MessagepropertiesPackage.QUERY__QUERY_LANGUAGE:
-				setQueryLanguage(QUERY_LANGUAGE_EDEFAULT);
-				return;
-			case MessagepropertiesPackage.QUERY__VALUE:
-				setValue(VALUE_EDEFAULT);
-				return;
+		case MessagepropertiesPackage.QUERY__QUERY_LANGUAGE:
+			setQueryLanguage(QUERY_LANGUAGE_EDEFAULT);
+			return;
+		case MessagepropertiesPackage.QUERY__VALUE:
+			setValue(VALUE_EDEFAULT);
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -220,12 +220,12 @@ public class QueryImpl extends ExtensibilityElementImpl implements Query, Expres
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case MessagepropertiesPackage.QUERY__QUERY_LANGUAGE:
-				return QUERY_LANGUAGE_EDEFAULT == null ? queryLanguage != null
-						: !QUERY_LANGUAGE_EDEFAULT.equals(queryLanguage);
-			case MessagepropertiesPackage.QUERY__VALUE:
-				return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT
-						.equals(value);
+		case MessagepropertiesPackage.QUERY__QUERY_LANGUAGE:
+			return QUERY_LANGUAGE_EDEFAULT == null ? queryLanguage != null
+					: !QUERY_LANGUAGE_EDEFAULT.equals(queryLanguage);
+		case MessagepropertiesPackage.QUERY__VALUE:
+			return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT
+					.equals(value);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -335,17 +335,17 @@ public class QueryImpl extends ExtensibilityElementImpl implements Query, Expres
 	 * Helper method to get a string from the given text node or CDATA text node.
 	 */
 	private String getText(Node node) {
-		String data = "";
+		StringBuilder data = new StringBuilder();
 		boolean containsValidData = false;
 		while (node != null) {
 			if (node.getNodeType() == Node.TEXT_NODE) {
 				Text text = (Text) node;
-				data += text.getData();
+				data.append(text.getData());
 			} else if (node.getNodeType() == Node.CDATA_SECTION_NODE) {
-				data = "";
+				data = new StringBuilder();
 				do {
 					CDATASection cdata = (CDATASection) node;
-					data += cdata.getData();
+					data.append(cdata.getData());
 					node = node.getNextSibling();
 					containsValidData = true;
 				} while (node != null
@@ -354,6 +354,7 @@ public class QueryImpl extends ExtensibilityElementImpl implements Query, Expres
 			}
 			node = node.getNextSibling();
 		}
+
 		if (!containsValidData) {
 			for (int i = 0; i < data.length(); i++) {
 				char charData = data.charAt(i);
@@ -365,11 +366,8 @@ public class QueryImpl extends ExtensibilityElementImpl implements Query, Expres
 				}
 			}
 		}
-		if (containsValidData) {
-			return data;
-		} else {
-			return null;
-		}
+
+		return containsValidData ? data.toString() : null;
 	}
 
 	/**
@@ -383,6 +381,7 @@ public class QueryImpl extends ExtensibilityElementImpl implements Query, Expres
 		return elementType;
 	}
 
+	// https://bugs.eclipse.org/bugs/show_bug.cgi?id=330813
 	// https://jira.jboss.org/browse/JBIDE-7107
 	// the Expression interface methods
 	public Object getBody() {
@@ -406,7 +405,7 @@ public class QueryImpl extends ExtensibilityElementImpl implements Query, Expres
 	}
 
 	public boolean isSetExpressionLanguage() {
-		return getQueryLanguage()!=null;
+		return getQueryLanguage() != null;
 	}
 
 	public Boolean getOpaque() {

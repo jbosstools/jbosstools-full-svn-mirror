@@ -103,4 +103,8 @@ public class NewBPELProjectWizard extends NewProjectDataModelFacetWizard
 	protected IWizardPage createFirstPage() {
 		return new NewBPELProjectWizardPage1(model, "newBPELProject"); // $NON-NLS-1$
 	}
+	
+	protected String getFinalPerspectiveID() {
+		return "org.eclipse.bpel.ui.perspective"; //$NON-NLS-1$
+	}
 }

@@ -53,6 +53,7 @@ public final class MessagepropertiesConstants
 
     public static final String PROPERTY_NAME_ATTRIBUTE = "name";
     public static final String PROPERTY_TYPE_ATTRIBUTE = "type";
+	// https://bugs.eclipse.org/bugs/show_bug.cgi?id=330813
     // https://jira.jboss.org/browse/JBIDE-7107
     // added to allow "element" addressing for <property> and <propertyAlias>
     public static final String PROPERTY_XSD_ELEMENT_ATTRIBUTE = "element";

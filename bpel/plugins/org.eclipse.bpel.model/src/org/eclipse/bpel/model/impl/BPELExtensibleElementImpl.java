@@ -2,23 +2,28 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ExtensibleElementImpl.java,v 1.14 2009/04/14 10:50:36 smoser Exp $
+ * $Id: BPELExtensibleElementImpl.java,v 1.2 2011/04/05 17:24:30 rbrodt Exp $
  */
 package org.eclipse.bpel.model.impl;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.bpel.model.BPELExtensibleElement;
 import org.eclipse.bpel.model.BPELPackage;
 import org.eclipse.bpel.model.Documentation;
-import org.eclipse.bpel.model.ExtensibleElement;
 import org.eclipse.bpel.model.util.ReconciliationHelper;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
 import org.eclipse.wst.wsdl.WSDLElement;
+import org.eclipse.wst.wsdl.internal.impl.ExtensibleElementImpl;
 import org.eclipse.wst.wsdl.internal.impl.WSDLElementImpl;
 import org.w3c.dom.Element;
 
@@ -29,15 +34,14 @@ import org.w3c.dom.Element;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.bpel.model.impl.ExtensibleElementImpl#getDocumentation <em>Documentation</em>}</li>
+ *   <li>{@link org.eclipse.bpel.model.impl.BPELExtensibleElementImpl#getDocumentation <em>Documentation</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class ExtensibleElementImpl extends
-		org.eclipse.wst.wsdl.internal.impl.ExtensibleElementImpl implements
-		ExtensibleElement {
+public class BPELExtensibleElementImpl extends ExtensibleElementImpl implements
+		BPELExtensibleElement {
 	/**
 	 * The cached value of the '{@link #getDocumentation() <em>Documentation</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -62,7 +66,7 @@ public class ExtensibleElementImpl extends
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected ExtensibleElementImpl() {
+	protected BPELExtensibleElementImpl() {
 		super();
 	}
 
@@ -73,7 +77,7 @@ public class ExtensibleElementImpl extends
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return BPELPackage.Literals.EXTENSIBLE_ELEMENT;
+		return BPELPackage.Literals.BPEL_EXTENSIBLE_ELEMENT;
 	}
 
 	/**
@@ -88,6 +92,7 @@ public class ExtensibleElementImpl extends
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
 	 */
 	public NotificationChain basicSetDocumentation(
 			Documentation newDocumentation, NotificationChain msgs) {
@@ -102,7 +107,7 @@ public class ExtensibleElementImpl extends
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this,
 					Notification.SET,
-					BPELPackage.EXTENSIBLE_ELEMENT__DOCUMENTATION,
+					BPELPackage.BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION,
 					oldDocumentation, newDocumentation, !oldDocumentationESet);
 			if (msgs == null)
 				msgs = notification;
@@ -125,14 +130,14 @@ public class ExtensibleElementImpl extends
 						.eInverseRemove(
 								this,
 								EOPPOSITE_FEATURE_BASE
-										- BPELPackage.EXTENSIBLE_ELEMENT__DOCUMENTATION,
+										- BPELPackage.BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION,
 								null, msgs);
 			if (newDocumentation != null)
 				msgs = ((InternalEObject) newDocumentation)
 						.eInverseAdd(
 								this,
 								EOPPOSITE_FEATURE_BASE
-										- BPELPackage.EXTENSIBLE_ELEMENT__DOCUMENTATION,
+										- BPELPackage.BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION,
 								null, msgs);
 			msgs = basicSetDocumentation(newDocumentation, msgs);
 			if (msgs != null)
@@ -142,7 +147,7 @@ public class ExtensibleElementImpl extends
 			documentationESet = true;
 			if (eNotificationRequired())
 				eNotify(new ENotificationImpl(this, Notification.SET,
-						BPELPackage.EXTENSIBLE_ELEMENT__DOCUMENTATION,
+						BPELPackage.BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION,
 						newDocumentation, newDocumentation,
 						!oldDocumentationESet));
 		}
@@ -151,6 +156,7 @@ public class ExtensibleElementImpl extends
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated
 	 */
 	public NotificationChain basicUnsetDocumentation(NotificationChain msgs) {
 		Documentation oldDocumentation = documentation;
@@ -163,7 +169,7 @@ public class ExtensibleElementImpl extends
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this,
 					Notification.UNSET,
-					BPELPackage.EXTENSIBLE_ELEMENT__DOCUMENTATION,
+					BPELPackage.BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION,
 					oldDocumentation, null, oldDocumentationESet);
 			if (msgs == null)
 				msgs = notification;
@@ -181,10 +187,12 @@ public class ExtensibleElementImpl extends
 	public void unsetDocumentation() {
 		if (documentation != null) {
 			NotificationChain msgs = null;
-			msgs = ((InternalEObject) documentation).eInverseRemove(this,
-					EOPPOSITE_FEATURE_BASE
-							- BPELPackage.EXTENSIBLE_ELEMENT__DOCUMENTATION,
-					null, msgs);
+			msgs = ((InternalEObject) documentation)
+					.eInverseRemove(
+							this,
+							EOPPOSITE_FEATURE_BASE
+									- BPELPackage.BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION,
+							null, msgs);
 			msgs = basicUnsetDocumentation(msgs);
 			if (msgs != null)
 				msgs.dispatch();
@@ -193,8 +201,8 @@ public class ExtensibleElementImpl extends
 			documentationESet = false;
 			if (eNotificationRequired())
 				eNotify(new ENotificationImpl(this, Notification.UNSET,
-						BPELPackage.EXTENSIBLE_ELEMENT__DOCUMENTATION, null,
-						null, oldDocumentationESet));
+						BPELPackage.BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION,
+						null, null, oldDocumentationESet));
 		}
 	}
 
@@ -216,7 +224,7 @@ public class ExtensibleElementImpl extends
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-		case BPELPackage.EXTENSIBLE_ELEMENT__DOCUMENTATION:
+		case BPELPackage.BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION:
 			return basicUnsetDocumentation(msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -230,7 +238,7 @@ public class ExtensibleElementImpl extends
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case BPELPackage.EXTENSIBLE_ELEMENT__DOCUMENTATION:
+		case BPELPackage.BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION:
 			return getDocumentation();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -244,7 +252,7 @@ public class ExtensibleElementImpl extends
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case BPELPackage.EXTENSIBLE_ELEMENT__DOCUMENTATION:
+		case BPELPackage.BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION:
 			setDocumentation((Documentation) newValue);
 			return;
 		}
@@ -259,7 +267,7 @@ public class ExtensibleElementImpl extends
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case BPELPackage.EXTENSIBLE_ELEMENT__DOCUMENTATION:
+		case BPELPackage.BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION:
 			unsetDocumentation();
 			return;
 		}
@@ -274,7 +282,7 @@ public class ExtensibleElementImpl extends
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case BPELPackage.EXTENSIBLE_ELEMENT__DOCUMENTATION:
+		case BPELPackage.BPEL_EXTENSIBLE_ELEMENT__DOCUMENTATION:
 			return isSetDocumentation();
 		}
 		return super.eIsSet(featureID);
@@ -355,47 +363,6 @@ public class ExtensibleElementImpl extends
 		ReconciliationHelper.getInstance().reconcile(this, changedElement);
 	}
 
-	//	protected void reconcileContents(Element changedElement) {
-	//	    List remainingModelObjects = new ArrayList(getWSDLContents());
-	//
-	//	    Collection<Element> contentNodes = ReconciliationHelper.getContentNodes(this, changedElement);
-	//
-	//	    Element theDocumentationElement = null;
-	//
-	//	    // for each applicable child node of changedElement
-	//	    LOOP: for (Element child : contentNodes) {
-	//	    	// Set Documentation element if exists
-	//	    	/*if (WSDLConstants.DOCUMENTATION_ELEMENT_TAG.equals(child.getLocalName())
-	//	    			&& WSDLConstants.isMatchingNamespace(child.getNamespaceURI(), WSDLConstants.WSDL_NAMESPACE_URI)) {
-	//	    		// assume the first 'documentation' element is 'the' documentation element
-	//	    		// 'there can be only one!'
-	//	    		if (theDocumentationElement == null) {
-	//	    			theDocumentationElement = child;
-	//	    		}
-	//	    	}*/
-	//	    	// go thru the model objects to collect matching object for reuse
-	//	    	for (Iterator contents = remainingModelObjects.iterator(); contents.hasNext();) {
-	//	    		Object modelObject = (Object)contents.next();
-	//	    		if (((WSDLElement)modelObject).getElement() == child) {
-	//	    			contents.remove(); // removes the 'child' Node from the remainingModelObjects list
-	//	    			continue LOOP;
-	//	    		}
-	//	    	}
-	//
-	//	    	// if the documentation element has changed... update it
-	//	    	if (theDocumentationElement != getDocumentationElement()) {
-	//	    		setDocumentationElement(theDocumentationElement);
-	//	    	}
-	//
-	//	    	// we haven't found a matching model object for the Node, so we may need to
-	//	    	// create a new model object
-	//	    	handleUnreconciledElement(child, remainingModelObjects);
-	//	    }
-	//
-	//	    // now we can remove the remaining model objects
-	//	    handleReconciliation(remainingModelObjects);
-	//	}
-
 	@Override
 	public void elementChanged(Element changedElement) {
 		if (!isUpdatingDOM()) {
@@ -419,15 +386,15 @@ public class ExtensibleElementImpl extends
 	}
 
 	public boolean isReconciling() {
-		return isReconciling;
+		return this.isReconciling;
 	}
 
-	@Override
 	public boolean isUpdatingDOM() {
-		return super.isUpdatingDOM();
+		return updatingDOM;
 	}
 
 	public void setUpdatingDOM(boolean updatingDOM) {
 		this.updatingDOM = updatingDOM;
 	}
-} //ExtensibleElementImpl
+
+} //BPELExtensibleElementImpl

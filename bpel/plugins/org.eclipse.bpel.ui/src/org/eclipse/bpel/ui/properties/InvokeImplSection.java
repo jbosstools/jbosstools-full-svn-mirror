@@ -102,8 +102,10 @@ import org.eclipse.wst.wsdl.Input;
 import org.eclipse.wst.wsdl.Message;
 import org.eclipse.wst.wsdl.Operation;
 import org.eclipse.wst.wsdl.Output;
+import org.eclipse.wst.wsdl.Part;
 import org.eclipse.wst.wsdl.PortType;
 import org.eclipse.wst.wsdl.WSDLFactory;
+import org.eclipse.xsd.XSDElementDeclaration;
 
 /**
  * Details section for the Partner/PortType/Operation properties of a
@@ -138,6 +140,9 @@ public class InvokeImplSection extends BPELPropertySection {
 	private Text faultText;
 	// https://issues.jboss.org/browse/JBIDE-7861
 	private boolean ignoreQuickPickSelection = false;
+	// https://issues.jboss.org/browse/JBIDE-8305
+	private Label messageOrElementLabel;
+	private Text messageOrElementText;
 	
 	private IControlContentAdapter fTextContentAdapter = new TextContentAdapter() {
 		@Override
@@ -216,11 +221,13 @@ public class InvokeImplSection extends BPELPropertySection {
 							updatePartnerWidgets();
 							updatePortTypeWidgets();
 							updateOperationWidgets();
+							updateMessageOrElementWidgets(); // https://issues.jboss.org/browse/JBIDE-8305
 							updateFaultWidgets();
 						} else if (ModelHelper.isOperationAffected(input, n)) {
 							upp = true;
 							updatePortTypeWidgets();
-							updateOperationWidgets();							
+							updateOperationWidgets();		
+							updateMessageOrElementWidgets(); // https://issues.jboss.org/browse/JBIDE-8305
 							updateFaultWidgets();
 						} else {							
 							updateFaultWidgets();								
@@ -265,6 +272,7 @@ public class InvokeImplSection extends BPELPropertySection {
 		updatePartnerWidgets();
 		updatePortTypeWidgets();
 		updateOperationWidgets();
+		updateMessageOrElementWidgets(); // https://issues.jboss.org/browse/JBIDE-8305
 		updateFaultWidgets();		
 		
 	}
@@ -654,7 +662,39 @@ public class InvokeImplSection extends BPELPropertySection {
 		return composite;
 	}
 	
-	
+	// https://issues.jboss.org/browse/JBIDE-8305
+	private  Composite createMessageOrElementWidgets(Composite top, Composite parent) {
+		FlatFormData data;
+		
+		final Composite composite = createFlatFormComposite(parent);
+		data = new FlatFormData();
+		if (top == null) {
+			data.top = new FlatFormAttachment(0, IDetailsAreaConstants.VSPACE);
+		} else {
+			data.top = new FlatFormAttachment(top,  IDetailsAreaConstants.VSPACE );
+		}
+		data.left = new FlatFormAttachment(0, IDetailsAreaConstants.HSPACE);
+		data.right = new FlatFormAttachment(SPLIT_POINT, -SPLIT_POINT_OFFSET);
+		composite.setLayoutData(data);
+		
+		messageOrElementLabel = fWidgetFactory.createLabel(composite, Messages.InvokeImplDetails_MessageTypeOrElement); 
+		messageOrElementText = fWidgetFactory.createText(composite,EMPTY_STRING,SWT.NONE);
+		messageOrElementText.setEditable(false); // read-only text for visual feedback of Quick Pick tree selection
+		
+
+		data = new FlatFormData();
+		data.left = new FlatFormAttachment(0, BPELUtil.calculateLabelWidth(messageOrElementLabel, STANDARD_LABEL_WIDTH_SM));
+		data.right = new FlatFormAttachment(operationButton, 0);
+		messageOrElementText.setLayoutData(data);
+
+		data = new FlatFormData();
+		data.left = new FlatFormAttachment(0, 0);
+		data.right = new FlatFormAttachment(messageOrElementText, -IDetailsAreaConstants.HSPACE);
+		data.top = new FlatFormAttachment(messageOrElementText, 0, SWT.CENTER);
+		messageOrElementLabel.setLayoutData(data);
+
+		return composite;
+	}
 	
 //	protected Composite createInputVariableWidgets(Composite top, Composite parent) {
 //		FlatFormData data;
@@ -1135,7 +1175,10 @@ public class InvokeImplSection extends BPELPropertySection {
 		quickPickTreeViewer.setLabelProvider(new ModelTreeLabelProvider());
 		quickPickTreeViewer.addFilter( fPartnerRoleFilter );
 		quickPickTreeViewer.setInput ( null );
-		quickPickTreeViewer.setAutoExpandLevel(3);
+		// https://issues.jboss.org/browse/JBIDE-8305
+		// show tree down to message part level so that tree node highlight works
+		// when the tree viewer is constructed.
+		quickPickTreeViewer.setAutoExpandLevel(5);
 		// end tree viewer for variable structure
 		
 		data = new FlatFormData();
@@ -1175,7 +1218,7 @@ public class InvokeImplSection extends BPELPropertySection {
 		Composite ref = createPartnerWidgets(null,composite);
 		ref = createPortTypeWidgets(ref, composite);
 		ref = createOperationWidgets(ref,composite);
-		 
+		ref = createMessageOrElementWidgets(ref,composite);	 // https://issues.jboss.org/browse/JBIDE-8305	 
 		ref = createFaultComposite ( ref, composite );
 		
 		
@@ -1297,6 +1340,13 @@ public class InvokeImplSection extends BPELPropertySection {
 				if (obj!=partnerLink)
 					return false;
 			}
+			// https://issues.jboss.org/browse/JBIDE-8305
+			else if (obj instanceof Input) {
+				obj = ModelHelper.getMessageType(obj);
+			}
+			else if (obj instanceof Part) {
+				obj = ModelHelper.getVariableTypeFrom(obj);
+			}
 			if (model==obj) {
 				quickPickTree.setSelection(item);
 				return true;
@@ -1337,6 +1387,48 @@ public class InvokeImplSection extends BPELPropertySection {
 		} else {
 			operationText.setText ( EMPTY_STRING );
 		}
+		if (getInput() instanceof OnEvent) {
+			// https://issues.jboss.org/browse/JBIDE-8305
+			// show the message type or message part in the quick pick tree
+			OnEvent onEvent = (OnEvent)getInput();
+			Message message = onEvent.getMessageType();
+			if (message!=null) {
+				updateQuickPickSelection(message);
+			}
+			else {
+				XSDElementDeclaration element = onEvent.getXSDElement();
+				if (element!=null)
+					updateQuickPickSelection(element);
+			}
+		}
+	}
+	
+	// https://issues.jboss.org/browse/JBIDE-8305
+	private void updateMessageOrElementWidgets() {
+		boolean visible = (getInput() instanceof OnEvent);
+		if (visible) {
+			OnEvent onEvent = (OnEvent)getInput();
+			String text = "";
+			String label = Messages.InvokeImplDetails_MessageTypeOrElement;
+			if (onEvent.getVariable()!=null) {
+				Message message = onEvent.getMessageType();
+				if (message!=null) {
+					text = message.getQName().getLocalPart();
+					label = Messages.InvokeImplDetails_MessageType;
+				}
+				else {
+					XSDElementDeclaration element = onEvent.getXSDElement();
+					if (element!=null) {
+						text = element.getName();
+						label = Messages.InvokeImplDetails_Element;
+					}
+				}
+			}
+			messageOrElementText.setText(text);
+			messageOrElementLabel.setText(label);
+		}
+		messageOrElementLabel.setVisible(visible);
+		messageOrElementText.setVisible(visible);
 	}
 	
 	/**
@@ -1684,7 +1776,8 @@ public class InvokeImplSection extends BPELPropertySection {
 		List cmdList = basicCommandList( input , null, null);
 		
 		PartnerLink pl = null;
-		Operation op = null;		
+		Operation op = null;
+		Part part = null;
 		SetCommand setCommand = null;
 									
 		for (int i=0,j=path.getSegmentCount(); i < j; i++) {
@@ -1726,10 +1819,20 @@ public class InvokeImplSection extends BPELPropertySection {
 				// attempt to locate a variable matching the type
 				alterCommands (cmdList,input,pl,op,(Input) op.getInput()  );
 				alterCommands (cmdList,input,pl,op,(Output)op.getOutput() );
-												
-			} else { 
-				break;
-			}			
+				
+			} else if (model instanceof Part) {
+				// https://issues.jboss.org/browse/JBIDE-8305
+				// if a message part was selected, set the OnEvent "element" attribute
+				part = (Part) model;
+				setCommand = (SetCommand) ListMap.Find ( cmdList, new ListMap.Visitor() {
+					public Object visit(Object obj) {
+						return (obj instanceof SetOnEventVariableTypeCommand ? obj : ListMap.IGNORE);						
+					}										
+				});
+				if (setCommand!=null)
+					setCommand.setNewValue( part.getElementDeclaration() );
+
+			}	
 			// System.out.println( "segment[" + i + "]=" + path.getSegment( i ));
 		}
 
@@ -1799,7 +1902,10 @@ public class InvokeImplSection extends BPELPropertySection {
 			}
 			variable.setName ( name );			
 			variable.setMessageType( msg );
-			cmds.add(0, new AddVariableCommand(input, variable));
+			// https://issues.jboss.org/browse/JBIDE-8305
+			// don't create a new variable for OnEvent - this is an "implicit" variable
+			if (input instanceof OnEvent == false)
+				cmds.add(0, new AddVariableCommand(input, variable));
 		}
 		
 		SetVariableCommand cmd = (SetVariableCommand) ListMap.Find(cmds, new ListMap.Visitor() {

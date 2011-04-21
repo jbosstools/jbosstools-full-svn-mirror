@@ -60,6 +60,10 @@ public class XSDImportResolver implements ImportResolver {
     	Resource baseResource = imp.eResource();
         String location = imp.getLocation();
         
+    	// Bug 120110 - just bulletproofing :)
+        if (baseResource==null)
+        	return null;
+        
         if (!baseResource.getURI().isRelative()) {
             location = URI.createURI(location).resolve(baseResource.getURI()).toString();
         }

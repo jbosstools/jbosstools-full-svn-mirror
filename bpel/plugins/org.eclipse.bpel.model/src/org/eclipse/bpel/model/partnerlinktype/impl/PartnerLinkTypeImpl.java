@@ -10,7 +10,7 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: PartnerLinkTypeImpl.java,v 1.6 2008/05/04 11:05:47 odanilov Exp $
+ * $Id: PartnerLinkTypeImpl.java,v 1.8 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model.partnerlinktype.impl;
 
@@ -19,7 +19,8 @@ import java.util.Iterator;
 
 import javax.xml.namespace.QName;
 
-import org.eclipse.bpel.model.impl.ExtensibilityElementImpl;
+// Bugzilla 340654 - renamed to avoid confusion with WSDL's ExtensibilityElement
+import org.eclipse.bpel.model.impl.BPELExtensibilityElementImpl;
 import org.eclipse.bpel.model.partnerlinktype.PartnerLinkType;
 import org.eclipse.bpel.model.partnerlinktype.PartnerlinktypeFactory;
 import org.eclipse.bpel.model.partnerlinktype.PartnerlinktypePackage;
@@ -42,6 +43,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
+import org.eclipse.wst.wsdl.internal.impl.ExtensibilityElementImpl;
 import org.w3c.dom.Element;
 
 /**
@@ -176,9 +178,8 @@ public class PartnerLinkTypeImpl extends ExtensibilityElementImpl implements
 	public NotificationChain eInverseRemove(InternalEObject otherEnd,
 			int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case PartnerlinktypePackage.PARTNER_LINK_TYPE__ROLE:
-				return ((InternalEList<?>) getRole()).basicRemove(otherEnd,
-						msgs);
+		case PartnerlinktypePackage.PARTNER_LINK_TYPE__ROLE:
+			return ((InternalEList<?>) getRole()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -191,12 +192,12 @@ public class PartnerLinkTypeImpl extends ExtensibilityElementImpl implements
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case PartnerlinktypePackage.PARTNER_LINK_TYPE__NAME:
-				return getName();
-			case PartnerlinktypePackage.PARTNER_LINK_TYPE__ID:
-				return getID();
-			case PartnerlinktypePackage.PARTNER_LINK_TYPE__ROLE:
-				return getRole();
+		case PartnerlinktypePackage.PARTNER_LINK_TYPE__NAME:
+			return getName();
+		case PartnerlinktypePackage.PARTNER_LINK_TYPE__ID:
+			return getID();
+		case PartnerlinktypePackage.PARTNER_LINK_TYPE__ROLE:
+			return getRole();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -210,13 +211,13 @@ public class PartnerLinkTypeImpl extends ExtensibilityElementImpl implements
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case PartnerlinktypePackage.PARTNER_LINK_TYPE__NAME:
-				setName((String) newValue);
-				return;
-			case PartnerlinktypePackage.PARTNER_LINK_TYPE__ROLE:
-				getRole().clear();
-				getRole().addAll((Collection<? extends Role>) newValue);
-				return;
+		case PartnerlinktypePackage.PARTNER_LINK_TYPE__NAME:
+			setName((String) newValue);
+			return;
+		case PartnerlinktypePackage.PARTNER_LINK_TYPE__ROLE:
+			getRole().clear();
+			getRole().addAll((Collection<? extends Role>) newValue);
+			return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -229,12 +230,12 @@ public class PartnerLinkTypeImpl extends ExtensibilityElementImpl implements
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case PartnerlinktypePackage.PARTNER_LINK_TYPE__NAME:
-				setName(NAME_EDEFAULT);
-				return;
-			case PartnerlinktypePackage.PARTNER_LINK_TYPE__ROLE:
-				getRole().clear();
-				return;
+		case PartnerlinktypePackage.PARTNER_LINK_TYPE__NAME:
+			setName(NAME_EDEFAULT);
+			return;
+		case PartnerlinktypePackage.PARTNER_LINK_TYPE__ROLE:
+			getRole().clear();
+			return;
 		}
 		super.eUnset(featureID);
 	}
@@ -247,14 +248,14 @@ public class PartnerLinkTypeImpl extends ExtensibilityElementImpl implements
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case PartnerlinktypePackage.PARTNER_LINK_TYPE__NAME:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT
-						.equals(name);
-			case PartnerlinktypePackage.PARTNER_LINK_TYPE__ID:
-				return ID_EDEFAULT == null ? getID() != null : !ID_EDEFAULT
-						.equals(getID());
-			case PartnerlinktypePackage.PARTNER_LINK_TYPE__ROLE:
-				return role != null && !role.isEmpty();
+		case PartnerlinktypePackage.PARTNER_LINK_TYPE__NAME:
+			return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT
+					.equals(name);
+		case PartnerlinktypePackage.PARTNER_LINK_TYPE__ID:
+			return ID_EDEFAULT == null ? getID() != null : !ID_EDEFAULT
+					.equals(getID());
+		case PartnerlinktypePackage.PARTNER_LINK_TYPE__ROLE:
+			return role != null && !role.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

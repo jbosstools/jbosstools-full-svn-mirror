@@ -10,7 +10,7 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: PickImpl.java,v 1.8 2009/04/14 10:50:36 smoser Exp $
+ * $Id: PickImpl.java,v 1.9 2011/03/30 18:54:24 rbrodt Exp $
  */
 package org.eclipse.bpel.model.impl;
 
@@ -134,8 +134,8 @@ public class PickImpl extends ActivityImpl implements Pick {
 		Boolean oldCreateInstance = createInstance;
 		if (!isReconciling) {
 			ReconciliationHelper.replaceAttribute(this,
-					BPELConstants.AT_CREATE_INSTANCE, BPELUtils
-							.boolean2XML(newCreateInstance));
+					BPELConstants.AT_CREATE_INSTANCE,
+					BPELUtils.boolean2XML(newCreateInstance));
 		}
 		createInstance = newCreateInstance;
 		boolean oldCreateInstanceESet = createInstanceESet;

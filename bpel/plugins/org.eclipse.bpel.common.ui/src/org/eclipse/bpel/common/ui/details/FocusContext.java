@@ -28,8 +28,6 @@ public class FocusContext implements IValue , Listener {
 
 	Control [] fControls;
 	
-	int fId = 1;
-	
 	Control fFocussed;
 	
 	/**

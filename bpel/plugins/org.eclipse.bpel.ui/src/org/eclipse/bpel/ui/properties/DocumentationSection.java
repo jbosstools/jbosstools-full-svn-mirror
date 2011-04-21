@@ -25,7 +25,7 @@ import org.eclipse.bpel.common.ui.flatui.FlatFormData;
 import org.eclipse.bpel.model.BPELFactory;
 import org.eclipse.bpel.model.BPELPackage;
 import org.eclipse.bpel.model.Documentation;
-import org.eclipse.bpel.model.ExtensibleElement;
+import org.eclipse.bpel.model.BPELExtensibleElement;
 import org.eclipse.bpel.model.util.BPELUtils;
 import org.eclipse.bpel.ui.IHelpContextIds;
 import org.eclipse.bpel.ui.Messages;
@@ -77,11 +77,11 @@ public class DocumentationSection extends BPELPropertySection {
 	
 	IValue fContext;
 	
-	ExtensibleElement fModelEE;
+	BPELExtensibleElement fModelEE;
 	
 
 	/**
-	 * The adapter here is on the model object for this section, which is any ExtensibleElement
+	 * The adapter here is on the model object for this section, which is any BPELExtensibleElement
 	 * 
 	 */
 	
@@ -98,7 +98,7 @@ public class DocumentationSection extends BPELPropertySection {
 						return ;
 					}
 					
-					if (n.getFeature() == BPELPackage.eINSTANCE.getExtensibleElement_Documentation()) {
+					if (n.getFeature() == BPELPackage.eINSTANCE.getBPELExtensibleElement_Documentation()) {
 						/** Documentation has been replaced. */
 						Documentation eObj = (Documentation) n.getNewValue();
 						
@@ -124,7 +124,7 @@ public class DocumentationSection extends BPELPropertySection {
 			fDocumentation.setSource(fSourceText.getText());
 			fDocumentation.setLang(fLangCombo.getText());
 			fDocumentation.setValue(fDescription.getText());
-			ccmd.add( new SetCommand(fModelEE,fDocumentation,BPELPackage.eINSTANCE.getExtensibleElement_Documentation()) );
+			ccmd.add( new SetCommand(fModelEE,fDocumentation,BPELPackage.eINSTANCE.getBPELExtensibleElement_Documentation()) );
 		}
 		return ccmd;
 	}
@@ -140,11 +140,11 @@ public class DocumentationSection extends BPELPropertySection {
 		
 		restoreUserContextFromInput();
 		
-		if (input instanceof ExtensibleElement == false) {
-			throw new IllegalArgumentException("input must be ExtensibleElement");
+		if (input instanceof BPELExtensibleElement == false) {
+			throw new IllegalArgumentException("input must be BPELExtensibleElement");
 		}
 		
-		fModelEE = (ExtensibleElement) input;
+		fModelEE = (BPELExtensibleElement) input;
 		
 		fDocumentation = fModelEE.getDocumentation();
 		

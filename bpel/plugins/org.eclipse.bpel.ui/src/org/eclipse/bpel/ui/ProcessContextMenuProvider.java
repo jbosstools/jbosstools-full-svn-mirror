@@ -13,6 +13,7 @@ package org.eclipse.bpel.ui;
 import java.util.List;
 
 import org.eclipse.bpel.common.ui.tray.AddChildInTrayAction;
+import org.eclipse.bpel.ui.actions.AbstractDeclarationAction;
 import org.eclipse.bpel.ui.actions.AutoArrangeFlowsAction;
 import org.eclipse.bpel.ui.actions.BPELCopyAction;
 import org.eclipse.bpel.ui.actions.BPELCutAction;
@@ -40,9 +41,9 @@ import org.eclipse.bpel.ui.editparts.VariablesEditPart;
 import org.eclipse.bpel.ui.util.BPELUtil;
 import org.eclipse.gef.ContextMenuProvider;
 import org.eclipse.gef.DefaultEditDomain;
-import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gef.ui.actions.ActionRegistry;
 import org.eclipse.gef.ui.actions.GEFActionConstants;
+import org.eclipse.gef.ui.actions.SelectionAction;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
@@ -120,6 +121,11 @@ public class ProcessContextMenuProvider extends ContextMenuProvider {
 		menu.appendToGroup(GEFActionConstants.GROUP_COPY, actionRegistry.getAction(BPELPasteAction.ID));	
 		menu.appendToGroup(GEFActionConstants.GROUP_COPY, actionRegistry.getAction(BPELDuplicateAction.ACTION_ID));
 
+		// https://issues.jboss.org/browse/JBIDE-7953
+		// create the "Add" sub-menu before we iterate through all the EditPartActions;
+		// some of these will go in the main context menu, some in the "Add" sub-menu
+		MenuManager addMenu = new MenuManager(Messages.ProcessContextMenuProvider_Add_1);
+		
 		// Frequently-used actions
 		List selected = getViewer().getSelectedEditParts();
 		if (selected.size() == 1) {// any more than 1 is ambiguous
@@ -139,7 +145,12 @@ public class ProcessContextMenuProvider extends ContextMenuProvider {
 						//Image image = epAction.getIconImg();
 						if (s != null && imageDes != null) {
 							EditPartContextAction conAction = new EditPartContextAction(null, p, epAction);
-							menu.appendToGroup(EDITPART_ACTIONS, conAction);
+							// if the action creates a declaration element (variables, partnerLinks, etc.)
+							// then add it to the "Add" sub-menu, instead of cluttering up the main context menu 
+							if ( epAction instanceof AbstractDeclarationAction )
+								addMenu.add(conAction);
+							else
+								menu.appendToGroup(EDITPART_ACTIONS, conAction);
 						}
 					}
 				}
@@ -147,7 +158,8 @@ public class ProcessContextMenuProvider extends ContextMenuProvider {
 		}
 		
 		// Add and Insert actions
-		MenuManager addMenu = new MenuManager(Messages.ProcessContextMenuProvider_Add_1); 
+		if (addMenu.getItems().length>0)
+			addMenu.add(new Separator());
 		MenuManager insertMenu = new MenuManager(Messages.ProcessContextMenuProvider_Insert_Before_2); 
 
 		// TODO: There should be a better way to do this
@@ -157,12 +169,21 @@ public class ProcessContextMenuProvider extends ContextMenuProvider {
 		// TODO: need to be more selective here!  Only add actions that make sense for this
 		// context..
 		for (IAction anAction : bpelEditor.getAppendNewActions()) {
-			if (anAction != null && anAction.isEnabled()) {
-				addMenu.add(anAction);
+			if (anAction != null) {
+				// https://issues.jboss.org/browse/JBIDE-8043
+				// update the action's current selection
+				if (anAction instanceof SelectionAction)
+					((SelectionAction)anAction).update();
+				if (anAction.isEnabled())
+					addMenu.add(anAction);
 			}			
 		}
 		for (IAction anAction : bpelEditor.getInsertNewActions()) {
-			if (anAction != null && anAction.isEnabled()) {
+			if (anAction != null) {
+				// https://issues.jboss.org/browse/JBIDE-8043
+				if (anAction instanceof SelectionAction)
+					((SelectionAction)anAction).update();
+				if (anAction.isEnabled())
 				insertMenu.add(anAction);
 			}
 		}

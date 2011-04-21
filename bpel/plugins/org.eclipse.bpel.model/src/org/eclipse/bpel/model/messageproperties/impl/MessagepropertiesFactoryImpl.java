@@ -10,7 +10,7 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: MessagepropertiesFactoryImpl.java,v 1.3 2007/08/01 21:02:32 mchmielewski Exp $
+ * $Id: MessagepropertiesFactoryImpl.java,v 1.4 2011/03/30 18:54:26 rbrodt Exp $
  */
 package org.eclipse.bpel.model.messageproperties.impl;
 
@@ -68,15 +68,15 @@ public class MessagepropertiesFactoryImpl extends EFactoryImpl implements
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case MessagepropertiesPackage.PROPERTY:
-				return createProperty();
-			case MessagepropertiesPackage.PROPERTY_ALIAS:
-				return createPropertyAlias();
-			case MessagepropertiesPackage.QUERY:
-				return createQuery();
-			default:
-				throw new IllegalArgumentException(
-						"The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
+		case MessagepropertiesPackage.PROPERTY:
+			return createProperty();
+		case MessagepropertiesPackage.PROPERTY_ALIAS:
+			return createPropertyAlias();
+		case MessagepropertiesPackage.QUERY:
+			return createQuery();
+		default:
+			throw new IllegalArgumentException(
+					"The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 

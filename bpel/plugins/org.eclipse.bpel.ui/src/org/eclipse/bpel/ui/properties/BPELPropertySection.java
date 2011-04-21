@@ -450,7 +450,12 @@ public abstract class BPELPropertySection extends AbstractPropertySection
 		
 		final TabbedPropertyViewer viewer = getTabbedPropertySheetPage().getTabbedPropertyViewer();
 		final int tabIndex = viewer.getSelectionIndex();
-		final int sectionIndex = getTabbedPropertySheetPage().getCurrentTab().getSectionIndex(section);
+		// Bug 120110 - found this problem while building the extension activity examples
+		// it's possible that a property section can update the model while the property
+		// section tab itself has already been disposed (getCurrentTab() will be null).
+		final int sectionIndex = getTabbedPropertySheetPage().getCurrentTab()==null
+				? -1
+				: getTabbedPropertySheetPage().getCurrentTab().getSectionIndex(section);
 		
 		if (!inner.canExecute()) {
 			System.out.println("WARNING: unexecutable command passed to wrapInShowContextCommand():"); //$NON-NLS-1$

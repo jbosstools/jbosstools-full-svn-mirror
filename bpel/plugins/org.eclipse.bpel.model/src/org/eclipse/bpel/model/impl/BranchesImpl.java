@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: BranchesImpl.java,v 1.9 2009/04/14 10:50:37 smoser Exp $
+ * $Id: BranchesImpl.java,v 1.10 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model.impl;
 
@@ -95,8 +95,8 @@ public class BranchesImpl extends ExpressionImpl implements Branches {
 		Boolean oldCountCompletedBranchesOnly = countCompletedBranchesOnly;
 		if (!isReconciling) {
 			ReconciliationHelper.replaceAttribute(this,
-					BPELConstants.AT_SUCCESSFUL_BRANCHES_ONLY, BPELUtils
-							.boolean2XML(newCountCompletedBranchesOnly));
+					BPELConstants.AT_SUCCESSFUL_BRANCHES_ONLY,
+					BPELUtils.boolean2XML(newCountCompletedBranchesOnly));
 		}
 		countCompletedBranchesOnly = newCountCompletedBranchesOnly;
 		boolean oldCountCompletedBranchesOnlyESet = countCompletedBranchesOnlyESet;

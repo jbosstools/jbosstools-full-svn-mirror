@@ -708,7 +708,7 @@
             class="org.eclipse.bpel.ui.perspectives.BPELPerspectiveFactory"
             icon="icons/obj20/bpel.png"
             id="org.eclipse.bpel.ui.perspective"
-            name="BPEL Perspective">
+            name="BPEL">
       </perspective>
    </extension>
 </plugin>

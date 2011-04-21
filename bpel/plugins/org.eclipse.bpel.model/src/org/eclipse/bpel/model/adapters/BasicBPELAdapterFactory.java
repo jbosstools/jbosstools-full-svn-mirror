@@ -47,6 +47,7 @@ public class BasicBPELAdapterFactory extends BPELAdapterFactory {
 	public Adapter adaptNew(Notifier target, Object type) {
 		Adapter adapter = createAdapter(target, type);
 		// https://jira.jboss.org/browse/JBIDE-7497
+		// Bugzilla 330519
 		// only associate the adapter with the target (i.e. add it to the
 		// target's eAdapters list) if the adapter is for the requested type
 		if (adapter!=null && adapter.isAdapterForType(type)) {

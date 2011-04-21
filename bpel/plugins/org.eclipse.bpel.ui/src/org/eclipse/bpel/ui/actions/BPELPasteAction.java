@@ -33,11 +33,8 @@ public class BPELPasteAction extends EditAction {
 	
 	public final static String ID = "BPELPasteAction";  //$NON-NLS-1$
 	
-	Command command;
-	
 	/**
 	 * Brand new BPELPaste action.
-	 * 
 	 * @param editorPart
 	 */
 	public BPELPasteAction(IWorkbenchPart editorPart) {

@@ -17,11 +17,13 @@ import java.util.Map;
 
 import org.eclipse.bpel.ui.BPELUIPlugin;
 import org.eclipse.bpel.ui.Templates.Template;
+import org.eclipse.core.internal.resources.Folder;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.swt.widgets.Display;
@@ -31,6 +33,7 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.ide.IDE;
+import org.eclipse.ui.internal.Workbench;
 import org.eclipse.ui.wizards.newresource.BasicNewResourceWizard;
 import org.eclipse.wst.common.componentcore.ComponentCore;
 import org.eclipse.wst.common.componentcore.ModuleCoreNature;
@@ -212,6 +215,8 @@ public class NewFileWizard extends Wizard implements INewWizard {
 
 	IContainer getBPELContainer(Object obj) {
 
+		IContainer bpelContent = null;
+		
 		if (obj == null) {
 			return null;
 		}
@@ -225,12 +230,22 @@ public class NewFileWizard extends Wizard implements INewWizard {
 			project = container.getProject();
 		}
 		if (project != null) {
-			IContainer bpelContent = project.getFolder(getWebContentRootPath(project));
-			if (bpelContent != null) {
-				return bpelContent;
+			// https://issues.jboss.org/browse/JBIDE-8591
+			// if not a faceted project, still allow resources to be created
+			IPath rootPath = getWebContentRootPath(project);
+			if (rootPath!=null && !rootPath.isEmpty()) {
+				bpelContent = project.getFolder(rootPath);
 			}
 		}
-		return null;
+		if (bpelContent == null) {
+			// https://issues.jboss.org/browse/JBIDE-8591
+			// use folder or project
+			if (obj instanceof IContainer)
+				bpelContent = (IContainer)obj;
+			else
+				bpelContent = project;
+		}
+		return bpelContent;
 	}
 
 		static IPath getWebContentRootPath(IProject project) {
@@ -248,6 +263,16 @@ public class NewFileWizard extends Wizard implements INewWizard {
 				return path;
 			}
 	
+	// https://issues.jboss.org/browse/JBIDE-8591
+	// added to allow first and last page access to resource container
+	public IContainer getBPELContainer() {
+		return mContainer;
+	}
+	
+	public void setBPELContainer(IContainer container) {
+		mContainer = container;
+	}
+	
 	/**
 	 * @return the currently selected Template
 	 * @see https://jira.jboss.org/browse/JBIDE-7165
@@ -264,7 +289,7 @@ public class NewFileWizard extends Wizard implements INewWizard {
 
 	@Override
 	public boolean canFinish() {
-		return (fMainPage.isPageComplete() && wsdlPage.isPageComplete() && mContainer != null)
+		return (fMainPage.isPageComplete() && wsdlPage.isPageComplete() && fContainerPage.isPageComplete() && mContainer != null)
 				|| super.canFinish();
 	}
 

@@ -10,7 +10,7 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: OnMessageImpl.java,v 1.12 2009/04/14 10:50:37 smoser Exp $
+ * $Id: OnMessageImpl.java,v 1.13 2011/03/30 18:54:24 rbrodt Exp $
  */
 package org.eclipse.bpel.model.impl;
 
@@ -54,7 +54,8 @@ import org.eclipse.wst.wsdl.PortType;
  *
  * @generated
  */
-public class OnMessageImpl extends ExtensibleElementImpl implements OnMessage {
+public class OnMessageImpl extends BPELExtensibleElementImpl implements
+		OnMessage {
 	/**
 	 * The cached value of the '{@link #getVariable() <em>Variable</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -591,7 +592,8 @@ public class OnMessageImpl extends ExtensibleElementImpl implements OnMessage {
 	public void setMessageExchange(MessageExchange newMessageExchange) {
 		MessageExchange oldMessageExchange = messageExchange;
 		if (!isReconciling) {
-			ReconciliationHelper.replaceAttribute(this,
+			ReconciliationHelper.replaceAttribute(
+					this,
 					BPELConstants.AT_MESSAGE_EXCHANGE,
 					newMessageExchange == null ? null : newMessageExchange
 							.getName());

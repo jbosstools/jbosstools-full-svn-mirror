@@ -50,12 +50,15 @@ public class Messages extends NLS {
 	public static String NewFileWizardPage1_9;
 	public static String NewFileWizardPage1_10;
 	public static String NewFileWizardPage1_11;
+	public static String NewFileWizardPage1_12;
 	public static String NewFileWizardPage2_0;
 	public static String NewFileWizardPage2_1;
 	public static String NewFileWizardPage2_2;
 	public static String NewFileWizardPage2_3;
 	public static String NewFileWizardPage1_Name;
 	public static String NewFileWizardPage2_Name;
+	// https://issues.jboss.org/browse/JBIDE-8591
+	public static String NewFileWizard_Not_A_Faceted_Project;
 	public static String NewFileWizard_WSDLCustomPage_Name;
 	public static String NewFileWizard_WSDLCustomPage_Title;
 	public static String NewFileWizard_WSDLCustomPage_Description;

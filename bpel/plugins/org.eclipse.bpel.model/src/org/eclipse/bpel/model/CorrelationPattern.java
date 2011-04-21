@@ -10,7 +10,7 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: CorrelationPattern.java,v 1.7 2009/04/23 10:52:48 smoser Exp $
+ * $Id: CorrelationPattern.java,v 1.8 2011/03/30 14:59:18 rbrodt Exp $
  */
 package org.eclipse.bpel.model;
 
@@ -39,22 +39,22 @@ public enum CorrelationPattern implements Enumerator {
 	 * @ordered
 	 */
 	REQUEST_LITERAL(0, "request", "request"), /**
-	 * The '<em><b>Response</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #RESPONSE
-	 * @generated
-	 * @ordered
-	 */
+											  * The '<em><b>Response</b></em>' literal object.
+											  * <!-- begin-user-doc -->
+											  * <!-- end-user-doc -->
+											  * @see #RESPONSE
+											  * @generated
+											  * @ordered
+											  */
 	RESPONSE_LITERAL(1, "response", "response"), /**
-	 * The '<em><b>Requestresponse</b></em>' literal object.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #REQUESTRESPONSE
-	 * @generated
-	 * @ordered
-	 */
-	REQUESTRESPONSE_LITERAL(2, "request-response", "request-response"); 
+												 * The '<em><b>Requestresponse</b></em>' literal object.
+												 * <!-- begin-user-doc -->
+												 * <!-- end-user-doc -->
+												 * @see #REQUESTRESPONSE
+												 * @generated
+												 * @ordered
+												 */
+	REQUESTRESPONSE_LITERAL(2, "requestresponse", "request-response");
 	/**
 	 * The '<em><b>Request</b></em>' literal value.
 	 * <!-- begin-user-doc -->
@@ -91,10 +91,11 @@ public enum CorrelationPattern implements Enumerator {
 	 * <p>
 	 * If the meaning of '<em><b>Requestresponse</b></em>' literal object isn't clear,
 	 * there really should be more of a description here...
+	 * Bugzilla 340654 - fix request-response literal name
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @see #REQUESTRESPONSE_LITERAL
-	 * @model name="requestresponse"
+	 * @model name="requestresponse" literal="request-response"
 	 * @generated
 	 * @ordered
 	 */

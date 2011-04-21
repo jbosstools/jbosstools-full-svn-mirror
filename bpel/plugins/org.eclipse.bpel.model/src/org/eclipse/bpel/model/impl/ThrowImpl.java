@@ -10,7 +10,7 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: ThrowImpl.java,v 1.11 2009/04/14 10:50:37 smoser Exp $
+ * $Id: ThrowImpl.java,v 1.12 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model.impl;
 
@@ -150,7 +150,8 @@ public class ThrowImpl extends ActivityImpl implements Throw {
 	public void setFaultVariable(Variable newFaultVariable) {
 		Variable oldFaultVariable = faultVariable;
 		if (!isReconciling) {
-			ReconciliationHelper.replaceAttribute(this,
+			ReconciliationHelper.replaceAttribute(
+					this,
 					BPELConstants.AT_FAULT_VARIABLE,
 					newFaultVariable == null ? null : newFaultVariable
 							.getName());

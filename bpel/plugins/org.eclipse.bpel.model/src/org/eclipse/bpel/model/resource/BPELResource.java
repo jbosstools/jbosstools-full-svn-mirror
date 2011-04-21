@@ -35,18 +35,17 @@ public interface BPELResource extends Resource {
 	 * @see org.eclipse.emf.ecore.resource.impl.ResourceImpl#doSave(OutputStream, Map)
 	 */
 	void doSave(OutputStream out, Map<?, ?> args) throws Exception;
-	
 	/**
 	 * Set an error handler for SAX Parser
 	 * @param errorHandler
-	 * @see https://jira.jboss.org/browse/JBIDE-6825
+	 * @see Bugzilla 324165
 	 */
 	void setErrorHandler(ErrorHandler errorHandler);
 	
 	/**
 	 * Return the current SAX Parser error handler
 	 * @return error handler
-	 * @see https://jira.jboss.org/browse/JBIDE-6825
+	 * @see Bugzilla 324165
 	 */
 	ErrorHandler getErrorHandler();
     

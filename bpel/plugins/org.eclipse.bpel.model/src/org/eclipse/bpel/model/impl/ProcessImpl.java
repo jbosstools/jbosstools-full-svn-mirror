@@ -68,7 +68,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class ProcessImpl extends ExtensibleElementImpl implements
+public class ProcessImpl extends BPELExtensibleElementImpl implements
 		org.eclipse.bpel.model.Process {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -567,8 +567,8 @@ public class ProcessImpl extends ExtensibleElementImpl implements
 		suppressJoinFailure = newSuppressJoinFailure;
 		if (!isReconciling) {
 			ReconciliationHelper.replaceAttribute(this,
-					BPELConstants.AT_SUPPRESS_JOIN_FAILURE, BPELUtils
-							.boolean2XML(newSuppressJoinFailure));
+					BPELConstants.AT_SUPPRESS_JOIN_FAILURE,
+					BPELUtils.boolean2XML(newSuppressJoinFailure));
 		}
 		boolean oldSuppressJoinFailureESet = suppressJoinFailureESet;
 		suppressJoinFailureESet = true;
@@ -626,8 +626,8 @@ public class ProcessImpl extends ExtensibleElementImpl implements
 		Boolean oldVariableAccessSerializable = variableAccessSerializable;
 		if (!isReconciling) {
 			ReconciliationHelper.replaceAttribute(this,
-					BPELConstants.AT_VARIABLE_ACCESS_SERIALIZABLE, BPELUtils
-							.boolean2XML(newVariableAccessSerializable));
+					BPELConstants.AT_VARIABLE_ACCESS_SERIALIZABLE,
+					BPELUtils.boolean2XML(newVariableAccessSerializable));
 		}
 		variableAccessSerializable = newVariableAccessSerializable;
 		boolean oldVariableAccessSerializableESet = variableAccessSerializableESet;
@@ -977,8 +977,8 @@ public class ProcessImpl extends ExtensibleElementImpl implements
 		Boolean oldExitOnStandardFault = exitOnStandardFault;
 		if (!isReconciling) {
 			ReconciliationHelper.replaceAttribute(this,
-					BPELConstants.AT_EXIT_ON_STANDARD_FAULT, BPELUtils
-							.boolean2XML(newExitOnStandardFault));
+					BPELConstants.AT_EXIT_ON_STANDARD_FAULT,
+					BPELUtils.boolean2XML(newExitOnStandardFault));
 		}
 		exitOnStandardFault = newExitOnStandardFault;
 		if (eNotificationRequired())
@@ -1071,7 +1071,8 @@ public class ProcessImpl extends ExtensibleElementImpl implements
 	public void setAbstractProcessProfile(String newAbstractProcessProfile) {
 		if (!isReconciling) {
 			ReconciliationHelper.replaceAttribute(this,
-					BPELConstants.AT_ABSTRACT_PROFILES, newAbstractProcessProfile);
+					BPELConstants.AT_ABSTRACT_PROFILES,
+					newAbstractProcessProfile);
 		}
 		String oldAbstractProcessProfile = abstractProcessProfile;
 		abstractProcessProfile = newAbstractProcessProfile;
@@ -1083,7 +1084,7 @@ public class ProcessImpl extends ExtensibleElementImpl implements
 					oldAbstractProcessProfile, abstractProcessProfile,
 					!oldAbstractProcessProfileESet));
 	}
-	
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

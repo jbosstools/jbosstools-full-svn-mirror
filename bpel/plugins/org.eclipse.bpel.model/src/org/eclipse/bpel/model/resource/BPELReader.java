@@ -54,7 +54,7 @@ import org.eclipse.bpel.model.EndpointReferenceRole;
 import org.eclipse.bpel.model.EventHandler;
 import org.eclipse.bpel.model.Exit;
 import org.eclipse.bpel.model.Expression;
-import org.eclipse.bpel.model.ExtensibleElement;
+import org.eclipse.bpel.model.BPELExtensibleElement;
 import org.eclipse.bpel.model.Extension;
 import org.eclipse.bpel.model.Extensions;
 import org.eclipse.bpel.model.FaultHandler;
@@ -165,7 +165,7 @@ public class BPELReader implements ErrorHandler {
 
 	// The process we are reading
 	private Process process = null;
-	// https://jira.jboss.org/browse/JBIDE-6825
+	// Bugzilla 324165
 	// The resource we are reading from
 	private Resource fCurrentResource = null;
 	// The successfully loaded resource
@@ -306,7 +306,7 @@ public class BPELReader implements ErrorHandler {
 			inputSource.setSystemId( resource.getURI().toString() );
 			
 			resource.setErrorHandler(fErrorHandler != null ? fErrorHandler : this);
-			// https://jira.jboss.org/browse/JBIDE-6825
+			// Bugzilla 324165
 			// set the resource currently being loaded so the error handler can
 			// attach diagnostics to it
 			fCurrentResource = resource;
@@ -319,9 +319,10 @@ public class BPELReader implements ErrorHandler {
 		} catch (IOException ioe) {
 			BPELPlugin.log("I/O Error Reading BPEL XML", ioe ) ;
 		} finally {
-
+			
 		}
-		
+
+		// Bugzilla 324165
 		if (doc != null) {
 			pass1(doc);		
 			pass2();
@@ -359,7 +360,7 @@ public class BPELReader implements ErrorHandler {
 		try {
 			InputSource inputSource = new InputSource(new StringReader ( xmlSource ));
 			inputSource.setPublicId( sourceDescription );
-			// https://jira.jboss.org/browse/JBIDE-6825
+			// Bugzilla 324165
 			// set the resource currently being loaded so the error handler can
 			// attach diagnostics to it
 			fCurrentResource = resource;
@@ -658,7 +659,7 @@ public class BPELReader implements ErrorHandler {
 	/**
 	 * Sets a FaultHandler element for a given extensibleElement.
 	 */
-	protected void setFaultHandler(Element element, ExtensibleElement extensibleElement) {
+	protected void setFaultHandler(Element element, BPELExtensibleElement extensibleElement) {
 		List<Element> faultHandlerElements = getBPELChildElementsByLocalName(element, "faultHandlers");
 		
 		if (faultHandlerElements.size() > 0) {
@@ -675,7 +676,7 @@ public class BPELReader implements ErrorHandler {
 	/**
 	 * Sets a EventHandler element for a given extensibleElement.
 	 */
-	protected void setEventHandler(Element element, ExtensibleElement extensibleElement) {
+	protected void setEventHandler(Element element, BPELExtensibleElement extensibleElement) {
 		List<Element> eventHandlerElements = getBPELChildElementsByLocalName(element, "eventHandlers");
                  
 		if (eventHandlerElements.size() > 0) {
@@ -702,7 +703,7 @@ public class BPELReader implements ErrorHandler {
 		Attr suppressJoinFailure = activityElement.getAttributeNode("suppressJoinFailure");
 		
 		if (suppressJoinFailure != null && suppressJoinFailure.getSpecified())		
-			activity.setSuppressJoinFailure(new Boolean(suppressJoinFailure.getValue().equals("yes")));
+			activity.setSuppressJoinFailure( Boolean.valueOf( suppressJoinFailure.getValue().equals("yes")));
 	}
 
 
@@ -831,6 +832,19 @@ public class BPELReader implements ErrorHandler {
 			onEvent.setMessageType(messageType);
 		}
 
+		// https://bugs.eclipse.org/bugs/show_bug.cgi?id=336003
+		// "element" attribute was missing from original model
+		// Set xsd element
+		if (activityElement.hasAttribute("element")) {
+			QName qName = BPELUtils.createAttributeValue(activityElement,
+					"element");
+			XSDElementDeclaration element = new XSDElementDeclarationProxy(
+					getResource().getURI(), qName);
+			onEvent.setXSDElement(element);
+		} else {
+			onEvent.setXSDElement(null);
+		}
+
 		// Set correlations
 		Element correlationsElement = getBPELChildElementByLocalName(activityElement, "correlations");
 		if (correlationsElement != null) {
@@ -957,13 +971,13 @@ public class BPELReader implements ErrorHandler {
 			process.setTargetNamespace(processElement.getAttribute("targetNamespace"));
 		
 		if (processElement.hasAttribute("suppressJoinFailure"))
-			process.setSuppressJoinFailure(new Boolean(processElement.getAttribute("suppressJoinFailure").equals("yes")));
+			process.setSuppressJoinFailure( Boolean.valueOf( processElement.getAttribute("suppressJoinFailure").equals("yes")));
 		
 		if (processElement.hasAttribute("exitOnStandardFault"))
-			process.setExitOnStandardFault(new Boolean(processElement.getAttribute("exitOnStandardFault").equals("yes")));
+			process.setExitOnStandardFault( Boolean.valueOf( processElement.getAttribute("exitOnStandardFault").equals("yes")));
 		
 		if (processElement.hasAttribute("variableAccessSerializable"))
-			process.setVariableAccessSerializable(new Boolean(processElement.getAttribute("variableAccessSerializable").equals("yes")));
+			process.setVariableAccessSerializable( Boolean.valueOf( processElement.getAttribute("variableAccessSerializable").equals("yes")));
 
 		if (processElement.hasAttribute("queryLanguage"))
 			process.setQueryLanguage(processElement.getAttribute("queryLanguage"));
@@ -1252,7 +1266,7 @@ public class BPELReader implements ErrorHandler {
 		
 		// Set mustUnderstand
 		if (extensionElement.hasAttribute("mustUnderstand"))
-			extension.setMustUnderstand(new Boolean(extensionElement.getAttribute("mustUnderstand").equals("yes")));
+			extension.setMustUnderstand( Boolean.valueOf( extensionElement.getAttribute("mustUnderstand").equals("yes")));
 		
 		xml2ExtensibleElement(extension, extensionElement);
 
@@ -1277,7 +1291,7 @@ public class BPELReader implements ErrorHandler {
 			partnerLink.setName(partnerLinkElement.getAttribute("name"));
 			
 		if (partnerLinkElement.hasAttribute("initializePartnerRole"))
-			partnerLink.setInitializePartnerRole(new Boolean(partnerLinkElement.getAttribute("initializePartnerRole").equals("yes")));		
+			partnerLink.setInitializePartnerRole( Boolean.valueOf( partnerLinkElement.getAttribute("initializePartnerRole").equals("yes")));		
 		
 		Attr partnerLinkTypeName = partnerLinkElement.getAttributeNode("partnerLinkType");
 		if (partnerLinkTypeName != null && partnerLinkTypeName.getSpecified()) {
@@ -1681,12 +1695,12 @@ public class BPELReader implements ErrorHandler {
 		Attr isolated = scopeElement.getAttributeNode("isolated");
 		
 		if (isolated != null && isolated.getSpecified())
-			scope.setIsolated(new Boolean(isolated.getValue().equals("yes")));
+			scope.setIsolated( Boolean.valueOf( isolated.getValue().equals("yes")));
 		
 		// Handle attribute exitOnStandardFault
 		Attr exitOnStandardFault = scopeElement.getAttributeNode("exitOnStandardFault");
 		if (exitOnStandardFault != null && exitOnStandardFault.getSpecified())
-			scope.setExitOnStandardFault(new Boolean(exitOnStandardFault.getValue().equals("yes")));
+			scope.setExitOnStandardFault( Boolean.valueOf( exitOnStandardFault.getValue().equals("yes")));
 				
 		// Handle Variables element
 		Element variablesElement = getBPELChildElementByLocalName(scopeElement, "variables");
@@ -2210,7 +2224,7 @@ public class BPELReader implements ErrorHandler {
 
 		// Set opaque
 		if (expressionElement.hasAttribute("opaque")) {
-			expression.setOpaque(new Boolean(expressionElement.getAttribute("opaque").equals("yes")));
+			expression.setOpaque( Boolean.valueOf( expressionElement.getAttribute("opaque").equals("yes")));
 		}
 				
 		String data = getText(expressionElement);
@@ -2355,25 +2369,27 @@ public class BPELReader implements ErrorHandler {
 	protected Activity xml2ExtensionActivity(Element extensionActivityElement) {
 		// Do not call setStandardAttributes here because extensionActivityElement
 		// doesn't have them.
+		Activity extensionActivity = BPELFactory.eINSTANCE.createExtensionActivity();
 
 		// Find the child element.
 		List<Element> nodeList = getChildElements(extensionActivityElement);
 		
 		if (nodeList.size() == 1) {
-			Element child = nodeList.get(0);
+			final Element child = nodeList.get(0);
 			// We found a child element. Look up a deserializer for this
 			// activity and call it.
 			String localName = child.getLocalName();
 			String namespace = child.getNamespaceURI();
-			QName qname = new QName(namespace, localName);
-			BPELActivityDeserializer deserializer = extensionRegistry.getActivityDeserializer(qname);
+			final QName qname = new QName(namespace, localName);
+			final BPELActivityDeserializer deserializer = extensionRegistry.getActivityDeserializer(qname);
 			if (deserializer != null) {
 				// Deserialize the DOM element and return the new Activity
-				Map<String,String> nsMap = getAllNamespacesForElement(child);
-				Activity activity = deserializer.unmarshall(qname,child,process,nsMap,extensionRegistry,getResource().getURI(), this);
+				final Map<String,String> nsMap = getAllNamespacesForElement(child);
+				// https://bugs.eclipse.org/bugs/show_bug.cgi?id=334424
+				extensionActivity = deserializer.unmarshall(qname,child,extensionActivity,process,nsMap,extensionRegistry, getResource().getURI(), this);
 				// Now let's do the standard attributes and elements
-				setStandardAttributes(child, activity);
-				setStandardElements(child, activity);
+				setStandardAttributes(child, extensionActivity);
+				setStandardElements(child, extensionActivity);
 				
 				// Don't do extensibility because extensionActivity is not extensible.
 				// If individual extensionActivity subclasses are actually extensible, they
@@ -2381,17 +2397,25 @@ public class BPELReader implements ErrorHandler {
 				
 				// The created Activity that extends from ExtensioActivity should get the
 				// whole <extensionActivity>-DOM-Fragment, this is done here.
-				activity.setElement(extensionActivityElement);
- 				return activity;
+				extensionActivity.setElement(extensionActivityElement);
+				final Activity ea = extensionActivity;
+				
+		    	// Bug 120110 - run the deserializer again so it can resolve references to
+				// objects that were not fully realized in pass 1.
+				fPass2Runnables.add(new Runnable() {
+					public void run() {
+						deserializer.unmarshall(qname,child,ea,process,nsMap,extensionRegistry, getResource().getURI(), BPELReader.this);
+					}
+				});
+ 				return extensionActivity;
 			}
 		}
 		// Fallback is to create a new extensionActivity.
-		// https://jira.jboss.org/browse/JBIDE-6917
-		Activity activity = BPELFactory.eINSTANCE.createExtensionActivity();
-		setStandardAttributes(extensionActivityElement, activity);
-		setStandardElements(extensionActivityElement, activity);
-		activity.setElement(extensionActivityElement);
-		return activity;
+		// Bugzilla 324115
+		setStandardAttributes(extensionActivityElement, extensionActivity);
+		setStandardElements(extensionActivityElement, extensionActivity);
+		extensionActivity.setElement(extensionActivityElement);
+		return extensionActivity;
 	}
 
 	
@@ -2475,7 +2499,7 @@ public class BPELReader implements ErrorHandler {
 		assign.setElement(assignElement);			
         
 		if (assignElement.hasAttribute("validate")) {
-			assign.setValidate(new Boolean(assignElement.getAttribute("validate").equals("yes")));
+			assign.setValidate( Boolean.valueOf( assignElement.getAttribute("validate").equals("yes")));
 		}
 		
 		for (Element copyElement : getBPELChildElementsByLocalName(assignElement, "copy") ) {                    
@@ -2517,10 +2541,10 @@ public class BPELReader implements ErrorHandler {
         }
  
 		if (copyElement.hasAttribute("keepSrcElementName"))
-			copy.setKeepSrcElementName(new Boolean(copyElement.getAttribute("keepSrcElementName").equals("yes")));
+			copy.setKeepSrcElementName( Boolean.valueOf( copyElement.getAttribute("keepSrcElementName").equals("yes")));
 		
 		if (copyElement.hasAttribute("ignoreMissingFromData")) 
-			copy.setIgnoreMissingFromData(new Boolean(copyElement.getAttribute("ignoreMissingFromData").equals("yes")));
+			copy.setIgnoreMissingFromData( Boolean.valueOf( copyElement.getAttribute("ignoreMissingFromData").equals("yes")));
 
 		xml2ExtensibleElement(copy, copyElement);
  		
@@ -2786,14 +2810,17 @@ public class BPELReader implements ErrorHandler {
 					QName qname = new QName(childElement.getNamespaceURI(), childElement.getLocalName());
 					BPELExtensionDeserializer deserializer=null;
 					try {
-						deserializer = (BPELExtensionDeserializer)extensionRegistry.queryDeserializer(ExtensibleElement.class,qname);
-					} catch (WSDLException e) {}
+						deserializer = (BPELExtensionDeserializer)extensionRegistry.queryDeserializer(BPELExtensibleElement.class,qname);
+					} catch (WSDLException e) {
+						// nothing
+					}
+					
 					if (deserializer != null && !(deserializer instanceof BPELUnknownExtensionDeserializer)) {
 						// Deserialize the DOM element and add the new Extensibility element to the parent
-						// ExtensibleElement
+						// BPELExtensibleElement
 						try {
 							Map<String,String> nsMap = getAllNamespacesForElement(serviceRefElement);
-							ExtensibilityElement extensibilityElement=deserializer.unmarshall(ExtensibleElement.class,qname,childElement,process,nsMap,extensionRegistry,getResource().getURI(),this);
+							ExtensibilityElement extensibilityElement=deserializer.unmarshall(BPELExtensibleElement.class,qname,childElement,process,nsMap,extensionRegistry,getResource().getURI(),this);
 							serviceRef.setValue(extensibilityElement);
 						} catch (WSDLException e) {
 							throw new WrappedException(e);
@@ -2867,7 +2894,7 @@ public class BPELReader implements ErrorHandler {
 		Attr opaque = fromElement.getAttributeNode("opaque");
 			
 		if (opaque != null && opaque.getSpecified()) {
-			from.setOpaque(new Boolean(opaque.getValue().equals("yes")));
+			from.setOpaque( Boolean.valueOf( opaque.getValue().equals("yes")));
 		}
 
 		
@@ -2989,7 +3016,7 @@ public class BPELReader implements ErrorHandler {
 		// Set createInstance
 		if (receiveElement.hasAttribute("createInstance")) {		           
 			String createInstance = receiveElement.getAttribute("createInstance");
-			receive.setCreateInstance(new Boolean(createInstance.equals("yes")));
+			receive.setCreateInstance( Boolean.valueOf( createInstance.equals("yes")));
 		}
 
 		Element fromPartsElement = getBPELChildElementByLocalName(receiveElement, "fromParts");
@@ -3114,7 +3141,7 @@ public class BPELReader implements ErrorHandler {
 		xml2Expression(branchesElement, branches);
 
 		if (branchesElement.hasAttribute("successfulBranchesOnly"))
-			branches.setCountCompletedBranchesOnly(new Boolean(branchesElement.getAttribute("successfulBranchesOnly").equals("yes")));
+			branches.setCountCompletedBranchesOnly( Boolean.valueOf( branchesElement.getAttribute("successfulBranchesOnly").equals("yes")));
 
 		return branches;
 	}
@@ -3287,7 +3314,7 @@ public class BPELReader implements ErrorHandler {
 	 * Converts an XML extensible element to a BPEL extensible element
 	 */
 	
-	protected void xml2ExtensibleElement (ExtensibleElement extensibleElement, Element element) {
+	protected void xml2ExtensibleElement (BPELExtensibleElement extensibleElement, Element element) {
 		
 		if (extensionRegistry == null) {
 			return;
@@ -3337,12 +3364,12 @@ public class BPELReader implements ErrorHandler {
 	}
 	
 
-	protected void deserialize ( ExtensibleElement ee, Element elm ) {
+	protected void deserialize ( BPELExtensibleElement ee, Element elm ) {
 		
 		QName qname = new QName(elm.getNamespaceURI(),elm.getLocalName());
 		BPELExtensionDeserializer deserializer = null;
 		try {
-			deserializer = (BPELExtensionDeserializer)extensionRegistry.queryDeserializer (ExtensibleElement.class,qname);
+			deserializer = (BPELExtensionDeserializer)extensionRegistry.queryDeserializer (BPELExtensibleElement.class,qname);
 		} catch (WSDLException e) {
 			// we don't have one.
 		}
@@ -3350,7 +3377,7 @@ public class BPELReader implements ErrorHandler {
 			return ;
 		}
 		// Deserialize the DOM element and add the new Extensibility element to the parent
-		// ExtensibleElement
+		// BPELExtensibleElement
 		Map<String,String> nsMap = getAllNamespacesForElement (elm);
 		try {			
 			ExtensibilityElement extensibilityElement = deserializer.unmarshall(ee.getClass(),qname,elm,process,nsMap,extensionRegistry,getResource().getURI(),this);
@@ -3361,7 +3388,7 @@ public class BPELReader implements ErrorHandler {
 	}
 	
 	
-	protected void deserialize ( ExtensibleElement ee, Attr attr) {
+	protected void deserialize ( BPELExtensibleElement ee, Attr attr) {
 		 
 		if (attr.getSpecified() == false) {
 			 return ;
@@ -3370,7 +3397,7 @@ public class BPELReader implements ErrorHandler {
 		QName qname = new QName (attr.getNamespaceURI(),"extensibilityAttributes");
 		BPELExtensionDeserializer deserializer = null;
 		try {
-			deserializer = (BPELExtensionDeserializer) extensionRegistry.queryDeserializer(ExtensibleElement.class,qname);
+			deserializer = (BPELExtensionDeserializer) extensionRegistry.queryDeserializer(BPELExtensibleElement.class,qname);
 		} catch (WSDLException e) {
 			// ignore
 		}
@@ -3390,10 +3417,10 @@ public class BPELReader implements ErrorHandler {
 		tempElement.setAttribute(attr.getLocalName(), attr.getNodeValue());
 		
 		// Deserialize the temp DOM element and add the new Extensibility element to the parent
-		// ExtensibleElement
+		// BPELExtensibleElement
 		Map<String,String> nsMap = getAllNamespacesForElement( (Element) attr.getParentNode() );
 		try {			
-			ExtensibilityElement extensibilityElement = deserializer.unmarshall(ExtensibleElement.class,qname,tempElement,process,nsMap,extensionRegistry,getResource().getURI(),this);
+			ExtensibilityElement extensibilityElement = deserializer.unmarshall(BPELExtensibleElement.class,qname,tempElement,process,nsMap,extensionRegistry,getResource().getURI(),this);
 			if (extensibilityElement!=null) {
 				ee.addExtensibilityElement (extensibilityElement);
 			}
@@ -3520,6 +3547,8 @@ public class BPELReader implements ErrorHandler {
 		return LINK_RESOLVER.getLink(activity, linkName);
 	}
 
+	
+	
 	/**
 	 * @see org.xml.sax.ErrorHandler#error(org.xml.sax.SAXParseException)
 	 */
@@ -3535,7 +3564,7 @@ public class BPELReader implements ErrorHandler {
 				exception.getLocalizedMessage()
 		);			
 		BPELPlugin.logMessage(message, exception, IStatus.ERROR);		
-		// https://jira.jboss.org/browse/JBIDE-6825
+		// Bugzilla 324165
 		// add the error to resource
 		if (fCurrentResource!=null)
 			fCurrentResource.getErrors().add(new SAXParseDiagnostic(exception, SAXParseDiagnostic.ERROR));
@@ -3555,7 +3584,7 @@ public class BPELReader implements ErrorHandler {
 				exception.getLocalizedMessage()
 		);			
 		BPELPlugin.logMessage(message, exception, IStatus.ERROR);
-		// https://jira.jboss.org/browse/JBIDE-6825
+		// Bugzilla 324165
 		// add the error to resource
 		if (fCurrentResource!=null)
 			fCurrentResource.getErrors().add(new SAXParseDiagnostic(exception, SAXParseDiagnostic.FATAL_ERROR));
@@ -3575,7 +3604,9 @@ public class BPELReader implements ErrorHandler {
 				exception.getLocalizedMessage()
 		);			
 		BPELPlugin.logMessage(message, exception, IStatus.WARNING);		
-		// https://jira.jboss.org/browse/JBIDE-6825
+
+		
+		// Bugzilla 324165
 		// add the error to resource
 		if (fCurrentResource!=null)
 			fCurrentResource.getErrors().add(new SAXParseDiagnostic(exception, SAXParseDiagnostic.WARNING));

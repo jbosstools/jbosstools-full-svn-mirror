@@ -10,7 +10,7 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: TargetImpl.java,v 1.8 2009/04/14 10:50:37 smoser Exp $
+ * $Id: TargetImpl.java,v 1.9 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model.impl;
 
@@ -43,7 +43,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class TargetImpl extends ExtensibleElementImpl implements Target {
+public class TargetImpl extends BPELExtensibleElementImpl implements Target {
 	/**
 	 * The cached value of the '{@link #getLink() <em>Link</em>}' reference.
 	 * <!-- begin-user-doc -->

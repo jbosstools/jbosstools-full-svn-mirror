@@ -10,7 +10,7 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: CopyImpl.java,v 1.11 2009/04/14 10:50:37 smoser Exp $
+ * $Id: CopyImpl.java,v 1.12 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model.impl;
 
@@ -43,7 +43,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class CopyImpl extends ExtensibleElementImpl implements Copy {
+public class CopyImpl extends BPELExtensibleElementImpl implements Copy {
 	/**
 	 * The cached value of the '{@link #getTo() <em>To</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -266,8 +266,8 @@ public class CopyImpl extends ExtensibleElementImpl implements Copy {
 		Boolean oldKeepSrcElementName = keepSrcElementName;
 		if (!isReconciling) {
 			ReconciliationHelper.replaceAttribute(this,
-					BPELConstants.AT_KEEP_SRC_ELEMENT_NAME, BPELUtils
-							.boolean2XML(newKeepSrcElementName));
+					BPELConstants.AT_KEEP_SRC_ELEMENT_NAME,
+					BPELUtils.boolean2XML(newKeepSrcElementName));
 		}
 		keepSrcElementName = newKeepSrcElementName;
 		boolean oldKeepSrcElementNameESet = keepSrcElementNameESet;
@@ -325,8 +325,8 @@ public class CopyImpl extends ExtensibleElementImpl implements Copy {
 		Boolean oldIgnoreMissingFromData = ignoreMissingFromData;
 		if (!isReconciling) {
 			ReconciliationHelper.replaceAttribute(this,
-					BPELConstants.AT_IGNORE_MISSING_FROM_DATA, BPELUtils
-							.boolean2XML(newIgnoreMissingFromData));
+					BPELConstants.AT_IGNORE_MISSING_FROM_DATA,
+					BPELUtils.boolean2XML(newIgnoreMissingFromData));
 		}
 		ignoreMissingFromData = newIgnoreMissingFromData;
 		boolean oldIgnoreMissingFromDataESet = ignoreMissingFromDataESet;

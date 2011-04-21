@@ -241,6 +241,12 @@ public final class Messages extends NLS {
 	public static String BPELUtil__unknown_URI__54;
 	public static String BPELUtil_HiddenSequence_2;
 	public static String BPELUtil_Sequence_1;
+	
+	// https://issues.jboss.org/browse/JBIDE-8601
+	public static String BPELUtil__Error;
+	public static String BPELUtil_NoEditorForNullObject;
+	public static String BPELUtil_NoEditorForObject;
+
 	public static String BPELVariableAdapter_Variable_1;
 	public static String BPELXYLayoutEditPolicy_Add_Part_1;
 	public static String BPELXYLayoutEditPolicy_Move_Part_2;
@@ -452,6 +458,11 @@ public final class Messages extends NLS {
 	public static String InvokeImplDetails_Partner__10;
 	public static String InvokeImplDetails_Request_3_Plain;
 	public static String InvokeImplDetails_Response_4_Plain;
+	// https://issues.jboss.org/browse/JBIDE-8305
+	public static String InvokeImplDetails_MessageType;
+	public static String InvokeImplDetails_Element;
+	public static String InvokeImplDetails_MessageTypeOrElement;
+
 	public static String InvokeImplSection_None_1;
 	public static String JoinConditionSection_Create_a_New_Condition_3;
 	public static String JoinConditionSection_No_condition_specified_1;
@@ -689,6 +700,9 @@ public final class Messages extends NLS {
 	public static String Editor_load_error_title;
 	public static String Editor_load_error;
 	public static String Editor_design_page_error;
+	
+	public static String Make_Process_Abstract_Title;
+	public static String Make_Process_Abstract_Message;
 	
 	static {
 		

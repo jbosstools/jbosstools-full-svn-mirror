@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.bpel.validator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.XMLConstants;
@@ -457,13 +458,14 @@ public class EmfModelQuery {
 	 * 
 	 * @param eObj
 	 * @return the root object 
+	 * @see https://issues.jboss.org/browse/JBIDE-8088 - made public
 	 */
 	@SuppressWarnings("nls")
-	static EObject getRoot ( EObject eObj ) {
+	public static EObject getRoot ( EObject eObj ) {
 	
 		assertTrue(eObj != null, CONTEXT_MSG );
 		EObject top = eObj;
-		while (top.eContainer() != null) {
+		while( top != null && top.eContainer() != null ) {
 			top = top.eContainer();
 		}		
 		
@@ -501,6 +503,39 @@ public class EmfModelQuery {
         } 
         
         return null;
+	}
+
+	/**
+	 * Search all process imports for the given QName reference
+	 * 
+	 * @param process
+	 * @param qname
+	 * @param refType
+	 * @return list of Imports
+	 * @see https://issues.jboss.org/browse/JBIDE-8088 - added
+	 */
+	public static List<Import> scanAllImports (  Process process, QName qname , String refType ) {
+		
+		List<Import> imports = new ArrayList<Import>();
+		EObject result = null;
+		
+		for(Object n : process.getImports()) {
+            Import imp = (Import) n;                                    
+            if (imp.getLocation() == null ) {
+            	continue;
+            }
+            
+    	    ImportResolver[] resolvers = ImportResolverRegistry.INSTANCE.getResolvers(imp.getImportType());
+    	    for(ImportResolver r : resolvers) {
+                result = r.resolve(imp, qname, null, refType);
+                if (result != null) {
+                	imports.add(imp);
+                }                
+            }
+    	    
+        } 
+        
+        return imports;
 	}
 
 	public static EObject resolveProxy( Process process, EObject obj) {
@@ -766,8 +801,7 @@ public class EmfModelQuery {
 		
 		if (!src.getQName().equals(dst.getQName()))
 			return false;
-		URI uri1 = src.eResource().getURI();
-		URI uri2 = dst.eResource().getURI();
+
 		if (src.eResource().getURI().equals(dst.eResource().getURI()))
 			return true;
 		

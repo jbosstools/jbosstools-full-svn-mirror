@@ -15,11 +15,11 @@ package org.eclipse.bpel.validator.rules;
  */
 import java.util.List;
 
+import org.eclipse.bpel.validator.model.ARule;
 import org.eclipse.bpel.validator.model.Filters;
 import org.eclipse.bpel.validator.model.IModelQueryLookups;
 import org.eclipse.bpel.validator.model.INode;
 import org.eclipse.bpel.validator.model.IProblem;
-import org.eclipse.bpel.validator.model.ARule;
 
 
 /**
@@ -44,9 +44,6 @@ public class InvokeValidator extends CPartnerActivityValidator {
 
 	
 	INode fPortTypeFromRoleNode;
-	
-	INode operationNode;
-	
 	List<INode> fToPartsParts;
 	List<INode> fFromParts;
 	

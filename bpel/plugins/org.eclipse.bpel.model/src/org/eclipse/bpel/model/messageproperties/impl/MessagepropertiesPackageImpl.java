@@ -10,15 +10,19 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: MessagepropertiesPackageImpl.java,v 1.7 2008/05/04 11:05:47 odanilov Exp $
+ * $Id: MessagepropertiesPackageImpl.java,v 1.8 2011/03/30 18:54:26 rbrodt Exp $
  */
 package org.eclipse.bpel.model.messageproperties.impl;
 
+import org.eclipse.bpel.model.BPELPackage;
+import org.eclipse.bpel.model.impl.BPELPackageImpl;
 import org.eclipse.bpel.model.messageproperties.MessagepropertiesFactory;
 import org.eclipse.bpel.model.messageproperties.MessagepropertiesPackage;
 import org.eclipse.bpel.model.messageproperties.Property;
 import org.eclipse.bpel.model.messageproperties.PropertyAlias;
 import org.eclipse.bpel.model.messageproperties.Query;
+import org.eclipse.bpel.model.partnerlinktype.PartnerlinktypePackage;
+import org.eclipse.bpel.model.partnerlinktype.impl.PartnerlinktypePackageImpl;
 import org.eclipse.bpel.model.messageproperties.util.MessagepropertiesConstants;
 import org.eclipse.bpel.model.messageproperties.util.MessagepropertiesExtensibilityElementFactory;
 
@@ -125,8 +129,7 @@ public class MessagepropertiesPackageImpl extends EPackageImpl implements
 		// Obtain or create and register package
 		MessagepropertiesPackageImpl theMessagepropertiesPackage = (MessagepropertiesPackageImpl) (EPackage.Registry.INSTANCE
 				.getEPackage(eNS_URI) instanceof MessagepropertiesPackageImpl ? EPackage.Registry.INSTANCE
-				.getEPackage(eNS_URI)
-				: new MessagepropertiesPackageImpl());
+				.getEPackage(eNS_URI) : new MessagepropertiesPackageImpl());
 
 		isInited = true;
 

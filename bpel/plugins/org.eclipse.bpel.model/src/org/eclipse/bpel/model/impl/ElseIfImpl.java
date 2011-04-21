@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ElseIfImpl.java,v 1.9 2009/04/14 10:50:37 smoser Exp $
+ * $Id: ElseIfImpl.java,v 1.10 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model.impl;
 
@@ -31,7 +31,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class ElseIfImpl extends ExtensibleElementImpl implements ElseIf {
+public class ElseIfImpl extends BPELExtensibleElementImpl implements ElseIf {
 	/**
 	 * The cached value of the '{@link #getCondition() <em>Condition</em>}' containment reference.
 	 * <!-- begin-user-doc -->

@@ -118,10 +118,12 @@ import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gef.GraphicalViewer;
 import org.eclipse.gef.Tool;
 import org.eclipse.jface.dialogs.IInputValidator;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.window.Window;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.accessibility.ACC;
 import org.eclipse.swt.accessibility.AccessibleControlEvent;
@@ -1724,14 +1726,34 @@ public class BPELUtil {
 	public static void openEditor(EObject modelObject, BPELEditor editor) {
 		try {
 			// https://issues.jboss.org/browse/JBIDE-8044
-			Assert.isNotNull(modelObject);
-			Assert.isNotNull(modelObject.eResource());
-			// https://jira.jboss.org/browse/JBIDE-7351
-			// try to resolve proxies here, otherwise we don't know editor input
-			if (modelObject.eIsProxy()) {
-				modelObject = EmfModelQuery.resolveProxy(editor.getProcess(), modelObject);
+			if (modelObject==null) {
+				// https://issues.jboss.org/browse/JBIDE-8601
+				MessageDialog.openError(editor.getEditorSite().getShell(),
+						Messages.BPELUtil__Error,
+						Messages.BPELUtil_NoEditorForNullObject);
+				return;
 			}
-			IFile file = BPELUtil.getFileFromURI(modelObject.eResource().getURI());
+			
+			EObject resolvedObject = null;
+			if (modelObject.eResource()==null) {
+				// https://jira.jboss.org/browse/JBIDE-7351
+				// try to resolve proxies here, otherwise we don't know editor input
+				if (modelObject.eIsProxy()) {
+					resolvedObject = EmfModelQuery.resolveProxy(editor.getProcess(), modelObject);
+				}
+			}
+			else
+				resolvedObject = modelObject;
+			
+			if (resolvedObject==null) {
+				// https://issues.jboss.org/browse/JBIDE-8601
+				MessageDialog.openError(editor.getEditorSite().getShell(),
+						Messages.BPELUtil__Error, NLS.bind(
+								Messages.BPELUtil_NoEditorForObject,
+								(new Object[] { modelObject.getClass().getSimpleName() })));
+				return;
+			}
+			IFile file = BPELUtil.getFileFromURI(resolvedObject.eResource().getURI());
 			IDE.openEditor(editor.getSite().getWorkbenchWindow().getActivePage(), file);	
 		} catch (PartInitException ex) {
 			BPELUIPlugin.log(ex, IStatus.WARNING);

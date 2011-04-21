@@ -2,13 +2,14 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ExtensionActivityImpl.java,v 1.7 2008/05/04 11:05:47 odanilov Exp $
+ * $Id: ExtensionActivityImpl.java,v 1.9 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model.impl;
 
 import org.eclipse.bpel.model.BPELPackage;
 import org.eclipse.bpel.model.ExtensionActivity;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -38,6 +39,17 @@ public class ExtensionActivityImpl extends ActivityImpl implements
 	@Override
 	protected EClass eStaticClass() {
 		return BPELPackage.Literals.EXTENSION_ACTIVITY;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * Bug 120110 - added this method so extensions can update name references to
+	 * other model objects (e.g. Variables)
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public void updateElementReferences(EObject object, String attrName,
+			String attrValue) {
 	}
 
 } //ExtensionActivityImpl

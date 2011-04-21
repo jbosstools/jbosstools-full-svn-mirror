@@ -10,7 +10,7 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: FaultHandlerImpl.java,v 1.9 2009/04/14 10:50:37 smoser Exp $
+ * $Id: FaultHandlerImpl.java,v 1.10 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model.impl;
 
@@ -47,7 +47,7 @@ import org.eclipse.wst.wsdl.WSDLElement;
  *
  * @generated
  */
-public class FaultHandlerImpl extends ExtensibleElementImpl implements
+public class FaultHandlerImpl extends BPELExtensibleElementImpl implements
 		FaultHandler {
 	/**
 	 * The cached value of the '{@link #getCatch() <em>Catch</em>}' containment reference list.

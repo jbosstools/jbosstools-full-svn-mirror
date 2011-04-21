@@ -341,7 +341,7 @@ public class FMReader implements XMLLoad , ErrorHandler {
 		Element dep = getChildElementByLocalName(element,"deprecated");
 		
 		if (dep != null) {
-			function.setIsDeprecated(dep != null);
+			function.setIsDeprecated( false );
 			function.setDeprecateComment(getText(dep));
 		}
 				

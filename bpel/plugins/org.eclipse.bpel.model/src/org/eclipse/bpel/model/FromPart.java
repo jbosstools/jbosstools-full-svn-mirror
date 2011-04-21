@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: FromPart.java,v 1.5 2007/12/06 20:01:24 smoser Exp $
+ * $Id: FromPart.java,v 1.6 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model;
 
@@ -25,7 +25,7 @@ import org.eclipse.wst.wsdl.Part;
  * @model
  * @generated
  */
-public interface FromPart extends ExtensibleElement {
+public interface FromPart extends BPELExtensibleElement {
 	/**
 	 * Returns the value of the '<em><b>To Variable</b></em>' reference.
 	 * <!-- begin-user-doc -->

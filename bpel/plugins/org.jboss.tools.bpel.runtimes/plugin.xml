@@ -26,6 +26,8 @@
             category="org.eclipse.bpel.wizards"
             project="true"
             class="org.jboss.tools.bpel.runtimes.ui.wizards.NewBPELProjectWizard"
+            finalPerspective="org.eclipse.bpel.ui.perspective"
+            preferredPerspectives="org.eclipse.bpel.ui.perspective"
             id="org.jboss.tools.bpel.runtimes.wizards.newBPELProject">
             <description>%NEW_BPEL_PROJECT_DESCRIPTION</description>
       </wizard>
@@ -63,11 +65,59 @@
 <!-- BPEL Facet							 									 -->
 <!--=========================================================================-->
 
+	<!--
+	This facet is now the same as the one defined by the eclipse.org BPEL editor.
+	An uninstall action was added to allow the facet to be swapped out with the
+	deprecated jbt.bpel.facet.core facet, or to be removed altogether
+	-->
+	<extension point="org.eclipse.wst.common.project.facet.core.facets">
+		
+		<project-facet id="bpel.facet.core">
+		  <label>%BPEL_CORE_FACET_LABEL</label>
+		  <description>%BPEL_CORE_FACET_DESCRIPTION</description>
+		</project-facet>
+		
+		<project-facet-version facet="bpel.facet.core" version="2.0">
+          <group-member
+               id="modules">
+          </group-member>
+          <constraint>
+            <and>
+               <conflicts group="modules"/>
+            </and>
+          </constraint>
+        </project-facet-version>
+                
+        <action facet="bpel.facet.core" version="2.0" type="INSTALL" id="bpel.facet.core.install">
+               <delegate class="org.jboss.tools.bpel.runtimes.facets.BPELCoreFacetInstallDelegate"/>
+               <config-factory class="org.jboss.tools.bpel.runtimes.facets.BPELFacetInstallDataModelProvider"/>
+        </action>
+
+        <action facet="bpel.facet.core" version="2.0" type="UNINSTALL" id="bpel.facet.core.uninstall">
+               <delegate class="org.jboss.tools.bpel.runtimes.facets.BPELCoreFacetUninstallDelegate"/>
+        </action>
+
+		<category id="bpel.category">
+		  <label>%BPEL_FACET_CATEGORY_LABEL</label>
+		  <description>%BPEL_CORE_FACET_DESCRIPTION</description>
+		</category>
+		
+		<template id="jbt.template.bpel.core">
+    		<label>%BPEL_FACET_TEMPLATE_LABEL</label>
+       		<fixed facet="bpel.facet.core"/>
+	   </template>
+    	
+	</extension>
+
+	<!--
+	This facet is has been deprecated, but retained for backward compatibility
+	with JBoss 5.1.0 and SOA-P 5.1 and earlier
+	-->
 	<extension point="org.eclipse.wst.common.project.facet.core.facets">
 		
 		<project-facet id="jbt.bpel.facet.core">
-		  <label>%BPEL_CORE_FACET_LABEL</label>
-		  <description>%BPEL_CORE_FACET_DESCRIPTION</description>
+		  <label>%OLD_BPEL_CORE_FACET_LABEL</label>
+		  <description>%OLD_BPEL_CORE_FACET_DESCRIPTION</description>
 		</project-facet>
 		
 		<project-facet-version facet="jbt.bpel.facet.core" version="2.0">
@@ -80,20 +130,23 @@
             </and>
           </constraint>
         </project-facet-version>
+        
+		<category id="bpel.category">
+		  <label>%OLD_BPEL_FACET_CATEGORY_LABEL</label>
+		  <description>%OLD_BPEL_CORE_FACET_DESCRIPTION</description>
+		</category>
                 
-        <action facet="jbt.bpel.facet.core" version="2.0" type="INSTALL" id="bpel.facet.core.install">
+        <action facet="jbt.bpel.facet.core" version="2.0" type="INSTALL" id="jbt.bpel.facet.core.install">
                <delegate class="org.jboss.tools.bpel.runtimes.facets.BPELCoreFacetInstallDelegate"/>
-               <config-factory class="org.jboss.tools.bpel.runtimes.facets.BPELFacetInstallDataModelProvider"/>
+               <config-factory class="org.jboss.tools.bpel.runtimes.facets.JBT_BPELFacetInstallDataModelProvider"/>
         </action>
 
-			
-		<category id="bpel.category">
-		  <label>%BPEL_FACET_CATEGORY_LABEL</label>
-		  <description>%bpelCoreFacetDescription</description>
-		</category>
+        <action facet="jbt.bpel.facet.core" version="2.0" type="UNINSTALL" id="jbt.bpel.facet.core.uninstall">
+               <delegate class="org.jboss.tools.bpel.runtimes.facets.BPELCoreFacetUninstallDelegate"/>
+        </action>
 		
 		<template id="jbt.template.bpel.core">
-    		<label>%BPEL_FACET_TEMPLATE_LABEL</label>
+    		<label>%OLD_BPEL_FACET_TEMPLATE_LABEL</label>
        		<fixed facet="jbt.bpel.facet.core"/>
 	   </template>
     	
@@ -106,7 +159,7 @@
     <extension
          point="org.eclipse.wst.common.modulecore.componentimpl">
       <componentimpl
-            typeID="jbt.bpel.facet.core"
+            typeID="bpel.facet.core"
             class="org.jboss.tools.bpel.runtimes.facets.BPELVirtualComponent">
       </componentimpl>
    </extension>
@@ -117,7 +170,7 @@
 <!--=========================================================================-->		
 			
 	<extension point="org.eclipse.wst.common.project.facet.ui.images">
-    	<image facet="jbt.bpel.facet.core" path="icons/obj16/bpelfacet.gif"/>
+    	<image facet="bpel.facet.core" path="icons/obj16/bpelfacet.gif"/>
     </extension>
 
 <!--=========================================================================-->
@@ -263,5 +316,77 @@
 	      </includes>
 	   </viewerContentBinding>
 	</extension>
+ 
+ 
+ 
+ 
+ <extension
+         point="org.eclipse.wst.common.project.facet.core.runtimes">
+      <runtime-component-type id="org.jboss.ide.eclipse.as.runtime.stripped.component"/>
+      <runtime-component-version
+            type="org.jboss.ide.eclipse.as.runtime.stripped.component"
+            version="1.0"/>
+      <supported>
+        <runtime-component
+         	id="org.jboss.ide.eclipse.as.runtime.stripped.component"
+         	version="1.0"/>
+       <facet id="bpel.facet.core" version="1.2,2.0"/>
+     </supported>
+ </extension>
+
+   <extension
+         point="org.eclipse.wst.common.project.facet.core.runtimes">
+      		<runtime-component-type id="org.jboss.ide.eclipse.eap.runtime.component"/>
+      		<runtime-component-version
+            	type="org.jboss.ide.eclipse.eap.runtime.component"
+            	version="5.0"/>
+   			<supported>
+        		<runtime-component
+         			id="org.jboss.ide.eclipse.eap.runtime.component"
+         			version="5.0"/>
+                <facet id="bpel.facet.core" version="1.2,2.0"/>
+     		</supported>
+   </extension>
+		
+   <extension
+         point="org.eclipse.wst.common.project.facet.core.runtimes">
+      <runtime-component-type id="org.jboss.ide.eclipse.as.runtime.component"/>
+      <runtime-component-version
+            type="org.jboss.ide.eclipse.as.runtime.component"
+            version="5.1"/>
+      <runtime-component-version
+            type="org.jboss.ide.eclipse.as.runtime.component"
+            version="6.0"/>
+      <runtime-component-version
+            type="org.jboss.ide.eclipse.as.runtime.component"
+            version="7.0"/>
+
+      <supported>
+        <runtime-component version="5.1"
+         	id="org.jboss.ide.eclipse.as.runtime.component"/>
+        <facet id="bpel.facet.core" version="1.2,2.0"/>
+     </supported>
+
+      <supported>
+        <runtime-component version="5.1"
+         	id="org.jboss.ide.eclipse.as.runtime.component"/>
+        <facet id="jbt.bpel.facet.core" version="1.2,2.0"/>
+     </supported>
+
+      <supported>
+        <runtime-component version="6.0"
+         	id="org.jboss.ide.eclipse.as.runtime.component"/>
+        <facet id="bpel.facet.core" version="1.2,2.0"/>
+     </supported>
+
+      <supported>
+        <runtime-component version="7.0"
+         	id="org.jboss.ide.eclipse.as.runtime.component"/>
+        <facet id="bpel.facet.core" version="1.2,2.0"/>
+     </supported>
+
+   </extension>
+ 
+ 
  
 </plugin>

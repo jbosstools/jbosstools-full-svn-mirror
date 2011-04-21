@@ -24,8 +24,7 @@ import org.eclipse.wst.wsdl.ExtensibleElement;
  */
 public class SetExtensibilityElementCommand extends AutoUndoCommand {
 
-	int oldIndex, newIndex;
-	
+	int oldIndex;
 	boolean initialized = false;
 	
 	ExtensibleElement target;

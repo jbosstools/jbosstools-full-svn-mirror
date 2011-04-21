@@ -11,11 +11,7 @@
 package org.eclipse.bpel.validator.rules;
 
 
-import java.util.List;
-
-
 import org.eclipse.bpel.validator.model.Filters;
-import org.eclipse.bpel.validator.model.INode;
 
 
 /**
@@ -28,9 +24,6 @@ import org.eclipse.bpel.validator.model.INode;
  */
 
 public class SequenceValidator extends CActivityValidator {
-			
-	
-	List<INode>   activities ;	
 	
 	/**
 	 * @see org.eclipse.bpel.validator.rules.CActivityValidator#checkChildren()

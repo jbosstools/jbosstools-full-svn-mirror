@@ -50,7 +50,13 @@ public class Factory implements IFactory<Validator> {
 		String nsURI = qname.getNamespaceURI();
 		
 		if (nsURI.equals(IConstants.XMLNS_BPEL) || nsURI.equals(IConstants.XMLNS_BPEL20_OLD)) {
-			return createValidator ( qname.getLocalPart() );			
+			// Bugzilla 324165
+			// https://issues.jboss.org/browse/JBIDE-6825
+			// handle unknown BPEL elements
+			Validator validator = createValidator ( qname.getLocalPart() );
+			if (validator==null)
+				validator = new UnknownElementValidator();
+			return validator;
 		}
 		
 		return null;	

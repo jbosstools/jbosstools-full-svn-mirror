@@ -21,15 +21,24 @@ import org.eclipse.wst.wsdl.Definition;
  */
 public class MessageTypeContentProvider extends AbstractContentProvider  {
 
+	// https://issues.jboss.org/browse/JBIDE-8075
+	// provide a filter for enabling/disabling selection of Messages
+	private boolean showMessages = true;
+	
 	@Override
 	public void collectElements ( Object input, List list) {
 		
-		if (input instanceof Definition) {
-			list.addAll( ((Definition)input).getEMessages() );
-			return;
+		if (showMessages) {
+			if (input instanceof Definition) {
+				list.addAll( ((Definition)input).getEMessages() );
+				return;
+			}
+			
+			collectComplex( input, list);
 		}
-		
-		collectComplex( input, list);
 	}
-		
+
+	public void setFilter(int filter) {
+		showMessages = (filter!=0);
+	}
 }

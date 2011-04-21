@@ -10,16 +10,19 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: BPELSwitch.java,v 1.25 2008/02/28 17:33:21 smoser Exp $
+ * $Id: BPELSwitch.java,v 1.27 2011/03/31 14:04:42 rbrodt Exp $
  */
 package org.eclipse.bpel.model.util;
 
 import java.util.List;
 
+import javax.wsdl.extensions.AttributeExtensible;
+import javax.wsdl.extensions.ElementExtensible;
 import javax.wsdl.extensions.ExtensibilityElement;
 
 import org.eclipse.bpel.model.Activity;
 import org.eclipse.bpel.model.Assign;
+import org.eclipse.bpel.model.BPELExtensibleElement;
 import org.eclipse.bpel.model.BPELPackage;
 import org.eclipse.bpel.model.BooleanExpression;
 import org.eclipse.bpel.model.Branches;
@@ -42,7 +45,6 @@ import org.eclipse.bpel.model.Empty;
 import org.eclipse.bpel.model.EventHandler;
 import org.eclipse.bpel.model.Exit;
 import org.eclipse.bpel.model.Expression;
-import org.eclipse.bpel.model.ExtensibleElement;
 import org.eclipse.bpel.model.Extension;
 import org.eclipse.bpel.model.ExtensionActivity;
 import org.eclipse.bpel.model.Extensions;
@@ -92,6 +94,7 @@ import org.eclipse.bpel.model.Wait;
 import org.eclipse.bpel.model.While;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.wst.wsdl.ExtensibleElement;
 import org.eclipse.wst.wsdl.UnknownExtensibilityElement;
 import org.eclipse.wst.wsdl.WSDLElement;
 
@@ -170,11 +173,15 @@ public class BPELSwitch<T> {
 			org.eclipse.bpel.model.Process process = (org.eclipse.bpel.model.Process) theEObject;
 			T result = caseProcess(process);
 			if (result == null)
+				result = caseBPELExtensibleElement(process);
+			if (result == null)
 				result = caseExtensibleElement(process);
 			if (result == null)
-				result = caseExtensibleElement_1(process);
-			if (result == null)
 				result = caseWSDLElement(process);
+			if (result == null)
+				result = caseIElementExtensible(process);
+			if (result == null)
+				result = caseIAttributeExtensible(process);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -183,11 +190,15 @@ public class BPELSwitch<T> {
 			PartnerLink partnerLink = (PartnerLink) theEObject;
 			T result = casePartnerLink(partnerLink);
 			if (result == null)
+				result = caseBPELExtensibleElement(partnerLink);
+			if (result == null)
 				result = caseExtensibleElement(partnerLink);
 			if (result == null)
-				result = caseExtensibleElement_1(partnerLink);
-			if (result == null)
 				result = caseWSDLElement(partnerLink);
+			if (result == null)
+				result = caseIElementExtensible(partnerLink);
+			if (result == null)
+				result = caseIAttributeExtensible(partnerLink);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -196,11 +207,15 @@ public class BPELSwitch<T> {
 			FaultHandler faultHandler = (FaultHandler) theEObject;
 			T result = caseFaultHandler(faultHandler);
 			if (result == null)
+				result = caseBPELExtensibleElement(faultHandler);
+			if (result == null)
 				result = caseExtensibleElement(faultHandler);
 			if (result == null)
-				result = caseExtensibleElement_1(faultHandler);
-			if (result == null)
 				result = caseWSDLElement(faultHandler);
+			if (result == null)
+				result = caseIElementExtensible(faultHandler);
+			if (result == null)
+				result = caseIAttributeExtensible(faultHandler);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -209,11 +224,15 @@ public class BPELSwitch<T> {
 			Activity activity = (Activity) theEObject;
 			T result = caseActivity(activity);
 			if (result == null)
+				result = caseBPELExtensibleElement(activity);
+			if (result == null)
 				result = caseExtensibleElement(activity);
 			if (result == null)
-				result = caseExtensibleElement_1(activity);
-			if (result == null)
 				result = caseWSDLElement(activity);
+			if (result == null)
+				result = caseIElementExtensible(activity);
+			if (result == null)
+				result = caseIAttributeExtensible(activity);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -222,11 +241,15 @@ public class BPELSwitch<T> {
 			CorrelationSet correlationSet = (CorrelationSet) theEObject;
 			T result = caseCorrelationSet(correlationSet);
 			if (result == null)
+				result = caseBPELExtensibleElement(correlationSet);
+			if (result == null)
 				result = caseExtensibleElement(correlationSet);
 			if (result == null)
-				result = caseExtensibleElement_1(correlationSet);
-			if (result == null)
 				result = caseWSDLElement(correlationSet);
+			if (result == null)
+				result = caseIElementExtensible(correlationSet);
+			if (result == null)
+				result = caseIAttributeExtensible(correlationSet);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -239,11 +262,15 @@ public class BPELSwitch<T> {
 			if (result == null)
 				result = caseActivity(invoke);
 			if (result == null)
+				result = caseBPELExtensibleElement(invoke);
+			if (result == null)
 				result = caseExtensibleElement(invoke);
 			if (result == null)
-				result = caseExtensibleElement_1(invoke);
-			if (result == null)
 				result = caseWSDLElement(invoke);
+			if (result == null)
+				result = caseIElementExtensible(invoke);
+			if (result == null)
+				result = caseIAttributeExtensible(invoke);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -252,11 +279,15 @@ public class BPELSwitch<T> {
 			Link link = (Link) theEObject;
 			T result = caseLink(link);
 			if (result == null)
+				result = caseBPELExtensibleElement(link);
+			if (result == null)
 				result = caseExtensibleElement(link);
 			if (result == null)
-				result = caseExtensibleElement_1(link);
-			if (result == null)
 				result = caseWSDLElement(link);
+			if (result == null)
+				result = caseIElementExtensible(link);
+			if (result == null)
+				result = caseIAttributeExtensible(link);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -265,11 +296,15 @@ public class BPELSwitch<T> {
 			Catch catch_ = (Catch) theEObject;
 			T result = caseCatch(catch_);
 			if (result == null)
+				result = caseBPELExtensibleElement(catch_);
+			if (result == null)
 				result = caseExtensibleElement(catch_);
 			if (result == null)
-				result = caseExtensibleElement_1(catch_);
-			if (result == null)
 				result = caseWSDLElement(catch_);
+			if (result == null)
+				result = caseIElementExtensible(catch_);
+			if (result == null)
+				result = caseIAttributeExtensible(catch_);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -282,11 +317,15 @@ public class BPELSwitch<T> {
 			if (result == null)
 				result = caseActivity(reply);
 			if (result == null)
+				result = caseBPELExtensibleElement(reply);
+			if (result == null)
 				result = caseExtensibleElement(reply);
 			if (result == null)
-				result = caseExtensibleElement_1(reply);
-			if (result == null)
 				result = caseWSDLElement(reply);
+			if (result == null)
+				result = caseIElementExtensible(reply);
+			if (result == null)
+				result = caseIAttributeExtensible(reply);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -297,11 +336,15 @@ public class BPELSwitch<T> {
 			if (result == null)
 				result = caseActivity(partnerActivity);
 			if (result == null)
+				result = caseBPELExtensibleElement(partnerActivity);
+			if (result == null)
 				result = caseExtensibleElement(partnerActivity);
 			if (result == null)
-				result = caseExtensibleElement_1(partnerActivity);
-			if (result == null)
 				result = caseWSDLElement(partnerActivity);
+			if (result == null)
+				result = caseIElementExtensible(partnerActivity);
+			if (result == null)
+				result = caseIAttributeExtensible(partnerActivity);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -314,11 +357,15 @@ public class BPELSwitch<T> {
 			if (result == null)
 				result = caseActivity(receive);
 			if (result == null)
+				result = caseBPELExtensibleElement(receive);
+			if (result == null)
 				result = caseExtensibleElement(receive);
 			if (result == null)
-				result = caseExtensibleElement_1(receive);
-			if (result == null)
 				result = caseWSDLElement(receive);
+			if (result == null)
+				result = caseIElementExtensible(receive);
+			if (result == null)
+				result = caseIAttributeExtensible(receive);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -329,11 +376,15 @@ public class BPELSwitch<T> {
 			if (result == null)
 				result = caseActivity(exit);
 			if (result == null)
+				result = caseBPELExtensibleElement(exit);
+			if (result == null)
 				result = caseExtensibleElement(exit);
 			if (result == null)
-				result = caseExtensibleElement_1(exit);
-			if (result == null)
 				result = caseWSDLElement(exit);
+			if (result == null)
+				result = caseIElementExtensible(exit);
+			if (result == null)
+				result = caseIAttributeExtensible(exit);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -344,11 +395,15 @@ public class BPELSwitch<T> {
 			if (result == null)
 				result = caseActivity(throw_);
 			if (result == null)
+				result = caseBPELExtensibleElement(throw_);
+			if (result == null)
 				result = caseExtensibleElement(throw_);
 			if (result == null)
-				result = caseExtensibleElement_1(throw_);
-			if (result == null)
 				result = caseWSDLElement(throw_);
+			if (result == null)
+				result = caseIElementExtensible(throw_);
+			if (result == null)
+				result = caseIAttributeExtensible(throw_);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -359,11 +414,15 @@ public class BPELSwitch<T> {
 			if (result == null)
 				result = caseActivity(wait);
 			if (result == null)
+				result = caseBPELExtensibleElement(wait);
+			if (result == null)
 				result = caseExtensibleElement(wait);
 			if (result == null)
-				result = caseExtensibleElement_1(wait);
-			if (result == null)
 				result = caseWSDLElement(wait);
+			if (result == null)
+				result = caseIElementExtensible(wait);
+			if (result == null)
+				result = caseIAttributeExtensible(wait);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -374,11 +433,15 @@ public class BPELSwitch<T> {
 			if (result == null)
 				result = caseActivity(empty);
 			if (result == null)
+				result = caseBPELExtensibleElement(empty);
+			if (result == null)
 				result = caseExtensibleElement(empty);
 			if (result == null)
-				result = caseExtensibleElement_1(empty);
-			if (result == null)
 				result = caseWSDLElement(empty);
+			if (result == null)
+				result = caseIElementExtensible(empty);
+			if (result == null)
+				result = caseIAttributeExtensible(empty);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -389,11 +452,15 @@ public class BPELSwitch<T> {
 			if (result == null)
 				result = caseActivity(sequence);
 			if (result == null)
+				result = caseBPELExtensibleElement(sequence);
+			if (result == null)
 				result = caseExtensibleElement(sequence);
 			if (result == null)
-				result = caseExtensibleElement_1(sequence);
-			if (result == null)
 				result = caseWSDLElement(sequence);
+			if (result == null)
+				result = caseIElementExtensible(sequence);
+			if (result == null)
+				result = caseIAttributeExtensible(sequence);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -404,11 +471,15 @@ public class BPELSwitch<T> {
 			if (result == null)
 				result = caseActivity(while_);
 			if (result == null)
+				result = caseBPELExtensibleElement(while_);
+			if (result == null)
 				result = caseExtensibleElement(while_);
 			if (result == null)
-				result = caseExtensibleElement_1(while_);
-			if (result == null)
 				result = caseWSDLElement(while_);
+			if (result == null)
+				result = caseIElementExtensible(while_);
+			if (result == null)
+				result = caseIAttributeExtensible(while_);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -419,11 +490,15 @@ public class BPELSwitch<T> {
 			if (result == null)
 				result = caseActivity(pick);
 			if (result == null)
+				result = caseBPELExtensibleElement(pick);
+			if (result == null)
 				result = caseExtensibleElement(pick);
 			if (result == null)
-				result = caseExtensibleElement_1(pick);
-			if (result == null)
 				result = caseWSDLElement(pick);
+			if (result == null)
+				result = caseIElementExtensible(pick);
+			if (result == null)
+				result = caseIAttributeExtensible(pick);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -434,11 +509,15 @@ public class BPELSwitch<T> {
 			if (result == null)
 				result = caseActivity(flow);
 			if (result == null)
+				result = caseBPELExtensibleElement(flow);
+			if (result == null)
 				result = caseExtensibleElement(flow);
 			if (result == null)
-				result = caseExtensibleElement_1(flow);
-			if (result == null)
 				result = caseWSDLElement(flow);
+			if (result == null)
+				result = caseIElementExtensible(flow);
+			if (result == null)
+				result = caseIAttributeExtensible(flow);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -447,11 +526,15 @@ public class BPELSwitch<T> {
 			OnAlarm onAlarm = (OnAlarm) theEObject;
 			T result = caseOnAlarm(onAlarm);
 			if (result == null)
+				result = caseBPELExtensibleElement(onAlarm);
+			if (result == null)
 				result = caseExtensibleElement(onAlarm);
 			if (result == null)
-				result = caseExtensibleElement_1(onAlarm);
-			if (result == null)
 				result = caseWSDLElement(onAlarm);
+			if (result == null)
+				result = caseIElementExtensible(onAlarm);
+			if (result == null)
+				result = caseIAttributeExtensible(onAlarm);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -462,11 +545,15 @@ public class BPELSwitch<T> {
 			if (result == null)
 				result = caseActivity(assign);
 			if (result == null)
+				result = caseBPELExtensibleElement(assign);
+			if (result == null)
 				result = caseExtensibleElement(assign);
 			if (result == null)
-				result = caseExtensibleElement_1(assign);
-			if (result == null)
 				result = caseWSDLElement(assign);
+			if (result == null)
+				result = caseIElementExtensible(assign);
+			if (result == null)
+				result = caseIAttributeExtensible(assign);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -475,11 +562,15 @@ public class BPELSwitch<T> {
 			Copy copy = (Copy) theEObject;
 			T result = caseCopy(copy);
 			if (result == null)
+				result = caseBPELExtensibleElement(copy);
+			if (result == null)
 				result = caseExtensibleElement(copy);
 			if (result == null)
-				result = caseExtensibleElement_1(copy);
-			if (result == null)
 				result = caseWSDLElement(copy);
+			if (result == null)
+				result = caseIElementExtensible(copy);
+			if (result == null)
+				result = caseIAttributeExtensible(copy);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -488,11 +579,15 @@ public class BPELSwitch<T> {
 			Extension extension = (Extension) theEObject;
 			T result = caseExtension(extension);
 			if (result == null)
+				result = caseBPELExtensibleElement(extension);
+			if (result == null)
 				result = caseExtensibleElement(extension);
 			if (result == null)
-				result = caseExtensibleElement_1(extension);
-			if (result == null)
 				result = caseWSDLElement(extension);
+			if (result == null)
+				result = caseIElementExtensible(extension);
+			if (result == null)
+				result = caseIAttributeExtensible(extension);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -503,11 +598,15 @@ public class BPELSwitch<T> {
 			if (result == null)
 				result = caseActivity(scope);
 			if (result == null)
+				result = caseBPELExtensibleElement(scope);
+			if (result == null)
 				result = caseExtensibleElement(scope);
 			if (result == null)
-				result = caseExtensibleElement_1(scope);
-			if (result == null)
 				result = caseWSDLElement(scope);
+			if (result == null)
+				result = caseIElementExtensible(scope);
+			if (result == null)
+				result = caseIAttributeExtensible(scope);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -518,11 +617,15 @@ public class BPELSwitch<T> {
 			if (result == null)
 				result = caseActivity(compensateScope);
 			if (result == null)
+				result = caseBPELExtensibleElement(compensateScope);
+			if (result == null)
 				result = caseExtensibleElement(compensateScope);
 			if (result == null)
-				result = caseExtensibleElement_1(compensateScope);
-			if (result == null)
 				result = caseWSDLElement(compensateScope);
+			if (result == null)
+				result = caseIElementExtensible(compensateScope);
+			if (result == null)
+				result = caseIAttributeExtensible(compensateScope);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -531,11 +634,15 @@ public class BPELSwitch<T> {
 			CompensationHandler compensationHandler = (CompensationHandler) theEObject;
 			T result = caseCompensationHandler(compensationHandler);
 			if (result == null)
+				result = caseBPELExtensibleElement(compensationHandler);
+			if (result == null)
 				result = caseExtensibleElement(compensationHandler);
 			if (result == null)
-				result = caseExtensibleElement_1(compensationHandler);
-			if (result == null)
 				result = caseWSDLElement(compensationHandler);
+			if (result == null)
+				result = caseIElementExtensible(compensationHandler);
+			if (result == null)
+				result = caseIAttributeExtensible(compensationHandler);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -544,11 +651,15 @@ public class BPELSwitch<T> {
 			To to = (To) theEObject;
 			T result = caseTo(to);
 			if (result == null)
+				result = caseBPELExtensibleElement(to);
+			if (result == null)
 				result = caseExtensibleElement(to);
 			if (result == null)
-				result = caseExtensibleElement_1(to);
-			if (result == null)
 				result = caseWSDLElement(to);
+			if (result == null)
+				result = caseIElementExtensible(to);
+			if (result == null)
+				result = caseIAttributeExtensible(to);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -557,11 +668,15 @@ public class BPELSwitch<T> {
 			From from = (From) theEObject;
 			T result = caseFrom(from);
 			if (result == null)
+				result = caseBPELExtensibleElement(from);
+			if (result == null)
 				result = caseExtensibleElement(from);
 			if (result == null)
-				result = caseExtensibleElement_1(from);
-			if (result == null)
 				result = caseWSDLElement(from);
+			if (result == null)
+				result = caseIElementExtensible(from);
+			if (result == null)
+				result = caseIAttributeExtensible(from);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -570,11 +685,15 @@ public class BPELSwitch<T> {
 			OnMessage onMessage = (OnMessage) theEObject;
 			T result = caseOnMessage(onMessage);
 			if (result == null)
+				result = caseBPELExtensibleElement(onMessage);
+			if (result == null)
 				result = caseExtensibleElement(onMessage);
 			if (result == null)
-				result = caseExtensibleElement_1(onMessage);
-			if (result == null)
 				result = caseWSDLElement(onMessage);
+			if (result == null)
+				result = caseIElementExtensible(onMessage);
+			if (result == null)
+				result = caseIAttributeExtensible(onMessage);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -611,11 +730,15 @@ public class BPELSwitch<T> {
 			Correlation correlation = (Correlation) theEObject;
 			T result = caseCorrelation(correlation);
 			if (result == null)
+				result = caseBPELExtensibleElement(correlation);
+			if (result == null)
 				result = caseExtensibleElement(correlation);
 			if (result == null)
-				result = caseExtensibleElement_1(correlation);
-			if (result == null)
 				result = caseWSDLElement(correlation);
+			if (result == null)
+				result = caseIElementExtensible(correlation);
+			if (result == null)
+				result = caseIAttributeExtensible(correlation);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -624,11 +747,15 @@ public class BPELSwitch<T> {
 			MessageExchange messageExchange = (MessageExchange) theEObject;
 			T result = caseMessageExchange(messageExchange);
 			if (result == null)
+				result = caseBPELExtensibleElement(messageExchange);
+			if (result == null)
 				result = caseExtensibleElement(messageExchange);
 			if (result == null)
-				result = caseExtensibleElement_1(messageExchange);
-			if (result == null)
 				result = caseWSDLElement(messageExchange);
+			if (result == null)
+				result = caseIElementExtensible(messageExchange);
+			if (result == null)
+				result = caseIAttributeExtensible(messageExchange);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -637,11 +764,15 @@ public class BPELSwitch<T> {
 			EventHandler eventHandler = (EventHandler) theEObject;
 			T result = caseEventHandler(eventHandler);
 			if (result == null)
+				result = caseBPELExtensibleElement(eventHandler);
+			if (result == null)
 				result = caseExtensibleElement(eventHandler);
 			if (result == null)
-				result = caseExtensibleElement_1(eventHandler);
-			if (result == null)
 				result = caseWSDLElement(eventHandler);
+			if (result == null)
+				result = caseIElementExtensible(eventHandler);
+			if (result == null)
+				result = caseIAttributeExtensible(eventHandler);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -650,11 +781,15 @@ public class BPELSwitch<T> {
 			Source source = (Source) theEObject;
 			T result = caseSource(source);
 			if (result == null)
+				result = caseBPELExtensibleElement(source);
+			if (result == null)
 				result = caseExtensibleElement(source);
 			if (result == null)
-				result = caseExtensibleElement_1(source);
-			if (result == null)
 				result = caseWSDLElement(source);
+			if (result == null)
+				result = caseIElementExtensible(source);
+			if (result == null)
+				result = caseIAttributeExtensible(source);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -663,11 +798,15 @@ public class BPELSwitch<T> {
 			Target target = (Target) theEObject;
 			T result = caseTarget(target);
 			if (result == null)
+				result = caseBPELExtensibleElement(target);
+			if (result == null)
 				result = caseExtensibleElement(target);
 			if (result == null)
-				result = caseExtensibleElement_1(target);
-			if (result == null)
 				result = caseWSDLElement(target);
+			if (result == null)
+				result = caseIElementExtensible(target);
+			if (result == null)
+				result = caseIAttributeExtensible(target);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -676,11 +815,15 @@ public class BPELSwitch<T> {
 			PartnerLinks partnerLinks = (PartnerLinks) theEObject;
 			T result = casePartnerLinks(partnerLinks);
 			if (result == null)
+				result = caseBPELExtensibleElement(partnerLinks);
+			if (result == null)
 				result = caseExtensibleElement(partnerLinks);
 			if (result == null)
-				result = caseExtensibleElement_1(partnerLinks);
-			if (result == null)
 				result = caseWSDLElement(partnerLinks);
+			if (result == null)
+				result = caseIElementExtensible(partnerLinks);
+			if (result == null)
+				result = caseIAttributeExtensible(partnerLinks);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -689,11 +832,15 @@ public class BPELSwitch<T> {
 			MessageExchanges messageExchanges = (MessageExchanges) theEObject;
 			T result = caseMessageExchanges(messageExchanges);
 			if (result == null)
+				result = caseBPELExtensibleElement(messageExchanges);
+			if (result == null)
 				result = caseExtensibleElement(messageExchanges);
 			if (result == null)
-				result = caseExtensibleElement_1(messageExchanges);
-			if (result == null)
 				result = caseWSDLElement(messageExchanges);
+			if (result == null)
+				result = caseIElementExtensible(messageExchanges);
+			if (result == null)
+				result = caseIAttributeExtensible(messageExchanges);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -702,11 +849,15 @@ public class BPELSwitch<T> {
 			Variables variables = (Variables) theEObject;
 			T result = caseVariables(variables);
 			if (result == null)
+				result = caseBPELExtensibleElement(variables);
+			if (result == null)
 				result = caseExtensibleElement(variables);
 			if (result == null)
-				result = caseExtensibleElement_1(variables);
-			if (result == null)
 				result = caseWSDLElement(variables);
+			if (result == null)
+				result = caseIElementExtensible(variables);
+			if (result == null)
+				result = caseIAttributeExtensible(variables);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -715,11 +866,15 @@ public class BPELSwitch<T> {
 			CorrelationSets correlationSets = (CorrelationSets) theEObject;
 			T result = caseCorrelationSets(correlationSets);
 			if (result == null)
+				result = caseBPELExtensibleElement(correlationSets);
+			if (result == null)
 				result = caseExtensibleElement(correlationSets);
 			if (result == null)
-				result = caseExtensibleElement_1(correlationSets);
-			if (result == null)
 				result = caseWSDLElement(correlationSets);
+			if (result == null)
+				result = caseIElementExtensible(correlationSets);
+			if (result == null)
+				result = caseIAttributeExtensible(correlationSets);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -728,11 +883,15 @@ public class BPELSwitch<T> {
 			Links links = (Links) theEObject;
 			T result = caseLinks(links);
 			if (result == null)
+				result = caseBPELExtensibleElement(links);
+			if (result == null)
 				result = caseExtensibleElement(links);
 			if (result == null)
-				result = caseExtensibleElement_1(links);
-			if (result == null)
 				result = caseWSDLElement(links);
+			if (result == null)
+				result = caseIElementExtensible(links);
+			if (result == null)
+				result = caseIAttributeExtensible(links);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -741,11 +900,15 @@ public class BPELSwitch<T> {
 			CatchAll catchAll = (CatchAll) theEObject;
 			T result = caseCatchAll(catchAll);
 			if (result == null)
+				result = caseBPELExtensibleElement(catchAll);
+			if (result == null)
 				result = caseExtensibleElement(catchAll);
 			if (result == null)
-				result = caseExtensibleElement_1(catchAll);
-			if (result == null)
 				result = caseWSDLElement(catchAll);
+			if (result == null)
+				result = caseIElementExtensible(catchAll);
+			if (result == null)
+				result = caseIAttributeExtensible(catchAll);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -754,11 +917,15 @@ public class BPELSwitch<T> {
 			Correlations correlations = (Correlations) theEObject;
 			T result = caseCorrelations(correlations);
 			if (result == null)
+				result = caseBPELExtensibleElement(correlations);
+			if (result == null)
 				result = caseExtensibleElement(correlations);
 			if (result == null)
-				result = caseExtensibleElement_1(correlations);
-			if (result == null)
 				result = caseWSDLElement(correlations);
+			if (result == null)
+				result = caseIElementExtensible(correlations);
+			if (result == null)
+				result = caseIAttributeExtensible(correlations);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -767,11 +934,15 @@ public class BPELSwitch<T> {
 			Variable variable = (Variable) theEObject;
 			T result = caseVariable(variable);
 			if (result == null)
+				result = caseBPELExtensibleElement(variable);
+			if (result == null)
 				result = caseExtensibleElement(variable);
 			if (result == null)
-				result = caseExtensibleElement_1(variable);
-			if (result == null)
 				result = caseWSDLElement(variable);
+			if (result == null)
+				result = caseIElementExtensible(variable);
+			if (result == null)
+				result = caseIAttributeExtensible(variable);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -795,11 +966,15 @@ public class BPELSwitch<T> {
 			OnEvent onEvent = (OnEvent) theEObject;
 			T result = caseOnEvent(onEvent);
 			if (result == null)
+				result = caseBPELExtensibleElement(onEvent);
+			if (result == null)
 				result = caseExtensibleElement(onEvent);
 			if (result == null)
-				result = caseExtensibleElement_1(onEvent);
-			if (result == null)
 				result = caseWSDLElement(onEvent);
+			if (result == null)
+				result = caseIElementExtensible(onEvent);
+			if (result == null)
+				result = caseIAttributeExtensible(onEvent);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -808,11 +983,15 @@ public class BPELSwitch<T> {
 			Import import_ = (Import) theEObject;
 			T result = caseImport(import_);
 			if (result == null)
+				result = caseBPELExtensibleElement(import_);
+			if (result == null)
 				result = caseExtensibleElement(import_);
 			if (result == null)
-				result = caseExtensibleElement_1(import_);
-			if (result == null)
 				result = caseWSDLElement(import_);
+			if (result == null)
+				result = caseIElementExtensible(import_);
+			if (result == null)
+				result = caseIAttributeExtensible(import_);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -823,11 +1002,15 @@ public class BPELSwitch<T> {
 			if (result == null)
 				result = caseActivity(rethrow);
 			if (result == null)
+				result = caseBPELExtensibleElement(rethrow);
+			if (result == null)
 				result = caseExtensibleElement(rethrow);
 			if (result == null)
-				result = caseExtensibleElement_1(rethrow);
-			if (result == null)
 				result = caseWSDLElement(rethrow);
+			if (result == null)
+				result = caseIElementExtensible(rethrow);
+			if (result == null)
+				result = caseIAttributeExtensible(rethrow);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -851,11 +1034,15 @@ public class BPELSwitch<T> {
 			Targets targets = (Targets) theEObject;
 			T result = caseTargets(targets);
 			if (result == null)
+				result = caseBPELExtensibleElement(targets);
+			if (result == null)
 				result = caseExtensibleElement(targets);
 			if (result == null)
-				result = caseExtensibleElement_1(targets);
-			if (result == null)
 				result = caseWSDLElement(targets);
+			if (result == null)
+				result = caseIElementExtensible(targets);
+			if (result == null)
+				result = caseIAttributeExtensible(targets);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -864,11 +1051,15 @@ public class BPELSwitch<T> {
 			Sources sources = (Sources) theEObject;
 			T result = caseSources(sources);
 			if (result == null)
+				result = caseBPELExtensibleElement(sources);
+			if (result == null)
 				result = caseExtensibleElement(sources);
 			if (result == null)
-				result = caseExtensibleElement_1(sources);
-			if (result == null)
 				result = caseWSDLElement(sources);
+			if (result == null)
+				result = caseIElementExtensible(sources);
+			if (result == null)
+				result = caseIAttributeExtensible(sources);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -886,9 +1077,13 @@ public class BPELSwitch<T> {
 			ServiceRef serviceRef = (ServiceRef) theEObject;
 			T result = caseServiceRef(serviceRef);
 			if (result == null)
-				result = caseExtensibleElement_1(serviceRef);
+				result = caseExtensibleElement(serviceRef);
 			if (result == null)
 				result = caseWSDLElement(serviceRef);
+			if (result == null)
+				result = caseIElementExtensible(serviceRef);
+			if (result == null)
+				result = caseIAttributeExtensible(serviceRef);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -897,11 +1092,15 @@ public class BPELSwitch<T> {
 			Extensions extensions = (Extensions) theEObject;
 			T result = caseExtensions(extensions);
 			if (result == null)
+				result = caseBPELExtensibleElement(extensions);
+			if (result == null)
 				result = caseExtensibleElement(extensions);
 			if (result == null)
-				result = caseExtensibleElement_1(extensions);
-			if (result == null)
 				result = caseWSDLElement(extensions);
+			if (result == null)
+				result = caseIElementExtensible(extensions);
+			if (result == null)
+				result = caseIAttributeExtensible(extensions);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -912,11 +1111,15 @@ public class BPELSwitch<T> {
 			if (result == null)
 				result = caseActivity(extensionActivity);
 			if (result == null)
+				result = caseBPELExtensibleElement(extensionActivity);
+			if (result == null)
 				result = caseExtensibleElement(extensionActivity);
 			if (result == null)
-				result = caseExtensibleElement_1(extensionActivity);
-			if (result == null)
 				result = caseWSDLElement(extensionActivity);
+			if (result == null)
+				result = caseIElementExtensible(extensionActivity);
+			if (result == null)
+				result = caseIAttributeExtensible(extensionActivity);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -925,11 +1128,15 @@ public class BPELSwitch<T> {
 			FromPart fromPart = (FromPart) theEObject;
 			T result = caseFromPart(fromPart);
 			if (result == null)
+				result = caseBPELExtensibleElement(fromPart);
+			if (result == null)
 				result = caseExtensibleElement(fromPart);
 			if (result == null)
-				result = caseExtensibleElement_1(fromPart);
-			if (result == null)
 				result = caseWSDLElement(fromPart);
+			if (result == null)
+				result = caseIElementExtensible(fromPart);
+			if (result == null)
+				result = caseIAttributeExtensible(fromPart);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -938,11 +1145,15 @@ public class BPELSwitch<T> {
 			ToPart toPart = (ToPart) theEObject;
 			T result = caseToPart(toPart);
 			if (result == null)
+				result = caseBPELExtensibleElement(toPart);
+			if (result == null)
 				result = caseExtensibleElement(toPart);
 			if (result == null)
-				result = caseExtensibleElement_1(toPart);
-			if (result == null)
 				result = caseWSDLElement(toPart);
+			if (result == null)
+				result = caseIElementExtensible(toPart);
+			if (result == null)
+				result = caseIAttributeExtensible(toPart);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -953,11 +1164,15 @@ public class BPELSwitch<T> {
 			if (result == null)
 				result = caseActivity(opaqueActivity);
 			if (result == null)
+				result = caseBPELExtensibleElement(opaqueActivity);
+			if (result == null)
 				result = caseExtensibleElement(opaqueActivity);
 			if (result == null)
-				result = caseExtensibleElement_1(opaqueActivity);
-			if (result == null)
 				result = caseWSDLElement(opaqueActivity);
+			if (result == null)
+				result = caseIElementExtensible(opaqueActivity);
+			if (result == null)
+				result = caseIAttributeExtensible(opaqueActivity);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -968,11 +1183,15 @@ public class BPELSwitch<T> {
 			if (result == null)
 				result = caseActivity(forEach);
 			if (result == null)
+				result = caseBPELExtensibleElement(forEach);
+			if (result == null)
 				result = caseExtensibleElement(forEach);
 			if (result == null)
-				result = caseExtensibleElement_1(forEach);
-			if (result == null)
 				result = caseWSDLElement(forEach);
+			if (result == null)
+				result = caseIElementExtensible(forEach);
+			if (result == null)
+				result = caseIAttributeExtensible(forEach);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -983,11 +1202,15 @@ public class BPELSwitch<T> {
 			if (result == null)
 				result = caseActivity(repeatUntil);
 			if (result == null)
+				result = caseBPELExtensibleElement(repeatUntil);
+			if (result == null)
 				result = caseExtensibleElement(repeatUntil);
 			if (result == null)
-				result = caseExtensibleElement_1(repeatUntil);
-			if (result == null)
 				result = caseWSDLElement(repeatUntil);
+			if (result == null)
+				result = caseIElementExtensible(repeatUntil);
+			if (result == null)
+				result = caseIAttributeExtensible(repeatUntil);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -996,11 +1219,15 @@ public class BPELSwitch<T> {
 			TerminationHandler terminationHandler = (TerminationHandler) theEObject;
 			T result = caseTerminationHandler(terminationHandler);
 			if (result == null)
+				result = caseBPELExtensibleElement(terminationHandler);
+			if (result == null)
 				result = caseExtensibleElement(terminationHandler);
 			if (result == null)
-				result = caseExtensibleElement_1(terminationHandler);
-			if (result == null)
 				result = caseWSDLElement(terminationHandler);
+			if (result == null)
+				result = caseIElementExtensible(terminationHandler);
+			if (result == null)
+				result = caseIAttributeExtensible(terminationHandler);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -1011,11 +1238,15 @@ public class BPELSwitch<T> {
 			if (result == null)
 				result = caseActivity(validate);
 			if (result == null)
+				result = caseBPELExtensibleElement(validate);
+			if (result == null)
 				result = caseExtensibleElement(validate);
 			if (result == null)
-				result = caseExtensibleElement_1(validate);
-			if (result == null)
 				result = caseWSDLElement(validate);
+			if (result == null)
+				result = caseIElementExtensible(validate);
+			if (result == null)
+				result = caseIAttributeExtensible(validate);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -1026,11 +1257,15 @@ public class BPELSwitch<T> {
 			if (result == null)
 				result = caseActivity(if_);
 			if (result == null)
+				result = caseBPELExtensibleElement(if_);
+			if (result == null)
 				result = caseExtensibleElement(if_);
 			if (result == null)
-				result = caseExtensibleElement_1(if_);
-			if (result == null)
 				result = caseWSDLElement(if_);
+			if (result == null)
+				result = caseIElementExtensible(if_);
+			if (result == null)
+				result = caseIAttributeExtensible(if_);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -1039,11 +1274,15 @@ public class BPELSwitch<T> {
 			ElseIf elseIf = (ElseIf) theEObject;
 			T result = caseElseIf(elseIf);
 			if (result == null)
+				result = caseBPELExtensibleElement(elseIf);
+			if (result == null)
 				result = caseExtensibleElement(elseIf);
 			if (result == null)
-				result = caseExtensibleElement_1(elseIf);
-			if (result == null)
 				result = caseWSDLElement(elseIf);
+			if (result == null)
+				result = caseIElementExtensible(elseIf);
+			if (result == null)
+				result = caseIAttributeExtensible(elseIf);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -1052,11 +1291,15 @@ public class BPELSwitch<T> {
 			Else else_ = (Else) theEObject;
 			T result = caseElse(else_);
 			if (result == null)
+				result = caseBPELExtensibleElement(else_);
+			if (result == null)
 				result = caseExtensibleElement(else_);
 			if (result == null)
-				result = caseExtensibleElement_1(else_);
-			if (result == null)
 				result = caseWSDLElement(else_);
+			if (result == null)
+				result = caseIElementExtensible(else_);
+			if (result == null)
+				result = caseIAttributeExtensible(else_);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -1065,11 +1308,15 @@ public class BPELSwitch<T> {
 			CompletionCondition completionCondition = (CompletionCondition) theEObject;
 			T result = caseCompletionCondition(completionCondition);
 			if (result == null)
+				result = caseBPELExtensibleElement(completionCondition);
+			if (result == null)
 				result = caseExtensibleElement(completionCondition);
 			if (result == null)
-				result = caseExtensibleElement_1(completionCondition);
-			if (result == null)
 				result = caseWSDLElement(completionCondition);
+			if (result == null)
+				result = caseIElementExtensible(completionCondition);
+			if (result == null)
+				result = caseIAttributeExtensible(completionCondition);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -1089,13 +1336,17 @@ public class BPELSwitch<T> {
 				result = defaultCase(theEObject);
 			return result;
 		}
-		case BPELPackage.EXTENSIBLE_ELEMENT: {
-			ExtensibleElement extensibleElement = (ExtensibleElement) theEObject;
-			T result = caseExtensibleElement(extensibleElement);
+		case BPELPackage.BPEL_EXTENSIBLE_ELEMENT: {
+			BPELExtensibleElement bpelExtensibleElement = (BPELExtensibleElement) theEObject;
+			T result = caseBPELExtensibleElement(bpelExtensibleElement);
 			if (result == null)
-				result = caseExtensibleElement_1(extensibleElement);
+				result = caseExtensibleElement(bpelExtensibleElement);
 			if (result == null)
-				result = caseWSDLElement(extensibleElement);
+				result = caseWSDLElement(bpelExtensibleElement);
+			if (result == null)
+				result = caseIElementExtensible(bpelExtensibleElement);
+			if (result == null)
+				result = caseIAttributeExtensible(bpelExtensibleElement);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -1103,6 +1354,16 @@ public class BPELSwitch<T> {
 		case BPELPackage.DOCUMENTATION: {
 			Documentation documentation = (Documentation) theEObject;
 			T result = caseDocumentation(documentation);
+			if (result == null)
+				result = caseBPELExtensibleElement(documentation);
+			if (result == null)
+				result = caseExtensibleElement(documentation);
+			if (result == null)
+				result = caseWSDLElement(documentation);
+			if (result == null)
+				result = caseIElementExtensible(documentation);
+			if (result == null)
+				result = caseIAttributeExtensible(documentation);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -1113,11 +1374,15 @@ public class BPELSwitch<T> {
 			if (result == null)
 				result = caseActivity(compensate);
 			if (result == null)
+				result = caseBPELExtensibleElement(compensate);
+			if (result == null)
 				result = caseExtensibleElement(compensate);
 			if (result == null)
-				result = caseExtensibleElement_1(compensate);
-			if (result == null)
 				result = caseWSDLElement(compensate);
+			if (result == null)
+				result = caseIElementExtensible(compensate);
+			if (result == null)
+				result = caseIAttributeExtensible(compensate);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -1126,11 +1391,15 @@ public class BPELSwitch<T> {
 			FromParts fromParts = (FromParts) theEObject;
 			T result = caseFromParts(fromParts);
 			if (result == null)
+				result = caseBPELExtensibleElement(fromParts);
+			if (result == null)
 				result = caseExtensibleElement(fromParts);
 			if (result == null)
-				result = caseExtensibleElement_1(fromParts);
-			if (result == null)
 				result = caseWSDLElement(fromParts);
+			if (result == null)
+				result = caseIElementExtensible(fromParts);
+			if (result == null)
+				result = caseIAttributeExtensible(fromParts);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -1139,11 +1408,15 @@ public class BPELSwitch<T> {
 			ToParts toParts = (ToParts) theEObject;
 			T result = caseToParts(toParts);
 			if (result == null)
+				result = caseBPELExtensibleElement(toParts);
+			if (result == null)
 				result = caseExtensibleElement(toParts);
 			if (result == null)
-				result = caseExtensibleElement_1(toParts);
-			if (result == null)
 				result = caseWSDLElement(toParts);
+			if (result == null)
+				result = caseIElementExtensible(toParts);
+			if (result == null)
+				result = caseIAttributeExtensible(toParts);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -2145,6 +2418,21 @@ public class BPELSwitch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Extensible Element</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Extensible Element</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseBPELExtensibleElement(BPELExtensibleElement object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Element</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -2160,18 +2448,32 @@ public class BPELSwitch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Extensible Element</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>IElement Extensible</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Extensible Element</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>IElement Extensible</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseExtensibleElement_1(
-			org.eclipse.wst.wsdl.ExtensibleElement object) {
+	public T caseIElementExtensible(ElementExtensible object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>IAttribute Extensible</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>IAttribute Extensible</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseIAttributeExtensible(AttributeExtensible object) {
 		return null;
 	}
 

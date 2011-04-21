@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.bpel.xpath10
-Bundle-Version: 0.5.0.qualifier
+Bundle-Version: 0.5.1.qualifier
 Bundle-Localization: plugin
 Bundle-ClassPath: .,
  lib/antlr-runtime-3.0.1.jar
@@ -13,4 +13,4 @@ Export-Package: org.antlr.runtime;uses:="org.antlr.runtime.tree",
  org.eclipse.bpel.xpath10,
  org.eclipse.bpel.xpath10.parser;uses:="org.antlr.runtime.tree,org.antlr.runtime,org.eclipse.bpel.xpath10"
 Bundle-Vendor: %providerName
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

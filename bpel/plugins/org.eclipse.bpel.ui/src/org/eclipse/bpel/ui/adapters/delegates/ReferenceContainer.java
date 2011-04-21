@@ -24,8 +24,6 @@ public class ReferenceContainer extends AbstractContainer {
 
 	EReference fFeature;
 	
-	boolean allowMixedTypeReplace = false;
-	
 	/**
 	 * Brand new ReferenceContainer
 	 * @param aFeature

@@ -16,6 +16,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -49,7 +50,9 @@ public class XSDUtils {
 	// all xsd primitives (see getAdvancedPrimitives()) respectively
 	
 		
-	private static List<XSDSimpleTypeDefinition> advancedPrimitives;
+	private static List<XSDSimpleTypeDefinition> advancedPrimitives = new ArrayList<XSDSimpleTypeDefinition> ();
+	private static final AtomicBoolean advancedPrimitiveWasSet = new AtomicBoolean( false );
+	
 	
 	// XSD short list -- these are the types presented to the user by default, rather than inundating them with
 	// all the available types
@@ -129,10 +132,8 @@ public class XSDUtils {
 	 */
 	public static List<XSDSimpleTypeDefinition> getAdvancedPrimitives() {
 		
-		
-		if (advancedPrimitives == null) {
-			
-			advancedPrimitives = new ArrayList<XSDSimpleTypeDefinition>();
+		// (VZ) FIXME: use a singleton instance of a set of static methods
+		if( ! advancedPrimitiveWasSet.get()) {
 		
 			// Get the schema for schemas instance to use when resolving primitives
 			XSDSchema schemaForSchemas = XSDUtil.getSchemaForSchema(XSDConstants.SCHEMA_FOR_SCHEMA_URI_2001);
@@ -151,7 +152,10 @@ public class XSDUtils {
 					return o1.getName().compareToIgnoreCase(o2.getName());
 				}
 			});
+			
+			advancedPrimitiveWasSet.set( true );
 		}
+		
 		return advancedPrimitives;		
 	}
 	
@@ -227,9 +231,8 @@ public class XSDUtils {
 		List<XSDParticleContent> children = new ArrayList<XSDParticleContent>();
 		children.addAll(getChildElements(getModelGroup(bo)));
 		if(bo.getBaseTypeDefinition() instanceof XSDComplexTypeDefinition){
-			children.addAll(getChildElements(getModelGroup((XSDComplexTypeDefinition)bo.getBaseTypeDefinition())));
-		}
-   		return children;//getChildElements( getModelGroup(bo) );
+			children.addAll(getChildElements(getModelGroup((XSDComplexTypeDefinition)bo.getBaseTypeDefinition())));		}
+		return children;
 	}
 
 	/**

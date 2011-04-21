@@ -10,7 +10,7 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: CompensationHandlerImpl.java,v 1.8 2009/04/14 10:50:36 smoser Exp $
+ * $Id: CompensationHandlerImpl.java,v 1.9 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model.impl;
 
@@ -37,8 +37,8 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class CompensationHandlerImpl extends ExtensibleElementImpl implements
-		CompensationHandler {
+public class CompensationHandlerImpl extends BPELExtensibleElementImpl
+		implements CompensationHandler {
 	/**
 	 * The cached value of the '{@link #getActivity() <em>Activity</em>}' containment reference.
 	 * <!-- begin-user-doc -->

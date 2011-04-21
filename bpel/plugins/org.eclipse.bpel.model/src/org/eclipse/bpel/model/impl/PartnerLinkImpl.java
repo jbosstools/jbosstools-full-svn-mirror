@@ -10,7 +10,7 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: PartnerLinkImpl.java,v 1.12 2009/04/14 10:50:37 smoser Exp $
+ * $Id: PartnerLinkImpl.java,v 1.13 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model.impl;
 
@@ -48,7 +48,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * @generated
  */
 @SuppressWarnings("restriction")
-public class PartnerLinkImpl extends ExtensibleElementImpl implements
+public class PartnerLinkImpl extends BPELExtensibleElementImpl implements
 		PartnerLink {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -340,8 +340,8 @@ public class PartnerLinkImpl extends ExtensibleElementImpl implements
 		Boolean oldInitializePartnerRole = initializePartnerRole;
 		if (!isReconciling) {
 			ReconciliationHelper.replaceAttribute(this,
-					BPELConstants.AT_INITIALIZE_PARTNER_ROLE, BPELUtils
-							.boolean2XML(newInitializePartnerRole));
+					BPELConstants.AT_INITIALIZE_PARTNER_ROLE,
+					BPELUtils.boolean2XML(newInitializePartnerRole));
 		}
 		initializePartnerRole = newInitializePartnerRole;
 		boolean oldInitializePartnerRoleESet = initializePartnerRoleESet;

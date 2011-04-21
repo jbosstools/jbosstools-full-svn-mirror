@@ -86,7 +86,6 @@ public class CreatePartnerLinkTypeWizardNamePage extends WizardPage {
 	}
 
 	Composite createPartnerLinkName(Composite parent) {
-		IDialogSettings settings = getWizard().getDialogSettings();
 
 		Composite fields = new Composite(parent, SWT.NONE);
 		GridLayout layout = new GridLayout();

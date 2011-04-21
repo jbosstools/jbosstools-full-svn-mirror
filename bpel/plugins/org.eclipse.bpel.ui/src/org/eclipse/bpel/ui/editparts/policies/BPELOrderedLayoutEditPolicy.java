@@ -269,6 +269,14 @@ public class BPELOrderedLayoutEditPolicy extends FlowLayoutEditPolicy {
 	protected EditPolicy createChildEditPolicy(EditPart child) {		
 		return null;
 	}
+	
+	// https://issues.jboss.org/browse/JBIDE-8694
+	// isHorizontal() has been deprecated in GEF 3.7
+	// See also https://bugs.eclipse.org/bugs/show_bug.cgi?id=88884 
+	// @Override - eventually
+	protected boolean isLayoutHorizontal() {
+		return this.isHorizontal();
+	}
 
 	@Override
 	protected boolean isHorizontal() {

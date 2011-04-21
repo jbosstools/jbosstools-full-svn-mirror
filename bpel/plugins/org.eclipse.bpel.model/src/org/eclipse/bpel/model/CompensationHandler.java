@@ -10,7 +10,7 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: CompensationHandler.java,v 1.3 2007/08/01 21:02:31 mchmielewski Exp $
+ * $Id: CompensationHandler.java,v 1.4 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model;
 
@@ -30,7 +30,7 @@ package org.eclipse.bpel.model;
  * @model
  * @generated
  */
-public interface CompensationHandler extends ExtensibleElement {
+public interface CompensationHandler extends BPELExtensibleElement {
 	/**
 	 * Returns the value of the '<em><b>Activity</b></em>' containment reference.
 	 * <!-- begin-user-doc -->

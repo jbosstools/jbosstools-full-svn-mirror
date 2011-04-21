@@ -293,7 +293,9 @@ public class VariableInitializationSection extends BPELPropertySection {
 			From from = fVariable.getFrom();
 			if (from!=null) {
 				String literal = from.getLiteral();
-				if (literal==null || literal.isEmpty()) {
+				// https://issues.jboss.org/browse/JBIDE-8345
+				// remove dependency on Java 1.6
+				if (literal==null || "".equals(literal.trim())) {
 					literal = createDefaultInitializer(getBPELEditor(), fVariable, null);
 					from.setLiteral(literal);
 				}
@@ -350,7 +352,9 @@ public class VariableInitializationSection extends BPELPropertySection {
 		String literal = EMPTY_STRING;
 		if ( from!=null && to!=null) {
 			literal = from.getLiteral();
-			if (literal==null || literal.isEmpty()) {
+			// https://issues.jboss.org/browse/JBIDE-8345
+			// remove dependency on Java 1.6
+			if (literal==null || "".equals(literal.trim())) {
 				literal = createDefaultInitializer(bpelEditor, to.getVariable(), to.getPart());
 				from.setLiteral(literal);
 			}

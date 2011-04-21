@@ -18,6 +18,7 @@ import org.eclipse.bpel.ui.adapters.AdapterNotification;
 import org.eclipse.bpel.ui.commands.CompoundCommand;
 import org.eclipse.bpel.ui.commands.SetVariableKindCommand;
 import org.eclipse.bpel.ui.commands.SetVariableTypeCommand;
+import org.eclipse.bpel.ui.dialogs.TypeSelectorDialog;
 import org.eclipse.bpel.ui.uiextensionmodel.VariableExtension;
 import org.eclipse.bpel.ui.util.BPELUtil;
 import org.eclipse.bpel.ui.util.BatchedMultiObjectAdapter;
@@ -186,8 +187,10 @@ public class VariableTypeSection extends BPELPropertySection {
 	protected void createClient(Composite parent) {
 		Composite composite = parentComposite = createFlatFormComposite(parent);
 		
+		// https://issues.jboss.org/browse/JBIDE-8045
 		variableTypeSelector = new VariableTypeSelector(composite, SWT.NONE, getBPELEditor(),
-			fWidgetFactory, new VariableTypeCallback(), true);
+			fWidgetFactory, new VariableTypeCallback(), false,
+			TypeSelectorDialog.INCLUDE_ALL);
 		FlatFormData data = new FlatFormData();
 		data.top = new FlatFormAttachment(0,0);
 		data.left = new FlatFormAttachment(0,0);

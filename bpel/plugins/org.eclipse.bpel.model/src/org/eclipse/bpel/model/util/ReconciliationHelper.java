@@ -38,7 +38,7 @@ import org.eclipse.bpel.model.Else;
 import org.eclipse.bpel.model.ElseIf;
 import org.eclipse.bpel.model.EventHandler;
 import org.eclipse.bpel.model.Expression;
-import org.eclipse.bpel.model.ExtensibleElement;
+import org.eclipse.bpel.model.BPELExtensibleElement;
 import org.eclipse.bpel.model.Extension;
 import org.eclipse.bpel.model.ExtensionActivity;
 import org.eclipse.bpel.model.Extensions;
@@ -84,8 +84,9 @@ import org.eclipse.bpel.model.Variable;
 import org.eclipse.bpel.model.Variables;
 import org.eclipse.bpel.model.While;
 import org.eclipse.bpel.model.impl.CorrelationSetsImpl;
-import org.eclipse.bpel.model.impl.ExtensibilityElementImpl;
-import org.eclipse.bpel.model.impl.ExtensibleElementImpl;
+//Bugzilla 340654 - renamed to avoid confusion with WSDL's ExtensibilityElement
+import org.eclipse.bpel.model.impl.BPELExtensibilityElementImpl;
+import org.eclipse.bpel.model.impl.BPELExtensibleElementImpl;
 import org.eclipse.bpel.model.impl.MessageExchangesImpl;
 import org.eclipse.bpel.model.impl.PartnerLinksImpl;
 import org.eclipse.bpel.model.impl.VariablesImpl;
@@ -213,8 +214,12 @@ public class ReconciliationHelper {
 			reader.xml2Targets((Targets)element, changedElement);
 		} else if (element instanceof CompensationHandler){
 			// https://issues.jboss.org/browse/JBIDE-8048
-			// this was left out inadevertently
+			// this was left out inadvertently
 			reader.xml2CompensationHandler((CompensationHandler)element, changedElement);
+		} else if (element instanceof BPELExtensibleElement){
+			// https://bugs.eclipse.org/bugs/show_bug.cgi?id=334424
+			// https://issues.jboss.org/browse/JBIDE-8132
+			reader.xml2ExtensibleElement((BPELExtensibleElement)element, changedElement);
 		} else {
 			System.err.println("Cannot reconcile: " + element.getClass());
 //			throw new NotImplementedException(element.getClass().toString());
@@ -309,6 +314,7 @@ public class ReconciliationHelper {
 		if (nodeList.size() == 1) {
 			return nodeList.get(0);
 		}
+		
 		return null;
 	}
 	
@@ -637,7 +643,8 @@ public class ReconciliationHelper {
 			// OnMessage
 			} else if (object instanceof OnMessage) {
 				OnMessage onMessage = (OnMessage) object;
-				if (variable.equals(onMessage)) {
+				
+				if (variable.equals(onMessage.getVariable())) {
 					onMessage.getElement().setAttribute(BPELConstants.AT_VARIABLE, name);
 				}
 
@@ -698,7 +705,7 @@ public class ReconciliationHelper {
 					// ignore attempts to set attributes on the parent that aren't in the model
 					for ( EStructuralFeature feature : parent.eClass().getEAllStructuralFeatures()) {
 						if ( feature.getName().equals(attributeName)) {
-							parseElement = ((ExtensibleElement)parent).getElement();
+							parseElement = ((BPELExtensibleElement)parent).getElement();
 							break;
 						}
 					}
@@ -757,6 +764,22 @@ public class ReconciliationHelper {
 			} else if (BPELConstants.AT_COUNTER_NAME.equals(attributeName)) {
 				if (element instanceof ForEach) {
 					updateForeachCounterVariableNameReferences((ForEach) element, attributeValue);
+				}
+			}
+			
+	    	// Bug 120110 - if this is not an extension activity, notify all
+			// extensionActivities that this thing has changed - references
+			// to this thing should be updated in the activity's XML fragment
+			if ( !(element instanceof ExtensionActivity)) {
+				Process process = BPELUtils.getProcess(element);
+				if (process!=null) {
+					TreeIterator<EObject> iter = process.eAllContents();
+					while (iter.hasNext()) {
+						Object object = iter.next();
+						if (object instanceof ExtensionActivity) {
+							((ExtensionActivity)object).updateElementReferences(element, attributeName, attributeValue);
+						}
+					}
 				}
 			}
 			
@@ -937,19 +960,19 @@ public class ReconciliationHelper {
 	}
 	
 	static boolean isUpdatingDom(WSDLElement element) {
-		if (element instanceof ExtensibleElementImpl) {
-			return ((ExtensibleElementImpl) element).isUpdatingDOM();			
-		} else if (element instanceof ExtensibilityElementImpl) {
-			return ((ExtensibilityElementImpl) element).isUpdatingDOM();			
+		if (element instanceof BPELExtensibleElementImpl) {
+			return ((BPELExtensibleElementImpl) element).isUpdatingDOM();			
+		} else if (element instanceof BPELExtensibilityElementImpl) {
+			return ((BPELExtensibilityElementImpl) element).isUpdatingDOM();			
 		} 
 		return false;
 	}
 	
 	static void setUpdatingDom(WSDLElement element, boolean updatingDOM) {
-		if (element instanceof ExtensibleElementImpl) {
-			((ExtensibleElementImpl) element).setUpdatingDOM(updatingDOM);			
-		} else if (element instanceof ExtensibilityElementImpl) {
-			((ExtensibilityElementImpl) element).setUpdatingDOM(updatingDOM);			
+		if (element instanceof BPELExtensibleElementImpl) {
+			((BPELExtensibleElementImpl) element).setUpdatingDOM(updatingDOM);			
+		} else if (element instanceof BPELExtensibilityElementImpl) {
+			((BPELExtensibilityElementImpl) element).setUpdatingDOM(updatingDOM);			
 		} 
 	}
 	
@@ -968,7 +991,7 @@ public class ReconciliationHelper {
         // new child as child of the <extensionActivity> element child and not the <extensionActivity> itself. 
         // This code snippet changes the parentElement to the correct subelement
         if (parent instanceof ExtensionActivity) {
-			// https://jira.jboss.org/browse/JBIDE-6917
+			// Bugzilla 324115
 			// Fix NPE
             Node realParent = ReconciliationHelper.getExtensionActivityChildElement((Element) parentElement);
             if (realParent!=null)
@@ -989,8 +1012,8 @@ public class ReconciliationHelper {
 	    if (!BPELUtils.isTransparent(parent, child)) {
 	    	Element childElement = ((WSDLElement)child).getElement();
 			if (childElement == null) {
-	    		childElement = ElementFactory.getInstance().createElement(((ExtensibleElement)child), parent);
-	    		((ExtensibleElement)child).setElement(childElement);
+	    		childElement = ElementFactory.getInstance().createElement(((BPELExtensibleElement)child), parent);
+	    		((BPELExtensibleElement)child).setElement(childElement);
 	    	}
 			if (childElement.getParentNode() != parentElement) {
 				System.err.println("Non-reconciling element:" + parent.getClass());
@@ -1026,14 +1049,14 @@ public class ReconciliationHelper {
 	    	reconcile(th, th.getElement());
 			System.err.println("TerminationHandler patch ok");
 	    } else if (child instanceof OnEvent) {
-
+	    	
 	    } else if (child instanceof OnAlarm) {
-	    	// fix https://jira.jboss.org/browse/JBIDE-7480
+	        // fix https://bugs.eclipse.org/bugs/show_bug.cgi?id=330308
 	    	OnAlarm o = (OnAlarm)child;
 	    	Activity a = o.getActivity();
-			Element s = ReconciliationHelper.getBPELChildElementByLocalName(o.getElement(), BPELConstants.ND_SCOPE);
-			a.setElement(s);
-			reconcile(a, s);
+	    	Element s = ReconciliationHelper.getBPELChildElementByLocalName(o.getElement(), BPELConstants.ND_SCOPE);
+	    	a.setElement(s);
+	    	reconcile(a, s);
 	    } else if (child instanceof FaultHandler) {
 	    	FaultHandler c = (FaultHandler)child;
 	    	EList<Catch> _catch = c.getCatch();
@@ -1044,22 +1067,23 @@ public class ReconciliationHelper {
 				reconcile(ch, catchElement);
 	    	}
 			System.err.println("FaultHandler patch ok");
-	    }  else if (child instanceof EventHandler) {
-	    	// fix https://jira.jboss.org/browse/JBIDE-7504
-	        EventHandler e = (EventHandler)child;
-	        EList<OnEvent> _onEvent = e.getEvents();
-	        OnEvent on = _onEvent.get(0);
-			Element onElement = ReconciliationHelper.getBPELChildElementByLocalName(e.getElement(), BPELConstants.ND_ON_EVENT);
-			on.setElement(onElement);
-			reconcile(on, onElement);
+	    } else if (child instanceof EventHandler) {
+	    	// fix https://bugs.eclipse.org/bugs/show_bug.cgi?id=330308
+	    	EventHandler e = (EventHandler)child;
+	    	EList<OnEvent> _onEvent = e.getEvents();
+	    	OnEvent on = _onEvent.get(0);
+	    	Element onElement = ReconciliationHelper.getBPELChildElementByLocalName(e.getElement(), BPELConstants.ND_ON_EVENT);
+	    	on.setElement(onElement);
+	    	reconcile(on, onElement);
 	    }  else if (child instanceof CompensationHandler) {
-	    	// fix https://jira.jboss.org/browse/JBIDE-7504
+	    	// fix https://bugs.eclipse.org/bugs/show_bug.cgi?id=330308
 	    	CompensationHandler c = (CompensationHandler)child;
 	    	Activity a = c.getActivity();
-			Element s = ReconciliationHelper.getBPELChildElementByLocalName(c.getElement(), BPELConstants.ND_SEQUENCE);
-			a.setElement(s);
-			reconcile(a, s);
+	    	Element s = ReconciliationHelper.getBPELChildElementByLocalName(c.getElement(), BPELConstants.ND_SEQUENCE);
+	    	a.setElement(s);
+	    	reconcile(a, s);
 	    }
+
 	    	
 	}
 
@@ -1425,8 +1449,7 @@ public class ReconciliationHelper {
         if (context instanceof CompensationHandler)  return ((CompensationHandler)context).getActivity();
         if (context instanceof TerminationHandler)  return ((TerminationHandler)context).getActivity();
         if (context instanceof If) return ((If) context).getActivity();
-		// https://jira.jboss.org/browse/JBIDE-6917
-		// added an Activity for Structure Activities that behave like containers
+		// Bugzilla 324115
         if (context instanceof ExtensionActivity)
         {
         	ExtensionActivity ea = (ExtensionActivity)context;

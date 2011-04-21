@@ -10,7 +10,7 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: OnEventImpl.java,v 1.13 2009/04/14 10:50:37 smoser Exp $
+ * $Id: OnEventImpl.java,v 1.16 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model.impl;
 
@@ -35,6 +35,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.wst.wsdl.Message;
 import org.eclipse.wst.wsdl.Operation;
 import org.eclipse.wst.wsdl.PortType;
+import org.eclipse.xsd.XSDElementDeclaration;
 
 /**
  * <!-- begin-user-doc -->
@@ -50,6 +51,7 @@ import org.eclipse.wst.wsdl.PortType;
  *   <li>{@link org.eclipse.bpel.model.impl.OnEventImpl#getOperation <em>Operation</em>}</li>
  *   <li>{@link org.eclipse.bpel.model.impl.OnEventImpl#getPortType <em>Port Type</em>}</li>
  *   <li>{@link org.eclipse.bpel.model.impl.OnEventImpl#getMessageType <em>Message Type</em>}</li>
+ *   <li>{@link org.eclipse.bpel.model.impl.OnEventImpl#getXSDElement <em>XSD Element</em>}</li>
  *   <li>{@link org.eclipse.bpel.model.impl.OnEventImpl#getCorrelationSets <em>Correlation Sets</em>}</li>
  *   <li>{@link org.eclipse.bpel.model.impl.OnEventImpl#getFromParts <em>From Parts</em>}</li>
  *   <li>{@link org.eclipse.bpel.model.impl.OnEventImpl#getMessageExchange <em>Message Exchange</em>}</li>
@@ -58,7 +60,7 @@ import org.eclipse.wst.wsdl.PortType;
  *
  * @generated
  */
-public class OnEventImpl extends ExtensibleElementImpl implements OnEvent {
+public class OnEventImpl extends BPELExtensibleElementImpl implements OnEvent {
 	/**
 	 * The cached value of the '{@link #getActivity() <em>Activity</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -128,6 +130,16 @@ public class OnEventImpl extends ExtensibleElementImpl implements OnEvent {
 	 * @ordered
 	 */
 	protected Message messageType;
+
+	/**
+	 * The cached value of the '{@link #getXSDElement() <em>XSD Element</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getXSDElement()
+	 * @generated
+	 * @ordered
+	 */
+	protected XSDElementDeclaration xsdElement;
 
 	/**
 	 * The cached value of the '{@link #getCorrelationSets() <em>Correlation Sets</em>}' containment reference.
@@ -548,9 +560,10 @@ public class OnEventImpl extends ExtensibleElementImpl implements OnEvent {
 	 */
 	public Message getMessageType() {
 		Variable variable = getVariable();
-		if (variable != null && variable instanceof Variable) {
+		if (variable != null) {
 			return (variable).getMessageType();
 		}
+
 		if (messageType != null && messageType.eIsProxy()) {
 			Message oldMessageType = messageType;
 			messageType = (Message) eResolveProxy((InternalEObject) messageType);
@@ -580,15 +593,70 @@ public class OnEventImpl extends ExtensibleElementImpl implements OnEvent {
 	 */
 	public void setMessageType(Message newMessageType) {
 		Variable variable = getVariable();
-		if (variable != null && variable instanceof Variable) {
+		if (variable != null) {
 			(variable).setMessageType(newMessageType);
 		}
+
 		Message oldMessageType = messageType;
 		messageType = newMessageType;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET,
 					BPELPackage.ON_EVENT__MESSAGE_TYPE, oldMessageType,
 					messageType));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * https://bugs.eclipse.org/bugs/show_bug.cgi?id=336003
+	 * "element" attribute was missing from original model
+	 * <!-- end-user-doc -->
+	 * @customized
+	 */
+	public XSDElementDeclaration getXSDElement() {
+		Variable variable = getVariable();
+		if (variable != null) {
+			return (variable).getXSDElement();
+		}
+
+		if (xsdElement != null && xsdElement.eIsProxy()) {
+			XSDElementDeclaration oldXSDElement = xsdElement;
+			xsdElement = (XSDElementDeclaration) eResolveProxy((InternalEObject) xsdElement);
+			if (xsdElement != oldXSDElement) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE,
+							BPELPackage.ON_EVENT__XSD_ELEMENT, oldXSDElement,
+							xsdElement));
+			}
+		}
+		return xsdElement;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public XSDElementDeclaration basicGetXSDElement() {
+		return xsdElement;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @customized
+	 */
+	public void setXSDElement(XSDElementDeclaration newXSDElement) {
+		Variable variable = getVariable();
+		if (variable != null) {
+			(variable).setXSDElement(newXSDElement);
+		}
+
+		XSDElementDeclaration oldXSDElement = xsdElement;
+		xsdElement = newXSDElement;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET,
+					BPELPackage.ON_EVENT__XSD_ELEMENT, oldXSDElement,
+					xsdElement));
 	}
 
 	/**
@@ -744,7 +812,8 @@ public class OnEventImpl extends ExtensibleElementImpl implements OnEvent {
 	public void setMessageExchange(MessageExchange newMessageExchange) {
 		MessageExchange oldMessageExchange = messageExchange;
 		if (!isReconciling) {
-			ReconciliationHelper.replaceAttribute(this,
+			ReconciliationHelper.replaceAttribute(
+					this,
 					BPELConstants.AT_MESSAGE_EXCHANGE,
 					newMessageExchange == null ? null : newMessageExchange
 							.getName());
@@ -809,6 +878,10 @@ public class OnEventImpl extends ExtensibleElementImpl implements OnEvent {
 			if (resolve)
 				return getMessageType();
 			return basicGetMessageType();
+		case BPELPackage.ON_EVENT__XSD_ELEMENT:
+			if (resolve)
+				return getXSDElement();
+			return basicGetXSDElement();
 		case BPELPackage.ON_EVENT__CORRELATION_SETS:
 			return getCorrelationSets();
 		case BPELPackage.ON_EVENT__FROM_PARTS:
@@ -850,6 +923,9 @@ public class OnEventImpl extends ExtensibleElementImpl implements OnEvent {
 			return;
 		case BPELPackage.ON_EVENT__MESSAGE_TYPE:
 			setMessageType((Message) newValue);
+			return;
+		case BPELPackage.ON_EVENT__XSD_ELEMENT:
+			setXSDElement((XSDElementDeclaration) newValue);
 			return;
 		case BPELPackage.ON_EVENT__CORRELATION_SETS:
 			setCorrelationSets((CorrelationSets) newValue);
@@ -893,6 +969,9 @@ public class OnEventImpl extends ExtensibleElementImpl implements OnEvent {
 		case BPELPackage.ON_EVENT__MESSAGE_TYPE:
 			setMessageType((Message) null);
 			return;
+		case BPELPackage.ON_EVENT__XSD_ELEMENT:
+			setXSDElement((XSDElementDeclaration) null);
+			return;
 		case BPELPackage.ON_EVENT__CORRELATION_SETS:
 			setCorrelationSets((CorrelationSets) null);
 			return;
@@ -928,6 +1007,8 @@ public class OnEventImpl extends ExtensibleElementImpl implements OnEvent {
 			return portType != null;
 		case BPELPackage.ON_EVENT__MESSAGE_TYPE:
 			return messageType != null;
+		case BPELPackage.ON_EVENT__XSD_ELEMENT:
+			return xsdElement != null;
 		case BPELPackage.ON_EVENT__CORRELATION_SETS:
 			return correlationSets != null;
 		case BPELPackage.ON_EVENT__FROM_PARTS:

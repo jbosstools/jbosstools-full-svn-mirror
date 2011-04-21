@@ -40,9 +40,10 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 @SuppressWarnings("nls")
 
 public class BPELResourceSetImpl extends ResourceSetImpl implements IResourceChangeListener {
-	 
+	// Bugzilla 320545:
+	// this ID identifies the BPEL file content type
 	public static final String BPEL_CONTENT_TYPE = "org.eclipse.bpel.contenttype"; //$NON-NLS-1$
-	
+	 
 	public BPELResourceSetImpl() {
 		super();
 		// FIX ME: This should not have dependency on running eclipse.
@@ -74,18 +75,17 @@ public class BPELResourceSetImpl extends ResourceSetImpl implements IResourceCha
 	@SuppressWarnings("nls")
 	public Resource getResource(URI uri, boolean loadOnDemand, String kind)  {
 
-		// https://jira.jboss.org/browse/JBIDE-6786
+		// Bugzilla 324164
 		// don't bother if URI is null or empty
 		if (uri==null || uri.isEmpty())
 			return null;
-
 		Map<URI, Resource> map = getURIResourceMap();
 		
 		if (map != null) {
 			Resource resource = map.get(uri);
 			if (resource != null) {
 				if (loadOnDemand && !resource.isLoaded()) {
-					// https://jira.jboss.org/browse/JBIDE-6786
+					// Bugzilla 324164
 					// if load fails, mark resource as unloaded
 					try {
 						demandLoadHelper(resource);
@@ -105,7 +105,7 @@ public class BPELResourceSetImpl extends ResourceSetImpl implements IResourceCha
 			if (theURIConverter.normalize(resource.getURI()).equals(
 					normalizedURI)) {
 				if (loadOnDemand && !resource.isLoaded()) {
-					// https://jira.jboss.org/browse/JBIDE-6786
+					// Bugzilla 324164
 					// if load fails, mark resource as unloaded
 					try {
 						demandLoadHelper(resource);
@@ -265,7 +265,7 @@ public class BPELResourceSetImpl extends ResourceSetImpl implements IResourceCha
 			// TODO: Temporary hack
 			// Actually we should remove all resources from the resourceSet,
 			// but for some reasons bpel files can't be removed now
-			// https://jira.jboss.org/jira/browse/JBIDE-6006
+			// Bugzilla 320545:
 			if (isBPELFile(resource)){
 				continue;
 			}
@@ -309,6 +309,7 @@ public class BPELResourceSetImpl extends ResourceSetImpl implements IResourceCha
 		}
 	}
 
+	// Bugzilla 320545:
 	public static boolean isBPELFile(IResource res)
 	{
 		try

@@ -15,32 +15,41 @@ import org.eclipse.bpel.ui.commands.util.AutoUndoCommand;
 import org.eclipse.wst.wsdl.Input;
 import org.eclipse.wst.wsdl.Message;
 import org.eclipse.wst.wsdl.Operation;
+import org.eclipse.wst.wsdl.Part;
+import org.eclipse.xsd.XSDElementDeclaration;
 
-public class SetOnEventVariableTypeCommand extends AutoUndoCommand {
-	
-	OnEvent onEvent;
+public class SetOnEventVariableTypeCommand extends SetCommand {
 	
 	public SetOnEventVariableTypeCommand(OnEvent onEvent) {
-		super(onEvent);
-		this.onEvent = onEvent;
+		super(onEvent,null);
 	}
 	
 	@Override
 	public void doExecute() {
-		if (onEvent.getVariable() == null) {
-			onEvent.setMessageType(null);
-		} else {
-			Message message = null;
-			if (onEvent.getOperation() != null) {
-				Operation op = onEvent.getOperation();
-				if (op != null) {
-					Input input = op.getEInput();
-					if (input != null) {
-						message = input.getEMessage();
+		if (fTarget instanceof OnEvent) {
+			OnEvent onEvent = (OnEvent) fTarget;
+			if (onEvent.getVariable() == null) {
+				onEvent.setMessageType(null);
+			} else {
+				if (fNewValue instanceof XSDElementDeclaration) {
+					onEvent.setMessageType(null);
+					onEvent.setXSDElement((XSDElementDeclaration)fNewValue);
+				}
+				else {
+					Message message = null;
+					if (onEvent.getOperation() != null) {
+						Operation op = onEvent.getOperation();
+						if (op != null) {
+							Input input = op.getEInput();
+							if (input != null) {
+								message = input.getEMessage();
+							}
+						}
 					}
+					onEvent.setMessageType(message);
+					onEvent.setXSDElement(null);
 				}
 			}
-			onEvent.setMessageType(message);
 		}
 	}
 }

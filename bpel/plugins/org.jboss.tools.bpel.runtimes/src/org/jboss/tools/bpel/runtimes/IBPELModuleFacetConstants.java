@@ -32,7 +32,9 @@ public interface IBPELModuleFacetConstants {
 	public final static String BPEL20_FACET_TEMPLATE = "jbt.template.bpel.core";  //$NON-NLS-1$
 	
 	// facet
-	public final static String BPEL_PROJECT_FACET = "jbt.bpel.facet.core"; //$NON-NLS-1$ 
+	// this facet has been deprecated
+	public final static String JBT_BPEL_PROJECT_FACET = "jbt.bpel.facet.core"; //$NON-NLS-1$ 
+	public final static String BPEL_PROJECT_FACET = "bpel.facet.core"; //$NON-NLS-1$ 
 	
 	// bpel file extension
 	public final static String BPEL_FILE_EXTENSION = "bpel";  //$NON-NLS-1$

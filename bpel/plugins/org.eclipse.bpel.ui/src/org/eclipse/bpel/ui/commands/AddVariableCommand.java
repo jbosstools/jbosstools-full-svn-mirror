@@ -13,15 +13,11 @@ package org.eclipse.bpel.ui.commands;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.bpel.model.BPELPackage;
-import org.eclipse.bpel.model.Import;
 import org.eclipse.bpel.model.Variable;
 import org.eclipse.bpel.model.Variables;
 import org.eclipse.bpel.ui.IBPELUIConstants;
 import org.eclipse.bpel.ui.util.ModelHelper;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 
 
 /**

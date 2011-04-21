@@ -68,7 +68,7 @@ public class BPELTerms {
 	 * Returns the shared instance. This method must work in both
 	 * the eclipse and non-eclipse case.
 	 */
-	public static BPELTerms getDefault() { 
+	public synchronized static BPELTerms getDefault() { 
 		// Lazy initialization for the non-eclipse case
 		if (plugin == null) {
 			plugin = new BPELTerms();

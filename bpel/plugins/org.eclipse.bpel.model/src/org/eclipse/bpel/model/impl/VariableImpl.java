@@ -10,7 +10,7 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: VariableImpl.java,v 1.15 2009/04/14 10:50:37 smoser Exp $
+ * $Id: VariableImpl.java,v 1.16 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model.impl;
 
@@ -49,7 +49,7 @@ import org.eclipse.xsd.XSDTypeDefinition;
  */
 
 @SuppressWarnings("restriction")
-public class VariableImpl extends ExtensibleElementImpl implements Variable {
+public class VariableImpl extends BPELExtensibleElementImpl implements Variable {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -264,7 +264,9 @@ public class VariableImpl extends ExtensibleElementImpl implements Variable {
 	public void setType(XSDTypeDefinition newType) {
 		XSDTypeDefinition oldType = type;
 		if (!isReconciling) {
-			ReconciliationHelper.replaceAttribute(this, BPELConstants.AT_TYPE,
+			ReconciliationHelper.replaceAttribute(
+					this,
+					BPELConstants.AT_TYPE,
 					newType == null ? null : new QName(newType
 							.getTargetNamespace(), newType.getName()));
 		}

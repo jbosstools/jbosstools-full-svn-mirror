@@ -88,16 +88,19 @@ public class LiteralAssignCategory extends AssignCategoryBase {
 		From from = BPELUtil.adapt(aModel.getCopyRuleSide(), From.class);
 
 		fChangeHelper.startNonUserChange();
-		String fromString = EMPTY_STRING;
-		if (from != null) {
-			fromString = from.getLiteral();
+		try {
+			String fromString = EMPTY_STRING;
+			if (from != null) {
+				fromString = from.getLiteral();
+			}
+			if (fromString == null) {
+				fromString = EMPTY_STRING;
+			}
+			
+			fLiteralText.setText(fromString);			
+		} finally {
+			fChangeHelper.finishNonUserChange();
 		}
-		if (fromString == null) {
-			fromString = EMPTY_STRING;
-		}
-		
-		fLiteralText.setText(fromString);			
-		fChangeHelper.finishNonUserChange();
 	}
 	
 	

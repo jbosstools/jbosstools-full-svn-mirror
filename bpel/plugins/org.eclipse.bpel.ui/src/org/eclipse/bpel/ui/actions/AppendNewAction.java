@@ -12,7 +12,7 @@ package org.eclipse.bpel.ui.actions;
 
 import java.util.List;
 
-import org.eclipse.bpel.model.ExtensibleElement;
+import org.eclipse.bpel.model.BPELExtensibleElement;
 import org.eclipse.bpel.ui.BPELEditor;
 import org.eclipse.bpel.ui.Messages;
 import org.eclipse.bpel.ui.adapters.IContainer;
@@ -35,7 +35,7 @@ import org.eclipse.ui.IWorkbenchPart;
 /**
  * This action appends a new object to the container object that is currently <b>selected</b>.
  * 
- * The selection must be of type ExtensibleElement and it must allow an addition of such an object
+ * The selection must be of type BPELExtensibleElement and it must allow an addition of such an object
  * to the list of children (via the IContainer interface).
  * 
  * 
@@ -52,7 +52,7 @@ public class AppendNewAction extends SelectionAction {
 	protected Object cachedInstance;  // used for IContainer.canAddObject()
 	
 	/** the computed selection */
-	protected ExtensibleElement fSelection;
+	protected BPELExtensibleElement fSelection;
 	
 	
 	/**
@@ -143,8 +143,8 @@ public class AppendNewAction extends SelectionAction {
 			sel = part.getModel();
 		} 
 		
-		if (sel instanceof ExtensibleElement) {
-			fSelection = (ExtensibleElement) sel;
+		if (sel instanceof BPELExtensibleElement) {
+			fSelection = (BPELExtensibleElement) sel;
 		} 
 		
 		if (fSelection == null) {

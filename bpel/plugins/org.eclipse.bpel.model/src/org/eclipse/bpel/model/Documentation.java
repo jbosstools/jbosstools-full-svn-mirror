@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: Documentation.java,v 1.4 2008/05/04 11:05:46 odanilov Exp $
+ * $Id: Documentation.java,v 1.5 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model;
 
@@ -26,7 +26,7 @@ import org.eclipse.wst.wsdl.WSDLElement;
  * @model
  * @generated
  */
-public interface Documentation extends WSDLElement {
+public interface Documentation extends BPELExtensibleElement {
 	/**
 	 * Returns the value of the '<em><b>Lang</b></em>' attribute.
 	 * <!-- begin-user-doc -->

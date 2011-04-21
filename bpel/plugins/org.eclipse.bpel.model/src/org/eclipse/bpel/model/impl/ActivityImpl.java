@@ -10,7 +10,7 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: ActivityImpl.java,v 1.10 2009/04/14 10:50:36 smoser Exp $
+ * $Id: ActivityImpl.java,v 1.11 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model.impl;
 
@@ -44,7 +44,7 @@ import org.w3c.dom.Node;
  *
  * @generated
  */
-public class ActivityImpl extends ExtensibleElementImpl implements Activity {
+public class ActivityImpl extends BPELExtensibleElementImpl implements Activity {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -175,8 +175,8 @@ public class ActivityImpl extends ExtensibleElementImpl implements Activity {
 		Boolean oldSuppressJoinFailure = suppressJoinFailure;
 		if (!isReconciling) {
 			ReconciliationHelper.replaceAttribute(this,
-					BPELConstants.AT_SUPPRESS_JOIN_FAILURE, BPELUtils
-							.boolean2XML(newSuppressJoinFailure));
+					BPELConstants.AT_SUPPRESS_JOIN_FAILURE,
+					BPELUtils.boolean2XML(newSuppressJoinFailure));
 		}
 		suppressJoinFailure = newSuppressJoinFailure;
 		boolean oldSuppressJoinFailureESet = suppressJoinFailureESet;

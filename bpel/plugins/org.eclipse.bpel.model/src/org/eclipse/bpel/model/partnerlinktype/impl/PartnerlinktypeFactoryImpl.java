@@ -10,7 +10,7 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: PartnerlinktypeFactoryImpl.java,v 1.4 2007/08/01 21:02:32 mchmielewski Exp $
+ * $Id: PartnerlinktypeFactoryImpl.java,v 1.5 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model.partnerlinktype.impl;
 
@@ -68,13 +68,13 @@ public class PartnerlinktypeFactoryImpl extends EFactoryImpl implements
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case PartnerlinktypePackage.PARTNER_LINK_TYPE:
-				return createPartnerLinkType();
-			case PartnerlinktypePackage.ROLE:
-				return createRole();
-			default:
-				throw new IllegalArgumentException(
-						"The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
+		case PartnerlinktypePackage.PARTNER_LINK_TYPE:
+			return createPartnerLinkType();
+		case PartnerlinktypePackage.ROLE:
+			return createRole();
+		default:
+			throw new IllegalArgumentException(
+					"The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
 	}
 

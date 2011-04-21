@@ -76,6 +76,7 @@ public class Validator implements IValidator {
 	public void validate (IValidationContext helper, IReporter reporter)
 			throws ValidationException {
 
+		reporter.removeAllMessages(this);
 		
 		String s[] = helper.getURIs();
 		

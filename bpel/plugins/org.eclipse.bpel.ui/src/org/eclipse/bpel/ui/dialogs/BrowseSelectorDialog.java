@@ -180,7 +180,7 @@ public class BrowseSelectorDialog extends ListAndViewDialog {
 		computeResult();
 		Object obj[] = getResult();
 		
-		if (obj != null || obj.length > 0) {
+		if (obj != null && obj.length > 0) {
 			if (ensureXSDTypeNamespaceMappings ( obj[0] ) == false) {
 				return ;
 			}

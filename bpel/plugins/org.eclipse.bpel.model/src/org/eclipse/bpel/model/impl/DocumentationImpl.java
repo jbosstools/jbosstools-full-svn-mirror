@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: DocumentationImpl.java,v 1.10 2009/04/14 10:50:36 smoser Exp $
+ * $Id: DocumentationImpl.java,v 1.11 2011/03/30 18:54:24 rbrodt Exp $
  */
 package org.eclipse.bpel.model.impl;
 
@@ -29,7 +29,8 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class DocumentationImpl extends ExtensibleElementImpl implements Documentation {
+public class DocumentationImpl extends BPELExtensibleElementImpl implements
+		Documentation {
 	/**
 	 * The default value of the '{@link #getLang() <em>Lang</em>}' attribute.
 	 * <!-- begin-user-doc -->

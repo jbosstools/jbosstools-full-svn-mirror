@@ -2,9 +2,11 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ExtensionActivity.java,v 1.2 2007/08/01 21:02:30 mchmielewski Exp $
+ * $Id: ExtensionActivity.java,v 1.4 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model;
+
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -17,4 +19,15 @@ package org.eclipse.bpel.model;
  * @generated
  */
 public interface ExtensionActivity extends Activity {
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * Bug 120110 - added this method so extensions can update name references to
+	 * other model objects (e.g. Variables)
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public void updateElementReferences(EObject object, String attrName,
+			String attrValue);
+
 } // ExtensionActivity

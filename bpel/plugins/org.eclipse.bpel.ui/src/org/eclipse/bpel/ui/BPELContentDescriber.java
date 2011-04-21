@@ -34,6 +34,8 @@ import org.xml.sax.InputSource;
 public class BPELContentDescriber implements ITextContentDescriber {
 
 	private static final String WSBPEL_2_NAMESPACE = "http://docs.oasis-open.org/wsbpel/2.0/process/executable"; //$NON-NLS-1$
+	// https://issues.jboss.org/browse/JBIDE-8068
+	private static final String WSBPEL_2_ABSTRACT_NAMESPACE = "http://docs.oasis-open.org/wsbpel/2.0/process/abstract"; //$NON-NLS-1$
 	private static final String ROOT_ELEMENT = "process"; //$NON-NLS-1$
 
 	private RootElementParser parser;
@@ -79,7 +81,8 @@ public class BPELContentDescriber implements ITextContentDescriber {
 
 			if (ROOT_ELEMENT.equals(qName.localpart)) {
 				String namespace = fNamespaceContext.getURI(qName.prefix);
-				if (WSBPEL_2_NAMESPACE.equals(namespace))
+				// https://issues.jboss.org/browse/JBIDE-8068
+				if (WSBPEL_2_NAMESPACE.equals(namespace) || WSBPEL_2_ABSTRACT_NAMESPACE.equals(namespace))
 					throw new AcceptedException(qName.localpart);
 				else
 					throw new RejectedException();

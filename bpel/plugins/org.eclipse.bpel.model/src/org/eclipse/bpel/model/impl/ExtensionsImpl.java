@@ -2,7 +2,7 @@
  * <copyright>
  * </copyright>
  *
- * $Id: ExtensionsImpl.java,v 1.8 2009/04/14 10:50:37 smoser Exp $
+ * $Id: ExtensionsImpl.java,v 1.9 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model.impl;
 
@@ -34,7 +34,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class ExtensionsImpl extends ExtensibleElementImpl implements Extensions {
+public class ExtensionsImpl extends BPELExtensibleElementImpl implements
+		Extensions {
 	/**
 	 * The cached value of the '{@link #getChildren() <em>Children</em>}' containment reference list.
 	 * <!-- begin-user-doc -->

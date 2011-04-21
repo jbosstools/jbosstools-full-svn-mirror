@@ -56,6 +56,16 @@ import org.eclipse.wst.wsdl.Message;
  */
 
 public class TypeSelectorDialog extends BrowseSelectorDialog {
+
+	// https://issues.jboss.org/browse/JBIDE-8045
+	// additional filters for constraining XSD & message type selections
+	final public static int INCLUDE_SIMPLE_TYPES = 0x1;
+	final public static int INCLUDE_COMPLEX_TYPES = 0x2;
+	final public static int INCLUDE_ELEMENT_DECLARATIONS = 0x4;
+	final public static int INCLUDE_PRIMITIVES = 0x8;
+	final public static int INCLUDE_MESSAGE_TYPES = 0x10;
+	final public static int INCLUDE_ALL = 0xff;
+	final public static int INCLUDE_XSD_TYPES = INCLUDE_SIMPLE_TYPES | INCLUDE_COMPLEX_TYPES;
 		
 	/* Button id for complex types */
 	protected final static int BID_COMPLEX_TYPES = IDialogConstants.CLIENT_ID + 100;
@@ -88,7 +98,11 @@ public class TypeSelectorDialog extends BrowseSelectorDialog {
 	
 			
 	/* Which types to filter ? */
-	protected int FILTER_TYPES = XSDTypeOrElementContentProvider.INLCUDE_ALL;
+	protected int FILTER_TYPES = XSDTypeOrElementContentProvider.INCLUDE_ALL;
+	
+	// https://issues.jboss.org/browse/JBIDE-8045
+	/* Which types to include as selections (checkboxes) in dialog ? */
+	protected int includeTypes = INCLUDE_ALL;
 	
 	// https://jira.jboss.org/browse/JBIDE-7107
 	// set by caller if a selection from the lower tree (typically message parts or XSD elements)
@@ -102,10 +116,12 @@ public class TypeSelectorDialog extends BrowseSelectorDialog {
 	 * @param parent the parent shell
 	 * @param eObj any BPEL model object
 	 */
-	
-	public TypeSelectorDialog (Shell parent, EObject eObj ) {
+	// https://issues.jboss.org/browse/JBIDE-8045
+	// add filter selection parameter
+	public TypeSelectorDialog (Shell parent, EObject eObj, int filter ) {
 		super(parent, new ModelLabelProvider(eObj));
 		
+		this.includeTypes = filter;
 		this.modelObject = eObj;
 					
 		resourceContentProvider = new XSDSchemaFromResourceContentProvider( modelObject.eResource().getResourceSet() );
@@ -127,17 +143,15 @@ public class TypeSelectorDialog extends BrowseSelectorDialog {
 		try {
 			FILTER_TYPES = settings.getInt(FILTER_TYPES_KEY);
 		} catch (Exception ex) {
-			FILTER_TYPES = XSDTypeOrElementContentProvider.INLCUDE_ALL;
+			FILTER_TYPES = XSDTypeOrElementContentProvider.INCLUDE_ALL;
 		}		
 				
 		try {
 			showMessages = settings.getBoolean(SHOW_MESSAGES_KEY);
 		} catch (Exception ex) {
 			showMessages = false;
-		}		
+		}
 	}
-	
-
 	
 	/** 
 	 * Hook a load on the defaults into this dialog upon create.
@@ -149,9 +163,9 @@ public class TypeSelectorDialog extends BrowseSelectorDialog {
 		
 		Control control = super.createContents(parent);
 			
-		// Re-Create the state of the provider from the dialog settings.
-		xsdTypeProvider.setFilter( FILTER_TYPES );
-		
+		// Re-Create the state of the providers from the dialog settings.
+		setProviderFilters();
+
 		refresh();		
 
 		return control;
@@ -198,6 +212,10 @@ public class TypeSelectorDialog extends BrowseSelectorDialog {
 			
 		case BID_MESSAGES :
 			showMessages = checked;
+			// https://issues.jboss.org/browse/JBIDE-8075
+			// enable/disable selection of Message objects
+			setProviderFilters();
+			bRefresh = true;
 			break;
 							
 		default :
@@ -214,7 +232,7 @@ public class TypeSelectorDialog extends BrowseSelectorDialog {
 			} else {
 				FILTER_TYPES &= ~bits;
 			}
-			xsdTypeProvider.setFilter (FILTER_TYPES);
+			setProviderFilters();
 		}
 		
 		if (bRefresh) {
@@ -234,15 +252,21 @@ public class TypeSelectorDialog extends BrowseSelectorDialog {
 	@Override
 	protected void createBrowseFilterGroupButtons ( Group  group ) {
         
-		createCheckButton(group,Messages.TypeSelectorDialog_14, BID_XSD_PRIMITIVES, 
+        // https://issues.jboss.org/browse/JBIDE-8045
+		if ((includeTypes & INCLUDE_PRIMITIVES) > 0 )
+			createCheckButton(group,Messages.TypeSelectorDialog_14, BID_XSD_PRIMITIVES, 
 				(FILTER_TYPES & XSDTypeOrElementContentProvider.INCLUDE_PRIMITIVES) > 0  );
-		createCheckButton(group,Messages.TypeSelectorDialog_15, BID_SIMPLE_TYPES, 
+		if ((includeTypes & INCLUDE_SIMPLE_TYPES) > 0 )
+			createCheckButton(group,Messages.TypeSelectorDialog_15, BID_SIMPLE_TYPES, 
 				(FILTER_TYPES &  XSDTypeOrElementContentProvider.INCLUDE_SIMPLE_TYPES) > 0   );
-		createCheckButton(group,Messages.TypeSelectorDialog_16, BID_COMPLEX_TYPES, 
+		if ((includeTypes & INCLUDE_COMPLEX_TYPES) > 0 )
+			createCheckButton(group,Messages.TypeSelectorDialog_16, BID_COMPLEX_TYPES, 
 				(FILTER_TYPES &  XSDTypeOrElementContentProvider.INCLUDE_COMPLEX_TYPES ) > 0 );
-		createCheckButton(group,Messages.TypeSelectorDialog_17, BID_ELEMENT_DECLARATIONS,
+		if ((includeTypes & INCLUDE_ELEMENT_DECLARATIONS) > 0 )
+			createCheckButton(group,Messages.TypeSelectorDialog_17, BID_ELEMENT_DECLARATIONS,
 				(FILTER_TYPES &  XSDTypeOrElementContentProvider.INCLUDE_ELEMENT_DECLARATIONS ) > 0 );
-		createCheckButton(group,Messages.TypeSelectorDialog_18, BID_MESSAGES,
+		if ((includeTypes & INCLUDE_MESSAGE_TYPES) > 0 )
+			createCheckButton(group,Messages.TypeSelectorDialog_18, BID_MESSAGES,
 				showMessages);
 		
 		super.createBrowseFilterGroupButtons( group );
@@ -326,5 +350,26 @@ public class TypeSelectorDialog extends BrowseSelectorDialog {
 	public void setRequireLowerTreeSelection(boolean enabled)
 	{
 		this.requireLowerTreeSelection = enabled;
+	}
+	
+	// https://issues.jboss.org/browse/JBIDE-8045
+	public void setIncludeTypes(int includeTypes) {
+		this.includeTypes = includeTypes;
+	}
+	
+	// https://issues.jboss.org/browse/JBIDE-8045
+	// update the provider filters for only those types selected and available
+	private void setProviderFilters() {
+		
+		xsdTypeProvider.setFilter( FILTER_TYPES & includeTypes );
+		
+		// https://issues.jboss.org/browse/JBIDE-8075
+		// enable/disable selection of Message objects
+		if ( (includeTypes & INCLUDE_MESSAGE_TYPES) > 0 ) {
+			messageTypeProvider.setFilter( showMessages ? 1 : 0 );
+		}
+		else {
+			messageTypeProvider.setFilter( 0 );
+		}
 	}
 }

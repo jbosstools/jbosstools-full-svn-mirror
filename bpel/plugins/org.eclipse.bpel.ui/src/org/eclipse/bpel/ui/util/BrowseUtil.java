@@ -10,11 +10,9 @@
  *******************************************************************************/
 package org.eclipse.bpel.ui.util;
 
-import org.eclipse.bpel.ui.dialogs.MessageSelectorTypeDialog;
+import org.eclipse.bpel.ui.dialogs.TypeSelectorDialog;
 import org.eclipse.bpel.ui.dialogs.PartnerLinkTypeSelectorDialog;
 import org.eclipse.bpel.ui.dialogs.TypeSelectorDialog;
-import org.eclipse.bpel.ui.dialogs.XSDElementSelectorDialog;
-import org.eclipse.bpel.ui.dialogs.XSDTypeSelectorDialog;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jface.window.Window;
@@ -39,7 +37,14 @@ public class BrowseUtil {
 	}
 	
 	public static Object browseForXSDTypeOrElement(EObject eObject, Shell parent) {		
-		TypeSelectorDialog dialog = new TypeSelectorDialog (parent,eObject);		
+		// https://issues.jboss.org/browse/JBIDE-8045
+		// changed TypeSelectorDialog
+		TypeSelectorDialog dialog = new TypeSelectorDialog (parent,eObject,
+				TypeSelectorDialog.INCLUDE_SIMPLE_TYPES |
+				TypeSelectorDialog.INCLUDE_COMPLEX_TYPES |
+				TypeSelectorDialog.INCLUDE_ELEMENT_DECLARATIONS |
+				TypeSelectorDialog.INCLUDE_PRIMITIVES
+				);		
 		if (dialog.open() != Window.OK) {
 			return null;
 		}
@@ -71,7 +76,10 @@ public class BrowseUtil {
 	}
 
 	public static Object[] browseForXSDType(EObject eObject, Shell parent) {		
-		TypeSelectorDialog dialog = new XSDTypeSelectorDialog (parent,eObject);		
+		// https://issues.jboss.org/browse/JBIDE-8045
+		// removed use of specialized selection dialog
+		TypeSelectorDialog dialog = new TypeSelectorDialog (parent,eObject,
+				TypeSelectorDialog.INCLUDE_XSD_TYPES);
 		if (dialog.open() != Window.OK) {
 			return null;
 		}
@@ -84,8 +92,11 @@ public class BrowseUtil {
 	}
 
 	public static Object[] browseForXSDElement(EObject eObject, Shell parent, boolean requireElementSelection) {		
-		XSDElementSelectorDialog dialog = new XSDElementSelectorDialog (parent,eObject);
-		dialog.setRequireElementSelection(requireElementSelection);
+		// https://issues.jboss.org/browse/JBIDE-8045
+		// removed use of specialized selection dialog
+		TypeSelectorDialog dialog = new TypeSelectorDialog (parent,eObject,
+				TypeSelectorDialog.INCLUDE_ELEMENT_DECLARATIONS);
+		dialog.setRequireLowerTreeSelection(requireElementSelection);
 		if (dialog.open() != Window.OK) {
 			return null;
 		}
@@ -98,8 +109,11 @@ public class BrowseUtil {
 	}
 
 	public static Object[] browseForMessageType(EObject eObject, Shell parent, boolean requirePartSelection) {		
-		MessageSelectorTypeDialog dialog = new MessageSelectorTypeDialog (parent,eObject);
-		dialog.setRequirePartSelection(requirePartSelection);
+		// https://issues.jboss.org/browse/JBIDE-8045
+		// removed use of specialized selection dialog
+		TypeSelectorDialog dialog = new TypeSelectorDialog (parent,eObject,
+				TypeSelectorDialog.INCLUDE_MESSAGE_TYPES);
+		dialog.setRequireLowerTreeSelection(requirePartSelection);
 		if (dialog.open() != Window.OK) {
 			return null;
 		}
@@ -111,4 +125,19 @@ public class BrowseUtil {
 
 	}
 
+
+	// https://issues.jboss.org/browse/JBIDE-8045
+	public static Object[] browseForVariableType(EObject eObject, Shell parent, boolean requireElementSelection, int filter) {		
+		TypeSelectorDialog dialog = new TypeSelectorDialog (parent,eObject,filter);
+		dialog.setRequireLowerTreeSelection(requireElementSelection);
+		if (dialog.open() != Window.OK) {
+			return null;
+		}
+		Object obj[] = dialog.getResult();
+		if (obj != null && obj.length > 0) {
+			return obj;
+		}
+		return null;
+
+	}
 }

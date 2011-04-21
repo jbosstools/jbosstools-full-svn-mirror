@@ -10,7 +10,7 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: CatchImpl.java,v 1.11 2009/04/14 10:50:37 smoser Exp $
+ * $Id: CatchImpl.java,v 1.13 2011/03/30 18:54:24 rbrodt Exp $
  */
 package org.eclipse.bpel.model.impl;
 
@@ -47,7 +47,7 @@ import org.eclipse.xsd.XSDElementDeclaration;
  *
  * @generated
  */
-public class CatchImpl extends ExtensibleElementImpl implements Catch {
+public class CatchImpl extends BPELExtensibleElementImpl implements Catch {
 	/**
 	 * The default value of the '{@link #getFaultName() <em>Fault Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -169,7 +169,8 @@ public class CatchImpl extends ExtensibleElementImpl implements Catch {
 			NotificationChain msgs) {
 		Variable oldFaultVariable = faultVariable;
 		if (!isReconciling) {
-			ReconciliationHelper.replaceAttribute(this,
+			ReconciliationHelper.replaceAttribute(
+					this,
 					BPELConstants.AT_FAULT_VARIABLE,
 					newFaultVariable == null ? null : newFaultVariable
 							.getName());
@@ -274,9 +275,10 @@ public class CatchImpl extends ExtensibleElementImpl implements Catch {
 	 * @customized
 	 */
 	public Message getFaultMessageType() {
-		if (faultVariable != null && faultVariable instanceof Variable) {
+		if (faultVariable != null) {
 			return (faultVariable).getMessageType();
 		}
+
 		if (faultMessageType != null && faultMessageType.eIsProxy()) {
 			Message oldFaultMessageType = faultMessageType;
 			faultMessageType = (Message) eResolveProxy((InternalEObject) faultMessageType);
@@ -306,12 +308,14 @@ public class CatchImpl extends ExtensibleElementImpl implements Catch {
 	 */
 	public void setFaultMessageType(Message newFaultMessageType) {
 		Variable variable = getFaultVariable();
-		if (variable != null && variable instanceof Variable) {
+		if (variable != null) {
 			(variable).setMessageType(newFaultMessageType);
 		}
+
 		Message oldFaultMessageType = faultMessageType;
 		if (!isReconciling) {
-			ReconciliationHelper.replaceAttribute(this,
+			ReconciliationHelper.replaceAttribute(
+					this,
 					BPELConstants.AT_FAULT_MESSAGE_TYPE,
 					newFaultMessageType == null ? null : newFaultMessageType
 							.getQName());
@@ -329,9 +333,10 @@ public class CatchImpl extends ExtensibleElementImpl implements Catch {
 	 * @customized
 	 */
 	public XSDElementDeclaration getFaultElement() {
-		if (faultVariable != null && faultVariable instanceof Variable) {
+		if (faultVariable != null) {
 			return (faultVariable).getXSDElement();
 		}
+
 		if (faultElement != null && faultElement.eIsProxy()) {
 			XSDElementDeclaration oldFaultElement = faultElement;
 			faultElement = (XSDElementDeclaration) eResolveProxy((InternalEObject) faultElement);
@@ -361,12 +366,14 @@ public class CatchImpl extends ExtensibleElementImpl implements Catch {
 	 */
 	public void setFaultElement(XSDElementDeclaration newFaultElement) {
 		Variable variable = getFaultVariable();
-		if (variable != null && variable instanceof Variable) {
+		if (variable != null) {
 			(variable).setXSDElement(newFaultElement);
 		}
+
 		XSDElementDeclaration oldFaultElement = faultElement;
 		if (!isReconciling) {
-			ReconciliationHelper.replaceAttribute(this,
+			ReconciliationHelper.replaceAttribute(
+					this,
 					BPELConstants.AT_FAULT_ELEMENT,
 					newFaultElement == null ? null : new QName(newFaultElement
 							.getTargetNamespace(), newFaultElement.getName()));

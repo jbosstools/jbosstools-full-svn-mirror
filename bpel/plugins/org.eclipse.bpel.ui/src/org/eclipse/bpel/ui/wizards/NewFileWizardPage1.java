@@ -23,6 +23,7 @@ import org.eclipse.bpel.ui.BPELUIPlugin;
 import org.eclipse.bpel.ui.IBPELUIConstants;
 import org.eclipse.bpel.ui.Templates;
 import org.eclipse.bpel.ui.Templates.Template;
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.runtime.IStatus;
@@ -43,6 +44,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.internal.ide.IDEWorkbenchPlugin;
+import org.eclipse.wst.common.componentcore.ModuleCoreNature;
 
 /**
  * 
@@ -206,6 +208,7 @@ public class NewFileWizardPage1 extends WizardPage {
 
 			public void handleEvent(Event event) {
 				String val = processTemplateField.getText().trim();
+				// https://bugs.eclipse.org/bugs/show_bug.cgi?id=330813
 				// https://jira.jboss.org/browse/JBIDE-7165
 				mArgs.put(Templates.PROPERTY_NAME, val);
 				Template template = BPELUIPlugin.INSTANCE.getTemplates()
@@ -221,7 +224,7 @@ public class NewFileWizardPage1 extends WizardPage {
 		});
 
 		templateDescription = new Text(projectGroup, SWT.READ_ONLY | SWT.WRAP
-				| SWT.SCROLL_LINE);
+				| SWT.SCROLL_LINE | SWT.V_SCROLL);
 		data = new GridData(GridData.FILL_HORIZONTAL);
 		data.widthHint = SIZING_TEXT_FIELD_WIDTH;
 		data.heightHint = 60;
@@ -362,6 +365,18 @@ public class NewFileWizardPage1 extends WizardPage {
 		setErrorMessage(null);
 		setMessage(null);
 
+		// https://issues.jboss.org/browse/JBIDE-8591
+		NewFileWizard wiz = (NewFileWizard)getWizard();
+		// https://issues.jboss.org/browse/JBIDE-8738
+		IContainer container = wiz.getBPELContainer(); 
+		if (container!=null) {
+			if (!ModuleCoreNature.isFlexibleProject(container.getProject()))
+				setMessage(Messages.NewFileWizard_Not_A_Faceted_Project, WizardPage.WARNING);
+			
+			if (container.findMember(processNameField.getText()+".bpel")!=null ) //$NON-NLS-1$
+				setMessage(Messages.NewFileWizardPage1_12,WARNING);
+		}
+
 		String namespace = processNamespaceField.getText().trim();
 		if (namespace.length() < 1) {
 			setErrorMessage(Messages.NewFileWizardPage1_11);
@@ -394,6 +409,11 @@ public class NewFileWizardPage1 extends WizardPage {
 			page.getPortNameField().setText(processName + "Port");
 			page.getAddressField().setText(
 					"http://localhost:8080/" + processName);
+		}
+		NewFileWizardPage2 page2 = (NewFileWizardPage2) this.getWizard().getPage(
+				Messages.NewFileWizardPage2_Name);
+		if (page2 != null) {
+			page2.setProcessName(processName);
 		}
 	}
 
@@ -457,6 +477,8 @@ public class NewFileWizardPage1 extends WizardPage {
 		super.setVisible(visible);
 		if (visible) {
 			processNameField.setFocus();
+			// https://issues.jboss.org/browse/JBIDE-8591
+			validatePage();
 		}
 	}
 
@@ -477,5 +499,4 @@ public class NewFileWizardPage1 extends WizardPage {
 
 		return mArgs;
 	}
-
 }

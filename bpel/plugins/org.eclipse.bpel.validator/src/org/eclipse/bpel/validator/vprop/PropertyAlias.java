@@ -13,7 +13,6 @@ package org.eclipse.bpel.validator.vprop;
 import javax.xml.namespace.QName;
 
 import org.eclipse.bpel.validator.model.ARule;
-
 import org.eclipse.bpel.validator.model.IFilter;
 import org.eclipse.bpel.validator.model.IModelQueryLookups;
 import org.eclipse.bpel.validator.model.INode;
@@ -45,26 +44,12 @@ public class PropertyAlias extends CValidator {
 	
 	/** Parent nodes */
 	static public IFilter<INode> PARENTS = new NodeNameFilter( WSDL_ND_DEFINITIONS );
-	
-	
-	String ncName ;
-
 
 	protected String fTypeName;
-
-
 	protected String fElementName;
-
-
 	protected String fPropertyName;
-
-
 	protected String fMessageTypeName;
-
-
 	protected String fMessagePartName;
-
-
 	protected String fDuplicateKey = null;	
 	
 	
@@ -128,6 +113,7 @@ public class PropertyAlias extends CValidator {
 			// good
 			fDuplicateKey = nn + "/messageType/" + fMessageTypeName + "/" + fMessagePartName + "/" + fPropertyName;
 
+		// https://bugs.eclipse.org/bugs/show_bug.cgi?id=330813
 		// https://jira.jboss.org/browse/JBIDE-7107
 		// sheesh! fix a typo
 		} else if (isEmpty(fMessageTypeName) && isEmpty(fMessagePartName) ) {
@@ -185,6 +171,7 @@ public class PropertyAlias extends CValidator {
 		IProblem problem;
 		INode typeNode = null;
 
+		// https://bugs.eclipse.org/bugs/show_bug.cgi?id=330813
 		// https://jira.jboss.org/browse/JBIDE-7107				
 		if (isNonEmpty(fMessageTypeName) && isNonEmpty(fMessagePartName)) {			
 			// good			
@@ -215,6 +202,7 @@ public class PropertyAlias extends CValidator {
 				
 			}
 
+		// https://bugs.eclipse.org/bugs/show_bug.cgi?id=330813
 		// https://jira.jboss.org/browse/JBIDE-7107
 		// reversed type and element...
 		// wow, Michal must have been tired when he was writing this ;)

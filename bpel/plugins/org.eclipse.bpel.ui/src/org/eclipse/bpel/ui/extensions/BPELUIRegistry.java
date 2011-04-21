@@ -268,8 +268,8 @@ public class BPELUIRegistry {
      * Read all the actions and categories.
      */
     private void readUIObjecFactories() {
-        List categories = new ArrayList();
-        List factories = new ArrayList();
+
+    	List factories = new ArrayList();
         IConfigurationElement[] extensions = getConfigurationElements("uiObjectFactories");
         for (int i = 0; i < extensions.length; i++) {
             IConfigurationElement element = extensions[i];

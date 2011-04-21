@@ -10,7 +10,7 @@
  *     IBM Corporation - initial API and implementation
  * </copyright>
  *
- * $Id: OnMessage.java,v 1.7 2008/02/28 17:33:21 smoser Exp $
+ * $Id: OnMessage.java,v 1.8 2011/03/30 18:54:25 rbrodt Exp $
  */
 package org.eclipse.bpel.model;
 
@@ -44,7 +44,7 @@ import org.eclipse.wst.wsdl.PortType;
  * @model
  * @generated
  */
-public interface OnMessage extends ExtensibleElement {
+public interface OnMessage extends BPELExtensibleElement {
 	/**
 	 * Returns the value of the '<em><b>Variable</b></em>' reference.
 	 * <!-- begin-user-doc -->
