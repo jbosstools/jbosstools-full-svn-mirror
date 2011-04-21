@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %Bundle-Name.0
+Bundle-SymbolicName: org.jboss.tools.flow.ruleflow;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: org.jboss.tools.process.ruleflow.Activator
+Bundle-Vendor: %Bundle-Vendor.0
+Require-Bundle: 
+ org.eclipse.core.resources,
+ org.eclipse.core.runtime,
+ org.eclipse.gef,
+ org.eclipse.ui,
+ org.eclipse.ui.ide,
+ org.jboss.tools.flow.common
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: .,
+ lib/drools-core.jar,
+ lib/drools-compiler.jar,
+ lib/antlr-runtime.jar,
+ lib/core-3.2.3.v_686_R32x.jar,
+ lib/mvel.jar
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-Localization: plugin

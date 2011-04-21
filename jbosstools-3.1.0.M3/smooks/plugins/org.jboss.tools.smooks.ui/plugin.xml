@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="org.jboss.tools.smooks.configuration.editors.SmooksMultiFormEditor"
+            contributorClass="org.jboss.tools.smooks.configuration.editors.SmooksActionBarContributor"
+            icon="icons/smooks-sm.gif"
+            id="org.jboss.tools.smooks.configuration.editors.MultiPageEditor"
+            name="Smooks Configuration Editor">
+         <contentTypeBinding
+               contentTypeId="org.jboss.tools.smooks.ui.smooks.contentType">
+         </contentTypeBinding>
+      </editor>
+      <editor
+            class="org.jboss.tools.smooks.edimap.editor.EDIMapFormEditor"
+            icon="icons/edi-mapping.gif"
+            id="org.jboss.tools.smooks.edimap.editors.MultiPageEditor"
+            name="EDI Message Mapping Editor">
+         <contentTypeBinding
+               contentTypeId="org.jboss.tools.smooks.ui.edimap.contentType">
+         </contentTypeBinding>
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="Smooks"
+            id="org.jboss.tools.smooks.configuration">
+      </category>
+      <wizard
+            name="Smooks Configuration File"
+            icon="icons/smooks-sm.gif"
+            category="org.jboss.tools.smooks.configuration"
+            class="org.jboss.tools.smooks.configuration.wizards.SmooksConfigurationFileNewWizard"
+            id="org.jboss.tools.smooks.configuration.wizards.NewConfigurationFileWizard">
+      </wizard>
+      <wizard
+            category="org.jboss.tools.smooks.configuration"
+            class="org.jboss.tools.smooks.edimap.wizard.EDIMappingConfigFileWizard"
+            icon="icons/edi-mapping.gif"
+            id="org.jboss.tools.smooks.configuration.wizards.NewEDIMappingConfigurationFileWizard"
+            name="EDI Message Mapping Configuration File">
+      </wizard>
+   </extension>
+   
+    <extension
+         point="org.eclipse.core.contenttype.contentTypes">
+      <content-type
+            base-type="org.eclipse.core.runtime.xml"
+            describer="org.jboss.tools.smooks.configuration.editors.SmooksConfigfileContentDescriber"
+            file-extensions="xml"
+            id="org.jboss.tools.smooks.ui.smooks.contentType"
+            name="Smooks Configuration File"
+            priority="low">
+      </content-type>
+      <content-type
+            base-type="org.eclipse.core.runtime.xml"
+            describer="org.jboss.tools.smooks.edimap.editor.EDIMapFileContentDescriber"
+            file-extensions="xml"
+            id="org.jboss.tools.smooks.ui.edimap.contentType"
+            name="EDI Map File"
+            priority="low">
+      </content-type>
+   </extension>
+    <extension
+          point="org.eclipse.ui.startup">
+       <startup
+             class="org.jboss.tools.smooks.configuration.editors.SmooksToolsStartup">
+       </startup>
+    </extension>
+    <extension
+          point="org.eclipse.ui.decorators">
+       <decorator
+             adaptable="false"
+             class="org.jboss.tools.smooks.configuration.validate.ValidateResultLabelDecorator"
+             id="org.jboss.tools.smooks.ui.configurationPage.decorator"
+             label="Smooks Configuration Page Viewer Decorator"
+             lightweight="true"
+             state="false">
+          <description>
+             Decorate smooks configuration page viewer
+          </description>
+          <enablement>
+             <or>
+                <objectClass
+                      name="org.eclipse.emf.edit.provider.IWrapperItemProvider">
+                </objectClass>
+                <objectClass
+                      name="org.jboss.tools.smooks.model.common.AbstractAnyType">
+                </objectClass>
+                <objectClass
+                      name="org.eclipse.emf.ecore.util.FeatureMap$Entry">
+                </objectClass>
+             </or>
+          </enablement>
+       </decorator>
+    </extension>
+    <extension
+          id="problem"
+          name="Smooks Problem"
+          point="org.eclipse.core.resources.markers">
+       <persistent
+             value="true">
+       </persistent>
+       <super
+             type="org.eclipse.core.resources.problemmarker">
+       </super>
+       <attribute
+             name="uri">
+       </attribute>
+    </extension>
+    <extension
+          id="org.jboss.tools.smooks.configuration.validator"
+          name="Smooks File Validator"
+          point="org.eclipse.wst.validation.validatorV2">
+       <validator
+             build="true"
+             class="org.jboss.tools.smooks.configuration.validate.SmooksModelValidator"
+             manual="true"
+             version="1">
+          <include>
+             <rules>
+                <contentType
+                      exactMatch="true"
+                      id="org.jboss.tools.smooks.ui.smooks.contentType">
+                </contentType>
+                <contentType
+                      exactMatch="true"
+                      id="org.jboss.tools.smooks.ui.edimap.contentType">
+                </contentType>
+             </rules>
+          </include>
+       </validator>
+    </extension>
+
+</plugin>

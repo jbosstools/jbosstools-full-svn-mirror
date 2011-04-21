@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.debug.core.sourceContainerTypes">
+      <sourceContainerType
+            class="org.jboss.tools.labs.pde.sourceprovider.EclipseSourceContainerType"
+            description="Includes all the available source in an eclipse installation"
+            id="org.jboss.tools.labs.pde.sourceprovider.eclipseSourceContainerType"
+            name="Eclipse Installation">
+      </sourceContainerType>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.sourceContainerPresentations">
+      <sourceContainerPresentation
+            browserClass="org.jboss.tools.labs.pde.sourceprovider.EclipseSourceContainerType$EclipseSourceContainerBrowser"
+            containerTypeID="org.jboss.tools.labs.pde.sourceprovider.eclipseSourceContainerType"
+            icon="icons/icon.gif"
+            id="org.jboss.tools.labs.pde.sourceprovider.eclipseSourceContainerPresentation">
+      </sourceContainerPresentation>
+   </extension>
+
+</plugin>

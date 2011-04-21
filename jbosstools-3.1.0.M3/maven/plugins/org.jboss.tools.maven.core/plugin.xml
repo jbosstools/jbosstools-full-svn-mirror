@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+	
+    <extension point="org.eclipse.wst.common.project.facet.core.facets">
+   
+	 <project-facet id="jboss.m2">   
+    	<label>JBoss Maven Integration</label>
+    	<description>
+      		Adds support for Maven.
+    	</description>
+    	<default-version version="1.0"/>
+  	  </project-facet>
+  	  
+  	  <project-facet-version facet="jboss.m2" version="1.0">
+      	<constraint>
+         	<or>
+                <requires facet="jst.ear" version="[5.0"/>
+                <requires facet="jst.ejb" version="[3.0"/>
+	            <requires facet="jst.web" version="[2.5"/>
+    	        <requires facet="jst.utility" version="[1.0"/>
+				<requires facet="jst.appclient" version="[1.2"/>
+				<requires facet="jst.connector" version="[1.0"/>
+         	</or>
+         </constraint>
+      </project-facet-version>
+      
+     <action id="jboss.m2.install" facet="jboss.m2" type="INSTALL" version="1.0">
+      	<delegate class="org.jboss.tools.maven.core.internal.project.facet.MavenFacetInstallDelegate"/>
+      	<config-factory class="org.jboss.tools.maven.core.internal.project.facet.MavenFacetInstallDataModelProvider"/>
+     </action>  
+      
+    </extension>
+     
+    <extension point="org.eclipse.wst.common.project.facet.core.runtimes">
+    	<supported>
+			<runtime-component any="true"/>
+        		<facet id="jboss.m2" version="1.0"/>
+    	</supported>
+    </extension>
+   
+    <extension point="org.eclipse.jst.common.project.facet.core.libraryProviders">
+    	<provider id="maven-library-provider" abstract="true">
+      		<label>Maven library provider</label>
+      		<priority>500</priority>
+      		<action type="INSTALL">
+        		<config class="org.jboss.tools.maven.core.libprov.MavenLibraryProviderInstallOperationConfig"/>
+        		<operation class="org.jboss.tools.maven.core.libprov.MavenLibraryProviderInstallOperation"/>
+      		</action>
+      		
+      		<action type="UNINSTALL">
+        		<operation class="org.jboss.tools.maven.core.libprov.MavenLibraryProviderUninstallOperation"/>
+      		</action>
+      		
+    	</provider>
+  	</extension>
+  	
+  	 <extension point="org.eclipse.core.expressions.propertyTesters">
+      <propertyTester
+      		namespace="org.jboss.tools.maven.core"
+            properties="projectFacets"
+            type="java.util.Collection"
+            class="org.jboss.tools.maven.core.ProjectFacetsFactoryTester"
+            id="org.jboss.tools.maven.core.ProjectFacetsFactoryTester">
+      </propertyTester>
+   </extension>
+   
+  	<extension point="org.eclipse.jst.common.project.facet.core.libraryProviders">
+    	<provider id="jsf12-maven-library-provider" extends="maven-library-provider">
+    		<label>Maven JSF 1.2 Libraries</label>
+      		<param name="template" value="platform:/plugin/org.jboss.tools.maven.core/poms/jsf-template12.xml"/>
+      		<enablement>
+      		  <and>
+        		<with variable="projectFacets">
+          			<test property="org.jboss.tools.maven.core.projectFacets" value="jst.jsf,jboss.m2" forcePluginActivation="true"/>
+        		</with>
+        		<with variable="requestingProjectFacet">
+                    <test property="org.eclipse.wst.common.project.facet.core.projectFacet" value="jst.jsf:1.2" forcePluginActivation="true"/>
+                </with>
+        	  </and>
+      		</enablement>
+    	</provider>
+  	</extension>
+  	
+  	<extension point="org.eclipse.jst.common.project.facet.core.libraryProviders">
+    	<provider id="jsf11-maven-library-provider" extends="maven-library-provider">
+      		<label>Maven JSF 1.1 Libraries</label>
+      		<param name="template" value="platform:/plugin/org.jboss.tools.maven.core/poms/jsf-template11.xml"/>
+      		<enablement>
+      		  <and>
+        		<with variable="projectFacets">
+          			<test property="org.jboss.tools.maven.core.projectFacets" value="jst.jsf,jboss.m2" forcePluginActivation="true"/>
+        		</with>
+        		<with variable="requestingProjectFacet">
+                    <test property="org.eclipse.wst.common.project.facet.core.projectFacet" value="jst.jsf:1.1" forcePluginActivation="true"/>
+                </with>
+        	  </and>
+      		</enablement>
+    	</provider>
+  	</extension>
+  	
+  	<extension point="org.eclipse.jst.common.project.facet.core.libraryProviders">
+    	<provider id="hibernate332-maven-library-provider" extends="maven-library-provider">
+      		<label>Hibernate 3.3.2 Libraries</label>
+      		<param name="template" value="platform:/plugin/org.jboss.tools.maven.core/poms/hibernate332-template.xml"/>
+      		<enablement>
+      		  <and>
+        		<with variable="projectFacets">
+          			<test property="org.jboss.tools.maven.core.projectFacets" value="jpt.jpa,jboss.m2" forcePluginActivation="true"/>
+        		</with>
+        		<with variable="requestingProjectFacet">
+                    <test property="org.eclipse.wst.common.project.facet.core.projectFacet" value="jpt.jpa:1.0" forcePluginActivation="true"/>
+                </with>
+                <with variable="jpaPlatform">
+					<equals value="hibernate"/>
+				</with>
+        	  </and>
+      		</enablement>
+    	</provider>
+  	</extension>
+  	
+</plugin>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+    <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="org.jboss.tools.hibernate.ui.diagram.editors.DiagramViewer"
+            contributorClass="org.jboss.tools.hibernate.ui.diagram.editors.DiagramActionBarContributor"
+            icon="$nl$/icons/hibernate_small_icon.gif"
+            id="org.jboss.tools.hibernate.ui.diagram.editors.DiagramViewer"
+            name="Hibernate Diagram Viewer">
+      </editor>
+   </extension>
+
+   <extension point="org.eclipse.ui.popupMenus">
+      <objectContribution id="diagramEditorAction" objectClass="java.lang.Object"> 
+         <visibility>
+           <or>
+             <objectClass name="org.hibernate.cfg.Configuration"/>
+             <objectClass name="org.hibernate.console.ConsoleConfiguration"/>
+             <objectClass name="org.hibernate.mapping.PersistentClass"/>
+           </or>
+         </visibility>
+         <action
+            id="org.jboss.tools.hibernate.ui.view.openDiagramAction" 
+            label="Mapping Diagram" 
+            icon="images/hibernate_small_icon.gif"
+            menubarPath="group.primalEditors.last"
+            class="org.jboss.tools.hibernate.ui.view.OpenDiagramActionDelegate"> 
+         </action> 
+      </objectContribution> 
+   </extension>
+
+</plugin>

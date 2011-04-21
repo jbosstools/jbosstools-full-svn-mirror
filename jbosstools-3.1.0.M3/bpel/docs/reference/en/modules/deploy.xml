@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<chapter id="deploy">
+    <title>Deploy a JBoss BPEL project into JBoss BPEL Runtime</title>
+    <section id="createdeploy">
+        <title>Creating a bpel-deploy.xml file</title>
+        <para>If you want to deploy a BPEL project into JBoss BPEL Runtime, you need to create a bpel-deploy.xml file. 
+            Our tools can help you to create it:
+        </para>
+        <itemizedlist>
+            <listitem>
+                <para>Create the bpel-deploy.xml by selecting 
+                    <emphasis><property>New > Other... > BPEL 2.0 > Apache ODE Deployment Descriptor</property></emphasis>.
+                </para>
+                <figure>
+                    <title>New BPEL Deploy file</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/deploy_createdeploy_1.png"/>
+                            </imageobject>
+                      </mediaobject>
+                </figure>                
+            </listitem>
+            <listitem>
+                <para>BPEL Project: Click on the <property>Browse...</property> button to select a BPEL project in your workspace which you want to deploy into the runtime.
+                    Please note that you should select the bpel folder under the BPEL project because the bpel-deploy.xml should be at this place.
+                </para>
+                <para>File name: The default value is bpel-deploy.xml. Please don't change it.</para>
+                <para>Click on <property>Finish</property> button to close the wizard.</para>
+                <figure>
+                    <title>New BPEL Deploy file Wizard</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/deploy_createdeploy_2.png"/>
+                            </imageobject>
+                      </mediaobject>
+                </figure>                
+            </listitem>
+            <listitem>
+                <para>Double-click on the bpel-deploy.xml file to open it. In the <property>Inbound Interface</property> section, click in the 
+                    <property>Associated Port</property> column for the <property>client</property> Parner link. Then select <property>HelloWorldProcessPort</property>
+                     in the drop down box. Click in the other part of the eclipse, the <property>Related Service</property> and <property>Binding Used</property>
+                     clumns should automatically be filled in. Save the bpel-deploy.xml.
+                </para>
+                <figure>
+                    <title>bpel-deploy.xml file editor</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/deploy_createdeploy_3.png"/>
+                            </imageobject>
+                      </mediaobject>
+                </figure>                
+            </listitem>            
+        </itemizedlist>
+    </section>
+    <section id="createruntime">
+        <title>Creating JBoss BPEL Server</title>
+        <para>Suppose you have installed the JBoss BPEL Runtime, <property>RiftSaw</property>, now we can create a server for the JBoss BPEL runtime</para>
+        <itemizedlist>
+            <listitem>
+                <para>Open the <property>Servers view</property> by selecting 
+                    <emphasis><property>Windows > Show View > Other... > Server > Servers</property></emphasis>.
+                </para>                
+            </listitem>
+            <listitem>
+                <para>In the  Servers view, right-click and select  
+                    <emphasis><property>New > Server</property></emphasis> to open a wizard: 
+                </para>
+                <figure>
+                    <title>New Server Wizard</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/deploy_createdeploy_4.png"/>
+                            </imageobject>
+                      </mediaobject>
+                </figure>                
+            </listitem>
+            <listitem>
+                <para>Server type: select <property>JBoss AS 5.1</property>. Please note that only JBoss As 5.1 or higher version support BPEL.</para>                
+                <para>Click on the <property>Next</property> button. On the next page, you can input your JBoss As location. Then click on the <property>Next</property> button. 
+                    you can get the page like this: 
+                </para>
+                <figure>
+                    <title>Add resource to the server</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/deploy_createdeploy_5.png"/>
+                            </imageobject>
+                      </mediaobject>
+                </figure>                 
+            </listitem>
+            <listitem>
+                <para>Select <property>HelloWorld</property>, then click on the <property>Add > </property> button to add the project to the server.
+                    Then click on <property>Finish</property> button.
+                </para>
+                <para>Start the server by right-clicking on the server and selecting the <property>Start</property> item. </para> 
+                               
+                <figure>
+                    <title>The started server</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/deploy_createdeploy_6.png"/>
+                            </imageobject>
+                      </mediaobject>
+                </figure>                 
+            </listitem>
+            <listitem>
+                <para>You can input the link <ulink url="http://localhost:8080/bpel/processes.html">http://localhost:8080/bpel/processes.html</ulink> in the browse to find the deployed processes.</para>                 
+                <figure>
+                    <title>The BPEL console</title>
+                        <mediaobject>
+                            <imageobject>
+                                <imagedata fileref="images/deploy_createdeploy_7.png"/>
+                            </imageobject>
+                      </mediaobject>
+                </figure>                 
+            </listitem>            
+        </itemizedlist>  
+              
+    </section>
+</chapter>

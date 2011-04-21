@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<chapter id="install">
+    <title>Install the JBoss BPEL editor</title>
+    <section id="installeclipse">
+        <title>Installing the JBoss BPEL editor</title>
+        <para>At first, you need an Eclipse(3.5). You can get it from <ulink url="http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/galileo/">Eclipse</ulink> Web Site. 
+        </para>
+        <para>The JBoss BPEL editor is included in JBoss Tools. You have some methods to install JBoss Tools. See <ulink url="http://www.jboss.org/tools/download/installation.html">Installing JBoss Tools</ulink> for more information.</para>
+        <para>If you only want to install the JBoss BPEL editor, you may install it from <ulink url="http://jboss.org/tools/download/dev.html">JBoss Tools</ulink> page. Please note that 
+            only JBoss Tools 3.1 or higher version include the JBoss BPEL editor.
+        </para>
+    </section>
+    <section id="installRuntime">
+        <title>Installing the JBoss BPEL Runtime</title>
+        <para>If you want to deploy a BPEL project to JBoss runtime, you need to download the JBoss BPEL Runtime by yourself. The JBoss BPEL Runtime
+            is named RiftSaw. You can get it from <ulink url="">JBoss RiftSaw</ulink> page.
+        </para>
+    </section>
+</chapter>
