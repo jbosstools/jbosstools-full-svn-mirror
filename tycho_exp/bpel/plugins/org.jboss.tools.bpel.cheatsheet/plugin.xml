@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.5"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.cheatsheets.cheatSheetContent">
+      <category
+            id="org.jboss.tools.bpel.cheatsheet"
+            name="JBoss BPEL Tutorial">
+      </category>
+      <cheatsheet
+            category="org.jboss.tools.bpel.cheatsheet"
+            contentFile="$nl$/cheatsheets/bpel.xml"
+            id="org.jboss.tools.bpel.cheatsheet.bpel"
+            name="JBoss BPEL Tutorial">
+         <description>
+            Learn how to use JBoss BPEL editor
+         </description>
+      </cheatsheet>
+   </extension>
+
+</plugin>

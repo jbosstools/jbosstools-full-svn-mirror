@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="moduleDependencyPropertyPage" name="moduleDependencyPropertyPage" schema="schema/moduleDependencyPropertyPage.exsd"/>
+   <extension-point id="referenceWizardFragment" name="referenceWizardFragment" schema="schema/referenceWizardFragment.exsd"/>
+    <extension point="org.eclipse.ui.propertyPages">
+ 
+     
+<!-- =========== org.eclipse.jst.j2ee.internal.J2EEDependencyPage ============ -->
+      <page
+            adaptable="true"
+      		objectClass="org.eclipse.core.resources.IProject"
+      		name="Module Assembly"
+            class="org.jboss.ide.eclipse.as.wtp.ui.propertypage.ModuleAssemblyRootPage"
+            id="org.jboss.ide.eclipse.as.wtp.ui.ModuleAssemblyPage">
+           <enabledWhen>
+			<and>
+				<adapt
+					type="org.eclipse.core.resources.IProject">
+				</adapt>
+			</and> 
+         </enabledWhen>          
+      </page>
+      </extension>
+    <extension
+          point="org.jboss.ide.eclipse.as.wtp.ui.moduleDependencyPropertyPage">
+       <dependencyPage
+             class="org.jboss.ide.eclipse.as.wtp.ui.propertypage.impl.EarModuleDependencyPageProvider"
+             id="org.jboss.ide.eclipse.as.wtp.ui.earDependencyPage">
+       </dependencyPage>
+    </extension>
+    <extension
+          point="org.jboss.ide.eclipse.as.wtp.ui.referenceWizardFragment">
+       <referenceFragment
+             class="org.jboss.ide.eclipse.as.wtp.ui.propertypage.ProjectReferenceWizardFragment"
+             icon="icons/prj_obj.gif"
+             id="org.jboss.ide.eclipse.as.wtp.ui.newProjectReference"
+             name="Project">
+       </referenceFragment>
+       <referenceFragment
+             class="org.jboss.ide.eclipse.as.wtp.ui.propertypage.JarReferenceWizardFragment"
+             icon="icons/jar_obj.gif"
+             id="org.jboss.ide.eclipse.as.wtp.ui.jarReference"
+             name="Jar">
+       </referenceFragment>
+       <referenceFragment
+             class="org.jboss.ide.eclipse.as.wtp.ui.propertypage.ExternalJarReferenceWizardFragment"
+             icon="icons/jar_obj.gif"
+             id="org.jboss.ide.eclipse.as.wtp.ui.externalJarReference"
+             name="External Jar">
+       </referenceFragment>
+       <referenceFragment
+             class="org.jboss.ide.eclipse.as.wtp.ui.propertypage.VariableReferenceWizardFragment"
+             icon="icons/jar_obj.gif"
+             id="org.jboss.ide.eclipse.as.wtp.ui.variableReference"
+             name="Variable">
+       </referenceFragment>
+       <referenceFragment
+             class="org.jboss.ide.eclipse.as.wtp.ui.propertypage.OutputFolderReferenceWizardFragment"
+             icon="icons/jar_obj.gif"
+             id="org.jboss.ide.eclipse.as.wtp.ui.mappedOutputFoldersReference"
+             name="Mapped Output Folders">
+       </referenceFragment>
+       <referenceFragment
+             class="org.jboss.ide.eclipse.as.wtp.ui.propertypage.ExportedClasspathFoldersReferenceWizardFragment"
+             icon="icons/jar_obj.gif"
+             id="org.jboss.ide.eclipse.as.wtp.ui.ExportedClasspathFoldersReference"
+             name="Build Path Class Folders">
+       </referenceFragment>
+    </extension>
+    
+    
+    
+    <extension
+         point="org.eclipse.ui.exportWizards">
+      <wizard
+            category="org.eclipse.jst.j2ee.internal"
+            class="org.jboss.ide.eclipse.as.wtp.ui.wizards.export.ProjectModuleExportWizard"
+            icon="icons/jar_obj.gif"
+            id="org.jboss.ide.eclipse.as.wtp.ui.wizards.export.ProjectModuleExportWizard"
+            name="Module Archive">
+         <description>
+            Export any Flexible Module projects into a zipped archive. A "Flexible Project" is a project with the ModuleCore nature.
+         </description>
+         <selection
+               class="org.eclipse.core.resources.IResource">
+         </selection>
+      </wizard>
+    </extension>
+</plugin>

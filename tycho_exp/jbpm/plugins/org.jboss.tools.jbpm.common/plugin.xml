@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="org.jboss.tools.jbpm.preferences.DefaultPage"
+            id="org.jboss.tools.jbpm"
+            name="JBoss jBPM"/>
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="JBoss jBPM"
+            id="org.jboss.tools.jbpm">
+      </category> 
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            id="org.jboss.tools.jbpm"
+            name="JBoss jBPM">
+      </category>
+   </extension>
+   
+</plugin>

@@ -1,0 +1,30 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Hibernate Jdt UI
+Bundle-SymbolicName: org.jboss.tools.hibernate.jpt.ui;singleton:=true
+Bundle-Version: 3.3.0.qualifier
+Bundle-Activator: org.jboss.tools.hibernate.jpt.ui.HibernateJptUIPlugin
+Require-Bundle: 
+ org.hibernate.eclipse.console,
+ org.hibernate.eclipse,
+ org.eclipse.debug.core,
+ org.eclipse.jdt.core,
+ org.eclipse.jdt.ui,
+ org.eclipse.datatools.connectivity,
+ org.eclipse.jdt.launching,
+ org.eclipse.wst.common.project.facet.ui,
+ org.eclipse.ui.forms,
+ org.jboss.tools.hibernate.jpt.core,
+ org.eclipse.ui.ide,
+ org.eclipse.jpt.core,
+ org.eclipse.jpt.ui,
+ org.eclipse.jpt.utility,
+ org.eclipse.jpt.db;bundle-version="1.2.100",
+ org.eclipse.ui.views.properties.tabbed;bundle-version="3.5.0"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-Vendor: %Bundle-Vendor.0
+Export-Package: org.jboss.tools.hibernate.jpt.ui,
+ org.jboss.tools.hibernate.jpt.ui.internal.platform,
+ org.jboss.tools.hibernate.jpt.ui.wizard
+Bundle-Localization: plugin

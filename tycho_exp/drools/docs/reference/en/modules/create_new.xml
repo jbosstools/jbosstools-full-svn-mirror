@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="create_new" xreflabel="create_new">
+    
+    <chapterinfo>
+        <keywordset>
+            <keyword>JBoss Tools</keyword>
+            <keyword>Drools Tools</keyword>
+        </keywordset>
+    </chapterinfo>
+    
+    <title>Drools Perspective</title>
+    
+    <section id="creating_dsl">
+        <title>Creating a New DSL</title>
+        
+        <para>Domain Specific Languages (DSL) allows to read your rules like natural
+            language.</para>
+        
+        <para>There is a wizard for creating a sample DSL file which is called from <emphasis>
+            <property>File > New > Domain Specific Language</property>
+        </emphasis> or using the menu with the JBoss Drools icon on the toolbar.</para>
+        
+        <figure>
+            <title>Calling New DSL Wizard</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/create_new_project/create_new_project7.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+        
+        <para>On the wizard page select the parent folder and give a proper name to your <emphasis>
+            <property>.dsl</property>
+        </emphasis> file. Then hit <emphasis>
+            <property>Finish</property>
+        </emphasis> to create a file and open it in the <link linkend="dsl_editor">DSL
+            editor</link>.</para>
+        
+        <figure>
+            <title>New DSL Wizard</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/create_new_project/create_new_project8.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+    </section>
+    
+    <section id="creating_decision_table">
+        <title>Creating a New Decision Table</title>
+        <para/>
+    </section>
+    
+    <section id="creating_business_rule">
+        <title>Creating a New Business Rule</title>
+        
+        <para>To create a rule this way, use the wizard menu. It will create an instance of a <emphasis>
+            <property>.brl</property>
+        </emphasis> file and open it in the <link linkend="guided_editor">Guided editor</link>.
+            The <property>Guided editor</property> works based on a <emphasis>
+                <property>.package</property>
+            </emphasis> file in the same directory as the <emphasis>
+                <property>.brl</property>
+            </emphasis> file. In this <emphasis>
+                <property>.package</property>
+            </emphasis> file you have the package name and import statements, just like you would in
+            the top of a normal DRL file. So the first time you create a brl rule, you will need to
+            populate the package file with the fact classes you are interested in.</para>
+    </section>
+</chapter>

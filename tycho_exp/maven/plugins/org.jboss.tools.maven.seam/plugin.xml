@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+	<extension point="org.eclipse.wst.common.project.facet.core.listeners">
+  		<listener class="org.jboss.tools.maven.seam.internal.project.facet.MavenPostInstallListener" 
+  		eventTypes="POST_INSTALL"/>
+	</extension>
+	
+	<extension point="org.maven.ide.eclipse.projectConfigurators">
+      <configurator 
+          id="org.jboss.tools.maven.seam.configurator"
+          class="org.jboss.tools.maven.seam.configurators.SeamProjectConfigurator"
+          name="Seam Project configurator" priority="200"/>
+    </extension>
+   
+    <extension point="org.maven.ide.eclipse.projectConfigurators">
+      <configurator 
+          id="org.jboss.tools.maven.jsf.configurator"
+          class="org.jboss.tools.maven.seam.configurators.JSFProjectConfigurator"
+          name="JSF Project configurator" priority="150"/>
+    </extension>
+    
+    <extension point="org.maven.ide.eclipse.projectConfigurators">
+      <configurator 
+          id="org.jboss.tools.maven.portlet.configurator"
+          class="org.jboss.tools.maven.seam.configurators.PortletProjectConfigurator"
+          name="Portlet Core Project configurator" priority="155"/>
+    </extension>
+    
+    <extension
+        point="org.eclipse.ui.preferencePages">
+     <page
+           category="org.jboss.tools.common.model.ui.MainPreferencePage"
+           class="org.jboss.tools.maven.seam.preferences.SeamConfiguratorPreferencePage"
+           id="org.jboss.tools.maven.seam.preferences.seamConfiguratorPreferencePage"
+           name="JBoss Maven Integration"/>
+    </extension>
+    
+    <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer class="org.jboss.tools.maven.seam.preferences.SeamConfiguratorPreferencesInitializer"/>
+   </extension>
+</plugin>

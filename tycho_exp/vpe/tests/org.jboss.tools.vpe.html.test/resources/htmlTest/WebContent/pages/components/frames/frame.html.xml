@@ -1,0 +1,5 @@
+<tests>
+	<test id="frame">
+		<FRAME NAME="leftFrame" SRC="/.*temp/left.html/" STYLE="-moz-user-modify: read-only;" />
+	</test>
+</tests>
