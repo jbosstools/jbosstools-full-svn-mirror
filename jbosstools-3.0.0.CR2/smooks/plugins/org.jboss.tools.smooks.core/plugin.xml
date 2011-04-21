@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.core.contenttype.contentTypes">
+   </extension>
+  <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://www.milyn.org/xsd/smooks-1.0.xsd"
+            class="org.jboss.tools.smooks.model.SmooksPackage"
+            genModel="model/smooks_1_0.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <parser
+            type="smooks"
+            class="org.jboss.tools.smooks.model.util.SmooksResourceFactoryImpl"/>
+   </extension>
+      <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
+      <factory
+            uri="http://www.milyn.org/xsd/smooks-1.0.xsd"
+            class="org.jboss.tools.smooks.model.provider.SmooksItemProviderAdapterFactory"
+            supportedTypes=
+              "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
+               org.eclipse.emf.edit.provider.IStructuredItemContentProvider
+               org.eclipse.emf.edit.provider.ITreeItemContentProvider
+               org.eclipse.emf.edit.provider.IItemLabelProvider
+               org.eclipse.emf.edit.provider.IItemPropertySource"/>
+   </extension>
+   
+</plugin>

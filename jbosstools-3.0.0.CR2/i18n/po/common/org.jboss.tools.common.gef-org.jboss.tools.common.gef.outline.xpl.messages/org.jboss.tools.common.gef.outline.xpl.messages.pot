@@ -1,0 +1,58 @@
+#SOME DESCRIPTIVE TITLE.
+#Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+#This file is distributed under the same license as the PACKAGE package.
+#FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-07-04 13:13+1000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+""
+
+#. ******************************************************************************
+#. Copyright (c) 2000, 2005 IBM Corporation and others.
+#. All rights reserved. This program and the accompanying materials
+#. are made available under the terms of the Eclipse Public License v1.0
+#. which accompanies this distribution, and is available at
+#. http://www.eclipse.org/legal/epl-v10.html
+#. 
+#. Contributors:
+#. IBM Corporation - initial API and implementation
+#. Exadel, Inc.
+#. Red Hat, Inc.
+#. ******************************************************************************
+#: TREE
+#, java-format
+msgctxt "TREE"
+msgid "Tree"
+msgstr ""
+
+#. 
+#: SHOW_TREE
+#, java-format
+msgctxt "SHOW_TREE"
+msgid "Show Tree"
+msgstr ""
+
+#. 
+#: DIAGRAM_NAVIGATOR
+#, java-format
+msgctxt "DIAGRAM_NAVIGATOR"
+msgid "Diagram Navigator"
+msgstr ""
+
+#. 
+#: SHOW_DIAGRAM_NAVIGATOR
+#, java-format
+msgctxt "SHOW_DIAGRAM_NAVIGATOR"
+msgid "Show Diagram Navigator"
+msgstr ""
+

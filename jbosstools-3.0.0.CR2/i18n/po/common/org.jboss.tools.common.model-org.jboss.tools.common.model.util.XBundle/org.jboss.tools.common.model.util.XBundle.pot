@@ -1,0 +1,43 @@
+#SOME DESCRIPTIVE TITLE.
+#Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+#This file is distributed under the same license as the PACKAGE package.
+#FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-07-04 13:13+1000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+""
+
+#. 
+#: ERR_GET_MESSAGE
+#, java-format
+msgctxt "ERR_GET_MESSAGE"
+msgid ""
+"Failure in building message.\n"
+"id = {0}:{1}\n"
+"Message : {2}."
+msgstr ""
+
+#. 
+#: ERR_TEMPLATE_NOT_FOUND
+#, java-format
+msgctxt "ERR_TEMPLATE_NOT_FOUND"
+msgid "Template '{0}' has not been found in resource '{1}'."
+msgstr ""
+
+#. 
+#: ERR_RESOURCE_NOT_FOUND
+#, java-format
+msgctxt "ERR_RESOURCE_NOT_FOUND"
+msgid "Resource '{0}{1}' has not been found."
+msgstr ""
+

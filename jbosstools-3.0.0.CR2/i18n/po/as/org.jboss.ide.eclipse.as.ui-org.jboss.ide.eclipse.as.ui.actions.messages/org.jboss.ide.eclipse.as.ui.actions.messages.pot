@@ -1,0 +1,75 @@
+#SOME DESCRIPTIVE TITLE.
+#Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+#This file is distributed under the same license as the PACKAGE package.
+#FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-11-13 10:32+1000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+""
+
+#. 
+#: START_IN_DEBUG_MODE
+#, java-format
+msgctxt "START_IN_DEBUG_MODE"
+msgid "Start {0} in debug mode"
+msgstr ""
+
+#. 
+#: RESTART_IN_DEBUG_MODE
+#, java-format
+msgctxt "RESTART_IN_DEBUG_MODE"
+msgid "Restart {0} in debug mode"
+msgstr ""
+
+#. 
+#: START_IN_RUN_MODE
+#, java-format
+msgctxt "START_IN_RUN_MODE"
+msgid "Start {0}"
+msgstr ""
+
+#. 
+#: RESTART_IN_RUN_MODE
+#, java-format
+msgctxt "RESTART_IN_RUN_MODE"
+msgid "Restart {0}"
+msgstr ""
+
+#. 
+#: SELECT_A_SERVER
+#, java-format
+msgctxt "SELECT_A_SERVER"
+msgid "Select a default server"
+msgstr ""
+
+#. 
+#: STOP_SERVER
+#, java-format
+msgctxt "STOP_SERVER"
+msgid "Shutdown {0}"
+msgstr ""
+
+#. 
+#: CHANGE_TIME_STAMP
+#, java-format
+msgctxt "CHANGE_TIME_STAMP"
+msgid "Change Timestamp of {0}"
+msgstr ""
+
+#. 
+#: CHANGE_TIME_STAMP_DEFAULT
+#, java-format
+msgctxt "CHANGE_TIME_STAMP_DEFAULT"
+msgid "Touch descriptors"
+msgstr ""
+

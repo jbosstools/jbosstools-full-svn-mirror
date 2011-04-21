@@ -1,0 +1,152 @@
+#SOME DESCRIPTIVE TITLE.
+#Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+#This file is distributed under the same license as the PACKAGE package.
+#FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-11-27 12:42+1000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+""
+
+#. 
+#: JavaBeanConfigWizardPage.JavaBeanSelectionDialogDesc
+#, java-format
+msgctxt "JavaBeanConfigWizardPage.JavaBeanSelectionDialogDesc"
+msgid "Select the JavaBean class"
+msgstr ""
+
+#. 
+#: JavaBeanConfigWizardPage.JavaBeanSelectionDialogErrorMsg
+#, java-format
+msgctxt "JavaBeanConfigWizardPage.JavaBeanSelectionDialogErrorMsg"
+msgid "Please select a Java project."
+msgstr ""
+
+#. 
+#: JavaBeanConfigWizardPage.JavaBeanSelectionDialogTitle
+#, java-format
+msgctxt "JavaBeanConfigWizardPage.JavaBeanSelectionDialogTitle"
+msgid "JavaBean Class selection page"
+msgstr ""
+
+#. 
+#: JavaBeanModelLoadComposite.Browse
+#, java-format
+msgctxt "JavaBeanModelLoadComposite.Browse"
+msgid "Browse..."
+msgstr ""
+
+#. 
+#: JavaBeanModelLoadComposite.ClassNameText
+#, java-format
+msgctxt "JavaBeanModelLoadComposite.ClassNameText"
+msgid "JavaBean Model List :"
+msgstr ""
+
+#. 
+#: JavaBeanModelLoadComposite.InitRunnableContextException
+#, java-format
+msgctxt "JavaBeanModelLoadComposite.InitRunnableContextException"
+msgid "Unable to init IRunnableContext"
+msgstr ""
+
+#. 
+#: JavaBeanModelLoadComposite.SearchJavaType
+#, java-format
+msgctxt "JavaBeanModelLoadComposite.SearchJavaType"
+msgid "Search Java Type"
+msgstr ""
+
+#. 
+#: JavaBeanModelLoadComposite.SourceJavaBean
+#, java-format
+msgctxt "JavaBeanModelLoadComposite.SourceJavaBean"
+msgid "Source Java Bean:"
+msgstr ""
+
+#. 
+#: JavaBeanPropertiesSection.Browse
+#, java-format
+msgctxt "JavaBeanPropertiesSection.Browse"
+msgid "Browse"
+msgstr ""
+
+#. 
+#: JavaBeanPropertiesSection.ClassBrowse
+#, java-format
+msgctxt "JavaBeanPropertiesSection.ClassBrowse"
+msgid "Browse class"
+msgstr ""
+
+#. 
+#: JavaBeanPropertiesSection.CustomTypeBrowse
+#, java-format
+msgctxt "JavaBeanPropertiesSection.CustomTypeBrowse"
+msgid "Browse custom type"
+msgstr ""
+
+#. 
+#: JavaBeanPropertiesSection.ErrorMessageTitle
+#, java-format
+msgctxt "JavaBeanPropertiesSection.ErrorMessageTitle"
+msgid "Error"
+msgstr ""
+
+#. 
+#: JavaBeanPropertiesSection.JavaBeanProperties
+#, java-format
+msgctxt "JavaBeanPropertiesSection.JavaBeanProperties"
+msgid "JavaBean Properties"
+msgstr ""
+
+#. 
+#: JavaBeanPropertiesSection.JavaType
+#, java-format
+msgctxt "JavaBeanPropertiesSection.JavaType"
+msgid "Java Type:"
+msgstr ""
+
+#. 
+#: JavaBeanPropertiesSection.MappingType
+#, java-format
+msgctxt "JavaBeanPropertiesSection.MappingType"
+msgid "Mapping Type : "
+msgstr ""
+
+#. 
+#: JavaBeanPropertiesSection.SearchJavaType
+#, java-format
+msgctxt "JavaBeanPropertiesSection.SearchJavaType"
+msgid "Search Java Type"
+msgstr ""
+
+#. 
+#: JavaBeanPropertiesSection.TargetInstanceClass
+#, java-format
+msgctxt "JavaBeanPropertiesSection.TargetInstanceClass"
+msgid "Target instance class name : "
+msgstr ""
+
+#. 
+#: JavaBeanPropertiesSection.TypeDialogErrorMessage
+#, java-format
+msgctxt "JavaBeanPropertiesSection.TypeDialogErrorMessage"
+msgid "Unable to open type selection dialog"
+msgstr ""
+
+#. 
+#: JavaBeanPropertiesSection.TypePropertyName
+#, java-format
+msgctxt "JavaBeanPropertiesSection.TypePropertyName"
+msgid "type"
+msgstr ""
+

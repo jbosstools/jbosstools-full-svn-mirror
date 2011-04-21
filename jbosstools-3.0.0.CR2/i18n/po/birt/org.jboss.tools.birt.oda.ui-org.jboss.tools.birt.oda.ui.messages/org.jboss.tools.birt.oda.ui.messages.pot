@@ -1,0 +1,201 @@
+#SOME DESCRIPTIVE TITLE.
+#Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+#This file is distributed under the same license as the PACKAGE package.
+#FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-11-19 15:07+1000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+""
+
+#. 
+#: CustomDataSetWizardPage_Avaliable_Items
+#, java-format
+msgctxt "CustomDataSetWizardPage_Avaliable_Items"
+msgid "Available Items"
+msgstr ""
+
+#. 
+#: CustomDataSetWizardPage_Define_the_query_text_for_the_data_set
+#, java-format
+msgctxt "CustomDataSetWizardPage_Define_the_query_text_for_the_data_set"
+msgid "Define the query text for the data set"
+msgstr ""
+
+#. 
+#: CustomDataSetWizardPage_Invalid_configuration
+#, java-format
+msgctxt "CustomDataSetWizardPage_Invalid_configuration"
+msgid "Invalid configuration ''{0}''."
+msgstr ""
+
+#. 
+#: CustomDataSetWizardPage_Requires_input_value
+#, java-format
+msgctxt "CustomDataSetWizardPage_Requires_input_value"
+msgid "Requires input value."
+msgstr ""
+
+#. 
+#: CustomDataSetWizardPage_Test_query
+#, java-format
+msgctxt "CustomDataSetWizardPage_Test_query"
+msgid "Test query ..."
+msgstr ""
+
+#. 
+#: CustomDataSetWizardPage_Test_query1
+#, java-format
+msgctxt "CustomDataSetWizardPage_Test_query1"
+msgid "Test query"
+msgstr ""
+
+#. 
+#: CustomDataSetWizardPage_The_query_is_not_valid
+#, java-format
+msgctxt "CustomDataSetWizardPage_The_query_is_not_valid"
+msgid "The query is not valid."
+msgstr ""
+
+#. 
+#: CustomDataSetWizardPage_The_query_is_valid
+#, java-format
+msgctxt "CustomDataSetWizardPage_The_query_is_valid"
+msgid "The query is valid."
+msgstr ""
+
+#. 
+#: HibernateSelectionPageHelper_Configuration
+#, java-format
+msgctxt "HibernateSelectionPageHelper_Configuration"
+msgid "Configuration:"
+msgstr ""
+
+#. 
+#: HibernateSelectionPageHelper_Configuration_must_not_be_empty
+#, java-format
+msgctxt "HibernateSelectionPageHelper_Configuration_must_not_be_empty"
+msgid "Configuration must not be empty"
+msgstr ""
+
+#. 
+#: HibernateSelectionPageHelper_Connection_successfull
+#, java-format
+msgctxt "HibernateSelectionPageHelper_Connection_successfull"
+msgid "Connection successfull."
+msgstr ""
+
+#. 
+#: HibernateSelectionPageHelper_Edit_the_selected_data_source
+#, java-format
+msgctxt "HibernateSelectionPageHelper_Edit_the_selected_data_source"
+msgid "Edit the selected data source"
+msgstr ""
+
+#. 
+#: HibernateSelectionPageHelper_Invalid_configuration
+#, java-format
+msgctxt "HibernateSelectionPageHelper_Invalid_configuration"
+msgid "Invalid configuration ''{0}''."
+msgstr ""
+
+#. 
+#: HibernateSelectionPageHelper_JNDI_URL
+#, java-format
+msgctxt "HibernateSelectionPageHelper_JNDI_URL"
+msgid "JNDI URL:"
+msgstr ""
+
+#. 
+#: HibernateSelectionPageHelper_Max_results
+#, java-format
+msgctxt "HibernateSelectionPageHelper_Max_results"
+msgid "Max results:"
+msgstr ""
+
+#. 
+#: HibernateSelectionPageHelper_Test_connection
+#, java-format
+msgctxt "HibernateSelectionPageHelper_Test_connection"
+msgid "Test Connection..."
+msgstr ""
+
+#. 
+#: HibernateSelectionPageHelper_Test_connection1
+#, java-format
+msgctxt "HibernateSelectionPageHelper_Test_connection1"
+msgid "Test connection"
+msgstr ""
+
+#. 
+#: TextMenuManager_Content_Assist
+#, java-format
+msgctxt "TextMenuManager_Content_Assist"
+msgid "Content Assist"
+msgstr ""
+
+#. 
+#: TextMenuManager_Content_Tip
+#, java-format
+msgctxt "TextMenuManager_Content_Tip"
+msgid "Content Tip"
+msgstr ""
+
+#. 
+#: TextMenuManager_Copy
+#, java-format
+msgctxt "TextMenuManager_Copy"
+msgid "Copy"
+msgstr ""
+
+#. 
+#: TextMenuManager_Cut
+#, java-format
+msgctxt "TextMenuManager_Cut"
+msgid "Cut"
+msgstr ""
+
+#. 
+#: TextMenuManager_Format_HQL_source
+#, java-format
+msgctxt "TextMenuManager_Format_HQL_source"
+msgid "Format HQL source"
+msgstr ""
+
+#. 
+#: TextMenuManager_Paste
+#, java-format
+msgctxt "TextMenuManager_Paste"
+msgid "Paste"
+msgstr ""
+
+#. 
+#: TextMenuManager_Redo
+#, java-format
+msgctxt "TextMenuManager_Redo"
+msgid "Redo"
+msgstr ""
+
+#. 
+#: TextMenuManager_Select_all
+#, java-format
+msgctxt "TextMenuManager_Select_all"
+msgid "Select all"
+msgstr ""
+
+#. 
+#: TextMenuManager_Undo
+#, java-format
+msgctxt "TextMenuManager_Undo"
+msgid "Undo"
+msgstr ""
+

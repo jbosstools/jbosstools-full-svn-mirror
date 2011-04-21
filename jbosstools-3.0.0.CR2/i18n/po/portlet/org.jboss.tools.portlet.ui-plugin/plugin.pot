@@ -1,0 +1,75 @@
+#SOME DESCRIPTIVE TITLE.
+#Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+#This file is distributed under the same license as the PACKAGE package.
+#FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-11-27 12:41+1000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+""
+
+#. Properties file for org.jboss.tools.portlet.ui
+#: BundleVendor
+#, java-format
+msgctxt "BundleVendor"
+msgid "JBoss, a division of Red Hat"
+msgstr ""
+
+#. 
+#: BundleName
+#, java-format
+msgctxt "BundleName"
+msgid "JBoss Portlet"
+msgstr ""
+
+#. 
+#: Portlet_category
+#, java-format
+msgctxt "Portlet_category"
+msgid "Portlet"
+msgstr ""
+
+#. 
+#: Java_portlet_wizard_name
+#, java-format
+msgctxt "Java_portlet_wizard_name"
+msgid "Java Portlet"
+msgstr ""
+
+#. 
+#: Portlet_wizard_description
+#, java-format
+msgctxt "Portlet_wizard_description"
+msgid "Create a new Java Portlet"
+msgstr ""
+
+#. 
+#: JSFSeam_portlet_wizard_name
+#, java-format
+msgctxt "JSFSeam_portlet_wizard_name"
+msgid "JBoss JSF/Seam Portlet"
+msgstr ""
+
+#. 
+#: JSFSeam_portlet_wizard_description
+#, java-format
+msgctxt "JSFSeam_portlet_wizard_description"
+msgid "Create a new JBoss JSF Portlet"
+msgstr ""
+
+#. 
+#: JBoss_Portlet
+#, java-format
+msgctxt "JBoss_Portlet"
+msgid "JBoss Portlet"
+msgstr ""
+

@@ -1,0 +1,222 @@
+#SOME DESCRIPTIVE TITLE.
+#Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+#This file is distributed under the same license as the PACKAGE package.
+#FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-10-22 16:27+1000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+""
+
+#. 
+#: ConsoleConfiguration_could_not_access
+#, java-format
+msgctxt "ConsoleConfiguration_could_not_access"
+msgid "Could not access"
+msgstr ""
+
+#. 
+#: ConsoleConfiguration_could_not_configure_entity_resolver
+#, java-format
+msgctxt "ConsoleConfiguration_could_not_configure_entity_resolver"
+msgid "Could not configure entity resolver"
+msgstr ""
+
+#. 
+#: ConsoleConfiguration_could_not_configure_naming_strategy
+#, java-format
+msgctxt "ConsoleConfiguration_could_not_configure_naming_strategy"
+msgid "Could not configure naming strategy"
+msgstr ""
+
+#. 
+#: ConsoleConfiguration_could_not_create_jpa_based_configuration
+#, java-format
+msgctxt "ConsoleConfiguration_could_not_create_jpa_based_configuration"
+msgid "Could not create JPA based Configuration"
+msgstr ""
+
+#. 
+#: ConsoleConfiguration_could_not_load_annotationconfiguration
+#, java-format
+msgctxt "ConsoleConfiguration_could_not_load_annotationconfiguration"
+msgid "Could not load AnnotationConfiguration"
+msgstr ""
+
+#. 
+#: ConsoleConfiguration_could_not_load_jpa_configuration
+#, java-format
+msgctxt "ConsoleConfiguration_could_not_load_jpa_configuration"
+msgid "Could not load JPA Configuration"
+msgstr ""
+
+#. 
+#: ConsoleConfiguration_could_not_parse_configuration
+#, java-format
+msgctxt "ConsoleConfiguration_could_not_parse_configuration"
+msgid "Could not parse configuration:"
+msgstr ""
+
+#. 
+#: ConsoleConfiguration_factory_not_closed_before_build_new_factory
+#, java-format
+msgctxt "ConsoleConfiguration_factory_not_closed_before_build_new_factory"
+msgid "Factory were not closed before attempting to built a new factory."
+msgstr ""
+
+#. 
+#: ConsoleConfiguration_invalid_configuration
+#, java-format
+msgctxt "ConsoleConfiguration_invalid_configuration"
+msgid "invalid configuration"
+msgstr ""
+
+#. 
+#: ConsoleConfiguration_persistence_unit_not_found
+#, java-format
+msgctxt "ConsoleConfiguration_persistence_unit_not_found"
+msgid "Persistence unit not found: ''{0}''."
+msgstr ""
+
+#. 
+#: ConsoleConfiguration_problems_while_loading_database_driverclass
+#, java-format
+msgctxt "ConsoleConfiguration_problems_while_loading_database_driverclass"
+msgid "Problems while loading database driverclass ({0})"
+msgstr ""
+
+#. 
+#: JavaPage_no_info
+#, java-format
+msgctxt "JavaPage_no_info"
+msgid "<no info>"
+msgstr ""
+
+#. 
+#: JavaPage_not_allowed
+#, java-format
+msgctxt "JavaPage_not_allowed"
+msgid "System.exit not allowed!"
+msgstr ""
+
+#. 
+#: KnownConfigurations_could_not_write_state
+#, java-format
+msgctxt "KnownConfigurations_could_not_write_state"
+msgid "Could not write state"
+msgstr ""
+
+#. 
+#: KnownConfigurations_hibernate_log
+#, java-format
+msgctxt "KnownConfigurations_hibernate_log"
+msgid "Hibernate Log -"
+msgstr ""
+
+#. 
+#: KnownConfigurations_unknown
+#, java-format
+msgctxt "KnownConfigurations_unknown"
+msgid "<unknown>"
+msgstr ""
+
+#. 
+#: DefaultExecutionContext_existing_classloader
+#, java-format
+msgctxt "DefaultExecutionContext_existing_classloader"
+msgid "Existing classloader is not equal to the previously installed classloader! Existing={0} Previous={1}"
+msgstr ""
+
+#. 
+#: ClassNode_uninitialized_proxy
+#, java-format
+msgctxt "ClassNode_uninitialized_proxy"
+msgid "(uninitialized proxy)"
+msgstr ""
+
+#. 
+#: ConfigurationNode_mapped_entities
+#, java-format
+msgctxt "ConfigurationNode_mapped_entities"
+msgid "Mapped entities"
+msgstr ""
+
+#. 
+#: NodeFactory_unknown
+#, java-format
+msgctxt "NodeFactory_unknown"
+msgid "Unknown ->"
+msgstr ""
+
+#. 
+#: PersistentCollectionNode_could_not_access_property_value
+#, java-format
+msgctxt "PersistentCollectionNode_could_not_access_property_value"
+msgid "Could not access property value"
+msgstr ""
+
+#. 
+#: AbstractConsoleConfigurationPreferences_could_not_load_prop_file
+#, java-format
+msgctxt "AbstractConsoleConfigurationPreferences_could_not_load_prop_file"
+msgid "Could not load property file"
+msgstr ""
+
+#. 
+#: AbstractConsoleConfigurationPreferences_name_not_null_or_empty
+#, java-format
+msgctxt "AbstractConsoleConfigurationPreferences_name_not_null_or_empty"
+msgid "Name cannot be null or empty"
+msgstr ""
+
+#. 
+#: AbstractConsoleConfigurationPreferences_unknown
+#, java-format
+msgctxt "AbstractConsoleConfigurationPreferences_unknown"
+msgid "<unknown>"
+msgstr ""
+
+#. 
+#: StandAloneConsoleConfigurationPreferences_could_not_resolve_classpaths
+#, java-format
+msgctxt "StandAloneConsoleConfigurationPreferences_could_not_resolve_classpaths"
+msgid "Could not resolve classpaths"
+msgstr ""
+
+#. 
+#: StandAloneConsoleConfigurationPreferences_errors_while_parsing
+#, java-format
+msgctxt "StandAloneConsoleConfigurationPreferences_errors_while_parsing"
+msgid "Errors while parsing"
+msgstr ""
+
+#. 
+#: PluginFileAppender_missing_plugin_state_location
+#, java-format
+msgctxt "PluginFileAppender_missing_plugin_state_location"
+msgid "Missing Plugin State Location."
+msgstr ""
+
+#. 
+#: PluginLogAppender_missing_layout_for_appender
+#, java-format
+msgctxt "PluginLogAppender_missing_layout_for_appender"
+msgid "Missing layout for appender"
+msgstr ""
+
+#. 
+#: ConsoleConfiguration_connection_profile_not_found
+#, java-format
+msgctxt "ConsoleConfiguration_connection_profile_not_found"
+msgid "Connection profile not found: ''{0}''."
+msgstr ""
+

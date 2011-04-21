@@ -1,0 +1,418 @@
+#SOME DESCRIPTIVE TITLE.
+#Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+#This file is distributed under the same license as the PACKAGE package.
+#FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-11-13 10:32+1000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+""
+
+#. 
+#: JSF.SetApplication.menu
+#, java-format
+msgctxt "JSF.SetApplication.menu"
+msgid "Edit Application Settings..."
+msgstr ""
+
+#. 
+#: JSF.SetFactory.menu
+#, java-format
+msgctxt "JSF.SetFactory.menu"
+msgid "Edit Factory Settings..."
+msgstr ""
+
+#. 
+#: JSF.AddRule.menu
+#, java-format
+msgctxt "JSF.AddRule.menu"
+msgid "Rule..."
+msgstr ""
+
+#. 
+#: JSF.AddComponent.menu
+#, java-format
+msgctxt "JSF.AddComponent.menu"
+msgid "Component..."
+msgstr ""
+
+#. 
+#: JSF.AddConverter.menu
+#, java-format
+msgctxt "JSF.AddConverter.menu"
+msgid "Converter"
+msgstr ""
+
+#. 
+#: JSF.WithId.menu
+#, java-format
+msgctxt "JSF.WithId.menu"
+msgid "with id..."
+msgstr ""
+
+#. 
+#: JSF.ForClass.menu
+#, java-format
+msgctxt "JSF.ForClass.menu"
+msgid "for class..."
+msgstr ""
+
+#. 
+#: JSF.AddManagedBean.menu
+#, java-format
+msgctxt "JSF.AddManagedBean.menu"
+msgid "Managed Bean..."
+msgstr ""
+
+#. 
+#: JSF.AddReferencedBean.menu
+#, java-format
+msgctxt "JSF.AddReferencedBean.menu"
+msgid "Referenced Bean..."
+msgstr ""
+
+#. 
+#: JSF.AddRenderKit.menu
+#, java-format
+msgctxt "JSF.AddRenderKit.menu"
+msgid "Render Kit..."
+msgstr ""
+
+#. 
+#: JSF.AddLifecycle.menu
+#, java-format
+msgctxt "JSF.AddLifecycle.menu"
+msgid "Lifecycle..."
+msgstr ""
+
+#. 
+#: JSF.AddValidator.menu
+#, java-format
+msgctxt "JSF.AddValidator.menu"
+msgid "Validator..."
+msgstr ""
+
+#. 
+#: JSF.AddMessageBundle.menu
+#, java-format
+msgctxt "JSF.AddMessageBundle.menu"
+msgid "Message Bundle"
+msgstr ""
+
+#. 
+#: JSF.AddPropertyResolver.menu
+#, java-format
+msgctxt "JSF.AddPropertyResolver.menu"
+msgid "Property Resolver..."
+msgstr ""
+
+#. 
+#: JSF.AddVariableResolver.menu
+#, java-format
+msgctxt "JSF.AddVariableResolver.menu"
+msgid "Variable Resolver..."
+msgstr ""
+
+#. 
+#: JSF.OpenSource.menu
+#, java-format
+msgctxt "JSF.OpenSource.menu"
+msgid "Open Declaration"
+msgstr ""
+
+#. 
+#: JSF.AddResourceBundle.menu
+#, java-format
+msgctxt "JSF.AddResourceBundle.menu"
+msgid "Resource Bundle..."
+msgstr ""
+
+#. 
+#: JSF.AddELResolver.menu
+#, java-format
+msgctxt "JSF.AddELResolver.menu"
+msgid "EL Resolver..."
+msgstr ""
+
+#. 
+#: JSF.CreateExtension.menu
+#, java-format
+msgctxt "JSF.CreateExtension.menu"
+msgid "Extension"
+msgstr ""
+
+#. 
+#: JSF.CreateTag.menu
+#, java-format
+msgctxt "JSF.CreateTag.menu"
+msgid "Add Tag..."
+msgstr ""
+
+#. 
+#: JSF.CreateAttribute.menu
+#, java-format
+msgctxt "JSF.CreateAttribute.menu"
+msgid "Attribute..."
+msgstr ""
+
+#. 
+#: JSF.CreateProperty.menu
+#, java-format
+msgctxt "JSF.CreateProperty.menu"
+msgid "Property..."
+msgstr ""
+
+#. 
+#: JSF.CreateFacet.menu
+#, java-format
+msgctxt "JSF.CreateFacet.menu"
+msgid "Facet..."
+msgstr ""
+
+#. 
+#: JSF.CreatePhaseListener.menu
+#, java-format
+msgctxt "JSF.CreatePhaseListener.menu"
+msgid "Add Phase Listener..."
+msgstr ""
+
+#. 
+#: JSF.AddEntry.menu
+#, java-format
+msgctxt "JSF.AddEntry.menu"
+msgid "Entry"
+msgstr ""
+
+#. 
+#: JSF.AddSupportedLocale.menu
+#, java-format
+msgctxt "JSF.AddSupportedLocale.menu"
+msgid "Add Supported Locale..."
+msgstr ""
+
+#. 
+#: JSF.ChangeToList.menu
+#, java-format
+msgctxt "JSF.ChangeToList.menu"
+msgid "List-Entries"
+msgstr ""
+
+#. 
+#: JSF.ChangeToMap.menu
+#, java-format
+msgctxt "JSF.ChangeToMap.menu"
+msgid "Map-Entries"
+msgstr ""
+
+#. 
+#: JSF.RenameClass.menu
+#, java-format
+msgctxt "JSF.RenameClass.menu"
+msgid "Rename Class..."
+msgstr ""
+
+#. 
+#: JSF.AddNullValue.menu
+#, java-format
+msgctxt "JSF.AddNullValue.menu"
+msgid "Null Value"
+msgstr ""
+
+#. 
+#: JSF.AddValue.menu
+#, java-format
+msgctxt "JSF.AddValue.menu"
+msgid "Value..."
+msgstr ""
+
+#. 
+#: JSF.OpenPage.menu
+#, java-format
+msgctxt "JSF.OpenPage.menu"
+msgid "Open Page"
+msgstr ""
+
+#. 
+#: JSF.RunPageOnServer.menu
+#, java-format
+msgctxt "JSF.RunPageOnServer.menu"
+msgid "Run on Server"
+msgstr ""
+
+#. 
+#: JSF.Select.menu
+#, java-format
+msgctxt "JSF.Select.menu"
+msgid "Select on Diagram"
+msgstr ""
+
+#. 
+#: JSF.CreateCase.menu
+#, java-format
+msgctxt "JSF.CreateCase.menu"
+msgid "Case..."
+msgstr ""
+
+#. 
+#: JSF.AutoLayout.menu
+#, java-format
+msgctxt "JSF.AutoLayout.menu"
+msgid "Auto Layout"
+msgstr ""
+
+#. 
+#: JSF.SelectItem.menu
+#, java-format
+msgctxt "JSF.SelectItem.menu"
+msgid "Select Element"
+msgstr ""
+
+#. 
+#: JSF.VerifyAll.menu
+#, java-format
+msgctxt "JSF.VerifyAll.menu"
+msgid "Verify"
+msgstr ""
+
+#. 
+#: JSF.AsTransition.menu
+#, java-format
+msgctxt "JSF.AsTransition.menu"
+msgid "Show as Transition"
+msgstr ""
+
+#. 
+#: JSF.AsSrortcut.menu
+#, java-format
+msgctxt "JSF.AsSrortcut.menu"
+msgid "Show as Shortcut"
+msgstr ""
+
+#. 
+#: JSF.CreateRenderer.menu
+#, java-format
+msgctxt "JSF.CreateRenderer.menu"
+msgid "Renderer..."
+msgstr ""
+
+#. 
+#: JSF.AddCapability.menu
+#, java-format
+msgctxt "JSF.AddCapability.menu"
+msgid "Add Capability"
+msgstr ""
+
+#. 
+#: JSF.AddLibraryReference.menu
+#, java-format
+msgctxt "JSF.AddLibraryReference.menu"
+msgid "Add Library Reference"
+msgstr ""
+
+#. 
+#: JSF.AddFileAddition.menu
+#, java-format
+msgctxt "JSF.AddFileAddition.menu"
+msgid "Define Configuration File Addition"
+msgstr ""
+
+#. 
+#: JSF.CreateFacesConfig.menu
+#, java-format
+msgctxt "JSF.CreateFacesConfig.menu"
+msgid "Faces Config"
+msgstr ""
+
+#. 
+#: JSF.CreateFileProperties.menu
+#, java-format
+msgctxt "JSF.CreateFileProperties.menu"
+msgid "Properties File..."
+msgstr ""
+
+#. 
+#: JSF.CreateFileTLD.menu
+#, java-format
+msgctxt "JSF.CreateFileTLD.menu"
+msgid "Tag Library..."
+msgstr ""
+
+#. 
+#: JSF.CreateTiles.menu
+#, java-format
+msgctxt "JSF.CreateTiles.menu"
+msgid "Tiles..."
+msgstr ""
+
+#. 
+#: JSF.JSFStudio.menu
+#, java-format
+msgctxt "JSF.JSFStudio.menu"
+msgid "JBoss Tools JSF"
+msgstr ""
+
+#. 
+#: JSF.SaveAsTemplate.menu
+#, java-format
+msgctxt "JSF.SaveAsTemplate.menu"
+msgid "Save As Template..."
+msgstr ""
+
+#. 
+#: JSF.RemoveJSFNature.menu
+#, java-format
+msgctxt "JSF.RemoveJSFNature.menu"
+msgid "Remove JSF Capabilities"
+msgstr ""
+
+#. 
+#: JSF.AddCustomJSFCapabilities.menu
+#, java-format
+msgctxt "JSF.AddCustomJSFCapabilities.menu"
+msgid "Add Custom Capabilities..."
+msgstr ""
+
+#. 
+#: JSF.AddORMCapabilities.menu
+#, java-format
+msgctxt "JSF.AddORMCapabilities.menu"
+msgid "Add ORM Capability..."
+msgstr ""
+
+#. 
+#: JSF.CreateNewProject.menu
+#, java-format
+msgctxt "JSF.CreateNewProject.menu"
+msgid "Create New Project..."
+msgstr ""
+
+#. 
+#: JSF.ImportExistingProject.menu
+#, java-format
+msgctxt "JSF.ImportExistingProject.menu"
+msgid "Import Existing Project..."
+msgstr ""
+
+#. 
+#: JSF.AddProperties.menu
+#, java-format
+msgctxt "JSF.AddProperties.menu"
+msgid "Add..."
+msgstr ""
+
+#. 
+#: JSF.CreateFacesConfigV.menu
+#, java-format
+msgctxt "JSF.CreateFacesConfigV.menu"
+msgid "Faces Config"
+msgstr ""
+

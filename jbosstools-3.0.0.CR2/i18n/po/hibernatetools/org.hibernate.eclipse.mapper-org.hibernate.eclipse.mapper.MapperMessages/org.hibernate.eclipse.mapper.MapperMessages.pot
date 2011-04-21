@@ -1,0 +1,687 @@
+#SOME DESCRIPTIVE TITLE.
+#Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+#This file is distributed under the same license as the PACKAGE package.
+#FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-07-04 13:05+1000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+""
+
+#. 
+#: ChooseConsoleConfigurationDialog_console_configuration
+#, java-format
+msgctxt "ChooseConsoleConfigurationDialog_console_configuration"
+msgid "Console configuration:"
+msgstr ""
+
+#. 
+#: ChooseConsoleConfigurationDialog_select_console_configuration
+#, java-format
+msgctxt "ChooseConsoleConfigurationDialog_select_console_configuration"
+msgid "Select a console configuration"
+msgstr ""
+
+#. 
+#: HibernateCfgXmlEditor_configuration
+#, java-format
+msgctxt "HibernateCfgXmlEditor_configuration"
+msgid "Configuration"
+msgstr ""
+
+#. 
+#: HibernateCfgXmlEditor_could_not_create_form_part
+#, java-format
+msgctxt "HibernateCfgXmlEditor_could_not_create_form_part"
+msgid "Could not create form part for hibernate.cfg.xml editor"
+msgstr ""
+
+#. 
+#: ReverseEngineeringEditor_could_not_create_graphical_viewer
+#, java-format
+msgctxt "ReverseEngineeringEditor_could_not_create_graphical_viewer"
+msgid "Could not create graphical viewer"
+msgstr ""
+
+#. 
+#: ReverseEngineeringEditor_error_while_refreshing_databasetree
+#, java-format
+msgctxt "ReverseEngineeringEditor_error_while_refreshing_databasetree"
+msgid "Error while refreshing database tree"
+msgstr ""
+
+#. 
+#: ReverseEngineeringEditor_no_filters_defined
+#, java-format
+msgctxt "ReverseEngineeringEditor_no_filters_defined"
+msgid "No filters defined"
+msgstr ""
+
+#. 
+#: ReverseEngineeringEditor_no_filters_has_been_defined
+#, java-format
+msgctxt "ReverseEngineeringEditor_no_filters_has_been_defined"
+msgid ""
+"No filters has been defined.\n"
+" This can make the reading of the database schema very slow.\n"
+" Do you wish to continue reading the database schema ?"
+msgstr ""
+
+#. 
+#: ReverseEngineeringEditor_overview
+#, java-format
+msgctxt "ReverseEngineeringEditor_overview"
+msgid "Overview"
+msgstr ""
+
+#. 
+#: ReverseEngineeringEditor_table_column
+#, java-format
+msgctxt "ReverseEngineeringEditor_table_column"
+msgid "Table && Columns"
+msgstr ""
+
+#. 
+#: ReverseEngineeringEditor_table_filters
+#, java-format
+msgctxt "ReverseEngineeringEditor_table_filters"
+msgid "Table Filters"
+msgstr ""
+
+#. 
+#: ReverseEngineeringEditor_type_mappings
+#, java-format
+msgctxt "ReverseEngineeringEditor_type_mappings"
+msgid "Type Mappings"
+msgstr ""
+
+#. 
+#: ColumnDetailsPage_column_details
+#, java-format
+msgctxt "ColumnDetailsPage_column_details"
+msgid "Column Details"
+msgstr ""
+
+#. 
+#: ColumnDetailsPage_exclude_columns_from_reverse_engineering
+#, java-format
+msgctxt "ColumnDetailsPage_exclude_columns_from_reverse_engineering"
+msgid "Exclude column from reverse engineering"
+msgstr ""
+
+#. 
+#: ColumnDetailsPage_hibernate_type
+#, java-format
+msgctxt "ColumnDetailsPage_hibernate_type"
+msgid "Hibernate Type:"
+msgstr ""
+
+#. 
+#: ColumnDetailsPage_jdbc_type
+#, java-format
+msgctxt "ColumnDetailsPage_jdbc_type"
+msgid "JDBC Type:"
+msgstr ""
+
+#. 
+#: ColumnDetailsPage_name
+#, java-format
+msgctxt "ColumnDetailsPage_name"
+msgid "Name:"
+msgstr ""
+
+#. 
+#: ColumnDetailsPage_property_name
+#, java-format
+msgctxt "ColumnDetailsPage_property_name"
+msgid "Property name:"
+msgstr ""
+
+#. 
+#: ColumnDetailsPage_set_properties_of_selected_column
+#, java-format
+msgctxt "ColumnDetailsPage_set_properties_of_selected_column"
+msgid "Set the properties of the selected column."
+msgstr ""
+
+#. 
+#: ColumnDetailsPage_the_hibernate_type
+#, java-format
+msgctxt "ColumnDetailsPage_the_hibernate_type"
+msgid "The hibernate type which should be used for this column when used as a property"
+msgstr ""
+
+#. 
+#: ColumnDetailsPage_the_name_of_the_column
+#, java-format
+msgctxt "ColumnDetailsPage_the_name_of_the_column"
+msgid "The name of the column"
+msgstr ""
+
+#. 
+#: ColumnDetailsPage_the_property_name_which_must_be_used_for
+#, java-format
+msgctxt "ColumnDetailsPage_the_property_name_which_must_be_used_for"
+msgid "The property name which must be used for this column when used as a property"
+msgstr ""
+
+#. 
+#: ColumnDetailsPage_which_jdbc_type_this_column_should_have
+#, java-format
+msgctxt "ColumnDetailsPage_which_jdbc_type_this_column_should_have"
+msgid "Which JDBC Type this column should have (overriding the type read from the database)"
+msgstr ""
+
+#. 
+#: ConsoleConfigNamePart_console_configuration
+#, java-format
+msgctxt "ConsoleConfigNamePart_console_configuration"
+msgid "Console Configuration"
+msgstr ""
+
+#. 
+#: ConsoleConfigNamePart_problem_when_trying_to_hibernate_project_info
+#, java-format
+msgctxt "ConsoleConfigNamePart_problem_when_trying_to_hibernate_project_info"
+msgid "Problem when trying to Hibernate Project information"
+msgstr ""
+
+#. 
+#: ConsoleConfigNamePart_select_console_configuration
+#, java-format
+msgctxt "ConsoleConfigNamePart_select_console_configuration"
+msgid "Select Console configuration to be used for editing the reverse engineering settings"
+msgstr ""
+
+#. 
+#: CounterFormPart_debug_counter
+#, java-format
+msgctxt "CounterFormPart_debug_counter"
+msgid "Debug counter"
+msgstr ""
+
+#. 
+#: CounterFormPart_debug_counter_for_property_changes
+#, java-format
+msgctxt "CounterFormPart_debug_counter_for_property_changes"
+msgid "debug counter for property changes"
+msgstr ""
+
+#. 
+#: CounterFormPart_zero
+#, java-format
+msgctxt "CounterFormPart_zero"
+msgid "Zero"
+msgstr ""
+
+#. 
+#: GeneratorDetailsPage_class
+#, java-format
+msgctxt "GeneratorDetailsPage_class"
+msgid "Class:"
+msgstr ""
+
+#. 
+#: GeneratorDetailsPage_id_generator_details
+#, java-format
+msgctxt "GeneratorDetailsPage_id_generator_details"
+msgid "Id Generator details"
+msgstr ""
+
+#. 
+#: GeneratorDetailsPage_set_the_properties_of_the_selected_generator
+#, java-format
+msgctxt "GeneratorDetailsPage_set_the_properties_of_the_selected_generator"
+msgid "Set the properties of the selected generator."
+msgstr ""
+
+#. 
+#: HibernateConfigurationForm_hibernate_configuration
+#, java-format
+msgctxt "HibernateConfigurationForm_hibernate_configuration"
+msgid "Hibernate Configuration"
+msgstr ""
+
+#. 
+#: ParamDetailsPage_generator_parameter_details
+#, java-format
+msgctxt "ParamDetailsPage_generator_parameter_details"
+msgid "Generator parameter details"
+msgstr ""
+
+#. 
+#: ParamDetailsPage_name
+#, java-format
+msgctxt "ParamDetailsPage_name"
+msgid "Name:"
+msgstr ""
+
+#. 
+#: ParamDetailsPage_set_the_properties_of_the_selected_parameter
+#, java-format
+msgctxt "ParamDetailsPage_set_the_properties_of_the_selected_parameter"
+msgid "Set the properties of the selected parameter."
+msgstr ""
+
+#. 
+#: ParamDetailsPage_value
+#, java-format
+msgctxt "ParamDetailsPage_value"
+msgid "Value:"
+msgstr ""
+
+#. 
+#: PrimaryKeyDetailsPage_add_column
+#, java-format
+msgctxt "PrimaryKeyDetailsPage_add_column"
+msgid "Add column"
+msgstr ""
+
+#. 
+#: PrimaryKeyDetailsPage_add_generator
+#, java-format
+msgctxt "PrimaryKeyDetailsPage_add_generator"
+msgid "Add generator"
+msgstr ""
+
+#. 
+#: PrimaryKeyDetailsPage_primary_key_can_define_generator_strategy_and_alternative_columns
+#, java-format
+msgctxt "PrimaryKeyDetailsPage_primary_key_can_define_generator_strategy_and_alternative_columns"
+msgid "A primary key can define a generator strategy and alternative columns"
+msgstr ""
+
+#. 
+#: PrimaryKeyDetailsPage_primary_key_details
+#, java-format
+msgctxt "PrimaryKeyDetailsPage_primary_key_details"
+msgid "Primary key details"
+msgstr ""
+
+#. 
+#: RevEngFormEditorPart_need_to_override_formcontent_in
+#, java-format
+msgctxt "RevEngFormEditorPart_need_to_override_formcontent_in"
+msgid "Need to override formcontent in"
+msgstr ""
+
+#. 
+#: RevEngOverviewPage_contents
+#, java-format
+msgctxt "RevEngOverviewPage_contents"
+msgid "Contents"
+msgstr ""
+
+#. 
+#: RevEngOverviewPage_overview
+#, java-format
+msgctxt "RevEngOverviewPage_overview"
+msgid "Overview"
+msgstr ""
+
+#. 
+#: RevEngOverviewPage_the_content
+#, java-format
+msgctxt "RevEngOverviewPage_the_content"
+msgid "<form><p>The content of the reveng.xml is made up of three sections:</p><li style=\"image\" value=\"page\" bindent=\"5\"><a href=\"typemappings\">Type Mappings</a>: lists the mappings from a JDBC/SQL type to Hibernate type.</li><li style=\"image\" value=\"page\" bindent=\"5\"><a href=\"tablefilter\">Table filters</a>: lists which tables that should be included or excluded during reverse engineering.</li><li style=\"image\" value=\"page\" bindent=\"5\"><a href=\"tables\">Tables &amp; Columns</a>: explicitly set properties for tables and columns.</li></form>"
+msgstr ""
+
+#. 
+#: RevEngTableFilterPage_table_filters
+#, java-format
+msgctxt "RevEngTableFilterPage_table_filters"
+msgid "Table filters"
+msgstr ""
+
+#. 
+#: RevEngTablesPage_tables_and_columns
+#, java-format
+msgctxt "RevEngTablesPage_tables_and_columns"
+msgid "Tables & Columns"
+msgstr ""
+
+#. 
+#: RevEngTypeMappingPage_type_mappings
+#, java-format
+msgctxt "RevEngTypeMappingPage_type_mappings"
+msgid "Type Mappings"
+msgstr ""
+
+#. 
+#: TableDetailsPage_add_primary_key
+#, java-format
+msgctxt "TableDetailsPage_add_primary_key"
+msgid "Add primary key"
+msgstr ""
+
+#. 
+#: TableDetailsPage_catalog
+#, java-format
+msgctxt "TableDetailsPage_catalog"
+msgid "Catalog:"
+msgstr ""
+
+#. 
+#: TableDetailsPage_class_name
+#, java-format
+msgctxt "TableDetailsPage_class_name"
+msgid "Class name:"
+msgstr ""
+
+#. 
+#: TableDetailsPage_name
+#, java-format
+msgctxt "TableDetailsPage_name"
+msgid "Name:"
+msgstr ""
+
+#. 
+#: TableDetailsPage_schema
+#, java-format
+msgctxt "TableDetailsPage_schema"
+msgid "Schema:"
+msgstr ""
+
+#. 
+#: TableDetailsPage_set_properties_of_selected_table
+#, java-format
+msgctxt "TableDetailsPage_set_properties_of_selected_table"
+msgid "Set the properties of the selected table."
+msgstr ""
+
+#. 
+#: TableDetailsPage_table_details
+#, java-format
+msgctxt "TableDetailsPage_table_details"
+msgid "Table details"
+msgstr ""
+
+#. 
+#: TableFilterFormPart_table_filters
+#, java-format
+msgctxt "TableFilterFormPart_table_filters"
+msgid "Table filters"
+msgstr ""
+
+#. 
+#: TableFilterFormPart_table_filters_defines_which_table_included
+#, java-format
+msgctxt "TableFilterFormPart_table_filters_defines_which_table_included"
+msgid "Table filters defines which tables/views are included when performing reverse engineering."
+msgstr ""
+
+#. 
+#: TablePropertiesBlock_add
+#, java-format
+msgctxt "TablePropertiesBlock_add"
+msgid "Add..."
+msgstr ""
+
+#. 
+#: TablePropertiesBlock_add_tables_columns
+#, java-format
+msgctxt "TablePropertiesBlock_add_tables_columns"
+msgid "Add Tables & Columns"
+msgstr ""
+
+#. 
+#: TablePropertiesBlock_delete
+#, java-format
+msgctxt "TablePropertiesBlock_delete"
+msgid "Delete"
+msgstr ""
+
+#. 
+#: TablePropertiesBlock_deselect_all
+#, java-format
+msgctxt "TablePropertiesBlock_deselect_all"
+msgid "Deselect all"
+msgstr ""
+
+#. 
+#: TablePropertiesBlock_explicitly_control_settings_for_table_columns
+#, java-format
+msgctxt "TablePropertiesBlock_explicitly_control_settings_for_table_columns"
+msgid "Explicitly control settings for table & columns for which the defaults is not applicable. Click Add, select the relevant tables & columns and adjust their settings here."
+msgstr ""
+
+#. 
+#: TablePropertiesBlock_horizontal_orientation
+#, java-format
+msgctxt "TablePropertiesBlock_horizontal_orientation"
+msgid "Horizontal orientation"
+msgstr ""
+
+#. 
+#: TablePropertiesBlock_select_all_children
+#, java-format
+msgctxt "TablePropertiesBlock_select_all_children"
+msgid "Select all children"
+msgstr ""
+
+#. 
+#: TablePropertiesBlock_select_tables_columns
+#, java-format
+msgctxt "TablePropertiesBlock_select_tables_columns"
+msgid "Select tables and columns"
+msgstr ""
+
+#. 
+#: TablePropertiesBlock_tables_columns
+#, java-format
+msgctxt "TablePropertiesBlock_tables_columns"
+msgid "Tables & Columns"
+msgstr ""
+
+#. 
+#: TablePropertiesBlock_vertical_orientation
+#, java-format
+msgctxt "TablePropertiesBlock_vertical_orientation"
+msgid "Vertical orientation"
+msgstr ""
+
+#. 
+#: TablePropertiesLabelProvider_primary_key
+#, java-format
+msgctxt "TablePropertiesLabelProvider_primary_key"
+msgid "Primary key"
+msgstr ""
+
+#. 
+#: TypeMappingFormPart_type_mappings
+#, java-format
+msgctxt "TypeMappingFormPart_type_mappings"
+msgid "Type mappings"
+msgstr ""
+
+#. 
+#: TypeMappingFormPart_type_mappings_allows_you_define_which_hibernate_type
+#, java-format
+msgctxt "TypeMappingFormPart_type_mappings_allows_you_define_which_hibernate_type"
+msgid "Type mappings allows you to define which Hibernate type to use for specific JDBC types."
+msgstr ""
+
+#. 
+#: TypeMappingView_add
+#, java-format
+msgctxt "TypeMappingView_add"
+msgid "Add..."
+msgstr ""
+
+#. 
+#: TypeMappingView_database_schema
+#, java-format
+msgctxt "TypeMappingView_database_schema"
+msgid "Database schema:"
+msgstr ""
+
+#. 
+#: TypeMappingView_do_you_want_to_remove_all_mappings
+#, java-format
+msgctxt "TypeMappingView_do_you_want_to_remove_all_mappings"
+msgid "Do you want to remove all mappings?"
+msgstr ""
+
+#. 
+#: TypeMappingView_hibernate_type
+#, java-format
+msgctxt "TypeMappingView_hibernate_type"
+msgid "Hibernate Type"
+msgstr ""
+
+#. 
+#: TypeMappingView_jdbc_type
+#, java-format
+msgctxt "TypeMappingView_jdbc_type"
+msgid "JDBC Type"
+msgstr ""
+
+#. 
+#: TypeMappingView_length
+#, java-format
+msgctxt "TypeMappingView_length"
+msgid "Length"
+msgstr ""
+
+#. 
+#: TypeMappingView_not_known_button
+#, java-format
+msgctxt "TypeMappingView_not_known_button"
+msgid " not a known button"
+msgstr ""
+
+#. 
+#: TypeMappingView_not_null
+#, java-format
+msgctxt "TypeMappingView_not_null"
+msgid "Not-Null"
+msgstr ""
+
+#. 
+#: TypeMappingView_precision
+#, java-format
+msgctxt "TypeMappingView_precision"
+msgid "Precision"
+msgstr ""
+
+#. 
+#: TypeMappingView_remove_all_mappings
+#, java-format
+msgctxt "TypeMappingView_remove_all_mappings"
+msgid "Remove all mappings"
+msgstr ""
+
+#. 
+#: TypeMappingView_scale
+#, java-format
+msgctxt "TypeMappingView_scale"
+msgid "Scale"
+msgstr ""
+
+#. 
+#: TypeMappingView_type_mappings
+#, java-format
+msgctxt "TypeMappingView_type_mappings"
+msgid "Type mappings:"
+msgstr ""
+
+#. 
+#: GeneratorTypeHandler_generator_type
+#, java-format
+msgctxt "GeneratorTypeHandler_generator_type"
+msgid "<b>Generator type</b>:"
+msgstr ""
+
+#. 
+#: GeneratorTypeHandler_return_class
+#, java-format
+msgctxt "GeneratorTypeHandler_return_class"
+msgid "<br><b>Return class</b>:"
+msgstr ""
+
+#. 
+#: HBMInfoExtractor_access_fields_directly
+#, java-format
+msgctxt "HBMInfoExtractor_access_fields_directly"
+msgid "Access fields directly"
+msgstr ""
+
+#. 
+#: HBMInfoExtractor_do_not_perform_any_access
+#, java-format
+msgctxt "HBMInfoExtractor_do_not_perform_any_access"
+msgid "Do not perform any access. Use with HQL-only properties"
+msgstr ""
+
+#. 
+#: HBMInfoExtractor_use_javabean_accessor_methods
+#, java-format
+msgctxt "HBMInfoExtractor_use_javabean_accessor_methods"
+msgid "Use JavaBean accessor methods"
+msgstr ""
+
+#. 
+#: HibernateTypeHandler_hibernate_type
+#, java-format
+msgctxt "HibernateTypeHandler_hibernate_type"
+msgid "<b>Hibernate type</b>:"
+msgstr ""
+
+#. 
+#: HibernateTypeHandler_return_class
+#, java-format
+msgctxt "HibernateTypeHandler_return_class"
+msgid "<br><b>Return class</b>:"
+msgstr ""
+
+#. 
+#: HibernateTypeHandler_return_primitive
+#, java-format
+msgctxt "HibernateTypeHandler_return_primitive"
+msgid "<br><b>Return primitive</b>:"
+msgstr ""
+
+#. 
+#: PropertyAccessHandler_access_method
+#, java-format
+msgctxt "PropertyAccessHandler_access_method"
+msgid "<b>Access method</b>:"
+msgstr ""
+
+#. 
+#: PropertyAccessHandler_description
+#, java-format
+msgctxt "PropertyAccessHandler_description"
+msgid "<br><b>Description</b>:"
+msgstr ""
+
+#. 
+#: DOMReverseEngineeringDefinition_unknown_change
+#, java-format
+msgctxt "DOMReverseEngineeringDefinition_unknown_change"
+msgid "Unknown change: {0} {1}"
+msgstr ""
+
+#. 
+#: RevEngPrimaryKeyAdapter_column
+#, java-format
+msgctxt "RevEngPrimaryKeyAdapter_column"
+msgid "column_"
+msgstr ""
+
+#. 
+#: xml_hibernate_tools
+#, java-format
+msgctxt "xml_hibernate_tools"
+msgid "xml (Hibernate Tools)"
+msgstr ""
+

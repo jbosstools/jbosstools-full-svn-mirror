@@ -1,0 +1,537 @@
+#SOME DESCRIPTIVE TITLE.
+#Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+#This file is distributed under the same license as the PACKAGE package.
+#FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-11-13 10:25+1000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+""
+
+#. 
+#: SeamPages.element_type
+#, java-format
+msgctxt "SeamPages.element_type"
+msgid "Element Type"
+msgstr ""
+
+#. 
+#: SeamPages.class
+#, java-format
+msgctxt "SeamPages.class"
+msgid "Class"
+msgstr ""
+
+#. 
+#: SeamPages.view_id
+#, java-format
+msgctxt "SeamPages.view_id"
+msgid "View ID"
+msgstr ""
+
+#. 
+#: SeamPages.error_code
+#, java-format
+msgctxt "SeamPages.error_code"
+msgid "Error Code"
+msgstr ""
+
+#. 
+#: SeamPages.if_outcome
+#, java-format
+msgctxt "SeamPages.if_outcome"
+msgid "If Outcome"
+msgstr ""
+
+#. 
+#: SeamPages.if
+#, java-format
+msgctxt "SeamPages.if"
+msgid "If"
+msgstr ""
+
+#. 
+#: SeamPages.kind
+#, java-format
+msgctxt "SeamPages.kind"
+msgid "Kind"
+msgstr ""
+
+#. 
+#: SeamPages.rename_file
+#, java-format
+msgctxt "SeamPages.rename_file"
+msgid "Rename File"
+msgstr ""
+
+#. 
+#: SeamPages.create_file
+#, java-format
+msgctxt "SeamPages.create_file"
+msgid "Create File"
+msgstr ""
+
+#. 
+#: SeamPages.template
+#, java-format
+msgctxt "SeamPages.template"
+msgid "Template"
+msgstr ""
+
+#. 
+#: SeamPages.name
+#, java-format
+msgctxt "SeamPages.name"
+msgid "Name"
+msgstr ""
+
+#. 
+#: SeamPages.extension
+#, java-format
+msgctxt "SeamPages.extension"
+msgid "Extension"
+msgstr ""
+
+#. 
+#: SeamPages.encoding
+#, java-format
+msgctxt "SeamPages.encoding"
+msgid "Encoding"
+msgstr ""
+
+#. 
+#: SeamPages.xmlns
+#, java-format
+msgctxt "SeamPages.xmlns"
+msgid "Xmlns"
+msgstr ""
+
+#. 
+#: SeamPages.xmlns_xsi
+#, java-format
+msgctxt "SeamPages.xmlns_xsi"
+msgid "Xmlns:xsi"
+msgstr ""
+
+#. 
+#: SeamPages.xsi_schemaLocation
+#, java-format
+msgctxt "SeamPages.xsi_schemaLocation"
+msgid "Xsi:schemaLocation"
+msgstr ""
+
+#. 
+#: SeamPages.concurrent_request_timeout
+#, java-format
+msgctxt "SeamPages.concurrent_request_timeout"
+msgid "Concurrent Request Timeout"
+msgstr ""
+
+#. 
+#: SeamPages.expires
+#, java-format
+msgctxt "SeamPages.expires"
+msgid "Expires"
+msgstr ""
+
+#. 
+#: SeamPages.no_conversation_view_id
+#, java-format
+msgctxt "SeamPages.no_conversation_view_id"
+msgid "No Conversation View ID"
+msgstr ""
+
+#. 
+#: SeamPages.login_view_id
+#, java-format
+msgctxt "SeamPages.login_view_id"
+msgid "Login View ID"
+msgstr ""
+
+#. 
+#: SeamPages.namespaceMapping
+#, java-format
+msgctxt "SeamPages.namespaceMapping"
+msgid "NamespaceMapping"
+msgstr ""
+
+#. 
+#: SeamPages.http_port
+#, java-format
+msgctxt "SeamPages.http_port"
+msgid "Http Port"
+msgstr ""
+
+#. 
+#: SeamPages.https_port
+#, java-format
+msgctxt "SeamPages.https_port"
+msgid "Https Port"
+msgstr ""
+
+#. 
+#: SeamPages.action
+#, java-format
+msgctxt "SeamPages.action"
+msgid "Action"
+msgstr ""
+
+#. 
+#: SeamPages.switch
+#, java-format
+msgctxt "SeamPages.switch"
+msgid "Switch"
+msgstr ""
+
+#. 
+#: SeamPages.conversation_required
+#, java-format
+msgctxt "SeamPages.conversation_required"
+msgid "Conversation Required"
+msgstr ""
+
+#. 
+#: SeamPages.login_required
+#, java-format
+msgctxt "SeamPages.login_required"
+msgid "Login Required"
+msgstr ""
+
+#. 
+#: SeamPages.scheme
+#, java-format
+msgctxt "SeamPages.scheme"
+msgid "Scheme"
+msgstr ""
+
+#. 
+#: SeamPages.timeout
+#, java-format
+msgctxt "SeamPages.timeout"
+msgid "Timeout"
+msgstr ""
+
+#. 
+#: SeamPages.bundle
+#, java-format
+msgctxt "SeamPages.bundle"
+msgid "Bundle"
+msgstr ""
+
+#. 
+#: SeamPages.conversation
+#, java-format
+msgctxt "SeamPages.conversation"
+msgid "Conversation"
+msgstr ""
+
+#. 
+#: SeamPages.restrict
+#, java-format
+msgctxt "SeamPages.restrict"
+msgid "Restrict"
+msgstr ""
+
+#. 
+#: SeamPages.description
+#, java-format
+msgctxt "SeamPages.description"
+msgid "Description"
+msgstr ""
+
+#. 
+#: SeamPages.execute
+#, java-format
+msgctxt "SeamPages.execute"
+msgid "Execute"
+msgstr ""
+
+#. 
+#: SeamPages.on_postback
+#, java-format
+msgctxt "SeamPages.on_postback"
+msgid "On Postback"
+msgstr ""
+
+#. 
+#: SeamPages.join
+#, java-format
+msgctxt "SeamPages.join"
+msgid "Join"
+msgstr ""
+
+#. 
+#: SeamPages.nested
+#, java-format
+msgctxt "SeamPages.nested"
+msgid "Nested"
+msgstr ""
+
+#. 
+#: SeamPages.pageflow
+#, java-format
+msgctxt "SeamPages.pageflow"
+msgid "Pageflow"
+msgstr ""
+
+#. 
+#: SeamPages.flush_mode
+#, java-format
+msgctxt "SeamPages.flush_mode"
+msgid "Flush Mode"
+msgstr ""
+
+#. 
+#: SeamPages.task_id
+#, java-format
+msgctxt "SeamPages.task_id"
+msgid "Task ID"
+msgstr ""
+
+#. 
+#: SeamPages.parameter_name
+#, java-format
+msgctxt "SeamPages.parameter_name"
+msgid "Parameter Name"
+msgstr ""
+
+#. 
+#: SeamPages.parameter_value
+#, java-format
+msgctxt "SeamPages.parameter_value"
+msgid "Parameter Value"
+msgstr ""
+
+#. 
+#: SeamPages.definition
+#, java-format
+msgctxt "SeamPages.definition"
+msgid "Definition"
+msgstr ""
+
+#. 
+#: SeamPages.before_redirect
+#, java-format
+msgctxt "SeamPages.before_redirect"
+msgid "Before Redirect"
+msgstr ""
+
+#. 
+#: SeamPages.root
+#, java-format
+msgctxt "SeamPages.root"
+msgid "Root"
+msgstr ""
+
+#. 
+#: SeamPages.transition
+#, java-format
+msgctxt "SeamPages.transition"
+msgid "Transition"
+msgstr ""
+
+#. 
+#: SeamPages.log
+#, java-format
+msgctxt "SeamPages.log"
+msgid "Log"
+msgstr ""
+
+#. 
+#: SeamPages.log_level
+#, java-format
+msgctxt "SeamPages.log_level"
+msgid "Log Level"
+msgstr ""
+
+#. 
+#: SeamPages.value
+#, java-format
+msgctxt "SeamPages.value"
+msgid "Value"
+msgstr ""
+
+#. 
+#: SeamPages.scope
+#, java-format
+msgctxt "SeamPages.scope"
+msgid "Scope"
+msgstr ""
+
+#. 
+#: SeamPages.message
+#, java-format
+msgctxt "SeamPages.message"
+msgid "Message"
+msgstr ""
+
+#. 
+#: SeamPages.for
+#, java-format
+msgctxt "SeamPages.for"
+msgid "For"
+msgstr ""
+
+#. 
+#: SeamPages.severity
+#, java-format
+msgctxt "SeamPages.severity"
+msgid "Severity"
+msgstr ""
+
+#. 
+#: SeamPages.from_action
+#, java-format
+msgctxt "SeamPages.from_action"
+msgid "From Action"
+msgstr ""
+
+#. 
+#: SeamPages.evaluate
+#, java-format
+msgctxt "SeamPages.evaluate"
+msgid "Evaluate"
+msgstr ""
+
+#. 
+#: SeamPages.converter
+#, java-format
+msgctxt "SeamPages.converter"
+msgid "Converter"
+msgstr ""
+
+#. 
+#: SeamPages.converter_id
+#, java-format
+msgctxt "SeamPages.converter_id"
+msgid "Converter ID"
+msgstr ""
+
+#. 
+#: SeamPages.validator
+#, java-format
+msgctxt "SeamPages.validator"
+msgid "Validator"
+msgstr ""
+
+#. 
+#: SeamPages.validator_id
+#, java-format
+msgctxt "SeamPages.validator_id"
+msgid "Validator ID"
+msgstr ""
+
+#. 
+#: SeamPages.required
+#, java-format
+msgctxt "SeamPages.required"
+msgid "Required"
+msgstr ""
+
+#. 
+#: SeamPages.type
+#, java-format
+msgctxt "SeamPages.type"
+msgid "Type"
+msgstr ""
+
+#. 
+#: SeamPages.url
+#, java-format
+msgctxt "SeamPages.url"
+msgid "URL"
+msgstr ""
+
+#. 
+#: SeamPages.resume-process
+#, java-format
+msgctxt "SeamPages.resume-process"
+msgid "Resume-Process"
+msgstr ""
+
+#. 
+#: SeamPages.process_id
+#, java-format
+msgctxt "SeamPages.process_id"
+msgid "Process ID"
+msgstr ""
+
+#. 
+#: SeamPages.pattern
+#, java-format
+msgctxt "SeamPages.pattern"
+msgid "Pattern"
+msgstr ""
+
+#. 
+#: SeamPages.title
+#, java-format
+msgctxt "SeamPages.title"
+msgid "Title"
+msgstr ""
+
+#. 
+#: SeamPages.id
+#, java-format
+msgctxt "SeamPages.id"
+msgid "ID"
+msgstr ""
+
+#. 
+#: SeamPages.subtype
+#, java-format
+msgctxt "SeamPages.subtype"
+msgid "Subtype"
+msgstr ""
+
+#. 
+#: SeamPages.path
+#, java-format
+msgctxt "SeamPages.path"
+msgid "Path"
+msgstr ""
+
+#. 
+#: SeamPages.shape
+#, java-format
+msgctxt "SeamPages.shape"
+msgid "Shape"
+msgstr ""
+
+#. 
+#: SeamPages.params
+#, java-format
+msgctxt "SeamPages.params"
+msgid "Params"
+msgstr ""
+
+#. 
+#: SeamPages.target
+#, java-format
+msgctxt "SeamPages.target"
+msgid "Target"
+msgstr ""
+
+#. 
+#: SeamPages.hidden
+#, java-format
+msgctxt "SeamPages.hidden"
+msgid "Hidden"
+msgstr ""
+
+#. 
+#: SeamPages.shortcut
+#, java-format
+msgctxt "SeamPages.shortcut"
+msgid "Shortcut"
+msgstr ""
+

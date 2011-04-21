@@ -1,0 +1,180 @@
+#SOME DESCRIPTIVE TITLE.
+#Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+#This file is distributed under the same license as the PACKAGE package.
+#FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-10-22 16:27+1000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+""
+
+#. 
+#: SEAM_XML_UI_PLUGIN_NO_MESSAGES
+#, java-format
+msgctxt "SEAM_XML_UI_PLUGIN_NO_MESSAGES"
+msgid "No message"
+msgstr ""
+
+#. 
+#: SEAM_PROPERTY_FORM_LAYOUT_DATA_VALUES
+#, java-format
+msgctxt "SEAM_PROPERTY_FORM_LAYOUT_DATA_VALUES"
+msgid "Values"
+msgstr ""
+
+#. 
+#: SEAM_EVENT_FORM_LAYOUT_DATA_ACTIONS
+#, java-format
+msgctxt "SEAM_EVENT_FORM_LAYOUT_DATA_ACTIONS"
+msgid "Actions"
+msgstr ""
+
+#. 
+#: SEAM_PROPERTY_FORM_LAYOUT_DATA_SEAM_PROPERTY_LIST
+#, java-format
+msgctxt "SEAM_PROPERTY_FORM_LAYOUT_DATA_SEAM_PROPERTY_LIST"
+msgid "Seam Property (List)"
+msgstr ""
+
+#. 
+#: SEAM_PROPERTY_FORM_LAYOUT_DATA_ENTRIES
+#, java-format
+msgctxt "SEAM_PROPERTY_FORM_LAYOUT_DATA_ENTRIES"
+msgid "Entries"
+msgstr ""
+
+#. 
+#: SEAM_FACTORY_FORM_LAYOUT_DATA_ADVANCED
+#, java-format
+msgctxt "SEAM_FACTORY_FORM_LAYOUT_DATA_ADVANCED"
+msgid "Advanced"
+msgstr ""
+
+#. 
+#: SEAM_EVENT_FORM_LAYOUT_DATA_SEAM_EVENT
+#, java-format
+msgctxt "SEAM_EVENT_FORM_LAYOUT_DATA_SEAM_EVENT"
+msgid "Seam EVENT"
+msgstr ""
+
+#. 
+#: SEAM_COMPONENT_FORM_LAYOUT_DATA_ADVANCED
+#, java-format
+msgctxt "SEAM_COMPONENT_FORM_LAYOUT_DATA_ADVANCED"
+msgid "Advanced"
+msgstr ""
+
+#. 
+#: SEAM_EVENT_FORM_LAYOUT_DATA_SEAM_ACTION
+#, java-format
+msgctxt "SEAM_EVENT_FORM_LAYOUT_DATA_SEAM_ACTION"
+msgid "Seam Action"
+msgstr ""
+
+#. 
+#: SEAM_PROPERTY_FORM_LAYOUT_DATA_SEAM_PROPERTY_MAP
+#, java-format
+msgctxt "SEAM_PROPERTY_FORM_LAYOUT_DATA_SEAM_PROPERTY_MAP"
+msgid "Seam Property (Map)"
+msgstr ""
+
+#. 
+#: SEAM_COMPONENT_FORM_LAYOUT_DATA_PROPERTIES
+#, java-format
+msgctxt "SEAM_COMPONENT_FORM_LAYOUT_DATA_PROPERTIES"
+msgid "Properties"
+msgstr ""
+
+#. 
+#: SEAM_FACTORY_FORM_LAYOUT_DATA_SEAM_FACTORY
+#, java-format
+msgctxt "SEAM_FACTORY_FORM_LAYOUT_DATA_SEAM_FACTORY"
+msgid "Seam Factory"
+msgstr ""
+
+#. 
+#: SEAM_COMPONENT_FORM_LAYOUT_DATA_SEAM_COMPONENT
+#, java-format
+msgctxt "SEAM_COMPONENT_FORM_LAYOUT_DATA_SEAM_COMPONENT"
+msgid "Seam Component"
+msgstr ""
+
+#. 
+#: SEAM_COMPONENTS_FILE_FORM_LAYOUT_DATA_COMPONENTS
+#, java-format
+msgctxt "SEAM_COMPONENTS_FILE_FORM_LAYOUT_DATA_COMPONENTS"
+msgid "Components"
+msgstr ""
+
+#. 
+#: SEAM_COMPONENTS_FILE_FORM_LAYOUT_DATA_FACTORIES
+#, java-format
+msgctxt "SEAM_COMPONENTS_FILE_FORM_LAYOUT_DATA_FACTORIES"
+msgid "Factories"
+msgstr ""
+
+#. 
+#: SEAM_COMPONENTS_FILE_FORM_LAYOUT_DATA_EVENTS
+#, java-format
+msgctxt "SEAM_COMPONENTS_FILE_FORM_LAYOUT_DATA_EVENTS"
+msgid "Events"
+msgstr ""
+
+#. 
+#: SEAM_COMPONENT_FORM_LAYOUT_DATA_SEAM_COMPONENT_1_2_FILE
+#, java-format
+msgctxt "SEAM_COMPONENT_FORM_LAYOUT_DATA_SEAM_COMPONENT_1_2_FILE"
+msgid "Seam Component 1.2 File"
+msgstr ""
+
+#. 
+#: SEAM_COMPONENT_FORM_LAYOUT_DATA_SEAM_COMPONENT_2_0_FILE
+#, java-format
+msgctxt "SEAM_COMPONENT_FORM_LAYOUT_DATA_SEAM_COMPONENT_2_0_FILE"
+msgid "Seam Component 2.0 File"
+msgstr ""
+
+#. 
+#: SEAM_COMPONENT_FORM_LAYOUT_DATA_SEAM_COMPONENT_2_1_FILE
+#, java-format
+msgctxt "SEAM_COMPONENT_FORM_LAYOUT_DATA_SEAM_COMPONENT_2_1_FILE"
+msgid "Seam Component 2.1 File"
+msgstr ""
+
+#. 
+#: SEAM_COMPONENTS_FILE_FORM_LAYOUT_DATA_SEAM_COMPONENTS_11_FILE
+#, java-format
+msgctxt "SEAM_COMPONENTS_FILE_FORM_LAYOUT_DATA_SEAM_COMPONENTS_11_FILE"
+msgid "Seam Components 1.1 File"
+msgstr ""
+
+#. 
+#: SEAM_COMPONENTS_FILE_FORM_LAYOUT_DATA_SEAM_COMPONENTS_12_FILE
+#, java-format
+msgctxt "SEAM_COMPONENTS_FILE_FORM_LAYOUT_DATA_SEAM_COMPONENTS_12_FILE"
+msgid "Seam Components 1.2 File"
+msgstr ""
+
+#. 
+#: SEAM_COMPONENTS_FILE_FORM_LAYOUT_DATA_SEAM_COMPONENTS_20_FILE
+#, java-format
+msgctxt "SEAM_COMPONENTS_FILE_FORM_LAYOUT_DATA_SEAM_COMPONENTS_20_FILE"
+msgid "Seam Components 2.0 File"
+msgstr ""
+
+#. 
+#: SEAM_COMPONENTS_FILE_FORM_LAYOUT_DATA_SEAM_COMPONENTS_21_FILE
+#, java-format
+msgctxt "SEAM_COMPONENTS_FILE_FORM_LAYOUT_DATA_SEAM_COMPONENTS_21_FILE"
+msgid "Seam Components 2.1 File"
+msgstr ""
+

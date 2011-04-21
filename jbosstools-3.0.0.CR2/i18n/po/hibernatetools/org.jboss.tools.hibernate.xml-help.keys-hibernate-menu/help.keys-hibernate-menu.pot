@@ -1,0 +1,642 @@
+#SOME DESCRIPTIVE TITLE.
+#Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+#This file is distributed under the same license as the PACKAGE package.
+#FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-11-13 10:30+1000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+""
+
+#. 
+#: Hibernate.AddSessionFactory.menu
+#, java-format
+msgctxt "Hibernate.AddSessionFactory.menu"
+msgid "Session Factory..."
+msgstr ""
+
+#. 
+#: Hibernate.AddSecurity.menu
+#, java-format
+msgctxt "Hibernate.AddSecurity.menu"
+msgid "Security..."
+msgstr ""
+
+#. 
+#: Hibernate.AddClassCache.menu
+#, java-format
+msgctxt "Hibernate.AddClassCache.menu"
+msgid "Class Cache..."
+msgstr ""
+
+#. 
+#: Hibernate.AddCollectionCache.menu
+#, java-format
+msgctxt "Hibernate.AddCollectionCache.menu"
+msgid "Collection Cache..."
+msgstr ""
+
+#. 
+#: Hibernate.AddListener.menu
+#, java-format
+msgctxt "Hibernate.AddListener.menu"
+msgid "Listener..."
+msgstr ""
+
+#. 
+#: Hibernate.AddEvent.menu
+#, java-format
+msgctxt "Hibernate.AddEvent.menu"
+msgid "Event..."
+msgstr ""
+
+#. 
+#: Hibernate.AddMapping.menu
+#, java-format
+msgctxt "Hibernate.AddMapping.menu"
+msgid "Mapping..."
+msgstr ""
+
+#. 
+#: Hibernate.AddProperty.menu
+#, java-format
+msgctxt "Hibernate.AddProperty.menu"
+msgid "Property..."
+msgstr ""
+
+#. 
+#: Hibernate.AddGrant.menu
+#, java-format
+msgctxt "Hibernate.AddGrant.menu"
+msgid "Grant..."
+msgstr ""
+
+#. 
+#: Hibernate.AddMeta.menu
+#, java-format
+msgctxt "Hibernate.AddMeta.menu"
+msgid "Meta..."
+msgstr ""
+
+#. 
+#: Hibernate.AddTypedef.menu
+#, java-format
+msgctxt "Hibernate.AddTypedef.menu"
+msgid "Typedef..."
+msgstr ""
+
+#. 
+#: Hibernate.AddImport.menu
+#, java-format
+msgctxt "Hibernate.AddImport.menu"
+msgid "Import..."
+msgstr ""
+
+#. 
+#: Hibernate.AddClass.menu
+#, java-format
+msgctxt "Hibernate.AddClass.menu"
+msgid "Class..."
+msgstr ""
+
+#. 
+#: Hibernate.AddJoinedSubclass.menu
+#, java-format
+msgctxt "Hibernate.AddJoinedSubclass.menu"
+msgid "Joined-Subclass..."
+msgstr ""
+
+#. 
+#: Hibernate.AddSubclass.menu
+#, java-format
+msgctxt "Hibernate.AddSubclass.menu"
+msgid "Subclass..."
+msgstr ""
+
+#. 
+#: Hibernate.AddResultSet.menu
+#, java-format
+msgctxt "Hibernate.AddResultSet.menu"
+msgid "Result Set..."
+msgstr ""
+
+#. 
+#: Hibernate.AddQuery.menu
+#, java-format
+msgctxt "Hibernate.AddQuery.menu"
+msgid "Query..."
+msgstr ""
+
+#. 
+#: Hibernate.AddSQLQuery.menu
+#, java-format
+msgctxt "Hibernate.AddSQLQuery.menu"
+msgid "SQL-Query..."
+msgstr ""
+
+#. 
+#: Hibernate.AddFilterdef.menu
+#, java-format
+msgctxt "Hibernate.AddFilterdef.menu"
+msgid "Filter..."
+msgstr ""
+
+#. 
+#: Hibernate.DatabaseObject.menu
+#, java-format
+msgctxt "Hibernate.DatabaseObject.menu"
+msgid "Database Object"
+msgstr ""
+
+#. 
+#: Hibernate.AddDatabaseObjectDef.menu
+#, java-format
+msgctxt "Hibernate.AddDatabaseObjectDef.menu"
+msgid "With Class Definition..."
+msgstr ""
+
+#. 
+#: Hibernate.AddDatabaseObjectCreateDrop.menu
+#, java-format
+msgctxt "Hibernate.AddDatabaseObjectCreateDrop.menu"
+msgid "With Create/Drop..."
+msgstr ""
+
+#. 
+#: Hibernate.AddJoin.menu
+#, java-format
+msgctxt "Hibernate.AddJoin.menu"
+msgid "Join..."
+msgstr ""
+
+#. 
+#: Hibernate.AddUnionSubclass.menu
+#, java-format
+msgctxt "Hibernate.AddUnionSubclass.menu"
+msgid "Union-Subclass..."
+msgstr ""
+
+#. 
+#: Hibernate.AddMetaValue.menu
+#, java-format
+msgctxt "Hibernate.AddMetaValue.menu"
+msgid "Meta-Value..."
+msgstr ""
+
+#. 
+#: Hibernate.AddColumn.menu
+#, java-format
+msgctxt "Hibernate.AddColumn.menu"
+msgid "Column..."
+msgstr ""
+
+#. 
+#: Hibernate.AddSubselect.menu
+#, java-format
+msgctxt "Hibernate.AddSubselect.menu"
+msgid "Subselect..."
+msgstr ""
+
+#. 
+#: Hibernate.AddCache.menu
+#, java-format
+msgctxt "Hibernate.AddCache.menu"
+msgid "Cache..."
+msgstr ""
+
+#. 
+#: Hibernate.AddSynchronize.menu
+#, java-format
+msgctxt "Hibernate.AddSynchronize.menu"
+msgid "Synchronize..."
+msgstr ""
+
+#. 
+#: Hibernate.AddComment.menu
+#, java-format
+msgctxt "Hibernate.AddComment.menu"
+msgid "Comment..."
+msgstr ""
+
+#. 
+#: Hibernate.AddKey.menu
+#, java-format
+msgctxt "Hibernate.AddKey.menu"
+msgid "Key..."
+msgstr ""
+
+#. 
+#: Hibernate.IndexActions.menu
+#, java-format
+msgctxt "Hibernate.IndexActions.menu"
+msgid "Index"
+msgstr ""
+
+#. 
+#: Hibernate.AddIndex.menu
+#, java-format
+msgctxt "Hibernate.AddIndex.menu"
+msgid "Index..."
+msgstr ""
+
+#. 
+#: Hibernate.AddListIndex.menu
+#, java-format
+msgctxt "Hibernate.AddListIndex.menu"
+msgid "List Index..."
+msgstr ""
+
+#. 
+#: Hibernate.AddCompositeElement.menu
+#, java-format
+msgctxt "Hibernate.AddCompositeElement.menu"
+msgid "Composite-Element..."
+msgstr ""
+
+#. 
+#: Hibernate.AddElement.menu
+#, java-format
+msgctxt "Hibernate.AddElement.menu"
+msgid "Element..."
+msgstr ""
+
+#. 
+#: Hibernate.AddManyToAny.menu
+#, java-format
+msgctxt "Hibernate.AddManyToAny.menu"
+msgid "Many-to-Any..."
+msgstr ""
+
+#. 
+#: Hibernate.AddManyToMany.menu
+#, java-format
+msgctxt "Hibernate.AddManyToMany.menu"
+msgid "Many-to-Many..."
+msgstr ""
+
+#. 
+#: Hibernate.AddOneToMany.menu
+#, java-format
+msgctxt "Hibernate.AddOneToMany.menu"
+msgid "One-to-Many..."
+msgstr ""
+
+#. 
+#: Hibernate.AddLoader.menu
+#, java-format
+msgctxt "Hibernate.AddLoader.menu"
+msgid "Loader..."
+msgstr ""
+
+#. 
+#: Hibernate.AddInsert.menu
+#, java-format
+msgctxt "Hibernate.AddInsert.menu"
+msgid "Insert..."
+msgstr ""
+
+#. 
+#: Hibernate.AddUpdate.menu
+#, java-format
+msgctxt "Hibernate.AddUpdate.menu"
+msgid "Update..."
+msgstr ""
+
+#. 
+#: Hibernate.AddDelete.menu
+#, java-format
+msgctxt "Hibernate.AddDelete.menu"
+msgid "Delete..."
+msgstr ""
+
+#. 
+#: Hibernate.AddDeleteAll.menu
+#, java-format
+msgctxt "Hibernate.AddDeleteAll.menu"
+msgid "Delete All..."
+msgstr ""
+
+#. 
+#: Hibernate.AddAny.menu
+#, java-format
+msgctxt "Hibernate.AddAny.menu"
+msgid "Any..."
+msgstr ""
+
+#. 
+#: Hibernate.AddManyToOne.menu
+#, java-format
+msgctxt "Hibernate.AddManyToOne.menu"
+msgid "Many-to-One..."
+msgstr ""
+
+#. 
+#: Hibernate.AddOneToOne.menu
+#, java-format
+msgctxt "Hibernate.AddOneToOne.menu"
+msgid "One-to-One..."
+msgstr ""
+
+#. 
+#: Hibernate.AddComponent.menu
+#, java-format
+msgctxt "Hibernate.AddComponent.menu"
+msgid "Component..."
+msgstr ""
+
+#. 
+#: Hibernate.AddDynamicComponent.menu
+#, java-format
+msgctxt "Hibernate.AddDynamicComponent.menu"
+msgid "Dynamic-Component..."
+msgstr ""
+
+#. 
+#: Hibernate.AddArray.menu
+#, java-format
+msgctxt "Hibernate.AddArray.menu"
+msgid "Array..."
+msgstr ""
+
+#. 
+#: Hibernate.AddBag.menu
+#, java-format
+msgctxt "Hibernate.AddBag.menu"
+msgid "Bag..."
+msgstr ""
+
+#. 
+#: Hibernate.AddIdBag.menu
+#, java-format
+msgctxt "Hibernate.AddIdBag.menu"
+msgid "IdBag..."
+msgstr ""
+
+#. 
+#: Hibernate.AddList.menu
+#, java-format
+msgctxt "Hibernate.AddList.menu"
+msgid "List..."
+msgstr ""
+
+#. 
+#: Hibernate.AddMap.menu
+#, java-format
+msgctxt "Hibernate.AddMap.menu"
+msgid "Map..."
+msgstr ""
+
+#. 
+#: Hibernate.AddPrimitiveArray.menu
+#, java-format
+msgctxt "Hibernate.AddPrimitiveArray.menu"
+msgid "Primitive-Array..."
+msgstr ""
+
+#. 
+#: Hibernate.AddSet.menu
+#, java-format
+msgctxt "Hibernate.AddSet.menu"
+msgid "Set..."
+msgstr ""
+
+#. 
+#: Hibernate.AddNestedCompositeElement.menu
+#, java-format
+msgctxt "Hibernate.AddNestedCompositeElement.menu"
+msgid "Nested-Composite-Element..."
+msgstr ""
+
+#. 
+#: Hibernate.AddFilter.menu
+#, java-format
+msgctxt "Hibernate.AddFilter.menu"
+msgid "Filter..."
+msgstr ""
+
+#. 
+#: Hibernate.AddTuplizer.menu
+#, java-format
+msgctxt "Hibernate.AddTuplizer.menu"
+msgid "Tuplizer..."
+msgstr ""
+
+#. 
+#: Hibernate.AddId.menu
+#, java-format
+msgctxt "Hibernate.AddId.menu"
+msgid "Id..."
+msgstr ""
+
+#. 
+#: Hibernate.AddCompositeId.menu
+#, java-format
+msgctxt "Hibernate.AddCompositeId.menu"
+msgid "Composite-Id..."
+msgstr ""
+
+#. 
+#: Hibernate.AddDiscriminator.menu
+#, java-format
+msgctxt "Hibernate.AddDiscriminator.menu"
+msgid "Discriminator..."
+msgstr ""
+
+#. 
+#: Hibernate.AddNaturalId.menu
+#, java-format
+msgctxt "Hibernate.AddNaturalId.menu"
+msgid "Natural Id..."
+msgstr ""
+
+#. 
+#: Hibernate.AddVersion.menu
+#, java-format
+msgctxt "Hibernate.AddVersion.menu"
+msgid "Version..."
+msgstr ""
+
+#. 
+#: Hibernate.AddTimestamp.menu
+#, java-format
+msgctxt "Hibernate.AddTimestamp.menu"
+msgid "Timestamp..."
+msgstr ""
+
+#. 
+#: Hibernate.OpenSource.menu
+#, java-format
+msgctxt "Hibernate.OpenSource.menu"
+msgid "Open Declaration"
+msgstr ""
+
+#. 
+#: Hibernate.AddGenerator.menu
+#, java-format
+msgctxt "Hibernate.AddGenerator.menu"
+msgid "Generator..."
+msgstr ""
+
+#. 
+#: Hibernate.AddKeyProperty.menu
+#, java-format
+msgctxt "Hibernate.AddKeyProperty.menu"
+msgid "Key-Property..."
+msgstr ""
+
+#. 
+#: Hibernate.AddKeyManyToOne.menu
+#, java-format
+msgctxt "Hibernate.AddKeyManyToOne.menu"
+msgid "Key-Many-to-One..."
+msgstr ""
+
+#. 
+#: Hibernate.AddDialectScope.menu
+#, java-format
+msgctxt "Hibernate.AddDialectScope.menu"
+msgid "Dialect Scope..."
+msgstr ""
+
+#. 
+#: Hibernate.AddFormula.menu
+#, java-format
+msgctxt "Hibernate.AddFormula.menu"
+msgid "Formula..."
+msgstr ""
+
+#. 
+#: Hibernate.AddParam.menu
+#, java-format
+msgctxt "Hibernate.AddParam.menu"
+msgid "Param..."
+msgstr ""
+
+#. 
+#: Hibernate.AddCollectionId.menu
+#, java-format
+msgctxt "Hibernate.AddCollectionId.menu"
+msgid "Index..."
+msgstr ""
+
+#. 
+#: Hibernate.AddReturnProperty.menu
+#, java-format
+msgctxt "Hibernate.AddReturnProperty.menu"
+msgid "Return Property..."
+msgstr ""
+
+#. 
+#: Hibernate.AddMapKey.menu
+#, java-format
+msgctxt "Hibernate.AddMapKey.menu"
+msgid "Map Key..."
+msgstr ""
+
+#. 
+#: Hibernate.AddCompositeIndex.menu
+#, java-format
+msgctxt "Hibernate.AddCompositeIndex.menu"
+msgid "Composite Index..."
+msgstr ""
+
+#. 
+#: Hibernate.AddMapKeyManyToMany.menu
+#, java-format
+msgctxt "Hibernate.AddMapKeyManyToMany.menu"
+msgid "Map Key Many To Many..."
+msgstr ""
+
+#. 
+#: Hibernate.AddCompositeMapKey.menu
+#, java-format
+msgctxt "Hibernate.AddCompositeMapKey.menu"
+msgid "Composite Map Key..."
+msgstr ""
+
+#. 
+#: Hibernate.AddIndexManyToAny.menu
+#, java-format
+msgctxt "Hibernate.AddIndexManyToAny.menu"
+msgid "Index..."
+msgstr ""
+
+#. 
+#: Hibernate.AddIndexManyToMany.menu
+#, java-format
+msgctxt "Hibernate.AddIndexManyToMany.menu"
+msgid "Index..."
+msgstr ""
+
+#. 
+#: Hibernate.AddQueryParam.menu
+#, java-format
+msgctxt "Hibernate.AddQueryParam.menu"
+msgid "Query Param..."
+msgstr ""
+
+#. 
+#: Hibernate.AddReturn.menu
+#, java-format
+msgctxt "Hibernate.AddReturn.menu"
+msgid "Return..."
+msgstr ""
+
+#. 
+#: Hibernate.AddReturnJoin.menu
+#, java-format
+msgctxt "Hibernate.AddReturnJoin.menu"
+msgid "Return Join..."
+msgstr ""
+
+#. 
+#: Hibernate.AddLoadCollection.menu
+#, java-format
+msgctxt "Hibernate.AddLoadCollection.menu"
+msgid "Load Collection..."
+msgstr ""
+
+#. 
+#: Hibernate.AddReturnScalar.menu
+#, java-format
+msgctxt "Hibernate.AddReturnScalar.menu"
+msgid "Return Scalar..."
+msgstr ""
+
+#. 
+#: Hibernate.AddReturnDiscriminator.menu
+#, java-format
+msgctxt "Hibernate.AddReturnDiscriminator.menu"
+msgid "Return Discriminator..."
+msgstr ""
+
+#. 
+#: Hibernate.AddReturnColumn.menu
+#, java-format
+msgctxt "Hibernate.AddReturnColumn.menu"
+msgid "Return Column..."
+msgstr ""
+
+#. 
+#: Hibernate.CreateFileHibConfig3.menu
+#, java-format
+msgctxt "Hibernate.CreateFileHibConfig3.menu"
+msgid "Hibernate Configuration 3.0..."
+msgstr ""
+
+#. 
+#: Hibernate.CreateFileHibernate3.menu
+#, java-format
+msgctxt "Hibernate.CreateFileHibernate3.menu"
+msgid "Hibernate 3.0..."
+msgstr ""
+

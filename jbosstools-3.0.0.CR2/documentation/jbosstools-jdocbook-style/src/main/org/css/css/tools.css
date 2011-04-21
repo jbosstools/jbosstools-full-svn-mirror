@@ -1,0 +1,111 @@
+@import url("jbossorg.css");
+
+/* -----Override jbossorg.css----- */
+
+body {
+background-repeat:repeat-x;
+background-repeat:no-repeat;
+background-attachment:fixed;
+background-position:top left;
+z-index:1;
+text-align:center;
+margin:0 auto;
+padding:0;
+}
+
+div#overlay{
+background-image:url(../images/community/bkg_gradient.gif);
+background-repeat:repeat-x;
+width:100%;
+height:100%;
+position:absolute;
+top:-8px;
+left:0px;
+z-index:-1;
+}
+
+/*
+body {
+background-image:url(../images/jbosstools_label2.png);
+background-repeat:no-repeat;
+background-attachment:fixed;
+background-position:top left;
+z-index:1;
+color:#333333;
+font-family:'Lucida Grande',Geneva,Verdana,Arial,sans-serif;
+font-size:12px;
+line-height:150%;
+max-width:1000px;
+padding:0em 2em;
+text-align:center;
+}
+
+div#overlay{
+background-image:url(../images/bkg_gradient.gif);
+background-repeat:repeat-x;
+width:100%;
+height:100%;
+position:absolute;
+top:0px;
+left:0px;
+z-index:-1;
+}
+*/
+div.book{
+    font-family:'Lucida Grande', Geneva, Verdana, Arial, sans-serif;
+    font-size:12px;
+    margin:0;
+    padding:0em 2em;
+    color:#333;
+    line-height:150%;
+    text-align:justify;
+    width: 57em;
+   }
+   
+   div.chapter, #title{
+    text-align:justify;
+    width: 57em;
+}
+
+div.abstract {
+font-size:10px;
+}
+
+
+ul.docnav {
+    margin:0px;
+    width: 57em;
+    ! height:40px;
+    display:block;
+}
+
+.new, .added { 
+background:transparent url(../images/new.png) no-repeat scroll right top; 
+padding-right:70px; 
+} 
+.updated, .changed { 
+background:transparent url(../images/updated.png) no-repeat scroll right top; 
+padding-right:70px; 
+}
+span.diffmkwrapper{
+	background-color: #cce2f6;
+}
+
+div.diffmkwrapper p{
+	background-color: #c8d7e4;
+	padding:0px;
+	margin-left:56px;
+}
+
+h1, h2, h3, h4, h5, h6{
+    display:inline;
+}
+.img_marker{
+    display:inline;
+    padding: 0px;
+    margin:0px;
+}
+h1.title {
+display:block;
+}
+

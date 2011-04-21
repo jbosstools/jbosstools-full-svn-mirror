@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="introduction" xreflabel="introduction">
+    <title>Introduction</title>
+
+    <section id="whatisDrools">
+        <title>What is Drools?</title>
+
+        <para><property>Drools</property> is a business rule management system (BRMS) with a forward
+            chaining inference based rules engine, more correctly known as a production rule system,
+            using an enhanced implementation of the Rete algorithm.</para>
+
+        <para> In this guide we are going to get you familiar with Drools Eclipse plugin which provides
+            development tools for creating, executing and debugging Drools processes and rules from
+            within Eclipse.</para>
+
+        <note>
+            <title>Note:</title>
+            <para>It is assumed that you has some familiarity with rule engines and Drools in
+                particular. If no, we suggest that you look carefully through the <ulink
+                    url="http://downloads.jboss.com/drools/docs/4.0.7.19894.GA/html_single/index.html"
+                    >Drools Documentation</ulink>.</para>
+        </note>
+
+        <para><property>Drools Tools</property> come bundled with <property>JBoss Tools</property>
+            set of Eclipse plugins. How to install <property>JBoss Tools</property> you can find in the 
+                <ulink url="&gsglink;#JBossToolsInstall">Getting Started Guide</ulink>.</para>
+    </section>
+
+    <section id="drools_key_features">
+        <title>Drools Tools Key Features</title>
+
+        <para>The following table lists all valuable features of the <property>Drools Tools</property>.</para>
+        <table>
+            <title>Key Functionality of Drools Tools</title>
+            <tgroup cols="3">
+
+                <colspec colnum="1" align="left" colwidth="1*"/>
+                <colspec colnum="2" colwidth="5*"/>
+                <colspec colnum="3" align="left" colwidth="1*"/>
+
+                <thead>
+                    <row>
+                        <entry>Feature</entry>
+                        <entry>Benefit</entry>
+                        <entry>Chapter</entry>
+                    </row>
+                </thead>
+
+                <tbody>
+
+                    <row>
+                        <entry>
+                            <para>Wizard for creating a new Drools Project</para>
+                        </entry>
+                        <entry>
+                            <para>The wizard allows to create a sample project to easy get started
+                                with Drools</para>
+                        </entry>
+                        <entry>
+                            <link linkend="sample_drools_project">Creating a Sample Drools
+                                Project</link>
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry>
+                            <para>Wizards for creation new Drools resources</para>
+                        </entry>
+                        <entry>
+                            <para>A set of wizards are provided with the Drools Eclipse tools to
+                                quickly create a new Rule resource, a new Domain Specific language,
+                                Decision Table and Business rule</para>
+                        </entry>
+                        <entry>
+                            <link linkend="creating_rule">Creating a New Rule</link>
+                            <!--link linkend="creating_dsl">Creating a New DSL</link>
+                            <link linkend="creating_decision_table">Creating a New Decision
+                                Table</link>
+                            <link linkend="creating_business_rule">Creating a New Business
+                                Rule</link-->
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry>
+                            <para>The Rule editor</para>
+                        </entry>
+                        <entry>
+                            <para>An editor that is aware of DRL syntax and provides content
+                                assistance and synchronizing with the Outline view</para>
+                        </entry>
+                        <entry>
+                            <link linkend="textual_rule_editor">The Rule Editor</link>
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry>
+                            <para>The Domain Specific Language editor</para>
+                        </entry>
+                        <entry>
+                            <para>The editor allows to create and manage mappings from users
+                                language to the rule language</para>
+                        </entry>
+                        <entry>
+                            <!--link linkend="dsl_editor">The Domain Specific Language Editor</link-->
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry>
+                            <para>The Guided editor</para>
+                        </entry>
+                        <entry>
+                            <para>This guided editor for rules allows you to build rules in a GUI
+                                driven fashion based on your object model</para>
+                        </entry>
+                        <entry>
+                            <!--link linkend="guided_editor">The Guided Editor</link-->
+                        </entry>
+                    </row>
+
+                    <row>
+                        <entry>
+                            <para>The Rule Flow graphical editor</para>
+                        </entry>
+                        <entry>
+                            <para>The editor is meant for editing visual graphs which represent a
+                                process (a rule flow)</para>
+                        </entry>
+                        <entry>
+                            <!--link linkend="ruleflow_editor">The Rule Flow Graphical Editor</link-->
+                        </entry>
+                    </row>
+
+                </tbody>
+            </tgroup>
+        </table>
+    </section>
+
+    <section>
+        <title>Other relevant resources on the topic</title>
+
+        <itemizedlist>
+            <listitem>
+                <para>Drools on <ulink url="http://www.jboss.org/drools/">JBoss.org</ulink></para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <ulink url="http://www.jboss.org/tools/">JBoss Tools Home Page</ulink>
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <ulink url="http://download.jboss.org/jbosstools/nightly-docs/">The latest
+                        JBossTools/JBDS documentation builds</ulink>
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <ulink url="http://www.jboss.com/products/devstudio/docs">Stable JBossTools/JBDS
+                        documentation</ulink> (supplied with the latest JBDS release, 1.1.0 GA
+                    currently) </para>
+            </listitem>
+        </itemizedlist>
+
+    </section>
+</chapter>

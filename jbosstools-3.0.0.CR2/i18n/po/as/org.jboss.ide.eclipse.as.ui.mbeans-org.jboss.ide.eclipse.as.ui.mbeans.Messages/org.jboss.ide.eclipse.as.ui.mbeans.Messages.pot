@@ -1,0 +1,168 @@
+#SOME DESCRIPTIVE TITLE.
+#Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+#This file is distributed under the same license as the PACKAGE package.
+#FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-07-04 13:16+1000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+""
+
+#. 
+#. Mbean wizard
+#: NewMBeanInterface
+#, java-format
+msgctxt "NewMBeanInterface"
+msgid "New MBean Interface"
+msgstr ""
+
+#. 
+#: NewMBeanInterfaceDesc
+#, java-format
+msgctxt "NewMBeanInterfaceDesc"
+msgid "Create the interface for the MBean"
+msgstr ""
+
+#. 
+#: NewMBeanName
+#, java-format
+msgctxt "NewMBeanName"
+msgid "MBean Name"
+msgstr ""
+
+#. 
+#: NewMBeanInterfaceName
+#, java-format
+msgctxt "NewMBeanInterfaceName"
+msgid "Interface Name"
+msgstr ""
+
+#. 
+#: NewMBeanClass
+#, java-format
+msgctxt "NewMBeanClass"
+msgid "New MBean Class"
+msgstr ""
+
+#. 
+#: MBeanClassDescription
+#, java-format
+msgctxt "MBeanClassDescription"
+msgid "Create the concrete MBean Class"
+msgstr ""
+
+#. 
+#: MBeanServiceXML
+#, java-format
+msgctxt "MBeanServiceXML"
+msgid "Create -service.xml file?"
+msgstr ""
+
+#. 
+#. service xml
+#: ServiceXMLAddAttributeTags
+#, java-format
+msgctxt "ServiceXMLAddAttributeTags"
+msgid "Add missing attribute tags"
+msgstr ""
+
+#. 
+#: NewSessionBeanWizardTitle
+#, java-format
+msgctxt "NewSessionBeanWizardTitle"
+msgid "Session Bean Wizard"
+msgstr ""
+
+#. 
+#: NewSessionBeanWizardBeanTypeLabel
+#, java-format
+msgctxt "NewSessionBeanWizardBeanTypeLabel"
+msgid "Session Bean Type:"
+msgstr ""
+
+#. 
+#: NewSessionBeanWizardStatefulButtonLabel
+#, java-format
+msgctxt "NewSessionBeanWizardStatefulButtonLabel"
+msgid "Stateful"
+msgstr ""
+
+#. 
+#: NewSessionBeanWizardStatelessButtonLabel
+#, java-format
+msgctxt "NewSessionBeanWizardStatelessButtonLabel"
+msgid "Stateless"
+msgstr ""
+
+#. 
+#: NewSessionBeanWizardBeanPackageLabel
+#, java-format
+msgctxt "NewSessionBeanWizardBeanPackageLabel"
+msgid "Bean Package:"
+msgstr ""
+
+#. 
+#: NewSessionBeanWizardBeanNameLabel
+#, java-format
+msgctxt "NewSessionBeanWizardBeanNameLabel"
+msgid "Bean Name:"
+msgstr ""
+
+#. 
+#: NewSessionBeanWizardBeanClassNameLabel
+#, java-format
+msgctxt "NewSessionBeanWizardBeanClassNameLabel"
+msgid "Bean Class Name:"
+msgstr ""
+
+#. 
+#: NewSessionBeanWizardUseCustomInterfacePackageButtonLabel
+#, java-format
+msgctxt "NewSessionBeanWizardUseCustomInterfacePackageButtonLabel"
+msgid "Remote Interface Package:"
+msgstr ""
+
+#. 
+#: NewSessionBeanWizardRemoteInterfaceNameLabel
+#, java-format
+msgctxt "NewSessionBeanWizardRemoteInterfaceNameLabel"
+msgid "Remote Interface Name:"
+msgstr ""
+
+#. 
+#: NewSessionBeanWizardMessage
+#, java-format
+msgctxt "NewSessionBeanWizardMessage"
+msgid "Create a new EJB3 Session Bean"
+msgstr ""
+
+#. 
+#: NewSessionBeanWizardDescription
+#, java-format
+msgctxt "NewSessionBeanWizardDescription"
+msgid "Create a new EJB3 Session Bean"
+msgstr ""
+
+#. 
+#: NewMessageBeanWizardMessage
+#, java-format
+msgctxt "NewMessageBeanWizardMessage"
+msgid "Create a new Message-Driven Bean"
+msgstr ""
+
+#. 
+#: NewMessageBeanWizardDescription
+#, java-format
+msgctxt "NewMessageBeanWizardDescription"
+msgid "Create a new Message-Driven Bean"
+msgstr ""
+

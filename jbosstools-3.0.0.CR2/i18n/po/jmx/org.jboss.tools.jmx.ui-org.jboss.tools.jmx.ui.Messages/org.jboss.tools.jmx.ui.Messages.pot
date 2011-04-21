@@ -1,0 +1,506 @@
+#SOME DESCRIPTIVE TITLE.
+#Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+#This file is distributed under the same license as the PACKAGE package.
+#FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-01-13 13:14+1000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+""
+
+#. 
+#: NewConnectionAction
+#, java-format
+msgctxt "NewConnectionAction"
+msgid "New Connection..."
+msgstr ""
+
+#. 
+#: NewConnectionWizard
+#, java-format
+msgctxt "NewConnectionWizard"
+msgid "New Connection Wizard"
+msgstr ""
+
+#. 
+#: NewConnectionWizard_CreateNewConnection
+#, java-format
+msgctxt "NewConnectionWizard_CreateNewConnection"
+msgid "Create a new JMX Connection"
+msgstr ""
+
+#. 
+#: DefaultConnectionWizardPage_Title
+#, java-format
+msgctxt "DefaultConnectionWizardPage_Title"
+msgid "Create JMX Connection"
+msgstr ""
+
+#. 
+#: DefaultConnectionWizardPage_Description
+#, java-format
+msgctxt "DefaultConnectionWizardPage_Description"
+msgid "Create a new Default JMX Connection type by filling out either the Simple or the Advanced tab."
+msgstr ""
+
+#. 
+#: DefaultConnectionWizardPage_Simple
+#, java-format
+msgctxt "DefaultConnectionWizardPage_Simple"
+msgid "Simple"
+msgstr ""
+
+#. 
+#: DefaultConnectionWizardPage_Advanced
+#, java-format
+msgctxt "DefaultConnectionWizardPage_Advanced"
+msgid "Advanced"
+msgstr ""
+
+#. 
+#: DefaultConnectionWizardPage_Name
+#, java-format
+msgctxt "DefaultConnectionWizardPage_Name"
+msgid "Name"
+msgstr ""
+
+#. 
+#: DefaultConnectionWizardPage_Default_Name
+#, java-format
+msgctxt "DefaultConnectionWizardPage_Default_Name"
+msgid "JMX Server"
+msgstr ""
+
+#. 
+#: DefaultConnectionWizardPage_Host
+#, java-format
+msgctxt "DefaultConnectionWizardPage_Host"
+msgid "Host"
+msgstr ""
+
+#. 
+#: DefaultConnectionWizardPage_Port
+#, java-format
+msgctxt "DefaultConnectionWizardPage_Port"
+msgid "Port"
+msgstr ""
+
+#. 
+#: DefaultConnectionWizardPage_Username
+#, java-format
+msgctxt "DefaultConnectionWizardPage_Username"
+msgid "Username"
+msgstr ""
+
+#. 
+#: DefaultConnectionWizardPage_Password
+#, java-format
+msgctxt "DefaultConnectionWizardPage_Password"
+msgid "Password"
+msgstr ""
+
+#. 
+#: DefaultConnectionWizardPage_JMX_URL
+#, java-format
+msgctxt "DefaultConnectionWizardPage_JMX_URL"
+msgid "JMX URL"
+msgstr ""
+
+#. 
+#: AttributeControlFactory_updateButtonTitle
+#, java-format
+msgctxt "AttributeControlFactory_updateButtonTitle"
+msgid "Update"
+msgstr ""
+
+#. 
+#: AttributeDetails_title
+#, java-format
+msgctxt "AttributeDetails_title"
+msgid "Attribute Details"
+msgstr ""
+
+#. 
+#: AttributeDetailsSection_errorTitle
+#, java-format
+msgctxt "AttributeDetailsSection_errorTitle"
+msgid "Error"
+msgstr ""
+
+#. 
+#: AttributesPage_title
+#, java-format
+msgctxt "AttributesPage_title"
+msgid "Attributes"
+msgstr ""
+
+#. 
+#: AttributesSection_title
+#, java-format
+msgctxt "AttributesSection_title"
+msgid "All Attributes"
+msgstr ""
+
+#. 
+#: className
+#, java-format
+msgctxt "className"
+msgid "Class Name"
+msgstr ""
+
+#. 
+#: description
+#, java-format
+msgctxt "description"
+msgid "Description"
+msgstr ""
+
+#. 
+#: domain
+#, java-format
+msgctxt "domain"
+msgid "Domain"
+msgstr ""
+
+#. 
+#: general
+#, java-format
+msgctxt "general"
+msgid "General"
+msgstr ""
+
+#. 
+#: horizontal
+#, java-format
+msgctxt "horizontal"
+msgid "horizontal"
+msgstr ""
+
+#. 
+#: impact
+#, java-format
+msgctxt "impact"
+msgid "Impact"
+msgstr ""
+
+#. 
+#: InfoPage_notificationsSectionTitle
+#, java-format
+msgctxt "InfoPage_notificationsSectionTitle"
+msgid "Notifications"
+msgstr ""
+
+#. 
+#: InfoPage_title
+#, java-format
+msgctxt "InfoPage_title"
+msgid "Info"
+msgstr ""
+
+#. 
+#: InvocationResultDialog_title
+#, java-format
+msgctxt "InvocationResultDialog_title"
+msgid "Result"
+msgstr ""
+
+#. 
+#: key
+#, java-format
+msgctxt "key"
+msgid "Key"
+msgstr ""
+
+#. 
+#: MBeanAttributeValue_Warning
+#, java-format
+msgctxt "MBeanAttributeValue_Warning"
+msgid "Unable to retrieve value for attribute {0}"
+msgstr ""
+
+#. 
+#: MBeanServerConnectAction_text
+#, java-format
+msgctxt "MBeanServerConnectAction_text"
+msgid "Connect..."
+msgstr ""
+
+#. 
+#: MBeanServerDisconnectAction_text
+#, java-format
+msgctxt "MBeanServerDisconnectAction_text"
+msgid "Disconnect"
+msgstr ""
+
+#. 
+#: MBeanServerDisconnectAction_dialogTitle
+#, java-format
+msgctxt "MBeanServerDisconnectAction_dialogTitle"
+msgid "JMX Disconnection"
+msgstr ""
+
+#. 
+#: MBeanServerDisconnectAction_dialogText
+#, java-format
+msgctxt "MBeanServerDisconnectAction_dialogText"
+msgid ""
+"You are managing MBeans from this server.\n"
+"If you disconnect, you will no longer be able to manage them.\n"
+"\n"
+"Are you sure you want to disconnect? "
+msgstr ""
+
+#. 
+#: name
+#, java-format
+msgctxt "name"
+msgid "Name"
+msgstr ""
+
+#. 
+#: NotificationsPage_clearActionToolTip
+#, java-format
+msgctxt "NotificationsPage_clearActionToolTip"
+msgid "Clear received notifications"
+msgstr ""
+
+#. 
+#: NotificationsPage_message
+#, java-format
+msgctxt "NotificationsPage_message"
+msgid "Message"
+msgstr ""
+
+#. 
+#: NotificationsPage_sequenceNumber
+#, java-format
+msgctxt "NotificationsPage_sequenceNumber"
+msgid "Sequence Number"
+msgstr ""
+
+#. 
+#: NotificationsPage_source
+#, java-format
+msgctxt "NotificationsPage_source"
+msgid "Source"
+msgstr ""
+
+#. 
+#: NotificationsPage_subscribeActionToolTip
+#, java-format
+msgctxt "NotificationsPage_subscribeActionToolTip"
+msgid "Subscribe to receive notifications"
+msgstr ""
+
+#. 
+#: NotificationsPage_timestamp
+#, java-format
+msgctxt "NotificationsPage_timestamp"
+msgid "Timestamp"
+msgstr ""
+
+#. 
+#: NotificationsPage_title
+#, java-format
+msgctxt "NotificationsPage_title"
+msgid "Notifications"
+msgstr ""
+
+#. 
+#: NotificationsPage_type
+#, java-format
+msgctxt "NotificationsPage_type"
+msgid "Type"
+msgstr ""
+
+#. 
+#: NotificationsPage_userData
+#, java-format
+msgctxt "NotificationsPage_userData"
+msgid "User Data"
+msgstr ""
+
+#. 
+#: objectName
+#, java-format
+msgctxt "objectName"
+msgid "Object Name"
+msgstr ""
+
+#. 
+#: OpenMBeanAction_description
+#, java-format
+msgctxt "OpenMBeanAction_description"
+msgid "Open a MBean in a MBean editor"
+msgstr ""
+
+#. 
+#: OpenMBeanAction_dialogDescription
+#, java-format
+msgctxt "OpenMBeanAction_dialogDescription"
+msgid "Select a MBean to open"
+msgstr ""
+
+#. 
+#: OpenMBeanAction_dialogTitle
+#, java-format
+msgctxt "OpenMBeanAction_dialogTitle"
+msgid "Open MBean"
+msgstr ""
+
+#. 
+#: OpenMBeanAction_text
+#, java-format
+msgctxt "OpenMBeanAction_text"
+msgid "Open MBean..."
+msgstr ""
+
+#. 
+#: OpenMBeanAction_tooltip
+#, java-format
+msgctxt "OpenMBeanAction_tooltip"
+msgid "Open a MBean"
+msgstr ""
+
+#. 
+#: OperationDetails_invocationError
+#, java-format
+msgctxt "OperationDetails_invocationError"
+msgid "Error"
+msgstr ""
+
+#. 
+#: OperationDetails_invocationResult
+#, java-format
+msgctxt "OperationDetails_invocationResult"
+msgid "Result"
+msgstr ""
+
+#. 
+#: OperationDetails_invocationSuccess
+#, java-format
+msgctxt "OperationDetails_invocationSuccess"
+msgid "Operation invoked successfully."
+msgstr ""
+
+#. 
+#: OperationDetails_title
+#, java-format
+msgctxt "OperationDetails_title"
+msgid "Operation Details"
+msgstr ""
+
+#. 
+#: OperationsPage_title
+#, java-format
+msgctxt "OperationsPage_title"
+msgid "Operations"
+msgstr ""
+
+#. 
+#: OperationsSection_title
+#, java-format
+msgctxt "OperationsSection_title"
+msgid "All Operations"
+msgstr ""
+
+#. 
+#: parameters
+#, java-format
+msgctxt "parameters"
+msgid "Parameters"
+msgstr ""
+
+#. 
+#: permission
+#, java-format
+msgctxt "permission"
+msgid "Permission"
+msgstr ""
+
+#. 
+#: readable
+#, java-format
+msgctxt "readable"
+msgid "Readable"
+msgstr ""
+
+#. 
+#: readOnly
+#, java-format
+msgctxt "readOnly"
+msgid "Read-Only"
+msgstr ""
+
+#. 
+#: readWrite
+#, java-format
+msgctxt "readWrite"
+msgid "Read/Write"
+msgstr ""
+
+#. 
+#: returnType
+#, java-format
+msgctxt "returnType"
+msgid "Return Type"
+msgstr ""
+
+#. 
+#: type
+#, java-format
+msgctxt "type"
+msgid "Type"
+msgstr ""
+
+#. 
+#: unavailable
+#, java-format
+msgctxt "unavailable"
+msgid "Unavailable"
+msgstr ""
+
+#. 
+#: value
+#, java-format
+msgctxt "value"
+msgid "Value"
+msgstr ""
+
+#. 
+#: vertical
+#, java-format
+msgctxt "vertical"
+msgid "vertical"
+msgstr ""
+
+#. 
+#: writable
+#, java-format
+msgctxt "writable"
+msgid "Writable"
+msgstr ""
+
+#. 
+#: writeOnly
+#, java-format
+msgctxt "writeOnly"
+msgid "Write-Only"
+msgstr ""
+
+#. 
+#: DeleteConnection
+#, java-format
+msgctxt "DeleteConnection"
+msgid "Delete Connection"
+msgstr ""
+

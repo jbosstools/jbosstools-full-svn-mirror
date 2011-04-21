@@ -1,0 +1,138 @@
+#SOME DESCRIPTIVE TITLE.
+#Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+#This file is distributed under the same license as the PACKAGE package.
+#FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-01-09 13:02+1000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+""
+
+#. PD (PREFERENCE DESCRIPTION)
+#: LIBRARY_SETS_PD
+#, java-format
+msgctxt "LIBRARY_SETS_PD"
+msgid "Here you can modify what libraries get included in the project file systems for new Struts projects. You can modify this specifically for different versions of the Servlet and Struts technologies that might be used with a project. "
+msgstr ""
+
+#. 
+#: LibrarySetsPreferencePage.0
+#, java-format
+msgctxt "LibrarySetsPreferencePage.0"
+msgid "Add"
+msgstr ""
+
+#. 
+#: LibrarySetsPreferencePage.1
+#, java-format
+msgctxt "LibrarySetsPreferencePage.1"
+msgid "Remove"
+msgstr ""
+
+#. 
+#: LibrarySetsPreferencePage.2
+#, java-format
+msgctxt "LibrarySetsPreferencePage.2"
+msgid "Add"
+msgstr ""
+
+#. 
+#: LibrarySetsPreferencePage.3
+#, java-format
+msgctxt "LibrarySetsPreferencePage.3"
+msgid "Remove"
+msgstr ""
+
+#. 
+#: AbstractPagesPreferencePage.0
+#, java-format
+msgctxt "AbstractPagesPreferencePage.0"
+msgid "Add"
+msgstr ""
+
+#. 
+#: AbstractPagesPreferencePage.1
+#, java-format
+msgctxt "AbstractPagesPreferencePage.1"
+msgid "Remove"
+msgstr ""
+
+#. 
+#: AbstractPagesPreferencePage.2
+#, java-format
+msgctxt "AbstractPagesPreferencePage.2"
+msgid "Set Default"
+msgstr ""
+
+#. 
+#: AbstractPagesPreferencePage.3
+#, java-format
+msgctxt "AbstractPagesPreferencePage.3"
+msgid "[default]"
+msgstr ""
+
+#. 
+#: LibrarySetsPreferencePage.jarsIncluded
+#, java-format
+msgctxt "LibrarySetsPreferencePage.jarsIncluded"
+msgid "Jars Included:"
+msgstr ""
+
+#. 
+#: ImplementationsPreferencesPage.Add
+#, java-format
+msgctxt "ImplementationsPreferencesPage.Add"
+msgid "Add"
+msgstr ""
+
+#. 
+#: ImplementationsPreferencesPage.Edit
+#, java-format
+msgctxt "ImplementationsPreferencesPage.Edit"
+msgid "Edit"
+msgstr ""
+
+#. 
+#: ImplementationsPreferencesPage.Remove
+#, java-format
+msgctxt "ImplementationsPreferencesPage.Remove"
+msgid "Remove"
+msgstr ""
+
+#. 
+#: ImplementationsPreferencesPage.Up
+#, java-format
+msgctxt "ImplementationsPreferencesPage.Up"
+msgid "Up"
+msgstr ""
+
+#. 
+#: ImplementationsPreferencesPage.Down
+#, java-format
+msgctxt "ImplementationsPreferencesPage.Down"
+msgid "Down"
+msgstr ""
+
+#. 
+#: ImplementationsPreferencesPage.Library.Sets
+#, java-format
+msgctxt "ImplementationsPreferencesPage.Library.Sets"
+msgid "Library Sets"
+msgstr ""
+
+#. 
+#: ImplementationsPreferencesPage.Project.Templates
+#, java-format
+msgctxt "ImplementationsPreferencesPage.Project.Templates"
+msgid "Project Templates"
+msgstr ""
+

@@ -1,0 +1,39 @@
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>null</groupId>
+    <artifactId>null</artifactId>
+    <version>0</version>
+    
+    <repositories>
+        <repository>
+            <name>Tennera release repository on fedorahosted.org</name>
+            <id>fhosted.tennera.svn</id>
+            <url>http://svn.fedorahosted.org/svn/tennera/m2repo/</url>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </repository>
+        <repository>
+          <name>Tennera snapshot repository on fedorapeople.org</name>
+          <id>fpeople.tennera.snap</id>
+          <url>http://seanf.fedorapeople.org/maven2/snapshot/</url>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.fedorahosted.tennera</groupId>
+            <artifactId>ant-gettext</artifactId>
+            <version>0.5-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>ant-contrib</groupId>
+            <artifactId>ant-contrib</artifactId>
+            <!-- 1.0b3 is not in the central/jboss maven repos -->
+            <version>1.0b2</version>
+        </dependency>
+    </dependencies>
+</project>

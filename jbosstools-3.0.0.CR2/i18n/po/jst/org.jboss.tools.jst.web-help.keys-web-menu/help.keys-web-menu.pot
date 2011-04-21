@@ -1,0 +1,481 @@
+#SOME DESCRIPTIVE TITLE.
+#Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+#This file is distributed under the same license as the PACKAGE package.
+#FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-11-13 10:25+1000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+""
+
+#. 
+#: Web.Validate.menu
+#, java-format
+msgctxt "Web.Validate.menu"
+msgid "Report Problem"
+msgstr ""
+
+#. 
+#: Web.CreateTag.menu
+#, java-format
+msgctxt "Web.CreateTag.menu"
+msgid "Add Tag..."
+msgstr ""
+
+#. 
+#: Web.SetExpanded.menu
+#, java-format
+msgctxt "Web.SetExpanded.menu"
+msgid "Set Expanded"
+msgstr ""
+
+#. 
+#: Web.CreateAttribute.menu
+#, java-format
+msgctxt "Web.CreateAttribute.menu"
+msgid "Add Attribute..."
+msgstr ""
+
+#. 
+#: Web.CreateValidator.menu
+#, java-format
+msgctxt "Web.CreateValidator.menu"
+msgid "Validator..."
+msgstr ""
+
+#. 
+#: Web.CreateListener.menu
+#, java-format
+msgctxt "Web.CreateListener.menu"
+msgid "Listener..."
+msgstr ""
+
+#. 
+#: Web.ImportTLD.menu
+#, java-format
+msgctxt "Web.ImportTLD.menu"
+msgid "Import Tags from TLD File"
+msgstr ""
+
+#. 
+#: Web.CreateVariable.menu
+#, java-format
+msgctxt "Web.CreateVariable.menu"
+msgid "Add Variable..."
+msgstr ""
+
+#. 
+#: Web.CreateInitParam.menu
+#, java-format
+msgctxt "Web.CreateInitParam.menu"
+msgid "Add Init Param..."
+msgstr ""
+
+#. 
+#: Web.CreateContextParam.menu
+#, java-format
+msgctxt "Web.CreateContextParam.menu"
+msgid "Context Param..."
+msgstr ""
+
+#. 
+#: Web.CreateFilter.menu
+#, java-format
+msgctxt "Web.CreateFilter.menu"
+msgid "Filter..."
+msgstr ""
+
+#. 
+#: Web.CreateFilterMapping.menu
+#, java-format
+msgctxt "Web.CreateFilterMapping.menu"
+msgid "Filter Mapping..."
+msgstr ""
+
+#. 
+#: Web.CreateServlet.menu
+#, java-format
+msgctxt "Web.CreateServlet.menu"
+msgid "Servlet..."
+msgstr ""
+
+#. 
+#: Web.CreateServletMapping.menu
+#, java-format
+msgctxt "Web.CreateServletMapping.menu"
+msgid "Servlet Mapping..."
+msgstr ""
+
+#. 
+#: Web.CreateMimeMapping.menu
+#, java-format
+msgctxt "Web.CreateMimeMapping.menu"
+msgid "Mime Mapping..."
+msgstr ""
+
+#. 
+#: Web.CreateErrorPage.menu
+#, java-format
+msgctxt "Web.CreateErrorPage.menu"
+msgid "Error Page..."
+msgstr ""
+
+#. 
+#: Web.CreateTaglib.menu
+#, java-format
+msgctxt "Web.CreateTaglib.menu"
+msgid "Taglib..."
+msgstr ""
+
+#. 
+#: Web.CreateResourceEnvRef.menu
+#, java-format
+msgctxt "Web.CreateResourceEnvRef.menu"
+msgid "Resource Env Ref..."
+msgstr ""
+
+#. 
+#: Web.CreateResourceRef.menu
+#, java-format
+msgctxt "Web.CreateResourceRef.menu"
+msgid "Resource Ref..."
+msgstr ""
+
+#. 
+#: Web.CreateSecurityConstraint.menu
+#, java-format
+msgctxt "Web.CreateSecurityConstraint.menu"
+msgid "Security Constraint..."
+msgstr ""
+
+#. 
+#: Web.CreateLoginConfig.menu
+#, java-format
+msgctxt "Web.CreateLoginConfig.menu"
+msgid "Login Config..."
+msgstr ""
+
+#. 
+#: Web.CreateSecurityRole.menu
+#, java-format
+msgctxt "Web.CreateSecurityRole.menu"
+msgid "Security Role..."
+msgstr ""
+
+#. 
+#: Web.CreateEnvEntry.menu
+#, java-format
+msgctxt "Web.CreateEnvEntry.menu"
+msgid "Env Entry..."
+msgstr ""
+
+#. 
+#: Web.CreateEjbRef.menu
+#, java-format
+msgctxt "Web.CreateEjbRef.menu"
+msgid "Ejb Ref..."
+msgstr ""
+
+#. 
+#: Web.CreateEjbLocalRef.menu
+#, java-format
+msgctxt "Web.CreateEjbLocalRef.menu"
+msgid "Ejb Local Ref..."
+msgstr ""
+
+#. 
+#: Web.ChangeTimeStamp.menu
+#, java-format
+msgctxt "Web.ChangeTimeStamp.menu"
+msgid "Change Timestamp"
+msgstr ""
+
+#. 
+#: Web.CreateRole.menu
+#, java-format
+msgctxt "Web.CreateRole.menu"
+msgid "Add Role Name..."
+msgstr ""
+
+#. 
+#: Web.CreateServiceMessageDestinationRef.menu
+#, java-format
+msgctxt "Web.CreateServiceMessageDestinationRef.menu"
+msgid "Message Destination Ref..."
+msgstr ""
+
+#. 
+#: Web.CreateServiceMessageDestination.menu
+#, java-format
+msgctxt "Web.CreateServiceMessageDestination.menu"
+msgid "Message Destination..."
+msgstr ""
+
+#. 
+#: Web.CreateServiceRef.menu
+#, java-format
+msgctxt "Web.CreateServiceRef.menu"
+msgid "Service Ref..."
+msgstr ""
+
+#. 
+#: Web.CreateResourceCollection.menu
+#, java-format
+msgctxt "Web.CreateResourceCollection.menu"
+msgid "Add Web Resource Collection..."
+msgstr ""
+
+#. 
+#: Web.CreateAuthConstraint.menu
+#, java-format
+msgctxt "Web.CreateAuthConstraint.menu"
+msgid "Add Auth Constraint..."
+msgstr ""
+
+#. 
+#: Web.CreateUserConstraint.menu
+#, java-format
+msgctxt "Web.CreateUserConstraint.menu"
+msgid "Add User Data Constraint..."
+msgstr ""
+
+#. 
+#: Web.CreateRunAs.menu
+#, java-format
+msgctxt "Web.CreateRunAs.menu"
+msgid "Run As..."
+msgstr ""
+
+#. 
+#: Web.CreateSecurityRoleRef.menu
+#, java-format
+msgctxt "Web.CreateSecurityRoleRef.menu"
+msgid "Add Security Role Ref..."
+msgstr ""
+
+#. 
+#: Web.CreateWelcomFile.menu
+#, java-format
+msgctxt "Web.CreateWelcomFile.menu"
+msgid "Add Welcome File..."
+msgstr ""
+
+#. 
+#: Web.CreateTagFile.menu
+#, java-format
+msgctxt "Web.CreateTagFile.menu"
+msgid "Tag File..."
+msgstr ""
+
+#. 
+#: Web.CreateFunction.menu
+#, java-format
+msgctxt "Web.CreateFunction.menu"
+msgid "Function..."
+msgstr ""
+
+#. 
+#: Web.CreateAttributeFragment.menu
+#, java-format
+msgctxt "Web.CreateAttributeFragment.menu"
+msgid "Add Attribute As Fragment..."
+msgstr ""
+
+#. 
+#: Web.CreateLibrarySet.menu
+#, java-format
+msgctxt "Web.CreateLibrarySet.menu"
+msgid "Add Library Set"
+msgstr ""
+
+#. 
+#: Web.AddJar.menu
+#, java-format
+msgctxt "Web.AddJar.menu"
+msgid "Add Jar"
+msgstr ""
+
+#. 
+#: Web.CreateLibraryReference.menu
+#, java-format
+msgctxt "Web.CreateLibraryReference.menu"
+msgid "Add Library Reference"
+msgstr ""
+
+#. 
+#: Web.CreatePageTemplate.menu
+#, java-format
+msgctxt "Web.CreatePageTemplate.menu"
+msgid "Add Page Template"
+msgstr ""
+
+#. 
+#: Web.CreateProjectTemplate.menu
+#, java-format
+msgctxt "Web.CreateProjectTemplate.menu"
+msgid "Add JSF Project Template"
+msgstr ""
+
+#. 
+#: Web.CreateProjectTemplate2.menu
+#, java-format
+msgctxt "Web.CreateProjectTemplate2.menu"
+msgid "Add JSF Project Template"
+msgstr ""
+
+#. 
+#: Web.EditProjectTemplate.menu
+#, java-format
+msgctxt "Web.EditProjectTemplate.menu"
+msgid "Edit JSF Project Template"
+msgstr ""
+
+#. 
+#: Web.CreateProjectVersion.menu
+#, java-format
+msgctxt "Web.CreateProjectVersion.menu"
+msgid "Add JSF Project Version"
+msgstr ""
+
+#. 
+#: Web.Add.menu
+#, java-format
+msgctxt "Web.Add.menu"
+msgid "Add Module"
+msgstr ""
+
+#. 
+#: Web.CreateNewJSFProject.menu
+#, java-format
+msgctxt "Web.CreateNewJSFProject.menu"
+msgid "Create New JSF Project..."
+msgstr ""
+
+#. 
+#: Web.ImportExistingJSFProject.menu
+#, java-format
+msgctxt "Web.ImportExistingJSFProject.menu"
+msgid "Import Existing JSF Project..."
+msgstr ""
+
+#. 
+#: Web.CreateNewStrutsProject.menu
+#, java-format
+msgctxt "Web.CreateNewStrutsProject.menu"
+msgid "Create New Struts Project..."
+msgstr ""
+
+#. 
+#: Web.ImportExistingStrutsProject.menu
+#, java-format
+msgctxt "Web.ImportExistingStrutsProject.menu"
+msgid "Import Existing Struts Project..."
+msgstr ""
+
+#. 
+#: Web.CreatePropertyGroup.menu
+#, java-format
+msgctxt "Web.CreatePropertyGroup.menu"
+msgid "Add JSP Property Group..."
+msgstr ""
+
+#. 
+#: Web.CreateLocaleEncodingMapping.menu
+#, java-format
+msgctxt "Web.CreateLocaleEncodingMapping.menu"
+msgid "Add Locale Encoding Mapping..."
+msgstr ""
+
+#. 
+#: Web.CreateFileTLDV.menu
+#, java-format
+msgctxt "Web.CreateFileTLDV.menu"
+msgid "Tag Library..."
+msgstr ""
+
+#. 
+#: Web.CreateWebAppV.menu
+#, java-format
+msgctxt "Web.CreateWebAppV.menu"
+msgid "Web Descriptor..."
+msgstr ""
+
+#. 
+#: Web.CreateFileJSPV.menu
+#, java-format
+msgctxt "Web.CreateFileJSPV.menu"
+msgid "JSP..."
+msgstr ""
+
+#. 
+#: Web.CreateFileHTMLV.menu
+#, java-format
+msgctxt "Web.CreateFileHTMLV.menu"
+msgid "HTML..."
+msgstr ""
+
+#. 
+#: Web.CreateFileCSSV.menu
+#, java-format
+msgctxt "Web.CreateFileCSSV.menu"
+msgid "CSS..."
+msgstr ""
+
+#. 
+#: Web.CreateFileJSV.menu
+#, java-format
+msgctxt "Web.CreateFileJSV.menu"
+msgid "JS..."
+msgstr ""
+
+#. 
+#: Web.CreateFileXHTMLV.menu
+#, java-format
+msgctxt "Web.CreateFileXHTMLV.menu"
+msgid "XHTML..."
+msgstr ""
+
+#. 
+#: Web.CreateTemplate.menu
+#, java-format
+msgctxt "Web.CreateTemplate.menu"
+msgid "Save as Template..."
+msgstr ""
+
+#. 
+#: Web.SynchronizeModules.menu
+#, java-format
+msgctxt "Web.SynchronizeModules.menu"
+msgid "Modules Configuration"
+msgstr ""
+
+#. 
+#: Web.UnregisterInServerXML.menu
+#, java-format
+msgctxt "Web.UnregisterInServerXML.menu"
+msgid "Unregister Web Context from server.xml"
+msgstr ""
+
+#. 
+#: Web.RegisterInServerXML.menu
+#, java-format
+msgctxt "Web.RegisterInServerXML.menu"
+msgid "Register Web Context in server.xml"
+msgstr ""
+
+#. 
+#: Web.RunPageOnServer.menu
+#, java-format
+msgctxt "Web.RunPageOnServer.menu"
+msgid "Run On Server"
+msgstr ""
+

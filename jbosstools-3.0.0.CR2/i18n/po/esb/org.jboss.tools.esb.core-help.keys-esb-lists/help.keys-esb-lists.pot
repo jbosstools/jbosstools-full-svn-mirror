@@ -1,0 +1,159 @@
+#SOME DESCRIPTIVE TITLE.
+#Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+#This file is distributed under the same license as the PACKAGE package.
+#FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-11-13 10:24+1000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+""
+
+#. 
+#: ESB.lists.process
+#, java-format
+msgctxt "ESB.lists.process"
+msgid "process"
+msgstr ""
+
+#. 
+#: ESB.lists.split
+#, java-format
+msgctxt "ESB.lists.split"
+msgid "split"
+msgstr ""
+
+#. 
+#: ESB.lists.RequestResponse
+#, java-format
+msgctxt "ESB.lists.RequestResponse"
+msgid "RequestResponse"
+msgstr ""
+
+#. 
+#: ESB.lists.OneWay
+#, java-format
+msgctxt "ESB.lists.OneWay"
+msgid "OneWay"
+msgstr ""
+
+#. 
+#: ESB.lists.ftp
+#, java-format
+msgctxt "ESB.lists.ftp"
+msgid "ftp"
+msgstr ""
+
+#. 
+#: ESB.lists.ftps
+#, java-format
+msgctxt "ESB.lists.ftps"
+msgid "ftps"
+msgstr ""
+
+#. 
+#: ESB.lists.sftp
+#, java-format
+msgctxt "ESB.lists.sftp"
+msgid "sftp"
+msgstr ""
+
+#. 
+#: ESB.lists.http
+#, java-format
+msgctxt "ESB.lists.http"
+msgid "http"
+msgstr ""
+
+#. 
+#: ESB.lists.https
+#, java-format
+msgctxt "ESB.lists.https"
+msgid "https"
+msgstr ""
+
+#. 
+#: ESB.lists.socket
+#, java-format
+msgctxt "ESB.lists.socket"
+msgid "socket"
+msgstr ""
+
+#. 
+#: ESB.lists.sslsocket
+#, java-format
+msgctxt "ESB.lists.sslsocket"
+msgid "sslsocket"
+msgstr ""
+
+#. 
+#: ESB.lists.QUEUE
+#, java-format
+msgctxt "ESB.lists.QUEUE"
+msgid "QUEUE"
+msgstr ""
+
+#. 
+#: ESB.lists.TOPIC
+#, java-format
+msgctxt "ESB.lists.TOPIC"
+msgid "TOPIC"
+msgstr ""
+
+#. 
+#: ESB.lists.AUTO_ACKNOWLEDGE
+#, java-format
+msgctxt "ESB.lists.AUTO_ACKNOWLEDGE"
+msgid "AUTO_ACKNOWLEDGE"
+msgstr ""
+
+#. 
+#: ESB.lists.CLIENT_ACKNOWLEDGE
+#, java-format
+msgctxt "ESB.lists.CLIENT_ACKNOWLEDGE"
+msgid "CLIENT_ACKNOWLEDGE"
+msgstr ""
+
+#. 
+#: ESB.lists.DUPS_OK_ACKNOWLEDGE
+#, java-format
+msgctxt "ESB.lists.DUPS_OK_ACKNOWLEDGE"
+msgid "DUPS_OK_ACKNOWLEDGE"
+msgstr ""
+
+#. 
+#: ESB.lists.NONE
+#, java-format
+msgctxt "ESB.lists.NONE"
+msgid "NONE"
+msgstr ""
+
+#. 
+#: ESB.lists.GLOBAL
+#, java-format
+msgctxt "ESB.lists.GLOBAL"
+msgid "GLOBAL"
+msgstr ""
+
+#. 
+#: ESB.lists.seconds
+#, java-format
+msgctxt "ESB.lists.seconds"
+msgid "seconds"
+msgstr ""
+
+#. 
+#: ESB.lists.milliseconds
+#, java-format
+msgctxt "ESB.lists.milliseconds"
+msgid "milliseconds"
+msgstr ""
+

@@ -1,0 +1,257 @@
+#SOME DESCRIPTIVE TITLE.
+#Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+#This file is distributed under the same license as the PACKAGE package.
+#FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-11-19 15:12+1000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+""
+
+#. 
+#: SeamCoreBuilder_1
+#, java-format
+msgctxt "SeamCoreBuilder_1"
+msgid "Error storing build results for ''{0}''"
+msgstr ""
+
+#. 
+#: SeamFacetAbstractInstallDelegate_Could_not_activate_Hibernate_nature_on_project
+#, java-format
+msgctxt "SeamFacetAbstractInstallDelegate_Could_not_activate_Hibernate_nature_on_project"
+msgid "Could not activate Hibernate nature on project "
+msgstr ""
+
+#. 
+#: SeamFacetAbstractInstallDelegate_Could_not_save_changes_to_preferences
+#, java-format
+msgctxt "SeamFacetAbstractInstallDelegate_Could_not_save_changes_to_preferences"
+msgid "Could not save changes to preferences"
+msgstr ""
+
+#. 
+#: SeamFacetAbstractInstallDelegate_Error
+#, java-format
+msgctxt "SeamFacetAbstractInstallDelegate_Error"
+msgid "Error"
+msgstr ""
+
+#. 
+#: SeamFacetAbstractInstallDelegate_Restrict_raw_XHTML_Documents
+#, java-format
+msgctxt "SeamFacetAbstractInstallDelegate_Restrict_raw_XHTML_Documents"
+msgid "Restrict raw XHTML Documents"
+msgstr ""
+
+#. 
+#: ANT_COPY_UTILS_COPY_FAILED
+#, java-format
+msgctxt "ANT_COPY_UTILS_COPY_FAILED"
+msgid "Copy failed - ''{0}'' does not exist"
+msgstr ""
+
+#. 
+#: ANT_COPY_UTILS_COULD_NOT_FIND_FOLDER
+#, java-format
+msgctxt "ANT_COPY_UTILS_COULD_NOT_FIND_FOLDER"
+msgid "Could not find ''{0}''"
+msgstr ""
+
+#. 
+#: ANT_COPY_UTILS_IN
+#, java-format
+msgctxt "ANT_COPY_UTILS_IN"
+msgid " in "
+msgstr ""
+
+#. 
+#: ANT_COPY_UTILS_CANNOT_COPY_JDBC_DRIVER_JAR
+#, java-format
+msgctxt "ANT_COPY_UTILS_CANNOT_COPY_JDBC_DRIVER_JAR"
+msgid "Cannot copy JDBC driver jar ''{0}''"
+msgstr ""
+
+#. 
+#: DATA_SOURCE_XML_DEPLOYER_DEPLOYING_DATASOURCE_TO_SERVER
+#, java-format
+msgctxt "DATA_SOURCE_XML_DEPLOYER_DEPLOYING_DATASOURCE_TO_SERVER"
+msgid "Deploying datasource to server"
+msgstr ""
+
+#. 
+#: DATA_SOURCE_XML_DEPLOYER_NO_SERVER_SELECTED_TO_DEPLOY_DATASOURCE_TO
+#, java-format
+msgctxt "DATA_SOURCE_XML_DEPLOYER_NO_SERVER_SELECTED_TO_DEPLOY_DATASOURCE_TO"
+msgid "No server selected to deploy datasource to"
+msgstr ""
+
+#. 
+#: DATA_SOURCE_XML_DEPLOYER_SERVER_DID_NOT_SUPPORT_DEPLOY_OF_DATASOURCE
+#, java-format
+msgctxt "DATA_SOURCE_XML_DEPLOYER_SERVER_DID_NOT_SUPPORT_DEPLOY_OF_DATASOURCE"
+msgid "Server did not support deploy of datasource."
+msgstr ""
+
+#. 
+#: DATA_SOURCE_XML_DEPLOYER_COULD_NOT_DEPLOY_DATASOURCE
+#, java-format
+msgctxt "DATA_SOURCE_XML_DEPLOYER_COULD_NOT_DEPLOY_DATASOURCE"
+msgid "Could not deploy datasource "
+msgstr ""
+
+#. 
+#: JAVA_SCANNER_CANNOT_GET_COMPILATION_UNIT_FOR
+#, java-format
+msgctxt "JAVA_SCANNER_CANNOT_GET_COMPILATION_UNIT_FOR"
+msgid "Cannot get compilation unit for ''{0}''"
+msgstr ""
+
+#. 
+#: SEAM_EL_VALIDATOR_SETTER
+#, java-format
+msgctxt "SEAM_EL_VALIDATOR_SETTER"
+msgid "Setter"
+msgstr ""
+
+#. 
+#: SEAM_EL_VALIDATOR_GETTER
+#, java-format
+msgctxt "SEAM_EL_VALIDATOR_GETTER"
+msgid "Getter"
+msgstr ""
+
+#. 
+#: LIBRARY_SCANNER_CANNOT_PROCESS_JAVA_CLASSES
+#, java-format
+msgctxt "LIBRARY_SCANNER_CANNOT_PROCESS_JAVA_CLASSES"
+msgid "Cannot process Java Classes"
+msgstr ""
+
+#. 
+#: SEAM_VALIDATION_CONTEXT_LINKED_RESOURCE_PATH_MUST_NOT_BE_NULL
+#, java-format
+msgctxt "SEAM_VALIDATION_CONTEXT_LINKED_RESOURCE_PATH_MUST_NOT_BE_NULL"
+msgid "Linked resource path must not be null!"
+msgstr ""
+
+#. 
+#: SEAM_VALIDATION_CONTEXT_VARIABLE_NAME_MUST_NOT_BE_NULL
+#, java-format
+msgctxt "SEAM_VALIDATION_CONTEXT_VARIABLE_NAME_MUST_NOT_BE_NULL"
+msgid "Variable name must not be null!"
+msgstr ""
+
+#. 
+#: SEAM_FACET_INSTALL_ABSTRACT_DELEGATE_CHECK_ERROR_LOG_VIEW
+#, java-format
+msgctxt "SEAM_FACET_INSTALL_ABSTRACT_DELEGATE_CHECK_ERROR_LOG_VIEW"
+msgid "Check Errors View for details"
+msgstr ""
+
+#. 
+#: SEAM_VALIDATION_HELPER_CANNOT_GET_SEAM_PROJECT
+#, java-format
+msgctxt "SEAM_VALIDATION_HELPER_CANNOT_GET_SEAM_PROJECT"
+msgid "Can't get Seam Project"
+msgstr ""
+
+#. 
+#: SEAM_CORE_VALIDATOR_ERROR_VALIDATING_SEAM_CORE
+#, java-format
+msgctxt "SEAM_CORE_VALIDATOR_ERROR_VALIDATING_SEAM_CORE"
+msgid "Error validating Seam Core"
+msgstr ""
+
+#. 
+#: SEAM_VALIDATION_HELPER_RESOURCE_MUST_NOT_BE_NULL
+#, java-format
+msgctxt "SEAM_VALIDATION_HELPER_RESOURCE_MUST_NOT_BE_NULL"
+msgid "Resource must not be null"
+msgstr ""
+
+#. 
+#: SEAM_CORE_VALIDATOR_FACTORY_METHOD_MUST_HAVE_NAME
+#, java-format
+msgctxt "SEAM_CORE_VALIDATOR_FACTORY_METHOD_MUST_HAVE_NAME"
+msgid "Factory method must have name: ''{0}'' "
+msgstr ""
+
+#. 
+#: SEAM_FACET_INSTALL_ABSTRACT_DELEGATE_ERRORS_OCCURED
+#, java-format
+msgctxt "SEAM_FACET_INSTALL_ABSTRACT_DELEGATE_ERRORS_OCCURED"
+msgid "Error occured during creating Seam Web Project"
+msgstr ""
+
+#. 
+#: SEAM_EL_VALIDATOR_ERROR_VALIDATING_SEAM_EL
+#, java-format
+msgctxt "SEAM_EL_VALIDATOR_ERROR_VALIDATING_SEAM_EL"
+msgid "Error validating Seam EL"
+msgstr ""
+
+#. 
+#: SEAM_FACET_INSTALL_ABSTRACT_DELEGATE_ERROR
+#, java-format
+msgctxt "SEAM_FACET_INSTALL_ABSTRACT_DELEGATE_ERROR"
+msgid "Error"
+msgstr ""
+
+#. 
+#: ERROR_JBOSS_AS_TARGET_SERVER_IS_EMPTY
+#, java-format
+msgctxt "ERROR_JBOSS_AS_TARGET_SERVER_IS_EMPTY"
+msgid "Target Server cannot be empty"
+msgstr ""
+
+#. 
+#: ERROR_JBOSS_AS_TARGET_SERVER_UNKNOWN
+#, java-format
+msgctxt "ERROR_JBOSS_AS_TARGET_SERVER_UNKNOWN"
+msgid "Unknown Target Server"
+msgstr ""
+
+#. 
+#: ERROR_JBOSS_AS_TARGET_SERVER_NO_SERVERS_DEFINED
+#, java-format
+msgctxt "ERROR_JBOSS_AS_TARGET_SERVER_NO_SERVERS_DEFINED"
+msgid "There are no available Target Service for selected Target Runtime"
+msgstr ""
+
+#. 
+#: ERROR_JBOSS_AS_TARGET_SERVER_INCOMPATIBLE
+#, java-format
+msgctxt "ERROR_JBOSS_AS_TARGET_SERVER_INCOMPATIBLE"
+msgid "Target Server is incompatible with Target Runtime selected"
+msgstr ""
+
+#. 
+#: ERROR_JBOSS_AS_TARGET_RUNTIME_IS_EMPTY
+#, java-format
+msgctxt "ERROR_JBOSS_AS_TARGET_RUNTIME_IS_EMPTY"
+msgid "Target Runtime cannot be empty"
+msgstr ""
+
+#. 
+#: ERROR_JBOSS_AS_TARGET_RUNTIME_UNKNOWN
+#, java-format
+msgctxt "ERROR_JBOSS_AS_TARGET_RUNTIME_UNKNOWN"
+msgid "Unknown Target Runtime"
+msgstr ""
+
+#. 
+#: SEAM_INSTALL_WIZARD_PROJECT_NAME_WITH_UPPERCASE
+#, java-format
+msgctxt "SEAM_INSTALL_WIZARD_PROJECT_NAME_WITH_UPPERCASE"
+msgid "Project names which start with a capital letter may break Seam/JSF applications; use lower case."
+msgstr ""
+

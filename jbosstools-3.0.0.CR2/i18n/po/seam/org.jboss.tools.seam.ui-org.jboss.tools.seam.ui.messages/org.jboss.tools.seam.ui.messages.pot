@@ -1,0 +1,1733 @@
+#SOME DESCRIPTIVE TITLE.
+#Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+#This file is distributed under the same license as the PACKAGE package.
+#FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-01-12 17:06+1000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+""
+
+#. 
+#: CREATE_NEW_SEAM_PROJECT
+#, java-format
+msgctxt "CREATE_NEW_SEAM_PROJECT"
+msgid "Create New Seam Project"
+msgstr ""
+
+#. 
+#: GENERATE_SEAM_ENTITIES_WIZARD_TITLE
+#, java-format
+msgctxt "GENERATE_SEAM_ENTITIES_WIZARD_TITLE"
+msgid "Generate Seam Entities"
+msgstr ""
+
+#. 
+#: GENERATE_SEAM_ENTITIES_WIZARD_PAGE_MESSAGE
+#, java-format
+msgctxt "GENERATE_SEAM_ENTITIES_WIZARD_PAGE_MESSAGE"
+msgid "Select Seam project"
+msgstr ""
+
+#. 
+#: GENERATE_SEAM_ENTITIES_WIZARD_HIBERNATE_CONFIGURATION_LABEL
+#, java-format
+msgctxt "GENERATE_SEAM_ENTITIES_WIZARD_HIBERNATE_CONFIGURATION_LABEL"
+msgid "Hibernate Console Configuration:"
+msgstr ""
+
+#. 
+#: GENERATE_SEAM_ENTITIES_WIZARD_HIBERNATE_CONFIGURATION_MESSAGE
+#, java-format
+msgctxt "GENERATE_SEAM_ENTITIES_WIZARD_HIBERNATE_CONFIGURATION_MESSAGE"
+msgid "Select Hibernate Console Configuration"
+msgstr ""
+
+#. 
+#: GENERATE_SEAM_ENTITIES_WIZARD_HIBERNATE_CONFIGURATION_ERROR
+#, java-format
+msgctxt "GENERATE_SEAM_ENTITIES_WIZARD_HIBERNATE_CONFIGURATION_ERROR"
+msgid "Hibernate console configuration name is empty"
+msgstr ""
+
+#. 
+#: GENERATE_SEAM_ENTITIES_WIZARD_GROUP_LABEL
+#, java-format
+msgctxt "GENERATE_SEAM_ENTITIES_WIZARD_GROUP_LABEL"
+msgid "Generation Mode"
+msgstr ""
+
+#. 
+#: GENERATE_SEAM_ENTITIES_WIZARD_REVERSE_ENGINEER_LABEL
+#, java-format
+msgctxt "GENERATE_SEAM_ENTITIES_WIZARD_REVERSE_ENGINEER_LABEL"
+msgid "Reverse engineer from database"
+msgstr ""
+
+#. 
+#: GENERATE_SEAM_ENTITIES_WIZARD_EXISTING_ENTITIES_LABEL
+#, java-format
+msgctxt "GENERATE_SEAM_ENTITIES_WIZARD_EXISTING_ENTITIES_LABEL"
+msgid "Use existing entities"
+msgstr ""
+
+#. 
+#: SEAM_INSTALL_WIZARD_PAGE_CONFIGURE_SEAM_FACET_SETTINGS
+#, java-format
+msgctxt "SEAM_INSTALL_WIZARD_PAGE_CONFIGURE_SEAM_FACET_SETTINGS"
+msgid "Configure Seam Facet Settings"
+msgstr ""
+
+#. 
+#: SEAM_INSTALL_WIZARD_PAGE_CANNOT_USE_SELECTED_DEPLOYMENT6
+#, java-format
+msgctxt "SEAM_INSTALL_WIZARD_PAGE_CANNOT_USE_SELECTED_DEPLOYMENT6"
+msgid "''{0}'' deployment cannot be used, because selected Server Runtime ''{1}'' doesn't support EJB 3.0 and EAR 5.0 modules"
+msgstr ""
+
+#. 
+#: SEAM_PROJECT_WIZARD_PAGE1_FILE_NAME_MUST_BE_SPECIFIED
+#, java-format
+msgctxt "SEAM_PROJECT_WIZARD_PAGE1_FILE_NAME_MUST_BE_SPECIFIED"
+msgid "File name must be specified"
+msgstr ""
+
+#. 
+#: SEAM_PROJECT_WIZARD_PAGE1_SEAM_FACET_MUST_BE_SPECIFIED
+#, java-format
+msgctxt "SEAM_PROJECT_WIZARD_PAGE1_SEAM_FACET_MUST_BE_SPECIFIED"
+msgid "Seam facet must be enabled"
+msgstr ""
+
+#. 
+#: SEAM_PROJECT_SELECTION_DIALOG_SELECT_SEAM_WEB_PROJECT
+#, java-format
+msgctxt "SEAM_PROJECT_SELECTION_DIALOG_SELECT_SEAM_WEB_PROJECT"
+msgid "Select Seam Web Project"
+msgstr ""
+
+#. 
+#: SEAM_PROJECT_WIZARD_CREATE_STANDALONE_SEAM_WEB_PROJECT
+#, java-format
+msgctxt "SEAM_PROJECT_WIZARD_CREATE_STANDALONE_SEAM_WEB_PROJECT"
+msgid "Create standalone Seam Web Project"
+msgstr ""
+
+#. 
+#: SEAM_INSTALL_WIZARD_PAGE_SEAM_RUNTIME
+#, java-format
+msgctxt "SEAM_INSTALL_WIZARD_PAGE_SEAM_RUNTIME"
+msgid "Seam Runtime:"
+msgstr ""
+
+#. 
+#: SEAM_INSTALL_WIZARD_PAGE_DEPLOY_AS
+#, java-format
+msgctxt "SEAM_INSTALL_WIZARD_PAGE_DEPLOY_AS"
+msgid "Deploy as:"
+msgstr ""
+
+#. 
+#: SEAM_VIEW_LAYOUT_ACTION_GROUP_FLAT
+#, java-format
+msgctxt "SEAM_VIEW_LAYOUT_ACTION_GROUP_FLAT"
+msgid "Flat"
+msgstr ""
+
+#. 
+#: SEAM_VIEW_LAYOUT_ACTION_GROUP_NODE
+#, java-format
+msgctxt "SEAM_VIEW_LAYOUT_ACTION_GROUP_NODE"
+msgid "Node"
+msgstr ""
+
+#. 
+#: SEAM_RUNTIME_LIST_FIELD_EDITOR_ADD
+#, java-format
+msgctxt "SEAM_RUNTIME_LIST_FIELD_EDITOR_ADD"
+msgid "Add..."
+msgstr ""
+
+#. 
+#: SEAM_RUNTIME_LIST_FIELD_EDITOR_REMOVE
+#, java-format
+msgctxt "SEAM_RUNTIME_LIST_FIELD_EDITOR_REMOVE"
+msgid "Remove"
+msgstr ""
+
+#. 
+#: SEAM_INSTALL_WIZARD_PAGE_WAR
+#, java-format
+msgctxt "SEAM_INSTALL_WIZARD_PAGE_WAR"
+msgid "war"
+msgstr ""
+
+#. 
+#: SEAM_INSTALL_WIZARD_PAGE_EAR
+#, java-format
+msgctxt "SEAM_INSTALL_WIZARD_PAGE_EAR"
+msgid "ear"
+msgstr ""
+
+#. 
+#: SEAM_INSTALL_WIZARD_PAGE_CONNECTION_PROFILE
+#, java-format
+msgctxt "SEAM_INSTALL_WIZARD_PAGE_CONNECTION_PROFILE"
+msgid "Connection profile:"
+msgstr ""
+
+#. 
+#: SEAM_VIEW_LAYOUT_ACTION_GROUP_SEAM_PACKAGES
+#, java-format
+msgctxt "SEAM_VIEW_LAYOUT_ACTION_GROUP_SEAM_PACKAGES"
+msgid "Seam Packages"
+msgstr ""
+
+#. 
+#: SEAM_RUNTIME_LIST_FIELD_EDITOR_SEAM_RUNTIME
+#, java-format
+msgctxt "SEAM_RUNTIME_LIST_FIELD_EDITOR_SEAM_RUNTIME"
+msgid "Seam Runtime"
+msgstr ""
+
+#. 
+#: SEAM_RUNTIME_LIST_FIELD_EDITOR_SEAM_VERSION
+#, java-format
+msgctxt "SEAM_RUNTIME_LIST_FIELD_EDITOR_SEAM_VERSION"
+msgid "Seam-Version"
+msgstr ""
+
+#. 
+#: SEAM_INSTALL_WIZARD_PAGE_DATABASE_TYPE
+#, java-format
+msgctxt "SEAM_INSTALL_WIZARD_PAGE_DATABASE_TYPE"
+msgid "Database Type:"
+msgstr ""
+
+#. 
+#: SEAM_BASE_WIZARD_PAGE_LOCAL_CLASS_NAME
+#, java-format
+msgctxt "SEAM_BASE_WIZARD_PAGE_LOCAL_CLASS_NAME"
+msgid "Local interface:"
+msgstr ""
+
+#. 
+#: SEAM_RUNTIME_LIST_FIELD_EDITOR_VERSION
+#, java-format
+msgctxt "SEAM_RUNTIME_LIST_FIELD_EDITOR_VERSION"
+msgid "Version"
+msgstr ""
+
+#. 
+#: SEAM_RUNTIME_LIST_FIELD_EDITOR_RUNTIME
+#, java-format
+msgctxt "SEAM_RUNTIME_LIST_FIELD_EDITOR_RUNTIME"
+msgid "Runtime '"
+msgstr ""
+
+#. 
+#: SEAM_INSTALL_WIZARD_PAGE_HIBERNATE_DIALECT
+#, java-format
+msgctxt "SEAM_INSTALL_WIZARD_PAGE_HIBERNATE_DIALECT"
+msgid "Hibernate Dialect:"
+msgstr ""
+
+#. 
+#: SEAM_INSTALL_WIZARD_PAGE_DATABASE_SCHEMA_NAME
+#, java-format
+msgctxt "SEAM_INSTALL_WIZARD_PAGE_DATABASE_SCHEMA_NAME"
+msgid "Database Schema Name:"
+msgstr ""
+
+#. 
+#: SEAM_RUNTIME_LIST_FIELD_EDITOR_USE_AS_DEFAULT
+#, java-format
+msgctxt "SEAM_RUNTIME_LIST_FIELD_EDITOR_USE_AS_DEFAULT"
+msgid "Use as default:"
+msgstr ""
+
+#. 
+#: SEAM_RUNTIME_LIST_FIELD_EDITOR_ALREADY_EXISTS
+#, java-format
+msgctxt "SEAM_RUNTIME_LIST_FIELD_EDITOR_ALREADY_EXISTS"
+msgid "' already exists"
+msgstr ""
+
+#. 
+#: SEAM_INSTALL_WIZARD_PAGE_DATABASE_CATALOG_NAME
+#, java-format
+msgctxt "SEAM_INSTALL_WIZARD_PAGE_DATABASE_CATALOG_NAME"
+msgid "Database Catalog Name:"
+msgstr ""
+
+#. 
+#: SEAM_PROJECT_WIZARD_PAGE1_MULTIPAGE_EDITOR_FILE
+#, java-format
+msgctxt "SEAM_PROJECT_WIZARD_PAGE1_MULTIPAGE_EDITOR_FILE"
+msgid "Multi-page Editor File"
+msgstr ""
+
+#. 
+#: SEAM_PROJECT_SELECTION_DIALOG_SEAM_WEB_PROJECT
+#, java-format
+msgctxt "SEAM_PROJECT_SELECTION_DIALOG_SEAM_WEB_PROJECT"
+msgid "Seam Web Projects"
+msgstr ""
+
+#. 
+#: SEAM_PROJECT_SELECTION_DIALOG_SHOW_ALL_PROJECTS
+#, java-format
+msgctxt "SEAM_PROJECT_SELECTION_DIALOG_SHOW_ALL_PROJECTS"
+msgid "Show all projects"
+msgstr ""
+
+#. 
+#: SEAM_PROJECT_LABEL_PROVIDER_SEAM_COMPONENTS
+#, java-format
+msgctxt "SEAM_PROJECT_LABEL_PROVIDER_SEAM_COMPONENTS"
+msgid "Seam Components"
+msgstr ""
+
+#. 
+#: SEAM_ENTITY_WIZARD_PAGE1_ENTITY_MASTER_PAGE
+#, java-format
+msgctxt "SEAM_ENTITY_WIZARD_PAGE1_ENTITY_MASTER_PAGE"
+msgid "Entity master page"
+msgstr ""
+
+#. 
+#: SEAM_ENTITY_WIZARD_ENTITY_CREATING_OPERATION
+#, java-format
+msgctxt "SEAM_ENTITY_WIZARD_ENTITY_CREATING_OPERATION"
+msgid "Entity creating operation"
+msgstr ""
+
+#. 
+#: SEAM_RUNTIME_LIST_FIELD_EDITOR_NEW_SEAM_RUNTIME
+#, java-format
+msgctxt "SEAM_RUNTIME_LIST_FIELD_EDITOR_NEW_SEAM_RUNTIME"
+msgid "New Seam Runtime"
+msgstr ""
+
+#. 
+#: SEAM_RUNTIME_LIST_FIELD_EDITOR_EDIT_SEAM_RUNTIME
+#, java-format
+msgctxt "SEAM_RUNTIME_LIST_FIELD_EDITOR_EDIT_SEAM_RUNTIME"
+msgid "Edit Seam Runtime"
+msgstr ""
+
+#. 
+#: SEAM_INSTALL_WIZARD_PAGE_DB_TABLES_ALREADY_EXISTS
+#, java-format
+msgctxt "SEAM_INSTALL_WIZARD_PAGE_DB_TABLES_ALREADY_EXISTS"
+msgid "DB Tables already exists in database:"
+msgstr ""
+
+#. 
+#: SEAM_INSTALL_WIZARD_PAGE_RECREATE_DATABASE_TABLES_AND_DATA_ON_DEPLOY
+#, java-format
+msgctxt "SEAM_INSTALL_WIZARD_PAGE_RECREATE_DATABASE_TABLES_AND_DATA_ON_DEPLOY"
+msgid "Recreate database tables and data on deploy:"
+msgstr ""
+
+#. 
+#: SEAM_ACTION_WIZARD_PAGE1_SELECT_THE_NAME_OF_THE_SEAM_CONVERSATION
+#, java-format
+msgctxt "SEAM_ACTION_WIZARD_PAGE1_SELECT_THE_NAME_OF_THE_SEAM_CONVERSATION"
+msgid "Select the name of the new Seam Conversation. A new Java interface and SLSB "
+msgstr ""
+
+#. 
+#: SEAM_RUNTIME_LIST_FIELD_EDITOR_PARENT_CONTROL_SHOULD_BE_COMPOSITE
+#, java-format
+msgctxt "SEAM_RUNTIME_LIST_FIELD_EDITOR_PARENT_CONTROL_SHOULD_BE_COMPOSITE"
+msgid "Parent control should be Composite"
+msgstr ""
+
+#. 
+#: SEAM_RUNTIME_LIST_FIELD_EDITOR_EDITOR_SUPPORTS_ONLY_GRID_LAYOUT
+#, java-format
+msgctxt "SEAM_RUNTIME_LIST_FIELD_EDITOR_EDITOR_SUPPORTS_ONLY_GRID_LAYOUT"
+msgid "Editor supports only grid layout"
+msgstr ""
+
+#. 
+#: SEAM_RUNTIME_LIST_FIELD_EDITOR_CANNOT_OBTAIN_SEAM_VERSION_NUMBER
+#, java-format
+msgctxt "SEAM_RUNTIME_LIST_FIELD_EDITOR_CANNOT_OBTAIN_SEAM_VERSION_NUMBER"
+msgid "Cannot obtain Seam version number from jboss-seam.jar file."
+msgstr ""
+
+#. 
+#: SEAM_ACTION_WIZARD_PAGE1_WITH_KEY_SEAM_EJB_ANNOTATIONS_WILL_BE_CREATED
+#, java-format
+msgctxt "SEAM_ACTION_WIZARD_PAGE1_WITH_KEY_SEAM_EJB_ANNOTATIONS_WILL_BE_CREATED"
+msgid "with key Seam/EJB annotations will be created."
+msgstr ""
+
+#. 
+#: SEAM_INSTALL_WIZARD_PAGE_SESSION_BEAN_PACKAGE_NAME
+#, java-format
+msgctxt "SEAM_INSTALL_WIZARD_PAGE_SESSION_BEAN_PACKAGE_NAME"
+msgid "Session Bean Package Name:"
+msgstr ""
+
+#. 
+#: SEAM_CONVERSATION_WIZARD_ENTITY_CREATING_OPERATION
+#, java-format
+msgctxt "SEAM_CONVERSATION_WIZARD_ENTITY_CREATING_OPERATION"
+msgid "Entity creating operation"
+msgstr ""
+
+#. 
+#: SEAM_CONVERSATION_WIZARD_PAGE1_MANAGING_A_CONVERSATION_WILL_BE_CREATED
+#, java-format
+msgctxt "SEAM_CONVERSATION_WIZARD_PAGE1_MANAGING_A_CONVERSATION_WILL_BE_CREATED"
+msgid "managing a coversation will be created."
+msgstr ""
+
+#. 
+#: SEAM_PROJECT_WIZARD_PAGE1_PROJECT_MUST_BE_WRITABLE
+#, java-format
+msgctxt "SEAM_PROJECT_WIZARD_PAGE1_PROJECT_MUST_BE_WRITABLE"
+msgid "Project must be writable"
+msgstr ""
+
+#. 
+#: SEAM_PROJECT_WIZARD_PAGE1_SELECT_NEW_FILE_CONTAINER
+#, java-format
+msgctxt "SEAM_PROJECT_WIZARD_PAGE1_SELECT_NEW_FILE_CONTAINER"
+msgid "Select new file container"
+msgstr ""
+
+#. 
+#: SEAM_PROJECT_WIZARD_PAGE1_FILE_CONTAINER_MUST_EXIST
+#, java-format
+msgctxt "SEAM_PROJECT_WIZARD_PAGE1_FILE_CONTAINER_MUST_EXIST"
+msgid "File container must exist"
+msgstr ""
+
+#. 
+#: SEAM_RUNTIME_LIST_FIELD_EDITOR_INPUTELEMENT_MUST_BE
+#, java-format
+msgctxt "SEAM_RUNTIME_LIST_FIELD_EDITOR_INPUTELEMENT_MUST_BE"
+msgid "inputElement must be "
+msgstr ""
+
+#. 
+#: SEAM_RUNTIME_LIST_FIELD_EDITOR_NAME_CANNOT_BE_EMPTY
+#, java-format
+msgctxt "SEAM_RUNTIME_LIST_FIELD_EDITOR_NAME_CANNOT_BE_EMPTY"
+msgid "Name cannot be empty"
+msgstr ""
+
+#. 
+#: SEAM_RUNTIME_LIST_FIELD_EDITOR_CANNOT_READ_JAR_FILE
+#, java-format
+msgctxt "SEAM_RUNTIME_LIST_FIELD_EDITOR_CANNOT_READ_JAR_FILE"
+msgid "Cannot read jboss-seam.jar file"
+msgstr ""
+
+#. 
+#: SEAM_RUNTIME_LIST_FIELD_EDITOR_CANNOT_FIND_JBOSS_SEAM_JAR
+#, java-format
+msgctxt "SEAM_RUNTIME_LIST_FIELD_EDITOR_CANNOT_FIND_JBOSS_SEAM_JAR"
+msgid "Cannot find jboss-seam.jar file"
+msgstr ""
+
+#. 
+#: SEAM_PROJECT_WIZARD_PAGE1_FILE_EXTENSION_MUST_BE_MPE
+#, java-format
+msgctxt "SEAM_PROJECT_WIZARD_PAGE1_FILE_EXTENSION_MUST_BE_MPE"
+msgid "File extension must be \"mpe\""
+msgstr ""
+
+#. 
+#: SEAM_RUNTIME_LIST_FIELD_EDITOR_AN_INSTANCEOF_OF_LIST
+#, java-format
+msgctxt "SEAM_RUNTIME_LIST_FIELD_EDITOR_AN_INSTANCEOF_OF_LIST"
+msgid "an instance of List<SeamRuntime>."
+msgstr ""
+
+#. 
+#: SEAM_RUNTIME_LIST_FIELD_EDITOR_CREATE_A_SEAM_RUNTIME
+#, java-format
+msgctxt "SEAM_RUNTIME_LIST_FIELD_EDITOR_CREATE_A_SEAM_RUNTIME"
+msgid "Create a Seam Runtime"
+msgstr ""
+
+#. 
+#: SEAM_RUNTIME_LIST_FIELD_EDITOR_MODIFY_SEAM_RUNTIME
+#, java-format
+msgctxt "SEAM_RUNTIME_LIST_FIELD_EDITOR_MODIFY_SEAM_RUNTIME"
+msgid "Input new values"
+msgstr ""
+
+#. 
+#: SEAM_BASE_WIZARD_OPERATION_IS_NOT_DEFINED_FOR_WIZARD
+#, java-format
+msgctxt "SEAM_BASE_WIZARD_OPERATION_IS_NOT_DEFINED_FOR_WIZARD"
+msgid "Operation is not defined for wizard"
+msgstr ""
+
+#. 
+#: SEAM_INSTALL_WIZARD_PAGE_ENTITY_BEAN_PACKAGE_NAME
+#, java-format
+msgctxt "SEAM_INSTALL_WIZARD_PAGE_ENTITY_BEAN_PACKAGE_NAME"
+msgid "Entity Bean Package Name:"
+msgstr ""
+
+#. 
+#: SEAM_PROJECT_WIZARD_PAGE1_FILE_NAME_MUST_BE_VALID
+#, java-format
+msgctxt "SEAM_PROJECT_WIZARD_PAGE1_FILE_NAME_MUST_BE_VALID"
+msgid "File name must be valid"
+msgstr ""
+
+#. 
+#: SEAM_VIEW_LAYOUT_ACTION_GROUP_SCOPE_PRESENTATION
+#, java-format
+msgctxt "SEAM_VIEW_LAYOUT_ACTION_GROUP_SCOPE_PRESENTATION"
+msgid "Scope Presentation"
+msgstr ""
+
+#. 
+#: SEAM_CONVERSATION_WIZARD_CREATE_NEW_CONVERSATION
+#, java-format
+msgctxt "SEAM_CONVERSATION_WIZARD_CREATE_NEW_CONVERSATION"
+msgid "Create New Conversation"
+msgstr ""
+
+#. 
+#: SEAM_CONVERSATION_WIZARD_PAGE1_SEAM_CONVERSATION
+#, java-format
+msgctxt "SEAM_CONVERSATION_WIZARD_PAGE1_SEAM_CONVERSATION"
+msgid "Seam Conversation"
+msgstr ""
+
+#. 
+#: SEAM_INSTALL_WIZARD_PAGE_TEST_PACKAGE_NAME
+#, java-format
+msgctxt "SEAM_INSTALL_WIZARD_PAGE_TEST_PACKAGE_NAME"
+msgid "Test Package Name:"
+msgstr ""
+
+#. 
+#: SEAM_VIEW_LAYOUT_ACTION_GROUP_HIERARCHICAL
+#, java-format
+msgctxt "SEAM_VIEW_LAYOUT_ACTION_GROUP_HIERARCHICAL"
+msgid "Hierarchical"
+msgstr ""
+
+#. 
+#: SEAM_RUNTIME_LIST_FIELD_EDITOR_HOME_FOLDER
+#, java-format
+msgctxt "SEAM_RUNTIME_LIST_FIELD_EDITOR_HOME_FOLDER"
+msgid "Home Folder:"
+msgstr ""
+
+#. 
+#: SEAM_WIZARD_FACTORY_SEAM_ENTITY_CLASS_NAME
+#, java-format
+msgctxt "SEAM_WIZARD_FACTORY_SEAM_ENTITY_CLASS_NAME"
+msgid "Seam entity class name:"
+msgstr ""
+
+#. 
+#: SEAM_ENTITY_WIZARD_PAGE1_ENTITY_CLASS_NAME
+#, java-format
+msgctxt "SEAM_ENTITY_WIZARD_PAGE1_ENTITY_CLASS_NAME"
+msgid "Entity class name"
+msgstr ""
+
+#. 
+#: SEAM_INSTALL_WIZARD_PAGE_SEAM_FACET
+#, java-format
+msgctxt "SEAM_INSTALL_WIZARD_PAGE_SEAM_FACET"
+msgid "Seam Facet"
+msgstr ""
+
+#. 
+#: SEAM_VIEW_LAYOUT_ACTION_GROUP_LABEL
+#, java-format
+msgctxt "SEAM_VIEW_LAYOUT_ACTION_GROUP_LABEL"
+msgid "Label"
+msgstr ""
+
+#. 
+#: SEAM_PROJECT_WIZARD_PAGE1_CONTAINER
+#, java-format
+msgctxt "SEAM_PROJECT_WIZARD_PAGE1_CONTAINER"
+msgid "&Container:"
+msgstr ""
+
+#. 
+#: SEAM_PROJECT_WIZARD_PAGE1_FILE_NAME
+#, java-format
+msgctxt "SEAM_PROJECT_WIZARD_PAGE1_FILE_NAME"
+msgid "&File name:"
+msgstr ""
+
+#. 
+#: SEAM_PROJECT_WIZARD_NEW_SEAM_PROJECT
+#, java-format
+msgctxt "SEAM_PROJECT_WIZARD_NEW_SEAM_PROJECT"
+msgid "New Seam Project"
+msgstr ""
+
+#. 
+#: SEAM_PROJECT_WIZARD_SEAM_WEB_PROJECT
+#, java-format
+msgctxt "SEAM_PROJECT_WIZARD_SEAM_WEB_PROJECT"
+msgid "Seam Web Project"
+msgstr ""
+
+#. 
+#: SEAM_PROJECT_WIZARD_EAR_MEMBERSHIP
+#, java-format
+msgctxt "SEAM_PROJECT_WIZARD_EAR_MEMBERSHIP"
+msgid "EAR Membership"
+msgstr ""
+
+#. 
+#: SEAM_RUNTIME_LIST_FIELD_EDITOR_NAME
+#, java-format
+msgctxt "SEAM_RUNTIME_LIST_FIELD_EDITOR_NAME"
+msgid "Name"
+msgstr ""
+
+#. 
+#: SEAM_RUNTIME_LIST_FIELD_EDITOR_PATH
+#, java-format
+msgctxt "SEAM_RUNTIME_LIST_FIELD_EDITOR_PATH"
+msgid "Path"
+msgstr ""
+
+#. 
+#: SEAM_INSTALL_WIZARD_PAGE_GENERAL
+#, java-format
+msgctxt "SEAM_INSTALL_WIZARD_PAGE_GENERAL"
+msgid "General"
+msgstr ""
+
+#. 
+#: SEAM_PROJECT_WIZARD_PAGE1_BROWSE
+#, java-format
+msgctxt "SEAM_PROJECT_WIZARD_PAGE1_BROWSE"
+msgid "Browse..."
+msgstr ""
+
+#. 
+#: SEAM_GENERATE_ENTITIES_WIZARD_54
+#, java-format
+msgctxt "SEAM_GENERATE_ENTITIES_WIZARD_54"
+msgid "org.hibernate.eclipse.launch.SeamUtil"
+msgstr ""
+
+#. 
+#: SEAM_WIZARD_FACTORY_SEAM_PROJECT
+#, java-format
+msgctxt "SEAM_WIZARD_FACTORY_SEAM_PROJECT"
+msgid "Seam Project:"
+msgstr ""
+
+#. 
+#: SEAM_INSTALL_WIZARD_PAGE_DATABASE
+#, java-format
+msgctxt "SEAM_INSTALL_WIZARD_PAGE_DATABASE"
+msgid "Database"
+msgstr ""
+
+#. 
+#: SELECT_SEAM_PROJECT_ACTION_BROWSE
+#, java-format
+msgctxt "SELECT_SEAM_PROJECT_ACTION_BROWSE"
+msgid "Browse..."
+msgstr ""
+
+#. 
+#: SHOW_PROJECT_SETTINGS_ACTION
+#, java-format
+msgctxt "SHOW_PROJECT_SETTINGS_ACTION"
+msgid "<a>Settings...</a>"
+msgstr ""
+
+#. 
+#: SEAM_INSTALL_WIZARD_PAGE_CODE_GENERATION
+#, java-format
+msgctxt "SEAM_INSTALL_WIZARD_PAGE_CODE_GENERATION"
+msgid "Code Generation"
+msgstr ""
+
+#. 
+#: SEAM_FORM_WIZARD_FORM_CREATING_OPERATION
+#, java-format
+msgctxt "SEAM_FORM_WIZARD_FORM_CREATING_OPERATION"
+msgid "Form creating operation"
+msgstr ""
+
+#. 
+#: SEAM_WIZARD_FACTORY_LOCAL_INTERFACE_NAME
+#, java-format
+msgctxt "SEAM_WIZARD_FACTORY_LOCAL_INTERFACE_NAME"
+msgid "Local interface name:"
+msgstr ""
+
+#. 
+#: SEAM_UI_IMAGESIMAGE_NAME_CANNOT_BE_NULL
+#, java-format
+msgctxt "SEAM_UI_IMAGESIMAGE_NAME_CANNOT_BE_NULL"
+msgid "Image name cannot be null."
+msgstr ""
+
+#. 
+#: SEAM_RUNTIME_LIST_FIELD_EDITOR_VERSION2
+#, java-format
+msgctxt "SEAM_RUNTIME_LIST_FIELD_EDITOR_VERSION2"
+msgid "Version:"
+msgstr ""
+
+#. 
+#: SEAM_WIZARD_FACTORY_SEAM_COMPONENT_NAME
+#, java-format
+msgctxt "SEAM_WIZARD_FACTORY_SEAM_COMPONENT_NAME"
+msgid "Seam component name:"
+msgstr ""
+
+#. 
+#: SEAM_INSTALL_WIZARD_PAGE_EDIT
+#, java-format
+msgctxt "SEAM_INSTALL_WIZARD_PAGE_EDIT"
+msgid "Edit..."
+msgstr ""
+
+#. 
+#: SEAM_WIZARD_FACTORY_BEAN_NAME
+#, java-format
+msgctxt "SEAM_WIZARD_FACTORY_BEAN_NAME"
+msgid "Bean name:"
+msgstr ""
+
+#. 
+#: SEAM_WIZARD_FACTORY_PAGE_NAME
+#, java-format
+msgctxt "SEAM_WIZARD_FACTORY_PAGE_NAME"
+msgid "Page name:"
+msgstr ""
+
+#. 
+#: SEAM_WIZARD_FACTORY_PACKAGE_NAME
+#, java-format
+msgctxt "SEAM_WIZARD_FACTORY_PACKAGE_NAME"
+msgid "Package name:"
+msgstr ""
+
+#. 
+#: SEAM_ENTITY_WIZARD_PAGE1_LIST
+#, java-format
+msgctxt "SEAM_ENTITY_WIZARD_PAGE1_LIST"
+msgid "List"
+msgstr ""
+
+#. 
+#: SEAM_ENTITY_WIZARD_PAGE1_PAGE
+#, java-format
+msgctxt "SEAM_ENTITY_WIZARD_PAGE1_PAGE"
+msgid "Page"
+msgstr ""
+
+#. 
+#: SEAM_FORM_WIZARD_NEW_SEAM_FORM
+#, java-format
+msgctxt "SEAM_FORM_WIZARD_NEW_SEAM_FORM"
+msgid "New Seam Form"
+msgstr ""
+
+#. 
+#: SEAM_FORM_WIZARD_PAGE1_SEAM_FORM
+#, java-format
+msgctxt "SEAM_FORM_WIZARD_PAGE1_SEAM_FORM"
+msgid "Seam Form"
+msgstr ""
+
+#. 
+#: SEAM_WIZARD_FACTORY_METHOD_NAME
+#, java-format
+msgctxt "SEAM_WIZARD_FACTORY_METHOD_NAME"
+msgid "Method name:"
+msgstr ""
+
+#. 
+#: SEAM_INSTALL_WIZARD_PAGE_NEW
+#, java-format
+msgctxt "SEAM_INSTALL_WIZARD_PAGE_NEW"
+msgid "New..."
+msgstr ""
+
+#. 
+#: SEAM_INSTALL_WIZARD_PAGE_PACKAGE_NAME_FOR
+#, java-format
+msgctxt "SEAM_INSTALL_WIZARD_PAGE_PACKAGE_NAME_FOR"
+msgid "Package name for "
+msgstr ""
+
+#. 
+#: SEAM_INSTALL_WIZARD_PAGE_IS_NOT_VALID
+#, java-format
+msgctxt "SEAM_INSTALL_WIZARD_PAGE_IS_NOT_VALID"
+msgid " is not valid"
+msgstr ""
+
+#. 
+#: SEAM_BASE_WIZARD_PAGE_POJO_CLASS_NAME
+#, java-format
+msgctxt "SEAM_BASE_WIZARD_PAGE_POJO_CLASS_NAME"
+msgid "POJO class name:"
+msgstr ""
+
+#. 
+#: SEAM_BASE_WIZARD_PAGE_SEAM_COMPONENTS
+#, java-format
+msgctxt "SEAM_BASE_WIZARD_PAGE_SEAM_COMPONENTS"
+msgid "Seam component"
+msgstr ""
+
+#. 
+#: SEAM_BASE_WIZARD_PAGE_LOCAL_INTERFACE
+#, java-format
+msgctxt "SEAM_BASE_WIZARD_PAGE_LOCAL_INTERFACE"
+msgid "Local interface"
+msgstr ""
+
+#. 
+#: SEAM_ACTION_WIZARD_PAGE1_SEAM_ACTION
+#, java-format
+msgctxt "SEAM_ACTION_WIZARD_PAGE1_SEAM_ACTION"
+msgid "Seam Action"
+msgstr ""
+
+#. 
+#: SEAM_ACTION_WIZARD_NEW_SEAM_ACTION
+#, java-format
+msgctxt "SEAM_ACTION_WIZARD_NEW_SEAM_ACTION"
+msgid "New Seam Action"
+msgstr ""
+
+#. 
+#: SEAM_ACTION_WIZARD_ACTION_CREATING_OPERATION
+#, java-format
+msgctxt "SEAM_ACTION_WIZARD_ACTION_CREATING_OPERATION"
+msgid "Action creating operation"
+msgstr ""
+
+#. 
+#: SEAM_RUNTIME_LIST_FIELD_EDITOR_NAME2
+#, java-format
+msgctxt "SEAM_RUNTIME_LIST_FIELD_EDITOR_NAME2"
+msgid "Name:"
+msgstr ""
+
+#. 
+#: SEAM_WIZARD_FACTORY_MASTER_PAGE_NAME
+#, java-format
+msgctxt "SEAM_WIZARD_FACTORY_MASTER_PAGE_NAME"
+msgid "Master page name:"
+msgstr ""
+
+#. 
+#: SEAM_ENTITY_WIZARD_PAGE1_SEAM_ENTITY
+#, java-format
+msgctxt "SEAM_ENTITY_WIZARD_PAGE1_SEAM_ENTITY"
+msgid "Seam Entity"
+msgstr ""
+
+#. 
+#: SEAM_ENTITY_WIZARD_NEW_SEAM_ENTITY
+#, java-format
+msgctxt "SEAM_ENTITY_WIZARD_NEW_SEAM_ENTITY"
+msgid "New Seam Entity"
+msgstr ""
+
+#. 
+#: SEAM_INSTALL_WIZARD_PAGE_ADD
+#, java-format
+msgctxt "SEAM_INSTALL_WIZARD_PAGE_ADD"
+msgid "Add..."
+msgstr ""
+
+#. 
+#: CREATE_PROJECT_ACTION_UNABLE_TO_CREATE_WIZARD
+#, java-format
+msgctxt "CREATE_PROJECT_ACTION_UNABLE_TO_CREATE_WIZARD"
+msgid "Unable to create wizard '"
+msgstr ""
+
+#. 
+#: CREATE_SEAM_WEB_PROJECTACTION_CREATE_SEAM_PROJECT
+#, java-format
+msgctxt "CREATE_SEAM_WEB_PROJECTACTION_CREATE_SEAM_PROJECT"
+msgid "Create Seam Project"
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_PATH_TO_A_FOLDER_CANNOT_BE_NULL
+#, java-format
+msgctxt "VALIDATOR_FACTORY_PATH_TO_A_FOLDER_CANNOT_BE_NULL"
+msgid "Path to a folder cannot be null"
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_FOLDER
+#, java-format
+msgctxt "VALIDATOR_FACTORY_FOLDER"
+msgid "Folder '"
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_DOES_NOT_EXISTS
+#, java-format
+msgctxt "VALIDATOR_FACTORY_DOES_NOT_EXISTS"
+msgid "' doesn't exists"
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_PATH
+#, java-format
+msgctxt "VALIDATOR_FACTORY_PATH"
+msgid "Path '"
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_POINTS_TO_FILE
+#, java-format
+msgctxt "VALIDATOR_FACTORY_POINTS_TO_FILE"
+msgid "' points to file"
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_SEAM_HOME_FOLDER_DOES_NOT_EXISTS
+#, java-format
+msgctxt "VALIDATOR_FACTORY_SEAM_HOME_FOLDER_DOES_NOT_EXISTS"
+msgid "Seam Home folder doesn't exist"
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_SEAM_RT_HOME_DIR_DOES_NOT_EXIST
+#, java-format
+msgctxt "VALIDATOR_FACTORY_SEAM_RT_HOME_DIR_DOES_NOT_EXIST"
+msgid "Seam Runtime ''{0}'' home directory doesn't exist for selected Seam Web Project"
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_SEAM_RT_HOME_DIR_IS_MISSING
+#, java-format
+msgctxt "VALIDATOR_FACTORY_SEAM_RT_HOME_DIR_IS_MISSING"
+msgid "Seam Runtime ''{0}'' home directory doesn't exist"
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_SEAM_RT_RESOURCES_DIR_IS_MISSING
+#, java-format
+msgctxt "VALIDATOR_FACTORY_SEAM_RT_RESOURCES_DIR_IS_MISSING"
+msgid "Seam Runtime ''{0}'' resource templates directory doesn't exist"
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_SEAM_RT_TEMPLATES_DIR_DOES_NOT_EXIST
+#, java-format
+msgctxt "VALIDATOR_FACTORY_SEAM_RT_TEMPLATES_DIR_DOES_NOT_EXIST"
+msgid "Seam Runtime ''{0}'' templates directory doesn't exist for selected Seam Web Project"
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_SEAM_RT_TEMPLATES_DIR_IS_MISSING
+#, java-format
+msgctxt "VALIDATOR_FACTORY_SEAM_RT_TEMPLATES_DIR_IS_MISSING"
+msgid "Seam Runtime ''{0}'' templates directory doesn't exist"
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_SEAM_RT_VIE_TEMPLATE_DIR_DOES_NOT_EXIST
+#, java-format
+msgctxt "VALIDATOR_FACTORY_SEAM_RT_VIE_TEMPLATE_DIR_DOES_NOT_EXIST"
+msgid "Seam Runtime ''{0}'' view templates directory doesn't exist for selected Seam Web Project"
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_HOME_FOLDER_POINTS_TO
+#, java-format
+msgctxt "VALIDATOR_FACTORY_HOME_FOLDER_POINTS_TO"
+msgid "Home folder points to "
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_LOCATION_THAT_DOES_NOT_LOOK_LIKE_SEAM_HOME_FOLDER
+#, java-format
+msgctxt "VALIDATOR_FACTORY_LOCATION_THAT_DOES_NOT_LOOK_LIKE_SEAM_HOME_FOLDER"
+msgid "location that does not look like seam home folder ('jboss-seam.jar' is missing)"
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_JBOSS_AS_HOME_FOLDER_DOES_NOT_EXIST
+#, java-format
+msgctxt "VALIDATOR_FACTORY_JBOSS_AS_HOME_FOLDER_DOES_NOT_EXIST"
+msgid "JBoss AS Home folder doesn't exist"
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_JBOSS_AS_HOME_FOLDER_POINT_TO_LOCATION_THAT_DOES_NOT
+#, java-format
+msgctxt "VALIDATOR_FACTORY_JBOSS_AS_HOME_FOLDER_POINT_TO_LOCATION_THAT_DOES_NOT"
+msgid "JBoss AS Home Folde field points to location that doesn't "
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_LOOK_LIKE_JBOSS_AS_HOME_FOLDER
+#, java-format
+msgctxt "VALIDATOR_FACTORY_LOOK_LIKE_JBOSS_AS_HOME_FOLDER"
+msgid "look like JBoss AS home folder"
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_COMPONENT_NAME_IS_NOT_VALID
+#, java-format
+msgctxt "VALIDATOR_FACTORY_COMPONENT_NAME_IS_NOT_VALID"
+msgid "Component name is not invalid."
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_NAME_IS_NOT_VALID
+#, java-format
+msgctxt "VALIDATOR_FACTORY_NAME_IS_NOT_VALID"
+msgid "{0} name is not valid."
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_LOCAL_INTERFACE_NAME_IS_NOT_VALID
+#, java-format
+msgctxt "VALIDATOR_FACTORY_LOCAL_INTERFACE_NAME_IS_NOT_VALID"
+msgid ""
+"Local Interface name is not valid.\n"
+""
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_NAME_IS_NOT_VALID2
+#, java-format
+msgctxt "VALIDATOR_FACTORY_NAME_IS_NOT_VALID2"
+msgid " name is not valid."
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_PROJECT
+#, java-format
+msgctxt "VALIDATOR_FACTORY_PROJECT"
+msgid "Project '"
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_DOES_NOT_EXIST
+#, java-format
+msgctxt "VALIDATOR_FACTORY_DOES_NOT_EXIST"
+msgid "' doesn't exist."
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_SELECTED_PROJECT
+#, java-format
+msgctxt "VALIDATOR_FACTORY_SELECTED_PROJECT"
+msgid "Selected project '"
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_SELECTED_PRJ_IS_CLOSED
+#, java-format
+msgctxt "VALIDATOR_FACTORY_SELECTED_PRJ_IS_CLOSED"
+msgid "Selected project ''{0}'' is closed"
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_PRJ_NOT_SELECTED
+#, java-format
+msgctxt "VALIDATOR_FACTORY_PRJ_NOT_SELECTED"
+msgid "Project is not selected"
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_IS_NOT_A_SEAM_WEB_PROJECT
+#, java-format
+msgctxt "VALIDATOR_FACTORY_IS_NOT_A_SEAM_WEB_PROJECT"
+msgid "' is not a Seam Project"
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_CONNECTION_PROFILE_IS_NOT_SELECTED
+#, java-format
+msgctxt "VALIDATOR_FACTORY_CONNECTION_PROFILE_IS_NOT_SELECTED"
+msgid "Connection profile is not selected"
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_DRIVER_CLASS_PROPERTY_IS_EMPTY_FOR_SELECTED
+#, java-format
+msgctxt "VALIDATOR_FACTORY_DRIVER_CLASS_PROPERTY_IS_EMPTY_FOR_SELECTED"
+msgid "Driver Class property is empty for selected '"
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_SEAM_RT_SOURCE_TEMPLATES_DIR_DOES_NOT_EXIST
+#, java-format
+msgctxt "VALIDATOR_FACTORY_SEAM_RT_SOURCE_TEMPLATES_DIR_DOES_NOT_EXIST"
+msgid "Seam Runtime ''{0}'' source templates directory doesn't exist for selected Seam Web Project"
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_CONNECTION_PROFILE
+#, java-format
+msgctxt "VALIDATOR_FACTORY_CONNECTION_PROFILE"
+msgid "' connection profile"
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_SEAM_RUNTIME_IS_NOT_SELECTED
+#, java-format
+msgctxt "VALIDATOR_FACTORY_SEAM_RUNTIME_IS_NOT_SELECTED"
+msgid "Seam Runtime is not selected"
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_SEAM_RT_VIEW_DIR_IS_MISSING
+#, java-format
+msgctxt "VALIDATOR_FACTORY_SEAM_RT_VIEW_DIR_IS_MISSING"
+msgid "Seam Runtime ''{0}'' view templates directory doesn't exist"
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_SEAM_RT_CANNOT_BE_FOUND
+#, java-format
+msgctxt "VALIDATOR_FACTORY_SEAM_RT_CANNOT_BE_FOUND"
+msgid "Cannot find ''{0}'' Seam Runtime for selected Seam Web Project"
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_CANNOT_FIND_SEAM_RUNTIME
+#, java-format
+msgctxt "VALIDATOR_FACTORY_CANNOT_FIND_SEAM_RUNTIME"
+msgid "Cannot find Seam Runtime ''{0}''"
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_SEAM_RT_SRC_DIR_IS_MISSING
+#, java-format
+msgctxt "VALIDATOR_FACTORY_SEAM_RT_SRC_DIR_IS_MISSING"
+msgid "Seam Runtime ''{0}'' source templates directory doesn't exist"
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_TEST_PROJECT
+#, java-format
+msgctxt "VALIDATOR_FACTORY_TEST_PROJECT"
+msgid "Test project '"
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_EAR_PROJECT
+#, java-format
+msgctxt "VALIDATOR_FACTORY_EAR_PROJECT"
+msgid "EAR project '"
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_EJB_PROJECT
+#, java-format
+msgctxt "VALIDATOR_FACTORY_EJB_PROJECT"
+msgid "EJB project '"
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_PROJECT_ALREADY_EXISTS
+#, java-format
+msgctxt "VALIDATOR_FACTORY_PROJECT_ALREADY_EXISTS"
+msgid "' already exists. Please select other name for new Seam project."
+msgstr ""
+
+#. 
+#: VALIDATOR_FACTORY_SEAM_RT_NOT_CONFIGURED
+#, java-format
+msgctxt "VALIDATOR_FACTORY_SEAM_RT_NOT_CONFIGURED"
+msgid "Seam Runtime is not configured for selected Seam Web Project"
+msgstr ""
+
+#. 
+#: VALIDATOR_INVALID_SETTINGS
+#, java-format
+msgctxt "VALIDATOR_INVALID_SETTINGS"
+msgid "Selected seam project has some invalid settings. Please press \"Settings...\" and correct them."
+msgstr ""
+
+#. 
+#: SEAM_PROJECT_WIZARD_PAGE1_FILE_CONTAINER_MUST_BE_SPECIFIED
+#, java-format
+msgctxt "SEAM_PROJECT_WIZARD_PAGE1_FILE_CONTAINER_MUST_BE_SPECIFIED"
+msgid "File container must be specified"
+msgstr ""
+
+#. 
+#: SEAM_RUNTIME_LIST_FIELD_EDITOR_RUNTIME_NAME_IS_NOT_CORRECT
+#, java-format
+msgctxt "SEAM_RUNTIME_LIST_FIELD_EDITOR_RUNTIME_NAME_IS_NOT_CORRECT"
+msgid "Runtime name is not correct"
+msgstr ""
+
+#. 
+#: SEAM_GENERATE_ENTITIES_WIZARD_CAN_NOT_GENERATE_SEAM_ENTITIES
+#, java-format
+msgctxt "SEAM_GENERATE_ENTITIES_WIZARD_CAN_NOT_GENERATE_SEAM_ENTITIES"
+msgid "Can't generate seam entities"
+msgstr ""
+
+#. 
+#: SEAM_FORM_WIZARD_PAGE1_SELECT_THE_NAME_OF_THE_NEW_SEAM_FORM
+#, java-format
+msgctxt "SEAM_FORM_WIZARD_PAGE1_SELECT_THE_NAME_OF_THE_NEW_SEAM_FORM"
+msgid "Select the name of the new Seam Form. A new Seam Form with a single input field and related "
+msgstr ""
+
+#. 
+#: SEAM_ENTITY_WIZARD_PAGE1_SELECT_THE_NAME_OF_NEW_SEAM_ENTITY
+#, java-format
+msgctxt "SEAM_ENTITY_WIZARD_PAGE1_SELECT_THE_NAME_OF_NEW_SEAM_ENTITY"
+msgid "Select the name of the new Seam Entity. A new Seam Entity Bean with key Seam/EJB3 "
+msgstr ""
+
+#. 
+#: SEAM_UI_IMAGESBASE_URL_FOR_IMAGE_REGISTRY_CANNOT_BE_NULL
+#, java-format
+msgctxt "SEAM_UI_IMAGESBASE_URL_FOR_IMAGE_REGISTRY_CANNOT_BE_NULL"
+msgid "Base url for image registry cannot be null."
+msgstr ""
+
+#. 
+#: SEAM_PROJECT_WIZARD_PAGE1_THIS_WIZARD_CREATES_A_NEW_FILE
+#, java-format
+msgctxt "SEAM_PROJECT_WIZARD_PAGE1_THIS_WIZARD_CREATES_A_NEW_FILE"
+msgid "This wizard creates a new file with *.mpe extension that can be opened by a multi-page editor."
+msgstr ""
+
+#. 
+#: SEAM_GENERATE_ENTITIES_WIZARD_ACTION_CREATING_OPERATION
+#, java-format
+msgctxt "SEAM_GENERATE_ENTITIES_WIZARD_ACTION_CREATING_OPERATION"
+msgid "Action creating operation"
+msgstr ""
+
+#. 
+#: SEAM_GENERATE_ENTITIES_WIZARD_CAN_NOT_FIND_SEAM_RUNTIME
+#, java-format
+msgctxt "SEAM_GENERATE_ENTITIES_WIZARD_CAN_NOT_FIND_SEAM_RUNTIME"
+msgid "Can't find seam runtime for project "
+msgstr ""
+
+#. 
+#: ABSTRACT_SEAM_CONTENT_PROVIDER_SEAM_PROJECT_CHANGE_EVENT_OCCURS_BUT_NO_SORCE_OF_PROJECT_PROVIDED
+#, java-format
+msgctxt "ABSTRACT_SEAM_CONTENT_PROVIDER_SEAM_PROJECT_CHANGE_EVENT_OCCURS_BUT_NO_SORCE_OF_PROJECT_PROVIDED"
+msgid "Seam Project change event occurs, but no soyrce of project provided"
+msgstr ""
+
+#. 
+#: SEAM_OPEN_ACTION_OPEN
+#, java-format
+msgctxt "SEAM_OPEN_ACTION_OPEN"
+msgid "Open"
+msgstr ""
+
+#. 
+#: TEXT_FIELD_EDITOR_PARENT_CONTROL_SHOULD_BE_COMPOSITE
+#, java-format
+msgctxt "TEXT_FIELD_EDITOR_PARENT_CONTROL_SHOULD_BE_COMPOSITE"
+msgid "Parent control should be Composite"
+msgstr ""
+
+#. 
+#: TEXT_FIELD_EDITOR_EDITOR_SUPPORTS_ONLY_GRID_LAYOUT
+#, java-format
+msgctxt "TEXT_FIELD_EDITOR_EDITOR_SUPPORTS_ONLY_GRID_LAYOUT"
+msgid "Editor supports only grid layout"
+msgstr ""
+
+#. 
+#: BUTTON_FIELD_EDITOR_BROWSE
+#, java-format
+msgctxt "BUTTON_FIELD_EDITOR_BROWSE"
+msgid "Browse..."
+msgstr ""
+
+#. 
+#: BUTTON_FIELD_EDITOR_NOT_IMPLEMENTED_YET
+#, java-format
+msgctxt "BUTTON_FIELD_EDITOR_NOT_IMPLEMENTED_YET"
+msgid "Not implemented yet. Please setup real acion for editor."
+msgstr ""
+
+#. 
+#: SWT_FIELD_EDITOR_FACTORY_BROWS
+#, java-format
+msgctxt "SWT_FIELD_EDITOR_FACTORY_BROWS"
+msgid "Browse..."
+msgstr ""
+
+#. 
+#: SWT_FIELD_EDITOR_FACTORY_SELECT_SEAM_HOME_FOLDER
+#, java-format
+msgctxt "SWT_FIELD_EDITOR_FACTORY_SELECT_SEAM_HOME_FOLDER"
+msgid "Select Seam Home Folder"
+msgstr ""
+
+#. 
+#: SWT_FIELD_EDITOR_FACTORY_ERROR
+#, java-format
+msgctxt "SWT_FIELD_EDITOR_FACTORY_ERROR"
+msgid "Error"
+msgstr ""
+
+#. 
+#: SWT_FIELD_EDITOR_FACTORY_NOT_IMPLEMENTED_YET
+#, java-format
+msgctxt "SWT_FIELD_EDITOR_FACTORY_NOT_IMPLEMENTED_YET"
+msgid "Not implemented yet"
+msgstr ""
+
+#. 
+#: SWT_FIELD_EDITOR_FACTORY_OK
+#, java-format
+msgctxt "SWT_FIELD_EDITOR_FACTORY_OK"
+msgid "Ok"
+msgstr ""
+
+#. 
+#: BASE_FIELD_EDITOR_NO_LABEL
+#, java-format
+msgctxt "BASE_FIELD_EDITOR_NO_LABEL"
+msgid "No label"
+msgstr ""
+
+#. 
+#: BASE_FIELD_EDITOR_PARENT_CONTROL_SHOULD_BE_COMPOSITE
+#, java-format
+msgctxt "BASE_FIELD_EDITOR_PARENT_CONTROL_SHOULD_BE_COMPOSITE"
+msgid "Parent control should be Composite"
+msgstr ""
+
+#. 
+#: BASE_FIELD_EDITOR_EDITOR_SUPPORTS_ONLY_GRID_LAYOUT
+#, java-format
+msgctxt "BASE_FIELD_EDITOR_EDITOR_SUPPORTS_ONLY_GRID_LAYOUT"
+msgid "Editor supports only grid layout"
+msgstr ""
+
+#. 
+#: BASE_FIELD_EDITOR_PARENT_FOR_LABEL_IS_DIFFERENT
+#, java-format
+msgctxt "BASE_FIELD_EDITOR_PARENT_FOR_LABEL_IS_DIFFERENT"
+msgid "Parent for label is different"
+msgstr ""
+
+#. 
+#: COMPOSITE_EDITOR_PARENT_CONTROL_SHOULD_BE_COMPOSITE
+#, java-format
+msgctxt "COMPOSITE_EDITOR_PARENT_CONTROL_SHOULD_BE_COMPOSITE"
+msgid "Parent control should be Composite"
+msgstr ""
+
+#. 
+#: COMPOSITE_EDITOR_EDITOR_SUPPORTS_ONLY_GRID_LAYOUT
+#, java-format
+msgctxt "COMPOSITE_EDITOR_EDITOR_SUPPORTS_ONLY_GRID_LAYOUT"
+msgid "Editor supports only grid layout"
+msgstr ""
+
+#. 
+#: COMPOSITE_EDITOR_THIS_METOD_CAN_BE_INVOKED
+#, java-format
+msgctxt "COMPOSITE_EDITOR_THIS_METOD_CAN_BE_INVOKED"
+msgid "This metod can be invoked after getEditorControls(parent) only"
+msgstr ""
+
+#. 
+#: SEAM_RUNTIME_LIST_FIELD_EDITOR_PATH_TO_SEAM_HOME_DIRECTORY_CANNOT_BE_EMPTY
+#, java-format
+msgctxt "SEAM_RUNTIME_LIST_FIELD_EDITOR_PATH_TO_SEAM_HOME_DIRECTORY_CANNOT_BE_EMPTY"
+msgid "Path to seam home directory cannot be empty"
+msgstr ""
+
+#. 
+#: SEAM_CONVERSATION_WIZARD_PAGE1_SELECT_THE_NAME_OF_THE_NEW_SEAM_CONVERSATION
+#, java-format
+msgctxt "SEAM_CONVERSATION_WIZARD_PAGE1_SELECT_THE_NAME_OF_THE_NEW_SEAM_CONVERSATION"
+msgid "Select the name of the new Seam Conversation. A set of classes "
+msgstr ""
+
+#. 
+#: SEAM_ENTITY_WIZARD_PAGE1_ANNOTATIONS_AND_EXAMPLES_ATTRIBUTES_WILL_BE_CREATED
+#, java-format
+msgctxt "SEAM_ENTITY_WIZARD_PAGE1_ANNOTATIONS_AND_EXAMPLES_ATTRIBUTES_WILL_BE_CREATED"
+msgid "annotations and wxample attributes will be created."
+msgstr ""
+
+#. 
+#: SEAM_RUNTIME_LIST_FIELD_EDITOR_THE_SELECTED_SEAM_APPEARS_TO_BE_OF_INCOMATIBLE_VERSION
+#, java-format
+msgctxt "SEAM_RUNTIME_LIST_FIELD_EDITOR_THE_SELECTED_SEAM_APPEARS_TO_BE_OF_INCOMATIBLE_VERSION"
+msgid "The selected seam appears to be of an incompatible version '"
+msgstr ""
+
+#. 
+#: SEAM_GENERATE_ENTITIES_WIZARD_THIS_METHOD_IS_NOT_RELEVANT_IN_GENERATING_SEAM_ENTITIES
+#, java-format
+msgctxt "SEAM_GENERATE_ENTITIES_WIZARD_THIS_METHOD_IS_NOT_RELEVANT_IN_GENERATING_SEAM_ENTITIES"
+msgid "This method is not relevant in generating seam entities."
+msgstr ""
+
+#. 
+#: SEAM_FORM_WIZARD_PAGE1_JAVA_INTERFACE_SLSB_AND_KEY_SEAMEJB3_ANNOTATIONS_WILL_BE_CREATED
+#, java-format
+msgctxt "SEAM_FORM_WIZARD_PAGE1_JAVA_INTERFACE_SLSB_AND_KEY_SEAMEJB3_ANNOTATIONS_WILL_BE_CREATED"
+msgid "Java Interface, SLSB and key Seam/EJB3 annotations will be created."
+msgstr ""
+
+#. 
+#: SEAM_TARGET_SERVER
+#, java-format
+msgctxt "SEAM_TARGET_SERVER"
+msgid "Target Server"
+msgstr ""
+
+#. 
+#: RUNTIME_DELETE_CONFIRM_TITLE
+#, java-format
+msgctxt "RUNTIME_DELETE_CONFIRM_TITLE"
+msgid "Confirm Runtime Delete"
+msgstr ""
+
+#. 
+#: RUNTIME_DELETE_NOT_USED_CONFIRM
+#, java-format
+msgctxt "RUNTIME_DELETE_NOT_USED_CONFIRM"
+msgid "Are you sure you want to delete runtime ''{0}''?"
+msgstr ""
+
+#. 
+#: RUNTIME_DELETE_USED_CONFIRM
+#, java-format
+msgctxt "RUNTIME_DELETE_USED_CONFIRM"
+msgid "Runtime ''{0}'' is used by seam projects. Are you sure you want to delete it?"
+msgstr ""
+
+#. 
+#: OPEN_SEAM_COMPONENT_ACTION_ACTION_NAME
+#, java-format
+msgctxt "OPEN_SEAM_COMPONENT_ACTION_ACTION_NAME"
+msgid "Open Seam Component"
+msgstr ""
+
+#. 
+#: OPEN_SEAM_COMPONENT_ACTION_DESCRIPTION
+#, java-format
+msgctxt "OPEN_SEAM_COMPONENT_ACTION_DESCRIPTION"
+msgid "Open Seam Component"
+msgstr ""
+
+#. 
+#: OPEN_SEAM_COMPONENT_ACTION_TOOL_TIP
+#, java-format
+msgctxt "OPEN_SEAM_COMPONENT_ACTION_TOOL_TIP"
+msgid "Open Seam Component"
+msgstr ""
+
+#. 
+#: OPEN_SEAM_COMPONENT_ACTION_MESSAGE
+#, java-format
+msgctxt "OPEN_SEAM_COMPONENT_ACTION_MESSAGE"
+msgid "Enter seam component name prefix or pattern (? = any character, * = any string):"
+msgstr ""
+
+#. 
+#: OPEN_SEAM_COMPONENT_DIALOG_LOADING
+#, java-format
+msgctxt "OPEN_SEAM_COMPONENT_DIALOG_LOADING"
+msgid "Seam components loading"
+msgstr ""
+
+#. 
+#: OPEN_SEAM_COMPONENT_DIALOG_NAME
+#, java-format
+msgctxt "OPEN_SEAM_COMPONENT_DIALOG_NAME"
+msgid "OpenSeamComponentDialog"
+msgstr ""
+
+#. 
+#: OPEN_SEAM_COMPONENT_DIALOG_WAIT
+#, java-format
+msgctxt "OPEN_SEAM_COMPONENT_DIALOG_WAIT"
+msgid "Wait for Build..."
+msgstr ""
+
+#. 
+#: FIND_DECLARATIONS_ACTION_ACTION_NAME
+#, java-format
+msgctxt "FIND_DECLARATIONS_ACTION_ACTION_NAME"
+msgid "Find Seam Declarations"
+msgstr ""
+
+#. 
+#: FIND_DECLARATIONS_ACTION_DESCRIPTION
+#, java-format
+msgctxt "FIND_DECLARATIONS_ACTION_DESCRIPTION"
+msgid "Find Seam Declarations"
+msgstr ""
+
+#. 
+#: FIND_DECLARATIONS_ACTION_TOOL_TIP
+#, java-format
+msgctxt "FIND_DECLARATIONS_ACTION_TOOL_TIP"
+msgid "Find Seam Declarations"
+msgstr ""
+
+#. 
+#: FIND_DECLARATIONS_ACTION_MESSAGE
+#, java-format
+msgctxt "FIND_DECLARATIONS_ACTION_MESSAGE"
+msgid "&Choose a name of the seam variable or pattern (? = any character, * = any string):"
+msgstr ""
+
+#. 
+#: FIND_REFERENCES_ACTION_ACTION_NAME
+#, java-format
+msgctxt "FIND_REFERENCES_ACTION_ACTION_NAME"
+msgid "Find Seam References"
+msgstr ""
+
+#. 
+#: FIND_REFERENCES_ACTION_DESCRIPTION
+#, java-format
+msgctxt "FIND_REFERENCES_ACTION_DESCRIPTION"
+msgid "Find Seam References"
+msgstr ""
+
+#. 
+#: FIND_REFERENCES_ACTION_TOOL_TIP
+#, java-format
+msgctxt "FIND_REFERENCES_ACTION_TOOL_TIP"
+msgid "Find Seam References"
+msgstr ""
+
+#. 
+#: FIND_REFERENCES_ACTION_MESSAGE
+#, java-format
+msgctxt "FIND_REFERENCES_ACTION_MESSAGE"
+msgid "&Choose a name of the seam variable or pattern (? = any character, * = any string):"
+msgstr ""
+
+#. 
+#: VIEW_FOLDER_FILED_EDITOR
+#, java-format
+msgctxt "VIEW_FOLDER_FILED_EDITOR"
+msgid "View Folder:"
+msgstr ""
+
+#. 
+#: SELECT_WORKSPACE_FOLDER_DIALOG_TITLE
+#, java-format
+msgctxt "SELECT_WORKSPACE_FOLDER_DIALOG_TITLE"
+msgid "Folder Selection"
+msgstr ""
+
+#. 
+#: SELECT_WORKSPACE_FOLDER_DIALOG_MESSAGE
+#, java-format
+msgctxt "SELECT_WORKSPACE_FOLDER_DIALOG_MESSAGE"
+msgid "&Chose a folder"
+msgstr ""
+
+#. 
+#: SeamSearchQuery_task_label
+#, java-format
+msgctxt "SeamSearchQuery_task_label"
+msgid "Searching for ''{0}''..."
+msgstr ""
+
+#. 
+#: SeamSearchQuery_label
+#, java-format
+msgctxt "SeamSearchQuery_label"
+msgid "Seam {0} Search"
+msgstr ""
+
+#. 
+#: SeamSearchQuery_error_unsupported_pattern
+#, java-format
+msgctxt "SeamSearchQuery_error_unsupported_pattern"
+msgid "Unsupported search pattern: \"{0}\""
+msgstr ""
+
+#. 
+#. The first argument will be replaced by the pattern, the second by the scope, last by limitTo patterns
+#: SeamSearchQuery_singularPatternWithLimitTo
+#, java-format
+msgctxt "SeamSearchQuery_singularPatternWithLimitTo"
+msgid "''{0}'' - 1 match in {1} ({2})"
+msgstr ""
+
+#. 
+#. The first argument will be replaced by the pattern, the second by the count and the third by the scope, last by limitTo patterns
+#: SeamSearchQuery_pluralPatternWithLimitTo
+#, java-format
+msgctxt "SeamSearchQuery_pluralPatternWithLimitTo"
+msgid "''{0}'' - {1} matches in {2} ({3})"
+msgstr ""
+
+#. 
+#: SeamSearchScope_scope_empty
+#, java-format
+msgctxt "SeamSearchScope_scope_empty"
+msgid "empty scope"
+msgstr ""
+
+#. 
+#: SeamSearchScope_scope_single
+#, java-format
+msgctxt "SeamSearchScope_scope_single"
+msgid "''{0}''"
+msgstr ""
+
+#. 
+#: SeamSearchScope_scope_double
+#, java-format
+msgctxt "SeamSearchScope_scope_double"
+msgid "''{0}'', ''{1}''"
+msgstr ""
+
+#. 
+#: SeamSearchScope_scope_multiple
+#, java-format
+msgctxt "SeamSearchScope_scope_multiple"
+msgid "''{0}'', ''{1}'', ..."
+msgstr ""
+
+#. 
+#: SeamSearchScope_scope_LimitToDeclarations
+#, java-format
+msgctxt "SeamSearchScope_scope_LimitToDeclarations"
+msgid "Declarations"
+msgstr ""
+
+#. 
+#: SeamSearchScope_scope_LimitToReferences
+#, java-format
+msgctxt "SeamSearchScope_scope_LimitToReferences"
+msgid "References"
+msgstr ""
+
+#. 
+#. The first argument will be replaced by the pattern, the second by the count and the third by the scope
+#: SeamSearchQuery_pluralPattern
+#, java-format
+msgctxt "SeamSearchQuery_pluralPattern"
+msgid "''{0}'' - {1} matches in {2} ({3})"
+msgstr ""
+
+#. 
+#. The first argument will be replaced by the pattern, the second by the scope
+#: SeamSearchQuery_singularLabel
+#, java-format
+msgctxt "SeamSearchQuery_singularLabel"
+msgid "''{0}'' - 1 match in {1} ({2})"
+msgstr ""
+
+#. 
+#: SeamSearchVisitor_scanning
+#, java-format
+msgctxt "SeamSearchVisitor_scanning"
+msgid "Scanning file {1} of {2} in Seam project ''{0}''"
+msgstr ""
+
+#. 
+#: SeamSearch
+#, java-format
+msgctxt "SeamSearch"
+msgid "\"Seam Search - \""
+msgstr ""
+
+#. 
+#: SeamQuickFixFindDeclarations
+#, java-format
+msgctxt "SeamQuickFixFindDeclarations"
+msgid "Find Seam declarations for ''{0}''"
+msgstr ""
+
+#. 
+#: SeamQuickFixFindReferences
+#, java-format
+msgctxt "SeamQuickFixFindReferences"
+msgid "Find Seam references for ''{0}''"
+msgstr ""
+
+#. 
+#: SeamRuntimeListFieldEditor_ActionAdd
+#, java-format
+msgctxt "SeamRuntimeListFieldEditor_ActionAdd"
+msgid "&Add"
+msgstr ""
+
+#. 
+#: SeamRuntimeListFieldEditor_ActionEdit
+#, java-format
+msgctxt "SeamRuntimeListFieldEditor_ActionEdit"
+msgid "&Edit"
+msgstr ""
+
+#. 
+#: SeamRuntimeListFieldEditor_ActionRemove
+#, java-format
+msgctxt "SeamRuntimeListFieldEditor_ActionRemove"
+msgid "&Remove"
+msgstr ""
+
+#. 
+#: POJO_CLASS_ALREADY_EXISTS
+#, java-format
+msgctxt "POJO_CLASS_ALREADY_EXISTS"
+msgid "Such POJO class already exists!"
+msgstr ""
+
+#. 
+#: ENTITY_CLASS_ALREADY_EXISTS
+#, java-format
+msgctxt "ENTITY_CLASS_ALREADY_EXISTS"
+msgid "Such entity class already exists!"
+msgstr ""
+
+#. 
+#: PAGE_ALREADY_EXISTS
+#, java-format
+msgctxt "PAGE_ALREADY_EXISTS"
+msgid "Such page already exists!"
+msgstr ""
+
+#. 
+#: MASTER_PAGE_ALREADY_EXISTS
+#, java-format
+msgctxt "MASTER_PAGE_ALREADY_EXISTS"
+msgid "Such master page already exists!"
+msgstr ""
+

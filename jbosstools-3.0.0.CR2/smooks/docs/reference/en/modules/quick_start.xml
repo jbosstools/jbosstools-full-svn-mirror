@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="quickstart" xreflabel="Quick Start" role="updated">
+	<?dbhtml filename="quick_start.html"?>
+	<chapterinfo>
+		<keywordset>
+			<keyword>JBoss Tools</keyword>
+			<keyword>Smooks</keyword>
+			<keyword>JBDS</keyword>
+			<keyword>java</keyword>
+		</keywordset>
+	</chapterinfo>
+	<title>Quick Start</title>
+	<para> This "Quick Start" will show how to use the <property>Smooks tools</property> to create/edit the Smooks
+		configuration file for Java2Java data transformation.</para>
+	<para> This chapter should give you a brief understanding of the <property>Smooks dev tools</property>.</para>
+	<section>
+		<title>Download Smooks Java-to-Java Example</title>
+		<para> Visit <ulink
+				url="http://www.smooks.org/documentation/documentation-smooks-1-1-x/examples/example---java-to-java"
+				>here</ulink> to download the "java-to-java" example project. </para>
+		<tip>
+			<title>Tip:</title>
+
+			<para> The example project is base on Maven, you suggest you to create a new eclipse
+				Java project and copy the example code and .jar files from the example project paste
+				them into the eclipse Java project. </para>
+		</tip>
+	</section>
+	<section>
+		<title>Smooks Configuration File Wizard</title>
+		<para>Select the Smooks Java-to-Java example project what you created and right-click,
+			select the menu <emphasis><property>New > Other</property>,</emphasis> then find
+					<emphasis><property>Smooks > Smooks Configuration File</property>.</emphasis>
+			Click the <emphasis>
+				<property>Next</property>
+			</emphasis> button. </para>
+		<figure>
+			<title>Selecting Smooks Configuration File Wizard</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/quick_start/quick_start1.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>The first wizard page is a file path creation page. Select the <emphasis>
+				<property>src</property>
+			</emphasis> folder to be the files container, and input the name
+					<emphasis><property>newConfig.smooks</property>.</emphasis> Click
+					<emphasis><property>Next</property>.</emphasis></para>
+		<figure>
+			<title>Choosing the configuration file container and the file name</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/quick_start/quick_start2.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>The second wizard page is a transform data type choose page.</para>
+		<para> As the quick start introduces how to create/edit the Java-to-Java Smooks
+			configuration file, let&apos;s select the<emphasis>
+				<property>Java-to-Java</property>
+			</emphasis> type as the source/target transform data type. </para>
+
+		<figure>
+			<title>Selecting Data Type</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/quick_start/quick_start3.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+
+		<para>On the next page you are prompted to choose the source data for transformation.
+			Let&apos;s select the <property>Order</property> class from the example project as
+			the source JavaBean class.</para>
+
+		<figure>
+			<title>Selecting the Source Data</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/quick_start/quick_start4.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+
+		<para>Then the wizard page asks you to choose the target data for transformation. We select
+			the <property>ListOrder</property> class as the target JavaBean class.</para>
+		<figure>
+			<title>Selecting the Target Data</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/quick_start/quick_start5.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+
+		<para/>
+
+		<tip>
+			<title>Tip:</title>
+			<para>You can omit two these steps and just press
+					<emphasis><property>Finish</property>.</emphasis> This will open the empty
+				Smooks Configuration file. It&apos;s possible to <link
+					linkend="graphicaleditor_datalink">select source/target data</link> afterwards
+				in the Smooks Graph editor.</para>
+		</tip>
+	</section>
+	<section id="quickstart_formeditor">
+		<title>Smooks Editor</title>
+
+		<para>When all the wizard steps are passed, a new Smooks Configuration file is created and
+			the <property>Smooks Editor</property> will be opened automatically:</para>
+		<figure>
+			<title>Smooks Editor</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/quick_start/quick_start6.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+
+		<para> This editor contains several parts: <table>
+				<title>The Smooks Editor Parts</title>
+				<tgroup cols="2">
+
+					<colspec colnum="1" align="left" colwidth="1*"/>
+					<colspec colnum="2" colwidth="5*"/>
+
+					<thead>
+						<row>
+							<entry>Editor feature</entry>
+							<entry>Functionality</entry>
+						</row>
+					</thead>
+
+					<tbody>
+
+						<row>
+							<entry>
+								<para>Problems area</para>
+							</entry>
+							<entry>
+								<para>If there are any errors when you are editing the file, the
+									Problems area will display them</para>
+							</entry>
+						</row>
+
+						<row>
+							<entry>
+								<para>Source data tree</para>
+							</entry>
+							<entry>
+								<para>The tree will display the structure of transformed source
+									data</para>
+							</entry>
+						</row>
+
+						<row>
+							<entry>
+								<para>Target data tree</para>
+							</entry>
+							<entry>
+								<para>The tree will display the structure of transformed target
+									data</para>
+							</entry>
+						</row>
+
+						<row>
+							<entry>
+								<para>Mapping graphical area</para>
+							</entry>
+							<entry>
+								<para>Show the data mapping connection lines</para>
+							</entry>
+						</row>
+
+						<row>
+							<entry>
+								<para>Source/Target data selection links</para>
+							</entry>
+							<entry>
+								<para>Click the link, and <link linkend="graphicaleditor_datalink"
+										>Data Selection wizard</link> will be opened helping you to
+									choose the source/target data</para>
+							</entry>
+						</row>
+					</tbody>
+				</tgroup>
+			</table>
+		</para>
+	</section>
+
+	<section id="graphicaleditor_datalink">
+		<title>Choosing the Source/Target Data</title>
+
+		<para>To choose the transform data you should make use of the data selection links:</para>
+
+		<itemizedlist>
+			<listitem>
+				<para><emphasis>
+						<property>Source Select</property>
+					</emphasis> for selecting source data</para>
+			</listitem>
+
+			<listitem>
+				<para><emphasis>
+						<property>Target Select</property>
+					</emphasis> for selecting target data</para>
+			</listitem>
+		</itemizedlist>
+
+		<para>After clicking the link the <property>Data Type Selection wizard</property> will be
+			opened, and there are two data types on the list: Java and XML.</para>
+		<note>
+			<title>Note</title>
+			<para> There will be more and more data types on the list as the development went on.
+			</para>
+		</note>
+
+		<figure>
+			<title>Data Type Wizard</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/quick_start/quick_start7.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+
+		<para>Select the <emphasis>
+				<property>Java</property>
+			</emphasis> data type and click <emphasis><property>Next</property>,</emphasis> you will
+			see the JavaBean class selection page:</para>
+
+		<figure>
+			<title>JavaBean Data Selection</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/quick_start/quick_start8.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+
+		<para>When you select all the necessary java classes, click <emphasis>
+				<property>Finish</property>
+			</emphasis> and the structure of the java class will be displayed on the source/target
+			data tree.</para>
+		<figure>
+			<title>Displaying the Structure of the Transformed Data</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/quick_start/quick_start9.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+	</section>
+
+	<section id="quickstart_mapping">
+		<title>Mapping</title>
+
+		<para> As you see, the source/target data tree displays the structure of the java class. </para>
+		<para>How to map it?</para>
+		
+		<para>First, you should know what to transform:</para>
+
+		<orderedlist numeration="loweralpha" inheritnum="inherit">
+			<listitem>
+				<para>Bind the <emphasis>
+						<property>&quot;customerName&quot;</property>
+					</emphasis> property of the <property>Order#header</property> to the <emphasis>
+						<property>&quot;customerName&quot;</property>
+					</emphasis> property of <property>LineOrder</property>.</para>
+			</listitem>
+			<listitem>
+				<para>Bind the <emphasis>
+						<property>&quot;customerNumber&quot;</property>
+					</emphasis> property of the <property>Order#header</property> to the <emphasis>
+						<property>&quot;customerId&quot;</property>
+					</emphasis> property of <property>LineOrder</property>.</para>
+			</listitem>
+			<listitem>
+				<para>Bind the <emphasis>
+						<property>&quot;price&quot;</property>
+					</emphasis> property of the <property>OrderItem</property> to the <emphasis>
+						<property>&quot;unitPrice&quot;</property>
+					</emphasis> property of <property>LineItem</property>.</para>
+			</listitem>
+			<listitem>
+				<para>Bind the <emphasis>
+						<property>&quot;productId&quot;</property>
+					</emphasis> property of the <property>OrderItem</property> to the <emphasis>
+						<property>&quot;productCode&quot;</property>
+					</emphasis> property of <property>LineItem</property>.</para>
+			</listitem>
+			<listitem>
+				<para>Bind the <emphasis>
+						<property>&quot;quantity&quot;</property>
+					</emphasis> property of the <property>OrderItem</property> to the <emphasis>
+						<property>&quot;unitQuantity&quot;</property>
+					</emphasis> property of <property>LineItem</property>.</para>
+			</listitem>
+		</orderedlist>
+
+		<para> Make sense?</para>
+		<para> OK, let&apos;s select the <emphasis>
+				<property>&quot;customerName&quot;</property>
+			</emphasis> item of the <emphasis>
+				<property>&quot;header&quot;</property>
+			</emphasis> item on the source data tree and start to drag it. When the drag item
+			crosses the Mapping graphical area, you will see a connection line. Drop the item onto
+			the <emphasis>
+				<property>&quot;customerName&quot;</property>
+			</emphasis> of the <property>LineOrder</property> on the target data
+			view.</para>
+		<para> Now a dialog is opened asking you to connect the root node:</para>
+
+		<figure>
+			<title>Dialog Asking You to Connect to the Root Nodes</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/quick_start/quick_start10.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para> Please, click <emphasis>
+				<property>Yes</property>
+			</emphasis> to connect the root node. If you don&apos;t do that, this dialog will be
+			opened again when you connect other nodes.</para>
+		<note>
+			<title>Note:</title>
+			<para>Please, remember that: The root nodes of the source data and target data *MUST* be
+				connected.</para>
+			<para>This rule is not only for Java-to-Java, but the same is also relevant for
+				XML-to-Java </para>
+		</note>
+		<para> Now let&apos;s do the same operation with the <emphasis>
+				<property>&quot;customerNumber&quot;</property>,</emphasis> that is what you
+			should see:</para>
+		<figure>
+			<title>Correctly Mapping Editor</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/quick_start/quick_start11.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>Next, you are going to bind the properties of the <property>OrderItem</property> to
+			the properties of the <property>LineItem</property>.</para>
+		<para>Select the <emphasis>
+				<property>&quot;price&quot;</property>
+			</emphasis> and drag it onto the <emphasis>
+				<property>&quot;unitPrice&quot;</property>
+			</emphasis> of the other side tree viewer. The Problems area will show an
+			error:</para>
+		<figure>
+			<title>Connection Error 1</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/quick_start/quick_start12.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>How to deal with the error?</para>
+		<para>Please click the <emphasis>
+			<property>Fix it</property></emphasis> link, a menu is popped-up with several
+			resolve methods on it.</para>
+		<figure>
+			<title>Fixing the Connection Error</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/quick_start/quick_start13.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para> Select the first resolve method: <emphasis>
+			'Connect the &quot;OrderItem&quot; to the
+			&quot;LineItem&quot; '.</emphasis> As the result the <emphasis>
+				<property>&quot;OrderItem&quot;</property></emphasis> is connected with
+			the <emphasis>
+				<property>&quot;LineItem&quot;</property>.</emphasis></para>
+		<para>But the notify message area still shows some other errors:</para>
+		<figure>
+			<title>Connection Error 2</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/quick_start/quick_start14.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>OK, let&apos;s deal with the fire error. Click the <emphasis>
+			<property>Fix it</property></emphasis> link and
+			select the first resolve method. The <emphasis>
+				<property>&quot;orderItems&quot;</property></emphasis> is connected with
+			the <emphasis>
+				<property>&quot;lineItems&quot;</property>.</emphasis></para>
+		
+		<tip>
+			<title>Tip:</title>
+			<para> Why does the error occur?</para>
+			<para> You will find that, if you only connect the property node without connecting the
+				parent node of the property, the &quot;connection error&quot; occurs.</para>
+			<para>The connection of the &quot;price-to-unitPrice&quot; is the
+				&quot;Binding Connection&quot;, but it needs an &quot;Instance Creation
+				Connection&quot; - the connection of the
+				&quot;OrderItem-to-LineItem&quot;.</para>
+		</tip>
+		<para> After that, connect <emphasis>
+			<property>&quot;quantity&quot;</property></emphasis> to the <emphasis>
+				<property>&quot;unitQuantity&quot;</property></emphasis> and <emphasis>
+					<property>&quot;productId&quot;</property></emphasis> to the
+			<emphasis>
+				<property>&quot;productCode&quot;</property>:</emphasis></para>
+		<figure>
+			<title>Complete Mapping</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/quick_start/quick_start15.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>Now, you should save the file and the <property>Smooks tools</property> will generate the correct
+			configuration file content.</para>
+		<para>OK, let run the test class: <property>example.Main</property>. (Please, make sure that the Smooks engine
+			loads the correct configuration file).</para>
+		<para>Success!</para>
+	</section>
+</chapter>

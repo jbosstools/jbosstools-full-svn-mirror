@@ -1,0 +1,166 @@
+#SOME DESCRIPTIVE TITLE.
+#Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+#This file is distributed under the same license as the PACKAGE package.
+#FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-11-13 10:30+1000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+""
+
+#. component.scope
+#: Seam.lists.stateless
+#, java-format
+msgctxt "Seam.lists.stateless"
+msgid "stateless"
+msgstr ""
+
+#. 
+#: Seam.lists.event
+#, java-format
+msgctxt "Seam.lists.event"
+msgid "event"
+msgstr ""
+
+#. 
+#: Seam.lists.page
+#, java-format
+msgctxt "Seam.lists.page"
+msgid "page"
+msgstr ""
+
+#. 
+#: Seam.lists.conversation
+#, java-format
+msgctxt "Seam.lists.conversation"
+msgid "conversation"
+msgstr ""
+
+#. 
+#: Seam.lists.session
+#, java-format
+msgctxt "Seam.lists.session"
+msgid "session"
+msgstr ""
+
+#. 
+#: Seam.lists.business_process
+#, java-format
+msgctxt "Seam.lists.business_process"
+msgid "business_process"
+msgstr ""
+
+#. 
+#: Seam.lists.application
+#, java-format
+msgctxt "Seam.lists.application"
+msgid "application"
+msgstr ""
+
+#. 
+#: Seam.lists.STATELESS
+#, java-format
+msgctxt "Seam.lists.STATELESS"
+msgid "STATELESS"
+msgstr ""
+
+#. 
+#: Seam.lists.EVENT
+#, java-format
+msgctxt "Seam.lists.EVENT"
+msgid "EVENT"
+msgstr ""
+
+#. 
+#: Seam.lists.PAGE
+#, java-format
+msgctxt "Seam.lists.PAGE"
+msgid "PAGE"
+msgstr ""
+
+#. 
+#: Seam.lists.CONVERSATION
+#, java-format
+msgctxt "Seam.lists.CONVERSATION"
+msgid "CONVERSATION"
+msgstr ""
+
+#. 
+#: Seam.lists.SESSION
+#, java-format
+msgctxt "Seam.lists.SESSION"
+msgid "SESSION"
+msgstr ""
+
+#. 
+#: Seam.lists.BUSINESS_PROCESS
+#, java-format
+msgctxt "Seam.lists.BUSINESS_PROCESS"
+msgid "BUSINESS_PROCESS"
+msgstr ""
+
+#. 
+#: Seam.lists.APPLICATION
+#, java-format
+msgctxt "Seam.lists.APPLICATION"
+msgid "APPLICATION"
+msgstr ""
+
+#. 
+#: Seam.lists.BUILT_IN
+#, java-format
+msgctxt "Seam.lists.BUILT_IN"
+msgid "BUILT_IN"
+msgstr ""
+
+#. 
+#: Seam.lists.FRAMEWORK
+#, java-format
+msgctxt "Seam.lists.FRAMEWORK"
+msgid "FRAMEWORK"
+msgstr ""
+
+#. 
+#: Seam.lists.DEPLOYMENT
+#, java-format
+msgctxt "Seam.lists.DEPLOYMENT"
+msgid "DEPLOYMENT"
+msgstr ""
+
+#. 
+#: Seam.lists.MOCK
+#, java-format
+msgctxt "Seam.lists.MOCK"
+msgid "MOCK"
+msgstr ""
+
+#. 
+#: Seam.lists.MANUAL
+#, java-format
+msgctxt "Seam.lists.MANUAL"
+msgid "MANUAL"
+msgstr ""
+
+#. 
+#: Seam.lists.AUTO
+#, java-format
+msgctxt "Seam.lists.AUTO"
+msgid "AUTO"
+msgstr ""
+
+#. 
+#: Seam.lists.COMMIT
+#, java-format
+msgctxt "Seam.lists.COMMIT"
+msgid "COMMIT"
+msgstr ""
+

@@ -1,0 +1,11 @@
+<tests>
+	<test id="td">
+		<TD ID="td"
+			STYLE="background: rgb(176, 178, 142) none repeat scroll 0% 50%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; -moz-user-modify: read-write;"
+			CLASS="tdClass">
+			<SPAN>
+				Some Text
+</SPAN>
+		</TD>
+	</test>
+</tests>

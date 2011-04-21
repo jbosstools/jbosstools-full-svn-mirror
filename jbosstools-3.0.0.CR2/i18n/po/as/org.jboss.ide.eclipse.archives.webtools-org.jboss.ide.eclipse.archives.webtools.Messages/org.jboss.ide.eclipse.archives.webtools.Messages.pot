@@ -1,0 +1,301 @@
+#SOME DESCRIPTIVE TITLE.
+#Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+#This file is distributed under the same license as the PACKAGE package.
+#FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-11-19 15:08+1000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+""
+
+#. 
+#: ExceptionCannotScanDirectory
+#, java-format
+msgctxt "ExceptionCannotScanDirectory"
+msgid "Cannot scan directory"
+msgstr ""
+
+#. 
+#: ExceptionUnexpectedException
+#, java-format
+msgctxt "ExceptionUnexpectedException"
+msgid "Unexpected exception"
+msgstr ""
+
+#. 
+#: ExceptionCannotDeployFile
+#, java-format
+msgctxt "ExceptionCannotDeployFile"
+msgid "Cannot publish file {0}"
+msgstr ""
+
+#. 
+#: ErrorDuringPublish
+#, java-format
+msgctxt "ErrorDuringPublish"
+msgid "Error publishing module {0}"
+msgstr ""
+
+#. 
+#: PublishSuccessful
+#, java-format
+msgctxt "PublishSuccessful"
+msgid "Module {0} published."
+msgstr ""
+
+#. 
+#: ArchivePublishSettings
+#, java-format
+msgctxt "ArchivePublishSettings"
+msgid "Archive Publish Settings"
+msgstr ""
+
+#. 
+#: SelectServerWizard
+#, java-format
+msgctxt "SelectServerWizard"
+msgid "Select Server Wizard"
+msgstr ""
+
+#. 
+#: SelectServerWizardDescription
+#, java-format
+msgctxt "SelectServerWizardDescription"
+msgid "Select the server to publish the archive to."
+msgstr ""
+
+#. 
+#: SelectServerWizardTitle
+#, java-format
+msgctxt "SelectServerWizardTitle"
+msgid "Publish archive to a server"
+msgstr ""
+
+#. 
+#: AlwaysPublishToTheseServers
+#, java-format
+msgctxt "AlwaysPublishToTheseServers"
+msgid "Always publish to these servers"
+msgstr ""
+
+#. 
+#: AutoDeployAfterBuild
+#, java-format
+msgctxt "AutoDeployAfterBuild"
+msgid "Auto-deploy to selected servers after builds"
+msgstr ""
+
+#. 
+#: DeleteFiles
+#, java-format
+msgctxt "DeleteFiles"
+msgid "Delete Files?"
+msgstr ""
+
+#. 
+#: DeleteFilesMessage
+#, java-format
+msgctxt "DeleteFilesMessage"
+msgid "Are you sure you want to delete the selected files?"
+msgstr ""
+
+#. 
+#. 
+#. 
+#. Filesets
+#: FilesetsCreateFilter
+#, java-format
+msgctxt "FilesetsCreateFilter"
+msgid "Create File Filter"
+msgstr ""
+
+#. 
+#: FilesetsDeleteFilter
+#, java-format
+msgctxt "FilesetsDeleteFilter"
+msgid "Delete File Filter"
+msgstr ""
+
+#. 
+#: FilesetsEditFilter
+#, java-format
+msgctxt "FilesetsEditFilter"
+msgid "Edit File Filter"
+msgstr ""
+
+#. 
+#: FilesetsDeleteFile
+#, java-format
+msgctxt "FilesetsDeleteFile"
+msgid "Delete File"
+msgstr ""
+
+#. 
+#: FilesetsEditFile
+#, java-format
+msgctxt "FilesetsEditFile"
+msgid "Edit File"
+msgstr ""
+
+#. 
+#: FilesetsNewFileset
+#, java-format
+msgctxt "FilesetsNewFileset"
+msgid "New File Filter"
+msgstr ""
+
+#. 
+#: FilesetsNewName
+#, java-format
+msgctxt "FilesetsNewName"
+msgid "Name:"
+msgstr ""
+
+#. 
+#: FilesetsNewRootDir
+#, java-format
+msgctxt "FilesetsNewRootDir"
+msgid "Root Directory:"
+msgstr ""
+
+#. 
+#: FilesetsNewBrowse
+#, java-format
+msgctxt "FilesetsNewBrowse"
+msgid "Browse..."
+msgstr ""
+
+#. 
+#: FilesetsNewIncludes
+#, java-format
+msgctxt "FilesetsNewIncludes"
+msgid "Includes:"
+msgstr ""
+
+#. 
+#: FilesetsNewExcludes
+#, java-format
+msgctxt "FilesetsNewExcludes"
+msgid "Excludes:"
+msgstr ""
+
+#. 
+#: FilesetsNewPreview
+#, java-format
+msgctxt "FilesetsNewPreview"
+msgid "Preview"
+msgstr ""
+
+#. 
+#: FilesetsCannotOpenFile
+#, java-format
+msgctxt "FilesetsCannotOpenFile"
+msgid "Cannot open file"
+msgstr ""
+
+#. 
+#: FilesetsDialogTitle
+#, java-format
+msgctxt "FilesetsDialogTitle"
+msgid "File filter"
+msgstr ""
+
+#. 
+#: FilesetsDialogMessage
+#, java-format
+msgctxt "FilesetsDialogMessage"
+msgid "Creates a new file filter"
+msgstr ""
+
+#. 
+#: NewEar
+#, java-format
+msgctxt "NewEar"
+msgid "New EAR"
+msgstr ""
+
+#. 
+#: EarPreview
+#, java-format
+msgctxt "EarPreview"
+msgid "EAR Preview"
+msgstr ""
+
+#. 
+#: EarDescription
+#, java-format
+msgctxt "EarDescription"
+msgid ""
+"Preview the EAR\n"
+"Later, you can customize this structure further."
+msgstr ""
+
+#. 
+#: NewWar
+#, java-format
+msgctxt "NewWar"
+msgid "New WAR"
+msgstr ""
+
+#. 
+#: WarPreview
+#, java-format
+msgctxt "WarPreview"
+msgid "WAR Preview"
+msgstr ""
+
+#. 
+#: WarDescription
+#, java-format
+msgctxt "WarDescription"
+msgid ""
+"Preview the WAR\n"
+"Later, you can customize this structure further."
+msgstr ""
+
+#. 
+#: NewEjbJar
+#, java-format
+msgctxt "NewEjbJar"
+msgid "New EJB JAR"
+msgstr ""
+
+#. 
+#: Preview
+#, java-format
+msgctxt "Preview"
+msgid "Preview"
+msgstr ""
+
+#. 
+#: BuildArchive
+#, java-format
+msgctxt "BuildArchive"
+msgid "Build Archive"
+msgstr ""
+
+#. 
+#: EjbJarPreview
+#, java-format
+msgctxt "EjbJarPreview"
+msgid "EJB JAR Preview"
+msgstr ""
+
+#. 
+#: EjbJarDescription
+#, java-format
+msgctxt "EjbJarDescription"
+msgid ""
+"Preview the EJB JAR\n"
+"Later, you can customize this structure further."
+msgstr ""
+

@@ -1,0 +1,70 @@
+#SOME DESCRIPTIVE TITLE.
+#Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+#This file is distributed under the same license as the PACKAGE package.
+#FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-07-04 13:07+1000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+""
+
+#. 
+#: SEAM_PAGES_XML_PLUGIN_NO_MESSAGE
+#, java-format
+msgctxt "SEAM_PAGES_XML_PLUGIN_NO_MESSAGE"
+msgid "No message"
+msgstr ""
+
+#. 
+#: WARNING
+#, java-format
+msgctxt "WARNING"
+msgid "Warning"
+msgstr ""
+
+#. 
+#: ATTRIBUTE_VIEW_ID_IS_NOT_CORRECT
+#, java-format
+msgctxt "ATTRIBUTE_VIEW_ID_IS_NOT_CORRECT"
+msgid "Attribute 'view id' is not correct"
+msgstr ""
+
+#. 
+#: TEMPLATE_IS_NOT_SPECIFIED
+#, java-format
+msgctxt "TEMPLATE_IS_NOT_SPECIFIED"
+msgid "Template is not specified"
+msgstr ""
+
+#. 
+#: TEMPLATE_DOES_NOT_EXIST
+#, java-format
+msgctxt "TEMPLATE_DOES_NOT_EXIST"
+msgid "Template does not exist."
+msgstr ""
+
+#. 
+#: THE_VIEW_WITH_PATH_IS_ALREADY_CREATED
+#, java-format
+msgctxt "THE_VIEW_WITH_PATH_IS_ALREADY_CREATED"
+msgid ""
+"The View with 'view id' '{0}' is already created.\n"
+""
+msgstr ""
+
+#. 
+#: TEMPLATE_IS_NOT_FOUND
+#, java-format
+msgctxt "TEMPLATE_IS_NOT_FOUND"
+msgid "Template {0} is not found."
+msgstr ""
+

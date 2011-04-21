@@ -1,0 +1,262 @@
+#SOME DESCRIPTIVE TITLE.
+#Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+#This file is distributed under the same license as the PACKAGE package.
+#FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-08-05 14:18+1000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+""
+
+#. ******************************************************************************
+#. Copyright (c) 2001, 2004 IBM Corporation and others.
+#. All rights reserved. This program and the accompanying materials
+#. are made available under the terms of the Eclipse Public License v1.0
+#. which accompanies this distribution, and is available at
+#. http://www.eclipse.org/legal/epl-v10.html
+#. 
+#. Contributors:
+#. IBM Corporation - initial API and implementation
+#. Jens Lukowski/Innoopract - initial renaming/restructuring
+#. Exadel, Inc.
+#. Red Hat, Inc.
+#. ******************************************************************************
+#: cannotOpenLink
+#, java-format
+msgctxt "cannotOpenLink"
+msgid "Current text selection does not resolve to a file"
+msgstr ""
+
+#. 
+#: BrowseToFilterNameDefinition
+#, java-format
+msgctxt "BrowseToFilterNameDefinition"
+msgid "Browse to TLD Attribute Name declaration"
+msgstr ""
+
+#. 
+#: BrowseToRoleNameDefinition
+#, java-format
+msgctxt "BrowseToRoleNameDefinition"
+msgid "Browse to ''role-name'' definition"
+msgstr ""
+
+#. 
+#: BrowseToServletNameDefinition
+#, java-format
+msgctxt "BrowseToServletNameDefinition"
+msgid "Browse to ''servlet-name'' definition"
+msgstr ""
+
+#. 
+#: Open
+#, java-format
+msgctxt "Open"
+msgid "Open ''{0}''"
+msgstr ""
+
+#. 
+#: OpenA
+#, java-format
+msgctxt "OpenA"
+msgid "Open a {0}"
+msgstr ""
+
+#. 
+#: OpenAn
+#, java-format
+msgctxt "OpenAn"
+msgid "Open an {0}"
+msgstr ""
+
+#. 
+#: BrowseFor
+#, java-format
+msgctxt "BrowseFor"
+msgid "Browse for {0}"
+msgstr ""
+
+#. 
+#: OpenGetterOrSetterForProperty
+#, java-format
+msgctxt "OpenGetterOrSetterForProperty"
+msgid "Open a {0} for the property ''{1}''"
+msgstr ""
+
+#. 
+#: OpenValidationMethod
+#, java-format
+msgctxt "OpenValidationMethod"
+msgid "Open Validation Method ''{0}''"
+msgstr ""
+
+#. 
+#: OpenClass
+#, java-format
+msgctxt "OpenClass"
+msgid "Open class ''{0}''"
+msgstr ""
+
+#. 
+#: OpenBean
+#, java-format
+msgctxt "OpenBean"
+msgid "Open Bean ''{0}''"
+msgstr ""
+
+#. 
+#: OpenBundle
+#, java-format
+msgctxt "OpenBundle"
+msgid "Open bundle for base name ''{0}''"
+msgstr ""
+
+#. 
+#: OpenBundleProperty
+#, java-format
+msgctxt "OpenBundleProperty"
+msgid "Open property ''{0}'' of bundle ''{1}''"
+msgstr ""
+
+#. 
+#: OpenCSSStyle
+#, java-format
+msgctxt "OpenCSSStyle"
+msgid "Open CSS style definition ''{0}''"
+msgstr ""
+
+#. 
+#: OpenFile
+#, java-format
+msgctxt "OpenFile"
+msgid "Open file ''{0}''"
+msgstr ""
+
+#. 
+#: Getter
+#, java-format
+msgctxt "Getter"
+msgid "getter"
+msgstr ""
+
+#. 
+#: Setter
+#, java-format
+msgctxt "Setter"
+msgid "setter"
+msgstr ""
+
+#. 
+#: Bean
+#, java-format
+msgctxt "Bean"
+msgid "bean"
+msgstr ""
+
+#. 
+#: Class
+#, java-format
+msgctxt "Class"
+msgid "class"
+msgstr ""
+
+#. 
+#: Bundle
+#, java-format
+msgctxt "Bundle"
+msgid "bundle"
+msgstr ""
+
+#. 
+#: BundleProperty
+#, java-format
+msgctxt "BundleProperty"
+msgid "bundle property"
+msgstr ""
+
+#. 
+#: CSSStyle
+#, java-format
+msgctxt "CSSStyle"
+msgid "CSS style"
+msgstr ""
+
+#. 
+#: ValidationMethod
+#, java-format
+msgctxt "ValidationMethod"
+msgid "Validation Method"
+msgstr ""
+
+#. 
+#: NotFound
+#, java-format
+msgctxt "NotFound"
+msgid "''{0}'' not found"
+msgstr ""
+
+#. 
+#: File
+#, java-format
+msgctxt "File"
+msgid "file"
+msgstr ""
+
+#. 
+#: TagLibrary
+#, java-format
+msgctxt "TagLibrary"
+msgid "Tag Library"
+msgstr ""
+
+#. 
+#: OpenTagLibraryForPrefix
+#, java-format
+msgctxt "OpenTagLibraryForPrefix"
+msgid "Open a Tag Library for prefix ''{0}''"
+msgstr ""
+
+#. 
+#: OpenTagLibraryForUri
+#, java-format
+msgctxt "OpenTagLibraryForUri"
+msgid "Open a Tag Library for URI ''{0}''"
+msgstr ""
+
+#. 
+#: BrowseForId
+#, java-format
+msgctxt "BrowseForId"
+msgid "Browse for ID ''{0}''"
+msgstr ""
+
+#. 
+#: Id
+#, java-format
+msgctxt "Id"
+msgid "ID"
+msgstr ""
+
+#. 
+#: BrowseForBeanId
+#, java-format
+msgctxt "BrowseForBeanId"
+msgid "Browse for Bean ID ''{0}''"
+msgstr ""
+
+#. 
+#: BeanId
+#, java-format
+msgctxt "BeanId"
+msgid "Bean ID"
+msgstr ""
+

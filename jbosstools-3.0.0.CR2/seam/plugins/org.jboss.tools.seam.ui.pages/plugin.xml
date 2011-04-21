@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+   <extension id="e" name="XML Editors" point="org.jboss.tools.common.model.ui.xmlEditor">
+      <xmlEditor 
+            class="org.jboss.tools.seam.ui.pages.editor.SeamPagesEditor" 
+            contributorClass="org.jboss.tools.seam.ui.pages.editor.PagesMultiPageContributor" 
+            entities="FileSeamPages12,FileSeamPages20,FileSeamPages21" 
+            icon="images/xstudio/editors/seam-pages.gif" 
+            name="Seam Pages">
+      </xmlEditor>
+      <xmlEditor 
+            class="org.jboss.tools.jst.web.ui.editors.WebCompoundEditor" 
+            contributorClass="org.jboss.tools.common.model.ui.texteditors.MultiPageContributor" 
+            entities="FileSeamPage12,FileSeamPage20,FileSeamPage21" 
+            icon="images/xstudio/editors/seam-pages.gif" 
+            name="Seam Page">
+      </xmlEditor>
+   </extension>
+
+	<extension point="org.jboss.tools.common.model.classes">
+		<xclass id="org.jboss.tools.seam.ui.pages.editor.wizard.SelectItemWizard"
+			class="org.jboss.tools.seam.ui.pages.editor.wizard.SelectItemWizard"/>
+		<xclass id="org.jboss.tools.seam.ui.pages.editor.commands.AddPageOnDiagramHandler"
+			class="org.jboss.tools.seam.ui.pages.editor.commands.AddPageOnDiagramHandler"/>
+		<xclass id="org.jboss.tools.seam.ui.pages.editor.commands.AddExceptionOnDiagramHandler"
+			class="org.jboss.tools.seam.ui.pages.editor.commands.AddExceptionOnDiagramHandler"/>
+   </extension>
+
+   <extension point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.jboss.tools.common.xstudio.editors"
+            class="org.jboss.tools.seam.ui.pages.editor.SeamPagesPreferencesPage"
+            id="org.jboss.tools.seam.ui.pages.diagram"
+            name="%PreferencePage_SeamPagesDiagram"/>
+   </extension>
+
+</plugin>

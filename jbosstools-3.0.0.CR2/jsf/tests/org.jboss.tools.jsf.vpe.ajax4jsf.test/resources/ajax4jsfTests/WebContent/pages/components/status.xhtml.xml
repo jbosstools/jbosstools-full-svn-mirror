@@ -1,0 +1,25 @@
+<tests>
+	<test id="status1">
+		<SPAN>
+			<SPAN>
+				Complete
+			</SPAN>
+		</SPAN>
+	</test>
+	<test id="status2">
+		<SPAN CLASS="StyleClass StopStyleClass" STYLE="border: 3px solid red;">
+			<SPAN>
+				STOP TEXT
+			</SPAN>
+			<DIV>
+				<SPAN CLASS="vpe-text">
+					<SPAN CLASS="vpe-text">
+					</SPAN>
+					<SPAN CLASS="vpe-text">
+						FACET STOP OUTPUT TEXT
+					</SPAN>
+				</SPAN>
+			</DIV>
+		</SPAN>
+	</test>
+</tests>

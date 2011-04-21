@@ -1,0 +1,173 @@
+#SOME DESCRIPTIVE TITLE.
+#Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+#This file is distributed under the same license as the PACKAGE package.
+#FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-01-14 12:15+1000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+""
+
+#. 
+#: Label_Select_All
+#, java-format
+msgctxt "Label_Select_All"
+msgid "Select All"
+msgstr ""
+
+#. 
+#: Label_Deselect_All
+#, java-format
+msgctxt "Label_Deselect_All"
+msgid "Deselect All"
+msgstr ""
+
+#. 
+#: Label_Button_Browse
+#, java-format
+msgctxt "Label_Button_Browse"
+msgid "Browse..."
+msgstr ""
+
+#. 
+#: Bpmn_Wizard_Title
+#, java-format
+msgctxt "Bpmn_Wizard_Title"
+msgid "BPMN to jPDL Conversion"
+msgstr ""
+
+#. 
+#: Bpmn_File_Choose_WizardPage_Name
+#, java-format
+msgctxt "Bpmn_File_Choose_WizardPage_Name"
+msgid "FileChoosePage"
+msgstr ""
+
+#. 
+#: Bpmn_File_Choose_WizardPage_Title
+#, java-format
+msgctxt "Bpmn_File_Choose_WizardPage_Title"
+msgid "BPMN Resources"
+msgstr ""
+
+#. 
+#: Bpmn_File_Choose_WizardPage_ViewerTitle
+#, java-format
+msgctxt "Bpmn_File_Choose_WizardPage_ViewerTitle"
+msgid "BPMN resources"
+msgstr ""
+
+#. 
+#: Bpmn_File_Choose_WizardPage_Message
+#, java-format
+msgctxt "Bpmn_File_Choose_WizardPage_Message"
+msgid "Select BPMN resources to convert"
+msgstr ""
+
+#. 
+#: Bpmn_Pool_Choose_WizardPage_Name
+#, java-format
+msgctxt "Bpmn_Pool_Choose_WizardPage_Name"
+msgid "PoolPage"
+msgstr ""
+
+#. 
+#: Bpmn_Pool_Choose_WizardPage_Title
+#, java-format
+msgctxt "Bpmn_Pool_Choose_WizardPage_Title"
+msgid "BPMN Pools"
+msgstr ""
+
+#. 
+#: Bpmn_Pool_Choose_WizardPage_ViewerTitle
+#, java-format
+msgctxt "Bpmn_Pool_Choose_WizardPage_ViewerTitle"
+msgid "BPMN pools"
+msgstr ""
+
+#. 
+#: Bpmn_Pool_Choose_WizardPage_Message
+#, java-format
+msgctxt "Bpmn_Pool_Choose_WizardPage_Message"
+msgid "Select BPMN pools to translate"
+msgstr ""
+
+#. 
+#: Bpmn_GeneratedFile_Location_WizardPage_Name
+#, java-format
+msgctxt "Bpmn_GeneratedFile_Location_WizardPage_Name"
+msgid "LocationPage"
+msgstr ""
+
+#. 
+#: Bpmn_GeneratedFile_Location_WizardPage_Title
+#, java-format
+msgctxt "Bpmn_GeneratedFile_Location_WizardPage_Title"
+msgid "Target Location"
+msgstr ""
+
+#. 
+#: Bpmn_GeneratedFile_Location_WizardPage_ViewerTitle
+#, java-format
+msgctxt "Bpmn_GeneratedFile_Location_WizardPage_ViewerTitle"
+msgid "Target location"
+msgstr ""
+
+#. 
+#: Bpmn_GeneratedFile_Location_WizardPage_Message
+#, java-format
+msgctxt "Bpmn_GeneratedFile_Location_WizardPage_Message"
+msgid "Select the target location"
+msgstr ""
+
+#. 
+#: Bpmn_GeneratedFile_Location_WizardPage_CheckBox
+#, java-format
+msgctxt "Bpmn_GeneratedFile_Location_WizardPage_CheckBox"
+msgid "Overwrite existing resources"
+msgstr ""
+
+#. 
+#: Bpmn_Translate_Message_WizardPage_Name
+#, java-format
+msgctxt "Bpmn_Translate_Message_WizardPage_Name"
+msgid "MessagePage"
+msgstr ""
+
+#. 
+#: Bpmn_Translate_Message_WizardPage_Title
+#, java-format
+msgctxt "Bpmn_Translate_Message_WizardPage_Title"
+msgid "Conversion Warnings and Errors"
+msgstr ""
+
+#. 
+#: Bpmn_Translate_Message_WizardpageViewer_Title
+#, java-format
+msgctxt "Bpmn_Translate_Message_WizardpageViewer_Title"
+msgid "Warnings and Errors"
+msgstr ""
+
+#. 
+#: Bpmn_Translate_Message_WizardPage_Message
+#, java-format
+msgctxt "Bpmn_Translate_Message_WizardPage_Message"
+msgid "Warnings and Errors that occurred during conversion"
+msgstr ""
+
+#. 
+#: Translate_Error_File_CanNotRead
+#, java-format
+msgctxt "Translate_Error_File_CanNotRead"
+msgid "Error: Couldn't read or parse {0} file to a DOM document: "
+msgstr ""
+

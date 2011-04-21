@@ -1,0 +1,61 @@
+#SOME DESCRIPTIVE TITLE.
+#Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+#This file is distributed under the same license as the PACKAGE package.
+#FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-07-04 13:16+1000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+""
+
+#. 
+#: jeeClasspathAdding
+#, java-format
+msgctxt "jeeClasspathAdding"
+msgid "Adding "
+msgstr ""
+
+#. 
+#: jeeClasspathBody1
+#, java-format
+msgctxt "jeeClasspathBody1"
+msgid "Click finish to continue adding "
+msgstr ""
+
+#. 
+#: jeeClasspathBody2
+#, java-format
+msgctxt "jeeClasspathBody2"
+msgid "to your project's classpath."
+msgstr ""
+
+#. 
+#: jeeClasspathDescription
+#, java-format
+msgctxt "jeeClasspathDescription"
+msgid "These libraries include the API and Source for the chosen JEE version."
+msgstr ""
+
+#. 
+#: ejb3ClasspathPageTitle
+#, java-format
+msgctxt "ejb3ClasspathPageTitle"
+msgid "JBoss EJB 3.0 Libraries"
+msgstr ""
+
+#. 
+#: ejb3ClasspathPageDescription
+#, java-format
+msgctxt "ejb3ClasspathPageDescription"
+msgid "Add EJB 3.0 Libraries from one of the declared servers."
+msgstr ""
+

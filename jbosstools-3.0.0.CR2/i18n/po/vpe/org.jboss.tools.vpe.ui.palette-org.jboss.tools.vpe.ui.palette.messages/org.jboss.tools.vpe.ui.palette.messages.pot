@@ -1,0 +1,54 @@
+#SOME DESCRIPTIVE TITLE.
+#Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+#This file is distributed under the same license as the PACKAGE package.
+#FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-07-04 13:14+1000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+""
+
+#. 
+#: PALETTE_EDITOR
+#, java-format
+msgctxt "PALETTE_EDITOR"
+msgid "Palette Editor"
+msgstr ""
+
+#. 
+#: SHOW_HIDE_TABS
+#, java-format
+msgctxt "SHOW_HIDE_TABS"
+msgid "Show/Hide tabs"
+msgstr ""
+
+#. 
+#: SHOW_HIDE
+#, java-format
+msgctxt "SHOW_HIDE"
+msgid "Show/Hide"
+msgstr ""
+
+#. 
+#: IMPORT_TLD
+#, java-format
+msgctxt "IMPORT_TLD"
+msgid "Import TLD"
+msgstr ""
+
+#. 
+#: IMPORT
+#, java-format
+msgctxt "IMPORT"
+msgid "Import"
+msgstr ""
+

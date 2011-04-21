@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<smooks-resource-list xmlns="http://www.milyn.org/xsd/smooks-1.0.xsd">
+	<resource-config selector="decoder:LongDate">
+		<resource>org.milyn.javabean.decoders.DateDecoder
+		</resource>
+		<param name="format">EEE MMM dd HH:mm:ss z yyyy</param>
+		<param name="locale-country"></param>
+		<param name="locale-language"></param>
+	</resource-config>
+	<resource-config selector="Order">
+		<resource>org.milyn.javabean.BeanPopulator
+		</resource>
+		<param name="beanId">OrderHeader</param>
+		<param name="beanClass">org.jboss.tools.smooks.test.xml2java.dvdstore.OrderHeader
+		</param>
+		<param name="bindings">
+			<binding property="netAmount" selector="Order @netAmount"
+				type="Double" />
+			<binding property="orderDate" selector="Order @orderDate"
+				type="LongDate" />
+			<binding property="orderId" selector="Order @orderId" />
+			<binding property="statusCode" selector="Order @statusCode"
+				type="Integer" />
+			<binding property="tax" selector="Order @tax" type="Double" />
+			<binding property="totalAmount" selector="Order @totalAmount"
+				type="Double" />
+		</param>
+	</resource-config>
+	<resource-config selector="Order Customer">
+		<resource>org.milyn.javabean.BeanPopulator
+		</resource>
+		<param name="beanId">Customer</param>
+		<param name="beanClass">org.jboss.tools.smooks.test.xml2java.dvdstore.Customer
+		</param>
+		<param name="bindings">
+			<binding property="firstName" selector="Order Customer @firstName" />
+			<binding property="lastName" selector="Order Customer @lastName" />
+			<binding property="state" selector="Order Customer @state" />
+			<binding property="userName" selector="Order Customer @userName" />
+		</param>
+	</resource-config>
+	<resource-config selector="Order OrderLines OrderLine">
+		<resource>org.milyn.javabean.BeanPopulator
+		</resource>
+		<param name="beanId">OrderItem</param>
+		<param name="beanClass">org.jboss.tools.smooks.test.xml2java.dvdstore.OrderItem
+		</param>
+		<param name="bindings">
+			<binding property="position" selector="Order OrderLines OrderLine @position"
+				type="Integer" />
+			<binding property="price" selector="Order OrderLines OrderLine Product @price"
+				type="Double" />
+			<binding property="productId"
+				selector="Order OrderLines OrderLine Product @productId" />
+			<binding property="quantity" selector="Order OrderLines OrderLine @quantity"
+				type="Integer" />
+			<binding property="title" selector="Order OrderLines OrderLine Product @title" />
+		</param>
+	</resource-config>
+	<resource-config selector="global-parameters">
+		<param name="stream.filter.type">SAX</param>
+	</resource-config>
+	<resource-config selector="aaaa">
+		<resource type=""></resource>
+	</resource-config>
+</smooks-resource-list>

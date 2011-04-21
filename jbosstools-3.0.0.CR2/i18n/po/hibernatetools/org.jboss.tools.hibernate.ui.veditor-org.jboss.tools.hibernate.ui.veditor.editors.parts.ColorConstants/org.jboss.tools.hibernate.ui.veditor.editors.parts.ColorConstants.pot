@@ -1,0 +1,103 @@
+#SOME DESCRIPTIVE TITLE.
+#Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+#This file is distributed under the same license as the PACKAGE package.
+#FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-07-04 13:05+1000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+""
+
+#. 
+#: Colors_PersistentClassR
+#, java-format
+msgctxt "Colors_PersistentClassR"
+msgid "255"
+msgstr ""
+
+#. 
+#: Colors_PersistentClassG
+#, java-format
+msgctxt "Colors_PersistentClassG"
+msgid "247"
+msgstr ""
+
+#. 
+#: Colors_PersistentClassB
+#, java-format
+msgctxt "Colors_PersistentClassB"
+msgid "206"
+msgstr ""
+
+#. 
+#: Colors_PersistentFieldR
+#, java-format
+msgctxt "Colors_PersistentFieldR"
+msgid "255"
+msgstr ""
+
+#. 
+#: Colors_PersistentFieldG
+#, java-format
+msgctxt "Colors_PersistentFieldG"
+msgid "255"
+msgstr ""
+
+#. 
+#: Colors_PersistentFieldB
+#, java-format
+msgctxt "Colors_PersistentFieldB"
+msgid "239"
+msgstr ""
+
+#. 
+#: Colors_DatabaseTableR
+#, java-format
+msgctxt "Colors_DatabaseTableR"
+msgid "222"
+msgstr ""
+
+#. 
+#: Colors_DatabaseTableG
+#, java-format
+msgctxt "Colors_DatabaseTableG"
+msgid "231"
+msgstr ""
+
+#. 
+#: Colors_DatabaseTableB
+#, java-format
+msgctxt "Colors_DatabaseTableB"
+msgid "239"
+msgstr ""
+
+#. 
+#: Colors_DatabaseColumnR
+#, java-format
+msgctxt "Colors_DatabaseColumnR"
+msgid "239"
+msgstr ""
+
+#. 
+#: Colors_DatabaseColumnG
+#, java-format
+msgctxt "Colors_DatabaseColumnG"
+msgid "247"
+msgstr ""
+
+#. 
+#: Colors_DatabaseColumnB
+#, java-format
+msgctxt "Colors_DatabaseColumnB"
+msgid "255"
+msgstr ""
+

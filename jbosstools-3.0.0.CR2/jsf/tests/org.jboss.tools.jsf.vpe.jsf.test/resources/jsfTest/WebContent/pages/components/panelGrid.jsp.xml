@@ -1,0 +1,76 @@
+<tests>
+	<test id="panelGrid">
+		<TABLE STYLE="-moz-user-modify: read-write;" >
+			<TR>
+				<TD>
+					<DIV>
+						<TABLE BORDER="0">
+							<TBODY>
+								<TR CLASS="oddRows">
+									<TD>
+										<SPAN CLASS="vpe-text">
+											<SPAN CLASS="vpe-text">
+											</SPAN>
+											<SPAN CLASS="vpe-text">
+												column 1
+											</SPAN>
+										</SPAN>
+									</TD>
+									<TD>
+										<SPAN CLASS="vpe-text">
+											<SPAN CLASS="vpe-text">
+											</SPAN>
+											<SPAN CLASS="vpe-text">
+												column 2
+											</SPAN>
+										</SPAN>
+									</TD>
+								</TR>
+								<TR CLASS="evenRows">
+									<TD>
+										<SPAN CLASS="vpe-text">
+											<SPAN CLASS="vpe-text">
+											</SPAN>
+											<SPAN CLASS="vpe-text">
+												1
+											</SPAN>
+										</SPAN>
+									</TD>
+									<TD>
+										<SPAN CLASS="vpe-text">
+											<SPAN CLASS="vpe-text">
+											</SPAN>
+											<SPAN CLASS="vpe-text">
+												2
+											</SPAN>
+										</SPAN>
+									</TD>
+								</TR>
+								<TR CLASS="oddRows">
+									<TD>
+										<SPAN CLASS="vpe-text">
+											<SPAN CLASS="vpe-text">
+											</SPAN>
+											<SPAN CLASS="vpe-text">
+												3
+											</SPAN>
+										</SPAN>
+									</TD>
+									<TD>
+										<SPAN CLASS="vpe-text">
+											<SPAN CLASS="vpe-text">
+											</SPAN>
+											<SPAN CLASS="vpe-text">
+												4
+											</SPAN>
+										</SPAN>
+									</TD>
+								</TR>
+							</TBODY>
+						</TABLE>
+					</DIV>
+				</TD>
+			</TR>
+		</TABLE>
+	</test>
+</tests>

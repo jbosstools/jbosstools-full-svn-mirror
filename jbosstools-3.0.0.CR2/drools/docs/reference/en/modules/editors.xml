@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="editors" xreflabel="editors">
+    <chapterinfo>
+        <keywordset>
+            <keyword>JBoss Tools</keyword>
+            <keyword>Drools Tools</keyword>
+        </keywordset>
+    </chapterinfo>
+
+    <title>Editors</title>
+
+    <section id="textual_rule_editor">
+        <title>The Rule Editor</title>
+
+        <para>The <property>Rule editor</property> works on files that have a <emphasis>
+                <property>.drl</property>
+            </emphasis> (or <emphasis>
+                <property>.rule</property>
+            </emphasis> in the case of spreading rules across multiple rule files) extension.</para>
+
+        <figure>
+            <title>New Rule</title>
+            <mediaobject>
+                <imageobject>
+                    <imagedata fileref="images/editors/editors1.png"/>
+                </imageobject>
+            </mediaobject>
+        </figure>
+
+        <para>The editor follows the pattern of a normal text editor in eclipse, with all the normal
+            features of a text editor:</para>
+
+        <itemizedlist>
+            <listitem>
+                <para>
+                    <link linkend="rules_editor_content_assist">Content Assist</link>
+                </para>
+            </listitem>
+
+            <listitem>
+                <para>
+                    <link linkend="rules_editor_code_folding">Code Folding</link>
+                </para>
+            </listitem>
+
+            <!--      <listitem>
+                <para>
+                    <link linkend="rules_editor_error_reporting">Error Reporting</link>
+                </para>
+            </listitem>-->
+
+            <listitem>
+                <para>
+                    <link linkend="rules_editor_sync_with_outline">Synchronization with Outline
+                        View</link>
+                </para>
+            </listitem>
+        </itemizedlist>
+
+        <section id="rules_editor_content_assist">
+            <title>Content Assist</title>
+
+            <para>While working in the <property>Rule editor</property> you can get a content
+                assistance the usual way by pressing <emphasis>
+                    <property>Ctrl + Space</property>.</emphasis></para>
+
+            <para>Content Assist shows all possible keywords for the currant cursor position.</para>
+
+            <figure>
+                <title>Content Assist Demonstration</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/editors/editors2.png"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+
+            <para>Content Assist inside of the <emphasis>
+                    <property>Message</property>
+                </emphasis> suggests all available fields.</para>
+
+            <figure>
+                <title>Content Assist Demonstration</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/editors/editors3.png"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+
+        </section>
+
+        <section id="rules_editor_code_folding">
+            <title>Code Folding</title>
+
+            <para>Code folding is also available in the <property>Rule editor</property>. To
+                hide/show sections of the file use the icons with minus/plus on the left vertical
+                line of the editor.</para>
+
+            <figure>
+                <title>Code Folding</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/editors/editors4.png"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+
+        </section>
+
+        <!--section id="rules_editor_error_reporting">
+            <title>Error Reporting</title>
+
+        </section-->
+
+        <section id="rules_editor_sync_with_outline">
+            <title>Synchronization with Outline View</title>
+
+            <para>The <property>Rule editor</property> works in synchronization with the
+                    <property>Outline view</property> which shows the structure of the rules,
+                imports in the file and also globals and functions if the file has them.</para>
+
+            <figure>
+                <title>Synchronization with Outline View</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/editors/editors5.png"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+
+            <para>The view is updated on save. It provides a quick way of navigating around rules by
+                names in a file which may have hundreds of rules. The items are sorted
+                alphabetically by default.</para>
+        </section>
+
+        <section id="rete_view">
+            <title>The Rete Tree View</title>
+
+            <para>The <property>Rete Tree view</property> shows you the current Rete Network for
+                your <emphasis>
+                    <property>.drl</property>
+                </emphasis> file. Just click on the <emphasis>
+                    <property>Rete Tree tab</property>
+                </emphasis> at the bottom of the <property>Rule editor</property>.</para>
+
+            <figure>
+                <title>Rete Tree</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/editors/editors6.png"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+
+            <para>Afterwards you can generate the current Rete Network visualization. You can push
+                and pull the nodes to arrange your optimal network overview.</para>
+            <para>If you got hundreds of nodes, select some of them with a frame. Then you can pull
+                groups of them.</para>
+
+            <figure>
+                <title>Selecting the nodes in the Rete Tree with Frame</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/editors/editors7.png"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+
+            <para>You can zoom in and out the Rete tree in case not all nodes are shown in the
+                current view. For this use the combo box or "+" and "-" icons on the toolbar.</para>
+
+            <figure>
+                <title>Rete Tree Zooming</title>
+                <mediaobject>
+                    <imageobject>
+                        <imagedata fileref="images/editors/editors8.png"/>
+                    </imageobject>
+                </mediaobject>
+            </figure>
+
+            <note>
+                <title>Note:</title>
+
+                <para>The <property>Rete Tree view</property> works only in Drools Rule Projects,
+                    where the Drools Builder is set in the project properties.</para>
+            </note>
+
+        </section>
+    </section>
+    <!--
+    <section id="guided_editor">
+        <title>The Guided Editor</title>
+
+        <para>The <property>Guided editor</property> allows you to build rules in a GUI driven
+            fashion, based on your object model. </para>        
+        
+    </section>
+
+    <section id="dsl_editor">
+        <title>The Domain Specific Language Editor</title>
+
+        <para/>
+    </section>
+
+    <section id="ruleflow_editor">
+        <title>The Rule Flow Graphical Editor</title>
+
+        <para/>
+    </section>
+    -->
+</chapter>

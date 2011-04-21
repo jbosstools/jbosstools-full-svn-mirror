@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="ASCII"?>
+<smooks-resource-list xmlns="http://www.milyn.org/xsd/smooks-1.0.xsd">
+
+	<resource-config selector="global-parameters">
+		<param name="stream.filter.type">SAX</param>
+	</resource-config>
+
+	<resource-config selector="org.jboss.tools.smooks.test.java2java.Order">
+		<resource>org.milyn.javabean.BeanPopulator</resource>
+		<param name="beanId">LineOrder</param>
+		<param name="beanClass">org.jboss.tools.smooks.test.java2java.LineOrder</param>
+		<param name="bindings">
+			<binding property="customerId"
+				selector="header customerNumber" />
+			<binding property="customerName"
+				selector="header customerName" />
+			<binding property="lineItems" selector="${lineItems}" />
+		</param>
+	</resource-config>
+	<resource-config selector="orderItems">
+		<resource>org.milyn.javabean.BeanPopulator</resource>
+		<param name="beanId">lineItems</param>
+		<param name="beanClass">org.jboss.tools.smooks.test.java2java.LineItem[]</param>
+		<param name="bindings">
+			<binding property="LineItem" selector="${LineItem}" />
+		</param>
+	</resource-config>
+	<resource-config selector="org.jboss.tools.smooks.test.java2java.OrderItem">
+		<resource>org.milyn.javabean.BeanPopulator</resource>
+		<param name="beanId">LineItem</param>
+		<param name="beanClass">org.jboss.tools.smooks.test.java2java.LineItem</param>
+		<param name="bindings">
+			<binding property="productCode"
+				selector="org.jboss.tools.smooks.test.java2java.OrderItem productId" type="Integer" />
+			<binding property="unitPrice"
+				selector="org.jboss.tools.smooks.test.java2java.OrderItem price" type="BigInteger"/>
+			<binding property="unitQuantity"
+				selector="org.jboss.tools.smooks.test.java2java.OrderItem quantity" type="Double" />
+		</param>
+	</resource-config>
+
+	<resource-config selector="decoder:OrderDateLong">
+		<resource>org.milyn.javabean.decoders.DateDecoder</resource>
+		<param name="format">EEE MMM dd HH:mm:ss z yyyy</param>
+		<param name="locale-language">en</param>
+		<param name="locale-country">IE</param>
+	</resource-config>
+
+
+</smooks-resource-list>

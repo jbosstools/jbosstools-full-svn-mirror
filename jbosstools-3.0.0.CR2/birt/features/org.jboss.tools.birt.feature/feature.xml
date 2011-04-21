@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.jboss.tools.birt.feature"
+      label="%featureName"
+      version="1.0.0"
+      provider-name="%providerName"
+      plugin="org.jboss.tools.birt.oda.ui">
+
+   <description>
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <url>
+      <update label="%updateSiteName" url="http://download.jboss.org/jbosstools/updates/stable"/>
+      <discovery label="%birtUpdateSiteName" url="http://download.eclipse.org/birt/update-site/2.3"/>
+   </url>
+
+   <requires>
+      <import feature="org.eclipse.birt" version="2.3.1"/>
+      <import feature="org.eclipse.birt.integration.wtp" version="2.3.1"/>
+   </requires>
+
+   <plugin
+         id="org.jboss.tools.birt.oda"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.jboss.tools.birt.oda.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.jboss.tools.birt.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.birt.integration.wtp.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+</feature>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension-point id="templates" name="Path to xml file with templates definitionj" schema="schema/templates.exsd"/>
+
+	<extension point="org.eclipse.ui.startup" />
+	
+   <extension point="org.jboss.tools.common.model.meta">
+      <meta path="meta/vpe.meta"/>
+   </extension>
+
+   <extension point="org.jboss.tools.common.model.keys">
+      <keys path="help/keys-vpe.properties"/>
+      <keys path="help/keys-vpe-attrs.properties"/>
+      <keys path="help/keys-vpe-menu.properties"/>
+      <keys path="help/keys-vpe-lists.properties"/>
+   </extension>
+   <!-- extension
+         point="org.jboss.tools.vpe.templates">
+      <templates
+            name="JSF Reference Implementation"
+            path="templates/vpe-templates-jsf.xml"/>
+   </extension -->
+   <extension
+         point="org.jboss.tools.common.model.resourceMapping">
+      <mapping
+          loader="org.jboss.tools.vpe"
+          priority="1"
+          kind="class"
+          paths=".vpe."
+      />
+   </extension>
+	<extension point="org.eclipse.ui.preferencePages">
+      <page category="org.jboss.tools.common.xstudio.editors" class="org.jboss.tools.vpe.editor.preferences.VpeEditorPreferencesPage" id="org.jboss.tools.vpe.editor" 
+            name="%PreferencePage_VpeEditor">
+      </page>
+      <page
+            category="org.jboss.tools.common.model.ui"
+            class="org.jboss.tools.vpe.editor.preferences.ELVariablesPreferencePage"
+            id="org.jboss.tools.common.xstudio.elvariables"
+            name="%PreferencePage_ElVariables">
+      </page>
+   	</extension>
+   	<extension
+       	point="org.eclipse.ui.contexts">
+    	<context
+          description="%vpe.editor.binding.context.description"
+          id="org.jboss.tools.vpe.editorContext"
+          name="%editor.binding.context.name"
+          parentId="org.eclipse.ui.textEditorScope">
+    	</context>
+    </extension>
+    <extension id="org.jboss.tools.vpe.commands" point="org.eclipse.ui.commands">
+		<category id="org.jboss.tools.vpe.category" name="%vpe.category"/>
+		<command categoryId="org.jboss.tools.vpe.category"
+			id="org.jboss.tools.vpe.source.maxmin"
+			name="%source.maxmin"/>
+		<command categoryId="org.jboss.tools.vpe.category"
+			id="org.jboss.tools.vpe.visual.maxmin"
+			name="%visual.maxmin"/>
+		<command categoryId="org.jboss.tools.vpe.category"
+			id="org.jboss.tools.vpe.jumping"
+			name="%visual.jumping"/>
+	</extension>
+ 	<extension point="org.eclipse.ui.bindings">
+		<key commandId="org.jboss.tools.vpe.source.maxmin"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			contextId="org.jboss.tools.vpe.editorContext"
+			sequence="M2+F6"/>
+		<key commandId="org.jboss.tools.vpe.visual.maxmin"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			contextId="org.jboss.tools.vpe.editorContext"
+			sequence="M2+M3+F6"/>
+		<key commandId="org.jboss.tools.vpe.jumping"
+			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+			contextId="org.jboss.tools.vpe.editorContext"
+			sequence="M1+M2+Tab"/>
+	</extension>
+  <extension
+        point="org.jboss.tools.jst.jsp.visulaEditorImplementations"  id="org.jboss.tools.vpe.editor.VpeEditorPartFactory">
+        	<visualEditorImplementation name="%visualEditorImpl_name" class="org.jboss.tools.vpe.editor.VpeEditorPartFactory"/>
+  </extension>
+   <extension
+        point="org.eclipse.ui.menus">
+        <menuContribution
+              locationURI="popup:org.jboss.tools.jst.jsp.jspeditor.JSPTextEditor.source.EditorContext?after=paste">
+             	<separator
+                    name="org.jboss.tools.insertGroup" visible="true" >
+             	</separator>
+              <dynamic
+                    class="org.jboss.tools.vpe.editor.menu.InsertContributionItem"
+                    id="org.jboss.tools.vpe.editor.menu.InsertContributionItem">
+              </dynamic>
+        </menuContribution>
+  </extension>
+  <extension
+        point="org.eclipse.ui.menus">
+        <menuContribution
+              locationURI="popup:org.jboss.tools.jst.jsp.jspeditor.HTMLTextEditor.source.EditorContext?after=paste">
+             	<separator
+                    name="org.jboss.tools.insertGroup" visible="true" >
+             	</separator>
+              <dynamic
+                    class="org.jboss.tools.vpe.editor.menu.InsertContributionItem"
+                    id="org.jboss.tools.vpe.editor.menu.InsertContributionItem">
+              </dynamic>
+        </menuContribution>
+  </extension>
+</plugin>

@@ -1,0 +1,538 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"http://www.docbook.org/xml/4.3/docbookx.dtd"
+
+[
+<!ENTITY introduction SYSTEM "modules/introduction.xml">
+<!ENTITY birt_support SYSTEM "modules/birt_support.xml">
+<!ENTITY birt_designer SYSTEM "modules/birt_designer.xml">
+
+                    
+
+]><book xmlns:diffmk="http://diffmk.sf.net/ns/diff">
+    <bookinfo>
+        <title>Birt Plugin Reference Guide</title>
+
+        <author><firstname>Anastasiya</firstname><surname>Bogachuk</surname><email>abogachuk@exadel.com</email></author> 
+  
+        
+        <pubdate>August 2008</pubdate>
+        <copyright>
+                     <year>2008</year>
+            <holder>JBoss, a division of Red Hat Inc.</holder>
+        </copyright>
+        <releaseinfo><diffmk:wrapper diffmk:change="changed">
+            Version: 1.0.0.CR1
+        </diffmk:wrapper></releaseinfo>
+  
+
+<abstract>
+   <title></title>
+       <para>
+           <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/jboss_birt_plugin_ref_guide/pdf/Birt_Reference_Guide.pdf">PDF version</ulink>
+       </para>
+</abstract>
+
+    
+    </bookinfo>
+ <toc></toc> 
+
+  
+    
+<chapter id="introduction" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/birt/docs/en/modules/introduction.xml">
+    <?dbhtml filename="introduction.html"?>
+
+    <chapterinfo>
+        <keywordset>
+            <keyword>JBoss Developer Studio</keyword>
+            <keyword>Eclipse</keyword>
+            <keyword>Java</keyword>
+            <keyword>JBoss</keyword>
+            <keyword>JBoss Tools</keyword>
+            <keyword>JBDS</keyword>
+            <keyword>BIRT</keyword>
+            <keyword>BIRT Plugin</keyword>
+        </keywordset>
+    </chapterinfo>
+
+    <title>Introduction</title>
+
+    <section>
+
+        <title>What is BIRT?</title>
+        <para>BIRT plugin for JBoss Developer Studio is an Eclipse-based open source reporting
+            system for web applications based on Java and J2EE. BIRT consists of two main
+            components: a report designer based on Eclipse, and a runtime component that can be
+            added to your app server. BIRT also offers a charting engine that lets you add charts to
+            your own Web application.</para>
+        <para>With the help of BIRT you can generate a great number of reports to be used in your
+            application:</para>
+
+        <itemizedlist>
+            <listitem>
+                <para>Lists</para>
+            </listitem>
+            <listitem>
+                <para>Charts</para>
+            </listitem>
+            <listitem>
+                <para>Crosstabs, or cross-tabulation, or matrix</para>
+            </listitem>
+            <listitem>
+                <para>Letters and Documents</para>
+            </listitem>
+            <listitem>
+                <para>Compound Reports</para>
+            </listitem>
+        </itemizedlist>
+
+        <para>In this guide we provide you with the information on BIRT Designer which allows you to
+            create a report much faster and with far fewer errors so sparing your time.</para>
+
+        <literallayout class="normal" format="linespecific"> </literallayout>
+        <para>You can find detailed information on the BIRT report types and anatomy here: <ulink url="http://www.eclipse.org/birt/phoenix/intro/">JBoss BIRT</ulink></para>
+
+
+        <para>All JBoss Developer Studio/JBoss Tools documentation you can find <ulink url="http://docs.jboss.org/tools/">here</ulink>.</para>
+        <para>The latest documentation builds are available <ulink url="http://download.jboss.org/jbosstools/nightly-docs/">here</ulink>.</para>
+
+    </section>
+
+</chapter>
+
+    
+<chapter id="esb_support" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/birt/docs/en/modules/birt_support.xml">
+        <?dbhtml filename="esb_support.html"?>
+        <chapterinfo>
+                <keywordset>
+                        <keyword>JBoss Developer Studio</keyword>
+                        <keyword>Eclipse</keyword>
+                        <keyword>BIRT</keyword>
+                        <keyword>Java</keyword>
+                        <keyword>JBoss</keyword>
+                </keywordset>
+        </chapterinfo>
+
+        <title>BIRT Support</title>
+
+        <para>In this section we will focus more on all concepts that JBoss Tools integrates for
+                        working with BIRT.</para>
+
+                <section>
+                        <title>BIRT Plugin Installation</title>
+                        
+                        <para>This chapter will provide you with detailed information on how to install BIRT plugin into JBoss Developer Studio.</para>
+                        
+                        <para>Since BIRT plugin is one of the modules of JBoss Tools project it has a dependence on other modules and will require their pre-installation. </para> 
+                                
+                        <para>These are the prerequisites to create a web project including Seam and BIRT capabilities:</para>
+                        <itemizedlist>
+                                <listitem><para>Eclipse Version 3.4 SDK</para></listitem>
+                                <listitem><para>DTP Version 1.6 Release</para></listitem>
+                                <listitem><para>EMF Version 2.4 Release EMF+XSD</para></listitem>
+                                <listitem><para>GEF Version 3.4 Release runtime</para></listitem>
+                                <listitem><para>WTP Version 3.0 Release</para></listitem>
+                                <listitem><para><ulink url="http://repository.jboss.org/eclipse/birt/2.3.0/birt-report-framework-2_3_0.zip">BIRT Report Designer SDK 2.3.0 Release</ulink> or BIRT Report Designer 2.3.0 Release</para></listitem>
+                                <listitem><para>JBoss Application Server 4.2.2 GA</para></listitem>
+                                <listitem><para>JBoss Seam 2.0.1 GA</para></listitem>
+                                <listitem><para><ulink url="http://repository.jboss.org/eclipse/birt/2.3.0/birt-wtp-integration-sdk-2_3_0.zip">BIRT Web Tools Integration</ulink></para></listitem>
+                                <listitem><para>JBoss Tools nightly build</para></listitem>
+                               
+                           </itemizedlist>    
+                                
+                           
+                     
+                </section>
+
+<section>
+        
+        <title>JBoss BIRT Integration</title>
+        <para>To understand Hibernate configuration, integration with Seam, and deployment  see <ulink url="http://docs.jboss.org/tools/whatsnew/birt/birt-news-1.0.0.Alpha1.html">JBoss BIRT Integration 1.0.0.alpha1 - New and Noteworthy</ulink>.</para>
+        
+</section>
+
+                <section>
+                        <title>Creating a BIRT Report</title>
+                        <para>In this chapter we suggest a step-by-step walk-through of creating your own BIRT report.</para>
+                                
+     <section><title>Create a Report Project</title>
+                                
+                                <para>First create a Report project. Select <emphasis><property moreinfo="none">File &gt; New &gt; Project...</property>
+                                </emphasis> in the main menu bar or context menu. The new project dialog appears.  Choose  <emphasis><property moreinfo="none">Business Intelligence and Reporting Tools &gt; Report Project</property></emphasis>:
+                                        
+                                        <figure float="0">
+                                        <title>New Report Project Creation</title>
+                                        <mediaobject>
+                                                <imageobject>
+                                                        <imagedata fileref="images/BirtSupport/01ReportProjectWizard.png"></imagedata>
+                                                </imageobject>
+                                        </mediaobject>
+                                </figure> 
+                                        
+                                        Click on the <emphasis><property moreinfo="none">Next</property></emphasis> button. Specify a name for the project and change location if necessary:</para>
+                                
+                        <figure float="0">
+                                <title>Specify a Name for the Report Project</title>
+                                <mediaobject>
+                                        <imageobject>
+                                                <imagedata fileref="images/BirtSupport/02ProjectName.png"></imagedata>
+                                        </imageobject>
+                                </mediaobject>
+                        </figure> 
+                                
+                        <para>Click on the <emphasis><property moreinfo="none">Finish</property></emphasis> button. Click <emphasis><property moreinfo="none">Ok</property></emphasis>  to switch to the Report Design perspective. Your Report Project is now created:</para>
+                               
+                               
+                        <figure float="0">
+                                <title>New Report Project Created</title>
+                                <mediaobject>
+                                        <imageobject>
+                                                <imagedata fileref="images/BirtSupport/03NewProjectCreated.png"></imagedata>
+                                        </imageobject>
+                                </mediaobject>
+                        </figure> 
+     </section>
+                       
+      <section> <title>Create a Report</title>
+                        <para>Now you can create a Report. Go to <emphasis><property moreinfo="none">File &gt; New &gt; Report...</property></emphasis>:</para>
+                               
+                        <figure float="0">
+                                <title>Create a New Report</title>
+                                <mediaobject>
+                                        <imageobject>
+                                                <imagedata fileref="images/BirtSupport/04NewReport.png"></imagedata>
+                                        </imageobject>
+                                </mediaobject>
+                        </figure> 
+                               
+                        <para>The new report dialog appears. Select the created project as a parent folder in the tree view:</para>
+                        
+                        <figure float="0">
+                                <title>Select a Parent Folder</title>
+                                <mediaobject>
+                                        <imageobject>
+                                                <imagedata fileref="images/BirtSupport/05SelectingParentFolder.png"></imagedata>
+                                        </imageobject>
+                                </mediaobject>
+                        </figure> 
+                               
+                               <para>Click on the <emphasis><property moreinfo="none">Next</property></emphasis> button. Then select the type of the template to use for your report. Each template is shown in the Preview window and is described below. Tick off the "Show Report Creation Cheat Sheet" checkbox if you don't  need the Cheat Sheets view to be displayed. The Cheat Sheets view can walk you though the process of creating a report based on the template you selected. 
+                                       
+                                        <figure float="0">
+                                <title>Choose a Report Template</title>
+                                <mediaobject>
+                                        <imageobject>
+                                                <imagedata fileref="images/BirtSupport/06ReportTemplate.png"></imagedata>
+                                        </imageobject>
+                                </mediaobject>
+                        </figure> 
+                                       
+                                       
+                                       Click on the <emphasis><property moreinfo="none">Finish</property></emphasis> button to open the newly created report in the workspace:</para>
+                               
+                                  <figure float="0">
+                                <title>Report Opened in the Workspace</title>
+                                <mediaobject>
+                                        <imageobject>
+                                                <imagedata fileref="images/BirtSupport/07SimpleListingReport.png"></imagedata>
+                                        </imageobject>
+                                </mediaobject>
+                        </figure> 
+                                       
+      </section>           
+                        
+                        <section>
+                         <title>Build a Data Source</title>
+                                
+                                <para>Data source is used to connect to the database. In order to create a data source for your report follow these steps:</para>
+                             <para>Open the Data Explorer View. Select Data Sources, right-click on it and choose New Data Source:</para>
+                             
+                             
+                                <figure float="0">
+                                        <title>Create a Data Source</title>
+                                        <mediaobject>
+                                                <imageobject>
+                                                        <imagedata fileref="images/BirtSupport/08DataSource.png"></imagedata>
+                                                </imageobject>
+                                        </mediaobject>
+                                </figure> 
+                             
+                                <para>The New Data Source dialog appears. Choose the "Create from a data source type in the following list" radiobutton and then "Classic Models Inc. Sample Database". Click on the <emphasis><property moreinfo="none">Next</property></emphasis> button:</para>
+                                                   
+                             
+                                <figure float="0">
+                                        <title>New Data Source</title>
+                                        <mediaobject>
+                                                <imageobject>
+                                                        <imagedata fileref="images/BirtSupport/09NewDataSource.png"></imagedata>
+                                                </imageobject>
+                                        </mediaobject>
+                                </figure> 
+                                
+                                <para>The newly created data source details wll be displayed: Driver Class, Database URL and Database User:</para>
+                                
+                                <figure float="0">
+                                        <title>New Data Source Details</title>
+                                        <mediaobject>
+                                                <imageobject>
+                                                        <imagedata fileref="images/BirtSupport/10NewSampleDateSource.png"></imagedata>
+                                                </imageobject>
+                                        </mediaobject>
+                                </figure> 
+                             <para>Click on the <emphasis><property moreinfo="none">Finish</property></emphasis> button to add the data source to the data source for your report.</para>
+                             
+                        <para>If you need to edit the data source right-click on it and select the corresponding option.</para>    
+                        </section>
+                        
+                        
+                        <section><title>Build a Data Set</title>
+                        
+                                <para>Data Set is a query to get and represent necessary column data from the data source specified. Select Data Sets in the tree view, right-click on it and select New Data Set:</para>
+                                        
+                                <figure float="0">
+                                        <title>Create a Data Set</title>
+                                        <mediaobject>
+                                                <imageobject>
+                                                        <imagedata fileref="images/BirtSupport/11DataSet.png"></imagedata>
+                                                </imageobject>
+                                        </mediaobject>
+                                </figure> 
+                                        
+                                        
+                                <para>The New Data Set dialog will appear. Enter a name for the Data Set Name field and ensure that the Data Source field shows the data source already created and that the Data Set Type field is set to "SQL Select Query". 
+                                        Then click on the <emphasis><property moreinfo="none">Next</property></emphasis> button:</para>
+                        
+                        
+                         <figure float="0">
+                                        <title>New Data Set Details</title>
+                                        <mediaobject>
+                                                <imageobject>
+                                                        <imagedata fileref="images/BirtSupport/12NewDataSet.png"></imagedata>
+                                                </imageobject>
+                                        </mediaobject>
+                                </figure> 
+                                        
+                        <para>Enter the following details into the query:</para>
+                                <programlisting format="linespecific"><![CDATA[
+SELECT *
+FROM CUSTOMERS
+WHERE COUNTRY = 'USA']]></programlisting>
+                        
+                        
+                                <figure float="0">
+                                        <title>Query Details</title>
+                                        <mediaobject>
+                                                <imageobject>
+                                                        <imagedata fileref="images/BirtSupport/13SQLQuery.png"></imagedata>
+                                                </imageobject>
+                                        </mediaobject>
+                                </figure> 
+                        
+                        
+                                <para>Click on the <emphasis><property moreinfo="none">Finish</property></emphasis> button. The Edit Data Set window opens where you can change Data Source, Settings, Parameters and other details for the Data Set created. If switched to the Query page you can check the schemas within this database, you can expand them to see the list of tables with their columns:</para>
+                        
+                        
+                                <figure float="0">
+                                        <title>Edit the Data Set</title>
+                                        <mediaobject>
+                                                <imageobject>
+                                                        <imagedata fileref="images/BirtSupport/14EditDataSet.png"></imagedata>
+                                                </imageobject>
+                                        </mediaobject>
+                                </figure> 
+                        
+                                <para>Switch to the Preview page to test your query and verify whether the list of customers appears:</para>
+                        
+                                <figure float="0">
+                                        <title>Test the Query</title>
+                                        <mediaobject>
+                                                <imageobject>
+                                                        <imagedata fileref="images/BirtSupport/15TestQuery.png"></imagedata>
+                                                </imageobject>
+                                        </mediaobject>
+                                </figure> 
+                                                       
+                        <para>Click on the <emphasis><property moreinfo="none">Ok</property></emphasis> button.</para>
+                        </section>
+                        
+                        <section><title>Create Report Layout</title>
+                                
+                                <para>After  the Data source and Data set are specified you can continue with the report layout. Please see the <xref linkend="Birt_Designer"></xref> chapter to learn more about BIRT Report Designer.</para>
+                                
+                        </section>
+                        
+                        
+                </section>
+        
+</chapter>
+
+    
+<chapter id="Birt_Designer" xml:base="file:///home/ochikvina/WORK/for_compare/trunk/birt/docs/en/modules/birt_designer.xml" xreflabel="Birt_Designer">
+    <?dbhtml filename="birtDesigner.html"?>
+    <chapterinfo>
+        <keywordset>
+            <keyword>JBoss</keyword>
+            <keyword>BIRT</keyword>
+            <keyword>BIRT Designer</keyword>
+            <keyword>BIRT Report Designer</keyword>
+        </keywordset>
+    </chapterinfo>
+
+    <title>BIRT Report Designer</title>
+
+    <para>BIRT Designer is an intuitive and quite easy Eclipse-based set of plugins to make reports.
+        In this chapter we will describe its interface and its features to you.</para>
+
+    <section id="birt_designer_UI" xreflabel="birt_designer_UI">
+        <title>BIRT User Interface</title>
+
+        <para>The central part of the user interface is the <property moreinfo="none">Layout Editor</property>. It
+            displays the whole process of building a report and contains the following tabs:</para>
+
+        <itemizedlist>
+            <listitem>
+                <para><emphasis role="bold">Layout</emphasis> - this is an area where you can edit
+                    your report design;</para>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">Preview</emphasis> - runs your report created and shows
+                    the output;</para>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">Script</emphasis> - on this page you can add JavaScript
+                    to your report to customize its behavior;</para>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">XML Source</emphasis> - this is an area where you can
+                    view and modify the XML source of your report;</para>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">Master Page</emphasis> - use it to format page
+                    data.</para>
+            </listitem>
+        </itemizedlist>
+
+        <para>The next part of user interface is different <property moreinfo="none">Views</property> that can be
+            arranged around the Layout Editor area the way you like:</para>
+
+        <itemizedlist>
+            <listitem>
+                <para><emphasis role="bold">Palette</emphasis> - shows the standard report items you
+                    can add to your report using drag and drop.</para>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">Outline</emphasis> - shows the structure of your report
+                    as a tree view.</para>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">Navigator</emphasis> - shows your projects and reports
+                    within the projects.</para>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">Data Explorer</emphasis> - shows your data sources, data
+                    sets and report parameters. You also can use this view to add data set columns
+                    to your report layout.</para>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">Property Editor</emphasis> - displays properties for
+                    many report items.</para>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">Properties View</emphasis> - shows all properties for a
+                    report item as a simple list.</para>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">Library Explorer View</emphasis> - allows the reuse of
+                    report objects, such as tables, data sources and styles. Objects created for
+                    reuse are stored in a library file. The Library Explorer will display Libraries
+                    that exist in the Resource folder. Developed libraries can be added to the
+                    resource folder by selecting <emphasis>File→Publish Library in Resource
+                        Folder</emphasis>. The resource folder location can be configured. </para>
+            </listitem>
+
+
+
+        </itemizedlist>
+
+
+
+
+
+    </section>
+
+    <section id="birt_designer_features">
+
+        <title>BIRT Report Designer Features</title>
+        <para>Here are the main BIRT Report Designer features:</para>
+        <itemizedlist>
+            <listitem>
+                <para><emphasis role="bold">Palette</emphasis> - contains tables, labels, and
+                    charts. It is used in conjunction with the Layout View to design reports.</para>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">Data Explorer</emphasis> - organizes your data sources
+                    and data sets. The Data Sets editor enables testing your data set to check
+                    whether the report receives the correct data. You can also create cubes using
+                    your data sets (when building any dynamic cross tables) and design necessary
+                    report parameters.</para>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">Resource Explorer</emphasis> - BIRT allows the reuse of
+                    report objects, such as tables, data sources and styles. Objects created for
+                    reuse are stored in a library file. To browse the contents of report libraries
+                    BIRT supplies the Resource Explorer view. This view lists all libraries within
+                    the resource folder, in addition to other shared content such as images and
+                    JavaScript files.</para>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">Property Editor</emphasis> - shows the most commonly
+                    used properties. BIRT also integrates with the standard Eclipse property view to
+                    display a detailed listing of all properties for an item.</para>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">Layout View</emphasis> - WYSIWYG editor. You can select
+                    any element from the Palette, drag and drop it to the report and then edit the
+                    way you like.</para>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">Script Editor</emphasis> - scripting adds business logic
+                    to reports during data access, report generation, or viewing. The code editor
+                    provides standard features for editing scripts: syntax coloring, auto-complete
+                    etc. You also can debug scripts when the report is running.</para>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">Report Preview</emphasis> - Report Preview is used to
+                    test your newly created report with some real data.</para>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">Chart Builder</emphasis> - using the Chart Builder you
+                    can add any charts to the design of your report. Just select a chart type, then
+                    data and, finally, format the chart.</para>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">Expression Builder </emphasis> - expressions are simple
+                    scripts that return a value. They are used to assign data values to report
+                    elements, build image locations, hyperlinks, parameter default values
+                    etc.</para>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">Cheat Sheets</emphasis> - Cheat sheets are small pices
+                    of useful documentation that lead you through a report creation process. Just
+                    select what you need and then follow the instructions.</para>
+            </listitem>
+            <listitem>
+                <para><emphasis role="bold">Outline</emphasis> - this view provides a compact
+                    overview of the entire report structure.</para>
+            </listitem>
+        </itemizedlist>
+
+        <para>In this guide we made a simple overview of the BIRT plugin: its installation, support,
+            features etc. that will help you to make your first steps with it.</para>
+
+    </section>
+
+</chapter>
+
+    
+
+</book>

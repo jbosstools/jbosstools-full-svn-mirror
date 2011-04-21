@@ -1,0 +1,124 @@
+#SOME DESCRIPTIVE TITLE.
+#Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+#This file is distributed under the same license as the PACKAGE package.
+#FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-07-04 13:05+1000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+""
+
+#. 
+#: EditorActionContributor_refresh_visual_mapping
+#, java-format
+msgctxt "EditorActionContributor_refresh_visual_mapping"
+msgid "Refresh Visual Mapping"
+msgstr ""
+
+#. 
+#: VisualEditor_diagram_for
+#, java-format
+msgctxt "VisualEditor_diagram_for"
+msgid "Diagram for"
+msgstr ""
+
+#. 
+#: ExportImageAction_bmp_format
+#, java-format
+msgctxt "ExportImageAction_bmp_format"
+msgid "Bitmap format (*.bmp)"
+msgstr ""
+
+#. 
+#: ExportImageAction_error
+#, java-format
+msgctxt "ExportImageAction_error"
+msgid "Error"
+msgstr ""
+
+#. 
+#: ExportImageAction_failed_to_export_image
+#, java-format
+msgctxt "ExportImageAction_failed_to_export_image"
+msgid "Failed to export image:"
+msgstr ""
+
+#. 
+#: ExportImageAction_jpg_format
+#, java-format
+msgctxt "ExportImageAction_jpg_format"
+msgid "JPEG format (*.jpg)"
+msgstr ""
+
+#. 
+#: ExportImageAction_png_format
+#, java-format
+msgctxt "ExportImageAction_png_format"
+msgid "PNG format (*.png)"
+msgstr ""
+
+#. 
+#: OpenMappingAction_canot_find_or_open_mapping_file
+#, java-format
+msgctxt "OpenMappingAction_canot_find_or_open_mapping_file"
+msgid "Can't find or open mapping file."
+msgstr ""
+
+#. 
+#: OpenMappingAction_open_mapping_file
+#, java-format
+msgctxt "OpenMappingAction_open_mapping_file"
+msgid "Open Mapping File"
+msgstr ""
+
+#. 
+#: OpenSourceAction_canot_find_source_file
+#, java-format
+msgctxt "OpenSourceAction_canot_find_source_file"
+msgid "Can't find source file."
+msgstr ""
+
+#. 
+#: OpenSourceAction_canot_open_source_file
+#, java-format
+msgctxt "OpenSourceAction_canot_open_source_file"
+msgid "Can't open source file."
+msgstr ""
+
+#. 
+#: OpenSourceAction_open_source_file
+#, java-format
+msgctxt "OpenSourceAction_open_source_file"
+msgid "Open Source File"
+msgstr ""
+
+#. 
+#: ShapeSetConstraintCommand_move
+#, java-format
+msgctxt "ShapeSetConstraintCommand_move"
+msgid "move"
+msgstr ""
+
+#. 
+#: PartFactory_canot_create_part_for_model_element
+#, java-format
+msgctxt "PartFactory_canot_create_part_for_model_element"
+msgid "Can't create part for model element:"
+msgstr ""
+
+#. 
+#: PartFactory_null
+#, java-format
+msgctxt "PartFactory_null"
+msgid "null"
+msgstr ""
+

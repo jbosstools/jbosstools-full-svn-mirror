@@ -1,0 +1,64 @@
+#SOME DESCRIPTIVE TITLE.
+#Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+#This file is distributed under the same license as the PACKAGE package.
+#FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-07-04 13:15+1000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+""
+
+#. 
+#: COD_MESSAGE
+#, java-format
+msgctxt "COD_MESSAGE"
+msgid ""
+"Selected location ''{0}'' is not empty.\n"
+"Wizard will rewrite all files that exist in template,\n"
+"but will not remove other files. Do you want to proceed?"
+msgstr ""
+
+#. 
+#: COD_TITLE
+#, java-format
+msgctxt "COD_TITLE"
+msgid "Warning"
+msgstr ""
+
+#. 
+#: BTN_CANCEL
+#, java-format
+msgctxt "BTN_CANCEL"
+msgid "Cancel"
+msgstr ""
+
+#. 
+#: BTN_OK
+#, java-format
+msgctxt "BTN_OK"
+msgid "OK"
+msgstr ""
+
+#. 
+#: ADOPT_WILL_OVERWRITE_DOT_FILES_MESSAGE
+#, java-format
+msgctxt "ADOPT_WILL_OVERWRITE_DOT_FILES_MESSAGE"
+msgid "Selected project includes file {0} and probably was an Eclipse project. This wizard will overwrite the file. If you wish to reuse it, try to import project using option 'Import Existing Project into Workspace'. After that, you may add JBoss Tools Capabilities if needed."
+msgstr ""
+
+#. 
+#: ADOPT_WILL_CLEAR_WORKSPACE_MESSAGE
+#, java-format
+msgctxt "ADOPT_WILL_CLEAR_WORKSPACE_MESSAGE"
+msgid "The folder {0} exists in workspace. Its content will be removed to avoid merge with the imported project."
+msgstr ""
+

@@ -1,0 +1,957 @@
+#SOME DESCRIPTIVE TITLE.
+#Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+#This file is distributed under the same license as the PACKAGE package.
+#FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-11-13 10:25+1000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+""
+
+#. 
+#: Web.element_type
+#, java-format
+msgctxt "Web.element_type"
+msgid "Element Type"
+msgstr ""
+
+#. 
+#: Web.name
+#, java-format
+msgctxt "Web.name"
+msgid "Name"
+msgstr ""
+
+#. 
+#: Web.extension
+#, java-format
+msgctxt "Web.extension"
+msgid "Extension"
+msgstr ""
+
+#. 
+#: Web.tlibversion
+#, java-format
+msgctxt "Web.tlibversion"
+msgid "Tlibversion"
+msgstr ""
+
+#. 
+#: Web.jspversion
+#, java-format
+msgctxt "Web.jspversion"
+msgid "Jspversion"
+msgstr ""
+
+#. 
+#: Web.shortname
+#, java-format
+msgctxt "Web.shortname"
+msgid "Shortname"
+msgstr ""
+
+#. 
+#: Web.uri
+#, java-format
+msgctxt "Web.uri"
+msgid "URI"
+msgstr ""
+
+#. 
+#: Web.info
+#, java-format
+msgctxt "Web.info"
+msgid "Info"
+msgstr ""
+
+#. 
+#: Web.encoding
+#, java-format
+msgctxt "Web.encoding"
+msgid "Encoding"
+msgstr ""
+
+#. 
+#: Web.required
+#, java-format
+msgctxt "Web.required"
+msgid "Required"
+msgstr ""
+
+#. 
+#: Web.rtexprvalue
+#, java-format
+msgctxt "Web.rtexprvalue"
+msgid "Rtexprvalue"
+msgstr ""
+
+#. 
+#: Web.tagclass
+#, java-format
+msgctxt "Web.tagclass"
+msgid "Tagclass"
+msgstr ""
+
+#. 
+#: Web.teiclass
+#, java-format
+msgctxt "Web.teiclass"
+msgid "Teiclass"
+msgstr ""
+
+#. 
+#: Web.bodycontent
+#, java-format
+msgctxt "Web.bodycontent"
+msgid "Bodycontent"
+msgstr ""
+
+#. 
+#: Web.comment
+#, java-format
+msgctxt "Web.comment"
+msgid "Comment"
+msgstr ""
+
+#. 
+#: Web.display-name
+#, java-format
+msgctxt "Web.display-name"
+msgid "Display-Name"
+msgstr ""
+
+#. 
+#: Web.small-icon
+#, java-format
+msgctxt "Web.small-icon"
+msgid "Small-Icon"
+msgstr ""
+
+#. 
+#: Web.large-icon
+#, java-format
+msgctxt "Web.large-icon"
+msgid "Large-Icon"
+msgstr ""
+
+#. 
+#: Web.description
+#, java-format
+msgctxt "Web.description"
+msgid "Description"
+msgstr ""
+
+#. 
+#: Web.id
+#, java-format
+msgctxt "Web.id"
+msgid "ID"
+msgstr ""
+
+#. 
+#: Web.folder
+#, java-format
+msgctxt "Web.folder"
+msgid "Folder"
+msgstr ""
+
+#. 
+#: Web.version
+#, java-format
+msgctxt "Web.version"
+msgid "Version"
+msgstr ""
+
+#. 
+#: Web.separator
+#, java-format
+msgctxt "Web.separator"
+msgid "Separator"
+msgstr ""
+
+#. 
+#: Web.separator2
+#, java-format
+msgctxt "Web.separator2"
+msgid "Separator2"
+msgstr ""
+
+#. 
+#: Web.type
+#, java-format
+msgctxt "Web.type"
+msgid "Type"
+msgstr ""
+
+#. 
+#: Web.listener-class
+#, java-format
+msgctxt "Web.listener-class"
+msgid "Listener-Class"
+msgstr ""
+
+#. 
+#: Web.example
+#, java-format
+msgctxt "Web.example"
+msgid "Example"
+msgstr ""
+
+#. 
+#: Web.validator-class
+#, java-format
+msgctxt "Web.validator-class"
+msgid "Validator-Class"
+msgstr ""
+
+#. 
+#: Web.name-given
+#, java-format
+msgctxt "Web.name-given"
+msgid "Name-Given"
+msgstr ""
+
+#. 
+#: Web.name-from-attribute
+#, java-format
+msgctxt "Web.name-from-attribute"
+msgid "Name-From-Attribute"
+msgstr ""
+
+#. 
+#: Web.variable-class
+#, java-format
+msgctxt "Web.variable-class"
+msgid "Variable-Class"
+msgstr ""
+
+#. 
+#: Web.declare
+#, java-format
+msgctxt "Web.declare"
+msgid "Declare"
+msgstr ""
+
+#. 
+#: Web.scope
+#, java-format
+msgctxt "Web.scope"
+msgid "Scope"
+msgstr ""
+
+#. 
+#: Web.distributable
+#, java-format
+msgctxt "Web.distributable"
+msgid "Distributable"
+msgstr ""
+
+#. 
+#: Web.param-name
+#, java-format
+msgctxt "Web.param-name"
+msgid "Param-Name"
+msgstr ""
+
+#. 
+#: Web.param-value
+#, java-format
+msgctxt "Web.param-value"
+msgid "Param-Value"
+msgstr ""
+
+#. 
+#: Web.ejb-ref-name
+#, java-format
+msgctxt "Web.ejb-ref-name"
+msgid "Ejb-Ref-Name"
+msgstr ""
+
+#. 
+#: Web.ejb-ref-type
+#, java-format
+msgctxt "Web.ejb-ref-type"
+msgid "Ejb-Ref-Type"
+msgstr ""
+
+#. 
+#: Web.local-home
+#, java-format
+msgctxt "Web.local-home"
+msgid "Local-Home"
+msgstr ""
+
+#. 
+#: Web.local
+#, java-format
+msgctxt "Web.local"
+msgid "Local"
+msgstr ""
+
+#. 
+#: Web.ejb-link
+#, java-format
+msgctxt "Web.ejb-link"
+msgid "Ejb-Link"
+msgstr ""
+
+#. 
+#: Web.home
+#, java-format
+msgctxt "Web.home"
+msgid "Home"
+msgstr ""
+
+#. 
+#: Web.remote
+#, java-format
+msgctxt "Web.remote"
+msgid "Remote"
+msgstr ""
+
+#. 
+#: Web.env-entry-name
+#, java-format
+msgctxt "Web.env-entry-name"
+msgid "Env-Entry-Name"
+msgstr ""
+
+#. 
+#: Web.env-entry-value
+#, java-format
+msgctxt "Web.env-entry-value"
+msgid "Env-Entry-Value"
+msgstr ""
+
+#. 
+#: Web.env-entry-type
+#, java-format
+msgctxt "Web.env-entry-type"
+msgid "Env-Entry-Type"
+msgstr ""
+
+#. 
+#: Web.error-code
+#, java-format
+msgctxt "Web.error-code"
+msgid "Error-Code"
+msgstr ""
+
+#. 
+#: Web.exception-type
+#, java-format
+msgctxt "Web.exception-type"
+msgid "Exception-Type"
+msgstr ""
+
+#. 
+#: Web.location
+#, java-format
+msgctxt "Web.location"
+msgid "Location"
+msgstr ""
+
+#. 
+#: Web.filter-name
+#, java-format
+msgctxt "Web.filter-name"
+msgid "Filter-Name"
+msgstr ""
+
+#. 
+#: Web.filter-class
+#, java-format
+msgctxt "Web.filter-class"
+msgid "Filter-Class"
+msgstr ""
+
+#. 
+#: Web.url-pattern
+#, java-format
+msgctxt "Web.url-pattern"
+msgid "URL-Pattern"
+msgstr ""
+
+#. 
+#: Web.servlet-name
+#, java-format
+msgctxt "Web.servlet-name"
+msgid "Servlet-Name"
+msgstr ""
+
+#. 
+#: Web.auth-method
+#, java-format
+msgctxt "Web.auth-method"
+msgid "Auth-Method"
+msgstr ""
+
+#. 
+#: Web.realm-name
+#, java-format
+msgctxt "Web.realm-name"
+msgid "Realm-Name"
+msgstr ""
+
+#. 
+#: Web.form-login-page
+#, java-format
+msgctxt "Web.form-login-page"
+msgid "Form-Login-Page"
+msgstr ""
+
+#. 
+#: Web.form-error-page
+#, java-format
+msgctxt "Web.form-error-page"
+msgid "Form-Error-Page"
+msgstr ""
+
+#. 
+#: Web.mime-type
+#, java-format
+msgctxt "Web.mime-type"
+msgid "Mime-Type"
+msgstr ""
+
+#. 
+#: Web.web-resource-name
+#, java-format
+msgctxt "Web.web-resource-name"
+msgid "Web-Resource-Name"
+msgstr ""
+
+#. 
+#: Web.url-patterns
+#, java-format
+msgctxt "Web.url-patterns"
+msgid "URL-Patterns"
+msgstr ""
+
+#. 
+#: Web.http-methods
+#, java-format
+msgctxt "Web.http-methods"
+msgid "Http-Methods"
+msgstr ""
+
+#. 
+#: Web.resource-env-ref-name
+#, java-format
+msgctxt "Web.resource-env-ref-name"
+msgid "Resource-Env-Ref-Name"
+msgstr ""
+
+#. 
+#: Web.resource-env-ref-type
+#, java-format
+msgctxt "Web.resource-env-ref-type"
+msgid "Resource-Env-Ref-Type"
+msgstr ""
+
+#. 
+#: Web.res-ref-name
+#, java-format
+msgctxt "Web.res-ref-name"
+msgid "Res-Ref-Name"
+msgstr ""
+
+#. 
+#: Web.res-type
+#, java-format
+msgctxt "Web.res-type"
+msgid "Res-Type"
+msgstr ""
+
+#. 
+#: Web.res-auth
+#, java-format
+msgctxt "Web.res-auth"
+msgid "Res-Auth"
+msgstr ""
+
+#. 
+#: Web.role-name
+#, java-format
+msgctxt "Web.role-name"
+msgid "Role-Name"
+msgstr ""
+
+#. 
+#: Web.role-link
+#, java-format
+msgctxt "Web.role-link"
+msgid "Role-Link"
+msgstr ""
+
+#. 
+#: Web.servlet-class
+#, java-format
+msgctxt "Web.servlet-class"
+msgid "Servlet-Class"
+msgstr ""
+
+#. 
+#: Web.jsp-file
+#, java-format
+msgctxt "Web.jsp-file"
+msgid "JSP-File"
+msgstr ""
+
+#. 
+#: Web.load-on-startup
+#, java-format
+msgctxt "Web.load-on-startup"
+msgid "Load-on-Startup"
+msgstr ""
+
+#. 
+#: Web.session-timeout
+#, java-format
+msgctxt "Web.session-timeout"
+msgid "Session-Timeout"
+msgstr ""
+
+#. 
+#: Web.taglib-uri
+#, java-format
+msgctxt "Web.taglib-uri"
+msgid "Taglib-URI"
+msgstr ""
+
+#. 
+#: Web.taglib-location
+#, java-format
+msgctxt "Web.taglib-location"
+msgid "Taglib-Location"
+msgstr ""
+
+#. 
+#: Web.transport-guarantee
+#, java-format
+msgctxt "Web.transport-guarantee"
+msgid "Transport-Guarantee"
+msgstr ""
+
+#. 
+#: Web.file_name
+#, java-format
+msgctxt "Web.file_name"
+msgid "File Name"
+msgstr ""
+
+#. 
+#: Web.xmlns
+#, java-format
+msgctxt "Web.xmlns"
+msgid "Xmlns"
+msgstr ""
+
+#. 
+#: Web.xmlns_xsi
+#, java-format
+msgctxt "Web.xmlns_xsi"
+msgid "Xmlns:xsi"
+msgstr ""
+
+#. 
+#: Web.xsi_schemaLocation
+#, java-format
+msgctxt "Web.xsi_schemaLocation"
+msgid "Xsi:schemaLocation"
+msgstr ""
+
+#. 
+#: Web.deferred-value_type
+#, java-format
+msgctxt "Web.deferred-value_type"
+msgid "Deferred-Value Type"
+msgstr ""
+
+#. 
+#: Web.deferred-method_signature
+#, java-format
+msgctxt "Web.deferred-method_signature"
+msgid "Deferred-Method Signature"
+msgstr ""
+
+#. 
+#: Web.fragment
+#, java-format
+msgctxt "Web.fragment"
+msgid "Fragment"
+msgstr ""
+
+#. 
+#: Web.function-class
+#, java-format
+msgctxt "Web.function-class"
+msgid "Function-Class"
+msgstr ""
+
+#. 
+#: Web.function-signature
+#, java-format
+msgctxt "Web.function-signature"
+msgid "Function-Signature"
+msgstr ""
+
+#. 
+#: Web.path
+#, java-format
+msgctxt "Web.path"
+msgid "Path"
+msgstr ""
+
+#. 
+#: Web.page_path
+#, java-format
+msgctxt "Web.page_path"
+msgid "Page Path"
+msgstr ""
+
+#. 
+#: Web.project
+#, java-format
+msgctxt "Web.project"
+msgid "Project"
+msgstr ""
+
+#. 
+#: Web.implementation
+#, java-format
+msgctxt "Web.implementation"
+msgid "Implementation"
+msgstr ""
+
+#. 
+#: Web.velocity_templates
+#, java-format
+msgctxt "Web.velocity_templates"
+msgid "Velocity Templates"
+msgstr ""
+
+#. 
+#: Web.templates_location
+#, java-format
+msgctxt "Web.templates_location"
+msgid "Templates Location"
+msgstr ""
+
+#. 
+#: Web.core_library
+#, java-format
+msgctxt "Web.core_library"
+msgid "Core Library"
+msgstr ""
+
+#. 
+#: Web.common_library
+#, java-format
+msgctxt "Web.common_library"
+msgid "Common Library"
+msgstr ""
+
+#. 
+#: Web.language
+#, java-format
+msgctxt "Web.language"
+msgid "Language"
+msgstr ""
+
+#. 
+#: Web.country
+#, java-format
+msgctxt "Web.country"
+msgid "Country"
+msgstr ""
+
+#. 
+#: Web.model_path
+#, java-format
+msgctxt "Web.model_path"
+msgid "Model Path"
+msgstr ""
+
+#. 
+#: Web.URI
+#, java-format
+msgctxt "Web.URI"
+msgid "URI"
+msgstr ""
+
+#. 
+#: Web.path_on_disk
+#, java-format
+msgctxt "Web.path_on_disk"
+msgid "Path on Disk"
+msgstr ""
+
+#. 
+#: Web.root_file_system
+#, java-format
+msgctxt "Web.root_file_system"
+msgid "Root File System"
+msgstr ""
+
+#. 
+#: Web.src_file_system
+#, java-format
+msgctxt "Web.src_file_system"
+msgid "Src File System"
+msgstr ""
+
+#. 
+#: Web.url
+#, java-format
+msgctxt "Web.url"
+msgid "URL"
+msgstr ""
+
+#. 
+#: Web.filter
+#, java-format
+msgctxt "Web.filter"
+msgid "Filter"
+msgstr ""
+
+#. 
+#: Web.add_libraries
+#, java-format
+msgctxt "Web.add_libraries"
+msgid "Add Libraries"
+msgstr ""
+
+#. 
+#: Web.servlet_version
+#, java-format
+msgctxt "Web.servlet_version"
+msgid "Servlet Version"
+msgstr ""
+
+#. 
+#: Web.use_default_path
+#, java-format
+msgctxt "Web.use_default_path"
+msgid "Use Default Path"
+msgstr ""
+
+#. 
+#: Web.import_type
+#, java-format
+msgctxt "Web.import_type"
+msgid "Import Type"
+msgstr ""
+
+#. 
+#: Web.template
+#, java-format
+msgctxt "Web.template"
+msgid "Template"
+msgstr ""
+
+#. 
+#: Web.TLDs
+#, java-format
+msgctxt "Web.TLDs"
+msgid "TLDs"
+msgstr ""
+
+#. 
+#: Web.domain
+#, java-format
+msgctxt "Web.domain"
+msgid "Domain"
+msgstr ""
+
+#. 
+#: Web.runtime
+#, java-format
+msgctxt "Web.runtime"
+msgid "Runtime"
+msgstr ""
+
+#. 
+#: Web.target_server
+#, java-format
+msgctxt "Web.target_server"
+msgid "Target Server"
+msgstr ""
+
+#. 
+#: Web.build
+#, java-format
+msgctxt "Web.build"
+msgid "Build"
+msgstr ""
+
+#. 
+#: Web.compile
+#, java-format
+msgctxt "Web.compile"
+msgid "Compile"
+msgstr ""
+
+#. 
+#: Web.create_jar
+#, java-format
+msgctxt "Web.create_jar"
+msgid "Create Jar"
+msgstr ""
+
+#. 
+#: Web.metadata-complete
+#, java-format
+msgctxt "Web.metadata-complete"
+msgid "Metadata-Complete"
+msgstr ""
+
+#. 
+#: Web.dispatchers
+#, java-format
+msgctxt "Web.dispatchers"
+msgid "Dispatchers"
+msgstr ""
+
+#. 
+#: Web.el-ignored
+#, java-format
+msgctxt "Web.el-ignored"
+msgid "El-Ignored"
+msgstr ""
+
+#. 
+#: Web.page-encoding
+#, java-format
+msgctxt "Web.page-encoding"
+msgid "Page-Encoding"
+msgstr ""
+
+#. 
+#: Web.scripting-invalid
+#, java-format
+msgctxt "Web.scripting-invalid"
+msgid "Scripting-Invalid"
+msgstr ""
+
+#. 
+#: Web.is-xml
+#, java-format
+msgctxt "Web.is-xml"
+msgid "Is-XML"
+msgstr ""
+
+#. 
+#: Web.include-prelude
+#, java-format
+msgctxt "Web.include-prelude"
+msgid "Include-Prelude"
+msgstr ""
+
+#. 
+#: Web.include-coda
+#, java-format
+msgctxt "Web.include-coda"
+msgid "Include-Coda"
+msgstr ""
+
+#. 
+#: Web.locale
+#, java-format
+msgctxt "Web.locale"
+msgid "Locale"
+msgstr ""
+
+#. 
+#: Web.message-destination-name
+#, java-format
+msgctxt "Web.message-destination-name"
+msgid "Message-Destination-Name"
+msgstr ""
+
+#. 
+#: Web.message-destination-ref-name
+#, java-format
+msgctxt "Web.message-destination-ref-name"
+msgid "Message-Destination-Ref-Name"
+msgstr ""
+
+#. 
+#: Web.message-destination-type
+#, java-format
+msgctxt "Web.message-destination-type"
+msgid "Message-Destination-Type"
+msgstr ""
+
+#. 
+#: Web.message-destination-usage
+#, java-format
+msgctxt "Web.message-destination-usage"
+msgid "Message-Destination-Usage"
+msgstr ""
+
+#. 
+#: Web.message-destination-link
+#, java-format
+msgctxt "Web.message-destination-link"
+msgid "Message-Destination-Link"
+msgstr ""
+
+#. 
+#: Web.service-ref-name
+#, java-format
+msgctxt "Web.service-ref-name"
+msgid "Service-Ref-Name"
+msgstr ""
+
+#. 
+#: Web.service-interface
+#, java-format
+msgctxt "Web.service-interface"
+msgid "Service-Interface"
+msgstr ""
+
+#. 
+#: Web.wsdl-file
+#, java-format
+msgctxt "Web.wsdl-file"
+msgid "Wsdl-File"
+msgstr ""
+
+#. 
+#: Web.jaxrpc-mapping-file
+#, java-format
+msgctxt "Web.jaxrpc-mapping-file"
+msgid "Jaxrpc-Mapping-File"
+msgstr ""
+
+#. 
+#: Web.service-qname
+#, java-format
+msgctxt "Web.service-qname"
+msgid "Service-Qname"
+msgstr ""
+
+#. 
+#: Web.port-component-ref
+#, java-format
+msgctxt "Web.port-component-ref"
+msgid "Port-Component-Ref"
+msgstr ""
+
+#. 
+#: Web.handler
+#, java-format
+msgctxt "Web.handler"
+msgid "Handler"
+msgstr ""
+

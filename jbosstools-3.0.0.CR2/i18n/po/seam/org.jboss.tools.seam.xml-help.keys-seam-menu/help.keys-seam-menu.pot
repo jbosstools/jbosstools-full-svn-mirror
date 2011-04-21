@@ -1,0 +1,726 @@
+#SOME DESCRIPTIVE TITLE.
+#Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+#This file is distributed under the same license as the PACKAGE package.
+#FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-11-13 10:30+1000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+""
+
+#. 
+#: Seam.AddProperty.menu
+#, java-format
+msgctxt "Seam.AddProperty.menu"
+msgid "Add Simple Property..."
+msgstr ""
+
+#. 
+#: Seam.AddListProperty.menu
+#, java-format
+msgctxt "Seam.AddListProperty.menu"
+msgid "Add List Property..."
+msgstr ""
+
+#. 
+#: Seam.AddMapProperty.menu
+#, java-format
+msgctxt "Seam.AddMapProperty.menu"
+msgid "Add Map Property..."
+msgstr ""
+
+#. 
+#: Seam.AddComponent.menu
+#, java-format
+msgctxt "Seam.AddComponent.menu"
+msgid "Component..."
+msgstr ""
+
+#. 
+#: Seam.AddFactory.menu
+#, java-format
+msgctxt "Seam.AddFactory.menu"
+msgid "Factory..."
+msgstr ""
+
+#. 
+#: Seam.AddEvent.menu
+#, java-format
+msgctxt "Seam.AddEvent.menu"
+msgid "Event..."
+msgstr ""
+
+#. 
+#: Seam.AddImport.menu
+#, java-format
+msgctxt "Seam.AddImport.menu"
+msgid "Import..."
+msgstr ""
+
+#. 
+#: Seam.AddAction.menu
+#, java-format
+msgctxt "Seam.AddAction.menu"
+msgid "Action..."
+msgstr ""
+
+#. 
+#: Seam.AddEntry.menu
+#, java-format
+msgctxt "Seam.AddEntry.menu"
+msgid "Add Entry..."
+msgstr ""
+
+#. 
+#: Seam.Async.menu
+#, java-format
+msgctxt "Seam.Async.menu"
+msgid "Async"
+msgstr ""
+
+#. 
+#: Seam.AddTimer.menu
+#, java-format
+msgctxt "Seam.AddTimer.menu"
+msgid "Timer Service Dispatcher..."
+msgstr ""
+
+#. 
+#: Seam.AddQuartz.menu
+#, java-format
+msgctxt "Seam.AddQuartz.menu"
+msgid "Quartz Dispatcher..."
+msgstr ""
+
+#. 
+#: Seam.AddPool.menu
+#, java-format
+msgctxt "Seam.AddPool.menu"
+msgid "Thread Pool Dispatcher..."
+msgstr ""
+
+#. 
+#: Seam.CreateFileSeamComponentsV.menu
+#, java-format
+msgctxt "Seam.CreateFileSeamComponentsV.menu"
+msgid "Seam Components File..."
+msgstr ""
+
+#. 
+#: Seam.Core.menu
+#, java-format
+msgctxt "Seam.Core.menu"
+msgid "Core"
+msgstr ""
+
+#. 
+#: Seam.AddActor.menu
+#, java-format
+msgctxt "Seam.AddActor.menu"
+msgid "Actor..."
+msgstr ""
+
+#. 
+#: Seam.AddDispatcher.menu
+#, java-format
+msgctxt "Seam.AddDispatcher.menu"
+msgid "Dispatcher..."
+msgstr ""
+
+#. 
+#: Seam.AddTransactionListener.menu
+#, java-format
+msgctxt "Seam.AddTransactionListener.menu"
+msgid "Transaction Listener..."
+msgstr ""
+
+#. 
+#: Seam.AddEJB.menu
+#, java-format
+msgctxt "Seam.AddEJB.menu"
+msgid "EJB..."
+msgstr ""
+
+#. 
+#: Seam.AddInit.menu
+#, java-format
+msgctxt "Seam.AddInit.menu"
+msgid "Init..."
+msgstr ""
+
+#. 
+#: Seam.AddJBPM.menu
+#, java-format
+msgctxt "Seam.AddJBPM.menu"
+msgid "JBPM..."
+msgstr ""
+
+#. 
+#: Seam.AddLocaleSelector.menu
+#, java-format
+msgctxt "Seam.AddLocaleSelector.menu"
+msgid "Locale Selector..."
+msgstr ""
+
+#. 
+#: Seam.AddManager.menu
+#, java-format
+msgctxt "Seam.AddManager.menu"
+msgid "Manager..."
+msgstr ""
+
+#. 
+#: Seam.AddMicrocontainer.menu
+#, java-format
+msgctxt "Seam.AddMicrocontainer.menu"
+msgid "Microcontainer..."
+msgstr ""
+
+#. 
+#: Seam.AddPages.menu
+#, java-format
+msgctxt "Seam.AddPages.menu"
+msgid "Pages..."
+msgstr ""
+
+#. 
+#: Seam.AddPojoCache.menu
+#, java-format
+msgctxt "Seam.AddPojoCache.menu"
+msgid "Pojo Cache..."
+msgstr ""
+
+#. 
+#: Seam.AddResourceBundle.menu
+#, java-format
+msgctxt "Seam.AddResourceBundle.menu"
+msgid "Resource Bundle..."
+msgstr ""
+
+#. 
+#: Seam.AddTimeZoneSelector.menu
+#, java-format
+msgctxt "Seam.AddTimeZoneSelector.menu"
+msgid "Time Zone Selector..."
+msgstr ""
+
+#. 
+#: Seam.AddManagedPersistenceContext.menu
+#, java-format
+msgctxt "Seam.AddManagedPersistenceContext.menu"
+msgid "Managed Persistence Context..."
+msgstr ""
+
+#. 
+#: Seam.AddEntityManagerFactory.menu
+#, java-format
+msgctxt "Seam.AddEntityManagerFactory.menu"
+msgid "Entity Manager Factory..."
+msgstr ""
+
+#. 
+#: Seam.AddFilter.menu
+#, java-format
+msgctxt "Seam.AddFilter.menu"
+msgid "Filter..."
+msgstr ""
+
+#. 
+#: Seam.AddResourceLoader.menu
+#, java-format
+msgctxt "Seam.AddResourceLoader.menu"
+msgid "Resource Loader..."
+msgstr ""
+
+#. 
+#: Seam.BPM.menu
+#, java-format
+msgctxt "Seam.BPM.menu"
+msgid "BPM"
+msgstr ""
+
+#. 
+#: Seam.Drools.menu
+#, java-format
+msgctxt "Seam.Drools.menu"
+msgid "Drools"
+msgstr ""
+
+#. 
+#: Seam.AddManagedWorkingMemory.menu
+#, java-format
+msgctxt "Seam.AddManagedWorkingMemory.menu"
+msgid "Managed Working Memory..."
+msgstr ""
+
+#. 
+#: Seam.AddRuleBase.menu
+#, java-format
+msgctxt "Seam.AddRuleBase.menu"
+msgid "Rule Base..."
+msgstr ""
+
+#. 
+#: Seam.AddRuleAgent.menu
+#, java-format
+msgctxt "Seam.AddRuleAgent.menu"
+msgid "Rule Agent..."
+msgstr ""
+
+#. 
+#: Seam.Framework.menu
+#, java-format
+msgctxt "Seam.Framework.menu"
+msgid "Framework"
+msgstr ""
+
+#. 
+#: Seam.AddEntityQuery.menu
+#, java-format
+msgctxt "Seam.AddEntityQuery.menu"
+msgid "Entity Query..."
+msgstr ""
+
+#. 
+#: Seam.AddHibernateEntityQuery.menu
+#, java-format
+msgctxt "Seam.AddHibernateEntityQuery.menu"
+msgid "Hibernate Entity Query..."
+msgstr ""
+
+#. 
+#: Seam.AddEntityHome.menu
+#, java-format
+msgctxt "Seam.AddEntityHome.menu"
+msgid "Entity Home..."
+msgstr ""
+
+#. 
+#: Seam.AddHibernateEntityHome.menu
+#, java-format
+msgctxt "Seam.AddHibernateEntityHome.menu"
+msgid "Hibernate Entity Home..."
+msgstr ""
+
+#. 
+#: Seam.International.menu
+#, java-format
+msgctxt "Seam.International.menu"
+msgid "International"
+msgstr ""
+
+#. 
+#: Seam.AddLocaleConfig.menu
+#, java-format
+msgctxt "Seam.AddLocaleConfig.menu"
+msgid "Locale Config..."
+msgstr ""
+
+#. 
+#: Seam.JMS.menu
+#, java-format
+msgctxt "Seam.JMS.menu"
+msgid "JMS"
+msgstr ""
+
+#. 
+#: Seam.AddQueueConnection.menu
+#, java-format
+msgctxt "Seam.AddQueueConnection.menu"
+msgid "Queue Connection..."
+msgstr ""
+
+#. 
+#: Seam.AddTopicConnection.menu
+#, java-format
+msgctxt "Seam.AddTopicConnection.menu"
+msgid "Topic Connection..."
+msgstr ""
+
+#. 
+#: Seam.AddTopicPublisher.menu
+#, java-format
+msgctxt "Seam.AddTopicPublisher.menu"
+msgid "Managed Topic Publisher..."
+msgstr ""
+
+#. 
+#: Seam.AddQueueSender.menu
+#, java-format
+msgctxt "Seam.AddQueueSender.menu"
+msgid "Managed Queue Sender..."
+msgstr ""
+
+#. 
+#: Seam.Mail.menu
+#, java-format
+msgctxt "Seam.Mail.menu"
+msgid "Mail"
+msgstr ""
+
+#. 
+#: Seam.AddMailSession.menu
+#, java-format
+msgctxt "Seam.AddMailSession.menu"
+msgid "Mail Session..."
+msgstr ""
+
+#. 
+#: Seam.AddMeldware.menu
+#, java-format
+msgctxt "Seam.AddMeldware.menu"
+msgid "Meldware..."
+msgstr ""
+
+#. 
+#: Seam.AddMeldwareUser.menu
+#, java-format
+msgctxt "Seam.AddMeldwareUser.menu"
+msgid "Meldware User..."
+msgstr ""
+
+#. 
+#: Seam.Pdf.menu
+#, java-format
+msgctxt "Seam.Pdf.menu"
+msgid "Pdf"
+msgstr ""
+
+#. 
+#: Seam.AddDocumentStore.menu
+#, java-format
+msgctxt "Seam.AddDocumentStore.menu"
+msgid "Document Store..."
+msgstr ""
+
+#. 
+#: Seam.AddKeyStoreConfig.menu
+#, java-format
+msgctxt "Seam.AddKeyStoreConfig.menu"
+msgid "Key Store Config..."
+msgstr ""
+
+#. 
+#: Seam.Persistence.menu
+#, java-format
+msgctxt "Seam.Persistence.menu"
+msgid "Persistence"
+msgstr ""
+
+#. 
+#: Seam.AddManagedHibernateSession.menu
+#, java-format
+msgctxt "Seam.AddManagedHibernateSession.menu"
+msgid "Managed Hibernate Session..."
+msgstr ""
+
+#. 
+#: Seam.AddHibernateSessionFactory.menu
+#, java-format
+msgctxt "Seam.AddHibernateSessionFactory.menu"
+msgid "Hibernate Session Factory..."
+msgstr ""
+
+#. 
+#: Seam.Remoting.menu
+#, java-format
+msgctxt "Seam.Remoting.menu"
+msgid "Remoting"
+msgstr ""
+
+#. 
+#: Seam.AddRemotingConfig.menu
+#, java-format
+msgctxt "Seam.AddRemotingConfig.menu"
+msgid "Config..."
+msgstr ""
+
+#. 
+#: Seam.Security.menu
+#, java-format
+msgctxt "Seam.Security.menu"
+msgid "Security"
+msgstr ""
+
+#. 
+#: Seam.AddIdentity.menu
+#, java-format
+msgctxt "Seam.AddIdentity.menu"
+msgid "Identity..."
+msgstr ""
+
+#. 
+#: Seam.AddFacesSecurityEvents.menu
+#, java-format
+msgctxt "Seam.AddFacesSecurityEvents.menu"
+msgid "Faces Security Events..."
+msgstr ""
+
+#. 
+#: Seam.AddIdentityManager.menu
+#, java-format
+msgctxt "Seam.AddIdentityManager.menu"
+msgid "Identity Manager..."
+msgstr ""
+
+#. 
+#: Seam.AddJPAIdentityStore.menu
+#, java-format
+msgctxt "Seam.AddJPAIdentityStore.menu"
+msgid "JPA Identity Store..."
+msgstr ""
+
+#. 
+#: Seam.AddLDAPIdentityStore.menu
+#, java-format
+msgctxt "Seam.AddLDAPIdentityStore.menu"
+msgid "LDAP Identity Store..."
+msgstr ""
+
+#. 
+#: Seam.AddPermissionManager.menu
+#, java-format
+msgctxt "Seam.AddPermissionManager.menu"
+msgid "Permission Manager..."
+msgstr ""
+
+#. 
+#: Seam.AddJPAPermissionStore.menu
+#, java-format
+msgctxt "Seam.AddJPAPermissionStore.menu"
+msgid "JPA Permission Store..."
+msgstr ""
+
+#. 
+#: Seam.AddRuleBasedPermissionResolver.menu
+#, java-format
+msgctxt "Seam.AddRuleBasedPermissionResolver.menu"
+msgid "Rule Based Permission Resolver..."
+msgstr ""
+
+#. 
+#: Seam.AddPersistentPermissionResolver.menu
+#, java-format
+msgctxt "Seam.AddPersistentPermissionResolver.menu"
+msgid "Persistent Permission Resolver..."
+msgstr ""
+
+#. 
+#: Seam.Spring.menu
+#, java-format
+msgctxt "Seam.Spring.menu"
+msgid "Spring"
+msgstr ""
+
+#. 
+#: Seam.AddContextLoader.menu
+#, java-format
+msgctxt "Seam.AddContextLoader.menu"
+msgid "Context Loader..."
+msgstr ""
+
+#. 
+#: Seam.AddTaskDispatcher.menu
+#, java-format
+msgctxt "Seam.AddTaskDispatcher.menu"
+msgid "Task Dispatcher..."
+msgstr ""
+
+#. 
+#: Seam.AddTransaction.menu
+#, java-format
+msgctxt "Seam.AddTransaction.menu"
+msgid "Transaction..."
+msgstr ""
+
+#. 
+#: Seam.Theme.menu
+#, java-format
+msgctxt "Seam.Theme.menu"
+msgid "Theme"
+msgstr ""
+
+#. 
+#: Seam.AddThemeSelector.menu
+#, java-format
+msgctxt "Seam.AddThemeSelector.menu"
+msgid "Theme Selector..."
+msgstr ""
+
+#. 
+#: Seam.Transaction.menu
+#, java-format
+msgctxt "Seam.Transaction.menu"
+msgid "Transaction"
+msgstr ""
+
+#. 
+#: Seam.AddEjb.menu
+#, java-format
+msgctxt "Seam.AddEjb.menu"
+msgid "Ejb..."
+msgstr ""
+
+#. 
+#: Seam.AddEntity.menu
+#, java-format
+msgctxt "Seam.AddEntity.menu"
+msgid "Entity..."
+msgstr ""
+
+#. 
+#: Seam.AddHibernate.menu
+#, java-format
+msgctxt "Seam.AddHibernate.menu"
+msgid "Hibernate..."
+msgstr ""
+
+#. 
+#: Seam.AddNo.menu
+#, java-format
+msgctxt "Seam.AddNo.menu"
+msgid "No Transaction..."
+msgstr ""
+
+#. 
+#: Seam.UI.menu
+#, java-format
+msgctxt "Seam.UI.menu"
+msgid "UI"
+msgstr ""
+
+#. 
+#: Seam.AddJPAEntityLoader.menu
+#, java-format
+msgctxt "Seam.AddJPAEntityLoader.menu"
+msgid "JPA Entity Loader..."
+msgstr ""
+
+#. 
+#: Seam.AddHibernateEntityLoader.menu
+#, java-format
+msgctxt "Seam.AddHibernateEntityLoader.menu"
+msgid "Hibernate Entity Loader..."
+msgstr ""
+
+#. 
+#: Seam.AddEntityConverter.menu
+#, java-format
+msgctxt "Seam.AddEntityConverter.menu"
+msgid "Entity Converter..."
+msgstr ""
+
+#. 
+#: Seam.Web.menu
+#, java-format
+msgctxt "Seam.Web.menu"
+msgid "Web"
+msgstr ""
+
+#. 
+#: Seam.AddContextFilter.menu
+#, java-format
+msgctxt "Seam.AddContextFilter.menu"
+msgid "Context Filter..."
+msgstr ""
+
+#. 
+#: Seam.AddExceptionFilter.menu
+#, java-format
+msgctxt "Seam.AddExceptionFilter.menu"
+msgid "Exception Filter..."
+msgstr ""
+
+#. 
+#: Seam.AddMultipartFilter.menu
+#, java-format
+msgctxt "Seam.AddMultipartFilter.menu"
+msgid "Multipart Filter..."
+msgstr ""
+
+#. 
+#: Seam.AddRedirectFilter.menu
+#, java-format
+msgctxt "Seam.AddRedirectFilter.menu"
+msgid "Redirect Filter..."
+msgstr ""
+
+#. 
+#: Seam.AddAuthenticationFilter.menu
+#, java-format
+msgctxt "Seam.AddAuthenticationFilter.menu"
+msgid "Authentication Filter..."
+msgstr ""
+
+#. 
+#: Seam.AddCharacterFilter.menu
+#, java-format
+msgctxt "Seam.AddCharacterFilter.menu"
+msgid "Character Encoding Filter..."
+msgstr ""
+
+#. 
+#: Seam.AddAjaxFilter.menu
+#, java-format
+msgctxt "Seam.AddAjaxFilter.menu"
+msgid "Ajax For JSF Filter..."
+msgstr ""
+
+#. 
+#: Seam.AddLoggingFilter.menu
+#, java-format
+msgctxt "Seam.AddLoggingFilter.menu"
+msgid "Logging Filter..."
+msgstr ""
+
+#. 
+#: Seam.AddServletSession.menu
+#, java-format
+msgctxt "Seam.AddServletSession.menu"
+msgid "Servlet Session..."
+msgstr ""
+
+#. 
+#: Seam.AddSession.menu
+#, java-format
+msgctxt "Seam.AddSession.menu"
+msgid "Session..."
+msgstr ""
+
+#. 
+#: Seam.AddIdentityFilter.menu
+#, java-format
+msgctxt "Seam.AddIdentityFilter.menu"
+msgid "Identity Filter..."
+msgstr ""
+
+#. 
+#: Seam.AddWicketFilter.menu
+#, java-format
+msgctxt "Seam.AddWicketFilter.menu"
+msgid "Wicket Filter..."
+msgstr ""
+
+#. 
+#: Seam.Wicket.menu
+#, java-format
+msgctxt "Seam.Wicket.menu"
+msgid "Wicket"
+msgstr ""
+
+#. 
+#: Seam.AddWebApplication.menu
+#, java-format
+msgctxt "Seam.AddWebApplication.menu"
+msgid "Web Application..."
+msgstr ""
+

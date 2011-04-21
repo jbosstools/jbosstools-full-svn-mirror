@@ -1,0 +1,68 @@
+#SOME DESCRIPTIVE TITLE.
+#Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+#This file is distributed under the same license as the PACKAGE package.
+#FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-11-13 10:33+1000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+""
+
+#. 
+#: VPE.lists.Page__Only_This_Page
+#, java-format
+msgctxt "VPE.lists.Page__Only_This_Page"
+msgid "Page: Only This Page"
+msgstr ""
+
+#. 
+#: VPE.lists.Folder__Any_Page_at_the_Same_Folder
+#, java-format
+msgctxt "VPE.lists.Folder__Any_Page_at_the_Same_Folder"
+msgid "Folder: Any Page at the Same Folder"
+msgstr ""
+
+#. 
+#: VPE.lists.Project__Any_Page_at_the_Same_Project
+#, java-format
+msgctxt "VPE.lists.Project__Any_Page_at_the_Same_Project"
+msgid "Project: Any Page at the Same Project"
+msgstr ""
+
+#. 
+#: VPE.lists.Page
+#, java-format
+msgctxt "VPE.lists.Page"
+msgid "Page"
+msgstr ""
+
+#. 
+#: VPE.lists.Folder
+#, java-format
+msgctxt "VPE.lists.Folder"
+msgid "Folder"
+msgstr ""
+
+#. 
+#: VPE.lists.Project
+#, java-format
+msgctxt "VPE.lists.Project"
+msgid "Project"
+msgstr ""
+
+#. 
+#: VPE.lists.Global__For_all_projects_in_workspace
+#, java-format
+msgctxt "VPE.lists.Global__For_all_projects_in_workspace"
+msgid "Global: For all projects in workspace"
+msgstr ""
+

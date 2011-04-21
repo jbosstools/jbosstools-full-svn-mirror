@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+<head>
+	<style type="text/css">
+		.red-text {
+			color:red;
+		}
+		.blue-text {
+			color:blue;
+		}
+		.yellow-background {
+			background-color: yellow;
+		}
+	</style>
+</head>
+<body>
+<f:view>
+	<rich:dataDefinitionList id="dataDefinitionList" rows="5"
+			styleClass="yellow-background" rowClasses="red-text, blue-text">
+		<f:facet name="term"><h:outputText value="TERM-VISIBLE"/></f:facet>
+		<f:facet name="term"><h:outputText value="TERM-INVISIBLE"/></f:facet>
+		<h:outputText value="col1" />
+		<h:outputText value="col2" />
+		<h:outputText value="col3" />
+		<h:outputText value="col4" />
+	</rich:dataDefinitionList>
+</f:view>
+</body>
+</html>

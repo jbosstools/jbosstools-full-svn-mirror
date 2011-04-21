@@ -1,0 +1,278 @@
+#SOME DESCRIPTIVE TITLE.
+#Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+#This file is distributed under the same license as the PACKAGE package.
+#FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-11-13 10:25+1000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+""
+
+#. 
+#: SeamPages.lists.render
+#, java-format
+msgctxt "SeamPages.lists.render"
+msgid "render"
+msgstr ""
+
+#. 
+#: SeamPages.lists.redirect
+#, java-format
+msgctxt "SeamPages.lists.redirect"
+msgid "redirect"
+msgstr ""
+
+#. 
+#: SeamPages.lists.enabled
+#, java-format
+msgctxt "SeamPages.lists.enabled"
+msgid "enabled"
+msgstr ""
+
+#. 
+#: SeamPages.lists.disabled
+#, java-format
+msgctxt "SeamPages.lists.disabled"
+msgid "disabled"
+msgstr ""
+
+#. 
+#: SeamPages.lists.manual
+#, java-format
+msgctxt "SeamPages.lists.manual"
+msgid "manual"
+msgstr ""
+
+#. 
+#: SeamPages.lists.auto
+#, java-format
+msgctxt "SeamPages.lists.auto"
+msgid "auto"
+msgstr ""
+
+#. 
+#: SeamPages.lists.commit
+#, java-format
+msgctxt "SeamPages.lists.commit"
+msgid "commit"
+msgstr ""
+
+#. 
+#: SeamPages.lists.MANUAL
+#, java-format
+msgctxt "SeamPages.lists.MANUAL"
+msgid "MANUAL"
+msgstr ""
+
+#. 
+#: SeamPages.lists.AUTO
+#, java-format
+msgctxt "SeamPages.lists.AUTO"
+msgid "AUTO"
+msgstr ""
+
+#. 
+#: SeamPages.lists.COMMIT
+#, java-format
+msgctxt "SeamPages.lists.COMMIT"
+msgid "COMMIT"
+msgstr ""
+
+#. 
+#: SeamPages.lists.info
+#, java-format
+msgctxt "SeamPages.lists.info"
+msgid "info"
+msgstr ""
+
+#. 
+#: SeamPages.lists.warn
+#, java-format
+msgctxt "SeamPages.lists.warn"
+msgid "warn"
+msgstr ""
+
+#. 
+#: SeamPages.lists.error
+#, java-format
+msgctxt "SeamPages.lists.error"
+msgid "error"
+msgstr ""
+
+#. 
+#: SeamPages.lists.fatal
+#, java-format
+msgctxt "SeamPages.lists.fatal"
+msgid "fatal"
+msgstr ""
+
+#. 
+#: SeamPages.lists.debug
+#, java-format
+msgctxt "SeamPages.lists.debug"
+msgid "debug"
+msgstr ""
+
+#. 
+#: SeamPages.lists.trace
+#, java-format
+msgctxt "SeamPages.lists.trace"
+msgid "trace"
+msgstr ""
+
+#. 
+#: SeamPages.lists.INFO
+#, java-format
+msgctxt "SeamPages.lists.INFO"
+msgid "INFO"
+msgstr ""
+
+#. 
+#: SeamPages.lists.WARN
+#, java-format
+msgctxt "SeamPages.lists.WARN"
+msgid "WARN"
+msgstr ""
+
+#. 
+#: SeamPages.lists.ERROR
+#, java-format
+msgctxt "SeamPages.lists.ERROR"
+msgid "ERROR"
+msgstr ""
+
+#. 
+#: SeamPages.lists.FATAL
+#, java-format
+msgctxt "SeamPages.lists.FATAL"
+msgid "FATAL"
+msgstr ""
+
+#. 
+#: SeamPages.lists.DEBUG
+#, java-format
+msgctxt "SeamPages.lists.DEBUG"
+msgid "DEBUG"
+msgstr ""
+
+#. 
+#: SeamPages.lists.TRACE
+#, java-format
+msgctxt "SeamPages.lists.TRACE"
+msgid "TRACE"
+msgstr ""
+
+#. 
+#: SeamPages.lists.stateless
+#, java-format
+msgctxt "SeamPages.lists.stateless"
+msgid "stateless"
+msgstr ""
+
+#. 
+#: SeamPages.lists.event
+#, java-format
+msgctxt "SeamPages.lists.event"
+msgid "event"
+msgstr ""
+
+#. 
+#: SeamPages.lists.page
+#, java-format
+msgctxt "SeamPages.lists.page"
+msgid "page"
+msgstr ""
+
+#. 
+#: SeamPages.lists.conversation
+#, java-format
+msgctxt "SeamPages.lists.conversation"
+msgid "conversation"
+msgstr ""
+
+#. 
+#: SeamPages.lists.session
+#, java-format
+msgctxt "SeamPages.lists.session"
+msgid "session"
+msgstr ""
+
+#. 
+#: SeamPages.lists.business_process
+#, java-format
+msgctxt "SeamPages.lists.business_process"
+msgid "business_process"
+msgstr ""
+
+#. 
+#: SeamPages.lists.application
+#, java-format
+msgctxt "SeamPages.lists.application"
+msgid "application"
+msgstr ""
+
+#. 
+#: SeamPages.lists.STATELESS
+#, java-format
+msgctxt "SeamPages.lists.STATELESS"
+msgid "STATELESS"
+msgstr ""
+
+#. 
+#: SeamPages.lists.EVENT
+#, java-format
+msgctxt "SeamPages.lists.EVENT"
+msgid "EVENT"
+msgstr ""
+
+#. 
+#: SeamPages.lists.PAGE
+#, java-format
+msgctxt "SeamPages.lists.PAGE"
+msgid "PAGE"
+msgstr ""
+
+#. 
+#: SeamPages.lists.CONVERSATION
+#, java-format
+msgctxt "SeamPages.lists.CONVERSATION"
+msgid "CONVERSATION"
+msgstr ""
+
+#. 
+#: SeamPages.lists.SESSION
+#, java-format
+msgctxt "SeamPages.lists.SESSION"
+msgid "SESSION"
+msgstr ""
+
+#. 
+#: SeamPages.lists.BUSINESS_PROCESS
+#, java-format
+msgctxt "SeamPages.lists.BUSINESS_PROCESS"
+msgid "BUSINESS_PROCESS"
+msgstr ""
+
+#. 
+#: SeamPages.lists.APPLICATION
+#, java-format
+msgctxt "SeamPages.lists.APPLICATION"
+msgid "APPLICATION"
+msgstr ""
+
+#. 
+#: SeamPages.lists.Default_CONVERSATION_
+#, java-format
+msgctxt "SeamPages.lists.Default_CONVERSATION_"
+msgid "Default(CONVERSATION)"
+msgstr ""
+

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+	<extension 
+		point="org.jboss.tools.common.text.ext.hyperlinkPartitioner"
+		id="org.jboss.tools.common.text.ext.jsf.richfaces.hyperlinkPartitioner"
+		name="org.jboss.tools.common.text.ext.jsf.richfaces.hyperlinkPartitioner">
+
+		<hyperlinkPartitioner
+         	id="org.jboss.tools.common.text.ext.jsf.richfaces.hyperlink.jsp.JSPLinkHyperlinkPartitioner"
+         	class="org.jboss.tools.common.text.ext.hyperlink.jsp.JSPLinkHyperlinkPartitioner">
+         	<contentType id="org.eclipse.jst.jsp.core.jspsource">
+         		<partitionType id="org.jboss.tools.common.text.ext.xml.XML_ATTRIBUTE_VALUE">
+         			<axis path="*/[http://richfaces.org/a4j]:include/viewId/" />
+         			<axis path="*/[http://richfaces.org/a4j]:loadStyle/src/" />
+         			<axis path="*/[http://richfaces.org/a4j]:commandButton/image/" />
+         			<axis path="*/[http://richfaces.org/a4j]:loadScript/src/" />
+         			<axis path="*/[http://richfaces.org/rich]:insert/src/" />
+         			<axis path="*/[http://richfaces.org/rich]:menuGroug/icon/" />
+         			<axis path="*/[http://richfaces.org/rich]:menuGroug/iconDisabled/" />
+         			<axis path="*/[http://richfaces.org/rich]:menuGroug/iconFolder/" />
+         			<axis path="*/[http://richfaces.org/rich]:menuGroug/iconFolderDisabled/" />
+         			<axis path="*/[http://richfaces.org/rich]:menuItem/icon/" />
+         			<axis path="*/[http://richfaces.org/rich]:menuItem/iconDisabled/" />
+         			<axis path="*/[http://richfaces.org/rich]:tree/icon/" />
+         			<axis path="*/[http://richfaces.org/rich]:tree/iconCollapsed/" />
+         			<axis path="*/[http://richfaces.org/rich]:tree/iconExpanded/" />
+         			<axis path="*/[http://richfaces.org/rich]:tree/iconLeaf/" />
+         			<axis path="*/[http://richfaces.org/rich]:panelMenu/iconCollapsedGroup/" />
+         			<axis path="*/[http://richfaces.org/rich]:panelMenu/iconCollapsedTopGroup/" />
+         			<axis path="*/[http://richfaces.org/rich]:panelMenu/iconDisabledGroup/" />
+         			<axis path="*/[http://richfaces.org/rich]:panelMenu/iconDisabledItem/" />
+         			<axis path="*/[http://richfaces.org/rich]:panelMenu/iconExpandedGroup/" />
+         			<axis path="*/[http://richfaces.org/rich]:panelMenu/iconExpandedTopGroup/" />
+         			<axis path="*/[http://richfaces.org/rich]:panelMenu/iconItem/" />
+         			<axis path="*/[http://richfaces.org/rich]:panelMenu/iconTopDisabledGroup/" />
+         			<axis path="*/[http://richfaces.org/rich]:panelMenu/iconTopDisabledItem/" />
+         			<axis path="*/[http://richfaces.org/rich]:panelMenu/iconTopItem/" />
+         			<axis path="*/[http://richfaces.org/rich]:calendar/buttonIcon/" />
+         			<axis path="*/[http://richfaces.org/rich]:calendar/buttonIconDisabled/" />
+         			<axis path="*/[http://richfaces.org/rich]:comboBox/buttonIcon/" />
+         			<axis path="*/[http://richfaces.org/rich]:comboBox/buttonIconDisabled/" />
+         			<axis path="*/[http://richfaces.org/rich]:comboBox/buttonIconInactive/" />
+         			<axis path="*/[http://richfaces.org/rich]:inplaceInput/cancelControlIcon/" />
+         			<axis path="*/[http://richfaces.org/rich]:inplaceInput/saveControlIcon/" />
+         			<axis path="*/[http://richfaces.org/rich]:inplaceSelect/cancelControlIcon/" />
+         			<axis path="*/[http://richfaces.org/rich]:inplaceSelect/saveControlIcon/" />
+         		</partitionType>
+         	</contentType>
+         	<contentType id="org.eclipse.wst.html.core.htmlsource">
+         		<partitionType id="org.jboss.tools.common.text.ext.xml.XML_ATTRIBUTE_VALUE">
+         			<axis path="*/[http://richfaces.org/a4j]:include/viewId/" />
+         			<axis path="*/[http://richfaces.org/a4j]:loadStyle/src/" />
+         			<axis path="*/[http://richfaces.org/a4j]:commandButton/image/" />
+         			<axis path="*/[http://richfaces.org/a4j]:loadScript/src/" />
+         			<axis path="*/[http://richfaces.org/rich]:insert/src/" />
+         			<axis path="*/[http://richfaces.org/rich]:menuGroug/icon/" />
+         			<axis path="*/[http://richfaces.org/rich]:menuGroug/iconDisabled/" />
+         			<axis path="*/[http://richfaces.org/rich]:menuGroug/iconFolder/" />
+         			<axis path="*/[http://richfaces.org/rich]:menuGroug/iconFolderDisabled/" />
+         			<axis path="*/[http://richfaces.org/rich]:menuItem/icon/" />
+         			<axis path="*/[http://richfaces.org/rich]:menuItem/iconDisabled/" />
+         			<axis path="*/[http://richfaces.org/rich]:tree/icon/" />
+         			<axis path="*/[http://richfaces.org/rich]:tree/iconCollapsed/" />
+         			<axis path="*/[http://richfaces.org/rich]:tree/iconExpanded/" />
+         			<axis path="*/[http://richfaces.org/rich]:tree/iconLeaf/" />
+         			<axis path="*/[http://richfaces.org/rich]:panelMenu/iconCollapsedGroup/" />
+         			<axis path="*/[http://richfaces.org/rich]:panelMenu/iconCollapsedTopGroup/" />
+         			<axis path="*/[http://richfaces.org/rich]:panelMenu/iconDisabledGroup/" />
+         			<axis path="*/[http://richfaces.org/rich]:panelMenu/iconDisabledItem/" />
+         			<axis path="*/[http://richfaces.org/rich]:panelMenu/iconExpandedGroup/" />
+         			<axis path="*/[http://richfaces.org/rich]:panelMenu/iconExpandedTopGroup/" />
+         			<axis path="*/[http://richfaces.org/rich]:panelMenu/iconItem/" />
+         			<axis path="*/[http://richfaces.org/rich]:panelMenu/iconTopDisabledGroup/" />
+         			<axis path="*/[http://richfaces.org/rich]:panelMenu/iconTopDisabledItem/" />
+         			<axis path="*/[http://richfaces.org/rich]:panelMenu/iconTopItem/" />
+         			<axis path="*/[http://richfaces.org/rich]:calendar/buttonIcon/" />
+         			<axis path="*/[http://richfaces.org/rich]:calendar/buttonIconDisabled/" />
+         			<axis path="*/[http://richfaces.org/rich]:comboBox/buttonIcon/" />
+         			<axis path="*/[http://richfaces.org/rich]:comboBox/buttonIconDisabled/" />
+         			<axis path="*/[http://richfaces.org/rich]:comboBox/buttonIconInactive/" />
+         			<axis path="*/[http://richfaces.org/rich]:inplaceInput/cancelControlIcon/" />
+         			<axis path="*/[http://richfaces.org/rich]:inplaceInput/saveControlIcon/" />
+         			<axis path="*/[http://richfaces.org/rich]:inplaceSelect/cancelControlIcon/" />
+         			<axis path="*/[http://richfaces.org/rich]:inplaceSelect/saveControlIcon/" />
+         		</partitionType>
+         	</contentType>
+		</hyperlinkPartitioner>
+
+		<hyperlinkPartitioner 
+         	id="org.jboss.tools.common.text.ext.jsf.richfaces.hyperlink.JSFJSPLinkHyperlinkPartitioner"
+         	class="org.jboss.tools.jsf.text.ext.hyperlink.JSFJSPLinkHyperlinkPartitioner">
+         	<contentType id="org.eclipse.jst.jsp.core.jspsource">
+         		<partitionType id="org.jboss.tools.common.text.ext.jsp.JSP_LINK" >
+         			<axis path="*/[http://richfaces.org/a4j]:include/viewId/" />
+         			<axis path="*/[http://richfaces.org/a4j]:loadStyle/src/" />
+         			<axis path="*/[http://richfaces.org/a4j]:commandButton/image/" />
+         			<axis path="*/[http://richfaces.org/a4j]:loadScript/src/" />
+         			<axis path="*/[http://richfaces.org/rich]:insert/src/" />
+         			<axis path="*/[http://richfaces.org/rich]:menuGroug/icon/" />
+         			<axis path="*/[http://richfaces.org/rich]:menuGroug/iconDisabled/" />
+         			<axis path="*/[http://richfaces.org/rich]:menuGroug/iconFolder/" />
+         			<axis path="*/[http://richfaces.org/rich]:menuGroug/iconFolderDisabled/" />
+         			<axis path="*/[http://richfaces.org/rich]:menuItem/icon/" />
+         			<axis path="*/[http://richfaces.org/rich]:menuItem/iconDisabled/" />
+         			<axis path="*/[http://richfaces.org/rich]:tree/icon/" />
+         			<axis path="*/[http://richfaces.org/rich]:tree/iconCollapsed/" />
+         			<axis path="*/[http://richfaces.org/rich]:tree/iconExpanded/" />
+         			<axis path="*/[http://richfaces.org/rich]:tree/iconLeaf/" />
+         			<axis path="*/[http://richfaces.org/rich]:panelMenu/iconCollapsedGroup/" />
+         			<axis path="*/[http://richfaces.org/rich]:panelMenu/iconCollapsedTopGroup/" />
+         			<axis path="*/[http://richfaces.org/rich]:panelMenu/iconDisabledGroup/" />
+         			<axis path="*/[http://richfaces.org/rich]:panelMenu/iconDisabledItem/" />
+         			<axis path="*/[http://richfaces.org/rich]:panelMenu/iconExpandedGroup/" />
+         			<axis path="*/[http://richfaces.org/rich]:panelMenu/iconExpandedTopGroup/" />
+         			<axis path="*/[http://richfaces.org/rich]:panelMenu/iconItem/" />
+         			<axis path="*/[http://richfaces.org/rich]:panelMenu/iconTopDisabledGroup/" />
+         			<axis path="*/[http://richfaces.org/rich]:panelMenu/iconTopDisabledItem/" />
+         			<axis path="*/[http://richfaces.org/rich]:panelMenu/iconTopItem/" />
+         			<axis path="*/[http://richfaces.org/rich]:calendar/buttonIcon/" />
+         			<axis path="*/[http://richfaces.org/rich]:calendar/buttonIconDisabled/" />
+         			<axis path="*/[http://richfaces.org/rich]:comboBox/buttonIcon/" />
+         			<axis path="*/[http://richfaces.org/rich]:comboBox/buttonIconDisabled/" />
+         			<axis path="*/[http://richfaces.org/rich]:comboBox/buttonIconInactive/" />
+         			<axis path="*/[http://richfaces.org/rich]:inplaceInput/cancelControlIcon/" />
+         			<axis path="*/[http://richfaces.org/rich]:inplaceInput/saveControlIcon/" />
+         			<axis path="*/[http://richfaces.org/rich]:inplaceSelect/cancelControlIcon/" />
+         			<axis path="*/[http://richfaces.org/rich]:inplaceSelect/saveControlIcon/" />
+         		</partitionType>
+         	</contentType>
+         	<contentType id="org.eclipse.wst.html.core.htmlsource">
+         		<partitionType id="org.jboss.tools.common.text.ext.jsp.JSP_LINK" >
+         			<axis path="*/[http://richfaces.org/a4j]:include/viewId/" />
+         			<axis path="*/[http://richfaces.org/a4j]:loadStyle/src/" />
+         			<axis path="*/[http://richfaces.org/a4j]:commandButton/image/" />
+         			<axis path="*/[http://richfaces.org/a4j]:loadScript/src/" />
+         			<axis path="*/[http://richfaces.org/rich]:insert/src/" />
+         			<axis path="*/[http://richfaces.org/rich]:menuGroug/icon/" />
+         			<axis path="*/[http://richfaces.org/rich]:menuGroug/iconDisabled/" />
+         			<axis path="*/[http://richfaces.org/rich]:menuGroug/iconFolder/" />
+         			<axis path="*/[http://richfaces.org/rich]:menuGroug/iconFolderDisabled/" />
+         			<axis path="*/[http://richfaces.org/rich]:menuItem/icon/" />
+         			<axis path="*/[http://richfaces.org/rich]:menuItem/iconDisabled/" />
+         			<axis path="*/[http://richfaces.org/rich]:tree/icon/" />
+         			<axis path="*/[http://richfaces.org/rich]:tree/iconCollapsed/" />
+         			<axis path="*/[http://richfaces.org/rich]:tree/iconExpanded/" />
+         			<axis path="*/[http://richfaces.org/rich]:tree/iconLeaf/" />
+         			<axis path="*/[http://richfaces.org/rich]:panelMenu/iconCollapsedGroup/" />
+         			<axis path="*/[http://richfaces.org/rich]:panelMenu/iconCollapsedTopGroup/" />
+         			<axis path="*/[http://richfaces.org/rich]:panelMenu/iconDisabledGroup/" />
+         			<axis path="*/[http://richfaces.org/rich]:panelMenu/iconDisabledItem/" />
+         			<axis path="*/[http://richfaces.org/rich]:panelMenu/iconExpandedGroup/" />
+         			<axis path="*/[http://richfaces.org/rich]:panelMenu/iconExpandedTopGroup/" />
+         			<axis path="*/[http://richfaces.org/rich]:panelMenu/iconItem/" />
+         			<axis path="*/[http://richfaces.org/rich]:panelMenu/iconTopDisabledGroup/" />
+         			<axis path="*/[http://richfaces.org/rich]:panelMenu/iconTopDisabledItem/" />
+         			<axis path="*/[http://richfaces.org/rich]:panelMenu/iconTopItem/" />
+         			<axis path="*/[http://richfaces.org/rich]:calendar/buttonIcon/" />
+         			<axis path="*/[http://richfaces.org/rich]:calendar/buttonIconDisabled/" />
+         			<axis path="*/[http://richfaces.org/rich]:comboBox/buttonIcon/" />
+         			<axis path="*/[http://richfaces.org/rich]:comboBox/buttonIconDisabled/" />
+         			<axis path="*/[http://richfaces.org/rich]:comboBox/buttonIconInactive/" />
+         			<axis path="*/[http://richfaces.org/rich]:inplaceInput/cancelControlIcon/" />
+         			<axis path="*/[http://richfaces.org/rich]:inplaceInput/saveControlIcon/" />
+         			<axis path="*/[http://richfaces.org/rich]:inplaceSelect/cancelControlIcon/" />
+         			<axis path="*/[http://richfaces.org/rich]:inplaceSelect/saveControlIcon/" />
+         		</partitionType>
+         	</contentType>
+		</hyperlinkPartitioner>
+
+	</extension>	
+</plugin>

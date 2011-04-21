@@ -1,0 +1,257 @@
+#SOME DESCRIPTIVE TITLE.
+#Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+#This file is distributed under the same license as the PACKAGE package.
+#FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-11-13 10:27+1000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+""
+
+#. 
+#: Tiles.folder
+#, java-format
+msgctxt "Tiles.folder"
+msgid "Folder"
+msgstr ""
+
+#. 
+#: Tiles.separator
+#, java-format
+msgctxt "Tiles.separator"
+msgid "Separator"
+msgstr ""
+
+#. 
+#: Tiles.register
+#, java-format
+msgctxt "Tiles.register"
+msgid "Register"
+msgstr ""
+
+#. 
+#: Tiles.element_type
+#, java-format
+msgctxt "Tiles.element_type"
+msgid "Element Type"
+msgstr ""
+
+#. 
+#: Tiles.name
+#, java-format
+msgctxt "Tiles.name"
+msgid "Name"
+msgstr ""
+
+#. 
+#: Tiles.extension
+#, java-format
+msgctxt "Tiles.extension"
+msgid "Extension"
+msgstr ""
+
+#. 
+#: Tiles.encoding
+#, java-format
+msgctxt "Tiles.encoding"
+msgid "Encoding"
+msgstr ""
+
+#. 
+#: Tiles.update_references
+#, java-format
+msgctxt "Tiles.update_references"
+msgid "Update References"
+msgstr ""
+
+#. 
+#: Tiles.id
+#, java-format
+msgctxt "Tiles.id"
+msgid "ID"
+msgstr ""
+
+#. 
+#: Tiles.value
+#, java-format
+msgctxt "Tiles.value"
+msgid "Value"
+msgstr ""
+
+#. 
+#: Tiles.type
+#, java-format
+msgctxt "Tiles.type"
+msgid "Type"
+msgstr ""
+
+#. 
+#: Tiles.direct
+#, java-format
+msgctxt "Tiles.direct"
+msgid "Direct"
+msgstr ""
+
+#. 
+#: Tiles.content
+#, java-format
+msgctxt "Tiles.content"
+msgid "Content"
+msgstr ""
+
+#. 
+#: Tiles.classtype
+#, java-format
+msgctxt "Tiles.classtype"
+msgid "Classtype"
+msgstr ""
+
+#. 
+#: Tiles.path
+#, java-format
+msgctxt "Tiles.path"
+msgid "Path"
+msgstr ""
+
+#. 
+#: Tiles.page
+#, java-format
+msgctxt "Tiles.page"
+msgid "Page"
+msgstr ""
+
+#. 
+#: Tiles.template
+#, java-format
+msgctxt "Tiles.template"
+msgid "Template"
+msgstr ""
+
+#. 
+#: Tiles.extends
+#, java-format
+msgctxt "Tiles.extends"
+msgid "Extends"
+msgstr ""
+
+#. 
+#: Tiles.role
+#, java-format
+msgctxt "Tiles.role"
+msgid "Role"
+msgstr ""
+
+#. 
+#: Tiles.controllerClass
+#, java-format
+msgctxt "Tiles.controllerClass"
+msgid "ControllerClass"
+msgstr ""
+
+#. 
+#: Tiles.controllerUrl
+#, java-format
+msgctxt "Tiles.controllerUrl"
+msgid "ControllerUrl"
+msgstr ""
+
+#. 
+#: Tiles.small-icon
+#, java-format
+msgctxt "Tiles.small-icon"
+msgid "Small-Icon"
+msgstr ""
+
+#. 
+#: Tiles.large-icon
+#, java-format
+msgctxt "Tiles.large-icon"
+msgid "Large-Icon"
+msgstr ""
+
+#. 
+#: Tiles.display-name
+#, java-format
+msgctxt "Tiles.display-name"
+msgid "Display-Name"
+msgstr ""
+
+#. 
+#: Tiles.description
+#, java-format
+msgctxt "Tiles.description"
+msgid "Description"
+msgstr ""
+
+#. 
+#: Tiles.link
+#, java-format
+msgctxt "Tiles.link"
+msgid "Link"
+msgstr ""
+
+#. 
+#: Tiles.icon
+#, java-format
+msgctxt "Tiles.icon"
+msgid "Icon"
+msgstr ""
+
+#. 
+#: Tiles.tooltip
+#, java-format
+msgctxt "Tiles.tooltip"
+msgid "Tooltip"
+msgstr ""
+
+#. 
+#: Tiles.title
+#, java-format
+msgctxt "Tiles.title"
+msgid "Title"
+msgstr ""
+
+#. 
+#: Tiles.subtype
+#, java-format
+msgctxt "Tiles.subtype"
+msgid "Subtype"
+msgstr ""
+
+#. 
+#: Tiles.shape
+#, java-format
+msgctxt "Tiles.shape"
+msgid "Shape"
+msgstr ""
+
+#. 
+#: Tiles.target
+#, java-format
+msgctxt "Tiles.target"
+msgid "Target"
+msgstr ""
+
+#. 
+#: Tiles.hidden
+#, java-format
+msgctxt "Tiles.hidden"
+msgid "Hidden"
+msgstr ""
+
+#. 
+#: Tiles.shortcut
+#, java-format
+msgctxt "Tiles.shortcut"
+msgid "Shortcut"
+msgstr ""
+

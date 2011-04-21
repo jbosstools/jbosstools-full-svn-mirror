@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %plugin.name
+Bundle-SymbolicName: org.jboss.tools.birt.oda;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-ClassPath: .
+Bundle-Activator: org.jboss.tools.birt.oda.Activator
+Bundle-Vendor: %BundleVendor
+Bundle-Localization: plugin
+Export-Package: org.jboss.tools.birt.oda,
+ org.jboss.tools.birt.oda.impl
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.datatools.connectivity.oda;bundle-version="[3.1.0,4.0.0)",
+ org.eclipse.datatools.connectivity.oda.profile;bundle-version="[3.0.4,4.0.0)",
+ org.hibernate.eclipse;resolution:=optional
+Eclipse-LazyStart: true
+
