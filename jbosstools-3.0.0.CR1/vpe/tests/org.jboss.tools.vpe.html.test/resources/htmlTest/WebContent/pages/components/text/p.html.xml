@@ -1,0 +1,10 @@
+<tests>
+	<test id="p">
+<P ALIGN="right" ID="p" CLASS="pClass" STYLE="color: red; -moz-user-modify: read-write;" DIR="ltr">
+<SPAN>
+Some
+text 2
+</SPAN>
+</P>
+	</test>
+</tests>

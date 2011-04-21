@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="quickstart" xreflabel="Quick Start">
+	<?dbhtml filename="quick_start.html"?>
+	<chapterinfo>
+		<keywordset>
+			<keyword>JBoss Tools</keyword>
+			<keyword>Smooks</keyword>
+			<keyword>JBDS</keyword>
+			<keyword>java</keyword>
+		</keywordset>
+	</chapterinfo>
+	<title>Quick Start</title>
+	<para>
+		This "Quick Start" will show how to use the Smooks tools to
+		create/edit the Smooks configuration file for Java2Java
+		data
+		transformation.</para>
+	<para>
+		This chapter should give you a brief understanding of
+		the
+		Smooks
+		dev tools.
+	</para>
+	<section>
+		<title>Download Smooks Java-to-Java example</title>
+		<para>  Visit
+			<ulink
+				url="http://www.smooks.org/documentation/documentation-smooks-1-1-x/examples/example---java-to-java">here</ulink>  to download the "java-to-java" example project.
+		</para>
+		<tip>
+			<title>Tip:</title>
+			<para>
+				The example project is base on Maven, you suggest you to
+				create a new eclipse Java project and copy the example code and .jar
+				files from the example project paste them into the eclipse Java
+				project.
+			</para>
+		</tip>
+	</section>
+	<section>
+		<title>Smooks configuration file wizard</title>
+		<para>Select the Smooks Java-to-Java example project what you created and right-click, select the menu: &quot;New&quot; ->
+			&quot;Other...&quot;, find  the
+			&quot;Smooks Configuration File&quot; wizard. Click
+			&quot;Next&quot; button.
+		</para>
+		<figure>
+			<title>To select Smooks Configuration File wizard</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/common/new_wizard.png" scale="90" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>The first wizard page is a file path creation page. Select the
+			&quot;src&quot; to be the files container, and input
+			&quot;smooks-newconfig.smooks&quot;. Click &quot;Next&quot;.</para>
+		<figure>
+			<title>Choose the configuration file container and type the
+				file name</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/common/input_file_name.png"
+						scale="90" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>The second wizard page is a transform data type choose page.</para>
+		<tip>
+			<title>Note</title>
+			<para>
+				As the quick start introduces how to create/edit the
+				Java-to-Java Smooks configuration file, it's necessary that "Java" type
+				is the source/target transform data type please. 
+			</para>
+		</tip>
+		<figure>
+			<title>Select Data Type</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/common/data_type_selection.png"
+						scale="90" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+	</section>
+	<section id="quickstart_formeditor">
+		<title>Smooks form Editor</title>
+		<para>When all the wizard steps are passed, a new Smooks configuration  file is created and the Smooks editor will be opened automatically.
+		</para>
+		<para> You will see the
+			&quot;Smooks Form Editor&quot;:
+		</para>
+		<figure>
+			<title>Smooks form editor</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/common/form_editor.png" scale="90" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		
+		<para>  This editor contains several parts:
+			<orderedlist numeration="loweralpha" inheritnum="inherit">
+				<listitem>
+					<para>Notify message display area. If there are any errors when you are editing the file,
+						the error area will display them.</para>
+				</listitem>
+				<listitem>
+					<para>Source data tree. The tree will display the structure of transformed source data.</para>
+				</listitem>
+				
+				<listitem>
+					<para>Target data tree. The tree will display the structure of transformed target data.</para>
+				</listitem>
+				
+				<listitem>
+					<para>Mapping graphical area. Show the data mapping connection lines.</para>
+				</listitem>
+				
+				<listitem>
+					<para>Source/Target data selection links. Click the link,
+						and <link linkend="graphicaleditor_datalink">"Data
+							Selection
+							Wizard"</link>  will be opened
+						helping you to choose the source/target
+						data.</para>
+				</listitem>
+			</orderedlist>
+		</para>
+	</section>
+	<section id="graphicaleditor_datalink">
+		<title>Choosing  the source/target data
+		</title>
+		<para>Click the data selection links to choose the transform  data. The "Data Selection Wizard" is opened, and there are two data  types on the list:  XML and Java.
+		</para>
+		<tip>
+			<title>Note</title>
+			<para>
+				There will be more and more data types on a list as the
+				development went on.
+			</para>
+		</tip>
+		<figure>
+			<title>Data type wizard</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/common/data_type_wizard.png"
+						scale="90" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>Select the &quot;JavaBean Data Type&quot; and click &quot;Next&quot;, you  will see a java class selection page:
+		</para>
+		<figure>
+			<title>JavaBean Data Selection Wizard</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/java2java/java_data_selection_wizard.png"
+						scale="90" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>When you select all the necessary java classes, click &quot;Finish&quot; and  the structure of the java class will be displayed on  the Source  data tree. Please, do the same with a target  data link.
+		</para>
+		<figure>
+			<title>Displaying Structure of the Transformed Data</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/java2java/java_data_display.png"
+						scale="90" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+	</section>
+	<section id="quickstart_mapping">
+		<title>Mapping</title>
+		<para>  As you see, the source/target data tree displays the structure  of the  java class. </para>
+		<para>How to map it?</para>
+		<para> First, you should know what to transform:
+			<orderedlist numeration="loweralpha" inheritnum="inherit">
+				  <listitem><para>Bind the &quot;customerName&quot; property of the
+					Order#header to
+					the
+					&quot;customerName&quot; property of LineOrder.</para>
+				</listitem>
+				  <listitem><para>Bind the
+					&quot;customerNumber&quot; property of the Order#header to
+					the
+					&quot;customerId&quot;
+					property of LineOrder.</para>
+				</listitem>
+				  <listitem><para>Bind the &quot;price&quot; property of the OrderItem
+					to
+					the
+					&quot;unitPrice&quot; property of
+					LineItem.</para>
+				</listitem>
+				  <listitem><para>Bind the &quot;productId&quot;
+					property
+					of the OrderItem to the
+					&quot;productCode&quot;
+					property of LineItem.</para>
+				</listitem>
+				  <listitem><para>Bind the
+					&quot;quantity&quot; property of the OrderItem to the
+					&quot;unitQuantity&quot;
+					property of
+					LineItem.</para>
+				</listitem>
+			</orderedlist>
+		</para>
+		<para>  Make sense?</para>
+		<para> OK, let's select the &quot;customerName&quot;  item of the
+			&quot;header&quot;  item on  the source data tree and start to drag  it. When the  drag item crosses the Mapping graphical area, you will  see a  connection  line. Drop the  item onto the &quot;customerName&quot; of the
+			&quot;LineOrder&quot; on the  target data  view.</para>
+		<para>  Now a dialog is oped asking you to  connect the root node:
+		</para>
+		<figure>
+			<title>Dialog Asking You to Connect to the Root Nodes</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/java2java/connect_rootnode.png"
+						scale="90" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>  Please, click &quot;Yes&quot; to connect the root node, if you didn't do  that,  this dialog  will be opened again when you connect other nodes. 
+		</para>
+		<tip>
+			<title>Note</title>
+			<para>Please,
+				remember that:
+				The root nodes of the source data
+				and target data
+				*MUST*
+				be connected.</para>
+			<para>This rule is not only for Java-to-Java, but the same is also relevant for XML-to-Java  </para>
+		</tip>
+		<para>  Now let's do the same operation with the &quot;customerNumber&quot;,  that  is  what you want to see:
+			
+		</para>
+		<figure>
+			<title>Correctly Mapping Editor</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/java2java/java_connection1.png"
+						scale="90" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>Next, you are going to bind the properties of the
+			&quot;OrderItem&quot; to the properties of the &quot;LineItem&quot;. 
+		</para>
+		<para>Select the &quot;price&quot; and drag it onto the &quot;unitPrice&quot; of  the  other side tree viewer. The error message display area will show  an  error:
+		</para>
+		<figure>
+			<title>Connection Error 1</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/java2java/connection_error1.png"
+						scale="90" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>How to deal with the error ?</para>
+		<para>Please click the &quot;Fix it&quot; link, a menu is popped-up with several "resolve methods" on it.
+		</para>
+		<para>  Select the first resolve method: 'Connect the &quot;OrderItem&quot; to the
+			&quot;LineItem&quot; ',  then the &quot;OrderItem&quot; is connected  with the
+			&quot;LineItem&quot;.
+		</para>
+		<para>But the notify message area still shows some other errors:
+		</para>
+		<figure>
+			<title>Connection Error 2</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/java2java/connection_error2.png"
+						scale="90" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>OK, let's deal with the fire error ---- Click &quot;Fix it&quot; link  and select the first resolve method. The &quot;orderItems&quot; is connected  with the &quot;lineItems&quot;.
+		</para>
+		<tip>
+			<title>Tip</title>
+			<para>
+				Why does the occur error?</para>
+			<para> You will find that, if you only connect the property node without connecting the parent node of the property, the &quot;connection error&quot; occur</para>
+			<para>The
+				connection of
+				the &quot;price-to-unitPrice&quot; is
+				the &quot;Binding
+				Connection&quot;,
+				but it needs
+				a &quot;Instance
+				Creation
+				Connection&quot; -the
+				connection
+				of
+				the
+				&quot;OrderItem-to-LineItem&quot;.</para>
+		</tip>
+		<para>  After that, connect the quantity to  the  unitQuantity ; connect  the  productId to the productCode:
+		</para>
+		<figure>
+			<title>Complete mapping</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/java2java/correct_editor.png"
+						scale="90" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>Now, you should save the file and the Smooks tools will generate  the correct configuration file content.</para>
+		<para>OK, Let run the test class: example.Main (Please, make  sure  that the Smooks engine loads the correct configuration file)
+		</para>
+		<para>Success!
+		</para>
+	</section>
+</chapter>

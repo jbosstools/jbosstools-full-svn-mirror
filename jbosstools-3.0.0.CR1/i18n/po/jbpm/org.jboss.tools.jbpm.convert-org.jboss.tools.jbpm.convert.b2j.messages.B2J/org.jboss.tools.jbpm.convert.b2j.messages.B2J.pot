@@ -1,0 +1,572 @@
+#SOME DESCRIPTIVE TITLE.
+#Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+#This file is distributed under the same license as the PACKAGE package.
+#FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-11-28 14:17+1000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+""
+
+#. 
+#: Loop_Decision
+#, java-format
+msgctxt "Loop_Decision"
+msgid "Loop_Decition"
+msgstr ""
+
+#. 
+#: To
+#, java-format
+msgctxt "To"
+msgid "to"
+msgstr ""
+
+#. 
+#: Space
+#, java-format
+msgctxt "Space"
+msgid ""
+msgstr ""
+
+#. 
+#: Underline
+#, java-format
+msgctxt "Underline"
+msgid "_"
+msgstr ""
+
+#. 
+#: Folder_Name_Separator
+#, java-format
+msgctxt "Folder_Name_Separator"
+msgid "."
+msgstr ""
+
+#. 
+#: Dom_Element_Name
+#, java-format
+msgctxt "Dom_Element_Name"
+msgid "name"
+msgstr ""
+
+#. 
+#: Dom_Element_ID
+#, java-format
+msgctxt "Dom_Element_ID"
+msgid "id"
+msgstr ""
+
+#. 
+#: Width_Attribute_Name
+#, java-format
+msgctxt "Width_Attribute_Name"
+msgid "width"
+msgstr ""
+
+#. 
+#: Height_Attribute_Name
+#, java-format
+msgctxt "Height_Attribute_Name"
+msgid "height"
+msgstr ""
+
+#. 
+#: X_Attribute_Name
+#, java-format
+msgctxt "X_Attribute_Name"
+msgid "x"
+msgstr ""
+
+#. 
+#: Y_Attribute_Name
+#, java-format
+msgctxt "Y_Attribute_Name"
+msgid "y"
+msgstr ""
+
+#. 
+#: Label_Select_All
+#, java-format
+msgctxt "Label_Select_All"
+msgid "Select All"
+msgstr ""
+
+#. 
+#: Label_Deselect_All
+#, java-format
+msgctxt "Label_Deselect_All"
+msgid "Deselect All"
+msgstr ""
+
+#. 
+#: Label_Button_Browse
+#, java-format
+msgctxt "Label_Button_Browse"
+msgid "Browse..."
+msgstr ""
+
+#. 
+#: Bpmn_Diagram_Name_Suffix
+#, java-format
+msgctxt "Bpmn_Diagram_Name_Suffix"
+msgid "_diagram"
+msgstr ""
+
+#. 
+#: Bpmn_Pool_Element_Name
+#, java-format
+msgctxt "Bpmn_Pool_Element_Name"
+msgid "pools"
+msgstr ""
+
+#. 
+#: Bpmn_Vertice_Element_Name
+#, java-format
+msgctxt "Bpmn_Vertice_Element_Name"
+msgid "vertices"
+msgstr ""
+
+#. 
+#: Bpmn_SequenceFlow_Element_Name
+#, java-format
+msgctxt "Bpmn_SequenceFlow_Element_Name"
+msgid "sequenceEdges"
+msgstr ""
+
+#. 
+#: Bpmn_Href_Attribute_Name
+#, java-format
+msgctxt "Bpmn_Href_Attribute_Name"
+msgid "href"
+msgstr ""
+
+#. 
+#: Bpmn_XmiType_Attribute_Name
+#, java-format
+msgctxt "Bpmn_XmiType_Attribute_Name"
+msgid "type"
+msgstr ""
+
+#. 
+#: Bpmn_ActivityType_Attribute_Name
+#, java-format
+msgctxt "Bpmn_ActivityType_Attribute_Name"
+msgid "activityType"
+msgstr ""
+
+#. 
+#: Bpmn_InFlow_Attribute_Name
+#, java-format
+msgctxt "Bpmn_InFlow_Attribute_Name"
+msgid "incomingEdges"
+msgstr ""
+
+#. 
+#: Bpmn_Looping_Attribute_Name
+#, java-format
+msgctxt "Bpmn_Looping_Attribute_Name"
+msgid "looping"
+msgstr ""
+
+#. 
+#: Bpmn_FlowSource_Attribute_Name
+#, java-format
+msgctxt "Bpmn_FlowSource_Attribute_Name"
+msgid "source"
+msgstr ""
+
+#. 
+#: Bpmn_FlowTarget_Attribute_Name
+#, java-format
+msgctxt "Bpmn_FlowTarget_Attribute_Name"
+msgid "target"
+msgstr ""
+
+#. 
+#: Bpmn_FlowDefault_Attribute_Name
+#, java-format
+msgctxt "Bpmn_FlowDefault_Attribute_Name"
+msgid "isDefault"
+msgstr ""
+
+#. 
+#: Bpmn_Element_ID
+#, java-format
+msgctxt "Bpmn_Element_ID"
+msgid "iD"
+msgstr ""
+
+#. 
+#: Bpmn_Wizard_Title
+#, java-format
+msgctxt "Bpmn_Wizard_Title"
+msgid "BPMN to jPDL Conversion"
+msgstr ""
+
+#. 
+#: Bpmn_File_Choose_WizardPage_Name
+#, java-format
+msgctxt "Bpmn_File_Choose_WizardPage_Name"
+msgid "FileChoosePage"
+msgstr ""
+
+#. 
+#: Bpmn_File_Choose_WizardPage_Title
+#, java-format
+msgctxt "Bpmn_File_Choose_WizardPage_Title"
+msgid "BPMN Resources"
+msgstr ""
+
+#. 
+#: Bpmn_File_Choose_WizardPage_ViewerTitle
+#, java-format
+msgctxt "Bpmn_File_Choose_WizardPage_ViewerTitle"
+msgid "BPMN resources"
+msgstr ""
+
+#. 
+#: Bpmn_File_Choose_WizardPage_Message
+#, java-format
+msgctxt "Bpmn_File_Choose_WizardPage_Message"
+msgid "Select BPMN resources to convert"
+msgstr ""
+
+#. 
+#: Bpmn_Pool_Choose_WizardPage_Name
+#, java-format
+msgctxt "Bpmn_Pool_Choose_WizardPage_Name"
+msgid "PoolPage"
+msgstr ""
+
+#. 
+#: Bpmn_Pool_Choose_WizardPage_Title
+#, java-format
+msgctxt "Bpmn_Pool_Choose_WizardPage_Title"
+msgid "BPMN Pools"
+msgstr ""
+
+#. 
+#: Bpmn_Pool_Choose_WizardPage_ViewerTitle
+#, java-format
+msgctxt "Bpmn_Pool_Choose_WizardPage_ViewerTitle"
+msgid "BPMN pools"
+msgstr ""
+
+#. 
+#: Bpmn_Pool_Choose_WizardPage_Message
+#, java-format
+msgctxt "Bpmn_Pool_Choose_WizardPage_Message"
+msgid "Select BPMN pools to translate"
+msgstr ""
+
+#. 
+#: Bpmn_GeneratedFile_Location_WizardPage_Name
+#, java-format
+msgctxt "Bpmn_GeneratedFile_Location_WizardPage_Name"
+msgid "LocationPage"
+msgstr ""
+
+#. 
+#: Bpmn_GeneratedFile_Location_WizardPage_Title
+#, java-format
+msgctxt "Bpmn_GeneratedFile_Location_WizardPage_Title"
+msgid "Target Location"
+msgstr ""
+
+#. 
+#: Bpmn_GeneratedFile_Location_WizardPage_ViewerTitle
+#, java-format
+msgctxt "Bpmn_GeneratedFile_Location_WizardPage_ViewerTitle"
+msgid "Target location"
+msgstr ""
+
+#. 
+#: Bpmn_GeneratedFile_Location_WizardPage_Message
+#, java-format
+msgctxt "Bpmn_GeneratedFile_Location_WizardPage_Message"
+msgid "Select the target location"
+msgstr ""
+
+#. 
+#: Bpmn_GeneratedFile_Location_WizardPage_CheckBox
+#, java-format
+msgctxt "Bpmn_GeneratedFile_Location_WizardPage_CheckBox"
+msgid "Overwrite existing resources"
+msgstr ""
+
+#. 
+#: Bpmn_Translate_Message_WizardPage_Name
+#, java-format
+msgctxt "Bpmn_Translate_Message_WizardPage_Name"
+msgid "MessagePage"
+msgstr ""
+
+#. 
+#: Bpmn_Translate_Message_WizardPage_Title
+#, java-format
+msgctxt "Bpmn_Translate_Message_WizardPage_Title"
+msgid "Conversion Warnings and Errors"
+msgstr ""
+
+#. 
+#: Bpmn_Translate_Message_WizardpageViewer_Title
+#, java-format
+msgctxt "Bpmn_Translate_Message_WizardpageViewer_Title"
+msgid "Warnings and Errors"
+msgstr ""
+
+#. 
+#: Bpmn_Translate_Message_WizardPage_Message
+#, java-format
+msgctxt "Bpmn_Translate_Message_WizardPage_Message"
+msgid "Warnings and Errors that occurred during conversion"
+msgstr ""
+
+#. 
+#: Bpmn_EAnnotations_Element_Name
+#, java-format
+msgctxt "Bpmn_EAnnotations_Element_Name"
+msgid "eAnnotations"
+msgstr ""
+
+#. 
+#: Bpmn_Details_Element_Name
+#, java-format
+msgctxt "Bpmn_Details_Element_Name"
+msgid "details"
+msgstr ""
+
+#. 
+#: Bpmn_Value_Attribute_Name
+#, java-format
+msgctxt "Bpmn_Value_Attribute_Name"
+msgid "value"
+msgstr ""
+
+#. 
+#: Jpdl_Suffix
+#, java-format
+msgctxt "Jpdl_Suffix"
+msgid "jpdl"
+msgstr ""
+
+#. 
+#: Jpdl_Element_Decision_Suffix
+#, java-format
+msgctxt "Jpdl_Element_Decision_Suffix"
+msgid "Decision"
+msgstr ""
+
+#. 
+#: Jpdl_Element_Complete_Suffix
+#, java-format
+msgctxt "Jpdl_Element_Complete_Suffix"
+msgid "Complete"
+msgstr ""
+
+#. 
+#: Jpdl_Element_Cancel_Suffix
+#, java-format
+msgctxt "Jpdl_Element_Cancel_Suffix"
+msgid "Cancel"
+msgstr ""
+
+#. 
+#: Jpdl_Element_Successful_Name
+#, java-format
+msgctxt "Jpdl_Element_Successful_Name"
+msgid "Successful?"
+msgstr ""
+
+#. 
+#: Jpdl_Process_Definition_Name
+#, java-format
+msgctxt "Jpdl_Process_Definition_Name"
+msgid "processdefinition.xml"
+msgstr ""
+
+#. 
+#: Jpdl_32_Namespace_Url
+#, java-format
+msgctxt "Jpdl_32_Namespace_Url"
+msgid "urn:jbpm.org:jpdl-3.2"
+msgstr ""
+
+#. 
+#: Jpdl_Process_Definition_Element_Name
+#, java-format
+msgctxt "Jpdl_Process_Definition_Element_Name"
+msgid "process-definition"
+msgstr ""
+
+#. 
+#: Jpdl_Transition_Element
+#, java-format
+msgctxt "Jpdl_Transition_Element"
+msgid "transition"
+msgstr ""
+
+#. 
+#: Jpdl_ProcessState_Element_Name
+#, java-format
+msgctxt "Jpdl_ProcessState_Element_Name"
+msgid "process-state"
+msgstr ""
+
+#. 
+#: Jpdl_SubProcess_Element_Name
+#, java-format
+msgctxt "Jpdl_SubProcess_Element_Name"
+msgid "sub-process"
+msgstr ""
+
+#. 
+#: Jpdl_Decision_Element_Name
+#, java-format
+msgctxt "Jpdl_Decision_Element_Name"
+msgid "decision"
+msgstr ""
+
+#. 
+#: Jpdl_Fork_Element_Name
+#, java-format
+msgctxt "Jpdl_Fork_Element_Name"
+msgid "fork"
+msgstr ""
+
+#. 
+#: Jpdl_Join_Element_Name
+#, java-format
+msgctxt "Jpdl_Join_Element_Name"
+msgid "join"
+msgstr ""
+
+#. 
+#: Jpdl_Start_Element_Name
+#, java-format
+msgctxt "Jpdl_Start_Element_Name"
+msgid "start-state"
+msgstr ""
+
+#. 
+#: Jpdl_State_Element_Name
+#, java-format
+msgctxt "Jpdl_State_Element_Name"
+msgid "state"
+msgstr ""
+
+#. 
+#: Jpdl_End_Element_Name
+#, java-format
+msgctxt "Jpdl_End_Element_Name"
+msgid "end-state"
+msgstr ""
+
+#. 
+#: Jpdl_Node_Element_Name
+#, java-format
+msgctxt "Jpdl_Node_Element_Name"
+msgid "node"
+msgstr ""
+
+#. 
+#: Gpd_Definition_Name
+#, java-format
+msgctxt "Gpd_Definition_Name"
+msgid "gpd.xml"
+msgstr ""
+
+#. 
+#: Gpd_Layout_Element_Name
+#, java-format
+msgctxt "Gpd_Layout_Element_Name"
+msgid "layoutConstraint"
+msgstr ""
+
+#. 
+#: Gpd_Element_Name
+#, java-format
+msgctxt "Gpd_Element_Name"
+msgid "element"
+msgstr ""
+
+#. 
+#: Gpd_Process_Diagram_Name
+#, java-format
+msgctxt "Gpd_Process_Diagram_Name"
+msgid "process-diagram"
+msgstr ""
+
+#. 
+#: Gpd_Label_Element_Name
+#, java-format
+msgctxt "Gpd_Label_Element_Name"
+msgid "label"
+msgstr ""
+
+#. 
+#: Translate_Error_GpdFile_CanNotGenerate
+#, java-format
+msgctxt "Translate_Error_GpdFile_CanNotGenerate"
+msgid "Errror: Couldn't write gpd.xml:"
+msgstr ""
+
+#. 
+#: Translate_Error_GpdFile_CanNotWrite
+#, java-format
+msgctxt "Translate_Error_GpdFile_CanNotWrite"
+msgid "Errror: Couldn't write gpd definition to a gpd.xml: "
+msgstr ""
+
+#. 
+#: Translate_Error_JpdlProcess_Definition_Null
+#, java-format
+msgctxt "Translate_Error_JpdlProcess_Definition_Null"
+msgid "Errror: The JPDL process definition is null."
+msgstr ""
+
+#. 
+#: Translate_Error_JpdlFile_CanNotGenerate
+#, java-format
+msgctxt "Translate_Error_JpdlFile_CanNotGenerate"
+msgid "Errror: Couldn't write process definition xml: "
+msgstr ""
+
+#. 
+#: Translate_Error_JpdlFile_CanNotWrite
+#, java-format
+msgctxt "Translate_Error_JpdlFile_CanNotWrite"
+msgid "Errror: Couldn't write process definition to a jpdl file: "
+msgstr ""
+
+#. 
+#: Translate_Error_File_CanNotRead
+#, java-format
+msgctxt "Translate_Error_File_CanNotRead"
+msgid "Error: Couldn't read or parse {0} file to a DOM document: "
+msgstr ""
+
+#. 
+#: Translate_Warning_Bpmn_Element_Name
+#, java-format
+msgctxt "Translate_Warning_Bpmn_Element_Name"
+msgid "Warning: The bpmn element's name is null or same to another element's name:"
+msgstr ""
+
+#. 
+#: Translate_Warning_Bpmn_Element_Type
+#, java-format
+msgctxt "Translate_Warning_Bpmn_Element_Type"
+msgid "Warning: The type of this bpmn element is not translated to corresponding jpdl element: "
+msgstr ""
+

@@ -1,0 +1,10 @@
+<tests>
+	<test id="pre">
+		<PRE WIDTH="30" ID="pre" CLASS="preClass" STYLE="color: red; -moz-user-modify: read-write;" DIR="ltr">
+<SPAN>
+string   1
+	string   2
+</SPAN>
+</PRE>
+	</test>
+</tests>

@@ -1,0 +1,6 @@
+<tests>
+	<test id="colgroup">
+		<COLGROUP WIDTH="150" ID="colgroup" STYLE="-moz-user-modify: read-write;">
+		</COLGROUP>
+	</test>
+</tests>

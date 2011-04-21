@@ -1,0 +1,10 @@
+<tests>
+	<test id="dt">
+		
+<DT ID="dt" CLASS="dtClass" DIR="ltr" STYLE="color: red; -moz-user-modify: read-write;">
+<SPAN>
+some term 1
+</SPAN>
+</DT>
+	</test>
+</tests>

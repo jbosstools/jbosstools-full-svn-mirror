@@ -1,0 +1,112 @@
+<tests>
+	<test id="dataDefinitionList">
+
+		<DL CLASS="yellow-background">
+			<DT CLASS="headerClass">
+				<DIV>
+					<SPAN>
+						TERM-VISIBLE
+</SPAN>
+				</DIV>
+			</DT>
+			<DD CLASS="columnClass red-text">
+				<SPAN>
+					col1
+</SPAN>
+				<SPAN>
+					col2
+</SPAN>
+				<SPAN>
+					col3
+</SPAN>
+				<SPAN>
+					col4
+</SPAN>
+			</DD>
+			<DT CLASS="headerClass">
+				<DIV>
+					<SPAN>
+						TERM-VISIBLE
+</SPAN>
+				</DIV>
+			</DT>
+			<DD CLASS="columnClass blue-text">
+				<SPAN>
+					col1
+</SPAN>
+				<SPAN>
+					col2
+</SPAN>
+				<SPAN>
+					col3
+</SPAN>
+				<SPAN>
+					col4
+</SPAN>
+			</DD>
+			<DT CLASS="headerClass">
+				<DIV>
+					<SPAN>
+						TERM-VISIBLE
+</SPAN>
+				</DIV>
+			</DT>
+			<DD CLASS="columnClass red-text">
+				<SPAN>
+					col1
+</SPAN>
+				<SPAN>
+					col2
+</SPAN>
+				<SPAN>
+					col3
+</SPAN>
+				<SPAN>
+					col4
+</SPAN>
+			</DD>
+			<DT CLASS="headerClass">
+				<DIV>
+					<SPAN>
+						TERM-VISIBLE
+</SPAN>
+				</DIV>
+			</DT>
+			<DD CLASS="columnClass blue-text">
+				<SPAN>
+					col1
+</SPAN>
+				<SPAN>
+					col2
+</SPAN>
+				<SPAN>
+					col3
+</SPAN>
+				<SPAN>
+					col4
+</SPAN>
+			</DD>
+			<DT CLASS="headerClass">
+				<DIV>
+					<SPAN>
+						TERM-VISIBLE
+</SPAN>
+				</DIV>
+			</DT>
+			<DD CLASS="columnClass red-text">
+				<SPAN>
+					col1
+</SPAN>
+				<SPAN>
+					col2
+</SPAN>
+				<SPAN>
+					col3
+</SPAN>
+				<SPAN>
+					col4
+</SPAN>
+			</DD>
+		</DL>
+	</test>
+</tests>
