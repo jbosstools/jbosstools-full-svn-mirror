@@ -265,7 +265,7 @@ public class NewFileWizard extends Wizard implements INewWizard {
 	
 	// https://issues.jboss.org/browse/JBIDE-8591
 	// added to allow first and last page access to resource container
-	public IResource getBPELContainer() {
+	public IContainer getBPELContainer() {
 		return mContainer;
 	}
 	
@@ -289,7 +289,7 @@ public class NewFileWizard extends Wizard implements INewWizard {
 
 	@Override
 	public boolean canFinish() {
-		return (fMainPage.isPageComplete() && wsdlPage.isPageComplete() && mContainer != null)
+		return (fMainPage.isPageComplete() && wsdlPage.isPageComplete() && fContainerPage.isPageComplete() && mContainer != null)
 				|| super.canFinish();
 	}
 

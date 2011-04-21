@@ -31,16 +31,16 @@ import org.eclipse.wst.common.componentcore.ModuleCoreNature;
  */
 public class NewFileWizardPage2 extends WizardPage {
 
-  private FileSelectionGroup fResourceComposite;
-  private String processName;
+	private FileSelectionGroup fResourceComposite;
+	private String processName;
 
-/**
- * New File Wizard, page 2.
- * 
- * @param pageName
- */
-  
-public NewFileWizardPage2(String pageName) 
+	/**
+	 * New File Wizard, page 2.
+	 * 
+	 * @param pageName
+	 */
+
+  	public NewFileWizardPage2(String pageName) 
     {
         super(pageName);
         setPageComplete(false);
@@ -70,12 +70,6 @@ public NewFileWizardPage2(String pageName)
 				public void handleEvent(Event event) {
 					IResource resource = fResourceComposite.getSelectedResource();
 					setPageComplete(validatePage(resource));
-					// https://issues.jboss.org/browse/JBIDE-8591
-					if (!ModuleCoreNature.isFlexibleProject(resource.getProject()))
-						setMessage(Messages.NewFileWizard_Not_A_Faceted_Project, WizardPage.WARNING);
-					else
-						setMessage(null);
-				
 					if (resource instanceof IContainer)
 						wiz.setBPELContainer((IContainer)resource);
 				}
@@ -89,17 +83,22 @@ public NewFileWizardPage2(String pageName)
 	}
 	
 	private boolean validatePage(IResource resource){
-		boolean validate = false;
-		validate = (resource != null && resource instanceof IContainer);
-		if(validate){
+		if (resource instanceof IContainer) {
 			IContainer container = (IContainer)resource;
-			if ( container.findMember(processName +".bpel") != null ) { //$NON-NLS-1$
-				setMessage(Messages.NewFileWizardPage1_12,WARNING);
-			} else {
-				setMessage(null);
+			// https://issues.jboss.org/browse/JBIDE-8591
+			if (!ModuleCoreNature.isFlexibleProject(resource.getProject())) {
+				setMessage(Messages.NewFileWizard_Not_A_Faceted_Project, WizardPage.WARNING);
+				return false;
 			}
+			
+			if ( container.findMember(processName +".bpel") != null ) { //$NON-NLS-1$
+				setMessage(Messages.NewFileWizardPage1_12, WizardPage.ERROR);
+				return false;
+			}
+			setMessage(null);
+			return true;
 		}
-		return validate;
+		return false;
 	}
 	
 	/**
@@ -117,5 +116,24 @@ public NewFileWizardPage2(String pageName)
 	
 	public void setProcessName(String processName) {
 		this.processName = processName;
+	}
+
+	@Override
+	public boolean isPageComplete() {
+		
+		IContainer container = getResourceContainer();
+		if (container==null)
+			return false;
+		
+		if (!ModuleCoreNature.isFlexibleProject(container.getProject()))
+			return false;
+		
+		if ( container.findMember(processName +".bpel") != null ) //$NON-NLS-1$
+			return false;
+		
+		if (!super.isPageComplete())
+			return false;
+		
+		return true;
 	}
 }

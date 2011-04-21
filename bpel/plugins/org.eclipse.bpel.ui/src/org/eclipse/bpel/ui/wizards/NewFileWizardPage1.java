@@ -60,8 +60,6 @@ public class NewFileWizardPage1 extends WizardPage {
 	/** last namespace used in creating a project, saved in dialog settings */
 	static final String LAST_NAMESPACE_KEY = "last.namespace.used"; //$NON-NLS-1$
 
-	private IContainer mContainer;
-
 	/** Process name field */
 	private Text processNameField;
 
@@ -365,25 +363,24 @@ public class NewFileWizardPage1 extends WizardPage {
 		}
 
 		setErrorMessage(null);
+		setMessage(null);
 
 		// https://issues.jboss.org/browse/JBIDE-8591
 		NewFileWizard wiz = (NewFileWizard)getWizard();
 		// https://issues.jboss.org/browse/JBIDE-8738
-		if (wiz.getBPELContainer()!=null) {
-			if (!ModuleCoreNature.isFlexibleProject(wiz.getBPELContainer().getProject()))
+		IContainer container = wiz.getBPELContainer(); 
+		if (container!=null) {
+			if (!ModuleCoreNature.isFlexibleProject(container.getProject()))
 				setMessage(Messages.NewFileWizard_Not_A_Faceted_Project, WizardPage.WARNING);
+			
+			if (container.findMember(processNameField.getText()+".bpel")!=null ) //$NON-NLS-1$
+				setMessage(Messages.NewFileWizardPage1_12,WARNING);
 		}
-		else
-			setMessage(null);
 
 		String namespace = processNamespaceField.getText().trim();
 		if (namespace.length() < 1) {
 			setErrorMessage(Messages.NewFileWizardPage1_11);
 			return false;
-		}
-		
-		if (mContainer!=null && mContainer.findMember(processNameField.getText()+".bpel")!=null ) { //$NON-NLS-1$
-			setMessage(Messages.NewFileWizardPage1_12,WARNING);
 		}
 
 		String bpelNamespace = (isAbstractOptionButtonChecked()) ? BPELConstants.NAMESPACE_ABSTRACT_2007
@@ -502,9 +499,4 @@ public class NewFileWizardPage1 extends WizardPage {
 
 		return mArgs;
 	}
-
-	public void setContainer(IContainer mContainer) {
-		this.mContainer = mContainer;
-	}
-
 }
