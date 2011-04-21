@@ -6,6 +6,9 @@
  */
 package org.eclipse.bpel.model.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.bpel.model.BPELExtensibleElement;
 import org.eclipse.bpel.model.BPELPackage;
 import org.eclipse.bpel.model.Documentation;
@@ -94,6 +97,10 @@ public class BPELExtensibleElementImpl extends ExtensibleElementImpl implements
 	public NotificationChain basicSetDocumentation(
 			Documentation newDocumentation, NotificationChain msgs) {
 		Documentation oldDocumentation = documentation;
+		if (!isReconciling) {
+			ReconciliationHelper.replaceChild(this, oldDocumentation,
+					newDocumentation);
+		}
 		documentation = newDocumentation;
 		boolean oldDocumentationESet = documentationESet;
 		documentationESet = true;
@@ -153,6 +160,9 @@ public class BPELExtensibleElementImpl extends ExtensibleElementImpl implements
 	 */
 	public NotificationChain basicUnsetDocumentation(NotificationChain msgs) {
 		Documentation oldDocumentation = documentation;
+		if (!isReconciling) {
+			ReconciliationHelper.replaceChild(this, oldDocumentation, null);
+		}
 		documentation = null;
 		boolean oldDocumentationESet = documentationESet;
 		documentationESet = false;
@@ -276,6 +286,72 @@ public class BPELExtensibleElementImpl extends ExtensibleElementImpl implements
 			return isSetDocumentation();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * Set the DOM element which has been read and which is the facade for this EMF 
+	 * object.
+	 * 
+	 * @see org.eclipse.wst.wsdl.internal.impl.WSDLElementImpl#setElement(org.w3c.dom.Element)
+	 */
+
+	@Override
+	public void setElement(Element elm) {
+		super.setElement(elm);
+
+		// a pointer back to the EMF model.
+
+		if (elm != null) {
+			elm.setUserData("emf.model", this, null); //$NON-NLS-1$
+		}
+	}
+
+	/**
+	 * @see org.eclipse.wst.wsdl.internal.impl.WSDLElementImpl#getElement()
+	 */
+
+	@Override
+	public Element getElement() {
+		return super.getElement();
+	}
+
+	/**
+	 * @generated NOT
+	 */
+
+	Map<String, Object> fTransients = null;
+
+	/**
+	 * This is not part of the EMF model.
+	 * 
+	 * @see org.eclipse.bpel.model.ExtensibleElement#getTransientProperty(java.lang.String) 
+	 * @generated NOT
+	 */
+
+	public <T extends Object> T getTransientProperty(String key) {
+		if (fTransients == null) {
+			return null;
+		}
+		Object obj = fTransients.get(key);
+		if (obj == null) {
+			return null;
+		}
+		return (T) obj;
+	}
+
+	/**
+	 * @see org.eclipse.bpel.model.ExtensibleElement#setTransientProperty(java.lang.String, java.lang.Object)
+	 * @generated NOT
+	 */
+	public <T extends Object> T setTransientProperty(String key, T value) {
+		if (fTransients == null) {
+			fTransients = new HashMap<String, Object>(7);
+		}
+		Object obj = fTransients.put(key, value);
+		if (obj == null) {
+			return null;
+		}
+		return (T) obj;
 	}
 
 	// Reconciliation stuff. Has copy in ExtensibilityElement
