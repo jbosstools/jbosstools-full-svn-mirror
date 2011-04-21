@@ -1,0 +1,42 @@
+## BEGIN PROJECT BUILD PROPERTIES ##
+
+# this property allows ant-contrib and pde-svn-plugin to be fetched and installed automatically for you
+thirdPartyDownloadLicenseAcceptance="I accept"
+
+projectid=jbosstools.xulrunner
+zipPrefix=XulRunner
+incubation=
+buildType=N
+version=1.1.0
+
+mainFeatureToBuildID=org.jboss.tools.xulrunner.feature
+
+#NOTE: fragments are not being packaged/built into the Update zip. Unsure why at this time.
+build.steps=map2psf,buildUpdate,generateDigests,publish,cleanup
+
+# If using local sources, must have xulrunner stuff symlinked into vpe/plugins/ folder
+localSourceCheckoutDir=/home/nboldt/eclipse/workspace-jboss/jbosstools-trunk/vpe
+relengBuilderDir=/home/nboldt/eclipse/workspace-jboss/jbosstools-trunk/vpe/releng/xulrunner
+relengBaseBuilderDir=/home/nboldt/eclipse/workspace-jboss/org.eclipse.releng.basebuilder
+relengCommonBuilderDir=/home/nboldt/eclipse/workspace-jboss/org.eclipse.dash.common.releng
+
+JAVA_HOME=/usr/lib/jvm/java
+JAVA50_HOME=/usr/lib/jvm/java
+
+dependencyURLs=\
+http://download.eclipse.org/eclipse/downloads/drops/R-3.5-200906111540/eclipse-SDK-3.5-linux-gtk.tar.gz
+
+flattenDependencies=true
+parallelCompilation=true
+generateFeatureVersionSuffix=true
+individualSourceBundles=false
+
+#do not pack or sign
+skipPack=true
+skipSign=true
+
+domainNamespace=*
+projNamespace=org.jboss.tools.xulrunner
+projRelengName=org.jboss.tools.xulrunner.releng
+
+## END PROJECT BUILD PROPERTIES ##

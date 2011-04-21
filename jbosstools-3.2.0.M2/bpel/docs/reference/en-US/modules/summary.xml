@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='ISO-8859-1'?><chapter>
+<?dbhtml filename="summary.html"?>  <title>Summary</title>
+  <para>This document is just a very brief introduction to the JBoss BPEL tooling but it touches on many aspects of the associated tools and runtimes. A  complete reference to the BPEL language and the Eclipse BPEL editor is available from various online resources, and is simply beyond the scope of this document.</para>
+  <para>If you have questions or suggestions concerning either the documentation or JBoss BPEL  Tools,
+        please visit the JBoss Tools website.
+        Bug reports, feature requests and documentation enhancements should be submitted via the Jira bug tracking facility at this website.</para>
+  <section>
+    <title>Other relevant resources on the topic</title>
+    <para>All JBoss Developer Studio/JBoss Tools release documentation you can find at
+            <ulink url="http://docs.jboss.org/tools">http://docs.jboss.org/tools</ulink> in the corresponding release directory.
+        </para>
+    <para>The latest documentation builds are available at <ulink url="http://download.jboss.org/jbosstools/nightly-docs">http://download.jboss.org/jbosstools/nightly-docs</ulink>. </para>
+  </section>
+</chapter>

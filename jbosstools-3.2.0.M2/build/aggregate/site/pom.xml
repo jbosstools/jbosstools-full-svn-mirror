@@ -1,0 +1,248 @@
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.jboss.tools</groupId>
+		<artifactId>org.jboss.tools.parent.pom</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<groupId>org.jboss.tools</groupId>
+	<artifactId>org.jboss.tools.site.aggregate</artifactId>
+	<name>JBoss Tools Aggregate Site</name>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>eclipse-update-site</packaging>
+
+	<properties>
+		<!-- add more inputRepo# here, then reference below; need variables so 
+			that these can be referred to in Ant script later -->
+		<inputRepo1>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-3.2.0.M2.nightly</inputRepo1>
+		<inputRepo2>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-pi4soa</inputRepo2>
+		<inputRepo3>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-teiid-designer</inputRepo3>
+		<inputRepo4>http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-drools</inputRepo4>
+		<inputRepos>1,2,3,4</inputRepos>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.3</version>
+				<executions>
+					<execution>
+						<id>install</id>
+						<phase>install</phase>
+						<configuration>
+							<quiet>true</quiet>
+							<tasks>
+								<property name="inputRepo1" value="${inputRepo1}" />
+								<property name="inputRepo2" value="${inputRepo2}" />
+								<property name="inputRepo3" value="${inputRepo3}" />
+								<property name="inputRepo4" value="${inputRepo4}" />
+								<property name="inputRepos" value="${inputRepos}" />
+
+								<!-- called AFTER generating update site + zip to add in extra content -->
+								<ant antfile="build.xml" />
+							</tasks>
+
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>commons-net</groupId>
+						<artifactId>commons-net</artifactId>
+						<version>1.4.1</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.ant</groupId>
+						<artifactId>ant-commons-net</artifactId>
+						<version>1.7.1</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.ant</groupId>
+						<artifactId>ant-apache-regexp</artifactId>
+						<version>1.7.1</version>
+					</dependency>
+					<dependency>
+						<groupId>ant-contrib</groupId>
+						<artifactId>ant-contrib</artifactId>
+						<version>1.0b3</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
+
+	<repositories>
+		<!-- add more inputRepo# here, ref'd above; need variables so that these 
+			can be referred to in Ant script later -->
+		<repository>
+			<id>inputRepo1</id>
+			<url>${inputRepo1}/all/repo/</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>inputRepo2</id>
+			<url>${inputRepo2}/all/repo/</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>inputRepo3</id>
+			<url>${inputRepo3}/all/repo/</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>inputRepo4</id>
+			<url>${inputRepo4}/all/repo/</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	<profiles>
+		<profile>
+			<id>helios-no-target</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<repositories>
+				<!--repository> <id>helios</id> <url>http://download.eclipse.org/releases/helios/</url> 
+					<layout>p2</layout> <snapshots> <enabled>true</enabled> </snapshots> <releases> 
+					<enabled>true</enabled> </releases> </repository -->
+				<repository>
+					<id>jboss-helios</id>
+					<url>http://download.jboss.org/jbosstools/updates/requirements/helios/
+					</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<!--repository> <id>webtools32</id> <url>http://download.eclipse.org/webtools/repository/helios</url> 
+					<layout>p2</layout> <snapshots> <enabled>true</enabled> </snapshots> <releases> 
+					<enabled>true</enabled> </releases> </repository -->
+				<repository>
+					<id>jboss-webtools32</id>
+					<url>http://download.jboss.org/jbosstools/updates/requirements/webtools-3.2/
+					</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<repository>
+					<id>birt26</id>
+					<url>http://download.eclipse.org/birt/update-site/2.6/
+					</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<!--repository> <id>swtbot-helios</id> <url>http://download.eclipse.org/technology/swtbot/helios/dev-build/update-site/ 
+					</url> <layout>p2</layout> <snapshots> <enabled>true</enabled> </snapshots> 
+					<releases> <enabled>true</enabled> </releases> </repository -->
+				<repository>
+					<id>jboss-swtbot-helios</id>
+					<url>http://download.jboss.org/jbosstools/updates/requirements/swtbot-helios/
+					</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<repository>
+					<id>m2eclipse</id>
+					<url>http://m2eclipse.sonatype.org/sites/m2e/</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<repository>
+					<id>m2eclipse-extras</id>
+					<url>http://m2eclipse.sonatype.org/sites/m2e-extras/</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<!--repository> <id>jboss-orbit</id> <url>http://download.jboss.org/jbosstools/updates/requirements/orbit/R20100519200754/ 
+					</url> <layout>p2</layout> <snapshots> <enabled>true</enabled> </snapshots> 
+					<releases> <enabled>true</enabled> </releases> </repository -->
+				<repository>
+					<id>jboss-thirdparty</id>
+					<url>http://download.jboss.org/jbosstools/updates/requirements/thirdparty/
+					</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<repository>
+					<id>jboss-xulrunner-1.9.1.2</id>
+					<url>http://download.jboss.org/jbosstools/updates/requirements/xulrunner-1.9.1.2/
+					</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<!--repository> <id>jboss-xulrunner-1.9.2</id> <url>http://download.jboss.org/jbosstools/updates/requirements/xulrunner-1.9.2/ 
+					</url> <layout>p2</layout> <snapshots> <enabled>true</enabled> </snapshots> 
+					<releases> <enabled>true</enabled> </releases> </repository -->
+				<repository>
+					<id>google eclipse plugins</id>
+					<url>http://dl.google.com/eclipse/plugin/3.6</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+			</repositories>
+		</profile>
+	</profiles>
+</project>

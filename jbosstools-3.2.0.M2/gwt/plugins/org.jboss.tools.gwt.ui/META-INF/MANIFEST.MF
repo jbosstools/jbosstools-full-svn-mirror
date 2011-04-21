@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: JBoss Tools GWT UI (Experimental)
+Bundle-SymbolicName: org.jboss.tools.gwt.ui;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.jboss.tools.gwt.ui.internal.GWTUIActivator
+Bundle-Vendor: JBoss by Red Hat
+Require-Bundle: org.eclipse.ui;bundle-version="[3.5.0,4.0.0)",
+ org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
+ org.eclipse.wst.common.project.facet.ui;bundle-version="1.4.1",
+ org.jboss.tools.gwt.core;bundle-version="1.0.0",
+ org.eclipse.wst.common.modulecore;bundle-version="[1.1.301,2.0.0)",
+ org.eclipse.wst.common.frameworks;bundle-version="[1.1.300,2.0.0)"
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Export-Package: org.jboss.tools.gwt.ui
+Bundle-ActivationPolicy: lazy

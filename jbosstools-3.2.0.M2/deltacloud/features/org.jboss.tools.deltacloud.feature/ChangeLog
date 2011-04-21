@@ -1,0 +1,5 @@
+2010-07-23  Jeff Johnston  <jjohnstn@redhat.com>
+
+	* .project: New file.
+	* build.properties: New file.
+	* feature.xml: New file.
