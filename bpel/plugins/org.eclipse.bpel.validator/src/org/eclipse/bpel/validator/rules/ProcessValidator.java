@@ -361,10 +361,10 @@ public class ProcessValidator extends CValidator {
 	// implemented missing code
 	public void CheckReferencedTypes () {
 		IProblem problem;
+		Process process = (Process) mModelQuery.lookupProcess(mNode);
 		
 		for(INode node : fTypeToCheckList) {
 			
-			Process process = (Process) mModelQuery.lookupProcess(mNode);
 			List<Import> conflicts = mModelQuery.findConflictingXSD(process, node);
 			if (conflicts!=null) {
 				
