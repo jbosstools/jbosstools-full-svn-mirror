@@ -1,0 +1,18 @@
+<project>
+
+	<target name="build.requirement">
+		<property file="build.properties"/>
+		<property file="../eclipse/build.properties"/>
+		
+		<property name="ext" value="zip"/>
+		<property name="os" value="win32"/>
+		
+		<property name="eclipseArchiveName"
+			value="eclipse-SDK-${eclipseBuildID}-win32.zip"/>
+		
+		<available file="${eclipseInstallDir}/eclipse-SDK-${os}.${ext}" property="archiveExists"/>
+		<available file="${eclipseInstallDir}/eclipse/startup.jar" property="isUnzipped"/>
+		
+		<ant  dir="../eclipse" antfile="../eclipse/buildRequirement.xml" target="getBaseEclipse"/>
+	</target>
+</project>

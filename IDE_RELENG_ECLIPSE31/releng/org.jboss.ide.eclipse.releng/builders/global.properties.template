@@ -1,0 +1,13 @@
+clean.eclipse.home=%build-output-directory%/clean-eclipse/eclipse
+pdescriptdir=${clean.eclipse.home}/plugins/org.eclipse.pde.build_3.1.2/scripts
+workspace=workspace
+verbose=-verbose
+build.root=%releng-root%
+
+default.cvs.tag=HEAD
+genericTargets=${pdescriptdir}/genericTargets.xml
+baseLocation=${clean.eclipse.home}/..
+#genericTargets=${build.root}/builders/genericTargets.xml
+%comment-enable-publishing% enable.publishing=%enable-publishing%
+%comment-enable-notification% enable.notification=%enable-notification%
+%comment-enable-downloads-update% enable.downloads.update=%enable-downloads-update%

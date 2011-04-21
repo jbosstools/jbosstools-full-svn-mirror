@@ -1,0 +1,22 @@
+<h2>Warning</h2>
+
+<p>This integration build is a test of stability before a major release. In general, integration builds will be more stable
+than nightly builds, but there is still no guarantees (especially against fire!).</p>
+
+<p>Any suggestions/issues should be posted on the relevant product
+forums and should clearly indicate that you are using an integration build. Please take care in making sure that your issue hasn't
+already been addressed when posting on forums or opening new JIRA issues.</p>
+
+<h2>Versioning/Updates</h2>
+<p>
+	JBossIDE Integration builds follow this simple versioning convention:
+	Iyyyymmddhhss.
+	
+	Everything after the "I" is a timestamp formatting field.
+	
+	It should be noted that any if you install an integration build into your workspace, Eclipse will not recognize any official release
+	as being an update due to it's version number ordering rules. If you want to upgrade to a stable release from an
+	integration build, you will need to remove all of the plugin and feature directories that are bundled with JBossIDE, and then proceed
+	with normal installation. If you are still having trouble with stable / release plugins after un-installing an integration build, try passing
+	the "-clean" argument to Eclipse at startup.
+</p>

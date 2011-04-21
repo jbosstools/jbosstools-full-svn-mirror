@@ -1,0 +1,10 @@
+<project default="getBaseEclipse">
+	<property file="build.properties"/>
+	
+	<target name="build.requirement">
+		<ant antfile="../webtools/buildDriver.xml" target="download.archive" inheritall="true">
+				  <property name="driver.properties" value="${basedir}/build.properties"/>
+				  <property name="requirement" value="testframework"/>
+		</ant>
+	</target>
+</project>

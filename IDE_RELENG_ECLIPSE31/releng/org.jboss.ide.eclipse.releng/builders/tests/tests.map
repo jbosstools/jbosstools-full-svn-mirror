@@ -1,0 +1,6 @@
+feature@org.jboss.ide.eclipse.test.feature=%cvsTag%,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/tests/org.jboss.ide.eclipse.test.feature
+plugin@org.jboss.ide.eclipse.core.test=%cvsTag%,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/tests/org.jboss.ide.eclipse.core.test
+plugin@org.jboss.ide.eclipse.xdoclet.test=%core-cvsTag%,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/core/tests/org.jboss.ide.eclipse.xdoclet.test
+feature@org.hibernate.eclipse.test.feature=%hibernate-tools-cvsTag%,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/hibernatetools/features/org.hibernate.eclipse.test.feature
+plugin@org.hibernate.eclipse.console.test=%hibernate-tools-cvsTag%,:pserver:anonymous@anoncvs.forge.jboss.com:/cvsroot/jboss,,jbosside/hibernatetools/tests/org.hibernate.eclipse.console.test
+
