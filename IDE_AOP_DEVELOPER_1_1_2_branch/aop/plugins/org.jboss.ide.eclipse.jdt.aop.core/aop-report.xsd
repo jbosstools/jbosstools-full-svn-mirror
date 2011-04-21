@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	JBoss, the OpenSource J2EE webOS
+	Distributable under LGPL license.
+	See terms of license at gnu.org.
+	
+	andrew oswald  May 18, 2004 - initial cut
+				  June 15, 2004 - added default ID values
+ -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns:jxb="http://java.sun.com/xml/ns/jaxb" 
+	xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+	jxb:version="1.0" jxb:extensionBindingPrefixes="xjc">
+	
+	<xsd:element name="aop-report">
+		<xsd:complexType>
+			<xsd:sequence maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<jxb:property name="Elements"/>
+					</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:element name="package" type="PackageFragment" minOccurs="0">
+					<xsd:annotation>
+						<xsd:appinfo>
+							<jxb:property name="PackageFragment"/>
+						</xsd:appinfo>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="class" type="CompilationUnit" minOccurs="0">
+					<xsd:annotation>
+						<xsd:appinfo>
+							<jxb:property name="CompilationUnit"/>
+						</xsd:appinfo>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="unbound-bindings" type="UnboundBindings" minOccurs="0"/>
+			</xsd:sequence>
+			<xsd:attribute name="ID" type="xsd:int" default="1"/>
+		</xsd:complexType>
+	</xsd:element>
+	<!-- 
+		| PackageFragment
+	 -->
+	<xsd:complexType name="PackageFragment">
+		<xsd:choice maxOccurs="unbounded">
+			<xsd:element name="package" type="PackageFragment">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<jxb:property name="PackageFragment"/>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="class" type="CompilationUnit">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<jxb:property name="CompilationUnit"/>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:choice>
+		<xsd:attribute name="name" type="xsd:string"/>
+		<xsd:attribute name="ID" type="xsd:int" default="2"/>
+	</xsd:complexType>
+	<!--
+		| CompilationUnit
+	 -->
+	<xsd:complexType name="CompilationUnit">
+		<xsd:sequence>
+			<xsd:element name="constructors" type="Constructors"/>
+			<xsd:element name="fields-read" type="Fields"/>
+			<xsd:element name="fields-write" type="Fields"/>
+			<xsd:element name="methods" type="Methods"/>
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:string"/>
+		<xsd:attribute name="ID" type="xsd:int" default="3"/>
+	</xsd:complexType>
+	<!--
+		| Constructors
+	 -->
+	<xsd:complexType name="Constructors">
+		<xsd:choice minOccurs="0" maxOccurs="unbounded">
+			<xsd:element name="constructor" type="Constructor"/>
+		</xsd:choice>
+		<xsd:attribute name="ID" type="xsd:int" default="4"/>
+	</xsd:complexType>
+	<!--
+		| Constructor
+	 -->
+	<xsd:complexType name="Constructor">
+		<xsd:sequence minOccurs="0">
+			<xsd:element name="interceptors" type="Interceptors" minOccurs="0"/>
+		</xsd:sequence>
+		<xsd:attribute name="signature" type="xsd:string"/>
+		<xsd:attribute name="ID" type="xsd:int" default="5"/>
+	</xsd:complexType>
+	<!--
+		| Fields
+	 -->
+	<xsd:complexType name="Fields">
+		<xsd:choice minOccurs="0" maxOccurs="unbounded">
+			<xsd:element name="field" type="Field"/>
+		</xsd:choice>
+		<xsd:attribute name="ID" type="xsd:int" default="6"/>
+	</xsd:complexType>
+	<!--
+		| Field
+	 -->
+	<xsd:complexType name="Field">
+		<xsd:sequence minOccurs="0">
+			<xsd:element name="interceptors" type="Interceptors" minOccurs="0"/>
+		</xsd:sequence>
+		<xsd:attribute name="name" type="xsd:string"/>
+		<xsd:attribute name="ID" type="xsd:int" default="7"/>
+	</xsd:complexType>
+	<!--
+		| Methods
+	 -->
+	<xsd:complexType name="Methods">
+		<xsd:choice minOccurs="0" maxOccurs="unbounded">
+			<xsd:element name="method" type="Method"/>
+		</xsd:choice>
+		<xsd:attribute name="ID" type="xsd:int" default="8"/>
+	</xsd:complexType>
+	<!--
+		| Method
+	 -->
+	<xsd:complexType name="Method">
+		<xsd:all minOccurs="0">
+			<xsd:element name="callers" type="Callers" minOccurs="0"/>
+			<xsd:element name="interceptors" type="Interceptors" minOccurs="0"/>
+		</xsd:all>
+		<xsd:attribute name="signature" type="xsd:string"/>
+		<xsd:attribute name="ID" type="xsd:int" default="9"/>
+	</xsd:complexType>
+	<!--
+		| Callers
+	 -->
+	<xsd:complexType name="Callers">
+		<xsd:choice minOccurs="0" maxOccurs="unbounded">
+			<xsd:element name="called-method" type="CalledMethod"/>
+		</xsd:choice>
+		<xsd:attribute name="ID" type="xsd:int" default="10"/>
+	</xsd:complexType>
+	<!--
+		| CalledMethod
+	 -->
+	<xsd:complexType name="CalledMethod">
+		<xsd:sequence minOccurs="0">
+			<xsd:element name="interceptors" type="Interceptors" minOccurs="0"/>
+		</xsd:sequence>
+		<xsd:attribute name="signature" type="xsd:string"/>
+		<xsd:attribute name="ID" type="xsd:int" default="11"/>
+	</xsd:complexType>
+	<!--
+		| Interceptors
+	 -->
+	<xsd:complexType name="Interceptors">
+		<xsd:choice minOccurs="0" maxOccurs="unbounded">
+			<xsd:element name="interceptor" type="ReportInterceptor"/>
+			<xsd:element name="advice" type="ReportAdvice"/>
+		</xsd:choice>
+		<xsd:attribute name="ID" type="xsd:int" default="12"/>
+	</xsd:complexType>
+	<!--
+		| Interceptor
+	 -->
+	<xsd:complexType name="ReportInterceptor">
+		<xsd:attribute name="class" type="xsd:string">
+			<xsd:annotation>
+				<xsd:appinfo>
+					<jxb:property name="Clazz"/>
+				</xsd:appinfo>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="ID" type="xsd:int" default="13"/>
+	</xsd:complexType>
+	<!--
+		| Advice
+	-->
+	<xsd:complexType name="ReportAdvice">
+		<xsd:attribute name="name" type="xsd:string"/>
+		<xsd:attribute name="ID" type="xsd:int" default="14"/>
+	</xsd:complexType>
+	<!--
+		| UnboundBindings
+	 -->
+	<xsd:complexType name="UnboundBindings">
+		<xsd:sequence maxOccurs="unbounded">
+			<xsd:element name="binding" type="ReportBinding"/>
+		</xsd:sequence>
+		<xsd:attribute name="ID" type="xsd:int" default="15"/>
+	</xsd:complexType>
+	<!--
+		| Binding
+	 -->
+	<xsd:complexType name="ReportBinding">
+		<xsd:attribute name="pointcut" type="xsd:string"/>
+		<xsd:attribute name="ID" type="xsd:int" default="16"/>
+	</xsd:complexType>
+</xsd:schema>
