@@ -1,0 +1,9 @@
+<tests>
+	<test id="center">
+		<CENTER STYLE="-moz-user-modify: read-write;" ID="center" >
+<SPAN>
+text
+</SPAN>
+</CENTER>
+	</test>
+</tests>

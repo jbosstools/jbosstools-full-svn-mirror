@@ -1,0 +1,239 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<chapter id="hibernate_datasource" xreflabel="hibernate_datasource">
+
+    <?dbhtml filename="hibernate_datasource.html"?>
+    <chapterinfo>
+        <keywordset>
+            <keyword>JBoss</keyword>
+            <keyword>BIRT</keyword>
+            <keyword>Seam</keyword>
+        </keywordset>
+    </chapterinfo>
+
+    <title>Hibernate ODA Data Source</title>
+
+    <para>The JBoss BIRT Integration feature includes the Hibernate ODA Data Source completely
+        integrated with Hibernate Tools. You can use it in the way you use any of BIRT ODA drivers.
+        Let&apos;s perform simple actions that demonstrate it.</para>
+
+    <para>First, run the <emphasis>
+            <property>Seam Generate Entities</property>
+        </emphasis> action (You can access it from <emphasis>
+            <property>File &gt; New &gt; Seam Generate Entities</property>
+        </emphasis> in the <property>Seam perspective</property>. More details on the Seam Generate
+        Entities read in our <ulink
+            url="http://download.jboss.org/jbosstools/nightly-docs/en/seam/html_single/index.html#generate_entities"
+            >Seam Dev Tools Reference guide</ulink>). This action will create a Hibernate Console
+        configuration.</para>
+
+    <tip>
+        <title>Tip:</title>
+        <para>Before performing Seam Generate Entities, you should have a connection profile
+            adjusted and connected to a database. How to do this see in the <ulink
+                url="http://download.jboss.org/jbosstools/nightly-docs/en/seam/html_single/index.html#d0e2725"
+                >CRUD Database Application</ulink> chapter of the Seam Dev Tools Reference
+            guide.</para>
+    </tip>
+
+    <para>Next add a new BIRT report. To do that navigate to <emphasis>
+            <property>File &gt; New &gt; Other &gt; Business Intelligence and Reporting
+                Tools &gt; Report</property>.</emphasis> In the <property>New Report
+            wizard</property> enter the report name, for instance <emphasis>
+            <property>testHibernateOda.rptdesign</property>,</emphasis> then click <emphasis>
+            <property>Finish</property>.</emphasis></para>
+
+    <figure>
+        <title>Creating a New BIRT Report </title>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="images/hibernate_datasource/creatingNewBirtReport.png"/>
+            </imageobject>
+        </mediaobject>
+    </figure>
+
+    <para>Now switch to the <property>Report Design perspective</property>.</para>
+
+    <para>In the <property>Data Explorer View</property> right-click the <emphasis>
+            <property>Data Source</property>
+        </emphasis> node and choose <emphasis>
+            <property>New Data Source</property>.</emphasis></para>
+
+    <figure>
+        <title>Creating a New Data Source</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="images/hibernate_datasource/creatingDataSource.png"/>
+            </imageobject>
+        </mediaobject>
+    </figure>
+
+    <para>In the wizard select <emphasis>
+            <property>Hibernate Data Source</property>
+        </emphasis> and give it a proper name, <emphasis>
+            <property>HbDataSource</property>
+        </emphasis> for instance. Hit <emphasis>
+            <property>Next</property>.</emphasis></para>
+
+    <figure>
+        <title>Creating Hibernate Data Source</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="images/hibernate_datasource/hibernateDataSource.png"/>
+            </imageobject>
+        </mediaobject>
+    </figure>
+
+    <para>On the next wizard page leave everything as it is, just press the <emphasis>
+            <property>Test Connection</property>
+        </emphasis> button to verify the connection is successful.</para>
+
+    <figure>
+        <title>Hibernate Data Source Profile</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="images/hibernate_datasource/connectionSuccessful.png"/>
+            </imageobject>
+        </mediaobject>
+    </figure>
+
+    <para>Click <emphasis>
+            <property>Ok</property>
+        </emphasis> and then <emphasis>
+            <property>Finish</property>
+        </emphasis> to complete.</para>
+
+    <para>Now let&apos;s add a Hibernate ODA dataset. To do that you should bring up the
+            <property>New Data Set wizard</property>. In the <property>Data Explorer View</property>
+        right-click the <emphasis>
+            <property>Data Set</property>
+        </emphasis> node and select <emphasis>
+            <property>New Data Set</property>.</emphasis></para>
+
+    <figure>
+        <title>Creating a New Data Set</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="images/hibernate_datasource/creatingDataSet.png"/>
+            </imageobject>
+        </mediaobject>
+    </figure>
+
+    <para>In the <emphasis>
+            <property>Data Set Name</property>
+        </emphasis> section specify the name. Let&apos;s it be <emphasis>
+            <property>HbDataSet</property>.</emphasis></para>
+
+    <figure>
+        <title>Creating a Hibernate ODA Data Set</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="images/hibernate_datasource/addingHibernateODADataset.png"/>
+            </imageobject>
+        </mediaobject>
+    </figure>
+
+    <para>Next you&apos;ll be prompted to define the query for this data set. To validate the
+        entered query you can press the <emphasis>
+            <property>Test query</property>
+        </emphasis> button. All the HQL features like syntax highlighting, content assist,
+        formatting, Drag and Drop, etc., are available to you here.</para>
+
+    <figure>
+        <title>Testing Query </title>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="images/hibernate_datasource/testingQuery.png"/>
+            </imageobject>
+        </mediaobject>
+    </figure>
+
+    <para>Next the output columns will be displayed. It&apos;s possible to edit them
+        here.</para>
+
+    <figure>
+        <title>HQL Features - Output Columns Section</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="images/hibernate_datasource/hqlFeaturesOutputColumns.png"/>
+            </imageobject>
+        </mediaobject>
+    </figure>
+
+    <para>To preview the results of the defined query click the <emphasis>
+            <property>Preview Results</property>
+        </emphasis> item.</para>
+    <figure>
+        <title>HQL Features - Preview Results Section</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="images/hibernate_datasource/hqlFeaturesPreviewResults.png"/>
+            </imageobject>
+        </mediaobject>
+    </figure>
+
+    <para>So far you have the Hibernate data source and data set defined. Now you can create a BIRT
+        report using this data source and data set.</para>
+
+    <tip>
+        <title>Tip:</title>
+        <para>If you don&apos;t know how to do this we suggest that you refer to the <ulink
+                url="http://www.eclipse.org/birt/phoenix/tutorial/">Eclipse BIRT Tutorial</ulink>.</para>
+    </tip>
+
+    <figure>
+        <title>Creating a BIRT Report using Created Data Source and Data Set</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata
+                    fileref="images/hibernate_datasource/BIRTReportUsingDataSourceAndSet.png "/>
+            </imageobject>
+        </mediaobject>
+    </figure>
+
+    <para>If you switch to the <emphasis>
+        <property>Preview</property></emphasis> tab, it will run your report and show the output.</para>
+    
+    <figure>
+        <title>BIRT Report -Preview Tab</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="images/hibernate_datasource/BIRTReportPreviewTab.png"/>
+            </imageobject>
+        </mediaobject>
+    </figure>
+
+    <para>You can also use parameters within the Hibernate ODA driver.</para>
+
+    <figure>
+        <title>Using Parameters within the Hibernate ODA Driver</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata
+                    fileref="images/hibernate_datasource/parametersWithinHibernateODADriver.png"/>
+            </imageobject>
+        </mediaobject>
+    </figure>
+
+
+    <figure>
+        <title>Adding New Parameter</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="images/hibernate_datasource/addingNewParameter.png"/>
+            </imageobject>
+        </mediaobject>
+    </figure>
+
+    <para>Again, to preview the results switch to the <emphasis>
+            <property>Preview Results</property>
+        </emphasis> item.</para>
+    <figure>
+        <title>Previewing the Results</title>
+        <mediaobject>
+            <imageobject>
+                <imagedata fileref="images/hibernate_datasource/previewingResults.png"/>
+            </imageobject>
+        </mediaobject>
+    </figure>
+
+</chapter>

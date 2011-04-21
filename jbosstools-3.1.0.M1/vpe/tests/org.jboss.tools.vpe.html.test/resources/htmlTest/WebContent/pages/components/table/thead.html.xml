@@ -1,0 +1,18 @@
+<tests>
+	<test id="thead">
+<THEAD ALIGN="right" ID="thead" DIR="ltr" STYLE="color: red; -moz-user-modify: read-only;" CLASS="theadClass">
+<TR STYLE="-moz-user-modify: read-write;">
+<TD STYLE="-moz-user-modify: read-write;">
+<SPAN>
+heading 1
+</SPAN>
+</TD>
+<TD STYLE="-moz-user-modify: read-write;">
+<SPAN>
+heading 2
+</SPAN>
+</TD>
+</TR>
+</THEAD>
+	</test>
+</tests>

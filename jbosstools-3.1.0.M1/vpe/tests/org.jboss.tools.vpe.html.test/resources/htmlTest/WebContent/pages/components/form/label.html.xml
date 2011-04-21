@@ -1,0 +1,10 @@
+<tests>
+	<test id="label">
+		<LABEL ID="label" CLASS="labelClass" DIR="ltr"
+			STYLE="color: red; -moz-user-modify: read-write;">
+			<SPAN>
+				label Value
+			</SPAN>
+		</LABEL>
+	</test>
+</tests>

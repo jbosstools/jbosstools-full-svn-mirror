@@ -1,0 +1,37 @@
+<tests>
+	<test id="jbide3416Test">
+		<DIV VPE:INCLUDE-ELEMENT="yes" STYLE="-moz-user-modify: read-only;">
+			<DIV STYLE="-moz-user-modify: read-only;">
+				<DIV STYLE="display: none; -moz-user-modify: read-only;">
+				</DIV>
+				<DIV STYLE="-moz-user-modify: read-only;">
+					<TABLE STYLE="-moz-user-modify: read-only;">
+					<THEAD>
+						<TR>
+							<TH>
+								<DIV>
+									<FORM>
+										<SPAN CLASS="vpe-text">
+											&#187;
+                                                       </SPAN>
+										<A STYLE="text-decoration: none;">Home</A>
+										<SPAN CLASS="vpe-text">
+											&#187;
+                                                       </SPAN>
+										<A STYLE="text-decoration: none;">CRM</A>	
+									</FORM>
+								</DIV>
+							</TH>
+						</TR>
+						</THEAD>
+					</TABLE>
+					<UL STYLE="color: red; font-weight: bold; -moz-user-modify: read-only;">
+						<LI>
+							Error Messages
+						</LI>
+					</UL>
+				</DIV>
+			</DIV>
+		</DIV>
+	</test>
+</tests>
