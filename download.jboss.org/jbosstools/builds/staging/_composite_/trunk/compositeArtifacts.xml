@@ -7,7 +7,7 @@
      get new time w/ 
       date +%s000
 -->
-<property name='p2.timestamp' value='1302028352000'/>
+<property name='p2.timestamp' value='1303423884000'/>
 </properties>
 <children size='33'>
 
@@ -47,7 +47,7 @@
 <child location='../../jbosstools-3.3_trunk.component--ws/all/repo/'/>
 <child location='../../savara-tools-eclipse-master/all/repo/'/>
 
-<child location='../../jbosstools-teiid-designer-7.4_trunk/all/repo/'/>
+<child location='../../jbosstools-teiid-designer-7.5_trunk/all/repo/'/>
 <child location='../../jbosstools-drools-5.2_trunk/all/repo/'/>
 <child location='../../xulrunner-1.9.1.2/all/repo/'/>
 
