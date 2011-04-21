@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+ 
+   <extension
+         point="org.eclipse.ui.propertyPages">
+       <page
+            name="%PreferencePage_CDISettings"
+            class="org.jboss.tools.cdi.ui.preferences.CDISettingsPreferencePage"
+            id="org.jboss.tools.cdi.ui.propertyPages.CDISettingsPreferencePage">
+         <enabledWhen>
+		     	<adapt type="org.eclipse.core.resources.IProject">
+		     		<test property="org.eclipse.core.resources.projectNature" value="org.eclipse.jdt.core.javanature"/>
+				</adapt>
+         </enabledWhen>
+      </page>
+   </extension>
+
+   <extension point="org.eclipse.ui.preferencePages">
+      <page 
+         category="org.jboss.tools.common.model.ui.cdi" 
+         class="org.jboss.tools.cdi.ui.preferences.CDIValidatorPreferencePage" 
+         id="org.jboss.tools.cdi.ui.preferences.CDIValidatorPreferencePage" 
+         name="%PreferencePage_Validator">
+      </page>
+      <page
+            category="org.jboss.tools.common.model.ui"
+            class="org.jboss.tools.cdi.ui.preferences.CDIPreferencePage"
+            id="org.jboss.tools.common.model.ui.cdi"
+            name="%PreferencePage_CDI">
+      </page>
+   </extension>
+
+	<extension
+		point="org.eclipse.ui.popupMenus">
+
+		<objectContribution
+			id="org.jboss.tools.cdi.ui.project.configure.enable"
+			objectClass="org.eclipse.core.resources.IProject"
+			adaptable="true">
+			<visibility>
+				<and>
+					<objectState 
+						name="projectNature"
+						value="org.eclipse.jdt.core.javanature"/>
+					<not>
+						<objectState 
+							name="projectNature"
+							value="org.jboss.tools.cdi.core.cdinature"/>
+					</not>
+				</and>
+			</visibility>
+
+			<action
+				id="org.jboss.tools.cdi.ui.AddCDISupport"
+				label="%ConfigureMenu_AddCDISupport"
+				class="org.jboss.tools.cdi.ui.preferences.AddCDISupportAction"
+				enablesFor="1"
+				menubarPath="org.eclipse.ui.projectConfigure/additions"/>
+
+		</objectContribution>
+
+		<objectContribution
+			id="org.jboss.tools.cdi.ui.project.configure.disable"
+			objectClass="org.eclipse.core.resources.IProject"
+			adaptable="true">
+			<visibility>
+				<objectState 
+					name="projectNature"
+					value="org.jboss.tools.cdi.core.cdinature"/>
+			</visibility>
+
+			<action
+				id="org.jboss.tools.cdi.ui.RemoveCDISupport"
+				label="%ConfigureMenu_RemoveCDISupport"
+				class="org.jboss.tools.cdi.ui.preferences.RemoveCDISupportAction"
+				enablesFor="1"
+				menubarPath="org.eclipse.ui.projectConfigure/additions"/>
+
+		</objectContribution>
+
+	</extension>
+
+   <extension point="org.eclipse.jdt.ui.javaCompletionProposalComputer"
+   		id="cdi_el_proposals"
+			name="CDI EL Proposals">
+	   	<proposalCategory icon="$nl$/icons/cdi16.png"/>
+ 	</extension>
+
+	<extension point="org.eclipse.jdt.ui.javaCompletionProposalComputer"
+   		id="CDIJavaELCompletionProposalComputer" 
+   		name="CDI EL Java Completion Proposal Computer">
+	   	<javaCompletionProposalComputer
+	      		class="org.jboss.tools.cdi.ui.ca.CDIJavaELProposalComputer"
+	      		categoryId="org.jboss.tools.cdi.ui.cdi_el_proposals"
+	      		activate="true">
+				<partition type="__java_string"/>
+	   	</javaCompletionProposalComputer>
+	</extension>
+	<extension
+        point="org.eclipse.jdt.ui.queryParticipants">
+     <queryParticipant
+           class="org.jboss.tools.cdi.ui.search.InjectionPointQueryParticipant"
+           id="org.jboss.tools.cdi.ui.search.InjectionPointQueryParticipant"
+           name="cdi-InjectionPointReferencesParticipant"
+           nature="org.jboss.tools.cdi.core.cdinature">
+     </queryParticipant>
+  </extension>
+  <!-- Refactorng -->
+	<extension
+		point="org.eclipse.ui.menus">
+	<menuContribution
+	      class="org.jboss.tools.cdi.ui.refactoring.CDIRefactorContributionFactory"
+	      locationURI="popup:org.eclipse.ui.popup.any?after=save">
+	</menuContribution>
+	</extension> 
+  
+   <extension point="org.eclipse.ui.newWizards">
+      <category
+            name="CDI"
+            id="org.jboss.tools.cdi.ui">
+      </category>
+      <wizard 
+         category="org.jboss.tools.cdi.ui" 
+         class="org.jboss.tools.cdi.ui.wizard.NewQualifierCreationWizard" 
+         icon="icons/cdi16.png"
+         id="org.jboss.tools.cdi.ui.wizard.NewQualifierCreationWizard" 
+         name="Qualifier Annotation Type" 
+         project="false">
+         <description>
+            Create a Qualifier Java File
+         </description>
+      </wizard>
+
+      <wizard 
+         category="org.jboss.tools.cdi.ui" 
+         class="org.jboss.tools.cdi.ui.wizard.NewStereotypeCreationWizard" 
+         icon="icons/cdi16.png"
+         id="org.jboss.tools.cdi.ui.wizard.NewStereotypeCreationWizard" 
+         name="Stereotype Annotation Type" 
+         project="false">
+         <description>
+            Create a Stereotype Java File
+         </description>
+      </wizard>
+
+      <wizard 
+         category="org.jboss.tools.cdi.ui" 
+         class="org.jboss.tools.cdi.ui.wizard.NewScopeCreationWizard" 
+         icon="icons/cdi16.png"
+         id="org.jboss.tools.cdi.ui.wizard.NewScopeCreationWizard" 
+         name="Scope Annotation Type" 
+         project="false">
+         <description>
+            Create a Scope Java File
+         </description>
+      </wizard>
+
+      <wizard 
+         category="org.jboss.tools.cdi.ui" 
+         class="org.jboss.tools.cdi.ui.wizard.NewInterceptorBindingCreationWizard" 
+         icon="icons/cdi16.png"
+         id="org.jboss.tools.cdi.ui.wizard.NewInterceptorBindingCreationWizard" 
+         name="Interceptor Binding Annotation Type" 
+         project="false">
+         <description>
+            Create a Interceptor Binding Java File
+         </description>
+      </wizard>
+   </extension>
+
+</plugin>

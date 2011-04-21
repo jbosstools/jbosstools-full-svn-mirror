@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3CR3//EN"
+	"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<sect1 id="testing-areas">
+	<title>Areas</title>
+	<para>TBD</para>
+	<sect2>
+		<title>Installation</title>
+		<para>
+			Two Installation approaches should be tested:
+			<itemizedlist>
+				<listitem>
+					<para>
+						Manual Install by downloading all tird-party software
+					</para>
+				</listitem>
+				<listitem>
+					<para>Installation from update site</para>
+				</listitem>
+				<listitem>
+					<para>Upgrade from update site</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</sect2>
+	<sect2>
+		<title>GUI</title>
+		<para>
+			GUI should be verified against:
+			<itemizedlist>
+				<listitem>
+					<para>
+						<ulink
+							url="http://www.eclipse.org/articles/Article-UI-Guidelines/Index.html">
+							Eclipse User Interface Guidelines Version 2.1
+						</ulink>
+					</para>
+				</listitem>
+				<listitem>
+					<para>JBoss Tools GUI Guidlines (should be written)</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</sect2>
+	<sect2>
+		<title>Functional</title>
+		<para>
+			Every functional requirement is represented by JIRA issue in JBIDE
+			JIRA project. Functional requirement should be obtained from issue
+			description field.
+		</para>
+	</sect2>
+	<sect2>
+		<title>Integration</title>
+		<para>TBD</para>
+	</sect2>
+	<sect2>
+		<title>Performance</title>
+		<para>TBD</para>
+	</sect2>
+	<sect2>
+		<title>Failure Recovery</title>
+		<para>TBD</para>
+	</sect2>
+		<sect2>
+		<title>Documentation Integrity</title>
+		<para>TBD</para>
+	</sect2>
+</sect1>

@@ -1,0 +1,704 @@
+<project default="run" name="aggregateRepos">
+
+	<target name="get.ant-contrib" unless="ant-contrib.jar.exists">
+		<property name="ANTCONTRIB_MIRROR" value="http://downloads.sourceforge.net/ant-contrib/" />
+		<get usetimestamp="true"
+		     dest="${requirement.build.root}/ant-contrib-1.0b2-bin.zip"
+		     src="${ANTCONTRIB_MIRROR}/ant-contrib-1.0b2-bin.zip"
+		/>
+		<touch file="${requirement.build.root}/ant-contrib-1.0b2-bin.zip" />
+		<mkdir dir="${java.io.tmpdir}/ant-contrib-1.0b2-bin.zip_" />
+		<unzip src="${requirement.build.root}/ant-contrib-1.0b2-bin.zip"
+		       dest="${java.io.tmpdir}/ant-contrib-1.0b2-bin.zip_"
+		       overwrite="true"
+		/>
+		<copy file="${java.io.tmpdir}/ant-contrib-1.0b2-bin.zip_/ant-contrib/lib/ant-contrib.jar"
+		      tofile="${requirement.build.root}/ant-contrib.jar"
+		      failonerror="true"
+		/>
+		<delete dir="${java.io.tmpdir}/ant-contrib-1.0b2-bin.zip_" includeemptydirs="true" quiet="true" />
+	</target>
+
+	<!-- Complete set of steps: init,prefetch.repo.zips,install.b3.aggregator,generate.build.file,run.build.file,add.associate.sites,zip.repo,cleanup -->
+	<target name="run"
+	        depends="init,prefetch.repo.zips,install.b3.aggregator,generate.build.file,run.build.file,add.associate.sites,zip.repo,cleanup"
+	/>
+
+	<target name="init">
+		<!-- set these properties in aggregateRepos.properties file:
+		# if eclipse.home not set, fetch + unpack Eclipse Helios Java bundle for 32- or 64-bit linux  
+		#eclipse.home=/home/nboldt/eclipse/35clean/eclipse
+		working.dir=${java.io.tmpdir}/b3aggr
+		repoName=JBoss Tools Nightly Aggregate Update Site
+		product.versionTag=3.1.0.v200910281633N-RC1
+		repos=\
+		http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-3.2.0.M1-Update-SNAPSHOT.zip,\
+		http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-cbi-pi4soa-Update-SNAPSHOT.zip,\
+		http://download.jboss.org/jbosstools/builds/nightly/3.2.helios/jbosstools-teiid-designer-Update-SNAPSHOT.zip
+		associate.sites=http://download.jboss.org/jbosstools/updates/helios/,\
+		  ...
+		-->
+
+		<property name="WORKSPACE" value="${java.io.tmpdir}" />
+
+		<property name="aggregateRepos.properties" value="aggregateRepos.jbosstools.properties" />
+		<property file="${aggregateRepos.properties}" />
+
+		<!-- if not set by Hudson (or in properties file), define defaults -->
+		<property name="working.dir" value="${WORKSPACE}/b3aggr" />
+		<property name="requirement.build.root" value="${working.dir}" />
+
+		<!-- create required dirs -->
+		<mkdir dir="${working.dir}" />
+		<mkdir dir="${requirement.build.root}" />
+
+		<!-- get Ant-Contrib -->
+		<available file="${requirement.build.root}/ant-contrib.jar" type="file" property="ant-contrib.jar.exists" />
+		<antcall target="get.ant-contrib" />
+		<taskdef resource="net/sf/antcontrib/antlib.xml">
+			<classpath>
+				<pathelement location="${requirement.build.root}/ant-contrib.jar" />
+			</classpath>
+		</taskdef>
+
+		<!-- get Eclipse for 32 or 64-bit linux -->
+		<if>
+			<not>
+				<isset property="eclipse.home" />
+			</not>
+			<then>
+				<if>
+					<os family="unix" />
+					<then>
+						<!-- Ant thinks that ${os.arch} == i386 for x86_64, so use `uname` instead -->
+						<exec executable="bash" outputproperty="arch">
+							<arg line="../util/getArch.sh" />
+						</exec>
+					</then>
+					<else>
+						<condition property="arch" value="x86_64" else="">
+							<os arch="amd64" />
+						</condition>
+					</else>
+				</if>
+				<property name="eclipse.home" value="${WORKSPACE}/eclipse" />
+				<delete dir="${eclipse.home}" includeemptydirs="true" quiet="true" />
+				<echo>Fetch + unpack fresh Eclipse into eclipse.home = ${eclipse.home}</echo>
+				<if>
+					<equals arg1="${arch}" arg2="x86_64" />
+					<then>
+						<get src="http://www.eclipse.org/downloads/download.php?file=/eclipse/downloads/drops/R-3.6-201006080911/eclipse-SDK-3.6-linux-gtk-x86_64.tar.gz&amp;r=1"
+						     dest="${WORKSPACE}/eclipse-SDK-3.6-linux-gtk-x86_64.tar.gz"
+						     usetimestamp="true"
+						/>
+						<untar compression="gzip"
+						       dest="${WORKSPACE}"
+						       src="${WORKSPACE}/eclipse-SDK-3.6-linux-gtk-x86_64.tar.gz"
+						/>
+					</then>
+					<else>
+						<get src="http://www.eclipse.org/downloads/download.php?file=/eclipse/downloads/drops/R-3.6-201006080911/eclipse-SDK-3.6-linux-gtk.tar.gz&amp;r=1"
+						     dest="${WORKSPACE}/eclipse-SDK-3.6-linux-gtk.tar.gz"
+						     usetimestamp="true"
+						/>
+						<untar compression="gzip"
+						       dest="${WORKSPACE}"
+						       src="${WORKSPACE}/eclipse-SDK-3.6-linux-gtk.tar.gz"
+						/>
+					</else>
+				</if>
+			</then>
+			<else>
+				<echo>Use pre-existing eclipse.home = ${eclipse.home}</echo>
+			</else>
+		</if>
+	</target>
+
+	<!-- prefetch remote update site zips as local archive repos -->
+	<target name="prefetch.repo.zips" description="prefetch repo zips and convert remote repo zips to local">
+		<antcallback return="prefetchRepoZips.return" target="prefetchRepoZips">
+			<param name="theList" value="${repos}" />
+		</antcallback>
+		<var name="repos" value="${prefetchRepoZips.return}" />
+		<var name="prefetchRepoZips.return" unset="true" />
+
+		<if>
+			<and>
+				<isset property="associate.sites" />
+				<not>
+					<equals arg1="${associate.sites}" arg2="" />
+				</not>
+			</and>
+			<then>
+				<antcallback return="prefetchRepoZips.return" target="prefetchRepoZips">
+					<param name="theList" value="${associate.sites}" />
+				</antcallback>
+				<var name="associate.sites" value="${prefetchRepoZips.return}" />
+				<var name="prefetchRepoZips.return" unset="true" />
+			</then>
+		</if>
+	</target>
+
+	<target name="install.b3.aggregator" description="b3 Aggregator requires Eclipse 3.6">
+		<!-- set these properties in aggregateRepos.properties file:
+			b3.aggregator.repo=http://download.jboss.org/jbosstools/requirements/helios/b3.aggregator-repo-0.1.0.r01001_e36.zip
+			b3.backup.repos=http://download.eclipse.org/eclipse/updates/3.6milestones/,http://download.eclipse.org/releases/helios/,http://download.jboss.org/jbosstools/requirements/helios/buckminster-repo-1.3.0.r11439_e36.zip
+		-->
+
+		<!-- prefetch remote update site zips as local archive repos -->
+		<antcallback return="prefetchRepoZips.return" target="prefetchRepoZips">
+			<param name="theList" value="${b3.aggregator.repo}" />
+		</antcallback>
+		<var name="b3.aggregator.repo" value="${prefetchRepoZips.return}" />
+		<var name="prefetchRepoZips.return" unset="true" />
+
+		<antcallback return="prefetchRepoZips.return" target="prefetchRepoZips">
+			<param name="theList" value="${b3.backup.repos}" />
+		</antcallback>
+		<var name="b3.backup.repos" value="${prefetchRepoZips.return}" />
+		<var name="prefetchRepoZips.return" unset="true" />
+
+		<chmod perm="+x" file="${eclipse.home}/eclipse" />
+		<exec executable="${eclipse.home}/eclipse"
+		      failonerror="true"
+		      dir="${eclipse.home}"
+		      timeout="900000"
+		      taskname="p2.dir"
+		>
+			<arg line=" -vm ${java.home}/bin/java" />
+			<!-- If using Eclipse 3.4, " -application org.eclipse.equinox.p2.director.app.application" -->
+			<arg line=" -application org.eclipse.equinox.p2.director" />
+			<arg line=" -nosplash --launcher.suppressErrors -consoleLog -flavor tooling -roaming -profile SDKProfile" />
+			<arg line=" -installIU org.eclipse.b3.aggregator.engine.feature.feature.group" />
+			<!-- optional for UI -->
+			<!-- <arg line=" -installIU org.eclipse.b3.aggregator.editor.feature.feature.group" /> -->
+			<arg line=" -destination ${eclipse.home} -bundlepool ${eclipse.home}" />
+			<arg line=" -metadataRepository ${b3.aggregator.repo},${b3.backup.repos}" />
+			<arg line=" -artifactRepository ${b3.aggregator.repo},${b3.backup.repos}" />
+			<arg line=" -profileProperties org.eclipse.update.install.features=true" />
+			<arg line=" -vmargs -Declipse.p2.data.area=${eclipse.home}/p2 -Declipse.p2.MD5Check=false" />
+		</exec>
+	</target>
+
+	<target name="prefetchRepoZips"
+	        description="Support remote update site zips: if repoURL contains http: or ftp: and .zip, get then switch it to a jar:file: URL"
+	>
+		<property name="theList" value="" />
+		<property name="theTargetDir" value="${requirement.build.root}/p2repos" />
+		<mkdir dir="${theTargetDir}" />
+		<var name="prefetchRepoZips.return" value="${theList}" />
+		<for param="repoURL" list="${theList}" delimiter=", 
+	">
+			<sequential>
+				<if>
+					<and>
+						<contains string="@{repoURL}" substring=".zip" />
+						<or>
+							<contains string="@{repoURL}" substring="http://" />
+							<contains string="@{repoURL}" substring="https://" />
+							<contains string="@{repoURL}" substring="ftp://" />
+							<contains string="@{repoURL}" substring="file://" />
+						</or>
+					</and>
+
+					<then>
+						<var name="repoFile" unset="true" />
+						<propertyregex property="repoFile"
+						               input="@{repoURL}"
+						               defaultvalue="@{repoURL}"
+						               regexp=".+/([^/]+.zip)"
+						               replace="\1"
+						               casesensitive="false"
+						               override="true"
+						/>
+						<propertyregex property="prefetchRepoZips.return"
+						               input="${prefetchRepoZips.return}"
+						               defaultvalue="${prefetchRepoZips.return}"
+						               regexp="@{repoURL}"
+						               replace="jar:file:${theTargetDir}/${repoFile}!/"
+						               casesensitive="false"
+						               override="true"
+						/>
+						<get dest="${theTargetDir}/${repoFile}" src="@{repoURL}" usetimestamp="true" />
+						<var name="repoFile" unset="true" />
+						<!-- <echo>repoURL = ${prefetchRepoZips.return}</echo> -->
+					</then>
+				</if>
+			</sequential>
+		</for>
+	</target>
+
+	<target name="generate.build.file">
+		<property name="repoName" value="JBoss Tools Aggregate Update Site" />
+		<property name="platform.names" value="linux-gtk,linux-gtk-x86_64,win32,macosx-carbon,macosx-cocoa" />
+		<!-- packedStrategy = {SKIP, UNPACK, UNPACK_AS_SIBLING, COPY, VERIFY} -->
+		<!-- mavenResult="{true,false}" -->
+		<echo file="${working.dir}/repo.b3aggr">&lt;?xml version="1.0" encoding="UTF-8"?>
+&lt;aggregator:Aggregator xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+			xmlns:aggregator="http://www.eclipse.org/b3/2010/aggregator/1.0.0"
+			buildmaster="//@contacts[email='nickboldt@gmail.com']" 
+			label="${repoName}" buildRoot="${working.dir}/output" 
+			packedStrategy="COPY" type="N" mavenResult="false">
+  &lt;contacts name="Nick Boldt" email="nickboldt@gmail.com"/>
+</echo>
+		<for param="platform" list="${platform.names}" delimiter=",">
+			<sequential>
+				<if>
+					<equals arg1="@{platform}" arg2="linux-gtk" />
+					<then>
+						<echo file="${working.dir}/repo.b3aggr" append="true">  &lt;configurations operatingSystem="linux" windowSystem="gtk"/>
+</echo>
+					</then>
+				</if>
+				<if>
+					<equals arg1="@{platform}" arg2="win32" />
+					<then>
+						<echo file="${working.dir}/repo.b3aggr" append="true">  &lt;configurations operatingSystem="win32" windowSystem="win32"/>
+</echo>
+					</then>
+				</if>
+				<if>
+					<equals arg1="@{platform}" arg2="linux-gtk-x86_64" />
+					<then>
+						<echo file="${working.dir}/repo.b3aggr" append="true">  &lt;configurations operatingSystem="linux" windowSystem="gtk" architecture="x86_64"/>
+</echo>
+					</then>
+				</if>
+				<if>
+					<equals arg1="@{platform}" arg2="macosx-carbon" />
+					<then>
+						<echo file="${working.dir}/repo.b3aggr" append="true">  &lt;configurations operatingSystem="macosx" windowSystem="carbon" architecture="x86"/>
+</echo>
+					</then>
+				</if>
+				<if>
+					<equals arg1="@{platform}" arg2="macosx-cocoa" />
+					<then>
+						<echo file="${working.dir}/repo.b3aggr" append="true">  &lt;configurations operatingSystem="macosx" windowSystem="cocoa"  architecture="x86"/>
+</echo>
+					</then>
+				</if>
+			</sequential>
+		</for>
+
+		<!-- store an array of ${featureID}_${featureVersion} values against which to check when echoing to repo.b3aggr file -->
+		<var name="unique.installableUnits" value="" />
+
+		<echo file="${working.dir}/repo.b3aggr" append="true">
+  &lt;contributions label="repos" contacts="//@contacts[email='nickboldt@gmail.com']"></echo>
+		<!-- counter variable; repoID.string stores a series of R; repoID stores the string length -->
+		<var name="repoID.string" value="" />
+		<var name="repoID" value="0" />
+		<for param="repo" list="${repos}" delimiter=", 
+	">
+			<sequential>
+				<!-- get list of features+plugins in the repo -->
+				<var name="repoFile" unset="true" />
+				<var name="repoFilename" unset="true" />
+				<propertyregex property="repoFile"
+				               input="@{repo}"
+				               defaultvalue="@{repo}"
+				               override="true"
+				               regexp="jar:file:(.+)!/"
+				               replace="\1"
+				/>
+				<propertyregex property="repoFilename"
+				               input="${repoFile}"
+				               defaultvalue="${repoFile}"
+				               override="true"
+				               regexp=".+/([^/]+.zip)"
+				               replace="\1"
+				/>
+				<echo file="${working.dir}/repo.b3aggr" append="true">
+    &lt;repositories location="@{repo}">
+</echo>
+				<!-- collect features into custom categories, if defined. See aggregateRepos.properties for how to define these mappings -->
+				<if>
+					<and>
+						<isset property="${repoFilename}.features" />
+						<isset property="categories" />
+					</and>
+					<then>
+						<!-- eg., pi4soa-Update-N-SNAPSHOT.zip.features=org.pi4soa.sdk.feature,org.pi4soa.core.feature -->
+						<propertycopy from="${repoFilename}.features"
+						              property="repo.features"
+						              override="true"
+						              silent="true"
+						/>
+						<var name="featureID.num" value="0" />
+						<for param="repo.feature" list="${repo.features}" delimiter=", ">
+							<sequential>
+								<!-- find the category to which this feature must be assigned -->
+								<!-- eg., categories=JBossToolsSDK,JBossTools,jBPMTools -->
+								<for param="categoryID" list="${categories}" delimiter=", ">
+									<sequential>
+										<if>
+											<not>
+												<isset property="custom.category.features.@{categoryID}" />
+											</not>
+											<then>
+												<var name="custom.category.features.@{categoryID}" value="" />
+											</then>
+										</if>
+
+										<if>
+											<and>
+												<!-- eg., JBossToolsSDK.features=org.pi4soa.sdk.feature,org.jboss.tools.jbpm3.sdk.feature,org.jboss.tools.jbpm4.sdk.feature
+													 	  JBossTools.features=org.pi4soa.core.feature,org.pi4soa.core.source.feature -->
+												<isset property="@{categoryID}.features" />
+												<contains string="${@{categoryID}.features}"
+												          substring="@{repo.feature}"
+												/>
+											</and>
+											<then>
+												<antcallback target="getIndex" return="getIndex.return">
+													<param name="entry" value="@{repo.feature}" />
+													<param name="list" value="${repo.features}" />
+												</antcallback>
+												<var name="featureID.num" value="${getIndex.return}" />
+												<var name="getIndex.return" unset="true" />
+
+												<!-- eg., custom.category.label.JBossToolsSDK=JBoss Tools SDK - ${product.versionTag}
+														  custom.category.description.JBossToolsSDK=JBoss Tools SDK helps JBoss and J2EE developers develop their applications quickly and painlessly. Contains runtimes and sources. -->
+												<antcallback target="addFeatureToCategories"
+												             return="addFeatureToCategories.return, unique.installableUnits"
+												>
+													<param name="repoID" value="${repoID}" />
+													<param name="featureID.num" value="${featureID.num}" />
+													<param name="include"
+													       value="features/@{repo.feature}_*, **/features/@{repo.feature}_*"
+													/>
+													<param name="repoFile" value="${repoFile}" />
+													<param name="categories" value="${categories}" />
+												</antcallback>
+												<var name="custom.category.features.@{categoryID}"
+												     value="${custom.category.features.@{categoryID}}${addFeatureToCategories.return}"
+												/>
+											</then>
+										</if>
+									</sequential>
+								</for>
+							</sequential>
+						</for>
+					</then>
+				</if>
+				<echo file="${working.dir}/repo.b3aggr" append="true">    &lt;/repositories>
+</echo>
+				<var name="repoID.string" value="${repoID.string}R" />
+				<var name="repoID" unset="true" />
+				<length property="repoID" string="${repoID.string}" />
+				<!-- <echo>repoID = ${repoID}, repoID.string = ${repoID.string}</echo> -->
+			</sequential>
+		</for>
+
+		<echo file="${working.dir}/repo.b3aggr" append="true">  &lt;/contributions>
+
+</echo>
+		<!-- create custom categories to collect the features -->
+		<for param="custom.category.id" list="${categories}" delimiter=", 
+	">
+			<sequential>
+				<!-- trim prefix " " -->
+				<propertyregex property="custom.category.features.@{custom.category.id}"
+				               defaultvalue="${custom.category.features.@{custom.category.id}}"
+				               input="${custom.category.features.@{custom.category.id}}"
+				               regexp=" (.+)"
+				               replace="\1"
+				               override="true"
+				/>
+
+				<echo file="${working.dir}/repo.b3aggr" append="true">  &lt;customCategories 
+    identifier="@{custom.category.id}" 
+    label="${custom.category.label.@{custom.category.id}}" 
+    description="${custom.category.description.@{custom.category.id}}"
+    features="${custom.category.features.@{custom.category.id}}" />
+</echo>
+			</sequential>
+		</for>
+
+		<if>
+			<and>
+				<isset property="associate.sites" />
+				<not>
+					<equals arg1="${associate.sites}" arg2="" />
+				</not>
+			</and>
+			<then>
+				<for param="associate.site" list="${associate.sites}" delimiter=", 
+	">
+					<sequential>
+						<echo file="${working.dir}/repo.b3aggr" append="true">
+  &lt;validationRepositories location="@{associate.site}" />
+</echo>
+					</sequential>
+				</for>
+			</then>
+		</if>
+
+		<echo file="${working.dir}/repo.b3aggr" append="true">&lt;/aggregator:Aggregator>
+</echo>
+	</target>
+
+	<target name="addFeatureToCategories">
+		<var name="addFeatureToCategories.return" value="" />
+		<property name="repoID" value="9" />
+		<property name="include" value="features/org.pi4soa.core.feature_*, **/features/org.pi4soa.core.feature_*" />
+		<property name="repoFile" value="${working.dir}/pi4soa-Update-N-SNAPSHOT.zip" />
+		<property name="categories" value="SDKTools2,SOATools2,AllTools2" />
+		<propertyregex property="repoFilename"
+		               input="${repoFile}"
+		               defaultvalue="${repoFile}"
+		               regexp=".+/([^/]+.zip)"
+		               replace="\1"
+		               casesensitive="false"
+		               override="true"
+		/>
+
+		<if>
+			<and>
+				<!-- haven't already unzipped this -->
+				<not>
+					<available file="${repoFile}_" type="dir" />
+				</not>
+			</and>
+			<then>
+				<if>
+					<available file="${repoFile}" type="file" />
+					<then>
+						<unzip src="${repoFile}" dest="${repoFile}_" />
+					</then>
+					<else>
+						<fail>Error!
+	Cannot find ${repoFile} to unpack!
+	</fail>
+					</else>
+				</if>
+			</then>
+		</if>
+
+		<property name="featureID.num" value="0" />
+		<for param="entry" delimiter=", 
+				">
+			<fileset dir="${repoFile}_" includes="${include}" />
+			<sequential>
+				<!-- get featureID and featureVersion -->
+				<var name="featureID" unset="true" />
+				<var name="featureVersion" unset="true" />
+				<propertyregex property="featureID"
+				               input="@{entry}"
+				               defaultvalue="@{entry}"
+				               regexp=".+/([^/_]+)_.+"
+				               replace="\1"
+				/>
+				<propertyregex property="featureVersion"
+				               input="@{entry}"
+				               defaultvalue="@{entry}"
+				               regexp=".+/${featureID}_(.+).jar"
+				               replace="\1"
+				/>
+
+				<!-- for a given featureID, check each of the available ${categories}; for each @{category}, check if featureID in list of ${@{category}.features} -->
+				<var name="featureID.categories" value="" />
+				<for param="category" list="${categories}" delimiter=", ">
+					<sequential>
+						<if>
+							<isset property="@{category}.features" />
+							<then>
+								<for param="featureID" list="${@{category}.features}" delimiter=", 
+">
+									<sequential>
+										<if>
+											<equals arg1="${featureID}" arg2="@{featureID}" />
+											<then>
+												<!-- given: SDKTools2,SOATools2,AllTools2
+													return: 
+													//@customCategories[identifier='${category1}'] //@customCategories[identifier='${category2}'] //@customCategories[identifier='${categoryID3}']
+													eg.,
+													//@customCategories[identifier='SDKTools2'] //@customCategories[identifier='SOATools2'] //@customCategories[identifier='AllTools2'] -->
+												<var name="featureID.categories"
+												     value="${featureID.categories} //@customCategories[identifier='@{category}']"
+												/>
+											</then>
+										</if>
+									</sequential>
+								</for>
+							</then>
+						</if>
+					</sequential>
+				</for>
+				<!-- trim prefix " " -->
+				<propertyregex property="featureID.categories"
+				               defaultvalue="${featureID.categories}"
+				               input="${featureID.categories}"
+				               regexp=" (.+)"
+				               replace="\1"
+				               override="true"
+				/>
+
+				<var name="isNewInstallableUnit" value="true" />
+				<for param="installableUnit" list="${unique.installableUnits}" delimiter=", ">
+					<sequential>
+						<if>
+							<equals arg1="@{installableUnit}" arg2="${featureID}_${featureVersion}" />
+							<then>
+								<var name="isNewInstallableUnit" value="false" />
+							</then>
+						</if>
+					</sequential>
+				</for>
+				<if>
+					<!-- cannot echo the same <features> twice - must be ; store ${featureID}_${featureVersion} in an array and check if in array before echoing again -->
+					<istrue value="${isNewInstallableUnit}" />
+					<then>
+						<var name="unique.installableUnits"
+						     value="${unique.installableUnits}, ${featureID}_${featureVersion}"
+						/>
+						<echo file="${working.dir}/repo.b3aggr" append="true">      &lt;features categories="${featureID.categories}" name="${featureID}.feature.group" versionRange="${featureVersion}" />
+</echo>
+						<echo level="info">${featureID}_${featureVersion}: add @repositories.${repoID}/@features.${featureID.num} to ${featureID.categories}</echo>
+					</then>
+					<else>
+						<echo level="info">${featureID}_${featureVersion} already added.</echo>
+					</else>
+				</if>
+				<var name="addFeatureToCategories.return"
+				     value="${addFeatureToCategories.return} //@contributions[label='repos']/@repositories.${repoID}/@features.${featureID.num}"
+				/>
+
+			</sequential>
+		</for>
+		<var name="featureID.categories" unset="true" />
+		<var name="isNewInstallableUnit" unset="true" />
+	</target>
+
+	<target name="run.build.file">
+		<chmod perm="+x" file="${eclipse.home}/eclipse" />
+		<exec executable="${eclipse.home}/eclipse"
+		      failonerror="true"
+		      dir="${eclipse.home}"
+		      timeout="900000"
+		      taskname="b3aggr"
+		>
+			<arg line=" -vm ${java.home}/bin/java" />
+			<arg line=" -application org.eclipse.b3.cli.headless" />
+			<arg line=" -nosplash --launcher.suppressErrors -consoleLog aggregate" />
+			<arg line=" --buildModel ${working.dir}/repo.b3aggr --action BUILD" />
+			<!-- To verify w/o actually doing the aggregation, use - -action VERIFY -->
+		</exec>
+	</target>
+
+	<!-- until https://bugs.eclipse.org/bugs/show_bug.cgi?id=303244 is fixed, do it manually -->
+	<target name="add.associate.sites">
+		<if>
+			<and>
+				<isset property="associate.sites" />
+				<not>
+					<equals arg1="${associate.sites}" arg2="" />
+				</not>
+			</and>
+			<then>
+				<if>
+					<available file="${working.dir}/output/final/content.jar" type="file" />
+					<then>
+						<unzip src="${working.dir}/output/final/content.jar" dest="${working.dir}/output/final" />
+						<delete file="${working.dir}/output/final/content.jar" />
+					</then>
+				</if>
+				<!-- counter variable -->
+				<var name="associate.sites.0" value="" />
+				<for param="associate.site" list="${associate.sites}" delimiter=", 
+	">
+					<sequential>
+						<var name="associate.sites.0" value="${associate.sites.0}00" />
+					</sequential>
+				</for>
+				<length property="associate.sites.length" string="${associate.sites.0}" />
+
+				<loadfile srcfile="${working.dir}/output/final/content.xml" property="content.xml">
+					<filterchain>
+						<tailfilter lines="-1" skip="1" />
+					</filterchain>
+				</loadfile>
+				<echo file="${working.dir}/output/final/content.xml" message="${content.xml}" />
+				<echo file="${working.dir}/output/final/content.xml" append="true">  &lt;references size='${associate.sites.length}'>
+</echo>
+				<for param="associate.site" list="${associate.sites}" delimiter=", 
+	">
+					<sequential>
+						<!-- insert into content.xml -->
+						<echo file="${working.dir}/output/final/content.xml" append="true">    &lt;repository uri='@{associate.site}' url='@{associate.site}' type='0' options='1'/>
+    &lt;repository uri='@{associate.site}' url='@{associate.site}' type='1' options='1'/>
+</echo>
+					</sequential>
+				</for>
+				<echo file="${working.dir}/output/final/content.xml" append="true">  &lt;/references>
+&lt;/repository>
+</echo>
+				<zip destfile="${working.dir}/output/final/content.jar"
+				     basedir="${working.dir}/output/final"
+				     includes="content.xml"
+				/>
+				<delete file="${working.dir}/output/final/content.xml" />
+			</then>
+		</if>
+	</target>
+
+	<!-- zip up the generated repo -->
+	<target name="zip.repo">
+		<zip destfile="${working.dir}/aggregate-Update-SNAPSHOT.zip"
+		     basedir="${working.dir}/output/final"
+		     update="false"
+		/>
+	</target>
+
+	<target name="cleanup">
+		<delete quiet="true" dir="${working.dir}/output" includeemptydirs="true" />
+		<!-- <delete quiet="true" file="${working.dir}/repo.b3aggr" /> -->
+		<for param="theZip" list="${repos}" delimiter=", 
+	">
+			<sequential>
+				<var name="zipFile" unset="true" />
+				<propertyregex property="zipFile"
+				               input="@{theZip}"
+				               defaultvalue="@{theZip}"
+				               regexp=".+/([^/]+.zip).*"
+				               replace="\1"
+				               casesensitive="false"
+				               override="true"
+				/>
+				<if>
+					<available file="${working.dir}/${zipFile}_" type="dir" />
+					<then>
+						<delete dir="${working.dir}/${zipFile}_" quiet="true" includeemptydirs="true" />
+					</then>
+				</if>
+			</sequential>
+		</for>
+	</target>
+
+	<target name="getIndex">
+		<property name="getIndex.string" value="" />
+		<var name="getIndex.return" value="0" />
+		<property name="entry" value="" />
+		<property name="list" value="" />
+		<for param="this.entry" list="${list}" delimiter=", ">
+			<sequential>
+				<if>
+					<not>
+						<equals arg1="@{this.entry}" arg2="${entry}" />
+					</not>
+					<then>
+						<var name="getIndex.string" value="${getIndex.string}L" />
+					</then>
+					<else>
+						<var name="getIndex.return" unset="true" />
+						<length property="getIndex.return" string="${getIndex.string}" />
+					</else>
+				</if>
+
+			</sequential>
+		</for>
+		<!-- <echo>        getIndex = ${getIndex.return} for ${entry} in ${list}</echo> -->
+	</target>
+
+</project>
