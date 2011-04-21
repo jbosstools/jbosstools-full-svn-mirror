@@ -45,5 +45,15 @@
 			<param name="build.archive" value="${jboss51.build.archive}"/>
 			<param name="md5" value="${jboss51.build.archive.md5}"/>
 		</antcall>
+		<antcall target="build-jbossas">
+			<param name="build.uri" value="${jboss60.build.uri}"/>
+			<param name="build.archive" value="${jboss60.build.archive}"/>
+			<param name="md5" value="${jboss60.build.archive.md5}"/>
+		</antcall>
+		<antcall target="build-jbossas">
+			<param name="build.uri" value="${jboss70.build.uri}"/>
+			<param name="build.archive" value="${jboss70.build.archive}"/>
+			<param name="md5" value="${jboss70.build.archive.md5}"/>
+		</antcall>
 	</target>
 </project>
