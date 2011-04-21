@@ -1,0 +1,459 @@
+<chapter id="packaging">
+	<title>The Packaging</title>
+	
+	<para>
+		JBoss-IDE provides an easy way to configure the packaging of various archives. There is no restriction of what can be packaged.
+		In this tutorial, four packaging configurations will be defined:
+		<itemizedlist>
+			<listitem><link linkend="ejb.jar">The EJB JAR</link>. It will contain the EJB classes and interfaces, as well as the ejb-jar.xml and jboss.xml deployment descriptors.</listitem>
+			<listitem><link linkend="ejb.client.jar">The EJB Client JAR</link>. It will contain the EJB interfaces.</listitem>
+			<listitem><link linkend="web.war">The Web Application WAR</link>. It will contain the Servlet class, the EJB client Jar, as well as the web.xml deployment descriptors.</listitem>
+			<listitem><link linkend="app.ear">The J2EE Application EAR</link>. It will contain the EJB Jar and the Web Application War, as well as the application.xml deployment descriptor.</listitem>
+		</itemizedlist>
+		When launched, these four packaging configurations will create the J2EE application ready to be deployed.
+	</para>
+	
+	<section id="ejb.jar">
+		<title>FiboEJB.jar creation</title>
+		
+	<informaltable frame="none">
+	<tgroup cols="2" align="left" colsep="1" rowsep="1">
+		<tbody>
+			<row>
+				<entry>
+					<procedure>
+						<title>Creating the EJB JAR</title>
+						<step>Edit the project properties by right clicking on the project and select <literal>Properties</literal>.</step>
+						<step>In the property page, select <literal>Packaging Configurations</literal>.</step>
+						<step>Right-click in the area to pop-up the menu and choose <literal>Add Archive</literal>. Type <literal>FiboEJB.jar</literal> in the dialog and click <literal>OK</literal>.</step>
+						<step>You have created a new packaging configuration that will produce the <literal>FiboEJB.jar</literal> file.</step>
+					</procedure>
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/packaging-1.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+					<para>We want to add the EJB classes and interfaces. Eclipse has generated the compiled classes into the <literal>bin</literal> folder (declared as the default output dir of the project).</para>
+					<para>Select the <literal>FiboEJB.jar</literal> item and right-click in the area to pop-up the menu and choose <literal>Add Folder</literal>. A “Folder Selection” dialog appears.</para>
+					<para>This dialog allows to select which folder (local to workspace or in the file system) to include into the package, to specify include and exclude filters (A la Ant) and to set a prefix that will be append when building the package.</para>
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/packaging-2.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+					<para>Click on <literal>Project Folder</literal>. A “Folder Chooser” dialog appears.</para>
+					<para>This dialog allows selecting which folder to include. This folder can be choosen among all the opened projects.</para>
+					<para>Select the <literal>/Tutorial/bin</literal> folder and click <literal>OK</literal>.</para>
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/packaging-3.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+					<para>The folder is now <literal>/Tutorial/bin</literal>.</para>
+					<para>As we only want the EJB classes and interfaces, specify the following as an include filter:</para>
+					<para><literal>tutorial/ejb/*.class,tutorial/interfaces/*.class</literal></para>
+					<para>Click on <literal>OK</literal></para>
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/packaging-4.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+					<para>We now want to add the standard EJB deployment descriptor.</para>
+					<para>Select the <literal>FiboEJB.jar</literal> item and right-click in the area to pop-up the menu and choose <literal>Add File</literal>. A “File Selection” dialog appears.</para>
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/packaging-5.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+					<para>This dialog allows you to select which file (local to workspace or in the file system) to include in the package and to set a prefix which will be appended when building the package.</para>
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/packaging-6.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+					<para>Click on <literal>Project File</literal>. A “File Chooser” dialog appears.</para>
+					<para>This dialog allows to select which file to include. This file can be choosen among all the opened projects.</para>
+					<para>Select the <literal>/Tutorial/src/META-INF/ejb-jar.xml</literal> folder and click <literal>OK</literal>.</para>
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/packaging-7.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+					<para>The file is now <literal>/Tutorial/src/META-INF/ejb-jar.xml</literal>.</para>
+					<para>The <literal>ejb-jar.xml</literal> must be located under the <literal>META-INF</literal> directory of the EJB package. Set the prefix to <literal>META-INF</literal>.</para>
+					<para>Click on <literal>OK</literal>.</para>
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/packaging-8.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+					<para>To add the specific EJB deployment descriptor, select the <literal>FiboEJB.jar</literal> item and right-click in the area to pop-up the menu and choose <literal>Add File</literal>.</para>
+					<para>The file to choose is <literal>/Tutorial/src/META-INF/jboss.xml</literal>.</para>
+					<para>The <literal>jboss.xml</literal> must be located under the <literal>META-INF</literal> directory of the EJB package. Set the prefix to <literal>META-INF</literal>.</para>
+					<para>Click on <literal>OK</literal>.</para>
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/packaging-9.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+					The packaging configuration for the <literal>FiboEJB.jar</literal> is now complete.
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/packaging-10.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+		</tbody>
+	</tgroup>
+	</informaltable>
+	
+	</section>
+	
+	<section id="ejb.client.jar">
+		<title>FiboEJB-client.jar creation</title>
+	
+	<informaltable frame="none">
+	<tgroup cols="2" align="left" colsep="1" rowsep="1">
+		<tbody>
+			<row>
+				<entry>
+					<para>Click the <literal>Add</literal> button on the right side of the list. Type <literal>FiboEJB-client.jar</literal> in the dialog and click <literal>OK</literal>.</para>
+					<para>You have created a new packaging configuration that will produce the <literal>FiboEJB-client.jar</literal> file.</para>
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/packaging-11.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+					<para>Select the <literal>FiboEJB-client.jar</literal> item and right-click in the area to pop-up the menu and choose <literal>Add Folder</literal>. A “Folder Selection” dialog appears.</para>
+					<para>Click on <literal>Project Folder</literal> and select the <literal>/Tutorial/bin</literal> folder from the “Folder Chooser” dialog.</para>
+					<para>As we only want the EJB interfaces, set the include filter to <literal>tutorial/interfaces/*.class</literal>.</para>
+					<para>Click on <literal>OK</literal>.</para>
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/packaging-12.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+					The packaging configuration for the <literal>FiboEJB-client.jar</literal> is now complete.
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/packaging-13.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+		</tbody>
+	</tgroup>
+	</informaltable>
+	
+	</section>
+	<section id="web.war">
+		<title>FiboWeb.war creation</title>
+	
+	<informaltable frame="none">
+	<tgroup cols="2" align="left" colsep="1" rowsep="1">
+		<tbody>
+			<row>
+				<entry>
+					<para>Click the <literal>Add</literal> button on the right side of the list. Type <literal>FiboWeb.war</literal> in the dialog and click <literal>OK</literal>.</para>
+					<para>You have created a new packaging configuration that will produce the <literal>FiboWeb.war</literal> file.</para>
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/packaging-14.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+					<para>Select the <literal>FiboWeb.war</literal> item and right-click in the area to pop-up the menu and choose <literal>Add Folder</literal>. A “Folder Selection” dialog appears.</para>
+					<para>Click on <literal>Project Folder</literal> and select the <literal>/Tutorial/bin</literal> folder from the “Folder Chooser” dialog.</para>
+					<para>As we only want the Servlet class, set the include filter to <literal>tutorial/web/*.class</literal>.</para>
+					<para>The classes must be located under the <literal>WEB-INF/classes</literal> of the War package. Set the prefix to <literal>WEB-INF/classes</literal>.</para>
+					<para>Click on <literal>OK</literal>.</para>
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/packaging-15.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+					<para>To add the standard Web deployment descriptor, select the <literal>FiboWeb.war</literal> item and right-click in the area to pop-up the menu and choose <literal>Add File</literal>. A “File Selection” dialog appears.</para>
+					<para>The file to choose is <literal>/Tutorial/src/WEB-INF/web.xml</literal>.</para>
+					<para>The <literal>web.xml</literal> must be located under the <literal>WEB-INF</literal> of the War package. Set the prefix to <literal>WEB-INF</literal>.</para>
+					<para>Click on <literal>OK</literal>.</para>
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/packaging-16.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+					<para>To add the JBoss specific Web deployment descriptor, select the <literal>FiboWeb.war</literal> item and right-click in the area to pop-up the menu and choose <literal>Add File</literal>. A “File Selection” dialog appears.</para>
+					<para>The file to choose is <literal>/Tutorial/src/WEB-INF/jboss-web.xml</literal>.</para>
+					<para>The <literal>jboss-web.xml</literal> must be located under the <literal>WEB-INF</literal> of the War package. Set the prefix to <literal>WEB-INF</literal>.</para>
+					<para>Click on <literal>OK</literal>.</para>
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/packaging-17.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+					<para>To add the EJB Client Jar, select the <literal>FiboWeb.war</literal> item and right-click in the area to pop-up the menu and choose <literal>Add File</literal>. A “File Selection” dialog appears.</para>
+					<para>
+						The file to choose is <literal>/Tutorial/FiboEJB-client.jar</literal>.
+						But it doesn’t exist yet as the packaging has not been run. Instead of selecting it, go in the text field and type the name of the file <literal>/Tutorial/FiboEJB-client.jar</literal>.
+						Even if the file doesn’t exist, it can be added to a packaging configuration.
+					</para>
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/packaging-18.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+					<para>The <literal>FiboEJB-client.jar</literal> must be located under the <literal>WEB-INF/lib</literal> directory of the War package. Set the prefix to <literal>WEB-INF/lib</literal>.</para>
+					<para>Click on <literal>OK</literal>.</para>
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/packaging-19.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+					<para>Select the <literal>FiboWeb.war</literal> item and right-click in the area to pop-up the menu and choose <literal>Add Folder</literal>. A “Folder Selection” dialog appears.</para>
+					<para>Click on <literal>Project Folder</literal> and select the <literal>/Tutorial/docroot</literal> folder from the “Folder Chooser” dialog. This is the content of the Web Application.</para>
+					<para>Click on <literal>OK</literal>.</para>
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/packaging-20.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+					The packaging configuration for the <literal>FiboWeb.war</literal> is now complete.
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/packaging-21.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+		</tbody>
+	</tgroup>
+	</informaltable>
+	
+	</section>
+	<section id="app.ear">
+		<title>FiboApp.ear creation</title>
+	
+	<informaltable frame="none">
+	<tgroup cols="2" align="left" colsep="1" rowsep="1">
+		<tbody>
+			<row>
+				<entry>
+					<para>Click the <literal>Add</literal> button on the right side of the list. Type <literal>FiboApp.ear</literal> in the dialog and click <literal>OK</literal>.</para>
+					<para>You have created a new packaging configuration that will produce the <literal>FiboApp.ear</literal> file.</para>
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/packaging-22.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+					<para>To add the application deployment descriptor, select the <literal>FiboApp.ear</literal> item and right-click in the area to pop-up the menu and choose <literal>Add File</literal>. A “File Selection” dialog appears.</para>
+					<para>The file to choose is <literal>/Tutorial/src/META-INF/application.xml</literal>.</para>
+					<para>The <literal>application.xml</literal> must be located under the <literal>META -INF</literal> of the EAR package. Set the prefix to <literal>META -INF</literal>.</para>
+					<para>Click on <literal>OK</literal>.</para>
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/packaging-23.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+					<para>To add the EJB module, select the <literal>FiboApp.ear</literal> item and right-click in the area to pop-up the menu and choose <literal>Add File</literal>. A “File Selection” dialog appears.</para>
+					<para>
+						The file to choose is <literal>/Tutorial/FiboEJB.jar</literal>. But it doesn’t exist yet as the packaging has not been run. 
+						Instead of selecting it, go in the text field and type the name of the file <literal>/Tutorial/FiboEJB.jar</literal>. Even if the file doesn’t exist, it can be added to a packaging configuration.
+					</para>
+					<para>Click on <literal>OK</literal>.</para>
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/packaging-24.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+					<para>To add the Webmodule, select the <literal>FiboApp.ear</literal> item and right-click in the area to pop-up the menu and choose <literal>Add File</literal>. A “File Selection” dialog appears.</para>
+					<para>
+						The file to choose is <literal>/Tutorial/FiboWeb.war</literal>. But it doesn’t exist yet as the packaging has not been run. Instead of selecting it,
+						go in the text field and type the name of the file <literal>/Tutorial/ FiboWeb.war</literal>. Even if the file doesn’t exist, it can be added to a packaging configuration.
+					</para>
+					<para>Click on <literal>OK</literal>.</para>
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/packaging-25.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+					<para>The packaging configuration for the <literal>FiboApp.ear</literal> is now complete.</para>
+					<para>Click <literal>OK</literal> to save the packaging configurations.</para>
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/packaging-26.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+					<para>
+					Right-click on the project and select <literal>Run Packaging</literal>. The packaging will display its output in the console. The output should look like this:
+					</para>
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/packaging-run.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+			<row>
+				<entry>
+					<para>
+					After the execution, you should have a project that looks like this:
+					</para>
+				</entry>
+				<entry>
+		            <mediaobject>
+		                <imageobject>
+		                    <imagedata align="center" fileref="images/project-after-packaging.jpg"/>
+		                </imageobject>
+		            </mediaobject>
+				</entry>
+			</row>
+		</tbody>
+	</tgroup>
+	</informaltable>
+	</section>
+</chapter>

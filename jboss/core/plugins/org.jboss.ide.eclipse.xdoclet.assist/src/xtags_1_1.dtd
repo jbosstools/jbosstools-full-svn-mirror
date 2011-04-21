@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+This is the XML DTD for the XDoclet Tags 1.1 descriptor.
+
+  <!DOCTYPE xdoclet PUBLIC
+    "-//XDoclet Team//DTD XDoclet Tags 1.1//EN"
+    "http://xdoclet.sourceforge.net/dtds/xtags_1_1.dtd">
+
+-->
+
+<!--
+Root element.
+-->
+<!ELEMENT xdoclet (namespace+)>
+
+<!--
+Tag namespace such as ejb, jboss, webwork etc.
+-->
+<!ELEMENT namespace (name, usage-description, condition-description?, condition?, tags)>
+
+<!--
+String indicating a name.
+-->
+<!ELEMENT name (#PCDATA)>
+
+<!--
+String indicating level of applicability for a tag.
+Valid values are:
+
+class
+field
+constructor
+method
+
+-->
+<!ELEMENT level (#PCDATA)>
+
+<!--
+Textual description of the usage of the tag parameter. It will be visible in the GUI's
+tooltips, and will also appear in the generated docs.
+-->
+<!ELEMENT usage-description (#PCDATA)>
+
+<!--
+A textual description of the condition.
+-->
+<!ELEMENT condition-description (#PCDATA)>
+
+<!--
+A String that will be passed to the Condition class' constructor.
+-->
+<!ELEMENT condition-parameter (#PCDATA)>
+
+<!--
+Indicates whether or not the parameter is mandatory.
+TODO: This element should probably have a condition sub-element
+in order to evaluate under which conditions the parameter is
+mandatory. This can depend on other parameter values
+(as in @ejb.relation)
+-->
+<!ELEMENT mandatory (#PCDATA)>
+
+<!--
+The condition element can nest deeper conditions to form complex logical conditions.
+the type element specifies the condition type. The type value is mapped to a class
+that evaluates the condition.
+
+Depending on the associated Condition class implementation's constructor, there must
+be a number of nested condition-parameter elements equal to the number of String parameters
+of the class' constructor.
+-->
+<!ELEMENT condition (condition-parameter* | condition*)>
+
+<!--
+Valid condition types. All of these types must map to a class name in
+xtags.ConditionFactory.
+-->
+<!ATTLIST condition
+    type (and | class | method | field | constructor | or | not | tag-param | tag-exists | tag-param-exists | type | name | abstract | public | final | static | starts-with | owner) #REQUIRED
+>
+
+<!--
+The definition of a tag.
+-->
+<!ELEMENT tag (level+, name, usage-description, unique, deprecated?, condition-description?, condition?, parameter*)>
+
+<!--
+A set of tags for a given namespace.
+-->
+<!ELEMENT tags (tag+)>
+
+<!--
+Indicates the tag parameter type.
+-->
+<!ELEMENT type (#PCDATA)>
+
+<!--
+Tag containing this element as "true" element is considered unique, and can occur in program
+element only once.
+-->
+<!ELEMENT unique (#PCDATA)>
+
+<!--
+Tag containing this element is denoted as 'deprecated' and should contain useful information about
+what tag replaces it.
+-->
+<!ELEMENT deprecated (#PCDATA)>
+
+<!--
+Default value to select from option or for tag parameter upon creation.
+-->
+<!ELEMENT default (#PCDATA)>
+
+<!--
+The value of a valid option for a tag parameter.
+-->
+<!ELEMENT option (#PCDATA)>
+
+<!--
+A set of valid options for a tag parameter. The
+condition sub-element evaluates whether or not
+this option-set is applicable. The first applicable
+option-set will be used. If no condition is specified,
+the option-set will apply to any circumstance.
+-->
+<!ELEMENT option-set (default?, options, condition?)>
+
+<!--
+A set of option-sets.
+-->
+<!ELEMENT option-sets (option-set+)>
+
+<!--
+A set of options.
+-->
+<!ELEMENT options (option+)>
+
+<!--
+The definition of a tag parameter. The type will have an effect in the GUI when deciding
+what kind of widget will be used to edit the tag parameter:
+bool -> checkbox
+text AND no options -> textfield
+text AND options -> combo
+-->
+<!ELEMENT parameter (name, usage-description, mandatory, default?, condition-description?, condition?, option-sets?)>
+<!ATTLIST parameter
+    type (text | bool | int) #REQUIRED
+>

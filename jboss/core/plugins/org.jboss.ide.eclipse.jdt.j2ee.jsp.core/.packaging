@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurations>
+<archive name="jasper-runtime.jar" destination="lib/jasper-5.0.27" used="true" exploded="false">
+<folder prefix="" includes="org/apache/jasper/Constants.class" excludes="" project="" projectLocation="bin" name="bin" location="bin" used="true"/>
+<folder prefix="" includes="org/apache/jasper/JasperException.class" excludes="" project="" projectLocation="bin" name="bin" location="bin" used="true"/>
+<folder prefix="" includes="org/apache/jasper/compiler/Localizer.class" excludes="" project="" projectLocation="bin" name="bin" location="bin" used="true"/>
+<folder prefix="" includes="org/apache/jasper/resources/**" excludes="" project="" projectLocation="bin" name="bin" location="bin" used="true"/>
+<folder prefix="" includes="org/apache/jasper/runtime/**" excludes="" project="" projectLocation="bin" name="bin" location="bin" used="true"/>
+<folder prefix="" includes="org/apache/jasper/security/**" excludes="" project="" projectLocation="bin" name="bin" location="bin" used="true"/>
+<folder prefix="" includes="org/apache/jasper/util/**" excludes="" project="" projectLocation="bin" name="bin" location="bin" used="true"/>
+</archive>
+<archive name="jasper-runtime.jar" destination="libsrc/jasper-5.0.27" used="true" exploded="false">
+<folder prefix="" includes="org/apache/jasper/Constants.java" excludes="" project="" projectLocation="jasper-src" name="jasper-src" location="jasper-src" used="true"/>
+<folder prefix="" includes="org/apache/jasper/JasperException.java" excludes="" project="" projectLocation="jasper-src" name="jasper-src" location="jasper-src" used="true"/>
+<folder prefix="" includes="org/apache/jasper/compiler/Localizer.java" excludes="" project="" projectLocation="jasper-src" name="jasper-src" location="jasper-src" used="true"/>
+<folder prefix="" includes="org/apache/jasper/resources/**" excludes="" project="" projectLocation="jasper-src" name="jasper-src" location="jasper-src" used="true"/>
+<folder prefix="" includes="org/apache/jasper/runtime/**" excludes="" project="" projectLocation="jasper-src" name="jasper-src" location="jasper-src" used="true"/>
+<folder prefix="" includes="org/apache/jasper/security/**" excludes="" project="" projectLocation="jasper-src" name="jasper-src" location="jasper-src" used="true"/>
+<folder prefix="" includes="org/apache/jasper/util/**" excludes="" project="" projectLocation="jasper-src" name="jasper-src" location="jasper-src" used="true"/>
+</archive>
+</configurations>

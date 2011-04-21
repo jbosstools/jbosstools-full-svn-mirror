@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin
+   id="org.jboss.ide.eclipse.jdt.ws.core"
+   name="%plugin.name"
+   version="1.5.0.m1"
+   provider-name="%plugin.provider"
+   class="org.jboss.ide.eclipse.jdt.ws.core.JDTWSCorePlugin">
+
+   <runtime>
+      <library name="org-jboss-ide-eclipse-jdt-ws-core.jar">
+         <export name="*"/>
+      </library>
+      <library name="lib/axis-1.2/axis.jar">
+         <export name="*"/>
+      </library>
+      <library name="lib/axis-1.2/commons-discovery.jar">
+         <export name="*"/>
+      </library>
+      <library name="lib/axis-1.2/commons-logging.jar">
+         <export name="*"/>
+      </library>
+      <library name="lib/axis-1.2/log4j-1.2.8.jar">
+         <export name="*"/>
+      </library>
+      <library name="lib/axis-1.2/wsdl4j.jar">
+         <export name="*"/>
+      </library>
+      <library name="lib/wsi-1.0/jaxr-api.jar">
+         <export name="*"/>
+      </library>
+      <library name="lib/wsi-1.0/jaxrpc-api.jar">
+         <export name="*"/>
+      </library>
+      <library name="lib/wsi-1.0/saaj-api.jar">
+         <export name="*"/>
+      </library>
+      <library name="lib/wsi-1.0/xml-api.jar">
+         <export name="*"/>
+      </library>
+   </runtime>
+
+   <requires>
+      <import plugin="org.eclipse.ui.ide"/>
+      <import plugin="org.eclipse.ui.views"/>
+      <import plugin="org.eclipse.jface.text"/>
+      <import plugin="org.eclipse.ui.workbench.texteditor"/>
+      <import plugin="org.eclipse.ui.editors"/>
+      <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.jboss.ide.eclipse.core"/>
+      <import plugin="org.jboss.ide.eclipse.ui"/>
+      <import plugin="org.eclipse.jdt"/>
+      <import plugin="org.eclipse.jdt.core"/>
+      <import plugin="org.eclipse.jdt.ui"/>
+      <import plugin="org.jboss.ide.eclipse.jdt.core"/>
+      <import plugin="org.jboss.ide.eclipse.jdt.test.core"/>
+      <import plugin="org.apache.xalan"/>
+      <import plugin="org.eclipse.core.runtime"/>
+   </requires>
+
+   <extension
+         point="org.eclipse.jdt.core.classpathContainerInitializer">
+      <classpathContainerInitializer
+            class="org.jboss.ide.eclipse.jdt.ws.core.classpath.WSIBasicProfile10ClasspathContainerInitializer"
+            id="org.jboss.ide.eclipse.jdt.core.classpath.wsi-1.0">
+      </classpathContainerInitializer>
+      <classpathContainerInitializer
+            class="org.jboss.ide.eclipse.jdt.ws.core.classpath.Axis12ClasspathContainerInitializer"
+            id="org.jboss.ide.eclipse.jdt.core.classpath.axis-1.2">
+      </classpathContainerInitializer>
+   </extension>
+
+</plugin>
