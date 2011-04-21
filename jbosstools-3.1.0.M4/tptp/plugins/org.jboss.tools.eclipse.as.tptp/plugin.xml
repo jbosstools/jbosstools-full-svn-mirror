@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+<!-- Make the associations between the launch configurations and the data collectors -->
+	<extension
+		point="org.eclipse.hyades.trace.ui.launchConfigMechanismAssociator">
+		
+		<!-- JBoss Server -->
+		<association			
+			launchConfigID = "org.jboss.ide.eclipse.as.core.server.startupConfiguration">
+ 		  	
+			<mechanism mechanismID = "org.eclipse.tptp.trace.ui.jvmpiMechanism"> 
+			    <configuration
+					launchDelegate = "org.eclipse.tptp.trace.ui.internal.launcher.deleg.application.PIAttachLauncherDelegate"
+					configurationId = "org.eclipse.tptp.trace.ui.jvmpiConfiguration"
+					associatedAgent = "org.eclipse.tptp.trace.ui.jvmpiAgent"		
+					filter = "org.eclipse.tptp.platform.profile.server.core.internal.PICollectorFiltration">				
+				</configuration>			
+		  	</mechanism> 		
+		  	
+		  	<mechanism mechanismID = "org.eclipse.tptp.trace.jvmti.jvmtiMechanism"> 
+			    <configuration
+					launchDelegate = "org.eclipse.tptp.platform.jvmti.client.internal.launcher.TIAttachLauncherDelegate"
+					configurationId = "org.eclipse.tptp.trace.jvmti.tiConfiguration"
+					associatedAgent = "org.eclipse.tptp.platform.jvmti.TIAgent"
+					filter = "org.eclipse.tptp.platform.profile.server.core.internal.TICollectorFiltration">							
+				</configuration>			
+		  	</mechanism>   	
+		</association>
+		<association launchConfigID="org.jboss.ide.eclipse.as.core.server.startupConfiguration">
+ 			<mechanism mechanismID="org.eclipse.tptp.platform.instrumentation.ui.instrumentCollector">
+				<configuration
+                 associatedAgent="org.eclipse.tptp.platform.instrumentation.ui.instrumentAgent"
+                 configurationId="org.eclipse.tptp.platform.instrumentation.ui.instrumentCollectorConfiguration"
+                 filter="org.jboss.tools.eclipse.as.tptp.PICollectorFiltration"
+                 launchDelegate="org.eclipse.tptp.platform.instrumentation.ui.internal.launcher.deleg.application.InstrumentLauncherDelegate"/>
+	  		</mechanism>  
+		</association>
+		
+	</extension>
+</plugin>

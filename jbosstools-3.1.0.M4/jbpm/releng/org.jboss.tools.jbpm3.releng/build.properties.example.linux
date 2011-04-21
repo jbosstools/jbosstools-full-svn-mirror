@@ -1,0 +1,49 @@
+## BEGIN PROJECT BUILD PROPERTIES ##
+
+# this property allows ant-contrib and pde-svn-plugin to be fetched and installed automatically for you
+thirdPartyDownloadLicenseAcceptance="I accept"
+
+projectid=jbosstools.jbpm3
+zipPrefix=jbpm3
+incubation=
+buildType=N
+version=3.2.0
+
+mainFeatureToBuildID=org.jboss.tools.jbpm3.sdk.feature
+testFeatureToBuildID=org.jboss.tools.jbpm3.tests.feature
+
+build.steps=buildUpdate,buildTests,generateDigests,test,publish,cleanup
+
+# Re-use local sources?
+localSourceCheckoutDir=/home/nboldt/eclipse/workspace-jboss/jbosstools-trunk/jbpm
+relengBuilderDir=/home/nboldt/eclipse/workspace-jboss/jbosstools-trunk/jbpm/releng/org.jboss.tools.jbpm3.releng
+relengBaseBuilderDir=/home/nboldt/eclipse/workspace-jboss/org.eclipse.releng.basebuilder
+relengCommonBuilderDir=/home/nboldt/eclipse/workspace-jboss/org.eclipse.dash.common.releng
+
+JAVA_HOME=/usr/lib/jvm/java
+JAVA14_HOME=/usr/lib/jvm/java
+JAVA50_HOME=/usr/lib/jvm/java
+JAVA60_HOME=/usr/lib/jvm/java
+
+dependencyURLs=\
+http://repository.jboss.org/eclipse/galileo/GEF-runtime-3.5.1.zip,\
+http://repository.jboss.org/eclipse/galileo/emf-runtime-2.5.0.zip,\
+http://repository.jboss.org/eclipse/galileo/xsd-runtime-2.5.0.zip,\
+http://repository.jboss.org/eclipse/galileo/wtp-R-3.1.1-20090917225226.zip,\
+http://repository.jboss.org/eclipse/galileo/eclipse-SDK-3.5.1-linux-gtk.tar.gz
+
+flattenDependencies=true
+parallelCompilation=true
+generateFeatureVersionSuffix=true
+individualSourceBundles=true
+
+domainNamespace=*
+projNamespace=org.jboss.tools.jbpm3
+projRelengName=org.jboss.tools.jbpm3.releng
+
+# needed for Hudson, not for local?
+#projRelengRoot=svn://svn.jboss.org/repos/jbosstools/trunk/jmx
+#projRelengPath=releng
+#basebuilderBranch=R35_M6
+
+## END PROJECT BUILD PROPERTIES ##

@@ -1,0 +1,576 @@
+Buildfile: /home/nboldt/eclipse/workspace-jboss/jbosstools-trunk/profiler/releng/build.xml
+run:
+runEclipse:
+check.ant-contrib:
+get.pde.build.svn:
+get.ant4eclipse:
+     [echo] Run /usr/lib/jvm/java/bin/java
+     [echo]   -enableassertions
+     [echo]   -jar /home/nboldt/eclipse/workspace-jboss/org.eclipse.releng.basebuilder/plugins/org.eclipse.equinox.launcher_1.0.200.v20090520.jar
+     [echo]   -application org.eclipse.ant.core.antRunner
+     [echo]   -f /home/nboldt/eclipse/workspace-jboss/org.eclipse.dash.common.releng/buildAll.xml run
+     [echo]   -Dprojectid=jbosstools.profiler -DbuildTimestamp=200910141328 -DbuildType=N -Dversion=1.1.0 -DwritableBuildRoot=/tmp/build -DdownloadsDir=/tmp/build/downloads -DthirdPartyJarsDir=/tmp/build/3rdPartyJars -DbuildDir=/tmp/build/N200910141328-JBoss-Profiler -Dbuild.steps=buildUpdate,generateDigests,publish,cleanup -DrelengBuilderDir=/home/nboldt/eclipse/workspace-jboss/jbosstools-trunk/profiler/releng -DrelengCommonBuilderDir=/home/nboldt/eclipse/workspace-jboss/org.eclipse.dash.common.releng -DrelengBaseBuilderDir=/home/nboldt/eclipse/workspace-jboss/org.eclipse.releng.basebuilder -DJAVA_HOME=/usr/lib/jvm/java -DdependencyURLs=http://download.eclipse.org/eclipse/downloads/drops/R-3.5-200906111540/eclipse-SDK-3.5-linux-gtk.tar.gz -DlocalSourceCheckoutDir=/home/nboldt/eclipse/workspace-jboss/jbosstools-trunk/profiler 
+    [build] Buildfile: /home/nboldt/eclipse/workspace-jboss/org.eclipse.dash.common.releng/buildAll.xml
+    [build] init:
+    [build] check.ant-contrib:
+    [build] init:
+    [build] genBuildCfgInit:
+    [build] projectid2names:
+    [build]    [delete] Deleting: /tmp/build/N200910141328-JBoss-Profiler/build.cfg
+    [build] genBuildCfg:
+    [build] createBuildConfigFile:
+    [build]      [echo] Created /tmp/build/N200910141328-JBoss-Profiler/build.cfg
+    [build] collectMapTypes:
+    [build]      [echo] Found these map entry types: local
+    [build] collectURLs:
+    [build] getZip:
+    [build]      [echo] Found 1 dependency URLs
+    [build]      [echo] Load properties from /tmp/build/N200910141328-JBoss-Profiler/build.cfg
+    [build] create.label.properties:
+    [build]      [echo] subprojectName = profiler
+    [build]      [echo] Base OS: linux; Base Window System: gtk
+    [build] collectMaps:
+    [build]    [delete] Deleting: /tmp/build/N200910141328-JBoss-Profiler/directory.txt
+    [build] run:
+    [build]      [echo] Get pde.build.svn
+    [build] get.pde.build.svn:
+    [build]      [echo] Get ant4eclipse
+    [build] get.ant4eclipse:
+    [build]      [echo] buildAll.xml#run :: build.step :: buildUpdate
+    [build] buildUpdate:
+    [build] buildMasterZip:
+    [build] -timestamp:
+    [build]      [echo] 01:28:57
+    [build] init:
+    [build] main:
+    [build] main:
+    [build] preBuild:
+    [build] preSetup:
+    [build] init:
+    [build] copyLocalSourceCheckout:
+    [build] init:
+    [build] convertRawCheckoutToFeaturesAndPluginsDirs:
+    [build]      [copy] Copying 4 files to /tmp/build/N200910141328-JBoss-Profiler/eclipse/features/org.jboss.tools.profiler.feature
+    [build]      [copy] Copying 45 files to /tmp/build/N200910141328-JBoss-Profiler/eclipse/plugins/org.jboss.tools.profiler.ui
+    [build]       [zip] Building zip: /tmp/build/N200910141328-JBoss-Profiler/eclipse/N200910141328/JBoss-Profiler-Sources-N200910141328.zip
+    [build] getMapFiles:
+    [build] init:
+    [build] postSetup:
+    [build]      [echo] Download, then unpack Eclipse ...
+    [build] init:
+    [build] getDependency:
+    [build] getBundle:
+    [build] downloadFile:
+    [build] unpackBundle:
+    [build] unzipFile:
+    [build] untarFile:
+    [build]     [untar] Expanding: /tmp/build/downloads/eclipse-SDK-3.5-linux-gtk.tar.gz into /tmp/build/N200910141328-JBoss-Profiler
+    [build] unpackDocISV:
+    [build] buildExtra.xml:
+    [build] processRepos:
+    [build] fetch:
+    [build] generate:
+    [build] preGenerate:
+    [build] buildExtra.xml:
+    [build] allElements:
+    [build] allElementsDelegator:
+    [build] init:
+    [build] generateScript:
+    [build] [eclipse.buildScript] Some inter-plug-in dependencies have not been satisfied.
+    [build] [eclipse.buildScript] Bundle org.eclipse.core.net:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.core.net_1.2.1.r35x_20090812-1200
+    [build] [eclipse.buildScript] Bundle org.eclipse.equinox.registry:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.equinox.registry_3.4.100.v20090520-1800
+    [build] [eclipse.buildScript] Bundle org.eclipse.jdt.compiler.tool:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.jdt.compiler.tool_1.0.100.v_972_R35x
+    [build] [eclipse.buildScript] Bundle org.eclipse.equinox.launcher.gtk.linux.x86:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.equinox.launcher.gtk.linux.x86_1.0.200.v20090520
+    [build] [eclipse.buildScript] Bundle org.eclipse.core.filesystem.linux.x86:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.core.filesystem.linux.x86_1.2.0.v20080604-1400
+    [build] [eclipse.buildScript] Bundle org.eclipse.jsch.core:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.jsch.core_1.1.100.I20090430-0408
+    [build] [eclipse.buildScript] Bundle org.eclipse.ecf.identity:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.ecf.identity_3.0.0.v20090831-1906
+    [build] [eclipse.buildScript] Bundle org.eclipse.ecf:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.ecf_3.0.0.v20090831-1906
+    [build] [eclipse.buildScript] Bundle org.eclipse.jdt.debug.ui:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.jdt.debug.ui_3.4.1.v20090811_r351
+    [build] [eclipse.buildScript] Bundle org.eclipse.equinox.simpleconfigurator.manipulator:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.equinox.simpleconfigurator.manipulator_1.0.100.v20090520-1905
+    [build] [eclipse.buildScript] Bundle org.eclipse.update.configurator:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.update.configurator_3.3.0.v20090312
+    [build] [eclipse.buildScript] Bundle org.eclipse.ui.externaltools:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.ui.externaltools_3.2.0.v20090504
+    [build] [eclipse.buildScript] Bundle org.eclipse.ui.views:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.ui.views_3.4.1.M20090826-0800
+    [build] [eclipse.buildScript] Bundle org.eclipse.equinox.p2.jarprocessor:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.equinox.p2.jarprocessor_1.0.100.v20090520-1905
+    [build] [eclipse.buildScript] Bundle org.eclipse.equinox.frameworkadmin.equinox:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.equinox.frameworkadmin.equinox_1.0.100.v20090520-1905
+    [build] [eclipse.buildScript] Bundle org.eclipse.ui.views.properties.tabbed:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.ui.views.properties.tabbed_3.5.0.I20090429-1800
+    [build] [eclipse.buildScript] Bundle org.eclipse.ecf.ssl.source:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.ecf.ssl.source_1.0.0.v20090831-1906
+    [build] [eclipse.buildScript] Bundle org.eclipse.equinox.app:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.equinox.app_1.2.0.v20090520-1800
+    [build] [eclipse.buildScript] Bundle org.eclipse.pde.ua.core:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.pde.ua.core_1.0.0.v20090429-1800
+    [build] [eclipse.buildScript] Bundle org.eclipse.ui:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.ui_3.5.1.M20090902-1000
+    [build] [eclipse.buildScript] Bundle org.eclipse.pde.ds.ui:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.pde.ds.ui_1.0.0.v20090527
+    [build] [eclipse.buildScript] Bundle org.eclipse.ui.navigator.resources:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.ui.navigator.resources_3.4.1.M20090826-0800
+    [build] [eclipse.buildScript] Bundle org.eclipse.equinox.http.registry:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.equinox.http.registry_1.0.200.v20090520-1800
+    [build] [eclipse.buildScript] Bundle org.eclipse.equinox.p2.metadata.generator:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.equinox.p2.metadata.generator_1.0.100.v20090520-1905
+    [build] [eclipse.buildScript] Bundle org.eclipse.debug.core:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.debug.core_3.5.0.v20090526-1600
+    [build] [eclipse.buildScript] Bundle org.eclipse.equinox.simpleconfigurator:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.equinox.simpleconfigurator_1.0.101.R35x_v20090807-1100
+    [build] [eclipse.buildScript] Bundle org.eclipse.ecf.filetransfer:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.ecf.filetransfer_3.0.0.v20090831-1906
+    [build] [eclipse.buildScript] Bundle com.ibm.icu:
+    [build] [eclipse.buildScript] 	Another singleton version selected: com.ibm.icu_4.0.1.v20090822
+    [build] [eclipse.buildScript] Bundle org.eclipse.equinox.p2.metadata:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.equinox.p2.metadata_1.0.100.v20090525
+    [build] [eclipse.buildScript] Bundle org.eclipse.swt:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.swt_3.5.1.v3555a
+    [build] [eclipse.buildScript] 	Unsatisfied import package org.eclipse.swt.accessibility2_0.0.0.
+    [build] [eclipse.buildScript] 	Unsatisfied import package org.mozilla.xpcom_0.0.0.
+    [build] [eclipse.buildScript] Bundle org.eclipse.ltk.core.refactoring:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.ltk.core.refactoring_3.5.0.v20090513-2000
+    [build] [eclipse.buildScript] Bundle org.eclipse.help.base:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.help.base_3.4.0.v200909170800
+    [build] [eclipse.buildScript] Bundle org.eclipse.jdt.ui:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.jdt.ui_3.5.1.r351_v20090821-0800
+    [build] [eclipse.buildScript] Bundle org.eclipse.equinox.p2.artifact.repository:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.equinox.p2.artifact.repository_1.0.101.R35x_v20090721
+    [build] [eclipse.buildScript] Bundle org.eclipse.ui.ide:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.ui.ide_3.5.1.M20090826-0800
+    [build] [eclipse.buildScript] Bundle org.eclipse.jdt.launching:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.jdt.launching_3.5.0.v20090527
+    [build] [eclipse.buildScript] Bundle org.eclipse.equinox.p2.engine:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.equinox.p2.engine_1.0.101.R35x_v20090825
+    [build] [eclipse.buildScript] Bundle org.eclipse.pde.runtime:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.pde.runtime_3.4.100.v20090731
+    [build] [eclipse.buildScript] Bundle org.eclipse.core.jobs:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.core.jobs_3.4.100.v20090429-1800
+    [build] [eclipse.buildScript] Bundle org.eclipse.jsch.ui:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.jsch.ui_1.1.200.I20090430-0408
+    [build] [eclipse.buildScript] Bundle org.eclipse.swt.gtk.linux.x86:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.swt.gtk.linux.x86_3.5.1.v3555a
+    [build] [eclipse.buildScript] Bundle org.eclipse.equinox.p2.ui.sdk.scheduler:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.equinox.p2.ui.sdk.scheduler_1.0.0.v20090520-1905
+    [build] [eclipse.buildScript] Bundle org.eclipse.jdt.core.manipulation:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.jdt.core.manipulation_1.3.0.v20090603
+    [build] [eclipse.buildScript] Bundle org.eclipse.ecf.filetransfer.source:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.ecf.filetransfer.source_3.0.0.v20090831-1906
+    [build] [eclipse.buildScript] Bundle org.eclipse.equinox.preferences:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.equinox.preferences_3.2.300.v20090520-1800
+    [build] [eclipse.buildScript] Bundle org.eclipse.jdt.apt.ui:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.jdt.apt.ui_3.3.200.v20090528-1135
+    [build] [eclipse.buildScript] Bundle org.eclipse.team.ui:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.team.ui_3.5.0.I20090430-0408
+    [build] [eclipse.buildScript] Bundle org.eclipse.equinox.p2.publisher:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.equinox.p2.publisher_1.0.0.v20090527-1812
+    [build] [eclipse.buildScript] Bundle org.eclipse.jdt.junit.runtime:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.jdt.junit.runtime_3.4.100.v20090513-2000
+    [build] [eclipse.buildScript] Bundle org.eclipse.pde.api.tools:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.pde.api.tools_1.0.101.v20090714
+    [build] [eclipse.buildScript] Bundle org.eclipse.ecf.identity.source:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.ecf.identity.source_3.0.0.v20090831-1906
+    [build] [eclipse.buildScript] Bundle org.eclipse.jdt:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.jdt_3.5.1.v200909170800
+    [build] [eclipse.buildScript] Bundle org.eclipse.help.webapp:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.help.webapp_3.4.1.v20090819_35x
+    [build] [eclipse.buildScript] Bundle org.eclipse.equinox.ds:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.equinox.ds_1.1.1.R35x_v20090806
+    [build] [eclipse.buildScript] Bundle org.eclipse.pde.ds.core:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.pde.ds.core_1.0.0.v20090429-1800
+    [build] [eclipse.buildScript] Bundle org.eclipse.ecf.provider.filetransfer.httpclient.ssl.source:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.ecf.provider.filetransfer.httpclient.ssl.source_1.0.0.v20090831-1906
+    [build] [eclipse.buildScript] Bundle org.eclipse.equinox.p2.reconciler.dropins:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.equinox.p2.reconciler.dropins_1.0.100.v20090520-1905
+    [build] [eclipse.buildScript] Bundle org.eclipse.jdt.apt.pluggable.core:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.jdt.apt.pluggable.core_1.0.201.R35x_v20090818-0225
+    [build] [eclipse.buildScript] Bundle org.eclipse.ecf.ssl:
+    [build] [eclipse.buildScript] Bundle org.eclipse.ui.intro:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.ui.intro_3.3.1.v20090805_35x
+    [build] [eclipse.buildScript] Bundle org.eclipse.core.runtime:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.core.runtime_3.5.0.v20090525
+    [build] [eclipse.buildScript] Bundle org.eclipse.equinox.p2.garbagecollector:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.equinox.p2.garbagecollector_1.0.100.v20090520-1905
+    [build] [eclipse.buildScript] Bundle org.eclipse.pde.doc.user:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.pde.doc.user_3.5.0.v20090818
+    [build] [eclipse.buildScript] Bundle org.eclipse.ui.console:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.ui.console_3.4.0.v20090513
+    [build] [eclipse.buildScript] Bundle org.eclipse.ui.navigator:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.ui.navigator_3.4.1.M20090911-1550
+    [build] [eclipse.buildScript] Bundle org.eclipse.ant.ui:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.ant.ui_3.4.1.v20090901_r351
+    [build] [eclipse.buildScript] Bundle org.eclipse.update.scheduler:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.update.scheduler_3.2.200.v20081127
+    [build] [eclipse.buildScript] Bundle org.eclipse.equinox.p2.director:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.equinox.p2.director_1.0.100.v20090520-1905
+    [build] [eclipse.buildScript] Bundle org.eclipse.help.ui:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.help.ui_3.4.1.v20090819_35x
+    [build] [eclipse.buildScript] Bundle org.eclipse.help.appserver:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.help.appserver_3.1.400.v20090429_1800
+    [build] [eclipse.buildScript] Bundle org.eclipse.core.filebuffers:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.core.filebuffers_3.5.0.v20090526-2000
+    [build] [eclipse.buildScript] Bundle org.eclipse.core.runtime.compatibility:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.core.runtime.compatibility_3.2.0.v20090413
+    [build] [eclipse.buildScript] Bundle org.eclipse.cvs:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.cvs_1.0.300.v200909170800
+    [build] [eclipse.buildScript] Bundle org.eclipse.jdt.apt.core:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.jdt.apt.core_3.3.201.R35x_v20090818-0235
+    [build] [eclipse.buildScript] Bundle org.eclipse.pde.build:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.pde.build_3.5.1.R35x_20090820
+    [build] [eclipse.buildScript] Bundle org.eclipse.ui.editors:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.ui.editors_3.5.0.v20090527-2000
+    [build] [eclipse.buildScript] Bundle org.eclipse.jdt.doc.isv:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.jdt.doc.isv_3.5.1.r351_v20090831
+    [build] [eclipse.buildScript] Bundle org.eclipse.team.cvs.core:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.team.cvs.core_3.3.200.I20090430-0408
+    [build] [eclipse.buildScript] Bundle org.eclipse.platform:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.platform_3.3.201.v200909170800
+    [build] [eclipse.buildScript] Bundle org.eclipse.ui.browser:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.ui.browser_3.2.300.v20090526
+    [build] [eclipse.buildScript] Bundle org.eclipse.equinox.p2.repository:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.equinox.p2.repository_1.0.1.v20090901-1041
+    [build] [eclipse.buildScript] Bundle org.eclipse.equinox.p2.updatechecker:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.equinox.p2.updatechecker_1.1.0.v20090520-1905
+    [build] [eclipse.buildScript] Bundle org.eclipse.ecf.provider.filetransfer:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.ecf.provider.filetransfer_3.0.1.v20090831-1906
+    [build] [eclipse.buildScript] Bundle org.eclipse.equinox.p2.touchpoint.natives:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.equinox.p2.touchpoint.natives_1.0.101.R35x_v20090806
+    [build] [eclipse.buildScript] Bundle org.eclipse.equinox.p2.console:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.equinox.p2.console_1.0.100.v20090520-1905
+    [build] [eclipse.buildScript] Bundle org.eclipse.core.runtime.compatibility.registry:
+    [build] [eclipse.buildScript] Bundle org.eclipse.ui.ide.application:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.ui.ide.application_1.0.101.M20090826-0800
+    [build] [eclipse.buildScript] Bundle org.eclipse.ui.workbench.compatibility:
+    [build] [eclipse.buildScript] Bundle org.eclipse.ecf.provider.filetransfer.httpclient.ssl:
+    [build] [eclipse.buildScript] Bundle org.eclipse.ui.views.log:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.ui.views.log_1.0.100.v20090731
+    [build] [eclipse.buildScript] Bundle org.eclipse.core.resources.compatibility:
+    [build] [eclipse.buildScript] Bundle org.eclipse.ant.core:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.ant.core_3.2.100.v20090817_r351
+    [build] [eclipse.buildScript] Bundle org.eclipse.equinox.p2.repository.tools:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.equinox.p2.repository.tools_1.0.1.R35x_v20090806
+    [build] [eclipse.buildScript] Bundle org.eclipse.help:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.help_3.4.1.v20090805_35x
+    [build] [eclipse.buildScript] Bundle org.eclipse.equinox.p2.touchpoint.eclipse:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.equinox.p2.touchpoint.eclipse_1.0.101.R35x_20090820-1821
+    [build] [eclipse.buildScript] Bundle org.eclipse.jdt.junit4.runtime:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.jdt.junit4.runtime_1.1.0.v20090513-2000
+    [build] [eclipse.buildScript] Bundle org.eclipse.platform.doc.user:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.platform.doc.user_3.5.1.r351_v20090821-0800
+    [build] [eclipse.buildScript] Bundle org.jboss.tools.profiler.ui:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.jboss.tools.profiler.ui_1.0.0.v200910141328
+    [build] [eclipse.buildScript] Bundle org.eclipse.equinox.p2.core:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.equinox.p2.core_1.0.101.R35x_v20090819
+    [build] [eclipse.buildScript] Bundle org.eclipse.update.core:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.update.core_3.2.300.v20090525
+    [build] [eclipse.buildScript] Bundle org.eclipse.equinox.p2.extensionlocation:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.equinox.p2.extensionlocation_1.0.100.v20090520-1905
+    [build] [eclipse.buildScript] Bundle org.eclipse.jdt.debug:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.jdt.debug_3.5.0.v20090526
+    [build] [eclipse.buildScript] Bundle org.eclipse.pde.ua.ui:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.pde.ua.ui_1.0.0.v20090511
+    [build] [eclipse.buildScript] Bundle org.eclipse.debug.ui:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.debug.ui_3.5.1.v20090811_r351
+    [build] [eclipse.buildScript] Bundle org.eclipse.equinox.p2.directorywatcher:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.equinox.p2.directorywatcher_1.0.100.v20090525
+    [build] [eclipse.buildScript] Bundle org.eclipse.pde.junit.runtime:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.pde.junit.runtime_3.4.0.v20090527
+    [build] [eclipse.buildScript] Bundle org.eclipse.update.core.linux:
+    [build] [eclipse.buildScript] Bundle org.eclipse.pde:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.pde_3.4.100.v200909170800
+    [build] [eclipse.buildScript] Bundle org.eclipse.team.cvs.ui:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.team.cvs.ui_3.3.201.R35x_v20090826-0905
+    [build] [eclipse.buildScript] Bundle org.eclipse.osgi:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.osgi_3.5.1.R35x_v20090827
+    [build] [eclipse.buildScript] Bundle org.eclipse.ltk.ui.refactoring:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.ltk.ui.refactoring_3.4.100.v20090604
+    [build] [eclipse.buildScript] Bundle org.eclipse.sdk:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.sdk_3.5.1.v200909170800
+    [build] [eclipse.buildScript] Bundle org.eclipse.ui.presentations.r21:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.ui.presentations.r21_3.2.100.I20081007-0800
+    [build] [eclipse.buildScript] Bundle org.eclipse.equinox.security:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.equinox.security_1.0.100.v20090520-1800
+    [build] [eclipse.buildScript] Bundle org.eclipse.equinox.p2.ui.sdk:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.equinox.p2.ui.sdk_1.0.100.v20090520-1905
+    [build] [eclipse.buildScript] Bundle org.eclipse.core.variables:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.core.variables_3.2.200.v20090521
+    [build] [eclipse.buildScript] Bundle org.eclipse.ecf.source:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.ecf.source_3.0.0.v20090831-1906
+    [build] [eclipse.buildScript] Bundle org.eclipse.equinox.p2.exemplarysetup:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.equinox.p2.exemplarysetup_1.0.100.v20090520-1905
+    [build] [eclipse.buildScript] Bundle org.eclipse.compare:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.compare_3.5.0.I20090514-0808
+    [build] [eclipse.buildScript] Bundle org.eclipse.core.net.linux.x86:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.core.net.linux.x86_1.1.0.I20081021
+    [build] [eclipse.buildScript] Bundle org.eclipse.equinox.p2.updatesite:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.equinox.p2.updatesite_1.0.100.v20090525
+    [build] [eclipse.buildScript] Bundle org.eclipse.ecf.provider.filetransfer.httpclient:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.ecf.provider.filetransfer.httpclient_3.0.1.v20090831-1906
+    [build] [eclipse.buildScript] Bundle org.eclipse.ui.intro.universal:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.ui.intro.universal_3.2.300.v20090526
+    [build] [eclipse.buildScript] Bundle org.eclipse.equinox.p2.ui:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.equinox.p2.ui_1.0.101.R35x_v20090819
+    [build] [eclipse.buildScript] Bundle org.eclipse.pde.core:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.pde.core_3.5.100.v20090821
+    [build] [eclipse.buildScript] Bundle org.eclipse.pde.ui.templates:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.pde.ui.templates_3.4.100.v20090527
+    [build] [eclipse.buildScript] Bundle org.eclipse.ecf.provider.filetransfer.ssl.source:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.ecf.provider.filetransfer.ssl.source_1.0.0.v20090831-1906
+    [build] [eclipse.buildScript] Bundle org.eclipse.search:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.search_3.5.1.r351_v20090708-0800
+    [build] [eclipse.buildScript] Bundle org.eclipse.equinox.frameworkadmin:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.equinox.frameworkadmin_1.0.100.v20090520-1905
+    [build] [eclipse.buildScript] Bundle org.eclipse.core.expressions:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.core.expressions_3.4.100.v20090429-1800
+    [build] [eclipse.buildScript] Bundle org.eclipse.core.contenttype:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.core.contenttype_3.4.1.R35x_v20090826-0451
+    [build] [eclipse.buildScript] Bundle org.eclipse.rcp:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.rcp_3.5.0.v200909170800
+    [build] [eclipse.buildScript] Bundle org.eclipse.team.cvs.ssh2:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.team.cvs.ssh2_3.2.200.I20090508-2000
+    [build] [eclipse.buildScript] Bundle org.eclipse.ui.net:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.ui.net_1.2.1.r35x_20090812-1200
+    [build] [eclipse.buildScript] Bundle org.eclipse.jdt.core:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.jdt.core_3.5.1.v_972_R35x
+    [build] [eclipse.buildScript] Bundle org.eclipse.ui.workbench.texteditor:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.ui.workbench.texteditor_3.5.0.v20090603
+    [build] [eclipse.buildScript] Bundle org.eclipse.jdt.compiler.apt:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.jdt.compiler.apt_1.0.201.R35x_v20090825-1530
+    [build] [eclipse.buildScript] Bundle org.eclipse.platform.doc.isv:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.platform.doc.isv_3.5.1.r351_v20090831
+    [build] [eclipse.buildScript] Bundle org.eclipse.pde.ui:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.pde.ui_3.5.0.v20090821
+    [build] [eclipse.buildScript] Bundle org.eclipse.core.filesystem:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.core.filesystem_1.2.0.v20090507
+    [build] [eclipse.buildScript] Bundle org.eclipse.ui.cheatsheets:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.ui.cheatsheets_3.3.200.v20090526
+    [build] [eclipse.buildScript] Bundle org.eclipse.pde.api.tools.ui:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.pde.api.tools.ui_1.0.101.v20090820
+    [build] [eclipse.buildScript] Bundle org.eclipse.jdt.junit:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.jdt.junit_3.5.1.r351_v20090708-0800
+    [build] [eclipse.buildScript] Bundle org.eclipse.equinox.security.ui:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.equinox.security.ui_1.0.100.v20090520-1800
+    [build] [eclipse.buildScript] Bundle org.eclipse.equinox.common:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.equinox.common_3.5.1.R35x_v20090807-1100
+    [build] [eclipse.buildScript] Bundle org.eclipse.ui.workbench:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.ui.workbench_3.5.1.M20090826-0800a
+    [build] [eclipse.buildScript] Bundle org.eclipse.core.resources:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.core.resources_3.5.1.R35x_v20090826-0451
+    [build] [eclipse.buildScript] Bundle org.eclipse.team.core:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.team.core_3.5.0.I20090527-0620
+    [build] [eclipse.buildScript] Bundle org.eclipse.ecf.provider.filetransfer.ssl:
+    [build] [eclipse.buildScript] Bundle org.eclipse.equinox.p2.director.app:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.equinox.p2.director.app_1.0.100.v20090521-1912
+    [build] [eclipse.buildScript] Bundle org.eclipse.equinox.p2.metadata.repository:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.equinox.p2.metadata.repository_1.0.101.R35x_v20090812
+    [build] [eclipse.buildScript] Bundle org.eclipse.jdt.doc.user:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.jdt.doc.user_3.5.1.r351_v20090821-0800
+    [build] [eclipse.buildScript] Bundle org.eclipse.update.ui:
+    [build] [eclipse.buildScript] 	Another singleton version selected: org.eclipse.update.ui_3.2.201.R35x_v20090813
+    [build] postGenerate:
+    [build] clean:
+    [build] allElements:
+    [build] allElementsDelegator:
+    [build] init:
+    [build] cleanElement:
+    [build]      [echo] /tmp/build/N200910141328-JBoss-Profiler/eclipse/features/org.jboss.tools.profiler.feature
+    [build] init:
+    [build] clean:
+    [build] init:
+    [build] all.features:
+    [build] all.plugins:
+    [build] properties:
+    [build] init:
+    [build] clean:
+    [build] update.feature:
+    [build] all.children:
+    [build] buildExtra.xml:
+    [build] process:
+    [build] preProcess:
+    [build] buildExtra.xml:
+    [build] allElements:
+    [build] allElementsDelegator:
+    [build] init:
+    [build] processElement:
+    [build] processViaFeature:
+    [build] processFlat:
+    [build] main:
+    [build] properties:
+    [build] init:
+    [build] build.jars:
+    [build] properties:
+    [build] init:
+    [build] @dot:
+    [build]     [mkdir] Created dir: /tmp/build/N200910141328-JBoss-Profiler/eclipse/plugins/org.jboss.tools.profiler.ui/@dot
+    [build]     [javac] Compiling 15 source files to /tmp/build/N200910141328-JBoss-Profiler/eclipse/plugins/org.jboss.tools.profiler.ui/@dot
+    [build] checkCompilationResults:
+    [build]      [copy] Copying 2 files to /tmp/build/N200910141328-JBoss-Profiler/eclipse/plugins/org.jboss.tools.profiler.ui/@dot
+    [build] postProcess:
+    [build] buildExtra.xml:
+    [build] assemble:
+    [build] preAssemble:
+    [build] buildExtra.xml:
+    [build] allElements:
+    [build] allElementsDelegator:
+    [build] init:
+    [build] assembleElement:
+    [build] main:
+    [build] defaultAssemble:
+    [build] main:
+    [build]     [mkdir] Created dir: /tmp/build/N200910141328-JBoss-Profiler/eclipse/tmp
+    [build] gather.bin.parts:
+    [build] properties:
+    [build] init:
+    [build] gather.bin.parts:
+    [build]     [mkdir] Created dir: /tmp/build/N200910141328-JBoss-Profiler/eclipse/tmp/eclipse/plugins/org.jboss.tools.profiler.ui_1.0.0.v200910141328
+    [build]      [copy] Copying 24 files to /tmp/build/N200910141328-JBoss-Profiler/eclipse/tmp/eclipse/plugins/org.jboss.tools.profiler.ui_1.0.0.v200910141328
+    [build]      [copy] Copying 27 files to /tmp/build/N200910141328-JBoss-Profiler/eclipse/tmp/eclipse/plugins/org.jboss.tools.profiler.ui_1.0.0.v200910141328
+    [build] apitools.generation:
+    [build] customAssembly:
+    [build] init:
+    [build] gather.bin.parts:
+    [build]     [mkdir] Created dir: /tmp/build/N200910141328-JBoss-Profiler/eclipse/tmp/eclipse/features/org.jboss.tools.profiler.feature_1.0.0.v200910141328-2--7w311A21252439
+    [build] children:
+    [build]      [copy] Copying 2 files to /tmp/build/N200910141328-JBoss-Profiler/eclipse/tmp/eclipse/features/org.jboss.tools.profiler.feature_1.0.0.v200910141328-2--7w311A21252439
+    [build] rootFiles:
+    [build] rootFilesgroup_group_group:
+    [build] rootFiles*_*_*:
+    [build] rootFileswin32_win32_x86:
+    [build] rootFileswin32_wpf_x86:
+    [build] rootFileswin32_win32_x86_64:
+    [build] rootFileswce_ppc_win32_arm:
+    [build] rootFileslinux_gtk_x86:
+    [build] rootFileslinux_gtk_ppc:
+    [build] rootFileslinux_gtk_x86_64:
+    [build] rootFileslinux_gtk_ia64:
+    [build] rootFileslinux_motif_x86:
+    [build] rootFilessolaris_gtk_sparc:
+    [build] rootFilessolaris_motif_sparc:
+    [build] rootFilesaix_motif_ppc:
+    [build] rootFileshpux_motif_PA_RISC:
+    [build] rootFileshpux_motif_ia64_32:
+    [build] rootFilesmacosx_carbon_ppc:
+    [build] rootFilesmacosx_cocoa_x86:
+    [build] rootFilesmacosx_cocoa_x86_64:
+    [build] rootFilesqnx_photon_x86:
+    [build] customAssembly:
+    [build] customAssembly:
+    [build] jar.processing:
+    [build] jarUp:
+    [build] jarIng:
+    [build]       [jar] Building jar: /tmp/build/N200910141328-JBoss-Profiler/eclipse/tmp/eclipse/plugins/org.jboss.tools.profiler.ui_1.0.0.v200910141328.jar
+    [build]    [delete] Deleting directory /tmp/build/N200910141328-JBoss-Profiler/eclipse/tmp/eclipse/plugins/org.jboss.tools.profiler.ui_1.0.0.v200910141328
+    [build] jarUp:
+    [build] jarIng_NoManifest:
+    [build]       [jar] Building jar: /tmp/build/N200910141328-JBoss-Profiler/eclipse/tmp/eclipse/features/org.jboss.tools.profiler.feature_1.0.0.v200910141328-2--7w311A21252439.jar
+    [build]       [jar] Building jar: /tmp/build/N200910141328-JBoss-Profiler/eclipse/tmp/eclipse/features/org.jboss.tools.profiler.feature_1.0.0.v200910141328-2--7w311A21252439.jar
+    [build]    [delete] Deleting directory /tmp/build/N200910141328-JBoss-Profiler/eclipse/tmp/eclipse/features/org.jboss.tools.profiler.feature_1.0.0.v200910141328-2--7w311A21252439
+    [build] customAssembly:
+    [build] generate.p2.metadata:
+    [build] assemble.archive:
+    [build] customAssembly:
+    [build]       [zip] Building zip: /tmp/build/N200910141328-JBoss-Profiler/eclipse/N200910141328/JBoss-Profiler-Master-N200910141328.zip
+    [build] cleanup.assembly:
+    [build]    [delete] Deleting directory /tmp/build/N200910141328-JBoss-Profiler/eclipse/tmp
+    [build] generate.p2.metadata:
+    [build] postAssemble:
+    [build] buildExtra.xml:
+    [build] package:
+    [build] postBuild:
+    [build] postBuild:
+    [build] gatherLogs:
+    [build]     [mkdir] Created dir: /tmp/build/N200910141328-JBoss-Profiler/eclipse/N200910141328/compilelogs
+    [build] allElements:
+    [build] allElementsDelegator:
+    [build] init:
+    [build] gatherLogs:
+    [build] init:
+    [build] zip.logs:
+    [build]     [mkdir] Created dir: /tmp/build/N200910141328-JBoss-Profiler/eclipse/features/org.jboss.tools.profiler.feature/feature.temp.folder
+    [build] init:
+    [build] all.features:
+    [build] all.plugins:
+    [build] properties:
+    [build] init:
+    [build] gather.logs:
+    [build]     [mkdir] Created dir: /tmp/build/N200910141328-JBoss-Profiler/eclipse/features/org.jboss.tools.profiler.feature/feature.temp.folder/plugins/org.jboss.tools.profiler.ui_1.0.0.v200910141328
+    [build]      [copy] Copying 1 file to /tmp/build/N200910141328-JBoss-Profiler/eclipse/features/org.jboss.tools.profiler.feature/feature.temp.folder/plugins/org.jboss.tools.profiler.ui_1.0.0.v200910141328
+    [build] update.feature:
+    [build] all.children:
+    [build]       [zip] Building zip: /tmp/build/N200910141328-JBoss-Profiler/eclipse/features/org.jboss.tools.profiler.feature/org.jboss.tools.profiler.feature_1.0.0.v200910141328-2--7w311A21252439.log.zip
+    [build]    [delete] Deleting directory /tmp/build/N200910141328-JBoss-Profiler/eclipse/features/org.jboss.tools.profiler.feature/feature.temp.folder
+    [build]     [unzip] Expanding: /tmp/build/N200910141328-JBoss-Profiler/eclipse/features/org.jboss.tools.profiler.feature/org.jboss.tools.profiler.feature_1.0.0.v200910141328-2--7w311A21252439.log.zip into /tmp/build/N200910141328-JBoss-Profiler/eclipse/N200910141328/compilelogs
+    [build] buildExtra.xml:
+    [build] -timestamp:
+    [build]      [echo] 01:29:33
+    [build]      [echo] Signing control properties:
+    [build]      [echo] 	sign = ${sign}
+    [build]      [echo] 	skipSign = ${skipSign}
+    [build]      [echo] 	domainNamespace = org.eclipse
+    [build] signMasterZip:
+    [build] unpackUpdateJarsAndRepack:
+    [build]     [mkdir] Created dir: /tmp/build/N200910141328-JBoss-Profiler/eclipse/unpacktmp/new/eclipse/features
+    [build]     [mkdir] Created dir: /tmp/build/N200910141328-JBoss-Profiler/eclipse/unpacktmp/new/eclipse/plugins
+    [build]     [unzip] Expanding: /tmp/build/N200910141328-JBoss-Profiler/eclipse/N200910141328/JBoss-Profiler-Master-N200910141328.zip into /tmp/build/N200910141328-JBoss-Profiler/eclipse/unpacktmp
+    [build] [unpackUpdateJars] [exec] unzip -qo /tmp/build/N200910141328-JBoss-Profiler/eclipse/unpacktmp/eclipse/features/org.jboss.tools.profiler.feature_1.0.0.v200910141328-2--7w311A21252439.jar -d /tmp/build/N200910141328-JBoss-Profiler/eclipse/unpacktmp/new/eclipse/features/org.jboss.tools.profiler.feature_1.0.0.v200910141328-2--7w311A21252439
+    [build]      [copy] Warning: features modified in the future.
+    [build]       [zip] Building zip: /tmp/build/N200910141328-JBoss-Profiler/eclipse/N200910141328/JBoss-Profiler-AllFeaturesAndPlugins-N200910141328.zip
+    [build]    [delete] Deleting directory /tmp/build/N200910141328-JBoss-Profiler/eclipse/unpacktmp
+    [build] processMasterZip:
+    [build] -timestamp:
+    [build]      [echo] 01:29:35
+    [build] packMasterZip:
+    [build]     [mkdir] Created dir: /tmp/build/N200910141328-JBoss-Profiler/eclipse/packtmp
+    [build]      [move] Moving 1 file to /tmp/build/N200910141328-JBoss-Profiler/eclipse/packtmp
+    [build]     [mkdir] Created dir: /tmp/build/N200910141328-JBoss-Profiler/eclipse/pack200tmp
+    [build]      [copy] Copying 1 file to /tmp/build/N200910141328-JBoss-Profiler/eclipse/pack200tmp
+    [build]      [copy] Copying 1 file to /tmp/build/N200910141328-JBoss-Profiler/eclipse/pack200tmp
+    [build]      [echo] Pack with /opt/public/common/ibm-java2-ppc-50/jre/bin/pack200
+    [build]    [delete] Deleting directory /tmp/build/N200910141328-JBoss-Profiler/eclipse/packtmp
+    [build]    [delete] Deleting directory /tmp/build/N200910141328-JBoss-Profiler/eclipse/pack200tmp
+    [build] -timestamp:
+    [build]      [echo] 01:30:57
+    [build]     [mkdir] Created dir: /tmp/build/N200910141328-JBoss-Profiler/eclipse/p2tmp
+    [build]     [unzip] Expanding: /tmp/build/N200910141328-JBoss-Profiler/eclipse/N200910141328/JBoss-Profiler-Master-N200910141328.zip into /tmp/build/N200910141328-JBoss-Profiler/eclipse/p2tmp
+    [build] buildSiteXml:
+    [build]      [echo] Generating site.xml for use with p2 repo / update site categories...
+    [build]      [copy] Copying 2 files to /tmp/build/N200910141328-JBoss-Profiler/eclipse/N200910141328/JBoss-Profiler-Update-N200910141328.zip_tmp
+    [build]      [copy] Copying 1 file to /tmp/build/N200910141328-JBoss-Profiler/eclipse/N200910141328/JBoss-Profiler-Update-N200910141328.zip_tmp
+    [build] p2.meta:
+    [build]      [echo] Run p2 metadata generator using launcherjar = /home/nboldt/eclipse/workspace-jboss/org.eclipse.releng.basebuilder/plugins/org.eclipse.equinox.launcher_1.0.200.v20090520.jar
+    [build]   [p2.meta] Generating metadata for /tmp/build/N200910141328-JBoss-Profiler/eclipse/N200910141328/JBoss-Profiler-Update-N200910141328.zip_tmp.
+    [build]   [p2.meta] Generation completed with success [0 seconds].
+    [build]       [zip] Building zip: /tmp/build/N200910141328-JBoss-Profiler/eclipse/N200910141328/JBoss-Profiler-Update-N200910141328.zip
+    [build]    [delete] Deleting directory /tmp/build/N200910141328-JBoss-Profiler/eclipse/N200910141328/JBoss-Profiler-Update-N200910141328.zip_tmp
+    [build]      [echo] buildAll.xml#run :: build.step :: generateDigests
+    [build] generateDigests:
+    [build]      [echo] buildAll.xml#run :: build.step :: publish
+    [build] publish:
+    [build]      [echo] Copy static files to build root folder
+    [build]      [copy] Copying 1 file to /tmp/build/N200910141328-JBoss-Profiler/eclipse/N200910141328
+    [build]      [echo] Move generated zips to build root folder
+    [build]      [move] Moving 10 files to /tmp/build/N200910141328-JBoss-Profiler
+    [build]      [echo] Generate compilelogs/summary.txt
+    [build]      [copy] Copying 1 file to /tmp/build/N200910141328-JBoss-Profiler/compilelogs
+    [build]      [copy] Copying 1 file to /tmp/build/N200910141328-JBoss-Profiler/compilelogs/plugins
+    [build]      [copy] Copying 1 file to /tmp/build/N200910141328-JBoss-Profiler/compilelogs/plugins/org.jboss.tools.profiler.ui_1.0.0.v200910141328
+    [build]      [echo] buildAll.xml#run :: build.step :: cleanup
+    [build] cleanup:
+    [build]      [echo] Remove temp dirs in /tmp/build/N200910141328-JBoss-Profiler
+    [build]      [copy] Copying 1 file to /tmp/build/N200910141328-JBoss-Profiler
+    [build] BUILD SUCCESSFUL
+    [build] BUILD SUCCESSFUL
+    [build] Total time: 2 minutes 8 seconds
+BUILD SUCCESSFUL
+Total time: 2 minutes 12 seconds

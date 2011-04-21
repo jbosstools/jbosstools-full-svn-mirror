@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension-point id="elResolver" name="EL Resolver" schema="schema/elResolver.exsd"/>
+   <extension-point id="elProjectSet" name="EL Project Set" schema="schema/elProjectSet.exsd"/>
+
+</plugin>
