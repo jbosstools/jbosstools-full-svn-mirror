@@ -1,0 +1,24 @@
+<tests>
+	<test id="ol">
+
+		<OL TYPE="I" ID="ol" CLASS="olClass" DIR="ltr"
+			STYLE="color: red; -moz-user-modify: read-only;" START="2">
+			<LI STYLE="-moz-user-modify: read-write;">
+				<SPAN>
+					text 1
+</SPAN>
+			</LI>
+			<LI STYLE="-moz-user-modify: read-write;">
+				<SPAN>
+					text 2
+</SPAN>
+			</LI>
+			<LI STYLE="-moz-user-modify: read-write;">
+				<SPAN>
+					text 3
+</SPAN>
+			</LI>
+		</OL>
+		
+	</test>
+</tests>

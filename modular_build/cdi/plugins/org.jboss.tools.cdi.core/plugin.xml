@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension
+         id="cdibuilder"
+         name="CDI Builder"
+         point="org.eclipse.core.resources.builders">
+      <builder
+            hasNature="false">
+         <run
+               class="org.jboss.tools.cdi.core.CDICoreBuilder">
+         </run>
+      </builder>
+   </extension>
+   <extension
+         id="cdinature"
+         name="CDI Project Nature"
+         point="org.eclipse.core.resources.natures">
+      <runtime>
+         <run
+               class="org.jboss.tools.cdi.core.CDICoreNature">
+         </run>
+      </runtime>
+      <builder
+            id="org.jboss.tools.cdi.core.cdibuilder">
+      </builder>
+   </extension>
+
+   <extension
+         point="org.eclipse.wst.common.project.facet.core.facets">
+      <project-facet
+            id="jst.cdi">
+         <label>
+            Contexts and Dependency Injection
+         </label>
+         <description>
+            Enables the project to work with CDI           
+         </description>
+      </project-facet>
+      <project-facet-version
+            facet="jst.cdi"
+            version="1.0">
+         <constraint>
+           <requires
+    	         facet="jst.java"
+	             version="[5.0">
+           </requires>
+         </constraint>
+      </project-facet-version>
+      <action
+            facet="jst.cdi"
+            id="jst.cdi.1.0.install"
+            type="install"
+            version="1.0">
+         <delegate
+               class="org.jboss.tools.cdi.internal.core.project.facet.CDIFacetInstallDelegate">
+         </delegate>
+         <config-factory
+               class="org.jboss.tools.cdi.internal.core.project.facet.CDIFacetInstallDataModelProvider">
+         </config-factory>
+      </action>
+      <action
+            facet="jst.cdi"
+            id="jst.cdi.1.0.uninstall"
+            type="uninstall"
+            version="1.0">
+         <delegate
+               class="org.jboss.tools.cdi.internal.core.project.facet.CDIFacetUninstallDelegate">
+         </delegate>
+      </action>
+   </extension>
+
+   <extension
+         point="org.eclipse.wst.common.project.facet.core.runtimes">
+      <supported>
+         <runtime-component
+               any="true">
+         </runtime-component>
+         <facet
+               id="jst.cdi"
+               version="[1.0">
+         </facet>
+      </supported>
+   </extension>
+
+   <extension
+         point="org.jboss.tools.common.el.core.elResolver">
+         <el-resolver id="cdiELResolver">
+         	<project-nature id="org.jboss.tools.cdi.core.cdinature" 
+         		resolver-class="org.jboss.tools.cdi.internal.core.el.CdiElResolver"/>
+         </el-resolver>
+   </extension>
+
+   <extension point="org.eclipse.core.runtime.preferences">
+      <initializer class="org.jboss.tools.cdi.core.preferences.CDIPreferenceInitializer"/>
+   </extension>
+
+   <extension
+         point="org.jboss.tools.jst.web.kb.validator">
+         <validator
+               class="org.jboss.tools.cdi.internal.core.validation.CDICoreValidator"
+               id="org.jboss.tools.cdi.core.CoreValidator">
+         </validator>
+   </extension>
+
+</plugin>

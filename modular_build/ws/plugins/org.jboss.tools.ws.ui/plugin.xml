@@ -1,0 +1,41 @@
+<plugin>
+   <extension point="org.eclipse.ui.preferencePages">     
+      <page
+            name="%JBOSSWS_PREFERENCE_PAGE"
+            category="org.eclipse.wst.ws.internal.ui.preferences.name"
+            class="org.jboss.tools.ws.ui.preferences.JBossWSRuntimePreferencePage"
+            id="org.jboss.tools.ws.ui.preferences.JBossWSRuntimePreferencePage">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            category="org.jboss.ide.eclipse.ui.wizards"
+            class="org.jboss.tools.ws.ui.wizards.JBossWSGenerateWizard"
+            hasPages="true"
+            icon="icons/obj16/new_webserv_wiz.gif"
+            id="org.jboss.tools.ws.ui.wizard.wsgenerate"
+            name="%JBOSSWS_GENERATEACTION_LABEL">
+         <selection
+               class="org.eclipse.core.resources.IProject">
+         </selection>
+         <description>
+            %JBOSSWS_WIZARD_DESC
+         </description>
+      </wizard>
+      <wizard
+            category="org.eclipse.jst.ws.ui.new"
+            class="org.jboss.tools.ws.ui.wizards.JBossWSGenerateWizard"
+            hasPages="true"
+            icon="icons/obj16/new_webserv_wiz.gif"
+            id="org.jboss.tools.ws.ui.wizard.wsgenerate2"
+            name="%JBOSSWS_GENERATEACTION_LABEL">
+         <selection
+               class="org.eclipse.core.resources.IProject">
+         </selection>
+         <description>
+            %JBOSSWS_WIZARD_DESC
+         </description>
+      </wizard>
+   </extension>
+</plugin>
