@@ -1,0 +1,122 @@
+@import url("jbossenterprise.css");
+
+/* -----Override jbossenterprise-single.css----- */
+
+body {
+background-image:url(../images/richfaces_label2.png);
+background-repeat:no-repeat;
+background-attachment:fixed;
+background-position:top left;
+z-index:1;
+text-align:center;
+font-family:"Lucida Grande", verdana, "Luxi Sans","Trebuchet MS", helvetica,verdana,arial,sans-serif;
+
+  }
+
+div#overlay{
+background-repeat:repeat-x;
+width:100%;
+height:100%;
+position:absolute;
+top:0px;
+left:0px;
+z-index:-1;
+}
+/*
+
+body {
+background-image:url(../images/jbds_label2.png);
+background-repeat:no-repeat;
+background-attachment:fixed;
+background-position:top left;
+z-index:1;
+color:#333333;
+font-family:'Lucida Grande',Geneva,Verdana,Arial,sans-serif;
+font-size:12px;
+line-height:150%;
+max-width:1000px;
+padding:0em 2em;
+text-align:center;
+}
+
+div#overlay{
+background-repeat:repeat-x;
+width:100%;
+height:100%;
+position:absolute;
+top:0px;
+left:0px;
+z-index:-1;
+}
+*/
+div.book, div.chapter{
+    text-align:justify;
+    width: 70em;
+    /*margin-left:50px;*/
+}
+
+div.abstract {
+font-size:10px;
+}
+
+ul.docnav {
+    margin:0px;
+    width: 70em;
+    ! height:40px; /* CSS hack for IE*/
+    display:block;
+}
+
+#title a.site_href, #title a.doc_href{
+display:block;
+height:100px;
+} 
+
+#title a.site_href {
+background:transparent url(../images/enterprise/jbossdivisionlogo.png) no-repeat scroll left top;
+! background:none; /* CSS hack for IE*/
+! filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/enterprise/jbossdivisionlogo.png'); /* CSS hack for IE*/
+float:left;
+width:310px;
+}
+
+#title a.doc_href {
+background:transparent url(../images/enterprise/enterprise_doc.png) no-repeat scroll right top;
+! background:none; /* CSS hack for IE*/
+! filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='images/enterprise/enterprise_doc.png'); /* CSS hack for IE*/
+margin-top:5px;
+}
+
+#title{
+text-align:right;
+}
+
+.new, .added { 
+background:transparent url(../images/new.png) no-repeat scroll right top; 
+padding-right:70px; 
+} 
+.updated, .changed { 
+background:transparent url(../images/updated.png) no-repeat scroll right top; 
+padding-right:70px; 
+}
+span.diffmkwrapper{
+	background-color: #cce2f6;
+}
+
+div.diffmkwrapper p{
+	background-color: #c8d7e4;
+	padding:0px;
+	margin-left:56px;
+}
+
+h1, h2, h3, h4, h5, h6{
+    display:inline;
+}
+
+.img_marker{
+    display:inline;
+    padding: 0px;
+    margin:0px;
+}
+h1.title {
+display:block;
+}

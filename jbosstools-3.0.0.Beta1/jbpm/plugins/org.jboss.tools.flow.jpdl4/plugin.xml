@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   <extension point="org.eclipse.ui.editors">
+      <editor
+            name="jPDL4 Editor"
+            extensions="jpdl4"
+            icon="icons/process.gif"
+            contributorClass="org.jboss.tools.flow.common.editor.GenericActionBarContributor"
+            class="org.jboss.tools.flow.jpdl4.editor.JpdlEditor"
+            id="org.jboss.tools.flow.jpdl4.editor">
+      </editor>
+   </extension>
+   <extension
+         point="org.jboss.tools.flow.common.languages">
+      <language
+            editor="org.jboss.tools.flow.jpdl4.editor"
+            id="org.jboss.tools.flow.jpdl4"
+            name="jBPM Process Definition Language">
+      </language>
+   </extension>
+   <extension
+         point="org.jboss.tools.flow.common.elements">
+      <element
+            class="org.jboss.tools.flow.jpdl4.model.Process"
+            figure="icons/process.gif"
+            id="org.jboss.tools.flow.jpdl4.process"
+            language="org.jboss.tools.flow.jpdl4"
+            name="Process Definition">
+         <flow
+               acceptsElementStrategy="org.jboss.tools.flow.jpdl4.strategy.ProcessAcceptsElementStrategy"></flow>
+      </element>
+      <element
+            class="org.jboss.tools.flow.jpdl4.model.SuperState"
+            figure="icons/super.gif"
+            id="org.jboss.tools.flow.jpdl4.superState"
+            language="org.jboss.tools.flow.jpdl4"
+            name="Super State">
+         <container></container>
+      </element>
+      <element
+            class="org.jboss.tools.flow.jpdl4.model.StartState"
+            figure="icons/start.gif"
+            id="org.jboss.tools.flow.jpdl4.startState"
+            language="org.jboss.tools.flow.jpdl4"
+            name="Start">
+         <node
+               acceptsIncomingConnectionStrategy="org.jboss.tools.flow.jpdl4.strategy.StartStateAcceptsIncomingConnectionStrategy">
+            <figure>
+               <rectangle></rectangle>
+            </figure>
+         </node>
+      </element>
+      <element
+            class="org.jboss.tools.flow.jpdl4.model.EndState"
+            figure="icons/end.gif"
+            id="org.jboss.tools.flow.jpdl4.endState"
+            language="org.jboss.tools.flow.jpdl4"
+            name="End">
+         <node
+               acceptsOutgoingConnectionStrategy="org.jboss.tools.flow.jpdl4.strategy.EndStateAcceptsOutgoingConnectionStrategy">
+            <figure>
+               <rectangle></rectangle>
+            </figure>
+         </node>
+      </element>
+      <element
+            class="org.jboss.tools.flow.jpdl4.model.State"
+            figure="icons/state.gif"
+            id="org.jboss.tools.flow.jpdl4.state"
+            language="org.jboss.tools.flow.jpdl4"
+            name="State">
+         <node>
+            <figure>
+               <rounded-rectangle></rounded-rectangle>
+            </figure>
+         </node>
+      </element>
+      <element
+            class="org.jboss.tools.flow.jpdl4.model.Transition"
+            figure="icons/transition.gif"
+            id="org.jboss.tools.flow.jpdl4.transition"
+            language="org.jboss.tools.flow.jpdl4"
+            name="Transition">
+         <connection></connection>
+      </element>
+   </extension>
+
+</plugin>

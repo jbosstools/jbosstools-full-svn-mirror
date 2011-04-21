@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="esb_support">
+        <?dbhtml filename="esb_support.html"?>
+        <chapterinfo>
+                <keywordset>
+                        <keyword>JBoss Developer Studio</keyword>
+                        <keyword>Eclipse</keyword>
+                        <keyword>ESB</keyword>
+                        <keyword>Java</keyword>
+                        <keyword>JBoss</keyword>
+                </keywordset>
+        </chapterinfo>
+
+        <title>ESB Support</title>
+
+        <para>In this section we will focus on all concepts that <property>JBoss Tools</property>
+                integrates for working with JBoss ESB.</para>
+
+        <section>
+                <title>ESB Tools Installation</title>
+
+                <para>This chapter will provide you with the information on how to install
+                        JBoss ESB plugin into Eclipse.</para>
+
+                <para>ESB Tools come as one module of JBoss Tools project. Since ESB Tools have a
+                        dependence on other JBoss Tools modules we recommend you to install a bundle
+                        of all <ulink url="http://labs.jboss.com/tools/download/index.html">JBoss
+                                Tools plug-ins</ulink> installation instruction on which you can find on
+                        JBoss Wiki in <ulink url="http://labs.jboss.com/wiki/InstallingJBossTools"
+                                >InstallingJBossTools</ulink> section.</para>
+        </section>
+
+        <section>
+                <title>Creating a ESB File</title>
+                <para>In this chapter we suggest a step-by-step walk-through of creating your own
+                        simple file. Let&apos;s try to organize a new ESB file.</para>
+
+                <para>We will show you how to use the Creation wizard for creating a new ESB file.</para>
+
+                <para>At first you should open any project. Select <emphasis>
+                                <property>File &gt;New &gt; Other...</property>
+                        </emphasis> in the main menu bar or context menu for selected project and
+                        then <emphasis>
+                                <property>ESB &gt; ESB File</property>
+                        </emphasis> in the New dialog:</para>
+
+                <figure>
+                        <title>New Dialog</title>
+                        <mediaobject>
+                                <imageobject>
+                                        <imagedata fileref="images/esb_support/01_create_esb.png"/>
+                                </imageobject>
+                        </mediaobject>
+                </figure>
+
+                <para> Clicking <emphasis>
+                                <property>Next</property>
+                        </emphasis> brings us to the wizard page where it&apos;s necessary to
+                        specify the folder, name and version for the file. We choose, for example, <emphasis>
+                                <property>jboss-esb.xml</property>
+                        </emphasis> as the name and accept the selected projects folder and default
+                        version.</para>
+                <figure>
+                        <title>Folder, Name and Version</title>
+                        <mediaobject>
+                                <imageobject>
+                                        <imagedata fileref="images/esb_support/02_create_esb.png"/>
+                                </imageobject>
+                        </mediaobject>
+                </figure>
+
+                <para>Thus, our file will be created in the selected projects folder by default. If
+                        you want to change the folder for your future file click <emphasis>
+                                <property>Browse...</property>
+                        </emphasis> button to set needed folder or simply type it.</para>
+
+                <para>Clicking on <emphasis>
+                                <property>Finish</property>
+                        </emphasis> results in the file being generated. The wizard creates one xml
+                        file.</para>
+
+        </section>
+
+</chapter>
