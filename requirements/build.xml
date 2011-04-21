@@ -44,24 +44,28 @@
 
 	<!-- if there's a mirror of the requirements stuff outside hudson, use that instead; else work in local workspace -->
 	<target name="default" description="to fetch 1 or more requirement(s), set -Drequirements=one,two,three" unless="skipRequirementBuild">
-		<!-- https://jira.jboss.org/jira/browse/JBQA-3313 Use static, shared space outside workspace, instead of working directly in the workspace -->
+		<!-- https://jira.jboss.org/jira/browse/JBQA-3313 Use static, shared space outside workspace, instead of fetching directly to the workspace -->
+		<var name="static_build_env.jbds.requirements" value="/home/hudson/static_build_env/jbds/requirements" />
 		<if>
-			<available file="/home/hudson/static_build_env/jbds" type="dir" />
+			<available file="${static_build_env.jbds.requirements}" type="dir" />
 			<then>
-				<var name="requirement.root" unset="true" />
-				<property name="requirement.root" value="/home/hudson/static_build_env/jbds/requirements"/>
-				<mkdir dir="${requirement.root}" />
-
-				<var name="requirement.build.root" unset="true" />
-				<property name="requirement.build.root" value="${requirement.root}/target" />
-				<mkdir dir="${requirement.build.root}" />
-
-				<var name="requirement.download.root" unset="true" />
-				<property name="requirement.download.root" value="${requirement.root}/download" />
-				<mkdir dir="${requirement.download.root}" />
+				<for list="${requirements}" param="requirement">
+					<sequential>
+						<!-- if /home/hudson/static_build_env/jbds/requirements/download/jbossas/ exists, copy into 
+						${WORKSPACE}/requirements/download/jbossas/ so no need to re-download zips -->
+						<if>
+							<available file="${static_build_env.jbds.requirements}/download/@{requirement}" />
+							<then>
+								<copy todir="${requirement.download.root}/@{requirement}">
+									<fileset dir="${static_build_env.jbds.requirements}/download/@{requirement}" />
+								</copy>
+							</then>
+						</if>
+					</sequential>
+				</for>
 			</then>
 		</if>
-		
+
 		<echo>maven.test.skip=${maven.test.skip}</echo>
 		<echo>settings.offline=${settings.offline}</echo>
 		<echo>requirements=${requirements}</echo>
