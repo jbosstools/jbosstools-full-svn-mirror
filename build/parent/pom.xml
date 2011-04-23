@@ -316,7 +316,7 @@
 								<artifact>
 									<groupId>org.jboss.tools</groupId>
 									<artifactId>org.jboss.tools.target.platform</artifactId>
-									<version>0.0.3-SNAPSHOT</version>
+									<version>0.0.2-SNAPSHOT</version>
 									<classifier>${target.platform.classifier.unified}</classifier>
 								</artifact>
 							</target>
