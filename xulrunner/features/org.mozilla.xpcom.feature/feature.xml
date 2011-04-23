@@ -2,7 +2,7 @@
 <feature
       id="org.mozilla.xpcom.feature"
       label="XPCOM Feature"
-      version="1.9.2.16.qualifier"
+      version="1.9.216.qualifier"
       provider-name="JBoss by Red Hat">
 
    <description>
@@ -10,7 +10,7 @@
    </description>
 
    <copyright>
-      (c) 2010 JBoss by Red Hat
+      (c) 2011 JBoss by Red Hat
    </copyright>
 
    <license>
