@@ -37,6 +37,7 @@ import org.jboss.tools.common.model.util.ClassLoaderUtil;
 import org.jboss.tools.jst.jsp.JspEditorPlugin;
 import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
 import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
+import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
@@ -121,17 +122,9 @@ public class VpeTest extends TestCase implements ILogListener {
 	 */
 	@Override
 	protected void tearDown() throws Exception {
-
 		closeEditors();
-
 		Platform.removeLogListener(this);
-
-		if (getException() != null) {
-			throw new Exception(getException());
-		}
-
 		super.tearDown();
-
 	}
 
 	/*
@@ -150,18 +143,20 @@ public class VpeTest extends TestCase implements ILogListener {
 	 *            the plugin
 	 */
 	public void logging(IStatus status, String plugin) {
-		switch (status.getSeverity()) {
-		case IStatus.ERROR:
-			setException(status.getException());
-			break;
-		case IStatus.WARNING:
-			if (isCheckWarning())
+		// Not perfect solution but at least now exceptions in other plug-ins aren't going to break VPE tests
+		if (VpePlugin.PLUGIN_ID.equals(status.getPlugin())) {
+			switch (status.getSeverity()) {
+			case IStatus.ERROR:
 				setException(status.getException());
-			break;
-		default:
-			break;
+				break;
+			case IStatus.WARNING:
+				if (isCheckWarning())
+					setException(status.getException());
+				break;
+			default:
+				break;
+			}
 		}
-
 	}
 	
 	/**
