@@ -5,15 +5,15 @@
          point="org.eclipse.ui.cheatsheets.cheatSheetContent">
       <category
             id="org.jboss.tools.bpel.cheatsheet"
-            name="JBoss BPEL Tutorial">
+            name="JBoss BPEL Tutorials">
       </category>
       <cheatsheet
             category="org.jboss.tools.bpel.cheatsheet"
-            contentFile="$nl$/cheatsheets/bpel.xml"
+            contentFile="$nl$/cheatsheets/HelloWorld.xml"
             id="org.jboss.tools.bpel.cheatsheet.bpel"
-            name="JBoss BPEL Tutorial">
+            name="&quot;HelloWorld&quot; Tutorial">
          <description>
-            Learn how to use JBoss BPEL editor
+            Demonstrates how to create, deploy and run the classic "HelloWorld" BPEL process
          </description>
       </cheatsheet>
    </extension>
