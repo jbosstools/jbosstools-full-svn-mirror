@@ -7,7 +7,7 @@
 </head>
 <body marginheight="0" marginwidth="0" leftmargin="0" topmargin="0">
 <table marginheight="0" marginwidth="0" leftmargin="0" topmargin="0"
-	cellspacing="0" cellpadding="0">
+	cellspacing="0" cellpadding="0" width="800">
 	<tr>
 		<td colspan="2"><img
 			src="https://www.jboss.org/dms/tools/images/tools-banner.png" /></td>
@@ -21,13 +21,25 @@
 		<h2 class="title">JBoss Tools Build Requirements - Update Sites</h2>
 		<table width="100%">
 
-			<!-- <tr class="light-row" style="height: 30px">
+			<tr class="light-row">
 				<td class="bodyText">
-				<p class="bodyText"></p>
-				</td>
-			</tr> -->
+<p class="bodyText">
+This directory contains a number of child folders, each containing update sites (p2 repos) of third party plugins and features used to build JBoss Tools or contained in JBoss Developer Studio.
+</p>
+<p class="bodyText">
+While you can certainly install these plugins from the individual URLs of the folders nested below here, it is <b>by far easier</b> to simply add the composite sites for your version of Eclipse / Web Tools / JBoss Tools / JBoss Developer Studio, and install from that single URL. The big reason for this - aside from the fact that 1 URL is easier than several, is that the composite site also includes all the third party projects' upstream dependencies (eg., Eclipse, WTP, Orbit), making it a <u>one-stop shopping destination</u>. 
 
-			<tr class="dark-row" style="height: 30px">
+<ul>
+<li><a class=link href=../indigo>All JBoss Tools 3.3 dependencies in one update site</a> (for installing or developing with Eclipse 3.7 / Web Tools 3.3 / Indigo)</li>
+<li><a class=link href=../helios>All JBoss Tools 3.2 dependencies in one update site</a> (for installing or developing with Eclipse 3.6 / Web Tools 3.2 / Helios)</li>
+</ul>
+
+<p class="bodyText">If you want a restricted set of features/plugins, namely the target platform used to build JBoss Tools or JBoss Developer Studio, <a href="../">click here</a>.
+</p>
+				</td>
+			</tr>
+
+			<tr class="dark-row">
 				<td class="bodyText">
 				<!-- <p class="bodyText"></p> -->
 
@@ -66,7 +78,13 @@ http://download.jboss.org/jbosstools/updates/requirements/
 <li><a class=link href=testng>testng</a></li>
 <li><a class=link href=webtools>webtools</a></li>
 <li><a class=link href=xulrunner-1.9.2>xulrunner-1.9.2</a></li>
-<p>
+</ul>
+				</td>
+			</tr>
+
+			<tr class="light-row">
+				<td class="bodyText">
+<br/><ul>
 <h2>JBoss Tools 3.2 / Eclipse 3.6 Helios / Web Tools 3.2</h2>
 <li><a class=link href=helios>helios</a></li>
 <li><a class=link href=birt/2.6.2>birt/2.6.2</a></li>
@@ -89,7 +107,13 @@ http://download.jboss.org/jbosstools/updates/requirements/
 <li><a class=link href=tptp>tptp/4.7</a></li>
 <li><a class=link href=webtools/3.2.3>webtools/3.2.3</a></li>
 <li><a class=link href=xulrunner-1.9.1.2>xulrunner-1.9.1.2</a></li>
-<p>
+</ul>
+				</td>
+			</tr>
+
+			<tr class="dark-row">
+				<td class="bodyText">
+<br/><ul>
 <h2>JBoss Tools 3.1 / Eclipse 3.5 Galileo / Web Tools 3.1</h2>
 <li><a class=link href=galileo>galileo</a></li>
 
