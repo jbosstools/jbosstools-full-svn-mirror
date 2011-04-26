@@ -37,7 +37,7 @@ mkdir -p $tmpdir
 pushd $tmpdir >/dev/null
 
 # get the metadata
-wget --no-clobber -q ${URL}/maven-metadata.xml
+wget --no-clobber --no-check-certificate -q ${URL}/maven-metadata.xml
 
 # parse it
 cat maven-metadata.xml | egrep "timestamp|buildNumber" > tmp.txt
