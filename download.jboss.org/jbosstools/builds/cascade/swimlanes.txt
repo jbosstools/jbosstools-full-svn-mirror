@@ -1,4 +1,4 @@
-Revised swimlanes, as implemented in 3.2_stable_branch and 3.3_trunk jobs, 2011/04/05.
+Revised swimlanes, as implemented in 3.2_stable_branch and 3.3_trunk jobs, 2011/04/27
 
 ------------------------
 
@@ -12,13 +12,15 @@ maven   -> cdi  -> jst -> common -> tests
 
 struts -> vpe -> xulrunner
 
-bpel, birt, examples, modeshape, portlet, profiler, smooks, tptp -> tests
+examples -> portlet
+
+bpel, birt, portlet, modeshape, profiler, smooks, tptp -> tests
 
 ws, deltacloud -> as -> archives, jmx -> tests
 
 jbpm -> flow -> tests 
 
-esb -> common -> tests
+esb -> jst -> common -> tests
 
 gwt, runtime, tests, usage, drools, pi4soa, savara, teiid -> [none]
 
