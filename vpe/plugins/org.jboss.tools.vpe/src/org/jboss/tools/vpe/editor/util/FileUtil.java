@@ -44,6 +44,7 @@ import org.eclipse.jdt.core.search.SearchParticipant;
 import org.eclipse.jdt.core.search.SearchPattern;
 import org.eclipse.jdt.core.search.SearchRequestor;
 import org.eclipse.jdt.internal.core.JarPackageFragmentRoot;
+import org.eclipse.jdt.internal.core.JavaElement;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IWorkbenchPage;
@@ -174,6 +175,14 @@ public class FileUtil {
 					        inputStream.close();
 					        out.close();
 					        result = temporaryFile.getAbsolutePath();
+						}
+					}
+				} else if (fragmentRoot instanceof JavaElement) {
+					IResource resource = ((JavaElement)fragmentRoot).resource();
+					if(resource instanceof IContainer && resource.exists()) {
+						IFile f = ((IContainer)resource).getFile(new Path(classPathResource));
+						if(f != null && f.exists()) {
+							result = f.getLocation().toFile().getAbsolutePath();
 						}
 					}
 				}
