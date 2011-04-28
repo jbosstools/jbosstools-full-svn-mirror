@@ -26,7 +26,6 @@
 					<explodedBundles>
 						<bundle>org.jboss.tools.vpe</bundle>
 						<bundle>org.jboss.tools.vpe.ui.test</bundle>
-						<bundle>org.mozilla.xulrunner.carbon.macosx.x86</bundle>
 						<bundle>org.mozilla.xulrunner.cocoa.macosx.x86</bundle>
 						<bundle>org.mozilla.xulrunner.gtk.linux.x86</bundle>
 						<bundle>org.mozilla.xulrunner.gtk.linux.x86_64</bundle>
