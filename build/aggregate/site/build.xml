@@ -283,7 +283,6 @@ DEST = ${aggregate.zips.dir}/@{zipPath}
 										</then>
 									</if>
 								</then>
-
 								<else>
 									<propertyregex override="true" property="location.cleaned" defaultvalue="@{location}" input="@{location}" regexp="../../" replace="http://download.jboss.org/jbosstools/builds/staging/" />
 								</else>
