@@ -51,13 +51,21 @@
 			<param name="build.archive" value="${jboss60.build.archive}" />
 			<param name="md5" value="${jboss60.build.archive.md5}" />
 		</antcall>
+
+<!-- this is called via the requirements profile in ../../build/parent/pom.xml, which sets these properties:
+		<requirements.root>${basedir}/../../../requirements</requirements.root>
+		<requirement.build.root>${requirements.root}/target</requirement.build.root>
+-->
+		<echo>${ant.file}, ${basedir}, ${unzip.dest}, ${requirement.build.root}</echo>
+
 		<!-- rename target folder from 6.0.0.Final to 6.0.0 -->
+		
 		<for param="dir">
 			<path>
-				<fileset dir="../target/" includes="jboss-6.0.0*" />
+				<fileset dir="${requirement.build.root}/" includes="jboss-6.0.0*" />
 			</path>
 			<sequential>
-				<rename src="@{dir}" dest="../target/jboss-6.0.0" />
+				<rename src="@{dir}" dest="${requirement.build.root}/jboss-6.0.0" />
 			</sequential>
 		</for>
 
@@ -69,10 +77,10 @@
 		<!-- rename target folder from 7.0.0.Beta3 to 7.0.0 -->
 		<for param="dir">
 			<path>
-				<fileset dir="../target/" includes="jboss-7.0.0*" />
+				<fileset dir="${requirement.build.root}/" includes="jboss-7.0.0*" />
 			</path>
 			<sequential>
-				<rename src="../target/jboss-7.0.0.Beta3" dest="../target/jboss-7.0.0" />
+				<rename src="${requirement.build.root}/jboss-7.0.0.Beta3" dest="${requirement.build.root}/jboss-7.0.0" />
 			</sequential>
 		</for>
 	</target>
