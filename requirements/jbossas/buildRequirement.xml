@@ -1,59 +1,79 @@
 <project default="build.requirement">
-	<property file="build.properties"/>
-	
+	<property file="build.properties" />
+
 	<target name="build-jbossas">
 		<ant antfile="../generic/build.xml" target="${action}" inheritall="true">
-			<property name="requirement" value="jbossas"/>
+			<property name="requirement" value="jbossas" />
 		</ant>
 	</target>
-		
+
 	<target name="build.requirement">
-		<antcall target="build-all" >
+		<antcall target="build-all">
 			<param name="action" value="build.requirement" />
 		</antcall>
 	</target>
-	
+
 	<target name="download.requirement">
-		<antcall target="build-all" >
+		<antcall target="build-all">
 			<param name="action" value="download.requirement" />
 		</antcall>
 	</target>
-	
-	<target name="build-all" >
+
+	<target name="build-all">
 		<antcall target="build-jbossas">
-			<param name="build.uri" value="${jboss32.build.uri}"/>
-			<param name="build.archive" value="${jboss32.build.archive}"/>
-			<param name="md5" value="${jboss32.build.archive.md5}"/>
+			<param name="build.uri" value="${jboss32.build.uri}" />
+			<param name="build.archive" value="${jboss32.build.archive}" />
+			<param name="md5" value="${jboss32.build.archive.md5}" />
 		</antcall>
 		<antcall target="build-jbossas">
-			<param name="build.uri" value="${jboss40.build.uri}"/>
-			<param name="build.archive" value="${jboss40.build.archive}"/>
-			<param name="md5" value="${jboss40.build.archive.md5}"/>			
+			<param name="build.uri" value="${jboss40.build.uri}" />
+			<param name="build.archive" value="${jboss40.build.archive}" />
+			<param name="md5" value="${jboss40.build.archive.md5}" />
 		</antcall>
 		<antcall target="build-jbossas">
-			<param name="build.uri" value="${jboss42.build.uri}"/>
-			<param name="build.archive" value="${jboss42.build.archive}"/>
-			<param name="md5" value="${jboss42.build.archive.md5}"/>			
+			<param name="build.uri" value="${jboss42.build.uri}" />
+			<param name="build.archive" value="${jboss42.build.archive}" />
+			<param name="md5" value="${jboss42.build.archive.md5}" />
 		</antcall>
 		<antcall target="build-jbossas">
-			<param name="build.uri" value="${jboss50.build.uri}"/>
-			<param name="build.archive" value="${jboss50.build.archive}"/>
-			<param name="md5" value="${jboss50.build.archive.md5}"/>			
+			<param name="build.uri" value="${jboss50.build.uri}" />
+			<param name="build.archive" value="${jboss50.build.archive}" />
+			<param name="md5" value="${jboss50.build.archive.md5}" />
 		</antcall>
 		<antcall target="build-jbossas">
-			<param name="build.uri" value="${jboss51.build.uri}"/>
-			<param name="build.archive" value="${jboss51.build.archive}"/>
-			<param name="md5" value="${jboss51.build.archive.md5}"/>
+			<param name="build.uri" value="${jboss51.build.uri}" />
+			<param name="build.archive" value="${jboss51.build.archive}" />
+			<param name="md5" value="${jboss51.build.archive.md5}" />
 		</antcall>
+
 		<antcall target="build-jbossas">
-			<param name="build.uri" value="${jboss60.build.uri}"/>
-			<param name="build.archive" value="${jboss60.build.archive}"/>
-			<param name="md5" value="${jboss60.build.archive.md5}"/>
+			<param name="build.uri" value="${jboss60.build.uri}" />
+			<param name="build.archive" value="${jboss60.build.archive}" />
+			<param name="md5" value="${jboss60.build.archive.md5}" />
 		</antcall>
+		<!-- rename target folder from 6.0.0.Final to 6.0.0 -->
+		<for param="dir">
+			<path>
+				<fileset dir="../target/" includes="jboss-6.0.0*" />
+			</path>
+			<sequential>
+				<rename src="@{dir}" dest="../target/jboss-6.0.0" />
+			</sequential>
+		</for>
+
 		<antcall target="build-jbossas">
-			<param name="build.uri" value="${jboss70.build.uri}"/>
-			<param name="build.archive" value="${jboss70.build.archive}"/>
-			<param name="md5" value="${jboss70.build.archive.md5}"/>
+			<param name="build.uri" value="${jboss70.build.uri}" />
+			<param name="build.archive" value="${jboss70.build.archive}" />
+			<param name="md5" value="${jboss70.build.archive.md5}" />
 		</antcall>
+		<!-- rename target folder from 7.0.0.Beta3 to 7.0.0 -->
+		<for param="dir">
+			<path>
+				<fileset dir="../target/" includes="jboss-7.0.0*" />
+			</path>
+			<sequential>
+				<rename src="../target/jboss-7.0.0.Beta3" dest="../target/jboss-7.0.0" />
+			</sequential>
+		</for>
 	</target>
 </project>
