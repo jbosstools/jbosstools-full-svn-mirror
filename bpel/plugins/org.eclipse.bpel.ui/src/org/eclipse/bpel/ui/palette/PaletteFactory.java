@@ -84,7 +84,7 @@ public class PaletteFactory implements IPaletteProvider {
 						.getFactoryFor(bpelPackage.getValidate())));
 		palette.add(basicActionsCategory);
 
-		PaletteCategory controlCategory = new PaletteCategory("Control2"); //$NON-NLS-1$
+		PaletteCategory controlCategory = new PaletteCategory("Controls"); //$NON-NLS-1$
 		controlCategory.setOrder(20);
 		controlCategory.setCategoryId("bpel.control");
 
