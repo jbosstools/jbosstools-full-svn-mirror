@@ -60,7 +60,7 @@
 			<var unset="true" name="ALL_ZIPS" />
 			<var unset="true" name="wget.return" />
 			<if>
-				<contains string="${location.cleaned}" substring="http" />
+				<contains string="${location.cleaned}" substring=":/" />
 				<then>
 
 					<exec executable="wget" dir="${aggregate.zips.dir}" failonerror="false" failifexecutionfails="false" resultproperty="wget.return" outputproperty="null">
@@ -77,7 +77,7 @@
 			<echo level="verbose">Fetch SVN_REVISION.txt if it exists (return 8 if not found)</echo>
 			<var name="svnRevTXT" value="${aggregate.zips.dir}/SVN_REVISION.txt" />
 			<if>
-				<contains string="${location.cleaned}" substring="http" />
+				<contains string="${location.cleaned}" substring=":/" />
 				<then>
 					<exec executable="wget" dir="${aggregate.zips.dir}" failonerror="false" failifexecutionfails="false" resultproperty="wget.return" outputproperty="null">
 						<arg line="${location.cleaned}/logs/SVN_REVISION.txt -q --no-clobber --tries=3" />
@@ -93,7 +93,7 @@
 			<echo level="verbose">Fetch SVN_REVISION.xml if it exists (return 8 if not found)</echo>
 			<var name="svnRevXML" value="${aggregate.zips.dir}/SVN_REVISION.xml" />
 			<if>
-				<contains string="${location.cleaned}" substring="http" />
+				<contains string="${location.cleaned}" substring=":/" />
 				<then>
 					<exec executable="wget" dir="${aggregate.zips.dir}" failonerror="false" failifexecutionfails="false" resultproperty="wget.return" outputproperty="null">
 						<arg line="${location.cleaned}/logs/SVN_REVISION.xml -q --no-clobber --tries=3" />
@@ -109,7 +109,7 @@
 			<echo level="verbose">Fetch build.properties if it exists (return 8 if not found)</echo>
 			<var name="buildProperties" value="${aggregate.zips.dir}/build.properties" />
 			<if>
-				<contains string="${location.cleaned}" substring="http" />
+				<contains string="${location.cleaned}" substring=":/" />
 				<then>
 					<exec executable="wget" dir="${aggregate.zips.dir}" failonerror="false" failifexecutionfails="false" resultproperty="wget.return" outputproperty="null">
 						<arg line="${location.cleaned}/logs/build.properties -q --no-clobber --tries=3" />
@@ -123,10 +123,19 @@
 			</if>
 
 			<if>
-				<and>
-					<equals arg1="${wget.return}" arg2="0" />
-					<available file="${aggregate.zips.dir}/zip.list.txt" type="file" />
-				</and>
+				<or>
+					<and>
+						<contains string="${location.cleaned}" substring=":/" />
+						<equals arg1="${wget.return}" arg2="0" />
+						<available file="${aggregate.zips.dir}/zip.list.txt" type="file" />
+					</and>
+					<and>
+						<not>
+							<contains string="${location.cleaned}" substring=":/" />
+						</not>
+						<available file="${aggregate.zips.dir}/zip.list.txt" type="file" />
+					</and>
+				</or>
 				<then>
 					<!-- load zip.list.txt file, get ALL_ZIPS list -->
 					<var unset="true" name="ALL_ZIPS" />
