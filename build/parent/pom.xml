@@ -30,13 +30,23 @@
 		<target.platform.classifier.local>local
 		</target.platform.classifier.local>
 
+		<!-- 1a. URL of latest JBT target platform site -->
+		<jbosstools-target-platform-repo>http://download.jboss.org/jbosstools/updates/target-platform/latest/</jbosstools-target-platform-repo>
+
+		<!-- 1b. or, use -Dtarget.platform.site=file://home/$user/trunk/build/target-platform/REPO/ -->
 		<!-- Set this to a path on your own machine, or use remote URL like http://download.jboss.org/jbosstools/updates/target-platform/latest/ 
 			Can also generate a local.target file which will always point to your local 
 			repo w/o having to edit here. See local.target profile below for more information. -->
-		<target.platform.site>file://home/hudson/static_build_env/jbds/target-platform/e362-wtp323.target/
-		</target.platform.site>
+		<target.platform.site>file://home/hudson/static_build_env/jbds/target-platform/e362-wtp323.target/</target.platform.site>
+
+		<!-- 2a. URL of latest JBT nightly staging composite site (all the components in once place) -->
+		<jbosstools-nightly-staging-composite>http://download.jboss.org/jbosstools/builds/staging/_composite_/3.2_stable_branch/</jbosstools-nightly-staging-composite>
+
+		<!-- 2b., or, use -Plocal.comp -Dlocal.comp=file://path/to/mirror/of/composite/staging/site/ -->
+		<local.composite>file://home/hudson/static_build_env/jbds/builds/staging/_composite_/3.2_stable_branch/</local.composite>
+
+		<!-- 3. published aggregate update site goes here, for consumption by QE and downstream JBDS builds -->
 		<jbosstools.update.site>http://download.jboss.org/jbosstools/updates/nightly/3.2_stable_branch/</jbosstools.update.site>
-		<jbosstools-target-platform-repo>http://download.jboss.org/jbosstools/updates/target-platform/latest/</jbosstools-target-platform-repo>
 	</properties>
 
 	<build>
@@ -793,8 +803,8 @@
 					</releases>
 				</repository>
 				<repository>
-					<id>jbosstools-nightly-staging-composite-trunk</id>
-					<url>http://download.jboss.org/jbosstools/builds/staging/_composite_/3.2_stable_branch/</url>
+					<id>jbosstools-nightly-staging-composite</id>
+					<url>${jbosstools-nightly-staging-composite}</url>
 					<layout>p2</layout>
 					<snapshots>
 						<enabled>true</enabled>
@@ -809,6 +819,27 @@
 					<layout>p2</layout> 
 					<snapshots> <enabled>true</enabled> </snapshots> 
 					<releases> <enabled>true</enabled> </releases> 
+				</repository>
+			</repositories>
+		</profile>
+
+		<!-- same contents as jbosstools-nightly-staging-composite, but locally available (to improve network lag) -->
+		<profile>
+			<id>local.composite</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<repositories>
+				<repository>
+					<id>local.composite</id>
+					<url>${local.composite}</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
 				</repository>
 			</repositories>
 		</profile>
