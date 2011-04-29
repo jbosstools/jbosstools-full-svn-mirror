@@ -228,7 +228,15 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 
 				Bundle xulRunnerBundle = Platform.getBundle(getXulRunnerBundle());
 				if (xulRunnerBundle == null) {
-					throw new XulRunnerException(MessageFormat.format(VpeXulrunnerMessages.XulRunnerBrowser_bundleNotFound,getXulRunnerBundle()));  //$NON-NLS-2$
+					if (!XulRunnerBrowser.isCurrentPlatformOfficiallySupported()) {
+						throw new XulRunnerException(MessageFormat.format(
+								VpeXulrunnerMessages.CURRENT_PLATFORM_IS_NOT_SUPPORTED,
+								XulRunnerBrowser.CURRENT_PLATFORM_ID));
+					} else {
+						throw new XulRunnerException(MessageFormat.format(
+								VpeXulrunnerMessages.XulRunnerBrowser_bundleNotFound,
+								getXulRunnerBundle()));
+					}
 				}
 
 				String xulRunnerVersion = (String) xulRunnerBundle.getHeaders().get("Bundle-Version"); //$NON-NLS-1$

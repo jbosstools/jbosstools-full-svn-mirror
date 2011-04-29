@@ -9,6 +9,7 @@ public class VpeXulrunnerMessages extends NLS {
 	public static String XulRunnerBrowser_cannotGetPathToXulrunner;
 	public static String XulRunnerBrowser_notAvailable;
 	public static String XulRunnerBrowser_wrongVersion;
+	public static String CURRENT_PLATFORM_IS_NOT_SUPPORTED;
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, VpeXulrunnerMessages.class);
