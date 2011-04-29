@@ -62,15 +62,12 @@
 			<if>
 				<contains string="${location.cleaned}" substring=":/" />
 				<then>
-
 					<exec executable="wget" dir="${aggregate.zips.dir}" failonerror="false" failifexecutionfails="false" resultproperty="wget.return" outputproperty="null">
 						<arg line="${location.cleaned}/logs/zip.list.txt -q --no-clobber --tries=3" />
 					</exec>
 				</then>
 				<else>
-					<copy todir="${aggregate.zips.dir}" failonerror="false">
-						<fileset dir="${location.cleaned}/logs" includes="zip.list.txt" />
-					</copy>
+					<copy todir="${aggregate.zips.dir}" failonerror="false" file="${location.cleaned}/logs/zip.list.txt" />
 				</else>
 			</if>
 
@@ -84,9 +81,7 @@
 					</exec>
 				</then>
 				<else>
-					<copy todir="${aggregate.zips.dir}" failonerror="false">
-						<fileset dir="${location.cleaned}/logs" includes="SVN_REVISION.txt" />
-					</copy>
+					<copy todir="${aggregate.zips.dir}" failonerror="false" file="${location.cleaned}/logs/SVN_REVISION.txt" />
 				</else>
 			</if>
 
@@ -100,9 +95,7 @@
 					</exec>
 				</then>
 				<else>
-					<copy todir="${aggregate.zips.dir}" failonerror="false">
-						<fileset dir="${location.cleaned}/logs" includes="SVN_REVISION.xml" />
-					</copy>
+					<copy todir="${aggregate.zips.dir}" failonerror="false" file="${location.cleaned}/logs/SVN_REVISION.xml" />
 				</else>
 			</if>
 
@@ -116,9 +109,7 @@
 					</exec>
 				</then>
 				<else>
-					<copy todir="${aggregate.zips.dir}" failonerror="false">
-						<fileset dir="${location.cleaned}/logs" includes="build.properties" />
-					</copy>
+					<copy todir="${aggregate.zips.dir}" failonerror="false" file="${location.cleaned}/logs/build.properties" />
 				</else>
 			</if>
 
@@ -173,17 +164,26 @@ DEST = ${aggregate.zips.dir}/@{zipPath}
 											<echo file="${aggregate.zips.dir}/@{zipPath}">${aggregate.zips.dir}/@{zipPath}</echo>
 										</then>
 										<else>
-											<var name="wget.return" unset="true" />
-											<exec executable="wget" dir="${aggregate.zips.dir}/${relativePath}" failonerror="false" failifexecutionfails="false" resultproperty="wget.return" outputproperty="null">
-												<arg line="${location.cleaned}/@{zipPath} -q --no-clobber --tries=3" />
-											</exec>
 											<if>
-												<not>
-													<equals arg1="${wget.return}" arg2="0" />
-												</not>
+												<contains string="${location.cleaned}" substring=":/" />
 												<then>
-													<echo> ** Error(@{i}) [${wget.return}] ** Could not wget ${location.cleaned}/@{zipPath}</echo>
+
+													<var name="wget.return" unset="true" />
+													<exec executable="wget" dir="${aggregate.zips.dir}/${relativePath}" failonerror="false" failifexecutionfails="false" resultproperty="wget.return" outputproperty="null">
+														<arg line="${location.cleaned}/@{zipPath} -q --no-clobber --tries=3" />
+													</exec>
+													<if>
+														<not>
+															<equals arg1="${wget.return}" arg2="0" />
+														</not>
+														<then>
+															<echo> ** Error [${wget.return}] ** Could not wget ${location.cleaned}/@{zipPath}</echo>
+														</then>
+													</if>
 												</then>
+												<else>
+													<copy todir="${aggregate.zips.dir}/${relativePath}" failonerror="false" file="${location.cleaned}/@{zipPath}" />
+												</else>
 											</if>
 										</else>
 									</if>
