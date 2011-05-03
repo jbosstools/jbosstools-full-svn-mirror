@@ -45,6 +45,7 @@
 	</properties>
 
 	<build>
+		<sourceDirectory>src</sourceDirectory>
 		<plugins>
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
@@ -186,6 +187,9 @@
 				<groupId>org.sonatype.tycho</groupId>
 				<artifactId>maven-osgi-compiler-plugin</artifactId>
 				<version>${tychoVersion}</version>
+				<configuration>
+					<encoding>UTF-8</encoding>
+				</configuration>
 				<!-- not strictly needed but this suppresses warnings when compiling 
 					that the default value (1.5) is being overwritten by the value in the MANIFEST.MF. 
 					You can use this in your plugins or their aggregator pom.xml files to set 
@@ -195,7 +199,32 @@
 					<!-- <target>1.6</target> -->
 				</configuration>
 			</plugin>
-
+			<!-- these two plugins copied in from Chris Aniszczyk's Minerva parent 
+				pom; also need org.sonatype.tycho:maven-osgi-compiler-plugin, above -->
+			<plugin>
+				<!-- TODO remove workaround when https://issues.sonatype.org/browse/TYCHO-473 
+					is fixed -->
+				<groupId>org.sonatype.tycho</groupId>
+				<artifactId>maven-osgi-source-plugin</artifactId>
+				<version>${tychoVersion}</version>
+				<executions>
+					<execution>
+						<id>attach-source</id>
+						<phase>process-classes</phase>
+						<goals>
+							<goal>plugin-source</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.4.1</version>
+				<configuration>
+					<encoding>ISO-8859-1</encoding>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
