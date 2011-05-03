@@ -201,9 +201,9 @@
 			</plugin>
 			<!-- these two plugins copied in from Chris Aniszczyk's Minerva parent 
 				pom; also need org.sonatype.tycho:maven-osgi-compiler-plugin, above -->
-			<plugin>
-				<!-- TODO remove workaround when https://issues.sonatype.org/browse/TYCHO-473 
+			<!-- TODO remove workaround when https://issues.sonatype.org/browse/TYCHO-473 
 					is fixed -->
+			<!--plugin>
 				<groupId>org.sonatype.tycho</groupId>
 				<artifactId>maven-osgi-source-plugin</artifactId>
 				<version>${tychoVersion}</version>
@@ -216,7 +216,7 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
+			</plugin-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
