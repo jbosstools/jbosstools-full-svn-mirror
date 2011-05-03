@@ -189,12 +189,12 @@
 				<version>${tychoVersion}</version>
 				<configuration>
 					<encoding>UTF-8</encoding>
-				</configuration>
-				<!-- not strictly needed but this suppresses warnings when compiling 
-					that the default value (1.5) is being overwritten by the value in the MANIFEST.MF. 
-					You can use this in your plugins or their aggregator pom.xml files to set 
-					this for your plugins -->
-				<configuration>
+
+					<!-- not strictly needed but this suppresses warnings when compiling 
+						that the default value (1.5) is being overwritten by the value in the MANIFEST.MF. 
+						You can use this in your plugins or their aggregator pom.xml files to set 
+						this for your plugins -->
+
 					<!-- <source>1.6</source> -->
 					<!-- <target>1.6</target> -->
 				</configuration>
