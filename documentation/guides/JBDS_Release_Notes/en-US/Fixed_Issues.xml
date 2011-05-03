@@ -1,13 +1,17 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <section id="Issues-fixed-in-this-release">
     <title>
-        Features added and issues fixed in this release
+        Features added and issues fixed in version 4.0.0
     </title>
     
     <para>
-        Following is a list of new and noteworthy features and bug fixes in this release:
+        The following list highlights new features that have been added to this release, as well as listing some notable bug fixes. You can find a complete list of bug fixes <ulink url="https://issues.jboss.org/browse/JBIDE">here</ulink>.
     </para>
-    <formalpara>
+    <!--
+    
+    		BIRT is no longer shipped with JBDS 4.0
+    
+    		<formalpara>
         <title>BIRT</title>
         <para>
             <itemizedlist>
@@ -18,11 +22,21 @@
                 </listitem>
             </itemizedlist>
         </para>
-    </formalpara>
+    </formalpara> -->
     <formalpara>
       <title>Contexts and Dependency Injection (CDI)</title>
         <para>
-					<itemizedlist>
+					<itemizedlist>					
+						<listitem>
+							<para>
+								<ulink url="https://issues.jboss.org/browse/JBIDE-7796">JBIDE-7796</ulink>: Previously the CDI Bean XML schemas were accessed from the Internet by default. This could cause delays as the files were downloaded. Now the CDI Bean XML schemas are included in the <guilabel>XML Catalog</guilabel>. You can access the <guilabel>XML Catalog</guilabel> by selecting <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Preferences</guimenuitem><guimenuitem>XML</guimenuitem><guimenuitem>XML Catalog</guimenuitem></menuchoice>.
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								<ulink url="https://issues.jboss.org/browse/JBIDE-8124">JBIDE-8124</ulink>: The <guilabel>New CDI Bean</guilabel> wizard has been added to provide a convenient way to create new CDI Java classes with the <code>@Named</code>, <code>@Scope</code> and <code>@Qualifier</code> annotations. The wizard can be accessed by selecting <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>New</guimenuitem><guimenuitem>Other</guimenuitem><guimenuitem>CDI (Context and Dependency Injection)</guimenuitem><guimenuitem>Bean</guimenuitem></menuchoice>.
+							</para>
+						</listitem>					
 							<listitem>
 								<para>
 									<ulink url="https://issues.jboss.org/browse/JBIDE-7875">JBIDE-7875</ulink>: It is recommended that developers create an Annotation Literal class for every qualifier in their public API. However, writing these classes by hand can be time consuming. To address this the new <guilabel>Annotation Literal Type</guilabel> wizard provides a streamlined way to create these classes. This wizard can be accessed by selecting <menuchoice>
@@ -334,6 +348,11 @@
 	   <title>Deltacloud</title>
 	   <para>
 	      <itemizedlist>
+	      	<listitem>
+	      		<para>
+	      			<ulink url="https://issues.jboss.org/browse/JBIDE-7761">JBIDE-7761</ulink>: The <guimenuitem>Show in Remote System Explorer...</guimenuitem> option is now available in the <guilabel>Cloud Viewer<guilabel> context menu.
+	      		</para>
+	      	</listitem>
 					<listitem>
 				    <para>
 		    			<ulink url="https://issues.jboss.org/browse/JBIDE-7186">JBIDE-7186</ulink>: Previously when publishing to a remote server the progress bar and percentage indicator provided insufficient information on the actions that were being undertaken during what could be a time consuming process. In this version the progress monitor now shows more detailed information such as the name of the individual file that is being uploaded or the name of the directory that is currently being created.
@@ -461,6 +480,8 @@
             </itemizedlist>
         </para>
     </formalpara>
+    <!-- Google Web Toolkit is only shipped with JBoss.org
+    
     <formalpara>
         <title>Google Web Toolkit</title>
         <para>
@@ -503,7 +524,7 @@
                 </listitem>
             </itemizedlist>
         </para>
-    </formalpara>
+    </formalpara> -->
     <formalpara>
         <title>Hibernate</title>
         <para>
@@ -568,11 +589,12 @@
                         <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6473">JBIDE-6473</ulink>: A new Hibernate platform has been added called <emphasis>Hibernate JPA 2.0</emphasis>. This platform extends the base JPA 2.0 platform.
                     </para>
                 </listitem>
+                <!-- This issue was rolled back 
                 <listitem>
                     <para>
                         <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6423">JBIDE-6423</ulink>: A new feature that allows for code generation to be run in external processes has been added. This new feature is accessed through the <guilabel>Hibernate Code Generation Configurations</guilabel> wizard in the form of a checkbox called <guilabel>Use generation in external process</guilabel>.
                     </para>
-                </listitem>
+                </listitem> -->
                 <listitem>
                     <para>
                         <ulink url="http://jira.jboss.com/jira/browse/JBIDE-6120">JBIDE-6120</ulink>: Superclass properties were not shown in code completion, within the <guilabel>HQLEditor</guilabel>. A new feature has been added for this release that enables superclass properties to appear when using code completion within the <guilabel>HQLEditor</guilabel>.
@@ -804,7 +826,13 @@
         <title>JBoss Application Server</title>
         <para>
             <itemizedlist>
-							<listitem>
+            	<listitem>
+                    <para>
+                        <ulink url="https://issues.jboss.org/browse/JBIDE-7412">JBIDE-7412</ulink>: The Eclipse server editor has been modified to present only the relevant options in the <guilabel>Server Behaviour</guilabel> section, depending on the value selected in the combobox. When you select <guilabel>Local</guilabel> from the combobox, no additional options are presented in the <guilabel>Server Behaviour</guilabel> section. When you select <guilabel>Remote System Deployment</guilabel> from the combobox a number of options are made available in the <guilabel>Server Behaviour</guilabel> section. Selecting either <guilabel>Local</guilabel> or <guilabel>Remote System Deployment</guilabel> will also now enable or disable the appropriate options in the <guilabel>Deployment</guilabel> tab.
+                    </para>
+                </listitem>
+            
+            	<listitem>
 						    <para>
 				    			<ulink url="https://issues.jboss.org/browse/JBIDE-7019">JBIDE-7019</ulink>: A <guibutton>Test</guibutton> button has been added to the <guilabel>Server Behaviour</guilabel> section in the JBoss Application Server configuration Editor which will verify that:
 									<orderedlist>
@@ -883,7 +911,7 @@
 			<itemizedlist>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-"> </ulink>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>
 					</para>
 				</listitem>
 			</itemizedlist>
@@ -988,7 +1016,7 @@
 			<itemizedlist>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-"> </ulink>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>
 					</para>
 				</listitem>
 			</itemizedlist>
@@ -1000,7 +1028,7 @@
 			<itemizedlist>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-"> </ulink>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>
 					</para>
 				</listitem>
 			</itemizedlist>
@@ -1034,7 +1062,7 @@
 				</listitem>
 				<listitem>
 				   <para>
-				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7034">JBIDE-7034</ulink> and <ulink url="http://jira.jboss.com/jira/browse/JBIDE-">JBIDE-</ulink>: New reporting fields were added to the usage plug-in for the gathering of user data. See the individual JIRAs for specific field details.
+				      <ulink url="http://jira.jboss.com/jira/browse/JBIDE-7034">JBIDE-7034</ulink> and <ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>: New reporting fields were added to the usage plug-in for the gathering of user data. See the individual JIRAs for specific field details.
 				   </para>
 				</listitem>
 				<listitem>
@@ -1241,7 +1269,7 @@
 			<itemizedlist>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-"> </ulink>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>
 					</para>
 				</listitem>
 			</itemizedlist>
@@ -1263,8 +1291,70 @@
         <title>General Issues</title>
         <para>
         	<itemizedlist>
-        	
         	<listitem>
+        		<para>
+							JBoss Developer Studio is certified to run on the following platforms:
+							<itemizedlist>
+								<listitem>
+									<para>Windows XP (i386 and x86_64) running 32-bit Sun JDK 6</para>
+								</listitem>
+								<listitem>
+									<para>Windows XP (i386 and x86_64) running 64-bit Sun JDK 6 (*)</para>
+								</listitem>
+								<listitem>
+									<para>MacOS X 10.6 running 32-bit Apple JDK 6</para>
+								</listitem>
+								<listitem>
+									<para>MacOS X 10.5 running 64-bit Apple JDK 6 (*)</para>
+								</listitem>
+								<listitem>
+									<para>RHEL5 i386 running 32-bit Sun JDK 6 and OpenJDK 6</para>
+								</listitem>
+								<listitem>
+									<para>RHEL5 x86_64 running 64-bit Sun JDK 6 and OpenJDK 6</para>
+								</listitem>
+							</itemizedlist>
+						</para>
+						
+						<para> (*) The visual component of the Visual Page Editor is not supported in these configurations.</para>
+						
+						<para>
+							The minimum requirements are:
+							<itemizedlist>
+								<listitem>
+									<para>1 GB RAM</para>
+								</listitem>
+								<listitem>
+									<para>450 MB of hard disk space for the non-EAP version</para>
+								</listitem>
+								<listitem>
+									<para>800 MB of hard disk space for the EAP version</para>
+								</listitem>
+							</itemizedlist>
+						</para>
+						
+						<para>
+							The recommended requirements are:
+							<itemizedlist>
+								<listitem>
+									<para>4 GB RAM</para>
+								</listitem>
+							</itemizedlist>
+						</para>
+        	</listitem>
+        	<listitem>
+        		<para>
+        			<ulink url="https://issues.jboss.org/browse/TOOLSDOC-134">TOOLSDOC-134</ulink>: Common typographical conventions that were listed at the beginning of each JBoss Developer Studio book have been moved into a seperate book called Document Conventions. JBoss Developer Studio books now link to the Document Conventions book in their preface.
+        		</para>
+        	</listitem>
+
+        	<listitem>
+        		<para>
+        			<ulink url="https://issues.jboss.org/browse/JBIDE-7527">JBIDE-7527</ulink>: The the new JBoss Tools Runtime Detection feature provides a way for JBoss runtime components such as jBPM, Drools, JBoss Server and Seam to be discovered when a workspace is created or when Eclipse is started. These runtime components can be found within a user definable list of directories, which can be defined in <menuchoice><guimenuitem>Preferences</guimenuitem><guimenuitem>JBoss Tools</guimenuitem><guimenuitem>JBoss Tools Runtime Detection</guimenuitem></menuchoice>.
+        		</para>
+        	</listitem>
+        	
+        		<listitem>
         			<para>
         				<ulink url="https://issues.jboss.org/browse/JBDS-1150">JBDS-1150</ulink>: The Java Virtual Machine used by the JBoss Developer Studio installer will also be used as the default VM for JBDS. This can casuse problems if a 64 bit Java VM is used to install a 32 bit JBDS distribution, as the two are incompatible. This can be fixed by editing the <filename>eclipse.ini</filename> file and modifying the <property>vm</property> argument, or by using the appropiate Java VM when installing JBDS.
         			</para>

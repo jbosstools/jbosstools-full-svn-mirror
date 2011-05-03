@@ -1,85 +1,98 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <section id="Overview">
 		<title>Overview</title>
+		<para>			
+			JBoss Developer Studio 4 (JBDS4) is a major release of the Eclipse based IDE developed and supported by Red Hat (the visual tooling components are supported for 3 years, and the runtime platform for 5 years). The IDE, which is available for Windows, Linux and OS X, provides tooling that allows for rapid Web 2.0 application development on the JBoss Enterprise Application Platform. This release also introduces additional support for SOA application development with JBoss Enterprise SOA Platform.
+		</para>
 		<para>
-			JBoss Developer Studio provides an integrated development environment for developers to build rich Web and enterprise applications, and SOA services. The technologies used include:
+			JBDS4 includes many new features including:
 		</para>
 		<itemizedlist>
 			<listitem>
-			      <para>
-				 BIRT
-			      </para>
-			</listitem>
-			<listitem>
-			      <para>
-				 Contexts and Dependency Injection (CDI)
-			      </para>
-			</listitem>
-			<listitem>
 				<para>
-					Hibernate
-				</para>
-			</listitem>
-			<listitem>
-				 <para>
-				    JavaServer Faces (JSF)
-				 </para>
-			</listitem>
-			<listitem>
-				 <para>
-				    JBoss Drools
-				 </para>
-			</listitem>
-			<listitem>
-				 <para>
-				    JBoss ESB
-				 </para>
-			</listitem>
-			<listitem>
-				<para>
-					JBoss jBPM
+					<emphasis role="bold">Improved Eclipse Integration:</emphasis> The installed IDE is now a native Eclipse application, which results in a more streamlined installation and update process, and a smaller download size since unused plugins are no longer included. In addition, the IDE is now based on Eclipse 3.6 (Helios), which is the latest stable release provided by the Eclipse Foundation.
 				</para>
 			</listitem>
 			<listitem>
 				<para>
-					JBoss Portal
+					<emphasis role="bold">Improved Java Performance:</emphasis> The IDE now targets Java 6, resulting in increased performance and reduced memory usage. However, users can still target runtimes relying on different versions of Java as long as they have the matching Java runtime configured in the Java SDK preferences section.
 				</para>
-			</listitem>
-			<listitem>
-				 <para>
-				       JBoss Seam
-				 </para>
 			</listitem>
 			<listitem>
 				<para>
-					ModeShape
+					<emphasis role="bold">New Hibernate Tools Features:</emphasis> Code generation settings can now be exported to an Ant build.xml file, providing a means to run them from the command line or to be included in your own build scripts. The JPA tooling supports both JPA 1 and JPA 2.
 				</para>
-			</listitem>
-			<listitem>
-				 <para>
-				       RichFaces
-				 </para>
-			</listitem>
-			<listitem>
-				 <para>
-				       Smooks
-				 </para>
 			</listitem>
 			<listitem>
 				<para>
-					Teiid
+					<emphasis role="bold">Additional Visual Page Editing Compatibility:</emphasis> The Visual Page Editor is now configured so it can be installed and used on platforms where XULRunner is not available (i.e. older OS X versions). While this does remove the "Visual" part of the editor, you still benefit from the code completion, navigation and validation features.
 				</para>
 			</listitem>
 			<listitem>
-				 <para>
-				       Web Services
-				 </para>
+				<para>
+					<emphasis role="bold">Improved Internationalization:</emphasis> There is now an Externalize Strings action available to help you implement internationalization(i18n) in your XHTML pages.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<emphasis role="bold">New DocBook Support:</emphasis> The editor now supports visual Docbook editing.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<emphasis role="bold">Spring Support:</emphasis> Support for the Spring tag libraries have been added.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<emphasis role="bold">Improved JSF and JSTL Support:</emphasis> Additional code completion, validation and refactoring support has been included for JSF and Seam managed beans. JSF and JSTL tag libraries are also now loaded from users classpath to provide code completion and validation for the exact version being used in the  project.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<emphasis role="bold">Additional Seam Features:</emphasis> Additional validation and refactoring features have been included.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<emphasis role="bold">Additional ESB Features:</emphasis> The latest ESB version is now added as a supported version, the ESB editor has additional shortcuts for configuring action and handlers, and JBDS now supports ESB annotation in the Annotation editor.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<emphasis role="bold">Improved JBoss Server Deployment and Configuration:</emphasis> The JBoss server adapter now has support for remote deployment via SSH and SCP, and the server adapter can publish individual files as well as individual folders. 
+				</para>
+				<para>
+						A new JBoss Tools Runtimes preference page is available that allows you to configure any server runtime found in a list of directories. This removes the need to manually configuring them all.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<emphasis role="bold">Simplified Web Services Creation and Testing:</emphasis> New simplified Wizards are provided for creating JAX-WS and JAX-RS Web services, while a new Webservice Tester View has been provided to test SOAP and HTTP based webservices.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<emphasis role="bold">New Teiid Support:</emphasis> The Teiid Designer has been added to this release of JBDS. The Teiid Designer is a graphical data modeling tool that enables rapid definition, integration, management and testing of data services without programming using the Teiid runtime engine.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<emphasis role="bold">New Modeshape Support:</emphasis> Modeshape tooling has been provided to allow users to browse, checkin and checkout of Modeshape servers.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<emphasis role="bold">Technical Previews:</emphasis> A Technical preview of CDI and JSF 2 (including composite components, code completions and validations) tooling is included, along with a JBoss AS 6 compatible server adapter. Technical previews of Servlet 3, Richfaces 4 and BPEL are also available.
+				</para>
+				<para>
+					Information on how to access the tech previews can be found in the <ulink url="http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/4.0/html-single/Getting_Started_Guide/index.html#tech_previews">Getting Started Guide</ulink>.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<emphasis role="bold">And More:</emphasis> JBDS supports many more libraries and technologies including: Contexts and Dependency Injection (CDI), JBoss Drools, JBoss ESB, JBoss jBPM, JBoss Portal, JBoss Seam, Smooks
+				</para>
 			</listitem>
 		</itemizedlist>
-		<para>
-			JBoss Developer Studio includes both certified visual tooling and a runtime platform (that Red Hat supports for 3 years (Limited) and 5 years respectively), ensuring developers of a stable, upgradable, deployable and supportable platform.
-		</para>
-		<para>
-			JBoss Developer Studio is available for Windows, Linux and MacOS.
-		</para>
 	</section>

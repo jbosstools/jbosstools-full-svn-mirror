@@ -4,6 +4,20 @@
 	<title>Revision History</title>
 	<simpara>
 		<revhistory>
+		<revision>
+				<revnumber>0-1</revnumber>
+				<date>Wed Feb 16 2011</date>
+				<author>
+					<firstname>Matthew</firstname>
+					<surname>Casperson</surname>
+					<email>mcaspers@redhat.com</email>
+				</author>
+				<revdescription>
+					<simplelist>
+						<member>Updated for JBDS 4.0 release</member>
+					</simplelist>
+				</revdescription>
+			</revision>
 			<revision>
 				<revnumber>0-0</revnumber>
 				<date>Tue Nov 09 2010</date>
