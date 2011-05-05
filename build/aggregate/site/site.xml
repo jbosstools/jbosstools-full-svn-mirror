@@ -3,7 +3,7 @@
 	<!-- This file is only used when building with Tycho.
 		If building with Ant (trunk/build/build.xml), see category.*.xml -->
 	<description>
-      JBoss Tools 3.2 Updates
+      JBoss Tools 3.2.x Updates
    	</description>
 
 	<!-- only in JBDS -->
@@ -178,7 +178,7 @@
 		</description>
 	</category-def>
 
-	<category-def name="AllTools" label="All JBoss Tools 3.2.0">
+	<category-def name="AllTools" label="All JBoss Tools 3.2.x">
 		<description>
 			Contains ALL the plugins that are available from
 			JBoss Tools except those
