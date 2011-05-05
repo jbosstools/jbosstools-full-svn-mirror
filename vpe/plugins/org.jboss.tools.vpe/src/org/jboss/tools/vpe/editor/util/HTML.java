@@ -20,6 +20,7 @@ public final class HTML {
 	private HTML() {
 	}
 
+	public static final String TAG_EMBED = "embed"; //$NON-NLS-1$
 	public static final String TAG_HTML = "html"; //$NON-NLS-1$
 	public static final String TAG_HEAD = "head"; //$NON-NLS-1$
 	public static final String TAG_BODY = "body"; //$NON-NLS-1$
@@ -51,6 +52,7 @@ public final class HTML {
 	public static final String TAG_INPUT = "input"; //$NON-NLS-1$
 	public static final String TAG_BUTTON = "button"; //$NON-NLS-1$
 	public static final String TAG_OL = "ol"; //$NON-NLS-1$
+	public static final String TAG_OBJECT = "object"; //$NON-NLS-1$
 	public static final String TAG_UL = "ul"; //$NON-NLS-1$
 	public static final String TAG_CODE = "code"; //$NON-NLS-1$
 	public static final String TAG_PRE = "pre"; //$NON-NLS-1$

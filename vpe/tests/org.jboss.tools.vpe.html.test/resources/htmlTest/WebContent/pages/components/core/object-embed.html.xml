@@ -1,0 +1,13 @@
+<tests>
+	<test id="object1">
+		<DIV CLASS="vpe-text" STYLE="display: inline-block; width: 468px; height: 60px;">
+			<OBJECT WIDTH="468" HEIGHT="60" ID="object1">
+				<DIV CLASS="vpe-text" STYLE="display: inline-block; width: 468px; height: 60px;">
+					<EMBED WIDTH="468" HEIGHT="60" ALIGN=""
+						PLUGINSPAGE="http://www.macromedia.com/go/getflashplayer" SRC="http://www.tizag.com/pics/example.swf">
+					</EMBED>
+				</DIV>
+			</OBJECT>
+		</DIV>
+	</test>
+</tests>

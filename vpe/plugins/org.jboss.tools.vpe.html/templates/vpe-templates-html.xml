@@ -1471,9 +1471,8 @@
 	</vpe:tag>
 
 	<vpe:tag name="object" case-sensitive="no">
-	<vpe:template children="yes" modify="no">
-		<vpe:copy
-			attrs="align,height,hspace,vspace,width,id,dir" />
+	<vpe:template children="yes" modify="no"
+			class="org.jboss.tools.vpe.html.template.HtmlObjectTemplate">
 		<vpe:dnd>
 			<vpe:drop container="yes">
 				<vpe:container-child tag-name="param" />
@@ -1485,10 +1484,9 @@
 	</vpe:tag>
 	
 	<vpe:tag name="embed" case-sensitive="no">
-	<vpe:template children="yes" modify="no">
-		<vpe:copy
-			attrs="align,height,hidden,hspace,pluginspage,src,vspace,width" />
-	</vpe:template>
+		<vpe:template children="yes" modify="no"
+				class="org.jboss.tools.vpe.html.template.HtmlEmbedTemplate">
+		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="ol" case-sensitive="no">
