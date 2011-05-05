@@ -1,4 +1,0 @@
-Authors:
---------
-Jesper Pedersen <jesper.pedersen@jboss.org>
-

@@ -1,6 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: org.jboss.tools.bpmn2.model
-Bundle-SymbolicName: org.jboss.tools.bpmn2.model
-Bundle-Version: 0.1.0
-Require-Bundle: org.eclipse.emf.ecore

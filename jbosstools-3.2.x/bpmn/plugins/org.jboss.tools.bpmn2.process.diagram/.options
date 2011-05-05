@@ -1,7 +1,0 @@
-# Tracing options for the org.eclipse.bpmn2.diagram plug-in
-
-# Common issues
-org.eclipse.bpmn2.diagram/debug=false
-
-# Visual IDs
-org.eclipse.bpmn2.diagram/debug/visualID=false

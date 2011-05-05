@@ -1,9 +1,0 @@
-To build drools, you first need to run the build.xml script:
-
-$ cd ../../drools; ant
-
-Then run maven:
-
-$ cd ../build/component; mvn clean install -f drools.xml
-
-
