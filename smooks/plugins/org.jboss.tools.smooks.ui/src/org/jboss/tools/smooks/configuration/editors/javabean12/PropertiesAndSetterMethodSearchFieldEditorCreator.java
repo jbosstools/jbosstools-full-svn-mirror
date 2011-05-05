@@ -73,10 +73,10 @@ public class PropertiesAndSetterMethodSearchFieldEditorCreator extends PropertyU
 				for (int i = 0; i < children.length; i++) {
 					Control child = children[i];
 					if(child instanceof Button){
-						child.setEnabled(false);
+//						child.setEnabled(false);
 					}
 				}
-				editPart.getContentControl().setEnabled(false);
+//				editPart.getContentControl().setEnabled(false);
 				return editPart;
 			}
 		}
