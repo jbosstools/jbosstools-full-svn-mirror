@@ -61,24 +61,16 @@ public class FreemarkerTemplateGraphicalModel extends AbstractResourceConfigGrap
 	private TemplateBuilder templateBuilder = null;
 
 	public FreemarkerTemplateGraphicalModel(Object data, ITreeContentProvider contentProvider,
-			ILabelProvider labelProvider, ISmooksModelProvider domainProvider) {
+			ILabelProvider labelProvider, ISmooksModelProvider domainProvider) throws TemplateBuilderException {
 		super(data, contentProvider, labelProvider, domainProvider);
 		this.smooksModelProvider = domainProvider;
 		graphModelProvider = createFreemarkerTemplateContentGraphModelProvider();
 		try {
 			templateBuilder = graphModelProvider.getTemplateBuilder(this);
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ModelBuilderException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (TemplateBuilderException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			throw new TemplateBuilderException("Failed to create template Builder instance.", e);
 		}
 	}
 

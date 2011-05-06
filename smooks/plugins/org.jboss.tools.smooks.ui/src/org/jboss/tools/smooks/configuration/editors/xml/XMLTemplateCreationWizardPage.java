@@ -40,6 +40,7 @@ import org.eclipse.xsd.XSDElementDeclaration;
 import org.jboss.tools.smooks.SmooksModelUtils;
 import org.jboss.tools.smooks.configuration.editors.uitls.SmooksUIUtils;
 import org.jboss.tools.smooks.templating.model.ModelBuilderException;
+import org.jboss.tools.smooks.templating.model.xml.XMLSampleModelBuilder;
 import org.jboss.tools.smooks.templating.model.xml.XSDModelBuilder;
 import org.xml.sax.SAXException;
 
@@ -119,6 +120,20 @@ public class XMLTemplateCreationWizardPage extends AbstractFileSelectionWizardPa
 			}
 			setErrorMessage(errorMessage);
 			setPageComplete(errorMessage == null);
+		} else if(templateSourceType == TemplateSourceType.xml) {
+			// Make sure a model can be created from the selected sample XML...
+			try {
+				String file = SmooksUIUtils.parseFilePath(this.fileText.getText());
+				new XMLSampleModelBuilder(URI.createFileURI(file));
+			} catch (Exception e) {
+				e.printStackTrace();
+				if(e.getCause() != null) {
+					setErrorMessage(Messages.XMLTemplateCreationWizardPage_Error_Invalid_Sample_XML + "  " + e.getCause().getMessage());  //$NON-NLS-1$
+				} else {
+					setErrorMessage(Messages.XMLTemplateCreationWizardPage_Error_Invalid_Sample_XML);
+				}
+				setPageComplete(false);
+			}
 		}
 	}
 

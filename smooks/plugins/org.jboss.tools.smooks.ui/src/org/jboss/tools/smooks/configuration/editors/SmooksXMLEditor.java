@@ -49,9 +49,6 @@ public class SmooksXMLEditor extends StructuredTextEditor {
 	@Override
 	public void doSetInput(IEditorInput input) throws CoreException {
 
-		System.out.println(((IFileEditorInput) input).getFile()
-				.getFileExtension());
-
 		final IFile newFile = ((IFileEditorInput) input).getFile();
 		if ("xml".equals(newFile.getFileExtension())) {
 			// try {

@@ -100,7 +100,6 @@ public class SmooksLauncher {
 			} else {
 				smooks.filterSource(inputSource, javaResult);
 			}
-			System.out.println("successfully");
 			Collection<ObjectSerializer> serializedJavaResults = ObjectSerializer.serialize(javaResult);
 			if(!serializedJavaResults.isEmpty()) {
 				System.out.println("[" + localizedMessages.getProperty("SmooksLauncher_Java_Mapping_Results") + "...]"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
