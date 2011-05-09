@@ -16,13 +16,13 @@
 			-f ~/RHDS/updates/requirements/indigo/build.xml -Ddestination=/tmp/indigo-repo
 	-->
 	<target name="mirror">
-		<property name="URL" value="http://download.eclipse.org/releases/indigo/" />
+		<property name="URL" value="http://download.eclipse.org/releases/indigo/201105060900/" />
 
-		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/indigo/201103180900/" />
+		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/indigo/201105060900/" />
 		<property name="compress" value="true" />
 
 		<p2.mirror>
-			<repository location="file:${destination}/201103180900-M6/" name="Indigo 201103180900-M6" />
+			<repository location="file:${destination}/201105060900-M7/" name="Indigo 201105060900-M7" />
 			<source>
 				<repository location="${URL}" />
 			</source>
@@ -30,6 +30,6 @@
 			<slicingOptions includeFeatures="true" followStrict="true" />
 		</p2.mirror>
 
-		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/201103180900-M6/" artifactRepository="file:${destination}/201103180900-M6/" publishartifacts="true" source="${destination}/201103180900-M6/" compress="${compress}" />
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/201105060900-M7/" artifactRepository="file:${destination}/201105060900-M7/" publishartifacts="true" source="${destination}/201105060900-M7/" compress="${compress}" />
 	</target>
 </project>
