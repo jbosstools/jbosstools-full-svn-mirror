@@ -29,6 +29,7 @@ gwt, runtime, tests, usage, drools, pi4soa, savara, teiid -> [none]
 New in 3.3:
 
 forge -> [none]
+examples -> portlet, jst
 
 tptp [REMOVED]
 
