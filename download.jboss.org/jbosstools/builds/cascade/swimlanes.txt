@@ -30,6 +30,7 @@ New in 3.3:
 
 forge -> [none]
 examples -> portlet, jst
+runtime -> tests
 
 tptp [REMOVED]
 
