@@ -19,7 +19,6 @@ public class XSDFileCollect {
 			if (file.isFile()) {
 				String name = file.getName();
 				if(name.endsWith(".xsd")){ //$NON-NLS-1$
-					System.out.println(file.getName());
 				}
 			}
 		}

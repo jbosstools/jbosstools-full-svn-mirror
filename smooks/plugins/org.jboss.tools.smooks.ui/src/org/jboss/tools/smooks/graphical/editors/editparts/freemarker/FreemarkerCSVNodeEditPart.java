@@ -261,7 +261,6 @@ public class FreemarkerCSVNodeEditPart extends TreeNodeEditPart {
 	 */
 	@Override
 	public void treeCollapsed(TreeFigureExpansionEvent event) {
-		System.out.println();
 	}
 
 	/*

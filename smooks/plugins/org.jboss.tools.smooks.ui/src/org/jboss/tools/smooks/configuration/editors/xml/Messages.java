@@ -10,6 +10,7 @@ public class Messages extends NLS {
 	public static String XMLTemplateCreationWizardPage_Button_Load;
 	public static String XMLTemplateCreationWizardPage_Error_Must_Click_Load;
 	public static String XMLTemplateCreationWizardPage_Error_Must_Select_Root;
+	public static String XMLTemplateCreationWizardPage_Error_Invalid_Sample_XML;
 	public static String XMLTemplateCreationWizardPage_FileLabel;
 	public static String XMLTemplateCreationWizardPage_Label_Select_Root;
 	public static String XMLTemplateCreationWizardPage_page_description;

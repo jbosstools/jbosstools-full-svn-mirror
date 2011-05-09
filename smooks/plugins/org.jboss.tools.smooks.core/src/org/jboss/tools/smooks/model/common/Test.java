@@ -36,9 +36,7 @@ public class Test {
 			List<?> list1 = sr.getAbstractResourceConfig();
 			for (Iterator<?> iterator = list1.iterator(); iterator.hasNext();) {
 				AbstractResourceConfig arc = (AbstractResourceConfig) iterator.next();
-				System.out.println(arc);
 			}
-			System.out.println(obj);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

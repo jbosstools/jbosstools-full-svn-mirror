@@ -30,6 +30,7 @@ import org.jboss.tools.smooks.graphical.editors.model.javamapping.JavaBeanGraphM
 import org.jboss.tools.smooks.graphical.editors.process.TaskType;
 import org.jboss.tools.smooks.model.freemarker.Freemarker;
 import org.jboss.tools.smooks.model.javabean12.BeanType;
+import org.jboss.tools.smooks.templating.template.exception.TemplateBuilderException;
 
 /**
  * @author Dart
@@ -70,8 +71,12 @@ public class FreemarkerTemplateGraphicalModelFactory extends GraphicalModelFacto
 						templateLP = new FreemarkerTemplateModelLabelProvider();
 					}
 					if (taskType.inTheTask((Freemarker)model)) {
-						graphModel = new FreemarkerTemplateGraphicalModel(model, new FreemarkerContentProvider(
-								contentProvider), templateLP, provider);
+						try {
+							graphModel = new FreemarkerTemplateGraphicalModel(model, new FreemarkerContentProvider(
+									contentProvider), templateLP, provider);
+						} catch (TemplateBuilderException e) {
+							return null;
+						}
 						((TreeContainerModel) graphModel).setHeaderVisable(true);
 					}
 				}
