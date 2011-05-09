@@ -823,6 +823,15 @@ VDBs are used by Teiid to access federated data.
         <url>
             http://anonsvn.jboss.org/repos/jbosstools/workspace/dflorian/teiid-designer/parts_modelProjectSet.zip
         </url>
+        <fixes>
+			<fix type="wtpruntime">
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50, org.jboss.ide.eclipse.as.runtime.51, org.jboss.ide.eclipse.as.runtime.60</property>
+				<property name="eclipse-projects">PartsProject</property>
+				<property name="required-components">teiid</property>
+				<property name="description">This project example requires a Teiid instance running within the JBoss EAP 5.0 or JBoss AS >= 5.1.0</property>
+			</fix>
+		</fixes>
+		<welcome type="html" url="/PartsProject/readme/Example Instructions.html"/>
         <perspectiveId>modelerPerspective</perspectiveId>
     </project>
     <project>
@@ -857,6 +866,14 @@ The example provides the sample SOAP Service and a Teiid Designer project set th
         <url>
             http://anonsvn.jboss.org/repos/jbosstools/workspace/jdoyle/teiid-designer/StateServiceExampleProject.zip
         </url>
+        <fixes>
+		  <fix type="wtpruntime">
+			<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50</property>
+			<property name="eclipse-projects">StateService,StateServiceEAR</property>
+			<property name="required-components">teiid</property>
+			<property name="description">This project example requires a Teiid instance running within the JBoss EAP 5.0</property>
+		  </fix>
+		</fixes>
         <perspectiveId>modelerPerspective</perspectiveId>
     </project>  
 </projects>
