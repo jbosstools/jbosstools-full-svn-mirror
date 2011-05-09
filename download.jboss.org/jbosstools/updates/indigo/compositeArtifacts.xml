@@ -14,18 +14,20 @@ nnoremap <Leader>ts :call ReplaceTimestamp()<CR>
 -->
 <property name='p2.timestamp' value='1304967283000'/>
 </properties>
-<children size='24'>
+<children size='26'>
 <child location='../requirements/indigo/201105060900-M7/'/>
 <child location='../requirements/birt/4.0M7/'/>
 <child location='../requirements/eclipse/3.7M7/'/>
 <child location='../requirements/emf/2.7M7/'/>
 <child location='../requirements/webtools/3.3M7/'/>
+<child location='../requirements/m2eclipse/0.13.0.201105091504/'/>
 
 <child location='../requirements/indigo/201103180900-M6/'/>
 <child location='../requirements/birt/4.0M6/'/>
 <child location='../requirements/eclipse/3.7M6/'/>
 <child location='../requirements/emf/2.7M6/'/>
 <child location='../requirements/webtools/3.3M6/'/>
+<child location='../requirements/m2eclipse/0.13.0.201103291237/'/>
 
 <child location='../requirements/ecf/3.5/'/>
 <child location='../requirements/egit/0.11/'/>
@@ -34,7 +36,6 @@ nnoremap <Leader>ts :call ReplaceTimestamp()<CR>
 <child location='../requirements/jslint/1.5/'/>
 
 <child location='../requirements/mylyn/3.6/'/>
-<child location='../requirements/m2eclipse/0.13.0.201103291237/'/>
 <child location='../requirements/orbit/S20110124210048/'/>
 <child location='../requirements/pmd/3.2.6/'/>
 <child location='../requirements/springide/2.6.0.201103160035/'/>
