@@ -71,7 +71,7 @@ import org.modeshape.web.jcr.rest.client.domain.Workspace;
  * more files to a repository.
  */
 public final class PublishPage extends WizardPage implements IServerRegistryListener, ModifyListener {
-
+	
 	/**
 	 * The default repository workspace area where files are published.
 	 */
@@ -307,6 +307,11 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
 	private Combo cbxWorkspaceAreas;
 
 	/**
+	 * The control indicating if the user wants to version resources (will be <code>null</code> when unpublishing).
+	 */
+	private Button chkVersioning;
+
+	/**
 	 * The files being published or unpublished (never <code>null</code>).
 	 */
 	private List<IFile> files;
@@ -316,6 +321,11 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
 	 * operations (may be <code>null</code>).
 	 */
 	private PublishingFileFilter filter;
+	
+	/**
+	 * A hyperlink to the preference page (will be <code>null</code> when unpublishing).
+	 */
+	private Link linkPrefs;
 
 	/**
 	 * The control containing all the files being published or unpublished.
@@ -337,6 +347,11 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
 	 * The repository where the workspace is located.
 	 */
 	private Repository repository;
+
+	/**
+	 * <code>true</code> if the selected repository supports versioning
+	 */
+	private boolean repositorySupportsVersioning;
 
 	/**
 	 * The collection of resources selected by the user to be published or
@@ -613,16 +628,17 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
 			pnlVersioning.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true));
 			((GridData) pnlVersioning.getLayoutData()).minimumHeight = 30;
 
-			Button chkVersioning = new Button(pnlVersioning, SWT.CHECK);
-			chkVersioning.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
-			chkVersioning.setText(RestClientI18n.publishPageVersionCheckBox.text());
-			chkVersioning.setToolTipText(RestClientI18n.publishPageVersionCheckBoxToolTip.text());
+			this.chkVersioning = new Button(pnlVersioning, SWT.CHECK);
+			this.chkVersioning.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
+			this.chkVersioning.setText(RestClientI18n.publishPageVersionCheckBox.text());
+			this.chkVersioning.setToolTipText(RestClientI18n.publishPageVersionCheckBoxToolTip.text());
 
 			// set the version flag based on preference
 			this.versioning = Activator.getDefault().getPreferenceStore().getBoolean(ENABLE_RESOURCE_VERSIONING);
 
-			chkVersioning.setSelection(this.versioning);
-			chkVersioning.addSelectionListener(new SelectionAdapter() {
+			this.chkVersioning.setSelection(this.versioning);
+			this.chkVersioning.setEnabled(false);
+			this.chkVersioning.addSelectionListener(new SelectionAdapter() {
 				/**
 				 * {@inheritDoc}
 				 * 
@@ -634,10 +650,11 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
 				}
 			});
 
-			Link link = new Link(pnlVersioning, SWT.WRAP);
-			link.setText(RestClientI18n.publishPageOpenPreferencePageLink.text());
-			link.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
-			link.addSelectionListener(new SelectionAdapter() {
+			this.linkPrefs = new Link(pnlVersioning, SWT.WRAP);
+			this.linkPrefs.setText(RestClientI18n.publishPageOpenPreferencePageLink.text());
+			this.linkPrefs.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
+			this.linkPrefs.setEnabled(false);
+			this.linkPrefs.addSelectionListener(new SelectionAdapter() {
 				/**
 				 * {@inheritDoc}
 				 * 
@@ -767,6 +784,9 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
 			this.repository = this.repositories.get(index);
 		}
 
+		// repository capabilities could affect the UI
+		updateRepositoryCapabilities();
+
 		// clear loaded workspaces
 		refreshWorkspaces();
 
@@ -878,7 +898,7 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
 	 *         done
 	 */
 	boolean isVersioning() {
-		return this.versioning;
+		return (this.repositorySupportsVersioning && this.versioning);
 	}
 
 	/**
@@ -964,6 +984,9 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
 				this.cbxRepository.setEnabled(true);
 			}
 		}
+		
+		// repository capabilities could affect the UI
+		updateRepositoryCapabilities();
 
 		// must reload workspaces
 		refreshWorkspaces();
@@ -1143,6 +1166,32 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
 
 		if (msg.equals(getMessage())) {
 			updateState();
+		}
+	}
+	
+	/**
+	* Some capabilities (like versioning) will not be supported by all repositories. This could affect the UI.
+	 */
+	private void updateRepositoryCapabilities() {
+		// versioning
+		this.repositorySupportsVersioning = true;
+
+		if (this.repository == null) {
+			this.repositorySupportsVersioning = false;
+		} else {
+			Object supportsVersioning = this.repository.getMetadata().get(javax.jcr.Repository.OPTION_VERSIONING_SUPPORTED);
+	
+			if (supportsVersioning == null) {
+				this.repositorySupportsVersioning = false;
+			} else {
+				this.repositorySupportsVersioning = Boolean.parseBoolean(supportsVersioning.toString());
+			}
+		}
+
+		// update enabled state of versioning controls
+		if ((this.chkVersioning != null) && (this.chkVersioning.getEnabled() != this.repositorySupportsVersioning)) {
+			this.chkVersioning.setEnabled(this.repositorySupportsVersioning);
+			this.linkPrefs.setEnabled(this.repositorySupportsVersioning);
 		}
 	}
 
