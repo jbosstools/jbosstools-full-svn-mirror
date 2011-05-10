@@ -32,6 +32,11 @@
 		<category name="WebTools" />
 		<category name="GeneralTools" />
 	</feature>
+	<feature url="features/org.jboss.tools.cdi.seam.feature_0.0.0.jar" id="org.jboss.tools.cdi.seam.feature" version="0.0.0">
+		<category name="AllTools" />
+		<category name="WebTools" />
+		<category name="GeneralTools" />
+	</feature>
 	<feature url="features/org.jboss.tools.jmx.feature_0.0.0.jar" id="org.jboss.tools.jmx.feature" version="0.0.0">
 		<category name="AllTools" />
 		<category name="GeneralTools" />
