@@ -44,8 +44,9 @@ public class AddTaskNodeAction extends AbstractProcessGraphAction {
 			if(currentTask.getTask().isEmpty()) {
 				String taskID = currentTask.getId();
 				if (taskID != null) {
-					if (taskID.equals(TaskTypeManager.TASK_ID_INPUT) || taskID.equals(TaskTypeManager.TASK_ID_JAVA_MAPPING))
+					if (taskID.equals(TaskTypeManager.TASK_ID_INPUT) || taskID.equals(TaskTypeManager.TASK_ID_JAVA_MAPPING)) {
 						this.setEnabled(true);
+					}
 				}
 			}
 		}
