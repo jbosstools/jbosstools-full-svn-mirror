@@ -512,20 +512,28 @@ public final class ServerManager implements IRestClient {
     public Status publish( Workspace workspace,
                            String path,
                            File file,
-                           boolean version ) {
-        CheckArg.isNotNull(workspace, "workspace"); //$NON-NLS-1$
-        CheckArg.isNotNull(path, "path"); //$NON-NLS-1$
-        CheckArg.isNotNull(file, "file"); //$NON-NLS-1$
+ boolean version) {
+		CheckArg.isNotNull(workspace, "workspace"); //$NON-NLS-1$
+		CheckArg.isNotNull(path, "path"); //$NON-NLS-1$
+		CheckArg.isNotNull(file, "file"); //$NON-NLS-1$
 
-        Server server = workspace.getServer();
+		Server server = workspace.getServer();
 
-        if (isRegistered(server)) {
-            return this.delegate.publish(workspace, path, file, version);
-        }
+		if (isRegistered(server)) {
+			if (version) {
+				return this.delegate.publish(workspace, path, file, true);
+			}
 
-        // server must be registered in order to publish
-        throw new RuntimeException(RestClientI18n.serverManagerUnregisteredServer.text(server.getShortDescription()));
-    }
+			// If version is false it could mean that versioning is not supported by the repository, or it is not enabled by the
+			// by the repository, or that the user does not want the file versioned. If repository is running on an older server
+			// that did not have versioning, then the only publishing method available on the server was the publish method without
+			// the version parameter.
+			return this.delegate.publish(workspace, path, file);
+		}
+
+		// server must be registered in order to publish
+		throw new RuntimeException(RestClientI18n.serverManagerUnregisteredServer.text(server.getShortDescription()));
+	}
 
     /**
      * @param listener the listener being unregistered and will no longer receive events (never <code>null</code>)
