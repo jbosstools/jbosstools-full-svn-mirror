@@ -42,10 +42,13 @@
 		<!-- 2a. URL of latest JBT nightly staging composite site (all the components in once place) -->
 		<jbosstools-nightly-staging-composite>http://download.jboss.org/jbosstools/builds/staging/_composite_/3.2_stable_branch/</jbosstools-nightly-staging-composite>
 
-		<!-- 2b., or, use -Plocal.comp -Dlocal.comp=file://path/to/mirror/of/composite/staging/site/ -->
+		<!-- 2b., or, use -Plocal.composite -Dlocal.composite=file://path/to/mirror/of/composite/staging/site/ -->
 		<local.composite>file://home/hudson/static_build_env/jbds/builds/staging/_composite_/3.2_stable_branch/</local.composite>
 
-		<!-- 3. published aggregate update site goes here, for consumption by QE and downstream JBDS builds -->
+		<!-- 3. optionally, use -Plocal.requirements -Dlocal.requirements=file://path/to/mirror/of/composite/requirements/site -->
+		<local.requirements>file://qa/services/http/binaries/RHDS/updates/helios/</local.requirements>
+
+		<!-- 4. published aggregate update site goes here, for consumption by QE and downstream JBDS builds -->
 		<jbosstools.update.site>http://download.jboss.org/jbosstools/updates/nightly/3.2_stable_branch/</jbosstools.update.site>
 	</properties>
 
@@ -831,6 +834,27 @@
 					<layout>p2</layout> 
 					<snapshots> <enabled>true</enabled> </snapshots> 
 					<releases> <enabled>true</enabled> </releases> 
+				</repository>
+			</repositories>
+		</profile>
+
+		<!-- same contents as jboss-requirements-composite-mirror, but locally available (to improve network lag) -->
+		<profile>
+			<id>local.requirements</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<repositories>
+				<repository>
+					<id>local.requirements</id>
+					<url>${local.requirements}</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
 				</repository>
 			</repositories>
 		</profile>
