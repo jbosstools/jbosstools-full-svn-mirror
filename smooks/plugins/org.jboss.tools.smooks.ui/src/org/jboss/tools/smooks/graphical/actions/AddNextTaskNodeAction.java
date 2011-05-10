@@ -57,12 +57,11 @@ public class AddNextTaskNodeAction extends AddTaskNodeAction {
 		super.init();
 	}
 
-	protected void addFreemarkerTemplateTask(IWizard currentWizard, SmooksResourceListType resourceList) {
+	protected void addFreemarkerTemplateTask(IWizard currentWizard, SmooksResourceListType resourceList, List<TaskType> selectedTask) {
 		if (currentWizard instanceof FreemarkerTemplateParametersProvider) {
-			List<TaskType> selectedTask = getCurrentSelectedTask();
-			
 			if(selectedTask == null || selectedTask.isEmpty()) {
 				// No node properly selected in the Task Detail panel...
+				System.out.println("No task selected.  Cannot add templating task.");
 				return;
 			}
 
@@ -141,12 +140,13 @@ public class AddNextTaskNodeAction extends AddTaskNodeAction {
 			SmooksResourceListType resourceList = SmooksUIUtils.getSmooks11ResourceListType(provider.getSmooksModel());
 			if (taskID.equals(TaskTypeManager.TASK_ID_FREEMARKER_XML_TEMPLATE) || taskID.equals(TaskTypeManager.TASK_ID_FREEMARKER_CSV_TEMPLATE)) {
 				// open wizard
+				List<TaskType> selectedTask = getCurrentSelectedTask();
 				TemplateMessageTypeWizard wizard = new TemplateMessageTypeWizard();
 				WizardDialog dialog = new WizardDialog(editorPart.getSite().getShell(), wizard);
 				if (dialog.open() == Dialog.OK) {
 					// init freemarker model
 					IWizard currentWizard = wizard.getWizard();
-					addFreemarkerTemplateTask(currentWizard, resourceList);
+					addFreemarkerTemplateTask(currentWizard, resourceList, selectedTask);
 				} else {
 					return;
 				}
