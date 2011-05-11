@@ -31,17 +31,17 @@
 		<!-- 1a. URL of latest JBT target platform site -->
 		<jbosstools-target-site>http://download.jboss.org/jbosstools/updates/target-platform_3.3.indigo/latest/</jbosstools-target-site>
 
-		<!-- 1b. or, use -Plocal.site -Dlocal.site=file://home/$user/trunk/build/target-platform/REPO/ -->
-		<local.site>file://home/hudson/static_build_env/jbds/target-platform_3.3.indigo/e37M6-wtp33M6.target/</local.site>
+		<!-- 1b. or, use -Plocal.site -Dlocal.site=file:///home/$user/trunk/build/target-platform/REPO/ -->
+		<local.site>file:///home/hudson/static_build_env/jbds/target-platform_3.3.indigo/e37M6-wtp33M6.target/</local.site>
 
 		<!-- 2a. URL of latest JBT nightly staging composite site (all the components in once place) -->
 		<jbosstools-nightly-staging-composite>http://download.jboss.org/jbosstools/builds/staging/_composite_/3.3.indigo/</jbosstools-nightly-staging-composite>
 
-		<!-- 2b., or, use -Plocal.composite -Dlocal.composite=file://path/to/mirror/of/composite/staging/site/ -->
-		<local.composite>file://home/hudson/static_build_env/jbds/builds/staging/_composite_/3.3.indigo/</local.composite>
+		<!-- 2b., or, use -Plocal.composite -Dlocal.composite=file:///path/to/mirror/of/composite/staging/site/ -->
+		<local.composite>file:///home/hudson/static_build_env/jbds/builds/staging/_composite_/3.3.indigo/</local.composite>
 
-		<!-- 3. optionally, use -Plocal.requirements -Dlocal.requirements=file://path/to/mirror/of/composite/requirements/site -->
-		<local.requirements>file://qa/services/http/binaries/RHDS/updates/indigo/</local.requirements>
+		<!-- 3. optionally, use -Plocal.requirements -Dlocal.requirements=file:///path/to/mirror/of/composite/requirements/site -->
+		<local.requirements>file:///qa/services/http/binaries/RHDS/updates/indigo/</local.requirements>
 
 		<!-- 4. published aggregate update site goes here, for consumption by QE and downstream JBDS builds -->
 		<jbosstools-nightly>http://download.jboss.org/jbosstools/updates/nightly/3.3.indigo/</jbosstools-nightly>
@@ -411,7 +411,7 @@
 		</profile>
 
 		<!-- if you have a local repo mirror of the unified.site, you can use this 
-			profile with the -Dlocal.site=file://path/to/repo to resolve dependencies 
+			profile with the -Dlocal.site=file:///path/to/repo to resolve dependencies 
 			without needing to use a local.site file -->
 		<profile>
 			<id>local.site</id>
