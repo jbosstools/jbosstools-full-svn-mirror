@@ -21,6 +21,7 @@ nnoremap <Leader>ts :call ReplaceTimestamp()<CR>
 <child location='../../requirements/emf/2.7M6/'/>
 <child location='../../requirements/webtools/3.3M6/'/>
 <child location='../../requirements/m2eclipse/0.13.0.201103291237/'/>
+<child location='../../requirements/mylyn/3.6-I20110415-0655/'/>
 
 <child location='../../requirements/ecf/3.5/'/>
 <child location='../../requirements/egit/0.11/'/>
@@ -28,7 +29,6 @@ nnoremap <Leader>ts :call ReplaceTimestamp()<CR>
 <child location='../../requirements/gwt/201102111811/'/>
 <child location='../../requirements/jslint/1.5/'/>
 
-<child location='../../requirements/mylyn/3.6/'/>
 <child location='../../requirements/orbit/S20110124210048/'/>
 <child location='../../requirements/pmd/3.2.6/'/>
 <child location='../../requirements/springide/2.6.0.201103160035/'/>

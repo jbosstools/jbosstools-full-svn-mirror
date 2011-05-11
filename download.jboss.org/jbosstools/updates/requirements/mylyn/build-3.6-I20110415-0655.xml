@@ -18,7 +18,7 @@
 	<target name="mirror">
 		<!-- core mylyn, if not on Indigo site; includes Bugzilla -->
 		<!-- <property name="URL1" value="http://download.eclipse.org/mylyn/snapshots/weekly/" /> -->
-		<property name="URL1" value="http://download.eclipse.org/mylyn/archive/3.6.0/I20110504-0744/" />
+		<property name="URL1" value="http://download.eclipse.org/mylyn/archive/3.6.0/I20110415-0655/" />
 		<!-- JIRA connector; note that Subclipse connector is on Subclipse req site, ../subclipse/ -->
 		<!--<property name="URL2" value="http://update.atlassian.com/atlassian-eclipse-plugin/e3.6/" /> -->
 		<property name="URL2" value="http://update.atlassian.com/atlassian-eclipse-plugin/weekly/e3.5/" />
@@ -26,7 +26,7 @@
 		<property name="compress" value="true" />
 
 		<p2.mirror>
-			<repository location="file:${destination}/3.6-I20110504-0744" name="mylyn plugins for Eclipse 3.6 - 3.7" />
+			<repository location="file:${destination}/3.6-I20110415-0655" name="mylyn plugins for Eclipse 3.6 - 3.7" />
 			<source>
 				<repository location="${URL1}" />
 				<repository location="${URL2}" />
@@ -58,6 +58,6 @@
 			<iu id="com.atlassian.connector.eclipse.subversive.feature.group" />
 		</p2.mirror>
 
-		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/3.6-I20110504-0744/" artifactRepository="file:${destination}/3.6-I20110504-0744/" publishartifacts="true" source="${destination}/3.6-I20110504-0744/" compress="${compress}" />
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/3.6-I20110415-0655/" artifactRepository="file:${destination}/3.6-I20110415-0655/" publishartifacts="true" source="${destination}/3.6-I20110415-0655/" compress="${compress}" />
 	</target>
 </project>
