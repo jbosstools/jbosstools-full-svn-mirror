@@ -653,7 +653,7 @@ public class EditMessagePropertyDialog extends Dialog {
 
 				// https://issues.jboss.org/browse/JBIDE-8075
 				// create the artifacts resource if it doesn't already exist
-				if (!targetFile.exists()) {
+				if (targetFile!=null && !targetFile.exists()) {
 					// add the import if not already being imported by this process
 					AddImportCommand cmd = new AddImportCommand(bpelEditor.getProcess(), definition, null);
 					if (cmd.canDoExecute() && cmd.wouldCreateDuplicateImport() == false) {

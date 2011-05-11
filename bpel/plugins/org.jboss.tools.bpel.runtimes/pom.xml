@@ -8,6 +8,6 @@
 	</parent>
 	<groupId>org.jboss.tools.bpel</groupId>
 	<artifactId>org.jboss.tools.bpel.runtimes</artifactId> 
-	<version>0.4.1-SNAPSHOT</version>
+	<version>0.4.2-SNAPSHOT</version>
 	<packaging>eclipse-plugin</packaging>
 </project>

@@ -86,16 +86,16 @@ public class NewFileWizardPage2 extends WizardPage {
 		if (resource instanceof IContainer) {
 			IContainer container = (IContainer)resource;
 			// https://issues.jboss.org/browse/JBIDE-8591
+			setMessage(null);
 			if (!ModuleCoreNature.isFlexibleProject(resource.getProject())) {
 				setMessage(Messages.NewFileWizard_Not_A_Faceted_Project, WizardPage.WARNING);
-				return false;
+//				return false;
 			}
 			
 			if ( container.findMember(processName +".bpel") != null ) { //$NON-NLS-1$
 				setMessage(Messages.NewFileWizardPage1_12, WizardPage.ERROR);
 				return false;
 			}
-			setMessage(null);
 			return true;
 		}
 		return false;
@@ -125,8 +125,8 @@ public class NewFileWizardPage2 extends WizardPage {
 		if (container==null)
 			return false;
 		
-		if (!ModuleCoreNature.isFlexibleProject(container.getProject()))
-			return false;
+//		if (!ModuleCoreNature.isFlexibleProject(container.getProject()))
+//			return false;
 		
 		if ( container.findMember(processName +".bpel") != null ) //$NON-NLS-1$
 			return false;

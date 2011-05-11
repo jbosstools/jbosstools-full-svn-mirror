@@ -8,6 +8,6 @@
 	</parent>
 	<groupId>org.jboss.tools.bpel</groupId>
 	<artifactId>org.eclipse.bpel.apache.ode.deploy.ui</artifactId> 
-	<version>0.6.1-SNAPSHOT</version>
+	<version>0.6.2-SNAPSHOT</version>
 	<packaging>eclipse-plugin</packaging>
 </project>
