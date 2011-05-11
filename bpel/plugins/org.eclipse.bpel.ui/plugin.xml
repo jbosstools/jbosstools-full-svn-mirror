@@ -711,4 +711,29 @@
             name="BPEL">
       </perspective>
    </extension>
+   
+	<extension point="org.eclipse.ui.navigator.navigatorContent">
+		<commonWizard type="new" wizardId="org.jboss.tools.bpel.runtimes.wizards.newBPELProject" menuGroupId="org.eclipse.bpel.new.menuGroup">
+			<enablement>
+				<with variable="activeWorkbenchWindow.activePerspective">
+					<equals value="org.eclipse.bpel.ui.perspective"/>
+				</with>
+			</enablement>
+		</commonWizard>
+		<commonWizard type="new" wizardId="org.eclipse.bpel.ui.newFile" menuGroupId="org.eclipse.bpel.new.menuGroup">
+			<enablement>
+				<with variable="activeWorkbenchWindow.activePerspective">
+					<equals value="org.eclipse.bpel.ui.perspective"/>
+				</with>
+			</enablement>
+		</commonWizard>
+		<commonWizard type="new" wizardId="org.eclipse.bpel.apache.ode.deploy.ui.wizards.NewODEDeployWizard" menuGroupId="org.eclipse.bpel.new.menuGroup">
+			<enablement>
+				<with variable="activeWorkbenchWindow.activePerspective">
+					<equals value="org.eclipse.bpel.ui.perspective"/>
+				</with>
+			</enablement>
+		</commonWizard>
+	</extension>   
+
 </plugin>

@@ -47,7 +47,8 @@
    <extension point="org.eclipse.wst.server.core.moduleTypes">
       <moduleType
             id="jbt.bpel.module"
-            name="%MODULE_TYPE_NAME">
+            name="%OLD_MODULE_TYPE_NAME"
+            description="%OLD_MODULE_TYPE_DESCRIPTION">
       </moduleType>
    </extension>
    
@@ -57,7 +58,26 @@
 	<extension point="org.eclipse.wst.server.ui.serverImages">
 		<image
 			id="org.jboss.tools.bpel.runtimes.jbt.bpel.module"
-			typeIds="jbt.bpel.module"
+			typeIds="jbt.bpel.module,bpel.module"
+			icon="icons/obj16/bpelfacet.gif"/>
+	</extension>
+
+   
+   <extension point="org.eclipse.wst.server.core.moduleTypes">
+      <moduleType
+            id="bpel.module"
+            name="%NEW_MODULE_TYPE_NAME"
+            description="%NEW_MODULE_TYPE_DESCRIPTION">
+      </moduleType>
+   </extension>
+   
+<!-- The following is needed to make icons for deployable modules occur in   -->
+<!-- the Add and Remove Projects wizard										 -->
+   
+	<extension point="org.eclipse.wst.server.ui.serverImages">
+		<image
+			id="org.jboss.tools.bpel.runtimes.bpel.module"
+			typeIds="bpel.module"
 			icon="icons/obj16/bpelfacet.gif"/>
 	</extension>
    
@@ -185,7 +205,7 @@
             id="org.jboss.tools.bpel.runtimes.module.moduleFactory">
      		<moduleType
                versions="1.1, 2.0"
-               types="jbt.bpel.module">
+               types="jbt.bpel.module,bpel.module">
 			</moduleType>
  		</moduleFactory>
      </extension>

@@ -10,7 +10,7 @@
        		version="1.0"
        		class="org.eclipse.jst.server.generic.core.internal.GenericServerRuntime">
        		<moduleType
-				types="jbt.bpel.module"
+				types="bpel.module"
          		versions="1.1, 2.0"/>
     	</runtimeType>
    	</extension>
@@ -42,8 +42,9 @@
 			id="org.eclipse.jst.server.generic.image"
 			icon="icons/obj16/ode.gif"
 			typeIds="org.eclipse.bpel.apache.ode.runtime.st"/>
-	</extension>	
-
+	</extension>
+		
+	
    <extension point="org.eclipse.jst.server.generic.core.genericpublisher">
 		<genericpublisher
 			class="org.eclipse.bpel.apache.ode.runtime.OdeBPELPublisher"
@@ -71,7 +72,7 @@
 				id="org.eclipse.bpel.apache.ode.runtime.rt"
 				version="2.0"/>
 			<facet
-				id="jbt.bpel.facet.core"
+				id="bpel.facet.core"
 				version="2.0"/>
 		</supported>
 	</extension>
