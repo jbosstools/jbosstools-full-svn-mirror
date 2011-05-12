@@ -1,0 +1,183 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Language" content="en-us">
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=ISO-8859-1">
+  <link rel="stylesheet" href="../whatsnew.css">
+  <title>Teiid Designer What's New</title>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17645367-5']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script></head>
+<body>
+<h1>Teiid Designer 7.4 What's New</h1>
+<p align="right"><a href="../index.html">&lt; Main Index</a> <a
+href="../deltacloud/deltacloud-news-0.0.1.CR1.html">Delta Cloud Tools &gt;</a></p>
+
+<p>Last revised May 12, 2011</p>
+<p><b>Teiid Designer</b> is a graphical data modeling tool that enables
+rapid definition, integration, management and testing of data services
+without programming using the <b>Teiid</b> runtime engine.</p>
+<p>For more details on <a href="http://www.jboss.org/teiid.html">Teiid</a>
+and <a href="http://www.jboss.org/teiiddesigner.html">Teiid Designer</a>
+visit: <a href="http://www.teiid.org">http://www.teiid.org</a></p>
+<table width="80%" border="0" cellpadding="10" cellspacing="0">
+  <tbody>
+    <tr>
+      <td colspan="2">
+      <hr>
+      <h3>VDB Editor</h3>
+      <hr> </td>
+    </tr>
+    <tr>
+      <td valign="top" align="left">
+      <p><b> Improved Layout<b>
+      </b></p>
+      </td>
+      <td valign="top">
+      <p> The VDB editor had some limitations on it's layout and required re-work in order to accommodate a 
+      large number of models and files as well as the addition of a new tab introduced for editing 
+      Translator Override properties. (TEIIDDES-934)</p>
+      <p>The image below shows upper and lower panels separated by a movable splitter.  
+      Upper panel includes tabs for adding and removing your "Models" and "Other Files.</p>
+      <p>The lower tab contains tabs for editing and managing Data Roles, VDB Description and the newly available 
+      Translator Overrides.</p>
+      <p><img style="border: 1px solid ;"
+ 		src="images/translator-overrides-editor-tab.png"
+ 		alt="VDB Editor"/></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top" align="left">
+      <p><b>Translator Overrides<b>
+      </b></p>
+      </td>
+      <td valign="top">
+      <p>The VDB manifest definition (vdb.xml) has had provisions for applying Translator property overrides 
+      specific to the source models contained in your VDB. In 7.4, Teiid Designer provides a means to add 
+      and edit these overrides. (TEIIDDES-710)</p>
+      <p>As shown in the figure above, the Translator Overrides tab panel contains a list panel on the left containing 
+      references to your Overridden Translators.  Selecting one of these from the list populates the Description 
+      and Properties panel on the right.</p>
+      <p>To override translator properties for one or more of you source models, select the "+" or add action at the 
+      bottom left of the panel.  When the Add Translator Override dialog appears (shown below), select an existing 
+      translator type and select OK.</p>
+      <p><img style="border: 1px solid ;"
+ 			src="images/add-translator-override-dialog.png"
+ 			alt="Add Translator Override Dialog"/></p>
+ 			
+ 	<p>The above dialog will be displayed if there is a default Teiid instance defined and connected in the Teiid View.  
+ 	If there are no Teiid servers defined in your workspace, you can still create a translator override. 
+ 	The following dialog will be displayed instead. Provide a unique name for your translator override and enter 
+ 	a valid translator name (i.e. oracle, mysql, etc. See your Teiid server installation or AS console 
+ 	for available translator names)</p>
+      <p><img style="border: 1px solid ;"
+ 			src="images/add-new-translator-override-dialog.png"
+ 			alt="Add New Translator Override Dialog"/></p>
+      </td>
+    </tr>
+<tr>
+      <td valign="top" align="left">
+      <p><b>Preferences<br>
+      </b></p>
+      </td>
+      <td valign="top">
+      <p>We added an additional tab in the Window > Preferences > Teiid Designer > Editor panel.  The lone preference 
+      allows preventing the confirmation/warning dialog that's presented when you synchronize your VDB. (TEIIDDES-896)</p>
+      <p><img style="border: 1px solid ;"
+ 			src="images/vdb-editor-preferences.png"
+ 			alt="VDB Editor Preferences"/></p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <hr>
+      <h3>Description View</h3>
+      <hr> </td>
+    </tr>
+    <tr>
+      <td valign="top" align="left">
+      <p><b> <br>
+      </b></p>
+      </td>
+      <td valign="top">
+      <p>To improve user experience editing descriptions for models and model objects (TEIIDDES-826) the Description
+      View was changed to a read-only view. To edit Descriptions for selected objects, click the Edit icon in the toolbar
+      or right-click select the "Edit" action in the context menu. (See figures below)</p>
+      <p><img style="border: 1px solid ;"
+ 			src="images/description-view.png"
+ 			alt="Descriptio View"/></p>
+ 	  <p><img style="border: 1px solid ;"
+ 			src="images/description-view-context-menu.png"
+ 			alt="Context Menu"/></p>
+ 		<p><img style="border: 1px solid ;"
+ 			src="images/edit-description-dialog.png"
+ 			alt="Edit Description Dialog"/></p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <hr>
+      <h3>Connection Management</h3>
+      <hr> </td>
+    </tr>
+    <tr>
+      <td valign="top" align="left">
+      <p><b>View Connection Information<b>
+      </b></p>
+      </td>
+      <td valign="top">
+      <p>During JDBC import a model will contain certain connection properties which Teiid Designer uses to 
+      provide Preview Data functionality as well as populate VDB's with translator type information.</p>
+      <p>In 7.4, you can now view this connection information by selecting a source model and using the "Modeling > 
+      View Connection Profile Info" action. The read-only dialog is shown below.  (TEIIDDES-826, TEIIDDES-876) </p>
+      <p><img style="border: 1px solid ;"
+ 			src="images/view-connection-info-action.png"
+ 			alt="View Connection Info Action"/></p>
+      <p><img style="border: 1px solid ;"
+ 			src="images/view-connection-info-dialog.png.png"
+ 			alt="View Connection Info Dialog"/></p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top" align="left">
+      <p><b>Remove Connection Information<b>
+      </b></p>
+      </td>
+      <td valign="top">
+      <p>In addition, a <b>Remove Connection Info</b> action was added (see image above) that allows cleaning up/removing 
+      Connection Profile properties stored in a model. Some users may want to remove these properties prior to production 
+      deployment in your VDB for security reasons.</p>
+      <p>Lastly, an option was added to the <b>Export > Teiid Designer > Model Project Set</b> wizard which reads "Remove all 
+      source connection information from source models". You may want to use this option when export project sets for 
+      use by other developers.</p>
+      <p><img style="border: 1px solid ;"
+ 			src="images/export-model-project-set-wizard-page-2.png"
+ 			alt="Export Model Project Set Wizard"/></p>
+      </td>
+    </tr>
+
+    <tr>
+      <td valign="top" align="left"><br>
+      </td>
+      <td valign="top"><br>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <hr></td>
+    </tr>
+  </tbody>
+</table>
+</body>
+</html>
