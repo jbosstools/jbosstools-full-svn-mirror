@@ -7,10 +7,10 @@
      get new time w/ 
       date +%s000
 -->
-<property name='p2.timestamp' value='1305148907000'/>
+<property name='p2.timestamp' value='1305148908000'/>
 </properties>
-<children size='2'>
+<children size='1'>
 <child location='http://download.jboss.org/jbosstools/updates/JBossTools-3.3.0.M1a/'/>
-<child location='http://download.jboss.org/jbosstools/updates/indigo/M6/'/>
+<!-- <child location='http://download.jboss.org/jbosstools/updates/indigo/M6/'/> -->
 </children>
 </repository>
