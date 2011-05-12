@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../whatsnew.css"/>
+<title>ModeShape What's New</title>
+</head>
+<body>
+<h1>ModeShape 3.3.0.M1 What's New</h1>
+<p align="right"><a href="../index.html">&lt; Main Index</a></p>
+<p>Last revised May 12, 2011</p>
+
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+  <tr>
+      <td colspan="2"><hr /></td>
+  </tr>
+
+  <tr>
+      <td valign="top" align="left">
+        <p>
+        <a name="publishingOperationsDialog"><b>Publishing Operations Dialog</b></a>
+        </p>
+      </td>
+
+      <td valign="top">
+        <p>
+        Two enhancements were made to the <i>Publishing Operations Dialog</i>:
+            <ul>
+                <li> publish areas are now selectable, and
+                <p>
+                <li> a resource versioning option was added.
+            </ul>
+        </p>
+        
+        <p>
+        The known "publish areas" of the selected ModeShape repository are now selectable. These "publish areas" are paths within 
+        the repository where uploaded files will be sequenced. If you don't want to use one of these known areas, you can always 
+        type in a different path. 
+        </p>
+
+        <p>
+        The option to version resources is made at the time resources are published. If a resource is set to be versioned by the
+        ModeShape repository, then subsequent uploads of that file, that have versioning enabled, will create a new version of that 
+        file. No check is made to determine if the version being uploaded is any different than the latest version in the repository. 
+        On the other hand, if a file is published without versioning, only one copy of that file is stored in the repository. When 
+        the dialog is first displayed, the state of the checkbox used to enable versioning is set to the current value of the 
+        "enable versioning" ModeShape preference (discussed below). However, you can always change the value or even click the link 
+        to open the appropriate <a href="#generalPreferencePage">preference page</a>.
+        </p>
+
+        <p>
+        Here is what the ModeShape <i>Publishing Operations Dialog</i> looks like:
+        </p>
+        
+        <p>
+        <center>
+        <img src="images/PublishDialog-3.3.0.M1.png" alt="ModeShape Publishing Operations Dialog"/>
+        </center>
+        </p>
+      </td>
+  </tr>
+
+  <tr>
+    <td colspan="2"><hr /></td>
+  </tr>
+
+  <tr>
+      <td valign="top" align="left">
+        <p>
+        <b>Preference Pages</b>
+        </p>
+      </td>
+
+      <td valign="top">
+        <p>
+        <i>ModeShape Tools</i> preferences are now found on two preference pages:
+            <ol>
+                <li> <a href="#generalPreferencePage"><i>General Preference Page</i></a> - includes general settings to control the 
+                publishing operations with ModeShape servers.
+                <p>
+                <li> <a href="#ignoredResourcesPreferencePage"><i>Ignored Resources Preference Page</i></a> - includes settings to 
+                control which files and folders are filtered out of your publishing operations. This is a replacement for the 
+                filtered file and folder preferences.
+            </ol>
+        </p>
+
+        <p><a name="generalPreferencePage" />
+        The <i>General Preference Page</i> currently only has a setting to control if published resources will be versioned by 
+        the ModeShape server. This versioning preference is used by the 
+        <a href="#publishingOperationsDialog"><i>Publishing Operations Dialog</i></a>.
+        </p>
+
+        <p>
+        Here is what the ModeShape <i>General Preference Page</i> looks like:
+        </p>
+        
+        <p>
+        <center>
+        <img src="images/GeneralPreferencePage.png" alt="ModeShape General Preference Page"/>
+        </center>
+        </p>
+
+        <p><a name="ignoredResourcesPreferencePage" />
+        The <i>Ignored Resources Preference Page</i> is where you identify the name patterns of files and folders that you do 
+        not want involved in your publishing operations. An ignored resource pattern will apply to both files and folder
+        names and can contain the '*' (zero or more characters) and '?' (one character) wildcard characters.
+        </p>
+
+        <p>
+        Here is what the ModeShape <i>Ignored Resources Preference Page</i> looks like:
+        </p>
+        
+        <p>
+        <center>
+        <img src="images/IgnoredResourcesPreferencePage.png" alt="ModeShape Ignored Resources Preference Page"/>
+        </center>
+        </p>
+      </td>
+  </tr>
+
+  <tr>
+    <td colspan="2"><hr /></td>
+  </tr>
+</table>
+
+</body>
+
+</html>
+
+
