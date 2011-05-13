@@ -143,10 +143,25 @@
 			</vpe:dnd>
 		</vpe:template>
 	</vpe:tag>
-	
-	<vpe:tag name="audio" case-sensitive="no">
+
+	<vpe:tag name="article" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir,hidden,autoplay,controls,loop,preload,src" />
+			<vpe:copy />
+			<vpe:textFormatting use-default-formats="yes" />
+		</vpe:template>
+	</vpe:tag>
+
+	<vpe:tag name="aside" case-sensitive="no">
+		<vpe:template children="yes" modify="yes">
+			<vpe:copy />
+			<vpe:textFormatting use-default-formats="yes" />
+		</vpe:template>
+	</vpe:tag>
+
+	<vpe:tag name="audio" case-sensitive="no">
+		<vpe:template children="no" modify="no">
+			<vpe:copy
+				attrs="id,style,class,dir,hidden,autoplay,controls,loop,preload,src" />
 		</vpe:template>
 	</vpe:tag>
 
@@ -437,6 +452,12 @@
 		</vpe:template>
 	</vpe:tag>
 
+	<vpe:tag name="canvas" case-sensitive="no">
+		<vpe:template children="no" modify="no">
+			<vpe:copy />
+		</vpe:template>
+	</vpe:tag>	
+	
 	<vpe:tag name="caption" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy attrs="id,style,class,dir" />
@@ -563,6 +584,18 @@
 		</vpe:template>
 	</vpe:tag>
 
+	<vpe:tag name="command" case-sensitive="no">
+		<vpe:template children="yes" modify="yes">
+			<vpe:copy />
+			<vpe:textFormatting use-default-formats="yes" />
+		</vpe:template>
+	</vpe:tag>	
+
+	<vpe:tag name="datalist" case-sensitive="no">
+		<vpe:template children="no" modify="no">
+		</vpe:template>
+	</vpe:tag>	
+
 	<vpe:tag name="dd" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy attrs="id,style,class,dir" />
@@ -625,6 +658,7 @@
 	<vpe:tag name="details" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy attrs="id,style,class,dir,hidden,open" />
+			<vpe:textFormatting use-default-formats="yes" />
 		</vpe:template>
 	</vpe:tag>
 
@@ -819,6 +853,20 @@
 		</vpe:template>
 	</vpe:tag>
 
+	<vpe:tag name="figcaption" case-sensitive="no">
+		<vpe:template children="yes" modify="yes">
+			<vpe:copy />
+			<vpe:textFormatting use-default-formats="yes" />
+		</vpe:template>
+	</vpe:tag>
+
+	<vpe:tag name="figure" case-sensitive="no">
+		<vpe:template children="yes" modify="yes">
+			<vpe:copy />
+			<vpe:textFormatting use-default-formats="yes" />
+		</vpe:template>
+	</vpe:tag>	
+
 	<vpe:tag name="font" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy attrs="id,style,class,size,color,face,dir" />
@@ -866,7 +914,14 @@
 			<vpe:copy attrs="border,bordercolor,cols,frameborder,framespacing,rows" />
 		</vpe:template>
 	</vpe:tag>
-	
+
+	<vpe:tag name="footer" case-sensitive="no">
+		<vpe:template children="yes" modify="yes">
+			<vpe:copy />
+			<vpe:textFormatting use-default-formats="yes" />
+		</vpe:template>
+	</vpe:tag>
+
 	<vpe:tag name="h1" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy attrs="id,style,class,align,dir" />
@@ -1076,6 +1131,20 @@
 			</vpe:dnd>
 		</vpe:template>
 	</vpe:tag>
+
+	<vpe:tag name="header" case-sensitive="no">
+		<vpe:template children="yes" modify="yes">
+			<vpe:copy />
+			<vpe:textFormatting use-default-formats="yes" />
+		</vpe:template>
+	</vpe:tag>
+
+	<vpe:tag name="hgroup" case-sensitive="no">
+		<vpe:template children="yes" modify="yes">
+			<vpe:copy />
+			<vpe:textFormatting use-default-formats="yes" />
+		</vpe:template>
+	</vpe:tag>	
 
 	<vpe:tag name="hr" case-sensitive="no">
 		<vpe:template children="no" modify="no">
@@ -1289,6 +1358,15 @@
 		</vpe:template>
 	</vpe:tag>
 
+	<vpe:tag name="keygen" case-sensitive="no">
+		<vpe:template children="no" modify="no">
+			<select>
+				<option>High Grade</option>
+				<option>Medium Grade</option>
+			</select>
+		</vpe:template>
+	</vpe:tag>
+
 	<vpe:tag name="kbd" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy attrs="id,style,class,dir" />
@@ -1459,6 +1537,13 @@
 			<vpe:copy attrs="id,style,class,dir,hidden" />
 		</vpe:template>
 	</vpe:tag>
+
+	<vpe:tag name="marquee" case-sensitive="no">
+		<vpe:template children="yes" modify="no">
+			<vpe:copy
+				attrs="behavior,bgcolor,direction,height,hspace,loop,scrollamount,scrolldelay,truespeed,vspace,width" />
+		</vpe:template>
+	</vpe:tag>
 	
 	<vpe:tag name="menu" case-sensitive="no">
 		<vpe:template children="yes" modify="no">
@@ -1487,6 +1572,11 @@
 	<vpe:tag name="nobr" case-sensitive="no">
 		<vpe:template children="yes" modify="no" >
 			<vpe:copy />
+		</vpe:template>
+	</vpe:tag>
+
+	<vpe:tag name="noembed" case-sensitive="no">
+		<vpe:template children="no" modify="no">
 		</vpe:template>
 	</vpe:tag>
 
@@ -2288,30 +2378,6 @@
 		</vpe:template>
 	</vpe:tag>
 
-	<vpe:tag name="#comment" case-sensitive="no">
-		<vpe:template children="no" modify="yes" 
-				class="org.jboss.tools.vpe.html.template.HtmlCommentTemplate">
-		</vpe:template>
-	</vpe:tag>
-	
-	<vpe:tag name="#text" case-sensitive="no">
-		 <vpe:template children="no" modify="yes"
-		 		 class="org.jboss.tools.vpe.html.template.HtmlTextTemplate">
-		 </vpe:template>
-	</vpe:tag>
-
-	<vpe:tag name="marquee" case-sensitive="no">
-	<vpe:template children="yes" modify="no">
-		<vpe:copy
-			attrs="behavior,bgcolor,direction,height,hspace,loop,scrollamount,scrolldelay,truespeed,vspace,width" />
-	</vpe:template>
-	</vpe:tag>
-	
-	<vpe:tag name="noembed" case-sensitive="no">
-	<vpe:template children="no" modify="no">
-	</vpe:template>
-	</vpe:tag>
-	
 	<vpe:tag name="wbr" case-sensitive="no">
 	<vpe:template children="no" modify="no">
 		<vpe:copy />
@@ -2323,4 +2389,17 @@
 		<vpe:copy />
 	</vpe:template>
 	</vpe:tag>
+	
+	<vpe:tag name="#comment" case-sensitive="no">
+		<vpe:template children="no" modify="yes" 
+				class="org.jboss.tools.vpe.html.template.HtmlCommentTemplate">
+		</vpe:template>
+	</vpe:tag>
+	
+	<vpe:tag name="#text" case-sensitive="no">
+		 <vpe:template children="no" modify="yes"
+		 		 class="org.jboss.tools.vpe.html.template.HtmlTextTemplate">
+		 </vpe:template>
+	</vpe:tag>
+	
 </vpe:templates>
