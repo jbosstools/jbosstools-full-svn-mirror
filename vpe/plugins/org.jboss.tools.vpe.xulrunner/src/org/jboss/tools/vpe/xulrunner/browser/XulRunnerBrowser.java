@@ -205,55 +205,55 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 		//this function should be call
 		String xulRunnerPath = System.getProperty(XULRUNNER_PATH);
 		if (xulRunnerPath == null) {
-
 			GREVersionRange[] greRanges = {new GREVersionRange(XULRUNNER_LOWER_VERSION, true, XULRUNNER_HIGHER_VERSION, true)};
 			File xulRunnerFile  = null;
 
 			// JBIDE-1222 begin
 			/*try {
 				if(!XULRUNNER_LOADING_INDICATOR) {
-					
+
 					XULRUNNER_LOADING_INDICATOR=true;
 					//this function should be call
 					xulRunnerFile = Mozilla.getGREPathWithProperties(greRanges, null);
 				} else {
-					
+
 					xulRunnerFile = null;
 				}
 			} catch (FileNotFoundException fnfe) {
 				// Ignre this exception. Will try to get XULRunner from plugin
 			}*/ 
 			// JBIDE-1222 end
-			
 
-				Bundle xulRunnerBundle = Platform.getBundle(getXulRunnerBundle());
-				if (xulRunnerBundle == null) {
-					throw new XulRunnerException(MessageFormat.format(VpeXulrunnerMessages.XulRunnerBrowser_bundleNotFound,getXulRunnerBundle()));  //$NON-NLS-2$
+			Bundle xulRunnerBundle = Platform.getBundle(getXulRunnerBundle());
+			if (xulRunnerBundle == null) {
+				if (!XulRunnerBrowser.isCurrentPlatformOfficiallySupported()) {
+					throw new XulRunnerException(MessageFormat.format(
+							VpeXulrunnerMessages.CURRENT_PLATFORM_IS_NOT_SUPPORTED,
+							XulRunnerBrowser.CURRENT_PLATFORM_ID));
+				} else {
+					throw new XulRunnerException(MessageFormat.format(
+							VpeXulrunnerMessages.XulRunnerBrowser_bundleNotFound,
+							getXulRunnerBundle())); 
 				}
+			}
 
-				String xulRunnerVersion = (String) xulRunnerBundle.getHeaders().get("Bundle-Version"); //$NON-NLS-1$
-				if (!greRanges[0].check(xulRunnerVersion)) {
-					throw new XulRunnerException(MessageFormat.format(VpeXulrunnerMessages.XulRunnerBrowser_wrongVersion, xulRunnerBundle.getLocation() ,XulRunnerBrowser.XULRUNNER_LOWER_VERSION,XulRunnerBrowser.XULRUNNER_HIGHER_VERSION) ); 
-				}
-				
-				
-				URL url = xulRunnerBundle.getEntry(XULRUNNER_ENTRY);
-				if (url == null) {
-					throw new XulRunnerException(MessageFormat.format(VpeXulrunnerMessages.XulRunnerBrowser_bundleDoesNotContainXulrunner, getXulRunnerBundle(),XULRUNNER_ENTRY));  
-				}
-
-				try {
-					URL url1 = FileLocator.resolve(url);
-					xulRunnerFile = new File(FileLocator.toFileURL(url1).getFile());
-				} catch (IOException ioe) {
-					throw new XulRunnerException(MessageFormat.format(VpeXulrunnerMessages.XulRunnerBrowser_cannotGetPathToXulrunner,getXulRunnerBundle()), ioe); 
-				}
-				
+			String xulRunnerVersion = (String) xulRunnerBundle.getHeaders().get("Bundle-Version"); //$NON-NLS-1$
+			if (!greRanges[0].check(xulRunnerVersion)) {
+				throw new XulRunnerException(MessageFormat.format(VpeXulrunnerMessages.XulRunnerBrowser_wrongVersion, xulRunnerBundle.getLocation() ,XulRunnerBrowser.XULRUNNER_LOWER_VERSION,XulRunnerBrowser.XULRUNNER_HIGHER_VERSION) ); 
+			}
+			URL url = xulRunnerBundle.getEntry(XULRUNNER_ENTRY);
+			if (url == null) {
+				throw new XulRunnerException(MessageFormat.format(VpeXulrunnerMessages.XulRunnerBrowser_bundleDoesNotContainXulrunner, getXulRunnerBundle(),XULRUNNER_ENTRY));  
+			}
+			try {
+				URL url1 = FileLocator.resolve(url);
+				xulRunnerFile = new File(FileLocator.toFileURL(url1).getFile());
+			} catch (IOException ioe) {
+				throw new XulRunnerException(MessageFormat.format(VpeXulrunnerMessages.XulRunnerBrowser_cannotGetPathToXulrunner,getXulRunnerBundle()), ioe); 
+			}
 			xulRunnerPath = xulRunnerFile.getAbsolutePath();
 			System.setProperty(XULRUNNER_PATH, xulRunnerPath);
 		}
-
-		
 		return xulRunnerPath;
 	}
 
