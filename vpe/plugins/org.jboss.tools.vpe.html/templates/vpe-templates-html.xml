@@ -143,6 +143,12 @@
 			</vpe:dnd>
 		</vpe:template>
 	</vpe:tag>
+	
+	<vpe:tag name="audio" case-sensitive="no">
+		<vpe:template children="yes" modify="yes">
+			<vpe:copy attrs="id,style,class,dir,hidden,autoplay,controls,loop,preload,src" />
+		</vpe:template>
+	</vpe:tag>
 
 	<vpe:tag name="b" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
@@ -613,6 +619,12 @@
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
 			</vpe:textFormatting>
+		</vpe:template>
+	</vpe:tag>
+	
+	<vpe:tag name="details" case-sensitive="no">
+		<vpe:template children="yes" modify="yes">
+			<vpe:copy attrs="id,style,class,dir,hidden,open" />
 		</vpe:template>
 	</vpe:tag>
 
@@ -1442,6 +1454,12 @@
 		</vpe:template>
 	</vpe:tag>
 	
+	<vpe:tag name="mark" case-sensitive="no">
+		<vpe:template children="yes" modify="yes">
+			<vpe:copy attrs="id,style,class,dir,hidden" />
+		</vpe:template>
+	</vpe:tag>
+	
 	<vpe:tag name="menu" case-sensitive="no">
 		<vpe:template children="yes" modify="no">
 			<vpe:copy attrs="id,style,class,dir" />
@@ -1452,6 +1470,18 @@
 
 	<vpe:tag name="meta" case-sensitive="no">
 		<vpe:template children="no" modify="no" />
+	</vpe:tag>
+	
+	<vpe:tag name="meter" case-sensitive="no">
+		<vpe:template children="yes" modify="yes">
+			<vpe:copy attrs="id,style,class,dir,hidden,form,high,low,max,min,optimum,value" />
+		</vpe:template>
+	</vpe:tag>
+
+	<vpe:tag name="nav" case-sensitive="no">
+		<vpe:template children="yes" modify="yes">
+			<vpe:copy attrs="id,style,class,dir,hidden" />
+		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="nobr" case-sensitive="no">
@@ -1520,6 +1550,12 @@
 	<vpe:tag name="option" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy attrs="id,style,class,value,label,dir,disabled,selected" />
+		</vpe:template>
+	</vpe:tag>
+	
+	<vpe:tag name="output" case-sensitive="no">
+		<vpe:template children="yes" modify="yes">
+			<vpe:copy attrs="id,style,class,dir,hidden,for,form,name" />
 		</vpe:template>
 	</vpe:tag>
 
@@ -1592,6 +1628,12 @@
 		</vpe:template>
 	</vpe:tag>
 
+	<vpe:tag name="progress" case-sensitive="no">
+		<vpe:template children="yes" modify="yes">
+			<vpe:copy attrs="id,style,class,dir,hidden,max,value" />
+		</vpe:template>
+	</vpe:tag>
+
 	<vpe:tag name="q" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy attrs="id,style,class,dir" />
@@ -1611,6 +1653,24 @@
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
 			</vpe:textFormatting>
+		</vpe:template>
+	</vpe:tag>
+	
+	<vpe:tag name="rp" case-sensitive="no">
+		<vpe:template children="yes" modify="yes">
+			<vpe:copy attrs="id,style,class,dir,hidden" />
+		</vpe:template>
+	</vpe:tag>
+	
+	<vpe:tag name="rt" case-sensitive="no">
+		<vpe:template children="yes" modify="yes">
+			<vpe:copy attrs="id,style,class,dir,hidden" />
+		</vpe:template>
+	</vpe:tag>
+	
+	<vpe:tag name="ruby" case-sensitive="no">
+		<vpe:template children="yes" modify="yes">
+			<vpe:copy attrs="id,style,class,dir,hidden" />
 		</vpe:template>
 	</vpe:tag>
 
@@ -1675,6 +1735,12 @@
 
 	<vpe:tag name="script" case-sensitive="no">
 		<vpe:template children="no" modify="no" />
+	</vpe:tag>
+	
+	<vpe:tag name="section" case-sensitive="no">
+		<vpe:template children="yes" modify="yes">
+			<vpe:copy attrs="id,style,class,dir,hidden" />
+		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="select" case-sensitive="no">
@@ -1742,6 +1808,12 @@
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
 			</vpe:textFormatting>
+		</vpe:template>
+	</vpe:tag>
+	
+	<vpe:tag name="source" case-sensitive="no">
+		<vpe:template children="yes" modify="yes">
+			<vpe:copy attrs="id,style,class,dir,hidden,media,src,type" />
 		</vpe:template>
 	</vpe:tag>
 
@@ -1847,6 +1919,12 @@
 					<vpe:formatAttribute type="style" />
 				</vpe:format>
 			</vpe:textFormatting>
+		</vpe:template>
+	</vpe:tag>
+	
+	<vpe:tag name="summary" case-sensitive="no">
+		<vpe:template children="yes" modify="yes">
+			<vpe:copy attrs="id,style,class,dir,hidden" />
 		</vpe:template>
 	</vpe:tag>
 
@@ -2076,6 +2154,12 @@
 	<vpe:tag name="title" case-sensitive="no">
 		<vpe:template children="no" modify="no" />
 	</vpe:tag>
+	
+	<vpe:tag name="time" case-sensitive="no">
+		<vpe:template children="yes" modify="yes">
+			<vpe:copy attrs="id,style,class,dir,hidden,datetime,pubdate" />
+		</vpe:template>
+	</vpe:tag>
 
 	<vpe:tag name="tr" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
@@ -2195,6 +2279,12 @@
 						<vpe:formatAttribute type="style"/>
 					</vpe:format>
 				</vpe:textFormatting>
+		</vpe:template>
+	</vpe:tag>
+	
+	<vpe:tag name="video" case-sensitive="no">
+		<vpe:template children="yes" modify="yes">
+			<vpe:copy attrs="id,style,class,dir,hidden,audio,autoplay,controls,height,loop,poster,preload,src,width" />
 		</vpe:template>
 	</vpe:tag>
 

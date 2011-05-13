@@ -362,7 +362,15 @@ a[\_moz_anonclass="mozTableRemoveRow"]:hover {
 
 a[\_moz_anonclass="mozTableRemoveRow"]:active {
   background-image: url("resource://gre/res/table-remove-row-active.gif");
-} 
+}
+
+mark {
+	background-color: yellow;/*the same color as in XULRunner 2.0*/
+}
+
+section {
+	display: block;
+}
 
 /*JBIDE-3995 #1*/
 select div {
