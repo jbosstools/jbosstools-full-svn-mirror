@@ -40,8 +40,11 @@
 			<iu id="org.eclipse.birt.integration.wtp.feature.group" />
 			<iu id="org.eclipse.birt.chart.feature.group" />
 			<iu id="org.eclipse.birt.chart.integration.wtp.feature.group" />
-
 		</p2.mirror>
+
+		<delete>
+			<fileset dir="${destination}/3.7M7/" includes="**/artifacts.jar, **/contents.jar"/>
+		</delete>
 
 		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/3.7M7/" artifactRepository="file:${destination}/3.7M7/" publishartifacts="true" source="${destination}/3.7M7/" compress="${compress}" />
 	</target>
