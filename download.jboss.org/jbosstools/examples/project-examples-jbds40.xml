@@ -875,6 +875,72 @@ The example provides the sample SOAP Service and a Teiid Designer project set th
 		  </fix>
 		</fixes>
         <perspectiveId>modelerPerspective</perspectiveId>
-    </project>  
+    </project>
+    <project>
+		<category>Portlet for GateIn 3.1/EPP 5.x</category>
+		<name>JSFPortlet</name>
+		<included-projects>JSFPortlet</included-projects>
+		<shortDescription>JBoss JSF RI Portlet</shortDescription>
+
+		<description>This example demonstrates the use of JBoss JSF Portlet. It runs on JBoss EPP 5.x or on GateIn 3.1.</description>
+		<size>1372160</size>
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/portlet-examples/JSFPortlet.zip
+		</url>
+		<fixes>
+			<fix type="wtpruntime">
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50, org.jboss.ide.eclipse.as.runtime.51</property>
+				<property name="eclipse-projects">JSFPortlet</property>
+				<property name="required-components">portlet</property>
+				<property name="description">This project example requires the JBoss EPP 5.x or GateIn 3.1</property>
+			</fix>
+			
+		</fixes>
+	</project>
+	
+	<project>
+		<category>Portlet for GateIn 3.1/EPP 5.x</category>
+		<name>RichFacesPortlet</name>
+		<included-projects>RichfacesPortlet</included-projects>
+		<shortDescription>JBoss Portlet Bridge - RichFaces Application</shortDescription>
+
+		<description>This example demonstrates the use of JBoss JSF Portlet with RichFaces. It runs on JBoss EPP 5.x or on GateIn 3.1.</description>
+		<size>7098368</size>
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/portlet-examples/RichFacesPortlet.zip
+		</url>
+		<fixes>
+			<fix type="wtpruntime">
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50, org.jboss.ide.eclipse.as.runtime.51</property>
+				<property name="eclipse-projects">RichfacesPortlet</property>
+				<property name="required-components">portlet</property>
+				<property name="description">This project example requires the JBoss EPP 5.x or GateIn 3.1</property>
+			</fix>
+			
+		</fixes>
+	</project>
+	
+	<project>
+		<category>Portlet for GateIn 3.1/EPP 5.x</category>
+		<name>SeamPortlet</name>
+		<included-projects>seam-portlet-ear,seam-portlet-ejb,seam-portlet-web</included-projects>
+		<shortDescription>JBoss Portlet Bridge - Seam Portlet</shortDescription>
+
+		<description>This example demonstrates the use of JBoss JSF Portlet with Seam. It runs on JBoss EPP 5.x or on GateIn 3.1.</description>
+		<size>8978432</size>
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/portlet-examples/SeamPortlet.zip
+		</url>
+		<fixes>
+			<fix type="wtpruntime">
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50, org.jboss.ide.eclipse.as.runtime.51</property>
+				<property name="eclipse-projects">seam-portlet-ejb,seam-portlet-web</property>
+				<property name="required-components">portlet</property>
+				<property name="description">This project example requires the JBoss EPP 5.x or GateIn 3.1</property>
+			</fix>
+			
+		</fixes>
+	</project>
+    
 </projects>
 
