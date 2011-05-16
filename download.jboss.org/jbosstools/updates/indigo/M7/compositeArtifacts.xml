@@ -12,7 +12,7 @@ fun! ReplaceTimestamp()
 endfun
 nnoremap <Leader>ts :call ReplaceTimestamp()<CR>
 -->
-<property name='p2.timestamp' value='1305086482000'/>
+<property name='p2.timestamp' value='1305546447000'/>
 </properties>
 <children size='20'>
 <child location='../../requirements/indigo/201105060900-M7/'/>
@@ -22,6 +22,7 @@ nnoremap <Leader>ts :call ReplaceTimestamp()<CR>
 <child location='../../requirements/webtools/3.3M7/'/>
 <child location='../../requirements/m2eclipse/0.13.0.201105091504/'/>
 <child location='../../requirements/mylyn/3.6-I20110504-0744/'/>
+<child location='../../requirements/orbit/S20110515001817/'/>
 
 <child location='../../requirements/ecf/3.5/'/>
 <child location='../../requirements/egit/0.11/'/>
@@ -29,12 +30,11 @@ nnoremap <Leader>ts :call ReplaceTimestamp()<CR>
 <child location='../../requirements/gwt/201102111811/'/>
 <child location='../../requirements/jslint/1.5/'/>
 
-<child location='../../requirements/orbit/S20110124210048/'/>
 <child location='../../requirements/pmd/3.2.6/'/>
 <child location='../../requirements/springide/2.6.0.201103160035/'/>
 
-<child location='../../requirements/subclipse/1.6/'/>
-<child location='../../requirements/subversive/0.7.9_2.2.2/'/>
+<child location='../../requirements/subclipse/1.6_1.3/'/>
+<child location='../../requirements/subversive/0.7.9_2.2.2_1.3/'/>
 <child location='../../requirements/swtbot/2.0.4/'/>
 <child location='../../requirements/testng/6.0.1.20110418_1444/'/>
 <child location='../../requirements/xulrunner-1.9.2/'/>
