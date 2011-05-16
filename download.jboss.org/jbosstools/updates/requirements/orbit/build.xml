@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="mirror">
+	<!-- run locally in Eclipse (to resolve p2 tasks) using these commandline options:
+	
+		-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} 
+		-consoleLog -nosplash -data /tmp
+		-application org.eclipse.ant.core.antRunner
+		-f "/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/orbit/build.xml"
+		
+		or, run headless on qa01 server, where Eclipse is installed into ~/eclipse:
+		
+		export JAVA_HOME=/opt/jdk1.6.0; \
+		${JAVA_HOME}/bin/java -cp ~/eclipse/plugins/org.eclipse.equinox.launcher_*.jar \
+			<iu id="org.eclipse.equinox.launcher.Main -vm ${JAVA_HOME} -consoleLog -nosplash -data /tmp \
+			-application org.eclipse.ant.core.antRunner \
+			-f ~/RHDS/updates/requirements/orbit/build.xml -Ddestination=/tmp/orbit-repo
+	-->
+	<target name="mirror">
+		<property name="URL1" value="http://download.eclipse.org/tools/orbit/downloads/drops/S20110515001817/repository/" />
+		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/orbit/S20110515001817/" />
+		<property name="compress" value="true" />
+
+		<p2.mirror>
+			<repository location="file:${destination}/S20110515001817" name="orbit plugins for Eclipse 3.6 - 3.7" />
+			<source>
+				<repository location="${URL1}" />
+			</source>
+
+			<slicingoptions includefeatures="true" followstrict="true" latestversiononly="true" />
+		</p2.mirror>
+
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/S20110515001817/" artifactRepository="file:${destination}/S20110515001817/" publishartifacts="true" source="${destination}/S20110515001817/" compress="${compress}" />
+	</target>
+</project>
