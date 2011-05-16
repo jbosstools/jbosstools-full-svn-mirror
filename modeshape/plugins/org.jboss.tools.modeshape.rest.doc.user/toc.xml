@@ -10,11 +10,11 @@
   - individual contributors.
   -->
 <toc label="ModeShape Publishing">
-   <topic label="Publishing Operations Dialog" href="doc/PublishDialog.html"/>
-   <topic label="ModeShape View" href="doc/ServerView.html"/>
-   <topic label="Server Dialog" href="doc/ServerDialog.html"/>
-   <topic label="ModeShape Message Console" href="doc/ModeShapeMessageConsole.html"/>
-   <topic label="Published Locations Dialog" href="doc/PublishedLocationsDialog.html"/>
-   <topic label="ModeShape Context Menu" href="doc/ResourceContextMenu.html"/>
-   <topic label="ModeShape Preferences Dialog" href="doc/ModeShapePreferencesDialog.html"/>
+   <topic label="Publishing Operations Dialog" href="PublishDialog.html"/>
+   <topic label="ModeShape View" href="ServerView.html"/>
+   <topic label="Server Dialog" href="ServerDialog.html"/>
+   <topic label="ModeShape Message Console" href="ModeShapeMessageConsole.html"/>
+   <topic label="Published Locations Dialog" href="PublishedLocationsDialog.html"/>
+   <topic label="ModeShape Context Menu" href="ResourceContextMenu.html"/>
+   <topic label="ModeShape Preferences Dialog" href="ModeShapePreferencesDialog.html"/>
 </toc>
