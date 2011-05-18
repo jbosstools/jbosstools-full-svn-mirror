@@ -3,10 +3,10 @@ Template for reference guide.
 MAVEN:
 
   How to build everything:
-    mvn install or mvn compile
+    mvn compile or mvn install
 
   Just build html-single:
-    mvn -Phtml-single install
+    mvn -Phtml-single compile
 
   All profiles available: html-single, html, pdf, eclipse
 
