@@ -239,26 +239,6 @@
 	</issueManagement>
 	<profiles>
 
-		<!-- Latest JBT nightly published update site (nightly builds) -->
-		<profile>
-			<id>jbosstools-nightly</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<repositories>
-				<repository>
-					<id>jbosstools-nightly</id>
-					<url>${jbosstools-nightly}</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-			</repositories>
-		</profile>
 
 		<!-- Latest JBT work-in-progress component builds (CI builds), not yet pushed to the above nightly update site -->
 		<profile>
@@ -347,11 +327,6 @@
 			the unified.target file -->
 		<profile>
 			<id>unified.target</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<properties>
-			</properties>
 			<build>
 				<plugins>
 					<plugin>
@@ -423,26 +398,6 @@
 			</repositories>
 		</profile>
 
-		<!-- Single repo containing contents of unified.target, but without using the target file -->
-		<profile>
-			<id>unified.site</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<repositories>
-				<repository>
-					<id>jbosstools-target-site</id>
-					<url>${jbosstools-target-site}</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-			</repositories>
-		</profile>
 
 		<profile>
 			<id>osx</id>
@@ -702,6 +657,33 @@
 	</profiles>
 
 	<repositories>
+
+		<!-- Single repo containing contents of unified.target, but without using the target file -->
+				<repository>
+					<id>jbosstools-target-site</id>
+					<url>${jbosstools-target-site}</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+
+		<!-- Latest JBT nightly published update site (nightly builds) -->
+				<repository>
+					<id>jbosstools-nightly</id>
+					<url>${jbosstools-nightly}</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+
 		<repository>
 			<id>jboss-public-repository-group</id>
 			<name>JBoss Public Repository Group</name>
