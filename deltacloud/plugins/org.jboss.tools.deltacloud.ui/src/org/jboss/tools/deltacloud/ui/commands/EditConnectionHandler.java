@@ -17,8 +17,8 @@ import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.ui.IWorkbenchWizard;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.internal.deltacloud.ui.utils.WorkbenchUtils;
@@ -33,9 +33,11 @@ public class EditConnectionHandler extends AbstractHandler implements IHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ISelection selection = HandlerUtil.getCurrentSelection(event);
 		if (selection instanceof IStructuredSelection) {
-			DeltaCloud cloud = WorkbenchUtils.getFirstAdaptedElement(selection, DeltaCloud.class);
+			IStructuredSelection structuredSelection = (IStructuredSelection) selection;
+			DeltaCloud cloud = WorkbenchUtils.getFirstAdaptedElement(structuredSelection, DeltaCloud.class);
 			if (cloud != null) {
-				IWizard wizard = new EditCloudConnectionWizard(cloud);
+				IWorkbenchWizard wizard = new EditCloudConnectionWizard(cloud);
+				wizard.init(WorkbenchUtils.getWorkbench(), structuredSelection);
 				WizardDialog dialog = new WizardDialog(WorkbenchUtils.getActiveWorkbenchWindow().getShell(), wizard);
 				dialog.create();
 				dialog.open();
