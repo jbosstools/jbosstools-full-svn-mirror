@@ -247,7 +247,8 @@ public class CloudConnectionPage extends WizardPage {
 						return ValidationStatus.ok();
 					}
 				} else {
-					if (cloudConnection.getDeltaCloud().equals(deltaCloud)) {
+					if (deltaCloud == null
+							|| cloudConnection.getDeltaCloud().equals(deltaCloud)) {
 						return ValidationStatus.ok();
 					}
 				}
