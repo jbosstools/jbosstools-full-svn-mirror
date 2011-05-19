@@ -672,6 +672,18 @@
                label="%command.createinstance.label"
                style="push"
                tooltip="%command.createinstance.tooltip">
+            <visibleWhen
+                  checkEnabled="true">
+               <with
+	                variable="selection">
+					<iterate>
+						<not>
+		               		<adapt
+		                	     type="org.jboss.tools.deltacloud.core.DeltaCloudImage" />
+		                </not>
+	               	</iterate>
+               </with>
+            </visibleWhen>
          </command>
     </menuContribution>
     <menuContribution
