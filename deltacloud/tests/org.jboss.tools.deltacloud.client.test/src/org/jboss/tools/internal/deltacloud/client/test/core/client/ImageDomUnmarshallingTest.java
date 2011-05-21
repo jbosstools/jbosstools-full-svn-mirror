@@ -17,10 +17,10 @@ import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
-import org.jboss.tools.deltacloud.core.client.Image;
-import org.jboss.tools.deltacloud.core.client.unmarshal.ImageUnmarshaller;
-import org.jboss.tools.deltacloud.core.client.unmarshal.ImagesUnmarshaller;
+import org.jboss.tools.deltacloud.client.DeltaCloudClientException;
+import org.jboss.tools.deltacloud.client.Image;
+import org.jboss.tools.deltacloud.client.unmarshal.ImageUnmarshaller;
+import org.jboss.tools.deltacloud.client.unmarshal.ImagesUnmarshaller;
 import org.jboss.tools.internal.deltacloud.client.test.fakes.ImageResponseFakes.ImageResponse;
 import org.jboss.tools.internal.deltacloud.client.test.fakes.ImageResponseFakes.ImagesResponse;
 import org.junit.Test;

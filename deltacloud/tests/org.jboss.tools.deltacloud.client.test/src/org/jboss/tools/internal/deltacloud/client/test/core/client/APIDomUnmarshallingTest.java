@@ -16,10 +16,10 @@ import static org.junit.Assert.assertNotNull;
 import java.io.ByteArrayInputStream;
 import java.net.MalformedURLException;
 
-import org.jboss.tools.deltacloud.core.client.API;
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
-import org.jboss.tools.deltacloud.core.client.API.Driver;
-import org.jboss.tools.deltacloud.core.client.unmarshal.APIUnmarshaller;
+import org.jboss.tools.deltacloud.client.API;
+import org.jboss.tools.deltacloud.client.DeltaCloudClientException;
+import org.jboss.tools.deltacloud.client.API.Driver;
+import org.jboss.tools.deltacloud.client.unmarshal.APIUnmarshaller;
 import org.jboss.tools.internal.deltacloud.client.test.fakes.APIResponseFakes.APIResponse;
 import org.junit.Test;
 

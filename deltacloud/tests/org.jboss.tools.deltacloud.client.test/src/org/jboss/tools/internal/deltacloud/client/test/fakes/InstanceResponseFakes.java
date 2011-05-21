@@ -10,7 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.internal.deltacloud.client.test.fakes;
 
-import org.jboss.tools.deltacloud.core.client.StateAware.State;
+import org.jboss.tools.deltacloud.client.StateAware.State;
 
 /**
  * @author André Dietisheim

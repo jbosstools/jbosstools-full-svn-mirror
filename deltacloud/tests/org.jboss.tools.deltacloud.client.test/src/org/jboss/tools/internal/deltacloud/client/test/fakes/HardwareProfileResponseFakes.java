@@ -10,8 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.internal.deltacloud.client.test.fakes;
 
-import org.jboss.tools.deltacloud.core.client.Property;
-import org.jboss.tools.deltacloud.core.client.Property.UNIT;
+import org.jboss.tools.deltacloud.client.Property;
+import org.jboss.tools.deltacloud.client.Property.UNIT;
 
 /**
  * @author André Dietisheim

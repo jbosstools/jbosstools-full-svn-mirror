@@ -17,9 +17,9 @@ import static org.junit.Assert.assertTrue;
 import java.io.IOException;
 import java.util.List;
 
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl;
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
-import org.jboss.tools.deltacloud.core.client.Realm;
+import org.jboss.tools.deltacloud.client.DeltaCloudClientImpl;
+import org.jboss.tools.deltacloud.client.DeltaCloudClientException;
+import org.jboss.tools.deltacloud.client.Realm;
 import org.jboss.tools.internal.deltacloud.client.test.context.MockIntegrationTestContext;
 import org.junit.After;
 import org.junit.Before;

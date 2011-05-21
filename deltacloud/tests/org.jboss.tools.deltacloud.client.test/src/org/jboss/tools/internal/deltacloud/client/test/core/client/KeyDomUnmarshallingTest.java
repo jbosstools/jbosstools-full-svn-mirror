@@ -21,13 +21,13 @@ import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
-import org.jboss.tools.deltacloud.core.client.Action;
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
-import org.jboss.tools.deltacloud.core.client.HttpMethod;
-import org.jboss.tools.deltacloud.core.client.Key;
-import org.jboss.tools.deltacloud.core.client.unmarshal.ActionUnmarshaller;
-import org.jboss.tools.deltacloud.core.client.unmarshal.KeyUnmarshaller;
-import org.jboss.tools.deltacloud.core.client.unmarshal.KeysUnmarshaller;
+import org.jboss.tools.deltacloud.client.Action;
+import org.jboss.tools.deltacloud.client.DeltaCloudClientException;
+import org.jboss.tools.deltacloud.client.HttpMethod;
+import org.jboss.tools.deltacloud.client.Key;
+import org.jboss.tools.deltacloud.client.unmarshal.ActionUnmarshaller;
+import org.jboss.tools.deltacloud.client.unmarshal.KeyUnmarshaller;
+import org.jboss.tools.deltacloud.client.unmarshal.KeysUnmarshaller;
 import org.jboss.tools.internal.deltacloud.client.test.fakes.KeyResponseFakes;
 import org.jboss.tools.internal.deltacloud.client.test.fakes.KeyResponseFakes.KeyActionResponse;
 import org.jboss.tools.internal.deltacloud.client.test.fakes.KeyResponseFakes.KeyResponse;

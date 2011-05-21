@@ -17,11 +17,11 @@ import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
-import org.jboss.tools.deltacloud.core.client.Realm;
-import org.jboss.tools.deltacloud.core.client.Realm.RealmState;
-import org.jboss.tools.deltacloud.core.client.unmarshal.RealmUnmarshaller;
-import org.jboss.tools.deltacloud.core.client.unmarshal.RealmsUnmarshaller;
+import org.jboss.tools.deltacloud.client.DeltaCloudClientException;
+import org.jboss.tools.deltacloud.client.Realm;
+import org.jboss.tools.deltacloud.client.Realm.RealmState;
+import org.jboss.tools.deltacloud.client.unmarshal.RealmUnmarshaller;
+import org.jboss.tools.deltacloud.client.unmarshal.RealmsUnmarshaller;
 import org.jboss.tools.internal.deltacloud.client.test.fakes.RealmResponseFakes;
 import org.jboss.tools.internal.deltacloud.client.test.fakes.RealmResponseFakes.RealmsResponse;
 import org.junit.Test;

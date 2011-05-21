@@ -24,12 +24,12 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClient;
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl;
-import org.jboss.tools.deltacloud.core.client.Image;
-import org.jboss.tools.deltacloud.core.client.Instance;
-import org.jboss.tools.deltacloud.core.client.StateAware.State;
+import org.jboss.tools.deltacloud.client.DeltaCloudClient;
+import org.jboss.tools.deltacloud.client.DeltaCloudClientException;
+import org.jboss.tools.deltacloud.client.DeltaCloudClientImpl;
+import org.jboss.tools.deltacloud.client.Image;
+import org.jboss.tools.deltacloud.client.Instance;
+import org.jboss.tools.deltacloud.client.StateAware.State;
 
 /**
  * A class that holds the integration test context

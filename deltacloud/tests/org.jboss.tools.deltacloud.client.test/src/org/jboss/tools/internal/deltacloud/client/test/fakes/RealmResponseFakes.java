@@ -10,7 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.internal.deltacloud.client.test.fakes;
 
-import org.jboss.tools.deltacloud.core.client.Realm.RealmState;
+import org.jboss.tools.deltacloud.client.Realm.RealmState;
 
 /**
  * @author André Dietisheim

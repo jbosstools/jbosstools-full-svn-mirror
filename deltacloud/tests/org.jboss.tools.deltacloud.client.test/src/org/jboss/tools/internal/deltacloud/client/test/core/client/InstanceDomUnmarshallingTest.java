@@ -20,12 +20,12 @@ import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
-import org.jboss.tools.deltacloud.core.client.Action;
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
-import org.jboss.tools.deltacloud.core.client.Instance;
-import org.jboss.tools.deltacloud.core.client.unmarshal.ActionUnmarshaller;
-import org.jboss.tools.deltacloud.core.client.unmarshal.InstanceUnmarshaller;
-import org.jboss.tools.deltacloud.core.client.unmarshal.InstancesUnmarshaller;
+import org.jboss.tools.deltacloud.client.Action;
+import org.jboss.tools.deltacloud.client.DeltaCloudClientException;
+import org.jboss.tools.deltacloud.client.Instance;
+import org.jboss.tools.deltacloud.client.unmarshal.ActionUnmarshaller;
+import org.jboss.tools.deltacloud.client.unmarshal.InstanceUnmarshaller;
+import org.jboss.tools.deltacloud.client.unmarshal.InstancesUnmarshaller;
 import org.jboss.tools.internal.deltacloud.client.test.fakes.InstanceResponseFakes.InstanceActionResponse;
 import org.jboss.tools.internal.deltacloud.client.test.fakes.InstanceResponseFakes.InstanceResponse;
 import org.jboss.tools.internal.deltacloud.client.test.fakes.InstanceResponseFakes.InstancesResponse;

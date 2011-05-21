@@ -12,7 +12,7 @@ package org.jboss.tools.internal.deltacloud.client.utils.test;
 
 import static org.junit.Assert.assertEquals;
 
-import org.jboss.tools.deltacloud.core.client.utils.UrlBuilder;
+import org.jboss.tools.deltacloud.client.utils.UrlBuilder;
 import org.junit.Test;
 
 public class UrlBuilderTest {

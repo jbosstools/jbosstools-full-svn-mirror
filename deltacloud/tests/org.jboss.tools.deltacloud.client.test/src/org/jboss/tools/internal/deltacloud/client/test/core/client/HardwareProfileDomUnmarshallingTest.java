@@ -20,11 +20,11 @@ import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
-import org.jboss.tools.deltacloud.core.client.HardwareProfile;
-import org.jboss.tools.deltacloud.core.client.Property;
-import org.jboss.tools.deltacloud.core.client.unmarshal.HardwareProfileUnmarshaller;
-import org.jboss.tools.deltacloud.core.client.unmarshal.HardwareProfilesUnmarshaller;
+import org.jboss.tools.deltacloud.client.DeltaCloudClientException;
+import org.jboss.tools.deltacloud.client.HardwareProfile;
+import org.jboss.tools.deltacloud.client.Property;
+import org.jboss.tools.deltacloud.client.unmarshal.HardwareProfileUnmarshaller;
+import org.jboss.tools.deltacloud.client.unmarshal.HardwareProfilesUnmarshaller;
 import org.jboss.tools.internal.deltacloud.client.test.fakes.HardwareProfileResponseFakes.HardwareProfile1Response;
 import org.jboss.tools.internal.deltacloud.client.test.fakes.HardwareProfileResponseFakes.HardwareProfile2Response;
 import org.jboss.tools.internal.deltacloud.client.test.fakes.HardwareProfileResponseFakes.HardwareProfilesResponse;

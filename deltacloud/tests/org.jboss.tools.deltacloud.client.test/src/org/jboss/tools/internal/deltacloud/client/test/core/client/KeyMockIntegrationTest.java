@@ -20,11 +20,11 @@ import java.util.List;
 
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClient;
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl;
-import org.jboss.tools.deltacloud.core.client.DeltaCloudNotFoundClientException;
-import org.jboss.tools.deltacloud.core.client.Key;
+import org.jboss.tools.deltacloud.client.DeltaCloudClient;
+import org.jboss.tools.deltacloud.client.DeltaCloudClientException;
+import org.jboss.tools.deltacloud.client.DeltaCloudClientImpl;
+import org.jboss.tools.deltacloud.client.DeltaCloudNotFoundClientException;
+import org.jboss.tools.deltacloud.client.Key;
 import org.jboss.tools.internal.deltacloud.client.test.context.MockIntegrationTestContext;
 import org.junit.After;
 import org.junit.Before;

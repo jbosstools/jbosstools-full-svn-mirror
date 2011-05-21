@@ -18,9 +18,9 @@ import java.net.MalformedURLException;
 import java.util.Collection;
 import java.util.List;
 
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl;
-import org.jboss.tools.deltacloud.core.client.Image;
+import org.jboss.tools.deltacloud.client.DeltaCloudClientException;
+import org.jboss.tools.deltacloud.client.DeltaCloudClientImpl;
+import org.jboss.tools.deltacloud.client.Image;
 import org.jboss.tools.internal.deltacloud.client.test.context.MockIntegrationTestContext;
 import org.junit.After;
 import org.junit.Before;
