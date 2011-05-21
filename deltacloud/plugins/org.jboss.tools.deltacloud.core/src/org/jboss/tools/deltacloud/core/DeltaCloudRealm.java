@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.core;
 
-import org.jboss.tools.deltacloud.core.client.Realm;
+import org.jboss.tools.deltacloud.client.Realm;
 
 /**
  * 
@@ -18,7 +18,7 @@ import org.jboss.tools.deltacloud.core.client.Realm;
  * 
  *         TODO: there are 2 realm classes:
  *         <ul>
- *         <li>org.jboss.tools.deltacloud.core.client.Realm</li>
+ *         <li>org.jboss.tools.deltacloud.client.Realm</li>
  *         <li>org.jboss.tools.deltacloud.core.DeltaCloudRealm</li>
  *         </ul>
  *         remove the DeltaCloudRealm class

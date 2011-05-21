@@ -13,8 +13,8 @@ package org.jboss.tools.deltacloud.core;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jboss.tools.deltacloud.core.client.HardwareProfile;
-import org.jboss.tools.deltacloud.core.client.Property;
+import org.jboss.tools.deltacloud.client.HardwareProfile;
+import org.jboss.tools.deltacloud.client.Property;
 
 /**
  * @author Jeff Johnston

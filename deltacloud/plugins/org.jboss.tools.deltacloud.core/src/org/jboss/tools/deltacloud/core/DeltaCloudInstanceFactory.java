@@ -15,7 +15,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.runtime.Assert;
-import org.jboss.tools.deltacloud.core.client.Instance;
+import org.jboss.tools.deltacloud.client.Instance;
 
 /**
  * @author André Dietisheim

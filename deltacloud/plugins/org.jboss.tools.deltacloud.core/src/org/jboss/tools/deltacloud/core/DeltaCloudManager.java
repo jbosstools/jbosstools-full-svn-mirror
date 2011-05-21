@@ -29,7 +29,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.ListenerList;
-import org.jboss.tools.deltacloud.core.client.utils.StringUtils;
+import org.jboss.tools.deltacloud.client.utils.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;

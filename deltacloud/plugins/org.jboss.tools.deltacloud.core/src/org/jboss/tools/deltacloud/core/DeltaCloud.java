@@ -17,18 +17,18 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.jboss.tools.deltacloud.client.DeltaCloudAuthClientException;
+import org.jboss.tools.deltacloud.client.DeltaCloudClient;
+import org.jboss.tools.deltacloud.client.DeltaCloudClientException;
+import org.jboss.tools.deltacloud.client.DeltaCloudClientImpl;
+import org.jboss.tools.deltacloud.client.DeltaCloudNotFoundClientException;
+import org.jboss.tools.deltacloud.client.HardwareProfile;
+import org.jboss.tools.deltacloud.client.Image;
+import org.jboss.tools.deltacloud.client.Instance;
+import org.jboss.tools.deltacloud.client.Key;
+import org.jboss.tools.deltacloud.client.Realm;
+import org.jboss.tools.deltacloud.client.API.Driver;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance.State;
-import org.jboss.tools.deltacloud.core.client.API.Driver;
-import org.jboss.tools.deltacloud.core.client.DeltaCloudAuthClientException;
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClient;
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClientImpl;
-import org.jboss.tools.deltacloud.core.client.DeltaCloudNotFoundClientException;
-import org.jboss.tools.deltacloud.core.client.HardwareProfile;
-import org.jboss.tools.deltacloud.core.client.Image;
-import org.jboss.tools.deltacloud.core.client.Instance;
-import org.jboss.tools.deltacloud.core.client.Key;
-import org.jboss.tools.deltacloud.core.client.Realm;
 import org.jboss.tools.internal.deltacloud.core.observable.ObservablePojo;
 
 /**

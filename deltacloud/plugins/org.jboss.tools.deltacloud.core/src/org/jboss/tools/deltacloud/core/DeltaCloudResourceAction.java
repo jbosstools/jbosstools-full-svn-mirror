@@ -10,7 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core;
 
-import org.jboss.tools.deltacloud.core.client.Action;
+import org.jboss.tools.deltacloud.client.Action;
 
 
 /**

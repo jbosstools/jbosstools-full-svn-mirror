@@ -10,7 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core;
 
-import org.jboss.tools.deltacloud.core.client.Key;
+import org.jboss.tools.deltacloud.client.Key;
 
 /**
  * @author André Dietisheim

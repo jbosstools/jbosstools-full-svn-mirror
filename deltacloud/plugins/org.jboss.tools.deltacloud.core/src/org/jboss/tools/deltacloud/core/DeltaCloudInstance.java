@@ -14,10 +14,10 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jboss.tools.deltacloud.core.client.Action;
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClient;
-import org.jboss.tools.deltacloud.core.client.DeltaCloudClientException;
-import org.jboss.tools.deltacloud.core.client.Instance;
+import org.jboss.tools.deltacloud.client.Action;
+import org.jboss.tools.deltacloud.client.DeltaCloudClient;
+import org.jboss.tools.deltacloud.client.DeltaCloudClientException;
+import org.jboss.tools.deltacloud.client.Instance;
 
 /**
  * An instance that may be reached on a DeltaCloud instance. Wraps Instance from

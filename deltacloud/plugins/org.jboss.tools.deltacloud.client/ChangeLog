@@ -1,11 +1,11 @@
-2011-03-29  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+2011-03-29  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClientImpl.java 
 	(request): 
 	(DeltaCloudClientImpl): 
 	[JBIDE-8635] removed http client and replaced by urlConnection
 
-2011-03-11  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+2011-03-11  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/client/StateAware.java: 
 	* src/org/jboss/tools/deltacloud/core/client/ActionAware.java 
@@ -21,7 +21,7 @@
 	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClient.java (performAction): 
 	[JBIDE-8565] refreshing instance and key after performing action
 
-2011-02-18  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+2011-02-18  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/DeltaCloudManager.java 
 	(loadCloud): 
@@ -35,25 +35,25 @@
 	(setLastRealmName): 
 	[JBIDE-8333]
 
-2011-02-15  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+2011-02-15  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (update): 
 	[JBIDE-8420] storing credentials before loading children 
 	(was: loaded children and stored afterwards. storing was skipped since loading threw an exception)
 
-2011-02-07  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+2011-02-07  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (waitForState): 
 	[JBIDE-8343] increased wait delay for refreshing instance, waiting before refreshing (was: refreshed first and waited afterwards)
 
-2011-02-03  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+2011-02-03  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/ImageFilter.java: 
 	* src/org/jboss/tools/deltacloud/core/InstanceFilter.java: 
 	* src/org/jboss/tools/deltacloud/core/AbstractCloudElementFilter.java:
 	[JBIDE-8187] added capability to filter for instance alias 
 
-2011-01-27  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+2011-01-27  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClientImpl.java (getServerType): 
 	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (getDriver): 
@@ -65,7 +65,7 @@
 	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClientImpl.java (throwOnHttpErrors): 
 	[JBIDE-8250] authorization error is status code 401 (was: 403)
 	
-2011-01-11  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+2011-01-11  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClientImpl.java 
 	(listRealms): 
@@ -102,13 +102,13 @@
 	(listImages): 
 	[JBIDE-7935] moved image unmarshalling to its own class (and created tests for it)
 
-2011-01-10  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+2011-01-10  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/client/unmarshal/HardwareProfileUnmarshaller.java: 
 	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClientImpl.java (listProfile):
 	[JBIDE-7935] moved HardwareProfile unmarshalling to HardwareProfileUnmarshaller 
 
-2011-01-04  André Dietisheim  <André Dietisheim@adietisheim-thinkpad>
+2011-01-04  André Dietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/DeltaCloudInstancesRepository.java: 
 	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (loadInstances): 
@@ -123,7 +123,7 @@
 	(setAlias): 
 	(getAlias): 
 
-2011-01-03  adietisheim  <adietisheim@adietisheim-thinkpad>
+2011-01-03  adietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (createInstance): 
 	* src/org/jboss/tools/deltacloud/core/DeltaCloudInstance.java 
@@ -131,12 +131,12 @@
 	(setAlias): 
 	[JBIDE-7294] implementing alias support
 	
-2010-12-27  adietisheim  <adietisheim@adietisheim-thinkpad>
+2010-12-27  adietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/DeltaCloud.java (isValid): 
 	[JBIDE-7864] added isValid property tester to offer "launch instance" on valid clouds only
 
-2010-12-23  adietisheim  <adietisheim@adietisheim-thinkpad>
+2010-12-23  adietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/job/AbstractCloudElementJob.java (CLOUDELEMENT.KEYS): 
 	* src/org/jboss/tools/deltacloud/core/DeltaCloudKey.java: 
@@ -145,7 +145,7 @@
 	(getKeys): 
 	[JBIDE-7763] added methods to DeltaCloud to get all keys and to create a key on the server
 
-2010-12-22  adietisheim  <adietisheim@adietisheim-thinkpad>
+2010-12-22  adietisheim  <adietish@redhat.com>
 
 	* src/org/jboss/tools/deltacloud/core/client/DeltaCloudClientImpl.java (DeltaCloudClientImpl): 
 	[JBIDE-7981] need to create a documentbuilder on each new parsing to avoid threads using the same builder.
