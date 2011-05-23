@@ -51,7 +51,7 @@ public class DeltaCloudMockIntegrationTest {
 	@Test
 	public void testConnectionReportsFalseOnAuthFailure() throws MalformedURLException, DeltaCloudClientException,
 			DeltaCloudException {
-		ServerFake serverFake = setupServerFake("HTTP/1.1 401 Forbidden\n\n\n");
+		ServerFake serverFake = setupServerFake("HTTP/1.1 401 Unauthorized\n\n\n");
 		try {
 			DeltaCloud deltaCloud = new DeltaCloudFake(
 					"http://localhost:" + ServerFake.DEFAULT_PORT,
