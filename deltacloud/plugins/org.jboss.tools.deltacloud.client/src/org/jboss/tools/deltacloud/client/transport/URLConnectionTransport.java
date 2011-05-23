@@ -28,6 +28,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.MessageFormat;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.jboss.tools.deltacloud.client.DeltaCloudNotFoundClientException;
 import org.jboss.tools.deltacloud.client.HttpMethod;
@@ -40,8 +42,6 @@ public class URLConnectionTransport extends AbstractHttpTransport {
 	private static final String PROPERTY_ACCEPT = "Accept";
 	private static final String PREFIX_BASIC_AUTHENTICATION = "Basic ";
 	private static final int TIMEOUT = 10 * 1024;
-	private static final String RESPONSE_CODE_PREFIX = "HTTP response code: ";
-	private static final int RESPONSE_CODE_LENGTH = 3;
 
 	public URLConnectionTransport(String username, String password) {
 		super(username, password);
@@ -49,9 +49,10 @@ public class URLConnectionTransport extends AbstractHttpTransport {
 
 	@Override
 	protected InputStream doRequest(DeltaCloudRequest request) throws Exception {
+		HttpURLConnection connection = null;
 		try {
 			URL url = request.getUrl();
-			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+			connection = (HttpURLConnection) url.openConnection();
 			connection.setUseCaches(false);
 			connection.setDoInput(true);
 			connection.setAllowUserInteraction(false);
@@ -61,8 +62,6 @@ public class URLConnectionTransport extends AbstractHttpTransport {
 			addCredentials(connection);
 			setRequestMethod(request, connection);
 			BufferedInputStream in = new BufferedInputStream(connection.getInputStream());
-			throwOnHttpErrors(
-					connection.getResponseCode(), connection.getResponseMessage(), request.getUrl());
 			return in;
 		} catch (FileNotFoundException e) {
 			/*
@@ -70,7 +69,17 @@ public class URLConnectionTransport extends AbstractHttpTransport {
 			 */
 			throw new DeltaCloudNotFoundClientException(
 					MessageFormat.format("Could not find resource {0}", request.getUrlString()));
+		} catch (IOException e) {
+			/*
+			 * thrown by #connect when server resonds with 401.
+			 */
+			HttpError httpError = HttpError.getInstance(e, connection);
+			if (httpError != null) {
+				throwOnHttpErrors(httpError.getStatusCode(), httpError.getStatusMessage(), request.getUrl());
+			}
+			throw e;
 		}
+
 	}
 
 	private void setRequestMethod(DeltaCloudRequest request, HttpURLConnection connection) throws IOException {
@@ -123,5 +132,55 @@ public class URLConnectionTransport extends AbstractHttpTransport {
 		out.write(password.getBytes());
 		char[] encoded = Base64Coder.encode(out.toByteArray());
 		return new String(encoded);
+	}
+
+	private static final class HttpError {
+
+		private static final Pattern STATUS_REGEX = Pattern.compile(".+ HTTP response code: ([0-9]{3}) .+");
+		private int statusCode;
+		private String statusMessage;
+
+		private HttpError(int statusCode, String statusMessage) {
+			this.statusCode = statusCode;
+			this.statusMessage = statusMessage;
+		}
+
+		public static HttpError getInstance(IOException ioe, HttpURLConnection connection) throws IOException {
+			HttpError httpError = null;
+			try {
+				int statusCode = getStatusCode(ioe);
+				if (statusCode > -1) {
+					String statusMessage = connection.getResponseMessage();
+					httpError = new HttpError(statusCode, statusMessage);
+				}
+			} catch (Exception e) {
+				// ignore
+			}
+			return httpError;
+		}
+
+		public String getStatusMessage() {
+			return statusMessage;
+		}
+
+		private static int getStatusCode(IOException e) {
+			Matcher matcher = STATUS_REGEX.matcher(e.getMessage());
+			if (matcher.matches()) {
+				return getStatusCode(matcher.group(1));
+			}
+			return -1;
+		}
+
+		private static int getStatusCode(String statusCode) {
+			try {
+				return Integer.parseInt(statusCode);
+			} catch (NumberFormatException e) {
+				return -1;
+			}
+		}
+
+		public int getStatusCode() {
+			return statusCode;
+		}
 	}
 }
