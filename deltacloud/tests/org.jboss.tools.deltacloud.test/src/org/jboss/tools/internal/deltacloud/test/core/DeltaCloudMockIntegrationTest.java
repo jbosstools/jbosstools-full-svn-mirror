@@ -64,7 +64,7 @@ public class DeltaCloudMockIntegrationTest {
 	}
 
 	@Test(expected = DeltaCloudException.class)
-	public void testConnectionThrowsOnGeneralFailure() throws MalformedURLException, DeltaCloudClientException, DeltaCloudException {
+	public void testConnectionThrowsOnInternalServerError() throws MalformedURLException, DeltaCloudClientException, DeltaCloudException {
 		ServerFake serverFake = setupServerFake("HTTP/1.1 501 Some Error\ndummy dummy dummy\n\n");
 		try {
 			DeltaCloud deltaCloud =
