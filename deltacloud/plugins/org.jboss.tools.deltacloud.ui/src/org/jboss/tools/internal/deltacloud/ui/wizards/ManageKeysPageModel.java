@@ -84,10 +84,6 @@ public class ManageKeysPageModel extends ObservableUIPojo {
 		return key;
 	}
 
-	public void storeKeyLocally(DeltaCloudKey key) throws DeltaCloudException, FileNotFoundException {
-		storeKeyLocally(key, getKeyStorePath());
-	}
-	
 	public void storeKeyLocally(DeltaCloudKey key, String pemFolder) throws DeltaCloudException, FileNotFoundException {
 		File pemFile = PemFileManager.create(key, pemFolder);
 		SshPrivateKeysPreferences.add(pemFile.getAbsolutePath());
