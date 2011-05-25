@@ -641,6 +641,31 @@ classes.</description>
 	
 	<project>
 		<category>ESB for SOA-P 5.0</category>
+		<name>helloworld_mail</name>		
+		<included-projects>helloworld_mail,helloworld_mail_testclient</included-projects>
+		<shortDescription>JBoss ESB HelloWorld Email Example</shortDescription>
+		<description>This is a very basic example that demonstrates how to configure a mail
+gateway using a JCA mail adapter and a Camel mail endpoint.  Both gateways
+route the messages through a JMS queue and finally to your action class for
+processing.
+NOTE: Before you import this example, please make sure that there is a runtime named "jboss-soa-p.5.0 Runtime" defined in the workspace.
+</description>
+		<size>1132232</size>
+		<url>
+			http://anonsvn.jboss.org/repos/jbosstools/workspace/rcernich/examples/esb/helloworld_mail_eclipse.zip
+		</url>
+		<fixes>
+			<fix type="wtpruntime">
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50</property>
+				<property name="eclipse-projects">helloworld_mail</property>
+				<property name="required-components">esb</property>
+				<property name="description">This project example requires a JBoss SOA-P 5.x runtime</property>
+			</fix>
+		</fixes>
+	</project>	
+
+	<project>
+		<category>ESB for SOA-P 5.0</category>
 		<name>helloworld_file_action</name>		
 		<included-projects>helloworld_file_action,helloworld_file_action_client</included-projects>
 		<shortDescription>JBoss ESB HelloWorld File Action Example - ESB</shortDescription>
