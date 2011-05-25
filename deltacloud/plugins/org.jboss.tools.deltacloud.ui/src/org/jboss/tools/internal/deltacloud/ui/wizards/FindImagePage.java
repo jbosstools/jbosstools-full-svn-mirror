@@ -48,7 +48,6 @@ import org.jboss.tools.deltacloud.core.ImageFilter;
 import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob;
 import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob.CLOUDELEMENT;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
-import org.jboss.tools.deltacloud.ui.views.CVMessages;
 import org.jboss.tools.deltacloud.ui.views.Columns;
 import org.jboss.tools.deltacloud.ui.views.Columns.Column;
 import org.jboss.tools.deltacloud.ui.views.cloudelements.ITableContentAndLabelProvider;
@@ -307,7 +306,7 @@ public class FindImagePage extends WizardPage {
 			if (i == 0) {
 				table.setSortColumn(tc);
 			}
-			tc.setText(CVMessages.getString(c.getName()));
+			tc.setText(c.getName());
 			tableLayout.setColumnData(tc, new ColumnWeightData(c.getWeight(), true));
 			tc.addSelectionListener(new ColumnListener(i, viewer));
 		}
