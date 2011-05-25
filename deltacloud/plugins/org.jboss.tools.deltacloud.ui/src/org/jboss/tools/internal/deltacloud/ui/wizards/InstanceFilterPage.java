@@ -207,7 +207,7 @@ public class InstanceFilterPage extends WizardPage {
 		defaultId.addSelectionListener(ButtonListener);
 
 		Label aliasLabel = new Label(container, SWT.NULL);
-		idLabel.setText(WizardMessages.getString(ALIAS_LABEL));
+		aliasLabel.setText(WizardMessages.getString(ALIAS_LABEL));
 
 		aliasText = new Text(container, SWT.BORDER | SWT.SINGLE);
 		aliasText.setText(cloud.getInstanceFilter().getAliasRule().toString());
@@ -331,17 +331,17 @@ public class InstanceFilterPage extends WizardPage {
 		aliasText.setLayoutData(f);
 
 		f = new FormData();
-		f.top = new FormAttachment(idLabel, 11 + centering + centering2);
+		f.top = new FormAttachment(aliasLabel, 11 + centering + centering2);
 		f.left = new FormAttachment(0, 0);
 		imageIdLabel.setLayoutData(f);
 		
 		f = new FormData();
-		f.top = new FormAttachment(idLabel, 11);
+		f.top = new FormAttachment(aliasLabel, 11);
 		f.right = new FormAttachment(100);
 		defaultImageId.setLayoutData(f);
 
 		f = new FormData();
-		f.top = new FormAttachment(idLabel, 11 + centering2);
+		f.top = new FormAttachment(aliasLabel, 11 + centering2);
 		f.left = new FormAttachment(profileLabel, 5);
 		f.right = new FormAttachment(defaultImageId, -10);
 		imageIdText.setLayoutData(f);
