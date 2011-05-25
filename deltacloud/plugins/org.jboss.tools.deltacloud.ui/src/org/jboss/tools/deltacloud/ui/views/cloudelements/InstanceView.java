@@ -58,6 +58,7 @@ public class InstanceView extends AbstractCloudElementTableView<DeltaCloudInstan
 		super.propertyChange(event);
 		if (DeltaCloud.PROP_INSTANCES.equals(event.getPropertyName())) {
 			updateFilteredLabel();
+			refreshToolbarCommandStates();
 		}
 	}
 
