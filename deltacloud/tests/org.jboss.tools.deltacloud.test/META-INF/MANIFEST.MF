@@ -10,3 +10,4 @@ Require-Bundle: org.jboss.tools.deltacloud.core;bundle-version="0.0.1",
  org.jboss.tools.common;bundle-version="[3.2.0,4.0.0)"
 Bundle-ClassPath: jruby-complete-1.5.3.jar,
  .
+Import-Package: org.jboss.tools.internal.deltacloud.ui.utils
