@@ -126,8 +126,8 @@ public class HtmlComponentContentTest extends ComponentContentTest {
 		performContentTest("components/core/map.html"); //$NON-NLS-1$
 	}
 
-	public void testObject() throws Throwable {
-		performContentTest("components/core/object.html"); //$NON-NLS-1$
+	public void testObjectEmbed() throws Throwable {
+		performContentTest("components/core/object-embed.html"); //$NON-NLS-1$
 	}
 	
 	public void testParam() throws Throwable {
@@ -385,10 +385,6 @@ public class HtmlComponentContentTest extends ComponentContentTest {
 
 	public void testCenter() throws Throwable {
 		performContentTest("components/other/center.html"); //$NON-NLS-1$
-	}
-	
-	public void testEmbed() throws Throwable {
-		performContentTest("components/other/embed.html"); //$NON-NLS-1$
 	}
 	
 	public void testFont() throws Throwable {
