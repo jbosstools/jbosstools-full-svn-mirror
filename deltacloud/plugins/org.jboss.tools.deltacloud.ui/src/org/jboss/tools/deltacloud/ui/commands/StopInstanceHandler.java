@@ -121,7 +121,7 @@ public class StopInstanceHandler extends AbstractInstanceHandler {
 						CVMessages.getString("StopInstancesConfirm.title"),
 						CVMessages.getString("StopInstancesConfirm.msg"),
 						CVMessages.getString("StopInstancesConfirmDontWarn.msg"),
-						IDeltaCloudPreferenceConstants.DONT_CONFIRM_CREATE_INSTANCE,
+						IDeltaCloudPreferenceConstants.DONT_CONFIRM_STOP_INSTANCE,
 						Activator.PLUGIN_ID,
 						WorkbenchUtils.getActiveShell());
 	}
