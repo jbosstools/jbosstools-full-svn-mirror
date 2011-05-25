@@ -10,7 +10,6 @@
  ******************************************************************************/
 package org.jboss.tools.internal.deltacloud.ui.wizards;
 
-import java.net.URI;
 import java.text.MessageFormat;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -21,6 +20,7 @@ import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudDriver;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.ObservableUIPojo;
+import org.jboss.tools.internal.deltacloud.ui.utils.URIUtils;
 
 /**
  * @author Andre Dietisheim
@@ -37,8 +37,6 @@ public class CloudConnectionPageModel extends ObservableUIPojo {
 	public static final String INVALID_URL = "ErrorInvalidURL.text"; //$NON-NLS-1$
 	public static final String NONCLOUD_URL = "ErrorNonCloudURL.text"; //$NON-NLS-1$
 
-	private static final String HTTP_PREFIX = "http://"; //$NON-NLS-1$
-
 	private String name;
 	private String url;
 	private String username;
@@ -54,33 +52,12 @@ public class CloudConnectionPageModel extends ObservableUIPojo {
 	public CloudConnectionPageModel(String name, String url, String username, String password, DeltaCloudDriver driver) {
 		this.name = name;
 		this.initialName = name;
-		setUrl(prependHttp(url));
+		setUrl(URIUtils.prependHttp(url));
 		this.username = username;
 		this.password = password;
 		setDriverByUrl(url);
 	}
-
-	private String prependHttp(String url) {
-		if (!startsWithScheme(url)) {
-			return HTTP_PREFIX + url;
-		} else {
-			return url;
-		}
-	}
 		
-	private boolean startsWithScheme(String url) {
-		if (url == null || url.length() == 0) {
-			return false;
-		} else {
-			try {
-				String scheme = URI.create(url).getScheme();
-				return scheme != null && scheme.length() > 0;
-			} catch (IllegalArgumentException e ) {
-				return false;
-			}
-		}
-	}
-
 	public String getUsername() {
 		return username;
 	}
