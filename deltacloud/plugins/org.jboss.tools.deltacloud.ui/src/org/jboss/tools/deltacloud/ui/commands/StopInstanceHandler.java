@@ -37,8 +37,8 @@ import org.osgi.service.prefs.Preferences;
  */
 public class StopInstanceHandler extends AbstractInstanceHandler {
 
-	private static final String DONT_CONFIRM_CREATE_INSTANCE = "dont_confirm_create_instance"; //$NON-NLS-1$
-
+	private static final String DONT_CONFIRM_STOP_INSTANCE = "dont_confirm_stop_instance"; //$NON-NLS-1$
+	
 	private final static String STOPPING_INSTANCE_TITLE = "StoppingInstance.title"; //$NON-NLS-1$
 	private final static String STOPPING_INSTANCE_MSG = "StoppingInstance.msg"; //$NON-NLS-1$
 	private final static String STOP_INSTANCES_DIALOG_TITLE = "StopInstancesDialog.title"; //$NON-NLS-1$
@@ -122,7 +122,7 @@ public class StopInstanceHandler extends AbstractInstanceHandler {
 						CVMessages.getString("StopInstancesConfirm.title"),
 						CVMessages.getString("StopInstancesConfirm.msg"),
 						CVMessages.getString("StopInstancesConfirmDontWarn.msg"),
-						DONT_CONFIRM_CREATE_INSTANCE,
+						DONT_CONFIRM_STOP_INSTANCE,
 						Activator.PLUGIN_ID,
 						WorkbenchUtils.getActiveShell());
 	}
