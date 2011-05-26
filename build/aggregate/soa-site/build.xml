@@ -1,0 +1,685 @@
+<project default="custom.build" name="jbosstools aggregate site build.xml">
+
+	<!-- pass in properties to Maven/Ant via Hudson job:
+		-DJOB_NAME=${JOB_NAME} 
+		-DBUILD_ID=${BUILD_ID} 
+		-DBUILD_NUMBER=${BUILD_NUMBER}
+	-->
+
+	<!-- if ${WORKSPACE}/site folder exists, target that folder; else generate here. -->
+	<condition property="output.dir" value="${WORKSPACE}/results" else="${basedir}">
+		<available file="${WORKSPACE}/results" />
+	</condition>
+
+	<condition property="COMMON_TOOLS" value="/home/hudson/static_build_env/jbds/tools" else="${java.io.tmpdir}">
+		<available file="/home/hudson/static_build_env/jbds" type="dir" />
+	</condition>
+	<mkdir dir="${COMMON_TOOLS}" />
+
+	<condition property="build.xml" value="/home/hudson/static_build_env/jbds/tools/sources/build/build.xml">
+		<available file="/home/hudson/static_build_env/jbds/tools/sources/build/build.xml" type="file" />
+	</condition>
+	<condition property="build.xml" value="${basedir}/../../build/build.xml">
+		<available file="${basedir}/../../build/build.xml" type="file" />
+	</condition>
+	<condition property="build.xml" value="${basedir}/../../build.xml">
+		<available file="${basedir}/../../build.xml" type="file" />
+	</condition>
+	<!-- if can't calculate where build/build.xml is located, must pass in path from parent when calling this script -->
+
+	<property name="update.site.source.dir" value="${output.dir}/target/site" />
+
+	<!-- load properties from default (or alternate) properties file -->
+	<property name="aggregateSite.properties" value="aggregateSite.jbosstools.properties" />
+	<property file="${aggregateSite.properties}" />
+
+	<target name="init">
+		<ant antfile="${build.xml}" target="init" />
+		<taskdef resource="net/sf/antcontrib/antlib.xml">
+			<classpath>
+				<pathelement location="${COMMON_TOOLS}/ant-contrib.jar" />
+			</classpath>
+		</taskdef>
+	</target>
+
+	<target name="custom.build" description="aggregate update site extras" depends="init,check.target,add.associate.sites,add.web.content,pack.zip,collect.zips,collect.metadata,create.summary.file" />
+
+	<!-- = = = = = = = = = = = = = = = = =
+          macrodef: fetchZipsFromList - given a list of zips in zip.list.txt, fetch those zips           
+         = = = = = = = = = = = = = = = = = -->
+	<macrodef name="fetchZipsFromList">
+		<attribute name="repo" default="" />
+		<sequential>
+
+			<var name="location.cleaned" value="@{repo}" />
+			<propertyregex defaultvalue="${location.cleaned}" input="${location.cleaned}" regexp="/all/repo/*$" replace="" casesensitive="true" override="true" property="location.cleaned" />
+			<propertyregex defaultvalue="${location.cleaned}" input="${location.cleaned}" regexp="/tools/*$" replace="" casesensitive="true" override="true" property="location.cleaned" />
+
+			<echo level="verbose">repo = ${location.cleaned}</echo>
+			<!-- fetch zip.list.txt file, if available -->
+			<var unset="true" name="ALL_ZIPS" />
+			<var unset="true" name="wget.return" />
+			<if>
+				<contains string="${location.cleaned}" substring=":/" />
+				<then>
+					<exec executable="wget" dir="${aggregate.zips.dir}" failonerror="false" failifexecutionfails="false" resultproperty="wget.return" outputproperty="null">
+						<arg line="${location.cleaned}/logs/zip.list.txt -q --no-clobber --tries=3" />
+					</exec>
+				</then>
+				<else>
+					<copy todir="${aggregate.zips.dir}" failonerror="false" file="${location.cleaned}/logs/zip.list.txt" />
+				</else>
+			</if>
+
+			<echo level="verbose">Fetch SVN_REVISION.txt if it exists (return 8 if not found)</echo>
+			<var name="svnRevTXT" value="${aggregate.zips.dir}/SVN_REVISION.txt" />
+			<if>
+				<contains string="${location.cleaned}" substring=":/" />
+				<then>
+					<exec executable="wget" dir="${aggregate.zips.dir}" failonerror="false" failifexecutionfails="false" resultproperty="wget.return" outputproperty="null">
+						<arg line="${location.cleaned}/logs/SVN_REVISION.txt -q --no-clobber --tries=3" />
+					</exec>
+				</then>
+				<else>
+					<copy todir="${aggregate.zips.dir}" failonerror="false" file="${location.cleaned}/logs/SVN_REVISION.txt" />
+				</else>
+			</if>
+
+			<echo level="verbose">Fetch SVN_REVISION.xml if it exists (return 8 if not found)</echo>
+			<var name="svnRevXML" value="${aggregate.zips.dir}/SVN_REVISION.xml" />
+			<if>
+				<contains string="${location.cleaned}" substring=":/" />
+				<then>
+					<exec executable="wget" dir="${aggregate.zips.dir}" failonerror="false" failifexecutionfails="false" resultproperty="wget.return" outputproperty="null">
+						<arg line="${location.cleaned}/logs/SVN_REVISION.xml -q --no-clobber --tries=3" />
+					</exec>
+				</then>
+				<else>
+					<copy todir="${aggregate.zips.dir}" failonerror="false" file="${location.cleaned}/logs/SVN_REVISION.xml" />
+				</else>
+			</if>
+
+			<echo level="verbose">Fetch build.properties if it exists (return 8 if not found)</echo>
+			<var name="buildProperties" value="${aggregate.zips.dir}/build.properties" />
+			<if>
+				<contains string="${location.cleaned}" substring=":/" />
+				<then>
+					<exec executable="wget" dir="${aggregate.zips.dir}" failonerror="false" failifexecutionfails="false" resultproperty="wget.return" outputproperty="null">
+						<arg line="${location.cleaned}/logs/build.properties -q --no-clobber --tries=3" />
+					</exec>
+				</then>
+				<else>
+					<copy todir="${aggregate.zips.dir}" failonerror="false" file="${location.cleaned}/logs/build.properties" />
+				</else>
+			</if>
+
+			<if>
+				<or>
+					<and>
+						<contains string="${location.cleaned}" substring=":/" />
+						<equals arg1="${wget.return}" arg2="0" />
+						<available file="${aggregate.zips.dir}/zip.list.txt" type="file" />
+					</and>
+					<and>
+						<not>
+							<contains string="${location.cleaned}" substring=":/" />
+						</not>
+						<available file="${aggregate.zips.dir}/zip.list.txt" type="file" />
+					</and>
+				</or>
+				<then>
+					<!-- load zip.list.txt file, get ALL_ZIPS list -->
+					<var unset="true" name="ALL_ZIPS" />
+					<property file="${aggregate.zips.dir}/zip.list.txt" />
+					<if>
+						<isset property="ALL_ZIPS" />
+						<then>
+							<var name="relativePath" unset="true" />
+							<for list="${ALL_ZIPS}" delimiter=", " keepgoing="true" param="zipPath">
+								<sequential>
+									<propertyregex override="true" property="relativePath" defaultvalue="" input="@{zipPath}" regexp="(.+)/([^/]+\.zip)" replace="\1" />
+
+									<propertyregex override="true" property="svnrevPath" defaultvalue="" input="@{zipPath}" regexp=".zip" replace=".SVN_REVISION" />
+									<propertyregex override="true" property="svnrevPath" defaultvalue="${svnrevPath}" input="${svnrevPath}" regexp="-Sources-|-Update-" replace="-" />
+
+									<propertyregex override="true" property="buildPropertiesPath" defaultvalue="" input="@{zipPath}" regexp=".zip" replace=".build.properties" />
+									<propertyregex override="true" property="buildPropertiesPath" defaultvalue="${buildPropertiesPath}" input="${buildPropertiesPath}" regexp="-Sources-|-Update-" replace="-" />
+
+									<propertyregex override="true" property="filePrefix" defaultvalue="@{zipPath}" input="@{zipPath}" regexp="(.+)/([^/]+)\.zip" replace="\2.build.properties" />
+
+									<mkdir dir="${aggregate.zips.dir}/${relativePath}" />
+									<!-- fetch zips to local dir -->
+									<echo level="verbose">repoNum = @{repoNum}
+relativePath = ${relativePath}
+svnrevPath = ${svnrevPath}
+buildPropertiesPath = ${buildPropertiesPath}
+zipPath = @{zipPath}
+DEST = ${aggregate.zips.dir}/@{zipPath}
+</echo>
+									<echo level="verbose"> Zip URL = ${location.cleaned}/@{zipPath}</echo>
+									<if>
+										<isset property="isTest" />
+										<then>
+											<!-- create a fake file of variable length (rather than using touch for zero-length one) -->
+											<echo file="${aggregate.zips.dir}/@{zipPath}">${aggregate.zips.dir}/@{zipPath}</echo>
+										</then>
+										<else>
+											<if>
+												<contains string="${location.cleaned}" substring=":/" />
+												<then>
+
+													<var name="wget.return" unset="true" />
+													<exec executable="wget" dir="${aggregate.zips.dir}/${relativePath}" failonerror="false" failifexecutionfails="false" resultproperty="wget.return" outputproperty="null">
+														<arg line="${location.cleaned}/@{zipPath} -q --no-clobber --tries=3" />
+													</exec>
+													<if>
+														<not>
+															<equals arg1="${wget.return}" arg2="0" />
+														</not>
+														<then>
+															<echo> ** Error [${wget.return}] ** Could not wget ${location.cleaned}/@{zipPath}</echo>
+														</then>
+													</if>
+												</then>
+												<else>
+													<copy todir="${aggregate.zips.dir}/${relativePath}" failonerror="false" file="${location.cleaned}/@{zipPath}" />
+												</else>
+											</if>
+										</else>
+									</if>
+
+									<if>
+										<available file="${aggregate.zips.dir}/@{zipPath}" type="file" />
+										<then>
+											<!-- set variable for filename -->
+											<echo file="${aggregate.zips.dir}/build.properties.file.txt" append="true">${filePrefix}.filename = @{zipPath}
+</echo>
+											<!-- set variable for filesize in Kb -->
+											<length file="${aggregate.zips.dir}/@{zipPath}" property="fs.length.b" />
+											<!-- <math operand2="${fs.length.b}" operation="/" operand1="1024" result="fs.length.kb" datatype="float" /> -->
+											<!-- <math operand2="${fs.length.b}" operation="/" operand1="1048576" result="fs.length.mb" datatype="float"/> -->
+											<!-- <echo level="verbose">${aggregate.zips.dir}/@{zipPath}: ${fs.length.kb} Kb, ${fs.length.mb} Mb</echo> -->
+											<echo file="${aggregate.zips.dir}/build.properties.file.txt" append="true">${filePrefix}.filesize = ${fs.length.b}
+</echo>
+											<var name="fs.length.b" unset="true" />
+											<var name="fs.length.kb" unset="true" />
+
+											<!-- set variable for filemd5 -->
+											<checksum file="${aggregate.zips.dir}/@{zipPath}" property="${filePrefix}.filemd5" />
+											<propertycopy from="${filePrefix}.filemd5" property="tempmd5" />
+											<echo file="${aggregate.zips.dir}/build.properties.file.txt" append="true">${filePrefix}.filemd5 = ${tempmd5}
+</echo>
+											<var name="${filePrefix}.filemd5" unset="true" />
+											<var name="tempmd5" unset="true" />
+										</then>
+									</if>
+
+									<!-- rename the svn and build properties files so they align with the zip names -->
+									<if>
+										<available file="${svnRevTXT}" type="file" />
+										<then>
+											<copy file="${svnRevTXT}" tofile="${aggregate.zips.dir}/${svnrevPath}.txt" />
+										</then>
+									</if>
+									<if>
+										<available file="${svnRevXML}" type="file" />
+										<then>
+											<copy file="${svnRevXML}" tofile="${aggregate.zips.dir}/${svnrevPath}.xml" />
+										</then>
+									</if>
+									<if>
+										<available file="${buildProperties}" type="file" />
+										<then>
+											<copy file="${buildProperties}" tofile="${aggregate.zips.dir}/${buildPropertiesPath}.txt" />
+										</then>
+									</if>
+								</sequential>
+							</for>
+							<var name="relativePath" unset="true" />
+							<var name="svnrevPath" unset="true" />
+							<var name="buildPropertiesPath" unset="true" />
+						</then>
+					</if>
+					<var unset="true" name="ALL_ZIPS" />
+				</then>
+				<else>
+					<echo> ** Error [${wget.return}] ** Could not wget ${location.cleaned}/logs/zip.list.txt</echo>
+				</else>
+			</if>
+			<var name="location.cleaned" unset="true" />
+			<delete quiet="true">
+				<fileset dir="${aggregate.zips.dir}" includes="zip.list.txt, SVN_REVISION.txt, SVN_REVISION.xml, build.properties" />
+			</delete>
+			<var name="svnRevFile" unset="true" />
+		</sequential>
+	</macrodef>
+
+	<!-- = = = = = = = = = = = = = = = = =
+          macrodef: fetchZipsFromMetadata - look for compositeArtifacts.xml and parse results
+         = = = = = = = = = = = = = = = = = -->
+	<macrodef name="fetchZipsFromMetadata">
+		<attribute name="repo" default="" />
+		<sequential>
+			<var name="location.cleaned" value="@{repo}" />
+			<echo level="verbose">repo = ${location.cleaned}</echo>
+			<!-- if no zip.list.txt from the inputRepo, then fetch from ${location.cleaned}/compositeArtifacts.xml instead -->
+			<var name="wget.return" unset="true" />
+			<exec executable="wget" dir="${aggregate.zips.dir}" failonerror="false" failifexecutionfails="false" resultproperty="wget.return" outputproperty="null">
+				<arg line="${location.cleaned}/compositeArtifacts.xml -q --no-clobber --tries=3" />
+			</exec>
+			<if>
+				<and>
+					<equals arg1="${wget.return}" arg2="0" />
+					<available file="${aggregate.zips.dir}/compositeArtifacts.xml" type="file" />
+				</and>
+				<then>
+					<echo level="verbose">Got ${aggregate.zips.dir}/compositeArtifacts.xml</echo>
+					<xmlproperty file="${aggregate.zips.dir}/compositeArtifacts.xml" validate="false" collapseAttributes="true" />
+					<echo level="verbose">Found ${repository.children.size} contained repos to search</echo>
+					<!-- foreach entry repository.children.child.location -->
+					<for param="location" list="${repository.children.child.location}">
+						<sequential>
+							<if>
+								<available file="/home/hudson/static_build_env/jbds/builds/staging" type="dir" />
+								<then>
+									<propertyregex override="true" property="location.cleaned" defaultvalue="@{location}" input="@{location}" regexp="../../" replace="/home/hudson/static_build_env/jbds/builds/staging/" />
+									<if>
+										<not>
+											<available file="${location.cleaned}" />
+										</not>
+										<then>
+											<propertyregex override="true" property="location.cleaned" defaultvalue="@{location}" input="@{location}" regexp="../../" replace="http://download.jboss.org/jbosstools/builds/staging/" />
+										</then>
+									</if>
+								</then>
+								<else>
+									<propertyregex override="true" property="location.cleaned" defaultvalue="@{location}" input="@{location}" regexp="../../" replace="http://download.jboss.org/jbosstools/builds/staging/" />
+								</else>
+							</if>
+							<echo level="error">Site URL = ${location.cleaned} (@{location})</echo>
+							<fetchZipsFromList repo="${location.cleaned}" />
+						</sequential>
+					</for>
+					<delete file="${aggregate.zips.dir}/compositeArtifacts.xml" quiet="true" />
+				</then>
+				<else>
+					<echo> ** Error [${wget.return}] ** Could not wget ${location.cleaned}/compositeArtifacts.xml</echo>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<target name="add.associate.sites" if="associate.sites">
+		<if>
+			<and>
+				<!-- Defined in aggregateSite.properties -->
+				<isset property="associate.sites" />
+				<not>
+					<equals arg1="${associate.sites}" arg2="" />
+				</not>
+			</and>
+			<then>
+				<if>
+					<available file="${update.site.source.dir}/content.jar" type="file" />
+					<then>
+						<unzip src="${update.site.source.dir}/content.jar" dest="${update.site.source.dir}" />
+						<delete file="${update.site.source.dir}/content.jar" />
+					</then>
+				</if>
+				<!-- counter variable -->
+				<var name="associate.sites.0" value="" />
+				<for param="associate.site" list="${associate.sites}" delimiter=", 
+	">
+					<sequential>
+						<var name="associate.sites.0" value="${associate.sites.0}00" />
+					</sequential>
+				</for>
+				<length property="associate.sites.length" string="${associate.sites.0}" />
+
+				<loadfile srcfile="${update.site.source.dir}/content.xml" property="content.xml">
+					<filterchain>
+						<tailfilter lines="-1" skip="1" />
+					</filterchain>
+				</loadfile>
+				<echo file="${update.site.source.dir}/content.xml" message="${content.xml}" />
+				<echo file="${update.site.source.dir}/content.xml" append="true">  &lt;references size='${associate.sites.length}'>
+</echo>
+				<for param="associate.site" list="${associate.sites}" delimiter=", 
+	">
+					<sequential>
+						<!-- insert into content.xml -->
+						<echo file="${update.site.source.dir}/content.xml" append="true">    &lt;repository uri='@{associate.site}' url='@{associate.site}' type='0' options='1'/>
+    &lt;repository uri='@{associate.site}' url='@{associate.site}' type='1' options='1'/>
+</echo>
+					</sequential>
+				</for>
+				<echo file="${update.site.source.dir}/content.xml" append="true">  &lt;/references>
+&lt;/repository>
+</echo>
+				<copy file="${update.site.source.dir}/content.xml" tofile="${update.site.source.dir}/content.old.xml" overwrite="true" />
+				<xslt style="remove-uncategorized.xsl" in="${update.site.source.dir}/content.old.xml" out="${update.site.source.dir}/content.xml" />
+				<zip destfile="${update.site.source.dir}/content.jar" basedir="${update.site.source.dir}" includes="content.xml" />
+				<delete file="${update.site.source.dir}/content.xml" />
+				<delete file="${update.site.source.dir}/content.old.xml" />
+			</then>
+		</if>
+	</target>
+
+	<target name="unpack.zip">
+		<unzip src="${output.dir}/target/site_assembly.zip" dest="${update.site.source.dir}" />
+	</target>
+
+	<target name="pack.zip">
+		<zip destfile="${output.dir}/target/site_assembly.zip" update="true" basedir="${update.site.source.dir}" includes="content.* index.html, web/*.css" />
+	</target>
+
+	<target name="check.target">
+		<if>
+			<or>
+				<not>
+					<available file="${output.dir}/target/site" type="dir" />
+				</not>
+				<not>
+					<available file="${output.dir}/target/site_assembly.zip" type="file" />
+				</not>
+			</or>
+			<then>
+				<fail>
+--
+This script must ONLY be called via the pom.xml in this directory, not run directly. 
+Cannot adjust an update site w/o first building it!
+--
+To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
+</fail>
+			</then>
+		</if>
+	</target>
+
+	<target name="add.web.content">
+		<!-- 
+		Properties needed for index.html are defined in aggregateSite.properties
+			update.site.description=Nightly Build
+			update.site.version=3.2.0.M2.2010-07-16_13-26-18-H21
+			
+		or calculated here
+			from ${JOB_NAME} = jbosstools-3.2.0.M1.aggregate get 3.2.0.M1  
+			from ${BUILD_ID} and ${BUILD_NUMBER}, get .${BUILD_ID}-H${BUILD_NUMBER}
+			default update.site.description=Nightly Build
+			default update.site.version=(null)
+		-->
+		<property name="update.site.description" value="Nightly Build" />
+		<if>
+			<and>
+				<not>
+					<isset property="update.site.version" />
+				</not>
+				<isset property="JOB_NAME" />
+				<isset property="BUILD_ID" />
+				<isset property="BUILD_NUMBER" />
+			</and>
+			<then>
+				<propertyregex override="true" property="update.site.version" defaultvalue="${JOB_NAME}" input="${JOB_NAME}" regexp="jbosstools-([0-9.]+.*).aggregate" replace=": \1.${BUILD_ID}-H${BUILD_NUMBER}" />
+			</then>
+			<else>
+				<property name="update.site.version" value="" />
+			</else>
+		</if>
+
+		<copy todir="${output.dir}" overwrite="true">
+			<fileset file="index-template.html" />
+			<mapper type="merge" to="index.html" />
+			<filterchain>
+				<expandproperties />
+			</filterchain>
+		</copy>
+
+		<copy todir="${update.site.source.dir}">
+			<fileset dir="${output.dir}" includes="index.html, **/*.css" />
+		</copy>
+	</target>
+
+	<!-- look for http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2.0.M2.continuous/logs/zip.list.txt; 
+	if found, load file and use ${ALL_ZIPS} to get list of relative path zips to fetch -->
+	<target name="collect.zips" description="collect zips from the sites we aggregated">
+		<property name="aggregate.zips.dir" value="${output.dir}/zips" />
+		<delete dir="${aggregate.zips.dir}" quiet="true" />
+		<mkdir dir="${aggregate.zips.dir}" />
+		<for list="${inputRepos}" delimiter=", " keepgoing="true" param="repoNum">
+			<sequential>
+				<var name="repo" value="${inputRepo@{repoNum}}" />
+				<if>
+					<contains string="${repo}" substring="composite" />
+					<then>
+						<fetchZipsFromMetadata repo="${repo}" />
+					</then>
+					<else>
+						<fetchZipsFromList repo="${repo}" />
+					</else>
+				</if>
+			</sequential>
+		</for>
+	</target>
+
+	<target name="test.collect.zips.from.metadata" depends="init">
+		<property name="isTest" value="true" />
+		<antcall target="collect.zips">
+			<param name="inputRepos" value="1" />
+			<param name="inputRepo1" value="http://download.jboss.org/jbosstools/builds/staging/_composite_/trunk" />
+		</antcall>
+	</target>
+
+	<target name="test.collect.zips.from.metadata.with.errors" depends="init">
+		<property name="isTest" value="true" />
+		<antcall target="collect.zips">
+			<param name="inputRepos" value="1,2" />
+			<param name="inputRepo1" value="http://download.jboss.org/jbosstools/builds/staging/_composite_/NO_SUCH_BRANCH" />
+		</antcall>
+	</target>
+
+	<target name="test.collect.zips.from.list.xml" depends="init">
+		<property name="isTest" value="true" />
+		<antcall target="collect.zips">
+			<param name="inputRepos" value="1,2,3,4" />
+			<param name="inputRepo1" value="http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--smooks" />
+			<param name="inputRepo2" value="http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--modeshape" />
+			<param name="inputRepo3" value="http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--deltacloud" />
+			<param name="inputRepo4" value="http://download.jboss.org/jbosstools/builds/staging/xulrunner-1.9.1.2" />
+		</antcall>
+	</target>
+
+	<target name="test.collect.zips.from.list.txt" depends="init">
+		<property name="isTest" value="true" />
+		<antcall target="collect.zips">
+			<param name="inputRepos" value="1,2,3,4,5" />
+			<param name="inputRepo1" value="http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--tests/" />
+			<param name="inputRepo2" value="http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--common/all/repo" />
+			<param name="inputRepo3" value="http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--jmx/all/repo/" />
+			<param name="inputRepo4" value="http://download.jboss.org/jbosstools/builds/staging/jbosstools-savara-1.1_trunk/tools/" />
+			<param name="inputRepo5" value="http://download.jboss.org/jbosstools/builds/staging/jbosstools-savara-1.1_trunk/tools" />
+		</antcall>
+	</target>
+
+	<target name="test.collect.zips.from.list.with.errors" depends="init">
+		<property name="isTest" value="true" />
+		<antcall target="collect.zips">
+			<param name="inputRepos" value="1,2" />
+			<param name="inputRepo2" value="http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_trunk.component--NO_SUCH_COMPONENT" />
+		</antcall>
+	</target>
+
+	<target name="test.collect.zips" depends="test.collect.zips.from.metadata,test.collect.zips.from.list.txt,test.collect.zips.from.list.xml">
+		<delete dir="${aggregate.zips.dir}" quiet="true" />
+	</target>
+
+	<target name="test.collect.zips.with.error" depends="test.collect.zips.from.metadata.with.errors,test.collect.zips.from.list.with.errors">
+		<delete dir="${aggregate.zips.dir}" quiet="true" />
+	</target>
+
+	<target name="collect.metadata" description="collect svn revision info + other metadata (JOB_NAME, BUILD_ID, BUILD_NUMBER, WORKSPACE, HUDSON_SLAVE), zip file names+sizes+md5sums">
+		<property name="aggregate.zips.dir" value="${output.dir}/zips" />
+
+		<!-- load file properties (name, size, md5sum) -->
+		<if>
+			<available file="${aggregate.zips.dir}/build.properties.file.txt" type="file" />
+			<then>
+				<property file="${aggregate.zips.dir}/build.properties.file.txt" />
+			</then>
+		</if>
+
+		<!-- for all build.properties.txt files in zips/ folder -->
+		<for param="propsfile">
+			<path>
+				<fileset dir="${aggregate.zips.dir}" includes="*.build.properties.txt, **/*.build.properties.txt" />
+			</path>
+			<sequential>
+				<!-- load properties file using a prefix which relates to the associated prop file -->
+				<propertyregex override="true" property="prefix" defaultvalue="" input="@{propsfile}" regexp=".+/([^/]+\.build\.properties)\.txt" replace="\1" />
+				<echo level="verbose">Read ${prefix} from @{propsfile}</echo>
+
+				<property file="@{propsfile}" prefix="${prefix}" />
+
+				<!-- now load SVN revs -->
+				<propertyregex override="true" property="svnrevTXT" defaultvalue="" input="@{propsfile}" regexp="\.build\.properties\.txt" replace=".SVN_REVISION.txt" />
+				<propertyregex override="true" property="svnrevXML" defaultvalue="" input="@{propsfile}" regexp="\.build\.properties\.txt" replace=".SVN_REVISION.xml" />
+				<if>
+					<available file="${svnrevXML}" type="file" />
+					<then>
+						<!-- XML way: load into .revision.module and .revision.revision -->
+						<xmlproperty file="${svnrevXML}" collapseAttributes="true" prefix="${prefix}" keeproot="false" />
+						<!-- purge the "<changeSet><kind>" entry if present -->
+						<if>
+							<isset property="${prefix}.kind" />
+							<then>
+								<var name="${prefix}.kind" unset="true" />
+							</then>
+						</if>
+
+						<!-- TXT way: load into .SVN_REVISION -->
+						<if>
+							<and>
+								<isset property="${prefix}.revision.module" />
+								<isset property="${prefix}.revision.revision" />
+							</and>
+							<then>
+								<propertycopy from="${prefix}.revision.module" property="temprm.all" override="true" />
+								<propertycopy from="${prefix}.revision.revision" property="temprr.all" override="true" />
+								<var name="i" value="0" />
+								<for list="${temprm.all}" delimiter=", " param="module">
+									<sequential>
+										<math result="i" operand1="1" operation="+" operand2="${i}" datatype="int" />
+										<var name="j" value="0" />
+										<for list="${temprr.all}" delimiter=", " param="revision">
+											<sequential>
+												<math result="j" operand1="1" operation="+" operand2="${j}" datatype="int" />
+												<if>
+													<equals arg1="${i}" arg2="${j}" />
+													<then>
+														<var name="temprr" value="@{revision}" />
+														<if>
+															<isset property="${prefix}.SVN_REVISION" />
+															<then>
+																<propertycopy from="${prefix}.SVN_REVISION" property="temp.all" override="true" />
+																<var name="${prefix}.SVN_REVISION" value="${temp.all},@{module}@${temprr}" />
+																<var name="temp.all" unset="true" />
+															</then>
+															<else>
+																<var name="${prefix}.SVN_REVISION" value="@{module}@${temprr}" />
+															</else>
+														</if>
+														<var name="temprr" unset="true" />
+													</then>
+												</if>
+											</sequential>
+										</for>
+										<var name="j" unset="true" />
+									</sequential>
+								</for>
+								<var name="i" unset="true" />
+								<var name="temprm.all" unset="true" />
+								<var name="temprr.all" unset="true" />
+							</then>
+						</if>
+					</then>
+					<elseif>
+						<available file="${svnrevTXT}" type="file" />
+						<then>
+							<!-- TXT way: load into .SVN_REVISION -->
+							<loadfile property="${prefix}.SVN_REVISION" srcFile="${svnrevTXT}" />
+							<propertycopy from="${prefix}.SVN_REVISION" property="temp" />
+							<propertyregex override="true" property="temp" defaultvalue="${temp}" input="${temp}" regexp="[ \n\t]+" replace="," />
+							<propertyregex override="true" property="${prefix}.SVN_REVISION" defaultvalue="${temp}" input="${temp}" regexp=",$" replace="" />
+
+							<!-- XML way: load into .revision.module and .revision.revision -->
+							<for list="${temp}" delimiter="," param="pair">
+								<sequential>
+									<propertyregex override="true" property="temprm" defaultvalue="@{pair}" input="@{pair}" regexp="(.+)@(.+)" replace="\1" />
+									<propertyregex override="true" property="temprr" defaultvalue="@{pair}" input="@{pair}" regexp="(.+)@(.+)" replace="\2" />
+									<if>
+										<isset property="${prefix}.revision.module" />
+										<then>
+											<propertycopy from="${prefix}.revision.module" property="temprm.all" override="true" />
+											<propertycopy from="${prefix}.revision.revision" property="temprr.all" override="true" />
+											<var name="${prefix}.revision.module" value="${temprm.all},${temprm}" />
+											<var name="${prefix}.revision.revision" value="${temprr.all},${temprr}" />
+											<var name="temprm.all" unset="true" />
+											<var name="temprr.all" unset="true" />
+										</then>
+										<else>
+											<var name="${prefix}.revision.module" value="${temprm}" />
+											<var name="${prefix}.revision.revision" value="${temprr}" />
+										</else>
+									</if>
+									<var name="temprm" unset="true" />
+									<var name="temprr" unset="true" />
+								</sequential>
+							</for>
+							<var name="temp" unset="true" />
+						</then>
+					</elseif>
+				</if>
+
+				<var name="prefix" unset="true" />
+			</sequential>
+
+		</for>
+		<for param="svnrevfile">
+			<path>
+				<fileset dir="${aggregate.zips.dir}" includes="*.SVN_REVISION.txt, **/*.SVN_REVISION.txt" />
+			</path>
+			<sequential>
+				<!-- load properties file using a prefix which relates to the associated prop file -->
+				<propertyregex override="true" property="prefix" defaultvalue="" input="@{propsfile}" regexp=".+/([^/]+\.build\.properties)\.txt" replace="\1" />
+				<echo level="verbose">Read ${prefix} from @{propsfile}</echo>
+
+				<property file="@{propsfile}" prefix="${prefix}" />
+
+				<var name="prefix" unset="true" />
+			</sequential>
+
+		</for>
+		<!-- dump properties to an XML file, filtering for only those properties we care about -->
+		<echoproperties format="xml" destfile="${aggregate.zips.dir}/build.properties.all.xml">
+			<propertyset>
+				<propertyref regex=".*\.build\.properties" />
+			</propertyset>
+		</echoproperties>
+
+	</target>
+
+	<target name="test.collect.metadata" depends="init">
+		<property name="isTest" value="true" />
+		<antcall target="collect.metadata">
+		</antcall>
+	</target>
+
+	<!-- TODO: write this method -->
+	<target name="create.summary.file" description="create summary file with list of generated files, sizes, and SVN revisions all linked and ordered by source build job">
+	</target>
+
+	<target name="test.create.summary.file" depends="test.collect.zips,test.collect.metadata">
+		<property name="isTest" value="true" />
+		<antcall target="create.summary.file">
+		</antcall>
+	</target>
+
+</project>
