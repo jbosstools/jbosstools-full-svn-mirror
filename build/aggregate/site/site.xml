@@ -63,10 +63,6 @@
 		<category name="AllTools" />
 		<category name="WebTools" />
 	</feature>
-	<feature url="features/org.jboss.tools.esb.feature_0.0.0.jar" id="org.jboss.tools.esb.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="SOATools" />
-	</feature>
 	<feature url="features/org.jboss.tools.ws.feature_0.0.0.jar" id="org.jboss.tools.ws.feature" version="0.0.0">
 		<category name="AllTools" />
 		<category name="SOATools" />
@@ -74,12 +70,6 @@
 	<feature url="features/org.jboss.tools.portlet.feature_0.0.0.jar" id="org.jboss.tools.portlet.feature" version="0.0.0">
 		<category name="AllTools" />
 		<category name="WebTools" />
-	</feature>
-	<feature url="features/org.jboss.tools.smooks.feature_0.0.0.jar" id="org.jboss.tools.smooks.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="SOATools" />
-		<category name="DataTools" />
-		<category name="GeneralTools" />
 	</feature>
 	<feature url="features/org.jboss.tools.project.examples.feature_0.0.0.jar" id="org.jboss.tools.project.examples.feature" version="0.0.0">
 		<category name="AllTools" />
@@ -124,13 +114,6 @@
 	<feature url="features/org.jboss.tools.maven.project.examples.feature_0.0.0.jar" id="org.jboss.tools.maven.project.examples.feature" version="0.0.0">
 		<category name="MavenTools" />
 	</feature>
-	<feature url="features/org.jboss.tools.jbpm4.feature_0.0.0.jar" id="org.jboss.tools.jbpm4.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="SOATools" />
-	</feature>
-	<feature url="features/org.jboss.tools.bpel.feature_0.0.0.jar" id="org.jboss.tools.bpel.feature" version="0.0.0">
-		<category name="SOATools" />
-	</feature>
 	<!-- <feature url="features/org.jboss.tools.gwt.feature_0.0.0.jar" id="org.jboss.tools.gwt.feature" version="0.0.0">
 		<category name="GeneralTools" />
 	</feature> -->
@@ -139,25 +122,7 @@
 		<category name="CloudTools" />
 	</feature>
 
-	<!-- jBPM Tools & Flow features -->
-	<feature url="features/org.jboss.tools.jbpm.convert.feature_0.0.0.jar" id="org.jboss.tools.jbpm.convert.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="SOATools" />
 	</feature>
-	<feature url="features/org.jboss.tools.jbpm.common.feature_0.0.0.jar" id="org.jboss.tools.jbpm.common.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="SOATools" />
-	</feature>
-	<feature url="features/org.jboss.tools.jbpm3.feature_0.0.0.jar" id="org.jboss.tools.jbpm3.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="SOATools" />
-	</feature>
-
-	<feature url="features/org.jboss.tools.modeshape.rest.feature_0.0.0.jar" id="org.jboss.tools.modeshape.rest.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="GeneralTools" />
-	</feature>
-
 	<feature url="features/org.jboss.tools.runtime.core.feature_0.0.0.jar" id="org.jboss.tools.runtime.core.feature" version="0.0.0">
 		<category name="AllTools" />
 	</feature>
@@ -194,14 +159,6 @@
 			both Web, Seam and SOA
 			Development.
       </description>
-	</category-def>
-
-	<category-def name="SOATools" label="SOA Development">
-		<description>
-			Tools to help create SOA applications. Use these if you
-			work with jBPM,
-			Drools, JBoss ESB, JBoss WebServices or Smooks.
-		</description>
 	</category-def>
 
 	<category-def name="WebTools" label="Web and Java EE Development">
@@ -241,42 +198,4 @@
       		</description>
 	</category-def>
 
-	<!-- aggregated from other sources; only in JBT -->
-	<feature url="features/org.pi4soa.core.feature_0.0.0.jar" id="org.pi4soa.core.feature" version="0.0.0">
-		<category name="SOATools" />
-	</feature>
-	<feature url="features/org.savara.tools.feature_0.0.0.jar" id="org.savara.tools.feature" version="0.0.0">
-		<category name="SOATools" />
-	</feature>
-	<feature url="features/org.jboss.savara.tools.feature_0.0.0.jar" id="org.jboss.savara.tools.feature" version="0.0.0">
-		<category name="SOATools" />
-	</feature>
-	<!-- scribble.protocol.feature no longer exists in Savara/Scribble 2.0 -->
-	<!-- <feature url="features/org.scribble.protocol.feature_0.0.0.jar" id="org.scribble.protocol.feature" version="0.0.0">
-	</feature> -->
-	
-	<!-- aggregated from other sources -->
-	<feature url="features/org.drools.eclipse.feature_0.0.0.jar" id="org.drools.eclipse.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="SOATools" />
-		<category name="GeneralTools" />
-	</feature>
-	<feature url="features/org.drools.eclipse.task.feature_0.0.0.jar" id="org.drools.eclipse.task.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="SOATools" />
-	</feature>
-	<feature url="features/org.guvnor.tools.feature_0.0.0.jar" id="org.guvnor.tools.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="SOATools" />
-	</feature>
-
-	<feature url="features/org.teiid.datatools.connectivity.feature_0.0.0.jar" id="org.teiid.datatools.connectivity.feature" version="0.0.0">
-		<category name="DataTools" />
-	</feature>
-	<feature url="features/org.teiid.designer.feature_0.0.0.jar" id="org.teiid.designer.feature" version="0.0.0">
-		<category name="DataTools" />
-	</feature>
-	<feature url="features/org.teiid.designer.runtime.feature_0.0.0.jar" id="org.teiid.designer.runtime.feature" version="0.0.0">
-		<category name="DataTools" />
-	</feature>
 </site>
