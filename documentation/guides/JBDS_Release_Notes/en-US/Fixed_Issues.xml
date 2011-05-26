@@ -163,7 +163,7 @@
 			<itemizedlist>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-8617">JBIDE-8617</ulink>: A new RichFaces 4 palette is available to assist with RichFaces 4 components. This palette is hidden by default.
 					</para>
 				</listitem>
 			</itemizedlist>
@@ -235,7 +235,7 @@
             <itemizedlist>
                 <listitem>
                     <para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1602">JBDS-1602</ulink>: The Web Service Tester tool included as part of the Web Tools Platform contained an issue that would generate incorrect SOAP code, causing marshaling issues expressed as a <exceptionname>NullPointerException</exceptionname>. Multiple namespaces can now be handled without error and correct SOAP code is generated, removing marshaling issues. 
                     </para>
                 </listitem>
             </itemizedlist>
@@ -271,7 +271,7 @@
 			<itemizedlist>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1268">JBDS-1268</ulink>: The JBoss Developer Studio can now be installed by passing the installer a settings file named <filename>InstallConfigRecord.xml</filename>. To undertake this, setup an <filename>InstallConfigRecord.xml</filename> and run the following on a command line: <code>java -jar jbdevstudio-4.1.0.GA.jar InstallConfigRecord.xml</code>. This allows for an automated and reproducible installation. For further information consult the <emphasis>Getting Started Guide</emphasis>.
 					</para>
 				</listitem>
 			</itemizedlist>
