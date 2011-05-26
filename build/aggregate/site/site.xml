@@ -78,9 +78,9 @@
 
 	<!-- DISABLED for now -->
 	<!-- 
-	<feature url="features/org.jboss.tools.profiler.feature_0.0.0.jar" id="org.jboss.tools.profiler.feature" version="0.0.0"> 
-		<category name="AllTools"/> 
-	</feature> 
+	<feature url="features/org.jboss.tools.profiler.feature_0.0.0.jar" id="org.jboss.tools.profiler.feature" version="0.0.0">
+		<category name="AllTools"/>
+	</feature>
 	-->
 
 	<!-- only in JBT -->
@@ -114,20 +114,21 @@
 	<feature url="features/org.jboss.tools.maven.project.examples.feature_0.0.0.jar" id="org.jboss.tools.maven.project.examples.feature" version="0.0.0">
 		<category name="MavenTools" />
 	</feature>
-	<!-- <feature url="features/org.jboss.tools.gwt.feature_0.0.0.jar" id="org.jboss.tools.gwt.feature" version="0.0.0">
-		<category name="GeneralTools" />
-	</feature> -->
-
 	<feature url="features/org.jboss.tools.deltacloud.feature_0.0.0.jar" id="org.jboss.tools.deltacloud.feature" version="0.0.0">
 		<category name="CloudTools" />
 	</feature>
-
+	-->
+	<!-- 
+	<feature url="features/org.jboss.tools.gwt.feature_0.0.0.jar" id="org.jboss.tools.gwt.feature" version="0.0.0">
+		<category name="GeneralTools" />
 	</feature>
-	<feature url="features/org.jboss.tools.runtime.core.feature_0.0.0.jar" id="org.jboss.tools.runtime.core.feature" version="0.0.0">
+	-->
+
+	<feature url="features/org.jboss.tools.runtime.feature_0.0.0.jar" id="org.jboss.tools.runtime.feature" version="0.0.0">
 		<category name="AllTools" />
 	</feature>
 	
-	<feature url="features/org.jboss.tools.runtime.feature_0.0.0.jar" id="org.jboss.tools.runtime.feature" version="0.0.0">
+	<feature url="features/org.jboss.tools.runtime.core.feature_0.0.0.jar" id="org.jboss.tools.runtime.core.feature" version="0.0.0">
 		<category name="AllTools" />
 	</feature>
 
@@ -135,11 +136,9 @@
 		<category name="AllTools" />
 	</feature>
 
-	<!-- include but leave uncategorized -->
-        <feature url="features/org.mozilla.xulrunner.feature_0.0.0.jar" id="org.mozilla.xulrunner.feature" version="0.0.0">
-	</feature>
-        <feature url="features/org.jboss.tools.xulrunner.feature_0.0.0.jar" id="org.jboss.tools.xulrunner.feature" version="0.0.0">
-        </feature>
+	<!-- include but do not categorize -->
+        <feature url="features/org.jboss.tools.xulrunner.feature_0.0.0.jar" id="org.jboss.tools.xulrunner.feature" version="0.0.0"></feature>
+	<feature url="features/org.mozilla.xulrunner.feature_0.0.0.jar" id="org.mozilla.xulrunner.feature" version="0.0.0"></feature>
 
 	<!-- categories - see also ../../../common/aggregateRepos.*.properties -->
 	<category-def name="SDKTools" label="JBoss Tools SDK">
@@ -156,9 +155,8 @@
 			related to integration with 3rd party
 			plugins. Selecting this
 			category will give you all tools needed for
-			both Web, Seam and SOA
-			Development.
-      </description>
+			both Web and Seam Development.
+		</description>
 	</category-def>
 
 	<category-def name="WebTools" label="Web and Java EE Development">
@@ -176,11 +174,6 @@
 	<category-def name="DataTools" label="Data Services">
 		<description>Tools related to data services such as persistence and
 			transformation.</description>
-	</category-def>
-
-	<category-def name="TestPerfTools" label="Test and Performance">
-		<description>Tools used to improve testing and performance.
-		</description>
 	</category-def>
 
 	<!-- Only in JBT -->
