@@ -1,0 +1,280 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<section id="Issues-fixed-in-this-release">
+    <title>
+        Features added and issues fixed in version 4.1.0
+    </title>
+<!--    <para>
+        The following list highlights new features that have been added to this release, as well as listing notable bug fixes. You can find a complete list of bug fixes <ulink url="https://issues.jboss.org/browse/JBIDE">here</ulink>.
+	</para> -->
+    <formalpara>
+      <title>Contexts and Dependency Injection (CDI)</title>
+        <para>
+			<itemizedlist>					
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+					</para>
+				</listitem>
+            </itemizedlist>
+        </para>
+    </formalpara>
+	<!-- Deltacloud is only shipped with JBoss.org -->
+	<!--
+	<formalpara>
+		<title>Deltacloud</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</formalpara> -->
+    <formalpara>
+        <title>Drools</title>
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+    </formalpara>
+    <formalpara>
+        <title>ESB</title>
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+    </formalpara>
+	<!-- Google Web Toolkit is only shipped with JBoss.org -->
+    <!--
+    <formalpara>
+        <title>Google Web Toolkit</title>
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:				
+                    </para>
+				</listitem>
+            </itemizedlist>
+        </para>
+    </formalpara> -->
+    <formalpara>
+        <title>Hibernate</title>
+        <para>
+            <itemizedlist>
+				<listitem>
+                    <para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+    </formalpara>
+    <formalpara>
+        <title>jBPM</title>
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+    </formalpara>
+	<formalpara>
+		<title>JBoss Enterprise Portal Platform</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</formalpara>
+    <formalpara>
+        <title>JavaServer Faces (JSF)</title>
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+    </formalpara>
+    <formalpara>
+        <title>JBoss Application Server</title>
+        <para>
+            <itemizedlist>
+            	<listitem>
+                    <para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+    </formalpara>
+    <!-- Include in JBT Release Notes only!!! -->
+    <!--	
+	<formalpara>
+		<title>Maven</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+					</para>
+				</listitem>
+	        </itemizedlist>
+		</para>
+    </formalpara> -->
+    	
+	<formalpara>
+		<title>Portlet</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</formalpara>
+	<formalpara>
+		<title>RichFaces</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</formalpara>
+	<formalpara>
+        <title>Seam</title>
+        	<para>
+          	<itemizedlist>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+					</para>	
+                </listitem>
+            </itemizedlist>
+        </para>
+    </formalpara>	
+	<formalpara>
+		<title>Smooks</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</formalpara>
+    <formalpara>
+		<title>Struts</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</formalpara>
+	<formalpara>
+		<title>Usage</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+				    <para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+				    </para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</formalpara>
+    <formalpara>
+        <title>Visual Page Editor</title>
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+    </formalpara>
+    <formalpara>
+        <title>Web Tools Platform</title>
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+    </formalpara>
+    <formalpara>
+		<title>XHTML Editor</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</formalpara>
+    <formalpara>
+        <title>XML Structured Editor</title>
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+    </formalpara>
+    <formalpara>
+        <title>General Issues</title>
+        <para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+					</para>
+				</listitem>
+			</itemizedlist>
+        </para>
+    </formalpara>
+</section>
