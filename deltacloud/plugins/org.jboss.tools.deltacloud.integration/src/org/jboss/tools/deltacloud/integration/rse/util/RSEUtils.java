@@ -227,7 +227,8 @@ public class RSEUtils {
 					monitor.done();
 					return status;
 				} catch (Exception e) {
-					e.printStackTrace();
+					IStatus status = new Status(IStatus.ERROR, DeltaCloudIntegrationPlugin.PLUGIN_ID, MessageFormat.format("Could not connect to {0}.", service.getHostName()), e);
+					DeltaCloudIntegrationPlugin.getDefault().getLog().log(status);
 					// odd behavior: service reports connection failure even if
 					// things seem to work (view opens up with connection in it)
 					// ignore errors since things work
