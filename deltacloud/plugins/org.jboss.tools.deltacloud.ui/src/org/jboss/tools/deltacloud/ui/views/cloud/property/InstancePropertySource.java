@@ -130,7 +130,7 @@ public class InstancePropertySource implements IPropertySource {
 		if (id.equals(PROPERTY_HOSTNAME)) {
 			List<String> hostnames = instance.getHostNames();
 			if (hostnames.size() >= 1) {
-				return hostnames.get(0);
+				return StringUtils.null2EmptyString(hostnames.get(0));
 			}
 		}
 		return null;
