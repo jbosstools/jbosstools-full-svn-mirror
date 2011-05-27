@@ -16,6 +16,7 @@ import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
+import org.jboss.tools.deltacloud.core.client.utils.StringUtils;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
 import org.jboss.tools.deltacloud.ui.views.cloud.InstanceItem;
 
@@ -121,7 +122,7 @@ public class InstancePropertySource implements IPropertySource {
 			return instance.getImageId();
 		}
 		if (id.equals(PROPERTY_KEYNAME)) {
-			return instance.getKeyId();
+			return StringUtils.null2EmptyString(instance.getKeyId());
 		}
 		if (id.equals(PROPERTY_STATE)) {
 			return instance.getState();
