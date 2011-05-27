@@ -101,25 +101,25 @@ public class InstancePropertySource implements IPropertySource {
 	@Override
 	public Object getPropertyValue(Object id) {
 		if (id.equals(PROPERTY_NAME)) {
-			return instance.getName();
+			return StringUtils.null2EmptyString(instance.getName());
 		}
 		if (id.equals(PROPERTY_ALIAS)) {
-			return instance.getAlias();
+			return StringUtils.null2EmptyString(instance.getAlias());
 		}
 		if (id.equals(PROPERTY_ID)) {
-			return instance.getId();
+			return StringUtils.null2EmptyString(instance.getId());
 		}
 		if (id.equals(PROPERTY_OWNER)) {
-			return instance.getOwnerId();
+			return StringUtils.null2EmptyString(instance.getOwnerId());
 		}
 		if (id.equals(PROPERTY_PROFILEID)) {
-			return instance.getProfileId();
+			return StringUtils.null2EmptyString(instance.getProfileId());
 		}
 		if (id.equals(PROPERTY_REALMID)) {
-			return instance.getRealmId();
+			return StringUtils.null2EmptyString(instance.getRealmId());
 		}
 		if (id.equals(PROPERTY_IMAGEID)) {
-			return instance.getImageId();
+			return StringUtils.null2EmptyString(instance.getImageId());
 		}
 		if (id.equals(PROPERTY_KEYNAME)) {
 			return StringUtils.null2EmptyString(instance.getKeyId());
