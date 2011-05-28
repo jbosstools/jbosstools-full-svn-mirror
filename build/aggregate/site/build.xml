@@ -4,6 +4,8 @@
 		-DJOB_NAME=${JOB_NAME} 
 		-DBUILD_ID=${BUILD_ID} 
 		-DBUILD_NUMBER=${BUILD_NUMBER}
+		eg., 
+		-DJOB_NAME=jbosstools-3.2_stable_branch.aggregate -DBUILD_ID=2011-05-12_06-03-43 -DBUILD_NUMBER=81
 	-->
 
 	<!-- if ${WORKSPACE}/site folder exists, target that folder; else generate here. -->
