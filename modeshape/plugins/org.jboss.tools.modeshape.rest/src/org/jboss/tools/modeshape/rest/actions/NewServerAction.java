@@ -13,23 +13,20 @@ package org.jboss.tools.modeshape.rest.actions;
 
 import static org.jboss.tools.modeshape.rest.IUiConstants.ModeShape_IMAGE_16x;
 import static org.jboss.tools.modeshape.rest.IUiConstants.NEW_SERVER_IMAGE;
+
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.jboss.tools.modeshape.rest.Activator;
-import org.jboss.tools.modeshape.rest.PersistedServer;
 import org.jboss.tools.modeshape.rest.RestClientI18n;
 import org.jboss.tools.modeshape.rest.ServerManager;
+import org.jboss.tools.modeshape.rest.domain.ModeShapeServer;
 import org.jboss.tools.modeshape.rest.wizards.ServerWizard;
 
 /**
- * The <code>NewServerAction</code> runs a UI that allows the user to create a new {@link PersistedServer server}.
+ * The <code>NewServerAction</code> runs a UI that allows the user to create a new {@link ModeShapeServer server}.
  */
 public final class NewServerAction extends Action {
-
-    // ===========================================================================================================================
-    // Fields
-    // ===========================================================================================================================
 
     /**
      * The server manager used to create and edit servers.
@@ -40,10 +37,6 @@ public final class NewServerAction extends Action {
      * The shell used to display the dialog that edits and creates servers.
      */
     private final Shell shell;
-
-    // ===========================================================================================================================
-    // Constructors
-    // ===========================================================================================================================
 
     /**
      * @param shell the parent shell used to display the dialog
@@ -58,10 +51,6 @@ public final class NewServerAction extends Action {
         this.shell = shell;
         this.serverManager = serverManager;
     }
-
-    // ===========================================================================================================================
-    // Methods
-    // ===========================================================================================================================
 
     /**
      * {@inheritDoc}

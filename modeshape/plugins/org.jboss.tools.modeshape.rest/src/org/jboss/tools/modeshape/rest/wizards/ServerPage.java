@@ -36,13 +36,12 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.help.IWorkbenchHelpSystem;
 import org.jboss.tools.modeshape.rest.Activator;
-import org.jboss.tools.modeshape.rest.PersistedServer;
 import org.jboss.tools.modeshape.rest.RestClientI18n;
 import org.jboss.tools.modeshape.rest.ServerManager;
 import org.jboss.tools.modeshape.rest.Utils;
+import org.jboss.tools.modeshape.rest.domain.ModeShapeServer;
 import org.modeshape.web.jcr.rest.client.Status;
 import org.modeshape.web.jcr.rest.client.Status.Severity;
-import org.modeshape.web.jcr.rest.client.domain.Server;
 
 /**
  * The <code>ServerPage</code> is used to create or modify a server.
@@ -67,7 +66,7 @@ public final class ServerPage extends WizardPage {
     /**
      * The server being editor or <code>null</code> if creating a new server.
      */
-    private PersistedServer server;
+    private ModeShapeServer server;
 
     /**
      * The current validation status.
@@ -98,7 +97,7 @@ public final class ServerPage extends WizardPage {
      * 
      * @param server the server being edited
      */
-    public ServerPage( PersistedServer server ) {
+    public ServerPage( ModeShapeServer server ) {
         super(ServerPage.class.getSimpleName());
         setTitle(RestClientI18n.serverPageTitle.text());
 
@@ -220,6 +219,7 @@ public final class ServerPage extends WizardPage {
             st.setText(RestClientI18n.serverPageSavePasswordLabel.text());
             st.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
             st.setCaret(null);
+            st.setEnabled(false);
             GridData gd = new GridData(SWT.FILL, SWT.CENTER, true, true);
             gd.grabExcessVerticalSpace = false;
             gd.horizontalIndent = 4;
@@ -302,6 +302,7 @@ public final class ServerPage extends WizardPage {
         st.setText(RestClientI18n.serverPageUrlTemplateLabel.text());
         st.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
         st.setCaret(null);
+        st.setEnabled(false);
         GridData gd = new GridData(SWT.FILL, SWT.CENTER, true, true);
         gd.grabExcessVerticalSpace = false;
         gd.horizontalIndent = 4;
@@ -335,9 +336,9 @@ public final class ServerPage extends WizardPage {
      * @throws RuntimeException if called when all inputs are not valid
      * @see #isPageComplete()
      */
-    public PersistedServer getServer() {
+    public ModeShapeServer getServer() {
         if (!this.status.isError()) {
-            return new PersistedServer(this.url, this.user, this.password, this.savePassword);
+            return new ModeShapeServer(this.url, this.user, this.password, this.savePassword);
         }
 
         // should never be called if error status
@@ -373,7 +374,7 @@ public final class ServerPage extends WizardPage {
      * are valid.
      */
     void handleTestConnection() {
-        final Server server = getServer();
+        final ModeShapeServer server = getServer();
         final boolean[] success = new boolean[1];
 
         BusyIndicator.showWhile(null, new Runnable() {
@@ -476,17 +477,9 @@ public final class ServerPage extends WizardPage {
     private void validate() {
         this.status = Utils.isServerValid(this.url, this.user, this.password);
 
-        // only enable test connection if URL is valid
-        if (this.status.isError()) {
-            this.btnTestConnection.setEnabled(false);
-        } else {
-            this.btnTestConnection.setEnabled(true);
-            return;
-        }
-
         // now check to see if a server is already registered
         if (this.status.isOk()) {
-            Server changedServer = getServer();
+            ModeShapeServer changedServer = getServer();
 
             // don't check if modifying existing server and identifying properties have not changed
             if (((this.server == null) || !this.server.hasSameKey(changedServer)) && getServerManager().isRegistered(changedServer)) {
@@ -495,6 +488,9 @@ public final class ServerPage extends WizardPage {
                                          null);
             }
         }
+
+        // only enable test connection if URL is valid
+        this.btnTestConnection.setEnabled(!this.status.isError());
     }
 
 }

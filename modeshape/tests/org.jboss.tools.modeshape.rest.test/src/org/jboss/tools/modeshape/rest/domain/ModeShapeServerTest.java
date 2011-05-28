@@ -9,18 +9,18 @@
  * See the AUTHORS.txt file in the distribution for a full listing of
  * individual contributors.
  */
-package org.jboss.tools.modeshape.rest;
+package org.jboss.tools.modeshape.rest.domain;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import org.jboss.tools.modeshape.rest.PersistedServer;
+
 import org.junit.Test;
 
-public final class PersistedServerTest {
+public final class ModeShapeServerTest {
 
-    private static final PersistedServer PERSISTED = new PersistedServer("url", "user", "pswd", true);
+    private static final ModeShapeServer PERSISTED = new ModeShapeServer("url", "user", "pswd", true); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
-    private static final PersistedServer NOT_PERSISTED = new PersistedServer(PERSISTED.getUrl(), PERSISTED.getUser(),
+    private static final ModeShapeServer NOT_PERSISTED = new ModeShapeServer(PERSISTED.getUrl(), PERSISTED.getUser(),
                                                                              PERSISTED.getPassword(), false);
 
     @Test

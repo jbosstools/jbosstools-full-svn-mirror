@@ -15,16 +15,17 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.StringTokenizer;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.QualifiedName;
+import org.jboss.tools.modeshape.rest.domain.ModeShapeRepository;
+import org.jboss.tools.modeshape.rest.domain.ModeShapeServer;
+import org.jboss.tools.modeshape.rest.domain.ModeShapeWorkspace;
 import org.modeshape.common.util.CheckArg;
 import org.modeshape.common.util.HashCode;
 import org.modeshape.web.jcr.rest.client.Status;
 import org.modeshape.web.jcr.rest.client.Status.Severity;
-import org.modeshape.web.jcr.rest.client.domain.Repository;
-import org.modeshape.web.jcr.rest.client.domain.Server;
-import org.modeshape.web.jcr.rest.client.domain.Workspace;
 
 /**
  * The <code>PublishedResourceHelper</code> knows how to get and set the property on a resource that indicates it has been
@@ -32,51 +33,35 @@ import org.modeshape.web.jcr.rest.client.domain.Workspace;
  */
 public final class PublishedResourceHelper {
 
-    // ===========================================================================================================================
-    // Constants
-    // ===========================================================================================================================
-
     /**
      * Delimiter between a workspace's properties.
      */
-    private static final String ID_DELIM = "$";
+    private static final String ID_DELIM = "$"; //$NON-NLS-1$
 
     /**
      * Delimiter between workspaces.
      */
-    private static final String DELIM = "|";
+    private static final String DELIM = "|"; //$NON-NLS-1$
 
     /**
      * The name of the persisted file property indicating if the resource has been published. This property will only exist if the
      * file has been published to at least one repository. The value of the property is a list of repository workspaces where this
      * file has been published.
      */
-    private static QualifiedName PUBLISHED_RESOURCE_PROPERTY = new QualifiedName(IUiConstants.PLUGIN_ID, "publishedLocations");
-
-    // ===========================================================================================================================
-    // Fields
-    // ===========================================================================================================================
+    private static QualifiedName PUBLISHED_RESOURCE_PROPERTY = new QualifiedName(IUiConstants.PLUGIN_ID, "publishedLocations"); //$NON-NLS-1$
 
     /**
      * The server manager used by the helper to obtain workspaces.
      */
     private final ServerManager serverManager;
 
-    // ===========================================================================================================================
-    // Constructors
-    // ===========================================================================================================================
-
     /**
      * @param serverManager the server manager used by this helper (never <code>null</code>)
      */
     public PublishedResourceHelper( ServerManager serverManager ) {
-        CheckArg.isNotNull(serverManager, "serverManager");
+        CheckArg.isNotNull(serverManager, "serverManager"); //$NON-NLS-1$
         this.serverManager = serverManager;
     }
-
-    // ===========================================================================================================================
-    // Methods
-    // ===========================================================================================================================
 
     /**
      * @param file the file that was just published (never <code>null</code>)
@@ -85,11 +70,11 @@ public final class PublishedResourceHelper {
      * @throws Exception if there is a problem setting the property
      */
     public void addPublishedProperty( IFile file,
-                                      Workspace workspace,
+                                      ModeShapeWorkspace workspace,
                                       String url ) throws Exception {
-        CheckArg.isNotNull(file, "file");
-        CheckArg.isNotNull(workspace, "workspace");
-        CheckArg.isNotNull(url, "url");
+        CheckArg.isNotNull(file, "file"); //$NON-NLS-1$
+        CheckArg.isNotNull(workspace, "workspace"); //$NON-NLS-1$
+        CheckArg.isNotNull(url, "url"); //$NON-NLS-1$
 
         Set<WorkspaceLocation> workspaceLocations = getPublishedWorkspaceLocations(file);
         workspaceLocations.add(new WorkspaceLocation(workspace, url));
@@ -117,7 +102,7 @@ public final class PublishedResourceHelper {
      * @return the ID
      */
     private String createWorkspaceLocationId( WorkspaceLocation workspaceLocation ) {
-        Workspace workspace = workspaceLocation.getWorkspace();
+        ModeShapeWorkspace workspace = workspaceLocation.getWorkspace();
 
         StringBuilder result = new StringBuilder();
         result.append(workspace.getServer().getUrl()).append(ID_DELIM).append(workspace.getServer().getUser()).append(ID_DELIM);
@@ -135,7 +120,7 @@ public final class PublishedResourceHelper {
      *         manager
      */
     public Set<WorkspaceLocation> getPublishedWorkspaceLocations( IFile file ) throws Exception {
-        CheckArg.isNotNull(file, "file");
+        CheckArg.isNotNull(file, "file"); //$NON-NLS-1$
 
         Set<WorkspaceLocation> publishedWorkspaceLocations = null;
         String value = file.getPersistentProperty(PUBLISHED_RESOURCE_PROPERTY);
@@ -154,24 +139,24 @@ public final class PublishedResourceHelper {
                     String user = propsTokenizer.nextToken();
 
                     // find server
-                    Server server = this.serverManager.findServer(url, user);
+                    ModeShapeServer server = this.serverManager.findServer(url, user);
 
                     if ((server != null) && this.serverManager.ping(server).isOk()) {
-                        Collection<Repository> repositories = this.serverManager.getRepositories(server);
+                        Collection<ModeShapeRepository> repositories = this.serverManager.getRepositories(server);
 
                         // find repository
                         if (!repositories.isEmpty()) {
                             String repositoryName = propsTokenizer.nextToken();
 
-                            for (Repository repository : repositories) {
+                            for (ModeShapeRepository repository : repositories) {
                                 if (repository.getName().equals(repositoryName)) {
-                                    Collection<Workspace> workspaces = this.serverManager.getWorkspaces(repository);
+                                    Collection<ModeShapeWorkspace> workspaces = this.serverManager.getWorkspaces(repository);
 
                                     // find workspace
                                     if (!workspaces.isEmpty()) {
                                         String workspaceName = propsTokenizer.nextToken();
 
-                                        for (Workspace workspace : workspaces) {
+                                        for (ModeShapeWorkspace workspace : workspaces) {
                                             if (workspace.getName().equals(workspaceName)) {
                                                 // get URL
                                                 String publishedUrl = propsTokenizer.nextToken();
@@ -200,7 +185,7 @@ public final class PublishedResourceHelper {
      * @return <code>true</code> if the file has been published to a repository
      */
     public boolean isPublished( IFile file ) {
-        CheckArg.isNotNull(file, "file");
+        CheckArg.isNotNull(file, "file"); //$NON-NLS-1$
 
         try {
             return !getPublishedWorkspaceLocations(file).isEmpty();
@@ -218,11 +203,11 @@ public final class PublishedResourceHelper {
      * @throws Exception if there is a problem changing the property value
      */
     public void removePublishedProperty( IFile file,
-                                         Workspace workspace,
+                                         ModeShapeWorkspace workspace,
                                          String url ) throws Exception {
-        CheckArg.isNotNull(file, "file");
-        CheckArg.isNotNull(workspace, "workspace");
-        CheckArg.isNotNull(url, "url");
+        CheckArg.isNotNull(file, "file"); //$NON-NLS-1$
+        CheckArg.isNotNull(workspace, "workspace"); //$NON-NLS-1$
+        CheckArg.isNotNull(url, "url"); //$NON-NLS-1$
 
         Set<WorkspaceLocation> workspaceLocations = getPublishedWorkspaceLocations(file);
         workspaceLocations.remove(new WorkspaceLocation(workspace, url));
@@ -260,11 +245,11 @@ public final class PublishedResourceHelper {
      */
     public class WorkspaceLocation {
 
-        private final Workspace workspace;
+        private final ModeShapeWorkspace workspace;
 
         private final String url;
 
-        public WorkspaceLocation( Workspace workspace,
+        public WorkspaceLocation( ModeShapeWorkspace workspace,
                                   String url ) {
             this.workspace = workspace;
             this.url = url;
@@ -283,8 +268,8 @@ public final class PublishedResourceHelper {
             WorkspaceLocation thatLocation = (WorkspaceLocation)obj;
 
             if (this.workspace.equals(thatLocation.workspace)) {
-                if ((this.url == null) || this.url.equals("")) {
-                    return ((thatLocation.url == null) || thatLocation.url.equals(""));
+                if ((this.url == null) || this.url.equals("")) { //$NON-NLS-1$
+                    return ((thatLocation.url == null) || thatLocation.url.equals("")); //$NON-NLS-1$
                 }
 
                 return this.url.equals(thatLocation.url);
@@ -296,21 +281,21 @@ public final class PublishedResourceHelper {
         /**
          * @return the repository where the workspace is located (never <code>null</code>)
          */
-        public Repository getRepository() {
+        public ModeShapeRepository getRepository() {
             return this.workspace.getRepository();
         }
 
         /**
          * @return the server where the workspace is located (never <code>null</code>)
          */
-        public Server getServer() {
+        public ModeShapeServer getServer() {
             return this.workspace.getServer();
         }
 
         /**
          * @return the workspace where published (never <code>null</code>)
          */
-        public Workspace getWorkspace() {
+        public ModeShapeWorkspace getWorkspace() {
             return this.workspace;
         }
 

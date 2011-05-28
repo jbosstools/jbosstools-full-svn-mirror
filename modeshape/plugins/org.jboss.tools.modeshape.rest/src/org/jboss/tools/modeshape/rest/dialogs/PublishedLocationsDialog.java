@@ -50,18 +50,14 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.jboss.tools.modeshape.rest.Activator;
 import org.jboss.tools.modeshape.rest.PublishedResourceHelper.WorkspaceLocation;
 import org.jboss.tools.modeshape.rest.RestClientI18n;
+import org.jboss.tools.modeshape.rest.domain.ModeShapeServer;
 import org.modeshape.common.util.CheckArg;
-import org.modeshape.web.jcr.rest.client.domain.Server;
 
 /**
- * The <code>PublishedLocationsDialog</code> class provides a UI for viewing a list of {@link Server servers} a selected file has
+ * The <code>PublishedLocationsDialog</code> class provides a UI for viewing a list of {@link ModeShapeServer servers} a selected file has
  * been published to.
  */
 public final class PublishedLocationsDialog extends MessageDialog {
-
-    // ===========================================================================================================================
-    // Constants
-    // ===========================================================================================================================
 
     /**
      * The column index of the server URL.
@@ -102,10 +98,6 @@ public final class PublishedLocationsDialog extends MessageDialog {
         RestClientI18n.publishedLocationsDialogWorkspaceColumnHeader.text(),
         RestClientI18n.publishedLocationsDialogFileUrlColumnHeader.text(),};
 
-    // ===========================================================================================================================
-    // Fields
-    // ===========================================================================================================================
-
     /**
      * The button that copies the file URL to the clipboard.
      */
@@ -120,10 +112,6 @@ public final class PublishedLocationsDialog extends MessageDialog {
      * Collection of workspace locations the selected file has been published to.
      */
     private final Collection<WorkspaceLocation> workspaceLocations;
-
-    // ===========================================================================================================================
-    // Constructors
-    // ===========================================================================================================================
 
     /**
      * @param parentShell the dialog parent
@@ -144,10 +132,6 @@ public final class PublishedLocationsDialog extends MessageDialog {
         // make sure dialog is resizable
         setShellStyle(getShellStyle() | SWT.RESIZE);
     }
-
-    // ===========================================================================================================================
-    // Methods
-    // ===========================================================================================================================
 
     /**
      * {@inheritDoc}
@@ -283,10 +267,6 @@ public final class PublishedLocationsDialog extends MessageDialog {
             this.btnCopy.setEnabled(enable);
         }
     }
-
-    // ===========================================================================================================================
-    // Inner Class
-    // ===========================================================================================================================
 
     /**
      * The <code>LocationsTableProvider</code> provides content, labels, and images for the table.

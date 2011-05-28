@@ -14,57 +14,40 @@ package org.jboss.tools.modeshape.rest;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsSame.sameInstance;
 import static org.junit.Assert.assertThat;
-import org.jboss.tools.modeshape.rest.ServerManager;
-import org.jboss.tools.modeshape.rest.ServerRegistryEvent;
+
+import org.jboss.tools.modeshape.rest.domain.ModeShapeServer;
 import org.junit.Before;
 import org.junit.Test;
-import org.modeshape.web.jcr.rest.client.domain.Server;
 
 public final class ServerRegistryEventTest {
 
-    // ===========================================================================================================================
-    // Constants
-    // ===========================================================================================================================
+    private static ModeShapeServer SERVER = new ModeShapeServer("url", "user", "pswd", true); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
-    private static Server SERVER = new Server("url", "user", "pswd");
-
-    private static Server UPDATED_SERVER = new Server("newurl", "newuser", "newpswd");
-
-    // ===========================================================================================================================
-    // Fields
-    // ===========================================================================================================================
+    private static ModeShapeServer UPDATED_SERVER = new ModeShapeServer("newurl", "newuser", "newpswd", true); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
     private ServerManager serverManager;
-
-    // ===========================================================================================================================
-    // Methods
-    // ===========================================================================================================================
 
     @Before
     public void beforeEach() {
         this.serverManager = new ServerManager(null, new MockRestClient());
     }
 
-    // ===========================================================================================================================
-    // Tests
-    // ===========================================================================================================================
-
     @Test
     public void shouldHaveNewType() {
         assertThat(ServerRegistryEvent.createNewEvent(this.serverManager, SERVER).isNew(), is(true));
     }
 
-    @Test( expected = IllegalArgumentException.class )
+    @Test(expected = IllegalArgumentException.class)
     public void shouldNotAllowNullServerManagerWhenCreatingNewEvent() {
         ServerRegistryEvent.createNewEvent(null, SERVER);
     }
 
-    @Test( expected = IllegalArgumentException.class )
+    @Test(expected = IllegalArgumentException.class)
     public void shouldNotAllowNullServerWhenCreatingNewEvent() {
         ServerRegistryEvent.createNewEvent(this.serverManager, null);
     }
 
-    @Test( expected = UnsupportedOperationException.class )
+    @Test(expected = UnsupportedOperationException.class)
     public void shouldNotBeAllowedToGetUpdatedServerOnNewEvent() {
         ServerRegistryEvent.createNewEvent(this.serverManager, SERVER).getUpdatedServer();
     }
@@ -79,17 +62,17 @@ public final class ServerRegistryEventTest {
         assertThat(ServerRegistryEvent.createRemoveEvent(this.serverManager, SERVER).isRemove(), is(true));
     }
 
-    @Test( expected = IllegalArgumentException.class )
+    @Test(expected = IllegalArgumentException.class)
     public void shouldNotAllowNullServerManagerWhenCreatingRemoveEvent() {
         ServerRegistryEvent.createRemoveEvent(null, SERVER);
     }
 
-    @Test( expected = IllegalArgumentException.class )
+    @Test(expected = IllegalArgumentException.class)
     public void shouldNotAllowNullServerWhenCreatingRemoveEvent() {
         ServerRegistryEvent.createRemoveEvent(this.serverManager, null);
     }
 
-    @Test( expected = UnsupportedOperationException.class )
+    @Test(expected = UnsupportedOperationException.class)
     public void shouldNotBeAllowedToGetUpdatedServerOnRemoveEvent() {
         ServerRegistryEvent.createRemoveEvent(this.serverManager, SERVER).getUpdatedServer();
     }
@@ -104,12 +87,12 @@ public final class ServerRegistryEventTest {
         assertThat(ServerRegistryEvent.createUpdateEvent(this.serverManager, SERVER, UPDATED_SERVER).isUpdate(), is(true));
     }
 
-    @Test( expected = IllegalArgumentException.class )
+    @Test(expected = IllegalArgumentException.class)
     public void shouldNotAllowNullServerManagerWhenCreatingUpdateEvent() {
         ServerRegistryEvent.createUpdateEvent(null, SERVER, UPDATED_SERVER);
     }
 
-    @Test( expected = IllegalArgumentException.class )
+    @Test(expected = IllegalArgumentException.class)
     public void shouldNotAllowNullServersWhenCreatingUpdateEvent() {
         ServerRegistryEvent.createUpdateEvent(this.serverManager, null, null);
     }

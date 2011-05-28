@@ -12,6 +12,7 @@
 package org.jboss.tools.modeshape.rest.actions;
 
 import static org.jboss.tools.modeshape.rest.IUiConstants.REFRESH_IMAGE;
+
 import org.eclipse.core.runtime.jobs.IJobChangeEvent;
 import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -21,26 +22,18 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.actions.BaseSelectionListenerAction;
 import org.jboss.tools.modeshape.rest.Activator;
 import org.jboss.tools.modeshape.rest.RestClientI18n;
+import org.jboss.tools.modeshape.rest.domain.ModeShapeServer;
 import org.jboss.tools.modeshape.rest.jobs.ReconnectJob;
-import org.modeshape.web.jcr.rest.client.domain.Server;
 
 /**
  * The <code>ReconnectToServerAction</code> tries to reconnect to a selected server.
  */
 public final class ReconnectToServerAction extends BaseSelectionListenerAction {
 
-    // ===========================================================================================================================
-    // Fields
-    // ===========================================================================================================================
-
     /**
      * The server view tree viewer.
      */
     private final TreeViewer viewer;
-
-    // ===========================================================================================================================
-    // Constructors
-    // ===========================================================================================================================
 
     /**
      * @param viewer the server view tree viewer
@@ -54,10 +47,6 @@ public final class ReconnectToServerAction extends BaseSelectionListenerAction {
         this.viewer = viewer;
     }
 
-    // ===========================================================================================================================
-    // Methods
-    // ===========================================================================================================================
-
     /**
      * @return the view's tree viewer
      */
@@ -68,7 +57,7 @@ public final class ReconnectToServerAction extends BaseSelectionListenerAction {
     /**
      * @param server the server being connected to
      */
-    void refresh( final Server server ) {
+    void refresh( final ModeShapeServer server ) {
         final Display display = this.viewer.getControl().getDisplay();
 
         if (!display.isDisposed()) {
@@ -94,7 +83,7 @@ public final class ReconnectToServerAction extends BaseSelectionListenerAction {
      */
     @Override
     public void run() {
-        final Server server = (Server)getStructuredSelection().getFirstElement();
+        final ModeShapeServer server = (ModeShapeServer)getStructuredSelection().getFirstElement();
         final ReconnectJob job = new ReconnectJob(server);
 
         // add listener so we can refresh tree
@@ -125,7 +114,7 @@ public final class ReconnectToServerAction extends BaseSelectionListenerAction {
      */
     @Override
     protected boolean updateSelection( IStructuredSelection selection ) {
-        return ((selection.size() == 1) && (selection.getFirstElement() instanceof Server));
+        return ((selection.size() == 1) && (selection.getFirstElement() instanceof ModeShapeServer));
     }
 
 }

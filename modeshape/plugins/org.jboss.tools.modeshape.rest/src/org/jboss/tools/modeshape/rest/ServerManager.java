@@ -19,12 +19,10 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import javax.jcr.nodetype.NodeType;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
@@ -36,6 +34,10 @@ import javax.xml.transform.stream.StreamResult;
 import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
 
+import org.jboss.tools.modeshape.rest.domain.ModeShapeRepository;
+import org.jboss.tools.modeshape.rest.domain.ModeShapeServer;
+import org.jboss.tools.modeshape.rest.domain.ModeShapeWorkspace;
+import org.jboss.tools.modeshape.rest.domain.WorkspaceArea;
 import org.modeshape.common.util.Base64;
 import org.modeshape.common.util.CheckArg;
 import org.modeshape.common.util.Logger;
@@ -45,7 +47,6 @@ import org.modeshape.web.jcr.rest.client.Status;
 import org.modeshape.web.jcr.rest.client.Status.Severity;
 import org.modeshape.web.jcr.rest.client.domain.QueryRow;
 import org.modeshape.web.jcr.rest.client.domain.Repository;
-import org.modeshape.web.jcr.rest.client.domain.Server;
 import org.modeshape.web.jcr.rest.client.domain.Workspace;
 import org.modeshape.web.jcr.rest.client.json.JsonRestClient;
 import org.w3c.dom.Document;
@@ -58,7 +59,7 @@ import org.w3c.dom.NodeList;
  * The <code>ServerManager</code> class manages the creation, deletion, and editing of servers hosting ModeShape repositories.
  */
 @ThreadSafe
-public final class ServerManager implements IRestClient {
+public final class ServerManager {
 
     /**
      * The tag used to persist a server's login password.
@@ -119,8 +120,8 @@ public final class ServerManager implements IRestClient {
     /**
      * The server registry.
      */
-    @GuardedBy( "serverLock" )
-    private final List<Server> servers;
+    @GuardedBy("serverLock")
+    private final List<ModeShapeServer> servers;
 
     /**
      * Lock used for when accessing the server registry.
@@ -128,15 +129,15 @@ public final class ServerManager implements IRestClient {
     private final ReadWriteLock serverLock = new ReentrantReadWriteLock();
 
     /**
-     * @param stateLocationPath the directory where the {@link Server} registry} is persisted (may be <code>null</code> if
-     *        persistence is not desired)
+     * @param stateLocationPath the directory where the {@link ModeShapeServer} registry} is persisted (may be <code>null</code> if
+     *            persistence is not desired)
      * @param restClient the client that will communicate with the REST server (never <code>null</code>)
      */
     public ServerManager( String stateLocationPath,
                           IRestClient restClient ) {
         CheckArg.isNotNull(restClient, "restClient"); //$NON-NLS-1$
 
-        this.servers = new ArrayList<Server>();
+        this.servers = new ArrayList<ModeShapeServer>();
         this.stateLocationPath = stateLocationPath;
         this.delegate = restClient;
         this.listeners = new CopyOnWriteArrayList<IServerRegistryListener>();
@@ -145,8 +146,8 @@ public final class ServerManager implements IRestClient {
     /**
      * This server manager uses the default REST Client.
      * 
-     * @param stateLocationPath the directory where the {@link Server} registry is persisted (may be <code>null</code> if
-     *        persistence is not desired)
+     * @param stateLocationPath the directory where the {@link ModeShapeServer} registry is persisted (may be <code>null</code> if
+     *            persistence is not desired)
      */
     public ServerManager( String stateLocationPath ) {
         this(stateLocationPath, new JsonRestClient());
@@ -163,7 +164,7 @@ public final class ServerManager implements IRestClient {
         boolean result = this.listeners.addIfAbsent(listener);
 
         // inform new listener of registered servers
-        for (Server server : getServers()) {
+        for (ModeShapeServer server : getServers()) {
             listener.serverRegistryChanged(ServerRegistryEvent.createNewEvent(this, server));
         }
 
@@ -171,12 +172,12 @@ public final class ServerManager implements IRestClient {
     }
 
     /**
-     * Registers the specified <code>PersistedServer</code>.
+     * Registers the specified <code>ModeShapeServer</code>.
      * 
      * @param server the server being added (never <code>null</code>)
      * @return a status indicating if the server was added to the registry
      */
-    public Status addServer( PersistedServer server ) {
+    public Status addServer( ModeShapeServer server ) {
         CheckArg.isNotNull(server, "server"); //$NON-NLS-1$
         return internalAddServer(server, true);
     }
@@ -186,12 +187,12 @@ public final class ServerManager implements IRestClient {
      * @param user the user ID of the server being requested (never <code>null</code>)
      * @return the requested server or <code>null</code> if not found in the registry
      */
-    public Server findServer( String url,
-                              String user ) {
+    public ModeShapeServer findServer( String url,
+                                       String user ) {
         CheckArg.isNotNull(url, "url"); //$NON-NLS-1$
         CheckArg.isNotNull(user, "user"); //$NON-NLS-1$
 
-        for (Server server : getServers()) {
+        for (ModeShapeServer server : getServers()) {
             if (url.equals(server.getUrl()) && user.equals(server.getUser())) {
                 return server;
             }
@@ -203,10 +204,10 @@ public final class ServerManager implements IRestClient {
     /**
      * @return an unmodifiable collection of registered servers (never <code>null</code>)
      */
-    public Collection<Server> getServers() {
+    public Collection<ModeShapeServer> getServers() {
         try {
             this.serverLock.readLock().lock();
-            return Collections.unmodifiableCollection(new ArrayList<Server>(this.servers));
+            return Collections.unmodifiableCollection(new ArrayList<ModeShapeServer>(this.servers));
         } finally {
             this.serverLock.readLock().unlock();
         }
@@ -226,22 +227,26 @@ public final class ServerManager implements IRestClient {
     }
 
     /**
-     * {@inheritDoc}
-     * 
-     * @see org.modeshape.web.jcr.rest.client.IRestClient#getRepositories(org.modeshape.web.jcr.rest.client.domain.Server)
-     * @throws RuntimeException if the server is not registered
-     * @see #isRegistered(Server)
+     * @param server the server whose repositories are being requested (cannot be <code>null</code>)
+     * @return the repositories (never <code>null</code>)
+     * @throws Exception if server is not registered or if there is an unexpected problem obtaining the repositories
      */
-    @Override
-    public Collection<Repository> getRepositories( Server server ) throws Exception {
+    public Collection<ModeShapeRepository> getRepositories( ModeShapeServer server ) throws Exception {
         CheckArg.isNotNull(server, "server"); //$NON-NLS-1$
 
         try {
             this.serverLock.readLock().lock();
 
             if (isRegistered(server)) {
-                Collection<Repository> repositories = this.delegate.getRepositories(server);
-                return Collections.unmodifiableCollection(new ArrayList<Repository>(repositories));
+                // need to wrap each repository
+                Collection<Repository> repositories = this.delegate.getRepositories(server.getDelegate());
+                Collection<ModeShapeRepository> result = new ArrayList<ModeShapeRepository>(repositories.size());
+
+                for (Repository repository : repositories) {
+                    result.add(new ModeShapeRepository(repository, server));
+                }
+
+                return Collections.unmodifiableCollection(result);
             }
 
             // server must be registered in order to obtain it's repositories
@@ -252,16 +257,16 @@ public final class ServerManager implements IRestClient {
     }
 
     /**
-     * {@inheritDoc}
-     * 
-     * @see org.modeshape.web.jcr.rest.client.IRestClient#getUrl(java.io.File, java.lang.String,
-     *      org.modeshape.web.jcr.rest.client.domain.Workspace)
+     * @param file the file whose URL is being requested (cannot be <code>null</code>)
+     * @param path the repository path where the file path should start from
+     * @param workspace the workspace where the file is published (cannot be <code>null</code>)
+     * @return the URL where the file was published
+     * @throws Exception if there is a problem obtaining the URL
      */
-    @Override
     public URL getUrl( File file,
                        String path,
-                       Workspace workspace ) throws Exception {
-        return this.delegate.getUrl(file, path, workspace);
+                       ModeShapeWorkspace workspace ) throws Exception {
+        return this.delegate.getUrl(file, path, workspace.getDelegate());
     }
 
     /**
@@ -269,11 +274,11 @@ public final class ServerManager implements IRestClient {
      * @return the workspace areas (never <code>null</code>)
      * @throws Exception if there is a problem obtaining the workspace areas
      */
-    public WorkspaceArea[] getWorkspaceAreas( Workspace workspace ) throws Exception {
+    public WorkspaceArea[] getWorkspaceAreas( ModeShapeWorkspace workspace ) throws Exception {
         final String path = "jcr:path"; //$NON-NLS-1$
         final String title = "jcr:title"; //$NON-NLS-1$
         final String statement = "SELECT [" + path + "], " + '[' + title + ']' + " FROM [mode:publishArea]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        List<QueryRow> rows = query(workspace, IJcrConstants.JCR_SQL2, statement);
+        List<QueryRow> rows = this.delegate.query(workspace.getDelegate(), IJcrConstants.JCR_SQL2, statement);
         WorkspaceArea[] workspaceAreas = new WorkspaceArea[rows.size()];
 
         for (int numRows = rows.size(), i = 0; i < numRows; ++i) {
@@ -285,22 +290,26 @@ public final class ServerManager implements IRestClient {
     }
 
     /**
-     * {@inheritDoc}
-     * 
-     * @see org.modeshape.web.jcr.rest.client.IRestClient#getWorkspaces(org.modeshape.web.jcr.rest.client.domain.Repository)
-     * @throws RuntimeException if the server is not registered
-     * @see #isRegistered(Server)
+     * @param repository the repository whose workspaces are being requested (cannot be <code>null</code>)
+     * @return the workspaces (never <code>null</code>)
+     * @throws Exception if server is not registered or if there is an unexpected problem obtaining the workspaces
      */
-    @Override
-    public Collection<Workspace> getWorkspaces( Repository repository ) throws Exception {
+    public Collection<ModeShapeWorkspace> getWorkspaces( ModeShapeRepository repository ) throws Exception {
         CheckArg.isNotNull(repository, "repository"); //$NON-NLS-1$
 
         try {
             this.serverLock.readLock().lock();
 
             if (isRegistered(repository.getServer())) {
-                Collection<Workspace> workspaces = this.delegate.getWorkspaces(repository);
-                return Collections.unmodifiableCollection(new ArrayList<Workspace>(workspaces));
+                // wrap workspaces
+                Collection<Workspace> workspaces = this.delegate.getWorkspaces(repository.getDelegate());
+                Collection<ModeShapeWorkspace> result = new ArrayList<ModeShapeWorkspace>(workspaces.size());
+
+                for (Workspace workspace : workspaces) {
+                    result.add(new ModeShapeWorkspace(workspace, repository));
+                }
+
+                return Collections.unmodifiableCollection(result);
             }
 
             // a repository's server must be registered in order to obtain it's workspaces
@@ -318,7 +327,7 @@ public final class ServerManager implements IRestClient {
      * @param notifyListeners indicates if registry listeners should be notified
      * @return a status indicating if the server was added to the registry
      */
-    private Status internalAddServer( Server server,
+    private Status internalAddServer( ModeShapeServer server,
                                       boolean notifyListeners ) {
         boolean added = false;
 
@@ -359,7 +368,7 @@ public final class ServerManager implements IRestClient {
      * @param notifyListeners indicates if registry listeners should be notified
      * @return a status indicating if the specified server was removed from the registry
      */
-    private Status internalRemoveServer( Server server,
+    private Status internalRemoveServer( ModeShapeServer server,
                                          boolean notifyListeners ) {
         boolean removed = false;
 
@@ -367,7 +376,7 @@ public final class ServerManager implements IRestClient {
             this.serverLock.writeLock().lock();
 
             // see if registered server has the same key
-            for (Server registeredServer : this.servers) {
+            for (ModeShapeServer registeredServer : this.servers) {
                 if (registeredServer.hasSameKey(server)) {
                     removed = this.servers.remove(registeredServer);
                     break;
@@ -394,21 +403,22 @@ public final class ServerManager implements IRestClient {
 
         // server could not be removed
         return new Status(Severity.ERROR,
-                          RestClientI18n.serverManagerRegistryRemoveUnexpectedError.text(server.getShortDescription()), null);
+                          RestClientI18n.serverManagerRegistryRemoveUnexpectedError.text(server.getShortDescription()),
+                          null);
     }
 
     /**
      * @param server the server being tested (never <code>null</code>)
      * @return <code>true</code> if the server has been registered
      */
-    public boolean isRegistered( Server server ) {
+    public boolean isRegistered( ModeShapeServer server ) {
         CheckArg.isNotNull(server, "server"); //$NON-NLS-1$
 
         try {
             this.serverLock.readLock().lock();
 
             // check to make sure no other registered server has the same key
-            for (Server registeredServer : this.servers) {
+            for (ModeShapeServer registeredServer : this.servers) {
                 if (registeredServer.hasSameKey(server)) {
                     return true;
                 }
@@ -475,13 +485,13 @@ public final class ServerManager implements IRestClient {
      * 
      * @param server the server being pinged (never <code>null</code>)
      * @return a status indicating if the server can be connected to
-     * @see #isRegistered(Server)
+     * @see #isRegistered(ModeShapeServer)
      */
-    public Status ping( Server server ) {
+    public Status ping( ModeShapeServer server ) {
         CheckArg.isNotNull(server, "server"); //$NON-NLS-1$
 
         try {
-            this.delegate.getRepositories(server);
+            this.delegate.getRepositories(server.getDelegate());
             return new Status(Severity.OK, RestClientI18n.serverManagerConnectionEstablishedMsg.text(), null);
         } catch (Exception e) {
             return new Status(Severity.ERROR, RestClientI18n.serverManagerConnectionFailedMsg.text(e), null);
@@ -489,51 +499,37 @@ public final class ServerManager implements IRestClient {
     }
 
     /**
-     * {@inheritDoc}
-     * 
-     * @see org.modeshape.web.jcr.rest.client.IRestClient#publish(org.modeshape.web.jcr.rest.client.domain.Workspace,
-     *      java.lang.String, java.io.File)
-     * @see #isRegistered(Server)
+     * @param workspace the workspace where the file should be published (cannot be <code>null</code>)
+     * @param path the starting path in the repository (cannot be <code>null</code>)
+     * @param file the file being published (cannot be <code>null</code>)
+     * @param version <code>true</code> if the file should be put under version control by ModeShape
+     * @return the status of the outcome of this publishing operation
      */
-    @Override
-    public Status publish( Workspace workspace,
-                           String path,
-                           File file ) {
-        return publish(workspace, path, file, false);
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see org.modeshape.web.jcr.rest.client.IRestClient#publish(org.modeshape.web.jcr.rest.client.domain.Workspace,
-     *      java.lang.String, java.io.File, boolean)
-     */
-    @Override
-    public Status publish( Workspace workspace,
+    public Status publish( ModeShapeWorkspace workspace,
                            String path,
                            File file,
- boolean version) {
-		CheckArg.isNotNull(workspace, "workspace"); //$NON-NLS-1$
-		CheckArg.isNotNull(path, "path"); //$NON-NLS-1$
-		CheckArg.isNotNull(file, "file"); //$NON-NLS-1$
+                           boolean version ) {
+        CheckArg.isNotNull(workspace, "workspace"); //$NON-NLS-1$
+        CheckArg.isNotNull(path, "path"); //$NON-NLS-1$
+        CheckArg.isNotNull(file, "file"); //$NON-NLS-1$
 
-		Server server = workspace.getServer();
+        ModeShapeServer server = workspace.getServer();
 
-		if (isRegistered(server)) {
-			if (version) {
-				return this.delegate.publish(workspace, path, file, true);
-			}
+        if (isRegistered(server)) {
+            if (version) {
+                return this.delegate.publish(workspace.getDelegate(), path, file, true);
+            }
 
-			// If version is false it could mean that versioning is not supported by the repository, or it is not enabled by the
-			// by the repository, or that the user does not want the file versioned. If repository is running on an older server
-			// that did not have versioning, then the only publishing method available on the server was the publish method without
-			// the version parameter.
-			return this.delegate.publish(workspace, path, file);
-		}
+            // If version is false it could mean that versioning is not supported by the repository, or it is not enabled by the
+            // by the repository, or that the user does not want the file versioned. If repository is running on an older server
+            // that did not have versioning, then the only publishing method available on the server was the publish method without
+            // the version parameter.
+            return this.delegate.publish(workspace.getDelegate(), path, file);
+        }
 
-		// server must be registered in order to publish
-		throw new RuntimeException(RestClientI18n.serverManagerUnregisteredServer.text(server.getShortDescription()));
-	}
+        // server must be registered in order to publish
+        throw new RuntimeException(RestClientI18n.serverManagerUnregisteredServer.text(server.getShortDescription()));
+    }
 
     /**
      * @param listener the listener being unregistered and will no longer receive events (never <code>null</code>)
@@ -548,7 +544,7 @@ public final class ServerManager implements IRestClient {
      * @param server the server being removed (never <code>null</code>)
      * @return a status indicating if the specified server was removed from the registry (never <code>null</code>)
      */
-    public Status removeServer( Server server ) {
+    public Status removeServer( ModeShapeServer server ) {
         CheckArg.isNotNull(server, "server"); //$NON-NLS-1$
         return internalRemoveServer(server, true);
     }
@@ -572,7 +568,8 @@ public final class ServerManager implements IRestClient {
                         if (server.getNodeType() != Node.TEXT_NODE) {
                             NamedNodeMap attributeMap = server.getAttributes();
 
-                            if (attributeMap == null) continue;
+                            if (attributeMap == null)
+                                continue;
 
                             Node urlNode = attributeMap.getNamedItem(URL_TAG);
                             Node userNode = attributeMap.getNamedItem(USER_TAG);
@@ -581,7 +578,7 @@ public final class ServerManager implements IRestClient {
                                                                                       "UTF-8")); //$NON-NLS-1$
 
                             // add server to registry
-                            addServer(new PersistedServer(urlNode.getNodeValue(), userNode.getNodeValue(), pswd, (pswd != null)));
+                            addServer(new ModeShapeServer(urlNode.getNodeValue(), userNode.getNodeValue(), pswd, (pswd != null)));
                         }
                     }
                 } catch (Exception e) {
@@ -595,7 +592,7 @@ public final class ServerManager implements IRestClient {
     }
 
     /**
-     * Saves the {@link Server} registry to the file system.
+     * Saves the {@link ModeShapeServer} registry to the file system.
      * 
      * @return a status indicating if the registry was successfully saved
      */
@@ -610,14 +607,14 @@ public final class ServerManager implements IRestClient {
                 Element root = doc.createElement(SERVERS_TAG);
                 doc.appendChild(root);
 
-                for (Server server : getServers()) {
+                for (ModeShapeServer server : getServers()) {
                     Element serverElement = doc.createElement(SERVER_TAG);
                     root.appendChild(serverElement);
 
                     serverElement.setAttribute(URL_TAG, server.getUrl());
                     serverElement.setAttribute(USER_TAG, server.getUser());
 
-                    if ((server instanceof PersistedServer) && ((PersistedServer)server).isPasswordBeingPersisted()) {
+                    if (server.isPasswordBeingPersisted()) {
                         serverElement.setAttribute(PASSWORD_TAG, Base64.encodeBytes(server.getPassword().getBytes()));
                     }
                 }
@@ -652,26 +649,22 @@ public final class ServerManager implements IRestClient {
     }
 
     /**
-     * {@inheritDoc}
-     * <p>
-     * Only tries to unpublish if the workspace's {@link Server server} is registered.
-     * 
-     * @see org.modeshape.web.jcr.rest.client.IRestClient#unpublish(org.modeshape.web.jcr.rest.client.domain.Workspace,
-     *      java.lang.String, java.io.File)
-     * @see #isRegistered(Server)
+     * @param workspace the workspace where the file should be unpublished from (cannot be <code>null</code>)
+     * @param path the starting path in the repository (cannot be <code>null</code>)
+     * @param file the file being unpublished (cannot be <code>null</code>)
+     * @return the status of the outcome of this unpublishing operation
      */
-    @Override
-    public Status unpublish( Workspace workspace,
+    public Status unpublish( ModeShapeWorkspace workspace,
                              String path,
                              File file ) {
         CheckArg.isNotNull(workspace, "workspace"); //$NON-NLS-1$
         CheckArg.isNotNull(path, "path"); //$NON-NLS-1$
         CheckArg.isNotNull(file, "file"); //$NON-NLS-1$
 
-        Server server = workspace.getServer();
+        ModeShapeServer server = workspace.getServer();
 
         if (isRegistered(server)) {
-            return this.delegate.unpublish(workspace, path, file);
+            return this.delegate.unpublish(workspace.getDelegate(), path, file);
         }
 
         // server must be registered in order to unpublish
@@ -685,8 +678,8 @@ public final class ServerManager implements IRestClient {
      * @param newServerVersion the new version of the server being put in the server registry (never <code>null</code>)
      * @return a status indicating if the server was updated in the registry (never <code>null</code>)
      */
-    public Status updateServer( Server previousServerVersion,
-                                Server newServerVersion ) {
+    public Status updateServer( ModeShapeServer previousServerVersion,
+                                ModeShapeServer newServerVersion ) {
         CheckArg.isNotNull(previousServerVersion, "previousServerVersion"); //$NON-NLS-1$
         CheckArg.isNotNull(newServerVersion, "newServerVersion"); //$NON-NLS-1$
 
@@ -701,14 +694,14 @@ public final class ServerManager implements IRestClient {
 
                 if (status.isOk()) {
                     // all good so notify listeners
-                    Exception[] errors = notifyRegistryListeners(ServerRegistryEvent.createUpdateEvent(this,
-                                                                                                       previousServerVersion,
+                    Exception[] errors = notifyRegistryListeners(ServerRegistryEvent.createUpdateEvent(this, previousServerVersion,
                                                                                                        newServerVersion));
                     return processRegistryListenerErrors(errors);
                 }
 
                 // unexpected problem adding new version of server to registry
-                return new Status(Severity.ERROR, RestClientI18n.serverManagerRegistryUpdateAddError.text(status.getMessage()),
+                return new Status(Severity.ERROR,
+                                  RestClientI18n.serverManagerRegistryUpdateAddError.text(status.getMessage()),
                                   status.getException());
             }
         } finally {
@@ -716,69 +709,9 @@ public final class ServerManager implements IRestClient {
         }
 
         // unexpected problem removing server from registry
-        return new Status(Severity.ERROR, RestClientI18n.serverManagerRegistryUpdateRemoveError.text(status.getMessage()),
+        return new Status(Severity.ERROR,
+                          RestClientI18n.serverManagerRegistryUpdateRemoveError.text(status.getMessage()),
                           status.getException());
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @throws UnsupportedOperationException if this method is called
-     * @see org.modeshape.web.jcr.rest.client.IRestClient#getNodeTypes(org.modeshape.web.jcr.rest.client.domain.Repository)
-     */
-    @Override
-    public Map<String, NodeType> getNodeTypes( Repository repository ) throws Exception {
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see org.modeshape.web.jcr.rest.client.IRestClient#query(org.modeshape.web.jcr.rest.client.domain.Workspace,
-     *      java.lang.String, java.lang.String)
-     */
-    @Override
-    public List<QueryRow> query( Workspace workspace,
-                                 String language,
-                                 String statement ) throws Exception {
-        return this.delegate.query(workspace, language, statement);
-    }
-
-    /**
-     * {@inheritDoc}
-     * <p>
-     * <strong>This method is unsupported and should not be called.</strong>
-     * 
-     * @throws UnsupportedOperationException if this method is called
-     * @see org.modeshape.web.jcr.rest.client.IRestClient#query(org.modeshape.web.jcr.rest.client.domain.Workspace,
-     *      java.lang.String, java.lang.String, int, int)
-     */
-    @Override
-    public List<QueryRow> query( Workspace workspace,
-                                 String language,
-                                 String statement,
-                                 int offset,
-                                 int limit ) throws Exception {
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * {@inheritDoc}
-     * <p>
-     * <strong>This method is unsupported and should not be called.</strong>
-     * 
-     * @throws UnsupportedOperationException if this method is called
-     * @see org.modeshape.web.jcr.rest.client.IRestClient#query(org.modeshape.web.jcr.rest.client.domain.Workspace,
-     *      java.lang.String, java.lang.String, int, int, java.util.Map)
-     */
-    @Override
-    public List<QueryRow> query( Workspace workspace,
-                                 String language,
-                                 String statement,
-                                 int offset,
-                                 int limit,
-                                 Map<String, String> variables ) throws Exception {
-        throw new UnsupportedOperationException();
     }
 
 }

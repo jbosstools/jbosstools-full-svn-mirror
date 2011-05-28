@@ -23,12 +23,12 @@ import org.eclipse.jface.wizard.Wizard;
 import org.jboss.tools.modeshape.rest.Activator;
 import org.jboss.tools.modeshape.rest.RestClientI18n;
 import org.jboss.tools.modeshape.rest.ServerManager;
+import org.jboss.tools.modeshape.rest.domain.ModeShapeWorkspace;
 import org.jboss.tools.modeshape.rest.jobs.PublishJob;
 import org.jboss.tools.modeshape.rest.jobs.PublishJob.Type;
 import org.modeshape.common.util.CheckArg;
 import org.modeshape.web.jcr.rest.client.Status;
 import org.modeshape.web.jcr.rest.client.Status.Severity;
-import org.modeshape.web.jcr.rest.client.domain.Workspace;
 
 /**
  * The <code>PublishWizard</code> is the wizard that published and unpublishes resources.
@@ -128,7 +128,7 @@ public final class PublishWizard extends Wizard {
         }
 
         // run publish job
-        Workspace workspace = this.page.getWorkspace();
+        ModeShapeWorkspace workspace = this.page.getWorkspace();
         List<IFile> files = this.page.getFiles();
         String workspaceArea = this.page.getWorkspaceArea();
         PublishJob job = new PublishJob(this.type, files, workspace, workspaceArea, this.page.isVersioning());

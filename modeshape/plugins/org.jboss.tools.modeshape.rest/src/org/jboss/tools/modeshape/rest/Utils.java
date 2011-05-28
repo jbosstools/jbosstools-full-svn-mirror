@@ -154,7 +154,21 @@ public final class Utils {
         }
 
         try {
-            new URL(url);
+            URL testUrl = new URL(url);
+
+            // make sure there is a host
+            String host = testUrl.getHost();
+
+            if ((host == null) || "".equals(host)) { //$NON-NLS-1$
+                return new Status(Severity.ERROR, RestClientI18n.serverInvalidUrlHostMsg.text(), null);
+            }
+
+            // make sure there is a port
+            int port = testUrl.getPort();
+
+            if (port == -1) {
+                return new Status(Severity.ERROR, RestClientI18n.serverInvalidUrlPortMsg.text(), null);
+            }
         } catch (Exception e) {
             return new Status(Severity.ERROR, RestClientI18n.serverInvalidUrlMsg.text(url), e);
         }
@@ -173,10 +187,6 @@ public final class Utils {
 
         return Status.OK_STATUS;
     }
-
-    // ===========================================================================================================================
-    // Constructors
-    // ===========================================================================================================================
 
     /**
      * Don't allow construction.

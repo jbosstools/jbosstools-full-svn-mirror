@@ -15,20 +15,18 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.hamcrest.core.IsNull.nullValue;
 import static org.junit.Assert.assertThat;
+
+import org.jboss.tools.modeshape.rest.domain.ModeShapeRepository;
+import org.jboss.tools.modeshape.rest.domain.ModeShapeServer;
 import org.junit.Before;
 import org.junit.Test;
 import org.modeshape.web.jcr.rest.client.Status;
 import org.modeshape.web.jcr.rest.client.domain.Repository;
-import org.modeshape.web.jcr.rest.client.domain.Server;
 
 /**
  * The <code>ServerManagerTest</code> class is a test class for the {@link ServerManager server manager} object.
  */
 public final class ServerManagerTest {
-
-    // ===========================================================================================================================
-    // Constants
-    // ===========================================================================================================================
 
     private static final String URL1 = "file:/tmp/temp.txt"; //$NON-NLS-1$
     private static final String URL2 = "http:www.redhat.com"; //$NON-NLS-1$
@@ -39,29 +37,19 @@ public final class ServerManagerTest {
     private static final String PSWD1 = "pwsd1"; //$NON-NLS-1$
     private static final String PSWD2 = "pwsd2"; //$NON-NLS-1$
 
-    private static PersistedServer SERVER1 = new PersistedServer(URL1, USER1, PSWD1, false);
-    private static PersistedServer SERVER1_UPDATE = new PersistedServer(SERVER1.getUrl(), SERVER1.getUser(),
-                                                                        SERVER1.getPassword(), SERVER1.isPasswordBeingPersisted());
-    private static PersistedServer SERVER2 = new PersistedServer(URL2, USER2, PSWD2, !SERVER1.isPasswordBeingPersisted());
-
-    // ===========================================================================================================================
-    // Fields
-    // ===========================================================================================================================
+    private static ModeShapeServer SERVER1 = new ModeShapeServer(URL1, USER1, PSWD1, false);
+    private static ModeShapeServer SERVER1_UPDATE = new ModeShapeServer(SERVER1.getUrl(),
+                                                                        SERVER1.getUser(),
+                                                                        SERVER1.getPassword(),
+                                                                        SERVER1.isPasswordBeingPersisted());
+    private static ModeShapeServer SERVER2 = new ModeShapeServer(URL2, USER2, PSWD2, !SERVER1.isPasswordBeingPersisted());
 
     private ServerManager serverManager;
-
-    // ===========================================================================================================================
-    // Methods
-    // ===========================================================================================================================
 
     @Before
     public void beforeEach() {
         this.serverManager = new ServerManager(null, new MockRestClient());
     }
-
-    // ===========================================================================================================================
-    // Tests
-    // ===========================================================================================================================
 
     @Test
     public void shouldBeRegisteredIfAdded() {
@@ -73,7 +61,10 @@ public final class ServerManagerTest {
     @Test
     public void shouldBeRegisteredIfServerWithSameKeyHasBeenAdded() {
         this.serverManager.addServer(SERVER1);
-        assertThat(this.serverManager.isRegistered(new Server(SERVER1.getUrl(), SERVER1.getUser(), PSWD2)), is(true));
+        assertThat(this.serverManager.isRegistered(new ModeShapeServer(SERVER1.getUrl(),
+                                                                       SERVER1.getUser(),
+                                                                       PSWD2,
+                                                                       SERVER1.isPasswordBeingPersisted())), is(true));
         assertThat(this.serverManager.getServers().size(), is(1));
     }
 
@@ -134,7 +125,7 @@ public final class ServerManagerTest {
     @Test
     public void shouldNotAddServerIfKeysMatch() {
         this.serverManager.addServer(SERVER1);
-        Status status = this.serverManager.addServer(new PersistedServer(SERVER1.getUrl(), SERVER1.getUser(), PSWD2, true));
+        Status status = this.serverManager.addServer(new ModeShapeServer(SERVER1.getUrl(), SERVER1.getUser(), PSWD2, true));
         assertThat(status.isOk(), is(false));
         assertThat(this.serverManager.getServers().size(), is(1));
     }
@@ -176,14 +167,14 @@ public final class ServerManagerTest {
         assertThat(this.serverManager.getServers().isEmpty(), is(true));
     }
 
-    @Test( expected = RuntimeException.class )
+    @Test(expected = RuntimeException.class)
     public void shouldNotObtainRepositoriesForUnregisteredServer() throws Exception {
         this.serverManager.getRepositories(SERVER1);
     }
 
-    @Test( expected = RuntimeException.class )
+    @Test(expected = RuntimeException.class)
     public void shouldNotObtainWorkspacesForUnregisteredServer() throws Exception {
-        Repository repository = new Repository("repo", SERVER1);//$NON-NLS-1$
+        ModeShapeRepository repository = new ModeShapeRepository(new Repository("repo", SERVER1.getDelegate()), SERVER1);//$NON-NLS-1$
         this.serverManager.getWorkspaces(repository);
     }
 
@@ -237,8 +228,11 @@ public final class ServerManagerTest {
         RegistryListener listener = new RegistryListener();
         this.serverManager.addRegistryListener(listener);
 
-        this.serverManager.updateServer(SERVER1, new PersistedServer(SERVER1.getUrl(), SERVER1.getUser(), PSWD2,
-                                                                     !SERVER1.isPasswordBeingPersisted()));
+        this.serverManager.updateServer(SERVER1,
+                                        new ModeShapeServer(SERVER1.getUrl(),
+                                                            SERVER1.getUser(),
+                                                            PSWD2,
+                                                            !SERVER1.isPasswordBeingPersisted()));
         assertThat(listener.getEvent().isUpdate(), is(true));
         assertThat(listener.getEvent().isNew(), is(false));
         assertThat(listener.getEvent().isRemove(), is(false));
@@ -251,12 +245,8 @@ public final class ServerManagerTest {
         assertThat(this.serverManager.getServers().isEmpty(), is(true));
     }
 
-    // ===========================================================================================================================
-    // RegistryListener Inner Class
-    // ===========================================================================================================================
-
     class RegistryListener implements IServerRegistryListener {
-        boolean[] notified = new boolean[] {false};
+        boolean[] notified = new boolean[] { false };
         ServerRegistryEvent event = null;
 
         public Exception[] serverRegistryChanged( ServerRegistryEvent event ) {

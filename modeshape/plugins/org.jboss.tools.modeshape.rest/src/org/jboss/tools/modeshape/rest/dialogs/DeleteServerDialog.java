@@ -12,7 +12,9 @@
 package org.jboss.tools.modeshape.rest.dialogs;
 
 import static org.jboss.tools.modeshape.rest.IUiConstants.ModeShape_IMAGE_16x;
+
 import java.util.Collection;
+
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
@@ -24,47 +26,34 @@ import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 import org.jboss.tools.modeshape.rest.Activator;
 import org.jboss.tools.modeshape.rest.RestClientI18n;
+import org.jboss.tools.modeshape.rest.domain.ModeShapeServer;
 import org.modeshape.common.util.CheckArg;
-import org.modeshape.web.jcr.rest.client.domain.IModeShapeObject;
-import org.modeshape.web.jcr.rest.client.domain.Server;
 
 /**
- * The <code>DeleteServerDialog</code> class provides a UI for deleting a {@link Server server}.
+ * The <code>DeleteServerDialog</code> class provides a UI for deleting a {@link ModeShapeServer server}.
  */
 public final class DeleteServerDialog extends MessageDialog {
-
-    // ===========================================================================================================================
-    // Fields
-    // ===========================================================================================================================
 
     /**
      * Collection of servers which will be deleted.
      */
-    private final Collection<Server> serversBeingDeleted;
-
-    // ===========================================================================================================================
-    // Constructors
-    // ===========================================================================================================================
+    private final Collection<ModeShapeServer> serversBeingDeleted;
 
     /**
      * @param parentShell the dialog parent
      * @param serversBeingDeleted the servers being deleted (never <code>null</code>)
      */
     public DeleteServerDialog( Shell parentShell,
-                               Collection<Server> serversBeingDeleted ) {
+                               Collection<ModeShapeServer> serversBeingDeleted ) {
         super(parentShell, RestClientI18n.deleteServerDialogTitle.text(), Activator.getDefault().getImage(ModeShape_IMAGE_16x),
-              null, MessageDialog.QUESTION, new String[] {IDialogConstants.OK_LABEL, IDialogConstants.CANCEL_LABEL}, 0);
+                null, MessageDialog.QUESTION, new String[] { IDialogConstants.OK_LABEL, IDialogConstants.CANCEL_LABEL }, 0);
 
-        CheckArg.isNotNull(serversBeingDeleted, "serversBeingDeleted");
+        CheckArg.isNotNull(serversBeingDeleted, "serversBeingDeleted"); //$NON-NLS-1$
         this.serversBeingDeleted = serversBeingDeleted;
 
         // make sure dialog is resizable
         setShellStyle(getShellStyle() | SWT.RESIZE);
     }
-
-    // ===========================================================================================================================
-    // Methods
-    // ===========================================================================================================================
 
     /**
      * {@inheritDoc}
@@ -79,7 +68,7 @@ public final class DeleteServerDialog extends MessageDialog {
         String msg;
 
         if (this.serversBeingDeleted.size() == 1) {
-            Server server = this.serversBeingDeleted.iterator().next();
+            ModeShapeServer server = this.serversBeingDeleted.iterator().next();
             msg = RestClientI18n.deleteServerDialogOneServerMsg.text(server.getName(), server.getUser());
         } else {
             msg = RestClientI18n.deleteServerDialogMultipleServersMsg.text(this.serversBeingDeleted.size());
@@ -102,7 +91,7 @@ public final class DeleteServerDialog extends MessageDialog {
             gd.horizontalIndent = 40;
             serverList.setLayoutData(gd);
 
-            for (IModeShapeObject server : this.serversBeingDeleted) {
+            for (ModeShapeServer server : this.serversBeingDeleted) {
                 serverList.add(server.getName());
             }
         }

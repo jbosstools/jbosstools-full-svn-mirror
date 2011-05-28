@@ -13,29 +13,26 @@ package org.jboss.tools.modeshape.rest.actions;
 
 import static org.jboss.tools.modeshape.rest.IUiConstants.EDIT_SERVER_IMAGE;
 import static org.jboss.tools.modeshape.rest.IUiConstants.ModeShape_IMAGE_16x;
+
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.actions.BaseSelectionListenerAction;
 import org.jboss.tools.modeshape.rest.Activator;
-import org.jboss.tools.modeshape.rest.PersistedServer;
 import org.jboss.tools.modeshape.rest.RestClientI18n;
 import org.jboss.tools.modeshape.rest.ServerManager;
+import org.jboss.tools.modeshape.rest.domain.ModeShapeServer;
 import org.jboss.tools.modeshape.rest.wizards.ServerWizard;
 
 /**
- * The <code>EditServerAction</code> runs a UI that allows {@link PersistedServer server} properties to be changed.
+ * The <code>EditServerAction</code> runs a UI that allows {@link ModeShapeServer server} properties to be changed.
  */
 public final class EditServerAction extends BaseSelectionListenerAction {
-
-    // ===========================================================================================================================
-    // Fields
-    // ===========================================================================================================================
 
     /**
      * The selected server being edited.
      */
-    private PersistedServer serverBeingEdited;
+    private ModeShapeServer serverBeingEdited;
 
     /**
      * The server manager used to create and edit servers.
@@ -46,10 +43,6 @@ public final class EditServerAction extends BaseSelectionListenerAction {
      * The shell used to display the dialog that edits and creates servers.
      */
     private final Shell shell;
-
-    // ===========================================================================================================================
-    // Constructors
-    // ===========================================================================================================================
 
     /**
      * @param shell the parent shell used to display the dialog
@@ -65,10 +58,6 @@ public final class EditServerAction extends BaseSelectionListenerAction {
         this.shell = shell;
         this.serverManager = serverManager;
     }
-
-    // ===========================================================================================================================
-    // Methods
-    // ===========================================================================================================================
 
     /**
      * {@inheritDoc}
@@ -110,8 +99,8 @@ public final class EditServerAction extends BaseSelectionListenerAction {
         Object obj = selection.getFirstElement();
 
         // enable if server is selected
-        if (obj instanceof PersistedServer) {
-            this.serverBeingEdited = (PersistedServer)obj;
+        if (obj instanceof ModeShapeServer) {
+            this.serverBeingEdited = (ModeShapeServer)obj;
             return true;
         }
 

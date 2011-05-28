@@ -12,6 +12,7 @@
 package org.jboss.tools.modeshape.rest.views;
 
 import static org.jboss.tools.modeshape.rest.IUiConstants.ModeShape_IMAGE_16x;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.debug.ui.console.FileLink;
 import org.eclipse.jface.text.BadLocationException;
@@ -40,33 +41,25 @@ import org.modeshape.web.jcr.rest.client.Status.Severity;
  */
 public final class ModeShapeMessageConsole extends MessageConsole {
 
-    // =======================================================================================================================
-    // Constants
-    // =======================================================================================================================
-
     /**
      * Start tag for adding emphasis to a message. Tag will appear in a properties file.
      */
-    private static final String EMPHASIS_START_TAG = "<em>";
+    private static final String EMPHASIS_START_TAG = "<em>"; //$NON-NLS-1$
 
     /**
      * End tag for adding emphasis to a message. Tag will appear in a properties file.
      */
-    private static final String EMPHASIS_END_TAG = "</em>";
+    private static final String EMPHASIS_END_TAG = "</em>"; //$NON-NLS-1$
 
     /**
      * The identifier and type of the Message Console.
      */
-    private static final String ID = "org.jboss.tools.modeshape.rest.views.ModeShapeMessageConsole";
+    private static final String ID = "org.jboss.tools.modeshape.rest.views.ModeShapeMessageConsole"; //$NON-NLS-1$
 
     /**
      * The message console name.
      */
     private static final String NAME = RestClientI18n.publishingConsoleName.text();
-
-    // =======================================================================================================================
-    // Class Methods
-    // =======================================================================================================================
 
     /**
      * Note: The <code>ModeShapeMessageConsole</code> should <strong>NOT</strong> be cached as the user can open/close/create instances.
@@ -101,7 +94,7 @@ public final class ModeShapeMessageConsole extends MessageConsole {
      * @param message the message being written to the console (never <code>null</code>)
      */
     public static void writeln( String message ) {
-        CheckArg.isNotNull(message, "message");
+        CheckArg.isNotNull(message, "message"); //$NON-NLS-1$
         writeln(message, null);
     }
 
@@ -114,15 +107,11 @@ public final class ModeShapeMessageConsole extends MessageConsole {
      */
     public static void writeln( String message,
                                 IFile file ) {
-        CheckArg.isNotNull(message, "message");
+        CheckArg.isNotNull(message, "message"); //$NON-NLS-1$
 
         ModeShapeMessageConsole console = getMessageConsole();
         console.print(message, true, file);
     }
-
-    // =======================================================================================================================
-    // Constructors
-    // =======================================================================================================================
 
     /**
      * Prevent construction.
@@ -130,10 +119,6 @@ public final class ModeShapeMessageConsole extends MessageConsole {
     private ModeShapeMessageConsole() {
         super(NAME, Activator.getDefault().getImageDescriptor(ModeShape_IMAGE_16x));
     }
-
-    // =======================================================================================================================
-    // Methods
-    // =======================================================================================================================
 
     /**
      * @param message the message being searched for
@@ -233,19 +218,11 @@ public final class ModeShapeMessageConsole extends MessageConsole {
         }
     }
 
-    // ===========================================================================================================================
-    // Inner Class
-    // ===========================================================================================================================
-
     /**
      * The <code>HyperlinkCreator</code> creates a hyperlink in a Message Console for the first occurrence of the full path of
      * a specified file.
      */
     class HyperlinkCreator implements IDocumentListener {
-
-        // =======================================================================================================================
-        // Fields
-        // =======================================================================================================================
 
         /**
          * The console where the message is printed to and the hyperlink will be created.
@@ -262,10 +239,6 @@ public final class ModeShapeMessageConsole extends MessageConsole {
          */
         private final String message;
 
-        // =======================================================================================================================
-        // Constructors
-        // =======================================================================================================================
-
         /**
          * @param message the message that contains the full path of the file
          * @param console the console where the message appears
@@ -274,14 +247,10 @@ public final class ModeShapeMessageConsole extends MessageConsole {
         public HyperlinkCreator( String message,
                                  ModeShapeMessageConsole console,
                                  IFile file ) {
-            this.message = message.replaceAll("<em>", "").replaceAll("\\Q</em>\\E", "");
+            this.message = message.replaceAll("<em>", "").replaceAll("\\Q</em>\\E", ""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
             this.console = console;
             this.file = file;
         }
-
-        // =======================================================================================================================
-        // Methods
-        // =======================================================================================================================
 
         /**
          * {@inheritDoc}

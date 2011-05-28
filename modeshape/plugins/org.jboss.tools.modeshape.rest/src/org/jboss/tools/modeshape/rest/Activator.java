@@ -21,13 +21,13 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.jboss.tools.modeshape.rest.domain.ModeShapeDomainObject;
+import org.jboss.tools.modeshape.rest.domain.ModeShapeRepository;
+import org.jboss.tools.modeshape.rest.domain.ModeShapeServer;
+import org.jboss.tools.modeshape.rest.domain.ModeShapeWorkspace;
 import org.modeshape.common.util.CheckArg;
 import org.modeshape.web.jcr.rest.client.Status;
 import org.modeshape.web.jcr.rest.client.Status.Severity;
-import org.modeshape.web.jcr.rest.client.domain.IModeShapeObject;
-import org.modeshape.web.jcr.rest.client.domain.Repository;
-import org.modeshape.web.jcr.rest.client.domain.Server;
-import org.modeshape.web.jcr.rest.client.domain.Workspace;
 import org.osgi.framework.BundleContext;
 
 /**
@@ -119,13 +119,13 @@ public final class Activator extends AbstractUIPlugin implements IUiConstants {
     public Image getImage( Object object ) {
         String key = null;
 
-        if (object instanceof Workspace) {
+        if (object instanceof ModeShapeWorkspace) {
             key = WORKSPACE_IMAGE;
-        } else if (object instanceof Repository) {
+        } else if (object instanceof ModeShapeRepository) {
             key = REPOSITORY_IMAGE;
-        } else if (object instanceof Server) {
+        } else if (object instanceof ModeShapeServer) {
             key = SERVER_IMAGE;
-        } else if (object instanceof IModeShapeObject) {
+        } else if (object instanceof ModeShapeDomainObject) {
             // should have an icon for every business object
             assert false;
         } else if (object instanceof String) {
@@ -160,13 +160,13 @@ public final class Activator extends AbstractUIPlugin implements IUiConstants {
     public ImageDescriptor getImageDescriptor( Object object ) {
         String key = null;
 
-        if (object instanceof Workspace) {
+        if (object instanceof ModeShapeWorkspace) {
             key = WORKSPACE_IMAGE;
-        } else if (object instanceof Repository) {
+        } else if (object instanceof ModeShapeRepository) {
             key = REPOSITORY_IMAGE;
-        } else if (object instanceof Server) {
+        } else if (object instanceof ModeShapeServer) {
             key = SERVER_IMAGE;
-        } else if (object instanceof IModeShapeObject) {
+        } else if (object instanceof ModeShapeDomainObject) {
             // should have an icon for every business object
             assert false;
         } else if (object instanceof String) {

@@ -1,12 +1,11 @@
-package org.jboss.tools.modeshape.rest;
+package org.jboss.tools.modeshape.rest.domain;
 
 import org.modeshape.common.util.CheckArg;
-import org.modeshape.web.jcr.rest.client.domain.Workspace;
 
 /**
  * The <code>WorkspaceArea</code> represents a known area in a ModeShape repository where sequencing of resources occurs.
  */
-public final class WorkspaceArea {
+public final class WorkspaceArea implements ModeShapeDomainObject {
 
     /**
      * The path within the workspace where this area is found (never <code>null</code>).
@@ -21,14 +20,14 @@ public final class WorkspaceArea {
     /**
      * The workspace where this area is found (never <code>null</code>).
      */
-    private final Workspace workspace;
+    private final ModeShapeWorkspace workspace;
 
     /**
      * @param workspace the workspace where this area is found (never <code>null</code>)
      * @param path the workspace path where this area is found (never <code>null</code>)
      * @param title the workspace area title (can be <code>null</code> or empty)
      */
-    public WorkspaceArea( Workspace workspace,
+    public WorkspaceArea( ModeShapeWorkspace workspace,
                           String path,
                           String title ) {
         CheckArg.isNotNull(workspace, "workspace"); //$NON-NLS-1$
@@ -40,10 +39,30 @@ public final class WorkspaceArea {
     }
 
     /**
+     * {@inheritDoc}
+     * 
+     * @see org.jboss.tools.modeshape.rest.domain.ModeShapeDomainObject#getName()
+     */
+    @Override
+    public String getName() {
+        return getPath();
+    }
+
+    /**
      * @return path the workspace path where this area is found (never <code>null</code>)
      */
     public String getPath() {
         return this.path;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.jboss.tools.modeshape.rest.domain.ModeShapeDomainObject#getShortDescription()
+     */
+    @Override
+    public String getShortDescription() {
+        return getPath();
     }
 
     /**
@@ -56,7 +75,7 @@ public final class WorkspaceArea {
     /**
      * @return workspace the workspace where this area is found (never <code>null</code>)
      */
-    public Workspace getWorkspace() {
+    public ModeShapeWorkspace getWorkspace() {
         return this.workspace;
     }
 

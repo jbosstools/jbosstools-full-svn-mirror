@@ -78,6 +78,8 @@ public final class RestClientI18n {
     public static I18n preferencePageEnableVersioningEditorToolTip;
     public static I18n preferencePageMessage;
     public static I18n preferencePageTitle;
+    
+    public static I18n propertiesBundleLoadErrorMsg;
 
     public static I18n publishJobCanceled;
     public static I18n publishJobDurationMsg;
@@ -149,6 +151,8 @@ public final class RestClientI18n {
     public static I18n serverEmptyUserMsg;
     public static I18n serverExistsMsg;
     public static I18n serverInvalidUrlMsg;
+    public static I18n serverInvalidUrlHostMsg;
+    public static I18n serverInvalidUrlPortMsg;
 
     public static I18n serverManagerConnectionEstablishedMsg;
     public static I18n serverManagerConnectionFailedMsg;

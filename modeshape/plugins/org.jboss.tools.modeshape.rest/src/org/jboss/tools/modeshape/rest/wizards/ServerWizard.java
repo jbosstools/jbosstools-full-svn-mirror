@@ -16,9 +16,9 @@ import static org.jboss.tools.modeshape.rest.IUiConstants.WIZARD_BANNER_IMAGE;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.wizard.Wizard;
 import org.jboss.tools.modeshape.rest.Activator;
-import org.jboss.tools.modeshape.rest.PersistedServer;
 import org.jboss.tools.modeshape.rest.RestClientI18n;
 import org.jboss.tools.modeshape.rest.ServerManager;
+import org.jboss.tools.modeshape.rest.domain.ModeShapeServer;
 import org.modeshape.web.jcr.rest.client.Status;
 
 /**
@@ -29,7 +29,7 @@ public final class ServerWizard extends Wizard {
     /**
      * Non-<code>null</code> if the wizard is editing an existing server.
      */
-    private PersistedServer existingServer;
+    private ModeShapeServer existingServer;
 
     /**
      * The wizard page containing all the controls that allow editing of server properties.
@@ -61,7 +61,7 @@ public final class ServerWizard extends Wizard {
      * @param server the server whose properties are being edited (never <code>null</code>)
      */
     public ServerWizard( ServerManager serverManager,
-                         PersistedServer server ) {
+                         ModeShapeServer server ) {
         this.page = new ServerPage(server);
         this.serverManager = serverManager;
         this.existingServer = server;
@@ -95,7 +95,7 @@ public final class ServerWizard extends Wizard {
     @Override
     public boolean performFinish() {
         Status status = Status.OK_STATUS;
-        PersistedServer server = this.page.getServer();
+        ModeShapeServer server = this.page.getServer();
 
         if (this.existingServer == null) {
             status = this.serverManager.addServer(server);

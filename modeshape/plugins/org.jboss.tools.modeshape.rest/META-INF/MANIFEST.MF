@@ -12,7 +12,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.console,
  org.eclipse.jface.text,
  org.eclipse.debug.ui,
- org.jboss.tools.usage;bundle-version="1.0.0";resolution:=optional
+ org.jboss.tools.usage;bundle-version="1.0.0";resolution:=optional,
+ org.eclipse.ui.views
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: modeshape-client.jar,
@@ -20,6 +21,7 @@ Bundle-ClassPath: modeshape-client.jar,
  .
 Export-Package: javax.jcr.nodetype,
  org.jboss.tools.modeshape.rest,
+ org.jboss.tools.modeshape.rest.domain,
  org.jboss.tools.modeshape.rest.preferences,
  org.modeshape.common.i18n,
  org.modeshape.web.jcr.rest.client,

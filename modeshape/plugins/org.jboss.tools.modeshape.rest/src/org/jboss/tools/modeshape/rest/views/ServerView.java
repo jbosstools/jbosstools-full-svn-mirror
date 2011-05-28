@@ -47,7 +47,7 @@ import org.jboss.tools.modeshape.rest.actions.DeleteServerAction;
 import org.jboss.tools.modeshape.rest.actions.EditServerAction;
 import org.jboss.tools.modeshape.rest.actions.NewServerAction;
 import org.jboss.tools.modeshape.rest.actions.ReconnectToServerAction;
-import org.modeshape.web.jcr.rest.client.domain.IModeShapeObject;
+import org.jboss.tools.modeshape.rest.domain.ModeShapeDomainObject;
 
 /**
  * The <code>ServerView</code> shows all defined servers and their repositories.
@@ -180,6 +180,9 @@ public final class ServerView extends ViewPart implements IServerRegistryListene
 
         // need to call this (doesn't matter what the param is) to bootstrap the provider.
         this.viewer.setInput(this);
+
+        // need to do this so that properties page will work
+        getSite().setSelectionProvider(this.viewer);
     }
 
     /**
@@ -253,6 +256,7 @@ public final class ServerView extends ViewPart implements IServerRegistryListene
      * @param event the event being processed
      */
     void handleSelectionChanged( SelectionChangedEvent event ) {
+        assert (((IStructuredSelection)event.getSelection()).getFirstElement() instanceof ModeShapeDomainObject);
         updateStatusLine((IStructuredSelection)event.getSelection());
     }
 
@@ -318,7 +322,7 @@ public final class ServerView extends ViewPart implements IServerRegistryListene
      * @param selection the current viewer selection (never <code>null</code>)
      */
     private void updateStatusLine( IStructuredSelection selection ) {
-        String msg = (selection.size() != 1 ? "" : ((IModeShapeObject)selection.getFirstElement()).getShortDescription()); //$NON-NLS-1$
+        String msg = (selection.size() != 1 ? "" : ((ModeShapeDomainObject)selection.getFirstElement()).getShortDescription()); //$NON-NLS-1$
         getViewSite().getActionBars().getStatusLineManager().setMessage(msg);
     }
 

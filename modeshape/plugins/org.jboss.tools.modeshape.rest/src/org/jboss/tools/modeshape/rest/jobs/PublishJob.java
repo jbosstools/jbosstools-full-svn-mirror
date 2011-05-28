@@ -27,11 +27,11 @@ import org.jboss.tools.modeshape.rest.Activator;
 import org.jboss.tools.modeshape.rest.PublishedResourceHelper;
 import org.jboss.tools.modeshape.rest.RestClientI18n;
 import org.jboss.tools.modeshape.rest.ServerManager;
+import org.jboss.tools.modeshape.rest.domain.ModeShapeWorkspace;
 import org.jboss.tools.modeshape.rest.views.ModeShapeContentProvider;
 import org.jboss.tools.modeshape.rest.views.ModeShapeMessageConsole;
 import org.modeshape.common.util.CheckArg;
 import org.modeshape.web.jcr.rest.client.Status;
-import org.modeshape.web.jcr.rest.client.domain.Workspace;
 
 /**
  * The <code>PublishJob</code> publishes or unpublishes one or more files using the {@link ServerManager}.
@@ -98,7 +98,7 @@ public final class PublishJob extends Job {
     /**
      * The workspace to use when publishing or unpublishing.
      */
-    private final Workspace workspace;
+    private final ModeShapeWorkspace workspace;
 
     /**
      * The path segment prepended to the resource project path (never <code>null</code> but can be empty)
@@ -114,7 +114,7 @@ public final class PublishJob extends Job {
      */
     public PublishJob( Type type,
                        List<IFile> files,
-                       Workspace workspace,
+                       ModeShapeWorkspace workspace,
                        String workspaceArea,
                        boolean version ) {
         super(getJobName(type, JOB_ID.incrementAndGet()));
@@ -189,17 +189,11 @@ public final class PublishJob extends Job {
 
             // write initial message to console
             if (isPublishing()) {
-                ModeShapeMessageConsole.writeln(RestClientI18n.publishJobPublish.text(this.jobId,
-                                                                                      serverUrl,
-                                                                                      repositoryName,
-                                                                                      workspaceName,
-                                                                                      fileCount));
+                ModeShapeMessageConsole.writeln(RestClientI18n.publishJobPublish.text(this.jobId, serverUrl, repositoryName,
+                                                                                      workspaceName, fileCount));
             } else {
-                ModeShapeMessageConsole.writeln(RestClientI18n.publishJobUnpublish.text(this.jobId,
-                                                                                        serverUrl,
-                                                                                        repositoryName,
-                                                                                        workspaceName,
-                                                                                        fileCount));
+                ModeShapeMessageConsole.writeln(RestClientI18n.publishJobUnpublish.text(this.jobId, serverUrl, repositoryName,
+                                                                                        workspaceName, fileCount));
             }
 
             PublishedResourceHelper resourceHelper = new PublishedResourceHelper(getServerManager());
@@ -283,15 +277,11 @@ public final class PublishJob extends Job {
 
             if (canceled) {
                 if (isPublishing()) {
-                    ModeShapeMessageConsole.writeln(RestClientI18n.publishJobPublishCanceledMsg.text(this.jobId,
-                                                                                                     numProcessed,
-                                                                                                     this.files.size(),
-                                                                                                     duration));
+                    ModeShapeMessageConsole.writeln(RestClientI18n.publishJobPublishCanceledMsg.text(this.jobId, numProcessed,
+                                                                                                     this.files.size(), duration));
                 } else {
-                    ModeShapeMessageConsole.writeln(RestClientI18n.publishJobUnpublishCanceledMsg.text(this.jobId,
-                                                                                                       numProcessed,
-                                                                                                       this.files.size(),
-                                                                                                       duration));
+                    ModeShapeMessageConsole.writeln(RestClientI18n.publishJobUnpublishCanceledMsg.text(this.jobId, numProcessed,
+                                                                                                       this.files.size(), duration));
                 }
             } else {
                 if (isPublishing()) {

@@ -12,11 +12,14 @@
 package org.jboss.tools.modeshape.rest.views;
 
 import static org.jboss.tools.modeshape.rest.IUiConstants.PUBLISHED_OVERLAY_IMAGE;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import net.jcip.annotations.GuardedBy;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
@@ -35,37 +38,29 @@ import org.jboss.tools.modeshape.rest.RestClientI18n;
 import org.jboss.tools.modeshape.rest.ServerManager;
 import org.jboss.tools.modeshape.rest.ServerRegistryEvent;
 import org.jboss.tools.modeshape.rest.Utils;
+import org.jboss.tools.modeshape.rest.domain.ModeShapeDomainObject;
+import org.jboss.tools.modeshape.rest.domain.ModeShapeRepository;
+import org.jboss.tools.modeshape.rest.domain.ModeShapeServer;
+import org.jboss.tools.modeshape.rest.domain.ModeShapeWorkspace;
 import org.modeshape.web.jcr.rest.client.Status;
 import org.modeshape.web.jcr.rest.client.Status.Severity;
-import org.modeshape.web.jcr.rest.client.domain.IModeShapeObject;
-import org.modeshape.web.jcr.rest.client.domain.Repository;
-import org.modeshape.web.jcr.rest.client.domain.Server;
-import org.modeshape.web.jcr.rest.client.domain.Workspace;
 
 /**
- * The <code>ModeShapeContentProvider</code> is a content and label provider for the repositories. This class
- * <strong>MUST</strong> be registered, and then unregistered, to receive server registry events.
+ * The <code>ModeShapeContentProvider</code> is a content and label provider for the repositories. This class <strong>MUST</strong>
+ * be registered, and then unregistered, to receive server registry events.
  */
-public final class ModeShapeContentProvider extends ColumnLabelProvider
-    implements ILightweightLabelDecorator, IServerRegistryListener, ITreeContentProvider {
-
-    // ===========================================================================================================================
-    // Constants
-    // ===========================================================================================================================
+public final class ModeShapeContentProvider extends ColumnLabelProvider implements ILightweightLabelDecorator,
+        IServerRegistryListener, ITreeContentProvider {
 
     /**
      * The decorator ID.
      */
-    private static final String ID = "org.jboss.tools.modeshape.rest.decorator";
+    private static final String ID = "org.jboss.tools.modeshape.rest.decorator"; //$NON-NLS-1$
 
     /**
      * If a server connection cannot be established, wait this amount of time before trying again.
      */
     private static final long RETRY_DURATION = 2000;
-
-    // ===========================================================================================================================
-    // Class Methods
-    // ===========================================================================================================================
 
     /**
      * @return the decorator
@@ -80,15 +75,11 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider
         return null;
     }
 
-    // ===========================================================================================================================
-    // Fields
-    // ===========================================================================================================================
-
     /**
      * Servers that a connection can't be established. Value is the last time a establishing a connection was tried.
      */
-    @GuardedBy( "offlineServersLock" )
-    private final Map<Server, Long> offlineServerMap = new HashMap<Server, Long>();
+    @GuardedBy("offlineServersLock")
+    private final Map<ModeShapeServer, Long> offlineServerMap = new HashMap<ModeShapeServer, Long>();
 
     /**
      * Lock used for when accessing the offline server map. The map will be accessed in different threads as the decorator runs in
@@ -101,14 +92,10 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider
      */
     private ServerManager serverManager;
 
-    // ===========================================================================================================================
-    // Methods
-    // ===========================================================================================================================
-
     /**
      * @param server the server that is offline
      */
-    private void addOfflineServer( Server server ) {
+    private void addOfflineServer( ModeShapeServer server ) {
         try {
             this.offlineServersLock.writeLock().lock();
             this.offlineServerMap.put(server, System.currentTimeMillis());
@@ -133,8 +120,8 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider
         }
 
         if (getServerManager() != null) {
-            if (element instanceof Server) {
-                Server server = (Server)element;
+            if (element instanceof ModeShapeServer) {
+                ModeShapeServer server = (ModeShapeServer)element;
 
                 if (isOkToConnect(server)) {
                     Status status = getServerManager().ping(server);
@@ -148,7 +135,7 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider
                 IFile file = (IFile)element;
 
                 if (file.exists() && !file.isHidden()
-                    && new PublishedResourceHelper(getServerManager()).isPublished((IFile)element)) {
+                        && new PublishedResourceHelper(getServerManager()).isPublished((IFile)element)) {
                     overlay = Activator.getDefault().getImageDescriptor(PUBLISHED_OVERLAY_IMAGE);
                 }
             }
@@ -176,11 +163,11 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider
      */
     @Override
     public Object[] getChildren( Object parentElement ) {
-        assert (parentElement instanceof IModeShapeObject);
+        assert (parentElement instanceof ModeShapeDomainObject);
 
         if (getServerManager() != null) {
-            if (parentElement instanceof Server) {
-                Server server = (Server)parentElement;
+            if (parentElement instanceof ModeShapeServer) {
+                ModeShapeServer server = (ModeShapeServer)parentElement;
 
                 if (isOkToConnect(server)) {
                     try {
@@ -191,8 +178,8 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider
                         Activator.getDefault().log(new Status(Severity.ERROR, msg, e));
                     }
                 }
-            } else if (parentElement instanceof Repository) {
-                Repository repository = (Repository)parentElement;
+            } else if (parentElement instanceof ModeShapeRepository) {
+                ModeShapeRepository repository = (ModeShapeRepository)parentElement;
 
                 if (isOkToConnect(repository.getServer())) {
                     try {
@@ -236,14 +223,14 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider
      */
     @Override
     public Object getParent( Object element ) {
-        assert (element instanceof IModeShapeObject);
+        assert (element instanceof ModeShapeDomainObject);
 
-        if (element instanceof Workspace) {
-            return ((Workspace)element).getRepository();
+        if (element instanceof ModeShapeWorkspace) {
+            return ((ModeShapeWorkspace)element).getRepository();
         }
 
-        if (element instanceof Repository) {
-            return ((Repository)element).getServer();
+        if (element instanceof ModeShapeRepository) {
+            return ((ModeShapeRepository)element).getServer();
         }
 
         // server
@@ -268,8 +255,8 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider
      */
     @Override
     public String getText( Object element ) {
-        assert (element instanceof IModeShapeObject);
-        return ((IModeShapeObject)element).getName();
+        assert (element instanceof ModeShapeDomainObject);
+        return ((ModeShapeDomainObject)element).getName();
     }
 
     /**
@@ -289,8 +276,8 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider
      */
     @Override
     public String getToolTipText( Object element ) {
-        if (element instanceof IModeShapeObject) {
-            return ((IModeShapeObject)element).getShortDescription();
+        if (element instanceof ModeShapeDomainObject) {
+            return ((ModeShapeDomainObject)element).getShortDescription();
         }
 
         return super.getToolTipText(element);
@@ -342,7 +329,7 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider
              * 
              * @see java.lang.Runnable#run()
              */
-            @SuppressWarnings( "synthetic-access" )
+            @SuppressWarnings("synthetic-access")
             @Override
             public void run() {
                 fireLabelProviderChanged(new LabelProviderChangedEvent(ModeShapeContentProvider.this, element));
@@ -356,7 +343,7 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider
      * @param server the server being checked
      * @return <code>true</code> if it is OK to try and connect
      */
-    private boolean isOkToConnect( Server server ) {
+    private boolean isOkToConnect( ModeShapeServer server ) {
         boolean check = false; // check map for time
 
         try {
@@ -406,7 +393,7 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider
                 this.offlineServersLock.writeLock().lock();
                 this.offlineServerMap.remove(event.getServer());
             } catch (Exception e) {
-                errors = new Exception[] {e};
+                errors = new Exception[] { e };
             } finally {
                 this.offlineServersLock.writeLock().unlock();
             }

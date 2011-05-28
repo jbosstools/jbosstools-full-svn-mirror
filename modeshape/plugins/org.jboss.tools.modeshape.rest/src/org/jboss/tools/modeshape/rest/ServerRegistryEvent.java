@@ -11,18 +11,14 @@
  */
 package org.jboss.tools.modeshape.rest;
 
+import org.jboss.tools.modeshape.rest.domain.ModeShapeServer;
 import org.modeshape.common.util.CheckArg;
-import org.modeshape.web.jcr.rest.client.domain.Server;
 
 /**
  * The <code>ServerRegistryEvent</code> class is the event that is broadcast from the {@link ServerManager server manager} when a
  * server is added, removed, or changed.
  */
 public final class ServerRegistryEvent {
-
-    // ===========================================================================================================================
-    // Constants
-    // ===========================================================================================================================
 
     /**
      * The status severity levels.
@@ -44,10 +40,6 @@ public final class ServerRegistryEvent {
         UPDATE
     }
 
-    // ===========================================================================================================================
-    // Class Methods
-    // ===========================================================================================================================
-
     /**
      * @param serverManager the server manager sourcing this event (never <code>null</code>)
      * @param newServer the server that was added to the server registry (never <code>null</code>)
@@ -55,9 +47,9 @@ public final class ServerRegistryEvent {
      * @see Type#NEW
      */
     public static ServerRegistryEvent createNewEvent( ServerManager serverManager,
-                                                      Server newServer ) {
-        CheckArg.isNotNull(serverManager, "serverManager");
-        CheckArg.isNotNull(newServer, "newServer");
+                                                      ModeShapeServer newServer ) {
+        CheckArg.isNotNull(serverManager, "serverManager"); //$NON-NLS-1$
+        CheckArg.isNotNull(newServer, "newServer"); //$NON-NLS-1$
         return new ServerRegistryEvent(serverManager, Type.NEW, newServer);
     }
 
@@ -68,9 +60,9 @@ public final class ServerRegistryEvent {
      * @see Type#REMOVE
      */
     public static ServerRegistryEvent createRemoveEvent( ServerManager serverManager,
-                                                         Server removedServer ) {
-        CheckArg.isNotNull(serverManager, "serverManager");
-        CheckArg.isNotNull(removedServer, "removedServer");
+                                                         ModeShapeServer removedServer ) {
+        CheckArg.isNotNull(serverManager, "serverManager"); //$NON-NLS-1$
+        CheckArg.isNotNull(removedServer, "removedServer"); //$NON-NLS-1$
         return new ServerRegistryEvent(serverManager, Type.REMOVE, removedServer);
     }
 
@@ -82,25 +74,21 @@ public final class ServerRegistryEvent {
      * @see Type#UPDATE
      */
     public static ServerRegistryEvent createUpdateEvent( ServerManager serverManager,
-                                                         Server previousServerVersion,
-                                                         Server newServerVersion ) {
-        CheckArg.isNotNull(serverManager, "serverManager");
-        CheckArg.isNotNull(previousServerVersion, "previousServerVersion");
-        CheckArg.isNotNull(newServerVersion, "newServerVersion");
+                                                         ModeShapeServer previousServerVersion,
+                                                         ModeShapeServer newServerVersion ) {
+        CheckArg.isNotNull(serverManager, "serverManager"); //$NON-NLS-1$
+        CheckArg.isNotNull(previousServerVersion, "previousServerVersion"); //$NON-NLS-1$
+        CheckArg.isNotNull(newServerVersion, "newServerVersion"); //$NON-NLS-1$
 
         ServerRegistryEvent event = new ServerRegistryEvent(serverManager, Type.UPDATE, previousServerVersion);
         event.updatedServer = newServerVersion;
         return event;
     }
 
-    // ===========================================================================================================================
-    // Fields
-    // ===========================================================================================================================
-
     /**
      * The server being added, removed, or updated.
      */
-    private final Server server;
+    private final ModeShapeServer server;
 
     /**
      * The server manager in charge of the server registry the event is associated with.
@@ -115,11 +103,7 @@ public final class ServerRegistryEvent {
     /**
      * The server that is replacing an existing server. Will be <code>null</code> for all types except {@link Type#UPDATE update}.
      */
-    private Server updatedServer;
-
-    // ===========================================================================================================================
-    // Constructors
-    // ===========================================================================================================================
+    private ModeShapeServer updatedServer;
 
     /**
      * @param serverManager the server manager sourcing this event
@@ -128,24 +112,20 @@ public final class ServerRegistryEvent {
      */
     private ServerRegistryEvent( ServerManager serverManager,
                                  Type type,
-                                 Server server ) {
+                                 ModeShapeServer server ) {
         assert (serverManager != null);
         assert (type != null);
         assert (server != null);
-        
+
         this.serverManager = serverManager;
         this.type = type;
         this.server = server;
     }
 
-    // ===========================================================================================================================
-    // Methods
-    // ===========================================================================================================================
-
     /**
      * @return the added, removed, or the old version of the server that has been updated
      */
-    public Server getServer() {
+    public ModeShapeServer getServer() {
         return this.server;
     }
 
@@ -161,7 +141,7 @@ public final class ServerRegistryEvent {
      * @throws UnsupportedOperationException if method is called when the type is not an update
      * @see Type#UPDATE
      */
-    public Server getUpdatedServer() {
+    public ModeShapeServer getUpdatedServer() {
         if (this.type != Type.UPDATE) {
             throw new UnsupportedOperationException();
         }

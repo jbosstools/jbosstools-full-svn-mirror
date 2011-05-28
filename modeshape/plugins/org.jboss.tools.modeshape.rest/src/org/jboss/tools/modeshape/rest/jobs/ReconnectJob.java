@@ -14,6 +14,7 @@ package org.jboss.tools.modeshape.rest.jobs;
 import static org.jboss.tools.modeshape.rest.IUiConstants.PLUGIN_ID;
 import static org.jboss.tools.modeshape.rest.IUiConstants.PUBLISHING_JOB_FAMILY;
 import static org.jboss.tools.modeshape.rest.RestClientI18n.reconnectJobTaskName;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.jobs.Job;
@@ -21,38 +22,26 @@ import org.jboss.tools.modeshape.rest.Activator;
 import org.jboss.tools.modeshape.rest.RestClientI18n;
 import org.jboss.tools.modeshape.rest.ServerManager;
 import org.jboss.tools.modeshape.rest.Utils;
+import org.jboss.tools.modeshape.rest.domain.ModeShapeServer;
 import org.modeshape.web.jcr.rest.client.Status;
-import org.modeshape.web.jcr.rest.client.domain.Server;
 
 /**
- * The <code>ReconnectJob</code> attempts to reconnect to the selected {@link Server server(s)}.
+ * The <code>ReconnectJob</code> attempts to reconnect to the selected {@link ModeShapeServer server(s)}.
  */
 public final class ReconnectJob extends Job {
-
-    // ===========================================================================================================================
-    // Fields
-    // ===========================================================================================================================
 
     /**
      * The server being reconnected to.
      */
-    private final Server server;
-
-    // ===========================================================================================================================
-    // Constructors
-    // ===========================================================================================================================
+    private final ModeShapeServer server;
 
     /**
      * @param server the server being connected to (never <code>null</code>)
      */
-    public ReconnectJob( Server server ) {
+    public ReconnectJob( ModeShapeServer server ) {
         super(reconnectJobTaskName.text(server.getShortDescription()));
         this.server = server;
     }
-
-    // ===========================================================================================================================
-    // Methods
-    // ===========================================================================================================================
 
     /**
      * {@inheritDoc}
