@@ -33,13 +33,18 @@
 		<!-- 1a. URL of latest JBT target platform site -->
 		<jbosstools-target-platform-repo>http://download.jboss.org/jbosstools/updates/target-platform/latest/</jbosstools-target-platform-repo>
 
-		<!-- 1b. or, use -Dtarget.platform.site=file:///home/$user/trunk/build/target-platform/REPO/ -->
+		<!-- 1b. or, use -Dtarget.platform.site=file:///home/$user/trunk/build/target-platform/REPO/ 
+			(old convention) -->
+		<!-- -Dlocal.site=file:///home/$user/trunk/build/target-platform/REPO/ 
+			(new convention) -->
 		<!-- Set this to a path on your own machine, or use remote URL like http://download.jboss.org/jbosstools/updates/target-platform/latest/ 
 			Can also generate a local.target file which will always point to your local 
 			repo w/o having to edit here. See local.target profile below for more information. -->
-		<target.platform.site>file:///home/hudson/static_build_env/jbds/target-platform/e362-wtp323.target/</target.platform.site>
+		<local.site>file:///home/hudson/static_build_env/jbds/target-platform/e362-wtp323.target/</local.site>
+		<target.platform.site>${local.site}</target.platform.site>
 
-		<!-- 2a. URL of latest JBT nightly staging composite site (all the components in once place) -->
+		<!-- 2a. URL of latest JBT nightly staging composite site (all the components 
+			in once place) -->
 		<jbosstools-nightly-staging-composite>http://download.jboss.org/jbosstools/builds/staging/_composite_/3.2_stable_branch/</jbosstools-nightly-staging-composite>
 
 		<!-- 2b., or, use -Plocal.composite -Dlocal.composite=file:///path/to/mirror/of/composite/staging/site/ -->
@@ -48,7 +53,8 @@
 		<!-- 3. optionally, use -Plocal.requirements -Dlocal.requirements=file:///path/to/mirror/of/composite/requirements/site -->
 		<local.requirements>file:///qa/services/http/binaries/RHDS/updates/helios/</local.requirements>
 
-		<!-- 4. published aggregate update site goes here, for consumption by QE and downstream JBDS builds -->
+		<!-- 4. published aggregate update site goes here, for consumption by QE 
+			and downstream JBDS builds -->
 		<jbosstools.update.site>http://download.jboss.org/jbosstools/updates/nightly/3.2_stable_branch/</jbosstools.update.site>
 	</properties>
 
@@ -56,8 +62,101 @@
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-antrun-plugin</artifactId>
 				<version>${maven.antrun.plugin.version}</version>
+				<executions>
+					<execution>
+						<id>install</id>
+						<phase>install</phase>
+						<configuration>
+							<quiet>true</quiet>
+							<tasks>
+								<taskdef resource="net/sf/antcontrib/antlib.xml" />
+								<if>
+									<available file="${basedir}/target/site" type="dir" />
+									<then>
+
+										<var name="ant.script" unset="true" />
+										<for param="ant.script"
+											list="update-site-build.xml, ../update-site-build.xml, ../parent/update-site-build.xml, ../build/parent/update-site-build.xml, ../../update-site-build.xml, ../../parent/update-site-build.xml, ../../build/parent/update-site-build.xml"
+											delimiter=", ">
+											<sequential>
+												<if>
+													<available file="@{ant.script}" type="file" />
+													<then>
+														<var name="ant.script" value="@{ant.script}" />
+													</then>
+												</if>
+											</sequential>
+										</for>
+										<if>
+											<not>
+												<isset property="ant.script" />
+											</not>
+											<then>
+												<tempfile property="ant.script" destdir="${java.io.tmpdir}"
+													deleteonexit="true" />
+												<get
+													src="http://anonsvn.jboss.org/repos/jbosstools/trunk/build/parent/update-site-build.xml"
+													dest="${ant.script}" verbose="false" usetimestamp="true" />
+											</then>
+										</if>
+										<if>
+											<isset property="ant.script" />
+											<then>
+												<ant antfile="${ant.script}" />
+											</then>
+											<else>
+												<echo>[WARN] Could not run build/parent/update-site-build.xml</echo>
+											</else>
+										</if>
+									</then>
+								</if>
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>commons-net</groupId>
+						<artifactId>commons-net</artifactId>
+						<version>1.4.1</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.ant</groupId>
+						<artifactId>ant</artifactId>
+						<version>1.7.1</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.ant</groupId>
+						<artifactId>ant-nodeps</artifactId>
+						<version>1.7.1</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.ant</groupId>
+						<artifactId>ant-trax</artifactId>
+						<version>1.7.1</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.ant</groupId>
+						<artifactId>ant-commons-net</artifactId>
+						<version>1.7.1</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.ant</groupId>
+						<artifactId>ant-apache-regexp</artifactId>
+						<version>1.7.1</version>
+					</dependency>
+					<dependency>
+						<groupId>ant-contrib</groupId>
+						<artifactId>ant-contrib</artifactId>
+						<version>1.0b3</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 
 			<plugin>
@@ -199,9 +298,9 @@
 					<encoding>UTF-8</encoding>
 
 					<!-- not strictly needed but this suppresses warnings when compiling 
-					that the default value (1.5) is being overwritten by the value in the MANIFEST.MF. 
-					You can use this in your plugins or their aggregator pom.xml files to set 
-					this for your plugins -->
+						that the default value (1.5) is being overwritten by the value in the MANIFEST.MF. 
+						You can use this in your plugins or their aggregator pom.xml files to set 
+						this for your plugins -->
 
 					<!-- <source>1.6</source> -->
 					<!-- <target>1.6</target> -->
@@ -828,17 +927,22 @@
 						<enabled>true</enabled>
 					</releases>
 				</repository>
-				<repository> 
-					<id>jboss-requirements-composite-mirror</id> 
-					<url>http://download.jboss.org/jbosstools/updates/helios/</url> 
-					<layout>p2</layout> 
-					<snapshots> <enabled>true</enabled> </snapshots> 
-					<releases> <enabled>true</enabled> </releases> 
+				<repository>
+					<id>jboss-requirements-composite-mirror</id>
+					<url>http://download.jboss.org/jbosstools/updates/helios/</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
 				</repository>
 			</repositories>
 		</profile>
 
-		<!-- same contents as jboss-requirements-composite-mirror, but locally available (to improve network lag) -->
+		<!-- same contents as jboss-requirements-composite-mirror, but locally 
+			available (to improve network lag) -->
 		<profile>
 			<id>local.requirements</id>
 			<activation>
@@ -859,7 +963,8 @@
 			</repositories>
 		</profile>
 
-		<!-- same contents as jbosstools-nightly-staging-composite, but locally available (to improve network lag) -->
+		<!-- same contents as jbosstools-nightly-staging-composite, but locally 
+			available (to improve network lag) -->
 		<profile>
 			<id>local.composite</id>
 			<activation>
