@@ -1,4 +1,4 @@
-<project default="build.results">
+<project default="buildResults.aggregate">
 
 	<!-- should be set by script or in Hudson -->
 	<property name="ZIPSUFFIX" value="SNAPSHOT" />
@@ -7,7 +7,6 @@
 	<!-- <property name="JOB_NAME" value="jbosstools-3.2.0.M2.continuous" /> -->
 
 	<!-- if a different template file (eg., a partially expanded one) should be used, feed it in here -->
-	<property name="template.file" value="download-template.xml" />
 
 	<!-- if ${WORKSPACE}/site folder exists, target that folder; else generate here. -->
 	<condition property="output.dir" value="${WORKSPACE}/results" else="${basedir}">
@@ -46,8 +45,26 @@
 	</condition>
 	<!-- if can't calculate where build/build.xml is located, must pass in path from parent when calling this script -->
 
+	<target name="get.saxon" unless="saxon.jar.exists">
+		<!-- or use http://downloads.sourceforge.net/saxon/saxonhe9-3-0-4j.zip ? -->
+		<property name="SAXON_MIRROR" value="http://downloads.sourceforge.net/project/saxon/Saxon-HE/9.3/saxonhe9-3-0-4j.zip?r=http%3A%2F%2Fsaxon.sourceforge.net%2F&amp;ts=1297812383&amp;use_mirror=softlayer" />
+		<get usetimestamp="true" dest="${COMMON_TOOLS}/saxonhe9-3-0-4j.zip" src="${SAXON_MIRROR}" />
+		<mkdir dir="${java.io.tmpdir}/saxonhe9-3-0-4j.zip_" />
+		<unzip src="${COMMON_TOOLS}/saxonhe9-3-0-4j.zip" dest="${java.io.tmpdir}/saxonhe9-3-0-4j.zip_" overwrite="true" />
+		<copy file="${java.io.tmpdir}/saxonhe9-3-0-4j.zip_/saxon9he.jar" tofile="${COMMON_TOOLS}/saxon.jar" failonerror="true" />
+		<delete dir="${java.io.tmpdir}/saxonhe9-3-0-4j.zip_" includeemptydirs="true" quiet="true" />
+	</target>
+
 	<target name="init">
 		<ant antfile="${build.xml}" target="init" />
+		<taskdef resource="net/sf/antcontrib/antlib.xml">
+			<classpath>
+				<pathelement location="${COMMON_TOOLS}/ant-contrib.jar" />
+			</classpath>
+		</taskdef>
+
+		<available file="${COMMON_TOOLS}/saxon.jar" type="file" property="saxon.jar.exists" />
+		<antcall target="get.saxon" />
 
 		<macrodef name="get.size">
 			<attribute name="file" />
@@ -82,144 +99,46 @@
 				</if>
 			</sequential>
 		</macrodef>
-		<taskdef resource="net/sf/antcontrib/antlib.xml">
-			<classpath>
-				<pathelement location="${COMMON_TOOLS}/ant-contrib.jar" />
-			</classpath>
-		</taskdef>
 	</target>
 
-	<target name="build.results" depends="init">
-		<!-- 
-			1. resolve variables in download-template.xml to produce download.xml
-			2. XSL transform download.xml to produce download-snippet.html
-			3. manually copy the contents of this file into a page under 
-				http://www.jboss.org/tools/downloads/
-		-->
-		<echo level="info">ZIPSUFFIX = ${ZIPSUFFIX}
-WORKINGDIR = ${WORKINGDIR}
-COMMON_TOOLS = ${COMMON_TOOLS}
-input.dir = ${input.dir}
-output.dir = ${output.dir}</echo>
-		<for param="UPDATEZIP">
-			<path>
-				<fileset dir="${input.dir}">
-					<include name="**/*-Update-${ZIPSUFFIX}.zip" />
-					<include name="**/*-Sources-${ZIPSUFFIX}.zip" />
-				</fileset>
-			</path>
-			<sequential>
-				<var name="filename" unset="true" />
-				<propertyregex property="filename" input="@{UPDATEZIP}" defaultvalue="@{UPDATEZIP}" regexp=".+/([^/]+\.zip)" replace="\1" casesensitive="false" override="true" />
-				<propertyregex property="COMPONENT" input="${filename}" defaultvalue="${filename}" regexp="(.+)-(Update|Sources)-${ZIPSUFFIX}\.zip" replace="\1" casesensitive="false" override="true" />
-				<if>
-					<and>
-						<isset property="JOB_NAME" />
-						<equals arg1="${COMPONENT}" arg2="${JOB_NAME}" />
-					</and>
-					<then>
-						<if>
-							<!-- only set the update variable if it's NOT coming from the aggregate build -->
-							<and>
-								<equals arg1="${filename}" arg2="${JOB_NAME}-Sources-${ZIPSUFFIX}.zip" />
-								<not>
-									<contains string="${JOB_NAME}" substring="aggregate" />
-								</not>
-							</and>
-							<then>
-								<var name="COMPONENT" unset="true" />
-								<var name="COMPONENT" value="sources" />
-							</then>
-							<elseif>
-								<!-- only set the update variable if it's coming from the aggregate build; others should be ignored -->
-								<and>
-									<equals arg1="${filename}" arg2="${JOB_NAME}-Update-${ZIPSUFFIX}.zip" />
-									<contains string="${JOB_NAME}" substring="aggregate" />
-								</and>
-								<then>
-									<var name="COMPONENT" unset="true" />
-									<var name="COMPONENT" value="update" />
-								</then>
-							</elseif>
-						</if>
-					</then>
-				</if>
+	<!-- NEW STUFF HERE -->
 
-				<echo level="verbose">UPDATEZIP = @{UPDATEZIP}
-COMPONENT = ${COMPONENT}</echo>
-				<property name="${COMPONENT}-filename" value="${filename}" />
-
-				<get.size file="@{UPDATEZIP}" property="${COMPONENT}-filesize" />
-				<var name="filesize" unset="true" />
-				<propertycopy from="${COMPONENT}-filesize" property="filesize" override="true" silent="true" />
-				<echo level="info">filesize =  ${filesize}</echo>
-				<echo level="info">filename =  ${filename}</echo>
-				<var name="filesize" unset="true" />
-				<var name="filename" unset="true" />
-			</sequential>
-		</for>
-
-		<if>
-			<!-- default operation from template file -->
-			<equals arg1="${template.file}" arg2="download-template.xml" />
-			<then>
-				<copy todir="${output.dir}" overwrite="true">
-					<fileset dir="${output.dir}" file="${template.file}" />
-					<mapper type="merge" to="download.xml" />
-					<filterchain>
-						<expandproperties />
-					</filterchain>
-				</copy>
-				<xslt in="${output.dir}/download.xml" out="${output.dir}/download-snippet.html" style="download.xsl" />
-				<xslt in="${output.dir}/download.xml" out="${output.dir}/buildResults.html" style="buildResults.xsl" />
-				<copy todir="${output.dir}" file="buildResults.css"/>
-				<delete file="${output.dir}/download.xml" />
-			</then>
-			<elseif>
-				<!-- use previously XLST'd file from an upstream build -->
-				<or>
-					<contains string="${template.file}" substring="http:" />
-					<contains string="${template.file}" substring="https:" />
-					<contains string="${template.file}" substring="ftp:" />
-				</or>
-				<then>
-					<propertyregex property="template.file.cleaned" input="${template.file}" defaultvalue="${template.file}" regexp=".+/([^/]+)" replace="\1" override="true" />
-					<get src="${template.file}" dest="${output.dir}/${template.file.cleaned}.in" ignoreerrors="true" />
-					<if>
-						<available file="${output.dir}/${template.file.cleaned}.in" type="file" />
-						<then>
-							<!-- use pre-existing snippet file -->
-							<copy todir="${output.dir}" overwrite="true">
-								<fileset dir="${output.dir}" file="${template.file.cleaned}.in" />
-								<mapper type="merge" to="download-snippet.html" />
-								<filterchain>
-									<expandproperties />
-								</filterchain>
-							</copy>
-							<delete file="${output.dir}/${template.file.cleaned}.in" quiet="true" />
-						</then>
-						<else>
-							<!-- fall back to default template file -->
-							<var name="template.file" value="download-template.xml" />
-							<copy todir="${output.dir}" overwrite="true">
-								<fileset dir="${output.dir}" file="${template.file}" />
-								<mapper type="merge" to="download.xml" />
-								<filterchain>
-									<expandproperties />
-								</filterchain>
-							</copy>
-							<xslt in="${output.dir}/download.xml" out="${output.dir}/download-snippet.html" style="download.xsl" />
-							<delete file="${output.dir}/download.xml" />
-						</else>
-					</if>
-				</then>
-			</elseif>
-		</if>
+	<target name="buildResults.aggregate" depends="init" description="generate buildResults.html from build properties">
+		<ant target="collect.zips" antfile="../aggregate/site/build.xml">
+			<property name="inputRepos" value="1" />
+			<property name="inputRepo1" value="http://download.jboss.org/jbosstools/builds/staging/_composite_/3.2_stable_branch" />
+		</ant>
+		<ant target="collect.metadata" antfile="../aggregate/site/build.xml">
+		</ant>
+		<antcall target="buildResults" />
+	</target>
+	<target name="test.buildResults.aggregate" depends="init" description="generate buildResults.html from build properties">
+		<property name="isTest" value="true" />
+		<ant target="collect.zips" antfile="../aggregate/site/build.xml">
+			<property name="inputRepos" value="1" />
+			<property name="inputRepo1" value="http://download.jboss.org/jbosstools/builds/staging/_composite_/3.2_stable_branch" />
+		</ant>
+		<ant target="collect.metadata" antfile="../aggregate/site/build.xml">
+		</ant>
+		<antcall target="buildResults" />
 	</target>
 
-	<target name="test.xslt">
-		<xslt in="download-template.xml" out="download-snippet.out.html" style="download.xsl" />
-		<xslt in="download-template.xml" out="buildResults.out.html" style="buildResults.xsl" />
+	<target name="test.buildResults.single" depends="init" description="generate buildResults.html from build properties">
+		<property name="isTest" value="true" />
+		<ant target="collect.zips" antfile="../aggregate/site/build.xml">
+			<property name="inputRepos" value="1" />
+			<property name="inputRepo1" value="http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_stable_branch.component--common/all/repo" />
+		</ant>
+		<ant target="collect.metadata" antfile="../aggregate/site/build.xml">
+		</ant>
+		<antcall target="buildResults" />
+	</target>
+
+	<target name="buildResults" description="generate buildResults.html from build properties" depends="init">
+		<delete quiet="true" file="buildResults.out.html" />
+		<xslt in="zips/build.properties.all.xml" out="buildResults.out.html" style="buildResults.xsl" force="true">
+			<classpath location="${COMMON_TOOLS}/saxon.jar" />
+		</xslt>
 	</target>
 
 </project>
