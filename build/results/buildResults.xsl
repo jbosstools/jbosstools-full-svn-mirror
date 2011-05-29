@@ -81,8 +81,8 @@
 								</xsl:variable>
 								<xsl:variable name="COMPONENT">
 									<xsl:choose>
-										<!-- property name="jbosstools-3.2_trunk.component- -ws-SNAPSHOT.build.properties.JOB_NAME" 
-											value="jbosstools-3.2_trunk.component- -ws" -->
+										<!-- property name="jbosstools-3.3_trunk.component- -ws-SNAPSHOT.build.properties.JOB_NAME" 
+											value="jbosstools-3.3_trunk.component- -ws" -->
 										<xsl:when test="contains(@value,'component--')">
 											<xsl:value-of select="substring-after(@value,'component--')" />
 										</xsl:when>
@@ -138,8 +138,8 @@
 												<b>
 													<xsl:variable name="filelabel">
 														<xsl:choose>
-															<!-- property name="jbosstools-3.2_trunk.component- -ws-SNAPSHOT.build.properties.JOB_NAME" 
-																value="jbosstools-3.2_trunk.component- -ws" -->
+															<!-- property name="jbosstools-3.3_trunk.component- -ws-SNAPSHOT.build.properties.JOB_NAME" 
+																value="jbosstools-3.3_trunk.component- -ws" -->
 															<xsl:when test="contains(@value,'component--')">
 																<xsl:value-of select="substring-after(@value,'component--')" />
 															</xsl:when>
@@ -162,6 +162,23 @@
 															</xsl:otherwise>
 														</xsl:choose>
 													</xsl:variable>
+													<!-- Update, Sources, etc. -->
+													<xsl:variable name="fileType">
+														<xsl:choose>
+															<xsl:when test="contains($filelabel, 'Update')">
+																<xsl:value-of
+																	select="'Update'" />
+															</xsl:when>
+															<xsl:when test="contains($filelabel, 'Sources')">
+																<xsl:value-of
+																	select="'Sources'" />
+															</xsl:when>
+															<xsl:otherwise>
+																<xsl:value-of select="'Other'" />
+															</xsl:otherwise>
+														</xsl:choose>
+													</xsl:variable>
+													
 													<a class="allLink-blue" href="{@value}">
 														<xsl:value-of select="$filelabel" />
 													</a>
@@ -169,12 +186,12 @@
 													<li>
 													md5:
 													<xsl:for-each
-														select="//property[contains(@name,'build.properties.filemd5') and contains(@name,$COMPONENT)]">
+														select="//property[contains(@name,'build.properties.filemd5') and contains(@name,$COMPONENT) and contains(@name,$fileType)]">
 														<xsl:value-of select="@value" />
 													</xsl:for-each>
 													</li><li>size:
 													<xsl:for-each
-														select="//property[contains(@name,'build.properties.filesize') and contains(@name,$COMPONENT)]">
+														select="//property[contains(@name,'build.properties.filesize') and contains(@name,$COMPONENT) and contains(@name,$fileType)]">
 														<xsl:value-of select="@value" /> bytes
 													</xsl:for-each>
 													</li>
@@ -200,28 +217,28 @@
 							<br />
 							See
 							<a
-								href="http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2_stable_branch.aggregate/logs/SVN_REVISION.txt">SVN_REVISION.txt</a>
+								href="http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.3_trunk.aggregate/logs/SVN_REVISION.txt">SVN_REVISION.txt</a>
 						</div>
 						<div id="buildDrivers-blue">
 							<b>Target Platform</b>
 							<table>
 								<tr>
 									<td rowspan="3">
-										Eclipse Helios 3.6.1 +
+										Eclipse Helios 3.7 +
 										<br />
-										Web Tools 3.2.2 +
+										Web Tools 3.3 +
 										<br />
-										TPTP + BIRT + DTP ...
+										BIRT + DTP ...
 									</td>
 									<td>
 										<a class="blue"
-											href="http://download.jboss.org/jbosstools/updates/target-platform/latest/">Target Platform Update Site</a>
+											href="http://download.jboss.org/jbosstools/updates/target-platform_3.3.indigo/latest/">Target Platform Update Site</a>
 									</td>
 								</tr>
 								<tr>
 									<td>
 										<a class="blue"
-											href="http://download.jboss.org/jbosstools/updates/target-platform/e361-wtp322.target.zip">Target Platform Update Zip</a>
+											href="http://download.jboss.org/jbosstools/updates/target-platform_3.3.indigo/e37RC2-wtp33RC2.target.zip">Target Platform Update Zip</a>
 									</td>
 								</tr>
 								<tr>
@@ -238,7 +255,7 @@
 
 							See
 							<a
-								href="http://hudson.qa.jboss.com/hudson/view/DevStudio_Stable_Branch/job/jbosstools-3.2_stable_branch.tests/">jbosstools-3.2_stable_branch.tests</a>
+								href="http://hudson.qa.jboss.com/hudson/view/DevStudio_Trunk/job/jbosstools-3.3_trunk.tests/">jbosstools-3.3_trunk.tests</a>
 							<!-- <table> <tr> <td> <img src="images/test.gif" /> Tests </td> <td 
 								align="right">??? </td> </tr> <tr> <td> <img src="images/testerr.gif" /> 
 								Errors </td> <td align="right">???</td> </tr> <tr> <td> <img src="images/testfail.gif" 
