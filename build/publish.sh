@@ -192,14 +192,8 @@ echo "# -----------" >> ${md5sumsFile}
 md5sum $(find . -name "*Source*.zip" | egrep -v "aggregate-Sources|nightly-Update") >> ${md5sumsFile}
 echo " " >> ${md5sumsFile}
 
-# TODO: JBIDE-7045 this is obsolete - replace it with xslt'd transform of build.properties.all.xml (agg site overall metadata)
-# generate HTML snippet, download-snippet.html, for inclusion on jboss.org
 mkdir -p ${STAGINGDIR}/logs
 ANT_PARAMS=" -DZIPSUFFIX=${ZIPSUFFIX} -DJOB_NAME=${JOB_NAME} -Dinput.dir=${STAGINGDIR} -Doutput.dir=${STAGINGDIR}/logs -DWORKSPACE=${WORKSPACE}"
-	# no longer using upstream continuous or nightly build in aggregation
-	#if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]]; then # reuse snippet from upstream build
-	#	ANT_PARAMS="${ANT_PARAMS} -Dtemplate.file=http://download.jboss.org/jbosstools/builds/staging/${JOB_NAME/.aggregate/.continuous}/logs/download-snippet.html"
-	#fi
 for buildxml in ${WORKSPACE}/build/results/build.xml ${WORKSPACE}/sources/build/results/build.xml ${WORKSPACE}/sources/results/build.xml; do
 	if [[ -f ${buildxml} ]]; then
 		ANT_SCRIPT=${buildxml}
