@@ -16,12 +16,12 @@
 			-f ~/RHDS/updates/requirements/orbit/build.xml -Ddestination=/tmp/orbit-repo
 	-->
 	<target name="mirror">
-		<property name="URL1" value="http://download.eclipse.org/tools/orbit/downloads/drops/S20110515001817/repository/" />
-		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/orbit/S20110515001817/" />
+		<property name="URL1" value="http://download.eclipse.org/tools/orbit/downloads/drops/S20110523182458/repository/" />
+		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/orbit/S20110523182458/" />
 		<property name="compress" value="true" />
 
 		<p2.mirror>
-			<repository location="file:${destination}/S20110515001817" name="orbit plugins for Eclipse 3.6 - 3.7" />
+			<repository location="file:${destination}/S20110523182458" name="orbit plugins for Eclipse 3.6 - 3.7" />
 			<source>
 				<repository location="${URL1}" />
 			</source>
@@ -29,6 +29,6 @@
 			<slicingoptions includefeatures="true" followstrict="true" latestversiononly="true" />
 		</p2.mirror>
 
-		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/S20110515001817/" artifactRepository="file:${destination}/S20110515001817/" publishartifacts="true" source="${destination}/S20110515001817/" compress="${compress}" />
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/S20110523182458/" artifactRepository="file:${destination}/S20110523182458/" publishartifacts="true" source="${destination}/S20110523182458/" compress="${compress}" />
 	</target>
 </project>

@@ -17,14 +17,18 @@
 	-->
 	<target name="mirror">
 		
-		<property name="URL1" value="https://repository.sonatype.org/content/sites/forge-sites/m2e/0.13.0/N/0.13.0.201105091504/"/>
-		<property name="URL2" value="https://repository.sonatype.org/content/sites/forge-sites/m2e-extras/0.13.0/N/0.13.0.201105090451/"/>
-		<property name="URL3" value="https://repository.sonatype.org/content/sites/forge-sites/m2eclipse-wtp/0.13.0/N/0.13.0.201105040943/"/>
+		<property name="URL1" value="https://repository.sonatype.org/content/sites/forge-sites/m2e/0.13.0/N/0.13.0.201105260005/"/>
+		<property name="URL2" value="https://repository.sonatype.org/content/sites/forge-sites/m2e-extras/0.13.0/N/0.13.0.201105271033/"/>
+		<property name="URL3" value="https://repository.sonatype.org/content/sites/forge-sites/m2eclipse-wtp/0.13.0/N/0.13.0.201105121337/"/>
 
 		<!-- 
-		<property name="URL1" value="https://repository.sonatype.org/content/sites/forge-sites/m2e/0.13.0/N/0.13.0.201103291237/"/>
-		<property name="URL2" value="https://repository.sonatype.org/content/sites/forge-sites/m2e-extras/0.13.0/N/0.13.0.201103252105/"/>
-		<property name="URL3" value="https://repository.sonatype.org/content/sites/forge-sites/m2eclipse-wtp/0.13.0/N/0.13.0.201103231111/"/>
+                <property name="URL1" value="https://repository.sonatype.org/content/sites/forge-sites/m2e/0.13.0/N/0.13.0.201105091504/"/>
+                <property name="URL2" value="https://repository.sonatype.org/content/sites/forge-sites/m2e-extras/0.13.0/N/0.13.0.201105090451/"/>
+                <property name="URL3" value="https://repository.sonatype.org/content/sites/forge-sites/m2eclipse-wtp/0.13.0/N/0.13.0.201105040943/"/>
+
+                <property name="URL1" value="https://repository.sonatype.org/content/sites/forge-sites/m2e/0.13.0/N/0.13.0.201103291237/"/>
+                <property name="URL2" value="https://repository.sonatype.org/content/sites/forge-sites/m2e-extras/0.13.0/N/0.13.0.201103252105/"/>
+                <property name="URL3" value="https://repository.sonatype.org/content/sites/forge-sites/m2eclipse-wtp/0.13.0/N/0.13.0.201103231111/"/>
 
 		<property name="URL1" value="http://m2eclipse.sonatype.org/sites/m2e/" />
 		<property name="URL2" value="http://m2eclipse.sonatype.org/sites/m2e-extras/" />
@@ -35,7 +39,7 @@
 		<property name="compress" value="true" />
 
 		<p2.mirror>
-			<repository location="file:${destination}/0.13.0.201105091504/" name="m2eclipse 0.13.0.201105091504 plugins for Eclipse 3.6 - 3.7" />
+			<repository location="file:${destination}/0.13.0.201105260005/" name="m2eclipse 0.13.0.201105260005 plugins for Eclipse 3.6 - 3.7" />
 			<source>
 				<repository location="${URL1}" />
 				<repository location="${URL2}" />
@@ -45,7 +49,7 @@
 			<slicingOptions includeFeatures="true" followStrict="true" />
 		</p2.mirror>
 
-		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/0.13.0.201105091504/" artifactRepository="file:${destination}/0.13.0.201105091504/" 
-			publishartifacts="true" source="${destination}/0.13.0.201105091504/" compress="${compress}" />
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/0.13.0.201105260005/" artifactRepository="file:${destination}/0.13.0.201105260005/" 
+			publishartifacts="true" source="${destination}/0.13.0.201105260005/" compress="${compress}" />
 	</target>
 </project>

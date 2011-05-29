@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?compositeMetadataRepository version='1.0.0'?>
+<repository name='JBoss Tools Requirements - Composite Indigo Mirror' type='org.eclipse.equinox.internal.p2.metadata.repository.CompositeMetadataRepository' version='1.0.0'>
+<properties size='2'>
+<property name='p2.compressed' value='true'/>
+<!-- 
+" add this to your ~/.vimrc file, then use \ts to update timestamp to current
+fun! ReplaceTimestamp()
+	let tstamp = strftime("%s000")
+	exe ":%s#<property name='p2.timestamp' value='[0-9]\\+'/>#<property name='p2.timestamp' value='" . tstamp . "'/>#g"
+	echo "New time: " . tstamp
+endfun
+nnoremap <Leader>ts :call ReplaceTimestamp()<CR>
+-->
+<property name='p2.timestamp' value='1306591670000'/>
+</properties>
+<children size='18'>
+<child location='../../requirements/indigo/201105270900-RC2/'/>
+<child location='../../requirements/birt/3.7RC2/'/>
+<child location='../../requirements/eclipse/3.7RC2/'/>
+<child location='../../requirements/emf/2.7RC2/'/>
+<child location='../../requirements/webtools/3.3RC2/'/>
+
+<child location='../../requirements/m2eclipse/0.13.0.201105260005/'/>
+<child location='../../requirements/mylyn/3.6-I20110526-2115/'/>
+<child location='../../requirements/orbit/S20110523182458/'/>
+
+<child location='../../requirements/ecf/3.5/'/>
+<child location='../../requirements/egit/0.11/'/>
+
+<child location='../../requirements/findbugs/1.3.9/'/>
+<child location='../../requirements/jslint/1.5/'/>
+<child location='../../requirements/pmd/3.2.6/'/>
+<child location='../../requirements/springide/2.6.0.201103160035/'/>
+<child location='../../requirements/subclipse/1.6_1.3/'/>
+
+<child location='../../requirements/swtbot/2.0.4/'/>
+<child location='../../requirements/testng/6.0.1.20110418_1444/'/>
+<child location='../../requirements/xulrunner-1.9.2/'/>
+</children>
+</repository>
