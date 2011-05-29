@@ -98,7 +98,7 @@
 												<tempfile property="ant.script" destdir="${java.io.tmpdir}"
 													deleteonexit="true" />
 												<get
-													src="http://anonsvn.jboss.org/repos/jbosstools/trunk/build/parent/update-site-build.xml"
+													src="http://anonsvn.jboss.org/repos/jbosstools/branches/jbosstools-3.2.x/build/parent/update-site-build.xml"
 													dest="${ant.script}" verbose="false" usetimestamp="true" />
 											</then>
 										</if>
