@@ -1,0 +1,110 @@
+<project default="custom.build" name="site build.xml">
+
+	<!-- pass in properties to Maven/Ant via Hudson job:
+		-DJOB_NAME=${JOB_NAME} 
+		-DBUILD_ID=${BUILD_ID} 
+		-DBUILD_NUMBER=${BUILD_NUMBER}
+		eg., 
+		-DJOB_NAME=jbosstools-3.2_stable_branch.component-_-jmx -DBUILD_ID=2011-05-12_06-03-43 -DBUILD_NUMBER=81
+	-->
+
+	<taskdef resource="net/sf/antcontrib/antlib.xml" />
+	<dirname property="componentPath" file="${basedir}" />
+	<basename property="componentName" file="${componentPath}" />
+
+	<target name="custom.build" description="generate list of jars in the site to aid in versioning downstream">
+		<if>
+			<available file="${basedir}/target/site" type="dir" />
+			<then>
+				<var name="all.features" value="" />
+				<var name="all.plugins" value="" />
+				<var name="all.feature.jars" value="" />
+				<var name="all.plugin.jars" value="" />
+
+				<!-- defaults if not set / running outside Hudson -->
+				<if>
+					<not>
+						<isset property="JOB_NAME" />
+					</not>
+					<then>
+						<var name="JOB_NAME" value="${componentName}" />
+					</then>
+				</if>
+
+				<if>
+					<not>
+						<isset property="BUILD_NUMBER" />
+					</not>
+					<then>
+						<var name="BUILD_NUMBER" value="000" />
+					</then>
+				</if>
+
+				<if>
+					<not>
+						<isset property="BUILD_ID" />
+					</not>
+					<then>
+						<tstamp>
+							<!-- eg., 2011-05-12_06-03-43 -->
+							<format property="BUILD_ID" pattern="yyyy-MM-dd_hh-mm-ss" />
+						</tstamp>
+					</then>
+				</if>
+
+				<!-- collect jars -->
+				<for keepgoing="true" param="jarName">
+					<path>
+						<fileset dir="${basedir}/target/site" includes="*/*.jar" />
+					</path>
+					<sequential>
+						<propertyregex property="jarNameProp" defaultvalue="@{jarName}" input="@{jarName}" 
+							regexp=".+/(plugins|features)/(.+)_([^_]+).jar" 
+							replace="${JOB_NAME}[${BUILD_ID}][H${BUILD_NUMBER}][\1][\2]" casesensitive="true" override="true" />
+						<propertyregex property="jarNameRelPath" defaultvalue="@{jarName}" input="@{jarName}" regexp="${basedir}/target/site/(features|plugins)/" replace="" casesensitive="true" override="true" />
+						<propertyregex property="jarNameName" defaultvalue="${jarNameRelPath}" input="${jarNameRelPath}" regexp="(.+)_([0-9]+\.[0-9]+\.[0-9]+\.[^_]*).jar" replace="\1" casesensitive="true" override="true" />
+						<property value="${jarNameRelPath}" name="${jarNameProp}" />
+						<if>
+							<contains string="${jarNameProp}" substring="[features]" />
+							<then>
+								<var name="all.features" value="${all.features}, ${jarNameName}" />
+								<var name="all.feature.jars" value="${all.feature.jars}, ${jarNameRelPath}" />
+							</then>
+							<elseif>
+								<contains string="${jarNameProp}" substring="[plugins]" />
+								<then>
+									<var name="all.plugins" value="${all.plugins}, ${jarNameName}" />
+									<var name="all.plugin.jars" value="${all.plugin.jars}, ${jarNameRelPath}" />
+								</then>
+							</elseif>
+						</if>
+						<var name="jarNameProp" unset="true" />
+					</sequential>
+				</for>
+
+				<!-- rename overall feature/plugin containers + remove prefix delim -->
+				<propertyregex property="all.${componentName}.features" defaultvalue="${all.features}" input="${all.features}" regexp=", (.+)" replace="\1" casesensitive="true" override="true" />
+				<propertyregex property="all.${componentName}.plugins" defaultvalue="${all.plugins}" input="${all.plugins}" regexp=", (.+)" replace="\1" casesensitive="true" override="true" />
+				<var unset="true" name="all.features" />
+				<var unset="true" name="all.plugins" />
+				<propertyregex property="all.${componentName}.feature.jars" defaultvalue="${all.feature.jars}" input="${all.feature.jars}" regexp=", (.+)" replace="\1" casesensitive="true" override="true" />
+				<propertyregex property="all.${componentName}.plugin.jars" defaultvalue="${all.plugin.jars}" input="${all.plugin.jars}" regexp=", (.+)" replace="\1" casesensitive="true" override="true" />
+				<var unset="true" name="all.feature.jars" />
+				<var unset="true" name="all.plugin.jars" />
+				<var name="${componentName}.JOB_NAME" value="${JOB_NAME}" />
+				<var name="${componentName}.BUILD_ID" value="${BUILD_ID}" />
+				<var name="${componentName}.BUILD_NUMBER" value="${BUILD_NUMBER}" />
+
+				<!-- dump properties to an XML file, filtering for only those properties we care about -->
+				<echoproperties format="xml" destfile="${basedir}/target/site/jarlist.xml">
+					<propertyset>
+						<propertyref regex="${JOB_NAME}\[${BUILD_ID}\]\[H${BUILD_NUMBER}\]|${componentName}.JOB_NAME|${componentName}.BUILD_ID|${componentName}.BUILD_NUMBER|all.${componentName}.feature|all.${componentName}.plugin" />
+					</propertyset>
+				</echoproperties>
+
+				<!-- stick jarlist.xml into the update site zip, too -->
+				<zip destfile="${basedir}/target/site_assembly.zip" update="true" basedir="${basedir}/target/site" includes="jarlist.xml" />
+			</then>
+		</if>
+	</target>
+</project>
