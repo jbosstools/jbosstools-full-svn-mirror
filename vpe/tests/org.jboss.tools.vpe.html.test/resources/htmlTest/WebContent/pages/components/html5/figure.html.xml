@@ -1,0 +1,13 @@
+<tests>
+	<test id="figure-id">
+		<FIGURE ID="figure-id">
+<P>
+<SPAN CLASS="vpe-text">
+A view of the pulpit rock in Norway
+</SPAN>
+</P>
+<IMG WIDTH="304" HEIGHT="228" SRC="http://www.w3schools.com/html5/img_pulpit.jpg"/>
+
+</FIGURE>
+	</test>
+</tests>

@@ -25,6 +25,76 @@ public class HtmlComponentContentTest extends ComponentContentTest {
 		setCheckWarning(false);
 	}
 
+	/* 
+	 * tests for html5 tags
+	 */
+	public void testArticle() throws Throwable {
+		performContentTest("components/html5/article.html"); //$NON-NLS-1$
+	}
+	public void testAside() throws Throwable {
+		performContentTest("components/html5/aside.html"); //$NON-NLS-1$
+	}
+	public void testAudio() throws Throwable {
+		performContentTest("components/html5/audio.html"); //$NON-NLS-1$
+	}
+	public void testCommand() throws Throwable {
+		performContentTest("components/html5/command.html"); //$NON-NLS-1$
+	}
+	public void testDetails() throws Throwable {
+		performContentTest("components/html5/details.html"); //$NON-NLS-1$
+	}
+	public void testFigcaption() throws Throwable {
+		performContentTest("components/html5/figcaption.html"); //$NON-NLS-1$
+	}
+	public void testFigure() throws Throwable {
+		performContentTest("components/html5/figure.html"); //$NON-NLS-1$
+	}
+	public void testFooter() throws Throwable {
+		performContentTest("components/html5/footer.html"); //$NON-NLS-1$
+	}
+	public void testHeader() throws Throwable {
+		performContentTest("components/html5/header.html"); //$NON-NLS-1$
+	}
+	public void testHgroup() throws Throwable {
+		performContentTest("components/html5/hgroup.html"); //$NON-NLS-1$
+	}
+	public void testMark() throws Throwable {
+		performContentTest("components/html5/mark.html"); //$NON-NLS-1$
+	}
+	public void testMeter() throws Throwable {
+		performContentTest("components/html5/meter.html"); //$NON-NLS-1$
+	}
+	public void testNav() throws Throwable {
+		performContentTest("components/html5/nav.html"); //$NON-NLS-1$
+	}
+	public void testOutput() throws Throwable {
+		performContentTest("components/html5/output.html"); //$NON-NLS-1$
+	}
+	public void testProgress() throws Throwable {
+		performContentTest("components/html5/progress.html"); //$NON-NLS-1$
+	}
+	public void testRp() throws Throwable {
+		performContentTest("components/html5/rp.html"); //$NON-NLS-1$
+	}
+	public void testRt() throws Throwable {
+		performContentTest("components/html5/rt.html"); //$NON-NLS-1$
+	}
+	public void testRuby() throws Throwable {
+		performContentTest("components/html5/ruby.html"); //$NON-NLS-1$
+	}
+	public void testSection() throws Throwable {
+		performContentTest("components/html5/section.html"); //$NON-NLS-1$
+	}
+	public void testSummary() throws Throwable {
+		performContentTest("components/html5/summary.html"); //$NON-NLS-1$
+	}
+	public void testTime() throws Throwable {
+		performContentTest("components/html5/time.html"); //$NON-NLS-1$
+	}
+	public void testVideo() throws Throwable {
+		performContentTest("components/html5/video.html"); //$NON-NLS-1$
+	}
+	
 	/*
 	 * 
 	 * test for block html tags

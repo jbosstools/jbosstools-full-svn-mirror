@@ -1,0 +1,16 @@
+<tests>
+	<test id="header-id">
+		<HEADER ID="header-id">
+<H1>
+<SPAN CLASS="vpe-text">
+Welcome to my homepage
+</SPAN>
+</H1>
+<P>
+<SPAN CLASS="vpe-text">
+My name is Donald Duck
+</SPAN>
+</P>
+</HEADER>
+	</test>
+</tests>

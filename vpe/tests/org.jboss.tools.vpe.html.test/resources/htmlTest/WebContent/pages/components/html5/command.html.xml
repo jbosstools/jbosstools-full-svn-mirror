@@ -1,0 +1,9 @@
+<tests>
+	<test id="command-id">
+		<COMMAND ID="command-id" ONCLICK="alert('Hello World')">
+<SPAN CLASS="vpe-text">
+Click Me!
+</SPAN>
+</COMMAND>
+	</test>
+</tests>

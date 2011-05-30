@@ -364,13 +364,21 @@ a[\_moz_anonclass="mozTableRemoveRow"]:active {
   background-image: url("resource://gre/res/table-remove-row-active.gif");
 }
 
+/*********** begin of FF 4.0/XULRunner 2.0 HTML5 elements emulation ***********/
 mark {
-	background-color: yellow;/*the same color as in XULRunner 2.0*/
+	background-color: yellow;
 }
 
-section {
+aside, figure, figcaption, footer, header, hgroup, nav, section {
 	display: block;
 }
+
+
+figure {
+	margin-left: 40px;
+	margin-right: 40px;
+}
+/*********** end of FF 4.0/XULRunner 2.0 HTML5 elements emulation *************/
 
 /*JBIDE-3995 #1*/
 select div {
