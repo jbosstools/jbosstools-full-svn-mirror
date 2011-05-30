@@ -134,18 +134,22 @@
 	</target>
 
 	<target name="buildResults" description="generate buildResults.html from build properties" depends="init">
-		<if>
-			<available file="zips/build.properties.all.xml" type="file"/>
-			<then>
-				<delete quiet="true" file="buildResults.out.html" />
-				<xslt in="zips/build.properties.all.xml" out="buildResults.out.html" style="buildResults.xsl" force="true">
-					<classpath location="${COMMON_TOOLS}/saxon.jar" />
-				</xslt>
-			</then>
-			<else>
-				<echo>Could not generate buildResults.out.html from zips/build.properties.all.xml - file does not exist!</echo>
-			</else>
-		</if>
+		<for param="propertiesFile" delimiter=", " list="zips/build.properties.all.xml, ../../logs/zips/build.properties.all.xml">
+			<sequential>
+				<if>
+					<available file="@{propertiesFile}" type="file"/>
+					<then>
+						<delete quiet="true" file="buildResults.out.html" />
+						<xslt in="@{propertiesFile}" out="buildResults.out.html" style="buildResults.xsl" force="true">
+							<classpath location="${COMMON_TOOLS}/saxon.jar" />
+						</xslt>
+					</then>
+					<else>
+						<echo>Could not generate buildResults.out.html from zips/build.properties.all.xml - file does not exist!</echo>
+					</else>
+				</if>
+			</sequential>
+		</for>
 	</target>
 
 </project>
