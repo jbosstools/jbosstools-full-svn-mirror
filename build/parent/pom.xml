@@ -32,7 +32,7 @@
 		<jbosstools-target-site>http://download.jboss.org/jbosstools/updates/target-platform_3.3.indigo/latest/</jbosstools-target-site>
 
 		<!-- 1b. or use -Plocal.site -Dlocal.site=file:///home/$user/trunk/build/target-platform/REPO/ -->
-		<local.site>file:///home/hudson/static_build_env/jbds/target-platform_3.3.indigo/e37M7-wtp33M7.target/</local.site>
+		<local.site>file:///home/hudson/static_build_env/jbds/target-platform_3.3.indigo/e37RC2-wtp33RC2.target/</local.site>
 
 		<!-- 2a. URL of latest JBT nightly staging composite site (all the components in once place) -->
 		<jbosstools-nightly-staging-composite>http://download.jboss.org/jbosstools/builds/staging/_composite_/3.3.indigo/</jbosstools-nightly-staging-composite>
@@ -41,7 +41,7 @@
 		<local.composite>file:///home/hudson/static_build_env/jbds/builds/staging/_composite_/3.3.indigo/</local.composite>
 
 		<!-- 3a. URL of latest JBT requirements composite mirror -->
-		<jboss-requirements-composite-mirror>http://download.jboss.org/jbosstools/updates/indigo/M7/</jboss-requirements-composite-mirror>
+		<jboss-requirements-composite-mirror>http://download.jboss.org/jbosstools/updates/indigo/RC2/</jboss-requirements-composite-mirror>
 
 		<!-- 3b., or use -Plocal.requirements -Dlocal.requirements=file:///path/to/mirror/of/composite/requirements/site -->
 		<local.requirements>file:///qa/services/http/binaries/RHDS/updates/indigo/</local.requirements>
