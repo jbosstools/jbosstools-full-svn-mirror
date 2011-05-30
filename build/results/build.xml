@@ -6,8 +6,6 @@
 	<!-- should be set by Hudson -->
 	<!-- <property name="JOB_NAME" value="jbosstools-3.2.0.M2.continuous" /> -->
 
-	<!-- if a different template file (eg., a partially expanded one) should be used, feed it in here -->
-
 	<!-- if ${WORKSPACE}/site folder exists, target that folder; else generate here. -->
 	<condition property="output.dir" value="${WORKSPACE}/results" else="${basedir}">
 		<available file="${WORKSPACE}/results" />
@@ -112,6 +110,7 @@
 		</ant>
 		<antcall target="buildResults" />
 	</target>
+
 	<target name="test.buildResults.aggregate" depends="init" description="generate buildResults.html from build properties">
 		<property name="isTest" value="true" />
 		<ant target="collect.zips" antfile="../aggregate/site/build.xml">
