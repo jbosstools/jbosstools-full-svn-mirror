@@ -16,13 +16,13 @@
 			-f ~/RHDS/updates/requirements/emf/build.xml -Ddestination=/tmp/emf-repo
 	-->
 	<target name="mirror">
-		<property name="URL" value="http://download.eclipse.org/modeling/emf/emf/updates/2.7milestones/" />
+		<property name="URL" value="http://download.eclipse.org/modeling/emf/emf/updates/2.7milestones/core/S201105301010/" />
 
 		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/emf/" />
 		<property name="compress" value="true" />
 
 		<p2.mirror>
-			<repository location="file:${destination}/2.7RC2/" name="EMF plugins for Eclipse 3.7" />
+			<repository location="file:${destination}/2.7RC3/" name="EMF plugins for Eclipse 3.7" />
 			<source>
 				<repository location="${URL}" />
 			</source>
@@ -30,6 +30,6 @@
 			<slicingOptions includeFeatures="true" followStrict="true" />
 		</p2.mirror>
 
-		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/2.7RC2/" artifactRepository="file:${destination}/2.7RC2/" publishartifacts="true" source="${destination}/2.7RC2/" compress="${compress}" />
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/2.7RC3/" artifactRepository="file:${destination}/2.7RC3/" publishartifacts="true" source="${destination}/2.7RC3/" compress="${compress}" />
 	</target>
 </project>
