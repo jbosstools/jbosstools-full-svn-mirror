@@ -199,7 +199,7 @@ for buildxml in ${WORKSPACE}/build/results/build.xml ${WORKSPACE}/sources/build/
 		ANT_SCRIPT=${buildxml}
 	fi
 done
-ant -f ${ANT_SCRIPT} ${ANT_PARAMS}
+if [[ ${ANT_SCRIPT} ]] && [[ -f ${ANT_SCRIPT} ]]; then ant -f ${ANT_SCRIPT} ${ANT_PARAMS}; fi
 
 # ${bl} is full build log; see above
 mkdir -p ${STAGINGDIR}/logs
