@@ -19,7 +19,7 @@
 		
 		<property name="URL1" value="https://repository.sonatype.org/content/sites/forge-sites/m2e/0.13.0/N/0.13.0.201105260005/"/>
 		<property name="URL2" value="https://repository.sonatype.org/content/sites/forge-sites/m2e-extras/0.13.0/N/0.13.0.201105271033/"/>
-		<property name="URL3" value="https://repository.sonatype.org/content/sites/forge-sites/m2eclipse-wtp/0.13.0/N/0.13.0.201105121337/"/>
+		<property name="URL3" value="https://repository.sonatype.org/content/sites/forge-sites/m2eclipse-wtp/0.13.0/N/0.13.0.201105110807/"/>
 
 		<!-- 
                 <property name="URL1" value="https://repository.sonatype.org/content/sites/forge-sites/m2e/0.13.0/N/0.13.0.201105091504/"/>
