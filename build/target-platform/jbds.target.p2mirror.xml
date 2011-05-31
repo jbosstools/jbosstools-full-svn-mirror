@@ -28,7 +28,7 @@
 <p2.mirror destination="file://${repoDir}" verbose="${verbose}">
 <slicingOptions includeFeatures="true" followStrict="${followStrict}"/>
 <source>
-<repository location="http://download.eclipse.org/releases/helios/"/>
+<repository location="http://download.jboss.org/jbosstools/updates/helios/"/>
 </source>
 <iu id="org.eclipse.cvs.feature.group" version=""/>
 <iu id="org.eclipse.datatools.enablement.sdk.feature.feature.group" version=""/>
@@ -143,6 +143,7 @@
 <iu id="org.eclipse.tm.terminal.view.feature.group" version=""/>
 <iu id="org.eclipse.tm.terminal.telnet.feature.group" version=""/>
 <iu id="org.eclipse.tm.terminal.ssh.feature.group" version=""/>
+<iu id="org.apache.commons.io" version=""/>
 </p2.mirror>
 </target>
 </project>

@@ -6,7 +6,7 @@
         	     from org.eclipse.tptp.platform.xerces_4.6.0.v201005032111-777K4AkF7B77R7c7N77.jar
 	             to <unit version="4.6.0.v201005032111-777K4AkF7B77R7c7N77" id="org.eclipse.tptp.platform.xerces.feature.group"/>
         	     using vi, apply this transform:
-	             :%s/.\+\/\(org.\+\)_\(\d\+.\+\)\.jar/\t\t\t<unit version="\2" id="\1.feature.group"\/>/g
+	             :%s/.\+\/\(org.\+\)_\(\d\+.\+\)\.jar/\t\t\t<unit id="\1.feature.group" version="\2"\/>/g
         	-->
 
 			<!-- CVS -->
@@ -148,7 +148,9 @@
 			<unit id="org.eclipse.tm.terminal.telnet.feature.group" version="2.0.200.v201005032000-3-8_7w311A1A271116"/>
 			<unit id="org.eclipse.tm.terminal.ssh.feature.group" version="2.0.200.v201005271030-3-A77w312116382141"/>
 
-			<repository location="http://download.eclipse.org/releases/helios/"/>
+			<unit id="org.apache.commons.io" version="1.4.0.v20081110-1000"/>
+
+			<repository location="http://download.jboss.org/jbosstools/updates/helios/"/>
 		</location>
 	</locations>
 </target>
