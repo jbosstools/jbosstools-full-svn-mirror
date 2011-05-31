@@ -197,9 +197,17 @@ ANT_PARAMS=" -DZIPSUFFIX=${ZIPSUFFIX} -DJOB_NAME=${JOB_NAME} -Dinput.dir=${STAGI
 for buildxml in ${WORKSPACE}/build/results/build.xml ${WORKSPACE}/sources/build/results/build.xml ${WORKSPACE}/sources/results/build.xml; do
 	if [[ -f ${buildxml} ]]; then
 		ANT_SCRIPT=${buildxml}
+		RESULTS_DIR=${buildxml/\/build.xml/}
 	fi
 done
 if [[ ${ANT_SCRIPT} ]] && [[ -f ${ANT_SCRIPT} ]]; then ant -f ${ANT_SCRIPT} ${ANT_PARAMS}; fi
+
+# copy buildResults.css, buildResults.html to ${STAGINGDIR}/logs
+if [[ ${RESULTS_DIR} ]] && [[ -d ${RESULTS_DIR} ]]; then
+	for f in buildResults.html buildResults.css; do
+		if [[ -f ${RESULTS_DIR}/${f} ]]; then rsync -arzq ${RESULTS_DIR}/${f} ${STAGINGDIR}/logs/; fi
+	done
+fi
 
 # purge duplicate zip files in logs/zips/all/*.zip
 if [[ -d ${STAGINGDIR}/logs/zips ]]; then rm -f $(find ${STAGINGDIR}/logs/zips -type f -name "*.zip"); fi
