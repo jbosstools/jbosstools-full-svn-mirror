@@ -27,7 +27,7 @@ nnoremap <Leader>ts :call ReplaceTimestamp()<CR>
 <child location='../requirements/mylyn/3.6-I20110415-0655/'/>
 <child location='../requirements/m2eclipse/0.12/'/>
 
-<child location='../../requirements/orbit/R20110523182458/'/>
+<child location='../requirements/orbit/R20110523182458/'/>
 <child location='../requirements/pmd/3.2.6/'/>
 <child location='../requirements/springide/2.5.1.201011101000/'/>
 <child location='../requirements/subclipse/1.6_1.3/'/>
