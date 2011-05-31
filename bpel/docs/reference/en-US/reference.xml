@@ -287,6 +287,30 @@
 			</figure>
 		</section>
 	</section>
+	<section>
+		<title>Views</title>
+		<section>
+			<title>Outline</title>
+			<para>
+				The <guilabel>Outline</guilabel> view provides a structural layout of the BPEL process. You can view the process as either a hierarchical tree-structured outline (<inlinemediaobject><imageobject>
+					<imagedata fileref="images/reference/View_Outline_icon_01.png"/>
+					</imageobject>
+            </inlinemediaobject>) or as a thumbnail view (<inlinemediaobject>
+            <imageobject>
+					<imagedata fileref="images/reference/View_Outline_icon_02.png"/>
+					</imageobject>
+            </inlinemediaobject>), by pressing the associated button.
+			</para>
+			<figure>
+				<title>Outline view</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/reference/View_Outline_01.png"/>
+					</imageobject>
+				</mediaobject>
+			</figure>
+		</section>
+	</section>
     <section>
         <title>Editors</title>
         <section>
