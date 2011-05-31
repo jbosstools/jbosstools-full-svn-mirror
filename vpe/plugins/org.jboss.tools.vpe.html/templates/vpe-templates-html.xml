@@ -1237,7 +1237,7 @@
 	<vpe:tag name="input" case-sensitive="no">
 		<vpe:if test="(@type='checkbox')|(@type='radio')">
 			<vpe:template children="no" modify="no">
-				<vpe:copy attrs="id,style,class,type,checked,disabled">
+				<vpe:copy attrs="id,style,class,type,checked,disabled,height,width,placeholder">
 					<!--vpe:attribute name="disabled" value="disabled"/-->
 				</vpe:copy>
 				<vpe:dnd>
@@ -1247,7 +1247,7 @@
 		</vpe:if>
 		<vpe:if test="(@type='submit')|(@type='button')">
 			<vpe:template children="yes" modify="yes">
-				<vpe:copy attrs="id,type,value,style,class,dir,disabled" />
+				<vpe:copy attrs="id,type,value,style,class,dir,disabled,height,width,placeholder" />
 				<!--span class="__button__tag" style="{@style}">
 					<nobr><vpe:value expr="{@value}"/></nobr>
 					</span-->
@@ -1265,7 +1265,7 @@
 		<vpe:if test="@type='reset'">
 			<vpe:if test="@value=''">
 				<vpe:template children="yes" modify="yes">
-					<vpe:copy attrs="id,type,checked,class,style,dir,disabled">
+					<vpe:copy attrs="id,type,checked,class,style,dir,disabled,height,width,placeholder">
 						<vpe:attribute name="value" value="Reset" />
 					</vpe:copy>
 					<!--span class="__button__tag" style="{@style}">
@@ -1280,7 +1280,7 @@
 			</vpe:if>
 			<vpe:if test="not(@value='')">
 				<vpe:template children="yes" modify="yes">
-					<vpe:copy attrs="id,type,checked,value,class,style,disabled" />
+					<vpe:copy attrs="id,type,checked,value,class,style,disabled,height,width,placeholder" />
 					<!--span class="__button__tag" style="{@style}">
 						<nobr><vpe:value expr="{@value}"/></nobr>
 						</span-->
@@ -1292,7 +1292,8 @@
 		<vpe:if test="@type='file'">
 			<vpe:template children="no" modify="no">
 				<input type="file" value="{@value}"
-					class="{@styleClass}" style="{@style}" size="{@size}" disabled="{@disabled}" />
+					class="{@styleClass}" style="{@style}" size="{@size}" disabled="{@disabled}"
+					height="{@height}" width="{@width}" placeholder="{@placeholder}"/>
 				<vpe:resize>
 					<vpe:width width-attr="style.width" />
 					<vpe:height height-attr="style.height" />
@@ -1311,11 +1312,12 @@
 			<vpe:template children="no" modify="no">
 				<!--				<img src="{@src}" width="20" height="20" />-->
 				<input type="image" value="{@value}" class="{@class}" style="{@style}"
-					size="{@size}" disabled="{@disabled}" border="{@border}" dir="{@dir}" src="{src(@src)}" />
+					size="{@size}" disabled="{@disabled}" border="{@border}" dir="{@dir}" src="{src(@src)}"
+					height="{@height}" width="{@width}" placeholder="{@placeholder}" />
 			</vpe:template>
 		</vpe:if>
 		<vpe:template children="no" modify="no">
-			<vpe:copy attrs="id,type,style,class,value,size,dir,disabled" />
+			<vpe:copy attrs="id,type,style,class,value,size,dir,disabled,height,width,placeholder" />
 			<!--span class="__input__tag" style="{@style}">
 				<nobr><vpe:value expr="{@value}"/></nobr>
 				</span-->
@@ -1611,7 +1613,7 @@
 
 	<vpe:tag name="ol" case-sensitive="no">
 		<vpe:template children="yes" modify="no">
-			<vpe:copy attrs="id,style,class,type,start,dir" />
+			<vpe:copy attrs="id,style,class,type,start,dir,reversed" />
 			<vpe:dnd>
 				<vpe:drop container="yes">
 					<vpe:container-child tag-name="del" />
