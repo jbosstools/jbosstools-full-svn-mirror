@@ -4,55 +4,52 @@
     <chapterinfo>
         <keywordset>
             <keyword>JBoss Tools</keyword>
-            <keyword>BPEL</keyword>
-            <keyword>JBT</keyword>
         </keywordset>
     </chapterinfo>
     <title>Reference</title>
-    <para>This chapter includes detailed reference information about all BPEL tools wizards and editors.</para>
+	<para>
+		Described are the user interface controls of BPEL Designer, and how they relate to the OASIS standard. If you are new to BPEL it is recommended that you first become familiar with the concepts surrounding the technology, detailed in <xref linkend="concepts"/>.
+	</para>
     <section>
         <title>Wizards</title>
         <section>
-            <title>New BPEL project Wizard</title>
-            <para>This wizard is provided to create a new BPEL project. It is available by selecting <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>New</guimenuitem><guimenuitem>Other</guimenuitem><guimenuitem>BPEL project</guimenuitem></menuchoice>.</para>
+            <title>New BPEL project</title>
+			<para>The New BPEL Project wizard creates a faceted project which allows it to be deployed to the JBoss Riftsaw runtime engine. It is available by selecting <menuchoice>
+                <guimenuitem>File</guimenuitem>
+                <guimenuitem>New</guimenuitem>
+                <guimenuitem>Other</guimenuitem>
+                <guimenuitem>BPEL 2.0</guimenuitem>
+				<guimenuitem>BPEL Project</guimenuitem>
+            </menuchoice>.</para>
             <figure>
                 <title>New BPEL Project Wizard</title>
                 <mediaobject>
                     <imageobject>
-                        <imagedata fileref="images/reference/bpel_ref_1.png"/>
+						<imagedata fileref="images/reference/New_BPEL_Project.png"/>
                     </imageobject>
                 </mediaobject>
             </figure>
-            <para>The wizard consists of two pages:</para>
-            <itemizedlist>
-                <listitem>
-                	<para>On the first page you can adjust the name of the project and the directory where it will be created.</para>
-                  <para>
-                  	If the <guilabel>Use default location</guilabel> option is checked the output directory will be set to the workspace, otherwise a custom location can be specified by clicking the <guibutton>Browse</guibutton> button.
-                  </para>
-                    <figure>
-                        <title>New BPEL Project Wizard</title>
-                        <mediaobject>
-                            <imageobject>
-                                <imagedata fileref="images/reference/bpel_ref_2.png"/>
-                            </imageobject>
-                        </mediaobject>
-                    </figure>
-                </listitem>
-                <listitem>
-                	<para>On the second page you can specify the name of the <guilabel>Content Folder</guilabel>.</para>                  
-                    <figure>
-                        <title>New BPEL Project Wizard</title>
-                        <mediaobject>
-                            <imageobject>
-                                <imagedata fileref="images/reference/bpel_ref_2a.png"/>
-                            </imageobject>
-                        </mediaobject>
-                    </figure>
-                </listitem>
-            </itemizedlist>
-        </section>
-        <section>
+            <para>The wizard consists of a single page:</para>
+            <para>
+				Enter the project name and select its location. When the wizard is completed the following files would have been created:
+			</para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<filename>bpelContent</filename> folder
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Project facet metadata
+					</para>
+				</listitem>
+			</itemizedlist>
+			<para>
+				The <filename>bpelContent</filename> folder contains all the files necessary for your project. This includes all WSDL and XSD files.
+			</para>
+          </section>
+     <!-- <section>
             <title>Apache ODE Deployment Descriptor Wizard</title>
             <para>This wizard can be used to create an ODE deployment descriptor (<filename>deploy.xml</filename>) file and place it in the temporary directory. It is available by selecting <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>New</guimenuitem><guimenuitem>Other</guimenuitem><guimenuitem>Apache ODE Deployment Descriptor Wizard</guimenuitem></menuchoice>.</para>
             <figure>
@@ -67,22 +64,31 @@
             		On this page you can adjust the name of the deployment descriptor and the directory where it will be created. Note that you should use <filename>/PROJECT_NAME/bpelContent</filename> directory for the output.
             </para>
                                    
-        </section>
+		</section> -->
         <section>
-            <title>New BPEL Process file Wizard</title>
-            <para>Using the <guilabel>New BPEL Process file Wizard</guilabel> it is possible to create a BPEL process file and a WSDL file.
-            The wizard includes several pages:</para>
-            <itemizedlist>
+            <title>New BPEL Process file</title>
+            <para>
+				The <guilabel>New BPEL Process File Wizard</guilabel> will create a BPEL process based on one of several templates defined by the wizard. The wizard assumes the new BPEL process is to be created in the curently selected project of the <guilabel>Project Explorer</guilabel> or <guilabel>Navigator</guilabel> view. If a BPEL process of the same name already exists within the project, a warning message will be displayed before any action is performed.
+			</para>
+			<figure>
+				<title>New BPEL Process</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/reference/Create_a_BPEL_Process_File_01.png"/>
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<itemizedlist>
                 <listitem><para>The first page includes the following options:</para>
                     <table>
-                        <title>New BPEL Process file Wizard. First Page Options.</title>   
+                        <title>New BPEL Process file wizard. First page options.</title>   
                         <tgroup cols="3">
                             <colspec colnum="1" align="left" colwidth="1*"/>
                             <colspec colnum="2" align="left" colwidth="3*"/>
                             <colspec colnum="3" align="left" colwidth="1*"/>
                             <thead>
                                 <row>
-                                    <entry>Option</entry>									
+                                    <entry>Field</entry>									
                                     <entry>Description</entry>
                                     <entry>Default</entry>
                                 </row>
@@ -95,7 +101,8 @@
                                 </row>     
                                 <row>
                                     <entry>Namespace</entry>
-                                    <entry>Enter the namespace url here</entry>
+									<entry>Enter the namespace URL. All namespaces should follow the W3C recommendation (<ulink url="http://www.w3.org/1999/10/nsuri">
+										http://www.w3.org/1999/10/nsuri</ulink>). </entry>
                                     <entry>no default value</entry>
                                 </row> 
                                 <row>
@@ -125,26 +132,29 @@
                             </tbody>
                         </tgroup>
                     </table>  
+					<para>
+						The second page of the wizard defines the process interface (WSDL file) including the web service address, port definition and protocol. The wizard will populate all of these fields with appropriate default values based on the information provided on the previous page.
+					</para>
                     <figure>
-                        <title>New BPEL Process file Wizard</title>
+                        <title>New BPEL Process</title>
                         <mediaobject>
                             <imageobject>
-                                <imagedata fileref="images/reference/bpel_ref_3.png"/>
+								<imagedata fileref="images/reference/Create_a_BPEL_Process_File_02.png"/>
                             </imageobject>
                         </mediaobject>
                     </figure>
                     
                 </listitem>
-                <listitem><para>The second page include the following options:</para>
+                <listitem><para>The second page includes the following options:</para>
                     <table>
-                        <title>New BPEL Process file Wizard. Second Page Options.</title>   
+                        <title>New BPEL process file wizard. Second page options.</title>   
                         <tgroup cols="3">
                             <colspec align="left" colnum="1" colwidth="1*"></colspec>
                             <colspec align="left" colnum="2" colwidth="3*"></colspec>
                             <colspec align="left" colnum="3" colwidth="1*"></colspec>
                             <thead>
                                 <row>
-                                    <entry>Option</entry>
+                                    <entry>Field</entry>
                                     <entry>Description</entry>
                                     <entry>Default</entry>
                                 </row>
@@ -174,32 +184,109 @@
                             </tbody>
                         </tgroup>
                     </table>  
-                    <figure float="0">
-                        <title>New BPEL Process file Wizard</title>
-                        <mediaobject>
-                            <imageobject>
-                                <imagedata fileref="images/reference/bpel_ref_3a.png"></imagedata>
-                            </imageobject>
-                        </mediaobject>
-                    </figure>
-                </listitem>             
-                <listitem><para>On the third page the user should select the BPEL project and folder where the process file will be created:</para>
-                <figure>
-                    <title>New BPEL Process file Wizard</title>
-                    <mediaobject>
-                        <imageobject>
-                            <imagedata fileref="images/reference/bpel_ref_4.png"/>
-                        </imageobject>
-                    </mediaobject>
-                </figure>
-                </listitem>
+				</listitem>
+				<!--	<important>
+						<para>
+							The JBoss Riftsaw engine currently only supports the SOAP binding protocol
+						</para>
+					</important> -->
+					<listitem>
+						<para>
+							The final page allows you to select the target project and folder for the new process artifacts. If a process with the name you provided already exists in that project and folder, the wizard will display an error message. 
+						</para>
+						<para>
+							If the project is not a BPEL Project (does not define a BPEL facet) the wizard will display a warning message. You can still create the BPEL process, however it will not be deployable to a BPEL runtime engine until the BPEL facet has been added to the project (see the <guimenuitem>Help</guimenuitem> menu for more information about project facets).
+						</para>
+						<important>
+							<para>
+								BPEL artifacts must be contained somewhere within the <filename>bpelContent</filename> folder hierarchy if you intend to deploy the process. Complex projects may be organized into a folder hierarchy, but these folders must be contained within <filename>bpelContent</filename>.
+							</para>
+							<para>
+								The <filename>Deployment Descriptor</filename> file must be contained within the <filename>bpelContent</filename> folder and at the root of any folder hierarchy.
+							</para>
+						</important>
+						<figure>
+							<title>New BPEL Process</title>
+							<mediaobject>
+								<imageobject>
+									<imagedata fileref="images/reference/Create_a_BPEL_Process_File_03.png"/>
+								</imageobject>
+							</mediaobject>
+						</figure>
+						<para>
+							You will be asked if you wish for the BPEL persepective to be opened once this wizard completes.
+						</para>
+				</listitem>
             </itemizedlist>
-            <note>
-                <para>Process files that are used in the BPEL project must be under the <filename>bpelContent</filename> folder. This is necessary for the files to be deployed to a JBoss server.
-                </para>
-            </note>
         </section>
+		<section>
+			<title>New BPEL Deployment Descriptor</title>
+			<para>
+				Use this wizard to create a <filename>Deployment Descriptor</filename> file. This file is a manifest for the web service and is required if the BPEL process is to be deployed to a runtime engine.
+			</para>
+			<figure>
+				<title>BPEL Deployment Descriptor</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/reference/BPEL_Deyployment_Descriptor_01.png"/>
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<itemizedlist>
+			<listitem>
+				<para>The page includes the following options:</para>
+				<table>
+					<title>New BPEL Process file wizard. First page options.</title>   
+					<tgroup cols="2">
+						<colspec colnum="1" align="left" colwidth="1*"/>
+						<colspec colnum="2" align="left" colwidth="3*"/>
+						<thead>
+							<row>
+								<entry>Field</entry>									
+								<entry>Description</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>BPEL Project</entry>
+								<entry>Select the project and folder where the new <filename>Deployment Descriptor</filename> will be created. This must also be the root folder that contains the BPEL processes.</entry>
+							</row>
+							<row>
+								<entry>File name</entry>
+								<entry>This field is automatically filled and cannot be edited.</entry>
+							</row>  
+                            </tbody>
+                        </tgroup>
+                    </table>
+					<para>
+						The BPEL Deployment Descriptor Editor will open once this wizard completes.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</section>
     </section>
+	<section>
+		<title>Perspectives</title>
+		<section>
+			<title>BPEL Perspective</title>
+			<para>
+			The BPEL Perspective is designed to facilitate the development and deployment of BPEL processes and their artifacts. To open this perspective navigate to <menuchoice>
+                    <guimenuitem>Window</guimenuitem>
+					<guimenuitem>Open Perspective</guimenuitem>
+					<guimenuitem>Other</guimenuitem>
+					<guimenuitem>BPEL</guimenuitem>
+                </menuchoice> and click <guibutton>OK</guibutton>.
+			</para>
+			<figure>
+				<title>BPEL Perspective default layout</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/reference/BPEL_Perspective_01.png"/>
+					</imageobject>
+				</mediaobject>
+			</figure>
+		</section>
+	</section>
     <section>
         <title>Editors</title>
         <section>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<chapter id="concepts">
+	<title>Concepts</title>
+	<para>
+        <!--last paragraph for this chaper-->
+		This reference manual is not intended as a definitive reference for WS-BPEL 2.0. For more information on the BPEL language, refer to OASIS documentation available from <ulink url="http://docs.oasis-open.org/wsbpel/2.0/wsbpel-v2.0.html">http://docs.oasis-open.org/wsbpel/2.0/wsbpel-v2.0.html</ulink>
+	</para>
+</chapter>
