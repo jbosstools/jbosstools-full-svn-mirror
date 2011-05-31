@@ -2,12 +2,12 @@
 <target includeMode="feature" name="jbds">
 	<locations>
 		<location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
-	        <!-- Pro tip: to convert 
-        	     from org.eclipse.tptp.platform.xerces_4.6.0.v201005032111-777K4AkF7B77R7c7N77.jar
-	             to <unit version="4.6.0.v201005032111-777K4AkF7B77R7c7N77" id="org.eclipse.tptp.platform.xerces.feature.group"/>
-        	     using vi, apply this transform:
-	             :%s/.\+\/\(org.\+\)_\(\d\+.\+\)\.jar/\t\t\t<unit id="\1.feature.group" version="\2"\/>/g
-        	-->
+		   <!-- Pro tip: to convert 
+	   		from org.eclipse.tptp.platform.xerces_4.6.0.v201005032111-777K4AkF7B77R7c7N77.jar
+			   to <unit version="4.6.0.v201005032111-777K4AkF7B77R7c7N77" id="org.eclipse.tptp.platform.xerces.feature.group"/>
+	   		using vi, apply this transform:
+			   :%s/.\+\/\(org.\+\)_\(\d\+.\+\)\.jar/\t\t\t<unit id="\1.feature.group" version="\2"\/>/g
+	   	-->
 
 			<!-- CVS -->
 			<unit id="org.eclipse.cvs.feature.group" version="1.2.0.v20100427-7B77FKt90GE5h0SBT5FV9A01911"/>
@@ -153,4 +153,7 @@
 			<repository location="http://download.jboss.org/jbosstools/updates/helios/"/>
 		</location>
 	</locations>
-</target>
+	<includeBundles>
+		<plugin id="org.apache.commons.io"/>
+	</includeBundles>
+ </target>

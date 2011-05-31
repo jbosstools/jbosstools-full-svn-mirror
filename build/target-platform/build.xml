@@ -77,6 +77,10 @@ To run for JBDS target file instead of JBT target files, pass in alternate targe
 Or, simply call the jbds target, to use the defaults in the previous example:
 
 	$ ant jbds
+
+To run for JBDS target file WHILE JBT target file is being run:
+
+	$ ant jbds -DWORKINGDIR=${basedir}
 </echo>
 	</target>
 
@@ -139,6 +143,8 @@ Or, simply call the jbds target, to use the defaults in the previous example:
 	<!-- should work on osx-cocoa32, win32, lin32, lin64 -->
 	<target name="get.eclipse">
 		<!-- NOTE: must use same platform (50M) or SDK (103M - 168M) version as feature version on target platform, or will get install/update conflicts -->
+		<!-- don't forget to increment these files when moving up a version:
+		     build.xml, *.target*, publish.sh, target2p2mirror.xml -->
 		<property name="eclipse.version" value="3.6.2" />
 		<property name="eclipse.URL" value="http://www.eclipse.org/downloads/download.php?r=1&amp;file=/eclipse/downloads/drops/R-3.6.2-201102101200" />
 		<!--
