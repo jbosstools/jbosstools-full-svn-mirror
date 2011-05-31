@@ -201,6 +201,9 @@ for buildxml in ${WORKSPACE}/build/results/build.xml ${WORKSPACE}/sources/build/
 done
 if [[ ${ANT_SCRIPT} ]] && [[ -f ${ANT_SCRIPT} ]]; then ant -f ${ANT_SCRIPT} ${ANT_PARAMS}; fi
 
+# purge duplicate zip files in logs/zips/all/*.zip
+if [[ -d ${STAGINGDIR}/logs/zips ]]; then rm -f $(find ${STAGINGDIR}/logs/zips -type f -name "*.zip"); fi
+
 # ${bl} is full build log; see above
 mkdir -p ${STAGINGDIR}/logs
 # filter out Maven test failures
