@@ -238,7 +238,7 @@
 								<tr>
 									<td>
 										<a class="blue"
-											href="http://download.jboss.org/jbosstools/updates/target-platform/e362-wtp323.target.zip">Target Platform Update Zip</a>
+											href="http://download.jboss.org/jbosstools/updates/target-platform/e362-wtp324.target.zip">Target Platform Update Zip</a>
 									</td>
 								</tr>
 								<tr>
