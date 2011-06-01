@@ -66,6 +66,7 @@ public final class RestClientI18n {
     public static I18n publishedResourcePropertyErrorMsg;
 
     public static I18n publishingConsoleName;
+    public static I18n publishingConsoleProblemMsg;
     public static I18n publishingConsoleProblemCreatingHyperlinkMsg;
     public static I18n publishingConsoleFilePathNotFoundMsg;
 

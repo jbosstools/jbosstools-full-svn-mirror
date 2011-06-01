@@ -13,6 +13,8 @@ package org.jboss.tools.modeshape.rest.views;
 
 import static org.jboss.tools.modeshape.rest.IUiConstants.ModeShape_IMAGE_16x;
 
+import java.io.IOException;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.debug.ui.console.FileLink;
 import org.eclipse.jface.text.BadLocationException;
@@ -27,8 +29,8 @@ import org.eclipse.ui.console.AbstractConsole;
 import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.console.IConsoleManager;
-import org.eclipse.ui.console.MessageConsole;
-import org.eclipse.ui.console.MessageConsoleStream;
+import org.eclipse.ui.console.IOConsole;
+import org.eclipse.ui.console.IOConsoleOutputStream;
 import org.jboss.tools.modeshape.rest.Activator;
 import org.jboss.tools.modeshape.rest.RestClientI18n;
 import org.modeshape.common.util.CheckArg;
@@ -39,7 +41,7 @@ import org.modeshape.web.jcr.rest.client.Status.Severity;
  * The <code>ModeShapeMessageConsole</code> is a message console view where status of publishing operations are logged. This class
  * ensures all writes to the console are done in the UI thread.
  */
-public final class ModeShapeMessageConsole extends MessageConsole {
+public final class ModeShapeMessageConsole extends IOConsole {
 
     /**
      * Start tag for adding emphasis to a message. Tag will appear in a properties file.
@@ -169,48 +171,67 @@ public final class ModeShapeMessageConsole extends MessageConsole {
                             addDocumentListener(message, file);
                         }
 
-                        MessageConsoleStream stream = newMessageStream();
+                        IOConsoleOutputStream stream = ModeShapeMessageConsole.this.newOutputStream();
 
-                        for (int beginIndex = 0, endIndex = 0, msgLength = message.length(); endIndex < msgLength;) {
-                            int startTagIndex = message.indexOf(EMPHASIS_START_TAG, beginIndex);
-                            int endTagIndex = ((startTagIndex < 0) ? -1 : message.indexOf(EMPHASIS_END_TAG,
-                                                                                         startTagIndex
-                                                                                         + EMPHASIS_START_TAG.length()));
-
-                            // ignore tags if both tags are not found
-                            if ((endTagIndex < 0) && (startTagIndex >= 0)) {
-                                startTagIndex = -1;
+                        try {
+                            for (int beginIndex = 0, endIndex = 0, msgLength = message.length(); endIndex < msgLength;) {
+                                int startTagIndex = message.indexOf(EMPHASIS_START_TAG, beginIndex);
+                                int endTagIndex = ((startTagIndex < 0) ? -1 : message.indexOf(EMPHASIS_END_TAG,
+                                                                                             startTagIndex
+                                                                                             + EMPHASIS_START_TAG.length()));
+    
+                                // ignore tags if both tags are not found
+                                if ((endTagIndex < 0) && (startTagIndex >= 0)) {
+                                    startTagIndex = -1;
+                                }
+    
+                                // determine if in emphasize mode
+                                boolean emphasize = (beginIndex == startTagIndex);
+    
+                                // skip over start tag and set stream to bold font style
+                                if (emphasize) {
+                                    beginIndex += EMPHASIS_START_TAG.length();
+                                    stream.setFontStyle(SWT.BOLD);
+                                    endIndex = endTagIndex;
+                                } else {
+                                    stream.setFontStyle(SWT.NORMAL);
+                                    endIndex = ((startTagIndex < 0) ? msgLength : startTagIndex);
+                                }
+    
+                                // print to console and close stream
+                                stream.write(message.substring(beginIndex, endIndex));
+                                stream.close();
+                                
+                                // need to construct a new stream as changes to font style seem to only work one time
+                                stream = ModeShapeMessageConsole.this.newOutputStream();
+    
+                                // skip over end tag
+                                if (emphasize) {
+                                    endIndex += EMPHASIS_END_TAG.length();
+                                }
+    
+                                beginIndex = endIndex;
                             }
 
-                            // determine if in emphasize mode
-                            boolean emphasize = (beginIndex == startTagIndex);
-
-                            // skip over start tag and set stream to bold font style
-                            if (emphasize) {
-                                beginIndex += EMPHASIS_START_TAG.length();
-                                stream.setFontStyle(SWT.BOLD);
-                                endIndex = endTagIndex;
-                            } else {
-                                stream.setFontStyle(SWT.NORMAL);
-                                endIndex = ((startTagIndex < 0) ? msgLength : startTagIndex);
+                            if (doLineFeedAtEnd) {
+                                stream.write("\n"); //$NON-NLS-1$
                             }
-
-                            // print to console
-                            stream.print(message.substring(beginIndex, endIndex));
-                            
-                            // need to construct a new stream as changes to font style seem to only work one time
-                            stream = newMessageStream();
-
-                            // skip over end tag
-                            if (emphasize) {
-                                endIndex += EMPHASIS_END_TAG.length();
+                        } catch (IOException e) {
+                            Activator.getDefault().log(new Status(Severity.ERROR,
+                                                                  RestClientI18n.publishingConsoleProblemMsg.text(),
+                                                                  e));
+                        } finally {
+                            if (stream != null) {
+                                if (!stream.isClosed()) {
+                                    try {
+                                        stream.close();
+                                    } catch (IOException e) {
+                                        Activator.getDefault().log(new Status(Severity.ERROR,
+                                                                              RestClientI18n.publishingConsoleProblemMsg.text(),
+                                                                              e));
+                                    }
+                                }
                             }
-
-                            beginIndex = endIndex;
-                        }
-
-                        if (doLineFeedAtEnd) {
-                            stream.println();
                         }
                     }
                 }
