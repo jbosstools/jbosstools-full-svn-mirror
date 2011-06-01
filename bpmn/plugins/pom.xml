@@ -3,16 +3,21 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.jboss.tools</groupId>
-		<artifactId>usage</artifactId>
+		<artifactId>bpmn</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-	</parent>	
-	<groupId>org.jboss.tools.usage</groupId>
+	</parent>
+	<groupId>org.jboss.tools.bpmn</groupId>
 	<artifactId>plugins</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>usage.plugins</name>	
+	<name>bpmn.plugins</name>
 	<packaging>pom</packaging>
 	<modules>
-		<module>org.jboss.tools.usage</module>
+		<module>org.eclipse.bpmn2</module>
+		<module>org.eclipse.bpmn2.edit</module>
+		<module>org.eclipse.bpmn2.editor</module>
+		<module>org.jboss.tools.bpmn2.model</module>
+		<module>org.jboss.tools.bpmn2.process.diagram</module>
+		<module>org.jboss.tools.jbpm</module>
 	</modules>
 </project>
 	

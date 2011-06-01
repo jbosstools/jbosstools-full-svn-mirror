@@ -1,238 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-	<!-- This file is only used when building with Tycho.
-		If building with Ant (trunk/build/build.xml), see category.*.xml -->
+
 	<description>
-      JBoss Tools 3.2.0 Update Site / p2 Repo
-   	</description>
+JBoss Tools 3.3.0 Update Site / p2 Repo
+	</description>
 
-	<!-- only in JBDS -->
-	<!--
-	<feature url="features/com.jboss.jbds.product.feature_0.0.0.jar"
-	         id="com.jboss.jbds.product.feature"
-	         version="0.0.0"
-	         patch="false"
-	>
-		<category name="AllTools" />
-	</feature>
-	<feature url="features/org.jboss.tools.runtime.feature_0.0.0.jar"
-	         id="org.jboss.tools.runtime.feature"
-	         version="0.0.0"
-	         patch="false"
-	>
-		<category name="AllTools" />
-	</feature>
-	-->
-	<feature url="features/org.jboss.tools.richfaces.feature_0.0.0.jar" id="org.jboss.tools.richfaces.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="WebTools" />
-	</feature>
-	<feature url="features/org.jboss.tools.seam.feature_0.0.0.jar" id="org.jboss.tools.seam.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="WebTools" />
-	</feature>
-	<feature url="features/org.jboss.tools.cdi.feature_0.0.0.jar" id="org.jboss.tools.cdi.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="WebTools" />
-		<category name="GeneralTools" />
-	</feature>
-	<feature url="features/org.jboss.tools.jmx.feature_0.0.0.jar" id="org.jboss.tools.jmx.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="GeneralTools" />
-	</feature>
-	<feature url="features/org.jboss.ide.eclipse.as.feature_0.0.0.jar" id="org.jboss.ide.eclipse.as.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="WebTools" />
-	</feature>
-	<feature url="features/org.jboss.ide.eclipse.archives.feature_0.0.0.jar" id="org.jboss.ide.eclipse.archives.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="GeneralTools" />
-	</feature>
-	<feature url="features/org.hibernate.eclipse.feature_0.0.0.jar" id="org.hibernate.eclipse.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="WebTools" />
-		<category name="DataTools" />
-		<category name="GeneralTools" />
-	</feature>
-	<feature url="features/org.jboss.ide.eclipse.freemarker.feature_0.0.0.jar" id="org.jboss.ide.eclipse.freemarker.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="GeneralTools" />
-	</feature>
-	<feature url="features/org.jboss.tools.struts.feature_0.0.0.jar" id="org.jboss.tools.struts.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="WebTools" />
-	</feature>
-	<feature url="features/org.jboss.tools.esb.feature_0.0.0.jar" id="org.jboss.tools.esb.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="SOATools" />
-	</feature>
-	<feature url="features/org.jboss.tools.ws.feature_0.0.0.jar" id="org.jboss.tools.ws.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="SOATools" />
-	</feature>
-	<feature url="features/org.jboss.tools.portlet.feature_0.0.0.jar" id="org.jboss.tools.portlet.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="WebTools" />
-	</feature>
-	<feature url="features/org.jboss.tools.smooks.feature_0.0.0.jar" id="org.jboss.tools.smooks.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="SOATools" />
-		<category name="DataTools" />
-		<category name="GeneralTools" />
-	</feature>
-	<feature url="features/org.drools.eclipse.task.feature_0.0.0.jar" id="org.drools.eclipse.task.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="SOATools" />
-	</feature>
-	<feature url="features/org.guvnor.tools.feature_0.0.0.jar" id="org.guvnor.tools.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="SOATools" />
-	</feature>
-	<feature url="features/org.jboss.tools.project.examples.feature_0.0.0.jar" id="org.jboss.tools.project.examples.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="GeneralTools" />
-	</feature>
+	<feature url="features/org.jboss.tools.richfaces.feature_0.0.0.jar" id="org.jboss.tools.richfaces.feature" version="0.0.0" />
+	<feature url="features/org.jboss.tools.seam.feature_0.0.0.jar" id="org.jboss.tools.seam.feature" version="0.0.0" />
+	<feature url="features/org.jboss.tools.cdi.feature_0.0.0.jar" id="org.jboss.tools.cdi.feature" version="0.0.0" />
+	<feature url="features/org.jboss.tools.cdi.seam.feature_0.0.0.jar" id="org.jboss.tools.cdi.seam.feature" version="0.0.0" />
+	<feature url="features/org.jboss.tools.jmx.feature_0.0.0.jar" id="org.jboss.tools.jmx.feature" version="0.0.0" />
+	<feature url="features/org.jboss.ide.eclipse.as.feature_0.0.0.jar" id="org.jboss.ide.eclipse.as.feature" version="0.0.0" />
+	<feature url="features/org.jboss.ide.eclipse.archives.feature_0.0.0.jar" id="org.jboss.ide.eclipse.archives.feature" version="0.0.0" />
+	<feature url="features/org.hibernate.eclipse.feature_0.0.0.jar" id="org.hibernate.eclipse.feature" version="0.0.0" />
 
-	<!-- DISABLED for now -->
-	<!-- 
-	<feature url="features/org.jboss.tools.profiler.feature_0.0.0.jar" id="org.jboss.tools.profiler.feature" version="0.0.0"> 
-		<category name="AllTools"/> 
-	</feature> 
-	-->
+	<feature url="features/org.jboss.ide.eclipse.freemarker.feature_0.0.0.jar" id="org.jboss.ide.eclipse.freemarker.feature" version="0.0.0" />
+	<feature url="features/org.jboss.tools.struts.feature_0.0.0.jar" id="org.jboss.tools.struts.feature" version="0.0.0" />
+	<feature url="features/org.jboss.tools.esb.feature_0.0.0.jar" id="org.jboss.tools.esb.feature" version="0.0.0" />
+	<feature url="features/org.jboss.tools.ws.feature_0.0.0.jar" id="org.jboss.tools.ws.feature" version="0.0.0" />
+	<feature url="features/org.jboss.tools.portlet.feature_0.0.0.jar" id="org.jboss.tools.portlet.feature" version="0.0.0" />
+	<feature url="features/org.jboss.tools.smooks.feature_0.0.0.jar" id="org.jboss.tools.smooks.feature" version="0.0.0" />
+	<feature url="features/org.drools.eclipse.task.feature_0.0.0.jar" id="org.drools.eclipse.task.feature" version="0.0.0" />
+	<feature url="features/org.guvnor.tools.feature_0.0.0.jar" id="org.guvnor.tools.feature" version="0.0.0" />
+	<feature url="features/org.jboss.tools.project.examples.feature_0.0.0.jar" id="org.jboss.tools.project.examples.feature" version="0.0.0" />
 
-	<!-- only in JBT -->
-	<feature url="features/org.jboss.tools.community.project.examples.feature_0.0.0.jar"
-	         id="org.jboss.tools.community.project.examples.feature"
-	         version="0.0.0">
-		<category name="AllTools" />
-		<category name="GeneralTools" />
-	</feature>
-	<feature url="features/org.jboss.tools.birt.feature_0.0.0.jar" id="org.jboss.tools.birt.feature" version="0.0.0">
-		<category name="ReportTools" />
-	</feature>
-	<feature url="features/org.jboss.tools.maven.feature_0.0.0.jar" id="org.jboss.tools.maven.feature" version="0.0.0">
-		<category name="MavenTools" />
-	</feature>
-	<feature url="features/org.jboss.tools.maven.seam.feature_0.0.0.jar" id="org.jboss.tools.maven.seam.feature" version="0.0.0">
-		<category name="MavenTools" />
-	</feature>
-	<feature url="features/org.jboss.tools.maven.jsf.feature_0.0.0.jar" id="org.jboss.tools.maven.jsf.feature" version="0.0.0">
-		<category name="MavenTools" />
-	</feature>
-	<feature url="features/org.jboss.tools.maven.cdi.feature_0.0.0.jar" id="org.jboss.tools.maven.cdi.feature" version="0.0.0">
-		<category name="MavenTools" />
-	</feature>
-	<feature url="features/org.jboss.tools.maven.hibernate.feature_0.0.0.jar" id="org.jboss.tools.maven.hibernate.feature" version="0.0.0">
-		<category name="MavenTools" />
-	</feature>
-	<feature url="features/org.jboss.tools.maven.portlet.feature_0.0.0.jar" id="org.jboss.tools.maven.portlet.feature" version="0.0.0">
-		<category name="MavenTools" />
-	</feature>
-	<feature url="features/org.jboss.tools.xulrunner.feature_0.0.0.jar" id="org.jboss.tools.xulrunner.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="WebTools" />
-	</feature>
-	<feature url="features/org.jboss.tools.jbpm.convert.feature_0.0.0.jar" id="org.jboss.tools.jbpm.convert.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="SOATools" />
-	</feature>
-	<feature url="features/org.jboss.tools.jbpm.common.feature_0.0.0.jar" id="org.jboss.tools.jbpm.common.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="SOATools" />
-	</feature>
-	<feature url="features/org.jboss.tools.jbpm3.feature_0.0.0.jar" id="org.jboss.tools.jbpm3.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="SOATools" />
-	</feature>
-	<feature url="features/org.jboss.tools.jbpm4.feature_0.0.0.jar" id="org.jboss.tools.jbpm4.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="SOATools" />
-	</feature>
-	<feature url="features/org.jboss.tools.bpel.feature_0.0.0.jar" id="org.jboss.tools.bpel.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="SOATools" />
-	</feature>
-	<feature url="features/org.jboss.tools.modeshape.rest.feature_0.0.0.jar" id="org.jboss.tools.modeshape.rest.feature" version="0.0.0">
-		<category name="AllTools" />
-		<category name="GeneralTools" />
-	</feature>
-	<feature url="features/org.jboss.tools.runtime.feature_0.0.0.jar" id="org.jboss.tools.runtime.feature" version="0.0.0">
-		<category name="AllTools" />
-	</feature>
-
-	<feature url="features/org.jboss.tools.deltacloud.feature_0.0.0.jar" id="org.jboss.tools.deltacloud.feature" version="0.0.0">
-		<category name="CloudTools" />
-		<category name="AllTools" />
-	</feature>
-
-	<feature url="features/org.jboss.tools.usage.feature_0.0.0.jar" id="org.jboss.tools.usage.feature" version="0.0.0">
-		<category name="AllTools" />
-	</feature>
-
-	<category-def name="SDKTools" label="JBoss Tools SDK">
-		<description>JBoss Tools SDK contains plugins where an SDK package
-			exists. These contain both source and runtimes. Use these if you want
-			to debug and/or provide patches to JBoss Tools plugins.
-		</description>
-	</category-def>
-
-	<category-def name="AllTools" label="All JBoss Tools 3.2.0">
-		<description>
-			Contains ALL the plugins that are available from
-			JBoss Tools except those
-			related to integration with 3rd party
-			plugins. Selecting this
-			category will give you all tools needed for
-			both Web, Seam and SOA
-			Development.
-      </description>
-	</category-def>
-
-	<category-def name="SOATools" label="SOA Development">
-		<description>
-			Tools to help create SOA applications. Use these if you
-			work with jBPM,
-			Drools, JBoss ESB, JBoss WebServices or Smooks.
-		</description>
-	</category-def>
-
-	<category-def name="WebTools" label="Web and Java EE Development">
-		<description>
-			Tools to help create web and enterprise applications,
-			using JSF, Facelets,
-			Seam, Hibernate/JPA, CSS, Webservices and more.
-		</description>
-	</category-def>
-
-	<category-def name="GeneralTools" label="Application Development">
-		<description>Tools for general application development.</description>
-	</category-def>
-
-	<category-def name="DataTools" label="Data Services">
-		<description>Tools related to data services such as persistence and
-			transformation.</description>
-	</category-def>
-
-	<!-- Only in JBT -->
-	<category-def name="MavenTools" label="Maven Support">
-		<description>Plugins related to Maven and m2eclipse support. Use these
-			to enable use of Maven.</description>
-	</category-def>
-
-	<!-- Only in JBT -->
-	<category-def name="ReportTools" label="Business Intelligence, Reporting and Charting">
-		<description>Business Intelligence, Reporting and Charting. Use these
-			if you plan to integrate Hibernate or Seam with Eclipse BIRT.
-		</description>
-	</category-def>
-
-	<category-def name="TestPerfTools" label="Test and Performance">
-		<description>Tools used to improve testing and performance.
-		</description>
-	</category-def>
-
-	<category-def name="CloudTools" label="Cloud">
-		<description>Tools for Cloud Development
-      		</description>
-	</category-def>
+	<feature url="features/org.jboss.tools.community.project.examples.feature_0.0.0.jar" id="org.jboss.tools.community.project.examples.feature" version="0.0.0" />
+	<feature url="features/org.jboss.tools.maven.feature_0.0.0.jar" id="org.jboss.tools.maven.feature" version="0.0.0" />
+	<feature url="features/org.jboss.tools.maven.seam.feature_0.0.0.jar" id="org.jboss.tools.maven.seam.feature" version="0.0.0" />
+	<feature url="features/org.jboss.tools.maven.jsf.feature_0.0.0.jar" id="org.jboss.tools.maven.jsf.feature" version="0.0.0" />
+	<feature url="features/org.jboss.tools.maven.cdi.feature_0.0.0.jar" id="org.jboss.tools.maven.cdi.feature" version="0.0.0" />
+	<feature url="features/org.jboss.tools.maven.hibernate.feature_0.0.0.jar" id="org.jboss.tools.maven.hibernate.feature" version="0.0.0" />
+	<feature url="features/org.jboss.tools.maven.portlet.feature_0.0.0.jar" id="org.jboss.tools.maven.portlet.feature" version="0.0.0" />
+	<feature url="features/org.jboss.tools.xulrunner.feature_0.0.0.jar" id="org.jboss.tools.xulrunner.feature" version="0.0.0" />
+	<feature url="features/org.jboss.tools.jbpm.convert.feature_0.0.0.jar" id="org.jboss.tools.jbpm.convert.feature" version="0.0.0" />
+	<feature url="features/org.jboss.tools.jbpm.common.feature_0.0.0.jar" id="org.jboss.tools.jbpm.common.feature" version="0.0.0" />
+	<feature url="features/org.jboss.tools.jbpm3.feature_0.0.0.jar" id="org.jboss.tools.jbpm3.feature" version="0.0.0" />
+	<feature url="features/org.jboss.tools.jbpm4.feature_0.0.0.jar" id="org.jboss.tools.jbpm4.feature" version="0.0.0" />
+	<feature url="features/org.jboss.tools.bpel.feature_0.0.0.jar" id="org.jboss.tools.bpel.feature" version="0.0.0" />
+	<feature url="features/org.jboss.tools.modeshape.rest.feature_0.0.0.jar" id="org.jboss.tools.modeshape.rest.feature" version="0.0.0" />
+	<feature url="features/org.jboss.tools.runtime.feature_0.0.0.jar" id="org.jboss.tools.runtime.feature" version="0.0.0" />
+	<feature url="features/org.jboss.tools.deltacloud.feature_0.0.0.jar" id="org.jboss.tools.deltacloud.feature" version="0.0.0" />
+	<feature url="features/org.jboss.tools.usage.feature_0.0.0.jar" id="org.jboss.tools.usage.feature" version="0.0.0" />
 </site>

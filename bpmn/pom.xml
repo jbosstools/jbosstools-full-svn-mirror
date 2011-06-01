@@ -8,14 +8,30 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		<relativePath>../build/parent/pom.xml</relativePath>
 	</parent>
 	<groupId>org.jboss.tools</groupId>
-	<artifactId>workingset</artifactId>
+	<artifactId>bpmn</artifactId>
+	<name>bpmn.all</name>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>workingset.all</name>
 	<packaging>pom</packaging>
 	<modules>
-		<module>features</module>
 		<module>plugins</module>
 		<module>tests</module>
-	</modules>
+		<module>features</module>
+       </modules>
+	<repositories>
+
+		<repository>
+			<id>indigo</id>
+			<url>http://download.eclipse.org/modeling/gmf/updates/milestones/</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+
+	</repositories>
+
 </project>
 	

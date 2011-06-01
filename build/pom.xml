@@ -342,6 +342,23 @@
 		</profile>
 
 		<profile>
+			<id>forge</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../forge</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>forge-bootstrap</id>
+			<modules>
+				<module>../forge</module>
+			</modules>
+		</profile>
+
+		<profile>
 			<id>cdi</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
@@ -556,12 +573,12 @@
 		<profile>
 			<id>gwt</id>
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 			</activation>
-			<!-- As long as GWT is not available for Eclipse 3.7 it is not to be included 
+			<!-- As long as GWT is not available for Eclipse 3.7 it is not to be included --> 
 			<modules>
 				<module>../gwt</module>
-			</modules> -->
+			</modules>
 		</profile>
 
 		<profile>
@@ -577,6 +594,7 @@
 		<profile>
 			<id>deltacloud-bootstrap</id>
 			<modules>
+				<module>../tests</module>
 				<module>../as</module>
 				<module>../deltacloud</module>
 			</modules>
@@ -611,7 +629,6 @@
 				<module>../usage</module>
 			</modules>
 		</profile>
-		
 
 		<profile>
 			<id>aggregate-coverage</id>
