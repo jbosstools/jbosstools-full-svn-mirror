@@ -573,7 +573,7 @@ As well as to demonstrate the needed  minimal files to make a basic ESB componen
 		</url>
 		<fixes>
 			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50</property>
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50, org.jboss.ide.eclipse.as.runtime.51</property>
 				<property name="eclipse-projects">helloworld,helloworld_testclient</property>
 				<property name="required-components">esb</property>
 				<property name="description">This project example requires the JBoss SOA-P 5.0 and the runtime name should be "jboss-soa-p.5.0 Runtime"</property>
@@ -596,7 +596,7 @@ As well as to demonstrate the needed  minimal files to make a basic ESB componen
 		</url>
 		<fixes>
 			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50</property>
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50, org.jboss.ide.eclipse.as.runtime.51</property>
 				<property name="eclipse-projects">helloworld_action</property>
 				<property name="required-components">esb</property>
 				<property name="description">This project example requires the JBoss SOA-P 5.0 and the runtime name should be "jboss-soa-p.5.0 Runtime"</property>
@@ -621,7 +621,7 @@ NOTE: Before you import this example, please make sure that there is a runtime n
 		</url>
 		<fixes>
 			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50</property>
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50, org.jboss.ide.eclipse.as.runtime.51</property>
 				<property name="eclipse-projects">helloworld_mail</property>
 				<property name="required-components">esb</property>
 				<property name="description">This project example requires a JBoss SOA-P 5.0 runtime named "jboss-soa-p.5.0 Runtime"</property>
@@ -644,7 +644,7 @@ NOTE: Before you import this example, please make sure that there is a runtime n
 		</url>
 		<fixes>
 			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50</property>
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50, org.jboss.ide.eclipse.as.runtime.51</property>
 				<property name="eclipse-projects">helloworld_file_action</property>
 				<property name="required-components">esb</property>
 				<property name="description">This project example requires the JBoss SOA-P 5.0 and the runtime name should be "jboss-soa-p.5.0 Runtime"</property>
@@ -668,7 +668,7 @@ NOTE: Before you import this example, please make sure that there is a runtime n
 		</url>
 		<fixes>
 			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50</property>
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50, org.jboss.ide.eclipse.as.runtime.51</property>
 				<property name="eclipse-projects">webservice_consumer1</property>
 				<property name="required-components">esb</property>
 				<property name="description">This project example requires the JBoss SOA-P 5.0 and the runtime name should be "jboss-soa-p.5.0 Runtime"</property>
@@ -691,7 +691,7 @@ NOTE: Before you import this example, please make sure that there is a runtime n
 		</url>
 		<fixes>
 			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50</property>
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50, org.jboss.ide.eclipse.as.runtime.51</property>
 				<property name="eclipse-projects">webservice_producer</property>
 				<property name="required-components">esb</property>
 				<property name="description">This project example requires the JBoss SOA-P 5.0 and the runtime name should be "jboss-soa-p.5.0 Runtime"</property>
@@ -716,7 +716,7 @@ NOTE: Before you import this example, please make sure that there is a runtime n
 		</url>
 		<fixes>
 			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50</property>
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50, org.jboss.ide.eclipse.as.runtime.51</property>
 				<property name="eclipse-projects">transform_CSV2XML</property>
 				<property name="required-components">esb</property>
 				<property name="description">This project example requires the JBoss SOA-P 5.0 and the runtime name should be "jboss-soa-p.5.0 Runtime"</property>
@@ -739,7 +739,7 @@ Java POJOs.</description>
 		</url>
 		<fixes>
 			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50</property>
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50, org.jboss.ide.eclipse.as.runtime.51</property>
 				<property name="eclipse-projects">transform_XML2POJO</property>
 				<property name="required-components">esb</property>
 				<property name="description">This project example requires the JBoss SOA-P 5.0 and the runtime name should be "jboss-soa-p.5.0 Runtime"</property>
@@ -769,7 +769,7 @@ Java POJOs.</description>
 		</url>
 		<fixes>
 			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50</property>
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50, org.jboss.ide.eclipse.as.runtime.51</property>
 				<property name="eclipse-projects">transform_XML2XML_date_manipulation</property>
 				<property name="required-components">esb</property>
 				<property name="description">This project example requires the JBoss SOA-P 5.0 and the runtime name should be "jboss-soa-p.5.0 Runtime"</property>
@@ -792,7 +792,7 @@ Java POJOs.</description>
 		</url>
 		<fixes>
 			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50</property>
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50, org.jboss.ide.eclipse.as.runtime.51</property>
 				<property name="eclipse-projects">transform_XML2XML_simple</property>
 				<property name="required-components">esb</property>
 				<property name="description">This project example requires the JBoss SOA-P 5.0 and the runtime name should be "jboss-soa-p.5.0 Runtime"</property>
