@@ -1,14 +1,20 @@
 <project
-xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.jboss.tools</groupId>
+		<artifactId>deltacloud</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
 	<groupId>org.jboss.tools.deltacloud</groupId>
-	<artifactId>org.jboss.tools.deltacloud.plugins</artifactId>
+	<artifactId>plugins</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>org.jboss.tools.deltacloud.plugins</name>
+	<name>deltacloud.plugins</name>
 	<packaging>pom</packaging>
 	<modules>
-                <module>org.jboss.tools.deltacloud.client</module>
-               	<module>org.jboss.tools.deltacloud.core</module>
+		<module>org.jboss.tools.deltacloud.client</module>
+		<module>org.jboss.tools.deltacloud.core</module>
 		<module>org.jboss.tools.deltacloud.ui</module>
 		<module>org.jboss.tools.deltacloud.integration</module>
 		<module>org.jboss.tools.deltacloud.docs</module>

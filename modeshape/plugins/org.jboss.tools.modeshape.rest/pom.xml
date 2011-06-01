@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.jboss.tools</groupId>
-		<artifactId>org.jboss.tools.parent.pom</artifactId>
-		<version>0.0.2-SNAPSHOT</version>
+		<groupId>org.jboss.tools.modeshape</groupId>
+		<artifactId>plugins</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<groupId>org.jboss.tools.modeshape</groupId>
+	<groupId>org.jboss.tools.modeshape.plugins</groupId>
 	<artifactId>org.jboss.tools.modeshape.rest</artifactId>
 	<version>1.1.0-SNAPSHOT</version>
 	<packaging>eclipse-plugin</packaging>
@@ -33,22 +34,16 @@
 							<tasks>
 								<!-- JBDS-1343, JBIDE-8055 uncomment this to pull a fresh copy of 
 									these jars from this or another location as needed -->
-								<!-- 
-								<property name="jarfolder"
-									value="http://jawa05.englab.brq.redhat.com/candidate/SOA-5.1-ER7/jbds" />
-								<property name="jar1" value="modeshape-client.jar" />
-								<property name="jar2" value="modeshape-common-2.2.1.jar" />
-								<property name="jar3" value="modeshape-graph-2.2.1.jar" />
-								<property name="jar4" value="modeshape-sequencer-ddl-2.2.1.jar" />
-								<delete file="${jar1}" quiet="true" />
-								<get src="${jarfolder}/${jar1}" dest="${jar1}" usetimestamp="true" />
-								<delete file="${jar2}" quiet="true" />
-								<get src="${jarfolder}/${jar2}" dest="${jar2}" usetimestamp="true" />
-								<delete file="${jar3}" quiet="true" />
-								<get src="${jarfolder}/${jar3}" dest="${jar3}" usetimestamp="true" />
-								<delete file="${jar4}" quiet="true" />
-								<get src="${jarfolder}/${jar4}" dest="${jar4}" usetimestamp="true" />
- 								-->
+								<!-- <property name="jarfolder" value="http://jawa05.englab.brq.redhat.com/candidate/SOA-5.1-ER7/jbds" 
+									/> <property name="jar1" value="modeshape-client.jar" /> <property name="jar2" 
+									value="modeshape-common-2.2.1.jar" /> <property name="jar3" value="modeshape-graph-2.2.1.jar" 
+									/> <property name="jar4" value="modeshape-sequencer-ddl-2.2.1.jar" /> <delete 
+									file="${jar1}" quiet="true" /> <get src="${jarfolder}/${jar1}" dest="${jar1}" 
+									usetimestamp="true" /> <delete file="${jar2}" quiet="true" /> <get src="${jarfolder}/${jar2}" 
+									dest="${jar2}" usetimestamp="true" /> <delete file="${jar3}" quiet="true" 
+									/> <get src="${jarfolder}/${jar3}" dest="${jar3}" usetimestamp="true" /> 
+									<delete file="${jar4}" quiet="true" /> <get src="${jarfolder}/${jar4}" dest="${jar4}" 
+									usetimestamp="true" /> -->
 							</tasks>
 						</configuration>
 						<goals>
