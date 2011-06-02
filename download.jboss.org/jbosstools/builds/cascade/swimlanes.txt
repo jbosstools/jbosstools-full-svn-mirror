@@ -1,4 +1,4 @@
-Revised swimlanes, as implemented in 3.2_stable_branch and 3.3_trunk jobs, 2011/04/27
+Revised swimlanes, as implemented in 3.2_stable_branch and 3.3_trunk jobs, 2011/05/01
 
 ------------------------
 
@@ -30,7 +30,7 @@ New in 3.3:
 
 forge -> [none]
 examples -> portlet, jst
-runtime -> tests
+teiid, runtime -> tests
 
 tptp [REMOVED]
 
