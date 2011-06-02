@@ -310,6 +310,294 @@
 				</mediaobject>
 			</figure>
 		</section>
+		<section>
+			<title>Palette</title>
+			<para>
+				The primary editing, creation and viewing tools of the BPEL Designer are accessed from the <guilabel>Palette</guilabel>. The <guilabel>Palette</guilabel> can be docked either at the right or left edge of the BPEL Designer main window, or it can be detached and displayed in its own view.
+		</para>
+		<figure>
+			<title>Palette</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/reference/Palette_01.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<formalpara>
+			<title>Selection Tools</title>
+			<para>
+				The <guilabel>Selection Tool</guilabel> is used to select individual activities in the editors drawing canvas. Multiple activities can be selected by holding the <keycap>CTRL</keycap> or <keycap>SHIFT</keycap> keys in combination with left mouse click. The <guilabel>Marquee Tool</guilabel> allows selection of groups of activities by dragging a selection rectangle around them.
+			</para>
+		</formalpara>
+		<formalpara>
+			<title>Tool Drawers</title>
+			<para>
+				BPEL activities are created by dragging icons from the labeled <guilabel>Actions</guilabel>, <guilabel>Controls</guilabel> and <guilabel>Faults</guilabel> palette sections (or drawers), onto the editor’s drawing canvas. These sections can be collapsed and expanded by clicking on individual palette section titles. They can also be <emphasis>pinned</emphasis> to prevent them from collapsing if another section is expanded.
+			</para>
+		</formalpara>
+		<formalpara>
+			<title>Zoom Tools</title>
+			<para>
+				The tools at the bottom of the <guilabel>Palette</guilabel> are used to expand or shrink the drawing canvas.
+			</para>
+		</formalpara>
+		</section>
+		<section>
+			<title>Dashboard</title>
+			<para>
+				This panel is embedded in the BPEL Designer canvas and provides a quick overview of the BPEL elements that are defined for the currently selected activity or BPEL process.
+			</para>
+			<figure>
+				<title>Palette</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/reference/Dashboard_01.png"/>
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>
+				The process name appears at the top of the Dashboard. The main Dashboard area lists all of the <guilabel>Partner Links</guilabel>, <guilabel>Variables</guilabel>,<guilabel>Correlation Sets</guilabel> and <guilabel>Message Exchanges</guilabel> currently defined for the process. The green plus symbol and grey x symbol allow you to add and delete each of these elements. In-line editing of all element names works by selecting the name and then clicking again to enable the editor.
+			</para>
+		</section>
+		<section>
+			<title>Property Sheets</title>
+			<section>
+				<title>Common Property sheet tabs</title>
+				<para>
+					This section describes the Property Sheet tabs that are common to many activities.
+				</para>
+				<section>
+					<title>Description tab</title>
+					<figure>
+						<title>Description tab</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Common_Property_Tabs_01.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						The <guilabel>Description</guilabel> tab contains the activity name. Names must follow XML element naming conventions, limiting characters to letters, numbers and certain special characters only (spaces are not permited). For further information on XML element naming conventions, see <ulink url="http://www.w3.org/TR/xml/">http://www.w3.org/TR/xml/</ulink>
+					</para>
+				</section>
+				<section>
+					<title>Join Behavior tab</title>
+					<figure>
+						<title>Join Behavior tab</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Common_Property_Tabs_02.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						Join conditions are evaluated by the target activities of links. With the drop-down <guilabel>Expression language</guilabel> menu, enter an XPath expression that defines the condition of the join. The <guilabel>Suppress Join Failure</guilabel> behavior defined by the process or a containing scope can be overridden with the radio buttons at the bottom.
+					</para>
+				</section>
+				<section>
+					<title>Correlation tab</title>
+					<figure>
+						<title>Correlation tab</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Common_Property_Tabs_03.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						The <guilabel>Correlation</guilabel> tab lists all correlations that are used by the currently selected <guilabel>Receive</guilabel>, <guilabel>Reply</guilabel> or <guilabel>Invoke</guilabel> activity. Correlations can be added to or removed from the activity through this tab.<!-- See <xref linkend=""/> --> <!--Correlation Sets section--><!-- for more information. -->
+					</para>
+				</section>
+				<section id="Common_Property_sheet_tabs-Namespaces_tab">
+					<title>Namespaces tab</title>
+					<figure>
+						<title>Namespaces tab</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Common_Property_Tabs_04.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						Namespaces are URIs (Uniform Resource Identifiers) that uniquely identify a set of resources on the Internet. Because URIs can be very lengthy, shorthand aliases called prefixes are typically defined and used in XML files to make the XML more readable.
+					</para>
+					<para>
+						The <guilabel>Namespaces</guilabel> tab lists all of the namespace URIs and their prefixes in scope for the currently selected activity. Whenever you create a reference to an external property (an element defined in an XSD) whose namespace has not yet been assigned a prefix, the BPEL Designer will prompt you to create a prefix. This can also be done beforehand through the <guilabel>Namespace</guilabel> tab of the <guilabel>Properties</guilabel> sheet for the property by clicking the <guibutton>Assign Prefix</guibutton> button.
+					</para>
+				</section>
+				<section>
+					<title>Message Exchange tab</title>
+					<figure>
+						<title>Message Exchange tab</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Common_Property_Tabs_05.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						Message exchanges are used to associate a <property>Reply</property> activity with an <property>inbound message</property> activity and can be either a <property>Receive</property>, <property>OnMessage</property> or <property>OnEvent</property>. These are descriptive names given to a request-response conversation between two parties and must conform to XML element naming conventions. For further informaiton on XML element naming conventions, see <ulink url="http://www.w3.org/TR/xml/">http://www.w3.org/TR/xml/</ulink>.
+					</para>
+				</section>
+			</section>
+			<section>
+				<title>Process Property sheet tabs</title>
+				<para>
+					This section describes the Property Sheet tabs that are unique to process activities.
+				</para>
+				<section>
+					<title>Description tab</title>
+				<figure>
+					<title>Description tab</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/reference/Property_Sheet_01.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<para>
+					The <guilabel>Description</guilabel> tab allows you to change the process name and its namespace URI. All namespaces should follow the W3C recommendation (<ulink url="http://www.w3.org/2005/07/13-nsuri">http://www.w3.org/2005/07/13-nsuri</ulink>.
+				</para>
+				</section>
+				<section>
+					<title>Details tab</title>
+				<figure>
+					<title>Details tab</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/reference/Property_Sheet_02.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<para>
+					The <guilabel>Process Details</guilabel> tab allows you to select the default <guilabel>Expression</guilabel> and <guilabel>Query</guilabel> language. If you set <guilabel>Exit on Standard Fault</guilabel> to <guilabel>Yes</guilabel>, it will cause the process to terminate if a WS-BPEL standard fault, other than a join failure, is encountered.
+				</para>
+				<note>
+					<para>
+						Currently only XPath 1.0 is supported.
+					</para>
+				</note>
+				</section>
+				<section>
+					<title>Join Behavior tab</title>
+				<figure>
+					<title>Join Behavior tab</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/reference/Property_Sheet_03.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<para>
+					The <guilabel>Process Join Behavior</guilabel> tab determines how the process will handle join failures. When set to <guilabel>Yes</guilabel>, any <exceptionname>JoinFailure</exceptionname> fault (detailed in the WS-BPEL Standard Faults section of the OASIS specification: <ulink url="http://docs.oasis-open.org/wsbpel/2.0/OS/wsbpel-v2.0-OS.html#_Toc164738543">http://docs.oasis-open.org/wsbpel/2.0/OS/wsbpel-v2.0-OS.html#_Toc164738543</ulink>) will be ignored for all activities in the process. An activity is able override this value, or inherit the value from its parent.
+				</para>
+				</section>
+				<section>
+					<title>Imports tab</title>
+				<figure>
+					<title>Imports tab</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/reference/Property_Sheet_04.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<para>
+					The <guilabel>Imports Detail</guilabel> tab lists all of the imported service interfaces (WSDL) and XML Schemas (XSD) used by the process. Additional WSDL and XSD files can be added to the imports on this page. After a new resource has been imported, you may assign a prefix to the namespace URI from the <guilabel>Namespaces</guilabel> tab.
+				</para>
+				<note>
+					<para>
+						Imported resources must be located in the project root folder (<filename>bpelContent</filename> by default) or in a sub-folder.
+					</para>
+				</note>
+				</section>
+				<section>
+					<title>Namespaces</title>
+					<para>
+						For information on the <guilabel>Namespaces</guilabel> tab, see <xref linkend="Common_Property_sheet_tabs-Namespaces_tab" />
+					</para>
+				</section>
+			</section>
+			<section>
+				<title>Details tab</title>
+				<para>
+					This section describes the <guilabel>Details</guilbel> tab and its attributes as they will appear for individual activities. Several activities share common detail elements, but all are presented here for your reference.
+				</para>
+				<section>
+					<title>Partner Links</title>
+					<figure>
+						<title>Partner Links</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Details_tab_01.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						<property>Partner Links</property> help define the conversations between two services. They define the roles each partner plays in the conversation and the types of messages that can be exchanged between them.
+					</para>
+					<para>
+						The <guilabel>Details</guilabel> tab allows you to choose the <guilabel>Expression language</guilabel> and <guilabel>Query language</guilabel> for selecting elements of a <property>Partner Link</property>. 
+					</para>
+					<note>
+						<para>
+							Currently only XPath 1.0 is supported.
+						</para>
+					</note>
+				</section>
+				<section>
+					<title>Variables</title>
+					<figure>
+						<title>Variables</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Details_tab_02.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						<property>Variables</property> are used in BPEL to store inbound and outbound messages for examination and manipulation by the business logic; they can also be used to save intermediate results and the process state. There are three kinds of variable declarations: messages types, XML Schema types and XML Schema elements.
+					</para>
+					<para>
+						The <guilabel>Details</guilabel> tab allows you to define the variable declared type and its structure by selecting from known types. Once a variable type has been defined, the structure of the variable is shown. Clicking on the hyperlink will open the WSDL or XML Schema editor for the selected type or element. <!--See the Type Selection dialogs section for more information.-->
+					</para>
+				</section>
+				<section>
+					<title>Empty</title>
+					<figure>
+						<title>Empty</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Details_tab_03.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						The <property>Empty</property> activity is a placeholder for any undefined <property>Basic Activity</property> and is intended to eventually be replaced by a real activity before the process can actually be executed. If the BPEL engine encounters an <property>Empty</property> activity, it is ignored.
+					</para>
+					<para>
+						The <guilabel>Details</guilabel> tab allows you to select one of four basic actions: <property>Invoke</property>, <property>Receive</property>, <property>Reply</property> and <property>Assign</property>. Hovering the mouse over one of the selection buttons displays a brief description of that activity.
+					</para>
+				</section>
+				<section>
+					<title>Invoke</title>
+					<figure>
+						<title>Invoke</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Details_tab_04.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						The <property>Invoke</property> activity requires a <property>Partner Link</property> name and an <property>Operation</property> as defined in the WSDL for that service. You can use the <guilabel>Quick Pick</guilabel> tree control at the right to select the <property>Partner Link</property> and <property>Operation</property>. For one-way invocations of the service, specify only an <property>Input Variable</property>; for request-response invocations you must also specify an <property>Output Variable</property>.
+					</para>
+					<para>
+						The checkbox labeled <guilabel>Use WSDL Message Parts Mapping</guilabel> provides an alternative to using variables for the request message.
+					</para>
+				</section>
+			</section>
+		</section>
 	</section>
     <section>
         <title>Editors</title>
