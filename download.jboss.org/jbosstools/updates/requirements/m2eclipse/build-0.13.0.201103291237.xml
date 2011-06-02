@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="mirror">
+	<!-- run locally in Eclipse (to resolve p2 tasks) using these commandline options:
+	
+		-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} 
+		-consoleLog -nosplash -data /tmp
+		-application org.eclipse.ant.core.antRunner
+		-f "/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/m2eclipse/build.xml"
+		
+		or, run headless on qa01 server, where Eclipse is installed into ~/eclipse:
+		
+		export JAVA_HOME=/opt/jdk1.6.0; \
+		${JAVA_HOME}/bin/java -cp ~/eclipse/plugins/org.eclipse.equinox.launcher_*.jar \
+			org.eclipse.equinox.launcher.Main -vm ${JAVA_HOME} -consoleLog -nosplash -data /tmp \
+			-application org.eclipse.ant.core.antRunner \
+			-f ~/RHDS/updates/requirements/m2eclipse/build.xml -Ddestination=/tmp/m2eclipse-repo
+	-->
+	<target name="mirror">
+		
+                <property name="URL1" value="https://repository.sonatype.org/content/sites/forge-sites/m2e/0.13.0/N/0.13.0.201103291237/"/>
+                <property name="URL2" value="https://repository.sonatype.org/content/sites/forge-sites/m2e-extras/0.13.0/N/0.13.0.201103252105/"/>
+                <property name="URL3" value="https://repository.sonatype.org/content/sites/forge-sites/m2eclipse-wtp/0.13.0/N/0.13.0.201103231111/"/>
+
+		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/m2eclipse/" />
+		<property name="compress" value="true" />
+
+		<p2.mirror>
+			<repository location="file:${destination}/0.13.0.201103291237/" name="m2eclipse 0.13.0.201103291237 plugins for Eclipse 3.6 - 3.7" />
+			<source>
+				<repository location="${URL1}" />
+				<repository location="${URL2}" />
+				<repository location="${URL3}" />
+			</source>
+
+			<slicingOptions includeFeatures="true" followStrict="true" />
+		</p2.mirror>
+
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/0.13.0.201103291237/" artifactRepository="file:${destination}/0.13.0.201103291237/" 
+			publishartifacts="true" source="${destination}/0.13.0.201103291237/" compress="${compress}" />
+	</target>
+</project>
