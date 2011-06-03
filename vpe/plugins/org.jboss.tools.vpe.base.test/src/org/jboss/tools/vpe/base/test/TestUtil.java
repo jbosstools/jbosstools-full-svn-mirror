@@ -20,8 +20,6 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.OperationCanceledException;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
@@ -30,6 +28,7 @@ import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
 import org.eclipse.wst.sse.ui.internal.contentassist.ContentAssistUtils;
 import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
+import org.jboss.tools.test.util.JobUtils;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.VpeEditorPart;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
@@ -46,10 +45,6 @@ import org.w3c.dom.Node;
  * @author sdzmitrovich
  */
 public class TestUtil {
-
-	/**
-	 * 
-	 */
 
 	/** The Constant COMPONENTS_PATH. */
 	public static final String COMPONENTS_PATH = "WebContent/pages/"; //$NON-NLS-1$
@@ -103,9 +98,7 @@ public class TestUtil {
 		}
 		return null;
 	}
-	
-	
-	
+
 	public static IResource getResource(String path,
 			String projectName) throws CoreException, IOException {
 		IProject project = ProjectsLoader.getInstance().getProject(projectName);
@@ -130,14 +123,9 @@ public class TestUtil {
 	public static IResource getWebContentPath(String componentPage,
 			String projectName) throws CoreException, IOException {
 		IProject project = ProjectsLoader.getInstance().getProject(projectName);
-		if (project != null) {
-			return project.getFolder(WEBCONTENT_PATH).findMember(componentPage);
-		}
-
-		return null;
+		return project.getFolder(WEBCONTENT_PATH).findMember(componentPage);
 	}
-	
-	
+
 	/**
 	 * @param xmlScheme
 	 * @param xmlSchemesRoot
@@ -153,30 +141,14 @@ public class TestUtil {
 	public static void delay() {
 		delay(STANDARD_DELAY);
 	}
-	
+
 	/**
 	 * Process UI input but do not return for the specified time interval.
 	 * 
 	 * @param waitTimeMillis the number of milliseconds
 	 */
 	public static void delay(long waitTimeMillis) {
-		Display display = Display.getCurrent();
-		if (display != null) {
-			long endTimeMillis = System.currentTimeMillis() + waitTimeMillis;
-			while (System.currentTimeMillis() < endTimeMillis) {
-				if (!display.readAndDispatch())
-					display.sleep();
-			}
-			display.update();
-		}
-		// Otherwise, perform a simple sleep.
-		else {
-			try {
-				Thread.sleep(waitTimeMillis);
-			} catch (InterruptedException e) {
-				// Ignored.
-			}
-		}
+		JobUtils.delay(waitTimeMillis);
 	}
 
 	/**
@@ -191,24 +163,12 @@ public class TestUtil {
 //				delay(100);	
 		waitForIdle();
 	}
-	
+
 	/**
 	 * Wait for idle.
 	 */
 	public static void waitForIdle(long maxIdle) {
-		long start = System.currentTimeMillis();
-		while (!Job.getJobManager().isIdle()) {
-			delay();
-			if ( (System.currentTimeMillis()-start) > maxIdle ) {
-				Job[] jobs = Job.getJobManager().find(null);
-				StringBuffer jobsList = new StringBuffer("A long running task detected\n");
-				
-				for (Job job : jobs) {
-					jobsList.append(job.getName()).append("\n");
-				}
-				throw new RuntimeException(jobsList.toString()); //$NON-NLS-1$
-			}
-		}
+		JobUtils.waitForIdle(STANDARD_DELAY, maxIdle);
 	}
 	
 	public static void waitForIdle() {
@@ -242,7 +202,6 @@ public class TestUtil {
 				findElementsByName(child, elements, name);
 			}
 		}
-
 	}
 
 	/**
@@ -297,13 +256,11 @@ public class TestUtil {
 	 * @return offcet in document
 	 * 
 	 * @throws IllegalArgumentException 	 */
-	public static final int getLinePositionOffcet(ITextViewer textViewer, int lineIndex, int linePosition) {
-		
+	public static final int getLinePositionOffcet(ITextViewer textViewer, int lineIndex, int linePosition) {		
 		int resultOffcet = 0;
 		
-		if(textViewer==null) {
-				
-				throw new IllegalArgumentException("Text viewer shouldn't be a null"); //$NON-NLS-1$
+		if(textViewer == null) {				
+			throw new IllegalArgumentException("Text viewer shouldn't be a null"); //$NON-NLS-1$
 		}	
 		//lineIndex-1 becose calculating of line begibns in eclipse from one, but should be form zero
 		resultOffcet=textViewer.getTextWidget().getOffsetAtLine(lineIndex-1);
@@ -324,9 +281,8 @@ public class TestUtil {
 			}
 		}
 		resultOffcet+=characterOffset;
-		if(textViewer.getTextWidget().getLineAtOffset(resultOffcet)!=(lineIndex-1)) {
-				
-				throw new IllegalArgumentException("Incorrect character position in line"); //$NON-NLS-1$
+		if(textViewer.getTextWidget().getLineAtOffset(resultOffcet)!=(lineIndex-1)) {				
+			throw new IllegalArgumentException("Incorrect character position in line"); //$NON-NLS-1$
 		}
 		return resultOffcet;
 	}
@@ -339,12 +295,11 @@ public class TestUtil {
      * @return {@link VpeController}
      */
     public static VpeController getVpeController(JSPMultiPageEditor part) {
-
         VpeEditorPart visualEditor = (VpeEditorPart) part.getVisualEditor();
         while(visualEditor.getController()==null) {
 			if (!Display.getCurrent().readAndDispatch()) {
 				Display.getCurrent().sleep();
-				}
+			}
         }
         return visualEditor.getController();
     }
@@ -357,16 +312,11 @@ public class TestUtil {
      * @return nsIDOMDocument
      */
     public static nsIDOMDocument getVpeVisualDocument(JSPMultiPageEditor part) {
-
-
         VpeController vpeController = TestUtil.getVpeController(part);
-
         // get xulRunner editor
         XulRunnerEditor xulRunnerEditor = vpeController.getXulRunnerEditor();
-
         // get dom document
         nsIDOMDocument document = xulRunnerEditor.getDOMDocument();
-
         return document;
     }
 
