@@ -146,9 +146,24 @@ public class VpeVisualLinkCreator extends VpeAbstractCreator {
                 textContainer.appendChild(text);
             }
         }
-
+        copyAttribute(sourceNode, a,"id"); //$NON-NLS-1$
+        copyAttribute(sourceNode, a,"rel"); //$NON-NLS-1$
+        copyAttribute(sourceNode, a,"tabindex"); //$NON-NLS-1$
         return creatorInfo;
     }
+	/**
+	 * Copies attribute from source node to visual node
+	 * @param sourceNode
+	 * @param a
+	 * @param attrName
+	 */
+	private void copyAttribute(Node sourceNode, nsIDOMElement a, String attrName) {
+		Element sourceA = (Element) sourceNode;
+		String attrValue = sourceA.getAttribute(attrName);
+		if ((attrValue != null) && (attrValue.length() > 0)) {
+			a.setAttribute(attrName, attrValue);
+		}
+	}
 
 	@Override
 	public boolean isRecreateAtAttrChange(VpePageContext pageContext,
