@@ -19,6 +19,7 @@ public class XulRunnerAllTests {
 		suite.addTestSuite(XulRunnerBrowserTest.class);
 		suite.addTestSuite(DOMCreatingTest.class);
 		suite.addTestSuite(XPCOMTest.class);
+		suite.addTestSuite(Nullplugin_JBIDE8792.class);		
 		return suite;
 	}
 }
