@@ -1078,6 +1078,20 @@
 				<para>
 					Most basic activities will require some additional configuration. See <xref linkend="Reference-Property_sections" /> for more information.
 				</para>
+				<section>
+					<title>Start and End</title>
+					<para>
+						Every BPEL process has implicit <property>Start</property> <inlinemediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/BPEL_Designer_04.png"/>
+							</imageobject>
+						</inlinemediaobject> and <property>End</property> <inlinemediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/BPEL_Designer_05.png"/>
+							</imageobject>
+						</inlinemediaobject> activities. These do not correspond to actual BPEL elements however, and are simply placeholders for visualizing the beginning and end of the process flow:
+					</para>
+				</section>
 			</section>
       </section>
     </section>
