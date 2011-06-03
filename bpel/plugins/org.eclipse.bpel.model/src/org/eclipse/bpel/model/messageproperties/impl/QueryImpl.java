@@ -15,6 +15,7 @@
 package org.eclipse.bpel.model.messageproperties.impl;
 
 //Bugzilla 340654 - renamed to avoid confusion with WSDL's ExtensibilityElement
+import org.eclipse.bpel.model.Expression;
 import org.eclipse.bpel.model.impl.BPELExtensibilityElementImpl;
 import java.util.Collection;
 
@@ -55,7 +56,7 @@ import org.w3c.dom.Text;
  *
  * @customized
  */
-public class QueryImpl extends BPELExtensibilityElementImpl implements Query {
+public class QueryImpl extends BPELExtensibilityElementImpl implements Query, Expression {
 	/**
 	 * The default value of the '{@link #getQueryLanguage() <em>Query Language</em>}' attribute.
 	 * <!-- begin-user-doc -->
