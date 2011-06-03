@@ -356,62 +356,59 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		Node sourceNodeProxy = null;
 		// FIX FOR JBIDE-1568, added by Max Areshkau
 		try {
-			if (ElService.getInstance().isELNode(getPageContext(),
-					sourceNode)) {
-				
-				sourceNodeProxy = VpeProxyUtil.createProxyForELExpressionNode(getPageContext(),
-					sourceNode);
+			if (ElService.getInstance().isELNode(getPageContext(), sourceNode)) {
+				sourceNodeProxy = VpeProxyUtil.createProxyForELExpressionNode(
+						getPageContext(), sourceNode);
 				try {
-				creationData = template.create(getPageContext(),
-						sourceNodeProxy, getVisualDocument());
-				//Fix for JBIDE-3144, we use proxy and some template can 
-				//try to cast for not supported interface
+					creationData = template.create(getPageContext(),
+							sourceNodeProxy, getVisualDocument());
+					//Fix for JBIDE-3144, we use proxy and some template can 
+					//try to cast for not supported interface
 				} catch(ClassCastException ex) {
 					VpePlugin.reportProblem(ex);
 					sourceNodeProxy = null;
 					//then we create template without using proxy
-					creationData = template.create(getPageContext(), sourceNode,
-							getVisualDocument());
+					creationData = template.create(getPageContext(), 
+							sourceNode, getVisualDocument());
 				}
-				
 			} else {
 				creationData = template.create(getPageContext(), sourceNode,
 						getVisualDocument());
 			}
-
 		} catch (XPCOMException ex) {
 			VpePlugin.getPluginLog().logError(ex);
 			VpeTemplate defTemplate = getTemplateManager().getDefTemplate();
 			creationData = defTemplate.create(getPageContext(), sourceNode,
 					getVisualDocument());
 		}
-
+		if (creationData == null) {
+			VpePlugin.getDefault().logError(
+					"!ERROR! VpeCreationData is not initialized for source node '" //$NON-NLS-1$
+							+ sourceNode.getNodeName() + "'"); //$NON-NLS-1$
+			VpeTemplate defTemplate = getTemplateManager().getDefTemplate();
+			creationData = defTemplate.create(getPageContext(), sourceNode,
+					getVisualDocument());
+		}
 		getPageContext().setCurrentVisualNode(null);
-
+		/*
+		 * JBDS crashes when 'creationData' is null
+		 */
 		nsIDOMNode visualNewNode = creationData.getNode();
-		
 		if (sourceNode.getNodeType() == Node.ELEMENT_NODE && visualNewNode == null && isShowInvisibleTags()) {
 			visualNewNode = createInvisbleElementLabel(sourceNode);
 		}
-
 		nsIDOMElement border = null;
-
 		if (visualNewNode != null
 				&& visualNewNode.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
-
 			nsIDOMElement visualNewElement = queryInterface(visualNewNode, nsIDOMElement.class);
-
 			if ((visualNewElement != null) && template.hasImaginaryBorder()) {
-
 				visualNewElement.setAttribute(HTML.ATTR_STYLE, visualNewElement
 						.getAttribute(HTML.ATTR_STYLE)
 						+ VpeStyleUtil.SEMICOLON_STRING + DOTTED_BORDER);
-
 			}
 			if (visualNewElement != null) {
 				correctVisualAttribute(visualNewElement);
 			}
-
 			/*
 			 * Create border for unknown tags if specified.
 			 * Update the style attribute. Usually it's DIV or SPAN with text, 
@@ -433,20 +430,14 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
 		if (sourceNode instanceof Element && visualNewNode != null
 				&& visualNewNode.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
-
 			setTooltip((Element) sourceNode, queryInterface(visualNewNode, nsIDOMElement.class));
 		}
 		if (registerFlag) {
-
 			final VpeElementData data = creationData.getElementData();
-			
 			if ((sourceNodeProxy != null) && (data != null)
 					&& (data.getNodesData() != null)
 					&& (data.getNodesData().size() > 0)) {
-
-				for (org.jboss.tools.vpe.editor.mapping.NodeData nodeData : data
-						.getNodesData()) {
-
+				for (org.jboss.tools.vpe.editor.mapping.NodeData nodeData : data.getNodesData()) {
 					if (nodeData.getSourceNode() != null) {
 						Node attr = null;
 						if(sourceNode.getAttributes()!=null) {
@@ -487,8 +478,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		template.validate(getPageContext(), sourceNode, getVisualDocument(),
 				creationData);
 		getPageContext().setCurrentVisualNode(null);
-
-
 		if (border != null) {
 			return border;
 		} else {
@@ -497,11 +486,9 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	}
 
 	protected void correctVisualAttribute(nsIDOMElement element) {
-
 		String styleValue = element.getAttribute(HTML.TAG_STYLE);
 		String backgroundValue = element
 				.getAttribute(VpeStyleUtil.PARAMETR_BACKGROND);
-
 		if (styleValue != null) {
 			styleValue = VpeStyleUtil.addFullPathIntoURLValue(styleValue,
 					pageContext);
@@ -530,7 +517,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	 */
 	protected void addChildren(VpeTemplate containerTemplate,
 			Node sourceContainer, nsIDOMNode visualContainer) {
-		
 		NodeList sourceNodes = sourceContainer.getChildNodes();
 		int len = sourceNodes.getLength();
 		int childrenCount = 0;
@@ -542,7 +528,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 				childrenCount++;
 			}
 		}
-
 		if (childrenCount == 0) {
 			setPseudoContent(containerTemplate, sourceContainer,
 					visualContainer);
@@ -915,13 +900,8 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			updateNode(sourceText);
 			return true;
 		}
-
-		// }
-		// updateNode(sourceText);
 		return false;
 	}
-
-	// }
 
 	public void setAttribute(Element sourceElement, String name, String value) {
 		VpeElementMapping elementMapping = (VpeElementMapping) domMapping
@@ -972,7 +952,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			return null;
 		}
 		String toggleId = toggleIdAttr.getNodeValue();
-
 		if (toggleId == null) {
 			return null;
 		}
