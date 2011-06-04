@@ -131,7 +131,23 @@
 	<feature url="features/org.jboss.tools.runtime.core.feature_0.0.0.jar" id="org.jboss.tools.runtime.core.feature" version="0.0.0">
 		<category name="AllTools" />
 	</feature>
+	
+	<feature url="features/org.jboss.tools.runtime.as.detector.feature_0.0.0.jar" id="org.jboss.tools.runtime.as.detector.feature" version="0.0.0">
+		<category name="AllTools" />
+	</feature>
+	
+	<feature url="features/org.jboss.tools.runtime.seam.detector.feature_0.0.0.jar" id="org.jboss.tools.runtime.seam.detector.feature" version="0.0.0">
+		<category name="AllTools" />
+	</feature>
 
+	<feature url="features/org.jboss.tools.runtime.drools.detector.feature_0.0.0.jar" id="org.jboss.tools.runtime.drools.detector.feature" version="0.0.0">
+		<category name="AllTools" />
+	</feature>
+
+	<feature url="features/org.jboss.tools.runtime.jbpm.detector.feature_0.0.0.jar" id="org.jboss.tools.runtime.jbpm.feature" version="0.0.0">
+		<category name="AllTools" />
+	</feature>
+	
 	<feature url="features/org.jboss.tools.usage.feature_0.0.0.jar" id="org.jboss.tools.usage.feature" version="0.0.0">
 		<category name="AllTools" />
 	</feature>

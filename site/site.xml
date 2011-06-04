@@ -39,6 +39,11 @@ JBoss Tools 3.3.0 Update Site / p2 Repo
 	<feature url="features/org.jboss.tools.bpel.feature_0.0.0.jar" id="org.jboss.tools.bpel.feature" version="0.0.0" />
 	<feature url="features/org.jboss.tools.modeshape.rest.feature_0.0.0.jar" id="org.jboss.tools.modeshape.rest.feature" version="0.0.0" />
 	<feature url="features/org.jboss.tools.runtime.feature_0.0.0.jar" id="org.jboss.tools.runtime.feature" version="0.0.0" />
+	<feature url="features/org.jboss.tools.runtime.core.feature_0.0.0.jar" id="org.jboss.tools.runtime.core.feature" version="0.0.0" />
+	<feature url="features/org.jboss.tools.runtime.as.detector.feature_0.0.0.jar" id="org.jboss.tools.runtime.as.detector.feature" version="0.0.0" />
+	<feature url="features/org.jboss.tools.runtime.seam.detector.feature_0.0.0.jar" id="org.jboss.tools.runtime.seam.detector.feature" version="0.0.0" />
+	<feature url="features/org.jboss.tools.runtime.drools.detector.feature_0.0.0.jar" id="org.jboss.tools.runtime.drools.detector.feature" version="0.0.0" />
+	<feature url="features/org.jboss.tools.runtime.jbpm.detector.feature_0.0.0.jar" id="org.jboss.tools.runtime.jbpm.detector.feature" version="0.0.0" />
 	<feature url="features/org.jboss.tools.deltacloud.feature_0.0.0.jar" id="org.jboss.tools.deltacloud.feature" version="0.0.0" />
 	<feature url="features/org.jboss.tools.usage.feature_0.0.0.jar" id="org.jboss.tools.usage.feature" version="0.0.0" />
 </site>
