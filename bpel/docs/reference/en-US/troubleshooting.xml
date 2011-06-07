@@ -7,9 +7,11 @@
 	<para>
 		Refer to the OASIS documentation linked in the SA column for a detailed explanation of the BPEL requirement, and for possible resolutions for the error.
 	</para>
-	<para>
-		The substitution parameters (for example: {0} and {1}) are placeholders for the BPEL element, attribute or value identified by the Validator.
-	</para>
+	<note>
+		<para>
+			The substitution parameters (for example: {0} and {1}) are placeholders for the BPEL element, attribute or value identified by the Validator.
+		</para>
+	</note>
 	<section>
 		<title>Error messages</title>
 		<table>
