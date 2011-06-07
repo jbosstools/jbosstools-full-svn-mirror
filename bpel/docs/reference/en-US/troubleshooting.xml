@@ -14,7 +14,7 @@
 		<title>Error messages</title>
 		<table>
 			<title>Error messages</title>
-			<tgroup cols='2' align='left' colsep='1' rowsep='1'>
+			<tgroup cols='2'>
 				<colspec colname='c1'/>
 				<colspec colname='c2'/>
 				<thead>
@@ -25,8 +25,30 @@
 				</thead>
 				<tbody>
 					<row>
-						<entry></entry>
-						<entry></entry>
+						<entry>{1} "{2}" of type "{4}" is not compatible with WSDL message "{3}".</entry>
+						<entry>
+							<ulink url="http://docs.oasis-open.org/wsbpel/2.0/OS/wsbpel-v2.0-OS.html#SA00048_table">00048</ulink>
+							<ulink url="http://docs.oasis-open.org/wsbpel/2.0/OS/wsbpel-v2.0-OS.html#SA00058_table">00058</ulink>
+							<ulink url="http://docs.oasis-open.org/wsbpel/2.0/OS/wsbpel-v2.0-OS.html#SA00087_table">00087</ulink>
+                        </entry> 
+					</row>
+					<row>
+						<entry>The start activity &lt;{0}&gt; must be the first activity in the process.</entry>
+						<entry>
+							<ulink url="http://docs.oasis-open.org/wsbpel/2.0/OS/wsbpel-v2.0-OS.html#SA00056_table">00056</ulink>
+						</entry> 
+					</row>
+					<row>
+						<entry>Standard fault "{1}" cannot be handled in &lt;{0}&gt; when exitOnStandardFaults is set to yes.</entry>
+						<entry>
+							<ulink url="http://docs.oasis-open.org/wsbpel/2.0/OS/wsbpel-v2.0-OS.html#SA00003_table">00003</ulink>
+						</entry> 
+					</row>
+					<row>
+						<entry>The partner link "{1}" referenced from this &lt;{0}&gt; must have "{2}" defined.</entry>
+						<entry>
+							<ulink url="http://docs.oasis-open.org/wsbpel/2.0/OS/wsbpel-v2.0-OS.html#SA00037_table">00037</ulink>
+						</entry> 
 					</row>
 				</tbody>
 			</tgroup>
