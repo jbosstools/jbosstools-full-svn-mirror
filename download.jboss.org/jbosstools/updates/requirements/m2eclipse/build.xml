@@ -16,12 +16,18 @@
 			-f ~/RHDS/updates/requirements/m2eclipse/build.xml -Ddestination=/tmp/m2eclipse-repo
 	-->
 	<target name="mirror">
-		
+		<property name="URL1" value="http://download.eclipse.org/technology/m2e/milestones/1.0/"/>
+		<property name="URL2" value="http://m2eclipse.sonatype.org/sites/m2e"/>
+		<property name="URL3" value="http://m2eclipse.sonatype.org/sites/m2e-extras/"/>
+
+		<property name="URL4" value="http://download.jboss.org/jbosstools/updates/requirements/m2eclipse-wtp-e36/"/>
+		<property name="URL5" value="http://download.jboss.org/jbosstools/updates/requirements/m2eclipse-wtp-e37/"/>
+
+		<!-- 
 		<property name="URL1" value="https://repository.sonatype.org/content/sites/forge-sites/m2e/0.13.0/N/0.13.0.201105260005/"/>
 		<property name="URL2" value="https://repository.sonatype.org/content/sites/forge-sites/m2e-extras/0.13.0/N/0.13.0.201105271033/"/>
 		<property name="URL3" value="https://repository.sonatype.org/content/sites/forge-sites/m2eclipse-wtp/0.13.0/N/0.13.0.201105110807/"/>
 
-		<!-- 
                 <property name="URL1" value="https://repository.sonatype.org/content/sites/forge-sites/m2e/0.13.0/N/0.13.0.201105091504/"/>
                 <property name="URL2" value="https://repository.sonatype.org/content/sites/forge-sites/m2e-extras/0.13.0/N/0.13.0.201105090451/"/>
                 <property name="URL3" value="https://repository.sonatype.org/content/sites/forge-sites/m2eclipse-wtp/0.13.0/N/0.13.0.201105040943/"/>
@@ -39,17 +45,19 @@
 		<property name="compress" value="true" />
 
 		<p2.mirror>
-			<repository location="file:${destination}/0.13.0.201105260005/" name="m2eclipse 0.13.0.201105260005 plugins for Eclipse 3.6 - 3.7" />
+			<repository location="file:${destination}/20110607-1445" name="m2eclipse 0.13 (1.0) for Eclipse 3.6 - 3.7 (mirrored 20110607-1445" />
 			<source>
 				<repository location="${URL1}" />
 				<repository location="${URL2}" />
 				<repository location="${URL3}" />
+				<repository location="${URL4}" />
+				<repository location="${URL5}" />
 			</source>
 
 			<slicingOptions includeFeatures="true" followStrict="true" />
 		</p2.mirror>
 
-		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/0.13.0.201105260005/" artifactRepository="file:${destination}/0.13.0.201105260005/" 
-			publishartifacts="true" source="${destination}/0.13.0.201105260005/" compress="${compress}" />
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/20110607-1445/" artifactRepository="file:${destination}/20110607-1445/" 
+			publishartifacts="true" source="${destination}/20110607-1445/" compress="${compress}" />
 	</target>
 </project>
