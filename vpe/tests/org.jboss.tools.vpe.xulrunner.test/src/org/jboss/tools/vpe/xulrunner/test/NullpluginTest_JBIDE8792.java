@@ -26,7 +26,7 @@ import org.osgi.framework.Bundle;
  * @see <a href="https://issues.jboss.org/browse/JBIDE-8792">JBIDE-8792</a>
  * @author Yahor Radtsevich
  */
-public class Nullplugin_JBIDE8792 extends TestCase {
+public class NullpluginTest_JBIDE8792 extends TestCase {
 	public void testNullplugin() {
 		Bundle xulRunnerBundle = Platform.getBundle(XulRunnerBrowser.getXulRunnerBundle());
 		assertTrue("Nullplugin is found, but it should not be there.", 
