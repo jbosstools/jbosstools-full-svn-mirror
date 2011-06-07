@@ -7,4 +7,77 @@
 	<para>
 		Refer to the OASIS documentation linked in the SA column for a detailed explanation of the BPEL requirement, and for possible resolutions for the error.
 	</para>
+	<para>
+		The substitution parameters (for example: {0} and {1}) are placeholders for the BPEL element, attribute or value identified by the Validator.
+	</para>
+	<section>
+		<title>Error messages</title>
+		<table>
+			<title>Error messages</title>
+			<tgroup cols='2' align='left' colsep='1' rowsep='1'>
+				<colspec colname='c1'/>
+				<colspec colname='c2'/>
+				<thead>
+					<row>
+						<entry>Message text</entry>
+						<entry>SA</entry>
+					</row>
+				</thead>
+				<tbody>
+					<row>
+						<entry></entry>
+						<entry></entry>
+					</row>
+				</tbody>
+			</tgroup>
+		</table>
+	</section>
+	<section>
+		<title>Warning messages</title>
+		<table>
+			<title>Error messages</title>
+			<tgroup cols='2' align='left' colsep='1' rowsep='1'>
+				<colspec colname='c1'/>
+				<colspec colname='c2'/>
+				<thead>
+					<row>
+						<entry>Message text</entry>
+						<entry>SA</entry>
+					</row>
+				</thead>
+				<tbody>
+					<row>
+					<entry>
+					</entry>
+					<entry>
+					</entry>
+				</row>
+			</tbody>
+		</tgroup>
+		</table>
+	</section>
+	<section>
+		<title>Information messages</title>
+		<table>
+			<title>Error messages</title>
+			<tgroup cols='2' align='left' colsep='1' rowsep='1'>
+				<colspec colname='c1'/>
+				<colspec colname='c2'/>
+				<thead>
+					<row>
+						<entry>Message text</entry>
+						<entry>SA</entry>
+					</row>
+				</thead>
+				<tbody>
+					<row>
+					<entry>
+					</entry>
+					<entry>
+					</entry>
+				</row>
+			</tbody>
+		</tgroup>
+		</table>
+	</section>
 </chapter>
