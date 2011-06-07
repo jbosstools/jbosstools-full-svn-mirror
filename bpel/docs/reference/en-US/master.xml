@@ -8,6 +8,7 @@
 	<!ENTITY summary SYSTEM "summary.xml">
 	<!ENTITY tasks SYSTEM "tasks.xml">
 	<!ENTITY install SYSTEM "install.xml">
+	<!ENTITY troubleshooting SYSTEM "troubleshooting.xml">
 ]>
 <book>
   <bookinfo>
@@ -51,5 +52,5 @@
     </abstract> -->
   </bookinfo>
   <toc/>
-  &overview;&install;&tasks;&reference;&summary;
+  &overview;&install;&tasks;&reference;&troubleshooting;&summary;
 <!--&overview;&install;&tasks;&detail;&deploy;&reference;&summary;--></book>

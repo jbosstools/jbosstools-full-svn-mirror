@@ -531,4 +531,55 @@
 			</para>
 		</section>
 	</section>
+	<section>
+		<title>Creating correlation sets</title>
+		<para>
+			Correlation sets are used to identify ongoing conversations between a client and the BPEL process. Typically, a correlation is an element in a message that uniquely identifies the conversation between client and service; for example, an Order ID or Social Security Number. This also identifies a specific process instance being managed by the BPEL engine.
+		</para>
+		<para>
+			In many cases a single element of a message is not enough to make it unique, so correlations can be defined as composites of several fields. Since a conversation can involve many different types of messages. Different correlations will need to be defined for each message type.
+		</para>
+		<para>
+			To create a correlation for a messaging activity (for example: <property>Invoke</property>, <property>Receive</property>, <property>Reply</property>), select the activity and then click <guibutton>Add</guibutton> on the <guilabel>Correlation Detail</guilabel> property tab. This will display the <guilabel>Select a Property</guilabel> dialog.
+		</para>
+		<figure>
+			<title>Select a Property</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/reference/Handlers_07.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>
+			You canselect an existing property defined in the WSDL or click <guibutton>New</guibutton> to create a new WSDL property, which will display the <guilabel>Create Message Property</guilabel> dialog.
+		</para>
+		<figure>
+			<title>Create Message Property</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/reference/Handlers_08.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>
+			Enter a name for the new WSDL property and its type. Either an XSD simple type or an XML Schema element. 
+		</para>
+		<para>
+			Next, click the <guibutton>Browse”</guibutton> button to select a type. This will display the <guilabel>Type Selection</guilabel> dialog. 
+		</para>
+		<para>
+			Click <guilabel>New</guilabel> in the <guilabel>Aliases</guilabel> section to create a new WSDL property alias.
+		</para>
+		<figure>
+			<title>Create Property Alias</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/reference/Handlers_09.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>
+			Select either the <guilabel>Message Type</guilabel>, XSD <guilabel>Simple Type</guilabel> or XML scheme <guilabel>Element</guilabel> radio button and click <guibutton>Browse</guibutton> to select its type. Then click <guibutton>OK</guibutton>.
+		</para>
+	</section>
 </chapter>
