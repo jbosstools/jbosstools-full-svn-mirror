@@ -20,8 +20,7 @@
 		<property name="URL2" value="http://m2eclipse.sonatype.org/sites/m2e"/>
 		<property name="URL3" value="http://m2eclipse.sonatype.org/sites/m2e-extras/"/>
 
-		<property name="URL4" value="http://download.jboss.org/jbosstools/updates/requirements/m2eclipse-wtp-e36/"/>
-		<property name="URL5" value="http://download.jboss.org/jbosstools/updates/requirements/m2eclipse-wtp-e37/"/>
+		<property name="URL4" value="http://download.jboss.org/jbosstools/updates/requirements/m2eclipse-wtp-e37/"/>
 
 		<!-- 
 		<property name="URL1" value="https://repository.sonatype.org/content/sites/forge-sites/m2e/0.13.0/N/0.13.0.201105260005/"/>
@@ -51,7 +50,6 @@
 				<repository location="${URL2}" />
 				<repository location="${URL3}" />
 				<repository location="${URL4}" />
-				<repository location="${URL5}" />
 			</source>
 
 			<slicingOptions includeFeatures="true" followStrict="true" />
