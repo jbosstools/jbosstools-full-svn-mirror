@@ -1654,6 +1654,9 @@ Cannot deploy - sourceDir not found in
 		<property name="get.artifact.id.expected.ws/features/org.jboss.tools.ws.feature/target/org.jboss.tools.ws.feature-1.1.0-SNAPSHOT.jar"
 		          value="org.jboss.tools.ws.feature"
 		/>
+		<property name="get.artifact.id.expected.ws/features/org.jboss.tools.ws.jaxrs.feature/target/org.jboss.tools.ws.jaxrs.feature-1.1.0-SNAPSHOT.jar"
+		          value="org.jboss.tools.ws.jaxrs.feature"
+		/>
 		<property name="get.artifact.id.expected.cdi/features/org.jboss.tools.cdi.feature/target/org.jboss.tools.cdi.feature-1.0.0-SNAPSHOT.jar"
 		          value="org.jboss.tools.cdi.feature"
 		/>

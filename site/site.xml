@@ -18,6 +18,7 @@ JBoss Tools 3.3.0 Update Site / p2 Repo
 	<feature url="features/org.jboss.tools.struts.feature_0.0.0.jar" id="org.jboss.tools.struts.feature" version="0.0.0" />
 	<feature url="features/org.jboss.tools.esb.feature_0.0.0.jar" id="org.jboss.tools.esb.feature" version="0.0.0" />
 	<feature url="features/org.jboss.tools.ws.feature_0.0.0.jar" id="org.jboss.tools.ws.feature" version="0.0.0" />
+	<feature url="features/org.jboss.tools.ws.jaxrs.feature_0.0.0.jar" id="org.jboss.tools.ws.jaxrs.feature" version="0.0.0" />
 	<feature url="features/org.jboss.tools.portlet.feature_0.0.0.jar" id="org.jboss.tools.portlet.feature" version="0.0.0" />
 	<feature url="features/org.jboss.tools.smooks.feature_0.0.0.jar" id="org.jboss.tools.smooks.feature" version="0.0.0" />
 	<feature url="features/org.drools.eclipse.task.feature_0.0.0.jar" id="org.drools.eclipse.task.feature" version="0.0.0" />
