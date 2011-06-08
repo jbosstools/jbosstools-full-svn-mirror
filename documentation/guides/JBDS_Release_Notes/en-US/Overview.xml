@@ -19,7 +19,21 @@
 				</para>
 			</listitem>
 		</itemizedlist>
-		
+		<important>
+			<para>
+				If you are installing on a Linux distribution you must set the following limits in <filename>/etc/security/limits.conf</filename> upon installation completion and before running JBoss Developer Studio:
+			</para>
+<programlisting>
+* soft nofile 9216
+* hard nofile 9216
+</programlisting>
+			<para>
+				These settings will ensure you do not encounter an error reguarding maximum open files when starting JBoss Developer Studio.
+			</para>
+			<para>
+				For further installation instructions see the Getting Started Guide for this release, available at: <ulink url="http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/index.html">http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/index.html</ulink>
+			</para>
+		</important>
 		<!-- Old 'new' feature list for JBDS 4.0.0 left as a guide -->
 	<!--	<itemizedlist>
 			<listitem>

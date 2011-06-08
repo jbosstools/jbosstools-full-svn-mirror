@@ -6,6 +6,18 @@
 <!--    <para>
         The following list highlights new features that have been added to this release, as well as listing notable bug fixes. You can find a complete list of bug fixes <ulink url="https://issues.jboss.org/browse/JBIDE">here</ulink>.
 	</para> -->
+	<formalpara>
+      <title>BPEL</title>
+        <para>
+			<itemizedlist>					
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1610">JBDS-1610</ulink>: BPEL tooling is now supported as an additional tool for JBoss Developer Studio. Many bug fixes and enhancements have been applied to it in order to bring it from a technology preview to a supported component. 
+					</para>
+				</listitem>
+            </itemizedlist>
+        </para>
+    </formalpara>
     <formalpara>
       <title>Contexts and Dependency Injection (CDI)</title>
         <para>
