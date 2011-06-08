@@ -237,6 +237,18 @@ Java HotSpot(TM) Server VM (build 19.1-b02, mixed mode)]]>
     <para>
       This chapter will provide you with detailed information on how to install <property>JBoss Developer Studio</property>.
     </para>
+	<important>
+		<para>
+			If you are installing on a Linux distribution you must set the following limits in <filename>/etc/security/limits.conf</filename> upon installation completion and before running JBoss Developer Studio:
+		</para>
+<programlisting>
+* soft nofile 9216
+* hard nofile 9216
+</programlisting>
+		<para>
+			These settings will ensure you do not encounter an error reguarding maximum open files when starting JBoss Developer Studio.
+		</para>
+	</important>
 	<section id="Installing_JBoss_Developer_Studio-Automated_Installation">
 		<title>Automated Installation</title>
 		<para>
@@ -584,11 +596,31 @@ java -jar /path/to/installer.jar /path/to/InstallConfigRecord.xml
     </figure>
 </section>
   </section>
-   
+  <section id="extras_site">
+	  <title>Accessing the additional supported tooling</title> 
+	  <para>
+	  A number of components are fully supported, but do not come as part of the standard installation. These extra components are available for individual installation through the JBoss Developer Studio extras site. To access the extras site, select <menuchoice>
+		  <guimenuitem>Help</guimenuitem>
+		  <guimenuitem>Install New Software...</guimenuitem>
+	  </menuchoice> and, click the 
+		  <guibutton>
+			  Add...
+		  </guibutton>
+		  button. In the <guilabel>Add Repository</guilabel> dialog box enter <guilabel>JBoss Developer Studio Extras</guilabel> for the <guilabel>Name</guilabel> and <guilabel>http://devstudio.jboss.com/updates/4.0/extras/ </guilabel> for the <guilabel>Location</guilabel>. Click the 
+			  <guibutton>
+				  OK
+			  </guibutton>
+			  button to save your changes.
+		  </para>
+		  
+		  <para>
+			  The components available on the extras site will then be listed, which you can select and install by following the prompts.
+		  </para>
+  </section>
   <section id="tech_previews">
-    <title>Getting Access to Tech Previews</title> 
+    <title>Accessing to Tech Previews</title> 
     <para>
-      A number of components that are not officially supported in this release of JDBS have been made available through an additional Tech Preview Eclipse update site. To access this update site select <menuchoice><guimenuitem>Help</guimenuitem><guimenuitem>Install New Software...</guimenuitem></menuchoice> in Eclipse, click the 
+      A number of components that are not officially supported in this release have been made available through an additional Tech Preview update site. To access this update site select <menuchoice><guimenuitem>Help</guimenuitem><guimenuitem>Install New Software...</guimenuitem></menuchoice> in Eclipse, click the 
       <guibutton>
         Add...
       </guibutton>
@@ -600,15 +632,15 @@ java -jar /path/to/installer.jar /path/to/InstallConfigRecord.xml
     </para>
      
     <para>
-      Eclipse will then list the components available on the update site, which you can select and install by following the prompts.
+      The components available on the update site will be listed, which you can select and install from by following the prompts.
     </para>
      
-    <note>
+<!--    <note>
       <title>Note</title> 
       <para>
         If you are prompted for credentials when accessing the Tech Preview Update Site, enter the username and password that were supplied in an email or shown in the Update Guide available on the <ulink url="http://access.redhat.com">Customer Service Portal</ulink>. If you experience any issues accessing the Tech Preview Update Site please contact technical support.
       </para>
-    </note>
+  </note> -->
   </section>
    
   <section>
