@@ -26,4 +26,9 @@
 				The Enterprise Application Platform Server has been redefined for the enterprise market to a level where direct association to a community release can no longer be drawn.
 			</para>
 		</note>
+		<important>
+			<para>
+				The Drools Rule editor has been removed from this release. For further information on why this has occurred, see <ulink url="https://issues.jboss.org/browse/JBIDE-9052">JBIDE-9052</ulink>
+			</para>
+		</important>
 </section>
