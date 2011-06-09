@@ -12,7 +12,7 @@ package org.jboss.tools.deltacloud.core;
 
 import java.util.List;
 
-import org.jboss.tools.deltacloud.client.Property;
+import org.apache.deltacloud.client.Property;
 
 public class DeltaCloudHardwareProperty {
 

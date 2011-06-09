@@ -13,7 +13,7 @@ package org.jboss.tools.internal.deltacloud.test.core.job;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.jboss.tools.deltacloud.client.Instance;
+import org.apache.deltacloud.client.Instance;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.core.job.AbstractCloudElementJob;

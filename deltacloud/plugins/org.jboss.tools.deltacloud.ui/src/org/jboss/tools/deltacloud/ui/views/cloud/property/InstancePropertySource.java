@@ -12,10 +12,10 @@ package org.jboss.tools.deltacloud.ui.views.cloud.property;
 
 import java.util.List;
 
+import org.apache.deltacloud.client.utils.StringUtils;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
-import org.jboss.tools.deltacloud.client.utils.StringUtils;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.ui.views.CVMessages;
 import org.jboss.tools.deltacloud.ui.views.cloud.InstanceItem;

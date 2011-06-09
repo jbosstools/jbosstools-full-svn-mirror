@@ -15,7 +15,7 @@ import static org.junit.Assert.assertFalse;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
-import org.jboss.tools.deltacloud.client.DeltaCloudClientException;
+import org.apache.deltacloud.client.DeltaCloudClientException;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.internal.deltacloud.test.context.MockIntegrationTestContext;

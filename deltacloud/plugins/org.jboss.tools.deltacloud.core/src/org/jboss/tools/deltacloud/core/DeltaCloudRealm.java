@@ -10,7 +10,7 @@
  *******************************************************************************/
 package org.jboss.tools.deltacloud.core;
 
-import org.jboss.tools.deltacloud.client.Realm;
+import org.apache.deltacloud.client.Realm;
 
 /**
  * 

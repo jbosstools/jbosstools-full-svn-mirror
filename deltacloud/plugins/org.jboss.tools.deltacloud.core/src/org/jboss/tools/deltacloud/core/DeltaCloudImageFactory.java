@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.deltacloud.client.Image;
 import org.eclipse.core.runtime.Assert;
-import org.jboss.tools.deltacloud.client.Image;
 
 /**
  * @author André Dietisheim

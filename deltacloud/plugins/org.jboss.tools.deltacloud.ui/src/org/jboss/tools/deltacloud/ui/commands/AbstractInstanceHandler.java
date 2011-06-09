@@ -10,12 +10,12 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.ui.commands;
 
+import org.apache.deltacloud.client.utils.StringUtils;
+import org.apache.deltacloud.client.utils.StringUtils.IElementFormatter;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.jboss.tools.deltacloud.client.utils.StringUtils;
-import org.jboss.tools.deltacloud.client.utils.StringUtils.IElementFormatter;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance;
 import org.jboss.tools.deltacloud.core.DeltaCloudResourceAction;
 import org.jboss.tools.deltacloud.core.job.InstanceActionJob;

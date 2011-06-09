@@ -10,7 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.deltacloud.core;
 
-import org.jboss.tools.deltacloud.client.API.Driver;
+import org.apache.deltacloud.client.API.Driver;
 
 
 /**
