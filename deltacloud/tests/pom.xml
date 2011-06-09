@@ -13,7 +13,6 @@
 	<name>deltacloud.tests</name>
 	<packaging>pom</packaging>
 	<modules>
-		<module>org.jboss.tools.deltacloud.test</module>
 	</modules>
 </project>
 	
