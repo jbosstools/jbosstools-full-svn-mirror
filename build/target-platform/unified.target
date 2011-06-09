@@ -24,9 +24,6 @@
 			<unit id="org.apache.oro" version="2.0.8.v201005080400"/>
 			<unit id="org.jdom" version="1.0.0.v201005080400"/>
 
-			<unit id="org.mozilla.xulrunner.feature.feature.group" version="1.9.12.v20110120-2050-H36-CR1"/>
-			<unit id="org.mozilla.xpcom.feature.feature.group" version="1.9.12.v20110120-2050-H36-CR1"/>
-
 			<unit id="org.eclipse.tptp.platform.profile.server.feature.group" version="4.5.2.v201101261720-7H7F4AkF7B88MAQCKJH"/>
 			<unit id="org.eclipse.tptp.platform.instrumentation.ui.feature.group" version="4.3.2.v201101261720-797918s735435695C83"/>
 			<unit id="org.eclipse.tptp.platform.core.feature.group" version="4.7.2.v201101261720-8X8ZFXoFLWUl6wn5veAISx"/>
