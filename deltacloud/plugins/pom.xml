@@ -13,7 +13,6 @@
 	<name>deltacloud.plugins</name>
 	<packaging>pom</packaging>
 	<modules>
-		<module>org.jboss.tools.deltacloud.client</module>
 		<module>org.jboss.tools.deltacloud.core</module>
 		<module>org.jboss.tools.deltacloud.ui</module>
 		<module>org.jboss.tools.deltacloud.integration</module>
