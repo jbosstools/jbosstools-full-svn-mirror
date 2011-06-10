@@ -41,8 +41,8 @@ import org.eclipse.wst.server.core.IRuntimeType;
 import org.eclipse.wst.server.core.IRuntimeWorkingCopy;
 import org.eclipse.wst.server.core.IServer;
 import org.eclipse.wst.server.core.IServerType;
+import org.eclipse.wst.server.core.IServerWorkingCopy;
 import org.eclipse.wst.server.core.ServerCore;
-import org.eclipse.wst.server.core.internal.ServerWorkingCopy;
 import org.jboss.ide.eclipse.as.core.server.internal.DeployableServer;
 import org.jboss.ide.eclipse.as.core.util.ServerCreationUtils;
 import org.jboss.ide.eclipse.as.rse.core.RSEUtils;
@@ -289,7 +289,7 @@ public class CreateServerFromRSEJob extends ChainedJob {
 			String serverName) throws CoreException {
 		IRuntime rt = findOrCreateStubDeployOnlyRuntime();
 		IServerType st = ServerCore.findServerType("org.jboss.ide.eclipse.as.systemCopyServer");
-		ServerWorkingCopy swc = (ServerWorkingCopy) st.createServer(serverName, null, null);
+		IServerWorkingCopy swc = (IServerWorkingCopy) st.createServer(serverName, null, null);
 		swc.setServerConfiguration(null);
 		swc.setName(serverName);
 		swc.setRuntime(rt);

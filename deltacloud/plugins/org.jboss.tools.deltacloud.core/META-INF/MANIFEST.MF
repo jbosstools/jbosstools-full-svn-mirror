@@ -13,7 +13,7 @@ Bundle-ActivationPolicy: lazy
 Export-Package: org.apache.deltacloud.client;x-friends:="org.jboss.tools.deltacloud.integration,org.jboss.tools.deltacloud.test",
  org.apache.deltacloud.client.utils;x-friends:="org.jboss.tools.deltacloud.test,org.jboss.tools.deltacloud.ui",
  org.jboss.tools.deltacloud.core;x-friends:="org.jboss.tools.deltacloud.ui,org.jboss.tools.deltacloud.test,org.jboss.tools.deltacloud.integration",
- org.jboss.tools.deltacloud.core.job;x-friends:="org.jboss.tools.deltacloud.ui,org.jboss.tools.deltacloud.test",
+ org.jboss.tools.deltacloud.core.job;x-friends:="org.jboss.tools.deltacloud.ui,org.jboss.tools.deltacloud.test,org.jboss.tools.deltacloud.integration",
  org.jboss.tools.internal.deltacloud.core.observable;x-friends:="org.jboss.tools.deltacloud.ui"
 Bundle-ClassPath: client-0.2.0-SNAPSHOT.jar,
  .
