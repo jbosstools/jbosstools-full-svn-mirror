@@ -60,9 +60,13 @@ rl=${STAGINGDIR}/logs/SVN_REVISION
 rm -f ${rl}.txt ${rl}.xml; wget -O ${rl}.xml "http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/api/xml?wrapper=changeSet&depth=1&xpath=//build[1]/changeSet/revision" --timeout=900 --wait=10 --random-wait --tries=30 --retry-connrefused --no-check-certificate --server-response
 if [[ $? -gt 0 ]]; then
 	rm -f ${rl}.txt ${rl}.xml; wget -O ${rl}.xml "http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/config.xml" --timeout=900 --wait=10 --random-wait --tries=30 --retry-connrefused --no-check-certificate --server-response
-	# TODO: track git source revision if available through hudson api
-	if [[ $(cat ${rl}.xml | grep "git" ]]; then
+	if [[ $(cat ${rl}.xml | grep "git") ]]; then
 		echo "GIT Sources" > ${rl}.txt
+		rm -f ${rl}.txt ${rl}.xml
+		# Now, track git source revision through hudson api: /job/${JOB_NAME}/${BUILD_NUMBER}/api/xml?xpath=//lastBuiltRevision
+		rl=${STAGINGDIR}/logs/GIT_REVISION
+		wget -O ${rl}.xml "http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/${BUILD_NUMBER}/api/xml?xpath=//lastBuiltRevision" --timeout=900 --wait=10 --random-wait --tries=30 --retry-connrefused --no-check-certificate --server-response
+		sed -e "s#<lastBuiltRevision><SHA1>\([a-f0-9]\+\)</SHA1><branch><SHA1>\([a-f0-9]\+\)</SHA1><name>\([^<>]\+\)</name></branch></lastBuiltRevision>#\3\@\1#g" ${rl}.xml | sed -e "s#<[^<>]\+>##g" > ${rl}.txt
 	else
 		echo "UNKNOWN" > ${rl}.txt
 	fi
