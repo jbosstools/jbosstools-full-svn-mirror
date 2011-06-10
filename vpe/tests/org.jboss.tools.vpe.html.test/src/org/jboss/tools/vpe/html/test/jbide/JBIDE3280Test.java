@@ -67,6 +67,9 @@ public class JBIDE3280Test extends VpeTest {
 		
 		controller.visualRefresh();
 
+		// yradtsevich: additional delay for Hudson builds 
+		TestUtil.delay(1000L);
+		
 		TestUtil.waitForIdle();
 
 		final nsIDOMDocument newDocument = controller.getXulRunnerEditor().getDOMDocument();
