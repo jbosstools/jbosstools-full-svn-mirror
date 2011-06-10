@@ -58,8 +58,17 @@ rm -f ${bl}; wget -q http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/${BUILD_N
 # JBDS-1361 - fetch XML and then sed it into plain text
 rl=${STAGINGDIR}/logs/SVN_REVISION
 rm -f ${rl}.txt ${rl}.xml; wget -O ${rl}.xml "http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/api/xml?wrapper=changeSet&depth=1&xpath=//build[1]/changeSet/revision" --timeout=900 --wait=10 --random-wait --tries=30 --retry-connrefused --no-check-certificate --server-response
-sed -e "s#<module>\(http[^<>]\+\)</module><revision>\([0-9]\+\)</revision>#\1\@\2\n#g" ${rl}.xml | sed -e "s#<[^<>]\+>##g" > ${rl}.txt 
-
+if [[ $? -gt 0 ]]; then
+	rm -f ${rl}.txt ${rl}.xml; wget -O ${rl}.xml "http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/config.xml" --timeout=900 --wait=10 --random-wait --tries=30 --retry-connrefused --no-check-certificate --server-response
+	# TODO: track git source revision if available through hudson api
+	if [[ $(cat ${rl}.xml | grep "git" ]]; then
+		echo "GIT Sources" > ${rl}.txt
+	else
+		echo "UNKNOWN" > ${rl}.txt
+	fi
+else
+	sed -e "s#<module>\(http[^<>]\+\)</module><revision>\([0-9]\+\)</revision>#\1\@\2\n#g" ${rl}.xml | sed -e "s#<[^<>]\+>##g" > ${rl}.txt 
+fi
 
 METAFILE="${BUILD_ID}-H${BUILD_NUMBER}.txt"
 touch ${STAGINGDIR}/logs/${METAFILE}
