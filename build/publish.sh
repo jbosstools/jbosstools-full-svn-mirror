@@ -56,10 +56,26 @@ bl=${STAGINGDIR}/logs/BUILDLOG.txt
 rm -f ${bl}; wget -q http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/${BUILD_NUMBER}/consoleText -O ${bl} --timeout=900 --wait=10 --random-wait --tries=10 --retry-connrefused --no-check-certificate
 
 # JBDS-1361 - fetch XML and then sed it into plain text
-rl=${STAGINGDIR}/logs/SVN_REVISION
-rm -f ${rl}.txt ${rl}.xml; wget -O ${rl}.xml "http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/api/xml?wrapper=changeSet&depth=1&xpath=//build[1]/changeSet/revision" --timeout=900 --wait=10 --random-wait --tries=30 --retry-connrefused --no-check-certificate --server-response
-sed -e "s#<module>\(http[^<>]\+\)</module><revision>\([0-9]\+\)</revision>#\1\@\2\n#g" ${rl}.xml | sed -e "s#<[^<>]\+>##g" > ${rl}.txt 
-
+wgetParams="--timeout=900 --wait=10 --random-wait --tries=30 --retry-connrefused --no-check-certificate --server-response"
+rl=${STAGINGDIR}/logs/REVISION
+if [[ $(find ${WORKSPACE} -mindepth 2 -maxdepth 3 -name ".svn") ]]; then
+	# Track git source revision through hudson api: /job/${JOB_NAME}/${BUILD_NUMBER}/api/xml?xpath=//lastBuiltRevision
+	rl=${STAGINGDIR}/logs/GIT_REVISION
+	rm -f ${rl}.txt ${rl}.xml; wget -O ${rl}.xml "http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/${BUILD_NUMBER}/api/xml?xpath=//lastBuiltRevision" ${wgetParams}
+	sed -e "s#<lastBuiltRevision><SHA1>\([a-f0-9]\+\)</SHA1><branch><SHA1>\([a-f0-9]\+\)</SHA1><name>\([^<>]\+\)</name></branch></lastBuiltRevision>#\3\@\1#g" ${rl}.xml | sed -e "s#<[^<>]\+>##g" > ${rl}.txt
+elif [[ $(find ${WORKSPACE} -mindepth 2 -maxdepth 3 -name ".svn") ]]; then
+	# Track svn source revision through hudson api: /job/${JOB_NAME}/api/xml?wrapper=changeSet&depth=1&xpath=//build[1]/changeSet/revision
+	rl=${STAGINGDIR}/logs/SVN_REVISION
+	rm -f ${rl}.txt ${rl}.xml; wget -O ${rl}.xml "http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/api/xml?wrapper=changeSet&depth=1&xpath=//build[1]/changeSet/revision" ${wgetParams}
+	if [[ $? -eq 0 ]]; then
+		sed -e "s#<module>\(http[^<>]\+\)</module><revision>\([0-9]\+\)</revision>#\1\@\2\n#g" ${rl}.xml | sed -e "s#<[^<>]\+>##g" > ${rl}.txt 
+	else
+		echo "UNKNOWN SVN REVISION(S)" > ${rl}.txt
+	fi
+else
+	# not git or svn... unsupported
+	echo "UNKNOWN REVISION(S)" > ${rl}.txt
+fi
 
 METAFILE="${BUILD_ID}-H${BUILD_NUMBER}.txt"
 touch ${STAGINGDIR}/logs/${METAFILE}
@@ -197,9 +213,20 @@ ANT_PARAMS=" -DZIPSUFFIX=${ZIPSUFFIX} -DJOB_NAME=${JOB_NAME} -Dinput.dir=${STAGI
 for buildxml in ${WORKSPACE}/build/results/build.xml ${WORKSPACE}/sources/build/results/build.xml ${WORKSPACE}/sources/results/build.xml; do
 	if [[ -f ${buildxml} ]]; then
 		ANT_SCRIPT=${buildxml}
+		RESULTS_DIR=${buildxml/\/build.xml/}
 	fi
 done
 if [[ ${ANT_SCRIPT} ]] && [[ -f ${ANT_SCRIPT} ]]; then ant -f ${ANT_SCRIPT} ${ANT_PARAMS}; fi
+
+# copy buildResults.css, buildResults.html to ${STAGINGDIR}/logs
+if [[ ${RESULTS_DIR} ]] && [[ -d ${RESULTS_DIR} ]]; then
+	for f in buildResults.html buildResults.css; do
+		if [[ -f ${RESULTS_DIR}/${f} ]]; then rsync -arzq ${RESULTS_DIR}/${f} ${STAGINGDIR}/logs/; fi
+	done
+fi
+
+# purge duplicate zip files in logs/zips/all/*.zip
+if [[ -d ${STAGINGDIR}/logs/zips ]]; then rm -f $(find ${STAGINGDIR}/logs/zips -type f -name "*.zip"); fi
 
 # ${bl} is full build log; see above
 mkdir -p ${STAGINGDIR}/logs
