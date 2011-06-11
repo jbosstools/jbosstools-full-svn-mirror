@@ -16,14 +16,19 @@
 			-f ~/RHDS/updates/requirements/m2eclipse/build.xml -Ddestination=/tmp/m2eclipse-repo
 	-->
 	<target name="mirror">
+		<property name="URL1" value="https://repository.sonatype.org/content/sites/forge-sites/m2e/0.12.2/S/0.12.2.20110415-2017/" />
+		<property name="URL2" value="https://repository.sonatype.org/content/sites/forge-sites/m2eclipse-wtp/0.12.0/S/0.12.0.20110421-1500/" />
+		
+		<!--
 		<property name="URL1" value="http://m2eclipse.sonatype.org/sites/m2e/" />
 		<property name="URL2" value="http://m2eclipse.sonatype.org/sites/m2e-extras/" />
-		
+		-->
+
 		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/m2eclipse/" />
 		<property name="compress" value="true" />
 
 		<p2.mirror>
-			<repository location="file:${destination}/0.12/" name="m2eclipse 0.12 plugins for Eclipse 3.6 - 3.7" />
+			<repository location="file:${destination}/0.12.2/" name="m2eclipse 0.12 plugins for Eclipse 3.6" />
 			<source>
 				<repository location="${URL1}" />
 				<repository location="${URL2}" />
@@ -32,6 +37,6 @@
 			<slicingOptions includeFeatures="true" followStrict="true" />
 		</p2.mirror>
 
-		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/0.12/" artifactRepository="file:${destination}/0.12/" publishartifacts="true" source="${destination}/0.12/" compress="${compress}" />
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/0.12.2/" artifactRepository="file:${destination}/0.12.2/" publishartifacts="true" source="${destination}/0.12.2/" compress="${compress}" />
 	</target>
 </project>
