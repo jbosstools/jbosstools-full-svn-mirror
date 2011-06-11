@@ -58,7 +58,7 @@ rm -f ${bl}; wget -q http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/${BUILD_N
 # JBDS-1361 - fetch XML and then sed it into plain text
 wgetParams="--timeout=900 --wait=10 --random-wait --tries=30 --retry-connrefused --no-check-certificate --server-response"
 rl=${STAGINGDIR}/logs/REVISION
-if [[ $(find ${WORKSPACE} -mindepth 2 -maxdepth 3 -name ".svn") ]]; then
+if [[ $(find ${WORKSPACE} -mindepth 2 -maxdepth 3 -name ".git") ]]; then
 	# Track git source revision through hudson api: /job/${JOB_NAME}/${BUILD_NUMBER}/api/xml?xpath=//lastBuiltRevision
 	rl=${STAGINGDIR}/logs/GIT_REVISION
 	rm -f ${rl}.txt ${rl}.xml; wget -O ${rl}.xml "http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/${BUILD_NUMBER}/api/xml?xpath=//lastBuiltRevision" ${wgetParams}
