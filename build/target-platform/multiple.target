@@ -13,8 +13,8 @@
 		<location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
 			<repository location="http://download.jboss.org/jbosstools/updates/helios/"/>
 
-			<unit id="org.maven.ide.eclipse.feature.feature.group" version="0.12.1.20110112-1712"/>
-			<unit id="org.maven.ide.eclipse.wtp.feature.feature.group" version="0.11.1.20101108-1810"/>
+			<unit id="org.maven.ide.eclipse.feature.feature.group" version="0.12.2.20110415-2017"/>
+			<unit id="org.maven.ide.eclipse.wtp.feature.feature.group" version="0.12.0.20110421-1500"/>
 		
 			<!-- want the latest, 1.6.2.v201005080631, not 1.5.1.v201005080630 -->
 			<!-- 
