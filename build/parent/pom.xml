@@ -330,7 +330,7 @@
 		<profile>
 			<id>jboss-requirements-composite-extras-mirror</id>
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 			</activation>
 			<repositories>
 				<repository>
