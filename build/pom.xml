@@ -9,7 +9,24 @@
 	<packaging>pom</packaging>
 
 	<profiles>
-
+		<!-- for bootstrapping the parent and target-platform poms via Mead, we need to be able to fetch from this folder and run 
+			this profile (excluding all others); currently parent pom includes target-platform build too, so only need to build the parent
+			 
+			mvn clean install -P parent,\!libs,\!tests,\!jmx,\!archives,\!as,\!common,\!jst,\!xulrunner,\!vpe \
+			-P \!jsf,\!freemarker,\!hibernatetools,\!portlet,\!struts,\!smooks,\!cdi,\!birt,\!bpel,\!esb,\!seam,\!examples \
+			-P \!maven,\!ws,\!modeshape,\!flow,\!jbpm,\!gwt,\!deltacloud,\!runtime,\!usage,\!aggregate-coverage
+			
+		-->
+		<profile>
+			<id>parent</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<modules>
+				<module>parent</module>
+			</modules>
+		</profile>
+		
 		<profile>
 			<id>libs</id>
 			<activation>
@@ -251,7 +268,7 @@
 		<profile>
 			<id>workingset</id>
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 			</activation>
 			<modules>
 				<module>../portlet</module>
@@ -291,7 +308,7 @@
 		<profile>
 			<id>profiler</id>
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 			</activation>
 			<modules>
 				<module>../profiler</module>
@@ -577,6 +594,7 @@
 		<profile>
 			<id>deltacloud-bootstrap</id>
 			<modules>
+				<module>../tests</module>
 				<module>../as</module>
 				<module>../deltacloud</module>
 			</modules>
@@ -609,16 +627,6 @@
 			</activation>
 			<modules>
 				<module>../usage</module>
-			</modules>
-		</profile>
-		
-		<profile>
-			<id>site</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<modules>
-				<module>../site</module>
 			</modules>
 		</profile>
 
