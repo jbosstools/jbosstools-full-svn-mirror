@@ -22,12 +22,12 @@
       <import plugin="org.apache.log4j" version="1.2.13" match="greaterOrEqual"/>
    </requires>
 
-   <plugin
+<!--   <plugin
          id="org.jboss.tools.deltacloud.client"
          download-size="0"
          install-size="0"
          version="0.0.0"
-         unpack="false"/>
+         unpack="false"/> -->
 
    <plugin
          id="org.jboss.tools.deltacloud.core"
