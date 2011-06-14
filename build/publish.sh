@@ -8,6 +8,9 @@
 # where to create the stuff to publish
 STAGINGDIR=${WORKSPACE}/results/${JOB_NAME}
 
+# for trunk, use "trunk" or "trunk/soa" instead of generated path from job name
+PUBLISHPATHSUFFIX=""; if [[ $1 ]]; then PUBLISHPATHSUFFIX="$1"; fi
+
 # https://jira.jboss.org/browse/JBIDE-6956 "jbosstools-3.2.0.M2" is too verbose, use "3.2.0.M2" instead
 JOBNAMEREDUX=${JOB_NAME/.aggregate}; JOBNAMEREDUX=${JOBNAMEREDUX/jbosstools-}
 
@@ -261,9 +264,10 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 		# if an aggregate build, put output elsewhere on disk
 		if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]]; then
 			echo "<meta http-equiv=\"refresh\" content=\"0;url=${BUILD_ID}-H${BUILD_NUMBER}/\">" > /tmp/latestBuild.html
-			if [[ $1 == "trunk" ]]; then
-				date; rsync -arzq --delete ${STAGINGDIR}/* $DESTINATION/builds/nightly/trunk/${BUILD_ID}-H${BUILD_NUMBER}/
-				date; rsync -arzq --delete /tmp/latestBuild.html $DESTINATION/builds/nightly/trunk/
+			
+			if [[ ${PUBLISHPATHSUFFIX} ]]; then
+				date; rsync -arzq --delete ${STAGINGDIR}/* $DESTINATION/builds/nightly/${PUBLISHPATHSUFFIX}/${BUILD_ID}-H${BUILD_NUMBER}/
+				date; rsync -arzq --delete /tmp/latestBuild.html $DESTINATION/builds/nightly/${PUBLISHPATHSUFFIX}/
 			else
 				date; rsync -arzq --delete /tmp/latestBuild.html $DESTINATION/builds/nightly/${JOBNAMEREDUX}/ 
 				date; rsync -arzq --delete ${STAGINGDIR}/* $DESTINATION/builds/nightly/${JOBNAMEREDUX}/${BUILD_ID}-H${BUILD_NUMBER}/
@@ -286,8 +290,8 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 
 	# extra publish step for aggregate update sites ONLY
 	if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]]; then
-		if [[ $1 == "trunk" ]]; then 
-			date; rsync -arzq --delete ${STAGINGDIR}/all/repo/* $DESTINATION/updates/nightly/trunk/
+		if [[ ${PUBLISHPATHSUFFIX} ]]; then 
+			date; rsync -arzq --delete ${STAGINGDIR}/all/repo/* $DESTINATION/updates/nightly/${PUBLISHPATHSUFFIX}/
 		else
 			date; rsync -arzq --delete ${STAGINGDIR}/all/repo/* $DESTINATION/updates/nightly/${JOBNAMEREDUX}/
 		fi
