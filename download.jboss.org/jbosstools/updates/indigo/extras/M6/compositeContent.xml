@@ -3,9 +3,9 @@
 <repository name='JBoss Tools Requirements - Composite Indigo Mirror - Extras' type='org.eclipse.equinox.internal.p2.metadata.repository.CompositeMetadataRepository' version='1.0.0'>
 <properties size='2'>
 <property name='p2.compressed' value='true'/>
-<property name='p2.timestamp' value='1308002845000'/>
+<property name='p2.timestamp' value='1308010282000'/>
 </properties>
-<children size='8'>
+<children size='9'>
 <child location='../../../requirements/egit/0.11/'/>
 <child location='../../../requirements/findbugs/1.3.9/'/>
 <child location='../../../requirements/jslint/1.5/'/>
@@ -14,6 +14,7 @@
 
 <child location='../../../requirements/springide/2.6.0.201103160035/'/>
 <child location='../../../requirements/subclipse/1.6/'/>
+<child location='../../../requirements/subversive/0.7.9_2.2.2_1.3/'/>
 <child location='../../../requirements/testng/6.0.1.20110418_1444/'/>
 </children>
 </repository>
