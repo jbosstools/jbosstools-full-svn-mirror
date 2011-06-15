@@ -1,4 +1,4 @@
-<project default="buildResults.aggregate">
+<project default="buildResults.single">
 
 	<!-- should be set by script or in Hudson -->
 	<property name="ZIPSUFFIX" value="SNAPSHOT" />
@@ -101,10 +101,22 @@
 
 	<!-- NEW STUFF HERE -->
 
+	<target name="buildResults.single" depends="init" description="generate buildResults.html from build properties">
+		<ant target="collect.zips" antfile="../aggregate/site/build.xml">
+			<property name="inputRepos" value="2" />
+			<property name="inputRepo1" value="file://${input.dir}/all/repo/" />
+			<property name="inputRepo2" value="http://download.jboss.org/jbosstools/builds/staging/${JOB_NAME}/all/repo/" />
+		</ant>
+		<ant target="collect.metadata" antfile="../aggregate/site/build.xml">
+		</ant>
+		<antcall target="buildResults" />
+	</target>
+
 	<target name="buildResults.aggregate" depends="init" description="generate buildResults.html from build properties">
 		<ant target="collect.zips" antfile="../aggregate/site/build.xml">
-			<property name="inputRepos" value="1" />
-			<property name="inputRepo1" value="http://download.jboss.org/jbosstools/builds/staging/_composite_/3.2_stable_branch" />
+			<property name="inputRepos" value="2" />
+			<property name="inputRepo1" value="file://${input.dir}/all/repo/" />
+			<property name="inputRepo2" value="http://download.jboss.org/jbosstools/builds/staging/_composite_/3.2_stable_branch" />
 		</ant>
 		<ant target="collect.metadata" antfile="../aggregate/site/build.xml">
 		</ant>
@@ -134,22 +146,37 @@
 	</target>
 
 	<target name="buildResults" description="generate buildResults.html from build properties" depends="init">
-		<for param="propertiesFile" delimiter=", " list="zips/build.properties.all.xml, ../../logs/zips/build.properties.all.xml">
+		<var name="propertiesFileFound" unset="true" />
+		<for param="propertiesFile" delimiter=", " list="${output.dir}/zips/build.properties.all.xml, zips/build.properties.all.xml, ../../logs/zips/build.properties.all.xml">
 			<sequential>
 				<if>
-					<available file="@{propertiesFile}" type="file"/>
+					<and>
+						<available file="@{propertiesFile}" type="file" />
+						<not>
+							<isset property="propertiesFileFound" />
+						</not>
+					</and>
 					<then>
-						<delete quiet="true" file="buildResults.out.html" />
-						<xslt in="@{propertiesFile}" out="buildResults.out.html" style="buildResults.xsl" force="true">
+						<var name="propertiesFileFound" value="true" />
+						<delete quiet="true" file="buildResults.html" />
+						<xslt in="@{propertiesFile}" out="buildResults.html" style="buildResults.xsl" force="true">
 							<classpath location="${COMMON_TOOLS}/saxon.jar" />
 						</xslt>
 					</then>
 					<else>
-						<echo>Could not generate buildResults.out.html from zips/build.properties.all.xml - file does not exist!</echo>
 					</else>
 				</if>
 			</sequential>
 		</for>
+		<if>
+			<not>
+				<isset property="propertiesFileFound" />
+			</not>
+			<then>
+				<echo>Could not generate buildResults.html from zips/build.properties.all.xml - file does not exist!</echo>
+			</then>
+		</if>
+		<var name="propertiesFileFound" unset="true" />
 	</target>
 
 </project>
