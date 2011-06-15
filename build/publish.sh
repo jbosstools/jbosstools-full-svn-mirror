@@ -219,7 +219,8 @@ for buildxml in ${WORKSPACE}/build/results/build.xml ${WORKSPACE}/sources/build/
 		RESULTS_DIR=${buildxml/\/build.xml/}
 	fi
 done
-if [[ ${ANT_SCRIPT} ]] && [[ -f ${ANT_SCRIPT} ]]; then ant -f ${ANT_SCRIPT} ${ANT_PARAMS}; fi
+ANT_TARGET="buildResults.single"; if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]]; then ANT_TARGET="buildResults.aggregate"; fi
+if [[ ${ANT_SCRIPT} ]] && [[ -f ${ANT_SCRIPT} ]]; then ant -f ${ANT_SCRIPT} ${ANT_TARGET} ${ANT_PARAMS}; fi
 
 # copy buildResults.css, buildResults.html to ${STAGINGDIR}/logs
 if [[ ${RESULTS_DIR} ]] && [[ -d ${RESULTS_DIR} ]]; then
