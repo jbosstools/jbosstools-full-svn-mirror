@@ -265,7 +265,6 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 		# if an aggregate build, put output elsewhere on disk
 		if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]]; then
 			echo "<meta http-equiv=\"refresh\" content=\"0;url=${BUILD_ID}-H${BUILD_NUMBER}/\">" > /tmp/latestBuild.html
-			
 			if [[ ${PUBLISHPATHSUFFIX} ]]; then
 				date; rsync -arzq --delete ${STAGINGDIR}/* $DESTINATION/builds/nightly/${PUBLISHPATHSUFFIX}/${BUILD_ID}-H${BUILD_NUMBER}/
 				date; rsync -arzq --delete /tmp/latestBuild.html $DESTINATION/builds/nightly/${PUBLISHPATHSUFFIX}/
