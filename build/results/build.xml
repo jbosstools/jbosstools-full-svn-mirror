@@ -1,4 +1,4 @@
-<project default="buildResults.aggregate">
+<project default="buildResults.single">
 
 	<!-- should be set by script or in Hudson -->
 	<property name="ZIPSUFFIX" value="SNAPSHOT" />
@@ -101,10 +101,22 @@
 
 	<!-- NEW STUFF HERE -->
 
+	<target name="buildResults.single" depends="init" description="generate buildResults.html from build properties">
+		<ant target="collect.zips" antfile="../aggregate/site/build.xml">
+			<property name="inputRepos" value="2" />
+			<property name="inputRepo1" value="file://${input.dir}/all/repo/" />
+			<property name="inputRepo2" value="http://download.jboss.org/jbosstools/builds/staging/${JOB_NAME}/all/repo/" />
+		</ant>
+		<ant target="collect.metadata" antfile="../aggregate/site/build.xml">
+		</ant>
+		<antcall target="buildResults" />
+	</target>
+
 	<target name="buildResults.aggregate" depends="init" description="generate buildResults.html from build properties">
 		<ant target="collect.zips" antfile="../aggregate/site/build.xml">
-			<property name="inputRepos" value="1" />
-			<property name="inputRepo1" value="http://download.jboss.org/jbosstools/builds/staging/_composite_/3.3.indigo" />
+			<property name="inputRepos" value="2" />
+			<property name="inputRepo1" value="file://${input.dir}/all/repo/" />
+			<property name="inputRepo2" value="http://download.jboss.org/jbosstools/builds/staging/_composite_/3.3.indigo" />
 		</ant>
 		<ant target="collect.metadata" antfile="../aggregate/site/build.xml">
 		</ant>
