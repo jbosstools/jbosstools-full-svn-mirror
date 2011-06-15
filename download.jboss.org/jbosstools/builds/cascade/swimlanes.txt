@@ -1,4 +1,4 @@
-Revised swimlanes, as implemented in 3.2_stable_branch and 3.3_trunk jobs, 2011/05/01
+Revised swimlanes, as implemented in 3.2_stable_branch and 3.3_trunk jobs, 2011/06/15
 
 ------------------------
 
@@ -14,9 +14,11 @@ struts -> vpe -> xulrunner
 
 examples -> portlet
 
-bpel, birt, portlet, modeshape, profiler, smooks, tptp -> tests
+birt, portlet, modeshape, profiler, smooks, tptp -> tests
 
 ws, deltacloud -> as -> archives, jmx -> tests
+
+bpel -> archives
 
 jbpm -> flow, common -> tests 
 
