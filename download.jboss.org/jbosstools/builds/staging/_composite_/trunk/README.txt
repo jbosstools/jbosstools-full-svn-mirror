@@ -1,1 +1,0 @@
-This site should always point at the actual site (eg., 3.3.indigo) and is provided for convenience/laziness, as well as to allow for branching between trunk and the experimental next-year branch, before it's merged into trunk.
