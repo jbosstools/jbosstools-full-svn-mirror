@@ -39,19 +39,19 @@
     <td valign="top" align="right"><a name="itemname3"
     id="itemname3"></a><b>JAX-RS Tooling</b></td>
     <td valign="top">
-    <p>This release introduces the work done by Xaiver Coulon with
+    <p>This release introduces the work done by Xavier Coulon with
     respect to JAX-RS tooling. The JAX-RS tooling is supposed to
     complement and extend the JAX-RS tooling found in Eclipse WTP but
     also to work on plain Java projects.</p>
 
-    <p>The JAX-RS tooling includes a mapping of JAX-RS resources to the
+    <p>The JAX-RS tooling includes a mapping of JAX-RS Resources to the
     source, validation of JAX-RS constructs and code completion for
     JAX-RS annotation values.</p>
 
-      <p>
+    <p>
       The tooling is not yet complete but is very functional and we
       are looking forward to get feedback on its current
-      functionallity and what you would like to see in the future.
+      functionality and what you would like to see in the future.
       </p>
     </td>
   </tr>
@@ -73,15 +73,15 @@
     JBoss Tools JAX-RS support will be added automatically.</p>
 
       <p><img src="../images/jaxrs_facet.png"/></p>
-      
+      <br/>
       <p>You can also enable JBoss Tools JAX-RS support on any Java project
     via the Configure > JAX-RS 1.1 Support... 
     </p>
 
       <img src="images/jaxrs_install.png"/>
 
-
-      <p>This enablement adds a JAX-RS Builder to your project that
+	  <br/>
+      <p>In both cases, this enablement adds a JAX-RS Builder to your project that
     will participate during building of your project to collect JAX-RS
     related resources.</p>
     
@@ -97,25 +97,29 @@
 
       <tr>
     <td valign="top" align="right"><a name="itemname3"
-    id="itemname3"></a><b>RESTFul Web Services Explorer</b></td>
+    id="itemname3"></a><b>RESTful Web Services Explorer</b></td>
     <td valign="top">
 
       <p>When you have enabled JAX-RS a "RESTful Web Services" node in
-      Project Explorer outlining the various RESTful services that
-      your project contain. The outline will update when you save
+      the Project Explorer outlines the various RESTful services that
+      your project contains. The outline will update when you save
       changes to your code.</p>
 
       <p><img src="../images/jaxrs_explorer.png"/></p>
 
-      <p>For each element in the navigator, you'll have the resolved
-      Http Method (GET, POST, etc.), the URI Path Template
-      (/customers/{id}, etc.). you'll also have the resolved consumed
-      and produces mediatypes (based on the annotations at method or type
-      level)</p>
+      <p>Each element in the navigator displays the resolved HTTP Method (GET, POST, etc.) 
+      followed by the URI Path Template
+      (/customers/{id}, etc.). This resolution includes @Path annotations at type 
+      and at method levels of both Resources and Subresources, as well as the optional @ApplicationPath 
+      annotation on a subclass of javax.ws.rs.core.Application.</p>
+      <p> 
+      Under each element, you'll see the resolved consumed
+      and produced media types (based on the annotations at method or type
+      level) and the associated Java method.</p>
       
       <p>To navigate easily to the related source code for a JAX-RS
-    resouce you can double click the elements of the resource explorer
-    and it will open and highlight the related source code.</p>
+    resource you can double click the elements of the resource explorer
+    and it will open and highlight the related source code. You can also copy the URI Path Template into your clipboard.</p>
     </td>
   </tr>
 
@@ -136,7 +140,7 @@
       
        <p><img src="../images/jaxrs_validation.png"/></p>
 
-      <p>Here the validation notices that the @PathParam does not
+      <p>In this release, an error is displayed if the @PathParam does not
       match what is defined in the @Path.</p>
       
     </td>
@@ -156,7 +160,7 @@
     <td valign="top">
 
       <p>There are code completion for template mappings for
-      @PathParam based on what is in the @Path.</p>
+      @PathParam based on what is in the @Path, in association with the Validation shown above.</p>
       
       <p><img src="../images/jaxrs_completion.png"/></p>
       
