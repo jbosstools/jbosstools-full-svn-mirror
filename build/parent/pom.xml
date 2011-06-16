@@ -35,10 +35,12 @@
 		<local.site>file:///home/hudson/static_build_env/jbds/target-platform_3.3.indigo/e37RC2-wtp33RC2.target/</local.site>
 
 		<!-- 2a. URL of latest JBT nightly staging composite site (all the components in once place) -->
-		<jbosstools-nightly-staging-composite>http://download.jboss.org/jbosstools/builds/staging/_composite_/3.3.indigo/</jbosstools-nightly-staging-composite>
+		<!-- for trunk use trunk; for 3.3_stable_branch, use 3.3.indigo -->
+		<jbosstools-nightly-staging-composite>http://download.jboss.org/jbosstools/builds/staging/_composite_/trunk/</jbosstools-nightly-staging-composite>
 
 		<!-- 2b. or use -Plocal.composite -Dlocal.composite=file:///path/to/mirror/of/composite/staging/site/ -->
-		<local.composite>file:///home/hudson/static_build_env/jbds/builds/staging/_composite_/3.3.indigo/</local.composite>
+		<!-- for trunk use trunk; for 3.3_stable_branch, use 3.3.indigo -->
+		<local.composite>file:///home/hudson/static_build_env/jbds/builds/staging/_composite_/trunk/</local.composite>
 
 		<!-- 3a. URL of latest JBT requirements composite mirror -->
 		<jboss-requirements-composite-mirror>http://download.jboss.org/jbosstools/updates/indigo/RC2/</jboss-requirements-composite-mirror>
