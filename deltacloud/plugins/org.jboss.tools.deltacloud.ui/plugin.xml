@@ -11,7 +11,7 @@
       <view
             name="%CloudViewerName"
             icon="icons/delta.png"
-            category="org.jlboss.tools.deltacloud.ui"
+            category="org.jboss.tools.deltacloud.ui"
             class="org.jboss.tools.deltacloud.ui.views.cloud.DeltaCloudView"
             id="org.jboss.tools.deltacloud.ui.views.CloudView">
       </view>
