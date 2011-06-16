@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Build Job Cascade + Results</title>
+<style>
+@import url("../../web/site.css");
+</style>
+</head>
+<!--
+	s#_trunk#_stable_branch#g
+	s#_Trunk#_Stable_Branch#g
+	s#/trunk#/3.3_stable_branch#g
+-->
+<body>
+<body marginheight="0" marginwidth="0" leftmargin="0" topmargin="0">
+<table marginheight="0" marginwidth="0" leftmargin="0" topmargin="0"
+	cellspacing="0" cellpadding="0">
+	<tr>
+		<td colspan="2"><a href="https://www.jboss.org/tools"><img
+			src="https://www.jboss.org/dms/tools/images/tools-banner.png"
+			border="0" /></a></td>
+	</tr>
+	<tr>
+		<td class="bodyText">&#160;&#160;</td>
+	</tr>
+	<tr>
+		<td class="bodyText">&#160;&#160;</td>
+		<td class="bodyText"><h2 class="title">JBoss Tools 3.3.x <b style="color:black">/</b> <b style="color:red">JBoss Developer Studio 5.x</b></h2></td>
+	</tr>
+	<tr>
+		<td class="bodyText">&#160;&#160;</td>
+		<td class="bodyText">
+		<p class="bodyText"><i>Note: <b style="color: red">red
+		links</b> require VPN access.</i>
+		<h2 class="title">Build Job Cascade:</h2>
+		<ul>
+			<li><a style="color: red"
+				href="http://hudson.qa.jboss.com/hudson/job/jbosstools-3.3_trunk.target-platform">Local
+			Target Platform build</a> (build + publish) <b>NOTE: same as trunk</b>
+			<ul>
+				<li><a style="color: red"
+					href="http://hudson.qa.jboss.com/hudson/job/jbosstools-3.3_stable_branch.continuous">Continuous
+				build</a> (build only, no tests, no publish)</li>
+				<li><a style="color: red"
+					href="http://hudson.qa.jboss.com/hudson/job/jbosstools-3.3_stable_branch.tests">Tests
+				build</a> (build + tests, no publish)</li>
+				<li><a style="color: red"
+					href="http://hudson.qa.jboss.com/hudson/view/DevStudio_Stable_Branch/">All
+				components' jobs, including JBT core + drools, teiid, pi4soa, savara</a>
+				(build, test, publish) :: <b><a style="color: red"
+					href="http://hudson.qa.jboss.com/hudson/view/DevStudio_Stable_Branch/portlet/dashboard_portlet_13/">list
+				of unstable jobs</a></b> - <a href=swimlanes.txt>Interdependencies between jobs, aka "swimlanes"</a></li>
+				<ul>
+					<li><a style="color: red"
+						href="http://hudson.qa.jboss.com/hudson/job/jbosstools-3.3_stable_branch.aggregate">Aggregate
+					build</a> (collect components into a single update site for downstream use and publishing to sf.net)
+					</li>
+				</ul>
+			</ul>
+					<hr />
+			<li><a style="color: red"
+				href="http://hudson.qa.jboss.com/hudson/job/devstudio-5.0_trunk.target-platform">Local
+			JBDS Target Platform build</a> (build + publish) <b>NOTE: same as trunk</b>
+			<ul>
+				<ul>
+					<li><a style="color: red"
+						href="http://hudson.qa.jboss.com/hudson/job/devstudio-5.0_stable_branch.updatesite">JBDS
+					Aggregate site build</a> (build Core [JBT + JBDS], Extras, Tech Preview
+					sites, then publish)
+					<ul>
+						<li><a style="color: red"
+							href="http://hudson.qa.jboss.com/hudson/job/devstudio-5.0_stable_branch.product">JBDS
+						Product builds</a> (combine JBDS components + TP into installers,
+						publish)</li>
+					</ul>
+					</li>
+				</ul>
+			</li>
+		</ul>
+		</li>
+		</ul>
+		</li>
+		</ul>
+		<h2 class="title">Results:</h2>
+		<ul>
+			<li>JBT Target Platform build: <a
+				href="http://download.jboss.org/jbosstools/updates/target-platform_3.3.indigo/latest/">http://download.jboss.org/jbosstools/updates/target-platform_3.3.indigo/latest/</a> <b>NOTE: same as trunk</b>
+			<ul>
+				<li>JBT Component builds: <a
+					href="http://download.jboss.org/jbosstools/builds/staging/">http://download.jboss.org/jbosstools/builds/staging/</a>
+				:: <b><a
+					href="http://download.jboss.org/jbosstools/builds/staging/_composite_/3.3.indigo/">composite
+				update site</a></b>
+				<ul>
+					<li>JBT Aggregate builds: <a
+						href="http://download.jboss.org/jbosstools/builds/nightly/">http://download.jboss.org/jbosstools/builds/nightly/</a>
+					:: <a
+						href="http://download.jboss.org/jbosstools/builds/nightly/3.3_stable_branch/latestBuild.html">latest
+					from branch</a> :: <a
+						href="http://download.jboss.org/jbosstools/updates/nightly/3.3_stable_branch/">updates</a>
+				</ul>
+			</ul>
+					<hr />
+			<li>JBDS Target Platform build: <a style="color: red"
+				href="http://www.qa.jboss.com/binaries/RHDS/updates/jbds-target-platform_3.3.indigo/">http://www.qa.jboss.com/binaries/RHDS/updates/jbds-target-platform_3.3.indigo/</a> <b>NOTE: same as trunk</b>
+			<ul>
+				<ul>
+					<li>JBDS Aggregate updates: <a style="color: red"
+						href="http://www.qa.jboss.com/binaries/RHDS/builds/staging/devstudio-5.0_stable_branch.updatesite/">http://www.qa.jboss.com/binaries/RHDS/builds/staging/</a>
+					(Core [JBT + JBDS], Extras, Tech Preview)</li>
+					<ul>
+						<li>JBDS Product builds: <a style="color: red"
+							href="http://www.qa.jboss.com/binaries/RHDS/builds/staging/devstudio-5.0_stable_branch.product/builds/nightly/">http://www.qa.jboss.com/binaries/RHDS/builds/staging/</a>
+						:: <a style="color: red"
+							href="http://www.qa.jboss.com/binaries/RHDS/builds/staging/devstudio-5.0_stable_branch.product/builds/nightly/">latest</a> :: <a style="color: red"
+							href="http://www.qa.jboss.com/binaries/RHDS/builds/staging/devstudio-5.0_stable_branch.product/updates/nightly/">updates</a></li>
+
+					</ul>
+				</ul>
+			</ul>
+			</li>
+		</ul>
+		</td>
+	</tr>
+</table>
+<p align="right"><i><small>Last updated 2011-06-16 16:54 GMT-5</small></i></p>
+</body>
+</html>
