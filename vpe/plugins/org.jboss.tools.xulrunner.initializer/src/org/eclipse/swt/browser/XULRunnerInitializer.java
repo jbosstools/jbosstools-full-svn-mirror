@@ -13,8 +13,19 @@ public class XULRunnerInitializer {
 
 	private static final String XULRUNNER_PATH = "org.eclipse.swt.browser.XULRunnerPath"; //$NON-NLS-1$
 	private static final String XULRUNNER_ENTRY = "/xulrunner"; //$NON-NLS-1$
+	
+	/* XXX: yradtsevich: these constants are duplicated
+	 * in XulRunnerBrowser, see JBIDE-9188 */
+	private static final String LOAD_XULRUNNER_SYSTEM_PROPERTY = "org.jboss.tools.vpe.loadxulrunner";//$NON-NLS-1$
+	private static boolean EMBEDDED_XULRUNNER_ENABLED = !"false".equals(System.getProperty(LOAD_XULRUNNER_SYSTEM_PROPERTY)); //$NON-NLS-1$ //$NON-NLS-2$
 
 	static {
+		if (EMBEDDED_XULRUNNER_ENABLED) {
+			initializeXULRunner();
+		}
+	}
+
+	private static void initializeXULRunner() {
 		String xulrunnerPath = System.getProperty(XULRUNNER_PATH);
 		if (xulrunnerPath != null) {
 			File xulrunnerFile = new File(xulrunnerPath);

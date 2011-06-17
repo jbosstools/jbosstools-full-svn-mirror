@@ -67,7 +67,12 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 	private static final String ROOT_BRANCH_NAME = ""; //$NON-NLS-1$
 	
 	private static final String PREFERENCE_DISABLEOPENDURINGLOAD = "dom.disable_open_during_load"; //$NON-NLS-1$
-	private static final String PREFERENCE_DISABLEWINDOWSTATUSCHANGE = "dom.disable_window_status_change"; //$NON-NLS-1$	
+	private static final String PREFERENCE_DISABLEWINDOWSTATUSCHANGE = "dom.disable_window_status_change"; //$NON-NLS-1$
+	
+	/* XXX: yradtsevich: these constants are duplicated
+	 * in XULRunnerInitializer, see JBIDE-9188 */
+	private static final String LOAD_XULRUNNER_SYSTEM_PROPERTY = "org.jboss.tools.vpe.loadxulrunner";//$NON-NLS-1$
+	private static boolean EMBEDDED_XULRUNNER_ENABLED = !"false".equals(System.getProperty(LOAD_XULRUNNER_SYSTEM_PROPERTY));  //$NON-NLS-1$
 
 	private Browser browser = null;
 	private nsIWebBrowser webBrowser = null;
@@ -103,7 +108,8 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 	}
 
 	public XulRunnerBrowser(Composite parent) throws XulRunnerException {
-//	    initXulRunner();
+		ensureEmbeddedXulRunnerEnabled();
+		
 	    if(Platform.OS_MACOSX.equals(Platform.getOS())){
 	    	getXulRunnerPath();
 	    }
@@ -134,17 +140,6 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
             webBrowser.addWebBrowserListener(this,
     		nsITooltipListener.NS_ITOOLTIPLISTENER_IID);
         }
-
-	public synchronized void initXulRunner() throws XulRunnerException {
-		String xulRunnerPath = getXulRunnerPath(); 
-		
-		if (!"true".equals(System.getProperty(XULRUNNER_INITIALIZED))) { //$NON-NLS-1$
-			File file = new File(xulRunnerPath);
-			mozilla.initialize(file);
-			mozilla.initEmbedding(file, file, new AppFileLocProvider(file));
-			System.setProperty(XULRUNNER_INITIALIZED, "true"); //$NON-NLS-1$
-		}
-	}
 
 	/**
 	 * Decorate Widget.getDisplay()
@@ -201,6 +196,7 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 	}
 
 	public synchronized static String getXulRunnerPath() throws XulRunnerException {
+		ensureEmbeddedXulRunnerEnabled();
 		//this function should be call
 		String xulRunnerPath = System.getProperty(XULRUNNER_PATH);
 		if (xulRunnerPath == null) {
@@ -262,6 +258,19 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 
 		
 		return xulRunnerPath;
+	}
+		
+	/**
+	 * Check if embedded XULRunner is not disabled by {@link #EMBEDDED_XULRUNNER_ENABLED}
+	 * system property. If it is, then throws a {@link XulRunnerException}.
+	 * 
+	 * @see <a href="https://issues.jboss.org/browse/JBIDE-9188">JBIDE-9188</a>
+	 */
+	private static void ensureEmbeddedXulRunnerEnabled() throws XulRunnerException {
+		if (!EMBEDDED_XULRUNNER_ENABLED) {
+			throw new XulRunnerException(MessageFormat.format(
+					VpeXulrunnerMessages.XulRunnerBrowser_embeddedXulRunnerIsDisabledByOption, LOAD_XULRUNNER_SYSTEM_PROPERTY));
+		}
 	}
 
 	public nsIServiceManager getServiceManager() {
