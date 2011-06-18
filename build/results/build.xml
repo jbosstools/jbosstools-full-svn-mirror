@@ -117,7 +117,7 @@
 			<property name="inputRepos" value="2" />
 			<property name="inputRepo1" value="file://${input.dir}/all/repo/" />
 			<!-- for trunk use _composite_/trunk; for 3.3_stable_branch, use _composite_/3.3.indigo -->
-			<property name="inputRepo2" value="http://download.jboss.org/jbosstools/builds/staging/_composite_/trunk" />
+			<property name="inputRepo2" value="http://download.jboss.org/jbosstools/builds/staging/_composite_/3.3.indigo/" />
 		</ant>
 		<ant target="collect.metadata" antfile="../aggregate/site/build.xml">
 		</ant>
@@ -129,7 +129,7 @@
 		<ant target="collect.zips" antfile="../aggregate/site/build.xml">
 			<property name="inputRepos" value="1" />
 			<!-- for trunk use _composite_/trunk; for 3.3_stable_branch, use _composite_/3.3.indigo -->
-			<property name="inputRepo1" value="http://download.jboss.org/jbosstools/builds/staging/_composite_/trunk" />
+			<property name="inputRepo1" value="http://download.jboss.org/jbosstools/builds/staging/_composite_/3.3.indigo/" />
 		</ant>
 		<ant target="collect.metadata" antfile="../aggregate/site/build.xml">
 		</ant>
