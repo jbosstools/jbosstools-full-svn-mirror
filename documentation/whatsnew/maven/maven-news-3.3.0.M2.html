@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../whatsnew.css" />
+<title>What's New in Maven Tools</title>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17645367-5']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script></head>
+<body>
+<h1>Maven Tools</h1>
+
+<p align="right"><a href="../index.html">&lt; Main Index</a> <!--<a
+	href="../examples/examples-news-3.3.0.M1.html">Project Examples &gt;</a>--></p>
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+	<tr>
+		<td colspan="2">
+		<hr />
+		<h3>JBoss Maven Integration</h3>
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+		<a name="itemname1" id="itemname1"></a><b>Upgrading to m2e 1.0.0 and m2e-wtp 0.13.0</b></td>
+		<td valign="top">
+		<p>The JBoss Maven Integration is now compatible with m2e 1.0.0 and m2e-wtp 0.13.0</p>
+		<p><small>
+		  See <a href="https://issues.jboss.org/browse/JBIDE-9057">JBIDE-9057</a> and <a href="https://issues.jboss.org/browse/JBIDE-8833">JBIDE-8833</a> , for more details.
+		  
+		</small></p>
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+		<a name="itemname2" id="itemname2"></a><b>CDI support enabled for projects depending on Seam 3 artifacts.</b></td>
+		<td valign="top">
+		<p>The <a href="http://seamframework.org/Seam3">Seam 3</a> artifacts are CDI extensions. So, when a project depends on any Seam 3 artifact, 
+		  even if it does not depend on the CDI jars directly, the CDI builder is automatically enabled. <br>
+		  For a Web or an EJB project, adding a dependency to any Seam 3 artifact will automagically enable the CDI facet.<br>		  
+		</p>
+		<p>
+		<small>
+		  See <a href="https://issues.jboss.org/browse/JBIDE-8755">JBIDE-8755</a> , for more details. 
+		</small></p>
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+		<a name="itemname2" id="itemname2"></a><b>JSF facet enabled for projects depending on seam-faces 3.x.</b></td>
+		<td valign="top">
+		<p>The JSF Facet is automatically enabled on maven projects depending on the <a href="http://seamframework.org/Seam3/FacesModule">seam-faces 3.x</a> artifacts, without needing any direct dependency to the JSF libraries .<br>		  
+		</p>
+		<p>
+		<small>
+		  See <a href="https://issues.jboss.org/browse/JBIDE-8755">JBIDE-8755</a> , for more details. 
+		</small></p>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<hr />
+		</td>
+	</tr>
+	
+</table>
+
+</body>
+
+</html>
+
+
