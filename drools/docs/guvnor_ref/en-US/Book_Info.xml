@@ -5,9 +5,9 @@
 	<title>Eclipse Guvnor Tools Reference Guide</title>
 	<subtitle>Provides information relating to the Eclipse Guvnor Tools set.</subtitle>
 	<productname>JBoss Developer Studio</productname>
-	<productnumber>4.0</productnumber>
-	<edition>4.0.0</edition>
-	<pubsnumber>10</pubsnumber>
+	<productnumber>4.1</productnumber>
+	<edition>4.1.0</edition>
+	<pubsnumber>1</pubsnumber>
 	<abstract>
 		<para>The Eclipse Guvnor Tools Reference Guide explains how to use the Eclipse Guvnor Tools to gain access to resources controlled by the Guvnor repository policies.</para>
 	</abstract>
