@@ -7,9 +7,9 @@
 	<title>Document Conventions</title>
 	<subtitle>An overview of the document conventions used by the JBoss Developer Studio documentation</subtitle>
 	<productname>JBoss Developer Studio</productname>
-	<productnumber>4.0</productnumber>
-	<edition>0</edition>
-	<pubsnumber>5</pubsnumber>
+	<productnumber>4.1</productnumber>
+	<edition>4.1.0</edition>
+	<pubsnumber>1</pubsnumber>
 	<abstract>
 		<para>
 			This book lists the document typographic conventions used by the JBoss Developer Studio documentation.
