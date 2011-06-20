@@ -5,9 +5,9 @@
 	<title>JBoss BPEL User Guide</title>
 	<subtitle>Provides information relating to the BPEL Tools set.</subtitle>
 	<productname>JBoss Developer Studio</productname>
-	<productnumber>4.0</productnumber>
-	<edition>4.0.0</edition>
-	<pubsnumber>12</pubsnumber>
+	<productnumber>4.1</productnumber>
+	<edition>4.1.0</edition>
+	<pubsnumber>1</pubsnumber>
 	<abstract>
 		<para>The JBoss BPEL User Guide explains how to use the BPEL Tools to create BPEL files quickly and with precision.</para>
 	</abstract>
