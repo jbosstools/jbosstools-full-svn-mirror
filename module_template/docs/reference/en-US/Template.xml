@@ -10,6 +10,7 @@
 	<xi:include href="tasks.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 	<xi:include href="reference.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 	<xi:include href="troubleshooting.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="Feedback.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 	<xi:include href="revision_history.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 </book>
 
