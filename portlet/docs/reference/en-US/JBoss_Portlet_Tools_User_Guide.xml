@@ -8,5 +8,6 @@
 <xi:include href="portlet_tools_tasks.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
 <xi:include href="reference.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
 <xi:include href="summary.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
+<xi:include href="Feedback.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 <xi:include href="Revision_History.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
 </book>
