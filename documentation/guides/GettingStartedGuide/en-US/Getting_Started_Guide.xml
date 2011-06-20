@@ -15,5 +15,6 @@
 <xi:include href="project_examples.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
 <xi:include href="gsg_faq.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
 <xi:include href="further_reading.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
+<xi:include href="Feedback.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 <xi:include href="Revision_History.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
 </book>
