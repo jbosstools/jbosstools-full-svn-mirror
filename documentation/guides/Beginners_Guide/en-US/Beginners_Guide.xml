@@ -10,6 +10,7 @@
 	<xi:include href="Service-Oriented_Architecture_Development.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 	<xi:include href="Workshops.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 	<xi:include href="Where_to_go_from_here.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="Feedback.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 	<xi:include href="Revision_History.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
 	<!-- 	<index />  -->
 </book>
