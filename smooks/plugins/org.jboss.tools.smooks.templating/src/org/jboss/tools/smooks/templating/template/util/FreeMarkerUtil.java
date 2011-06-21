@@ -59,7 +59,9 @@ public class FreeMarkerUtil {
 				splitTokens[1] = null; // no formatting
 			}
 			
-			if(splitTokens[0].endsWith("!")) { //$NON-NLS-1$
+			if(splitTokens[0].endsWith("[0]!")) { //$NON-NLS-1$
+				splitTokens[0] = splitTokens[0].substring(0, splitTokens[0].length() - 4);
+			} else if(splitTokens[0].endsWith("!")) { //$NON-NLS-1$
 				splitTokens[0] = splitTokens[0].substring(0, splitTokens[0].length() - 1);
 			}
 		} else {
@@ -136,7 +138,7 @@ public class FreeMarkerUtil {
 					}
 					builder.append(tokens[i]);
 				}
-				builder.append("\"]");
+				builder.append("\"][0]!");
 			}
 			
 			return builder.toString();
