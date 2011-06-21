@@ -21,6 +21,7 @@ public class Messages extends NLS {
 	public static String JavaBeanSelectionWizardPage_CantFindClass1;
 	public static String JavaBeanSelectionWizardPage_CollectionClassLabel;
 	public static String JavaBeanSelectionWizardPage_CollectionComponentClassEmptyErrorMessage;
+	public static String JavaBeanSelectionWizardPage_UnsupportedClassVersionError;
 	public static String JavaBeanSelectionWizardPage_CollectionLabel;
 	public static String JavaBeanSelectionWizardPage_QuoteChar;
 	public static String JavaBeanSelectionWizardPage_WizardDes;

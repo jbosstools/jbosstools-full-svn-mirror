@@ -259,6 +259,8 @@ public class JavaBeanSelectionWizardPage extends WizardPage {
 	}
 
 	protected void refreshJavaBeanModel() {
+		String error = null;
+
 		if (beanClass == null || "".equals(beanClass.trim())) { //$NON-NLS-1$
 		} else {
 			try {
@@ -290,8 +292,14 @@ public class JavaBeanSelectionWizardPage extends WizardPage {
 				}
 			} catch (JavaModelException e1) {
 			} catch (ClassNotFoundException e1) {
+				error = Messages.JavaBeanSelectionWizardPage_CantFindClass1 + beanClass + Messages.JavaBeanSelectionWizardPage_QuoteChar; //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$
+			} catch (UnsupportedClassVersionError e) {
+				error = Messages.JavaBeanSelectionWizardPage_UnsupportedClassVersionError;				
 			}
 		}
+
+		this.setErrorMessage(error);
+		this.setPageComplete(error == null);
 	}
 
 	private void createBeanClassControls(Composite mainComposite) {
@@ -403,6 +411,8 @@ public class JavaBeanSelectionWizardPage extends WizardPage {
 				e.printStackTrace();
 			} catch (ClassNotFoundException e) {
 				error = Messages.JavaBeanSelectionWizardPage_CantFindClass1 + beanClass + Messages.JavaBeanSelectionWizardPage_QuoteChar; //$NON-NLS-2$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$ //$NON-NLS-1$
+			} catch (UnsupportedClassVersionError e) {
+				error = Messages.JavaBeanSelectionWizardPage_UnsupportedClassVersionError;				
 			}
 		}
 
