@@ -12,7 +12,14 @@
 			<itemizedlist>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1643">JBDS-1643</ulink> and <ulink url="http://jira.jboss.com/jira/browse/SOA-3051">SOA-3051</ulink>: JBoss Developer Studio 4.1 assumes the use of Drools 5.0 or above for project creation. If using an earlier version of Drools or JBoss Rules, code compatibility must be set to your version of Drools or JBoss Rules in the last page of the project creation wizard.
+					</para>
+					<para>
+					If you need to set code compatibility to an older version of Drools or JBoss Rules, you may notice multiple warnings when creating a project relating to the new Drools 5 API. These warnings will not affect your project and can be turned off by navigating to <menuchoice>
+                            <guimenuitem>Window</guimenuitem>
+							<guimenuitem>Preferences</guimenuitem>
+							<guimenuitem>Drools</guimenuitem>
+						</menuchoice> and setting the <guilabel>Internal Drools classes are</guilabel> drop-down box to <guilabel>Accessible</guilabel>.
 					</para>
 				</listitem>
 			</itemizedlist>
