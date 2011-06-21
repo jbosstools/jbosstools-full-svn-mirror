@@ -8,6 +8,8 @@ public class Messages extends NLS {
 	public static String JavaBeanCreationWizardPage_27;
 	public static String JavaBeanCreationWizardPage_ArrayButtonText;
 	public static String JavaBeanCreationWizardPage_BeanClassEmptyErrorMessage;
+	public static String JavaBeanCreationWizardPage_UnsupportedClassVersionError;
+	public static String JavaBeanCreationWizardPage_ClassNotFoundException;
 	public static String JavaBeanCreationWizardPage_BeanClassLabel;
 	public static String JavaBeanCreationWizardPage_BeanIDDuplicateErrorMessage1;
 	public static String JavaBeanCreationWizardPage_BeanIDDuplicateErrorMessage2;

@@ -77,17 +77,18 @@ public class ProjectClassLoader extends URLClassLoader {
 				.getLocation();
 		for (int i = 0; i < roots.length; i++) {
 			try {
-				if (roots[i].isArchive()) {
+				IPackageFragmentRoot iPackageFragmentRoot = roots[i];
+				if (iPackageFragmentRoot.isArchive()) {
 					File f = new File(FileLocator.resolve(
-							installPath.append(roots[i].getPath()).toFile()
+							installPath.append(iPackageFragmentRoot.getPath()).toFile()
 									.toURL()).getFile());
 					if (!f.exists()) {
 						f = new File(FileLocator.resolve(
-								roots[i].getPath().makeAbsolute().toFile()
+								iPackageFragmentRoot.getPath().makeAbsolute().toFile()
 										.toURL()).getFile());
 					}
 					if (!f.exists()) {
-						IJavaElement javaElement = roots[i].getPrimaryElement();
+						IJavaElement javaElement = iPackageFragmentRoot.getPrimaryElement();
 						String jarName = javaElement.getElementName();
 						IResource jarResource = project.getProject().findMember(jarName);
 
@@ -98,14 +99,14 @@ public class ProjectClassLoader extends URLClassLoader {
 
 					list.add(f.toURL());
 				} else {
-					IPath path = roots[i].getJavaProject().getOutputLocation();
+					IPath path = iPackageFragmentRoot.getJavaProject().getOutputLocation();
 					if (path.segmentCount() > 1) {
 						IWorkspaceRoot root = ResourcesPlugin.getWorkspace()
 								.getRoot();
 						path = root.getFolder(path).getLocation();
 						list.add(path.toFile().toURL());
 					} else {
-						path = roots[i].getJavaProject().getProject()
+						path = iPackageFragmentRoot.getJavaProject().getProject()
 								.getLocation();
 						list.add(path.toFile().toURL());
 					}

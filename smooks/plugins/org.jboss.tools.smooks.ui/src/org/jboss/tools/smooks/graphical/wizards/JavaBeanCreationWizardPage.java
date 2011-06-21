@@ -439,6 +439,8 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 	}
 
 	protected void refreshJavaBeanModel() {
+		String error = null;
+		
 		if (beanClass == null || "".equals(beanClass.trim())) { //$NON-NLS-1$
 			viewer.setInput(""); //$NON-NLS-1$
 		} else {
@@ -471,8 +473,13 @@ public class JavaBeanCreationWizardPage extends WizardPage {
 				viewer.setInput(""); //$NON-NLS-1$
 			} catch (ClassNotFoundException e1) {
 				viewer.setInput(""); //$NON-NLS-1$
+				error = Messages.JavaBeanCreationWizardPage_ClassNotFoundException;
+			} catch (UnsupportedClassVersionError classVersion) {
+				error = Messages.JavaBeanCreationWizardPage_UnsupportedClassVersionError;
 			}
 		}
+		this.setErrorMessage(error);
+		this.setPageComplete(error == null);
 	}
 
 	private void createBeanClassControls(Composite mainComposite) {
