@@ -129,7 +129,7 @@ public class SmooksSAXXMLHandler extends SAXXMLHandler {
 	@Override
 	public void comment(char[] ch, int start, int length) {
 		String comment = new String(ch, start, length);
-		Object obj = objects.get(objects.size() - 1);
+		Object obj = getObject(objects.size() - 1);
 
 		if (mixedTargets.peek() != null) {
 			if (text != null) {
@@ -156,6 +156,24 @@ public class SmooksSAXXMLHandler extends SAXXMLHandler {
 			}
 		}
 
+	}
+
+	/**
+	 * @return
+	 */
+	private Object getObject(int index) {
+		if(index < 0 || index >= objects.size()) {
+			return null;
+		}
+		
+		// Need to perform the following check on the underlying objects.data[], before calling objects.get(),
+		// otherwise BasicEList throws a wobbler...
+		Object[] data = objects.data();		
+		if(data == null || data[index] == null) {
+			return null;
+		}
+		
+		return objects.get(index);
 	}
 
 	/*

@@ -671,7 +671,7 @@ public class AbstractSmooksFormEditor extends FormEditor implements IEditingDoma
 				try {
 					smooksResource.load(Collections.emptyMap());
 					smooksModel = smooksResource.getContents().get(0);
-				} catch (IOException e) {
+				} catch (Exception e) {
 					initSmooksModelException = e;
 				}
 			} else {
