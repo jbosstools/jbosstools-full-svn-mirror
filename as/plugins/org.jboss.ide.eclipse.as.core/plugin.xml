@@ -729,13 +729,14 @@
             supportsShutdown="true"
             supportsStartup="true">
       </serverPoller>
+<!-- disabled because of JBIDE-9173
       <serverPoller
             class="org.jboss.ide.eclipse.as.core.server.internal.v7.JBoss7ManagerServicePoller"
             id="org.jboss.ide.eclipse.as.core.server.JBoss7ManagerServicePoller"
             name="JBoss 7 Manager Service Poller"
             supportsShutdown="true"
             supportsStartup="true">
-       </serverPoller>
+       </serverPoller> -->
    </extension>
 
 
