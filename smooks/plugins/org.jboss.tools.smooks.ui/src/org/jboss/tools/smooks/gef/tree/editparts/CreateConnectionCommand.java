@@ -9,6 +9,7 @@ import org.jboss.tools.smooks.gef.tree.model.BeanReferenceConnection;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.gef.tree.model.TriggerConnection;
 import org.jboss.tools.smooks.gef.tree.model.ValueBindingConnection;
+import org.jboss.tools.smooks.graphical.editors.editparts.freemarker.FreemarkerRemoveConnectionsExecutor;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataTreeNodeModel;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTemplateConnection;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerXMLNodeGraphicalModel;
@@ -21,6 +22,7 @@ import org.jboss.tools.smooks.graphical.editors.model.javamapping.JavaBeanGraphM
  */
 public class CreateConnectionCommand extends Command {
 
+	private FreemarkerRemoveConnectionsExecutor removeExecutor = new FreemarkerRemoveConnectionsExecutor();
 	private AbstractSmooksGraphicalModel source;
 
 	private AbstractSmooksGraphicalModel target;
@@ -55,23 +57,37 @@ public class CreateConnectionCommand extends Command {
 			}
 
 			connection.connect();
-			tempConnectionHandle = connection;
+			if(connection instanceof FreemarkerTemplateConnection) {
+				removeExecutor.execute(connection, ((FreemarkerTemplateConnection)connection).getRemoveMappings());
+			}
 		}
 	}
 
 	@Override
 	public void redo() {
-		if (tempConnectionHandle != null) {
-			tempConnectionHandle.connect();
+		if(tempConnectionHandle instanceof FreemarkerTemplateConnection) {
+			for(TreeNodeConnection connection : removeExecutor.getRelatedConnections()) {
+				connection.connect();
+			}
 		} else {
-			execute();
+			if (tempConnectionHandle != null) {
+				tempConnectionHandle.connect();
+			} else {
+				execute();
+			}
 		}
 	}
 
 	@Override
 	public void undo() {
-		if (tempConnectionHandle != null) {
-			tempConnectionHandle.disconnect();
+		if(tempConnectionHandle instanceof FreemarkerTemplateConnection) {
+			for(TreeNodeConnection connection : removeExecutor.getRelatedConnections()) {
+				connection.disconnect();
+			}
+		} else {
+			if (tempConnectionHandle != null) {
+				tempConnectionHandle.disconnect();
+			}
 		}
 	}
 
