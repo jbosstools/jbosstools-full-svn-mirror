@@ -10,6 +10,7 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.template;
 
+import java.io.Console;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -36,6 +37,7 @@ import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.custom.CustomTLDReference;
 import org.jboss.tools.vpe.editor.template.textformating.TextFormatingData;
+import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.SourceDomUtil;
 import org.jboss.tools.vpe.editor.util.XmlUtil;
@@ -247,6 +249,9 @@ public class VpeTemplateManager {
 	
 	//added by Denis Vinnichek, for tags which are defined with regexp
 	static final String ATTR_TAG_MATCHING_MODE = "matching-mode"; //$NON-NLS-1$
+	
+	// for taglibs which are defined with regexp
+	static final String ATTR_TEMPLATE_TAGLIB_MATCHING_MODE = ATTR_TAG_MATCHING_MODE;
 
 	private static VpeTemplateManager instance = null;
 	private static Object monitor = new Object();
@@ -255,6 +260,7 @@ public class VpeTemplateManager {
 	 * Contains Mapping from URI and namespace
 	 */
 	private Map<String,String> templateTaglibs = new HashMap<String,String>();
+	private Map<String,String> matchingTemplateTaglibs = new HashMap<String,String>();
 	
 	private Map<String,VpeTemplateSet> caseSensitiveTags = new HashMap<String,VpeTemplateSet>();
 	private Map<String,VpeTemplateSet> ignoreSensitiveTags = new HashMap<String,VpeTemplateSet>();
@@ -279,8 +285,6 @@ public class VpeTemplateManager {
 	
 	//mareshkau, contains a name of custom template
 	private static final String CUSTOM_TEMPLATE_NAME="vpeCustomTemplate"; //$NON-NLS-1$
-	
-	private static final String JSF2_CUSTOM_TEMPLATE="vpejsf2customTemplate"; //$NON-NLS-1$
 	
 	/**
 	 * added by Max Areshkau, JBIDE-1494
@@ -439,10 +443,7 @@ public class VpeTemplateManager {
 					&& CustomTLDReference.isExistInCustomTlds(pageContext,sourceNodeUri)) {
 				return VpeTemplateManager.CUSTOM_TEMPLATE_NAME;
 			}
-			if(sourceNodeUri!=null 
-					&&CustomTLDReference.isExistInJsf2CustomComponenets(pageContext,sourceNodeUri,sourceNode.getLocalName()) ) {
-				return VpeTemplateManager.JSF2_CUSTOM_TEMPLATE;
-			}
+
 			return sourceNode.getNodeName();
 		default : 
 			return null;
@@ -451,7 +452,16 @@ public class VpeTemplateManager {
 	}
 	
 	public String getTemplateTaglibPrefix(String sourceUri) {
-		return (String)templateTaglibs.get(sourceUri);
+		String result = templateTaglibs.get(sourceUri);
+		if(result == null){
+			for ( Map.Entry<String, String> entry: matchingTemplateTaglibs.entrySet()) {
+				if(sourceUri.matches( entry.getKey() )){
+					result = entry.getValue();
+					break;
+				}
+			}
+		}
+		return result;
 	}
 
 	private void load() {
@@ -504,7 +514,8 @@ public class VpeTemplateManager {
 					} else if (TAG_TEMPLATE.equals(node.getNodeName())) {
 						setDefTemplate(createTemplate((Element)node,confElement, true));
 					} else if (TAG_TEMPLATE_TAGLIB.equals(node.getNodeName())) {
-						setTemplateTaglib((Element)node);
+						boolean templateTaglibMatchingMode = Constants.YES_STRING.equals(( (Element) node).getAttribute(VpeTemplateManager.ATTR_TEMPLATE_TAGLIB_MATCHING_MODE));
+						setTemplateTaglib((Element) node, templateTaglibMatchingMode);
 					}
 				}
 			}
@@ -579,12 +590,16 @@ public class VpeTemplateManager {
 	 * Register templates taglibs from templates files
 	 * @param templateTaglibElement
 	 */
-	private void setTemplateTaglib(Element templateTaglibElement) {
+	private void setTemplateTaglib(Element templateTaglibElement, boolean templateTaglibMatchingMode) {
 		String uri = templateTaglibElement.getAttribute(ATTR_DIRECTIVE_TAGLIB_URI);
 		String pefix = templateTaglibElement.getAttribute(ATTR_DIRECTIVE_TAGLIB_PREFIX);
 		if (uri.length() > 0 && pefix.length() > 0) {
 			if (!templateTaglibs.containsKey(uri)) {
-				templateTaglibs.put(uri, pefix);
+				if (templateTaglibMatchingMode) {
+					matchingTemplateTaglibs.put(uri, pefix);
+				} else {
+					templateTaglibs.put(uri, pefix);
+				}
 			}
 		}
 	}

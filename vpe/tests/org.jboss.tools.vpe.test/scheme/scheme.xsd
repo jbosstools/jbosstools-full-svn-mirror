@@ -119,6 +119,7 @@
     <xsd:complexType name="TEMPLATE-TAGLIB">
          <xsd:attribute name="prefix" use="required" type="xsd:NCName"/>
          <xsd:attribute name="uri" use="required" type="xsd:anyURI"/>
+         <xsd:attribute name="matching-mode" use="optional" type="vpe:VPE-BOOLEAN"/>
     </xsd:complexType>
 <!--  -->
     <xsd:complexType name="RESIZE">
@@ -353,6 +354,9 @@
         <xsd:attribute name="disabled" type="xsd:string" use="optional"/>
         <xsd:attribute name="id" type="xsd:string" use="optional"/>
         <xsd:attribute name="name" type="xsd:string" use="optional"/>
+        <xsd:attribute name="height" type="xsd:string" use="optional"/>
+        <xsd:attribute name="width" type="xsd:string" use="optional"/>
+        <xsd:attribute name="placeholder" type="xsd:string" use="optional"/>
     </xsd:complexType>
 <!--  -->
     <xsd:complexType name="HTML_DIV" mixed="true">
@@ -418,7 +422,7 @@
         <xsd:attribute name="value" type="xsd:string" use="optional"/>
     </xsd:complexType>
 <!--  -->    
-    <xsd:complexType name="HTML_OPTION">
+    <xsd:complexType name="HTML_OPTION" mixed="true">
         <xsd:sequence>
             <xsd:element name="value" minOccurs="0" type="vpe:VALUE" /> 
         </xsd:sequence>
