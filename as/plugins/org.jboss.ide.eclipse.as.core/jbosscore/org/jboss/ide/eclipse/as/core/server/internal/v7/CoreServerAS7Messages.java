@@ -8,24 +8,16 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.ide.eclipse.as.management.as7;
+package org.jboss.ide.eclipse.as.core.server.internal.v7;
 
 import org.eclipse.osgi.util.NLS;
 
-public class AS7Messages extends NLS {
-	public static String ModuleStateEvaluationFailed;
-	public static String OperationOnAddressFailed;
-	public static String FailedToBuildOperation;
-	public static String OperationOutcomeToString;
-	public static String OperationOnUnitNotExecuted;
-	public static String OperationOnUnitFailed;
-	public static String OperationOnUnitRolledBack;
-	public static String OperationNotExecConfigRequiresRestart;
+public class CoreServerAS7Messages extends NLS {
 	public static String JBoss7ServerState_noEnumForString;
 	
 	static {
-		NLS.initializeMessages("org.jboss.ide.eclipse.as.management.as7.AS7Messages", //$NON-NLS-1$ 
-				AS7Messages.class);
+		NLS.initializeMessages("org.jboss.ide.eclipse.as.core.server.internal.v7.CoreServerAS7Messages", //$NON-NLS-1$ 
+				CoreServerAS7Messages.class);
 	}
 
 }

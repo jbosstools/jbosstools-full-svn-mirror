@@ -36,7 +36,7 @@ import org.jboss.as.controller.client.helpers.standalone.DeploymentAction;
 import org.jboss.as.controller.client.helpers.standalone.DeploymentPlanBuilder;
 import org.jboss.as.controller.client.helpers.standalone.ServerDeploymentManager;
 import org.jboss.as.controller.client.helpers.standalone.ServerDeploymentPlanResult;
-import org.jboss.as.protocol.StreamUtils;
+import org.jboss.as.protocol.old.StreamUtils;
 import org.jboss.dmr.ModelNode;
 import org.jboss.ide.eclipse.as.core.server.internal.v7.IJBoss7DeploymentResult;
 import org.jboss.ide.eclipse.as.core.server.internal.v7.JBoss7DeploymentState;
@@ -167,7 +167,7 @@ public class AS7Manager {
 
 	private JBoss7ServerState toJBoss7ServerState(ModelNode response) throws JBoss7ManangerException {
 		try {
-			return JBoss7ServerState.valueOf(response.asString());
+			return JBoss7ServerState.valueOfIgnoreCase(response.asString());
 		} catch (IllegalArgumentException e) {
 			throw new JBoss7ManangerException(e);
 		}
