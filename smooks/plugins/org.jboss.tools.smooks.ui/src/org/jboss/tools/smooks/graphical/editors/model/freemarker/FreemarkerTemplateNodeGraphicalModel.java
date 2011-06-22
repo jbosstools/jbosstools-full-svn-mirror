@@ -26,6 +26,7 @@ import org.jboss.tools.smooks.configuration.editors.xml.TagPropertyObject;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
+import org.jboss.tools.smooks.graphical.editors.editparts.freemarker.FreemarkerRemoveConnectionsExecutor;
 import org.jboss.tools.smooks.graphical.editors.model.AbstractResourceConfigChildNodeGraphModel;
 import org.jboss.tools.smooks.graphical.editors.model.InputDataTreeNodeModel;
 import org.jboss.tools.smooks.graphical.editors.model.javamapping.JavaBeanGraphModel;
@@ -184,7 +185,6 @@ public class FreemarkerTemplateNodeGraphicalModel extends TreeNodeModel {
 				if(connection instanceof FreemarkerTemplateConnection){
 					((FreemarkerTemplateConnection)connection).setRemoveMappingConnections(mappingResult.getRemoveMappings());
 				}
-//				((TreeNodeModel)getModelRootNode()).removeMappingConnections(mappingResult.getRemoveMappings());
 			} else if (isMappingValueConnection(connection)) {
 				String mappingString = null;
 				
@@ -361,9 +361,9 @@ public class FreemarkerTemplateNodeGraphicalModel extends TreeNodeModel {
 			if (builder == null || mapping == null)
 				return;
 			if (mapping instanceof Mapping) {
-				removeResult = builder.removeMapping((Mapping) mapping);
-				
-				connection.setData(removeResult);
+				removeResult = builder.removeMapping((Mapping) mapping);				
+				FreemarkerRemoveConnectionsExecutor removeConnectionExecutor = new FreemarkerRemoveConnectionsExecutor();
+				removeConnectionExecutor.execute(connection, removeResult.getRemoveMappings());
 			}
 			changeFreemarkerContents();
 			super.removeTargetConnection(connection);

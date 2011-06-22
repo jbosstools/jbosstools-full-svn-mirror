@@ -173,64 +173,20 @@ public class FreemarkerXMLNodeEditPart extends TreeNodeEditPart {
 		}
 	}
 	
-	public class CreateFreemarkerXMLConnectionCommand extends CreateConnectionCommand{
-		private List<TreeNodeConnection> relatedConnections = new ArrayList<TreeNodeConnection>();
-		
-		public List<TreeNodeConnection> removeMappingConnections(
-				List<Mapping> removeMappings, AbstractSmooksGraphicalModel node) {
-			if (removeMappings == null || removeMappings.isEmpty()) {
-				return Collections.emptyList();
-			}
-
-			// Remove from all the children first...
-			for (AbstractSmooksGraphicalModel child : node.getChildren()) {
-				if (child instanceof TreeNodeModel) {
-					relatedConnections.addAll(removeMappingConnections(
-							removeMappings, (TreeNodeModel) child));
-				}
-			}
-
-			// Now remove from this node...
-			if (node.getTargetConnections() != null && !node.getTargetConnections().isEmpty()) {
-				List<TreeNodeConnection> connectionsToRemove = new ArrayList<TreeNodeConnection>();
-				for (TreeNodeConnection connection : node
-						.getTargetConnections()) {
-					Object connectionData = connection.getData();
-					if (connectionData instanceof Mapping) {
-						for (Mapping mapping : removeMappings) {
-							if(mapping.getMappingNode() ==  ((Mapping)connectionData).getMappingNode() &&
-									mapping.getSrcPath().equals(((Mapping)connectionData).getSrcPath())){
-								connectionsToRemove.add(connection);
-							}
-						}
-					}
-				}
-				return connectionsToRemove;
-			}
-			return Collections.emptyList();
-		}
+	public class CreateFreemarkerXMLConnectionCommand extends CreateConnectionCommand {
+		private FreemarkerRemoveConnectionsExecutor removeExecutor = new FreemarkerRemoveConnectionsExecutor();
 		
 		@Override
 		public void execute() {
 			super.execute();
-			Object target = getTempConnectionHandle().getTargetNode();
-				if (target instanceof FreemarkerTemplateNodeGraphicalModel) {
-				FreemarkerTemplateConnection connection = (FreemarkerTemplateConnection)this.getTempConnectionHandle();
-				List<Mapping> removeMappings = connection.getRemoveMappings();
-				if(removeMappings!=null){
-					relatedConnections.clear();
-					relatedConnections.addAll(removeMappingConnections(removeMappings, (FreemarkerTemplateNodeGraphicalModel)target));
-					for (TreeNodeConnection con : relatedConnections) {
-						con.disconnect();
-					}
-				}
-			}
+			TreeNodeConnection tempConnectionHandle = getTempConnectionHandle();
+			removeExecutor.execute(tempConnectionHandle, ((FreemarkerTemplateConnection)tempConnectionHandle).getRemoveMappings());
 		}
 
 		@Override
 		public void undo() {
 			super.undo();
-			for (TreeNodeConnection c : relatedConnections) {
+			for (TreeNodeConnection c : removeExecutor.getRelatedConnections()) {
 				c.connect();
 			}
 		}

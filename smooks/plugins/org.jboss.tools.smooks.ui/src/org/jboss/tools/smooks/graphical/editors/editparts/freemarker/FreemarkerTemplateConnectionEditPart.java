@@ -10,10 +10,6 @@
  ******************************************************************************/
 package org.jboss.tools.smooks.graphical.editors.editparts.freemarker;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.commands.Command;
@@ -25,10 +21,8 @@ import org.jboss.tools.smooks.configuration.editors.xml.TagObject;
 import org.jboss.tools.smooks.gef.model.AbstractSmooksGraphicalModel;
 import org.jboss.tools.smooks.gef.tree.command.DeleteConnectionCommand;
 import org.jboss.tools.smooks.gef.tree.editparts.TreeNodeConnectionEditPart;
-import org.jboss.tools.smooks.gef.tree.editpolicy.TreeNodeConnectionEditPolicy;
 import org.jboss.tools.smooks.gef.tree.editpolicy.TreeNodeEndpointEditPolicy;
 import org.jboss.tools.smooks.gef.tree.model.TreeNodeConnection;
-import org.jboss.tools.smooks.gef.tree.model.TreeNodeModel;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerModelAnalyzer;
 import org.jboss.tools.smooks.graphical.editors.model.freemarker.FreemarkerTemplateNodeGraphicalModel;
 import org.jboss.tools.smooks.templating.template.Mapping;
@@ -100,7 +94,7 @@ public class FreemarkerTemplateConnectionEditPart extends
 	public class DeleteFreeMarkerConnectionCommand extends
 			DeleteConnectionCommand {
 
-		private List<TreeNodeConnection> relatedConnections = new ArrayList<TreeNodeConnection>();
+		private FreemarkerRemoveConnectionsExecutor removeConnectionExecutor = new FreemarkerRemoveConnectionsExecutor();
 
 		public DeleteFreeMarkerConnectionCommand(TreeNodeConnection connection) {
 			super(connection);
@@ -118,13 +112,10 @@ public class FreemarkerTemplateConnectionEditPart extends
 					if (builder == null || mapping == null)
 						return;
 					if (mapping instanceof Mapping) {
-						relatedConnections.clear();
 						removeResult = builder.removeMapping((Mapping) mapping);
-						relatedConnections.addAll(removeMappingConnections(
-								removeResult.getRemoveMappings(),
-								(FreemarkerTemplateNodeGraphicalModel) target));
+						removeConnectionExecutor.execute(connection, removeResult.getRemoveMappings());
 					}
-					for (TreeNodeConnection con : relatedConnections) {
+					for (TreeNodeConnection con : removeConnectionExecutor.getRelatedConnections()) {
 						con.disconnect();
 					}
 				} catch (Exception e) {
@@ -142,43 +133,9 @@ public class FreemarkerTemplateConnectionEditPart extends
 		@Override
 		public void undo() {
 			super.undo();
-			for (TreeNodeConnection c : relatedConnections) {
+			for (TreeNodeConnection c : removeConnectionExecutor.getRelatedConnections()) {
 				c.connect();
 			}
-		}
-
-		public List<TreeNodeConnection> removeMappingConnections(
-				List<Mapping> removeMappings, AbstractSmooksGraphicalModel node) {
-			if (removeMappings == null || removeMappings.isEmpty()) {
-				return Collections.emptyList();
-			}
-
-			// Remove from all the children first...
-			for (AbstractSmooksGraphicalModel child : node.getChildren()) {
-				if (child instanceof TreeNodeModel) {
-					relatedConnections.addAll(removeMappingConnections(
-							removeMappings, (TreeNodeModel) child));
-				}
-			}
-
-			// Now remove from this node...
-			if (node.getTargetConnections() != null && !node.getTargetConnections().isEmpty()) {
-				List<TreeNodeConnection> connectionsToRemove = new ArrayList<TreeNodeConnection>();
-				for (TreeNodeConnection connection : node
-						.getTargetConnections()) {
-					Object connectionData = connection.getData();
-					if (connectionData instanceof Mapping) {
-						for (Mapping mapping : removeMappings) {
-							if(mapping.getMappingNode() ==  ((Mapping)connectionData).getMappingNode() &&
-									mapping.getSrcPath().equals(((Mapping)connectionData).getSrcPath())){
-								connectionsToRemove.add(connection);
-							}
-						}
-					}
-				}
-				return connectionsToRemove;
-			}
-			return Collections.emptyList();
 		}
 	}
 }
