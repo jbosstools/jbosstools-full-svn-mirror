@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.jboss.tools.patches.swt.gtk.linux.x86_64.feature"
+      id="org.jboss.tools.patches.swt.gtk.linux.x86.feature"
       label="%featureName"
       version="3.7.0.v3735b-201106220-1614">
 
@@ -22,6 +22,6 @@ source code, or contact Red Hat Legal Affairs, 1801 Varsity Drive,
 Raleigh NC 27606 USA.
    </license>
 
-	<plugin id="org.eclipse.swt.gtk.linux.x86_64" download-size="0" install-size="0" version="3.7.0" match="compatible"/>
-	<!-- <plugin id="org.eclipse.swt.gtk.linux.x86_64.source" download-size="0" install-size="0" version="3.7.0.v3735b"/> -->
+	<plugin id="org.eclipse.swt.gtk.linux.x86" download-size="0" install-size="0" version="3.7.0.v3735b-201106220-1614"/>
+	<!-- <plugin id="org.eclipse.swt.gtk.linux.x86.source" download-size="0" install-size="0" version="3.7.0.v3735b"/> -->
 </feature>
