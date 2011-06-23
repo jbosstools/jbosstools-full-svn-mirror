@@ -33,13 +33,29 @@
     </td>
   </tr>
 
+   <tr>
+    <td valign="top" align="right">
+      <p><b>AS 6.1 Support</b></p>
+    </td>
+    <td valign="top" width="90%">
+         <p>JBoss AS 6 support now includes 6.1 which adds the now
+    required
+    <code>-Dlogging.configuration="<pathtoAS6>/bin/logging.properties"</code>
+    argument to AS 6.1 launches.</p> 
+    <p><small><a href="https://issues.jboss.org/browse/JBIDE-9236">Related Jira</a></small></p>
+    </td>
+  </tr>
+  <tr><td colspan="2"><hr /></td></tr>
+
   <tr>
     <td valign="top" align="right">
       <p><b>Dont  execute startup/shutdown commands</b></p>
     </td>
     <td valign="top" width="90%">
          <p>You may now tell the server adapter not to start/stop the server when you start/stop the server adapter. 
-         This will allow you to deploy to a server that you dont (want to) control.</p> 
+         This will allow you to deploy to a server that you dont want
+    JBoss Tools to start and stop, i.e. for remote already running
+    servers.</p> 
          <p><img src="images/dont-execute-start-command.png" /></p>
      <p><small><a href="https://issues.jboss.org/browse/JBIDE-9093">Related Jira</a></small></p>
     </td>
@@ -51,8 +67,11 @@
 		<b>Custom deploy folders for JBoss AS7</b>
 	</td>
     <td valign="top" width="90%">
-         <p>You can now use custom depoy folders when deploying to JBoss AS7.</p> 
+         <p>You can now use custom deploy folders when deploying to JBoss AS7.</p> 
 	<p><img src="images/as7-custom-deploy-folders.png"/></p>
+
+      <p>Note: In M2 users must register the location at JBoss
+     manually, in upcoming milestones we will do that registration automatically.</p>
      <p><small><a href="https://issues.jboss.org/browse/JBIDE-9085">Related Jira</a></small>
     </td>
   </tr>
@@ -63,7 +82,12 @@
 		<b>AS7 Change of classpath container behaviour</b>
 	</td>
     <td valign="top" width="90%">
-         <p>In AS7, only the javax.* packages and jars are included in the classpath container. This is a change from previous AS versions, which put every jar in the distribution into the classpath container. </p> 
+         <p>In AS7, only the javax.* packages and jars are included in
+     the classpath container. This is a change from previous AS
+     versions, which put every jar in the distribution into the
+     classpath container. Done to avoid classpath overload and
+     conflicts; in the next milestones we will work on making that
+     more smoth and added other libs as needed and requested by users.</p> 
      <p><small><a href="https://issues.jboss.org/browse/JBIDE-8718">Related Jira</a></small>
     </td>
   </tr>

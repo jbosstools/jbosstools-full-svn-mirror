@@ -37,10 +37,20 @@
 	<tr>
 		<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Disable Visual Editor</b></td>
 		<td valign="top">
-		<p>Eclipse may crash while using Visual Editor on some Linux distributions. We created a command-line to option	for the users who experience this problem.
-		Adding the following line to eclipse.ini (or jbdevstudio.ini in JBDS) will disable Visual Editor:</p>
+		<p>Eclipse may crash while using Visual Editor on some
+		Linux distributions because of <a
+		href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=349837">https://bugs.eclipse.org/bugs/show_bug.cgi?id=349837</a>.
+
+		<p>To workaround this issue which will be fixed in
+		3.7.1, we've created a command-line option for the users who experience this problem.
+		Adding the following line to eclipse.ini (or
+		jbdevstudio.ini in JBDS) as -vmargs will disable the Visual
+		tab in the Visual Page Editor:</p>
 		<p><code>-Dorg.jboss.tools.vpe.loadxulrunner=false</code></p>
 
+		<p>You can also use that directly from the command
+		line:</p>
+		 <p><code>eclipse -vmargs -Dorg.jboss.tools.vpe.loadxulrunner=false</code></p>
 		<p><small><a href="https://issues.jboss.org/browse/JBIDE-9144">Related Jira 1</a></small>,
 		<small><a href="https://jira.jboss.org/jira/browse/JBIDE-9188">Related Jira 2</a></small></p>
 		</td>
