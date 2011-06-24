@@ -70,7 +70,7 @@
     </vpe:tag>
 
     <vpe:tag name="jsp:attribute" case-sensitive="yes">
-	    <vpe:template children="no" modify="no">
+	    <vpe:template children="yes" modify="yes">
 			<vpe:any value="{name()}" title="{tagstring()}" style="display:none;"/>
 	    </vpe:template>
     </vpe:tag>
