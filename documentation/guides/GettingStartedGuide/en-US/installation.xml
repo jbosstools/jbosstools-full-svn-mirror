@@ -616,6 +616,29 @@ java -jar /path/to/installer.jar /path/to/InstallConfigRecord.xml
 		  <para>
 			  The components available on the extras site will then be listed, which you can select and install by following the prompts.
 		  </para>
+		  <section>
+			  <title>Installing and setting up Subclipse</title>
+		  <para>
+			  If you decide to install Subclipse from the JBoss Developer Studio Extras site, upon restarting your JBoss Developer Studio installation, an error exists that sets a default SVN property incorrectly. The workaround for this issue is to navigate to <menuchoice>
+				  <guimenuitem>Window</guimenuitem>
+				  <guimenuitem>Preferences</guimenuitem>
+				  <guimenuitem>Team</guimenuitem>
+				  <guimenuitem>SVN</guimenuitem>
+			  </menuchoice>.
+		  </para>
+		  <para>
+			  If you then see an error window, click the <guibutton>OK</guibutton> button. 
+		  </para>
+		  <para>
+			  On the SVN Preferences page, in the <guilabel>SVN interface</guilabel> section, change the drop-down list value of <guilabel>Client</guilabel> to <guimenuitem>SVNKit (Pure Java) SVNKit v1.3.5.7406</guimenuitem>.
+		  </para>
+		  <para>
+			  Click the <guibutton>Apply</guibutton> button and then the <guibutton>OK</guibutton> button.
+		  </para>
+		  <para>
+			  Subclipse will now function correctly.
+		  </para>
+	  </section>
   </section>
   <section id="tech_previews">
     <title>Accessing to Tech Previews</title> 
