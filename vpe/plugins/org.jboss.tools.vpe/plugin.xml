@@ -322,4 +322,15 @@
              type="java.lang.Object">
        </propertyTester>
     </extension>
+    	
+	<extension point="org.eclipse.wst.common.snippets.SnippetProvider">
+		<provider
+				class="org.eclipse.wst.common.snippets.ui.TextSnippetProvider"
+				priority="100">
+			<enablement>
+				<instanceof value="org.jboss.tools.vpe.editor.VpeEditorPart"/>
+			</enablement>		
+		</provider>
+	</extension>
+    
 </plugin>
