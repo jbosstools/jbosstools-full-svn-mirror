@@ -445,6 +445,8 @@ public class VpeTemplateManager {
 			}
 
 			return sourceNode.getNodeName();
+		case Node.DOCUMENT_NODE:
+			return sourceNode.getNodeName();
 		default : 
 			return null;
 		}

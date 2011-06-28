@@ -64,7 +64,8 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 		    if(sourceNode==null||(
 		    		sourceNode.getNodeType()!=Node.TEXT_NODE
 		    		&&sourceNode.getNodeType()!=Node.ELEMENT_NODE
-		    		&&sourceNode.getNodeType()!=Node.COMMENT_NODE)) {
+		    		&&sourceNode.getNodeType()!=Node.COMMENT_NODE
+		    		&&sourceNode.getNodeType()!=Node.DOCUMENT_NODE)) {
 		        return null;
 		    }
 			getPageContext().setCurrentVisualNode(visualOldContainer);

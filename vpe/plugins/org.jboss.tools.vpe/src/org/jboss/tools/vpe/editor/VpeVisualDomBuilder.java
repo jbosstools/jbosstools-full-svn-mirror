@@ -209,7 +209,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 						XmlUtil.getTaglibsForNode(root, pageContext)))) {
 				addNode(root, null, getContentArea());
 		} else {
-			addChildren(null, sourceDocument, getContentArea());
+			addNode(sourceDocument, null, getContentArea());
 		}
 		/*
 		 * Fixes http://jira.jboss.com/jira/browse/JBIDE-2126. To provide
@@ -234,7 +234,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		//to avoid <br> in a visual DOM before editor browser
 		//load and after reload 
 //		nsIDOMNodeList children = getContentArea().getChildNodes();
-//		long len = children.getLength();
+//		long len = children.getLength();щ
 //		for (long i = len - 1; i >= 0; i--) {
 //			getContentArea().removeChild(children.item(i));
 //		}
@@ -343,7 +343,8 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 				|| (sourceNode.getNodeType() != Node.TEXT_NODE
 						&& sourceNode.getNodeType() != Node.ELEMENT_NODE
 						&& sourceNode.getNodeType() != Node.COMMENT_NODE 
-						&& sourceNode.getNodeType() != Node.CDATA_SECTION_NODE)) {
+						&& sourceNode.getNodeType() != Node.CDATA_SECTION_NODE
+						&& sourceNode.getNodeType() != Node.DOCUMENT_NODE)) {
 			return null;
 		}
 
