@@ -10,6 +10,6 @@
 <property name='p2.timestamp' value='1309362410000'/>
 </properties>
 <children size='1'>
-<child location='http://download.jboss.org/jbosstools/updates/JBossTools-3.3.0.M2/'/>
+<child location='http://download.jboss.org/jbosstools/updates/JBossTools-3.3.0.M2.soa-tooling'/>
 </children>
 </repository>
