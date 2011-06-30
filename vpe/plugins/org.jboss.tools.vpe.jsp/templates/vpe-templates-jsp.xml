@@ -91,7 +91,7 @@
 	    </vpe:template>
     </vpe:tag>
 
-    <vpe:tag name="jsp:doBody" case-sensitive="yes">
+    <vpe:tag name="jsp:doBody" case-sensitive="no">
 	    <vpe:template children="no" modify="no">
 			<vpe:any value="{name()}" title="{tagstring()}" style="display:none;"/>
 	    </vpe:template>
