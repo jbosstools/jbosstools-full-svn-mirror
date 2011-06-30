@@ -36,4 +36,151 @@ It will create the jboss-javaee6-webapp project in your workspace based on the o
 		</mavenArchetype>
 	</project>
 	
+	<project>
+		<category>JBoss AS 7 Quickstarts</category>
+		<name>helloworld</name>
+		<included-projects>jboss-as-helloworld</included-projects>
+		<shortDescription>Helloworld Example</shortDescription>
+		<description>
+This example demonstrates the use of CDI 1.0 and Servlet 3 in JBoss AS 7.
+The example can be deployed using Maven from the command line or from Eclipse using JBoss Tools.
+		</description>
+		<size>8192</size>
+		<url>http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/jbossas7-examples/helloworld.zip</url>
+		<fixes>
+			<fix type="wtpruntime">
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70</property>
+				<property name="description">This project example requires JBoss AS 7.0</property>
+			</fix>
+		</fixes>
+		<importType>maven</importType>
+		<importTypeDescription>The project example requires the m2eclipse, m2eclipse-wtp and JBoss Maven Project Examples feature.</importTypeDescription> 
+	</project>
+	
+	<project>
+		<category>JBoss AS 7 Quickstarts</category>
+		<name>helloworld-osgi</name>
+		<included-projects>jboss-as-helloworld-osgi</included-projects>
+		<shortDescription>Helloworld OSGi Example</shortDescription>
+		<description>
+This example demonstrates the use of OSGi in JBoss AS 7.
+The example can be deployed using Maven from the command line, by using the AS 7 web console or by dropping the OSGi bundle in the deployments folder.
+
+To deploy to JBoss AS 7 using JBoss Tools, start JBoss AS 7, right-click the project, select Run As>Maven build..., enter "package jboss-as:deploy" in the Goals field and click the Run button.
+This will build, deploy and start the OSGi bundle.
+You will see a Hello AS7 World!! message appear on the console when this is done.
+		</description>
+		<size>8192</size>
+		<url>http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/jbossas7-examples/helloworld-osgi.zip</url>
+		<fixes>
+			<fix type="wtpruntime">
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70</property>
+				<property name="description">This project example requires JBoss AS 7.0</property>
+			</fix>
+		</fixes>
+		<importType>maven</importType>
+		<importTypeDescription>The project example requires the m2eclipse, m2eclipse-wtp and JBoss Maven Project Examples feature.</importTypeDescription> 
+	</project>
+	
+	
+	<project>
+		<category>JBoss AS 7 Quickstarts</category>
+		<name>login</name>
+		<included-projects>jboss-as-login</included-projects>
+		<shortDescription>Login Example</shortDescription>
+		<description>
+This example demonstrates the use of CDI 1.0, JPA 2.0, JTA 1.1, EJB 3.1 and JSF 2.0 in JBoss AS 7.
+The example can be deployed using Maven from the command line or from Eclipse using JBoss Tools.		
+		</description>
+<size>8192</size>
+		<url>http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/jbossas7-examples/login.zip</url>
+		<fixes>
+			<fix type="wtpruntime">
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70</property>
+				<property name="description">This project example requires JBoss AS 7.0</property>
+			</fix>
+		</fixes>
+		<importType>maven</importType>
+		<importTypeDescription>The project example requires the m2eclipse, m2eclipse-wtp and JBoss Maven Project Examples feature.</importTypeDescription> 
+	</project>
+	
+	<project>
+		<category>JBoss AS 7 Quickstarts</category>
+		<name>numberguess</name>
+		<included-projects>jboss-as-numberguess</included-projects>
+		<shortDescription>Numberguess Example</shortDescription>
+		<description>
+This example demonstrates the use of CDI 1.0 and JSF 2.0 in JBoss AS 7.
+The example can be deployed using Maven from the command line or from Eclipse using JBoss Tools.
+		</description>
+<size>8192</size>
+		<url>http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/jbossas7-examples/numberguess.zip</url>
+		<fixes>
+			<fix type="wtpruntime">
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70</property>
+				<property name="description">This project example requires JBoss AS 7.0</property>
+			</fix>
+		</fixes>
+		<importType>maven</importType>
+		<importTypeDescription>The project example requires the m2eclipse, m2eclipse-wtp and JBoss Maven Project Examples feature.</importTypeDescription> 
+	</project>
+	
+	<project>
+		<category>JBoss AS 7 Quickstarts</category>
+		<name>kitchensink</name>
+		<included-projects>jboss-as-kitchensink</included-projects>
+		<shortDescription>Kitchensink Example</shortDescription>
+		<description>
+This is your project! It's a sample, deployable Maven 3 project to help you get your foot in the door developing with Java EE 6 on JBoss AS 7.
+This project is setup to allow you to create a compliant Java EE 6 application using JSF 2.0, CDI 1.0, EJB 3.1, JPA 2.0 and Bean Validation 1.0.
+It includes a persistence unit and some sample persistence and transaction code to help you get your feet wet with database access in enterprise Java.
+		</description>
+<size>8192</size>
+		<url>http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/jbossas7-examples/kitchensink.zip</url>
+		<fixes>
+			<fix type="wtpruntime">
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70</property>
+				<property name="description">This project example requires JBoss AS 7.0</property>
+			</fix>
+		</fixes>
+		<importType>maven</importType>
+		<importTypeDescription>The project example requires the m2eclipse, m2eclipse-wtp and JBoss Maven Project Examples feature.</importTypeDescription> 
+	</project>
+	
+	<project>
+		<category>JBoss AS 7 Quickstarts</category>
+		<name>jboss-javaee6-webapp</name>
+		<included-projects>jboss-javaee6-webapp</included-projects>
+		<shortDescription>Java EE 6 example (Maven archetype)</shortDescription>
+		<description>
+This is your project! It's a sample, deployable Maven 3 project to help you get your foot in the door developing with Java EE 6 on JBoss AS 7.
+This project is setup to allow you to create a compliant Java EE 6 application using JSF 2.0, CDI 1.0, EJB 3.1, JPA 2.0 and Bean Validation 1.0.
+It includes a persistence unit and some sample persistence and transaction code to help you get your feet wet with database access in enterprise Java.
+		</description>
+		<size>8192</size>
+		<url/>
+		<fixes>
+			<fix type="wtpruntime">
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70</property>
+				<property name="description">This project example requires JBoss AS 7.0</property>
+			</fix>
+		</fixes>
+		<importType>mavenArchetype</importType>
+		<importTypeDescription>The project example requires the m2eclipse-core, m2eclipse-wtp and JBoss Maven Project Examples feature.</importTypeDescription>
+		<mavenArchetype>
+			<archetypeGroupId>org.jboss.spec.archetypes</archetypeGroupId>
+			<archetypeArtifactId>jboss-javaee6-webapp</archetypeArtifactId>
+			<archetypeVersion>7.0.0.CR1</archetypeVersion>
+			<archetypeRepository>http://repository.jboss.org/nexus/content/groups/public/</archetypeRepository>
+			<groupId>org.jboss.tools.examples</groupId>
+			<artifactId>jboss-javaee6-webapp</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<javaPackage>org.jboss.tools.examples</javaPackage>
+			<properties>
+				<property name="name" value="Java EE 6 webapp project"/>
+			</properties>
+		</mavenArchetype>
+	</project>
+	
+	
 </projects>
