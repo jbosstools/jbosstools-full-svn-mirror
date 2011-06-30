@@ -26,6 +26,7 @@ import org.eclipse.wst.validation.internal.operations.ValidatorManager;
 import org.jboss.tools.jsf.model.pv.test.JSFPromptingProviderTest;
 import org.jboss.tools.jsf.model.pv.test.JsfJbide7975Test;
 import org.jboss.tools.jsf.test.project.facet.JSFFacetOnExistingProjectTest;
+import org.jboss.tools.jsf.test.project.facet.WebFragmentFacetOnExistingProjectTest;
 import org.jboss.tools.jsf.test.refactoring.ELVariableRefactoringTest;
 import org.jboss.tools.jsf.test.refactoring.JSF2RefactoringTest;
 import org.jboss.tools.jsf.test.refactoring.MessagePropertyRefactoringTest;
@@ -44,6 +45,7 @@ public class JsfAllTests {
 		TestSuite suite = new TestSuite("Test model loading for JSF projects"); //$NON-NLS-1$
 		suite.addTestSuite(JSFTemplateTest.class);
 		suite.addTestSuite(JSFFacetOnExistingProjectTest.class);
+		suite.addTestSuite(WebFragmentFacetOnExistingProjectTest.class);
 		TestSuite old = new TestSuite("Tests are using JSFKickStartOldFormat"); //$NON-NLS-1$
 		old.addTestSuite(JSFModelTest.class);
 		old.addTestSuite(ModelFormat_2_0_0_Test.class);
