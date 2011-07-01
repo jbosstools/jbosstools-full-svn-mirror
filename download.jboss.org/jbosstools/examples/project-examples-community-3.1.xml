@@ -190,14 +190,14 @@ Requires JBoss EAP 4.3/JBoss AS 4.2.x, Seam 2.1, m2eclipse and testng plugins.
 				<property name="description">This project example requires Seam version 2.1</property>
 			</fix>
 			<fix type="plugin">
+				<property name="id">org.maven.ide.eclipse.wtp</property>
+				<property name="versions">0.9.9, 0.12.9</property>
+				<property name="description">This project example requires m2eclipse <= 0.12.x. You can install it using the following update sites: http://m2eclipse.sonatype.org/sites/m2e and http://m2eclipse.sonatype.org/sites/m2e-extras</property>
+			</fix>
+			<fix type="plugin">
 				<property name="id">org.testng.eclipse</property>
 				<property name="versions">5.8.0, 5.9.0</property>
 				<property name="description">The TestNG plugin is required if you want to run Seam tests. You can install it using the following update site: http://beust.com/eclipse</property>
-			</fix>
-			<fix type="plugin">
-				<property name="id">org.maven.ide.eclipse.wtp</property>
-				<property name="versions">0.9.9, 0.10.0</property>
-				<property name="description">This project example requires m2eclipse. You can install it using the following update sites: http://m2eclipse.sonatype.org/sites/m2e and http://m2eclipse.sonatype.org/sites/m2e-extras</property>
 			</fix>
 			
 		</fixes>
@@ -271,15 +271,14 @@ Requires JBoss EAP 4.3/JBoss AS 4.2.x, Seam 2.0, m2eclipse and testng plugins.
 				<property name="description">This project example requires Seam version 2.0</property>
 			</fix>
 			<fix type="plugin">
+				<property name="id">org.maven.ide.eclipse.wtp</property>
+				<property name="versions">0.9.9, 0.12.9</property>
+				<property name="description">This project example requires m2eclipse <= 0.12.x. You can install it using the following update sites: http://m2eclipse.sonatype.org/sites/m2e and http://m2eclipse.sonatype.org/sites/m2e-extras</property>
+			</fix>
+			<fix type="plugin">
 				<property name="id">org.testng.eclipse</property>
 				<property name="versions">5.8.0, 5.9.0</property>
 				<property name="description">The TestNG plugin is required if you want to run Seam tests. You can install it using the following update site: http://beust.com/eclipse</property>
-			</fix>
-			
-			<fix type="plugin">
-				<property name="id">org.maven.ide.eclipse.wtp</property>
-				<property name="versions">0.9.9, 0.10.0</property>
-				<property name="description">This project example requires m2eclipse. You can install it using the following update sites: http://m2eclipse.sonatype.org/sites/m2e and http://m2eclipse.sonatype.org/sites/m2e-extras</property>
 			</fix>
 			
 		</fixes>
