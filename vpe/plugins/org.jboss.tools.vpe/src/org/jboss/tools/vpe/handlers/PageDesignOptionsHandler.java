@@ -23,10 +23,14 @@ import org.eclipse.ui.ISources;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.editors.text.ILocationProvider;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.jboss.tools.common.resref.core.ResourceReference;
 import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeController;
+import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
+import org.jboss.tools.vpe.editor.preferences.VpeResourcesDialogFactory;
 import org.jboss.tools.vpe.editor.util.FileUtil;
+import org.jboss.tools.vpe.editor.util.VpeStyleUtil;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.jboss.tools.vpe.resref.core.VpeResourcesDialog;
 
@@ -43,26 +47,8 @@ public class PageDesignOptionsHandler extends VisualPartAbstractHandler {
 	 */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IEditorPart activeEditor = HandlerUtil.getActiveEditorChecked(event);
-		IEditorInput input = activeEditor.getEditorInput();
-		Object fileLocation = null;
-		if (input instanceof IFileEditorInput) {
-			IFile file = ((IFileEditorInput) input).getFile();
-			fileLocation = file;
-		} else if (input instanceof ILocationProvider) {
-			ILocationProvider provider = (ILocationProvider) input;
-			IPath path = provider.getPath(input);
-			if (path != null) {
-				fileLocation = path;
-			}
-		}
-		if (null != fileLocation) {
-			VpeResourcesDialog dialogNew = new VpeResourcesDialog(PlatformUI
-					.getWorkbench().getDisplay().getActiveShell(), fileLocation);
-			dialogNew.open();
-		} else {
-			VpePlugin.getDefault().logError(
-					VpeUIMessages.COULD_NOT_OPEN_VPE_RESOURCES_DIALOG);
-		}
+		VpeResourcesDialogFactory.openVpeResourcesDialog(activeEditor.getEditorInput());
+		
 		return null;
 	}
 

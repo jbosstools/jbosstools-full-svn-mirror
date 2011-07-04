@@ -69,6 +69,7 @@ import org.jboss.tools.vpe.editor.mozilla.listener.EditorLoadWindowListener;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaResizeListener;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaTooltipListener;
 import org.jboss.tools.vpe.editor.preferences.VpeEditorPreferencesPage;
+import org.jboss.tools.vpe.editor.preferences.VpeResourcesDialogFactory;
 import org.jboss.tools.vpe.editor.toolbar.IVpeToolBarManager;
 import org.jboss.tools.vpe.editor.toolbar.VpeDropDownMenu;
 import org.jboss.tools.vpe.editor.toolbar.VpeToolBarManager;
@@ -78,7 +79,6 @@ import org.jboss.tools.vpe.editor.util.DocTypeUtil;
 import org.jboss.tools.vpe.editor.util.FileUtil;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
-import org.jboss.tools.vpe.resref.core.VpeResourcesDialog;
 import org.jboss.tools.vpe.xulrunner.XulRunnerException;
 import org.jboss.tools.vpe.xulrunner.browser.XulRunnerBrowser;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
@@ -276,26 +276,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				IAction.AS_PUSH_BUTTON) {
 			@Override
 			public void run() {
-				IEditorInput input = getEditorInput();
-				Object fileLocation = null;
-				if (input instanceof IFileEditorInput) {
-					IFile file = ((IFileEditorInput) input).getFile();
-					fileLocation = file;
-				} else if (input instanceof ILocationProvider) {
-					ILocationProvider provider = (ILocationProvider) input;
-					IPath path = provider.getPath(input);
-					if (path != null) {
-						fileLocation = path;
-					}
-				}
-				if (null != fileLocation) {
-					VpeResourcesDialog dialogNew = 
-						new VpeResourcesDialog(PlatformUI.getWorkbench().getDisplay()
-									.getActiveShell(), fileLocation);
-					dialogNew.open();
-				} else {
-					VpePlugin.getDefault().logError(VpeUIMessages.COULD_NOT_OPEN_VPE_RESOURCES_DIALOG);
-				}
+				VpeResourcesDialogFactory.openVpeResourcesDialog(getEditorInput());
 			}
 		};
 		showResouceDialogAction.setImageDescriptor(ImageDescriptor.createFromFile(MozillaEditor.class,

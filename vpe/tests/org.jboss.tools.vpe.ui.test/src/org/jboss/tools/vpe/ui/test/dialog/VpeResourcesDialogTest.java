@@ -12,8 +12,10 @@ package org.jboss.tools.vpe.ui.test.dialog;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.window.Window;
 import org.eclipse.ui.PlatformUI;
+import org.jboss.tools.common.resref.core.ResourceReference;
 import org.jboss.tools.vpe.base.test.TestUtil;
 import org.jboss.tools.vpe.base.test.VpeTest;
+import org.jboss.tools.vpe.editor.util.VpeStyleUtil;
 import org.jboss.tools.vpe.resref.core.VpeResourcesDialog;
 import org.jboss.tools.vpe.ui.test.VpeUiTests;
 
@@ -33,7 +35,9 @@ public class VpeResourcesDialogTest extends VpeTest {
 				+ "; projectName = " + VpeUiTests.IMPORT_PROJECT_NAME, file); //$NON-NLS-1$
 
 		VpeResourcesDialog dialog = new VpeResourcesDialog(PlatformUI
-				.getWorkbench().getDisplay().getActiveShell(), file);
+				.getWorkbench().getDisplay().getActiveShell(), file,
+				new ResourceReference("", ResourceReference.PROJECT_SCOPE),
+				new ResourceReference("", ResourceReference.FOLDER_SCOPE));
 
 		dialog.setBlockOnOpen(false);
 		int code = dialog.open();

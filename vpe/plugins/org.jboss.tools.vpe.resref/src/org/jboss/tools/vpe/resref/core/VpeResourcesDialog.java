@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -31,6 +32,7 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.jboss.tools.common.model.ui.ModelUIImages;
 import org.jboss.tools.common.model.ui.action.CommandBar;
+import org.jboss.tools.common.resref.core.ResourceReference;
 
 public class VpeResourcesDialog extends TitleAreaDialog {
 
@@ -46,24 +48,22 @@ public class VpeResourcesDialog extends TitleAreaDialog {
 	private final int DIALOG_HEIGHT = 300;
     
 
-	public VpeResourcesDialog(Shell parentShell, Object fileLocation) {
+	public VpeResourcesDialog(Shell parentShell, Object fileLocation,
+			ResourceReference defaultAbsReference, ResourceReference defaultRelReference) {
 		super(parentShell);
 		setHelpAvailable(false);
+		
 		this.fileLocation = fileLocation;
-		init(fileLocation);
-	}
-
-	private void init(Object fileLocation) {
 		absFolder = new AbsoluteFolderReferenceComposite();
 		relFolder = new RelativeFolderReferenceComposite();
 		css = new CssReferencesComposite();
 		el = new ElVariablesComposite();
 		tld = new TaglibReferencesComposite();
 		css.setObject(fileLocation);
-    	el.setObject(fileLocation);
-    	tld.setObject(fileLocation);
-    	absFolder.setObject(fileLocation);
-    	relFolder.setObject(fileLocation);
+		el.setObject(fileLocation);
+		tld.setObject(fileLocation);
+		absFolder.setObject(fileLocation, defaultAbsReference);
+		relFolder.setObject(fileLocation, defaultRelReference);
 	}
 
 	@Override

@@ -68,6 +68,7 @@ public final class Messages extends NLS {
 	public static String VRD_ADD_EL_PREFERENCE;
 	public static String VRD_ADD_EL_PREFERENCE_MESSAGE;
 	public static String ADD_GLOBAL_EL_PREFERENCE_MESSAGE;
+	public static String BROWSE_BUTTON_NAME;
 	
 	public static String VRD_PAGE_DESIGN_OPTIONS_ABOUT;
 	public static String VRD_ACTUAL_RUN_TIME_FOLDERS_ABOUT;
@@ -100,4 +101,5 @@ public final class Messages extends NLS {
 	public static String INVALID_EL_EXPRESSION;
 	public static String CANNOT_PARSE_SCOPE_VALUE;
 	public static String EL_EXPRESSION_ALREADY_EXISTS;
+	public static String OVERRIDE_DEFAULT_FOLDER;
 }

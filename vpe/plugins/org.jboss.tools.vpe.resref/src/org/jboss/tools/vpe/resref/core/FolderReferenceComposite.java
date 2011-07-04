@@ -12,6 +12,7 @@ package org.jboss.tools.vpe.resref.core;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
@@ -21,7 +22,6 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -35,41 +35,51 @@ import org.eclipse.swt.widgets.Text;
 import org.jboss.tools.common.resref.core.ResourceReference;
 import org.jboss.tools.common.resref.core.ResourceReferenceList;
 
-public abstract class FolderReferenceComposite implements ModifyListener {
+public abstract class FolderReferenceComposite {
 
-	private final String BROWSE_BUTTON_NAME = "&Browse...";//$NON-NLS-1$
-	private Text text = null;
+	private Text pathText = null;
 	/*
 	 * Object representing file location.
 	 * Can be IFile or IPath.
 	 */
 	Object fileLocation = null;
-	ResourceReference[] rs = null;
-	ResourceReference current = null;
-	private String browseDialogFilterPath = null;
+	private ResourceReference defaultReference;
+	List<ResourceReference> resourceReferences = new ArrayList<ResourceReference>();
+	private ResourceReference currentReference;
+	private boolean overrideDefaultPath;
+	
+	private Combo scopeCombo = null;
+	private static final String[] scopeNames = { Messages.SCOPE_PAGE_SHORT,
+			Messages.SCOPE_FOLDER_SHORT, Messages.SCOPE_PROJECT_SHORT };
+	private static final int[] scopeValues = { ResourceReference.FILE_SCOPE,
+		 ResourceReference.FOLDER_SCOPE,  ResourceReference.PROJECT_SCOPE };
+	private Button browseButton;
+	private Button overrideDefaultPathCheckBox;
+	private Label pathLabel;
+	private Label scopeLabel;
+	
 	
 	public FolderReferenceComposite() {}
 	
-	public void setObject(Object fileLocation) {
+	public void setObject(Object fileLocation, ResourceReference defaultReference) {
+		this.defaultReference = defaultReference;
+		
 		this.fileLocation = fileLocation;
+		
 		if (fileLocation instanceof IFile) {
-			browseDialogFilterPath = ((IFile)fileLocation).getProject().getLocation().toString(); 
-		}
-		if (null != fileLocation) {
-			if (fileLocation instanceof IFile) {
-				rs = getReferenceList().getAllResources((IFile) fileLocation);
-			} else if (fileLocation instanceof IPath) {
-				rs = getReferenceList().getAllResources((IPath) fileLocation);
-			}
-		} else {
-			rs = new ResourceReference[0];
+			resourceReferences.addAll(Arrays.asList(getReferenceList().getAllResources((IFile) fileLocation)));
+		} else if (fileLocation instanceof IPath) {
+			resourceReferences.addAll(Arrays.asList(getReferenceList().getAllResources((IPath) fileLocation)));
 		}
 		
-		if(rs.length == 0) {
-			rs = new ResourceReference[1];
-			rs[0] = new ResourceReference("", ResourceReference.FILE_SCOPE); //$NON-NLS-1$
+		if (resourceReferences.size() != 0) {
+			overrideDefaultPath = true;
+			ResourceReference firstReference = resourceReferences.remove(0);
+			currentReference = new ResourceReference(firstReference.getLocation(), firstReference.getScope());
+		} else {
+			overrideDefaultPath = false;
+			currentReference = new ResourceReference(defaultReference.getLocation(), defaultReference.getScope());
 		}
-		current = rs[0];
 	}
 
 	protected abstract ResourceReferenceList getReferenceList();
@@ -86,40 +96,53 @@ public abstract class FolderReferenceComposite implements ModifyListener {
 		groupControl.setLayoutData(gd);
 		groupControl.setText(getTitle());
 		
-		/*
-		 * Create label control
-		 */
-		Label pathLabel = new Label(groupControl, SWT.RIGHT);
+		
+		overrideDefaultPathCheckBox = new Button(groupControl, SWT.LEFT | SWT.CHECK);
+		overrideDefaultPathCheckBox.setText(Messages.OVERRIDE_DEFAULT_FOLDER);
+		gd = new GridData();
+		gd.horizontalSpan = 3;
+		overrideDefaultPathCheckBox.setLayoutData(gd);
+		overrideDefaultPathCheckBox.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				overrideDefaultPath = overrideDefaultPathCheckBox.getSelection();
+				updateFieldsForOverrideDefaultPath();
+			}
+		});
+		overrideDefaultPathCheckBox.setSelection(overrideDefaultPath);
+		
+		pathLabel = new Label(groupControl, SWT.RIGHT);
 		pathLabel.setText(Messages.FOLDER_PATH);
 		gd = new GridData();
+		gd.horizontalIndent = 20;
 		pathLabel.setLayoutData(gd);
 		
 		/*
 		 * Create text control.
 		 */
-		text = new Text(groupControl, SWT.BORDER);
+		pathText = new Text(groupControl, SWT.BORDER);
 		/*
 		 * Set location from stored resource reference
 		 * if it presents.
 		 */
-		text.setText(current.getLocation());
+		pathText.setText(currentReference.getLocation());
 		gd = new GridData(SWT.FILL, SWT.NONE, true, false);
-		text.setLayoutData(gd);
-		text.addModifyListener(this);
+		pathText.setLayoutData(gd);
+		pathText.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent e) {
+				currentReference.setLocation(pathText.getText().trim());
+			}
+		});
 		
-		/*
-		 * Create browse control.
-		 */
-		final Button button = new Button(groupControl, SWT.PUSH);
-		button.setText(BROWSE_BUTTON_NAME);
+		browseButton = new Button(groupControl, SWT.PUSH);
+		browseButton.setText(Messages.BROWSE_BUTTON_NAME);
 		gd = new GridData();
-		button.setLayoutData(gd);
-		button.addSelectionListener(new SelectionAdapter() {
+		browseButton.setLayoutData(gd);
+		browseButton.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent evt) {
-				DirectoryDialog dialog = new DirectoryDialog(button.getShell());
+				DirectoryDialog dialog = new DirectoryDialog(browseButton.getShell());
 				dialog.setMessage(Messages.SELECT_FOLDER_DIALOG_TITLE);
-				if ((null != browseDialogFilterPath) && (new File(browseDialogFilterPath).exists()) ){
-					dialog.setFilterPath(browseDialogFilterPath);
+				if (new File(currentReference.getLocation()).exists() ){
+					dialog.setFilterPath(currentReference.getLocation());
 				}
 				String newPath = dialog.open();
 				/*
@@ -127,73 +150,81 @@ public abstract class FolderReferenceComposite implements ModifyListener {
 				 * store it to current resref, filter, text field.
 				 */
 				if (newPath != null) {
-					newPath = newPath.trim();
-					browseDialogFilterPath = newPath;
-					current.setLocation(newPath);
-					text.setText(newPath);
+					currentReference.setLocation(newPath.trim());
+					pathText.setText(currentReference.getLocation());
 				}
 			}
 		});
 		
-		/*
-		 * Create scope label.
-		 */
-		Label comboboxLabel = new Label(groupControl, SWT.RIGHT);
-		comboboxLabel.setText(Messages.SCOPE_GROUP_NAME);
+		scopeLabel = new Label(groupControl, SWT.RIGHT);
+		scopeLabel.setText(Messages.SCOPE_GROUP_NAME);
 		gd = new GridData();
-		comboboxLabel.setLayoutData(gd);
+		gd.horizontalIndent = 20;
+		scopeLabel.setLayoutData(gd);
 		
-		/*
-		 * Create scope combobox.
-		 */
-		final Combo scopeCombo
-				= new Combo(groupControl, SWT.BORDER | SWT.READ_ONLY);
-		String[] items = { Messages.SCOPE_PAGE_SHORT,
-				Messages.SCOPE_FOLDER_SHORT, Messages.SCOPE_PROJECT_SHORT };
-		scopeCombo.setItems(items);
-		scopeCombo.select(current.getScope());
+		scopeCombo = new Combo(groupControl, SWT.BORDER | SWT.READ_ONLY);
+		scopeCombo.setItems(scopeNames);
+		setScopeComboValue(currentReference.getScope());
+
 		gd = new GridData(SWT.FILL, SWT.NONE, true, false, 2, 1);
 		scopeCombo.setLayoutData(gd);
 
 		scopeCombo.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				current.setScope(scopeCombo.getSelectionIndex());
+				currentReference.setScope(getScopeComboValue());
 			}
 		});
+		
+		updateFieldsForOverrideDefaultPath();
 		
 		return groupControl;
 	}
 	
 	public void commit() {
-		List l = new ArrayList();
-		for (int i = rs.length - 2; i >= 0; i--) {
-			if(rs[i].getLocation().equals(current.getLocation())) {
-				continue;
-			}
-			if(rs[i].getScope() == current.getScope()) {
-				continue;
-			}
-			l.add(rs[i]);
-		}
-		l.add(current);
-		rs = (ResourceReference[])l.toArray(new ResourceReference[0]);
-		if (null != fileLocation) {
-			if (fileLocation instanceof IFile) {
-				getReferenceList().setAllResources((IFile) fileLocation, rs);
-			} else if (fileLocation instanceof IPath) {
-				getReferenceList().setAllResources((IPath) fileLocation, rs);
+		List<ResourceReference> newResourceReferencesList = new ArrayList<ResourceReference>();
+		for (int i = resourceReferences.size() - 1; i >= 0; i--) {
+			if(!resourceReferences.get(i).getLocation().equals(currentReference.getLocation()) 
+					&& resourceReferences.get(i).getScope() != currentReference.getScope()) {
+				newResourceReferencesList.add(resourceReferences.get(i));
 			}
 		}
-	}
-
-	public void setFileLocation(Object fileLocation) {
-		this.fileLocation = fileLocation;
-	}
-
-	public void modifyText(ModifyEvent e) {
-		browseDialogFilterPath = text.getText().trim();
-		current.setLocation(browseDialogFilterPath);
+		if (overrideDefaultPath) {
+			newResourceReferencesList.add(currentReference);
+		}
+		
+		ResourceReference[] newResourceReferences = newResourceReferencesList.toArray(new ResourceReference[0]);
+		if (fileLocation instanceof IFile) {
+			getReferenceList().setAllResources((IFile) fileLocation, newResourceReferences);
+		} else if (fileLocation instanceof IPath) {
+			getReferenceList().setAllResources((IPath) fileLocation, newResourceReferences);
+		}
 	}
 	
+	private int getScopeComboValue() {
+		return scopeValues[scopeCombo.getSelectionIndex()];
+	}
+	
+	private void setScopeComboValue(int value) {
+		int i = 0;
+		for (int scopeValue : scopeValues) {
+			if (scopeValue == value) {
+				break;
+			}
+			i++;
+		}
+		scopeCombo.select(i);
+	}
+	
+	private void updateFieldsForOverrideDefaultPath() {
+		for (Control control : new Control[] {pathLabel, pathText, browseButton,
+											scopeLabel, scopeCombo}) {
+			control.setEnabled(overrideDefaultPath);
+		}
+		if (!overrideDefaultPath) {
+			pathText.setText(defaultReference.getLocation());
+			setScopeComboValue(defaultReference.getScope());
+		}
+	}
+
 }
