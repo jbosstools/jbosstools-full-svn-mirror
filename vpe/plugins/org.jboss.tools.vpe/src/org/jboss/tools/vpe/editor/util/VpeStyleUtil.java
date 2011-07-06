@@ -13,10 +13,12 @@ package org.jboss.tools.vpe.editor.util;
 import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
@@ -590,14 +592,14 @@ public class VpeStyleUtil {
 	public static String addFullPathToImgSrc(String path,
 			VpePageContext pageContext, boolean showUnresolvedImage) {
 	    
-	    	if (path == null) {
-	    	    if (showUnresolvedImage) {
-	    			return FILE_PROTOCOL + SLASH + SLASH
-						+ getAbsoluteResourcePath(UNRESOLVED_IMAGE_PATH).replace('\\', '/');
-	    	    } else {
-	    			return EMPTY_STRING;
-	    	    }
-	    	}
+    	if (path == null) {
+    	    if (showUnresolvedImage) {
+    			return FILE_PROTOCOL + SLASH + SLASH
+					+ getAbsoluteResourcePath(UNRESOLVED_IMAGE_PATH).replace('\\', '/');
+    	    } else {
+    			return EMPTY_STRING;
+    	    }
+    	}
 	    
 		IPath tagPath = new Path(path);
 		if (tagPath.isEmpty()) {
@@ -817,79 +819,62 @@ public class VpeStyleUtil {
     
     public static String processUrl(String url, IFile file) {
 
-		String resolvedValue = url
+		String resolvedUrl = url
 				.replaceFirst(
 						"^\\s*(\\#|\\$)\\{facesContext.externalContext.requestContextPath\\}", Constants.EMPTY); //$NON-NLS-1$
 
-		
 
-		resolvedValue = ElService.getInstance().replaceEl(file, resolvedValue);
+		resolvedUrl = ElService.getInstance().replaceEl(file, resolvedUrl);
 
 		URI uri = null;
 		try {
-			uri = new URI(resolvedValue);
+			uri = new URI(resolvedUrl);
 		} catch (URISyntaxException e) {
 	// here we process user input, and when user enter url, there possible that we will not be able parse it.
 	// so we just ignore this.
 	//		VpePlugin.getDefault().logWarning("Error in parsiong URI string", e); //$NON-NLS-1$
 		}
 
-		if ((uri != null) && (uri.isAbsolute()))
-			return resolvedValue;
-
-		Path path = new Path(resolvedValue);
-
-		if (resolvedValue.startsWith("/") //$NON-NLS-1$
+		if ((uri != null) && (uri.isAbsolute())) {
+			return resolvedUrl;
+		}
+		
+		String decodedUrl = decodeUrl(resolvedUrl);
+		
+		Path path = new Path(decodedUrl);
+		if (decodedUrl.startsWith("/") //$NON-NLS-1$
 				&& path.segment(0).equals(file.getProject().getName())) {
-			resolvedValue = "/" //$NON-NLS-1$
+			decodedUrl = "/" //$NON-NLS-1$
 					+ path.removeFirstSegments(1).toPortableString();
-
 		}
 
-		return Constants.FILE_PREFIX
-				+ FileUtil.getFile(resolvedValue, file).getLocation()
-						.toPortableString();
+		IPath location = FileUtil.getFile(decodedUrl, file).getLocation();
+		if (location != null) {
+			return pathToUrl(location);
+		} else {
+			return resolvedUrl;
+		}
 	}
-    
-    /**
-     * Gets the absolute workspace path.
-     * 
-     * @param resourcePathInWorkspace the relative path in workspace
-     * 
-     * @return the absolute workspace path
-     */
-    public static String getAbsoluteWorkspacePath(
-			String resourcePathInWorkspace, VpePageContext pageContext) {
 
-		String resolvedValue = resourcePathInWorkspace
-				.replaceFirst(
-						"^\\s*(\\#|\\$)\\{facesContext.externalContext.requestContextPath\\}", Constants.EMPTY); //$NON-NLS-1$
-
-		IFile file = null;
-		if ( (pageContext.getVisualBuilder().getCurrentIncludeInfo() != null)
-				&&(pageContext.getVisualBuilder().getCurrentIncludeInfo()
-						.getStorage() instanceof IFile) ) {
-			file = (IFile) pageContext.getVisualBuilder().getCurrentIncludeInfo()
-					.getStorage();
-			}
-		if (file == null)
-			return resolvedValue;
-
-		resolvedValue = ElService.getInstance().replaceEl(file, resolvedValue);
-
-		URI uri = null;
+	private static String pathToUrl(IPath location) {
+		String fullFilePath = location.toPortableString();
 		try {
-			uri = new URI(resolvedValue);
+			return new URI("file", "", "/" +  fullFilePath, null).toASCIIString();   //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
 		} catch (URISyntaxException e) {
+			VpePlugin.getPluginLog().logError(e);
+			return Constants.FILE_PREFIX + fullFilePath;
 		}
+	}
 
-		if ((uri != null)
-				&& (uri.isAbsolute() || (new File(resolvedValue)).exists()))
-			return resolvedValue;
-
-		return Constants.FILE_PREFIX
-				+ FileUtil.getFile(resolvedValue, file).getLocation()
-						.toPortableString();
+	private static String decodeUrl(String url) {
+		String decodedUrl;
+		try {
+			decodedUrl = URLDecoder.decode(url, "UTF-8"); //$NON-NLS-1$
+		} catch (UnsupportedEncodingException e) {
+			VpePlugin.getPluginLog().logError(e);
+			decodedUrl = url;
+		}
+		return decodedUrl;
 	}
     
     /**
