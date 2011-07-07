@@ -23,6 +23,7 @@ import java.util.zip.ZipEntry;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -256,14 +257,9 @@ public class FileUtil {
 			} else {
 				//WebArtifactEdit edit = WebArtifactEdit
 				//		.getWebArtifactEditForRead(includeFile.getProject());
-				IVirtualComponent com = ComponentCore
-						.createComponent(includeFile.getProject());
-				if (com != null) {
-					IVirtualFolder webRootFolder = com.getRootFolder().getFolder(
-							new Path("/")); //$NON-NLS-1$
-					IContainer folder = webRootFolder.getUnderlyingFolder();
-					IPath path = folder.getFullPath().append(fileName);
-					file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);										
+				IFolder defaultWebRootFolder = getDefaultWebRootFolder(includeFile);
+				if (defaultWebRootFolder != null) {
+					file = defaultWebRootFolder.getFile(fileName);										
 				} else {
 					/* Yahor Radtsevich (yradtsevich):
 					 * Fix of JBIDE-4416: assume that the parent directory
@@ -285,6 +281,27 @@ public class FileUtil {
 			}
 		}
 		return file;
+	}
+	
+	public static IFolder getDefaultWebRootFolder(IFile file) {
+		IProject project = file.getProject();
+		if (project == null) {
+			return null;
+		}
+
+		IVirtualComponent component = ComponentCore.createComponent(project);
+		if (component == null) {
+			return null;
+		}
+
+		IVirtualFolder webRootFolder = component.getRootFolder()
+				.getFolder(new Path("/")); //$NON-NLS-1$
+		IPath defaultWebRootPath = webRootFolder.getUnderlyingFolder().getFullPath();
+		if (defaultWebRootPath == null) {
+			return null;
+		}
+		
+		return ResourcesPlugin.getWorkspace().getRoot().getFolder(defaultWebRootPath);
 	}
 
 	/**

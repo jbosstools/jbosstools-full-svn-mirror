@@ -11,6 +11,7 @@
 package org.jboss.tools.vpe.editor.preferences;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
@@ -18,15 +19,21 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.editors.text.ILocationProvider;
 import org.jboss.tools.common.resref.core.ResourceReference;
 import org.jboss.tools.vpe.VpePlugin;
+import org.jboss.tools.vpe.editor.util.FileUtil;
 import org.jboss.tools.vpe.editor.util.VpeStyleUtil;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.jboss.tools.vpe.resref.core.VpeResourcesDialog;
 
 public class VpeResourcesDialogFactory {
 	public static void openVpeResourcesDialog(IEditorInput input) {
+		IPath absoluteDefaultPath = null;
 		Object fileLocation = null;
 		if (input instanceof IFileEditorInput) {
 			IFile file = ((IFileEditorInput) input).getFile();
+			IFolder absoluteDefaultFolder = FileUtil.getDefaultWebRootFolder(file);
+			if (absoluteDefaultFolder != null) {
+				absoluteDefaultPath = absoluteDefaultFolder.getLocation();
+			}
 			fileLocation = file;
 		} else if (input instanceof ILocationProvider) {
 			ILocationProvider provider = (ILocationProvider) input;
@@ -35,9 +42,9 @@ public class VpeResourcesDialogFactory {
 				fileLocation = path;
 			}
 		}
+
+		IPath relativeDafaultPath = VpeStyleUtil.getInputParentPath(input);
 		if (null != fileLocation) {
-			IPath absoluteDefaultPath = VpeStyleUtil.getRootPath(input);
-			IPath relativeDafaultPath = VpeStyleUtil.getInputParentPath(input);
 			VpeResourcesDialog dialogNew = 
 				new VpeResourcesDialog(
 						PlatformUI.getWorkbench().getDisplay().getActiveShell(),
