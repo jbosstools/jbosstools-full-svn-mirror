@@ -5,6 +5,6 @@ Bundle-SymbolicName: org.jboss.tools.xulrunner.initializer;singleton:=true
 Bundle-Version: 3.1.0.qualifier
 Bundle-Vendor: %BundleVendor
 Fragment-Host: org.eclipse.swt
-Require-Bundle: org.eclipse.core.runtime
+Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0"
 Bundle-Localization: initializer
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
