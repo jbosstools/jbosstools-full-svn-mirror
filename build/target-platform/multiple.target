@@ -13,9 +13,20 @@
 		<location includeAllPlatforms="false" includeMode="planner" type="InstallableUnit">
 			<repository location="http://download.jboss.org/jbosstools/updates/helios/"/>
 
-			<unit id="org.maven.ide.eclipse.feature.feature.group" version="0.12.2.20110415-2017"/>
-			<unit id="org.maven.ide.eclipse.wtp.feature.feature.group" version="0.12.0.20110421-1500"/>
-		
+			<unit id="org.eclipse.m2e.sdk.feature.feature.group" version="1.0.0.201106061504"/>
+			<unit id="org.eclipse.m2e.feature.feature.group" version="1.0.0.201106052308"/>
+			<unit id="org.maven.ide.eclipse.wtp.feature.feature.group" version="0.13.0.20110623-0455"/>
+			<unit id="ch.qos.logback.classic" version="0.9.27.v20110224-1110"/>
+			<unit id="ch.qos.logback.core" version="0.9.27.v20110224-1110"/>
+			<unit id="ch.qos.logback.slf4j" version="0.9.27.v20110224-1110"/>
+			<unit id="org.slf4j.api" version="1.6.1.v20100831-0715"/>
+			<unit id="com.ning.async-http-client" version="1.6.3.201106052308"/>
+			<unit id="org.jboss.netty" version="3.2.4.Final-201106061504"/>
+			<unit id="org.eclipse.equinox.p2.discovery.compatibility" version="1.0.1.v20110502-1955"/>
+			<unit id="org.eclipse.equinox.p2.discovery" version="1.0.100.v20110502-1955"/>
+			<unit id="org.eclipse.equinox.p2.ui.discovery" version="1.0.0.v20110502-1955"/>
+			<unit id="org.eclipse.net4j.jms.api" version="3.0.0.v20110516-1727"/>
+
 			<!-- want the latest, 1.6.2.v201005080631, not 1.5.1.v201005080630 -->
 			<!-- 
 			<unit id="javax.wsdl" version="1.6.2.v201005080631"/>
