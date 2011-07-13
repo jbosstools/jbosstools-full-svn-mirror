@@ -12,7 +12,7 @@ fun! ReplaceTimestamp()
 endfun
 nnoremap <Leader>ts :call ReplaceTimestamp()<CR>
 -->
-<property name='p2.timestamp' value='1308002202000'/>
+<property name='p2.timestamp' value='1308002202001'/>
 </properties>
 <children size='12'>
 <child location='../requirements/helios/SR2/'/>
