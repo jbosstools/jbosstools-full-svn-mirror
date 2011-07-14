@@ -86,7 +86,7 @@
     to Variable"; click on this entry in the list. The action of changing
     focus from the "To" tree selection widget to another widget, triggers
     validation of the assignment operation and a popup dialog asking if you
-    want to initialize the ouput variable should appear; click "Yes" to do so
+    want to initialize the output variable should appear; click "Yes" to do so
     now.<br />The BPEL Designer will automatically insert another entry in the
     assignment operations list labeled "Fixed Value to Variable". Select this
     entry in the list and you will see an XML fragment that corresponds to the
