@@ -29,6 +29,7 @@ import org.jboss.tools.vpe.editor.VpeController;
  */
 public abstract class VisualPartAbstractHandler extends AbstractHandler
 		implements IElementUpdater {
+	public static final String VPE_CATEGORY_ID = "org.jboss.tools.vpe.category"; //$NON-NLS-1$
 	@Override
 	public void setEnabled(Object evaluationContext) {
 		boolean enabled = false;
