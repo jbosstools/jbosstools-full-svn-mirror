@@ -13,10 +13,13 @@ package org.jboss.tools.vpe.editor;
 import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.core.commands.Command;
+import org.eclipse.core.commands.common.NotDefinedException;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -136,6 +139,7 @@ import org.jboss.tools.vpe.handlers.ShowBorderHandler;
 import org.jboss.tools.vpe.handlers.ShowBundleAsELHandler;
 import org.jboss.tools.vpe.handlers.ShowNonVisualTagsHandler;
 import org.jboss.tools.vpe.handlers.ShowTextFormattingHandler;
+import org.jboss.tools.vpe.handlers.VisualPartAbstractHandler;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.jboss.tools.vpe.resref.core.AbsoluteFolderReferenceList;
 import org.jboss.tools.vpe.resref.core.CSSReferenceList;
@@ -211,6 +215,7 @@ public class VpeController implements INodeAdapter,
 	private UIJob reinitJob;
 	private IZoomEventManager zoomEventManager;
 	private VpeDropWindow dropWindow = null;
+	private static List<String> vpeCategoryCommands = null;
 
 	/**
 	 * Added by Max Areshkau JBIDE-675, stores information about modification
@@ -2473,20 +2478,38 @@ public class VpeController implements INodeAdapter,
 		}
 
 	}
-	/**
-	 * 
-	 */
+
 	public void refreshCommands(){
 		ICommandService commandService = (ICommandService) PlatformUI
-		.getWorkbench().getService(ICommandService.class);
-		commandService.refreshElements(ShowTextFormattingHandler.COMMAND_ID, null);
-		commandService.refreshElements(RotateEditorsHandler.COMMAND_ID, null);
-		commandService.refreshElements(ShowNonVisualTagsHandler.COMMAND_ID, null);
-		commandService.refreshElements(ShowBundleAsELHandler.COMMAND_ID, null);
-		commandService.refreshElements(ShowBorderHandler.COMMAND_ID, null);
-		commandService.refreshElements(RefreshHandler.COMMAND_ID, null);
-		commandService.refreshElements(PreferencesHandler.COMMAND_ID, null);
-		commandService.refreshElements(PageDesignOptionsHandler.COMMAND_ID, null);
+				.getWorkbench().getService(ICommandService.class);
+
+		//just refresh state of commands
+		for (String commandId : getVpeCategoryCommands()) {
+			commandService.refreshElements(commandId, null);
+		}
+	}
+
+	private List<String> getVpeCategoryCommands() {
+		ICommandService commandService = (ICommandService) PlatformUI
+				.getWorkbench().getService(ICommandService.class);
+		
+		//init VPE Commands List if its has not been initialized
+		if (vpeCategoryCommands == null) {
+			vpeCategoryCommands = new ArrayList<String>();
+			Command [] definedCommands = commandService.getDefinedCommands();
+			for (Command command : definedCommands) {
+				try {
+					if(VisualPartAbstractHandler.VPE_CATEGORY_ID.equals(command.getCategory().getId())){
+						//collecting vpe category commands
+						vpeCategoryCommands.add(command.getId());
+					}
+				} catch (NotDefinedException e) {
+					VpePlugin.reportProblem(e);
+				}
+			}
+		}
+		
+		return vpeCategoryCommands;
 	}	
 
 	/**
