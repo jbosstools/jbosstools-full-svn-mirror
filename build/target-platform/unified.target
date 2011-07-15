@@ -27,13 +27,17 @@
 			<unit id="org.eclipse.equinox.p2.ui.discovery" version="1.0.0.v20110502-1955"/>
 			<unit id="org.eclipse.net4j.jms.api" version="3.0.0.v20110516-1727"/>
 
-			<!-- want the latest, 1.6.2.v201005080631, not 1.5.1.v201005080630 -->
-			<!-- 
-			<unit id="javax.wsdl" version="1.6.2.v201005080631"/>
-			-->
+			<!-- Orbit bundles -->
 			<unit id="javax.wsdl" version="1.6.2.v201012040545"/>
-			<unit id="org.apache.oro" version="2.0.8.v201005080400"/>
 			<unit id="org.jdom" version="1.0.0.v201005080400"/>
+			<unit id="org.apache.oro" version="2.0.8.v201005080400"/>
+			<unit id="org.apache.commons.codec" version="1.3.0.v201101211617"/>
+			<unit id="org.apache.commons.httpclient" version="3.1.0.v201012070820"/>
+			<unit id="org.hamcrest" version="1.1.0.v20090501071000"/>
+			<unit id="org.hamcrest.core" version="1.1.0.v20090501071000"/>
+			<unit id="org.hamcrest.text" version="1.1.0.v20090501071000"/>
+			<unit id="org.hamcrest.library" version="1.1.0.v20090501071000"/>
+			<unit id="org.hamcrest.integration" version="1.1.0.v20090501071000"/>
 
 			<unit id="org.eclipse.tptp.platform.profile.server.feature.group" version="4.5.2.v201101261720-7H7F4AkF7B88MAQCKJH"/>
 			<unit id="org.eclipse.tptp.platform.instrumentation.ui.feature.group" version="4.3.2.v201101261720-797918s735435695C83"/>
