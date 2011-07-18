@@ -4,6 +4,7 @@
 
 [
 <!ENTITY introduction SYSTEM "introduction.xml">
+<!ENTITY jbossinstall SYSTEM "jbossinstall.xml">
 <!ENTITY birt_integration_with_seam SYSTEM "birt_integration_with_seam.xml">
 <!ENTITY hibernate_datasource SYSTEM "hibernate_datasource.xml">      
 <!ENTITY birt_reports_deployment SYSTEM "birt_reports_deployment.xml">    
@@ -64,18 +65,19 @@
         </releaseinfo>
   
 
-<abstract>
+<!--<abstract>
    <title/>
        <para>
            <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/jboss_birt_plugin_ref_guide/pdf/Birt_Reference_Guide.pdf">PDF version</ulink>
        </para>
-</abstract>
+</abstract>-->
 
     
     </bookinfo>
  <toc/> 
     
     &introduction;
+    &jbossinstall;
     &tasks;
     &framework;
     &links;
