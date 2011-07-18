@@ -1,216 +1,185 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="create_new_project">
-    <chapterinfo>
-        <keywordset>
-            <keyword>JBoss Tools</keyword>
-            <keyword>Drools Tools</keyword>
-        </keywordset>
-    </chapterinfo>
+	<chapterinfo>
+		<keywordset>
+			<keyword>JBoss Tools</keyword>
+			<keyword>Drools Tools</keyword>
+		</keywordset>
+	</chapterinfo>
 
-    <title>Creating a New Drools Project</title>
+	<title>Creating a New Drools Project</title>
 
-    <para>In this chapter we are going to show you how to setup an executable sample Drools project
-        to start using rules immediately.</para>
+	<para>This chapter will cover the steps required to setup an executable sample Drools project in which rules can be used.</para>
 
+	<section id="sample_drools_project">
+		<title>Creating a Sample Drools Project</title>
 
+		<para>First, we suggest that you use <property>Drools perspective</property> which is aimed at work with Drools specific resources.</para>
 
-    <section id="sample_drools_project">
-        <title>Creating a Sample Drools Project</title>
+		<para>
+			To create a new Drools project select <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>New</guimenuitem><guimenuitem>Project...</guimenuitem><guimenuitem>Drools</guimenuitem><guimenuitem>Drools Project</guimenuitem></menuchoice>. This will open the <guilabel>New Drools Project wizard</guilabel>, as shown in the figure below.
+		</para>
 
-        <para>First, we suggest that you use <property>Drools perspective</property> which is aimed
-            at work with Drools specific resources.</para>
+		<para>On the first page type the project name and click the <guibutton>Next</guibutton> button.</para>
 
-        <para>To create a new Drools project follow to <emphasis>
-                <property>File > New > Drools Project</property>. </emphasis> This will open
-                <property>New Drools Project wizard</property> like on the figure below.</para>
+		<figure>
+			<title>Creating a New Drools Project</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/create_new_project/create_new_project1.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
 
-        <para>On the first page type the project name and click
-                <emphasis><property>Next</property>.</emphasis></para>
+		<para>
+			Next you have the choice to add some default artifacts to it like sample rules, decision tables or ruleflows and Java classes for them. Let&apos;s select first two check boxes and click the <guibutton>Next</guibutton> button.
+		</para>
 
-        <figure>
-            <title>Creating a New Drools Project</title>
-            <mediaobject>
-                <imageobject>
-                    <imagedata fileref="images/create_new_project/create_new_project1.png"/>
-                </imageobject>
-            </mediaobject>
-        </figure>
+		<figure>
+			<title>Selecting Drools Project Elements</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/create_new_project/create_new_project2.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
 
-        <para>Next you have a choice to add some default artifacts to it like sample rules, decision
-            tables or ruleflows and Java classes for them. Let&apos;s select first two check
-            boxes and press <emphasis>
-                <property>Next</property>. </emphasis></para>
+		<para>
+			The next page asks you to specify a Drools runtime. If you have not yet set it up, you should do this now by clicking the <guibutton>Configure Workspace Settings</guibutton> link.
+		</para>
 
-        <figure>
-            <title>Selecting Drools Project Elements</title>
-            <mediaobject>
-                <imageobject>
-                    <imagedata fileref="images/create_new_project/create_new_project2.png"/>
-                </imageobject>
-            </mediaobject>
-        </figure>
+		<figure>
+			<title>Configuring Drools Runtime</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/create_new_project/create_new_project3.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
 
-        <para>Next page asks you to specify a Drools runtime. If you have not yet set it up, you
-            should do this now by clicking the <emphasis>
-                <property>Configure Workspace Settings</property>
-            </emphasis> link.</para>
+		<para>
+			You should see the <property>Preferences window</property> where you can configure the workspace settings for Drools runtimes. To create a new runtime, click the <guibutton>Add</guibutton> button. The appeared dialog prompts you to enter a name for a new runtime and a path to the Drools runtime on your file system.
+		</para>
 
-        <figure>
-            <title>Configuring Drools Runtime</title>
-            <mediaobject>
-                <imageobject>
-                    <imagedata fileref="images/create_new_project/create_new_project3.png"/>
-                </imageobject>
-            </mediaobject>
-        </figure>
+		<note>
+			<title>Note:</title>
+			<para>
+				A Drools runtime is a collection of jars on your file system that represent one specific release of the Drools project jars. While creating a new runtime, you must either point to the release of your choice, or you can simply create a new runtime on your file system from the jars included in the Drools Eclipse plugin.
+			</para>
+		</note>
 
-        <para>You should see the <property>Preferences window</property> where you can configure the
-            workspace settings for Drools runtimes. To create a new runtime, press the <emphasis>
-                <property>Add</property>
-            </emphasis> button. The appeared dialog prompts you to enter a
-            name for a new runtime and a path to the Drools runtime on your file system.</para>
+		<figure>
+			<title>Adding a New Drools Runtime</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/create_new_project/create_new_project4.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
 
-        <note>
-            <title>Note:</title>
-            <para>A Drools runtime is a collection of jars on your file system that represent one
-                specific release of the Drools project jars. While creating a new runtime, you must
-                either point to the release of your choice, or you can simply create a new runtime
-                on your file system from the jars included in the Drools Eclipse plugin.</para>
-        </note>
+		<para>
+			Let&apos;s simply create a new Drools 5 runtime from the jars embedded in the Drools Eclipse plugin. Thus, you should click the <guibutton>Create a new Drools 5 runtime</guibutton> button, select the folder where you want this runtime to be created and click the <guibutton>OK</guibutton> button.
+		</para>
 
-        <figure>
-            <title>Adding a New Drools Runtime</title>
-            <mediaobject>
-                <imageobject>
-                    <imagedata fileref="images/create_new_project/create_new_project4.png"/>
-                </imageobject>
-            </mediaobject>
-        </figure>
-        
-        <para>Let&apos;s simply create a new Drools 5 runtime from the jars embedded in the
-            Drools Eclipse plugin. Thus, you should press <emphasis>
-                <property>Create a new Drools 5 runtime</property>
-            </emphasis> button and select the folder where you want this runtime to be created and
-            hit <emphasis>
-                <property>OK</property>.</emphasis></para>
+		<para>
+			You will see the newly created runtime show up in your list of Drools runtimes. Check it and click the <guibutton>OK</guibutton> button.
+		</para>
 
-        <para>You will see the newly created runtime show up in your list of Drools runtimes. Check
-            it and press <emphasis>
-                <property>OK</property>.</emphasis></para>
+		<figure>
+			<title>Selecting a Drools Runtime</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/create_new_project/create_new_project5.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
 
-        <figure>
-            <title>Selecting a Drools Runtime</title>
-            <mediaobject>
-                <imageobject>
-                    <imagedata fileref="images/create_new_project/create_new_project5.png"/>
-                </imageobject>
-            </mediaobject>
-        </figure>
+		<para>Now click the <guibutton>Finish</guibutton> to complete the project creation.</para>
 
-        <para>Now press <emphasis>
-                <property>Finish</property>
-            </emphasis> to complete the project creation.</para>
+		<figure>
+			<title>Completing the Drools Project Creation</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/create_new_project/create_new_project6.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
 
-        <figure>
-            <title>Completing the Drools Project Creation</title>
-            <mediaobject>
-                <imageobject>
-                    <imagedata fileref="images/create_new_project/create_new_project6.png"/>
-                </imageobject>
-            </mediaobject>
-        </figure>
-
-        <para>This will setup a basic structure, classpath and sample rules and test case to get you
-            started.</para>
-    </section>
+		<para>This will setup a basic structure, classpath, sample rules and test case to get you started.</para>
+	</section>
 
 
-    <section id="structure_overview">
-        <title>Drools Project Structure Overview</title>
+	<section id="structure_overview">
+		<title>Drools Project Structure Overview</title>
 
-        <para>Now let&apos;s look at the structure of the organized project. In the
-                <property>Package Explorer</property> you should see the following:</para>
+		<para>Now let&apos;s look at the structure of the organized project. In the <guilabel>Package Explorer</guilabel> you should see the following:</para>
 
-        <figure>
-            <title>Drools Project in the Package Explorer</title>
-            <mediaobject>
-                <imageobject>
-                    <imagedata fileref="images/create_new_project/create_new_project7.png"/>
-                </imageobject>
-            </mediaobject>
-        </figure>
+		<figure>
+			<title>Drools Project in the Package Explorer</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/create_new_project/create_new_project7.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
 
-        <para>The newly created project contains an example rule file <emphasis>
-                <property>Sample.drl</property>
-            </emphasis> in the <emphasis>
-                <property>src/main/rules</property>
-            </emphasis> directory and an example java file <emphasis>
-                <property>DroolsTest.java</property>
-            </emphasis> that can be used to execute the rules in a Drools engine in the folder <emphasis>
-                <property>src/main/java</property>
-            </emphasis>, in the <emphasis>
-                <property>com.sample</property>
-            </emphasis> package. All the others jar&apos;s that are necessary during execution
-            are also added to the classpath in a custom classpath container called <property>Drools
-                Library</property>.</para>
+		<para>
+			The newly created project contains an example rule file <filename>Sample.drl</filename> in the <filename>src/main/rules</filename> directory and an example java file <filename>DroolsTest.java</filename> that can be used to execute the rules in a Drools engine in the folder <filename>src/main/java</filename>, in the <code>com.sample</code> package. All the others jar&apos;s that are necessary during execution are also added to the classpath in a custom classpath container called <guilabel>Drools Library</guilabel>.
+		</para>
 
-        <note>
-            <title>Tip:</title>
-            <para>Rules do not have to be kept in Java projects at all, this is just a convenience
-                for people who are already using eclipse as their Java IDE.</para>
-        </note>
+		<note>
+			<title>Tip:</title>
+			<para>Rules do not have to be kept in Java projects at all, this is just a convenience for people who are already using Eclipse as their Java IDE.</para>
+		</note>
 
-    </section>
+	</section>
 
-    <section id="creating_rule">
-        <title>Creating a New Rule</title>
+	<section id="creating_rule">
+		<title>Creating a New Rule</title>
 
-        <para>Now we are going to add a new Rule package to the project.</para>
+		<para>Now we are going to add a new Rule package to the project.</para>
 
-        <para>You can either create an empty text <emphasis>
-                <property>.drl</property>
-        </emphasis> file or make use of the special <property>New Rule Package...</property>
-                wizard to do it.</para>
+		<para>
+			You can either create an empty text <filename>.drl</filename> file or make use of the special <guilabel>New Rule Package...</guilabel> wizard to do it.
+		</para>
 
-        <para>To open the wizard follow to <emphasis>
-                <property>File > New > Rule Resource</property>
-            </emphasis> or use the menu with the JBoss Drools icon on the toolbar.</para>
+		<para>
+			To open the wizard select <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>New</guimenuitem><guimenuitem>Rule Resource</guimenuitem></menuchoice> or use the menu with the JBoss Drools icon on the toolbar.
+		</para>
 
-        <figure>
-            <title>Opening the New Rule Package Wizard</title>
-            <mediaobject>
-                <imageobject>
-                    <imagedata fileref="images/create_new_project/create_new_project8.png"/>
-                </imageobject>
-            </mediaobject>
-        </figure>
+		<figure>
+			<title>Opening the New Rule Package Wizard</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/create_new_project/create_new_project8.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
 
-        <para>On the wizard page first select <emphasis>
-                <property>/rules</property>
-            </emphasis> as a top level directory to store your rules and type the rule name. Next
-            it&apos;s mandatory to specify the rule package name. It defines a namespace that
-            groups rules together.</para>
+		<para>
+			On the wizard page first select <guilabel>/rules</guilabel> as a top level directory to store your rules and type the rule name. Next specify the mandatory rule package name. It defines a namespace that groups rules together.
+		</para>
 
-        <figure>
-            <title>New Rule Package Wizard</title>
-            <mediaobject>
-                <imageobject>
-                    <imagedata fileref="images/create_new_project/create_new_project9.png"/>
-                </imageobject>
-            </mediaobject>
-        </figure>
+		<figure>
+			<title>New Rule Package Wizard</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/create_new_project/create_new_project9.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
 
-        <para>As a result the wizard generates a rule skeleton to get you started.</para>
+		<para>As a result the wizard generates a rule skeleton to get you started.</para>
 
-        <figure>
-            <title>New Rule</title>
-            <mediaobject>
-                <imageobject>
-                    <imagedata fileref="images/create_new_project/create_new_project10.png"/>
-                </imageobject>
-            </mediaobject>
-        </figure>
+		<figure>
+			<title>New Rule</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/create_new_project/create_new_project10.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
 
-    </section>
+	</section>
 
 </chapter>

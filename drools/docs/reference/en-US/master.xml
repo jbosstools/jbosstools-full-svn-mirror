@@ -49,12 +49,12 @@
           <releaseinfo>
               Version: 5.1.0.trunk
           </releaseinfo>
-<abstract>
+<!--<abstract>
    <title/>
        <para>
            <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/as/pdf/AS_Reference_Guide.pdf">PDF version</ulink>
        </para>
-</abstract>
+</abstract>-->
 
     </bookinfo>
 	

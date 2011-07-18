@@ -5,9 +5,9 @@
 	<title>Drools Tools Reference Guide</title>
 	<subtitle>Provides information relating to the Drools Tools set.</subtitle>
 	<productname>JBoss Developer Studio</productname>
-	<productnumber>4.0</productnumber>
-	<edition>4.0.0</edition>
-	<pubsnumber>4</pubsnumber>
+	<productnumber>4.1</productnumber>
+	<edition>4.1.0</edition>
+	<pubsnumber>1</pubsnumber>
 	<abstract>
 		<para>The Drools Tools Reference Guide explains how to use the Drools Tools for creating, executing and debugging Drools processes and rules.</para>
 	</abstract>
