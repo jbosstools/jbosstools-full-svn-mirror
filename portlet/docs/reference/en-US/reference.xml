@@ -648,11 +648,7 @@
 	<section id="preferences">
 		<title>JBoss Portlet Preferences</title>
 		
-		<para>To open <property>JBoss Portlet Preferences</property> property sheet, go to <emphasis>
-			<property>Window &gt; Preferences</property>
-		</emphasis> and then <emphasis>
-			<property>JBoss Tools &gt; JBoss Portlet</property>.
-		</emphasis></para>
+		<para>To open <property>JBoss Portlet Preferences</property> property sheet, go to <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Preferences</guimenuitem></menuchoice> and then <menuchoice><guimenuitem>JBoss Tools</guimenuitem><guimenuitem>JBoss Portlet.</guimenuitem></menuchoice></para>
 		
 		<figure>
 			<title>JBoss Runtime Preferences</title>

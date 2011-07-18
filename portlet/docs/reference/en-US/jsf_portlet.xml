@@ -2,256 +2,250 @@
 <section id="jsf_portlet">
 	<title>Creating and Deploying a JSF Portlet</title>
 
-    <para>This chapter will explain how you can configure a JSF portlet within a JSF project with JBoss Portlet capabilities 
-    	and then deploy it to <property>JBoss Portal</property>.</para>
+	<para>
+    	This chapter will explain how you can configure a JSF portlet within a JSF project with JBoss Portlet capabilities and then deploy it to <property>JBoss Portal</property>.
+  </para>
 
-    <section id="jsf_portlet1">
-    	<title>Creating a JSF Project with JBoss Portlet Capabilities</title>
-        
-        <para>You can create a JSF project with JBoss Portlet capabilities in two ways:</para>
+	<section id="jsf_portlet1">
+		<title>Creating a JSF Project with JBoss Portlet Capabilities</title>
+
+		<para>You can create a JSF project with JBoss Portlet capabilities in two ways:</para>
     	
-    	<orderedlist>
-    		<listitem>
-    			<para>Create a dynamic Web project with the <emphasis><property>JavaServer Faces</property></emphasis>
-    				and <emphasis><property>JBoss JSF Portlet</property></emphasis> facets enabled (see
-    				<xref linkend="create_dyn_web_proj_jsf"/>)</para>    			
-    		</listitem>
-    		<listitem><para>Or create a JSF project using the wizard JBoss JSF Tools provides, then enable 
-    			JSF and JBoss Portlet facets and add JBoss Portlet capabilities (see 
-    			<xref linkend="create_jsf_proj"/>)</para></listitem>
-    	</orderedlist>
+		<orderedlist>
+			<listitem>
+				<para>
+					Create a dynamic Web project with the <emphasis><property>JavaServer Faces</property></emphasis> and <emphasis><property>JBoss JSF Portlet</property></emphasis> facets enabled (see <xref linkend="create_dyn_web_proj_jsf"/>)
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Or create a JSF project using the wizard provided by JBoss JSF Tools, then enable JSF and JBoss Portlet facets and add JBoss Portlet capabilities (see 
+    			<xref linkend="create_jsf_proj"/>)
+    		</para>
+			</listitem>
+		</orderedlist>
     	
-    	<para>Refer to the further sections for the procedures on how to do this.</para>
+		<para>Refer to the further sections for the procedures on how to do this.</para>
     	
-    	<section id="create_dyn_web_proj_jsf">
-    		<title>Creating a Dynamic Web Project with the JBoss Portlet Capabilities</title>
+		<section id="create_dyn_web_proj_jsf">
+			<title>Creating a Dynamic Web Project with the JBoss Portlet Capabilities</title>
     		
-    		<para>The basic steps to create a dynamic Web project with the JBoss Portlet capabilities are as follows:</para>
+			<para>The basic steps to create a dynamic Web project with the JBoss Portlet capabilities are as follows:</para>
     		
-    		<orderedlist>
-    			<listitem>
-    				<para>Start the <emphasis><property>Dynamic Web Project</property></emphasis> wizard navigating to
-    					<emphasis><property>File &gt; New &gt; Other &gt; Web &gt; Dynamic Web Project</property>.</emphasis></para>
+			<orderedlist>
+				<listitem>
+					<para>
+						Start the <emphasis><property>Dynamic Web Project</property></emphasis> wizard navigating to <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>New</guimenuitem><guimenuitem>Other</guimenuitem><guimenuitem>Web</guimenuitem><guimenuitem>Dynamic Web Project</guimenuitem></menuchoice>.
+					</para>
     				
-    				<note>
-    					<title>Tip:</title>
-    					<para>You can also select  the <property>Java EE</property> perspective and then go to 
-    						<emphasis><property>File &gt; New &gt; Dynamic Web Project</property>.</emphasis></para>
-    				</note>
+					<note>
+						<title>Tip:</title>
+						<para>
+							You can also select  the <property>Java EE</property> perspective and then selecting <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>New</guimenuitem><guimenuitem>Dynamic Web Project</guimenuitem></menuchoice>.
+						</para>
+					</note>
     				
-    				<figure>
-    					<title>Setting the JSF Configuration</title>
-    					<mediaobject>
-    						<imageobject>
-    							<imagedata fileref="images/jsf_portlet/jsf_portlet1.png"/>
-    						</imageobject>
-    					</mediaobject>
-    				</figure>
-    			</listitem>
+					<figure>
+						<title>Setting the JSF Configuration</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/jsf_portlet/jsf_portlet1.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+				</listitem>
     			
-    			<listitem>
-    				<para>Specify the project name and set the target runtime to <property>JBoss Portal</property> by following the points 3, 4 and 5 in the 
-    					<xref linkend="jboss_core_portlet"/> procedure.</para>
-    			</listitem>
+				<listitem>
+					<para>Specify the project name and set the target runtime to <property>JBoss Portal</property> by following the points 3, 4 and 5 in the <xref linkend="jboss_core_portlet"/> procedure.</para>
+				</listitem>
     			
-    			<listitem>
-    				<para>In the <emphasis><property>Configuration</property></emphasis>
-    					area, click <emphasis><property>Modify</property></emphasis> and enable <emphasis><property>JavaServer Faces</property>,</emphasis>
-    					<emphasis><property>JBoss Core Portlet</property></emphasis> and <emphasis><property>JBoss JSF Portlet</property></emphasis> facets.
-    				Hit <emphasis><property>OK</property>.</emphasis></para>
+				<listitem>
+					<para>In the <emphasis><property>Configuration</property></emphasis>area, click the <guibutton>Modify</guibutton> button and enable <emphasis><property>JavaServer Faces</property>,</emphasis><emphasis><property>JBoss Core Portlet</property></emphasis> and <emphasis><property>JBoss JSF Portlet</property></emphasis> facets. Click the <guibutton>OK</guibutton> button.
+					</para>
     				
-    				<figure>
-    					<title>Enabling the Portlet Facets</title>
-    					<mediaobject>
-    						<imageobject>
-    							<imagedata fileref="images/jsf_portlet/jsf_portlet2.png"/>
-    						</imageobject>
-    					</mediaobject>
-    				</figure>
-    			</listitem>
+					<figure>
+						<title>Enabling the Portlet Facets</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/jsf_portlet/jsf_portlet2.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+				</listitem>
     			
-    			<listitem>
-    				<para>You may leave the next two wizard pages with defaults, just press <emphasis><property>Next</property></emphasis> to proceed.</para>
-    			</listitem>
+				<listitem>
+					<para>You may leave the next two wizard pages with their defaults, just press the <guibutton>Next</guibutton> button to proceed.</para>
+				</listitem>
     			
-    			<listitem>
-    				<para>On the <property>JBoss Portlet Capabilities</property> page, select <emphasis>
-    					<property>Portlet Target Runtime Provider</property></emphasis> and click <emphasis><property>Next</property>.</emphasis></para>
+				<listitem>
+					<para>On the <property>JBoss Portlet Capabilities</property> page, select <emphasis><property>Portlet Target Runtime Provider</property></emphasis> and click the <guibutton>Next</guibutton> button.
+					</para>
     				
-    				<figure>
-    					<title>JBoss Portlet Capabilities</title>
-    					<mediaobject>
-    						<imageobject>
-    							<imagedata fileref="images/jsf_portlet/jsf_portlet2a.png"/>
-    						</imageobject>
-    					</mediaobject>
-    				</figure>
+					<figure>
+						<title>JBoss Portlet Capabilities</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/jsf_portlet/jsf_portlet2a.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
     				
-    				<note>
-    					<title>Tip:</title>
-    					<para>All types of the portlet implementation library are described more closely in the wiki article at: 
+					<note>
+						<title>Tip:</title>
+						<para>All types of the portlet implementation library are described more closely in the wiki article at: 
     						<ulink url="http://www.jboss.org/community/wiki/PortletFacetLibraries">http://www.jboss.org/community/wiki/PortletFacetLibraries</ulink>.</para>
-    				</note>
-    			</listitem>
+					</note>
+				</listitem>
     			
-    			<listitem>
-    				<para>Next wizard page is for configuring JSF capabilities. You can leave everything as it
-    					is here.</para>
+				<listitem>
+					<para>Next wizard page is for configuring JSF capabilities. You can leave everything as it is here.</para>
     				
-    				<figure>
-    					<title>JSF Capabilities</title>
-    					<mediaobject>
-    						<imageobject>
-    							<imagedata fileref="images/jsf_portlet/jsf_portlet3.png"/>
-    						</imageobject>
-    					</mediaobject>
-    				</figure>
-    			</listitem>
+					<figure>
+						<title>JSF Capabilities</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/jsf_portlet/jsf_portlet3.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+				</listitem>
     			
-    			<listitem>
-    				<para>On the <property>JBoss JSF Portlet Capabilities</property> page, select 
-    					<emphasis><property>JSF Portlet Target Runtime Provider</property></emphasis> as the JSF portlet implementation library. It will
-    					copy Portlet Bridge libraries from the server runtime to the project classpath.</para>
+				<listitem>
+					<para>
+						On the <property>JBoss JSF Portlet Capabilities</property> page, select <emphasis><property>JSF Portlet Target Runtime Provider</property></emphasis> as the JSF portlet implementation library. It will copy Portlet Bridge libraries from the server runtime to the project classpath.
+					</para>
     				
-    				<figure>
-    					<title>JBoss JSF PortletCapabilities</title>
-    					<mediaobject>
-    						<imageobject>
-    							<imagedata fileref="images/jsf_portlet/jsf_portlet4.png"/>
-    						</imageobject>
-    					</mediaobject>
-    				</figure>
+					<figure>
+						<title>JBoss JSF PortletCapabilities</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/jsf_portlet/jsf_portlet4.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
     				
-    				<note>
-    					<title>Tip:</title>
-    					<para>On this page, it is also possible to add the RichFaces libraries from the RichFaces distribution by checking 
-    						<emphasis><property>Add/Change Richfaces Libraries</property>.</emphasis></para>
-    				</note>
+					<note>
+						<title>Tip:</title>
+						<para>On this page, it is also possible to add the RichFaces libraries from the RichFaces distribution by checking<emphasis><property>Add/Change Richfaces Libraries</property>.</emphasis>
+						</para>
+					</note>
     				
-    				<note>
-    					<title>Note:</title>
-    					<para>You can select the <emphasis><property>JSF Portletbridge Runtime Provider</property></emphasis> type. Then it 
-    					is necessary to set the home of the Portlet Bridge distribution.</para>
-    					<para>For information about all the JSF Portlet facet library providers, refer to the wiki article at: 
-    						<ulink url="http://community.jboss.org/wiki/PortletFacetLibraries">http://community.jboss.org/wiki/PortletFacetLibraries</ulink>.</para>
-    				</note>
-    			</listitem>
+					<note>
+						<title>Note:</title>
+						<para>
+							You can select the <emphasis><property>JSF Portletbridge Runtime Provider</property></emphasis> type. Then it is necessary to set the home of the Portlet Bridge distribution.
+						</para>
+						<para>
+							For information about all the JSF Portlet facet library providers, refer to the wiki article at: <ulink url="http://community.jboss.org/wiki/PortletFacetLibraries">http://community.jboss.org/wiki/PortletFacetLibraries</ulink>.
+						</para>
+					</note>
+				</listitem>
     			
-    			<listitem>
-    				<para>Click <emphasis><property>Finish</property>.</emphasis> The project will be created in the workbench.</para>
-    			</listitem>
-    		</orderedlist>
-    	</section>
+				<listitem>
+					<para>Click the <guibutton>Finish</guibutton> button. The project will be created in the workbench.</para>
+				</listitem>
+			</orderedlist>
+		</section>
     	
-    	<section id="create_jsf_proj">
-    		<title>Creating a JSF Project and adding the JBoss Portlet Capabilities</title>
+		<section id="create_jsf_proj">
+			<title>Creating a JSF Project and adding the JBoss Portlet Capabilities</title>
     		
-    		<para>How to organize a JSF project you can find out in the JSF Tools User Guide. Just
-    			remember to point the target runtime to <property>JBoss Portal</property> directory location (see 
-    			how it is done for a dynamic Web project: steps 3, 4 and 5 in the 
-    			<xref linkend="jboss_core_portlet"/> procedure).</para>
+			<para>
+				For information on how to organize a JSF project you can read the JSF Tools User Guide. Just remember to point the target runtime to <property>JBoss Portal</property> directory location (see how it is done for a dynamic Web project with steps 3, 4 and 5 in the <xref linkend="jboss_core_portlet"/> procedure).
+			</para>
     		
-    		<figure>
-    			<title>Creating New JSF Project</title>
-    			<mediaobject>
-    				<imageobject>
-    					<imagedata fileref="images/jsf_portlet/jsf_portlet8.png"/>
-    				</imageobject>
-    			</mediaobject>
-    		</figure>
+			<figure>
+				<title>Creating New JSF Project</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/jsf_portlet/jsf_portlet8.png"/>
+					</imageobject>
+				</mediaobject>
+			</figure>
     		
-    		<para>To add the JBoss Portlet capabilities to the created JSF project you should complete the next steps:</para>
-    		
-    		<orderedlist>
-    			<listitem>
-    				<para>Right-click the project and click <emphasis>
-    					<property>Properties</property>
-    				</emphasis> to open the project <property>Properties</property> sheet. Select <property>Project Facets</property>
-    					on the left and enable the <emphasis><property>JavaServer Faces</property>,</emphasis>
-    					<emphasis><property>JBoss Core Portlet</property></emphasis> and <emphasis><property>JBoss JSF Portlet</property></emphasis> facets.</para>
+			<para>To add the JBoss Portlet capabilities to the JSF project you should complete the next steps:</para>
+			
+			<orderedlist>
+				<listitem>
+					<para>Right-click the project and click <guimenuitem>Properties</guimenuitem> to open the project <property>Properties</property> sheet. Select <property>Project Facets</property> on the left and enable the <emphasis><property>JavaServer Faces</property>, </emphasis><emphasis><property>JBoss Core Portlet</property></emphasis> and <emphasis><property>JBoss JSF Portlet</property></emphasis> facets.</para>
     				
-    				<figure>
-    					<title>Project Facets</title>
-    					<mediaobject>
-    						<imageobject>
-    							<imagedata fileref="images/jsf_portlet/jsf_portlet9.png"/>
-    						</imageobject>
-    					</mediaobject>
-    				</figure>
-    			</listitem>
+					<figure>
+						<title>Project Facets</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/jsf_portlet/jsf_portlet9.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+				</listitem>
     			
-    			<listitem>
-    				<para>Notice, <emphasis>
-    					<property>&quot;Further configuration available...&quot;</property>
-    				</emphasis> warning appears at the bottom of the screen. It means that next you should configure the JSF Portlet capabilities in the project. 
-    					Click the link. The <property>Modify Faceted Project</property> wizard appears.</para>
-    			</listitem>
+				<listitem>
+					<para>Notice that the <emphasis><property>&quot;Further configuration available...&quot;</property></emphasis> warning appears at the bottom of the screen. It means that next you should configure the JSF Portlet capabilities in the project. Click the link. The <property>Modify Faceted Project</property> wizard appears.</para>
+				</listitem>
     			
-    			<listitem>
-    				<para>Complete all wizard pages the same way as described in the steps 5, 6, 7 of the 
-    					<xref linkend="jboss_core_portlet"/> procedure.
-    				Hit <emphasis><property>OK</property>.</emphasis></para>
-    			</listitem>
+				<listitem>
+					<para>Complete all wizard pages the same way as described in the steps 5, 6, 7 of the <xref linkend="jboss_core_portlet"/> procedure. Click the  <guibutton>OK</guibutton> button.
+					</para>
+				</listitem>
     			
-    			<listitem>
-    				<para>To apply the changes click <emphasis><property>Apply</property></emphasis> and then 
-    				<emphasis><property>OK</property></emphasis> to close the project <property>Properties</property> sheet.</para>
-    			</listitem>
-    		</orderedlist>
-    	</section>
-    </section>
+				<listitem>
+					<para>
+						To apply the changes click the <guibutton>Apply</guibutton> button and then the <guibutton>OK</guibutton> button to close the project <property>Properties</property> sheet.
+					</para>
+				</listitem>
+			</orderedlist>
+		</section>
+	</section>
 
-    <section id="jsf_portlet_to_JSF_project">
-        <title>Adding a JSF Portlet to the Project and Deploying It to JBoss Portal</title>
-        
-        <para>The previous section has shown how to create a JSF project with JBoss Portlet and JSF Portlet capabilities enabled. Use 
-        the following procedure to add a JSF portlet to the created project and deploy it to <property>JBoss Portal</property>.</para>
+	<section id="jsf_portlet_to_JSF_project">
+		<title>Adding a JSF Portlet to the Project and Deploying It to JBoss Portal</title>
+
+		<para>
+			The previous section demonstrated how to create a JSF project with JBoss Portlet and JSF Portlet capabilities enabled. Use the following procedure to add a JSF portlet to the created project and deploy it to <property>JBoss Portal</property>.
+		</para>
     	
-    	<orderedlist>
-    		<listitem>
-    			<para>Call the
-    				<property>Create Portlet</property> wizard by navigating to <emphasis>
-    					<property>New > Other > JBoss Tools Web > Portlet > JSF/Seam
-    					Portlet</property></emphasis> on the context menu of the project (for information about the wizard options, see 
-    				<xref linkend="jsf_seam_portlet_wizard"/> in the guide reference).</para>
+		<orderedlist>
+			<listitem>
+				<para>Display the <property>Create Portlet</property> wizard by selecting <menuchoice><guimenuitem>New</guimenuitem><guimenuitem>Other</guimenuitem><guimenuitem>JBoss Tools Web</guimenuitem><guimenuitem>Portlet</guimenuitem><guimenuitem>JSF/Seam Portlet</guimenuitem></menuchoice> from the context menu of the project (for information about the wizard options, see <xref linkend="jsf_seam_portlet_wizard"/> in the guide reference).</para>
     			
-    			<figure>
-    				<title>Calling New Portlet Wizard</title>
-    				<mediaobject>
-    					<imageobject>
-    						<imagedata fileref="images/jsf_portlet/jsf_portlet5.png"/>
-    					</imageobject>
-    				</mediaobject>
-    			</figure>
+				<figure>
+					<title>Calling New Portlet Wizard</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/jsf_portlet/jsf_portlet5.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
     			
-    			<note>
-    				<title>Tip:</title>
-    				<para>As you see, the JSF and Seam Portlet wizards are merged into one. We have set the JSF
+				<note>
+					<title>Tip:</title>
+					<para>As you see, the JSF and Seam Portlet wizards are merged into one. We have set the JSF
     					configuration for the project, so the default values in this wizard will be set as for a JSF
     					portlet.</para>
-    			</note>
-    		</listitem>
+				</note>
+			</listitem>
     		
-    		<listitem>
-    			<para>Leave all the wizard pages with default values by clicking the <emphasis><property>Next</property></emphasis> button, 
-    				on the last one click <emphasis><property>Finish</property></emphasis> to complete the JSF portlet creation.</para>
-    		</listitem>
+			<listitem>
+				<para>
+					Leave all the wizard pages with default values by clicking the <guibutton>Next</guibutton> button, on the last one click the <guibutton>Finish</guibutton> button to complete the JSF portlet creation.
+				</para>
+			</listitem>
     		
-    		<listitem>
-    			<para>Complete the steps described in the <xref linkend="deploying_to_portal"/> procedure to
-    			deploy a JSF portlet to <property>JBoss Portal</property>. Just use the other URL to see it in the browser: 
-    				<emphasis>http://localhost:8080/portal/portal/default/JSFPortlet</emphasis>.</para>
+			<listitem>
+				<para>
+					Complete the steps described in the <xref linkend="deploying_to_portal"/> procedure to deploy a JSF portlet to <property>JBoss Portal</property>. Just use the other URL to see it in the browser: <emphasis>http://localhost:8080/portal/portal/default/JSFPortlet</emphasis>.
+				</para>
     			
-    			<figure>
-    				<title>JSF Portlet in the Browser</title>
-    				<mediaobject>
-    					<imageobject>
-    						<imagedata fileref="images/jsf_portlet/jsf_portlet7.png"/>
-    					</imageobject>
-    				</mediaobject>
-    			</figure>
-    		</listitem>
-    	</orderedlist>
+				<figure>
+					<title>JSF Portlet in the Browser</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/jsf_portlet/jsf_portlet7.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+			</listitem>
+		</orderedlist>
 
-    </section>
+	</section>
 </section>
