@@ -3,6 +3,7 @@
 "http://www.docbook.org/xml/4.3/docbookx.dtd"
 [
 <!ENTITY getting_started SYSTEM "getting_started.xml">
+<!ENTITY jbossinstall SYSTEM "jbossinstall.xml">
 <!ENTITY  manage SYSTEM "manage.xml">
 <!ENTITY first_seam  SYSTEM "first_seam.xml">
 <!ENTITY jsp_application  SYSTEM "jsp_application.xml">
@@ -10,6 +11,8 @@
 <!ENTITY gsg_faq  SYSTEM "gsg_faq.xml">
 <!ENTITY further_reading  SYSTEM "further_reading.xml">
 <!ENTITY project_examples  SYSTEM "project_examples.xml">
+
+<!ENTITY usage_stats_intro  SYSTEM "usage_stats_jbt_intro.xml">
 
 
 <!ENTITY seamlink "../../seam/html_single/index.html">
@@ -45,7 +48,7 @@
    <year>2010</year>
    <holder>JBoss by Red Hat</holder>
   </copyright>
-  <releaseinfo>Version: 3.0.1.GA</releaseinfo>
+  <releaseinfo>Version: 3.2.0.GA</releaseinfo>
  <abstract>
    <title/>
        <para>
@@ -59,7 +62,8 @@
 
 
 
- &getting_started;
+ <!--&getting_started;-->
+ &jbossinstall;
  &manage; 
  &first_seam; 
  &jsp_application;

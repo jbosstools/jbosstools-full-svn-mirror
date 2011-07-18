@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="further_reading" xreflabel="further_reading">
+<chapter id="further_reading">
   <?dbhtml filename="further_reading.html"?>
   <chapterinfo>
     <keywordset>
@@ -29,7 +29,7 @@
       <emphasis role="bold">Visual Web Tools Reference Guide</emphasis>
 </para>
 <para>
-	provides general orientation and an overview of JBDS visual web tools functionality. This guide discusses the following topics: editors, palette, web properties view, openOn, content assist, RichFaces support.  
+	provides general orientation and an overview of visual web tools functionality. This guide discusses the following topics: editors, palette, web properties view, openOn, content assist, RichFaces support.  
     </para>
   </listitem>
   
@@ -122,7 +122,7 @@
     <emphasis role="bold">JSF Tools Tutorial</emphasis>
   </para>
   <para> This tutorial will describe how to deal with classic/old style of JSF development and how
-    to create a simple JSF application using the JBoss Developer Studio. </para>
+    to create a simple JSF application. </para>
   </listitem>
   
   <listitem> <para>
@@ -149,18 +149,20 @@
     <emphasis role="bold">Struts Tools Tutorial</emphasis>
   </para>
   <para> This tutorial will describe the classical style of Struts development, and will
-  step-by-step show you how to create a simple Struts application in JBoss Developer Studio.</para>
+  step-by-step show you how to create a simple Struts application.</para>
 </listitem>
 
 
-    <listitem> 
+<!--    <listitem> 
   <para>
     <emphasis role="bold">Exadel Studio Migration Guide</emphasis>
   </para>
   <para>This document is intended to help you to migrate an existing Exadel JSF or Struts projects
   from Exadel Studio into JBoss Developer Studio. </para>
-    </listitem>
+    </listitem> -->
 </itemizedlist>
-<para>If there&apos;s anything we didn&apos;t cover in this guide, please feel free to visit our <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss Developer Studio Users Forum</ulink> or <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201">JBoss Tools Users Forum</ulink> to ask questions. There we are also looking for your suggestions and comments.</para>
+<!--
+<para>If there&apos;s anything we didn&apos;t cover in this guide, please feel free to visit our <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss Developer Studio Users Forum</ulink> or <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201">JBoss Tools Users Forum</ulink> to ask questions. There we are also looking for your suggestions and comments.</para> 
+-->
 
 </chapter>
