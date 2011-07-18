@@ -4,46 +4,54 @@
     <chapterinfo>
         <keywordset>
             <keyword>JBoss Tools</keyword>
-            <keyword>BPEL</keyword>
-            <keyword>JBT</keyword>
         </keywordset>
     </chapterinfo>
     <title>Reference</title>
-    <para>This chapter includes detailed reference information about all BPEL tools wizards and editors.</para>
+	<para>
+		Described are the user interface controls of BPEL Designer, and how they relate to the OASIS standard. If you are new to BPEL it is recommended that you first become familiar with the concepts surrounding the technology, detailed in <xref linkend="concepts"/>.
+	</para>
     <section>
         <title>Wizards</title>
         <section>
-            <title>New BPEL project Wizard</title>
-            <para>This wizard helps to create new BPEL project.It is available with clicking
-                <property>File->New->Other->BPEL project</property> in the menu bar.</para>
+            <title>New BPEL project</title>
+			<para>The New BPEL Project wizard creates a faceted project which allows it to be deployed to the JBoss Riftsaw runtime engine. It is available by selecting <menuchoice>
+                <guimenuitem>File</guimenuitem>
+                <guimenuitem>New</guimenuitem>
+                <guimenuitem>Other</guimenuitem>
+                <guimenuitem>BPEL 2.0</guimenuitem>
+				<guimenuitem>BPEL Project</guimenuitem>
+            </menuchoice>.</para>
             <figure>
                 <title>New BPEL Project Wizard</title>
                 <mediaobject>
                     <imageobject>
-                        <imagedata fileref="images/reference/bpel_ref_1.png"/>
+						<imagedata fileref="images/reference/New_BPEL_Project.png"/>
                     </imageobject>
                 </mediaobject>
             </figure>
-            <para>It consists of only one page:</para>
-            <itemizedlist>
-                <listitem><para>On the page you can adjust the name of the project and the directory where it will be created.</para>
-                    <para>If "<property>Use default</property>" option is checked the output directory will be the workspace,
-                        othervise the user should specify it by himself using <property>Browse</property> button.</para>
-                    <figure>
-                        <title>New BPEL Project Wizard</title>
-                        <mediaobject>
-                            <imageobject>
-                                <imagedata fileref="images/reference/bpel_ref_2.png"/>
-                            </imageobject>
-                        </mediaobject>
-                    </figure>
-                </listitem>
-            </itemizedlist>
-        </section>
-        <section>
+            <para>The wizard consists of a single page:</para>
+            <para>
+				Enter the project name and select its location. When the wizard is completed the following files would have been created:
+			</para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<filename>bpelContent</filename> folder
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Project facet metadata
+					</para>
+				</listitem>
+			</itemizedlist>
+			<para>
+				The <filename>bpelContent</filename> folder contains all the files necessary for your project. This includes all WSDL and XSD files.
+			</para>
+          </section>
+     <!-- <section>
             <title>Apache ODE Deployment Descriptor Wizard</title>
-            <para>Using this wizard user can create ODE deployment descriptor (deploy.xml) and place it in the temporary directory.It is available with clicking
-                <property>File->New->Other->Apache ODE Deployment Descriptor Wizard</property> in the menu bar.</para>
+            <para>This wizard can be used to create an ODE deployment descriptor (<filename>deploy.xml</filename>) file and place it in the temporary directory. It is available by selecting <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>New</guimenuitem><guimenuitem>Other</guimenuitem><guimenuitem>Apache ODE Deployment Descriptor Wizard</guimenuitem></menuchoice>.</para>
             <figure>
                 <title>New BPEL Project Wizard</title>
                 <mediaobject>
@@ -52,27 +60,35 @@
                     </imageobject>
                 </mediaobject>
             </figure>
-            <para>On the page you can adjust the name of the deployment descriptor and
-                the directory where it will be created.Note,that you should use <property>
-                    /PROJECT_NAME/bpelContent</property> directory as an output one.</para>
+            <para>
+            		On this page you can adjust the name of the deployment descriptor and the directory where it will be created. Note that you should use <filename>/PROJECT_NAME/bpelContent</filename> directory for the output.
+            </para>
                                    
-        </section>
+		</section> -->
         <section>
-            <title>New BPEL Process file Wizard</title>
-            <para>Using <property>New BPEL Process file Wizard</property>
-                user can create BPEL process file and WSDL file if it is necessary.
-            The wizard includes several pages:</para>
-            <itemizedlist>
-                <listitem><para>The first page has the following options to set:</para>
+            <title>New BPEL Process file</title>
+            <para>
+				The <guilabel>New BPEL Process File Wizard</guilabel> will create a BPEL process based on one of several templates defined by the wizard. The wizard assumes the new BPEL process is to be created in the curently selected project of the <guilabel>Project Explorer</guilabel> or <guilabel>Navigator</guilabel> view. If a BPEL process of the same name already exists within the project, a warning message will be displayed before any action is performed.
+			</para>
+			<figure>
+				<title>New BPEL Process</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/reference/Create_a_BPEL_Process_File_01.png"/>
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<itemizedlist>
+                <listitem><para>The first page includes the following options:</para>
                     <table>
-                        <title>New BPEL Process file Wizard. First Page Options.</title>   
+                        <title>New BPEL Process file wizard. First page options.</title>   
                         <tgroup cols="3">
                             <colspec colnum="1" align="left" colwidth="1*"/>
                             <colspec colnum="2" align="left" colwidth="3*"/>
                             <colspec colnum="3" align="left" colwidth="1*"/>
                             <thead>
                                 <row>
-                                    <entry>Option</entry>									
+                                    <entry>Field</entry>									
                                     <entry>Description</entry>
                                     <entry>Default</entry>
                                 </row>
@@ -85,7 +101,8 @@
                                 </row>     
                                 <row>
                                     <entry>Namespace</entry>
-                                    <entry>Enter the namespace url here</entry>
+									<entry>Enter the namespace URL. All namespaces should follow the W3C recommendation (<ulink url="http://www.w3.org/1999/10/nsuri">
+										http://www.w3.org/1999/10/nsuri</ulink>). </entry>
                                     <entry>no default value</entry>
                                 </row> 
                                 <row>
@@ -94,7 +111,7 @@
                                         <itemizedlist>
                                             <listitem><para><emphasis>Asynchronous BPEL Process</emphasis>  - 
                                                 generates the basis of orchestration logic:  receive and reply activities
-                                                are included into the process;client WSDL is generated, 
+                                                are included into the process; client WSDL is generated, 
                                                 service is defined in the <property>parentlink</property> of the process.
                                                 The caller is notified asynchronously when the process completes.
                                             </para></listitem>
@@ -115,26 +132,29 @@
                             </tbody>
                         </tgroup>
                     </table>  
+					<para>
+						The second page of the wizard defines the process interface (WSDL file) including the web service address, port definition and protocol. The wizard will populate all of these fields with appropriate default values based on the information provided on the previous page.
+					</para>
                     <figure>
-                        <title>New BPEL Process file Wizard</title>
+                        <title>New BPEL Process</title>
                         <mediaobject>
                             <imageobject>
-                                <imagedata fileref="images/reference/bpel_ref_3.png"/>
+								<imagedata fileref="images/reference/Create_a_BPEL_Process_File_02.png"/>
                             </imageobject>
                         </mediaobject>
                     </figure>
                     
                 </listitem>
-                <listitem><para>The second page has the following options to set:</para>
+                <listitem><para>The second page includes the following options:</para>
                     <table>
-                        <title>New BPEL Process file Wizard. Second Page Options.</title>   
+                        <title>New BPEL process file wizard. Second page options.</title>   
                         <tgroup cols="3">
                             <colspec align="left" colnum="1" colwidth="1*"></colspec>
                             <colspec align="left" colnum="2" colwidth="3*"></colspec>
                             <colspec align="left" colnum="3" colwidth="1*"></colspec>
                             <thead>
                                 <row>
-                                    <entry>Option</entry>
+                                    <entry>Field</entry>
                                     <entry>Description</entry>
                                     <entry>Default</entry>
                                 </row>
@@ -142,288 +162,1761 @@
                             <tbody>
                                 <row>
                                     <entry>Service Name</entry>
-                                    <entry>Enter a wsdl service name for the BPEL process.</entry>
+                                    <entry>Enter a WDSL service name for the BPEL process.</entry>
                                     <entry>The process name</entry>
                                 </row>                                                                      
                                 <row>
                                     <entry>Port Name</entry>
-                                    <entry>Enter a wsdl port name for the BPEL process.</entry>
+                                    <entry>Enter a WDSL port name for the BPEL process.</entry>
                                     <entry>The process name + 'Port'</entry>
                                 </row> 
                                 <row>
                                     <entry>Service Address</entry>
-                                    <entry>Enter an address of the wsdl service for the BPEL process.</entry>
+                                    <entry>Enter an address of the WDSL service for the BPEL process.</entry>
                                     <entry>http://localhost:8080/ + process name </entry>
                                 </row>
 
                                 <row>
                                     <entry>Binding Protocol</entry>
-                                    <entry>Choose the binding protocal that you use in the wsdl: SOAP or HTTP</entry>
+                                    <entry>Choose the binding protocol that you use in the WDSL: SOAP or HTTP</entry>
                                     <entry>SOAP</entry>
                                 </row>                                
                             </tbody>
                         </tgroup>
                     </table>  
-                    <figure float="0">
-                        <title>New BPEL Process file Wizard</title>
-                        <mediaobject>
-                            <imageobject>
-                                <imagedata fileref="images/reference/bpel_ref_3a.png"></imagedata>
-                            </imageobject>
-                        </mediaobject>
-                    </figure>
-                </listitem>             
-                <listitem><para>On the third page the user should select the BPEL project and folder where the process file will be created:</para>
-                <figure>
-                    <title>New BPEL Process file Wizard</title>
-                    <mediaobject>
-                        <imageobject>
-                            <imagedata fileref="images/reference/bpel_ref_4.png"/>
-                        </imageobject>
-                    </mediaobject>
-                </figure>
-                </listitem>
+				</listitem>
+				<!--	<important>
+						<para>
+							The JBoss Riftsaw engine currently only supports the SOAP binding protocol
+						</para>
+					</important> -->
+					<listitem>
+						<para>
+							The final page allows you to select the target project and folder for the new process artifacts. If a process with the name you provided already exists in that project and folder, the wizard will display an error message. 
+						</para>
+						<para>
+							If the project is not a BPEL Project (does not define a BPEL facet) the wizard will display a warning message. You can still create the BPEL process, however it will not be deployable to a BPEL runtime engine until the BPEL facet has been added to the project (see the <guimenuitem>Help</guimenuitem> menu for more information about project facets).
+						</para>
+						<important>
+							<para>
+								BPEL artifacts must be contained somewhere within the <filename>bpelContent</filename> folder hierarchy if you intend to deploy the process. Complex projects may be organized into a folder hierarchy, but these folders must be contained within <filename>bpelContent</filename>.
+							</para>
+							<para>
+								The <filename>Deployment Descriptor</filename> file must be contained within the <filename>bpelContent</filename> folder and at the root of any folder hierarchy.
+							</para>
+						</important>
+						<figure>
+							<title>New BPEL Process</title>
+							<mediaobject>
+								<imageobject>
+									<imagedata fileref="images/reference/Create_a_BPEL_Process_File_03.png"/>
+								</imageobject>
+							</mediaobject>
+						</figure>
+						<para>
+							You will be asked if you wish for the BPEL persepective to be opened once this wizard completes.
+						</para>
+				</listitem>
             </itemizedlist>
-            <note>
-                <para>Process files that are used in the BPEL project must be under the <property>bpelContent</property> folder. Only in this case 
-                    these files can be deployed to JBoss server.
-                </para>
-            </note>
         </section>
+		<section id="Reference-Wizard-Deployment_Descriptor">
+			<title>New BPEL Deployment Descriptor</title>
+			<para>
+				Use this wizard to create a <filename>Deployment Descriptor</filename> file. This file is a manifest for the web service and is required if the BPEL process is to be deployed to a runtime engine.
+			</para>
+			<figure>
+				<title>BPEL Deployment Descriptor</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/reference/BPEL_Deyployment_Descriptor_01.png"/>
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<itemizedlist>
+			<listitem>
+				<para>The page includes the following options:</para>
+				<table>
+					<title>New BPEL Process file wizard. First page options.</title>   
+					<tgroup cols="2">
+						<colspec colnum="1" align="left" colwidth="1*"/>
+						<colspec colnum="2" align="left" colwidth="3*"/>
+						<thead>
+							<row>
+								<entry>Field</entry>									
+								<entry>Description</entry>
+							</row>
+						</thead>
+						<tbody>
+							<row>
+								<entry>BPEL Project</entry>
+								<entry>Select the project and folder where the new <filename>Deployment Descriptor</filename> will be created. This must also be the root folder that contains the BPEL processes.</entry>
+							</row>
+							<row>
+								<entry>File name</entry>
+								<entry>This field is automatically filled and cannot be edited.</entry>
+							</row>  
+                            </tbody>
+                        </tgroup>
+                    </table>
+					<para>
+						The BPEL Deployment Descriptor Editor will open once this wizard completes.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</section>
     </section>
+	<section>
+		<title>Perspectives</title>
+		<section>
+			<title>BPEL Perspective</title>
+			<para>
+			The BPEL Perspective is designed to facilitate the development and deployment of BPEL processes and their artifacts. To open this perspective navigate to <menuchoice>
+                    <guimenuitem>Window</guimenuitem>
+					<guimenuitem>Open Perspective</guimenuitem>
+					<guimenuitem>Other</guimenuitem>
+					<guimenuitem>BPEL</guimenuitem>
+                </menuchoice> and click <guibutton>OK</guibutton>.
+			</para>
+			<figure>
+				<title>BPEL Perspective default layout</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/reference/BPEL_Perspective_01.png"/>
+					</imageobject>
+				</mediaobject>
+			</figure>
+		</section>
+	</section>
+	<section id="Reference-Views">
+		<title>Views</title>
+		<section>
+			<title>Outline</title>
+			<para>
+				The <guilabel>Outline</guilabel> view provides a structural layout of the BPEL process. You can view the process as either a hierarchical tree-structured outline (<inlinemediaobject><imageobject>
+					<imagedata fileref="images/reference/View_Outline_icon_01.png"/>
+					</imageobject>
+            </inlinemediaobject>) or as a thumbnail view (<inlinemediaobject>
+            <imageobject>
+					<imagedata fileref="images/reference/View_Outline_icon_02.png"/>
+					</imageobject>
+            </inlinemediaobject>), by pressing the associated button.
+			</para>
+			<figure>
+				<title>Outline view</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/reference/View_Outline_01.png"/>
+					</imageobject>
+				</mediaobject>
+			</figure>
+		</section>
+		<section>
+			<title>Palette</title>
+			<para>
+				The primary editing, creation and viewing tools of the BPEL Designer are accessed from the <guilabel>Palette</guilabel>. The <guilabel>Palette</guilabel> can be docked either at the right or left edge of the BPEL Designer main window, or it can be detached and displayed in its own view.
+		</para>
+		<figure>
+			<title>Palette</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/reference/Palette_01.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<formalpara>
+			<title>Selection Tools</title>
+			<para>
+				The <guilabel>Selection Tool</guilabel> is used to select individual activities in the editors drawing canvas. Multiple activities can be selected by holding the <keycap>CTRL</keycap> or <keycap>SHIFT</keycap> keys in combination with left mouse click. The <guilabel>Marquee Tool</guilabel> allows selection of groups of activities by dragging a selection rectangle around them.
+			</para>
+		</formalpara>
+		<formalpara>
+			<title>Tool Drawers</title>
+			<para>
+				BPEL activities are created by dragging icons from the labeled <guilabel>Actions</guilabel>, <guilabel>Controls</guilabel> and <guilabel>Faults</guilabel> palette sections (or drawers), onto the editor’s drawing canvas. These sections can be collapsed and expanded by clicking on individual palette section titles. They can also be <emphasis>pinned</emphasis> to prevent them from collapsing if another section is expanded.
+			</para>
+		</formalpara>
+		<formalpara>
+			<title>Zoom Tools</title>
+			<para>
+				The tools at the bottom of the <guilabel>Palette</guilabel> are used to expand or shrink the drawing canvas.
+			</para>
+		</formalpara>
+		</section>
+		<section>
+			<title>Dashboard</title>
+			<para>
+				This panel is embedded in the BPEL Designer canvas and provides a quick overview of the BPEL elements that are defined for the currently selected activity or BPEL process.
+			</para>
+			<figure>
+				<title>Palette</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/reference/Dashboard_01.png"/>
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>
+				The process name appears at the top of the Dashboard. The main Dashboard area lists all of the <guilabel>Partner Links</guilabel>, <guilabel>Variables</guilabel>,<guilabel>Correlation Sets</guilabel> and <guilabel>Message Exchanges</guilabel> currently defined for the process. The green plus symbol and grey x symbol allow you to add and delete each of these elements. In-line editing of all element names works by selecting the name and then clicking again to enable the editor.
+			</para>
+		</section>
+		<section id="Reference-Property_sections">
+			<title>Property sections</title>
+			<section>
+				<title>Common property section tabs</title>
+				<para>
+					This section describes the Property Sheet tabs that are common to many activities.
+				</para>
+				<section>
+					<title>Description tab</title>
+					<figure>
+						<title>Description tab</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Common_Property_Tabs_01.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						The <guilabel>Description</guilabel> tab contains the activity name. Names must follow XML element naming conventions, limiting characters to letters, numbers and certain special characters only (spaces are not permited). For further information on XML element naming conventions, see <ulink url="http://www.w3.org/TR/xml/">http://www.w3.org/TR/xml/</ulink>
+					</para>
+				</section>
+				<section>
+					<title>Join Behavior tab</title>
+					<figure>
+						<title>Join Behavior tab</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Common_Property_Tabs_02.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						Join conditions are evaluated by the target activities of links. With the drop-down <guilabel>Expression language</guilabel> menu, enter an XPath expression that defines the condition of the join. The <guilabel>Suppress Join Failure</guilabel> behavior defined by the process or a containing scope can be overridden with the radio buttons at the bottom.
+					</para>
+				</section>
+				<section>
+					<title>Correlation tab</title>
+					<figure>
+						<title>Correlation tab</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Common_Property_Tabs_03.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						The <guilabel>Correlation</guilabel> tab lists all correlations that are used by the currently selected <guilabel>Receive</guilabel>, <guilabel>Reply</guilabel> or <guilabel>Invoke</guilabel> activity. Correlations can be added to or removed from the activity through this tab.<!-- See <xref linkend=""/> --> <!--Correlation Sets section--><!-- for more information. -->
+					</para>
+				</section>
+				<section id="Common_Property_sheet_tabs-Namespaces_tab">
+					<title>Namespaces tab</title>
+					<figure>
+						<title>Namespaces tab</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Common_Property_Tabs_04.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						Namespaces are URIs (Uniform Resource Identifiers) that uniquely identify a set of resources on the Internet. Because URIs can be very lengthy, shorthand aliases called prefixes are typically defined and used in XML files to make the XML more readable.
+					</para>
+					<para>
+						The <guilabel>Namespaces</guilabel> tab lists all of the namespace URIs and their prefixes in scope for the currently selected activity. Whenever you create a reference to an external property (an element defined in an XSD) whose namespace has not yet been assigned a prefix, the BPEL Designer will prompt you to create a prefix. This can also be done beforehand through the <guilabel>Namespace</guilabel> tab of the <guilabel>Properties</guilabel> sheet for the property by clicking the <guibutton>Assign Prefix</guibutton> button.
+					</para>
+				</section>
+				<section>
+					<title>Message Exchange tab</title>
+					<figure>
+						<title>Message Exchange tab</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Common_Property_Tabs_05.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						Message exchanges are used to associate a <property>Reply</property> activity with an <property>inbound message</property> activity and can be either a <property>Receive</property>, <property>OnMessage</property> or <property>OnEvent</property>. These are descriptive names given to a request-response conversation between two parties and must conform to XML element naming conventions. For further informaiton on XML element naming conventions, see <ulink url="http://www.w3.org/TR/xml/">http://www.w3.org/TR/xml/</ulink>.
+					</para>
+				</section>
+			</section>
+			<section>
+				<title>Process Property sheet tabs</title>
+				<para>
+					This section describes the Property Sheet tabs that are unique to process activities.
+				</para>
+				<section>
+					<title>Description tab</title>
+				<figure>
+					<title>Description tab</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/reference/Property_Sheet_01.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<para>
+					The <guilabel>Description</guilabel> tab allows you to change the process name and its namespace URI. All namespaces should follow the W3C recommendation (<ulink url="http://www.w3.org/2005/07/13-nsuri">http://www.w3.org/2005/07/13-nsuri</ulink>.
+				</para>
+				</section>
+				<section>
+					<title>Details tab</title>
+				<figure>
+					<title>Details tab</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/reference/Property_Sheet_02.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<para>
+					The <guilabel>Process Details</guilabel> tab allows you to select the default <guilabel>Expression</guilabel> and <guilabel>Query</guilabel> language. If you set <guilabel>Exit on Standard Fault</guilabel> to <guilabel>Yes</guilabel>, it will cause the process to terminate if a WS-BPEL standard fault, other than a join failure, is encountered.
+				</para>
+				<note>
+					<para>
+						Currently only XPath 1.0 is supported.
+					</para>
+				</note>
+				</section>
+				<section>
+					<title>Join Behavior tab</title>
+				<figure>
+					<title>Join Behavior tab</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/reference/Property_Sheet_03.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<para>
+					The <guilabel>Process Join Behavior</guilabel> tab determines how the process will handle join failures. When set to <guilabel>Yes</guilabel>, any <exceptionname>JoinFailure</exceptionname> fault (detailed in the WS-BPEL Standard Faults section of the OASIS specification: <ulink url="http://docs.oasis-open.org/wsbpel/2.0/OS/wsbpel-v2.0-OS.html#_Toc164738543">http://docs.oasis-open.org/wsbpel/2.0/OS/wsbpel-v2.0-OS.html#_Toc164738543</ulink>) will be ignored for all activities in the process. An activity is able override this value, or inherit the value from its parent.
+				</para>
+				</section>
+				<section>
+					<title>Imports tab</title>
+				<figure>
+					<title>Imports tab</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/reference/Property_Sheet_04.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<para>
+					The <guilabel>Imports Detail</guilabel> tab lists all of the imported service interfaces (WSDL) and XML Schemas (XSD) used by the process. Additional WSDL and XSD files can be added to the imports on this page. After a new resource has been imported, you may assign a prefix to the namespace URI from the <guilabel>Namespaces</guilabel> tab.
+				</para>
+				<note>
+					<para>
+						Imported resources must be located in the project root folder (<filename>bpelContent</filename> by default) or in a sub-folder.
+					</para>
+				</note>
+				</section>
+				<section>
+					<title>Namespaces</title>
+					<para>
+						For information on the <guilabel>Namespaces</guilabel> tab, see <xref linkend="Common_Property_sheet_tabs-Namespaces_tab" />
+					</para>
+				</section>
+			</section>
+			<section>
+				<title>Details tab</title>
+				<para>
+					This section describes the <guilabel>Details</guilabel> tab and its attributes as they will appear for individual activities. Several activities share common detail elements, but all are presented here for your reference.
+				</para>
+				<section>
+					<title>Partner Links</title>
+					<figure>
+						<title>Partner Links</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Details_tab_01.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						<property>Partner Links</property> help define the conversations between two services. They define the roles each partner plays in the conversation and the types of messages that can be exchanged between them.
+					</para>
+					<para>
+						The <guilabel>Details</guilabel> tab allows you to choose the <guilabel>Expression language</guilabel> and <guilabel>Query language</guilabel> for selecting elements of a <property>Partner Link</property>. 
+					</para>
+					<note>
+						<para>
+							Currently only XPath 1.0 is supported.
+						</para>
+					</note>
+				</section>
+				<section>
+					<title>Variables</title>
+					<figure>
+						<title>Variables</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Details_tab_02.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						<property>Variables</property> are used in BPEL to store inbound and outbound messages for examination and manipulation by the business logic; they can also be used to save intermediate results and the process state. There are three kinds of variable declarations: messages types, XML Schema types and XML Schema elements.
+					</para>
+					<para>
+						The <guilabel>Details</guilabel> tab allows you to define the variable declared type and its structure by selecting from known types. Once a variable type has been defined, the structure of the variable is shown. Clicking on the hyperlink will open the WSDL or XML Schema editor for the selected type or element. <!--See the Type Selection dialogs section for more information.-->
+					</para>
+				</section>
+				<section>
+					<title>Empty</title>
+					<figure>
+						<title>Empty</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Details_tab_03.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						The <property>Empty</property> activity is a placeholder for any undefined <property>Basic Activity</property> and is intended to eventually be replaced by a real activity before the process can actually be executed. If the BPEL engine encounters an <property>Empty</property> activity, it is ignored.
+					</para>
+					<para>
+						The <guilabel>Details</guilabel> tab allows you to select one of four basic actions: <property>Invoke</property>, <property>Receive</property>, <property>Reply</property> and <property>Assign</property>. Hovering the mouse over one of the selection buttons displays a brief description of that activity.
+					</para>
+				</section>
+				<section id="Reference-Details_tab-Invoke">
+					<title>Invoke</title>
+					<figure>
+						<title>Invoke</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Details_tab_04.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						The <property>Invoke</property> activity requires a <property>Partner Link</property> name and an <property>Operation</property> as defined in the WSDL for that service. You can use the <guilabel>Quick Pick</guilabel> tree control at the right to select the <property>Partner Link</property> and <property>Operation</property>. For one-way invocations of the service, specify only an <property>Input Variable</property>; for request-response invocations you must also specify an <property>Output Variable</property>.
+					</para>
+					<para>
+						The checkbox labeled <guilabel>Use WSDL Message Parts Mapping</guilabel> provides an alternative to using variables for the request message.
+					</para>
+				</section>
+				<section id="Reference-Details_tab-Receive">
+					<title>Receive</title>
+					<figure>
+						<title>Receive</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Details_tab_05.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						A <property>Receive</property> activity requires a <property>Partner Link</property> name and an Operation as defined in the WSDL for this service. You can use the <guilabel>Quick Pick</guilabel> tree control at the right to select the <property>Partner Link</property> and <property>Operation</property>. A previously defined variable can be used to hold the message data, or the <guilabel>Use WSDL Message Parts Mapping</guilabel> checkbox can be set to store the incoming message in an anonymous WSDL message variable.
+					</para>
+					<para>
+						The <guilabel>Create a new Process Instance</guilabel> checkbox, when enabled, will cause the BPEL engine to start a new process. This will start a new conversation with a client.
+					</para>
+				</section>
+				<section id="Reference-Details_tab-Reply">
+					<title>Reply</title>
+					<figure>
+						<title>Reply</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Details_tab_06.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						A <property>Reply</property> activity requires a <property>Partner Link</property> name and an <property>Operation</property> as defined in the WSDL for this service. You can use the <guilabel>Quick Pick</guilabel> tree control at the right to select the <property>Partner Link</property> and <property>Operation</property>. A previously defined variable can be used to provide the response message data, or the <guilabel>Use WSDL Message Parts Mapping</guilabel> checkbox can be set to use the data from the anonymous WSDL message variable.
+					</para>
+				</section>
+				<section>
+					<title>Opaque</title>
+					<para>
+						<property>Opaque</property> activities are only used in abstract processes, and are meant as placeholders for other activities or complex business logic that has not yet been determined. When you drag and drop an <property>Opaque</property> activity onto the drawing canvas, the process will be converted to a non-executable, abstract process. The BPEL Designer will inform you about this by displaying a warning dialog.
+					</para>
+					<figure>
+						<title>Opaque</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Details_tab_07-Opaque_Warning.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+				</section>
+				<section id="Reference-Details_tab-Assign">
+					<title>Assign</title>
+					<para>
+						The <property>Assign</property> section is probably one of the more complex pages in the BPEL Designer, due to the nature of the BPEL <property>Assign</property> activity. The figure below shows the detail tab of an empty <property>Assign</property> activity with callouts describing each component:
+					</para>
+					<figure>
+						<title>Assign</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Details_tab_08.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<orderedlist>
+						<listitem>
+							<para>
+								List (initially empty) of assignment operations currently defined.
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								<guilabel>From</guilabel> combo box for selecting the source element category.
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								<guilabel>To</guilabel> combo box for selecting the target element category.
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								Contents and order management buttons. The <guibutton>New</guibutton> button adds a new assignment operation to the list. When clicked, the <guilabel>From</guilabel> and <guilabel>To</guilabel> combo boxes become active and display <property>Variable</property>. These allow you to select the source and categories for target items.
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								<guilabel>Validate checkbox</guilabel>; when enabled will cause the BPEL engine to validate the data after the assignment. If an error is detected it will cause a fault, which can be caught by a fault handler in the BPEL process.
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								<guilabel>Ignore Missing Source Data checkbox</guilabel>; When enabled, missing source data is not considered an error (no fault will be generated).
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								<guilabel>Keep Source Element Name checkbox</guilabel>; when enabled, the complex target variable element names will not be replaced by the source element names if they differ.
+							</para>
+						</listitem>
+					</orderedlist>
+					<para>
+						The following figure shows the detail tab of an <property>Assign</property> activity which has an XPath expression as the source (<guilabel>From</guilabel>) and a process variable element as the target (<guilabel>To</guilabel>):
+					</para>
+					<figure>
+						<title>Assign</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Details_tab_08b.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+				<!--	<para>
+						See XPath Expression Editor section for more information regarding the composition of XPath expressions.
+					</para> -->
+					<para>
+						A requirement of the BPEL language is that all complex variables must be initialized with valid XML before they are referenced either as a target of an assignment, or in another BPEL activity. The BPEL Designer understands this and, once you have selected the target of an assignment operation, it will ask if you would like to have an XML fragment generated for the target variable:	
+					</para>
+					<figure>
+						<title>Assign</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Details_tab_08c-Initializer.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						Unless you are certain that the variable has been initialized during a previous assignment operation or other activity, you should click <guibutton>Yes</guibutton>. The figure below shows the <property>Assign</property> details tab after the initializer has been generated:
+					</para>
+					<figure>
+						<title>Assign</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Details_tab_08d.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<formalpara>
+						<title>Assignment Operation Categories</title>
+						<para>
+							Additional type selection or data entry widgets will appear below the <guilabel>From</guilabel> and <guilabel>To</guilabel> combo boxes, depending on the source and target item categories selected in the combo boxes. Initially these will be controls for the selection of process variables, since the default combo box selection is <property>Variable</property>. The possible source and target categories are described in the following table:
+						</para>
+					</formalpara>
+					<table>
+						<title>Possible source and target categories</title>
+						<tgroup cols='5' align='left' colsep='1' rowsep='1'>
+							<colspec colname='c1'/>
+							<colspec colname='c2'/>
+							<colspec colname='c3'/>
+							<colspec colname='c4'/>
+							<colspec colname='c5'/>
+							<thead>
+								<row>
+									<entry>Category</entry>
+									<entry>Control type</entry>
+									<entry>Can be source?</entry>
+									<entry>Can be target?</entry>
+									<entry>Further information</entry>
+								</row>
+							</thead>
+							<tbody>
+								<row>
+									<entry>Variable</entry>
+									<entry>Tree</entry>
+									<entry>Yes</entry>
+									<entry>Yes</entry>
+									<entry>Select an in-scope variable or any portion if it is a complex variable. The target of the assignment must have the same type (for simple variables) or structure (for complex variables) as the source.</entry>
+								</row>
+								<row>
+									<entry>Expression</entry>
+									<entry>XPath</entry>
+									<entry>Yes</entry>
+									<entry>Yes</entry>
+									<entry>Enter a valid XPath expression with the XPath editor. For targets, the expression must resolve to an L-Value; that is, it must be a variable reference.</entry>
+								</row>
+								<row>
+									<entry>Fixed Value</entry>
+									<entry>Text</entry>
+									<entry>Yes</entry>
+									<entry>No</entry>
+									<entry>Enter a valid XML fragment that is compatible in structure and data type with the target.</entry>
+								</row>
+								<row>
+									<entry>Property of a Variable</entry>
+									<entry>List</entry>
+									<entry>Yes</entry>
+									<entry>Yes</entry>
+									<entry>N/A</entry>
+								</row>
+								<row>
+									<entry>Partner Link reference</entry>
+									<entry>List</entry>
+									<entry>Yes</entry>
+									<entry>Yes</entry>
+									<entry>N/A</entry>
+								</row>
+								<row>
+									<entry>Endpoint reference</entry>
+									<entry>List</entry>
+									<entry>Yes</entry>
+									<entry>No</entry>
+									<entry>N/A</entry>
+								</row>
+								<row>
+									<entry>Opaque</entry>
+									<entry>None</entry>
+									<entry>Yes</entry>
+									<entry>No</entry>
+									<entry>N/A</entry>
+								</row>
+							</tbody>
+						</tgroup>
+					</table>
+				</section>
+				<section id="Reference-Details_tab-Validate">
+					<title>Validate</title>
+					<figure>
+						<title>Validate</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Details_tab_09.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						The <property>Validate</property> details tab contains a list of variables to be validated.
+					</para>
+				</section>
+				<section>
+					<title>While and RepeatUntil</title>
+					<figure>
+						<title>While and RepeatUntil</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Details_tab_10.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						These activities have the same details tab, which allows you to specify an XPath expression to be evaluated for the conditional activity. <!-- See the XPath Expression Editor for more information. -->
+					</para>
+				</section>
+				<section>
+					<title>Link</title>
+					<figure>
+						<title>Link</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Details_tab_11.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						The <property>Link</property> detail tab allows you to specify a condition that will cause <property>Flow</property> synchronization to be satisfied and allow the target activity to continue. This is similar to the details tab of the other conditional activities.
+					</para>
+				</section>
+				<section>
+					<title>Pick</title>
+					<figure>
+						<title>Pick</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Details_tab_12.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						The <property>Pick</property> details tab allows you to specify whether the event will create a new process instance. <!-- See also the discussion of the Pick Activity. -->
+					</para>
+				</section>
+				<section id="Reference-Details_tab-OnMessage">
+					<title>OnMessage</title>
+					<figure>
+						<title>OnMessage</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Details_tab_13.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						The <property>OnMessage</property> activity is used in either a <property>Pick</property> or event handler.
+					</para>
+					<para>
+						The <guilabel>Details</guilabel> tab allows you to specify the <property>Partner Link</property>, <property>Operation</property> and <property>Message Type</property> expected by the activity, and the process variable that will contain the received message data.
+					</para>
+				</section>
+				<section id="Reference-Details_tab-OnAlarm">
+					<title>OnAlarm</title>
+					<figure>
+						<title>OnAlarm</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Details_tab_14.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						The <property>OnAlarm</property> activity is used in either a <property>Pick</property> or event handler to handle timeouts while waiting for messages to arrive. This activity can be configured to wait for a certain period of time or until a specific date and time.
+					</para>
+					<para>
+						The <guilabel>Details</guilabel> tab allows you to specify the <property>Partner Link</property>, <property>Operation</property> and <property>Message Type</property> expected by the activity, and the process variable that will contain the received message data.
+					</para>
+					<para>
+						<guilabel>Repeat</guilabel> conditions are only allowed for an <property>OnAlarm</property> in an event handler. This allows the activities enclosed in the activity to be executed repeatedly. <guilabel>Repeat</guilabel> duration is the amount of time the process will wait before each repetition. The <guilabel>Repeat</guilabel> screen follows:
+					</para>
+					<figure>
+						<title>OnAlarm</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Details_tab_14b.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+				</section>
+				<section>
+					<title>ForEach</title>
+					<figure>
+						<title>ForEach</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Details_tab_15.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						The details tab of the <property>ForEach</property> activity allows you to specify a counter variable to be used for keeping track of the loop iterations. The <guilabel>Parallel execution</guilabel> checkbox, when enabled, will execute all iterations in parallel. <!-- See the description of this activity for more information about its behavior. -->
+					</para>
+					<figure>
+						<title>ForEach</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Details_tab_15b.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						The <guilabel>Counter Values</guilabel> tab is where the required starting and ending counter values are specified.
+					</para>
+					<figure>
+						<title>ForEach</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Details_tab_15c.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						The optional <guilabel>Completion</guilabel> tab allows you to specify the early termination condition for the loop.
+					</para>
+				</section>
+				<section id="Reference-Details_tab-Wait">
+					<title>Wait</title>
+					<figure>
+						<title>Wait</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Details_tab_16.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						The details tab of the <property>Wait</property> activity allows you set a delay (<property>Duration</property>) or specify a date and time (<property>Date</property>) for when to continue process execution.
+					</para>
+				</section>
+				<section>
+					<title>Scope</title>
+					<figure>
+						<title>Scope</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Details_tab_17.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						The details tab for the <property>Scope</property> activity allows you to define whether the Scope is <guilabel>isolated</guilabel>.<!--  See the discussion of Scope and Flow activities for more information regarding isolated Scopes. -->
+					</para>
+				</section>
+				<section>
+					<title>Throw</title>
+					<figure>
+						<title>Throw</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Details_tab_18.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						The <property>Throw</property> activity will invoke a fault handler in an enclosing <property>Scope</property> activity. <property>Throw</property> requires the name of either a standard BPEL fault, or the name of a user-defined fault message. A variable is used to hold the value of the fault data.
+					</para>
+				</section>
+				<section>
+					<title>CompensateScope</title>
+					<figure>
+						<title>CompensateScope</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Details_tab_19.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						The <property>CompensateScope</property> activity will invoke a compensation handler in the <property>Scope</property> or the <property>Invoke</property> activity given by the name of the <guilabel>Target Activity</guilabel>. 
+					</para>
+				</section>
+			</section>
+		</section>
+	</section>
     <section>
         <title>Editors</title>
         <section>
-            <title>Business Process Editor</title>
-            <para>Business Process Editor is intended to facilitate the process of changing and 
-                adding new logic to BPEL process file.You can open <emphasis>.bpel</emphasis> 
-                in this editor by right click the file in the project explorer and selecting  
-                <property>Open With...->Business Process Editor</property>
-            </para>
-            <figure>
-                <title>Business Process Editor</title>
-                <mediaobject>
-                    <imageobject>
-                        <imagedata fileref="images/reference/bpel_ref_5.png"/>
-                    </imageobject>
-                </mediaobject>
-            </figure>
-            <para>The editor consists of two tabs:<property>Design</property> tab and <property>Source</property> tab.</para>
-       <section>
-           <title>Design tab</title>
-           <para>Design tab is the main part of Business Process Editor.It consists of 3 parts:</para>
-           <itemizedlist>
-               <listitem><para>Visual Pane:</para>
-                   <figure>
-                       <title>Visual Pane of Business Process Editor</title>
-                       <mediaobject>
-                           <imageobject>
-                               <imagedata fileref="images/reference/bpel_ref_6.png"/>
-                           </imageobject>
-                       </mediaobject>
-                   </figure>
-                   <para>The Visual Pane graphically displays the order in which the activities are executed.</para>
-               </listitem>
-               <listitem><para>Palette:</para>
-                   <figure>
-                       <title>Palette of Business Process Editor</title>
-                       <mediaobject>
-                           <imageobject>
-                               <imagedata fileref="images/reference/bpel_ref_7.png"/>
-                           </imageobject>
-                       </mediaobject>
-                   </figure>
-                   <para>The <property>Palette</property> represents  different elements of the BPEL activities
-                       organized into functional categories.
-                       Using it the user can easily add new elements to the sequence activity.
-                       To do this,he should just click the required element and then drug
-                       and drop it to the place on the Visual Pane where it should be added.</para>
-               </listitem>
-               <listitem><para>Behavior Components View:</para>
-                  <figure>
-                      <title>Behavior Components View of Business Process Editor</title>
-                       <mediaobject>
-                           <imageobject>
-                               <imagedata fileref="images/reference/bpel_ref_8.png"/>
-                           </imageobject>
-                       </mediaobject>
-                  </figure>
-                   <para>Execution behavior components are grouped into the <property>
-                       Behavior Components View</property>.
-                       The view is also fully syncronized with Properties view where you can customize all
-                       the properties of the component.</para>
-                   <figure>
-                       <title>Process Structure View of Business Process Editor</title>
-                       <mediaobject>
-                           <imageobject>
-                               <imagedata fileref="images/reference/bpel_ref_9.png"/>
-                           </imageobject>
-                       </mediaobject>
-                   </figure>                  
-                   <para>To add an element to some component group click plus(<inlinemediaobject>
-                       <imageobject>
-                           <imagedata fileref="images/reference/bpel_ref_10.png"/>
-                       </imageobject>
-                   </inlinemediaobject>) icon,
-                       for its deleting you should click the element and
-                       use its <property>Delete</property> option in the popup menu.</para>  
-               </listitem>
-             
-           </itemizedlist>
-           
-           
-       </section>
-            <section>
-                <title>Source tab</title>
-                <para>Source tab can be used for editing BPEL process file directly.
-                    The validation of file structure is also available.
-                 </para>
-                <figure>
-                    <title>Validation error in Source tab</title>
-                    <mediaobject>
-                        <imageobject>
-                            <imagedata fileref="images/reference/bpel_ref_11.png"/>
-                        </imageobject>
-                    </mediaobject>
-                </figure>
-                <para>If the user wants to disable/unable validation he can do it by following
-                    <property>Window->Preferences->Validation</property>.</para>
-                <figure>
-                    <title>Validation configuration</title>
-                    <mediaobject>
-                        <imageobject>
-                            <imagedata fileref="images/reference/bpel_ref_12.png"/>
-                        </imageobject>
-                    </mediaobject>
-                </figure>     
-            </section>
-       </section>
-      <section>
-          <title>ODE Deployment Descriptor Editor</title>
-          <para>To deploy your process in Ode you need to create a
-              simple deployment descriptor with basic information and
-              <property>ODE Deployment Descriptor Editor</property> facilitates the process of descriptor configuration.
-              You can see how the descriptor file,opened in the editor looks like on the picture below:
-          </para>
-          <figure>
-              <title>ODE Deployment Descriptor Editor</title>
-              <mediaobject>
-                  <imageobject>
-                      <imagedata fileref="images/reference/bpel_ref_13.png"/>
-                  </imageobject>
-              </mediaobject>
-          </figure> 
-          <para>The table below describes the configuration options of the
-              ODE Deployment Descriptor Editor:</para>
-          <table>
-              <title>ODE Deployment Descriptor Editor.Options.</title>   
-              <tgroup cols="3">
-                  <colspec colnum="1" align="left" colwidth="1*"/>
-                  <colspec colnum="2" align="left" colwidth="3*"/>
-                  <colspec colnum="3" align="left" colwidth="1*"/>
-                  
-                  <thead>
-                      <row>
-                          <entry>Section</entry>									
-                          <entry>Options</entry>
-                          <entry>Description</entry>
-                      </row>
-                  </thead>
-                  <tbody>
-                      <row>
-                          <entry morerows='1' valign='middle'><para> 
-                              General</para></entry>
-                          
-                          <entry>This process is</entry>
-                          <entry>Select one of the provided options: 
-                              <itemizedlist>
-                                  <listitem>
-                                      <para><emphasis>activated</emphasis> 
-                                      </para>
-                                  </listitem>
-                                  <listitem>
-                                      <para><emphasis>deactivated</emphasis></para>
-                                  </listitem>
-                                  <listitem>
-                                      <para><emphasis>retired</emphasis> 
-                                      </para>
-                                  </listitem>
-                              </itemizedlist></entry>
-                          
-                      </row> 
-                      <row><entry>Run this process in memory</entry>
-                          <entry>for performance purposes,
-                              you can define the process as being 
-                              executed only in-memory.</entry>
-                      </row>
-                      
-                      <row>
-                          <entry>Inbound Interfaces(Services)</entry>
-                          <entry>Associated Port</entry>
-                          <entry>Click Associated Port and the dropdown list with all available port names will appear.
-                              Select the one you need ,other fields will be filled automatically.
-                              This action configure the services
-                              provided by the process and 
-                              bind each service to an endpoint
-                          </entry>
-                          
-                      </row> 
-                      
-                      <row>
-                          <entry>Outbound Interfaces(Invokes)</entry>
-                          <entry>Associated Port</entry>
-                          <entry>Click Associated Port and the dropdown list with all available port names will appear.
-                              Select the one you need, other fields will be filled automatically.
-                              This action configure the services
-                              invoked by the process</entry>
-                      </row>
-                      <row>
-                          <entry>Process-level Monitoring Events</entry>
-                          <entry>  <itemizedlist>
-                              <listitem><para>
-                                  <emphasis>None</emphasis>
-                              </para></listitem>
-                              <listitem>
-                              <para>
-                                  <emphasis>All</emphasis>
-                              </para>
-                              </listitem>
-                              <listitem>
-                              <para>
-                                  <emphasis>Selected</emphasis>:
-                              </para>
-                                  <itemizedlist>
-                                      <listitem><para>Instance life cycle</para></listitem>
-                                      <listitem><para>Activity life cycle</para></listitem>
-                                      <listitem><para>Data handling</para></listitem>
-                                      <listitem><para>Scope handling</para></listitem>
-                                      <listitem><para>Correlation</para></listitem>
-                                      
-                                  </itemizedlist>
-                                  
-                              </listitem>
-                          </itemizedlist>
-                          </entry>
-                          <entry>Using ODE's deployment descriptor, it's also 
-                              possible to make events generation to 
-                              filtrate which ones get created.
-                              All option  just duplicates the default behaviour,
-                              when nothing is specified in the deployment.</entry>
-                      </row>
-                      <row>
-                          <entry>Scope-level Monitoring Events</entry>
-                          <entry>Scope</entry>
-                          <entry>This section makes it possible to
-                              define filtering for each scope of your process.
-                              </entry>
-                      </row>
-                  </tbody>
-              </tgroup>
-          </table>
-      </section>
-        
+			<title>BPEL Designer</title>
+			<para>
+				This section discusses the features of the BPEL Designer. See <xref linkend="Reference-Views" /> for a detailed discussion of each of these features.
+			</para>
+			<figure>
+				<title>BPEL Designer</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/reference/BPEL_Designer_01.png"/>
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<orderedlist>
+				<listitem>
+					<para>
+						<emphasis>Drawing Canvas</emphasis>: This contains the graphical representation of the BPEL process and is displayed when the <guilabel>Design</guilabel> tab at the bottom of the editor window is selected. The primary mouse click action (default is left mouse button) on any of the activity names activates an in-line editor, allowing you to edit the process name. To finish editing, simply press the <keycap>ENTER</keycap> key or change focus by clicking on a different window control. 
+					</para>
+					<para>
+						The <guilabel>Source</guilabel> tab displays the XML (text) representation of the process. Any changes made in one view are immediately reflected in the other. The default layout of activities is top-to-bottom, but can be changed to horizontal layout from the context menu.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<emphasis>Palette</emphasis>: The primary editing, creation and viewing tools of the BPEL Designer are accessed from the tool <guilabel>Palette</guilabel>.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<emphasis>Dashboard</emphasis>: Provides an overview of the BPEL process.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<emphasis>Property Sheet</emphasis>: When an activity is selected in the drawing canvas, its properties are displayed in the tabbed <guilabel>Properties</guilabel> sheet. 
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<emphasis>Outline</emphasis>: This panel provides a structural view of the BPEL process.
+					</para>
+				</listitem>
+			</orderedlist>
+			<para>
+				The BPEL Designer will validate your business process every time it is saved. If an activity is found to be incomplete or incorrectly configured, it will be decorated with an error icon (red circle with an X) as for example the <property>Assign</property> activity below:
+			</para>
+			<figure>
+				<title>Assign error</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/reference/BPEL_Designer_02.png"/>
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>
+				Hovering your mouse over this icon will display an error message in a tooltip:
+			</para>
+			<figure>
+				<title>Assign error with tooltip</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/reference/BPEL_Designer_03.png"/>
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>
+				The remainder of this section discusses some basic BPEL concepts and how they relate to the BPEL Designer.
+			</para>
+			<section>
+				<title>Basic activities</title>
+				<para>
+					Basic activities are represented on the drawing canvas as rounded rectangles containing an icon and the user-defined name of the activity. The <guilabel>Actions</guilabel> section of the <guilabel>Palette</guilabel> contains all of the basic activities. For example: <property>Assign</property>, <property>Invoke</property> and <property>Receive</property>.
+				</para>
+				<para>
+					Most basic activities will require some additional configuration. See <xref linkend="Reference-Property_sections" /> for more information.
+				</para>
+				<section>
+					<title>Start and End</title>
+					<para>
+						Every BPEL process has implicit <property>Start</property> <inlinemediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/BPEL_Designer_04.png"/>
+							</imageobject>
+						</inlinemediaobject> and <property>End</property> <inlinemediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/BPEL_Designer_05.png"/>
+							</imageobject>
+						</inlinemediaobject> activities. These do not correspond to actual BPEL elements however, and are simply placeholders for visualizing the beginning and end of the process flow.
+					</para>
+				</section>
+				<section>
+					<title>Assign</title>
+					<figure>
+						<title>Assign activity</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/BPEL_Designer_06.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						The <property>Assign</property> activity allows you to manipulate variables and message contents that are defined in the process. See <xref linkend="Reference-Details_tab-Assign" /> for more information.
+					</para>
+				</section>
+				<section>
+					<title>Invoke</title>
+					<figure>
+						<title>Invoke activity</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/BPEL_Designer_07.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						The <property>Invoke</property> activity is used to send a message to an external service (one-way invocation), and optionally wait for a response (request and response). An <property>Invoke</property> can also define a compensation handler and a fault handler to handle exception conditions. See <xref linkend="Reference-Details_tab-Invoke" /> for more information.
+					</para>
+				</section>
+				<section>
+					<title>Receive</title>
+					<figure>
+						<title>Receive activity</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/BPEL_Designer_08.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						The <property>Receive</property> activity will wait for a specific message type from a service client.  See <xref linkend="Reference-Details_tab-Receive" /> for more information.
+					</para>
+				</section>
+				<section>
+					<title>Reply</title>
+					<figure>
+						<title>Reply activity</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/BPEL_Designer_09.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						The <property>Reply</property> activity is used to respond to clients with a specific message type, or fault message (if defined for the process interface). See <xref linkend="Reference-Details_tab-Reply" /> for more information.
+					</para>
+				</section>
+				<section>
+					<title>Validate</title>
+					<figure>
+						<title>Validate Input activity</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/BPEL_Designer_10.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						The <property>Validate</property> activity is used to validate the values of variables against their XML Schema and WSDL data definitions. This includes the variable’s data type as well as structure. If validation fails, the BPEL standard fault invalidVariables is thrown. 
+					</para>
+					<para>
+						Validation is typically performed just before sending messages to a partner or client, or after receiving a message to ensure the message contains all required data and that the data is as expected.  See <xref linkend="Reference-Details_tab-Validate" /> for more information.
+					</para>
+				</section>
+				<section>
+					<title>Wait</title>
+					<figure>
+						<title>Wait activity</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/BPEL_Designer_11.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						A <property>Wait</property> activity will delay process execution for a certain amount of time, or until a given date and time; this is typically used to invoke an operation at a certain time. For example to update process state hourly or daily, or to collect some information from another service at a certain time of day. See <xref linkend="Reference-Details_tab-Wait" /> for more information.
+					</para>
+				</section>
+			</section>
+			<section>
+				<title>Structured activities</title>
+				<para>
+					Structured activities can be thought of as containers that can hold one or more activities. The <guilabel>Controls</guilabel> section of the <guilabel>Palette</guilabel> contains all of the <emphasis>structured activities</emphasis>. When you drag and drop one of these onto the drawing canvas, the BPEL Designer will create a basic skeleton of the activity, and assign default properties. 
+				</para>
+				<para>
+					All structured activities will require some additional configuration before they are considered valid. For example, BPEL does not allow an empty <property>Sequence</property> activity. Invalid structured activities will be decorated with an error icon similar to basic activities.
+				</para>
+				<para>
+					Structured activities can be expanded and collapsed on the drawing canvas by clicking the plus and minus buttons at the bottom of the figure. Illustrated below is a collapsed and expanded <property>Sequence</property>:
+				</para>
+				<figure>
+					<title>Collapsed Sequence</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/reference/BPEL_Designer_12.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<figure>
+					<title>Expanded Sequence</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/reference/BPEL_Designer_13.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<para>
+					The following sections describe the structured activities and how each must be configured to be considered vaid for BPEL.
+				</para>
+				<section>
+					<title>If</title>
+					<figure>
+						<title>If, ElseIf and Else</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/BPEL_Designer_14.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						The <property>If</property> activity allows conditional execution of one or more sequences of activities. It consists of a sequence of one or more conditional branches defined by <property>If</property> and optional <property>ElseIf</property> elements. The elements are evaluated in left-to-right order (or top-to-bottom if you have selected horizontal layout). An optional <property>Else</property> branch will be executed if none of the other conditions are true.
+					</para>
+					<para>
+						An <property>If</property> activity must define a condition (expressed as an XPath) and an activity which is executed if the condition evaluates true. To insert additional <property>ElseIf</property> and <property>Else</property> elements, right-click the <property>If</property> figure and select the desired element from the context menu. The figure above shows a complete <property>If</property> activity with optional <property>ElseIf</property> and <property>Else</property> elements.
+					</para>
+				</section>
+				<section>
+					<title>Pick</title>
+					<figure>
+						<title>Pick</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/BPEL_Designer_15.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						The <property>Pick</property> activity will cause the process to wait for one of any number of messages to be received. An optional timer can be set to limit the time to wait for receipt of these messages. Activities to handle receipt of messages and timer expiration are defined in the <property>Pick</property>. Message receipts are handled by <property>OnMessage</property> activities (<xref linkend="Reference-Details_tab-OnMessage" />), and timer expiration is handled by the <property>OnAlaram</property> activity (<xref linkend="Reference-Details_tab-OnAlarm" />).
+					</para>
+				</section>
+				<section>
+					<title>While</title>
+					<figure>
+						<title>While</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/BPEL_Designer_16.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						The <property>While</property> activity repeatedly executes the contained activity as long as a condition evaluates true at the beginning of each iteration. A <property>While</property> activity must define a condition and must contain an activity.
+					</para>
+				</section>
+				<section>
+					<title>ForEach</title>
+					<figure>
+						<title>ForEach</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/BPEL_Designer_17.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						<property>ForEach</property> is a looping activity that executes the activities contained in its <property>Scope</property> a specified number of times. A counter variable, defined in the <property>ForEach</property> property detail tab, is used to keep track of the iterations. The <property>ForEach</property> properties must be configured with starting and ending value expressions for this counter variable. The counter is initially set to the starting value and activities in the <property>Scope</property> are executed until the counter exceeds the ending value.
+					</para>
+					<para>
+						This activity can also be configured to execute all iterations in parallel, meaning the enclosed <property>Scope</property> activity behaves as if multiple <property>Scopes</property> are enclosed in a <property>Flow</property> activity.
+					</para>
+					<para>
+						An optional early termination value can be defined, which will cause the loop to complete before the counter has reached its ending value. The <property>ForEach</property> will complete when the counter is equal to this early termination value for the sequential execution case. For the parallel execution case, the early termination value is the number of completed iterations. For example, the <property>ForEach</property> completes when at least <emphasis>some number</emphasis> of <emphasis>some action</emphasis> have finished.
+					</para>
+				</section>
+				<section>
+					<title>RepeatUntil</title>
+					<figure>
+						<title>RepeatUntil</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/BPEL_Designer_18.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						The <property>RepeatUntil</property> activity repeatedly executes the contained activity as long as a condition evaluates true at the end of each iteration. A condition must be defined for a <property>RepeatUntil</property>, and it must contain an activity.
+					</para>
+				</section>
+				<section>
+					<title>Sequence</title>
+					<para>
+						A <property>Sequence</property> is a container for one or more other activities, which are executed in sequential order and (unlike <property>Scope</property> and <property>Flow</property> activities), has no other special characteristics. Because the conditional activities (<property>If</property>, <property>While</property>, <property>RepeatUntil</property> and <property>ForEach</property>) can have only one activity as the target of their execution, a <property>Sequence</property> is typically used to execute multiple activities. 
+					</para>
+					<para>
+						For example, the <property>If</property> shown below contains only a single Assign activity:
+					</para>
+					<figure>
+						<title>Sequence</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/BPEL_Designer_19.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						If it were necessary to perform an assignment and then invoke another web service, the <property>Assign</property> and <property>Invoke</property> could be contained within a <property>Sequence</property>. The <property>Sequence</property> would then become the target of the <property>If</property>:
+					</para>
+					<figure>
+						<title>Sequence</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/BPEL_Designer_20.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<note>
+						<para>
+							The BPEL Designer will automatically create a <property>Sequence</property> if you drag-drop a second activity into any of the conditional activities.
+						</para>
+					</note>
+				</section>
+				<section>
+					<title>Scope</title>
+					<figure>
+						<title>Scope</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/BPEL_Designer_21.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						A <property>Scope</property> provides a context for its enclosed activity. This context includes variables, partner links, message exchanges, correlation sets, event handlers, fault handlers, a compensation handler and a termination handler. These <property>Scope</property> contexts can be nested hierarchically where the root context is provided by the process itself. 
+					</para>
+					<para>
+						A <property>Scope</property> can be thought of as a compartmentalized sub-process. If the <property>Scope</property> is declared as being <emphasis>isolated</emphasis>, then the variables and partner links shared with the process are locked to prevent other concurrent <property>Scopes</property> from altering them while a <property>Scope</property> is executing. <property>Scope</property> may also be nested to any depth and all variables, partner links and others defined in a <property>Scope</property>, are inherited by its children. Refer to <xref linkend="Reference-BPEL_Designer-Structured_Activities-Flow" /> for a discussion of concurrent execution. 
+					</para>
+					<para>
+						To be valid, a <property>Scope</property> must have a single activity. The typical use of a Scope activity is to invoke a service and wait for a response message or timeout. In the above figure, the <property>Scope</property> has defined a message variable and a partner link used to interact with the invoked service.
+					</para>
+				</section>
+				<section id="Reference-BPEL_Designer-Structured_Activities-Flow">
+					<title>Flow</title>
+					<para>
+						The <property>Flow</property> activity allows multiple activities to be executed in parallel. All activities or <property>Sequences</property> of activities that are contained in a <property>Flow</property>, are executed (or begun) at the same time by the BPEL engine. A <property>Flow</property> completes when all of its enclosed activities have completed. 
+					</para>
+					<para>
+						Parallel processing is typically used to save time by doing more than one thing at a time and as a result, speed up the process. However, in many situations several tasks can be started at the same time, but one or more tasks may depend on the successful completion of other tasks. This task dependency sequencing is called <emphasis>synchronization</emphasis> and is achieved using <property>Links</property>.
+					</para>
+					<para>
+						For example, a process that handles purchase orders for material goods needs to:
+					</para>
+					<orderedlist>
+						<listitem>
+							<para>
+								Calculate the total order price
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								Calculate shipping costs for the order
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								Send a customer invoice
+							</para>
+						</listitem>
+					</orderedlist>
+					<para>
+						All of these activities can be started at the same time, however the shipping cost must be finalized before the total order price can be determined, and the invoice can be sent.
+					</para>
+					<para>
+						To create a <property>Link</property>, right-click on the activity that must be completed first (the activity that is the <emphasis>source</emphasis> of the dependency) and select <guimenuitem>Add Link</guimenuitem> from the context menu. Next, move the mouse to the activity in the <property>Flow</property> that depends on this one (the <emphasis>target</emphasis>) and click the left mouse button to create the link.
+					</para>
+					<para>
+						A <property>Link</property> is identified by a name that must be unique within the <property>Flow</property>. The BPEL Designer generates a reasonable default name, but you can change this in its properties. You can also add a test to the <property>Link</property> that defines the conditions for considering an activity to be complete. For example an activity in a <property>Flow</property> may require two pieces of information, provided by other services, in order to continue. Consider the process <property>Flow</property> shown below:
+					</para>
+					<figure>
+						<title>Flow example</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/BPEL_Designer_22.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						In this example, the <emphasis>Billing</emphasis> department can begin preparation of a customer invoice, but it needs to know if sufficient stock is on hand to fulfill the order and if an outside vendor needs to provide the additional quantities ordered. The following condition would enable the <property>Link</property> so that execution can continue for the price calculation and customer invoicing:
+					</para>
+					<figure>
+						<title>Link example</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/BPEL_Designer_23.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						This process is only partially complete though as it does not consider the number of outside vendors, or if the total quantity being ordered can ever be filled.
+					</para>
+				</section>
+			</section>
+			<section>
+				<title>Fault Activities</title>
+				<para>
+					Fault activities cause the normal process execution flow to jump to a specialized handler, similar to exceptions in modern programming languages. There are five different types of fault activities, described in this section.
+				</para>
+				<section>
+					<title>Exit</title>
+					<figure>
+						<title>Exit</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Fault_Activities_01.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						The <property>Exit</property> activity causes the process to immediately terminate.
+					</para>
+				</section>
+				<section>
+					<title>Throw</title>
+					<figure>
+						<title>Throw</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Fault_Activities_02.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						The <property>Throw</property> activity propagates a specified fault to its ancestor <property>Scope</property>, or the process itself.
+					</para>
+				</section>
+				<section>
+					<title>Rethrow</title>
+					<figure>
+						<title>Rethrow</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Fault_Activities_03.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						A <property>Rethrow</property> activity can only be used inside a fault handler. It is used to propagate the fault that was caught by the handler, using the original fault data.
+					</para>
+				</section>
+				<section>
+					<title>Compensate</title>
+					<figure>
+						<title>Compensate</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Fault_Activities_04.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						The <property>Compensate</property> activity is used to invoke a compensation handler. This activity can only be used within a fault handler, compensation handler or termination handler.
+					</para>
+				</section>
+				<section>
+					<title>CompensateScope</title>
+					<figure>
+						<title>CompensateScope</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Fault_Activities_05.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						The <property>CompensateScope</property> activity is used to invoke a compensation handler in the enclosing <property>Scope</property>. This activity can only be used within a fault handler, compensation handler or termination handler.
+					</para>
+				</section>
+			</section>
+			<section>
+				<title>Faulot, compensation, termination and event handlers</title>
+				<para>
+					Handlers allow a BPEL process to recover from exception conditions. Exception conditions include: a timeout waiting for a response from a partner service, invalid or missing message data, a fault condition returned by a service. There are four types of handlers:
+				</para>
+				<itemizedlist>
+					<listitem>
+						<para>
+							Fault handler <inlinemediaobject>
+								<imageobject>
+									<imagedata fileref="images/reference/Handlers_01.png"/>
+								</imageobject>
+							</inlinemediaobject>: Executed when a fauly is thrown by an activity.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Compensation handler <inlinemediaobject>
+								<imageobject>
+									<imagedata fileref="images/reference/Handlers_02.png"/>
+								</imageobject>
+							</inlinemediaobject>: Executed when the BPEL process encounters a <property>Compensate</property> or <property>CompensateScope</property> activity.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Temination handler <inlinemediaobject>
+								<imageobject>
+									<imagedata fileref="images/reference/Handlers_03.png"/>
+								</imageobject>
+							</inlinemediaobject>: Executed if a <property>Scope</property> is forced to terminate early.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Event handler <inlinemediaobject>
+								<imageobject>
+									<imagedata fileref="images/reference/Handlers_04.png"/>
+								</imageobject>
+							</inlinemediaobject>: Executed for events include the receipt of a message and a timer expiration.
+						</para>
+					</listitem>
+				</itemizedlist>	
+				<para>
+					Handlers are defined for the process or for certain activities. To create a new handler right-click an activity and select the desired handler from its context menu. The BPEL Designer will generate a skeleton of the handler within a collapsible window that is attached to the activity. The figure below illustrates all of the different types of handlers in their fully expanded view. The handler windows can be collapsed and expanded by clicking on their respective icon. 
+				</para>
+				<figure>
+					<title>Handlers overview</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/reference/Handlers_05.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<para>
+					The behavior of handlers and the order of exception processing is complex and beyond the scope of this document. Refer to the OASIS WS-BPEL 2.0 specification at <ulink url="http://docs.oasis-open.org/wsbpel/2.0/wsbpel-v2.0.html">http://docs.oasis-open.org/wsbpel/2.0/wsbpel-v2.0.html</ulink> for more information.
+				</para>
+				<section>
+					<title>Process-level Handlers</title>
+					<figure>
+						<title>Start activity with handlers</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/Handlers_06.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					<para>
+						Fault and event handlers can be defined for the process by right-clicking the <property>Start</property> activity and selecting the desired handler from the context menu.
+					</para>
+				</section>
+				<section>
+					<title>Scope-level handlers</title>
+					<para>
+						A <property>Scope</property> may have any handler. Since <property>Scopes</property> can be nested, each level can define its own set of handlers. Events that are not caught and processed by a handler in an inner <property>Scope</property>, will be propagated to its ancestors. 
+					</para>
+				</section>
+				<section>
+					<title>Activity-level handlers</title>
+					<para>
+						Only the <property>Invoke</property> activity can define handlers. The handlers available to it are the fault and compensation handlers. 
+					</para>
+				</section>
+			</section>
+		</section>
+		<section>
+			<title>BPEL Deployment Descriptor editor</title>
+			<para>
+				Before a BPEL project can be deployed to the runtime engine, you must create what is called a <emphasis>deployment descriptor</emphasis>. This is simply a manifest file, serialized as XML, that describes all of the BPEL processes and their interfaces to the BPEL engine. The <emphasis>deployment descriptor</emphasis> file must be created in the root folder of your project. See <xref linkend="Reference-Wizard-Deployment_Descriptor" /> more information.
+			</para>
+			<para>
+				The <emphasis>deployment descriptor</emphasis> editor traverses the folder hierarchy in your project and searches for all BPEL files. Each process is then represented in a separate tab in the editor. The figure below shows two processes (HelloWorld and GoodbyeWorld). Each process must be configured before the project can be deployed.
+			</para>
+			<figure>
+				<title>Deployment descriptor editor example</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/reference/Deployment_descriptor_editor_01.png"/>
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<orderedlist>
+				<listitem>
+					<para>
+						Process selection tabs: Click on these tabs to display the configuration page for each process.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Initial process state: The process can be deployed in either an <emphasis>active</emphasis>, <emphasis>inactive</emphasis> or <emphasis>retired</emphasis> state.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Inbound interfaces selection: Select the WSDL port type that clients will use to invoke this service.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Output interfaces selection: Each invoked service (if any) will require you to select its port type.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Process-level monitoring events: Allow you to select which events are generated by the BPEL engine. This is currently unused but will be used in future for debugging the process.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Scope-level monitoring events: The BPEL engine can be configured to generate monitoring events for each Scope defined in the process.
+					</para>
+				</listitem>
+			</orderedlist>
+			<para>
+				The only action required to configure a processes is to select the interfaces for inbound and outbound services used by the process; all other settings are optional.
+			</para>
+		</section>
     </section>
-    
-    
+	<section>
+		<title>Preference pages</title>
+			<para>
+				Certain aspects of the BPEL Designers behavior can be customized to suit your personal preference.
+			</para>
+			<section>
+				<title>Editor</title>
+				<figure>
+					<title>Editor preferences</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/reference/Editor_preferences_01.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<para>
+					The editor behavior can be customized on this page.
+				</para>
+			</section>
+			<section>
+				<title>Expression editors</title>
+				<figure>
+					<title>Expression editor preferences</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/reference/Editor_preferences_02.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<para>
+					This preference page is used to configure the XPath expression editor templates and is similar to other Eclipse editor template preference pages.
+				</para>
+			</section>
+			<section>
+				<title>WSIL browser</title>
+				<figure>
+					<title>WSIL browser preferences</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/reference/WSIL_browser_preferences_01.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<para>
+					This preference page is used to configure a Web Services Inspection Language (WSIL) file. The file can contain references to WSDL files for external services as well as references to other WSIL files, either locally or on the web. This file is used to search for WSDLs when defining partner links in a process. <!-- See the Type Selection Dialog for more information.  Also see the Eclipse Help documentation for generating a WSIL file. -->
+				</para>
+			</section>
+		</section>
+		<section>
+			<title>Dialogs</title>
+			<section>
+				<title>XPath expression editor (embedded control)</title>
+				<para>
+					The XPath expression editor provides context-sensitive assistance in the form of pop-up proposals. The light bulb icon <inlinemediaobject>
+						<imageobject>
+							<imagedata fileref="images/reference/XPath_expression_editor_01.png"/>
+						</imageobject>
+					</inlinemediaobject> indicates that content assist is available by pressing the <keycap>CTRL</keycap> and <keycap>SPACE</keycap> keys simultaneously. The editor will display appropriate help information based on what it knows about variables currently in-scope for the selected activity. An example is seen in the figure below:
+				</para>
+				<figure>
+					<title>Expression editor assistance example</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/reference/XPath_expression_editor_02.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<note>
+					<para>
+						The BPEL 2.0 specification provides for the definition of an XPath language version at the process level, as well as the activity level (for those activities that make use of XPath). However, only XPath 1.0 is supported by the BPEL Designer and the JBoss Riftsaw runtime engine at this time.
+					</para>
+				</note>
+			</section>
+			<section>
+				<title>Quick pick (embedded control)</title>
+				<figure>
+					<title>Quick pick</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/reference/Dialog_quick_pick_01.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<para>
+					Tree control is used in many proeprty pages for selecting message parts, partner links and operations. 
+				</para>
+			</section>
+			<section>
+				<title>Type selection</title>
+				<para>
+					This dialog is displayed whenever the BPEL Designer requires you to select a message, message part, XML Schema type or XML element. Refer to the figure below for an explanation of each of the components of this dialog:
+				</para>
+				<figure>
+					<title>Type selection</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/reference/Dialog_type_selection_01.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<orderedlist>
+					<listitem>
+						<para>
+							<guilabel>Type Name</guilabel>: Used to limit the items displayed in the <guilabel>Matches</guilabel> (4) list. Only items that begin with the text in this filter will be displayed.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<guilabel>Show XSD Types</guilabel>: Can be used to limit where the editor will search for XSD files.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<guilabel>Filter</guilabel>: Further reduces the number of matches according to types.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<guilabel>Matches</guilabel>: Displays the items matching the selected filters. Selecting an item in this list will update the <guilabel>Type Structure</guilabel> (5) tree view.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<guilabel>Type Structure</guilabel>: Displays the structure of the item selected in the <guilabel>Matches</guilabel> (4) list. Depending on the type of item requested, you may need to select an item from this tree control as well; the <guibutton>OK</guibutton> button being enabled is an indicated of a selection being required here.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<guibutton>Add Schema</guibutton>: If the required XML Schema has not been resolved, you can add it to the process’ imports by clicking this button.
+						</para>
+					</listitem>
+				</orderedlist>
+			</section>
+			<section id="Reference-Dialog-WSDL_Selection">
+				<title>Select WSDL property</title>
+				<para>
+					This dialog allows you to select an existing WSDL property or create a new one.
+				</para>
+				<figure>
+					<title>Select a WSDL property</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/reference/Dialog_wsdl_selection_01.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<orderedlist>
+					<listitem>
+						<para>
+							<guilabel>Property Name</guilabel>: Used to limit the items displayed in the <guilabel>Matches</guilabel> (3) list. Only those items that begin with the text in this filter will be displayed.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<guibutton>New</guibutton>: Click this button to create a new WSDL property.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<guilabel>Matches</guilabel>: Displays the items that match the <guilabel> Property Name</guilabel> (1), or all items if the filter is blank.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<guilabel>Property Type</guilabel>: Displays the type of an item selected in the <guilabel>Matches</guilabel> (3) list.
+						</para>
+					</listitem>
+				</orderedlist>
+			</section>
+			<section>
+				<title>Create WSDL property</title>
+				<para>
+					This dialog is used to create a new WSDL property and is displayed when you click the <guibutton>New</guibutton> button in <xref linkend="Reference-Dialog-WSDL_Selection" /> dialog.
+				</para>
+				<figure>
+					<title>Create a WSDL property</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/reference/Dialog_wsdl_creation_01.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<orderedlist>
+					<listitem>
+						<para>
+							<guilabel>Name</guilabel>: Enter the name for the new property.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<guibutton>Defined As</guibutton>: Select how the property type will be defined.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<guilabel>Browse</guilabel>: Click this button to select the property type.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<guilabel>New</guilabel>: Click this button to create a new property alias.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<guilabel>Aliases</guilabel>: This list displays all property aliases defined for the property.
+						</para>
+					</listitem>
+				</orderedlist>
+			</section>
+			<section>
+				<title>Create WSDL property alias</title>
+				<para>
+					This dialog allows you to create a WSDL property alias for a selected property.
+				</para>
+				<figure>
+					<title>Create a WSDL property alias</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/reference/Dialog_wsdl_creation_02.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<orderedlist>
+					<listitem>
+						<para>
+							<guilabel>Defined As</guilabel>: Select how the property alias type will be defined.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<guibutton>Browse</guibutton>: Click this button to select the property alias type.
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<guilabel>Query</guilabel>: This editor allows you to use the XPath Expression Editor to define a query for the property alias.
+						</para>
+					</listitem>
+				</orderedlist>
+			</section>
+			<section>
+				<title>Cheat sheets</title>
+				<para>
+					Cheat sheets are part of the Eclipse <guilabel>Help</guilabel> framework, which provide interactive, step-by-step tutorials for plug-in tools. The BPEL Designer cheat sheet can be accessed by following <menuchoice><guimenuitem>Help</guimenuitem><guimenuitem>Cheat Sheets</guimenuitem></menuchoice>. You will then see the following screen:
+				</para>
+				<figure>
+					<title>Cheat sheet menu selection</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/reference/Dialog_cheet_sheet_01.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<para>
+					The cheat sheet will open in a separate view as show below. Click on the <guibutton>Click to begin</guibutton> link to begin.
+				</para>
+				<figure>
+					<title>Cheat sheet menu</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/reference/Dialog_cheet_sheet_02.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+			</section>
+		</section>
+		<section>
+			<title>Icons, buttons and menus</title>
+			<para>
+				The BPEL Designer does not contribute any toolbar buttons, or main menu actions.
+			</para>
+			<section>
+				<title>Context menu</title>
+				<para>
+					The context menu is activated when the right mouse button is clicked while the mouse is over an activity figure on the drawing canvas.
+				</para>
+				<figure>
+					<title>Cheat sheet menu</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/reference/Context_menu_01.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<para>
+					The <guibutton>Add</guibutton> and <guibutton>Insert Before</guibutton> sub-menus contain the same actions. The sub-menu is displayed in the figure below:
+				</para>
+				<figure>
+					<title>Cheat sheet menu</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/reference/Context_menu_02.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<para>
+					The items within the <guibutton>Add</guibutton> sub-menu appends the activity after the currently selected one, while those within the <guibutton>Insert Before</guibutton> sub-menu insert the new activity before the current one.
+				</para>
+			</section>
+		</section>
 </chapter>
 

@@ -1,14 +1,14 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3CR3//EN" 
-"http://www.docbook.org/xml/4.3/docbookx.dtd"
-
-[<!ENTITY  overview SYSTEM "overview.xml">
-<!ENTITY install SYSTEM "install.xml">
-<!ENTITY detail SYSTEM "detail.xml">
-<!ENTITY deploy SYSTEM "deploy.xml">
-<!ENTITY reference SYSTEM "reference.xml">
-<!ENTITY summary SYSTEM "summary.xml">
-<!ENTITY tasks SYSTEM "tasks.xml">
+<!DOCTYPE Book PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+	<!ENTITY  overview SYSTEM "overview.xml">
+	<!--<!ENTITY install SYSTEM "install.xml">-->
+	<!--<!ENTITY detail SYSTEM "detail.xml">-->
+	<!--<!ENTITY deploy SYSTEM "deploy.xml">-->
+	<!ENTITY reference SYSTEM "reference.xml">
+	<!ENTITY summary SYSTEM "summary.xml">
+	<!ENTITY tasks SYSTEM "tasks.xml">
+	<!ENTITY install SYSTEM "install.xml">
+	<!ENTITY troubleshooting SYSTEM "troubleshooting.xml">
 ]>
 <book>
   <bookinfo>
@@ -44,13 +44,13 @@
       <holder>JBoss by Red Hat</holder>
     </copyright>
     <releaseinfo> Version: 1.0.0.trunk </releaseinfo>
-    <abstract>
+ <!--   <abstract>
       <title/>
       <para>
            <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/bpel_ref_guide/pdf/BPEL_Reference_Guide.pdf">PDF version</ulink>
        </para>
-    </abstract>
+    </abstract> -->
   </bookinfo>
   <toc/>
-&overview;&install;&tasks;<!--  &detail;
-        &deploy;-->&reference;&summary;</book>
+  &overview;&tasks;&reference;&troubleshooting;&summary;
+<!--&overview;&install;&tasks;&detail;&deploy;&reference;&summary;--></book>
