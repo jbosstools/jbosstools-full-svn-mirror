@@ -49,7 +49,7 @@
 	</para>
 	<note>
 	   <para>
-	      It is possible for a ModeShape server instance to have numerious ModeShape repositories stored on it. Once you have registered a connection to the server you will have access to all ModeShape repositories on the server. You do not need to register a new connection for each repository on the same server.
+	      It is possible for a ModeShape server instance to have numerous ModeShape repositories stored on it. Once you have registered a connection to the server you will have access to all ModeShape repositories on the server. You do not need to register a new connection for each repository on the same server.
 	   </para>
 	</note>
 <!-- The functionality to delete a resource from the workspace using the Modeshape view does not currently exist, but could in a future version -->

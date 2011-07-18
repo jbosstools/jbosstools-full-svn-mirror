@@ -38,7 +38,7 @@
 	   The publishing wizard (shown in <xref linkend="ModeShape_publishing_wizard"/>) allows you to choose which ModeShape Java Content Repositories (JCR) type repository to interact with and displays the selected files the operation will be performed on. When a project or folder is selected all their included files are acted upon.
         </para>
 	<para>
-	   Publishing to a <guilabel>Publish Area</guilabel> will automatically sequence your files to extract usful informaiton and make it available to our repsitory users. Extracted information depends upon the type of file and the configuration of the ModeShape repository. The location where files will be published is constructed by appending the server URL, the names of the JCR repository and workspace, the path to the publish area, and the path of the files and folders within your Eclipse workspace. 
+	   Publishing to a <guilabel>Publish Area</guilabel> will automatically sequence your files to extract useful information and make it available to our repository users. Extracted information depends upon the type of file and the configuration of the ModeShape repository. The location where files will be published is constructed by appending the server URL, the names of the JCR repository and workspace, the path to the publish area, and the path of the files and folders within your Eclipse workspace. 
 	</para>
 	<warning>
 	    <para>

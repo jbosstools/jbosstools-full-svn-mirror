@@ -6,10 +6,10 @@
 <chapter id="chap-ModeShape_Tools_Reference_Guide-introduction">
 	<title>Introduction</title>
 	<para>
-	    ModeShape tools allows you to publish and unpublish resources to the Modeshape repositories you have made available through your workspace. These repositories are persisted within the workspace, from session to session.
+	    ModeShape tools allows you to publish and unpublish resources to the ModeShape repositories you have made available through your workspace. These repositories are persisted within the workspace, from session to session.
         </para>
 	<para>
-	   The Modeshape registry is persisted from session to session.
+	   The ModeShape registry is persisted from session to session.
 	</para>
 </chapter>
 
