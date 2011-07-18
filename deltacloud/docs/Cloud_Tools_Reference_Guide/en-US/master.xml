@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3CR3//EN"
 "http://www.oasis-open.org/docbook/xml/4.3CR3/docbookx.dtd"
-
-[<!ENTITY  Preface SYSTEM "Preface.xml">
+[
+<!ENTITY  Preface SYSTEM "Preface.xml">
+<!ENTITY  Tasks SYSTEM "Tasks.xml">
 <!ENTITY Revision_History SYSTEM "Revision_History.xml">
 ]>
 
@@ -45,6 +46,7 @@
     
     <toc/> 
  <!--   &Preface; -->
+ 		&Tasks;
     &Revision_History;
 
 </book> 
