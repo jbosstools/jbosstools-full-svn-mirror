@@ -1,54 +1,47 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <chapter id="conclusion">
-    <?dbhtml filename="conclusion.html"?>
-    <chapterinfo>
-        <keywordset>
-            <keyword>JBoss Tools</keyword>
-            <keyword>Eclipse Guvnor Tools</keyword>
-        </keywordset>
-    </chapterinfo>
+	<?dbhtml filename="conclusion.html"?>
+	<chapterinfo>
+		<keywordset>
+			<keyword>JBoss Tools</keyword>
+			<keyword>Eclipse Guvnor Tools</keyword>
+		</keywordset>
+	</chapterinfo>
 
-    <title>Summary</title>
+	<title>Summary</title>
 
-    <para>As stated at the beginning of this document, the key goal of the <property>EGT</property>
-        is to provide a way of interacting with Guvnor repository resources in a local Eclipse
-        workspace. While clearly there is a lot more that could be done, and no doubt there will be
-        aspects of the current tooling that require revision going forward, we feel that the current
-        state of the <property>EGT</property> is sufficient for the major use cases.</para>
+	<para>
+		As stated at the beginning of this document, the key goal of the <property>EGT</property> is to provide a way to interact with Guvnor repository resources in a local Eclipse workspace. While clearly there is a lot more that could be done, and no doubt there will be aspects of the current tooling that require revision going forward, we feel that the current state of the <property>EGT</property> is sufficient for the major use cases.
+	</para>
 
-    <section>
-        <title>Other relevant resources on the topic</title>
-        <para>For more information visit the following resources:</para>
-        <itemizedlist>
-            <listitem>
-                <para>Guvnor <ulink url="http://www.jboss.org/community/wiki/Guvnor">wiki page</ulink></para>
-            </listitem>
-            
-            <listitem>
-                <para>Drools on <ulink url="http://www.jboss.org/drools/">JBoss.org</ulink></para>
-            </listitem>
-            
-            <listitem>
-                <para>
-                    <ulink url="http://www.jboss.org/tools/">JBoss Tools Home Page</ulink>
-                </para>
-            </listitem>
-            
-            <listitem>
-                <para>
-                    <ulink url="http://download.jboss.org/jbosstools/nightly-docs/">The latest
-                        JBossTools/JBDS documentation builds</ulink>
-                </para>
-            </listitem>
-            
-            <listitem>
-                <para>
-                    <ulink url="http://docs.jboss.org/tools/">JBossTools/JBDS
-                        release documentation</ulink></para>
-            </listitem>
-        </itemizedlist>
-        <para>If you have some questions, comments or suggestions on the topic, please feel free to ask in the
-            <ulink url="http://www.jboss.org/index.html?module=bb&amp;op=viewforum&amp;f=201"
-            >Jboss Tools Forum</ulink>.</para>
-    </section>    
+	<section>
+		<title>Other relevant resources on the topic</title>
+		<para>For more information visit the following resources:</para>
+		<itemizedlist>
+			<listitem>
+				<para>Guvnor <ulink url="http://www.jboss.org/community/wiki/Guvnor">wiki page</ulink>
+				</para>
+			</listitem>
+
+			<listitem>
+				<para>Drools on <ulink url="http://www.jboss.org/drools/">JBoss.org</ulink>
+				</para>
+			</listitem>
+
+			<listitem>
+				<para>
+					<ulink url="http://www.jboss.com/products/devstudio/">JBoss Developer Studio Home Page</ulink>
+				</para>
+			</listitem>
+
+			<listitem>
+				<para>
+					<ulink url="http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/index.html">JBDS release documentation</ulink>
+				</para>
+			</listitem>
+		</itemizedlist>
+		<para>
+			If you have some questions, comments or suggestions on the topic, please feel free to ask in the <ulink url="http://www.jboss.org/index.html?module=bb&amp;op=viewforum&amp;f=201">JBoss Tools Forum</ulink>.
+		</para>
+	</section>
 </chapter>
