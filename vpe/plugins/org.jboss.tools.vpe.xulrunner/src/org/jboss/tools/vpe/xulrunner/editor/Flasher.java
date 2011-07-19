@@ -18,9 +18,6 @@ import org.mozilla.xpcom.Mozilla;
  */
 public class Flasher {
 	private inIFlasher iFlasher;
-	private static final boolean IS_OPEN_JDK = (System.getProperty("java.runtime.name")!=null&&System.getProperty("java.runtime.name").contains("OpenJDK")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-	//fix for JBIDE-7957
-	private static final boolean IS_LINUX=Platform.OS_LINUX.equals(Platform.getOS());
 	// added by Maksim Areshkau as element for which we
 	// have drowed border. When we draw new border,
 	// we should remove old one;
@@ -34,9 +31,7 @@ public class Flasher {
 				XPCOM.IN_FLASHER_CONTRACTID, inIFlasher.INIFLASHER_IID);
 		iFlasher.setThickness(2);
 		//fix for JBIDE-7295, added by Maksim Areshkau
-		if (Platform.OS_MACOSX.equals(Platform.getOS())
-				||IS_OPEN_JDK
-				||IS_LINUX) {
+		if (Platform.OS_MACOSX.equals(Platform.getOS())) {
 			drawOutline = new DrawOutlineInterface() {
 				private List<FlasherData> previouslyBorderedElements = null;
 				public void drawElementOutline(List<FlasherData> flasherData) {
