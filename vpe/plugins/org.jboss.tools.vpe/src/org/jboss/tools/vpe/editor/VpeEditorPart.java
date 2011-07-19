@@ -182,9 +182,9 @@ public class VpeEditorPart extends EditorPart implements
 			throws PartInitException {
 		setSite(site);
 		setInput(input);
-		if (editorSettings == null)
+		if (editorSettings == null) {
 			editorSettings = EditorSettings.getEditorSetting(this);
-		else if (input instanceof FileEditorInput) {
+		} else if (input instanceof FileEditorInput) {
 			editorSettings.setInput((FileEditorInput) input);
 		}
 

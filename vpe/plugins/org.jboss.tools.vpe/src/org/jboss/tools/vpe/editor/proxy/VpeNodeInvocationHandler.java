@@ -59,8 +59,7 @@ public class VpeNodeInvocationHandler implements InvocationHandler {
 	 * @return
 	 */
 	private String replaceEL(String toReplace) {
-		
-        return  ElService.getInstance().replaceElAndResources(this.pageContext, toReplace);
+		return ElService.getInstance().replaceElAndResources(this.pageContext, toReplace);
 	}
 
 }
