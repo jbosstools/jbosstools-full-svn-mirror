@@ -238,7 +238,7 @@
 								<tr>
 									<td>
 										<a class="blue"
-											href="http://download.jboss.org/jbosstools/updates/target-platform_3.3.indigo/e37RC2-wtp33RC2.target.zip">Target Platform Update Zip</a>
+											href="http://download.jboss.org/jbosstools/updates/target-platform_3.3.indigo/e370-wtp330.target.zip">Target Platform Update Zip</a>
 									</td>
 								</tr>
 								<tr>
