@@ -14,7 +14,7 @@ nnoremap <Leader>ts :call ReplaceTimestamp()<CR>
 -->
 <property name='p2.timestamp' value='1310665401000'/>
 </properties>
-<children size='12'>
+<children size='13'>
 <child location='../requirements/helios/SR2/'/>
 <child location='../requirements/birt/2.6.2/'/>
 <child location='../requirements/ecf/3.4/'/>
@@ -23,10 +23,11 @@ nnoremap <Leader>ts :call ReplaceTimestamp()<CR>
 
 <child location='../requirements/gwt/201012211742/'/>
 <child location='../requirements/m2eclipse/20110623-1035/'/>
+<child location='../requirements/m2eclipse/m2eclipse-wtp-0.13.1/'/>
 <child location='../requirements/orbit/R20100519200754/'/>
 <child location='../requirements/swtbot/2.0.3/'/>
-<child location='../requirements/tptp/4.7/'/>
 
+<child location='../requirements/tptp/4.7/'/>
 <child location='../requirements/webtools/3.2.4/'/>
 <child location='../requirements/xulrunner-1.9.1.2/'/>
 </children>
