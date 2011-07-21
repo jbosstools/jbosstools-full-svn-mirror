@@ -284,10 +284,38 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 		fi
 
 		# and create/replace a snapshot dir outside Hudson which is file:// accessible
-		date; rsync -arzq --delete ${STAGINGDIR} $INTRNALDEST/builds/staging/
+		date; rsync -arzq --delete ${STAGINGDIR}/* $INTRNALDEST/builds/staging/${STAGINGDIR}.next
 
 		# and create/replace a snapshot dir w/ static URL
-		date; rsync -arzq --delete ${STAGINGDIR} $DESTINATION/builds/staging/
+		date; rsync -arzq --delete ${STAGINGDIR}/* $DESTINATION/builds/staging/${STAGINGDIR}.next
+
+		# 1. To recursively purge contents of .../staging.previous/foobar/ folder: 
+		#  mkdir -p /tmp/foobar; 
+		#  rsync -aPrz --delete /tmp/foobar tools@filemgmt.jboss.org:/downloads_htdocs/tools/builds/staging.previous/ 
+		# 2. To then remove entire .../staging.previous/foobar/ folder: 
+		#  echo -e "rmdir foobar" | sftp tools@filemgmt.jboss.org:/downloads_htdocs/tools/builds/staging.previous/
+		#  rmdir /tmp/foobar
+
+		# TODO: JBIDE-8667 move current to previous; move next to current
+
+		# create folders if not already there (could be empty)
+		echo -e "-mkdir ${JOB_NAME}" $DESTINATION/builds/staging.previous/ 
+		echo -e "-mkdir ${JOB_NAME}.2" $DESTINATION/builds/staging.previous/ 
+
+		# purge contents of /builds/staging.previous/${JOB_NAME}.2 and remove empty dir
+		mkdir -p /tmp/${JOB_NAME}.2
+		rsync -arzq --delete /tmp/${JOB_NAME}.2 $DESTINATION/builds/staging.previous/
+		echo -e "rmdir ${JOB_NAME}.2" | sftp tools@filemgmt.jboss.org:/downloads_htdocs/tools/builds/staging.previous/
+		rmdir /tmp/${JOB_NAME}.2
+
+		# move contents of /builds/staging.previous/${JOB_NAME} into /builds/staging.previous/${JOB_NAME}.2
+		echo -e "rename ${JOB_NAME} ${JOB_NAME}.2" $DESTINATION/builds/staging.previous/
+
+		# move contents of /builds/staging/${JOB_NAME} into /builds/staging.previous/${JOB_NAME}
+		echo -e "rename ${JOB_NAME} ../staging.previous/${JOB_NAME}" $DESTINATION/builds/staging/
+
+		# move contents of /builds/staging/${JOB_NAME}.next into /builds/staging/${JOB_NAME}
+		echo -e "rename ${JOB_NAME}.next ${JOB_NAME}" $DESTINATION/builds/staging/
 	fi
 
 	# extra publish step for aggregate update sites ONLY
