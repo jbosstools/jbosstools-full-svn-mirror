@@ -338,6 +338,7 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 </repository>"
 		echo $metadata >> ${STAGINGDIR}/all/compositeContent.xml
 		echo $metadata >> ${STAGINGDIR}/all/compositeArtifacts.xml
+		date; rsync -arzq ${STAGINGDIR}/all/composite*.xml $DESTINATION/builds/staging/${JOB_NAME}/all/
 	fi
 
 	# extra publish step for aggregate update sites ONLY
