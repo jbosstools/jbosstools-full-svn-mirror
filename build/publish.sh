@@ -299,8 +299,8 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 		# TODO: JBIDE-8667 move current to previous; move next to current
 
 		# create folders if not already there (could be empty)
-		echo -e "-mkdir ${JOB_NAME}" $DESTINATION/builds/staging.previous/ 
-		echo -e "-mkdir ${JOB_NAME}.2" $DESTINATION/builds/staging.previous/ 
+		echo -e "mkdir ${JOB_NAME}" $DESTINATION/builds/staging.previous/ 
+		echo -e "mkdir ${JOB_NAME}.2" $DESTINATION/builds/staging.previous/ 
 
 		# purge contents of /builds/staging.previous/${JOB_NAME}.2 and remove empty dir
 		mkdir -p /tmp/${JOB_NAME}.2
