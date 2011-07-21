@@ -305,17 +305,17 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 		# purge contents of /builds/staging.previous/${JOB_NAME}.2 and remove empty dir
 		mkdir -p /tmp/${JOB_NAME}.2
 		rsync -arzq --delete /tmp/${JOB_NAME}.2 $DESTINATION/builds/staging.previous/
-		echo -e "rmdir ${JOB_NAME}.2" | sftp tools@filemgmt.jboss.org:/downloads_htdocs/tools/builds/staging.previous/
+		echo -e "rmdir ${JOB_NAME}.2" | sftp $DESTINATION/builds/staging.previous/
 		rmdir /tmp/${JOB_NAME}.2
 
 		# move contents of /builds/staging.previous/${JOB_NAME} into /builds/staging.previous/${JOB_NAME}.2
-		echo -e "rename ${JOB_NAME} ${JOB_NAME}.2" $DESTINATION/builds/staging.previous/
+		echo -e "rename ${JOB_NAME} ${JOB_NAME}.2" | sftp $DESTINATION/builds/staging.previous/
 
 		# move contents of /builds/staging/${JOB_NAME} into /builds/staging.previous/${JOB_NAME}
-		echo -e "rename ${JOB_NAME} ../staging.previous/${JOB_NAME}" $DESTINATION/builds/staging/
+		echo -e "rename ${JOB_NAME} ../staging.previous/${JOB_NAME}" | sftp $DESTINATION/builds/staging/
 
 		# move contents of /builds/staging/${JOB_NAME}.next into /builds/staging/${JOB_NAME}
-		echo -e "rename ${JOB_NAME}.next ${JOB_NAME}" $DESTINATION/builds/staging/
+		echo -e "rename ${JOB_NAME}.next ${JOB_NAME}" | sftp $DESTINATION/builds/staging/
 
 		# generate 2 ${STAGINGDIR}/all/composite*.xml files which will point at:
 			# /builds/staging/${JOB_NAME}/all/repo/
