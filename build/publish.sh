@@ -284,10 +284,10 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 		fi
 
 		# and create/replace a snapshot dir outside Hudson which is file:// accessible
-		date; rsync -arzq --delete ${STAGINGDIR}/* $INTRNALDEST/builds/staging/${STAGINGDIR}.next
+		date; rsync -arzq --delete ${STAGINGDIR}/* $INTRNALDEST/builds/staging/${JOB_NAME}.next
 
 		# and create/replace a snapshot dir w/ static URL
-		date; rsync -arzq --delete ${STAGINGDIR}/* $DESTINATION/builds/staging/${STAGINGDIR}.next
+		date; rsync -arzq --delete ${STAGINGDIR}/* $DESTINATION/builds/staging/${JOB_NAME}.next
 
 		# 1. To recursively purge contents of .../staging.previous/foobar/ folder: 
 		#  mkdir -p /tmp/foobar; 
