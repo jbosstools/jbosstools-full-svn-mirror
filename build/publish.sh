@@ -316,6 +316,28 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 
 		# move contents of /builds/staging/${JOB_NAME}.next into /builds/staging/${JOB_NAME}
 		echo -e "rename ${JOB_NAME}.next ${JOB_NAME}" $DESTINATION/builds/staging/
+
+		# generate 2 ${STAGINGDIR}/all/composite*.xml files which will point at:
+			# /builds/staging/${JOB_NAME}/all/repo/
+			# /builds/staging.previous/${JOB_NAME}/all/repo/
+			# /builds/staging.previous/${JOB_NAME}.2/all/repo/
+		now=$(date +%s000)
+		echo "<?xml version='1.0' encoding='UTF-8'?>
+<?compositeMetadataRepository version='1.0.0'?>
+<repository name='JBoss Tools Staging - ${JOB_NAME} Composite' type='org.eclipse.equinox.internal.p2.metadata.repository.CompositeMetadataRepository' version='1.0.0'>
+" > ${STAGINGDIR}/all/compositeContent.xml
+		echo "<?xml version='1.0' encoding='UTF-8'?>
+<?compositeArtifactRepository version='1.0.0'?>
+<repository name='JBoss Tools Staging - ${JOB_NAME} Composite' type='org.eclipse.equinox.internal.p2.artifact.repository.CompositeArtifactRepository' version='1.0.0'> " > ${STAGINGDIR}/all/compositeArtifacts.xml
+		metadata="<properties size='2'><property name='p2.compressed' value='true'/><property name='p2.timestamp' value='"${now}"'/></properties>
+<children size='3'>
+<child location='../../../staging/${JOB_NAME}/all/repo/'/>
+<child location='../../../staging.previous/${JOB_NAME}/all/repo/'/>
+<child location='../../../staging.previous/${JOB_NAME}.2/all/repo/'/>
+</children>
+</repository>"
+		echo $metadata >> ${STAGINGDIR}/all/compositeContent.xml
+		echo $metadata >> ${STAGINGDIR}/all/compositeArtifacts.xml
 	fi
 
 	# extra publish step for aggregate update sites ONLY
