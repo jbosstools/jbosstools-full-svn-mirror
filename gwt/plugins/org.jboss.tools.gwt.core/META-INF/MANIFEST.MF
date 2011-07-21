@@ -2,13 +2,13 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: JBoss Tools GWT (Experimental)
 Bundle-SymbolicName: org.jboss.tools.gwt.core;singleton:=true
-Bundle-Version: 1.0.1.qualifier
+Bundle-Version: 1.0.2.qualifier
 Bundle-Activator: org.jboss.tools.gwt.core.internal.GWTCoreActivator
 Bundle-Vendor: JBoss by Red Hat
 Require-Bundle: 
  org.jboss.tools.common;bundle-version="[3.2.0,4.0.0)",
  com.google.gwt.eclipse.core,
- com.google.gwt.eclipse.sdkbundle.2.2.0;resolution:=optional,
+ com.google.gwt.eclipse.sdkbundle;bundle-version="2.3.0",
  org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.wst.common.project.facet.core;bundle-version="[1.4.0,2.0.0)",
  org.eclipse.core.resources;bundle-version="[3.5.0,4.0.0)",
