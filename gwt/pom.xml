@@ -10,7 +10,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 	<groupId>org.jboss.tools</groupId>
 	<artifactId>gwt</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>gwt.all</name>	
+	<name>gwt.all</name>
 	<packaging>pom</packaging>
 	<modules>
 		<module>features</module>
@@ -18,5 +18,14 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		<module>tests</module>
 		<module>site</module>
 	</modules>
+	<repositories>
+		<repository>
+			<id>gwt-e37</id>
+			<url>http://dl.google.com/eclipse/plugin/3.7/</url>
+			<layout>p2</layout>
+			<snapshots><enabled>true</enabled></snapshots>
+			<releases><enabled>true</enabled></releases>
+		</repository>
+	</repositories>
 </project>
-	
+
