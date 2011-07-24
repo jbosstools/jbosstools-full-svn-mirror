@@ -100,7 +100,7 @@
 						</entry>
 					</row>
 
-					<row>
+				<!--	<row>
 						<entry>
 							<para>The Guided editor</para>
 						</entry>
@@ -108,8 +108,8 @@
 							<para>This rules allows you to build rules in a GUI driven fashion based on your object model</para>
 						</entry>
 						<entry>
-                            <!--link linkend="guided_editor">The Guided Editor</link--></entry>
-					</row>
+                            <link linkend="guided_editor">The Guided Editor</link></entry>
+						</row> -->
 
 					<row>
 						<entry>
