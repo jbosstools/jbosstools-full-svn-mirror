@@ -49,7 +49,7 @@ Raleigh NC 27606 USA.
 	<plugin id="org.jboss.tools.modeshape.rest.ui.bot.test" download-size="0" install-size="0" version="0.0.0" />
 <!--	<plugin id="org.jboss.tools.seam.ui.bot.test" download-size="0" install-size="0" version="0.0.0" /> -->
 <!--	<plugin id="org.jboss.tools.smooks.ui.bot.test" download-size="0" install-size="0" version="0.0.0" /> -->
-	<plugin id="org.jboss.tools.struts.ui.bot.test" download-size="0" install-size="0" version="0.0.0" />
+<!--	<plugin id="org.jboss.tools.struts.ui.bot.test" download-size="0" install-size="0" version="0.0.0" /> -->
 	<plugin id="org.jboss.tools.vpe.ui.bot.test" download-size="0" install-size="0" version="0.0.0" /> 
 	<plugin id="org.jboss.tools.ws.ui.bot.test" download-size="0" install-size="0" version="0.0.0" /> 
 
