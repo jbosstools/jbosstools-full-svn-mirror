@@ -3,13 +3,13 @@
 <repository name='JBoss Tools Requirements - Composite Helios Mirror - Extras' type='org.eclipse.equinox.internal.p2.metadata.repository.CompositeMetadataRepository' version='1.0.0'>
 <properties size='2'>
 <property name='p2.compressed' value='true'/>
-<property name='p2.timestamp' value='1308010224000'/>
+<property name='p2.timestamp' value='1311615397000'/>
 </properties>
 <children size='8'>
 <child location='../../requirements/egit/0.11/'/>
 <child location='../../requirements/findbugs/1.3.9/'/>
 <child location='../../requirements/mylyn/3.6-I20110415-0655/'/>
-<child location='../../requirements/pmd/3.2.6/'/>
+<child location='../../requirements/pmd/3.2.4/'/>
 <child location='../../requirements/springide/2.5.1.201011101000/'/>
 
 <child location='../../requirements/subclipse/1.6_1.3/'/>
