@@ -31,6 +31,9 @@ SUFFNAME="-Update-${ZIPSUFFIX}.zip"
 # for JBDS, use DESTINATION=/qa/services/http/binaries/RHDS
 if [[ $DESTINATION == "" ]]; then DESTINATION="tools@filemgmt.jboss.org:/downloads_htdocs/tools"; fi
 
+# if no user@hostname, add it for use with sftp (synlink creation & dir moves/deletes)
+DESTINATIONREDUX="$DESTINATION"; if [[ ${DESTINATION##*@*:*} == ${DESTINATION} ]]; then DESTINATIONREDUX="hudson@"`hostname -f`":${DESTINATION}"; fi 
+
 # internal destination mirror, for file:// access (instead of http://)
 if [[ $INTRNALDEST == "" ]]; then INTRNALDEST="/home/hudson/static_build_env/jbds/"; fi
 
@@ -267,11 +270,11 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 			echo "<meta http-equiv=\"refresh\" content=\"0;url=${BUILD_ID}-H${BUILD_NUMBER}/\">" > /tmp/latestBuild.html
 			if [[ ${PUBLISHPATHSUFFIX} ]]; then
 				date; rsync -arzq --delete ${STAGINGDIR}/* $DESTINATION/builds/nightly/${PUBLISHPATHSUFFIX}/${BUILD_ID}-H${BUILD_NUMBER}/
-				echo -e "rm latest\nln ${BUILD_ID}-H${BUILD_NUMBER} latest" | sftp ${DESTINATION}/builds/nightly/${PUBLISHPATHSUFFIX}/
+				echo -e "rm latest\nln ${BUILD_ID}-H${BUILD_NUMBER} latest" | sftp ${DESTINATIONREDUX}/builds/nightly/${PUBLISHPATHSUFFIX}/
 				date; rsync -arzq --delete /tmp/latestBuild.html $DESTINATION/builds/nightly/${PUBLISHPATHSUFFIX}/
 			else
 				date; rsync -arzq --delete /tmp/latestBuild.html $DESTINATION/builds/nightly/${JOBNAMEREDUX}/ 
-				echo -e "rm latest\nln ${BUILD_ID}-H${BUILD_NUMBER} latest" | sftp ${DESTINATION}/builds/nightly/${JOBNAMEREDUX}/
+				echo -e "rm latest\nln ${BUILD_ID}-H${BUILD_NUMBER} latest" | sftp ${DESTINATIONREDUX}/builds/nightly/${JOBNAMEREDUX}/
 				date; rsync -arzq --delete ${STAGINGDIR}/* $DESTINATION/builds/nightly/${JOBNAMEREDUX}/${BUILD_ID}-H${BUILD_NUMBER}/
 			fi
 			rm -f /tmp/latestBuild.html
@@ -305,17 +308,17 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 		# purge contents of /builds/staging.previous/${JOB_NAME}.2 and remove empty dir
 		mkdir -p /tmp/${JOB_NAME}.2
 		rsync -arzq --delete /tmp/${JOB_NAME}.2 $DESTINATION/builds/staging.previous/
-		echo -e "rmdir ${JOB_NAME}.2" | sftp $DESTINATION/builds/staging.previous/
+		echo -e "rmdir ${JOB_NAME}.2" | sftp $DESTINATIONREDUX/builds/staging.previous/
 		rmdir /tmp/${JOB_NAME}.2
 
 		# move contents of /builds/staging.previous/${JOB_NAME} into /builds/staging.previous/${JOB_NAME}.2
-		echo -e "rename ${JOB_NAME} ${JOB_NAME}.2" | sftp $DESTINATION/builds/staging.previous/
+		echo -e "rename ${JOB_NAME} ${JOB_NAME}.2" | sftp $DESTINATIONREDUX/builds/staging.previous/
 
 		# move contents of /builds/staging/${JOB_NAME} into /builds/staging.previous/${JOB_NAME}
-		echo -e "rename ${JOB_NAME} ../staging.previous/${JOB_NAME}" | sftp $DESTINATION/builds/staging/
+		echo -e "rename ${JOB_NAME} ../staging.previous/${JOB_NAME}" | sftp $DESTINATIONREDUX/builds/staging/
 
 		# move contents of /builds/staging/${JOB_NAME}.next into /builds/staging/${JOB_NAME}
-		echo -e "rename ${JOB_NAME}.next ${JOB_NAME}" | sftp $DESTINATION/builds/staging/
+		echo -e "rename ${JOB_NAME}.next ${JOB_NAME}" | sftp $DESTINATIONREDUX/builds/staging/
 
 		# generate 2 ${STAGINGDIR}/all/composite*.xml files which will point at:
 			# /builds/staging/${JOB_NAME}/all/repo/
