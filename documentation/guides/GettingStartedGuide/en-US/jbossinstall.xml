@@ -1,0 +1,130 @@
+<?xml version='1.0' encoding='utf-8' ?>
+
+<chapter>
+	<title>Installation Instructions</title>
+	<section>
+					
+			<title>Installing JBoss Tools Plugins</title>
+	
+			<para>
+				The JBoss Tools plugins can be installed in Eclipse from the JBoss.org update site. JBoss Tools 3.2 requires Eclipse 3.6, which can be downloaded from the <ulink url="http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/helios/">Eclipse web site</ulink>. 				
+			</para>
+			<para>
+				To install the JBoss Tools plugins start Eclipse and select	<menuchoice><guimenuitem>Help</guimenuitem><guimenuitem>Install New Software...</guimenuitem></menuchoice>
+			</para>
+		
+		<figure id="figure-install-new-software">
+			<title>Install New Software</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/installineclipse1.png" format="PNG"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		
+		<para>
+			Click the <guibutton>Add...</guibutton> button.
+		</para>
+		
+		<figure id="figure-install-dialog">
+			<title>Install Dialog</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/installineclipse2.png" format="PNG"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		
+		<para>
+			This will display the <guilabel>Add Repository</guilabel> dialog. Enter <guilabel>JBoss.org Tools</guilabel> in the <guilabel>Name</guilabel> field, and <ulink url="http://download.jboss.org/jbosstools/updates/JBossTools-3.2.0.GA/">http://download.jboss.org/jbosstools/updates/JBossTools-3.2.0.GA/</ulink> in the <guilabel>Location</guilabel> field. Click the <guibutton>OK</guibutton> button to save the changes and close the dialog.
+		</para>
+		
+		<figure id="figure-add-repository">
+			<title>Add Repository</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/installineclipse3.png" format="PNG"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		
+		<para>
+			The <guilabel>JBoss.org Tools</guilabel> site will be selected in the <guilabel>Work with</guilabel> drop down list, and after a moment the list of plugins that are included in the JBoss Tools package will be listed. From this list you can individually select the desired plugin, or select the <guilabel>All JBoss Tools 3.2.0</guilabel> option to install all the plugins.
+		</para>
+		
+		<figure id="figure-available-software">
+			<title>Available Software</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/installineclipse3a.png" format="PNG"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		
+		<para>
+			Click the <guibutton>Next</guibutton> button to calculate the system requirements and dependencies (this may take a little while). You will then be given an opportunity to review the plugins that will be installed.
+		</para>
+		
+		<figure id="figure-plugin-review">
+			<title>Installation review</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/installineclipse5.png" format="PNG"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		
+		<para>
+			Click the <guibutton>Next</guibutton> button to install the selected plugins. You will be prompted to accept the various license agreements that cover the plugins that are to be installed. Review the licenses, select the <guilabel>I accept the terms of the license agreements</guilabel> option, and click the <guibutton>Finish</guibutton> button to install the plugins.
+		</para>
+		
+		<figure id="figure-license-review">
+			<title>License review</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/installineclipse6.png" format="PNG"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		
+		<para>Wait while the plugins are downloaded and installed.</para>
+		
+		<figure id="figure-installing-software">
+			<title>Installing Software</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/installineclipse7.png" format="PNG"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		
+		<para>
+			You may be prompted with a warning informing you that you are attempting to install unsigned content. Click the <guibutton>OK</guibutton> button to continue.
+		</para>
+		
+		<figure id="figure-unsigned-software-warning">
+			<title>Unsigned Software Warning</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/installineclipse8.png" format="PNG"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		
+		<para>You will then have to restart Eclipse to apply the new plugins. Click the <guibutton>Restart Now</guibutton> button to restart Eclipse.</para>
+		
+		<figure id="figure-restart-eclipse">
+			<title>Restart Eclipse</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/installineclipse9.png" format="PNG"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		
+		<para>The plugin is now installed and ready to use.</para>
+		
+	</section>
+	
+	<xi:include href="usage_reporting.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
+</chapter>

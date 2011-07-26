@@ -1,0 +1,1007 @@
+<chapter id="installation">
+<?dbhtml filename="getting_started.html"?>
+  <chapterinfo>
+    <keywordset>
+      <keyword>JBoss Developer Studio</keyword>
+       
+      <keyword>Eclipse</keyword>
+       
+      <keyword>Java</keyword>
+       
+      <keyword>JBoss</keyword>
+    </keywordset>
+  </chapterinfo>
+   <title>Installing JBoss Developer Studio</title> 
+  <section id="ConfigJavaEnvironment">
+<?dbhtml filename="ConfigJavaEnvironment.html"?>
+    <title>Configuring Your Java Environment</title> 
+    <para>
+      You must have a working installation of JDK before you install <property>JBoss Developer Studio</property>. Thus in this guide we will show you how to install a 32-bit Sun JDK 6 on a Linux Platform and Microsoft Windows Platform.
+    </para>
+     
+    <section id="InstallJDK60onLinux">
+      <title>Installing and Configuring 32-bit Sun JDK 6 on Linux</title> 
+      <para>
+        To install 32-bit Sun JDK 6 on Linux and configure it, you should follow the next steps:
+      </para>
+       
+      <itemizedlist>
+        <listitem>
+          <para>
+            Download the <ulink url="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Sun JDK 6</ulink> from Sun&apos;s website. Click the 
+            <guibutton>
+              Download JDK
+            </guibutton>
+             button for the &quot;JDK SE 6 Update &lt;x&gt;&quot; (where &quot;x&quot; is the latest update number) option, select the Linux platform, agree to license agreement, and click the 
+            <guibutton>
+              Continue
+            </guibutton>
+             button. You can then download the JDK installation package.
+          </para>
+           
+          <para>
+            You may need to set the executable flag on the downloaded file before it can be launched by running the <code>chmod +x</code> command, like so: 
+            <screen>
+              chmod +x jdk-6u24-linux-i586-rpm.bin
+            </screen>
+          </para>
+           
+          <para>
+            Launch the installation package, and follow the prompts to install Java JDK 6.
+          </para>
+        </listitem>
+         
+        <listitem>
+          <para>
+            If you don&apos;t want to use SysV service scripts you can install the &quot;self-extracting file&quot; for Linux instead of choosing the &quot;RPM in self-extracting&quot; file. In that case you can skip the next step mentioned here. But it is recommended to use the SysV service scripts for production servers.
+          </para>
+        </listitem>
+         
+        <listitem>
+          <para>
+            Download and install the appropriate -compat RPM from JPackage <ulink url="ftp://jpackage.hmdc.harvard.edu/JPackage/1.7/generic/RPMS.non-free/">here</ulink>. Please ensure you choose a matching version of the -compat package to the JDK you've installed.
+          </para>
+        </listitem>
+         
+        <listitem>
+          <para>
+            Create an environment variable that points to the JDK installation directory and call it JAVA_HOME. Add <filename>$JAVA_HOME/bin</filename> to the system path to be able to run java from the command line. You can do this by adding the following lines to the .bashrc file in your home directory.
+          </para>
+           
+          <programlisting>
+<![CDATA[#In this example /usr/java/jdk1.6.0_24 is the JDK installation directory.
+export JAVA_HOME=/usr/java/jdk1.6.0_24
+export PATH=$PATH:$JAVA_HOME/bin]]>
+          </programlisting>
+        </listitem>
+      </itemizedlist>
+       
+      <note>
+        <title>Note:</title> 
+        <para>
+          ﻿ If you have JDK already installed and added in your system path, you should add <filename>$JAVA_HOME/bin</filename> before the old <emphasis>$PATH</emphasis> (not after it) so that the new version of JDK can be found first, i. e. <code>export PATH=$JAVA_HOME/bin:$PATH</code> This way, the machine will pick up the new JVM first. You only need to run "alternative" as a safe guard for the right JVM.
+        </para>
+      </note>
+       
+      <para>
+        Set this variable for your account doing the installation and also for the user account that will run the server.
+      </para>
+       
+      <itemizedlist>
+        <listitem>
+          <para>
+            If you have more than one version of JVM installed on your machine, make sure you are using the JDK 1.6 installation as the default java and javac. You can do this using the alternatives system. The alternatives system allows different versions of Java from different sources to co-exist on your system.
+          </para>
+           
+          <note>
+            <title>Note</title> 
+            <para>
+              If the JDK is not listed by the alternatives command, you can manually add it with the following commands (substitute the location of your JDK for <filename>/usr/java/jdk1.6.0_24</filename> where appropriate): 
+              <screen>
+                sudo /usr/sbin/alternatives --install "/usr/bin/java" "java" "/usr/java/jdk1.6.0_24/bin/java" 1 sudo /usr/sbin/alternatives --install "/usr/bin/javac" "javac" "/usr/java/jdk1.6.0_24/bin/javac" 1 sudo /usr/sbin/alternatives --install "/usr/lib/jvm/java-1.6.0" "java_sdk_1.6.0" "/usr/java/jdk1.6.0_24" 1
+              </screen>
+            </para>
+          </note>
+        </listitem>
+      </itemizedlist>
+       
+      <section id="SelectAlternativesforJava">
+        <title>Select alternatives for java, javac and java_sdk_1.6.0</title> 
+        <itemizedlist>
+          <listitem>
+            <para>
+              As a root user, type the following command at the shell prompt and you should see something like this:
+            </para>
+          </listitem>
+        </itemizedlist>
+         
+        <programlisting>
+<![CDATA[sudo /usr/sbin/alternatives --config java
+
+There are 3 programs which provide 'java'.
+
+  Selection    Command
+-----------------------------------------------
+   1           /usr/lib/jvm/jre-1.5.0-gcj/bin/java
+*  2           /usr/lib/jvm/jre-1.6.0-openjdk.x86_64/bin/java
+ + 3           /usr/java/jdk1.6.0_24/bin/java
+
+Enter to keep the current selection[+], or type selection number: ]]>
+        </programlisting>
+         
+        <para>
+          Make sure the Sun version [/usr/java/jdk1.6.0_24/bin/java in this case] is selected (marked with a &apos;+&apos; in the output), or select it by entering its number as prompted.
+        </para>
+         
+        <itemizedlist>
+          <listitem>
+            <para>
+              Repeat the same for javac and java_sdk_1.6.0.
+            </para>
+          </listitem>
+        </itemizedlist>
+         
+        <programlisting>
+<![CDATA[sudo /usr/sbin/alternatives --config javac
+
+There are 2 programs which provide 'javac'.
+
+  Selection    Command
+-----------------------------------------------
+*  1           /usr/lib/jvm/java-1.6.0-openjdk.x86_64/bin/javac
+ + 2           /usr/java/jdk1.6.0_24/bin/javac
+
+Enter to keep the current selection[+], or type selection number: 
+
+sudo /usr/sbin/alternatives --config java_sdk_1.6.0
+
+There are 2 programs which provide 'java_sdk_1.6.0'.
+
+  Selection    Command
+-----------------------------------------------
+*  1           /usr/lib/jvm/java-1.6.0-openjdk.x86_64
+ + 2           /usr/java/jdk1.6.0_24
+
+Enter to keep the current selection[+], or type selection number: ]]>
+        </programlisting>
+         
+        <para>
+          You should verify that java, javac and java_sdk_1.6.0 all point to the same manufacturer and version.
+        </para>
+         
+        <note>
+          <title>Note:</title> 
+          <para>
+            You can always override this step by setting the JAVA_HOME environment variable as explained in the previous step.
+          </para>
+        </note>
+         
+        <itemizedlist>
+          <listitem>
+            <para>
+              Make sure that the java executable is in your path and that you are using an appropriate version. To verify your Java environment, type <code>java -version</code> at the shell prompt and you should see something like this:
+            </para>
+          </listitem>
+        </itemizedlist>
+         
+        <programlisting>
+<![CDATA[java -version
+java version "1.6.0_24"
+Java(TM) SE Runtime Environment (build 1.6.0_24-b07)
+Java HotSpot(TM) Server VM (build 19.1-b02, mixed mode)]]>
+        </programlisting>
+      </section>
+    </section>
+     
+    <section id="InstallJDK60onWindows">
+      <title>Installing and Configuring 32-bit Sun JDK 6 on Microsoft Windows</title> 
+      <para>
+        To install and configure 32-bit Sun JDK 6 on Microsoft Windows, follow these steps:
+      </para>
+       
+      <itemizedlist>
+        <listitem>
+          <para>
+            Download the <ulink url="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Sun JDK 6</ulink> from Oracle&apos;s website. Choose &quot;JDK 6 Update &lt;x&gt;&quot; (where &quot;x&quot; is the latest update number) for download and then select your Windows Platform options to perform the installation.
+          </para>
+        </listitem>
+         
+        <listitem>
+          <para>
+            Create an environment variable called JAVA_HOME that points to the JDK installation directory, for example: <filename>C:\Program Files\Java\jdk1.6.0_24\</filename>
+          </para>
+        </listitem>
+      </itemizedlist>
+       
+      <para>
+        In order to run java from the command line, add the <emphasis>jre\bin</emphasis> directory to your path, for example:
+      </para>
+       
+      <para>
+        <filename>C:\Program Files\Java\jdk1.6.0_24\jre\bin</filename>
+      </para>
+       
+      <para>
+        To do this, open the <guilabel>Control Panel</guilabel> from the <guilabel>Start</guilabel> menu, switch to Classic View if necessary, open the System Control Panel applet (<guilabel>System</guilabel>), select the <guilabel>Advanced</guilabel> Tab, and click on the <guibutton>Environment Variables</guibutton> button.
+      </para>
+       
+      <para>
+        Now, when 32-bit Sun JDK 6 has been successfully installed, we can pass on to the next step.
+      </para>
+    </section>
+  </section>
+   
+  <section id="Installing_JBoss_Developer_Studio" condition="jbds">
+<?dbhtml filename="InstallingRHDS.html"?>
+    <title>JBoss Developer Studio Installation</title> 
+    <para>
+      This chapter will provide you with detailed information on how to install <property>JBoss Developer Studio</property>.
+    </para>
+	<important>
+		<para>
+			If you are installing on a Linux distribution you must set the following limits in <filename>/etc/security/limits.conf</filename> upon installation completion and before running JBoss Developer Studio:
+		</para>
+<programlisting>
+* soft nofile 9216
+* hard nofile 9216
+</programlisting>
+		<para>
+			These settings will ensure you do not encounter an error reguarding maximum open files when starting JBoss Developer Studio.
+		</para>
+	</important>
+	<important>
+		<para>
+			When installing JBoss Developer Studio on the 64-bit edition of MacOSX Leopard, only the 64-bit edition of JBoss Developer Studio is supported. Though the 32-bit edition will install, many features will not work correctly due to Java 1.6 being specific to 64-bit applications on Leopard and JBoss Developer Studio requiring Java 1.6 for all features to function.
+		</para>
+	</important>
+	<section id="Installing_JBoss_Developer_Studio-Automated_Installation">
+		<title>Automated Installation</title>
+		<para>
+			Parameters for automated installation are defined in the <filename>InstallConfigRecord.xml</filename> file. Defined in this file is the path to the installation folder, the packages to be installed and the shortcuts to be created.
+		</para>
+		<para>
+			Within the <filename>InstallConfigRecord.xml</filename> file are three parameters that can be modified for specific installation options:
+		</para>
+		<itemizedlist>
+			<listitem>
+				<para>
+					<property>AutomatedInstallation/com.jboss.jbds.installer.PathInputPanel/installpath</property>: Installation folder
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<property>AutomatedInstallation/com.jboss.jbds.installer.JBossAsSelectPanel/installgroup</property>: Software components to be installed
+				</para>
+				<para>
+					Options:
+				</para>
+				<itemizedlist>
+					<listitem>
+						<para>
+							jbds: JBoss Developer Studio only installation 
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							jbosseap: JBoss Developer Studio with JBoss Enterprise Application Platform 
+						</para>
+					</listitem>
+				</itemizedlist>
+			</listitem>
+			<listitem>
+				<para>
+					<property>com.izforge.izpack.panels.ShortcutPanel</property>: Shortcut menu for installation
+				</para>
+			</listitem>
+		</itemizedlist>
+		<note>
+			<para>
+				If you change the installation folder path, you must update the <property>com.izforge.izpack.panels.ShortcutPanel</property> parameter to reflect the new path.
+			</para>
+		</note>
+		<para>
+			Once you have configured the <filename>InstallConfigRecord.xml</filename> file for your needs, the following command can be run on the command line to begin installation:
+		</para>
+<programlisting>
+java -jar /path/to/installer.jar /path/to/InstallConfigRecord.xml
+</programlisting>
+		<formalpara>
+			<title>Current limitations</title>
+			<para>
+				The following limitations currently exist when using the automated method of installation:
+			</para>
+		</formalpara>
+		<itemizedlist>
+			<listitem>
+				<para>
+					Desktop shortcuts are not supported.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Creation of shoortcuts for all users on a system has not been tested.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Automated installation does not check if the specified installation path already exists. If the path does exist, any files will be overwritten without notice.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					The Java Virtual Manchine to be used with JBoss Developer Studio is automatically chosen and cannot be specified.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					No verification exists to ensure the installer you are using is correct for your platform.
+				</para>
+			</listitem>
+		</itemizedlist>
+		<warning>
+			<para>
+				Automated installation does not check if the specified installation path already exists. If the path does exist, any files will be overwritten without notice.
+			</para>
+		</warning>
+	</section>
+	<section id="Installing_JBoss_Developer_Studio-Manual_Installation">
+		<title>Manual Installation</title>
+    <para>
+      JBoss Developer Studio comes with a simple installer, bundled with tested and preconfigured versions of Eclipse, WTP, JBossEAP, Seam, and SpringIDE. The following steps show you how to install JBoss Developer Studio:
+    </para>
+     
+    <itemizedlist>
+      <listitem>
+        <para>
+          First of all you need the appropriate installation file for your platform from <ulink url="https://www.redhat.com/apps/store/developers/jboss_developer_studio.html">Red Hat website</ulink>.
+        </para>
+      </listitem>
+       
+      <listitem>
+        <para>
+          Run the following command in a terminal window:
+        </para>
+         
+        <programlisting role="JAVA">
+<![CDATA[java -jar jbdevstudio-eap-linux-gtk-4.0.0.GA.jar]]>
+        </programlisting>
+      </listitem>
+       
+      <listitem>
+        <para>
+          Follow the instructions presented by the installation wizard:
+        </para>
+      </listitem>
+    </itemizedlist>
+     
+    <figure>
+      <title>JBoss Developer Studio Installation Wizard</title> 
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/getting_started/getting_started_1.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+     
+    <itemizedlist>
+      <listitem>
+        <para>
+          Provide the installation path
+        </para>
+      </listitem>
+       
+      <listitem>
+        <para>
+          Select the appropriate Java Virtual Machine
+        </para>
+      </listitem>
+    </itemizedlist>
+     
+    <note>
+      <title>Tip:</title> 
+      <para>
+        By selecting <emphasis><property>Default Java VM</property></emphasis> you set default Java VM of your system (to verify your Java environment, type &quot;java -version&quot; in console).
+      </para>
+    </note>
+     
+    <para>
+      Selecting <emphasis> <property>Specific Java VM</property> </emphasis> you can provide the path to non-default Java VM.
+    </para>
+     
+    <note>
+      <title>Note:</title> 
+      <para>
+        JBoss Developer Studio 4.0 comes integrated with JBoss EAP 5.1 that requires JDK 6.0 to run and &quot;gij&quot; isn&apos;t available on every platform.
+      </para>
+    </note>
+     
+    <figure>
+      <title>Select Java VM</title> 
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/getting_started/getting_started_2.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+     
+    <itemizedlist>
+      <listitem>
+        <para>
+          As part of the installation you can choose to install <ulink url="http://www.jboss.com/products/platforms/application">JBoss Enterprise Application Platform</ulink>. Select <emphasis><property>Yes</property></emphasis> to use it in JBoss Developer Studio.
+        </para>
+         
+        <note>
+          <title>Note:</title> 
+          <para>
+            Like in the previous version of JBoss Developer Studio, version 4.0.0.GA comes integrated with JBoss EAP 5.1 that supports EAP 5 adapter and Seam 2.2.
+          </para>
+        </note>
+         
+        <para>
+          This step lets you configure locally available JBoss Application Servers:
+        </para>
+      </listitem>
+    </itemizedlist>
+     
+    <figure>
+      <title>JBoss Enterprise Application Platform Installing</title> 
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/getting_started/getting_started_3.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+     
+    <itemizedlist>
+      <listitem>
+        <para>
+          You can fill the list automatically using the 
+          <guibutton>
+            Find
+          </guibutton>
+           button. When the 
+          <guibutton>
+            Find
+          </guibutton>
+           button is clicked you are prompted to select the folder from which to search for available JBoss Application Servers. Click the 
+          <guibutton>
+            OK
+          </guibutton>
+           button to select the chosen folder.
+        </para>
+      </listitem>
+    </itemizedlist>
+     
+    <figure>
+      <title>Finding Servers in the Selected Directory</title> 
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/getting_started/getting_started_3_3_1.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+     
+    <para/>
+     
+    <itemizedlist>
+      <listitem>
+        <para>
+          All available servers in the selected directory will be added to the list with the following details: Name, Type, Version and Location.
+        </para>
+      </listitem>
+    </itemizedlist>
+     
+    <itemizedlist>
+      <listitem>
+        <para>
+          You can also add servers one by one using the 
+          <guibutton>
+            Add
+          </guibutton>
+           button:
+        </para>
+      </listitem>
+    </itemizedlist>
+     
+    <figure>
+      <title>Add Server to be Configured</title> 
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/getting_started/getting_started_3_1.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+     
+    <para/>
+     
+    <para>
+      Click on the 
+      <guibutton>
+        Browse
+      </guibutton>
+       button and select the server location. Fields Name, Type and Version will be filled in automatically:
+    </para>
+     
+    <figure>
+      <title>Specify Server Location</title> 
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/getting_started/getting_started_3_2.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+     
+    <para/>
+     
+    <para>
+      When you click the 
+      <guibutton>
+        OK
+      </guibutton>
+       button the server will be added to the list with the details on its type, version and location.
+    </para>
+     
+    <para>
+      The 
+      <guibutton>
+        Remove
+      </guibutton>
+       button will the remove the selected server from the list. If necessary, you can edit the server details clicking on the 
+      <guibutton>
+        Edit
+      </guibutton>
+       button:
+    </para>
+     
+    <figure>
+      <title>Edit Server</title> 
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/getting_started/getting_started_3_4.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+     
+    <para/>
+<!--  <note>
+   <title>Note:</title>
+   <para>The installer installs JBoss Enterprise Application Platform for running your applications
+    if you select this option during the installation process. If you want to use a different server
+    than ours, you can change the setting in JBoss Developer Studio.</para>
+    </note>-->
+    <itemizedlist>
+      <listitem>
+        <para>
+          Click the 
+          <guibutton>
+            Next
+          </guibutton>
+           button to bring up a summary page where you can check your installation paths and see the components that will be installed. If you'd like to change something, press the 
+          <guibutton>
+            Previous
+          </guibutton>
+           button. Click the 
+          <guibutton>
+            Next
+          </guibutton>
+           button to start installation.
+        </para>
+      </listitem>
+    </itemizedlist>
+     
+    <para/>
+     
+    <figure>
+      <title>Summary Information</title> 
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/getting_started/getting_started_4.png"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+</section>
+  </section>
+  <section id="extras_site">
+	  <title>Accessing the additional supported tooling</title> 
+	  <para>
+	  A number of components are fully supported, but do not come as part of the standard installation. These extra components are available for individual installation through the JBoss Developer Studio extras site. To access the extras site, select <menuchoice>
+		  <guimenuitem>Help</guimenuitem>
+		  <guimenuitem>Install New Software...</guimenuitem>
+	  </menuchoice> and, click the 
+		  <guibutton>
+			  Add...
+		  </guibutton>
+		  button. In the <guilabel>Add Repository</guilabel> dialog box enter <guilabel>JBoss Developer Studio Extras</guilabel> for the <guilabel>Name</guilabel> and <guilabel>http://devstudio.jboss.com/updates/4.0/extras/ </guilabel> for the <guilabel>Location</guilabel>. Click the 
+			  <guibutton>
+				  OK
+			  </guibutton>
+			  button to save your changes.
+		  </para>
+		  
+		  <para>
+			  The components available on the extras site will then be listed, which you can select and install by following the prompts.
+		  </para>
+		  <section>
+			  <title>Installing and setting up Subclipse</title>
+		  <para>
+			  If you decide to install Subclipse from the JBoss Developer Studio Extras site, upon restarting your JBoss Developer Studio installation, an error exists that sets a default SVN property incorrectly. The workaround for this issue is to navigate to <menuchoice>
+				  <guimenuitem>Window</guimenuitem>
+				  <guimenuitem>Preferences</guimenuitem>
+				  <guimenuitem>Team</guimenuitem>
+				  <guimenuitem>SVN</guimenuitem>
+			  </menuchoice>.
+		  </para>
+		  <para>
+			  If you then see an error window, click the <guibutton>OK</guibutton> button. 
+		  </para>
+		  <para>
+			  On the SVN Preferences page, in the <guilabel>SVN interface</guilabel> section, change the drop-down list value of <guilabel>Client</guilabel> to <guimenuitem>SVNKit (Pure Java) SVNKit v1.3.5.7406</guimenuitem>.
+		  </para>
+		  <para>
+			  Click the <guibutton>Apply</guibutton> button and then the <guibutton>OK</guibutton> button.
+		  </para>
+		  <para>
+			  Subclipse will now function correctly.
+		  </para>
+	  </section>
+  </section>
+  <section id="tech_previews">
+    <title>Accessing Tech Previews</title> 
+    <para>
+      A number of components that are not officially supported in this release have been made available through an additional Tech Preview update site. To access this update site select <menuchoice><guimenuitem>Help</guimenuitem><guimenuitem>Install New Software...</guimenuitem></menuchoice> in Eclipse, click the 
+      <guibutton>
+        Add...
+      </guibutton>
+       button, and in the <guilabel>Add Repository</guilabel> dialog box enter <guilabel>JBoss Developer Studio Tech Preview</guilabel> in the <guilabel>Name</guilabel> field and <guilabel>http://devstudio.jboss.com/updates/4.0/techpreview</guilabel> in the <guilabel>Location</guilabel> field. Click the 
+      <guibutton>
+        OK
+      </guibutton>
+       button to save your changes.
+    </para>
+     
+    <para>
+      The components available on the update site will be listed, which you can select and install from by following the prompts.
+    </para>
+     
+<!--    <note>
+      <title>Note</title> 
+      <para>
+        If you are prompted for credentials when accessing the Tech Preview Update Site, enter the username and password that were supplied in an email or shown in the Update Guide available on the <ulink url="http://access.redhat.com">Customer Service Portal</ulink>. If you experience any issues accessing the Tech Preview Update Site please contact technical support.
+      </para>
+  </note> -->
+  </section>
+   
+  <section>
+    <title>Updating JBoss Developer Studio</title> 
+    <para>
+      Updates to JBoss Developer Studio can be installed by selecting <menuchoice><guimenuitem>Help</guimenuitem><guimenuitem>Check For Updates</guimenuitem></menuchoice> from within Eclipse. You may be prompted for a username and password. These are the same credentials that are required to access the Tech Preview update site (see <xref linkend="tech_previews"/>).
+    </para>
+  </section>
+<!--section id="jbds_jbosstools">
+
+		<title>JBoss Developer Studio and JBoss Tools</title>
+
+		<para>
+			This section highlights the differences between <property>JBoss Developer Studio</property> and <property>JBoss Tools</property>, and provides the steps on the <property>JBoss Tools</property> installation process.
+		</para>
+
+		<section id="WhatDifferenceBetweenJBDSAndJBossTools">
+			<title>What is the difference?</title>
+
+			<para>
+				<property>JBoss Tools</property> is a component of <property>JBoss Developer Studio</property>, which is designed to be an easy-to-install Eclipse based IDE, fully configured and ready to run with the bundled <property>JBoss Enterprise Application Platform</property>.
+			</para>
+
+			<para>In short <property>JBoss Tools</property> are just a set of Eclipse plugins and <property>JBoss Developer Studio</property> adds:</para>
+			<itemizedlist>
+				<listitem>
+					<para>An installer</para>
+				</listitem>
+				<listitem>
+					<para>Eclipse and Web Tools preconfigured</para>
+				</listitem>
+				<listitem>
+					<para>JBoss EAP with JBoss AS and Seam preconfigured</para>
+				</listitem>
+				<listitem>
+					<para>3rd party plugins bundled and configured</para>
+				</listitem>
+				<listitem>
+					<para>Access to RHEL and Red Hat Network</para>
+				</listitem>
+				<listitem>
+					<para>Access to the JBoss/Red Hat supported software</para>
+				</listitem>
+			</itemizedlist>
+			<para> For additional information see <ulink url="http://www.jboss.com/products/devstudio">JBoss.com</ulink>
+			</para>
+		</section>
+
+		<section id="JBossToolsInstall">
+			<title>JBoss Tools Installation and Update</title>
+			<para>This section covers the installation of the <property>JBoss Tools</property> modules.</para>
+			<para>
+				<property>JBoss Tools</property> is an umbrella project for the JBoss developed plugins that are part of <property>JBoss Developer Studio</property>. The JBoss Tools modules are:
+			</para>
+			<itemizedlist>
+				<listitem>
+					<para>JBoss AS Tools</para>
+				</listitem>
+				<listitem>
+					<para>Seam Tools</para>
+				</listitem>
+				<listitem>
+					<para>Hibernate Tools</para>
+				</listitem>
+				<listitem>
+					<para>Visual Page Editor</para>
+				</listitem>
+				<listitem>
+					<para>JST Tools</para>
+				</listitem>
+				<listitem>
+					<para>JBPM Tools</para>
+				</listitem>
+				<listitem>
+					<para>Smooks Tools</para>
+				</listitem>
+				<listitem>
+					<para>Deltacloud Tools</para>
+				</listitem>
+			</itemizedlist>
+
+			<note>
+				<title>Note</title>
+				<para>The JBoss Tools Deltacloud component is not included with JBoss Developer Studio in this release.</para>
+			</note>
+
+			<para>To install the JBoss Tools plugins for Eclipse, you need the following:</para>
+
+			<itemizedlist>
+				<listitem>
+					<para>
+						A copy of Eclipse and Web Tools (make sure you have the <ulink url="http://www.jboss.org/community/wiki/MatrixofsupportedplatformsruntimesandtechnologiesinJBossToolsJBDS">appropriate version of Eclipse</ulink>).
+					</para>
+				</listitem>
+			</itemizedlist>
+			<para>
+				The current version of JBoss Tools (3.2.0.GA) targets at Eclipse 3.6.1 Helios JEE Bundle which is available from <ulink url="http://www.eclipse.org/downloads/">eclipse.org</ulink>.
+			</para>
+
+			<note>
+				<title>Tip:</title>
+				<para>
+					We recommend you do not use Eclipse.org update site to go from old version of Eclipse to new one. Instead we suggest that you download the full binary from <ulink url="http://www.eclipse.org/downloads/">here</ulink>.
+				</para>
+			</note>
+
+			<para>
+				If you can only use Eclipse 3.3 use <ulink url="http://www.jboss.org/tools/download.html">JBoss Tools 2.1.2</ulink>, but JBoss Tools 2.x will not have any of the new features.
+			</para>
+
+			<note>
+				<title>Note:</title>
+				<para>Remember to choose the download that matches your OS and use Java 6 when you run it.</para>
+			</note>
+			<para>
+				If you need to install any standalone plug-in from JBoss Tools visit a <ulink url="http://community.jboss.org/wiki/InstallingJBossTools">JBoss Tools Wiki</ulink> page to read about dependencies between standalone plug-ins.
+			</para>
+			<para>For more information about how to install JBoss Tools 3.0 and JBoss Tools 3.1 please read the following docs:</para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<ulink url="https://www.jboss.org/tools/download/installation/update_3_0.html">JBoss Tools 3.0 Installation</ulink>
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="https://www.jboss.org/tools/download/installation/update_3_1.html">JBoss Tools 3.1 Installation</ulink>
+					</para>
+				</listitem>
+			</itemizedlist>
+
+			<section>
+				<title>Installation From Update Site</title>
+				<para>
+					Instead of downloading installation and updating manually, it&apos;s also possible to get the latest release of <property>JBoss Tools</property> from one of our update sites: 
+						<itemizedlist id="sites">
+							<listitem>
+								<para>Stable Updates: <ulink url="http://download.jboss.org/jbosstools/updates/stable">http://download.jboss.org/jbosstools/updates/stable</ulink>
+							</para>
+						</listitem>
+						<listitem>
+							<para> Development Updates: <ulink url="http://download.jboss.org/jbosstools/updates/development">http://download.jboss.org/jbosstools/updates/development</ulink>
+							</para>
+						</listitem>
+						<listitem>
+							<para> Nightly Builds: <ulink url="http://download.jboss.org/jbosstools/updates/nightly/trunk/">http://download.jboss.org/jbosstools/updates/nightly/trunk/</ulink>
+							</para>
+						</listitem>
+					</itemizedlist>
+				</para>
+				<itemizedlist>
+					<note>
+						<title>Note:</title>
+						<para>
+							During the JBT installation and updating process using some of JBoss update sites the <emphasis>No repository found containing...</emphasis> error can appear. This is an Eclipse P2 bug. To work around it try: 1.Restarting Eclipse. 2. Add the update site again. 3. Performing the update again.
+						</para>
+					</note>
+					<para>To install and/or update JBoss Tools from one of the update sites you should follow the steps:</para>
+					<listitem>
+						<para>
+							First, download the correct version of Eclipse for your platform which is compatible with the version of JBoss Tools you plan to install. For example if you want to install 3.2.0.GA Eclipse 3.6.1 Helios JEE Bundle is required.
+						</para>
+					</listitem>
+					<listitem>
+						<para>If you do not already have Java 5 or 6 installed and in your path, download and install it.</para>
+					</listitem>
+					<listitem>
+						<para>When Eclipse is started, go to 
+							<itemizedlist>
+								<listitem>
+									<para>
+										<menuchoice><guimenuitem>Help</guimenuitem>
+												<guimenuitem>Software Updates...</guimenuitem>
+												<guimenuitem>Available Software</guimenuitem>
+												<guimenuitem>Manage Sites...</guimenuitem>
+												<guimenuitem>Add...</guimenuitem>
+										</menuchoice>
+										<emphasis> (Eclipse 3.4)</emphasis>
+									</para>
+								</listitem>
+								<listitem>
+									<para>
+										<menuchoice>
+											<guimenuitem>Help</guimenuitem>
+											<guimenuitem>Install New Software</guimenuitem>
+											<guimenuitem>Add...</guimenuitem>
+										</menuchoice>
+										<emphasis> (Eclipse 3.5, 3.6)</emphasis>
+									</para>
+								</listitem>
+							</itemizedlist>
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							After clicking the <guibutton>Add</guibutton> button the <property>Add Site</property> View should appear. In the <property>Location</property> field you should paste one of the update sites described <link linkend="sites">above</link>. On some platforms, you can also drag and drop the link from your browser directly into Eclipse. In the <property>Name</property> field you can enter any name you like. In the end press the <guibutton>OK</guibutton> button.
+						</para>
+						<figure>
+							<title>Add Update Site</title>
+							<mediaobject>
+								<imageobject>
+									<imagedata fileref="images/getting_started/getting_started_4a.png"/>
+								</imageobject>
+							</mediaobject>
+						</figure>
+					</listitem>
+					<listitem id="from_point">
+						<para>In the <property>Install</property> View select features to install, then click the <guibutton>Next</guibutton> button.</para>
+						<figure>
+							<title>JBoss Tools installation</title>
+							<mediaobject>
+								<imageobject>
+									<imagedata fileref="images/getting_started/getting_started_4b.png"/>
+								</imageobject>
+							</mediaobject>
+						</figure>
+					</listitem>
+					<listitem>
+						<para>And the system checks whether all necessary requirements and dependencies are installed on your Eclipse.</para>
+						<figure>
+							<title>Requirements and dependencies check</title>
+							<mediaobject>
+								<imageobject>
+									<imagedata fileref="images/getting_started/getting_started_10.png"/>
+								</imageobject>
+							</mediaobject>
+						</figure>
+						<para>If some of the dependencies are missing an error message will appear and the installation process will be terminated.</para>
+						<note>
+							<title>Note:</title>
+							<para>
+								Sometimes when a user changes the list of plugins for download and clicks the <guibutton>Next</guibutton> button, after the required dependencies have been checked, the list of missing dependencies from the previous attempt is showed. In this case completely closing the <emphasis>Install New Software</emphasis> dialog can help.
+							</para>
+						</note>
+						<para>
+							If JBoss Tools are already installed on your Eclipse and you are performing an update (and not installing new components) the following messages may appear in your <emphasis>Details</emphasis> section. Ignore them and press the <guibutton>Next</guibutton> button.
+						</para>
+						<figure>
+							<title>Possible messages</title>
+							<mediaobject>
+								<imageobject>
+									<imagedata fileref="images/getting_started/getting_started_4c.png"/>
+								</imageobject>
+							</mediaobject>
+						</figure>
+					</listitem>
+					<listitem>
+						<para>When you click the <guibutton>Finish</guibutton> button the Installation and/or Updating process will commence.</para>
+					</listitem>
+					<listitem>
+						<para>Once the installation is complete, restart Eclipse when prompted.</para>
+						<figure>
+							<title>Message dialog</title>
+							<mediaobject>
+								<imageobject>
+									<imagedata fileref="images/getting_started/getting_started_4d.png"/>
+								</imageobject>
+							</mediaobject>
+						</figure>
+					</listitem>
+					<listitem>
+						<para>
+							After fetching all the features and plugins for installation, you may be warned that your selection contains unsigned jars. This is normal, simply accept the warning and continue.
+						</para>
+						<figure>
+							<title>Warning Message</title>
+							<mediaobject>
+								<imageobject>
+									<imagedata fileref="images/getting_started/getting_started_4e.png"/>
+								</imageobject>
+							</mediaobject>
+						</figure>
+					</listitem>
+				</itemizedlist>
+
+				<note>
+					<title>Note:</title>
+					<para>
+						While installing JBoss Tools on GNU/Linux (64-bit) through the eclipse installation manager you may run into some problems which can interrupt your installation process. Please, read the <ulink url="http://www.jboss.org/community/wiki/ManualinstallationofJBossTools31xonEclipse35onGNULinux64-bit">Manual installation of JBoss Tools 3.1.x on Eclipse 3.5 on GNU/Linux (64-bit)</ulink> wiki article which provides you with the necessary steps to do it correct.
+					</para>
+				</note>
+			</section>
+			<section>
+				<title>Installation From Zip file</title>
+
+				<para>It is also possible to install JBoss Tools using the Eclipse P2 update manager and a common zip file which provides a single installer for all platforms.</para>
+				<para>You can download JBoss Tools in a zip file from one of the pages below:</para>
+				<itemizedlist id="zip_sites">
+					<listitem>
+						<para>Stable Releases: <ulink url="http://www.jboss.org/tools/download/stable.html">http://www.jboss.org/tools/download/stable.html</ulink>
+						</para>
+					</listitem>
+					<listitem>
+						<para> Development Updates: <ulink url="http://www.jboss.org/tools/download/dev.html">http://www.jboss.org/tools/download/dev.html</ulink>
+						</para>
+					</listitem>
+					<listitem>
+						<para> Nightly Builds: <ulink url="http://download.jboss.org/jbosstools/updates/nightly/">http://download.jboss.org/jbosstools/updates/nightly/</ulink>
+						</para>
+					</listitem>
+				</itemizedlist>
+				<para>When you downloaded Jboss Tools Zip please <emphasis>DO NOT UNZIP IT</emphasis> and follow the steps described below:</para>
+				<itemizedlist>
+					<listitem>
+						<para>When Eclipse is started, go to <menuchoice><guimenuitem>Help</guimenuitem>
+								<guimenuitem>Install New Software...</guimenuitem>
+								<guimenuitem>Add...</guimenuitem>
+								<guimenuitem>Archive...</guimenuitem>
+							</menuchoice>
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Browse for the update site zip. In the <emphasis>Name</emphasis> field you can write any name you like. Then click the <guibutton>OK</guibutton> button.
+						</para>
+						<figure>
+							<title>Installation from a zip file</title>
+							<mediaobject>
+								<imageobject>
+									<imagedata fileref="images/getting_started/getting_started_4f.png"/>
+								</imageobject>
+							</mediaobject>
+						</figure>
+					</listitem>
+					<listitem>
+						<para>
+							The remaining steps are the same as described in the section <link linkend="from_point">Installation From Update Site section</link>. 
+						</para>
+					</listitem>
+				</itemizedlist>
+
+			</section>
+
+		</section>
+	</section -->
+</chapter>

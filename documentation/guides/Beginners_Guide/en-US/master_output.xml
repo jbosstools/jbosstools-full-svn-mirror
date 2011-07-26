@@ -1,0 +1,1720 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3CR3//EN"
+"http://www.oasis-open.org/docbook/xml/4.3CR3/docbookx.dtd"
+
+[<!ENTITY  Preface SYSTEM "Preface.xml">
+<!ENTITY Introduction SYSTEM "Introduction.xml">
+<!ENTITY The_interface SYSTEM "The_interface.xml">
+<!ENTITY Java_EE_and_SE SYSTEM "Java_Web_(EE)_and_Standard_Edition_(SE).xml">
+<!ENTITY Service-Oriented_Architecture_Development SYSTEM "Service-Oriented_Architecture_Development.xml">
+<!ENTITY Where_to_go_from_here SYSTEM "Where_to_go_from_here.xml">
+<!ENTITY Workshops SYSTEM "Workshops.xml">
+<!ENTITY Revision_History SYSTEM "Revision_History.xml">
+]><book xmlns:diffmk="http://diffmk.sf.net/ns/diff">
+    
+     <bookinfo>
+         <title>Beginners Guide</title>
+             <corpauthor>
+                 <inlinemediaobject>
+                     <imageobject role="fo">
+                         <imagedata fileref="images/jbosstools_logo.png" format="PNG"></imagedata>
+                     </imageobject>	
+                     <imageobject role="html">
+                         <imagedata></imagedata>
+                     </imageobject>	
+                 </inlinemediaobject>           
+             </corpauthor>
+         
+         <author>
+		<firstname>Isaac</firstname>
+		<surname>Rooskov</surname>
+		<email>irooskov@redhat.com</email>
+	</author>
+	<author>
+		<firstname>Sean</firstname>
+		<surname>Rogers</surname>
+		<email>serogers@redhat.com</email>
+	</author>
+	<editor>
+		<firstname>Andrew</firstname>
+		<surname>Ross</surname>
+		<email>anross@redhat.com</email>
+	</editor>
+	<editor>
+		<firstname>Max</firstname>
+		<surname>Andersen</surname>
+		<email>max.andersen@redhat.com</email>
+	</editor>          
+      
+	     <copyright>
+	          <year>2010</year>
+	          <holder>JBoss by Red Hat</holder>
+	     </copyright>
+         <releaseinfo><diffmk:wrapper diffmk:change="changed">
+             Version: 3.0.1.GA
+         </diffmk:wrapper></releaseinfo>
+<!--<abstract>
+   <title/>
+       <para>
+           <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/jboss_bpmn_convert_ref_guide/pdf/Converter_Reference_Guide.pdf">PDF version</ulink>
+       </para>
+</abstract> -->
+
+
+    </bookinfo>
+    
+    <toc></toc> 
+ <!--   &Preface; -->
+    
+
+<chapter id="chap-Beginners_Guide-Introduction" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/documentation/guides/Beginners_Guide/en-US/Introduction.xml">
+	<title>Introduction</title>
+	<para>
+		The <application moreinfo="none">JBoss Developer Studio</application> is an Integrated Development Environment (IDE) that includes JBoss Tools and assists with the development of applications and services on JBoss Middleware software. These tools have been developed and are used by developers for increased efficiency and productivity with JBoss software.
+	</para>
+	<para>
+		This guide covers the basics of the interface you will be working with and the tools within it, assuming as little knowledge on your side as possible. If you are not familiar with <application moreinfo="none">JBoss Developer Studio</application> then this guide is the best place to begin.
+	</para>
+</chapter>
+
+ 
+    
+
+<chapter id="chap-Beginners_Guide-The_interface" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/documentation/guides/Beginners_Guide/en-US/The_interface.xml">
+	<title>The interface</title>
+	<para>
+		The interfaces that the <application moreinfo="none">JBoss Developer Studio</application> IDE is built for are discussed.
+	</para>
+	<section id="sect-Beginners_Guide-The_interface-Eclipse">
+		<title>Eclipse</title>
+		<para>
+			Eclipse is the container for all development work in the <application moreinfo="none">JBoss Developer Studio</application>. It allows for control over the running of the application server, the applications on it and provides an interface for developing your own applications.
+		</para>
+		<para>
+			Eclipse is started by double-clicking on the <filename moreinfo="none">eclipse</filename> executeable in your installation directory.
+		</para>
+		<para>
+			Following this you will be asked to specify a workspace. A workspace is the location on your computer where your files will be stored relating to the multiple sessions. If you wish to change your workspace location after this step you can do so by following the menu items <guimenuitem moreinfo="none">File</guimenuitem>, <guimenuitem moreinfo="none">Switch Workspace</guimenuitem>, <guimenuitem moreinfo="none">Other...</guimenuitem>.
+		</para>
+		<figure float="0" id="figu-Beginners_Guide-Eclipse-Eclipse_Workspace_launcher">
+			<title>Eclipse Workspace launcher</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Eclipse_workspace.png" format="PNG"></imagedata>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>
+			After selecting a workspace location, you will be greeted with the <guilabel moreinfo="none">Welcome</guilabel> screen. This screen provides a few pathway options, including a <guilabel moreinfo="none">Getting Started</guilabel> link to a selection of documentation, an option to create a new project with the <guilabel moreinfo="none">Create New...</guilabel> option and an option to skip straight to your <guilabel moreinfo="none">Workbench</guilabel>.
+		</para>
+		<figure float="0" id="figu-Beginners_Guide-Eclipse-Eclipse_welcome_screen">
+			<title>Eclipse welcome screen</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Eclipse_welcome_screen.png" format="PNG"></imagedata>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>
+			Skipping straight to your workbench, you will see a screen with a few sections and the JBoss Application Server listed in the bottom area of the interface.
+		</para>
+		<figure float="0" id="figu-Beginners_Guide-Eclipse-Eclipse_Workbench">
+			<title>Eclipse Workbench</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Eclipse_main.png" format="PNG"></imagedata>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>
+			In the bottom left hand corner of the screen is a picture of a white column with a blue bar and a yellow plus sign beside it. Clicking on this button will open a menu of different views and windows.
+		</para>
+		<figure float="0" id="figu-Beginners_Guide-Eclipse-Views_button">
+			<title>Views button</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/View_Button.png" format="PNG"></imagedata>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>
+			The window that may be of most use to you can be found by following: <menuchoice moreinfo="none"><guimenuitem moreinfo="none">Other...</guimenuitem><guimenuitem moreinfo="none">JBoss Tools Web</guimenuitem><guimenuitem moreinfo="none">JBoss Tools Palette</guimenuitem></menuchoice>. This window opens an interface to the tools included with the <application moreinfo="none">JBoss Developer Studio</application>.
+		</para>
+		<para>
+			Refer to the <citetitle pubwork="section">Welcome to JBoss Developer Studio</citetitle> section of the <citetitle pubwork="book">Getting Started with JBoss Developer Studio</citetitle> guide for further details.
+		</para>
+	</section>
+	
+	<section id="sect-Beginners_Guide-The_interface-JBoss_Application_Server">
+		<title>JBoss Application Server</title>
+		<para>
+			The JBoss Application Server provides the full range of Java EE 5 features as well as extended enterprise services including clustering, caching, and persistence.
+		</para>
+		<section id="sect-Beginners_Guide-JBoss_Application_Server-Using_the_application_server_shipped_with_the_JBoss_Developer_Studio">
+			<title>Using the application server shipped with the JBoss Developer Studio</title>
+			<para>
+				This section discusses the JBoss Application Server with regards to its use through Eclipse. Once you have started the Eclipse interface for the <application moreinfo="none">JBoss Developer Studio</application>, the JBoss Application Server can be started by clicking on its name in the lower part of the window and then clicking the green arrow to the right.
+			</para>
+			<figure float="0" id="figu-Beginners_Guide-Use_of_the_application_server_shipped_with_JBoss_Tools_or_JBoss_Developer_Studio-Starting_and_stopping_the_server">
+				<title>Starting and stopping the server</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/Start_Stop_Server.png" format="PNG"></imagedata>
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<note>
+				<para>
+					If the <guimenu moreinfo="none">Servers</guimenu> view is not displayed at the bottom of your Workbench, you can activate it through <menuchoice moreinfo="none"><guimenuitem moreinfo="none">Window</guimenuitem><guimenuitem moreinfo="none">Show View</guimenuitem><guimenuitem moreinfo="none">Other</guimenuitem><guimenuitem moreinfo="none">Server</guimenuitem><guimenuitem moreinfo="none">Servers</guimenuitem></menuchoice> and then click the <guibutton moreinfo="none">OK</guibutton> button.
+				</para>
+			</note>
+			<para>
+				After the server has been successfully started the status next to the server name will change from displaying <emphasis>Stopped</emphasis> to displaying <emphasis>Started, Synchronized</emphasis>.
+			</para>
+			<figure float="0" id="figu-Beginners_Guide-Use_of_the_application_server_shipped_with_JBoss_Tools_or_JBoss_Developer_Studio-Server_started_successfully">
+				<title>Server started successfully</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/Server_Started.png" format="PNG"></imagedata>
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>
+				Once Eclipse and the server are started, double click on the server name in Eclipse to see an <guilabel moreinfo="none">Overview</guilabel> screen in the center.
+			</para>
+			<figure float="0" id="figu-Beginners_Guide-Use_of_the_application_server_shipped_with_JBoss_Tools_or_JBoss_Developer_Studio-JBoss_Application_Server_overview">
+				<title>JBoss Application Server overview</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/JBoss_AS_Overview.png" format="PNG"></imagedata>
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>
+				From this <guilabel moreinfo="none">Overview</guilabel> section there are six subsections consisting of: <guilabel moreinfo="none">General Information</guilabel>, <guilabel moreinfo="none">Login Credentials</guilabel>, <guilabel moreinfo="none">Publishing</guilabel>, <guilabel moreinfo="none">Timeouts</guilabel>, <guilabel moreinfo="none">Server Polling</guilabel> and <guilabel moreinfo="none">Server Ports</guilabel>.
+			</para>
+			<para>
+				The <guilabel moreinfo="none">General Information</guilabel> subsection allows you to change the <guilabel moreinfo="none">Server name</guilabel> and <guilabel moreinfo="none">Host name</guilabel> to your own preferences. By clicking on the <guilabel moreinfo="none">Runtime Environment</guilabel> label a dialog box with options to change the name of the server runtime, the home directory, the Java Runtime and which server configuration should be used when running the application server. The <guibutton moreinfo="none">Open launch configuration</guibutton> button displays a dialog box for configuring the technical details of the application server instance.
+			</para>
+			<para>
+				Below the <guilabel moreinfo="none">General Information</guilabel> subsection is the <guilabel moreinfo="none">Login Credentials</guilabel> subsection. Set the <guilabel moreinfo="none">User Name</guilabel> and <guilabel moreinfo="none">Password</guilabel> for secure access to your server.
+			</para>
+			<para>
+				The <guilabel moreinfo="none">Publishing</guilabel> subsection at the top right of the <guilabel moreinfo="none">Overview</guilabel> section allows you to set when applications will be published to the location specified (whether the applications will be made available through the application server depends on the server running and if it is configured to recognise dynamic changes). You can select to either never have an application be published automatically or for a check of new applications yet to be published to occur at a certain timed interval.
+			</para>
+			<para>
+				The <guilabel moreinfo="none">Timeouts</guilabel> subsection below <guilabel moreinfo="none">Publishing</guilabel> allows you to set the start and stop time (in seconds) for the server to complete all of its operations. This setting is made available in order to decrease the chance of the server freezing or hanging.
+			</para>
+			<para>
+				Below the <guilabel moreinfo="none">Timeouts</guilabel> subsection is the <guilabel moreinfo="none">Server Polling</guilabel> subsection. A server poller gathers information about the server at certain points in time, capturing information about processes and applications. This section allows you to select between either the <literal moreinfo="none">JMX Poller</literal> or <literal moreinfo="none">Timeout Poller</literal> for startup and the <literal moreinfo="none">Process Terminated Poller</literal> or <literal moreinfo="none">Timeout Poller</literal> for shutdown.
+			</para>
+			<para>
+				The final subsection is <guilabel moreinfo="none">Server Ports</guilabel>, below <guilabel moreinfo="none">Server Polling</guilabel>. This section allows you to alter the port numbers that the server pollers gather their information from. The two settings of <guilabel moreinfo="none">JNDI Port</guilabel> and <guilabel moreinfo="none">Web Port</guilabel> are set to be automatically detected by default; normally there should be no reason to manually select the port numbers.
+			</para>
+			<note>
+				<para>
+					Changing the <guilabel moreinfo="none">Server Ports</guilabel> subsection configuration will not alter which ports the server itself listens on.
+				</para>
+			</note>
+			<para>
+				Default access to the server can be achieved by typing the address <ulink url="http://localhost:8080">http://localhost:8080</ulink> into your Internet browser address bar.
+			</para>
+			<figure float="0" id="figu-Beginners_Guide-Use_of_the_application_server_shipped_with_JBoss_Tools_or_JBoss_Developer_Studio-Server_access">
+				<title>Server access</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/JBoss_AS_localhost.png" format="PNG"></imagedata>
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>
+				Refer to the <citetitle pubwork="chapter">Manage JBoss AS from JBoss Developer Studio</citetitle> chapter of the <citetitle pubwork="book">Getting Started with JBoss Developer Studio</citetitle> guide for further details.
+			</para>
+		</section>
+		
+		<section id="sect-Beginners_Guide-JBoss_Application_Server-Adding_a_new_application_server_for_use_with_the_JBoss_Developer_Studio">
+			<title>Adding a new application server for use with the JBoss Developer Studio</title>
+			<para>
+				Though the JBoss Developer Studio may come with a pre-configured application server, you can still add your own servers. This section details how to add additional servers for use with the JBoss Developer Studio.
+			</para>
+			<para>
+				To add a new server runtime follow these steps:
+			</para>
+			<orderedlist continuation="restarts" inheritnum="ignore">
+				<listitem>
+					<para>
+						In the Eclipse interface click on <menuchoice moreinfo="none"><guimenuitem moreinfo="none">Window</guimenuitem><guimenuitem moreinfo="none">Preferences</guimenuitem><guimenuitem moreinfo="none">Server</guimenuitem><guimenuitem moreinfo="none">Runtime Environments</guimenuitem></menuchoice>
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Click on the <guibutton moreinfo="none">Add...</guibutton> button
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Select the type of runtime environment your application server is from the list provided
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Tick the box for <guilabel moreinfo="none">Create a new local server</guilabel>
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Click on the <guibutton moreinfo="none">Next &gt;</guibutton> button
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Name your server runtime and then click on the <guibutton moreinfo="none">Browse...</guibutton> button next to the <guilabel moreinfo="none">Home Directory</guilabel> location space
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Navigate to the directory where the server you wish to add is installed and click on the <guibutton moreinfo="none">OK</guibutton> button
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Select the Java Runtime Environment (JRE) you wish to use for this server from the drop-down menu. If the required JRE is not listed, click on the <guibutton moreinfo="none">JRE</guibutton> button beside the list and then select the <guibutton moreinfo="none">Add...</guibutton> button in the <guimenuitem moreinfo="none">Installed JREs</guimenuitem> <guilabel moreinfo="none">Preferences</guilabel> dialog box and follow the prompts to install the correct JRE
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						The <guilabel moreinfo="none">Configuration</guilabel> section should automatically list the available profiles available for your server. Select the server configuration you wish to use by clicking on its name in the list
+					</para>
+					<para>
+						If the profile you wish to use is not listed click on the <guibutton moreinfo="none">Browse...</guibutton> button, navigate to the profile location and click the <guibutton moreinfo="none">OK</guibutton> button
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Click the <guibutton moreinfo="none">Next &gt;</guibutton> button to display the <guilabel moreinfo="none">Runtime Information</guilabel> for the server you are about to add. If all the information is correct click the <guibutton moreinfo="none">Finish</guibutton> button.
+					</para>
+					<para>
+						If you need to change any information click the <guibutton moreinfo="none">&lt; Back</guibutton> button until you reach the screen with the information that needs to be altered and then navigate back to the <guilabel moreinfo="none">Runtime Information</guilabel> screen and click the <guibutton moreinfo="none">Finish</guibutton> button.
+					</para>
+				</listitem>
+			</orderedlist>
+			<para>
+				Once the new sever has been added, you can select it for use by clicking on its name in the <guilabel moreinfo="none">Server Runtime Environment</guilabel> list and then clicking the <guibutton moreinfo="none">OK</guibutton> button that will then take you back to the main Eclipse interface.
+			</para>
+			<para>
+				To start your new server, select it from those available through the <guimenu moreinfo="none">Servers</guimenu> view and click the white arrow in a green circle.
+			</para>
+			<note>
+				<para>
+					If the <guimenu moreinfo="none">Servers</guimenu> view is not displayed at the bottom of your Workbench, you can activate it through <menuchoice moreinfo="none"><guimenuitem moreinfo="none">Window</guimenuitem><guimenuitem moreinfo="none">Show View</guimenuitem><guimenuitem moreinfo="none">Other</guimenuitem><guimenuitem moreinfo="none">Server</guimenuitem><guimenuitem moreinfo="none">JBoss Server View</guimenuitem></menuchoice> and then click the <guibutton moreinfo="none">OK</guibutton> button.
+				</para>
+			</note>
+		</section>
+
+	</section>
+
+</chapter>
+
+
+    
+
+<chapter id="chap-Beginners_Guide-Java_Web_EE_and_Standard_Edition_SE_Plug_Ins" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/documentation/guides/Beginners_Guide/en-US/Java_Web_(EE)_and_Standard_Edition_(SE).xml">
+	<title>Java Web (EE) and Standard Edition (SE) Plug-Ins</title>
+	<para>
+		Included <application moreinfo="none">JBoss Developer Studio</application> Java plug-ins are detailed.
+	</para>
+	<section id="sect-Beginners_Guide-Java_Web_EE_and_Standard_Edition_SE_Plug_Ins-Visual_Web_Tools">
+		<title>Visual Web Tools</title>
+		<para>
+			Visual Web Tools aids in the development of web pages and web projects.
+		</para>
+		<variablelist>
+			<varlistentry>
+				<term>Visual Page Editor</term>
+				<listitem>
+					<para>
+						The Visual Page Editor allows an application to be developed alongside a visual preview. The application can be viewed either as the source code, as a preview of the application, or both simultaneously in a split-screen presentation. The Visual Page Editor can be used for developing an application using technologies such as JavaServer Faces (<acronym>JSF</acronym>), JavaServer Pages (<acronym>JSP</acronym>), Struts, and Hypertext Markup Language (<acronym>HTML</acronym>). The Visual Page Editor also features a graphical toolbar for in-line styling.
+					</para>
+					<figure float="0" id="figu-Beginners_Guide-Visual_Web_Tools-Visual_Page_Editor">
+						<title>Visual Page Editor</title> 
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/figu-Beginners_Guide-Visual_Web_Tools-Visual_Page_Editor.png" format="PNG"></imagedata>
+							</imageobject>
+							<textobject>
+								<phrase>
+									The Visual Page Editor, showing both the source and a visual preview simultaneously.
+								</phrase>
+							</textobject>
+						</mediaobject>
+					</figure>
+					<para>
+						Refer to the <ulink url="http://www.redhat.com/docs/en-US/JBoss_Developer_Studio/3.0/Visual_Web_Tools_Reference_Guide/html_single/index.html#jbds_editors">Editors</ulink> chapter of <citetitle pubwork="book">Visual Web Tools Reference Guide</citetitle> for full details.
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>JBoss Tools Palette</term>
+				<listitem>
+					<para>
+						The JBoss Tools Palette provides access to tag libraries for creating <acronym>JSP</acronym> and <acronym>JSF</acronym> pages. Tags can be quickly inserted into pages from a number of included libraries:
+					</para>
+					<itemizedlist>
+						<listitem>
+							<para>
+								<acronym>HTML</acronym>
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								JBoss
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								<acronym>JSF</acronym>
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								<acronym>JSTL</acronym> (<acronym>JSP</acronym> Standard Tag Library)
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								MyFaces
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								Oracle <acronym>ADF</acronym> (Application Development Framework) Faces
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								Struts
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								<acronym>XHTML</acronym> (Extensible Hypertext Markup Language)
+							</para>
+						</listitem>
+					</itemizedlist>
+					<para>
+						Custom-made tags and third-party tag libraries can also be included in the JBoss Tools Palette.
+					</para>
+					<figure float="0" id="figu-Beginners_Guide-Visual_Web_Tools-JBoss_Tools_Palette">
+						<title>JBoss Tools Palette</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/figu-Beginners_Guide-Visual_Web_Tools-JBoss_Tools_Palette.png" format="PNG"></imagedata>
+							</imageobject>
+							<textobject>
+								<phrase>
+									The JBoss Tools Palette, with a number of standard libraries loaded.
+								</phrase>
+							</textobject>
+						</mediaobject>
+					</figure>
+					<para>
+						Refer to the <citetitle pubwork="chapter">JBoss Tools Palette</citetitle> chapter of <citetitle pubwork="book">Visual Web Tools Reference Guide</citetitle> for full details.
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Web Projects View</term>
+				<listitem>
+					<para>
+						The Web Projects View is an additional view. It enhances project authoring with a number of features:
+					</para>
+					<itemizedlist>
+						<listitem>
+							<para>
+								Project artifacts for <acronym>JSF</acronym> and Struts projects are organized by function, allowing for better project visualization.
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								Selected items can be dragged and dropped into <acronym>JSP</acronym> and other <acronym>JSF</acronym> compatible pages:
+							</para>
+							<itemizedlist>
+								<listitem>
+									<para>
+										<acronym>JSF</acronym> managed bean attributes
+									</para>
+								</listitem>
+								<listitem>
+									<para>
+										<acronym>JSF</acronym> navigation rule outcomes
+									</para>
+								</listitem>
+								<listitem>
+									<para>
+										Property file values
+									</para>
+								</listitem>
+								<listitem>
+									<para>
+										Tag library files
+									</para>
+								</listitem>
+								<listitem>
+									<para>
+										Tags from tag libraries
+									</para>
+								</listitem>
+								<listitem>
+									<para>
+										<acronym>JSP</acronym> page links
+									</para>
+								</listitem>
+							</itemizedlist>
+						</listitem>
+					<!--	<listitem>
+							<para>
+								Context menus can be used to speed up application authoring.
+							</para>
+						</listitem> -->
+						<listitem>
+							<para>
+								<acronym>JSF</acronym> and Struts projects can be quickly created or imported from the shortcut buttons.
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								Tag library files can be expanded, inspected, and easily added to the JBoss Tools Palette.
+							</para>
+						</listitem>
+					</itemizedlist>
+					<figure float="0" id="figu-Beginners_Guide-Visual_Web_Tools-Web_Projects_View_for_JSF_left_and_Struts_right_projects">
+						<title>Web Projects View for <acronym>JSF</acronym> (left) and Struts (right) projects</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/figu-Beginners_Guide-Visual_Web_Tools-Web_Projects_View_for_JSF_left_and_Struts_right_projects.png" format="PNG"></imagedata>
+							</imageobject>
+							<textobject>
+								<phrase>
+									The Web Projects View, showing a <acronym>JSF</acronym> project on the left and a Struts project on the right.
+								</phrase>
+							</textobject>
+						</mediaobject>
+					</figure>
+					<para>
+						Refer to the <citetitle pubwork="chapter">Web Projects View</citetitle> chapter of <citetitle pubwork="book">Visual Web Tools Reference Guide</citetitle> for full details.
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>OpenOn</term>
+				<listitem>
+					<para>
+						OpenOn provides an easy method for switching directly from one project resource to another without navigating through the <guilabel moreinfo="none">Package Explorer</guilabel> view. Pressing <keycap moreinfo="none">F3</keycap> or <keycombo moreinfo="none"><keycap moreinfo="none">Ctrl</keycap><mousebutton moreinfo="none">click</mousebutton></keycombo> when a reference to another file is highlighted will open the file in the editor.
+					</para>
+					<para>
+						Refer to the <citetitle pubwork="chapter">Editors</citetitle> chapter of <citetitle pubwork="book">Visual Web Tools Reference Guide</citetitle> for full details.
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Content Assist</term>
+				<listitem>
+					<para>
+						Content Assist displays context-specific code completion suggestions while typing, speeding up development and reducing typing errors. Content Assist is supported in a number of contexts:
+					</para>
+					<para>
+						The suggestion list can be displayed by pressing <keycombo moreinfo="none"><keycap moreinfo="none">Ctrl</keycap><keycap moreinfo="none">Space</keycap></keycombo>, and the highlighted entry can be selected and inserted by pressing <keycap moreinfo="none">Enter</keycap>.
+					</para>
+					<figure float="0" id="figu-Beginners_Guide-Visual_Web_Tools-Content_Assist">
+						<title>Content Assist</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/figu-Beginners_Guide-Visual_Web_Tools-Content_Assist.png" format="PNG"></imagedata>
+							</imageobject>
+							<textobject>
+								<phrase>
+									Content Assist with <acronym>JSF</acronym> code completion suggestions.
+								</phrase>
+							</textobject>
+						</mediaobject>
+					</figure>
+					<para>
+						Refer to the <citetitle pubwork="chapter">Editors</citetitle> chapter of <citetitle pubwork="book">Visual Web Tools Reference Guide</citetitle> for full details.
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Drag-and-Drop</term>
+				<listitem>
+					<para>
+						Properties, managed bean attributes, navigation rules, tag library file declarations, and <acronym>JSP</acronym> pages can all be dragged from the <guilabel moreinfo="none">Web Projects</guilabel> view and dropped into the editor to add content.
+					</para>
+					<para>
+						Refer to the <citetitle pubwork="chapter">Web Projects View</citetitle> chapter of <citetitle pubwork="book">Visual Web Tools Reference Guide</citetitle> for full details.
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>RichFaces Support</term>
+				<listitem>
+					<para>
+						RichFaces and Ajax4jsf tag libraries can be used from the JBoss Tools Palette, and RichFaces components are rendered in the Visual Page Editor.
+					</para>
+					<para>
+						Refer to the <citetitle pubwork="chapter">Editors</citetitle> chapter of <citetitle pubwork="book">Visual Web Tools Reference Guide</citetitle> for full details.
+					</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+	</section>
+	
+	<section id="sect-Beginners_Guide-Java_Web_EE_and_Standard_Edition_SE_Plug_Ins-Seam_Development_Tools">
+		<title>Seam Development Tools</title>
+		<para>
+			<application moreinfo="none">JBoss Seam</application> combines several technologies to reduce the complexity of developing modern Web 2.0 applications:
+		</para>
+		<itemizedlist>
+			<listitem>
+				<para>
+					Enterprise Java Beans (<acronym>EJB3</acronym>)
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					JavaServer Faces (<acronym>JSF</acronym>)
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Asynchronous JavaScript and <acronym>XML</acronym> (Ajax)
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Java Portlets
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Business Process Management (<acronym>BPM</acronym>)
+				</para>
+			</listitem>
+		</itemizedlist>
+		<para>
+			<application moreinfo="none">Seam</application> provides an interface to these different technologies through simple <emphasis>Plain Old Java Objects</emphasis> (<acronym>POJO</acronym>), user interface components, and <acronym>XML</acronym>. <application moreinfo="none">Seam</application> does not distinguish between presentation-tier components and business logic components in an effort to present a simple, unified component model for the Java Enterprise Edition platform. Seam also provides mechanisms to manage application states across multiple workspaces, methods to manage workflow and pageflow through <acronym>jBPM</acronym>, and comprehensive integrated testing features.
+		</para>
+		<para>
+			The Seam Development Tools in the <application moreinfo="none">JBoss Developer Studio</application> allow for easy <application moreinfo="none">Seam</application> application development:
+		</para>
+		<variablelist>
+			<varlistentry>
+				<term>New Seam Project wizard</term>
+				<listitem>
+					<para>
+						The New Seam Project wizard allows the details of the Seam project to be configured, including target runtimes, target servers, project facets, and web module settings, then generates all the necessary files for a Seam project.
+					</para>
+					<figure float="0" id="figu-Beginners_Guide-Seam_Development_Tools-New_Seam_Project_wizard">
+						<title>New Seam Project wizard</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/figu-Beginners_Guide-Seam_Development_Tools-New_Seam_Project_wizard.png" format="PNG"></imagedata>
+							</imageobject>
+							<textobject>
+								<phrase>
+									The New Seam Project wizard, used to configure a Seam project.
+								</phrase>
+							</textobject>
+						</mediaobject>
+					</figure>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Other Seam wizards</term>
+				<listitem>
+					<para>
+						Wizards are also included for creating new Seam Actions, new Seam Forms, new Seam Conversations, and new Seam Entities.
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Entity generation</term>
+				<listitem>
+					<para>
+						Another wizard exists for generating Seam entities. The wizard produces a set of <acronym>CRUD</acronym> (create-read-update-delete) Seam components and web pages. These can be generated by reverse-engineering an existing database, or by using existing entities in the application.
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Editors and views</term>
+				<listitem>
+					<para>
+						There are a number of editors available in the <application moreinfo="none">JBoss Developer Studio</application> for working with Seam in addition to the Visual Page Editor:
+					</para>
+					<variablelist>
+						<varlistentry>
+							<term>Seam Pages Editor</term>
+							<listitem>
+								<para>
+									The Seam Pages Editor is used for editing the <filename moreinfo="none">pages.xml</filename> file. The file can be edited through three different views:
+								</para>
+								<itemizedlist>
+									<listitem>
+										<para>
+											the graphical view, which diagrammatically represents the project page-flow and exception handling;
+										</para>
+									</listitem>
+									<listitem>
+										<para>
+											the tree view, which lists the elements and attributes of the <filename moreinfo="none">pages.xml</filename> file in a hierarchical tree for simplified editing;
+										</para>
+									</listitem>
+									<listitem>
+										<para>
+											and the source view, which allows direct editing of the <filename moreinfo="none">pages.xml</filename> source.
+										</para>
+									</listitem>
+								</itemizedlist>
+								<figure float="0" id="figu-Beginners_Guide-Seam_Development_Tools-Seam_Pages_Editor_graphical_view">
+									<title>Seam Pages Editor (graphical view)</title>
+									<mediaobject>
+										<imageobject>
+											<imagedata fileref="images/figu-Beginners_Guide-Seam_Development_Tools-Seam_Pages_Editor_graphical_view.png" format="PNG"></imagedata>
+										</imageobject>
+										<textobject>
+										<phrase>
+												The graphical view of the Seam Pages Editor, representing the project page-flow and exception handling.
+										</phrase>
+										</textobject>
+									</mediaobject>
+								</figure>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term>Seam Components Editor</term>
+							<listitem>
+								<para>
+									The Seam Components Editor is used for editing the <filename moreinfo="none">components.xml</filename> file. The file can be edited through two views, the tree view and the source view, which operate similarly to the views in the Seam Pages Editor.
+								</para>
+								<figure float="0" id="figu-Beginners_Guide-Seam_Development_Tools-Seam_Components_Editor">
+									<title>Seam Components Editor</title>
+									<mediaobject>
+										<imageobject>
+											<imagedata fileref="images/figu-Beginners_Guide-Seam_Development_Tools-Seam_Components_Editor.png" format="PNG"></imagedata>
+										</imageobject>
+										<textobject>
+										<phrase>
+												The Seam Components Editor, displaying the components in a hierarchical tree.
+										</phrase>
+										</textobject>
+									</mediaobject>
+								</figure>
+							</listitem>
+						</varlistentry>
+					</variablelist>
+					<para>
+						The Seam Editors feature Content Assist and OpenOn; for more details on these technologies refer to <xref linkend="sect-Beginners_Guide-Java_Web_EE_and_Standard_Edition_SE_Plug_Ins-Visual_Web_Tools"></xref>. Seam Editors also feature validation tools to highlight potential issues with the application.
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><acronym>CRUD</acronym> database applications</term>
+				<listitem>
+					<para>
+						<acronym>CRUD</acronym> refers to the four basic <acronym>SQL</acronym> commands: <code>create</code>, <code>read</code>, <code>update</code>, and <code>delete</code>. A <acronym>CRUD</acronym> database application uses forms to retrieve data from and submit data to a database.
+					</para>
+					<para>
+						<acronym>CRUD</acronym> database applications can be created through the New Seam Project wizard.
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>TestNG</term>
+				<listitem>
+					<para>
+						TestNG (<emphasis>Testing, the Next Generation</emphasis>) is a Java-based unit testing framework. TestNG suites can be added to a project through the New Seam Action wizard.
+					</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+		<para>
+			Refer to the <citetitle pubwork="book">Seam Development Tools Reference Guide</citetitle> for full details.
+		</para>
+	</section>
+	
+	<section id="sect-Beginners_Guide-Java_Web_EE_and_Standard_Edition_SE_Plug_Ins-Hibernate_Tools">
+		<title>Hibernate Tools</title>
+		<para>
+			<application moreinfo="none">Hibernate</application> is an object-relational mapping (<acronym>ORM</acronym>) library, used for mapping an object-oriented domain model to a relational database.<!-- It replaces persistence-related database accesses with high-level object-handling functions to solve problems relating to object-relational impedance mismatch.--> <application moreinfo="none">Hibernate</application> also serves as a query service, allowing queries to be expressed in native <acronym>SQL</acronym> (Structured Query Language), an extension of <acronym>SQL</acronym> named <emphasis>Hibernate Query Language</emphasis> (<acronym>HQL</acronym>), or an object-oriented Criteria and Example <acronym>API</acronym> (Application Programming Interface).
+		</para>
+		<para>
+			Hibernate Tools in the <application moreinfo="none">JBoss Developer Studio</application> provides several features to aid in developing with <application moreinfo="none">Hibernate</application>:
+		</para>
+		<variablelist>
+			<varlistentry>
+				<term>Mapping Editor</term>
+				<listitem>
+					<para>
+						The Mapping Editor is used for authoring Hibernate <acronym>XML</acronym> mapping files. It supports code completion (Content Assist) and syntax highlighting.
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Console</term>
+				<listitem>
+					<para>
+						The Hibernate Console provides a visual representation of database connections and class relationships. Queries can be interactively performed on the database representation.
+					</para>
+					<figure float="0" id="figu-Beginners_Guide-Hibernate_Tools-Hibernate_Console">
+						<title>Hibernate Console</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/figu-Beginners_Guide-Hibernate_Tools-Hibernate_Console.png" format="PNG"></imagedata>
+							</imageobject>
+							<textobject>
+								<phrase>
+									The Hibernate Console consists of multiple panels representing the database.
+								</phrase>
+							</textobject>
+						</mediaobject>
+					</figure>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Reverse Engineering</term>
+				<listitem>
+					<para>
+						Databases can be reverse-engineered to construct domain model classes, Hibernate mapping files, annotated entity beans, <acronym>HTML</acronym> documentation, or complete JBoss Seam applications.
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Wizards</term>
+				<listitem>
+					<para>
+						Wizards are included to step through procedures to generate Hibernate configuration files and Hibernate console configurations.
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><application moreinfo="none">Apache Ant</application> Task</term>
+				<listitem>
+					<para>
+						<application moreinfo="none">Apache Ant</application> is a tool for automating software build processes. Hibernate Tools includes an Apache Ant Task for generating schema, mapping, and Java code related to the build process.
+					</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+		<para>
+			Refer to the <citetitle pubwork="book">Hibernate Tools Reference</citetitle> for full details.
+		</para>
+	</section>
+	
+	<section id="sect-Beginners_Guide-Java_Web_EE_and_Standard_Edition_SE_Plug_Ins-Portal_Tools">
+		<title>Portal Tools</title>
+		<para>
+			<application moreinfo="none">JBoss Portal</application> is a platform for hosting and serving the web interface of a web portal. It allows for content management and experience customization, and supports standard portlets, single sign-ons, clustering, and internationalization.
+		</para>
+		<para>
+			<application moreinfo="none">JBoss Portal</application> applications can be created through the Dynamic Web Project wizard. Java portlets, <acronym>JSF</acronym> portlets, and Seam portlets are all supported.
+		</para>
+		<figure float="0" id="figu-Beginners_Guide-Portal_Tools-Dynamic_Web_Project_wizard">
+			<title>Dynamic Web Project wizard</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/figu-Beginners_Guide-Portal_Tools-Dynamic_Web_Project_wizard.png" format="PNG"></imagedata>
+				</imageobject>
+				<textobject>
+					<phrase>
+						The Dynamic Web Project wizard streamlines the creation of a <application moreinfo="none">JBoss Portal</application> application.
+					</phrase>
+				</textobject>
+			</mediaobject>
+		</figure>
+		<para>
+			Click the <guibutton moreinfo="none">Modify...</guibutton> button and enable portlets for the creation of <application moreinfo="none">JBoss Portal</application> applications through this wizard.
+		</para>
+		<para>
+			Refer to the <citetitle pubwork="book">JBoss Portal Tools Reference Guide</citetitle> for full details.
+		</para>
+	</section>
+	
+	<section id="sect-Beginners_Guide-Java_Web_EE_and_Standard_Edition_SE_Plug_Ins-JMX_Tools">
+		<title>JMX Tools</title>
+		<para>
+			Java Management Extensions (<acronym>JMX</acronym>) is a Java tool-set for managing and monitoring applications, connected devices, and service-oriented networks. A managed resource is represented by a dynamic object called a <emphasis>Managed Bean</emphasis> (or <emphasis>MBean</emphasis>, which is a JavaBean with a dependency injection.
+		</para>
+		<para>
+			The <acronym>JMX</acronym> Tools consists of the <emphasis>MBean Explorer</emphasis> and the <emphasis>MBean Editor</emphasis>.
+		</para>
+		<variablelist>
+			<varlistentry>
+				<term>MBean Explorer</term>
+				<listitem>
+					<para>
+						The MBean Explorer lists a connection's Managed Beans, domains, attributes, and operations in a hierarchical tree. Items in the tree can be filtered, expanded, and collapsed, and double-clicking on any item will open the item in the MBean Editor.
+					</para>
+					<figure float="0" id="figu-Beginners_Guide-JMX_Tools-MBean_Explorer">
+						<title>MBean Explorer</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/figu-Beginners_Guide-JMX_Tools-MBean_Explorer.png" format="PNG"></imagedata>
+							</imageobject>
+							<textobject>
+								<phrase>
+									The MBean Explorer lists a connection's Managed Beans, domains, attributes, and operations in a hierarchical tree.
+								</phrase>
+							</textobject>
+						</mediaobject>
+					</figure>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>MBean Editor</term>
+				<listitem>
+					<para>
+						The MBean Editor is a detailed property-editor made up of four pages:
+					</para>
+					<itemizedlist>
+						<listitem>
+							<para>
+								the Attributes page, which allows the attributes of the Managed Bean to be viewed edited;
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								the Operations page, which allows the operations of the Managed Bean to be viewed and edited;
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								the Notifications page, which allows the Managed Bean to be subscribed to, and which notifications are received
+							</para>
+						</listitem>
+						<listitem>
+							<para>
+								the Info page, which displays information on the Managed Bean.
+							</para>
+						</listitem>
+					</itemizedlist>
+					<figure float="0" id="figu-Beginners_Guide-JMX_Tools-MBean_Editor">
+						<title>MBean Editor</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/figu-Beginners_Guide-JMX_Tools-MBean_Editor.png" format="PNG"></imagedata>
+							</imageobject>
+							<textobject>
+								<phrase>
+									The MBean Editor is a property editor for Managed Beans.
+								</phrase>
+							</textobject>
+						</mediaobject>
+					</figure>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+		<para>
+			Refer to the <citetitle pubwork="book">JMX Tools Reference Guide</citetitle> for full details.
+		</para>
+	</section>
+	
+	<section id="sect-Beginners_Guide-Java_Web_EE_and_Standard_Edition_SE_Plug_Ins-JSF_Tools">
+		<title>JSF Tools</title>
+		<para>
+			JavaServer Faces (JSF) is a Web application framework developed by Sun Microsystems© Inc. JSF Tools allows you to build JSF based applications, add JSF capabilities to existing web projects, import JSF projects and choose a JSF implementation during application development.
+		</para>
+		<para>
+			The tools included are outlined as follows:
+		</para>
+		<itemizedlist>
+			<listitem>
+				<para>
+					Wizards that assist with the creation of new JSF and Facelets projects and adding JSF capabilities to existing web projects.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Pre-configured templates are included and the functionality to create your own.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Add and generate code for new managed beans and then add them to a JSF configuration file.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					The ability to create your own custom Converter and Validator.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Constant validation checking no matter how you are currently interacting with the code, ensures you are always aware of any errors during the development process.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Three views are provided for interacting with the code: Diagram view, Tree view and Source view. Synchronization between the views ensures you are always working on the newest version.
+				</para>
+				<figure float="0" id="figu-Beginners_Guide-JSF_Tools-Diagram_view">
+					<title>Diagram view</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/JSF_diagram_view.png" format="PNG"></imagedata>
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<figure float="0" id="figu-Beginners_Guide-JSF_Tools-Tree_view">
+					<title>Tree view</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/JSF_tree_view.png" format="PNG"></imagedata>
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<figure float="0" id="figu-Beginners_Guide-JSF_Tools-Source_view">
+					<title>Source view</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/JSF_source_view.png" format="PNG"></imagedata>
+						</imageobject>
+					</mediaobject>
+				</figure>
+			</listitem>
+		</itemizedlist>
+		<para>
+			Refer to the <citetitle pubwork="book">JSF Tools Reference Guide</citetitle> for more details.
+		</para>
+	</section>
+	
+	<section id="sect-Beginners_Guide-Java_Web_EE_and_Standard_Edition_SE_Plug_Ins-JBoss_AS_Tools">
+		<title>JBoss AS Tools</title>
+		<para>
+			The JBoss <acronym>AS</acronym> Tools consists of a number of additional views for managing an installed JBoss Server through the JBoss <acronym>AS</acronym> (Application Server) perspective. These additional views include the standard Console and Properties views, and the Servers view. The Servers view allows installed servers to be configured, monitored, and managed.
+		</para>
+		<figure float="0" id="figu-Beginners_Guide-JBoss_AS_Tools-Servers_view">
+			<title>Servers view</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/figu-Beginners_Guide-JBoss_AS_Tools-JBoss_Server_View.png" format="PNG"></imagedata>
+				</imageobject>
+				<textobject>
+					<phrase>
+						The Servers view shows the installed servers and their current states.
+					</phrase>
+				</textobject>
+			</mediaobject>
+		</figure>
+		<para>
+			Refer to the <citetitle pubwork="book">JBoss Server Manager Reference Guide</citetitle> for full details.
+		</para>
+	</section>
+	
+	<section id="sect-Beginners_Guide-Java_Web_EE_and_Standard_Edition_SE_Plug_Ins-Archive_Tools">
+		<title>Archive Tools</title>
+		<para>
+			The JBoss AS Tools also include the Project Archives view for streamlined packaging and archiving of applications. Application projects can be configured with specific packaging instructions, and wizards are included for creating and managing archives.
+		</para>
+		<figure float="0" id="figu-Beginners_Guide-Archive_Tools-Archive_Tools">
+			<title>Archive Tools</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/figu-Beginners_Guide-Archive_Tools-Archive_Tools.png" format="PNG"></imagedata>
+				</imageobject>
+				<textobject>
+					<phrase>
+						Project archives can be managed with the Archive Tools.
+					</phrase>
+				</textobject>
+			</mediaobject>
+		</figure>
+		<para>
+			Refer to the <citetitle pubwork="book">JBoss Server Manager Reference Guide</citetitle> for full details.
+		</para>
+	</section>
+
+</chapter>
+
+
+    
+
+<chapter id="chap-Beginners_Guide-Service_Oriented_Architecture_Development" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/documentation/guides/Beginners_Guide/en-US/Service-Oriented_Architecture_Development.xml">
+	<title>Service-Oriented Architecture Development</title>
+	<para>
+		Included <application moreinfo="none">JBoss Developer Studio</application> plug-ins for development on Service-Oriented Architecture (SOA) are detailed.
+	</para>
+	<section id="sect-Beginners_Guide-Service_Oriented_Architecture_Development-jBPM_Tools">
+		<title>jBPM Tools</title>
+		<para>
+			jBPM is a workflow tool for framework control over business processes and languages.
+		</para>
+		<para>
+			jBPM supports the jBPM Process Definition Language (jPDL) and includes a perspective for easy creation and manipulation using the jPDL. Through this view you can add states, transitions and other processes and waypoints in order to create your own business workflow. Refer to the <ulink url="http://www.redhat.com/docs/en-US/JBoss_Developer_Studio/3.0/jBPM_Tools_Reference_Guide/html_single/index.html#minimal_process_definition">A Minimal Process Definition</ulink> section of the <citetitle pubwork="chapter">Creating an Empty Process Definition</citetitle> chapter within the <citetitle pubwork="book">jBPM Tools Reference Guide</citetitle> for more details.
+		</para>
+	<!--	<para>
+			Refer to the <citetitle pubwork="book">jBPM Tools Reference Guide</citetitle> for further details.
+		</para> -->
+	</section>
+	
+	<section id="sect-Beginners_Guide-Service_Oriented_Architecture_Development-ESB_Editor">
+		<title>ESB Editor</title>
+		<para>
+			The Enterprise Service Bus (ESB) is an abstraction layer that interacts with the messaging system in a Service-Oriented Architecture (SOA).
+		</para>
+		<figure float="0" id="figu-Beginners_Guide-ESB_Editor-ESB_Editor">
+			<title>ESB Editor</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/ESB_Editor.png" format="PNG"></imagedata>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>
+			The <application moreinfo="none">JBoss Developer Studio</application> includes a tool called the ESB file Editor. Through the use of this tool you can develop an application that will utilize the advantages of ESB technology. Features of the ESB Editor include:
+		</para>
+		<formalpara id="form-Beginners_Guide-ESB_Editor-ESB_syntax_validation">
+			<title>ESB syntax validation</title>
+			<para>
+				Contextual error checking is provided constantly, with error checking on incorrect or incomplete tags also included when using the Source viewer.
+			</para>
+		</formalpara>
+		<formalpara id="form-Beginners_Guide-ESB_Editor-XML_schema_support">
+			<title>XML schema support</title>
+			<para>
+				By checking the child elements of the providers, the ESB Editor relays incorrect usage combinations to you through error messages upon startup.
+			</para>
+		</formalpara>
+		<formalpara id="form-Beginners_Guide-ESB_Editor-ESB_XML_content_assistance">
+			<title>ESB XML content assistance</title>
+			<para>
+				Content Assist enables you to write code fast and with accuracy when using the Source mode.
+			</para>
+		</formalpara>
+		<formalpara id="form-Beginners_Guide-ESB_Editor-Synchronized_source_and_visual_editing">
+			<title>Synchronized source and visual editing</title>
+			<para>
+				The ESB Editor gives you the choice of using a graphical view (Tree), a code view (Source) or both when developing your ESB applications. With both instances open at once, the changes made to one can be directly viewable in the other, ensuring that you are always working with the most current version of your application no matter your choice.
+			</para>
+		</formalpara>
+		<para>
+			Refer to the <ulink url="http://www.redhat.com/docs/en-US/JBoss_Developer_Studio/3.0/ESB_Tools_Reference_Guide/html_single/index.html#esb_editor">ESB Editor</ulink> chapter of the <citetitle pubwork="book">ESB Tools Reference Guide</citetitle> for further information.
+		</para>
+		<para>
+			JBoss ESB intergrates component messaging into the JBoss Service-Oriented Architecture, serving as an integral part of JBoss middleware suite. For information on how to use and configure JBoss ESB with the JBoss Service-Oriented Architecture refer to the <ulink url="http://www.redhat.com/docs/en-US/JBoss_Developer_Studio/3.0/ESB_Tools_Reference_Guide/html_single/index.html#using_SOA">Using and Configuring SOA Platform</ulink> chapter of the <citetitle pubwork="book">ESB Tools Reference Guide</citetitle>.
+		</para>
+	</section>
+	
+	<section id="sect-Beginners_Guide-Service_Oriented_Architecture_Development-Web_Services_Tools">
+		<title>Web Services Tools</title>
+		<para>
+			JBoss Web Services is an integral part of the JBoss Application Server and JBoss Enterprise Application Platform, providing a standard means of working reliably between different software applications.
+		</para>
+		<para>
+			A Web Service defines a collection of technologies that provide protocols and standards for the exchange of data between applications. You can create a Web Service for your application server through the use of wizards in the <application moreinfo="none">JBoss Developer Studio</application>. For further details refer to the <ulink url="http://www.redhat.com/docs/en-US/JBoss_Developer_Studio/3.0/JBoss_Web_Services_User_Guide/html_single/index.html#topdownwebservice">Creating a Web Service using JBossWS runtime</ulink> chapter of the <citetitle pubwork="book">JBoss WS User Guide</citetitle>
+		</para>
+		<figure float="0" id="figu-Beginners_Guide-Web_Services_Tools-Example_of_a_Web_Services_wizard">
+			<title>Example of a Web Services wizard</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Web_Services_Wizard.png" format="PNG"></imagedata>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>
+			Web Services Tools also includes the ability to create a Web Service client through the use of a Web Services Description Language (WSDL) document. This can be useful if you already have a predefined service that you wish to recreate, or you wish to use one as a template for you to work with. Refer to the <citetitle pubwork="chapter">Creating a Web Service Client from a WSDL Document using JBoss WS</citetitle> chapter of the <citetitle pubwork="book">JBoss WS User Guide</citetitle> for more details.
+		</para>
+		<figure float="0" id="figu-Beginners_Guide-Web_Services_Tools-Web_Services_client_creation">
+			<title>Web Services client creation</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Web_Services_Using_Document.png" format="PNG"></imagedata>
+				</imageobject>
+			</mediaobject>
+		</figure>
+	</section>
+	
+	<section id="sect-Beginners_Guide-Service_Oriented_Architecture_Development-Drools_Tools">
+		<title>Drools Tools</title>
+		<para>
+			Drools is a Business Rule Management System (BRMS) that uses an enhanced implementation of the Rete algorithm to become a forward chaining inference based rules engine (production rule system). Refer to the <citetitle pubwork="chapter">The Rule Engine</citetitle> chapter of the JBoss Enterprise SOA <citetitle pubwork="book">JBoss Rules Reference Guide</citetitle> for more details.
+		</para>
+		<para>
+			Drools Tools includes wizards for creating new Drools projects and resources. The resources that can be created include a new rule, domain specific language, decision table and business rule. After these have been created there are numerous editors included to assist you with the rest of the development. Included editors are The Rule editor, The Domain Specific Language editor, The Rule Flow graphical editor and The Guided editor that provides a Graphical User Interface (GUI). Refer to the <ulink url="http://www.redhat.com/docs/en-US/JBoss_Developer_Studio/3.0/Drools_Tools_Reference_Guide/html_single/index.html">Drools Tools Reference Guide</ulink> for more details.
+		</para>
+		<figure float="0" id="figu-Beginners_Guide-Drools_Tools-Rule_text_editor">
+			<title>Rule text editor</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Drools_code_rule_editor.png" format="PNG"></imagedata>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<figure float="0" id="figu-Beginners_Guide-Drools_Tools-Rule_Flow_graphical_editor">
+			<title>Rule Flow graphical editor</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Drools_rete_rule_editor.png" format="PNG"></imagedata>
+				</imageobject>
+			</mediaobject>
+		</figure>
+	</section>
+	
+	<section id="sect-Beginners_Guide-Service_Oriented_Architecture_Development-Eclipse_Guvnor_Tools">
+		<title>Eclipse Guvnor Tools</title>
+		<para>
+			Eclipse Guvnor Tools work with Drools Guvnor through rich web based GUIs and editors to provide a centralized repository for a vast quantity of rules. You can store versions of rules, models, functions, processes and other Drools generated components that all relate to executeable knowledge bases. Access to the Guvnor is controlled, allowing you to lock down access and restrict features so domain experts (non programmers) can view and edit rules without being exposed to all the features at once.
+		</para>
+		<para>
+			The tools included for Eclipse Guvnor are outlined as follows:
+		</para>
+		<formalpara id="form-Beginners_Guide-Eclipse_Guvnor_Tools-Guvnor_Connection_Wizard">
+			<title>Guvnor Connection Wizard</title>
+			<para>
+				The Guvnor Connection Wizard is used to create a connection to a Guvnor repository. This wizard can be started by following the menu items <menuchoice moreinfo="none"><guimenuitem moreinfo="none">File</guimenuitem><guimenuitem moreinfo="none">New</guimenuitem><guimenuitem moreinfo="none">Other</guimenuitem><guimenuitem moreinfo="none">Guvnor</guimenuitem><guimenuitem moreinfo="none">Guvnor repository location</guimenuitem></menuchoice>, through the Guvnor Repositories View and other locations throughout Eclipse Guvnor Tools. Refer to the <citetitle pubwork="section">Guvnor Connection Wizard</citetitle> section of the <citetitle pubwork="chapter">Functionality Overview</citetitle> chapter within the <citetitle pubwork="book">Eclipse Guvnor Tools Reference Guide</citetitle> for more details.
+			</para>
+		</formalpara>
+		<figure float="0" id="figu-Beginners_Guide-Eclipse_Guvnor_Tools-Guvnor_connection_wizard">
+			<title>Guvnor connection wizard</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Guvnor_connection_wizard.png" format="PNG"></imagedata>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<formalpara id="form-Beginners_Guide-Eclipse_Guvnor_Tools-The_Guvnor_Repositories_View">
+			<title>The Guvnor Repositories View</title>
+			<para>
+				The Guvnor Repositories View tool displays the contents of a repository using a tree structure. From within this tool you can create a new Guvnor repository connection, remove a Guvnor repository connection, refresh the tree display and expand or condense the tree layout. Refer to the <citetitle pubwork="section">Guvnor Repositories View</citetitle> section of the <citetitle pubwork="chapter">Functionality Overview</citetitle> chapter within the <citetitle pubwork="book">Eclipse Guvnor Tools Reference Guide</citetitle> for more details.
+			</para>
+		</formalpara>
+		<figure float="0" id="figu-Beginners_Guide-Eclipse_Guvnor_Tools-Guvnor_repository_view">
+			<title>Guvnor repository view</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Guvnor_repository.png" format="PNG"></imagedata>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<formalpara id="form-Beginners_Guide-Eclipse_Guvnor_Tools-Guvnor_Resource_History_View">
+			<title>Guvnor Resource History View</title>
+			<para>
+				The task of the Guvnor Resource History View is to display the revision history details for files that are both locally stored and within Guvnor repositories. Refer to the <citetitle pubwork="section">Guvnor Resource History View</citetitle> section of the <citetitle pubwork="chapter">Functionality Overview</citetitle> chapter within the <citetitle pubwork="book">Eclipse Guvnor Tools Reference Guide</citetitle> for more details.
+			</para>
+		</formalpara>
+		<figure float="0" id="figu-Beginners_Guide-Eclipse_Guvnor_Tools-Guvnor_resource_history_view">
+			<title>Guvnor resource history view</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Guvnor_resource_history_view.png" format="PNG"></imagedata>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<formalpara id="form-Beginners_Guide-Eclipse_Guvnor_Tools-Guvnor_Resource_Importing_Wizard">
+			<title>Guvnor Resource Importing Wizard</title>
+			<para>
+				The Guvnor Resource Importing Wizard assists with the copying of one or more files from a Guvnor repository to the local workspace (while keeping file association with the Guvnor repository). This wizard can be started by following the menu items <menuchoice moreinfo="none"><guimenuitem moreinfo="none">File</guimenuitem><guimenuitem moreinfo="none">Import</guimenuitem><guimenuitem moreinfo="none">Guvnor</guimenuitem><guimenuitem moreinfo="none">Resource from Guvnor</guimenuitem></menuchoice>. Refer to the <citetitle pubwork="section">Importing Guvnor Repository Resources</citetitle> section of the <citetitle pubwork="chapter">Functionality Overview</citetitle> chapter within the <citetitle pubwork="book">Eclipse Guvnor Tools Reference Guide</citetitle> for more details.
+			</para>
+		</formalpara>
+		<figure float="0" id="figu-Beginners_Guide-Eclipse_Guvnor_Tools-Guvnor_resource_importing_wizard">
+			<title>Guvnor resource importing wizard</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Guvnor_copy_file.png" format="PNG"></imagedata>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<formalpara id="form-Beginners_Guide-Eclipse_Guvnor_Tools-Actions_for_Local_Guvnor_Resources">
+			<title>Actions for Local Guvnor Resources</title>
+			<para>
+				Through Eclipse Guvnor Tools a variety of actions can be performed on a file. Those actions are:
+			</para>
+		</formalpara>
+		<itemizedlist>
+			<listitem>
+				<para>
+					<emphasis>Update</emphasis>: Replaces the contents of the local file with the updated contents from the Guvnor repository.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<emphasis>Add</emphasis>: Include a local file in a Guvnor repository.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<emphasis>Commit</emphasis>: Update a Guvnor repository file with new content from a locally modified version.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<emphasis>Show History</emphasis>: Displays the revision history of a file.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<emphasis>Compare with Version</emphasis>: Opens a wizard that allows to files to be compared for similarities and differences.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<emphasis>Switch to Version</emphasis>: Provides the ability to replace a local file with an earlier revision of the same file.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<emphasis>Delete</emphasis>: Removes a file from the Guvnor repository and the local copy.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					<emphasis>Disconnect</emphasis>: Removes a Guvnor repository association.
+				</para>
+			</listitem>
+		</itemizedlist>
+		<para>
+			Refer to the <citetitle pubwork="section">Actions for Local Guvnor Resources</citetitle> section of the <citetitle pubwork="chapter">Functionality Overview</citetitle> chapter within the <citetitle pubwork="book">Eclipse Guvnor Tools Reference Guide</citetitle> for more details.
+		</para>
+	</section>
+	
+	
+
+</chapter>
+
+
+    
+
+<chapter id="chap-Beginners_Guide-Where_to_go_from_here" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/documentation/guides/Beginners_Guide/en-US/Where_to_go_from_here.xml">
+	<title>Where to go from here</title>
+	<para>
+		For documentation on the plugins available as part of the JBoss Developer Studio visit <ulink url="http://www.redhat.com/docs/en-US/JBoss_Developer_Studio/">http://www.redhat.com/docs/en-US/JBoss_Developer_Studio/</ulink>.
+	</para>
+	<para>
+		For documentation about the JBoss Enterprise Application Platform visit <ulink url="http://www.redhat.com/docs/en-US/JBoss_Enterprise_Application_Platform/">http://www.redhat.com/docs/en-US/JBoss_Enterprise_Application_Platform/</ulink>.
+	</para>
+	<para>
+		For information pertaining to Eclipse visit <ulink url="http://www.eclipse.org/">http://www.eclipse.org/</ulink>.
+	</para>
+</chapter>
+
+
+    
+
+<chapter id="chap-Beginners_Guide-Worshops" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/documentation/guides/Beginners_Guide/en-US/Workshops.xml">
+	<title>Workshops</title>
+	<para>
+		Follow the instructions in these workshops to broaden your knowledge and understanding of the <application moreinfo="none">JBoss Developer Studio</application>.
+	</para>
+	<section id="sect-Beginners_Guide-Workshops-RESTEasy">
+		<title>RESTEasy</title>
+		<para>
+			In this RESTEasy workshop we will provide an example of how to solve the problem of creating new customers for an online store. This will be achieved through the creation of a shopping application and adding customer records through a web browser. 
+		</para>
+		<formalpara>
+			<title>Prerequisites</title>
+			<para>
+				The following technologies are necessary for this workshop:
+				<itemizedlist>
+					<listitem>
+						<para>
+							<application moreinfo="none">JBoss Developer Studio 3.0</application>
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<application moreinfo="none">JBoss Enterprise Application Platform 5</application> or <application moreinfo="none">JBoss Service Orientated Architecture Platform 5</application>
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<application moreinfo="none">Firefox 2.0</application> or higher web browser
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<application moreinfo="none">REST Client</application> <application moreinfo="none">Firefox</application> plug-in available from <ulink url="https://addons.mozilla.org/en-US/firefox/addon/9780">https://addons.mozilla.org/en-US/firefox/addon/9780</ulink>
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</formalpara>
+		<para>
+			Make sure the <application moreinfo="none">JBoss Developer Studio</application> is open with the application server running. For the purpose of simplicity it will be assumed for the rest of the workshop that you are running the <application moreinfo="none">JBoss Enterprise Application Platform 5</application>, however the steps will be the same if you are using the <application moreinfo="none">JBoss Service Orientated Architecture Platform 5</application>.
+		</para>
+		<para>
+			In the <application moreinfo="none">JBoss Developer Studio</application> navigate to <menuchoice moreinfo="none"><guimenuitem moreinfo="none">Help</guimenuitem><guimenuitem moreinfo="none">Project Example</guimenuitem></menuchoice>.
+		</para>
+		<figure float="0" id="figu-Beginners_Guide-Workshops-Project_Example_Menu">
+			<title>Project Example Menu</title> 
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Project_Example_menu.png" format="PNG"></imagedata>
+				</imageobject>
+				<textobject>
+					<phrase>
+						The Project Example menu being selected through the JBoss Developer Studio GUI.
+					</phrase>
+				</textobject>
+			</mediaobject>
+		</figure>
+		<para>
+			In the <guimenuitem moreinfo="none">Project Example</guimenuitem> menu dialog box, scroll to <menuchoice moreinfo="none"><guimenuitem moreinfo="none">RESTEasy</guimenuitem><guimenuitem moreinfo="none">RESTEasy Simple Example</guimenuitem></menuchoice> and click <guibutton moreinfo="none">Finish</guibutton>.
+		</para>
+		<figure float="0" id="figu-Beginners_Guide-Workshops-RESTEasy_Simple_Example">
+			<title>RESTEasy Simple Example</title> 
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Project_Example_RESTEasy.png" format="PNG"></imagedata>
+				</imageobject>
+				<textobject>
+					<phrase>
+						Selecting to create the RESTEasy Simple Example.
+					</phrase>
+				</textobject>
+			</mediaobject>
+		</figure>
+		<para>
+			There may be two issues to fix before you can continue. The description for each of these will be  <guilabel moreinfo="none">Target runtime JBoss 4.2.2 Runtime is not defined</guilabel> and <guilabel moreinfo="none">Java compiler level does not match the version of the installed Java project facet</guilabel>. If they do not appear skip to <xref linkend="figu-Beginners_Guide-Workshops-Completed_fixing_the_issues"></xref>. If they do appear, the following steps will resolve these issues.  
+		</para>
+		<figure float="0" id="figu-Beginners_Guide-Workshops-Quick_Fixes">
+			<title>Quick Fixes</title> 
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Project_Example_Quick_Fix.png" format="PNG"></imagedata>
+				</imageobject>
+				<textobject>
+					<phrase>
+						Displaying the two issues that will need to be fixed; detailed after this image.
+					</phrase>
+				</textobject>
+			</mediaobject>
+		</figure>
+		<para>
+			To fix the first issue with the description <guilabel moreinfo="none">Target runtime JBoss 4.2.2 Runtime is not defined</guilabel> click on this description and then click the <guibutton moreinfo="none">Quick Fix</guibutton> button.
+		</para>
+		<figure float="0" id="figu-Beginners_Guide-Workshops-Fixing_the_first_issue">
+			<title>Fixing the first issue</title> 
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Project_Example_Quick_Fix_2.png" format="PNG"></imagedata>
+				</imageobject>
+				<textobject>
+					<phrase>
+						The description of the first issue is highlighted, waiting for the user to click the Quick Fix button.
+					</phrase>
+				</textobject>
+			</mediaobject>
+		</figure>
+		<para>
+			The next dialog box will display two runtime issues to fix, however by fixing the second one labeled as <guilabel moreinfo="none">Configure Targeted Runtimes</guilabel> both issues will be corrected.
+		</para>
+		<para>
+			Select the issue called <guilabel moreinfo="none">Configure Targeted Runtimes</guilabel> and click the <guibutton moreinfo="none">Finish</guibutton> button.
+		</para>
+		<figure float="0" id="figu-Beginners_Guide-Workshops-Runtime_issues">
+			<title>Runtime issues</title> 
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Project_Example_Quick_Fix_Runtime.png" format="PNG"></imagedata>
+				</imageobject>
+				<textobject>
+					<phrase>
+						Outlining the two runtime issues.
+					</phrase>
+				</textobject>
+			</mediaobject>
+		</figure>
+		<para>
+			A large dialog box will open with a long list of property categories on the left hand side. Navigate down to and click on the <guimenuitem moreinfo="none">Targeted Runtimes</guimenuitem> property title. To the right of the menu where the <guilabel moreinfo="none">JBoss 4.2.2 Runtime</guilabel> box is selected, deselect it and then select the name of your <application moreinfo="none">JBoss Enterprise Application Platform 5</application> runtime. 
+		</para>
+		<para>
+			Once the <application moreinfo="none">JBoss Enterprise Application Platform 5</application> is selected and the old runtime deselected, click the <guibutton moreinfo="none">Apply</guibutton> button and then the <guibutton moreinfo="none">OK</guibutton> button.
+		</para>
+		<note>
+			<para>
+				In <xref linkend="figu-Beginners_Guide-Workshops-Selecting_the_correct_runtime"></xref>, the runtime that will be used is the one called <guilabel moreinfo="none">JBoss EAP 5.0 Runtime Server</guilabel>, though the name will depend on what you called it when you configured the server for use with the <application moreinfo="none">JBoss Developer Studio</application>.
+			</para>
+		</note>
+		<figure float="0" id="figu-Beginners_Guide-Workshops-Selecting_the_correct_runtime">
+			<title>Selecting the correct runtime</title> 
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Project_Examples_Quick_Fix_Targeted_Runtimes.png" format="PNG"></imagedata>
+				</imageobject>
+				<textobject>
+					<phrase>
+						The JBoss 4.2.2 Runtime is displayed as selected to show how the user will be greeted by this property window.
+					</phrase>
+				</textobject>
+			</mediaobject>
+		</figure>
+		<para>
+			To fix the second issue with the description <guilabel moreinfo="none">Java compiler level does not match the version of the installed Java project facet</guilabel> click on this description and then click the <guibutton moreinfo="none">Quick Fix</guibutton> button.
+		</para>
+		<para>
+			After clicking the <guibutton moreinfo="none">Quick Fix</guibutton> button the Java compiler issue should disappear because the <application moreinfo="none">JBoss Developer Studio</application> has made the necessary changes in the background to fix it.
+		</para>
+		<para>
+			The <guilabel moreinfo="none">Quick Fix</guilabel> dialog box should now be empty. Click the <guibutton moreinfo="none">Finish</guibutton> button.
+		</para>
+		<figure float="0" id="figu-Beginners_Guide-Workshops-Completed_fixing_the_issues">
+			<title>Completed fixing the issues</title> 
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Project_Examples_RESTEasy_Quick_Fix_Finish.png" format="PNG"></imagedata>
+				</imageobject>
+				<textobject>
+					<phrase>
+						The Quick Fix dialog box is displayed without any remaining issues.
+					</phrase>
+				</textobject>
+			</mediaobject>
+		</figure>
+		<para>
+			To add the project to the <application moreinfo="none">JBoss Enterprise Application Platform 5</application> server right click on the server name in the <guimenuitem moreinfo="none">Servers</guimenuitem> tab in the bottom section of your workbench. Click on the <guimenuitem moreinfo="none">Add and Remove...</guimenuitem> option.
+		</para>
+		<figure float="0" id="figu-Beginners_Guide-Workshops-About_to_add_the_project_to_the_server">
+			<title>About to add the project to the server</title> 
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Project_Examples_RESTEasy_Add_to_Server.png" format="PNG"></imagedata>
+				</imageobject>
+				<textobject>
+					<phrase>
+						The servers right-click menu is displayed with the Add and Remove option highlighted for selection.
+					</phrase>
+				</textobject>
+			</mediaobject>
+		</figure>
+		<para>
+			From the <guilabel moreinfo="none">Add and Remove</guilabel> dialog box ensure the box labeled <guilabel moreinfo="none">If server is started, publish changes immediately</guilabel> is ticked. In the left-hand menu, highlight the project you just created called <guilabel moreinfo="none">simple</guilabel> by clicking on it. 
+		</para>
+		<figure float="0" id="figu-Beginners_Guide-Workshops-Add_project_to_server">
+			<title>Add project to server</title> 
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Project_Examples_RESTEasy_Add_simple_to_server.png" format="PNG"></imagedata>
+				</imageobject>
+				<textobject>
+					<phrase>
+						The simple project is highlighted about the Add button about to be pressed to configure it for the server.
+					</phrase>
+				</textobject>
+			</mediaobject>
+		</figure>
+		<para>
+			Click the <guibutton moreinfo="none">Add &gt;</guibutton> button to move it from the left-hand menu labeled <guilabel moreinfo="none">Available</guilabel> to the right-hand menu labeled <guilabel moreinfo="none">Configured</guilabel>. Once this is completed click the <guibutton moreinfo="none">Finish</guibutton> button.
+		</para>
+		<para>
+			Your RESTEasy project has now been deployed onto your server. We will now test the application by using the REST Client plug-in within the Firefox web browser.
+		</para>
+		<para>
+			Open your Firefox web browser and navigate to <menuchoice moreinfo="none"><guimenuitem moreinfo="none">Tools</guimenuitem><guimenuitem moreinfo="none">REST Client</guimenuitem></menuchoice>.
+		</para>
+		<figure float="0" id="figu-Beginners_Guide-Workshops-Selecting_the_REST_Client">
+			<title>Selecting the REST Client</title> 
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Project_Examples_RESTEasy_RESTClient_selection.png" format="PNG"></imagedata>
+				</imageobject>
+				<textobject>
+					<phrase>
+						Selecting the REST Client from the Firefox menu.
+					</phrase>
+				</textobject>
+			</mediaobject>
+		</figure>
+		<para>
+			In the REST Client click on the <guibutton moreinfo="none">Add Request Header</guibutton> button and type <property moreinfo="none">content-type</property> for the <guilabel moreinfo="none">Name</guilabel> and <property moreinfo="none">application/xml</property> for the <guilabel moreinfo="none">Value</guilabel>. This will ensure that the content will be consumable by the Plain Old Java Object (POJO) service at the server.
+		</para>
+		<para>
+			Select <guimenuitem moreinfo="none">POST</guimenuitem> from the <guilabel moreinfo="none">Method</guilabel> drop-down menu, copy <ulink url="http://localhost:8080/simple/rest-services/customers">http://localhost:8080/simple/rest-services/customers</ulink> into the drop-down menu beside the <guilabel moreinfo="none">Method</guilabel> and paste the following into the <guilabel moreinfo="none">Request Body</guilabel>:
+		</para>
+<screen format="linespecific">&lt;customer&gt;&lt;first-name&gt;Bill&lt;/first-name&gt;&lt;last-name&gt;Burke&lt;/last-name&gt;&lt;street&gt;256 Clarendon Street&lt;/street&gt;&lt;city&gt;Boston&lt;/city&gt;&lt;state&gt;MA&lt;/state&gt;&lt;zip&gt;02115&lt;/zip&gt;&lt;country&gt;USA&lt;/country&gt;&lt;/customer&gt;</screen>
+		<para>
+			The XML for the <guilabel moreinfo="none">Request Body</guilabel> must not contain any spaces between XML tags to avoid exceptions occurring at the server end.
+		</para>
+		<para>
+			Click the <guibutton moreinfo="none">Send</guibutton> button to add the customer information.
+		</para>
+		<figure float="0" id="figu-Beginners_Guide-Workshops-Adding_a_customer">
+			<title>Adding a customer</title> 
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Project_Examples_RESTEasy_RESTClient_Input.png" format="PNG"></imagedata>
+				</imageobject>
+				<textobject>
+					<phrase>
+						REST Client displays a green bar in the Response Header to signify a successful customer addition.
+					</phrase>
+				</textobject>
+			</mediaobject>
+		</figure>
+		<para>
+			To ensure the customer details were added, change the <guilabel moreinfo="none">Method</guilabel> type to <guimenuitem moreinfo="none">GET</guimenuitem> and the URL address to <ulink url="http://localhost:8080/simple/rest-services/customers/1">http://localhost:8080/simple/rest-services/customers/1</ulink>. The <emphasis>/1</emphasis> is added to the URL to select the customer with the <varname>customer id</varname> of 1, since that is the number that was given to the customer.
+		</para>
+		<para>
+			Click the <guibutton moreinfo="none">Send</guibutton> button to retrieve the information. Select the <guilabel moreinfo="none">Response Body</guilabel> tab beneath the <guilabel moreinfo="none">Request Body</guilabel> section to view the returned information. 
+		</para>
+		<figure float="0" id="figu-Beginners_Guide-Workshops-Retrieving_customer_information">
+			<title>Retrieving customer information</title> 
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Project_Examples_RESTEasy_RESTClient_GET_1.png" format="PNG"></imagedata>
+				</imageobject>
+				<textobject>
+					<phrase>
+						The customer information is displayed in the Response Body tab of the REST Client. 
+					</phrase>
+				</textobject>
+			</mediaobject>
+		</figure>
+		<para>
+			We have added a customer and retrieved their information, now we will update their information. To achieve this change the <guilabel moreinfo="none">Method</guilabel> to being <guimenuitem moreinfo="none">PUT</guimenuitem> and copy the following into the <guilabel moreinfo="none">Request Body</guilabel> (overwriting anything that may be in the <guilabel moreinfo="none">Request Body</guilabel> already):
+		</para>
+		<screen format="linespecific">&lt;customer&gt;&lt;first-name&gt;Gary&lt;/first-name&gt;&lt;last-name&gt;Lamperillo&lt;/last-name&gt;&lt;street&gt;256 Clarendon Street&lt;/street&gt;&lt;city&gt;Venice&lt;/city&gt;&lt;state&gt;CA&lt;/state&gt;&lt;zip&gt;90291&lt;/zip&gt;&lt;country&gt;USA&lt;/country&gt;&lt;/customer&gt;</screen>
+		<para>
+			Remember to make sure there are no spaces between the XML tags when you copy the information into the <guilabel moreinfo="none">Request Body</guilabel>.
+		</para>
+		<para>
+			Check to make sure the URL still reads <ulink url="http://localhost:8080/simple/rest-services/customers/1">http://localhost:8080/simple/rest-services/customers/1</ulink> from when you retrieved the customer information. By using the URL that references the ID of the customer you are updating that customer's record.
+		</para>
+		<para>
+			Click the <guibutton moreinfo="none">Send</guibutton> button to update the information.
+		</para>
+		<figure float="0" id="figu-Beginners_Guide-Workshops-Updating_customer_information">
+			<title>Updating customer information</title> 
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Project_Examples_RESTEasy_RESTClient_PUT.png" format="PNG"></imagedata>
+				</imageobject>
+				<textobject>
+					<phrase>
+						REST Client displays a green bar in the Response Header to signify a successful update.
+					</phrase>
+				</textobject>
+			</mediaobject>
+		</figure>
+		<para>
+			To verify that the record has been updated change the <guilabel moreinfo="none">Method</guilabel> type to <guimenuitem moreinfo="none">GET</guimenuitem>, ensure the URL still references customer ID 1 and click the <guibutton moreinfo="none">Send</guibutton> button.
+		</para>
+		<para>
+			Select the <guilabel moreinfo="none">Response Body</guilabel> tab beneath the <guilabel moreinfo="none">Request Body</guilabel> section to view the returned information. 
+		</para>
+		<figure float="0" id="figu-Beginners_Guide-Workshops-Retreiving_updated_customer_information">
+			<title>Retrieving updated customer information</title> 
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Project_Examples_RESTEasy_RESTClient_GET_2.png" format="PNG"></imagedata>
+				</imageobject>
+				<textobject>
+					<phrase>
+						REST Client displays a green bar in the Response Header to signify a successful update.
+					</phrase>
+				</textobject>
+			</mediaobject>
+		</figure>
+		<para>
+			The RESTEasy workshop is now complete.
+		</para>
+	</section>
+<!--	<section id="sect-Beginners_Guide-Workshops-RESTEasy_workshop">
+		<title>Web Service using JSR 181 workshop</title>
+		<para>
+			The Web Service workshop uses JSR 181 to provide an example of how to solve the problem of 
+		</para>
+		<formalpara>
+			<title>Prerequisites</title>
+			<para>
+				The following technologies are necessary for this workshop:
+				<itemizedlist>
+					<listitem>
+						<para>
+							<application>JBoss Developer Studio 3.0</application>
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							<application>JBoss Enterprise Application Platform 5</application> or <application>JBoss Service Orientated Architecture Platform 5</application>
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</formalpara>
+		<para>
+			Make sure the <application>JBoss Developer Studio</application> is open with the application server running. For the purpose of simplicity it will be assumed for the rest of the workshop that you are running the <application>JBoss Enterprise Application Platform 5</application>, however the steps will be the same if you are using the <application>JBoss Service Orientated Architecture Platform 5</application>.
+		</para>
+		<para>
+			Begin by creating a new <emphasis>Dynamic Web Project</emphasis> in the <application>JBoss Developer Studio</application>. To create the project select <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>New</guimenuitem><guimenuitem>Project...</guimenuitem></menuchoice>.
+		</para>
+		<para>
+			The <guilabel>New Project</guilabel> dialogue box will open and you can either navigate to <menuchoice><guimenuitem>Web</guimenuitem><guimenuitem>Dynamic Web Project</guimenuitem></menuchoice> or start to type <guimenuitem>Dynamic Web Project</guimenuitem> into the search bar under the <guilabel>Wizards:</guilabel> label.
+		</para>
+		<para>
+			Once you have found the <guimenuitem>Dynamic Web Project</guimenuitem> option, click on it to highlight it and click the <guibutton>Next &gt;</guibutton> button.
+		</para>
+		<figure id="figu-Beginners_Guide-Workshops-Selecting_to_create_a_Dynamic_Web_Project">
+			<title>Selecting to create a Dynamic Web Project</title> 
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/Web_Service_Select_Dynamic_Web_Project.png" format="PNG" />
+				</imageobject>
+				<textobject>
+					<phrase>
+						Selecting the Dynamic Web Project option from the New Project dialogue box.
+					</phrase>
+				</textobject>
+			</mediaobject>
+		</figure>
+		<para>
+			In the <guilabel>New Dynamic Web Project</guilabel> dialogue box that has opened type the name of the project as <emphasis>MyWebServiceProject</emphasis>.
+		</para>
+	</section> -->
+	<section id="sect-Beginners_Guide-Workshops-Seam">
+		<title>Seam</title>
+		<para>
+			The <application moreinfo="none">JBoss Enterprise Application Platform </application> book titled the <emphasis>Seam Reference Guide</emphasis> contains an example of how to setup Seam for use with the <application moreinfo="none">JBoss Developer Studio</application>. This workshop can be found here: <ulink url="http://www.redhat.com/docs/en-US/JBoss_Enterprise_Application_Platform/5.0.0/html-single/Seam_Reference_Guide/index.html#gettingstartedwithjbosstools">Getting Started with Seam, using JBoss Tools</ulink>.
+		</para>
+	</section>
+</chapter>
+
+
+    
+
+<appendix id="appe-Beginners_Guide-Revision_History" xml:base="file:///home/vchukhutsina/repos/ochik_jboss/documentation/guides/Beginners_Guide/en-US/Revision_History.xml">
+	<title>Revision History</title>
+	<simpara>
+		<revhistory>
+			<revision>
+				<revnumber>1</revnumber>
+				<date>Mon Feb 22 2010</date>
+				<author>
+					<firstname>Isaac</firstname>
+					<surname>Rooskov</surname>
+					<email>irooskov@redhat.com</email>
+				</author>
+				<revdescription>
+					<simplelist type="vert">
+						<member>Review and editing</member>
+					</simplelist>
+				</revdescription>
+			</revision>
+			<revision>
+				<revnumber>0</revnumber>
+				<date>Thu Nov 26 2009</date>
+				<author>
+					<firstname>Isaac</firstname>
+					<surname>Rooskov</surname>
+					<email>irooskov@redhat.com</email>
+				</author>
+				<revdescription>
+					<simplelist type="vert">
+						<member>Initial creation of book by publican</member>
+					</simplelist>
+				</revdescription>
+			</revision>
+		</revhistory>
+	</simpara>
+</appendix>
+
+
+
+</book>
