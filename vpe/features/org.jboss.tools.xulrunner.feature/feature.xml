@@ -2,7 +2,7 @@
 <feature
       id="org.jboss.tools.xulrunner.feature"
       label="%featureName"
-      version="1.9.216.qualifier"
+      version="3.3.0.qualifier"
       provider-name="%providerName"
       plugin="org.jboss.tools.xulrunner">
 
