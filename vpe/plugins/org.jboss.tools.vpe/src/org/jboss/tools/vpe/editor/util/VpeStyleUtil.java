@@ -35,6 +35,7 @@ import org.jboss.tools.common.model.util.EclipseResourceUtil;
 import org.jboss.tools.common.resref.core.ResourceReference;
 import org.jboss.tools.jst.web.project.WebProject;
 import org.jboss.tools.vpe.VpePlugin;
+import org.jboss.tools.vpe.editor.VpeIncludeInfo;
 import org.jboss.tools.vpe.editor.VpeVisualDomBuilder;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
@@ -52,372 +53,299 @@ public class VpeStyleUtil {
 
 	public static final String ATTRIBUTE_STYLE = "style"; //$NON-NLS-1$
 
-    public static final String PARAMETER_POSITION = "position"; //$NON-NLS-1$
-    public static final String PARAMETER_TOP = "top"; //$NON-NLS-1$
-    public static final String PARAMETER_LEFT = "left"; //$NON-NLS-1$
-    public static final String PARAMETER_WIDTH = "width"; //$NON-NLS-1$
-    public static final String PARAMETER_HEIGHT = "height"; //$NON-NLS-1$
-    public static final String PARAMETR_BACKGROND = "background"; //$NON-NLS-1$
-    public static final String PARAMETR_VERTICAL_ALIGN = "vertical-align"; //$NON-NLS-1$
+	public static final String PARAMETER_POSITION = "position"; //$NON-NLS-1$
+	public static final String PARAMETER_TOP = "top"; //$NON-NLS-1$
+	public static final String PARAMETER_LEFT = "left"; //$NON-NLS-1$
+	public static final String PARAMETER_WIDTH = "width"; //$NON-NLS-1$
+	public static final String PARAMETER_HEIGHT = "height"; //$NON-NLS-1$
+	public static final String PARAMETR_BACKGROND = "background"; //$NON-NLS-1$
+	public static final String PARAMETR_VERTICAL_ALIGN = "vertical-align"; //$NON-NLS-1$
 
-    public static final String VALUE_ABSOLUTE = "absolute"; //$NON-NLS-1$
+	public static final String VALUE_ABSOLUTE = "absolute"; //$NON-NLS-1$
 
-    public static final String DOT_STRING = "."; //$NON-NLS-1$
-    public static final String COLON_STRING = ":"; //$NON-NLS-1$
-    public static final String SEMICOLON_STRING = ";"; //$NON-NLS-1$
-    public static final String PX_STRING = "px"; //$NON-NLS-1$
-    public static final String SPACE_STRING = " "; //$NON-NLS-1$
-    public static final String EMPTY_STRING = ""; //$NON-NLS-1$
-    public static final String SINGLE_QUOTE_STRING = "\'"; //$NON-NLS-1$
-    public static final String QUOTE_STRING = "\""; //$NON-NLS-1$
-    
-    public static String ATTR_URL = "url"; //$NON-NLS-1$
-    public static String OPEN_BRACKET = "("; //$NON-NLS-1$
-    public static String CLOSE_BRACKET = ")"; //$NON-NLS-1$
-    public static String FILE_PROTOCOL = "file:"; //$NON-NLS-1$
-    public static String HTTP_PROTOCOL = "http:"; //$NON-NLS-1$
-    public static String SLASH = "/"; //$NON-NLS-1$
-    
-    /**
-     * Returns CSS style declaration corresponding to the given {@code element}. 
-     */
-    public static nsIDOMCSSStyleDeclaration getStyle(nsIDOMElement element) {
+	public static final String DOT_STRING = "."; //$NON-NLS-1$
+	public static final String COLON_STRING = ":"; //$NON-NLS-1$
+	public static final String SEMICOLON_STRING = ";"; //$NON-NLS-1$
+	public static final String PX_STRING = "px"; //$NON-NLS-1$
+	public static final String SPACE_STRING = " "; //$NON-NLS-1$
+	public static final String EMPTY_STRING = ""; //$NON-NLS-1$
+	public static final String SINGLE_QUOTE_STRING = "\'"; //$NON-NLS-1$
+	public static final String QUOTE_STRING = "\""; //$NON-NLS-1$
+
+	public static String ATTR_URL = "url"; //$NON-NLS-1$
+	public static String OPEN_BRACKET = "("; //$NON-NLS-1$
+	public static String CLOSE_BRACKET = ")"; //$NON-NLS-1$
+	public static String FILE_PROTOCOL = "file:"; //$NON-NLS-1$
+	public static String HTTP_PROTOCOL = "http:"; //$NON-NLS-1$
+	public static String SLASH = "/"; //$NON-NLS-1$
+
+	/**
+	 * Returns CSS style declaration corresponding to the given {@code element}.
+	 */
+	public static nsIDOMCSSStyleDeclaration getStyle(nsIDOMElement element) {
     	nsIDOMElementCSSInlineStyle inlineStyle = 
 				queryInterface(element, nsIDOMElementCSSInlineStyle.class);
-    	return inlineStyle.getStyle();
-    }
-    
-    
-
-    // sets parameter position in attribute style to absolute value
-    public static void setAbsolute(Element sourceElement) {
-	String style = sourceElement.getAttribute(ATTRIBUTE_STYLE);
-	if (style == null) {
-	    style = EMPTY_STRING;
-	} else { // remove old sizes
-	    style = deleteFromString(style, PARAMETER_POSITION,
-		    SEMICOLON_STRING);
-	}
-	if (style.length() > 0) {
-	    if (!style.endsWith(SEMICOLON_STRING))
-		style += SEMICOLON_STRING;
+		return inlineStyle.getStyle();
 	}
 
-	style += SPACE_STRING + PARAMETER_POSITION + SPACE_STRING
-		+ COLON_STRING + SPACE_STRING + VALUE_ABSOLUTE
-		+ SEMICOLON_STRING;
-
-	sourceElement.setAttribute(ATTRIBUTE_STYLE, style);
-    }
-
-    // sets parameter position in absolute value
-    public static String setAbsolute(String styleString) {
-	String style = styleString;
-	if (style == null) {
-	    style = EMPTY_STRING;
-	} else { // remove old sizes
-	    style = deleteFromString(style, PARAMETER_POSITION,
-		    SEMICOLON_STRING);
-	}
-	if (style.length() > 0) {
-	    if (!style.endsWith(SEMICOLON_STRING))
-		style += SEMICOLON_STRING;
-	}
-
-	style += SPACE_STRING + PARAMETER_POSITION + SPACE_STRING
-		+ COLON_STRING + SPACE_STRING + VALUE_ABSOLUTE
-		+ SEMICOLON_STRING;
-
-	return style;
-    }
-
-    // return true if parameter position was set to absolute
-    public static boolean getAbsolute(Element sourceElement) {
-	String style = sourceElement.getAttribute(ATTRIBUTE_STYLE);
-	if (style == null) {
-	    return false;
-	} else { // remove old sizes
-	    if (style.indexOf(VALUE_ABSOLUTE) >= 0)
-		return true;
-	}
-	return false;
-    }
-
-    // return true if parameter position was set to absolute
-    public static boolean getAbsolute(String style) {
-	if (style == null) {
-	    return false;
-	} else { // remove old sizes
-	    if (style.indexOf(VALUE_ABSOLUTE) >= 0)
-		return true;
-	}
-	return false;
-    }
-
-    // return value of parameter described in sizeAttribute, for example
-    // "style.width"
-    public static int getSizeFromStyle(Element sourceElement,
-	    String sizeAttribute) {
-	int dotPosition = sizeAttribute.indexOf(DOT_STRING);
-	String attribute = sizeAttribute.substring(0, dotPosition);
-	String parameter = sizeAttribute.substring(dotPosition + 1,
-		sizeAttribute.length());
-
-	String style = sourceElement.getAttribute(attribute);
-	if (style == null || EMPTY_STRING.equals(style))
-	    return -1;
-
-	int parameterPosition = style.indexOf(parameter);
-	if (parameterPosition >= 0) {
-	    int valuePosition = style.indexOf(COLON_STRING, parameterPosition);
-	    if (valuePosition >= 0) {
-		int endPosition = style.indexOf(PX_STRING, valuePosition);
-		if (endPosition >= 0) {
-		    return Integer.parseInt(style.substring(valuePosition + 1,
-			    endPosition).trim());
+	// sets parameter position in attribute style to absolute value
+	public static void setAbsolute(Element sourceElement) {
+		String style = sourceElement.getAttribute(ATTRIBUTE_STYLE);
+		if (style == null) {
+			style = EMPTY_STRING;
+		} else { // remove old sizes
+			style = deleteFromString(style, PARAMETER_POSITION, SEMICOLON_STRING);
 		}
-	    }
-	}
-	return -1;
-    }
-
-    // return value of parameter described in sizeAttribute, for example
-    // "style.width"
-    public static String getParameterFromStyle(Element sourceElement,
-	    String sizeAttribute) {
-	int dotPosition = sizeAttribute.indexOf(DOT_STRING);
-	String attribute = sizeAttribute.substring(0, dotPosition);
-	String parameter = sizeAttribute.substring(dotPosition + 1,
-		sizeAttribute.length());
-
-	String style = sourceElement.getAttribute(attribute);
-	if (style == null || EMPTY_STRING.equals(style))
-	    return null;
-
-	int parameterPosition = style.indexOf(parameter);
-	if (parameterPosition >= 0) {
-	    int valuePosition = style.indexOf(COLON_STRING, parameterPosition);
-	    if (valuePosition >= 0) {
-		int endPosition = style.indexOf(PX_STRING, valuePosition);
-		if (endPosition >= 0) {
-		    return style.substring(valuePosition + 1, endPosition)
-			    .trim();
+		if (style.length() > 0) {
+			if (!style.endsWith(SEMICOLON_STRING))
+				style += SEMICOLON_STRING;
 		}
-	    }
-	}
-	return null;
-    }
 
-    /**
-     * This method is used to get parameter value from <code>style</code> attribute.
-     * For instance, in case of style="width:65px; color:red" for parameter <code>color</code>
-     * method should return <code>red</code> string value.
-     *
-     * @param styleAttr the style attribute value
-     * @param parameter the name of parameter of style attribute
-     * @return the parameter value
-     */
-    public static String getParameterFromStyleAttribute(String style, String parameter) {
-    	if (style == null || EMPTY_STRING.equals(style)) {
-    		return null;
-    	}
-    	int parameterPosition = style.indexOf(parameter);
-    	if (parameterPosition >= 0) {
-    		int valuePosition = style.indexOf(COLON_STRING, parameterPosition);
-    		if (valuePosition >= 0) {
-    			int endPosition = style.indexOf(SEMICOLON_STRING, valuePosition);
-    			if (endPosition >= 0) {
-    				style = style.substring(valuePosition + 1, endPosition).trim();
-    				endPosition = style.indexOf(PX_STRING, valuePosition);
-    				if (endPosition >= 0) {
-    					return style.substring(valuePosition + 1, endPosition).trim();
-    				}
-    				return style;
-    			} else {
-    				// last parameter ends without closing semicolon symbol
-    				return style.substring(valuePosition + 1).trim();
-    			}
-    		}
-    	}
+		style += SPACE_STRING + PARAMETER_POSITION + SPACE_STRING
+				+ COLON_STRING + SPACE_STRING + VALUE_ABSOLUTE + SEMICOLON_STRING;
 
-    	return null;
-    }
-
-    // sets value of parameter described in sizeAttribute, for example
-    // "style.width"
-    public static void setParameterInStyle(Element sourceElement,
-	    String sizeAttribute, String value) {
-	int dotPosition = sizeAttribute.indexOf(DOT_STRING);
-	String attribute = sizeAttribute.substring(0, dotPosition);
-	String parameter = sizeAttribute.substring(dotPosition + 1,
-		sizeAttribute.length());
-
-	String style = sourceElement.getAttribute(attribute);
-	if (style == null) {
-	    style = EMPTY_STRING;
-	} else { // remove old sizes
-	    style = deleteFromString(style, parameter, SEMICOLON_STRING);
-	}
-	if (style.length() > 0) {
-	    if (!style.endsWith(SEMICOLON_STRING))
-		style += SEMICOLON_STRING;
+		sourceElement.setAttribute(ATTRIBUTE_STYLE, style);
 	}
 
-	style += SPACE_STRING + parameter + SPACE_STRING + COLON_STRING
-		+ SPACE_STRING + value + SEMICOLON_STRING;
+	// sets parameter position in absolute value
+	public static String setAbsolute(String styleString) {
+		String style = styleString;
+		if (style == null) {
+			style = EMPTY_STRING;
+		} else { // remove old sizes
+			style = deleteFromString(style, PARAMETER_POSITION, SEMICOLON_STRING);
+		}
+		if (style.length() > 0) {
+			if (!style.endsWith(SEMICOLON_STRING))
+				style += SEMICOLON_STRING;
+		}
 
-	sourceElement.setAttribute(attribute, style);
-    }
+		style += SPACE_STRING + PARAMETER_POSITION + SPACE_STRING
+				+ COLON_STRING + SPACE_STRING + VALUE_ABSOLUTE + SEMICOLON_STRING;
 
-    public static String setSizeInStyle(String style, String parameter, int size) {
-	if (style == null) {
-	    style = EMPTY_STRING;
-	} else { // remove old sizes
-	    style = deleteFromString(style, parameter, SEMICOLON_STRING);
+		return style;
 	}
-	if (style.length() > 0) {
-	    if (!style.endsWith(SEMICOLON_STRING))
-		style += SEMICOLON_STRING;
+
+	// return true if parameter position was set to absolute
+	public static boolean getAbsolute(Element sourceElement) {
+		String style = sourceElement.getAttribute(ATTRIBUTE_STYLE);
+		if (style == null) {
+			return false;
+		} else { // remove old sizes
+			if (style.indexOf(VALUE_ABSOLUTE) >= 0)
+				return true;
+		}
+		return false;
 	}
+
+	// return true if parameter position was set to absolute
+	public static boolean getAbsolute(String style) {
+		if (style == null) {
+			return false;
+		} else { // remove old sizes
+			if (style.indexOf(VALUE_ABSOLUTE) >= 0)
+				return true;
+		}
+		return false;
+	}
+
+	// return value of parameter described in sizeAttribute, for example
+	// "style.width"
+	public static int getSizeFromStyle(Element sourceElement, String sizeAttribute) {
+		int dotPosition = sizeAttribute.indexOf(DOT_STRING);
+		String attribute = sizeAttribute.substring(0, dotPosition);
+		String parameter = sizeAttribute.substring(dotPosition + 1, sizeAttribute.length());
+
+		String style = sourceElement.getAttribute(attribute);
+		if (style == null || EMPTY_STRING.equals(style))
+			return -1;
+
+		int parameterPosition = style.indexOf(parameter);
+		if (parameterPosition >= 0) {
+			int valuePosition = style.indexOf(COLON_STRING, parameterPosition);
+			if (valuePosition >= 0) {
+				int endPosition = style.indexOf(PX_STRING, valuePosition);
+				if (endPosition >= 0) {
+					return Integer.parseInt(style.substring(valuePosition + 1, endPosition).trim());
+				}
+			}
+		}
+		return -1;
+	}
+
+	// return value of parameter described in sizeAttribute, for example
+	// "style.width"
+	public static String getParameterFromStyle(Element sourceElement, String sizeAttribute) {
+		int dotPosition = sizeAttribute.indexOf(DOT_STRING);
+		String attribute = sizeAttribute.substring(0, dotPosition);
+		String parameter = sizeAttribute.substring(dotPosition + 1, sizeAttribute.length());
+
+		String style = sourceElement.getAttribute(attribute);
+		if (style == null || EMPTY_STRING.equals(style))
+			return null;
+
+		int parameterPosition = style.indexOf(parameter);
+		if (parameterPosition >= 0) {
+			int valuePosition = style.indexOf(COLON_STRING, parameterPosition);
+			if (valuePosition >= 0) {
+				int endPosition = style.indexOf(PX_STRING, valuePosition);
+				if (endPosition >= 0) {
+					return style.substring(valuePosition + 1, endPosition).trim();
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * This method is used to get parameter value from <code>style</code> attribute. For instance, in case of
+	 * style="width:65px; color:red" for parameter <code>color</code> method should return <code>red</code> string
+	 * value.
+	 * 
+	 * @param styleAttr
+	 *            the style attribute value
+	 * @param parameter
+	 *            the name of parameter of style attribute
+	 * @return the parameter value
+	 */
+	public static String getParameterFromStyleAttribute(String style, String parameter) {
+		if (style == null || EMPTY_STRING.equals(style)) {
+			return null;
+		}
+		int parameterPosition = style.indexOf(parameter);
+		if (parameterPosition >= 0) {
+			int valuePosition = style.indexOf(COLON_STRING, parameterPosition);
+			if (valuePosition >= 0) {
+				int endPosition = style.indexOf(SEMICOLON_STRING, valuePosition);
+				if (endPosition >= 0) {
+					style = style.substring(valuePosition + 1, endPosition).trim();
+					endPosition = style.indexOf(PX_STRING, valuePosition);
+					if (endPosition >= 0) {
+						return style.substring(valuePosition + 1, endPosition).trim();
+					}
+					return style;
+				} else {
+					// last parameter ends without closing semicolon symbol
+					return style.substring(valuePosition + 1).trim();
+				}
+			}
+		}
+
+		return null;
+	}
+
+	// sets value of parameter described in sizeAttribute, for example
+	// "style.width"
+	public static void setParameterInStyle(Element sourceElement, String sizeAttribute, String value) {
+		int dotPosition = sizeAttribute.indexOf(DOT_STRING);
+		String attribute = sizeAttribute.substring(0, dotPosition);
+		String parameter = sizeAttribute.substring(dotPosition + 1, sizeAttribute.length());
+
+		String style = sourceElement.getAttribute(attribute);
+		if (style == null) {
+			style = EMPTY_STRING;
+		} else { // remove old sizes
+			style = deleteFromString(style, parameter, SEMICOLON_STRING);
+		}
+		if (style.length() > 0) {
+			if (!style.endsWith(SEMICOLON_STRING))
+				style += SEMICOLON_STRING;
+		}
+
+		style += SPACE_STRING + parameter + SPACE_STRING + COLON_STRING
+				+ SPACE_STRING + value + SEMICOLON_STRING;
+
+		sourceElement.setAttribute(attribute, style);
+	}
+
+	public static String setSizeInStyle(String style, String parameter, int size) {
+		if (style == null) {
+			style = EMPTY_STRING;
+		} else { // remove old sizes
+			style = deleteFromString(style, parameter, SEMICOLON_STRING);
+		}
+		if (style.length() > 0) {
+			if (!style.endsWith(SEMICOLON_STRING))
+				style += SEMICOLON_STRING;
+		}
 
 	style += SPACE_STRING + parameter + SPACE_STRING + COLON_STRING
 		+ SPACE_STRING + size + PX_STRING + SEMICOLON_STRING;
 
-	return style;
-    }
+		return style;
+	}
 
-    public static String setParameterInStyle(String style, String parameter,
-	    String value) {
-	if (style == null) {
-	    style = EMPTY_STRING;
-	} else { // remove old sizes
-	    style = deleteFromString(style, parameter, SEMICOLON_STRING);
-	}
-	if (style.length() > 0) {
-	    if (!style.endsWith(SEMICOLON_STRING))
-		style += SEMICOLON_STRING;
-	}
+	public static String setParameterInStyle(String style, String parameter, String value) {
+		if (style == null) {
+			style = EMPTY_STRING;
+		} else { // remove old sizes
+			style = deleteFromString(style, parameter, SEMICOLON_STRING);
+		}
+		if (style.length() > 0) {
+			if (!style.endsWith(SEMICOLON_STRING))
+				style += SEMICOLON_STRING;
+		}
 
 	style += SPACE_STRING + parameter + SPACE_STRING + COLON_STRING
 		+ SPACE_STRING + value + SEMICOLON_STRING;
 
-	return style;
-    }
-
-    // selets parameter from atribute style
-    public static void deleteFromStyle(Element sourceElement, String begin,
-	    String end) {
-	String style = sourceElement.getAttribute(ATTRIBUTE_STYLE);
-	style = deleteFromString(style, begin, end);
-	sourceElement.setAttribute(ATTRIBUTE_STYLE, style);
-    }
-
-    // selects parameter from attribute style
-    public static String deleteFromString(String data, String begin, String end) {
-	int startPosition = data.indexOf(begin);
-
-	if (startPosition < 0)
-	    return data;
-
-	int endPosition = data.indexOf(end, startPosition);
-
-	String result = data.substring(0, startPosition).trim();
-	if (endPosition > 0) {
-	    result += data.substring(endPosition + 1, data.length()).trim();
+		return style;
 	}
 
-	return result;
-    }
-
-    /**
-     * 
-     * @param value
-     *                Css string
-     * @param input
-     *                The editor input
-     * @return format style string
-     */
-    public static String addFullPathIntoBackgroundValue(String value,
-	    IEditorInput input) {
-
-	if (value.indexOf(FILE_PROTOCOL) != -1) {
-		return value;
+	// selets parameter from atribute style
+	public static void deleteFromStyle(Element sourceElement, String begin, String end) {
+		String style = sourceElement.getAttribute(ATTRIBUTE_STYLE);
+		style = deleteFromString(style, begin, end);
+		sourceElement.setAttribute(ATTRIBUTE_STYLE, style);
 	}
 
-	if (!new File(value).isAbsolute()) {
-		value = getFilePath(input, value);
+	// selects parameter from attribute style
+	public static String deleteFromString(String data, String begin, String end) {
+		int startPosition = data.indexOf(begin);
+
+		if (startPosition < 0)
+			return data;
+
+		int endPosition = data.indexOf(end, startPosition);
+
+		String result = data.substring(0, startPosition).trim();
+		if (endPosition > 0) {
+			result += data.substring(endPosition + 1, data.length()).trim();
+		}
+
+		return result;
 	}
 
-	value = FILE_PROTOCOL + SLASH + SLASH + value.replace('\\', '/');
-	URL url = null;
-	try {
-	    url = new URL(value);
-	} catch (MalformedURLException e) {
-	    return value;
-	}
+	/**
+	 * 
+	 * @param value
+	 *            Css string
+	 * @param input
+	 *            The editor input
+	 * @return format style string
+	 */
+	public static String addFullPathIntoBackgroundValue(String value, IEditorInput input) {
 
-	return url.toString();
-    }
-
-    /**
-     * 
-     * @param value
-     *                Css string
-     * @param input
-     *                The editor input
-     * @return format style string
-     */
-    public static String addFullPathIntoURLValue(String value,
-			VpePageContext pageContext) {
-
-		String urls[] = value.split(ATTR_URL);
-
-		if (urls.length == 1) {
+		if (value.indexOf(FILE_PROTOCOL) != -1) {
 			return value;
 		}
 
-		String finalStr = EMPTY_STRING;
-		for (int i = 1; i < urls.length; i++) {
-
-			urls[i] = urls[i].replace(SINGLE_QUOTE_STRING, EMPTY_STRING);
-			urls[i] = urls[i].replace(QUOTE_STRING, EMPTY_STRING);
-			urls[i] = ATTR_URL + urls[i];
-
-			int startAttr = urls[i].indexOf(ATTR_URL);
-
-			int startPathIndex = urls[i].indexOf(OPEN_BRACKET, startAttr);
-			int endPathIndex = urls[i].indexOf(CLOSE_BRACKET,
-					startPathIndex + 1);
-
-			if (startPathIndex < 0 || endPathIndex < 0) {
-				continue;
-			}
-
-			String filePath = urls[i].substring(startPathIndex + 1,
-					endPathIndex);
-			
-			IFile file = null;
-			if ((pageContext.getVisualBuilder().getCurrentIncludeInfo() != null)
-					&&(pageContext.getVisualBuilder().getCurrentIncludeInfo()
-							.getStorage() instanceof IFile)) {
-				file = (IFile) pageContext.getVisualBuilder().getCurrentIncludeInfo()
-						.getStorage();
-			}
-			if(file!=null)
-				filePath = processUrl(filePath, file);
-
-			String firstPartValue = urls[i].substring(0, startPathIndex + 1);
-			String secondPartValue = urls[i].substring(endPathIndex, urls[i]
-					.length());
-
-			urls[i] = firstPartValue + filePath + secondPartValue;
+		if (!new File(value).isAbsolute()) {
+			value = getFilePath(input, value);
 		}
-		for (int i = 0; i < urls.length; i++)
-			finalStr += urls[i];
-		return finalStr;
+
+		value = FILE_PROTOCOL + SLASH + SLASH + value.replace('\\', '/');
+		URL url = null;
+		try {
+			url = new URL(value);
+		} catch (MalformedURLException e) {
+			return value;
+		}
+
+		return url.toString();
 	}
 
-    /**
+	/**
 	 * 
 	 * @param nput
 	 *            The editor input
@@ -425,31 +353,33 @@ public class VpeStyleUtil {
 	 *            Relative path file
 	 * @return Absolute path file
 	 */
-    public static String getFilePath(IEditorInput input, String fileName) {
+	public static String getFilePath(IEditorInput input, String fileName) {
 		IPath inputPath = getInputParentPath(input);
 		return inputPath.toOSString() + File.separator + fileName;
 	}
 
-    /**
-     * Gets the file path.
-     * 
-     * @param href_val the href_val
-     * @param fileName the file name
-     * 
-     * @return the file path
-     */
-    public static String getFilePath(String href_val, String fileName) {
-    	IPath inputPath = getInputParentPath(href_val);
-    	return inputPath.toOSString() + File.separator + fileName;
-    }
+	/**
+	 * Gets the file path.
+	 * 
+	 * @param href_val
+	 *            the href_val
+	 * @param fileName
+	 *            the file name
+	 * 
+	 * @return the file path
+	 */
+	public static String getFilePath(String href_val, String fileName) {
+		IPath inputPath = getInputParentPath(href_val);
+		return inputPath.toOSString() + File.separator + fileName;
+	}
 
-    /**
-     * 
-     * @param input
-     *                The editor input
-     * @return Path
-     */
-    public static IPath getInputParentPath(IEditorInput input) {
+	/**
+	 * 
+	 * @param input
+	 *            The editor input
+	 * @return Path
+	 */
+	public static IPath getInputParentPath(IEditorInput input) {
 		IPath inputPath = null;
 		if (input instanceof ILocationProvider) {
 			inputPath = ((ILocationProvider) input).getPath(input);
@@ -465,14 +395,15 @@ public class VpeStyleUtil {
 		return inputPath;
 	}
 
-    /**
-     * Gets the href file path.
-     * 
-     * @param href_val the href_val
-     * 
-     * @return href file path
-     */
-    public static IPath getInputParentPath(String href_val) {
+	/**
+	 * Gets the href file path.
+	 * 
+	 * @param href_val
+	 *            the href_val
+	 * 
+	 * @return href file path
+	 */
+	public static IPath getInputParentPath(String href_val) {
 		IPath inputPath = null;
 		inputPath = new Path(href_val);
 		if (inputPath != null && !inputPath.isEmpty()) {
@@ -483,8 +414,42 @@ public class VpeStyleUtil {
 		}
 		return inputPath;
 	}
-    
-    /**
+
+	/**
+	 * 
+	 * @param value
+	 *            Css string
+	 * @param input
+	 *            The editor input
+	 * @return format style string
+	 */
+	public static String addFullPathIntoURLValue(String value, VpePageContext pageContext) {
+
+		String urls[] = value.split(ATTR_URL);
+		if (urls.length == 1) {
+			return value;
+		}
+		
+		IFile file = null;
+		final VpeIncludeInfo vii = pageContext.getVisualBuilder().getCurrentIncludeInfo();
+		if (vii != null && (vii.getStorage() instanceof IFile)) {
+			file = (IFile) vii.getStorage();
+		}
+		for (int i = 1; i < urls.length; i++) {
+			urls[i] = updateURLItem(urls[i]);
+			String[] urlParts = splitURL(urls[i]);
+			if (urlParts == null) {
+				continue;
+			}
+			if (file != null) {
+				urlParts[1] = processUrl(urlParts[1], file);
+			}
+			urls[i] = collectArrayInto1Str(urlParts);
+		}
+		return collectArrayInto1Str(urls);
+	}
+
+	/**
 	 * 
 	 * @param value
 	 *            Css string
@@ -492,115 +457,123 @@ public class VpeStyleUtil {
 	 *            Path of css file
 	 * @return Format style string
 	 */
-    public static String addFullPathIntoURLValue(String value, String href_val) {
+	public static String addFullPathIntoURLValue(String value, String href_val) {
 
 		String urls[] = value.split(ATTR_URL);
 		if (urls.length == 1) {
 			return value;
 		}
 
-		String finalStr = EMPTY_STRING;
 		for (int i = 1; i < urls.length; i++) {
-			urls[i] = urls[i].replace(SINGLE_QUOTE_STRING, EMPTY_STRING);
-			urls[i] = urls[i].replace(QUOTE_STRING, EMPTY_STRING);
-			urls[i] = ATTR_URL + urls[i];
-			int startAttr = urls[i].indexOf(ATTR_URL);
-			int startPathIndex = urls[i].indexOf(OPEN_BRACKET, startAttr);
-			int endPathIndex = urls[i].indexOf(CLOSE_BRACKET,
-					startPathIndex + 1);
-
-			if (startPathIndex < 0 || endPathIndex < 0) {
+			urls[i] = updateURLItem(urls[i]);
+			String[] urlParts = splitURL(urls[i]);
+			if (urlParts == null) {
 				continue;
 			}
-
-			String filePath = urls[i].substring(startPathIndex + 1,
-					endPathIndex);
-
 			IFile sourceFile = null;
 			try {
 				URL url1 = new URL(href_val);
-				
-				sourceFile = ResourcesPlugin.getWorkspace().getRoot()
-				.getFileForLocation(new Path( url1.getPath()));
+				sourceFile = ResourcesPlugin.getWorkspace().getRoot().getFileForLocation(new Path(url1.getPath()));
 			} catch (MalformedURLException e1) {
 				// ignore
 			}
-			
 			if (sourceFile != null) {
-				
-				filePath = processUrl(filePath, sourceFile);
-
+				urlParts[1] = processUrl(urlParts[1], sourceFile);
 			} else {
-				
-				//TODO to redesign next code
-				try {
-					URL url = new URL(filePath);
-					// with url all ok
-					continue;
-				} catch (MalformedURLException e) {
-					// ignore, continue work with url
-				}
-
-				if (filePath.indexOf(FILE_PROTOCOL) != -1) {
+				urlParts[1] = updateURLFilePath(urlParts[1], href_val);
+				if (urlParts[1] == null) {
 					continue;
 				}
-
-				if (!new File(filePath).isAbsolute()) {
-					filePath = getFilePath(href_val, filePath);
-				} else {
-					filePath = FILE_PROTOCOL + SLASH + SLASH
-							+ filePath.replace('\\', '/');
-				}
-
-				URL url = null;
-				try {
-					url = new URL(filePath);
-				} catch (MalformedURLException e) {
-					continue;
-				}
-				filePath = url.toString();
 			}
-			
-
-			String firstPartValue = urls[i].substring(0, startPathIndex + 1);
-			String secondPartValue = urls[i].substring(endPathIndex, urls[i]
-					.length());
-
-			urls[i] = firstPartValue + filePath + secondPartValue;
+			urls[i] = collectArrayInto1Str(urlParts);
 		}
-		for (int i = 0; i < urls.length; i++) {
-			finalStr += urls[i];
+		return collectArrayInto1Str(urls);
+	}
+
+	private static String[] splitURL(String url) {
+		int startAttr = url.indexOf(ATTR_URL);
+		int startPathIndex = url.indexOf(OPEN_BRACKET, startAttr);
+		int endPathIndex = url.indexOf(CLOSE_BRACKET, startPathIndex + 1);
+		if (startPathIndex < 0 || endPathIndex < 0) {
+			return null;
+		}
+		String[] res = new String[3];
+		res[0] = url.substring(0, startPathIndex + 1);
+		res[1] = url.substring(startPathIndex + 1, endPathIndex);
+		res[2] = url.substring(endPathIndex, url.length());
+		return res;
+	}
+
+	private static String updateURLItem(String url) {
+		url = url.replace(SINGLE_QUOTE_STRING, EMPTY_STRING);
+		url = url.replace(QUOTE_STRING, EMPTY_STRING);
+		url = ATTR_URL + url;
+		return url;
+	}
+
+	private static String collectArrayInto1Str(String arr[]) {
+		String finalStr = EMPTY_STRING;
+		for (int i = 0; i < arr.length; i++) {
+			finalStr += arr[i];
 		}
 		return finalStr;
 	}
-    
-    public static String getAbsoluteResourcePathUrl(String resourcePathInPlugin) {
-    	return FILE_PROTOCOL + SLASH + SLASH + SLASH
-    			+ getAbsoluteResourcePath(resourcePathInPlugin)
-    					.replace('\\', '/');
-    }
+	
+	private static String updateURLFilePath(String filePath, String href_val) {
+		try {
+			URL url = new URL(filePath);
+			// with url all ok
+			return null;
+		} catch (MalformedURLException e) {
+			// ignore, continue work with url
+		}
+		if (filePath.indexOf(FILE_PROTOCOL) != -1) {
+			return null;
+		}
+		if (!new File(filePath).isAbsolute()) {
+			filePath = getFilePath(href_val, filePath);
+		} else {
+			filePath = FILE_PROTOCOL + SLASH + SLASH + filePath.replace('\\', '/');
+		}
+		URL url = null;
+		try {
+			url = new URL(filePath);
+		} catch (MalformedURLException e) {
+			return null;
+		}
+		filePath = url.toString();
+		return filePath;
+	}
 
-    /**
+	public static String getAbsoluteResourcePathUrl(String resourcePathInPlugin) {
+		return FILE_PROTOCOL + SLASH + SLASH + SLASH 
+				+ getAbsoluteResourcePath(resourcePathInPlugin).replace('\\', '/');
+	}
+
+	/**
 	 * Adds the full path to image "src" attribute.
 	 * 
-	 * @param path image "src" attribute value
-	 * @param pageContext the pageContext
-	 * @param showUnresolvedImage flag to display unresolved image
+	 * @param path
+	 *            image "src" attribute value
+	 * @param pageContext
+	 *            the pageContext
+	 * @param showUnresolvedImage
+	 *            flag to display unresolved image
 	 * 
 	 * @return the full path to image "src" attribute
 	 */
 	public static String addFullPathToImgSrc(String path,
 			VpePageContext pageContext, boolean showUnresolvedImage) {
-	    
-    	if (path == null) {
-    	    if (showUnresolvedImage) {
-    			return FILE_PROTOCOL + SLASH + SLASH
-					+ getAbsoluteResourcePath(UNRESOLVED_IMAGE_PATH).replace('\\', '/');
-    	    } else {
-    			return EMPTY_STRING;
-    	    }
-    	}
-	    
+
+		if (path == null) {
+			if (showUnresolvedImage) {
+				return FILE_PROTOCOL + SLASH + SLASH
+						+ getAbsoluteResourcePath(UNRESOLVED_IMAGE_PATH).replace('\\', '/');
+			} else {
+				return EMPTY_STRING;
+			}
+		}
+
 		IPath tagPath = new Path(path);
 		if (tagPath.isEmpty()) {
 			if (showUnresolvedImage) {
@@ -611,11 +584,8 @@ public class VpeStyleUtil {
 			}
 		}
 
-		String device = (tagPath.getDevice() == null ? tagPath.segment(0)
-				: tagPath.getDevice());
-		if (device != null
-				&& (HTTP_PROTOCOL.equalsIgnoreCase(device) || FILE_PROTOCOL
-						.equalsIgnoreCase(device))) {
+		String device = (tagPath.getDevice() == null ? tagPath.segment(0) : tagPath.getDevice());
+		if (device != null && (HTTP_PROTOCOL.equalsIgnoreCase(device) || FILE_PROTOCOL.equalsIgnoreCase(device))) {
 			if (showUnresolvedImage) {
 				return FILE_PROTOCOL + SLASH + SLASH
 						+ getAbsoluteResourcePath(UNRESOLVED_IMAGE_PATH).replace('\\', '/');
@@ -626,8 +596,7 @@ public class VpeStyleUtil {
 
 		File locFile = tagPath.toFile();
 		if (locFile.exists()) {
-			return FILE_PROTOCOL + SLASH + SLASH + SLASH
-					+ locFile.getAbsolutePath().replace('\\', '/');
+			return FILE_PROTOCOL + SLASH + SLASH + SLASH + locFile.getAbsolutePath().replace('\\', '/');
 		}
 
 		IEditorInput input = pageContext.getEditPart().getEditorInput();
@@ -636,8 +605,7 @@ public class VpeStyleUtil {
 		if (input instanceof ILocationProvider) {
 			imgPath = inputPath.append(path);
 		} else {
-			IPath basePath = tagPath.isAbsolute() ? getRootPath(input)
-					: inputPath;
+			IPath basePath = tagPath.isAbsolute() ? getRootPath(input) : inputPath;
 			if (basePath != null) {
 				imgPath = basePath.append(tagPath);
 			}
@@ -655,12 +623,10 @@ public class VpeStyleUtil {
 				ResourceReference resourceReference = null;
 				String pathCopy = path;
 				if (SLASH.equals(path.substring(0, 1))) {
-					resourceReference = pageContext
-							.getRuntimeAbsoluteFolder(file);
+					resourceReference = pageContext.getRuntimeAbsoluteFolder(file);
 					pathCopy = pathCopy.substring(1);
 				} else {
-					resourceReference = pageContext
-							.getRuntimeRelativeFolder(file);
+					resourceReference = pageContext.getRuntimeRelativeFolder(file);
 				}
 
 				String location = null;
@@ -675,15 +641,13 @@ public class VpeStyleUtil {
 				if (null != location) {
 					File f = new File(location + File.separator + pathCopy);
 					if (f.exists()) {
-						return FILE_PROTOCOL + SLASH + SLASH + SLASH
-								+ f.getPath().replace('\\', '/');
+						return FILE_PROTOCOL + SLASH + SLASH + SLASH + f.getPath().replace('\\', '/');
 					}
 				}
 			}
 		}
 		if (showUnresolvedImage) {
-			return FILE_PROTOCOL + SLASH + SLASH
-					+ getAbsoluteResourcePath(UNRESOLVED_IMAGE_PATH).replace('\\', '/');
+			return FILE_PROTOCOL + SLASH + SLASH + getAbsoluteResourcePath(UNRESOLVED_IMAGE_PATH).replace('\\', '/');
 		} else {
 			return path.replace('\\', '/');
 		}
@@ -692,22 +656,20 @@ public class VpeStyleUtil {
 	/**
 	 * Gets the root path of the web project.
 	 * 
-	 * @param input the input
+	 * @param input
+	 *            the input
 	 * 
 	 * @return the root path
 	 */
 	public static IPath getRootPath(IEditorInput input) {
 		IPath rootPath = null;
 		if (input instanceof IFileEditorInput) {
-			IProject project = ((IFileEditorInput) input).getFile()
-					.getProject();
+			IProject project = ((IFileEditorInput) input).getFile().getProject();
 			if (project != null && project.isOpen()) {
-				IModelNature modelNature = EclipseResourceUtil
-						.getModelNature(project);
+				IModelNature modelNature = EclipseResourceUtil.getModelNature(project);
 				if (modelNature != null) {
 					XModel model = modelNature.getModel();
-					String rootPathStr = WebProject.getInstance(model)
-							.getWebRootLocation();
+					String rootPathStr = WebProject.getInstance(model).getWebRootLocation();
 					if (rootPathStr != null) {
 						rootPath = new Path(rootPathStr);
 					} else {
@@ -720,31 +682,27 @@ public class VpeStyleUtil {
 		}
 		return rootPath;
 	}
-	
+
 	/**
 	 * refresh style element
+	 * 
 	 * @param visualDomBuilder
 	 * @param sourceElement
 	 * @param oldStyleNode
 	 * @return
 	 */
-	public static void refreshStyleElement(
-			VpeVisualDomBuilder visualDomBuilder,
-			VpeElementMapping elementMapping) {
+	public static void refreshStyleElement(VpeVisualDomBuilder visualDomBuilder, VpeElementMapping elementMapping) {
 
 		nsIDOMNode value = null;
 
 		/*
-		 * data property( of "style's" elementMapping ) contains Map<Object,nsIDOMNode>.
-		 * There is only one "style" visual element in this map. So we get this
-		 * element from map
+		 * data property( of "style's" elementMapping ) contains Map<Object,nsIDOMNode>. There is only one "style"
+		 * visual element in this map. So we get this element from map
 		 * 
-		 * there is potential danger in this manner of keeping "style"
-		 * element ( use property "data" of Object type )
+		 * there is potential danger in this manner of keeping "style" element ( use property "data" of Object type )
 		 */
-		 
-		Map<Object, nsIDOMNode> map = (Map<Object, nsIDOMNode>) elementMapping
-				.getData();
+
+		Map<Object, nsIDOMNode> map = (Map<Object, nsIDOMNode>) elementMapping.getData();
 
 		// get "style" element
 		if (map != null) {
@@ -765,7 +723,6 @@ public class VpeStyleUtil {
 			text = textNode.getNodeValue();
 		}
 
-		
 		nsIDOMNodeList list = value.getChildNodes();
 
 		// remove all children of style element
@@ -773,12 +730,11 @@ public class VpeStyleUtil {
 			value.removeChild(list.item(i));
 
 		// add new value of style element
-		value.appendChild(visualDomBuilder.getXulRunnerEditor()
-				.getDOMDocument().createTextNode(text));
+		value.appendChild(visualDomBuilder.getXulRunnerEditor().getDOMDocument().createTextNode(text));
 
 	}
-	
-    public static String getAbsoluteResourcePath(String resourcePathInPlugin) {
+
+	public static String getAbsoluteResourcePath(String resourcePathInPlugin) {
 		String pluginPath = VpePlugin.getPluginResourcePath();
 		IPath pluginFile = new Path(pluginPath);
 		File file = pluginFile.append(resourcePathInPlugin).toFile();
@@ -790,57 +746,54 @@ public class VpeStyleUtil {
 		}
 	}
 
+	/**
+	 * If the {@code size} ends with a digit, adds {@code "px"} to it.
+	 * 
+	 * @param size
+	 *            non-null value of a size attribute (e.g. {@code width}).
+	 */
+	public static String addPxIfNecessary(final String size) {
+		final String trimmed = size.trim();
+		int length = trimmed.length();
+		if (length > 0) {
+			final char lastChar = trimmed.charAt(length - 1);
+			if (Character.isDigit(lastChar)) {
+				return trimmed + PX_STRING;
+			}
+		}
 
-    /**
-     * If the {@code size} ends with a digit, adds {@code "px"} to it.
-     * 
-     * @param size non-null value of a size attribute (e.g. {@code width}).
-     */
-    public static String addPxIfNecessary(final String size) {
-    	final String trimmed = size.trim();
-    	int length = trimmed.length();
-    	if (length > 0) {
-    		final char lastChar = trimmed.charAt(length - 1);
-    		if (Character.isDigit(lastChar)) {
-    			return trimmed + PX_STRING;
-    		}
-    	}
+		return size;
+	}
 
-    	return size;
-    }
-    
-    /**
-     * Converts the argument to the form {@code "Xpx"},
-     * where {@code X=position}.
-     */
-    public static String toPxPosition(int position) {
+	/**
+	 * Converts the argument to the form {@code "Xpx"}, where {@code X=position}.
+	 */
+	public static String toPxPosition(int position) {
 		return Integer.toString(position) + PX_STRING;
 	}
-    
-    public static String processUrl(String url, IFile file) {
 
-		String resolvedUrl = url
-				.replaceFirst(
-						"^\\s*(\\#|\\$)\\{facesContext.externalContext.requestContextPath\\}", Constants.EMPTY); //$NON-NLS-1$
+	public static String processUrl(String url, IFile file) {
 
+		String resolvedUrl = url.replaceFirst(
+				"^\\s*(\\#|\\$)\\{facesContext.externalContext.requestContextPath\\}", Constants.EMPTY); //$NON-NLS-1$
 
-		resolvedUrl = ElService.getInstance().replaceEl(file, resolvedUrl);
+		resolvedUrl = ElService.replaceEl(file, resolvedUrl);
 
 		URI uri = null;
 		try {
 			uri = new URI(resolvedUrl);
 		} catch (URISyntaxException e) {
-	// here we process user input, and when user enter url, there possible that we will not be able parse it.
-	// so we just ignore this.
-	//		VpePlugin.getDefault().logWarning("Error in parsiong URI string", e); //$NON-NLS-1$
+			// here we process user input, and when user enter url, there possible that we will not be able parse it.
+			// so we just ignore this.
+			//		VpePlugin.getDefault().logWarning("Error in parsiong URI string", e); //$NON-NLS-1$
 		}
 
-		if ((uri != null) && (uri.isAbsolute())) {
+		if (uri != null && uri.isAbsolute()) {
 			return resolvedUrl;
 		}
-		
+
 		String decodedUrl = decodeUrl(resolvedUrl);
-		
+
 		Path path = new Path(decodedUrl);
 		if (decodedUrl.startsWith("/") //$NON-NLS-1$
 				&& path.segment(0).equals(file.getProject().getName())) {
@@ -851,15 +804,14 @@ public class VpeStyleUtil {
 		IPath location = FileUtil.getFile(decodedUrl, file).getLocation();
 		if (location != null) {
 			return pathToUrl(location);
-		} else {
-			return resolvedUrl;
 		}
+		return resolvedUrl;
 	}
 
 	private static String pathToUrl(IPath location) {
 		String fullFilePath = location.toPortableString();
 		try {
-			return new URI("file", "", "/" +  fullFilePath, null).toASCIIString();   //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
+			return new URI("file", "", "/" + fullFilePath, null).toASCIIString(); //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
 		} catch (URISyntaxException e) {
 			VpePlugin.getPluginLog().logError(e);
 			return Constants.FILE_PREFIX + fullFilePath;
@@ -876,29 +828,25 @@ public class VpeStyleUtil {
 		}
 		return decodedUrl;
 	}
-    
-    /**
-     * Applies CSS attributes {@code left:x;top:y;} to the specified
-     * {@code element}.
-     */
-    public static void moveElementTo(nsIDOMElement element, int x, int y) {
-    	nsIDOMCSSStyleDeclaration style	= VpeStyleUtil.getStyle(element);
-		style.setProperty(HTML.STYLE_PARAMETER_LEFT,
-				VpeStyleUtil.toPxPosition(x), HTML.STYLE_PRIORITY_IMPORTANT);
-		style.setProperty(HTML.STYLE_PARAMETER_TOP,
-				VpeStyleUtil.toPxPosition(y), HTML.STYLE_PRIORITY_IMPORTANT);
-    }
 
-    /**
-     * Applies CSS attribute {@code display} to the specified
-     * {@code element} according to the {@code visible} parameter.
-     */
-    public static void setElementVisible(nsIDOMElement element,
-    		boolean visible) {
-    	nsIDOMCSSStyleDeclaration style	= VpeStyleUtil.getStyle(element);
+	/**
+	 * Applies CSS attributes {@code left:x;top:y;} to the specified {@code element}.
+	 */
+	public static void moveElementTo(nsIDOMElement element, int x, int y) {
+		nsIDOMCSSStyleDeclaration style = VpeStyleUtil.getStyle(element);
+		style.setProperty(HTML.STYLE_PARAMETER_LEFT, VpeStyleUtil.toPxPosition(x), HTML.STYLE_PRIORITY_IMPORTANT);
+		style.setProperty(HTML.STYLE_PARAMETER_TOP, VpeStyleUtil.toPxPosition(y), HTML.STYLE_PRIORITY_IMPORTANT);
+	}
+
+	/**
+	 * Applies CSS attribute {@code display} to the specified {@code element} according to the {@code visible}
+	 * parameter.
+	 */
+	public static void setElementVisible(nsIDOMElement element, boolean visible) {
+		nsIDOMCSSStyleDeclaration style = VpeStyleUtil.getStyle(element);
 		style.setProperty(HTML.STYLE_PARAMETER_DISPLAY,
 				visible ? HTML.STYLE_VALUE_DEFAULT_DISPLAY
 						: HTML.STYLE_VALUE_NONE, HTML.STYLE_PRIORITY_IMPORTANT);
 
-    }
+	}
 }

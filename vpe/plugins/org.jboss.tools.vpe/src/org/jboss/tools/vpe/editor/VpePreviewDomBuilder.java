@@ -74,7 +74,7 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 			
 			//FIX FOR JBIDE-1568, added by Max Areshkau
 			try {
-		          if (ElService.getInstance().isELNode(getPageContext(),  sourceNode)) {
+		          if (ElService.isELNode(getPageContext(),  sourceNode)) {
                     final Node sourceNodeProxy =  VpeProxyUtil.createProxyForELExpressionNode(getPageContext(),
         					sourceNode);
     				try {

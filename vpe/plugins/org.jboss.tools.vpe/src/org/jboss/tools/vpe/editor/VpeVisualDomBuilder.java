@@ -173,7 +173,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		for (long i = len - 1; i >= 0; i--) {
 			getContentArea().removeChild(children.item(i));
 		}
-		VpeSourceDomBuilder sourceBuilder = pageContext.getSourceBuilder();
+		final VpeSourceDomBuilder sourceBuilder = pageContext.getSourceBuilder();
 		IDocument document = sourceBuilder.getStructuredTextViewer()
 				.getDocument();
 		if (document == null) {
@@ -184,12 +184,12 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		if (input instanceof IFileEditorInput) {
 			IFile file = ((IFileEditorInput) input).getFile();
 			if (file != null) {
-				includeStack.add(new VpeIncludeInfo(null, file, pageContext
-						.getSourceBuilder().getSourceDocument()));
+				pushIncludeStack(new VpeIncludeInfo(null, file, sourceBuilder.getSourceDocument()));
 			}
 		}
 
 		pageContext.refreshConnector();
+		pageContext.refreshResReferences();
 		
 		// FIXED FOR JBIDE-3799 by sdzmitrovich
 		// it code is not necessary because addExternalLinks() does the same but
@@ -263,7 +263,15 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	 */
 	private boolean addNode(Node sourceNode, nsIDOMNode visualNextNode, nsIDOMNode visualContainer) {
 		try {
-		nsIDOMNode visualNewNode = createNode(sourceNode, visualContainer);
+
+		nsIDOMNode visualNewNode = null;
+		
+		try {
+			visualNewNode = createNode(sourceNode, visualContainer);
+		} catch (Exception ex) {
+			VpePlugin.getPluginLog().logError(ex);
+		}
+			
 // Commented as fix for JBIDE-3012.	
 //		// Fix for JBIDE-1097
 //		try {
@@ -329,7 +337,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		if(visualEditor.getController().getSelectionManager()!=null) {
 			// reads and dispatch events, this code prevent eclipse
 			//from sleeping during processing big pages
-			getPageContext().processDisplayEvents();
+			VpePageContext.processDisplayEvents();
 		}
 		// JBIDE-675, checks if editor was disposed or not
 		if (getPageContext().getSourceBuilder() == null
@@ -357,7 +365,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		Node sourceNodeProxy = null;
 		// FIX FOR JBIDE-1568, added by Max Areshkau
 		try {
-			if (ElService.getInstance().isELNode(getPageContext(), sourceNode)) {
+			if (ElService.isELNode(getPageContext(), sourceNode)) {
 				sourceNodeProxy = VpeProxyUtil.createProxyForELExpressionNode(
 						getPageContext(), sourceNode);
 				try {
@@ -377,6 +385,11 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 						getVisualDocument());
 			}
 		} catch (XPCOMException ex) {
+			VpePlugin.getPluginLog().logError(ex);
+			VpeTemplate defTemplate = getTemplateManager().getDefTemplate();
+			creationData = defTemplate.create(getPageContext(), sourceNode,
+					getVisualDocument());
+		} catch (Exception ex) {
 			VpePlugin.getPluginLog().logError(ex);
 			VpeTemplate defTemplate = getTemplateManager().getDefTemplate();
 			creationData = defTemplate.create(getPageContext(), sourceNode,
@@ -476,14 +489,16 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			visualNewNode= span;
 		}
 		getPageContext().setCurrentVisualNode(visualOldContainer);
-		template.validate(getPageContext(), sourceNode, getVisualDocument(),
-				creationData);
+		try {
+			template.validate(getPageContext(), sourceNode, getVisualDocument(), creationData);
+		} catch (Exception ex) {
+			VpePlugin.getPluginLog().logError(ex);
+		}
 		getPageContext().setCurrentVisualNode(null);
 		if (border != null) {
 			return border;
-		} else {
-			return visualNewNode;
 		}
+		return visualNewNode;
 	}
 
 	protected void correctVisualAttribute(nsIDOMElement element) {
@@ -679,8 +694,12 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	private void setPseudoContent(VpeTemplate containerTemplate,
 			Node sourceContainer, nsIDOMNode visualContainer) {
 		if (containerTemplate != null) {
-			containerTemplate.setPseudoContent(pageContext, sourceContainer,
+			try {
+				containerTemplate.setPseudoContent(pageContext, sourceContainer,
 					visualContainer, getVisualDocument());
+			} catch (Exception ex) {
+				VpePlugin.getPluginLog().logError(ex);
+			}
 		} else {
 			try {
 				VpeDefaultPseudoContentCreator.getInstance().setPseudoContent(

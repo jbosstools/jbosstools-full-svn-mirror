@@ -224,9 +224,6 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 				visualNodeMap.put(this, new ModifyInfo(visualElement, curModify));
 			}
 		}
-		if (dependencyFromBundle) {
-			pageContext.addBundleDependency(sourceElement);
-		}
 		return elementInfo;
 	}
 
@@ -491,9 +488,6 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 //////////////////////////////////////////////
 	private void removeElement(VpePageContext pageContext, Element sourceElement, Map<VpeTemplate,?> visualNodeMap) {
 		if (creator != null) {
-			if (dependencyFromBundle) {
-				pageContext.removeBundleDependency(sourceElement);
-			}
 			creator.removeElement(pageContext, sourceElement, visualNodeMap);
 		}
 	}

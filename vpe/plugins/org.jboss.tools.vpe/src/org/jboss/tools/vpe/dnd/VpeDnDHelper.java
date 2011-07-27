@@ -97,7 +97,7 @@ public class VpeDnDHelper {
 	}
 	
 	public boolean isDropEnabled(VpePageContext pageContext, Node container, Node node){
-		if(!pageContext.isAbsolutePosition() && isAncestor(container, node)) return false;
+		if(!VpePageContext.isAbsolutePosition() && isAncestor(container, node)) return false;
 		if(isContainer){
 			if(enabledTags != null && enabledTags.size() > 0){
 				String name = node.getNodeType() == Node.ELEMENT_NODE ? node.getLocalName().toLowerCase() : node.getNodeName();

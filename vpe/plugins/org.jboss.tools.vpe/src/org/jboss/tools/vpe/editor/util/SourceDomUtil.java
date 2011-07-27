@@ -80,7 +80,7 @@ public class SourceDomUtil {
 		final String attrName = "rendered"; //$NON-NLS-1$
 		Element tempElement = sourceNode;
 		if (sourceNode.hasAttribute(attrName)) {
-			if (ElService.getInstance().isELNode(pageContext, sourceNode)) {
+			if (ElService.isELNode(pageContext, sourceNode)) {
 				tempElement = (Element) VpeProxyUtil
 						.createProxyForELExpressionNode(pageContext, sourceNode);
 			}

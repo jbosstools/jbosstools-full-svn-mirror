@@ -20,7 +20,7 @@ import org.w3c.dom.Node;
 
 /**
  * @author mareshkau
- *
+ * 
  */
 public class VpeNodeInvocationHandler implements InvocationHandler {
 
@@ -28,38 +28,38 @@ public class VpeNodeInvocationHandler implements InvocationHandler {
 	 * Node for which we process events
 	 */
 	private Node node;
-	
-	private VpePageContext pageContext; 
-		
+
+	private VpePageContext pageContext;
+
 	/**
 	 * @param node
 	 */
-	public VpeNodeInvocationHandler(VpePageContext pageContext,Node node) {
+	public VpeNodeInvocationHandler(VpePageContext pageContext, Node node) {
 		this.node = node;
 		this.pageContext = pageContext;
 	}
 
-	public Object invoke(Object proxy, Method method, Object[] args)
-			throws Throwable {
-		Object result = method.invoke(this.node, args);
-		if(result instanceof String) {
+	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+		Object result = method.invoke(node, args);
+		if (result instanceof String) {
 			String processedStr = (String) result;
 			result = replaceEL(processedStr);
-		} else if(result instanceof Attr) {
-			result = VpeProxyUtil.createProxyForELExpressionNode(this.pageContext,
-						(Node)result);
-		} else if(result instanceof NamedNodeMap) {
-			result = VpeProxyUtil.createProxyForNamedNodeMap(this.pageContext, (NamedNodeMap)result);
+		} else if (result instanceof Attr) {
+			result = VpeProxyUtil.createProxyForELExpressionNode(pageContext, (Node) result);
+		} else if (result instanceof NamedNodeMap) {
+			result = VpeProxyUtil.createProxyForNamedNodeMap(pageContext, (NamedNodeMap) result);
 		}
- 		return result;
+		return result;
 	}
+
 	/**
 	 * Replaced string with el value
+	 * 
 	 * @param toReplace
 	 * @return
 	 */
 	private String replaceEL(String toReplace) {
-		return ElService.getInstance().replaceElAndResources(this.pageContext, toReplace);
+		return ElService.replaceElAndResources(pageContext, toReplace);
 	}
 
 }
