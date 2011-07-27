@@ -5,11 +5,11 @@
 	<parent>
 		<groupId>org.jboss.tools</groupId>
 		<artifactId>deltacloud</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0.1-SNAPSHOT</version>
 	</parent>
 	<groupId>org.jboss.tools.deltacloud</groupId>
 	<artifactId>deltacloud.site</artifactId>
 	<name>deltacloud.site</name>
-	<version>0.0.1-SNAPSHOT</version>
+	
 	<packaging>eclipse-update-site</packaging>
 </project>

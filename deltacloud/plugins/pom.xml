@@ -5,11 +5,11 @@
 	<parent>
 		<groupId>org.jboss.tools</groupId>
 		<artifactId>deltacloud</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0.1-SNAPSHOT</version>
 	</parent>
 	<groupId>org.jboss.tools.deltacloud</groupId>
 	<artifactId>plugins</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	
 	<name>deltacloud.plugins</name>
 	<packaging>pom</packaging>
 	<modules>

@@ -5,10 +5,10 @@
 	<parent>
 		<groupId>org.jboss.tools.deltacloud</groupId>
 		<artifactId>plugins</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0.1-SNAPSHOT</version>
 	</parent>
 	<groupId>org.jboss.tools.deltacloud.plugins</groupId>
 	<artifactId>org.jboss.tools.deltacloud.docs</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	
 	<packaging>eclipse-plugin</packaging>
 </project>

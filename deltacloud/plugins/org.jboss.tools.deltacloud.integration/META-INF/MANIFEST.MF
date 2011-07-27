@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: DeltaCloud Integration (Experimental)
 Bundle-SymbolicName: org.jboss.tools.deltacloud.integration;singleton:=true
-Bundle-Version: 0.2.0.qualifier
+Bundle-Version: 1.0.1.qualifier
 Bundle-Vendor: Red Hat Inc.
 Bundle-Activator: org.jboss.tools.deltacloud.integration.DeltaCloudIntegrationPlugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
