@@ -98,7 +98,7 @@
 							<itemizedlist>
 								<listitem>
 									<para>
-										<emphasis>Edit</emphasis>: by clicking the button users can edit selected in the table of language message mappings lines. For more information look at the <xref linkend="edit_wizard"/> section.
+										<emphasis>Edit</emphasis>: by clicking the button users can edit the selected line in the language message mappings table. For more information look at the <xref linkend="edit_wizard"/> section.
 									</para>
 								</listitem>
 								<listitem>
