@@ -5,11 +5,11 @@
 	<parent>
 		<groupId>org.jboss.tools</groupId>
 		<artifactId>gwt</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0.2-SNAPSHOT</version>
 	</parent>
 	<groupId>org.jboss.tools.gwt</groupId>
 	<artifactId>features</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	
 	<name>gwt.features</name>
 	<packaging>pom</packaging>
 	<modules>

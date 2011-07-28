@@ -5,11 +5,11 @@
 	<parent>
 		<groupId>org.jboss.tools</groupId>
 		<artifactId>gwt</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0.2-SNAPSHOT</version>
 	</parent>
 	<groupId>org.jboss.tools.gwt</groupId>
 	<artifactId>gwt.site</artifactId>
 	<name>gwt.site</name>
-	<version>0.0.1-SNAPSHOT</version>
+	
 	<packaging>eclipse-update-site</packaging>
 </project>
