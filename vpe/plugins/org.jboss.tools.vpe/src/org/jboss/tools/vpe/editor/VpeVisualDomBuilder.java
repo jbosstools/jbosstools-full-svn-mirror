@@ -322,7 +322,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	 * @param visualOldContainer visual node, in which the caller plans to insert new visual node 
 	 * @return new visual node
 	 */
-	protected nsIDOMNode createNode(Node sourceNode,
+	public nsIDOMNode createNode(Node sourceNode,
 			nsIDOMNode visualOldContainer) {
 			
 		boolean registerFlag = isCurrentMainDocument();

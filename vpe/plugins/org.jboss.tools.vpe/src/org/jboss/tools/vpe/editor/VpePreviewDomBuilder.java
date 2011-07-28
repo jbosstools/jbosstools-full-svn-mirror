@@ -57,7 +57,7 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 	 * @return
 	 */
 	@Override
-	protected nsIDOMNode createNode(Node sourceNode, nsIDOMNode visualOldContainer) {
+	public nsIDOMNode createNode(Node sourceNode, nsIDOMNode visualOldContainer) {
 
 			Set<?> ifDependencySet = new HashSet();
 			
