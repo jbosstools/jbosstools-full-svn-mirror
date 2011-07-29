@@ -8,7 +8,7 @@
 	<simpara>
 		<revhistory>
 			<revision>
-				<revnumber>1</revnumber>
+				<revnumber>1-1</revnumber>
 				<date>Fri Apr 1 2011</date>
 				<author>
 					<firstname>Isaac</firstname>
@@ -22,7 +22,7 @@
 				</revdescription>
 			</revision>
 			<revision>
-				<revnumber>0</revnumber>
+				<revnumber>1-0</revnumber>
 				<date>Wed Jan 5 2011</date>
 				<author>
 					<firstname>Matthew</firstname>
