@@ -302,11 +302,11 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 
 		# TODO: JBIDE-8667 move current to previous; move next to current
 
-		# create folders if not already there (could be empty)
-		echo -e "mkdir ${JOB_NAME}" $DESTINATION/builds/staging.previous/ 
-		echo -e "mkdir ${JOB_NAME}.2" $DESTINATION/builds/staging.previous/ 
-
 		if [[ ${DESTINATION##*@*:*} == "" ]]; then # user@server, do remote op
+			# create folders if not already there (could be empty)
+			echo -e "mkdir ${JOB_NAME}" | sftp $DESTINATION/builds/staging.previous/
+			echo -e "mkdir ${JOB_NAME}.2" | sftp $DESTINATION/builds/staging.previous/
+
 			# purge contents of /builds/staging.previous/${JOB_NAME}.2 and remove empty dir
 			mkdir -p /tmp/${JOB_NAME}.2
 			rsync -arzq --delete /tmp/${JOB_NAME}.2 $DESTINATION/builds/staging.previous/
@@ -322,6 +322,9 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 			# move contents of /builds/staging/${JOB_NAME}.next into /builds/staging/${JOB_NAME}
 			echo -e "rename ${JOB_NAME}.next ${JOB_NAME}" | sftp $DESTINATION/builds/staging/
 		else # work locally
+			# create folders if not already there (could be empty)
+			mkdir -p $DESTINATION/builds/staging.previous/${JOB_NAME} $DESTINATION/builds/staging.previous/${JOB_NAME}.2
+
 			# purge contents of /builds/staging.previous/${JOB_NAME}.2 and remove empty dir
 			rm -fr $DESTINATION/builds/staging.previous/${JOB_NAME}.2/
 
