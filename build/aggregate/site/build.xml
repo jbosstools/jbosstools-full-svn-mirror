@@ -276,30 +276,49 @@ DEST = ${aggregate.zips.dir}/@{zipPath}
 					<echo level="verbose">Got ${aggregate.zips.dir}/compositeArtifacts.xml</echo>
 					<xmlproperty file="${aggregate.zips.dir}/compositeArtifacts.xml" validate="false" collapseAttributes="true" />
 					<echo level="verbose">Found ${repository.children.size} contained repos to search</echo>
+
+					<!-- counter variable -->
+					<var name="counter" value="" />
 					<!-- foreach entry repository.children.child.location -->
 					<for param="location" list="${repository.children.child.location}">
 						<sequential>
+							<var name="counter" value="${counter}0" />
+							<var name="i" unset="true"/>
+							<length property="i" string="${counter}" />
 							<if>
-								<available file="/home/hudson/static_build_env/jbds/builds/staging" type="dir" />
+								<not>
+									<contains string="@{location}" substring="/staging.previous/"/>
+								</not>
 								<then>
-									<propertyregex override="true" property="location.cleaned" defaultvalue="@{location}" input="@{location}" regexp="../../" replace="/home/hudson/static_build_env/jbds/builds/staging/" />
 									<if>
-										<not>
-											<available file="${location.cleaned}" />
-										</not>
+										<available file="/home/hudson/static_build_env/jbds/builds/staging" type="dir" />
 										<then>
-											<propertyregex override="true" property="location.cleaned" defaultvalue="@{location}" input="@{location}" regexp="../../" replace="http://download.jboss.org/jbosstools/builds/staging/" />
+											<propertyregex override="true" property="location.cleaned" defaultvalue="@{location}" input="@{location}" regexp="../../" replace="/home/hudson/static_build_env/jbds/builds/staging/" />
+											<if>
+												<not>
+													<available file="${location.cleaned}" />
+												</not>
+												<then>
+													<propertyregex override="true" property="location.cleaned" defaultvalue="@{location}" input="@{location}" regexp="../../" replace="http://download.jboss.org/jbosstools/builds/staging/" />
+												</then>
+											</if>
 										</then>
+										<else>
+											<propertyregex override="true" property="location.cleaned" defaultvalue="@{location}" input="@{location}" regexp="../../" replace="http://download.jboss.org/jbosstools/builds/staging/" />
+										</else>
 									</if>
+									<echo level="error">[${i}/${repository.children.size}] Site URL = ${location.cleaned} (@{location})</echo>
+									<fetchZipsFromList repo="${location.cleaned}" />
 								</then>
 								<else>
-									<propertyregex override="true" property="location.cleaned" defaultvalue="@{location}" input="@{location}" regexp="../../" replace="http://download.jboss.org/jbosstools/builds/staging/" />
+									<echo level="error">[${i}/${repository.children.size}] Skip @{location}</echo>
 								</else>
 							</if>
-							<echo level="error">Site URL = ${location.cleaned} (@{location})</echo>
-							<fetchZipsFromList repo="${location.cleaned}" />
 						</sequential>
 					</for>
+					<var name="counter" unset="true" />
+					<var name="i" unset="true"/>
+
 					<delete file="${aggregate.zips.dir}/compositeArtifacts.xml" quiet="true" />
 				</then>
 				<else>
