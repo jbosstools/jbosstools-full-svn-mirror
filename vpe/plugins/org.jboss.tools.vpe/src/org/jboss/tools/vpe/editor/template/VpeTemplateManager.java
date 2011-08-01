@@ -1053,6 +1053,7 @@ public class VpeTemplateManager {
 		}
 		if (template != null) {
 			template.init(templateElement, caseSensitive);
+			template = new VpeTemplateSafeWrapper(template);
 		}
 		return template;
 	}

@@ -525,7 +525,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		}
 
 		//Create a composite to the Editor
-		Composite cmpEd = new Composite (cmpEdTl, SWT.NATIVE);
+		final Composite cmpEd = new Composite (cmpEdTl, SWT.NATIVE);
 		GridLayout layoutEd = new GridLayout(1, false);
 		layoutEd.marginBottom = 0;
 		layoutEd.marginHeight = 1;
@@ -587,11 +587,15 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				}
 
 				public void completed(ProgressEvent event) {
-					if(MozillaEditor.this.getXulRunnerEditor().getWebBrowser()!=null){
-						//process this code only in case when editor hasn't been disposed,
-						//see https://jira.jboss.org/browse/JBIDE-6373
-						MozillaEditor.this.onLoadWindow();
-						xulRunnerEditor.getBrowser().removeProgressListener(this);
+					try {
+						if (MozillaEditor.this.getXulRunnerEditor().getWebBrowser() != null) {
+							//process this code only in case when editor hasn't been disposed,
+							//see https://jira.jboss.org/browse/JBIDE-6373
+							MozillaEditor.this.onLoadWindow();
+							xulRunnerEditor.getBrowser().removeProgressListener(this);
+						}
+					} catch (Exception ex) {
+						showXulRunnerError(cmpEd, ex);
 					}
 				}
 				
