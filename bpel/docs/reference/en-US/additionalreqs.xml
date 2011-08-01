@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <chapter id="install">
 	<title>Additional BPEL Requirements</title>
+	<para>
+		The following sections describe how to setup and isntall the BPEL engine into your JBoss Application Server (JBossAS). If you are running JBoss SOA-P then the following sections are already done for you.
+	</para>
 	<section>
 		<title>Additional Tools</title>
 		<para>For installation and configuring BPEL engine into a JBossAS environment you will need the following: </para>
@@ -18,7 +21,7 @@
 
 	</section>
 	<section id="installRuntime">
-		<title>Installation JBoss BPEL Runtime</title>
+		<title>Installing the JBoss BPEL Runtime</title>
 		<itemizedlist>
 			<listitem>
 				<para>Unpack the JBossAS installation archive into the required location.</para>
