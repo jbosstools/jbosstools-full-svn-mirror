@@ -15,7 +15,7 @@
 			</listitem>
 			<listitem>
 				<para>
-					Full BPEL Editor support with installation of JBoss Developer Studio 4.1 and through the Extras site for upgrades from previous releases. To access this plug-in when upgrading from a previous version of JBoss Developer Studio, add the JBoss Developer Studio Extras site to your installation; see the Getting Started Guide for further information.
+					Full BPEL Editor support is included with installation of JBoss Developer Studio 4.1, and through the Update site for upgrading from previous releases. To access this plug-in when upgrading from a previous version of JBoss Developer Studio, add the JBoss Developer Studio Update site to your installation; see the Getting Started Guide for further information.
 				</para>
 			</listitem>
 		</itemizedlist>
