@@ -300,21 +300,27 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 		#  echo -e "rmdir foobar" | sftp tools@filemgmt.jboss.org:/downloads_htdocs/tools/builds/staging.previous/
 		#  rmdir /tmp/foobar
 
-		# TODO: JBIDE-8667 move current to previous; move next to current
-
+		# JBIDE-8667 move current to previous; move next to current
 		if [[ ${DESTINATION##*@*:*} == "" ]]; then # user@server, do remote op
 			# create folders if not already there (could be empty)
 			echo -e "mkdir ${JOB_NAME}" | sftp $DESTINATION/builds/staging.previous/
-			echo -e "mkdir ${JOB_NAME}.2" | sftp $DESTINATION/builds/staging.previous/
+			#echo -e "mkdir ${JOB_NAME}.2" | sftp $DESTINATION/builds/staging.previous/
 
-			# purge contents of /builds/staging.previous/${JOB_NAME}.2 and remove empty dir
-			mkdir -p /tmp/${JOB_NAME}.2
-			rsync -arzq --delete /tmp/${JOB_NAME}.2 $DESTINATION/builds/staging.previous/
-			echo -e "rmdir ${JOB_NAME}.2" | sftp $DESTINATION/builds/staging.previous/
-			rmdir /tmp/${JOB_NAME}.2
+			# IF using .2 folders, purge contents of /builds/staging.previous/${JOB_NAME}.2 and remove empty dir
+			# NOTE: comment out next section - should only purge one staging.previous/* folder
+			#mkdir -p /tmp/${JOB_NAME}.2
+			#rsync -arzq --delete /tmp/${JOB_NAME}.2 $DESTINATION/builds/staging.previous/
+			#echo -e "rmdir ${JOB_NAME}.2" | sftp $DESTINATION/builds/staging.previous/
+			#rmdir /tmp/${JOB_NAME}.2
+
+			# OR, purge contents of /builds/staging.previous/${JOB_NAME} and remove empty dir
+			mkdir -p /tmp/${JOB_NAME}
+			rsync -arzq --delete /tmp/${JOB_NAME} $DESTINATION/builds/staging.previous/
+			echo -e "rmdir ${JOB_NAME}" | sftp $DESTINATION/builds/staging.previous/
+			rmdir /tmp/${JOB_NAME}
 
 			# move contents of /builds/staging.previous/${JOB_NAME} into /builds/staging.previous/${JOB_NAME}.2
-			echo -e "rename ${JOB_NAME} ${JOB_NAME}.2" | sftp $DESTINATION/builds/staging.previous/
+			#echo -e "rename ${JOB_NAME} ${JOB_NAME}.2" | sftp $DESTINATION/builds/staging.previous/
 
 			# move contents of /builds/staging/${JOB_NAME} into /builds/staging.previous/${JOB_NAME}
 			echo -e "rename ${JOB_NAME} ../staging.previous/${JOB_NAME}" | sftp $DESTINATION/builds/staging/
@@ -323,13 +329,18 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 			echo -e "rename ${JOB_NAME}.next ${JOB_NAME}" | sftp $DESTINATION/builds/staging/
 		else # work locally
 			# create folders if not already there (could be empty)
-			mkdir -p $DESTINATION/builds/staging.previous/${JOB_NAME} $DESTINATION/builds/staging.previous/${JOB_NAME}.2
+			mkdir -p $DESTINATION/builds/staging.previous/${JOB_NAME}
+			#mkdir -p $DESTINATION/builds/staging.previous/${JOB_NAME}.2
 
 			# purge contents of /builds/staging.previous/${JOB_NAME}.2 and remove empty dir
-			rm -fr $DESTINATION/builds/staging.previous/${JOB_NAME}.2/
+			# NOTE: comment out next section - should only purge one staging.previous/* folder
+			#rm -fr $DESTINATION/builds/staging.previous/${JOB_NAME}.2/
+			
+			# OR, purge contents of /builds/staging.previous/${JOB_NAME} and remove empty dir
+			rm -fr $DESTINATION/builds/staging.previous/${JOB_NAME}/
 
 			# move contents of /builds/staging.previous/${JOB_NAME} into /builds/staging.previous/${JOB_NAME}.2
-			mv $DESTINATION/builds/staging.previous/${JOB_NAME} $DESTINATION/builds/staging.previous/${JOB_NAME}.2
+			#mv $DESTINATION/builds/staging.previous/${JOB_NAME} $DESTINATION/builds/staging.previous/${JOB_NAME}.2
 
 			# move contents of /builds/staging/${JOB_NAME} into /builds/staging.previous/${JOB_NAME}
 			mv $DESTINATION/builds/staging/${JOB_NAME} $DESTINATION/builds/staging.previous/${JOB_NAME}
@@ -354,7 +365,7 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 <children size='3'>
 <child location='../../../staging/${JOB_NAME}/all/repo/'/>
 <child location='../../../staging.previous/${JOB_NAME}/all/repo/'/>
-<child location='../../../staging.previous/${JOB_NAME}.2/all/repo/'/>
+<!-- <child location='../../../staging.previous/${JOB_NAME}.2/all/repo/'/> -->
 </children>
 </repository>"
 		echo $metadata >> ${STAGINGDIR}/all/compositeContent.xml
