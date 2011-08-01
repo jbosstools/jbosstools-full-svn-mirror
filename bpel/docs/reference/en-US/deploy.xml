@@ -25,8 +25,11 @@
                 <para><emphasis><property>BPEL Project</property></emphasis>: Click  the <property>Browse...</property> button to select the BPEL project in your workspace which you want to deploy to the runtime.
                     Please note, that you should select the <property>bpelContent</property> folder in your new BPEL project as a value of <property>BPEL Project</property> field because the bpel-deploy.xml should be created in this place.
                 </para>
-                <para><emphasis><property>File name</property></emphasis>: The default value is bpel-deploy.xml. Please, don't change it.</para>
-                <para>Click on <property>Finish</property> button to close the wizard and a new bpel-deploy.xml file will be created.</para>
+				<para>
+                    <emphasis>
+                        <property>File name</property>
+                    </emphasis>: The default value is <filename>bpel-deploy.xml</filename>. Please, don't change it.</para>
+				<para>Click on <property>Finish</property> button to close the wizard and a new <filename>bpel-deploy.xml</filename> file will be created.</para>
                 <figure>
                     <title>New BPEL Deploy file Wizard</title>
                         <mediaobject>
@@ -37,7 +40,7 @@
                 </figure>                
             </listitem>
             <listitem>
-                <para>Double-click the bpel-deploy.xml file to open it in ODE Descriptor Deployment Editor.
+				<para>Double-click the <filename>bpel-deploy.xml</filename> file to open it in ODE Descriptor Deployment Editor.
                     In the <property>Inbound Interfaces</property> section, click the 
                     <property>Associated Port</property> column and select <property>HelloWorldProcessPort</property>
                      in the dropdown box.The <property>Related Service</property> and <property>Binding Used</property> 
@@ -77,7 +80,7 @@
                 </figure>                
             </listitem>
             <listitem>
-                <para>Select <property>JBoss AS 5.1 </property>as a server type. </para>
+				<para>Select <property>JBoss AS 5.1 </property> or <property>JBoss SOA-P</property> as the server type. </para>
                 <note>
                     <para>Please note, that only JBoss As 5.1 or higher version supports BPEL.</para>
                 </note>
@@ -124,9 +127,9 @@
                 </figure>                 
             </listitem>            
         </itemizedlist>  
-        <para>If there's anything we didn't cover or you can't figure out, please feel free to visit our <ulink
+        <para condition="jbt">If there is anything that was not covered, visit our <ulink
             url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201"
             >JBoss Tools Users Forum</ulink> to ask questions.
-            There we are also waiting for your suggestions and comments.</para>      
+				There we are also waiting for your suggestions and comments.</para>    
     </section>
 </chapter>

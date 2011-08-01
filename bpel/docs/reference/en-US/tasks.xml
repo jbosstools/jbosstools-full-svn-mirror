@@ -405,7 +405,7 @@
 		<section id="createdeploy">
 			<title>Creating a deploy.xml file</title>
 			<para>
-				If you want to deploy a BPEL project to the JBoss BPEL Runtime, a <filename>deploy.xml</filename> file needs to be created. The steps below show you how to create this file in JBDS:
+				If you want to deploy a BPEL project to the JBoss BPEL Runtime, a <filename>deploy.xml</filename> file needs to be created. The steps below show you how to create this file:
       </para>
 			<itemizedlist>
 				<listitem>
@@ -512,7 +512,7 @@
 							</imageobject>
 						</mediaobject>
 					</figure>
-					<para>Read the <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/as/html_single/index.html">JBoss Server Manager Reference Guide</ulink> for more detail on this process.</para>
+					<para condition="jbt">Read the <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/as/html_single/index.html">JBoss Server Manager Reference Guide</ulink> for more detail on this process.</para>
 				</listitem>
 				<listitem>
 					<para>You can enter the link <ulink url="http://localhost:8080/bpel-console/app.html">http://localhost:8080/bpel-console/app.html</ulink> in your web browser to access the deployed processes.</para>
@@ -526,7 +526,7 @@
 					</figure>
 				</listitem>
 			</itemizedlist>
-			<para>
+			<para condition="jbt">
 				Please visit the <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201">JBoss Tools Users Forum</ulink> for more information and assistance.
 			</para>
 		</section>
