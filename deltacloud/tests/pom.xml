@@ -14,6 +14,7 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>org.jboss.tools.deltacloud.test</module>
+		<module>org.jboss.tools.deltacloud.ui.bot.test</module>
 	</modules>
 </project>
 	
