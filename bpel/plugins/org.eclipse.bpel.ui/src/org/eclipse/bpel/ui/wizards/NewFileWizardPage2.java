@@ -86,16 +86,23 @@ public class NewFileWizardPage2 extends WizardPage {
 		if (resource instanceof IContainer) {
 			IContainer container = (IContainer)resource;
 			// https://issues.jboss.org/browse/JBIDE-8591
-			setMessage(null);
-			if (!ModuleCoreNature.isFlexibleProject(resource.getProject())) {
-				setMessage(Messages.NewFileWizard_Not_A_Faceted_Project, WizardPage.WARNING);
-//				return false;
-			}
 			
 			if ( container.findMember(processName +".bpel") != null ) { //$NON-NLS-1$
 				setMessage(Messages.NewFileWizardPage1_12, WizardPage.ERROR);
 				return false;
 			}
+			
+			if (!ModuleCoreNature.isFlexibleProject(resource.getProject())) {
+				setMessage(Messages.NewFileWizard_Not_A_Faceted_Project, WizardPage.WARNING);
+     			return true;
+			}
+			
+			if (!container.equals(NewFileWizard.getBPELContentFolder(container.getProject()))) {
+				setMessage(Messages.NewFileWizard_Not_A_BPELContent_Folder, WizardPage.WARNING);
+				return true;
+			}
+			
+			setMessage(null);
 			return true;
 		}
 		return false;

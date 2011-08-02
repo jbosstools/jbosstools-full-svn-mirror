@@ -59,6 +59,8 @@ public class Messages extends NLS {
 	public static String NewFileWizardPage2_Name;
 	// https://issues.jboss.org/browse/JBIDE-8591
 	public static String NewFileWizard_Not_A_Faceted_Project;
+	
+	public static String NewFileWizard_Not_A_BPELContent_Folder;
 	public static String NewFileWizard_WSDLCustomPage_Name;
 	public static String NewFileWizard_WSDLCustomPage_Title;
 	public static String NewFileWizard_WSDLCustomPage_Description;
