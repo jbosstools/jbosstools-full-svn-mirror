@@ -8,5 +8,8 @@
 	<feature url="features/org.jboss.tools.flow.common.feature_0.0.0.jar" id="org.jboss.tools.flow.common.feature" version="0.0.0">
 		<category name="JBoss Tools flow Nightly Build Update Site"/>
 	</feature>
+	<feature url="features/org.jboss.tools.flow.common.test.feature_0.0.0.jar" id="org.jboss.tools.flow.common.test.feature" version="0.0.0">
+		<category name="JBoss Tools flow Nightly Build Update Site"/>
+	</feature>
 
 </site>
