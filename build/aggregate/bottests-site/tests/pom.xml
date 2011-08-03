@@ -7,7 +7,10 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<groupId>org.jboss.tools.bottests</groupId>
-	<artifactId>org.jboss.tools.bottests.site</artifactId>
+	<artifactId>org.jboss.tools.bottests.tests</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>eclipse-update-site</packaging>
+	<packaging>pom</packaging>
+	<modules>
+		<module>org.jboss.tools.drools.ui.bot.test</module>
+	</modules>
 </project>

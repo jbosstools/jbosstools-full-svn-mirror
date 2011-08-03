@@ -7,9 +7,8 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<groupId>org.jboss.tools.bottests</groupId>
-	<artifactId>features</artifactId>
+	<artifactId>org.jboss.tools.bottests.features</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>bottests.features</name>
 	<packaging>pom</packaging>
 	<modules>
 		<module>org.jboss.tools.bot.test.feature</module>

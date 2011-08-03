@@ -6,9 +6,8 @@
 		<artifactId>bottests</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<groupId>org.jboss.tools</groupId>
-	<artifactId>org.jboss.tools.tests.plugins</artifactId>
-	<name>org.jboss.tools.tests.plugins</name>
+	<groupId>org.jboss.tools.bottests</groupId>
+	<artifactId>org.jboss.tools.bottests.plugins</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<modules>

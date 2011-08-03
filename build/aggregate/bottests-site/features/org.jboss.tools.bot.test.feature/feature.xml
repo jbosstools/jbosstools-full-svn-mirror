@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<feature id="org.jboss.tools.bot.test.feature" label="Tools Bot Tests" version="3.1.0.qualifier">
+<feature id="org.jboss.tools.bot.test.feature" label="JBoss Tools Bot Tests" version="3.1.0.qualifier">
 
 	<description url="http://www.jboss.org/tools">
-      JBossTools unit tests feature
+      JBoss Tools Bot Tests
    </description>
 
 	<copyright>
@@ -26,15 +26,16 @@ Raleigh NC 27606 USA.
    </license>
 
 	<!-- depends on upstream components being built, 
-	 including tests, common, bpel, cdi, deltacloud, etc. -->
-	<requires>
-		<import plugin="org.jboss.tools.tests" />
-		<import plugin="org.jboss.tools.ui.bot.ext" />
-		<import plugin="org.jboss.tools.ui.bot.ext.test" />
-	</requires>
+	 including tests, common, bpel, cdi, deltacloud, etc. 
+	 Can source these from http://download.jboss.org/jbosstools/builds/staging/_composite_/trunk/
+	 -->
 
 	<!-- bpmn is not yet being built so this can't be available upstream -->
 <!--	<plugin id="org.jboss.tools.bpmn.ui.bot.test" download-size="0" install-size="0" version="0.0.0" /> -->
+
+	<plugin id="org.jboss.tools.tests" download-size="0" install-size="0" version="0.0.0" />
+	<plugin id="org.jboss.tools.ui.bot.ext" download-size="0" install-size="0" version="0.0.0" />
+	<plugin id="org.jboss.tools.ui.bot.ext.test" download-size="0" install-size="0" version="0.0.0" />
 
 	<plugin id="org.jboss.tools.bpel.ui.bot.test" download-size="0" install-size="0" version="0.0.0" />
 	<plugin id="org.jboss.tools.cdi.bot.test" download-size="0" install-size="0" version="0.0.0" />  
@@ -45,7 +46,7 @@ Raleigh NC 27606 USA.
 	<plugin id="org.jboss.tools.jbpm.ui.bot.test" download-size="0" install-size="0" version="0.0.0" /> 
 	<plugin id="org.jboss.tools.jsf.ui.bot.test" download-size="0" install-size="0" version="0.0.0" /> 
 	<plugin id="org.jboss.tools.jst.ui.bot.test" download-size="0" install-size="0" version="0.0.0" /> 
-<!--	<plugin id="org.jboss.tools.maven.ui.bot.test" download-size="0" install-size="0" version="0.0.0" />  -->
+	<plugin id="org.jboss.tools.maven.ui.bot.test" download-size="0" install-size="0" version="0.0.0" />
 	<plugin id="org.jboss.tools.modeshape.rest.ui.bot.test" download-size="0" install-size="0" version="0.0.0" />
 	<plugin id="org.jboss.tools.seam.ui.bot.test" download-size="0" install-size="0" version="0.0.0" /> 
 	<plugin id="org.jboss.tools.smooks.ui.bot.test" download-size="0" install-size="0" version="0.0.0" /> 
