@@ -65,11 +65,11 @@
 	</feature>
 	<feature url="features/org.jboss.tools.ws.feature_0.0.0.jar" id="org.jboss.tools.ws.feature" version="0.0.0">
 		<category name="AllTools" />
-		<category name="SOATools" />
+		<category name="WebTools" />
 	</feature>
 	<feature url="features/org.jboss.tools.ws.jaxrs.feature_0.0.0.jar" id="org.jboss.tools.ws.jaxrs.feature" version="0.0.0">
 		<category name="AllTools" />
-		<category name="SOATools" />
+		<category name="WebTools" />
 	</feature>
 	<feature url="features/org.jboss.tools.portlet.feature_0.0.0.jar" id="org.jboss.tools.portlet.feature" version="0.0.0">
 		<category name="AllTools" />
