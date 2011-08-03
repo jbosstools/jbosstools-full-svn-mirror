@@ -84,7 +84,7 @@ As well as to demonstrate the needed  minimal files to make a basic ESB componen
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50</property>
-				<property name="eclipse-projects">webservice_consumer1</property>
+				<property name="eclipse-projects">webservice_consumer1, webservice_consumer1_client</property>
 				<property name="required-components">esb</property>
 				<property name="description">This project example requires the JBoss SOA-P 5.0 and the runtime name should be "jboss-soa-p.5.0 Runtime"</property>
 			</fix>
