@@ -3,11 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.jboss.tools</groupId>
-		<artifactId>bottests</artifactId>
+		<artifactId>bot.tests</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<groupId>org.jboss.tools.bottests</groupId>
-	<artifactId>org.jboss.tools.bottests.site</artifactId>
+	<groupId>org.jboss.tools.bot.tests</groupId>
+	<artifactId>org.jboss.tools.bot.tests.site</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>eclipse-update-site</packaging>
 </project>
