@@ -16,6 +16,7 @@
 		<module>org.jboss.tools.smooks.core.test</module>
 		<module>org.jboss.tools.smooks.templating.test</module>
 		<module>org.jboss.tools.smooks.ui.test</module>
+		<module>org.jboss.tools.smooks.ui.bot.test</module>
 	</modules>
 </project>
 	
