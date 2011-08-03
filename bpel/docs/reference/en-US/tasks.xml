@@ -565,7 +565,7 @@
 			Enter a name for the new WSDL property and its type. Either an XSD simple type or an XML Schema element. 
 		</para>
 		<para>
-			Next, click the <guibutton>Browse”</guibutton> button to select a type. This will display the <guilabel>Type Selection</guilabel> dialog. 
+			Next, click the <guibutton>Browse</guibutton> button to select a type. This will display the <guilabel>Type Selection</guilabel> dialog. 
 		</para>
 		<para>
 			Click <guilabel>New</guilabel> in the <guilabel>Aliases</guilabel> section to create a new WSDL property alias.
