@@ -18,19 +18,10 @@
 		<module>features</module>
 		<module>site</module>
 	</modules>
+<!--	to build against locally built sources, use:
+		mvn clean install
 
-	<repositories>
-		<repository>
-			<id>jbosstools-nightly-staging-composite</id>
-			<url>${jbosstools-nightly-staging-composite}</url>
-			<layout>p2</layout>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-	</repositories>
-
+	to build against http://download.jboss.org/jbosstools/builds/staging/_composite_/trunk/, use:
+		mvn clean install -Pjbosstools-nightly-staging-composite
+-->
 </project>
