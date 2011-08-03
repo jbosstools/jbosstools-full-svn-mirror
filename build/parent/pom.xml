@@ -12,8 +12,10 @@
 	</modules>
 
 	<properties>
-		<!--tychoVersion>0.10.0-SNAPSHOT</tychoVersion -->
-		<tychoVersion>0.10.0</tychoVersion>
+		<!-- to build w/ latest 0.13.0-SNAPSHOT, run `mvn install -DtychoVersion=0.13.0-SNAPSHOT`, or uncomment this property:
+		<tychoVersion>0.13.0-SNAPSHOT</tychoVersion>
+		-->
+		<tychoVersion>0.12.0</tychoVersion>
 		<scmBranch>trunk</scmBranch>
 		<BUILD_ALIAS>M3</BUILD_ALIAS>
 		<memoryOptions1>-Xms512m -Xmx1024m -XX:PermSize=256m</memoryOptions1>
@@ -96,7 +98,7 @@
 			</plugin>
 
 			<plugin>
-				<groupId>org.sonatype.tycho</groupId>
+				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-maven-plugin</artifactId>
 				<version>${tychoVersion}</version>
 				<extensions>true</extensions>
@@ -706,6 +708,20 @@
 		</repository -->
 	</repositories>
 	
+	<!-- Additional m2 repos to resolve things like org.eclipse.tycho:tycho-maven-plugin:0.13.0-SNAPSHOT -->
+	<pluginRepositories>
+		<pluginRepository>
+			<id>sonatype-public-grid</id>
+			<name>sonatype-public-grid</name>
+			<url>https://repository.sonatype.org/content/groups/sonatype-public-grid</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>repository.sonatype.org-snapshots</id>
+			<name>repository.sonatype.org-snapshots</name>
+			<url>https://repository.sonatype.org/content/repositories/snapshots</url>
+		</pluginRepository>
+	</pluginRepositories>
+
 	<!-- commented to check if it is added by default on hudson but with https:// -->
 	<!-- pluginRepositories>
 		<pluginRepository>
