@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.jboss.tools</groupId>
+		<artifactId>org.jboss.tools.parent.pom</artifactId>
+		<version>0.0.2-SNAPSHOT</version>
+		<relativePath>../build/parent/pom.xml</relativePath>
+	</parent>
+	<groupId>org.jboss.tools</groupId>
+	<artifactId>webtools</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>webtools.all</name>
+	<packaging>pom</packaging>
+	<modules>
+		<module>site</module>
+	</modules>
+<!--	to build against locally built sources, use:
+		mvn clean install
+
+	to build against http://download.jboss.org/jbosstools/builds/staging/_composite_/trunk/, use:
+		mvn clean install -Pjbosstools-nightly-staging-composite
+-->
+</project>
