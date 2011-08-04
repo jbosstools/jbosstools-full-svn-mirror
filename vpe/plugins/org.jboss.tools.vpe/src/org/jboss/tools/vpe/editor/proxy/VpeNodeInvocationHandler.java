@@ -13,7 +13,6 @@ package org.jboss.tools.vpe.editor.proxy;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
-import org.jboss.tools.vpe.editor.util.ElService;
 import org.w3c.dom.Attr;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -59,7 +58,7 @@ public class VpeNodeInvocationHandler implements InvocationHandler {
 	 * @return
 	 */
 	private String replaceEL(String toReplace) {
-		return ElService.replaceElAndResources(pageContext, toReplace);
+		return pageContext.getElService().replaceElAndResources(toReplace);
 	}
 
 }

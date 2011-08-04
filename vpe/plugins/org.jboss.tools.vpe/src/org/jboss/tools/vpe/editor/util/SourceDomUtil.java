@@ -80,7 +80,7 @@ public class SourceDomUtil {
 		final String attrName = "rendered"; //$NON-NLS-1$
 		Element tempElement = sourceNode;
 		if (sourceNode.hasAttribute(attrName)) {
-			if (ElService.isELNode(pageContext, sourceNode)) {
+			if (pageContext.getElService().isELNode(sourceNode)) {
 				tempElement = (Element) VpeProxyUtil
 						.createProxyForELExpressionNode(pageContext, sourceNode);
 			}
@@ -117,7 +117,7 @@ public class SourceDomUtil {
 		if (node instanceof Element) {
 			String templateName = VpeTemplateManager.getInstance()
 					.getTemplateName(pageContext, node);
-			return "f:facet".equals(templateName);
+			return "f:facet".equals(templateName); //$NON-NLS-1$
 		} else {
 			return false;
 		}

@@ -56,11 +56,9 @@ import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.vpe.editor.template.VpeToggableTemplate;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionException;
 import org.jboss.tools.vpe.editor.util.Docbook;
-import org.jboss.tools.vpe.editor.util.ElService;
 import org.jboss.tools.vpe.editor.util.FaceletUtil;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.TextUtil;
-import org.jboss.tools.vpe.editor.util.VisualDomUtil;
 import org.jboss.tools.vpe.editor.util.VpeStyleUtil;
 import org.jboss.tools.vpe.editor.util.XmlUtil;
 import org.jboss.tools.vpe.resref.core.CSSReferenceList;
@@ -68,9 +66,6 @@ import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
 import org.mozilla.interfaces.nsIDOMAttr;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
-import org.mozilla.interfaces.nsIDOMEvent;
-import org.mozilla.interfaces.nsIDOMEventTarget;
-import org.mozilla.interfaces.nsIDOMNSEvent;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
 import org.mozilla.interfaces.nsIDOMText;
@@ -226,6 +221,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		super.dispose();
 
 		pageContext.clearAll();
+		pageContext.resetElService();
 		// FIXED FOR JBIDE-3799 by sdzmitrovich, moved calling of this method to buid dom 
 		// refreshExternalLinks();
 		pageContext.getBundle().refreshRegisteredBundles();
@@ -365,7 +361,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		Node sourceNodeProxy = null;
 		// FIX FOR JBIDE-1568, added by Max Areshkau
 		try {
-			if (ElService.isELNode(getPageContext(), sourceNode)) {
+			if (getPageContext().getElService().isELNode(sourceNode)) {
 				sourceNodeProxy = VpeProxyUtil.createProxyForELExpressionNode(
 						getPageContext(), sourceNode);
 				try {

@@ -25,7 +25,6 @@ import org.jboss.tools.vpe.editor.proxy.VpeProxyUtil;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
-import org.jboss.tools.vpe.editor.util.ElService;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.xpcom.XPCOMException;
@@ -74,7 +73,7 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 			
 			//FIX FOR JBIDE-1568, added by Max Areshkau
 			try {
-		          if (ElService.isELNode(getPageContext(),  sourceNode)) {
+		          if (getPageContext().getElService().isELNode(sourceNode)) {
                     final Node sourceNodeProxy =  VpeProxyUtil.createProxyForELExpressionNode(getPageContext(),
         					sourceNode);
     				try {

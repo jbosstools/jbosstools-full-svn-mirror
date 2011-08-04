@@ -12,8 +12,10 @@ package org.jboss.tools.vpe.editor.context;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.swt.widgets.Display;
@@ -31,6 +33,7 @@ import org.jboss.tools.vpe.editor.VpeSourceDomBuilder;
 import org.jboss.tools.vpe.editor.VpeVisualDomBuilder;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.util.ElService;
+import org.jboss.tools.vpe.editor.util.ElServiceUtil;
 import org.jboss.tools.vpe.editor.util.XmlUtil;
 import org.jboss.tools.vpe.resref.core.AbsoluteFolderReferenceList;
 import org.jboss.tools.vpe.resref.core.RelativeFolderReferenceList;
@@ -48,6 +51,7 @@ public class VpePageContext implements IVisualContext {
 	public static final String CUSTOM_ELEMENTS_ATTRS = "customElementsAttributes"; //$NON-NLS-1$
 	public static final String CURRENT_VISUAL_NODE = "currentVisualNode"; //$NON-NLS-1$
 	public static final String RES_REFERENCES = "resourceReferences"; //$NON-NLS-1$
+	public static final String EL_EXPR_SERVICE = "elExprService"; //$NON-NLS-1$
 	
 	private BundleMap bundle;
 	private VpeSourceDomBuilder sourceBuilder;
@@ -58,6 +62,12 @@ public class VpePageContext implements IVisualContext {
 	public VpePageContext(BundleMap bundle, VpeEditorPart editPart) {
 		this.bundle = bundle;
 		this.editPart = editPart;
+		resetElService();
+	}
+	
+	public void resetElService() {
+		// set default el expression service
+		setElService(new ElService(this));
 	}
 
 	public VpeSourceDomBuilder getSourceBuilder() {
@@ -79,6 +89,22 @@ public class VpePageContext implements IVisualContext {
 	 */
 	public void addAttributeInCustomElementsMap(String key, String value) {
 		getCustomElementsAttributes().put(key, value);
+	}
+
+	public void removeAttributeFromCustomElementsMap(String key) {
+		getCustomElementsAttributes().remove(key);
+	}
+
+	public boolean containsAttributeInCustomElementsMap(String key) {
+		return getCustomElementsAttributes().containsKey(key);
+	}
+
+	public String getAttributefromCustomElementsMapValue(String key) {
+		return getCustomElementsAttributes().get(key);
+	}
+
+	public Set<String> getKeysCustomElementsAttributes() {
+		return new HashSet<String>(getCustomElementsAttributes().keySet());
 	}
 
 	/**
@@ -112,8 +138,8 @@ public class VpePageContext implements IVisualContext {
 			final VpeIncludeInfo vii = visualBuilder.getCurrentIncludeInfo();
 			if (vii != null && (vii.getStorage() instanceof IFile)) {
 				final IFile file = (IFile)vii.getStorage();
-				ResourceReference[] rr = ElService.getAllResources(file);
-				rr = ElService.sortReferencesByScope2(rr);
+				ResourceReference[] rr = ElServiceUtil.getAllResources(file);
+				rr = ElServiceUtil.sortReferencesByScope2(rr);
 				putValue(RES_REFERENCES, rr);
 			}
 		}
@@ -254,6 +280,21 @@ public class VpePageContext implements IVisualContext {
 	}
 
 	/**
+	 * @return the elService
+	 */
+	public ElService getElService() {
+		return (ElService)getValue(EL_EXPR_SERVICE);
+	}
+
+	/**
+	 * @param elService
+	 *            the elService to set
+	 */
+	public void setElService(ElService elService) {
+		putValue(EL_EXPR_SERVICE, elService);
+	}
+
+	/**
 	 * Processes display events to prevent eclipse froze
 	 */
 	public static void processDisplayEvents() {
@@ -271,7 +312,7 @@ public class VpePageContext implements IVisualContext {
 	 * @return the customElementsAttributes
 	 */
 	@SuppressWarnings("unchecked")
-	public Map<String, String> getCustomElementsAttributes() {
+	protected Map<String, String> getCustomElementsAttributes() {
 		Map<String, String> res = null;
 		Object obj = values.get(CUSTOM_ELEMENTS_ATTRS);
 		if (obj == null || !(obj instanceof HashMap)) {

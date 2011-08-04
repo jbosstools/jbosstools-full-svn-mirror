@@ -777,7 +777,7 @@ public class VpeStyleUtil {
 		String resolvedUrl = url.replaceFirst(
 				"^\\s*(\\#|\\$)\\{facesContext.externalContext.requestContextPath\\}", Constants.EMPTY); //$NON-NLS-1$
 
-		resolvedUrl = ElService.replaceEl(file, resolvedUrl);
+		resolvedUrl = ElServiceUtil.replaceEl(file, resolvedUrl);
 
 		URI uri = null;
 		try {
