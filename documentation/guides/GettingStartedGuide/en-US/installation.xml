@@ -246,7 +246,7 @@ Java HotSpot(TM) Server VM (build 19.1-b02, mixed mode)]]>
 * hard nofile 9216
 </programlisting>
 		<para>
-			These settings will ensure you do not encounter an error reguarding maximum open files when starting JBoss Developer Studio.
+			These settings will ensure you do not encounter an error regarding maximum open files when starting JBoss Developer Studio.
 		</para>
 		<para>
 			A GUI interface is also necessary for JBoss Developer Studio to run correctly. Either Gnome or KDE are acceptable.
