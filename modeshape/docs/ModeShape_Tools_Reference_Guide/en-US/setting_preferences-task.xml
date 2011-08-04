@@ -26,7 +26,7 @@
 	<para>
 		To manage the resources to be published to the repository, click on the <guimenuitem>Ignored Resources</guimenuitem> menu item under <guimenuitem>ModeShape</guimenuitem> in the main left <guilabel>Preferences</guilabel> menu.
 	</para>
-	<figure id="Preferences_dialog">
+	<figure id="Preferences_dialog_02">
 		<title>ModeShape: Ignored Resources preferences dialog</title>
 		<mediaobject>
 			<imageobject>
@@ -40,7 +40,7 @@
 	<para>
 		To add a new file extension type or folder name to be filtered from publishing, click on the <guibutton>New</guibutton> button, enter the details and click the <guibutton>Apply</guibutton> button so that your preference changes are saved.
 	</para>
-	<figure id="Preferences_dialog">
+	<figure id="Preferences_dialog_03">
 		<title>ModeShape: Ignored Resources preferences dialog</title>
 		<mediaobject>
 			<imageobject>
