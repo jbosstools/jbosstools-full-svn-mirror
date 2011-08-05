@@ -11,6 +11,8 @@ import org.eclipse.wst.common.project.facet.core.FacetedProjectFramework;
 import org.eclipse.wst.common.project.facet.core.IFacetedProjectBase;
 import org.eclipse.wst.common.project.facet.core.IProjectFacet;
 import org.eclipse.wst.common.project.facet.core.IProjectFacetVersion;
+import org.eclipse.wst.common.project.facet.core.events.IFacetedProjectEvent;
+import org.eclipse.wst.common.project.facet.core.events.IFacetedProjectListener;
 import org.jboss.tools.portlet.core.IPortletConstants;
 import org.jboss.tools.portlet.core.Messages;
 import org.jboss.tools.portlet.core.PortletCoreActivator;
@@ -24,6 +26,7 @@ public abstract class AbstractLibraryProviderInstallOperationConfig extends
 	private String richfacesType;
 	private String richfacesRuntime;
 	private Boolean isEPP = null;
+	private IFacetedProjectListener listener;
 	
 	@Override
 	public synchronized IStatus validate() {
@@ -105,11 +108,12 @@ public abstract class AbstractLibraryProviderInstallOperationConfig extends
 	@Override
 	public void reset() {
 		super.reset();
-		isEPP = null;
+		isEPP = PortletCoreActivator.isEPP(getFacetedProject());
 		IProjectFacet f = getProjectFacet();
         try {
 			Preferences prefs = FacetedProjectFramework.getPreferences( f );
 			prefs = prefs.node(IPortletConstants.PORTLET_BRIDGE_HOME);
+			prefs.putBoolean(IPortletConstants.IS_EPP, isEPP);
 			if( prefs.nodeExists( IPortletConstants.PREFS_PORTLETBRIDGE_HOME ) ) {
 				addRichfacesCapabilities = prefs.getBoolean(IPortletConstants.RICHFACES_CAPABILITIES, false);
 				richfacesType = prefs.get(IPortletConstants.RICHFACES_LIBRARIES_TYPE, null);
@@ -118,6 +122,21 @@ public abstract class AbstractLibraryProviderInstallOperationConfig extends
 		} catch (BackingStoreException e) {
 			PortletCoreActivator.log(e);
 		}
+        listener = new IFacetedProjectListener() {
+			
+			@Override
+			public void handleEvent(IFacetedProjectEvent event) {
+				isEPP = PortletCoreActivator.isEPP(getFacetedProject());
+				IProjectFacet f = getProjectFacet();
+		        try {
+					Preferences prefs = FacetedProjectFramework.getPreferences( f );
+					prefs.putBoolean(IPortletConstants.IS_EPP, isEPP);
+				} catch (BackingStoreException e) {
+					PortletCoreActivator.log(e);
+				}
+			}
+		};
+        getFacetedProject().addListener(listener, IFacetedProjectEvent.Type.PRIMARY_RUNTIME_CHANGED);
 	}
 	
 	public void setAddRichfacesCapabilities(boolean addRichfacesCapabilities) {
@@ -146,21 +165,29 @@ public abstract class AbstractLibraryProviderInstallOperationConfig extends
 	}
 
 	public boolean isEPP() {
-		if (isEPP == null) {
-			IFacetedProjectBase facetedProject = getFacetedProject();
-			if (facetedProject == null) {
-				return false;
-			}
-			isEPP = PortletCoreActivator.isEPP(facetedProject);
-			IProjectFacet f = getProjectFacet();
-	        try {
-				Preferences prefs = FacetedProjectFramework.getPreferences( f );
-				prefs.putBoolean(IPortletConstants.IS_EPP, isEPP());
-			} catch (BackingStoreException e) {
-				PortletCoreActivator.log(e);
-			}
-		}
+//		if (isEPP == null) {
+//			IFacetedProjectBase facetedProject = getFacetedProject();
+//			if (facetedProject == null) {
+//				return false;
+//			}
+//			isEPP = PortletCoreActivator.isEPP(facetedProject);
+//			IProjectFacet f = getProjectFacet();
+//	        try {
+//				Preferences prefs = FacetedProjectFramework.getPreferences( f );
+//				prefs.putBoolean(IPortletConstants.IS_EPP, isEPP);
+//			} catch (BackingStoreException e) {
+//				PortletCoreActivator.log(e);
+//			}
+//		}
 		return isEPP;
+	}
+
+	@Override
+	public void dispose() {
+		if (listener != null) {
+			getFacetedProject().removeListener(listener);
+		}
+		super.dispose();
 	}
 
 }
