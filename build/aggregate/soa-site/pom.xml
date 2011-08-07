@@ -7,8 +7,8 @@
 		<version>0.0.2-SNAPSHOT</version>
 	</parent>
 	<groupId>org.jboss.tools</groupId>
-	<artifactId>org.jboss.tools.site.aggregate</artifactId>
-	<name>JBoss Tools Aggregate Site</name>
+	<artifactId>org.jboss.tools.site.aggregate.soa-tooling</artifactId>
+	<name>JBoss Tools - SOA Tooling Site</name>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>eclipse-update-site</packaging>
 
@@ -100,7 +100,7 @@
 		</repository>
 		<repository>
 			<id>jbosstools-requirements-composite-mirror</id>
-			<url>http://download.jboss.org/jbosstools/updates/indigo/</url>
+			<url>http://download.jboss.org/jbosstools/updates/indigo/SR0/</url>
 			<layout>p2</layout>
 			<snapshots>
 				<enabled>true</enabled>
