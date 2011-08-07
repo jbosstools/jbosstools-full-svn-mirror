@@ -10,7 +10,7 @@
 		<itemizedlist>
 			<listitem>
 				<para>
-					Scriptble install of JBoss Developer Studio 4.1. When installing JBoss Developer Studio 4.1, you can now pass the installation a <filename>InstallConfigRecord.xml</filename> file to install with pre-defined settings, ensuring no user interaction is required. For further details see the release note for JBDS-1268 in the new and fixed issues section of this document, or the <emphasis>Getting Started Guide</emphasis> for this release.
+					Scriptable install of JBoss Developer Studio 4.1. When installing JBoss Developer Studio 4.1, you can now pass the installation a <filename>InstallConfigRecord.xml</filename> file to install with pre-defined settings, ensuring no user interaction is required. For further details see the release note for JBDS-1268 in the new and fixed issues section of this document, or the <emphasis>Getting Started Guide</emphasis> for this release.
 				</para>
 			</listitem>
 			<listitem>
