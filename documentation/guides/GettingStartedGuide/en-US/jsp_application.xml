@@ -265,14 +265,14 @@
       <para>
         Writing ant scripts and managing the packaging process can be quite a complicated and time consuming task for even the most trivial web applications. However, <property>JBoss Developer Studio</property> relieves you of this burden. All you need is to start <property>JBoss Server</property> and launch your application in your favorite browser.
       </para>
-    <!--   
+       
       <para>
-		  You can also create a WAR archive with JBoss Developer Studio&apos;s Archive Tools and export it to any web server.
+		  You can also create a JAR archive with JBoss Developer Studio&apos;s Archive Tools and export it to any web server.
       </para>
        
-      <section id="WarConfig">
-<?dbhtml filename="WarConfig.html"?>
-        <title>WAR Config</title> 
+      <section id="JarConfig">
+<?dbhtml filename="JarConfig.html"?>
+        <title>JAR Config</title> 
         <para>
           Project archives managing is available through Project Archives view.
         </para>
@@ -305,7 +305,7 @@
         </figure>
          
         <para>
-          Right click on the project and select the type of archive you want to create. In this case we will create a WAR archive.
+          Right click on the project and select the JAR type of archive. 
         </para>
          
         <figure>
@@ -318,44 +318,25 @@
         </figure>
          
         <para>
-          In the <property>New WAR</property> dialog you can see automatically selected default values.
+          In the <property>New JAR</property> dialog you can see automatically selected default values.
         </para>
          
         <figure>
-          <title>New WAR Archive</title> 
+          <title>New JAR Archive</title> 
           <mediaobject>
             <imageobject>
               <imagedata fileref="images/jsp_application/jsp_application_9.png"/>
             </imageobject>
           </mediaobject>
         </figure>
-         
-        <itemizedlist>
-          <listitem>
-            <para>
-              Click the 
-              <guibutton>
-                Next
-              </guibutton>
-               button to see a stub archive configuration for your project: 
-              <figure>
-                <title>Stub Archive Configuration</title> 
-                <mediaobject>
-                  <imageobject>
-                    <imagedata fileref="images/jsp_application/jsp_application_10.png"/>
-                  </imageobject>
-                </mediaobject>
-              </figure>
-            </para>
-          </listitem>
-           
+		<itemizedlist>
           <listitem>
             <para>
               Click the 
               <guibutton>
                 Finish
               </guibutton>
-               button. The <emphasis>.WAR</emphasis> file will appear in <property>Package Explorer</property> and also in <property>Project Archives</property> view as structure tree: 
+               button. The <emphasis>.JAR</emphasis> file will appear in <property>Package Explorer</property> and also in <property>Project Archives</property> view as structure tree: 
               <figure>
                 <title>Archive is Created</title> 
                 <mediaobject>
@@ -390,7 +371,7 @@
           </mediaobject>
         </figure>
       </section>
-	  -->
+	  
       <section id="AutoRedeploy">
 <?dbhtml filename="AutoRedeploy.html"?>
         <title>Auto redeploy</title> 
