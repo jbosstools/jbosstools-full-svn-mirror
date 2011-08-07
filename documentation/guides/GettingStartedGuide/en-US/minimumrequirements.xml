@@ -5,10 +5,16 @@
 		JBoss Developer Studio is certified to run on the following platforms:
 		<itemizedlist>
 			<listitem>
-				<para>Windows XP (i386 and x86_64) running 32-bit Sun JDK 6</para>
+				<para>Microsoft Windows 7 (i386 and x86_64) running 32-bit Sun JDK 6</para>
 			</listitem>
 			<listitem>
-				<para>Windows XP (i386 and x86_64) running 64-bit Sun JDK 6 (*)</para>
+				<para>Microsoft Windows 7 (x86_64) running 64-bit Sun JDK 6 (*)</para>
+			</listitem>
+			<listitem>
+				<para>Microsoft Windows XP (i386 and x86_64) running 32-bit Sun JDK 6</para>
+			</listitem>
+			<listitem>
+				<para>Microsoft Windows XP (x86_64) running 64-bit Sun JDK 6 (*)</para>
 			</listitem>
 			<listitem>
 				<para>MacOS X 10.6 running 32-bit Apple JDK 6</para>
@@ -17,10 +23,16 @@
 				<para>MacOS X 10.5 running 64-bit Apple JDK 6 (*)</para>
 			</listitem>
 			<listitem>
-				<para>RHEL5 i386 running 32-bit Sun JDK 6 and OpenJDK 6</para>
+				<para>Red Hat Enterprise Linux 6 i386 running 32-bit Sun JDK 6 and OpenJDK 6</para>
 			</listitem>
 			<listitem>
-				<para>RHEL5 x86_64 running 64-bit Sun JDK 6 and OpenJDK 6</para>
+				<para>Red Hat Enterprise Linux 6 x86_64 running 64-bit Sun JDK 6 and OpenJDK 6 (*)</para>
+			</listitem>
+			<listitem>
+				<para>Red Hat Enterprise Linux 5 i386 running 32-bit Sun JDK 6 and OpenJDK 6</para>
+			</listitem>
+			<listitem>
+				<para>Red Hat Enterprise Linux 5 x86_64 running 64-bit Sun JDK 6 and OpenJDK 6 (*)</para>
 			</listitem>
 		</itemizedlist>
 	</para>
