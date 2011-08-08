@@ -40,6 +40,20 @@
 	<para>
 	   Publishing to a <guilabel>Publish Area</guilabel> will automatically sequence your files to extract useful information and make it available to our repository users. Extracted information depends upon the type of file and the configuration of the ModeShape repository. The location where files will be published is constructed by appending the server URL, the names of the JCR repository and workspace, the path to the publish area, and the path of the files and folders within your Eclipse workspace. 
 	</para>
+	<para>
+		As ModeShape now allows for the versioning of pubilshed files you will notice a checkbox labelled <guilabel>Version the published files (change default in your preferences)</guilabel>. If you have selected to allow for file versioning in your ModeShape preferences then this checkbox will automatically be checked.
+	</para>
+	<para>
+		If your server instance does not permit the versioning of files, reguardless of the settings you choose in the preferences for ModeShape, the checkbox labelled <guilabel>Version the published files (change default in your preferences)</guilabel> will be greyed out.
+	</para>
+	<figure id="ModeShape_publishing_wizard">
+		<title>ModeShape publishing wizard - server without versioning ability</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/Publish_Wizard-no_versioning.png"/>
+			</imageobject>
+		</mediaobject>
+	</figure>
 	<warning>
 	    <para>
 		  When performing a publish operation, make sure you are aware of the following:
