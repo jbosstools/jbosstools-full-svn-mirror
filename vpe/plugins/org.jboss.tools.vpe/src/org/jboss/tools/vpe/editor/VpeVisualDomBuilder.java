@@ -260,13 +260,8 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	private boolean addNode(Node sourceNode, nsIDOMNode visualNextNode, nsIDOMNode visualContainer) {
 		try {
 
-		nsIDOMNode visualNewNode = null;
-		
-		try {
-			visualNewNode = createNode(sourceNode, visualContainer);
-		} catch (Exception ex) {
-			VpePlugin.getPluginLog().logError(ex);
-		}
+		nsIDOMNode visualNewNode = createNode(sourceNode, visualContainer);
+
 			
 // Commented as fix for JBIDE-3012.	
 //		// Fix for JBIDE-1097
@@ -319,7 +314,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	 * @return new visual node
 	 */
 	public nsIDOMNode createNode(Node sourceNode,
-			nsIDOMNode visualOldContainer) {
+			nsIDOMNode visualOldContainer) throws VpeDisposeException {
 			
 		boolean registerFlag = isCurrentMainDocument();
 
@@ -338,7 +333,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		// JBIDE-675, checks if editor was disposed or not
 		if (getPageContext().getSourceBuilder() == null
 				|| includeDocuments == null) {
-
 			throw new VpeDisposeException();
 		}
 		// check source node can be changed and link can be a null in this case
@@ -385,7 +379,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			VpeTemplate defTemplate = getTemplateManager().getDefTemplate();
 			creationData = defTemplate.create(getPageContext(), sourceNode,
 					getVisualDocument());
-		} catch (Exception ex) {
+		} catch (RuntimeException ex) {
 			VpePlugin.getPluginLog().logError(ex);
 			VpeTemplate defTemplate = getTemplateManager().getDefTemplate();
 			creationData = defTemplate.create(getPageContext(), sourceNode,
@@ -487,7 +481,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		getPageContext().setCurrentVisualNode(visualOldContainer);
 		try {
 			template.validate(getPageContext(), sourceNode, getVisualDocument(), creationData);
-		} catch (Exception ex) {
+		} catch (RuntimeException ex) {
 			VpePlugin.getPluginLog().logError(ex);
 		}
 		getPageContext().setCurrentVisualNode(null);
@@ -693,7 +687,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			try {
 				containerTemplate.setPseudoContent(pageContext, sourceContainer,
 					visualContainer, getVisualDocument());
-			} catch (Exception ex) {
+			} catch (RuntimeException ex) {
 				VpePlugin.getPluginLog().logError(ex);
 			}
 		} else {

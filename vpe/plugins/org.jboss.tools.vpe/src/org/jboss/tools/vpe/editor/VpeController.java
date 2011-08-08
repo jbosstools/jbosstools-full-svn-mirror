@@ -574,7 +574,7 @@ public class VpeController implements INodeAdapter,
 									// refresh job in time, so we just ignore
 									// this exception
 								}
-							} catch(Exception ex) {
+							} catch(RuntimeException ex) {
 								VpePlugin.getPluginLog().logError(ex);
 							}
 							getChangeEvents().remove(eventBean);
@@ -1568,9 +1568,9 @@ public class VpeController implements INodeAdapter,
 							// refresh job in time, so we just ignore this
 							// exception
 						}
-					}catch (Exception ex){
+					} catch (RuntimeException ex) {
 						VpePlugin.getPluginLog().logError(ex);
-					}finally {
+					} finally {
 						if (switcher != null) {
 							switcher.stopActiveEditor();
 						}
@@ -2471,6 +2471,8 @@ public class VpeController implements INodeAdapter,
 		} catch (VpeDisposeException ex) {
 			// vpe vas closed when refresh job is running, so just
 			// ignore this exception
+		} catch(RuntimeException ex) {
+			VpePlugin.getPluginLog().logError(ex);
 		} finally {
 			if (switcher != null) {
 				switcher.stopActiveEditor();
