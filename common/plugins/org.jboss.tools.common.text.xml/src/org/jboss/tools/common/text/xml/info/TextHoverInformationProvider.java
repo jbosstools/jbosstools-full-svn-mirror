@@ -1,5 +1,5 @@
 /******************************************************************************* 
- * Copyright (c) 2009 Red Hat, Inc. 
+ * Copyright (c) 2009-2011 Red Hat, Inc. 
  * Distributed under license by Red Hat, Inc. All rights reserved. 
  * This program is made available under the terms of the 
  * Eclipse Public License v1.0 which accompanies this distribution, 
@@ -8,7 +8,7 @@
  * Contributors: 
  * Red Hat, Inc. - initial API and implementation 
  ******************************************************************************/
-package org.jboss.tools.jst.jsp;
+package org.jboss.tools.common.text.xml.info;
 
 import org.eclipse.jface.text.IInformationControlCreator;
 import org.eclipse.jface.text.IRegion;
@@ -24,7 +24,7 @@ import org.eclipse.jface.text.information.IInformationProviderExtension2;
  * @author Victor Rubezhny
  *
  */
-class TextHoverInformationProvider implements IInformationProvider, IInformationProviderExtension, IInformationProviderExtension2 {
+public class TextHoverInformationProvider implements IInformationProvider, IInformationProviderExtension, IInformationProviderExtension2 {
 	private ITextHover fTextHover;
 
 	public TextHoverInformationProvider(ITextHover hover) {
