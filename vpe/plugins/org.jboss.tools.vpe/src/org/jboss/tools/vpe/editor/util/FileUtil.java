@@ -61,6 +61,8 @@ import org.jboss.tools.common.model.project.IModelNature;
 import org.jboss.tools.common.model.util.EclipseResourceUtil;
 import org.jboss.tools.common.resref.core.ResourceReference;
 import org.jboss.tools.vpe.VpePlugin;
+import org.jboss.tools.vpe.editor.VpeIncludeInfo;
+import org.jboss.tools.vpe.editor.VpeVisualDomBuilder;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.template.VpeCreatorUtil;
 import org.jboss.tools.vpe.resref.core.AbsoluteFolderReferenceList;
@@ -132,6 +134,15 @@ public class FileUtil {
     	}
     	return false;	
     }
+    
+    private static IJavaProject getJavaProject(VpePageContext pageContext) {
+    	VpeVisualDomBuilder visualBuilder = pageContext != null ? pageContext.getVisualBuilder() : null;
+		VpeIncludeInfo currentIncludeInfo = visualBuilder != null ? visualBuilder.getCurrentIncludeInfo() : null;
+		IFile currentFile = currentIncludeInfo != null ? (IFile) currentIncludeInfo.getStorage() : null;
+		IProject project = currentFile != null ? currentFile.getProject() : null;
+		return JavaCore.create(project);
+    }
+    
     /**
      * Function search into project class path resource, if resource founded in jar file, make a 
      * temp copy of this resource and return path to copy.
@@ -141,10 +152,12 @@ public class FileUtil {
      * @return path to file
      */
     private static String  seachResourceInClassPath(VpePageContext pageContext, String classPathResource) {
-    	String result = null;
-		final IFile currentFile = (IFile) pageContext.getVisualBuilder().getCurrentIncludeInfo().getStorage();
-		final IProject project = currentFile.getProject();
-		IJavaProject javaProject = JavaCore.create(project);
+		final IJavaProject javaProject = getJavaProject(pageContext);
+		if (javaProject == null) {
+			return null;
+		}
+		
+		String result = null;
 		try {
 			for (IPackageFragmentRoot fragmentRoot : javaProject.getAllPackageFragmentRoots()) {
 				if(fragmentRoot instanceof JarPackageFragmentRoot) {
