@@ -13,12 +13,9 @@ package org.jboss.tools.vpe.dnd;
 import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
 
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.Rectangle;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.VpeStyleUtil;
-import org.jboss.tools.vpe.xulrunner.util.XulRunnerVpeUtils;
-import org.mozilla.interfaces.nsIDOMCSSStyleDeclaration;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMMouseEvent;
 import org.mozilla.interfaces.nsIDOMNode;
@@ -81,8 +78,11 @@ public class DraggablePattern {
 			dragIconElement = mozillaEditor.getDomDocument()
 					.createElement(HTML.TAG_IMG);
 			DndUtil.setTemporaryDndElement(dragIconElement, true);
-			mozillaEditor.getDomDocument().getElementsByTagName(HTML.TAG_BODY)
-					.item(0).appendChild(dragIconElement);
+			nsIDOMNode bodyNode = mozillaEditor.getDomDocument().getElementsByTagName(HTML.TAG_BODY)
+					.item(0);
+			if (bodyNode != null) {
+				bodyNode.appendChild(dragIconElement);
+			}
 			dragIconElement.setAttribute(HTML.ATTR_ID, DRAG_ICON_ID);
 			dragIconElement.setAttribute(HTML.ATTR_SRC,
 					VpeStyleUtil.getAbsoluteResourcePathUrl(DRAG_ICON_FILE));
