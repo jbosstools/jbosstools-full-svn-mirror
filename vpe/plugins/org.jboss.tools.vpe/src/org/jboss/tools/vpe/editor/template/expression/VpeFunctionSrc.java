@@ -25,6 +25,7 @@ import org.eclipse.ui.editors.text.ILocationProvider;
 import org.eclipse.wst.sse.core.internal.provisional.IndexedRegion;
 import org.jboss.tools.common.resref.core.ResourceReference;
 import org.jboss.tools.jst.jsp.contentassist.JspContentAssistProcessor;
+import org.jboss.tools.jst.jsp.contentassist.computers.JspELCompletionProposalComputer;
 import org.jboss.tools.jst.jsp.outline.ValueHelper;
 import org.jboss.tools.jst.web.kb.IPageContext;
 import org.jboss.tools.jst.web.kb.KbQuery;
@@ -194,7 +195,7 @@ public class VpeFunctionSrc extends VpeFunction {
 		}
 	};
 
-	JspContentAssistProcessor processor = valueHelper.createContentAssistProcessor();
+	JspELCompletionProposalComputer processor = valueHelper.createContentAssistProcessor();
 	int offset = 0;
 	if(sourceNode instanceof IndexedRegion) {
 		offset = ((IndexedRegion)sourceNode).getStartOffset() + 1;
@@ -292,7 +293,7 @@ public class VpeFunctionSrc extends VpeFunction {
 //	}
 //    }
 
-	protected KbQuery createKbQuery(JspContentAssistProcessor processor, Node fNode, int offset, String attrName) {
+	protected KbQuery createKbQuery(JspELCompletionProposalComputer processor, Node fNode, int offset, String attrName) {
 		KbQuery kbQuery = new KbQuery();
 
 		String[] parentTags = processor.getParentTags(false);
