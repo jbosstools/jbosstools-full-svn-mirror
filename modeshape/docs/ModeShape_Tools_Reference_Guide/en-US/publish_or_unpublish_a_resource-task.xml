@@ -46,7 +46,7 @@
 	<para>
 		If your server instance does not permit the versioning of files, reguardless of the settings you choose in the preferences for ModeShape, the checkbox labelled <guilabel>Version the published files (change default in your preferences)</guilabel> will be greyed out.
 	</para>
-	<figure id="ModeShape_publishing_wizard">
+	<figure id="ModeShape_publishing_wizard-no_versioning">
 		<title>ModeShape publishing wizard - server without versioning ability</title>
 		<mediaobject>
 			<imageobject>
