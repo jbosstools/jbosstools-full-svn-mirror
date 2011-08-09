@@ -2277,4 +2277,10 @@
 			<span id="{@id}"/>
 		</vpe:template>
 	</vpe:tag>
+	
+	<vpe:tag name="#text" case-sensitive="no">
+		 <vpe:template children="no" modify="yes"
+		 		 class="org.jboss.tools.vpe.docbook.template.DocbookTextTemplate">
+		 </vpe:template>
+	</vpe:tag>
 </vpe:templates>
