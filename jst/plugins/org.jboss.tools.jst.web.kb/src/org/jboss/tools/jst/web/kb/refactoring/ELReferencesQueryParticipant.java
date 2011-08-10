@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.jsf.ui.el.refactoring;
+package org.jboss.tools.jst.web.kb.refactoring;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
@@ -27,8 +27,8 @@ import org.eclipse.jdt.ui.search.ISearchRequestor;
 import org.eclipse.jdt.ui.search.QuerySpecification;
 import org.eclipse.search.ui.text.Match;
 import org.jboss.tools.common.model.project.ProjectHome;
-import org.jboss.tools.jsf.el.refactoring.ELProjectSetExtension;
-import org.jboss.tools.jsf.el.refactoring.ProjectsSet;
+import org.jboss.tools.jst.web.kb.refactoring.ELProjectSetExtension;
+import org.jboss.tools.jst.web.kb.refactoring.IProjectsSet;
 import org.jboss.tools.jst.web.kb.refactoring.RefactorSearcher;
 
 public class ELReferencesQueryParticipant implements IQueryParticipant{
@@ -77,7 +77,7 @@ public class ELReferencesQueryParticipant implements IQueryParticipant{
 	
 	class ELSearcher extends RefactorSearcher{
 		ISearchRequestor requestor;
-		ProjectsSet projectSet=null;
+		IProjectsSet projectSet=null;
 		
 		public ELSearcher(ISearchRequestor requestor, IJavaElement element, IFile file, String name){
 			super(file, name, element);

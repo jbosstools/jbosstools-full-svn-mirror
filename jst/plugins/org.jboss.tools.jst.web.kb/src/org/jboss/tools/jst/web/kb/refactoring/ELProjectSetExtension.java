@@ -1,4 +1,4 @@
-package org.jboss.tools.jsf.el.refactoring;
+package org.jboss.tools.jst.web.kb.refactoring;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,10 +10,10 @@ import org.eclipse.core.runtime.Platform;
 import org.jboss.tools.common.el.core.ELCorePlugin;
 
 public class ELProjectSetExtension {
-	public static String EXTENSION_POINT = "org.jboss.tools.jsf.elProjectSet"; //$NON-NLS-1$
+	public static String EXTENSION_POINT = "org.jboss.tools.jst.web.kb.elProjectSet"; //$NON-NLS-1$
 
 	String id;
-	ProjectsSet searcher;
+	IProjectsSet searcher;
 
 	public ELProjectSetExtension() {}
 
@@ -21,7 +21,7 @@ public class ELProjectSetExtension {
 		return id;
 	}
 
-	public ProjectsSet getProjectSet() {
+	public IProjectsSet getProjectSet() {
 		return searcher;
 	}
 
@@ -36,7 +36,7 @@ public class ELProjectSetExtension {
 			ELProjectSetExtension n = new ELProjectSetExtension();
 			n.id = e.getAttribute("id"); //$NON-NLS-1$
 			try{
-				n.searcher = (ProjectsSet)e.createExecutableExtension("projectset-class"); //$NON-NLS-1$
+				n.searcher = (IProjectsSet)e.createExecutableExtension("projectset-class"); //$NON-NLS-1$
 			}catch(CoreException ex){
 				ELCorePlugin.getDefault().logError(ex);
 			}

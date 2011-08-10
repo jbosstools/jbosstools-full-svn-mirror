@@ -8,7 +8,7 @@
   * Contributors:
   *     Red Hat, Inc. - initial API and implementation
   ******************************************************************************/
-package org.jboss.tools.jsf.el.refactoring;
+package org.jboss.tools.jst.web.kb.refactoring;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
@@ -19,7 +19,7 @@ import org.eclipse.core.resources.IProject;
  * 
  * This interface is used for transmit information about seam project structure from seam plugins through org.jboss.tools.common.el.core.elSearcher extension point
  */
-public interface ProjectsSet {
+public interface IProjectsSet {
 	/**
 	 *  inits seam project structure 
 	 * @param project
