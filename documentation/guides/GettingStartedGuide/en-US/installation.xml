@@ -624,6 +624,14 @@ java -jar /path/to/installer.jar /path/to/InstallConfigRecord.xml
 		  <para>
 			  The components available on the extras site will then be listed, which you can select and install by following the prompts. Components that are certified to work with JBoss Developer Studio and JBoss technologies will be marked with <emphasis>(Certified)</emphasis> after the component name.
 		  </para>
+		  <figure>
+			  <title>Example of certified components</title> 
+			  <mediaobject>
+				  <imageobject>
+					  <imagedata fileref="images/getting_started/extras_certified.png"/>
+				  </imageobject>
+			  </mediaobject>
+		  </figure>
 		  <section>
 			  <title>Installing and setting up Subclipse</title>
 		  <para>
