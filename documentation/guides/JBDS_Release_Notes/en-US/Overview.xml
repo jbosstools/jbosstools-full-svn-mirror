@@ -18,6 +18,11 @@
 					Full BPEL Editor support is included with installation of JBoss Developer Studio 4.1, and through the Update site for upgrading from previous releases. To access this plug-in when upgrading from a previous version of JBoss Developer Studio, add the JBoss Developer Studio Update site to your installation; see the Getting Started Guide for further information.
 				</para>
 			</listitem>
+			<listitem>
+				<para>
+					Certified third-party components. JBoss Developer Studio 4.1 is released with numerous third-party components that have been tested to work with JBoss Developer Studio and JBoss technologies. These components are available through the Extras site; see the Getting Started Guide for further information. 
+				</para>
+			</listitem>
 		</itemizedlist>
 		<important>
 			<para>
