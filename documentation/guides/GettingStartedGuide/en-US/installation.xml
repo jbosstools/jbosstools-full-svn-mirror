@@ -607,7 +607,7 @@ java -jar /path/to/installer.jar /path/to/InstallConfigRecord.xml
   <section id="extras_site">
 	  <title>Accessing the additional supported tooling</title> 
 	  <para>
-	  A number of components are fully supported, but do not come as part of the standard installation. These extra components are available for individual installation through the JBoss Developer Studio extras site. To access the extras site, select <menuchoice>
+	  A number of components are supported, but do not come as part of the standard installation. These extra components are available for individual installation through the JBoss Developer Studio extras site. To access the extras site, select <menuchoice>
 		  <guimenuitem>Help</guimenuitem>
 		  <guimenuitem>Install New Software...</guimenuitem>
 	  </menuchoice> and, click the 
@@ -622,7 +622,7 @@ java -jar /path/to/installer.jar /path/to/InstallConfigRecord.xml
 		  </para>
 		  
 		  <para>
-			  The components available on the extras site will then be listed, which you can select and install by following the prompts.
+			  The components available on the extras site will then be listed, which you can select and install by following the prompts. Components that are certified to work with JBoss Developer Studio and JBoss technologies will be marked with <emphasis>(Certified)</emphasis> after the component name.
 		  </para>
 		  <section>
 			  <title>Installing and setting up Subclipse</title>
