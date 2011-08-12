@@ -40,7 +40,7 @@ public class VpeTemplateSet {
 
 	VpeTemplate getTemplate(VpePageContext pageContext, Node sourceNode, Set ifDependencySet) {
 		VpeTemplate result = defTemplate;
-		boolean initializeCustomTemplete = true;
+		boolean initializeCustomTemplate = true;
 		for (int i = 0; i < templates.size(); i++) {
 			VpeTemplateSet set = (VpeTemplateSet)templates.get(i);
 			VpeTemplate template = set.getTemplate(pageContext, sourceNode, ifDependencySet);
@@ -51,14 +51,14 @@ public class VpeTemplateSet {
 					 * in the result -- set it up
 					 */
 					result = template;
-					initializeCustomTemplete = false;
-				} else if (initializeCustomTemplete) {
+					initializeCustomTemplate = false;
+				} else if (initializeCustomTemplate) {
 					/*
 					 * Default template presents, but custom template was found.
 					 * Put this new template to the result variable
 					 */
 					result = template;
-					initializeCustomTemplete = false;
+					initializeCustomTemplate = false;
 				} else if (result.getPriority() < template.getPriority()) {
 					/*
 					 * In the cycle -- looking for the template
