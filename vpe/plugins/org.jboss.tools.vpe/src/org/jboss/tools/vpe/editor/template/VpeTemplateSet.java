@@ -39,17 +39,39 @@ public class VpeTemplateSet {
 	}
 
 	VpeTemplate getTemplate(VpePageContext pageContext, Node sourceNode, Set ifDependencySet) {
+		VpeTemplate result = defTemplate;
+		boolean initializeCustomTemplete = true;
 		for (int i = 0; i < templates.size(); i++) {
 			VpeTemplateSet set = (VpeTemplateSet)templates.get(i);
 			VpeTemplate template = set.getTemplate(pageContext, sourceNode, ifDependencySet);
 			if (template != null) {
-				if ((defTemplate != null) && (defTemplate.getPriority() > template.getPriority())) {
-					return defTemplate;
-				} else {
-					return template;
+				if (result == null) {
+					/*
+					 * When there is no default template 
+					 * in the result -- set it up
+					 */
+					result = template;
+					initializeCustomTemplete = false;
+				} else if (initializeCustomTemplete) {
+					/*
+					 * Default template presents, but custom template was found.
+					 * Put this new template to the result variable
+					 */
+					result = template;
+					initializeCustomTemplete = false;
+				} else if (result.getPriority() < template.getPriority()) {
+					/*
+					 * In the cycle -- looking for the template
+					 * with the highest priority
+					 */
+					result = template;
 				}
 			}
 		}
-		return defTemplate;
+		/*
+		 * If no templates have been found --
+		 * default template will be returned
+		 */
+		return result;
 	}
 }
