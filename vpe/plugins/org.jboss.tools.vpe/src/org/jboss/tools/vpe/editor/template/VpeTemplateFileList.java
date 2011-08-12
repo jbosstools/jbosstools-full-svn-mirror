@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2007 Exadel, Inc. and Red Hat, Inc.
+ * Copyright (c) 2007-2011 Exadel, Inc. and Red Hat, Inc.
  * Distributed under license by Red Hat, Inc. All rights reserved.
  * This program is made available under the terms of the
  * Eclipse Public License v1.0 which accompanies this distribution,
@@ -7,7 +7,7 @@
  *
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
- ******************************************************************************/ 
+ ******************************************************************************/
 package org.jboss.tools.vpe.editor.template;
 
 import java.io.IOException;
@@ -34,7 +34,7 @@ public class VpeTemplateFileList {
 
 	VpeTemplateFileList() {
 	}
-	
+
 	void load() {
 		VpeTemplateFile newAutoTemplateFile = new VpeTemplateFile(
 				VpeTemplateManager.getAutoTemplates(), null);
@@ -57,50 +57,50 @@ public class VpeTemplateFileList {
 		autoTemplateFile = newAutoTemplateFile;
 		templateFiles = newTemplateFiles;
 	}
-	
+
 	VpeTemplateFile getAutoTemplateFile() {
 		return autoTemplateFile;
 	}
-	
+
 	VpeTemplateFile[] getTemplateFiles() {
 		return templateFiles;
 	}
-	
+
 	boolean isChanged() {
 		return changed;
 	}
-	
+
 	private VpeTemplateFile[] createTemplateFileList() {
 		List<VpeTemplateFile> templateList = createTemplateFileListImpl();
 		return templateList.toArray(new VpeTemplateFile[templateList.size()]);
 	}
-		
+
 	private List<VpeTemplateFile> createTemplateFileListImpl() {
 		List<VpeTemplateFile> templateList = new ArrayList<VpeTemplateFile>();
 
-			IExtensionRegistry registry = Platform.getExtensionRegistry();
-			IExtensionPoint extensionPoint = registry.getExtensionPoint(VpePlugin.EXTESION_POINT_VPE_TEMPLATES);
-			IExtension[] extensions = extensionPoint.getExtensions();
-			for (int i=0;i<extensions.length;i++) {
-				IExtension extension = extensions[i];
-				IConfigurationElement[] elements = extension.getConfigurationElements();
-				for(int j=0;j<elements.length;j++) {
-					String pathAttrValue = elements[j].getAttribute("path"); //$NON-NLS-1$
-					try {
+		IExtensionRegistry registry = Platform.getExtensionRegistry();
+		IExtensionPoint extensionPoint = registry.getExtensionPoint(VpePlugin.EXTESION_POINT_VPE_TEMPLATES);
+		IExtension[] extensions = extensionPoint.getExtensions();
+		for (int i = 0; i < extensions.length; i++) {
+			IExtension extension = extensions[i];
+			IConfigurationElement[] elements = extension.getConfigurationElements();
+			for (int j = 0; j < elements.length; j++) {
+				String pathAttrValue = elements[j].getAttribute("path"); //$NON-NLS-1$
+				try {
 					VpeTemplateFile templateFile = new VpeTemplateFile(pathAttrValue, elements[j]);
-						templateList.add(templateFile);
-					} catch (IOException e) {
-						VpePlugin.getPluginLog().logError("Error during loading template '" + pathAttrValue + "'", e); //$NON-NLS-1$ //$NON-NLS-2$
-					}
+					templateList.add(templateFile);
+				} catch (IOException e) {
+					VpePlugin.getPluginLog().logError("Error during loading template '" + pathAttrValue + "'", e); //$NON-NLS-1$ //$NON-NLS-2$
 				}
 			}
+		}
 		return templateList;
 	}
 
 	static IPath getFilePath(String name, IConfigurationElement confElement) throws IOException {
 		VpePlugin plugin = VpePlugin.getDefault();
 		Bundle bundle = confElement == null 
-				? plugin.getBundle()
+				? plugin.getBundle() 
 				: Platform.getBundle(confElement.getContributor().getName());
 		URL url = bundle.getEntry("/"); //$NON-NLS-1$
 		IPath path = new Path(FileLocator.toFileURL(url).getFile());

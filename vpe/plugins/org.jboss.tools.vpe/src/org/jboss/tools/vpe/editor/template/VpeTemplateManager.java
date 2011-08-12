@@ -312,6 +312,9 @@ public class VpeTemplateManager {
 	 */
 	private static final String NAMESPACE_IDENTIFIER_ATTRIBUTE = "namespaceIdentifier"; //$NON-NLS-1$
 
+	/** The priority to load tempaltes */
+	private static final String PRIORITY = "priority"; //$NON-NLS-1$
+
 	private static final IPath DEFAULT_AUTO_TEMPLATES_PATH = VpePlugin.getDefault()
 			.getStateLocation().append(VPE_TEMPLATES_AUTO);
 	
@@ -1024,6 +1027,14 @@ public class VpeTemplateManager {
 				.getAttribute(VpeTemplateManager.ATTR_TEMPLATE_CLASS);
 		String nameSpaceIdentifyer = templateElement
 				.getAttribute(VpeTemplateManager.NAMESPACE_IDENTIFIER_ATTRIBUTE);
+		String priority = templateElement
+				.getAttribute(VpeTemplateManager.PRIORITY);
+		if (priority != null) {
+			priority = priority.trim();
+		}
+		if (priority == null || priority.isEmpty()) {
+			priority = "0"; //$NON-NLS-1$
+		}
 		if (templateClassName != null && templateClassName.length() > 0) {
 			if (nameSpaceIdentifyer == null
 					|| nameSpaceIdentifyer.length() == 0) {
@@ -1054,6 +1065,9 @@ public class VpeTemplateManager {
 		if (template != null) {
 			template.init(templateElement, caseSensitive);
 			template = new VpeTemplateSafeWrapper(template);
+		}
+		if (template != null) {
+			template.setPriority(Double.parseDouble(priority));
 		}
 		return template;
 	}

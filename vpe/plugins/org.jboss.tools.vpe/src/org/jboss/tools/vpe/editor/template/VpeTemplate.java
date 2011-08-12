@@ -466,4 +466,8 @@ public interface VpeTemplate {
 	 */
 	public IRegion getSourceRegionForOpenOn(VpePageContext pageContext, Node sourceNode,nsIDOMNode domNode);
 	
+	public double getPriority();
+	
+	public void setPriority(double priority);
+	
 }

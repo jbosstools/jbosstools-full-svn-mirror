@@ -590,4 +590,11 @@ public class VpeTemplateSafeWrapper implements VpeTemplate {
 		}
 		return null;
 	};
+    
+	public double getPriority() {
+		return delegate.getPriority();
+	}
+	public void setPriority(double priority) {
+		delegate.setPriority(priority);
+	}
 }

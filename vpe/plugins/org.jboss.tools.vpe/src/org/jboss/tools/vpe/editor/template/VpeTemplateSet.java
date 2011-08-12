@@ -20,6 +20,7 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 
 public class VpeTemplateSet {
 	private List<VpeTemplateSet> templates = new ArrayList<VpeTemplateSet>();
+	/** Default template  */
 	private VpeTemplate defTemplate;
 	
 	VpeTemplateSet(){
@@ -32,6 +33,8 @@ public class VpeTemplateSet {
 	void setDefTemplate(VpeTemplate defTemplate) {
 		if (this.defTemplate == null) {
 			this.defTemplate = defTemplate;
+		} else if (this.defTemplate.getPriority() < defTemplate.getPriority()) {
+			this.defTemplate = defTemplate;
 		}
 	}
 
@@ -40,7 +43,11 @@ public class VpeTemplateSet {
 			VpeTemplateSet set = (VpeTemplateSet)templates.get(i);
 			VpeTemplate template = set.getTemplate(pageContext, sourceNode, ifDependencySet);
 			if (template != null) {
-				return template;
+				if ((defTemplate != null) && (defTemplate.getPriority() > template.getPriority())) {
+					return defTemplate;
+				} else {
+					return template;
+				}
 			}
 		}
 		return defTemplate;

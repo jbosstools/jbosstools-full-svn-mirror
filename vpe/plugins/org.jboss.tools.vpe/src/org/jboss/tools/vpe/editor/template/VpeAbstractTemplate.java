@@ -84,6 +84,9 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	
 	/** The pseudo content creator. */
 	private VpePseudoContentCreator pseudoContentCreator;
+	
+	/** The priority to load templates for the tag */
+	protected double priority = 0.0;
 
 	/** The Constant TAG_BREAKER. */
 	private static final String TAG_BREAKER = VpeTemplateManager.VPE_PREFIX
@@ -1430,4 +1433,12 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 			return new Region(offset, 0); 
 	}
     
+	final public double getPriority() {
+		return priority;
+	}
+	
+	final public void setPriority(double priority) {
+		this.priority = priority;
+	}
+	
 }

@@ -198,4 +198,10 @@ public class ELResolver {
 		rst = replaceEl(rst);
 		return rst;
 	}
+	
+	public void createScope() {
+	}
+	
+	public void resolveScope() {
+	}
 }

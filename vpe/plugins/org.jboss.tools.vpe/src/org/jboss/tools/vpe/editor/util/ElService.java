@@ -59,5 +59,13 @@ public class ElService {
 	public void setElResolver(ELResolver elResolver) {
 		this.elResolver = elResolver;
 	}
+	
+	public void createScope() {
+		getElResolver().createScope();
+	}
+	
+	public void resolveScope() {
+		getElResolver().resolveScope();
+	}
 
 }
