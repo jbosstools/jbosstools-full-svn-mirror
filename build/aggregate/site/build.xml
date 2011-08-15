@@ -389,7 +389,7 @@ DEST = ${aggregate.zips.dir}/@{zipPath}
 	</target>
 
 	<target name="pack.zip">
-		<zip destfile="${output.dir}/target/site_assembly.zip" update="true" basedir="${update.site.source.dir}" includes="content.* index.html, web/*.css" />
+		<zip destfile="${output.dir}/target/site_assembly.zip" update="true" basedir="${update.site.source.dir}" includes="content.* index.html, web/*.css, README*" />
 	</target>
 
 	<target name="check.target">
@@ -453,7 +453,7 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 		</copy>
 
 		<copy todir="${update.site.source.dir}">
-			<fileset dir="${output.dir}" includes="index.html, **/*.css" />
+			<fileset dir="${output.dir}" includes="index.html, **/*.css, README*" />
 		</copy>
 	</target>
 
