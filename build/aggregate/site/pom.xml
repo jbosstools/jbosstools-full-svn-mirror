@@ -12,7 +12,9 @@ xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLS
 	<name>JBoss Tools Aggregate Site</name>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>eclipse-update-site</packaging>
-
+	<!-- to build locally, use:
+		mvn clean install -P jbosstools-nightly-trunk
+	-->
 	<properties>
 		<!-- add more inputRepos into the composite metadata at the URL below. Therefore need not edit this file and add dozens of URLs
 			which need to be called by Ant script later -->
