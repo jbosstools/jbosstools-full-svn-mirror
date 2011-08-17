@@ -139,7 +139,7 @@ public class DomainSpecificLanguageEditorTest extends SWTTestExt{
     assertTrue("File "
       + sampleDrlFileName 
       + " was not udpated properly. There are these errors: "
-      + SWTEclipseExt.getFormattedTreeNodesText(bot.tree(), errors),
+      + SWTEclipseExt.getFormattedTreeNodesText(errors),
       errors == null || errors.length == 0);
     
     SWTBotTreeItem[] warnings = ProblemsView
@@ -151,7 +151,7 @@ public class DomainSpecificLanguageEditorTest extends SWTTestExt{
     assertTrue("File "
       + sampleDrlFileName 
       + " was not udpated properly. There are these warnings: "
-      + SWTEclipseExt.getFormattedTreeNodesText(bot.tree(), warnings),
+      + SWTEclipseExt.getFormattedTreeNodesText(warnings),
       warnings == null || warnings.length == 0);
   }
   /**

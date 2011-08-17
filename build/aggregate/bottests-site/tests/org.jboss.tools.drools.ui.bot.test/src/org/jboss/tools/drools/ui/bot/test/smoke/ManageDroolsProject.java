@@ -84,13 +84,13 @@ public class ManageDroolsProject extends SWTTestExt{
     assertTrue("Project "
         + droolsProjectName 
         + " was not created properly. There are these errors: "
-        + SWTEclipseExt.getFormattedTreeNodesText(bot.tree(), errors),
+        + SWTEclipseExt.getFormattedTreeNodesText(errors),
         errors == null || errors.length == 0);
     SWTBotTreeItem[] warnings = ProblemsView.getFilteredWarningsTreeItems(bot,null ,projectPath, null,null);
     assertTrue("Project "
         + droolsProjectName 
         + " was not created properly. There are these warnings: "
-        + SWTEclipseExt.getFormattedTreeNodesText(bot.tree(), warnings),
+        + SWTEclipseExt.getFormattedTreeNodesText(warnings),
         warnings == null || warnings.length == 0);
     
   }
