@@ -343,7 +343,16 @@ public class TextUtil {
 				break;
 			}
 		}
-		String s1 = sourceText.substring(0, sourcePosition);
+		/*
+		 * Fix: https://issues.jboss.org/browse/JBIDE-9548
+		 * Without <span> for text nodes -- there is an
+		 * string out of bounds exception. 
+		 */
+		int substringPosition = sourcePosition;
+		if (sourceText.length() < sourcePosition) {
+			substringPosition = sourceText.length() - 1;
+		}
+		String s1 = sourceText.substring(0, substringPosition);
 		String s2 = s1.replaceAll(SOURCE_BREAK, VISUAL_BREAK);
 		return calcPosition - (s1.length() - s2.length());
 	}
