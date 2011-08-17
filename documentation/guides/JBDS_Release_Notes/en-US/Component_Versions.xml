@@ -28,7 +28,7 @@
 		</note>
 		<important>
 			<para>
-				The Drools Rule editor has been removed from this release. For further information on why this has occurred, see <ulink url="https://issues.jboss.org/browse/JBIDE-9052">JBIDE-9052</ulink>
+				The Guided Drools Rule editor has been removed from this release. For further information on why this has occurred, see <ulink url="https://issues.jboss.org/browse/JBIDE-9052">JBIDE-9052</ulink>
 			</para>
 		</important>
 </section>

@@ -24,7 +24,7 @@
 			<itemizedlist>					
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-3126">JBIDE-3126</ulink>: Validation for the serializablity of injected beans into passive-scoped beans has been added. This ensures that if a bean belongs to <property>@SessionScoped</property>, <property>@ConversationScope</property> or any <property>@NormalScope(passivating=true)</property> and it is not stateful (<property>@Stateful</property>), the bean is checked to see if it implements <classname>java.io.Serializible</classname>. If it does implement the Serializible class, then it is marked as an error.
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-3126">JBIDE-3126</ulink>: Validation for the serializablity of injected beans into passive-scoped beans has been added. This ensures that if a bean belongs to <property>@SessionScoped</property>, <property>@ConversationScope</property> or any <property>@NormalScope(passivating=true)</property> and it is not stateful (<property>@Stateful</property>), the bean is checked to see if it implements <classname>java.io.Serializible</classname>. If it does not implement the Serializible class, then it is marked as an error.
 					</para>
 				</listitem>
             </itemizedlist>
