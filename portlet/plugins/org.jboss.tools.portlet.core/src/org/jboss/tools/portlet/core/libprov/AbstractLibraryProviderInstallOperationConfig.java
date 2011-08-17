@@ -124,7 +124,6 @@ public abstract class AbstractLibraryProviderInstallOperationConfig extends
 		}
         listener = new IFacetedProjectListener() {
 			
-			@Override
 			public void handleEvent(IFacetedProjectEvent event) {
 				isEPP = PortletCoreActivator.isEPP(getFacetedProject());
 				IProjectFacet f = getProjectFacet();
