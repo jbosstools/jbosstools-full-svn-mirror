@@ -573,9 +573,8 @@
 		<profile>
 			<id>gwt</id>
 			<activation>
-				<activeByDefault>false</activeByDefault>
+				<activeByDefault>true</activeByDefault>
 			</activation>
-			<!-- As long as GWT is not available for Eclipse 3.7 it is not to be included --> 
 			<modules>
 				<module>../gwt</module>
 			</modules>
