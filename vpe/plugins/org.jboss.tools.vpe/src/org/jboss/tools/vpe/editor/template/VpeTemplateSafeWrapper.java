@@ -1,5 +1,7 @@
 package org.jboss.tools.vpe.editor.template;
 
+import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.SafeRunner;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.swt.graphics.Point;
@@ -8,6 +10,7 @@ import org.jboss.tools.jst.jsp.selection.SourceSelection;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeSourceDropInfo;
 import org.jboss.tools.vpe.editor.VpeSourceInnerDragInfo;
+import org.jboss.tools.vpe.editor.VpeVisualDomBuilder;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.NodeData;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
@@ -22,7 +25,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-public class VpeTemplateSafeWrapper implements VpeTemplate {
+public class VpeTemplateSafeWrapper implements VpeTemplate, IAdaptable {
 
 	VpeTemplate delegate;
 
@@ -591,10 +594,47 @@ public class VpeTemplateSafeWrapper implements VpeTemplate {
 		return null;
 	};
     
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.vpe.editor.template.VpeTemplate#getPriority()
+	 */
 	public double getPriority() {
-		return delegate.getPriority();
+		try {
+			return delegate.getPriority();
+		} catch (Exception ex) {
+			VpePlugin.getPluginLog().logError(ex);
+		}
+		return 0.0;
 	}
+	
+	/* (non-Javadoc)
+	 * @see org.jboss.tools.vpe.editor.template.VpeTemplate#setPriority(double)
+	 */
 	public void setPriority(double priority) {
-		delegate.setPriority(priority);
+		try {
+			delegate.setPriority(priority);
+		} catch (Exception ex) {
+			VpePlugin.getPluginLog().logError(ex);
+		}
 	}
+
+	@Override
+	public Object getAdapter(Class adapter) {
+		if (adapter == VpeToggableTemplate.class) {
+			return castDelegateTo(VpeToggableTemplate.class);
+		} 
+		return Platform.getAdapterManager().getAdapter(this, adapter);
+	}
+	
+	public Object castDelegateTo(Class adapter) {
+		Object result = null;
+		try {
+			if (adapter.isInstance(delegate)) {
+				result = adapter.cast(delegate);
+			}
+		} catch (Exception ex) {
+			VpePlugin.getPluginLog().logError(ex);
+		}
+		return result;
+	}
+	
 }

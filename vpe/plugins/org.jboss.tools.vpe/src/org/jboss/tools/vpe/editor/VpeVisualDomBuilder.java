@@ -53,6 +53,7 @@ import org.jboss.tools.vpe.editor.template.VpeHtmlTemplate;
 import org.jboss.tools.vpe.editor.template.VpeTagDescription;
 import org.jboss.tools.vpe.editor.template.VpeTemplate;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
+import org.jboss.tools.vpe.editor.template.VpeTemplateSafeWrapper;
 import org.jboss.tools.vpe.editor.template.VpeToggableTemplate;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionException;
 import org.jboss.tools.vpe.editor.util.Docbook;
@@ -934,10 +935,10 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		VpeElementMapping elementMapping = (VpeElementMapping) domMapping
 				.getNodeMapping(sourceElement);
 		if (elementMapping != null) {
-			VpeTemplate template = elementMapping.getTemplate();
-
-			if (template instanceof VpeToggableTemplate) {
-				((VpeToggableTemplate) template).stopToggling(sourceElement);
+			VpeToggableTemplate toggableTemplate = (VpeToggableTemplate) ((VpeTemplateSafeWrapper) 
+					elementMapping.getTemplate()).getAdapter(VpeToggableTemplate.class);
+			if (toggableTemplate != null) {
+				toggableTemplate.stopToggling(sourceElement);
 			}
 		}
 	}
@@ -1012,14 +1013,14 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 				.getAttributeNode(VPE_USER_TOGGLE_LOOKUP_PARENT);
 		if (toggleLookupAttr != null) {
 			toggleLookup = "true".equals(toggleLookupAttr.getNodeValue()); //$NON-NLS-1$
+		} else {
+			toggleLookup = false;
 		}
 		// end of fix
-
 		if (elementMapping != null) {
-			VpeTemplate template = elementMapping.getTemplate();
-
-			while (toggleLookup && sourceElement != null
-					&& !(template instanceof VpeToggableTemplate)) {
+			VpeToggableTemplate toggableTemplate = (VpeToggableTemplate) ((VpeTemplateSafeWrapper)
+					elementMapping.getTemplate()).getAdapter(VpeToggableTemplate.class);
+			while (toggleLookup && (sourceElement != null) && (toggableTemplate == null)) {
 				sourceElement = (Element) sourceElement.getParentNode();
 				if (sourceElement == null) {
 					break;
@@ -1033,12 +1034,11 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 				if (elementMapping == null) {
 					continue;
 				}
-				template = elementMapping.getTemplate();
+				toggableTemplate = (VpeToggableTemplate) ((VpeTemplateSafeWrapper)
+						elementMapping.getTemplate()).getAdapter(VpeToggableTemplate.class);
 			}
-
-			if (template instanceof VpeToggableTemplate) {
-				((VpeToggableTemplate) template).toggle(this, sourceElement,
-						toggleId);
+			if (toggableTemplate != null) {
+				toggableTemplate.toggle(this, sourceElement, toggleId);
 				updateElement(sourceElement);
 				return sourceElement;
 			}

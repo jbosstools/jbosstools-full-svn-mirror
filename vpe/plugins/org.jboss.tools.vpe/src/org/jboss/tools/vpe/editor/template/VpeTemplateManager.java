@@ -1064,11 +1064,13 @@ public class VpeTemplateManager {
 		}
 		if (template != null) {
 			template.init(templateElement, caseSensitive);
+			template.setPriority(Double.parseDouble(priority));
 			template = new VpeTemplateSafeWrapper(template);
 		}
-		if (template != null) {
-			template.setPriority(Double.parseDouble(priority));
-		}
+		/*
+		 * In any case VpeTemplateSafeWrapper will be return,
+		 * or null.
+		 */
 		return template;
 	}
 
