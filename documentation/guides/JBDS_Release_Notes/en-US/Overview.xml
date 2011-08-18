@@ -20,7 +20,57 @@
 			</listitem>
 			<listitem>
 				<para>
-					Certified third-party components. JBoss Developer Studio 4.1 is released with numerous third-party components that have been tested to work with JBoss Developer Studio and JBoss technologies. These components are available through the extras site; see the Getting Started Guide for further information. 
+					Certified third-party components. JBoss Developer Studio 4.1 is released with numerous third-party components that have been tested to work with JBoss Developer Studio and JBoss technologies. The components are as follows:
+				</para>
+				<itemizedlist>
+					<listitem>
+						<para>
+							JBoss BPEL Editor (also available with the core installation of JBoss Developer Studio 4.1)
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Spring
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							TestNG
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							m2eclipse (m2e)
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Mylyn
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							eGit
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							Subclipse
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							PMD
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							FindBugs
+						</para>
+					</listitem>
+				</itemizedlist>
+				<para>
+					These components are available through the extras site; see the Getting Started Guide for further information. 
 				</para>
 			</listitem>
 		</itemizedlist>
