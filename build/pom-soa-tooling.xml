@@ -1,0 +1,279 @@
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.jboss.tools</groupId>
+	<artifactId>org.jboss.tools.build</artifactId>
+	<name>org.jboss.tools.build</name>
+	<version>0.0.2</version>
+	<packaging>pom</packaging>
+
+	<profiles>
+		<!-- for bootstrapping the parent and target-platform poms via Mead, we need to be able to fetch from this folder and run 
+			this profile (excluding all others); currently parent pom includes target-platform build too, so only need to build the parent
+			 
+			mvn clean install -P parent,\!libs,\!tests,\!jmx,\!archives,\!common \
+			-P \!smooks,\!bpel,\!esb,\!jst,\!modeshape,\!flow,\!jbpm,\!usage,\!aggregate-coverage
+			
+		-->
+		<profile>
+			<id>parent</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<modules>
+				<module>parent</module>
+			</modules>
+		</profile>
+		
+		<profile>
+			<id>libs</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>libs</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>tests</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>as-bootstrap</name>
+				</property>
+			</activation>
+			<modules>
+				<module>../tests</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>jmx</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../jmx</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>jmx-bootstrap</id>
+			<modules>
+				<module>../tests</module>
+				<module>../jmx</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>archives</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>as-bootstrap</name>
+				</property>
+			</activation>
+			<modules>
+				<module>../archives</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>archives-bootstrap</id>
+			<modules>
+				<module>../tests</module>
+				<module>../archives</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>common</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../common</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>common-bootstrap</id>
+			<modules>
+				<module>../tests</module>
+				<module>../common</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>jst</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../jst</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>jst-bootstrap</id>
+			<modules>
+				<module>../tests</module>
+				<module>../common</module>
+				<module>../jst</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>smooks</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../smooks</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>smooks-bootstrap</id>
+			<modules>
+				<module>../tests</module>
+				<module>../smooks</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>bpel</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../bpel</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>bpel-bootstrap</id>
+			<modules>
+				<module>../tests</module>
+				<module>../bpel</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>esb</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../esb</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>esb-bootstrap</id>
+			<modules>
+				<module>../tests</module>
+				<module>../esb</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>modeshape</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../modeshape</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>modeshape-bootstrap</id>
+			<modules>
+				<module>../tests</module>
+				<module>../modeshape</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>flow</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../flow</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>flow-bootstrap</id>
+			<modules>
+				<module>../tests</module>
+				<module>../flow</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>jbpm</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../jbpm</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>jbpm-bootstrap</id>
+			<modules>
+				<module>../tests</module>
+				<module>../flow</module>
+				<module>../jbpm</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>deltacloud</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../deltacloud</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>deltacloud-bootstrap</id>
+			<modules>
+				<module>../tests</module>
+				<module>../as</module>
+				<module>../deltacloud</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>usage</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../usage</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>aggregate-coverage</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>reports/emma-coverage</module>
+			</modules>
+		</profile>
+
+	</profiles>
+
+</project>
+	
