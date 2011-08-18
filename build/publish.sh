@@ -362,12 +362,12 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 <?compositeArtifactRepository version='1.0.0'?>
 <repository name='JBoss Tools Staging - ${JOB_NAME} Composite' type='org.eclipse.equinox.internal.p2.artifact.repository.CompositeArtifactRepository' version='1.0.0'> " > ${STAGINGDIR}/all/compositeArtifacts.xml
 		metadata="<properties size='2'><property name='p2.compressed' value='true'/><property name='p2.timestamp' value='"${now}"'/></properties>
-<children size='3'>
+<children size='2'>
 <child location='../../../staging/${JOB_NAME}/all/repo/'/>
 <child location='../../../staging.previous/${JOB_NAME}/all/repo/'/>
-<!-- <child location='../../../staging.previous/${JOB_NAME}.2/all/repo/'/> -->
 </children>
-</repository>"
+</repository>
+"
 		echo $metadata >> ${STAGINGDIR}/all/compositeContent.xml
 		echo $metadata >> ${STAGINGDIR}/all/compositeArtifacts.xml
 		date; rsync -arzq ${STAGINGDIR}/all/composite*.xml $DESTINATION/builds/staging/${JOB_NAME}/all/
