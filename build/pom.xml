@@ -601,16 +601,6 @@
 		</profile>
 
 		<profile>
-			<id>drools</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<modules>
-				<module>../drools</module>
-			</modules>
-		</profile>
-
-		<profile>
 			<id>runtime</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
