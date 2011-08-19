@@ -673,6 +673,11 @@ java -jar /path/to/installer.jar /path/to/InstallConfigRecord.xml
     <para>
       The components available on the update site will be listed, which you can select and install from by following the prompts.
     </para>
+	<note>
+		<para>
+			At the time of the JBoss Developer Studio 4.1 release, the technical preview site does not contain any components.
+		</para>
+	</note>
      
 <!--    <note>
       <title>Note</title> 
