@@ -662,7 +662,7 @@ public class VpeController implements INodeAdapter,
 				sourceChangeFlag = true;
 				int type = ((Node) notifier).getNodeType();
 				visualEditor.hideResizer();
-				visualBuilder.setSelectionRectangle(null);
+				visualBuilder.setSelectionRectangle(SelectionManager.EMPTY_SELECTION);
 				if (type == Node.CDATA_SECTION_NODE) {
 					visualBuilder.setCdataText((Node) notifier);					
 				} else if (type == Node.TEXT_NODE) {
@@ -1599,7 +1599,7 @@ public class VpeController implements INodeAdapter,
 			visualEditor.reload();
 		} else {
 			// Fix bugs JBIDE-2750
-			visualBuilder.setSelectionRectangle(null);
+			visualBuilder.setSelectionRectangle(SelectionManager.EMPTY_SELECTION);
 			visualEditor.reload();
 			// IDOMModel sourceModel = (IDOMModel) getModel();
 			// if (sourceModel != null) {
@@ -1702,15 +1702,12 @@ public class VpeController implements INodeAdapter,
 		}
 
 		public boolean startActiveEditor(int newType) {
-			if (type == ACTIVE_EDITOR_NONE) {
-				if (newType == ACTIVE_EDITOR_SOURCE
-						&& editPart.getVisualMode() == VpeEditorPart.SOURCE_MODE) {
-					return false;
-				}
+			if (type != ACTIVE_EDITOR_NONE || type == ACTIVE_EDITOR_NONE && newType == ACTIVE_EDITOR_SOURCE
+				&& editPart.getVisualMode() == VpeEditorPart.SOURCE_MODE) {
+				return false;
+			} else {
 				type = newType;
 				return true;
-			} else {
-				return false;
 			}
 		}
 
@@ -2442,7 +2439,7 @@ public class VpeController implements INodeAdapter,
 			// node is created, see JBIDE-5105
 			visualEditor.reinitDesignMode();
 
-			visualBuilder.setSelectionRectangle(null);
+			visualBuilder.setSelectionRectangle(SelectionManager.EMPTY_SELECTION);
 			IDOMModel sourceModel = (IDOMModel) getModel();
 			if (sourceModel != null) {
 				IDOMDocument sourceDocument = sourceModel.getDocument();

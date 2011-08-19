@@ -40,14 +40,12 @@ public class VpeResizerMouseMotionListener implements nsIDOMEventListener {
 	public void mouseMove(nsIDOMEvent event) {
 		nsIDOMMouseEvent mouseEvent = XPCOM.queryInterface(event, nsIDOMMouseEvent.class);
 		
-		if ( mouseEvent == null ) {
-			return;
+		if ( mouseEvent != null ) {
+			vpeResizer.mouseMove(mouseEvent);
 		}
-		vpeResizer.mouseMove(mouseEvent);	
 	}
 	
 	public void dragMove(nsIDOMEvent event) {
-		
 	}
 
 	public void handleEvent(nsIDOMEvent event) {

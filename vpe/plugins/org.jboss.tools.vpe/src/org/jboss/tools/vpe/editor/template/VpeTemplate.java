@@ -14,8 +14,8 @@ import org.eclipse.jface.text.IRegion;
 import org.eclipse.swt.graphics.Point;
 import org.jboss.tools.jst.jsp.editor.ITextFormatter;
 import org.jboss.tools.jst.jsp.selection.SourceSelection;
-import org.jboss.tools.vpe.editor.VpeSourceInnerDragInfo;
 import org.jboss.tools.vpe.editor.VpeSourceDropInfo;
+import org.jboss.tools.vpe.editor.VpeSourceInnerDragInfo;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.NodeData;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
@@ -430,9 +430,9 @@ public interface VpeTemplate {
 
 	boolean containsText();
 	
-	public boolean canModify();
+	boolean canModify();
 	
-	public void setModify(boolean modify);
+	void setModify(boolean modify);
 
 	/**
 	 * 
@@ -441,7 +441,7 @@ public interface VpeTemplate {
 	 * @param domMapping
 	 * @return
 	 */
-	public NodeData getNodeData(nsIDOMNode node, VpeElementData elementData,
+	NodeData getNodeData(nsIDOMNode node, VpeElementData elementData,
 			VpeDomMapping domMapping);
 
 	/**
@@ -451,11 +451,11 @@ public interface VpeTemplate {
 	 * @param domMapping
 	 * @return
 	 */
-	public nsIDOMNode getVisualNodeBySourcePosition(
+	nsIDOMNode getVisualNodeBySourcePosition(
 			VpeElementMapping elementMapping,
 			Point selectionRange, VpeDomMapping domMapping);
 	
-	public boolean isInvisible();
+	boolean isInvisible();
 	
 	/**
 	 * Calculates and returns sourceRegion, on which we should
@@ -464,10 +464,18 @@ public interface VpeTemplate {
 	 * @param domNode
 	 * @return sourceRegion on which we should make openOn action
 	 */
-	public IRegion getSourceRegionForOpenOn(VpePageContext pageContext, Node sourceNode,nsIDOMNode domNode);
+	IRegion getSourceRegionForOpenOn(VpePageContext pageContext, Node sourceNode,nsIDOMNode domNode);
 	
-	public double getPriority();
+	/**
+	 * 
+	 * @return
+	 */
+	double getPriority();
 	
-	public void setPriority(double priority);
-	
+	/**
+	 * 
+	 * @param priority
+	 */
+	void setPriority(double priority);
+
 }

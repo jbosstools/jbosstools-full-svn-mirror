@@ -267,26 +267,23 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	 * @param scroll
 	 */
 	public void setSelectionRectangle(List<nsIDOMNode> nodes, int resizerConstrains) {
-		if (getFlasher() == null) {
-			return;
-		}
+		getFlasher();
 		this.selectedNodes = nodes;
 
-			nsIDOMElement element = getSelectedElement();
-			if (element != null) {
-				repaint();
-				scrollToElement(element);			
-			}
-			redrawSelectionRectangle();
+		nsIDOMElement element = getSelectedElement();
+		if (element != null) {
+			repaint();
+			scrollToElement(element);			
+		}
+		redrawSelectionRectangle();
 
-			if (xulRunnerVpeResizer != null) {
-				if (element != null && resizerConstrains != 0) {
-					xulRunnerVpeResizer.show(element, resizerConstrains);
-				} else {
-					xulRunnerVpeResizer.hide();
-				}
+		if (xulRunnerVpeResizer != null) {
+			if (element != null && resizerConstrains != 0) {
+				xulRunnerVpeResizer.show(element, resizerConstrains);
+			} else {
+				xulRunnerVpeResizer.hide();
 			}
-		
+		}
 
 		lastResizerConstrains = resizerConstrains;
 		

@@ -1078,7 +1078,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
 	public void setSelectionRectangle(/* nsIDOMElement */List<nsIDOMNode> visualNodes) {
 		int resizerConstrains = VpeTagDescription.RESIZE_CONSTRAINS_NONE;
-		if(visualNodes!=null&&visualNodes.size()==1){
+		if(visualNodes.size()==1){
 			 resizerConstrains = getResizerConstrains(visualNodes.get(0));
 		}
 		visualEditor.setSelectionRectangle(visualNodes, resizerConstrains);

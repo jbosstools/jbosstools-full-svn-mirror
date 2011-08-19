@@ -41,8 +41,8 @@ public class VpeTemplateSet {
 	VpeTemplate getTemplate(VpePageContext pageContext, Node sourceNode, Set ifDependencySet) {
 		VpeTemplate result = defTemplate;
 		boolean initializeCustomTemplate = true;
-		for (int i = 0; i < templates.size(); i++) {
-			VpeTemplateSet set = (VpeTemplateSet)templates.get(i);
+		
+		for (VpeTemplateSet set : templates) {
 			VpeTemplate template = set.getTemplate(pageContext, sourceNode, ifDependencySet);
 			if (template != null) {
 				if (result == null) {

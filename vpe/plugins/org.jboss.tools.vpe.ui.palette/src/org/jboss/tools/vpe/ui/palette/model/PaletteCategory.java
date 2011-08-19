@@ -21,8 +21,6 @@ import org.jboss.tools.common.model.XModelObject;
 
 public class PaletteCategory extends PaletteDrawer implements PaletteXModelObject {
 	private XModelObject xobject;
-///	private String[] natureTypes;
-///	private String[] editorTypes;
 
 	public PaletteCategory(XModelObject xobject, boolean open) {
 		super(null);
@@ -47,32 +45,6 @@ public class PaletteCategory extends PaletteDrawer implements PaletteXModelObjec
 			p = p.getParent();
 		}
 		setLabel(label);
-///		natureTypes = getTypes("nature type");
-///		editorTypes = getTypes("editor type");
 	}
-/*	
-	public String[] getNatureTypes() {
-		return natureTypes;
-	}
-	
-	public String[] getEditorTypes() {
-		return editorTypes;
-	}
-*/
-	private String[] getTypes(String name) {
-		String attr = xobject.getAttributeValue(name);
-		if (attr == null) {
-			return null; 
-		}
-		StringTokenizer st = new StringTokenizer(attr, ";"); //$NON-NLS-1$
-		List attrs = new ArrayList();
 
-		while (st.hasMoreTokens()) {
-			attrs.add(st.nextToken());
-		 }
-		 if (attrs.size() <= 0) {
-		 	return null;
-		 }
-		return (String[])attrs.toArray(new String[attrs.size()]); 
-	}
 }

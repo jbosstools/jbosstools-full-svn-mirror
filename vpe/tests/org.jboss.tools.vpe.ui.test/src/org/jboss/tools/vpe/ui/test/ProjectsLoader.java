@@ -96,7 +96,7 @@ public class ProjectsLoader {
 	public IProject getProject(String projectName) throws IOException {
 		IProject project = getExistingProject(projectName);
 
-		if (project == null) {
+		if (!project.isAccessible()) {
 			ProjectLocation location = projectNameToLocation.get(projectName);
 			if (location == null) {
 				throw new RuntimeException(
@@ -115,10 +115,6 @@ public class ProjectsLoader {
 				throw new RuntimeException("Project by the path='" + location.getPath()
 						+ "' cannot be imported.",e);
 			}
-			if (project == null) {
-				throw new RuntimeException("Project by the path='" + location.getPath()
-						+ "' cannot be imported.");
-			}
 		}
 
 		return project;
@@ -129,13 +125,8 @@ public class ProjectsLoader {
 	 * if there is no project with this name in the workspace.
 	 */
 	public static IProject getExistingProject(String projectName) {
-		IProject project = ResourcesPlugin.getWorkspace().getRoot()
+		return ResourcesPlugin.getWorkspace().getRoot()
 				.getProject(projectName);
-		if (project.isAccessible()) {
-			return project;
-		} else {
-			return null;
-		}
 	}
 
 	/**
