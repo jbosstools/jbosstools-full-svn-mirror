@@ -44,13 +44,11 @@
              <author><firstname>Thomas</firstname><surname>Heute</surname><email>theute@jboss.org</email></author>      
      
 	                       <copyright>
-	                           <year>2008</year>
-	                           <year>2009</year>
-	                           <year>2010</year>
+	                           <year>2011</year>
 	                           <holder>JBoss by Red Hat</holder>
 	                       </copyright>
           <releaseinfo>
-              Version: 1.1.1.GA
+              Version: 3.2.1.GA
           </releaseinfo>
 	
 <!--<abstract>
