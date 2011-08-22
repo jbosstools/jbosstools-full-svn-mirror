@@ -12,7 +12,6 @@
 package org.jboss.tools.vpe.editor.template;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.swt.graphics.Point;
@@ -40,7 +39,6 @@ import org.w3c.dom.Node;
  */
 public class SelectionManager implements ISelectionManager {
 	
-	public static final List<nsIDOMNode> EMPTY_SELECTION = Collections.unmodifiableList(new ArrayList<nsIDOMNode>(0));
 	/**
 	 * pageContext keeps information about page
 	 */

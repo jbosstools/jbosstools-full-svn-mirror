@@ -662,7 +662,7 @@ public class VpeController implements INodeAdapter,
 				sourceChangeFlag = true;
 				int type = ((Node) notifier).getNodeType();
 				visualEditor.hideResizer();
-				visualBuilder.setSelectionRectangle(SelectionManager.EMPTY_SELECTION);
+				visualBuilder.clearSelectionRectangle();
 				if (type == Node.CDATA_SECTION_NODE) {
 					visualBuilder.setCdataText((Node) notifier);					
 				} else if (type == Node.TEXT_NODE) {
@@ -673,7 +673,7 @@ public class VpeController implements INodeAdapter,
 						visualBuilder.updateNode((Node) notifier);
 				} else if (type == Node.COMMENT_NODE) {
 					if ("yes".equals(VpePreference.SHOW_COMMENTS.getValue())) { //$NON-NLS-1$
-						visualBuilder.setSelectionRectangle(null);
+						visualBuilder.clearSelectionRectangle();
 						visualBuilder.updateNode((Node) notifier);
 					}
 				} else if (feature != null
@@ -744,7 +744,7 @@ public class VpeController implements INodeAdapter,
 				 */
 				if (!commentNodeChanged ||(commentNodeChanged && (commentAddCount != 1 || commentRemoveCount != 1))) {
 					visualEditor.hideResizer();
-					visualBuilder.setSelectionRectangle(null);
+					visualBuilder.clearSelectionRectangle();
 					visualBuilder.updateNode((Node) notifier);
 				} else {
 					commentNodeChanged = false;
@@ -761,7 +761,7 @@ public class VpeController implements INodeAdapter,
 						// "style"))
 						// {
 						visualEditor.hideResizer();
-						visualBuilder.setSelectionRectangle(null);
+						visualBuilder.clearSelectionRectangle();
 						visualBuilder.setText((Node) feature);
 						visualEditor.showResizer();
 						// }
@@ -1173,50 +1173,9 @@ public class VpeController implements INodeAdapter,
 			return;
 		}
 		try {
-			// mouseDownSelectionFlag = false;
-			// VpeTemplate template = TemplateManagingUtil
-			// .getTemplateByVisualSelection(pageContext, VisualDomUtil
-			// .getTargetNode(mouseEvent));
-			// if (template instanceof ITemplateSelectionManager) {
-			// ((ITemplateSelectionManager) template).setSelectionByMouse(
-			// pageContext, visualSelectionController, mouseEvent);
-			// mouseDownSelectionFlag = true;
-			// } else {
-			// nsIDOMElement visualDragElement = selectionBuilder
-			// .getDragElement(mouseEvent);
 			if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
-				System.out.println("<<< mouseDown  targetNode: " //$NON-NLS-1$
-						/*
-						 * +visualNode. getNodeName() + " (" + visualNode +
-						 * ")  selectedElement: " +( visualDragElement != null ?
-						 * visualDragElement . getNodeName() + " (" +
-						 * visualDragElement + ")" : null)
-						 */);
+				System.out.println("<<< mouseDown  targetNode:"); //$NON-NLS-1$
 			}
-			//
-			// if (visualDragElement != null) {
-			//
-			// // we shouldn't change selection when we click on <input
-			// // type="text" /> element,
-			// // because if we change after resizing the input element
-			// // lost
-			// // selection
-			// // if(!(HTML.TAG_INPUT.equalsIgnoreCase(visualDragElement.
-			// // getNodeName())&&
-			// // HTML.ATTR_TEXT.equalsIgnoreCase(visualDragElement.
-			// // getAttribute(HTML.ATTR_TYPE))
-			// // &&visualDragElement.getAttribute(HTML.ATTR_TYPE)!=null))
-			// // {
-			//
-			// selectionBuilder
-			// .setVisualElementSelection(visualDragElement);
-			// mouseDownSelectionFlag = true;
-			// // }
-			// } else {
-			// selectionBuilder.setCaretAtMouse(mouseEvent);
-			// }
-			// }
-
 			// selection will be set only if press left button
 			if (mouseEvent.getButton() == LEFT_BUTTON) {
 				// drag gesture isn't generated in XR 1.9 for Linux Platforms,
@@ -1310,13 +1269,6 @@ public class VpeController implements INodeAdapter,
 
 	public void mouseMove(nsIDOMMouseEvent mouseEvent) {
 		onRefresh();
-//		nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
-//		if (visualNode != null) {
-//			if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
-//				System.out.println("<<< mouseMove  visualNode: "
-//						+ visualNode.getNodeName() + " (" + visualNode + ")");
-//			}
-//		}
 	}
 
 	public void keyPress(nsIDOMKeyEvent keyEvent) {
@@ -1395,12 +1347,12 @@ public class VpeController implements INodeAdapter,
 		 * fixing JBIDE-2562 I found that eclipse handles key shortcuts without
 		 * this notification.
 		 */
-		// getXulRunnerEditor().getBrowser().notifyListeners(
-		// keyboardEvent.type, keyboardEvent);
+		/*	getXulRunnerEditor().getBrowser().notifyListeners(
+			keyboardEvent.type, keyboardEvent); */
 
 		/*
-		 * Fixes https://jira.jboss.org/jira/browse/JBIDE-2562 author:
-		 * dmaliarevich
+		 * Fixes https://jira.jboss.org/jira/browse/JBIDE-2562 
+		 * author: dmaliarevich
 		 * 
 		 * When shortcut key is pressed do not handle this event in the handler.
 		 */
@@ -1418,26 +1370,8 @@ public class VpeController implements INodeAdapter,
 				}
 			}
 			if (keyEventHandler.handleKeyPress(keyEvent)) {
-				/*
-				 * JBIDE-2670
-				 */
+				/* JBIDE-2670 */
 				keyEvent.preventDefault();
-				// switcher
-				// .startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL);
-				// try {
-				/*
-				 * Edward
-				 */
-				// commented by sdzmitrovich because cursor disappear after
-				// trying to edit of read-only elements
-				// TODO check editing and if are appear errors then
-				// uncommented next code
-				// sourceSelectionChanged(true);
-				// visualSelectionController.setCaretEnabled(true);
-
-				// } finally {
-				// switcher.stopActiveEditor();
-				// }
 			}
 		}
 		onRefresh();
@@ -1486,10 +1420,6 @@ public class VpeController implements INodeAdapter,
 	 */
 	public void onShowContextMenu(long contextFlags, nsIDOMEvent event,
 			nsIDOMNode node) {
-		// FIXED FOR JBIDE-3072 by sdzmitrovich
-
-		// nsIDOMNode visualNode = VisualDomUtil.getTargetNode(event);
-		// if (visualNode != null) {
 		Node selectedSourceNode = null;
 
 		VpeNodeMapping nodeMapping = SelectionUtil
@@ -1516,12 +1446,6 @@ public class VpeController implements INodeAdapter,
 			}
 		});
 
-		// create context menu
-		// MenuCreationHelper menuCreationHelper =
-		// new MenuCreationHelper(domMapping, pageContext, sourceEditor,
-		// visualEditor);
-		// menuCreationHelper.createMenuForNode(selectedSourceNode, menuManager,
-		// true);
 		new VpeMenuCreator(menuManager, selectedSourceNode).createMenu();
 		contextMenu.setVisible(true);
 		onRefresh();
@@ -1599,7 +1523,7 @@ public class VpeController implements INodeAdapter,
 			visualEditor.reload();
 		} else {
 			// Fix bugs JBIDE-2750
-			visualBuilder.setSelectionRectangle(SelectionManager.EMPTY_SELECTION);
+			visualBuilder.clearSelectionRectangle();
 			visualEditor.reload();
 			// IDOMModel sourceModel = (IDOMModel) getModel();
 			// if (sourceModel != null) {
@@ -2439,7 +2363,7 @@ public class VpeController implements INodeAdapter,
 			// node is created, see JBIDE-5105
 			visualEditor.reinitDesignMode();
 
-			visualBuilder.setSelectionRectangle(SelectionManager.EMPTY_SELECTION);
+			visualBuilder.clearSelectionRectangle();
 			IDOMModel sourceModel = (IDOMModel) getModel();
 			if (sourceModel != null) {
 				IDOMDocument sourceDocument = sourceModel.getDocument();

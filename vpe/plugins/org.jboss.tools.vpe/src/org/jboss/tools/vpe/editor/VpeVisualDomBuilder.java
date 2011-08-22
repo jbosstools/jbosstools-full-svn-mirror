@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -137,6 +138,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	private Map<IStorage, Document> includeDocuments = new HashMap<IStorage, Document>();
 	private boolean showInvisibleTags;
 	private boolean showBorderForUnknownTags;
+	public static final List<nsIDOMNode> EMPTY_SELECTION = Collections.unmodifiableList(new ArrayList<nsIDOMNode>(0));
 
 	public VpeVisualDomBuilder(VpeDomMapping domMapping,
 			INodeAdapter sorceAdapter,
@@ -1078,11 +1080,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
 	public void setSelectionRectangle(/* nsIDOMElement */List<nsIDOMNode> visualNodes) {
 		int resizerConstrains = VpeTagDescription.RESIZE_CONSTRAINS_NONE;
-		/*
-		 * I've got null while pasting tag from one page to another.
-		 * Thus null checking should present.
-		 */
-		if ((visualNodes != null) && (visualNodes.size() == 1)) {
+		if(visualNodes.size()==1){
 			 resizerConstrains = getResizerConstrains(visualNodes.get(0));
 		}
 		visualEditor.setSelectionRectangle(visualNodes, resizerConstrains);
@@ -1597,5 +1595,9 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		span.appendChild(text);
 
 		return span;
+	}
+
+	public void clearSelectionRectangle() {
+		setSelectionRectangle(VpeVisualDomBuilder.EMPTY_SELECTION);
 	}
 }
