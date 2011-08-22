@@ -433,7 +433,16 @@
 			<modules>
 				<module>../gwt</module>
 			</modules>
-		</profile>
+		        <repositories>
+                	        <repository>
+                        		<id>gwt-e37</id>
+        				<url>http://dl.google.com/eclipse/plugin/3.7/</url>
+				        <layout>p2</layout>
+				        <snapshots><enabled>true</enabled></snapshots>
+				        <releases><enabled>true</enabled></releases>
+		               </repository>
+        		</repositories>
+	        </profile>
 
 		<profile>
 			<id>deltacloud</id>
