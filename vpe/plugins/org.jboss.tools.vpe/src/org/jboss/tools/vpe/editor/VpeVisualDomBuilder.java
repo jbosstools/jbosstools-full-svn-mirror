@@ -1078,7 +1078,11 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
 	public void setSelectionRectangle(/* nsIDOMElement */List<nsIDOMNode> visualNodes) {
 		int resizerConstrains = VpeTagDescription.RESIZE_CONSTRAINS_NONE;
-		if(visualNodes.size()==1){
+		/*
+		 * I've got null while pasting tag from one page to another.
+		 * Thus null checking should present.
+		 */
+		if ((visualNodes != null) && (visualNodes.size() == 1)) {
 			 resizerConstrains = getResizerConstrains(visualNodes.get(0));
 		}
 		visualEditor.setSelectionRectangle(visualNodes, resizerConstrains);
