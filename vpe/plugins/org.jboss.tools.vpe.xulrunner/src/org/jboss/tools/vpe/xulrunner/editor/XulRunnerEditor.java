@@ -243,15 +243,6 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 		return domWindow.getDocument();
 	}
 
-//	/**
-//	 * Function created to restore functionality of MozillaBrowser
-//	 * 
-//	 * @return
-//	 */
-//	public nsIDOMElement getLastSelectedElement() {
-//		return getElementForNode(lastSelectedNode);
-//	}
-
 	public List<nsIDOMNode> getSelectedNodes() {
 		if(selectedNodes==null){
 			selectedNodes=Collections.<nsIDOMNode>emptyList();
@@ -273,7 +264,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 		nsIDOMElement element = getSelectedElement();
 		if (element != null) {
 			repaint();
-			scrollToElement(element);			
+			scrollToElement(element);
 		}
 		redrawSelectionRectangle();
 
@@ -394,10 +385,9 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	 * 
 	 */
 	public void showResizer() {
-		if (xulRunnerVpeResizer != null && getSelectedElement() != null
-				&& lastResizerConstrains != 0) {
-			xulRunnerVpeResizer.show(getSelectedElement(),
-					lastResizerConstrains);
+		nsIDOMElement selectedElement = getSelectedElement();
+		if (xulRunnerVpeResizer != null && selectedElement != null && lastResizerConstrains != 0) {
+			xulRunnerVpeResizer.show(selectedElement, lastResizerConstrains);
 		}
 	}
 
@@ -411,25 +401,6 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	}
 
 	public void redrawSelectionRectangle() {
-//		nsIDOMElement element = get SelectedElement();
-//		if (element != null) {
-//			if (isVisible(element)) {
-//				if (element.getAttribute(VPE_INVISIBLE_ELEMENT) == null
-//						|| (!element.getAttribute(VPE_INVISIBLE_ELEMENT)
-//								.equals(Boolean.TRUE.toString()))) {
-//					getFlasher().setColor(FLASHER_VISUAL_ELEMENT_COLOR);
-//				} else {
-//					getFlasher().setColor(FLASHER_HIDDEN_ELEMENT_COLOR);
-//				}			
-//				drawElementOutline(element);
-//			} else {
-//				getFlasher().setColor(FLASHER_HIDDEN_ELEMENT_COLOR);
-//				nsIDOMElement domElement = findVisibleParentElement(element);
-//				if (domElement != null) {
-//					drawElementOutline(domElement);
-//				}
-//			}
-//		}
 		List<FlasherData> flasherDatas = new ArrayList<FlasherData>();
 		for (nsIDOMNode domNode : getSelectedNodes()) {
 			flasherDatas.add(prepareFlasherData(domNode));
@@ -501,23 +472,6 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 		getFlasher().drawElementOutline(flasherData);
 	}
 
-	/**
-	 * Checks if node has select in parent node, if has it's cause crash on OSX
-	 * and xulrunner 1.8.1.3
-	 * 
-	 * @param domElement
-	 * @return
-	 */
-	// private boolean hasSelectInParenNodes(nsIDOMNode domNode){
-	// if(domNode==null) {
-	// return false;
-	//		}else if("select".equalsIgnoreCase(domNode.getNodeName())){ //$NON-NLS-1$
-	// return true;
-	// } else {
-	// return hasSelectInParenNodes(domNode.getParentNode());
-	// }
-	// }
-
 	@Override
 	protected void onDispose() {
 		selectedNodes = new ArrayList<nsIDOMNode>();
@@ -541,8 +495,8 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	 */
 	public nsIDOMElement getSelectedElement(){
 		nsIDOMElement resizeElement = null;
-		if(getSelectedNodes()!=null&&getSelectedNodes().size()>0){
-			resizeElement =getElementForNode(getSelectedNodes().get(0));
+		if(!getSelectedNodes().isEmpty()){
+			resizeElement = getElementForNode(getSelectedNodes().get(0));
 		}
 		return resizeElement;
 	}
