@@ -337,6 +337,7 @@
 			<id>smooks-bootstrap</id>
 			<modules>
 				<module>../tests</module>
+				<module>../common</module>
 				<module>../smooks</module>
 			</modules>
 		</profile>
