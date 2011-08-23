@@ -45,6 +45,10 @@
 		<category name="AllTools" />
 		<category name="WebTools" />
 	</feature>
+	<feature url="features/org.jboss.ide.eclipse.as.server.egit.integration.feature_0.0.0.jar" id="org.jboss.ide.eclipse.as.server.egit.integration.feature" version="0.0.0">
+		<category name="AllTools" />
+		<category name="WebTools" />
+	</feature>
 	<feature url="features/org.jboss.ide.eclipse.archives.feature_0.0.0.jar" id="org.jboss.ide.eclipse.archives.feature" version="0.0.0">
 		<category name="AllTools" />
 		<category name="GeneralTools" />
