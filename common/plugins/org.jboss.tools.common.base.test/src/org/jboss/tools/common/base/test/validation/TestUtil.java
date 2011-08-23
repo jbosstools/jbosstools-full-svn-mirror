@@ -1,4 +1,4 @@
-package org.jboss.tools.jst.jsp.test;
+package org.jboss.tools.common.base.test.validation;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -22,7 +22,7 @@ import org.eclipse.wst.validation.internal.operations.EnabledValidatorsOperation
 import org.eclipse.wst.validation.internal.operations.ValidatorSubsetOperation;
 import org.eclipse.wst.validation.internal.operations.WorkbenchReporter;
 import org.eclipse.wst.validation.internal.plugin.ValidationPlugin;
-import org.jboss.tools.jst.web.kb.internal.validation.ValidatorManager;
+import org.jboss.tools.common.validation.ValidatorManager;
 import org.jboss.tools.test.util.JobUtils;
 
 public class TestUtil {

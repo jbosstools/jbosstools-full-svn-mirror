@@ -8,7 +8,7 @@
  * Contributors: 
  * Red Hat, Inc. - initial API and implementation 
  ******************************************************************************/
-package org.jboss.tools.jst.jsp.test;
+package org.jboss.tools.common.base.test.validation;
 
 import junit.framework.Test;
 
