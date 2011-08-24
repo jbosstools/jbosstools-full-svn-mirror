@@ -100,15 +100,6 @@
 			<modules>
 				<module>../as</module>
 			</modules>
-			<repositories>
-				<repository>
-					<id>egit11</id>
-					<url>http://download.jboss.org/jbosstools/updates/requirements/egit/1.1.0.201108230343/</url>
-					<layout>p2</layout>
-					<snapshots><enabled>true</enabled></snapshots>
-					<releases><enabled>true</enabled></releases>
-				</repository>
-			</repositories>
 		</profile>
 
 		<profile>
@@ -442,15 +433,6 @@
 			<modules>
 				<module>../gwt</module>
 			</modules>
-		        <repositories>
-                	        <repository>
-                        		<id>gwt-e37</id>
-        				<url>http://dl.google.com/eclipse/plugin/3.7/</url>
-				        <layout>p2</layout>
-				        <snapshots><enabled>true</enabled></snapshots>
-				        <releases><enabled>true</enabled></releases>
-		               </repository>
-        		</repositories>
 	        </profile>
 
 		<profile>
@@ -501,8 +483,23 @@
 				<module>reports/emma-coverage</module>
 			</modules>
 		</profile>
-
 	</profiles>
 
+        <repositories>
+                <repository>
+               		<id>gwt-e37</id>
+      			<url>http://dl.google.com/eclipse/plugin/3.7/</url>
+		        <layout>p2</layout>
+		        <snapshots><enabled>true</enabled></snapshots>
+		        <releases><enabled>true</enabled></releases>
+	        </repository>
+		<repository>
+			<id>egit11</id>
+			<url>http://download.jboss.org/jbosstools/updates/requirements/egit/1.1.0.201108230343/</url>
+			<layout>p2</layout>
+			<snapshots><enabled>true</enabled></snapshots>
+			<releases><enabled>true</enabled></releases>
+		</repository>
+	</repositories>
 </project>
 	
