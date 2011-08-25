@@ -1,0 +1,666 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="reference">
+	<?dbhtml filename="reference.html"?>
+	<title>Reference</title>
+	
+	<para>This chapter includes detailed reference information about <property>JBoss Portlet Tools</property>.</para>
+	<section id="project_overview">
+		<title>JBoss Portlet Descriptors</title>
+		
+		<para>In order to a web project with portlets could be deployed to <property>JBoss Portal</property>, it should include certain descriptors.
+		The next table lists and describes these configuration files.</para>
+		
+		<table>
+			<title>JBoss Portlet Descriptors</title>   
+			<tgroup cols="2">
+				<thead>
+					<row>
+						<entry>Name</entry>
+						
+						<entry>Description</entry>
+					</row>
+				</thead>
+				<tbody>
+					<row>
+						<entry>portlet.xml</entry>
+						<entry>The mandatory portlet descriptor defined by the <ulink url="http://www.jcp.org/en/jsr/detail?id=168">JSR-168 Portlet Specification</ulink>.
+							It is used during deployment.</entry>
+					</row> 
+					
+					<row>
+						<entry>portlet-instances.xml</entry>
+						<entry>The optional <property>JBoss Portal</property> specific descriptor. It allows to create a portlet instance from a portlet class definition.</entry>
+					</row> 
+					
+					<row>
+						<entry>*-object.xml</entry>
+						<entry>The optional <property>JBoss Portal</property> specific descriptor. It helps define the layout of the portal.</entry>
+					</row> 
+					
+					<row>
+						<entry>jboss-portlet.xml</entry>
+						<entry>The optional <property>JBoss Portal</property> specific descriptor. It allows to use JBoss 
+							specific functionality within a portlet application.</entry>
+					</row> 
+				</tbody>
+			</tgroup>
+		</table>
+		
+		<para>For more detail information about each descriptor, see 
+			<ulink url="http://docs.jboss.org/jbportal/v2.7.1/referenceGuide/html_single/#descriptors_portlet">&quot;Portlet Descriptors&quot;</ulink> in Chapter 6,
+			<ulink url="http://docs.jboss.org/jbportal/v2.7.1/referenceGuide/html_single/">&quot;JBoss Portal Reference Guide&quot;</ulink>.</para>
+	</section>
+	
+	<section id="wizards">
+		<title>Wizards</title>
+		<para>This section describes the <property>JBoss Portlet Tools</property> wizards:</para>
+		<itemizedlist>
+			<listitem><para><xref linkend="java_portlet_wizard"/></para></listitem>
+			<listitem><para><xref linkend="jsf_seam_portlet_wizard"/></para></listitem>
+		</itemizedlist>
+		
+		<section id="java_portlet_wizard">
+			<title>Java Portlet Wizard</title>
+			
+			<para>The <property>Java Portlet</property> wizard helps you create a new Java portlet (1.0 or 2.0). It is based on the WTP's Create Servlet wizard, 
+				but adapted to JBoss Portlet. You can call it from the <emphasis><property>File</property></emphasis> or context menu of your project by following to 
+			<emphasis><property>New &gt; Other &gt; JBoss Tools Web &gt; Portlet &gt; Java Portlet</property>.</emphasis></para>
+			
+			<para>The wizard consists of the four pages:</para>
+			
+			<orderedlist>
+				<listitem>
+					<para>The first one includes the next options to adjust:</para>
+					
+					<table>
+						<title>Java Portlet Wizard. First Page Options.</title>   
+						<tgroup cols="3">
+							<colspec colnum="1" align="left" colwidth="1*"/>
+							<colspec colnum="2" colwidth="3*"/>
+							<colspec colnum="3" align="left" colwidth="1*"/>
+							
+							<thead>
+								<row>
+									<entry>Option</entry>									
+									<entry>Description</entry>
+									<entry>Default</entry>
+								</row>
+							</thead>
+							<tbody>
+								<row>
+									<entry>Project</entry>
+									<entry>Select the project to add a new Java portlet</entry>
+									<entry>The project selected when the wizard has been started</entry>
+								</row> 
+								
+								<row>
+									<entry>Source folder</entry>
+									<entry>The path to the source folder relative to the selected project</entry>
+									<entry>The source folder of the project selected in the <emphasis><property>Project</property></emphasis> field</entry>
+								</row> 
+								
+								<row>
+									<entry>Java package</entry>
+									<entry>Enter a package to contain a new portlet. Either type a valid package name or click 
+										<emphasis><property>Browse</property></emphasis> to select a package via the dialog box.</entry>
+									<entry>&lt;blank&gt;</entry>
+								</row> 
+								
+								<row>
+									<entry>Class name</entry>
+									<entry>Type a name for a new Java portlet class</entry>
+									<entry>&lt;blank&gt;</entry>
+								</row> 
+								
+								<row>
+									<entry>Superclass</entry>
+									<entry>Type or click <emphasis><property>Browse</property></emphasis> to select a superclass for a Java portlet class</entry>
+									<entry>javax.portlet.GenericPortlet</entry>
+								</row> 
+								
+								<row>
+									<entry>Use an existing Portlet class</entry>
+									<entry>Select this check box if you want to use an existing Java portlet class. In the appeared 
+										<emphasis><property>Class name</property></emphasis> field type or 
+										click <emphasis><property>Browse</property></emphasis> to select an existing portlet class.</entry>
+									<entry>Cleared</entry>
+								</row> 
+							</tbody>
+						</tgroup>
+					</table>
+				</listitem>
+				
+				<listitem>
+					<para>The second wizard page is for specifying modifiers, interfaces to implement and method stubs to generate.</para>
+					
+					<figure>
+						<title>Second Page of the Java Portlet Wizard</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/javaPortlet2.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					
+					<para>The descriptions of the options listed on this page are in the following table.</para>
+					
+					<table>
+						<title>Java Portlet Wizard. Second Page Options.</title>   
+						<tgroup cols="3">
+							<colspec colnum="1" align="left" colwidth="1*"/>
+							<colspec colnum="2" align="left" colwidth="3*"/>
+							<colspec colnum="3" align="left" colwidth="1*"/>
+							
+							<thead>
+								<row>
+									<entry>Option</entry>									
+									<entry>Description</entry>
+									<entry>Default</entry>
+								</row>
+							</thead>
+							<tbody>
+								<row>
+									<entry>Modifiers</entry>
+									<entry>Select one or more access modifiers for a new Java portlet class:
+										<itemizedlist>
+											<listitem><para>Public</para></listitem>
+											<listitem><para>Abstract</para></listitem>
+											<listitem><para>Final</para></listitem>
+										</itemizedlist>
+									</entry>
+									<entry>Public</entry>
+								</row> 
+								
+								<row>
+									<entry>Interfaces</entry>
+									<entry>Click <emphasis><property>Add</property></emphasis> to choose interfaces that a new class implements</entry>
+									<entry>&lt;blank&gt;</entry>
+								</row> 
+								
+								<row>
+									<entry>Which method stubs would you like to create?</entry>
+									<entry>Choose which methods from superclass to override in the Java portlet class:
+										<itemizedlist>
+											<listitem><para>Constructors from superclass</para></listitem>
+											<listitem><para>Inherited abstract methods</para></listitem>
+											<listitem><para>init</para></listitem>
+											<listitem><para>doView</para></listitem>
+											<listitem><para>doDispatch</para></listitem>
+											<listitem><para>destroy</para></listitem>
+											<listitem><para>doEdit</para></listitem>
+											<listitem><para>processAction</para></listitem>
+											<listitem><para>getPortletConfig</para></listitem>
+											<listitem><para>doHelp</para></listitem>
+											<listitem><para>render</para></listitem>
+										</itemizedlist>
+									</entry>
+									<entry>Inherited abstract methods, doView</entry>
+								</row> 
+							</tbody>
+						</tgroup>
+					</table>
+				</listitem>
+				
+				<listitem>
+					<para>The third page is for adjusting the portlet deployment descriptor settings.</para>
+					
+					 <figure>
+					 	<title>Third Page of the Java Portlet Wizard</title>
+					 	<mediaobject>
+					 		<imageobject>
+					 			<imagedata fileref="images/reference/javaPortlet3.png"/>
+					 		</imageobject>
+					 	</mediaobject>
+					 </figure>
+					
+					<table>
+						<title>Java Portlet Wizard. Third Page Options.</title>   
+						<tgroup cols="3">
+							<colspec colnum="1" align="left" colwidth="1*"/>
+							<colspec colnum="2" align="left" colwidth="3*"/>
+							<colspec colnum="3" align="left" colwidth="1*"/>
+							
+							<thead>
+								<row>
+									<entry>Option</entry>									
+									<entry>Description</entry>
+									<entry>Default</entry>
+								</row>
+							</thead>
+							<tbody>
+								<row>
+									<entry>Name</entry>
+									<entry>Enter the portlet name. It does not have to be the portlet class name.</entry>
+									<entry>The name of the portlet class</entry>
+								</row> 
+								
+								<row>
+									<entry>Display name</entry>
+									<entry>Enter the display name of the Java portlet</entry>
+									<entry>The name of the portlet class</entry>
+								</row> 
+								
+								<row>
+									<entry>Title</entry>
+									<entry>Enter the title of the portlet</entry>
+									<entry>The name of the portlet class</entry>
+								</row> 
+								
+								<row>
+									<entry>Description</entry>
+									<entry>Enter the description of the portlet&apos;s function</entry>
+									<entry>&lt;blank&gt;</entry>
+								</row> 
+								
+								<row>
+									<entry>Portlet Modes</entry>
+									<entry>Select one or more of three modes defined by the JSR-286 specification: 
+										<itemizedlist>
+											<listitem><para><emphasis>View</emphasis>  - generates markup reflecting the current state of the portlet;</para></listitem>
+											<listitem><para><emphasis>Edit</emphasis>  - allows customizing the behavior of the portlet;</para></listitem>
+											<listitem><para><emphasis>Help</emphasis>  - provides an information on how to use the portlet.</para></listitem>
+										</itemizedlist>
+									</entry>
+									<entry>View</entry>
+								</row> 
+								
+								<row>
+									<entry>Initialization Parameters</entry>
+									<entry>Specify initialization parameters to create an initial state inside your portlet class. Click 
+										<emphasis><property>Add</property></emphasis> and fill in the 
+										<emphasis><property>Name</property>,</emphasis> <emphasis><property>Value</property></emphasis> and
+									<emphasis><property>Description</property></emphasis> (optional) fields to set a parameter.</entry>
+									<entry>&lt;blank&gt;</entry>
+								</row>
+							</tbody>
+						</tgroup>
+					</table>
+					
+				</listitem>
+				
+				<listitem>
+					<para>The last wizard page helps configure the JBoss Portlet specific descriptors.</para>
+					
+					<figure>
+						<title>Last Page of the  Java Portlet Wizard</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/javaPortlet4.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					
+					<table>
+						<title>Java Portlet Wizard. Last Page Options.</title>   
+						<tgroup cols="3">
+							<colspec colnum="1" align="left" colwidth="1*"/>
+							<colspec colnum="2" align="left" colwidth="3*"/>
+							<colspec colnum="3" align="left" colwidth="1*"/>
+							
+							<thead>
+								<row>
+									<entry>Option</entry>									
+									<entry>Description</entry>
+									<entry>Default</entry>
+								</row>
+							</thead>
+							<tbody>
+								<row>
+									<entry>Create Portlet Instance</entry>
+									<entry>Clear the <emphasis><property>Create Portlet Instance</property></emphasis> check box,
+										if you don&apos;t wont the wizard to create the deployment elements
+										in the <literal>default-object.xml</literal> and <literal>
+											portlet-instances.xml</literal> files</entry>
+									<entry>Selected</entry>
+								</row> 
+								
+								<row>
+									<entry>If Exists</entry>
+									<entry>Select one of two options:
+										<itemizedlist>
+											<listitem><para><emphasis>overwrite</emphasis> - destroys the existing object and creates a new one based on the content of the deployment</para></listitem>
+											<listitem><para><emphasis>keep</emphasis> - maintains the existing object deployment or creates a new one if it does not exist</para></listitem>
+										</itemizedlist>
+									</entry>
+									<entry>overwrite</entry>
+								</row> 
+								
+								<row>
+									<entry>Instance Name</entry>
+									<entry>Enter a name of the portlet instance that the portlet window represents</entry>
+									<entry>[Portlet class name]Instance</entry>
+								</row> 
+								
+								<row>
+									<entry>Page Name</entry>
+									<entry>If set, the portlet page is created with the name defined</entry>
+									<entry>&lt;blank&gt;</entry>
+								</row> 
+								
+								<row>
+									<entry>Window Name</entry>
+									<entry>Enter a name of the portlet window</entry>
+									<entry>[Portlet class name]Window</entry>
+								</row> 
+								
+								<row>
+									<entry>Parent Reference</entry>
+									<entry>
+										<para>Define a reference to the parent object. The syntax for this element is <literal>[portal-instance].[portal-page]</literal>.</para>
+										<para>For example, <literal>default.default</literal> means that the window appears on the default page, in the default portal.</para>
+									</entry>
+									<entry>default.default</entry>
+								</row> 
+								
+								<row>
+									<entry>Region</entry>
+									<entry>Specify the region where the window should appear on the page</entry>
+									<entry>center</entry>
+								</row>
+								
+								<row>
+									<entry>Height</entry>
+									<entry>Define the height of the window</entry>
+									<entry>1</entry>
+								</row> 
+								
+								<row>
+									<entry>Initial Window State</entry>
+									<entry>Set the window state indicator by selecting one of three states defined by the JSR-168 specification:
+										<itemizedlist>
+											<listitem><para><emphasis>normal</emphasis>  - a portlet shares this page with other portlets</para></listitem>
+											<listitem><para><emphasis>minimized</emphasis>  - a portlet may show very little information or none at all</para></listitem>
+											<listitem><para><emphasis>maximized</emphasis>  - a portlet may be the only portlet displayed on this page</para></listitem>
+										</itemizedlist>
+									</entry>
+									<entry>maximized</entry>
+								</row> 
+							</tbody>
+						</tgroup>
+					</table>
+				</listitem>
+			</orderedlist>
+		</section>
+		
+		<section id="jsf_seam_portlet_wizard">
+			<title>JSF/Seam Portlet Wizard</title>
+			
+			<para>The <property>JSF/Seam Portlet</property> wizard, that is merged into one JSF and Seam Portlet wizards, helps you create a 
+				JSF/Seam portlet that uses the <property>JBoss Portlet Bridge</property> libraries. The default values in this wizard 
+				depend on the configuration set for the project. For instance, if you set the JSF configuration, the default values in this wizard will be 
+				as for a JSF portlet.</para>
+
+			<para>The <property>JSF/Seam Portlet</property> wizard could be started from the <emphasis><property>File</property></emphasis> or 
+				context menu of your project by following to 
+				<emphasis><property>New &gt; Other &gt; JBoss Tools Web &gt; Portlet &gt; JSF/Seam Portlet</property>.</emphasis></para>
+			
+			<para>The wizard includes three pages to adjust JSF/Seam portlet setting:</para>
+			
+			<orderedlist>
+				<listitem>
+					<para>The first wizard page asks to select a project to add JSF/Seam portlet and set a class file destination.</para>
+					
+					<figure>
+						<title>First Page of the JSF Portlet Wizard</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/jsf_seam_portlet1.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					
+					<table>
+						<title>JSF/Seam Portlet Wizard. First Page Options.</title>   
+						<tgroup cols="3">
+							<colspec colnum="1" align="left" colwidth="1*"/>
+							<colspec colnum="2" align="left" colwidth="3*"/>
+							<colspec colnum="3" align="left" colwidth="1*"/>
+							
+							<thead>
+								<row>
+									<entry>Option</entry>									
+									<entry>Description</entry>
+									<entry>Default</entry>
+								</row>
+							</thead>
+							<tbody>
+								<row>
+									<entry>Project</entry>
+									<entry>Select the project to add a new JSF/Seam portlet</entry>
+									<entry>The project selected when the wizard has been started</entry>
+								</row> 
+								
+								<row>
+									<entry>Class name</entry>
+									<entry>Type or click <emphasis><property>Browse</property></emphasis> to select a class for a JSF/Seam portlet</entry>
+									<entry>javax.portlet.faces.GenericFacesPortlet</entry>
+								</row> 
+							</tbody>
+						</tgroup>
+					</table>
+				</listitem>
+				
+				<listitem>
+					<para>The second page allows to configure a portlet deployment descriptors.</para>
+					
+					<figure>
+						<title>Second Page of the JSF Portlet Wizard</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/jsf_seam_portlet2.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					
+					<table>
+						<title>JSF/Seam Portlet Wizard. Second Page Options.</title>   
+						<tgroup cols="3">
+							<colspec colnum="1" align="left" colwidth="1*"/>
+							<colspec colnum="2" align="left" colwidth="3*"/>
+							<colspec colnum="3" align="left" colwidth="1*"/>
+							
+							<thead>
+								<row>
+									<entry>Option</entry>									
+									<entry>Description</entry>
+									<entry>Default (JSF / Seam)</entry>
+								</row>
+							</thead>
+							<tbody>
+								<row>
+									<entry>Name</entry>
+									<entry>Enter the portlet name. It does not have to be the portlet class name.</entry>
+									<entry>riPortlet / seamPortlet</entry>
+								</row> 
+								
+								<row>
+									<entry>Display name</entry>
+									<entry>Enter the display name of the Java portlet</entry>
+									<entry>JBoss JSF Portlet / JBoss Seam Portlet</entry>
+								</row> 
+								
+								<row>
+									<entry>Title</entry>
+									<entry>Enter the title of the portlet</entry>
+									<entry>JBoss JSF Portlet / JBoss Seam Portlet</entry>
+								</row> 
+								
+								<row>
+									<entry>Description</entry>
+									<entry>Enter the description of the portlet&apos;s function</entry>
+									<entry>&lt;blank&gt;</entry>
+								</row> 
+								
+								<row>
+									<entry>Portlet Modes</entry>
+									<entry>Select one or more of three modes defined by the JSR-286 specification: 
+										<itemizedlist>
+											<listitem><para><emphasis>View</emphasis>  - generates markup reflecting the current state of the portlet</para></listitem>
+											<listitem><para><emphasis>Edit</emphasis>  - allows customizing the behavior of the portlet</para></listitem>
+											<listitem><para><emphasis>Help</emphasis>  - provides an information on how to use the portlet</para></listitem>
+										</itemizedlist>
+									</entry>
+									<entry>View, Edit, Help / View</entry>
+								</row> 
+								
+								<row>
+									<entry>Initialization Parameters</entry>
+									<entry>Specify initialization parameters to create an initial state inside your portlet class. Click 
+										<emphasis><property>Add</property></emphasis> and fill in the 
+										<emphasis><property>Name</property>,</emphasis> <emphasis><property>Value</property></emphasis> and
+										<emphasis><property>Description</property></emphasis> (optional) fields to set a parameter.</entry>
+									<entry>javax.portlet.faces.defaultViewId.view, javax.portlet.faces.defaultViewId.edit,
+										javax.portlet.faces.defaultViewId.help / javax.portlet.faces.defaultViewId.view</entry>
+								</row> 
+							</tbody>
+						</tgroup>
+					</table>
+				</listitem>
+				
+				<listitem>
+					<para>The last wizard page helps you configure the JBoss Portlet specific information.</para>
+					
+					<figure>
+						<title>Third Page of the JSF Portlet Wizard</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/reference/jsf_seam_portlet3.png"/>
+							</imageobject>
+						</mediaobject>
+					</figure>
+					
+					<table>
+						<title>JSF/Seam Portlet Wizard. Third Page Options.</title>   
+						<tgroup cols="3">
+							<colspec colnum="1" align="left" colwidth="1*"/>
+							<colspec colnum="2" align="left" colwidth="3*"/>
+							<colspec colnum="3" align="left" colwidth="1*"/>
+							
+							<thead>
+								<row>
+									<entry>Option</entry>									
+									<entry>Description</entry>
+									<entry>Default (JSF / Seam)</entry>
+								</row>
+							</thead>
+							<tbody>
+								<row>
+									<entry>Create Portlet Instance</entry>
+									<entry>Clear the <emphasis><property>Create Portlet Instance</property></emphasis> check box,
+										if you don&apos;t wont the wizard to create the deployment elements
+										in the <literal>default-object.xml</literal> and <literal>
+											portlet-instances.xml</literal> files</entry>
+									<entry>Selected</entry>
+								</row> 
+								
+								<row>
+									<entry>If Exists</entry>
+									<entry>Select one of two options:
+										<itemizedlist>
+											<listitem><para><emphasis>overwrite</emphasis> - destroys the existing object and creates a new one based on the content of the deployment</para></listitem>
+											<listitem><para><emphasis>keep</emphasis> - maintains the existing object deployment or creates a new one if it does not exist</para></listitem>
+										</itemizedlist>
+									</entry>
+									<entry>overwrite</entry>
+								</row> 
+								
+								<row>
+									<entry>Instance Name</entry>
+									<entry>Enter a name of the portlet instance that the portlet window represents</entry>
+									<entry>JSFPortletInstance / SeamPortletInstance</entry>
+								</row> 
+								
+								<row>
+									<entry>Page Name</entry>
+									<entry>If set, the portlet page is created with the name defined</entry>
+									<entry>JSFPortlet / SeamPortlet</entry>
+								</row> 
+								
+								<row>
+									<entry>Window Name</entry>
+									<entry>Enter a name of the portlet window</entry>
+									<entry>JSFPortletWindow / SeamPortletWindow</entry>
+								</row> 
+								
+								<row>
+									<entry>Parent Reference</entry>
+									<entry>
+										<para>Define a reference to the parent object.</para>
+										<para>For example, <literal>default</literal> means that the page appears in the default portal.</para>
+									</entry>
+									<entry>default</entry>
+								</row> 
+								
+								<row>
+									<entry>Region</entry>
+									<entry>Specify the region where the window should appear on the page</entry>
+									<entry>center</entry>
+								</row>
+								
+								<row>
+									<entry>Height</entry>
+									<entry>Define the height of the window</entry>
+									<entry>1</entry>
+								</row> 
+								
+								<row>
+									<entry>Initial Window State</entry>
+									<entry>Set the window state indicator by selecting one of three states defined by the JSR-168 specification:
+										<itemizedlist>
+											<listitem><para><emphasis>normal</emphasis>  - a portlet shares this page with other portlets</para></listitem>
+											<listitem><para><emphasis>minimized</emphasis>  - a portlet may show very little information or none at all</para></listitem>
+											<listitem><para><emphasis>maximized</emphasis>  - a portlet may be the only portlet displayed on this page</para></listitem>
+										</itemizedlist>
+									</entry>
+									<entry>maximized</entry>
+								</row> 
+								
+								<row>
+									<entry>Create JBoss Application</entry>
+									<entry>
+										<para>Select to add the <literal>jboss-app.xml</literal> descriptor.</para>
+										<para><emphasis>riPortletApp / seamPortletApp</emphasis> - the default name of the JBoss application. You can change it by
+										typing a new one in the <emphasis><property>JBoss Application Name</property></emphasis> field.</para>
+									</entry>
+									<entry>Selected</entry>
+								</row>
+								
+								<row>
+									<entry>Add the jboss-portlet.xml file</entry>
+									<entry>Select to create the <literal>jboss-portlet.xml</literal> file</entry>
+									<entry>Selected</entry>
+								</row> 
+								
+								<row>
+									<entry>Copy JSF Templates</entry>
+									<entry>Select to add the folder with JSF templates (<literal>edit.jsp</literal>, <literal>help.jsp</literal>, 
+										<literal>view.jsp</literal>) to the project</entry>
+									<entry>Cleared</entry>
+								</row> 
+							</tbody>
+						</tgroup>
+					</table>
+				</listitem>
+			</orderedlist>
+		</section>
+	</section>
+	
+	<section id="preferences">
+		<title>JBoss Portlet Preferences</title>
+		
+		<para>To open <property>JBoss Portlet Preferences</property> property sheet, go to <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Preferences</guimenuitem></menuchoice> and then <menuchoice><guimenuitem>JBoss Tools</guimenuitem><guimenuitem>JBoss Portlet.</guimenuitem></menuchoice></para>
+		
+		<figure>
+			<title>JBoss Runtime Preferences</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/reference/portlet_preferences.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		
+		<para>The <emphasis>
+			<property>Check runtimes for Portlet Components</property>
+		</emphasis> option makes the JBoss Portlet functionality always visible no matter what the runtime is set. By default the option is checked.</para>
+	</section>
+</chapter>

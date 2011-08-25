@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section id="starting_project">
+	<title>Creating and Deploying a Java Portlet</title>
+
+	<para>This chapter shows how to create a Dynamic Web Project, add a Java
+        Portlet to it and deploy it to the <property>JBoss Portal</property>.</para>
+	
+	<section id="jboss_core_portlet">
+		<title>Creating a Web Project with JBoss Portlet Capabilities</title>
+		<para>Follow the next procedure to create a Web project with JBoss Portlet capabilities pointed to the JBoss Portal runtime.</para>
+		
+		<orderedlist>
+			<listitem>
+				<para>Select <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>New</guimenuitem><guimenuitem>Dynamic Web Project</guimenuitem></menuchoice> if you are in the <property>Web</property> perspective or select <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>New</guimenuitem><guimenuitem>Other</guimenuitem><guimenuitem>Web</guimenuitem><guimenuitem>Dynamic Web Project</guimenuitem></menuchoice> in any other perspective. This will display the <property>New Dynamic Web Project</property> wizard.</para>
+				
+				<figure>
+					<title>New Dynamic Web Project</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/starting_project/starting_project_1.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+			</listitem>
+			
+			<listitem>
+				<para>Specify the name of the project.</para>
+			</listitem>
+			
+			<listitem>
+				<para>Click the <guibutton>New</guibutton> in the <emphasis><property>Target Runtime</property></emphasis> area to create a JBoss Portal runtime. Choose <emphasis><property>JBoss Community &gt; JBoss 4.2 Runtime</property></emphasis> and select the <emphasis><property>Create a new local server</property>
+					</emphasis> check box below. Click the <guibutton>Next</guibutton> button.
+				</para>
+				
+				<figure>
+					<title>New Server Runtime</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/starting_project/starting_project_2.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+			</listitem>
+			
+			<listitem>
+				<para>The <property>New Server Runtime Environment</property> wizard appears. In the <emphasis><property>Name</property></emphasis> field, type <emphasis><property>JBoss Portal 2.7 Runtime</property>,</emphasis> and then use the <guibutton>Browse</guibutton> button to point to the location of JBoss Portal + JBoss AS extracted. Click <guibutton>Next</guibutton> button to proceed.</para>
+				
+				<figure>
+					<title>New Server Runtime Environment</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/starting_project/server_runtime_environment.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+			</listitem>
+			
+			<listitem>
+				<para>
+					At this point a new JBoss Server instance will be created. On the next page you can verify the runtime information and configuration. If something is incorrect, press the <guibutton>Back</guibutton> button to return to the previous wizard page. Click the <guibutton>Finish</guibutton> button.
+				</para>
+				
+				<figure>
+					<title>Target Server</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/starting_project/starting_project_3.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+			</listitem>
+			
+			<listitem>
+				<para>
+					Click the <guibutton>Modify</guibutton> button in the <emphasis><property>Configuration</property></emphasis> area to enable a portlet facet for the project.
+				</para>
+				
+				<figure>
+					<title>Setting the Project Configuration</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/starting_project/starting_project_4.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+			</listitem>
+			
+			<listitem>
+				<para>In the <property>Project Facets</property> dialog, check <emphasis><property>JBoss Core Portlet</property></emphasis> and click the  <guibutton>OK</guibutton> button.</para>
+				
+				<figure>
+					<title>Enabling the JBoss Core Portlet Facet</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/starting_project/starting_project_4_a.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+				
+				<note>
+					<title>Note:</title>
+					<para>
+						If the portlet libraries aren&apos;t available in the runtime you targeted, <emphasis><property>JBoss Portlets</property></emphasis> facets will be hidden on this page.
+					</para>
+					<para>To make them always visible no matter what the runtime is set, you should enable the appropriate option in <xref linkend="preferences"/>.</para>
+				</note>
+			</listitem>
+			
+			<listitem>
+				<para>
+					The <property>Java</property> and <property>Web Module</property> pages are for configuring Java and Web modules in the project. Here the default values are fine, so leave everything as it is.
+				</para>
+			</listitem>
+			
+			<listitem>
+				<para>
+					The last wizard page will ask you to add JBoss Portlet capabilities to the project. Select <emphasis><property>Portlet Target Runtime Provider</property></emphasis> and click the <guibutton>Finish</guibutton> button to complete the project creation.
+				</para>
+				
+				<figure>
+					<title>Including the Portlet Libraries Provided by Target Runtime</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/starting_project/portlet_capabilities6.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+				
+				<note>
+					<title>Note:</title>
+					<para>All types available under <emphasis>
+						<property>Portlet Implementation Library</property>
+						</emphasis> are fully described in the Wiki article at: 
+						<ulink url="http://www.jboss.org/community/wiki/PortletFacetLibraries">http://www.jboss.org/community/wiki/PortletFacetLibraries</ulink>.</para>
+				</note>
+			</listitem>
+		</orderedlist>
+		
+		<para>As the result, <property>JBoss Portlet Tools</property> adds <emphasis>
+			<property>JBoss Core Portlet</property>
+			</emphasis> facet to the project,
+			creates an empty <filename>portlet.xml</filename> file and adds the JBoss Portlet library to the project classpath.</para>
+		
+		<figure>
+			<title>Portlet Project Structure Overview</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/starting_project/starting_project_6.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+	</section>
+
+	<section id="adding_java_portlet">
+		<title>Adding a Java Portlet to a Web Project</title>
+
+		<para>
+			At the previous section you have created a web project with JBoss Portlet capabilities. The next steps will show you how to add a new Java portlet to the project.
+		</para>
+		
+		<orderedlist>
+			<listitem>
+				<para>
+					Right-click the project and select <menuchoice><guimenuitem>New</guimenuitem><guimenuitem>Other</guimenuitem><guimenuitem>JBoss Tools Web</guimenuitem><guimenuitem>Portlet</guimenuitem><guimenuitem>Java
+					Portlet</guimenuitem></menuchoice>.
+				</para>
+				
+				<figure>
+					<title>New Java Portlet</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/starting_project/starting_project_7.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+			</listitem>
+			
+			<listitem>
+				<para>The <property>Create Portlet</property> wizard starts (for information about the wizard options, see <xref linkend="java_portlet_wizard"/> in the guide reference). The wizard fills in the <emphasis><property>Project</property></emphasis> and <emphasis><property>Source Folder</property></emphasis> fields for you. You should specify a Java package and a class name (for instance, <emphasis><property>org.example</property></emphasis> and <emphasis><property>TestPortlet</property></emphasis>). Then click the <guibutton>Next</guibutton> button.</para>
+				
+				<figure>
+					<title>Specifying Class File Destination</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/starting_project/starting_project_8.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+			</listitem>
+			
+			<listitem>
+				<para>
+					You may leave the next three pages with default values, on the last one click the <guibutton>Finish</guibutton> button.
+				</para>
+			</listitem>
+		</orderedlist>
+
+		<para>
+			Once a Java portlet is created, new resources are added to the project structure: a Java portlet class (<filename>TestPortlet.java</filename>), <filename>default-object.xml</filename> and <filename>portlet-instances.xml</filename> files and the <filename>portlet.xml</filename> descriptor is updated as well.
+		</para>
+
+		<figure>
+			<title>Structure of the Project with a Java Portlet</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/starting_project/starting_project_12.png"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+    	
+		<para>Now the project is ready to be built and deployed.</para>
+	</section>
+
+	<section id="deploying_to_portal">
+		<title>Deploying a Portlet to JBoss Portal</title>
+
+		<para>You can deploy a portlet project in the way you deploy any other web application.</para>
+    	
+		<orderedlist>
+			<listitem>
+				<para>
+					Right-click the project and select <menuchoice><guimenuitem>Run As</guimenuitem><guimenuitem>Run On Server</guimenuitem></menuchoice>. The <guilabel>Run On Server</guilabel> wizard starts.
+				</para>
+    			
+				<figure>
+					<title>Running the Java Portlet on Server</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/starting_project/runOnServer.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+			</listitem>
+    		
+			<listitem>
+				<para>Select <emphasis><property>JBoss Portal 2.7 Server</property></emphasis> created before and click the <guibutton>Next</guibutton> button.
+				</para>
+			</listitem>
+    		
+			<listitem>
+				<para>
+					On the <emphasis><property>Add and Remove</property></emphasis> page move the created project to the right and click <guilabel>Finish</guilabel>.
+				</para>
+    			
+				<figure>
+					<title>Deploying the Portlet Application</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/starting_project/starting_project_13.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+    			
+				<para>It will deploy the portlet application and start <property>JBoss AS</property>.</para>
+			</listitem>
+    		
+			<listitem>
+				<para>Use the <ulink url="http://localhost:8080/portal/portal/default/default">http://localhost:8080/portal/portal/default/default</ulink> URL to see your portlet in the browser.</para>
+    			
+				<figure>
+					<title>Java Portlet in the Browser Window</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/starting_project/starting_project_14.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+			</listitem>
+		</orderedlist>
+	</section>
+
+</section>
