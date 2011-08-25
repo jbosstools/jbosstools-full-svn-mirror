@@ -175,6 +175,7 @@
 			<id>esb-bootstrap</id>
 			<modules>
 				<module>../tests</module>
+				<module>../common</module>
 				<module>../esb</module>
 			</modules>
 		</profile>
