@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="further_reading">
+  <?dbhtml filename="further_reading.html"?>
+  <chapterinfo>
+    <keywordset>
+      <keyword>JBoss Developer Studio</keyword>
+      <keyword>Eclipse</keyword>
+      <keyword>Deploy</keyword>
+      <keyword>Deployment</keyword>
+      <keyword>JBoss</keyword>
+    </keywordset>
+  </chapterinfo>
+
+  <title>Further Reading</title>
+<itemizedlist>
+  
+  <listitem>
+    <para>
+      <emphasis role="bold">Seam Dev Tools Reference Guide</emphasis>
+    </para>
+    <para> This guide helps you to understand what Seam is and how to install Seam plug-in into
+      Eclipse. It tells you the necessary steps to start working with Seam Framework and assists in a
+      simple Seam Project creation. Also you will learn how to create and run the CRUD Database
+      Application with Seam as well as find out what Seam Editors Features and Seam Components are. </para>
+  </listitem>
+  
+  <listitem>
+    <para>
+      <emphasis role="bold">Visual Web Tools Reference Guide</emphasis>
+</para>
+<para>
+	provides general orientation and an overview of visual web tools functionality. This guide discusses the following topics: editors, palette, web properties view, openOn, content assist, RichFaces support.  
+    </para>
+  </listitem>
+  
+  <listitem>
+    <para>
+      <emphasis role="bold">JBoss Server Manager Reference Guide</emphasis>
+    </para>
+    <para> This guide covers the basics of working with the JBoss server manager. You will read how to
+      install runtimes and servers and quickly learn how to configure, start, stop the server and know
+      how deployment and archiving process. You will find out how to manage installed JBoss Servers
+      via JBoss AS Perspective. You will also read how to deploy modules onto the server. </para>
+  </listitem>
+  
+  <listitem>
+    <para>
+      <emphasis role="bold">jBPM Tools Reference Guide</emphasis>
+    </para>
+    <para>With jBPM Tools Reference Guide we&apos;ll help you to facilitate a cross-product
+      learning and know how you can speed your development using special editors and visual designers.
+      We&apos;ll also guide you through the steps on how to create a simple process and test it
+      within jBPM jPDL perspective.</para>
+  </listitem>
+  
+  <listitem>
+    <para>
+      <emphasis role="bold">Hibernate Tools Reference Guide</emphasis>
+    </para>
+    <para>Throughout this guide you will learn how to install and use Hibernate Tools bath via Ant and
+      through Eclipse. We&apos;ll supply you with the information on how to create mapping files,
+      configuration file as well as a file for controlling reverse engineering by using specific
+      wizards that Hibernate tooling provides. Also you will know about Code Generation and
+      peculiarities of work within Hibernate Console Perspective.</para>
+  </listitem>
+  
+  <listitem>
+    <para>
+      <emphasis role="bold">ESB Editor Reference Guide</emphasis>
+    </para>
+    <para>This guide provides you with the information on ESB Editor and all necessary wizards for ESB
+      files development.</para>
+  </listitem>
+  
+  <listitem>
+    <para>
+      <emphasis role="bold">JBoss Portal Tools Reference Guide</emphasis>
+    </para>
+    <para>The guide gives a detail look at how you can easily build a Portlet Web Application with
+      JBoss Tools and deploy it onto JBoss Portal.</para>
+  </listitem>
+  
+  <listitem>
+    <para>
+      <emphasis role="bold">JBoss WS User Guide</emphasis>
+    </para>
+    <para>This guide gives you practical help on JBossWS usage. You will learn how to create a web service using JBossWS runtime, find out how to create a web service client from a WSDL document using JBoss WS and also see how to set your development environment.</para>
+  </listitem>
+  
+  <listitem>
+    <para>
+      <emphasis role="bold">Smooks Tools Reference Guide</emphasis>
+    </para>
+    <para>This guide is packed with useful and easy-to-understand information about graphical, configuration and source editor pages.</para>
+  </listitem>
+  
+  <listitem>
+    <para>
+      <emphasis role="bold">Drools Tools Reference Guide</emphasis>
+    </para>
+    <para>The guide help you to discover how to create a new Drools project, use debugging rules and work with different editors.</para>
+  </listitem>
+  
+  <listitem>
+    <para>
+      <emphasis role="bold">JMX Tools Reference Guide</emphasis>
+    </para>
+    <para>With the help of this guide you'll explore the best practices to follow when working with MBean Explorer, MBean Editor, Connections and etc.</para>
+  </listitem>
+  
+  <listitem>
+    <para>
+      <emphasis role="bold">Eclipse Guvnor Tools Reference Guide</emphasis>
+    </para>
+    <para>The purpose of this guide is to describe briefly the functionality present in the Eclipse Guvnor Tools (EGT) for Drools 5.</para>
+  </listitem>
+  
+  
+  
+  <listitem>
+  <para>
+    <emphasis role="bold">JSF Tools Tutorial</emphasis>
+  </para>
+  <para> This tutorial will describe how to deal with classic/old style of JSF development and how
+    to create a simple JSF application. </para>
+  </listitem>
+  
+  <listitem> <para>
+    <emphasis role="bold">JSF Tools Reference Guide</emphasis>
+    
+  </para>
+    <para> From this guide you'll discover all peculiarities of work at a JSF project. You&apos;ll
+      learn all shades that cover the process of project creation and take a closer look at the JSF
+      configuration file. Also you&apos;ll get to know managed beans and how to work with them and
+      find out, how to create and register a custom converter, custom validator and referenced beans
+      in a JSF project. </para>
+  </listitem>
+  
+  <listitem> <para>
+    <emphasis role="bold">Struts Tools Reference Guide</emphasis>
+  </para>
+  <para> In Struts Tools Reference Guide you will learn how to create and work with a new struts
+    project. This guide also provides information about graphical editor for struts configuration
+    files, tiles files, and struts validation files. </para>
+  </listitem>
+
+<listitem>
+  <para>
+    <emphasis role="bold">Struts Tools Tutorial</emphasis>
+  </para>
+  <para> This tutorial will describe the classical style of Struts development, and will
+  step-by-step show you how to create a simple Struts application.</para>
+</listitem>
+
+
+<!--    <listitem> 
+  <para>
+    <emphasis role="bold">Exadel Studio Migration Guide</emphasis>
+  </para>
+  <para>This document is intended to help you to migrate an existing Exadel JSF or Struts projects
+  from Exadel Studio into JBoss Developer Studio. </para>
+    </listitem> -->
+</itemizedlist>
+<!--
+<para>If there&apos;s anything we didn&apos;t cover in this guide, please feel free to visit our <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=258">JBoss Developer Studio Users Forum</ulink> or <ulink url="http://www.jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=201">JBoss Tools Users Forum</ulink> to ask questions. There we are also looking for your suggestions and comments.</para> 
+-->
+
+</chapter>
