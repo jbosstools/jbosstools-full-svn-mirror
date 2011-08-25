@@ -19,6 +19,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		<module>site</module>
 	</modules>
 	<repositories>
+                <!--  Cannot redistribute GWT plugins due to license therefore cannot be included in target platform; must reference as 3rd party URL -->
 		<repository>
 			<id>gwt-e37</id>
 			<url>http://dl.google.com/eclipse/plugin/3.7/</url>
