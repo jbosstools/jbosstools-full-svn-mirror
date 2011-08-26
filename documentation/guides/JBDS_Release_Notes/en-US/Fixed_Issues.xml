@@ -12,24 +12,24 @@
 			<itemizedlist>					
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1610">JBDS-1610</ulink>: BPEL tooling is now supported as an additional tool for JBoss Developer Studio. Many bug fixes and enhancements have been applied to it in order to bring it from a technology preview to a supported component. 
+						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1806">JBDS-1806</ulink>: Validation within the BPEL editor would not show malformed XML and unknown extensions as errors. This would cause code to fail without prior warning. In this release these issues are correctly flagged as validation errors in the BPEL editor, allowing for prior warning before publishing the code.
 					</para>
 				</listitem>
             </itemizedlist>
         </para>
-    </formalpara>
-    <formalpara>
+	</formalpara>
+<!--    <formalpara>
       <title>Contexts and Dependency Injection (CDI)</title>
         <para>
 			<itemizedlist>					
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-3126">JBIDE-3126</ulink>: Validation for the serializablity of injected beans into passive-scoped beans has been added. This ensures that if a bean belongs to <property>@SessionScoped</property>, <property>@ConversationScope</property> or any <property>@NormalScope(passivating=true)</property> and it is not stateful (<property>@Stateful</property>), the bean is checked to see if it implements <classname>java.io.Serializible</classname>. If it does not implement the Serializible class, then it is marked as an error.
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
 					</para>
 				</listitem>
             </itemizedlist>
         </para>
-    </formalpara>
+	</formalpara> -->
 	<!-- Deltacloud is only shipped with JBoss.org -->
 	<!--
 	<formalpara>
@@ -181,18 +181,18 @@
 			</itemizedlist>
 		</para>
 	</formalpara> -->
-	<!--<formalpara>
+	<formalpara>
         <title>Seam</title>
         	<para>
           	<itemizedlist>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1818">JBDS-1818</ulink>: Drools libraries were upgraded in Enterprise Application Platform 5.1.1 and the Seam tooling did not take this into account. As a result, the Seam Project wizard needed to be updated to replace the JAR <filename>core.jar</filename> to be <filename>ecj.jar</filename> in the project classpath. This update has been applied in this release and allows the Seam Project wizard to use Drools libraries correctly.
 					</para>	
                 </listitem>
             </itemizedlist>
         </para>
-    </formalpara>	-->
+    </formalpara>	
 	<!--<formalpara>
 		<title>Smooks</title>
 		<para>
