@@ -5,20 +5,114 @@
 		<groupId>org.jboss.tools</groupId>
 		<artifactId>org.jboss.tools.parent.pom</artifactId>
 		<version>0.0.2-SNAPSHOT</version>
-		<relativePath>../build/parent/pom.xml</relativePath>
 	</parent>
-	<groupId>org.jboss.tools</groupId>
-	<artifactId>webtools</artifactId>
+	<groupId>org.jboss.tools.webtools</groupId>
+	<artifactId>org.jboss.tools.webtools.site</artifactId>
+	<name>JBoss Tools - Web Tools Site</name>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>webtools.all</name>
-	<packaging>pom</packaging>
-	<modules>
-		<module>site</module>
-	</modules>
-<!--	to build against locally built sources, use:
-		mvn clean install
+	<packaging>eclipse-update-site</packaging>
 
-	to build against http://download.jboss.org/jbosstools/builds/staging/_composite_/trunk/, use:
-		mvn clean install -Pjbosstools-nightly-staging-composite
--->
+	<!--	to build against locally built sources, use:
+ 			mvn clean install
+		to build against http://download.jboss.org/jbosstools/builds/staging/_composite_/trunk/, use:
+			mvn clean install -Pjbosstools-nightly-staging-composite
+	-->
+	<properties>
+		<!-- add more inputRepos into the composite metadata at the URL below. Therefore need not edit this file and add dozens of URLs
+			which need to be called by Ant script later -->
+		<!-- for trunk use _composite_/trunk; for 3.3_stable_branch, use _composite_/3.3.indigo -->
+		<inputRepo1>http://download.jboss.org/jbosstools/builds/staging/_composite_/trunk/</inputRepo1>
+		<inputRepos>1</inputRepos>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>${maven.antrun.plugin.version}</version>
+				<executions>
+					<execution>
+						<id>install</id>
+						<phase>install</phase>
+						<configuration>
+							<quiet>true</quiet>
+							<tasks>
+								<property name="inputRepo1" value="${inputRepo1}"/>
+								<property name="inputRepos" value="${inputRepos}"/>
+
+								<!-- called AFTER generating update site + zip to add in extra content -->
+								<ant antfile="build.xml"/>
+							</tasks>
+
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>commons-net</groupId>
+						<artifactId>commons-net</artifactId>
+						<version>1.4.1</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.ant</groupId>
+						<artifactId>ant</artifactId>
+						<version>1.7.1</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.ant</groupId>
+						<artifactId>ant-nodeps</artifactId>
+						<version>1.7.1</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.ant</groupId>
+						<artifactId>ant-trax</artifactId>
+						<version>1.7.1</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.ant</groupId>
+						<artifactId>ant-commons-net</artifactId>
+						<version>1.7.1</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.ant</groupId>
+						<artifactId>ant-apache-regexp</artifactId>
+						<version>1.7.1</version>
+					</dependency>
+					<dependency>
+						<groupId>ant-contrib</groupId>
+						<artifactId>ant-contrib</artifactId>
+						<version>1.0b3</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
+
+	<repositories>
+		<!-- add more inputRepo# here, ref'd above; need variables so that these 
+			can be referred to in Ant script later -->
+		<repository>
+			<id>inputRepo1</id>
+			<url>${inputRepo1}</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>jbosstools-requirements-composite-mirror</id>
+			<url>http://download.jboss.org/jbosstools/updates/indigo/SR0/</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+	</repositories>
 </project>
