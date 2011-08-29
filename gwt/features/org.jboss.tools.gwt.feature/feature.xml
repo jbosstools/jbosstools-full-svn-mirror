@@ -5,11 +5,11 @@
       version="1.0.2.qualifier"
       provider-name="%providerName">
 
-   <description url="http://www.example.com/description">
+   <description url="%descriptionURL">
       %description
    </description>
 
-   <copyright url="http://www.example.com/copyright">
+   <copyright>
       %copyright
    </copyright>
 
