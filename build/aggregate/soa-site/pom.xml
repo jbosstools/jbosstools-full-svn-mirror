@@ -12,6 +12,11 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>eclipse-update-site</packaging>
 
+	<!--	to build against locally built sources, use:
+ 			mvn clean install
+		to build against http://download.jboss.org/jbosstools/builds/staging/_composite_/trunk/, use:
+			mvn clean install -Pjbosstools-nightly-staging-composite
+	-->
 	<properties>
 		<!-- add more inputRepos into the composite metadata at the URL below. Therefore need not edit this file and add dozens of URLs
 			which need to be called by Ant script later -->

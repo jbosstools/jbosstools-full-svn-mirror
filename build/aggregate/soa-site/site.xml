@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-	<!-- This file is only used when building with Tycho.
-		If building with Ant (trunk/build/build.xml), see category.*.xml -->
 	<description>
       JBoss Tools - SOA Tooling 3.3 Updates
    	</description>
