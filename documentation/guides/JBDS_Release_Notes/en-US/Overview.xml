@@ -5,72 +5,12 @@
 			JBoss Developer Studio 4.1 is a major release of the Eclipse based IDE developed and supported by Red Hat (the visual tooling components are supported for 3 years, and the runtime platform for 5 years). The IDE, which is available for Windows, Linux and OS X, provides tooling that allows for rapid Web 2.0 application development on the JBoss Enterprise Application Platform. This release also improves support for SOA application development with the JBoss Enterprise SOA Platform.
 		</para>
 		<para>
-			JBoss Developer Studio 4.1 contains many new features, including:
+			JBoss Developer Studio 4.1.1 contains the following new features:
 		</para>
 		<itemizedlist>
 			<listitem>
 				<para>
-					Scriptable install of JBoss Developer Studio 4.1. When installing JBoss Developer Studio 4.1, you can now pass the installation a <filename>InstallConfigRecord.xml</filename> file to install with pre-defined settings, ensuring no user interaction is required. For further details see the release note for JBDS-1268 in the new and fixed issues section of this document, or the <emphasis>Getting Started Guide</emphasis> for this release.
-				</para>
-			</listitem>
-			<listitem>
-				<para>
-					Full BPEL Editor support is included with installation of JBoss Developer Studio 4.1, and through the Update site for upgrading from previous releases. To access this plug-in when upgrading from a previous version of JBoss Developer Studio, add the JBoss Developer Studio Update site to your installation; see the Getting Started Guide for further information.
-				</para>
-			</listitem>
-			<listitem>
-				<para>
-					Certified third-party components. JBoss Developer Studio 4.1 is released with numerous third-party components that have been tested to work with JBoss Developer Studio and JBoss technologies. The components are as follows:
-				</para>
-				<itemizedlist>
-					<listitem>
-						<para>
-							JBoss BPEL Editor (also available with the core installation of JBoss Developer Studio 4.1)
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							Spring
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							TestNG
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							m2eclipse (m2e)
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							Mylyn
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							eGit
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							Subclipse
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							PMD
-						</para>
-					</listitem>
-					<listitem>
-						<para>
-							FindBugs
-						</para>
-					</listitem>
-				</itemizedlist>
-				<para>
-					These components are available through the extras site; see the Getting Started Guide for further information. 
+					The ESB Runtime within the JBoss Service Oriented Architecture Platform is now separately identified and defined for individual use.
 				</para>
 			</listitem>
 		</itemizedlist>

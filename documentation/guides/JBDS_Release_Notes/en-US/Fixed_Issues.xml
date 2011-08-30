@@ -157,18 +157,23 @@
 		</para>
     </formalpara> -->
     	
-	<!--<formalpara>
+	<formalpara>
 		<title>Portlet</title>
 		<para>
 			<itemizedlist>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-9103">JBIDE-9103</ulink>: When creating a JSF portlet project on a 64bit operating system, the <guilabel>Installing JSF Facet</guilabel> process would hang and project creation would fail. This issue has been corrected by modifying the <filename>AbstractLibraryProviderInstallOperationConfig.java</filename> file by implementing a facet project listener and corecting an error of an extra bracket in a section of code.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-9013">JBIDE-9013</ulink>: An issue existed that would not allow the Seam Portlet example to be deployed to JBoss Enterprise Portal Platform (EPP) 4.3. The problem was caused by a change in how Web Tools Platform (WTP) deployment is undertaken. Where this used to be done through the Java build path, WTP now deploys source folders based on the WTP <filename>component.xml</filename> file. The example has now been updated to support this change.
 					</para>
 				</listitem>
 			</itemizedlist>
 		</para>
-	</formalpara>-->
+	</formalpara>
 <!--	<formalpara>
 		<title>RichFaces</title>
 		<para>
@@ -318,6 +323,21 @@
 				<listitem>
 					<para>
 						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-9344">JBIDE-9344</ulink>: When a user would import a project ZIP file using the project example framework, an empty sub-folder would appear that was unnecessary. This issue has been corrected in this release by modifying the <filename>NewProjectExamplesWizard.java</filename> file to check the files being imported and ensure the empty sub-folder no longer appears.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-9009">JBIDE-9009</ulink>: The option to create a WAR archive would produce an error and the archive would not be created. The user interface menu item to auto-create a WAR archive has been removed from this release.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-8919">JBIDE-8919</ulink>: A new feature has been added that allows for the ESB Runtime within the JBoss Service Oriented Architecture Platform to be separately identified and defined for individual use.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-7052">JBIDE-7052</ulink>: An error existed where the optional dependency of <filename>org.hibernate.eclipse<filename> would not be resolved correctly within the BIRT component file <filename>ConsoleConfigurationOdaFactory.java</filename>. This caused any import of the plug-in to fail. The issue has been corrected by setting the <filename>org.hibernate.eclipse<filename> plug-in as reguired within the BIRT plug-ins <filename>MANIFEST.MF<filename> file.
 					</para>
 				</listitem>
 			</itemizedlist>
