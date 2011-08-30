@@ -283,7 +283,7 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 			# COMMENTED OUT as this uses too much disk space
 			# if a release build, create a named dir
 			#if [[ ${RELEASE} == "Yes" ]]; then
-			#	date; rsync -arzq --delete ${STAGINGDIR}/* $DESTINATION/builds/staging/${JOB_NAME}-${ZIPSUFFIX}/
+			#	date; rsync -arzq --protocol=28 --delete ${STAGINGDIR}/* $DESTINATION/builds/staging/${JOB_NAME}-${ZIPSUFFIX}/
 			#fi
 		fi
 
@@ -309,7 +309,7 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 			# IF using .2 folders, purge contents of /builds/staging.previous/${JOB_NAME}.2 and remove empty dir
 			# NOTE: comment out next section - should only purge one staging.previous/* folder
 			#mkdir -p /tmp/${JOB_NAME}.2
-			#rsync -arzq --delete /tmp/${JOB_NAME}.2 $DESTINATION/builds/staging.previous/
+			#rsync -arzq --delete --protocol=28 /tmp/${JOB_NAME}.2 $DESTINATION/builds/staging.previous/
 			#echo -e "rmdir ${JOB_NAME}.2" | sftp $DESTINATION/builds/staging.previous/
 			#rmdir /tmp/${JOB_NAME}.2
 
@@ -393,5 +393,5 @@ fi
 bl=${STAGINGDIR}/logs/BUILDLOG.txt
 rm -f ${bl}; wget -q http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/${BUILD_NUMBER}/consoleText -O ${bl} --timeout=900 --wait=10 --random-wait --tries=10 --retry-connrefused --no-check-certificate
 date; rsync -arzq --protocol=28 --delete ${STAGINGDIR}/logs $DESTINATION/builds/staging/${JOB_NAME}/
-date; rsync -arzq --protocol=28 --delete ${STAGINGDIR}/logs $INTRNALDEST/builds/staging/${JOB_NAME}/
+date; rsync -arzq --delete ${STAGINGDIR}/logs $INTRNALDEST/builds/staging/${JOB_NAME}/
 
