@@ -266,24 +266,24 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 		if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]]; then
 			echo "<meta http-equiv=\"refresh\" content=\"0;url=${BUILD_ID}-H${BUILD_NUMBER}/\">" > /tmp/latestBuild.html
 			if [[ ${PUBLISHPATHSUFFIX} ]]; then
-				date; rsync -arzq --delete ${STAGINGDIR}/* $DESTINATION/builds/nightly/${PUBLISHPATHSUFFIX}/${BUILD_ID}-H${BUILD_NUMBER}/
+				date; rsync -arzq --protocol=28 --delete ${STAGINGDIR}/* $DESTINATION/builds/nightly/${PUBLISHPATHSUFFIX}/${BUILD_ID}-H${BUILD_NUMBER}/
 				# sftp only works with user@server, not with local $DESTINATIONS, so use rsync to push symlink instead
 				# echo -e "rm latest\nln ${BUILD_ID}-H${BUILD_NUMBER} latest" | sftp ${DESTINATIONREDUX}/builds/nightly/${PUBLISHPATHSUFFIX}/ 
 				pushd /tmp >/dev/null; ln -s ${BUILD_ID}-H${BUILD_NUMBER} latest; rsync -l latest ${DESTINATION}/builds/nightly/${PUBLISHPATHSUFFIX}/; rm -f latest; popd >/dev/null
-				date; rsync -arzq --delete /tmp/latestBuild.html $DESTINATION/builds/nightly/${PUBLISHPATHSUFFIX}/
+				date; rsync -arzq --protocol=28 --delete /tmp/latestBuild.html $DESTINATION/builds/nightly/${PUBLISHPATHSUFFIX}/
 			else
-				date; rsync -arzq --delete /tmp/latestBuild.html $DESTINATION/builds/nightly/${JOBNAMEREDUX}/ 
+				date; rsync -arzq --protocol=28 --delete /tmp/latestBuild.html $DESTINATION/builds/nightly/${JOBNAMEREDUX}/ 
 				# sftp only works with user@server, not with local $DESTINATIONS, so use rsync to push symlink instead
 				# echo -e "rm latest\nln ${BUILD_ID}-H${BUILD_NUMBER} latest" | sftp ${DESTINATIONREDUX}/builds/nightly/${JOBNAMEREDUX}/
 				pushd /tmp >/dev/null; ln -s ${BUILD_ID}-H${BUILD_NUMBER} latest; rsync -l latest ${DESTINATION}/builds/nightly/${JOBNAMEREDUX}/; rm -f latest; popd >/dev/null
-				date; rsync -arzq --delete ${STAGINGDIR}/* $DESTINATION/builds/nightly/${JOBNAMEREDUX}/${BUILD_ID}-H${BUILD_NUMBER}/
+				date; rsync -arzq --protocol=28 --delete ${STAGINGDIR}/* $DESTINATION/builds/nightly/${JOBNAMEREDUX}/${BUILD_ID}-H${BUILD_NUMBER}/
 			fi
 			rm -f /tmp/latestBuild.html
 		#else
 			# COMMENTED OUT as this uses too much disk space
 			# if a release build, create a named dir
 			#if [[ ${RELEASE} == "Yes" ]]; then
-			#	date; rsync -arzq --delete ${STAGINGDIR}/* $DESTINATION/builds/staging/${JOB_NAME}-${ZIPSUFFIX}/
+			#	date; rsync -arzq --protocol=28 --delete ${STAGINGDIR}/* $DESTINATION/builds/staging/${JOB_NAME}-${ZIPSUFFIX}/
 			#fi
 		fi
 
@@ -291,7 +291,7 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 		date; rsync -arzq --delete ${STAGINGDIR}/* $INTRNALDEST/builds/staging/${JOB_NAME}.next
 
 		# and create/replace a snapshot dir w/ static URL
-		date; rsync -arzq --delete ${STAGINGDIR}/* $DESTINATION/builds/staging/${JOB_NAME}.next
+		date; rsync -arzq --protocol=28 --delete ${STAGINGDIR}/* $DESTINATION/builds/staging/${JOB_NAME}.next
 
 		# 1. To recursively purge contents of .../staging.previous/foobar/ folder: 
 		#  mkdir -p /tmp/foobar; 
@@ -309,13 +309,13 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 			# IF using .2 folders, purge contents of /builds/staging.previous/${JOB_NAME}.2 and remove empty dir
 			# NOTE: comment out next section - should only purge one staging.previous/* folder
 			#mkdir -p /tmp/${JOB_NAME}.2
-			#rsync -arzq --delete /tmp/${JOB_NAME}.2 $DESTINATION/builds/staging.previous/
+			#rsync -arzq --delete --protocol=28 /tmp/${JOB_NAME}.2 $DESTINATION/builds/staging.previous/
 			#echo -e "rmdir ${JOB_NAME}.2" | sftp $DESTINATION/builds/staging.previous/
 			#rmdir /tmp/${JOB_NAME}.2
 
 			# OR, purge contents of /builds/staging.previous/${JOB_NAME} and remove empty dir
 			mkdir -p /tmp/${JOB_NAME}
-			rsync -arzq --delete /tmp/${JOB_NAME} $DESTINATION/builds/staging.previous/
+			rsync -arzq --protocol=28 --delete /tmp/${JOB_NAME} $DESTINATION/builds/staging.previous/
 			echo -e "rmdir ${JOB_NAME}" | sftp $DESTINATION/builds/staging.previous/
 			rmdir /tmp/${JOB_NAME}
 
@@ -370,15 +370,15 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 "
 		echo $metadata >> ${STAGINGDIR}/all/compositeContent.xml
 		echo $metadata >> ${STAGINGDIR}/all/compositeArtifacts.xml
-		date; rsync -arzq ${STAGINGDIR}/all/composite*.xml $DESTINATION/builds/staging/${JOB_NAME}/all/
+		date; rsync -arzq --protocol=28 ${STAGINGDIR}/all/composite*.xml $DESTINATION/builds/staging/${JOB_NAME}/all/
 	fi
 
 	# extra publish step for aggregate update sites ONLY
 	if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]]; then
 		if [[ ${PUBLISHPATHSUFFIX} ]]; then 
-			date; rsync -arzq --delete ${STAGINGDIR}/all/repo/* $DESTINATION/updates/nightly/${PUBLISHPATHSUFFIX}/
+			date; rsync -arzq --protocol=28 --delete ${STAGINGDIR}/all/repo/* $DESTINATION/updates/nightly/${PUBLISHPATHSUFFIX}/
 		else
-			date; rsync -arzq --delete ${STAGINGDIR}/all/repo/* $DESTINATION/updates/nightly/${JOBNAMEREDUX}/
+			date; rsync -arzq --protocol=28 --delete ${STAGINGDIR}/all/repo/* $DESTINATION/updates/nightly/${JOBNAMEREDUX}/
 		fi
 	fi
 fi
@@ -392,6 +392,6 @@ fi
 # publish updated log
 bl=${STAGINGDIR}/logs/BUILDLOG.txt
 rm -f ${bl}; wget -q http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/${BUILD_NUMBER}/consoleText -O ${bl} --timeout=900 --wait=10 --random-wait --tries=10 --retry-connrefused --no-check-certificate
-date; rsync -arzq --delete ${STAGINGDIR}/logs $DESTINATION/builds/staging/${JOB_NAME}/
+date; rsync -arzq --protocol=28 --delete ${STAGINGDIR}/logs $DESTINATION/builds/staging/${JOB_NAME}/
 date; rsync -arzq --delete ${STAGINGDIR}/logs $INTRNALDEST/builds/staging/${JOB_NAME}/
 
