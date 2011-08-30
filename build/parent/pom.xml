@@ -17,7 +17,7 @@
 		-->
 		<tychoVersion>0.12.0</tychoVersion>
 		<scmBranch>trunk</scmBranch>
-		<BUILD_ALIAS>M3</BUILD_ALIAS>
+		<BUILD_ALIAS>M4</BUILD_ALIAS>
 		<memoryOptions1>-Xms512m -Xmx1024m -XX:PermSize=256m</memoryOptions1>
 		<memoryOptions2>-XX:MaxPermSize=256m</memoryOptions2>
 		<systemProperties></systemProperties>
