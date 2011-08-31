@@ -19,11 +19,11 @@
 	<condition property="build.xml" value="/home/hudson/static_build_env/jbds/tools/sources/build/build.xml">
 		<available file="/home/hudson/static_build_env/jbds/tools/sources/build/build.xml" type="file" />
 	</condition>
-	<condition property="build.xml" value="${basedir}/../../build/build.xml">
-		<available file="${basedir}/../../build/build.xml" type="file" />
+	<condition property="build.xml" value="${basedir}/../../../build/build.xml">
+		<available file="${basedir}/../../../build/build.xml" type="file" />
 	</condition>
-	<condition property="build.xml" value="${basedir}/../../build.xml">
-		<available file="${basedir}/../../build.xml" type="file" />
+	<condition property="build.xml" value="${basedir}/../../../build.xml">
+		<available file="${basedir}/../../../build.xml" type="file" />
 	</condition>
 	<!-- if can't calculate where build/build.xml is located, must pass in path from parent when calling this script -->
 
