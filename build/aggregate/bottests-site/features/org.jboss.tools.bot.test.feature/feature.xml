@@ -42,7 +42,7 @@ Raleigh NC 27606 USA.
 	<plugin id="org.jboss.tools.cdi.bot.test" download-size="0" install-size="0" version="0.0.0" />  
 	<plugin id="org.jboss.tools.deltacloud.ui.bot.test" download-size="0" install-size="0" version="0.0.0" /> 
 	<plugin id="org.jboss.tools.drools.ui.bot.test" download-size="0" install-size="0" version="0.0.0" /> 
-	<plugin id="org.jboss.tools.esb.ui.bot.test" download-size="0" install-size="0" version="0.0.0" /> 
+	<!-- TODO JBIDE-9464 add this back in after test is fixed <plugin id="org.jboss.tools.esb.ui.bot.test" download-size="0" install-size="0" version="0.0.0" />  -->
 	<plugin id="org.jboss.tools.hibernate.ui.bot.test" download-size="0" install-size="0" version="0.0.0" /> 
 	<plugin id="org.jboss.tools.jbpm.ui.bot.test" download-size="0" install-size="0" version="0.0.0" /> 
 	<plugin id="org.jboss.tools.jsf.ui.bot.test" download-size="0" install-size="0" version="0.0.0" /> 
