@@ -94,18 +94,18 @@
             </itemizedlist>
         </para>
     </formalpara>-->
-    <!--<formalpara>
+    <formalpara>
         <title>jBPM</title>
         <para>
             <itemizedlist>
                 <listitem>
                     <para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-3727">JBIDE-3727</ulink>: When editing the name of a node in source view (and more than one node is present), performing backspace or delete actions would not work correctly, missing characters and when typing a new name it would appear backwards. These issues have been corrected in this release by using the <classname>org.eclipse.swt.widgets.Display</classname> class and updating semantic element variables to be <property>final</property>. The results from editing node names is now as expected.
                     </para>
                 </listitem>
             </itemizedlist>
         </para>
-    </formalpara>-->
+    </formalpara>
 	<!--<formalpara>
 		<title>JBoss Enterprise Portal Platform</title>
 		<para>
@@ -315,6 +315,11 @@
 						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-9514">JBIDE-9514</ulink>: Project Example ZIP files that contian empty folders, would not be imported correctly and the empty folders would be excluded, though they are necessary for the project to work (for example, the <filename>src</filename> folder). To fix this issue the <filename>NewProjectExamplesWizard.java</filename> has been modified to allow for empty folders within ZIP files to be imported correctly.
 					</para>
 				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-9381">JBIDE-9381</ulink>: An issue existed that meant the runtime detector did not detect the SOA 5.2 runtime correctly, instead displaying it as 5.1. Correcting this issue has seen the modification of <filename>JBossASHandler.java</filename> to also include 5.2 as a runtime displau option, and using the implementation and version properties from <filename>run.jar</filename>.
+						</para>
+					</listitem>
 				<listitem>
 					<para>
 						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-9361">JBIDE-9361</ulink>: When importing a project, if it is not faceted or does not contain a primary runtime, the project will not be imported correctly. This could have lead to errors being displayed and projects referencing an incorrect runtime. The issue has been corrected within this release by updating the <filename>WTPRuntimeFix.java</filename> by adding in code to check and handle when a project is not faceted or does not contain a primary runtime. 
