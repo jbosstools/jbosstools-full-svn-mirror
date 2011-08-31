@@ -1066,18 +1066,24 @@ public class CDIProject extends CDIElement implements ICDIProject {
 			if(typeDefinition.isVetoed()) {
 				continue;
 			}
-			ClassBean bean = null;
-			if(typeDefinition.getInterceptorAnnotation() != null || ic.isInterceptor(typeDefinition.getType())) {
-				bean = new InterceptorBean();
-			} else if(typeDefinition.getDecoratorAnnotation() != null || ic.isDecorator(typeDefinition.getType())) {
-				bean = new DecoratorBean();
-			} else if(typeDefinition.getStatefulAnnotation() != null || typeDefinition.getStatelessAnnotation() != null || typeDefinition.getSingletonAnnotation() != null) {
-				bean = new SessionBean();
+
+			ClassBean bean = (ClassBean)classBeans.get(typeDefinition.getType());
+			if(bean != null && (bean.getDefinition() == typeDefinition)) {
+				//Type definitions are rebuilt when changed, otherwise old bean should be reused.
+				bean.cleanCache();
 			} else {
-				bean = new ClassBean();
+				if(typeDefinition.getInterceptorAnnotation() != null || ic.isInterceptor(typeDefinition.getType())) {
+					bean = new InterceptorBean();
+				} else if(typeDefinition.getDecoratorAnnotation() != null || ic.isDecorator(typeDefinition.getType())) {
+					bean = new DecoratorBean();
+				} else if(typeDefinition.getStatefulAnnotation() != null || typeDefinition.getStatelessAnnotation() != null || typeDefinition.getSingletonAnnotation() != null) {
+					bean = new SessionBean();
+				} else {
+					bean = new ClassBean();
+				}
+				bean.setParent(this);
+				bean.setDefinition(typeDefinition);
 			}
-			bean.setParent(this);
-			bean.setDefinition(typeDefinition);
 
 			if(typeDefinition.hasBeanConstructor()) {
 				beans.add(bean);
