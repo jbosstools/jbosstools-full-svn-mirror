@@ -14,13 +14,7 @@
 	<feature url="features/org.jboss.ide.eclipse.as.archives.integration_0.0.0.jar" id="org.jboss.ide.eclipse.as.archives.integration" version="0.0.0">
 		<category name="JBoss Tools - Web Tools Nightly Build Update Site"/>
 	</feature>
-	<feature url="features/org.jboss.ide.eclipse.as.serverAdapter.wtp_0.0.0.jar" id="org.jboss.ide.eclipse.as.serverAdapter.wtp" version="0.0.0">
-		<category name="JBoss Tools - Web Tools Nightly Build Update Site"/>
-	</feature>
 	<feature url="features/org.jboss.ide.eclipse.as.feature_0.0.0.jar" id="org.jboss.ide.eclipse.as.feature" version="0.0.0">
-		<category name="JBoss Tools - Web Tools Nightly Build Update Site"/>
-	</feature>
-	<feature url="features/org.jboss.ide.eclipse.as.jmx.integration_0.0.0.jar" id="org.jboss.ide.eclipse.as.jmx.integration" version="0.0.0">
 		<category name="JBoss Tools - Web Tools Nightly Build Update Site"/>
 	</feature>
 </site>
