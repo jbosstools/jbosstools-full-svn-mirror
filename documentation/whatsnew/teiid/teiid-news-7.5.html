@@ -1,0 +1,243 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Language" content="en-us">
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=ISO-8859-1">
+  <link rel="stylesheet" href="../whatsnew.css">
+  <title>Teiid Designer What's New</title>
+  <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17645367-5']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+  </script>
+</head>
+<body>
+<h1>Teiid Designer 7.5 What's New</h1>
+<p align="right"><a href="../index.html">&lt; Main Index</a></p>
+<p>Last revised August 31, 2011</p>
+<p><b>Teiid Designer</b> is a graphical data modeling tool that enables
+rapid definition, integration, management and testing of data services
+without programming using the <b>Teiid</b> runtime engine.</p>
+<p>For more details on <a href="http://www.jboss.org/teiid.html">Teiid</a>
+and <a href="http://www.jboss.org/teiiddesigner.html">Teiid Designer</a>
+visit: <a href="http://www.teiid.org">http://www.teiid.org</a></p>
+<table width="80%" border="0" cellpadding="10" cellspacing="0">
+  <tbody>
+    <tr>
+      <td colspan="2">
+      <hr>
+      <h3><span style="font-size: 12pt;"><strong>Relational Model
+Source Functions</strong></span></h3>
+      <hr> </td>
+    </tr>
+    <tr>
+      <td valign="top" align="left">
+      <p><b>Create Source Function<b> </b></b></p>
+      <b> </b></td>
+      <td valign="top">
+      <p> To improve ability to utilize database functions within View
+transformations, a new "<strong>New Child &gt; Source Function</strong>"
+
+action
+and
+wizard was added to assist in building a source procedure
+that conforms to a function structure, including input and output
+parameters. Prior to Teiid Designer 7.5, these functions were required
+to be modeled as User Defined functions.. (TEIIDDES-992)</p>
+      <p>To create a new Source Function, select a Relational Source
+Model in your workspace and select "<strong>New Child &gt; Source
+Function</strong>". Enter your database function name, define input
+parameters including datatype and length, specify output parameter
+info, set options and click OK.</p>
+      <p>The resulting source function will be added to your model and
+will be represented by the <a
+ href="http://community.jboss.org/servlet/JiveServlet/showImage/102-17147-4-16878/source-function.png"><img
+ alt="source-function.png" class="jive-image"
+ src="images/source-function.png"
+ style="border: 0px solid ; width: 16px; height: 16px;"></a> icon.</p>
+      <p><img style="border: 1px solid ; width: 449px; height: 551px;"
+ src="images/create-source-function-dialog.png"
+ alt="Create Source Function Dialog"><br>
+      </p>
+      <p><br>
+      </p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <hr>
+      <h3>New Flat File Import Wizard View</h3>
+      <hr> </td>
+    </tr>
+    <tr>
+      <td valign="top" align="left">
+      <p><b> <br>
+      </b></p>
+      </td>
+      <td valign="top">
+      <p>Teiid supports Flat Files as data sources.&nbsp; In release
+7.5, Teiid Designer introduces a new Import wizard designed to assist
+in creating the metadata models required to access the data in your
+flat files. As with Designer's JDBC, Salesforce and WSDL importers, the
+Flat File importer is based on utilizing a specific Data Tools
+Connection Profile. (TEIIDDES-1017)<br>
+      </p>
+      <p>The results of the importer will include a source model
+containing the three Flat File procedures supported by Teiid. Namely:</p>
+      <ul>
+        <li style="text-align: start;">getFiles()</li>
+        <li style="text-align: start;">getTextFiles()</li>
+        <li style="text-align: start;">saveFile()</li>
+      </ul>
+      <p>The importer will also create a new view model containing a
+view table for each of your selected flat file source files. Within
+these view tables will be generated SQL transformations containing the
+"getTextFiles()" procedure from your source model as well as the column
+definitions and parameters required for the Teiid TEXTTABLE() function
+used to query the data file. You can also choose to update an existing
+view model instead of creating a new view model.</p>
+      <p>The TEXTTABLE function, as defined in the Teiid documentation,
+processes character input to produce tabular ouptut. It supports both
+fixed and delimited file format parsing. The function itself defines
+what columns it projects. The TEXTTABLE function is implicitly a nested
+table and may be correlated to preceeding FROM clause entries.</p>
+      <p>TEXTTABLE(expression COLUMNS &lt;COLUMN&gt;, ... <span
+ class="error">[DELIMITER char]</span> <span class="error">[(QUOTE|ESCAPE)
+char]</span> [HEADER <span class="error">[integer]</span>] <span
+ class="error">[SKIP integer]</span>) AS name</p>
+      <p>Teiid Designer will construct the full SQL statement for each
+view table in the form:</p>
+      <p><strong>SELECT</strong></p>
+      <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A.Name,
+A.Sport, A.Position, A.Team, A.City, A.StateCode, A.AnnualSalary</strong></p>
+      <p><strong>&nbsp;&nbsp;&nbsp; FROM</strong></p>
+      <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (EXEC
+PlayerDataSource.getTextFiles('PlayerData.txt')) AS f, TEXTTABLE(f.file
+COLUMNS Name string, Sport string, Position string, Team string, City
+string, StateCode string, AnnualSalary string HEADER 2 SKIP 3) AS A</strong></p>
+      <p>The import option is labeled "<strong>Flat File Source
+&gt;&gt; Source and View Model</strong>" and is show below in the
+Import wizard's first page under the Teiid Designer category.&nbsp; <em>Note
+
+also
+that Designer's import labels have changed to reflect both a
+source (i.e. JDBC Database) and one or more target metamodels that will
+be created or updated during the import process.</em><br>
+      </p>
+      <p><img style="border: 1px solid ; width: 449px; height: 452px;"
+ src="images/teiid-designer-import-options.png" alt="Import Options"><br>
+      </p>
+      <p>The first page of the wizard requires selection of an existing
+Flat File Source connection profile in order to locate the designer
+source file folder. Once selected (or created view "New..." button) the
+available data files will be displayed in the table.</p>
+      <p>Check each data file you wish to process. Each file will be
+used to construct a view table containing the required SQL
+transformation for retrieving your data and returning a result set.</p>
+      <p><img style="border: 1px solid ; width: 449px; height: 451px;"
+ src="images/teiid-metadata-file-import-page-1.png"
+ alt="Source Selection"><br>
+      </p>
+      <p>The first page of the wizard requires selection of an existing
+Flat File Source connection profile in order to locate the designer
+source file folder. Once selected (or created view "New..." button) the
+available data files will be displayed in the table.</p>
+      <p>Check each data file you wish to process. Each file will be
+used to construct a view table containing the required SQL
+transformation for retrieving your data and returning a result set.</p>
+      <p><img style="border: 1px solid ; width: 450px; height: 515px;"
+ src="images/teiid-metadata-file-import-configure.png"
+ alt="Parser Settings Dialog"><br>
+      </p>
+      <p>At any time you can select a data row in your <strong>File
+Contents Preview</strong> section and click the "<strong>Parse Selected
+Row</strong>" button. A dialog will be displayed showing the list of
+columns and the resulting column data. If your column data is not what
+you expected, you'll need to adjust your settings accordingly.<br>
+      </p>
+      <p><img style="width: 445px; height: 467px;"
+ alt="Parsed Column Data Dialog"
+ src="images/teiid-metadata-file-import-parse-column.png"><br>
+      </p>
+      <p>The last page of the wizard, the <strong>Target Models
+Definition</strong> page, contains two model definition sections. Both
+sections allow you to select a workspace location to place the
+generated model. In the case of the <strong>View Model Definition</strong>,
+you
+can select an existing view model via the "..." browse button and
+the "<strong>Update Existing Model</strong>" checkbox will be selected.<br>
+      </p>
+      <p><img style="width: 449px; height: 478px;"
+ alt="Target Models Definition"
+ src="images/teiid-metadata-file-import-page-2.png"><br>
+      </p>
+      <p>This import operation will result in the generated source
+model shown below...<br>
+      </p>
+      <p><img style="width: 449px; height: 268px;"
+ alt="Flat File Source Procedures"
+ src="images/generated-flat-file-diagram.png"><br>
+      </p>
+      <p>... and generated view tables containing the completed SQL
+required to access the data in your flat file using the "getFiles"
+procedure above and the Teiid TEXTTABLE() function.<br>
+      </p>
+      <h3>Connection Management</h3>
+      <p><img style="width: 449px; height: 355px;"
+ alt="Generated Flat File View Table"
+ src="images/generated-flat-file-view-table.png"><br>
+      </p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <hr>
+      <h3>Teiid SQL Grammar Reserved Words View<br>
+      </h3>
+      <hr> </td>
+    </tr>
+    <tr>
+      <td valign="top" align="left">
+      <p><b>SQL Reserved Words View<b> </b></b></p>
+      <b> </b></td>
+      <td valign="top">Teiid supports a subset of various SQL reserved
+words. A full list of the supported reserved words is now available in
+a new SQL&nbsp; Reserverd Words view.&nbsp; You can open this view via "<strong>Preferences
+&gt;
+Other ... &gt; Teiid Designer &gt; SQ Reserved Words</strong>" or
+select the "<strong>Metadata &gt; Show SQL Reserved Words</strong>"
+action in the main toolbar shown below. (TEIIDDES-958)&nbsp;
+      <p><img style="border: 1px solid ; width: 331px; height: 227px;"
+ src="images/show-sql-reserved-words-action.png"
+ alt="Show SQL Reserved Words Action"><img style="border: 1px solid ;"
+ src="images/view-connection-info-dialog.png.png"
+ alt="View Connection Info Dialog"><br>
+      </p>
+      <p><img style="width: 449px; height: 200px;"
+ alt="SQL Reserved Words View" src="images/sql-reserved-words-view.png"><br>
+      </p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top" align="left"><br>
+      </td>
+      <td valign="top"><br>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <hr></td>
+    </tr>
+  </tbody>
+</table>
+</body>
+</html>
