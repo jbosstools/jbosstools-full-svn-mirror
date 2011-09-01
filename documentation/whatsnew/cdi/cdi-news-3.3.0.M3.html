@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../whatsnew.css" />
+<title>CDI/Seam 3 tools 3.3.0.M3 What's New</title>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17645367-5']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script></head>
+<body>
+<h1>CDI/Seam 3 tools 3.3.0.M3 What's New</h1>
+
+<p align="right"><a href="../index.html">&lt; Main Index</a> <a
+	href="../forge/forge-news-3.3.0.M3.html">Forge Tools News &gt;</a></p>
+
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+
+	<tr>
+		<td colspan="2">
+		<hr />
+		<h3>CDI</h3>
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+			<p><b>Quick Fixes</b></p>
+		</td>
+        <td align="top">
+			<p>New quick fixes for the following problems found by CDI validator are now available:</p>
+			<p>
+			<ul>
+				<li>Stereotype annotation type must be annotated with one of @Target('{'TYPE, METHOD, FIELD'}'), @Target('{'METHOD, FIELD'}'), @Target('{'TYPE'}'), @Target('{'METHOD'}'), @Target('{'FIELD'}') [JSR-299 2.7.1]</li>
+				<li>Stereotype/Qualifier/Scope annotation type must be annotated with @Retention(RUNTIME)</li>
+				<li>Qualifier annotation type must be annotated with @Target('{'TYPE, METHOD, FIELD, PARAMETER'}') or @Target('{'FIELD, PARAMETER'}') [JSR-299 2.3.2, 10.1]</li>
+				<li>Scope annotation type must be annotated with @Target('{'TYPE, METHOD, FIELD'}') [JSR-299 2.4.2]</li>
+				<li>Quick fix for "Stereotype declares a non-empty @Named annotation [JSR-299 2.7.1.3]</li>
+				<li>Interceptor/Decorator has a name [JSR-299 2.5.3]</li>
+				<li>Stereotype cannot be annotated @Typed [JSR-299 2.7.1.3]</li>
+				<li>Annotation-valued or array-valued member of a qualifier or interceptor binding type must be annotated @Nonbinding [JSR-299 5.2.5, 9.5.2]</li>
+				<li>Bean constructor cannot have a parameter annotated @Disposes/@Observes [JSR-299 3.7.1]</li>
+				<li>Producer or Observer method has a parameter annotated @Disposes/@Observes [JSR-299 3.3.2, 10.4.2]</li>
+				<li>Producer method or field cannot be annotated @Inject [JSR-299 3.3.2, 3.4.2]</li>
+				<li>Bean class of a session bean cannot be annotated @Interceptor/@Decorator [JSR-299 3.2]</li>
+				<li>Producer cannot be declared in an interceptor/decorator [JSR-299 3.3.2]</li>
+				<li>Interceptor/Decorator has a method annotated @Disposes/@Observes [JSR-299 3.3.6, 10.4.2]</li>
+				<li>Interceptor/Decorator is annotated @Specializes [JSR-299 4.3.1]</li>
+			</ul>
+			</p>
+
+        	<img src="images/3.3.0.M3/NonEmptyNamedInStereotype.png"/>
+			<p>
+				<small>
+					<a href="https://issues.jboss.org/browse/JBIDE-7630">Related Jira JBIDE-7630</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7631">JBIDE-7631</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7632">JBIDE-7632</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7633">JBIDE-7633</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7634">JBIDE-7634</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7636">JBIDE-7636</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7640">JBIDE-7640</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7641">JBIDE-7641</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7664">JBIDE-7664</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7665">JBIDE-7665</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7667">JBIDE-7667</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7668">JBIDE-7668</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7680">JBIDE-7680</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7683">JBIDE-7683</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7684">JBIDE-7684</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7685">JBIDE-7685</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-7686">JBIDE-7686</a>
+				</small><br/>
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+			<p><b>Ctrl+Shift+G (Search for references)</b></p>
+		</td>
+        <td align="top">
+			<p></p>
+        	<img src="images/3.3.0.M3/seam_config_open_on.png"/>
+			<p>
+				<small>
+				       <a href="https://jira.jboss.org/browse/JBIDE-9473">Related Jira JBIDE-9473</a>,
+				       <a href="https://jira.jboss.org/browse/JBIDE-8705">JBIDE-8705</a>
+				</small><br/>
+			</p>
+		</td>
+	</tr>
+
+</table>
+
+</body>
+
+</html>
