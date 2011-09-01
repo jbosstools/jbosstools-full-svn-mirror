@@ -61,6 +61,13 @@
 			</classpath>
 		</taskdef>
 
+		<condition property="aggregate_site_build.xml" value="${basedir}/../aggregate/site/build.xml">
+			<available file="${basedir}/../aggregate/site/build.xml" type="file" />
+		</condition>
+		<condition property="aggregate_site_build.xml" value="${basedir}/../aggregate/site/site/build.xml">
+			<available file="${basedir}/../aggregate/site/site/build.xml" type="file" />
+		</condition>
+
 		<available file="${COMMON_TOOLS}/saxon.jar" type="file" property="saxon.jar.exists" />
 		<antcall target="get.saxon" />
 
@@ -102,47 +109,47 @@
 	<!-- NEW STUFF HERE -->
 
 	<target name="buildResults.single" depends="init" description="generate buildResults.html from build properties">
-		<ant target="collect.zips" antfile="../aggregate/site/build.xml">
+		<ant target="collect.zips" antfile="${aggregate_site_build.xml}">
 			<property name="inputRepos" value="2" />
 			<property name="inputRepo1" value="file://${input.dir}/all/repo/" />
 			<property name="inputRepo2" value="http://download.jboss.org/jbosstools/builds/staging/${JOB_NAME}/all/repo/" />
 		</ant>
-		<ant target="collect.metadata" antfile="../aggregate/site/build.xml">
+		<ant target="collect.metadata" antfile="${aggregate_site_build.xml}">
 		</ant>
 		<antcall target="buildResults" />
 	</target>
 
 	<target name="buildResults.aggregate" depends="init" description="generate buildResults.html from build properties">
-		<ant target="collect.zips" antfile="../aggregate/site/build.xml">
+		<ant target="collect.zips" antfile="${aggregate_site_build.xml}">
 			<property name="inputRepos" value="2" />
 			<property name="inputRepo1" value="file://${input.dir}/all/repo/" />
 			<!-- for trunk use _composite_/trunk; for 3.3_stable_branch, use _composite_/3.3.indigo -->
 			<property name="inputRepo2" value="http://download.jboss.org/jbosstools/builds/staging/_composite_/trunk" />
 		</ant>
-		<ant target="collect.metadata" antfile="../aggregate/site/build.xml">
+		<ant target="collect.metadata" antfile="${aggregate_site_build.xml}">
 		</ant>
 		<antcall target="buildResults" />
 	</target>
 
 	<target name="test.buildResults.aggregate" depends="init" description="generate buildResults.html from build properties">
 		<property name="isTest" value="true" />
-		<ant target="collect.zips" antfile="../aggregate/site/build.xml">
+		<ant target="collect.zips" antfile="${aggregate_site_build.xml}">
 			<property name="inputRepos" value="1" />
 			<!-- for trunk use _composite_/trunk; for 3.3_stable_branch, use _composite_/3.3.indigo -->
 			<property name="inputRepo1" value="http://download.jboss.org/jbosstools/builds/staging/_composite_/trunk" />
 		</ant>
-		<ant target="collect.metadata" antfile="../aggregate/site/build.xml">
+		<ant target="collect.metadata" antfile="${aggregate_site_build.xml}">
 		</ant>
 		<antcall target="buildResults" />
 	</target>
 
 	<target name="test.buildResults.single" depends="init" description="generate buildResults.html from build properties">
 		<property name="isTest" value="true" />
-		<ant target="collect.zips" antfile="../aggregate/site/build.xml">
+		<ant target="collect.zips" antfile="${aggregate_site_build.xml}">
 			<property name="inputRepos" value="1" />
 			<property name="inputRepo1" value="http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.3_trunk.component--common/all/repo" />
 		</ant>
-		<ant target="collect.metadata" antfile="../aggregate/site/build.xml">
+		<ant target="collect.metadata" antfile="${aggregate_site_build.xml}">
 		</ant>
 		<antcall target="buildResults" />
 	</target>
