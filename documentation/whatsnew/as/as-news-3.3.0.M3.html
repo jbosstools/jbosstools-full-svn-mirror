@@ -1,0 +1,111 @@
+<html>
+
+<head>
+<link rel="stylesheet" href="../whatsnew.css">
+<title>JBoss AS Tools 3.3.0.M3 News</title>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17645367-5']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script></head>
+
+<body>
+
+<h1>JBoss AS Tools 3.3.0.M3 What's New</h1>
+
+  <p align="right"><a href="../index.html">&lt; Main Index</a> <a href="../jst/jst-news-3.3.0.M3.html">JST/JSF Tools &gt;</a></p>
+
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>Server</h3>
+      <hr/>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="right">
+      <p><b>Remote AS7 Servers</b></p>
+    </td>
+    <td valign="top" width="90%">
+        <p>The AS7 server adapter is now capable of dealing with remote JBoss AS 7 server. You can now deploy to them and 
+        start/stop them as you already can with prior JBoss servers.</p>
+	    <p><small><a href="https://issues.jboss.org/browse/JBIDE-9215">Related Jira</a></small></p>
+    </td>
+  </tr>  
+  <tr><td colspan="2"><hr /></td></tr>
+  <tr>
+    <td valign="top" align="right">
+      <p><b>EAP 6 Support</b></p>
+    </td>
+    <td valign="top" width="90%">
+        <p>We added support for JBoss EAP 6 in JBoss Tools M3.</p>
+	    <p><small><a href="https://issues.jboss.org/browse/JBIDE-9574">Related Jira</a></small></p>
+    </td>
+  </tr>
+  <tr><td colspan="2"><hr /></td></tr>
+  <tr>
+    <td valign="top" align="right">
+      <p><b>AS7 Adapter Workflow</b></p>
+    </td>
+    <td valign="top" width="90%">
+        <p>JBoss AS 7 finally matches all features that we offered when configuring adapters for prior JBoss AS adapters. You can now add new runtimes at will, edit them, configure their deployment behaviour when creating them etc.</p>
+	    <p><small><a href="https://issues.jboss.org/browse/JBIDE-9609">Related Jira</a></small></p>
+    </td>
+  </tr>
+    <tr>
+    <td valign="top" align="right">
+      <p><b>Detecting running server</b></p>
+    </td>
+    <td valign="top" width="90%">
+        <p>When you start a server adapter, we'll check if there's a server already running. We'll then let 
+        you choose to use the server we found or to start a new instance.</p>
+        <image src="images/server-already-running.png" />
+	    <p><small><a href="https://issues.jboss.org/browse/JBIDE-9243">Related Jira</a></small></p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>Miscellaneous</h3>
+      <hr/>
+    </td>
+  </tr>
+   <tr>
+    <td valign="top" align="right">
+      <p><b>1 Step Commit and Push to Git</b></p>
+    </td>
+    <td valign="top" width="90%">
+        <p>When working with git repositories you'd sometimes want to commit and push at once. 
+        The current Eclipse tooling requires you to first call commit and then execute push in a 2nd step.
+        We therefore added an entry to the context menu of git shared projects that would allow you to
+        commit and push in 1 step.</p>
+        <img src="images/commit-and-push.png" />
+		<p>The workflow is not yet perfect in the sense that it would still present you the dialog to push even
+		if you cancelled the commit. We fixed that in the patch we contributed to Eclipse Egit         
+	    <p>
+	    	<small>
+	    		<div><a href="https://issues.jboss.org/browse/JBIDE-9609">Related Jira</a></div>
+	    		<div><a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=330048">EGit bugzilla</a></div>
+	    	</small>
+	    </p>
+    </td>
+  </tr>
+  <tr><td colspan="2"><hr /></td></tr>
+  
+</table>
+
+</body>
+
+</html>
+
+
