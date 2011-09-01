@@ -45,6 +45,12 @@ if [[ -d ${WORKSPACE}/sources/aggregate/site/target ]]; then
 		siteZip=${WORKSPACE}/sources/aggregate/site/target/site.zip
 	fi
 	z=$siteZip
+elif [[ -d ${WORKSPACE}/sources/aggregate/site/site/target ]]; then
+	siteZip=${WORKSPACE}/sources/aggregate/site/site/target/site_assembly.zip
+	if [[ ! -f ${WORKSPACE}/sources/aggregate/site/site/target/site_assembly.zip ]]; then
+		siteZip=${WORKSPACE}/sources/aggregate/site/site/target/site.zip
+	fi
+	z=$siteZip
 elif [[ -d ${WORKSPACE}/sources/site/target ]]; then
 	siteZip=${WORKSPACE}/sources/site/target/site_assembly.zip
 	if [[ ! -f ${WORKSPACE}/sources/site/target/site_assembly.zip ]]; then
