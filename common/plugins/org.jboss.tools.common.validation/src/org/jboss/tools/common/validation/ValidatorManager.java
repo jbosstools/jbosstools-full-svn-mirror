@@ -66,30 +66,32 @@ public class ValidatorManager implements IValidatorJob {
 			Set<IProject> rootProjects = validationContextManager.getRootProjects();
 			IStatus status = OK_STATUS;
 			synchronized (validatingProjects) {
-				for (IProject rootProject : rootProjects) {
-					if(validatingProjects.contains(rootProject)) {
-						return OK_STATUS;
-					}
-					validatingProjects.add(rootProject);
+				// Validate root projects that is not being validated yet.
+				rootProjects.removeAll(validatingProjects);
+				if(rootProjects.isEmpty()) {
+					// We don't have projects to validate.
+					return OK_STATUS;
 				}
+				validatingProjects.addAll(rootProjects);
 			}
 			try {
 				validationContextManager.clearValidatedProjectsList();
 				Set<IFile> changedFiles = validationHelper.getChangedFiles();
 				if(!changedFiles.isEmpty()) {
-					status = validate(changedFiles, validationHelper, reporter);
+					status = validate(changedFiles, validationHelper, reporter, rootProjects);
 				} else if(!validationContextManager.getRegisteredFiles().isEmpty()) {
 					validationContextManager.clearAllResourceLinks();
-					status = validateAll(validationHelper, reporter);
+					status = validateAll(validationHelper, reporter, rootProjects);
 				}
 			} finally {
-				if(validationContextManager!=null) {
-					validationContextManager.clearRegisteredFiles();
-				}
-				validationHelper.cleanup(); // See https://issues.jboss.org/browse/JBIDE-8726
-				synchronized (validatingProjects) {
-					for (IProject rootProject : rootProjects) {
-						validatingProjects.remove(rootProject);
+				try {
+					if(validationContextManager!=null) {
+						validationContextManager.clearRegisteredFiles();
+					}
+					validationHelper.cleanup(); // See https://issues.jboss.org/browse/JBIDE-8726
+				} finally {
+					synchronized (validatingProjects) {
+						validatingProjects.removeAll(rootProjects);
 					}
 				}
 			}
@@ -103,10 +105,9 @@ public class ValidatorManager implements IValidatorJob {
 		}
 	}
 
-	private IStatus validate(Set<IFile> changedFiles, ContextValidationHelper validationHelper, IReporter reporter) throws ValidationException {
+	private IStatus validate(Set<IFile> changedFiles, ContextValidationHelper validationHelper, IReporter reporter, Set<IProject> rootProjects) throws ValidationException {
 		IValidationContextManager validationContextManager = validationHelper.getValidationContextManager();
 		List<IValidator> validators = validationContextManager.getValidators();
-		Set<IProject> rootProjects = validationContextManager.getRootProjects();
 		removeMarkers(changedFiles);
 		for (IValidator validator : validators) {
 			for (IProject rootProject : rootProjects) {
@@ -119,10 +120,9 @@ public class ValidatorManager implements IValidatorJob {
 		return OK_STATUS;
 	}
 
-	private IStatus validateAll(ContextValidationHelper validationHelper, IReporter reporter) throws ValidationException {
+	private IStatus validateAll(ContextValidationHelper validationHelper, IReporter reporter, Set<IProject> rootProjects) throws ValidationException {
 		IValidationContextManager validationContextManager = validationHelper.getValidationContextManager();
 		List<IValidator> validators = validationContextManager.getValidators();
-		Set<IProject> rootProjects = validationContextManager.getRootProjects();
 		removeMarkers(validationHelper.getProjectSetRegisteredFiles());
 		for (IValidator validator : validators) {
 			for (IProject rootProject : rootProjects) {
