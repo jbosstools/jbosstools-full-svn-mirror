@@ -6,8 +6,7 @@
         <title>JBoss Tools Guides - Latest Version</title>
         <pubdate>Last published: <?dbtimestamp format="B d, Y"?></pubdate>
         <copyright>
-            <year>2007</year>
-            <year>2010</year>
+            <year>2011</year>
             <holder>JBoss by Red Hat</holder>
         </copyright>
     </bookinfo>
