@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+<?xml version="1.0" encoding="iso-8859-1"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Language" content="en-us" />
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <link rel="stylesheet" href="../whatsnew.css"/>
-<title>JBoss Remote Debugging 3.3.0.M3 What's New</title>
+<title>Core/Common 3.3.0.M3 What's New</title>
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
@@ -21,7 +20,7 @@
 
 </script></head>
 <body>
-<h1>Debugging Remote Java Application 3.3.0.M3 What's New</h1>
+<h1>Core/Common 3.3.0.M3 What's New</h1>
 
 <p align="right"><a href="../index.html">&lt; Main Index</a> 
 <a href="../jst/jst-news-3.3.0.M3.html">JST/JSF Tools &gt;</a>
@@ -31,7 +30,7 @@
   <tr>
     <td colspan="2">
       <hr/>
-      <h3>Debugging Remote Java Application</h3>
+      <h3>General</h3>
 	<hr/>
     </td>
   </tr>
@@ -41,42 +40,82 @@
     </td>
     <td width="70%" valign="top">
     <p>
-    Now JBoss Tools supports discovering and debugging remote Java applications.
+    Now JBoss Tools supports discovering and debugging remote Java
+      applications running on an hotspot enabled JVM.
 	</p>
+
+      <p>This feature allows you to connect the Eclipse Java Debugger
+      to any running Java application without having to configure
+      Eclipse to use the right port and source attachements. This
+      feature will do that work for you, making it super easy to
+      remote debug any java application with full source navigation in
+      your loaded Eclipse projects.</p>
+      
 	<p>
-	You can right-click one or more Java projects in the workspace and call 
+        To use it you right-click one or more Java projects in the workspace and call 
 	an action to discover Remote Java applications started in the debug mode.
 	</p>
 	<img src="images/remote-debugging1.png" />
     
+
+       <p><i>Note: To be able to detect these remote applications you need classes in the package
+      <code>sun.jvmstat.monitor.*</code> which are only provided by
+      Sun/Oracle based JVM's like the standard JVM/JDK and
+      OpenJDK. The feature should work on all common JDK
+      distributions but if you use some custom JDK distribution it
+      might not work. For OSX these classes are included in the normal
+      JavaVM, but on other operating systems you will need to ensure
+      a full JDK with tools.jar is used when running Eclipse.</i></p>
+      
     <p>
-    If there are remote Java applications on your localhost, a dialog as shown below will appear:
+    The selection of projects is important since it tells JBoss Tools
+      which projects you wish to have added as source projects for the
+      remote Java application.
+      </p>
+
+      <p>Once you select "Remote Java Application..." the scanning
+    commmences, normally this should go fast but if you have alot of
+    java applications or one of them are waiting for a debugger to
+    attach the search can take a while. Eventually, if there are remote Java applications on your localhost, a dialog as shown below will appear:
     </p>
     <img src="images/remote-debugging2.png" />
     <p>
-    The application with PID 4964 is started with the 'suspend=y' option. In this case, JDK can determine only the application's PID and port.
+    In this case the application with PID 4964 is started with the
+    'suspend=y' option. In this case, JDK can determine only the
+    application's PID and port and not any info about class and
+    arguments (because the JVM is suspended/not fully started).
     
     </p>
     <p>
-    The JBoss Remote Java Application feature uses the standard Eclipse Remote Java Application launch configurations having the JBoss Remote configuration preference checked.
+    In the bottom of the dialog a combobox allowing you to choose
+    between Configurations are shown. JBoss Tools will create one
+    automatically based on the selection but if you have some
+    customization you wish to you can do that and just ensure the
+    "JBoss Remote configuration" preference is checked on your own
+    custom launch configuration
     </p>
+
+      <p>If that preference is set, it will be included in the list of
+    possible Configurations and every setting beyond the host/port
+    numbers will be reused. This allow you to customize your launch
+    configurations as you wish to for repeated launches.</p>
+
+<p></p>
     <img src="images/remote-debugging3.png" />
     
     <p>
     The JBoss Remote Java Application supports the following features:
     </p>
     <ul>
-    <li>all selected projects will be included in the source attachment</li>
-    <li>if there is the m2e feature, Maven dependencies for all the selected projects will be resolved
+      <li>Discovers remote applications running on the local host (not external hosts)</li>
+    <li>all selected projects will be included in the source
+    attachment for the project</li>
+    <li>if you have m2e installed, Maven dependencies for all the selected projects will be resolved
      and included in the source attachment 
      (m2e supports this functionality only for Java application, JUnit and TestNG launch configurations)</li>
     <li>The user can create Remote Java Application launch configurations containing user specific source attachments</li>
     </ul>
     
-    <p>
-    The JBoss Remote Java Application feature for now only supports discovering remote applications on localhost.
-    </p>
-    <p>This feature requires JDK on Windows and Linux. Java for Mac OS X includes all necessary requirements.</p>
     <p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-8548">Related Jira</a></small></p>
     
     </td>
