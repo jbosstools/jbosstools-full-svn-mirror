@@ -31,6 +31,9 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.hamcrest.Matcher;
 import org.jboss.tools.drools.ui.bot.test.DroolsAllBotTests;
+import org.jboss.tools.ui.bot.ext.config.Annotations.Require;
+import org.jboss.tools.ui.bot.ext.config.Annotations.Server;
+import org.jboss.tools.ui.bot.ext.config.Annotations.ServerState;
 import org.jboss.tools.ui.bot.ext.config.requirement.PrepareViews;
 import org.jboss.tools.ui.bot.ext.config.requirement.RequirementNotFulfilledException;
 import org.jboss.tools.ui.bot.ext.config.requirement.StartServer;
@@ -55,6 +58,12 @@ import org.junit.Test;
  * @author Vladimir Pakan
  *
  */
+@Require(server = @Server(state = ServerState.Present),
+clearProjects=false,
+clearWorkspace=false,
+runOnce=true,
+perspective="Guvnor Repository Exploring"
+)
 public class GuvnorRepositoriesTest extends SWTTestExt{
   @SuppressWarnings("unused")
   private static final Logger log = Logger.getLogger(GuvnorRepositoriesTest.class);
@@ -247,10 +256,12 @@ public class GuvnorRepositoriesTest extends SWTTestExt{
         IDELabel.GuvnorRepositories.PACKAGES_TREE_ITEM,
         IDELabel.GuvnorRepositories.MORTGAGE_TREE_ITEM,
         fileName);
+    String editorText = GuvnorRepositoriesTest.trimEditorText(editor.toTextEditor().getText());
+    String expectedEditorText = GuvnorRepositoriesTest.trimEditorText(changeText + originalEditorText);
     assertTrue("Commit to Guvnor Repository was not successful. File " + fileName + " was not commited properly." +
-      "\nIt has content: " + editor.toTextEditor().getText() +
-      "\nExpected content: " + changeText + originalEditorText,
-      editor.toTextEditor().getText().equals(changeText + originalEditorText));
+      "\nIt has content: " + editorText +
+      "\nExpected content: " + expectedEditorText,
+      editorText.equals(expectedEditorText));
     // Test Add To Repository
     SWTBotTreeItem tiSampleFile = packageExplorer.selectTreeItem(sampleFileName,
       new String[] {DroolsAllBotTests.DROOLS_PROJECT_NAME,
@@ -539,4 +550,10 @@ public class GuvnorRepositoriesTest extends SWTTestExt{
       "\n but is " + editorText,editorText.startsWith(addedChange));
   }
 
+  private static String trimEditorText (String textToTrim){
+    
+    return textToTrim.replaceAll("\n", "").replaceAll("\t", "").replaceAll("\r", "").replaceAll(" ", "");
+    
+  }
+  
 }

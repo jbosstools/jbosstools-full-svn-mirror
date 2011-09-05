@@ -24,6 +24,7 @@ import org.jboss.tools.drools.ui.bot.test.smoke.ManageDroolsRules;
 import org.jboss.tools.drools.ui.bot.test.smoke.DroolsRulesEditorTest;
 import org.jboss.tools.drools.ui.bot.test.smoke.OpenDroolsPerspective;
 import org.jboss.tools.drools.ui.bot.test.smoke.RuleFlowTest;
+import org.jboss.tools.ui.bot.ext.RequirementAwareSuite;
 import org.jboss.tools.ui.bot.ext.SWTTestExt;
 import org.jboss.tools.ui.bot.ext.SWTUtilExt;
 import org.jboss.tools.ui.bot.ext.types.IDELabel;
@@ -31,7 +32,6 @@ import org.jboss.tools.ui.bot.ext.types.PerspectiveType;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 /**
@@ -41,8 +41,9 @@ import org.junit.runners.Suite.SuiteClasses;
  * @author Vladimir Pakan
  * 
  */
-@RunWith(Suite.class)
-@SuiteClasses({OpenDroolsPerspective.class,
+@RunWith(RequirementAwareSuite.class)
+@SuiteClasses({
+  OpenDroolsPerspective.class,
   ManageDroolsRuntime.class,
   ManageDroolsProject.class,
   ManageDroolsRules.class,

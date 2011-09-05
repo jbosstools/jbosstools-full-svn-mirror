@@ -73,6 +73,8 @@ public class ManageDroolsProject extends SWTTestExt{
       }
     }
     bot.button(IDELabel.Button.NEXT).click();
+    bot.comboBoxWithLabel(IDELabel.NewDroolsProjectDialog.GENERATE_CODE_COMPATIBLE_WITH_COMBO_BOX_LABEL)
+      .setSelection(IDELabel.NewDroolsProjectDialog.CODE_COMPATIBLE_WITH_50_DROOLS);
     bot.button(IDELabel.Button.FINISH).click();
     SWTTestExt.util.waitForAll(30*1000L);
     bot.sleep(Timing.time10S());
