@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../whatsnew.css"/>
+<title>Hibernate tools 3.5.0.M3 What's New</title>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17645367-5']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script></head>
+<body>
+<h1>Hibernate tools 3.5.0.M3 What's New</h1>
+
+<p align="right"><a href="../index.html">&lt; Main
+    Index</a>  <a href="../ws/ws-news-1.2.2.M2.html">Webservices Tools &gt;</a></p>
+
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>Dali Integration</h3>
+	<hr/>
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right"><a name="itemname1" id="itemname1"></a><b>Validate @TypeDef</b></td>
+    <td valign="top">
+    <p>Added validation of org.hibernate.annotation.TypeDef annotation. The typeClass attribute should contain a name of the class
+    which implements(directly or indirectly) one of:</p>
+    <ul>
+    <li>org.hibernate.type.Type</li>
+    <li>org.hibernate.usertype.UserType</li>
+    <li>org.hibernate.usertype.CompositeUserType</li>
+    <li>org.hibernate.usertype.UserCollectionType</li>
+    </ul>
+	<p>Validation of org.hibernate.annotation.Type annotation was updated according this rule.</p>
+   <p><small><a href="https://issues.jboss.org/browse/JBIDE-9485">Related jira</a></p>
+    </td>
+  </tr>
+  
+   <tr>
+    <td colspan="2">
+    </td>
+  </tr>
+  
+   <tr>
+    <td valign="top" align="right"><a name="itemname2" id="itemname2"></a><b>Validate @ForeignKey</b></td>
+    <td valign="top">
+    <p>Added validation of inverseName attribute of org.hibernate.annotation.ForignKey annotation. @ForignKey annotation can be used in OneToMany,
+    ManyToOne, OneToOne and ManyToMany relationships. Inverse name should be validated only in ManyToMany relationships at owner side.</p>
+   <p><small><a href="https://issues.jboss.org/browse/JBIDE-9375">Related jira</a></p>
+    </td>
+  </tr>
+  
+   <tr>
+    <td colspan="2">
+    </td>
+  </tr>
+  
+  <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Create ui for @GenericGenerators</b></td>
+    <td valign="top">
+    <p>Created ui for org.hibernate.annotation.GenericGenerators which hold many @GenericGenerator.</p>
+    <img src="images/generic_generators.png"/></p>
+   <p><small><a href="https://issues.jboss.org/browse/JBIDE-9560">Related jira</a></p>
+    </td>
+  </tr>
+  
+   <tr>
+    <td colspan="2">
+    </td>
+  </tr>
+  
+  <tr>
+    <td valign="top" align="right"><a name="itemname4" id="itemname4"></a><b>Create ui for @TypeDef(s)</b></td>
+    <td valign="top">
+    <p>Created ui for org.hibernate.annotation.TypeDef and TypeDefs annotations.</p>
+    <img src="images/type_def_ui.png"/></p>
+   <p><small><a href="https://issues.jboss.org/browse/JBIDE-9486">Related jira</a></p>
+    </td>
+  </tr>
+  
+   <tr>
+    <td colspan="2">
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right"><a name="itemname6" id="itemname6"></a><b>Create ui for @Type</b></td>
+    <td valign="top">
+     <p>Created simple ui for org.hibernate.annotation.Type annotation.</p>
+    <img src="images/hibernate_type_composite.png"/></p>
+   <p><small><a href="https://issues.jboss.org/browse/JBIDE-9283">Related jira</a></p>
+    </td>
+  </tr>
+
+<tr>
+    <td colspan="2">
+    </td>
+  </tr>
+
+  <tr>
+    <td valign="top" align="right"><a name="itemname6" id="itemname6"></a><b>Process package-info.java</b></td>
+    <td valign="top">
+    <p>Package level annotations</p>
+     <ul>
+    <li>org.hibernate.annotation.GenericGenerator(s)</li>
+    <li>org.hibernate.annotation.TypeDef(s)</li>
+    <li>org.hibernate.annotation.NamedQuery(es)</li>
+    <li>org.hibernate.annotation.NamedNativeQuery(es)</li>
+    </ul>
+    now handled by the model and validator. There is also ui for the annotations.
+    <img src="images/pacakge_info.ui.png"/></p>
+
+   <p><small>Related jiras:<a href="https://issues.jboss.org/browse/JBIDE-9435">1</a>, <a href="https://issues.jboss.org/browse/JBIDE-9436">2</a></p>
+
+    </td>
+  </tr>
+
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+    </td>
+  </tr>
+
+
+
+</table>
+
+</body>
+
+</html>
+
+
