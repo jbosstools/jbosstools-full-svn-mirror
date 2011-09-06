@@ -31,7 +31,7 @@
 	<tr>
 		<td colspan="2">
 		<hr />
-		<h3>CDI</h3>
+		<h3>CDI (JSR-299)</h3>
 		<hr />
 		</td>
 	</tr>
@@ -95,14 +95,143 @@
 			<p><b>Ctrl+Shift+G (Search for references)</b></p>
 		</td>
         <td align="top">
-			<p></p>
-        	<img src="images/3.3.0.M3/seam_config_open_on.png"/>
+			<p>Search for references (Ctrl+Shift+G) now works for bean classes and finds all the injection points and ELs that inject/use the bean.</p>
+        	<img src="images/3.3.0.M3/ctrlShiftG.png"/>
 			<p>
 				<small>
 				       <a href="https://jira.jboss.org/browse/JBIDE-9473">Related Jira JBIDE-9473</a>,
 				       <a href="https://jira.jboss.org/browse/JBIDE-8705">JBIDE-8705</a>
 				</small><br/>
 			</p>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<hr />
+		<h3>Seam 3</h3>
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+			<p><b>Seam Solder Hyperlinks (OpenOns)</b></p>
+		</td>
+        <td align="top">
+			<p>@Resource injected into a java field/parameter can now be navigated to via OpenOn. Just press Ctrl and click on the declaration, e.g. @Inject @Resource("WEB-INF/beans.xml") to open the corresponding beans.xml.</p>
+			<p>
+				<small>
+					<a href="https://issues.jboss.org/browse/JBIDE-8202">Related Jira JBIDE-8202</a>
+				</small><br/>
+			</p>
+			<p>Also you can navigate to all the available generic bean for the injected configuration.</p>
+			<img src="images/3.3.0.M3/generic1.png"/><br/><br/>
+			<img src="images/3.3.0.M3/generic2.png"/>
+			<p>
+				<small>
+					<a href="https://issues.jboss.org/browse/JBIDE-8692">Related Jira JBIDE-8692</a>
+				</small><br/>
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+			<p><b>Seam Solder Validation</b></p>
+		</td>
+        <td align="top">
+			<p>A few validation rules were added to CDI-Seam3 Tools to validate Seam Generic Beans.</p>
+			<img src="images/3.3.0.M3/validation.png"/>
+			<p>
+				<small>
+					<a href="https://issues.jboss.org/browse/JBIDE-8695">Related Jira JBIDE-8695</a>,
+					<a href="https://issues.jboss.org/browse/JBIDE-9185">Related Jira JBIDE-9185</a> 
+				</small><br/>
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+			<p><b>Seam Config</b></p>
+		</td>
+        <td align="top">
+			<p>Bean injected via <s:Inject> in beans.xml can now be navigated (Ctrl+Click) to via OpenOn.</p>
+			<img src="images/3.3.0.M3/seamConf.png"/>
+			<p>
+				<small>
+					<a href="https://issues.jboss.org/browse/JBIDE-9187">Related Jira JBIDE-9187</a>
+				</small><br/>
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+			<p><b>Seam International</b></p>
+		</td>
+        <td align="top">
+			<p>Bundles bean from Seam International module is now available for EL code completion, OpenOns, validation, refactoring, etc.</p>
+			<img src="images/3.3.0.M3/intrn.png"/><br/><br/>
+			<img src="images/3.3.0.M3/intrlnOpenOn.png"/>
+			<p>
+				<small>
+					<a href="https://issues.jboss.org/browse/JBIDE-9087">Related Jira JBIDE-9087</a>
+				</small><br/>
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+			<p><b>Seam Servlet</b></p>
+		</td>
+        <td align="top">
+			<p>Injection points annotated @RequestParam/@HeaderParam/@CookieParam are now ignored by CDI validator since it's imposible in design time to know what bean will be injected to this point.</p>
+			<p>
+				<small>
+					<a href="https://issues.jboss.org/browse/JBIDE-9389">Related Jira JBIDE-9389</a>
+				</small><br/>
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+			<p><b>Seam Persistence</b></p>
+		</td>
+        <td align="top">
+			<p>CDI Tools now recognizes <i>@Inject EntityManager manager;</i> or <i>@Inject Session session;</i> if the corresponding producers defined it the project. CDI validation and OpenOns work with such an injections now.</p>
+			<img src="images/3.3.0.M3/persistence.png"/>
+			<p>
+				<small>
+					<a href="https://issues.jboss.org/browse/JBIDE-9400">Related Jira JBIDE-9400</a>
+				</small><br/>
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<hr />
 		</td>
 	</tr>
 
