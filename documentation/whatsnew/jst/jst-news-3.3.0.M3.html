@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../whatsnew.css" />
+<title>JST/JSF 3.3.0.M3 What's New</title>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17645367-5']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script></head>
+<body>
+<h1>JST/JSF 3.3.0.M3 What's New</h1>
+
+<p align="right"><a href="../index.html">&lt; Main
+    Index</a> <a href="../vpe/vpe-news-3.3.0.M3.html">VPE Tools &gt</a></p>
+
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+
+	<tr>
+		<td colspan="2">
+		<hr />
+		<h3>JSF 2</h3>
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+		<p><b>@ManagedBean support</b></p>
+		</td>
+		<td valign="top">
+		<p>JSF Tools now support managed beans annotated @ManagedBean. This support includes EL code completion, validation, refactoring, OpenOns (Ctrl+Click) and searching (Ctrl+Shift+G).</p>
+		<img src="images/3.3.0.M3/ca.png"/>
+		<p><small><a
+			href="https://jira.jboss.org/browse/JBIDE-5045">Related Jira</a></small></p>
+		</td>
+	</tr>
+
+	<tr>
+		<td colspan="2">
+		<hr />
+		</td>
+	</tr>
+
+	<tr>
+		<td valign="top" align="left">
+		<p><b>&lt;faces-config metadata-complete="true"&gt;</b></p>
+		</td>
+		<td valign="top">
+		<p>If &lt;faces-config metadata-complete="true"&gt; then JSF Tools will ignore bean annotated @ManagedBean according to JSF-2 spec.</p>
+		<p><small><a href="https://jira.jboss.org/browse/JBIDE-8280">Related Jira</a></small></p>
+		</td>
+	</tr>
+
+	<tr>
+		<td colspan="2">
+		<hr />
+		<h3>JSF capabilities</h3>
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+			<p><b>Projects w/ no web.xml</b></p>
+		</td>
+		<td valign="top">
+			<p>
+				It was a pretty annoying bug in <b>Add JSF Capability</b> dialog which required web.xml. That obsolete dialog has been removed. Now all you need to enable JBoss JSF Tools support is to install JSF facet into the project.
+				So Project->Configuration->Add JSF Capability will lead you to Project Properties->Facets property page. Web.xml is not required there. 
+			</p>
+			<p>
+				<small>
+					<a href="https://jira.jboss.org/browse/JBIDE-9198">Related Jira</a>
+				</small>
+			</p>
+			<p>
+				If some of your JSF project depends on another Java Project then both project should have JBoss Tools Knowledge Base builder installed to provide code completion, validation and other features for all resources from both projects.
+				If for some reason not all of your dependent projects configured correctly then JBoss Tools will add a warning to the project. A QuickFix is available for such a warning. And of course you can disable that warning in Preferences.    
+			</p>
+			<img src="images/3.3.0.M3/qf.png"/>
+			<p>
+				<small>
+					<a href="https://jira.jboss.org/browse/JBIDE-9120">Related Jira</a>
+				</small>
+			</p>
+			<p>
+				If you missed the warning you will be asked to fix the configuration problem when you are opening any XHTML or JSP page with JBoss Tools Visual Page Editor. 
+			</p>
+			<img src="images/3.3.0.M3/nature.png"/>
+			<p>
+				<small>
+					<a href="https://jira.jboss.org/browse/JBIDE-9427">Related Jira</a>
+				</small>
+			</p>
+		</td>
+		
+	</tr>
+
+</table>
+
+</body>
+
+</html>
