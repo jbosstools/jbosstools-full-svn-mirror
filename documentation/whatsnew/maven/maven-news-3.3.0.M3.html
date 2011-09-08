@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../whatsnew.css" />
+<title>What's New in Maven Tools</title>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17645367-5']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script></head>
+<body>
+<h1>Maven Tools</h1>
+
+<p align="right"><a href="../index.html">&lt; Main Index</a> <a
+	href="../hibernate/hibernate-news-3.3.0.M3.html">Hibernate Tools &gt;</a></p>
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+	<tr>
+		<td colspan="2">
+		<hr />
+		<h3>JBoss Maven Integration</h3>
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+		<a name="itemname1" id="itemname1"></a><b>Maven Profile selection interface</b></td>
+		<td valign="top">
+		<p>The JBoss Tools Maven integration features a brand new Maven Profile selection interface that will ease switching between different profiles.<br/> 
+		   Rather than right-clicking on a project, going to the Properties > Maven page, then manually (mis)typing a list of active or disabled profile,
+		   You just use the <b>Ctrl+Alt+P</b> shortcut to open the new Maven Profile selection interface :</p> 
+		<a href="../images/maven-profile-selection-single-project.jpg"><img src="../images/maven-profile-selection-single-project.jpg" width="829" height="598"/></a>	
+		<p>The new interface is also accessible from the Maven contextual menu : <br/>
+		    <b>Right-click on project > Maven > Select Maven Profiles...</b>
+		</p>
+		<p>
+		    The list of available profiles is inferred from profiles defined in :
+		    <ul>
+		      <li>the project pom.xml</li>
+		      <li>the project's parent hierarchy </li>
+		      <li>user and global maven settings.xml</li>
+		    </ul>
+		    The source columns indicates where the profile is defined. An <i>undefined</i> source means the profile is present in the Maven property page of the project, but there is no available definition. 
+		    <br/>
+		    You can right-click on a profile to (de)activate it. The list of (in)active profiles for the project is updated as you manage the profiles in the upper text area.
+		    What you select is what you get in the Maven property page of the project.
+		</p>
+		<p>
+		   When several projects are selected, only the common available profiles are displayed for selection.
+		   Common profiles are profiles defined in settings.xml or profiles having the same id in different pom.xml. 
+		 </p>
+		<a href="../images/maven-profile-selection-multi-projects.jpg"><img src="../images/maven-profile-selection-multi-projects.jpg" width="829" height="528"/></a>
+		<p>Since only a subset of profiles are selected, the "Available profiles" text area is hidden. Each project may have a different profile settings, all non-common profiles are kept unmodified</p>
+		<p>
+		<small>
+		  See <a href="https://issues.jboss.org/browse/JBIDE-8969">JBIDE-8969</a> for more details.
+		  
+		</small></p>
+		</td>
+	</tr>
+
+	<tr>
+    <td colspan="2">
+      <hr/>
+    </td>
+  </tr>
+
+	<tr>
+	    <td valign="top" align="left">
+		<a name="itemname2" id="itemname2"></a><b>New JAX-RS configurator</b></td>
+		<td valign="top">
+		<p>If a maven project has a dependency on any JAX-RS API (resteasy, jersey ...), the JAX-RS Facet will be automatically applied during m2e's project configuration.<br/>
+		The JAX-RS configurator feature can be selected from the Maven Support category in the JBoss Tools update site :
+		</p>
+		<img src="../images/maven-jaxrs-configurator.png" />
+		<p>
+		<small>
+		  See <a href="https://issues.jboss.org/browse/JBIDE-9290">JBIDE-9290</a> , for more details. 
+		</small></p>
+	    </td>
+	</tr>
+	<tr>
+	    <td colspan="2">
+	      <hr/>
+	    </td>
+	</tr>
+
+
+	<tr>
+	    <td valign="top" align="left">
+		<a name="itemname3" id="itemname3"></a><b>New JBoss SAR configurator</b></td>
+		<td valign="top">
+		<p>Mavenized <a href="http://community.jboss.org/wiki/ServiceArchive">JBoss Service Archive</a> projects can now be configured automagically with the new JBoss SAR configurator. 
+		The jboss-sar packaging must be enabled via the <a href="http://mojo.codehaus.org/jboss-packaging-maven-plugin/usage.html">jboss-packaging-maven-plugin</a>.<br/>
+		The configurator reads the <a href="http://mojo.codehaus.org/jboss-packaging-maven-plugin/sar-mojo.html">jboss-packaging SAR configuration</a> 
+		and installs the new JBoss SAR facet to the project. <br/>
+		SAR projects can be deployed within EARs (being declared as dependencies), or standalone on JBoss application servers (<b>right-click on project > Run As > Run on Server</b>).
+		</p>
+		<p>The JBoss SAR configurator is part of the JBoss Packaging Maven Configurators feature, from the Maven Support category in the JBoss Tools update site :
+		</p>
+		<img src="../images/maven-jbosspackaging-configurator.png" />
+		<p>
+		<small>
+		  For more details, see :
+		 <br/>
+		  - <a href="http://community.jboss.org/wiki/ServiceArchive">http://community.jboss.org/wiki/ServiceArchive</a>
+		 <br/>
+		  -  <a href="http://mojo.codehaus.org/jboss-packaging-maven-plugin/usage.html">http://mojo.codehaus.org/jboss-packaging-maven-plugin/usage.html</a>
+		 <br/>
+		  -  <a href="http://mojo.codehaus.org/jboss-packaging-maven-plugin/sar-mojo.html">http://mojo.codehaus.org/jboss-packaging-maven-plugin/sar-mojo.html</a>
+		 <br/>
+		  - <a href="https://issues.jboss.org/browse/JBIDE-9497">JBIDE-9497</a>
+		</small></p>
+	    </td>
+	</tr>
+	<tr>
+	    <td colspan="2">
+	      <hr/>
+	    </td>
+	</tr>
+
+	<tr>
+	    <td valign="top" align="left">
+		<a name="itemname4" id="itemname4"></a><b>Better JSF detection</b></td>
+		<td valign="top">
+		<p>The JSF configurator now adds the JSF Facet automatically, depending on the JSF classes found on the project classpath. It means jboss-jsf-api, mojarra, myfaces or any other dependency bringing JSF classes now triggers the JSF facet installation.
+		</p>
+		<p>
+		<small>
+		  See <a href="https://issues.jboss.org/browse/JBIDE-9242">JBIDE-9242</a> , for more details. 
+		</small></p>
+	    </td>
+	</tr>
+	<tr>
+	    <td colspan="2">
+	      <hr/>
+	    </td>
+	</tr>
+
+	<tr>
+	    <td valign="top" align="left">
+		<a name="itemname5" id="itemname5"></a><b>JBoss Maven repository available in m2e's XML editor</b></td>
+		<td valign="top">
+		<p>If you ever need to declare one of the JBoss maven repositories in your settings.xml (or pom.xml, if you plan on easing the distribution of an example project on Internet), 
+		  then you can add a &lt;repositories&gt; element to your document, press <b>Ctrl + Space</b> for content assist and easily add one of the JBoss repositories :
+		  <ul>
+		    <li>The JBoss public repository (releases and snapshots) : composite repository of several major repositories.</li>
+		    <li>The JBoss artifacts repository (releases) : containing JBoss community project artifacts</li>
+		  </ul>
+		  <a href="../images/maven-jboss-repos-autocompletion.png"><img src="../images/maven-jboss-repos-autocompletion.png" width="800" height="410"/></a>
+		  
+		  Keep in mind that <a href="http://www.sonatype.com/people/2009/02/why-putting-repositories-in-your-poms-is-a-bad-idea/">putting repositories in your POMs is a Bad Idea</a>. So try to keep the repositories in your settings.xml (Windows > Preferences > Maven > User settings > open file). 
+		
+		
+		</p>
+		<p>
+		<small>
+		  See <a href="https://issues.jboss.org/browse/JBIDE-9321">JBIDE-9321</a> , for more details. 
+		</small></p>
+	    </td>
+	</tr>
+	<tr>
+	    <td colspan="2">
+	      <hr/>
+	    </td>
+	</tr>
+
+	
+</table>
+
+</body>
+
+</html>
+
+
