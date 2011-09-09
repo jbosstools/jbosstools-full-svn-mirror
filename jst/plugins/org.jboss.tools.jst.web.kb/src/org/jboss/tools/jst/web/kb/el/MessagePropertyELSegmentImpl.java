@@ -8,7 +8,7 @@
  * Contributors: 
  * Red Hat, Inc. - initial API and implementation 
  ******************************************************************************/ 
-package org.jboss.tools.common.el.core.resolver;
+package org.jboss.tools.jst.web.kb.el;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -20,6 +20,9 @@ import org.eclipse.swt.graphics.Image;
 import org.jboss.tools.common.el.core.ElCoreMessages;
 import org.jboss.tools.common.el.core.ca.AbstractELCompletionEngine;
 import org.jboss.tools.common.el.core.parser.LexicalToken;
+import org.jboss.tools.common.el.core.resolver.ELSegmentImpl;
+import org.jboss.tools.common.el.core.resolver.IOpenableReference;
+import org.jboss.tools.common.el.core.resolver.MessagePropertyELSegment;
 import org.jboss.tools.common.model.XModelObject;
 import org.jboss.tools.common.model.util.FindObjectHelper;
 import org.jboss.tools.common.text.ITextSourceReference;
