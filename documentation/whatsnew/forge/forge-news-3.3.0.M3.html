@@ -32,12 +32,17 @@
   <tr>
     <td colspan="2">
       <hr/>
+      <h3>General</h3>
+      <hr/>
     </td>
   </tr>
   <tr>
     <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>New Embedded Forge Runtime</b></td>
     <td valign="top">
-    <p>The embedded runtime is now the 1.0.0.Beta1 release of Forge.</p>
+    <p>The embedded bundled runtime is now the 1.0.0.Beta1 release of
+    Forge. The 1.0.0.Beta1 is also now the minimum requirement for any external Forge
+    runtime since we are now integrating with newly provided API in
+    Forge for better integration.</p>
     </td>
   </tr>
   <tr>
@@ -48,7 +53,7 @@
   <tr>
     <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Plugin Structure Change</b></td>
     <td valign="top">
-    <p>The Forge Tools now consist of four plugins:</p>
+    <p>The Forge Tools now consists of four plugins:</p>
     <ul>
       <li><b>org.jboss.tools.forge.core</b> : contains all the non-ui related classes such 
       as the Forge runtime launcher and the runtime preferences</li>
@@ -65,22 +70,32 @@
   <tr>
     <td colspan="2">
       <hr/>
+      <h3>UI Enhancements</h3>
+      <hr/>
     </td>
   </tr>
   <tr>
     <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Progress Monitor</b></td>
     <td valign="top">
-    <p>When starting the Forge runtime a progress monitor and a startup pane indicate the startup status.</p>
+    <p>When starting the Forge runtime a progress monitor and a
+    startup pane indicate the startup status to let you know Forge is working.</p>
 	<p><img src="images/3.3.0.M3/progress-monitor.png"/></p>
     </td>
+  </tr>
+   <tr>
+    <td colspan="2">
+      <hr/>
+     </td>
   </tr>
   <tr>
     <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Command Quick Access</b></td>
     <td valign="top">
-    <p>There is now a keyboard shortcut that brings up a pop-up dialog with a list of commands that can be
+    <p>There is now a keyboard shortcut that brings up a pop-up with a list of commands that can be
     applied in the current context. By default this command is 'Ctrl+4' (or 'Cmd+4' on OS X). Typing in the
     text box at the top of the pop-up filters the list of commands to contain only those matching the typed 
-    String. Double-clicking one of the commands results in the command being inserted in the Forge Console.</p>
+    String. Double-clicking one of the commands results in the command
+    being inserted in the Forge Console, in future versions we will
+    expand on this UI for even smoother integration/access to Forge.</p>
 	<p><img src="images/3.3.0.M3/quick-access.png"/></p>
     </td>
   </tr>
