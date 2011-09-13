@@ -610,7 +610,21 @@
 				<module>../runtime</module>
 			</modules>
 		</profile>
-		
+
+		<profile>
+			<id>richfaces</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<modules>
+				<module>../tests</module>
+				<module>../common</module>
+				<module>../jst</module>
+				<module>../vpe</module>
+				<module>../jsf</module>
+			</modules>
+		</profile>
+
 		<profile>
 			<id>usage</id>
 			<activation>
