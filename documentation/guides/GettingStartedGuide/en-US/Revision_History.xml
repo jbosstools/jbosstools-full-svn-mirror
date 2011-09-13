@@ -6,6 +6,20 @@
 	<simpara>
 		<revhistory>
 			<revision>
+				<revnumber>1-4</revnumber>
+				<date>Wed Sep 14 2011</date>
+				<author>
+					<firstname>Isaac</firstname>
+					<surname>Rooskov</surname>
+					<email>irooskov@redhat.com</email>
+				</author>
+				<revdescription>
+					<simplelist>
+						<member>Updated FAQ section with correct config file information</member>
+					</simplelist>
+				</revdescription>
+			</revision>
+			<revision>
 				<revnumber>1-3</revnumber>
 				<date>Mon Aug 01 2011</date>
 				<author>

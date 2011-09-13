@@ -48,7 +48,7 @@
 					</listitem>
 
 					<listitem>
-						<para>Open the file <filename>eclipse.ini</filename>, which can be found in your Fedora Eclipse location and add the following line: </para>
+						<para>Open the file <filename>jbdevstudio.ini</filename>, which can be found in your JBoss Developer Studio location and add the following line: </para>
 						<programlisting role="JAVA"><![CDATA[-Dswt.library.path=/usr/lib/eclipse]]></programlisting>
 						<para>,where <code>/usr/lib/eclipse</code> is the path to your eclipse folder.</para>
 					</listitem>
@@ -165,7 +165,7 @@ If you are sure that your project does not need JSF capabilities, just disable t
 		<title>Is it possible to increase the performance of Eclipse after installing your product?</title>
 
 		<para>
-			<property>JBoss Developer Studio</property> configures eclipse via the <filename>eclipse.ini</filename> file to allocate extra memory, but if you for some reason need more memory then by default, you can manually make adjustments in this file. For example:</para>
+			<property>JBoss Developer Studio</property> configures eclipse via the <filename>jbdevstudio.ini</filename> file to allocate extra memory, but if you for some reason need more memory then by default, you can manually make adjustments in this file. For example:</para>
 		<programlisting role="XML"><![CDATA[-vmargs -Xms128m -Xmx512m -XX:MaxPermSize=128m]]></programlisting>
 	</section>
 
