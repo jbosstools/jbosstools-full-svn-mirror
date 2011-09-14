@@ -10,27 +10,21 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.ui.palette.model;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.gef.palette.PaletteEntry;
 import org.eclipse.gef.palette.PaletteContainer;
-
+import org.eclipse.gef.palette.PaletteEntry;
+import org.eclipse.swt.widgets.Shell;
 import org.jboss.tools.common.meta.action.XActionInvoker;
 import org.jboss.tools.common.model.XModel;
 import org.jboss.tools.common.model.XModelObject;
 import org.jboss.tools.common.model.event.XModelTreeListener;
+import org.jboss.tools.common.model.ui.util.ModelUtilities;
 import org.jboss.tools.common.model.ui.views.palette.PaletteContents;
 import org.jboss.tools.common.model.ui.views.palette.editor.PaletteEditor;
-import org.jboss.tools.common.model.ui.util.ModelUtilities;
-import org.jboss.tools.common.model.util.ClassLoaderUtil;
 
 public class PaletteModel {
-	
-	static {
-		ClassLoaderUtil.init();
-	}
 	
 	private static PaletteModel instance = null;
 	private static Object monitor = new Object();

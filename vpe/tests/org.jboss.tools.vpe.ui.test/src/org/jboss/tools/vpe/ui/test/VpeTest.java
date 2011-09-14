@@ -31,7 +31,6 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMDocument;
-import org.jboss.tools.common.model.util.ClassLoaderUtil;
 import org.jboss.tools.jst.jsp.JspEditorPlugin;
 import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
 import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
@@ -67,9 +66,6 @@ public class VpeTest extends TestCase implements ILogListener {
 
 	// FIX for JBIDE-1628
 	static {
-		ClassLoaderUtil.init();
-		// wait for initialization
-		TestUtil.delay(3000);
 		JspEditorPlugin
 				.getDefault()
 				.getPreferenceStore()
