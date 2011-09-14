@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-	<category-def label="org.eclipse.wst.server.core.serverAdapter" name="org.eclipse.wst.server.core.serverAdapter">
+	<category-def label="JBoss Application Server Adapters" name="org.eclipse.wst.server.core.serverAdapter">
 	</category-def>
 	<feature url="features/org.jboss.tools.jmx.feature_0.0.0.jar" id="org.jboss.tools.jmx.feature" version="0.0.0">
 		<category name="org.eclipse.wst.server.core.serverAdapter"/>
