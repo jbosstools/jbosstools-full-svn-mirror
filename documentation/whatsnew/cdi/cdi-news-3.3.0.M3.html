@@ -47,7 +47,7 @@
 				<li>Stereotype/Qualifier/Scope annotation type must be annotated with @Retention(RUNTIME)</li>
 				<li>Qualifier annotation type must be annotated with @Target('{'TYPE, METHOD, FIELD, PARAMETER'}') or @Target('{'FIELD, PARAMETER'}') [JSR-299 2.3.2, 10.1]</li>
 				<li>Scope annotation type must be annotated with @Target('{'TYPE, METHOD, FIELD'}') [JSR-299 2.4.2]</li>
-				<li>Quick fix for "Stereotype declares a non-empty @Named annotation [JSR-299 2.7.1.3]</li>
+				<li>Stereotype declares a non-empty @Named annotation [JSR-299 2.7.1.3]</li>
 				<li>Interceptor/Decorator has a name [JSR-299 2.5.3]</li>
 				<li>Stereotype cannot be annotated @Typed [JSR-299 2.7.1.3]</li>
 				<li>Annotation-valued or array-valued member of a qualifier or interceptor binding type must be annotated @Nonbinding [JSR-299 5.2.5, 9.5.2]</li>
@@ -221,7 +221,7 @@
 			<p><b>Seam Servlet</b></p>
 		</td>
         <td align="top">
-			<p>Injection points annotated @RequestParam/@HeaderParam/@CookieParam are now ignored by CDI validator since it's imposible in design time to know what bean will be injected to this point.</p>
+			<p>Injection points annotated @RequestParam/@HeaderParam/@CookieParam are now ignored by CDI validator since it's imposible in design time to know what bean will be injected.</p>
 			<p>
 				<small>
 					<a href="https://issues.jboss.org/browse/JBIDE-9389">Related Jira JBIDE-9389</a>

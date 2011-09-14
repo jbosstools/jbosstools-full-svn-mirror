@@ -40,9 +40,17 @@
 		<p><b>@ManagedBean support</b></p>
 		</td>
 		<td valign="top">
-		<p>JSF Tools now support managed beans annotated @ManagedBean. This support includes EL code completion, validation, refactoring, OpenOns (Ctrl+Click) and searching (Ctrl+Shift+G).</p>
+		  <p>JSF Tools now support managed beans annotated
+		@ManagedBean. This support includes EL code
+		completion, validation, refactoring, OpenOns
+		(Ctrl+Click) and searching (Ctrl+Shift+G).</p>
+
 		<img src="images/3.3.0.M3/ca.png"/>
-		<p><small><a
+		<p>Wwith this existing
+		applications and examples will no longer have error
+		markers for EL expressions that refer to
+		@ManagedBeans. For new development consider use CDI
+		beans with @Named instead for fuller integration.</p><p><small><a
 			href="https://jira.jboss.org/browse/JBIDE-5045">Related Jira</a></small></p>
 		</td>
 	</tr>
@@ -58,7 +66,8 @@
 		<p><b>&lt;faces-config metadata-complete="true"&gt;</b></p>
 		</td>
 		<td valign="top">
-		<p>If &lt;faces-config metadata-complete="true"&gt; then JSF Tools will ignore bean annotated @ManagedBean according to JSF-2 spec.</p>
+		<p> <code>&lt;faces-config
+		metadata-complete="true"&gt;</code> in faces-config.xml JSF Tools will ignore bean annotated @ManagedBean according to JSF-2 spec.</p>
 		<p><small><a href="https://jira.jboss.org/browse/JBIDE-8280">Related Jira</a></small></p>
 		</td>
 	</tr>
@@ -76,44 +85,78 @@
 		</td>
 		<td valign="top">
 			<p>
-				It was a pretty annoying bug in <b>Add JSF Capability</b> dialog which required web.xml. That obsolete dialog has been removed. Now all you need to enable JBoss JSF Tools support is to install JSF facet into the project.
-				So Project->Configuration->Add JSF Capability will lead you to Project Properties->Facets property page. Web.xml is not required there. 
+			 <b>Add JSF Capability</b> dialog which were
+		used to enable JSF on projects required an web.xml
+		even for JavaEE projects. That limitation and dialog
+		has now been removed. Now all you need to enable JBoss
+		JSF Tools support is to install JSF facet into the
+		project and things will just work.
+		  </p>
+		<p>Project->Configuration->Add JSF Capability will
+		lead you to Project Properties->Facets property
+		page. Web.xml is not required for this. 
 			</p>
+		  
 			<p>
 				<small>
 					<a href="https://jira.jboss.org/browse/JBIDE-9198">Related Jira</a>
 				</small>
 			</p>
-			<p>
-				If some of your JSF project depends on another Java Project then both project should have JBoss Tools Knowledge Base builder installed to provide code completion, validation and other features for all resources from both projects.
-				If for some reason not all of your dependent projects configured correctly then JBoss Tools will add a warning to the project. A QuickFix is available for such a warning. And of course you can disable that warning in Preferences.    
+
+		  </td>
+		  </tr>
+
+		  	<tr>
+		<td colspan="2">
+		<hr />
+		</td>
+	</tr>
+		   	<tr>
+			  <td valign="top" align="left">
+			    <p><b>Resources in related non-WTP projects</b></p>
+			  </td>
+		<td valign=top>
+			<p>If you project have resources in related
+		projects which does not have JBoss Tools Knowledgebase
+		Builder installed JBoss Tools cannot "see" the
+		resources inside these projects and you might get
+		false warnings.</p>
+
+		  <p>To help avoid this problem JBoss Tools now warns
+				if it detects project dependencies
+				which should have the knowledgebase
+				builder enabled to make it visible to
+				JBoss Tools and be available in code
+				completion, validation and resource lookups.</p>
+		  
+		  <p>A QuickFix is available for the warning so it is
+			easy to fix and of course if you do not wish
+			your projects to have the build you can
+			disable the Warning in Preferences.    
 			</p>
 			<img src="images/3.3.0.M3/qf.png"/>
 			<p>
-				<small>
-					<a href="https://jira.jboss.org/browse/JBIDE-9120">Related Jira</a>
-				</small>
-			</p>
-			<p>
-				Also it's possible to enable such a support via project properties page:
+				It is also possible to enable the
+			support via project properties page:
 			</p>
 			<img src="images/3.3.0.M3/properties.png"/>
 			<p>
-			</p>
-			<p>
-				<small>
-					<a href="https://jira.jboss.org/browse/JBIDE-9198">Related Jira</a>
-				</small>
-			</p>
-			<p>
-				If you missed the warning you will be asked to fix the configuration problem when you are opening any XHTML or JSP page with JBoss Tools Visual Page Editor. 
+				If you missed the warning you will be
+			asked to fix the configuration problem when
+			you are opening any XHTML or JSP page with
+			JBoss Tools Visual Page Editor. 
 			</p>
 			<img src="images/3.3.0.M3/nature.png"/>
 			<p>
 				<small>
-					<a href="https://jira.jboss.org/browse/JBIDE-9427">Related Jira</a>
+					Related jira <a
+			href="https://jira.jboss.org/browse/JBIDE-9120">1</a>,<a
+			href="https://jira.jboss.org/browse/JBIDE-9198">2</a>,<a
+			href="https://jira.jboss.org/browse/JBIDE-9427">3</a>
+		  
 				</small>
 			</p>
+		
 		</td>
 		
 	</tr>
