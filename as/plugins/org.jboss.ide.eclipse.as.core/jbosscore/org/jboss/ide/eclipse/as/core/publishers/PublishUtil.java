@@ -249,6 +249,8 @@ public class PublishUtil {
 			suffix = IWTPConstants.EXT_EAR;
 		else if( IWTPConstants.FACET_WEB.equals(type) || IWTPConstants.FACET_STATIC_WEB.equals(type)) 
 			suffix = IWTPConstants.EXT_WAR;
+		else if( IWTPConstants.FACET_UTILITY.equals(type)) 
+			suffix = IWTPConstants.EXT_JAR;
 		else if( IWTPConstants.FACET_CONNECTOR.equals(type)) 
 			suffix = IWTPConstants.EXT_RAR;
 		else if( IWTPConstants.FACET_ESB.equals(type))
