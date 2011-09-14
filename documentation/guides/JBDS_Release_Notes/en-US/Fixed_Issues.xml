@@ -222,18 +222,52 @@
 			</itemizedlist>
 		</para>
 	</formalpara>-->
-<!--	<formalpara>
+	<formalpara>
 		<title>Teiid Designer</title>
 		<para>
 			<itemizedlist>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-1021">TEIIDDES-1021</ulink>: When creating a new virtual procedure a user was requried to remember to insert prologue and postlogue code into the transformation editor. This allowed for common mistakes to occur when a user forgot to insert the correct code. For ease of use prologue and postlogue code is now inserted into the transformation editor automatically when creating a new virtual procedure. The change has reduced the amount of code required to be display on screen and created an improved user exerpeince. 
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-971">TEIIDDES-972</ulink>: New behavior has been implemented when a user imports a model that already exists. Previously importing an existing model would result in a warning message noting that it exists and the update checkbox would not be checked. For this release the behavior has changed so that the update checkbox is checked by default. This change ensures that the <guilabel>Import</guilabel> wizard works as expected.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-971">TEIIDDES-971</ulink>: When a user imported a table with one or more foreign keys, all tables with matching primary keys would also be imported. This could mean that when only one table was necessary, an import could also bring in numerious unnecessary tables for what the user wished to do. In order to allow for a table to be imported reguardless of foreign key relationships, an option has been added to the <guilabel>Import Database</guilabel> wizard where a user can select to not import tabels that have an incomplete foreign key and primary key relationship amoungst the tables seleted for import. By allowing the user to make this decision, the number of unnecessary tables that are imported is decreased.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-965">TEIIDDES-965</ulink>: The ability to generate a WAR archive with Message Transmission Optimization Mechanism (MTOM) support has been added for generated SOAP web services. A user can now avoid manually modifying a generated WAR archive to contain MTOM support by generating one that does, straight from the tooling.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-958">TEIIDDES-958</ulink>: A new menu item has been added under <guimenuitem>Metadata</guimenuitem> called <guimenuitem>Show SQL Reserved Words</guimenuitem>. By clicking on this option a new view will open in the workspace that allows a user to search and see if a word they wish to use is within the reserved words list. By exposing this list to the user to makes it easier to identify a reserved word.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-843">TEIIDDES-843</ulink>: The <guilabel>Build XML Documents from XML Schema</guilabel> dialog was larger than necessary, obscuring content below it. To correct this design error the left width hint has been modified within the <filename>AccumulatorPanel</filename> file. This allows for improved size judgement, reducing the dialog size.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-597">TEIIDDES-597</ulink>: An issue in the <classname>TableNotificationHandler</classname> class caused inserterd rows of a relational column to appear in reverse order within the table editor. This meant that the tree view and table editor displayed the rows in inconsistent ways. The issue has been corrected by modifying the <filename>TableNotificationHandler.java</filename> file so that rows inserted are displayed correctly within the table editor. This results in both the tree view and table editor displaying the information in the same way.
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-369">TEIIDDES-369</ulink>: A new feature has been added that places a green arrow beside any objects that are previewable by a user. The implementation of this new feature ensures that a user does not need to click an object to identify if performing the click action will do anything.			
 					</para>
 				</listitem>
 			</itemizedlist>
 		</para>
-	</formalpara> -->
+	</formalpara>
 	<!--<formalpara>
 		<title>Usage</title>
 		<para>
