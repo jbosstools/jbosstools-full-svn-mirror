@@ -167,7 +167,7 @@ public class CustomTLDReference {
 				}
 				File fileToOpen = new File(fullResourcePath);
 				if (fileToOpen.exists() && fileToOpen.isFile()) {
-					StringBuffer fileContent = new StringBuffer();
+					StringBuilder fileContent = new StringBuilder();
 					 try {
 						 BufferedReader input =  new BufferedReader(new FileReader(fileToOpen));
 						 try {

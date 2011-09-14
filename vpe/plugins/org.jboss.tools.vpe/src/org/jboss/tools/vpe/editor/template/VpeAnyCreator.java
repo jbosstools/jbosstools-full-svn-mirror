@@ -81,7 +81,7 @@ public class VpeAnyCreator extends VpeAbstractCreator {
 			try {
 				//TODO Max Areshkau This code was leave here for versions compatibility BEGIN
 				Node attrBorder = element.getAttributeNode(VpeTemplateManager.ATTR_ANY_BORDER);
-				StringBuffer stringBuffer =  new StringBuffer();
+				StringBuilder stringBuffer =  new StringBuilder();
 				
 				if (attrBorder != null) {
 					stringBuffer.append("border-width:").append(attrBorder.getNodeValue()) //$NON-NLS-1$

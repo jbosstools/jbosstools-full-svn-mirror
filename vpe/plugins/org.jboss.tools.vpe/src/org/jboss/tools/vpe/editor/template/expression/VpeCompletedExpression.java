@@ -25,7 +25,7 @@ public class VpeCompletedExpression implements VpeExpression {
 		if (expressions == null) {
 			return new VpeValue(""); //$NON-NLS-1$
 		}
-		StringBuffer result = new StringBuffer();
+		StringBuilder result = new StringBuilder();
 		for (int i = 0; i < expressions.length; i++) {
 			result.append(expressions[i].exec(pageContext, sourceNode).stringValue());
 		}

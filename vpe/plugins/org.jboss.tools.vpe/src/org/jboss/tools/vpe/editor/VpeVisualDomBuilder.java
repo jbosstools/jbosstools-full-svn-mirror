@@ -1150,7 +1150,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			linkNode.setAttribute(VpeTemplateManager.ATTR_LINK_EXT, ext_val);
 			BufferedReader in = null;
 			try {
-				StringBuffer styleText = new StringBuffer(EMPTY_STRING);
+				StringBuilder styleText = new StringBuilder(EMPTY_STRING);
 				URL url = new URL((new Path(href_val)).toOSString());
 				String fileName = url.getFile();
 				in = new BufferedReader(new FileReader(
@@ -1404,7 +1404,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	}
 	
 	private String getTooltip(Element sourceElement) {
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		buffer.append(sourceElement.getNodeName());
 		NamedNodeMap attrs = sourceElement.getAttributes();
 		int len = attrs.getLength();
@@ -1414,15 +1414,15 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			}
 			int valueLength = attrs.item(i).getNodeValue().length();
 			if (valueLength > 30) {
-				StringBuffer temp = new StringBuffer();
-				temp.append(attrs.item(i).getNodeValue().substring(0, 15)
-						+ " ... " //$NON-NLS-1$
-						+ attrs.item(i).getNodeValue().substring(
+				StringBuilder temp = new StringBuilder();
+				temp.append(attrs.item(i).getNodeValue().substring(0, 15))
+					.append(" ... ") //$NON-NLS-1$
+					.append(attrs.item(i).getNodeValue().substring(
 								valueLength - 15, valueLength));
-				buffer.append("\n" + attrs.item(i).getNodeName() + ": " + temp); //$NON-NLS-1$ //$NON-NLS-2$
+				buffer.append("\n").append(attrs.item(i).getNodeName()).append(": ").append(temp); //$NON-NLS-1$ //$NON-NLS-2$
 			} else {
-				buffer.append("\n" + attrs.item(i).getNodeName() + ": " //$NON-NLS-1$ //$NON-NLS-2$
-						+ attrs.item(i).getNodeValue());
+				buffer.append("\n").append(attrs.item(i).getNodeName()).append(": ") //$NON-NLS-1$ //$NON-NLS-2$
+					  .append(attrs.item(i).getNodeValue());
 			}
 
 		}

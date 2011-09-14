@@ -134,7 +134,7 @@ abstract public class FormatHandler implements IFormatHandler {
 	}
 
 	protected String getNodeBody(Node node) {
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		NodeList list = node.getChildNodes();
 		for(int i=0; i<list.getLength(); i++) {
 			Node child = list.item(i);
@@ -186,7 +186,7 @@ abstract public class FormatHandler implements IFormatHandler {
 		IDocument document = viewer.getDocument();
 
 		// Append start part - "<tag";
-		StringBuffer resultNode = new StringBuffer("<").append(newName); //$NON-NLS-1$
+		StringBuilder resultNode = new StringBuilder("<").append(newName); //$NON-NLS-1$
 
 		int endOffcet = element.getEndOffset() - element.getStartOffset();
 		int startEndOffcet = element.getStartEndOffset() - element.getStartOffset();

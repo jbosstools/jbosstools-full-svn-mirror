@@ -48,7 +48,7 @@ abstract public class ColorFormatController extends ToolItemFormatController {
 		if (newColor == null) {
 			return;
 		}
-		StringBuffer buf = new StringBuffer();
+		StringBuilder buf = new StringBuilder();
 		String c = Integer.toHexString(newColor.red);
 		if(c.length()<2) {
 			buf.append("0"); //$NON-NLS-1$

@@ -93,7 +93,7 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 	
 	private static final Mozilla mozilla;
 	static {
-		StringBuffer buff = new StringBuffer();
+		StringBuilder buff = new StringBuilder();
 		buff.append("org.mozilla.xulrunner.") //$NON-NLS-1$
 			.append(Platform.getWS()).append('.')
 			.append(Platform.getOS());

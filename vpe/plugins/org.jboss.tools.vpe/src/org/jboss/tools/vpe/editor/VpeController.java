@@ -2060,20 +2060,20 @@ public class VpeController implements INodeAdapter,
 		gridData.horizontalSpan = 2;
 		tipControlHeaderText.setLayoutData(gridData);
 
-		StringBuffer tempAttr = new StringBuffer();
-		StringBuffer tempValue = new StringBuffer();
+		StringBuilder tempAttr = new StringBuilder();
+		StringBuilder tempValue = new StringBuilder();
 
 		if (attributeString.length >= 2) {
 			for (int i = 1; i < attributeString.length; i++) {
 				buffer = attributeString[i].split(" ", 2); //$NON-NLS-1$
 				if (i == 1) {
-					tempAttr.append(buffer[0] + " "); //$NON-NLS-1$
+					tempAttr.append(buffer[0]).append(" "); //$NON-NLS-1$
 					tempValue
-							.append((buffer.length >= 2 ? buffer[1] : "") + " "); //$NON-NLS-1$ //$NON-NLS-2$
+							.append((buffer.length >= 2 ? buffer[1] : "")).append(" "); //$NON-NLS-1$ //$NON-NLS-2$
 				} else {
-					tempAttr.append("\n" + buffer[0] + " "); //$NON-NLS-1$ //$NON-NLS-2$
+					tempAttr.append("\n").append(buffer[0]).append(" "); //$NON-NLS-1$ //$NON-NLS-2$
 					tempValue
-							.append(" \n" + (buffer.length >= 2 ? buffer[1] : "") + " "); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+							.append(" \n").append(buffer.length >= 2 ? buffer[1] : "").append(" "); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				}
 			}
 

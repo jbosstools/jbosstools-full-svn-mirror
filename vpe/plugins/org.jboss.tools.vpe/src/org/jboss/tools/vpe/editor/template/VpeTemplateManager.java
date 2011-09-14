@@ -740,7 +740,7 @@ public class VpeTemplateManager {
 									anyData.setChildren(ATTR_VALUE_YES.equalsIgnoreCase(attr.getNodeValue()));
 								}
 								//TODO Max Areshkau This code was leave here for versions compatibility BEGIN
-								StringBuffer stringBuffer = new StringBuffer();
+								StringBuilder stringBuffer = new StringBuilder();
 								Node attrDisplay = anyNode.getAttributeNode(ATTR_ANY_DISPLAY);
 								if (attr != null) {
 									stringBuffer.append(HTML.ATTR_DISPLAY).append(":") //$NON-NLS-1$
