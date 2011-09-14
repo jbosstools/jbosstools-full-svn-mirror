@@ -82,12 +82,12 @@
 <child location='../../../staging.previous/jbosstools-3.3_trunk.component--ws/all/repo/'/>
 
 <child location='../../../staging/jbosstools-drools-5.2_trunk/all/repo/'/>
-<child location='../../../staging/jbosstools-teiid-designer-7.5_trunk/all/repo/'/>
+<child location='../../../staging/jbosstools-teiid-designer_trunk/all/repo/'/>
 <child location='../../../staging/savara-tools-eclipse-master/all/repo/'/>
 <child location='../../../staging/xulrunner-1.9.2/all/repo/'/>
 
 <child location='../../../staging.previous/jbosstools-drools-5.2_trunk/all/repo/'/>
-<child location='../../../staging.previous/jbosstools-teiid-designer-7.5_trunk/all/repo/'/>
+<child location='../../../staging.previous/jbosstools-teiid-designer_trunk/all/repo/'/>
 <child location='../../../staging.previous/savara-tools-eclipse-master/all/repo/'/>
 <child location='../../../staging.previous/xulrunner-1.9.2/all/repo/'/>
 
