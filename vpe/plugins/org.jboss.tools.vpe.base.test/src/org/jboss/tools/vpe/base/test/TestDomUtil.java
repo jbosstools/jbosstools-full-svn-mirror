@@ -15,6 +15,7 @@ import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,6 +30,7 @@ import java.util.regex.Pattern;
 
 import org.jboss.tools.common.model.ui.util.StringUtil;
 import org.jboss.tools.common.model.util.XMLUtil;
+import org.jboss.tools.common.xml.XMLUtilities;
 import org.jboss.tools.jst.css.common.CSSStyleManager;
 import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.editor.util.HTML;
@@ -75,9 +77,16 @@ public class TestDomUtil {
 	public static Document getDocument(File file) throws FileNotFoundException {
 		// create reader
 		FileReader reader = new FileReader(file);
-
-		// return document
-		return XMLUtil.getDocument(reader);
+		try {
+			// return document
+			return XMLUtilities.getDocument(reader, null);
+		} finally {
+			try {
+				reader.close();
+			} catch (IOException e) {
+				VPEBaseTestPlugin.getDefault().logError(e);
+			}
+		}
 	}
 
 	public static Document getDocument(String content)
@@ -86,7 +95,7 @@ public class TestDomUtil {
 		StringReader reader = new StringReader(content);
 
 		// return document
-		return XMLUtil.getDocument(reader);
+		return XMLUtilities.getDocument(reader, null);
 	}
 
 	/**
@@ -100,7 +109,8 @@ public class TestDomUtil {
 		Element element = document.getDocumentElement();
 
 		NodeList children = element.getChildNodes();
-		for (int i = 0; i < children.getLength(); i++) {
+		int length = children.getLength();
+		for (int i = 0; i < length; i++) {
 			Node child = children.item(i);
 			if ((child.getNodeType() == Node.ELEMENT_NODE)
 					&& elementId.equals(((Element) child)
@@ -122,7 +132,8 @@ public class TestDomUtil {
 
 		if (element != null) {
 			NodeList children = element.getChildNodes();
-			for (int i = 0; i < children.getLength(); i++) {
+			int length = children.getLength();
+			for (int i = 0; i < length; i++) {
 				Node child = children.item(i);
 
 				if (child.getNodeType() == Node.ELEMENT_NODE)
@@ -168,31 +179,18 @@ public class TestDomUtil {
 		nsIDOMNodeList vpeChildren = vpeNode.getChildNodes();
 		NodeList schemeChildren = modelNode.getChildNodes();
 		int realCount = 0;
-		for (int i = 0; i < schemeChildren.getLength(); i++) {
+		int length = schemeChildren.getLength();
+		for (int i = 0; i < length; i++) {
 
 			Node schemeChild = schemeChildren.item(i);
 
 			// leave out empty text nodes in test dom model
-			if ((schemeChild.getNodeType() == Node.TEXT_NODE)
-					&& ((schemeChild.getNodeValue() == null) || (schemeChild
-							.getNodeValue().trim().length() == 0)))
-				continue;
-
-			nsIDOMNode vpeChild = vpeChildren.item(realCount++);
-
-			if (null == vpeChild) {
-				throw new DOMComparisonException(
-						"Child of node \"" //$NON-NLS-1$
-								+ vpeNode.getNodeName()
-								+ "\" is \"null\", but should be \"" + schemeChild.getNodeName() + "\"",//$NON-NLS-1$ //$NON-NLS-2$
-						schemeChild); 
-			}
-
-			// leave out empty text nodes in vpe dom model
-			while (((vpeChild.getNodeType() == Node.TEXT_NODE) && ((vpeChild
-					.getNodeValue() == null) || (vpeChild.getNodeValue().trim()
-					.length() == 0)))) {
-				vpeChild = vpeChildren.item(realCount++);
+			String nodeValue = schemeChild.getNodeValue();
+			if ((schemeChild.getNodeType() != Node.TEXT_NODE)
+					|| ((nodeValue != null) && (nodeValue.trim().length() > 0))) {
+				
+				nsIDOMNode vpeChild = vpeChildren.item(realCount++);
+	
 				if (null == vpeChild) {
 					throw new DOMComparisonException(
 							"Child of node \"" //$NON-NLS-1$
@@ -200,10 +198,21 @@ public class TestDomUtil {
 									+ "\" is \"null\", but should be \"" + schemeChild.getNodeName() + "\"",//$NON-NLS-1$ //$NON-NLS-2$
 							schemeChild); 
 				}
+				// leave out empty text nodes in vpe dom model
+				while (((vpeChild.getNodeType() == Node.TEXT_NODE) && ((vpeChild
+						.getNodeValue() == null) || (vpeChild.getNodeValue().trim()
+						.length() == 0)))) {
+					vpeChild = vpeChildren.item(realCount++);
+					if (null == vpeChild) {
+						throw new DOMComparisonException(
+								"Child of node \"" //$NON-NLS-1$
+										+ vpeNode.getNodeName()
+										+ "\" is \"null\", but should be \"" + schemeChild.getNodeName() + "\"",//$NON-NLS-1$ //$NON-NLS-2$
+								schemeChild); 
+					}
+				}
+				compareNodes(vpeChild, schemeChild);
 			}
-
-			compareNodes(vpeChild, schemeChild);
-
 		}
 
 	}
@@ -218,7 +227,8 @@ public class TestDomUtil {
 		Element rootElement = testDocument.getDocumentElement();
 		List<String> ids = new ArrayList<String>();
 		NodeList children = rootElement.getChildNodes();
-		for (int i = 0; i < children.getLength(); i++) {
+		int length = children.getLength();
+		for (int i = 0; i < length; i++) {
 			Node child = children.item(i);
 			if (child.getNodeType() == Node.ELEMENT_NODE)
 				ids.add(((Element) child).getAttribute(ID_ATTRIBUTE));
@@ -338,17 +348,7 @@ public class TestDomUtil {
 		List<String> propertyParts1 = splitAndSort(property1);
 		List<String> propertyParts2 = splitAndSort(property2);
 		
-		if (propertyParts1.size() != propertyParts2.size()) {
-			return false;
-		}
-		
-		for (int i = 0; i < propertyParts1.size(); i++) {
-			if (!propertyParts1.get(i).equals(propertyParts2.get(i))) {
-				return false;
-			}
-		}
-		
-		return true;		
+		return propertyParts1.equals(propertyParts2);		
 	}
 	
 	private static List<String> splitAndSort(String property) {

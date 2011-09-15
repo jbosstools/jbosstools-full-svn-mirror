@@ -1471,34 +1471,11 @@ public class VpeController implements INodeAdapter,
 					if (monitor.isCanceled()) {
 						return Status.CANCEL_STATUS;
 					}
-					if (!switcher
-							.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
-						return Status.CANCEL_STATUS;
-					}
-					try {
-						monitor.beginTask(VpeUIMessages.VPE_VISUAL_REFRESH_JOB,
-								IProgressMonitor.UNKNOWN);
-						visualRefreshImpl();
-						monitor.done();
-						setSynced(true);
-					} catch (VpeDisposeException exc) {
-						// just ignore this exception
-					} catch (NullPointerException ex) {
-						if (switcher != null) {
-							throw ex;
-						} else {
-							// class was disposed and exception result of
-							// that we can't stop
-							// refresh job in time, so we just ignore this
-							// exception
-						}
-					} catch (RuntimeException ex) {
-						VpePlugin.getPluginLog().logError(ex);
-					} finally {
-						if (switcher != null) {
-							switcher.stopActiveEditor();
-						}
-					}
+					monitor.beginTask(VpeUIMessages.VPE_VISUAL_REFRESH_JOB,
+							IProgressMonitor.UNKNOWN);
+					visualRefreshImpl();
+					monitor.done();
+					setSynced(true);
 					return Status.OK_STATUS;
 				}
 			};
@@ -1508,31 +1485,42 @@ public class VpeController implements INodeAdapter,
 		}
 	}
 
-	void visualRefreshImpl() {
-		visualEditor.hideResizer();
-
-		String currentDoctype = DocTypeUtil.getDoctype(visualEditor
-				.getEditorInput());
-		/*
-		 * https://jira.jboss.org/jira/browse/JBIDE-3591 Avoid using missing
-		 * resource.
-		 */
-		String visualEditorDoctype = visualEditor.getDoctype();
-		if ((null != currentDoctype) && (null != visualEditorDoctype)
-				&& (!visualEditorDoctype.equals(currentDoctype))) {
-			visualEditor.reload();
-		} else {
-			// Fix bugs JBIDE-2750
-			visualBuilder.clearSelectionRectangle();
-			visualEditor.reload();
-			// IDOMModel sourceModel = (IDOMModel) getModel();
-			// if (sourceModel != null) {
-			// IDOMDocument sourceDocument = sourceModel.getDocument();
-			// visualBuilder.rebuildDom(sourceDocument);
-			// } else {
-			// visualBuilder.rebuildDom(null);
-			// }
+	public void visualRefreshImpl() {
+		if (!switcher
+				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
+			return;
 		}
+		try {
+			visualEditor.hideResizer();
+	
+			String currentDoctype = DocTypeUtil.getDoctype(visualEditor
+					.getEditorInput());
+			/*
+			 * https://jira.jboss.org/jira/browse/JBIDE-3591 Avoid using missing
+			 * resource.
+			 */
+			String visualEditorDoctype = visualEditor.getDoctype();
+			if ((null != currentDoctype) && (null != visualEditorDoctype)
+					&& (!visualEditorDoctype.equals(currentDoctype))) {
+				visualEditor.reload();
+			} else {
+				// Fix bugs JBIDE-2750
+				visualBuilder.clearSelectionRectangle();
+				visualEditor.reload();
+				// IDOMModel sourceModel = (IDOMModel) getModel();
+				// if (sourceModel != null) {
+				// IDOMDocument sourceDocument = sourceModel.getDocument();
+				// visualBuilder.rebuildDom(sourceDocument);
+				// } else {
+				// visualBuilder.rebuildDom(null);
+				// }
+			} 
+		} finally {
+			if (switcher != null) {
+				switcher.stopActiveEditor();
+			}
+		}
+			
 	}
 
 	public void preLongOperation() {

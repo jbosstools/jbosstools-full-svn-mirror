@@ -331,14 +331,11 @@ public class TestUtil {
      */
     public static nsIDOMElement performTestForRichFacesComponent(IFile componentPage) throws Throwable {
         nsIDOMElement rst = null;
-        TestUtil.waitForJobs();
 
         // IFile file = (IFile)
         // TestUtil.getComponentPath(componentPage,getImportProjectName());
         IEditorInput input = new FileEditorInput(componentPage);
 
-        TestUtil.waitForJobs();
-        //
         JSPMultiPageEditor editor = (JSPMultiPageEditor) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(
                 input, EDITOR_ID, true);
 

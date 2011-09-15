@@ -100,11 +100,8 @@ public class VpeTest extends TestCase implements ILogListener {
 	protected void setUp() throws Exception {
 		super.setUp();
 		Platform.addLogListener(this);
-		// String jbossPath = System.getProperty(
-		// "jbosstools.test.jboss.home.4.2", "C:\\java\\jboss-4.2.2.GA");
-		// JBossASAdapterInitializer.initJBossAS(jbossPath, new
-		// NullProgressMonitor());
 		closeEditors();
+		setException(null);
 	}
 
 	/**
@@ -197,15 +194,9 @@ public class VpeTest extends TestCase implements ILogListener {
 	 */
 	protected void performTestForVpeComponent(IFile componentPage)
 			throws PartInitException, Throwable {
-		TestUtil.waitForJobs();
-
-		setException(null);
-
 		// IFile file = (IFile)
 		// TestUtil.getComponentPath(componentPage,getImportProjectName());
 		IEditorInput input = new FileEditorInput(componentPage);
-
-		TestUtil.waitForJobs();
 
 		IEditorPart editor = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getActivePage().openEditor(input,
@@ -214,10 +205,6 @@ public class VpeTest extends TestCase implements ILogListener {
 		TestUtil.getVpeController((JSPMultiPageEditor) editor);
 
 		assertNotNull(editor);
-
-		TestUtil.waitForJobs();
-		// JBIDE-1628
-		// TestUtil.delay(1000);
 
 		PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
 				.closeAllEditors(true);
@@ -361,24 +348,25 @@ public class VpeTest extends TestCase implements ILogListener {
 			 * exclude out DomDocument ( it is added to mapping specially ) and
 			 * nodes without visual representation
 			 */
-			if (!(nodeMapping.getSourceNode() instanceof IDOMDocument)
-					&& (nodeMapping.getVisualNode() != null)) {
+			Node sourceNode = nodeMapping.getSourceNode();
+			nsIDOMNode visualNode = nodeMapping.getVisualNode();
+			if (!(sourceNode instanceof IDOMDocument)
+					&& (visualNode != null)) {
 
 				SelectionUtil.setSourceSelection(controller.getPageContext(),
-						nodeMapping.getSourceNode(), 1, 0);
+						sourceNode, 1, 0);
 
 				TestUtil.delay();
 
 				assertNotNull(getSelectedNode(xulRunnerEditor));
 
 				nsIDOMNode sample;
-				if (nodeMapping.getSourceNode().getNodeType() == Node.TEXT_NODE
-						&& ((VpeElementMapping) nodeMapping).getElementData() != null) {
+				if (sourceNode.getNodeType() == Node.TEXT_NODE) {
 
 					sample = ((VpeElementMapping) nodeMapping).getElementData()
 							.getNodesData().get(0).getVisualNode();
 				} else {
-					sample = nodeMapping.getVisualNode();
+					sample = visualNode;
 				}
 
 				assertEquals(sample, getSelectedNode(xulRunnerEditor));

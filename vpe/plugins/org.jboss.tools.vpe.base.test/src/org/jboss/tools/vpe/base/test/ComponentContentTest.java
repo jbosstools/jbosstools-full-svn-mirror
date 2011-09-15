@@ -15,6 +15,7 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
@@ -73,7 +74,6 @@ public abstract class ComponentContentTest extends VpeTest {
 		setException(null);
 		IFile elementPageFile = (IFile) TestUtil.getComponentFileByFullPath(
 				elementPagePath, getTestProjectName());
-		TestUtil.waitForIdle();
 		/*
 		 * Test that test file was found and exists
 		 */
@@ -104,7 +104,7 @@ public abstract class ComponentContentTest extends VpeTest {
 	protected void compareContent(VpeController controller, File xmlTestFile)
 			throws FileNotFoundException {
 		Document xmlTestDocument = TestDomUtil.getDocument(xmlTestFile);
-		assertNotNull("Can't get test file, possibly file not exists "+xmlTestFile,xmlTestDocument); //$NON-NLS-1$
+		assertNotNull("Can't get test file, possibly file not exists " + xmlTestFile,xmlTestDocument); //$NON-NLS-1$
 
 		List<String> ids = TestDomUtil.getTestIds(xmlTestDocument);
 
@@ -176,7 +176,6 @@ public abstract class ComponentContentTest extends VpeTest {
 	 */
 	protected void performInvisibleTagTestByFullPath(String elementPagePath,
 			String elementId) throws Throwable {
-		setException(null);
 		
 		IFile elementPageFile = (IFile) TestUtil.getComponentFileByFullPath(
 				elementPagePath, getTestProjectName());
@@ -188,12 +187,10 @@ public abstract class ComponentContentTest extends VpeTest {
 		 * Open the editor
 		 */
 		IEditorInput input = new FileEditorInput(elementPageFile);
-		TestUtil.waitForJobs();
 		IEditorPart editor = PlatformUI.getWorkbench()
 		.getActiveWorkbenchWindow().getActivePage().openEditor(input,
 				getEditorID(), true);
 		assertNotNull("Editor should be opened.", editor); //$NON-NLS-1$
-		TestUtil.waitForJobs();
 		/*
 		 * Get the controller
 		 */
@@ -213,7 +210,7 @@ public abstract class ComponentContentTest extends VpeTest {
 		 * Set show invisible tag's flag to true
 		 */
 		controller.getVisualBuilder().setShowInvisibleTags(true);
-		controller.visualRefresh();
+		controller.visualRefreshImpl();
 		
 		/*
 		 * Find visual element and check if it is not null
@@ -260,15 +257,11 @@ public abstract class ComponentContentTest extends VpeTest {
 
 		IEditorInput input = new FileEditorInput(elementPageFile);
 
-		TestUtil.waitForJobs();
-
 		IEditorPart editor = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getActivePage().openEditor(input,
 						getEditorID(), true);
 
 		assertNotNull(editor);
-
-		TestUtil.waitForJobs();
 
 		VpeController controller = TestUtil.getVpeController((JSPMultiPageEditor) editor);
 
@@ -289,12 +282,10 @@ public abstract class ComponentContentTest extends VpeTest {
 
 		// set show invisible tag's flag to true
 		controller.getVisualBuilder().setShowInvisibleTags(true);
-		controller.visualRefresh();
-
-		TestUtil.waitForIdle();
+		controller.visualRefreshImpl();
 
 		// find visual element and check if it is not null
-		visualElement = findElementById(controller, elementId);
+		visualElement = findElementById(controller, elementId,TestUtil.MAX_IDLE);
 		assertNotNull(visualElement);
 
 		// generate text for invisible tag
@@ -340,7 +331,9 @@ public abstract class ComponentContentTest extends VpeTest {
 		nsIDOMElement result = null;
 		while (result==null) {
 			result = findElementById(controller, elementId);
-			TestUtil.delay();
+			if(!Display.getCurrent().readAndDispatch()) {
+				Display.getCurrent().sleep();
+			}
 			if (result==null && ((System.currentTimeMillis()-start) > idle) ) 
 				throw new RuntimeException("A long running task detected"); //$NON-NLS-1$
 		}

@@ -53,20 +53,13 @@ public class ProjectsLoader {
 		projectNameToLocation = new HashMap<String, ProjectLocation>();
 		IExtension[] extensions = VPEBaseTestPlugin.getDefault().getVpeTestExtensions();
 		for (IExtension extension : extensions) {
-			IConfigurationElement[] confElements = extension
-					.getConfigurationElements();
+			IConfigurationElement[] confElements = extension.getConfigurationElements();
 			for (IConfigurationElement configurationElement : confElements) {
-				if (TEST_PROJECT_ELEMENT.equals(
-						configurationElement.getName())) {
-					Bundle bundle = Platform.getBundle(
-							configurationElement.getNamespaceIdentifier());
-					String name = configurationElement.getAttribute(
-							TEST_PROJECT_NAME_ATTRIBUTE);
-					String path = configurationElement.getAttribute(
-							TEST_PROJECT_PATH_ATTRIBUTE);
-
-					projectNameToLocation.put(name,
-							new ProjectLocation(bundle, path));
+				if (TEST_PROJECT_ELEMENT.equals(configurationElement.getName())) {
+					Bundle bundle = Platform.getBundle(configurationElement.getNamespaceIdentifier());
+					String name = configurationElement.getAttribute(TEST_PROJECT_NAME_ATTRIBUTE);
+					String path = configurationElement.getAttribute(TEST_PROJECT_PATH_ATTRIBUTE);
+					projectNameToLocation.put(name,new ProjectLocation(bundle, path));
 				}
 			}
 		}
@@ -104,7 +97,7 @@ public class ProjectsLoader {
 			}
 			
 			try {
-				project = ResourcesUtils.importProject(location.getBundle(), location.getPath(), projectName, new NullProgressMonitor());
+				project = ResourcesUtils.importProject(location.getBundle(), location.getPath(), projectName, new NullProgressMonitor(),true);
 			} catch (CoreException e) {
 				throw new RuntimeException("Project by the path='" + location.getPath()
 						+ "' cannot be imported.",e);
