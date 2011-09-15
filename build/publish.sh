@@ -275,13 +275,13 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 				date; rsync -arzq --protocol=28 --delete ${STAGINGDIR}/* $DESTINATION/builds/nightly/${PUBLISHPATHSUFFIX}/${BUILD_ID}-H${BUILD_NUMBER}/
 				# sftp only works with user@server, not with local $DESTINATIONS, so use rsync to push symlink instead
 				# echo -e "rm latest\nln ${BUILD_ID}-H${BUILD_NUMBER} latest" | sftp ${DESTINATIONREDUX}/builds/nightly/${PUBLISHPATHSUFFIX}/ 
-				pushd /tmp >/dev/null; ln -s ${BUILD_ID}-H${BUILD_NUMBER} latest; rsync -l latest ${DESTINATION}/builds/nightly/${PUBLISHPATHSUFFIX}/; rm -f latest; popd >/dev/null
+				pushd /tmp >/dev/null; ln -s ${BUILD_ID}-H${BUILD_NUMBER} latest; rsync --protocol=28 -l latest ${DESTINATION}/builds/nightly/${PUBLISHPATHSUFFIX}/; rm -f latest; popd >/dev/null
 				date; rsync -arzq --protocol=28 --delete /tmp/latestBuild.html $DESTINATION/builds/nightly/${PUBLISHPATHSUFFIX}/
 			else
 				date; rsync -arzq --protocol=28 --delete /tmp/latestBuild.html $DESTINATION/builds/nightly/${JOBNAMEREDUX}/ 
 				# sftp only works with user@server, not with local $DESTINATIONS, so use rsync to push symlink instead
 				# echo -e "rm latest\nln ${BUILD_ID}-H${BUILD_NUMBER} latest" | sftp ${DESTINATIONREDUX}/builds/nightly/${JOBNAMEREDUX}/
-				pushd /tmp >/dev/null; ln -s ${BUILD_ID}-H${BUILD_NUMBER} latest; rsync -l latest ${DESTINATION}/builds/nightly/${JOBNAMEREDUX}/; rm -f latest; popd >/dev/null
+				pushd /tmp >/dev/null; ln -s ${BUILD_ID}-H${BUILD_NUMBER} latest; rsync --protocol=28 -l latest ${DESTINATION}/builds/nightly/${JOBNAMEREDUX}/; rm -f latest; popd >/dev/null
 				date; rsync -arzq --protocol=28 --delete ${STAGINGDIR}/* $DESTINATION/builds/nightly/${JOBNAMEREDUX}/${BUILD_ID}-H${BUILD_NUMBER}/
 			fi
 			rm -f /tmp/latestBuild.html
