@@ -1,4 +1,4 @@
-Revised swimlanes, as implemented in 3.2_stable_branch and 3.3_trunk jobs, 2011/09/08
+Revised swimlanes, as implemented in 3.2_stable_branch, 3.3_stable_branch and 3.3_trunk jobs, 2011/09/14
 
 ------------------------
 
@@ -36,5 +36,7 @@ teiid, runtime -> tests
 portlet -> seam
 tptp [REMOVED]
 smooks [removed from JBDS, still in JBT]
+
+seam -> hibernate, jsf **[TODO: FIX JOBS in both 3.3 streams]**
 
 ------------------------
