@@ -21,7 +21,7 @@
 <!--	to build against locally built sources, use:
 		mvn clean install
 
-	to build against http://download.jboss.org/jbosstools/builds/staging/_composite_/trunk/, use:
+	to build against http://download.jboss.org/jbosstools/builds/staging/_composite_/3.3.indigo/, use:
 		mvn clean install -Pjbosstools-nightly-staging-composite
 -->
 </project>
