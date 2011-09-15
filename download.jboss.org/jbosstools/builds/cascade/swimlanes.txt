@@ -36,7 +36,6 @@ teiid, runtime -> tests
 portlet -> seam
 tptp [REMOVED]
 smooks [removed from JBDS, still in JBT]
-
-seam -> hibernate, jsf **[TODO: FIX JOBS in both 3.3 streams]**
+seam -> hibernate, jsf 
 
 ------------------------
