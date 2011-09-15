@@ -41,21 +41,12 @@ rm -fr ${WORKSPACE}/results; mkdir -p ${STAGINGDIR}
 z=""
 if [[ -d ${WORKSPACE}/sources/aggregate/site/target ]]; then
 	siteZip=${WORKSPACE}/sources/aggregate/site/target/site_assembly.zip
-	if [[ ! -f ${WORKSPACE}/sources/aggregate/site/target/site_assembly.zip ]]; then
-		siteZip=${WORKSPACE}/sources/aggregate/site/target/site.zip
-	fi
 	z=$siteZip
 elif [[ -d ${WORKSPACE}/sources/aggregate/site/site/target ]]; then
 	siteZip=${WORKSPACE}/sources/aggregate/site/site/target/site_assembly.zip
-	if [[ ! -f ${WORKSPACE}/sources/aggregate/site/site/target/site_assembly.zip ]]; then
-		siteZip=${WORKSPACE}/sources/aggregate/site/site/target/site.zip
-	fi
 	z=$siteZip
 elif [[ -d ${WORKSPACE}/sources/site/target ]]; then
 	siteZip=${WORKSPACE}/sources/site/target/site_assembly.zip
-	if [[ ! -f ${WORKSPACE}/sources/site/target/site_assembly.zip ]]; then
-		siteZip=${WORKSPACE}/sources/site/target/site.zip
-	fi
 	z=$siteZip
 fi
 
@@ -113,8 +104,8 @@ if [[ $z != "" ]] && [[ -f $z ]] ; then
 fi
 z=""
 
-# if component zips exist, copy them too; first site.zip, then site_assembly.zip
-for z in $(find ${WORKSPACE}/sources/*/site/target -type f -name "site*.zip" | sort -r); do 
+# if component zips exist, copy site_assembly.zip too
+for z in $(find ${WORKSPACE}/sources/*/site/target -type f -name "site_assembly.zip"); do 
 	y=${z%%/site/target/*}; y=${y##*/}
 	if [[ $y != "aggregate" ]]; then # prevent duplicate nested sites
 		#echo "[$y] $z ..."
