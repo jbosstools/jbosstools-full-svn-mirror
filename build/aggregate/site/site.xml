@@ -20,6 +20,22 @@
 		<category name="AllTools" />
 		<category name="WebTools" />
 	</feature>
+	<feature url="features/org.jboss.tools.jst.feature_0.0.0.jar" id="org.jboss.tools.jst.feature" version="0.0.0">
+		<category name="AllTools" />
+		<category name="WebTools" />
+	</feature>
+	<feature url="features/org.jboss.tools.vpe.feature_0.0.0.jar" id="org.jboss.tools.vpe.feature" version="0.0.0">
+		<category name="AllTools" />
+		<category name="WebTools" />
+	</feature>
+	<feature url="features/org.jboss.tools.jsf.feature_0.0.0.jar" id="org.jboss.tools.jsf.feature" version="0.0.0">
+		<category name="AllTools" />
+		<category name="WebTools" />
+	</feature>
+	<!-- include but do not categorize -->
+	<feature url="features/org.jboss.tools.xulrunner.feature_0.0.0.jar" id="org.jboss.tools.xulrunner.feature" version="0.0.0"></feature>
+	<feature url="features/org.mozilla.xulrunner.feature_0.0.0.jar" id="org.mozilla.xulrunner.feature" version="0.0.0"></feature>
+
 	<feature url="features/org.jboss.tools.forge.feature_0.0.0.jar" id="org.jboss.tools.forge.feature" version="0.0.0">
 		<category name="WebTools" />
         </feature>
@@ -138,6 +154,12 @@
 	<feature url="features/org.jboss.tools.common.jdt.feature_0.0.0.jar" id="org.jboss.tools.common.jdt.feature" version="0.0.0">
 		<category name="AllTools" />
 	</feature>
+	<!-- include but do not categorize -->
+	<feature url="features/org.jboss.tools.common.feature_0.0.0.jar" id="org.jboss.tools.common.feature" version="0.0.0"></feature>
+	<feature url="features/org.jboss.tools.common.core.feature_0.0.0.jar" id="org.jboss.tools.common.core.feature" version="0.0.0"></feature>
+	<feature url="features/org.jboss.tools.common.text.ext.feature_0.0.0.jar" id="org.jboss.tools.common.text.ext.feature" version="0.0.0"></feature>
+	<feature url="features/org.jboss.tools.common.ui.feature_0.0.0.jar" id="org.jboss.tools.common.ui.feature" version="0.0.0"></feature>
+	<feature url="features/org.jboss.tools.common.verification.feature_0.0.0.jar" id="org.jboss.tools.common.verification.feature" version="0.0.0"></feature>
 	
 	<feature url="features/org.jboss.tools.runtime.feature_0.0.0.jar" id="org.jboss.tools.runtime.feature" version="0.0.0">
 		<category name="AllTools" />
@@ -168,14 +190,6 @@
 	<feature url="features/org.jboss.tools.usage.feature_0.0.0.jar" id="org.jboss.tools.usage.feature" version="0.0.0">
 		<category name="AllTools" />
 	</feature>
-
-	<!-- include but do not categorize -->
-	<feature url="features/org.jboss.tools.xulrunner.feature_0.0.0.jar" id="org.jboss.tools.xulrunner.feature" version="0.0.0"></feature>
-	<feature url="features/org.mozilla.xulrunner.feature_0.0.0.jar" id="org.mozilla.xulrunner.feature" version="0.0.0"></feature>
-	<feature url="features/org.jboss.tools.common.feature_0.0.0.jar" id="org.jboss.tools.common.feature" version="0.0.0"></feature>
-	<feature url="features/org.jboss.tools.jst.feature_0.0.0.jar" id="org.jboss.tools.jst.feature" version="0.0.0"></feature>
-	<feature url="features/org.jboss.tools.jsf.feature_0.0.0.jar" id="org.jboss.tools.jsf.feature" version="0.0.0"></feature>
-	<feature url="features/org.jboss.tools.vpe.feature_0.0.0.jar" id="org.jboss.tools.vpe.feature" version="0.0.0"></feature>
 
 	<!-- categories - see also ../../../common/aggregateRepos.*.properties -->
 	<category-def name="SDKTools" label="JBoss Tools SDK">
