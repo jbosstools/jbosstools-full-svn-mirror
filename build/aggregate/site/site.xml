@@ -1,18 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-	<!-- This file is only used when building with Tycho.
-		If building with Ant (trunk/build/build.xml), see category.*.xml -->
-	<description>
-      JBoss Tools 3.3 Updates
-   	</description>
+	<description>JBoss Tools 3.3 Updates</description>
 
-	<!-- only in JBDS -->
-	<!--
-	<feature url="features/com.jboss.jbds.product.feature_0.0.0.jar"
-	         id="com.jboss.jbds.product.feature"
-	         version="0.0.0"
-	         patch="false"
-	>
+	<!-- only in JBDS
+	<feature url="features/com.jboss.jbds.product.feature_0.0.0.jar" id="com.jboss.jbds.product.feature" version="0.0.0" patch="false">
 		<category name="AllTools" />
 	</feature>
 	-->
@@ -20,6 +11,7 @@
 		<category name="AllTools" />
 		<category name="WebTools" />
 	</feature>
+	<!-- include and categorize in JBT -->
 	<feature url="features/org.jboss.tools.jst.feature_0.0.0.jar" id="org.jboss.tools.jst.feature" version="0.0.0">
 		<category name="AllTools" />
 		<category name="WebTools" />
@@ -36,9 +28,6 @@
 	<feature url="features/org.jboss.tools.xulrunner.feature_0.0.0.jar" id="org.jboss.tools.xulrunner.feature" version="0.0.0"></feature>
 	<feature url="features/org.mozilla.xulrunner.feature_0.0.0.jar" id="org.mozilla.xulrunner.feature" version="0.0.0"></feature>
 
-	<feature url="features/org.jboss.tools.forge.feature_0.0.0.jar" id="org.jboss.tools.forge.feature" version="0.0.0">
-		<category name="WebTools" />
-        </feature>
         <feature url="features/org.jboss.tools.seam.feature_0.0.0.jar" id="org.jboss.tools.seam.feature" version="0.0.0">
 		<category name="AllTools" />
 		<category name="WebTools" />
@@ -61,6 +50,7 @@
 		<category name="AllTools" />
 		<category name="WebTools" />
 	</feature>
+	<!-- only in JBT -->
 	<feature url="features/org.jboss.ide.eclipse.as.server.egit.integration.feature_0.0.0.jar" id="org.jboss.ide.eclipse.as.server.egit.integration.feature" version="0.0.0">
 		<category name="AllTools" />
 		<category name="WebTools" />
@@ -87,6 +77,7 @@
 		<category name="AllTools" />
 		<category name="WebTools" />
 	</feature>
+	<!-- only in JBT -->
 	<feature url="features/org.jboss.tools.ws.jaxrs.feature_0.0.0.jar" id="org.jboss.tools.ws.jaxrs.feature" version="0.0.0">
 		<category name="AllTools" />
 		<category name="WebTools" />
@@ -100,17 +91,11 @@
 		<category name="GeneralTools" />
 	</feature>
 
-	<!-- DISABLED for now -->
-	<!-- 
-	<feature url="features/org.jboss.tools.profiler.feature_0.0.0.jar" id="org.jboss.tools.profiler.feature" version="0.0.0">
-		<category name="AllTools"/>
-	</feature>
-	-->
-
 	<!-- only in JBT -->
-	<feature url="features/org.jboss.tools.community.project.examples.feature_0.0.0.jar"
-	         id="org.jboss.tools.community.project.examples.feature"
-	         version="0.0.0">
+	<feature url="features/org.jboss.tools.forge.feature_0.0.0.jar" id="org.jboss.tools.forge.feature" version="0.0.0">
+		<category name="WebTools" />
+        </feature>
+	<feature url="features/org.jboss.tools.community.project.examples.feature_0.0.0.jar" id="org.jboss.tools.community.project.examples.feature" version="0.0.0">
 		<category name="AllTools" />
 		<category name="GeneralTools" />
 	</feature>
@@ -177,16 +162,6 @@
 		<category name="AllTools" />
 	</feature>
 
-    <!--
-	<feature url="features/org.jboss.tools.runtime.drools.detector.feature_0.0.0.jar" id="org.jboss.tools.runtime.drools.detector.feature" version="0.0.0">
-		<category name="AllTools" />
-	</feature>
-
-	<feature url="features/org.jboss.tools.runtime.jbpm.detector.feature_0.0.0.jar" id="org.jboss.tools.runtime.jbpm.feature" version="0.0.0">
-		<category name="AllTools" />
-	</feature>
-	-->
-	
 	<feature url="features/org.jboss.tools.usage.feature_0.0.0.jar" id="org.jboss.tools.usage.feature" version="0.0.0">
 		<category name="AllTools" />
 	</feature>
@@ -200,8 +175,7 @@
 	</category-def>
 
 	<category-def name="AllTools" label="All JBoss Tools 3.3">
-		<description>
-			Contains ALL the plugins that are available from
+		<description>Contains ALL the plugins that are available from
 			JBoss Tools except those
 			related to integration with 3rd party
 			plugins. Selecting this
@@ -211,8 +185,7 @@
 	</category-def>
 
 	<category-def name="WebTools" label="Web and Java EE Development">
-		<description>
-			Tools to help create web and enterprise applications,
+		<description>Tools to help create web and enterprise applications,
 			using JSF, Facelets,
 			Seam, Hibernate/JPA, CSS, Webservices and more.
 		</description>
@@ -223,8 +196,7 @@
 	</category-def>
 
 	<category-def name="DataTools" label="Data Services">
-		<description>Tools related to data services such as persistence and
-			transformation.</description>
+		<description>Tools related to data services such as persistence and transformation.</description>
 	</category-def>
 
 	<!-- Only in JBT -->
