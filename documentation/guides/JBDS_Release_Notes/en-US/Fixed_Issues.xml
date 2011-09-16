@@ -264,10 +264,11 @@
 				<listitem>
 					<para>
 						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-597">TEIIDDES-597</ulink>: An issue in the <classname>TableNotificationHandler</classname> class caused inserterd rows of a relational column to appear in reverse order within the table editor. This meant that the tree view and table editor displayed the rows in inconsistent ways. The issue has been corrected by modifying the <filename>TableNotificationHandler.java</filename> file so that rows inserted are displayed correctly within the table editor. This results in both the tree view and table editor displaying the information in the same way.
+					</para>
 				</listitem>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-369">TEIIDDES-369</ulink>: A new feature has been added that places a green arrow beside any objects that are previewable by a user. The implementation of this new feature ensures that a user does not need to click an object to identify if performing the click action will do anything.			
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-369">TEIIDDES-369</ulink>: A new feature has been added that places a green arrow beside any objects that are previewable by a user. The implementation of this new feature ensures that a user does not need to click an object to identify if performing the click action will do anything.		
 					</para>
 				</listitem>
 			</itemizedlist>
@@ -298,7 +299,7 @@
         </para>
     </formalpara>-->
 	<formalpara>
-		<title>Webservices/title>
+		<title>Webservices</title>
 		<para>
 			<itemizedlist>
 				<listitem>
@@ -386,7 +387,7 @@
 				</listitem>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-7052">JBIDE-7052</ulink>: An error existed where the optional dependency of <filename>org.hibernate.eclipse<filename> would not be resolved correctly within the BIRT component file <filename>ConsoleConfigurationOdaFactory.java</filename>. This caused any import of the plug-in to fail. The issue has been corrected by setting the <filename>org.hibernate.eclipse<filename> plug-in as reguired within the BIRT plug-ins <filename>MANIFEST.MF<filename> file.
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-7052">JBIDE-7052</ulink>: An error existed where the optional dependency of <filename>org.hibernate.eclipse</filename> would not be resolved correctly within the BIRT component file <filename>ConsoleConfigurationOdaFactory.java</filename>. This caused any import of the plug-in to fail. The issue has been corrected by setting the <filename>org.hibernate.eclipse</filename> plug-in as reguired within the BIRT plug-ins <filename>MANIFEST.MF</filename> file.
 					</para>
 				</listitem>
 			</itemizedlist>

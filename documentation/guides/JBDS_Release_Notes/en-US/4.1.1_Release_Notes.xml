@@ -1,7 +1,5 @@
 <?xml version='1.0' encoding='utf-8' ?>
 
-<!-- This article will dsplay the release notes for version 4.0.0, and be found at http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/4.0/html-single/4.0.0_Release_Notes/index.html --> 
-
 <article>
 	<xi:include href="Article_Info.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
 	<xi:include href="Overview.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
