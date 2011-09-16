@@ -233,6 +233,11 @@
 				</listitem>
 				<listitem>
 					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-981">TEIIDDES-981</ulink>: An enhancement has been made to the <guilabel>Preview Data</guilabel> action that asks if a user wants to enable the preview preference and if they wish to create a server (if one does not already exist). The <guilabel>Deploy</guilabel> action has also been updated to ask a user if they wish to create a server, if one does not already exist. These enhancements improve the user experience for Teiid Designer.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
 						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-971">TEIIDDES-972</ulink>: New behavior has been implemented when a user imports a model that already exists. Previously importing an existing model would result in a warning message noting that it exists and the update checkbox would not be checked. For this release the behavior has changed so that the update checkbox is checked by default. This change ensures that the <guilabel>Import</guilabel> wizard works as expected.
 					</para>
 				</listitem>
