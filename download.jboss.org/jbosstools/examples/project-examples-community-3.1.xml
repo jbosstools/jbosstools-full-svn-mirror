@@ -17,13 +17,13 @@ It includes the registration,registration-ejb,registration-ear,registration-test
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43, org.jboss.ide.eclipse.as.runtime.42</property>
 				<property name="eclipse-projects">registration,registration-ejb,registration-ear</property>
-				<property name="description">This project example requires the JBoss EAP 4.3 or JBoss AS 4.2.x</property>
+				<property name="description">This project example requires JBoss EAP 4.3 or JBoss AS 4.2.x</property>
 			</fix>
 			
 			<fix type="seam">
 				<property name="allowed-versions">2.0.0, 2.0.1, 2.0.2</property>
 				<property name="eclipse-projects">registration</property>
-				<property name="description">This project example requires Seam version 2.0</property>
+				<property name="description">This project example requires Seam 2.0</property>
 			</fix>
 			
 			<fix type="plugin">
@@ -54,14 +54,14 @@ It includes a tutorial.
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43, org.jboss.ide.eclipse.as.runtime.42</property>
 				<property name="eclipse-projects">registration,registration-ejb,registration-ear</property>
-				<property name="description">This project example requires the JBoss EAP 4.3 or JBoss AS 4.2.x</property>
+				<property name="description">This project example requires JBoss EAP 4.3 or JBoss AS 4.2.x</property>
 				<property name="downloadId">org.jboss.tools.runtime.core.as.423</property>
 			</fix>
 			
 			<fix type="seam">
 				<property name="allowed-versions">2.0.0, 2.0.1, 2.0.2</property>
 				<property name="eclipse-projects">registration</property>
-				<property name="description">This project example requires Seam version 2.0</property>
+				<property name="description">This project example requires Seam 2.0</property>
 				<property name="downloadId">org.jboss.tools.runtime.core.seam.202</property>
 			</fix>
 		</fixes>
@@ -87,14 +87,14 @@ It includes a tutorial.
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43, org.jboss.ide.eclipse.as.runtime.42</property>
 				<property name="eclipse-projects">messages,messages-ejb,messages-ear</property>
-				<property name="description">This project example requires the JBoss EAP 4.3 or JBoss AS 4.2.x</property>
+				<property name="description">This project example requires JBoss EAP 4.3 or JBoss AS 4.2.x</property>
 				<property name="downloadId">org.jboss.tools.runtime.core.as.423</property>
 			</fix>
 			
 			<fix type="seam">
 				<property name="allowed-versions">2.0.0, 2.0.1, 2.0.2</property>
 				<property name="eclipse-projects">messages</property>
-				<property name="description">This project example requires Seam version 2.0</property>
+				<property name="description">This project example requires Seam 2.0</property>
 				<property name="downloadId">org.jboss.tools.runtime.core.seam.202</property>
 			</fix>
 		</fixes>
@@ -121,14 +121,14 @@ It includes a tutorial.
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43, org.jboss.ide.eclipse.as.runtime.42</property>
 				<property name="eclipse-projects">todo,todo-ejb,todo-ear</property>
-				<property name="description">This project example requires the JBoss EAP 4.3 or JBoss AS 4.2.x</property>
+				<property name="description">This project example requires JBoss EAP 4.3 or JBoss AS 4.2.x</property>
 				<property name="downloadId">org.jboss.tools.runtime.core.as.423</property>
 			</fix>
 			
 			<fix type="seam">
 				<property name="allowed-versions">2.0.0, 2.0.1, 2.0.2</property>
 				<property name="eclipse-projects">todo</property>
-				<property name="description">This project example requires Seam version 2.0</property>
+				<property name="description">This project example requires Seam 2.0</property>
 				<property name="downloadId">org.jboss.tools.runtime.core.seam.202</property>
 			</fix>
 		</fixes>
@@ -155,14 +155,14 @@ It includes a tutorial.
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43, org.jboss.ide.eclipse.as.runtime.42</property>
 				<property name="eclipse-projects">numberguess,numberguess-ejb,numberguess-ear</property>
-				<property name="description">This project example requires the JBoss EAP 4.3 or JBoss AS 4.2.x</property>
+				<property name="description">This project example requires JBoss EAP 4.3 or JBoss AS 4.2.x</property>
 				<property name="downloadId">org.jboss.tools.runtime.core.as.423</property>
 			</fix>
 			
 			<fix type="seam">
 				<property name="allowed-versions">2.0.0, 2.0.1, 2.0.2</property>
 				<property name="eclipse-projects">numberguess</property>
-				<property name="description">This project example requires Seam version 2.0</property>
+				<property name="description">This project example requires Seam 2.0</property>
 				<property name="downloadId">org.jboss.tools.runtime.core.seam.202</property>
 			</fix>
 		</fixes>
@@ -189,13 +189,13 @@ Requires JBoss EAP 4.3/JBoss AS 4.2.x, Seam 2.1, m2eclipse and testng plugins.
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43, org.jboss.ide.eclipse.as.runtime.42</property>
 				<property name="eclipse-projects">booking,booking-ejb,booking-ear</property>
-				<property name="description">This project example requires the JBoss EAP 4.3 or JBoss AS 4.2.x</property>
+				<property name="description">This project example requires JBoss EAP 4.3 or JBoss AS 4.2.x</property>
 			</fix>
 			
 			<fix type="seam">
 				<property name="allowed-versions">2.1.0, 2.1.1, 2.1.2</property>
 				<property name="eclipse-projects">booking</property>
-				<property name="description">This project example requires Seam version 2.1</property>
+				<property name="description">This project example requires Seam 2.1</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.maven.ide.eclipse</property>
@@ -237,13 +237,13 @@ It includes the booking, booking-ear,booking-test and booking-ejb projects.
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43, org.jboss.ide.eclipse.as.runtime.42</property>
 				<property name="eclipse-projects">booking,booking-ear,booking-ejb</property>
-				<property name="description">This project example requires the JBoss EAP 4.3 or JBoss AS 4.2.x</property>
+				<property name="description">This project example requires JBoss EAP 4.3 or JBoss AS 4.2.x</property>
 			</fix>
 			
 			<fix type="seam">
 				<property name="allowed-versions">2.0.0, 2.0.1, 2.0.2</property>
 				<property name="eclipse-projects">booking</property>
-				<property name="description">This project example requires Seam version 2.0</property>
+				<property name="description">This project example requires Seam 2.0</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.testng.eclipse</property>
@@ -275,13 +275,13 @@ Requires JBoss EAP 4.3/JBoss AS 4.2.x, Seam 2.0, m2eclipse and testng plugins.
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43, org.jboss.ide.eclipse.as.runtime.42</property>
 				<property name="eclipse-projects">booking,booking-ejb,booking-ear</property>
-				<property name="description">This project example requires the JBoss EAP 4.3 or JBoss AS 4.2.x</property>
+				<property name="description">This project example requires JBoss EAP 4.3 or JBoss AS 4.2.x</property>
 			</fix>
 			
 			<fix type="seam">
 				<property name="allowed-versions">2.0.0, 2.0.1, 2.0.2</property>
 				<property name="eclipse-projects">booking</property>
-				<property name="description">This project example requires Seam version 2.0</property>
+				<property name="description">This project example requires Seam 2.0</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.maven.ide.eclipse</property>
@@ -323,14 +323,14 @@ It includes the booking22, booking22-ear,booking22-test and booking22-ejb projec
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50</property>
 				<property name="eclipse-projects">booking22,booking22-ejb,booking22-ear</property>
-				<property name="description">This project example requires the JBoss EAP 5.0</property>
+				<property name="description">This project example requires JBoss EAP 5.0</property>
 				<property name="downloadId">org.jboss.tools.runtime.core.eap.50</property>
 			</fix>
 			
 			<fix type="seam">
 				<property name="allowed-versions">2.2.0</property>
 				<property name="eclipse-projects">booking22</property>
-				<property name="description">This project example requires Seam version 2.2.0</property>
+				<property name="description">This project example requires Seam 2.2</property>
 				<property name="downloadId">org.jboss.tools.runtime.core.eap.50</property>
 			</fix>
 			<fix type="plugin">
@@ -360,13 +360,13 @@ The example requires Seam 2.2,JBoss EAP 4.3/JBoss EAP 5.0/JBoss AS 4.2.x/JBoss A
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50, org.jboss.ide.eclipse.as.runtime.eap.43, org.jboss.ide.eclipse.as.runtime.51, org.jboss.ide.eclipse.as.runtime.50, org.jboss.ide.eclipse.as.runtime.42</property>
 				<property name="eclipse-projects">photoalbum-mavenized,photoalbum-mavenized-ear,photoalbum-mavenized-ejb</property>
-				<property name="description">This project example requires the JBoss EAP 4.3/JBoss EAP 5.0/JBoss AS 4.2.x/JBoss AS 5.x</property>
+				<property name="description">This project example requires JBoss EAP 4.3/JBoss EAP 5.0/JBoss AS 4.2.x/JBoss AS 5.x</property>
 			</fix>
 			
 			<fix type="seam">
 				<property name="allowed-versions">2.2.0</property>
 				<property name="eclipse-projects">photoalbum-mavenized</property>
-				<property name="description">This project example requires Seam version 2.2.0</property>
+				<property name="description">This project example requires Seam 2.2</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.maven.ide.eclipse</property>
@@ -405,7 +405,7 @@ The example requires Seam 2.2 and JBoss EAP 4.3/JBoss EAP 5.0/JBoss AS 4.2.x/JBo
 			<fix type="seam">
 				<property name="allowed-versions">2.2.0</property>
 				<property name="eclipse-projects">photoalbum</property>
-				<property name="description">This project example requires Seam version 2.2.0</property>
+				<property name="description">This project example requires Seam 2.2</property>
 			</fix>
 		</fixes>
 	</project>
@@ -429,13 +429,13 @@ The example requires Seam 2.2 and JBoss EAP 4.3/JBoss EAP 5.0/JBoss AS 4.2.x/JBo
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50</property>
 				<property name="eclipse-projects">dvdstore22,dvdstore22-ejb,dvdstore22-ear</property>
-				<property name="description">This project example requires the JBoss EAP 5.0</property>
+				<property name="description">This project example requires JBoss EAP 5.0</property>
 			</fix>
 			
 			<fix type="seam">
 				<property name="allowed-versions">2.2.0</property>
 				<property name="eclipse-projects">dvdstore22</property>
-				<property name="description">This project example requires Seam version 2.2.0</property>
+				<property name="description">This project example requires Seam 2.2</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.testng.eclipse</property>
@@ -508,12 +508,12 @@ Requires m2eclipse and JBoss EAP 4.3/JBoss EAP 5.0/JBoss AS 4.2.x/JBoss AS 5.x.
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43, org.jboss.ide.eclipse.as.runtime.42</property>
 				<property name="eclipse-projects">testseamportlet</property>
-				<property name="description">This project example requires the JBoss EPP 4.3 or JBoss Portal 2.7.x</property>
+				<property name="description">This project example requires JBoss EPP 4.3 or JBoss Portal 2.7.x</property>
 			</fix>
 			<fix type="seam">
 				<property name="allowed-versions">2.0.0, 2.0.1, 2.0.2</property>
 				<property name="eclipse-projects">testseamportlet</property>
-				<property name="description">This project example requires Seam version 2.0</property>
+				<property name="description">This project example requires Seam 2.0</property>
 			</fix>
 		</fixes>
 	</project>
