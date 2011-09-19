@@ -8,7 +8,7 @@
  * Contributors:
  *     JBoss by Red Hat - Initial implementation.
  ************************************************************************************/
-package org.jboss.tools.central;
+package org.jboss.tools.runtime.core.model;
 
 /**
  * 

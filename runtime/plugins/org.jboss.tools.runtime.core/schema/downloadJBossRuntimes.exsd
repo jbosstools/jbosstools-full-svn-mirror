@@ -3,10 +3,10 @@
 <schema targetNamespace="org.jboss.tools.central" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appinfo>
-         <meta.schema plugin="org.jboss.tools.central" id="projectExamplesTutorial" name="Project Examples Tutorial"/>
+         <meta.schema plugin="org.jboss.tools.central" id="downloadJBossRuntimes" name="Download JBoss Runtimes"/>
       </appinfo>
       <documentation>
-         [Enter description of this extension point.]
+         Downloads a new JBoss Runtime
       </documentation>
    </annotation>
 
@@ -18,7 +18,7 @@
       </annotation>
       <complexType>
          <sequence>
-            <element ref="tutorial" minOccurs="1" maxOccurs="unbounded"/>
+            <element ref="runtime" minOccurs="1" maxOccurs="unbounded"/>
          </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -47,53 +47,37 @@
       </complexType>
    </element>
 
-   <element name="tutorial">
+   <element name="runtime">
       <complexType>
-         <sequence>
-         </sequence>
-         <attribute name="category" type="string" use="required">
+         <attribute name="id" type="string" use="required">
             <annotation>
                <documentation>
                   
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="name" type="string">
+         <attribute name="name" type="string" use="required">
             <annotation>
                <documentation>
                   
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="wtpRuntimes" type="string">
+         <attribute name="version" type="string" use="required">
             <annotation>
                <documentation>
                   
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="id" type="string">
+         <attribute name="url" type="string" use="required">
             <annotation>
                <documentation>
                   
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="seamRuntimes" type="string">
-            <annotation>
-               <documentation>
-                  
-               </documentation>
-            </annotation>
-         </attribute>
-         <attribute name="eclipseIU" type="string">
-            <annotation>
-               <documentation>
-                  
-               </documentation>
-            </annotation>
-         </attribute>
-         <attribute name="description" type="string" use="required">
+         <attribute name="size" type="string" use="required">
             <annotation>
                <documentation>
                   
@@ -108,7 +92,7 @@
          <meta.section type="since"/>
       </appinfo>
       <documentation>
-         [Enter the first release in which this extension point appears.]
+         3.0.0
       </documentation>
    </annotation>
 
@@ -117,7 +101,10 @@
          <meta.section type="examples"/>
       </appinfo>
       <documentation>
-         [Enter extension point usage example here.]
+         &lt;extension
+         point=&quot;org.jboss.tools.central.downloadJBossRuntimes&quot;&gt;
+
+&lt;/extension&gt;
       </documentation>
    </annotation>
 
@@ -139,5 +126,13 @@
       </documentation>
    </annotation>
 
+   <annotation>
+      <appinfo>
+         <meta.section type="copyright"/>
+      </appinfo>
+      <documentation>
+         JBoss by Red Hat
+      </documentation>
+   </annotation>
 
 </schema>

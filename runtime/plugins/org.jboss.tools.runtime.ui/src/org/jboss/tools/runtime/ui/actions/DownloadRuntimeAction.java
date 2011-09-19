@@ -1,4 +1,4 @@
-package org.jboss.tools.central.actions;
+package org.jboss.tools.runtime.ui.actions;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -10,35 +10,56 @@ import java.net.URL;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.core.commands.AbstractHandler;
-import org.eclipse.core.commands.ExecutionEvent;
-import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
-import org.jboss.tools.central.DownloadRuntime;
-import org.jboss.tools.central.JBossCentralActivator;
 import org.jboss.tools.project.examples.ProjectExamplesActivator;
 import org.jboss.tools.project.examples.filetransfer.ECFExamplesTransport;
 import org.jboss.tools.runtime.core.JBossRuntimeLocator;
 import org.jboss.tools.runtime.core.RuntimeCoreActivator;
+import org.jboss.tools.runtime.core.model.DownloadRuntime;
 import org.jboss.tools.runtime.core.model.IRuntimeDetector;
 import org.jboss.tools.runtime.core.model.RuntimePath;
 import org.jboss.tools.runtime.core.model.ServerDefinition;
 import org.jboss.tools.runtime.ui.RuntimeUIActivator;
 
-public class DownloadJBossAs701Handler extends AbstractHandler {
+public class DownloadRuntimeAction extends Action {
 
-	@Override
-	public Object execute(ExecutionEvent event) throws ExecutionException {
-		final DownloadRuntime runtime = JBossCentralActivator.getDefault().getDownloadJBossRuntimes().get(getId());
-		if (runtime == null) {
-			JBossCentralActivator.log("Invalid runtime");
-		}
+	private String runtimeId;
+	
+	public DownloadRuntimeAction(String runtimeId) {
+		super();
+		setRuntimeId(runtimeId);
+	}
+
+	private void setRuntimeId(String runtimeId) {
+		Assert.isNotNull(runtimeId);
+		this.runtimeId = runtimeId;
+	}
+
+	public DownloadRuntimeAction(String text, ImageDescriptor image, String runtimeId) {
+		super(text, image);
+		setRuntimeId(runtimeId);
+	}
+
+	public DownloadRuntimeAction(String text, int style, String runtimeId) {
+		super(text, style);
+		setRuntimeId(runtimeId);
+	}
+
+	public DownloadRuntimeAction(String text, String runtimeId) {
+		super(text);
+		setRuntimeId(runtimeId);
+	}
+
+	private void downloadRuntime(final DownloadRuntime runtime) {
 		Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 		DirectoryDialog dialog = new DirectoryDialog(shell);
 		dialog.setMessage("Select installation directory.");
@@ -55,11 +76,9 @@ public class DownloadJBossAs701Handler extends AbstractHandler {
 			job.setUser(true);
 			job.schedule();
 		}
-		
-		return null;
 	}
-
-	protected IStatus downloadAndInstall(DownloadRuntime runtime,
+	
+	private IStatus downloadAndInstall(DownloadRuntime runtime,
 			String selectedDirectory, IProgressMonitor monitor) {
 		FileInputStream in = null;
 		OutputStream out = null;
@@ -81,19 +100,19 @@ public class DownloadJBossAs701Handler extends AbstractHandler {
 			File directory = new File(selectedDirectory);
 			directory.mkdirs();
 			if (!directory.isDirectory()) {
-				JBossCentralActivator.getDefault().getLog().log(result);
+				RuntimeCoreActivator.getDefault().getLog().log(result);
 				// FIXME 
 				return Status.CANCEL_STATUS;
 			}
 			ProjectExamplesActivator.extractZipFile(file, directory, monitor);
 			if (!result.isOK()) {
-				JBossCentralActivator.getDefault().getLog().log(result);
+				RuntimeCoreActivator.getDefault().getLog().log(result);
 				// FIXME 
 				return Status.CANCEL_STATUS;
 			}
 			createRuntimes(selectedDirectory, monitor);
 		} catch (IOException e) {
-			JBossCentralActivator.log(e);
+			RuntimeCoreActivator.log(e);
 			// FIXME 
 		} finally {
 			if (in != null) {
@@ -114,10 +133,6 @@ public class DownloadJBossAs701Handler extends AbstractHandler {
 		return Status.OK_STATUS;
 	}
 
-	private String getId() {
-		return "org.jboss.tools.central.as.701";
-	}
-	
 	private static void createRuntimes(String directory, IProgressMonitor monitor) {
 		JBossRuntimeLocator locator = new JBossRuntimeLocator();
 		Set<RuntimePath> runtimePaths = RuntimeUIActivator.getDefault()
@@ -143,6 +158,14 @@ public class DownloadJBossAs701Handler extends AbstractHandler {
 				detector.initializeRuntimes(serverDefinitions);
 			}
 		}
+	}
+
+	@Override
+	public void run() {
+		Assert.isNotNull(runtimeId);
+		DownloadRuntime runtime = RuntimeCoreActivator.getDefault().getDownloadJBossRuntimes().get(runtimeId);
+		Assert.isNotNull(runtime);
+		downloadRuntime(runtime);
 	}
 
 }
