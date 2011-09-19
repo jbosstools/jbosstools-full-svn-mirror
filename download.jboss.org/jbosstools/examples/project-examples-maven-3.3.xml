@@ -15,6 +15,7 @@ It will create the jboss-javaee6-webapp project in your workspace based on the o
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.60</property>
 				<property name="description">This project example requires JBoss AS 6.0</property>
+				<property name="downloadId">org.jboss.tools.runtime.core.as.610</property>
 			</fix>
 		</fixes>
 		<importType>mavenArchetype</importType>
@@ -51,6 +52,25 @@ The example can be deployed using Maven from the command line or from Eclipse us
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70</property>
 				<property name="description">This project example requires JBoss AS 7.0</property>
+				<property name="downloadId">org.jboss.tools.runtime.core.as.701</property>
+			</fix>
+			<fix type="plugin">
+				<property name="id">org.eclipse.m2e.core</property>
+				<property name="versions">[1.0.0,1.1.0)</property>
+				<property name="description">This project example requires m2eclipse &lt;= 1.0.</property>
+				<property name="connectorIds">org.eclipse.m2e.feature</property>
+			</fix>
+			<fix type="plugin">
+				<property name="id">org.maven.ide.eclipse.wtp</property>
+				<property name="versions">[0.13.1,0.14.0)</property>
+				<property name="description">This project example requires m2eclipse &lt;= 0.13.1.</property>
+				<property name="connectorIds">org.maven.ide.eclipse.wtp</property>
+			</fix>
+			<fix type="plugin">
+				<property name="id">org.jboss.tools.maven.core</property>
+				<property name="versions">[1.3.0,1.4.0)</property>
+				<property name="description">This project example requires JBoss Maven Tools.</property>
+				<property name="connectorIds">org.jboss.tools.maven.feature,org.jboss.tools.maven.cdi.feature,org.jboss.tools.maven.hibernate.feature,org.jboss.tools.maven.jaxrs.feature, org.jboss.tools.maven.portlet.feature,org.jboss.tools.maven.seam.feature</property>
 			</fix>
 		</fixes>
 		<importType>maven</importType>
@@ -76,6 +96,25 @@ You will see a Hello AS7 World!! message appear on the console when this is done
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70</property>
 				<property name="description">This project example requires JBoss AS 7.0</property>
+				<property name="downloadId">org.jboss.tools.runtime.core.as.701</property>
+			</fix>
+			<fix type="plugin">
+				<property name="id">org.eclipse.m2e.core</property>
+				<property name="versions">[1.0.0,1.1.0)</property>
+				<property name="description">This project example requires m2eclipse &lt;= 1.0.</property>
+				<property name="connectorIds">org.eclipse.m2e.feature</property>
+			</fix>
+			<fix type="plugin">
+				<property name="id">org.maven.ide.eclipse.wtp</property>
+				<property name="versions">[0.13.1,0.14.0)</property>
+				<property name="description">This project example requires m2eclipse &lt;= 0.13.1.</property>
+				<property name="connectorIds">org.maven.ide.eclipse.wtp</property>
+			</fix>
+			<fix type="plugin">
+				<property name="id">org.jboss.tools.maven.core</property>
+				<property name="versions">[1.3.0,1.4.0)</property>
+				<property name="description">This project example requires JBoss Maven Tools.</property>
+				<property name="connectorIds">org.jboss.tools.maven.feature,org.jboss.tools.maven.cdi.feature,org.jboss.tools.maven.hibernate.feature,org.jboss.tools.maven.jaxrs.feature, org.jboss.tools.maven.portlet.feature,org.jboss.tools.maven.seam.feature</property>
 			</fix>
 		</fixes>
 		<importType>maven</importType>
@@ -98,6 +137,25 @@ The example can be deployed using Maven from the command line or from Eclipse us
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70</property>
 				<property name="description">This project example requires JBoss AS 7.0</property>
+				<property name="downloadId">org.jboss.tools.runtime.core.as.701</property>
+			</fix>
+			<fix type="plugin">
+				<property name="id">org.eclipse.m2e.core</property>
+				<property name="versions">[1.0.0,1.1.0)</property>
+				<property name="description">This project example requires m2eclipse &lt;= 1.0.</property>
+				<property name="connectorIds">org.eclipse.m2e.feature</property>
+			</fix>
+			<fix type="plugin">
+				<property name="id">org.maven.ide.eclipse.wtp</property>
+				<property name="versions">[0.13.1,0.14.0)</property>
+				<property name="description">This project example requires m2eclipse &lt;= 0.13.1.</property>
+				<property name="connectorIds">org.maven.ide.eclipse.wtp</property>
+			</fix>
+			<fix type="plugin">
+				<property name="id">org.jboss.tools.maven.core</property>
+				<property name="versions">[1.3.0,1.4.0)</property>
+				<property name="description">This project example requires JBoss Maven Tools.</property>
+				<property name="connectorIds">org.jboss.tools.maven.feature,org.jboss.tools.maven.cdi.feature,org.jboss.tools.maven.hibernate.feature,org.jboss.tools.maven.jaxrs.feature, org.jboss.tools.maven.portlet.feature,org.jboss.tools.maven.seam.feature</property>
 			</fix>
 		</fixes>
 		<importType>maven</importType>
@@ -119,6 +177,25 @@ The example can be deployed using Maven from the command line or from Eclipse us
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70</property>
 				<property name="description">This project example requires JBoss AS 7.0</property>
+				<property name="downloadId">org.jboss.tools.runtime.core.as.701</property>
+			</fix>
+			<fix type="plugin">
+				<property name="id">org.eclipse.m2e.core</property>
+				<property name="versions">[1.0.0,1.1.0)</property>
+				<property name="description">This project example requires m2eclipse &lt;= 1.0.</property>
+				<property name="connectorIds">org.eclipse.m2e.feature</property>
+			</fix>
+			<fix type="plugin">
+				<property name="id">org.maven.ide.eclipse.wtp</property>
+				<property name="versions">[0.13.1,0.14.0)</property>
+				<property name="description">This project example requires m2eclipse &lt;= 0.13.1.</property>
+				<property name="connectorIds">org.maven.ide.eclipse.wtp</property>
+			</fix>
+			<fix type="plugin">
+				<property name="id">org.jboss.tools.maven.core</property>
+				<property name="versions">[1.3.0,1.4.0)</property>
+				<property name="description">This project example requires JBoss Maven Tools.</property>
+				<property name="connectorIds">org.jboss.tools.maven.feature,org.jboss.tools.maven.cdi.feature,org.jboss.tools.maven.hibernate.feature,org.jboss.tools.maven.jaxrs.feature, org.jboss.tools.maven.portlet.feature,org.jboss.tools.maven.seam.feature</property>
 			</fix>
 		</fixes>
 		<importType>maven</importType>
@@ -141,6 +218,25 @@ It includes a persistence unit and some sample persistence and transaction code 
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70</property>
 				<property name="description">This project example requires JBoss AS 7.0</property>
+				<property name="downloadId">org.jboss.tools.runtime.core.as.701</property>
+			</fix>
+			<fix type="plugin">
+				<property name="id">org.eclipse.m2e.core</property>
+				<property name="versions">[1.0.0,1.1.0)</property>
+				<property name="description">This project example requires m2eclipse &lt;= 1.0.</property>
+				<property name="connectorIds">org.eclipse.m2e.feature</property>
+			</fix>
+			<fix type="plugin">
+				<property name="id">org.maven.ide.eclipse.wtp</property>
+				<property name="versions">[0.13.1,0.14.0)</property>
+				<property name="description">This project example requires m2eclipse &lt;= 0.13.1.</property>
+				<property name="connectorIds">org.maven.ide.eclipse.wtp</property>
+			</fix>
+			<fix type="plugin">
+				<property name="id">org.jboss.tools.maven.core</property>
+				<property name="versions">[1.3.0,1.4.0)</property>
+				<property name="description">This project example requires JBoss Maven Tools.</property>
+				<property name="connectorIds">org.jboss.tools.maven.feature,org.jboss.tools.maven.cdi.feature,org.jboss.tools.maven.hibernate.feature,org.jboss.tools.maven.jaxrs.feature, org.jboss.tools.maven.portlet.feature,org.jboss.tools.maven.seam.feature</property>
 			</fix>
 		</fixes>
 		<importType>maven</importType>
@@ -163,6 +259,25 @@ It includes a persistence unit and some sample persistence and transaction code 
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70</property>
 				<property name="description">This project example requires JBoss AS 7.0</property>
+				<property name="downloadId">org.jboss.tools.runtime.core.as.701</property>
+			</fix>
+			<fix type="plugin">
+				<property name="id">org.eclipse.m2e.core</property>
+				<property name="versions">[1.0.0,1.1.0)</property>
+				<property name="description">This project example requires m2eclipse &lt;= 1.0.</property>
+				<property name="connectorIds">org.eclipse.m2e.feature</property>
+			</fix>
+			<fix type="plugin">
+				<property name="id">org.maven.ide.eclipse.wtp</property>
+				<property name="versions">[0.13.1,0.14.0)</property>
+				<property name="description">This project example requires m2eclipse &lt;= 0.13.1.</property>
+				<property name="connectorIds">org.maven.ide.eclipse.wtp</property>
+			</fix>
+			<fix type="plugin">
+				<property name="id">org.jboss.tools.maven.core</property>
+				<property name="versions">[1.3.0,1.4.0)</property>
+				<property name="description">This project example requires JBoss Maven Tools.</property>
+				<property name="connectorIds">org.jboss.tools.maven.feature,org.jboss.tools.maven.cdi.feature,org.jboss.tools.maven.hibernate.feature,org.jboss.tools.maven.jaxrs.feature,org.jboss.tools.maven.portlet.feature,org.jboss.tools.maven.seam.feature</property>
 			</fix>
 		</fixes>
 		<importType>mavenArchetype</importType>
@@ -181,6 +296,5 @@ It includes a persistence unit and some sample persistence and transaction code 
 			</properties>
 		</mavenArchetype>
 	</project>
-	
 	
 </projects>

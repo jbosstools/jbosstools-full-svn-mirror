@@ -55,12 +55,14 @@ It includes a tutorial.
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43, org.jboss.ide.eclipse.as.runtime.42</property>
 				<property name="eclipse-projects">registration,registration-ejb,registration-ear</property>
 				<property name="description">This project example requires the JBoss EAP 4.3 or JBoss AS 4.2.x</property>
+				<property name="downloadId">org.jboss.tools.runtime.core.as.423</property>
 			</fix>
 			
 			<fix type="seam">
 				<property name="allowed-versions">2.0.0, 2.0.1, 2.0.2</property>
 				<property name="eclipse-projects">registration</property>
 				<property name="description">This project example requires Seam version 2.0</property>
+				<property name="downloadId">org.jboss.tools.runtime.core.seam.202</property>
 			</fix>
 		</fixes>
 	</project>
@@ -86,12 +88,14 @@ It includes a tutorial.
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43, org.jboss.ide.eclipse.as.runtime.42</property>
 				<property name="eclipse-projects">messages,messages-ejb,messages-ear</property>
 				<property name="description">This project example requires the JBoss EAP 4.3 or JBoss AS 4.2.x</property>
+				<property name="downloadId">org.jboss.tools.runtime.core.as.423</property>
 			</fix>
 			
 			<fix type="seam">
 				<property name="allowed-versions">2.0.0, 2.0.1, 2.0.2</property>
 				<property name="eclipse-projects">messages</property>
 				<property name="description">This project example requires Seam version 2.0</property>
+				<property name="downloadId">org.jboss.tools.runtime.core.seam.202</property>
 			</fix>
 		</fixes>
 	</project>
@@ -118,12 +122,14 @@ It includes a tutorial.
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43, org.jboss.ide.eclipse.as.runtime.42</property>
 				<property name="eclipse-projects">todo,todo-ejb,todo-ear</property>
 				<property name="description">This project example requires the JBoss EAP 4.3 or JBoss AS 4.2.x</property>
+				<property name="downloadId">org.jboss.tools.runtime.core.as.423</property>
 			</fix>
 			
 			<fix type="seam">
 				<property name="allowed-versions">2.0.0, 2.0.1, 2.0.2</property>
 				<property name="eclipse-projects">todo</property>
 				<property name="description">This project example requires Seam version 2.0</property>
+				<property name="downloadId">org.jboss.tools.runtime.core.seam.202</property>
 			</fix>
 		</fixes>
 	</project>
@@ -150,12 +156,14 @@ It includes a tutorial.
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43, org.jboss.ide.eclipse.as.runtime.42</property>
 				<property name="eclipse-projects">numberguess,numberguess-ejb,numberguess-ear</property>
 				<property name="description">This project example requires the JBoss EAP 4.3 or JBoss AS 4.2.x</property>
+				<property name="downloadId">org.jboss.tools.runtime.core.as.423</property>
 			</fix>
 			
 			<fix type="seam">
 				<property name="allowed-versions">2.0.0, 2.0.1, 2.0.2</property>
 				<property name="eclipse-projects">numberguess</property>
 				<property name="description">This project example requires Seam version 2.0</property>
+				<property name="downloadId">org.jboss.tools.runtime.core.seam.202</property>
 			</fix>
 		</fixes>
 	</project>
@@ -316,17 +324,20 @@ It includes the booking22, booking22-ear,booking22-test and booking22-ejb projec
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50</property>
 				<property name="eclipse-projects">booking22,booking22-ejb,booking22-ear</property>
 				<property name="description">This project example requires the JBoss EAP 5.0</property>
+				<property name="downloadId">org.jboss.tools.runtime.core.eap.50</property>
 			</fix>
 			
 			<fix type="seam">
 				<property name="allowed-versions">2.2.0</property>
 				<property name="eclipse-projects">booking22</property>
 				<property name="description">This project example requires Seam version 2.2.0</property>
+				<property name="downloadId">org.jboss.tools.runtime.core.eap.50</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.testng.eclipse</property>
-				<property name="versions">5.8.0, 5.9.0</property>
+				<property name="versions">5.8.0</property>
 				<property name="description">The TestNG plugin is required if you want to run Seam tests. You can install it using the following update site: http://beust.com/eclipse</property>
+				<property name="connectorIds">org.testng.eclipse</property>
 			</fix>
 		</fixes>
 	</project>
