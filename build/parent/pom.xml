@@ -17,6 +17,8 @@
 		-->
 		<tychoVersion>0.12.0</tychoVersion>
 		<scmBranch>trunk</scmBranch>
+		<JBT_VERSION>3.3.0</JBT_VERSION>
+		<JBDS_VERSION>5.0.0</JBDS_VERSION>
 		<BUILD_ALIAS>M4</BUILD_ALIAS>
 		<memoryOptions1>-Xms512m -Xmx1024m -XX:PermSize=256m</memoryOptions1>
 		<memoryOptions2>-XX:MaxPermSize=256m</memoryOptions2>
