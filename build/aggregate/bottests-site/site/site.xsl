@@ -5,7 +5,8 @@
 	<xsl:output method="html" indent="yes" />
 	<xsl:template match="/site">
 		<br />
-			<table cellspacing="2" cellpadding="0" border="0">
+		<table cellspacing="2" cellpadding="0" border="0">
+			<xsl:if test="count(feature[contains(@id,'jboss')])>0">
 				<tr style="background-color:#DDDDDD">
 					<th style="font-size:small">Feature</th>
 					<th style="font-size:small">Version</th>
@@ -50,6 +51,8 @@
 						</td>
 					</tr>
 				</xsl:for-each>
+			</xsl:if>
+			<xsl:if test="count(feature[not(contains(@id,'jboss'))])>0">
 				<tr style="background-color:#DDDDDD">
 					<th style="font-size:small">Feature</th>
 					<th style="font-size:small">Version</th>
@@ -94,25 +97,27 @@
 						</td>
 					</tr>
 				</xsl:for-each>
-				<tr style="background-color:#DDDDDD">
-					<th colspan="1" style="font-size:small">Metadata</th>
-					<th colspan="1" style="font-size:small"></th>
-					<th colspan="1" style="font-size:small"></th>
-				</tr>
-				<tr style="background-color:#EEEEEE">
-					<td class="rowLine">
-						<a href="site.xml" style="font-size:x-small">site.xml</a>
-						::
-						<a href="artifacts.jar" style="font-size:x-small">artifacts.jar</a>
-						::
-						<a href="content.jar" style="font-size:x-small">content.jar</a>
-					</td>
-					<td class="rowLine">
-					</td>
-					<td class="rowLine">
-					</td>
-				</tr>
-			</table>
+			</xsl:if>
+
+			<tr style="background-color:#DDDDDD">
+				<th colspan="1" style="font-size:small">Metadata</th>
+				<th colspan="1" style="font-size:small"></th>
+				<th colspan="1" style="font-size:small"></th>
+			</tr>
+			<tr style="background-color:#EEEEEE">
+				<td class="rowLine">
+					<a href="site.xml" style="font-size:x-small">site.xml</a>
+					::
+					<a href="artifacts.jar" style="font-size:x-small">artifacts.jar</a>
+					::
+					<a href="content.jar" style="font-size:x-small">content.jar</a>
+				</td>
+				<td class="rowLine">
+				</td>
+				<td class="rowLine">
+				</td>
+			</tr>
+		</table>
 		<br />
 	</xsl:template>
 </xsl:stylesheet>
