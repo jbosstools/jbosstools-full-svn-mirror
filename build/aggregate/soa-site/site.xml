@@ -42,6 +42,25 @@
 		<category name="GeneralTools" />
 	</feature>
 
+	<feature url="features/org.jboss.tools.runtime.feature_0.0.0.jar" id="org.jboss.tools.runtime.feature" version="0.0.0">
+		<category name="AllTools" />
+	</feature>
+	<feature url="features/org.jboss.tools.runtime.core.feature_0.0.0.jar" id="org.jboss.tools.runtime.core.feature" version="0.0.0">
+		<category name="AllTools" />
+	</feature>
+	<feature url="features/org.jboss.tools.runtime.drools.detector.feature_0.0.0.jar" id="org.jboss.tools.runtime.drools.detector.feature" version="0.0.0">
+		<category name="AllTools" />
+	</feature>
+	<feature url="features/org.jboss.tools.runtime.esb.detector.feature_0.0.0.jar" id="org.jboss.tools.runtime.esb.detector.feature" version="0.0.0">
+		<category name="AllTools" />
+	</feature>
+	<feature url="features/org.jboss.tools.runtime.jbpm.detector.feature_0.0.0.jar" id="org.jboss.tools.runtime.jbpm.detector.feature" version="0.0.0">
+		<category name="AllTools" />
+	</feature>
+	<feature url="features/org.jboss.tools.usage.feature_0.0.0.jar" id="org.jboss.tools.usage.feature" version="0.0.0">
+		<category name="AllTools" />
+	</feature>
+
 	<category-def name="AllTools" label="All JBoss Tools - SOA Tooling 3.3">
 		<description>
 			Contains ALL the plugins that are available from
@@ -83,7 +102,7 @@
 	<!-- scribble.protocol.feature no longer exists in Savara/Scribble 2.0 -->
 	<!-- <feature url="features/org.scribble.protocol.feature_0.0.0.jar" id="org.scribble.protocol.feature" version="0.0.0">
 	</feature> -->
-	
+
 	<!-- aggregated from other sources -->
 	<feature url="features/org.drools.eclipse.feature_0.0.0.jar" id="org.drools.eclipse.feature" version="0.0.0">
 		<category name="AllTools" />
