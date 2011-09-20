@@ -270,7 +270,6 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 				date; rsync -arzq --protocol=28 --delete ${STAGINGDIR}/* $DESTINATION/builds/nightly/${PUBLISHPATHSUFFIX}/${BUILD_ID}-H${BUILD_NUMBER}/
 				# sftp only works with user@server, not with local $DESTINATIONS, so use rsync to push symlink instead
 				# echo -e "rm latest\nln ${BUILD_ID}-H${BUILD_NUMBER} latest" | sftp ${DESTINATIONREDUX}/builds/nightly/${PUBLISHPATHSUFFIX}/ 
-
 				pushd $tmpdir >/dev/null; ln -s ${BUILD_ID}-H${BUILD_NUMBER} latest; rsync --protocol=28 -l latest ${DESTINATION}/builds/nightly/${PUBLISHPATHSUFFIX}/; rm -f latest; popd >/dev/null
 				date; rsync -arzq --protocol=28 --delete $tmpdir/latestBuild.html $DESTINATION/builds/nightly/${PUBLISHPATHSUFFIX}/
 			else
