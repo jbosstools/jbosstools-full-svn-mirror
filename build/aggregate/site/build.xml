@@ -4,8 +4,6 @@
 		-DJOB_NAME=${JOB_NAME} 
 		-DBUILD_ID=${BUILD_ID} 
 		-DBUILD_NUMBER=${BUILD_NUMBER}
-		eg., 
-		-DJOB_NAME=jbosstools-3.2_stable_branch.aggregate -DBUILD_ID=2011-05-12_06-03-43 -DBUILD_NUMBER=81
 	-->
 
 	<!-- if ${WORKSPACE}/site folder exists, target that folder; else generate here. -->
@@ -42,9 +40,22 @@
 				<pathelement location="${COMMON_TOOLS}/ant-contrib.jar" />
 			</classpath>
 		</taskdef>
+
+		<available file="${COMMON_TOOLS}/saxon.jar" type="file" property="saxon.jar.exists" />
+		<antcall target="get.saxon" />
 	</target>
 
 	<target name="custom.build" description="aggregate update site extras" depends="init,check.target,add.associate.sites,add.web.content,pack.zip,collect.zips,collect.metadata,create.summary.file" />
+
+	<target name="get.saxon" unless="saxon.jar.exists">
+		<!-- or use http://downloads.sourceforge.net/saxon/saxonhe9-3-0-4j.zip ? -->
+		<property name="SAXON_MIRROR" value="http://downloads.sourceforge.net/project/saxon/Saxon-HE/9.3/saxonhe9-3-0-4j.zip?r=http%3A%2F%2Fsaxon.sourceforge.net%2F&amp;ts=1297812383&amp;use_mirror=softlayer" />
+		<get usetimestamp="true" dest="${COMMON_TOOLS}/saxonhe9-3-0-4j.zip" src="${SAXON_MIRROR}" />
+		<mkdir dir="${java.io.tmpdir}/saxonhe9-3-0-4j.zip_" />
+		<unzip src="${COMMON_TOOLS}/saxonhe9-3-0-4j.zip" dest="${java.io.tmpdir}/saxonhe9-3-0-4j.zip_" overwrite="true" />
+		<copy file="${java.io.tmpdir}/saxonhe9-3-0-4j.zip_/saxon9he.jar" tofile="${COMMON_TOOLS}/saxon.jar" failonerror="true" />
+		<delete dir="${java.io.tmpdir}/saxonhe9-3-0-4j.zip_" includeemptydirs="true" quiet="true" />
+	</target>
 
 	<!-- = = = = = = = = = = = = = = = = =
           macrodef: fetchZipsFromList - given a list of zips in zip.list.txt, fetch those zips           
@@ -278,30 +289,49 @@ DEST = ${aggregate.zips.dir}/@{zipPath}
 					<echo level="verbose">Got ${aggregate.zips.dir}/compositeArtifacts.xml</echo>
 					<xmlproperty file="${aggregate.zips.dir}/compositeArtifacts.xml" validate="false" collapseAttributes="true" />
 					<echo level="verbose">Found ${repository.children.size} contained repos to search</echo>
+
+					<!-- counter variable -->
+					<var name="counter" value="" />
 					<!-- foreach entry repository.children.child.location -->
 					<for param="location" list="${repository.children.child.location}">
 						<sequential>
+							<var name="counter" value="${counter}0" />
+							<var name="i" unset="true" />
+							<length property="i" string="${counter}" />
 							<if>
-								<available file="/home/hudson/static_build_env/jbds/builds/staging" type="dir" />
+								<not>
+									<contains string="@{location}" substring="/staging.previous/" />
+								</not>
 								<then>
-									<propertyregex override="true" property="location.cleaned" defaultvalue="@{location}" input="@{location}" regexp="../../" replace="/home/hudson/static_build_env/jbds/builds/staging/" />
 									<if>
-										<not>
-											<available file="${location.cleaned}" />
-										</not>
+										<available file="/home/hudson/static_build_env/jbds/builds/staging" type="dir" />
 										<then>
-											<propertyregex override="true" property="location.cleaned" defaultvalue="@{location}" input="@{location}" regexp="../../" replace="http://download.jboss.org/jbosstools/builds/staging/" />
+											<propertyregex override="true" property="location.cleaned" defaultvalue="@{location}" input="@{location}" regexp="../../" replace="/home/hudson/static_build_env/jbds/builds/staging/" />
+											<if>
+												<not>
+													<available file="${location.cleaned}" />
+												</not>
+												<then>
+													<propertyregex override="true" property="location.cleaned" defaultvalue="@{location}" input="@{location}" regexp="../../" replace="http://download.jboss.org/jbosstools/builds/staging/" />
+												</then>
+											</if>
 										</then>
+										<else>
+											<propertyregex override="true" property="location.cleaned" defaultvalue="@{location}" input="@{location}" regexp="../../" replace="http://download.jboss.org/jbosstools/builds/staging/" />
+										</else>
 									</if>
+									<echo level="error">[${i}/${repository.children.size}] Site URL = ${location.cleaned} (@{location})</echo>
+									<fetchZipsFromList repo="${location.cleaned}" />
 								</then>
 								<else>
-									<propertyregex override="true" property="location.cleaned" defaultvalue="@{location}" input="@{location}" regexp="../../" replace="http://download.jboss.org/jbosstools/builds/staging/" />
+									<echo level="error">[${i}/${repository.children.size}] Skip @{location}</echo>
 								</else>
 							</if>
-							<echo level="error">Site URL = ${location.cleaned} (@{location})</echo>
-							<fetchZipsFromList repo="${location.cleaned}" />
 						</sequential>
 					</for>
+					<var name="counter" unset="true" />
+					<var name="i" unset="true" />
+
 					<delete file="${aggregate.zips.dir}/compositeArtifacts.xml" quiet="true" />
 				</then>
 				<else>
@@ -427,6 +457,9 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 			</else>
 		</if>
 
+		<!-- get site.xml as HTML, then load into ${site.contents} in order to merge into index.html -->
+		<antcallback target="transform.site.xml" return="site.contents" />
+
 		<copy todir="${output.dir}" overwrite="true">
 			<fileset file="index-template.html" />
 			<mapper type="merge" to="index.html" />
@@ -438,6 +471,18 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 		<copy todir="${update.site.source.dir}">
 			<fileset dir="${output.dir}" includes="index.html, **/*.css, README*" />
 		</copy>
+	</target>
+
+	<target name="transform.site.xml">
+		<!-- turn site.xml into site.html via site.xsl -->
+		<delete quiet="true" file="${update.site.source.dir}/site.html" />
+		<xslt style="site.xsl" in="${update.site.source.dir}/site.xml" out="${update.site.source.dir}/site.html" force="true">
+			<classpath location="${COMMON_TOOLS}/saxon.jar" />
+		</xslt>
+		<!-- merge contents of site.html into index.html, then remove site.html -->
+		<loadfile property="site.contents" srcfile="${update.site.source.dir}/site.html" failonerror="false" />
+		<property name="site.contents" value="" />
+		<delete file="${update.site.source.dir}/site.html" quiet="true" />
 	</target>
 
 	<!-- look for http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2.0.M2.continuous/logs/zip.list.txt; 
