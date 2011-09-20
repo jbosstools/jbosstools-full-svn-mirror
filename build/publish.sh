@@ -5,6 +5,10 @@
 # to use timestamp when naming dirs instead of ${BUILD_ID}-H${BUILD_NUMBER}, use:
 # BUILD_ID=2010-08-31_19-16-10; timestamp=$(echo $BUILD_ID | tr -d "_-"); timestamp=${timestamp:0:12}; echo $timestamp; # 201008311916
 
+#set up tmpdir
+tmpdir=`mktemp -d`
+mkdir -p $tmpdir
+
 # where to create the stuff to publish
 STAGINGDIR=${WORKSPACE}/results/${JOB_NAME}
 
@@ -261,21 +265,21 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 		
 		# if an aggregate build, put output elsewhere on disk
 		if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]]; then
-			echo "<meta http-equiv=\"refresh\" content=\"0;url=${BUILD_ID}-H${BUILD_NUMBER}/\">" > /tmp/latestBuild.html
+			echo "<meta http-equiv=\"refresh\" content=\"0;url=${BUILD_ID}-H${BUILD_NUMBER}/\">" > $tmpdir/latestBuild.html
 			if [[ ${PUBLISHPATHSUFFIX} ]]; then
 				date; rsync -arzq --protocol=28 --delete ${STAGINGDIR}/* $DESTINATION/builds/nightly/${PUBLISHPATHSUFFIX}/${BUILD_ID}-H${BUILD_NUMBER}/
 				# sftp only works with user@server, not with local $DESTINATIONS, so use rsync to push symlink instead
 				# echo -e "rm latest\nln ${BUILD_ID}-H${BUILD_NUMBER} latest" | sftp ${DESTINATIONREDUX}/builds/nightly/${PUBLISHPATHSUFFIX}/ 
-				pushd /tmp >/dev/null; ln -s ${BUILD_ID}-H${BUILD_NUMBER} latest; rsync --protocol=28 -l latest ${DESTINATION}/builds/nightly/${PUBLISHPATHSUFFIX}/; rm -f latest; popd >/dev/null
-				date; rsync -arzq --protocol=28 --delete /tmp/latestBuild.html $DESTINATION/builds/nightly/${PUBLISHPATHSUFFIX}/
+				pushd $tmpdir >/dev/null; ln -s ${BUILD_ID}-H${BUILD_NUMBER} latest; rsync --protocol=28 -l latest ${DESTINATION}/builds/nightly/${PUBLISHPATHSUFFIX}/; rm -f latest; popd >/dev/null
+				date; rsync -arzq --protocol=28 --delete $tmpdir/latestBuild.html $DESTINATION/builds/nightly/${PUBLISHPATHSUFFIX}/
 			else
-				date; rsync -arzq --protocol=28 --delete /tmp/latestBuild.html $DESTINATION/builds/nightly/${JOBNAMEREDUX}/ 
+				date; rsync -arzq --protocol=28 --delete $tmpdir/latestBuild.html $DESTINATION/builds/nightly/${JOBNAMEREDUX}/ 
 				# sftp only works with user@server, not with local $DESTINATIONS, so use rsync to push symlink instead
 				# echo -e "rm latest\nln ${BUILD_ID}-H${BUILD_NUMBER} latest" | sftp ${DESTINATIONREDUX}/builds/nightly/${JOBNAMEREDUX}/
-				pushd /tmp >/dev/null; ln -s ${BUILD_ID}-H${BUILD_NUMBER} latest; rsync --protocol=28 -l latest ${DESTINATION}/builds/nightly/${JOBNAMEREDUX}/; rm -f latest; popd >/dev/null
+				pushd $tmpdir >/dev/null; ln -s ${BUILD_ID}-H${BUILD_NUMBER} latest; rsync --protocol=28 -l latest ${DESTINATION}/builds/nightly/${JOBNAMEREDUX}/; rm -f latest; popd >/dev/null
 				date; rsync -arzq --protocol=28 --delete ${STAGINGDIR}/* $DESTINATION/builds/nightly/${JOBNAMEREDUX}/${BUILD_ID}-H${BUILD_NUMBER}/
 			fi
-			rm -f /tmp/latestBuild.html
+			rm -f $tmpdir/latestBuild.html
 		#else
 			# COMMENTED OUT as this uses too much disk space
 			# if a release build, create a named dir
@@ -291,11 +295,11 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 		date; rsync -arzq --protocol=28 --delete ${STAGINGDIR}/* $DESTINATION/builds/staging/${JOB_NAME}.next
 
 		# 1. To recursively purge contents of .../staging.previous/foobar/ folder: 
-		#  mkdir -p /tmp/foobar; 
-		#  rsync -aPrz --delete /tmp/foobar tools@filemgmt.jboss.org:/downloads_htdocs/tools/builds/staging.previous/ 
+		#  mkdir -p $tmpdir/foobar; 
+		#  rsync -aPrz --delete $tmpdir/foobar tools@filemgmt.jboss.org:/downloads_htdocs/tools/builds/staging.previous/ 
 		# 2. To then remove entire .../staging.previous/foobar/ folder: 
 		#  echo -e "rmdir foobar" | sftp tools@filemgmt.jboss.org:/downloads_htdocs/tools/builds/staging.previous/
-		#  rmdir /tmp/foobar
+		#  rmdir $tmpdir/foobar
 
 		# JBIDE-8667 move current to previous; move next to current
 		if [[ ${DESTINATION##*@*:*} == "" ]]; then # user@server, do remote op
@@ -305,16 +309,16 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 
 			# IF using .2 folders, purge contents of /builds/staging.previous/${JOB_NAME}.2 and remove empty dir
 			# NOTE: comment out next section - should only purge one staging.previous/* folder
-			#mkdir -p /tmp/${JOB_NAME}.2
-			#rsync -arzq --delete --protocol=28 /tmp/${JOB_NAME}.2 $DESTINATION/builds/staging.previous/
+			#mkdir -p $tmpdir/${JOB_NAME}.2
+			#rsync -arzq --delete --protocol=28 $tmpdir/${JOB_NAME}.2 $DESTINATION/builds/staging.previous/
 			#echo -e "rmdir ${JOB_NAME}.2" | sftp $DESTINATION/builds/staging.previous/
-			#rmdir /tmp/${JOB_NAME}.2
+			#rmdir $tmpdir/${JOB_NAME}.2
 
 			# OR, purge contents of /builds/staging.previous/${JOB_NAME} and remove empty dir
-			mkdir -p /tmp/${JOB_NAME}
-			rsync -arzq --protocol=28 --delete /tmp/${JOB_NAME} $DESTINATION/builds/staging.previous/
+			mkdir -p $tmpdir/${JOB_NAME}
+			rsync -arzq --protocol=28 --delete $tmpdir/${JOB_NAME} $DESTINATION/builds/staging.previous/
 			echo -e "rmdir ${JOB_NAME}" | sftp $DESTINATION/builds/staging.previous/
-			rmdir /tmp/${JOB_NAME}
+			rmdir $tmpdir/${JOB_NAME}
 
 			# move contents of /builds/staging.previous/${JOB_NAME} into /builds/staging.previous/${JOB_NAME}.2
 			#echo -e "rename ${JOB_NAME} ${JOB_NAME}.2" | sftp $DESTINATION/builds/staging.previous/
@@ -391,4 +395,7 @@ bl=${STAGINGDIR}/logs/BUILDLOG.txt
 rm -f ${bl}; wget -q http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/${BUILD_NUMBER}/consoleText -O ${bl} --timeout=900 --wait=10 --random-wait --tries=10 --retry-connrefused --no-check-certificate
 date; rsync -arzq --protocol=28 --delete ${STAGINGDIR}/logs $DESTINATION/builds/staging/${JOB_NAME}/
 date; rsync -arzq --delete ${STAGINGDIR}/logs $INTRNALDEST/builds/staging/${JOB_NAME}/
+
+# purge tmpdir
+rm -fr $tmpdir
 
