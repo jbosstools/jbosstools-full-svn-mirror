@@ -86,7 +86,7 @@
 			can be referred to in Ant script later -->
 		<repository>
 			<id>jbosstools-requirements-composite-mirror</id>
-			<url>http://download.jboss.org/jbosstools/updates/indigo/SR0/</url>
+			<url>http://download.jboss.org/jbosstools/updates/indigo/SR1/</url>
 			<layout>p2</layout>
 			<snapshots>
 				<enabled>true</enabled>
