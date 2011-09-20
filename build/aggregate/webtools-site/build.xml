@@ -45,7 +45,8 @@
 		<antcall target="get.saxon" />
 	</target>
 
-	<target name="custom.build" description="aggregate update site extras" depends="init,check.target,add.associate.sites,add.web.content,pack.zip,collect.zips,collect.metadata,create.summary.file" />
+	<!-- don't do collect.zips,collect.metadata,create.summary.file -->
+	<target name="custom.build" description="aggregate update site extras" depends="init,check.target,add.associate.sites,add.web.content,pack.zip" />
 
 	<target name="get.saxon" unless="saxon.jar.exists">
 		<!-- or use http://downloads.sourceforge.net/saxon/saxonhe9-3-0-4j.zip ? -->
@@ -438,6 +439,11 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 			from ${BUILD_ID} and ${BUILD_NUMBER}, get .${BUILD_ID}-H${BUILD_NUMBER}
 			default update.site.description=Nightly Build
 			default update.site.version=(null)
+			
+		To test output, run in parent folder (bottests-site/):
+			$ mvn install -DJOB_NAME=jbosstools-3.2_stable_branch.webtools.aggregate -DBUILD_ID=2011-09-19_19-10-45 -DBUILD_NUMBER=6969
+				or
+			$ mvn install -DJOB_NAME=jbosstools-3.2_stable_branch.webtools.aggregate -DBUILD_ID=2011-09-19_19-10-45 -DBUILD_NUMBER=6969 -DJBT_VERSION=3.2.99 -DBUILD_ALIAS=M7 -Dupdate.site.description="Stable Milestone"
 		-->
 		<property name="update.site.description" value="Nightly Build" />
 		<if>
@@ -450,7 +456,18 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 				<isset property="BUILD_NUMBER" />
 			</and>
 			<then>
-				<propertyregex override="true" property="update.site.version" defaultvalue="${JOB_NAME}" input="${JOB_NAME}" regexp="jbosstools-([0-9.]+.*).aggregate" replace=": \1.${BUILD_ID}-H${BUILD_NUMBER}" />
+				<if>
+					<and>
+						<isset property="JBT_VERSION" />
+						<isset property="BUILD_ALIAS" />
+					</and>
+					<then>
+						<propertyregex override="true" property="update.site.version" defaultvalue="${JOB_NAME}" input="${JOB_NAME}" regexp="jbosstools-([0-9.]+)(_stable_branch|_trunk)(.*).aggregate" replace=": ${JBT_VERSION}.${BUILD_ALIAS}\3.${BUILD_ID}-H${BUILD_NUMBER}" />
+					</then>
+					<else>
+						<propertyregex override="true" property="update.site.version" defaultvalue="${JOB_NAME}" input="${JOB_NAME}" regexp="jbosstools-([0-9.]+.*).aggregate" replace=": \1.${BUILD_ID}-H${BUILD_NUMBER}" />
+					</else>
+				</if>
 			</then>
 			<else>
 				<property name="update.site.version" value="" />
@@ -485,7 +502,7 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 		<delete file="${update.site.source.dir}/site.html" quiet="true" />
 	</target>
 
-	<!-- look for http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2.0.M2.continuous/logs/zip.list.txt; 
+	<!-- look for http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.*/logs/zip.list.txt; 
 	if found, load file and use ${ALL_ZIPS} to get list of relative path zips to fetch -->
 	<target name="collect.zips" description="collect zips from the sites we aggregated">
 		<property name="aggregate.zips.dir" value="${output.dir}/zips" />
