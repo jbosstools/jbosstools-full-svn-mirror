@@ -23,12 +23,12 @@
 
 	-->
 	<target name="mirror">
-		<property name="URL" value="http://download.eclipse.org/webtools/downloads/drops/R3.3.1/M-3.3.1-20110915193224/repository/" />
+		<property name="URL" value="http://download.eclipse.org/webtools/downloads/drops/R3.3.0/S-3.3.0RC2-20110520234832/repository/" />
 		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/webtools/" />
 		<property name="compress" value="true" />
 
 		<p2.mirror>
-			<repository location="file:${destination}/3.3.1-20110915193224/" name="Web Tools plugins for Eclipse 3.7 Indigo" />
+			<repository location="file:${destination}/3.3RC2/" name="Web Tools plugins for Eclipse 3.7 Indigo" />
 			<source>
 				<repository location="${URL}" />
 			</source>
@@ -37,6 +37,6 @@
 
 		</p2.mirror>
 
-		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/3.3.1-20110915193224/" artifactRepository="file:${destination}/3.3.1-20110915193224/" publishartifacts="true" source="${destination}/3.3.1-20110915193224/" compress="${compress}" />
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/3.3RC2/" artifactRepository="file:${destination}/3.3RC2/" publishartifacts="true" source="${destination}/3.3RC2/" compress="${compress}" />
 	</target>
 </project>

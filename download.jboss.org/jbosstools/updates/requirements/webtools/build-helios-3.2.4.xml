@@ -5,7 +5,7 @@
 		-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} 
 		-consoleLog -nosplash -data /tmp
 		-application org.eclipse.ant.core.antRunner
-		-f "/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/webtools/build-indigo.xml"
+		-f "/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/webtools/build-helios.xml"
 		
 		or, run headless on qa01 server, where Eclipse is installed into ~/eclipse:
 		
@@ -13,22 +13,23 @@
 		${JAVA_HOME}/bin/java -cp ~/eclipse/plugins/org.eclipse.equinox.launcher_*.jar \
 			org.eclipse.equinox.launcher.Main -vm ${JAVA_HOME} -consoleLog -nosplash -data /tmp \
 			-application org.eclipse.ant.core.antRunner \
-			-f ~/RHDS/updates/requirements/webtools/build-indigo.xml -Ddestination=/tmp/webtools-repo
+			-f ~/RHDS/updates/requirements/webtools/build-helios.xml -Ddestination=/tmp/webtools-repo
 
 		or, on local:
 	
 		java -cp /home/nboldt/eclipse/eclipse361/plugins/org.eclipse.equinox.launcher_*.jar \
 			org.eclipse.equinox.launcher.Main -consoleLog -nosplash -data /tmp \
-			-application org.eclipse.ant.core.antRunner -f build-indigo.xml
+			-application org.eclipse.ant.core.antRunner -f build-helios.xml
 
 	-->
 	<target name="mirror">
-		<property name="URL" value="http://download.eclipse.org/webtools/downloads/drops/R3.3.1/M-3.3.1-20110915193224/repository/" />
+		<!-- <property name="URL" value="http://download.eclipse.org/webtools/downloads/drops/R3.2.3/R-3.2.3-20110217214612/repository/"/> -->
+		<property name="URL" value="http://download.eclipse.org/webtools/downloads/drops/R3.2.4/R-3.2.4-20110511033327/repository/"/>
 		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/webtools/" />
 		<property name="compress" value="true" />
 
 		<p2.mirror>
-			<repository location="file:${destination}/3.3.1-20110915193224/" name="Web Tools plugins for Eclipse 3.7 Indigo" />
+			<repository location="file:${destination}/3.2.4" name="Web Tools plugins for Eclipse 3.6 Helios" />
 			<source>
 				<repository location="${URL}" />
 			</source>
@@ -37,6 +38,6 @@
 
 		</p2.mirror>
 
-		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/3.3.1-20110915193224/" artifactRepository="file:${destination}/3.3.1-20110915193224/" publishartifacts="true" source="${destination}/3.3.1-20110915193224/" compress="${compress}" />
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/3.2.4" artifactRepository="file:${destination}/3.2.4" publishartifacts="true" source="${destination}/3.2.4" compress="${compress}" />
 	</target>
 </project>
