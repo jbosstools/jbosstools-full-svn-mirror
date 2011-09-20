@@ -48,7 +48,7 @@
 		<local.composite>file:///home/hudson/static_build_env/jbds/builds/staging/_composite_/trunk/</local.composite>
 
 		<!-- 3a. URL of latest JBT requirements composite mirror -->
-		<jboss-requirements-composite-mirror>http://download.jboss.org/jbosstools/updates/indigo/SR0/</jboss-requirements-composite-mirror>
+		<jboss-requirements-composite-mirror>http://download.jboss.org/jbosstools/updates/indigo/SR1/</jboss-requirements-composite-mirror>
 
 		<!-- 3b., or use -Plocal.requirements -Dlocal.requirements=file:///path/to/mirror/of/composite/requirements/site -->
 		<local.requirements>file:///qa/services/http/binaries/RHDS/updates/indigo/</local.requirements>
