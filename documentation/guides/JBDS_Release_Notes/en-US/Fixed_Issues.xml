@@ -228,7 +228,43 @@
 			<itemizedlist>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-1021">TEIIDDES-1021</ulink>: When creating a new virtual procedure a user was requried to remember to insert prologue and postlogue code into the transformation editor. This allowed for common mistakes to occur when a user forgot to insert the correct code. For ease of use prologue and postlogue code is now inserted into the transformation editor automatically when creating a new virtual procedure. The change has reduced the amount of code required to be display on screen and created an improved user exerpeince. 
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-1032">TEIIDDES-1032</ulink>: An error in the code when a web service data source was created meant that the <property>Endpoint</property> would not be set. This was because the <property>Endpoint</property> property was incorrectly named as <property>WSUrl</property>. Correcting this error within the <filename>IWSProfileConstants.java</filename> file has fixed the issue.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-1026">TEIIDDES-1026</ulink>: A bug existed where only DBO schemas could be selected when importing from an SQL server using <guilabel>Import from JDBC</guilabel>. This meant that any other type of schemas in the server database could not be imported although they are supported by Teiid Designer. To correct the issue the code that asks for all the different schemas available in an SQL server database has been modified to allow for multiple types of schemas.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-1017">TEIIDDES-1017</ulink>: A new feature has been added that allows for a Teiid Source file to be imported through an import wizard called <guilabel>Metadata from Teiid Metadata File</guilabel>. Once a source file is imported a relational model is generated that contains standard file connector procedures and a virtual model is created or selected for use that contains the file functions required by the table. For further information see the Teiid Designer User Guide for this release.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-1016">TEIIDDES-1016</ulink>: Working towards the removal of the relationship metamodel, all non-essential user interface components have been removed and only the relationship diagram is now displayed. The relationship metamodel is being removed as it is no longer be used by Teiid or Modeshape.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-1013">TEIIDDES-1013</ulink>: A bug existed where the RESTful properties of <property>REST-METHOD</proeprty> and <property>URI</proeprty> that are required for RESTful procedures required the names to be all upper-case. This caused errors when users would provide these properties but not all letters were upper-case. Resolving this issue has seen the modification of the <classname>ModelObjectAnnotationHelper</classname> and <classname>GenerateRestWarAction</classname> classes to check that the properties exist reguardless of the case-type used.
+					</para>
+				</listitem>
+				<!-- To be completed -->
+		<!--		<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-992">TEIIDDES-992</ulink>: A new feature has been added that allows the use of <emphasis>Pushdown</emphasis> functions without Java programming. 
+					</para>
+				</listitem> -->
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-990">TEIIDDES-990</ulink>: Previously generated RESTEasy WARs accepted only a Uniform Resourc e Identifier (URI) and XML parameters and produced only XML. JavaScript Object Notation (JSON) support as input and output has been added for this release and the URI for JSON methods contain <property>json</property> (for example, http://host:port/warname/modelname/json/pathinfo). To utilize XML instead, remove <property>json</property> from the path.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-982">TEIIDDES-982</ulink>: If a SOAP <property>EndPoint</property> was entered for a connection profile it would cause a connection erorr when exiting the dialog. The error occured because the key value for the <property>EndPoint</property> was incorrect and never added to the <property>TeiidDataSourceProperty</property> object, which meant the connection could not be referenced correctly. This issue has been corrected through the modification of the <classname>SOAPConnectionInfoProvider</classname> class to correctly contain the <property>EndPoint</property> value and add it to the <property>TeiidDataSourceProperty</property> object for later recall by the connection.
 					</para>
 				</listitem>
 				<listitem>
@@ -269,6 +305,11 @@
 				<listitem>
 					<para>
 						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-369">TEIIDDES-369</ulink>: A new feature has been added that places a green arrow beside any objects that are previewable by a user. The implementation of this new feature ensures that a user does not need to click an object to identify if performing the click action will do anything.		
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-332">TEIIDDES-332</ulink>: When creating a new virtual procedure a user was requried to remember to insert prologue and postlogue code into the transformation editor. This allowed for common mistakes to occur when a user forgot to insert the correct code. For ease of use prologue and postlogue code is now inserted into the transformation editor automatically when creating a new virtual procedure. The change has reduced the amount of code required to be display on screen and created an improved user exerpeince. 
 					</para>
 				</listitem>
 			</itemizedlist>
