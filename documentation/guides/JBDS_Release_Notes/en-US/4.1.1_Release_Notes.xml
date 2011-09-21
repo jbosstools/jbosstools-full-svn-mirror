@@ -2,6 +2,7 @@
 
 <article>
 	<xi:include href="Article_Info.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
+	<xi:include href="Need_Info_Issues.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
 	<xi:include href="Overview.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
 	<xi:include href="Component_Versions.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
 	<xi:include href="Fixed_Issues.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
