@@ -163,7 +163,7 @@
 			<itemizedlist>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-9103">JBIDE-9103</ulink>: When creating a JSF portlet project on a 64bit operating system, the <guilabel>Installing JSF Facet</guilabel> process would hang and project creation would fail. This issue has been corrected by modifying the <filename>AbstractLibraryProviderInstallOperationConfig.java</filename> file by implementing a facet project listener and corecting an error of an extra bracket in a section of code.
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-9103">JBIDE-9103</ulink>: When creating a JSF portlet project on a 64bit operating system, the <guilabel>Installing JSF Facet</guilabel> process would hang and project creation would fail. This issue has been corrected by modifying the <filename>AbstractLibraryProviderInstallOperationConfig.java</filename> file by implementing a facet project listener and correcting an error of an extra bracket in a section of code.
 					</para>
 				</listitem>
 				<listitem>
@@ -228,6 +228,46 @@
 			<itemizedlist>
 				<listitem>
 					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-1065">TEIIDDES-1065</ulink>: The Salesforce translator included with Teiid Designer has been upgraded from version 17 of the API to version 22. This update has also seen modifications made to the <filename>modelgenerator.salesforce</filename> plug-in to work correctly with the new API. 
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-1064">TEIIDDES-1064</ulink>: When attempting to override a property on the translator, after saving the VDB and deploying it to the server, an error would occur informing <errorname>VDB Not Deployed</errorname>. The consequence of this was that a user had to manually copy the VDB to the server. To correct the issue Teiid Designer has been updated to validate a VDB against a list of translators that also include overrides. This ensures that a VDB that contains a translator override will still deploy correctly.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-1058">TEIIDDES-1058</ulink>: When importing a VDB file into a different project than the one it was created in, a <errorname>java.lang.IllegalArgumentException</errorname> would occur upon double-clicking a model in the <guilabel>VDB Editor</guilabel>. To fix the issue a check for any null path values has been added prior to opening the editor. This ensures that the error is no longer seen and instead double-clicking a model within the <guilabel>VDB Editor</guilabel> that is not in the workspace will not produce any outcome. 
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-1044">TEIIDDES-1044</ulink>: An interface error existed once the <guilabel>Dependency Diagram</guilabel> view had been opened that disallowed a user to return to the previous view. The consequence was that a user would have to close the model or search to find a way to go to another view. To correct the problem the <classname>ShowParentDiagramAction</classname> class is utilized through a new toolbar and context menu to allow a user a way to easily switch between views. 
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-1042">TEIIDDES-1042</ulink>: The path to the ModeShape connection profile icon was incorrect, causing a red icon to appear in its place. The issue was fixed by correcting the path to the ModeShape icon within the correct <filename>plug-in.xml</filename> file.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-1041">TEIIDDES-1041</ulink>: There was confusion with the Teiid driver called <guilabel>Teiid Preview Driver</guilabel>. The name of the driver allowed an assumption that it was only used when previewing a VDB, however it is also used when executing a VDB from the workspace. To better capture the role of the driver it has been renamed to <guilabel>Teiid Driver (default)</guilabel>. This renaming also ensures that as a user creates their own driver instances it is easy to identify the default.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-1039">TEIIDDES-1039</ulink>: The VDB dialog contained columns of defined widths causing some columns to need manual width adjustment in order to see all the text contained within it, while other columns contained nothing but were assigned a large allowance of space. To fix this usability issue the <filename>VdbEditor.java</filename> has been edited to utilize the <code>getColumn().pack()</code> command that adjusts column widths for best readability, depending on the text within them. By incorporating this change it ensures an improved user experience when using the VDB dialog.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-1035">TEIIDDES-1035</ulink>: Within the <guilabel>Create Data Source</guilabel> wizard, the <guilabel>Connection Properties</guilabel> table contains a column called <guilabel>Data Source Name</guilabel>. The column should actually only be called <guilabel>Name</guilabel>. The column name has been changed in this version to ensure consistency across wizards. 
+					</para>
+				</listitem>
+				<listitem>
+					<para>
 						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-1032">TEIIDDES-1032</ulink>: An error in the code when a web service data source was created meant that the <property>Endpoint</property> would not be set. This was because the <property>Endpoint</property> property was incorrectly named as <property>WSUrl</property>. Correcting this error within the <filename>IWSProfileConstants.java</filename> file has fixed the issue.
 					</para>
 				</listitem>
@@ -243,12 +283,12 @@
 				</listitem>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-1016">TEIIDDES-1016</ulink>: Working towards the removal of the relationship metamodel, all non-essential user interface components have been removed and only the relationship diagram is now displayed. The relationship metamodel is being removed as it is no longer be used by Teiid or Modeshape.
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-1016">TEIIDDES-1016</ulink>: Working towards the removal of the relationship metamodel, all non-essential user interface components have been removed and only the relationship diagram is now displayed. The relationship metamodel is being removed as it is no longer be used by Teiid or ModeShape.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-1013">TEIIDDES-1013</ulink>: A bug existed where the RESTful properties of <property>REST-METHOD</property> and <property>URI</property> that are required for RESTful procedures required the names to be all upper-case. This caused errors when users would provide these properties but not all letters were upper-case. Resolving this issue has seen the modification of the <classname>ModelObjectAnnotationHelper</classname> and <classname>GenerateRestWarAction</classname> classes to check that the properties exist reguardless of the case-type used.
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-1013">TEIIDDES-1013</ulink>: A bug existed where the RESTful properties of <property>REST-METHOD</property> and <property>URI</property> that are required for RESTful procedures required the names to be all upper-case. This caused errors when users would provide these properties but not all letters were upper-case. Resolving this issue has seen the modification of the <classname>ModelObjectAnnotationHelper</classname> and <classname>GenerateRestWarAction</classname> classes to check that the properties exist regardless of the case-type used.
 					</para>
 				</listitem>
 				<!-- To be completed -->
@@ -259,12 +299,12 @@
 				</listitem> -->
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-990">TEIIDDES-990</ulink>: Previously generated RESTEasy WARs accepted only a Uniform Resourc e Identifier (URI) and XML parameters and produced only XML. JavaScript Object Notation (JSON) support as input and output has been added for this release and the URI for JSON methods contain <property>json</property> (for example, http://host:port/warname/modelname/json/pathinfo). To utilize XML instead, remove <property>json</property> from the path.
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-990">TEIIDDES-990</ulink>: Previously generated RESTEasy WARs accepted only a Uniform Resource e Identifier (URI) and XML parameters and produced only XML. JavaScript Object Notation (JSON) support as input and output has been added for this release and the URI for JSON methods contain <property>json</property> (for example, http://host:port/warname/modelname/json/pathinfo). To utilize XML instead, remove <property>json</property> from the path.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-982">TEIIDDES-982</ulink>: If a SOAP <property>EndPoint</property> was entered for a connection profile it would cause a connection erorr when exiting the dialog. The error occured because the key value for the <property>EndPoint</property> was incorrect and never added to the <property>TeiidDataSourceProperty</property> object, which meant the connection could not be referenced correctly. This issue has been corrected through the modification of the <classname>SOAPConnectionInfoProvider</classname> class to correctly contain the <property>EndPoint</property> value and add it to the <property>TeiidDataSourceProperty</property> object for later recall by the connection.
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-982">TEIIDDES-982</ulink>: If a SOAP <property>EndPoint</property> was entered for a connection profile it would cause a connection error when exiting the dialog. The error occurred because the key value for the <property>EndPoint</property> was incorrect and never added to the <property>TeiidDataSourceProperty</property> object, which meant the connection could not be referenced correctly. This issue has been corrected through the modification of the <classname>SOAPConnectionInfoProvider</classname> class to correctly contain the <property>EndPoint</property> value and add it to the <property>TeiidDataSourceProperty</property> object for later recall by the connection.
 					</para>
 				</listitem>
 				<listitem>
@@ -279,7 +319,7 @@
 				</listitem>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-971">TEIIDDES-971</ulink>: When a user imported a table with one or more foreign keys, all tables with matching primary keys would also be imported. This could mean that when only one table was necessary, an import could also bring in numerious unnecessary tables for what the user wished to do. In order to allow for a table to be imported reguardless of foreign key relationships, an option has been added to the <guilabel>Import Database</guilabel> wizard where a user can select to not import tabels that have an incomplete foreign key and primary key relationship amoungst the tables seleted for import. By allowing the user to make this decision, the number of unnecessary tables that are imported is decreased.
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-971">TEIIDDES-971</ulink>: When a user imported a table with one or more foreign keys, all tables with matching primary keys would also be imported. This could mean that when only one table was necessary, an import could also bring in numerous unnecessary tables for what the user wished to do. In order to allow for a table to be imported regardless of foreign key relationships, an option has been added to the <guilabel>Import Database</guilabel> wizard where a user can select to not import tables that have an incomplete foreign key and primary key relationship amongst the tables selected for import. By allowing the user to make this decision, the number of unnecessary tables that are imported is decreased.
 					</para>
 				</listitem>
 				<listitem>
@@ -294,12 +334,12 @@
 				</listitem>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-843">TEIIDDES-843</ulink>: The <guilabel>Build XML Documents from XML Schema</guilabel> dialog was larger than necessary, obscuring content below it. To correct this design error the left width hint has been modified within the <filename>AccumulatorPanel</filename> file. This allows for improved size judgement, reducing the dialog size.
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-843">TEIIDDES-843</ulink>: The <guilabel>Build XML Documents from XML Schema</guilabel> dialog was larger than necessary, obscuring content below it. To correct this design error the left width hint has been modified within the <filename>AccumulatorPanel</filename> file. This allows for improved size judgment, reducing the dialog size.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-597">TEIIDDES-597</ulink>: An issue in the <classname>TableNotificationHandler</classname> class caused inserterd rows of a relational column to appear in reverse order within the table editor. This meant that the tree view and table editor displayed the rows in inconsistent ways. The issue has been corrected by modifying the <filename>TableNotificationHandler.java</filename> file so that rows inserted are displayed correctly within the table editor. This results in both the tree view and table editor displaying the information in the same way.
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-597">TEIIDDES-597</ulink>: An issue in the <classname>TableNotificationHandler</classname> class caused inserted rows of a relational column to appear in reverse order within the table editor. This meant that the tree view and table editor displayed the rows in inconsistent ways. The issue has been corrected by modifying the <filename>TableNotificationHandler.java</filename> file so that rows inserted are displayed correctly within the table editor. This results in both the tree view and table editor displaying the information in the same way.
 					</para>
 				</listitem>
 				<listitem>
@@ -309,7 +349,7 @@
 				</listitem>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-332">TEIIDDES-332</ulink>: When creating a new virtual procedure a user was requried to remember to insert prologue and postlogue code into the transformation editor. This allowed for common mistakes to occur when a user forgot to insert the correct code. For ease of use prologue and postlogue code is now inserted into the transformation editor automatically when creating a new virtual procedure. The change has reduced the amount of code required to be display on screen and created an improved user exerpeince. 
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-332">TEIIDDES-332</ulink>: When creating a new virtual procedure a user was required to remember to insert prologue and postlogue code into the transformation editor. This allowed for common mistakes to occur when a user forgot to insert the correct code. For ease of use prologue and postlogue code is now inserted into the transformation editor automatically when creating a new virtual procedure. The change has reduced the amount of code required to be display on screen and created an improved user experience. 
 					</para>
 				</listitem>
 			</itemizedlist>
@@ -398,12 +438,12 @@
 			<itemizedlist>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-9514">JBIDE-9514</ulink>: Project Example ZIP files that contian empty folders, would not be imported correctly and the empty folders would be excluded, though they are necessary for the project to work (for example, the <filename>src</filename> folder). To fix this issue the <filename>NewProjectExamplesWizard.java</filename> has been modified to allow for empty folders within ZIP files to be imported correctly.
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-9514">JBIDE-9514</ulink>: Project Example ZIP files that contain empty folders, would not be imported correctly and the empty folders would be excluded, though they are necessary for the project to work (for example, the <filename>src</filename> folder). To fix this issue the <filename>NewProjectExamplesWizard.java</filename> has been modified to allow for empty folders within ZIP files to be imported correctly.
 					</para>
 				</listitem>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-9381">JBIDE-9381</ulink>: An issue existed that meant the runtime detector did not detect the SOA 5.2 runtime correctly, instead displaying it as 5.1. Correcting this issue has seen the modification of <filename>JBossASHandler.java</filename> to also include 5.2 as a runtime displau option, and using the implementation and version properties from <filename>run.jar</filename>.
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-9381">JBIDE-9381</ulink>: An issue existed that meant the runtime detector did not detect the SOA 5.2 runtime correctly, instead displaying it as 5.1. Correcting this issue has seen the modification of <filename>JBossASHandler.java</filename> to also include 5.2 as a runtime display option, and using the implementation and version properties from <filename>run.jar</filename>.
 						</para>
 					</listitem>
 				<listitem>
@@ -428,7 +468,7 @@
 				</listitem>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-7052">JBIDE-7052</ulink>: An error existed where the optional dependency of <filename>org.hibernate.eclipse</filename> would not be resolved correctly within the BIRT component file <filename>ConsoleConfigurationOdaFactory.java</filename>. This caused any import of the plug-in to fail. The issue has been corrected by setting the <filename>org.hibernate.eclipse</filename> plug-in as reguired within the BIRT plug-ins <filename>MANIFEST.MF</filename> file.
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-7052">JBIDE-7052</ulink>: An error existed where the optional dependency of <filename>org.hibernate.eclipse</filename> would not be resolved correctly within the BIRT component file <filename>ConsoleConfigurationOdaFactory.java</filename>. This caused any import of the plug-in to fail. The issue has been corrected by setting the <filename>org.hibernate.eclipse</filename> plug-in as required within the BIRT plug-ins <filename>MANIFEST.MF</filename> file.
 					</para>
 				</listitem>
 			</itemizedlist>
