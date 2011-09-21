@@ -248,7 +248,7 @@
 				</listitem>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-1013">TEIIDDES-1013</ulink>: A bug existed where the RESTful properties of <property>REST-METHOD</proeprty> and <property>URI</proeprty> that are required for RESTful procedures required the names to be all upper-case. This caused errors when users would provide these properties but not all letters were upper-case. Resolving this issue has seen the modification of the <classname>ModelObjectAnnotationHelper</classname> and <classname>GenerateRestWarAction</classname> classes to check that the properties exist reguardless of the case-type used.
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-1013">TEIIDDES-1013</ulink>: A bug existed where the RESTful properties of <property>REST-METHOD</property> and <property>URI</property> that are required for RESTful procedures required the names to be all upper-case. This caused errors when users would provide these properties but not all letters were upper-case. Resolving this issue has seen the modification of the <classname>ModelObjectAnnotationHelper</classname> and <classname>GenerateRestWarAction</classname> classes to check that the properties exist reguardless of the case-type used.
 					</para>
 				</listitem>
 				<!-- To be completed -->
