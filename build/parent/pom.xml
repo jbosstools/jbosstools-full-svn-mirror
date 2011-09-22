@@ -17,7 +17,7 @@
 		<scmBranch>branches/jbosstools-3.2.x</scmBranch>
 		<JBT_VERSION>3.2.2</JBT_VERSION>
 		<JBDS_VERSION>4.1.1</JBDS_VERSION>
-		<BUILD_ALIAS>CR1</BUILD_ALIAS>
+		<BUILD_ALIAS>M2</BUILD_ALIAS>
 		<memoryOptions1>-Xms512m -Xmx1024m -XX:PermSize=256m</memoryOptions1>
 		<memoryOptions2>-XX:MaxPermSize=256m</memoryOptions2>
 		<systemProperties></systemProperties>
