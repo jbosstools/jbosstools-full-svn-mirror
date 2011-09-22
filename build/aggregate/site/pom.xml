@@ -39,7 +39,6 @@
 								<property name="JBT_VERSION" value="${JBT_VERSION}"/>
 								<ant antfile="build.xml"/>
 							</tasks>
-
 						</configuration>
 						<goals>
 							<goal>run</goal>
