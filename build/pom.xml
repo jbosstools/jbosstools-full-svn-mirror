@@ -366,7 +366,7 @@
 			<id>cdi-tests</id>
 			<modules>
 				<module>libs</module>
-				<module>../cdi</module>
+				<module>../cdi/tests</module>
 				<module>reports/emma-coverage</module>
 			</modules>
 		</profile>
