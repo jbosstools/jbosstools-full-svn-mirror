@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.jboss.tools</groupId>
@@ -13,8 +14,9 @@
 	<packaging>eclipse-update-site</packaging>
 
 	<properties>
-		<!-- add more inputRepos into the composite metadata at the URL below. Therefore need not edit this file and add dozens of URLs
-			which need to be called by Ant script later -->
+		<!-- add more inputRepos into the composite metadata at the URL below. 
+			Therefore need not edit this file and add dozens of URLs which need to be 
+			called by Ant script later -->
 		<!-- for trunk use _composite_/trunk; for 3.3_stable_branch, use _composite_/3.3.indigo -->
 		<inputRepo1>http://download.jboss.org/jbosstools/builds/staging/_composite_/trunk/</inputRepo1>
 		<inputRepos>1</inputRepos>
@@ -34,11 +36,12 @@
 							<quiet>true</quiet>
 							<tasks>
 								<!-- called AFTER generating update site + zip to add in extra content -->
-								<property name="inputRepo1" value="${inputRepo1}"/>
-								<property name="inputRepos" value="${inputRepos}"/>
-								<property name="JBT_VERSION" value="${JBT_VERSION}"/>
-								<property name="BUILD_ALIAS" value="${BUILD_ALIAS}"/>
-								<ant antfile="build.xml"/>
+								<property name="inputRepo1" value="${inputRepo1}" />
+								<property name="inputRepos" value="${inputRepos}" />
+								<ant antfile="build.xml">
+									<property name="JBT_VERSION" value="${JBT_VERSION}" />
+									<property name="BUILD_ALIAS" value="${BUILD_ALIAS}" />
+								</ant>
 							</tasks>
 						</configuration>
 						<goals>
