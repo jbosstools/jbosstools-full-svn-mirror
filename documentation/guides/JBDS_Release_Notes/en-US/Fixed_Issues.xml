@@ -291,12 +291,14 @@
 						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-1013">TEIIDDES-1013</ulink>: A bug existed where the RESTful properties of <property>REST-METHOD</property> and <property>URI</property> that are required for RESTful procedures required the names to be all upper-case. This caused errors when users would provide these properties but not all letters were upper-case. Resolving this issue has seen the modification of the <classname>ModelObjectAnnotationHelper</classname> and <classname>GenerateRestWarAction</classname> classes to check that the properties exist regardless of the case-type used.
 					</para>
 				</listitem>
-				<!-- To be completed -->
-		<!--		<listitem>
+				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-992">TEIIDDES-992</ulink>: A new feature has been added that allows the use of <emphasis>Pushdown</emphasis> functions without Java programming. 
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-992">TEIIDDES-992</ulink>: A new feature has been added that allows the use of <emphasis>Pushdown</emphasis> functions without Java programming. A <emphasis>Pushdown</emphasis> function refers to SQL code that contains a function call as part of the final query, acts upon the actual source or database and is exposed in Teiid Designer as a <emphasis>Source Function</emphasis> (a function that exists or is known by a database source).
 					</para>
-				</listitem> -->
+					<para>
+						The addition of this feature ensures that creating a <emphasis>Pushdown</emphasis> function is simpler than it was before, improving usability.
+					</para>
+				</listitem>
 				<listitem>
 					<para>
 						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-990">TEIIDDES-990</ulink>: Previously generated RESTEasy WARs accepted only a Uniform Resource e Identifier (URI) and XML parameters and produced only XML. JavaScript Object Notation (JSON) support as input and output has been added for this release and the URI for JSON methods contain <property>json</property> (for example, http://host:port/warname/modelname/json/pathinfo). To utilize XML instead, remove <property>json</property> from the path.

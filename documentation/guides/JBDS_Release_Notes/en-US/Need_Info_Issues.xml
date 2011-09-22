@@ -224,24 +224,18 @@
 			</itemizedlist>
 		</para>
 	</formalpara>-->
-	<formalpara>
+<!--	<formalpara>
 		<title>Teiid Designer</title>
 		<para>
 			<itemizedlist>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-992">TEIIDDES-992</ulink>: <emphasis>Developer</emphasis>: Barry LaFond
-					</para>
-					<para>
-						<emphasis>Title</emphasis>: Allow the use of pushdown functions without requiring Java programming
-					</para>
-					<para>
-						<emphasis>Question</emphasis>: What is a 'pushdown' function?
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-0000">TEIIDDES-0000</ulink>:
 					</para>
 				</listitem>
 			</itemizedlist>
 		</para>
-	</formalpara>
+	</formalpara> -->
 	<!--<formalpara>
 		<title>Usage</title>
 		<para>
@@ -337,7 +331,7 @@
 						<emphasis>Title</emphasis>: All menus but one are missing on Ubuntu 11.04 (Unity).
 					</para>
 					<para>
-						<emphasis>Question</emphasis>: The Release Notes text field indicates the workaround, but is this issue indeed fixed for JBDS 4.1.1 so that the workaround is no longer necessary? If so, where was the <code>&lt;</code> code missing from?
+						<remark>Updated</remark><emphasis>Question</emphasis>: How does the jbdevstudio-uniti script make it possible to negate those extra steps when using uniti? I'd like to let customers know so they can feel at ease with the script being run and not doing anything else to their systems.
 					</para>
 				</listitem>
 			</itemizedlist>
