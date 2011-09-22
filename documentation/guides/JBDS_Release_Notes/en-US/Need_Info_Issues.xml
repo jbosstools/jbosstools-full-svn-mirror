@@ -1,7 +1,9 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <section id="Need_info_issues">
-    <title>
-        Issues requiring more info before release. 
+	<title>
+		<remark>
+			Issues requiring more info before release.
+		</remark>
     </title>
 	<note>
 		<para>
@@ -228,13 +230,13 @@
 			<itemizedlist>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-992">TEIIDDES-992</ulink>: Developer: Barry LaFond
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-992">TEIIDDES-992</ulink>: <emphasis>Developer</emphasis>: Barry LaFond
 					</para>
 					<para>
-						Title: Allow the use of pushdown functions without requiring Java programming
+						<emphasis>Title</emphasis>: Allow the use of pushdown functions without requiring Java programming
 					</para>
 					<para>
-						Question: What is a 'pushdown' function?
+						<emphasis>Question</emphasis>: What is a 'pushdown' function?
 					</para>
 				</listitem>
 			</itemizedlist>
@@ -318,24 +320,24 @@
 			<itemizedlist>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1844">JBDS-1844</ulink>: Developer: Denis Golovin.
+						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1844">JBDS-1844</ulink>: <emphasis>Developer</emphasis>: Denis Golovin.
 					</para>
 					<para>
-						Title: Automated Installer Script Does Not Recored Preferred JRE
+						<emphasis>Title</emphasis>: Automated Installer Script Does Not Recored Preferred JRE
 					</para>
 					<para>
-						Question: Only a "fixed in trunk and 4.x branch" comment is given. No SVN/Fisheye links are recorded and no further information is provided. What was the cause of the issue? How was the issue fixed in the code? What is the result that the user will now see - does JBDS now start with the user-selected JRE?
+						<emphasis>Question</emphasis>: Only a "fixed in trunk and 4.x branch" comment is given. No SVN/Fisheye links are recorded and no further information is provided. What was the cause of the issue? How was the issue fixed in the code? What is the result that the user will now see - does JBDS now start with the user-selected JRE?
 					</para>
 				</listitem>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1781">JBDS-1781</ulink>: Developer: Denis Golovin.
+						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1781">JBDS-1781</ulink>: <emphasis>Developer</emphasis>: Denis Golovin.
 					</para>
 					<para>
-						Title: All menus but one are missing on Ubuntu 11.04 (Unity).
+						<emphasis>Title</emphasis>: All menus but one are missing on Ubuntu 11.04 (Unity).
 					</para>
 					<para>
-						Question: The Release Notes text field indicates the workaround, but is this issue indeed fixed for JBDS 4.1.1 so that the workaround is no longer necessary? If so, where was the <code>&kt;</code> code missing from?
+						<emphasis>Question</emphasis>: The Release Notes text field indicates the workaround, but is this issue indeed fixed for JBDS 4.1.1 so that the workaround is no longer necessary? If so, where was the <code>&lt;</code> code missing from?
 					</para>
 				</listitem>
 			</itemizedlist>
