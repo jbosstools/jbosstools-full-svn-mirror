@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.jboss.tools</groupId>
@@ -12,11 +13,9 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>eclipse-update-site</packaging>
 
-	<!--	to build against locally built sources, use:
- 			mvn clean install
-		to build against http://download.jboss.org/jbosstools/builds/staging/_composite_/trunk/, use:
-			mvn clean install -Pjbosstools-nightly-staging-composite
-	-->
+	<!-- to build against locally built sources, use: mvn clean install to build 
+		against http://download.jboss.org/jbosstools/builds/staging/_composite_/trunk/, 
+		use: mvn clean install -Pjbosstools-nightly-staging-composite -->
 	<build>
 		<plugins>
 			<plugin>
@@ -31,9 +30,10 @@
 							<quiet>true</quiet>
 							<tasks>
 								<!-- called AFTER generating update site + zip to add in extra content -->
-								<!-- <property name="JBT_VERSION" value="${JBT_VERSION}"/>
-								<property name="BUILD_ALIAS" value="${BUILD_ALIAS}"/> -->
-								<ant antfile="build.xml"/>
+								<ant antfile="build.xml">
+									<property name="JBT_VERSION" value="${JBT_VERSION}" />
+									<property name="BUILD_ALIAS" value="${BUILD_ALIAS}" />
+								</ant>
 							</tasks>
 						</configuration>
 						<goals>
