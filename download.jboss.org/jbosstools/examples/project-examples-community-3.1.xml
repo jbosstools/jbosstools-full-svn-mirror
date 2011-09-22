@@ -647,7 +647,7 @@ NOTE: Before you import this example, please make sure that there is a runtime n
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50, org.jboss.ide.eclipse.as.runtime.51</property>
-				<property name="eclipse-projects">helloworld_mail</property>
+				<property name="eclipse-projects">helloworld_mail,helloworld_mail_testclient</property>
 				<property name="required-components">esb</property>
 				<property name="description">This project example requires a JBoss SOA-P 5.0 runtime named "jboss-soa-p.5.0 Runtime"</property>
 			</fix>
