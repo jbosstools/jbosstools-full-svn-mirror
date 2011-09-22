@@ -18,19 +18,12 @@
 			
 		-->
 		<profile>
-			<id>parent</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<modules>
-				<module>parent</module>
-			</modules>
-		</profile>
-		
-		<profile>
 			<id>libs</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>coverage</name>
+				</property>
 			</activation>
 			<modules>
 				<module>libs</module>
@@ -370,12 +363,33 @@
 		</profile>
 
 		<profile>
+			<id>cdi-tests</id>
+			<modules>
+				<module>libs</module>
+				<module>../cdi</module>
+				<module>reports/emma-coverage</module>
+			</modules>
+		</profile>
+
+		<profile>
 			<id>cdi-bootstrap</id>
 			<modules>
 				<module>../tests</module>
 				<module>../common</module>
 				<module>../jst</module>
 				<module>../cdi</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>cdi-botstrap-tests</id>
+			<modules>
+				<module>libs</module>
+				<module>../tests</module>
+				<module>../common</module>
+				<module>../jst</module>
+				<module>../cdi</module>
+				<module>reports/emma-coverage</module>
 			</modules>
 		</profile>
 
@@ -639,6 +653,9 @@
 			<id>aggregate-coverage</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>coverage</name>
+				</property>
 			</activation>
 			<modules>
 				<module>reports/emma-coverage</module>
