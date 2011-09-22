@@ -445,16 +445,18 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 				<isset property="BUILD_NUMBER" />
 			</and>
 			<then>
+				<!-- from 2011-09-21_01-11-04 to 20110921-0111 -->
+				<propertyregex override="true" property="BUILD_TS" defaultvalue="${BUILD_ID}" input="${BUILD_ID}" regexp="([0-9]+)-([0-9]+)-([0-9]+)_([0-9]+)-([0-9]+)-([0-9]+)" replace="v\1\2\3-\4\5" />
 				<if>
 					<and>
 						<isset property="JBT_VERSION" />
 						<isset property="BUILD_ALIAS" />
 					</and>
 					<then>
-						<propertyregex override="true" property="update.site.version" defaultvalue="${JOB_NAME}" input="${JOB_NAME}" regexp="jbosstools-([0-9.]+)(_stable_branch|_trunk)(.*).aggregate" replace=": ${JBT_VERSION}.${BUILD_ALIAS}\3.${BUILD_ID}-H${BUILD_NUMBER}" />
+						<propertyregex override="true" property="update.site.version" defaultvalue="${JOB_NAME}" input="${JOB_NAME}" regexp="jbosstools-([0-9.]+)(_stable_branch|_trunk)(.*).aggregate" replace=": ${JBT_VERSION}.${BUILD_TS}-H${BUILD_NUMBER}-${BUILD_ALIAS}\3" />
 					</then>
 					<else>
-						<propertyregex override="true" property="update.site.version" defaultvalue="${JOB_NAME}" input="${JOB_NAME}" regexp="jbosstools-([0-9.]+.*).aggregate" replace=": \1.${BUILD_ID}-H${BUILD_NUMBER}" />
+						<propertyregex override="true" property="update.site.version" defaultvalue="${JOB_NAME}" input="${JOB_NAME}" regexp="jbosstools-([0-9.]+)(_stable_branch|_trunk)(.*).aggregate" replace=": \1.${BUILD_TS}-H${BUILD_NUMBER}\2\3" />
 					</else>
 				</if>
 			</then>
