@@ -12,6 +12,7 @@
 	
 	<packaging>eclipse-test-plugin</packaging>
 	<properties>
-		<emma.filter>org.jboss.tools*</emma.filter>
-	</properties>
+		<emma.filter>org.jboss.tools.vpe.spring*</emma.filter>
+		<emma.instrument.bundles>org.jboss.tools.vpe.spring</emma.instrument.bundles>
+	</properties>	
 </project>
