@@ -30,6 +30,7 @@
 						<configuration>
 							<quiet>true</quiet>
 							<tasks>
+								<property name="JBT_VERSION" value="${JBT_VERSION}"/>
 								<!-- called AFTER generating update site + zip to add in extra content -->
 								<ant antfile="build.xml"/>
 							</tasks>

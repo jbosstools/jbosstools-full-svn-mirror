@@ -1,9 +1,7 @@
 <project default="custom.build" name="jbosstools aggregate site build.xml">
-
-	<!-- pass in properties to Maven/Ant via Hudson job:
-		-DJOB_NAME=${JOB_NAME} 
-		-DBUILD_ID=${BUILD_ID} 
-		-DBUILD_NUMBER=${BUILD_NUMBER}
+	<!--
+	To test output, run maven in this folder:
+		$ mvn install -DJOB_NAME=jbosstools-3.3_trunk.webtools.aggregate -DBUILD_ID=2011-09-19_19-10-45 -DBUILD_NUMBER=6969 -DJBT_VERSION=3.3.99 -DBUILD_ALIAS=M7 -Dupdate.site.description="Stable Milestone"
 	-->
 
 	<!-- if ${WORKSPACE}/site folder exists, target that folder; else generate here. -->
@@ -430,20 +428,11 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 
 	<target name="add.web.content">
 		<!-- 
-		Properties needed for index.html are defined in aggregateSite.properties
-			update.site.description=Nightly Build
-			update.site.version=3.2.0.M2.2010-07-16_13-26-18-H21
-			
-		or calculated here
+		Properties calculated here
 			from ${JOB_NAME} = jbosstools-3.2.0.M1.aggregate get 3.2.0.M1  
 			from ${BUILD_ID} and ${BUILD_NUMBER}, get .${BUILD_ID}-H${BUILD_NUMBER}
 			default update.site.description=Nightly Build
 			default update.site.version=(null)
-			
-		To test output, run in parent folder (bottests-site/):
-			$ mvn install -DJOB_NAME=jbosstools-3.3_trunk.webtools.aggregate -DBUILD_ID=2011-09-19_19-10-45 -DBUILD_NUMBER=6969
-				or
-			$ mvn install -DJOB_NAME=jbosstools-3.3_trunk.webtools.aggregate -DBUILD_ID=2011-09-19_19-10-45 -DBUILD_NUMBER=6969 -DJBT_VERSION=3.3.99 -DBUILD_ALIAS=M7 -Dupdate.site.description="Stable Milestone"
 		-->
 		<property name="update.site.description" value="Nightly Build" />
 		<if>

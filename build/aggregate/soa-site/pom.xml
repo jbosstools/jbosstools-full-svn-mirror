@@ -38,10 +38,10 @@
 						<configuration>
 							<quiet>true</quiet>
 							<tasks>
+								<!-- called AFTER generating update site + zip to add in extra content -->
 								<property name="inputRepo1" value="${inputRepo1}"/>
 								<property name="inputRepos" value="${inputRepos}"/>
-
-								<!-- called AFTER generating update site + zip to add in extra content -->
+								<property name="JBT_VERSION" value="${JBT_VERSION}"/>
 								<ant antfile="build.xml"/>
 							</tasks>
 
