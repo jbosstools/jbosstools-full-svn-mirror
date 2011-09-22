@@ -42,6 +42,7 @@
 								<property name="inputRepo1" value="${inputRepo1}"/>
 								<property name="inputRepos" value="${inputRepos}"/>
 								<property name="JBT_VERSION" value="${JBT_VERSION}"/>
+								<property name="BUILD_ALIAS" value="${BUILD_ALIAS}"/>
 								<ant antfile="build.xml"/>
 							</tasks>
 						</configuration>

@@ -32,6 +32,7 @@
 							<tasks>
 								<!-- called AFTER generating update site + zip to add in extra content -->
 								<property name="JBT_VERSION" value="${JBT_VERSION}"/>
+								<property name="BUILD_ALIAS" value="${BUILD_ALIAS}"/>
 								<ant antfile="build.xml"/>
 							</tasks>
 						</configuration>
