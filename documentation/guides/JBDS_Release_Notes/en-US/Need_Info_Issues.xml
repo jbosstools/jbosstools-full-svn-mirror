@@ -323,17 +323,6 @@
 						<emphasis>Question</emphasis>: Only a "fixed in trunk and 4.x branch" comment is given. No SVN/Fisheye links are recorded and no further information is provided. What was the cause of the issue? How was the issue fixed in the code? What is the result that the user will now see - does JBDS now start with the user-selected JRE?
 					</para>
 				</listitem>
-				<listitem>
-					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1781">JBDS-1781</ulink>: <emphasis>Developer</emphasis>: Denis Golovin.
-					</para>
-					<para>
-						<emphasis>Title</emphasis>: All menus but one are missing on Ubuntu 11.04 (Unity).
-					</para>
-					<para>
-						<remark>Updated</remark><emphasis>Question</emphasis>: How does the jbdevstudio-uniti script make it possible to negate those extra steps when using uniti? I'd like to let customers know so they can feel at ease with the script being run and not doing anything else to their systems.
-					</para>
-				</listitem>
 			</itemizedlist>
         </para>
 	</formalpara>
