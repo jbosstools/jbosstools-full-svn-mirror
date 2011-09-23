@@ -10,7 +10,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.emf.ecore.xmi;visibility:=reexport,
  org.junit4,
  org.eclipse.emf.edit,
- org.jboss.tools.usage;bundle-version="1.0.0";resolution:=optional
+ org.jboss.tools.usage;bundle-version="1.0.0";resolution:=optional;x-installation:=greedy
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.jboss.tools.smooks,

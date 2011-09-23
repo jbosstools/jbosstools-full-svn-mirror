@@ -26,7 +26,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.jboss.ide.eclipse.as.core;visibility:=reexport,
  org.eclipse.core.commands,
  org.eclipse.core.expressions,
- org.jboss.tools.usage;bundle-version="1.0.0";resolution:=optional
+ org.jboss.tools.usage;bundle-version="1.0.0";resolution:=optional;x-installation:=greedy
 Bundle-ActivationPolicy: lazy
 Export-Package: org.jboss.tools.portlet.core,
  org.jboss.tools.portlet.core.internal,
