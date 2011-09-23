@@ -105,7 +105,7 @@
 								<!-- remove the target/ folder -->
 								<delete dir="${project.build.directory}" quiet="true" />
 								<echo>To apply patch to disable SpringIDE welcome page (JBDS-1838), run build.xml in this folder passing in these parameters:
-	-DsiteVersion=${siteVersion} -DURL=${sourceURL}
+	patch.and.regen -DsiteVersion=${siteVersion} -DURL=${sourceURL}
 								</echo>
 							</tasks>
 						</configuration>

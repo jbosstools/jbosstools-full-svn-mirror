@@ -22,10 +22,10 @@
 		org.eclipse.equinox.launcher.Main -vm ${JAVA_HOME} -consoleLog -nosplash -data /tmp \
 		-application org.eclipse.ant.core.antRunner -f build.xml 
 	-->
-	<target name="default" depends="mirror,apply.patch,regenerate.metadta" />
-	<target name="patch.and.regen" depends="apply.patch,regenerate.metadta" />
+	<target name="default" depends="init,mirror,apply.patch,regenerate.metadata" />
+	<target name="patch.and.regen" depends="init,apply.patch,regenerate.metadata" />
 
-	<target name="mirror">
+	<target name="init">
 		<!-- Other URLs:
 		   http://dist.springframework.org/release/IDE/
 		   http://dist.springframework.org/snapshot/IDE/weekly/
@@ -35,7 +35,9 @@
 		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/springide/" />
 		<property name="siteVersion" value="2.6.0.201103160035" />
 		<property name="compress" value="true" />
-
+	</target>
+	
+	<target name="mirror">
 		<p2.mirror>
 			<repository location="file:${destination}/${siteVersion}/" name="springide plugins for Eclipse 3.6 - 3.7" />
 			<source>
@@ -54,7 +56,6 @@
 
 			<slicingoptions includefeatures="true" followstrict="true" latestversiononly="false" platformfilter="true" />
 		</p2.mirror>
-
 	</target>
 
 	<target name="apply.patch">
@@ -87,7 +88,7 @@ Bundle-SymbolicName: org.springframework.ide.eclipse
 		<delete dir="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse/" quiet="true" />
 	</target>
 
-	<target name="regenerate.metadta">
+	<target name="regenerate.metadata">
 		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/${siteVersion}/" artifactRepository="file:${destination}/${siteVersion}/" publishartifacts="true" source="${destination}/${siteVersion}/" compress="${compress}" />
 	</target>
 
