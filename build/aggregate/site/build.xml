@@ -444,7 +444,20 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 				<isset property="BUILD_NUMBER" />
 			</and>
 			<then>
-				<propertyregex override="true" property="update.site.version" defaultvalue="${JOB_NAME}" input="${JOB_NAME}" regexp="jbosstools-([0-9.]+.*).aggregate" replace=": \1.${BUILD_ID}-H${BUILD_NUMBER}" />
+				<!-- from 2011-09-21_01-11-04 to 20110921-0111 -->
+				<propertyregex override="true" property="BUILD_TS" defaultvalue="${BUILD_ID}" input="${BUILD_ID}" regexp="([0-9]+)-([0-9]+)-([0-9]+)_([0-9]+)-([0-9]+)-([0-9]+)" replace="v\1\2\3-\4\5" />
+				<if>
+					<and>
+						<isset property="JBT_VERSION" />
+						<isset property="BUILD_ALIAS" />
+					</and>
+					<then>
+						<propertyregex override="true" property="update.site.version" defaultvalue="${JOB_NAME}" input="${JOB_NAME}" regexp="jbosstools-([0-9.]+)(_stable_branch|_trunk)(.*).aggregate" replace=": ${JBT_VERSION}.${BUILD_TS}-H${BUILD_NUMBER}-${BUILD_ALIAS}\3" />
+					</then>
+					<else>
+						<propertyregex override="true" property="update.site.version" defaultvalue="${JOB_NAME}" input="${JOB_NAME}" regexp="jbosstools-([0-9.]+)(_stable_branch|_trunk)(.*).aggregate" replace=": \1.${BUILD_TS}-H${BUILD_NUMBER}\2\3" />
+					</else>
+				</if>
 			</then>
 			<else>
 				<property name="update.site.version" value="" />
@@ -479,7 +492,7 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 		<delete file="${update.site.source.dir}/site.html" quiet="true" />
 	</target>
 
-	<!-- look for http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.2.0.M2.continuous/logs/zip.list.txt; 
+	<!-- look for http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.*/logs/zip.list.txt; 
 	if found, load file and use ${ALL_ZIPS} to get list of relative path zips to fetch -->
 	<target name="collect.zips" description="collect zips from the sites we aggregated">
 		<property name="aggregate.zips.dir" value="${output.dir}/zips" />
