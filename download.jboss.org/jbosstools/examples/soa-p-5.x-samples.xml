@@ -1,0 +1,155 @@
+<projects>   
+      <project>
+          <category>SOA-P 5.x Examples Importable By Eclipse</category>
+          <name>aggregator_eclipse</name>
+          <included-projects>aggregator_aggregation_eclipse,aggregator_blue_service_eclipse,aggregator_eclipse_test,aggregator_green_service_eclipse,aggregator_inbound_splitter_eclipse,aggregator_red_service_eclipse</included-projects>       
+          <shortDescription>aggregator_eclipse</shortDescription>
+          <description>The purpose of this particular example is to demonstrate the Enterprise Integration Patterns of Splitter and Aggregator. In addition, this example demonstrates the concepts of multiple JVMs, each running unique services but all working in concert, a federated model that shares a common registry and uses JMS between the JVMs.</description> 
+          <size>75809</size> <!-- size of the zip file -->
+          <url>http://anonsvn.jboss.org/repos/jbosstools/workspace/bfitzpat/SOA_5_2_Examples/aggregator_eclipse.zip</url>
+		  <fixes>
+			  <fix type="wtpruntime">
+				  <property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50</property>
+				  <property name="eclipse-projects">aggregator_aggregation_eclipse,aggregator_blue_service_eclipse,aggregator_eclipse_test,aggregator_green_service_eclipse,aggregator_inbound_splitter_eclipse,aggregator_red_service_eclipse</property>
+				  <property name="required-components">esb</property>
+  				  <property name="description">This project example requires JBoss SOA-P 5.x</property>
+			  </fix>
+  		  </fixes>
+      </project>
+      <project>
+          <category>SOA-P 5.x Examples Importable By Eclipse</category>
+          <name>business_service_eclipse</name>
+          <included-projects>business_service_eclipse,business_service_eclipse_test</included-projects>       
+          <shortDescription>business_service_eclipse</shortDescription>
+          <description>This example demonstrates the how to access an EJB3 Stateless Session Bean from within an ESB Action.  ESB Actions are primarily custom mediation components which allow you to introduce different specialized transformations, routing behaviors, orchestration, etc. The EJB3 is a simple "Hello World" annotated POJO.</description>
+          <size>17993</size> <!-- size of the zip file -->
+          <url>http://anonsvn.jboss.org/repos/jbosstools/workspace/bfitzpat/SOA_5_2_Examples/business_service_eclipse.zip</url>
+		  <fixes>
+			  <fix type="wtpruntime">
+				  <property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50</property>
+				  <property name="eclipse-projects">business_service_eclipse,business_service_eclipse_test</property>
+				  <property name="required-components">esb</property>
+  				  <property name="description">This project example requires JBoss SOA-P 5.x</property>
+			  </fix>
+  		  </fixes>
+      </project>
+      <project>
+          <category>SOA-P 5.x Examples Importable By Eclipse</category>
+          <name>custom_action_eclipse</name>
+          <included-projects>custom_action_eclipse,custom_action_eclipse_test</included-projects>       
+          <shortDescription>custom_action_eclipse</shortDescription>
+          <description>The purpose of the custom_action quickstart example is to show different ways of using Action classes.</description>
+          <size>19737</size> <!-- size of the zip file -->
+          <url>http://anonsvn.jboss.org/repos/jbosstools/workspace/bfitzpat/SOA_5_2_Examples/custom_action_eclipse.zip</url>
+		  <fixes>
+			  <fix type="wtpruntime">
+				  <property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50</property>
+				  <property name="eclipse-projects">custom_action_eclipse,custom_action_eclipse_test</property>
+				  <property name="required-components">esb</property>
+  				  <property name="description">This project example requires JBoss SOA-P 5.x</property>
+			  </fix>
+  		  </fixes>
+      </project>
+      <project>
+          <category>SOA-P 5.x Examples Importable By Eclipse</category>
+          <name>fun_cbr_eclipse</name>
+          <included-projects>fun_cbr_eclipse,fun_cbr_eclipse_test</included-projects>       
+          <shortDescription>fun_cbr_eclipse</shortDescription>
+          <description>This example has three "teams" of order processors.  All new orders that flow into the system can be evaluated via the XPath or Drools rule processors. These routing rules will determine which team receives the order for actually processing.   In the case of the green team, the order is first transformed to a different format prior to routing.</description>
+          <size>31633</size> <!-- size of the zip file -->
+          <url>http://anonsvn.jboss.org/repos/jbosstools/workspace/bfitzpat/SOA_5_2_Examples/fun_cbr_eclipse.zip</url>
+		  <fixes>
+			  <fix type="wtpruntime">
+				  <property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50</property>
+				  <property name="eclipse-projects">fun_cbr_eclipse,fun_cbr_eclipse_test</property>
+				  <property name="required-components">esb,drools</property>
+  				  <property name="description">This project example requires JBoss SOA-P 5.x</property>
+			  </fix>
+  		  </fixes>
+      </project>
+      <project>
+          <category>SOA-P 5.x Examples Importable By Eclipse</category>
+          <name>helloworld_action_eclipse</name>
+          <included-projects>helloworld_action_eclipse,helloworld_action_eclipse_test</included-projects>       
+          <shortDescription>helloworld_action_eclipse</shortDescription>
+          <description>The purpose of the helloworld_action quickstart sample is to show the use of multiple action invocations from a single configuration.  You can use a single Action class and make multiple method calls or use multiple Action classes</description>
+          <size>18894</size> <!-- size of the zip file -->
+          <url>http://anonsvn.jboss.org/repos/jbosstools/workspace/bfitzpat/SOA_5_2_Examples/helloworld_action_eclipse.zip</url>
+		  <fixes>
+			  <fix type="wtpruntime">
+				  <property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50</property>
+				  <property name="eclipse-projects">helloworld_action_eclipse,helloworld_action_eclipse_test</property>
+				  <property name="required-components">esb</property>
+  				  <property name="description">This project example requires JBoss SOA-P 5.x</property>
+			  </fix>
+  		  </fixes>
+      </project>
+      <project>
+          <category>SOA-P 5.x Examples Importable By Eclipse</category>
+          <name>helloworld_eclipse</name>
+          <included-projects>helloworld_eclipse,helloworld_eclipse_test</included-projects>       
+          <shortDescription>helloworld_eclipse</shortDescription>
+          <description>The purpose of the helloworld quickstart sample is to prove that the ESB is properly configured and happy.  As well as to demonstrate the needed minimal files to make a basic ESB component execute.</description>
+          <size>14056</size> <!-- size of the zip file -->
+          <url>http://anonsvn.jboss.org/repos/jbosstools/workspace/bfitzpat/SOA_5_2_Examples/helloworld_eclipse.zip</url>
+		  <fixes>
+			  <fix type="wtpruntime">
+				  <property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50</property>
+				  <property name="eclipse-projects">helloworld_eclipse,helloworld_eclipse_test</property>
+				  <property name="required-components">esb</property>
+  				  <property name="description">This project example requires JBoss SOA-P 5.x</property>
+			  </fix>
+  		  </fixes>
+      </project>
+      <project>
+          <category>SOA-P 5.x Examples Importable By Eclipse</category>
+          <name>simple_cbr_eclipse</name>
+          <included-projects>simple_cbr_eclipse,simple_cbr_eclipse_test</included-projects>       
+          <shortDescription>simple_cbr_eclipse</shortDescription>
+          <description>The purpose of the simple_cbr quickstart is to demonstrate the Content Based Router in JBoss ESB.</description>
+          <size>24985</size> <!-- size of the zip file -->
+          <url>http://anonsvn.jboss.org/repos/jbosstools/workspace/bfitzpat/SOA_5_2_Examples/simple_cbr_eclipse.zip</url>
+		  <fixes>
+			  <fix type="wtpruntime">
+				  <property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50</property>
+				  <property name="eclipse-projects">simple_cbr_eclipse,simple_cbr_eclipse_test</property>
+				  <property name="required-components">esb,drools</property>
+  				  <property name="description">This project example requires JBoss SOA-P 5.x</property>
+			  </fix>
+  		  </fixes>
+      </project>
+      <project>
+          <category>SOA-P 5.x Examples Importable By Eclipse</category>
+          <name>static_router_eclipse</name>
+          <included-projects>static_router_eclipse,static_router_eclipse_test</included-projects>       
+          <shortDescription>static_router_eclipse</shortDescription>
+          <description>This quick start will create a file on the FTP server and show the progress of the message through a static route.  Intermediate files will be created in the directories under build/dirs/</description>
+          <size>9194</size> <!-- size of the zip file -->
+          <url>http://anonsvn.jboss.org/repos/jbosstools/workspace/bfitzpat/SOA_5_2_Examples/static_router_eclipse.zip</url>
+		  <fixes>
+			  <fix type="wtpruntime">
+				  <property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50</property>
+				  <property name="eclipse-projects">static_router_eclipse,static_router_eclipse_test</property>
+				  <property name="required-components">esb</property>
+  				  <property name="description">This project example requires JBoss SOA-P 5.x</property>
+			  </fix>
+  		  </fixes>
+      </project>
+      <project>
+          <category>SOA-P 5.x Examples Importable By Eclipse</category>
+          <name>transform_XML2POJO_eclipse</name>
+          <included-projects>transform_XML2POJO_eclipse,transform_XML2POJO_eclipse_test</included-projects>       
+          <shortDescription>transform_XML2POJO_eclipse</shortDescription>
+          <description>The purpose of the simple_transformation quickstart sample is to illustrate the use of Smooks performing a simple transformation by converting a XML file into Java POJOs.</description>
+          <size>26927</size> <!-- size of the zip file -->
+          <url>http://anonsvn.jboss.org/repos/jbosstools/workspace/bfitzpat/SOA_5_2_Examples/transform_XML2POJO_eclipse.zip</url>
+		  <fixes>
+			  <fix type="wtpruntime">
+				  <property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50</property>
+				  <property name="eclipse-projects">transform_XML2POJO_eclipse,transform_XML2POJO_eclipse_test</property>
+				  <property name="required-components">esb</property>
+  				  <property name="description">This project example requires JBoss SOA-P 5.x</property>
+			  </fix>
+  		  </fixes>
+      </project>
+  </projects>
