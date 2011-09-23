@@ -77,7 +77,7 @@
 					<!-- "strict" means perfect version match -->
 					<followStrictOnly>true</followStrictOnly>
 					<!-- Whether or not to follow optional requirements. -->
-					<includeOptional>false</includeOptional>
+					<includeOptional>true</includeOptional>
 					<!-- Whether or not to follow non-greedy requirements. -->
 					<includeNonGreedy>true</includeNonGreedy>
 					<!-- filter properties. E.g. filter only one platform -->
