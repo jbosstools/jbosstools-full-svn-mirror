@@ -3,9 +3,9 @@
 <repository name='JBoss Tools Requirements - Composite Indigo Mirror - Extras' type='org.eclipse.equinox.internal.p2.artifact.repository.CompositeArtifactRepository' version='1.0.0'>
 <properties size='2'>
 <property name='p2.compressed' value='true'/>
-<property name='p2.timestamp' value='1308002972000'/>
+<property name='p2.timestamp' value='1316838896000'/>
 </properties>
 <children size='1'>
-<child location='RC2/'/>
+<child location='SR0/'/>
 </children>     
 </repository>
