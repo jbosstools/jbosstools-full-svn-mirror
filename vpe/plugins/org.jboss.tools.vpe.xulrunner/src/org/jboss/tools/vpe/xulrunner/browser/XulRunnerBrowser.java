@@ -27,7 +27,9 @@ import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Listener;
+import org.jboss.tools.vpe.xulrunner.PlatformIsNotSupportedException;
 import org.jboss.tools.vpe.xulrunner.VpeXulrunnerMessages;
+import org.jboss.tools.vpe.xulrunner.XulRunnerBundleNotFoundException;
 import org.jboss.tools.vpe.xulrunner.XulRunnerException;
 import org.jboss.tools.vpe.xulrunner.util.XPCOM;
 import org.mozilla.interfaces.nsIComponentManager;
@@ -109,11 +111,7 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 
 	public XulRunnerBrowser(Composite parent) throws XulRunnerException {
 		ensureEmbeddedXulRunnerEnabled();
-		
-	    if(Platform.OS_MACOSX.equals(Platform.getOS())){
-	    	getXulRunnerPath();
-	    }
-		
+		getXulRunnerPath();
 	    browser = new Browser(parent, SWT.MOZILLA);
 	    
 	    webBrowser = (nsIWebBrowser) browser.getWebBrowser();
@@ -224,13 +222,9 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 				Bundle xulRunnerBundle = Platform.getBundle(getXulRunnerBundle());
 				if (xulRunnerBundle == null) {
 					if (!XulRunnerBrowser.isCurrentPlatformOfficiallySupported()) {
-						throw new XulRunnerException(MessageFormat.format(
-								VpeXulrunnerMessages.CURRENT_PLATFORM_IS_NOT_SUPPORTED,
-								XulRunnerBrowser.CURRENT_PLATFORM_ID));
+						throw new PlatformIsNotSupportedException();
 					} else {
-						throw new XulRunnerException(MessageFormat.format(
-								VpeXulrunnerMessages.XulRunnerBrowser_bundleNotFound,
-								getXulRunnerBundle()));
+						throw new XulRunnerBundleNotFoundException(getXulRunnerBundle());
 					}
 				}
 
@@ -238,8 +232,7 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 				if (!greRanges[0].check(xulRunnerVersion)) {
 					throw new XulRunnerException(MessageFormat.format(VpeXulrunnerMessages.XulRunnerBrowser_wrongVersion, xulRunnerBundle.getLocation() ,XulRunnerBrowser.XULRUNNER_LOWER_VERSION,XulRunnerBrowser.XULRUNNER_HIGHER_VERSION) ); 
 				}
-				
-				
+
 				URL url = xulRunnerBundle.getEntry(XULRUNNER_ENTRY);
 				if (url == null) {
 					throw new XulRunnerException(MessageFormat.format(VpeXulrunnerMessages.XulRunnerBrowser_bundleDoesNotContainXulrunner, getXulRunnerBundle(),XULRUNNER_ENTRY));  
@@ -251,12 +244,11 @@ public class XulRunnerBrowser implements nsIWebBrowserChrome,
 				} catch (IOException ioe) {
 					throw new XulRunnerException(MessageFormat.format(VpeXulrunnerMessages.XulRunnerBrowser_cannotGetPathToXulrunner,getXulRunnerBundle()), ioe); 
 				}
-				
+
 			xulRunnerPath = xulRunnerFile.getAbsolutePath();
 			System.setProperty(XULRUNNER_PATH, xulRunnerPath);
 		}
 
-		
 		return xulRunnerPath;
 	}
 		
