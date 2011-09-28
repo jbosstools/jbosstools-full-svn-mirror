@@ -90,6 +90,10 @@
 		<category name="AllTools" />
 		<category name="GeneralTools" />
 	</feature>
+	<feature url="features/org.jboss.tools.central.feature_0.0.0.jar" id="org.jboss.tools.central.feature" version="0.0.0">
+		<category name="AllTools" />
+		<category name="GeneralTools" />
+	</feature>
 
 	<!-- only in JBT -->
 	<feature url="features/org.jboss.tools.forge.feature_0.0.0.jar" id="org.jboss.tools.forge.feature" version="0.0.0">
