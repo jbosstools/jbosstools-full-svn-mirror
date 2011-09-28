@@ -361,8 +361,11 @@ public class VpeTest extends TestCase implements ILogListener {
 				assertNotNull(getSelectedNode(xulRunnerEditor));
 
 				nsIDOMNode sample;
-				if (sourceNode.getNodeType() == Node.TEXT_NODE) {
-
+				if ((sourceNode.getNodeType() == Node.TEXT_NODE)
+						&& (((VpeElementMapping) nodeMapping).getElementData() != null)) {
+					/*
+					 * ElementData could be null. Thus the check is required.
+					 */
 					sample = ((VpeElementMapping) nodeMapping).getElementData()
 							.getNodesData().get(0).getVisualNode();
 				} else {
