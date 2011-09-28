@@ -31,6 +31,7 @@ import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.handlers.RegistryToggleState;
 import org.eclipse.ui.part.FileEditorInput;
+import org.eclipse.ui.part.MultiPageEditorPart;
 import org.jboss.tools.jst.jsp.JspEditorPlugin;
 import org.jboss.tools.jst.jsp.bundle.BundleMap;
 import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
@@ -387,7 +388,7 @@ public class VpeCommandsTests extends VpeTest {
 			IllegalArgumentException, IllegalAccessException,
 			InvocationTargetException {
 		Method pageChange;
-		pageChange = JSPMultiPageEditorPart.class.getDeclaredMethod(
+		pageChange = MultiPageEditorPart.class.getDeclaredMethod(
 				"setActivePage", new Class[] { int.class });
 		pageChange.setAccessible(true);
 		pageChange.invoke(multiPageEditor, index);
