@@ -60,6 +60,7 @@ import org.jboss.tools.common.model.XModelObject;
 import org.jboss.tools.common.model.project.IModelNature;
 import org.jboss.tools.common.model.util.EclipseResourceUtil;
 import org.jboss.tools.common.resref.core.ResourceReference;
+import org.jboss.tools.jst.web.WebUtils;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeIncludeInfo;
 import org.jboss.tools.vpe.editor.VpeVisualDomBuilder;
@@ -270,9 +271,15 @@ public class FileUtil {
 			} else {
 				//WebArtifactEdit edit = WebArtifactEdit
 				//		.getWebArtifactEditForRead(includeFile.getProject());
-				IFolder defaultWebRootFolder = getDefaultWebRootFolder(includeFile);
-				if (defaultWebRootFolder != null) {
-					file = defaultWebRootFolder.getFile(fileName);										
+				IContainer[] webRootFolders = WebUtils.getWebRootFolders(includeFile.getProject());
+				if (webRootFolders != null) {
+					for (IContainer webRootFolder : webRootFolders) {
+						IFile handle = webRootFolder.getFile(new Path(fileName));
+						if (handle.exists()) {
+							file = handle;
+							break;
+						}
+					}
 				} else {
 					/* Yahor Radtsevich (yradtsevich):
 					 * Fix of JBIDE-4416: assume that the parent directory
@@ -302,14 +309,11 @@ public class FileUtil {
 			return null;
 		}
 
-		IVirtualComponent component = ComponentCore.createComponent(project);
-		if (component == null) {
-			return null;
+		IContainer[] webRootFolders = WebUtils.getWebRootFolders(project);
+		IPath defaultWebRootPath = null;
+		if (webRootFolders != null && webRootFolders.length > 0) {
+			defaultWebRootPath = webRootFolders[0].getFullPath();
 		}
-
-		IVirtualFolder webRootFolder = component.getRootFolder()
-				.getFolder(new Path("/")); //$NON-NLS-1$
-		IPath defaultWebRootPath = webRootFolder.getUnderlyingFolder().getFullPath();
 		if (defaultWebRootPath == null) {
 			return null;
 		}

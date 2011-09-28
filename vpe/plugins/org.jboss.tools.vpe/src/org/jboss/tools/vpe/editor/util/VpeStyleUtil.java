@@ -772,12 +772,12 @@ public class VpeStyleUtil {
 		return Integer.toString(position) + PX_STRING;
 	}
 
-	public static String processUrl(String url, IFile file) {
+	public static String processUrl(String url, IFile baseFile) {
 
 		String resolvedUrl = url.replaceFirst(
 				"^\\s*(\\#|\\$)\\{facesContext.externalContext.requestContextPath\\}", Constants.EMPTY); //$NON-NLS-1$
 
-		resolvedUrl = ElServiceUtil.replaceEl(file, resolvedUrl);
+		resolvedUrl = ElServiceUtil.replaceEl(baseFile, resolvedUrl);
 
 		URI uri = null;
 		try {
@@ -796,14 +796,14 @@ public class VpeStyleUtil {
 
 		Path path = new Path(decodedUrl);
 		if (decodedUrl.startsWith("/") //$NON-NLS-1$
-				&& path.segment(0).equals(file.getProject().getName())) {
+				&& path.segment(0).equals(baseFile.getProject().getName())) {
 			decodedUrl = "/" //$NON-NLS-1$
 					+ path.removeFirstSegments(1).toPortableString();
 		}
 
-		IPath location = FileUtil.getFile(decodedUrl, file).getLocation();
-		if (location != null) {
-			return pathToUrl(location);
+		IFile file = FileUtil.getFile(decodedUrl, baseFile);
+		if (file != null && file.getLocation() != null) {
+			return pathToUrl(file.getLocation());
 		}
 		return resolvedUrl;
 	}
