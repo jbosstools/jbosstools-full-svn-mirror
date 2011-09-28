@@ -498,6 +498,13 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 		<property name="aggregate.zips.dir" value="${output.dir}/zips" />
 		<delete dir="${aggregate.zips.dir}" quiet="true" />
 		<mkdir dir="${aggregate.zips.dir}" />
+		<if>
+			<isset property="inputRepo" />
+			<then>
+				<var name="inputRepos" value="1" />
+				<var name="inputRepo1" value="${inputRepo}" />
+			</then>
+		</if>
 		<for list="${inputRepos}" delimiter=", " keepgoing="true" param="repoNum">
 			<sequential>
 				<var name="repo" value="${inputRepo@{repoNum}}" />
