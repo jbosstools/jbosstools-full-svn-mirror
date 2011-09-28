@@ -657,7 +657,7 @@ public class NumberBean
 					<para>On the Palette click on <emphasis><property>inputText</property>, </emphasis> drag the cursor over to the editor, and drop it inside the editor after the text.</para>
 				</listitem>
 				<listitem>
-					<para>Switch to a Source mode and insert a <code>&lt;br/&gt;</code> tag after the <code>&lt;h:outputText&gt;</code> component to make a new line</para>
+					<para>Switch to Source mode and insert a <code>&lt;br/&gt;</code> tag after the <code>&lt;h:outputText&gt;</code> component to make a new line</para>
 				</listitem>
 				<listitem>
 					<para>Click the <guibutton>Save</guibutton> button</para>

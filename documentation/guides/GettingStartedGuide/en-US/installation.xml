@@ -549,7 +549,7 @@ java -jar /path/to/installer.jar /path/to/InstallConfigRecord.xml
       <guibutton>
         Remove
       </guibutton>
-       button will the remove the selected server from the list. If necessary, you can edit the server details clicking on the 
+       button will remove the selected server from the list. If necessary, you can edit the server details clicking on the 
       <guibutton>
         Edit
       </guibutton>

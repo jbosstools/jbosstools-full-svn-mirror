@@ -251,11 +251,11 @@
       </programlisting>
        
       <para>
-        If you come back to <property>Tree</property> mode you will see that the changes made are automatically reflected in that mode.
+		  If you go back to <property>Tree</property> tab you will see that the changes made in the <property>Source</proeprty> tab are automatically reflected.
       </para>
        
       <para>
-        Actually you don&apos;t really need to do any configurations right now.
+        Actually you do not really need to do any configurations right now.
       </para>
     </section>
      
@@ -347,7 +347,7 @@
               </figure>
                
               <figure>
-                <title>Archive in Project Archives View</title> 
+                <title>Archive in Project Explorer View</title> 
                 <mediaobject>
                   <imageobject>
                     <imagedata fileref="images/jsp_application/jsp_application_12.png"/>
