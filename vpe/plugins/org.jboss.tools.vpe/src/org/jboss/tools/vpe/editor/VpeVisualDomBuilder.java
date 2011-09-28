@@ -340,12 +340,11 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		}
 		// check source node can be changed and link can be a null in this case
 		// we shouldn't process this node
-		if (sourceNode == null
-				|| (sourceNode.getNodeType() != Node.TEXT_NODE
-						&& sourceNode.getNodeType() != Node.ELEMENT_NODE
-						&& sourceNode.getNodeType() != Node.COMMENT_NODE 
-						&& sourceNode.getNodeType() != Node.CDATA_SECTION_NODE
-						&& sourceNode.getNodeType() != Node.DOCUMENT_NODE)) {
+		if (sourceNode.getNodeType() != Node.TEXT_NODE
+			&& sourceNode.getNodeType() != Node.ELEMENT_NODE
+			&& sourceNode.getNodeType() != Node.COMMENT_NODE 
+			&& sourceNode.getNodeType() != Node.CDATA_SECTION_NODE
+			&& sourceNode.getNodeType() != Node.DOCUMENT_NODE) {
 			return null;
 		}
 

@@ -58,7 +58,7 @@ public class VpeElementMapping extends VpeNodeMapping {
 	}
 	
 	public nsIDOMElement getVisualElement() {
-		return (nsIDOMElement) getVisualNode();
+		return (nsIDOMElement) this.visualNode;
 	}
 	
 	public VpeTemplate getTemplate() {
@@ -96,7 +96,7 @@ public class VpeElementMapping extends VpeNodeMapping {
 		
 		while(true){
 			if(this.border.equals(element)) return true;
-			if(getVisualNode().equals(element)) return false;
+			if(this.visualNode.equals(element)) return false;
 			
 			element = element.getParentNode();
 			if(element == null) break;

@@ -13,9 +13,13 @@ package org.jboss.tools.vpe.editor.mapping;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.w3c.dom.Node;
 
+/**
+ * Stores a relation between Node in source model and nsIDOMNode in in visual model
+ * @see VpeDomMapping
+ */
 public class VpeNodeMapping {
-	private Node sourceNode;
-	private nsIDOMNode visualNode;
+	Node sourceNode;
+	nsIDOMNode visualNode;
 	
 	public VpeNodeMapping(Node sourceNode, nsIDOMNode visualNode) {
 		this.sourceNode = sourceNode;

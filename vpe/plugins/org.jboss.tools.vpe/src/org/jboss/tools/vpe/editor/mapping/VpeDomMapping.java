@@ -75,24 +75,9 @@ public class VpeDomMapping {
 	}
 	
 	public VpeNodeMapping getNodeMappingAtVisualNode(nsIDOMNode visualNode) {
-
-		
-		Iterator<Map.Entry<nsIDOMNode, VpeNodeMapping>> iter = visualMap.entrySet().iterator();
-	//Map.get() doesn't work correctly for this situation	
-		while(iter.hasNext()){
-			Map.Entry<nsIDOMNode,VpeNodeMapping> element = iter.next();
-			nsIDOMNode key = element.getKey();
-			if(visualNode!=null&&visualNode.equals(key)) {
-				
-				return element.getValue();
-			}
-
+		if(visualNode!=null) {
+			return visualMap.get(visualNode);
 		}
-//		
-//		if (visualNode != null) {
-//			return visualMap.get(visualNode);
-//		}
-		
 		return null;
 	}
 	

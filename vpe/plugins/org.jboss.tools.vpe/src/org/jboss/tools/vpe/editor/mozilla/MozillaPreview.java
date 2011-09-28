@@ -26,6 +26,10 @@ import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mozilla.listener.EditorLoadWindowListener;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaDndListener;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
+import org.jboss.tools.vpe.xulrunner.PlatformIsNotSupportedException;
+import org.jboss.tools.vpe.xulrunner.XulRunnerBundleNotFoundException;
+import org.jboss.tools.vpe.xulrunner.XulRunnerException;
+import org.mozilla.xpcom.XPCOMException;
 
 /**
  * a class implementation of mozilla preview 
@@ -55,33 +59,20 @@ public class MozillaPreview extends MozillaEditor {
 	@Override
 	public void createPartControl(final Composite parent) {
 		try {
-			/*setXulRunnerEditor(new XulRunnerEditor(parent) {
-				public void onLoadWindow() {
-					super.onLoadWindow();
-					MozillaPreview.this.onLoadWindow();
-				}
-				
-				public void onShowTooltip(int x, int y, String text) {
-					if (editorDomEventListener != null) {
-						editorDomEventListener.onShowTooltip(x, y, text);
-					}
-				}
-				public void onHideTooltip() {
-					if (editorDomEventListener != null) {
-						editorDomEventListener.onHideTooltip();
-					}
-				}
-				public void onDispose() {
-					removeDomEventListeners();
-					super.onDispose();
-				}
-			});*/
 			setXulRunnerEditor(new XulRunnerPreview(parent, this));
 			setInitialContent();
 			getXulRunnerEditor().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		} catch (Throwable e) {
+		} catch (XulRunnerBundleNotFoundException e) {
+			// TODO add page with explanation what to do
 			showXulRunnerError(parent, e);
-		}		
+		} catch (PlatformIsNotSupportedException e) {
+			// TODO add page with explanation what platforms supported and what tod o
+			showXulRunnerError(parent, e);
+		} catch (XulRunnerException e) {
+			showXulRunnerError(parent, e);
+		} catch(XPCOMException e) {
+			showXulRunnerError(parent, e);
+		}
 	}
 
 	@Override

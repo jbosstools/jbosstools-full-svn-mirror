@@ -122,12 +122,11 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	public static final String ICON_NON_VISUAL_TAGS = "icons/non-visusal-tags.gif"; //$NON-NLS-1$
 	public static final String ICON_TEXT_FORMATTING = "icons/text-formatting.gif"; //$NON-NLS-1$
 	public static final String ICON_BUNDLE_AS_EL= "icons/bundle-as-el.gif"; //$NON-NLS-1$
-//static String SELECT_BAR = "SELECT_LBAR"; //$NON-NLS-1$
+
 	private XulRunnerEditor xulRunnerEditor;
 	private nsIDOMElement contentArea;
 	private nsIDOMNode headNode;
-	private MozillaEventAdapter mozillaEventAdapter
-			= createMozillaEventAdapter();
+	private MozillaEventAdapter mozillaEventAdapter = createMozillaEventAdapter();
 
 	private EditorLoadWindowListener editorLoadWindowListener;
 
@@ -149,7 +148,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	private Action showNonVisualTagsAction;
 	private Action showTextFormattingAction;
 	private Action showBundleAsELAction;
-//	private Action externalizeStringsAction;
+
 	
 	static {
 		/*
@@ -477,28 +476,15 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	 */
 	@Override
 	public void createPartControl(final Composite parent) {
-    	//Setting  Layout for the parent Composite
-//		parent.setLayout(new FillLayout());
-		
-		/*
-		 * https://jira.jboss.org/jira/browse/JBIDE-4062
-		 * Creating scrollable eclipse element.
-		 */
-//		ScrolledComposite sc = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
-//		sc.setLayout(new FillLayout());
-//		Composite composite = new Composite(parent, SWT.NATIVE);
 
-	    GridLayout layout = new GridLayout(2,false);
+		GridLayout layout = new GridLayout(2,false);
 		layout.marginHeight = 0;
 		layout.marginWidth = 2;
 		layout.verticalSpacing = 2;
 		layout.horizontalSpacing = 2;
 		layout.marginBottom = 0;
 		parent.setLayout(layout);
-//		composite.setLayout(layout);
-//		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		
-		
+
 		// Editors and Toolbar composite 
 		Composite cmpEdTl = new Composite(parent, SWT.NONE);
 		GridLayout layoutEdTl = new GridLayout(1, false);
@@ -537,49 +523,11 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		cmpEd.setLayout(layoutEd);
 		cmpEd.setLayoutData(new GridData(GridData.FILL_BOTH));
 
-		//TODO Add a paintListener  to cmpEd and give him a border top and left only
+		//TODO Add a paintListener to cmpEd and give him a border top and left only
 		Color buttonDarker = parent.getDisplay().getSystemColor(SWT.COLOR_WIDGET_NORMAL_SHADOW);
 		cmpEd.setBackground(buttonDarker);
 
 		try {
-			/*xulRunnerEditor = new XulRunnerEditor(cmpEd) {
-				public void onLoadWindow() {
-					// if the first load page
-					if (!isRefreshPage()) {
-						super.onLoadWindow();
-//						MozillaEditor.this.onLoadWindow();
-					}
-					// if only refresh page
-					else {
-						
-						MozillaEditor.this.onReloadWindow();
-						setRefreshPage(false);
-					}
-
-				}
-				public void onElementResize(nsIDOMElement element, int constrains, int top, int left, int width, int height) {
-					if (editorDomEventListener != null) {
-						editorDomEventListener.elementResized(element, constrains, top, left, width, height);
-					}
-				}
-				public void onShowTooltip(int x, int y, String text) {
-					if (editorDomEventListener != null) {
-						editorDomEventListener.onShowTooltip(x, y, text);
-					}
-				}
-				public void onHideTooltip() {
-					if (editorDomEventListener != null) {
-						editorDomEventListener.onHideTooltip();
-					}
-				}
-				public void onDispose() {
-					tearDownEditor();
-					removeDomEventListeners();
-					headNode = null;
-					contentArea = null;
-					super.onDispose();
-				}
-			};*/
 			xulRunnerEditor = new XulRunnerEditor2(cmpEd, this);
 			xulRunnerEditor.getBrowser().addProgressListener(new ProgressListener() {
 
@@ -598,41 +546,20 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 						showXulRunnerError(cmpEd, ex);
 					}
 				}
-				
 			});
-			
+
 			setInitialContent();
-			// Wait while visual part is loaded
-			//commented by mareshkau, fix for jbide-3032
-//			while (!loaded) {
-//				if (!Display.getCurrent().readAndDispatch())
-//					Display.getCurrent().sleep();
-//			}
 			xulRunnerEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 			
 		} catch (Throwable t) {
 			/*
-			 * https://jira.jboss.org/browse/JBIDE-6690
 			 * Disable VPE toolbar
 			 */
 			if (verBar != null) {
 				verBar.setEnabled(false);
 			}
-			/*
-			 * Show the exception
-			 */
 			showXulRunnerError(cmpEd, t);
 		}
-		
-		/*
-		 * https://jira.jboss.org/jira/browse/JBIDE-4062
-		 * Computing elements sizes to set up scroll bars.
-		 */
-//		Point totalSize = composite.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-//		sc.setContent(composite);
-//		sc.setExpandHorizontal(true);
-//		sc.setExpandVertical(true);
-//		sc.setMinSize(totalSize);
 	}
 
 	/**
@@ -716,23 +643,24 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 
 		link.addMouseListener(new MouseListener() {
 			public void mouseDown(org.eclipse.swt.events.MouseEvent e) {
-		        BusyIndicator.showWhile(link.getDisplay(), new Runnable() {
-		            public void run() {
-		                URL theURL=null;;
+				BusyIndicator.showWhile(link.getDisplay(), new Runnable() {
+					public void run() {
+						URL theURL = null;
+						;
 						try {
 							theURL = new URL(VpeUIMessages.MOZILLA_LOADING_ERROR_LINK);
 						} catch (MalformedURLException e) {
 							VpePlugin.reportProblem(e);
 						}
-		                IWorkbenchBrowserSupport support = PlatformUI.getWorkbench().getBrowserSupport();
-		                try {
+						IWorkbenchBrowserSupport support = PlatformUI.getWorkbench().getBrowserSupport();
+						try {
 							support.getExternalBrowser().openURL(theURL);
 						} catch (PartInitException e) {
 							VpePlugin.reportProblem(e);
 						}
-		            }
-		        });
-		    }
+					}
+				});
+			}
 
 			public void mouseDoubleClick(MouseEvent e) {
 			}

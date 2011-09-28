@@ -1533,40 +1533,31 @@ public class VpeController implements INodeAdapter,
 	}
 
 	// for debug
-	private void printSourceEvent(INodeNotifier notifier, int eventType,
-			Object feature, Object oldValue, Object newValue, int pos) {
-		System.out
-				.println(">>> eventType: " + INodeNotifier.EVENT_TYPE_STRINGS[eventType] + //$NON-NLS-1$
-						"  pos: " + pos
-						+ "  notifier: " + ((Node) notifier).getNodeName() + //$NON-NLS-1$ //$NON-NLS-2$
-						"  hashCode: " + notifier.hashCode()); //$NON-NLS-1$
+	private void printSourceEvent(INodeNotifier notifier, int eventType, Object feature, Object oldValue,
+			Object newValue, int pos) {
+		System.out.println(">>> eventType: " + INodeNotifier.EVENT_TYPE_STRINGS[eventType] + //$NON-NLS-1$
+				"  pos: " + pos + "  notifier: " + ((Node) notifier).getNodeName() + //$NON-NLS-1$ //$NON-NLS-2$
+				"  hashCode: " + notifier.hashCode()); //$NON-NLS-1$
 		if (feature != null) {
 			if (feature instanceof Node) {
-				System.out
-						.println("     feature: " + ((Node) feature).getNodeType() + //$NON-NLS-1$
-								Constants.WHITE_SPACE
-								+ ((Node) feature).getNodeName()
-								+ "  hashCode: " + feature.hashCode()); //$NON-NLS-1$
+				System.out.println("     feature: " + ((Node) feature).getNodeType() + //$NON-NLS-1$
+						Constants.WHITE_SPACE + ((Node) feature).getNodeName() + "  hashCode: " + feature.hashCode()); //$NON-NLS-1$
 			} else {
 				System.out.println("     feature: " + feature); //$NON-NLS-1$
 			}
 		}
 		if (oldValue != null) {
 			if (oldValue instanceof Node) {
-				System.out
-						.println("     oldValue: " + ((Node) oldValue).getNodeName() + //$NON-NLS-1$
-								"  hashCode: " + oldValue.hashCode()); //$NON-NLS-1$
+				System.out.println("     oldValue: " + ((Node) oldValue).getNodeName() + //$NON-NLS-1$
+						"  hashCode: " + oldValue.hashCode()); //$NON-NLS-1$
 			} else {
 				System.out.println("     oldValue: " + oldValue); //$NON-NLS-1$
 			}
 		}
 		if (newValue != null) {
 			if (newValue instanceof Node) {
-				System.out
-						.println("     newValue: " + ((Node) newValue).getNodeName() + //$NON-NLS-1$
-								"  hashCode: " + newValue.hashCode()
-								+ Constants.WHITE_SPACE
-								+ ((Node) newValue).getNodeType()); //$NON-NLS-1$
+				System.out.println("     newValue: " + ((Node) newValue).getNodeName() + //$NON-NLS-1$
+						"  hashCode: " + newValue.hashCode() + Constants.WHITE_SPACE + ((Node) newValue).getNodeType()); //$NON-NLS-1$
 			} else {
 				System.out.println("     newValue: " + newValue); //$NON-NLS-1$
 			}
@@ -1629,24 +1620,6 @@ public class VpeController implements INodeAdapter,
 		}
 	}
 
-	// void refreshBundleValues() {
-	// if
-	// (!switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE))
-	// {
-	// return;
-	// }
-	// try {
-	// if (bundle != null) {
-	// bundle.refresh();
-	// if (pageContext != null) {
-	// pageContext.refreshBundleValues();
-	// }
-	// }
-	// } finally {
-	// switcher.stopActiveEditor();
-	// }
-	// }
-	//
 	void refreshTemplates() {
 		if (includeList.includesRefresh()) {
 			visualRefresh();
@@ -1677,164 +1650,6 @@ public class VpeController implements INodeAdapter,
 
 	public void structureChanged(XModelTreeEvent event) {
 	}
-
-	// private Node getSourceNodeAt(int offset) {
-	// if (sourceEditor != null && getModel() != null) {
-	// IndexedRegion node = getModel().getIndexedRegion(offset);
-	// if (node instanceof IDOMNode) {
-	// VpeElementMapping elementMapping = domMapping
-	// .getNearElementMapping((IDOMNode) node);
-	// if (elementMapping != null) {
-	// if (node instanceof IDOMElement) {
-	// IDOMElement element = (IDOMElement) node;
-	//
-	// if (offset < element.getEndStartOffset()) {
-	// NamedNodeMap attrs = element.getAttributes();
-	// if (attrs != null) {
-	// for (int i = 0; i < attrs.getLength(); i++) {
-	// if (attrs.item(i) instanceof AttrImpl) {
-	// AttrImpl attr = (AttrImpl) attrs.item(i);
-	// if (getSourceAttributeOffset(attr, offset) != -1) {
-	// String[] atributeNames =
-	// elementMapping.getTemplate().getOutputAtributeNames();
-	// if (atributeNames != null
-	// && atributeNames.length > 0
-	// && attr.getName().equalsIgnoreCase(atributeNames[0])) {
-	// return attr;
-	// }
-	// }
-	// }
-	// }
-	// }
-	// }
-	// }
-	// }
-	// }
-	// if (node == null) {
-	// node = getModel().getIndexedRegion(offset - 1);
-	// }
-	// if (node instanceof Node) {
-	// return (Node) node;
-	// }
-	// }
-	// return null;
-	// }
-	//
-	// private int getSourceNodeOffset(Node node, int pos, boolean endFlag) {
-	// if (node == null)
-	// return 0;
-	// int start = ((IndexedRegion) node).getStartOffset();
-	// int end = ((IndexedRegion) node).getEndOffset();
-	//
-	// switch (node.getNodeType()) {
-	// case Node.ATTRIBUTE_NODE:
-	// if (node instanceof AttrImpl) {
-	// return getSourceAttributeOffset((AttrImpl) node, pos);
-	// }
-	// case Node.TEXT_NODE:
-	// if (pos < start) {
-	// return 0;
-	// } else if (pos > end) {
-	// return end - start;
-	// } else {
-	// return pos - start;
-	// }
-	// case Node.COMMENT_NODE:
-	// if (pos > end) {
-	// pos = end;
-	// }
-	// int offset = pos - start - 4;
-	// return offset < 0 ? 0 : offset;
-	// case Node.ELEMENT_NODE:
-	// ElementImpl element = (ElementImpl) node;
-	// if (element.isContainer()) {
-	// if (pos < element.getStartEndOffset()) {
-	// return 0;
-	// } else {
-	// return 1;
-	// }
-	// } else {
-	// return endFlag ? 1 : 0;
-	// }
-	// default:
-	// return endFlag ? 1 : 0;
-	// }
-	// }
-	//
-	// private int getSourceAttributeOffset(AttrImpl attr, int pos) {
-	// if (attr.getValueRegion() != null) {
-	// int start = attr.getValueRegionStartOffset();
-	// String value = attr.getValueRegionText();
-	// int len = value.length();
-	// if (pos >= start && pos <= start + len) {
-	// int offset = pos - start;
-	// if (len > 1 && value.charAt(0) == '"'
-	// && value.charAt(len - 1) == '"') {
-	// if (offset <= 0 || offset >= len) {
-	// return -1;
-	// }
-	// offset--;
-	// }
-	// return offset;
-	// }
-	// }
-	// return -1;
-	// }
-	//
-	// private int getSourceNodeOffset1(Node node, int pos, boolean endFlag) {
-	// if (node == null)
-	// return 0;
-	// int start = ((IndexedRegion) node).getStartOffset();
-	// int end = ((IndexedRegion) node).getEndOffset();
-	//
-	// switch (node.getNodeType()) {
-	// case Node.ATTRIBUTE_NODE:
-	// if (node instanceof AttrImpl) {
-	// AttrImpl attr = (AttrImpl) node;
-	// start = attr.getValueRegionStartOffset();
-	// end = start + attr.getValueRegion().getLength();
-	// int ret = 0;
-	// if (pos > end) {
-	// ret = end - start;
-	// } else {
-	// ret = pos - start;
-	// }
-	// if (ret > 0 && attr.getValueRegionText().charAt(0) == '"') {
-	// ret--;
-	// }
-	// return ret;
-	// }
-	// case Node.TEXT_NODE:
-	// if (pos < start) {
-	// return 0;
-	// } else if (pos > end) {
-	// return end - start;
-	// } else {
-	// return pos - start;
-	// }
-	// case Node.COMMENT_NODE:
-	// if (pos > end) {
-	// pos = end;
-	// }
-	// int offset = pos - start - 4;
-	// return offset < 0 ? 0 : offset;
-	// case Node.ELEMENT_NODE:
-	// ElementImpl element = (ElementImpl) node;
-	// if (element.isContainer()) {
-	// if (pos < element.getStartEndOffset()) {
-	// return 0;
-	// } else if (pos < element.getStartEndOffset()) {
-	// return 1;
-	// } else if (pos == element.getStartEndOffset()) {
-	// return 2;
-	// }
-	// } else {
-	// return endFlag ? 1 : 0;
-	// }
-	// default:
-	// return endFlag ? 1 : 0;
-	// }
-	// }
 
 	public class VpeSelectionProvider implements ISelectionProvider {
 		VpeSelection selection;
@@ -1951,22 +1766,6 @@ public class VpeController implements INodeAdapter,
 			visualRefresh();
 		}
 	}
-
-// this method is never used	
-//	public void dragEnter(nsIDOMEvent event) {
-//		if (VpeDebug.PRINT_VISUAL_DRAGDROP_EVENT) {
-//			System.out.println("<<<<<<<<<<<<<<<<<<<< DragEnter"); //$NON-NLS-1$
-//		}
-//	}
-
-// this method is never used
-//	public void dragExit(nsIDOMEvent event) {
-//		if (VpeDebug.PRINT_VISUAL_DRAGDROP_EVENT) {
-//			System.out.println("<<<<<<<<<<<<<<<<<<<< dragExit"); //$NON-NLS-1$
-//		}
-//		// TODO Sergey Vasilyev figure out with drag caret
-//		// xulRunnerEditor.hideDragCaret();
-//	}
 
 	public String getTagName(XModelObject object) {
 		String tagname = object.getAttributeValue("name"); //$NON-NLS-1$
@@ -2198,65 +1997,9 @@ public class VpeController implements INodeAdapter,
 		}
 	}
 
-// this method is never used	
-//	// nsIClipboardDragDropHooks implementation
-//	public void onPasteOrDrop(nsIDOMMouseEvent mouseEvent, String flavor,
-//			String data) {
-//		onHideTooltip();
-//
-//		VpeVisualInnerDropInfo visualDropInfo = selectionBuilder
-//				.getInnerDropInfo(mouseEvent);
-//		Point range = selectionBuilder.getSourceSelectionRangeAtVisualNode(
-//				visualDropInfo.getDropContainer(), (int) visualDropInfo
-//						.getDropOffset());
-//		VpeSourceInnerDropInfo sourceDropInfo = null;
-//
-//		XModelObject object = PreferenceModelUtilities.getPreferenceModel()
-//				.getModelBuffer().source();
-//
-//		String tagname = getTagName(object);
-//		if (tagname.indexOf("taglib") >= 0)tagname = "taglib"; //$NON-NLS-1$ //$NON-NLS-2$
-//		Node sourceDragNode = ((Document) getModel().getAdapter(Document.class))
-//				.createElement(tagname);
-//		if (visualDropInfo.getDropContainer() != null) {
-//			sourceDropInfo = visualBuilder.getSourceInnerDropInfo(
-//					sourceDragNode, visualDropInfo, true);
-//			range = selectionBuilder.getSourceSelectionRange(sourceDropInfo
-//					.getContainer(), sourceDropInfo.getOffset());
-//		}
-//
-//		if (visualDropInfo.getDropContainer() != null) {
-//			if (VpeDebug.PRINT_VISUAL_INNER_DRAGDROP_EVENT) {
-//				System.out
-//						.println("  drop!  container: " + visualDropInfo.getDropContainer().getNodeName()); //$NON-NLS-1$
-//			}
-//			final String finalFlavor = flavor;
-//			final String finalData = data;
-//			final Point finalRange = range;
-//			final Node finalDropContainer = sourceDropInfo == null ? null
-//					: sourceDropInfo.getContainer();
-//			Display.getDefault().asyncExec(new Runnable() {
-//				public void run() {
-//					externalDropAny(finalFlavor, finalData, finalRange,
-//							finalDropContainer);
-//				}
-//			});
-//		}
-//	}
-
 	public void drop(Node node, Node parentNode, int offset) {
 		visualBuilder.innerDrop(node, parentNode, offset);
 	}
-
-//	this method is never used
-//	/*
-//	 * (non-Javadoc)
-//	 * 
-//	 * @see org.mozilla.interfaces.nsISupports#queryInterface(java.lang.String)
-//	 */
-//	public nsISupports queryInterface(String arg0) {
-//		return Mozilla.getInstance().queryInterface(this, arg0);
-//	}
 
 	/**
 	 * Calls when editor content changed, and we should highlight selected element.
