@@ -218,40 +218,20 @@ public class FileUtil {
     
     
     
-    public static IFile getFile(IEditorInput input, String value) {
-		IPath tagPath = new Path(value);
+    public static IFile getFile(IEditorInput input, String fileName) {
+		IPath tagPath = new Path(fileName);
 		if (tagPath.isEmpty()) return null;
 
 		if (input instanceof IFileEditorInput) {
-			IContainer container = null;
-			if(tagPath.isAbsolute()) {
-				container = getWebRoot((IFileEditorInput)input);
-			} else {
-				IFile inputFile = ((IFileEditorInput)input).getFile();
-				if(inputFile != null) container = inputFile.getParent();
-			}
-			IFile f = (container == null) ? null : container.getFile(tagPath);
-			return (f == null || !f.exists()) ? null : f;
+			return getFile(fileName, ((IFileEditorInput) input).getFile());
 		} else if (input instanceof ILocationProvider) {
     	    IPath path = ((ILocationProvider)input).getPath(input);
     	    if(path == null || path.segmentCount() < 1) return null;
-    	    path = path.removeLastSegments(1).append(value);
+    	    path = path.removeLastSegments(1).append(fileName);
     	    return EclipseResourceUtil.getFile(path.toString());			
 		}
         return null;
     }
-
-    private static IContainer getWebRoot(IFileEditorInput input) {
-		IProject project = ((IFileEditorInput)input).getFile().getProject();
-		if(project != null && project.isOpen()) {
-			IModelNature modelNature = EclipseResourceUtil.getModelNature(project);
-			XModel model = (modelNature == null) ? null : modelNature.getModel();
-			XModelObject webRoot = (model == null) ? null : model.getByPath("FileSystems/WEB-ROOT"); //$NON-NLS-1$
-			IResource webRootResource = (webRoot == null) ? null : EclipseResourceUtil.getResource(webRoot);
-			return (webRootResource instanceof IContainer) ? (IContainer)webRootResource : null;
-		}
-	    return null;
-	}
 
 	/**
 	 * @param fileName
@@ -266,7 +246,7 @@ public class FileUtil {
 			if (resources != null && resources.length == 1) {
 				String location = resources[0].getLocation() + fileName;
 				IPath path = new Path(location);
-				return ResourcesPlugin.getWorkspace().getRoot()
+				file = ResourcesPlugin.getWorkspace().getRoot()
 						.getFileForLocation(path);
 			} else {
 				//WebArtifactEdit edit = WebArtifactEdit
@@ -294,7 +274,7 @@ public class FileUtil {
 				String location = resources[0].getLocation() + File.separator
 						+ fileName;
 				IPath path = new Path(location);
-				return ResourcesPlugin.getWorkspace().getRoot()
+				file = ResourcesPlugin.getWorkspace().getRoot()
 						.getFileForLocation(path);
 			} else {
 				file = resolveRelatedPath(includeFile, fileName);
@@ -323,13 +303,14 @@ public class FileUtil {
 
 	/**
 	 * Appends {@code relatedFilePath} to the parent directory of
-	 * {@code baseFile}.
+	 * {@code baseFile}. Returns {@code null} if the file does not exist.
 	 */
 	private static IFile resolveRelatedPath(IFile baseFile,
 			String relatedFilePath) {
 		IPath currentFolder = baseFile.getParent().getFullPath();
 		IPath path = currentFolder.append(relatedFilePath);
-		return ResourcesPlugin.getWorkspace().getRoot().getFile(path);
+		IFile handle = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
+		return handle.exists() ? handle : null;
 	}
 
 	/**
