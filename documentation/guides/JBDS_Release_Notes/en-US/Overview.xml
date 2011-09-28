@@ -4,16 +4,23 @@
 		<para>			
 			JBoss Developer Studio 5.0 is a major release of the Eclipse based IDE developed and supported by Red Hat (the visual tooling components are supported for 3 years, and the runtime platform for 5 years). The IDE, which is available for Windows, Linux and OS X, provides tooling that allows for rapid Web 2.0 application development on the JBoss Enterprise Application Platform. This release also improves support for SOA application development with the JBoss Enterprise SOA Platform.
 		</para>
-<!--		<para>
+		<para>
 			JBoss Developer Studio 5.0 contains many new features, including:
 		</para>
 		<itemizedlist>
 			<listitem>
 				<para>
-
+					OpenShift Express support
+					<!-- https://issues.jboss.org/browse/JBIDE-9591 -->
 				</para>
 			</listitem>
-		</itemizedlist> -->
+			<listitem>
+				<para>
+					SAR project deployment
+					<!-- https://issues.jboss.org/browse/JBIDE-9497 -->
+				</para>
+			</listitem>
+		</itemizedlist>
 		<important>
 			<para>
 				If you are installing on a Linux distribution you must set the following limits in <filename>/etc/security/limits.conf</filename> upon installation completion and before running JBoss Developer Studio:

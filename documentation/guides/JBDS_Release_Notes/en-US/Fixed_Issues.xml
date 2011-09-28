@@ -18,18 +18,23 @@
             </itemizedlist>
         </para>
 	</formalpara> -->
- <!--   <formalpara>
+   <formalpara>
       <title>Contexts and Dependency Injection (CDI)</title>
         <para>
 			<itemizedlist>					
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-9734">JBIDE-9734</ulink>: The CDI validator would treat <property>@Inject</property> and <property>@RestClient("...") ServiceInterface</property> injection as unstatisfied dependencies. This caused an incorrect warning message to appear. To fix the issue, the CDI Seam Core Rest files have been modified to correctly validate <property>@Inject</property> and <property>@RestClient("...") ServiceInterface</property> properties, ensuring the warning message no longer appears.    
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-9685">JBIDE-9685</ulink>: A new feature has been added to the CDI validator making it aware of JMS resource injections. This ensures correct validation of JMS injections that also have a JMS destination.   
 					</para>
 				</listitem>
             </itemizedlist>
         </para>
-	</formalpara> -->
+	</formalpara>
 	<!-- Deltacloud is only shipped with JBoss.org -->
 	<!--
 	<formalpara>
@@ -241,18 +246,18 @@
 			</itemizedlist>
 		</para>
 	</formalpara>-->
-   <!-- <formalpara>
+<!--    <formalpara>
         <title>Visual Page Editor</title>
         <para>
             <itemizedlist>
                 <listitem>
                     <para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>: 
                     </para>
                 </listitem>
             </itemizedlist>
         </para>
-    </formalpara>-->
+	</formalpara> -->
 <!--    <formalpara>
         <title>Web Tools Platform</title>
         <para>
@@ -289,16 +294,23 @@
             </itemizedlist>
         </para>
     </formalpara>-->
-<!--    <formalpara>
+    <formalpara>
         <title>General Issues</title>
         <para>
 			<itemizedlist>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+						<!--This item is only for JBDS -->
+						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1673">JBDS-1673</ulink>: The JBoss Developer Studio installer server detection did not allign with runtime detection from within the tooling. When detection plug-ins were updated, new servers were not automatically detected due to the code split between detection through the product installation wizard and runtime detection within the user interface. In this release, on first start-up, the installer asks for a list of directories to scan for new servers. The directory selected will then be optionally scanned on every subsequent launch of the JBoss Developer Studio and new discovered servers will be displayed in a list to the user. This allows for new servers to be detected, while not having to duplicate the code and combine it with the runtime detection available from within JBoss Developer Studio.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<!--This item is only for JBDS -->
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-9497">JBIDE-9497</ulink>: JBoss Developer Studio now supports the deployment of standalone SAR projects. To undertake this a new wizard has been created to take a user through the process. For further information see the relevant documentation accompanying this release.
 					</para>
 				</listitem>
 			</itemizedlist>
         </para>
-	</formalpara> -->
+	</formalpara>
 </section>
