@@ -14,7 +14,7 @@
 			 
 			mvn clean install -P parent,\!libs,\!tests,\!jmx,\!archives,\!as,\!common,\!jst,\!xulrunner,\!vpe \
 			-P \!jsf,\!freemarker,\!hibernatetools,\!portlet,\!struts,\!cdi,\!birt,\!seam,\!examples \
-			-P \!maven,\!ws,\!gwt,\!deltacloud,\!runtime,\!usage,\!aggregate-coverage
+			-P \!maven,\!ws,\!gwt,\!deltacloud,\!runtime,\!usage,\!central,\!aggregate-coverage
 			
 		-->
 		<profile>
@@ -26,11 +26,14 @@
 				<module>parent</module>
 			</modules>
 		</profile>
-		
+
 		<profile>
 			<id>libs</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>coverage</name>
+				</property>
 			</activation>
 			<modules>
 				<module>libs</module>
@@ -433,7 +436,7 @@
 			<modules>
 				<module>../gwt</module>
 			</modules>
-	        </profile>
+		</profile>
 
 		<profile>
 			<id>deltacloud</id>
@@ -463,7 +466,7 @@
 				<module>../runtime</module>
 			</modules>
 		</profile>
-		
+
 		<profile>
 			<id>usage</id>
 			<activation>
@@ -475,9 +478,46 @@
 		</profile>
 
 		<profile>
+			<id>central</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../central</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>central-bootstrap</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../tests</module>
+				<module>../common</module>
+				<module>../runtime</module>
+				<module>../freemarker</module>
+				<module>../hibernatetools</module>
+				<module>../jst</module>
+				<module>../vpe</module>
+				<module>../jsf</module>
+				<module>../jmx</module>
+				<module>../archives</module>
+				<module>../as</module>
+				<module>../seam</module>
+				<module>../portlet</module>
+				<module>../examples</module>
+				<module>../central</module>
+			</modules>
+		</profile>
+
+		<profile>
 			<id>aggregate-coverage</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>coverage</name>
+				</property>
 			</activation>
 			<modules>
 				<module>reports/emma-coverage</module>

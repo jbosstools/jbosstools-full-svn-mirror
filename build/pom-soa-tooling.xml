@@ -25,11 +25,14 @@
 				<module>parent</module>
 			</modules>
 		</profile>
-		
+
 		<profile>
 			<id>libs</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>coverage</name>
+				</property>
 			</activation>
 			<modules>
 				<module>libs</module>
@@ -139,6 +142,7 @@
 			<id>smooks-bootstrap</id>
 			<modules>
 				<module>../tests</module>
+				<module>../common</module>
 				<module>../smooks</module>
 			</modules>
 		</profile>
@@ -268,12 +272,14 @@
 			<id>aggregate-coverage</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>coverage</name>
+				</property>
 			</activation>
 			<modules>
 				<module>reports/emma-coverage</module>
 			</modules>
 		</profile>
-
 	</profiles>
 
 </project>

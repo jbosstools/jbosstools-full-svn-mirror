@@ -14,9 +14,19 @@
 			 
 			mvn clean install -P parent,\!libs,\!tests,\!jmx,\!archives,\!as,\!common,\!jst,\!xulrunner,\!vpe \
 			-P \!jsf,\!freemarker,\!hibernatetools,\!portlet,\!struts,\!smooks,\!cdi,\!birt,\!bpel,\!esb,\!seam,\!examples \
-			-P \!maven,\!ws,\!modeshape,\!flow,\!jbpm,\!gwt,\!deltacloud,\!runtime,\!usage,\!aggregate-coverage
+			-P \!maven,\!ws,\!modeshape,\!flow,\!jbpm,\!gwt,\!deltacloud,\!runtime,\!usage,\!central,\!aggregate-coverage
 			
 		-->
+		<profile>
+			<id>parent</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<modules>
+				<module>parent</module>
+			</modules>
+		</profile>
+
 		<profile>
 			<id>libs</id>
 			<activation>
@@ -255,24 +265,6 @@
 			<modules>
 				<module>../tests</module>
 				<module>../portlet</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>workingset</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<modules>
-				<module>../portlet</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>workingset-bootstrap</id>
-			<modules>
-				<module>../tests</module>
-				<module>../workingset</module>
 			</modules>
 		</profile>
 
@@ -650,6 +642,40 @@
 		</profile>
 
 		<profile>
+			<id>central</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../central</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>central-bootstrap</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../tests</module>
+				<module>../common</module>
+				<module>../runtime</module>
+				<module>../freemarker</module>
+				<module>../hibernatetools</module>
+				<module>../jst</module>
+				<module>../vpe</module>
+				<module>../jsf</module>
+				<module>../jmx</module>
+				<module>../archives</module>
+				<module>../as</module>
+				<module>../seam</module>
+				<module>../portlet</module>
+				<module>../examples</module>
+				<module>../central</module>
+			</modules>
+		</profile>
+
+		<profile>
 			<id>aggregate-coverage</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
@@ -661,7 +687,32 @@
 				<module>reports/emma-coverage</module>
 			</modules>
 		</profile>
-
 	</profiles>
+
+	<repositories>
+		<!--  Cannot redistribute GWT plugins due to license therefore cannot be included in target platform; must reference as 3rd party URL -->
+		<repository>
+			<id>gwt-e37</id>
+			<url>http://dl.google.com/eclipse/plugin/3.7/</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		<!-- no longer needed (https://issues.jboss.org/browse/JBIDE-9585) <repository>
+			<id>egit11</id>
+			<url>http://download.jboss.org/jbosstools/updates/requirements/egit/1.1.0.201108230343/</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository> -->
+	</repositories>
 </project>
 	
