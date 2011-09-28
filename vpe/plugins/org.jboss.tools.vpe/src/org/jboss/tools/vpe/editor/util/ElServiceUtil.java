@@ -74,14 +74,14 @@ public class ElServiceUtil {
 		final ResourceReference[] gResources = GlobalELReferenceList.getInstance().getAllResources(workspacePath);
 		final ResourceReference[] elResources = ELReferenceList.getInstance().getAllResources(resourceFile);
 
-		int size = (gResources == null ? 0 : gResources.length);
-		size += (elResources == null ? 0 : elResources.length);
+		int size = gResources.length;
+		size += elResources.length;
 		ResourceReference[] rst = new ResourceReference[size];
 
-		if ((gResources != null) && (gResources.length > 0)) {
+		if (gResources.length > 0) {
 			System.arraycopy(gResources, 0, rst, 0, gResources.length);
 		}
-		if ((elResources != null) && (elResources.length > 0)) {
+		if (elResources.length > 0) {
 			System.arraycopy(elResources, 0, rst, gResources == null ? 0 : gResources.length, elResources.length);
 		}
 		return rst;

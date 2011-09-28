@@ -196,7 +196,7 @@ public class FileUtil {
 					IResource resource = ((JavaElement)fragmentRoot).resource();
 					if(resource instanceof IContainer && resource.exists()) {
 						IFile f = ((IContainer)resource).getFile(new Path(classPathResource));
-						if(f != null && f.exists()) {
+						if(f.exists()) {
 							result = f.getLocation().toFile().getAbsolutePath();
 						}
 					}
@@ -243,7 +243,7 @@ public class FileUtil {
 		if (fileName.startsWith("/")) { //$NON-NLS-1$
 			ResourceReference[] resources = AbsoluteFolderReferenceList
 					.getInstance().getAllResources(includeFile);
-			if (resources != null && resources.length == 1) {
+			if (resources.length == 1) {
 				String location = resources[0].getLocation() + fileName;
 				IPath path = new Path(location);
 				file = ResourcesPlugin.getWorkspace().getRoot()
@@ -252,7 +252,7 @@ public class FileUtil {
 				//WebArtifactEdit edit = WebArtifactEdit
 				//		.getWebArtifactEditForRead(includeFile.getProject());
 				IContainer[] webRootFolders = WebUtils.getWebRootFolders(includeFile.getProject());
-				if (webRootFolders != null) {
+				if (webRootFolders.length > 0) {
 					for (IContainer webRootFolder : webRootFolders) {
 						IFile handle = webRootFolder.getFile(new Path(fileName));
 						if (handle.exists()) {
@@ -270,7 +270,7 @@ public class FileUtil {
 		} else {
 			ResourceReference[] resources = RelativeFolderReferenceList
 					.getInstance().getAllResources(includeFile);
-			if ((resources != null) && resources.length == 1) {
+			if (resources.length == 1) {
 				String location = resources[0].getLocation() + File.separator
 						+ fileName;
 				IPath path = new Path(location);
@@ -291,7 +291,7 @@ public class FileUtil {
 
 		IContainer[] webRootFolders = WebUtils.getWebRootFolders(project);
 		IPath defaultWebRootPath = null;
-		if (webRootFolders != null && webRootFolders.length > 0) {
+		if (webRootFolders.length > 0) {
 			defaultWebRootPath = webRootFolders[0].getFullPath();
 		}
 		if (defaultWebRootPath == null) {
