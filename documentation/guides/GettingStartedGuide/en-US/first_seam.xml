@@ -644,7 +644,7 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
         to <emphasis>
           <property>http://localhost:8080/workshop</property>
         </emphasis> and insert/update/delete/query a few records. There is quite a bit of AJAX in
-        this application, but which we will explore further later on in the lab. For now, take note
+        this application, but we will explore that later on in the lab. For now, take note
         of the page tabs, required field logic and data table sorting in the list pages. </para>
         
       <note>
