@@ -8,9 +8,14 @@
 			JBoss Developer Studio 4.1.1 contains the following new features:
 		</para>
 		<itemizedlist>
-			<listitem>
+	<!--		<listitem>
 				<para>
 					The ESB Runtime within the JBoss Service Oriented Architecture Platform is now separately identified and defined for individual use.
+				</para>
+			</listitem> -->
+			<listitem>
+				<para>
+					JBoss Service Oriented Architecture examples are now included with JBoss Devleoper Studio via the <ulink url="http://download.jboss.org/jbosstools/examples/">http://download.jboss.org/jbosstools/examples/</ulink> examples site. For further information see the Getting Started Guide for this release.
 				</para>
 			</listitem>
 		</itemizedlist>
