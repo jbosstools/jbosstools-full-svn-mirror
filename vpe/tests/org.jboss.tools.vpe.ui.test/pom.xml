@@ -14,7 +14,7 @@
 
 	<properties>
 		<emma.filter>org.jboss.tools.vpe*</emma.filter>
-		<emma.instrument.bundles>org.jboss.tools.vpe</emma.instrument.bundles>
+		<emma.instrument.bundles>org.jboss.tools.vpe,org.jboss.tools.vpe.resref,org.jboss.tools.vpe.ui.palette</emma.instrument.bundles>
 	</properties>
 
 	<build>
