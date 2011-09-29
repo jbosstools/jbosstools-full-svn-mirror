@@ -13,7 +13,6 @@ import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
-import org.jboss.tools.vpe.spring.template.util.Spring;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.w3c.dom.Element;
@@ -34,9 +33,9 @@ public class SpringUrlTemplate extends VpeAbstractTemplate {
 			nsIDOMDocument visualDocument) {
 		Element sourceElement = (Element) sourceNode; 
 		nsIDOMElement urlContainer = VisualDomUtil.createBorderlessContainer(visualDocument);
-		if (sourceElement.hasAttribute(Spring.ATTR_VALUE) &&
-				!sourceElement.hasAttribute(Spring.ATTR_VAR)) {
-			String valueAttribute = sourceElement.getAttribute(Spring.ATTR_VALUE);
+		if (sourceElement.hasAttribute(SpringConstant.ATTR_VALUE) &&
+				!sourceElement.hasAttribute(SpringConstant.ATTR_VAR)) {
+			String valueAttribute = sourceElement.getAttribute(SpringConstant.ATTR_VALUE);
 			StringBuilder url = new StringBuilder(valueAttribute);
 			
 			boolean hasParams = valueAttribute.contains("?"); //$NON-NLS-1$
@@ -45,7 +44,7 @@ public class SpringUrlTemplate extends VpeAbstractTemplate {
 				Node childNode = childNodes.item(i);
 				String childTemplateName = VpeTemplateManager.getInstance()
 						.getTemplateName(pageContext, childNode);
-				if (Spring.TAG_SPRING_PARAM.equals(childTemplateName)) {
+				if (SpringConstant.TAG_SPRING_PARAM.equals(childTemplateName)) {
 					url.append(hasParams ? '&' : '?');
 					hasParams = true;
 					appendParam(url, (Element) childNode);
@@ -60,10 +59,10 @@ public class SpringUrlTemplate extends VpeAbstractTemplate {
 	 * @param paramElement
 	 */
 	private void appendParam(StringBuilder url, Element paramElement) {
-		if (paramElement.hasAttribute(Spring.ATTR_NAME)) {
-			url.append(paramElement.getAttribute(Spring.ATTR_NAME));
-			if (paramElement.hasAttribute(Spring.ATTR_VALUE)) {
-				url.append('=').append(paramElement.getAttribute(Spring.ATTR_VALUE));
+		if (paramElement.hasAttribute(SpringConstant.ATTR_NAME)) {
+			url.append(paramElement.getAttribute(SpringConstant.ATTR_NAME));
+			if (paramElement.hasAttribute(SpringConstant.ATTR_VALUE)) {
+				url.append('=').append(paramElement.getAttribute(SpringConstant.ATTR_VALUE));
 			}
 		}
 	}

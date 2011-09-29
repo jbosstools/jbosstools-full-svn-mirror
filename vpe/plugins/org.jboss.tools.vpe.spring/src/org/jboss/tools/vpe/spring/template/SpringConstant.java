@@ -8,14 +8,18 @@
  * Contributor:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.vpe.spring.template.util;
+package org.jboss.tools.vpe.spring.template;
 
 
 /**
  * @author Yahor Radtsevich (yradtsevich)
  *
  */
-public class Spring {
+public class SpringConstant {
+
+	private SpringConstant() {
+	}
+
 	public static final String ATTR_CSS_CLASS = "cssClass";			//$NON-NLS-1$
 	public static final String ATTR_CSS_STYLE = "cssStyle";			//$NON-NLS-1$
 	public static final String ATTR_DISABLED = "disabled";		//$NON-NLS-1$

@@ -18,7 +18,6 @@ import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
-import org.jboss.tools.vpe.spring.template.util.Spring;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
@@ -44,21 +43,21 @@ public class SpringTextAreaTemplate extends VpeAbstractTemplate {
 		 */
 		textarea.setAttribute(
 				HTML.ATTR_CLASS,
-				(sourceElement.hasAttribute(Spring.ATTR_CSS_CLASS) 
-						? sourceElement.getAttribute(Spring.ATTR_CSS_CLASS) 
+				(sourceElement.hasAttribute(SpringConstant.ATTR_CSS_CLASS) 
+						? sourceElement.getAttribute(SpringConstant.ATTR_CSS_CLASS) 
 						: Constants.EMPTY));
 		textarea.setAttribute(
 				HTML.ATTR_STYLE,
-				(sourceElement.hasAttribute(Spring.ATTR_CSS_STYLE) 
-						? sourceElement.getAttribute(Spring.ATTR_CSS_STYLE) 
+				(sourceElement.hasAttribute(SpringConstant.ATTR_CSS_STYLE) 
+						? sourceElement.getAttribute(SpringConstant.ATTR_CSS_STYLE) 
 						: Constants.EMPTY));
 		/*
 		 * Add value of the 'path' attribute to the textarea.
 		 * No children are allowed for the form:textarea. 
 		 */
-		if (sourceElement.hasAttribute(Spring.ATTR_PATH)) {
+		if (sourceElement.hasAttribute(SpringConstant.ATTR_PATH)) {
 			textarea.appendChild(visualDocument.createTextNode(sourceElement
-					.getAttribute(Spring.ATTR_PATH)));
+					.getAttribute(SpringConstant.ATTR_PATH)));
 		}
 		
 		final VpeCreationData creationData = new VpeCreationData(textarea);

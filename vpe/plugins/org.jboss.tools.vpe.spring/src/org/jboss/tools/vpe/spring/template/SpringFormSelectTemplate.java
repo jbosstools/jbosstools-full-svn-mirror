@@ -18,7 +18,6 @@ import org.jboss.tools.vpe.editor.template.VpeAbstractTemplate;
 import org.jboss.tools.vpe.editor.template.VpeCreationData;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
-import org.jboss.tools.vpe.spring.template.util.Spring;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.w3c.dom.Element;
@@ -33,9 +32,9 @@ import org.w3c.dom.Node;
 public class SpringFormSelectTemplate extends VpeAbstractTemplate {
 	public static final Map<String, String> COMMON_SPRING_FORM_ATTRIBUTES_MAP
 			= new HashMap<String, String>() {{
-		put(Spring.ATTR_ID, HTML.ATTR_ID);
-		put(Spring.ATTR_CSS_STYLE, HTML.ATTR_STYLE);
-		put(Spring.ATTR_CSS_CLASS, HTML.ATTR_CLASS);
+		put(SpringConstant.ATTR_ID, HTML.ATTR_ID);
+		put(SpringConstant.ATTR_CSS_STYLE, HTML.ATTR_STYLE);
+		put(SpringConstant.ATTR_CSS_CLASS, HTML.ATTR_CLASS);
 		put(HTML.ATTR_SIZE, HTML.ATTR_SIZE);
 	}};
 	
@@ -50,19 +49,19 @@ public class SpringFormSelectTemplate extends VpeAbstractTemplate {
 		VisualDomUtil.copyAttributes(sourceElement, select, COMMON_SPRING_FORM_ATTRIBUTES_MAP);
 		
 		
-		if (Spring.VALUE_TRUE.equals(sourceElement.getAttribute(Spring.ATTR_DISABLED))) {
+		if (SpringConstant.VALUE_TRUE.equals(sourceElement.getAttribute(SpringConstant.ATTR_DISABLED))) {
 			select.setAttribute(HTML.ATTR_DISABLED, HTML.ATTR_DISABLED);
 		}
 		
-		if (!Spring.VALUE_FALSE.equals(sourceElement.getAttribute(Spring.ATTR_MULTIPLE))) {
+		if (!SpringConstant.VALUE_FALSE.equals(sourceElement.getAttribute(SpringConstant.ATTR_MULTIPLE))) {
 			select.setAttribute(HTML.ATTR_MULTIPLE, HTML.ATTR_MULTIPLE);
 		}
 		
-		if (sourceElement.hasAttribute(Spring.ATTR_ITEMS)) {
+		if (sourceElement.hasAttribute(SpringConstant.ATTR_ITEMS)) {
 			// an inner 'option' tag has to be generated
-			String optionBody = sourceElement.getAttribute(Spring.ATTR_ITEMS);
-			if (sourceElement.hasAttribute(Spring.ATTR_ITEM_LABEL)) {
-				optionBody += '.' + sourceElement.getAttribute(Spring.ATTR_ITEM_LABEL);
+			String optionBody = sourceElement.getAttribute(SpringConstant.ATTR_ITEMS);
+			if (sourceElement.hasAttribute(SpringConstant.ATTR_ITEM_LABEL)) {
+				optionBody += '.' + sourceElement.getAttribute(SpringConstant.ATTR_ITEM_LABEL);
 			}
 			
 			nsIDOMElement option = visualDocument.createElement(HTML.TAG_OPTION);
