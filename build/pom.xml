@@ -181,19 +181,6 @@
 		</profile>
 
 		<profile>
-			<id>vpe-tests</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<modules>
-				<module>libs</module>
-				<module>../vpe/tests</module>
-				<module>reports/emma-coverage</module>
-			</modules>
-		</profile>
-
-
-		<profile>
 			<id>vpe-bootstrap</id>
 			<modules>
 				<module>../tests</module>
@@ -201,19 +188,6 @@
 				<module>../jst</module>
 				<module>../xulrunner</module>
 				<module>../vpe</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>vpe-bootstrap-tests</id>
-			<modules>
-				<module>libs</module>
-				<module>../tests</module>
-				<module>../common</module>
-				<module>../jst</module>
-				<module>../xulrunner</module>
-				<module>../vpe</module>
-				<module>reports/emma-coverage</module>
 			</modules>
 		</profile>
 
@@ -385,28 +359,6 @@
 			<modules>
 				<module>libs</module>
 				<module>../cdi/tests</module>
-				<module>reports/emma-coverage</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>cdi-bootstrap</id>
-			<modules>
-				<module>../tests</module>
-				<module>../common</module>
-				<module>../jst</module>
-				<module>../cdi</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>cdi-botstrap-tests</id>
-			<modules>
-				<module>libs</module>
-				<module>../tests</module>
-				<module>../common</module>
-				<module>../jst</module>
-				<module>../cdi</module>
 				<module>reports/emma-coverage</module>
 			</modules>
 		</profile>
