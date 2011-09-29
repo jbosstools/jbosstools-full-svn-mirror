@@ -20,5 +20,6 @@ for a full listing of individual contributors.
       %license
    </license>
 
-   <includes id="org.jboss.tools.bpel.source.feature" version="0.0.0"/> 
+   <plugin id="org.jboss.tools.bpel.runtimes.source" download-size="0" install-size="0" version="0.0.0"/>
+
 </feature>

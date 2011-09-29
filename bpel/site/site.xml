@@ -5,11 +5,12 @@
 	<category-def label="JBoss Tools bpel Nightly Build Update Site" name="JBoss Tools bpel Nightly Build Update Site">
 		<description>JBoss Tools bpel Nightly Build Update Site: contains all features in this build.</description>
 	</category-def>
-	<!-- OLD JBT feature has been replaced by Eclipse.org version 
 	<feature url="features/org.jboss.tools.bpel.feature_0.0.0.jar" id="org.jboss.tools.bpel.feature" version="0.0.0">
 		<category name="JBoss Tools bpel Nightly Build Update Site"/>
 	</feature>
-	-->
+	<feature url="features/org.jboss.tools.bpel.source.feature_0.0.0.jar" id="org.jboss.tools.bpel.source.feature" version="0.0.0">
+		<category name="JBoss Tools bpel Nightly Build Update Site"/>
+	</feature>
 	<feature url="features/org.eclipse.bpel.feature_0.0.0.jar" id="org.eclipse.bpel.feature" version="0.0.0">
 		<category name="JBoss Tools bpel Nightly Build Update Site"/>
 	</feature>
@@ -23,6 +24,9 @@
 	-->
 
 	<feature url="features/org.jboss.tools.bpel.test.feature_0.0.0.jar" id="org.jboss.tools.bpel.test.feature" version="0.0.0">
+		<category name="JBoss Tools bpel Nightly Build Update Site"/>
+	</feature>
+	<feature url="features/org.jboss.tools.bpel.test.source.feature_0.0.0.jar" id="org.jboss.tools.bpel.test.source.feature" version="0.0.0">
 		<category name="JBoss Tools bpel Nightly Build Update Site"/>
 	</feature>
 
