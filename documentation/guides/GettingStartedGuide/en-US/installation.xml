@@ -686,6 +686,121 @@ java -jar /path/to/installer.jar /path/to/InstallConfigRecord.xml
       </para>
   </note> -->
   </section>
+  <section id="SOA_examples">
+	  <title>Accessing JBoss Enterprise SOA Platform examples</title>
+	  <para>
+		  To add the JBoss Enterprise SOA Platform examples, follow these steps:
+	  </para>
+	  <important>
+		  <para>
+			  For best performance ensure you have created the JBoss SOA server you wish to deploy the examples to before undertaking these steps.
+		  </para>
+	  </important>
+	  <itemizedlist>
+		  <listitem>
+			  <para>
+			  Navigate to <menuchoice>
+                      <guimenuitem>Windows</guimenuitem>
+					  <guimenuitem>Preferences</guimenuitem>
+                      <guimenuitem>JBoss Tools</guimenuitem>             <guimenuitem>Project Examples</guimenuitem>
+                  </menuchoice>
+			  </para>
+		  </listitem>
+		  <listitem>
+			  <para>
+				  Click on the <guibutton>Add</guibutton> button
+			  </para>
+		  </listitem>
+		  <listitem>
+			  <para>
+				  In the <guilabel>Name</guilabel> field place <emphasis>JBoss SOA examples</emphasis> and in the <guilabel>URL</guilabel> field place <ulink url="http://download.jboss.org/jbosstools/examples/soa-p-5.x-samples.xml">http://download.jboss.org/jbosstools/examples/soa-p-5.x-samples.xml</ulink>
+			  </para>
+		  </listitem>
+		  <listitem>
+			  <para>
+				  Clink the <guibutton>OK</guibutton> button to close the dialog box
+			  </para>
+		  </listitem>
+		  <listitem>
+			  <para>
+				  Click the <guibutton>Apply</guibutton> button follwed by the <guibutton>Close</guibutton> button to save the changes and close the <guilabel>Preferences</guilabel> screen.
+			  </para>
+		  </listitem>
+		  <listitem>
+			  <para>
+				  Navigate to <menuchoice><guimenuitem>Help</guimenuitem><guimenuitem>Project Examples</guimenuitem></menuchoice>
+			  </para>
+		  </listitem>
+		  <listitem>
+			  <para>
+				  Check the <guilabel>Show Experimental Sites</guilabel> checkbox at the top of the dialog window
+			  </para>
+		  </listitem>
+		  <listitem>
+			  <para>
+				  Select the <emphasis>JBoss SOA examples</emphasis> site from the list in the <guilabel>Site</guilabel> combobox
+			  </para>
+		  </listitem>
+		  <listitem>
+			  <para>
+				  The following example names should now be available in the <guilabel>Projects</guilabel> section under <emphasis>SOA-P 5.x Examples Importable By Eclipse</emphasis>:
+			  </para>
+			  <itemizedlist>
+				  <listitem>
+					  <para>
+						  aggregator_eclipse  
+					  </para>
+				  </listitem>
+				  <listitem>
+					  <para>
+						  business_service_eclipse
+					  </para>
+				  </listitem>
+				  <listitem>
+					  <para>
+						  custom_action_eclipse
+					  </para>
+				  </listitem>
+				  <listitem>
+					  <para>
+						  fun_cbr_eclipse
+					  </para>
+				  </listitem>
+				  <listitem>
+					  <para>
+						  helloworld_action_eclipse
+					  </para>
+				  </listitem>
+				  <listitem>
+					  <para>
+						  helloworld_eclipse
+					  </para>
+				  </listitem>
+				  <listitem>
+					  <para>
+						  simple_cbr_eclipse
+					  </para>
+				  </listitem>
+				  <listitem>
+					  <para>
+						  static_router_eclipse
+					  </para>
+				  </listitem>
+				  <listitem>
+					  <para>
+						  transform_XML2POJO_eclipse
+					  </para>
+				  </listitem>
+			  </itemizedlist>
+		  </listitem>
+	  </itemizedlist>
+	  <para>
+		  The above examples are suffixed with <emphasis>_eclipse</emphasis> to differentiate them from the quickstarts that are included with the runtime itself. Each example contains one or more deployable ESB projects and a test project.
+	  </para>
+	  <para>
+		  After you have imported the projects you want, they will be ready for use with no additional changes if the server you are going to test them on was created ahead of time. To use an example, deploy the project that is not suffixed with <emphasis>_test</emphasis>. After a successful deployment, run the ESB or JMS message testers within the <emphasis>_test</emphasis> project of the deployed example.
+	  </para>
+  </section>
    
   <section>
     <title>Updating JBoss Developer Studio</title> 
