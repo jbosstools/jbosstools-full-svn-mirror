@@ -30,9 +30,6 @@
 			<id>libs</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
-				<property>
-					<name>coverage</name>
-				</property>
 			</activation>
 			<modules>
 				<module>libs</module>
@@ -272,9 +269,6 @@
 			<id>aggregate-coverage</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
-				<property>
-					<name>coverage</name>
-				</property>
 			</activation>
 			<modules>
 				<module>reports/emma-coverage</module>
