@@ -7,9 +7,9 @@
      get new time w/ 
       date +%s000
 -->
-<property name='p2.timestamp' value='1304696370000'/>
+<property name='p2.timestamp' value='1317306933000'/>
 </properties>
-<children size='33'>
+<children size='34'>
 
 <child location='../../jbosstools-3.3_stable_branch.component--archives/all/repo/'/>
 <child location='../../jbosstools-3.3_stable_branch.component--as/all/repo/'/>
@@ -17,37 +17,38 @@
 <child location='../../jbosstools-3.3_stable_branch.component--bpel/all/repo/'/>
 <child location='../../jbosstools-3.3_stable_branch.component--cdi/all/repo/'/>
 
+<child location='../../jbosstools-3.3_stable_branch.component--central/all/repo/'/>
 <child location='../../jbosstools-3.3_stable_branch.component--common/all/repo/'/>
 <child location='../../jbosstools-3.3_stable_branch.component--deltacloud/all/repo/'/>
 <child location='../../jbosstools-3.3_stable_branch.component--esb/all/repo/'/>
 <child location='../../jbosstools-3.3_stable_branch.component--examples/all/repo/'/>
-<child location='../../jbosstools-3.3_stable_branch.component--flow/all/repo/'/>
 
+<child location='../../jbosstools-3.3_stable_branch.component--flow/all/repo/'/>
 <child location='../../jbosstools-3.3_stable_branch.component--forge/all/repo/'/>
 <child location='../../jbosstools-3.3_stable_branch.component--freemarker/all/repo/'/>
 <child location='../../jbosstools-3.3_stable_branch.component--gwt/all/repo/'/>
 <child location='../../jbosstools-3.3_stable_branch.component--hibernatetools/all/repo/'/>
-<child location='../../jbosstools-3.3_stable_branch.component--jbpm/all/repo/'/>
 
+<child location='../../jbosstools-3.3_stable_branch.component--jbpm/all/repo/'/>
 <child location='../../jbosstools-3.3_stable_branch.component--jmx/all/repo/'/>
 <child location='../../jbosstools-3.3_stable_branch.component--jsf/all/repo/'/>
 <child location='../../jbosstools-3.3_stable_branch.component--jst/all/repo/'/>
 <child location='../../jbosstools-3.3_stable_branch.component--maven/all/repo/'/>
-<child location='../../jbosstools-3.3_stable_branch.component--modeshape/all/repo/'/>
 
+<child location='../../jbosstools-3.3_stable_branch.component--modeshape/all/repo/'/>
 <child location='../../jbosstools-3.3_stable_branch.component--portlet/all/repo/'/>
 <child location='../../jbosstools-3.3_stable_branch.component--runtime/all/repo/'/>
 <child location='../../jbosstools-3.3_stable_branch.component--seam/all/repo/'/>
 <child location='../../jbosstools-3.3_stable_branch.component--smooks/all/repo/'/>
-<child location='../../jbosstools-3.3_stable_branch.component--struts/all/repo/'/>
 
+<child location='../../jbosstools-3.3_stable_branch.component--struts/all/repo/'/>
 <child location='../../jbosstools-3.3_stable_branch.component--tests/all/repo/'/>
 <child location='../../jbosstools-3.3_stable_branch.component--usage/all/repo/'/>
 <child location='../../jbosstools-3.3_stable_branch.component--vpe/all/repo/'/>
 <child location='../../jbosstools-3.3_stable_branch.component--ws/all/repo/'/>
+
 <!-- <child location='../../savara-tools-eclipse-master/all/repo/'/> -->
 <child location='http://downloads.jboss.org/savara/releases/updates/2.0.x/' />
-
 <child location='../../jbosstools-teiid-designer-7.5_stable_branch/all/repo/'/>
 <child location='../../jbosstools-drools-5.2_stable_branch/all/repo/'/>
 <child location='../../xulrunner-1.9.2/all/repo/'/>
