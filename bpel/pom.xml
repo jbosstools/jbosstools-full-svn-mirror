@@ -1,0 +1,46 @@
+<project
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.jboss.tools</groupId>
+		<artifactId>org.jboss.tools.parent.pom</artifactId>
+		<version>0.0.2-SNAPSHOT</version>
+		<relativePath>../build/parent/pom.xml</relativePath>
+	</parent>
+	<groupId>org.jboss.tools</groupId>
+	<artifactId>bpel</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>bpel.all</name>
+	<packaging>pom</packaging>
+	<modules>
+		<module>plugins</module>
+		<module>features</module>
+		<module>site</module>
+		<module>tests</module>
+	</modules>
+	<repositories>
+		<repository>
+			<id>eclipse-bpel-milestone</id>
+			<url>http://download.eclipse.org/bpel/update-site/</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>eclipse-bpel-nightly</id>
+			<url>https://hudson.eclipse.org/hudson/job/bpel-0.5/lastSuccessfulBuild/artifact/site/target/site/</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+	</repositories>
+</project>
+

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<chapter id="install">
+	<title>Additional BPEL Requirements</title>
+	<para>
+		The following sections describe how to setup and isntall the BPEL engine into your JBoss Application Server (JBossAS). If you are running JBoss SOA-P then the following sections are already done for you.
+	</para>
+	<section>
+		<title>Additional Tools</title>
+		<para>For installation and configuring BPEL engine into a JBossAS environment you will need the following: </para>
+		<itemizedlist>
+			<listitem>
+				<para> JBossAS (version 5.1.0.GA or higher), available from <ulink url="http://www.jboss.org/jbossas">http://www.jboss.org/jbossas</ulink>.</para>
+			</listitem>
+			<listitem>
+				<para>RiftSaw (version 2.1 or higher), available from <ulink url="http://www.jboss.org/riftsaw">http://www.jboss.org/riftsaw</ulink>.</para>
+			</listitem>
+			<listitem>
+				<para>Ant, available from <ulink url="http://ant.apache.org">here</ulink>.</para>
+			</listitem>
+		</itemizedlist>
+
+	</section>
+	<section id="installRuntime">
+		<title>Installing the JBoss BPEL Runtime</title>
+		<itemizedlist>
+			<listitem>
+				<para>Unpack the JBossAS installation archive into the required location.</para>
+			</listitem>
+			<listitem>
+				<para>Unpack the RiftSaw distribution into the location alongside the JBossAS installation:</para>
+				<itemizedlist>
+					<listitem>
+						<para>Edit the <filename>install/deployment.properties</filename> file to update the JBossAS location settings.</para>
+					</listitem>
+					<listitem>
+						<para>From the <filename>install</filename> folder run: <command>ant deploy -Ddatabase=hsql</command> to deploy RiftSaw to JBossAS.</para>
+					</listitem>
+				</itemizedlist>
+			</listitem>
+			<listitem>
+				<para>
+					Then in the <filename>${RiftSaw}/install</filename> folder run the command: <command>ant deploy -Ddatabase=hsql -Dws.stack=native -Dws.version=3.2.2.GA</command> It will help you to download the web service stack, and then upgrade it for JBoss AS. Alternatively, you can  do it step by step by following the guide from <ulink url="http://www.jboss.org/riftsaw/documentation">JBoss RiftSaw documents</ulink> or the README file in <filename>${RiftSaw}/install</filename>
+				</para>
+			</listitem>
+		</itemizedlist>
+
+	</section>
+</chapter>
