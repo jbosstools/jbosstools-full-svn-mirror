@@ -399,3 +399,5 @@ date; rsync -arzq --delete ${STAGINGDIR}/logs $INTRNALDEST/builds/staging/${JOB_
 # purge tmpdir
 rm -fr $tmpdir
 
+# to avoid looking for files that are still being synched/nfs-copied, wait a bit before trying to run tests (the next step usually)
+sleep 15s
