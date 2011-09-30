@@ -28,8 +28,8 @@ import org.apache.deltacloud.client.Instance;
 import org.apache.deltacloud.client.Key;
 import org.apache.deltacloud.client.Realm;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.jboss.tools.common.databinding.ObservablePojo;
 import org.jboss.tools.deltacloud.core.DeltaCloudInstance.State;
-import org.jboss.tools.internal.deltacloud.core.observable.ObservablePojo;
 
 /**
  * @author Jeff Jonston

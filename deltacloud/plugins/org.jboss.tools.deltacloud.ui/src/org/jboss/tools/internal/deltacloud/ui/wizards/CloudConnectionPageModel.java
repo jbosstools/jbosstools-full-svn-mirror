@@ -16,10 +16,10 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.jboss.tools.common.ui.databinding.ObservableUIPojo;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudDriver;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
-import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.ObservableUIPojo;
 import org.jboss.tools.internal.deltacloud.ui.utils.URIUtils;
 
 /**

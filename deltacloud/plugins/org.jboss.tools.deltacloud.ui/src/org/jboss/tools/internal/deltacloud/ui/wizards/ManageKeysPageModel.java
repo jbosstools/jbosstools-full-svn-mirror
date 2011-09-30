@@ -16,10 +16,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.jboss.tools.common.ui.databinding.ObservableUIPojo;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudKey;
-import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.ObservableUIPojo;
 
 /**
  * @author André Dietisheim
