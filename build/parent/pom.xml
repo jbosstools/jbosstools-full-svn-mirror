@@ -554,7 +554,7 @@
 							<dependencies>
 								<dependency>
 									<type>p2-installable-unit</type>
-									<artifactId>org.eclipse.sdk.ide</artifactId>
+									<artifactId>org.eclipse.platform.ide</artifactId>
 									<version>0.0.0</version>
 								</dependency>
 							</dependencies>
@@ -597,15 +597,22 @@
 								<configuration>
 									<tasks>
 										<taskdef resource="emma_ant.properties" />
-										<taskdef resource="net/sf/antcontrib/antcontrib.properties" />
+										<taskdef resource="net/sf/antcontrib/antlib.xml" />
 										<if>
 											<available file="${project.build.directory}/emma"
 												type="dir" />
 											<then>
 												<echo>Process emma report...</echo>
-												<!-- emma enabled="true"> <instr metadatafile="${project.build.directory}/coverage.em" 
-													mode="overwrite" instrpath="${project.build.directory}/../../../plugins/${emma.instrument.bundles}/target/classes" 
-													/> </emma -->
+												<for list="${emma.instrument.bundles}" param="bundle">
+												  <sequential>
+												    <echo>instruments ${project.build.directory}/../../../plugins/@{bundle}/target/classes</echo>
+												    <emma enabled="true"> 
+												    	<instr metadatafile="${project.build.directory}/emma/@{bundle}-coverage.em" 
+															mode="overwrite" instrpath="${project.build.directory}/../../../plugins/@{bundle}/target/classes" 
+													/> </emma>
+												  </sequential>
+												</for>
+												
 												<emma enabled="true">
 													<report>
 														<infileset dir="${project.build.directory}/emma"
