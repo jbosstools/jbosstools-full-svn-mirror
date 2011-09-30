@@ -13,3 +13,4 @@ Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %Bundle-Vendor.0
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Activator: org.jboss.tools.vpe.docbook.DocbookTemplatePlugin
