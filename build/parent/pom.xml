@@ -605,11 +605,17 @@
 												<echo>Process emma report...</echo>
 												<for list="${emma.instrument.bundles}" param="bundle">
 												  <sequential>
-												    <echo>instruments ${project.build.directory}/../../../plugins/@{bundle}/target/classes</echo>
+												  	<property name="@{bundle}-classes" location="${project.build.directory}/../../../plugins/@{bundle}" /> 
+												    <echo>instruments ${@{bundle}-classes}</echo>
 												    <emma enabled="true"> 
 												    	<instr metadatafile="${project.build.directory}/emma/@{bundle}-coverage.em" 
-															mode="overwrite" instrpath="${project.build.directory}/../../../plugins/@{bundle}/target/classes" 
-													/> </emma>
+															mode="copy" outdir="${project.build.directory}/../../../plugins/@{bundle}/target/instrumented-classes"> 
+															<instrpath>
+		          												<fileset dir="${@{bundle}-classes}" includes="*.jar"/>
+		          												<fileset dir="${@{bundle}-classes}/target" includes="*.jar"/>
+		        											</instrpath>
+		        										</instr>
+													</emma>
 												  </sequential>
 												</for>
 												
