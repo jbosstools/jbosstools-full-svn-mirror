@@ -1,4 +1,4 @@
-<chapter id="installation">
+ace<chapter id="installation">
 <?dbhtml filename="getting_started.html"?>
   <chapterinfo>
     <keywordset>
@@ -693,7 +693,7 @@ java -jar /path/to/installer.jar /path/to/InstallConfigRecord.xml
 	  </para>
 	  <important>
 		  <para>
-			  For best performance ensure you have created the JBoss SOA server you wish to deploy the examples to before undertaking these steps.
+			  For best performance ensure you have created the JBoss SOA server you wish to deploy the examples to before undertaking these steps. If you import the examples before creating the server, follow <xref linkend="server_after_imported_example" />.
 		  </para>
 	  </important>
 	  <itemizedlist>
@@ -800,6 +800,69 @@ java -jar /path/to/installer.jar /path/to/InstallConfigRecord.xml
 	  <para>
 		  After you have imported the projects you want, they will be ready for use with no additional changes if the server you are going to test them on was created ahead of time. To use an example, deploy the project that is not suffixed with <emphasis>_test</emphasis>. After a successful deployment, run the ESB or JMS message testers within the <emphasis>_test</emphasis> project of the deployed example.
 	  </para>
+	  <formalpara id="server_after_imported_example">
+		  <title>Creating the server after an example has been imported</title>
+		  <para>
+			  If you import an example before creating the server it will be deployed to, you will need to undertake the following steps in order to manually correct the project build path:
+		  </para>
+	  </formalpara>
+	  <itemizedlist>
+		  <listitem>
+			  <para>
+				  Right-click on the example project and select <menuchoice><guimenuitem>Build Path</guimenuitem><guimenuitem>Configure Build Path</guimenuitem></menuchoice> from the context menu
+			  </para>
+		  </listitem>
+		  <listitem>
+			  <para>
+				  Select the <guilabel>Libraries</guilabel> tab on the <guilabel>Java Build Path</guilabel> property page
+			  </para>
+		  </listitem>
+		  <listitem>
+			  <para>
+				  Select the 
+			  </para>
+		  </listitem>
+		  <listitem>
+			  <para>
+				  
+			  </para>
+		  </listitem>
+		  <listitem>
+			  <para>
+				  
+			  </para>
+		  </listitem>
+		  <listitem>
+			  <para>
+				  
+			  </para>
+		  </listitem>
+		  <listitem>
+			  <para>
+				  
+			  </para>
+		  </listitem>
+		  <listitem>
+			  <para>
+				  
+			  </para>
+		  </listitem>
+		  <listitem>
+			  <para>
+				  
+			  </para>
+		  </listitem>
+		  <listitem>
+			  <para>
+				  
+			  </para>
+		  </listitem>
+		  <listitem>
+			  <para>
+				  
+			  </para>
+		  </listitem>
+	  </itemizedlist>
   </section>
    
   <section>
