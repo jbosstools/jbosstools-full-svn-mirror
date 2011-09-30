@@ -75,10 +75,23 @@ public class VpeDomMapping {
 	}
 	
 	public VpeNodeMapping getNodeMappingAtVisualNode(nsIDOMNode visualNode) {
-		if(visualNode!=null) {
-			return visualMap.get(visualNode);
+		VpeNodeMapping nodeMapping = null;
+		/*
+		 * See https://issues.jboss.org/browse/JBIDE-9807
+		 * Method map.get(key) doesn't work correctly for this situation,
+		 * it happens because "visualMap.keySet().contains(visualNode)" 
+		 * not always correctly determines the "visualNode".
+		 */
+		if (visualNode != null) {
+			Iterator<Map.Entry<nsIDOMNode, VpeNodeMapping>> iter = visualMap.entrySet().iterator();
+			while(iter.hasNext()) {
+				Map.Entry<nsIDOMNode,VpeNodeMapping> element = iter.next();
+				if (visualNode.equals(element.getKey())) {
+					nodeMapping = element.getValue();
+				}
+			}
 		}
-		return null;
+		return nodeMapping;
 	}
 	
 	public nsIDOMNode getVisualNode(Node sourceNode) {
@@ -86,7 +99,6 @@ public class VpeDomMapping {
 		if (nodeMapping != null) {
 			return nodeMapping.getVisualNode();
 		}
-		
 		return null;
 	}
 	
