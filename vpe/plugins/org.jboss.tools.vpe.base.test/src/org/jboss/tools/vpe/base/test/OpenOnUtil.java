@@ -82,9 +82,8 @@ public class OpenOnUtil {
 	
 	public static final void checkOpenOnInEditor(IEditorInput editorInput,String editorId,int lineNumber, int lineOffset, String openedOnFileName) throws Throwable {
 		StructuredTextEditor textEditor = getStructuredTextEditorPart(editorInput, editorId);
-			
-		int openOnPosition = TestUtil.getLinePositionOffcet(textEditor
-				.getTextViewer(),lineNumber, lineOffset);
+		int openOnPosition = TestUtil.getLinePositionOffcet(
+				textEditor.getTextViewer(), lineNumber, lineOffset);
 		// hack to get hyperlinks detectors, no other was have been founded
 		Method method = AbstractTextEditor.class
 				.getDeclaredMethod("getSourceViewerConfiguration"); //$NON-NLS-1$
@@ -106,8 +105,8 @@ public class OpenOnUtil {
 		}
 		IEditorPart activeEditor = PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getActivePage().getActiveEditor();
-		assertEquals(
-				"Active page should be ", openedOnFileName, activeEditor.getEditorInput().getName()); //$NON-NLS-1$
+		assertEquals("Active page should be ",  //$NON-NLS-1$
+				openedOnFileName, activeEditor.getEditorInput().getName());
 	}
 	
 	private static StructuredTextEditor getStructuredTextEditorPart(IEditorInput editorInput,String editorId) throws PartInitException{
@@ -115,20 +114,26 @@ public class OpenOnUtil {
 				.getWorkbench().getActiveWorkbenchWindow().getActivePage()
 				.openEditor(editorInput, editorId);
 		StructuredTextEditor textEditor = null;
-		if(editorPart instanceof MultiPageEditorPart){
-			StructuredTextEditor structuredTextEditor = findStructEditor((MultiPageEditorPart)editorPart, editorInput);
-			((MultiPageEditorPart)editorPart).setActiveEditor(structuredTextEditor);
+		/*
+		 * https://issues.jboss.org/browse/JBIDE-9808
+		 * After "JSPMultiPageEditorPart extends MultiPageEditorPart"
+		 * the comparison condition should be updated.
+		 */
+		if (editorPart instanceof JSPMultiPageEditor) {
+			textEditor = ((JSPMultiPageEditor) editorPart).getSourceEditor();
+		} else if (editorPart instanceof MultiPageEditorPart) {
+			StructuredTextEditor structuredTextEditor = findStructEditor((MultiPageEditorPart) editorPart, editorInput);
+			((MultiPageEditorPart) editorPart).setActiveEditor(structuredTextEditor);
 			textEditor = structuredTextEditor;
-		} else if(editorPart instanceof JSPMultiPageEditor) {
-			textEditor = ((JSPMultiPageEditor)editorPart).getSourceEditor();
-		} else if(editorPart instanceof EditorPartWrapper
-				&&(((EditorPartWrapper)editorPart).getEditor()) instanceof MultiPageEditorPart) {
-			StructuredTextEditor structuredTextEditor = findStructEditor((MultiPageEditorPart)((EditorPartWrapper)editorPart).getEditor(), editorInput);
-			((MultiPageEditorPart)((EditorPartWrapper)editorPart).getEditor()).setActiveEditor(structuredTextEditor);
+		} else if (editorPart instanceof EditorPartWrapper
+				&& (((EditorPartWrapper) editorPart).getEditor()) instanceof MultiPageEditorPart) {
+			StructuredTextEditor structuredTextEditor = findStructEditor((MultiPageEditorPart) 
+					((EditorPartWrapper) editorPart).getEditor(), editorInput);
+			((MultiPageEditorPart) ((EditorPartWrapper) editorPart).getEditor()).setActiveEditor(structuredTextEditor);
 			textEditor = structuredTextEditor;
-		} else if(editorPart instanceof EditorPartWrapper &&
-				(((EditorPartWrapper)editorPart).getEditor()) instanceof StructuredTextEditor){
-			textEditor = (StructuredTextEditor) (((EditorPartWrapper)editorPart).getEditor());
+		} else if (editorPart instanceof EditorPartWrapper
+				&& (((EditorPartWrapper) editorPart).getEditor()) instanceof StructuredTextEditor) {
+			textEditor = (StructuredTextEditor) (((EditorPartWrapper) editorPart).getEditor());
 		}
 		return textEditor;
 	}
