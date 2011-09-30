@@ -364,6 +364,16 @@
 		</profile>
 
 		<profile>
+			<id>cdi-bootstrap</id>
+			<modules>
+				<module>../tests</module>
+				<module>../common</module>
+				<module>../jst</module>
+				<module>../cdi</module>
+			</modules>
+		</profile>
+
+		<profile>
 			<id>birt</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
