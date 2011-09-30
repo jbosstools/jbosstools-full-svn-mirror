@@ -217,10 +217,12 @@ public abstract class FolderReferenceComposite {
 	}
 	
 	private void updateFieldsForOverrideDefaultPath() {
-		for (Control control : new Control[] {pathLabel, pathText, browseButton,
+		pathText.setEditable(overrideDefaultPath);
+		for (Control control : new Control[] {pathLabel, browseButton,
 											scopeLabel, scopeCombo}) {
 			control.setEnabled(overrideDefaultPath);
 		}
+		
 		if (!overrideDefaultPath) {
 			pathText.setText(defaultReference.getLocation());
 			setScopeComboValue(defaultReference.getScope());
