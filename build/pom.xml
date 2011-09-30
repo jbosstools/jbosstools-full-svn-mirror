@@ -18,16 +18,6 @@
 			
 		-->
 		<profile>
-			<id>parent</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<modules>
-				<module>parent</module>
-			</modules>
-		</profile>
-
-		<profile>
 			<id>libs</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
