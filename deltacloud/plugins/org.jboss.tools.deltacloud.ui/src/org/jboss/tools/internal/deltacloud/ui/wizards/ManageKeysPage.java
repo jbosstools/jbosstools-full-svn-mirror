@@ -51,6 +51,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.jboss.tools.common.log.StatusFactory;
+import org.jboss.tools.common.ui.WizardUtils;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudKey;
@@ -61,7 +62,6 @@ import org.jboss.tools.deltacloud.ui.ErrorUtils;
 import org.jboss.tools.deltacloud.ui.SWTImagesFactory;
 import org.jboss.tools.internal.deltacloud.ui.common.databinding.validator.ObjectNotNullToBoolean;
 import org.jboss.tools.internal.deltacloud.ui.utils.LayoutUtils;
-import org.jboss.tools.internal.deltacloud.ui.utils.WizardUtils;
 
 /**
  * @author Jeff Johnston

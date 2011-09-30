@@ -39,6 +39,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
+import org.jboss.tools.common.ui.WizardUtils;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
 import org.jboss.tools.deltacloud.core.DeltaCloudImage;
@@ -51,7 +52,6 @@ import org.jboss.tools.deltacloud.ui.views.Columns;
 import org.jboss.tools.deltacloud.ui.views.Columns.Column;
 import org.jboss.tools.deltacloud.ui.views.cloudelements.ITableContentAndLabelProvider;
 import org.jboss.tools.deltacloud.ui.views.cloudelements.TableViewerColumnComparator;
-import org.jboss.tools.internal.deltacloud.ui.utils.WizardUtils;
 
 /**
  * @author Jeff Johnston
