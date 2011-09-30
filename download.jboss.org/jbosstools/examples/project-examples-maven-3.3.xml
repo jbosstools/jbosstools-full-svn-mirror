@@ -74,7 +74,8 @@ The example can be deployed using Maven from the command line or from Eclipse us
 			</fix>
 		</fixes>
 		<importType>maven</importType>
-		<importTypeDescription>The project example requires the m2eclipse, m2eclipse-wtp and JBoss Maven Project Examples feature.</importTypeDescription> 
+		<importTypeDescription>The project example requires the m2eclipse, m2eclipse-wtp and JBoss Maven Project Examples feature.</importTypeDescription>
+		<welcome type="cheatsheets" url="/jboss-as-helloworld/cheatsheets/helloworld.xml"/> 
 	</project>
 	
 	<project>
