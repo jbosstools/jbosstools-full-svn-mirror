@@ -154,7 +154,7 @@ public class VpeDataTableColumnCreator extends VpeAbstractCreator {
 					creatorInfo.addChildrenInfo(info);
 					
 					String columnClasses = getNodeAttrValue(sourceNode.getParentNode(), VpeTemplateManager.ATTR_DATATABLE_COLUMN_CLASSES);
-					if (null != columnClasses) {
+					if (null != columnClasses && cell != null) {
 						setColumnClassesToCell(cell, columnClasses, index);
 					}
 					visualColumnElements.setBodyCell(cell);
@@ -227,44 +227,25 @@ public class VpeDataTableColumnCreator extends VpeAbstractCreator {
 	 * @param columnClasses the column classes
 	 * @param index the index of the column in the table
 	 */
-	private void setColumnClassesToCell(nsIDOMElement cell,
-			String columnClasses, int index) {
-		if (cell != null) {
-			String[] classes = splitClasses(columnClasses);
-			if ((null != classes) && (classes.length > 0)) {
-				int classesCount = classes.length;
-				int columnCount = index + 1;
-				String className = ""; //$NON-NLS-1$
-
-				// Finds correct css style class index
-				// for the column
-				if (columnCount <= classesCount) {
-					className = classes[columnCount - 1];
-				} else {
-					int remainder = columnCount % classesCount;
-					int classesIndex = ((0 == remainder) ? (classesCount-1) : (remainder-1));
-					className = classes[classesIndex];
-				}
-				if (className.trim().length() > 0) {
-					cell.setAttribute("class", className); //$NON-NLS-1$
-				}
+	private void setColumnClassesToCell(nsIDOMElement cell,String columnClasses, int index) {
+		String[] classes = columnClasses.split(",");
+		if (classes.length > 0) {
+			int classesCount = classes.length;
+			int columnCount = index + 1;
+			String className = ""; //$NON-NLS-1$
+			// Finds correct css style class index
+			// for the column
+			if (columnCount <= classesCount) {
+				className = classes[columnCount - 1];
+			} else {
+				int remainder = columnCount % classesCount;
+				int classesIndex = ((0 == remainder) ? (classesCount-1) : (remainder-1));
+				className = classes[classesIndex];
 			}
-
+			if (className.trim().length() > 0) {
+				cell.setAttribute("class", className); //$NON-NLS-1$
+			}
 		}
-	}
-	
-	/**
-	 * Splits a sequence of classes to an array of separate classes.
-	 * 
-	 * @param value the sequence of classes
-	 * 
-	 * @return the array of separate classes
-	 */
-	private String[] splitClasses(String value) {
-		if (value != null) {
-			return value.split(","); //$NON-NLS-1$
-		}
-		return null;
 	}
 	
 	/**

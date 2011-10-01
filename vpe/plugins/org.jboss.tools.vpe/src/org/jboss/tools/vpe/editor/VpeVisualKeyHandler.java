@@ -920,7 +920,7 @@ public class VpeVisualKeyHandler {
 		if (nm instanceof VpeElementMapping) {
 			VpeElementMapping mapping = (VpeElementMapping)nm;
 			String[] names = mapping.getTemplate().getOutputAttributeNames();
-			if(names!=null) {
+			if(names.length>0) {
 				String name = names[0];
 				return (Attr)node.getAttributes().getNamedItem(name);
 			}

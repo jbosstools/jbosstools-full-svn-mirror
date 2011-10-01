@@ -118,6 +118,8 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	/** The Constant ATTR_PSEUDOCONTENT_ATTRNAME. */
 	private static final String ATTR_PSEUDOCONTENT_ATTRNAME = "attrName"; //$NON-NLS-1$
 
+	protected static final String[] EMPTY_ARRAY = new String[0];;
+
 	/** The breaker type. */
 	private int breakerType = BREAKER_TYPE_NONE;
 
@@ -1120,7 +1122,7 @@ public abstract class VpeAbstractTemplate implements VpeTemplate {
 	 * @return attrubute name array
 	 */
 	public String[] getOutputAttributeNames() {
-		return null;
+		return EMPTY_ARRAY;
 	}
 
 	/**

@@ -367,7 +367,7 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 				return ((VpeOutputAttributes)creators[i]).getOutputAttributes();
 			}
 		}
-		return null;
+		return EMPTY_ARRAY;
 	}
 	@Override
 	public nsIDOMText getOutputTextNode(VpePageContext pageContext, Element sourceElement, Object data) {
