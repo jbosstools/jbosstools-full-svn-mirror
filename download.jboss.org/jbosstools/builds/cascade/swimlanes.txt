@@ -43,5 +43,6 @@ esb -> as, jst, common, tests
 cdi -> jst
 (all but common and tests) -> usage
 usage -> common, tests
+ws -> common
 
 ------------------------
