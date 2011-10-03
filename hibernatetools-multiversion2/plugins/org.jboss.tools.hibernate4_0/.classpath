@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry exported="true" kind="lib" path="lib/optional/ehcache/ehcache-core-2.4.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/optional/ehcache/hibernate-ehcache-4.0.0.CR3.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/optional/infinispan/hibernate-infinispan-4.0.0.CR3.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/optional/infinispan/i18nlog-1.0.10.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/optional/infinispan/infinispan-core-5.0.0.CR4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/optional/infinispan/jboss-marshalling-1.3.0.CR9.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/optional/infinispan/jboss-marshalling-river-1.3.0.CR9.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/optional/infinispan/jboss-transaction-api-1.0.1.GA.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/optional/infinispan/jgroups-2.12.0.Final.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/optional/infinispan/rhq-pluginAnnotations-3.0.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/optional/proxool/hibernate-proxool-4.0.0.CR3.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/optional/proxool/proxool-0.8.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jpa/hibernate-entitymanager-4.0.0.CR3.jar" sourcepath="C:/Documents and Settings/dgeraskov/.m2/repository/org/hibernate/hibernate-entitymanager/4.0.0.CR3/hibernate-entitymanager-4.0.0.CR3-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/optional/c3p0/c3p0-0.9.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/optional/c3p0/hibernate-c3p0-4.0.0.CR3.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/required/antlr-2.7.7.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/required/classmate-0.5.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/required/commons-collections-3.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/required/dom4j-1.6.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/required/hibernate-commons-annotations-4.0.0.CR2.jar" sourcepath="C:/Documents and Settings/dgeraskov/.m2/repository/org/hibernate/common/hibernate-commons-annotations/4.0.0.CR2/hibernate-commons-annotations-4.0.0.CR2-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/required/hibernate-core-4.0.0.CR3.jar" sourcepath="C:/Documents and Settings/dgeraskov/.m2/repository/org/hibernate/hibernate-core/4.0.0.CR3/hibernate-core-4.0.0.CR3-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/required/hibernate-jpa-2.0-api-1.0.1.Final.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/required/jandex-1.0.3.Final.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/required/javassist-3.12.0.GA.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/required/jboss-logging-3.0.0.GA.jar" sourcepath="C:/Documents and Settings/dgeraskov/.m2/repository/org/jboss/logging/jboss-logging/3.0.0.GA/jboss-logging-3.0.0.GA-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/required/jta-1.1.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
