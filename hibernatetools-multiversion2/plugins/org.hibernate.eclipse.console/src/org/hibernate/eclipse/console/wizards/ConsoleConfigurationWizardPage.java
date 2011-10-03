@@ -67,6 +67,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbenchPreferenceConstants;
 import org.eclipse.ui.PlatformUI;
+import org.hibernate.console.ConsoleConfiguration;
+import org.hibernate.console.KnownConfigurations;
 import org.hibernate.console.preferences.ConsoleConfigurationPreferences.ConfigurationMode;
 import org.hibernate.eclipse.console.EclipseConsoleConfiguration;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;

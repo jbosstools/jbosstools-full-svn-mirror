@@ -285,7 +285,7 @@ public abstract class GenerateInitWizardPage extends WizardPage {
 		String dialect = determineDialect();
 		String ccName = launchManager.generateLaunchConfigurationName(HibernateConsoleMessages.AddConfigurationAction_hibernate);
 		ConsoleConfigurationPreferences prefs = new EclipseConsoleConfigurationPreferences(ccName, 
-				ConfigurationMode.JPA, jpaProject.getName(), true, 
+				ConfigurationMode.JPA, null, jpaProject.getName(), true, 
 				null, null, null, 
 				new IPath[0], new IPath[0], null, null,
 				getConnectionProfileName(), dialect);
