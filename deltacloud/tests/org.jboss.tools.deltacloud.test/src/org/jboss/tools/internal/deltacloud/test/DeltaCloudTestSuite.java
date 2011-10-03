@@ -11,7 +11,6 @@
 package org.jboss.tools.internal.deltacloud.test;
 
 import org.jboss.tools.internal.deltacloud.test.core.job.CloudSchedulingRulesTest;
-import org.jboss.tools.internal.deltacloud.test.ui.preferences.StringsPreferenceValueTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -20,7 +19,6 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-	CloudSchedulingRulesTest.class,
-	StringsPreferenceValueTest.class})
+	CloudSchedulingRulesTest.class})
 public class DeltaCloudTestSuite {
 }
