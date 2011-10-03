@@ -240,4 +240,11 @@ public class EclipseLaunchConsoleConfigurationPreferences implements ConsoleConf
 		return prop.size() == 0 ? null : prop;
 	}
 
+
+
+	@Override
+	public String getHibernateVersion() {
+		return getAttribute(IConsoleConfigurationLaunchConstants.HIBERNATE_VERSION, null);
+	}
+
 }

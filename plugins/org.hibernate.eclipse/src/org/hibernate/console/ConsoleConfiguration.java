@@ -42,10 +42,14 @@ import org.hibernate.cfg.Environment;
 import org.hibernate.cfg.Settings;
 import org.hibernate.console.execution.DefaultExecutionContext;
 import org.hibernate.console.execution.ExecutionContext;
-import org.hibernate.console.execution.ExecutionContextHolder;
 import org.hibernate.console.execution.ExecutionContext.Command;
+import org.hibernate.console.execution.ExecutionContextHolder;
+import org.hibernate.console.ext.ExtensionManager;
+import org.hibernate.console.ext.HibernateExtension;
+import org.hibernate.console.ext.HibernateExtensionDefinition;
 import org.hibernate.console.preferences.ConsoleConfigurationPreferences;
 import org.hibernate.console.preferences.PreferencesClassPathUtils;
+import org.hibernate.tool.hbm2x.StringUtils;
 
 public class ConsoleConfiguration implements ExecutionContextHolder {
 
@@ -57,14 +61,49 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 	/* TODO: move this out to the actual users of the configuraiton/sf ? */
 	private Configuration configuration;
 	private SessionFactory sessionFactory;
+	
+	//****************************** EXTENSION **********************
+	private String hibernateVersion;
+	
+	private HibernateExtension extension;
+	
+	//TODO do we need to create new instance every time???
+	public HibernateExtension getConsoleConfigurationExtension(){
+		return extension;
+	}
+	
+	private void loadHibernateExtension(){
+		String version = hibernateVersion == null ? "3.5" : hibernateVersion;//3.5 is a default version
+		HibernateExtensionDefinition def = ExtensionManager.findHibernateExtensionDefinition(version);
+		if (def != null){
+			HibernateExtension hibernateExtension = def.createHibernateExtensionInstance();
+			hibernateExtension.setConsoleConfigurationPreferences(prefs);
+			extension = hibernateExtension;
+		} else {
+			throw new IllegalArgumentException("Can't find definition for hibernate version " + version);
+		}
+	}
+	
+	private void setHibernateVersion(String hibernateVersion){
+		if (!StringUtils.equals(this.hibernateVersion, hibernateVersion)){
+			this.hibernateVersion = hibernateVersion;
+			loadHibernateExtension();
+		}
+	}
+	
+	public HibernateExtension getHibernateExtension(){
+		return this.extension;
+	}
+	
+	//****************************** EXTENSION **********************
+	
+	public ConsoleConfiguration(ConsoleConfigurationPreferences config) {
+		prefs = config;
+	}
 
 	/** Unique name for this configuration */
 	public String getName() {
 		return prefs.getName();
-	}
-
-	public ConsoleConfiguration(ConsoleConfigurationPreferences config) {
-		prefs = config;
 	}
 
 	public Object execute(Command c) {
@@ -84,10 +123,15 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 	public boolean reset() {
 		boolean res = false;
 		// reseting state
+		if (getHibernateExtension() != null ) {
+			getHibernateExtension().reset();
+			getHibernateExtension().closeSessionFactory();
+		}
 		if (configuration != null) {
 			configuration = null;
 			res = true;
 		}
+		
 		boolean tmp = closeSessionFactory();
 		res = res || tmp;
 		if (executionContext != null) {
@@ -164,6 +208,8 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 
 	public void build() {
 		configuration = buildWith(null, true);
+		setHibernateVersion(prefs.getHibernateVersion());
+		getHibernateExtension().build();
 		fireConfigurationBuilt();
 	}
 	
@@ -217,6 +263,7 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 				return csf.createConfiguration(cfg, includeMappings);
 			}
 		});
+		//extension.buildWith(cfg, includeMappings);
 		return result;
 	}
 
@@ -247,6 +294,7 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 				return null;
 			}
 		});
+		getHibernateExtension().buildSessionFactory();
 	}
 
 	public SessionFactory getSessionFactory() {
@@ -262,17 +310,17 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 	}
 
 	public QueryPage executeHQLQuery(final String hql, final QueryInputModel queryParameters) {
-		return (QueryPage)execute(new Command() {
-			public Object execute() {
-				Session session = getSessionFactory().openSession();
+				/*Session session = getSessionFactory().openSession();
 				QueryPage qp = new HQLQueryPage(ConsoleConfiguration.this,hql,queryParameters);
 				qp.setSession(session);
 
 				qp.setId(++execcount);
 				fireQueryPageCreated(qp);
+				return qp;*/
+				QueryPage qp = new org.hibernate.console.ext.HQLQueryPage(ConsoleConfiguration.this,hql,queryParameters);
+				qp.setId(++execcount);
+				fireQueryPageCreated(qp);
 				return qp;
-			}
-		});
 	}
 
 	public QueryPage executeBSHQuery(final String queryString, final QueryInputModel model) {
@@ -397,6 +445,9 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 			sessionFactory.close();
 			sessionFactory = null;
 			res = true;
+		}
+		if (getHibernateExtension() != null){
+			getHibernateExtension().closeSessionFactory();
 		}
 		return res;
 	}
