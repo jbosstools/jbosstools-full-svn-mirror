@@ -1,4 +1,4 @@
-ace<chapter id="installation">
+<chapter id="installation">
 <?dbhtml filename="getting_started.html"?>
   <chapterinfo>
     <keywordset>
@@ -819,47 +819,47 @@ java -jar /path/to/installer.jar /path/to/InstallConfigRecord.xml
 		  </listitem>
 		  <listitem>
 			  <para>
-				  Select the 
+				  Select the JBoss Enterprise Application Platform 5.x Runtime Library (the JBoss Service Oriented Architecture Platform 5.x is based on JBoss Enterprise Application Platform 5.x)
 			  </para>
 		  </listitem>
 		  <listitem>
 			  <para>
-				  
+				  Click on the <guibutton>Edit</guibutton> button
 			  </para>
 		  </listitem>
 		  <listitem>
 			  <para>
-				  
+				  Select a server runtime from the list
 			  </para>
 		  </listitem>
 		  <listitem>
 			  <para>
-				  
+				  Click on the <guibutton>Finish</guibutton> button
 			  </para>
 		  </listitem>
 		  <listitem>
 			  <para>
-				  
+				  Select the JBoss ESB Runtime library
 			  </para>
 		  </listitem>
 		  <listitem>
 			  <para>
-				  
+				  Click on the <guibutton>Edit</guibutton> button
 			  </para>
 		  </listitem>
 		  <listitem>
 			  <para>
-				  
+				  Select the <guilabel>Server Contained</guilabel> entry in the list, that matches the server runtime you selected earlier
 			  </para>
 		  </listitem>
 		  <listitem>
 			  <para>
-				  
+				  Click on the <guibutton>Finish</guibutton> button
 			  </para>
 		  </listitem>
 		  <listitem>
 			  <para>
-				  
+				  Click on the <guibutton>OK</guibutton> button
 			  </para>
 		  </listitem>
 	  </itemizedlist>
