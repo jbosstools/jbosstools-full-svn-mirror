@@ -15,9 +15,9 @@ import java.io.FileNotFoundException;
 
 import org.apache.deltacloud.client.utils.StringUtils;
 import org.eclipse.core.runtime.Platform;
+import org.jboss.tools.common.ui.preferencevalue.StringPreferenceValue;
+import org.jboss.tools.common.ui.preferencevalue.StringsPreferenceValue;
 import org.jboss.tools.deltacloud.core.DeltaCloudException;
-import org.jboss.tools.deltacloud.ui.preferences.StringPreferenceValue;
-import org.jboss.tools.deltacloud.ui.preferences.StringsPreferenceValue;
 
 /**
  * @author André Dietisheim

@@ -17,12 +17,12 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IWorkbench;
 import org.jboss.tools.common.ui.WizardUtils;
+import org.jboss.tools.common.ui.preferencevalue.StringPreferenceValue;
 import org.jboss.tools.deltacloud.core.DeltaCloud;
 import org.jboss.tools.deltacloud.core.DeltaCloudDriver;
 import org.jboss.tools.deltacloud.core.job.AbstractCloudJob;
 import org.jboss.tools.deltacloud.ui.Activator;
 import org.jboss.tools.deltacloud.ui.IDeltaCloudPreferenceConstants;
-import org.jboss.tools.deltacloud.ui.preferences.StringPreferenceValue;
 
 /**
  * @author Jeff Johnston

@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.deltacloud.ui.preferences;
+package org.jboss.tools.common.ui.preferencevalue;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;

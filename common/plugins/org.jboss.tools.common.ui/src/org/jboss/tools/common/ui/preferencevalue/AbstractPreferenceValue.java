@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.deltacloud.ui.preferences;
+package org.jboss.tools.common.ui.preferencevalue;
 
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.osgi.service.prefs.BackingStoreException;
@@ -72,6 +72,6 @@ public abstract class AbstractPreferenceValue<TYPE> {
 	}
 
 	protected Preferences getPreferences(String pluginId) {
-		return new InstanceScope().getNode(pluginId);
+		return InstanceScope.INSTANCE.getNode(pluginId);
 	}
 }

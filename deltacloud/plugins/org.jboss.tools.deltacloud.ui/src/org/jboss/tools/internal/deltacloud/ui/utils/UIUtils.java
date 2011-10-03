@@ -26,8 +26,8 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.jboss.tools.common.ui.preferencevalue.StringsPreferenceValue;
 import org.jboss.tools.deltacloud.ui.Activator;
-import org.jboss.tools.deltacloud.ui.preferences.StringsPreferenceValue;
 import org.osgi.service.prefs.Preferences;
 
 /**

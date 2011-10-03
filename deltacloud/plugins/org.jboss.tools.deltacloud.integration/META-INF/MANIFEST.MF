@@ -29,3 +29,4 @@ Require-Bundle: org.jboss.tools.common,
  org.eclipse.wst.server.ui;bundle-version="1.1.305",
  org.eclipse.jsch.core;bundle-version="1.1.300",
  com.jcraft.jsch;bundle-version="0.1.41"
+Import-Package: org.jboss.tools.common.ui.preferencevalue
