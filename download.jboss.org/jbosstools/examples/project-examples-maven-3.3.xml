@@ -56,13 +56,13 @@ The example can be deployed using Maven from the command line or from Eclipse us
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.eclipse.m2e.core</property>
-				<property name="versions">[1.0.0,1.1.0)</property>
+				<property name="versions">[1.0.0,1.2.0)</property>
 				<property name="description">This project example requires m2e &gt;= 1.0.</property>
 				<property name="connectorIds">org.eclipse.m2e.feature</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.maven.ide.eclipse.wtp</property>
-				<property name="versions">[0.13.1,0.14.0)</property>
+				<property name="versions">[0.13.1,0.15.0)</property>
 				<property name="description">This project example requires m2eclipse-wtp &gt;= 0.13.1.</property>
 				<property name="connectorIds">org.maven.ide.eclipse.wtp</property>
 			</fix>
@@ -101,13 +101,13 @@ You will see a Hello AS7 World!! message appear on the console when this is done
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.eclipse.m2e.core</property>
-				<property name="versions">[1.0.0,1.1.0)</property>
+				<property name="versions">[1.0.0,1.2.0)</property>
 				<property name="description">This project example requires m2e &gt;= 1.0.</property>
 				<property name="connectorIds">org.eclipse.m2e.feature</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.maven.ide.eclipse.wtp</property>
-				<property name="versions">[0.13.1,0.14.0)</property>
+				<property name="versions">[0.13.1,0.15.0)</property>
 				<property name="description">This project example requires m2eclipse-wtp &gt;= 0.13.1.</property>
 				<property name="connectorIds">org.maven.ide.eclipse.wtp</property>
 			</fix>
@@ -142,13 +142,13 @@ The example can be deployed using Maven from the command line or from Eclipse us
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.eclipse.m2e.core</property>
-				<property name="versions">[1.0.0,1.1.0)</property>
+				<property name="versions">[1.0.0,1.2.0)</property>
 				<property name="description">This project example requires m2e &gt;= 1.0.</property>
 				<property name="connectorIds">org.eclipse.m2e.feature</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.maven.ide.eclipse.wtp</property>
-				<property name="versions">[0.13.1,0.14.0)</property>
+				<property name="versions">[0.13.1,0.15.0)</property>
 				<property name="description">This project example requires m2eclipse-wtp &gt;= 0.13.1.</property>
 				<property name="connectorIds">org.maven.ide.eclipse.wtp</property>
 			</fix>
@@ -183,13 +183,13 @@ The example can be deployed using Maven from the command line or from Eclipse us
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.eclipse.m2e.core</property>
-				<property name="versions">[1.0.0,1.1.0)</property>
+				<property name="versions">[1.0.0,1.2.0)</property>
 				<property name="description">This project example requires m2e &gt;= 1.0.</property>
 				<property name="connectorIds">org.eclipse.m2e.feature</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.maven.ide.eclipse.wtp</property>
-				<property name="versions">[0.13.1,0.14.0)</property>
+				<property name="versions">[0.13.1,0.15.0)</property>
 				<property name="description">This project example requires m2eclipse-wtp &gt;= 0.13.1.</property>
 				<property name="connectorIds">org.maven.ide.eclipse.wtp</property>
 			</fix>
@@ -225,13 +225,13 @@ It includes a persistence unit and some sample persistence and transaction code 
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.eclipse.m2e.core</property>
-				<property name="versions">[1.0.0,1.1.0)</property>
+				<property name="versions">[1.0.0,1.2.0)</property>
 				<property name="description">This project example requires m2e &gt;= 1.0.</property>
 				<property name="connectorIds">org.eclipse.m2e.feature</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.maven.ide.eclipse.wtp</property>
-				<property name="versions">[0.13.1,0.14.0)</property>
+				<property name="versions">[0.13.1,0.15.0)</property>
 				<property name="description">This project example requires m2eclipse-wtp &gt;= 0.13.1.</property>
 				<property name="connectorIds">org.maven.ide.eclipse.wtp</property>
 			</fix>
@@ -267,13 +267,13 @@ It includes a persistence unit and some sample persistence and transaction code 
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.eclipse.m2e.core</property>
-				<property name="versions">[1.0.0,1.1.0)</property>
+				<property name="versions">[1.0.0,1.2.0)</property>
 				<property name="description">This project example requires m2e &gt;= 1.0.</property>
 				<property name="connectorIds">org.eclipse.m2e.feature</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.maven.ide.eclipse.wtp</property>
-				<property name="versions">[0.13.1,0.14.0)</property>
+				<property name="versions">[0.13.1,0.15.0)</property>
 				<property name="description">This project example requires m2eclipse-wtp &gt;= 0.13.1.</property>
 				<property name="connectorIds">org.maven.ide.eclipse.wtp</property>
 			</fix>
