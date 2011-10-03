@@ -160,7 +160,8 @@ The example can be deployed using Maven from the command line or from Eclipse us
 			</fix>
 		</fixes>
 		<importType>maven</importType>
-		<importTypeDescription>The project example requires the m2eclipse, m2eclipse-wtp and JBoss Maven Project Examples feature.</importTypeDescription> 
+		<importTypeDescription>The project example requires the m2eclipse, m2eclipse-wtp and JBoss Maven Project Examples feature.</importTypeDescription>
+		<welcome type="cheatsheets" url="/jboss-as-login/cheatsheets/login.xml"/> 
 	</project>
 	
 	<project>
@@ -200,7 +201,8 @@ The example can be deployed using Maven from the command line or from Eclipse us
 			</fix>
 		</fixes>
 		<importType>maven</importType>
-		<importTypeDescription>The project example requires the m2eclipse, m2eclipse-wtp and JBoss Maven Project Examples feature.</importTypeDescription> 
+		<importTypeDescription>The project example requires the m2eclipse, m2eclipse-wtp and JBoss Maven Project Examples feature.</importTypeDescription>
+		<welcome type="cheatsheets" url="/jboss-as-numberguess/cheatsheets/numberguess.xml"/>  
 	</project>
 	
 	<project>
@@ -241,7 +243,8 @@ It includes a persistence unit and some sample persistence and transaction code 
 			</fix>
 		</fixes>
 		<importType>maven</importType>
-		<importTypeDescription>The project example requires the m2eclipse, m2eclipse-wtp and JBoss Maven Project Examples feature.</importTypeDescription> 
+		<importTypeDescription>The project example requires the m2eclipse, m2eclipse-wtp and JBoss Maven Project Examples feature.</importTypeDescription>
+		<welcome type="cheatsheets" url="/jboss-as-kitchensink/cheatsheets/kitchensink.xml"/> 
 	</project>
 	
 	<project>
@@ -282,11 +285,11 @@ It includes a persistence unit and some sample persistence and transaction code 
 			</fix>
 		</fixes>
 		<importType>mavenArchetype</importType>
-		<importTypeDescription>The project example requires the m2eclipse-core, m2eclipse-wtp and JBoss Maven Project Examples feature.</importTypeDescription>
+		<importTypeDescription>The project example requires the m2e, m2eclipse-wtp and JBoss Maven Integration feature.</importTypeDescription>
 		<mavenArchetype>
 			<archetypeGroupId>org.jboss.spec.archetypes</archetypeGroupId>
 			<archetypeArtifactId>jboss-javaee6-webapp</archetypeArtifactId>
-			<archetypeVersion>7.0.0.CR1</archetypeVersion>
+			<archetypeVersion>7.0.0.Final</archetypeVersion>
 			<archetypeRepository>http://repository.jboss.org/nexus/content/groups/public/</archetypeRepository>
 			<groupId>org.jboss.tools.examples</groupId>
 			<artifactId>jboss-javaee6-webapp</artifactId>
@@ -297,5 +300,5 @@ It includes a persistence unit and some sample persistence and transaction code 
 			</properties>
 		</mavenArchetype>
 	</project>
-	
+		
 </projects>
