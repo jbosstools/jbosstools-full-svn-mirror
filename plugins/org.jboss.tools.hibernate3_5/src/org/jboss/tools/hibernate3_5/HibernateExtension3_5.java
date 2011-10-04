@@ -19,7 +19,6 @@ import org.hibernate.console.ConfigurationFactory;
 import org.hibernate.console.ConsoleConfigClassLoader;
 import org.hibernate.console.ConsoleMessages;
 import org.hibernate.console.ConsoleQueryParameter;
-import org.hibernate.console.FakeDelegatingDriver;
 import org.hibernate.console.QueryInputModel;
 import org.hibernate.console.execution.DefaultExecutionContext;
 import org.hibernate.console.execution.ExecutionContext;
@@ -30,6 +29,7 @@ import org.hibernate.console.ext.QueryResult;
 import org.hibernate.console.ext.QueryResultImpl;
 import org.hibernate.console.preferences.ConsoleConfigurationPreferences;
 import org.hibernate.console.preferences.PreferencesClassPathUtils;
+import org.hibernate.eclipse.libs.FakeDelegatingDriver;
 import org.hibernate.type.Type;
 
 public class HibernateExtension3_5 implements HibernateExtension {
