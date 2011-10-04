@@ -49,6 +49,7 @@ import org.hibernate.console.ext.HibernateExtension;
 import org.hibernate.console.ext.HibernateExtensionDefinition;
 import org.hibernate.console.preferences.ConsoleConfigurationPreferences;
 import org.hibernate.console.preferences.PreferencesClassPathUtils;
+import org.hibernate.eclipse.libs.FakeDelegatingDriver;
 import org.hibernate.tool.hbm2x.StringUtils;
 
 public class ConsoleConfiguration implements ExecutionContextHolder {

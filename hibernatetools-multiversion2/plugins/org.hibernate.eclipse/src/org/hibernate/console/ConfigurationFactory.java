@@ -53,6 +53,7 @@ import org.hibernate.console.preferences.ConsoleConfigurationPreferences;
 import org.hibernate.console.preferences.ConsoleConfigurationPreferences.ConfigurationMode;
 import org.hibernate.dialect.Dialect;
 import org.hibernate.dialect.resolver.DialectFactory;
+import org.hibernate.eclipse.libs.FakeDelegatingDriver;
 import org.hibernate.util.ConfigHelper;
 import org.hibernate.util.ReflectHelper;
 import org.hibernate.util.StringHelper;
