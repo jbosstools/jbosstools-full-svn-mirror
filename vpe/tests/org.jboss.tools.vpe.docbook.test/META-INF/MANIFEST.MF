@@ -6,7 +6,6 @@ Bundle-Version: 3.3.0.qualifier
 Bundle-Activator: org.jboss.tools.vpe.docbook.test.DocbookTestPlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.jboss.tools.vpe.ui.test,
  org.jboss.tools.common.text.ext,
  org.jboss.tools.common.model,
  org.jboss.tools.vpe.xulrunner,
