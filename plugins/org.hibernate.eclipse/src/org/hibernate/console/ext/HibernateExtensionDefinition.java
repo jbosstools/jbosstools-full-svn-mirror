@@ -12,9 +12,6 @@ package org.hibernate.console.ext;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.osgi.util.NLS;
-import org.hibernate.console.HibernateConsoleRuntimeException;
-import org.hibernate.util.ReflectHelper;
 
 /**
  * @author Dmitry Geraskov
