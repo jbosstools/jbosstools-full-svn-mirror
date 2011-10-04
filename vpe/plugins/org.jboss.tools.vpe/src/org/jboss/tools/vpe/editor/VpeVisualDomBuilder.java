@@ -338,16 +338,24 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 				|| includeDocuments == null) {
 			throw new VpeDisposeException();
 		}
-		// check source node can be changed and link can be a null in this case
-		// we shouldn't process this node
-		if (sourceNode.getNodeType() != Node.TEXT_NODE
-			&& sourceNode.getNodeType() != Node.ELEMENT_NODE
-			&& sourceNode.getNodeType() != Node.COMMENT_NODE 
-			&& sourceNode.getNodeType() != Node.CDATA_SECTION_NODE
-			&& sourceNode.getNodeType() != Node.DOCUMENT_NODE) {
+		/*
+		 * 1) source node can be changed and link can be a null in this case --
+		 * we shouldn't process this node
+		 * 2) https://issues.jboss.org/browse/JBIDE-9827
+		 * Every source node's change/update causes a new update job, 
+		 * every update job is put to the queue.
+		 * When there is the update job for the same node in the queue -- 
+		 * the oldest one is removed from the queue, and then sourceNode could be null. 
+		 */
+		if ((sourceNode==null)
+				||(sourceNode.getNodeType() != Node.TEXT_NODE
+	 			&& sourceNode.getNodeType() != Node.ELEMENT_NODE
+	 			&& sourceNode.getNodeType() != Node.COMMENT_NODE 
+	 			&& sourceNode.getNodeType() != Node.CDATA_SECTION_NODE
+				&& sourceNode.getNodeType() != Node.DOCUMENT_NODE)) {
 			return null;
 		}
-
+		
 		Set<Node> ifDependencySet = new HashSet<Node>();
 		pageContext.setCurrentVisualNode(visualOldContainer);
 		VpeTemplate template = getTemplateManager().getTemplate(pageContext,
