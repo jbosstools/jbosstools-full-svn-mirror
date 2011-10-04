@@ -56,6 +56,8 @@ public final class XPCOM {
 	public static final String NS_IWEBBROWSER_CID = "F1EAC761-87E9-11d3-AF80-00A024FFC08C"; //$NON-NLS-1$
 	public static final String NS_IAPPSHELL_CID = "2d96b3df-c051-11d1-a827-0040959a28c9"; //$NON-NLS-1$
 	
+	public static final long NS_ERROR_NO_INTERFACE =  0x80004002L;
+	
 	/**Stores all interfaces which extend nsISupports. */
 	/* Lazy initialization of interfacesList is used to avoid loading
 	 * of all these classes (>1000) by the class loader. */
