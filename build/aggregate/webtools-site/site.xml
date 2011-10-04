@@ -2,25 +2,7 @@
 <site>
 	<category-def label="JBoss Application Server Adapters" name="org.eclipse.wst.server.core.serverAdapter">
 	</category-def>
-	<feature url="features/org.jboss.tools.jmx.feature_0.0.0.jar" id="org.jboss.tools.jmx.feature" version="0.0.0">
-		<category name="org.eclipse.wst.server.core.serverAdapter"/>
-	</feature>
-	<feature url="features/org.jboss.ide.eclipse.archives.feature_0.0.0.jar" id="org.jboss.ide.eclipse.archives.feature" version="0.0.0">
-		<category name="org.eclipse.wst.server.core.serverAdapter"/>
-	</feature>
-	<feature url="features/org.jboss.ide.eclipse.as.archives.integration_0.0.0.jar" id="org.jboss.ide.eclipse.as.archives.integration" version="0.0.0">
-		<category name="org.eclipse.wst.server.core.serverAdapter"/>
-	</feature>
-	<feature url="features/org.jboss.ide.eclipse.as.serverAdapter.wtp_0.0.0.jar" id="org.jboss.ide.eclipse.as.serverAdapter.wtp" version="0.0.0">
-		<category name="org.eclipse.wst.server.core.serverAdapter"/>
-	</feature>
 	<feature url="features/org.jboss.ide.eclipse.as.feature_0.0.0.jar" id="org.jboss.ide.eclipse.as.feature" version="0.0.0">
-		<category name="org.eclipse.wst.server.core.serverAdapter"/>
-	</feature>
-	<feature url="features/org.jboss.ide.eclipse.as.server.rse.integration_0.0.0.jar" id="org.jboss.ide.eclipse.as.server.rse.integration" version="0.0.0">
-		<category name="org.eclipse.wst.server.core.serverAdapter"/>
-	</feature>
-	<feature url="features/org.jboss.ide.eclipse.as.jmx.integration_0.0.0.jar" id="org.jboss.ide.eclipse.as.jmx.integration" version="0.0.0">
 		<category name="org.eclipse.wst.server.core.serverAdapter"/>
 	</feature>
 </site>
