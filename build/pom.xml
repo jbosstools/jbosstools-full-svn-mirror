@@ -411,6 +411,11 @@
 			<id>esb-bootstrap</id>
 			<modules>
 				<module>../tests</module>
+				<module>../common</module>
+				<module>../jst</module>				
+				<module>../jmx</module>
+				<module>../archives</module>
+				<module>../as</module>
 				<module>../esb</module>
 			</modules>
 		</profile>
