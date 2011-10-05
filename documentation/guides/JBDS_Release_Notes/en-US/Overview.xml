@@ -20,6 +20,12 @@
 					<!-- https://issues.jboss.org/browse/JBIDE-9497 -->
 				</para>
 			</listitem>
+			<listitem>
+				<para>
+					Seam Servlet module support
+						<!-- https://issues.jboss.org/browse/JBIDE-9388 -->
+				</para>
+			</listitem>
 		</itemizedlist>
 		<important>
 			<para>
