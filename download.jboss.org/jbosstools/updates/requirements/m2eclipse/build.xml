@@ -16,12 +16,16 @@
 			-f ~/RHDS/updates/requirements/m2eclipse/build.xml -Ddestination=/tmp/m2eclipse-repo
 	-->
 	<target name="mirror">
+		<property name="URL1" value="http://download.eclipse.org/technology/m2e/releases/"/>
+		<property name="URL2" value="http://repository.sonatype.org/content/repositories/forge-sites/m2e-extras/0.15.0/N/0.15.0.201109290002/"/>
+		<property name="URL3" value="http://download.jboss.org/jbosstools/updates/m2eclipse-wtp/"/> 
+	  
+		<!--
 		<property name="URL1" value="https://repository.sonatype.org/content/sites/forge-sites/m2e/1.0.0/N/1.0.0.201106061504/"/>
 		<property name="URL2" value="https://repository.sonatype.org/content/repositories/forge-sites/m2e-extras/0.14.0/N/0.14.0.201107260131/"/>
 		<property name="URL3" value="https://repository.sonatype.org/content/sites/forge-sites/m2eclipse-wtp/0.13.0/S/0.13.0.20110623-0455/"/>
 		<property name="URL4" value="http://download.jboss.org/jbosstools/updates/m2eclipse-wtp/"/> 
 
-		<!--
 		<property name="URL1" value="https://repository.sonatype.org/content/sites/forge-sites/m2e/1.0.0/N/1.0.0.201106061504/"/>
 		<property name="URL2" value="https://repository.sonatype.org/content/repositories/forge-sites/m2e-extras/0.13.0/S/0.13.0.20110622-1538/"/>
 		<property name="URL3" value="https://repository.sonatype.org/content/sites/forge-sites/m2eclipse-wtp/0.13.0/S/0.13.0.20110623-0455/"/>
@@ -52,18 +56,17 @@
 		<property name="compress" value="true" />
 
 		<p2.mirror>
-			<repository location="file:${destination}/20110728-1500" name="m2eclipse 0.13 (1.0) for Eclipse 3.6 - 3.7 (mirrored 20110728-1500)" />
+			<repository location="file:${destination}/20111005-1500" name="m2eclipse 1.0.100 for Eclipse 3.6 - 3.7 (mirrored 20111005-1500)" />
 			<source>
 				<repository location="${URL1}" />
 				<repository location="${URL2}" />
 				<repository location="${URL3}" />
-				<repository location="${URL4}" />
 			</source>
 
 			<slicingOptions includeFeatures="true" followStrict="true" />
 		</p2.mirror>
 
-		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/20110728-1500/" artifactRepository="file:${destination}/20110728-1500/" 
-			publishartifacts="true" source="${destination}/20110728-1500/" compress="${compress}" />
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/20111005-1500/" artifactRepository="file:${destination}/20111005-1500/" 
+			publishartifacts="true" source="${destination}/20111005-1500/" compress="${compress}" />
 	</target>
 </project>
