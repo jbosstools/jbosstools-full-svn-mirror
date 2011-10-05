@@ -141,6 +141,10 @@ public final class VpeUIMessages extends NLS {
 	public static String DEFAULT_VPE_TAB_VISUAL_SOURCE;
 	public static String DEFAULT_VPE_TAB_SOURCE;
 	public static String DEFAULT_VPE_TAB_PREVIEW;
+	public static String SPLITTING_VERT_TOP_SOURCE_TOOLTIP;
+	public static String SPLITTING_VERT_TOP_VISUAL_TOOLTIP;
+	public static String SPLITTING_HORIZ_LEFT_SOURCE_TOOLTIP;
+	public static String SPLITTING_HORIZ_LEFT_VISUAL_TOOLTIP;
 	public static String SPLITTING_VERT_TOP_SOURCE;
 	public static String SPLITTING_VERT_TOP_VISUAL;
 	public static String SPLITTING_HORIZ_LEFT_SOURCE;

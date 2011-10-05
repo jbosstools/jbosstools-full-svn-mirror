@@ -41,7 +41,7 @@ public class RotateEditorsHandler extends VisualPartAbstractHandler{
 	
 	private static List<String> layoutValues;
 	private static Map<String, String> layoutIcons;
-	private static Map<String, String> layoutNames;
+	private static Map<String, String> layoutNamesAndTooltips;
 	private static final String ICON_ORIENTATION_SOURCE_LEFT = "icons/source_left.gif"; //$NON-NLS-1$
 	private static final String ICON_ORIENTATION_SOURCE_TOP = "icons/source_top.gif"; //$NON-NLS-1$
 	private static final String ICON_ORIENTATION_VISUAL_LEFT = "icons/visual_left.gif"; //$NON-NLS-1$
@@ -63,15 +63,15 @@ public class RotateEditorsHandler extends VisualPartAbstractHandler{
 		layoutIcons.put(IVpePreferencesPage.SPLITTING_VERT_TOP_VISUAL_VALUE,
 				ICON_ORIENTATION_VISUAI_TOP);
 
-		layoutNames = new HashMap<String, String>();
-		layoutNames.put(IVpePreferencesPage.SPLITTING_HORIZ_LEFT_SOURCE_VALUE,
-				VpeUIMessages.SPLITTING_HORIZ_LEFT_SOURCE);
-		layoutNames.put(IVpePreferencesPage.SPLITTING_VERT_TOP_SOURCE_VALUE,
-				VpeUIMessages.SPLITTING_VERT_TOP_SOURCE);
-		layoutNames.put(IVpePreferencesPage.SPLITTING_HORIZ_LEFT_VISUAL_VALUE,
-				VpeUIMessages.SPLITTING_HORIZ_LEFT_VISUAL);
-		layoutNames.put(IVpePreferencesPage.SPLITTING_VERT_TOP_VISUAL_VALUE,
-				VpeUIMessages.SPLITTING_VERT_TOP_VISUAL);
+		layoutNamesAndTooltips = new HashMap<String, String>();
+		layoutNamesAndTooltips.put(IVpePreferencesPage.SPLITTING_HORIZ_LEFT_SOURCE_VALUE,
+				VpeUIMessages.SPLITTING_HORIZ_LEFT_SOURCE_TOOLTIP);
+		layoutNamesAndTooltips.put(IVpePreferencesPage.SPLITTING_VERT_TOP_SOURCE_VALUE,
+				VpeUIMessages.SPLITTING_VERT_TOP_SOURCE_TOOLTIP);
+		layoutNamesAndTooltips.put(IVpePreferencesPage.SPLITTING_HORIZ_LEFT_VISUAL_VALUE,
+				VpeUIMessages.SPLITTING_HORIZ_LEFT_VISUAL_TOOLTIP);
+		layoutNamesAndTooltips.put(IVpePreferencesPage.SPLITTING_VERT_TOP_VISUAL_VALUE,
+				VpeUIMessages.SPLITTING_VERT_TOP_VISUAL_TOOLTIP);
 
 		layoutValues = new ArrayList<String>();
 		layoutValues.add(IVpePreferencesPage.SPLITTING_HORIZ_LEFT_SOURCE_VALUE);
@@ -97,8 +97,7 @@ public class RotateEditorsHandler extends VisualPartAbstractHandler{
 		 */
 		currentOrientationIndex++;
 		if (currentOrientationIndex >= layoutValues.size()) {
-			currentOrientationIndex = currentOrientationIndex
-					% layoutValues.size();
+			currentOrientationIndex = currentOrientationIndex % layoutValues.size();
 		}
 
 		String newOrientation = layoutValues.get(currentOrientationIndex);
@@ -120,10 +119,9 @@ public class RotateEditorsHandler extends VisualPartAbstractHandler{
 	}
 
 	public void updateElement(UIElement element, Map parameters) {
-		IPreferenceStore preferences = JspEditorPlugin.getDefault()
-				.getPreferenceStore();
-		String orientation = preferences
-				.getString(IVpePreferencesPage.VISUAL_SOURCE_EDITORS_SPLITTING);
+		IPreferenceStore preferences = JspEditorPlugin.getDefault().getPreferenceStore();
+		String orientation = preferences.getString(
+				IVpePreferencesPage.VISUAL_SOURCE_EDITORS_SPLITTING);
 		if (orientation.isEmpty()) {
 			orientation = IVpePreferencesPage.SPLITTING_HORIZ_LEFT_SOURCE_VALUE;
 			preferences.setValue(
@@ -136,7 +134,7 @@ public class RotateEditorsHandler extends VisualPartAbstractHandler{
 		 */
 		element.setIcon(ImageDescriptor.createFromFile(this.getClass(),
 				layoutIcons.get(orientation)));
-		String orientationName = layoutNames.get(orientation);
+		String orientationName = layoutNamesAndTooltips.get(orientation);
 		element.setTooltip(orientationName);
 		element.setText(orientationName);
 
