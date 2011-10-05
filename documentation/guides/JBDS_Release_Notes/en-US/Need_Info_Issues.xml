@@ -308,22 +308,22 @@
             </itemizedlist>
         </para>
     </formalpara>-->
-    <formalpara>
+<!--    <formalpara>
         <title>General Issues</title>
         <para>
 			<itemizedlist>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1844">JBDS-1844</ulink>: <emphasis>Developer</emphasis>: Denis Golovin.
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>: <emphasis>Developer</emphasis>: 
 					</para>
 					<para>
-						<emphasis>Title</emphasis>: Automated Installer Script Does Not Recored Preferred JRE
+						<emphasis>Title</emphasis>: 
 					</para>
 					<para>
-						<emphasis>Question</emphasis>: Only a "fixed in trunk and 4.x branch" comment is given. No SVN/Fisheye links are recorded and no further information is provided. What was the cause of the issue? How was the issue fixed in the code? What is the result that the user will now see - does JBDS now start with the user-selected JRE?
+						<emphasis>Question</emphasis>:
 					</para>
 				</listitem>
 			</itemizedlist>
         </para>
-	</formalpara>
+	</formalpara> -->
 </section>
