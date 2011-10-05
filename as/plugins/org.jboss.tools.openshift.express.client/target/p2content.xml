@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<units size='2'>
+  <unit id='org.jboss.tools.openshift.express.client' version='2.3.0.v20111005-1239-M4' singleton='false'>
+    <update id='org.jboss.tools.openshift.express.client' range='[0.0.0,2.3.0.v20111005-1239-M4)' severity='0'/>
+    <properties size='5'>
+      <property name='org.eclipse.equinox.p2.name' value='Openshift Core Plugin'/>
+      <property name='org.eclipse.equinox.p2.provider' value='JBoss by Red Hat'/>
+      <property name='maven-groupId' value='org.jboss.tools.as.plugins'/>
+      <property name='maven-artifactId' value='org.jboss.tools.openshift.express.client'/>
+      <property name='maven-version' value='2.3.0-SNAPSHOT'/>
+    </properties>
+    <provides size='11'>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='org.jboss.tools.openshift.express.client' version='2.3.0.v20111005-1239-M4'/>
+      <provided namespace='osgi.bundle' name='org.jboss.tools.openshift.express.client' version='2.3.0.v20111005-1239-M4'/>
+      <provided namespace='java.package' name='org.jboss.dmr' version='0.0.0'/>
+      <provided namespace='java.package' name='org.jboss.tools.openshift.express.client' version='0.0.0'/>
+      <provided namespace='java.package' name='org.jboss.tools.openshift.express.internal.client' version='0.0.0'/>
+      <provided namespace='java.package' name='org.jboss.tools.openshift.express.internal.client.request' version='0.0.0'/>
+      <provided namespace='java.package' name='org.jboss.tools.openshift.express.internal.client.request.marshalling' version='0.0.0'/>
+      <provided namespace='java.package' name='org.jboss.tools.openshift.express.internal.client.response' version='0.0.0'/>
+      <provided namespace='java.package' name='org.jboss.tools.openshift.express.internal.client.response.unmarshalling' version='0.0.0'/>
+      <provided namespace='java.package' name='org.jboss.tools.openshift.express.internal.client.utils' version='0.0.0'/>
+      <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+    </provides>
+    <requires size='2'>
+      <required namespace='osgi.bundle' name='org.eclipse.core.runtime' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='com.jcraft.jsch' range='[0.1.41,2.0.0)'/>
+    </requires>
+    <artifacts size='1'>
+      <artifact classifier='osgi.bundle' id='org.jboss.tools.openshift.express.client' version='2.3.0.v20111005-1239-M4'/>
+    </artifacts>
+    <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+    <touchpointData size='1'>
+      <instructions size='1'>
+        <instruction key='manifest'>
+          Bundle-ManifestVersion: 2&#xA;Created-By: Apache Maven&#xA;Archiver-Version: Plexus Archiver&#xA;Manifest-Version: 1.0&#xA;Bundle-Name: Openshift Core Plugin&#xA;Bundle-Vendor: JBoss by Red Hat&#xA;Bundle-ActivationPolicy: lazy&#xA;Bundle-ClassPath: jboss-dmr-1.0.0.Final.jar,.&#xA;Build-Jdk: 1.6.0_24&#xA;Bundle-Version: 2.3.0.v20111005-1239-M4&#xA;Export-Package: org.jboss.dmr;x-friends:=&quot;org.jboss.ide.eclipse.as.openshift.test&quot;,org.jboss.tools.openshift.express.client,org.jboss.tools.openshift.express.internal.client;x-friends:=&quot;org.jboss.ide.eclipse.as.openshift.test&quot;,org.jboss.tools.openshift.express.internal.client.request;x-friends:=&quot;org.jboss.ide.eclipse.as.openshift.test&quot;,org.jboss.tools.openshift.express.internal.client.request.marshalling;x-friends:=&quot;org.jboss.ide.eclipse.as.openshift.test&quot;,org.jboss.tools.openshift.express.internal.client.response;x-friends:=&quot;org.jboss.ide.eclipse.as.openshift.test&quot;,org.jboss.tools.openshift.express.internal.client.response.unmarshalling;x-friends:=&quot;org.jboss.ide.eclipse.as.openshift.test&quot;,org.jboss.tools.openshift.express.internal.client.utils;x-friends:=&quot;org.jboss.ide.eclipse.as.openshift.test&quot;&#xA;Require-Bundle: org.eclipse.core.runtime,com.jcraft.jsch;bundle-version=&quot;[0.1.41,2.0.0)&quot;&#xA;Bundle-Activator: org.jboss.tools.openshift.express.internal.client.OpenshiftCoreActivator&#xA;Bundle-SymbolicName: org.jboss.tools.openshift.express.client&#xA;Built-By: adietish&#xA;Bundle-RequiredExecutionEnvironment: JavaSE-1.6&#xA;
+        </instruction>
+      </instructions>
+    </touchpointData>
+  </unit>
+  <unit id='org.jboss.tools.openshift.express.client.source' version='2.3.0.v20111005-1239-M4' singleton='false'>
+    <update id='org.jboss.tools.openshift.express.client.source' range='[0.0.0,2.3.0.v20111005-1239-M4)' severity='0'/>
+    <properties size='4'>
+      <property name='maven-groupId' value='org.jboss.tools.as.plugins'/>
+      <property name='maven-artifactId' value='org.jboss.tools.openshift.express.client'/>
+      <property name='maven-version' value='2.3.0-SNAPSHOT'/>
+      <property name='maven-classifier' value='sources'/>
+    </properties>
+    <provides size='3'>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='org.jboss.tools.openshift.express.client.source' version='2.3.0.v20111005-1239-M4'/>
+      <provided namespace='osgi.bundle' name='org.jboss.tools.openshift.express.client.source' version='2.3.0.v20111005-1239-M4'/>
+      <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='source' version='1.0.0'/>
+    </provides>
+    <artifacts size='1'>
+      <artifact classifier='osgi.bundle' id='org.jboss.tools.openshift.express.client.source' version='2.3.0.v20111005-1239-M4'/>
+    </artifacts>
+    <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+    <touchpointData size='1'>
+      <instructions size='1'>
+        <instruction key='manifest'>
+          Bundle-ManifestVersion: 2&#xA;Built-By: adietish&#xA;Bundle-Version: 2.3.0.v20111005-1239-M4&#xA;Build-Jdk: 1.6.0_24&#xA;Eclipse-SourceBundle: org.jboss.tools.openshift.express.client;version=&quot;2.3.0.v20111005-1239-M4&quot;;roots:=&quot;.&quot;&#xA;Created-By: Apache Maven&#xA;Bundle-SymbolicName: org.jboss.tools.openshift.express.client.source&#xA;Manifest-Version: 1.0&#xA;Archiver-Version: Plexus Archiver&#xA;
+        </instruction>
+      </instructions>
+    </touchpointData>
+  </unit>
+</units>

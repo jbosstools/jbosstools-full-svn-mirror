@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?artifactRepository version='1.1.0'?>
+<artifacts size='2'>
+  <artifact classifier='osgi.bundle' id='org.jboss.tools.openshift.express.client' version='2.3.0.v20111005-1239-M4'>
+    <properties size='6'>
+      <property name='artifact.size' value='156891'/>
+      <property name='download.size' value='156891'/>
+      <property name='download.md5' value='869f8065a6537aeaf1079413baffdcea'/>
+      <property name='maven-groupId' value='org.jboss.tools.as.plugins'/>
+      <property name='maven-artifactId' value='org.jboss.tools.openshift.express.client'/>
+      <property name='maven-version' value='2.3.0-SNAPSHOT'/>
+    </properties>
+  </artifact>
+  <artifact classifier='osgi.bundle' id='org.jboss.tools.openshift.express.client.source' version='2.3.0.v20111005-1239-M4'>
+    <properties size='7'>
+      <property name='artifact.size' value='59659'/>
+      <property name='download.size' value='59659'/>
+      <property name='download.md5' value='940dd8c22e7b6a2cd34dc07a09a16728'/>
+      <property name='maven-groupId' value='org.jboss.tools.as.plugins'/>
+      <property name='maven-artifactId' value='org.jboss.tools.openshift.express.client'/>
+      <property name='maven-version' value='2.3.0-SNAPSHOT'/>
+      <property name='maven-classifier' value='sources'/>
+    </properties>
+  </artifact>
+</artifacts>
