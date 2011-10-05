@@ -23,7 +23,7 @@
 
 	-->
 	<target name="mirror">
-		<property name="URL" value="http://download.eclipse.org/webtools/downloads/drops/R3.3.1/M-3.3.1-20110915193224/repository/" />
+		<property name="URL" value="http://download.eclipse.org/webtools/downloads/drops/R3.3.1/R-3.3.1-20110915193224/repository/" />
 		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/webtools/" />
 		<property name="compress" value="true" />
 
