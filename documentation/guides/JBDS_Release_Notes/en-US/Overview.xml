@@ -39,6 +39,9 @@
 				These settings will ensure you do not encounter an error reguarding maximum open files when starting JBoss Developer Studio.
 			</para>
 			<para>
+				For further information concerning this issue, see <ulink url="https://issues.jboss.org/browse/JBIDE-8944">https://issues.jboss.org/browse/JBIDE-8944</ulink>
+			</para>
+			<para>
 				For further installation instructions see the Getting Started Guide for this release, available at: <ulink url="http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/index.html">http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/index.html</ulink>
 			</para>
 		</important>
