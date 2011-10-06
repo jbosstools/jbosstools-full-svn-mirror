@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
 
+	<!-- :: DEPRECATED :: SEE README -->
 	<description>
 JBoss Tools 3.3.0 Update Site / p2 Repo
 	</description>
