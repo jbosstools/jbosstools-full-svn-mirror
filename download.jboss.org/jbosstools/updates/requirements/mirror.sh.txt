@@ -3,7 +3,7 @@ TMP=`mktemp -d`
 destfolder=`pwd`
 scriptname=${destfolder}/build.xml
 
-if [[ $# -lt 1 ]]; then
+if [[ $# -lt 1 ]] || [[ $1 == "." ]]; then
 	echo "Usage: $0 <scriptname> <destfolder>"
 	echo "Usage: $0 - (to use defaults of build.xml and .)"
 	exit
@@ -13,12 +13,9 @@ else
 		if [[ $2 ]]; then destfolder=$2; fi
 	fi
 fi
-#export JAVA_HOME=/opt/jdk1.6.0; # old path on qa01
-export JAVA_HOME=$HOME/bin/sun-java2-6.0; # new path on dev01 - download Sun JDK 6 SE (.bin) and unpack into ~/bin/, then symlink as sun-java2-6.0
-
-${JAVA_HOME}/bin/java -cp ~/eclipse/plugins/org.eclipse.equinox.launcher_*.jar org.eclipse.equinox.launcher.Main -vm ${JAVA_HOME} -consoleLog -nosplash -data $TMP -application org.eclipse.ant.core.antRunner -f $scriptname -Ddestination=$destfolder -Declipse.p2.mirrors=false
+export JAVA_HOME=$HOME/bin/sun-java2-6.0
+${JAVA_HOME}/bin/java -cp ~/eclipse/plugins/org.eclipse.equinox.launcher_*.jar org.eclipse.equinox.launcher.Main -vm ${JAVA_HOME} -consoleLog -nosplash -data $TMP -application org.eclipse.ant.core.antRunner -f $scriptname -Ddestination=$destfolder -Declipse.p2.mirrors=false $3 $4 $5
+#${JAVA_HOME}/bin/java -cp ~/eclipse/plugins/org.eclipse.equinox.launcher_*.jar org.eclipse.equinox.launcher.Main -vm ${JAVA_HOME} -consoleLog -nosplash -data $TMP -application org.eclipse.ant.core.antRunner -f $scriptname -Ddestination=$destfolder -Declipse.p2.mirrors=true
 
 # cleanup
-if [[ $? -eq 0 ]]; then
-	rm -fr $TMP
-fi
+rm -fr $TMP
