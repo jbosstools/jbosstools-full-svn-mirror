@@ -7,6 +7,6 @@
 		<version>1.3.0-SNAPSHOT</version>
 	</parent>
 	<groupId>org.jboss.tools.birt.features</groupId>
-	<artifactId>org.jboss.tools.birt.feature</artifactId> 
+	<artifactId>org.jboss.tools.birt.source.feature</artifactId>
 	<packaging>eclipse-feature</packaging>
 </project>
