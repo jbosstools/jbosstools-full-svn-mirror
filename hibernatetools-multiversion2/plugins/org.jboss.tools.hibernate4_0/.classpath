@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry exported="true" kind="lib" path="lib/bsh-core-2.0b4.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/optional/ehcache/ehcache-core-2.4.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/optional/ehcache/hibernate-ehcache-4.0.0.CR3.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/optional/infinispan/hibernate-infinispan-4.0.0.CR3.jar"/>
