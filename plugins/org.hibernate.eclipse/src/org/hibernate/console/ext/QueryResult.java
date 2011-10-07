@@ -21,5 +21,13 @@ public interface QueryResult {
 	public List<Object> list();
 	
 	public List<String> getPathNames();
+	
+	public long getQueryTime();
+	
+	public boolean hasExceptions();
+	
+	public List<Exception> getExceptions();
+
+	public void setPathNames(List<String> pathNames);
 
 }

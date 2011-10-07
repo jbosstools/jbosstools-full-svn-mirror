@@ -28,7 +28,7 @@ public interface HibernateExtension {
 	public boolean closeSessionFactory();
 	
 	public boolean reset();
-	
+	//TODO do we really need this?
 	public String getHibernateVersion();
 	
 	public QueryResult executeHQLQuery(final String hql, final QueryInputModel queryParameters);
