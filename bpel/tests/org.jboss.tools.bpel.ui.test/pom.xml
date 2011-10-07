@@ -12,8 +12,10 @@
 	<packaging>eclipse-test-plugin</packaging>
 	
 	<properties>
+		<!--  TODO: re-enable this as per JBDS-1876
 		<emma.filter>org.eclipse.bpel*</emma.filter>
 		<emma.instrument.bundles>org.eclipse.bpel.ui,org.eclipse.bpel.common.ui,org.eclipse.bpel.common.model,org.eclipse.bpel.model</emma.instrument.bundles>
+		-->
 	</properties>
 	
 
