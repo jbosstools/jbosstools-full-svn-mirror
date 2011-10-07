@@ -327,10 +327,15 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 	public QueryPage executeBSHQuery(final String queryString, final QueryInputModel model) {
 		return (QueryPage)execute(new Command() {
 			public Object execute() {
-				Session session = getSessionFactory().openSession();
+				/*Session session = getSessionFactory().openSession();
 				QueryPage qp = new JavaPage(ConsoleConfiguration.this,queryString,model);
 				qp.setSession(session);
 
+				qp.setId(++execcount);
+				fireQueryPageCreated(qp);
+				return qp;*/
+				
+				QueryPage qp = new org.hibernate.console.ext.JavaPage(ConsoleConfiguration.this,queryString,model);
 				qp.setId(++execcount);
 				fireQueryPageCreated(qp);
 				return qp;

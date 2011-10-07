@@ -43,21 +43,24 @@ public class HQLQueryPage extends AbstractQueryPage {
 	private void updateQueryResults(){
 		try {
 			list = new ArrayList<Object>();
-			long startTime = System.currentTimeMillis();
 			queryResult = getConsoleConfiguration().getConsoleConfigurationExtension()
 					.executeHQLQuery(queryString, model);
-			Iterator<?> iter = queryResult.list().iterator(); // need to be user-controllable to toggle between iterate, scroll etc.
-			queryTime = System.currentTimeMillis() - startTime;
-			while (iter.hasNext() ) {
-				Object element = iter.next();
-				list.add(element);
+			if (!queryResult.hasExceptions()){
+				Iterator<?> iter = queryResult.list().iterator(); // need to be user-controllable to toggle between iterate, scroll etc.
+				queryTime = queryResult.getQueryTime();
+				while (iter.hasNext() ) {
+					Object element = iter.next();
+					list.add(element);
+				}
+				pcs.firePropertyChange("list", null, list); //$NON-NLS-1$
+			} else {
+				for (Exception e : queryResult.getExceptions()) {
+					addException(e);
+				}
 			}
-			pcs.firePropertyChange("list", null, list); //$NON-NLS-1$
 		} catch (HibernateException e) {
-			list = Collections.emptyList();
 			addException(e);				                
 		} catch (IllegalArgumentException e) {
-			list = Collections.emptyList();
 			addException(e);
 		}
 	}
@@ -90,6 +93,7 @@ public class HQLQueryPage extends AbstractQueryPage {
 	public void setQueryString(String queryString) {
 		this.queryString = queryString;
 		list = null;
+		queryResult = null;
 	}
 
 }

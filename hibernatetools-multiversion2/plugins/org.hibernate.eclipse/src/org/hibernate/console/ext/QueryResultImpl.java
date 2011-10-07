@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.hibernate.console.ext;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -19,11 +20,13 @@ import java.util.List;
  */
 public class QueryResultImpl implements QueryResult {
 	
-	private List<Object> list;
+	private List<Object> list = new ArrayList<Object>();;
 	
 	private List<String> pathNames = Collections.emptyList();
 	
 	private long execTime;
+	
+	private List<Exception> exceptions = new ArrayList<Exception>();
 	
 	public QueryResultImpl(List<Object> list, long execTime){
 		this.list = list;
@@ -33,6 +36,10 @@ public class QueryResultImpl implements QueryResult {
 	public QueryResultImpl(List<Object> list, List<String> pathNames, long execTime){
 		this(list, execTime);
 		this.pathNames = pathNames;
+	}
+	
+	public QueryResultImpl(Exception e){
+		exceptions.add(e);
 	}
 
 	@Override
@@ -44,9 +51,32 @@ public class QueryResultImpl implements QueryResult {
 	public List<String> getPathNames() {
 		return pathNames;
 	}
+	
+	@Override
+	public void setPathNames(List<String> pathNames) {
+		this.pathNames = pathNames;
+	}
 
 	public long getExecTime() {
 		return execTime;
+	}
+
+	@Override
+	public long getQueryTime() {
+		return execTime;
+	}
+	
+	public void addException(Exception e){
+		exceptions.add(e);
+	}
+	
+	public List<Exception> getExceptions(){
+		return this.exceptions;
+	}
+
+	@Override
+	public boolean hasExceptions() {
+		return getExceptions().size() > 0;
 	}
 
 }
