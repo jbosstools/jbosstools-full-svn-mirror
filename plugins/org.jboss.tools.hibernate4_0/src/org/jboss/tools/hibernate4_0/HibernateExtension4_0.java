@@ -5,22 +5,16 @@ import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import org.eclipse.osgi.util.NLS;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.console.ConsoleConfigClassLoader;
 import org.hibernate.console.ConsoleMessages;
-import org.hibernate.console.ConsoleQueryParameter;
 import org.hibernate.console.QueryInputModel;
 import org.hibernate.console.execution.DefaultExecutionContext;
 import org.hibernate.console.execution.ExecutionContext;
@@ -34,7 +28,6 @@ import org.hibernate.console.preferences.PreferencesClassPathUtils;
 import org.hibernate.service.BasicServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 import org.hibernate.service.internal.BasicServiceRegistryImpl;
-import org.hibernate.type.Type;
 
 public class HibernateExtension4_0 implements HibernateExtension {
 	
@@ -59,116 +52,49 @@ public class HibernateExtension4_0 implements HibernateExtension {
 	public String getHibernateVersion() {
 		return "4.0";
 	}
-
+	
 	@Override
 	public QueryResult executeHQLQuery(String hql,
 			QueryInputModel queryParameters) {
-		System.out.println("Execute HQLQuery in " + getClass().getName());
 		Session session = null;
 		try {
-		 session = sessionFactory.openSession();
-		} catch (Exception e){
-			e.printStackTrace();
-		}
-		Query query = session.createQuery(hql);
-		List<Object> list = Collections.emptyList();
-		long queryTime = 0;
-		try {
-			list = new ArrayList<Object>();
-			setupParameters(query, queryParameters);
-			long startTime = System.currentTimeMillis();
-			Iterator<?> iter = query.list().iterator(); // need to be user-controllable to toggle between iterate, scroll etc.
-			queryTime = System.currentTimeMillis() - startTime;
-			while (iter.hasNext() ) {
-				Object element = iter.next();
-				list.add(element);
-			}
-		} 
-		catch (HibernateException e) {
-			e.printStackTrace();
-		}
-		return new QueryResultImpl(list,
-				getPathNames(query), queryTime);
-	}
-	
-	public List<String> getPathNames(Query query) {
-    	List<String> l = Collections.emptyList();
-    
-    	try {
-    		if(query==null) return l;
-    		String[] returnAliases = null;
-    		try {
-    			returnAliases = query.getReturnAliases();
-    		} catch(NullPointerException e) {
-    			// ignore - http://opensource.atlassian.com/projects/hibernate/browse/HHH-2188
-    		}
-			if(returnAliases==null) {
-    		Type[] t;
-    		try {
-			t = query.getReturnTypes();
-    		} catch(NullPointerException npe) {
-    			t = new Type[] { null };
-    			// ignore - http://opensource.atlassian.com/projects/hibernate/browse/HHH-2188
-    		}
-    		l = new ArrayList<String>(t.length);
-    
-    		for (int i = 0; i < t.length; i++) {
-    			Type type = t[i];
-    			if(type==null) {
-    			    l.add("<multiple types>");	 //$NON-NLS-1$
-    			} else {
-    				l.add(type.getName() );
-    			}
-    		}
-    		} else {
-    			String[] t = returnAliases;
-        		l = new ArrayList<String>(t.length);
-        
-        		for (int i = 0; i < t.length; i++) {
-        			l.add(t[i]);
-        		}			
-    		}
-    	} catch (HibernateException he) {
-    		he.printStackTrace();           
-    	}
-    
-    	return l;
-    }
-	
-	private void setupParameters(Query query2, QueryInputModel model) {
-		
-		if(model.getMaxResults()!=null) {
-			query2.setMaxResults( model.getMaxResults().intValue() );
-		}
-		
-		ConsoleQueryParameter[] qp = model.getQueryParameters();
-		for (int i = 0; i < qp.length; i++) {
-			ConsoleQueryParameter parameter = qp[i];
-		
 			try {
-				int pos = Integer.parseInt(parameter.getName());
-				//FIXME no method to set positioned list value
-				query2.setParameter(pos, calcValue( parameter ), parameter.getType());
-			} catch(NumberFormatException nfe) {
-				Object value = parameter.getValue();
-				if (value != null && value.getClass().isArray()){
-					Object[] values = (Object[])value;
-					query2.setParameterList(parameter.getName(), Arrays.asList(values), parameter.getType());
-				} else {
-					query2.setParameter(parameter.getName(), calcValue( parameter ), parameter.getType());
-				}
+				session = sessionFactory.openSession();
+			} catch (Exception e){
+				return new QueryResultImpl(e);
 			}
-		}		
-	}
-	
-	private Object calcValue(ConsoleQueryParameter parameter) {
-		return parameter.getValueForQuery();				
+			return QueryExecutor.executeHQLQuery(session, hql, queryParameters);
+		} finally {
+			if (session != null && session.isOpen()){
+				try {
+					session.close();
+				} catch (HibernateException e) {
+					return new QueryResultImpl(e);
+	    		}
+			}
+		}
 	}
 
 	@Override
-	public QueryResult executeCriteriaQuery(String criteria,
-			QueryInputModel queryParameters) {
-		return null;
+	public QueryResult executeCriteriaQuery(String criteriaCode,
+			QueryInputModel model) {
+		Session session = null;
+		try {
+			try {
+				session = sessionFactory.openSession();
+			} catch (Exception e){
+				return new QueryResultImpl(e);
+			}
+			return QueryExecutor.executeCriteriaQuery(session, criteriaCode, model);
+		} finally {
+			if (session != null && session.isOpen()){
+				try {
+					session.close();
+				} catch (HibernateException e) {
+					return new QueryResultImpl(e);
+	    		}
+			}
+		}
 	}
 
 	/**
