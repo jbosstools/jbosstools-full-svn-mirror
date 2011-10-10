@@ -22,7 +22,7 @@ consequently the ability to update using the update site, are provided to users 
 	<section id="sect-update_site_configuration-Upgrading_using_the_update_site">
 	<title>Upgrading using the update site</title>
 	<para>
-	    JBoss Developer Studio provides the facility to update from version 3.0.x to the latest code fixes and enhancements without the need to download a complete installation. Updating can be achieved by adding the relevant remote update site to the list of available software sites then performing manual or scheduled updates. <!-- At present, the update site contains the latest 3.0.0.GA build so performing an update at this stage will leave your installation unchanged. -->
+	    JBoss Developer Studio provides the facility to update from version 4.x.x to the latest code fixes and enhancements without the need to download a complete installation. Updating can be achieved by adding the relevant remote update site to the list of available software sites then performing manual or scheduled updates. <!-- At present, the update site contains the latest 3.0.0.GA build so performing an update at this stage will leave your installation unchanged. -->
 	</para>
 	<para>
 	  <xref linkend="proc-Adding_Update_Sites"/> describes how to add the update site to the list of available sites. Configuring JBoss Developer Studio to check for and download updates is outlined in <xref linkend="proc-Configuring_Automatic_Updates"/>. Manual updates can be performed by selecting <menuchoice><guimenu>Help</guimenu><guisubmenu>Check For Updates</guisubmenu></menuchoice>.
@@ -53,7 +53,7 @@ consequently the ability to update using the update site, are provided to users 
       	    </listitem>
       	    <listitem>
       	      <para>
-      	        Enter a name for the update site such as JBDS3.0 in the <guilabel>Name</guilabel> field.
+      	        Enter a name for the update site such as JBDS 4.0 in the <guilabel>Name</guilabel> field.
       	      </para>
       	    </listitem>
       	    <listitem>
@@ -63,12 +63,12 @@ consequently the ability to update using the update site, are provided to users 
       	      <itemizedlist>
       	        <listitem>
       	          <para>
-      	           https://devstudio.jboss.com/updates/3.0/
+      	           https://devstudio.jboss.com/updates/4.0/
       	          </para>
       	        </listitem>
       	        <listitem>
       	          <para>
-      	           http://devstudio.jboss.com/updates/3.0/
+      	           http://devstudio.jboss.com/updates/4.0/
       	          </para>
       	        </listitem>
       	      </itemizedlist>
@@ -85,7 +85,7 @@ consequently the ability to update using the update site, are provided to users 
               </figure>
       	      <warning><title>Use the secure site where possible</title>
       	        <para>
-      	         The unsecure site, http://devstudio.jboss.com/updates/3.0/, should only be used if the user is experiencing proxy problems or the user's firewall restricts access to https sites. The password will be sent in plain text if the http site is used.    
+      	         The unsecure site, http://devstudio.jboss.com/updates/4.0/, should only be used if the user is experiencing proxy problems or the user's firewall restricts access to https sites. The password will be sent in plain text if the http site is used.    
       	        </para>
       	      </warning>
       	    </listitem>
