@@ -32,12 +32,13 @@
             <description>%NEW_BPEL_PROJECT_DESCRIPTION</description>
       </wizard>
    </extension>
-   
+   <!--
    <extension point="org.eclipse.wst.common.project.facet.ui.wizardPages">
     <wizard-pages action="bpel.facet.core.install">
       <page class="org.jboss.tools.bpel.runtimes.ui.wizards.BPELFacetInstallPage"/>
     </wizard-pages>
   </extension>
+  -->
 
    
 <!--=========================================================================-->
@@ -107,7 +108,8 @@
             </and>
           </constraint>
         </project-facet-version>
-                
+
+<!--                
         <action facet="bpel.facet.core" version="2.0" type="INSTALL" id="bpel.facet.core.install">
                <delegate class="org.jboss.tools.bpel.runtimes.facets.BPELCoreFacetInstallDelegate"/>
                <config-factory class="org.jboss.tools.bpel.runtimes.facets.BPELFacetInstallDataModelProvider"/>
@@ -116,6 +118,7 @@
         <action facet="bpel.facet.core" version="2.0" type="UNINSTALL" id="bpel.facet.core.uninstall">
                <delegate class="org.jboss.tools.bpel.runtimes.facets.BPELCoreFacetUninstallDelegate"/>
         </action>
+-->
 
 		<category id="bpel.category">
 		  <label>%BPEL_FACET_CATEGORY_LABEL</label>

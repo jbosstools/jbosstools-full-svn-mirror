@@ -95,7 +95,7 @@ public class BPELModuleFactoryDelegate  extends ProjectModuleFactoryDelegate imp
 	protected boolean canHandleProject(IProject p) {
 		// https://issues.jboss.org/browse/JBIDE-8533
 		// Added support for deprecated jbt.bpel.facet.core
-		return FacetedProjectUtilities.isProjectOfType(p, IBPELModuleFacetConstants.BPEL_PROJECT_FACET) ||
+		return //FacetedProjectUtilities.isProjectOfType(p, IBPELModuleFacetConstants.BPEL_PROJECT_FACET) ||
 			FacetedProjectUtilities.isProjectOfType(p, IBPELModuleFacetConstants.JBT_BPEL_PROJECT_FACET);
 	}
 	

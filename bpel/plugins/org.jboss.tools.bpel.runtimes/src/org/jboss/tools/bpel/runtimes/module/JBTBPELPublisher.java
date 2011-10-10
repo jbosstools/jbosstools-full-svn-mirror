@@ -72,7 +72,10 @@ public class JBTBPELPublisher implements IJBossServerPublisher {
 		if( LocalPublishMethod.LOCAL_PUBLISH_METHOD.equals(method) 
 				&& module != null && module.length > 0 
 				&& module[module.length-1] != null  
-				&& module[module.length-1].getModuleType().getId().equals(IBPELModuleFacetConstants.BPEL_MODULE_TYPE))
+				&& (
+						module[module.length-1].getModuleType().getId().equals(IBPELModuleFacetConstants.BPEL_MODULE_TYPE) ||
+						module[module.length-1].getModuleType().getId().equals("bpel.module"))
+					)
 			return true;
 		return false;
 	}
@@ -104,17 +107,15 @@ public class JBTBPELPublisher implements IJBossServerPublisher {
         // org.eclipse.wst.server.ui.internal.wizard.ModifyModulesWizard
         // but there is no WizardFragment extension point for this class...
         // 
-		if (status!=null) {
+		if (status!=null && !status.isOK()) {
 			final IStatus s = status;
-			if (!s.isOK()) {
-				Display.getDefault().syncExec(new Runnable() {
-					public void run() {
-						MessageDialog.openWarning(Display.getDefault()
-								.getActiveShell(), Messages.DeployError, s
-								.getMessage());
-					}
-				});
-			}
+			Display.getDefault().syncExec(new Runnable() {
+				public void run() {
+					MessageDialog.openWarning(Display.getDefault()
+							.getActiveShell(), Messages.DeployError, s
+							.getMessage());
+				}
+			});
 		}
 		return status == null ? Status.OK_STATUS : status;
 	}
@@ -140,7 +141,7 @@ public class JBTBPELPublisher implements IJBossServerPublisher {
 			}
 		}
 		if (!hasDeployXML) {
-			MultiStatus ms = new MultiStatus(JBossServerCorePlugin.PLUGIN_ID, IEventCodes.JST_PUB_FULL_FAIL, 
+			Status ms = new Status(IStatus.ERROR,JBossServerCorePlugin.PLUGIN_ID, IEventCodes.JST_PUB_FULL_FAIL, 
 					NLS.bind(Messages.MissingDeployXML, last.getName()), null);
 			return ms;
 		}
