@@ -18,29 +18,5 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		<module>site</module>
 		<module>tests</module>
 	</modules>
-	<repositories>
-		<repository>
-			<id>eclipse-bpel-milestone</id>
-			<url>http://download.eclipse.org/bpel/update-site/</url>
-			<layout>p2</layout>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-		<repository>
-			<id>eclipse-bpel-nightly</id>
-			<url>https://hudson.eclipse.org/hudson/job/bpel-0.5/lastSuccessfulBuild/artifact/site/target/site/</url>
-			<layout>p2</layout>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-	</repositories>
 </project>
 
