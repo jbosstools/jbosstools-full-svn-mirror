@@ -6,16 +6,19 @@
 	<para> 
 			Following is a list of known issues at the time of release.
 	</para>
-<!--	<formalpara>
+	<formalpara>
 		<title>General Known Issues</title>
 		<para>
 			<itemizedlist>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1781">JBDS-1781</ulink>: When using the toolset on Ubuntu 11.04 with the Unity interface, only the <guilabel>Window</guilabel> menu item appears in the top menu bar of the JBoss Developer Studio workspace. For the user this means that all other menu functions are absent (for example, all options in the <guilabel>File</guilabel> and <guilabel> Edit</guilabel> menus). The current workarpund to correct the issue is to start JBoss Developer Studio using a new script called <filename>jbdevstudio-unity</filename>. The script sets the environment variable <property>UBUNTU_MENUPROXY=0</property> prior to launching JBoss Developer Studio, forcing Ubuntu Unity to disable the global menu for the JBoss Developer Studio instance, enabling the normal JBoss Developer Studio menu to be shown (containing all the usual menu options such as <guilabel>File</guilabel> and <guilabel> Edit</guilabel>). All other application windows within Ubuntu Unity remain unaffected.   
+					</para>
+					<para>
+						Another option available to users is to use a different Ubuntu desktop manager such as Ubuntu Classic.
 					</para>
 				</listitem>
 			</itemizedlist>
 		</para>
-	</formalpara> -->
+	</formalpara>
 </section>

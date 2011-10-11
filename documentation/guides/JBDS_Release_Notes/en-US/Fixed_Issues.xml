@@ -445,11 +445,6 @@
 				</listitem>
 				<listitem>
 					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1781">JBDS-1781</ulink>: When using the toolset on Ubuntu 11.04 with the Unity interface, only the <guilabel>Window</guilabel> menu item would appear in the top menu bar of the JBoss Developer Studio workspace. For the user this meant that all other menu functions were absent (for example, all options in the <guilabel>File</guilabel> and <guilabel> Edit</guilabel> menus). To correct the issue a new script is distributed with this JBoss Developer Studio release called <filename>jbdevstudio-unity</filename> that sets the environment variable <property>UBUNTU_MENUPROXY=0</property> prior to launching JBoss Developer Studio. By result of this script running is that Ubuntu Unity is forced to disable the global menu for JBoss Developer Studio, enabling the normal JBoss Developer Studio menu to be shown (containing all the usual menu options such as <guilabel>File</guilabel> and <guilabel> Edit</guilabel>). All other application windows within Ubuntu Unity remain unaffected.   
-					</para>
-				</listitem>
-				<listitem>
-					<para>
 						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-9514">JBIDE-9514</ulink>: Project Example ZIP files that contain empty folders, would not be imported correctly and the empty folders would be excluded, though they are necessary for the project to work (for example, the <filename>src</filename> folder). To fix this issue the <filename>NewProjectExamplesWizard.java</filename> has been modified to allow for empty folders within ZIP files to be imported correctly.
 					</para>
 				</listitem>
