@@ -3,22 +3,23 @@
 <repository name='JBoss Tools Requirements - Composite Indigo SR1 Mirror' type='org.eclipse.equinox.internal.p2.artifact.repository.CompositeArtifactRepository' version='1.0.0'>
 <properties size='2'>
 <property name='p2.compressed' value='true'/>
-<property name='p2.timestamp' value='1317877554000'/>
+<property name='p2.timestamp' value='1318354979000'/>
 </properties>
-<children size='13'>
+<children size='14'>
 <child location='../../requirements/indigo/201109230900-SR1/'/>
 <child location='../../requirements/birt/3.7.1/'/>
+<child location='../../requirements/bpel/0.5.0-20110915-1141-H87/'/>
 <child location='../../requirements/ecf/3.5.2/'/>
 <child location='../../requirements/eclipse/3.7.1/'/>
-<child location='../../requirements/egit/1.0.0/'/>
 
+<child location='../../requirements/egit/1.0.0/'/>
 <child location='../../requirements/emf/2.7.1/'/>
 <!-- includes m2e, m2e-extras, m2e-wtp -->
 <child location='../../requirements/m2eclipse/20111005-1500/'/>
 <child location='../../requirements/mylyn/3.6.2-v20110908-0706/'/>
 <child location='../../requirements/orbit/R20110523182458/'/>
-<child location='../../requirements/swtbot/2.0.5/'/>
 
+<child location='../../requirements/swtbot/2.0.5/'/>
 <child location='../../requirements/webtools/3.3.1-20110915193224/'/>
 <child location='../../requirements/xulrunner-1.9.2/'/>
 <child location='http://dl.google.com/eclipse/plugin/3.7/'/>
