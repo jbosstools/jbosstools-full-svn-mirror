@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<directory xmlns="http://www.eclipse.org/mylyn/discovery/directory/">
+<entry url="http://download.jboss.org/jbosstools/updates/nightly/trunk//plugins/org.jboss.tools.central.discovery_1.0.0.v20111013-0545-M4.jar" permitCategories="true"/>
+</directory>
