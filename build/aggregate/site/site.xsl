@@ -105,16 +105,20 @@
 				<th colspan="1" style="font-size:small"></th>
 			</tr>
 			<tr style="background-color:#EEEEEE">
-				<td class="rowLine">
+				<td class="rowLine" colspan="1">
 					<a href="site.xml" style="font-size:x-small">site.xml</a>
 					::
 					<a href="artifacts.jar" style="font-size:x-small">artifacts.jar</a>
 					::
 					<a href="content.jar" style="font-size:x-small">content.jar</a>
 				</td>
-				<td class="rowLine">
+				<td class="rowLine" colspan="1">
+					::
+					<a href="plugins/" style="font-size:x-small">plugins</a>
+					::
+					<a href="features/" style="font-size:x-small">features</a>
 				</td>
-				<td class="rowLine">
+				<td class="rowLine" colspan="1">
 				</td>
 			</tr>
 		</table>
