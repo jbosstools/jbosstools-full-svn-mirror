@@ -3,9 +3,8 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.jboss.tools</groupId>
-		<artifactId>org.jboss.tools.parent.pom</artifactId>
-		<version>0.0.3-SNAPSHOT</version>
-		<relativePath>../build/parent/pom.xml</relativePath>
+		<artifactId>org.jboss.tools.aggregate.site</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<groupId>org.jboss.tools</groupId>
 	<artifactId>bot.tests</artifactId>
