@@ -347,7 +347,7 @@
               </figure>
                
               <figure>
-                <title>Archive in Project Explorer View</title> 
+				  <title>Archive in Package Explorer</title> 
                 <mediaobject>
                   <imageobject>
                     <imagedata fileref="images/jsp_application/jsp_application_12.png"/>
