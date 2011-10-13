@@ -119,6 +119,8 @@
 					<a href="features/" style="font-size:x-small">features</a>
 				</td>
 				<td class="rowLine" colspan="1">
+					::
+                                        <a href="directory.xml" style="font-size:x-small">directory.xml</a>
 				</td>
 			</tr>
 		</table>
