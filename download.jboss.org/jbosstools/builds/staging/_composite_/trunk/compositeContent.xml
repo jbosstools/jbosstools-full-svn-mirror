@@ -7,7 +7,7 @@
      get new time w/ 
       date +%s000
 -->
-<property name='p2.timestamp' value='1317306501000'/>
+<property name='p2.timestamp' value='1318520080000'/>
 </properties>
 <children size='68'>
 
@@ -84,12 +84,14 @@
 <child location='../../../staging.previous/jbosstools-3.3_trunk.component--ws/all/repo/'/>
 
 <child location='../../../staging/jbosstools-drools-5.2_trunk/all/repo/'/>
-<child location='../../../staging/jbosstools-teiid-designer_trunk/all/repo/'/>
+<!-- TODO: 7.6 to be included after M4 <child location='../../../staging/jbosstools-teiid-designer_trunk/all/repo/'/> -->
+<child location='../../../staging/jbosstools-teiid-designer-7.5_stable_branch/all/repo/'/>
 <child location='../../../staging/savara-tools-eclipse-master/all/repo/'/>
 <child location='../../../staging/xulrunner-1.9.2/all/repo/'/>
 
 <child location='../../../staging.previous/jbosstools-drools-5.2_trunk/all/repo/'/>
-<child location='../../../staging.previous/jbosstools-teiid-designer_trunk/all/repo/'/>
+<!-- TODO: 7.6 to be included after M4 <child location='../../../staging.previous/jbosstools-teiid-designer_trunk/all/repo/'/> -->
+<child location='../../../staging.previous/jbosstools-teiid-designer-7.5_stable_branch/all/repo/'/>
 <child location='../../../staging.previous/savara-tools-eclipse-master/all/repo/'/>
 <child location='../../../staging.previous/xulrunner-1.9.2/all/repo/'/>
 
