@@ -251,7 +251,7 @@
       </programlisting>
        
       <para>
-		  If you go back to <property>Tree</property> tab you will see that the changes made in the <property>Source</proeprty> tab are automatically reflected.
+		  If you go back to <property>Tree</property> tab you will see that the changes made in the <property>Source</property> tab are automatically reflected.
       </para>
        
       <para>
@@ -347,7 +347,7 @@
               </figure>
                
               <figure>
-                <title>Archive in Project Explorer View</title> 
+				  <title>Archive in Package Explorer</title> 
                 <mediaobject>
                   <imageobject>
                     <imagedata fileref="images/jsp_application/jsp_application_12.png"/>

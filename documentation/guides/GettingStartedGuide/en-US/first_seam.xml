@@ -815,7 +815,7 @@ rendered="#{s:hasRole('admin')}"/>]]></programlisting>
       <programlisting><![CDATA[<rich:inputNumberSlider id="quantityOrdered" required="true"
                                                                value="#{orderdetailsHome.instance.quantityordered}"/>]]></programlisting>
       <figure>
-        <title>Manually coping Source Code</title>
+        <title>Manually copying Source Code</title>
         <mediaobject>
           <imageobject>
             <imagedata fileref="images/first_seam/first_seam48.png"/>
