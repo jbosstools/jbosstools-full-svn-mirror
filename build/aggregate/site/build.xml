@@ -475,8 +475,21 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 			</filterchain>
 		</copy>
 
+		<!-- get filename matching org.jboss.tools.central.discovery_1.0.0.v20111013-0511-M4.jar, then generate replacement directory.xml file -->
+		<path id="central.discovery.jar.id">
+		    <fileset dir="${update.site.source.dir}/plugins">
+		        <include name="org.jboss.tools.central.discovery_*.jar"/>
+		     </fileset>
+		</path>
+		<property name="central.discovery.path" refid="central.discovery.jar.id"/> 
+		<basename property="central.discovery.jar" file="${central.discovery.path}"/>
+		<echo file="${output.dir}/directory.xml">&lt;?xml version='1.0' encoding='UTF-8'?>
+&lt;directory xmlns="http://www.eclipse.org/mylyn/discovery/directory/">
+&lt;entry url="${jbosstools-nightly}plugins/${central.discovery.jar}" permitCategories="true"/>
+&lt;/directory>
+</echo>
 		<copy todir="${update.site.source.dir}">
-			<fileset dir="${output.dir}" includes="index.html, **/*.css, README*" />
+			<fileset dir="${output.dir}" includes="index.html, **/*.css, README*, directory.xml" />
 		</copy>
 	</target>
 
@@ -494,7 +507,7 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 
 	<!-- look for http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.*/logs/zip.list.txt; 
 	if found, load file and use ${ALL_ZIPS} to get list of relative path zips to fetch -->
-	<target name="collect.zips" description="collect zips from the sites we aggregated">
+	<target name="collect.zips" description="collect zips from the sites we aggregated" unless="collect.zips.skip">
 		<property name="aggregate.zips.dir" value="${output.dir}/zips" />
 		<delete dir="${aggregate.zips.dir}" quiet="true" />
 		<mkdir dir="${aggregate.zips.dir}" />
