@@ -54,7 +54,7 @@ public class HQLQueryPage extends AbstractQueryPage {
 				}
 				pcs.firePropertyChange("list", null, list); //$NON-NLS-1$
 			} else {
-				for (Exception e : queryResult.getExceptions()) {
+				for (Throwable e : queryResult.getExceptions()) {
 					addException(e);
 				}
 			}

@@ -26,7 +26,7 @@ public interface QueryResult {
 	
 	public boolean hasExceptions();
 	
-	public List<Exception> getExceptions();
+	public List<Throwable> getExceptions();
 
 	public void setPathNames(List<String> pathNames);
 
