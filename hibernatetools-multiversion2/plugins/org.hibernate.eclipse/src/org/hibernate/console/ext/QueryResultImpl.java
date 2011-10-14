@@ -26,7 +26,7 @@ public class QueryResultImpl implements QueryResult {
 	
 	private long execTime;
 	
-	private List<Exception> exceptions = new ArrayList<Exception>();
+	private List<Throwable> exceptions = new ArrayList<Throwable>();
 	
 	public QueryResultImpl(List<Object> list, long execTime){
 		this.list = list;
@@ -38,7 +38,7 @@ public class QueryResultImpl implements QueryResult {
 		this.pathNames = pathNames;
 	}
 	
-	public QueryResultImpl(Exception e){
+	public QueryResultImpl(Throwable e){
 		exceptions.add(e);
 	}
 
@@ -66,11 +66,11 @@ public class QueryResultImpl implements QueryResult {
 		return execTime;
 	}
 	
-	public void addException(Exception e){
+	public void addException(Throwable e){
 		exceptions.add(e);
 	}
 	
-	public List<Exception> getExceptions(){
+	public List<Throwable> getExceptions(){
 		return this.exceptions;
 	}
 
