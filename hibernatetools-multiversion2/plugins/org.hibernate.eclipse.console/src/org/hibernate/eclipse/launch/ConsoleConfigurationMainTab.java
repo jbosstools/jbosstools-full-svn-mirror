@@ -128,7 +128,7 @@ public class ConsoleConfigurationMainTab extends ConsoleConfigurationTab {
 		comp2.setLayout(new GridLayout(2, false));
 		comp2.setLayoutData(new GridData(GridData.BEGINNING, -1, false, false, 2, 1));
 		Label hLabel = new Label(comp2, SWT.NULL);
-		hLabel.setText("Hiberante Version:");
+		hLabel.setText(HibernateConsoleMessages.ConsoleConfigurationMainTab_0);
 		hibernateVersion = new Combo(comp2, SWT.READ_ONLY);
 		hibernateVersion.setItems((String[])ExtensionManager.getExporterDefinitionsAsMap().keySet().toArray(new String[0]));
 		hibernateVersion.select(0);
@@ -216,7 +216,7 @@ public class ConsoleConfigurationMainTab extends ConsoleConfigurationTab {
 		try {
 			ConfigurationMode cm = ConfigurationMode.parse(configuration.getAttribute( IConsoleConfigurationLaunchConstants.CONFIGURATION_FACTORY, "" )); //$NON-NLS-1$
 			coreMode.setSelection( cm.equals( ConfigurationMode.CORE ) );
-			hibernateVersion.setText(configuration.getAttribute( IConsoleConfigurationLaunchConstants.HIBERNATE_VERSION, ""));
+			hibernateVersion.setText(configuration.getAttribute( IConsoleConfigurationLaunchConstants.HIBERNATE_VERSION, "")); //$NON-NLS-1$
 			annotationsMode.setSelection( cm.equals( ConfigurationMode.ANNOTATIONS ) );
 			jpaMode.setSelection( cm.equals( ConfigurationMode.JPA ) );
 
@@ -516,7 +516,7 @@ public class ConsoleConfigurationMainTab extends ConsoleConfigurationTab {
 	}
 	
 	public String getHibernateVersion(){
-		return "".equals(hibernateVersion.getText()) ? null : hibernateVersion.getText();
+		return "".equals(hibernateVersion.getText()) ? null : hibernateVersion.getText(); //$NON-NLS-1$
 	}
 
 	String getProjectName() {
