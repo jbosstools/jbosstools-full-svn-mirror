@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2011 Red Hat, Inc.
+ * Distributed under license by Red Hat, Inc. All rights reserved.
+ * This program is made available under the terms of the
+ * Eclipse Public License v1.0 which accompanies this distribution,
+ * and is available at http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributor:
+ *     Red Hat, Inc. - initial API and implementation
+ ******************************************************************************/
 package org.jboss.tools.hibernate4_0;
 
 import java.net.URL;
@@ -29,6 +39,11 @@ import org.hibernate.service.BasicServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 import org.hibernate.service.internal.BasicServiceRegistryImpl;
 
+/**
+ * 
+ * @author Dmitry Geraskov
+ *
+ */
 public class HibernateExtension4_0 implements HibernateExtension {
 	
 	private ConsoleConfigClassLoader classLoader = null;
@@ -60,10 +75,13 @@ public class HibernateExtension4_0 implements HibernateExtension {
 		try {
 			try {
 				session = sessionFactory.openSession();
-			} catch (Exception e){
+				return QueryExecutor.executeHQLQuery(session, hql, queryParameters);
+			} catch (Throwable e){
+				//Incompatible library versions could throw subclasses of Error, like  AbstractMethodError
+				//may be there is a sense to say to user that the reason is probably a wrong CC version
+				//(when catch a subclass of Error)
 				return new QueryResultImpl(e);
 			}
-			return QueryExecutor.executeHQLQuery(session, hql, queryParameters);
 		} finally {
 			if (session != null && session.isOpen()){
 				try {
@@ -82,10 +100,10 @@ public class HibernateExtension4_0 implements HibernateExtension {
 		try {
 			try {
 				session = sessionFactory.openSession();
+				return QueryExecutor.executeCriteriaQuery(session, criteriaCode, model);
 			} catch (Exception e){
 				return new QueryResultImpl(e);
 			}
-			return QueryExecutor.executeCriteriaQuery(session, criteriaCode, model);
 		} finally {
 			if (session != null && session.isOpen()){
 				try {

@@ -48,16 +48,15 @@ public class QueryExecutor {
 		list = new ArrayList<Object>();
 		setupParameters(query, queryParameters);
 		long startTime = System.currentTimeMillis();
-		Iterator<?> iter = query.list().iterator(); // need to be user-controllable to toggle between iterate, scroll etc.
-		queryTime = System.currentTimeMillis() - startTime;
-		while (iter.hasNext() ) {
-			Object element = iter.next();
-			list.add(element);
-		}
-		
 		QueryResultImpl result = new QueryResultImpl(list,
 				queryTime);
-		try{
+		try {
+			Iterator<?> iter = query.list().iterator(); // need to be user-controllable to toggle between iterate, scroll etc.
+			queryTime = System.currentTimeMillis() - startTime;
+			while (iter.hasNext() ) {
+				Object element = iter.next();
+				list.add(element);
+			}
 			result.setPathNames(getHQLPathNames(query)); 
 		} catch (HibernateException e){
 			result.addException(e);
