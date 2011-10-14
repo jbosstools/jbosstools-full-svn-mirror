@@ -101,7 +101,10 @@ public class HibernateExtension4_0 implements HibernateExtension {
 			try {
 				session = sessionFactory.openSession();
 				return QueryExecutor.executeCriteriaQuery(session, criteriaCode, model);
-			} catch (Exception e){
+			} catch (Throwable e){
+				//Incompatible library versions could throw subclasses of Error, like  AbstractMethodError
+				//may be there is a sense to say to user that the reason is probably a wrong CC version
+				//(when catch a subclass of Error)
 				return new QueryResultImpl(e);
 			}
 		} finally {
