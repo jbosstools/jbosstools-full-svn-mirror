@@ -64,7 +64,7 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 	private SessionFactory sessionFactory;
 	
 	//****************************** EXTENSION **********************
-	private String hibernateVersion;
+	private String hibernateVersion = "==<None>=="; //set to some unused value //$NON-NLS-1$
 	
 	private HibernateExtension extension;
 	
