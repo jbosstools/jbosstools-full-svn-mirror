@@ -87,11 +87,13 @@ public class TestConsoleConfigurationPreferences implements ConsoleConfiguration
 		return null;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.hibernate.console.preferences.ConsoleConfigurationPreferences#getDialectName()
-	 */
 	public String getDialectName() {
+		return null;
+	}
+
+	@Override
+	public String getHibernateVersion() {
+		//default
 		return null;
 	}
 

@@ -58,7 +58,8 @@ Require-Bundle: org.junit,
  org.eclipse.datatools.connectivity.ui,
  org.eclipse.datatools.connectivity,
  org.eclipse.ui.workbench.texteditor,
- org.eclipse.ui.editors
+ org.eclipse.ui.editors,
+ org.hibernate.eclipse.libs;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.hibernate.eclipse.console.test.HibernateConsoleTestPlugin
 Eclipse-RegisterBuddy: org.hibernate.eclipse
