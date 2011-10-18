@@ -52,7 +52,7 @@ The example can be deployed using Maven from the command line or from Eclipse us
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70</property>
 				<property name="description">This project example requires JBoss AS 7.0</property>
-				<property name="downloadId">org.jboss.tools.runtime.core.as.701</property>
+				<property name="downloadId">org.jboss.tools.runtime.core.as.702</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.eclipse.m2e.core</property>
@@ -97,7 +97,7 @@ You will see a Hello AS7 World!! message appear on the console when this is done
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70</property>
 				<property name="description">This project example requires JBoss AS 7.0</property>
-				<property name="downloadId">org.jboss.tools.runtime.core.as.701</property>
+				<property name="downloadId">org.jboss.tools.runtime.core.as.702</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.eclipse.m2e.core</property>
@@ -138,7 +138,7 @@ The example can be deployed using Maven from the command line or from Eclipse us
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70</property>
 				<property name="description">This project example requires JBoss AS 7.0</property>
-				<property name="downloadId">org.jboss.tools.runtime.core.as.701</property>
+				<property name="downloadId">org.jboss.tools.runtime.core.as.702</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.eclipse.m2e.core</property>
@@ -179,7 +179,7 @@ The example can be deployed using Maven from the command line or from Eclipse us
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70</property>
 				<property name="description">This project example requires JBoss AS 7.0</property>
-				<property name="downloadId">org.jboss.tools.runtime.core.as.701</property>
+				<property name="downloadId">org.jboss.tools.runtime.core.as.702</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.eclipse.m2e.core</property>
@@ -221,7 +221,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70</property>
 				<property name="description">This project example requires JBoss AS 7.0</property>
-				<property name="downloadId">org.jboss.tools.runtime.core.as.701</property>
+				<property name="downloadId">org.jboss.tools.runtime.core.as.702</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.eclipse.m2e.core</property>
@@ -248,7 +248,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 	</project>
 	
 	<project>
-		<category>JBoss AS 7 Quickstarts</category>
+		<category>Java EE 6 Quickstarts</category>
 		<name>jboss-javaee6-webapp</name>
 		<included-projects>jboss-javaee6-webapp</included-projects>
 		<shortDescription>Java EE 6 example (Maven archetype)</shortDescription>
@@ -263,7 +263,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70</property>
 				<property name="description">This project example requires JBoss AS 7.0</property>
-				<property name="downloadId">org.jboss.tools.runtime.core.as.701</property>
+				<property name="downloadId">org.jboss.tools.runtime.core.as.702</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.eclipse.m2e.core</property>
@@ -300,19 +300,20 @@ It includes a persistence unit and some sample persistence and transaction code 
 			</properties>
 		</mavenArchetype>
 	</project>
+	<!-- Temporary EE6 project - replace with Pete's new archetype when it's ready -->
 	<project>
 		<category>Java EE 6 Quickstarts</category>
 		<name>multi-javaee6-archetype</name>
 		<included-projects>multi-javaee6-archetype</included-projects>
 		<shortDescription>Java EE 6 example (Maven archetype)</shortDescription>
-		<description>Simple multi module project</description>
+		<description>Experimental multi-module Java EE 6 project. It's composed of a parent pom project and 4 nested modules : Java Utility, EJB 3.1, Web 3.0 and EAR 6.0</description>
 		<size>8192</size>
 		<url/>
 		<fixes>
 			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70</property>
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.60, org.jboss.ide.eclipse.as.runtime.70, org.jboss.ide.eclipse.as.runtime.eap.60</property>
 				<property name="description">This project example requires JBoss AS 7.0</property>
-				<property name="downloadId">org.jboss.tools.runtime.core.as.701</property>
+				<property name="downloadId">org.jboss.tools.runtime.core.as.702</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.eclipse.m2e.core</property>
@@ -339,13 +340,13 @@ It includes a persistence unit and some sample persistence and transaction code 
 			<archetypeGroupId>org.openarchetypes</archetypeGroupId>
 			<archetypeArtifactId>multi-javaee6-archetype</archetypeArtifactId>
 			<archetypeVersion>0.0.1-SNAPSHOT</archetypeVersion>
-			<archetypeRepository> http://open-archetypes.github.com/maven-repo/snapshots/</archetypeRepository>
+			<archetypeRepository>http://open-archetypes.github.com/maven-repo/snapshots/</archetypeRepository>
 			<groupId>org.jboss.tools.example</groupId>
 			<artifactId>multi-javaee6</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<javaPackage></javaPackage>
 			<properties>
-				<property name="name" value="Java EE 6 multi module project"/>
+				<property name="name" value="Java EE 6 multi-module application"/>
 			</properties>
 		</mavenArchetype>
 		<!--targetProjectFacet facet="jst.ear" version="6.0"/-->
