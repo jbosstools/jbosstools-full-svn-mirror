@@ -3,3 +3,4 @@ bin
 target
 buildlog*.txt
 build*log*.txt
+.project
