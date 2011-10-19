@@ -44,6 +44,8 @@ public class VpeTemplateSafeWrapper implements VpeTemplate, IAdaptable {
 			delegate.init(templateElement, caseSensitive);
 		} catch(Exception ex) {
 			VpePlugin.getPluginLog().logError(ex);
+		} catch (LinkageError ex) {
+			VpePlugin.getPluginLog().logError(ex);
 		}
 	}
 
@@ -56,7 +58,14 @@ public class VpeTemplateSafeWrapper implements VpeTemplate, IAdaptable {
 	 */
 	public VpeCreationData create(VpePageContext pageContext, Node sourceNode,
 			nsIDOMDocument visualDocument) {
-		return delegate.create(pageContext, sourceNode, visualDocument);
+		try {
+			return delegate.create(pageContext, sourceNode, visualDocument);
+		} catch(Exception ex) {
+			VpePlugin.getPluginLog().logError(ex);
+		} catch (LinkageError ex) {
+			VpePlugin.getPluginLog().logError(ex);
+		}
+		return  null;
 	}
 
 	/**
