@@ -31,6 +31,8 @@
 	<property name="aggregateSite.properties" value="aggregateSite.jbosstools.properties" />
 	<property file="${aggregateSite.properties}" />
 
+	<property name="web.content.files" value="index.html, **/*.css, README*, *directory.xml"/>
+
 	<target name="init">
 		<ant antfile="${build.xml}" target="init" />
 		<taskdef resource="net/sf/antcontrib/antlib.xml">
@@ -400,7 +402,7 @@ DEST = ${aggregate.zips.dir}/@{zipPath}
 	</target>
 
 	<target name="pack.zip">
-		<zip destfile="${output.dir}/target/site_assembly.zip" update="true" basedir="${update.site.source.dir}" includes="content.* index.html, web/*.css, README*" />
+		<zip destfile="${output.dir}/target/site_assembly.zip" update="true" basedir="${update.site.source.dir}" includes="content.*, ${web.content.files}" />
 	</target>
 
 	<target name="check.target">
@@ -489,7 +491,7 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 &lt;/directory>
 </echo>
 		<copy todir="${update.site.source.dir}">
-			<fileset dir="${output.dir}" includes="index.html, **/*.css, README*, *directory.xml" />
+			<fileset dir="${output.dir}" includes="${web.content.files}" />
 		</copy>
 	</target>
 
