@@ -166,11 +166,11 @@
 						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-9103">JBIDE-9103</ulink>: When creating a JSF portlet project on a 64bit operating system, the <guilabel>Installing JSF Facet</guilabel> process would hang and project creation would fail. This issue has been corrected by modifying the <filename>AbstractLibraryProviderInstallOperationConfig.java</filename> file by implementing a facet project listener and correcting an error of an extra bracket in a section of code.
 					</para>
 				</listitem>
-				<listitem>
+			<!--	<listitem>
 					<para>
 						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-9013">JBIDE-9013</ulink>: An issue existed that would not allow the Seam Portlet example to be deployed to JBoss Enterprise Portal Platform (EPP) 4.3. The problem was caused by a change in how Web Tools Platform (WTP) deployment is undertaken. Where this used to be done through the Java build path, WTP now deploys source folders based on the WTP <filename>component.xml</filename> file. The example has now been updated to support this change.
 					</para>
-				</listitem>
+				</listitem> -->
 			</itemizedlist>
 		</para>
 	</formalpara>
