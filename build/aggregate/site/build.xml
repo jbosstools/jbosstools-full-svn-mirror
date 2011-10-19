@@ -483,13 +483,13 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 		</path>
 		<property name="central.discovery.path" refid="central.discovery.jar.id"/> 
 		<basename property="central.discovery.jar" file="${central.discovery.path}"/>
-		<echo file="${output.dir}/directory.xml">&lt;?xml version='1.0' encoding='UTF-8'?>
+		<echo file="${output.dir}/jbosstools-directory.xml">&lt;?xml version='1.0' encoding='UTF-8'?>
 &lt;directory xmlns="http://www.eclipse.org/mylyn/discovery/directory/">
 &lt;entry url="plugins/${central.discovery.jar}" permitCategories="true"/>
 &lt;/directory>
 </echo>
 		<copy todir="${update.site.source.dir}">
-			<fileset dir="${output.dir}" includes="index.html, **/*.css, README*, directory.xml" />
+			<fileset dir="${output.dir}" includes="index.html, **/*.css, README*, *directory.xml" />
 		</copy>
 	</target>
 
