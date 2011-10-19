@@ -29,7 +29,6 @@
 								<ant antfile="build.xml">
 									<property name="inputRepo"
 										value="${jbosstools-nightly-staging-composite}" />
-									<property name="jbosstools-nightly" value="${jbosstools-nightly}" />
 									<property name="JBT_VERSION" value="${JBT_VERSION}" />
 									<property name="BUILD_ALIAS" value="${BUILD_ALIAS}" />
 								</ant>
