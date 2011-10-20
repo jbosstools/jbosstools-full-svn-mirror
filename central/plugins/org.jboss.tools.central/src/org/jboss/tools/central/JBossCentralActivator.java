@@ -31,6 +31,8 @@ import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
@@ -91,6 +93,8 @@ public class JBossCentralActivator extends AbstractUIPlugin {
 	// The plug-in ID
 	public static final String PLUGIN_ID = "org.jboss.tools.central"; //$NON-NLS-1$
 
+	private static Boolean isInternalWebBrowserAvailable;
+	
 	public static final String SHOW_JBOSS_CENTRAL_ON_STARTUP = "showJBossCentralOnStartup";
 
 	public static final boolean SHOW_JBOSS_CENTRAL_ON_STARTUP_DEFAULT_VALUE = true;
@@ -435,4 +439,30 @@ public class JBossCentralActivator extends AbstractUIPlugin {
 		}
 		return directory;
 	}
+		
+	public static boolean isInternalWebBrowserAvailable() {
+		if (isInternalWebBrowserAvailable != null) {
+			return isInternalWebBrowserAvailable.booleanValue();
+		}
+		Shell shell = null;
+		try {
+			shell = new Shell(PlatformUI.getWorkbench().getDisplay());
+			new Browser(shell, SWT.NONE);
+			isInternalWebBrowserAvailable = new Boolean(true);
+			return true;
+		} catch (Throwable t) {
+			try {
+				new Browser(shell, SWT.WEBKIT);
+				isInternalWebBrowserAvailable = new Boolean(true);
+				return true;
+			} catch (Throwable e) {
+				isInternalWebBrowserAvailable = new Boolean(false);
+				return false;
+			}
+		} finally {
+			if (shell != null)
+				shell.dispose();
+		}
+	}
+
 }
