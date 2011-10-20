@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<directory xmlns="http://www.eclipse.org/mylyn/discovery/directory/">
+<!-- this should only be updated every time we doa milestone release to point at absolute path, eg., 
+     http://download.jboss.org/jbosstools/updates/JBossTools-3.3.0.M4/plugins/org.jboss.tools.central.discovery_1.0.0.v20111019-0041-H25-M4.jar 
+
+For now, point at a local file. :: JBIDE-9907 :: ~nboldt
+-->
+<entry url="org.jboss.tools.central.discovery_1.0.0.v20111019-0041-H25-M4.jar" permitCategories="true"/>
+</directory>
