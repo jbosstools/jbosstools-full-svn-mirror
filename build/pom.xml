@@ -99,6 +99,7 @@
 			<id>as-bootstrap</id>
 			<modules>
 				<module>../tests</module>
+				<module>../common</module>
 				<module>../archives</module>
 				<module>../jmx</module>
 				<module>../as</module>
