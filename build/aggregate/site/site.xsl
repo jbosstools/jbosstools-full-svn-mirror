@@ -120,7 +120,7 @@
 				</td>
 				<td class="rowLine" colspan="1">
 					::
-                                        <a href="directory.xml" style="font-size:x-small">directory.xml</a>
+                                        <a href="jbosstools-directory.xml" style="font-size:x-small">jbosstools-directory.xml</a>
 				</td>
 			</tr>
 		</table>
