@@ -305,8 +305,8 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<category>Java EE 6 Quickstarts</category>
 		<name>multi-javaee6-archetype</name>
 		<included-projects>multi-javaee6-archetype</included-projects>
-		<shortDescription>Java EE 6 Multi Module application(Maven archetype)</shortDescription>
-		<description>Experimental multi-module Java EE 6 project. It's composed of a parent pom project and 4 nested modules : Java Utility, EJB 3.1, Web 3.0 and EAR 6.0</description>
+		<shortDescription>JBoss AS 7 / Java EE 6 EAR Webapp(Maven archetype)</shortDescription>
+		<description>An archetype that generates a starter Java EE 6 webapp project for JBoss AS 7. The project is an EAR, with an EJB-JAR and WAR</description>
 		<size>13806</size>
 		<url/>
 		<fixes>
@@ -337,17 +337,14 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<importType>mavenArchetype</importType>
 		<importTypeDescription>The project example requires the m2e, m2eclipse-wtp and JBoss Maven Integration feature.</importTypeDescription>
 		<mavenArchetype>
-			<archetypeGroupId>org.openarchetypes</archetypeGroupId>
-			<archetypeArtifactId>multi-javaee6-archetype</archetypeArtifactId>
-			<archetypeVersion>0.0.1-SNAPSHOT</archetypeVersion>
-			<archetypeRepository>http://open-archetypes.github.com/maven-repo/snapshots/</archetypeRepository>
+			<archetypeGroupId>org.jboss.spec.archetypes</archetypeGroupId>
+			<archetypeArtifactId>jboss-javaee6-ear-webapp</archetypeArtifactId>
+			<archetypeVersion>7.1.0-SNAPSHOT</archetypeVersion>
+			<archetypeRepository>http://repository.jboss.org/nexus/content/repositories/snapshots/</archetypeRepository>
 			<groupId>org.jboss.tools.example</groupId>
-			<artifactId>multi-javaee6</artifactId>
+			<artifactId>multi</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<javaPackage></javaPackage>
-			<properties>
-				<property name="name" value="Java EE 6 multi-module application"/>
-			</properties>
 		</mavenArchetype>
 		<!--targetProjectFacet facet="jst.ear" version="6.0"/-->
 	</project>		
