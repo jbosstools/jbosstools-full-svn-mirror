@@ -16,6 +16,7 @@ import java.util.Set;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jdt.core.IJavaElement;
 import org.eclipse.jdt.core.IMethod;
 import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -50,8 +51,10 @@ public class ResourceMethod extends BaseElement<IMethod> {
 	 * @throws CoreException
 	 * @throws InvalidModelElementException
 	 */
-	public ResourceMethod(final IMethod javaMethod, final Resource parentResource, final Metamodel metamodel,
-			final IProgressMonitor progressMonitor) throws InvalidModelElementException, CoreException {
+	public ResourceMethod(final IMethod javaMethod,
+			final Resource parentResource, final Metamodel metamodel,
+			final IProgressMonitor progressMonitor)
+			throws InvalidModelElementException, CoreException {
 		super(javaMethod, metamodel);
 		this.parentResource = parentResource;
 		this.resourceMethodMapping = new ResourceMethodMapping(this);
@@ -63,7 +66,8 @@ public class ResourceMethod extends BaseElement<IMethod> {
 	 */
 	@Override
 	// FIXME : always returning at least MAPPING ??
-	public final Set<EnumElementChange> merge(final IMethod javaMethod, final IProgressMonitor progressMonitor)
+	public final Set<EnumElementChange> merge(final IMethod javaMethod,
+			final IProgressMonitor progressMonitor)
 			throws InvalidModelElementException, CoreException {
 		CompilationUnit compilationUnit = getCompilationUnit(progressMonitor);
 		Set<EnumElementChange> changes = new HashSet<EnumElementChange>();
@@ -77,7 +81,8 @@ public class ResourceMethod extends BaseElement<IMethod> {
 		 * metamodel.reportErrors(javaMethod, problems); return; }
 		 */
 		HTTPMethod httpMethod = resourceMethodMapping.getHTTPMethod();
-		String uriPathTemplateFragment = resourceMethodMapping.getUriPathTemplateFragment();
+		String uriPathTemplateFragment = resourceMethodMapping
+				.getUriPathTemplateFragment();
 		EnumKind nextKind = null;
 		if (uriPathTemplateFragment == null && httpMethod != null) {
 			nextKind = EnumKind.RESOURCE_METHOD;
@@ -90,21 +95,30 @@ public class ResourceMethod extends BaseElement<IMethod> {
 					"ResourceMethod has no valid @Path annotation and no HTTP ResourceMethod annotation");
 		}
 		if (this.kind != nextKind) {
-			if (this.kind == EnumKind.SUBRESOURCE_LOCATOR || nextKind == EnumKind.SUBRESOURCE_LOCATOR) {
+			if (this.kind == EnumKind.SUBRESOURCE_LOCATOR
+					|| nextKind == EnumKind.SUBRESOURCE_LOCATOR) {
 				changes.add(EnumElementChange.KIND);
 			} else {
 				changes.add(EnumElementChange.MAPPING);
 			}
 			this.kind = nextKind;
 		}
-		IMethodBinding methodBinding = JdtUtils.resolveMethodBinding(javaMethod, compilationUnit);
+		if (this.kind == EnumKind.SUBRESOURCE_LOCATOR) {
+			IMethodBinding methodBinding = JdtUtils.resolveMethodBinding(
+					javaMethod, compilationUnit);
+			ITypeBinding javaReturnTypeBinding = methodBinding.getReturnType();
+			IJavaElement nextReturnType = javaReturnTypeBinding != null ? javaReturnTypeBinding
+					.getJavaElement() : null;
 
-		ITypeBinding javaReturnType = methodBinding.getReturnType();
-		IType nextReturnType = javaReturnType != null ? (IType) javaReturnType.getJavaElement() : null;
-		if ((nextReturnType != null && !nextReturnType.equals(this.returnType))
-				|| (this.returnType != null && !this.returnType.equals(nextReturnType))) {
-			changes.add(EnumElementChange.KIND);
-			this.returnType = nextReturnType;
+			if (nextReturnType.getElementType() == IJavaElement.TYPE
+					&& ((nextReturnType != null && !nextReturnType
+							.equals(this.returnType)) || (this.returnType != null && !this.returnType
+							.equals(nextReturnType)))) {
+				changes.add(EnumElementChange.KIND);
+				this.returnType = (IType) nextReturnType;
+			}
+		} else {
+			this.returnType = null;
 		}
 
 		return changes;
@@ -168,7 +182,8 @@ public class ResourceMethod extends BaseElement<IMethod> {
 	 */
 	@Override
 	public final String toString() {
-		return "ResourceMethod [" + parentResource.getName() + "." + getJavaElement().getElementName() + "] -> "
+		return "ResourceMethod [" + parentResource.getName() + "."
+				+ getJavaElement().getElementName() + "] -> "
 				+ resourceMethodMapping.toString() + ", kind=" + kind + "]";
 	}
 
@@ -190,7 +205,8 @@ public class ResourceMethod extends BaseElement<IMethod> {
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof ResourceMethod) {
-			return getJavaElement().equals(((ResourceMethod) obj).getJavaElement());
+			return getJavaElement().equals(
+					((ResourceMethod) obj).getJavaElement());
 		}
 		return false;
 	}
