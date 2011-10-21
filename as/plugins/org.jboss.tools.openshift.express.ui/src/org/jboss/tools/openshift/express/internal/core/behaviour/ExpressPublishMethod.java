@@ -45,31 +45,34 @@ public class ExpressPublishMethod implements IJBossServerPublishMethod {
 		IProject p = module[module.length-1].getProject();
 		int changed = EGitUtils.countCommitableChanges(p, new NullProgressMonitor() );
 		if( changed == 0 || (kind == IServer.PUBLISH_FULL || state == IServer.PUBLISH_STATE_FULL)) {
-			if( changed != 0 && requestCommitAndPushApproval(module)) {
+			if( changed != 0 && requestCommitAndPushApproval(module, changed)) {
 				monitor.beginTask("Publishing " + p.getName(), 200);
 				EGitUtils.commit(p, new SubProgressMonitor(monitor, 100));
 				EGitUtils.push(EGitUtils.getRepository(p), new SubProgressMonitor(monitor, 100));
 				monitor.done();
+				return IServer.PUBLISH_STATE_NONE;
 			} else if( changed == 0 && requestPushApproval(module)) {
 				monitor.beginTask("Publishing " + p.getName(), 100);
 				EGitUtils.push(EGitUtils.getRepository(p), new SubProgressMonitor(monitor, 100));
 				monitor.done();
+				return IServer.PUBLISH_STATE_NONE;
 			}
-			return IServer.PUBLISH_STATE_NONE;
 		}
 		return IServer.PUBLISH_STATE_INCREMENTAL;
 	}
 
-	private boolean requestCommitAndPushApproval(final IModule[] module) {
+	private boolean requestCommitAndPushApproval(final IModule[] module, int changed) {
 		String projName = module[module.length-1].getProject().getName();
-		String msg = "Do you wish to publish \"" + projName + "\" to OpenShift by commiting and pushing its git repository?";
+		String msg = "There are " + changed + " local changes in \"" + projName + "\". " +
+				"Do you want to publish to OpenShift by commiting the changes and pushing its Git repository?";
 		String title = "Publish " + projName + "?";
 		return requestApproval(module, msg, title);
 	}
 
 	private boolean requestPushApproval(final IModule[] module) {
 		String projName = module[module.length-1].getProject().getName();
-		String msg = "Do you wish to publish \"" + projName + "\" to OpenShift by pushing its git repository?";
+		String msg = "The are no local changes in \"" + projName + "\". " +
+				"Do you want to publish to OpenShift by pushing its Git repository?";
 		String title = "Publish " + projName + "?";
 		return requestApproval(module, msg, title);
 	}
