@@ -109,6 +109,7 @@
 			<id>as-bootstrap</id>
 			<modules>
 				<module>../tests</module>
+				<module>../common</module>
 				<module>../archives</module>
 				<module>../jmx</module>
 				<module>../as</module>
@@ -264,6 +265,17 @@
 			<id>portlet-bootstrap</id>
 			<modules>
 				<module>../tests</module>
+				<module>../jmx</module>
+				<module>../archives</module>
+				<module>../as</module>
+				<module>../hibernatetools</module>
+				<module>../common</module>
+				<module>../jst</module>
+				<module>../xulrunner</module>
+				<module>../vpe</module>
+				<module>../jsf</module>
+				<module>../usage</module>
+				<module>../seam</module>
 				<module>../portlet</module>
 			</modules>
 		</profile>
@@ -404,6 +416,19 @@
 			<id>maven-bootstrap</id>
 			<modules>
 				<module>../tests</module>
+				<module>../jmx</module>
+				<module>../archives</module>
+				<module>../as</module>
+				<module>../hibernatetools</module>
+				<module>../common</module>
+				<module>../examples</module>
+				<module>../jst</module>
+				<module>../xulrunner</module>
+				<module>../vpe</module>
+				<module>../jsf</module>
+				<module>../seam</module>
+				<module>../usage</module>
+				<module>../cdi</module>
 				<module>../maven</module>
 			</modules>
 		</profile>
@@ -468,6 +493,23 @@
 		</profile>
 
 		<profile>
+			<id>runtime-bootstrap</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../tests</module>
+				<module>../common</module>
+				<module>../jmx</module>
+				<module>../usage</module>
+				<module>../examples</module>
+				<module>../runtime</module>
+			</modules>
+		</profile>
+			</modules>
+		</profile>
+
+		<profile>
 			<id>usage</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
@@ -507,6 +549,9 @@
 				<module>../seam</module>
 				<module>../portlet</module>
 				<module>../examples</module>
+				<module>../esb</module>
+				<module>../jbpm</module>
+				<module>../flow</module>
 				<module>../central</module>
 			</modules>
 		</profile>
