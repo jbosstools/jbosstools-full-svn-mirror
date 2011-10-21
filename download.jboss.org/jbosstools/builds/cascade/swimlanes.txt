@@ -33,7 +33,7 @@ New in 3.3:
 forge -> [none]
 examples -> portlet, jst
 teiid, runtime -> tests
-portlet -> seam
+portlet -> seam, as, tests, usage
 tptp [REMOVED]
 smooks [removed from JBDS, still in JBT]
 seam -> hibernate, jsf 
