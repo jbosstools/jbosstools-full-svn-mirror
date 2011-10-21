@@ -1,4 +1,4 @@
-Revised swimlanes, as implemented in 3.2_stable_branch, 3.3_stable_branch and 3.3_trunk jobs, 2011/10/20
+Revised swimlanes, as implemented in 3.2_stable_branch, 3.3_stable_branch and 3.3_trunk jobs, 2011/10/21
 
 ------------------------
 
@@ -44,5 +44,6 @@ cdi -> jst
 (all but common and tests) -> usage
 usage -> common, tests
 ws -> common
+maven -> examples
 
 ------------------------
