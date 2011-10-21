@@ -6,6 +6,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
@@ -43,6 +44,13 @@ public class ExpressPublishMethod implements IJBossServerPublishMethod {
 			throws CoreException {
 		int state = behaviour.getServer().getModulePublishState(module);
 		IProject p = module[module.length-1].getProject();
+		
+		Repository repository = EGitUtils.getRepository(p);
+		
+		if (repository==null) {
+			return IServer.PUBLISH_STATE_UNKNOWN;
+		}
+		
 		int changed = EGitUtils.countCommitableChanges(p, new NullProgressMonitor() );
 		if( changed == 0 || (kind == IServer.PUBLISH_FULL || state == IServer.PUBLISH_STATE_FULL)) {
 			if( changed != 0 && requestCommitAndPushApproval(module, changed)) {
