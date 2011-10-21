@@ -311,7 +311,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<url/>
 		<fixes>
 			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.60, org.jboss.ide.eclipse.as.runtime.70, org.jboss.ide.eclipse.as.runtime.eap.60</property>
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70, org.jboss.ide.eclipse.as.runtime.eap.60</property>
 				<property name="description">This project example requires JBoss AS 7.0</property>
 				<property name="downloadId">org.jboss.tools.runtime.core.as.702</property>
 			</fix>
