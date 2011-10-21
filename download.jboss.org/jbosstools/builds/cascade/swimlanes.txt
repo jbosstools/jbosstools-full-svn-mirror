@@ -1,4 +1,4 @@
-Revised swimlanes, as implemented in 3.2_stable_branch, 3.3_stable_branch and 3.3_trunk jobs, 2011/10/02
+Revised swimlanes, as implemented in 3.2_stable_branch, 3.3_stable_branch and 3.3_trunk jobs, 2011/10/20
 
 ------------------------
 
@@ -38,7 +38,7 @@ tptp [REMOVED]
 smooks [removed from JBDS, still in JBT]
 seam -> hibernate, jsf 
 central -> examples, portlet, seam, as, archives, jmx, jsf, vpe, jst, hibernate, freemarker, runtime, common, tests
-runtime -> common, tests, jmx
+runtime -> common, tests, jmx, examples
 esb -> as, jst, common, tests
 cdi -> jst
 (all but common and tests) -> usage
