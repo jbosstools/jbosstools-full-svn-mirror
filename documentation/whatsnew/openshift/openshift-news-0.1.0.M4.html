@@ -35,7 +35,7 @@
 		<tr> 
 			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>New Wizard</b></td> 
 			<td valign="top"> 
-				We developed a wizard that would allow you to import an OpenShift Express application to your Eclipse workspace.
+				We developed a wizard that allows you to create an application on OpenShift Express and import it to your Eclipse workspace. 
 				The wizard holds all operations involved in creating a new application on OpenShift Express.
 				<p></p><img src="images/new-openshift-express-wizard.png" alt="new openshift express application"/></p> 
 				A frist step would require you to supply your credentials. A link would open the signup page if you have no account on 
@@ -71,12 +71,13 @@
 		<tr> 
 			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>REST Client</b></td> 
 			<td valign="top">
-			We also developed a REST client in Java for OpenShift Express. It pretty much offers all features that
-			are currently offered by the rhc-* command line tools. Even though it's pretty new, 
-			it's code base is pretty well tested since it's covered well by unit-tests and used in our application wizard 
-			and in the <a href="https://github.com/forge/plugin-openshift-express">Forge OpenShift Express plugin</a>.
-			The plugin is currently still an eclipse plugin, but we will strip its Eclipse dependencies and move it to github
-			at some point. 
+			We also developed a client for the OpenShift Express REST service. It pretty much offers all features that
+			are currently available in the rhc-* command line tools (create/rename a domain, create/destroy applications, 
+			list all existing applications, available cartridges, read the application log etc.). <br/>
+			Even though it's pretty new, it's code base is pretty well tested since it's well covered by unit-tests and 
+			used in our application wizard and the <a href="https://github.com/forge/plugin-openshift-express">Forge OpenShift Express plugin</a>.
+			The plug-in is currently still an osgi bundle, but we will strip its Eclipse dependencies and move it to github
+			at some point.</br>
 			You may check the current code in our <a href="http://anonsvn.jboss.org/repos/jbosstools/trunk/openshift/plugins/org.jboss.tools.openshift.express.client/">SVN</a>. 
 			<p><small><a href="https://issues.jboss.org/browse/JBIDE-9591">Related Jira</a></small></p>
 			</td>
