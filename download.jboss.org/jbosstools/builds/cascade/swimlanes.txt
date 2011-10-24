@@ -1,4 +1,4 @@
-Revised swimlanes, as implemented in 3.2_stable_branch, 3.3_stable_branch and 3.3_trunk jobs, 2011/10/21
+Revised swimlanes, as implemented in 3.2_stable_branch, 3.3_stable_branch and 3.3_trunk jobs, 2011/10/24
 
 See also https://svn.jboss.org/repos/jbosstools/trunk/build/ -> pom*.xml
 
@@ -47,5 +47,6 @@ cdi -> jst
 usage -> common, tests
 ws -> common
 maven -> examples
+openshift -> as, jmx, archives, common, tests
 
 ------------------------
