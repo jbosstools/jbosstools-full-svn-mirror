@@ -117,6 +117,31 @@
 		</profile>
 
 		<profile>
+			<id>openshift</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>openshift-bootstrap</name>
+				</property>
+			</activation>
+			<modules>
+				<module>../openshift</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>openshift-bootstrap</id>
+			<modules>
+				<module>../tests</module>
+				<module>../common</module>
+				<module>../archives</module>
+				<module>../jmx</module>
+				<module>../as</module>
+				<module>../openshift</module>
+			</modules>
+		</profile>
+
+		<profile>
 			<id>common</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
