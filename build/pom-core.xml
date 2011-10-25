@@ -531,8 +531,6 @@
 				<module>../runtime</module>
 			</modules>
 		</profile>
-			</modules>
-		</profile>
 
 		<profile>
 			<id>usage</id>
