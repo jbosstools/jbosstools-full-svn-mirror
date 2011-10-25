@@ -7,9 +7,9 @@
      get new time w/ 
       date +%s000
 -->
-<property name='p2.timestamp' value='1317306933000'/>
+<property name='p2.timestamp' value='1319582202000'/>
 </properties>
-<children size='34'>
+<children size='35'>
 
 <child location='../../jbosstools-3.3_stable_branch.component--archives/all/repo/'/>
 <child location='../../jbosstools-3.3_stable_branch.component--as/all/repo/'/>
@@ -36,17 +36,18 @@
 <child location='../../jbosstools-3.3_stable_branch.component--maven/all/repo/'/>
 
 <child location='../../jbosstools-3.3_stable_branch.component--modeshape/all/repo/'/>
+<child location='../../jbosstools-3.3_stable_branch.component--openshift/all/repo/'/>
 <child location='../../jbosstools-3.3_stable_branch.component--portlet/all/repo/'/>
 <child location='../../jbosstools-3.3_stable_branch.component--runtime/all/repo/'/>
 <child location='../../jbosstools-3.3_stable_branch.component--seam/all/repo/'/>
-<child location='../../jbosstools-3.3_stable_branch.component--smooks/all/repo/'/>
 
+<child location='../../jbosstools-3.3_stable_branch.component--smooks/all/repo/'/>
 <child location='../../jbosstools-3.3_stable_branch.component--struts/all/repo/'/>
 <child location='../../jbosstools-3.3_stable_branch.component--tests/all/repo/'/>
 <child location='../../jbosstools-3.3_stable_branch.component--usage/all/repo/'/>
 <child location='../../jbosstools-3.3_stable_branch.component--vpe/all/repo/'/>
-<child location='../../jbosstools-3.3_stable_branch.component--ws/all/repo/'/>
 
+<child location='../../jbosstools-3.3_stable_branch.component--ws/all/repo/'/>
 <!-- <child location='../../savara-tools-eclipse-master/all/repo/'/> -->
 <child location='http://downloads.jboss.org/savara/releases/updates/2.0.x/' />
 <child location='../../jbosstools-teiid-designer-7.5_stable_branch/all/repo/'/>
