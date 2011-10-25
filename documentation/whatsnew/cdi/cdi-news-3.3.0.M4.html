@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../whatsnew.css" />
+<title>CDI/Seam 3 tools 3.3.0.M4 What's New</title>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17645367-5']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script></head>
+<body>
+<h1>CDI/Seam 3 tools 3.3.0.M4 What's New</h1>
+
+<p align="right"><a href="../index.html">&lt; Main Index</a> <a
+	href="../forge/forge-news-3.3.0.M4.html">Forge Tools News &gt;</a></p>
+
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+
+	<tr>
+		<td colspan="2">
+		<hr />
+		<h3>CDI (JSR-299)</h3>
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+			<p><b>Quick Fixes</b></p>
+		</td>
+        <td align="top">
+			<p>New quick fixes for problems in beans.xml found by CDI validator are now available:</p>
+        	<img src="images/3.3.0.M4/qf1.png"/><br/><br/>
+        	<img src="images/3.3.0.M4/qf2.png"/>
+			<p>
+				<small>
+					<a href="https://issues.jboss.org/browse/JBIDE-9833">Related Jira</a>
+				</small><br/>
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+			<p><b>All Assignable Beans dialog</b></p>
+		</td>
+        <td align="top">
+			<p>
+			   The dialog for multiple hyperlinks for injection points has been improved.
+			   If there are a few assignable beans for the injection point then "Show All Assignable Beans..." menu is available when you Ctrl+Click on the injection.
+			</p>
+			<img src="images/3.3.0.M4/showAllAssignable.png"/>
+			<p>
+			   <b>Show All Assignable Beans...</b> opens a dialog with all the beans which match the injection type and qualifiers.
+			</p>
+			<img src="images/3.3.0.M4/allAssignable.png"/>
+			<p>
+			   It's possible to hide unavailable beans (shown by default). Show/hide menu is shown by default but can be hidden in dialog settings.
+			</p>
+			<img src="images/3.3.0.M4/show-hide.png"/>
+			<p>
+			   The beans can be filtered by name. 
+			</p>
+			<img src="images/3.3.0.M4/filter.png"/>
+			<p>
+			   Other CDI hyperlinks (OpenOns) also have this new look and feel: <b>Show All Generic Configuration Points"</b>, <b>"Show CDI Events"</b>, <b>"Show CDI Observer Methods"</b>  
+			</p>
+			<img src="images/3.3.0.M4/genericOpenOn.png"/>
+			<p>
+				<small>
+				       <a href="https://jira.jboss.org/browse/JBIDE-9347">Related Jira 1</a>,<br/>
+				       <a href="https://jira.jboss.org/browse/JBIDE-9673">Related Jira 2</a>
+				</small>
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+			<p><b>Open @Named Bean</b></p>
+		</td>
+        <td align="top">
+			<p>New dialog "Open CDI Named Bean" is now available. Using this dialog you can open the resource which declares wanted EL bean name.</p>
+			<img src="images/3.3.0.M4/toolpanel.png"/><br/><br/>
+        	<img src="images/3.3.0.M4/openNamed.png"/>
+			<p>
+				<small>
+				       <a href="https://jira.jboss.org/browse/JBIDE-7892">Related Jira</a>
+				</small><br/>
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<hr />
+		<h3>CDI Extensions/Seam 3</h3>
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+			<p><b>Seam 3.1.0.Beta3</b></p>
+		</td>
+        <td align="top">
+			<p>
+			   There are some major changes in the latest <a href="http://in.relation.to/Bloggers/JBossSeam310Beta3Released">Seam 3.1.0.Beta3 release</a> which made it incompatible to previous Seam 3 releases.
+			   JBoss Tools 3.3.0.M4 will support the new Seam 3.1.0.Beta3 along with older versions. If you want use the latest Seam release just make sure you have the proper JARs in the project class path.
+			</p>
+			<p>
+				<small>
+					<a href="https://issues.jboss.org/browse/JBIDE-8852">Related Jira</a>
+				</small>
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+			<p><b>Solder</b></p>
+		</td>
+        <td align="top">
+			<p>
+			   Seam config beans that reference abstract types or interfaces are now validated.
+            </p>
+			<img src="images/3.3.0.M4/validation.png"/>
+			<p>
+				<small>
+					<a href="https://issues.jboss.org/browse/JBIDE-9834">Related Jira</a> 
+				</small>
+			</p>
+			<p>
+			   Also there is one more built-in bean is now supported by JBoss Tools: @Inject Logger log;
+            </p>
+			<p>
+				<small>
+					<a href="https://issues.jboss.org/browse/JBIDE-9745">Related Jira</a> 
+				</small>
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+			<p><b>Seam REST</b></p>
+		</td>
+        <td align="top">
+			<p>CDI Validator is now aware of @Inject @RestClient("...") injection points and doesn't threat it as unsatisfied dependencies since such beans are generated dynamically.</p>
+			<p>
+				<small>
+					<a href="https://issues.jboss.org/browse/JBIDE-9734">Related Jira</a>
+				</small>
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+			<p><b>Seam JMS</b></p>
+		</td>
+        <td align="top">
+			<p>
+				The following JMS resources are available for injection in Seam JMS module:
+				<ul>
+					<li>javax.jms.Connection</li>
+					<li>javax.jms.Session</li>
+					<li>javax.jms.Topic</li>
+					<li>javax.jms.Queue</li>
+					<li>javax.jms.TopicPublisher</li>
+					<li>javax.jms.QueueSender</li>
+					<li>javax.jms.TopicSubscriber</li>
+					<li>javax.jms.QueueReceiver</li>
+				</ul>
+				All of them are now supported by CDI Validator.
+			</p>
+			<p>
+				<small>
+					<a href="https://issues.jboss.org/browse/JBIDE-9685">Related Jira</a>
+				</small?
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<hr />
+		</td>
+	</tr>
+
+</table>
+
+</body>
+
+</html>
