@@ -306,7 +306,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<name>multi-javaee6-archetype</name>
 		<included-projects>multi-javaee6-archetype</included-projects>
 		<shortDescription>JBoss AS 7 / Java EE 6 EAR Webapp(Maven archetype)</shortDescription>
-		<description>An archetype that generates a starter Java EE 6 webapp project for JBoss AS 7. The project is an EAR, with an EJB-JAR and WAR</description>
+		<description>An archetype that generates a starter Java EE 6 webapp project for JBoss AS 7 / EAP 6. The project is an EAR, with an EJB-JAR and WAR</description>
 		<size>13806</size>
 		<url/>
 		<fixes>
@@ -339,8 +339,8 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<mavenArchetype>
 			<archetypeGroupId>org.jboss.spec.archetypes</archetypeGroupId>
 			<archetypeArtifactId>jboss-javaee6-ear-webapp</archetypeArtifactId>
-			<archetypeVersion>7.1.0-SNAPSHOT</archetypeVersion>
-			<archetypeRepository>http://repository.jboss.org/nexus/content/repositories/snapshots/</archetypeRepository>
+			<archetypeVersion>7.0.2-SNAPSHOT</archetypeVersion>
+			<archetypeRepository>http://anonsvn.jboss.org/repos/jbosstools/workspace/fred/repositories/snapshot/</archetypeRepository>
 			<groupId>org.jboss.tools.example</groupId>
 			<artifactId>multi</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
