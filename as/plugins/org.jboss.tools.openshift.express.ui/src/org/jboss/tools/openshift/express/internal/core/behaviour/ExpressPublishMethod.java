@@ -95,7 +95,8 @@ public class ExpressPublishMethod implements IJBossServerPublishMethod {
 		        int response = messageBox.open();
 		        if (response == SWT.YES)
 		        	b[0] = true;
-		        b[0] = false;
+		        else
+		        	b[0] = false;
 			}
 		});
 		return b[0];
