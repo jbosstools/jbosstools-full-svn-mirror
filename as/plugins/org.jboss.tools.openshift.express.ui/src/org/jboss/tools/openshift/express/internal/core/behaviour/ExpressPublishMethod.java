@@ -51,8 +51,8 @@ public class ExpressPublishMethod implements IJBossServerPublishMethod {
 			return IServer.PUBLISH_STATE_UNKNOWN;
 		}
 		
-		int changed = EGitUtils.countCommitableChanges(p, new NullProgressMonitor() );
-		if( changed == 0 || (kind == IServer.PUBLISH_FULL || state == IServer.PUBLISH_STATE_FULL)) {
+		if( kind == IServer.PUBLISH_FULL || state == IServer.PUBLISH_STATE_FULL) {
+	                int changed = EGitUtils.countCommitableChanges(p, new NullProgressMonitor() );
 			if( changed != 0 && requestCommitAndPushApproval(module, changed)) {
 				monitor.beginTask("Publishing " + p.getName(), 200);
 				EGitUtils.commit(p, new SubProgressMonitor(monitor, 100));
@@ -66,7 +66,7 @@ public class ExpressPublishMethod implements IJBossServerPublishMethod {
 				return IServer.PUBLISH_STATE_NONE;
 			}
 		}
-		return IServer.PUBLISH_STATE_INCREMENTAL;
+		return state;
 	}
 
 	private boolean requestCommitAndPushApproval(final IModule[] module, int changed) {
