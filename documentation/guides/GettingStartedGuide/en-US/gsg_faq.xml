@@ -58,15 +58,17 @@
 				<para>If none of these work, do the following:</para>
 				<itemizedlist>
 					<listitem>
-						<para>Clear the Eclipse log file,<filename>&lt;workspace&gt;\.metadata\.log</filename>
-						</para>
+						<para>Clear the JBoss Developer Studio log file,<filename>&lt;workspace&gt;\.metadata\.log</filename>
+					</para>
+				</listitem>
+				<listitem>
+					<para>Start JBoss Developer Studio with the -debug option:</para>
+					<programlisting role="JAVA">
+						<![CDATA[jbdevstudio -debug]]>
+						</programlisting>
 					</listitem>
 					<listitem>
-						<para>Start Eclipse with the -debug option:</para>
-						<programlisting role="JAVA"><![CDATA[eclipse -debug]]></programlisting>
-					</listitem>
-					<listitem>
-						<para>Post the Eclipse log file(<filename>&lt;workspace&gt;\.metadata\.log</filename>) on the forums.</para>
+						<para>Post the JBoss Developer Studio log file(<filename>&lt;workspace&gt;\.metadata\.log</filename>) on the forums.</para>
 					</listitem>
 				</itemizedlist>
 			</listitem>
