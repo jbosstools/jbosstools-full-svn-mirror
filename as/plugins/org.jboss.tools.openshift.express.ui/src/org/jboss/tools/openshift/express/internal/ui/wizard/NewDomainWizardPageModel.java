@@ -14,6 +14,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import org.eclipse.core.runtime.Preferences;
+import org.eclipse.jsch.internal.core.IConstants;
+import org.eclipse.jsch.internal.core.JSchCorePlugin;
 import org.jboss.tools.common.ui.databinding.ObservableUIPojo;
 import org.jboss.tools.common.ui.ssh.SshPrivateKeysPreferences;
 import org.jboss.tools.openshift.express.client.IDomain;
@@ -62,8 +65,23 @@ public class NewDomainWizardPageModel extends ObservableUIPojo {
 	public void createSShKeyPair(String passPhrase) throws FileNotFoundException, OpenShiftException {
 		String sshKeysDirectory = SshPrivateKeysPreferences.getSshKeyDirectory();
 		SSHKeyPair keyPair = createSshKeyPair(passPhrase, sshKeysDirectory);
-		SshPrivateKeysPreferences.add(keyPair.getPrivateKeyPath());
+		addToPrivateKeysPreferences(keyPair);
 		setSshKey(keyPair.getPublicKeyPath());
+	}
+	
+	private void addToPrivateKeysPreferences(SSHKeyPair keyPair) {
+		Preferences preferences = JSchCorePlugin.getPlugin().getPluginPreferences();
+		String privateKeys = preferences.getString(IConstants.KEY_PRIVATEKEY);
+		if (privateKeys != null 
+				&& privateKeys.trim().length() > 0) {
+			privateKeys = privateKeys + ","	+ keyPair.getPrivateKeyPath();
+		} else {
+			privateKeys = keyPair.getPrivateKeyPath();
+		}
+		preferences.setValue(IConstants.KEY_PRIVATEKEY, privateKeys);
+		JSchCorePlugin.getPlugin().setNeedToLoadKnownHosts(true);
+	    JSchCorePlugin.getPlugin().setNeedToLoadKeys(true);
+	    JSchCorePlugin.getPlugin().savePluginPreferences();
 	}
 	
 	private SSHKeyPair createSshKeyPair(String passPhrase, String sshKeysDirectory) throws OpenShiftException {
