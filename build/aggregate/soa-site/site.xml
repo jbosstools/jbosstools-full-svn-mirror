@@ -70,7 +70,7 @@
       </description>
 	</category-def>
 
-	<category-def name="SOATools" label="SOA Development">
+	<category-def name="SOATools" label="JBoss SOA Development">
 		<description>
 			Tools to help create SOA applications. Use these if you
 			work with jBPM,
@@ -78,11 +78,11 @@
 		</description>
 	</category-def>
 
-	<category-def name="GeneralTools" label="Application Development">
+	<category-def name="GeneralTools" label="JBoss Application Development">
 		<description>Tools for general application development.</description>
 	</category-def>
 
-	<category-def name="DataTools" label="Data Services">
+	<category-def name="DataTools" label="JBoss Data Services">
 		<description>Tools related to data services such as persistence and
 			transformation.</description>
 	</category-def>
