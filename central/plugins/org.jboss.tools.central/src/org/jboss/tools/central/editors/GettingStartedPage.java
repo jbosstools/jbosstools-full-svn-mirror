@@ -57,6 +57,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
@@ -239,7 +240,7 @@ public class GettingStartedPage extends AbstractJBossCentralPage {
 
 			@Override
 			public void expansionStateChanged(ExpansionEvent e) {
-				resize();
+				resize(true);
 			}
 			
 		});
@@ -286,7 +287,7 @@ public class GettingStartedPage extends AbstractJBossCentralPage {
 
 			@Override
 			public void expansionStateChanged(ExpansionEvent e) {
-				resize();
+				resize(true);
 			}
 			
 		});
@@ -425,7 +426,7 @@ public class GettingStartedPage extends AbstractJBossCentralPage {
 						
 			@Override
 			public void expansionStateChanged(ExpansionEvent e) {
-				resize();
+				resize(true);
 			}
 		});
 	    
@@ -498,6 +499,13 @@ public class GettingStartedPage extends AbstractJBossCentralPage {
 	    toolBarManager.update(true);
 	    
 		projectsSection.setTextClient(headerComposite);
+		projectsSection.addExpansionListener(new ExpansionAdapter() {
+			
+			@Override
+			public void expansionStateChanged(ExpansionEvent e) {
+				resize(true);
+			}
+		});
 		
 		projectsComposite = toolkit.createComposite(projectsSection);
 	    GridLayout layout = new GridLayout(2, true);
@@ -644,6 +652,13 @@ public class GettingStartedPage extends AbstractJBossCentralPage {
 		addHyperlink(toolkit, documentationComposite, "Issue Tracker", "https://issues.jboss.org/browse/JBIDE");
 		
 		documentationSection.setClient(documentationComposite);
+		documentationSection.addExpansionListener(new ExpansionAdapter() {
+			
+			@Override
+			public void expansionStateChanged(ExpansionEvent e) {
+				resize(true);
+			}
+		});
 	}
 	
 	public void createSettingsSection(FormToolkit toolkit, Composite parent) {
@@ -842,7 +857,7 @@ public class GettingStartedPage extends AbstractJBossCentralPage {
 					} else {
 						expandedCategories.remove(category);
 					}
-					resize();
+					resize(true);
 				}
 			});
 
@@ -1002,7 +1017,11 @@ public class GettingStartedPage extends AbstractJBossCentralPage {
 		recomputeScrollComposite(scrollable, pageBook);
 	}
 
-	protected void resize() {
+	private void resize() {
+		resize(false);
+	}
+	
+	protected void resize(boolean force) {
 		Point size;
 		if (Platform.OS_MACOSX.equals(Platform.getOS())) {
 			size = form.getSize();
@@ -1010,7 +1029,7 @@ public class GettingStartedPage extends AbstractJBossCentralPage {
 		} else {
 			size = form.getBody().getSize();
 		}
-		if (size.equals(oldSize)) {
+		if (!force && size.equals(oldSize)) {
 			return;
 		}
 		oldSize = size;
