@@ -31,6 +31,8 @@
 	<property name="aggregateSite.properties" value="aggregateSite.jbosstools.properties" />
 	<property file="${aggregateSite.properties}" />
 
+	<property name="web.content.files" value="index.html, **/*.css, README*, *directory.xml"/>
+
 	<target name="init">
 		<ant antfile="${build.xml}" target="init" />
 		<taskdef resource="net/sf/antcontrib/antlib.xml">
@@ -400,7 +402,7 @@ DEST = ${aggregate.zips.dir}/@{zipPath}
 	</target>
 
 	<target name="pack.zip">
-		<zip destfile="${output.dir}/target/site_assembly.zip" update="true" basedir="${update.site.source.dir}" includes="content.* index.html, web/*.css, README*" />
+		<zip destfile="${output.dir}/target/site_assembly.zip" update="true" basedir="${update.site.source.dir}" includes="content.*, ${web.content.files}" />
 	</target>
 
 	<target name="check.target">
@@ -476,7 +478,7 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 		</copy>
 
 		<copy todir="${update.site.source.dir}">
-			<fileset dir="${output.dir}" includes="index.html, **/*.css, README*" />
+			<fileset dir="${output.dir}" includes="${web.content.files}" />
 		</copy>
 	</target>
 
@@ -494,7 +496,7 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 
 	<!-- look for http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.*/logs/zip.list.txt; 
 	if found, load file and use ${ALL_ZIPS} to get list of relative path zips to fetch -->
-	<target name="collect.zips" description="collect zips from the sites we aggregated">
+	<target name="collect.zips" description="collect zips from the sites we aggregated" unless="collect.zips.skip">
 		<property name="aggregate.zips.dir" value="${output.dir}/zips" />
 		<delete dir="${aggregate.zips.dir}" quiet="true" />
 		<mkdir dir="${aggregate.zips.dir}" />
