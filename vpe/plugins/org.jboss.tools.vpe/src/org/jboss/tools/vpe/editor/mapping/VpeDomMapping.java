@@ -37,11 +37,6 @@ public class VpeDomMapping {
 		sourceMap.put(nodeMapping.getSourceNode(), nodeMapping);
 		if (nodeMapping.getVisualNode() != null) {
 			visualMap.put(nodeMapping.getVisualNode(), nodeMapping);
-			if (nodeMapping instanceof VpeElementMapping) {
-				if (((VpeElementMapping)nodeMapping).getBorder() != null) {
-					visualMap.put(((VpeElementMapping)nodeMapping).getBorder(), nodeMapping);
-				}
-			}
 		}
 	}
 	
@@ -298,9 +293,6 @@ public class VpeDomMapping {
 //					}
 //					elementMapping.setXmlnsMap(null);
 //				}
-				if (elementMapping.getBorder() != null) {
-					visualMap.remove(elementMapping.getBorder());
-				}
 				elementMapping.getTemplate().beforeRemove(pageContext, elementMapping.getSourceNode(), elementMapping.getVisualNode(), elementMapping.getData());
 			}
 		}

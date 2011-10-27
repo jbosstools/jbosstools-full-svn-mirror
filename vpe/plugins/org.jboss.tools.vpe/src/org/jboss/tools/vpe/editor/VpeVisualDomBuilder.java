@@ -320,7 +320,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			nsIDOMNode visualOldContainer) throws VpeDisposeException {
 			
 		boolean registerFlag = isCurrentMainDocument();
-
 		//it's check for initialization visualController,
 		//if we trying to process some event when controller
 		//hasn't been initialized, it's causes 
@@ -387,21 +386,21 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		} catch (XPCOMException ex) {
 			VpePlugin.getPluginLog().logError(ex);
 			VpeTemplate defTemplate = getTemplateManager().getDefTemplate();
-			creationData = defTemplate.create(getPageContext(), sourceNode,
-					getVisualDocument());
+			creationData = defTemplate.create(
+					getPageContext(), sourceNode, getVisualDocument());
 		} catch (RuntimeException ex) {
 			VpePlugin.getPluginLog().logError(ex);
 			VpeTemplate defTemplate = getTemplateManager().getDefTemplate();
-			creationData = defTemplate.create(getPageContext(), sourceNode,
-					getVisualDocument());
+			creationData = defTemplate.create(
+					getPageContext(), sourceNode, getVisualDocument());
 		}
 		if (creationData == null) {
 			VpePlugin.getDefault().logError(
 					"!ERROR! VpeCreationData is not initialized for source node '" //$NON-NLS-1$
 							+ sourceNode.getNodeName() + "'"); //$NON-NLS-1$
 			VpeTemplate defTemplate = getTemplateManager().getDefTemplate();
-			creationData = defTemplate.create(getPageContext(), sourceNode,
-					getVisualDocument());
+			creationData = defTemplate.create(
+					getPageContext(), sourceNode, getVisualDocument());
 		}
 		getPageContext().setCurrentVisualNode(null);
 		/*
@@ -411,7 +410,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		if (sourceNode.getNodeType() == Node.ELEMENT_NODE && visualNewNode == null && isShowInvisibleTags()) {
 			visualNewNode = createInvisbleElementLabel(sourceNode);
 		}
-		nsIDOMElement border = null;
 		if (visualNewNode != null
 				&& visualNewNode.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
 			nsIDOMElement visualNewElement = queryInterface(visualNewNode, nsIDOMElement.class);
@@ -468,25 +466,41 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
 			}
 			VpeElementMapping elementMapping = new VpeElementMapping(
-					sourceNode, visualNewNode, border, template,
+					sourceNode, visualNewNode, template,
 					ifDependencySet, creationData.getData(), data);
 			registerNodes(elementMapping);
 		}
+		/*
+		 * When in templates xml file specified that particular template
+		 * cannot have children -- childrenInfoList will be ignored.
+		 * But tags could have other html tags in value attribute. 
+		 * And while creating the template they will be put into childrenInfoList.
+		 * Thus childrenInfoList should be checked in any way!
+		 */
+		List<VpeChildrenInfo> childrenInfoList = creationData.getChildrenInfoList();
 		if (template.hasChildren()) {
-			List<?> childrenInfoList = creationData.getChildrenInfoList();
 			if (childrenInfoList == null) {
 				addChildren(template, sourceNode,
-						visualNewNode != null ? visualNewNode
-								: visualOldContainer);
+						visualNewNode != null ? visualNewNode : visualOldContainer);
 			} else {
-				addChildren(template, sourceNode, visualOldContainer,
-						childrenInfoList);
+				addChildren(template, sourceNode, visualOldContainer, childrenInfoList);
 			}
-		} else if(sourceNode.getNodeType() == Node.ELEMENT_NODE&&visualNewNode != null && isShowInvisibleTags()){
-			nsIDOMElement span =  getVisualDocument().createElement(HTML.TAG_SPAN);
-			span.appendChild(visualNewNode);
-			addChildren(template, sourceNode,span);
-			visualNewNode= span;
+		} else {
+			/*
+			 * https://issues.jboss.org/browse/JBIDE-9417
+			 * Template has no children, but should add
+			 * any additional children from childrenInfoList
+			 */
+			if (childrenInfoList != null) {
+				addChildren(template, sourceNode, visualOldContainer, childrenInfoList);
+			}
+			if ((sourceNode.getNodeType() == Node.ELEMENT_NODE)
+					&& (visualNewNode != null) && isShowInvisibleTags()) {
+				nsIDOMElement span =  getVisualDocument().createElement(HTML.TAG_SPAN);
+				span.appendChild(visualNewNode);
+				addChildren(template, sourceNode,span);
+				visualNewNode= span;
+			}
 		}
 		getPageContext().setCurrentVisualNode(visualOldContainer);
 		try {
@@ -495,9 +509,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			VpePlugin.getPluginLog().logError(ex);
 		}
 		getPageContext().setCurrentVisualNode(null);
-		if (border != null) {
-			return border;
-		}
 		return visualNewNode;
 	}
 
@@ -823,12 +834,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			((INodeNotifier) sourceNode).removeAdapter(getSorceAdapter());
 		}
 		if (visualOldNode != null) {
-			if (elementMapping != null) {
-				nsIDOMElement border = elementMapping.getBorder();
-				if (border != null) {
-					visualOldNode = border;
-				}
-			}
 			nsIDOMNode visualContainer = visualOldNode.getParentNode();
 			nsIDOMNode visualNextNode = visualOldNode.getNextSibling();
 			if (visualContainer != null) {

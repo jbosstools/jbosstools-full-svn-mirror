@@ -29,10 +29,8 @@ public class VpeElementMapping extends VpeNodeMapping {
 	 */
 	private Object data;
 	private VpeElementData elementData;
-	private nsIDOMElement border;
 	
-	public VpeElementMapping(Node sourceElement,
-			nsIDOMNode visualNode, nsIDOMElement border,
+	public VpeElementMapping(Node sourceElement, nsIDOMNode visualNode, 
 			VpeTemplate template, Set ifDependencySet, Object data, VpeElementData elementData) {
 		super(sourceElement, visualNode);
 		this.template = template;
@@ -41,7 +39,6 @@ public class VpeElementMapping extends VpeNodeMapping {
 		}
 		this.data = data;
 		this.elementData = elementData;
-		this.border = border;
 	}
 	
 	public VpeElementMapping(Element sourceElement,
@@ -54,7 +51,6 @@ public class VpeElementMapping extends VpeNodeMapping {
 			this.ifDependencySet = ifDependencySet;
 		}
 		this.elementData = elementData;
-		this.border = border;
 	}
 	
 	public nsIDOMElement getVisualElement() {
@@ -84,26 +80,6 @@ public class VpeElementMapping extends VpeNodeMapping {
 		return ifDependencySet.contains(VpeExpressionBuilder.SIGNATURE_ANY_ATTR);
 	}
 	
-	public nsIDOMElement getBorder() {
-		return border;
-	}
-	
-	public boolean isBorder(nsIDOMNode border) {
-		if (this.border == null) return false;
-		if (this.border.equals(border)) return true;
-		
-		nsIDOMNode element = border;
-		
-		while(true){
-			if(this.border.equals(element)) return true;
-			if(this.visualNode.equals(element)) return false;
-			
-			element = element.getParentNode();
-			if(element == null) break;
-		}
-		return false;
-	}
-
 	/**
 	 * get element data
 	 * @return
