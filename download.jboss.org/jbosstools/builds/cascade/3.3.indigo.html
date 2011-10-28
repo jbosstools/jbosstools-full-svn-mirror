@@ -9,7 +9,7 @@
 </head>
 <!--
 	s#_trunk#_stable_branch#g
-	s#_Trunk#_Stable_Branch#g
+	s#_Trunk#_3.3.indigo#g
 	s#/trunk#/3.3_stable_branch#g
 -->
 <body>
@@ -36,41 +36,41 @@
 		<h2 class="title">Build Job Cascade:</h2>
 		<ul>
 			<li><a style="color: red"
-				href="http://hudson.qa.jboss.com/hudson/job/jbosstools-3.3_trunk.target-platform">Local
+				href="https://hudson.qa.jboss.com/hudson/job/jbosstools-3.3_trunk.target-platform">Local
 			Target Platform build</a> (build + publish) <b>NOTE: same as trunk</b>
 			<ul>
 				<li><a style="color: red"
-					href="http://hudson.qa.jboss.com/hudson/job/jbosstools-3.3_stable_branch.continuous">Continuous
+					href="https://hudson.qa.jboss.com/hudson/job/jbosstools-3.3_stable_branch.continuous">Continuous
 				build</a> (build only, no tests, no publish)</li>
 				<li><a style="color: red"
-					href="http://hudson.qa.jboss.com/hudson/job/jbosstools-3.3_stable_branch.tests">Tests
+					href="https://hudson.qa.jboss.com/hudson/job/jbosstools-3.3_stable_branch.tests">Tests
 				build</a> (build + tests, no publish)</li>
 				<li><a style="color: red"
-					href="http://hudson.qa.jboss.com/hudson/view/DevStudio_Stable_Branch/">All
+					href="https://hudson.qa.jboss.com/hudson/view/DevStudio/view/DevStudio_3.3.indigo/">All
 				components' jobs, including JBT core + drools, teiid, pi4soa, savara</a>
 				(build, test, publish) :: <b><a style="color: red"
-					href="http://hudson.qa.jboss.com/hudson/view/DevStudio_Stable_Branch/portlet/dashboard_portlet_13/">list
+					href="https://hudson.qa.jboss.com/hudson/view/DevStudio/view/DevStudio_3.3.indigo/portlet/dashboard_portlet_77/">list
 				of unstable jobs</a></b> - <a href=swimlanes.txt>Interdependencies between jobs, aka "swimlanes"</a></li>
 				<ul>
 					<li><a style="color: red"
-						href="http://hudson.qa.jboss.com/hudson/job/jbosstools-3.3_stable_branch.aggregate">Aggregate
+						href="https://hudson.qa.jboss.com/hudson/job/jbosstools-3.3_stable_branch.aggregate">Aggregate
 					build</a> (collect components into a single update site for downstream use and publishing to sf.net)
 					</li>
 				</ul>
 			</ul>
 					<hr />
 			<li><a style="color: red"
-				href="http://hudson.qa.jboss.com/hudson/job/devstudio-5.0_trunk.target-platform">Local
+				href="https://hudson.qa.jboss.com/hudson/job/devstudio-5.0_trunk.target-platform">Local
 			JBDS Target Platform build</a> (build + publish) <b>NOTE: same as trunk</b>
 			<ul>
 				<ul>
 					<li><a style="color: red"
-						href="http://hudson.qa.jboss.com/hudson/job/devstudio-5.0_stable_branch.updatesite">JBDS
+						href="https://hudson.qa.jboss.com/hudson/job/devstudio-5.0_stable_branch.updatesite">JBDS
 					Aggregate site build</a> (build Core [JBT + JBDS], Extras, Tech Preview
 					sites, then publish)
 					<ul>
 						<li><a style="color: red"
-							href="http://hudson.qa.jboss.com/hudson/job/devstudio-5.0_stable_branch.product">JBDS
+							href="https://hudson.qa.jboss.com/hudson/job/devstudio-5.0_stable_branch.product">JBDS
 						Product builds</a> (combine JBDS components + TP into installers,
 						publish)</li>
 					</ul>
