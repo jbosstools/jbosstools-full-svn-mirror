@@ -488,8 +488,10 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		} else {
 			/*
 			 * https://issues.jboss.org/browse/JBIDE-9417
-			 * Template has no children, but should add
-			 * any additional children from childrenInfoList
+			 * Template has no children, but could add
+			 * any additional children from childrenInfoList.
+			 * Implies that templates that should have no children
+			 * also should have null or empty childrenInfoList.
 			 */
 			if (childrenInfoList != null) {
 				addChildren(template, sourceNode, visualOldContainer, childrenInfoList);
