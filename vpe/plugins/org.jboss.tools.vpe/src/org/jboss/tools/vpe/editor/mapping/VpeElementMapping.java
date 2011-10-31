@@ -41,10 +41,8 @@ public class VpeElementMapping extends VpeNodeMapping {
 		this.elementData = elementData;
 	}
 	
-	public VpeElementMapping(Element sourceElement,
-			nsIDOMElement visualElement, nsIDOMElement border,
-			VpeTemplate template, Set ifDependencySet,
-			VpeElementData elementData) {
+	public VpeElementMapping(Element sourceElement,nsIDOMElement visualElement,
+			VpeTemplate template, Set ifDependencySet, VpeElementData elementData) {
 		super(sourceElement, visualElement);
 		this.template = template;
 		if (ifDependencySet != null && ifDependencySet.size() > 0) {

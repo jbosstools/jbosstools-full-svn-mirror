@@ -286,8 +286,7 @@ public abstract class VpeDefineContainerTemplate extends VpeAbstractTemplate {
 		    }
 		}
 		pageContext.getVisualBuilder().registerNodes(
-			new VpeElementMapping((Element) sourceChild, null,
-				null, template, null, null));
+			new VpeElementMapping((Element) sourceChild, null, template, null, null));
 	    }
 	}
     }
