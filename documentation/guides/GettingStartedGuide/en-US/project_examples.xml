@@ -111,7 +111,7 @@
         </figure>
         
         
-        <para>Some project examples have dependencies which could not be automatically configured.
+    <!--    <para>Some project examples have dependencies which could not be automatically configured.
             In these cases you will receive a message prompt listing the detected requirements (see the figure below).</para>
  
         <figure>
@@ -133,7 +133,7 @@
                 </imageobject>
             </mediaobject>
         </figure>
-        
+		-->
         <para>If you have previously specified user sites (see the <link linkend="UserSites">User Sites</link> chapter) they also will be  displayed in the list of project examples in the category that was defined in the XML file with user sites settings.  </para>
        <figure>
            <title>User Site</title>
