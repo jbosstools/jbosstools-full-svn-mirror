@@ -4,7 +4,6 @@
 	extension-element-prefixes="saxon">
 	<xsl:output method="html" indent="yes" />
 	<xsl:template match="/site">
-		<br />
 		<table cellspacing="2" cellpadding="0" border="0">
 			<xsl:if test="count(feature[contains(@id,'jboss')])>0">
 				<tr style="background-color:#DDDDDD">
