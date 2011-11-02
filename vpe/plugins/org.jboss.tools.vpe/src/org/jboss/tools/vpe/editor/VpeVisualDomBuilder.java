@@ -318,7 +318,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	 */
 	public nsIDOMNode createNode(Node sourceNode,
 			nsIDOMNode visualOldContainer) throws VpeDisposeException {
-			
+
 		boolean registerFlag = isCurrentMainDocument();
 		//it's check for initialization visualController,
 		//if we trying to process some event when controller
@@ -775,33 +775,14 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			rebuildDom((Document) sourceNode);
 			break;
 		default:
-			updateElement(getNodeForUpdate(sourceNode));
+			updateElement(sourceNode);
 		}
-	}
-
-	// TODO Ssergey Vasilyev make a common code for figuring out
-	// if it is need to update parent node or not
-	private Node getNodeForUpdate(Node sourceNode) {
-		/* Changing of <tr> or <td> tags can affect whole the table */
-		Node sourceTable = getParentTable(sourceNode, 2);
-		if (sourceTable != null) {
-			return sourceTable;
-		}
-
-		/* Changing of an <option> tag can affect the parent select */
-		Node sourceSelect = getParentSelect(sourceNode);
-		if (sourceSelect != null) {
-			return sourceSelect;
-		}
-
-		return sourceNode;
 	}
 
 	private void updateElement(Node sourceNode) {
 		VpeElementMapping elementMapping = null;
 		VpeNodeMapping nodeMapping = domMapping.getNodeMapping(sourceNode);
 		if (nodeMapping instanceof VpeElementMapping) {
-
 			elementMapping = (VpeElementMapping) nodeMapping;
 			if (elementMapping != null && elementMapping.getTemplate() != null) {
 				Node updateNode = elementMapping.getTemplate()
@@ -809,7 +790,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 								elementMapping.getSourceNode(),
 								elementMapping.getVisualNode(),
 								elementMapping.getData());
-
 				/*
 				 * special processing of "style" element
 				 * 
@@ -822,19 +802,23 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 					VpeStyleUtil.refreshStyleElement(this, elementMapping);
 					return;
 				}
-				if (updateNode != null && updateNode != sourceNode) {
+				if ((updateNode != null) && (updateNode != sourceNode)) {
 					updateNode(updateNode);
 					return;
 				}
 			}
 		}
-
+		/*
+		 * 1) Remove source node from mappings and lists.
+		 */
 		nsIDOMNode visualOldNode = domMapping.remove(sourceNode);
 		getSourceNodes().remove(sourceNode);
-
 		if (sourceNode instanceof INodeNotifier) {
 			((INodeNotifier) sourceNode).removeAdapter(getSorceAdapter());
 		}
+		/*
+		 * 2) Add new visual node for this source node.
+		 */
 		if (visualOldNode != null) {
 			nsIDOMNode visualContainer = visualOldNode.getParentNode();
 			nsIDOMNode visualNextNode = visualOldNode.getNextSibling();
@@ -866,27 +850,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		}
 	}
 
-	private Node getParentTable(Node sourceNode, int depth) {
-		Node parentNode = sourceNode.getParentNode();
-		for (int i = 0; parentNode != null && i < depth; parentNode = parentNode
-				.getParentNode(), i++) {
-			if (HTML.TAG_TABLE.equalsIgnoreCase(parentNode.getNodeName())) {
-				return parentNode;
-			}
-		}
-		return null;
-	}
-
-	private Node getParentSelect(Node sourceNode) {
-		if (HTML.TAG_OPTION.equalsIgnoreCase(sourceNode.getNodeName())) {
-			Node parentNode = sourceNode.getParentNode();
-			if (HTML.TAG_SELECT.equalsIgnoreCase(parentNode.getNodeName())) {
-				return parentNode;
-			}
-		}
-		return null;
-	}
-	
 	public void setCdataText(Node sourceNode) {
 		Node sourceParent = sourceNode.getParentNode();
 		if (sourceParent != null && sourceParent.getLocalName() != null) {

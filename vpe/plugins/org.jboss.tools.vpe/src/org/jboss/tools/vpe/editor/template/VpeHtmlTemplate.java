@@ -526,17 +526,33 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 		}
 		return false;
 	}
+	
 	@Override
-	public Node getNodeForUpdate(VpePageContext pageContext, Node sourceNode, nsIDOMNode visualNode, Object data) {
+	public Node getNodeForUpdate(VpePageContext pageContext, Node sourceNode, 
+			nsIDOMNode visualNode, Object data) {
+		Node nodeForUpdate = null;
+		String templateName = VpeTemplateManager.getInstance().getTemplateName(pageContext, sourceNode);
 		// TODO Sergey Vasilyev redevelop JSF's facet template
 		if (sourceNode.getNodeName().endsWith(":facet")) { //$NON-NLS-1$
-			return sourceNode.getParentNode();
+			nodeForUpdate = sourceNode.getParentNode();
+		} else if ((HTML.TAG_TD.equalsIgnoreCase(templateName))
+				|| (HTML.TAG_TR.equalsIgnoreCase(templateName))) {
+			Node parentNode = sourceNode.getParentNode();
+			for (int i = 0; parentNode != null && i < 2; parentNode = parentNode.getParentNode(), i++) {
+				if (HTML.TAG_TABLE.equalsIgnoreCase(parentNode.getNodeName())) {
+					nodeForUpdate = parentNode;
+					break;
+				}
+			}
+		} else if(HTML.TAG_OPTION.equalsIgnoreCase(templateName)) {
+			Node parentNode = sourceNode.getParentNode();
+			if (HTML.TAG_SELECT.equalsIgnoreCase(parentNode.getNodeName())) {
+				nodeForUpdate = parentNode;
+			}
+		} else if (creator != null) {
+			nodeForUpdate = creator.getNodeForUpdate(pageContext, sourceNode, visualNode, (Map<VpeTemplate,?>)data);
 		}
-		
-		if (creator != null) {
-			return creator.getNodeForUpdate(pageContext, sourceNode, visualNode, (Map<VpeTemplate,?>)data);
-		}
-		return null;
+		return nodeForUpdate;
 	}
 	
 	/* (non-Javadoc)
@@ -570,5 +586,5 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 		    }
 		}
 		return null;
-	}
+	}		
 }
