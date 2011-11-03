@@ -785,23 +785,21 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		if (nodeMapping instanceof VpeElementMapping) {
 			elementMapping = (VpeElementMapping) nodeMapping;
 			if (elementMapping != null && elementMapping.getTemplate() != null) {
+				/*
+				 * https://issues.jboss.org/browse/JBIDE-10089
+				 * <style> is updated in a special way:
+				 * There is no need in removing and adding its visual node.
+				 * Thus the underneath statement is reasonable here.
+				 */
+				if (HTML.TAG_STYLE.equalsIgnoreCase(sourceNode.getNodeName())) {
+					VpeStyleUtil.refreshStyleElement(this, elementMapping);
+					return;
+				}
 				Node updateNode = elementMapping.getTemplate()
 						.getNodeForUpdate(pageContext,
 								elementMapping.getSourceNode(),
 								elementMapping.getVisualNode(),
 								elementMapping.getData());
-				/*
-				 * special processing of "style" element
-				 * 
-				 * for unification of updating nodes - or redevelop updating
-				 * mechanism (for example : transfer this function to template )
-				 * or redevelop template of "style" element
-				 */
-				if (HTML.TAG_STYLE.equalsIgnoreCase(sourceNode.getNodeName())) {
-					// refresh style node
-					VpeStyleUtil.refreshStyleElement(this, elementMapping);
-					return;
-				}
 				if ((updateNode != null) && (updateNode != sourceNode)) {
 					updateNode(updateNode);
 					return;
