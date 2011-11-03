@@ -44,7 +44,7 @@ public interface HibernateExtension {
 	public Object getSessionFactory();
 	//FIXME remove this method
 	*/
-
 	
+	public CompletionProposalsResult hqlCodeComplete(String query, int position);
 
 }

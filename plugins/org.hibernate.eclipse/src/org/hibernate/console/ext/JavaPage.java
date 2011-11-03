@@ -51,7 +51,7 @@ public class JavaPage extends AbstractQueryPage {
 	private void updateQueryResults(){
 		try {
 			list = new ArrayList<Object>();
-			queryResult = getConsoleConfiguration().getConsoleConfigurationExtension()
+			queryResult = getConsoleConfiguration().getHibernateExtension()
 					.executeCriteriaQuery(criteriaCode, model);
 			if (!queryResult.hasExceptions()){
 				Iterator<?> iter = queryResult.list().iterator(); // need to be user-controllable to toggle between iterate, scroll etc.
