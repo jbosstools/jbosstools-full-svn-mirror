@@ -348,11 +348,18 @@ public class TextUtil {
 		 * Without <span> for text nodes -- there is an
 		 * string out of bounds exception. 
 		 */
-		int substringPosition = sourcePosition;
-		if (sourceText.length() < sourcePosition) {
-			substringPosition = sourceText.length() - 1;
+		int endPos = sourcePosition;
+		int length = sourceText.length();
+		String s1 = sourceText;
+		/*
+		 * If sourceText is not empty -- correct endPos
+		 */
+		if (length > 0) {
+			if (endPos > length) {
+				endPos = length;
+			}
+			s1 = sourceText.substring(0, endPos);
 		}
-		String s1 = sourceText.substring(0, substringPosition);
 		String s2 = s1.replaceAll(SOURCE_BREAK, VISUAL_BREAK);
 		return calcPosition - (s1.length() - s2.length());
 	}
