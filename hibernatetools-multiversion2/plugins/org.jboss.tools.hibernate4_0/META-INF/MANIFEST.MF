@@ -7,7 +7,9 @@ Bundle-Activator: org.jboss.tools.hibernate4_0.HibernateExtension4_0Plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.hibernate.eclipse;bundle-version="3.4.0",
- org.eclipse.datatools.connectivity;bundle-version="1.2.2"
+ org.eclipse.datatools.connectivity;bundle-version="1.2.2",
+ org.hibernate.eclipse.console;bundle-version="3.4.0",
+ org.eclipse.jface.text;bundle-version="3.7.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ClassPath: lib/required/jboss-logging-3.0.0.GA.jar,
@@ -25,4 +27,5 @@ Bundle-ClassPath: lib/required/jboss-logging-3.0.0.GA.jar,
  lib/required/jta-1.1.jar,
  lib/jpa/hibernate-entitymanager-4.0.0.CR3.jar,
  lib/bsh-core-2.0b4.jar,
+ lib/tools/hibernate-tools-3.5.0.Alpha.jar,
  .

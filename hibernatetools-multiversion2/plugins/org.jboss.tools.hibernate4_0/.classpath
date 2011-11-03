@@ -30,5 +30,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="lib/tools/hibernate-tools-3.5.0.Alpha.jar" sourcepath="C:/dev/workspaces/RedHat/_Git/dgeraskov/hibernate-tools/target/hibernate-tools-3.5.0.Alpha-SNAPSHOT-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
