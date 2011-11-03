@@ -110,13 +110,13 @@ public class LazyDatabaseSchemaWorkbenchAdapter extends BasicWorkbenchAdapter {
 		return getLazyDatabaseSchema(o).getConsoleConfiguration();
 	}
 
-	protected DefaultDatabaseCollector readDatabaseSchema(final IProgressMonitor monitor, ConsoleConfiguration consoleConfiguration, final ReverseEngineeringStrategy strategy) {
+	protected DefaultDatabaseCollector readDatabaseSchema(final IProgressMonitor monitor, final ConsoleConfiguration consoleConfiguration, final ReverseEngineeringStrategy strategy) {
 		final Configuration configuration = consoleConfiguration.buildWith(null, false);
 		return (DefaultDatabaseCollector) consoleConfiguration.execute(new ExecutionContext.Command() {
 
 			public Object execute() {
 				DefaultDatabaseCollector db = null;
-				Settings settings = configuration.buildSettings();
+				Settings settings = consoleConfiguration.getSettings(configuration);
 				ConnectionProvider connectionProvider = null;
 				try {
 					connectionProvider = settings.getConnectionProvider();

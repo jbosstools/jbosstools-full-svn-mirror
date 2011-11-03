@@ -35,7 +35,6 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.eclipse.osgi.util.NLS;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
@@ -68,11 +67,6 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 	
 	private HibernateExtension extension;
 	
-	//TODO do we need to create new instance every time???
-	public HibernateExtension getConsoleConfigurationExtension(){
-		return extension;
-	}
-	
 	private void loadHibernateExtension(){
 		String version = hibernateVersion == null ? "3.5" : hibernateVersion;//3.5 is a default version
 		HibernateExtensionDefinition def = ExtensionManager.findHibernateExtensionDefinition(version);
@@ -85,7 +79,7 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 		}
 	}
 	
-	private void setHibernateVersion(String hibernateVersion){
+	private void updateHibernateVersion(String hibernateVersion){
 		if (!StringUtils.equals(this.hibernateVersion, hibernateVersion)){
 			this.hibernateVersion = hibernateVersion;
 			loadHibernateExtension();
@@ -93,9 +87,10 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 	}
 	
 	public HibernateExtension getHibernateExtension(){
+		updateHibernateVersion(prefs.getHibernateVersion());//reinit is necessary
 		return this.extension;
 	}
-	
+
 	//****************************** EXTENSION **********************
 	
 	public ConsoleConfiguration(ConsoleConfigurationPreferences config) {
@@ -209,7 +204,6 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 
 	public void build() {
 		configuration = buildWith(null, true);
-		setHibernateVersion(prefs.getHibernateVersion());
 		getHibernateExtension().build();
 		fireConfigurationBuilt();
 	}

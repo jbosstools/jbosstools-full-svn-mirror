@@ -44,27 +44,15 @@ public class HibernateExtensionDefinition {
 	public HibernateExtension createHibernateExtensionInstance() {
 		HibernateExtension hiberanteExtension = null;
 
-		   try {
-			  // hiberanteExtension = (HibernateExtension) ReflectHelper.classForName( classname ).newInstance();
-			   hiberanteExtension = (HibernateExtension) element.createExecutableExtension(CLASSNAME);
-		   }
-		  /* catch (InstantiationException e) {
-			   throw new HibernateConsoleRuntimeException(NLS.bind(
-					   "Problem while creating hibernate extension instance {0}", classname));
-		   }
-		   catch (IllegalAccessException e) {
-			   throw new HibernateConsoleRuntimeException(NLS.bind(
-					   "Problem while creating hibernate extension instance {0}", classname));	}
-		   catch (ClassNotFoundException e) {
-			   throw new HibernateConsoleRuntimeException(NLS.bind(
-					   "Problem while creating hibernate extension instance {0}", classname));
-		   } */catch (CoreException e) {
-			// TODO Auto-generated catch block
+		try {
+			hiberanteExtension = (HibernateExtension) element
+					.createExecutableExtension(CLASSNAME);
+		} catch (CoreException e) {
 			e.printStackTrace();
 		}
 
-		   return hiberanteExtension;
-		}
+		return hiberanteExtension;
+	}
 
 	/**
 	 * @return the hibernateVersion
