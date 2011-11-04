@@ -452,7 +452,7 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 		if (node != null) {
 			if (node.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
 				return XPCOM.queryInterface(node, nsIDOMElement.class);
-			} else if (node.getNodeType() == nsIDOMNode.TEXT_NODE) {
+			} else if (node.getNodeType() == nsIDOMNode.TEXT_NODE && node.getParentNode() != null) {
 				return XPCOM.queryInterface(node.getParentNode(), nsIDOMElement.class);
 			}
 		}
