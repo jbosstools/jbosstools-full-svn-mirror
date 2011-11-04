@@ -97,5 +97,8 @@
 
 <!-- <child location='http://downloads.jboss.org/savara/releases/updates/2.0.x/' /> -->
 
+<child location='http://download.jboss.org/jbosstools/builds/staging/openshift-java-client-master/all/repo/'/>
+<child location='http://download.jboss.org/jbosstools/builds/staging.previous/openshift-java-client-master/all/repo/'/>
+
 </children>
 </repository>
