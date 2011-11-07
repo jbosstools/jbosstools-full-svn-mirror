@@ -9,7 +9,7 @@ import org.osgi.framework.BundleContext;
 public class JspTemplatePluign extends BaseUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.jboss.tools.jst.vpe.jsp"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "org.jboss.tools.vpe.jsp"; //$NON-NLS-1$
 
 	// The shared instance
 	private static JspTemplatePluign plugin;
