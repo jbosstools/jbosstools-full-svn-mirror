@@ -64,7 +64,24 @@
 			Refer to the <ulink url="http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/4.0/html-single/Getting_Started_Guide/index.html#Welcome">Welcome to JBoss Developer Studio</ulink> section of the <citetitle pubwork="book">Getting Started with JBoss Developer Studio</citetitle> guide for further details.
 		</para>
 	</section>
-	
+	<section id="sect-Beginners_Guide-The_interface-JBoss_Central">
+		<title>JBoss Central</title>
+		<para>
+			When starting the JBoss Developer Studio you will see <guilabel>JBoss Central</guilabel> in the workspace. From <guilabel>JBoss Central</guilabel> you can quickly <guilabel>Create Projects</guilabel>, run <guilabel>Project Examples</guilabel>, view <guilabel>Documentation</guilabel>, read the latest <guilabel>News</guilabel> and <guilabel>Blogs</guilabel>, and change <guilabel>JBoss Central</guilabel>
+            <guilabel>Settings</guilabel>.
+		</para>
+		<figure id="figu-Beginners_Guide-JBoss_Central">
+			<title>JBoss Central</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/jboss_central_01.png" format="PNG" />
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>
+			For further information on <guilabel>JBoss Central</guilabel> see the <emphasis>Getting Started Guide</emphasis> for this realease.
+		</para>
+	</section>
 	<section id="sect-Beginners_Guide-The_interface-JBoss_Application_Server">
 		<title>JBoss Application Server</title>
 		<para>
