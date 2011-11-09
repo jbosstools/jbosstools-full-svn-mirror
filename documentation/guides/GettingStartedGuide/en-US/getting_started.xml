@@ -117,7 +117,56 @@
 	</section>
 
 	<xi:include href="usage_reporting.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
-
+	<section>
+		<title>JBoss Central</title>
+		<para>
+			When viewing the workbench for the first time you will be greated with <firstterm>JBoss Central</firstterm>. JBoss Central assists you in getting started and keeps you up to date with JBoss technologies.
+		</para>
+		<figure>
+			<title>JBoss Central</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/getting_started/jboss_central_01.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>
+			At the top of the tab is a search box. By clicking the down arrow to the left you can select to perform a search on either the <guimenuitem>Red Hat Customer Portal</guimenuitem> or the <guimenuitem>JBoss Community</guimenuitem>.
+		</para>
+		<figure>
+			<title>Search Options</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/getting_started/jboss_central_02.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>
+			Performing a search will launch a web browser as a new tab within JBoss Developer Studio displaying the results page. You can interact with the browser as you would any other web browser.
+		</para>
+		<figure>
+			<title>Search Results</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/getting_started/jboss_central_03.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>
+			From the <guilabel>Create Projects</guilabel> section you can create
+		</para>
+		<figure>
+			<title>Creating a Project</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/getting_started/jboss_central_04.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>
+			If you do not wish to see JBoss Central at every startup, you can deselect the checkbox <guilabel>Show on Startup</guilabel> in the <guilabel>Settings</guilabel> section.
+		</para>
+	</section>
 	<section id="Support">
 		<?dbhtml filename="Support.html"?>
 		<title>Support</title>
