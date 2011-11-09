@@ -78,8 +78,6 @@ public class VpeStyleUtil {
 	public static String FILE_PROTOCOL = "file:"; //$NON-NLS-1$
 	public static String HTTP_PROTOCOL = "http:"; //$NON-NLS-1$
 	public static String SLASH = "/"; //$NON-NLS-1$
-	public static final String[] REPLACED_CHARACTERS_REGEXP = 
-			new String[] {"\\(", "\\)", "'", "\"", Constants.WHITE_SPACE}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
 	/**
 	 * Returns CSS style declaration corresponding to the given {@code element}.
@@ -436,7 +434,7 @@ public class VpeStyleUtil {
 			file = (IFile) vii.getStorage();
 		}
 		for (int i = 1; i < urls.length; i++) {
-			urls[i] = updateURLItem(urls[i]);
+			urls[i] = removeQuotesUpdate(urls[i]);
 			String[] urlParts = splitURL(urls[i]);
 			if (urlParts == null) {
 				continue;
@@ -463,7 +461,7 @@ public class VpeStyleUtil {
 			return value;
 		}
 		for (int i = 1; i < urls.length; i++) {
-			urls[i] = updateURLItem(urls[i]);
+			urls[i] = removeQuotesUpdate(urls[i]);
 			String[] urlParts = splitURL(urls[i]);
 			if (urlParts == null) {
 				continue;
@@ -503,7 +501,7 @@ public class VpeStyleUtil {
 		return res;
 	}
 
-	private static String updateURLItem(String url) {
+	private static String removeQuotesUpdate(String url) {
 		url = url.replace(SINGLE_QUOTE_STRING, EMPTY_STRING);
 		url = url.replace(QUOTE_STRING, EMPTY_STRING);
 		url = ATTR_URL + url;
@@ -769,9 +767,11 @@ public class VpeStyleUtil {
 		try {
 			uri = new URI(resolvedUrl);
 		} catch (URISyntaxException e) {
-			// here we process user input, and when user enter url, there possible that we will not be able parse it.
-			// so we just ignore this.
-			//		VpePlugin.getDefault().logWarning("Error in parsiong URI string", e); //$NON-NLS-1$
+			/*
+			 * here we process user input, and when user enter url,
+			 * there possible that we will not be able parse it.
+			 * So we just ignore this. 
+			 */
 		}
 		if (uri == null || !uri.isAbsolute()) {
 			String decodedUrl = decodeUrl(resolvedUrl);
@@ -788,15 +788,10 @@ public class VpeStyleUtil {
 		}
 		/*
 		 * https://issues.jboss.org/browse/JBIDE-9975
-		 * Accompany escaped symbols with "\"
-		 * Now all the URL string will be updated.
+		 * Put the URL into quotes.
+		 * It's default xulrunner behavior.
 		 */
-		String n = null;
-		for (String str : REPLACED_CHARACTERS_REGEXP) {
-			n = "\\\\"+str.replaceAll("\\\\", Constants.EMPTY); //$NON-NLS-1$ //$NON-NLS-2$
-			resolvedUrl = resolvedUrl.replaceAll(str, n);
-		}
-		return resolvedUrl;
+		return QUOTE_STRING + resolvedUrl + QUOTE_STRING;
 	}
 
 	private static String pathToUrl(IPath location) {
