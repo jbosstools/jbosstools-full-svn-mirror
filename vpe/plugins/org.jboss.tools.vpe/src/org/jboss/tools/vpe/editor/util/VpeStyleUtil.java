@@ -78,6 +78,8 @@ public class VpeStyleUtil {
 	public static String FILE_PROTOCOL = "file:"; //$NON-NLS-1$
 	public static String HTTP_PROTOCOL = "http:"; //$NON-NLS-1$
 	public static String SLASH = "/"; //$NON-NLS-1$
+	public static final String[] REPLACED_CHARACTERS_REGEXP = 
+			new String[] {"\\(", "\\)", "'", "\"", Constants.WHITE_SPACE}; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
 	/**
 	 * Returns CSS style declaration corresponding to the given {@code element}.
@@ -424,12 +426,10 @@ public class VpeStyleUtil {
 	 * @return format style string
 	 */
 	public static String addFullPathIntoURLValue(String value, VpePageContext pageContext) {
-
 		String urls[] = value.split(ATTR_URL);
 		if (urls.length == 1) {
 			return value;
 		}
-		
 		IFile file = null;
 		final VpeIncludeInfo vii = pageContext.getVisualBuilder().getCurrentIncludeInfo();
 		if (vii != null && (vii.getStorage() instanceof IFile)) {
@@ -458,12 +458,10 @@ public class VpeStyleUtil {
 	 * @return Format style string
 	 */
 	public static String addFullPathIntoURLValue(String value, String href_val) {
-
 		String urls[] = value.split(ATTR_URL);
 		if (urls.length == 1) {
 			return value;
 		}
-
 		for (int i = 1; i < urls.length; i++) {
 			urls[i] = updateURLItem(urls[i]);
 			String[] urlParts = splitURL(urls[i]);
@@ -493,7 +491,8 @@ public class VpeStyleUtil {
 	private static String[] splitURL(String url) {
 		int startAttr = url.indexOf(ATTR_URL);
 		int startPathIndex = url.indexOf(OPEN_BRACKET, startAttr);
-		int endPathIndex = url.indexOf(CLOSE_BRACKET, startPathIndex + 1);
+//		int endPathIndex = url.lastIndexOf(CLOSE_BRACKET, startPathIndex + 1);
+		int endPathIndex = url.lastIndexOf(CLOSE_BRACKET, url.length());
 		if (startPathIndex < 0 || endPathIndex < 0) {
 			return null;
 		}
@@ -692,46 +691,36 @@ public class VpeStyleUtil {
 	 * @return
 	 */
 	public static void refreshStyleElement(VpeVisualDomBuilder visualDomBuilder, VpeElementMapping elementMapping) {
-
 		nsIDOMNode value = null;
-
 		/*
-		 * data property( of "style's" elementMapping ) contains Map<Object,nsIDOMNode>. There is only one "style"
-		 * visual element in this map. So we get this element from map
-		 * 
-		 * there is potential danger in this manner of keeping "style" element ( use property "data" of Object type )
+		 * data property( of "style's" elementMapping ) contains Map<Object,nsIDOMNode>. 
+		 * There is only one "style" visual element in this map. So we get this element from map.
+		 * There is potential danger in this manner of keeping "style" element ( use property "data" of Object type )
 		 */
-
 		Map<Object, nsIDOMNode> map = (Map<Object, nsIDOMNode>) elementMapping.getData();
-
 		// get "style" element
 		if (map != null) {
-
 			if (map.size() > 0) {
 				value = map.values().iterator().next();
 			}
 		}
-
-		if (value == null)
+		if (value == null) {
 			return;
-
+		}
 		// get new value of style element
 		Node textNode = elementMapping.getSourceNode().getFirstChild();
 		String text = null;
-
 		if (textNode != null) {
 			text = textNode.getNodeValue();
 		}
-
 		nsIDOMNodeList list = value.getChildNodes();
-
 		// remove all children of style element
-		for (int i = 0; i < list.getLength(); i++)
+		for (int i = 0; i < list.getLength(); i++) {
 			value.removeChild(list.item(i));
-
+		}
 		// add new value of style element
-		value.appendChild(visualDomBuilder.getXulRunnerEditor().getDOMDocument().createTextNode(text));
-
+		value.appendChild(visualDomBuilder.getXulRunnerEditor()
+				.getDOMDocument().createTextNode(text));
 	}
 
 	public static String getAbsoluteResourcePath(String resourcePathInPlugin) {
@@ -773,12 +762,9 @@ public class VpeStyleUtil {
 	}
 
 	public static String processUrl(String url, IFile baseFile) {
-
 		String resolvedUrl = url.replaceFirst(
 				"^\\s*(\\#|\\$)\\{facesContext.externalContext.requestContextPath\\}", Constants.EMPTY); //$NON-NLS-1$
-
 		resolvedUrl = ElServiceUtil.replaceEl(baseFile, resolvedUrl);
-
 		URI uri = null;
 		try {
 			uri = new URI(resolvedUrl);
@@ -787,23 +773,28 @@ public class VpeStyleUtil {
 			// so we just ignore this.
 			//		VpePlugin.getDefault().logWarning("Error in parsiong URI string", e); //$NON-NLS-1$
 		}
-
-		if (uri != null && uri.isAbsolute()) {
-			return resolvedUrl;
+		if (uri == null || !uri.isAbsolute()) {
+			String decodedUrl = decodeUrl(resolvedUrl);
+			Path path = new Path(decodedUrl);
+			if (decodedUrl.startsWith("/") //$NON-NLS-1$
+					&& path.segment(0).equals(baseFile.getProject().getName())) {
+				decodedUrl = "/" //$NON-NLS-1$
+						+ path.removeFirstSegments(1).toPortableString();
+			}
+			IFile file = FileUtil.getFile(decodedUrl, baseFile);
+			if (file != null && file.getLocation() != null) {
+				resolvedUrl = pathToUrl(file.getLocation());
+			}
 		}
-
-		String decodedUrl = decodeUrl(resolvedUrl);
-
-		Path path = new Path(decodedUrl);
-		if (decodedUrl.startsWith("/") //$NON-NLS-1$
-				&& path.segment(0).equals(baseFile.getProject().getName())) {
-			decodedUrl = "/" //$NON-NLS-1$
-					+ path.removeFirstSegments(1).toPortableString();
-		}
-
-		IFile file = FileUtil.getFile(decodedUrl, baseFile);
-		if (file != null && file.getLocation() != null) {
-			return pathToUrl(file.getLocation());
+		/*
+		 * https://issues.jboss.org/browse/JBIDE-9975
+		 * Accompany escaped symbols with "\"
+		 * Now all the URL string will be updated.
+		 */
+		String n = null;
+		for (String str : REPLACED_CHARACTERS_REGEXP) {
+			n = "\\\\"+str.replaceAll("\\\\", Constants.EMPTY); //$NON-NLS-1$ //$NON-NLS-2$
+			resolvedUrl = resolvedUrl.replaceAll(str, n);
 		}
 		return resolvedUrl;
 	}
