@@ -35,7 +35,7 @@
 				<repository location="${URL2}" />
 			</source>
 
-			<slicingOptions includeFeatures="true" followStrict="true" />
+			<slicingOptions includeFeatures="true" followStrict="true" latestversiononly="true" />
 		</p2.mirror>
 
 		<delete>
