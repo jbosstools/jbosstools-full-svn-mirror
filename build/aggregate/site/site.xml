@@ -113,6 +113,7 @@
 		<category name="ReportTools" />
 	</feature>
 	<feature url="features/org.jboss.tools.maven.feature_0.0.0.jar" id="org.jboss.tools.maven.feature" version="0.0.0">
+		<category name="AbridgedTools" />
 		<category name="MavenTools" />
 	</feature>
 	<feature url="features/org.jboss.tools.maven.seam.feature_0.0.0.jar" id="org.jboss.tools.maven.seam.feature" version="0.0.0">
@@ -147,6 +148,9 @@
 	</feature>
 
 	<feature url="features/org.jboss.tools.common.jdt.feature_0.0.0.jar" id="org.jboss.tools.common.jdt.feature" version="0.0.0">
+		<category name="AbridgedTools" />
+	</feature>
+	<feature url="features/org.jboss.tools.common.mylyn.feature_0.0.0.jar" id="org.jboss.tools.common.mylyn.feature" version="0.0.0">
 		<category name="AbridgedTools" />
 	</feature>
 	<!-- include but do not categorize -->
