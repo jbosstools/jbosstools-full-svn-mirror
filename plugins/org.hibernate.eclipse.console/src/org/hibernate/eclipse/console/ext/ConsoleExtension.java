@@ -10,7 +10,6 @@
  ******************************************************************************/
 package org.hibernate.eclipse.console.ext;
 
-import org.hibernate.console.ext.CompletionProposalsResult;
 import org.hibernate.console.ext.HibernateExtension;
 
 /**
