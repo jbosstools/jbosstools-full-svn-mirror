@@ -43,7 +43,7 @@ import org.hibernate.console.execution.DefaultExecutionContext;
 import org.hibernate.console.execution.ExecutionContext;
 import org.hibernate.console.execution.ExecutionContext.Command;
 import org.hibernate.console.execution.ExecutionContextHolder;
-import org.hibernate.console.ext.ExtensionManager;
+import org.hibernate.console.ext.HibernateExtensionManager;
 import org.hibernate.console.ext.HibernateExtension;
 import org.hibernate.console.ext.HibernateExtensionDefinition;
 import org.hibernate.console.preferences.ConsoleConfigurationPreferences;
@@ -69,7 +69,7 @@ public class ConsoleConfiguration implements ExecutionContextHolder {
 	
 	private void loadHibernateExtension(){
 		String version = hibernateVersion == null ? "3.5" : hibernateVersion;//3.5 is a default version
-		HibernateExtensionDefinition def = ExtensionManager.findHibernateExtensionDefinition(version);
+		HibernateExtensionDefinition def = HibernateExtensionManager.findHibernateExtensionDefinition(version);
 		if (def != null){
 			HibernateExtension hibernateExtension = def.createHibernateExtensionInstance();
 			hibernateExtension.setConsoleConfigurationPreferences(prefs);

@@ -29,7 +29,7 @@ import org.hibernate.type.Type;
  * @author MAX
  *
  */
-public class TypeNode extends ClassNode implements TypedNode{
+class TypeNode extends ClassNode implements TypedNode{
 
 	Type type;
 	public TypeNode(NodeFactory factory, BaseNode parent, Type type, ClassMetadata metadata, Object baseObject, boolean objectGraph) {

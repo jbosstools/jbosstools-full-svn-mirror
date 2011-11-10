@@ -25,7 +25,7 @@ import org.eclipse.core.runtime.Platform;
  * @author Dmitry Geraskov
  *
  */
-public class ExtensionManager {
+public class HibernateExtensionManager {
 	
 	public static final String HIBERNATEEXTENSION_EXTENSION_ID = "org.hibernate.eclipse.hibernateextension"; //$NON-NLS-1$
 	
@@ -39,7 +39,7 @@ public class ExtensionManager {
 	}
 
 	public static HibernateExtensionDefinition[] findHiberanteExtensionDefinitions() {
-		List<HibernateExtensionDefinition> exporters = new ArrayList<HibernateExtensionDefinition>();
+		List<HibernateExtensionDefinition> hibernateExtensions = new ArrayList<HibernateExtensionDefinition>();
 
 		IExtension[] extensions = findExtensions(HIBERNATEEXTENSION_EXTENSION_ID);
 		for (int i = 0; i < extensions.length; i++) {
@@ -47,17 +47,17 @@ public class ExtensionManager {
 			for (int j = 0; j < elements.length; j++) {
 				HibernateExtensionDefinition extensiodDefinition = new HibernateExtensionDefinition(
 						elements[j]);
-				exporters.add(extensiodDefinition);
+				hibernateExtensions.add(extensiodDefinition);
 			}
 		}
 
-		return exporters.toArray(new HibernateExtensionDefinition[exporters.size()]);
+		return hibernateExtensions.toArray(new HibernateExtensionDefinition[hibernateExtensions.size()]);
 	}
 
 	/**
 	 * return map of ExporterDefinitions keyed by id
 	 */
-	public static synchronized Map<String, HibernateExtensionDefinition> getExporterDefinitionsAsMap() {
+	public static synchronized Map<String, HibernateExtensionDefinition> getHibernateExtensionDefinitionsAsMap() {
 		if (hibernateExtensions == null){
 			//TODO add good comparator here(we often need the keys ordered)
 			hibernateExtensions = new TreeMap<String, HibernateExtensionDefinition>();
@@ -74,7 +74,7 @@ public class ExtensionManager {
 	}
 	
 	public static HibernateExtensionDefinition findHibernateExtensionDefinition(String hibernateVersion){
-		return getExporterDefinitionsAsMap().get(hibernateVersion);
+		return getHibernateExtensionDefinitionsAsMap().get(hibernateVersion);
 	}
 
 }
