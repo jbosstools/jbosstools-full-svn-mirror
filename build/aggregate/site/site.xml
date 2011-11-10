@@ -7,7 +7,7 @@
 		<category name="AbridgedTools" />
 	</feature>
 	-->
-	<!-- only in JBT for now (JBIDE-9784), eventually in JBDS (JBDS-1867) -->
+
 	<feature url="features/org.jboss.tools.central.feature_0.0.0.jar" id="org.jboss.tools.central.feature" version="0.0.0">
 		<category name="AbridgedTools"/>
 	</feature>
