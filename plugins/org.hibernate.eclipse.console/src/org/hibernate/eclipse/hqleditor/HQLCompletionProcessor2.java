@@ -39,6 +39,8 @@ import org.hibernate.console.ext.CompletionProposalsResult;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.QueryEditor;
+import org.hibernate.eclipse.console.ext.ConsoleExtension;
+import org.hibernate.eclipse.console.ext.ConsoleExtensionManager;
 
 /**
  * content assist processor for HQL code.
@@ -115,16 +117,21 @@ public class HQLCompletionProcessor2 implements IContentAssistProcessor {
 				}
 
 				if(consoleConfiguration != null) {
-					//EclipseHQLCompletionRequestor eclipseHQLCompletionCollector = new EclipseHQLCompletionRequestor();
-					CompletionProposalsResult codeCompletions = consoleConfiguration.getHibernateExtension().hqlCodeComplete(doc.get(), currentOffset);
-	
-					proposalList.addAll(codeCompletions.getCompletionProposals());
-					errorMessage = codeCompletions.getErrorMessage();//eclipseHQLCompletionCollector.getLastErrorMessage();
-					
-					result = proposalList.toArray(new ICompletionProposal[proposalList.size()]);
-	    			if(result.length==0 && errorMessage==null) {
-	    				errorMessage = HibernateConsoleMessages.HQLCompletionProcessor_no_hql_completions_available;
-	    			}
+					ConsoleExtension consoleExtension = ConsoleExtensionManager.getConsoleExtension(consoleConfiguration.getHibernateExtension());
+					if (consoleExtension != null){
+						CompletionProposalsResult codeCompletions = consoleExtension.hqlCodeComplete(doc.get(), currentOffset);
+						
+						proposalList.addAll(codeCompletions.getCompletionProposals());
+						errorMessage = codeCompletions.getErrorMessage();//eclipseHQLCompletionCollector.getLastErrorMessage();
+						
+						result = proposalList.toArray(new ICompletionProposal[proposalList.size()]);
+		    			if(result.length==0 && errorMessage==null) {
+		    				errorMessage = HibernateConsoleMessages.HQLCompletionProcessor_no_hql_completions_available;
+		    			}
+					} else {
+						errorMessage = "There is no completion proposal implementation for this hibernate version \'"
+								+ consoleConfiguration.getHibernateExtension().getHibernateVersion() + "\'";
+					}
 				}
     		} else {
     			errorMessage = HibernateConsoleMessages.HQLCompletionProcessor_no_start_word_found;

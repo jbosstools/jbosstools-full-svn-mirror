@@ -43,7 +43,7 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.WizardNewFileCreationPage;
 import org.hibernate.console.ImageConstants;
-import org.hibernate.console.ext.ExtensionManager;
+import org.hibernate.console.ext.HibernateExtensionManager;
 import org.hibernate.console.preferences.ConsoleConfigurationPreferences.ConfigurationMode;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
@@ -130,7 +130,7 @@ public class ConsoleConfigurationMainTab extends ConsoleConfigurationTab {
 		Label hLabel = new Label(comp2, SWT.NULL);
 		hLabel.setText(HibernateConsoleMessages.ConsoleConfigurationMainTab_0);
 		hibernateVersion = new Combo(comp2, SWT.READ_ONLY);
-		hibernateVersion.setItems((String[])ExtensionManager.getExporterDefinitionsAsMap().keySet().toArray(new String[0]));
+		hibernateVersion.setItems((String[])HibernateExtensionManager.getHibernateExtensionDefinitionsAsMap().keySet().toArray(new String[0]));
 		hibernateVersion.select(0);
 		hibernateVersion.setLayoutData(new GridData(53, -1));
 		hibernateVersion.addModifyListener(getChangeListener());

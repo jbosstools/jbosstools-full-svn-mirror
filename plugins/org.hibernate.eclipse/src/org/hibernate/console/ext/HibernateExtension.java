@@ -45,6 +45,6 @@ public interface HibernateExtension {
 	//FIXME remove this method
 	*/
 	
-	public CompletionProposalsResult hqlCodeComplete(String query, int position);
-
+	
+	
 }

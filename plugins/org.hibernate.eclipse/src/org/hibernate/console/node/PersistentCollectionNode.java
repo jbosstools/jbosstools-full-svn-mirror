@@ -39,7 +39,7 @@ import org.hibernate.type.Type;
  * @author MAX
  *
  */
-public class PersistentCollectionNode extends BaseNode implements TypedNode{
+class PersistentCollectionNode extends BaseNode implements TypedNode{
 
 	BaseNode virtualNode;
 	CollectionType type;
