@@ -19,9 +19,9 @@
 		<category name="AbridgedTools" />
 		<category name="SOATools" />
 	</feature>
-	<!-- JBIDE-10062 REMOVE BPEL for M4 <feature url="features/org.jboss.tools.bpel.feature_0.0.0.jar" id="org.jboss.tools.bpel.feature" version="0.0.0">
+	<feature url="features/org.jboss.tools.bpel.feature_0.0.0.jar" id="org.jboss.tools.bpel.feature" version="0.0.0">
 		<category name="SOATools" />
-	</feature> -->
+	</feature>
 
 	<!-- jBPM Tools & Flow features -->
 	<feature url="features/org.jboss.tools.jbpm.convert.feature_0.0.0.jar" id="org.jboss.tools.jbpm.convert.feature" version="0.0.0">
