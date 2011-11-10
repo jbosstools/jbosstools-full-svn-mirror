@@ -311,30 +311,11 @@ public class HibernateExtension4_0 implements HibernateExtension {
 		return configuration != null;
 	}
 
-	@Override
-	public CompletionProposalsResult hqlCodeComplete(String query, int currentOffset) {
-		EclipseHQLCompletionRequestor requestor = new EclipseHQLCompletionRequestor();
-		if (!hasConfiguration()){
-			try {
-				build();
-			 	execute( new ExecutionContext.Command() {
-			 		public Object execute() {
-			 			if(hasConfiguration()) {
-				 			configuration.buildMappings();
-				 		}
-			 			return null;
-			 		}
-				});
-			} catch (HibernateException e){
-				//FIXME
-				//String mess = NLS.bind(HibernateConsoleMessages.CompletionHelper_error_could_not_build_cc, consoleConfiguration.getName());
-				//HibernateConsolePlugin.getDefault().logErrorMessage(mess, e);
-			}
-		}
-		IHQLCodeAssist hqlEval = new HQLCodeAssist(configuration);
-		query = query.replace('\t', ' ');
-		hqlEval.codeComplete(query, currentOffset, requestor);
-		return new CompletionProposalsResult(requestor.getCompletionProposals(), requestor.getLastErrorMessage());
+	/**
+	 * @return
+	 */
+	public Configuration getConfiguration() {
+		return configuration;
 	}
 
 }
