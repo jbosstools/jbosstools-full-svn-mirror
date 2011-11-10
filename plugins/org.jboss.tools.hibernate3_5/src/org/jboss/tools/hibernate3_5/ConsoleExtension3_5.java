@@ -11,9 +11,9 @@
 package org.jboss.tools.hibernate3_5;
 
 import org.hibernate.console.execution.ExecutionContext;
-import org.hibernate.console.ext.CompletionProposalsResult;
 import org.hibernate.console.ext.HibernateException;
 import org.hibernate.console.ext.HibernateExtension;
+import org.hibernate.eclipse.console.ext.CompletionProposalsResult;
 import org.hibernate.eclipse.console.ext.ConsoleExtension;
 import org.hibernate.tool.ide.completion.HQLCodeAssist;
 import org.hibernate.tool.ide.completion.IHQLCodeAssist;
