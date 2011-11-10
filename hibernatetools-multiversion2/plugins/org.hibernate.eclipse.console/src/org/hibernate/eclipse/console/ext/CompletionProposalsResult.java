@@ -8,7 +8,7 @@
  * Contributor:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.hibernate.console.ext;
+package org.hibernate.eclipse.console.ext;
 
 import java.util.List;
 
