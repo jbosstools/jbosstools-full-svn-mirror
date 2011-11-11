@@ -10,23 +10,17 @@
  ******************************************************************************/
 package org.hibernate.eclipse.console.ext;
 
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.debug.core.ILaunch;
-import org.eclipse.debug.core.ILaunchConfiguration;
-import org.hibernate.console.ext.HibernateExtension;
+import java.io.File;
+import java.util.Set;
 
 /**
  * @author Dmitry Geraskov
  *
  */
-public interface ConsoleExtension {
+public interface IArtifactCollector {
 	
-	public CompletionProposalsResult hqlCodeComplete(String query, int position);
+	public File[] getFiles(String type);
 	
-	public void setHibernateException(HibernateExtension hibernateExtension);
+	public Set getFileTypes();
 
-	public void launchExporters(ILaunchConfiguration configuration, String mode,
-			ILaunch launch, IProgressMonitor monitor) throws CoreException;
-	
 }
