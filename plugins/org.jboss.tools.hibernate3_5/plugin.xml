@@ -11,7 +11,7 @@
    <extension
          point="org.hibernate.eclipse.console.consoleextension">
       <consoleextension
-            classname="org.jboss.tools.hibernate3_5.ConsoleExtension3_5"
+            classname="org.jboss.tools.hibernate3_5.console.ConsoleExtension3_5"
             version="%hibernate.version">
       </consoleextension>
    </extension>
