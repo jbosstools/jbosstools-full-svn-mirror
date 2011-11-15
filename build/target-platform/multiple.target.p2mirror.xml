@@ -207,7 +207,7 @@
 <iu id="com.google.gdt.eclipse.suite.e36.feature.feature.group" version=""/>
 <iu id="com.google.gwt.eclipse.sdkbundle.e36.feature.2.1.1.feature.group" version=""/>
 <iu id="org.eclipse.rcp.patch333630.feature.group" version=""/>
-<iu id="org.eclipse.rcp.patch64333630.feature.group" version=""/>
+<iu id="org.eclipse.rcp.patch64333360.feature.group" version=""/>
 <iu id="org.drools.eclipse.feature.feature.group" version=""/>
 <iu id="org.drools.eclipse.task.feature.feature.group" version=""/>
 <iu id="org.guvnor.tools.feature.feature.group" version=""/>
