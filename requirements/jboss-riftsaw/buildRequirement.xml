@@ -29,7 +29,7 @@ install riftsaw
 	</target>
 	<target name="install-jbossas" >
 		<property file="../jbossas/build.properties" />
-		<unzip src="${requirement.build.root}/jbossas/${jboss51.build.archive}" dest="${unzip.dest}" >
+		<unzip src="${requirement.build.root}/../download/jbossas/${jboss51.build.archive}" dest="${unzip.dest}" >
 			<mapper type="glob" from="${jboss51.build.name}/*" to="${jboss51.build.name}-riftsaw/*"/>
 		</unzip>
 	</target>
