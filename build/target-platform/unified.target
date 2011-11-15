@@ -225,7 +225,7 @@
 
 			<!-- JBDS-1648 SWT patches -->
 			<unit id="org.eclipse.rcp.patch333630.feature.group" version="1.0.0"/>
-			<unit id="org.eclipse.rcp.patch64333630.feature.group" version="1.0.0"/>
+			<unit id="org.eclipse.rcp.patch64333360.feature.group" version="1.0.0"/>
 		</location>
 	</locations>
 	<includeBundles>
