@@ -668,6 +668,17 @@
 									</exclusion>
 								</exclusions>
 							</dependency>
+							<dependency>
+									<groupId>ant</groupId>
+									<artifactId>ant-optional</artifactId>
+									<version>1.5.3-1</version>
+									<exclusions>
+										<exclusion>
+											<groupId>ant</groupId>
+											<artifactId>ant</artifactId>
+										</exclusion>
+									</exclusions>
+							</dependency>
 						</dependencies>
 						<artifactId>maven-antrun-plugin</artifactId>
 						<version>${maven.antrun.plugin.version}</version>
