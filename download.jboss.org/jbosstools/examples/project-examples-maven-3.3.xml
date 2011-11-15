@@ -434,10 +434,10 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<mavenArchetype>
 			<archetypeGroupId>org.jboss.spring.archetypes</archetypeGroupId>
 			<archetypeArtifactId>spring-mvc-webapp</archetypeArtifactId>
-			<archetypeVersion>1.0.0-SNAPSHOT</archetypeVersion>
-			<archetypeRepository>http://anonsvn.jboss.org/repos/jbosstools/workspace/fred/repositories/snapshot/</archetypeRepository>
+			<archetypeVersion>1.0.0.CR1</archetypeVersion>
+			<!-- archetypeRepository>http://anonsvn.jboss.org/repos/jbosstools/workspace/fred/repositories/snapshot/</archetypeRepository -->
 			<groupId>org.jboss.tools.example</groupId>
-			<artifactId>spring-mvc-webapp</artifactId>
+			<artifactId>springmvc</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<javaPackage>org.jboss.tools.example.springmvc</javaPackage>
 		</mavenArchetype>
