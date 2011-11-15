@@ -210,6 +210,8 @@
 <iu id="org.guvnor.tools.feature.feature.group" version=""/>
 <iu id="org.mozilla.xulrunner.feature.feature.group" version=""/>
 <iu id="org.mozilla.xpcom.feature.feature.group" version=""/>
+<iu id="org.eclipse.rcp.patch333630.feature.group" version=""/>
+<iu id="org.eclipse.rcp.patch64333630.feature.group" version=""/>
 </p2.mirror>
 </target>
 </project>
