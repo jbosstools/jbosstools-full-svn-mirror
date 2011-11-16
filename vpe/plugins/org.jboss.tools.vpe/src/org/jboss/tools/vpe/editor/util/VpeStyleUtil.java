@@ -20,6 +20,8 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -487,17 +489,30 @@ public class VpeStyleUtil {
 	}
 
 	private static String[] splitURL(String url) {
-		int startAttr = url.indexOf(ATTR_URL);
-		int startPathIndex = url.indexOf(OPEN_BRACKET, startAttr);
-//		int endPathIndex = url.lastIndexOf(CLOSE_BRACKET, startPathIndex + 1);
-		int endPathIndex = url.lastIndexOf(CLOSE_BRACKET, url.length());
-		if (startPathIndex < 0 || endPathIndex < 0) {
-			return null;
+		/*
+		 * https://issues.jboss.org/browse/JBIDE-10178
+		 * The index of closing bracket was wrong.
+		 * Thus replaced with java regexp. 
+		 */
+		String urlRegExp = "(?<=\\burl\\b)\\((.*)\\)(?=(?>[^\\)]*;|[^\\)]*))"; //$NON-NLS-1$
+		Pattern p = Pattern.compile(urlRegExp);
+		Matcher m = p.matcher(url);
+		String[] res = null;
+		if (m.find()) {
+			res = new String[3];
+			/*
+			 * Before URL
+			 */
+			res[0] = url.substring(0, m.start(1));
+			/*
+			 * The URL string itself
+			 */
+			res[1] = m.group(1);
+			/*
+			 * After the URL string
+			 */
+			res[2] = url.substring(m.end(1), url.length());
 		}
-		String[] res = new String[3];
-		res[0] = url.substring(0, startPathIndex + 1);
-		res[1] = url.substring(startPathIndex + 1, endPathIndex);
-		res[2] = url.substring(endPathIndex, url.length());
 		return res;
 	}
 
