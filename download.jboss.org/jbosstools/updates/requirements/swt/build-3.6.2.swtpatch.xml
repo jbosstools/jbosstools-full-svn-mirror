@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="default">
+<target name="default">
+	<echo>Run like this:
+
+java -cp /home/nboldt/eclipse/37clean/eclipse/plugins/org.eclipse.equinox.launcher_*.jar org.eclipse.equinox.launcher.Main -consoleLog -nosplash -data /tmp -application org.eclipse.equinox.p2.publisher.UpdateSitePublisher -metadataRepository file://${basedir}/result -artifactRepository file://${basedir}/result -source ${basedir}/3.6.2.v3660-patched_JBDS-1648 -publishArtifacts 
+
+</echo>
+</target>
+</project>
