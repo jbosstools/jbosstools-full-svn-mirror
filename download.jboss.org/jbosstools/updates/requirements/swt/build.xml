@@ -27,7 +27,7 @@
 		<property name="compress" value="false" />
 
 		<delete>
-			<fileset dir="${destination}/3.7.0.v3735b-201106220-1614/" includes="**/artifacts.jar, **/contents.jar"/>
+			<fileset dir="${destination}/3.7.0.v3735b-201106220-1614/" includes="**/artifacts.jar, **/content.jar"/>
 		</delete>
 
 		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/3.7.0.v3735b-201106220-1614/" artifactRepository="file:${destination}/3.7.0.v3735b-201106220-1614/" publishartifacts="true" source="${destination}/3.7.0.v3735b-201106220-1614/" compress="${compress}" />
