@@ -246,7 +246,7 @@ public class ConsoleExtension4_0 implements ConsoleExtension {
 					ReverseEngineeringSettings qqsettings = new ReverseEngineeringSettings(res)
 					.setDefaultPackageName(attributes.getPackageName())
 					.setDetectManyToMany( attributes.detectManyToMany() )
-					.setDetectOneToOne( attributes.detectOneToOne() )
+					//.setDetectOneToOne( attributes.detectOneToOne() )
 					.setDetectOptimisticLock( attributes.detectOptimisticLock() );
 
 					res.setSettings(qqsettings);
