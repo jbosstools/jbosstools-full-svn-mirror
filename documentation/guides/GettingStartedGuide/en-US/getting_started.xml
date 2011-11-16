@@ -153,7 +153,11 @@
 			</mediaobject>
 		</figure>
 		<para>
-			From the <guilabel>Create Projects</guilabel> section you can create
+			From the <guilabel>Create Projects</guilabel> section you can create a <guilabel>Dynamic Web Project</guilabel>, <guilabel>Seam 2 Web Project</guilabel>, <guilabel>Maven Project</guilabel> or any one of many <guilabel>Project Examples</guilabel>. To access a complete list of projects you can create, click on the window icon at the top-right of the <guilabel>Create Projects</guilabel> section <inlinemediaobject>
+				<imageobject>
+					<imagedata fileref="images/getting_started/jboss_central_icon_01.png"/>
+				</imageobject>
+			</inlinemediaobject>.
 		</para>
 		<figure>
 			<title>Creating a Project</title>
@@ -163,6 +167,81 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
+		<para>
+			Under the <guilabel>Project Examples</guilabel> section you can expand and view <guilabel>Java EE 6 Quickstarts</guilabel>, <guilabel>JBoss AS 7 Quickstarts</guilabel> and <guilabel>Seam 2 Tutorials</guilabel>. 
+		</para>
+		<figure>
+			<title>Project Examples</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/getting_started/jboss_central_05.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>
+			You can also download other examples and install and set runtime preferences through the <guilabel>Project Examples</guilabel> section by using the five buttons at the top-right. The first button <inlinemediaobject>
+				<imageobject>
+					<imagedata fileref="images/getting_started/jboss_central_icon_02.png"/>
+				</imageobject>
+			</inlinemediaobject> launches a <guilabel>New Project Examples</guilabel> wizard. Here you can search and download project examples to assist you with getting started.
+		</para>
+		<figure>
+			<title>New Project Examples wizard</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/getting_started/jboss_central_06.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>
+			By clicking on the second button <inlinemediaobject>
+				<imageobject>
+					<imagedata fileref="images/getting_started/jboss_central_icon_03.png"/>
+				</imageobject>
+			</inlinemediaobject> you will be taken directly to the <guilabel>JBoss Tools Runtime Detection</guilabel> dialog within <guilabel>Preferences</guilabel>. 
+		</para>
+		<figure>
+			<title>JBoss Tools Runtime Detection</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/getting_started/jboss_central_07.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>
+			The third <inlinemediaobject>
+				<imageobject>
+					<imagedata fileref="images/getting_started/jboss_central_icon_04.png"/>
+				</imageobject>
+			</inlinemediaobject> and fourth <inlinemediaobject>
+				<imageobject>
+					<imagedata fileref="images/getting_started/jboss_central_icon_05.png"/>
+				</imageobject>
+			</inlinemediaobject> buttons take you directly to the <guilabel>Seam 2</guilabel> runtime and <guilabel>Server Runtime Environments</guilabel> preference dialogs respectively.
+		</para>
+		<figure>
+			<title>Seam 2 runtime preferences</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/getting_started/jboss_central_08.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<figure>
+			<title>Server Runtime Environments preferences</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/getting_started/jboss_central_09.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>
+		The final button <inlinemediaobject>
+            <imageobject>
+				<imagedata fileref="images/getting_started/jboss_central_icon_06.png"/>
+			</imageobject>
+		</inlinemediaobject> refreshes the <guilabel>Project Examples</guilabel> list.
+		</para>
 		<para>
 			If you do not wish to see JBoss Central at every startup, you can deselect the checkbox <guilabel>Show on Startup</guilabel> in the <guilabel>Settings</guilabel> section.
 		</para>
