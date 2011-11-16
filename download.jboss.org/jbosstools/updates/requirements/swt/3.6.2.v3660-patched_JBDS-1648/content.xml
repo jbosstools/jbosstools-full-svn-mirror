@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <?metadataRepository version='1.1.0'?>
-<repository name='file:/home/nboldt/eclipse/workspace-jboss/jbosstools_trunk/download.jboss.org/jbosstools/updates/requirements/swt/result - metadata' type='org.eclipse.equinox.internal.p2.metadata.repository.LocalMetadataRepository' version='1'>
+<repository name='JBoss SWT Patches' type='org.eclipse.equinox.internal.p2.metadata.repository.LocalMetadataRepository' version='1.0.0'>
   <properties size='2'>
-    <property name='p2.timestamp' value='1321460510873'/>
+    <property name='p2.timestamp' value='1321472430287'/>
     <property name='p2.compressed' value='false'/>
   </properties>
   <units size='13'>
@@ -44,6 +44,31 @@
       <copyright>
         %copyright
       </copyright>
+    </unit>
+    <unit id='file:/home/nboldt/eclipse/workspace-jboss/jbosstools_trunk/download.jboss.org/jbosstools/updates/requirements/swt/3.6.2.v3660-patched_JBDS-1648_source/site.xml.JBoss SWT Patches' version='1.0.0.7N7k7EcLSsaSDUcz0z0ECivC7kMAVjl0p7Mz0lD'>
+      <properties size='3'>
+        <property name='org.eclipse.equinox.p2.name' value='JBoss SWT Patches'/>
+        <property name='org.eclipse.equinox.p2.description' value='JBoss SWT Patches: contains all features in this build.'/>
+        <property name='org.eclipse.equinox.p2.type.category' value='true'/>
+      </properties>
+      <provides size='1'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='file:/home/nboldt/eclipse/workspace-jboss/jbosstools_trunk/download.jboss.org/jbosstools/updates/requirements/swt/3.6.2.v3660-patched_JBDS-1648_source/site.xml.JBoss SWT Patches' version='1.0.0.7N7k7EcLSsaSDUcz0z0ECivC7kMAVjl0p7Mz0lD'/>
+      </provides>
+      <requires size='4'>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.rcp.patch.JBDS1648.x86.feature.feature.group' range='[3.6.2.v3660-patched_JBDS-1648,3.6.2.v3660-patched_JBDS-1648]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.rcp.patch.JBDS1648.x86.source.feature.feature.group' range='[3.6.2.v3660-patched_JBDS-1648,3.6.2.v3660-patched_JBDS-1648]'>
+          <filter>
+            (&amp;(osgi.arch=x86)(osgi.os=win32)(osgi.ws=win32))
+          </filter>
+        </required>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.rcp.patch.JBDS1648.x86_64.source.feature.feature.group' range='[3.6.2.v3660-patched_JBDS-1648,3.6.2.v3660-patched_JBDS-1648]'>
+          <filter>
+            (&amp;(osgi.os=win32)(osgi.ws=win32)(|(osgi.arch=x86)(osgi.arch=x86_64)))
+          </filter>
+        </required>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.rcp.patch.JBDS1648.x86_64.feature.feature.group' range='[3.6.2.v3660-patched_JBDS-1648,3.6.2.v3660-patched_JBDS-1648]'/>
+      </requires>
+      <touchpoint id='null' version='0.0.0'/>
     </unit>
     <unit id='org.eclipse.swt.win32.win32.x86_64' version='3.6.2.v3660'>
       <update id='org.eclipse.swt.win32.win32.x86_64' range='[0.0.0,3.6.2.v3660)' severity='0'/>
@@ -149,7 +174,7 @@
         </required>
       </requires>
       <filter>
-        (&amp;(osgi.arch=x86_64)(osgi.os=win32)(osgi.ws=win32))
+        (&amp;(osgi.os=win32)(osgi.ws=win32)(|(osgi.arch=x86)(osgi.arch=x86_64)))
       </filter>
       <touchpoint id='null' version='0.0.0'/>
       <licenses size='1'>
@@ -305,10 +330,10 @@
       <changes>
         <change>
           <from>
-            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.win32.win32.x86_64' range='0.0.0'/>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.swt.win32.win32.x86_64' range='0.0.0'/>
           </from>
           <to>
-            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.win32.win32.x86_64' range='[3.6.2.v3660,3.6.2.v3660]'/>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.swt.win32.win32.x86_64' range='[3.6.2.v3660,3.6.2.v3660]'/>
           </to>
         </change>
       </changes>
@@ -481,31 +506,6 @@
       <copyright>
         %copyright
       </copyright>
-    </unit>
-    <unit id='file:/home/nboldt/eclipse/workspace-jboss/jbosstools_trunk/download.jboss.org/jbosstools/updates/requirements/swt/3.6.2.v3660-patched_JBDS-1648/site.xml.JBoss SWT Patches' version='1.0.0.7N7k7EcLSsaSDUcz0z0ECivC7kMAVjl0p7Mz0lD'>
-      <properties size='3'>
-        <property name='org.eclipse.equinox.p2.name' value='JBoss SWT Patches'/>
-        <property name='org.eclipse.equinox.p2.description' value='JBoss SWT Patches: contains all features in this build.'/>
-        <property name='org.eclipse.equinox.p2.type.category' value='true'/>
-      </properties>
-      <provides size='1'>
-        <provided namespace='org.eclipse.equinox.p2.iu' name='file:/home/nboldt/eclipse/workspace-jboss/jbosstools_trunk/download.jboss.org/jbosstools/updates/requirements/swt/3.6.2.v3660-patched_JBDS-1648/site.xml.JBoss SWT Patches' version='1.0.0.7N7k7EcLSsaSDUcz0z0ECivC7kMAVjl0p7Mz0lD'/>
-      </provides>
-      <requires size='4'>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.rcp.patch.JBDS1648.x86.feature.feature.group' range='[3.6.2.v3660-patched_JBDS-1648,3.6.2.v3660-patched_JBDS-1648]'/>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.rcp.patch.JBDS1648.x86.source.feature.feature.group' range='[3.6.2.v3660-patched_JBDS-1648,3.6.2.v3660-patched_JBDS-1648]'>
-          <filter>
-            (&amp;(osgi.arch=x86)(osgi.os=win32)(osgi.ws=win32))
-          </filter>
-        </required>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.rcp.patch.JBDS1648.x86_64.source.feature.feature.group' range='[3.6.2.v3660-patched_JBDS-1648,3.6.2.v3660-patched_JBDS-1648]'>
-          <filter>
-            (&amp;(osgi.arch=x86_64)(osgi.os=win32)(osgi.ws=win32))
-          </filter>
-        </required>
-        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.rcp.patch.JBDS1648.x86_64.feature.feature.group' range='[3.6.2.v3660-patched_JBDS-1648,3.6.2.v3660-patched_JBDS-1648]'/>
-      </requires>
-      <touchpoint id='null' version='0.0.0'/>
     </unit>
   </units>
 </repository>
