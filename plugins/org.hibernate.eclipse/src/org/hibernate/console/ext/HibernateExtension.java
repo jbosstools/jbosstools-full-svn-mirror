@@ -11,6 +11,7 @@
 package org.hibernate.console.ext;
 
 import org.hibernate.console.QueryInputModel;
+import org.hibernate.console.execution.ExecutionContext.Command;
 import org.hibernate.console.preferences.ConsoleConfigurationPreferences;
 
 /**
@@ -44,6 +45,8 @@ public interface HibernateExtension {
 	public Object getSessionFactory();
 	//FIXME remove this method
 	*/
+
+	public Object execute(Command command);
 	
 	
 	

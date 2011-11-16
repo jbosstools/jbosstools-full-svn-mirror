@@ -151,14 +151,14 @@ public class ConsoleExtension4_0 implements ConsoleExtension {
 					if (attributes.isReverseEngineer()) {
 						monitor.subTask(HibernateConsoleMessages.CodeGenerationLaunchDelegate_reading_jdbc_metadata);
 					}
-					final Configuration cfg = buildConfiguration(attributes, cc, ResourcesPlugin.getWorkspace().getRoot());
+					final Configuration cfg = buildConfiguration(attributes, (HibernateExtension4_0) cc.getHibernateExtension(), ResourcesPlugin.getWorkspace().getRoot());
 
 					monitor.worked(1);
 
 					if (monitor.isCanceled())
 						return null;
 
-					return (ArtifactCollector) cc.execute(new Command() {
+					return (ArtifactCollector) hibernateExtension.execute(new Command() {
 
 						public Object execute() {
 							ArtifactCollector artifactCollector = new ArtifactCollector();
@@ -200,7 +200,7 @@ public class ConsoleExtension4_0 implements ConsoleExtension {
 				}
 	
 	
-	private Configuration buildConfiguration(final ExporterAttributes attributes, ConsoleConfiguration cc, IWorkspaceRoot root) {
+	private Configuration buildConfiguration(final ExporterAttributes attributes, HibernateExtension4_0 cc, IWorkspaceRoot root) {
 		final boolean reveng = attributes.isReverseEngineer();
 		final String reverseEngineeringStrategy = attributes.getRevengStrategy();
 		final boolean preferBasicCompositeids = attributes.isPreferBasicCompositeIds();
@@ -262,7 +262,7 @@ public class ConsoleExtension4_0 implements ConsoleExtension {
 			return cfg;
 		} else {
 			cc.build();
-			final Configuration configuration = ((HibernateExtension4_0)cc.getHibernateExtension()).getConfiguration();
+			final Configuration configuration = cc.getConfiguration();
 
 			cc.execute(new Command() {
 				public Object execute() {

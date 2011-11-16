@@ -35,12 +35,9 @@ import org.hibernate.console.ext.QueryResult;
 import org.hibernate.console.ext.QueryResultImpl;
 import org.hibernate.console.preferences.ConsoleConfigurationPreferences;
 import org.hibernate.console.preferences.PreferencesClassPathUtils;
-import org.hibernate.eclipse.console.ext.CompletionProposalsResult;
 import org.hibernate.service.BasicServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 import org.hibernate.service.internal.BasicServiceRegistryImpl;
-import org.hibernate.tool.ide.completion.HQLCodeAssist;
-import org.hibernate.tool.ide.completion.IHQLCodeAssist;
 
 /**
  * 
@@ -72,8 +69,8 @@ public class HibernateExtension4_0 implements HibernateExtension {
 	}
 	
 	@Override
-	public QueryResult executeHQLQuery(String hql,
-			QueryInputModel queryParameters) {
+	public QueryResult executeHQLQuery(final String hql,
+			final QueryInputModel queryParameters) {
 		Session session = null;
 		try {
 			try {
