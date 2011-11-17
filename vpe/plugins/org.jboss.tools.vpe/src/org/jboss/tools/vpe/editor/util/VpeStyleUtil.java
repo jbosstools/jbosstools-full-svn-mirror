@@ -73,7 +73,12 @@ public class VpeStyleUtil {
 	public static final String EMPTY_STRING = ""; //$NON-NLS-1$
 	public static final String SINGLE_QUOTE_STRING = "\'"; //$NON-NLS-1$
 	public static final String QUOTE_STRING = "\""; //$NON-NLS-1$
-
+	/*
+	 * Java regexp pattern to match css path from the url(..) construction.
+	 * It's implied that the css string has only one URL in it.
+	 */
+	public static final Pattern CSS_URL_PATTERN = Pattern.compile("(?<=\\burl\\b)(?:[\\p{Space}]*\\()[\\p{Space}]*([^;]*)[\\p{Space}]*(?:\\)[\\p{Space}]*)(?=(?>[^\\)]*;|[^\\)]*))"); //$NON-NLS-1$
+	
 	public static String ATTR_URL = "url"; //$NON-NLS-1$
 	public static String OPEN_BRACKET = "("; //$NON-NLS-1$
 	public static String CLOSE_BRACKET = ")"; //$NON-NLS-1$
@@ -493,11 +498,12 @@ public class VpeStyleUtil {
 		 * https://issues.jboss.org/browse/JBIDE-10178
 		 * The index of closing bracket was wrong.
 		 * Thus replaced with java regexp. 
-		 */
-		String urlRegExp = "(?<=\\burl\\b)\\((.*)\\)(?=(?>[^\\)]*;|[^\\)]*))"; //$NON-NLS-1$
-		Pattern p = Pattern.compile(urlRegExp);
-		Matcher m = p.matcher(url);
+		 */	
+		Matcher m = CSS_URL_PATTERN.matcher(url);
 		String[] res = null;
+		/*
+		 * It's implied that the "url" string has only one URL in it.
+		 */
 		if (m.find()) {
 			res = new String[3];
 			/*
