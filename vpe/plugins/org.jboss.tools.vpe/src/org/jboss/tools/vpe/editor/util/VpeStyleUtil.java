@@ -77,7 +77,7 @@ public class VpeStyleUtil {
 	 * Java regexp pattern to match css path from the url(..) construction.
 	 * It's implied that the css string has only one URL in it.
 	 */
-	public static final Pattern CSS_URL_PATTERN = Pattern.compile("(?<=\\burl\\b)(?:[\\p{Space}]*\\()[\\p{Space}]*([^;]*)[\\p{Space}]*(?:\\)[\\p{Space}]*)(?=(?>[^\\)]*;|[^\\)]*))"); //$NON-NLS-1$
+	public static final Pattern CSS_URL_PATTERN = Pattern.compile("(?<=\\burl\\b)(?:[\\p{Space}]*\\()[\\p{Space}]*(.*)[\\p{Space}]*(?:\\)[\\p{Space}]*)(?=(?>[^\\)]*;|[^\\)]*))"); //$NON-NLS-1$
 	
 	public static String ATTR_URL = "url"; //$NON-NLS-1$
 	public static String OPEN_BRACKET = "("; //$NON-NLS-1$
