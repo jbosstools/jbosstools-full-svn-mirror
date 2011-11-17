@@ -14,6 +14,7 @@ Look for "result - metadata" and fix that value to be "JBoss SWT Patches".
 
 4. Commit changes and push to download.jboss.org.
 
+NOTE that this patch is not needed w/ Eclipse 3.7 as this bug is fixed there.
 </echo>
 </target>
 </project>
