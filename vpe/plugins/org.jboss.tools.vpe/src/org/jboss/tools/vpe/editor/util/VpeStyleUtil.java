@@ -74,10 +74,13 @@ public class VpeStyleUtil {
 	public static final String SINGLE_QUOTE_STRING = "\'"; //$NON-NLS-1$
 	public static final String QUOTE_STRING = "\""; //$NON-NLS-1$
 	/*
+	 * https://issues.jboss.org/browse/JBIDE-10178
 	 * Java regexp pattern to match css path from the url(..) construction.
 	 * It's implied that the css string has only one URL in it.
+	 * For the long string regexp could be updated:
+	 * (.*) should be replaced with ([^;]*) 
 	 */
-	public static final Pattern CSS_URL_PATTERN = Pattern.compile("(?<=\\burl\\b)(?:[\\p{Space}]*\\()[\\p{Space}]*(.*)[\\p{Space}]*(?:\\)[\\p{Space}]*)(?=(?>[^\\)]*;|[^\\)]*))"); //$NON-NLS-1$
+	public static final Pattern CSS_URL_PATTERN = Pattern.compile("(?<=\\burl\\b)(?:[\\p{Space}]*\\()[\\p{Space}]*([^;]*)[\\p{Space}]*(?:\\)[\\p{Space}]*)(?=(?>[^\\)]*;|[^\\)]*))"); //$NON-NLS-1$
 	
 	public static String ATTR_URL = "url"; //$NON-NLS-1$
 	public static String OPEN_BRACKET = "("; //$NON-NLS-1$
