@@ -26,7 +26,7 @@ import org.modeshape.web.jcr.rest.client.Status.Severity;
 public final class Utils {
 
     /**
-     * Converts the non-Eclipse status severity to an Eclipse severity level. An {@link Status.Severity#UNKNOWN unknown status} is
+     * Converts the non-Eclipse status severity to an Eclipse severity level. An {@link org.modeshape.web.jcr.rest.client.Status.Severity#UNKNOWN unknown status} is
      * converted to {@link IStatus#CANCEL cancel}.
      * 
      * @param severity the eclipse status severity level
