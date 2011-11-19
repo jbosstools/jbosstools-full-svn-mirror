@@ -8,21 +8,34 @@ import java.sql.SQLException;
 
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
-import org.hibernate.engine.ForeignKeys;
-import org.hibernate.engine.SessionImplementor;
+import org.hibernate.engine.internal.ForeignKeys;
+import org.hibernate.engine.spi.SessionFactoryImplementor;
+import org.hibernate.engine.spi.SessionImplementor;
+import org.hibernate.type.IntegerType;
+import org.hibernate.type.ManyToOneType;
+import org.hibernate.type.StringType;
 import org.hibernate.type.Type;
+import org.hibernate.type.TypeFactory;
 import org.hibernate.usertype.CompositeUserType;
 
 public class MultiplicityType implements CompositeUserType {
 
+	private static class NoScope implements TypeFactory.TypeScope {
+		public static final NoScope INSTANCE = new NoScope();
+
+		public SessionFactoryImplementor resolveFactory() {
+			throw new HibernateException( "Cannot access SessionFactory from here" );
+		}
+	}
+	
 	private static final String[] PROP_NAMES = new String[] {
 		"count", "glarch" //$NON-NLS-1$ //$NON-NLS-2$
 	};
 	private static final int[] SQL_TYPES = new int[] {
-		Hibernate.INTEGER.sqlType(), Hibernate.STRING.sqlType()
+		IntegerType.INSTANCE.sqlType(), StringType.INSTANCE.sqlType()
 	};
 	private static final Type[] TYPES = new Type[] {
-		Hibernate.INTEGER, Hibernate.entity(Glarch.class)
+		IntegerType.INSTANCE, new ManyToOneType( NoScope.INSTANCE, Glarch.class.getName())
 	};
 
 	public String[] getPropertyNames() {
@@ -78,8 +91,8 @@ public class MultiplicityType implements CompositeUserType {
 	public Object nullSafeGet(ResultSet rs, String[] names, SessionImplementor session, Object owner)
 		throws HibernateException, SQLException {
 
-		Integer c = (Integer) Hibernate.INTEGER.nullSafeGet( rs, names[0] );
-		GlarchProxy g = (GlarchProxy) Hibernate.entity(Glarch.class).nullSafeGet(rs, names[1], session, owner);
+		Integer c = (Integer) IntegerType.INSTANCE.nullSafeGet( rs, names[0], session );
+		GlarchProxy g = (GlarchProxy) new ManyToOneType( NoScope.INSTANCE, Glarch.class.getName()).nullSafeGet(rs, names[1], session, owner);
 		Multiplicity m = new Multiplicity();
 		m.count = c==null ? 0 : c.intValue();
 		m.glarch = g;
@@ -100,8 +113,8 @@ public class MultiplicityType implements CompositeUserType {
 			g = o.glarch;
 			c = new Integer(o.count);
 		}
-		Hibernate.INTEGER.nullSafeSet(st, c, index, session);
-		Hibernate.entity(Glarch.class).nullSafeSet(st, g, index+1, session);
+		IntegerType.INSTANCE.nullSafeSet(st, c, index, session);
+		new ManyToOneType( NoScope.INSTANCE, Glarch.class.getName()).nullSafeSet(st, g, index+1, session);
 
 	}
 

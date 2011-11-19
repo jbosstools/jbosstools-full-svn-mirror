@@ -29,7 +29,7 @@ public class NumericTrueFalseType extends BooleanType {
 		}
 	}
 
-	public void set(PreparedStatement st, Object value, int index) throws SQLException {
+	public void set(PreparedStatement st, Boolean value, int index) throws SQLException {
 		if ( value == null ) {
 			st.setNull( index, Types.INTEGER );
 		}
@@ -39,12 +39,8 @@ public class NumericTrueFalseType extends BooleanType {
 		}
 	}
 
-	public String objectToSQLString(Object value, Dialect dialect) throws Exception {
+	public String objectToSQLString(Boolean value, Dialect dialect) {
 		return ( ( Boolean ) value ).booleanValue() ? "1" : "0"; //$NON-NLS-1$ //$NON-NLS-2$
-	}
-
-	public int sqlType() {
-		return Types.INTEGER;
 	}
 
 	public String getName() {

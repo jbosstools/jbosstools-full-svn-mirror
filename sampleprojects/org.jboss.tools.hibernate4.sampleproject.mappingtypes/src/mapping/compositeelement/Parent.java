@@ -11,7 +11,7 @@ public class Parent {
 	private Long id;
 	private String name;
 	private Collection children = new HashSet();
-	Parent() {}
+	public Parent() {}
 	public Parent(String name) {
 		this.name = name;
 	}

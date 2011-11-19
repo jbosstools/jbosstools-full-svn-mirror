@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Types;
 
 import org.hibernate.HibernateException;
+import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.usertype.UserType;
 
 /**
@@ -31,16 +32,6 @@ public class RowIdType implements UserType {
 		return x.hashCode();
 	}
 
-	public Object nullSafeGet(ResultSet rs, String[] names, Object owner)
-			throws HibernateException, SQLException {
-		return rs.getObject( names[0] );
-	}
-
-	public void nullSafeSet(PreparedStatement st, Object value, int index)
-			throws HibernateException, SQLException {
-		throw new UnsupportedOperationException();
-	}
-
 	public Object deepCopy(Object value) throws HibernateException {
 		return value;
 	}
@@ -59,6 +50,19 @@ public class RowIdType implements UserType {
 
 	public Object replace(Object original, Object target, Object owner) throws HibernateException {
 		return null;
+	}
+
+	@Override
+	public Object nullSafeGet(ResultSet rs, String[] names,
+			SessionImplementor session, Object owner)
+			throws HibernateException, SQLException {
+		return rs.getObject( names[0] );
+	}
+
+	@Override
+	public void nullSafeSet(PreparedStatement st, Object value, int index,
+			SessionImplementor session) throws HibernateException, SQLException {
+		throw new UnsupportedOperationException();
 	}
 
 }

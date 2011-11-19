@@ -10,7 +10,9 @@ import java.util.Currency;
 
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
-import org.hibernate.engine.SessionImplementor;
+import org.hibernate.engine.spi.SessionImplementor;
+import org.hibernate.type.BigDecimalType;
+import org.hibernate.type.CurrencyType;
 import org.hibernate.type.Type;
 import org.hibernate.usertype.CompositeUserType;
 
@@ -24,7 +26,7 @@ public class MonetoryAmountUserType implements CompositeUserType {
 	}
 
 	public Type[] getPropertyTypes() {
-		return new Type[] { Hibernate.BIG_DECIMAL, Hibernate.CURRENCY };
+		return new Type[] { BigDecimalType.INSTANCE, CurrencyType.INSTANCE };
 	}
 
 	public Object getPropertyValue(Object component, int property) throws HibernateException {
@@ -62,8 +64,8 @@ public class MonetoryAmountUserType implements CompositeUserType {
 
 	public Object nullSafeGet(ResultSet rs, String[] names, SessionImplementor session, Object owner)
 			throws HibernateException, SQLException {
-		BigDecimal amt = (BigDecimal) Hibernate.BIG_DECIMAL.nullSafeGet( rs, names[0] );
-		Currency cur = (Currency) Hibernate.CURRENCY.nullSafeGet( rs, names[1] );
+		BigDecimal amt = (BigDecimal) BigDecimalType.INSTANCE.nullSafeGet( rs, names[0],session );
+		Currency cur = (Currency) CurrencyType.INSTANCE.nullSafeGet( rs, names[1], session );
 		if (amt==null) return null;
 		return new MonetoryAmount(amt, cur);
 	}
@@ -73,8 +75,8 @@ public class MonetoryAmountUserType implements CompositeUserType {
 		MonetoryAmount ma = (MonetoryAmount) value;
 		BigDecimal amt = ma == null ? null : ma.getAmount();
 		Currency cur = ma == null ? null : ma.getCurrency();
-		Hibernate.BIG_DECIMAL.nullSafeSet(st, amt, index);
-		Hibernate.CURRENCY.nullSafeSet(st, cur, index+1);
+		BigDecimalType.INSTANCE.nullSafeSet(st, amt, index, session);
+		CurrencyType.INSTANCE.nullSafeSet(st, cur, index+1, session);
 	}
 
 	public Object deepCopy(Object value) throws HibernateException {

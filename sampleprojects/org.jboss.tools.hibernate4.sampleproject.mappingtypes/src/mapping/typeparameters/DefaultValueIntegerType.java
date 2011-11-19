@@ -8,6 +8,7 @@ import java.sql.Types;
 import java.util.Properties;
 
 import org.hibernate.HibernateException;
+import org.hibernate.engine.spi.SessionImplementor;
 import org.hibernate.usertype.ParameterizedType;
 import org.hibernate.usertype.UserType;
 
@@ -31,19 +32,6 @@ public class DefaultValueIntegerType implements UserType, ParameterizedType, Ser
 		if (x==y) return true;
 		if (x==null || y==null) return false;
 		return x.equals(y);
-	}
-
-	public Object nullSafeGet(ResultSet rs, String[] names, Object owner) throws HibernateException, SQLException {
-		Number result = (Number) rs.getObject(names[0]);
-		return result==null ? defaultValue : new Integer(result.intValue());
-	}
-
-	public void nullSafeSet(PreparedStatement st, Object value, int index) throws HibernateException, SQLException {
-		if (value == null || defaultValue.equals(value) ) {
-			st.setNull(index, Types.INTEGER);
-		} else {
-			st.setInt(index, ((Integer)value).intValue());
-		}
 	}
 
 	public Object deepCopy(Object value) throws HibernateException {
@@ -74,6 +62,24 @@ public class DefaultValueIntegerType implements UserType, ParameterizedType, Ser
 
 	public void setParameterValues(Properties parameters) {
 		this.defaultValue = Integer.valueOf((String) parameters.get("default")); //$NON-NLS-1$
+	}
+
+	@Override
+	public Object nullSafeGet(ResultSet rs, String[] names,
+			SessionImplementor session, Object owner)
+			throws HibernateException, SQLException {
+		Number result = (Number) rs.getObject(names[0]);
+		return result==null ? defaultValue : new Integer(result.intValue());
+	}
+
+	@Override
+	public void nullSafeSet(PreparedStatement st, Object value, int index,
+			SessionImplementor session) throws HibernateException, SQLException {
+		if ( value == null || defaultValue.equals(value) ) {
+			st.setNull(index, Types.INTEGER);
+		} else {
+			st.setInt(index, ((Integer)value).intValue());
+		}
 	}
 
 }

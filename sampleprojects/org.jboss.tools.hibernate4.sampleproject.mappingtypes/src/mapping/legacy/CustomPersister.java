@@ -2,37 +2,43 @@
 package mapping.legacy;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Hashtable;
 import java.util.Map;
-import java.util.Comparator;
 
 import org.hibernate.EntityMode;
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.LockMode;
+import org.hibernate.LockOptions;
 import org.hibernate.MappingException;
-import org.hibernate.cache.CacheConcurrencyStrategy;
-import org.hibernate.cache.entry.CacheEntryStructure;
-import org.hibernate.cache.entry.UnstructuredCacheEntry;
-import org.hibernate.engine.CascadeStyle;
-import org.hibernate.engine.EntityKey;
-import org.hibernate.engine.Mapping;
-import org.hibernate.engine.SessionFactoryImplementor;
-import org.hibernate.engine.SessionImplementor;
-import org.hibernate.engine.TwoPhaseLoad;
-import org.hibernate.event.EventSource;
-import org.hibernate.event.PostLoadEvent;
-import org.hibernate.event.PreLoadEvent;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.cache.spi.access.EntityRegionAccessStrategy;
+import org.hibernate.cache.spi.entry.CacheEntryStructure;
+import org.hibernate.cache.spi.entry.UnstructuredCacheEntry;
+import org.hibernate.engine.internal.TwoPhaseLoad;
+import org.hibernate.engine.spi.CascadeStyle;
+import org.hibernate.engine.spi.EntityKey;
+import org.hibernate.engine.spi.Mapping;
+import org.hibernate.engine.spi.SessionFactoryImplementor;
+import org.hibernate.engine.spi.SessionImplementor;
+import org.hibernate.engine.spi.ValueInclusion;
+import org.hibernate.event.spi.EventSource;
+import org.hibernate.event.spi.PostLoadEvent;
+import org.hibernate.event.spi.PreLoadEvent;
 import org.hibernate.id.IdentifierGenerator;
 import org.hibernate.id.UUIDHexGenerator;
+import org.hibernate.internal.util.compare.EqualsHelper;
 import org.hibernate.mapping.PersistentClass;
 import org.hibernate.metadata.ClassMetadata;
 import org.hibernate.persister.entity.EntityPersister;
 import org.hibernate.sql.QuerySelect;
 import org.hibernate.sql.Select;
+import org.hibernate.tuple.entity.EntityMetamodel;
+import org.hibernate.tuple.entity.EntityTuplizer;
+import org.hibernate.type.StringType;
 import org.hibernate.type.Type;
 import org.hibernate.type.VersionType;
-import org.hibernate.util.EqualsHelper;
 
 public class CustomPersister implements EntityPersister {
 
@@ -111,7 +117,7 @@ public class CustomPersister implements EntityPersister {
 
 	public Object[] getPropertyValuesToInsert(Object object, Map mergeMap, SessionImplementor session)
 	throws HibernateException {
-		return getPropertyValues( object, session.getEntityMode() );
+		return getPropertyValues( object, session.getEntityPersister(null, object).getEntityMode() );
 	}
 
 	public void processInsertGeneratedProperties(Serializable id, Object entity, Object[] state, SessionImplementor session) {
@@ -293,7 +299,7 @@ public class CustomPersister implements EntityPersister {
 		if (obj!=null) {
 			clone = (Custom) obj.clone();
 			TwoPhaseLoad.addUninitializedEntity(
-					new EntityKey( id, this, session.getEntityMode() ),
+					new EntityKey( id, session.getEntityPersister(null, clone), null ),
 					clone,
 					this,
 					LockMode.NONE,
@@ -379,7 +385,7 @@ public class CustomPersister implements EntityPersister {
 
 	}
 
-	private static final Type[] TYPES = new Type[] { Hibernate.STRING };
+	private static final Type[] TYPES = new Type[] { StringType.INSTANCE };
 	private static final String[] NAMES = new String[] { "name" }; //$NON-NLS-1$
 	private static final boolean[] MUTABILITY = new boolean[] { true };
 	private static final boolean[] GENERATION = new boolean[] { false };
@@ -409,7 +415,7 @@ public class CustomPersister implements EntityPersister {
 	 * @see EntityPersister#getIdentifierType()
 	 */
 	public Type getIdentifierType() {
-		return Hibernate.STRING;
+		return StringType.INSTANCE;
 	}
 
 	/**
@@ -622,6 +628,157 @@ public class CustomPersister implements EntityPersister {
 	public boolean hasIdentifierPropertyOrEmbeddedCompositeIdentifier() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public EntityRegionAccessStrategy getCacheAccessStrategy() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public EntityMetamodel getEntityMetamodel() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Serializable getIdentifier(Object arg0, SessionImplementor arg1) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ValueInclusion[] getPropertyInsertGenerationInclusions() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ValueInclusion[] getPropertyUpdateGenerationInclusions() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object instantiate(Serializable arg0, SessionImplementor arg1) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object load(Serializable arg0, Object arg1, LockOptions arg2,
+			SessionImplementor arg3) throws HibernateException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void lock(Serializable arg0, Object arg1, Object arg2,
+			LockOptions arg3, SessionImplementor arg4)
+			throws HibernateException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void resetIdentifier(Object arg0, Serializable arg1, Object arg2,
+			SessionImplementor arg3) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setIdentifier(Object arg0, Serializable arg1,
+			SessionImplementor arg2) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean isInstrumented() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean implementsLifecycle() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Class getConcreteProxyClass() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setPropertyValues(Object object, Object[] values) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setPropertyValue(Object object, int i, Object value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Object[] getPropertyValues(Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object getPropertyValue(Object object, int i)
+			throws HibernateException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Serializable getIdentifier(Object object) throws HibernateException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Object getVersion(Object object) throws HibernateException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isInstance(Object object) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean hasUninitializedLazyProperties(Object object) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public EntityPersister getSubclassEntityPersister(Object instance,
+			SessionFactoryImplementor factory) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public EntityMode getEntityMode() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public EntityTuplizer getEntityTuplizer() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

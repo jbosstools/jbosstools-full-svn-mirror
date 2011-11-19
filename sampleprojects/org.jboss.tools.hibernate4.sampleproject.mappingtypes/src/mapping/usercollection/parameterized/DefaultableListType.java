@@ -1,16 +1,16 @@
 package mapping.usercollection.parameterized;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.List;
 
-import org.hibernate.usertype.UserCollectionType;
-import org.hibernate.usertype.ParameterizedType;
-import org.hibernate.collection.PersistentCollection;
-import org.hibernate.engine.SessionImplementor;
-import org.hibernate.persister.collection.CollectionPersister;
 import org.hibernate.EntityMode;
+import org.hibernate.collection.spi.PersistentCollection;
+import org.hibernate.engine.spi.SessionImplementor;
+import org.hibernate.persister.collection.CollectionPersister;
+import org.hibernate.usertype.ParameterizedType;
+import org.hibernate.usertype.UserCollectionType;
 
 /**
  * Our Hibernate type-system extension for defining our specialized collection
@@ -35,12 +35,7 @@ public class DefaultableListType implements UserCollectionType, ParameterizedTyp
 	}
 
 	public PersistentCollection wrap(SessionImplementor session, Object collection) {
-		if ( session.getEntityMode() == EntityMode.DOM4J ) {
-			throw new IllegalStateException( "dom4j not supported" ); //$NON-NLS-1$
-		}
-		else {
 			return new PersistentDefaultableList( session, ( List ) collection );
-		}
 	}
 
 	public Iterator getElementsIterator(Object collection) {

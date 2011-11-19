@@ -1,17 +1,8 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC 
-	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-
-<!-- 
-
-  This mapping demonstrates how to use a composite
-  element mapping to model a parent/child association.
-     
--->
-
-<hibernate-mapping 
-	package="mapping.compositeelement">
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="mapping.compositeelement">
 	
 	<import class="Child"/>
 
@@ -31,6 +22,4 @@
 			</composite-element>
 		</set>
 	</class>
-	
-
 </hibernate-mapping>
