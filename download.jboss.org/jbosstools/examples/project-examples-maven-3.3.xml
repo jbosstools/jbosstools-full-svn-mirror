@@ -289,8 +289,8 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<mavenArchetype>
 			<archetypeGroupId>org.jboss.spec.archetypes</archetypeGroupId>
 			<archetypeArtifactId>jboss-javaee6-webapp</archetypeArtifactId>
-			<archetypeVersion>7.0.0.Final</archetypeVersion>
-			<archetypeRepository>http://repository.jboss.org/nexus/content/groups/public/</archetypeRepository>
+			<archetypeVersion>7.0.2-SNAPSHOT</archetypeVersion>
+			<archetypeRepository>http://anonsvn.jboss.org/repos/jbosstools/workspace/fred/repositories/snapshot/</archetypeRepository>
 			<groupId>org.jboss.tools.examples</groupId>
 			<artifactId>jboss-javaee6-webapp</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
@@ -384,9 +384,10 @@ It includes a persistence unit and some sample persistence and transaction code 
 		</fixes>
 		<importType>mavenArchetype</importType>
 		<importTypeDescription>The project example requires the m2e, m2eclipse-wtp and JBoss Maven Integration feature.</importTypeDescription>
+        <defaultMavenProfiles>arq-jbossas-remote</defaultMavenProfiles>
 		<mavenArchetype>
 			<archetypeGroupId>org.jboss.spec.archetypes</archetypeGroupId>
-			<archetypeArtifactId>jboss-javaee6-poh5-archetype</archetypeArtifactId>
+			<archetypeArtifactId>jboss-javaee6-html5-mobile-archetype</archetypeArtifactId>
 			<archetypeVersion>7.0.2-SNAPSHOT</archetypeVersion>
 			<archetypeRepository>http://anonsvn.jboss.org/repos/jbosstools/workspace/fred/repositories/snapshot/</archetypeRepository>
 			<groupId>org.jboss.tools.example</groupId>
@@ -478,6 +479,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 		</fixes>
 		<importType>mavenArchetype</importType>
 		<importTypeDescription>The project example requires the m2e, m2eclipse-wtp and JBoss Maven Integration feature.</importTypeDescription>
+        <defaultMavenProfiles>jee6</defaultMavenProfiles>
 		<mavenArchetype>
 			<archetypeGroupId>org.richfaces.archetypes</archetypeGroupId>
 			<archetypeArtifactId>richfaces-archetype-simpleapp</archetypeArtifactId>
