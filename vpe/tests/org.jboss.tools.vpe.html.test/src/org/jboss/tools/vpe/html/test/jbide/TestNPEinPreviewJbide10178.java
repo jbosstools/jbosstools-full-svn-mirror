@@ -20,13 +20,17 @@ public class TestNPEinPreviewJbide10178 extends VpeTest {
 		IFile ifile = (IFile) TestUtil.getComponentPath(
 				TEST_PAGE_NAME, HtmlAllTests.IMPORT_PROJECT_NAME);
 		JSPMultiPageEditor jspMultiPageEditor = openEditor(ifile);
-		jspMultiPageEditor.pageChange(jspMultiPageEditor.getPreviewIndex());
-		TestUtil.waitForJobs();
-		/*
-		 * Check error log for exception.
-		 */
-		if (getException() != null) {
-			throw getException();
+		try {
+			jspMultiPageEditor.pageChange(jspMultiPageEditor.getPreviewIndex());
+			TestUtil.waitForJobs();
+			/*
+			 * Check error log for exception.
+			 */
+			if (getException() != null) {
+				throw getException();
+			}
+		} finally {
+			jspMultiPageEditor.pageChange(jspMultiPageEditor.getVisualSourceIndex());
 		}
 	}
 	
@@ -35,13 +39,18 @@ public class TestNPEinPreviewJbide10178 extends VpeTest {
 		IFile ifile = (IFile) TestUtil.getComponentPath(
 				TEST_PAGE_NAME2, HtmlAllTests.IMPORT_PROJECT_NAME);
 		JSPMultiPageEditor jspMultiPageEditor = openEditor(ifile);
-		jspMultiPageEditor.pageChange(jspMultiPageEditor.getPreviewIndex());
-		TestUtil.waitForJobs();
-		/*
-		 * Check error log for exception.
-		 */
-		if (getException() != null) {
-			throw getException();
+		try {
+			jspMultiPageEditor.pageChange(jspMultiPageEditor.getPreviewIndex());
+			TestUtil.waitForJobs();
+			/*
+			 * Check error log for exception.
+			 */
+			if (getException() != null) {
+				throw getException();
+			}
+		} finally {
+			jspMultiPageEditor.pageChange(jspMultiPageEditor.getVisualSourceIndex());
 		}
 	}
+
 }
