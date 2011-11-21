@@ -84,8 +84,8 @@ import org.hibernate.eclipse.console.ext.ConsoleExtensionManager;
 import org.hibernate.eclipse.console.model.impl.ExporterFactory;
 import org.hibernate.tool.hbm2x.ArtifactCollector;
 import org.hibernate.tool.hbm2x.Exporter;
-import org.hibernate.util.ReflectHelper;
-import org.hibernate.util.StringHelper;
+import org.hibernate.util.xpl.ReflectHelper;
+import org.hibernate.util.xpl.StringHelper;
 
 @SuppressWarnings("restriction")
 public class CodeGenerationLaunchDelegate extends AntLaunchDelegate { 

@@ -51,7 +51,7 @@ import org.hibernate.eclipse.console.utils.DriverClassHelpers;
 import org.hibernate.eclipse.console.utils.LaunchHelper;
 import org.hibernate.eclipse.launch.PathHelper;
 import org.hibernate.tool.hbm2x.StringUtils;
-import org.hibernate.util.StringHelper;
+import org.hibernate.util.xpl.StringHelper;
 import org.jboss.tools.hibernate.jpt.core.internal.HibernateJpaProject;
 import org.jboss.tools.hibernate.jpt.ui.HibernateJptUIPlugin;
 

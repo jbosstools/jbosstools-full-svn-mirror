@@ -15,7 +15,8 @@ Export-Package: org.hibernate.console,
  org.hibernate.eclipse,
  org.hibernate.eclipse.launch,
  org.hibernate.eclipse.logging,
- org.hibernate.eclipse.logging.xpl
+ org.hibernate.eclipse.logging.xpl,
+ org.hibernate.util.xpl
 Require-Bundle: org.hibernate.eclipse.libs;bundle-version="1.0.0",
  org.eclipse.core.runtime,
  org.eclipse.ui.console,

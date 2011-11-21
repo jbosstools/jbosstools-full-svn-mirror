@@ -52,7 +52,7 @@ import org.hibernate.eclipse.console.utils.EclipseImages;
 import org.hibernate.eclipse.console.utils.ProjectUtils;
 import org.hibernate.eclipse.console.wizards.NewConfigurationWizard;
 import org.hibernate.eclipse.console.wizards.NewConfigurationWizardPage;
-import org.hibernate.util.StringHelper;
+import org.hibernate.util.xpl.StringHelper;
 
 @SuppressWarnings("restriction")
 public class ConsoleConfigurationMainTab extends ConsoleConfigurationTab {

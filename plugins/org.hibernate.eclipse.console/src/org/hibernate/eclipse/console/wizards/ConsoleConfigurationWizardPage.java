@@ -79,7 +79,7 @@ import org.hibernate.eclipse.launch.ConsoleConfigurationJavaClasspathTab;
 import org.hibernate.eclipse.launch.ConsoleConfigurationMainTab;
 import org.hibernate.eclipse.launch.ConsoleConfigurationTabGroup;
 import org.hibernate.eclipse.launch.IConsoleConfigurationLaunchConstants;
-import org.hibernate.util.StringHelper;
+import org.hibernate.util.xpl.StringHelper;
 
 /**
  * This wizardpage wraps the LaunchConfiguration based tabs and thus mimicks the normal launch configuration ui.
