@@ -68,7 +68,7 @@ import org.xml.sax.InputSource;
 
 public class ConfigurationFactory {
 
-	public static final String FAKE_TM_LOOKUP = "org.hibernate.console.FakeTransactionManagerLookup"; //$NON-NLS-1$
+	public static final String FAKE_TM_LOOKUP = "org.jboss.tools.hibernate4_0.FakeTransactionManagerLookup"; //$NON-NLS-1$
 	
 	private ConsoleConfigurationPreferences prefs;
 	private Map<String, FakeDelegatingDriver> fakeDrivers;

@@ -35,9 +35,9 @@ import org.hibernate.console.ext.QueryResult;
 import org.hibernate.console.ext.QueryResultImpl;
 import org.hibernate.console.preferences.ConsoleConfigurationPreferences;
 import org.hibernate.console.preferences.PreferencesClassPathUtils;
-import org.hibernate.service.BasicServiceRegistry;
+import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
-import org.hibernate.service.internal.BasicServiceRegistryImpl;
+import org.hibernate.service.internal.StandardServiceRegistryImpl;
 
 /**
  * 
@@ -56,7 +56,7 @@ public class HibernateExtension4_0 implements HibernateExtension {
 	
 	private SessionFactory sessionFactory;
 	
-	private BasicServiceRegistry serviceRegistry;
+	private ServiceRegistry serviceRegistry;
 	
 	private Map<String, FakeDelegatingDriver> fakeDrivers = new HashMap<String, FakeDelegatingDriver>();
 
@@ -151,7 +151,7 @@ public class HibernateExtension4_0 implements HibernateExtension {
 		if (sessionFactory != null) {
 			sessionFactory.close();
 			sessionFactory = null;
-			( (BasicServiceRegistryImpl) serviceRegistry ).destroy();
+			( (StandardServiceRegistryImpl) serviceRegistry ).destroy();
 			serviceRegistry = null;
 			res = true;
 		}
