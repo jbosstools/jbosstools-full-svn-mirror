@@ -28,8 +28,8 @@
 	<property name="update.site.source.dir" value="${output.dir}/target/site" />
 
 	<!-- load properties from default (or alternate) properties file -->
-	<property name="aggregateSite.properties" value="aggregateSite.jbosstools.properties" />
-	<property file="${aggregateSite.properties}" />
+	<property name="associate.sites" value="associate.sites.properties" />
+	<property file="${associate.sites}" />
 
 	<property name="web.content.files" value="index.html, **/*.css, README*, *directory.xml" />
 
@@ -344,7 +344,7 @@ DEST = ${aggregate.zips.dir}/@{zipPath}
 	<target name="add.associate.sites" if="associate.sites">
 		<if>
 			<and>
-				<!-- Defined in aggregateSite.properties -->
+				<!-- Defined in associate.sites -->
 				<isset property="associate.sites" />
 				<not>
 					<equals arg1="${associate.sites}" arg2="" />

@@ -28,10 +28,10 @@
 	<property name="update.site.source.dir" value="${output.dir}/target/site" />
 
 	<!-- load properties from default (or alternate) properties file -->
-	<property name="aggregateSite.properties" value="aggregateSite.jbosstools.properties" />
-	<property file="${aggregateSite.properties}" />
+	<property name="associate.sites" value="associate.sites.properties" />
+	<property file="${associate.sites}" />
 
-	<property name="web.content.files" value="index.html, **/*.css, README*, *directory.xml"/>
+	<property name="web.content.files" value="index.html, **/*.css, README*, *directory.xml" />
 
 	<target name="init">
 		<ant antfile="${build.xml}" target="init" />
@@ -45,7 +45,7 @@
 		<antcall target="get.saxon" />
 	</target>
 
-	<target name="custom.build" description="aggregate update site extras" depends="init,check.target,add.associate.sites,add.web.content,pack.zip,collect.zips,collect.metadata,create.summary.file" />
+	<target name="custom.build" description="aggregate update site extras" depends="init,check.target,unpack.content.jar,add.associate.sites,add.web.content,pack.content.jar,pack.zip,collect.zips,collect.metadata,create.summary.file" />
 
 	<target name="get.saxon" unless="saxon.jar.exists">
 		<!-- or use http://downloads.sourceforge.net/saxon/saxonhe9-3-0-4j.zip ? -->
@@ -344,20 +344,13 @@ DEST = ${aggregate.zips.dir}/@{zipPath}
 	<target name="add.associate.sites" if="associate.sites">
 		<if>
 			<and>
-				<!-- Defined in aggregateSite.properties -->
+				<!-- Defined in associate.sites -->
 				<isset property="associate.sites" />
 				<not>
 					<equals arg1="${associate.sites}" arg2="" />
 				</not>
 			</and>
 			<then>
-				<if>
-					<available file="${update.site.source.dir}/content.jar" type="file" />
-					<then>
-						<unzip src="${update.site.source.dir}/content.jar" dest="${update.site.source.dir}" />
-						<delete file="${update.site.source.dir}/content.jar" />
-					</then>
-				</if>
 				<!-- counter variable -->
 				<var name="associate.sites.0" value="" />
 				<for param="associate.site" list="${associate.sites}" delimiter=", 
@@ -390,11 +383,24 @@ DEST = ${aggregate.zips.dir}/@{zipPath}
 </echo>
 				<copy file="${update.site.source.dir}/content.xml" tofile="${update.site.source.dir}/content.old.xml" overwrite="true" />
 				<xslt style="remove-uncategorized.xsl" in="${update.site.source.dir}/content.old.xml" out="${update.site.source.dir}/content.xml" />
-				<zip destfile="${update.site.source.dir}/content.jar" basedir="${update.site.source.dir}" includes="content.xml" />
-				<delete file="${update.site.source.dir}/content.xml" />
-				<delete file="${update.site.source.dir}/content.old.xml" />
 			</then>
 		</if>
+	</target>
+
+	<target name="unpack.content.jar">
+		<if>
+			<available file="${update.site.source.dir}/content.jar" type="file" />
+			<then>
+				<unzip src="${update.site.source.dir}/content.jar" dest="${update.site.source.dir}" />
+				<delete file="${update.site.source.dir}/content.jar" />
+			</then>
+		</if>
+	</target>
+
+	<target name="pack.content.jar">
+		<zip destfile="${update.site.source.dir}/content.jar" basedir="${update.site.source.dir}" includes="content.xml" />
+		<delete file="${update.site.source.dir}/content.xml" />
+		<delete file="${update.site.source.dir}/content.old.xml" />
 	</target>
 
 	<target name="unpack.zip">
@@ -580,7 +586,7 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 
 	<target name="collect.metadata" description="collect svn revision info + other metadata (JOB_NAME, BUILD_ID, BUILD_NUMBER, WORKSPACE, HUDSON_SLAVE), zip file names+sizes+md5sums">
 		<property name="aggregate.zips.dir" value="${output.dir}/zips" />
-		<mkdir dir="${aggregate.zips.dir}"/>
+		<mkdir dir="${aggregate.zips.dir}" />
 		<!-- load file properties (name, size, md5sum) -->
 		<if>
 			<available file="${aggregate.zips.dir}/build.properties.file.txt" type="file" />
