@@ -15,12 +15,12 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
-import org.eclipse.wst.xml.xpath.core.util.XSLTXPathHelper;
 import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
 import org.jboss.tools.test.util.WorkbenchUtils;
 import org.jboss.tools.vpe.editor.VpeController;
@@ -85,13 +85,12 @@ public abstract class ComponentContentTest extends VpeTest {
 		/*
 		 * Get xml test file
 		 */
-		File xmlTestFile = TestUtil.getComponentFileByFullPath(
-				elementPagePath + XML_FILE_EXTENSION, getTestProjectName())
-				.getLocation().toFile();
+		IResource xmlFile =TestUtil.getComponentFileByFullPath(elementPagePath + XML_FILE_EXTENSION, getTestProjectName());
 		/*
 		 * Test that XML test file was found and exists
 		 */
-		assertNotNull("Could not find XML component file '"+elementPagePath + XML_FILE_EXTENSION+"'", elementPageFile); //$NON-NLS-1$ //$NON-NLS-2$
+		assertNotNull("Could not find XML component file '"+elementPagePath + XML_FILE_EXTENSION+"'", xmlFile); //$NON-NLS-1$ //$NON-NLS-2$
+		File xmlTestFile = xmlFile.getLocation().toFile();
 		/*
 		 * Get document
 		 */
@@ -286,7 +285,7 @@ public abstract class ComponentContentTest extends VpeTest {
 
 		// find visual element and check if it is not null
 		visualElement = findElementById(controller, elementId,TestUtil.MAX_IDLE);
-		assertNotNull(visualElement);
+		assertNotNull("Cannot find invisible element with id '"+elementId+"' ", visualElement); //$NON-NLS-1$ //$NON-NLS-2$
 
 		// generate text for invisible tag
 		String modelInvisibleTagText = generateInvisibleTagText(sourceELement
