@@ -28,8 +28,8 @@
 	<property name="update.site.source.dir" value="${output.dir}/target/site" />
 
 	<!-- load properties from default (or alternate) properties file -->
-	<property name="associate.sites" value="associate.sites.properties" />
-	<property file="${associate.sites}" />
+	<property name="associate.sites.properties" value="associate.sites.properties" />
+	<property file="${associate.sites.properties}" />
 
 	<property name="web.content.files" value="index.html, **/*.css, README*, *directory.xml" />
 
