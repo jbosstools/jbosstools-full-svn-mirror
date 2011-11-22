@@ -25,7 +25,7 @@ public interface ITable {
 	
 	public String getCatalog();
 
-	public IPrimaryKey getPrimaryKey();
+	//public IPrimaryKey getPrimaryKey();
 
-	public Iterator<IColumn> getColumnIterator();
+	//public Iterator<IColumn> getColumnIterator();
 }

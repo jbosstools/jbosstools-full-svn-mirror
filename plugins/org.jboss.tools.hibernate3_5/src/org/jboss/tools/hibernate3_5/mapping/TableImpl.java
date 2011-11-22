@@ -8,22 +8,36 @@
  * Contributor:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.hibernate.console.ext.api;
+package org.jboss.tools.hibernate3_5.mapping;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map.Entry;
-
+import org.hibernate.console.ext.api.ITable;
+import org.hibernate.mapping.Table;
 
 /**
  * @author Dmitry Geraskov {geraskov@gmail.com}
  *
  */
-public interface ConsoleDatabaseCollector {
+public class TableImpl implements ITable {
+	
+	private Table table;
+	
+	public TableImpl(Table table){
+		this.table = table;
+	}
 
-	/**
-	 * @return
-	 */
-	public Iterator<Entry<String, List<ITable>>> getQualifierEntries();
+	@Override
+	public String getName() {
+		return table.getName();
+	}
+
+	@Override
+	public String getSchema() {
+		return table.getSchema();
+	}
+
+	@Override
+	public String getCatalog() {
+		return table.getCatalog();
+	}
 
 }
