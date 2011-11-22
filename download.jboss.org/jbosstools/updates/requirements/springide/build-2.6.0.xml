@@ -29,17 +29,17 @@
 		<!-- Other URLs:
 		   http://dist.springframework.org/release/IDE/
 		   http://dist.springframework.org/snapshot/IDE/weekly/
-                   http://dist.springsource.com/release/TOOLS/update/e3.7/
+                   http://dist.springsource.com/release/TOOLS/update/e3.6/
         	-->
-		<property name="URL" value="http://dist.springsource.com/release/TOOLS/update/e3.7/" />
+		<property name="URL" value="http://dist.springsource.com/release/TOOLS/update/e3.6/" />
 		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/springide/" />
-		<property name="siteVersion" value="2.8.0.201110170010-RELEASE" />
+		<property name="siteVersion" value="2.6.0.201103160035" />
 		<property name="compress" value="true" />
 	</target>
 	
 	<target name="mirror">
 		<p2.mirror>
-			<repository location="file:${destination}/${siteVersion}/" name="springide plugins for Eclipse 3.7" />
+			<repository location="file:${destination}/${siteVersion}/" name="springide plugins for Eclipse 3.6 - 3.7" />
 			<source>
 				<repository location="${URL}" />
 			</source>
@@ -65,8 +65,8 @@
 	replace MANIFEST.MF
 	delete welcome.xml META-INF/VMWARE.*
 	zip jar -->
-		<copy file="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse_${siteVersion}.jar" tofile="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse_${siteVersion}_ORIGINAL.jar" />
-		<unzip src="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse_${siteVersion}.jar" dest="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse" />
+		<copy file="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse_${siteVersion}-RELEASE.jar" tofile="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse_${siteVersion}-RELEASE_ORIGINAL.jar" />
+		<unzip src="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse_${siteVersion}-RELEASE.jar" dest="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse" />
 		<echo file="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse/about.ini">
 aboutText=%title
 featureImage=feature_image.png
@@ -76,7 +76,7 @@ Bundle-Name: %pluginName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: %providerName
-Bundle-Version: ${siteVersion}
+Bundle-Version: ${siteVersion}-RELEASE
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.springframework.ide.eclipse
 </echo>
@@ -84,7 +84,7 @@ Bundle-SymbolicName: org.springframework.ide.eclipse
 			<fileset dir="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse" includes="welcome.xml" />
 			<fileset dir="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse/META-INF" includes="eclipse.inf, VMWARE.RSA, VMWARE.SF" />
 		</delete>
-		<zip destfile="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse_${siteVersion}.jar" basedir="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse/" />
+		<zip destfile="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse_${siteVersion}-RELEASE.jar" basedir="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse/" />
 		<delete dir="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse/" quiet="true" />
 	</target>
 
