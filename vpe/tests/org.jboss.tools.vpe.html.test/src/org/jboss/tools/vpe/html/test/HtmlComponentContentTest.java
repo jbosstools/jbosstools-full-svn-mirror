@@ -481,6 +481,10 @@ public class HtmlComponentContentTest extends ComponentContentTest {
 		performContentTest("components/other/xmp.xhtml"); //$NON-NLS-1$
 	}
 
+	public void testCssUrl() throws Throwable {
+		performContentTest("jbide9975( 1 )/CSSUrlQuotes.html"); //$NON-NLS-1$
+	}
+	
 	protected String getTestProjectName() {
 		return HtmlAllTests.IMPORT_PROJECT_NAME;
 	}

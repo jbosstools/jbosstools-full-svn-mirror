@@ -1,0 +1,32 @@
+<tests>
+	<test id="id1">
+		<DIV
+			STYLE="/.*WebContent/img/jbide9975\(%20pic%20\).png.*\) repeat scroll 0% 0% transparent; -moz-user-modify: read-write;/">
+			<SPAN CLASS="vpe-text">
+				[GOOD] Checking escaping slashes in this case
+			</SPAN>
+		</DIV>
+	</test>
+	<test id="id2">
+		<DIV
+			STYLE="/.*WebContent/pages/jbide9975\(%201%20\)/jbide9975\(%20pic%20\).png.*\) repeat scroll 0% 0% transparent; -moz-user-modify: read-write;/">
+			<SPAN CLASS="vpe-text">
+				[GOOD] Checking putting url into quotes
+			</SPAN>
+		</DIV>
+	</test>
+	<test id="id3">
+		<DIV STYLE="-moz-user-modify: read-write;">
+			<SPAN CLASS="vpe-text">
+				[BAD] Checking bad escaping example
+			</SPAN>
+		</DIV>
+	</test>
+	<test id="id4">
+		<DIV STYLE="-moz-user-modify: read-write;">
+			<SPAN CLASS="vpe-text">
+				[BAD] Checking example with no escaping at all
+			</SPAN>
+		</DIV>
+	</test>
+</tests>
