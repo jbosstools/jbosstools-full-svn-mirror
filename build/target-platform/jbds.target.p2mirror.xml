@@ -168,8 +168,6 @@
 <iu id="org.eclipse.tm.terminal.view.feature.group" version=""/>
 <iu id="org.eclipse.tm.terminal.telnet.feature.group" version=""/>
 <iu id="org.eclipse.tm.terminal.ssh.feature.group" version=""/>
-<iu id="org.eclipse.rcp.patch333630.feature.group" version=""/>
-<iu id="org.eclipse.rcp.patch64333360.feature.group" version=""/>
 </p2.mirror>
 </target>
 </project>
