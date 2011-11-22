@@ -30,7 +30,12 @@ import org.eclipse.osgi.util.NLS;
 import org.hibernate.annotations.common.util.ReflectHelper;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.JDBCMetaDataConfiguration;
+import org.hibernate.cfg.JDBCReaderFactory;
+import org.hibernate.cfg.Settings;
+import org.hibernate.cfg.reveng.DatabaseCollector;
+import org.hibernate.cfg.reveng.DefaultDatabaseCollector;
 import org.hibernate.cfg.reveng.DefaultReverseEngineeringStrategy;
+import org.hibernate.cfg.reveng.JDBCReader;
 import org.hibernate.cfg.reveng.OverrideRepository;
 import org.hibernate.cfg.reveng.ReverseEngineeringSettings;
 import org.hibernate.cfg.reveng.ReverseEngineeringStrategy;
@@ -41,13 +46,19 @@ import org.hibernate.console.execution.ExecutionContext;
 import org.hibernate.console.execution.ExecutionContext.Command;
 import org.hibernate.console.ext.HibernateException;
 import org.hibernate.console.ext.HibernateExtension;
+import org.hibernate.console.ext.api.ConsoleDatabaseCollector;
 import org.hibernate.eclipse.console.HibernateConsoleMessages;
 import org.hibernate.eclipse.console.HibernateConsolePlugin;
 import org.hibernate.eclipse.console.ext.CompletionProposalsResult;
 import org.hibernate.eclipse.console.ext.ConsoleExtension;
+import org.hibernate.eclipse.console.workbench.ProgressListenerMonitor;
 import org.hibernate.eclipse.launch.CodeGenerationStrings;
 import org.hibernate.eclipse.launch.CodeGenerationUtils;
 import org.hibernate.eclipse.launch.PathHelper;
+import org.hibernate.service.ServiceRegistry;
+import org.hibernate.service.ServiceRegistryBuilder;
+import org.hibernate.service.spi.ServiceRegistryImplementor;
+import org.hibernate.service.spi.Stoppable;
 import org.hibernate.tool.hbm2x.ArtifactCollector;
 import org.hibernate.tool.hbm2x.Exporter;
 import org.hibernate.tool.ide.completion.HQLCodeAssist;
@@ -299,5 +310,40 @@ public class ConsoleExtension4_0 implements ConsoleExtension {
 			throw new HibernateConsoleRuntimeException(out, e);
 		}
     }
+	
+	@Override
+	public ConsoleDatabaseCollector readDatabaseSchema(final IProgressMonitor monitor, final ConsoleConfiguration cc,
+			final ReverseEngineeringStrategy strategy) {
+		return new ConsoleDatabaseCollectorImpl(readDatabaseSchemaInternal(monitor, cc, strategy));
+	}
+	
+	protected DatabaseCollector readDatabaseSchemaInternal(final IProgressMonitor monitor, final ConsoleConfiguration consoleConfiguration, final ReverseEngineeringStrategy strategy) {
+		final Configuration configuration = consoleConfiguration.buildWith(null, false);
+		return (DefaultDatabaseCollector) consoleConfiguration.execute(new ExecutionContext.Command() {
+
+			public Object execute() {
+				ServiceRegistry serviceRegistry = new ServiceRegistryBuilder()
+					.applySettings(configuration.getProperties())
+					.buildServiceRegistry();
+				DefaultDatabaseCollector db = null;
+				Settings settings = consoleConfiguration.getSettings(configuration);
+				try {
+					JDBCReader reader = JDBCReaderFactory.newJDBCReader(configuration.getProperties(), settings, strategy, serviceRegistry);
+					db = new DefaultDatabaseCollector(reader.getMetaDataDialect());
+					reader.readDatabaseSchema(db, settings.getDefaultCatalogName(), settings.getDefaultSchemaName(), new ProgressListenerMonitor(monitor));
+				} catch (HibernateException he) {
+					throw he;
+				} catch (UnsupportedOperationException he) {
+					throw new HibernateException(he);
+				}
+				finally {
+					if (serviceRegistry instanceof ServiceRegistryImplementor) {
+						((ServiceRegistryImplementor)serviceRegistry).destroy();
+					}
+				}
+				return db;
+			}
+		});
+	}
 
 }

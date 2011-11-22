@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
+import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.ext.HibernateExtension;
 
 /**
@@ -91,6 +92,13 @@ public class ConsoleExtensionManager {
 				}
 			}
 			return consoleExtensions.get(hibernateExtension);
+		}
+		return null;
+	}
+	
+	public static ConsoleExtension getConsoleExtension(ConsoleConfiguration consoleConfiguration){
+		if (consoleConfiguration != null){
+			return getConsoleExtension(consoleConfiguration.getHibernateExtension());
 		}
 		return null;
 	}
