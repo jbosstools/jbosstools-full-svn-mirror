@@ -800,10 +800,9 @@ public class VpeStyleUtil {
 		if (uri == null || !uri.isAbsolute()) {
 			String decodedUrl = decodeUrl(resolvedUrl);
 			Path path = new Path(decodedUrl);
-			if (decodedUrl.startsWith("/") //$NON-NLS-1$
+			if (decodedUrl.startsWith("/") && (null != path.segment(0))//$NON-NLS-1$
 					&& path.segment(0).equals(baseFile.getProject().getName())) {
-				decodedUrl = "/" //$NON-NLS-1$
-						+ path.removeFirstSegments(1).toPortableString();
+				decodedUrl = "/" + path.removeFirstSegments(1).toPortableString(); //$NON-NLS-1$
 			}
 			IFile file = FileUtil.getFile(decodedUrl, baseFile);
 			if (file != null && file.getLocation() != null) {
