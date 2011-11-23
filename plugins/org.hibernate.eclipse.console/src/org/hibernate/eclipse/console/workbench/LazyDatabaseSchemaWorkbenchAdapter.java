@@ -106,7 +106,7 @@ public class LazyDatabaseSchemaWorkbenchAdapter extends BasicWorkbenchAdapter {
 
 	protected ConsoleDatabaseCollector readDatabaseSchema(final IProgressMonitor monitor, final ConsoleConfiguration consoleConfiguration/*, final ReverseEngineeringStrategy strategy*/) {
 		return ConsoleExtensionManager.getConsoleExtension(consoleConfiguration)
-				.readDatabaseSchema(monitor, consoleConfiguration);
+				.readDatabaseSchema(monitor);
 		/*final Configuration configuration = consoleConfiguration.buildWith(null, false);
 		return (DefaultDatabaseCollector) consoleConfiguration.execute(new ExecutionContext.Command() {
 
