@@ -31,7 +31,6 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.JDBCMetaDataConfiguration;
 import org.hibernate.cfg.JDBCReaderFactory;
 import org.hibernate.cfg.Settings;
-import org.hibernate.cfg.reveng.DatabaseCollector;
 import org.hibernate.cfg.reveng.DefaultDatabaseCollector;
 import org.hibernate.cfg.reveng.DefaultReverseEngineeringStrategy;
 import org.hibernate.cfg.reveng.JDBCReader;
@@ -308,9 +307,8 @@ public class ConsoleExtension3_5 implements ConsoleExtension {
     }
 
 	@Override
-	public ConsoleDatabaseCollector readDatabaseSchema(final IProgressMonitor monitor, final ConsoleConfiguration cc,
-			final ReverseEngineeringStrategy strategy) {
-		return new ConsoleDatabaseCollectorImpl(readDatabaseSchemaInternal(monitor, cc, strategy));
+	public ConsoleDatabaseCollector readDatabaseSchema(final IProgressMonitor monitor, final ConsoleConfiguration cc) {
+		return new ConsoleDatabaseCollectorImpl(readDatabaseSchemaInternal(monitor, cc, new DefaultReverseEngineeringStrategy()));
 	}
 	
 	protected DefaultDatabaseCollector readDatabaseSchemaInternal(final IProgressMonitor monitor, final ConsoleConfiguration consoleConfiguration, final ReverseEngineeringStrategy strategy) {
