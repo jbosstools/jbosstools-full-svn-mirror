@@ -8,21 +8,36 @@
  * Contributor:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.hibernate4_0.console;
+package org.jboss.tools.hibernate4_0.mapping;
 
-import org.hibernate.cfg.reveng.DatabaseCollector;
-import org.hibernate.console.ext.api.ConsoleDatabaseCollector;
+import org.hibernate.console.ext.api.ITable;
+import org.hibernate.mapping.Table;
 
 /**
  * @author Dmitry Geraskov {geraskov@gmail.com}
  *
  */
-public class ConsoleDatabaseCollectorImpl extends ConsoleDatabaseCollector {
+public class TableImpl implements ITable {
 	
-	private DatabaseCollector collector;
+	private Table table;
 	
-	public ConsoleDatabaseCollectorImpl(DatabaseCollector databaseCollector){
-		this.collector = databaseCollector;
+	public TableImpl(Table table){
+		this.table = table;
+	}
+
+	@Override
+	public String getName() {
+		return table.getName();
+	}
+
+	@Override
+	public String getSchema() {
+		return table.getSchema();
+	}
+
+	@Override
+	public String getCatalog() {
+		return table.getCatalog();
 	}
 
 }

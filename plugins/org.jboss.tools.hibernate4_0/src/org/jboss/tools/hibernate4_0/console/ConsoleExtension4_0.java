@@ -317,7 +317,7 @@ public class ConsoleExtension4_0 implements ConsoleExtension {
 		return new ConsoleDatabaseCollectorImpl(readDatabaseSchemaInternal(monitor, cc, strategy));
 	}
 	
-	protected DatabaseCollector readDatabaseSchemaInternal(final IProgressMonitor monitor, final ConsoleConfiguration consoleConfiguration, final ReverseEngineeringStrategy strategy) {
+	protected DefaultDatabaseCollector readDatabaseSchemaInternal(final IProgressMonitor monitor, final ConsoleConfiguration consoleConfiguration, final ReverseEngineeringStrategy strategy) {
 		final Configuration configuration = consoleConfiguration.buildWith(null, false);
 		return (DefaultDatabaseCollector) consoleConfiguration.execute(new ExecutionContext.Command() {
 
