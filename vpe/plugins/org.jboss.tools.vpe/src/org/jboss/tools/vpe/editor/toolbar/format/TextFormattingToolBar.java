@@ -177,7 +177,7 @@ public class TextFormattingToolBar extends SplitToolBar {
 		 * CSSStyleDialog should be on the Formatting toolbar.
 		 */
 		item = createToolItem(toolBar, SWT.PUSH, 
-				CSSPlugin.getImageDescriptor(Util.IMAGE_COLORLARGE_FILE_LOCATION).createImage(), 
+				createImage(CSSPlugin.getImageDescriptor(Util.IMAGE_COLORLARGE_FILE_LOCATION)), 
 				VpeUIMessages.EDIT_STYLE_ATTRIBUTE);
 		listener = new StyleFormatController(formatControllerManager, item);
 		item.addListener(SWT.Selection, listener);
@@ -208,10 +208,13 @@ public class TextFormattingToolBar extends SplitToolBar {
 	}
 
 	private Image createImage(String path) {
-		Image image = ImageDescriptor.createFromFile(MozillaEditor.class, path)
-			.createImage();
+		ImageDescriptor imageDescriptor = ImageDescriptor.createFromFile(MozillaEditor.class, path);
+		return createImage(imageDescriptor);
+	}
+
+	private Image createImage(ImageDescriptor imageDescriptor) {
+		Image image = imageDescriptor.createImage();
 		imagesList.add(image);
-		
 		return image;
 	}
 }
