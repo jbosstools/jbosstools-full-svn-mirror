@@ -310,20 +310,20 @@ public class ConsoleExtension4_0 implements ConsoleExtension {
     }
 	
 	@Override
-	public ConsoleDatabaseCollector readDatabaseSchema(final IProgressMonitor monitor, final ConsoleConfiguration cc) {
-		return new ConsoleDatabaseCollectorImpl(readDatabaseSchemaInternal(monitor, cc, new DefaultReverseEngineeringStrategy()));
+	public ConsoleDatabaseCollector readDatabaseSchema(final IProgressMonitor monitor) {
+		return new ConsoleDatabaseCollectorImpl(readDatabaseSchemaInternal(monitor, new DefaultReverseEngineeringStrategy()));
 	}
 	
-	protected DefaultDatabaseCollector readDatabaseSchemaInternal(final IProgressMonitor monitor, final ConsoleConfiguration consoleConfiguration, final ReverseEngineeringStrategy strategy) {
-		final Configuration configuration = consoleConfiguration.buildWith(null, false);
-		return (DefaultDatabaseCollector) consoleConfiguration.execute(new ExecutionContext.Command() {
+	protected DefaultDatabaseCollector readDatabaseSchemaInternal(final IProgressMonitor monitor, final ReverseEngineeringStrategy strategy) {
+		final Configuration configuration = hibernateExtension.buildWith(null, false);
+		return (DefaultDatabaseCollector) hibernateExtension.execute(new ExecutionContext.Command() {
 
 			public Object execute() {
 				ServiceRegistry serviceRegistry = new ServiceRegistryBuilder()
 					.applySettings(configuration.getProperties())
 					.buildServiceRegistry();
 				DefaultDatabaseCollector db = null;
-				Settings settings = consoleConfiguration.getSettings(configuration);
+				Settings settings = hibernateExtension.getSettings(configuration, serviceRegistry);
 				try {
 					JDBCReader reader = JDBCReaderFactory.newJDBCReader(configuration.getProperties(), settings, strategy, serviceRegistry);
 					db = new DefaultDatabaseCollector(reader.getMetaDataDialect());

@@ -307,17 +307,17 @@ public class ConsoleExtension3_5 implements ConsoleExtension {
     }
 
 	@Override
-	public ConsoleDatabaseCollector readDatabaseSchema(final IProgressMonitor monitor, final ConsoleConfiguration cc) {
-		return new ConsoleDatabaseCollectorImpl(readDatabaseSchemaInternal(monitor, cc, new DefaultReverseEngineeringStrategy()));
+	public ConsoleDatabaseCollector readDatabaseSchema(final IProgressMonitor monitor) {
+		return new ConsoleDatabaseCollectorImpl(readDatabaseSchemaInternal(monitor, new DefaultReverseEngineeringStrategy()));
 	}
 	
-	protected DefaultDatabaseCollector readDatabaseSchemaInternal(final IProgressMonitor monitor, final ConsoleConfiguration consoleConfiguration, final ReverseEngineeringStrategy strategy) {
-		final Configuration configuration = consoleConfiguration.buildWith(null, false);
-		return (DefaultDatabaseCollector) consoleConfiguration.execute(new ExecutionContext.Command() {
+	protected DefaultDatabaseCollector readDatabaseSchemaInternal(final IProgressMonitor monitor, final ReverseEngineeringStrategy strategy) {
+		final Configuration configuration = hibernateExtension.buildWith(null, false);
+		return (DefaultDatabaseCollector) hibernateExtension.execute(new ExecutionContext.Command() {
 
 			public Object execute() {
 				DefaultDatabaseCollector db = null;
-				Settings settings = consoleConfiguration.getSettings(configuration);
+				Settings settings = hibernateExtension.getSettings(configuration);
 				ConnectionProvider connectionProvider = null;
 				try {
 					connectionProvider = settings.getConnectionProvider();

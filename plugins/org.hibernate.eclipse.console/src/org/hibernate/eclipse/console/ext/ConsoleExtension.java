@@ -14,7 +14,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
-import org.hibernate.console.ConsoleConfiguration;
 import org.hibernate.console.ext.HibernateExtension;
 import org.hibernate.console.ext.api.ConsoleDatabaseCollector;
 
@@ -31,7 +30,6 @@ public interface ConsoleExtension {
 	public void launchExporters(ILaunchConfiguration configuration, String mode,
 			ILaunch launch, IProgressMonitor monitor) throws CoreException;
 
-	public ConsoleDatabaseCollector readDatabaseSchema(IProgressMonitor monitor,
-			ConsoleConfiguration consoleConfiguration);
+	public ConsoleDatabaseCollector readDatabaseSchema(IProgressMonitor monitor);
 	
 }

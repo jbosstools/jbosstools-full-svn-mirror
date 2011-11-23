@@ -23,6 +23,7 @@ import org.eclipse.osgi.util.NLS;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.cfg.Settings;
 import org.hibernate.console.ConsoleConfigClassLoader;
 import org.hibernate.console.ConsoleMessages;
 import org.hibernate.console.QueryInputModel;
@@ -313,6 +314,14 @@ public class HibernateExtension4_0 implements HibernateExtension {
 	 */
 	public Configuration getConfiguration() {
 		return configuration;
+	}
+	
+	public Settings getSettings(final Configuration cfg, final ServiceRegistry serviceRegisrty) {
+		return (Settings) execute(new Command() {
+			public Object execute() {
+				return cfg.buildSettings(serviceRegisrty);
+			}
+		});
 	}
 
 }

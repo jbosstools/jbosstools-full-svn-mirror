@@ -19,6 +19,7 @@ import org.eclipse.osgi.util.NLS;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.cfg.Settings;
 import org.hibernate.console.ConfigurationFactory;
 import org.hibernate.console.ConsoleConfigClassLoader;
 import org.hibernate.console.ConsoleMessages;
@@ -32,10 +33,7 @@ import org.hibernate.console.ext.QueryResult;
 import org.hibernate.console.ext.QueryResultImpl;
 import org.hibernate.console.preferences.ConsoleConfigurationPreferences;
 import org.hibernate.console.preferences.PreferencesClassPathUtils;
-import org.hibernate.eclipse.console.ext.CompletionProposalsResult;
 import org.hibernate.eclipse.libs.FakeDelegatingDriver;
-import org.hibernate.tool.ide.completion.HQLCodeAssist;
-import org.hibernate.tool.ide.completion.IHQLCodeAssist;
 
 /**
  * 
@@ -264,5 +262,13 @@ public class HibernateExtension3_5 implements HibernateExtension {
 	 */
 	public Configuration getConfiguration() {
 		return configuration;
+	}
+	
+	public Settings getSettings(final Configuration cfg) {
+		return (Settings) execute(new Command() {
+			public Object execute() {
+				return cfg.buildSettings();
+			}
+		});
 	}
 }
