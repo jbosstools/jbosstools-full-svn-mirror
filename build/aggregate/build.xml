@@ -456,6 +456,7 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 			default update.site.description=Nightly Build
 			default update.site.version=(null)
 		-->
+		<property name="update.site.name" value="JBoss Tools" />
 		<property name="update.site.description" value="Nightly Build" />
 		<if>
 			<and>
@@ -493,7 +494,7 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 		<antcallback target="generate.directory.xml" return="directory.xml.html"/>
 		
 		<copy todir="${output.dir}" overwrite="true">
-			<fileset file="${output.dir}/index-template.html" />
+			<fileset file="${basedir}/index-template.html" />
 			<mapper type="merge" to="index.html" />
 			<filterchain>
 				<expandproperties />
