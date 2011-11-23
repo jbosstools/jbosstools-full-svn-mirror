@@ -118,8 +118,7 @@
 					<a href="features/" style="font-size:x-small">features</a>
 				</td>
 				<td class="rowLine" colspan="1">
-					::
-                                        <a href="jbosstools-directory.xml" style="font-size:x-small">jbosstools-directory.xml</a>
+					@DIRECTORY.XML@
 				</td>
 			</tr>
 		</table>

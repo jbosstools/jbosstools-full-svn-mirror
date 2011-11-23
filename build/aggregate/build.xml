@@ -28,9 +28,14 @@
 	<property name="update.site.source.dir" value="${output.dir}/target/site" />
 
 	<!-- load properties from file -->
-	<property name="associate.properties" value="associate.properties" />
+	<condition property="associate.properties" value="${output.dir}/associate.properties">
+		<available file="${output.dir}/associate.properties" type="file" />
+	</condition>
+	<condition property="associate.properties" value="associate.properties">
+		<available file="associate.properties" type="file" />
+	</condition>
 	<property file="${associate.properties}" />
-	<property name="web.content.files" value="index.html, **/*.css, README*, *directory.xml" />
+	<property name="web.content.files" value="index.html, web/*.css, README*, *directory.xml" />
 
 	<target name="init">
 		<ant antfile="${build.xml}" target="init" />
@@ -44,7 +49,8 @@
 		<antcall target="get.saxon" />
 	</target>
 
-	<target name="custom.build" description="JBT aggregate update site extra processing steps" depends="init,check.target,unpack.content.jar,remove.references,add.associate.sites,remove.uncategorized.category,add.web.content,pack.content.jar,pack.zip,collect.zips,collect.metadata,create.summary.file" />
+	<target name="basic.build" description="JBT aggregate update site extra processing steps" depends="init,check.target,unpack.content.jar,remove.references,add.associate.sites,remove.uncategorized.category,add.web.content,pack.content.jar,pack.zip" />
+	<target name="custom.build" description="JBT aggregate update site extra processing steps" depends="basic.build,collect.zips,collect.metadata,create.summary.file" />
 
 	<target name="get.saxon" unless="saxon.jar.exists">
 		<!-- or use http://downloads.sourceforge.net/saxon/saxonhe9-3-0-4j.zip ? -->
@@ -384,10 +390,10 @@ DEST = ${aggregate.zips.dir}/@{zipPath}
 		</if>
 	</target>
 
-        <target name="remove.references">
-                <copy file="${update.site.source.dir}/content.xml" tofile="${update.site.source.dir}/content.old.xml" overwrite="true" />
-                <xslt style="remove-references.xsl" in="${update.site.source.dir}/content.old.xml" out="${update.site.source.dir}/content.xml" />
-        </target>
+	<target name="remove.references">
+		<copy file="${update.site.source.dir}/content.xml" tofile="${update.site.source.dir}/content.old.xml" overwrite="true" />
+		<xslt style="remove-references.xsl" in="${update.site.source.dir}/content.old.xml" out="${update.site.source.dir}/content.xml" />
+	</target>
 
 	<target name="remove.uncategorized.category">
 		<copy file="${update.site.source.dir}/content.xml" tofile="${update.site.source.dir}/content.old.xml" overwrite="true" />
@@ -430,6 +436,8 @@ DEST = ${aggregate.zips.dir}/@{zipPath}
 			</or>
 			<then>
 				<fail>
+--
+Could not find ${output.dir}/target/site or ${output.dir}/target/site_assembly.zip
 --
 This script must ONLY be called via the pom.xml in this directory, not run directly. 
 Cannot adjust an update site w/o first building it!
@@ -482,30 +490,51 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 		<!-- get site.xml as HTML, then load into ${site.contents} in order to merge into index.html -->
 		<antcallback target="transform.site.xml" return="site.contents" />
 
+		<antcallback target="generate.directory.xml" return="directory.xml.html"/>
+		
 		<copy todir="${output.dir}" overwrite="true">
-			<fileset file="index-template.html" />
+			<fileset file="${output.dir}/index-template.html" />
 			<mapper type="merge" to="index.html" />
 			<filterchain>
 				<expandproperties />
+				<replacetokens>
+					<token key="DIRECTORY.XML" value="${directory.xml.html}"/>
+				</replacetokens>
 			</filterchain>
 		</copy>
 
-		<!-- get filename matching org.jboss.tools.central.discovery_1.0.0.v20111013-0511-M4.jar, then generate replacement directory.xml file -->
-		<path id="central.discovery.jar.id">
-			<fileset dir="${update.site.source.dir}/plugins">
-				<include name="org.jboss.tools.central.discovery_*.jar" />
-			</fileset>
-		</path>
-		<property name="central.discovery.path" refid="central.discovery.jar.id" />
-		<basename property="central.discovery.jar" file="${central.discovery.path}" />
-		<echo file="${output.dir}/jbosstools-directory.xml">&lt;?xml version='1.0' encoding='UTF-8'?>
+		<copy todir="${update.site.source.dir}" overwrite="true">
+			<fileset dir="${basedir}" includes="${web.content.files}" />
+		</copy>
+		<copy todir="${update.site.source.dir}" overwrite="true">
+			<fileset dir="${output.dir}" includes="${web.content.files}" />
+		</copy>
+	</target>
+
+	<target name="generate.directory.xml">
+	<!-- get filename matching org.jboss.tools.central.discovery_1.0.0.v20111013-0511-M4.jar, then generate replacement directory.xml file -->
+	<path id="central.discovery.jar.id">
+		<fileset dir="${update.site.source.dir}/plugins">
+			<include name="org.jboss.tools.central.discovery_*.jar" />
+		</fileset>
+	</path>
+	<property name="central.discovery.path" refid="central.discovery.jar.id" />
+	<basename property="central.discovery.jar" file="${central.discovery.path}" />
+	<var name="directory.xml.html" value=""/>
+	<if>
+		<not>
+			<equals arg1="${central.discovery.path}" arg2="" trim="true" />
+		</not>
+		<then>
+			<echo level="verbose">Generate ${output.dir}/jbosstools-directory.xml pointing at discovery jar: plugins/${central.discovery.jar}</echo>
+			<echo file="${output.dir}/jbosstools-directory.xml">&lt;?xml version='1.0' encoding='UTF-8'?>
 &lt;directory xmlns="http://www.eclipse.org/mylyn/discovery/directory/">
 &lt;entry url="plugins/${central.discovery.jar}" permitCategories="true"/>
 &lt;/directory>
 </echo>
-		<copy todir="${update.site.source.dir}">
-			<fileset dir="${output.dir}" includes="${web.content.files}" />
-		</copy>
+		<var name="directory.xml.html" value=":: &lt;a href=&quot;jbosstools-directory.xml&quot; style=&quot;font-size:x-small&quot;&gt;jbosstools-directory.xml&lt;/a&gt;"/>
+		</then>
+	</if>
 	</target>
 
 	<target name="transform.site.xml">

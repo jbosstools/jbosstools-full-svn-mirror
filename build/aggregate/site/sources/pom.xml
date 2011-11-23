@@ -6,11 +6,11 @@
 		<groupId>org.jboss.tools</groupId>
 		<artifactId>org.jboss.tools.aggregate.site</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath>../pom.xml</relativePath>
+		<relativePath>../../pom.xml</relativePath>
 	</parent>
 	<groupId>org.jboss.tools</groupId>
 	<artifactId>org.jboss.tools.site.aggregate</artifactId>
-	<name>JBoss Tools Aggregate Site</name>
+	<name>JBoss Tools Aggregate Site [Sources]</name>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>eclipse-update-site</packaging>
 	<build>
@@ -31,7 +31,7 @@
 									else="${basedir}">
 									<available file="${WORKSPACE}/results" />
 								</condition>
-								<ant antfile="build.xml" dir="../">
+								<ant antfile="build.xml" target="basic.build" dir="../../">
 									<property name="output.dir" value="${output.dir}" />
 									<property name="inputRepo"
 										value="${jbosstools-nightly-staging-composite}" />
