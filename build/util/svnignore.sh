@@ -4,7 +4,6 @@ echo "target
 buildlog.latest.txt
 bin
 build
-*.class
 " > $tmpfile
 
 dir="."; if [[ $1 ]]; then dir=$1; fi
