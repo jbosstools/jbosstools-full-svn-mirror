@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-	<description>JBoss Tools 3.3 Updates</description>
-
-	<!-- only in JBDS
-	<feature url="features/com.jboss.jbds.product.source.feature_0.0.0.jar" id="com.jboss.jbds.product.source.feature" version="0.0.0" patch="false">
-		<category name="AllSources" />
-	</feature>
-	-->
-
-       	<!--
+	<description>JBoss Tools 3.3 Sources</description>
+   	<!--
 	<feature url="features/org.jboss.tools.central.source.feature_0.0.0.jar" id="org.jboss.tools.central.source.feature" version="0.0.0">
 		<category name="AllSources"/>
 	</feature>
@@ -17,9 +10,6 @@
        	<feature url="features/org.jboss.tools.richfaces.source.feature_0.0.0.jar" id="org.jboss.tools.richfaces.source.feature" version="0.0.0">
 		<category name="AllSources" />
 	</feature>
-	-->
-	<!-- include and categorize in JBT -->
-	<!--
 	<feature url="features/org.jboss.tools.jst.source.feature_0.0.0.jar" id="org.jboss.tools.jst.source.feature" version="0.0.0">
 		<category name="AllSources" />
 	</feature>
@@ -29,13 +19,13 @@
 	<feature url="features/org.jboss.tools.jsf.source.feature_0.0.0.jar" id="org.jboss.tools.jsf.source.feature" version="0.0.0">
 		<category name="AllSources" />
 	</feature>
-	-->
-	<!-- include but do not categorize -->
-	<!--
-	<feature url="features/org.jboss.tools.xulrunner.source.feature_0.0.0.jar" id="org.jboss.tools.xulrunner.source.feature" version="0.0.0"></feature>
-	<feature url="features/org.mozilla.xulrunner.source.feature_0.0.0.jar" id="org.mozilla.xulrunner.source.feature" version="0.0.0"></feature>
-
-        <feature url="features/org.jboss.tools.seam.source.feature_0.0.0.jar" id="org.jboss.tools.seam.source.feature" version="0.0.0">
+	<feature url="features/org.jboss.tools.xulrunner.source.feature_0.0.0.jar" id="org.jboss.tools.xulrunner.source.feature" version="0.0.0">
+			<category name="AllSources" />
+	</feature>
+	<feature url="features/org.mozilla.xulrunner.source.feature_0.0.0.jar" id="org.mozilla.xulrunner.source.feature" version="0.0.0">
+			<category name="AllSources" />
+	</feature>
+    <feature url="features/org.jboss.tools.seam.source.feature_0.0.0.jar" id="org.jboss.tools.seam.source.feature" version="0.0.0">
 		<category name="AllSources" />
 	</feature>
 	<feature url="features/org.jboss.tools.cdi.source.feature_0.0.0.jar" id="org.jboss.tools.cdi.source.feature" version="0.0.0">
@@ -51,9 +41,8 @@
 	<feature url="features/org.jboss.ide.eclipse.as.source.feature_0.0.0.jar" id="org.jboss.ide.eclipse.as.source.feature" version="0.0.0">
 		<category name="AllSources" />
 	</feature>
-	<!-- only in JBT -->
 	<feature url="features/org.jboss.tools.openshift.express.source.feature_0.0.0.jar" id="org.jboss.tools.openshift.express.source.feature" version="0.0.0">
-                <category name="AllSources" />
+        <category name="AllSources" />
 	</feature>
 	<feature url="features/org.jboss.tools.openshift.egit.integration.source.feature_0.0.0.jar" id="org.jboss.tools.openshift.egit.integration.source.feature" version="0.0.0">
 		<category name="AllSources" />
@@ -74,9 +63,6 @@
 	<feature url="features/org.jboss.tools.ws.source.feature_0.0.0.jar" id="org.jboss.tools.ws.source.feature" version="0.0.0">
 		<category name="AllSources" />
 	</feature>
-	-->
-	<!-- only in JBT -->
-	<!--
 	<feature url="features/org.jboss.tools.ws.jaxrs.source.feature_0.0.0.jar" id="org.jboss.tools.ws.jaxrs.source.feature" version="0.0.0">
 		<category name="AllSources" />
 	</feature>
@@ -129,7 +115,6 @@
 	<feature url="features/org.jboss.tools.gwt.source.feature_0.0.0.jar" id="org.jboss.tools.gwt.source.feature" version="0.0.0">
 		<category name="AllSources" />
 	</feature>
-
 	-->
 	<feature url="features/org.jboss.tools.common.all.source.feature_0.0.0.jar" id="org.jboss.tools.common.all.source.feature" version="0.0.0">
 		<category name="AllSources" />
