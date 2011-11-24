@@ -26,12 +26,8 @@
 							<quiet>true</quiet>
 							<tasks>
 								<!-- called AFTER generating update site + zip to add in extra content -->
-								<condition property="output.dir" value="${WORKSPACE}/results"
-									else="${basedir}">
-									<available file="${WORKSPACE}/results" />
-								</condition>
 								<ant antfile="build.xml" target="basic.build" dir="../../">
-									<property name="output.dir" value="${output.dir}" />
+									<property name="output.dir" value="${basedir}" />
 									<property name="inputRepo"
 										value="${jbosstools-nightly-staging-composite}" />
 									<property name="update.site.name" value="JBoss Tools - Core Sources"/>
