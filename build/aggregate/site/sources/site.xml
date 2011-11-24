@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
 	<description>JBoss Tools 3.3 Sources</description>
+
+	<!-- PLEASE NOTE!
+		When updating this file, please be sure that it parses as valid XML before committing it.
+		To test, just run `mvn clean install` in this folder. 
+		
+		Please also remember to add matching feature entries to ../site.xml
+	-->
+
+	<!-- only in JBDS
+	<feature url="features/com.jboss.jbds.product.feature_0.0.0.jar" id="com.jboss.jbds.product.feature" version="0.0.0" patch="false">
+	</feature>
+	-->
+
    	<!--
 	<feature url="features/org.jboss.tools.central.source.feature_0.0.0.jar" id="org.jboss.tools.central.source.feature" version="0.0.0">
 		<category name="AllSources"/>
+	</feature>
+	<feature url="features/org.jboss.tools.community.central.source.feature_0.0.0.jar" id="org.jboss.tools.community.central.source.feature" version="0.0.0">
+		<category name="AllSources" />
 	</feature>
 	<feature url="features/org.jboss.tools.central.discovery.source.feature_0.0.0.jar" id="org.jboss.tools.central.discovery.source.feature" version="0.0.0">
 	</feature>
@@ -116,13 +132,13 @@
 		<category name="AllSources" />
 	</feature>
 	-->
-	<feature url="features/org.jboss.tools.common.all.source.feature_0.0.0.jar" id="org.jboss.tools.common.all.source.feature" version="0.0.0">
-		<category name="AllSources" />
-	</feature>
 	<feature url="features/org.jboss.tools.common.jdt.source.feature_0.0.0.jar" id="org.jboss.tools.common.jdt.source.feature" version="0.0.0">
 		<category name="AllSources" />
 	</feature>
 	<feature url="features/org.jboss.tools.common.mylyn.source.feature_0.0.0.jar" id="org.jboss.tools.common.mylyn.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+	<feature url="features/org.jboss.tools.common.all.source.feature_0.0.0.jar" id="org.jboss.tools.common.all.source.feature" version="0.0.0">
 		<category name="AllSources" />
 	</feature>
 	<!--

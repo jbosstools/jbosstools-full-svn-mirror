@@ -2,6 +2,13 @@
 <site>
 	<description>JBoss Tools 3.3 Updates</description>
 
+	<!-- PLEASE NOTE!
+		When updating this file, please be sure that it parses as valid XML before committing it.
+		To test, just run `mvn clean install` in this folder. 
+		
+		Please also remember to add matching source feature entries to sources/site.xml
+	-->
+
 	<!-- only in JBDS
 	<feature url="features/com.jboss.jbds.product.feature_0.0.0.jar" id="com.jboss.jbds.product.feature" version="0.0.0" patch="false">
 		<category name="AbridgedTools" />
