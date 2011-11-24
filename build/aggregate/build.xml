@@ -31,10 +31,11 @@
 	<condition property="associate.properties" value="${output.dir}/associate.properties">
 		<available file="${output.dir}/associate.properties" type="file" />
 	</condition>
-	<condition property="associate.properties" value="associate.properties">
-		<available file="associate.properties" type="file" />
+	<condition property="associate.properties" value="${output.dir}/../associate.properties">
+		<available file="${output.dir}/../associate.properties" type="file" />
 	</condition>
 	<property file="${associate.properties}" />
+	<echo level="verbose">Loaded associate sites from ${associate.properties}</echo>
 	<property name="web.content.files" value="index.html, web/*.css, README*, *directory.xml" />
 
 	<target name="init">
