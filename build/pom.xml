@@ -318,24 +318,6 @@
 		</profile>
 
 		<profile>
-			<id>profiler</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<modules>
-				<module>../profiler</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>profiler-bootstrap</id>
-			<modules>
-				<module>../tests</module>
-				<module>../profiler</module>
-			</modules>
-		</profile>
-
-		<profile>
 			<id>smooks</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
