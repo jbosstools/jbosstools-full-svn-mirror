@@ -16,11 +16,13 @@ import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
+import org.jboss.tools.common.util.SwtUtil;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
 
 /**
@@ -34,8 +36,10 @@ public class VpeDropDownMenu {
 	public VpeDropDownMenu(ToolBar bar, String toolTipText) {
 		ToolItem item = new ToolItem(bar, SWT.MENU);
 		item.setToolTipText(toolTipText);
-		item.setImage(ImageDescriptor.createFromFile(MozillaEditor.class,
-				"icons/arrow.gif").createImage()); //$NON-NLS-1$
+		final Image arrowImage = ImageDescriptor.createFromFile(MozillaEditor.class,
+				"icons/arrow.gif").createImage(); //$NON-NLS-1$
+		item.setImage(arrowImage);
+		SwtUtil.bindDisposal(arrowImage, item);
 
 		item.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent event) {

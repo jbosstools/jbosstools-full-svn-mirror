@@ -102,7 +102,9 @@ public abstract class SplitToolBar implements IVpeToolBar {
 //		coolBar.layout();
 		
 //		final Button  button = new Button(parent, SWT.FLAT|SWT.PUSH);
-//		button.setImage(ImageDescriptor.createFromFile(MozillaEditor.class, "icons/arrow_more.gif").createImage());
+//		Image arrowMoreImage = ImageDescriptor.createFromFile(MozillaEditor.class, "icons/arrow_more.gif").createImage(); 
+//		button.setImage(arrowMoreImage);
+//		SWTUtil.bindDisposal(arrowMoreImage, button);
 //		button.setVisible(false);
 //		
 //		button.addListener(SWT.Selection, new Listener() {
