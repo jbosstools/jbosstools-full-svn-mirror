@@ -44,12 +44,12 @@ import org.eclipse.wst.xml.ui.internal.contentoutline.JFaceNodeContentProvider;
 import org.eclipse.wst.xml.ui.internal.contentoutline.JFaceNodeLabelProvider;
 import org.jboss.tools.common.model.ui.dnd.ModelTransfer;
 import org.jboss.tools.common.model.ui.editors.dnd.context.DropContext;
+import org.jboss.tools.common.util.SwtUtil;
 import org.jboss.tools.jst.jsp.editor.IJSPTextEditor;
 import org.jboss.tools.vpe.editor.dnd.context.JSPViewerDropAdapter;
 import org.w3c.dom.Node;
 
 public class VpeDropWindow extends Window {
-	static final Color BACKGROUND_COLOR = new Color(null, 0xff, 0xff, 0xcd);
 	IJSPTextEditor editor;
 	boolean active = false;
 	TreeViewer treeViewer;
@@ -104,7 +104,10 @@ public class VpeDropWindow extends Window {
 		treeViewer.setLabelProvider(labelProvider);
 		treeViewer.setInput(rootNode);
 
-		tree.setBackground(BACKGROUND_COLOR);
+		Color treeBackgroundColor = new Color(null, 0xff, 0xff, 0xcd);
+		tree.setBackground(treeBackgroundColor);
+		SwtUtil.bindDisposal(treeBackgroundColor, tree);
+		
 		GridData data = new GridData(GridData.FILL_BOTH);
 		data.verticalIndent = 0;
 		data.horizontalIndent = 0;

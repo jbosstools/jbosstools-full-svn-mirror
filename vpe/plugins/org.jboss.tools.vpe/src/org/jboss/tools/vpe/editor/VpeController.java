@@ -41,6 +41,8 @@ import org.eclipse.swt.custom.LineStyleEvent;
 import org.eclipse.swt.custom.LineStyleListener;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.MenuEvent;
 import org.eclipse.swt.events.MenuListener;
 import org.eclipse.swt.events.SelectionEvent;
@@ -87,6 +89,7 @@ import org.jboss.tools.common.model.ui.util.ModelUtilities;
 import org.jboss.tools.common.model.util.EclipseResourceUtil;
 import org.jboss.tools.common.model.util.XModelTreeListenerSWTSync;
 import org.jboss.tools.common.resref.core.ResourceReferenceListListener;
+import org.jboss.tools.common.util.SwtUtil;
 import org.jboss.tools.jst.jsp.bundle.BundleMap;
 import org.jboss.tools.jst.jsp.editor.IJSPTextEditor;
 import org.jboss.tools.jst.jsp.editor.IVisualController;
@@ -1792,6 +1795,7 @@ public class VpeController implements INodeAdapter,
 
 		tip = new Shell(parent, SWT.NO_FOCUS | SWT.ON_TOP);
 		Color bckgColor = new Color(tip.getDisplay(), 255, 250, 236);
+		SwtUtil.bindDisposal(bckgColor, tip);
 		tip.setBackground(bckgColor);
 
 		Composite composite = tip;
@@ -1828,8 +1832,9 @@ public class VpeController implements INodeAdapter,
 
 		tipControlHeaderText.addLineStyleListener(new LineStyleListener() {
 			public void lineGetStyle(LineStyleEvent event) {
-				Color color = new Color(tipControlHeaderText.getDisplay(), 201,
-						51, 40);
+				final Color color = new Color(tipControlHeaderText.getDisplay(),
+						201, 51, 40);
+				SwtUtil.bindDisposal(color, tipControlHeaderText);
 				if (event.lineOffset == 0) {
 					StyleRange st = new StyleRange();
 					st.fontStyle = SWT.BOLD;
@@ -1876,6 +1881,7 @@ public class VpeController implements INodeAdapter,
 						public void lineGetStyle(LineStyleEvent event) {
 							Color color = new Color(tipControlHeaderText
 									.getDisplay(), 42, 148, 0);
+							SwtUtil.bindDisposal(color, tipControlAttributeText);
 							StyleRange st = new StyleRange();
 							st.start = event.lineOffset;
 							st.length = event.lineText.length();
