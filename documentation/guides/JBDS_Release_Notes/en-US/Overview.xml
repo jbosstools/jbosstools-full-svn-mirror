@@ -27,7 +27,70 @@
 				</para>
 			</listitem>
 		</itemizedlist>
+		<para>
+			JBoss Developer Studio 5 is supported on the following operating systems:
+		</para>
+		<itemizedlist>
+			<listitem>
+				<para>
+					Red Hat Enterprise Linux 6
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Windows XP
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Windows 7
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Mac OS X 10.6
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Max OS X 10.7
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Fedora 15
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Fedora 16
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Ubuntu 10.4-LTS
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Ubuntu 11.04
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Ubuntu 11.10
+				</para>
+			</listitem>
+		</itemizedlist>
 		<important>
+			<para>
+				For Linux distributions, a Gnome interface is expected.
+			</para>
+		</important>
+		<para>
+			JBoss Developer Studio 5 requires Java Development Kit (JDK) 1.6.
+		</para>
+<!--		<important>
 			<para>
 				If you are installing on a Linux distribution you must set the following limits in <filename>/etc/security/limits.conf</filename> upon installation completion and before running JBoss Developer Studio:
 			</para>
@@ -44,5 +107,5 @@
 			<para>
 				For further installation instructions see the Getting Started Guide for this release, available at: <ulink url="http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/index.html">http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/index.html</ulink>
 			</para>
-		</important>
+		</important> -->
 	</section>
