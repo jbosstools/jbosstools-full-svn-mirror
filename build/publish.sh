@@ -92,6 +92,7 @@ echo "WORKSPACE = ${WORKSPACE}" >> ${STAGINGDIR}/logs/${METAFILE}
 echo "HUDSON_SLAVE = $(uname -a)" >> ${STAGINGDIR}/logs/${METAFILE}
 echo "RELEASE = ${RELEASE}" >> ${STAGINGDIR}/logs/${METAFILE}
 echo "ZIPSUFFIX = ${ZIPSUFFIX}" >> ${STAGINGDIR}/logs/${METAFILE}
+z=${STAGINGDIR}/logs/${METAFILE}; for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done
 
 #echo "$z ..."
 if [[ $z != "" ]] && [[ -f $z ]] ; then
@@ -167,7 +168,8 @@ if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]] && [[ -d ${WORKSPACE}/sources/agg
 		for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done
 		mv $z ${z}.MD5 ${STAGINGDIR}/components
 	done
-
+	
+	# TODO :: JBIDE-9870 When we have a -Update-Sources- zip, this can be removed
 	mkdir -p ${STAGINGDIR}/all/sources	
 	# unpack component source zips like jbosstools-pi4soa-3.1_trunk-Sources-SNAPSHOT.zip or jbosstools-3.2_trunk.component--ws-Sources-SNAPSHOT.zip
 	for z in $(find ${WORKSPACE}/sources/aggregate/site/zips -name "*Sources*.zip"); do
@@ -183,7 +185,6 @@ if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]] && [[ -d ${WORKSPACE}/sources/agg
 	  -x \*docs\* -x \*reference\* -x \*releng\* -x \*.git\* -x \*/lib/\*.jar
 	popd
 	rm -fr ${STAGINGDIR}/all/sources
-	
 	z=${STAGINGDIR}/all/${SRCSNAME}; for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done
 
 	# JBIDE-7444 get aggregate metadata xml properties file
@@ -191,6 +192,13 @@ if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]] && [[ -d ${WORKSPACE}/sources/agg
 		rsync -aq ${WORKSPACE}/sources/aggregate/site/zips/build.properties.all.xml ${STAGINGDIR}/logs/
 	fi
 fi
+
+# JBIDE-9870 check if there's a sources update site and rename it if found (note, bottests-site/site/sources won't work; use bottests-site/souces)
+for z in $(find ${WORKSPACE}/sources/aggregate/*/sources/target/ -name "site_assembly.zip"); do
+	echo "Collect sources from update site in $z"
+	mv $z ${STAGINGDIR}/all/${SRCSNAME/-Sources-/-Update-Sources-}
+	for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done 
+done
 
 # generate list of zips in this job
 METAFILE=zip.list.txt
