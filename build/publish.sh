@@ -92,7 +92,7 @@ echo "WORKSPACE = ${WORKSPACE}" >> ${STAGINGDIR}/logs/${METAFILE}
 echo "HUDSON_SLAVE = $(uname -a)" >> ${STAGINGDIR}/logs/${METAFILE}
 echo "RELEASE = ${RELEASE}" >> ${STAGINGDIR}/logs/${METAFILE}
 echo "ZIPSUFFIX = ${ZIPSUFFIX}" >> ${STAGINGDIR}/logs/${METAFILE}
-z=${STAGINGDIR}/logs/${METAFILE}; for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done
+y=${STAGINGDIR}/logs/${METAFILE}; for m in $(md5sum ${y}); do if [[ $m != ${y} ]]; then echo $m > ${y}.MD5; fi; done
 
 #echo "$z ..."
 if [[ $z != "" ]] && [[ -f $z ]] ; then
