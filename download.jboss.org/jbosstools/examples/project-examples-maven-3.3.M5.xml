@@ -50,8 +50,8 @@ The example can be deployed using Maven from the command line or from Eclipse us
 		<url>http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/jbossas7-examples/helloworld.zip</url>
 		<fixes>
 			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70</property>
-				<property name="description">This project example requires JBoss AS 7.0</property>
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70, org.jboss.ide.eclipse.as.runtime.71</property>
+				<property name="description">This project example requires JBoss AS 7.0/7.1</property>
 				<property name="downloadId">org.jboss.tools.runtime.core.as.702</property>
 			</fix>
 			<fix type="plugin">
@@ -95,8 +95,8 @@ You will see a Hello AS7 World!! message appear on the console when this is done
 		<url>http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/jbossas7-examples/helloworld-osgi.zip</url>
 		<fixes>
 			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70</property>
-				<property name="description">This project example requires JBoss AS 7.0</property>
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70, org.jboss.ide.eclipse.as.runtime.71</property>
+				<property name="description">This project example requires JBoss AS 7.0/7.1</property>
 				<property name="downloadId">org.jboss.tools.runtime.core.as.702</property>
 			</fix>
 			<fix type="plugin">
@@ -136,8 +136,8 @@ The example can be deployed using Maven from the command line or from Eclipse us
 		<url>http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/jbossas7-examples/login.zip</url>
 		<fixes>
 			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70</property>
-				<property name="description">This project example requires JBoss AS 7.0</property>
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70, org.jboss.ide.eclipse.as.runtime.71</property>
+				<property name="description">This project example requires JBoss AS 7.0/7.1</property>
 				<property name="downloadId">org.jboss.tools.runtime.core.as.702</property>
 			</fix>
 			<fix type="plugin">
@@ -177,8 +177,8 @@ The example can be deployed using Maven from the command line or from Eclipse us
 		<url>http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/jbossas7-examples/numberguess.zip</url>
 		<fixes>
 			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70</property>
-				<property name="description">This project example requires JBoss AS 7.0</property>
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70, org.jboss.ide.eclipse.as.runtime.71</property>
+				<property name="description">This project example requires JBoss AS 7.0/7.1</property>
 				<property name="downloadId">org.jboss.tools.runtime.core.as.702</property>
 			</fix>
 			<fix type="plugin">
@@ -219,8 +219,8 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<url>http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/jbossas7-examples/kitchensink.zip</url>
 		<fixes>
 			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70</property>
-				<property name="description">This project example requires JBoss AS 7.0</property>
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70, org.jboss.ide.eclipse.as.runtime.71</property>
+				<property name="description">This project example requires JBoss AS 7.0/7.1</property>
 				<property name="downloadId">org.jboss.tools.runtime.core.as.702</property>
 			</fix>
 			<fix type="plugin">
