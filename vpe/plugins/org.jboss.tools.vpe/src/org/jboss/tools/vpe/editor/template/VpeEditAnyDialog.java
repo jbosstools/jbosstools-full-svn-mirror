@@ -40,7 +40,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.jboss.tools.common.model.ui.ModelUIImages;
-import org.jboss.tools.common.util.SwtUtil;
 import org.jboss.tools.jst.css.CSSPlugin;
 import org.jboss.tools.jst.css.dialog.CSSStyleDialog;
 import org.jboss.tools.jst.css.dialog.common.Util;
@@ -97,10 +96,7 @@ public class VpeEditAnyDialog extends TitleAreaDialog {
 		 */
 		getShell().setText(VpeUIMessages.TEMPLATE);
 		setTitle(VpeUIMessages.TAG_ATTRIBUTES);
-		final Image titleImage = ModelUIImages.getImageDescriptor(
-				ModelUIImages.WIZARD_DEFAULT).createImage(null);
-		setTitleImage(titleImage);
-		SwtUtil.bindDisposal(titleImage, getShell());
+		setTitleImage(ModelUIImages.getImage(ModelUIImages.WIZARD_DEFAULT)); //image is managed by registry
 		setMessage(VpeUIMessages.USER_SPECIFIED_TAG_DIALOG_DESCRIPTION);
 		
 		/*
