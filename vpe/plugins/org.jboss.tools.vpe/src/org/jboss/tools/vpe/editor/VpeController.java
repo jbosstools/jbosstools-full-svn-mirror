@@ -164,7 +164,6 @@ public class VpeController implements INodeAdapter,
 		MozillaContextMenuListener, MozillaResizeListener,
 		MozillaAfterPaintListener, MozillaScrollListener {
 
-	public static final int DEFAULT_UPDATE_DELAY_TIME = 400;
 	private boolean visualEditorVisible = true;
 	private boolean synced = true;
 	StructuredTextEditor sourceEditor;
