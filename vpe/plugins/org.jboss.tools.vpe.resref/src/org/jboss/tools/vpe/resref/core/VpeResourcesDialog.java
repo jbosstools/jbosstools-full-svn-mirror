@@ -20,11 +20,8 @@ import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -36,7 +33,6 @@ import org.eclipse.swt.widgets.TabItem;
 import org.jboss.tools.common.model.ui.ModelUIImages;
 import org.jboss.tools.common.model.ui.action.CommandBar;
 import org.jboss.tools.common.resref.core.ResourceReference;
-import org.jboss.tools.common.util.SwtUtil;
 
 public class VpeResourcesDialog extends TitleAreaDialog {
 
@@ -74,10 +70,7 @@ public class VpeResourcesDialog extends TitleAreaDialog {
 	protected Control createDialogArea(Composite parent) {
 		getShell().setText(Messages.VRD_DEFAULT_WINDOW_TITLE);
 		setTitle(Messages.VRD_DEFAULT_TITLE);
-		final Image wizardDefaultImage = ModelUIImages.getImageDescriptor(
-				ModelUIImages.WIZARD_DEFAULT).createImage(null);
-		setTitleImage(wizardDefaultImage);
-		SwtUtil.bindDisposal(wizardDefaultImage, parent);
+		setTitleImage(ModelUIImages.getImage(ModelUIImages.WIZARD_DEFAULT));  // image is managed by registry
 		setMessage(Messages.VRD_PAGE_DESIGN_OPTIONS_ABOUT);
 		
 		Composite composite = new Composite(parent, SWT.NONE);
