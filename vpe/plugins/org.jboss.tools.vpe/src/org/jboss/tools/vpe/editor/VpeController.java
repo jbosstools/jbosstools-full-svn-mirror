@@ -42,6 +42,8 @@ import org.eclipse.swt.custom.LineStyleEvent;
 import org.eclipse.swt.custom.LineStyleListener;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.MenuEvent;
 import org.eclipse.swt.events.MenuListener;
 import org.eclipse.swt.events.SelectionEvent;
@@ -562,7 +564,6 @@ public class VpeController implements INodeAdapter,
 				return;
 			}
 			// visualBuilder.rebuildFlag = false;
-			boolean rebuildWholeDocumentFlag = false;
 			switch (eventType) {
 			case INodeNotifier.CHANGE:
 				sourceChangeFlag = true;
@@ -575,13 +576,12 @@ public class VpeController implements INodeAdapter,
 					boolean update = visualBuilder.setText((Node) notifier);
 					visualEditor.showResizer();
 					// Added by Max Areshkau JBIDE-1554
-					if (!update) {
-						rebuildWholeDocumentFlag = visualBuilder.updateNode((Node) notifier);
-					}
+					if (!update)
+						visualBuilder.updateNode((Node) notifier);
 				} else if (type == Node.COMMENT_NODE) {
 					if ("yes".equals(VpePreference.SHOW_COMMENTS.getValue())) { //$NON-NLS-1$
 						visualBuilder.clearSelectionRectangle();
-						rebuildWholeDocumentFlag = visualBuilder.updateNode((Node) notifier);
+						visualBuilder.updateNode((Node) notifier);
 					}
 				} else if (feature != null
 						&& ((Node) feature).getNodeType() == Node.ATTRIBUTE_NODE) {
@@ -590,7 +590,7 @@ public class VpeController implements INodeAdapter,
 						if ((Attr) feature == lastRemovedAttr
 								&& !attrName.equals(lastRemovedAttrName)) {
 							lastRemovedAttr = null;
-							rebuildWholeDocumentFlag = visualBuilder.removeAttribute((Element) notifier,
+							visualBuilder.removeAttribute((Element) notifier,
 									lastRemovedAttrName);
 						}
 						visualBuilder.setAttribute((Element) notifier,
@@ -598,7 +598,7 @@ public class VpeController implements INodeAdapter,
 					} else {
 						lastRemovedAttr = (Attr) feature;
 						lastRemovedAttrName = ((Attr) feature).getName();
-						rebuildWholeDocumentFlag = visualBuilder.removeAttribute((Element) notifier,
+						visualBuilder.removeAttribute((Element) notifier,
 								lastRemovedAttrName);
 					}
 				}
@@ -630,7 +630,7 @@ public class VpeController implements INodeAdapter,
 				 */
 				if (Node.COMMENT_NODE == ((Node) feature).getNodeType()) {
 					commentRemoveCount++;
-					rebuildWholeDocumentFlag = visualBuilder.updateNode((Node) feature);
+					visualBuilder.updateNode((Node) feature);
 					commentNodeChanged = true;
 				} else {
 					commentRemoveCount--;
@@ -652,7 +652,7 @@ public class VpeController implements INodeAdapter,
 				if (!commentNodeChanged ||(commentNodeChanged && (commentAddCount != 1 || commentRemoveCount != 1))) {
 					visualEditor.hideResizer();
 					visualBuilder.clearSelectionRectangle();
-					rebuildWholeDocumentFlag = visualBuilder.updateNode((Node) notifier);
+					visualBuilder.updateNode((Node) notifier);
 				} else {
 					commentNodeChanged = false;
 				}
@@ -677,10 +677,6 @@ public class VpeController implements INodeAdapter,
 					sourceChangeFlag = false;
 				}
 				break;
-			}
-			if (rebuildWholeDocumentFlag) {
-				// whole document rebuild occur -> so cleanup change events queue
-				getChangeEvents().clear();
 			}
 		} finally {
 			// fix for jbide-675, swithcer is null when vpecontroller is
@@ -1954,7 +1950,6 @@ public class VpeController implements INodeAdapter,
 				if (monitor.isCanceled()) {
 					return Status.CANCEL_STATUS;
 				}
-				getChangeEvents().clear();
 				reinitImpl();
 				return Status.OK_STATUS;
 			}

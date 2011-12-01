@@ -79,7 +79,6 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-@SuppressWarnings("restriction")
 public class VpeVisualDomBuilder extends VpeDomBuilder {
     public static final String VPE_USER_TOGGLE_ID = "vpe-user-toggle-id"; //$NON-NLS-1$
 	public static final String VPE_USER_TOGGLE_LOOKUP_PARENT = "vpe-user-toggle-lookup-parent"; //$NON-NLS-1$
@@ -766,26 +765,21 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
 	// ==========================================================
 
-	// return true in case if rebuild whole document occur
-	public boolean updateNode(Node sourceNode) {
-		boolean res = false;
+	public void updateNode(Node sourceNode) {
 		if (sourceNode == null) {
-			return res;
+			return;
 		}
 
 		switch (sourceNode.getNodeType()) {
 		case Node.DOCUMENT_NODE:
 			rebuildDom((Document) sourceNode);
-			res = true;
 			break;
 		default:
-			res = updateElement(sourceNode);
+			updateElement(sourceNode);
 		}
-		return res;
 	}
 
-	// return true in case if rebuild whole document occur
-	private boolean updateElement(Node sourceNode) {
+	private void updateElement(Node sourceNode) {
 		VpeElementMapping elementMapping = null;
 		VpeNodeMapping nodeMapping = domMapping.getNodeMapping(sourceNode);
 		if (nodeMapping instanceof VpeElementMapping) {
@@ -799,7 +793,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 				 */
 				if (HTML.TAG_STYLE.equalsIgnoreCase(sourceNode.getNodeName())) {
 					VpeStyleUtil.refreshStyleElement(this, elementMapping);
-					return false;
+					return;
 				}
 				Node updateNode = elementMapping.getTemplate()
 						.getNodeForUpdate(pageContext,
@@ -807,11 +801,11 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 								elementMapping.getVisualNode(),
 								elementMapping.getData());
 				if ((updateNode != null) && (updateNode != sourceNode)) {
-					return updateNode(updateNode);
+					updateNode(updateNode);
+					return;
 				}
 			}
 		}
-		boolean res = false;
 		/*
 		 * 1) Remove source node from mappings and lists.
 		 */
@@ -838,12 +832,11 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			// node?
 			// looks like we haven't need do it.
 			if (sourceNode.getNodeType() == Node.TEXT_NODE) {
-				res = updateNode(sourceNode.getParentNode());
-			} else if(HTML.TAG_LINK.equalsIgnoreCase(sourceNode.getNodeName())) {
+				updateNode(sourceNode.getParentNode());
+			}else if(HTML.TAG_LINK.equalsIgnoreCase(sourceNode.getNodeName())) {
 				addNode(sourceNode, null, getHeadNode());
 			}
 		}
-		return res;
 	}
 
 	public void removeNode(Node sourceNode) {
@@ -898,19 +891,16 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return false;
 	}
 
-	// return true in case if rebuild whole document occur
-	public boolean setAttribute(Element sourceElement, String name, String value) {
+	public void setAttribute(Element sourceElement, String name, String value) {
 		VpeElementMapping elementMapping = (VpeElementMapping) domMapping
 				.getNodeMapping(sourceElement);
 		/*
 		 * https://jira.jboss.org/jira/browse/JBIDE-4110
 		 * Update any template automatically on attribute adding.
 		 */
-		boolean res = false;
 		if (elementMapping != null) {
-			res = updateElement(sourceElement);
+		    updateElement(sourceElement);
 		}
-		return res;
 	}
 
 	public void stopToggle(Node sourceNode) {
@@ -1033,19 +1023,16 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		return null;
 	}
 
-	// return true in case if rebuild whole document occur
-	public boolean removeAttribute(Element sourceElement, String name) {
+	public void removeAttribute(Element sourceElement, String name) {
 		VpeElementMapping elementMapping = (VpeElementMapping) domMapping
 				.getNodeMapping(sourceElement);
 		/*
 		 * https://jira.jboss.org/jira/browse/JBIDE-4110
 		 * Update any template automatically on attribute deleting.
 		 */
-		boolean res = false;
 		if (elementMapping != null) {
-			res = updateElement(sourceElement);
+		    updateElement(sourceElement);
 		}
-		return res;
 	}
 
 	public void refreshBundleValues(Element sourceElement) {
