@@ -14,6 +14,7 @@ import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -41,8 +42,6 @@ import org.eclipse.swt.custom.LineStyleEvent;
 import org.eclipse.swt.custom.LineStyleListener;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.MenuEvent;
 import org.eclipse.swt.events.MenuListener;
 import org.eclipse.swt.events.SelectionEvent;
@@ -84,7 +83,6 @@ import org.jboss.tools.common.model.XModelObject;
 import org.jboss.tools.common.model.event.XModelTreeEvent;
 import org.jboss.tools.common.model.event.XModelTreeListener;
 import org.jboss.tools.common.model.project.IModelNature;
-import org.jboss.tools.common.model.ui.dnd.ModelTransfer;
 import org.jboss.tools.common.model.ui.util.ModelUtilities;
 import org.jboss.tools.common.model.util.EclipseResourceUtil;
 import org.jboss.tools.common.model.util.XModelTreeListenerSWTSync;
@@ -104,7 +102,6 @@ import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.dnd.VpeDnD;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
-import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.menu.VpeMenuCreator;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
@@ -132,16 +129,6 @@ import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.editor.util.DocTypeUtil;
 import org.jboss.tools.vpe.editor.util.SelectionUtil;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
-import org.jboss.tools.vpe.editor.util.VpeDebugUtil;
-import org.jboss.tools.vpe.editor.util.VpeNodesManagingUtil;
-import org.jboss.tools.vpe.handlers.PageDesignOptionsHandler;
-import org.jboss.tools.vpe.handlers.PreferencesHandler;
-import org.jboss.tools.vpe.handlers.RefreshHandler;
-import org.jboss.tools.vpe.handlers.RotateEditorsHandler;
-import org.jboss.tools.vpe.handlers.ShowBorderHandler;
-import org.jboss.tools.vpe.handlers.ShowBundleAsELHandler;
-import org.jboss.tools.vpe.handlers.ShowNonVisualTagsHandler;
-import org.jboss.tools.vpe.handlers.ShowTextFormattingHandler;
 import org.jboss.tools.vpe.handlers.VisualPartAbstractHandler;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.jboss.tools.vpe.resref.core.AbsoluteFolderReferenceList;
@@ -164,6 +151,7 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+@SuppressWarnings({ "restriction", "deprecation" })
 public class VpeController implements INodeAdapter,
 		IModelLifecycleListener, INodeSelectionListener,
 		ITextSelectionListener, SelectionListener,
@@ -174,7 +162,6 @@ public class VpeController implements INodeAdapter,
 		MozillaContextMenuListener, MozillaResizeListener,
 		MozillaAfterPaintListener, MozillaScrollListener {
 
-	public static final int DEFAULT_UPDATE_DELAY_TIME = 400;
 	private boolean visualEditorVisible = true;
 	private boolean synced = true;
 	StructuredTextEditor sourceEditor;
@@ -189,7 +176,7 @@ public class VpeController implements INodeAdapter,
 	private VpeVisualDomBuilder visualBuilder;
 	private VpeDnD vpeDnD;
 	// private VpeVisualKeyHandler visualKeyHandler;
-	private ActiveEditorSwitcher switcher = new ActiveEditorSwitcher();
+	private ActiveEditorSwitcher switcher;
 	private Attr lastRemovedAttr;
 	private String lastRemovedAttrName;
 	private boolean mouseUpSelectionReasonFlag;
@@ -212,7 +199,7 @@ public class VpeController implements INodeAdapter,
 	private XModelTreeListenerSWTSync optionsListener;
 	// Added by Max Areshkau Fix for JBIDE-1479
 	private UIJob job = null;
-	private UIJob uiJob;
+	private VpeUpdateJob uiJob;
 	// JBIDE-675, visual refresh job
 	private UIJob visualRefreshJob;
 	private UIJob reinitJob;
@@ -224,7 +211,7 @@ public class VpeController implements INodeAdapter,
 	 * Added by Max Areshkau JBIDE-675, stores information about modification
 	 * events
 	 */
-	private LinkedList<VpeEventBean> changeEvents;
+	private List<VpeEventBean> changeEvents;
 
 	Shell tip;
 
@@ -238,12 +225,10 @@ public class VpeController implements INodeAdapter,
 	 */
 	private IKeyEventHandler keyEventHandler;
 
-	// contains vpe update delau time in miliseconds
-	private int vpeUpdateDelayTime;
-
 	public VpeController(VpeEditorPart editPart) {
 
 		this.editPart = editPart;
+		this.switcher = new ActiveEditorSwitcher(this, editPart);
 		dropWindow = new VpeDropWindow(editPart.getSite().getShell());
 	}
 
@@ -366,9 +351,6 @@ public class VpeController implements INodeAdapter,
 
 		elReferenceListListener = ELReferenceList.getInstance();
 		elReferenceListListener.addChangeListener(this);
-
-		// initialization of vpe update delay time
-		vpeUpdateDelayTime = DEFAULT_UPDATE_DELAY_TIME;
 
 		// pageContext.fireTaglibsChanged();
 
@@ -527,99 +509,13 @@ public class VpeController implements INodeAdapter,
 			display = PlatformUI.getWorkbench().getDisplay();
 
 		if (display != null && (Thread.currentThread() == display.getThread())) {
-			getChangeEvents().addLast(
-					new VpeEventBean(notifier, eventType, feature, oldValue,
-							newValue, pos));
+			getChangeEvents().add(new VpeEventBean(notifier, eventType, feature, oldValue, newValue, pos));
 			if (uiJob == null) {
-				uiJob = new UIJob(VpeUIMessages.VPE_UPDATE_JOB_TITLE) {
-					@Override
-					public IStatus runInUIThread(IProgressMonitor monitor) {
-						monitor.beginTask(VpeUIMessages.VPE_UPDATE_JOB_TITLE,
-								100);
-						while (getChangeEvents().size() > 0) {
-							monitor.worked((int) (100 / getChangeEvents()
-									.size()));
-							VpeEventBean eventBean = getChangeEvents()
-									.getFirst();
-							if (monitor.isCanceled()) {
-								/*
-								 * Yahor Radtsevich: the following line is
-								 * commented as fix of JBIDE-3758: VPE
-								 * autorefresh is broken in some cases. Now if
-								 * the change events queue should be cleared,
-								 * the user have to do it explicitly.
-								 */
-								// getChangeEvents().clear();
-
-								return Status.CANCEL_STATUS;
-							}
-							try {
-								notifyChangedInUiThread(
-										eventBean.getNotifier(), eventBean
-												.getEventType(), eventBean
-												.getFeature(), eventBean
-												.getOldValue(), eventBean
-												.getNewValue(), eventBean
-												.getPos());
-							} catch (VpeDisposeException ex) {
-								// JBIDE-675 we will get this exception if user
-								// close editor,
-								// when update visual editor job is running, we
-								// shoud ignore this
-								// exception
-								break;
-							} catch (NullPointerException ex) {
-								if (switcher != null) {
-									throw ex;
-								} else {
-									// class was disposed and exception result
-									// of that we can't stop
-									// refresh job in time, so we just ignore
-									// this exception
-								}
-							} catch(RuntimeException ex) {
-								VpePlugin.getPluginLog().logError(ex);
-							}
-							getChangeEvents().remove(eventBean);
-						}
-						// cause is to lock calls others events
-						if (switcher != null
-								&& switcher
-										.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE))
-							try {
-								sourceSelectionChanged();
-								/*
-								 * https://jira.jboss.org/jira/browse/JBIDE-3619
-								 * VpeViewUpdateJob takes place after toolbar
-								 * selection have been updated. New nodes
-								 * haven't been put into dom mapping thus
-								 * toolbar becomes desabled. Updating toolbar
-								 * state here takes into account updated vpe
-								 * nodes.
-								 */
-								if (toolbarFormatControllerManager != null) {
-									toolbarFormatControllerManager
-											.selectionChanged();
-								}
-							} finally {
-								switcher.stopActiveEditor();
-							}
-						monitor.done();
-						return Status.OK_STATUS;
-					}
-				};
-			}
-
-			if (uiJob.getState() != Job.RUNNING) {
+				uiJob = new VpeUpdateJob(this, switcher);
 				uiJob.setPriority(Job.LONG);
-				// Fix of JBIDE-1900
-				uiJob.schedule(getVpeUpdateDelayTime());
-			} else {
-				uiJob.cancel();
-				uiJob.schedule(getVpeUpdateDelayTime());
-				setVpeUpdateDelayTime(400);
 			}
-
+			uiJob.interrupt();
+			uiJob.execute();
 			return;
 		}
 		// start job when we modify file in non ui thread
@@ -644,6 +540,11 @@ public class VpeController implements INodeAdapter,
 		job.schedule(1000L);
 	}
 
+	public void notifyChangedInUiThread(VpeEventBean eventBean) {
+		notifyChangedInUiThread(eventBean.getNotifier(), eventBean.getEventType(), eventBean.getFeature(),
+			eventBean.getOldValue(), eventBean.getNewValue(), eventBean.getPos());
+	}
+
 	public void notifyChangedInUiThread(INodeNotifier notifier, int eventType,
 			Object feature, Object oldValue, Object newValue, int pos) {
 		if (switcher == null
@@ -660,6 +561,7 @@ public class VpeController implements INodeAdapter,
 				return;
 			}
 			// visualBuilder.rebuildFlag = false;
+			boolean rebuildWholeDocumentFlag = false;
 			switch (eventType) {
 			case INodeNotifier.CHANGE:
 				sourceChangeFlag = true;
@@ -672,12 +574,13 @@ public class VpeController implements INodeAdapter,
 					boolean update = visualBuilder.setText((Node) notifier);
 					visualEditor.showResizer();
 					// Added by Max Areshkau JBIDE-1554
-					if (!update)
-						visualBuilder.updateNode((Node) notifier);
+					if (!update) {
+						rebuildWholeDocumentFlag = visualBuilder.updateNode((Node) notifier);
+					}
 				} else if (type == Node.COMMENT_NODE) {
 					if ("yes".equals(VpePreference.SHOW_COMMENTS.getValue())) { //$NON-NLS-1$
 						visualBuilder.clearSelectionRectangle();
-						visualBuilder.updateNode((Node) notifier);
+						rebuildWholeDocumentFlag = visualBuilder.updateNode((Node) notifier);
 					}
 				} else if (feature != null
 						&& ((Node) feature).getNodeType() == Node.ATTRIBUTE_NODE) {
@@ -686,7 +589,7 @@ public class VpeController implements INodeAdapter,
 						if ((Attr) feature == lastRemovedAttr
 								&& !attrName.equals(lastRemovedAttrName)) {
 							lastRemovedAttr = null;
-							visualBuilder.removeAttribute((Element) notifier,
+							rebuildWholeDocumentFlag = visualBuilder.removeAttribute((Element) notifier,
 									lastRemovedAttrName);
 						}
 						visualBuilder.setAttribute((Element) notifier,
@@ -694,7 +597,7 @@ public class VpeController implements INodeAdapter,
 					} else {
 						lastRemovedAttr = (Attr) feature;
 						lastRemovedAttrName = ((Attr) feature).getName();
-						visualBuilder.removeAttribute((Element) notifier,
+						rebuildWholeDocumentFlag = visualBuilder.removeAttribute((Element) notifier,
 								lastRemovedAttrName);
 					}
 				}
@@ -726,7 +629,7 @@ public class VpeController implements INodeAdapter,
 				 */
 				if (Node.COMMENT_NODE == ((Node) feature).getNodeType()) {
 					commentRemoveCount++;
-					visualBuilder.updateNode((Node) feature);
+					rebuildWholeDocumentFlag = visualBuilder.updateNode((Node) feature);
 					commentNodeChanged = true;
 				} else {
 					commentRemoveCount--;
@@ -748,7 +651,7 @@ public class VpeController implements INodeAdapter,
 				if (!commentNodeChanged ||(commentNodeChanged && (commentAddCount != 1 || commentRemoveCount != 1))) {
 					visualEditor.hideResizer();
 					visualBuilder.clearSelectionRectangle();
-					visualBuilder.updateNode((Node) notifier);
+					rebuildWholeDocumentFlag = visualBuilder.updateNode((Node) notifier);
 				} else {
 					commentNodeChanged = false;
 				}
@@ -773,6 +676,10 @@ public class VpeController implements INodeAdapter,
 					sourceChangeFlag = false;
 				}
 				break;
+			}
+			if (rebuildWholeDocumentFlag) {
+				// whole document rebuild occur -> so cleanup change events queue
+				getChangeEvents().clear();
 			}
 		} finally {
 			// fix for jbide-675, swithcer is null when vpecontroller is
@@ -1277,11 +1184,11 @@ public class VpeController implements INodeAdapter,
 	public void keyPress(nsIDOMKeyEvent keyEvent) {
 		if (VpeDebug.PRINT_VISUAL_KEY_EVENT) {
 			System.out.println("<<< keyPress  type: " + keyEvent.getType() + //$NON-NLS-1$
-					"  Ctrl: "
+					"  Ctrl: " //$NON-NLS-1$
 					+ keyEvent.getCtrlKey()
-					+ "  Shift: " + keyEvent.getShiftKey() + //$NON-NLS-1$ //$NON-NLS-2$
-					"  CharCode: " + keyEvent.getCharCode()
-					+ "  KeyCode: " + keyEvent.getKeyCode()); //$NON-NLS-1$ //$NON-NLS-2$
+					+ "  Shift: " + keyEvent.getShiftKey() + //$NON-NLS-1$
+					"  CharCode: " + keyEvent.getCharCode()  //$NON-NLS-1$
+					+ "  KeyCode: " + keyEvent.getKeyCode()); //$NON-NLS-1$
 		}
 		if (!switcher
 				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
@@ -1293,7 +1200,6 @@ public class VpeController implements INodeAdapter,
 		} finally {
 			switcher.stopActiveEditor();
 		}
-		setVpeUpdateDelayTime(0);
 		/*
 		 * adding calls of core event handlers, for example' CTR+H' or 'CTRL+M'
 		 * event handler dialog
@@ -1589,38 +1495,6 @@ public class VpeController implements INodeAdapter,
 					.print("  NewValue: " + mutationEvent.getNewValue().trim()); //$NON-NLS-1$
 		}
 		System.out.println();
-	}
-
-	public class ActiveEditorSwitcher {
-		public static final int ACTIVE_EDITOR_CANNOT = 0;
-		public static final int ACTIVE_EDITOR_NONE = 1;
-		public static final int ACTIVE_EDITOR_SOURCE = 2;
-		public static final int ACTIVE_EDITOR_VISUAL = 3;
-
-		private int type = ACTIVE_EDITOR_CANNOT;
-
-		private void initActiveEditor() {
-			type = ACTIVE_EDITOR_NONE;
-		}
-
-		private void destroyActiveEditor() {
-			type = ACTIVE_EDITOR_CANNOT;
-		}
-
-		public boolean startActiveEditor(int newType) {
-			if (type != ACTIVE_EDITOR_NONE || type == ACTIVE_EDITOR_NONE && newType == ACTIVE_EDITOR_SOURCE
-				&& editPart.getVisualMode() == VpeEditorPart.SOURCE_MODE) {
-				return false;
-			} else {
-				type = newType;
-				return true;
-			}
-		}
-
-		public void stopActiveEditor() {
-			onRefresh();
-			type = ACTIVE_EDITOR_NONE;
-		}
 	}
 
 	void refreshTemplates() {
@@ -2061,11 +1935,9 @@ public class VpeController implements INodeAdapter,
 	/**
 	 * @return the changeEvents
 	 */
-	public LinkedList<VpeEventBean> getChangeEvents() {
-
+	public List<VpeEventBean> getChangeEvents() {
 		if (changeEvents == null) {
-
-			changeEvents = new LinkedList<VpeEventBean>();
+			changeEvents = Collections.synchronizedList(new LinkedList<VpeEventBean>());
 		}
 		return changeEvents;
 	}
@@ -2081,6 +1953,7 @@ public class VpeController implements INodeAdapter,
 				if (monitor.isCanceled()) {
 					return Status.CANCEL_STATUS;
 				}
+				getChangeEvents().clear();
 				reinitImpl();
 				return Status.OK_STATUS;
 			}
@@ -2088,7 +1961,7 @@ public class VpeController implements INodeAdapter,
 		reinitJob.schedule();
 	}
 
-	private void reinitImpl() {
+	void reinitImpl() {
 		try {
 			if (switcher == null
 					|| !switcher
@@ -2193,21 +2066,6 @@ public class VpeController implements INodeAdapter,
 	 */
 	public VpeVisualDomBuilder getVisualBuilder() {
 		return visualBuilder;
-	}
-
-	/**
-	 * @return the vpeUpdateDelayTime
-	 */
-	private int getVpeUpdateDelayTime() {
-		return vpeUpdateDelayTime;
-	}
-
-	/**
-	 * @param vpeUpdateDelayTime
-	 *            the vpeUpdateDelayTime to set
-	 */
-	private void setVpeUpdateDelayTime(int vpeUpdateDelayTime) {
-		this.vpeUpdateDelayTime = vpeUpdateDelayTime;
 	}
 
 	/**
