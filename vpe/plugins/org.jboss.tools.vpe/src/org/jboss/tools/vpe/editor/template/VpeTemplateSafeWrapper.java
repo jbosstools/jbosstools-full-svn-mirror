@@ -645,5 +645,11 @@ public class VpeTemplateSafeWrapper implements VpeTemplate, IAdaptable {
 		}
 		return result;
 	}
+
+	@Override
+	public String toString() {
+		return "VpeTemplateSafeWrapper@" + this.hashCode()  //$NON-NLS-1$
+				+ " [delegate=" + delegate + "]"; //$NON-NLS-1$ //$NON-NLS-2$
+	}
 	
 }

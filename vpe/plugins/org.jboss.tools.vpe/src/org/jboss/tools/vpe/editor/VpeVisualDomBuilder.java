@@ -261,11 +261,16 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	 * @return {@code true} if and only if the visual representation is created and added successfully 
 	 */
 	private boolean addNode(Node sourceNode, nsIDOMNode visualNextNode, nsIDOMNode visualContainer) {
+		/*
+		 * Check includeStack size. During node creation it could be increased.
+		 * !IMPORTANT! Thus the state should be check in the beginning 
+		 * and stored until the visual element is added into DOM.
+		 * For each node there should be a separate variable.
+		 * !IMPORTANT! It is used to register nodes in VpeDomMapping.
+		 */
+		boolean onlyOneIncludeStack = isCurrentMainDocument(); 
 		try {
-
-		nsIDOMNode visualNewNode = createNode(sourceNode, visualContainer);
-
-			
+			nsIDOMNode visualNewNode = createNode(sourceNode, visualContainer, onlyOneIncludeStack);
 // Commented as fix for JBIDE-3012.	
 //		// Fix for JBIDE-1097
 //		try {
@@ -277,35 +282,40 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 //		} catch (XPCOMException ex) {
 //			// just ignore this exception
 //		}
-
-		if (visualNewNode != null) {
-			/*
-			 * https://jira.jboss.org/jira/browse/JBIDE-3373
-			 * Do not add additional visual node for f:facet
-			 * when it is inserted into existing one.
-			 */
-			nsIDOMElement element = null;
-			try {
-				element = queryInterface(visualNewNode, nsIDOMElement.class);
-			} catch (org.mozilla.xpcom.XPCOMException e) {
-				/*
-				 * Cannot parse node to element,
-				 * do nothing
-				 */
-		 	}
-			if (!((null != element) && element.hasAttribute(VPE_FACET))) {
-				if (visualNextNode == null) {
-					visualContainer.appendChild(visualNewNode);
-				} else {
-					visualContainer.insertBefore(visualNewNode, visualNextNode);
+				if (visualNewNode != null) {
+					/*
+					 * https://jira.jboss.org/jira/browse/JBIDE-3373 
+					 * Do not add additional visual node for f:facet 
+					 * when it is inserted into existing one.
+					 */
+					nsIDOMElement element = null;
+					try {
+						element = queryInterface(visualNewNode, nsIDOMElement.class);
+					} catch (org.mozilla.xpcom.XPCOMException e) {
+						/*
+						 * Cannot parse node to element, do nothing
+						 */
+					}
+					if (!((null != element) && element.hasAttribute(VPE_FACET))) {
+						nsIDOMNode registeredVisualNewNode = null;
+						if (visualNextNode == null) {
+							registeredVisualNewNode = visualContainer.appendChild(visualNewNode);
+						} else {
+							registeredVisualNewNode = visualContainer.insertBefore(visualNewNode, visualNextNode);
+						}
+						/*
+						 * https://issues.jboss.org/browse/JBIDE-9932
+						 * Update visual node in vpe mapping.
+						 */
+						if (onlyOneIncludeStack) {
+							domMapping.remapVisualNode(visualNewNode, registeredVisualNewNode);
+						}
+					}
+					return true;
 				}
-			}
-			return true;
-		}
-		} catch(XPCOMException xpcomException) {
+		} catch (XPCOMException xpcomException) {
 			VpePlugin.reportProblem(xpcomException);
 		}
-
 		return false;
 	}
 
@@ -316,10 +326,8 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	 * @param visualOldContainer visual node, in which the caller plans to insert new visual node 
 	 * @return new visual node
 	 */
-	public nsIDOMNode createNode(Node sourceNode,
-			nsIDOMNode visualOldContainer) throws VpeDisposeException {
-
-		boolean registerFlag = isCurrentMainDocument();
+	public nsIDOMNode createNode(Node sourceNode, nsIDOMNode visualOldContainer, 
+			boolean onlyOneIncludeStack) throws VpeDisposeException {
 		//it's check for initialization visualController,
 		//if we trying to process some event when controller
 		//hasn't been initialized, it's causes 
@@ -359,7 +367,6 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		pageContext.setCurrentVisualNode(visualOldContainer);
 		VpeTemplate template = getTemplateManager().getTemplate(pageContext,
 				sourceNode, ifDependencySet);
-
 		VpeCreationData creationData = null;
 		Node sourceNodeProxy = null;
 		// FIX FOR JBIDE-1568, added by Max Areshkau
@@ -444,7 +451,8 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 				&& visualNewNode.getNodeType() == nsIDOMNode.ELEMENT_NODE) {
 			setTooltip((Element) sourceNode, queryInterface(visualNewNode, nsIDOMElement.class));
 		}
-		if (registerFlag) {
+		VpeElementMapping elementMapping = null;
+		if (onlyOneIncludeStack) {
 			final VpeElementData data = creationData.getElementData();
 			if ((sourceNodeProxy != null) && (data != null)
 					&& (data.getNodesData() != null)
@@ -453,8 +461,8 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 					if (nodeData.getSourceNode() != null) {
 						Node attr = null;
 						if(sourceNode.getAttributes()!=null) {
-							attr =	sourceNode.getAttributes().getNamedItem(nodeData
-								.getSourceNode().getNodeName());
+							attr = sourceNode.getAttributes().getNamedItem(
+									nodeData.getSourceNode().getNodeName());
 						} else {
 							//Text node haven't child nodes, but it's  node.
 							attr = sourceNode;
@@ -463,9 +471,8 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 						nodeData.setEditable(false);
 					}
 				}
-
 			}
-			VpeElementMapping elementMapping = new VpeElementMapping(
+			elementMapping = new VpeElementMapping(
 					sourceNode, visualNewNode, template,
 					ifDependencySet, creationData.getData(), data);
 			registerNodes(elementMapping);
@@ -552,14 +559,12 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		for (int i = 0; i < len; i++) {
 			Node sourceNode = sourceNodes.item(i);
 			if (addNode(sourceNode, null, visualContainer)) {
-				if (Node.ELEMENT_NODE == sourceNode.getNodeType()) {
-				}
+//				if (Node.ELEMENT_NODE == sourceNode.getNodeType()) { }
 				childrenCount++;
 			}
 		}
 		if (childrenCount == 0) {
-			setPseudoContent(containerTemplate, sourceContainer,
-					visualContainer);
+			setPseudoContent(containerTemplate, sourceContainer,visualContainer);
 		}
 	}
 
@@ -1430,8 +1435,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
 	protected void setReadOnlyElement(nsIDOMElement node) {
 		String style = node.getAttribute(VpeStyleUtil.ATTRIBUTE_STYLE);
-		style = VpeStyleUtil.setParameterInStyle(style, "-moz-user-modify", //$NON-NLS-1$
-				"read-only"); //$NON-NLS-1$
+		style = VpeStyleUtil.setParameterInStyle(style, "-moz-user-modify", "read-only"); //$NON-NLS-1$ //$NON-NLS-2$
 		node.setAttribute(VpeStyleUtil.ATTRIBUTE_STYLE, style);
 	}
 	
@@ -1474,7 +1478,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		}
 		return false;
 	}
-
+	
 	public boolean isCurrentMainDocument() {
 		return includeStack.size() <= 1;
 	}

@@ -11,6 +11,8 @@
 
 package org.jboss.tools.vpe.base.test;
 
+import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
+
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
@@ -428,18 +430,24 @@ public class VpeTest extends TestCase implements ILogListener {
 	 * @param elementId
 	 * @return
 	 */
-	protected nsIDOMElement findElementById(VpeController controller,
-			String elementId) {
-
+	protected nsIDOMElement findElementById(VpeController controller,String elementId) {
 		Element sourceElement = findSourceElementById(controller, elementId);
-
-		VpeNodeMapping nodeMapping = controller.getDomMapping().getNodeMapping(
-				sourceElement);
-
-		if (nodeMapping == null)
-			return null;
-
-		return (nsIDOMElement) nodeMapping.getVisualNode();
+		nsIDOMElement element = null;
+		VpeNodeMapping nodeMapping = controller
+				.getDomMapping().getNodeMapping(sourceElement);
+		if (nodeMapping != null) {
+			nsIDOMNode node = nodeMapping.getVisualNode();
+			if (node != null) {
+				try {
+					element = queryInterface(node, nsIDOMElement.class);
+				} catch (org.mozilla.xpcom.XPCOMException e) { 
+					//Do nothing
+				} catch (NullPointerException e) { 
+					//Do nothing					
+				}
+			}
+		}
+		return element; 
 	}
 	
 	protected String getEditorID(){

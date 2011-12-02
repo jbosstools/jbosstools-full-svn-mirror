@@ -33,4 +33,12 @@ public class VpeNodeMapping {
 	public nsIDOMNode getVisualNode() {
 		return visualNode;
 	}
+	
+	/**
+	 * Fix for https://issues.jboss.org/browse/JBIDE-9932
+	 * @param visualNode the visual node
+	 */
+	public void setVisualNode(nsIDOMNode visualNode) {
+		this.visualNode = visualNode;
+	}
 }

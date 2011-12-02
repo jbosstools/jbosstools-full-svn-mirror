@@ -40,6 +40,23 @@ public class VpeDomMapping {
 		}
 	}
 	
+	/**
+	 * Remap visual node in DOM Mapping and in the VisualMap. 
+	 * 
+	 * @param visualNode old visual node
+	 * @param registeredVisualNewNode node, that've been  actually registered in the DOM  
+	 */
+	public void remapVisualNode(nsIDOMNode visualNode, nsIDOMNode registeredVisualNewNode) {
+		if ((visualNode != null) && (registeredVisualNewNode != null)) {
+			VpeNodeMapping nodeMapping = visualMap.get(visualNode);
+			if (nodeMapping != null) {
+				nodeMapping.setVisualNode(registeredVisualNewNode);
+				visualMap.remove(visualNode);
+				visualMap.put(registeredVisualNewNode, nodeMapping);
+			}
+		}
+	}
+	
 	public void clear(nsIDOMNode except) {
 		Set<Map.Entry<nsIDOMNode, VpeNodeMapping>> entrySet = visualMap.entrySet();
 		Iterator<Map.Entry<nsIDOMNode, VpeNodeMapping>> iter = entrySet.iterator();
@@ -62,29 +79,21 @@ public class VpeDomMapping {
 	}
 	
 	public VpeNodeMapping getNodeMappingAtSourceNode(Node sourceNode) {
+		VpeNodeMapping nodeMapping = null;
 		if (sourceNode != null) {
-			return sourceMap.get(sourceNode);
+			nodeMapping = sourceMap.get(sourceNode);
 		}
-		
-		return null;
+		return nodeMapping;
 	}
 	
 	public VpeNodeMapping getNodeMappingAtVisualNode(nsIDOMNode visualNode) {
 		VpeNodeMapping nodeMapping = null;
 		/*
-		 * See https://issues.jboss.org/browse/JBIDE-9807
-		 * Method map.get(key) doesn't work correctly for this situation,
-		 * it happens because "visualMap.keySet().contains(visualNode)" 
-		 * not always correctly determines the "visualNode".
+		 * https://issues.jboss.org/browse/JBIDE-9932
+		 * Replaced with map.
 		 */
 		if (visualNode != null) {
-			Iterator<Map.Entry<nsIDOMNode, VpeNodeMapping>> iter = visualMap.entrySet().iterator();
-			while(iter.hasNext()) {
-				Map.Entry<nsIDOMNode,VpeNodeMapping> element = iter.next();
-				if (visualNode.equals(element.getKey())) {
-					nodeMapping = element.getValue();
-				}
-			}
+			nodeMapping = visualMap.get(visualNode);
 		}
 		return nodeMapping;
 	}
@@ -102,7 +111,6 @@ public class VpeDomMapping {
 		if (nodeMapping != null) {
 			return nodeMapping.getSourceNode();
 		}
-		
 		return null;
 	}
 	

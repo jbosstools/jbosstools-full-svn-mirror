@@ -49,17 +49,9 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 		super(domMapping, sorceAdapter, visualEditor, pageContext);
 	}
 	
-	/**
-	 * 
-	 * @param sourceNode
-	 * @param visualOldContainer
-	 * @return
-	 */
 	@Override
-	public nsIDOMNode createNode(Node sourceNode, nsIDOMNode visualOldContainer) {
-
+	public nsIDOMNode createNode(Node sourceNode, nsIDOMNode visualOldContainer, boolean onlyOneIncludeStack) {
 			Set<?> ifDependencySet = new HashSet();
-			
 		    if(sourceNode==null||(
 		    		sourceNode.getNodeType()!=Node.TEXT_NODE
 		    		&&sourceNode.getNodeType()!=Node.ELEMENT_NODE
@@ -74,8 +66,8 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 			//FIX FOR JBIDE-1568, added by Max Areshkau
 			try {
 		          if (getPageContext().getElService().isELNode(sourceNode)) {
-                    final Node sourceNodeProxy =  VpeProxyUtil.createProxyForELExpressionNode(getPageContext(),
-        					sourceNode);
+                    final Node sourceNodeProxy =  VpeProxyUtil.createProxyForELExpressionNode(
+                    		getPageContext(), sourceNode);
     				try {
     					creationData = template.create(getPageContext(),
     							sourceNodeProxy, getVisualDocument());
@@ -84,10 +76,9 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
     					} catch(ClassCastException ex) {
     						VpePlugin.reportProblem(ex);
     						//then we create template without using proxy
-    						creationData = template.create(getPageContext(), sourceNode,
-    								getVisualDocument());
+    						creationData = template.create(getPageContext(), 
+    								sourceNode, getVisualDocument());
     					}
-                
 		          } else {
                     creationData = template.create(getPageContext(), sourceNode, getVisualDocument());
                 }
@@ -99,13 +90,10 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 			getPageContext().setCurrentVisualNode(null);
 			nsIDOMNode visualNewNode;
 			visualNewNode = creationData.getNode();
-
 			if(sourceNode instanceof Element && visualNewNode != null) {		
 				setTooltip((Element)sourceNode, queryInterface(visualNewNode, nsIDOMElement.class));
 				correctVisualAttribute(queryInterface(visualNewNode, nsIDOMElement.class));
 			}
-
-			
 			if (template.hasChildren()) {
 				List<?> childrenInfoList = creationData.getChildrenInfoList();
 				if (childrenInfoList == null) {
@@ -114,7 +102,6 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 					addChildren(template, sourceNode, visualOldContainer, childrenInfoList);
 				}
 			}
-			
 			/*
 			 * Setting current visual node was added
 			 * to fix h:dataTable content visibility on Preview tab.
@@ -126,5 +113,4 @@ public class VpePreviewDomBuilder extends VpeVisualDomBuilder {
 			
 			return visualNewNode;
 	}
-
 }

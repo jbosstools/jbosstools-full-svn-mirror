@@ -41,14 +41,11 @@ public class VpeRenderingTemplate extends VpeAbstractTemplate{
 		return  new VpeCreationData(null);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.jboss.tools.vpe.editor.template.VpeAbstractTemplate#getNodeForUpdate(org.jboss.tools.vpe.editor.context.VpePageContext, org.w3c.dom.Node, org.mozilla.interfaces.nsIDOMNode, java.lang.Object)
-	 */
 	@Override
 	public Node getNodeForUpdate(VpePageContext pageContext, Node sourceNode,
 			nsIDOMNode visualNode, Object data) {
 		//if rendered=false, template hasn't visual presentations
-		//so we should upadte parent node
+		//so we should update parent node
 		return sourceNode.getParentNode();
 	}
 }

@@ -133,7 +133,7 @@ public abstract class ComponentContentTest extends VpeTest {
 				throws DOMComparisonException {
 		// get element by id
 		nsIDOMElement vpeElement = findElementById(controller, elementId);
-		assertNotNull("Cann't find element with id="+elementId,vpeElement); //$NON-NLS-1$
+		assertNotNull("Cannot find element with id="+elementId,vpeElement); //$NON-NLS-1$
 
 		// DOMTreeDumper dumper = new DOMTreeDumper(
 		// VpeDebug.VISUAL_DUMP_PRINT_HASH);

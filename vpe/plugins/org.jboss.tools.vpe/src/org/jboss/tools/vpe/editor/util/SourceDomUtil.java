@@ -25,12 +25,12 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class SourceDomUtil {
-	private static final Set<String> templatesNamespacesWithRendered=new HashSet<String>();
+	private static final Set<String> TEMPLATES_NAMESPACES_WITH_RENDERED=new HashSet<String>();
 	static {
-		templatesNamespacesWithRendered.add("h:"); //$NON-NLS-1$
-		templatesNamespacesWithRendered.add("a4j:"); //$NON-NLS-1$
-		templatesNamespacesWithRendered.add("rich:"); //$NON-NLS-1$
-		templatesNamespacesWithRendered.add("seam:"); //$NON-NLS-1$
+		TEMPLATES_NAMESPACES_WITH_RENDERED.add("h:"); //$NON-NLS-1$
+		TEMPLATES_NAMESPACES_WITH_RENDERED.add("a4j:"); //$NON-NLS-1$
+		TEMPLATES_NAMESPACES_WITH_RENDERED.add("rich:"); //$NON-NLS-1$
+		TEMPLATES_NAMESPACES_WITH_RENDERED.add("seam:"); //$NON-NLS-1$
 	}
 	
 	static public Node getAncestorNode(Node sourceNode, String tagName) {
@@ -77,17 +77,17 @@ public class SourceDomUtil {
 	public static boolean isRenderedAttrEqFalse(VpePageContext pageContext,
 			Element sourceNode) {
 		boolean result = false;
-		final String attrName = "rendered"; //$NON-NLS-1$
+		final String ATTR_RENDERED = "rendered"; //$NON-NLS-1$
 		Element tempElement = sourceNode;
-		if (sourceNode.hasAttribute(attrName)) {
+		if (sourceNode.hasAttribute(ATTR_RENDERED)) {
 			if (pageContext.getElService().isELNode(sourceNode)) {
 				tempElement = (Element) VpeProxyUtil
 						.createProxyForELExpressionNode(pageContext, sourceNode);
 			}
-			if ("false".equals(tempElement.getAttribute(attrName))) { //$NON-NLS-1$
+			if ("false".equals(tempElement.getAttribute(ATTR_RENDERED))) { //$NON-NLS-1$
 				String templateName = VpeTemplateManager.getInstance().getTemplateName(pageContext, sourceNode);
 				String [] templatePrefix = templateName.split(":"); //$NON-NLS-1$
-				if(templatePrefix.length>1 && templatesNamespacesWithRendered.contains(templatePrefix[0]+":")) { //$NON-NLS-1$
+				if(templatePrefix.length>1 && TEMPLATES_NAMESPACES_WITH_RENDERED.contains(templatePrefix[0]+":")) { //$NON-NLS-1$
 					result = true;
 				}
 			}

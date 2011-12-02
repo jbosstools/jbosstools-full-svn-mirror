@@ -44,11 +44,8 @@ public class VpeDomBuilder {
 		if (sorceAdapter == null) {
 			return;
 		}
-		
 		domMapping.mapNodes(nodeMapping);
 		Node sourceNode = nodeMapping.getSourceNode();
-		
-		
 		/* yradtsevich:
 		 * checking for ((INodeNotifier) sourceNode).getExistingAdapter(sorceAdapter) == null
  		 * is not used because of JBIDE-8049 (JBIDE-8051)
