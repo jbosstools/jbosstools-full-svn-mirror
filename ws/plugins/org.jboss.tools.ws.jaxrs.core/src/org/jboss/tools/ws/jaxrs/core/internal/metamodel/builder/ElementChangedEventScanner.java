@@ -100,6 +100,8 @@ public class ElementChangedEventScanner {
 					compilationUnitAST, new int[0]);
 			if (filter.apply(event)) {
 				events.add(event);
+			} else {
+				Logger.debug("Event {} **rejected** ", event);
 			}
 		} else if (javaFileWithMarkers) {
 			ICompilationUnit compilationUnit = JdtUtils.getCompilationUnit(delta.getResource());
