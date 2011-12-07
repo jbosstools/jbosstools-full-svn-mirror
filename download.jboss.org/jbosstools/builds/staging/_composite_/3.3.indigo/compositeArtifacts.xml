@@ -50,7 +50,7 @@
 <child location='../../jbosstools-3.3_stable_branch.component--ws/all/repo/'/>
 <!-- <child location='../../savara-tools-eclipse-master/all/repo/'/> -->
 <child location='http://downloads.jboss.org/savara/releases/updates/2.0.x/' />
-<child location='../../jbosstools-teiid-designer-7.5_stable_branch/all/repo/'/>
+<child location='../../jbosstools-teiid-designer-7.6_stable_branch/all/repo/'/>
 <child location='../../jbosstools-drools-5.2_stable_branch/all/repo/'/>
 <child location='../../xulrunner-1.9.2/all/repo/'/>
 
