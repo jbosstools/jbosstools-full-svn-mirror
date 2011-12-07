@@ -212,7 +212,7 @@
           type="org.eclipse.ui.console.MessageConsole">
       </propertyTester>
     </extension>
-    
+  
     <extension  point="org.eclipse.ui.editors.templates">    
         <template id="org.jboss.tools.maven.editor.xml.templates.profiles.openshift"
          contextTypeId="org.eclipse.m2e.editor.xml.templates.contextType.profiles"
@@ -238,8 +238,5 @@
     &lt;/build&gt;
 &lt;/profile&gt;</pattern>
        </template>
-    </extension>
-    
-    
-    
+    </extension>      
 </plugin>

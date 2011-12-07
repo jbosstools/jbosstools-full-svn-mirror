@@ -20,19 +20,21 @@ import org.eclipse.core.databinding.observable.value.WritableValue;
 import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.core.databinding.validation.MultiValidator;
 import org.eclipse.core.databinding.validation.ValidationStatus;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.databinding.swt.WidgetProperties;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.wizard.IWizardPage;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DirectoryDialog;
@@ -55,20 +57,22 @@ import org.jboss.tools.openshift.express.internal.ui.OpenShiftUIActivator;
  * 
  */
 public class AdapterWizardPage extends AbstractOpenShiftWizardPage implements IWizardPage, PropertyChangeListener {
-	private Text gitUriValueText;
 
 	private AdapterWizardPageModel model;
-	private IServerType serverTypeToCreate;
+	private Text cloneUriValueText;
 	private Label domainValueLabel;
 	private Label modeValueLabel;
 	private Button serverAdapterCheckbox;
+	private IServerType serverTypeToCreate;
 
 	private IObservableValue serverAdapterCheckboxObservable;
+	private IObservableValue newProjectCheckboxIsEnabled;
 
 	public AdapterWizardPage(ImportProjectWizard wizard, ImportProjectWizardModel model) {
 		super(
-				"Import Project",
-				"Select the Git clone destination, the branch to clone "
+				"Import OpenShift application",
+				"Choose to create a new/use existing project, " +
+						"the GITbranch and clone destination, "
 						+ "and configure your server adapter ",
 				"Server Adapter",
 				wizard);
@@ -80,13 +84,84 @@ public class AdapterWizardPage extends AbstractOpenShiftWizardPage implements IW
 	protected void doCreateControls(Composite parent, DataBindingContext dbc) {
 		GridLayoutFactory.fillDefaults().applyTo(parent);
 
-		Group projectGroup = createCloneGroup(parent, dbc);
+		Group mergeGroup = createProjectGroup(parent, dbc);
 		GridDataFactory.fillDefaults()
-				.align(SWT.LEFT, SWT.CENTER).align(SWT.FILL, SWT.FILL).grab(true, false).applyTo(projectGroup);
+				.align(SWT.FILL, SWT.FILL).grab(true, false).applyTo(mergeGroup);
+
+		Group cloneGroup = createCloneGroup(parent, dbc);
+		GridDataFactory.fillDefaults()
+				.align(SWT.FILL, SWT.FILL).grab(true, false).applyTo(cloneGroup);
 
 		Group serverAdapterGroup = createAdapterGroup(parent, dbc);
 		GridDataFactory.fillDefaults()
-				.align(SWT.LEFT, SWT.CENTER).align(SWT.FILL, SWT.FILL).grab(true, false).applyTo(serverAdapterGroup);
+				.align(SWT.FILL, SWT.FILL).grab(true, false).applyTo(serverAdapterGroup);
+
+		Label fillerLabel = new Label(parent, SWT.NONE);
+		GridDataFactory.fillDefaults()
+				.align(SWT.FILL, SWT.FILL).grab(true, false).applyTo(fillerLabel);
+
+	}
+
+	private Group createProjectGroup(Composite parent, DataBindingContext dbc) {
+		Group projectGroup = new Group(parent, SWT.BORDER);
+		projectGroup.setText("Project");
+		GridDataFactory.fillDefaults()
+				.align(SWT.LEFT, SWT.CENTER).align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(projectGroup);
+		GridLayoutFactory.fillDefaults().margins(6, 6).numColumns(3).applyTo(projectGroup);
+
+		Button newProjectCheckbox = new Button(projectGroup, SWT.CHECK);
+		newProjectCheckbox.setText("Create new Project");
+		GridDataFactory.fillDefaults()
+				.span(3, 1).align(SWT.FILL, SWT.CENTER).grab(true, true).applyTo(newProjectCheckbox);
+		IObservableValue newProjectObservable =
+				BeanProperties.value(AdapterWizardPageModel.PROPERTY_NEW_PROJECT).observe(model);
+		ValueBindingBuilder
+				.bind(WidgetProperties.selection().observe(newProjectCheckbox))
+				.to(newProjectObservable)
+				.in(dbc);
+
+		this.newProjectCheckboxIsEnabled = WidgetProperties.enabled().observe(newProjectCheckbox);
+
+		Label existingProjectLabel = new Label(projectGroup, SWT.NONE);
+		existingProjectLabel.setText("Existing Project");
+		GridDataFactory
+				.fillDefaults().align(SWT.FILL, SWT.CENTER).applyTo(existingProjectLabel);
+		ValueBindingBuilder
+				.bind(WidgetProperties.enabled().observe(existingProjectLabel))
+				.notUpdating(newProjectObservable)
+				.converting(new InvertingBooleanConverter())
+				.in(dbc);
+		Text newProjectText = new Text(projectGroup, SWT.BORDER);
+		newProjectText.setEditable(false);
+		GridDataFactory.fillDefaults()
+				.align(SWT.FILL, SWT.CENTER).grab(true, true).applyTo(newProjectText);
+
+		IObservableValue newProjectNameObservable =
+				BeanProperties.value(AdapterWizardPageModel.PROPERTY_PROJECT_NAME).observe(model);
+		ValueBindingBuilder
+				.bind(WidgetProperties.text().observe(newProjectText))
+				.to(newProjectNameObservable)
+				.in(dbc);
+		ValueBindingBuilder
+				.bind(WidgetProperties.enabled().observe(newProjectText))
+				.notUpdating(newProjectObservable)
+				.converting(new InvertingBooleanConverter())
+				.in(dbc);
+		dbc.addValidationStatusProvider(
+				new NewProjectValidator(newProjectObservable, newProjectNameObservable));
+
+		Button browseProjectsButton = new Button(projectGroup, SWT.NONE);
+		browseProjectsButton.setText("Browse");
+		GridDataFactory.fillDefaults()
+				.align(SWT.LEFT, SWT.CENTER).hint(100, SWT.DEFAULT).applyTo(browseProjectsButton);
+		browseProjectsButton.addSelectionListener(onBrowseProjects());
+		ValueBindingBuilder
+				.bind(WidgetProperties.enabled().observe(browseProjectsButton))
+				.notUpdating(newProjectObservable)
+				.converting(new InvertingBooleanConverter())
+				.in(dbc);
+
+		return projectGroup;
 	}
 
 	private Group createCloneGroup(Composite parent, DataBindingContext dbc) {
@@ -100,16 +175,16 @@ public class AdapterWizardPage extends AbstractOpenShiftWizardPage implements IW
 		gitUriLabel.setText("Cloning From");
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(gitUriLabel);
 
-		gitUriValueText = new Text(cloneGroup, SWT.BORDER);
-		gitUriValueText.setEditable(false);
+		cloneUriValueText = new Text(cloneGroup, SWT.BORDER);
+		cloneUriValueText.setEditable(false);
 		GridDataFactory
-				.fillDefaults().span(3, 1).align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(gitUriValueText);
+				.fillDefaults().span(3, 1).align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(cloneUriValueText);
 		ValueBindingBuilder
-				.bind(WidgetProperties.text(SWT.Modify).observe(gitUriValueText))
-				.notUpdating(BeanProperties.value(AdapterWizardPageModel.PROPERTY_GIT_URI).observe(model))
+				.bind(WidgetProperties.text(SWT.Modify).observe(cloneUriValueText))
+				.notUpdating(BeanProperties.value(AdapterWizardPageModel.PROPERTY_CLONE_URI).observe(model))
 				.in(dbc);
 		ValueBindingBuilder
-				.bind(WidgetProperties.enabled().observe(gitUriValueText))
+				.bind(WidgetProperties.enabled().observe(cloneUriValueText))
 				.notUpdating(BeanProperties.value(AdapterWizardPageModel.PROPERTY_LOADING).observe(model))
 				.converting(new InvertingBooleanConverter())
 				.in(dbc);
@@ -204,6 +279,24 @@ public class AdapterWizardPage extends AbstractOpenShiftWizardPage implements IW
 		return cloneGroup;
 	}
 
+	private SelectionListener onBrowseProjects() {
+		return new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				SelectExistingProjectDialog dialog =
+						new SelectExistingProjectDialog(model.getApplicationName(), getShell());
+				if (dialog.open() == Dialog.OK) {
+					Object selectedProject = dialog.getFirstResult();
+					if (selectedProject instanceof IProject) {
+						model.setProjectName(((IProject) selectedProject).getName());
+					}
+				}
+			}
+
+		};
+	}
+
 	private SelectionListener onDefaultRepoPath() {
 		return new SelectionAdapter() {
 
@@ -251,14 +344,55 @@ public class AdapterWizardPage extends AbstractOpenShiftWizardPage implements IW
 
 	private Group createAdapterGroup(Composite parent, DataBindingContext dbc) {
 		Group serverAdapterGroup = new Group(parent, SWT.BORDER);
-		serverAdapterGroup.setText("JBoss Server adapter");
-		FillLayout fillLayout = new FillLayout();
-		fillLayout.marginHeight = 6;
-		fillLayout.marginWidth = 6;
-		serverAdapterGroup.setLayout(fillLayout);
-		fillServerAdapterGroup(serverAdapterGroup);
+		serverAdapterGroup.setText("Server Adapter");
+		GridLayoutFactory.fillDefaults().margins(6, 6).applyTo(serverAdapterGroup);
+
+		Composite c = new Composite(serverAdapterGroup, SWT.NONE);
+		GridDataFactory.fillDefaults()
+				.align(SWT.FILL, SWT.FILL).grab(true, true).applyTo(c);
+		GridLayoutFactory.fillDefaults().numColumns(3).spacing(12, 8).applyTo(c);
+
+		serverAdapterCheckbox = new Button(c, SWT.CHECK);
+		serverAdapterCheckbox.setText("Create OpenShift Server Adapter");
+		GridDataFactory.fillDefaults().span(3, 1).align(SWT.FILL, SWT.CENTER)
+				.grab(true, false).applyTo(serverAdapterCheckbox);
+		serverAdapterCheckbox.addSelectionListener(onCreateAdapter());
+
+		Label domainLabel = new Label(c, SWT.NONE);
+		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(domainLabel);
+		domainLabel.setText("Host");
+		domainValueLabel = new Label(c, SWT.NONE);
+		GridDataFactory.fillDefaults()
+				.span(2, 1).align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(domainValueLabel);
+		ValueBindingBuilder
+				.bind(WidgetProperties.text().observe(domainValueLabel))
+				.notUpdating(BeanProperties.value(AdapterWizardPageModel.PROPERTY_APPLICATION_URL).observe(model))
+				.in(dbc);
+
+		Label modeLabel = new Label(c, SWT.NONE);
+		modeLabel.setText("Mode");
+		GridDataFactory.fillDefaults()
+				.align(SWT.LEFT, SWT.CENTER).applyTo(modeLabel);
+		modeValueLabel = new Label(c, SWT.NONE);
+		GridDataFactory.fillDefaults()
+				.span(2, 1).align(SWT.FILL, SWT.CENTER).grab(true, false).applyTo(modeValueLabel);
+
+		model.getWizardModel().setProperty(
+				AdapterWizardPageModel.CREATE_SERVER, serverAdapterCheckbox.getSelection());
+		this.serverAdapterCheckboxObservable =
+				WidgetProperties.selection().observe(serverAdapterCheckbox);
 
 		return serverAdapterGroup;
+	}
+
+	private SelectionListener onCreateAdapter() {
+		return new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				model.getWizardModel().setProperty(
+						AdapterWizardPageModel.CREATE_SERVER, serverAdapterCheckbox.getSelection());
+				enableServerWidgets(serverAdapterCheckbox.getSelection());
+			}
+		};
 	}
 
 	protected void enableServerWidgets(boolean enabled) {
@@ -266,64 +400,21 @@ public class AdapterWizardPage extends AbstractOpenShiftWizardPage implements IW
 		modeValueLabel.setEnabled(enabled);
 	}
 
-	private void fillServerAdapterGroup(Group serverAdapterGroup) {
-		Composite c = new Composite(serverAdapterGroup, SWT.NONE);
-		GridLayoutFactory.fillDefaults().numColumns(3).spacing(12, 8).applyTo(c);
-
-		serverAdapterCheckbox = new Button(c, SWT.CHECK);
-		serverAdapterCheckbox.setText("Create a JBoss server adapter");
-		serverAdapterCheckbox.addSelectionListener(new SelectionListener() {
-			public void widgetSelected(SelectionEvent e) {
-				model.getParentModel().setProperty(AdapterWizardPageModel.CREATE_SERVER,
-						serverAdapterCheckbox.getSelection());
-				enableServerWidgets(serverAdapterCheckbox.getSelection());
-			}
-
-			public void widgetDefaultSelected(SelectionEvent e) {
-			}
-		});
-
-		Label domainLabel = new Label(c, SWT.NONE);
-		domainLabel.setText("Host");
-		domainValueLabel = new Label(c, SWT.NONE);
-		DataBindingContext dbc = getDataBindingContext();
-		ValueBindingBuilder
-				.bind(WidgetProperties.text().observe(domainValueLabel))
-				.notUpdating(BeanProperties.value(AdapterWizardPageModel.PROPERTY_APPLICATION_URL).observe(model))
-				.in(dbc);
-		// appLabel = new Label(c, SWT.NONE);
-		Label modeLabel = new Label(c, SWT.NONE);
-		modeLabel.setText("Mode");
-		modeValueLabel = new Label(c, SWT.NONE);
-
-		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(domainLabel);
-		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).applyTo(modeLabel);
-		GridDataFactory.fillDefaults().span(2, 1).align(SWT.FILL, SWT.CENTER)
-						.grab(true, false).applyTo(domainValueLabel);
-		GridDataFactory.fillDefaults().span(3, 1).align(SWT.FILL, SWT.CENTER)
-						.grab(true, false).applyTo(serverAdapterCheckbox);
-		GridDataFactory.fillDefaults().span(2, 1).align(SWT.FILL, SWT.CENTER)
-						.grab(true, false).applyTo(modeValueLabel);
-
-		model.getParentModel().setProperty(AdapterWizardPageModel.CREATE_SERVER,
-				serverAdapterCheckbox.getSelection());
-		this.serverAdapterCheckboxObservable =
-				WidgetProperties.selection().observe(serverAdapterCheckbox);
-
-		SelectedRuntimeValidator selectedRuntimeValidator = new SelectedRuntimeValidator();
-		dbc.addValidationStatusProvider(selectedRuntimeValidator);
-	}
-
 	private IServerType getServerTypeToCreate() {
 		return ServerCore.findServerType("org.jboss.tools.openshift.express.openshift.server.type");
 	}
 
 	protected void onPageActivated(DataBindingContext dbc) {
+		// allow to enable a proj only for as7 openshift applications
+		setTitle(NLS.bind("Import OpenShift application {0}", model.getApplicationName()));
+
+		newProjectCheckboxIsEnabled.setValue(model.isJBossAS7Application());
+
 		model.resetRepositoryPath();
 		serverTypeToCreate = getServerTypeToCreate();
-		model.getParentModel().setProperty(AdapterWizardPageModel.SERVER_TYPE, serverTypeToCreate);
+		model.getWizardModel().setProperty(AdapterWizardPageModel.SERVER_TYPE, serverTypeToCreate);
 		modeValueLabel.setText("Source");
-		model.getParentModel().setProperty(AdapterWizardPageModel.MODE, AdapterWizardPageModel.MODE_SOURCE);
+		model.getWizardModel().setProperty(AdapterWizardPageModel.MODE, AdapterWizardPageModel.MODE_SOURCE);
 		onPageActivatedBackground(dbc);
 	}
 
@@ -334,7 +425,9 @@ public class AdapterWizardPage extends AbstractOpenShiftWizardPage implements IW
 					model.loadGitUri();
 					model.loadApplicationUrl();
 				} catch (OpenShiftException e) {
-					OpenShiftUIActivator.log(OpenShiftUIActivator.createErrorStatus(e.getMessage(), e));
+					IStatus status = OpenShiftUIActivator.createErrorStatus(e.getMessage(), e);
+					OpenShiftUIActivator.log(status);
+					return status;
 				}
 				return Status.OK_STATUS;
 			}
@@ -356,11 +449,24 @@ public class AdapterWizardPage extends AbstractOpenShiftWizardPage implements IW
 		serverAdapterCheckbox.setEnabled(canCreateServer);
 		serverAdapterCheckboxObservable.setValue(canCreateServer);
 		enableServerWidgets(canCreateServer);
-		model.getParentModel().setProperty(AdapterWizardPageModel.SERVER_TYPE, serverTypeToCreate);
-		model.getParentModel().setProperty(AdapterWizardPageModel.CREATE_SERVER, canCreateServer);
+		model.getWizardModel().setProperty(AdapterWizardPageModel.SERVER_TYPE, serverTypeToCreate);
+		model.getWizardModel().setProperty(AdapterWizardPageModel.CREATE_SERVER, canCreateServer);
 	}
 
-	private class SelectedRuntimeValidator extends MultiValidator {
+	/**
+	 * A multi validator that validates the state of the project that shall be
+	 * (OpenShift) enabled
+	 */
+	private class NewProjectValidator extends MultiValidator {
+
+		private IObservableValue newProjectObservable;
+		private IObservableValue newProjectNameObservable;
+
+		public NewProjectValidator(IObservableValue newProjectObservable,
+				IObservableValue newProjectNameObservable) {
+			this.newProjectObservable = newProjectObservable;
+			this.newProjectNameObservable = newProjectNameObservable;
+		}
 
 		@Override
 		protected IStatus validate() {
@@ -370,10 +476,73 @@ public class AdapterWizardPage extends AbstractOpenShiftWizardPage implements IW
 			 * is tracking what observables are read to know when he has to
 			 * recalculate it's state.
 			 */
-			if (Boolean.FALSE.equals(serverAdapterCheckboxObservable.getValue())) {
+			if (Boolean.TRUE.equals(newProjectObservable.getValue())) {
 				return ValidationStatus.ok();
 			}
-			return ValidationStatus.ok();
+
+			if (newProjectNameObservable.getValue() != null
+					&& (!((String) newProjectNameObservable.getValue()).isEmpty())) {
+				return ValidationStatus.ok();
+			} else {
+				return ValidationStatus.error(
+						"Select an existing project to use with OpenShift");
+			}
 		}
 	}
+
+	// private static class GitUriLabelProvider implements ILabelProvider {
+	//
+	// @Override
+	// public void addListener(ILabelProviderListener listener) {
+	// }
+	//
+	// @Override
+	// public void dispose() {
+	// }
+	//
+	// @Override
+	// public boolean isLabelProperty(Object element, String property) {
+	// return true;
+	// }
+	//
+	// @Override
+	// public void removeListener(ILabelProviderListener listener) {
+	// }
+	//
+	// @Override
+	// public Image getImage(Object element) {
+	// return null;
+	// }
+	//
+	// @Override
+	// public String getText(Object element) {
+	// if (!(element instanceof GitUri)) {
+	// return null;
+	// }
+	// return ((GitUri) element).getLabel();
+	// }
+	// }
+
+	// private class MergeUriValidator implements IValidator {
+	//
+	// @Override
+	// public IStatus validate(Object value) {
+	// String mergeUri = (String) value;
+	// if (mergeUri == null
+	// || mergeUri.length() == 0) {
+	// return ValidationStatus
+	// .warning("You have to provide a git uri to merge with");
+	// }
+	// GitUri gitUri = model.getKnownMergeUri(mergeUri);
+	// if (gitUri == null) {
+	// return ValidationStatus
+	// .warning("You are not merging with an official example. Things may go wrong");
+	// }
+	// if (!model.isCompatibleToApplicationCartridge(gitUri.getCartridge())) {
+	// return ValidationStatus
+	// .warning("The example you've chosen is not compatible to your application");
+	// }
+	// return ValidationStatus.ok();
+	// }
+	// }
 }
