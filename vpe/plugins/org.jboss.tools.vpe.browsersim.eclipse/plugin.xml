@@ -33,13 +33,26 @@
          point="org.eclipse.ui.menus">
       <menuContribution
             locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
-         <toolbar
-               id="org.jboss.tools.vpe.browsersim.eclipse.toolbars.sampleToolbar">
+         <toolbar 
+               id="org.jboss.tools.vpe.browsersim.eclipse.toolbars">
             <command
                   commandId="org.jboss.tools.vpe.browsersim.eclipse.commands.runBrowserSim"
                   icon="icons/sample.gif"
                   tooltip="Run Mobile Browser Simulator"
-                  id="org.jboss.tools.vpe.browsersim.eclipse.toolbars.runBrowserSim">
+                  id="org.jboss.tools.vpe.browsersim.eclipse.toolbars.runBrowserSim"
+                  >
+               <visibleWhen
+                     checkEnabled="false">
+                  <with
+                        variable="activeContexts">
+                     <iterate
+                           operator="or">
+                        <equals
+                              value="org.jboss.tools.vpe.browsersim.eclipse.actionSet">
+                        </equals>
+                     </iterate>
+                  </with>
+               </visibleWhen>
             </command>
          </toolbar>
       </menuContribution>
@@ -65,5 +78,14 @@
              .
           </location>
    </browser>
+   </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            description="Makes browser simulator available in main toolbar"
+            id="org.jboss.tools.vpe.browsersim.eclipse.actionSet"
+            label="BrowserSim"
+            visible="false">
+      </actionSet>
    </extension>
 </plugin>
