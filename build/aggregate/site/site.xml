@@ -17,12 +17,12 @@
 
 	<feature url="features/org.jboss.tools.central.feature_0.0.0.jar" id="org.jboss.tools.central.feature" version="0.0.0">
 		<category name="AbridgedTools" />
-		<category name="GeneralTools"/>
+		<category name="GeneralTools" />
 	</feature>
 	<!-- only in JBT -->
 	<feature url="features/org.jboss.tools.community.central.feature_0.0.0.jar" id="org.jboss.tools.community.central.feature" version="0.0.0">
 		<category name="AbridgedTools" />
-		 <category name="GeneralTools"/>
+		<category name="GeneralTools"/>
 	</feature>
 	<feature url="features/org.jboss.tools.central.discovery.feature_0.0.0.jar" id="org.jboss.tools.central.discovery.feature" version="0.0.0">
 	</feature>
@@ -30,16 +30,15 @@
 		<category name="AbridgedTools" />
 		<category name="WebTools" />
 	</feature>
-	<!-- include and categorize in JBT -->
+	<feature url="features/org.jboss.tools.vpe.browsersim.feature_0.0.0.jar" id="org.jboss.tools.vpe.browsersim.feature" version="0.0.0">
+		<category name="AbridgedTools" />
+		<category name="WebTools" />
+	</feature>
 	<feature url="features/org.jboss.tools.jst.feature_0.0.0.jar" id="org.jboss.tools.jst.feature" version="0.0.0">
 		<category name="AbridgedTools" />
 		<category name="WebTools" />
 	</feature>
 	<feature url="features/org.jboss.tools.vpe.feature_0.0.0.jar" id="org.jboss.tools.vpe.feature" version="0.0.0">
-		<category name="AbridgedTools" />
-		<category name="WebTools" />
-	</feature>
-	<feature url="features/org.jboss.tools.vpe.browsersim.feature_0.0.0.jar" id="org.jboss.tools.vpe.browsersim.feature" version="0.0.0">
 		<category name="AbridgedTools" />
 		<category name="WebTools" />
 	</feature>
@@ -75,7 +74,6 @@
 		<category name="AbridgedTools" />
 		<category name="WebTools" />
 	</feature>
-	<!-- only in JBT -->
 	<feature url="features/org.jboss.tools.openshift.express.feature_0.0.0.jar" id="org.jboss.tools.openshift.express.feature" version="0.0.0">
 		<category name="AbridgedTools" />
 		<category name="CloudTools" />
@@ -84,6 +82,12 @@
 		<category name="AbridgedTools" />
 		<category name="CloudTools" />
 	</feature>
+	<!-- only in JBDS 
+	<feature url="features/org.eclipse.egit_0.0.0.jar" id="org.eclipse.egit" version="0.0.0">
+	</feature>
+	<feature url="features/org.eclipse.jgit_0.0.0.jar" id="org.eclipse.jgit" version="0.0.0">
+	</feature>
+	-->
 	<feature url="features/org.jboss.ide.eclipse.archives.feature_0.0.0.jar" id="org.jboss.ide.eclipse.archives.feature" version="0.0.0">
 		<category name="AbridgedTools" />
 		<category name="GeneralTools" />
@@ -115,15 +119,16 @@
 		<category name="AbridgedTools" />
 		<category name="WebTools" />
 	</feature>
+	<feature url="features/org.jboss.tools.forge.feature_0.0.0.jar" id="org.jboss.tools.forge.feature" version="0.0.0">
+		<category name="AbridgedTools"/>
+		<category name="WebTools" />
+	</feature>
 	<feature url="features/org.jboss.tools.project.examples.feature_0.0.0.jar" id="org.jboss.tools.project.examples.feature" version="0.0.0">
 		<category name="AbridgedTools" />
 		<category name="GeneralTools" />
 	</feature>
 
 	<!-- only in JBT -->
-	<feature url="features/org.jboss.tools.forge.feature_0.0.0.jar" id="org.jboss.tools.forge.feature" version="0.0.0">
-		<category name="WebTools" />
-	</feature>
 	<feature url="features/org.jboss.tools.community.project.examples.feature_0.0.0.jar" id="org.jboss.tools.community.project.examples.feature" version="0.0.0">
 		<category name="AbridgedTools" />
 		<category name="GeneralTools" />
@@ -131,15 +136,20 @@
 	<feature url="features/org.jboss.tools.birt.feature_0.0.0.jar" id="org.jboss.tools.birt.feature" version="0.0.0">
 		<category name="ReportTools" />
 	</feature>
+
+	<!-- only in JBDS
+	<feature url="features/com.jboss.jbds.m2e.feature_0.0.0.jar" id="com.jboss.jbds.m2e.feature" version="0.0.0">
+		<category name="AbridgedTools"/>
+		<category name="MavenTools" />
+	</feature>
+	<feature url="features/org.eclipse.m2e.feature_0.0.0.jar" id="org.eclipse.m2e.feature" version="0.0.0">
+	</feature>
+	<feature url="features/org.maven.ide.eclipse.wtp.feature_0.0.0.jar" id="org.maven.ide.eclipse.wtp.feature" version="0.0.0">
+	</feature>
+	<feature url="features/org.sonatype.m2e.mavenarchiver.feature_0.0.0.jar" id="org.sonatype.m2e.mavenarchiver.feature" version="0.0.0">
+	</feature>
+	-->
 	<feature url="features/org.jboss.tools.maven.feature_0.0.0.jar" id="org.jboss.tools.maven.feature" version="0.0.0">
-		<category name="AbridgedTools" />
-		<category name="MavenTools" />
-	</feature>
-	<feature url="features/org.jboss.tools.maven.seam.feature_0.0.0.jar" id="org.jboss.tools.maven.seam.feature" version="0.0.0">
-		<category name="AbridgedTools" />
-		<category name="MavenTools" />
-	</feature>
-	<feature url="features/org.jboss.tools.maven.jsf.feature_0.0.0.jar" id="org.jboss.tools.maven.jsf.feature" version="0.0.0">
 		<category name="AbridgedTools" />
 		<category name="MavenTools" />
 	</feature>
@@ -151,7 +161,19 @@
 		<category name="AbridgedTools" />
 		<category name="MavenTools" />
 	</feature>
+	<feature url="features/org.jboss.tools.maven.jsf.feature_0.0.0.jar" id="org.jboss.tools.maven.jsf.feature" version="0.0.0">
+		<category name="AbridgedTools" />
+		<category name="MavenTools" />
+	</feature>
 	<feature url="features/org.jboss.tools.maven.portlet.feature_0.0.0.jar" id="org.jboss.tools.maven.portlet.feature" version="0.0.0">
+		<category name="AbridgedTools" />
+		<category name="MavenTools" />
+	</feature>
+	<feature url="features/org.jboss.tools.maven.seam.feature_0.0.0.jar" id="org.jboss.tools.maven.seam.feature" version="0.0.0">
+		<category name="AbridgedTools" />
+		<category name="MavenTools"/>
+	</feature>
+	<feature url="features/org.jboss.tools.maven.project.examples.feature_0.0.0.jar" id="org.jboss.tools.maven.project.examples.feature" version="0.0.0">
 		<category name="AbridgedTools" />
 		<category name="MavenTools" />
 	</feature>
@@ -161,13 +183,6 @@
 	</feature>
 	<feature url="features/org.jboss.tools.maven.jbosspackaging.feature_0.0.0.jar" id="org.jboss.tools.maven.jbosspackaging.feature" version="0.0.0">
 		<category name="MavenTools" />
-	</feature>
-	<feature url="features/org.jboss.tools.maven.project.examples.feature_0.0.0.jar" id="org.jboss.tools.maven.project.examples.feature" version="0.0.0">
-		<category name="AbridgedTools" />
-		<category name="MavenTools" />
-	</feature>
-	<feature url="features/org.jboss.tools.deltacloud.feature_0.0.0.jar" id="org.jboss.tools.deltacloud.feature" version="0.0.0">
-		<category name="CloudTools" />
 	</feature>
 	<feature url="features/org.jboss.tools.gwt.feature_0.0.0.jar" id="org.jboss.tools.gwt.feature" version="0.0.0">
 		<category name="GeneralTools" />
@@ -215,11 +230,18 @@
 	</feature>
 
 	<category-def name="AbridgedTools" label="Abridged JBoss Tools 3.3">
-		<description>Contains most of the JBoss Tools features. Excluded are those related to integration with 3rd party plugins. Selecting this category will give you all tools needed for Web and Seam Development.</description>
+		<description>Contains most of the JBoss Tools features. 
+                        Excluded are those related to integration with 3rd party
+			plugins. Selecting this category will give you all tools 
+			needed for Web and Seam Development.
+		</description>
 	</category-def>
 
 	<category-def name="WebTools" label="JBoss Web and Java EE Development">
-		<description>Tools to help create web and enterprise applications, using JSF, Facelets, Seam, Hibernate/JPA, CSS, Webservices and more.</description>
+		<description>Tools to help create web and enterprise applications,
+			using JSF, Facelets,
+			Seam, Hibernate/JPA, CSS, Webservices and more.
+		</description>
 	</category-def>
 
 	<category-def name="GeneralTools" label="JBoss Application Development">
@@ -230,15 +252,19 @@
 		<description>Tools related to data services such as persistence and transformation.</description>
 	</category-def>
 
-	<!-- Only in JBT -->
 	<category-def name="MavenTools" label="JBoss Maven Support">
-		<description>Plugins related to Maven and m2eclipse support. Use these to enable use of Maven.</description>
-	</category-def>
-	<category-def name="ReportTools" label="JBoss Business Intelligence, Reporting and Charting">
-		<description>Business Intelligence, Reporting and Charting. Use these if you plan to integrate Hibernate or Seam with Eclipse BIRT.</description>
+		<description>Plugins related to Maven and m2eclipse support. Use these
+			to enable use of Maven.</description>
 	</category-def>
 	<category-def name="CloudTools" label="JBoss Cloud Development Tools">
-		<description>Tools for Cloud Development.</description>
+		<description>Tools for Cloud Development.
+		</description>
+	</category-def>
+	<!-- Only in JBT -->
+	<category-def name="ReportTools" label="JBoss Business Intelligence, Reporting and Charting">
+		<description>Business Intelligence, Reporting and Charting. Use these 
+			if you plan to integrate Hibernate or Seam with Eclipse BIRT.
+		</description>
 	</category-def>
 
 </site>
