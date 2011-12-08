@@ -254,11 +254,11 @@ public class ForgeView extends ViewPart implements PropertyChangeListener, IShow
     		    Object first = ss.getFirstElement();
     		    if (first instanceof IResource) {
     		    	String path = ((IResource)first).getLocation().toOSString();
-    		    	runtime.sendInput("pick-up " + path + "\n");
+    		    	runtime.sendInput("pick-up \"" + path + "\"\n");
     		    } else if (first instanceof IJavaElement) {
     		    	try {
 						String path = ((IJavaElement)first).getCorrespondingResource().getLocation().toOSString();
-	    		    	runtime.sendInput("pick-up " + path + "\n");
+	    		    	runtime.sendInput("pick-up \"" + path + "\"\n");
 					} catch (JavaModelException e) {
 						ForgeUIPlugin.log(e);
 					}
