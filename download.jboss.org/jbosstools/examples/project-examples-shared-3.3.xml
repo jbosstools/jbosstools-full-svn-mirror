@@ -251,6 +251,9 @@ It includes a persistence unit and some sample persistence and transaction code 
 			<artifactId>richfaces-webapp</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<javaPackage>org.jboss.tools.example.richfaces</javaPackage>
+            <properties>
+              <property name="richfaces-version" value="4.1.0.CR2" />    
+            </properties>
 		</mavenArchetype>
 	</project>		
 </projects>
