@@ -14,8 +14,8 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<url/>
 		<fixes>
 			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70</property>
-				<property name="description">This project example requires JBoss AS 7.0</property>
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70, org.jboss.ide.eclipse.as.runtime.71, org.jboss.ide.eclipse.as.runtime.eap.60</property>
+				<property name="description">This project example requires JBoss AS 7.0/7.1 or EAP 6 </property>
 				<property name="downloadId">org.jboss.tools.runtime.core.as.702</property>
 			</fix>
 			<fix type="plugin">
@@ -26,7 +26,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.maven.ide.eclipse.wtp</property>
-				<property name="versions">[0.13.1,0.15.0)</property>
+				<property name="versions">[0.13.1,0.16.0)</property>
 				<property name="description">This project example requires m2eclipse-wtp &gt;= 0.13.1.</property>
 				<property name="connectorIds">org.maven.ide.eclipse.wtp</property>
 			</fix>
@@ -38,13 +38,15 @@ It includes a persistence unit and some sample persistence and transaction code 
 			</fix>
 		</fixes>
 		<importType>mavenArchetype</importType>
-		<importTypeDescription>The project example requires the m2e, m2eclipse-wtp and JBoss Maven Integration feature.</importTypeDescription>
+		<importTypeDescription>The project example requires the m2e, m2eclipse-wtp and JBoss Maven Integration features.</importTypeDescription>
 		<mavenArchetype>
 			<archetypeGroupId>org.jboss.spec.archetypes</archetypeGroupId>
-			<archetypeArtifactId>jboss-javaee6-webapp</archetypeArtifactId>
-			<archetypeVersion>7.0.2-SNAPSHOT</archetypeVersion>
-			<archetypeRepository>http://anonsvn.jboss.org/repos/jbosstools/workspace/fred/repositories/snapshot/</archetypeRepository>
-			<groupId>org.jboss.tools.examples</groupId>
+			<archetypeArtifactId>jboss-javaee6-webapp-archetype</archetypeArtifactId>
+			<archetypeVersion>7.0.2.CR2</archetypeVersion>
+            <!--
+            <archetypeRepository>http://anonsvn.jboss.org/repos/jbosstools/workspace/fred/repositories/snapshot/</archetypeRepository>
+            -->
+            <groupId>org.jboss.tools.examples</groupId>
 			<artifactId>jboss-javaee6-webapp</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<javaPackage>org.jboss.tools.examples</javaPackage>
@@ -64,8 +66,8 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<url/>
 		<fixes>
 			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70, org.jboss.ide.eclipse.as.runtime.eap.60</property>
-				<property name="description">This project example requires JBoss AS 7.0</property>
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70, org.jboss.ide.eclipse.as.runtime.71, org.jboss.ide.eclipse.as.runtime.eap.60</property>
+				<property name="description">This project example requires JBoss AS 7.0/7.1 or EAP 6 </property>
 				<property name="downloadId">org.jboss.tools.runtime.core.as.702</property>
 			</fix>
 			<fix type="plugin">
@@ -76,7 +78,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.maven.ide.eclipse.wtp</property>
-				<property name="versions">[0.13.1,0.15.0)</property>
+				<property name="versions">[0.13.1,0.16.0)</property>
 				<property name="description">This project example requires m2eclipse-wtp &gt;= 0.13.1.</property>
 				<property name="connectorIds">org.maven.ide.eclipse.wtp</property>
 			</fix>
@@ -88,13 +90,15 @@ It includes a persistence unit and some sample persistence and transaction code 
 			</fix>
 		</fixes>
 		<importType>mavenArchetype</importType>
-		<importTypeDescription>The project example requires the m2e, m2eclipse-wtp and JBoss Maven Integration feature.</importTypeDescription>
+		<importTypeDescription>The project example requires the m2e, m2eclipse-wtp and JBoss Maven Integration features.</importTypeDescription>
 		<mavenArchetype>
 			<archetypeGroupId>org.jboss.spec.archetypes</archetypeGroupId>
-			<archetypeArtifactId>jboss-javaee6-ear-webapp</archetypeArtifactId>
-			<archetypeVersion>7.0.2-SNAPSHOT</archetypeVersion>
+			<archetypeArtifactId>jboss-javaee6-webapp-ear-archetype</archetypeArtifactId>
+			<archetypeVersion>7.0.2.CR2</archetypeVersion>
+            <!--
 			<archetypeRepository>http://anonsvn.jboss.org/repos/jbosstools/workspace/fred/repositories/snapshot/</archetypeRepository>
-			<groupId>org.jboss.tools.example</groupId>
+			-->
+            <groupId>org.jboss.tools.example</groupId>
 			<artifactId>multi</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<javaPackage>org.jboss.tools.example</javaPackage>
@@ -112,8 +116,8 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<url/>
 		<fixes>
 			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70, org.jboss.ide.eclipse.as.runtime.eap.60</property>
-				<property name="description">This project example requires JBoss AS 7.0</property>
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70, org.jboss.ide.eclipse.as.runtime.71, org.jboss.ide.eclipse.as.runtime.eap.60</property>
+				<property name="description">This project example requires JBoss AS 7.0/7.1 or EAP 6 </property>
 				<property name="downloadId">org.jboss.tools.runtime.core.as.702</property>
 			</fix>
 			<fix type="plugin">
@@ -136,14 +140,16 @@ It includes a persistence unit and some sample persistence and transaction code 
 			</fix>
 		</fixes>
 		<importType>mavenArchetype</importType>
-		<importTypeDescription>The project example requires the m2e, m2eclipse-wtp and JBoss Maven Integration feature.</importTypeDescription>
+		<importTypeDescription>The project example requires the m2e, m2eclipse-wtp and JBoss Maven Integration features.</importTypeDescription>
         <defaultMavenProfiles>arq-jbossas-remote</defaultMavenProfiles>
 		<mavenArchetype>
 			<archetypeGroupId>org.jboss.spec.archetypes</archetypeGroupId>
-			<archetypeArtifactId>jboss-javaee6-html5-mobile-archetype</archetypeArtifactId>
-			<archetypeVersion>7.0.2-SNAPSHOT</archetypeVersion>
+			<archetypeArtifactId>jboss-html5-mobile-archetype</archetypeArtifactId>
+			<archetypeVersion>7.0.2.CR2</archetypeVersion>
+            <!--
 			<archetypeRepository>http://anonsvn.jboss.org/repos/jbosstools/workspace/fred/repositories/snapshot/</archetypeRepository>
-			<groupId>org.jboss.tools.example</groupId>
+            -->
+            <groupId>org.jboss.tools.example</groupId>
 			<artifactId>html5-webapp</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<javaPackage>org.jboss.tools.example.html5</javaPackage>
@@ -160,8 +166,8 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<url/>
 		<fixes>
 			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70, org.jboss.ide.eclipse.as.runtime.eap.60</property>
-				<property name="description">This project example requires JBoss AS 7.0</property>
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70, org.jboss.ide.eclipse.as.runtime.71, org.jboss.ide.eclipse.as.runtime.eap.60</property>
+				<property name="description">This project example requires JBoss AS 7.0/7.1 or EAP 6 </property>
 				<property name="downloadId">org.jboss.tools.runtime.core.as.702</property>
 			</fix>
 			<fix type="plugin">
@@ -172,7 +178,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.maven.ide.eclipse.wtp</property>
-				<property name="versions">[0.13.1,0.15.0)</property>
+				<property name="versions">[0.13.1,0.16.0)</property>
 				<property name="description">This project example requires m2eclipse-wtp &gt;= 0.13.1.</property>
 				<property name="connectorIds">org.maven.ide.eclipse.wtp</property>
 			</fix>
@@ -184,7 +190,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 			</fix>
 		</fixes>
 		<importType>mavenArchetype</importType>
-		<importTypeDescription>The project example requires the m2e, m2eclipse-wtp and JBoss Maven Integration feature.</importTypeDescription>
+		<importTypeDescription>The project example requires the m2e, m2eclipse-wtp and JBoss Maven Integration features.</importTypeDescription>
 		<mavenArchetype>
 			<archetypeGroupId>org.jboss.spring.archetypes</archetypeGroupId>
 			<archetypeArtifactId>spring-mvc-webapp</archetypeArtifactId>
@@ -207,8 +213,8 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<url/>
 		<fixes>
 			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70, org.jboss.ide.eclipse.as.runtime.eap.60</property>
-				<property name="description">This project example requires JBoss AS 7.0</property>
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70, org.jboss.ide.eclipse.as.runtime.71, org.jboss.ide.eclipse.as.runtime.eap.60</property>
+				<property name="description">This project example requires JBoss AS 7.0/7.1 or EAP 6 </property>
 				<property name="downloadId">org.jboss.tools.runtime.core.as.702</property>
 			</fix>
 			<fix type="plugin">
@@ -219,7 +225,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.maven.ide.eclipse.wtp</property>
-				<property name="versions">[0.13.1,0.15.0)</property>
+				<property name="versions">[0.13.1,0.16.0)</property>
 				<property name="description">This project example requires m2eclipse-wtp &gt;= 0.13.1.</property>
 				<property name="connectorIds">org.maven.ide.eclipse.wtp</property>
 			</fix>
@@ -231,14 +237,17 @@ It includes a persistence unit and some sample persistence and transaction code 
 			</fix>
 		</fixes>
 		<importType>mavenArchetype</importType>
-		<importTypeDescription>The project example requires the m2e, m2eclipse-wtp and JBoss Maven Integration feature.</importTypeDescription>
+		<importTypeDescription>The project example requires the m2e, m2eclipse-wtp and JBoss Maven Integration features.</importTypeDescription>
         <defaultMavenProfiles>jee6</defaultMavenProfiles>
 		<mavenArchetype>
 			<archetypeGroupId>org.richfaces.archetypes</archetypeGroupId>
 			<archetypeArtifactId>richfaces-archetype-simpleapp</archetypeArtifactId>
 			<archetypeVersion>4.1.0-SNAPSHOT</archetypeVersion>
-			<archetypeRepository>http://repository.jboss.org/nexus/content/repositories/snapshots/</archetypeRepository>
-			<groupId>org.jboss.tools.example</groupId>
+            <!--
+			<archetypeRepository>http://repository.jboss.org/nexus/content/repositories/releases/</archetypeRepository>
+			-->
+            <archetypeRepository>http://anonsvn.jboss.org/repos/jbosstools/workspace/fred/repositories/snapshot/</archetypeRepository>
+            <groupId>org.jboss.tools.example</groupId>
 			<artifactId>richfaces-webapp</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<javaPackage>org.jboss.tools.example.richfaces</javaPackage>
