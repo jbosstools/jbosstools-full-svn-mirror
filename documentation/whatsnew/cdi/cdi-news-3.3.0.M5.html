@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../whatsnew.css" />
+<title>CDI/Seam 3 tools 3.3.0.M5 What's New</title>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17645367-5']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script></head>
+<body>
+<h1>CDI/Seam 3 tools 3.3.0.M5 What's New</h1>
+
+<p align="right"><a href="../index.html">&lt; Main Index</a> <a
+	href="../forge/forge-news-3.3.0.M5.html">Forge Tools News &gt;</a></p>
+
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+
+	<tr>
+		<td colspan="2">
+		<hr />
+		<h3>CDI (JSR-299)</h3>
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+			<p><b>New CDI Web Project Wizard</b></p>
+		</td>
+        <td align="top">
+			<p>New CDI Web Project wizard is now available:</p>
+        	<img src="images/3.3.0.M5/wizard.png"/><br/><br/>
+			<p>
+				<small>
+					<a href="https://issues.jboss.org/browse/JBIDE-9581">Related Jira</a>
+				</small><br/>
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<hr />
+		<h3>CDI Extensions/Solder</h3>
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+			<p><b>@DefaultBean validation</b></p>
+		</td>
+        <td align="top">
+			<p>
+			    Solder default beans (@DefaultBean) are validated and if any of the following problems is detected then CDI validator will mark the code:
+				<li>1. Default producer fields are not supported on normal scoped beans. - it is a deployment error.</li>
+                <li>2. Two default beans with the same type and qualifiers is a deployment error.</li>
+			</p>
+			<img src="images/3.3.0.M5/default.png"/><br/><br/>
+			<p>
+				<small>
+					<a href="https://issues.jboss.org/browse/JBIDE-9244">Related Jira</a>
+				</small>
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+			<p><b>All Assignable Beans Dialog</b></p>
+		</td>
+        <td align="top">
+			<p>
+				New filter "Eliminated @DefaultBean" is now available in Assignable Beans dialog (Ctrl+Click on @Inject) which helps you to filter out default beans for the injection point.
+		 		Note: you will see this filter only if your project has Solder jars in its classpath.
+			</p>
+			<img src="images/3.3.0.M5/dialog.png"/><br/><br/>
+			<p>
+				<small>
+					<a href="https://issues.jboss.org/browse/JBIDE-10086">Related Jira</a>
+				</small>
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<hr />
+		</td>
+	</tr>
+
+</table>
+
+</body>
+
+</html>
