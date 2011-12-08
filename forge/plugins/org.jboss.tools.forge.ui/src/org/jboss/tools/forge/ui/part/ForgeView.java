@@ -4,7 +4,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -254,11 +253,11 @@ public class ForgeView extends ViewPart implements PropertyChangeListener, IShow
     		    IStructuredSelection ss = (IStructuredSelection)sel;
     		    Object first = ss.getFirstElement();
     		    if (first instanceof IResource) {
-    		    	IPath path = ((IResource)first).getLocation();
+    		    	String path = ((IResource)first).getLocation().toOSString();
     		    	runtime.sendInput("pick-up " + path + "\n");
     		    } else if (first instanceof IJavaElement) {
     		    	try {
-						IPath path = ((IJavaElement)first).getCorrespondingResource().getLocation();
+						String path = ((IJavaElement)first).getCorrespondingResource().getLocation().toOSString();
 	    		    	runtime.sendInput("pick-up " + path + "\n");
 					} catch (JavaModelException e) {
 						ForgeUIPlugin.log(e);
