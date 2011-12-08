@@ -34,7 +34,10 @@ import org.w3c.dom.NodeList;
 
 public abstract class VpeDefineContainerTemplate extends VpeAbstractTemplate {
     private static Set<Node> defineContainer = new HashSet<Node>();
-
+    private static final Pattern CURLY_BRACKET_PATTERN = 
+    		Pattern.compile("(" + Pattern.quote("#") + "\\{(.+?)\\})+?"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    private static final Pattern WORD_PATTERN = Pattern.compile("((\\w+)([\\.\\[\\]]*))");  //$NON-NLS-1$
+    
     @Override
     protected void init(Element templateElement) {
 	children = true;
@@ -43,55 +46,60 @@ public abstract class VpeDefineContainerTemplate extends VpeAbstractTemplate {
     }
 
     public VpeCreationData createTemplate(String includedFileName,
-	    VpePageContext pageContext, Node sourceNode,
-	    nsIDOMDocument visualDocument) {
-	VpeCreationData creationData = null;
-	if (includedFileName != null && includedFileName.trim().length() > 0) {
-	    IFile file = VpeCreatorUtil.getFile(includedFileName, pageContext);
-	    if (file != null) {
-		if (!pageContext.getVisualBuilder().isFileInIncludeStack(file)) {
-		    registerDefine(pageContext, sourceNode);
-		    Document document = pageContext.getVisualBuilder()
-			    .getIncludeDocuments().get(file);
-		    if (document == null) {
-			document = VpeCreatorUtil.getDocumentForRead(file);
-			if (document != null)
-			    pageContext.getVisualBuilder()
-				    .getIncludeDocuments().put(file, document);
-		    }
-		    // Document document =
-		    // VpeCreatorUtil.getDocumentForRead(file, pageContext);
-		    if (document != null) {
-			creationData = createInclude(document, visualDocument);
-			creationData.setData(new TemplateFileInfo(file));
-			pageContext.getVisualBuilder().pushIncludeStack(
-				new VpeIncludeInfo((Element) sourceNode, file,
-					document));
-			/*
-			 * we should add only real node, sourceNode can be a
-			 * proxy so
-			 */
-			if (sourceNode.getFirstChild() != null) {
-			    defineContainer.add(sourceNode.getFirstChild()
-				    .getParentNode());
-			}
-			return creationData;
-		    }
-		}
-	    }
-	}
+    		VpePageContext pageContext, Node sourceNode,
+    		nsIDOMDocument visualDocument) {
+    	VpeCreationData creationData = null;
+    	if (includedFileName != null && includedFileName.trim().length() > 0) {
+    		IFile file = VpeCreatorUtil.getFile(includedFileName, pageContext);
+    		if ((file != null) && !pageContext.getVisualBuilder().isFileInIncludeStack(file)) {
+    			Document document = pageContext.getVisualBuilder()
+    					.getIncludeDocuments().get(file);
+    			if (document == null) {
+    				document = VpeCreatorUtil.getDocumentForRead(file);
+    			}
+    			// Document document = VpeCreatorUtil.getDocumentForRead(file, pageContext);
+    			if (document != null) {
+    				/*
+    				 * Putting include document
+    				 */
+    				pageContext.getVisualBuilder()
+    					.getIncludeDocuments().put(file, document);
+    				creationData = createInclude(document, visualDocument);
+    				creationData.setData(new TemplateFileInfo(file));
+    				/*
+    				 * Pushing include stack and right after that --
+    				 * registering <UI:DEFINE> element.
+    				 */
+    				pageContext.getVisualBuilder().pushIncludeStack(
+    						new VpeIncludeInfo((Element) sourceNode, file, document));
+    				registerDefine(pageContext, sourceNode);
+    				/*
+    				 * we should add only real node, sourceNode can be a proxy,
+    				 * so there is a trick to get the node:
+    				 * get the parent of the first child. 
+    				 */
+    				if (sourceNode.getFirstChild() != null) {
+    					defineContainer.add(sourceNode.getFirstChild().getParentNode());
+    				} else {
+    					/*
+    					 * Then it helps to detect DefineContainer in 
+    					 * "isDefineContainer(Node sourceNode)" method. 
+    					 */
+    					defineContainer.add(sourceNode);
+    				}
+    				return creationData;
+    			}
+    		}
+    	}
 	/*
 	 * Create a stub when creationData is null.
 	 */
-	creationData = createStub(includedFileName, (Element) sourceNode,
-		visualDocument);
+	creationData = createStub(includedFileName, (Element) sourceNode,visualDocument);
 	creationData.setData(null);
 	return creationData;
     }
 
-    private String replacePattern(String origStr, String target,
-	    String replacement) {
-	    
+    private String replacePattern(String origStr, String target, String replacement) {
 	/*
 	 * https://jira.jboss.org/jira/browse/JBIDE-4311
 	 * target string could be null in some case. 
@@ -101,11 +109,9 @@ public abstract class VpeDefineContainerTemplate extends VpeAbstractTemplate {
 	}
 	    
 	StringBuilder sb = new StringBuilder();
-	String word = "((\\w+)([\\.\\[\\]]*))"; //$NON-NLS-1$
-	Matcher m;
 	String variable;
 	String signs;
-	m = Pattern.compile(word).matcher(origStr);
+	Matcher m = WORD_PATTERN.matcher(origStr);
 
 	// everything must be found here
 	int endIndex = 0;
@@ -140,172 +146,157 @@ public abstract class VpeDefineContainerTemplate extends VpeAbstractTemplate {
 	return origStr;
     }
 
-    private void updateNodeValue(nsIDOMNode node, Map<String, String> paramsMap) {
-	Set<String> keys = paramsMap.keySet();
-	if (null != node) {
-	    String nodeValue = node.getNodeValue();
-	    String curlyBracketResultPattern = "(" + Pattern.quote("#") //$NON-NLS-1$ //$NON-NLS-2$
-		    + "\\{(.+?)\\})+?"; //$NON-NLS-1$
-	    int matcherGroupWithVariable = 2;
+	private void updateNodeValue(nsIDOMNode node, Map<String, String> paramsMap) {
+		Set<String> keys = paramsMap.keySet();
+		if (null != node) {
+			String nodeValue = node.getNodeValue();
+			int matcherGroupWithVariable = 2;
 
-	    if ((null != nodeValue) && (!"".equals(nodeValue))) { //$NON-NLS-1$
-		for (String key : keys) {
-		    Matcher curlyBracketMatcher = Pattern.compile(
-			    curlyBracketResultPattern).matcher(nodeValue);
+			if ((null != nodeValue) && (!"".equals(nodeValue))) { //$NON-NLS-1$
+				for (String key : keys) {
+					Matcher curlyBracketMatcher = CURLY_BRACKET_PATTERN.matcher(nodeValue);
 
-		    String replacement = paramsMap.get(key);
-		    if (replacement.startsWith("#{") //$NON-NLS-1$
-			    && replacement.endsWith("}")) { //$NON-NLS-1$
-			// remove first 2 signs '#{'
-			replacement = replacement.substring(2);
-			// remove last '}' sign
-			replacement = replacement.substring(0, replacement
-				.length() - 1);
-		    }
+					String replacement = paramsMap.get(key);
+					if (replacement.startsWith("#{") //$NON-NLS-1$
+							&& replacement.endsWith("}")) { //$NON-NLS-1$
+						// remove first 2 signs '#{'
+						replacement = replacement.substring(2);
+						// remove last '}' sign
+						replacement = replacement.substring(0,
+								replacement.length() - 1);
+					}
 
-		    int lastPos = 0;
-		    StringBuilder sb = new StringBuilder();
-		    curlyBracketMatcher.reset(nodeValue);
-		    boolean firstFind = false;
-		    boolean find = curlyBracketMatcher.find();
-		    while (find) {
-			if (!firstFind) {
-			    firstFind = true;
+					int lastPos = 0;
+					StringBuilder sb = new StringBuilder();
+					curlyBracketMatcher.reset(nodeValue);
+					boolean firstFind = false;
+					boolean find = curlyBracketMatcher.find();
+					while (find) {
+						if (!firstFind) {
+							firstFind = true;
+						}
+						int start = curlyBracketMatcher.start(matcherGroupWithVariable);
+						int end = curlyBracketMatcher.end(matcherGroupWithVariable);
+						String group = replacePattern(
+								curlyBracketMatcher.group(matcherGroupWithVariable),
+								key, replacement);
+						sb.append(nodeValue.substring(lastPos, start));
+						sb.append(group);
+						lastPos = end;
+						find = curlyBracketMatcher.find();
+					}
+					if (firstFind) {
+						sb.append(nodeValue.substring(lastPos,
+								nodeValue.length()));
+						nodeValue = sb.toString();
+						node.setNodeValue(nodeValue);
+					}
+				}
 			}
-			int start = curlyBracketMatcher
-				.start(matcherGroupWithVariable);
-			int end = curlyBracketMatcher
-				.end(matcherGroupWithVariable);
-			String group = replacePattern(curlyBracketMatcher
-				.group(matcherGroupWithVariable), key,
-				replacement);
-			sb.append(nodeValue.substring(lastPos, start));
-			sb.append(group);
-			lastPos = end;
-			find = curlyBracketMatcher.find();
-		    }
-		    if (firstFind) {
-			sb.append(nodeValue.substring(lastPos, nodeValue
-				.length()));
-			nodeValue = sb.toString();
-			node.setNodeValue(nodeValue);
-		    }
 		}
-	    }
 	}
-    }
 
     private void insertParam(nsIDOMNode node, Map<String, String> paramsMap) {
+    	// update current node value
+    	updateNodeValue(node, paramsMap);
 
-	// update current node value
-	updateNodeValue(node, paramsMap);
+    	nsIDOMNamedNodeMap attributes = node.getAttributes();
+    	if (null != attributes) {
+    		long len = attributes.getLength();
+    		for (int i = 0; i < len; i++) {
+    			nsIDOMNode item = attributes.item(i);
+    			// update attributes node
+    			updateNodeValue(item, paramsMap);
+    		}
+    	}
 
-	nsIDOMNamedNodeMap attributes = node.getAttributes();
-	if (null != attributes) {
-	    long len = attributes.getLength();
-	    for (int i = 0; i < len; i++) {
-		nsIDOMNode item = attributes.item(i);
-		// update attributes node
-		updateNodeValue(item, paramsMap);
-	    }
-	}
-
-	nsIDOMNodeList children = node.getChildNodes();
-	if (null != children) {
-	    long len = children.getLength();
-	    for (int i = 0; i < len; i++) {
-		nsIDOMNode child = children.item(i);
-		// update child node
-		insertParam(child, paramsMap);
-	    }
-	}
+    	nsIDOMNodeList children = node.getChildNodes();
+    	if (null != children) {
+    		long len = children.getLength();
+    		for (int i = 0; i < len; i++) {
+    			nsIDOMNode child = children.item(i);
+    			// update child node
+    			insertParam(child, paramsMap);
+    		}
+    	}
     }
 
     @Override
     public void validate(VpePageContext pageContext, Node sourceNode,
-	    nsIDOMDocument visualDocument, VpeCreationData creationData) {
+    		nsIDOMDocument visualDocument, VpeCreationData creationData) {
 
-	Map<String, String> paramsMap = new HashMap<String, String>();
-	NodeList sourceChildren = sourceNode.getChildNodes();
-	int len = sourceChildren.getLength();
-	for (int i = 0; i < len; i++) {
-	    Node sourceChild = sourceChildren.item(i);
-	    if (sourceChild.getNodeType() == Node.ELEMENT_NODE
-		    && "param".equals(sourceChild.getLocalName())) { //$NON-NLS-1$
-		String name = ((Element) sourceChild)
-			.getAttribute(HTML.ATTR_NAME);
-		String value = ((Element) sourceChild)
-			.getAttribute(HTML.ATTR_VALUE);
-		paramsMap.put(name, value);
-	    }
-	}
-	nsIDOMNode node = creationData.getNode();
-	insertParam(node, paramsMap);
+    	Map<String, String> paramsMap = new HashMap<String, String>();
+    	NodeList sourceChildren = sourceNode.getChildNodes();
+    	int len = sourceChildren.getLength();
+    	for (int i = 0; i < len; i++) {
+    		Node sourceChild = sourceChildren.item(i);
+    		if (sourceChild.getNodeType() == Node.ELEMENT_NODE
+    				&& "param".equals(sourceChild.getLocalName())) { //$NON-NLS-1$
+    			String name = ((Element) sourceChild)
+    					.getAttribute(HTML.ATTR_NAME);
+    			String value = ((Element) sourceChild)
+    					.getAttribute(HTML.ATTR_VALUE);
+    			paramsMap.put(name, value);
+    		}
+    	}
+    	nsIDOMNode node = creationData.getNode();
+    	insertParam(node, paramsMap);
 
-	TemplateFileInfo templateFileInfo = (TemplateFileInfo) creationData
-		.getData();
-	if (templateFileInfo != null) {
-	   pageContext.getVisualBuilder().popIncludeStack();
-	}
-	defineContainer.remove(sourceNode);
+    	TemplateFileInfo templateFileInfo = (TemplateFileInfo) creationData.getData();
+    	if (templateFileInfo != null) {
+    		pageContext.getVisualBuilder().popIncludeStack();
+    	}
+    	defineContainer.remove(sourceNode);
     }
 
     @Override
     public void beforeRemove(VpePageContext pageContext, Node sourceNode,
-	    nsIDOMNode visualNode, Object data) {
-	TemplateFileInfo templateFileInfo = (TemplateFileInfo) data;
-	if (templateFileInfo != null && templateFileInfo.templateFile != null) {
-	    pageContext.getEditPart().getController().getIncludeList()
-		    .removeIncludeModel(templateFileInfo.templateFile);
-	}
+    		nsIDOMNode visualNode, Object data) {
+    	TemplateFileInfo templateFileInfo = (TemplateFileInfo) data;
+    	if (templateFileInfo != null && templateFileInfo.templateFile != null) {
+    		pageContext.getEditPart().getController().getIncludeList()
+    		.removeIncludeModel(templateFileInfo.templateFile);
+    	}
     }
 
-    @Override
-    public boolean recreateAtAttrChange(VpePageContext pageContext,
-	    Element sourceElement, nsIDOMDocument visualDocument,
-	    nsIDOMElement visualNode, Object data, String name, String value) {
-
-	return true;
-    }
-
-    private void registerDefine(VpePageContext pageContext, Node defineContainer) {
-	VpeTemplate template = null;
-	NodeList sourceChildren = defineContainer.getChildNodes();
-	int len = sourceChildren.getLength();
-	for (int i = 0; i < len; i++) {
-	    Node sourceChild = sourceChildren.item(i);
-	    if (sourceChild.getNodeType() == Node.ELEMENT_NODE
-		    && "define".equals(sourceChild.getLocalName())) { //$NON-NLS-1$
-		if (template == null) {
-		    VpeTemplateManager templateManager = pageContext
-			    .getVisualBuilder().getTemplateManager();
-		    template = templateManager.getTemplate(pageContext,
-			    (Element) sourceChild, null);
-		    if (template == null) {
-			break;
-		    }
+	private void registerDefine(VpePageContext pageContext, Node defineContainer) {
+		VpeTemplate template = null;
+		NodeList sourceChildren = defineContainer.getChildNodes();
+		int len = sourceChildren.getLength();
+		for (int i = 0; i < len; i++) {
+			Node sourceChild = sourceChildren.item(i);
+			if (sourceChild.getNodeType() == Node.ELEMENT_NODE
+					&& "define".equals(sourceChild.getLocalName())) { //$NON-NLS-1$
+				if (template == null) {
+					VpeTemplateManager templateManager = pageContext
+							.getVisualBuilder().getTemplateManager();
+					template = templateManager.getTemplate(
+							pageContext, (Element) sourceChild, null);
+					if (template == null) {
+						break;
+					}
+				}
+				pageContext.getVisualBuilder().registerNodes(
+						new VpeElementMapping(sourceChild, null, template, null, null, null));
+			}
 		}
-		pageContext.getVisualBuilder().registerNodes(
-			new VpeElementMapping((Element) sourceChild, null, template, null, null));
-	    }
 	}
-    }
 
-    private VpeCreationData createInclude(Document sourceDocument,
-	    nsIDOMDocument visualDocument) {
-	nsIDOMElement visualNewElement = visualDocument
-		.createElement(HTML.TAG_DIV);
-	VpeVisualDomBuilder.markIncludeElement(visualNewElement);
-	VpeCreationData creationData = new VpeCreationData(visualNewElement);
-	VpeChildrenInfo childrenInfo = new VpeChildrenInfo(visualNewElement);
-	NodeList sourceChildren = sourceDocument.getChildNodes();
-	int len = sourceChildren.getLength();
-	for (int i = 0; i < len; i++) {
-	    childrenInfo.addSourceChild(sourceChildren.item(i));
+	private VpeCreationData createInclude(Document sourceDocument,
+			nsIDOMDocument visualDocument) {
+		
+		nsIDOMElement visualNewElement = visualDocument.createElement(HTML.TAG_DIV);
+		VpeVisualDomBuilder.markIncludeElement(visualNewElement);
+		VpeCreationData creationData = new VpeCreationData(visualNewElement);
+		VpeChildrenInfo childrenInfo = new VpeChildrenInfo(visualNewElement);
+		NodeList sourceChildren = sourceDocument.getChildNodes();
+		int len = sourceChildren.getLength();
+		for (int i = 0; i < len; i++) {
+			childrenInfo.addSourceChild(sourceChildren.item(i));
+		}
+		creationData.addChildrenInfo(childrenInfo);
+		return creationData;
 	}
-	creationData.addChildrenInfo(childrenInfo);
-	return creationData;
-    }
 
     @Override
     public boolean containsText() {
@@ -313,67 +304,64 @@ public abstract class VpeDefineContainerTemplate extends VpeAbstractTemplate {
     }
 
     public static boolean isDefineContainer(Node sourceNode) {
-
-	// FIX https://jira.jboss.org/jira/browse/JBIDE-3187 by sdzmitrovich
-	// TODO: it is necessary to refactor facelet templates
-	// return defineContainer.contains(sourceNode);
-	while (sourceNode != null) {
-	    if (defineContainer.contains(sourceNode))
-		return true;
-
-	    sourceNode = sourceNode.getParentNode();
-	}
-
-	return false;
-
+    	// FIX https://jira.jboss.org/jira/browse/JBIDE-3187 by sdzmitrovich
+    	// TODO: it is necessary to refactor facelet templates
+    	// return defineContainer.contains(sourceNode);
+    	while (sourceNode != null) {
+    		if (defineContainer.contains(sourceNode)) {
+    			return true;
+    		}
+    		sourceNode = sourceNode.getParentNode();
+    	}
+    	return false;
     }
 
     protected VpeCreationData createStub(String fileName,
-	    Node sourceElement, nsIDOMDocument visualDocument) {
-	
-	nsIDOMElement container = visualDocument.createElement(HTML.TAG_DIV);
-	container.setAttribute("style", "border: 1px dashed #2A7F00"); //$NON-NLS-1$ //$NON-NLS-2$
-	VpeVisualDomBuilder.markIncludeElement(container);
+    		Node sourceElement, nsIDOMDocument visualDocument) {
 
-	nsIDOMElement title = visualDocument.createElement(HTML.TAG_DIV);
-	nsIDOMElement tag = visualDocument.createElement(HTML.TAG_SPAN);
-	tag.setAttribute("class", "__any__tag__caption"); //$NON-NLS-1$ //$NON-NLS-2$
-	tag.appendChild(visualDocument.createTextNode(sourceElement.getNodeName()));
-	title.appendChild(tag);
-	if (fileName != null) {
-		title.appendChild(visualDocument.createTextNode(fileName));
-	}
-	container.appendChild(title);
-	
-	VpeCreationData creationData = new VpeCreationData(container);
+    	nsIDOMElement container = visualDocument.createElement(HTML.TAG_DIV);
+    	container.setAttribute("style", "border: 1px dashed #2A7F00"); //$NON-NLS-1$ //$NON-NLS-2$
+    	VpeVisualDomBuilder.markIncludeElement(container);
 
-	VpeChildrenInfo childrenInfo = new VpeChildrenInfo(container);
-	NodeList sourceChildren = sourceElement.getChildNodes();
-	int len = sourceChildren.getLength();
-	for (int i = 0; i < len; i++) {
-		Node sourceChild = sourceChildren.item(i);
-		if (sourceChild.getNodeType() == Node.ELEMENT_NODE
-		    && "define".equals(sourceChild.getLocalName())) { //$NON-NLS-1$
-			childrenInfo.addSourceChild(sourceChild);
-		}
-	}
-	creationData.addChildrenInfo(childrenInfo);
-	return creationData;
+    	nsIDOMElement title = visualDocument.createElement(HTML.TAG_DIV);
+    	nsIDOMElement tag = visualDocument.createElement(HTML.TAG_SPAN);
+    	tag.setAttribute("class", "__any__tag__caption"); //$NON-NLS-1$ //$NON-NLS-2$
+    	tag.appendChild(visualDocument.createTextNode(sourceElement.getNodeName()));
+    	title.appendChild(tag);
+    	if (fileName != null) {
+    		title.appendChild(visualDocument.createTextNode(fileName));
+    	}
+    	container.appendChild(title);
+
+    	VpeCreationData creationData = new VpeCreationData(container);
+
+    	VpeChildrenInfo childrenInfo = new VpeChildrenInfo(container);
+    	NodeList sourceChildren = sourceElement.getChildNodes();
+    	int len = sourceChildren.getLength();
+    	for (int i = 0; i < len; i++) {
+    		Node sourceChild = sourceChildren.item(i);
+    		if (sourceChild.getNodeType() == Node.ELEMENT_NODE
+    				&& "define".equals(sourceChild.getLocalName())) { //$NON-NLS-1$
+    			childrenInfo.addSourceChild(sourceChild);
+    		}
+    	}
+    	creationData.addChildrenInfo(childrenInfo);
+    	return creationData;
     }
 
     static class TemplateFileInfo {
-	private IFile templateFile;
+    	private IFile templateFile;
 
-	TemplateFileInfo(IFile templateFile) {
-	    this.templateFile = templateFile;
-	}
+    	TemplateFileInfo(IFile templateFile) {
+    		this.templateFile = templateFile;
+    	}
 
-	public IFile getTemplateFile() {
-	    return templateFile;
-	}
+    	public IFile getTemplateFile() {
+    		return templateFile;
+    	}
 
-	public void setTemplateFile(IFile templateFile) {
-	    this.templateFile = templateFile;
-	}
+    	public void setTemplateFile(IFile templateFile) {
+    		this.templateFile = templateFile;
+    	}
     }
 }

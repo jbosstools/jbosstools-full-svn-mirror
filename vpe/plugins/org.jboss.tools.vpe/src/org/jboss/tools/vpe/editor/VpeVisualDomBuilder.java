@@ -452,6 +452,10 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			setTooltip((Element) sourceNode, queryInterface(visualNewNode, nsIDOMElement.class));
 		}
 		VpeElementMapping elementMapping = null;
+		/*
+		 * Even when 'visualNewNode=null' VpeElementMapping
+		 * should be created. It influences on the visual refresh.
+		 */
 		if (onlyOneIncludeStack) {
 			final VpeElementData data = creationData.getElementData();
 			if ((sourceNodeProxy != null) && (data != null)

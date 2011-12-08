@@ -81,15 +81,13 @@ public class ELResolver {
 	public boolean isELNode(Node sourceNode) {
 		boolean rst = false;
 		if (isInCustomElementsAttributes(sourceNode)) {
-			return true;
-		}
-		if (isAvailableForNode(sourceNode)
+			rst = true;
+		} else if (isAvailableForNode(sourceNode)
 				|| BundleMapUtil.isInResourcesBundle(pageContext.getBundle(), sourceNode)) {
 			rst = true;
 		} else if (Jsf2ResourceUtil.isContainJSFContextPath(sourceNode)) {
 			rst = true;
-		}
-		if (Jsf2ResourceUtil.isContainJSF2ResourceAttributes(sourceNode)) {
+		} else if (Jsf2ResourceUtil.isContainJSF2ResourceAttributes(sourceNode)) {
 			// added by Maksim Areshkau, see JBIDE-4812
 			rst = true;
 		}
@@ -154,10 +152,16 @@ public class ELResolver {
 	 * @return
 	 */
 	protected boolean findForNode(Node sourceNode) {
+		/*
+		 * Case 1
+		 */
 		final ResourceReference[] references = getResourceReferences();
 		if (references == null || references.length == 0) {
 			return false;
 		}
+		/*
+		 * Case 2
+		 */
 		String textValue = null;
 		if (sourceNode.getNodeType() == Node.TEXT_NODE) {
 			textValue = sourceNode.getNodeValue();
@@ -165,6 +169,9 @@ public class ELResolver {
 				return true;
 			}
 		}
+		/*
+		 * Case 3
+		 */
 		final NamedNodeMap nodeMap = sourceNode.getAttributes();
 		if (nodeMap != null) {
 			for (int i = 0; i < nodeMap.getLength(); i++) {
