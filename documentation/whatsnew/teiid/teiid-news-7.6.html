@@ -1,0 +1,464 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Language" content="en-us">
+  <meta http-equiv="Content-Type"
+ content="text/html; charset=ISO-8859-1">
+  <link rel="stylesheet" href="../whatsnew.css">
+  <title>Teiid Designer What's New</title>
+  <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17645367-5']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+  </script>
+</head>
+<body>
+<h1>Teiid Designer 7.6 What's New</h1>
+<p align="right"><a href="../index.html">&lt; Main Index</a></p>
+<p>Last revised Dec 08, 2011</p>
+<p><b>Teiid Designer</b> is a graphical data modeling tool that enables
+rapid definition, integration, management and testing of data services
+without programming using the <b>Teiid</b> runtime engine.</p>
+<p>For more details on <a href="http://www.jboss.org/teiid.html">Teiid</a>
+and <a href="http://www.jboss.org/teiiddesigner.html">Teiid Designer</a>
+visit: <a href="http://www.teiid.org">http://www.teiid.org</a></p>
+<table width="80%" border="0" cellpadding="10" cellspacing="0">
+  <tbody>
+    <tr>
+      <td colspan="2">
+      <hr>
+      <h3><span style="font-size: 12pt;"><strong>XML Source Data File
+Importer<br>
+      </strong></span></h3>
+      <hr> </td>
+    </tr>
+    <tr>
+      <td valign="top" align="left">
+      <p><b><br>
+      <b> </b></b></p>
+      <b> </b></td>
+      <td valign="top">
+      <p> n 7.5, we introduced an Flat File import option which
+simplified the process of constructing the source and view models
+(including generated transformation SQL) necessary for querying the
+flat file as a source.&nbsp; In 7.6, we've added an importer which
+follows the same import steps as the flat file importer but with a
+backing XML data file. Since this importer is file-based, it utilizes
+the same specific Data Tools Flat File Connection Profile as the Flat
+File importer option, but filters on *.xml files instead of *.txt and
+*.csv.&nbsp; (TEIIDDES-1078)</p>
+      <p>The importer will create a source model containing the three
+standard text file procedures supported by Teiid. Namely:</p>
+      <ul>
+        <li>getFiles()</li>
+        <li>getTextFiles()</li>
+        <li>saveFile()</li>
+      </ul>
+      <p>The importer will also create a new view model containing a
+view table for each of your selected xml source files. Within these
+view tables will be generated SQL transformations containing the
+"getTextFiles()" procedure from your source model as well as the column
+definitions and parameters required for the Teiid TEXTTABLE() function
+used to query the data file. You can also choose to update an existing
+view model instead of creating a new view model.<br>
+      </p>
+      <p>The <a class="jive-link-external-small"
+ href="http://http//docs.jboss.org/teiid/7.5.0.Final/reference/en-US/html/sql_clauses.html#xmltable">XMLTABLE</a>
+function, as defined in the Teiid documentation, processes xml input to
+produce tabular ouptut. </p>
+      <p style="padding: 0px; min-height: 8pt; height: 8pt;"><a
+ class="jive-link-anchor-small">XMLTABLE([&lt;NSP&gt;,]
+xquery-expression [&lt;PASSING&gt;] [COLUMNS &lt;COLUMN&gt;, ... )] AS
+name<br>
+      </a></p>
+      <p style="padding: 0px; min-height: 8pt; height: 8pt;">&nbsp;Teiid
+Designer
+will
+construct the full SQL statement for each view table in
+the form:<br>
+      <br>
+      </p>
+      <p><strong>================================================================<br>
+SELECT</strong></p>
+      <p><strong>&nbsp;&nbsp;&nbsp;&nbsp; title.pmid AS pmid,
+title.journal AS journal, title.title AS title</strong></p>
+      <p><strong>FROM</strong></p>
+      <p><strong>&nbsp;&nbsp;&nbsp;&nbsp; (EXEC
+getMeds.getTextFiles('medsamp2011.xml')) AS f, </strong></p>
+      <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+XMLTABLE('$d/MedlineCitationSet/MedlineCitation' PASSING </strong></p>
+      <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+XMLPARSE(DOCUMENT
+f.file)
+AS d </strong></p>
+      <p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+COLUMNS
+pmid
+biginteger PATH 'PMID', journal string PATH
+'Article/Journal/Title', title string PATH 'Article/ArticleTitle') AS
+title<br>
+      </strong><strong>================================================================</strong><br>
+      </p>
+      <p style="padding: 0px; min-height: 8pt; height: 8pt;">The import
+option is labeled <strong>File Source (XML) &gt;&gt; Source and View
+Model</strong> and is shown below in the Import wizard's first page
+under the Teiid Designer category. <br>
+      </p>
+      <p style="padding: 0px; min-height: 8pt; height: 8pt;"><br>
+      </p>
+      <p><img style="width: 484px; height: 545px;" alt="Import Options"
+ src="images/7.6/teiid-data-file-import-options.png"><br>
+      </p>
+      <p>The second page includes options to select either the<strong>
+XML file on local file system</strong> or <strong>XML file via remote
+URL</strong> format.<br>
+      </p>
+      <p><img style="width: 697px; height: 500px;" alt="Page 1"
+ src="images/7.6/teiid-xml-file-source-page-1.png"><br>
+      </p>
+      <p>The third page of the wizard, titled <strong>XML Data File
+Source Selection</strong>,&nbsp; requires selection of an existing Flat
+File Source connection profile in order to locate the designer source
+file folder. Once selected (or created view "New..." button) the
+available data files will be displayed in the table.<br>
+      </p>
+      <p><img style="width: 759px; height: 743px;" alt="Page 2"
+ src="images/7.6/teiid-xml-file-source-page-2.png"><br>
+      </p>
+      <p>Check/select the xml data file you wish to use to define your
+view tables. The lower section, <strong>Source Model Definition</strong>,
+allows
+defining
+or selecting a target source model and location. Note
+the <strong>Model Status</strong> sub-section where the status of a
+source mode (new or existing) will be displayed as well as the action
+that will be performed on completion of the wizard.</p>
+      <p>The fourth page, <strong>XML Data File Import Options</strong>,
+shown
+below,
+contains the various parser settings and XMLTABLE() method
+and parameter options.&nbsp; The <strong>XML File Contents Preview</strong>
+section displays a portion of the raw xml file contents.<br>
+      </p>
+      <p><img style="width: 670px; height: 705px;" alt="Page 3"
+ src="images/7.6/teiid-xml-file-source-page-3.png"><br>
+      </p>
+      <p>The&nbsp; <strong>Columns Information</strong> panel contains
+a Root Path entry and Add/Delete/Up/Down buttons which allow
+customizing the <strong>Generated SQL Statement</strong> shown in the
+bottom panel.</p>
+      <p>When finished configuring your import settings for your XML
+data file, click <strong>Next &gt;</strong> to show the <strong>View
+Model Definition</strong> page. You can change the target location and
+target view model and specify a unique name for your new view table.<br>
+      </p>
+      <p><img style="width: 658px; height: 599px;" alt="Page 4"
+ src="images/7.6/teiid-xml-file-source-page-4.png"><br>
+      </p>
+      <p>This importer utilizes two new Data Tools connection profiles
+tailored to work with Teiid Designer. In the <strong>Database
+Development</strong> perspective, select the <strong>Teiid Importer
+Connections</strong> folder and right-click select <strong>New...</strong>
+action. The following dialog will display the new connection profile
+options which include: <strong>XML File URL Source</strong> and <strong>XML
+Local
+File
+Source</strong> which correspond to the XML import options
+shown previously.<br>
+      </p>
+      <p><img style="width: 486px; height: 544px;"
+ alt="Connection Profile Type Selection"
+ src="images/7.6/teiid-connection-profile-type-dialog.png"><br>
+      </p>
+      <p>The <strong>New Connection Profile</strong> dialog for the <strong>XML
+URL
+Connection</strong> is shown below and includes a <strong>XML
+Local File Source</strong> field as well as a description of how and
+where this profile can be used in Teiid Designer.<br>
+      </p>
+      <p><img style="width: 525px; height: 621px;"
+ alt="XML URL Connection Profile"
+ src="images/7.6/teiid-url-xml-file-connection-profile-wizard-page.png"><br>
+      </p>
+      <p>The <strong>New Connection Profile</strong> dialog for the <strong>XML
+Local
+File
+Source</strong> is shown below and includes a <strong>File
+Name</strong> field as well as a description of how and where this
+profile can be used in Teiid Designer.<br>
+      </p>
+      <p><img style="width: 514px; height: 617px;"
+ alt="Local XML File Connection Profile"
+ src="images/7.6/teiid-local-xml-file-connection-profile-wizard-page.png"><br>
+      </p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <hr>
+      <h3>Improved Flat File Importer<br>
+      </h3>
+      <hr> </td>
+    </tr>
+    <tr>
+      <td valign="top" align="left">
+      <p><b> <br>
+      </b></p>
+      </td>
+      <td valign="top">
+      <p style="padding: 0px; min-height: 8pt; height: 8pt;">While
+architecting the XML Data File importer, the Flat File import wizard
+was also modified and improved.&nbsp; (TEIIDDES-1078) <br>
+      </p>
+      <p style="padding: 0px; min-height: 8pt; height: 8pt;"><br>
+      </p>
+      <p>The import option is now labeled <strong>File Source (Flat)
+&gt;&gt; Source and View Model</strong> and is shown below in the
+Import wizard's first page under the Teiid Designer category.</p>
+      <p><img style="width: 484px; height: 545px;" alt="Import Options"
+ src="images/7.6/teiid-data-file-import-options.png"><br>
+      </p>
+      <p>The second page, labeled <strong>Data File Source Selection</strong>,
+
+allows
+selecting/creating/editing
+a valid connection profile which in
+this case contains the relevant folder contain your flat files. Select
+a single flat file to target for this import by checking an entry in
+the <strong>Available Data Files</strong> table.</p>
+      <p>The lower section, <strong>Source Model Definition</strong>,
+allows defining or selecting a target source model and location. Note
+the <strong>Model Status</strong> sub-section where the status of a
+source mode (new or existing) will be displayed as well as the action
+that will be performed on completion of the wizard.<br>
+      </p>
+      <p><img style="width: 660px; height: 774px;" alt="Page 1"
+ src="images/7.6/teiid-flat-file-source-page-1.png"><br>
+      </p>
+      <p> </p>
+The third page, <strong>Flat File Collumn Format Definition</strong>,
+provides a preview of your data file and allows specifying that the
+data file contains <strong>Character delimited</strong> or <strong>Fixed
+width</strong> format. The selection will determine the details of the
+next page.<br>
+      <br>
+      <img style="width: 732px; height: 825px;" alt="Page  2"
+ src="images/7.6/teiid-flat-file-source-page-2.png"><br>
+      <p>If the <strong>Character delimited</strong> option is
+checked, the fourth page will contain options to specify the delimited
+character as well as to view and edit the specific column information
+which allow customizing the <strong>Generated SQL Statement</strong>
+shown in the bottom panel.<br>
+      </p>
+      <p><img style="width: 604px; height: 784px;"
+ alt="Page 3 Delimited Character"
+ src="images/7.6/teiid-flat-file-source-page-3_delimited.png"><br>
+      </p>
+If the <strong>Fixed width</strong> option is checked, the fourth page
+will contain options to edit the specific column information which
+allow customizing the <strong>Generated SQL Statement</strong> shown
+in the bottom panel.&nbsp; The Format Options panel in the upper left
+contains <strong>Cursor Position</strong> and <strong>Text Length</strong>
+values which can assist you in determining your actual column widths in
+conjunction with the file contents preview to the right.<br>
+      <br>
+      <img style="width: 674px; height: 822px;"
+ alt="Page 3 Fixed Width Columns"
+ src="images/7.6/teiid-flat-file-source-page-3_fixed.png"><br>
+      <p>When finished configuring your import settings for your flat
+data file, click <strong>Next &gt;</strong> to show the <strong>View
+Model Definition</strong> page. You can change the target location and
+target view model and specify a unique name for your new view table.<br>
+      </p>
+      <p><img style="width: 713px; height: 579px;" alt="Page 4"
+ src="images/7.6/teiid-flat-file-source-page-4.png"><br>
+      </p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <hr>
+      <h3>New Relational Table Wizard<br>
+      </h3>
+      <hr> </td>
+    </tr>
+    <tr>
+      <td valign="top" align="left">
+      <p><b>&nbsp; <br>
+      <b> </b></b></p>
+      <b> </b></td>
+      <td valign="top">
+      <p>There is a new wizard designed to improve creating relational
+tables complete with column definitions as well as specifying unique
+keys and foreign key references.</p>
+      <p>To access the new wizard, select a relational model in your
+workpace and right-click select the <strong>New Child &gt; Base
+Table...</strong> action as shown below. Note that you can also launch
+this wizard by selecting a relational model child (table, view,
+procedure or index) and right-click select <strong>New Sibling &gt;
+Base Table...<br>
+      </strong></p>
+      <p><strong><img style="width: 402px; height: 219px;"
+ alt="New Table Action" src="images/7.6/new-table-wizard-action.png"><br>
+      </strong></p>
+      <p>The <strong>Create Relational Table</strong> wizard contains
+5 tabbed panels representing the various properties and components that
+make up the possible definition of a relational table. This wizard is
+designed to provide feedback as to the completeness of the relational
+table information as well as the validation state of the table and it's
+components.&nbsp; Note that although errors may be displayed during
+editing, the wizard is designed to allow finishing with the
+construction of an incomplete table containing errors.</p>
+      <p>The first tab labeled <strong>Properties</strong> contains
+the input for the simple table properties including name, name in
+source, etc... <br>
+      </p>
+      <p><img style="width: 525px; height: 506px;" alt="Properties Tab"
+ src="images/7.6/new-table-wizard-tab-1.png"><br>
+      </p>
+      <p>The <strong>Columns</strong> tab allows creation and editing
+of basic relational columns. This includes adding, deleting or moving
+columns as changing the name, datatype and length properties.<br>
+      </p>
+      <p><img style="width: 525px; height: 506px;" alt="Columns Tab"
+ src="images/7.6/new-table-wizard-tab-2.png"><br>
+      </p>
+      <p>The <strong>Primary Key</strong> tab contains basic name,
+name in source and column definition editing. If wish to include a
+primary key for your table, check the Include box and begin editing..
+Note that unchecking the box will clear the data.&nbsp; The Unique
+Constraint tab contains the identical information.<br>
+      </p>
+      <p><img style="width: 525px; height: 506px;" alt="Primary Key Tab"
+ src="images/7.6/new-table-wizard-tab-3.png"><br>
+      </p>
+      <p>The <strong>Foreign Keys</strong> tab allows creating,
+editing and deleting multiple foreign keys.<br>
+      </p>
+      <p><img style="width: 525px; height: 506px;"
+ alt="Foreign Keys Tab" src="images/7.6/new-table-wizard-tab-5.png"><br>
+      </p>
+      <p>To create a new <strong>Foreign Key</strong>, select the <strong>Add</strong>
+button and enter/select the properties, key references in the tables
+shown below. Note the <strong>Select Primary Key or Unique Constraint</strong>
+table will display any PK/UC existing in the selected relational model.
+If no tables in that model contain a PK or UC, then the table will be
+empty.<br>
+      </p>
+      <p><img style="width: 579px; height: 558px;" alt="Edit FK Dialog"
+ src="images/7.6/new-table-wizard-fk-dialog.png"><br>
+      </p>
+      <p>When finished, click <strong>OK</strong> and your new
+relational table will be created and added to your relational model.</p>
+      <p> </p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <hr>
+      <h3>New Model Extension Definition Framework<br>
+      </h3>
+      <hr> </td>
+    </tr>
+    <tr>
+      <td valign="top" align="left">
+      <p><b>&nbsp; <br>
+      <b> </b></b></p>
+      <b> </b></td>
+      <td valign="top">For 7.6, Teiid Designer introduces a new <strong>Model
+Extension
+Definition</strong> (<strong>MED</strong>) framework. This
+framework is designed to replace the old way of extending Teiid
+Designer's models by creating EMF-based Extension models and applying
+an extension model to a relational, relational view, xml document or
+web services model.&nbsp; In this way users can design and apply
+additional metadata to their model objects (tables, columns, etc...).
+This metadata is indexed along with the model objects and is available
+to translators through the Teiid VDB metadata.<br>
+      <br>
+(TEIIDDES-905)&nbsp;
+      <p>The new framework was designed to help:</p>
+      <ul>
+        <li style="text-align: start;">reduce Designer's dependency on
+EMF and it's verbose and specific language and terminology.</li>
+        <li style="text-align: start;">allow models to be extended by
+more than one extension model.</li>
+        <li style="text-align: start;">simplify the creation and
+management of the extensions.</li>
+      </ul>
+      <p style="padding: 0px; min-height: 8pt; height: 8pt;">&nbsp;</p>
+      <p>The <strong>MED Editor </strong>and accompanying <strong>Model
+Extension
+Registry View</strong> are shown below. Details on this new
+feature can be found at New Model Extension Definition Feature page.</p>
+      <p><img style="width: 544px; height: 397px;"
+ alt="MED Editor Overview Tab"
+ src="images/7.6/med-editor-overview-tab.png"><br>
+      </p>
+      <p><img style="width: 793px; height: 183px;"
+ alt="MED Registry View" src="images/7.6/med-registry-view.png"><br>
+      </p>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <hr>
+      <h3>New XML Format Relational Model Importer<br>
+      </h3>
+      <hr> </td>
+    </tr>
+    <tr>
+      <td valign="top" align="left">
+      <p><b>&nbsp; <br>
+      <b> </b></b></p>
+      <b> </b></td>
+      <td valign="top">For 7.6, Teiid Designer introduces a new
+importer which allows contructing relational objects (tables, columns,
+keys etc...) from XML-based model definitions.&nbsp; If your XML file
+is based on Teiid Designer's <a class="jive-link-external-small"
+ href="http://download.jboss.org/teiid/designer/7.6/RelationalModel.xsd">RelationalModel.xsd</a>
+schema, then you can import via <strong>Import &gt; Teiid Designer
+&gt; Designer Text File &gt;&gt; Source or View Models</strong> option.<br>
+      <br>
+(TEIIDDES-1086)&nbsp;
+      <p>On the first page of the wizard, select the <strong>Relational
+Model (XML Format) </strong>option.<br>
+      </p>
+      <p><img style="width: 567px; height: 743px;" alt="Page 1"
+ src="images/7.6/import-relational-model-xml-page-1.png"><br>
+      </p>
+      <p>On the next page, browse and select your XML file on your
+local file system, browse and select or create a target model for your
+new relational objects and click <strong>Finish</strong>.<br>
+      </p>
+      <p><img style="width: 584px; height: 663px;" alt="Page 2"
+ src="images/7.6/import-relational-model-xml-page-2.png"><br>
+      </p>
+      <p>On Finish, your relational objects will be created and added
+to your target model.<br>
+      </p>
+      </td>
+    </tr>
+    <tr>
+      <td valign="top" align="left"><br>
+      </td>
+      <td valign="top"><br>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+      <hr></td>
+    </tr>
+  </tbody>
+</table>
+</body>
+</html>
