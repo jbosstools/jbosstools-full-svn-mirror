@@ -57,17 +57,19 @@ public class VpeDomMapping {
 		}
 	}
 	
+	/**
+	 * Clear maps of source and visual nodes with their mappings,
+	 * except for the specified visual node.  
+	 * 
+	 * @param except the node with its mapping to remain in visual map.
+	 */
 	public void clear(nsIDOMNode except) {
-		Set<Map.Entry<nsIDOMNode, VpeNodeMapping>> entrySet = visualMap.entrySet();
-		Iterator<Map.Entry<nsIDOMNode, VpeNodeMapping>> iter = entrySet.iterator();
-		while (iter.hasNext()) {
-			Map.Entry<nsIDOMNode, VpeNodeMapping> entry = iter.next();
-			nsIDOMNode visualNode = entry.getKey();
-			if (!visualNode.equals(except)) {
-				iter.remove();
-			}
-		}
 		sourceMap.clear();
+		VpeNodeMapping exceptMapping = visualMap.get(except);
+		visualMap.clear();
+		if (exceptMapping != null) {
+			visualMap.put(except, exceptMapping);
+		}
 	}
 	
 	public VpeNodeMapping getNodeMapping(Node node) {
