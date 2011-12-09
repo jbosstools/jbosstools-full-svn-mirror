@@ -57,6 +57,7 @@ import org.jboss.tools.openshift.express.client.OpenShiftException;
 import org.jboss.tools.openshift.express.internal.core.behaviour.ExpressServerUtils;
 import org.jboss.tools.openshift.express.internal.ui.OpenShiftUIActivator;
 import org.jboss.tools.openshift.express.internal.ui.common.FileUtils;
+import org.jboss.tools.openshift.express.internal.ui.common.WontOverwriteException;
 import org.jboss.tools.openshift.express.internal.ui.wizard.projectimport.GeneralProjectImportOperation;
 import org.jboss.tools.openshift.express.internal.ui.wizard.projectimport.MavenProjectImportOperation;
 
@@ -152,6 +153,25 @@ public class ImportProjectWizardModel extends ObservableUIPojo {
 		return (String) getProperty(REPOSITORY_PATH);
 	}
 
+	/**
+	 * Returns the destination folder that the OpenShift application will get
+	 * cloned to.
+	 * 
+	 * @return the destination that the application will get cloned to.
+	 */
+	private File getCloneDestination() {
+		String repositoryPath = getRepositoryPath();
+		if (repositoryPath == null
+				|| repositoryPath.length() == 0) {
+			return null;
+		}
+		IApplication application = getApplication();
+		if (application == null) {
+			return null;
+		}
+		return new File(getRepositoryPath(), application.getName());
+	}
+
 	public boolean isNewProject() {
 		return (Boolean) getProperty(NEW_PROJECT);
 	}
@@ -241,8 +261,24 @@ public class ImportProjectWizardModel extends ObservableUIPojo {
 	public void importProject(IProgressMonitor monitor)
 			throws OpenShiftException, CoreException, InterruptedException, URISyntaxException,
 			InvocationTargetException {
+		File cloneDestination = getCloneDestination();
+		if (cloneDestination != null
+				&& cloneDestination.exists()) {
+			throw new WontOverwriteException(
+					NLS.bind(
+							"There is already a folder at {0}. The new OpenShift project would overwrite it. " +
+							"Please choose another destination to clone to.",
+							cloneDestination.getAbsolutePath()));
+		}
 		File repositoryFolder = cloneRepository(monitor);
 		List<IProject> importedProjects = importMavenProject(repositoryFolder, monitor);
+		if (importedProjects.size() == 0) {
+			throw new OpenShiftException(
+					"The maven import failed. One of the possible reasons is that already is a project " +
+					"in your workspace that matches the maven name of the OpenShift application." +
+					"Please rename your workspace project in that case and start over again.");
+		}
+
 		connectToGitRepo(importedProjects, repositoryFolder, monitor);
 		createServerAdapterIfRequired(importedProjects, monitor);
 	}
@@ -307,6 +343,15 @@ public class ImportProjectWizardModel extends ObservableUIPojo {
 		return ResourcesPlugin.getWorkspace().getRoot().getProject(projectName);
 	}
 
+	private boolean doesProjectExist(String name) {
+		if (name == null) {
+			return false;
+		}
+		IProject project = getProject(name);
+		return project != null
+				&& project.exists();
+	}
+
 	public boolean projectExists(final File gitProjectFolder) {
 		String projectName = gitProjectFolder.getName();
 		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(projectName);
@@ -351,9 +396,7 @@ public class ImportProjectWizardModel extends ObservableUIPojo {
 	 */
 	private File cloneRepository(IProgressMonitor monitor)
 			throws OpenShiftException, InvocationTargetException, InterruptedException, URISyntaxException {
-		IApplication application = getApplication();
-		File destination = new File(getRepositoryPath(), application.getName());
-		return cloneRepository(destination, monitor);
+		return cloneRepository(getCloneDestination(), monitor);
 	}
 
 	private File cloneRepository(File destination, IProgressMonitor monitor)
@@ -366,9 +409,6 @@ public class ImportProjectWizardModel extends ObservableUIPojo {
 
 	private void cloneRepository(String uri, File destination, IProgressMonitor monitor)
 			throws OpenShiftException, URISyntaxException, InvocationTargetException, InterruptedException {
-		if (destination.exists()) {
-			FileUtil.completeDelete(destination);
-		}
 		ensureEgitUIIsStarted();
 		URIish gitUri = new URIish(uri);
 		CloneOperation cloneOperation =
