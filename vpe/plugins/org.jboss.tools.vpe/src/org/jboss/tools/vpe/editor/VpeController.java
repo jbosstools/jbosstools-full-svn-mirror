@@ -24,6 +24,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.ListenerList;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.action.MenuManager;
@@ -241,6 +242,8 @@ public class VpeController implements INodeAdapter,
 	// contains vpe update delau time in miliseconds
 	private int vpeUpdateDelayTime;
 
+	private ListenerList updateListeners = new ListenerList();
+	
 	public VpeController(VpeEditorPart editPart) {
 
 		this.editPart = editPart;
@@ -1403,6 +1406,7 @@ public class VpeController implements INodeAdapter,
 					visualRefreshImpl();
 					monitor.done();
 					setSynced(true);
+					notifyVpeUpdateListeners();
 					return Status.OK_STATUS;
 				}
 			};
@@ -1596,6 +1600,7 @@ public class VpeController implements INodeAdapter,
 					switcher.stopActiveEditor();
 				}
 			monitor.done();
+			notifyVpeUpdateListeners();
 			return Status.OK_STATUS;
 		}
 
@@ -2245,5 +2250,26 @@ public class VpeController implements INodeAdapter,
 	public VpeDropWindow getDropWindow() {
 		return dropWindow;
 	}
-	
+
+	/**
+	 * Adds an event listener which is notified at the end
+	 * of VPE update/refresh jobs. This allows clients to know when
+	 * changing of the visual part is completed.
+	 * 
+	 * @since 3.3
+	 */
+	public void addVpeRefreshListener(final IVpeUpdateListener listener) {
+		updateListeners.add(listener);
+	}
+
+	/** @since 3.3 */
+	public void removeVpeRefreshListener(final IVpeUpdateListener listener) {
+		updateListeners.remove(listener);
+	}
+
+	private void notifyVpeUpdateListeners() {
+		for (Object listener : updateListeners.getListeners()) {
+			((IVpeUpdateListener) listener).vpeUpdated();
+		}
+	}
 }
