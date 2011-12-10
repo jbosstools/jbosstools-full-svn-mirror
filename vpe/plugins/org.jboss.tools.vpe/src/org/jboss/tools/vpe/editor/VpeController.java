@@ -2118,7 +2118,8 @@ public class VpeController implements INodeAdapter,
 			// node is created, see JBIDE-5105
 			visualEditor.reinitDesignMode();
 			visualBuilder.clearSelectionRectangle();
-			//selectionManager = null;
+			// this is required because fullRefresh cannot be interrupded by messages from OS queue
+			selectionManager = null;
 			IDOMModel sourceModel = (IDOMModel) getModel();
 			if (sourceModel != null) {
 				IDOMDocument sourceDocument = sourceModel.getDocument();
@@ -2134,6 +2135,8 @@ public class VpeController implements INodeAdapter,
 
 			selectionManager = new SelectionManager(pageContext, sourceEditor,
 					visualSelectionController);
+			// selection should be restored after full refresh
+			selectionManager.refreshVisualSelection();
 
 			keyEventHandler = new KeyEventManager(sourceEditor, domMapping,
 					pageContext);
