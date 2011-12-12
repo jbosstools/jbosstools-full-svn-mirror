@@ -1,0 +1,88 @@
+<html>
+
+<head>
+<link rel="stylesheet" href="../whatsnew.css">
+<title>JBoss AS Tools 3.3.0.M5 News</title>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17645367-5']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script></head>
+
+<body>
+
+<h1>JBoss AS Tools 3.3.0.M5 What's New</h1>
+
+  <p align="right"><a href="../index.html">&lt; Main Index</a> <a href="../openshift/openshift-news-2.3.0.M5.html">OpenShift Tools&gt;</a></p>
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>Server</h3>
+      <hr/>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="right">
+      <p><b>Support for AS 7.1</b></p>
+    </td>
+    <td valign="top" width="90%">
+        <p>JBoss AS Tools now supports JBoss AS 7.1 beta1b. The support includes a new server adapter type. JBoss AS 7.1 also includes new security features restricting access to the remote management services. The new 7.1 adapter includes methods for storing these credentials. </p>
+	    <p><small><a href="https://issues.jboss.org/browse/JBIDE-10292">Related Jira</a></small></p>
+    </td>
+  </tr>  
+  <tr><td colspan="2"><hr /></td></tr>
+  <tr>
+    <td valign="top" align="right">
+      <p><b>Run On Server supported for EAR projects</b></p>
+    </td>
+    <td valign="top" width="90%">
+        <p>Attempting to run an EAR project on a server now will load the url that is most likely to be desired, whereas previously no action was taken on EAR projects</p>
+	    <p><small><a href="https://issues.jboss.org/browse/JBIDE-9893">Related Jira</a></small></p>
+    </td>
+  </tr>  
+  <tr><td colspan="2"><hr /></td></tr>
+  <tr>
+    <td valign="top" align="right">
+      <p><b>Deep-Nested project deployment support</b></p>
+    </td>
+    <td valign="top" width="90%">
+        <p>Nesting deployments several layers deep, such as having a utility jar nested inside another utility project, now functions as expected. </p> 
+	    <p><small><a href="https://issues.jboss.org/browse/JBIDE-8863">Related Jira</a></small></p>
+    </td>
+  </tr>  
+  <tr>
+    <td valign="top" align="right">
+      <p><b>Actions to load AS Management urls</b></p>
+    </td>
+    <td valign="top" width="90%">
+        <p>The most commonly loaded bundled apps for our servers now appear in the server view's context menu. Simply right-click on the server, select "show in", and you will see options such as the JMX Console, Admin Console, and Web Console.</p> 
+	    <p><small><a href="https://issues.jboss.org/browse/JBIDE-6828">Related Jira</a></small></p>
+    </td>
+  </tr>  
+  <tr>
+    <td valign="top" align="right">
+      <p><b>Usability improvement for "Mark As Deployable" feature</b></p>
+    </td>
+    <td valign="top" width="90%">
+        <p>Some users may have been confusing the "Mark as Deployable" feature with simple deployment done via the Add / Remove Module wizard. When a user now attempts to "Mark as Deployable" a project which is already a deployable module, a dialog is shown, advising them against it unless they are aware of what they are doing. </p> 
+	    <p><small><a href="https://issues.jboss.org/browse/JBIDE-9995">Related Jira</a></small></p>
+    </td>
+  </tr>  
+
+</table>
+
+</body>
+
+</html>
+
+
