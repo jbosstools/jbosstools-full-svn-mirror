@@ -180,20 +180,23 @@
 		<category name="AbridgedTools" />
 		<category name="MavenTools" />
 	</feature>
+
+	<!-- only in JBT and JBDS Extras -->
 	<feature url="features/org.jboss.tools.maven.jbosspackaging.feature_0.0.0.jar" id="org.jboss.tools.maven.jbosspackaging.feature" version="0.0.0">
 		<category name="MavenTools" />
 	</feature>
+	<!-- only in JBT -->
 	<feature url="features/org.jboss.tools.gwt.feature_0.0.0.jar" id="org.jboss.tools.gwt.feature" version="0.0.0">
 		<category name="GeneralTools" />
+	</feature>
+	<feature url="features/org.jboss.tools.common.mylyn.feature_0.0.0.jar" id="org.jboss.tools.common.mylyn.feature" version="0.0.0">
+		<category name="AbridgedTools" />
+		<category name="GeneralTools"/>
 	</feature>
 
 	<feature url="features/org.jboss.tools.common.jdt.feature_0.0.0.jar" id="org.jboss.tools.common.jdt.feature" version="0.0.0">
 		<category name="AbridgedTools" />
                 <category name="GeneralTools"/>
-	</feature>
-	<feature url="features/org.jboss.tools.common.mylyn.feature_0.0.0.jar" id="org.jboss.tools.common.mylyn.feature" version="0.0.0">
-		<category name="AbridgedTools" />
-		<category name="GeneralTools"/>
 	</feature>
 
 	<!-- include but do not categorize -->
