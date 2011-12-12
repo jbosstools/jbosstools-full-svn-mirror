@@ -110,7 +110,6 @@
 		<category name="AbridgedTools" />
 		<category name="WebTools" />
 	</feature>
-	<!-- only in JBT -->
 	<feature url="features/org.jboss.tools.ws.jaxrs.feature_0.0.0.jar" id="org.jboss.tools.ws.jaxrs.feature" version="0.0.0">
 		<category name="AbridgedTools" />
 		<category name="WebTools" />
