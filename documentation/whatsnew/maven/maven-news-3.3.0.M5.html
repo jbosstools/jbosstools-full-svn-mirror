@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../whatsnew.css" />
+<title>What's New in Maven Tools</title>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17645367-5']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script></head>
+<body>
+<h1>Maven Tools</h1>
+
+<p align="right"><a href="../index.html">&lt; Main Index</a> <a
+href="../hibernate/hibernate-news-3.5.0.M5.html">Hibernate Tools &gt;</a></p>
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+	<tr>
+		<td colspan="2">
+		<hr />
+		<h3>JBoss Maven Integration</h3>
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+		<a name="itemname1" id="itemname1"></a><b>Quick fixes for missing JBoss / Red Hat dependencies </b></td>
+		<td valign="top">
+		<p>If a missing dependency groupId is prefixed with "org.jboss", the associated error marker will propose the following quick fix : 
+        "See how to setup JBoss repositories in your settings.xml" and will open <a href="http://community.jboss.org/wiki/MavenGettingStarted-Users">http://community.jboss.org/wiki/MavenGettingStarted-Users</a> 
+        in the browser :
+        </p>
+		<img src="../images/jboss-maven-quickfix.png" />
+        
+        <p>Similarly, if the missing dependency version contains "-redhat", the quick fix label will be "See how to setup JBoss Enterprise repositories in your settings.xml" 
+        and will open <a href="http://community.jboss.org/wiki/SettingUpTheJBossEnterpriseRepositories">http://community.jboss.org/wiki/SettingUpTheJBossEnterpriseRepositories</a> :
+        </p>
+		<img src="../images/redhat-maven-quickfix.png" />
+		
+		<small>
+		  See <a href="https://issues.jboss.org/browse/JBIDE-9921">JBIDE-9921</a> for more details.
+		  
+		</small></p>
+		</td>
+	</tr>
+
+	<tr>
+	    <td colspan="2">
+	      <hr/>
+	    </td>
+	</tr>
+
+	
+</table>
+
+</body>
+
+</html>
+
+
