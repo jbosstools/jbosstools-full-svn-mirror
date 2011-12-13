@@ -153,7 +153,7 @@
 			</mediaobject>
 		</figure>
 		<para>
-			From the <guilabel>Create Projects</guilabel> section you can create a <guilabel>Dynamic Web Project</guilabel>, <guilabel>Seam 2 Web Project</guilabel>, <guilabel>Maven Project</guilabel> or any one of many <guilabel>Project Examples</guilabel>. To access a complete list of projects you can create, click on the window icon at the top-right of the <guilabel>Create Projects</guilabel> section <inlinemediaobject>
+			From the <guilabel>Create Projects</guilabel> section you can create a <guilabel>Dynamic Web Project</guilabel>, <guilabel>OpenShift Express Application</guilabel>, <guilabel>Java EE Web Project</guilabel>, <guilabel>Java EE Project</guilabel>, <guilabel>HTML5 Project</guilabel>, <guilabel>Spring MVC Project</guilabel>, <guilabel>RichFaces Project</guilabel>, or any one of many <guilabel>Project Examples</guilabel>. To access a complete list of projects you can create, click on the window icon at the top-right of the <guilabel>Create Projects</guilabel> section <inlinemediaobject>
 				<imageobject>
 					<imagedata fileref="images/getting_started/jboss_central_icon_01.png"/>
 				</imageobject>
@@ -168,7 +168,7 @@
 			</mediaobject>
 		</figure>
 		<para>
-			Under the <guilabel>Project Examples</guilabel> section you can expand and view <guilabel>Java EE 6 Quickstarts</guilabel>, <guilabel>JBoss AS 7 Quickstarts</guilabel> and <guilabel>Seam 2 Tutorials</guilabel>. 
+			Under the <guilabel>Project Examples</guilabel> section you can expand and view <guilabel>JBoss Quickstarts</guilabel>. Each quickstart is an example to assist first time users. 
 		</para>
 		<figure>
 			<title>Project Examples</title>
@@ -236,15 +236,45 @@
 			</mediaobject>
 		</figure>
 		<para>
-		The final button <inlinemediaobject>
-            <imageobject>
-				<imagedata fileref="images/getting_started/jboss_central_icon_06.png"/>
-			</imageobject>
-		</inlinemediaobject> refreshes the <guilabel>Project Examples</guilabel> list.
+			The final button <inlinemediaobject>
+				<imageobject>
+					<imagedata fileref="images/getting_started/jboss_central_icon_06.png"/>
+				</imageobject>
+			</inlinemediaobject> refreshes the <guilabel>Project Examples</guilabel> list.
 		</para>
+		<para>
+			The <guilabel>Documentation</guilabel> section of JBoss Central contains links to help materials such as reference guides, user forums and documentation concerning new features.
+		</para>
+		<figure>
+			<title>Documentation links</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/getting_started/jboss_central_10.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
 		<para>
 			If you do not wish to see JBoss Central at every startup, you can deselect the checkbox <guilabel>Show on Startup</guilabel> in the <guilabel>Settings</guilabel> section.
 		</para>
+		<figure>
+			<title>Settings section</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/getting_started/jboss_central_11.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>
+			The <guilabel>News</guilabel> and <guilabel>Blogs</guilabel> sections are updated automatically, bringing you the latest information concerning JBoss  technologies.
+		</para>
+		<figure>
+			<title>News and Blogs sections</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/getting_started/jboss_central_12.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
 	</section>
 	<section id="Support">
 		<?dbhtml filename="Support.html"?>
