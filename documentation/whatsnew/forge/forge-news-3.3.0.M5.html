@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../whatsnew.css"/>
+<title>Forge Tools 3.3.0.M5 What's New</title>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17645367-5']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script></head>
+<body>
+<h1>Forge Tools 3.3.0.M5 What's New</h1>
+
+  <p align="right"><a href="../index.html">&lt; Main Index</a> <a
+  href="../index.html">Other &gt;</a></p>  
+
+
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>New Embedded Forge Runtime</b></td>
+    <td valign="top">
+    <p>The embedded runtime is now a snapshot Forge build  from the 7th of December 2011.</p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <hr/>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Support for the 'open' Command</b></td>
+    <td valign="top">
+    <p>The 'open' command is now intercepted and the default Forge runtime behaviour is slightly modified. As expected, if the resource is a file Forge opens it in an editor. Before M5, this editor was external to the workbench. This is  unwanted behavior and is now changed to open an editor in the workbench. If the resource is a folder in the workspace, this folder is selected and expanded in the Project and/or Package Explorer views. If the resource is a folder outside the workspace it will be selected and expanded in the Remote Systems Explorer view if this view is installed. </p>
+	<p><img src="images/3.3.0.M5/open_file.png"/></p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <hr/>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Support for the 'pick-up' command</b></td>
+    <td valign="top">
+    <p>Issuing the 'pick-up' command will now automatically result not only in a change in the Forge runtime context but also in opening the resource. This means that a workbench editor will open if the resource is a file or that the folder will be expanded and selected in the Project and/or Package explorer views if the resource is a folder.  Just like with the 'open' command above, the Remote Systems view will be used if the resource is outside of the workspace.</p>
+	<p><img src="images/3.3.0.M5/pick_up.png"/></p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <hr/>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>'Show In Forge Console'</b></td>
+    <td valign="top">
+    <p>A very nice feature we have added is  the so called 'Show In Forge Console' feature. Bringing up the context menu and then selecting the 'Show In' menu on a selected item in the Project or Package explorer will contain an entry labeled 'Forge Console'.    </p>
+	<p><img src="images/3.3.0.M5/show_in_forge_console.png"/></p>
+	<p>Selecting this entry will result in the Forge Console automatically issuing the 'pick-up' command and changing the current Forge runtime context to the selected resource and performing the other behaviour mentioned earlier.</p>
+	<p><img src="images/3.3.0.M5/show_in_result.png"/></p>
+	<p>An alternative for this behavior is to use the toolbar button or the dropdown menu of the Forge Console view.</p>
+	<p><img src="images/3.3.0.M5/show_in_shortcut.png"/></p>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <hr/>
+    </td>
+  </tr>
+</table>
+
+</body>
+
+</html>
+
+
