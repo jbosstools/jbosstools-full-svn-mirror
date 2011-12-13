@@ -37,6 +37,8 @@ href="../hibernate/hibernate-news-3.5.0.M5.html">Hibernate Tools &gt;</a></p>
 		<td valign="top" align="left">
 		<a name="itemname1" id="itemname1"></a><b>Quick fixes for missing JBoss / Red Hat dependencies </b></td>
 		<td valign="top">
+        If, for some reason, you imported a project having some JBoss dependencies, but the JBoss repositories themselves are not defined in the pom.xml, 
+        there's a chance maven won't be able to resolve the dependencies unless the required repositories are defined in your settings.xml.
 		<p>If a missing dependency groupId is prefixed with "org.jboss", the associated error marker will propose the following quick fix : 
         "See how to setup JBoss repositories in your settings.xml" and will open <a href="http://community.jboss.org/wiki/MavenGettingStarted-Users">http://community.jboss.org/wiki/MavenGettingStarted-Users</a> 
         in the browser :
