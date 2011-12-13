@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../whatsnew.css" />
+<title>OpenShift Tools 2.3.0.M5 What's New</title>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17645367-5']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script></head>
+<body>
+<h1>OpenShift 2.3.0.M5 What's New</h1>
+
+<p align="right"><a href="../index.html">&lt; Main Index</a> <a
+	 href="../esb/esb-news-1.5.1.M4.html">ESB Tools
+	&gt;</a></p> 
+	<table border="0" cellpadding="10" cellspacing="0" width="80%"> 
+		<tr> 
+			<td colspan="2">
+	    	  <hr/>
+				<h3>Maven pom.xml editor</h3>
+		      <hr/>
+			</td> 
+		</tr> 
+		<tr> 
+			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>New OpenShift Express profile template</b></td> 
+			<td valign="top"> 
+                If you want to deploy your Web application to OpenShift Express, you will need to define an <strong><i>openshift</i></strong> maven profile.
+                It basically configures the maven build to generate a ROOT.war archive in the deployments folder of your project.
+                <p>
+				In the pom.xml editor, create a &lt;profiles&gt; section if it doesn't exist and press <strong>CTRL+&lt;space&gt;</strong> to trigger auto-completion, 
+                an OpenShift Express Maven profile template is now available : 
+                </p>
+				<p></p><img src="images/openshift-profile.png" alt="new OpenShift Express maven profile template"/></p> 
+				Press enter to select and insert the <strong><i>openshift</i></strong> profile in your pom.xml.
+				<p><small><a href="https://issues.jboss.org/browse/JBIDE-10354">Related Jira</a></small></p>
+			</td>
+		</tr>	
+        <!--
+		<tr> 
+			<td colspan="2">
+      			<hr/>
+				<h3>OpenShift Express REST client</h3>
+		      	<hr/>
+			</td> 
+		</tr> 
+		<tr> 
+			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>REST Client</b></td> 
+			<td valign="top">
+			We also developed a client for the OpenShift Express REST service. It pretty much offers all features that
+			are currently available in the rhc-* command line tools (create/rename a domain, create/destroy applications, 
+			list all existing applications, available cartridges, read the application log etc.). <br/>
+			Even though it's pretty new, it's code base is pretty well tested since it's well covered by unit-tests and 
+			used in our application wizard and the <a href="https://github.com/forge/plugin-openshift-express">Forge OpenShift Express plugin</a>.
+			The plug-in is currently still an osgi bundle, but we will strip its Eclipse dependencies and move it to github
+			at some point.</br>
+			You may check the current code in our <a href="http://anonsvn.jboss.org/repos/jbosstools/trunk/openshift/plugins/org.jboss.tools.openshift.express.client/">SVN</a>. 
+			<p><small><a href="https://issues.jboss.org/browse/JBIDE-9591">Related Jira</a></small></p>
+			</td>
+		</tr>
+        -->
+	</table>
+</body>
+
+</html>
+
+
