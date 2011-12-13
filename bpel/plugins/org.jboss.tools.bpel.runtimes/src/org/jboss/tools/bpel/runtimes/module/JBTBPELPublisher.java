@@ -26,6 +26,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.osgi.util.NLS;
@@ -42,8 +43,8 @@ import org.jboss.ide.eclipse.as.core.publishers.PublishUtil;
 import org.jboss.ide.eclipse.as.core.server.IDeployableServer;
 import org.jboss.ide.eclipse.as.core.server.IJBossServerPublishMethod;
 import org.jboss.ide.eclipse.as.core.server.IJBossServerPublisher;
+import org.jboss.ide.eclipse.as.core.server.xpl.LocalCopyCallback;
 import org.jboss.ide.eclipse.as.core.server.xpl.PublishCopyUtil;
-import org.jboss.ide.eclipse.as.core.server.xpl.PublishCopyUtil.LocalCopyCallback;
 import org.jboss.ide.eclipse.as.core.util.FileUtil;
 import org.jboss.ide.eclipse.as.core.util.IJBossToolingConstants;
 import org.jboss.ide.eclipse.as.core.util.IWTPConstants;
@@ -128,7 +129,7 @@ public class JBTBPELPublisher implements IJBossServerPublisher {
 		IModule last = moduleTree[moduleTree.length -1];
 		IPath deployPath = getDeployPath(moduleTree, ds);
 		IPath tempDeployPath = PublishUtil.getTempDeployFolder(moduleTree, ds);
-		IModuleResource[] members = PublishUtil.getResources(last);
+		IModuleResource[] members = PublishUtil.getResources(last, new NullProgressMonitor());
 		// https://issues.jboss.org/browse/JBDS-1573
 		// make sure the project has a deploy.xml (bpel-deploy.xml for backward compatibility).
 		boolean hasDeployXML = false;
