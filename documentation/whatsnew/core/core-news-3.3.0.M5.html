@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="iso-8859-1"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../whatsnew.css"/>
+<title>Core/Common 3.3.0.M5 What's New</title>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17645367-5']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script></head>
+<body>
+<h1>Core/Common 3.3.0.M5 What's New</h1>
+
+<p align="right"><a href="../index.html">&lt; Main Index</a> 
+<a href="../jst/jst-news-3.3.0.M5.html">JST/JSF 3.3.0.M5 &gt;</a>
+</p>
+
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>General</h3>
+	<hr/>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="right">
+       <a name="itemnam1e" id="itemname1"></a><b>Materializing Classpath Library improvements</b>
+    </td>
+    <td width="70%" valign="top">
+    <p>
+      A few improvements were made to the Materialize Classpath Libraries feature, introduced in <a href="core-news-3.3.0.M4.html"> JBoss Tools 3.3.0.M4</a>      
+      <ul>		<li>The "Copy as" column, which allows you to rename the copied file in it's destination folder, is now editable under Windows.</li>        <li>There is a new option to retain the "source" attachment to classpath entries. Since these links contain the hard-coded path to the source file, it's disabled by default.</li>	    <li>A warning is displayed if you're about to materialize the Maven Classpath Library, as this will also remove the Maven nature from the project.</li>	    <li>When the Maven nature is removed from the project, the exclusion patterns on the resource folders (**) are also removed.</li>	    <li>The wizard tries to best guess the destination folder location : if it's a web project, it'll use either <strong>&lt;project&gt;/src/main/webapp/lib</strong>         or <strong>&lt;project&gt;/WebContent/lib</strong>, depending on what folder already exists. For other projects, it'll use <strong>&lt;project&gt;/lib</strong> by default</li>	  </ul>    </p>	  <img src="images/materialization_warning.png" />	  
+    <p>Again, feedbacks on this feature are very welcome. You can follow existing related issues using this <a href="https://issues.jboss.org/secure/IssueNavigator.jspa?reset=true&jqlQuery=labels+%3D+materialize_library">link</a>. Please use the "materialize_library" label when submitting new issues.</p>
+<p></p>
+    
+    <p><small>Related Jiras : <a href="https://issues.jboss.org/browse/JBIDE-10125">JBIDE-10125</a>,          <a href="https://issues.jboss.org/browse/JBIDE-10015">JBIDE-10015</a>,          <a href="https://issues.jboss.org/browse/JBIDE-9878">JBIDE-9878</a>,                   <a href="https://issues.jboss.org/browse/JBIDE-9879">JBIDE-9879</a>,          <a href="https://issues.jboss.org/browse/JBIDE-9996">JBIDE-9996</a>                          </small></p>
+    
+    </td>
+  </tr>
+
+   <tr>
+		<td colspan="2">
+		<hr />
+		</td>
+	</tr>
+	
+</table>
+
+</body>
+
+</html>
