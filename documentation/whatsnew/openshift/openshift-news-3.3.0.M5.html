@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../whatsnew.css" />
+<title>OpenShift Tools 3.3.0.M5 What's New</title>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17645367-5']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script></head>
+<body>
+<h1>OpenShift 3.3.0.M5 What's New</h1>
+
+<p align="right"><a href="../index.html">&lt; Main Index</a> <a
+	 href="../esb/esb-news-1.5.1.M5.html">ESB Tools
+	&gt;</a></p> 
+	<table border="0" cellpadding="10" cellspacing="0" width="80%"> 
+		<tr> 
+			<td colspan="2">
+	    	  <hr/>
+				<h3>OpenShift Express Application Wizard</h3>
+		      <hr/>
+			</td> 
+		</tr> 
+		<tr> 
+			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Embed Cartridges</b></td> 
+			<td valign="top"> 
+				The OpenShift Express Application wizard now allows you to embed cartridges to your OpenShift application.
+				Cartridges add capabilities to your application. A typical usecase is to add a mysql database. 
+				You allow your application to use a mysql database by embedding the mysql cartridge to it.
+				The OpenShift Express Application wizard will list all available cartridges and allow you to add/remove cartridges at will.
+				<p><img src="images/embed-cartridge.png" alt="embed cartridge"/></p>
+			</td>
+		</tr>	
+		<tr>
+			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Embed Jenkins</b></td> 
+			<td valign="top"> 
+				An even more exciting use case is to embed jenkins to your OpenShift application. That will turn OpenShift into an Continous Integration server.
+				Anytime you push changes to OpenShift, a jenkins CI server will build your application. 
+				Our wizard allows you to embed the jenkins client. It will verify behind the scenes that you already have a jenkins application and 
+				prompt you to create one if you haven't yet.
+				<p><img src="images/create-jenkins.png" alt="create jenkins"/></p>
+				Credentials and url of your new jenkins instance will get reported to you accordingly.
+				<p><img src="images/jenkins-creation-log.png" alt="jenkins creation log"/></p>
+				<p><small><a href="https://issues.jboss.org/browse/JBIDE-9927">Related Jira</a></small></p>
+			</td>
+		</tr>	
+		<tr>
+			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Push Existing Projects</b></td> 
+			<td valign="top"> 
+				The OpenShift Express Application wizard in M4 allowed you to import the demo application (that the OpenShift PaaS creates initially) to your workspace. 
+				It was then up to you to merge the demo with your own application and push things to the OpenShift PaaS. Our tooling did not assist you in that case.
+				In M5 we now allow you to push your own application directly. Just uncheck <b>"Create New Project"</b> and choose the project from your workspace, that you want to 
+				publish to OpenShift. The wizard will then copy OpenShift configurations and enable git on it. You'll then be able to manually push it to OpenShift 
+				or let our Server Adapter do that job for you.  
+				<p><img src="images/push-existing-project.png" alt="push existing project"/></p>
+				<p><small><a href="https://issues.jboss.org/browse/JBIDE-10171">Related Jira</a></small></p>
+			</td>
+		</tr>	
+		<tr>
+			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>OpenShift server adapter</b></td> 
+			<td valign="top"> 
+				We also offer you an Eclipse WTP compliant OpenShift Server adapter that allows you to publish applications to OpenShift. 
+				The server adapter is created when you finish the OpenShift Express Application wizard. We already offered that server adapter in M4. 
+				We now turned it into its own distinct server type and made it work even more seamlessly.
+				<p><img src="images/openshift-server-adapter.png" alt="openshift server adapter"/></p>
+				<p><small><a href="https://issues.jboss.org/browse/JBIDE-9935">Related Jira</a></small></p>
+			</td>
+		</tr>		<tr> 
+			<td colspan="2">
+      			<hr/>
+				<h3>OpenShift Express REST client</h3>
+		      	<hr/>
+			</td> 
+		</tr> 
+		<tr> 
+			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>REST Client</b></td> 
+			<td valign="top">
+			We developed a client for the OpenShift Express REST service in M4. It pretty much offers all features that
+			are currently available in the rhc-* command line tools (create/rename a domain, create/destroy applications, 
+			list all existing applications, available cartridges, read the application log, embed cartridges etc.). <br/>
+			We moved it to github and joined forces with the OpenShift team. 
+			The official client is now maintained at <a href="https://github.com/bdecoste/openshift-java-client">https://github.com/bdecoste/openshift-java-client</a>
+			<p><small><a href="https://issues.jboss.org/browse/JBIDE-10068">Related Jira</a>, <a href="https://issues.jboss.org/browse/JBIDE-10455">Related Jira</a></small></p>
+			</td>
+		</tr>
+	</table>
+</body>
+
+</html>
+
+
