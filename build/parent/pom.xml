@@ -36,6 +36,7 @@
 		<jbosstools-target-site>http://download.jboss.org/jbosstools/updates/target-platform_3.3.indigo/latest/</jbosstools-target-site>
 
 		<!-- 1b. or use -Plocal.site -Dlocal.site=file:///home/$user/trunk/build/target-platform/REPO/ -->
+		<!-- TODO: don't forget to update JBDS .updatesite jobs when this value changes! -->
 		<local.site>file:///home/hudson/static_build_env/jbds/target-platform_3.3.indigo/e371-wtp331.target/</local.site>
 
 		<!-- 2a. URL of latest JBT nightly staging composite site (all the components 
