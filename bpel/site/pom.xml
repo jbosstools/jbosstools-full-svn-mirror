@@ -11,7 +11,23 @@
 	<artifactId>bpel.site</artifactId>
 	<version>0.1.0-SNAPSHOT</version>
 	<packaging>eclipse-update-site</packaging>
+	<!--
 	<repositories>
+	-->
+		<!-- since BPEL is on the TP, don't need to get it from ${jboss-requirements-composite-mirror} 
+		<repository>
+			<id>jboss-requirements-composite-mirror</id>
+			<url>${jboss-requirements-composite-mirror}</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		-->
+		<!-- latest stable milestone (potentially older than what's on the TP)
 		<repository>
 			<id>eclipse-bpel-milestone</id>
 			<url>http://download.eclipse.org/bpel/site/</url>
@@ -23,6 +39,8 @@
 				<enabled>true</enabled>
 			</releases>
 		</repository>
+		-->
+		<!-- latest build (potentially newer than what's on the TP)
 		<repository>
 			<id>eclipse-bpel-nightly</id>
 			<url>https://hudson.eclipse.org/hudson/job/bpel-0.5/lastSuccessfulBuild/artifact/site/target/site/</url>
@@ -34,7 +52,10 @@
 				<enabled>true</enabled>
 			</releases>
 		</repository>
+		-->
+	<!--
 	</repositories>
+	-->
 </project>
 
 
