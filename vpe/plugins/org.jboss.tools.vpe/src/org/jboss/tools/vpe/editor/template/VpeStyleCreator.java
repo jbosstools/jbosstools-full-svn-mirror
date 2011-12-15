@@ -10,9 +10,13 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.editor.template;
 
+import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
 
+import org.jboss.tools.vpe.editor.VpeVisualDomBuilder;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
+import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.editor.util.VpeStyleUtil;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
@@ -35,9 +39,24 @@ public class VpeStyleCreator extends VpeAbstractCreator {
 		String text = null;
 		if (textNode != null) {
 			text = textNode.getNodeValue();
+			/*
+			 * https://issues.jboss.org/browse/JBIDE-5861
+			 * Add inline <style> element for each found css @import
+			 */
+			VpeVisualDomBuilder vvdb = pageContext.getVisualBuilder();
+			List<String> imports = VpeStyleUtil.findCssImportConstruction(text, pageContext);
+			if (imports.size() > 0) {
+				for (String key : imports) {
+					vvdb.addLinkNodeToHead(key, "css_import_construction", false); //$NON-NLS-1$
+				}
+				/*
+				 * Replace @import constructions
+				 */
+				Matcher m = VpeStyleUtil.CSS_IMPORT_PATTERN.matcher(text);
+				text = m.replaceAll(Constants.EMPTY);
+			}
 			text = VpeStyleUtil.addFullPathIntoURLValue(text, pageContext);
 		}
-
 		nsIDOMNode newStyle = pageContext.getVisualBuilder()
 				.addStyleNodeToHead(text);
 		visualNodeMap.put(this, newStyle);
@@ -47,14 +66,11 @@ public class VpeStyleCreator extends VpeAbstractCreator {
 	@Override
 	public void removeElement(VpePageContext pageContext,
 			Element sourceElement, Map visualNodeMap) {
-
 		nsIDOMNode styleNode = (nsIDOMNode) visualNodeMap.get(this);
-
 		if (styleNode != null) {
 			pageContext.getVisualBuilder().removeStyleNodeFromHead(styleNode);
 			visualNodeMap.remove(this);
 		}
-
 	}
 
 	@Override
@@ -69,8 +85,8 @@ public class VpeStyleCreator extends VpeAbstractCreator {
 		}
 		nsIDOMNode newStyleNode;
 		if (oldStyleNode == null) {
-			newStyleNode = pageContext.getVisualBuilder().addStyleNodeToHead(
-					text);
+			newStyleNode = pageContext.getVisualBuilder().
+					addStyleNodeToHead(text);
 			visualNodeMap.put(this, newStyleNode);
 		} else {
 			newStyleNode = pageContext.getVisualBuilder()
@@ -79,6 +95,5 @@ public class VpeStyleCreator extends VpeAbstractCreator {
 				visualNodeMap.remove(this);
 			visualNodeMap.put(this, newStyleNode);
 		}
-
 	}
 }

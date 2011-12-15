@@ -25,6 +25,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IStorage;
@@ -57,6 +58,7 @@ import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.vpe.editor.template.VpeTemplateSafeWrapper;
 import org.jboss.tools.vpe.editor.template.VpeToggableTemplate;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionException;
+import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.editor.util.Docbook;
 import org.jboss.tools.vpe.editor.util.FaceletUtil;
 import org.jboss.tools.vpe.editor.util.HTML;
@@ -1080,7 +1082,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
      */
     public nsIDOMNode addLinkNodeToHead(String href_val, String ext_val,
 	    boolean firstElement) {
-	nsIDOMElement newNode = createLinkNode(href_val,
+	nsIDOMElement newNode = createInlineStyleNode(href_val,
 		ATTR_REL_STYLESHEET_VALUE, ext_val);
 
 	// TODO Dzmitry Sakovich
@@ -1096,7 +1098,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
 	public nsIDOMNode replaceLinkNodeToHead(nsIDOMNode oldNode,
 			String href_val, String ext_val) {
-		nsIDOMNode newNode = createLinkNode(href_val,
+		nsIDOMNode newNode = createInlineStyleNode(href_val,
 				ATTR_REL_STYLESHEET_VALUE, ext_val);
 		getHeadNode().replaceChild(newNode, oldNode);
 		return newNode;
@@ -1115,10 +1117,9 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		getHeadNode().removeChild(node);
 	}
 
-	private nsIDOMElement createLinkNode(String href_val, String rel_val,
-			String ext_val) {
-		nsIDOMElement linkNode = null;
-		if ((ATTR_REL_STYLESHEET_VALUE.equalsIgnoreCase(rel_val))
+	private nsIDOMElement createInlineStyleNode(String href_val, String rel_val, String ext_val) {
+		nsIDOMElement inlineStyle = null;
+		if (ATTR_REL_STYLESHEET_VALUE.equalsIgnoreCase(rel_val)
 				&& href_val.startsWith("file:")) { //$NON-NLS-1$
 			/*
 			 * Because of the Mozilla caches the linked css files we replace tag
@@ -1126,33 +1127,43 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			 * vpe="ATTR_VPE_INLINE_LINK_VALUE">file content</style> It is
 			 * LinkReplacer
 			 */
-			linkNode = getVisualDocument().createElement(HTML.TAG_STYLE);
-			linkNode.setAttribute(ATTR_VPE, ATTR_VPE_INLINE_LINK_VALUE);
+			inlineStyle = getVisualDocument().createElement(HTML.TAG_STYLE);
+			inlineStyle.setAttribute(ATTR_VPE, ATTR_VPE_INLINE_LINK_VALUE);
 
 			/* Copy links attributes into our <style> */
-			linkNode.setAttribute(VpeTemplateManager.ATTR_LINK_HREF, href_val);
-			linkNode.setAttribute(VpeTemplateManager.ATTR_LINK_EXT, ext_val);
+			inlineStyle.setAttribute(VpeTemplateManager.ATTR_LINK_HREF, href_val);
+			inlineStyle.setAttribute(VpeTemplateManager.ATTR_LINK_EXT, ext_val);
 			BufferedReader in = null;
 			try {
 				StringBuilder styleText = new StringBuilder(EMPTY_STRING);
 				URL url = new URL((new Path(href_val)).toOSString());
 				String fileName = url.getFile();
-				in = new BufferedReader(new FileReader(
-						(fileName)));
+				in = new BufferedReader(new FileReader((fileName)));
 				String str = EMPTY_STRING;
 				while ((str = in.readLine()) != null) {
 					styleText.append(str);
 				}
+				in.close();
 
 				String styleForParse = styleText.toString();
-				styleForParse = VpeStyleUtil.addFullPathIntoURLValue(
-						styleForParse, href_val);
-
-				in.close();
-				nsIDOMText textNode = getVisualDocument()
-						.createTextNode(styleForParse);
-				linkNode.appendChild(textNode);
-				return linkNode;
+				/*
+				 * https://issues.jboss.org/browse/JBIDE-5861
+				 * Add nested @import constructions
+				 */
+				List<String> imports = VpeStyleUtil.findCssImportConstruction(styleForParse, pageContext);
+				if (imports.size() > 0) {
+					for (String key : imports) {
+						addLinkNodeToHead(key, "css_nested_import_construction", false); //$NON-NLS-1$
+					}
+					/*
+					 * Replace @import constructions
+					 */
+					Matcher m = VpeStyleUtil.CSS_IMPORT_PATTERN.matcher(styleForParse);
+					styleForParse = m.replaceAll(Constants.EMPTY);
+				}
+				styleForParse = VpeStyleUtil.addFullPathIntoURLValue(styleForParse, href_val);
+				inlineStyle.appendChild(getVisualDocument().createTextNode(styleForParse));
+				return inlineStyle;
 			} catch (FileNotFoundException fnfe) {
 				/* File which was pointed by user is not exists. Do nothing. */
 			} catch (IOException ioe) {
@@ -1168,12 +1179,12 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			}
 		}
 
-		linkNode = getVisualDocument().createElement(HTML.TAG_LINK);
-		linkNode.setAttribute(VpeTemplateManager.ATTR_LINK_REL, rel_val);
-		linkNode.setAttribute(VpeTemplateManager.ATTR_LINK_HREF, href_val);
-		linkNode.setAttribute(VpeTemplateManager.ATTR_LINK_EXT, ext_val);
+		inlineStyle = getVisualDocument().createElement(HTML.TAG_LINK);
+		inlineStyle.setAttribute(VpeTemplateManager.ATTR_LINK_REL, rel_val);
+		inlineStyle.setAttribute(VpeTemplateManager.ATTR_LINK_HREF, href_val);
+		inlineStyle.setAttribute(VpeTemplateManager.ATTR_LINK_EXT, ext_val);
 
-		return linkNode;
+		return inlineStyle;
 	}
 
 	private boolean isLinkReplacer(nsIDOMNode node) {

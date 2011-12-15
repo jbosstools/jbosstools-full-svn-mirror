@@ -19,6 +19,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -81,6 +83,8 @@ public class VpeStyleUtil {
 	 * (.*) should be replaced with ([^;]*) 
 	 */
 	public static final Pattern CSS_URL_PATTERN = Pattern.compile("(?<=\\burl\\b)(?:[\\p{Space}]*\\()[\\p{Space}]*([^;]*)[\\p{Space}]*(?:\\)[\\p{Space}]*)(?=(?>[^\\)]*;|[^\\)]*))"); //$NON-NLS-1$
+	public static final Pattern CSS_IMPORT_PATTERN = Pattern.compile("@import[\\p{Space}]+(?:\\burl\\b[\\p{Space}]*\\()*[\\p{Space}]*([^;]*)[\\p{Space}]*(?:\\)[\\p{Space}]*(?=(?>[^\\)]*;|[^\\)]*)))*"); //$NON-NLS-1$
+	public static final Pattern CSS_URI_PATTERN = Pattern.compile("(?:\\\"{1}(.*)\\\"{1})|(?:\\'{1}(.*)\\'{1})"); //$NON-NLS-1$
 	
 	public static String ATTR_URL = "url"; //$NON-NLS-1$
 	public static String OPEN_BRACKET = "("; //$NON-NLS-1$
@@ -438,11 +442,7 @@ public class VpeStyleUtil {
 		if (urls.length == 1) {
 			return value;
 		}
-		IFile file = null;
-		final VpeIncludeInfo vii = pageContext.getVisualBuilder().getCurrentIncludeInfo();
-		if (vii != null && (vii.getStorage() instanceof IFile)) {
-			file = (IFile) vii.getStorage();
-		}
+		IFile file = getSourceFileFromPageContext(pageContext);
 		for (int i = 1; i < urls.length; i++) {
 			urls[i] = removeQuotesUpdate(urls[i]);
 			String[] urlParts = splitURL(urls[i]);
@@ -450,7 +450,7 @@ public class VpeStyleUtil {
 				continue;
 			}
 			if (file != null) {
-				urlParts[1] = processUrl(urlParts[1], file);
+				urlParts[1] = processUrl(urlParts[1], file, true);
 			}
 			urls[i] = collectArrayInto1Str(urlParts);
 		}
@@ -484,7 +484,7 @@ public class VpeStyleUtil {
 				// ignore
 			}
 			if (sourceFile != null) {
-				urlParts[1] = processUrl(urlParts[1], sourceFile);
+				urlParts[1] = processUrl(urlParts[1], sourceFile, true);
 			} else {
 				urlParts[1] = updateURLFilePath(urlParts[1], href_val);
 				if (urlParts[1] == null) {
@@ -685,20 +685,26 @@ public class VpeStyleUtil {
 	public static IPath getRootPath(IEditorInput input) {
 		IPath rootPath = null;
 		if (input instanceof IFileEditorInput) {
-			IProject project = ((IFileEditorInput) input).getFile().getProject();
-			if (project != null && project.isOpen()) {
-				IModelNature modelNature = EclipseResourceUtil.getModelNature(project);
-				if (modelNature != null) {
-					XModel model = modelNature.getModel();
-					String rootPathStr = WebProject.getInstance(model).getWebRootLocation();
-					if (rootPathStr != null) {
-						rootPath = new Path(rootPathStr);
-					} else {
-						rootPath = project.getLocation();
-					}
+			rootPath = getRootPath(((IFileEditorInput) input).getFile());
+		}
+		return rootPath;
+	}
+	
+	public static IPath getRootPath(IFile inputFile) {
+		IPath rootPath = null;
+		IProject project = inputFile.getProject();
+		if (project != null && project.isOpen()) {
+			IModelNature modelNature = EclipseResourceUtil.getModelNature(project);
+			if (modelNature != null) {
+				XModel model = modelNature.getModel();
+				String rootPathStr = WebProject.getInstance(model).getWebRootLocation();
+				if (rootPathStr != null) {
+					rootPath = new Path(rootPathStr);
 				} else {
 					rootPath = project.getLocation();
 				}
+			} else {
+				rootPath = project.getLocation();
 			}
 		}
 		return rootPath;
@@ -783,7 +789,7 @@ public class VpeStyleUtil {
 		return Integer.toString(position) + PX_STRING;
 	}
 
-	public static String processUrl(String url, IFile baseFile) {
+	public static String processUrl(String url, IFile baseFile, boolean putIntoQuotes) {
 		String resolvedUrl = url.replaceFirst(
 				"^\\s*(\\#|\\$)\\{facesContext.externalContext.requestContextPath\\}", Constants.EMPTY); //$NON-NLS-1$
 		resolvedUrl = ElServiceUtil.replaceEl(baseFile, resolvedUrl);
@@ -799,22 +805,25 @@ public class VpeStyleUtil {
 		}
 		if (uri == null || !uri.isAbsolute()) {
 			String decodedUrl = decodeUrl(resolvedUrl);
-			Path path = new Path(decodedUrl);
-			if (decodedUrl.startsWith("/") && (null != path.segment(0))//$NON-NLS-1$
-					&& path.segment(0).equals(baseFile.getProject().getName())) {
-				decodedUrl = "/" + path.removeFirstSegments(1).toPortableString(); //$NON-NLS-1$
-			}
+			Path decodedPath = new Path(decodedUrl);
+			if (decodedUrl.startsWith("/") && (null != decodedPath.segment(0))//$NON-NLS-1$
+					&& decodedPath.segment(0).equals(baseFile.getProject().getName())) {
+				decodedUrl = "/" + decodedPath.removeFirstSegments(1).toPortableString(); //$NON-NLS-1$
+			} 
 			IFile file = FileUtil.getFile(decodedUrl, baseFile);
 			if (file != null && file.getLocation() != null) {
 				resolvedUrl = pathToUrl(file.getLocation());
-			}
+			} 
 		}
 		/*
 		 * https://issues.jboss.org/browse/JBIDE-9975
 		 * Put the URL into quotes.
 		 * It's default xulrunner behavior.
 		 */
-		return QUOTE_STRING + resolvedUrl + QUOTE_STRING;
+		if (putIntoQuotes) {
+			resolvedUrl = QUOTE_STRING + resolvedUrl + QUOTE_STRING; 
+		}
+		return resolvedUrl;
 	}
 
 	private static String pathToUrl(IPath location) {
@@ -857,5 +866,72 @@ public class VpeStyleUtil {
 				visible ? HTML.STYLE_VALUE_DEFAULT_DISPLAY
 						: HTML.STYLE_VALUE_NONE, HTML.STYLE_PRIORITY_IMPORTANT);
 
+	}
+	
+	/**
+	 * Finds CSS @import url(".."); construction
+	 * 
+	 * @param cssText the css text
+	 * @param pageContext VPE page context 
+	 * @return the map with the import statement as a key and the css file path as a value
+	 */
+	public static List<String> findCssImportConstruction(String cssText, VpePageContext pageContext) {
+		ArrayList<String> list = new ArrayList<String>();
+		IFile sourceFile = getSourceFileFromPageContext(pageContext);
+		Matcher m = CSS_IMPORT_PATTERN.matcher(cssText);
+		while (m.find()) {
+			/*
+			 * Path should be a well formed URI
+			 */
+			list.add(processUrl(getCorrectURI(m.group(1)), sourceFile, false));
+		}
+		return list;
+	}
+	
+	/**
+	 * Gets the source file from pageContext
+	 * 
+	 * @param pageContext
+	 * @return the opened file
+	 */
+	public static IFile getSourceFileFromPageContext(VpePageContext pageContext) {
+		IFile file = null;
+		final VpeIncludeInfo vii = pageContext.getVisualBuilder().getCurrentIncludeInfo();
+		if ((vii != null) && (vii.getStorage() instanceof IFile)) {
+			file = (IFile) vii.getStorage();
+		}
+		return file;
+	}
+	
+	/**
+	 * Determine correct uri in the input path:
+	 * Remove quotes and brackets
+	 * 
+	 * @param path input path
+	 * @return correct URI string
+	 */
+	private static String getCorrectURI(String path) {
+		String uri = path;
+		/*
+		 * Closing bracket appears due to regex pattern.
+		 * Should be removed.
+		 */
+		if (path.endsWith(CLOSE_BRACKET)) {
+			uri = uri.substring(0, uri.length() - 1);
+		}
+		Matcher m = CSS_URI_PATTERN.matcher(uri);
+		/*
+		 * Find uri in " or ' quotes
+		 */
+		if (m.find()) {
+			if ((m.group(1) != null) 
+					&& !EMPTY_STRING.equalsIgnoreCase(m.group(1))) {
+				uri = m.group(1);
+			} else if ((m.group(2) != null) 
+					&& !EMPTY_STRING.equalsIgnoreCase(m.group(2))) {
+				uri = m.group(2);
+			}
+		}
+		return uri;
 	}
 }
