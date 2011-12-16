@@ -194,9 +194,9 @@ public class TestDomUtil {
 		String xmlName = null;
 		String xmlValue = null;
 		while (m.find()) {
-			vpeValue = computedStyle.getPropertyValue(m.group(1));
 			xmlName = m.group(1);
 			xmlValue = m.group(2);
+			vpeValue = computedStyle.getPropertyValue(xmlName);
 			if (vpeValue == null) {
 				throw new DOMComparisonException("CSS property ["  //$NON-NLS-1$
 						+ xmlName + "] is missing in VPE visual node", modelNode); //$NON-NLS-1$
