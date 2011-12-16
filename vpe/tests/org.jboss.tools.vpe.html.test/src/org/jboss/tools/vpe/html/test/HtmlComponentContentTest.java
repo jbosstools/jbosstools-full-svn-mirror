@@ -485,6 +485,10 @@ public class HtmlComponentContentTest extends ComponentContentTest {
 		performContentTest("jbide9975( 1 )/CSSUrlQuotes.html"); //$NON-NLS-1$
 	}
 	
+	public void testCssImport() throws Throwable {
+		performStyleTest("jbide9975( 1 )/CSSImportConstruction.html"); //$NON-NLS-1$
+	}
+	
 	protected String getTestProjectName() {
 		return HtmlAllTests.IMPORT_PROJECT_NAME;
 	}

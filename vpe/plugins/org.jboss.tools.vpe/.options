@@ -11,6 +11,7 @@ org.jboss.tools.vpe/debug/visual/inner_dragdrop_event=
 org.jboss.tools.vpe/debug/visual/add_pseudo_element=
 org.jboss.tools.vpe/debug/visual/contextmenu/dump_source=
 org.jboss.tools.vpe/debug/visual/contextmenu/dump_selected_element=
+org.jboss.tools.vpe/debug/visual/contextmenu/dump_style=
 org.jboss.tools.vpe/debug/visual/contextmenu/dump_mapping=
 org.jboss.tools.vpe/debug/visual/dump_print_hash=
 #This may be a list, e.g.:style,class,width

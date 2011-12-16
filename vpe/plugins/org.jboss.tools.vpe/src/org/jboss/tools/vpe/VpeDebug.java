@@ -33,6 +33,7 @@ public class VpeDebug {
 
 	public static final boolean VISUAL_CONTEXTMENU_DUMP_SOURCE;
 	public static final boolean VISUAL_CONTEXTMENU_DUMP_SELECTED_ELEMENT;
+	public static final boolean VISUAL_CONTEXTMENU_DUMP_CSS_STYLE;
 	public static final boolean VISUAL_CONTEXTMENU_DUMP_MAPPING;
 	public static final boolean VISUAL_DUMP_PRINT_HASH;
 
@@ -61,17 +62,15 @@ public class VpeDebug {
 
 		VISUAL_CONTEXTMENU_DUMP_SOURCE = "true".equals(Platform.getDebugOption(VpePlugin.PLUGIN_ID + "/debug/visual/contextmenu/dump_source")); //$NON-NLS-1$ //$NON-NLS-2$
 		VISUAL_CONTEXTMENU_DUMP_SELECTED_ELEMENT = "true".equals(Platform.getDebugOption(VpePlugin.PLUGIN_ID + "/debug/visual/contextmenu/dump_selected_element")); //$NON-NLS-1$ //$NON-NLS-2$
+		VISUAL_CONTEXTMENU_DUMP_CSS_STYLE = "true".equals(Platform.getDebugOption(VpePlugin.PLUGIN_ID + "/debug/visual/contextmenu/dump_style")); //$NON-NLS-1$ //$NON-NLS-2$
 		VISUAL_CONTEXTMENU_DUMP_MAPPING = "true".equals(Platform.getDebugOption(VpePlugin.PLUGIN_ID + "/debug/visual/contextmenu/dump_mapping")); //$NON-NLS-1$ //$NON-NLS-2$
 		VISUAL_DUMP_PRINT_HASH = "true".equals(Platform.getDebugOption(VpePlugin.PLUGIN_ID + "/debug/visual/dump_print_hash")); //$NON-NLS-1$ //$NON-NLS-2$
-		VISUAL_DUMP_IGNORED_ATTRIBUTES = Platform
-				.getDebugOption(VpePlugin.PLUGIN_ID
+		VISUAL_DUMP_IGNORED_ATTRIBUTES = Platform.getDebugOption(VpePlugin.PLUGIN_ID
 						+ "/debug/visual/ignored_attributes") != null ? Arrays //$NON-NLS-1$
-				.asList(Platform.getDebugOption(
-						VpePlugin.PLUGIN_ID
+				.asList(Platform.getDebugOption(VpePlugin.PLUGIN_ID
 								+ "/debug/visual/ignored_attributes").split( //$NON-NLS-1$
 						Constants.COMMA)) : null; 
 		VISUAL_CONTEXTMENU_TEST = "true".equals(Platform.getDebugOption(VpePlugin.PLUGIN_ID + "/debug/visual/contextmenu/show_test")); //$NON-NLS-1$ //$NON-NLS-2$
-
 		USE_PRINT_STACK_TRACE = "true".equals(Platform.getDebugOption(VpePlugin.PLUGIN_ID + "/debug/use_PrintStackTrace")); //$NON-NLS-1$ //$NON-NLS-2$
 		
 	}

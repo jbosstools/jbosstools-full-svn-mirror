@@ -339,6 +339,19 @@ public class MenuCreationHelper {
 							}
 						});
 			}
+			if (VpeDebug.VISUAL_CONTEXTMENU_DUMP_CSS_STYLE) {
+				manager.add(new Action("Dump CSS Style") { //$NON-NLS-1$
+					public void run() {
+						VpeNodeMapping nodeMapping = SelectionUtil
+								.getNodeMappingBySourceSelection(sourceEditor, domMapping);
+						if (nodeMapping != null) {
+							DOMTreeDumper dumper = new DOMTreeDumper(VpeDebug.VISUAL_DUMP_PRINT_HASH);
+							dumper.setIgnoredAttributes(VpeDebug.VISUAL_DUMP_IGNORED_ATTRIBUTES);
+							dumper.dumpStyle(nodeMapping.getVisualNode());
+						}
+					}
+				});
+			}
 			if (VpeDebug.VISUAL_CONTEXTMENU_DUMP_MAPPING) {
 				manager.add(new Action("Dump Mapping") { //$NON-NLS-1$
 							public void run() {

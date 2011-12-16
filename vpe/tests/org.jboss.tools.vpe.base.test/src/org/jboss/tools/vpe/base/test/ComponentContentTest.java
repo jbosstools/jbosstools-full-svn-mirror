@@ -99,6 +99,32 @@ public abstract class ComponentContentTest extends VpeTest {
 			throw getException();
 		}
 	}
+	protected void compareStyles(VpeController controller, File xmlTestFile)
+			throws FileNotFoundException {
+		Document xmlTestDocument = TestDomUtil.getDocument(xmlTestFile);
+		assertNotNull("Can't get test file, possibly file not exists " + xmlTestFile,xmlTestDocument); //$NON-NLS-1$
+		List<String> ids = TestDomUtil.getTestIds(xmlTestDocument);
+		for (String id : ids) {
+			try{
+				compareStylesJob(controller, xmlTestDocument, id, id);
+			} catch (DOMComparisonException e) {
+				String xPathToNode = SourceDomUtil.getXPath(e.getNode());
+				String testFileName = xmlTestFile.getPath();
+				String message = e.getMessage();
+				fail(String.format("%s[%s]:\n%s", testFileName, xPathToNode, message)); //$NON-NLS-1$
+			}
+		}
+	}
+	
+	private void compareStylesJob(VpeController controller, Document xmlTestDocument, 
+			String elementId, String xmlTestId) throws DOMComparisonException {
+		nsIDOMElement vpeElement = findElementById(controller, elementId);
+		assertNotNull("Cannot find element with id = "+elementId, vpeElement); //$NON-NLS-1$
+		Element xmlModelElement = TestDomUtil.getFirstChildElement(
+				TestDomUtil.getElemenById(xmlTestDocument, xmlTestId));
+		assertNotNull(xmlModelElement);
+		TestDomUtil.compareComputedStyle(vpeElement, xmlModelElement);
+	}
 	
 	protected void compareContent(VpeController controller, File xmlTestFile)
 			throws FileNotFoundException {
@@ -315,6 +341,36 @@ public abstract class ComponentContentTest extends VpeTest {
 				+ tagName + "</span>"; //$NON-NLS-1$
 	}
 
+	protected void performStyleTest(String elementPagePath) throws Throwable {
+		String fullelementPagePath = TestUtil.COMPONENTS_PATH + elementPagePath; 
+		IFile elementPageFile = (IFile) TestUtil.getComponentFileByFullPath(
+				fullelementPagePath, getTestProjectName());
+		/*
+		 * Test that test file was found and exists
+		 */
+		assertNotNull("Could not find component file '"+fullelementPagePath+"'", elementPageFile); //$NON-NLS-1$ //$NON-NLS-2$
+		
+		IEditorPart editor = WorkbenchUtils.openEditor(elementPageFile,getEditorID());
+		assertNotNull("Editor should be opened.", editor); //$NON-NLS-1$
+		VpeController controller = TestUtil.getVpeController((JSPMultiPageEditor) editor);
+		/*
+		 * Get xml test file
+		 */
+		IResource xmlFile =TestUtil.getComponentFileByFullPath(fullelementPagePath + XML_FILE_EXTENSION, getTestProjectName());
+		/*
+		 * Test that XML test file was found and exists
+		 */
+		assertNotNull("Could not find XML component file '"+fullelementPagePath + XML_FILE_EXTENSION+"'", xmlFile); //$NON-NLS-1$ //$NON-NLS-2$
+		File xmlTestFile = xmlFile.getLocation().toFile();
+		/*
+		 * Compare styles
+		 */
+		compareStyles(controller, xmlTestFile);
+		if (getException() != null) {
+			throw getException();
+		}
+	}
+	
 	/**
 	 * find visual element by "id" entered in source part of vpe
 	 * 
@@ -338,6 +394,7 @@ public abstract class ComponentContentTest extends VpeTest {
 		}
 		return result;
 	}	
+	
 	/**
 	 * find visual element by "id" entered in source part of vpe
 	 * 
@@ -346,20 +403,12 @@ public abstract class ComponentContentTest extends VpeTest {
 	 * @return
 	 */
 	protected nsIDOMNode findNode(VpeController controller, Node node) {
-
-		VpeNodeMapping nodeMapping = controller.getDomMapping().getNodeMapping(
-				node);
-
-		if (nodeMapping == null)
+		VpeNodeMapping nodeMapping = controller.getDomMapping().getNodeMapping(node);
+		if (nodeMapping == null) {
 			return null;
-
+		}
 		return nodeMapping.getVisualNode();
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
 	abstract protected String getTestProjectName();
-
 }

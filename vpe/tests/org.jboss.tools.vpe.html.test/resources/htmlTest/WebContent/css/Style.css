@@ -1,0 +1,10 @@
+.label {
+	font-weight: bold;
+	background: transparent url("file:///D:/Projects/jbds/jsf/WebContent/css(2)/print_share_sprite.png") no-repeat;
+}
+.label2 {
+	font-weight: bold;
+	background: transparent url(file:///D:/Projects/jbds/jsf/WebContent/css/print_share_sprite.png) no-repeat;
+}
+table {width: 100%; border-spacing: 0; }
+tr { background: #f6d654 url(images/orangebg.png) repeat-y; }

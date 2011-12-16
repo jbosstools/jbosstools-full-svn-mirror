@@ -37,10 +37,12 @@ import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.editor.util.VpeStyleUtil;
 import org.mozilla.interfaces.nsIDOMAttr;
 import org.mozilla.interfaces.nsIDOMCSSStyleDeclaration;
+import org.mozilla.interfaces.nsIDOMDocumentView;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNamedNodeMap;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
+import org.mozilla.interfaces.nsIDOMViewCSS;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -73,7 +75,9 @@ public class TestDomUtil {
 	final public static String START_REGEX = "/"; //$NON-NLS-1$
 
 	final public static String END_REGEX = "/"; //$NON-NLS-1$
-
+	
+	public static final Pattern CSS_PROPERTY_PATTERN = Pattern.compile("([^\\p{Space}]*)[\\p{Space}]*:[\\p{Space}]*(.*)[\\p{Space}]*;"); //$NON-NLS-1$
+	
 	public static Document getDocument(File file) throws FileNotFoundException {
 		// create reader
 		FileReader reader = new FileReader(file);
@@ -145,6 +149,65 @@ public class TestDomUtil {
 
 	}
 
+	public static void compareComputedStyle(nsIDOMNode vpeNode, Node modelNode)
+			throws DOMComparisonException {
+		/*
+		 * Check node names
+		 */
+		if (!modelNode.getNodeName().equalsIgnoreCase(vpeNode.getNodeName())) {
+			throw new DOMComparisonException("name of tag is \"" //$NON-NLS-1$
+					+ vpeNode.getNodeName() + "\"but must be \"" //$NON-NLS-1$
+					+ modelNode.getNodeName() + "\"", modelNode); //$NON-NLS-1$
+		}
+		/*
+		 * Check node values 
+		 */
+		if ((modelNode.getNodeValue() != null)
+				&& (!modelNode.getNodeValue().trim().equalsIgnoreCase(
+						vpeNode.getNodeValue().trim()))) {
+			throw new DOMComparisonException("value of " + vpeNode.getNodeName() //$NON-NLS-1$
+					+ " is \"" + vpeNode.getNodeValue().trim() //$NON-NLS-1$
+					+ "\" but must be \"" + modelNode.getNodeValue().trim() //$NON-NLS-1$
+					+ "\"", modelNode); //$NON-NLS-1$
+		}
+		/*
+		 * Check node attributes 
+		 */
+		if (modelNode.getNodeType() == Node.ELEMENT_NODE) {
+			compareAttributes(modelNode.getAttributes(), vpeNode.getAttributes());
+		}
+		/*
+		 * Check node styles 
+		 */
+		compareComputedStyleJob(vpeNode, modelNode);
+	}
+	
+	private static void compareComputedStyleJob(nsIDOMNode vpeNode, Node modelNode)  
+			throws DOMComparisonException {
+		final nsIDOMDocumentView view = queryInterface(vpeNode.getOwnerDocument(), nsIDOMDocumentView.class);
+		final nsIDOMViewCSS viewCss = queryInterface(view.getDefaultView(), nsIDOMViewCSS.class);
+		final nsIDOMElement vpeElement = queryInterface(vpeNode, nsIDOMElement.class);
+		final nsIDOMCSSStyleDeclaration computedStyle = viewCss.getComputedStyle(vpeElement, null);
+		String modelText = modelNode.getTextContent();
+		Matcher m = CSS_PROPERTY_PATTERN.matcher(modelText);
+		String vpeValue = null;
+		String xmlName = null;
+		String xmlValue = null;
+		while (m.find()) {
+			vpeValue = computedStyle.getPropertyValue(m.group(1));
+			xmlName = m.group(1);
+			xmlValue = m.group(2);
+			if (vpeValue == null) {
+				throw new DOMComparisonException("CSS property ["  //$NON-NLS-1$
+						+ xmlName + "] is missing in VPE visual node", modelNode); //$NON-NLS-1$
+			} else if (!vpeValue.equalsIgnoreCase(xmlValue)) {
+				throw new DOMComparisonException("CSS property ["  //$NON-NLS-1$
+						+ xmlName + "] is [" + vpeValue + "]" //$NON-NLS-1$ //$NON-NLS-2$
+						+ ", but should be [" + xmlValue + "]", modelNode); //$NON-NLS-1$ //$NON-NLS-2$
+			}
+		}
+	}
+	
 	/**
 	 * 
 	 * @param vpeNode
@@ -154,7 +217,6 @@ public class TestDomUtil {
 	 */
 	public static void compareNodes(nsIDOMNode vpeNode, Node modelNode)
 			throws DOMComparisonException {
-
 		if (!modelNode.getNodeName().equalsIgnoreCase(vpeNode.getNodeName())) {
 			throw new DOMComparisonException("name of tag is \"" //$NON-NLS-1$
 					+ vpeNode.getNodeName() + "\"but must be \"" //$NON-NLS-1$
@@ -171,19 +233,15 @@ public class TestDomUtil {
 
 		// compare node's attributes
 		if (modelNode.getNodeType() == Node.ELEMENT_NODE) {
-			compareAttributes(modelNode.getAttributes(), vpeNode
-					.getAttributes());
+			compareAttributes(modelNode.getAttributes(), vpeNode.getAttributes());
 		}
-
 		// compare children
 		nsIDOMNodeList vpeChildren = vpeNode.getChildNodes();
 		NodeList schemeChildren = modelNode.getChildNodes();
 		int realCount = 0;
 		int length = schemeChildren.getLength();
 		for (int i = 0; i < length; i++) {
-
 			Node schemeChild = schemeChildren.item(i);
-
 			// leave out empty text nodes in test dom model
 			String nodeValue = schemeChild.getNodeValue();
 			if ((schemeChild.getNodeType() != Node.TEXT_NODE)
@@ -214,7 +272,6 @@ public class TestDomUtil {
 				compareNodes(vpeChild, schemeChild);
 			}
 		}
-
 	}
 
 	/**
@@ -353,7 +410,7 @@ public class TestDomUtil {
 	
 	private static List<String> splitAndSort(String property) {
 		List<String> propertyParts = new ArrayList<String>();
-		for (String propertyPart : property.split("[\\s]+")) {
+		for (String propertyPart : property.split("[\\s]+")) { //$NON-NLS-1$
 			if (!propertyPart.isEmpty()) {
 				propertyParts.add(propertyPart);
 			}

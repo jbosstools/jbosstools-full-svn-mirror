@@ -132,6 +132,7 @@ public class VpeMenuCreator {
 		if (topLevelMenu) {
 			addIfEnabled(new DumpSourceAction());
 			addIfEnabled(new DumpSelectedElementAction());
+			addIfEnabled(new DumpStyleAction());
 			addIfEnabled(new DumpMappingAction());
 			addIfEnabled(new TestAction());
 		}
@@ -305,6 +306,36 @@ public class VpeMenuCreator {
 		@Override
 		public boolean isEnabled() {
 			return VpeDebug.VISUAL_CONTEXTMENU_DUMP_SELECTED_ELEMENT;
+		}
+	}
+	
+	/**
+	 * Action to dump computed css style 
+	 * of the selected VPE element. 
+	 * For debugging purposes only.
+	 */
+	public class DumpStyleAction extends Action {
+		public DumpStyleAction() {
+			setText("Dump CSS Style"); //$NON-NLS-1$
+		}
+		
+		@Override
+		public void run() {
+			final StructuredTextEditor sourceEditor = vpeMenuUtil.getSourceEditor();
+			final VpeDomMapping domMapping = vpeMenuUtil.getDomMapping();
+			final VpeNodeMapping nodeMapping = SelectionUtil
+					.getNodeMappingBySourceSelection(sourceEditor, domMapping);
+			if (nodeMapping != null) {
+				DOMTreeDumper dumper = new DOMTreeDumper(
+						VpeDebug.VISUAL_DUMP_PRINT_HASH);
+				dumper.setIgnoredAttributes(VpeDebug.VISUAL_DUMP_IGNORED_ATTRIBUTES);
+				dumper.dumpStyle(nodeMapping.getVisualNode());
+			}
+		}
+		
+		@Override
+		public boolean isEnabled() {
+			return VpeDebug.VISUAL_CONTEXTMENU_DUMP_CSS_STYLE;
 		}
 	}
 
