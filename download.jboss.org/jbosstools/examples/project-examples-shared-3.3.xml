@@ -242,18 +242,20 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<mavenArchetype>
 			<archetypeGroupId>org.richfaces.archetypes</archetypeGroupId>
 			<archetypeArtifactId>richfaces-archetype-simpleapp</archetypeArtifactId>
-			<archetypeVersion>4.1.0-SNAPSHOT</archetypeVersion>
-            <!--
+			<archetypeVersion>4.1.0.Final</archetypeVersion>
 			<archetypeRepository>http://repository.jboss.org/nexus/content/repositories/releases/</archetypeRepository>
-			-->
+            <!--
             <archetypeRepository>http://anonsvn.jboss.org/repos/jbosstools/workspace/fred/repositories/snapshot/</archetypeRepository>
+			-->
             <groupId>org.jboss.tools.example</groupId>
 			<artifactId>richfaces-webapp</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<javaPackage>org.jboss.tools.example.richfaces</javaPackage>
+            <!--
             <properties>
-              <property name="richfaces-version" value="4.1.0.CR2" />    
+              <property name="richfaces-version" value="4.1.0.Final" />    
             </properties>
+            -->
 		</mavenArchetype>
 	</project>		
 </projects>
