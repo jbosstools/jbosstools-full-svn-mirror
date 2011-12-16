@@ -172,7 +172,9 @@
 						<var name="propertiesFileFound" value="true" />
 						<delete quiet="true" file="buildResults.html" />
 						<xslt in="@{propertiesFile}" out="buildResults.html" style="buildResults.xsl" force="true">
-							<classpath location="${COMMON_TOOLS}/saxon.jar" />
+							<classpath>
+								<pathelement location="${COMMON_TOOLS}/saxon.jar" />
+							</classpath>
 						</xslt>
 					</then>
 					<else>
