@@ -221,6 +221,15 @@ md5sum $(find . -name "*Source*.zip" | egrep -v "aggregate-Sources|nightly-Updat
 echo " " >> ${md5sumsFile}
 
 mkdir -p ${STAGINGDIR}/logs
+
+if [[ ! $ANT_HOME ]]; then # find ant in PATH - select LAST entry if more than one
+	ANT_HOME=$(for d in $(echo ${PATH//:/ }); do if [[ ${d/ant/} != ${d} ]]; then echo -n " ${d%/bin}"; fi; done); ANT_HOME=${ANT_HOME##* }
+fi
+ANT_EXEC=ant
+if [[ -d ${ANT_HOME} ]] && [[ -x ${ANT_HOME}/bin/ant ]]; then
+	export ANT_HOME=${ANT_HOME}
+	ANT_EXEC=${ANT_HOME}/bin/ant
+fi
 ANT_PARAMS=" -DZIPSUFFIX=${ZIPSUFFIX} -DJOB_NAME=${JOB_NAME} -Dinput.dir=${STAGINGDIR} -Doutput.dir=${STAGINGDIR}/logs -DWORKSPACE=${WORKSPACE}"
 for buildxml in ${WORKSPACE}/build/results/build.xml ${WORKSPACE}/sources/build/results/build.xml ${WORKSPACE}/sources/results/build.xml; do
 	if [[ -f ${buildxml} ]]; then
@@ -229,7 +238,7 @@ for buildxml in ${WORKSPACE}/build/results/build.xml ${WORKSPACE}/sources/build/
 	fi
 done
 ANT_TARGET="buildResults.single"; if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]]; then ANT_TARGET="buildResults.aggregate"; fi
-if [[ ${ANT_SCRIPT} ]] && [[ -f ${ANT_SCRIPT} ]]; then ant -f ${ANT_SCRIPT} ${ANT_TARGET} ${ANT_PARAMS}; fi
+if [[ ${ANT_SCRIPT} ]] && [[ -f ${ANT_SCRIPT} ]]; then ${ANT_EXEC} -f ${ANT_SCRIPT} ${ANT_TARGET} ${ANT_PARAMS}; fi
 
 # copy buildResults.css, buildResults.html to ${STAGINGDIR}/logs
 if [[ ${RESULTS_DIR} ]] && [[ -d ${RESULTS_DIR} ]]; then
