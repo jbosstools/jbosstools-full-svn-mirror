@@ -340,4 +340,9 @@ public class DOMTreeDumper {
 	public void setIgnoredAttributes(List<String> ignoredAttributes) {
 		this.ignoredAttributes = ignoredAttributes;
 	}
+
+	public void dumpStyle(nsIDOMNode visualNode) {
+		// TODO Auto-generated method stub
+		
+	}
 }
