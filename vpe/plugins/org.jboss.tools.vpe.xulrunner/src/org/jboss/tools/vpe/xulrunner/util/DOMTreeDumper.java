@@ -18,11 +18,14 @@ import java.io.PrintStream;
 import java.util.List;
 
 import org.mozilla.interfaces.nsIDOMAttr;
+import org.mozilla.interfaces.nsIDOMCSSStyleDeclaration;
 import org.mozilla.interfaces.nsIDOMDocument;
+import org.mozilla.interfaces.nsIDOMDocumentView;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNamedNodeMap;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
+import org.mozilla.interfaces.nsIDOMViewCSS;
 
 
 /**
@@ -142,6 +145,23 @@ public class DOMTreeDumper {
      */
     public void dumpNode(nsIDOMNode node) {
         dumpNode(node, false);
+    }
+    
+    
+    public void dumpStyle(nsIDOMNode vpeNode) {
+    	if (vpeNode != null) {
+    		final nsIDOMDocumentView view = queryInterface(vpeNode.getOwnerDocument(), nsIDOMDocumentView.class);
+    		final nsIDOMViewCSS viewCss = queryInterface(view.getDefaultView(), nsIDOMViewCSS.class);
+    		final nsIDOMElement vpeElement = queryInterface(vpeNode, nsIDOMElement.class);
+    		final nsIDOMCSSStyleDeclaration styleDeclaration = viewCss.getComputedStyle(vpeElement, null);
+    		String item = null;
+    		String value = null;
+    		for (int i = 0; i < styleDeclaration.getLength(); i++) {
+    			item = styleDeclaration.item(i);
+    			value = styleDeclaration.getPropertyValue(item);
+    			ps.println(item + ": " + value + ";"); //$NON-NLS-1$ //$NON-NLS-2$
+    		}
+    	}
     }
 
     /**
@@ -339,10 +359,5 @@ public class DOMTreeDumper {
 
 	public void setIgnoredAttributes(List<String> ignoredAttributes) {
 		this.ignoredAttributes = ignoredAttributes;
-	}
-
-	public void dumpStyle(nsIDOMNode visualNode) {
-		// TODO Auto-generated method stub
-		
 	}
 }
