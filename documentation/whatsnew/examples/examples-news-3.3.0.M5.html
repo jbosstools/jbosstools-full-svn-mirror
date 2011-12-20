@@ -36,7 +36,7 @@ href="../central/central-news-1.0.0.M5.html">JBoss Central &gt;</a>
   </tr>
   <tr>
     <td valign="top" align="left">
-       <a name="itemnam1e" id="itemname1"></a><b>Improve cheatsheets</b>
+       <a name="itemnam1e" id="itemname1"></a><b>Improved cheatsheet support</b>
     </td>
     <td width="70%" valign="top">
     <p>Now the Project Example engine opens cheatsheet.xml, .cheatsheet.xml, readme.html, readme.txt and readme.md automatically when finding them in the root of some of the created projects.
@@ -44,7 +44,41 @@ href="../central/central-news-1.0.0.M5.html">JBoss Central &gt;</a>
 	<p><small><a href="https://jira.jboss.org/jira/browse/JBIDE-10243">Related Jira</a></small></p>
     </td>
   </tr>
-
+  <tr>
+		<td colspan="2">
+		<hr />
+		</td>
+  </tr>
+  <tr>
+    <td valign="top" align="left">
+       <a name="itemnam1e" id="itemname1"></a><b>New Wizard for Maven Archetypes</b>
+    </td>
+    <td width="70%" valign="top">
+    <p>For project examples based on Maven archetypes, the project Wizard now provides a simplified UI, abstracting away anything Maven related.
+    The first page now displays the following :
+    </p>
+    <img src="images/simplified-wizard.png" alt="new simplified wizard for Maven archetype based project examples"/>
+    <p>Filling in the project name and a package fields will enable the "Finish" button so you can get started almost immediately.
+    Even though nothing maven related is displayed in this first page, if you click finish, the generated project will be a fully functional maven project.
+    Using the package value as groupId, Project name as artifactId and 0.0.1-SNAPSHOT as the default version.
+    </p>
+    <p>Setting the target runtime will, for JBoss archetypes, determine if the generated project will use the community 
+    or enterprise version of some JBoss or Java EE 6 dependencies (this is equivalent to setting -Denterprise=true / false on the archetype). 
+    By default, such archetypes will depend on org.jboss.spec:jboss-javaee-web-6.0 version 2.0.0.Final,
+    but if the "enterprise" version is selected (by choosing an EAP target runtime), version 3.0.0.Beta1-redhat-1 will be used instead.
+    </p>
+    <p>
+    If org.jboss.spec:jboss-javaee-web-6.0:pom:3.0.0.Beta1-redhat-1 can not be resolved from any available maven repositories, a warning will be displayed :
+    </p>
+    <img src="images/missingEapRepoWarning.png" alt="Warning if org.jboss.spec:jboss-javaee-web-6.0:pom:3.0.0.Beta1-redhat-1 is missing"/>
+    <p>
+    Clicking on the "Next" button, will display the regular Maven Archetype wizard, so you can have more control over the maven settings of your project. 
+    If a maven profile is active by default for that archetype, the advanced section will be expanded :</p>
+    <img src="images/advanced-wizard.png" alt="Advanced page of Maven archetype based project examples"/>
+	<p><small>related JIRAs : <a href="https://jira.jboss.org/jira/browse/JBIDE-9776">JBIDE-9776</a>,
+        <a href="https://jira.jboss.org/jira/browse/JBIDE-10209">JBIDE-10209</a>, <a href="https://jira.jboss.org/jira/browse/JBIDE-10200">JBIDE-10200</a>	 </small></p>
+    </td>
+  </tr>
   <tr>
 		<td colspan="2">
 		<hr />
