@@ -149,46 +149,42 @@ public class SourceDomUtil {
 	 */
 	public static Node getNodeByXPath(Document document, String xPath) {
 		Node currentNode = document;
-		try {
-			String[] nodeNames = xPath.split("/"); //$NON-NLS-1$
-			
-			// begin from 1 to skip the first element which is empty
-			for (int i = 1; i < nodeNames.length; i++) {
-				String nodeName = nodeNames[i];
-				if (nodeName.charAt(0) != '@') {
-					currentNode = currentNode.getFirstChild();
-					if (nodeName.charAt(nodeName.length() - 1) != ']') {
-						while (currentNode.getNodeType() != Node.ELEMENT_NODE 
-								|| !currentNode.getNodeName().equals(nodeName)) {
-							currentNode = currentNode.getNextSibling();
-						}
-					} else {
-						int openingBracketIndex = nodeName.lastIndexOf('[');
-						String stringPosition = nodeName.substring(
-								openingBracketIndex + 1,
-								nodeName.length() - 1);
-						nodeName = nodeName.substring(0, openingBracketIndex);
-						
-						int position = Integer.parseInt(stringPosition);
-						int curPosition = 0;
-						while (true) {
-							if (currentNode.getNodeType() == Node.ELEMENT_NODE 
-									&& currentNode.getNodeName().equals(nodeName)) {
-								++curPosition;
-								if (curPosition == position) {
-									break;
-								}
-							}
-							currentNode = currentNode.getNextSibling();
-						}
+		String[] nodeNames = xPath.split("/"); //$NON-NLS-1$
+		
+		// begin from 1 to skip the first element which is empty
+		for (int i = 1; i < nodeNames.length; i++) {
+			String nodeName = nodeNames[i];
+			if (nodeName.charAt(0) != '@') {
+				currentNode = currentNode.getFirstChild();
+				if (nodeName.charAt(nodeName.length() - 1) != ']') {
+					while (currentNode.getNodeType() != Node.ELEMENT_NODE 
+							|| !currentNode.getNodeName().equals(nodeName)) {
+						currentNode = currentNode.getNextSibling();
 					}
 				} else {
-					String attributeName = nodeName.substring(1, nodeName.length());
-					currentNode = currentNode.getAttributes().getNamedItem(attributeName);
+					int openingBracketIndex = nodeName.lastIndexOf('[');
+					String stringPosition = nodeName.substring(
+							openingBracketIndex + 1,
+							nodeName.length() - 1);
+					nodeName = nodeName.substring(0, openingBracketIndex);
+					
+					int position = Integer.parseInt(stringPosition);
+					int curPosition = 0;
+					while (true) {
+						if (currentNode.getNodeType() == Node.ELEMENT_NODE 
+								&& currentNode.getNodeName().equals(nodeName)) {
+							++curPosition;
+							if (curPosition == position) {
+								break;
+							}
+						}
+						currentNode = currentNode.getNextSibling();
+					}
 				}
+			} else {
+				String attributeName = nodeName.substring(1, nodeName.length());
+				currentNode = currentNode.getAttributes().getNamedItem(attributeName);
 			}
-		} catch (Exception e) {
-			return null;
 		}
 
 		return currentNode;

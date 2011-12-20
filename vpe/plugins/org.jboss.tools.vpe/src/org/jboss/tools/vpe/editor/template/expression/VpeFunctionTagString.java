@@ -35,6 +35,6 @@ public class VpeFunctionTagString extends VpeFunction {
 	}
 	
 	String[] getSignatures() {
-		return new String[] {VpeExpressionBuilder.SIGNATURE_ANY_ATTR};
+		return VpeFunctionAttrPresent.SIGNATURE_ANY_ATTR_ARAY;
 	}
 }

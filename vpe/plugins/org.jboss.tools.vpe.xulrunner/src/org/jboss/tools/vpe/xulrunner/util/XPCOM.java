@@ -104,11 +104,13 @@ public final class XPCOM {
 		String interfaceId = interfaceIdByType.get(type);
 		if (interfaceId == null) {
 			String interfaceIdFieldName = getInterfaceIdFieldName(type);
-			try {
-				interfaceId = (String) type.getField(interfaceIdFieldName).get(null);
-			} catch (Exception e) {
-				throw new RuntimeException(e);
-			}
+				try {
+					interfaceId = (String) type.getField(interfaceIdFieldName).get(null);
+				} catch (NoSuchFieldException e) {
+					throw new RuntimeException(e);
+				} catch (IllegalAccessException e) {
+					throw new RuntimeException(e);
+				}
 			interfaceIdByType.put(type, interfaceId);
 		}
 		return interfaceId;

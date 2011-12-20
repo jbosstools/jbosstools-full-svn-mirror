@@ -218,11 +218,10 @@ public class VpeExpressionBuilder {
 			function.setParameters(params.toArray(new VpeOperand[params.size()]));
 		}
 		String[] signatures = function.getSignatures();
-		if (signatures != null) {
-			for (int i = 0; i < signatures.length; i++) {
+		for (int i = 0; i < signatures.length; i++) {
 				dependencySet.add(signatures[i]);
-			}
 		}
+
 		return function;
 	}
 	

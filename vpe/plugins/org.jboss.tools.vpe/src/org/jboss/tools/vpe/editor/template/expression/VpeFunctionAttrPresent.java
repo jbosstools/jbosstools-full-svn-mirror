@@ -29,9 +29,10 @@ public class VpeFunctionAttrPresent extends VpeFunction {
 		}
 		return new VpeValue(present);
 	}
-
+	
+	public static final String[] SIGNATURE_ANY_ATTR_ARAY = new String[] {VpeExpressionBuilder.SIGNATURE_ANY_ATTR};
 	@Override
 	String[] getSignatures() {
-		return new String[] {VpeExpressionBuilder.SIGNATURE_ANY_ATTR};
+		return SIGNATURE_ANY_ATTR_ARAY;
 	}
 }

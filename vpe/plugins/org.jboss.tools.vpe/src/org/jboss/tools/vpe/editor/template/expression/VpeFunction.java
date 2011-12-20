@@ -10,11 +10,15 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.template.expression;
 
+import java.util.Arrays;
+
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 
 public abstract class VpeFunction extends VpeOperand {
 	
+	private static final String[] EMPTY_SIGNS = new String[0];
 	private VpeOperand[] paramertes;
+	private String[] signatures = EMPTY_SIGNS;
 	
 	VpeFunction() {
 	}
@@ -36,6 +40,6 @@ public abstract class VpeFunction extends VpeOperand {
 	}
 	
 	String[] getSignatures() {
-		return null;
+		return signatures;
 	}
 }
