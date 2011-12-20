@@ -57,7 +57,7 @@
 
 		<!-- 4. published aggregate update site goes here, for consumption by QE 
 			and downstream JBDS builds -->
-		<jbosstools.update.site>http://download.jboss.org/jbosstools/updates/nightly/3.2_stable_branch/</jbosstools.update.site>
+		<jbosstools.update.site>http://download.jboss.org/jbosstools/updates/nightly/core/3.2_stable_branch/</jbosstools.update.site>
 
 		<!-- 5. extra requirements (for 3rd party "Extras" site) -->
 		<jboss-requirements-composite-extras-mirror>http://download.jboss.org/jbosstools/updates/helios/extras/</jboss-requirements-composite-extras-mirror>
