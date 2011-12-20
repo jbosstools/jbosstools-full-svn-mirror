@@ -92,6 +92,7 @@ echo "WORKSPACE = ${WORKSPACE}" >> ${STAGINGDIR}/logs/${METAFILE}
 echo "HUDSON_SLAVE = $(uname -a)" >> ${STAGINGDIR}/logs/${METAFILE}
 echo "RELEASE = ${RELEASE}" >> ${STAGINGDIR}/logs/${METAFILE}
 echo "ZIPSUFFIX = ${ZIPSUFFIX}" >> ${STAGINGDIR}/logs/${METAFILE}
+y=${STAGINGDIR}/logs/${METAFILE}; for m in $(md5sum ${y}); do if [[ $m != ${y} ]]; then echo $m > ${y}.MD5; fi; done
 
 #echo "$z ..."
 if [[ $z != "" ]] && [[ -f $z ]] ; then
@@ -167,7 +168,8 @@ if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]] && [[ -d ${WORKSPACE}/sources/agg
 		for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done
 		mv $z ${z}.MD5 ${STAGINGDIR}/components
 	done
-
+	
+	# TODO :: JBIDE-9870 When we have a -Update-Sources- zip, this can be removed
 	mkdir -p ${STAGINGDIR}/all/sources	
 	# unpack component source zips like jbosstools-pi4soa-3.1_trunk-Sources-SNAPSHOT.zip or jbosstools-3.2_trunk.component--ws-Sources-SNAPSHOT.zip
 	for z in $(find ${WORKSPACE}/sources/aggregate/site/zips -name "*Sources*.zip"); do
@@ -183,7 +185,6 @@ if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]] && [[ -d ${WORKSPACE}/sources/agg
 	  -x \*docs\* -x \*reference\* -x \*releng\* -x \*.git\* -x \*/lib/\*.jar
 	popd
 	rm -fr ${STAGINGDIR}/all/sources
-	
 	z=${STAGINGDIR}/all/${SRCSNAME}; for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done
 
 	# JBIDE-7444 get aggregate metadata xml properties file
@@ -213,6 +214,19 @@ md5sum $(find . -name "*Source*.zip" | egrep -v "aggregate-Sources|nightly-Updat
 echo " " >> ${md5sumsFile}
 
 mkdir -p ${STAGINGDIR}/logs
+
+if [[ ! $ANT_HOME ]]; then # find ant in PATH - select LAST entry if more than one
+	ANT_HOME=$(for d in $(echo ${PATH//:/ }); do if [[ ${d/ant/} != ${d} ]]; then echo -n " ${d%/bin}"; fi; done); ANT_HOME=${ANT_HOME##* }
+fi
+ANT_EXEC="ant"
+if [[ -d ${ANT_HOME} ]] && [[ -x ${ANT_HOME}/bin/ant ]]; then
+	export ANT_HOME=${ANT_HOME}
+	ANT_EXEC=${ANT_HOME}/bin/ant
+fi
+ANT_LIB="" # add COMMON_TOOLS folder to ant's lib folder
+if [[ -d /home/hudson/static_build_env/jbds/tools ]]; then
+	ANT_LIB=" -lib /home/hudson/static_build_env/jbds/tools"
+fi
 ANT_PARAMS=" -DZIPSUFFIX=${ZIPSUFFIX} -DJOB_NAME=${JOB_NAME} -Dinput.dir=${STAGINGDIR} -Doutput.dir=${STAGINGDIR}/logs -DWORKSPACE=${WORKSPACE}"
 for buildxml in ${WORKSPACE}/build/results/build.xml ${WORKSPACE}/sources/build/results/build.xml ${WORKSPACE}/sources/results/build.xml; do
 	if [[ -f ${buildxml} ]]; then
@@ -221,7 +235,7 @@ for buildxml in ${WORKSPACE}/build/results/build.xml ${WORKSPACE}/sources/build/
 	fi
 done
 ANT_TARGET="buildResults.single"; if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]]; then ANT_TARGET="buildResults.aggregate"; fi
-if [[ ${ANT_SCRIPT} ]] && [[ -f ${ANT_SCRIPT} ]]; then ant -f ${ANT_SCRIPT} ${ANT_TARGET} ${ANT_PARAMS}; fi
+if [[ ${ANT_SCRIPT} ]] && [[ -f ${ANT_SCRIPT} ]]; then ${ANT_EXEC}${ANT_LIB} -f ${ANT_SCRIPT} ${ANT_TARGET} ${ANT_PARAMS}; fi
 
 # copy buildResults.css, buildResults.html to ${STAGINGDIR}/logs
 if [[ ${RESULTS_DIR} ]] && [[ -d ${RESULTS_DIR} ]]; then
@@ -399,3 +413,5 @@ date; rsync -arzq --delete ${STAGINGDIR}/logs $INTRNALDEST/builds/staging/${JOB_
 # purge tmpdir
 rm -fr $tmpdir
 
+# to avoid looking for files that are still being synched/nfs-copied, wait a bit before trying to run tests (the next step usually)
+sleep 15s
