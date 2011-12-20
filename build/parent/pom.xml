@@ -42,7 +42,7 @@
 		<!-- Set this to a path on your own machine, or use remote URL like http://download.jboss.org/jbosstools/updates/target-platform/latest/ 
 			Can also generate a local.target file which will always point to your local 
 			repo w/o having to edit here. See local.target profile below for more information. -->
-		<local.site>file:///home/hudson/static_build_env/jbds/target-platform/e362-wtp324.target/</local.site>
+		<local.site>file:///home/hudson/static_build_env/jbds/target-platform/e362-wtp325.target/</local.site>
 		<target.platform.site>${local.site}</target.platform.site>
 
 		<!-- 2a. URL of latest JBT nightly staging composite site (all the components 
