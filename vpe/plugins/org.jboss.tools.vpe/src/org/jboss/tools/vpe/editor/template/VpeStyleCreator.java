@@ -41,19 +41,22 @@ public class VpeStyleCreator extends VpeAbstractCreator {
 			text = textNode.getNodeValue();
 			/*
 			 * https://issues.jboss.org/browse/JBIDE-5861
-			 * Add inline <style> element for each found css @import
+			 * Remove CSS comments first:
 			 */
-			VpeVisualDomBuilder vvdb = pageContext.getVisualBuilder();
+			text = VpeStyleUtil.removeAllCssComments(text);
 			List<String> imports = VpeStyleUtil.findCssImportConstruction(text, pageContext);
+			VpeVisualDomBuilder vvdb = pageContext.getVisualBuilder();
 			if (imports.size() > 0) {
 				for (String key : imports) {
+					/*
+					 * Add inline <style> element for each found css @import.
+					 */
 					vvdb.addLinkNodeToHead(key, "css_import_construction", false); //$NON-NLS-1$
 				}
 				/*
-				 * Replace @import constructions
+				 * Replace @import constructions that've been added.
 				 */
-				Matcher m = VpeStyleUtil.CSS_IMPORT_PATTERN.matcher(text);
-				text = m.replaceAll(Constants.EMPTY);
+				text = VpeStyleUtil.removeAllCssImportConstructions(text);
 			}
 			text = VpeStyleUtil.addFullPathIntoURLValue(text, pageContext);
 		}

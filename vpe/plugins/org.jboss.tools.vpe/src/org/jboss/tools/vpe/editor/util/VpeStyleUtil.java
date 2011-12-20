@@ -82,9 +82,14 @@ public class VpeStyleUtil {
 	 * For the long string regexp could be updated:
 	 * (.*) should be replaced with ([^;]*) 
 	 */
+	public static final String LINE_SEPARATOR = System.getProperty("line.separator"); //$NON-NLS-1$
 	public static final Pattern CSS_URL_PATTERN = Pattern.compile("(?<=\\burl\\b)(?:[\\p{Space}]*\\()[\\p{Space}]*([^;]*)[\\p{Space}]*(?:\\)[\\p{Space}]*)(?=(?>[^\\)]*;|[^\\)]*))"); //$NON-NLS-1$
 	public static final Pattern CSS_IMPORT_PATTERN = Pattern.compile("@import[\\p{Space}]+(?:\\burl\\b[\\p{Space}]*\\()*[\\p{Space}]*([^;]*)[\\p{Space}]*(?:\\)[\\p{Space}]*(?=(?>[^\\)]*;|[^\\)]*)))*"); //$NON-NLS-1$
 	public static final Pattern CSS_URI_PATTERN = Pattern.compile("(?:\\\"{1}(.*)\\\"{1})|(?:\\'{1}(.*)\\'{1})"); //$NON-NLS-1$
+	/*
+	 * Pattern "|(//.*)" could be added at the end to remove single line comments.
+	 */
+	public static final Pattern CSS_COMMENT_PATTERN = Pattern.compile("(/\\*([^*]|["+LINE_SEPARATOR+"]|(\\*+([^*/]|["+LINE_SEPARATOR+"])))*\\*+/)"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ 
 	
 	public static String ATTR_URL = "url"; //$NON-NLS-1$
 	public static String OPEN_BRACKET = "("; //$NON-NLS-1$
@@ -933,5 +938,13 @@ public class VpeStyleUtil {
 			}
 		}
 		return uri;
+	}
+	
+	public static String removeAllCssImportConstructions(String cssText) {
+		return CSS_IMPORT_PATTERN.matcher(cssText).replaceAll(Constants.EMPTY);
+	}
+	
+	public static String removeAllCssComments(String cssText) {
+		return CSS_COMMENT_PATTERN.matcher(cssText).replaceAll(Constants.EMPTY);
 	}
 }

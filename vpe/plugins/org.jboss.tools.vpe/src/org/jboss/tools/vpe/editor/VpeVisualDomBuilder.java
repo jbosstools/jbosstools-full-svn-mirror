@@ -320,7 +320,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		}
 		return false;
 	}
-
+	
 	/**
 	 * Creates new visual node representing {@code sourceNode} and its descendants.
 	 * 
@@ -1148,18 +1148,21 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 				String styleForParse = styleText.toString();
 				/*
 				 * https://issues.jboss.org/browse/JBIDE-5861
-				 * Add nested @import constructions
+				 * Remove CSS comments first:
 				 */
+				styleForParse = VpeStyleUtil.removeAllCssComments(styleForParse);
 				List<String> imports = VpeStyleUtil.findCssImportConstruction(styleForParse, pageContext);
 				if (imports.size() > 0) {
 					for (String key : imports) {
+						/*
+						 * Add nested @import constructions
+						 */
 						addLinkNodeToHead(key, "css_nested_import_construction", false); //$NON-NLS-1$
 					}
 					/*
 					 * Replace @import constructions
 					 */
-					Matcher m = VpeStyleUtil.CSS_IMPORT_PATTERN.matcher(styleForParse);
-					styleForParse = m.replaceAll(Constants.EMPTY);
+					styleForParse = VpeStyleUtil.removeAllCssImportConstructions(styleForParse);
 				}
 				styleForParse = VpeStyleUtil.addFullPathIntoURLValue(styleForParse, href_val);
 				inlineStyle.appendChild(getVisualDocument().createTextNode(styleForParse));
