@@ -147,7 +147,11 @@ public class DOMTreeDumper {
         dumpNode(node, false);
     }
     
-    
+    /**
+     * Dumps the CSS style for the visual node
+     * 
+     * @param vpeNode visual node
+     */
     public void dumpStyle(nsIDOMNode vpeNode) {
     	if (vpeNode != null) {
     		final nsIDOMDocumentView view = queryInterface(vpeNode.getOwnerDocument(), nsIDOMDocumentView.class);

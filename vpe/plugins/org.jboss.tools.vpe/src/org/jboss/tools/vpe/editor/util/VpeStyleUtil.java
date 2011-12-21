@@ -940,10 +940,22 @@ public class VpeStyleUtil {
 		return uri;
 	}
 	
+	/**
+	 * Removes all the CSS @import constructions from the text
+	 * 
+	 * @param cssText the css text
+	 * @return updated string
+	 */
 	public static String removeAllCssImportConstructions(String cssText) {
 		return CSS_IMPORT_PATTERN.matcher(cssText).replaceAll(Constants.EMPTY);
 	}
 	
+	/**
+	 * Removes all the CSS comments  from the text
+	 * 
+	 * @param cssText the css text
+	 * @return updated string
+	 */
 	public static String removeAllCssComments(String cssText) {
 		return CSS_COMMENT_PATTERN.matcher(cssText).replaceAll(Constants.EMPTY);
 	}
