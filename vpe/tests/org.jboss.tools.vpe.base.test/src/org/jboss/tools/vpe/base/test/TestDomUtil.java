@@ -193,13 +193,23 @@ public class TestDomUtil {
 		String vpeValue = null;
 		String xmlName = null;
 		String xmlValue = null;
+		boolean regExpIsUsed = false;
 		while (m.find()) {
 			xmlName = m.group(1);
 			xmlValue = m.group(2);
 			vpeValue = computedStyle.getPropertyValue(xmlName);
+			regExpIsUsed = xmlValue.startsWith(START_REGEX) && xmlValue.endsWith(END_REGEX);
 			if (vpeValue == null) {
 				throw new DOMComparisonException("CSS property ["  //$NON-NLS-1$
 						+ xmlName + "] is missing in VPE visual node", modelNode); //$NON-NLS-1$
+			} else if (regExpIsUsed) {
+				String pattern = xmlValue.substring(1, xmlValue.length() - 1);
+				Matcher matcher = Pattern.compile(pattern).matcher(vpeValue);
+				if (!matcher.find()) {
+					throw new DOMComparisonException("CSS property ["  //$NON-NLS-1$
+							+ xmlName + "] is [" + vpeValue + "]" //$NON-NLS-1$ //$NON-NLS-2$
+							+ ", but pattern is [" + pattern + "]", modelNode); //$NON-NLS-1$ //$NON-NLS-2$
+				}
 			} else if (!vpeValue.equalsIgnoreCase(xmlValue)) {
 				throw new DOMComparisonException("CSS property ["  //$NON-NLS-1$
 						+ xmlName + "] is [" + vpeValue + "]" //$NON-NLS-1$ //$NON-NLS-2$
