@@ -2,7 +2,6 @@
 	<test id="basefont">
 		<BASEFONT ID="basefont" FACE="Arial, Helvetica, sans-serif"
 			SIZE="4" COLOR="red" STYLE="-moz-user-modify: read-write;"  />
-		<BR VPE:PSEUDO-ELEMENT="yes"
-			STYLE="font-style: italic; color: green; -moz-user-modify: read-only;" />
+		<BR VPE:PSEUDO-ELEMENT="yes"/>
 	</test>
 </tests>

@@ -3,8 +3,7 @@
 		<TABLE CELLSPACING="0" CELLPADDING="5" BORDER="0" WIDTH="400"
 			ID="table" STYLE="-moz-user-modify: read-write;">
 			<COLGROUP WIDTH="150" STYLE="-moz-user-modify: read-write;">
-				<BR VPE:PSEUDO-ELEMENT="yes"
-					STYLE="font-style: italic; color: green; -moz-user-modify: read-only;" />
+				<BR VPE:PSEUDO-ELEMENT="yes"/>
 
 			</COLGROUP>
 			<COLGROUP ALIGN="center" SPAN="9" WIDTH="50"

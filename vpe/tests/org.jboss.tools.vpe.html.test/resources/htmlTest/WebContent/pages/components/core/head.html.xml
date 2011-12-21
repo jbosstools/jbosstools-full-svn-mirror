@@ -1,6 +1,6 @@
 <tests>
 	<test id="head">
-		<DIV STYLE="display: none; -moz-user-modify: read-only;"><BR VPE:PSEUDO-ELEMENT="yes" STYLE="font-style: italic; color: green; -moz-user-modify: read-only;"/>
+		<DIV STYLE="display: none; -moz-user-modify: read-only;"><BR VPE:PSEUDO-ELEMENT="yes"/>
 
 </DIV>
 	</test>

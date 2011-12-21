@@ -451,3 +451,8 @@ span.vpe-text {
 	font-size-adjust	:inherit !important;
 	opacity	:inherit !important;
 }
+
+[vpe\:pseudo-element='yes'] {
+	font-style:italic;
+	color:green;
+}

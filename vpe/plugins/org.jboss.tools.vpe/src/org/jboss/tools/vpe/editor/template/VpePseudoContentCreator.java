@@ -26,7 +26,6 @@ public abstract class VpePseudoContentCreator {
 	
 	public static void setPseudoAttribute(nsIDOMElement visualPseudoElement) {
 		visualPseudoElement.setAttribute(PSEUDO_CONTENT_ATTR, "yes"); //$NON-NLS-1$
-		visualPseudoElement.setAttribute("style", "font-style:italic; color:green"); //$NON-NLS-1$ //$NON-NLS-2$
 		VpeHtmlTemplate.makeModify(visualPseudoElement, false);
 	}
 	

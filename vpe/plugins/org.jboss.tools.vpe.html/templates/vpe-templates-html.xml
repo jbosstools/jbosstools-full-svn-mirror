@@ -8,7 +8,6 @@
 			<vpe:dnd>
 				<vpe:drag start-enable="yes" />
 				<vpe:drop container="yes">
-					<vpe:container-child tag-name="#text" />
 				</vpe:drop>
 			</vpe:dnd>
 			<vpe:textFormatting use-default-formats="yes">
