@@ -36,7 +36,13 @@
       <p><b>Support for AS 7.1</b></p>
     </td>
     <td valign="top" width="90%">
-        <p>JBoss AS Tools now supports JBoss AS 7.1 beta1b. The support includes a new server adapter type. JBoss AS 7.1 also includes new security features restricting access to the remote management services. The new 7.1 adapter includes methods for storing these credentials. </p>
+        <p>JBoss AS Tools now supports JBoss AS 7.1 beta1b and should
+    work with newer releases of AS 7.1 too. The support includes a new
+    server adapter type (JBoss AS 7.1.x). JBoss AS 7.1 also includes
+    new security features restricting access to the remote management
+    services if you are not running as the same user as AS 7 is
+    started with. The new 7.1 adapter includes support for managing
+    and using such credentials. </p>
 	    <p><img src="images/credentials-dialog.png" alt="credentials dialog"/></p>
 	    <p><small><a href="https://issues.jboss.org/browse/JBIDE-10292">Related Jira</a></small></p>
     </td>
@@ -47,8 +53,12 @@
       <p><b>Run On Server supported for EAR projects</b></p>
     </td>
     <td valign="top" width="90%">
-        <p>Attempting to run an EAR project on a server now will load the url that is most likely to be desired, whereas previously no action was taken on EAR projects</p>
-	    <p><small><a href="https://issues.jboss.org/browse/JBIDE-9893">Related Jira</a></small></p>
+
+      <p>Previously nothing happend when you attempted to "Run on
+    Server" on an EAR project. Now our server adapters will load the
+    url for the first found WAR project on it.</p>
+      
+      <p><small><a href="https://issues.jboss.org/browse/JBIDE-9893">Related Jira</a></small></p>
     </td>
   </tr>  
   <tr><td colspan="2"><hr /></td></tr>
@@ -67,7 +77,7 @@
       <p><b>Actions to load AS Management urls</b></p>
     </td>
     <td valign="top" width="90%">
-        <p>The most commonly loaded bundled apps for our servers now appear in the server view's context menu. Simply right-click on the server, select "show in", and you will see options such as the JMX Console, Admin Console, and Web Console.</p> 
+        <p>The most commonly bundled apps for JBoss servers now appear in the server view's context menu. Right-click on the server, select "Show In", and you will see options such as the JMX Console, Admin Console, and Web Console.</p> 
 	    <p><img src="images/show-in-management-console.png" alt="show in management console"/></p>
 	    <p><small><a href="https://issues.jboss.org/browse/JBIDE-6828">Related Jira</a></small></p>
     </td>
@@ -78,7 +88,15 @@
       <p><b>Usability improvement for "Mark As Deployable" feature</b></p>
     </td>
     <td valign="top" width="90%">
-        <p>Some users may have been confusing the "Mark as Deployable" feature with simple deployment done via the Add / Remove Module wizard. When a user now attempts to "Mark as Deployable" a project which is already a deployable module, a dialog is shown, advising them against it unless they are aware of what they are doing. </p> 
+        <p>We've seen many users use "Mark as Deployable" on
+    individual resources instead of deploying the project
+    directly. They were not aware of the project being runnable/deployable on
+    the server adapter.</p>
+
+      <p>Thus now when a user attempts to "Mark as Deployable" on a
+		resource within a project which is already a
+		deployable module, a dialog is shown, advising about
+		their options. </p> 
 		<p><img src="images/mark-deployable.png" alt="mark deployable"/)></p>
 	    <p><small><a href="https://issues.jboss.org/browse/JBIDE-9995">Related Jira</a></small></p>
     </td>

@@ -28,6 +28,41 @@
 	&gt;</a></p> 
 	<table border="0" cellpadding="10" cellspacing="0"
 	 width="80%">
+
+	  	<tr> 
+			<td colspan="2">
+	    	  <hr/>
+				<h3>General</h3>
+		      <hr/>
+			</td> 
+		</tr>
+		
+	  	<tr>
+			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>OpenShift server adapter</b></td> 
+			<td valign="top">
+			  <p>
+				The server adapter for OpenShift has
+			changed from previous versions. Previously
+			OpenShift was an possible AS7 behavior, but
+			that made it hard/impossible to use together
+			with other application types such as PHP &
+			Ruby.
+			  </p>
+			  <p>
+			  In this release OpenShift is its own server
+				type and does not have hard
+				dependencies to AS7 anymore.
+</p><p>
+			  If you used the old server adapter then you
+				should delete the old and create a new
+				via the OpenShift Express Application
+				wizard to get the updated server type.
+			  </p>
+				<p><img src="images/openshift-server-adapter.png" alt="openshift server adapter"/></p>
+				<p><small><a href="https://issues.jboss.org/browse/JBIDE-9935">Related Jira</a></small></p>
+			</td>
+		</tr>
+		
 	  	<tr> 
 			<td colspan="2">
 	    	  <hr/>
@@ -35,10 +70,54 @@
 		      <hr/>
 			</td> 
 		</tr> 
+	<tr>
+			<td valign="top" align="left"><a
+	 name="itemname3" id="itemname3"></a><b>Use Existing Projects</b></td> 
+			<td valign="top"> 
+			  <p>
+			  The OpenShift Express Application wizard
+			  previously only allowed you to import the
+			  existing application installed to OpenShift
+			  into your workspace.
+			  </p>
+			  <p>
+			  It was then up to you to merge the demo with
+			  your own application and push things to the
+			  OpenShift PaaS. Our tooling did not assist
+			  you in that case.
+			  </p>
+			  <p>
+			  M5 we now support to setup your own
+			  application directly for deployment to OpenShift. Just uncheck
+			  <b>"Create New Project"</b> and choose
+			  an existing project from your workspace, that
+			  you want to publish to OpenShift. The
+			  wizard will then copy OpenShift
+			  configurations and enable git on
+			  the project. You'll then be able to 
+			  push it to OpenShift via git or let the OpenShift Server
+			  Adapter do that job for you.
+			  </p>
+
+			  <p><img
+			  src="images/push-existing-project.png"
+			  alt="push existing project"/></p>
+				<p><small><a
+				 href="https://issues.jboss.org/browse/JBIDE-10171">Related
+				Jira</a></small></p> </td> </tr>
+		
+		<tr> 
+			<td colspan="2">
+	    	  <hr/>
+				<h3>Cartridges</h3>
+		      <hr/>
+			</td> 
+		</tr> 
 		<tr> 
 			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Embed Cartridges</b></td> 
 			<td valign="top"> 
-				The OpenShift Express Application wizard now allows you to embed cartridges to your OpenShift application.
+				You can now manage cartridges for your
+			OpenShift applition directly from JBoss Tools.
 				Cartridges add capabilities to your application. A typical usecase is to add a mysql database. 
 				You allow your application to use a mysql database by embedding the mysql cartridge to it.
 				The OpenShift Express Application wizard will list all available cartridges and allow you to add/remove cartridges at will.
@@ -53,66 +132,26 @@
 		<tr>
 			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Embed Jenkins</b></td> 
 			<td valign="top"> 
-				An even more exciting use case is to embed jenkins to your OpenShift application. That will turn OpenShift into an Continous Integration server.
+				OpenShift now has support for Jenkins, turning OpenShift into an Continous Integration server.
 				Anytime you push changes to OpenShift, a jenkins CI server will build your application. 
-				Our wizard allows you to embed the jenkins client. It will verify behind the scenes that you already have a jenkins application and 
-				prompt you to create one if you haven't yet.
-				<p><img src="images/create-jenkins.png" alt="create jenkins"/></p>
-				Credentials and url of your new jenkins instance will get reported to you accordingly.
+				The OpenShift Express Application wizard allows you to embed the jenkins client. It will verify behind the scenes that you already have a jenkins application and prompt you to create one if you haven't yet.
+
+			  <p><img src="images/create-jenkins.png" alt="create jenkins"/></p>
+				Credentials and url of your new
+				jenkins instance will get reported to
+				you - keep those for future reference.
 				<p><img src="images/jenkins-creation-log.png" alt="jenkins creation log"/></p>
 				<p><small><a href="https://issues.jboss.org/browse/JBIDE-9927">Related Jira</a></small></p>
 			</td>
 		</tr>	
+	
  <tr>
    <td colspan="2">
       <hr/>
    </td>
   </tr>
-		<tr>
-			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Push Existing Projects</b></td> 
-			<td valign="top"> 
-				The OpenShift Express Application wizard in M4 allowed you to import the demo application (that the OpenShift PaaS creates initially) to your workspace. 
-				It was then up to you to merge the demo with your own application and push things to the OpenShift PaaS. Our tooling did not assist you in that case.
-				In M5 we now allow you to push your own application directly. Just uncheck <b>"Create New Project"</b> and choose the project from your workspace, that you want to 
-				publish to OpenShift. The wizard will then copy OpenShift configurations and enable git on it. You'll then be able to manually push it to OpenShift 
-				or let our Server Adapter do that job for you.  
-				<p><img src="images/push-existing-project.png" alt="push existing project"/></p>
-				<p><small><a href="https://issues.jboss.org/browse/JBIDE-10171">Related Jira</a></small></p>
-			</td>
-		</tr>	
- <tr>
-   <td colspan="2">
-      <hr/>
-   </td>
-  </tr>
-		<tr>
-			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>OpenShift server adapter</b></td> 
-			<td valign="top"> 
-				We also offer you an Eclipse WTP compliant OpenShift Server adapter that allows you to publish applications to OpenShift. 
-				The server adapter is created when you finish the OpenShift Express Application wizard. We already offered that server adapter in M4. 
-				We now turned it into its own distinct server type and made it work even more seamlessly.
-				<p><img src="images/openshift-server-adapter.png" alt="openshift server adapter"/></p>
-				<p><small><a href="https://issues.jboss.org/browse/JBIDE-9935">Related Jira</a></small></p>
-			</td>
-		</tr>
-		<tr> 
-			<td colspan="2">
-      			<hr/>
-				<h3>OpenShift Express REST client</h3>
-		      	<hr/>
-			</td> 
-		</tr> 
-		<tr> 
-			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>REST Client</b></td> 
-			<td valign="top">
-			We developed a client for the OpenShift Express REST service in M4. It pretty much offers all features that
-			are currently available in the rhc-* command line tools (create/rename a domain, create/destroy applications, 
-			list all existing applications, available cartridges, read the application log, embed cartridges etc.). <br/>
-			We moved it to github and joined forces with the OpenShift team. 
-			The official client is now maintained at <a href="https://github.com/bdecoste/openshift-java-client">https://github.com/bdecoste/openshift-java-client</a>
-			<p><small><a href="https://issues.jboss.org/browse/JBIDE-10068">Related Jira</a>, <a href="https://issues.jboss.org/browse/JBIDE-10455">Related Jira</a></small></p>
-			</td>
-		</tr>
+	
+
 		<tr> 
 			<td colspan="2">
 	    	  <hr/>
@@ -126,15 +165,15 @@
                 If you want to deploy your Web application to OpenShift Express, you will need to define an <strong><i>openshift</i></strong> maven profile.
                 It basically configures the maven build to generate a ROOT.war archive in the deployments folder of your project.
                 <p>
-				In the pom.xml editor, create a &lt;profiles&gt; section if it doesn't exist and press <strong>CTRL+&lt;space&gt;</strong> to trigger auto-completion, 
+			  In the pom.xml editor, create a &lt;profiles&gt; section if it doesn't exist and press <strong>CTRL+&lt;space&gt;</strong> to trigger auto-completion, 
                 an OpenShift Express Maven profile template is now available : 
                 </p>
 				<p></p><img src="images/openshift-profile.png" alt="new OpenShift Express maven profile template"/></p> 
 				Press enter to select and insert the <strong><i>openshift</i></strong> profile in your pom.xml.
 				<p><small><a href="https://issues.jboss.org/browse/JBIDE-10354">Related Jira</a></small></p>
 			</td>
-		</tr>	
-        <!--
+		</tr>
+		
 		<tr> 
 			<td colspan="2">
       			<hr/>
@@ -145,18 +184,15 @@
 		<tr> 
 			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>REST Client</b></td> 
 			<td valign="top">
-			We also developed a client for the OpenShift Express REST service. It pretty much offers all features that
+			We developed a client for the OpenShift Express REST service in M4. It offers most features that
 			are currently available in the rhc-* command line tools (create/rename a domain, create/destroy applications, 
-			list all existing applications, available cartridges, read the application log etc.). <br/>
-			Even though it's pretty new, it's code base is pretty well tested since it's well covered by unit-tests and 
-			used in our application wizard and the <a href="https://github.com/forge/plugin-openshift-express">Forge OpenShift Express plugin</a>.
-			The plug-in is currently still an osgi bundle, but we will strip its Eclipse dependencies and move it to github
-			at some point.</br>
-			You may check the current code in our <a href="http://anonsvn.jboss.org/repos/jbosstools/trunk/openshift/plugins/org.jboss.tools.openshift.express.client/">SVN</a>. 
-			<p><small><a href="https://issues.jboss.org/browse/JBIDE-9591">Related Jira</a></small></p>
+			list all existing applications, available cartridges, read the application log, embed cartridges etc.). <br/>
+			We moved it to github and joined forces with the OpenShift team. 
+			The official client is now maintained at <a href="https://github.com/bdecoste/openshift-java-client">https://github.com/bdecoste/openshift-java-client</a>
+			<p><small><a href="https://issues.jboss.org/browse/JBIDE-10068">Related Jira</a>, <a href="https://issues.jboss.org/browse/JBIDE-10455">Related Jira</a></small></p>
 			</td>
 		</tr>
-        -->
+			
 	</table>
 </body>
 
