@@ -23,7 +23,7 @@
 		<property name="compress" value="true" />
 
 		<p2.mirror>
-			<repository location="file:${destination}/201112121340-SR1-M/" name="Indigo 201112121340-SR1-M" />
+			<repository location="file:${destination}/201112221140-SR1-M/" name="Indigo 201112221140-SR1-M" />
 			<source>
 				<repository location="${URL}" />
 			</source>
@@ -31,6 +31,6 @@
 			<slicingOptions includeFeatures="true" followStrict="true" />
 		</p2.mirror>
 
-		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/201112121340-SR1-M/" artifactRepository="file:${destination}/201112121340-SR1-M/" publishartifacts="true" source="${destination}/201112121340-SR1-M/" compress="${compress}" />
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/201112221140-SR1-M/" artifactRepository="file:${destination}/201112221140-SR1-M/" publishartifacts="true" source="${destination}/201112221140-SR1-M/" compress="${compress}" />
 	</target>
 </project>
