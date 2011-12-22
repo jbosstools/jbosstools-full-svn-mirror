@@ -67,7 +67,7 @@
       <p>You can now retrieve the live logs from the remote JBossAS7 instance running on OpenShift right into your Eclipse Console view. This feature is available from the <b>"Show In>Remote Console"</b> contextual menu item of the Server Adapter associated with your OpenShift Application. 
       </p>
       <p><image src="images/show-in-remote-console.png" alt="Show In Remote Console"/></p>
-      <p>This works in the same manner as the 'rhc-tail-files' command line tool, which means that the underlying action issues an 'ssh tail' command on the remote VM, and thus may prompt you for the passphrase associated with your OpenShift SSH Key if it was not previously loaded during the Eclipse session.</p>
+      <p>This works in the same manner as the '<b>rhc-tail-files</b>' command line tool, which means that the underlying action issues a single 'ssh tail' command on the remote VM, and thus may prompt you for the passphrase associated with your OpenShift SSH Key if it was not previously loaded during the Eclipse session.</p>
       <p>Both the 'boot.log' and 'server.log' will be shown in the console, including their 100 previous lines.</p>
       <p><img src="images/remote-console.png" alt="Remote Console"/></p>
       <p>You can stop the 'ssh tail' command from the console by clicking on the 'Close Console' button.</p>
