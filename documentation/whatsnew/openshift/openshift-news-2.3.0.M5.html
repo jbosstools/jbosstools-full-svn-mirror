@@ -32,7 +32,7 @@
 	  	<tr> 
 			<td colspan="2">
 	    	  <hr/>
-				<h3>General</h3>
+				<h3>OpenShift Server</h3>
 		      <hr/>
 			</td> 
 		</tr>
@@ -40,7 +40,7 @@
 	  	<tr>
 			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>OpenShift server adapter</b></td> 
 			<td valign="top">
-                          <p><b>Updated OpenShift Server Adapter</b></p>
+                   
 			  <p>
 				The server adapter for OpenShift has
 			changed from previous versions. Previously
@@ -63,8 +63,17 @@
 				<p><small><a href="https://issues.jboss.org/browse/JBIDE-9935">Related Jira</a></small></p>
 
 
-     <p><b>Tailing the remote instance logs into the Eclipse Console</b></p>
-      <p>You can now retrieve the live logs from the remote JBossAS7 instance running on OpenShift right into your Eclipse Console view. This feature is available from the <b>"Show In>Remote Console"</b> contextual menu item of the Server Adapter associated with your OpenShift Application. 
+			  	<tr> 
+			<td colspan="2">
+	    	     <hr/>
+			</td> 
+		</tr>
+
+			<td valign="top" align="left"><a
+			name="itemname3" id="itemname3"></a><b>Tail files/logs</b></td> 
+			<td valign="top">
+                      
+      <p>You can now tail the live logs from the remote JBossAS7 instance running on OpenShift right into your Eclipse Console view. This feature is available from the <b>"Show In>Remote Console"</b> contextual menu item of the Server Adapter associated with your OpenShift Application. 
       </p>
       <p><image src="images/show-in-remote-console.png" alt="Show In Remote Console"/></p>
       <p>This works in the same manner as the '<b>rhc-tail-files</b>' command line tool, which means that the underlying action issues a single 'ssh tail' command on the remote VM, and thus may prompt you for the passphrase associated with your OpenShift SSH Key if it was not previously loaded during the Eclipse session.</p>
@@ -73,7 +82,7 @@
       <p>You can stop the 'ssh tail' command from the console by clicking on the 'Close Console' button.</p>
       <p><small><a href="https://issues.jboss.org/browse/JBIDE-10152">Related Jira</a></small></p>
 
-
+			  
     </td>
 
 
