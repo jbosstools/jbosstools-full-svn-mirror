@@ -119,10 +119,12 @@ public abstract class ComponentContentTest extends VpeTest {
 	private void compareStylesJob(VpeController controller, Document xmlTestDocument, 
 			String elementId, String xmlTestId) throws DOMComparisonException {
 		nsIDOMElement vpeElement = findElementById(controller, elementId);
-		assertNotNull("Cannot find element with id = "+elementId, vpeElement); //$NON-NLS-1$
+		assertNotNull("Cannot find element with id = [" + elementId //$NON-NLS-1$
+				+ "] in VPE page", vpeElement); //$NON-NLS-1$
 		Element xmlModelElement = TestDomUtil.getFirstChildElement(
 				TestDomUtil.getElemenById(xmlTestDocument, xmlTestId));
-		assertNotNull(xmlModelElement);
+		assertNotNull("Cannot find element with id = [" + xmlTestId //$NON-NLS-1$ 
+				+ "] in XML file", xmlModelElement); //$NON-NLS-1$
 		TestDomUtil.compareComputedStyle(vpeElement, xmlModelElement);
 	}
 	
@@ -159,7 +161,8 @@ public abstract class ComponentContentTest extends VpeTest {
 				throws DOMComparisonException {
 		// get element by id
 		nsIDOMElement vpeElement = findElementById(controller, elementId);
-		assertNotNull("Cannot find element with id="+elementId,vpeElement); //$NON-NLS-1$
+		assertNotNull("Cannot find element with id = [" + elementId //$NON-NLS-1$
+				+ "] in VPE page", vpeElement); //$NON-NLS-1$
 
 		// DOMTreeDumper dumper = new DOMTreeDumper(
 		// VpeDebug.VISUAL_DUMP_PRINT_HASH);
@@ -170,7 +173,8 @@ public abstract class ComponentContentTest extends VpeTest {
 		Element xmlModelElement = TestDomUtil.getFirstChildElement(TestDomUtil
 				.getElemenById(xmlTestDocument, xmlTestId));
 
-		assertNotNull(xmlModelElement);
+		assertNotNull("Cannot find element with id = [" + xmlTestId //$NON-NLS-1$ 
+				+ "] in XML file", xmlModelElement); //$NON-NLS-1$
 
 		TestDomUtil.compareNodes(vpeElement, xmlModelElement);
 	}
