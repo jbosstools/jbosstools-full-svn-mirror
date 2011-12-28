@@ -28,7 +28,7 @@
 
 	<vpe:tag name="abbr" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir" />
+			<vpe:copy />
 			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="deny"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
@@ -67,7 +67,7 @@
 
 	<vpe:tag name="acronym" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir" />
+			<vpe:copy />
 			<vpe:textFormatting use-default-formats="yes">
 				<vpe:format type="BlockFormat" addChildren="deny"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
@@ -91,7 +91,7 @@
 
 	<vpe:tag name="address" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir" />
+			<vpe:copy />
 			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="allow"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
@@ -166,7 +166,7 @@
 
 	<vpe:tag name="b" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir" />
+			<vpe:copy />
 			<vpe:dnd>
 				<vpe:drag start-enable="yes" />
 				<vpe:drop container="yes">
@@ -195,13 +195,13 @@
 
 	<vpe:tag name="basefont" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,size,color,face" />
+			<vpe:copy />
 		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="bdo" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir,lang" />
+			<vpe:copy />
 			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="deny"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
@@ -246,7 +246,7 @@
 
 	<vpe:tag name="big" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir" />
+			<vpe:copy />
 			<vpe:textFormatting use-default-formats="yes">
 				<vpe:format type="BlockFormat" addChildren="deny"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
@@ -268,7 +268,7 @@
 
 	<vpe:tag name="blockquote" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir" />
+			<vpe:copy />
 			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addParent="deny" addChildren="allow"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
@@ -337,7 +337,7 @@
 
 	<vpe:tag name="br" case-sensitive="no">
 		<vpe:template children="no" modify="yes">
-			<vpe:copy attrs="id,style,class,clear" />
+			<vpe:copy />
 		</vpe:template>
 	</vpe:tag>
 
@@ -459,13 +459,13 @@
 	
 	<vpe:tag name="caption" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir" />
+			<vpe:copy />
 		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="center" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir" />
+			<vpe:copy />
 			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addParent="deny" addChildren="allow"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
@@ -502,7 +502,7 @@
 
 	<vpe:tag name="cite" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir" />
+			<vpe:copy />
 			<vpe:textFormatting use-default-formats="yes">
 				<vpe:format type="BlockFormat" addChildren="deny"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
@@ -524,7 +524,7 @@
 
 	<vpe:tag name="code" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir" />
+			<vpe:copy />
 			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="deny"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
@@ -597,7 +597,7 @@
 
 	<vpe:tag name="dd" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir" />
+			<vpe:copy />
 			<vpe:textFormatting use-default-formats="yes">
 				<vpe:format type="BlockFormat" addChildren="allow" addParent="deny"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
@@ -619,7 +619,7 @@
 
 	<vpe:tag name="del" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir" />
+			<vpe:copy />
 			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="allow"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
@@ -656,14 +656,14 @@
 	
 	<vpe:tag name="details" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir,hidden,open" />
+			<vpe:copy />
 			<vpe:textFormatting use-default-formats="yes" />
 		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="dfn" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir" />
+			<vpe:copy />
 			<vpe:textFormatting use-default-formats="yes">
 				<vpe:format type="BlockFormat" addChildren="deny"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
@@ -685,13 +685,14 @@
 
 	<vpe:tag name="dir" case-sensitive="no">
 		<vpe:template children="yes" modify="no">
-			<vpe:copy attrs="id,style,class,dir" />
+			<vpe:copy />
 		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="div" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,align,dir" />
+			<!-- vpe:copy attrs="id,style,class,align,dir,title" /-->
+			<vpe:copy />
 			<vpe:resize>
 				<vpe:width width-attr="style.width" />
 				<vpe:height height-attr="style.height" />
@@ -736,7 +737,7 @@
 
 	<vpe:tag name="dl" case-sensitive="no">
 		<vpe:template children="yes" modify="no">
-			<vpe:copy attrs="id,style,class,dir" />
+			<vpe:copy />
 			<vpe:textFormatting use-default-formats="yes">
 				<vpe:format type="BlockFormat" addChildren="deny" addParent="deny"/>
 				<vpe:format type="BoldFormat" addParent="deny" addChildren="deny">
@@ -751,7 +752,7 @@
 
 	<vpe:tag name="dt" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir" />
+			<vpe:copy />
 			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="deny" addParent="deny"/>
 				<vpe:format type="BoldFormat" addParent="deny" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BoldFormatHandler" />
@@ -787,7 +788,7 @@
 
 	<vpe:tag name="em" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir" />
+			<vpe:copy />
 			<vpe:textFormatting use-default-formats="yes">
 				<vpe:format type="BlockFormat" addChildren="deny"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
@@ -809,7 +810,7 @@
 
 	<vpe:tag name="fieldset" case-sensitive="no">
 		<vpe:template children="yes" modify="no">
-			<vpe:copy attrs="id,style,class,dir" />
+			<vpe:copy />
 			<vpe:resize>
 				<vpe:width width-attr="style.width" />
 				<vpe:height height-attr="style.height" />
@@ -868,7 +869,7 @@
 
 	<vpe:tag name="font" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,size,color,face,dir" />
+			<vpe:copy />
 			<vpe:textFormatting use-default-formats="yes">
 				<vpe:format type="BlockFormat" addChildren="deny"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
@@ -890,7 +891,7 @@
 
 	<vpe:tag name="form" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,align,dir" />
+			<vpe:copy />
 			<form />
 			<vpe:dnd>
 				<vpe:drag start-enable="yes" />
@@ -910,7 +911,7 @@
 
 	<vpe:tag name="frameset" case-sensitive="no">
 		<vpe:template children="yes" modify="no" >
-			<vpe:copy attrs="border,bordercolor,cols,frameborder,framespacing,rows" />
+			<vpe:copy />
 		</vpe:template>
 	</vpe:tag>
 
@@ -923,7 +924,7 @@
 
 	<vpe:tag name="h1" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,align,dir" />
+			<vpe:copy />
 			<vpe:dnd>
 				<vpe:drag start-enable="yes" />
 				<vpe:drop container="yes" />
@@ -964,7 +965,7 @@
 
 	<vpe:tag name="h2" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,align,dir" />
+			<vpe:copy />
 			<vpe:dnd>
 				<vpe:drag start-enable="yes" />
 				<vpe:drop container="yes" />
@@ -990,7 +991,7 @@
 
 	<vpe:tag name="h3" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,align,dir" />
+			<vpe:copy />
 			<vpe:dnd>
 				<vpe:drag start-enable="yes" />
 				<vpe:drop container="yes" />
@@ -1031,7 +1032,7 @@
 
 	<vpe:tag name="h4" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,align,dir" />
+			<vpe:copy />
 			<vpe:dnd>
 				<vpe:drag start-enable="yes" />
 				<vpe:drop container="yes" />
@@ -1057,7 +1058,7 @@
 
 	<vpe:tag name="h5" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,align,dir" />
+			<vpe:copy />
 			<vpe:dnd>
 				<vpe:drag start-enable="yes" />
 				<vpe:drop container="yes" />
@@ -1098,7 +1099,7 @@
 
 	<vpe:tag name="h6" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,align,dir" />
+			<vpe:copy />
 			<vpe:dnd>
 				<vpe:drag start-enable="yes" />
 				<vpe:drop container="yes" />
@@ -1147,7 +1148,7 @@
 
 	<vpe:tag name="hr" case-sensitive="no">
 		<vpe:template children="no" modify="no">
-			<vpe:copy attrs="id,style,class,align,size,width,color,dir" />
+			<vpe:copy />
 		</vpe:template>
 	</vpe:tag>
 
@@ -1168,7 +1169,7 @@
 
 	<vpe:tag name="i" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir" />
+			<vpe:copy />
 			<vpe:dnd>
 				<vpe:drag start-enable="yes" />
 				<vpe:drop container="yes" />
@@ -1245,7 +1246,7 @@
 		</vpe:if>
 		<vpe:if test="(@type='submit')|(@type='button')">
 			<vpe:template children="yes" modify="yes">
-				<vpe:copy attrs="id,type,value,style,class,dir,disabled,height,width,placeholder,name" />
+				<vpe:copy />
 				<!--span class="__button__tag" style="{@style}">
 					<nobr><vpe:value expr="{@value}"/></nobr>
 					</span-->
@@ -1278,7 +1279,7 @@
 			</vpe:if>
 			<vpe:if test="not(@value='')">
 				<vpe:template children="yes" modify="yes">
-					<vpe:copy attrs="id,type,checked,value,class,style,disabled,height,width,placeholder" />
+					<vpe:copy />
 					<!--span class="__button__tag" style="{@style}">
 						<nobr><vpe:value expr="{@value}"/></nobr>
 						</span-->
@@ -1315,7 +1316,7 @@
 			</vpe:template>
 		</vpe:if>
 		<vpe:template children="no" modify="no">
-			<vpe:copy attrs="id,type,style,class,value,size,dir,disabled,height,width,placeholder,name" />
+			<vpe:copy />
 			<!--span class="__input__tag" style="{@style}">
 				<nobr><vpe:value expr="{@value}"/></nobr>
 				</span-->
@@ -1333,7 +1334,7 @@
 
 	<vpe:tag name="ins" case-sensitive="no">
 		<vpe:template children="yes" modify="no">
-			<vpe:copy attrs="id,style,class,dir" />
+			<vpe:copy />
 			<vpe:textFormatting use-default-formats="yes">
 				<vpe:format type="BlockFormat" addChildren="allow"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
@@ -1354,7 +1355,7 @@
 
 	<vpe:tag name="isindex" case-sensitive="no">
 		<vpe:template children="yes" modify="no">
-			<vpe:copy attrs="id,style,class,prompt,dir" />
+			<vpe:copy />
 		</vpe:template>
 	</vpe:tag>
 
@@ -1369,7 +1370,7 @@
 
 	<vpe:tag name="kbd" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir" />
+			<vpe:copy />
 			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="allow"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
@@ -1406,7 +1407,7 @@
 
 	<vpe:tag name="label" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,for,dir" />
+			<vpe:copy />
 			<vpe:dnd>
 				<vpe:drag start-enable="yes" />
 				<vpe:drop container="yes">
@@ -1479,13 +1480,13 @@
 
 	<vpe:tag name="legend" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,align,dir" />
+			<vpe:copy />
 		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="li" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,type,value,dir" />
+			<vpe:copy />
 			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="allow" addParent="deny"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
@@ -1528,13 +1529,13 @@
 
 	<vpe:tag name="map" case-sensitive="no">
 		<vpe:template children="yes" modify="no">
-			<vpe:copy attrs="id,style,class,name,dir" />
+			<vpe:copy />
 		</vpe:template>
 	</vpe:tag>
 	
 	<vpe:tag name="mark" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir,hidden" />
+			<vpe:copy />
 		</vpe:template>
 	</vpe:tag>
 
@@ -1547,7 +1548,7 @@
 	
 	<vpe:tag name="menu" case-sensitive="no">
 		<vpe:template children="yes" modify="no">
-			<vpe:copy attrs="id,style,class,dir" />
+			<vpe:copy />
 			<vpe:textFormatting use-default-formats="yes">
 			</vpe:textFormatting>
 		</vpe:template>
@@ -1559,13 +1560,13 @@
 	
 	<vpe:tag name="meter" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir,hidden,form,high,low,max,min,optimum,value" />
+			<vpe:copy />
 		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="nav" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir,hidden" />
+			<vpe:copy />
 		</vpe:template>
 	</vpe:tag>
 
@@ -1611,7 +1612,7 @@
 
 	<vpe:tag name="ol" case-sensitive="no">
 		<vpe:template children="yes" modify="no">
-			<vpe:copy attrs="id,style,class,type,start,dir,reversed" />
+			<vpe:copy />
 			<vpe:dnd>
 				<vpe:drop container="yes">
 					<vpe:container-child tag-name="del" />
@@ -1626,7 +1627,7 @@
 
 	<vpe:tag name="optgroup" case-sensitive="no">
 		<vpe:template children="yes" modify="no">
-			<vpe:copy attrs="id,style,class,label,dir,disabled"/>
+			<vpe:copy />
 			<vpe:dnd>
 				<vpe:drop container="yes">
 					<vpe:container-child tag-name="del" />
@@ -1639,19 +1640,19 @@
 
 	<vpe:tag name="option" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,value,label,dir,disabled,selected" />
+			<vpe:copy />
 		</vpe:template>
 	</vpe:tag>
 	
 	<vpe:tag name="output" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir,hidden,for,form,name" />
+			<vpe:copy />
 		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="p" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,align,dir" />
+			<vpe:copy />
 			<vpe:dnd>
 				<vpe:drag start-enable="yes" />
 				<vpe:drop container="yes" />
@@ -1683,7 +1684,7 @@
 
 	<vpe:tag name="pre" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,width,dir" />
+			<vpe:copy />
 			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="deny" addParent = "deny"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
@@ -1720,13 +1721,13 @@
 
 	<vpe:tag name="progress" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir,hidden,max,value" />
+			<vpe:copy />
 		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="q" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir" />
+			<vpe:copy />
 			<vpe:textFormatting use-default-formats="yes">
 				<vpe:format type="BlockFormat" addChildren="allow"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
@@ -1748,25 +1749,25 @@
 	
 	<vpe:tag name="rp" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir,hidden" />
+			<vpe:copy />
 		</vpe:template>
 	</vpe:tag>
 	
 	<vpe:tag name="rt" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir,hidden" />
+			<vpe:copy />
 		</vpe:template>
 	</vpe:tag>
 	
 	<vpe:tag name="ruby" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir,hidden" />
+			<vpe:copy />
 		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="s" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir" />
+			<vpe:copy />
 			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="allow"
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
@@ -1803,7 +1804,7 @@
 
 	<vpe:tag name="samp" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir" />
+			<vpe:copy />
 			<vpe:textFormatting use-default-formats="yes">
 				<vpe:format type="BlockFormat" addChildren="allow" 
 					handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
@@ -1829,13 +1830,13 @@
 	
 	<vpe:tag name="section" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir,hidden" />
+			<vpe:copy />
 		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="select" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,size,dir,disabled,multiple" />
+			<vpe:copy />
 			<vpe:resize>
 				<vpe:width width-attr="style.width" />
 				<vpe:height height-attr="style.height" />
@@ -1883,7 +1884,7 @@
 
 	<vpe:tag name="small" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir" />
+			<vpe:copy />
 			<vpe:textFormatting use-default-formats="yes">
 				<vpe:format type="BlockFormat" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat">
@@ -1903,13 +1904,13 @@
 	
 	<vpe:tag name="source" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir,hidden,media,src,type" />
+			<vpe:copy />
 		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="span" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir" />
+			<vpe:copy />
 			<vpe:dnd>
 				<vpe:drag start-enable="yes" />
 				<vpe:drop container="yes" />
@@ -1933,7 +1934,7 @@
 
 	<vpe:tag name="strike" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir" />
+			<vpe:copy />
 		<vpe:textFormatting use-default-formats="yes">
 				<vpe:format type="BlockFormat" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat">
@@ -1953,7 +1954,7 @@
 
 	<vpe:tag name="strong" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir" />
+			<vpe:copy />
 			<vpe:textFormatting use-default-formats="yes">
 				<vpe:format type="BlockFormat" addChildren="deny" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat" setDefault="true">
@@ -1979,7 +1980,7 @@
 
 	<vpe:tag name="sub" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir" />
+			<vpe:copy />
 			<vpe:textFormatting>
 				<vpe:format type="BlockFormat" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat">
@@ -2014,13 +2015,13 @@
 	
 	<vpe:tag name="summary" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir,hidden" />
+			<vpe:copy />
 		</vpe:template>
 	</vpe:tag>
 
 	<vpe:tag name="sup" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir" />
+			<vpe:copy />
 			<vpe:textFormatting use-default-formats="yes">
 				<vpe:format type="BlockFormat" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 				<vpe:format type="BoldFormat">
@@ -2066,7 +2067,7 @@
 
 	<vpe:tag name="tbody" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,align,char,charoff,valign,dir,bgcolor" />
+			<vpe:copy />
 			<vpe:dnd>
 				<vpe:drop container="yes">
 					<vpe:container-child tag-name="del" />
@@ -2184,7 +2185,7 @@
 
 	<vpe:tag name="tfoot" case-sensitive="no">
 		<vpe:template children="yes" modify="no">
-			<vpe:copy attrs="id,style,class,align,char,charoff,valign,dir,bgcolor" />
+			<vpe:copy />
 			<vpe:textFormatting use-default-formats="yes">
 			</vpe:textFormatting>
 		</vpe:template>
@@ -2228,7 +2229,7 @@
 
 	<vpe:tag name="thead" case-sensitive="no">
 		<vpe:template children="yes" modify="no">
-			<vpe:copy attrs="id,style,class,align,char,charoff,valign,dir,bgcolor" />
+			<vpe:copy />
 			<vpe:dnd>
 				<vpe:drop container="yes">
 					<vpe:container-child tag-name="del" />
@@ -2247,7 +2248,7 @@
 	
 	<vpe:tag name="time" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir,hidden,datetime,pubdate" />
+			<vpe:copy />
 		</vpe:template>
 	</vpe:tag>
 
@@ -2277,7 +2278,7 @@
 
 	<vpe:tag name="tt" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir" />
+			<vpe:copy />
 			<vpe:textFormatting use-default-formats="yes">
 					<vpe:format type="BlockFormat" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
 					<vpe:format type="UnderlineFormat" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.UnderlineFormatHandler" />
@@ -2298,7 +2299,7 @@
 
 	<vpe:tag name="u" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir" />
+			<vpe:copy />
 			<vpe:textFormatting>
 					<vpe:format type="BlockFormat" addChildren="allow"
 						handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
@@ -2337,7 +2338,7 @@
 
 	<vpe:tag name="ul" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,type,dir" />
+			<vpe:copy />
 			<vpe:dnd>
 				<vpe:drop container="yes">
 					<vpe:container-child tag-name="del" />
@@ -2352,7 +2353,7 @@
 
 	<vpe:tag name="var" case-sensitive="no">
 		<vpe:template children="yes" modify="no">
-			<vpe:copy attrs="id,style,class,dir" />
+			<vpe:copy />
 			<vpe:textFormatting use-default-formats="yes">
 					<vpe:format type="BlockFormat" addChildren="allow"
 						handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
@@ -2374,7 +2375,7 @@
 	
 	<vpe:tag name="video" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
-			<vpe:copy attrs="id,style,class,dir,hidden,audio,autoplay,controls,height,loop,poster,preload,src,width" />
+			<vpe:copy />
 		</vpe:template>
 	</vpe:tag>
 

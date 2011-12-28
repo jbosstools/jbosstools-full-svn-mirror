@@ -489,6 +489,10 @@ public class HtmlComponentContentTest extends ComponentContentTest {
 		performStyleTest("jbide9975( 1 )/CSSImportConstruction.html"); //$NON-NLS-1$
 	}
 	
+	public void testComplexStyle() throws Throwable {
+		performContentTest("jbide10126/complexStyle.html"); //$NON-NLS-1$
+	}
+	
 	protected String getTestProjectName() {
 		return HtmlAllTests.IMPORT_PROJECT_NAME;
 	}
