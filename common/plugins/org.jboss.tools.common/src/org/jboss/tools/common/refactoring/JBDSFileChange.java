@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.cdi.internal.core.refactoring;
+package org.jboss.tools.common.refactoring;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
@@ -23,11 +23,11 @@ import org.eclipse.ltk.core.refactoring.TextFileChange;
 import org.eclipse.text.edits.TextEdit;
 import org.eclipse.text.edits.UndoEdit;
 
-public class CDIFileChange extends MultiStateTextFileChange{
+public class JBDSFileChange extends MultiStateTextFileChange{
 	private IFile file;
-	private CDITextChange rootChange = null;
+	private JBDSTextChange rootChange = null;
 
-	public CDIFileChange(IFile file) {
+	public JBDSFileChange(IFile file) {
 		super(file.getName(), file);
 		this.file = file;
 		setSaveMode(TextFileChange.LEAVE_DIRTY);
@@ -38,7 +38,7 @@ public class CDIFileChange extends MultiStateTextFileChange{
 	}
 	
 	public void setEdit(TextEdit edit) {
-		rootChange = new CDITextChange();
+		rootChange = new JBDSTextChange();
 		rootChange.setEdit(edit);
 		super.addChange(rootChange);
 	}
@@ -51,9 +51,9 @@ public class CDIFileChange extends MultiStateTextFileChange{
 		rootChange.addEdit(edit);
 	}
 	
-	class CDITextChange extends TextChange{
+	class JBDSTextChange extends TextChange{
 
-		protected CDITextChange() {
+		protected JBDSTextChange() {
 			super("");
 		}
 

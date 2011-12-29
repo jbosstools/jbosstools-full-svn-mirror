@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.cdi.ui.wizard;
+package org.jboss.tools.common.ui.refactoring;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.ltk.core.refactoring.Refactoring;
@@ -19,9 +19,9 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
-public class CDIRefactoringWizard extends RefactoringWizard {
+public class JBDSRefactoringWizard extends RefactoringWizard {
 
-	public CDIRefactoringWizard(Refactoring refactoring, int flags) {
+	public JBDSRefactoringWizard(Refactoring refactoring, int flags) {
 		super(refactoring, flags);
 	}
 
