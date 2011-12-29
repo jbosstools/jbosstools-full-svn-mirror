@@ -629,10 +629,16 @@
 														<html outfile="${project.build.directory}/emma/coverage.html" />
 													</report>
 												</emma>
-												<loadfile property="emma.txt"
-													srcFile="${project.build.directory}/emma/coverage.txt"
-													failonerror="false" />
-												<echo>${emma.txt}</echo>
+												<if>
+													<available file="${project.build.directory}/emma/coverage.txt" type="file" />
+													<then>
+														<loadfile property="emma.txt" srcFile="${project.build.directory}/emma/coverage.txt" failonerror="false" />
+														<echo>${emma.txt}</echo>
+													</then>
+													<else>
+														<echo>No coverage report found </echo>
+													</else>
+												</if>
 											</then>
 										</if>
 									</tasks>
