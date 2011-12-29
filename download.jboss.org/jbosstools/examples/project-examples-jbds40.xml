@@ -961,11 +961,15 @@ The example provides the sample SOAP Service and a Teiid Designer project set th
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50, org.jboss.ide.eclipse.as.runtime.51</property>
-				<property name="eclipse-projects">seam-portlet-ejb,seam-portlet-web</property>
+				<property name="eclipse-projects">seam-portlet-ejb,seam-portlet-web,seam-portlet-ear</property>
 				<property name="required-components">portlet</property>
 				<property name="description">This project example requires the JBoss EPP 5.x or GateIn 3.1</property>
 			</fix>
-			
+			<fix type="seam">
+				<property name="allowed-versions">2.2.0</property>
+				<property name="eclipse-projects">seam-portlet-web</property>
+				<property name="description">This project example requires Seam version 2.2.0</property>
+			</fix>
 		</fixes>
 	</project>
     
