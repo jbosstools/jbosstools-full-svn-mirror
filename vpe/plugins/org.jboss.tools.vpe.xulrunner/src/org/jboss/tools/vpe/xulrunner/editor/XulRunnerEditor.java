@@ -32,6 +32,7 @@ import org.jboss.tools.vpe.xulrunner.util.XPCOM;
 import org.mozilla.interfaces.nsIBaseWindow;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMKeyEvent;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMWindow;
 import org.mozilla.interfaces.nsISupports;
@@ -499,5 +500,25 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 			resizeElement = getElementForNode(getSelectedNodes().get(0));
 		}
 		return resizeElement;
+	}
+	
+	public Event createSWTKeyEvent(nsIDOMKeyEvent keyEvent) {
+		Event keyboardEvent = new Event();
+		keyboardEvent.widget = getBrowser();
+
+		keyboardEvent.stateMask = (keyEvent.getAltKey() ? SWT.ALT : 0)
+				| (keyEvent.getCtrlKey() ? SWT.CTRL : 0)
+				| (keyEvent.getShiftKey() ? SWT.SHIFT : 0)
+				| (keyEvent.getMetaKey() ? SWT.MOD1 : 0);
+		keyboardEvent.x = 0;
+		keyboardEvent.y = 0;
+		keyboardEvent.type = SWT.KeyDown;
+
+		if (keyEvent.getKeyCode() == 0) {
+			keyboardEvent.keyCode = (int) keyEvent.getCharCode();
+		} else {
+			keyboardEvent.keyCode = (int) keyEvent.getKeyCode();
+		}
+		return keyboardEvent; 
 	}
 }

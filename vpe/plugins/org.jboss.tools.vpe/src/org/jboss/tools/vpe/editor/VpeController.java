@@ -189,8 +189,6 @@ public class VpeController implements INodeAdapter,
 	private VpeSourceDomBuilder sourceBuilder;
 	private VpeVisualDomBuilder visualBuilder;
 	private VpeDnD vpeDnD;
-	// private VpeVisualKeyHandler visualKeyHandler;
-	private ActiveEditorSwitcher switcher = new ActiveEditorSwitcher();
 	private Attr lastRemovedAttr;
 	private String lastRemovedAttrName;
 	private boolean mouseUpSelectionReasonFlag;
@@ -344,7 +342,6 @@ public class VpeController implements INodeAdapter,
 		}
 
 		registerEventTargets();
-		switcher.initActiveEditor();
 
 		if (optionsListener == null) {
 			XModelObject optionsObject = ModelUtilities.getPreferenceModel()
@@ -409,8 +406,6 @@ public class VpeController implements INodeAdapter,
 		if (sourceModel != null) {
 			sourceModel.removeModelLifecycleListener(this);
 		}
-		switcher.destroyActiveEditor();
-		switcher = null;
 
 		VpeTemplateManager.getInstance().removeTemplateListener(this);
 
@@ -423,10 +418,6 @@ public class VpeController implements INodeAdapter,
 			// glory
 			ISelectionProvider provider = sourceEditor.getSelectionProvider();
 			provider.removeSelectionChangedListener(this);
-			// ViewerSelectionManager selectionManager =
-			// sourceEditor.getViewerSelectionManager();
-			// selectionManager.removeNodeSelectionListener(this);
-			// selectionManager.removeTextSelectionListener(this);
 			StyledText textWidget = SelectionHelper
 					.getSourceTextWidget(sourceEditor);
 			if (textWidget != null) {
@@ -444,11 +435,6 @@ public class VpeController implements INodeAdapter,
 				// visualSelectionController.Release();
 				visualSelectionController = null;
 			}
-			// TODO Sergey Vasilyev figure out with Press Shell
-			// if (presShell != null) {
-			// presShell.Release();
-			// presShell = null;
-			// }
 			visualEditor = null;
 		}
 
@@ -573,14 +559,9 @@ public class VpeController implements INodeAdapter,
 
 	public void notifyChangedInUiThread(INodeNotifier notifier, int eventType,
 			Object feature, Object oldValue, Object newValue, int pos) {
-		if (switcher == null
-				|| !switcher
-						.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
-			return;
-		}
-		try {
+		if (editPart.getVisualMode() != VpeEditorPart.SOURCE_MODE) {
 			if (VpeDebug.PRINT_SOURCE_MUTATION_EVENT) {
-				printSourceEvent(notifier, eventType, feature, oldValue,
+				VpeDebugUtil.printSourceEvent(notifier, eventType, feature, oldValue,
 						newValue, pos);
 			}
 			if (visualBuilder == null) {
@@ -701,51 +682,39 @@ public class VpeController implements INodeAdapter,
 				}
 				break;
 			}
-		} finally {
-			// fix for jbide-675, swithcer is null when vpecontroller is
-			// disposed
-			if (switcher != null) {
-				switcher.stopActiveEditor();
-			} else {
-				throw new VpeDisposeException("VpeController already disposed"); //$NON-NLS-1$
-			}
 		}
 	}
 
 	// INodeSelectionListener implementation
 	public void nodeSelectionChanged(NodeSelectionChangedEvent event) {
-		if (!switcher
-				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
-			return;
-		}
-		try {
-			List<?> nodes = event.getSelectedNodes();
-			if (nodes != null && nodes.size() > 0) {
-				Node sourceNode = (Node) nodes.get(0);
-				if (VpeDebug.PRINT_SOURCE_SELECTION_EVENT) {
-					System.out
-							.println(">>>>>>>>>>>>>> nodeSelectionChanged  sourceNode: " + //$NON-NLS-1$
-									sourceNode.getNodeName()
-									+ Constants.WHITE_SPACE
-									+ event.getCaretPosition());
-				}
-				if (event.getSource() instanceof IContentOutlinePage) {
-					sourceSelectionChanged();
-				}
-			}
-		} finally {
-			switcher.stopActiveEditor();
-		}
+//		if (!switcher
+//				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
+//			return;
+//		}
+//		try {
+//			List<?> nodes = event.getSelectedNodes();
+//			if (nodes != null && nodes.size() > 0) {
+//				Node sourceNode = (Node) nodes.get(0);
+//				if (VpeDebug.PRINT_SOURCE_SELECTION_EVENT) {
+//					System.out
+//							.println(">>>>>>>>>>>>>> nodeSelectionChanged  sourceNode: " + //$NON-NLS-1$
+//									sourceNode.getNodeName()
+//									+ Constants.WHITE_SPACE
+//									+ event.getCaretPosition());
+//				}
+//				if (event.getSource() instanceof IContentOutlinePage) {
+//					sourceSelectionChanged();
+//				}
+//			}
+//		} finally {
+//			switcher.stopActiveEditor();
+//		}
 	}
 
 	// ITextSelectionListener implementation
 	// TODO Max Areshau looks like this method don't used
 	public void textSelectionChanged(TextSelectionChangedEvent event) {
-		if (!switcher
-				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
-			return;
-		}
-		try {
+		if (editPart.getVisualMode() != VpeEditorPart.SOURCE_MODE) {
 			if (VpeDebug.PRINT_SOURCE_SELECTION_EVENT) {
 				System.out
 						.println(">>>>>>>>>>>>>> textSelectionChanged  " + event.getSource()); //$NON-NLS-1$
@@ -753,26 +722,18 @@ public class VpeController implements INodeAdapter,
 			// if (event.getSource() instanceof StyledText) {
 			sourceSelectionChanged();
 			// }
-		} finally {
-			switcher.stopActiveEditor();
 		}
 	}
 
 	// SelectionListener implementation
 	public void widgetSelected(SelectionEvent event) {
-		if (!switcher
-				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
-			return;
-		}
-		try {
+		if (editPart.getVisualMode() != VpeEditorPart.SOURCE_MODE) {
 			if (VpeDebug.PRINT_SOURCE_SELECTION_EVENT) {
 				System.out.println(">>>>>>>>>>>>>> widgetSelected"); //$NON-NLS-1$
 			}
 			if (event.getSource() instanceof StyledText) {
 				sourceSelectionChanged();
 			}
-		} finally {
-			switcher.stopActiveEditor();
 		}
 	}
 
@@ -793,101 +754,13 @@ public class VpeController implements INodeAdapter,
 			return;
 		}
 
-		// Point range = sourceEditor.getTextViewer().getSelectedRange();
-		// int anchorPosition = range.x;
-		// int focusPosition = range.x + range.y;
-		//
-		// boolean extendFlag = range.y != 0;
-		// boolean reversionFlag = extendFlag
-		// && anchorPosition == VpeSelectionHelper
-		// .getCaretOffset(sourceEditor);
-		// if (reversionFlag) {
-		// anchorPosition = focusPosition;
-		// focusPosition = range.x;
-		// }
-
 		if (selectionManager != null)
 			selectionManager.refreshVisualSelection();
-
-		// VpeTemplate template = TemplateManagingUtil
-		// .getTemplateBySourceSelection(pageContext, focusPosition,
-		// anchorPosition);
-		//
-		// if (template instanceof ITemplateSelectionManager) {
-		// ((ITemplateSelectionManager) template).setSelectionBySource(
-		// pageContext, visualSelectionController, focusPosition,
-		// anchorPosition);
-		// return;
-		// }
-		//
-		// Node focusNode = getSourceNodeAt(focusPosition);
-		// if (focusNode == null) {
-		// return;
-		// }
-		// int focusOffset = getSourceNodeOffset(focusNode, focusPosition,
-		// extendFlag && !reversionFlag);
-		// Node anchorNode = null;
-		// int anchorOffset = 0;
-		// if (extendFlag) {
-		// anchorNode = getSourceNodeAt(anchorPosition);
-		// anchorOffset = getSourceNodeOffset(anchorNode, anchorPosition,
-		// reversionFlag);
-		// } else {
-		// anchorNode = focusNode;
-		// anchorOffset = focusOffset;
-		// }
-		//
-		// if (VpeDebug.PRINT_SOURCE_SELECTION_EVENT) {
-		//	    System.out.println("sourceSelectionChanged"); //$NON-NLS-1$
-		// System.out
-		//		    .println("               anchorNode: " + anchorNode.getNodeName() + "  anchorOffset: " + anchorOffset); //$NON-NLS-1$ //$NON-NLS-2$
-		// System.out
-		//		    .println("               focusNode: " + focusNode.getNodeName() + "  focusOffset: " + focusOffset + "  focusPosition: " + focusPosition); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-		// }
-		// try {
-		// if (anchorNode.getNodeType() == Node.TEXT_NODE
-		// || anchorNode.getNodeType() == Node.ATTRIBUTE_NODE) {
-		// String text;
-		// if (anchorNode.getNodeType() == Node.TEXT_NODE) {
-		// IndexedRegion region = (IndexedRegion) anchorNode;
-		// text = sourceEditor.getTextViewer().getDocument().get(
-		// region.getStartOffset(),
-		// region.getEndOffset() - region.getStartOffset());
-		// } else {
-		// text = ((AttrImpl) anchorNode).getValueRegionText();
-		// }
-		// anchorOffset = TextUtil.visualPosition(text, anchorOffset);
-		// }
-		// if (focusNode.getNodeType() == Node.TEXT_NODE
-		// || focusNode.getNodeType() == Node.ATTRIBUTE_NODE) {
-		// IndexedRegion region = (IndexedRegion) focusNode;
-		// String text;
-		// if (focusNode.getNodeType() == Node.TEXT_NODE) {
-		// text = sourceEditor.getTextViewer().getDocument().get(
-		// region.getStartOffset(),
-		// region.getEndOffset() - region.getStartOffset());
-		// } else {
-		// text = ((AttrImpl) focusNode).getValueRegionText();
-		// }
-		// focusOffset = TextUtil.visualPosition(text, focusOffset);
-		// }
-		// } catch (Exception ex) {
-		// VpePlugin.reportProblem(ex);
-		// }
-		//
-		// selectionBuilder.setVisualSelection(anchorNode, anchorOffset,
-		// focusNode, focusOffset, reversionFlag, showCaret);
 	}
 
 	public void sourceSelectionToVisualSelection(boolean showCaret) {
-		if (!switcher
-				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
-			return;
-		}
-		try {
+		if (editPart.getVisualMode() != VpeEditorPart.SOURCE_MODE) {
 			sourceSelectionChanged(showCaret);
-		} finally {
-			switcher.stopActiveEditor();
 		}
 	}
 
@@ -897,12 +770,8 @@ public class VpeController implements INodeAdapter,
 
 	public void processPostModelEvent(ModelLifecycleEvent event) {
 		// A part of fix JBIDE-5066
-		if ((switcher == null)
-				|| (!switcher
-						.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE))) {
-			return;
-		}
-		try {
+		if (editPart.getVisualMode() != VpeEditorPart.SOURCE_MODE) {
+
 			/*
 			 * Added by Max Areshkau JBIDE-1457
 			 * ModelLifecycleEvent.MODEL_RELEASED is generated when model in
@@ -934,266 +803,107 @@ public class VpeController implements INodeAdapter,
 				// visualBuilder.rebuildDom(sourceDocument);
 				// pageContext.fireTaglibsChanged();
 			}
-		} finally {
-			// A part of fix JBIDE-5066
-			if (switcher != null) {
-				switcher.stopActiveEditor();
-			}
 		}
 	}
-
-	// EditorDomEventListener implementation
-//	this method is never used
-//	public void subtreeModified(nsIDOMMutationEvent mutationEvent) {
-//		if (!switcher
-//				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-//			return;
-//		}
-//		try {
-//			if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
-//				printVisualEvent(mutationEvent);
-//			}
-//		} finally {
-//			switcher.stopActiveEditor();
-//		}
-//	}
-
-//	this method is never used
-//	public void nodeInserted(nsIDOMMutationEvent mutationEvent) {
-//		if (!switcher
-//				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-//			return;
-//		}
-//		try {
-//			if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
-//				printVisualEvent(mutationEvent);
-//			}
-//			nsIDOMNode targetNode = mutationEvent.getRelatedNode();
-//			if (!VpeVisualDomBuilder.isAnonElement(targetNode)) {
-//				sourceBuilder.addNode(targetNode);
-//				visualBuilder.resetPseudoElement(targetNode);
-//			}
-//		} finally {
-//			switcher.stopActiveEditor();
-//		}
-//	}
-
-//	this method is never used
-//	public void nodeRemoved(nsIDOMMutationEvent mutationEvent) {
-//		if (!switcher
-//				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-//			return;
-//		}
-//		try {
-//			if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
-//				printVisualEvent(mutationEvent);
-//			}
-//			nsIDOMNode targetNode = VisualDomUtil.getTargetNode(mutationEvent);
-//			if (!VpeVisualDomBuilder.isAnonElement(targetNode)) {
-//				visualBuilder.setSelectionRectangle(null);
-//				sourceBuilder.removeNode(targetNode);
-//				visualBuilder.resetPseudoElement(targetNode);
-//			}
-//		} finally {
-//			switcher.stopActiveEditor();
-//		}
-//	}
 
 	public void nodeRemovedFromDocument(nsIDOMMutationEvent mutationEvent) {
-		if (!switcher
-				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-			return;
-		}
-		try {
 			if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
-				printVisualEvent(mutationEvent);
+				VpeDebugUtil.printVisualEvent(mutationEvent);
 			}
-		} finally {
-			switcher.stopActiveEditor();
-		}
 	}
-//	this method is never used
-//	public void nodeInsertedIntoDocument(nsIDOMMutationEvent mutationEvent) {
-//		if (!switcher
-//				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-//			return;
-//		}
-//		try {
-//			if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
-//				printVisualEvent(mutationEvent);
-//			}
-//		} finally {
-//			switcher.stopActiveEditor();
-//		}
-//	}
-
-//	this method is never used
-//	public void attrModified(nsIDOMMutationEvent mutationEvent) {
-//		if (!switcher
-//				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-//			return;
-//		}
-//		try {
-//			if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
-//				printVisualEvent(mutationEvent);
-//			}
-//		} finally {
-//			switcher.stopActiveEditor();
-//		}
-//	}
-
-//	this method is never used
-//	public void characterDataModified(nsIDOMMutationEvent mutationEvent) {
-//		if (!switcher
-//				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-//			return;
-//		}
-//		try {
-//			if (VpeDebug.PRINT_VISUAL_MUTATION_EVENT) {
-//				printVisualEvent(mutationEvent);
-//			}
-//			nsIDOMNode targetNode = VisualDomUtil.getTargetNode(mutationEvent);
-//			sourceBuilder.setText(targetNode);
-//			visualBuilder.resetPseudoElement(targetNode);
-//		} finally {
-//			switcher.stopActiveEditor();
-//		}
-//	}
 
 	public void notifySelectionChanged(nsIDOMDocument doc,
-			nsISelection selection, short reason) {
-		if (switcher
-				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-			try {
-				mouseUpSelectionReasonFlag = (reason & nsISelectionListener.MOUSEUP_REASON) != 0;
-				if (
-						// commited by Dzmitrovich - experimental
-						// TODO check selection and if are appear errors then
-						// uncommented next code
-					    // reason != nsISelectionListener.NO_REASON
-						(reason & (nsISelectionListener.KEYPRESS_REASON
-								| nsISelectionListener.SELECTALL_REASON
-								| nsISelectionListener.MOUSEDOWN_REASON)) != 0) {
-					if (VpeDebug.PRINT_VISUAL_SELECTION_EVENT) {
-						System.out
-								.println("<<< notifySelectionChanged: " + reason); //$NON-NLS-1$
-					}
-					nsIDOMNode node = SelectionUtil.getSelectedNode(selection);
-					/*
-					 * Fixes https://jira.jboss.org/jira/browse/JBIDE-2571
-					 * Checking if the node is of text type was removed to allow
-					 * <select> node to be selected on the first click.
-					 */
-					if (node != null) {
-						selectionManager.setSelection(SelectionUtil.getSelectedNode(selection),
-								selection.getFocusOffset(), selection.getAnchorOffset());
-					}
-				}
-				// enables cursor on selection event
-				visualSelectionController.setCaretEnabled(true);
-			} finally {
-				switcher.stopActiveEditor();
+		nsISelection selection, short reason) {
+		mouseUpSelectionReasonFlag = (reason & nsISelectionListener.MOUSEUP_REASON) != 0;
+		if (
+				// commited by Dzmitrovich - experimental
+				// TODO check selection and if are appear errors then
+				// uncommented next code
+			    // reason != nsISelectionListener.NO_REASON
+				(reason & (nsISelectionListener.KEYPRESS_REASON
+						| nsISelectionListener.SELECTALL_REASON
+						| nsISelectionListener.MOUSEDOWN_REASON)) != 0) {
+			if (VpeDebug.PRINT_VISUAL_SELECTION_EVENT) {
+				System.out
+						.println("<<< notifySelectionChanged: " + reason); //$NON-NLS-1$
+			}
+			nsIDOMNode node = SelectionUtil.getSelectedNode(selection);
+			/*
+			 * Fixes https://jira.jboss.org/jira/browse/JBIDE-2571
+			 * Checking if the node is of text type was removed to allow
+			 * <select> node to be selected on the first click.
+			 */
+			if (node != null) {
+				selectionManager.setSelection(SelectionUtil.getSelectedNode(selection),
+						selection.getFocusOffset(), selection.getAnchorOffset());
 			}
 		}
+		// enables cursor on selection event
+		visualSelectionController.setCaretEnabled(true);
+		// enables cursor on selection event
+		visualSelectionController.setCaretEnabled(true);
 	}
 
 	public void mouseDown(nsIDOMMouseEvent mouseEvent) {
-		if (!switcher
-				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-			return;
+		if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
+			System.out.println("<<< mouseDown  targetNode:"); //$NON-NLS-1$
 		}
-		try {
-			if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
-				System.out.println("<<< mouseDown  targetNode:"); //$NON-NLS-1$
+		// selection will be set only if press left button
+		if (mouseEvent.getButton() == LEFT_BUTTON) {
+			// drag gesture isn't generated in XR 1.9 for Linux Platforms,
+			// so we start it's manually
+			// mareshkau
+			if (vpeDnD.isDragIconClicked(mouseEvent)) {
+				vpeDnD.dragStart(mouseEvent);
+			} else {
+				int rangeOffset = queryInterface(mouseEvent, nsIDOMNSUIEvent.class).getRangeOffset();
+				
+				// set source selection at the point where mouse is clicked
+				selectionManager.setSelection(
+						VisualDomUtil.getTargetNode(mouseEvent),
+						rangeOffset, rangeOffset);					
 			}
-			// selection will be set only if press left button
-			if (mouseEvent.getButton() == LEFT_BUTTON) {
-				// drag gesture isn't generated in XR 1.9 for Linux Platforms,
-				// so we start it's manually
-				// mareshkau
-				if (vpeDnD.isDragIconClicked(mouseEvent)) {
-					vpeDnD.dragStart(mouseEvent);
-				} else {
-					int rangeOffset = queryInterface(mouseEvent, nsIDOMNSUIEvent.class).getRangeOffset();
-					
-					// set source selection at the point where mouse is clicked
-					selectionManager.setSelection(
-							VisualDomUtil.getTargetNode(mouseEvent),
-							rangeOffset, rangeOffset);					
-				}
-			}
-		} finally {
-			switcher.stopActiveEditor();
 		}
 	}
 
 	public void mouseUp(nsIDOMMouseEvent mouseEvent) {
-		if (!switcher
-				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-			return;
-		}
-		try {
-			if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
-				System.out.println("<<< mouseUp"); //$NON-NLS-1$
-			}
-		} finally {
-			switcher.stopActiveEditor();
+		if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
+			System.out.println("<<< mouseUp"); //$NON-NLS-1$
 		}
 	}
 
 	public void mouseClick(nsIDOMMouseEvent mouseEvent) {
-		if (!switcher
-				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-			return;
-		}
-		try {
-			nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
-			if (visualNode != null) {
-				if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
-					System.out.println(MessageFormat.format(
-							"<<< mouseClick  visualNode: {0} ({1})", //$NON-NLS-1$
-							visualNode.getNodeName(),
-							visualNode));
+		nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
+		if (visualNode != null) {
+			if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
+				VpeDebugUtil.printVisualMouseEvent(visualNode);
+			}
+			if (!mouseUpSelectionReasonFlag) {
+				if (visualBuilder.isContentArea(visualNode)) {
+					// selectionBuilder.setClickContentAreaSelection();
 				}
-				if (!mouseUpSelectionReasonFlag) {
-					if (visualBuilder.isContentArea(visualNode)) {
-						// selectionBuilder.setClickContentAreaSelection();
-					}
-				} else {
-					mouseUpSelectionReasonFlag = false;
-				}
+			} else {
+				mouseUpSelectionReasonFlag = false;
+			}
 
-				Element toggledElement = visualBuilder.doToggle(visualNode);
-				if (toggledElement != null) {
-					VpeNodeMapping toggledMapping
-							= getDomMapping().getNearNodeMapping(toggledElement);
-					if (toggledMapping != null && toggledMapping.getVisualNode() != null) {
-						selectionManager.setSelection(toggledMapping.getVisualNode(), 0, 0);
-					}
+			Element toggledElement = visualBuilder.doToggle(visualNode);
+			if (toggledElement != null) {
+				VpeNodeMapping toggledMapping
+						= getDomMapping().getNearNodeMapping(toggledElement);
+				if (toggledMapping != null && toggledMapping.getVisualNode() != null) {
+					selectionManager.setSelection(toggledMapping.getVisualNode(), 0, 0);
 				}
 			}
-		} finally {
-			switcher.stopActiveEditor();
 		}
 	}
 
 	public void mouseDblClick(nsIDOMMouseEvent mouseEvent) {
-		if (!switcher
-				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-			return;
-		}
-		try {
-			nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
-			if (visualNode != null) {
-				sourceBuilder.openOn(visualNode);
-				if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
-					System.out
-							.println("<<< mouseDblClick  visualNode: " + visualNode.getNodeName() + //$NON-NLS-1$
-									" (" + visualNode + ")"); //$NON-NLS-1$ //$NON-NLS-2$
-				}
+		nsIDOMNode visualNode = VisualDomUtil.getTargetNode(mouseEvent);
+		if (visualNode != null) {
+			sourceBuilder.openOn(visualNode);
+			if (VpeDebug.PRINT_VISUAL_MOUSE_EVENT) {
+				VpeDebugUtil.printVisualMouseEvent(visualNode);
 			}
-		} finally {
-			switcher.stopActiveEditor();
 		}
 	}
 
@@ -1203,75 +913,19 @@ public class VpeController implements INodeAdapter,
 
 	public void keyPress(nsIDOMKeyEvent keyEvent) {
 		if (VpeDebug.PRINT_VISUAL_KEY_EVENT) {
-			System.out.println("<<< keyPress  type: " + keyEvent.getType() + //$NON-NLS-1$
-					"  Ctrl: "
-					+ keyEvent.getCtrlKey()
-					+ "  Shift: " + keyEvent.getShiftKey() + //$NON-NLS-1$ //$NON-NLS-2$
-					"  CharCode: " + keyEvent.getCharCode()
-					+ "  KeyCode: " + keyEvent.getKeyCode()); //$NON-NLS-1$ //$NON-NLS-2$
+			VpeDebugUtil.printKeyEvent(keyEvent);
 		}
-		if (!switcher
-				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-			switcher.stopActiveEditor();
-			return;
-		}
-		try {
-			visualEditor.hideResizer();
-		} finally {
-			switcher.stopActiveEditor();
-		}
+		visualEditor.hideResizer();
 		setVpeUpdateDelayTime(0);
 		/*
 		 * adding calls of core event handlers, for example' CTR+H' or 'CTRL+M'
 		 * event handler dialog
 		 */
-		boolean keyBindingPressed = false;
-		Event keyboardEvent = new Event();
-		/*
-		 * widget where event occur
-		 */
-		keyboardEvent.widget = xulRunnerEditor.getBrowser();
-
-		keyboardEvent.stateMask = (keyEvent.getAltKey() ? SWT.ALT : 0)
-				| (keyEvent.getCtrlKey() ? SWT.CTRL : 0)
-				| (keyEvent.getShiftKey() ? SWT.SHIFT : 0)
-				| (keyEvent.getMetaKey() ? SWT.MOD1 : 0);
-		keyboardEvent.x = 0;
-		keyboardEvent.y = 0;
-		keyboardEvent.type = SWT.KeyDown;
-
-		if (keyEvent.getKeyCode() == 0) {
-			keyboardEvent.keyCode = (int) keyEvent.getCharCode();
-		} else {
-			keyboardEvent.keyCode = (int) keyEvent.getKeyCode();
-		}
+		Event keyboardEvent = xulRunnerEditor.createSWTKeyEvent(keyEvent);
+		
 		/*
 		 * JBIDE-1627
 		 */
-		List<KeyStroke> possibleKeyStrokes = WorkbenchKeyboard
-				.generatePossibleKeyStrokes(keyboardEvent);
-		IWorkbench iWorkbench = VpePlugin.getDefault().getWorkbench();
-		if (iWorkbench.hasService(IBindingService.class)) {
-			IBindingService iBindingService = (IBindingService) iWorkbench
-					.getService(IBindingService.class);
-
-			KeySequence sequenceBeforeKeyStroke = KeySequence.getInstance();
-
-			for (Iterator<KeyStroke> iterator = possibleKeyStrokes.iterator(); iterator
-					.hasNext();) {
-				KeySequence sequenceAfterKeyStroke = KeySequence.getInstance(
-						sequenceBeforeKeyStroke, iterator.next());
-				if (iBindingService.isPerfectMatch(sequenceAfterKeyStroke)) {
-					final Binding binding = iBindingService
-							.getPerfectMatch(sequenceAfterKeyStroke);
-					if ((binding != null)
-							&& (binding.getParameterizedCommand() != null)
-							&& (binding.getParameterizedCommand().getCommand() != null)) {
-						keyBindingPressed = true;
-					}
-				}
-			}
-		}
 		/*
 		 * Sends xulrunner event to eclipse environment. dmaliarevich: while
 		 * fixing JBIDE-2562 I found that eclipse handles key shortcuts without
@@ -1286,9 +940,7 @@ public class VpeController implements INodeAdapter,
 		 * 
 		 * When shortcut key is pressed do not handle this event in the handler.
 		 */
-		boolean isHandleCurrentEvent = !keyBindingPressed
-				|| isZoomEvent(keyEvent);
-		if (isHandleCurrentEvent) {
+		if (!isKeyBinding(keyboardEvent) || isZoomEvent(keyEvent)) {
 			if (keyEventHandler instanceof KeyEventManager) {
 				IZoomEventManager zoomEventManager = ((KeyEventManager) keyEventHandler)
 						.getZoomEventManager();
@@ -1307,6 +959,35 @@ public class VpeController implements INodeAdapter,
 		onRefresh();
 	}
 
+
+	public boolean isKeyBinding(Event keyboardEvent) {
+		boolean keyBindingPressed = false;
+		List<KeyStroke> possibleKeyStrokes = WorkbenchKeyboard
+				.generatePossibleKeyStrokes(keyboardEvent);
+		
+		if (PlatformUI.getWorkbench().hasService(IBindingService.class)) {
+			IBindingService iBindingService = (IBindingService) PlatformUI.getWorkbench()
+					.getService(IBindingService.class);
+
+			KeySequence sequenceBeforeKeyStroke = KeySequence.getInstance();
+
+			for (KeyStroke keyStroke : possibleKeyStrokes) {
+				KeySequence sequenceAfterKeyStroke = KeySequence.getInstance(
+						sequenceBeforeKeyStroke, keyStroke);
+				if (iBindingService.isPerfectMatch(sequenceAfterKeyStroke)) {
+					final Binding binding = iBindingService
+							.getPerfectMatch(sequenceAfterKeyStroke);
+					if ((binding != null)
+							&& (binding.getParameterizedCommand() != null)
+							&& (binding.getParameterizedCommand().getCommand() != null)) {
+						keyBindingPressed = true;
+					}
+				}
+			}
+		}
+		return keyBindingPressed;
+	}
+
 	private boolean isZoomEvent(nsIDOMKeyEvent keyEvent) {
 		return keyEvent.getCtrlKey()
 				&& (keyEvent.getCharCode() == IZoomEventManager.ZOOM_IN_CH_CODE
@@ -1316,15 +997,7 @@ public class VpeController implements INodeAdapter,
 
 	public void elementResized(nsIDOMElement element, int constrains, int top,
 			int left, int width, int height) {
-		if (!switcher
-				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL)) {
-			return;
-		}
-		try {
-			visualEditor.hideResizer();
-		} finally {
-			switcher.stopActiveEditor();
-		}
+		visualEditor.hideResizer();
 		visualBuilder.resize(element, constrains, top, left, width, height);
 		sourceSelectionChanged();
 	}
@@ -1340,13 +1013,10 @@ public class VpeController implements INodeAdapter,
 	/**
 	 * Calls when on when browser receive context menu event.
 	 * 
-	 * @param contextFlags
-	 *            -not used in this function, just for because this parameter
-	 *            exist in nsIContextMenuListener
-	 * @param event
-	 *            event from browser used here
-	 * @param node
-	 *            where this event are occur
+	 * @param contextFlags is not used in this function, just for because this parameter
+	 * exist in nsIContextMenuListener
+	 * @param event comes from browser is used here
+	 * @param node where the event has occurred
 	 */
 	public void onShowContextMenu(long contextFlags, nsIDOMEvent event,
 			nsIDOMNode node) {
@@ -1417,11 +1087,7 @@ public class VpeController implements INodeAdapter,
 	}
 
 	public void visualRefreshImpl() {
-		if (!switcher
-				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
-			return;
-		}
-		try {
+		if (editPart.getVisualMode() != VpeEditorPart.SOURCE_MODE) {
 			visualEditor.hideResizer();
 	
 			String currentDoctype = DocTypeUtil.getDoctype(visualEditor
@@ -1438,85 +1104,16 @@ public class VpeController implements INodeAdapter,
 				// Fix bugs JBIDE-2750
 				visualBuilder.clearSelectionRectangle();
 				visualEditor.reload();
-				// IDOMModel sourceModel = (IDOMModel) getModel();
-				// if (sourceModel != null) {
-				// IDOMDocument sourceDocument = sourceModel.getDocument();
-				// visualBuilder.rebuildDom(sourceDocument);
-				// } else {
-				// visualBuilder.rebuildDom(null);
-				// }
 			} 
-		} finally {
-			if (switcher != null) {
-				switcher.stopActiveEditor();
-			}
 		}
-			
 	}
 
 	public void preLongOperation() {
-		switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_VISUAL);
+
 	}
 
 	public void postLongOperation() {
-		switcher.stopActiveEditor();
 		visualRefresh();
-	}
-
-	// for debug
-	private void printSourceEvent(INodeNotifier notifier, int eventType, Object feature, Object oldValue,
-			Object newValue, int pos) {
-		System.out.println(">>> eventType: " + INodeNotifier.EVENT_TYPE_STRINGS[eventType] + //$NON-NLS-1$
-				"  pos: " + pos + "  notifier: " + ((Node) notifier).getNodeName() + //$NON-NLS-1$ //$NON-NLS-2$
-				"  hashCode: " + notifier.hashCode()); //$NON-NLS-1$
-		if (feature != null) {
-			if (feature instanceof Node) {
-				System.out.println("     feature: " + ((Node) feature).getNodeType() + //$NON-NLS-1$
-						Constants.WHITE_SPACE + ((Node) feature).getNodeName() + "  hashCode: " + feature.hashCode()); //$NON-NLS-1$
-			} else {
-				System.out.println("     feature: " + feature); //$NON-NLS-1$
-			}
-		}
-		if (oldValue != null) {
-			if (oldValue instanceof Node) {
-				System.out.println("     oldValue: " + ((Node) oldValue).getNodeName() + //$NON-NLS-1$
-						"  hashCode: " + oldValue.hashCode()); //$NON-NLS-1$
-			} else {
-				System.out.println("     oldValue: " + oldValue); //$NON-NLS-1$
-			}
-		}
-		if (newValue != null) {
-			if (newValue instanceof Node) {
-				System.out.println("     newValue: " + ((Node) newValue).getNodeName() + //$NON-NLS-1$
-						"  hashCode: " + newValue.hashCode() + Constants.WHITE_SPACE + ((Node) newValue).getNodeType()); //$NON-NLS-1$
-			} else {
-				System.out.println("     newValue: " + newValue); //$NON-NLS-1$
-			}
-		}
-	}
-
-	private void printVisualEvent(nsIDOMEvent event) {
-		System.out.print("<<< " + event.getType()); //$NON-NLS-1$
-
-		if (event instanceof nsIDOMMutationEvent) {
-			nsIDOMMutationEvent mutationEvent = (nsIDOMMutationEvent) event;
-
-			System.out.print("  EventPhase: " + mutationEvent.getEventPhase()); //$NON-NLS-1$
-
-			nsIDOMNode relatedNode = mutationEvent.getRelatedNode();
-			System.out
-					.print("  RelatedNode: " + (relatedNode == null ? null : relatedNode.getNodeName())); //$NON-NLS-1$
-
-			nsIDOMNode targetNode = VisualDomUtil.getTargetNode(mutationEvent);
-			String name = targetNode != null ? targetNode.getNodeName() : null;
-			System.out.print("  TargetNode: " + name + " (" + targetNode + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-
-			System.out
-					.print("  PrevValue: " + mutationEvent.getPrevValue().trim()); //$NON-NLS-1$
-			System.out
-					.print("  NewValue: " + mutationEvent.getNewValue().trim()); //$NON-NLS-1$
-		}
-		System.out.println();
 	}
 
 	private class VPEUpdateJob extends UIJob {
@@ -1540,9 +1137,7 @@ public class VpeController implements INodeAdapter,
 				
 				if (changeEvents.size() > MAX_EVENTS_TILL_REFRESH) {
 					monitor.worked((int) (10000 / 2));
-					System.out.println("full refresh is started");
 					reinitImpl();
-					System.out.println("full refresh is finished");
 					monitor.worked(10000);
 					changeEvents.clear();
 					return Status.OK_STATUS;
@@ -1565,40 +1160,26 @@ public class VpeController implements INodeAdapter,
 					// shoud ignore this
 					// exception
 					break;
-				} catch (NullPointerException ex) {
-					if (switcher != null) {
-						throw ex;
-					} else {
-						// class was disposed and exception result
-						// of that we can't stop
-						// refresh job in time, so we just ignore
-						// this exception
-					}
-				} catch(RuntimeException ex) {
-					VpePlugin.getPluginLog().logError(ex);
 				} finally {
 					getChangeEvents().remove(eventBean);
 				}
 			}
 			// cause is to lock calls others events
-			if (switcher != null && switcher.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE))
-				try {
-					sourceSelectionChanged();
-					/*
-					 * https://jira.jboss.org/jira/browse/JBIDE-3619
-					 * VpeViewUpdateJob takes place after toolbar
-					 * selection have been updated. New nodes
-					 * haven't been put into dom mapping thus
-					 * toolbar becomes desabled. Updating toolbar
-					 * state here takes into account updated vpe
-					 * nodes.
-					 */
-					if (toolbarFormatControllerManager != null) {
-						toolbarFormatControllerManager.selectionChanged();
-					}
-				} finally {
-					switcher.stopActiveEditor();
+			if (editPart.getVisualMode() != VpeEditorPart.SOURCE_MODE) {
+				sourceSelectionChanged();
+				/*
+				 * https://jira.jboss.org/jira/browse/JBIDE-3619
+				 * VpeViewUpdateJob takes place after toolbar
+				 * selection have been updated. New nodes
+				 * haven't been put into dom mapping thus
+				 * toolbar becomes desabled. Updating toolbar
+				 * state here takes into account updated vpe
+				 * nodes.
+				 */
+				if (toolbarFormatControllerManager != null) {
+					toolbarFormatControllerManager.selectionChanged();
 				}
+			}
 			monitor.done();
 			notifyVpeUpdateListeners();
 			return Status.OK_STATUS;
@@ -1606,38 +1187,6 @@ public class VpeController implements INodeAdapter,
 
 		protected void canceling() {
 			this.cancelled  = true;
-		}
-	}
-
-	public class ActiveEditorSwitcher {
-		public static final int ACTIVE_EDITOR_CANNOT = 0;
-		public static final int ACTIVE_EDITOR_NONE = 1;
-		public static final int ACTIVE_EDITOR_SOURCE = 2;
-		public static final int ACTIVE_EDITOR_VISUAL = 3;
-
-		private int type = ACTIVE_EDITOR_CANNOT;
-
-		private void initActiveEditor() {
-			type = ACTIVE_EDITOR_NONE;
-		}
-
-		private void destroyActiveEditor() {
-			type = ACTIVE_EDITOR_CANNOT;
-		}
-
-		public boolean startActiveEditor(int newType) {
-			if (type != ACTIVE_EDITOR_NONE || type == ACTIVE_EDITOR_NONE && newType == ACTIVE_EDITOR_SOURCE
-				&& editPart.getVisualMode() == VpeEditorPart.SOURCE_MODE) {
-				return false;
-			} else {
-				type = newType;
-				return true;
-			}
-		}
-
-		public void stopActiveEditor() {
-			onRefresh();
-			type = ACTIVE_EDITOR_NONE;
 		}
 	}
 
@@ -1650,16 +1199,8 @@ public class VpeController implements INodeAdapter,
 
 		if (bundleMap != null) {
 			bundleMap.refresh();
-			if (pageContext != null) {
-				if (!switcher
-						.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
-					return;
-				}
-				try {
-					pageContext.refreshBundleValues();
-				} finally {
-					switcher.stopActiveEditor();
-				}
+			if (pageContext != null && editPart.getVisualMode() != VpeEditorPart.SOURCE_MODE) {
+				pageContext.refreshBundleValues();
 			}
 		}
 	}
@@ -2005,19 +1546,11 @@ public class VpeController implements INodeAdapter,
 				toolbarFormatControllerManager.selectionChanged();
 		}
 
-		if (!switcher
-				.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
-			return;
-		}
-		try {
-
+		if (editPart.getVisualMode() != VpeEditorPart.SOURCE_MODE) {
 			if (VpeDebug.PRINT_SOURCE_SELECTION_EVENT) {
-				System.out
-						.println(">>>>>>>>>>>>>> selectionChanged  " + event.getSource()); //$NON-NLS-1$
+				System.out.println(">>>>>>>>>>>>>> selectionChanged  " + event.getSource()); //$NON-NLS-1$
 			}
 			sourceSelectionChanged();
-		} finally {
-			switcher.stopActiveEditor();
 		}
 	}
 
@@ -2107,57 +1640,48 @@ public class VpeController implements INodeAdapter,
 	}
 
 	private void reinitImpl() {
-		try {
-			if (switcher == null
-					|| !switcher
-							.startActiveEditor(ActiveEditorSwitcher.ACTIVE_EDITOR_SOURCE)) {
-				return;
-			}
-			
-			// this method must be invoked before any visual
-			// node is created, see JBIDE-5105
-			visualEditor.reinitDesignMode();
-			visualBuilder.clearSelectionRectangle();
-			// this is required because fullRefresh cannot be interrupded by messages from OS queue
-			selectionManager = null;
-			IDOMModel sourceModel = (IDOMModel) getModel();
-			if (sourceModel != null) {
-				IDOMDocument sourceDocument = sourceModel.getDocument();
-				visualBuilder.rebuildDom(sourceDocument);
-			} else {
-				visualBuilder.rebuildDom(null);
-			}
-			// reinits selection controller+ controller
-			visualSelectionController = new VpeSelectionController(visualEditor
-					.getEditor().getSelectionController());
-
-			visualSelectionController.setSelectionFlags(nsISelectionDisplay.DISPLAY_ALL);
-
-			selectionManager = new SelectionManager(pageContext, sourceEditor,
-					visualSelectionController);
-			// selection should be restored after full refresh
-			selectionManager.refreshVisualSelection();
-
-			keyEventHandler = new KeyEventManager(sourceEditor, domMapping,
-					pageContext);
-			float currentZoom = zoomEventManager.getCurrentZoom();
-			zoomEventManager = new ZoomEventManager(getXulRunnerEditor());
-			zoomEventManager.setCurrentZoom(currentZoom);
-			((KeyEventManager) keyEventHandler)
-					.setZoomEventManager(zoomEventManager);
-			// restore selection in visula part
-			sourceSelectionChanged();
-		} catch (VpeDisposeException ex) {
-			// vpe vas closed when refresh job is running, so just
-			// ignore this exception
-		} catch(RuntimeException ex) {
-			VpePlugin.getPluginLog().logError(ex);
-		} finally {
-			if (switcher != null) {
-				switcher.stopActiveEditor();
+		if (editPart.getVisualMode() != VpeEditorPart.SOURCE_MODE){
+			try {
+				// this method must be invoked before any visual
+				// node is created, see JBIDE-5105
+				visualEditor.reinitDesignMode();
+				visualBuilder.clearSelectionRectangle();
+				// this is required because fullRefresh cannot be interrupded by messages from OS queue
+				selectionManager = null;
+				IDOMModel sourceModel = (IDOMModel) getModel();
+				if (sourceModel != null) {
+					IDOMDocument sourceDocument = sourceModel.getDocument();
+					visualBuilder.rebuildDom(sourceDocument);
+				} else {
+					visualBuilder.rebuildDom(null);
+				}
+				// reinits selection controller+ controller
+				visualSelectionController = new VpeSelectionController(visualEditor
+						.getEditor().getSelectionController());
+	
+				visualSelectionController.setSelectionFlags(nsISelectionDisplay.DISPLAY_ALL);
+	
+				selectionManager = new SelectionManager(pageContext, sourceEditor,
+						visualSelectionController);
+				// selection should be restored after full refresh
+				selectionManager.refreshVisualSelection();
+	
+				keyEventHandler = new KeyEventManager(sourceEditor, domMapping,
+						pageContext);
+				float currentZoom = zoomEventManager.getCurrentZoom();
+				zoomEventManager = new ZoomEventManager(getXulRunnerEditor());
+				zoomEventManager.setCurrentZoom(currentZoom);
+				((KeyEventManager) keyEventHandler)
+						.setZoomEventManager(zoomEventManager);
+				// restore selection in visula part
+				sourceSelectionChanged();
+			} catch (VpeDisposeException ex) {
+				// vpe vas closed when refresh job is running, so just
+				// ignore this exception
+			} catch(RuntimeException ex) {
+				VpePlugin.getPluginLog().logError(ex);
 			}
 		}
-
 	}
 
 	public void refreshCommands(){
@@ -2244,11 +1768,8 @@ public class VpeController implements INodeAdapter,
 
 	public void setZoomEventManager(IZoomEventManager zoomEventManager) {
 		this.zoomEventManager = zoomEventManager;
-	}
+	}
 
-	public ActiveEditorSwitcher getSwitcher() {
-		return switcher;
-	}
 
 	public VpeDropWindow getDropWindow() {
 		return dropWindow;
