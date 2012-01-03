@@ -25,6 +25,7 @@ import org.jboss.tools.drools.ui.bot.test.smoke.DroolsRulesEditorTest;
 import org.jboss.tools.drools.ui.bot.test.smoke.OpenDroolsPerspective;
 import org.jboss.tools.drools.ui.bot.test.smoke.RuleFlowTest;
 import org.jboss.tools.ui.bot.ext.RequirementAwareSuite;
+import org.jboss.tools.ui.bot.ext.SWTJBTExt;
 import org.jboss.tools.ui.bot.ext.SWTTestExt;
 import org.jboss.tools.ui.bot.ext.SWTUtilExt;
 import org.jboss.tools.ui.bot.ext.types.IDELabel;
@@ -114,7 +115,7 @@ public class DroolsAllBotTests extends SWTTestExt {
 
   @BeforeClass
   public static void setUpTest() {
-    jbt.closeReportUsageWindowIfOpened(false);
+    SWTJBTExt.manageBlockingWidows(false, false);
     props = util.loadProperties(Activator.PLUGIN_ID);
     String guvnorRepositoryUrl = props.getProperty(DroolsAllBotTests.GUVNOR_REPOSITORY_URL_PROPERTY_NAME);
     if (guvnorRepositoryUrl != null){
