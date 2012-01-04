@@ -159,6 +159,11 @@
 				</imageobject>
 			</inlinemediaobject>.
 		</para>
+		<note>
+			<para>
+				All wizards generate Maven based projects, except for the <guilabel>Dynamic Web Project</guilabel> wizard.
+			</para>
+		</note>
 		<figure>
 			<title>Creating a Project</title>
 			<mediaobject>
