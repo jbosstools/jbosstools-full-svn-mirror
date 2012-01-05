@@ -3,22 +3,23 @@
 <repository name='JBoss Tools Requirements - Composite Indigo SR1 Mirror' type='org.eclipse.equinox.internal.p2.metadata.repository.CompositeMetadataRepository' version='1.0.0'>
 <properties size='2'>
 <property name='p2.compressed' value='true'/>
-<property name='p2.timestamp' value='1324599909000'/>
+<property name='p2.timestamp' value='1325772506000'/>
 </properties>
-<children size='14'>
+<children size='15'>
 <child location='../../requirements/indigo/201112221140-SR1-M/'/>
 <child location='../../requirements/birt/3.7.1/'/>
 <child location='../../requirements/bpel/0.8.0.v20111120-0746-H98-CI/'/>
+<child location='../../requirements/bpmn2-modeler/20120105-0830/'/>
 <child location='../../requirements/ecf/3.5.3/'/>
-<child location='../../requirements/eclipse/3.7.2.M20111214-1406/'/>
 
+<child location='../../requirements/eclipse/3.7.2.M20111214-1406/'/>
 <child location='../../requirements/egit/1.2.0.201112131611/'/>
 <child location='../../requirements/emf/2.7.2.v20111031-1121/'/>
 <!-- includes m2e, m2e-extras, m2e-wtp -->
 <child location='../../requirements/m2eclipse/20111005-1500/'/>
 <child location='../../requirements/mylyn/3.6.4.v20111118-0100/'/>
-<child location='../../requirements/orbit/R20110523182458/'/>
 
+<child location='../../requirements/orbit/R20110523182458/'/>
 <child location='../../requirements/swtbot/2.0.5/'/>
 <child location='../../requirements/webtools/3.3.2-20111207200956/'/>
 <child location='../../requirements/xulrunner-1.9.2/'/>
