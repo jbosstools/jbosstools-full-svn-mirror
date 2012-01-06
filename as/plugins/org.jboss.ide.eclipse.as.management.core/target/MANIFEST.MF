@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Export-Package: org.jboss.ide.eclipse.as.management.core
+Require-Bundle: org.eclipse.ui,org.eclipse.core.runtime,org.eclipse.ws
+ t.server.core
+Bundle-ActivationPolicy: lazy
+Bundle-Version: 2.3.0.v20120106-0956-Beta1
+Bundle-Name: Application Server Interface Core Plugin
+Bundle-Activator: org.jboss.ide.eclipse.as.management.core.AS7Manageme
+ ntActivator
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.jboss.ide.eclipse.as.management.core
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+

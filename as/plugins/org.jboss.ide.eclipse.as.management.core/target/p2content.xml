@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<units size='2'>
+  <unit id='org.jboss.ide.eclipse.as.management.core' version='2.3.0.v20120106-0956-Beta1' singleton='false'>
+    <update id='org.jboss.ide.eclipse.as.management.core' range='[0.0.0,2.3.0.v20120106-0956-Beta1)' severity='0'/>
+    <properties size='4'>
+      <property name='org.eclipse.equinox.p2.name' value='Application Server Interface Core Plugin'/>
+      <property name='maven-groupId' value='org.jboss.tools.as.plugins'/>
+      <property name='maven-artifactId' value='org.jboss.ide.eclipse.as.management.core'/>
+      <property name='maven-version' value='2.3.0-SNAPSHOT'/>
+    </properties>
+    <provides size='4'>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='org.jboss.ide.eclipse.as.management.core' version='2.3.0.v20120106-0956-Beta1'/>
+      <provided namespace='osgi.bundle' name='org.jboss.ide.eclipse.as.management.core' version='2.3.0.v20120106-0956-Beta1'/>
+      <provided namespace='java.package' name='org.jboss.ide.eclipse.as.management.core' version='0.0.0'/>
+      <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+    </provides>
+    <requires size='3'>
+      <required namespace='osgi.bundle' name='org.eclipse.ui' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.core.runtime' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.wst.server.core' range='0.0.0'/>
+    </requires>
+    <artifacts size='1'>
+      <artifact classifier='osgi.bundle' id='org.jboss.ide.eclipse.as.management.core' version='2.3.0.v20120106-0956-Beta1'/>
+    </artifacts>
+    <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+    <touchpointData size='1'>
+      <instructions size='1'>
+        <instruction key='manifest'>
+          Bundle-SymbolicName: org.jboss.ide.eclipse.as.management.core&#xA;Bundle-Version: 2.3.0.v20120106-0956-Beta1&#xA;
+        </instruction>
+      </instructions>
+    </touchpointData>
+  </unit>
+  <unit id='org.jboss.ide.eclipse.as.management.core.source' version='2.3.0.v20120106-0956-Beta1' singleton='false'>
+    <update id='org.jboss.ide.eclipse.as.management.core.source' range='[0.0.0,2.3.0.v20120106-0956-Beta1)' severity='0'/>
+    <properties size='4'>
+      <property name='maven-groupId' value='org.jboss.tools.as.plugins'/>
+      <property name='maven-artifactId' value='org.jboss.ide.eclipse.as.management.core'/>
+      <property name='maven-version' value='2.3.0-SNAPSHOT'/>
+      <property name='maven-classifier' value='sources'/>
+    </properties>
+    <provides size='3'>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='org.jboss.ide.eclipse.as.management.core.source' version='2.3.0.v20120106-0956-Beta1'/>
+      <provided namespace='osgi.bundle' name='org.jboss.ide.eclipse.as.management.core.source' version='2.3.0.v20120106-0956-Beta1'/>
+      <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='source' version='1.0.0'/>
+    </provides>
+    <artifacts size='1'>
+      <artifact classifier='osgi.bundle' id='org.jboss.ide.eclipse.as.management.core.source' version='2.3.0.v20120106-0956-Beta1'/>
+    </artifacts>
+    <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+    <touchpointData size='1'>
+      <instructions size='1'>
+        <instruction key='manifest'>
+          Bundle-SymbolicName: org.jboss.ide.eclipse.as.management.core.source&#xA;Bundle-Version: 2.3.0.v20120106-0956-Beta1&#xA;
+        </instruction>
+      </instructions>
+    </touchpointData>
+  </unit>
+</units>
