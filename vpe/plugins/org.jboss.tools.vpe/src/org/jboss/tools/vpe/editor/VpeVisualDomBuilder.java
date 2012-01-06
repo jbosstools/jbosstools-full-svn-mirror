@@ -70,6 +70,7 @@ import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
 import org.mozilla.interfaces.nsIDOMAttr;
 import org.mozilla.interfaces.nsIDOMDocument;
 import org.mozilla.interfaces.nsIDOMElement;
+import org.mozilla.interfaces.nsIDOMNamedNodeMap;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.interfaces.nsIDOMNodeList;
 import org.mozilla.interfaces.nsIDOMText;
@@ -806,11 +807,9 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 					VpeStyleUtil.refreshStyleElement(this, elementMapping);
 					return;
 				}
-				Node updateNode = elementMapping.getTemplate()
-						.getNodeForUpdate(pageContext,
-								elementMapping.getSourceNode(),
-								elementMapping.getVisualNode(),
-								elementMapping.getData());
+				Node updateNode = elementMapping.getTemplate().getNodeForUpdate(
+						pageContext,elementMapping.getSourceNode(),
+						elementMapping.getVisualNode(),elementMapping.getData());
 				if ((updateNode != null) && (updateNode != sourceNode)) {
 					updateNode(updateNode);
 					return;
@@ -962,7 +961,11 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			toggleLookup = "true".equals(toggleLookupAttr.getNodeValue()); //$NON-NLS-1$
 		}
 
-		nsIDOMElement selectedElem = getSelectedElement();
+		List<nsIDOMNode> list = xulRunnerEditor.getSelectedNodes();
+		nsIDOMNode selectedElem = null;
+		if (list.size() > 0) {
+			selectedElem = list.get(0);
+		}
 		// Fixes JBIDE-1823 author dmaliarevich
 		if (null == selectedElem) {
 			return null;
@@ -973,36 +976,25 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			elementMapping = (VpeElementMapping) nodeMapping;
 		}
 		// end of fix
-		if (elementMapping == null) {
-			// may be toggle with facet
-			while (!selectedElem.getNodeName().equals(HTML.TAG_TABLE)) {
-				selectedElem = queryInterface(selectedElem.getParentNode(), nsIDOMElement.class);
-			}
-			// Fixes JBIDE-1823 author dmaliarevich
-			nodeMapping = domMapping.getNodeMapping(selectedElem);
-			if (nodeMapping instanceof VpeElementMapping) {
-				elementMapping = (VpeElementMapping) nodeMapping;
-			}
-			// end of fix
-		}
 		Node sourceNode = domMapping.getSourceNode(selectedElem);
 		if (sourceNode == null) {
 			return null;
 		}
-
-		Element sourceElement = (Element) (sourceNode instanceof Element ? sourceNode
+		Element sourceElement = (Element) (sourceNode instanceof Element 
+				? sourceNode
 				: sourceNode.getParentNode());
-
-		// Fixes JBIDE-1823 author dmaliarevich
-		// Template is looked according to <code>selectedElem</code>
-		// so <code>toggleLookupAttr</code> should be retrieved
-		// from this element
-		toggleLookupAttr = selectedElem
-				.getAttributeNode(VPE_USER_TOGGLE_LOOKUP_PARENT);
-		if (toggleLookupAttr != null) {
-			toggleLookup = "true".equals(toggleLookupAttr.getNodeValue()); //$NON-NLS-1$
-		} else {
-			toggleLookup = false;
+		/*
+		 * Fixes JBIDE-1823 author dmaliarevich
+		 * Template is looked according to <code>selectedElem</code>
+		 * so <code>toggleLookupAttr</code> should be retrieved
+		 * from this element
+		 */
+		nsIDOMNamedNodeMap m = selectedElem.getAttributes();
+		if (m != null) {
+			nsIDOMNode attr = m.getNamedItem(VPE_USER_TOGGLE_LOOKUP_PARENT);
+			if (attr != null) {
+				toggleLookup = "true".equalsIgnoreCase(attr.getNodeValue()); //$NON-NLS-1$
+			}
 		}
 		// end of fix
 		if (elementMapping != null) {
