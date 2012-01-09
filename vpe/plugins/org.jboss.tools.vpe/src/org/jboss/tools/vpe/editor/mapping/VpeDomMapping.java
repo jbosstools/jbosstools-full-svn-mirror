@@ -10,15 +10,19 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.mapping;
 
+import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
+import org.mozilla.xpcom.XPCOMException;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -95,7 +99,16 @@ public class VpeDomMapping {
 		 * Replaced with map.
 		 */
 		if (visualNode != null) {
-			nodeMapping = visualMap.get(visualNode);
+			/*
+			 * https://issues.jboss.org/browse/JBIDE-10600
+			 * visualNode could be a nsIDOMElement or other,
+			 * to get right mapping it should be exactly nsIDOMNode.
+			 */
+			try {
+				nodeMapping = visualMap.get(queryInterface(visualNode, nsIDOMNode.class));
+			} catch (XPCOMException e) {
+				VpePlugin.getDefault().logError("Cannot parse visualNode to nsIDOMNode type", e); //$NON-NLS-1$
+			}
 		}
 		return nodeMapping;
 	}
