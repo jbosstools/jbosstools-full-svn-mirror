@@ -107,7 +107,7 @@ public class VpeDomMapping {
 			try {
 				nodeMapping = visualMap.get(queryInterface(visualNode, nsIDOMNode.class));
 			} catch (XPCOMException e) {
-				VpePlugin.getDefault().logError("Cannot parse visualNode to nsIDOMNode type", e); //$NON-NLS-1$
+				VpePlugin.getDefault().logError("Cannot cast visualNode to nsIDOMNode type", e); //$NON-NLS-1$
 			}
 		}
 		return nodeMapping;
