@@ -12,16 +12,17 @@ package org.jboss.tools.drools.ui.bot.test;
 
 import java.io.File;
 
+import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
 import org.jboss.tools.drools.ui.bot.test.smoke.DecisionTableTest;
 import org.jboss.tools.drools.ui.bot.test.smoke.DomainSpecificLanguageEditorTest;
-//import org.jboss.tools.drools.ui.bot.test.smoke.GuidedDroolsRulesEditorTest;
+import org.jboss.tools.drools.ui.bot.test.smoke.DroolsRulesEditorTest;
+import org.jboss.tools.drools.ui.bot.test.smoke.DroolsViewsTest;
 import org.jboss.tools.drools.ui.bot.test.smoke.GuvnorRepositoriesTest;
-import org.jboss.tools.drools.ui.bot.test.smoke.ManageDroolsRuntime;
 import org.jboss.tools.drools.ui.bot.test.smoke.ManageDroolsProject;
 import org.jboss.tools.drools.ui.bot.test.smoke.ManageDroolsRules;
-import org.jboss.tools.drools.ui.bot.test.smoke.DroolsRulesEditorTest;
+import org.jboss.tools.drools.ui.bot.test.smoke.ManageDroolsRuntime;
 import org.jboss.tools.drools.ui.bot.test.smoke.OpenDroolsPerspective;
 import org.jboss.tools.drools.ui.bot.test.smoke.RuleFlowTest;
 import org.jboss.tools.ui.bot.ext.RequirementAwareSuite;
@@ -52,7 +53,8 @@ import org.junit.runners.Suite.SuiteClasses;
   DomainSpecificLanguageEditorTest.class,
   RuleFlowTest.class,
   DecisionTableTest.class,
-  GuvnorRepositoriesTest.class})
+  GuvnorRepositoriesTest.class,
+  DroolsViewsTest.class})
 public class DroolsAllBotTests extends SWTTestExt {
   public static final String DROOLS_PROJECT_NAME = "droolsTest";
   public static final String DROOLS_RUNTIME_NAME = "Drools Test Runtime";
@@ -67,12 +69,13 @@ public class DroolsAllBotTests extends SWTTestExt {
   public static final String GUIDED_DROOLS_RULE_NAME = "GuidedRule.brl";
   public static final String DOMAIN_SPECIFIC_LANGUAGE_FILE_NAME = "DslTest.dsl";
   public static final String RULE_FLOW_JAVA_TEST_FILE_NAME = "ProcessTest.java";
-  public static final String RULE_FLOW_RF_FILE_NAME = "ruleflow.rf";
+  public static final String RULE_FLOW_RF_FILE_NAME = "ruleflow.rf";//"sample.bpmn";
   public static final String DECISION_TABLE_JAVA_TEST_FILE_NAME = "DecisionTableTest.java";
   public static final String USE_EXTERNAL_DROOLS_RUNTIME_PROPERTY_NAME = "use-external-drools-runtime";
   public static final String EXTERNAL_DROOLS_RUTIME_HOME_PROPERTY_NAME = "external-drools-runtime-home";
   public static final String GUVNOR_REPOSITORY_URL_PROPERTY_NAME = "guvnor-repository-url";
   private static boolean USE_EXTERNAL_DROOLS_RUNTIME;
+  private static boolean isFirstRun = true;
 
   private static String testDroolsRuntimeName = null;
   private static String testDroolsRuntimeLocation = null;
@@ -114,6 +117,11 @@ public class DroolsAllBotTests extends SWTTestExt {
 
   @BeforeClass
   public static void setUpTest() {
+    if (isFirstRun) {
+    	isFirstRun = false;
+    } else {
+    	return;
+    }
     props = util.loadProperties(Activator.PLUGIN_ID);
     String guvnorRepositoryUrl = props.getProperty(DroolsAllBotTests.GUVNOR_REPOSITORY_URL_PROPERTY_NAME);
     if (guvnorRepositoryUrl != null){
@@ -124,7 +132,7 @@ public class DroolsAllBotTests extends SWTTestExt {
     DroolsAllBotTests.USE_EXTERNAL_DROOLS_RUNTIME = useExternalDroolRuntime != null && useExternalDroolRuntime.equalsIgnoreCase("true");
     String droolsRuntimeLocation = props.getProperty(DroolsAllBotTests.EXTERNAL_DROOLS_RUTIME_HOME_PROPERTY_NAME);
     String tmpDir = System.getProperty("java.io.tmpdir");
-    if (droolsRuntimeLocation == null || droolsRuntimeLocation.length() ==0){
+    if (droolsRuntimeLocation == null || droolsRuntimeLocation.length() == 0) {
       DroolsAllBotTests.DROOLS_RUNTIME_LOCATION = tmpDir;
     }
     else{
@@ -134,10 +142,18 @@ public class DroolsAllBotTests extends SWTTestExt {
     // Create directory for Drools Runtime which will be created as a part of test
     new File(DroolsAllBotTests.CREATE_DROOLS_RUNTIME_LOCATION).mkdir();
     try{
+      bot.button(IDELabel.Button.NO).click();
       SWTBotView welcomeView = eclipse.getBot().viewByTitle(IDELabel.View.WELCOME);
       welcomeView.close();
     } catch (WidgetNotFoundException wnfe){
       // Do nothing ignore this error
+    }
+    // Close JBoss Central editor
+    for (SWTBotEditor editor : bot.editors()) {
+      if (IDELabel.View.JBOSS_CENTRAL.equals(editor.getTitle())) { 
+        editor.close();
+        break;
+      } 
     }
     eclipse.openPerspective(PerspectiveType.JAVA);
     eclipse.maximizeActiveShell();
