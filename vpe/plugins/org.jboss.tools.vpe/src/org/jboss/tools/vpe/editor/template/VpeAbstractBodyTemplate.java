@@ -57,24 +57,27 @@ public abstract class VpeAbstractBodyTemplate extends VpeAbstractTemplate {
 			final Node sourceAttribute = sourceNodeAttributes.item(i);
 			final String sourceAttributeName = sourceAttribute.getNodeName();
 			String attributeValue = sourceAttribute.getNodeValue();
-			
 			final String targetAttributeName = getTargetAttributeName(sourceAttributeName);
 			
 			if (targetAttributeName != null) {
 				if(HTML.ATTR_ID.equalsIgnoreCase(targetAttributeName)) {
 					div.setAttribute(HTML.ATTR_ID, attributeValue);
 				} else {
-					// all full path for 'url'
-					if (VpeStyleUtil.ATTRIBUTE_STYLE.equalsIgnoreCase(targetAttributeName))
-						attributeValue = VpeStyleUtil.addFullPathIntoURLValue(attributeValue, pageContext);
-					if (VpeStyleUtil.PARAMETR_BACKGROND.equalsIgnoreCase(targetAttributeName))
-						attributeValue = VpeStyleUtil.addFullPathIntoBackgroundValue(attributeValue,
-								pageContext.getEditPart().getEditorInput());
+					if (HTML.ATTR_BACKGROUND.equalsIgnoreCase(targetAttributeName)
+						|| HTML.ATTR_STYLE.equalsIgnoreCase(targetAttributeName)) {
+						/*
+						 * https://issues.jboss.org/browse/JBIDE-9975
+						 * Simply set the background style, its correction will be made in 
+						 * VpeVisualDomBuilder.correctVisualAttribute(..) method. 
+						 * Wrong URLs won't be set by XULRunner itself.
+						 */
+						div.setAttribute(targetAttributeName, attributeValue);
+					}
 					//FIX FOR JBIDE-1568, added by Max Areshkau
 					try {
 						body.setAttribute(targetAttributeName, attributeValue);
 					} catch(XPCOMException ex ) {
-						//jsut ignore it
+						// Ignored
 					}
 				}
 			}
