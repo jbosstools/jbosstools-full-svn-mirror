@@ -41,41 +41,46 @@ public class ManageDroolsProject extends SWTTestExt{
   private static final String RENAMED_DROOLS_PROJECT = DroolsAllBotTests.DROOLS_PROJECT_NAME + "-renamed";
   @Test
   public void testManageDroolsProject() {
-    createDroolsProject (DroolsAllBotTests.DROOLS_PROJECT_NAME);
+    createDroolsProjectTest (DroolsAllBotTests.DROOLS_PROJECT_NAME);
     runNewDroolsProject (DroolsAllBotTests.DROOLS_PROJECT_NAME);
     renameDroolsProject (DroolsAllBotTests.DROOLS_PROJECT_NAME, ManageDroolsProject.RENAMED_DROOLS_PROJECT);
     deleteDroolsProject (ManageDroolsProject.RENAMED_DROOLS_PROJECT);
-    createDroolsProject (DroolsAllBotTests.DROOLS_PROJECT_NAME);
+    createDroolsProjectTest (DroolsAllBotTests.DROOLS_PROJECT_NAME);
   }
+  
+  public static void createDroolsProject(String droolsProjectName) {
+	    eclipse.showView(ViewType.PACKAGE_EXPLORER);
+	    eclipse.createNew(EntityType.DROOLS_PROJECT);
+	    bot.textWithLabel(IDELabel.NewDroolsProjectDialog.NAME).setText(droolsProjectName);
+	    bot.button(IDELabel.Button.NEXT).click();
+	    // check all buttons
+	    int index = 0;
+	    boolean checkBoxExists = true;
+	    while (checkBoxExists){
+	      try{
+	        SWTBotCheckBox checkBox = bot.checkBox(index);
+	        if (!checkBox.isChecked()){
+	          checkBox.click();
+	        }
+	        index++;
+	      }catch (WidgetNotFoundException wnfe){
+	        checkBoxExists = false;
+	      }catch (IndexOutOfBoundsException ioobe){
+	        checkBoxExists = false;
+	      }
+	    }
+	    bot.button(IDELabel.Button.NEXT).click();
+	    bot.comboBoxWithLabel(IDELabel.NewDroolsProjectDialog.GENERATE_CODE_COMPATIBLE_WITH_COMBO_BOX_LABEL)
+	      .setSelection(IDELabel.NewDroolsProjectDialog.CODE_COMPATIBLE_WITH_50_DROOLS);
+	    bot.button(IDELabel.Button.FINISH).click();
+  }
+  
   /**
    * Creates new Drools project
    * @param droolsProjectName
    */
-  private void createDroolsProject(String droolsProjectName){
-    eclipse.showView(ViewType.PACKAGE_EXPLORER);
-    eclipse.createNew(EntityType.DROOLS_PROJECT);
-    bot.textWithLabel(IDELabel.NewDroolsProjectDialog.NAME).setText(droolsProjectName);
-    bot.button(IDELabel.Button.NEXT).click();
-    // check all buttons
-    int index = 0;
-    boolean checkBoxExists = true;
-    while (checkBoxExists){
-      try{
-        SWTBotCheckBox checkBox = bot.checkBox(index);
-        if (!checkBox.isChecked()){
-          checkBox.click();
-        }
-        index++;
-      }catch (WidgetNotFoundException wnfe){
-        checkBoxExists = false;
-      }catch (IndexOutOfBoundsException ioobe){
-        checkBoxExists = false;
-      }
-    }
-    bot.button(IDELabel.Button.NEXT).click();
-    bot.comboBoxWithLabel(IDELabel.NewDroolsProjectDialog.GENERATE_CODE_COMPATIBLE_WITH_COMBO_BOX_LABEL)
-      .setSelection(IDELabel.NewDroolsProjectDialog.CODE_COMPATIBLE_WITH_50_DROOLS);
-    bot.button(IDELabel.Button.FINISH).click();
+  private void createDroolsProjectTest(String droolsProjectName){
+	  createDroolsProject(droolsProjectName);
     SWTTestExt.util.waitForAll(30*1000L);
     bot.sleep(Timing.time10S());
     assertTrue("Project "
@@ -138,12 +143,13 @@ public class ManageDroolsProject extends SWTTestExt{
       IDELabel.Shell.RENAME_JAVA_PROJECT);
     assertNull(checkResult,checkResult);
   }
+
   /**
    * Deletes Drools project and check result
    * @param droolsProjectName
    */
   private void deleteDroolsProject(String droolsProjectName){
-    
+
     packageExplorer.deleteProject(droolsProjectName, true);
     boolean notFound = false;
     try{

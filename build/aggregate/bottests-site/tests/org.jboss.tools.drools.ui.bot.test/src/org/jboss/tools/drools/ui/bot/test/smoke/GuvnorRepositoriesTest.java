@@ -143,8 +143,8 @@ public class GuvnorRepositoriesTest extends SWTTestExt{
       IDELabel.Menu.OPEN_GUVNOR_CONSOLE, false)).click();
     bot.sleep(Timing.time5S());
     SWTBotBrowserExt browser = bot.browserByTitle(IDELabel.GuvnorConsole.GUVNOR_CONSOLE_TITLE);
-    browser.setInputTextViaJavaScript(GuvnorRepositoriesTest.GUVNOR_USER_NAME, 0, bot);
-    browser.setInputTextViaJavaScript(GuvnorRepositoriesTest.GUVNOR_PASSWORD, 1, bot);
+    browser.setInputTextViaJavaScript(GuvnorRepositoriesTest.GUVNOR_USER_NAME, 1, bot);
+    browser.setInputTextViaJavaScript(GuvnorRepositoriesTest.GUVNOR_PASSWORD, 2, bot);
     browser.clickOnButtonViaJavaScript(0, bot);
     browser.clickOnButtonViaJavaScript(IDELabel.GuvnorConsole.BUTTON_YES_INSTALL_SAMPLES, bot);
     bot.sleep(Timing.time1S());
@@ -213,8 +213,7 @@ public class GuvnorRepositoriesTest extends SWTTestExt{
     SWTBotTreeItem tiDroolRuleDir = packageExplorer.selectTreeItem(DroolsAllBotTests.SRC_MAIN_RULES_TREE_NODE,
       new String[] {DroolsAllBotTests.DROOLS_PROJECT_NAME});
     DragAndDropHelper.dragAndDropOnTo(tiGuvnorFile.widget,tiDroolRuleDir.widget);
-    bot.sleep(Timing.time5S());
-    bot.shell(IDELabel.Shell.COPY_FILE_FROM_GUVNOR_TO_PACKAGE_EXPLORER).activate();
+    bot.waitForShell(IDELabel.Shell.COPY_FILE_FROM_GUVNOR_TO_PACKAGE_EXPLORER).activate();
     bot.button(IDELabel.Button.OK).click();
     SWTBotTree packageExplorerTree = packageExplorerBot.tree();
     // File is renamed because there is appended Guvnor info to Tree Item Label

@@ -99,7 +99,6 @@ public class ManageDroolsRules extends SWTTestExt{
           DroolsAllBotTests.COM_SAMPLE_TREE_NODE});
     console.clearConsole();
     eclipse.debugTreeItemAsDroolsApplication(tiDroolsTest);
-    bot.sleep(Timing.time10S());
     eclipse.closeConfirmPerspectiveSwitchShellIfOpened(false);
     String consoleText = console.getConsoleText(3*1000L,3*1000L,true);
     assertTrue("Drools Rule was not debuged properly.\nConsole content should have been empty but is:\n" + consoleText,
