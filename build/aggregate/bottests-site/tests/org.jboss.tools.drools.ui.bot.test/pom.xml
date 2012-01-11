@@ -9,7 +9,7 @@
 	<groupId>org.jboss.tools.drools</groupId>
 	<artifactId>org.jboss.tools.drools.ui.bot.test</artifactId> 
 	<version>1.0.0-SNAPSHOT</version>
-	<packaging>eclipse-plugin</packaging>
+	<packaging>eclipse-test-plugin</packaging>
 	<build>
 		<plugins>
 			<plugin>
@@ -18,6 +18,8 @@
 				<version>${tychoVersion}</version>
 				<configuration>
 					<useUIThread>false</useUIThread>
+					<testSuite>org.jboss.tools.drools.ui.bot.test</testSuite>
+					<testClass>org.jboss.tools.drools.ui.bot.test.DroolsAllBotTests</testClass>
 				</configuration>
 			</plugin>
 		</plugins>
