@@ -1,4 +1,4 @@
-package org.jboss.tools.jst.web.kb.test;
+package org.jboss.tools.common.base.test.kb;
 
 import java.util.ArrayList;
 import java.util.List;
