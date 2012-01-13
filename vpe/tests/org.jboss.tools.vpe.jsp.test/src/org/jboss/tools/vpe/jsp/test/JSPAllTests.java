@@ -21,7 +21,7 @@ public class JSPAllTests {
 		// $JUnit-BEGIN$
 	
 		suite.addTestSuite(JSPComponentTest.class);
-	
+		suite.addTestSuite(JSPTemplatePluginTest.class);
 		// $JUnit-END$
 		return new VpeTestSetup(suite);
     }
