@@ -42,7 +42,10 @@
 							<taskdef resource="emma_ant.properties" />
 							<taskdef resource="net/sf/antcontrib/antcontrib.properties" />
 							<move todir="${project.build.directory}/emma">
-								<fileset dir="${basedir}/../../.." includes="*/tests/*/target/emma/*.es" />
+								<fileset dir="${basedir}/../../..">
+									<include name="*/tests/*/target/emma/*.es" />
+									<include name="*/tests/*/target/emma/*.em" />
+								</fileset>
 							</move>
 							<if>
 								<and>
@@ -55,7 +58,7 @@
 									<echo>Process emma report...</echo>
 									<emma enabled="true">
 										<report>
-											<infileset dir="${project.build.directory}/emma" includes="*/tests/*/target/emma/*.es" />
+											<infileset dir="${project.build.directory}/emma" includes="*/tests/*/target/emma/*.es,*/tests/*/target/emma/*.em" />
 											<txt outfile="${project.build.directory}/coverage.txt" />
 											<xml outfile="${project.build.directory}/coverage.xml" />
 											<html outfile="${project.build.directory}/coverage.html" />
