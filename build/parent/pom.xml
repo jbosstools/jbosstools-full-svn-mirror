@@ -508,8 +508,7 @@
 				</property>
 			</activation>
 			<properties>
-				<emma.session.out.file>${project.build.directory}/emma/coverage.es
-				</emma.session.out.file>
+				<emma.session.out.file>${project.build.directory}/emma/coverage.es</emma.session.out.file>
 				<emma.filter />
 				<emma.instrument.bundles />
 			</properties>
