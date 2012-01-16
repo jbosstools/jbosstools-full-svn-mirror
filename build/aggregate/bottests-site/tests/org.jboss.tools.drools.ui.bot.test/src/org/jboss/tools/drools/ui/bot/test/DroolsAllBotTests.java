@@ -69,7 +69,10 @@ public class DroolsAllBotTests extends SWTTestExt {
   public static final String GUIDED_DROOLS_RULE_NAME = "GuidedRule.brl";
   public static final String DOMAIN_SPECIFIC_LANGUAGE_FILE_NAME = "DslTest.dsl";
   public static final String RULE_FLOW_JAVA_TEST_FILE_NAME = "ProcessTest.java";
-  public static final String RULE_FLOW_RF_FILE_NAME = "ruleflow.rf";//"sample.bpmn";
+  public static final String RULE_FLOW_RF_FILE_NAME = "ruleflow.rf";
+  public static final String RULE_FLOW_SAMPLE_FILE_NAME = "sample.bpmn";
+  // this variable should be set in ManageDroolsProject class according to used Drools version
+  public static String RULE_FLOW_FILE_NAME = RULE_FLOW_SAMPLE_FILE_NAME; // default choice
   public static final String DECISION_TABLE_JAVA_TEST_FILE_NAME = "DecisionTableTest.java";
   public static final String USE_EXTERNAL_DROOLS_RUNTIME_PROPERTY_NAME = "use-external-drools-runtime";
   public static final String EXTERNAL_DROOLS_RUTIME_HOME_PROPERTY_NAME = "external-drools-runtime-home";

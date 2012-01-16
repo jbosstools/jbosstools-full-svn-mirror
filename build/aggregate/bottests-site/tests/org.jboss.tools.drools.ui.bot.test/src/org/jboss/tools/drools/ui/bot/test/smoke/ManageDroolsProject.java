@@ -70,8 +70,15 @@ public class ManageDroolsProject extends SWTTestExt{
 	      }
 	    }
 	    bot.button(IDELabel.Button.NEXT).click();
+	    //final String CODE_COMPATIBILITY = IDELabel.NewDroolsProjectDialog.CODE_COMPATIBLE_WITH_50_DROOLS;
+	    final String CODE_COMPATIBILITY = IDELabel.NewDroolsProjectDialog.CODE_COMPATIBLE_WITH_51_DROOLS_OR_ABOVE;
+	    if (CODE_COMPATIBILITY.equals(IDELabel.NewDroolsProjectDialog.CODE_COMPATIBLE_WITH_51_DROOLS_OR_ABOVE)) {
+	    	DroolsAllBotTests.RULE_FLOW_FILE_NAME = DroolsAllBotTests.RULE_FLOW_SAMPLE_FILE_NAME;
+	    } else {
+	    	DroolsAllBotTests.RULE_FLOW_FILE_NAME = DroolsAllBotTests.RULE_FLOW_RF_FILE_NAME;
+	    }
 	    bot.comboBoxWithLabel(IDELabel.NewDroolsProjectDialog.GENERATE_CODE_COMPATIBLE_WITH_COMBO_BOX_LABEL)
-	      .setSelection(IDELabel.NewDroolsProjectDialog.CODE_COMPATIBLE_WITH_50_DROOLS);
+	      .setSelection(CODE_COMPATIBILITY);
 	    bot.button(IDELabel.Button.FINISH).click();
   }
   

@@ -18,9 +18,16 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Source;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
 
 import org.eclipse.swtbot.eclipse.gef.finder.SWTGefBot;
 import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefEditor;
@@ -60,14 +67,16 @@ public class RuleFlowTest extends SWTTestExt{
   private static final int ROOT_NODE_CHILDREN_COUNT = 3;
   
   private boolean isEditorMaximized = false;
+
   /**
    * Tests Rule Flow
    */
   @Test
   public void testRuleFlow() {
     runRuleFlowCheck(DroolsAllBotTests.RULE_FLOW_JAVA_TEST_FILE_NAME);
-    ruleFlowEditorCheck(DroolsAllBotTests.RULE_FLOW_RF_FILE_NAME);
+    ruleFlowEditorCheck(DroolsAllBotTests.RULE_FLOW_FILE_NAME);
   }
+
   /**
    * Runs newly created Drools project and check result
    * @param droolsProjectName
@@ -90,18 +99,18 @@ public class RuleFlowTest extends SWTTestExt{
       "Expected console text is: " + "Hello World\n",
       "Hello World\n".equals(consoleText));
   }
+
   /**
    * Add all possible object to RF diagram and then remove them
    * @param ruleFlowRfFileName
    */
-  private void ruleFlowEditorCheck (String ruleFlowFileName){
+  private void ruleFlowEditorCheck(String ruleFlowFileName) {
     packageExplorer.show();
     packageExplorer.openFile(DroolsAllBotTests.DROOLS_PROJECT_NAME ,
-      DroolsAllBotTests.SRC_MAIN_RULES_TREE_NODE,
-      DroolsAllBotTests.RULE_FLOW_RF_FILE_NAME);
-    // Test if Rule Flow RF File is opened in editor
-    assertTrue("Rule Flow RF File is not opened properly. File " + ruleFlowFileName + " is not opened in editor",
-      SWTEclipseExt.existEditorWithLabel(bot,ruleFlowFileName));
+      DroolsAllBotTests.SRC_MAIN_RULES_TREE_NODE, ruleFlowFileName);
+    // Test if Rule Flow File is opened in editor
+    assertTrue("Rule Flow File is not opened properly. File " + ruleFlowFileName + " is not opened in editor",
+      SWTEclipseExt.existEditorWithLabel(bot, ruleFlowFileName));
     // Maximize editor
     bot.menu(IDELabel.Menu.WINDOW)
       .menu(IDELabel.Menu.NAVIGATION)
@@ -112,9 +121,7 @@ public class RuleFlowTest extends SWTTestExt{
     SWTBotGefEditor gefEditor = gefBot.gefEditor(ruleFlowFileName);
     // Clear Editor
     gefEditor.setFocus();
-    deleteAllObjectsFromRFFile(gefEditor,
-      DroolsAllBotTests.DROOLS_PROJECT_NAME,
-      DroolsAllBotTests.RULE_FLOW_RF_FILE_NAME);
+    deleteAllObjectsFromRuleFile(gefEditor, DroolsAllBotTests.DROOLS_PROJECT_NAME, ruleFlowFileName);
     // Draw each component
     String[] tools = new String[]{"Start Event","End Event","Rule Task",
       "Gateway [diverge]","Gateway [converge]","Reusable Sub-Process",
@@ -136,7 +143,7 @@ public class RuleFlowTest extends SWTTestExt{
     // Click on End Node
     gefEditor.click(xspacing + xoffset + 5, yoffset + 5);
     gefEditor.save();
-    checkFullRFFile(DroolsAllBotTests.DROOLS_PROJECT_NAME , ruleFlowFileName);
+    checkFullRuleFile(DroolsAllBotTests.DROOLS_PROJECT_NAME , ruleFlowFileName);
     // check synchronization with Properties View
     gefEditor.activateTool("Select");
     gefEditor.click(xoffset + 5, yoffset + 5);
@@ -163,23 +170,139 @@ public class RuleFlowTest extends SWTTestExt{
     isEditorMaximized = false;
     gefEditor.save();
     gefEditor.close();
-    checkEmptyRFFile(DroolsAllBotTests.DROOLS_PROJECT_NAME , ruleFlowFileName);
-  }  
+    checkEmptyRuleFile(DroolsAllBotTests.DROOLS_PROJECT_NAME , ruleFlowFileName);
+  }
+
+    /**
+     * Converts to full path of rule flow file.
+     * 
+     * @param projectName Project name
+     * @param ruleFlowFileName File name of rule flow
+     * @return Full path to rule flow file
+     */
+    private String getFullPathToRuleFlowFile(final String projectName, final String ruleFlowFileName) {
+        return SWTUtilExt.getPathToProject(projectName) + File.separator
+                + RuleFlowTest.RULE_FLOW_FILE_DIRECTORY + File.separator + ruleFlowFileName;  
+    }
+
+    /**
+     * Return normalized document from file with given name.
+     * 
+     * @param fileName File name to get it normalized document from.
+     * @return Normalized document
+     */
+    private Document getNormalizedDocument(final String fileName) {
+        Document document = loadXmlFile(fileName);
+        document.normalizeDocument();
+        return document;
+    }
+
+    /**
+     * Decides according to used Drools version.
+     * 
+     * @param projectName
+     * @param ruleFlowFileName
+     */
+    private void checkFullRuleFile(final String projectName, final String ruleFlowFileName) {
+        if (DroolsAllBotTests.RULE_FLOW_SAMPLE_FILE_NAME.equals(ruleFlowFileName)) {
+            checkFullBpmnFile(projectName, ruleFlowFileName);
+        } else {
+            checkFullRFFile(projectName, ruleFlowFileName);
+        }
+    }
+
+    /**
+     * Checks full BPMN file.
+     * 
+     * @param projectName
+     * @param ruleFlowFileName
+     */
+    private void checkFullBpmnFile(final String projectName, final String ruleFlowFileName) {
+        final String START_EVENT_NODE_NAME = "startEvent";
+        final String END_EVENT_NODE_NAME = "endEvent";
+        final String BUSINESS_RULE_TASK = "businessRuleTask";
+        final String COMPLEX_GATEWAY_NODE_NAME = "complexGateway";
+        final String CALL_ACTIVITY_NODE_NAME = "callActivity";
+        final String SCRIPT_TASK_NODE_NAME = "scriptTask";
+        final String SEQUENCE_FLOW_NODE_NAME = "sequenceFlow";
+        final String GATEWAY_DIRECTION = "gatewayDirection";
+        final String DIVERGING = "Diverging";
+        final String CONVERGING = "Converging";
+        final String SOURCE_REF = "sourceRef";
+        final String TARGET_REF = "targetRef";
+        final String ID = "id";
+
+        final String fullRuleFlowFileName = getFullPathToRuleFlowFile(projectName, ruleFlowFileName);
+
+        assertTrue("'" + fullRuleFlowFileName + "' is not valid BPMN 2 XML file.", isValidBpmnXml(fullRuleFlowFileName));
+
+        Document document = getNormalizedDocument(fullRuleFlowFileName);
+
+        final String START_EVENT_ID;
+        final String END_EVENT_ID;
+
+        assertEquals("There should be just one '" + START_EVENT_NODE_NAME + "' element in XML.",
+                1, document.getElementsByTagName(START_EVENT_NODE_NAME).getLength());
+        START_EVENT_ID = document.getElementsByTagName(START_EVENT_NODE_NAME).item(0).getAttributes()
+                .getNamedItem(ID).getTextContent();
+
+        assertEquals("There should be just one '" + END_EVENT_NODE_NAME + "' element in XML.",
+                1, document.getElementsByTagName(END_EVENT_NODE_NAME).getLength());
+        END_EVENT_ID = document.getElementsByTagName(END_EVENT_NODE_NAME).item(0).getAttributes()
+                .getNamedItem(ID).getTextContent();
+
+        assertEquals("There should be just one '" + BUSINESS_RULE_TASK + "' element in XML.",
+                1, document.getElementsByTagName(BUSINESS_RULE_TASK).getLength());
+
+        NodeList gatewayNodes = document.getElementsByTagName(COMPLEX_GATEWAY_NODE_NAME);
+        assertEquals("There should be exactly two '" + COMPLEX_GATEWAY_NODE_NAME + "' elements in XML.",
+                2, gatewayNodes.getLength());
+        int diverging = 0;
+        int converging = 0;
+        for (int i = 0; i < gatewayNodes.getLength(); i++) {
+            NamedNodeMap attributes = gatewayNodes.item(i).getAttributes();
+            for (int j = 0; j < attributes.getLength(); j++) {
+                Node attribute = attributes.item(j);
+                if (GATEWAY_DIRECTION.equals(attribute.getNodeName())) {
+                    if (DIVERGING.equals(attribute.getTextContent())) {
+                        diverging++;
+                    } else if (CONVERGING.equals(attribute.getTextContent())) {
+                        converging++;
+                    }
+                }
+            }
+        }
+        assertEquals("There should be one diverging and one converting gateway, but it wasn't so.",
+                1, diverging * converging);
+
+        assertEquals("There should be just one '" + CALL_ACTIVITY_NODE_NAME + "' element in XML.",
+                1, document.getElementsByTagName(CALL_ACTIVITY_NODE_NAME).getLength());
+
+        assertEquals("There should be just one '" + SCRIPT_TASK_NODE_NAME + "' element in XML.",
+                1, document.getElementsByTagName(SCRIPT_TASK_NODE_NAME).getLength());
+
+        assertEquals("There should be just one '" + SEQUENCE_FLOW_NODE_NAME + "' element in XML.",
+                1, document.getElementsByTagName(SEQUENCE_FLOW_NODE_NAME).getLength());
+
+        NamedNodeMap attributes = document.getElementsByTagName(SEQUENCE_FLOW_NODE_NAME).item(0).getAttributes();
+        final String sourceRef = attributes.getNamedItem(SOURCE_REF).getTextContent();
+        assertEquals("Source of sequence flow should be '" + START_EVENT_ID + "' but was '"
+                + sourceRef + "'.", START_EVENT_ID, sourceRef);
+        final String targetRef = attributes.getNamedItem(TARGET_REF).getTextContent();
+        assertEquals("Target of sequence flow should be '" + END_EVENT_ID + "' but was '"
+                + targetRef, END_EVENT_ID, targetRef);
+    }
+
   /**
    * Check content of Rule Flow file containing all possible objects
    * 
    * @param projectName
    * @param ruleFlowFileName
    */
-  private void checkFullRFFile(String projectName, String ruleFlowFileName) {
-
-    Document doc = loadXmlFile(SWTUtilExt.getPathToProject(projectName)
-        + File.separator + RuleFlowTest.RULE_FLOW_FILE_DIRECTORY
-        + File.separator + ruleFlowFileName);
-
+  private void checkFullRFFile(final String projectName, final String ruleFlowFileName) {
     String errorDescription = null;
+    Document doc = getNormalizedDocument(getFullPathToRuleFlowFile(projectName, ruleFlowFileName));
     Element rootNode = doc.getDocumentElement();
-    doc.normalizeDocument();
     if (rootNode.getNodeName().equals(ROOT_NODE_NAME)) {
       NodeList rootNodeList = rootNode.getChildNodes();
       List<Node> rootNodes = removeTextNodes(rootNodeList);
@@ -213,6 +336,45 @@ public class RuleFlowTest extends SWTTestExt{
     }
     assertNull(errorDescription,errorDescription);
   }
+
+    /**
+     * Decides according to used Drools version.
+     * 
+     * @param projectName
+     * @param ruleFlowFileName
+     */
+    private void checkEmptyRuleFile(final String projectName, final String ruleFlowFileName) {
+        if (DroolsAllBotTests.RULE_FLOW_SAMPLE_FILE_NAME.equals(ruleFlowFileName)) {
+            checkEmptyBpmnFile(projectName, ruleFlowFileName);
+        } else {
+            checkEmptyRFFile(projectName, ruleFlowFileName);
+        }
+    }
+
+    /**
+     * Checks empty BPMN file with given name.
+     * 
+     * @param projectName
+     * @param ruleFlowFileName
+     */
+    private void checkEmptyBpmnFile(final String projectName, final String ruleFlowFileName) {
+        final String fullRuleFlowFileName = getFullPathToRuleFlowFile(projectName, ruleFlowFileName);
+        assertTrue("'" + fullRuleFlowFileName + "' is not a valid BPMN 2 XML file.",
+                isValidBpmnXml(fullRuleFlowFileName));
+
+        final String PROCESS_NODE_NAME = "process";
+        Document document = getNormalizedDocument(fullRuleFlowFileName);
+        NodeList processNode = document.getElementsByTagName(PROCESS_NODE_NAME);
+        assertEquals("There should be just one '" + PROCESS_NODE_NAME + "' node.", 1, processNode.getLength());
+        NodeList processChildNodes = processNode.item(0).getChildNodes();
+        for (int i = 0; i < processChildNodes.getLength(); i++) {
+            final String processChildNodeName = processChildNodes.item(i).getNodeName();
+            if (!("#text".equals(processChildNodeName) || "#comment".equals(processChildNodeName))) {
+                fail("'" + PROCESS_NODE_NAME + "' node should not have any child nodes (except #text and #comment) but it has.");
+            }
+        }
+    }
+
   /**
    * Check content of empty Rule Flow file
    * @param projectName
@@ -445,6 +607,22 @@ public class RuleFlowTest extends SWTTestExt{
       e.printStackTrace();
     }
   }
+
+    /**
+     * Deletes all objects from rule file.
+     * 
+     * @param gefEditor
+     * @param projectName
+     * @param ruleFlowFileName
+     */
+    private void deleteAllObjectsFromRuleFile(SWTBotGefEditor gefEditor, String projectName, String ruleFlowFileName) {
+        if (DroolsAllBotTests.RULE_FLOW_SAMPLE_FILE_NAME.equals(ruleFlowFileName)) {
+            deleteAllObjectFromBpmnFile(gefEditor, projectName, ruleFlowFileName);
+        } else {
+            deleteAllObjectsFromRFFile(gefEditor, projectName, ruleFlowFileName);
+        }
+    }
+
   /**
    * Delete all objects from RF File
    * @param gefEditor
@@ -488,4 +666,85 @@ public class RuleFlowTest extends SWTTestExt{
     assertNull(errorDescription,errorDescription);
   }
 
+    /**
+     * Deletes all object from BPMN file.
+     * 
+     * @param gefEditor
+     * @param projectName
+     * @param ruleFlowFileName
+     */
+    private void deleteAllObjectFromBpmnFile(SWTBotGefEditor gefEditor, String projectName, String ruleFlowFileName) {
+        final String fileName = getFullPathToRuleFlowFile(projectName, ruleFlowFileName);
+        assertTrue("Rule flow file '" + fileName + "' is not valid.", isValidBpmnXml(fileName));
+
+        Document document = getNormalizedDocument(fileName);
+        NodeList nodeList = document.getElementsByTagName("*");
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Node xAttribute = nodeList.item(i).getAttributes().getNamedItem("g:x");
+            Node yAttribute = nodeList.item(i).getAttributes().getNamedItem("g:y");
+            if (xAttribute != null && yAttribute != null) {
+                int x = Integer.parseInt(xAttribute.getNodeValue());
+                int y = Integer.parseInt(yAttribute.getNodeValue());
+                final int OFFSET = 3;
+                gefEditor.click(x + OFFSET, y + OFFSET);
+                bot.sleep(Timing.time1S());
+                KeyboardHelper.typeKeyCodeUsingAWT(KeyEvent.VK_DELETE);
+                bot.sleep(Timing.time1S());
+            }
+        }
+    }
+
+    /**
+     * Validates file with given name if it is valid BPMN 2 XML.
+     * 
+     * @param bpmnXmlFileName Name of the file to be validated.
+     * @return <code>true</code> if given document is valid BPMN 2 XML file,
+     *         <code>false</code> otherwise.
+     */
+    private static boolean isValidBpmnXml(final String bpmnXmlFileName) {
+        final String XML_SCHEMA_FILE = "resources/XMLSchemas/BPMN20.xsd";
+
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        dbf.setNamespaceAware(true);
+
+        DocumentBuilder parser;
+        Document document;
+        try {
+            parser = dbf.newDocumentBuilder();
+            document = parser.parse(new File(bpmnXmlFileName)); 
+        } catch (ParserConfigurationException pce) {
+            pce.printStackTrace();
+            return false;
+        } catch (SAXException saxe) {
+            saxe.printStackTrace();
+            return false;
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+            return false;
+        }
+
+        SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+        Source schemaFile = new StreamSource(new File(XML_SCHEMA_FILE));
+        Schema schema;
+        try {
+            schema = schemaFactory.newSchema(schemaFile);
+        } catch (SAXException saxe) {
+            saxe.printStackTrace();
+            return false;
+        }
+
+        Validator validator = schema.newValidator();
+        try {
+            validator.validate(new DOMSource(document));
+        } catch (SAXException saxe) {
+            // instance document is invalid!
+            log.error("ERROR: Document '" + bpmnXmlFileName + "' is invalid (" + saxe.getMessage() + ")");
+            return false;
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+            return false;
+        }
+
+        return true;
+    }
 }
