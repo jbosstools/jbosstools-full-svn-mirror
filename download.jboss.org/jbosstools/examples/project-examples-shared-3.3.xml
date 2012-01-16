@@ -54,6 +54,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 				<property name="name" value="Java EE 6 webapp project"/>
 			</properties>
 		</mavenArchetype>
+        <tags>wizard</tags>
 	</project>
 	<!-- Temporary EE6 project - replace with Pete's new archetype when it's ready -->
 	<project>
@@ -104,6 +105,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 			<javaPackage>org.jboss.tools.example</javaPackage>
 		</mavenArchetype>
 		<!--targetProjectFacet facet="jst.ear" version="6.0"/-->
+        <tags>wizard</tags>
 	</project>		
 	<!-- Temporary POH5 project - replace with Pete's new archetype when it's ready -->
 	<project>
@@ -154,6 +156,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 			<version>0.0.1-SNAPSHOT</version>
 			<javaPackage>org.jboss.tools.example.html5</javaPackage>
 		</mavenArchetype>
+        <tags>wizard</tags>
 	</project>		
 	<!-- Temporary Spring MVC project - replace with Marius' new archetype when it's ready -->
 	<project>
@@ -201,6 +204,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 			<version>0.0.1-SNAPSHOT</version>
 			<javaPackage>org.jboss.tools.example.springmvc</javaPackage>
 		</mavenArchetype>
+        <tags>wizard</tags>
 	</project>		
 	<!-- Richfaces project  -->
 	<project>
@@ -257,5 +261,6 @@ It includes a persistence unit and some sample persistence and transaction code 
             </properties>
             -->
 		</mavenArchetype>
+        <tags>wizard</tags>
 	</project>		
 </projects>
