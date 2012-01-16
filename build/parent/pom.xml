@@ -612,8 +612,9 @@
 															<instr metadatafile="${project.build.directory}/emma/@{bundle}-coverage.em"
 																mode="copy" outdir="${project.build.directory}/instrumented-classes/@{bundle}">
 																<instrpath>
-																	<fileset dir="${@{bundle}-classes}" includes="*.jar" />
-																	<fileset dir="${@{bundle}-classes}/target" includes="*.jar" />
+																	<dirset dir="${@{bundle}-classes}">
+	        															<include name="target/*classes"/>
+																	</dirset>
 																</instrpath>
 															</instr>
 														</emma>
