@@ -4,7 +4,7 @@
 		<category>Java EE 6 Quickstarts</category>
 		<name>jboss-javaee6-webapp</name>
 		<included-projects>jboss-javaee6-webapp</included-projects>
-		<shortDescription>Java EE 6 example (Maven archetype)</shortDescription>
+		<shortDescription>Java EE Web Project</shortDescription>
 		<description>
 This is your project! It's a sample, deployable Maven 3 project to help you get your foot in the door developing with Java EE 6 on JBoss AS 7.
 This project is setup to allow you to create a compliant Java EE 6 application using JSF 2.0, CDI 1.0, EJB 3.1, JPA 2.0 and Bean Validation 1.0.
@@ -55,13 +55,14 @@ It includes a persistence unit and some sample persistence and transaction code 
 			</properties>
 		</mavenArchetype>
         <tags>wizard</tags>
+        <icon path="icons/newwebprj_wiz.gif" />
 	</project>
 	<!-- Temporary EE6 project - replace with Pete's new archetype when it's ready -->
 	<project>
 		<category>Java EE 6 Quickstarts</category>
 		<name>multi-javaee6-archetype</name>
 		<included-projects>multi-javaee6-archetype</included-projects>
-		<shortDescription>JBoss AS 7 / Java EE 6 EAR Webapp(Maven archetype)</shortDescription>
+		<shortDescription>Java EE Project</shortDescription>
 		<description>An archetype that generates a starter Java EE 6 webapp project for JBoss AS 7 / EAP 6. The project is an EAR, with an EJB-JAR and WAR</description>
 		<size>13806</size>
 		<url/>
@@ -106,13 +107,14 @@ It includes a persistence unit and some sample persistence and transaction code 
 		</mavenArchetype>
 		<!--targetProjectFacet facet="jst.ear" version="6.0"/-->
         <tags>wizard</tags>
-	</project>		
+        <icon path="icons/ear-wiz-icon.gif" />
+    </project>		
 	<!-- Temporary POH5 project - replace with Pete's new archetype when it's ready -->
 	<project>
 		<category>Java EE 6 Quickstarts</category>
 		<name>jboss-javaee6-poh5-archetype</name>
 		<included-projects>jboss-javaee6-poh5</included-projects>
-		<shortDescription>Java EE 6 HTML5 Mobile Webapp</shortDescription>
+		<shortDescription>HTML5 Project</shortDescription>
 		<description>An archetype that generates a Java EE 6 HTML5 Mobile Webapp project for JBoss AS 7 / EAP 6</description>
 		<size>165567</size>
 		<url/>
@@ -157,13 +159,14 @@ It includes a persistence unit and some sample persistence and transaction code 
 			<javaPackage>org.jboss.tools.example.html5</javaPackage>
 		</mavenArchetype>
         <tags>wizard</tags>
-	</project>		
+        <icon path="icons/html5.png" />
+    </project>		
 	<!-- Temporary Spring MVC project - replace with Marius' new archetype when it's ready -->
 	<project>
 		<category>Java EE 6 Quickstarts</category>
 		<name>spring-mvc-webapp</name>
 		<included-projects>spring-mvc-webapp</included-projects>
-		<shortDescription>Java EE 6 - Spring MVC Application (Maven archetype)</shortDescription>
+		<shortDescription>Spring MVC Project</shortDescription>
 		<description>An archetype that generates a starter Spring MVC application with Java EE persistence settings (server bootstrapped JPA, JTA transaction management) for JBoss AS7 / EAP 6</description>
 		<size>165567</size>
 		<url/>
@@ -205,13 +208,14 @@ It includes a persistence unit and some sample persistence and transaction code 
 			<javaPackage>org.jboss.tools.example.springmvc</javaPackage>
 		</mavenArchetype>
         <tags>wizard</tags>
-	</project>		
+        <icon path="icons/spring_wiz.gif" />
+    </project>		
 	<!-- Richfaces project  -->
 	<project>
 		<category>Java EE 6 Quickstarts</category>
 		<name>richfaces-archetype-simpleapp</name>
 		<included-projects>richfaces-archetype-simpleapp</included-projects>
-		<shortDescription>Java EE 6 - RichFaces Simple Application (Maven archetype)</shortDescription>
+		<shortDescription>RichFaces Project</shortDescription>
 		<description>An archetype that generates a simple Richfaces application</description>
 		<size>165567</size>
 		<url/>
@@ -262,5 +266,6 @@ It includes a persistence unit and some sample persistence and transaction code 
             -->
 		</mavenArchetype>
         <tags>wizard</tags>
+        <icon path="icons/rf_logo.png" />
 	</project>		
 </projects>

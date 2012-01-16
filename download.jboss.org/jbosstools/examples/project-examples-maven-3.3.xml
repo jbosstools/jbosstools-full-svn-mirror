@@ -36,6 +36,7 @@ It will create the jboss-javaee6-webapp project in your workspace based on the o
 			-->
 		</mavenArchetype>
         <tags>central</tags>
+        <icon path="icons/jbossas7.png" />
 	</project>
 	
 	<project>
@@ -78,6 +79,7 @@ The example can be deployed using Maven from the command line or from Eclipse us
 		<importTypeDescription>The project example requires the m2eclipse, m2eclipse-wtp and JBoss Maven Project Examples feature.</importTypeDescription>
 		<welcome type="cheatsheets" url="/jboss-as-helloworld/cheatsheets/helloworld.xml"/> 
         <tags>central</tags>
+        <icon path="icons/jbossas7.png" />        
 	</project>
 	
 	<project>
@@ -123,7 +125,8 @@ You will see a Hello AS7 World!! message appear on the console when this is done
 		<importType>maven</importType>
 		<importTypeDescription>The project example requires the m2eclipse, m2eclipse-wtp and JBoss Maven Project Examples feature.</importTypeDescription> 
         <tags>central</tags>
-	</project>
+        <icon path="icons/jbossas7.png" />
+    </project>
 	
 	
 	<project>
@@ -166,7 +169,8 @@ The example can be deployed using Maven from the command line or from Eclipse us
 		<importTypeDescription>The project example requires the m2eclipse, m2eclipse-wtp and JBoss Maven Project Examples feature.</importTypeDescription>
 		<welcome type="cheatsheets" url="/jboss-as-login/cheatsheets/login.xml"/> 
         <tags>central</tags>
-	</project>
+        <icon path="icons/jbossas7.png" />
+    </project>
 	
 	<project>
 		<category>JBoss AS 7 Quickstarts</category>
@@ -208,7 +212,8 @@ The example can be deployed using Maven from the command line or from Eclipse us
 		<importTypeDescription>The project example requires the m2eclipse, m2eclipse-wtp and JBoss Maven Project Examples feature.</importTypeDescription>
 		<welcome type="cheatsheets" url="/jboss-as-numberguess/cheatsheets/numberguess.xml"/>  
         <tags>central</tags>
-	</project>
+        <icon path="icons/jbossas7.png" />
+    </project>
 	
 	<project>
 		<category>JBoss AS 7 Quickstarts</category>
@@ -251,7 +256,8 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<importTypeDescription>The project example requires the m2eclipse, m2eclipse-wtp and JBoss Maven Project Examples feature.</importTypeDescription>
 		<welcome type="cheatsheets" url="/jboss-as-kitchensink/cheatsheets/kitchensink.xml"/> 
         <tags>central</tags>
-	</project>
+        <icon path="icons/jbossas7.png" />
+    </project>
 	<project>
 		<category>JBoss AS 7 Quickstarts</category>
 		<name>poh5-helloworld</name>
@@ -292,6 +298,7 @@ POH5 is basically a smart, HTML5+CSS3+JavaScript front-end using RESTful service
         <welcome type="cheatsheets" url="/poh5-helloworld/cheatsheets/poh5-helloworld.xml"/> 
         -->
         <tags>central, poh5</tags>
-	</project>
+        <icon path="icons/jbossas7.png" />
+ </project>
 	
 </projects>
