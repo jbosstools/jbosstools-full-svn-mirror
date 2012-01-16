@@ -2,6 +2,9 @@
 	<!--
 	To test output, run maven in this folder:
 		$ mvn install -DJOB_NAME=jbosstools-3.3_trunk.aggregate -DBUILD_ID=2011-09-19_19-10-45 -DBUILD_NUMBER=6969 -DJBT_VERSION=3.3.99 -DBUILD_ALIAS=M7 -Dupdate.site.description="Stable Milestone"
+		
+	Or, to run just the ant script:
+		$ cd ~/tru/build/aggregate/webtools-site; ant basic.build -f ../build.xml -Doutput.dir=`pwd`
 	-->
 
 	<!-- if ${WORKSPACE}/site folder exists, target that folder; else generate here. -->
@@ -42,7 +45,7 @@
 	</condition>
 	<property file="${associate.properties}" />
 	<echo level="verbose">Loaded associate sites from ${associate.properties}</echo>
-	<property name="web.content.files" value="index.html, web/*.css, README*, *directory.xml" />
+	<property name="web.content.files" value="index.html, web/*.css, README*, *directory.xml, site.*" />
 
 	<target name="init">
 		<ant antfile="${build.xml}" target="init" />
@@ -555,6 +558,13 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 		<loadfile property="site.contents" srcfile="${update.site.source.dir}/site.html" failonerror="false" />
 		<property name="site.contents" value="" />
 		<delete file="${update.site.source.dir}/site.html" quiet="true" />
+		
+		<!-- turn site.xml into site.properties -->
+		<delete quiet="true" file="${update.site.source.dir}/site.properties" />
+		<xslt style="site.properties.xsl" in="${update.site.source.dir}/site.xml" out="${update.site.source.dir}/site.properties" force="true">
+			<classpath location="${COMMON_TOOLS}/saxon.jar" />
+		</xslt>
+		
 	</target>
 
 	<!-- look for http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.*/logs/zip.list.txt; 
