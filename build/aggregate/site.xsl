@@ -119,6 +119,7 @@
 				</td>
 				<td class="rowLine" colspan="1">
 					@DIRECTORY.XML@
+					@SITE.PROPERTIES@
 				</td>
 			</tr>
 		</table>

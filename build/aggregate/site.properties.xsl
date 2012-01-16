@@ -8,7 +8,7 @@
 			<xsl:sort select="@name" />
 			<xsl:variable name="catg"><xsl:value-of select="@name"/></xsl:variable>
 # 
-<xsl:value-of select="$catg" /> = \
+<xsl:value-of select="$catg" />.category.features = \
 <xsl:for-each select="//feature">
 				<xsl:sort select="@id" />
 				<xsl:if test="count(./category[contains(@name,$catg)])>0"><xsl:value-of select="@id" />,

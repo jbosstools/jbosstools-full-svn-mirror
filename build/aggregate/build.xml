@@ -45,7 +45,7 @@
 	</condition>
 	<property file="${associate.properties}" />
 	<echo level="verbose">Loaded associate sites from ${associate.properties}</echo>
-	<property name="web.content.files" value="index.html, web/*.css, README*, *directory.xml, site.*" />
+	<property name="web.content.files" value="index.html, web/*.css, README*, *directory.xml, site.xml, site.properties" />
 
 	<target name="init">
 		<ant antfile="${build.xml}" target="init" />
@@ -501,6 +501,8 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 		<!-- get site.xml as HTML, then load into ${site.contents} in order to merge into index.html -->
 		<antcallback target="transform.site.xml" return="site.contents" />
 
+		<antcallback target="generate.site.properties" return="site.properties.html"/>
+		
 		<antcallback target="generate.directory.xml" return="directory.xml.html"/>
 		
 		<copy todir="${output.dir}" overwrite="true">
@@ -510,6 +512,7 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 				<expandproperties />
 				<replacetokens>
 					<token key="DIRECTORY.XML" value="${directory.xml.html}"/>
+					<token key="SITE.PROPERTIES" value="${site.properties.html}"/>
 				</replacetokens>
 			</filterchain>
 		</copy>
@@ -520,6 +523,15 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 		<copy todir="${update.site.source.dir}" overwrite="true">
 			<fileset dir="${output.dir}" includes="${web.content.files}" />
 		</copy>
+	</target>
+
+	<target name="generate.site.properties">
+		<!-- turn site.xml into site.properties -->
+		<delete quiet="true" file="${update.site.source.dir}/site.properties" />
+		<xslt style="site.properties.xsl" in="${update.site.source.dir}/site.xml" out="${update.site.source.dir}/site.properties" force="true">
+			<classpath location="${COMMON_TOOLS}/saxon.jar" />
+		</xslt>
+		<var name="site.properties.html" value=":: &lt;a href=&quot;site.properties&quot; style=&quot;font-size:x-small&quot;&gt;site.properties&lt;/a&gt;"/>
 	</target>
 
 	<target name="generate.directory.xml">
@@ -558,13 +570,6 @@ To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 		<loadfile property="site.contents" srcfile="${update.site.source.dir}/site.html" failonerror="false" />
 		<property name="site.contents" value="" />
 		<delete file="${update.site.source.dir}/site.html" quiet="true" />
-		
-		<!-- turn site.xml into site.properties -->
-		<delete quiet="true" file="${update.site.source.dir}/site.properties" />
-		<xslt style="site.properties.xsl" in="${update.site.source.dir}/site.xml" out="${update.site.source.dir}/site.properties" force="true">
-			<classpath location="${COMMON_TOOLS}/saxon.jar" />
-		</xslt>
-		
 	</target>
 
 	<!-- look for http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.*/logs/zip.list.txt; 
