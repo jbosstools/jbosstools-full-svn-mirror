@@ -547,11 +547,9 @@
 						<version>${tychoVersion}</version>
 						<configuration>
 							<systemProperties combine.children="append">
-								<emma.session.out.file>${emma.session.out.file}
-								</emma.session.out.file>
+								<emma.session.out.file>${emma.session.out.file}</emma.session.out.file>
 								<emma.filter>${emma.filter}</emma.filter>
-								<eclemma.instrument.bundles>${emma.instrument.bundles}
-								</eclemma.instrument.bundles>
+								<eclemma.instrument.bundles>${emma.instrument.bundles}</eclemma.instrument.bundles>
 							</systemProperties>
 							<frameworkExtensions>
 								<frameworkExtension>
@@ -617,17 +615,25 @@
 													<sequential>
 														<property name="@{bundle}-classes"
 															location="${project.build.directory}/../../../plugins/@{bundle}" />
-														<echo>instruments ${@{bundle}-classes}</echo>
-														<emma enabled="true">
-															<instr metadatafile="${project.build.directory}/emma/@{bundle}-coverage.em"
-																mode="copy" outdir="${project.build.directory}/instrumented-classes/@{bundle}">
-																<instrpath>
-																	<dirset dir="${@{bundle}-classes}">
-	        															<include name="target/*classes"/>
-																	</dirset>
-																</instrpath>
-															</instr>
-														</emma>
+														<if>
+															<available file="${@{bundle}-classes}" type="dir" />
+															<then>
+																<echo>Generating coverage metadata for ${@{bundle}-classes}</echo>
+																<emma enabled="true">
+																	<instr metadatafile="${project.build.directory}/emma/@{bundle}-coverage.em"
+																		mode="copy" outdir="${project.build.directory}/instrumented-classes/@{bundle}">
+																		<instrpath>
+																			<dirset dir="${@{bundle}-classes}">
+			        															<include name="target/*classes"/>
+																			</dirset>
+																		</instrpath>
+																	</instr>
+																</emma>
+															</then>
+															<else>
+																<echo>Skipping coverage metadata generation for ${@{bundle}-classes}</echo>
+															</else>
+														</if>
 													</sequential>
 												</for>
 												<emma enabled="true">
