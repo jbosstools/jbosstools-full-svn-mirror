@@ -1,6 +1,6 @@
 <projects>
 	<project>
-		<category>JBoss Quickstarts</category>
+		<category>JBoss AS 7 Quickstarts</category>
 		<name>helloworld</name>
 		<included-projects>jboss-as-helloworld</included-projects>
 		<shortDescription>Helloworld</shortDescription>
@@ -43,7 +43,7 @@ The example can be deployed using Maven from the command line or from Eclipse us
 	</project>
 	
 	<project>
-		<category>JBoss Quickstarts</category>
+		<category>JBoss AS 7 Quickstarts</category>
 		<name>helloworld-osgi</name>
 		<included-projects>jboss-as-helloworld-osgi</included-projects>
 		<shortDescription>Helloworld OSGi Example</shortDescription>
@@ -89,7 +89,7 @@ You will see a Hello AS7 World!! message appear on the console when this is done
 	
 	
 	<project>
-		<category>JBoss Quickstarts</category>
+		<category>JBoss AS 7 Quickstarts</category>
 		<name>login</name>
 		<included-projects>jboss-as-login</included-projects>
 		<shortDescription>Login</shortDescription>
@@ -132,7 +132,7 @@ The example can be deployed using Maven from the command line or from Eclipse us
 	</project>
 	
 	<project>
-		<category>JBoss Quickstarts</category>
+		<category>JBoss AS 7 Quickstarts</category>
 		<name>numberguess</name>
 		<included-projects>jboss-as-numberguess</included-projects>
 		<shortDescription>Numberguess</shortDescription>
@@ -175,7 +175,7 @@ The example can be deployed using Maven from the command line or from Eclipse us
 	</project>
 	
 	<project>
-		<category>JBoss Quickstarts</category>
+		<category>JBoss AS 7 Quickstarts</category>
 		<name>kitchensink</name>
 		<included-projects>jboss-as-kitchensink</included-projects>
 		<shortDescription>Kitchensink</shortDescription>
@@ -218,7 +218,7 @@ It includes a persistence unit and some sample persistence and transaction code 
         <icon path="icons/jbossas7.png" />           
 	</project>
 	<project>
-		<category>JBoss Quickstarts</category>
+		<category>JBoss AS 7 Quickstarts</category>
 		<name>poh5-helloworld</name>
 		<included-projects>poh5-helloworld</included-projects>
 		<shortDescription>HTML5</shortDescription>
