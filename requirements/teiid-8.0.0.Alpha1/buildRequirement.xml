@@ -1,0 +1,8 @@
+<project default="build.requirement">
+	<import file="../generic/build.xml" />
+
+	<target name="unpack-zip" >
+		<unzip src="${driver.dest}/${build.archive}" dest="${unzip.dest}/teiid-8.0.0.Aplpha1" />
+	</target>
+
+</project>
