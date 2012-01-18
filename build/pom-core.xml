@@ -533,6 +533,20 @@
 		</profile>
 
 		<profile>
+			<id>richfaces</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<modules>
+				<module>../tests</module>
+				<module>../common</module>
+				<module>../jst</module>
+				<module>../vpe</module>
+				<module>../jsf</module>
+			</modules>
+		</profile>
+
+		<profile>
 			<id>usage</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
@@ -594,8 +608,7 @@
 	</profiles>
 
 	<repositories>
-		<!--  Cannot redistribute GWT plugins due to license therefore cannot be included in target platform; must reference as 3rd party URL -->
-		<repository>
+		<!--  no longer needed (https://issues.jboss.org/browse/JBIDE-10595) <repository>
 			<id>gwt-e37</id>
 			<url>http://dl.google.com/eclipse/plugin/3.7/</url>
 			<layout>p2</layout>
@@ -605,7 +618,7 @@
 			<releases>
 				<enabled>true</enabled>
 			</releases>
-		</repository>
+		</repository> -->
 		<!-- no longer needed (https://issues.jboss.org/browse/JBIDE-9585) <repository>
 			<id>egit11</id>
 			<url>http://download.jboss.org/jbosstools/updates/requirements/egit/1.1.0.201108230343/</url>
