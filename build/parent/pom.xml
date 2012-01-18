@@ -455,7 +455,7 @@
 		</profile>
 
 		<!-- GWT dependencies which we can't mirror and must reference directly. -->
-		<profile>
+		<!-- no longer needed (https://issues.jboss.org/browse/JBIDE-10595) <profile>
 			<id>gwt</id>
 			<activation>
 				<activeByDefault>false</activeByDefault>
@@ -473,7 +473,7 @@
 					</releases>
 				</repository>
 			</repositories>
-		</profile>
+		</profile> -->
 
 		<profile>
 			<id>osx</id>
