@@ -4,7 +4,7 @@ Components are here:
 
     http://anonsvn.jboss.org/repos/jbosstools/trunk/
 
-2. Next, ensure the paret pom in ../../parent/pom.xml has been built w/ `mvn clean install`
+2. Next, ensure the parent pom in ../../parent/pom.xml has been built w/ `mvn clean install` (this may not be required as the next step should resolve/build it automatically)
 
 3. Build this folder w/ `mvn clean install`
 
