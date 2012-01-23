@@ -44,7 +44,7 @@
 		<!-- for trunk use _composite_/trunk; for 3.3_stable_branch, use _composite_/3.3.indigo -->
 		<jbosstools-nightly-staging-composite>http://download.jboss.org/jbosstools/builds/staging/_composite_/core/trunk/</jbosstools-nightly-staging-composite>
 		<!-- this site is not enabled by default as SOA Tooling is a downstream project (sorta). -->
-		<jbosstools-nightly-staging-composite-soa-tooling>http://download.jboss.org/jbosstools/builds/staging/_composite_/soa-tooling/trunk/</jbosstools-nightly-staging-composite>
+		<jbosstools-nightly-staging-composite-soa-tooling>http://download.jboss.org/jbosstools/builds/staging/_composite_/soa-tooling/trunk/</jbosstools-nightly-staging-composite-soa-tooling>
 
 		<!-- 2b. or use -Plocal.composite -Dlocal.composite=file:///path/to/mirror/of/composite/staging/site/ -->
 		<!-- for trunk use _composite_/trunk; for 3.3_stable_branch, use _composite_/3.3.indigo -->
@@ -60,7 +60,7 @@
 			and downstream JBDS builds -->
 		<jbosstools-nightly>http://download.jboss.org/jbosstools/updates/nightly/core/trunk/</jbosstools-nightly>
 		<!-- this site is not enabled by default as SOA Tooling is a downstream project (sorta). -->
-		<jbosstools-nightly-soa-tooling>http://download.jboss.org/jbosstools/updates/nightly/soa-tooling/trunk/</jbosstools-nightly>
+		<jbosstools-nightly-soa-tooling>http://download.jboss.org/jbosstools/updates/nightly/soa-tooling/trunk/</jbosstools-nightly-soa-tooling>
 
 		<!-- 5. extra requirements (for 3rd party "Extras" site) -->
 		<jboss-requirements-composite-extras-mirror>http://download.jboss.org/jbosstools/updates/indigo/extras/SR1a/</jboss-requirements-composite-extras-mirror>
