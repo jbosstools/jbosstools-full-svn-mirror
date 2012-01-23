@@ -28,7 +28,7 @@
 								<ant antfile="build.xml" target="custom.build" dir="../">
 									<property name="output.dir" value="${basedir}" />
 									<property name="inputRepo"
-										value="${jbosstools-nightly-staging-composite}" />
+										value="${jbosstools-nightly-staging-composite-soa-tooling}" />
 									<property name="update.site.name" value="JBoss Tools - SOA Tooling"/>
 									<property name="JBT_VERSION" value="${JBT_VERSION}" />
 									<property name="BUILD_ALIAS" value="${BUILD_ALIAS}" />
