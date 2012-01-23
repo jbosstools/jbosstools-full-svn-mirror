@@ -7,7 +7,7 @@
      get new time w/ 
       date +%s000
 -->
-<property name='p2.timestamp' value='1327337910000'/>
+<property name='p2.timestamp' value='1327343487000'/>
 </properties>
 <children size='18'>
 
@@ -20,7 +20,7 @@
 <child location='../../../../staging/jbosstools-3.3_trunk.component--jbpm/all/repo/'/>
 <child location='../../../../staging/jbosstools-3.3_trunk.component--modeshape/all/repo/'/>
 <child location='../../../../staging/savara-tools-eclipse-master/all/repo/'/>
-<child location='../../../../staging/SwitchYard-Tools/all/repo/'/>
+<child location='../../../../staging/SwitchYard-Tools/eclipse/'/>
 <child location='../../../../staging/jbosstools-teiid-designer_trunk/all/repo/'/>
 
 <child location='../../../../staging.previous/jbosstools-3.3_trunk.component--bpel/all/repo/'/>
@@ -30,7 +30,7 @@
 <child location='../../../../staging.previous/jbosstools-3.3_trunk.component--jbpm/all/repo/'/>
 <child location='../../../../staging.previous/jbosstools-3.3_trunk.component--modeshape/all/repo/'/>
 <child location='../../../../staging.previous/savara-tools-eclipse-master/all/repo/'/>
-<child location='../../../../staging.previous/SwitchYard-Tools/all/repo/'/>
+<child location='../../../../staging.previous/SwitchYard-Tools/eclipse/'/>
 <child location='../../../../staging.previous/jbosstools-teiid-designer_trunk/all/repo/'/>
 
 <!-- <child location='http://download.jboss.org/savara/releases/updates/2.0.x/' /> -->
