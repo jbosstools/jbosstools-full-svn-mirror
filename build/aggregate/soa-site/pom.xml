@@ -83,6 +83,18 @@
 
 	<repositories>
 		<repository>
+			<id>jbosstools-nightly-staging-composite-soa-tooling</id>
+			<url>${jbosstools-nightly-staging-composite-soa-tooling}</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		<!-- JBIDE-10670 - TODO: instead of upstream staging bits, use ${jbosstools-nightly} ? -->
+		<repository>
 			<id>jbosstools-nightly-staging-composite</id>
 			<url>${jbosstools-nightly-staging-composite}</url>
 			<layout>p2</layout>
