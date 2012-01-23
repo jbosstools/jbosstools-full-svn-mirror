@@ -27,14 +27,14 @@
 <child location='../../../staging/jbosstools-3.3_trunk.component--common/all/repo/'/>
 <child location='../../../staging/jbosstools-3.3_trunk.component--deltacloud/all/repo/'/>
 <child location='../../../staging/jbosstools-3.3_trunk.component--esb/all/repo/'/>
-<child location='../../../staging/jbosstools-3.3_trunk.component--switchyard/all/repo/'/>
+<child location='../../../staging/SwitchYard-Tools/all/repo/'/>
 <child location='../../../staging/jbosstools-3.3_trunk.component--examples/all/repo/'/>
 
 <child location='../../../staging.previous/jbosstools-3.3_trunk.component--central/all/repo/'/>
 <child location='../../../staging.previous/jbosstools-3.3_trunk.component--common/all/repo/'/>
 <child location='../../../staging.previous/jbosstools-3.3_trunk.component--deltacloud/all/repo/'/>
 <child location='../../../staging.previous/jbosstools-3.3_trunk.component--esb/all/repo/'/>
-<child location='../../../staging.previous/jbosstools-3.3_trunk.component--switchyard/all/repo/'/>
+<child location='../../../staging.previous/SwitchYard-Tools/all/repo/'/>
 <child location='../../../staging.previous/jbosstools-3.3_trunk.component--examples/all/repo/'/>
 
 <child location='../../../staging/jbosstools-3.3_trunk.component--flow/all/repo/'/>
