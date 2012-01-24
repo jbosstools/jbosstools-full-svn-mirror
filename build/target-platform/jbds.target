@@ -178,9 +178,9 @@
 			<unit id="org.eclipse.tm.terminal.telnet.feature.group" version="2.0.200.v201005032000-3-8_7w311A1A271116"/>
 			<unit id="org.eclipse.tm.terminal.ssh.feature.group" version="2.0.200.v201005271030-3-A77w312116382141"/>
 
-			<!-- JBDS-1648 SWT patches -->
-			<unit id="org.eclipse.rcp.patch333630.feature.group" version="1.0.0"/>
-			<unit id="org.eclipse.rcp.patch64333360.feature.group" version="1.0.0"/>
+			<!-- JBDS-1648 SWT patches from http://download.jboss.org/jbosstools/updates/requirements/swt/3.6.2.v3660-patched_JBDS-1648/ -->
+			<unit id="org.eclipse.swt.win32.win32.x86" version="3.6.2.v3660"/>
+			<unit id="org.eclipse.swt.win32.win32.x86_64" version="3.6.2.v3660"/>
 		</location>
 	</locations>
  </target>
