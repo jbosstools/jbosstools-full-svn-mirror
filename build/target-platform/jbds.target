@@ -27,7 +27,7 @@
 			<unit id="org.eclipse.net4j.jms.api" version="3.0.0.v20110215-1551"/>
 
 			<!-- Orbit bundles -->
-			<unit id="javax.wsdl" version="1.5.1.v201005080630"/>
+			<unit id="javax.wsdl" version="1.6.2.v201012040545"/>
 			<unit id="org.jdom" version="1.0.0.v201005080400"/>
 			<unit id="org.apache.oro" version="2.0.8.v201005080400"/>
 			<unit id="org.apache.commons.codec" version="1.3.0.v20100518-1140"/>
@@ -177,6 +177,10 @@
 			<unit id="org.eclipse.tm.terminal.view.feature.group" version="2.1.2.R32x_v201102011435-3017S43yaw312213122546"/>
 			<unit id="org.eclipse.tm.terminal.telnet.feature.group" version="2.0.200.v201005032000-3-8_7w311A1A271116"/>
 			<unit id="org.eclipse.tm.terminal.ssh.feature.group" version="2.0.200.v201005271030-3-A77w312116382141"/>
+
+			<!-- JBDS-1648 SWT patches -->
+			<unit id="org.eclipse.rcp.patch333630.feature.group" version="1.0.0"/>
+			<unit id="org.eclipse.rcp.patch64333360.feature.group" version="1.0.0"/>
 		</location>
 	</locations>
  </target>
