@@ -295,7 +295,7 @@
 			</mediaobject>
 		</figure>
 		<para>
-			The JBoss perspective views include: <guilabel>Project Explorer</guilabel>, <guilabel>JBoss Central</guilabel>, <guilabel>Outline</guilabel>, <guilabel>Palette</guilabel>, <guilabel>Properties</guilabes> and <guilabel>Servers</guilabel>. 
+			The JBoss perspective views include: <guilabel>Project Explorer</guilabel>, <guilabel>JBoss Central</guilabel>, <guilabel>Outline</guilabel>, <guilabel>Palette</guilabel>, <guilabel>Properties</guilabel> and <guilabel>Servers</guilabel>. 
 		</para>
 	</section>
 	<section id="Support">
