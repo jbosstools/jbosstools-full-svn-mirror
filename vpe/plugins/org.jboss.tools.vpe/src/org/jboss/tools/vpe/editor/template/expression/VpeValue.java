@@ -29,13 +29,6 @@ public class VpeValue {
 	}
 	
 	public VpeValue(String value) {
-		/* yradtsevich: workaround for JBIDE-8649: WTP ElementImpl
-		 * may return null for getAttribute method.
-		 */
-		if (value == null) {
-			value = ""; //$NON-NLS-1$
-		}
-		
 		stringValue = value;
 		type = STRING_VALUE;
 	}
