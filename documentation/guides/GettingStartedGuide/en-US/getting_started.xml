@@ -281,6 +281,23 @@
 			</mediaobject>
 		</figure>
 	</section>
+	<section id="JBoss_Perspective">
+		<title>JBoss Perspective</title>
+		<para>
+			The JBoss perspective is designed to incorporate the views most often used by developers using JBoss, while also changing standard menu items to reflect what a JBoss devleoper would want and need. 
+		</para>
+		<figure>
+			<title>JBoss Perspective</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/getting_started/jboss_perspective_01.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>
+			The JBoss perspective views include: <guilabel>Project Explorer</guilabel>, <guilabel>JBoss Central</guilabel>, <guilabel>Outline</guilabel>, <guilabel>Palette</guilabel>, <guilabel>Properties</guilabes> and <guilabel>Servers</guilabel>. 
+		</para>
+	</section>
 	<section id="Support">
 		<?dbhtml filename="Support.html"?>
 		<title>Support</title>
