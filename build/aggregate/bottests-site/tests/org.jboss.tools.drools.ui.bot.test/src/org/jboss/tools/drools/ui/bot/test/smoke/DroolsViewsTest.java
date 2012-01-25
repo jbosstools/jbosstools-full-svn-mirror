@@ -15,10 +15,10 @@ import org.jboss.tools.ui.bot.ext.SWTOpenExt;
 import org.jboss.tools.ui.bot.ext.SWTTestExt;
 import org.jboss.tools.ui.bot.ext.Timing;
 import org.jboss.tools.ui.bot.ext.gen.IView;
+import org.jboss.tools.ui.bot.ext.helper.DragAndDropHelper;
 import org.jboss.tools.ui.bot.ext.types.IDELabel;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -36,6 +36,7 @@ public class DroolsViewsTest extends SWTTestExt {
     private static final String SAMPLE_TREE_NODE = "com.sample";
     private static final String GLOBAL_VARIABLE_NAME = "globalString";
     private static final String GLOBAL_VARIABLE_VALUE = "abcd";
+    private static final String LOG_FILE = "test.log";
     private static boolean isFirstTimeRun = true;
 
     /**
@@ -44,17 +45,17 @@ public class DroolsViewsTest extends SWTTestExt {
     @Before
     public void setUp() {
         if (isFirstTimeRun) {
+        	eclipse.closeAllEditors();
             manageProject();
             setUpOnce();
         }
 
         SWTBotTreeItem javaTreeItem = packageExplorer.selectTreeItem(JAVA_FILE, new String[] {PROJECT_NAME, JAVA_FILE_PATH, SAMPLE_TREE_NODE});
         eclipse.debugTreeItemAsDroolsApplication(javaTreeItem);
-        while (bot.waitForShell(IDELabel.Shell.PROGRESS_INFORMATION, 1) != null) {
-            // nothing to do, waiting time is included in waitForShell method
+        while (bot.waitForShell(IDELabel.Shell.PROGRESS_INFORMATION, 0) != null) {
+            bot.sleep(Timing.time2S());
         }
         if (isFirstTimeRun) {
-            bot.waitForShell(IDELabel.Shell.CONFIRM_PERSPECTIVE_SWITCH).activate();
             eclipse.closeConfirmPerspectiveSwitchShellIfOpened(false, true);
         }
 
@@ -136,7 +137,6 @@ public class DroolsViewsTest extends SWTTestExt {
     /**
      * Tests refreshing of Agenda view.
      */
-    @Ignore
     @Test
     public void refreshAgendaTest() {
         openView(IDELabel.View.AGENDA);
@@ -155,6 +155,26 @@ public class DroolsViewsTest extends SWTTestExt {
         assertTrue("Global data does not contain variable '" + GLOBAL_VARIABLE_NAME + "' with value '"
                 + GLOBAL_VARIABLE_VALUE + "'", bot.tree().getAllItems()[0].getText()
                 .contains(GLOBAL_VARIABLE_NAME + "= \"" + GLOBAL_VARIABLE_VALUE + "\""));
+    }
+
+    /**
+     * Test of Audit view.
+     */
+    @Test
+    public void auditTest() {
+        eclipse.finishDebug();
+        openView(IDELabel.View.AUDIT);
+        SWTBotView auditView = bot.viewByTitle(IDELabel.View.AUDIT);
+        assertEquals("Tree in Audit view should be empty, but it has " + auditView.bot().tree().getAllItems().length
+                + " items.", 0, auditView.bot().tree().getAllItems().length);
+        packageExplorer.selectTreeItem(PROJECT_NAME, null).contextMenu(IDELabel.Menu.REFRESH).click();
+        assertTrue("Log file '" + LOG_FILE + "' was not created.", packageExplorer.existsResource(PROJECT_NAME, LOG_FILE));
+        SWTBotTreeItem treeItem = packageExplorer.selectTreeItem(LOG_FILE, new String[] {PROJECT_NAME});
+        DragAndDropHelper.dragAndDropOnTo(treeItem.widget, auditView.getWidget());
+        assertTrue("Tree in Audit view should not be empty, but it was.", auditView.bot().tree().getAllItems().length > 0);
+        assertFalse("Log file '" + LOG_FILE + "' was not loaded properly into Audit view.",
+                "The selected audit log is empty.".equals(auditView.bot().tree().getAllItems()[0].getText()));
+        fail("Error with Audit was probably resolved. This should be completed now.");
     }
 
     /**
