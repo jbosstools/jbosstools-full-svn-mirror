@@ -190,19 +190,22 @@ public class ELResolver {
 
 	public String replaceElAndResources(String value) {
 		String rst = value;
-		rst = ResourceUtil.getBundleValue(pageContext, value);
+		rst = ResourceUtil.getBundleValue(pageContext, rst);
+		rst = replaceEl(rst);
+		
 		// replace custom attributes
 		rst = replaceCustomAttributes(rst);
-		if (Jsf2ResourceUtil.isExternalContextPathString(value)) {
-			rst = Jsf2ResourceUtil.processExternalContextPath(value);
+		
+		if (Jsf2ResourceUtil.isExternalContextPathString(rst)) {
+			rst = Jsf2ResourceUtil.processExternalContextPath(rst);
 		}
-		if (Jsf2ResourceUtil.isRequestContextPathString(value)) {
-			rst = Jsf2ResourceUtil.processRequestContextPath(value);
+		if (Jsf2ResourceUtil.isRequestContextPathString(rst)) {
+			rst = Jsf2ResourceUtil.processRequestContextPath(rst);
 		}
 		if (Jsf2ResourceUtil.isJSF2ResourceString(rst)) {
 			rst = Jsf2ResourceUtil.processCustomJSFAttributes(pageContext, rst);
 		}
-		rst = replaceEl(rst);
+		
 		return rst;
 	}
 	
