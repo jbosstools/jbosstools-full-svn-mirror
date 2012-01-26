@@ -26,7 +26,7 @@ import org.eclipse.wst.xml.core.internal.document.NodeImpl;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMElement;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMNode;
 import org.eclipse.wst.xml.ui.internal.dnd.XMLDragAndDropManager;
-import org.jboss.tools.common.model.options.PreferenceModelUtilities;
+import org.jboss.tools.common.model.XModelFactory;
 import org.jboss.tools.common.model.ui.dnd.ModelTransfer;
 import org.jboss.tools.common.model.ui.editors.dnd.context.DropContext;
 import org.jboss.tools.jst.jsp.editor.IJSPTextEditor;
@@ -67,7 +67,7 @@ public class JSPViewerDropAdapter extends ViewerDropAdapter {
 	      	return extractDragSource(object);
 		} else if(ModelTransfer.getInstance().isSupportedType(event.currentDataType)) {
 			List list = new ArrayList();
-			Object source = PreferenceModelUtilities.getPreferenceModel().getModelBuffer().source();
+			Object source = XModelFactory.getDefaultInstance().getModelBuffer().source();
 			if(source != null) list.add(source);
 			return list;
 		} else if(dropContext.getFlavor() != null) {
