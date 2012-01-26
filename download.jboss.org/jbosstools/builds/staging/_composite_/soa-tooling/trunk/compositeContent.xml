@@ -14,7 +14,7 @@
 <!-- SOA Tooling : 9 x 2 = 18 -->
 
 <child location='../../../../staging/jbosstools-3.3_trunk.component--bpel/all/repo/'/>
-<child location='../../../../staging/jbosstools-drools-5.2_trunk/all/repo/'/>
+<child location='../../../../staging/jbosstools-drools-5.3_trunk/all/repo/'/>
 <child location='../../../../staging/jbosstools-3.3_trunk.component--esb/all/repo/'/>
 <child location='../../../../staging/jbosstools-3.3_trunk.component--flow/all/repo/'/>
 <child location='../../../../staging/jbosstools-3.3_trunk.component--jbpm/all/repo/'/>
@@ -25,7 +25,7 @@
 
 <child location='../../../../staging.previous/jbosstools-3.3_trunk.component--bpel/all/repo/'/>
 <child location='../../../../staging.previous/jbosstools-3.3_trunk.component--esb/all/repo/'/>
-<child location='../../../../staging.previous/jbosstools-drools-5.2_trunk/all/repo/'/>
+<child location='../../../../staging.previous/jbosstools-drools-5.3_trunk/all/repo/'/>
 <child location='../../../../staging.previous/jbosstools-3.3_trunk.component--flow/all/repo/'/>
 <child location='../../../../staging.previous/jbosstools-3.3_trunk.component--jbpm/all/repo/'/>
 <child location='../../../../staging.previous/jbosstools-3.3_trunk.component--modeshape/all/repo/'/>

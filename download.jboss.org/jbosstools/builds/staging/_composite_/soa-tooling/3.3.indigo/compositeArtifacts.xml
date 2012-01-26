@@ -14,7 +14,7 @@
 <!-- SOA Tooling : 9 x 1 = 9 -->
 
 <child location='../../../../staging/jbosstools-3.3_stable_branch.component--bpel/all/repo/'/>
-<child location='../../../../staging/jbosstools-drools-5.2_stable_branch/all/repo/'/>
+<child location='../../../../staging/jbosstools-drools-5.3_stable_branch/all/repo/'/>
 <child location='../../../../staging/jbosstools-3.3_stable_branch.component--esb/all/repo/'/>
 <child location='../../../../staging/jbosstools-3.3_stable_branch.component--flow/all/repo/'/>
 <child location='../../../../staging/jbosstools-3.3_stable_branch.component--jbpm/all/repo/'/>
