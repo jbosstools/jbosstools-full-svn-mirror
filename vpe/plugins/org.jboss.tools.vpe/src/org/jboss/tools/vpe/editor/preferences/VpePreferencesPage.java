@@ -10,7 +10,6 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.editor.preferences;
 
-import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.SWT;
@@ -116,25 +115,27 @@ public class VpePreferencesPage extends FieldEditorPreferencePage implements
 
 	@Override
 	protected void createFieldEditors() {
-		addField(new BooleanFieldEditor(SHOW_VISUAL_TOOLBAR,
+		addField(new VpeBooleanFieldEditor(SHOW_VISUAL_TOOLBAR,
 				VpeUIMessages.SHOW_VPE_TOOLBAR,
 				visualEditorToolbarGroup));
-		addField(new BooleanFieldEditor(SHOW_BORDER_FOR_UNKNOWN_TAGS,
+		addField(new VpeBooleanFieldEditor(SHOW_BORDER_FOR_UNKNOWN_TAGS,
 				VpeUIMessages.SHOW_BORDER_FOR_UNKNOWN_TAGS,
 				visualAppearanceGroup));
-		addField(new BooleanFieldEditor(SHOW_NON_VISUAL_TAGS,
+		addField(new VpeBooleanFieldEditor(SHOW_NON_VISUAL_TAGS,
 				VpeUIMessages.SHOW_NON_VISUAL_TAGS, visualAppearanceGroup));
-		addField(new BooleanFieldEditor(SHOW_TEXT_FORMATTING,
+		addField(new VpeBooleanFieldEditor(SHOW_TEXT_FORMATTING,
 				VpeUIMessages.SHOW_TEXT_FORMATTING, visualAppearanceGroup));
-		addField(new BooleanFieldEditor(SHOW_RESOURCE_BUNDLES_USAGE_AS_EL,
+		addField(new VpeBooleanFieldEditor(SHOW_RESOURCE_BUNDLES_USAGE_AS_EL,
 				VpeUIMessages.SHOW_RESOURCE_BUNDLES_USAGE_AS_EL,
 				visualAppearanceGroup));
-		addField(new BooleanFieldEditor(ASK_TAG_ATTRIBUTES_ON_TAG_INSERT,
+		addField(new VpeBooleanFieldEditor(ASK_TAG_ATTRIBUTES_ON_TAG_INSERT,
 				VpeUIMessages.ASK_TAG_ATTRIBUTES_ON_TAG_INSERT,
 				confirmationGroup));
-		addField(new BooleanFieldEditor(INFORM_WHEN_PROJECT_MIGHT_NOT_BE_CONFIGURED_PROPERLY_FOR_VPE,
+		addField(new VpeBooleanFieldEditor(INFORM_WHEN_PROJECT_MIGHT_NOT_BE_CONFIGURED_PROPERLY_FOR_VPE,
 				VpeUIMessages.INFORM_WHEN_PROJECT_MIGHT_NOT_BE_CONFIGURED_PROPERLY_FOR_VPE,
 				confirmationGroup));
+		addField(new VpeBooleanFieldEditor(SYNCHRONIZE_SCROLLING_BETWEEN_SOURCE_VISUAL_PANES,
+				VpeUIMessages.SYNCHRONIZE_SCROLLING_BETWEEN_SOURCE_VISUAL_PANES, tabsGroup));
 		addField(new VpeComboFieldEditor(DEFAULT_VPE_TAB,
 				VpeUIMessages.DEFAULT_VPE_TAB,
 				DEFAULT_VPE_TAB_COMBO_BOX_VALUES, tabsGroup));
@@ -182,17 +183,18 @@ public class VpePreferencesPage extends FieldEditorPreferencePage implements
 		return JspEditorPlugin.getDefault().getPreferenceStore();
 	}
 /**
- * Creates a layout group for vpe preferencess
+ * Creates a layout group for vpe preferences
  * @param parent
  * @param style
  * @param groupTitle
- * @return layut grop for VPE Preferences
+ * @return layout group for VPE Preferences
  * @author mareshkau
  */
 	private static Group createLayoutGroup(final Composite parent,final int style, final String groupTitle){
 		Group prefGroup = new Group(parent, style);
 		prefGroup.setText(groupTitle);
 		GridLayout layout = new GridLayout();
+		layout.numColumns = 1;
 		layout.marginHeight = 10;
 		layout.marginWidth = 10;
 		layout.horizontalSpacing = 10;

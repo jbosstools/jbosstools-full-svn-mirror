@@ -32,5 +32,14 @@ public interface ISelectionManager {
 	 * to bring in correspondence visual selection and source selection
 	 */
 	public void refreshVisualSelection();
+	
+	/**
+	 * Check the flag
+	 */
+	public boolean isUpdateSelectionEventPerformed();
+	/**
+	 * Set the flag indicating that source and visual selection is updating
+	 */
+	public void setUpdateSelectionEventFlag(boolean event);
 
 }

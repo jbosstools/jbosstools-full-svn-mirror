@@ -40,6 +40,11 @@ import org.w3c.dom.Node;
 public class SelectionManager implements ISelectionManager {
 	
 	/**
+	 * Flag indicates that the source and visual selection is updating. 
+	 */
+	public static boolean updateSelectionEventFlag = false;
+	
+	/**
 	 * pageContext keeps information about page
 	 */
 	private VpePageContext pageContext;
@@ -62,7 +67,18 @@ public class SelectionManager implements ISelectionManager {
 		this.selectionController = selectionController;
 	}
 
+	@Override
+	public boolean isUpdateSelectionEventPerformed() {
+		return updateSelectionEventFlag;
+	}
+
+	@Override
+	public void setUpdateSelectionEventFlag(boolean isPerforming) {
+		updateSelectionEventFlag = isPerforming;
+	}
+
 	public final void setSelection(nsIDOMNode visualNode, int focusOffset, int anchorOffset) {
+		setUpdateSelectionEventFlag(true);
 		if (visualNode == null) {
 			return;
 		}
@@ -186,6 +202,7 @@ public class SelectionManager implements ISelectionManager {
 	 * Selects text in the Visual Part Visual Part according to source selection.
 	 */
 	private void refreshVisualTextSelection() {
+		setUpdateSelectionEventFlag(true);
 		// checks for null, for case when we close editor and background
 		// update job is running
 		if (getSourceEditor().getTextViewer() == null) {

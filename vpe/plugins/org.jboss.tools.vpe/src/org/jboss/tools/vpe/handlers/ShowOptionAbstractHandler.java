@@ -27,14 +27,15 @@ import org.jboss.tools.vpe.editor.VpeController;
 public abstract class ShowOptionAbstractHandler extends VisualPartAbstractHandler{
 	
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-		boolean toggleState = !HandlerUtil.toggleCommandState(event
-				.getCommand());
-		
-		JspEditorPlugin
-				.getDefault()
-				.getPreferenceStore()
-				.setValue(getPreferenceKey(),
-						toggleState);
+		/*
+		 * Change the toggle state
+		 */
+		boolean toggleState = !HandlerUtil.toggleCommandState(event.getCommand());
+		/*
+		 * Save new state into PreferenceStore
+		 */
+		JspEditorPlugin.getDefault().getPreferenceStore()
+				.setValue(getPreferenceKey(),toggleState);
 		
 		IEditorReference[] openedEditors = PlatformUI.getWorkbench()
 		.getActiveWorkbenchWindow().getActivePage()

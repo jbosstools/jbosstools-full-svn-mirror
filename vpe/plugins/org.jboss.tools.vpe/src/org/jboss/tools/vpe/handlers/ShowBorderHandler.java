@@ -27,8 +27,6 @@ public class ShowBorderHandler extends ShowOptionAbstractHandler {
 
 	@Override
 	protected void toogleShow(VpeController vpeController, boolean state) {
-		vpeController.getVisualBuilder().setShowBorderForUnknownTags(
-				state);
-		
+		vpeController.getVisualBuilder().setShowBorderForUnknownTags(state);
 	}
 }

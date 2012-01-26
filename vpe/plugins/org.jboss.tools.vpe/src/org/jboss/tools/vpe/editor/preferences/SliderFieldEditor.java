@@ -65,7 +65,7 @@ public class SliderFieldEditor extends FieldEditor {
 
 	@Override
 	protected void createControl(Composite parent) {
-		doFillIntoGrid(parent, 2);
+        doFillIntoGrid(parent, 1);
 	}
 	
 	@Override
@@ -109,6 +109,8 @@ public class SliderFieldEditor extends FieldEditor {
 	public int getNumberOfControls() {
 		return 2;
 	}
+	
+	
 	
 	private Composite getSliderComposite(Composite parent) {
 		if (sliderComposite == null) {

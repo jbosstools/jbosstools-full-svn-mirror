@@ -56,6 +56,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
@@ -91,10 +92,12 @@ import org.jboss.tools.common.model.util.EclipseResourceUtil;
 import org.jboss.tools.common.model.util.XModelTreeListenerSWTSync;
 import org.jboss.tools.common.resref.core.ResourceReferenceListListener;
 import org.jboss.tools.common.util.SwtUtil;
+import org.jboss.tools.jst.jsp.JspEditorPlugin;
 import org.jboss.tools.jst.jsp.bundle.BundleMap;
 import org.jboss.tools.jst.jsp.editor.IJSPTextEditor;
 import org.jboss.tools.jst.jsp.editor.IVisualController;
 import org.jboss.tools.jst.jsp.jspeditor.dnd.JSPPaletteInsertHelper;
+import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
 import org.jboss.tools.jst.jsp.preferences.VpePreference;
 import org.jboss.tools.jst.jsp.selection.SelectionHelper;
 import org.jboss.tools.jst.web.model.helpers.WebAppHelper;
@@ -158,9 +161,12 @@ import org.mozilla.interfaces.nsIDOMMouseEvent;
 import org.mozilla.interfaces.nsIDOMMutationEvent;
 import org.mozilla.interfaces.nsIDOMNSUIEvent;
 import org.mozilla.interfaces.nsIDOMNode;
+import org.mozilla.interfaces.nsIDOMWindow;
+import org.mozilla.interfaces.nsIDOMWindowInternal;
 import org.mozilla.interfaces.nsISelection;
 import org.mozilla.interfaces.nsISelectionDisplay;
 import org.mozilla.interfaces.nsISelectionListener;
+import org.mozilla.interfaces.nsIWebBrowser;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -175,6 +181,15 @@ public class VpeController implements INodeAdapter,
 		MozillaContextMenuListener, MozillaResizeListener,
 		MozillaAfterPaintListener, MozillaScrollListener {
 
+	/*
+	 * https://issues.jboss.org/browse/JBIDE-8701
+	 * Scroll listeners staff.
+	 */
+	private SelectionListener sourceScrollSelectionListener;
+	private ScrollBar sourceEditorVerticalScrollBar;
+	private boolean sourceScrollEventFlag = false;
+	private boolean visualScrollEventFlag = false;
+	
 	public static final int DEFAULT_UPDATE_DELAY_TIME = 400;
 	private boolean visualEditorVisible = true;
 	private boolean synced = true;
@@ -335,12 +350,62 @@ public class VpeController implements INodeAdapter,
 		// sourceEditor.getViewerSelectionManager();
 		// selectionManager.addNodeSelectionListener(this);
 		// selectionManager.addTextSelectionListener(this);
-		StyledText textWidget = SelectionHelper
-				.getSourceTextWidget(sourceEditor);
+		final StyledText textWidget = SelectionHelper.getSourceTextWidget(sourceEditor);
 		if (textWidget != null) {
 			textWidget.addSelectionListener(this);
 		}
-
+		/*
+		 * https://issues.jboss.org/browse/JBIDE-8701
+		 * Add Source ScrollBar Listener
+		 */
+		if ((visualEditor != null) && (sourceEditor != null)) {
+			sourceEditorVerticalScrollBar = textWidget.getVerticalBar();
+			if (sourceEditorVerticalScrollBar != null) {
+				if (visualEditor.getXulRunnerEditor() != null) {
+					nsIWebBrowser webBrowser = visualEditor.getXulRunnerEditor().getWebBrowser();
+					if (webBrowser != null) {
+						/*
+						 * Initialize mozilla browser content window
+						 */
+						final nsIDOMWindow domWindow = webBrowser.getContentDOMWindow();
+						final nsIDOMWindowInternal windowInternal = org.jboss.tools.vpe.xulrunner.util.XPCOM
+								.queryInterface(domWindow, nsIDOMWindowInternal.class);
+						/*
+						 * Adding source listener
+						 */
+						sourceScrollSelectionListener = new SelectionListener() {
+							@Override
+							public void widgetSelected(SelectionEvent e) {
+								if (JspEditorPlugin.getDefault().getPreferenceStore().getBoolean(
+										IVpePreferencesPage.SYNCHRONIZE_SCROLLING_BETWEEN_SOURCE_VISUAL_PANES)
+										&& !visualScrollEventFlag && !selectionManager.isUpdateSelectionEventPerformed()) { // ignore internal visual scroll event
+									sourceScrollEventFlag = true;
+									ScrollBar sb = (ScrollBar)e.widget;
+									int pageYOffsetSrc = sb.getSelection();
+									int scrollMaxYSrc = sb.getMaximum() - sb.getThumb();
+									float percentsSrc = ((float)pageYOffsetSrc/scrollMaxYSrc);
+									if (windowInternal.getScrollbars().getVisible()) {
+										int scrollMaxYVisual = -1;
+										scrollMaxYVisual = windowInternal.getScrollMaxY();
+										if (scrollMaxYVisual != 0 && scrollMaxYVisual != -1) {
+											// there is a visual scroll bar
+											int posY = ((int) (scrollMaxYVisual*percentsSrc));
+											domWindow.scrollTo(windowInternal.getPageXOffset(),posY);
+										}
+									}
+								} else {
+									visualScrollEventFlag = false;
+									selectionManager.setUpdateSelectionEventFlag(false);
+								}
+							}
+							@Override
+							public void widgetDefaultSelected(SelectionEvent e) { }
+						};
+						sourceEditorVerticalScrollBar.addSelectionListener(sourceScrollSelectionListener);
+					}
+				}
+			}
+		} // End of fix JBIDE-8701
 		registerEventTargets();
 
 		if (optionsListener == null) {
@@ -356,12 +421,10 @@ public class VpeController implements INodeAdapter,
 		taglibReferenceListListener = TaglibReferenceList.getInstance();
 		taglibReferenceListListener.addChangeListener(this);
 
-		absoluteFolderReferenceListListener = AbsoluteFolderReferenceList
-				.getInstance();
+		absoluteFolderReferenceListListener = AbsoluteFolderReferenceList.getInstance();
 		absoluteFolderReferenceListListener.addChangeListener(this);
 
-		relativeFolderReferenceListListener = RelativeFolderReferenceList
-				.getInstance();
+		relativeFolderReferenceListListener = RelativeFolderReferenceList.getInstance();
 		relativeFolderReferenceListListener.addChangeListener(this);
 
 		elReferenceListListener = ELReferenceList.getInstance();
@@ -376,6 +439,26 @@ public class VpeController implements INodeAdapter,
 		// JBIDE-4037)
 		sourceSelectionChanged(true);
 		refreshCommands();
+		/*
+		 * Reset the flag, to enable scroll synchronizing right after init
+		 */
+		selectionManager.setUpdateSelectionEventFlag(false);
+	}
+
+	private ScrollBar getSourceEditorVerticalScrollBar() {
+		return sourceEditorVerticalScrollBar;
+	}
+	
+	private void removeSourceScrollListener() {
+		if (sourceEditorVerticalScrollBar != null && sourceScrollSelectionListener != null) {
+			sourceEditorVerticalScrollBar.removeSelectionListener(sourceScrollSelectionListener);
+		}
+	}
+
+	private void addSourceScrollListener() {
+		if (sourceEditorVerticalScrollBar != null && sourceScrollSelectionListener != null) {
+			sourceEditorVerticalScrollBar.addSelectionListener(sourceScrollSelectionListener);
+		}
 	}
 
 	public void dispose() {
@@ -959,7 +1042,6 @@ public class VpeController implements INodeAdapter,
 		onRefresh();
 	}
 
-
 	public boolean isKeyBinding(Event keyboardEvent) {
 		boolean keyBindingPressed = false;
 		List<KeyStroke> possibleKeyStrokes = WorkbenchKeyboard
@@ -1007,7 +1089,45 @@ public class VpeController implements INodeAdapter,
 	}
 	
 	public void editorScrolled(nsIDOMEvent domEvent) {
+		/*
+		 * Redraw selection rectangle
+		 */
 		onRefresh();
+		/*
+		 * https://issues.jboss.org/browse/JBIDE-8701
+		 * Perform visual and source scroll synchronizing.
+		 * The idea of visual scroll listener is to scroll src part when it is required 
+		 * (when src hasn't been scrolled to a proper position).  
+		 */
+		if (JspEditorPlugin.getDefault().getPreferenceStore().getBoolean(
+				IVpePreferencesPage.SYNCHRONIZE_SCROLLING_BETWEEN_SOURCE_VISUAL_PANES)
+				&& !sourceScrollEventFlag && !selectionManager.isUpdateSelectionEventPerformed()) { // ignore internal event from source
+			if (visualEditor.getXulRunnerEditor() != null) {
+				visualScrollEventFlag = true;
+				final nsIWebBrowser webBrowser = visualEditor.getXulRunnerEditor().getWebBrowser();
+				removeSourceScrollListener();
+				final StyledText textWidget = SelectionHelper.getSourceTextWidget(sourceEditor);
+				final nsIDOMWindow domWindow = webBrowser.getContentDOMWindow();
+				nsIDOMWindowInternal windowInternal = org.jboss.tools.vpe.xulrunner.util.XPCOM
+						.queryInterface(domWindow, nsIDOMWindowInternal.class); 
+				int pageYOffsetVisual = windowInternal.getPageYOffset();
+				int scrollMaxYVisual = windowInternal.getScrollMaxY();
+				float percentsVisual = ((float)pageYOffsetVisual/scrollMaxYVisual);
+				ScrollBar sb = getSourceEditorVerticalScrollBar();
+				if ((sb != null) && (sb.getMaximum() != 1)) {
+					int srcLinesCount = textWidget.getLineCount();
+					// there is a source scroll bar
+					if (srcLinesCount != 1) {
+						int posLines = ((int) (srcLinesCount*percentsVisual));
+						textWidget.setTopIndex(posLines);
+					}
+				}
+				addSourceScrollListener();
+			}
+		} else {
+			sourceScrollEventFlag = false;
+			selectionManager.setUpdateSelectionEventFlag(false);
+		} // End of fix JBIDE-8701
 	}
 
 	/**
@@ -1768,8 +1888,7 @@ public class VpeController implements INodeAdapter,
 
 	public void setZoomEventManager(IZoomEventManager zoomEventManager) {
 		this.zoomEventManager = zoomEventManager;
-	}
-
+	}
 
 	public VpeDropWindow getDropWindow() {
 		return dropWindow;

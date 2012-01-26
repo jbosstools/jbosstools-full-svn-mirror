@@ -137,6 +137,7 @@ public final class VpeUIMessages extends NLS {
 	public static String INFORM_WHEN_PROJECT_MIGHT_NOT_BE_CONFIGURED_PROPERLY_FOR_VPE;
 	public static String DEFAULT_VPE_TAB;
 	public static String VISUAL_SOURCE_EDITORS_SPLITTING;
+	public static String SYNCHRONIZE_SCROLLING_BETWEEN_SOURCE_VISUAL_PANES;
 	public static String VISUAL_SOURCE_EDITORS_WEIGHTS;
 	public static String DEFAULT_VPE_TAB_VISUAL_SOURCE;
 	public static String DEFAULT_VPE_TAB_SOURCE;

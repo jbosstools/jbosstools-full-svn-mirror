@@ -97,6 +97,14 @@
                  id="org.eclipse.ui.commands.toggleState">
            </state>
         </command>
+        <command categoryId="org.jboss.tools.vpe.category"
+			id="org.jboss.tools.vpe.commands.scrollLockSourceVisual"
+		    name="%vpe.toolbar.scroll_lock">		    
+           <state
+                 class="org.eclipse.ui.handlers.RegistryToggleState:false"
+                 id="org.eclipse.ui.commands.toggleState">
+           </state>
+        </command>
 	</extension>
  	<extension point="org.eclipse.ui.bindings">
 		<key commandId="org.jboss.tools.vpe.source.maxmin"
@@ -261,6 +269,16 @@
 	            	<reference definitionId="org.jboss.tools.ui.vpe.editor"/>
 	            </visibleWhen>
             </command>
+            <command
+	            	commandId="org.jboss.tools.vpe.commands.scrollLockSourceVisual"
+	                icon="icons/scroll_lock.gif"
+	                style="toggle"
+	                id="org.jboss.tools.vpe.toolbars.scrollLockSourceVisual"
+	                tooltip="%vpe.toolbar.scroll_lock">
+				<visibleWhen checkEnabled="false">
+	            	<reference definitionId="org.jboss.tools.ui.vpe.editor"/>
+	            </visibleWhen>
+            </command>
         </menuContribution>
   </extension>
   <extension
@@ -313,6 +331,9 @@
        <handler
              class="org.jboss.tools.vpe.handlers.ShowBundleAsELHandler"
              commandId="org.jboss.tools.vpe.commands.showBundleAsELCommand"/>
+       <handler
+             class="org.jboss.tools.vpe.handlers.ScrollLockSourceVisualHandler"
+             commandId="org.jboss.tools.vpe.commands.scrollLockSourceVisual"/>
     </extension>
     <extension
           point="org.eclipse.core.expressions.propertyTesters">
