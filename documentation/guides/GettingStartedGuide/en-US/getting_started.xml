@@ -297,6 +297,41 @@
 		<para>
 			The JBoss perspective views include: <guilabel>Project Explorer</guilabel>, <guilabel>JBoss Central</guilabel>, <guilabel>Outline</guilabel>, <guilabel>Palette</guilabel>, <guilabel>Properties</guilabel> and <guilabel>Servers</guilabel>. 
 		</para>
+		<para>
+			Certain menus also see a change in available items. These menus include <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>New</guimenuitem></menuchoice>, <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Show View</guimenuitem></menuchoice> and the context menu for a project. 
+		</para>
+		<para>
+		The menu items for <menuchoice>
+                <guimenuitem>File</guimenuitem>
+                <guimenuitem>New</guimenuitem>
+            </menuchoice> can be seen in <xref linkend="figure-jboss_perspective_02" />
+		</para>
+		<figure id="figure-jboss_perspective_02">
+			<title>JBoss Perspective: <menuchoice><guimenuitem>File</guimenuitem><guimenuitem>New</guimenuitem></menuchoice></title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/getting_started/jboss_perspective_02.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>
+			The menu items for <menuchoice>
+				<guimenuitem>Window</guimenuitem>
+				<guimenuitem>Show View</guimenuitem>
+			</menuchoice> can be seen in <xref linkend="figure-jboss_perspective_03" />
+		</para>
+		<figure id="figure-jboss_perspective_03">
+		<title>JBoss Perspective: <menuchoice>
+			<guimenuitem>Window</guimenuitem>
+			<guimenuitem>Show View</guimenuitem>
+		</menuchoice>
+	</title>
+	<mediaobject>
+		<imageobject>
+					<imagedata fileref="images/getting_started/jboss_perspective_03.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
 	</section>
 	<section id="Support">
 		<?dbhtml filename="Support.html"?>
