@@ -147,14 +147,14 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<importTypeDescription>The project example requires the m2e, m2eclipse-wtp and JBoss Maven Integration features.</importTypeDescription>
         <defaultMavenProfiles>arq-jbossas-remote</defaultMavenProfiles>
 		<mavenArchetype>
-			<archetypeGroupId>org.jboss.spec.archetypes</archetypeGroupId>
+			<archetypeGroupId>org.jboss.aerogear.archetypes</archetypeGroupId>
 			<archetypeArtifactId>jboss-html5-mobile-archetype</archetypeArtifactId>
-			<archetypeVersion>7.0.2.CR2</archetypeVersion>
+			<archetypeVersion>1.0.0.M1</archetypeVersion>
             <!--
-			<archetypeRepository>http://anonsvn.jboss.org/repos/jbosstools/workspace/fred/repositories/snapshot/</archetypeRepository>
+			<archetypeRepository>http://repository.jboss.org/nexus/content/repositories/releases/</archetypeRepository>
             -->
             <groupId>org.jboss.tools.example</groupId>
-			<artifactId>html5-webapp</artifactId>
+			<artifactId>poh5</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<javaPackage>org.jboss.tools.example.html5</javaPackage>
 		</mavenArchetype>
