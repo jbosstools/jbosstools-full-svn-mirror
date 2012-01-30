@@ -26,6 +26,7 @@
 				<repository location="${URL}" />
 			</source>
 			<iu id="com.google.gdt.eclipse.suite.e37.feature.feature.group"/>
+			<iu id="com.google.gwt.eclipse.sdkbundle.e37.feature.feature.group"/>
 			<slicingOptions includeFeatures="true" followStrict="true" />
 		</p2.mirror>
 
