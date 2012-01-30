@@ -608,7 +608,8 @@
 	</profiles>
 
 	<repositories>
-		<!--  no longer needed (https://issues.jboss.org/browse/JBIDE-10595) <repository>
+		<!-- still needed? JBIDE-10595 vs. JBIDE-10742 -->
+		<repository>
 			<id>gwt-e37</id>
 			<url>http://dl.google.com/eclipse/plugin/3.7/</url>
 			<layout>p2</layout>
@@ -618,7 +619,7 @@
 			<releases>
 				<enabled>true</enabled>
 			</releases>
-		</repository> -->
+		</repository>
 		<!-- no longer needed (https://issues.jboss.org/browse/JBIDE-9585) <repository>
 			<id>egit11</id>
 			<url>http://download.jboss.org/jbosstools/updates/requirements/egit/1.1.0.201108230343/</url>
