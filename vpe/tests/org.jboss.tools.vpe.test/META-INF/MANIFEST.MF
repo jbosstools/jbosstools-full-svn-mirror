@@ -18,3 +18,4 @@ Export-Package: org.jboss.tools.vpe.editor.template,
 Import-Package: org.eclipse.ui.part
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Eclipse-BundleShape: dir

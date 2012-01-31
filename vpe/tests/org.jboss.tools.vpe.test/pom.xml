@@ -16,17 +16,4 @@
 		<emma.instrument.bundles>org.jboss.tools.vpe</emma.instrument.bundles>
 	</properties>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>tycho-surefire-plugin</artifactId>
-				<configuration>
-					<explodedBundles>
-						<bundle>org.jboss.tools.vpe.test</bundle>
-					</explodedBundles>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 </project>
