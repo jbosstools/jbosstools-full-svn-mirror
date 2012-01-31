@@ -20,10 +20,6 @@
 		<category name="GeneralTools" />
 	</feature>
 
-	<feature url="features/org.jboss.tools.jbpm4.feature_0.0.0.jar" id="org.jboss.tools.jbpm4.feature" version="0.0.0">
-		<category name="AbridgedTools" />
-		<category name="SOATools" />
-	</feature>
 	<feature url="features/org.jboss.tools.bpel.feature_0.0.0.jar" id="org.jboss.tools.bpel.feature" version="0.0.0">
 		<category name="SOATools" />
 	</feature>
@@ -38,6 +34,18 @@
 		<category name="SOATools" />
 	</feature>
 	<feature url="features/org.jboss.tools.jbpm3.feature_0.0.0.jar" id="org.jboss.tools.jbpm3.feature" version="0.0.0">
+		<category name="AbridgedTools" />
+		<category name="SOATools" />
+	</feature>
+	<feature url="features/org.jboss.tools.jbpm4.feature_0.0.0.jar" id="org.jboss.tools.jbpm4.feature" version="0.0.0">
+		<category name="AbridgedTools" />
+		<category name="SOATools" />
+	</feature>
+	<feature url="features/org.jbpm.eclipse.feature_0.0.0.jar" id="org.jbpm.eclipse.feature" version="0.0.0">
+		<category name="AbridgedTools" />
+		<category name="SOATools" />
+	</feature>
+	<feature url="features/org.jbpm.eclipse.task.feature_0.0.0.jar" id="org.jbpm.eclipse.task.feature" version="0.0.0">
 		<category name="AbridgedTools" />
 		<category name="SOATools" />
 	</feature>
