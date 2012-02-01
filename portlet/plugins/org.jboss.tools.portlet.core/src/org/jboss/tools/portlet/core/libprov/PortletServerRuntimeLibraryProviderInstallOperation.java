@@ -8,7 +8,6 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jst.common.project.facet.core.libprov.ILibraryProvider;
 import org.eclipse.jst.common.project.facet.core.libprov.LibraryProviderOperation;
 import org.eclipse.jst.common.project.facet.core.libprov.LibraryProviderOperationConfig;
 import org.eclipse.wst.common.project.facet.core.IFacetedProjectBase;
@@ -30,8 +29,16 @@ public class PortletServerRuntimeLibraryProviderInstallOperation extends
 	}
 
 	private void setContainerPath(IProgressMonitor monitor, IJavaProject javaProject,IPath containerPath) throws CoreException {
-		IClasspathEntry entry = JavaCore.newContainerEntry(containerPath, true);
 		IClasspathEntry[] entries = javaProject.getRawClasspath();
+		for (IClasspathEntry entry:entries) {
+			if (entry.getEntryKind() == IClasspathEntry.CPE_CONTAINER) {
+				IPath path = entry.getPath();
+				if (containerPath.equals(path)) {
+					return;
+				}
+			}
+		}
+		IClasspathEntry entry = JavaCore.newContainerEntry(containerPath, true);
 		IClasspathEntry[] newEntries = new IClasspathEntry[entries.length + 1];
 		System.arraycopy( entries, 0, newEntries, 0, entries.length );
 		newEntries[entries.length] = entry;

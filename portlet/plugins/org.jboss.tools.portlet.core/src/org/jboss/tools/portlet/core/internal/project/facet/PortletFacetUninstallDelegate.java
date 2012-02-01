@@ -10,11 +10,20 @@
  ************************************************************************************/
 package org.jboss.tools.portlet.core.internal.project.facet;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.jdt.core.IClasspathEntry;
+import org.eclipse.jdt.core.IJavaProject;
+import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.wst.common.project.facet.core.IDelegate;
 import org.eclipse.wst.common.project.facet.core.IProjectFacetVersion;
+import org.jboss.tools.portlet.core.IPortletConstants;
 
 /**
  * @author snjeza
@@ -27,8 +36,24 @@ public class PortletFacetUninstallDelegate implements IDelegate {
 	 */
 	public void execute(IProject project, IProjectFacetVersion fv,
 			Object config, IProgressMonitor monitor) throws CoreException {
-		// TODO Auto-generated method stub
-
+		IJavaProject javaProject = JavaCore.create(project);
+		if (javaProject != null && javaProject.exists()) {
+			IClasspathEntry[] entries = javaProject.getRawClasspath();
+			IPath containerPath = new Path(IPortletConstants.PORTLET_RUNTIME_CONTAINER_ID);
+			List<IClasspathEntry> newEntries = new ArrayList<IClasspathEntry>();
+			for (IClasspathEntry entry:entries) {
+				if (entry.getEntryKind() == IClasspathEntry.CPE_CONTAINER) {
+					IPath path = entry.getPath();
+					if (containerPath.equals(path)) {
+						continue;
+					}
+				}
+				newEntries.add(entry);
+			}
+			if (newEntries.size() != entries.length) {
+				javaProject.setRawClasspath(newEntries.toArray(new IClasspathEntry[0]), monitor);
+			}
+		}
 	}
 
 }
