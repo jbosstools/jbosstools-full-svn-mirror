@@ -1431,7 +1431,7 @@ public class VpeController implements INodeAdapter,
 	public IPath getPath() {
 		if (editPart != null) {
 			IEditorInput input = editPart.getEditorInput();
-			if (input != null && input instanceof IFileEditorInput) {
+			if (input instanceof IFileEditorInput) {
 				return ((IFileEditorInput) input).getFile().getFullPath();
 			}
 		}

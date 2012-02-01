@@ -156,7 +156,7 @@ public class VpeSourceDomBuilder extends VpeDomBuilder {
 	private boolean openOnOnVisualNode(nsIDOMNode visualNode) {
 		VpeNodeMapping nodeMapping = VpeNodesManagingUtil.getNodeMapping(
 				this.domMapping, visualNode);
-		if (nodeMapping != null && nodeMapping instanceof VpeElementMapping) {
+		if (nodeMapping instanceof VpeElementMapping) {
 
 			VpeElementMapping elementMapping = (VpeElementMapping) nodeMapping;
 			VpeTemplate template = elementMapping.getTemplate();

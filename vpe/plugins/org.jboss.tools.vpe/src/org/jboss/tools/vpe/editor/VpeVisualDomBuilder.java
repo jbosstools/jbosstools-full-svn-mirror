@@ -886,7 +886,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		} else {
 			VpeNodeMapping nodeMapping = domMapping
 					.getNodeMapping(sourceParent);
-			if (nodeMapping != null && nodeMapping instanceof VpeElementMapping) {
+			if (nodeMapping instanceof VpeElementMapping) {
 				VpeTemplate template = ((VpeElementMapping) nodeMapping)
 						.getTemplate();
 				if (template != null) {
@@ -1302,7 +1302,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			nsIDOMNode visualParent = visualDropContainer.getParentNode();
 			VpeNodeMapping oldMapping = mapping;
 			mapping = domMapping.getNearNodeMapping(visualParent);
-			if (mapping != null && mapping instanceof VpeElementMapping) {
+			if (mapping instanceof VpeElementMapping) {
 				((VpeElementMapping) mapping).getTemplate().innerDrop(
 						pageContext,
 						new VpeSourceInnerDragInfo(dragNode, 0, 0),

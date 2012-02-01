@@ -1064,7 +1064,7 @@ public class VpeVisualKeyHandler {
 					VpeNodeMapping parentMapping = domMapping.getNearParentMapping(focusNode);
 					if (parentMapping != null) {
 						boolean handled = false;
-						while (!handled && parentMapping != null && parentMapping instanceof VpeElementMapping) {
+						while (!handled && parentMapping instanceof VpeElementMapping) {
 							VpeTemplate template = ((VpeElementMapping)parentMapping).getTemplate();
 							Node srcNode = parentMapping.getSourceNode();
 							nsIDOMNode visualNode = parentMapping.getVisualNode();
@@ -1127,7 +1127,7 @@ public class VpeVisualKeyHandler {
 			VpeNodeMapping parentMapping = domMapping.getNearParentMapping(focusNode);
 			if (parentMapping != null) {
 				boolean handled = false;
-				while (!handled && parentMapping != null && parentMapping instanceof VpeElementMapping) {
+				while (!handled && parentMapping instanceof VpeElementMapping) {
 					VpeTemplate template = ((VpeElementMapping)parentMapping).getTemplate();
 					Node srcNode = parentMapping.getSourceNode();
 					nsIDOMNode visualNode = parentMapping.getVisualNode();
@@ -1262,7 +1262,7 @@ public class VpeVisualKeyHandler {
 	private void goToParentTemplate(Node node, SourceSelection selection, long keyCode) {
 		ITextFormatter formatter = null;
 		VpeNodeMapping nearNodeMapping = domMapping.getNearParentMapping(node);
-		if (nearNodeMapping != null && nearNodeMapping instanceof VpeElementMapping) {
+		if (nearNodeMapping instanceof VpeElementMapping) {
 			VpeTemplate template = ((VpeElementMapping)nearNodeMapping).getTemplate();
 			if (template != null) {
 				Node sourceNode = nearNodeMapping.getSourceNode();
