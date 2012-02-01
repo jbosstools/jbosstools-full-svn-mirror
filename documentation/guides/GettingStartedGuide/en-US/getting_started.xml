@@ -332,6 +332,21 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
+		<para>
+			The menu items for the context menu of a project can be seen in <xref linkend="figure-jboss_perspective_04" />
+		</para>
+		<figure id="figure-jboss_perspective_04">
+			<title>JBoss Perspective: <menuchoice>
+				<guimenuitem>Window</guimenuitem>
+				<guimenuitem>Show View</guimenuitem>
+			</menuchoice>
+		</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/getting_started/jboss_perspective_04.png" scale="90"/>
+			</imageobject>
+		</mediaobject>
+	</figure>
 	</section>
 	<section id="Support">
 		<?dbhtml filename="Support.html"?>
