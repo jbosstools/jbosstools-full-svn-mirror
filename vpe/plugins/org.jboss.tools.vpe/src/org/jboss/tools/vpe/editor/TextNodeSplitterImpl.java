@@ -84,8 +84,7 @@ public class TextNodeSplitterImpl implements ITextNodeSplitter  {
 	}
 	
 	private boolean isSpacing(String str){
-		if("".endsWith(str.trim())) return true; //$NON-NLS-1$
-		else return false;
+		return "".endsWith(str.trim());
 	}
 	
 	private int getIndex(Node parentNode, Node child) {
