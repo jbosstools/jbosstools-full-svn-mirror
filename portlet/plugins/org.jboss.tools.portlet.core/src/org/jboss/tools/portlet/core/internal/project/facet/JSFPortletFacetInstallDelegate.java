@@ -45,7 +45,8 @@ public class JSFPortletFacetInstallDelegate implements IDelegate {
 
 	private static final String ORG_JBOSS_PORTLET_STATE_MANAGER = "org.jboss.portletbridge.application.PortletStateManager"; //$NON-NLS-1$
 	private static final String ORG_JBOSS_PORTLET_VIEW_HANDLER = "org.jboss.portletbridge.application.PortletViewHandler"; //$NON-NLS-1$
-
+	private static final String COM_SUN_FACELETS_VIEW_HANDLER = "com.sun.facelets.FaceletViewHandler"; //$NON-NLS-1$
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -179,12 +180,19 @@ public class JSFPortletFacetInstallDelegate implements IDelegate {
 				for (Iterator iterator = applications.iterator(); iterator.hasNext();) {
 					ApplicationType application = (ApplicationType) iterator.next();
 					EList viewHandlers = application.getViewHandler();
+					ViewHandlerType faceletsHandler = null;
 					for (Iterator iterator2 = viewHandlers.iterator(); iterator2.hasNext();) {
 						ViewHandlerType viewHandler = (ViewHandlerType) iterator2.next();
 						if (ORG_JBOSS_PORTLET_VIEW_HANDLER.equals(viewHandler.getTextContent())) {
 							facesState.viewHandlerExists = true;
 						}
-					}	
+						if (COM_SUN_FACELETS_VIEW_HANDLER.equals(viewHandler.getTextContent())) {
+							faceletsHandler = viewHandler;
+						}
+					}
+					if (faceletsHandler != null) {
+						viewHandlers.remove(faceletsHandler);
+					}
 				}
 				for (Iterator iterator = applications.iterator(); iterator.hasNext();) {
 					ApplicationType application = (ApplicationType) iterator.next();
