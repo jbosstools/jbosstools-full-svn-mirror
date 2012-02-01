@@ -544,7 +544,7 @@ public class PortletPostInstallListener implements IFacetedProjectListener {
 		} else {
 			portletbridgeHome = new File(portletbridgeRuntime);
 		}
-		if (!portletbridgeHome.exists()) {
+		if (portletbridgeHome == null || !portletbridgeHome.exists()) {
 			PortletCoreActivator.log(null, Messages.PortletPostInstallListener_Cannot_find_Portletbridge_Runtime);
 			return;
 		}

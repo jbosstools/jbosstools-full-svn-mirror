@@ -253,6 +253,9 @@ public class JBossWebUtil25 implements IJBossWebUtil {
 
 	public String getFacesConfig(IProject project, IProgressMonitor monitor) {
 		WebApp webApp = getWebApp(project, monitor);
+		if (webApp == null) {
+			return null;
+		}
 		List contextParams = webApp.getContextParams();
 		for (Iterator iterator = contextParams.iterator(); iterator.hasNext();) {
 			Object paramObj = (Object) iterator.next();
