@@ -16,3 +16,4 @@ Bundle-ActivationPolicy: lazy
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.jboss.tools.vpe.jsp
+Eclipse-BundleShape: dir
