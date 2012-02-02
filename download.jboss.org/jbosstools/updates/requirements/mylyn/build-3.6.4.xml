@@ -19,15 +19,15 @@
 		<!-- core mylyn, if not on Indigo site; includes Bugzilla -->
 		<!-- <property name="URL1" value="http://download.eclipse.org/mylyn/snapshots/weekly/" /> -->
 		<!-- <property name="URL1" value="http://download.eclipse.org/mylyn/archive/3.6.0/v20110608-1400/" /> -->
-		<property name="URL1" value="http://download.eclipse.org/mylyn/drops/3.6.5/I20120201-0822/" />
+		<property name="URL1" value="http://download.eclipse.org/mylyn/drops/3.6.4/v20111118-0100/" />
 		<!-- JIRA connector; note that Subclipse connector is on Subclipse req site, ../subclipse/ -->
 		<!-- <property name="URL2" value="http://update.atlassian.com/atlassian-eclipse-plugin/weekly/e3.6/" /> -->
 		<property name="URL2" value="http://update.atlassian.com/atlassian-eclipse-plugin/e3.7" />
-		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/mylyn/3.6.5/" />
+		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/mylyn/3.6.4/" />
 		<property name="compress" value="true" />
 
 		<p2.mirror>
-			<repository location="file:${destination}/3.6.5.I20120201-0822" name="mylyn plugins for Eclipse 3.6 - 3.7" />
+			<repository location="file:${destination}/3.6.4.v20111118-0100" name="mylyn plugins for Eclipse 3.6 - 3.7" />
 			<source>
 				<repository location="${URL1}" />
 				<repository location="${URL2}" />
@@ -58,6 +58,6 @@
 			<iu id="com.atlassian.connector.eclipse.subversive.feature.group" />
 		</p2.mirror>
 
-		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/3.6.5.I20120201-0822/" artifactRepository="file:${destination}/3.6.5.I20120201-0822/" publishartifacts="true" source="${destination}/3.6.5.I20120201-0822/" compress="${compress}" />
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/3.6.4.v20111118-0100/" artifactRepository="file:${destination}/3.6.4.v20111118-0100/" publishartifacts="true" source="${destination}/3.6.4.v20111118-0100/" compress="${compress}" />
 	</target>
 </project>

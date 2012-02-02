@@ -33,7 +33,7 @@
 		<property name="compress" value="true" />
 
 		<p2.mirror>
-			<repository location="file:${destination}/20120105-0830/" name="Eclipse BPEL for Eclipse 3.7 (Not in Indigo)" />
+			<repository location="file:${destination}/201201302358/" name="Eclipse BPEL for Eclipse 3.7 (Not in Indigo)" />
 			<source>
 				<repository location="${URL1}" />
 				<repository location="${URL2}" />
@@ -43,9 +43,9 @@
 		</p2.mirror>
 
 		<delete>
-			<fileset dir="${destination}/20120105-0830/" includes="**/artifacts.jar, **/contents.jar"/>
+			<fileset dir="${destination}/201201302358/" includes="**/artifacts.jar, **/contents.jar"/>
 		</delete>
 
-		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/20120105-0830/" artifactRepository="file:${destination}/20120105-0830/" publishartifacts="true" source="${destination}/20120105-0830/" compress="${compress}" />
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/201201302358/" artifactRepository="file:${destination}/201201302358/" publishartifacts="true" source="${destination}/201201302358/" compress="${compress}" />
 	</target>
 </project>
