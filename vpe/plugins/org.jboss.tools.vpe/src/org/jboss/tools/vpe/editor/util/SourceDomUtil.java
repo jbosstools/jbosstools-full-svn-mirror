@@ -207,16 +207,14 @@ public class SourceDomUtil {
 		int resultOffset = -1;
 		StyledText textWidget = itextViewer.getTextWidget();
 		if (textWidget != null) {
-			// lineIndex-1 because calculating of line begins in eclipse from
-			// one, but should be form zero
-			resultOffset = textWidget.getOffsetAtLine(lineIndex - 1);
+			resultOffset = textWidget.getOffsetAtLine(lineIndex);
 			// here we get's tabs length
 			// for more example you can see code
 			// org.eclipse.ui.texteditor.AbstractTextEditor@getCursorPosition()
 			// and class $PositionLabelValue
 			int tabWidth = textWidget.getTabs();
 			int characterOffset = 0;
-			String currentString = textWidget.getLine(lineIndex - 1);
+			String currentString = textWidget.getLine(lineIndex);
 			int pos = 1;
 			for (int i = 0; (i < currentString.length())
 					&& (pos < linePosition); i++) {
@@ -229,7 +227,7 @@ public class SourceDomUtil {
 				}
 			}
 			resultOffset += characterOffset;
-			if (textWidget.getLineAtOffset(resultOffset) != (lineIndex - 1)) {
+			if (textWidget.getLineAtOffset(resultOffset) != lineIndex) {
 				resultOffset = -1;
 			}
 		}

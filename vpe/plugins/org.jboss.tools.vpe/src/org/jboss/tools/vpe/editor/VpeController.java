@@ -363,14 +363,18 @@ public class VpeController implements INodeAdapter,
 						sourceScrollSelectionListener = new SelectionListener() {
 							@Override
 							public void widgetSelected(SelectionEvent e) {
+								/*
+								 * Check that scrolling is reasonable:
+								 * when scrollMaxYVisual > 0
+								 */
+								int scrollMaxYVisual = windowInternal.getScrollMaxY();
 								if (JspEditorPlugin.getDefault().getPreferenceStore().getBoolean(
 										IVpePreferencesPage.SYNCHRONIZE_SCROLLING_BETWEEN_SOURCE_VISUAL_PANES)
 										&& !visualScrollEventFlag && !selectionManager.isUpdateSelectionEventPerformed()
-										&& editPart.getVisualMode() == VpeEditorPart.VISUALSOURCE_MODE) { // ignore internal visual scroll event
+										&& editPart.getVisualMode() == VpeEditorPart.VISUALSOURCE_MODE
+										&& scrollMaxYVisual > 0) { // ignore internal visual scroll event
 									sourceScrollEventFlag = true;
 									int posY = scrollCoordinator.computeVisualPositionFromSource();
-									int scrollMaxYVisual = -1;
-									scrollMaxYVisual = windowInternal.getScrollMaxY();
 									if (posY > scrollMaxYVisual) {
 										posY = scrollMaxYVisual;
 									}
@@ -1085,6 +1089,7 @@ public class VpeController implements INodeAdapter,
 				IVpePreferencesPage.SYNCHRONIZE_SCROLLING_BETWEEN_SOURCE_VISUAL_PANES)
 				&& !sourceScrollEventFlag && !selectionManager.isUpdateSelectionEventPerformed()
 				&& editPart.getVisualMode() == VpeEditorPart.VISUALSOURCE_MODE) { // ignore internal event from source
+			System.out.println("vis scroll");
 			removeSourceScrollListener();
 			visualScrollEventFlag = true;
 			int line = scrollCoordinator.computeSourcePositionFromVisual();
