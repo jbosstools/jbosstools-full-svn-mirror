@@ -142,6 +142,12 @@ public class XulRunnerVpeUtils {
 		return element;
 	}
 	
+	/**
+	 * Returns the offset for visual node
+	 * 
+	 * @param node the visual node
+	 * @return node's offset in browser
+	 */
 	public static Point getVisualNodeOffset(nsIDOMNode node) {
 		Point p = new Point(-1, -1);
 		try {

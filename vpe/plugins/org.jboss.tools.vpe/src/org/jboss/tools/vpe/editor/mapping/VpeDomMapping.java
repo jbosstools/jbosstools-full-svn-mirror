@@ -258,6 +258,12 @@ public class VpeDomMapping {
 		return null;
 	}
 	
+	/**
+	 * Returns the nearest visual element for the source node 
+	 * 
+	 * @param sourceNode the source node
+	 * @return nearest visual element
+	 */
 	public nsIDOMElement getNearVisualElement(Node sourceNode) {
 		nsIDOMElement element = null;
 		VpeNodeMapping nodeMapping = getNearNodeMappingAtSourceNode(sourceNode);
@@ -299,6 +305,12 @@ public class VpeDomMapping {
 		return null;
 	}
 	
+	/**
+	 * Returns the nearest source element for the visual node 
+	 * 
+	 * @param visualNode the visual node
+	 * @return nearest source element
+	 */
 	public ElementImpl getNearSourceElementImpl(nsIDOMNode visualNode) {
 		ElementImpl element = null;
 		VpeNodeMapping nodeMapping = getNearNodeMappingAtVisualNode(visualNode);
