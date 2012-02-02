@@ -12,9 +12,7 @@ package org.jboss.tools.vpe.editor;
 
 import static org.jboss.tools.vpe.xulrunner.util.XPCOM.queryInterface;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -33,6 +31,7 @@ import org.eclipse.jface.bindings.keys.KeySequence;
 import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
@@ -42,8 +41,6 @@ import org.eclipse.swt.custom.LineStyleEvent;
 import org.eclipse.swt.custom.LineStyleListener;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.events.DisposeEvent;
-import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.MenuEvent;
 import org.eclipse.swt.events.MenuListener;
 import org.eclipse.swt.events.SelectionEvent;
@@ -60,13 +57,11 @@ import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
-import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.internal.keys.WorkbenchKeyboard;
 import org.eclipse.ui.keys.IBindingService;
 import org.eclipse.ui.progress.UIJob;
-import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 import org.eclipse.wst.sse.core.internal.model.ModelLifecycleEvent;
 import org.eclipse.wst.sse.core.internal.provisional.IModelLifecycleListener;
 import org.eclipse.wst.sse.core.internal.provisional.INodeAdapter;
@@ -78,6 +73,7 @@ import org.eclipse.wst.sse.ui.internal.view.events.INodeSelectionListener;
 import org.eclipse.wst.sse.ui.internal.view.events.ITextSelectionListener;
 import org.eclipse.wst.sse.ui.internal.view.events.NodeSelectionChangedEvent;
 import org.eclipse.wst.sse.ui.internal.view.events.TextSelectionChangedEvent;
+import org.eclipse.wst.xml.core.internal.document.ElementImpl;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMDocument;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMModel;
 import org.jboss.tools.common.el.core.ELReferenceList;
@@ -86,7 +82,6 @@ import org.jboss.tools.common.model.XModelObject;
 import org.jboss.tools.common.model.event.XModelTreeEvent;
 import org.jboss.tools.common.model.event.XModelTreeListener;
 import org.jboss.tools.common.model.project.IModelNature;
-import org.jboss.tools.common.model.ui.dnd.ModelTransfer;
 import org.jboss.tools.common.model.ui.util.ModelUtilities;
 import org.jboss.tools.common.model.util.EclipseResourceUtil;
 import org.jboss.tools.common.model.util.XModelTreeListenerSWTSync;
@@ -108,7 +103,6 @@ import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.dnd.VpeDnD;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
-import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
 import org.jboss.tools.vpe.editor.menu.VpeMenuCreator;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
@@ -121,6 +115,7 @@ import org.jboss.tools.vpe.editor.mozilla.listener.MozillaResizeListener;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaScrollListener;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaSelectionListener;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaTooltipListener;
+import org.jboss.tools.vpe.editor.scrolling.ScrollCoordinator;
 import org.jboss.tools.vpe.editor.selection.VpeSelectionController;
 import org.jboss.tools.vpe.editor.template.IKeyEventHandler;
 import org.jboss.tools.vpe.editor.template.ISelectionManager;
@@ -132,20 +127,10 @@ import org.jboss.tools.vpe.editor.template.VpeTemplateListener;
 import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.vpe.editor.template.ZoomEventManager;
 import org.jboss.tools.vpe.editor.toolbar.format.FormatControllerManager;
-import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.editor.util.DocTypeUtil;
 import org.jboss.tools.vpe.editor.util.SelectionUtil;
 import org.jboss.tools.vpe.editor.util.VisualDomUtil;
 import org.jboss.tools.vpe.editor.util.VpeDebugUtil;
-import org.jboss.tools.vpe.editor.util.VpeNodesManagingUtil;
-import org.jboss.tools.vpe.handlers.PageDesignOptionsHandler;
-import org.jboss.tools.vpe.handlers.PreferencesHandler;
-import org.jboss.tools.vpe.handlers.RefreshHandler;
-import org.jboss.tools.vpe.handlers.RotateEditorsHandler;
-import org.jboss.tools.vpe.handlers.ShowBorderHandler;
-import org.jboss.tools.vpe.handlers.ShowBundleAsELHandler;
-import org.jboss.tools.vpe.handlers.ShowNonVisualTagsHandler;
-import org.jboss.tools.vpe.handlers.ShowTextFormattingHandler;
 import org.jboss.tools.vpe.handlers.VisualPartAbstractHandler;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.jboss.tools.vpe.resref.core.AbsoluteFolderReferenceList;
@@ -185,6 +170,7 @@ public class VpeController implements INodeAdapter,
 	 * https://issues.jboss.org/browse/JBIDE-8701
 	 * Scroll listeners staff.
 	 */
+	private ScrollCoordinator scrollCoordinator;
 	private SelectionListener sourceScrollSelectionListener;
 	private ScrollBar sourceEditorVerticalScrollBar;
 	private boolean sourceScrollEventFlag = false;
@@ -358,6 +344,7 @@ public class VpeController implements INodeAdapter,
 		 * https://issues.jboss.org/browse/JBIDE-8701
 		 * Add Source ScrollBar Listener
 		 */
+		scrollCoordinator = new ScrollCoordinator(sourceEditor, visualEditor, domMapping); 
 		if ((visualEditor != null) && (sourceEditor != null)) {
 			sourceEditorVerticalScrollBar = textWidget.getVerticalBar();
 			if (sourceEditorVerticalScrollBar != null) {
@@ -378,21 +365,16 @@ public class VpeController implements INodeAdapter,
 							public void widgetSelected(SelectionEvent e) {
 								if (JspEditorPlugin.getDefault().getPreferenceStore().getBoolean(
 										IVpePreferencesPage.SYNCHRONIZE_SCROLLING_BETWEEN_SOURCE_VISUAL_PANES)
-										&& !visualScrollEventFlag && !selectionManager.isUpdateSelectionEventPerformed()) { // ignore internal visual scroll event
+										&& !visualScrollEventFlag && !selectionManager.isUpdateSelectionEventPerformed()
+										&& editPart.getVisualMode() == VpeEditorPart.VISUALSOURCE_MODE) { // ignore internal visual scroll event
 									sourceScrollEventFlag = true;
-									ScrollBar sb = (ScrollBar)e.widget;
-									int pageYOffsetSrc = sb.getSelection();
-									int scrollMaxYSrc = sb.getMaximum() - sb.getThumb();
-									float percentsSrc = ((float)pageYOffsetSrc/scrollMaxYSrc);
-									if (windowInternal.getScrollbars().getVisible()) {
-										int scrollMaxYVisual = -1;
-										scrollMaxYVisual = windowInternal.getScrollMaxY();
-										if (scrollMaxYVisual != 0 && scrollMaxYVisual != -1) {
-											// there is a visual scroll bar
-											int posY = ((int) (scrollMaxYVisual*percentsSrc));
-											domWindow.scrollTo(windowInternal.getPageXOffset(),posY);
-										}
+									int posY = scrollCoordinator.computeVisualPositionFromSource();
+									int scrollMaxYVisual = -1;
+									scrollMaxYVisual = windowInternal.getScrollMaxY();
+									if (posY > scrollMaxYVisual) {
+										posY = scrollMaxYVisual;
 									}
+									domWindow.scrollTo(windowInternal.getPageXOffset(),posY);
 								} else {
 									visualScrollEventFlag = false;
 									selectionManager.setUpdateSelectionEventFlag(false);
@@ -1101,29 +1083,15 @@ public class VpeController implements INodeAdapter,
 		 */
 		if (JspEditorPlugin.getDefault().getPreferenceStore().getBoolean(
 				IVpePreferencesPage.SYNCHRONIZE_SCROLLING_BETWEEN_SOURCE_VISUAL_PANES)
-				&& !sourceScrollEventFlag && !selectionManager.isUpdateSelectionEventPerformed()) { // ignore internal event from source
-			if (visualEditor.getXulRunnerEditor() != null) {
-				visualScrollEventFlag = true;
-				final nsIWebBrowser webBrowser = visualEditor.getXulRunnerEditor().getWebBrowser();
-				removeSourceScrollListener();
-				final StyledText textWidget = SelectionHelper.getSourceTextWidget(sourceEditor);
-				final nsIDOMWindow domWindow = webBrowser.getContentDOMWindow();
-				nsIDOMWindowInternal windowInternal = org.jboss.tools.vpe.xulrunner.util.XPCOM
-						.queryInterface(domWindow, nsIDOMWindowInternal.class); 
-				int pageYOffsetVisual = windowInternal.getPageYOffset();
-				int scrollMaxYVisual = windowInternal.getScrollMaxY();
-				float percentsVisual = ((float)pageYOffsetVisual/scrollMaxYVisual);
-				ScrollBar sb = getSourceEditorVerticalScrollBar();
-				if ((sb != null) && (sb.getMaximum() != 1)) {
-					int srcLinesCount = textWidget.getLineCount();
-					// there is a source scroll bar
-					if (srcLinesCount != 1) {
-						int posLines = ((int) (srcLinesCount*percentsVisual));
-						textWidget.setTopIndex(posLines);
-					}
-				}
-				addSourceScrollListener();
+				&& !sourceScrollEventFlag && !selectionManager.isUpdateSelectionEventPerformed()
+				&& editPart.getVisualMode() == VpeEditorPart.VISUALSOURCE_MODE) { // ignore internal event from source
+			removeSourceScrollListener();
+			visualScrollEventFlag = true;
+			int line = scrollCoordinator.computeSourcePositionFromVisual();
+			if ((line != -1) && (sourceEditor.getTextViewer() != null)){
+				sourceEditor.getTextViewer().setTopIndex(line);
 			}
+			addSourceScrollListener();
 		} else {
 			sourceScrollEventFlag = false;
 			selectionManager.setUpdateSelectionEventFlag(false);

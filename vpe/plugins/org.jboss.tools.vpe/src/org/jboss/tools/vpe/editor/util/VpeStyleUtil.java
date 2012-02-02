@@ -435,17 +435,16 @@ public class VpeStyleUtil {
 	}
 
 	/**
+	 * Adds full path for URL value
 	 * 
-	 * @param value
-	 *            Css string
-	 * @param input
-	 *            The editor input
-	 * @return format style string
+	 * @param url the url
+	 * @param pageContext VPE page context
+	 * @return the full path string
 	 */
-	public static String addFullPathIntoURLValue(String value, VpePageContext pageContext) {
-		String urls[] = value.split(ATTR_URL);
+	public static String addFullPathIntoURLValue(String url, VpePageContext pageContext) {
+		String urls[] = url.split(ATTR_URL);
 		if (urls.length == 1) {
-			return value;
+			return url;
 		}
 		IFile file = getSourceFileFromPageContext(pageContext);
 		for (int i = 1; i < urls.length; i++) {
@@ -463,17 +462,16 @@ public class VpeStyleUtil {
 	}
 
 	/**
+	 * Adds full path for URL value
 	 * 
-	 * @param value
-	 *            Css string
-	 * @param href_val
-	 *            Path of css file
-	 * @return Format style string
+	 * @param url css url string
+	 * @param href_val path to css file
+	 * @return the full path string
 	 */
-	public static String addFullPathIntoURLValue(String value, String href_val) {
-		String urls[] = value.split(ATTR_URL);
+	public static String addFullPathIntoURLValue(String url, String href_val) {
+		String urls[] = url.split(ATTR_URL);
 		if (urls.length == 1) {
-			return value;
+			return url;
 		}
 		for (int i = 1; i < urls.length; i++) {
 			urls[i] = removeQuotesUpdate(urls[i]);

@@ -17,6 +17,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.wst.xml.core.internal.document.ElementImpl;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.xulrunner.editor.XulRunnerEditor;
@@ -24,7 +25,6 @@ import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMNode;
 import org.mozilla.xpcom.XPCOMException;
 import org.w3c.dom.Attr;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -258,19 +258,70 @@ public class VpeDomMapping {
 		return null;
 	}
 	
+	public nsIDOMElement getNearVisualElement(Node sourceNode) {
+		nsIDOMElement element = null;
+		VpeNodeMapping nodeMapping = getNearNodeMappingAtSourceNode(sourceNode);
+		if (sourceNode != null) {
+			if (nodeMapping != null) {
+				nsIDOMNode visualNode = nodeMapping.getVisualNode();
+				if (visualNode != null) {
+					try {
+						element = queryInterface(visualNode, nsIDOMElement.class);
+					} catch (XPCOMException xpcomException) {
+						if (sourceNode.getPreviousSibling() != null) {
+							element = getNearVisualElement(sourceNode.getPreviousSibling());
+						} else {
+							element = getNearVisualElement(sourceNode.getParentNode());
+						}
+					}
+				}
+			} else {
+				if (sourceNode.getPreviousSibling() != null) {
+					element = getNearVisualElement(sourceNode.getPreviousSibling());
+				} else {
+					element = getNearVisualElement(sourceNode.getParentNode());
+				}
+			}
+		}
+		return element;
+	}
+	
 	public nsIDOMNode getNearVisualNode(Node sourceNode) {
 		if (sourceNode == null) return null;
 		VpeNodeMapping nodeMapping = getNearNodeMappingAtSourceNode(sourceNode);
 		if (nodeMapping != null) {
 			if (nodeMapping.getVisualNode() == null) {
-	
 				return getNearVisualNode(sourceNode.getParentNode());
 			} else {
-				
 				return nodeMapping.getVisualNode();
 			}
 		}
 		return null;
+	}
+	
+	public ElementImpl getNearSourceElementImpl(nsIDOMNode visualNode) {
+		ElementImpl element = null;
+		VpeNodeMapping nodeMapping = getNearNodeMappingAtVisualNode(visualNode);
+		if (visualNode != null) {
+			if ((nodeMapping != null) && (nodeMapping.getSourceNode() != null) 
+					&& (nodeMapping.getSourceNode() instanceof ElementImpl)) {
+				/*
+				 * This visual node is OK and src node is Element
+				 */
+				element = (ElementImpl) nodeMapping.getSourceNode();
+			} else {
+				/*
+				 * Else continue searching
+				 */
+				if (visualNode.getNextSibling() != null) {
+					element = getNearSourceElementImpl(visualNode.getNextSibling());
+				} else {
+					element = getNearSourceElementImpl(visualNode.getParentNode());
+				}
+			}
+		}
+//		System.out.println("--near src element = " + element);
+		return element;
 	}
 	
 	public Node getNearSourceNode(nsIDOMNode visualNode) {

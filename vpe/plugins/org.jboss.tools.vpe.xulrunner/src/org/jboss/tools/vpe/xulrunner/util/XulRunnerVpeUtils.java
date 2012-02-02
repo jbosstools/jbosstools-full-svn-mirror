@@ -142,6 +142,15 @@ public class XulRunnerVpeUtils {
 		return element;
 	}
 	
+	public static Point getVisualNodeOffset(nsIDOMNode node) {
+		Point p = new Point(-1, -1);
+		try {
+			p = getDocumentPos(queryInterface(node, nsIDOMNSHTMLElement.class));
+		} catch (XPCOMException xpcomException) {
+			// do nothing
+		}
+		return p;
+	}
 	
 	private static Point getDocumentPos(nsIDOMNSHTMLElement boxElement) {
 		int x = 0;
@@ -152,7 +161,6 @@ public class XulRunnerVpeUtils {
 			y += curBoxElement.getOffsetTop();
 			curBoxElement = getOffsetParent(curBoxElement);
 		}
-		
 		return new Point(x, y);
 	}
 

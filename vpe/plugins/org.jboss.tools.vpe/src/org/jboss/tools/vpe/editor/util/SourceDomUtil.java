@@ -13,6 +13,9 @@ package org.jboss.tools.vpe.editor.util;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.eclipse.jface.text.ITextViewer;
+import org.eclipse.swt.custom.StyledText;
+import org.eclipse.wst.sse.ui.internal.contentassist.ContentAssistUtils;
 import org.eclipse.wst.xml.xpath.core.util.XSLTXPathHelper;
 import org.jboss.tools.vpe.editor.context.VpePageContext;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
@@ -188,5 +191,67 @@ public class SourceDomUtil {
 		}
 
 		return currentNode;
+	}
+	
+	/**
+	 * Utility function which is used to calculate offset in document by line number and character position.
+	 * 
+	 * @param linePosition the line position
+	 * @param textWidget the text viewer
+	 * @param lineIndex the line index
+	 * 
+	 * @return offset in document, -1 for wrong offset
+	 * 
+	 */
+	public static final int getLinePositionOffset(ITextViewer itextViewer, int lineIndex, int linePosition) {
+		int resultOffset = -1;
+		StyledText textWidget = itextViewer.getTextWidget();
+		if (textWidget != null) {
+			// lineIndex-1 because calculating of line begins in eclipse from
+			// one, but should be form zero
+			resultOffset = textWidget.getOffsetAtLine(lineIndex - 1);
+			// here we get's tabs length
+			// for more example you can see code
+			// org.eclipse.ui.texteditor.AbstractTextEditor@getCursorPosition()
+			// and class $PositionLabelValue
+			int tabWidth = textWidget.getTabs();
+			int characterOffset = 0;
+			String currentString = textWidget.getLine(lineIndex - 1);
+			int pos = 1;
+			for (int i = 0; (i < currentString.length())
+					&& (pos < linePosition); i++) {
+				if ('\t' == currentString.charAt(i)) {
+					characterOffset += (tabWidth == 0 ? 0 : 1);
+					pos += tabWidth;
+				} else {
+					pos++;
+					characterOffset++;
+				}
+			}
+			resultOffset += characterOffset;
+			if (textWidget.getLineAtOffset(resultOffset) != (lineIndex - 1)) {
+				resultOffset = -1;
+			}
+		}
+		return resultOffset;
+	}
+	
+	/**
+	 * Returns source node by source editor position(line and position in line).
+	 * 
+	 * @param linePosition the line position
+	 * @param lineIndex the line index
+	 * @param itextViewer the itext viewer
+	 * 
+	 * @return node for specified src position
+	 */
+	@SuppressWarnings("restriction")
+    public static Node getSourceNodeByEditorPosition(ITextViewer itextViewer, int lineIndex, int linePosition) {
+		int offset = getLinePositionOffset(itextViewer, lineIndex, linePosition);
+		if (offset != -1) {
+			return (Node) ContentAssistUtils.getNodeAt(itextViewer, offset);
+		} else {
+			return null;
+		}
 	}
 }

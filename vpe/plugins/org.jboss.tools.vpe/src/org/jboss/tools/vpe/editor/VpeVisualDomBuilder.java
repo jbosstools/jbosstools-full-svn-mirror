@@ -25,7 +25,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Matcher;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IStorage;
@@ -35,6 +34,7 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.wst.sse.core.internal.provisional.INodeAdapter;
 import org.eclipse.wst.sse.core.internal.provisional.INodeNotifier;
+import org.eclipse.wst.xml.core.internal.document.ElementImpl;
 import org.eclipse.wst.xml.core.internal.provisional.document.IDOMElement;
 import org.jboss.tools.common.resref.core.ResourceReference;
 import org.jboss.tools.jst.jsp.JspEditorPlugin;
@@ -58,7 +58,6 @@ import org.jboss.tools.vpe.editor.template.VpeTemplateManager;
 import org.jboss.tools.vpe.editor.template.VpeTemplateSafeWrapper;
 import org.jboss.tools.vpe.editor.template.VpeToggableTemplate;
 import org.jboss.tools.vpe.editor.template.expression.VpeExpressionException;
-import org.jboss.tools.vpe.editor.util.Constants;
 import org.jboss.tools.vpe.editor.util.Docbook;
 import org.jboss.tools.vpe.editor.util.FaceletUtil;
 import org.jboss.tools.vpe.editor.util.HTML;
@@ -529,20 +528,16 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	}
 
 	protected void correctVisualAttribute(nsIDOMElement element) {
-		String styleValue = element.getAttribute(HTML.TAG_STYLE);
-		String backgroundValue = element
-				.getAttribute(VpeStyleUtil.PARAMETR_BACKGROND);
+		String styleValue = element.getAttribute(HTML.ATTR_STYLE);
+		String backgroundValue = element.getAttribute(HTML.ATTR_BACKGROUND);
 		if (styleValue != null) {
-			styleValue = VpeStyleUtil.addFullPathIntoURLValue(styleValue,
-					pageContext);
-			element.setAttribute(HTML.TAG_STYLE, styleValue);
+			styleValue = VpeStyleUtil.addFullPathIntoURLValue(styleValue, pageContext);
+			element.setAttribute(HTML.ATTR_STYLE, styleValue);
 		}
 		if (backgroundValue != null) {
-			backgroundValue = VpeStyleUtil
-					.addFullPathIntoBackgroundValue(backgroundValue,
-							pageContext.getEditPart().getEditorInput());
-			element.setAttribute(VpeStyleUtil.PARAMETR_BACKGROND,
-					backgroundValue);
+			backgroundValue = VpeStyleUtil.addFullPathIntoBackgroundValue(
+					backgroundValue, pageContext.getEditPart().getEditorInput());
+			element.setAttribute(HTML.ATTR_BACKGROUND, backgroundValue);
 		}
 		//fix for jbide-3209		
 		if(element.hasAttribute(HTML.ATTR_DIR)) {
