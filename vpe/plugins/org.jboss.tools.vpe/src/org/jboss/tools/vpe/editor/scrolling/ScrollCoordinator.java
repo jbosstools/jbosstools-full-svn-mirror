@@ -141,35 +141,37 @@ public class ScrollCoordinator implements IScrollCoordinator {
 	 */
 	private int getBetterPositionFromList(List<Integer> list) {
 		int pos = -1;
-		/*
-		 * Sort the list to get min and max values
-		 */
-		Collections.sort(list);
-		removeList.add(list.get(0));
-		removeList.add(list.get(list.size() - 1));
-		/*
-		 * Remove min and max values the result positions 
-		 */
-		list.removeAll(removeList);
-		if (list.size() == 1) {
+		if (list.size() > 1) {
 			/*
-			 * Get only one available value
+			 * Sort the list to get min and max values
 			 */
-			pos = list.get(0);
-		} else if (list.size() > 1) {
+			Collections.sort(list);
+			removeList.add(list.get(0));
+			removeList.add(list.get(list.size() - 1));
 			/*
-			 * Find the average
+			 * Remove min and max values the result positions 
 			 */
-			int sum = 0;
-			for (Integer position : list) {
-				sum += position;
+			list.removeAll(removeList);
+			if (list.size() == 1) {
+				/*
+				 * Get only one available value
+				 */
+				pos = list.get(0);
+			} else if (list.size() > 1) {
+				/*
+				 * Find the average
+				 */
+				int sum = 0;
+				for (Integer position : list) {
+					sum += position;
+				}
+				pos = sum/list.size();
+			} else {
+				/*
+				 * Get max value
+				 */
+				pos = removeList.get(1);
 			}
-			pos = sum/list.size();
-		} else {
-			/*
-			 * Get max value
-			 */
-			pos = removeList.get(1);
 		}
 		return pos;
 	}
