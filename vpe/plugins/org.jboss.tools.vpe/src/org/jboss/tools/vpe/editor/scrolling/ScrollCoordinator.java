@@ -60,6 +60,9 @@ public class ScrollCoordinator implements IScrollCoordinator {
 			ITextViewer textViewer = sourceEditor.getTextViewer();
 			if (textViewer != null) {
 				int topLine = textViewer.getTopIndex();
+				/*
+				 * Check 9 top lines. 
+				 */
 				for (int i = 0; i < 9; i++) {
 					Node n = SourceDomUtil.getSourceNodeByEditorPosition(textViewer, topLine+i, 1);
 					nsIDOMElement visualElement = domMapping.getNearVisualElement(n);
@@ -89,6 +92,10 @@ public class ScrollCoordinator implements IScrollCoordinator {
 						.queryInterface(domWindow, nsIDOMWindowInternal.class);
 				nsIDOMWindowUtils windowUtils = (nsIDOMWindowUtils) 
 						iInterfaceRequestor.getInterface(nsIDOMWindowUtils.NS_IDOMWINDOWUTILS_IID);
+				/*
+				 * Get 9 point from visual part. Mostly in the upper left corner.
+				 * Based on them -- source line will be searched.
+				 */
 				visualPoints.add(new Point(windowInternal.getInnerWidth()/10, windowInternal.getInnerHeight()/10));
 				visualPoints.add(new Point(windowInternal.getInnerWidth()/5, windowInternal.getInnerHeight()/10));
 				visualPoints.add(new Point(windowInternal.getInnerWidth()/2, windowInternal.getInnerHeight()/10));
@@ -149,7 +156,7 @@ public class ScrollCoordinator implements IScrollCoordinator {
 			removeList.add(list.get(0));
 			removeList.add(list.get(list.size() - 1));
 			/*
-			 * Remove min and max values the result positions 
+			 * Remove min and max values from result positions 
 			 */
 			list.removeAll(removeList);
 			if (list.size() == 1) {
