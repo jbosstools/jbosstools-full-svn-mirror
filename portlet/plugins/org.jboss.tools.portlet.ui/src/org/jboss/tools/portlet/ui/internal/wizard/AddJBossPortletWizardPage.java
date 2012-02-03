@@ -47,7 +47,11 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.wst.common.componentcore.datamodel.properties.IFacetProjectCreationDataModelProperties;
+import org.eclipse.wst.common.componentcore.internal.operation.IArtifactEditOperationDataModelProperties;
+import org.eclipse.wst.common.frameworks.datamodel.DataModelEvent;
 import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
+import org.eclipse.wst.common.frameworks.datamodel.IDataModelListener;
 import org.eclipse.wst.common.frameworks.internal.datamodel.ui.DataModelWizardPage;
 import org.eclipse.wst.common.frameworks.internal.plugin.WTPCommonPlugin;
 import org.jboss.tools.portlet.ui.IPortletUIConstants;
@@ -69,11 +73,14 @@ public class AddJBossPortletWizardPage extends DataModelWizardPage {
 	private Text heightText;
 	private Combo initialWindowStateCombo;
 	private Button addPortlet;
+	private boolean isJBossPortal;
+	private boolean isGateIn;
 
 	public AddJBossPortletWizardPage(IDataModel model, String pageName) {
 		super(model, pageName);
 		setDescription(IPortletUIConstants.ADD_JBOSS_PORTLET_WIZARD_PAGE_DESC);
 		setTitle(IPortletUIConstants.ADD_JBOSS_PORTLET_WIZARD_PAGE_TITLE);
+		refreshProperties();
 	}
 
 	/*
@@ -115,14 +122,7 @@ public class AddJBossPortletWizardPage extends DataModelWizardPage {
 		Composite composite = new Composite(parent, SWT.NULL);
 		composite.setLayout(new GridLayout(2, false));
 		composite.setLayoutData(new GridData(GridData.FILL_BOTH));
-		
-		boolean isJBossPortal = PortletUIActivator.isJBossPortalRuntime(model);
-		model.setBooleanProperty(ADD_PORTLET, isJBossPortal);
-		boolean isGateIn = PortletUIActivator.isGateIn(model);
-		if (isGateIn) {
-			model.setBooleanProperty(ADD_JBOSS_APP, false);
-			model.setBooleanProperty(ADD_JBOSS_PORTLET, false);
-		}
+		refreshProperties();
 		GridData gd;
 		if (isJBossPortal) {
 			addPortlet = new Button(composite,SWT.CHECK);
@@ -261,6 +261,17 @@ public class AddJBossPortletWizardPage extends DataModelWizardPage {
 			
 		
 	}
+
+	protected void refreshProperties() {
+		isJBossPortal = PortletUIActivator.isJBossPortalRuntime(model);
+		model.setBooleanProperty(ADD_PORTLET, isJBossPortal);
+		isGateIn = PortletUIActivator.isGateIn(model);
+		model.setBooleanProperty(CONFIGURE_GATEIN_PARAMETERS, isGateIn);
+		if (isGateIn) {
+			model.setBooleanProperty(ADD_JBOSS_APP, false);
+			model.setBooleanProperty(ADD_JBOSS_PORTLET, false);
+		}
+	}
 	
 	public boolean canFlipToNextPage() {
 		if (model.getBooleanProperty(USE_EXISTING_CLASS))
@@ -291,5 +302,14 @@ public class AddJBossPortletWizardPage extends DataModelWizardPage {
 		heightText.setEnabled(enable);
 		initialWindowStateCombo.setEnabled(enable);
 		pageNameText.setEnabled(enable);
+	}
+
+	@Override
+	public void propertyChanged(DataModelEvent event) {
+		super.propertyChanged(event);
+		String propertyName = event.getPropertyName();
+		if (propertyName != null && propertyName.equals(IArtifactEditOperationDataModelProperties.PROJECT_NAME)) {
+			refreshProperties();
+		}
 	}
 }
