@@ -10,6 +10,10 @@
  ******************************************************************************/ 
 package org.jboss.tools.vpe.editor.scrolling;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
@@ -20,6 +24,7 @@ import org.jboss.tools.vpe.editor.util.SourceDomUtil;
 import org.jboss.tools.vpe.xulrunner.util.XulRunnerVpeUtils;
 import org.mozilla.interfaces.nsIDOMElement;
 import org.mozilla.interfaces.nsIDOMWindow;
+import org.mozilla.interfaces.nsIDOMWindowInternal;
 import org.mozilla.interfaces.nsIDOMWindowUtils;
 import org.mozilla.interfaces.nsIInterfaceRequestor;
 import org.w3c.dom.Node;
@@ -33,6 +38,9 @@ public class ScrollCoordinator implements IScrollCoordinator {
 	StructuredTextEditor sourceEditor = null;
 	MozillaEditor visualEditor = null;
 	VpeDomMapping domMapping = null;
+	private List<Integer> resultPositions = new ArrayList<Integer>();
+	private List<Integer> removeList = new ArrayList<Integer>();
+	private List<Point> visualPoints = new ArrayList<Point>();
 	
 	public ScrollCoordinator(StructuredTextEditor sourceEditor,
 			MozillaEditor visualEditor, VpeDomMapping domMapping) {
@@ -76,20 +84,67 @@ public class ScrollCoordinator implements IScrollCoordinator {
 				nsIDOMWindow domWindow = visualEditor.getXulRunnerEditor().getWebBrowser().getContentDOMWindow();
 				nsIInterfaceRequestor iInterfaceRequestor = (nsIInterfaceRequestor) 
 						domWindow.queryInterface(nsIInterfaceRequestor.NS_IINTERFACEREQUESTOR_IID);
+				nsIDOMWindowInternal windowInternal = org.jboss.tools.vpe.xulrunner.util.XPCOM
+						.queryInterface(domWindow, nsIDOMWindowInternal.class);
 				nsIDOMWindowUtils windowUtils = (nsIDOMWindowUtils) 
 						iInterfaceRequestor.getInterface(nsIDOMWindowUtils.NS_IDOMWINDOWUTILS_IID);
-				int x = 40;//windowInternal.getInnerWidth()/5;
-				int y = 30;//windowInternal.getInnerHeight()/5;
-				nsIDOMElement elementFromPoint = windowUtils.elementFromPoint(x, y, true, false);
-				if (elementFromPoint != null) {
-					ElementImpl sourceElement = domMapping.getNearSourceElementImpl(elementFromPoint);
+				visualPoints.add(new Point(windowInternal.getInnerWidth()/10, windowInternal.getInnerHeight()/10));
+				visualPoints.add(new Point(windowInternal.getInnerWidth()/5, windowInternal.getInnerHeight()/10));
+				visualPoints.add(new Point(windowInternal.getInnerWidth()/2, windowInternal.getInnerHeight()/10));
+				visualPoints.add(new Point(windowInternal.getInnerWidth()/10, windowInternal.getInnerHeight()/5));
+				visualPoints.add(new Point(windowInternal.getInnerWidth()/5, windowInternal.getInnerHeight()/5));
+				visualPoints.add(new Point(windowInternal.getInnerWidth()/2, windowInternal.getInnerHeight()/5));
+				visualPoints.add(new Point(windowInternal.getInnerWidth()/10, windowInternal.getInnerHeight()/2));
+				visualPoints.add(new Point(windowInternal.getInnerWidth()/5, windowInternal.getInnerHeight()/2));
+				visualPoints.add(new Point(windowInternal.getInnerWidth()/2, windowInternal.getInnerHeight()/2));
+				for (Point p : visualPoints) {
+					nsIDOMElement elementFromPoint = windowUtils.elementFromPoint(p.x, p.y, true, false);
+					if (elementFromPoint != null) {
+						ElementImpl sourceElement = domMapping.getNearSourceElementImpl(elementFromPoint);
+						/*
+						 * Transform offset to line number
+						 */
+						resultPositions.add(sourceEditor.getTextViewer().getTextWidget().getLineAtOffset(sourceElement.getStartEndOffset()));
+					}
+				}
+				/*
+				 * Sort the list to get min and max values
+				 */
+				Collections.sort(resultPositions);
+				removeList.add(resultPositions.get(0));
+				removeList.add(resultPositions.get(resultPositions.size() - 1));
+				/*
+				 * Remove min and max values the result positions 
+				 */
+				resultPositions.removeAll(removeList);
+				if (resultPositions.size() == 1) {
 					/*
-					 * Transform offset to line number
+					 * Get only one available value
 					 */
-					line = sourceEditor.getTextViewer().getTextWidget().getLineAtOffset(sourceElement.getStartEndOffset());
+					line = resultPositions.get(0);
+				} else if (resultPositions.size() > 1) {
+					/*
+					 * Find the average
+					 */
+					int sum = 0;
+					for (Integer l : resultPositions) {
+						sum += l;
+					}
+					line = sum/resultPositions.size();
+				} else {
+					/*
+					 * Get max value
+					 */
+					line = removeList.get(1);
 				}
 			}
 		}
+		/*
+		 * Clear the calculation lists
+		 */
+		visualPoints.clear();
+		resultPositions.clear();
+		removeList.clear();
 		return line;
 	}
 }

@@ -1089,7 +1089,6 @@ public class VpeController implements INodeAdapter,
 				IVpePreferencesPage.SYNCHRONIZE_SCROLLING_BETWEEN_SOURCE_VISUAL_PANES)
 				&& !sourceScrollEventFlag && !selectionManager.isUpdateSelectionEventPerformed()
 				&& editPart.getVisualMode() == VpeEditorPart.VISUALSOURCE_MODE) { // ignore internal event from source
-			System.out.println("vis scroll");
 			removeSourceScrollListener();
 			visualScrollEventFlag = true;
 			int line = scrollCoordinator.computeSourcePositionFromVisual();
