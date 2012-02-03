@@ -60,14 +60,15 @@ public class ScrollCoordinator implements IScrollCoordinator {
 			ITextViewer textViewer = sourceEditor.getTextViewer();
 			if (textViewer != null) {
 				int topLine = textViewer.getTopIndex();
-				Node n = SourceDomUtil.getSourceNodeByEditorPosition(textViewer, topLine, 1);
-				if (n != null) {
+				for (int i = 0; i < 9; i++) {
+					Node n = SourceDomUtil.getSourceNodeByEditorPosition(textViewer, topLine+i, 1);
 					nsIDOMElement visualElement = domMapping.getNearVisualElement(n);
 					if (visualElement != null) {
 						Point r = XulRunnerVpeUtils.getVisualNodeOffset(visualElement);
-						posY = r.y;
+						resultPositions.add(r.y);
 					}
 				}
+				posY = findBetterPosition(resultPositions);
 			}
 		}
 		return posY;
@@ -107,44 +108,69 @@ public class ScrollCoordinator implements IScrollCoordinator {
 						resultPositions.add(sourceEditor.getTextViewer().getTextWidget().getLineAtOffset(sourceElement.getStartEndOffset()));
 					}
 				}
-				/*
-				 * Sort the list to get min and max values
-				 */
-				Collections.sort(resultPositions);
-				removeList.add(resultPositions.get(0));
-				removeList.add(resultPositions.get(resultPositions.size() - 1));
-				/*
-				 * Remove min and max values the result positions 
-				 */
-				resultPositions.removeAll(removeList);
-				if (resultPositions.size() == 1) {
-					/*
-					 * Get only one available value
-					 */
-					line = resultPositions.get(0);
-				} else if (resultPositions.size() > 1) {
-					/*
-					 * Find the average
-					 */
-					int sum = 0;
-					for (Integer l : resultPositions) {
-						sum += l;
-					}
-					line = sum/resultPositions.size();
-				} else {
-					/*
-					 * Get max value
-					 */
-					line = removeList.get(1);
-				}
+				line = findBetterPosition(resultPositions);
 			}
 		}
+		return line;
+	}
+	
+	/**
+	 * Finds better editor position.
+	 * <p>
+	 * List should have at least 2 values.
+	 * 
+	 * @param list the list with positions
+	 * @return the best match
+	 */
+	private int findBetterPosition(List<Integer> list) {
+		int pos = getBetterPositionFromList(list);
 		/*
-		 * Clear the calculation lists
+		 * Clear calculation lists
 		 */
 		visualPoints.clear();
 		resultPositions.clear();
 		removeList.clear();
-		return line;
+		return pos;
+	}
+	
+	/**
+	 * List should have at least 2 values
+	 * 
+	 * @param list list with positions
+	 * @return the best match
+	 */
+	private int getBetterPositionFromList(List<Integer> list) {
+		int pos = -1;
+		/*
+		 * Sort the list to get min and max values
+		 */
+		Collections.sort(list);
+		removeList.add(list.get(0));
+		removeList.add(list.get(list.size() - 1));
+		/*
+		 * Remove min and max values the result positions 
+		 */
+		list.removeAll(removeList);
+		if (list.size() == 1) {
+			/*
+			 * Get only one available value
+			 */
+			pos = list.get(0);
+		} else if (list.size() > 1) {
+			/*
+			 * Find the average
+			 */
+			int sum = 0;
+			for (Integer position : list) {
+				sum += position;
+			}
+			pos = sum/list.size();
+		} else {
+			/*
+			 * Get max value
+			 */
+			pos = removeList.get(1);
+		}
+		return pos;
 	}
 }

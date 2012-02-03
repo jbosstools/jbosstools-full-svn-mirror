@@ -375,10 +375,15 @@ public class VpeController implements INodeAdapter,
 										&& scrollMaxYVisual > 0) { // ignore internal visual scroll event
 									sourceScrollEventFlag = true;
 									int posY = scrollCoordinator.computeVisualPositionFromSource();
-									if (posY > scrollMaxYVisual) {
-										posY = scrollMaxYVisual;
+									/*
+									 * Scroll only when there is a new position
+									 */
+									if (posY != -1) {
+										if (posY > scrollMaxYVisual) {
+											posY = scrollMaxYVisual;
+										}
+										domWindow.scrollTo(windowInternal.getPageXOffset(),posY);
 									}
-									domWindow.scrollTo(windowInternal.getPageXOffset(),posY);
 								} else {
 									visualScrollEventFlag = false;
 									selectionManager.setUpdateSelectionEventFlag(false);
