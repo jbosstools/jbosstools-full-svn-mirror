@@ -435,10 +435,6 @@ public class VpeController implements INodeAdapter,
 		 */
 		selectionManager.setUpdateSelectionEventFlag(false);
 	}
-
-	private ScrollBar getSourceEditorVerticalScrollBar() {
-		return sourceEditorVerticalScrollBar;
-	}
 	
 	private void removeSourceScrollListener() {
 		if (sourceEditorVerticalScrollBar != null && sourceScrollSelectionListener != null) {
