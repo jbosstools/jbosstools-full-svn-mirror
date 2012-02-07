@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?artifactRepository version='1.1.0'?>
+<artifacts size='2'>
+  <artifact classifier='osgi.bundle' id='org.jboss.ide.eclipse.as.dmr' version='2.3.0.v20120207-1253-Beta1'>
+    <properties size='6'>
+      <property name='artifact.size' value='89326'/>
+      <property name='download.size' value='89326'/>
+      <property name='download.md5' value='cbbe512a983b75c00d23f874571dcae0'/>
+      <property name='maven-groupId' value='org.jboss.tools.as.plugins'/>
+      <property name='maven-artifactId' value='org.jboss.ide.eclipse.as.dmr'/>
+      <property name='maven-version' value='2.3.0-SNAPSHOT'/>
+    </properties>
+  </artifact>
+  <artifact classifier='osgi.bundle' id='org.jboss.ide.eclipse.as.dmr.source' version='2.3.0.v20120207-1253-Beta1'>
+    <properties size='7'>
+      <property name='artifact.size' value='1371'/>
+      <property name='download.size' value='1371'/>
+      <property name='download.md5' value='5f2ffaddf15f39e5e33fb5b17d277e92'/>
+      <property name='maven-groupId' value='org.jboss.tools.as.plugins'/>
+      <property name='maven-artifactId' value='org.jboss.ide.eclipse.as.dmr'/>
+      <property name='maven-version' value='2.3.0-SNAPSHOT'/>
+      <property name='maven-classifier' value='sources'/>
+    </properties>
+  </artifact>
+</artifacts>
