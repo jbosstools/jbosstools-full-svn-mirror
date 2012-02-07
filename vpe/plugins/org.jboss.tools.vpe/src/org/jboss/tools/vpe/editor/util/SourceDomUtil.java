@@ -206,7 +206,7 @@ public class SourceDomUtil {
 	public static final int getLinePositionOffset(ITextViewer itextViewer, int lineIndex, int linePosition) {
 		int resultOffset = -1;
 		StyledText textWidget = itextViewer.getTextWidget();
-		if (textWidget != null) {
+		if ((textWidget != null) && (lineIndex <= textWidget.getLineCount())) {
 			resultOffset = textWidget.getOffsetAtLine(lineIndex);
 			// here we get's tabs length
 			// for more example you can see code

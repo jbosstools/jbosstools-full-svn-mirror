@@ -110,6 +110,7 @@ public class SelectionManager implements ISelectionManager {
 				selectionData.getSourceNode(),
 				selectionOffset, selectionLength);
 		refreshVisualNodeSelection();
+		setUpdateSelectionEventFlag(false);
 	}
 
 	private SelectionData getSelectionData(nsIDOMNode visualNode) {
@@ -238,6 +239,7 @@ public class SelectionManager implements ISelectionManager {
 				restoreVisualCursorPosition(elementMapping.getTemplate(), nodeData, range);
 			}
 		}
+		setUpdateSelectionEventFlag(false);
 	}
 
 	/**

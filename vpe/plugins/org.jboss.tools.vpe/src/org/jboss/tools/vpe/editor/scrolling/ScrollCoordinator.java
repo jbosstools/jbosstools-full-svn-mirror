@@ -64,11 +64,13 @@ public class ScrollCoordinator implements IScrollCoordinator {
 				 * Check 9 top lines. 
 				 */
 				for (int i = 0; i < 9; i++) {
-					Node n = SourceDomUtil.getSourceNodeByEditorPosition(textViewer, topLine+i, 1);
-					nsIDOMElement visualElement = domMapping.getNearVisualElement(n);
-					if (visualElement != null) {
-						Point r = XulRunnerVpeUtils.getVisualNodeOffset(visualElement);
-						resultPositions.add(r.y);
+					Node sourceNode = SourceDomUtil.getSourceNodeByEditorPosition(textViewer, topLine+i, 1);
+					if (sourceNode != null) {
+						nsIDOMElement visualElement = domMapping.getNearVisualElement(sourceNode);
+						if (visualElement != null) {
+							Point r = XulRunnerVpeUtils.getVisualNodeOffset(visualElement);
+							resultPositions.add(r.y);
+						}
 					}
 				}
 				posY = findBetterPosition(resultPositions);
@@ -93,26 +95,31 @@ public class ScrollCoordinator implements IScrollCoordinator {
 				nsIDOMWindowUtils windowUtils = (nsIDOMWindowUtils) 
 						iInterfaceRequestor.getInterface(nsIDOMWindowUtils.NS_IDOMWINDOWUTILS_IID);
 				/*
-				 * Get 9 point from visual part. Mostly in the upper left corner.
+				 * Divide visual area into xLines*yLines=30 squares.  
+				 * Get coordinates of their points of intersection. 
 				 * Based on them -- source line will be searched.
-				 */
-				visualPoints.add(new Point(windowInternal.getInnerWidth()/10, windowInternal.getInnerHeight()/10));
-				visualPoints.add(new Point(windowInternal.getInnerWidth()/5, windowInternal.getInnerHeight()/10));
-				visualPoints.add(new Point(windowInternal.getInnerWidth()/2, windowInternal.getInnerHeight()/10));
-				visualPoints.add(new Point(windowInternal.getInnerWidth()/10, windowInternal.getInnerHeight()/5));
-				visualPoints.add(new Point(windowInternal.getInnerWidth()/5, windowInternal.getInnerHeight()/5));
-				visualPoints.add(new Point(windowInternal.getInnerWidth()/2, windowInternal.getInnerHeight()/5));
-				visualPoints.add(new Point(windowInternal.getInnerWidth()/10, windowInternal.getInnerHeight()/2));
-				visualPoints.add(new Point(windowInternal.getInnerWidth()/5, windowInternal.getInnerHeight()/2));
-				visualPoints.add(new Point(windowInternal.getInnerWidth()/2, windowInternal.getInnerHeight()/2));
+				 */				
+				int xLines = 6;
+				int yLines = 5;
+				for (int i = 1; i < xLines; i++) {
+					for (int j = 1; j < yLines; j++) {
+						visualPoints.add(new Point(
+								windowInternal.getInnerWidth()*i/xLines, 
+								windowInternal.getInnerHeight()*j/yLines));
+					}
+				}
+				
 				for (Point p : visualPoints) {
 					nsIDOMElement elementFromPoint = windowUtils.elementFromPoint(p.x, p.y, true, false);
 					if (elementFromPoint != null) {
 						ElementImpl sourceElement = domMapping.getNearSourceElementImpl(elementFromPoint);
-						/*
-						 * Transform offset to line number
-						 */
-						resultPositions.add(sourceEditor.getTextViewer().getTextWidget().getLineAtOffset(sourceElement.getStartEndOffset()));
+						if (sourceElement != null) {
+							/*
+							 * Transform offset to line number
+							 */
+							resultPositions.add(sourceEditor.getTextViewer().getTextWidget()
+									.getLineAtOffset(sourceElement.getStartEndOffset()));
+						}
 					}
 				}
 				line = findBetterPosition(resultPositions);
