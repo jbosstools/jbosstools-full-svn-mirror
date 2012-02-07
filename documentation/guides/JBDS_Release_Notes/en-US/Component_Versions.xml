@@ -7,19 +7,19 @@
 		<itemizedlist>
 			<listitem>
 				<para>
-					Eclipse 3.6
+					Eclipse 3.7.1
 				</para>
 			</listitem>
 			<listitem>
 				<para>
-					JBoss Tools 3.3.0
+					JBoss Tools 3.3.0.Beta1
 				</para>
 			</listitem>
-			<listitem>
+<!--			<listitem>
 				<para>
 					JBoss Enterprise Application Platform 6.0
 				</para>
-			</listitem> 
+			</listitem>  -->
 		</itemizedlist>
 		<note>
 			<para>

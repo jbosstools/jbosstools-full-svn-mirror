@@ -11,9 +11,15 @@
 			<listitem>
 				<para>
 					OpenShift Express support
-					<!-- https://issues.jboss.org/browse/JBIDE-9591 -->
+					<!-- https://issues.jboss.org/browse/JBDS-1896 -->
 				</para>
 			</listitem>
+			<listitem>
+				<para>
+					Maven support
+						<!-- https://issues.jboss.org/browse/JBIDE-9591 -->
+						</para>
+					</listitem>
 			<listitem>
 				<para>
 					SAR project deployment
