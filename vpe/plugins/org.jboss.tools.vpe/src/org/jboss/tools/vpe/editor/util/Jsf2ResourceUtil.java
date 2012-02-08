@@ -19,16 +19,16 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
 /**
- * Class created for processing jsf 2.0 resources, see following issues
- * JBIDE-2550, JBIDE-4812,
+ * Class created for processing jsf 2.0 resources, 
+ * see following issues JBIDE-2550, JBIDE-4812
  * 
  * @author mareshkau
  */
 public class Jsf2ResourceUtil {
 	
-	private static final Pattern resourcePatternWithSinglCoat = Pattern
+	private static final Pattern resourcePatternWithSingleQuotes = Pattern
 			.compile("[#\\$]\\{\\s*resource\\s*\\[\\s*'(.*)'\\s*\\]\\s*\\}"); //$NON-NLS-1$
-	private static final Pattern resourcePatternWithDoableCoat = Pattern
+	private static final Pattern resourcePatternWithDoableQuotes = Pattern
 			.compile("[#\\$]\\{\\s*resource\\s*\\[\\s*\"(.*)\"\\s*\\]\\s*\\}"); //$NON-NLS-1$
 	private static final Pattern jsfExternalContextPath = Pattern
 			.compile("^\\s*(\\#|\\$)\\{facesContext.externalContext.requestContextPath\\}"); //$NON-NLS-1$
@@ -80,8 +80,8 @@ public class Jsf2ResourceUtil {
 	 * @author mareshkau, fix for https://jira.jboss.org/jira/browse/JBIDE-5985
 	 */
 	public static boolean isExternalContextPathString(String attributeValue) {
-		Matcher externalContextPathMatcher = jsfExternalContextPath
-				.matcher(attributeValue);
+		Matcher externalContextPathMatcher = 
+				jsfExternalContextPath.matcher(attributeValue);
 		boolean result = false;
 		if (externalContextPathMatcher.find()) {
 			result = true;
@@ -95,8 +95,8 @@ public class Jsf2ResourceUtil {
 	 * @return true if string contains #{request.contextPath}
 	 */
 	public static boolean isRequestContextPathString(String attributeValue) {
-		Matcher requestContextPathMatcher = jsfRequestContextPath
-				.matcher(attributeValue);
+		Matcher requestContextPathMatcher = 
+				jsfRequestContextPath.matcher(attributeValue);
 		return requestContextPathMatcher.find();
 	}
 
@@ -142,17 +142,15 @@ public class Jsf2ResourceUtil {
 			VpePageContext pageContext, String value) {
 		String result = null;
 		// fix for JBIDE-2550, author Maksim Areshkau
-		Matcher singleCoatMatcher = resourcePatternWithSinglCoat.matcher(value);
-		Matcher doubleCoatMatcher = resourcePatternWithDoableCoat
-				.matcher(value);
-		if (doubleCoatMatcher.find()) {
-			result = FileUtil.getJSF2ResourcePath(pageContext,
-					doubleCoatMatcher.group(1));
-		} else if (singleCoatMatcher.find()) {
-			result = FileUtil.getJSF2ResourcePath(pageContext,
-					singleCoatMatcher.group(1));
+		Matcher singleQuotesMatcher = 
+				resourcePatternWithSingleQuotes.matcher(value);
+		Matcher doubleQuotesMatcher = 
+				resourcePatternWithDoableQuotes.matcher(value);
+		if (doubleQuotesMatcher.find()) {
+			result = FileUtil.getJSF2ResourcePath(pageContext, doubleQuotesMatcher.group(1));
+		} else if (singleQuotesMatcher.find()) {
+			result = FileUtil.getJSF2ResourcePath(pageContext, singleQuotesMatcher.group(1));
 		}
-
 		return result;
 	}
 
@@ -163,15 +161,14 @@ public class Jsf2ResourceUtil {
 	 * @return
 	 */
 	public static boolean isJSF2ResourceString(String attributeValue) {
-		Matcher singleCoatMatcher = resourcePatternWithSinglCoat
-				.matcher(attributeValue);
-		Matcher doubleCoatMatcher = resourcePatternWithDoableCoat
-				.matcher(attributeValue);
-		boolean result = false;
-		if (doubleCoatMatcher.find() || singleCoatMatcher.find()) {
-			result = true;
+		Matcher singleQuotesMatcher = 
+				resourcePatternWithSingleQuotes.matcher(attributeValue);
+		Matcher doubleQuotesMatcher = 
+				resourcePatternWithDoableQuotes.matcher(attributeValue);
+		if (doubleQuotesMatcher.find() || singleQuotesMatcher.find()) {
+			return true;
 		}
-		return result;
+		return false;
 	}
 	
 	/**

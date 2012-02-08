@@ -84,7 +84,7 @@ public class FileUtil {
 	 */
     public static final String getJSF2ResourcePath(VpePageContext pageContext,
     		String resourceStr) {
-		if (resourceStr.contains(":")) {					//$NON-NLS-1$
+		if (resourceStr.contains(":")) {	//$NON-NLS-1$
 				String[] parts = resourceStr.split(":");	//$NON-NLS-1$
 				return getJSF2ResourcePath(pageContext, parts[0], parts[1]);
 		} else {
@@ -94,43 +94,41 @@ public class FileUtil {
 
 	/**
 	 * Returns the path to the resource specified by the {@code library}
-	 * and the {@code name}.
-	 * 
-	 * See JBIDE-5638
-	 *
+	 * and the {@code name}. See JBIDE-5638
 	 * @param library may be {@code null}
-	 * 
 	 * @author mareshkau
 	 * @author yradtsevich
-	 * 
 	 * @see <a href="http://java.sun.com/javaee/javaserverfaces/2.0/docs/api/javax/faces/application/ResourceHandler.html">javax.faces.application.ResourceHandler</a>
 	 */
     public static final String getJSF2ResourcePath(VpePageContext pageContext,
     		String library, String name) {
-    	String tempString = library == null ? name 
-    										: library + '/' + name;
-
-    	tempString = FileUtil.JSF2_RESOURCES + tempString;
+    	String tempPath = (library == null ? name : library + '/' + name);
+    	tempPath = FileUtil.JSF2_RESOURCES + tempPath;
     	String result = ""; //$NON-NLS-1$
     	// if file not accessible and try to search in jar files
-    	if(VpeCreatorUtil.getFile(tempString, pageContext)==null) {
-    		String tempEntryPath =seachResourceInClassPath(pageContext,
-    				"META-INF" + tempString); //$NON-NLS-1$
-    		if(tempEntryPath!=null) {
-    			result = tempEntryPath;
-    		}
-    	} else {
-    		result = tempString;
-    	}
+    	IFile file = VpeCreatorUtil.getFile(tempPath, pageContext);
+		if (file == null) {
+			String tempEntryPath = seachResourceInClassPath(pageContext,
+					"META-INF" + tempPath); //$NON-NLS-1$
+			if (tempEntryPath != null) {
+				result = tempEntryPath;
+			}
+		} else {
+			/*
+			 * https://issues.jboss.org/browse/JBIDE-10819 
+			 * The result path should be taken from the found file.
+			 */
+			result = file.getLocation().toString();
+		}
     	return result;
-	}
+    }
 
     public static boolean isExistsInJSF2Resources(VpePageContext pageContext, String resStr) {
     	String resourceString = resStr;
     	resourceString = resourceString.replaceAll(":", "/");  //$NON-NLS-1$//$NON-NLS-2$
     	resourceString = FileUtil.JSF2_RESOURCES+resourceString;
     	if(FileUtil.getFile(pageContext.getEditPart().getEditorInput(), resourceString)!=null || 
-    			FileUtil.seachResourceInClassPath(pageContext, "META-INF"+resourceString)!=null) {
+    			FileUtil.seachResourceInClassPath(pageContext, "META-INF"+resourceString)!=null) { //$NON-NLS-1$
     		return true;
     	}
     	return false;	

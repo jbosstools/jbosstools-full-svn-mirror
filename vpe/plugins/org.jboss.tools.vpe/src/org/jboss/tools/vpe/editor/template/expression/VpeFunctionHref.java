@@ -55,7 +55,7 @@ public class VpeFunctionHref extends VpeFunctionSrc {
 
 	File locFile = tagPath.toFile();
 	if (locFile.exists()) {
-	    return new VpeValue(getPrefix() + locFile.getAbsolutePath());
+	    return new VpeValue(getPrefix() + tagPath.toString());
 	}
 
 	IEditorInput input = pageContext.getEditPart().getEditorInput();

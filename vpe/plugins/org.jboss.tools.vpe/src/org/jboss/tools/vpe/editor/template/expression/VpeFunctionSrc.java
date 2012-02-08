@@ -44,102 +44,88 @@ import org.w3c.dom.Node;
 public class VpeFunctionSrc extends VpeFunction {
     static final String IMG_UNRESOLVED = "unresolved_image.gif"; //$NON-NLS-1$
     static final String IMG_PREFIX = "file:///"; //$NON-NLS-1$
-//    private static final Pattern resourcePatternWithSinglCoat= Pattern.compile("[#\\$]\\{\\s*resource\\s*\\[\\s*'(.*)'\\s*\\]\\s*\\}"); //$NON-NLS-1$
-//    private static final Pattern resourcePatternWithDoableCoat= Pattern.compile("[#\\$]\\{\\s*resource\\s*\\[\\s*\"(.*)\"\\s*\\]\\s*\\}"); //$NON-NLS-1$
-    
     
     public VpeValue exec(VpePageContext pageContext, Node sourceNode) throws VpeExpressionException {
-	String tagValue = getParameter(0).exec(pageContext, sourceNode)
-		.stringValue();
-//	tagValue = resolveEL(pageContext,tagValue);
-	IFile iFile = VpeCreatorUtil.getFile(tagValue, pageContext);
-
-	if (iFile != null) {
-	    return new VpeValue(getPrefix()+iFile.getLocation().toString());
-	}
-	tagValue = processValue(pageContext, sourceNode, tagValue);
-
-	// decode string from utf
-	try {
-	    tagValue = URLDecoder.decode(tagValue, "UTF-8"); //$NON-NLS-1$
-	} catch (UnsupportedEncodingException e) {
-		
-	    VpePlugin.getPluginLog().logError(e);
-	} catch (IllegalArgumentException ex) {
-		//if user enter invalid URL, for example " % sss", 
-		//illegal argument exception will be throwed, 
-		//brouser will not processed this url, so we just slow this exeption
-		//You can check it's by inserting next code
-		//<h:graphicImage value=" %= request.getContextPath()%/images/logos/banner.png"/>
-		tagValue=""; //$NON-NLS-1$
-	}
-
-	IPath tagPath = new Path(tagValue);
-	if (tagPath.isEmpty())
-	    return new VpeValue(getUnresolved());
-
-	String device = (tagPath.getDevice() == null ? tagPath.segment(0)
-		: tagPath.getDevice());
-	if (device != null
-		&& ("http:".equalsIgnoreCase(device) //$NON-NLS-1$
-			|| "file:".equalsIgnoreCase(device))) //$NON-NLS-1$
-	    return new VpeValue(tagValue);
-
-	File locFile = tagPath.toFile();
-	if (locFile.exists())
-	    return new VpeValue(getPrefix() + locFile.getAbsolutePath());
-
-	IEditorInput input = pageContext.getEditPart().getEditorInput();
-	IPath inputPath = getInputParentPath(input);
-	IPath imgPath = null;
-	if (input instanceof ILocationProvider) {
-	    imgPath = inputPath.append(tagValue);
-	} else {
-	    IPath basePath = tagPath.isAbsolute() ? VpeStyleUtil.getRootPath(input)
-		    : inputPath;
-	    if (basePath != null) {
-		imgPath = basePath.append(tagPath);
-	    }
-	}
-
-	if (imgPath != null && imgPath.toFile().exists()) {
-	    return new VpeValue(getPrefix() + imgPath.toString());
-	} else {
-	    IFile file = null;
-	    if (input instanceof IFileEditorInput) {
-		file = ((IFileEditorInput) input).getFile();
-	    }
-
-	    if (null != file) {
-		ResourceReference resourceReference = null;
-		if ("/".equals(tagValue.substring(0, 1))) { //$NON-NLS-1$
-		    resourceReference = pageContext
-			    .getRuntimeAbsoluteFolder(file);
-		    tagValue = tagValue.substring(1);
-		} else {
-		    resourceReference = pageContext
-			    .getRuntimeRelativeFolder(file);
-		}
-
-		String location = null;
-		if (resourceReference != null) {
-		    location = resourceReference.getLocation();
-		}
-
-		if (null == location && null != file.getLocation()) {
-		    location = file.getLocation().toFile().getParent();
-		}
-
-		if (null != location) {
-		    File f = new File(location + File.separator + tagValue);
-		    if (f.exists()) {
-			return new VpeValue(getPrefix() + f.getPath());
-		    }
-		}
-	    }
-	}
-	
-	return new VpeValue(getUnresolved());
+    	String tagValue = getParameter(0).exec(pageContext, sourceNode).stringValue();
+    	//	tagValue = resolveEL(pageContext,tagValue);
+    	IFile iFile = VpeCreatorUtil.getFile(tagValue, pageContext);
+    	if (iFile != null) {
+    		return new VpeValue(getPrefix()+iFile.getLocation().toString());
+    	}
+    	tagValue = processValue(pageContext, sourceNode, tagValue);
+    	// decode string from utf
+    	try {
+    		tagValue = URLDecoder.decode(tagValue, "UTF-8"); //$NON-NLS-1$
+    	} catch (UnsupportedEncodingException e) {
+    		VpePlugin.getPluginLog().logError(e);
+    	} catch (IllegalArgumentException ex) {
+    		//if user enter invalid URL, for example " % sss", 
+    		//illegal argument exception will be throwed, 
+    		//brouser will not processed this url, so we just slow this exeption
+    		//You can check it's by inserting next code
+    		//<h:graphicImage value=" %= request.getContextPath()%/images/logos/banner.png"/>
+    		tagValue=""; //$NON-NLS-1$
+    	}
+    	IPath tagPath = new Path(tagValue);
+    	if (tagPath.isEmpty()) {
+    		return new VpeValue(getUnresolved());
+    	}
+    	String device = (tagPath.getDevice() == null ? tagPath.segment(0)
+    			: tagPath.getDevice());
+    	if (device != null
+    			&& ("http:".equalsIgnoreCase(device) //$NON-NLS-1$
+    					|| "file:".equalsIgnoreCase(device))) { //$NON-NLS-1$
+    		return new VpeValue(tagValue);
+    	}
+    	File locFile = tagPath.toFile();
+    	if (locFile.exists()) {
+    		return new VpeValue(getPrefix() + tagPath.toString());
+    	}
+    	IEditorInput input = pageContext.getEditPart().getEditorInput();
+    	IPath inputPath = getInputParentPath(input);
+    	IPath imgPath = null;
+    	if (input instanceof ILocationProvider) {
+    		imgPath = inputPath.append(tagValue);
+    	} else {
+    		IPath basePath = tagPath.isAbsolute() 
+    				? VpeStyleUtil.getRootPath(input) : inputPath;
+    				if (basePath != null) {
+    					imgPath = basePath.append(tagPath);
+    				}
+    	}
+    	if (imgPath != null && imgPath.toFile().exists()) {
+    		return new VpeValue(getPrefix() + imgPath.toString());
+    	} else {
+    		IFile file = null;
+    		if (input instanceof IFileEditorInput) {
+    			file = ((IFileEditorInput) input).getFile();
+    		}
+    		if (null != file) {
+    			ResourceReference resourceReference = null;
+    			if ("/".equals(tagValue.substring(0, 1))) { //$NON-NLS-1$
+    				resourceReference = pageContext
+    						.getRuntimeAbsoluteFolder(file);
+    				tagValue = tagValue.substring(1);
+    			} else {
+    				resourceReference = pageContext
+    						.getRuntimeRelativeFolder(file);
+    			}
+    			String location = null;
+    			if (resourceReference != null) {
+    				location = resourceReference.getLocation();
+    			}
+    			if (null == location && null != file.getLocation()) {
+    				location = file.getLocation().toFile().getParent();
+    			}
+    			if (null != location) {
+    				File f = new File(location + File.separator + tagValue);
+    				if (f.exists()) {
+    					return new VpeValue(getPrefix() + f.getPath());
+    				}
+    			}
+    		}
+    	}
+    	return new VpeValue(getUnresolved());
     }
 
     protected IPath getInputParentPath(IEditorInput input) {

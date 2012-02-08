@@ -33,10 +33,7 @@ public class VpeFunctionJsf2Resource extends VpeFunction {
 		if ("".equals(library)) { //$NON-NLS-1$
 			library = null;
 		}
-
 		String name = getParameter(1).exec(pageContext, sourceNode).stringValue();
-		
-		String resourcePath = FileUtil.getJSF2ResourcePath(pageContext, library, name);
-		return new VpeValue(resourcePath);
+		return new VpeValue(FileUtil.getJSF2ResourcePath(pageContext, library, name));
 	}
 }
