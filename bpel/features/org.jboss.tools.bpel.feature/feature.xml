@@ -61,6 +61,7 @@
 	</requires>
 
 	<includes id="org.eclipse.bpel.feature" version="0.8.0" match="compatible" />
+	<includes id="org.eclipse.bpel.common.feature" version="0.8.0" match="compatible" />
 	<includes id="org.eclipse.bpel.apache.ode.runtime.feature" version="0.8.0" match="compatible" />
 	<plugin id="org.jboss.tools.bpel.runtimes" download-size="0" install-size="0" version="0.0.0" unpack="false" />
 
