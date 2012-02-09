@@ -28,6 +28,7 @@ import org.jboss.tools.drools.ui.bot.test.smoke.RuleFlowTest;
 import org.jboss.tools.ui.bot.ext.RequirementAwareSuite;
 import org.jboss.tools.ui.bot.ext.SWTTestExt;
 import org.jboss.tools.ui.bot.ext.SWTUtilExt;
+import org.jboss.tools.ui.bot.ext.config.TestConfigurator;
 import org.jboss.tools.ui.bot.ext.types.IDELabel;
 import org.jboss.tools.ui.bot.ext.types.PerspectiveType;
 import org.junit.AfterClass;
@@ -160,7 +161,30 @@ public class DroolsAllBotTests extends SWTTestExt {
     }
     eclipse.openPerspective(PerspectiveType.JAVA);
     eclipse.maximizeActiveShell();
+
+    // Removes legacy files after previous run
+    final String serverHome = TestConfigurator.currentConfig.getServer().runtimeHome;
+    if (serverHome != null) {
+        deleteGuvnorRepositoryIfExists(serverHome + "/bin/");
+    }
   }
+
+    private static void deleteGuvnorRepositoryIfExists(final String pathToDirectoryWithRepository) {
+        delete(new File(pathToDirectoryWithRepository + "repository.xml"));
+        delete(new File(pathToDirectoryWithRepository + "repository"));
+    }
+
+    private static boolean delete(final File file) {
+        if (!file.exists()) {
+            return false;
+        }
+        if (file.isDirectory()) {
+            for (final String s : file.list()) {
+                delete(new File(file, s));
+            }
+        }
+        return file.delete();
+    }
 
   public static boolean useExternalDroolsRuntime() {
     return USE_EXTERNAL_DROOLS_RUNTIME;

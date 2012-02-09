@@ -31,13 +31,16 @@ import javax.xml.validation.Validator;
 
 import org.eclipse.swtbot.eclipse.gef.finder.SWTGefBot;
 import org.eclipse.swtbot.eclipse.gef.finder.widgets.SWTBotGefEditor;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotCheckBox;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.jboss.tools.drools.ui.bot.test.DroolsAllBotTests;
 import org.jboss.tools.ui.bot.ext.SWTEclipseExt;
+import org.jboss.tools.ui.bot.ext.SWTOpenExt;
 import org.jboss.tools.ui.bot.ext.SWTTestExt;
 import org.jboss.tools.ui.bot.ext.SWTUtilExt;
 import org.jboss.tools.ui.bot.ext.Timing;
+import org.jboss.tools.ui.bot.ext.gen.ActionItem;
 import org.jboss.tools.ui.bot.ext.helper.KeyboardHelper;
 import org.jboss.tools.ui.bot.ext.types.IDELabel;
 import org.jboss.tools.ui.bot.ext.types.ViewType;
@@ -68,14 +71,31 @@ public class RuleFlowTest extends SWTTestExt{
   
   private boolean isEditorMaximized = false;
 
-  /**
-   * Tests Rule Flow
-   */
-  @Test
-  public void testRuleFlow() {
-    runRuleFlowCheck(DroolsAllBotTests.RULE_FLOW_JAVA_TEST_FILE_NAME);
-    ruleFlowEditorCheck(DroolsAllBotTests.RULE_FLOW_FILE_NAME);
-  }
+    /**
+     * Tests Rule Flow
+     */
+    @Test
+    public void testRuleFlow() {
+        runRuleFlowCheck(DroolsAllBotTests.RULE_FLOW_JAVA_TEST_FILE_NAME);
+        ruleFlowEditorCheck(DroolsAllBotTests.RULE_FLOW_FILE_NAME);
+    }
+
+    /**
+     * Sets all drools flow nodes.
+     */
+    @SuppressWarnings("unused")
+    private void setAllDroolsFlowNodes() {
+        new SWTOpenExt(bot).preferenceOpen(ActionItem.Preference.DroolsDroolsFlownodes.LABEL);
+        bot.waitForShell(IDELabel.Shell.PREFERENCES);
+        for (SWTBotCheckBox checkBox : bot.checkBoxes()) {
+            if (checkBox.isEnabled()) {
+                checkBox.select();
+            }
+        }
+        bot.button(IDELabel.Button.OK).click();
+        bot.waitForShell(IDELabel.Shell.WARNING);
+        bot.button(IDELabel.Button.OK).click();
+    }
 
   /**
    * Runs newly created Drools project and check result

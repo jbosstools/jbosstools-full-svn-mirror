@@ -5,11 +5,14 @@ import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.withLa
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEclipseEditor;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotMenu;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.jboss.tools.ui.bot.ext.SWTOpenExt;
 import org.jboss.tools.ui.bot.ext.SWTTestExt;
@@ -19,6 +22,7 @@ import org.jboss.tools.ui.bot.ext.helper.DragAndDropHelper;
 import org.jboss.tools.ui.bot.ext.types.IDELabel;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -28,7 +32,7 @@ import org.junit.Test;
  */
 public class DroolsViewsTest extends SWTTestExt {
 
-    private static final String PROJECT_NAME = "droolsTest";
+    private static final String PROJECT_NAME = "droolsViewsTest";
     private static final String RULES_FILE = "Sample.drl";
     private static final String RULES_FILE_PATH = "src/main/rules";
     private static final String JAVA_FILE = "DroolsTest.java";
@@ -45,18 +49,20 @@ public class DroolsViewsTest extends SWTTestExt {
     @Before
     public void setUp() {
         if (isFirstTimeRun) {
-        	eclipse.closeAllEditors();
+            eclipse.closeAllEditors();
             manageProject();
             setUpOnce();
         }
 
         SWTBotTreeItem javaTreeItem = packageExplorer.selectTreeItem(JAVA_FILE, new String[] {PROJECT_NAME, JAVA_FILE_PATH, SAMPLE_TREE_NODE});
         eclipse.debugTreeItemAsDroolsApplication(javaTreeItem);
-        while (bot.waitForShell(IDELabel.Shell.PROGRESS_INFORMATION, 0) != null) {
-            bot.sleep(Timing.time2S());
-        }
+
         if (isFirstTimeRun) {
             eclipse.closeConfirmPerspectiveSwitchShellIfOpened(false, true);
+        } else {
+            while (bot.waitForShell(IDELabel.Shell.PROGRESS_INFORMATION, 0) != null) {
+                bot.sleep(Timing.time2S());
+            }    
         }
 
         bot.sleep(Timing.time2S());
@@ -77,7 +83,7 @@ public class DroolsViewsTest extends SWTTestExt {
      * and creates brand new project.
      */
     private void manageProject() {
-        packageExplorer.deleteAllProjects();
+        //packageExplorer.deleteAllProjects();
         ManageDroolsProject.createDroolsProject(PROJECT_NAME);
         Widget openingProjectWidget = null;
         try {
@@ -102,6 +108,8 @@ public class DroolsViewsTest extends SWTTestExt {
     public void tearDown() {
         eclipse.closeView(IDELabel.View.AGENDA);
         eclipse.closeView(IDELabel.View.GLOBAL_DATA);
+        eclipse.closeView(IDELabel.View.AUDIT);
+        eclipse.closeView(IDELabel.View.WORKING_MEMORY);
         eclipse.finishDebug();
     }
 
@@ -138,6 +146,7 @@ public class DroolsViewsTest extends SWTTestExt {
      * Tests refreshing of Agenda view.
      */
     @Test
+    @Ignore
     public void refreshAgendaTest() {
         openView(IDELabel.View.AGENDA);
         eclipse.stepOver();
@@ -175,6 +184,99 @@ public class DroolsViewsTest extends SWTTestExt {
         assertFalse("Log file '" + LOG_FILE + "' was not loaded properly into Audit view.",
                 "The selected audit log is empty.".equals(auditView.bot().tree().getAllItems()[0].getText()));
         fail("Error with Audit was probably resolved. This should be completed now.");
+    }
+
+    /**
+     * Test of Working Memory view
+     */
+    @Test
+    public void workingMemoryTest() {
+        openView(IDELabel.View.WORKING_MEMORY);
+
+        SWTBotTree workingMemoryTree = bot.tree();
+        assertEquals("Working memory tree was expected to have exactly 1 root item, but it had "
+                + workingMemoryTree.getAllItems().length + " root items.", 1, workingMemoryTree.getAllItems().length);
+
+        String rootItemText = workingMemoryTree.getAllItems()[0].getText();
+        assertNotNull(rootItemText);
+        assertTrue("Root item of working memory tree had unexpected text: " + rootItemText,
+                rootItemText.contains("DroolsTest$Message"));
+
+        List<String> treeItemsStrings = workingMemoryTree.expandNode(rootItemText).getNodes();
+        final int EXPECTED_ITEMS = 6;
+        assertEquals("There should be " + EXPECTED_ITEMS + " items but was " + treeItemsStrings.size(),
+                EXPECTED_ITEMS, treeItemsStrings.size());
+
+        String messageString = "message= \"Goodbye cruel world\"";
+        String statusString = "status= 1";
+        String[] itemsStrings = new String[] {"BYE= 2", "FINISH= 3","GOODBYE= 1", "HELLO= 0", messageString, statusString};
+        Set<String> expectedWorkingMemorySet = new HashSet<String>(EXPECTED_ITEMS);
+        for (int i = 0; i < itemsStrings.length; i++) {
+            expectedWorkingMemorySet.add(itemsStrings[i]);
+        }
+        assertEquals(expectedWorkingMemorySet, getWorkingMemoryItems(rootItemText));
+
+        eclipse.resumeDebug();
+        expectedWorkingMemorySet.remove(messageString);
+        expectedWorkingMemorySet.remove(statusString);
+        messageString = "message= \"JustBye rule\"";
+        statusString = "status= 3";
+        expectedWorkingMemorySet.add(messageString);
+        expectedWorkingMemorySet.add(statusString);
+        assertEquals(expectedWorkingMemorySet, getWorkingMemoryItems(rootItemText));
+
+        eclipse.resumeDebug();
+        expectedWorkingMemorySet.clear();
+        showView(IDELabel.View.CONSOLE);
+        showView(IDELabel.View.WORKING_MEMORY);
+        assertEquals("Working memory view should be empty. Maybe it was not refreshed.",
+        		expectedWorkingMemorySet, getWorkingMemoryItems(rootItemText));
+    }
+
+    /**
+     * Gets working memory items from Working Memory view.
+     * 
+     * @param rootNode Root node name
+     * @return Set of strings representing working memory items.
+     */
+    private Set<String> getWorkingMemoryItems(final String rootNode) {
+        waitForStoppingDebugging();
+        showView(IDELabel.View.WORKING_MEMORY);
+        Set<String> stringSet = new HashSet<String>();
+
+        List<String> nodesStrings = null;
+        try {
+            nodesStrings = bot.tree().expandNode(rootNode).getNodes();
+        } catch (WidgetNotFoundException wnfe) {
+            return stringSet;
+        }
+
+        for (String s : nodesStrings) {
+            final int index = s.indexOf('(');
+            if (index > 0) {
+                s = s.substring(0, index);
+            }
+            stringSet.add(s.trim());
+        }
+
+        return stringSet;
+    }
+
+    /**
+     * Waits while debugging is stopped at breakpoint or finished.
+     */
+    private void waitForStoppingDebugging() {
+        for (int i = 0; i < 20; i++) {
+            SWTBotMenu resumeMenu = bot.menu(IDELabel.Menu.RUN).menu(IDELabel.Menu.RESUME);
+            if (resumeMenu.isEnabled()) {
+                return;
+            }
+            SWTBotMenu terminateMenu = bot.menu(IDELabel.Menu.RUN).menu(IDELabel.Menu.TERMINATE);
+            if (!resumeMenu.isEnabled() && !terminateMenu.isEnabled()) {
+                return;
+            }
+            bot.sleep(Timing.time1S());
+        }
     }
 
     /**
@@ -252,10 +354,14 @@ public class DroolsViewsTest extends SWTTestExt {
     private void showView(final String viewTitle) {
         checkViewTitleNull(viewTitle);
         boolean isViewOpened = false;
-        for (SWTBotView view : bot.views()) {
+        for (final SWTBotView view : bot.views()) {
             if (viewTitle.equals(view.getTitle())) {
-                view.show();
-                view.setFocus();
+            	view.getWidget().getDisplay().syncExec(new Runnable() {
+					public void run() {
+						view.show();
+		                view.setFocus();
+					}
+				});
                 isViewOpened = true;
                 break;
             }
