@@ -130,6 +130,11 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
+		<section>
+			<title>Getting Started with JBoss Central</title>
+			<para>
+				The <guilabel>Getting Started</guilabel> tab of JBoss Central is the first you will see upon launching the JBoss Developer Studio and is setup as a functional starting point for developers.
+			</para>
 		<para>
 			At the top of the tab is a search box. By clicking the down arrow to the left you can select to perform a search on either the <guimenuitem>Red Hat Customer Portal</guimenuitem> or the <guimenuitem>JBoss Community</guimenuitem>.
 		</para>
@@ -280,6 +285,55 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
+	</section>
+	<section>
+		<title>Software installation and updates from within JBoss Central</title>
+		<para>
+			The <guilabel>Software/Update</guilabel> tab at the bottom of JBoss Central switches to a screen where you can install and update your software. 
+		</para>
+		<figure>
+			<title>Software/Update tab</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/getting_started/jboss_central_13.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<warning>
+			<para>
+					Some software available through this tab is third-party community software that Red Hat has no control over. Installing third-party software may impact the level of support that Red Hat can provide. 
+			</para>
+		</warning>
+		<para>
+			To install or update software, select the checkbox beside one or more components. 
+		</para>
+		<figure>
+			<title>Software/Update tab</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/getting_started/jboss_central_14.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>
+			Once you have selected all the components to update or install, click the <inlinemediaobject>
+				<imageobject>
+					<imagedata fileref="images/getting_started/jboss_central_icon_07.png"/>
+				</imageobject>
+				<textobject>
+					<phrase>Install</phrase>
+				</textobject>
+</inlinemediaobject> button at the bottom left of the tab window. A screen will then appear offering you the option of deselecting a part of the component if you wish. 
+		</para>
+		<figure>
+			<title>Software/Update tab</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/getting_started/jboss_central_15.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+	</section>
 	</section>
 	<section id="JBoss_Perspective">
 		<title>JBoss Perspective</title>
