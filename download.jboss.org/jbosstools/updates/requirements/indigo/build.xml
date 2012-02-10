@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project default="mirror">
+<project default="run">
 	<!-- run locally in Eclipse (to resolve p2 tasks) using these commandline options:
 	
 		-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} 
@@ -15,6 +15,7 @@
 			-application org.eclipse.ant.core.antRunner \
 			-f ~/RHDS/updates/requirements/indigo/build.xml -Ddestination=/tmp/indigo-repo
 	-->
+	<target name="run" depends="mirror,regen"/>
 	<target name="mirror">
 		<!-- <property name="URL" value="http://download.eclipse.org/releases/indigo/201202012328-SR1-M/" /> -->
 		<!-- must include BOTH Indigo and Eclipse in the same repo now, since the Indigo site is broken (refs an old Eclipse build which is gone) -->
@@ -33,7 +34,12 @@
 
 			<slicingOptions includeFeatures="true" followStrict="true" />
 		</p2.mirror>
-
+	</target>
+	<target name="regen">
+		<!-- remove OTDT patched version of o.e.jdt.core -->
+		<delete>
+			<fileset dir="${destination}/201202012328-SR1-M/" includes="**/org.eclipse.jdt.core_*OTDT*.jar*"/>
+		</delete>
 		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/201202012328-SR1-M/" artifactRepository="file:${destination}/201202012328-SR1-M/" publishartifacts="true" source="${destination}/201202012328-SR1-M/" compress="${compress}" />
 	</target>
 </project>
