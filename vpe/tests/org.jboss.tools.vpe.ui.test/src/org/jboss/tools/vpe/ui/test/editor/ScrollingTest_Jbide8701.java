@@ -41,7 +41,7 @@ public class ScrollingTest_Jbide8701 extends VpeTest {
 		super(name);
 	}
 	
-	public void _testScrolling_Jbide8701() throws Throwable {
+	public void testScrolling_Jbide8701() throws Throwable {
 		boolean testFinished = false;
 		IFile file = (IFile) TestUtil.getComponentPath(FILE_NAME,
             	VpeUiTests.IMPORT_PROJECT_NAME);
@@ -79,35 +79,69 @@ public class ScrollingTest_Jbide8701 extends VpeTest {
 				/*
 				 * Set source position -- visual part should be scrolled.
 				 */
-				int scrollX = windowInternal.getScrollX();
 				int scrollY = windowInternal.getScrollY();
-				assertEquals("Initital visual position is wrong", 0, scrollX); //$NON-NLS-1$
+				int halfHeight = windowInternal.getScrollMaxY()/2;
 				assertEquals("Initital visual position is wrong", 0, scrollY); //$NON-NLS-1$
 				
 				sourceEditor.setFocus();
-				for (int i = 0; i < 15; i++) {
-					pressKeyCode(PlatformUI.getWorkbench().getDisplay(), SWT.PAGE_DOWN);
+				TestUtil.delay(DELAY_1S);
+				/*
+				 * Press CTRL+END to get to the end of the page
+				 */
+				pressCtrlEnd(PlatformUI.getWorkbench().getDisplay());
+				TestUtil.delay(DELAY_1S);
+				/*
+				 * Press ARROW_UP several times to select element at the bottom
+				 */
+				for (int i = 0; i < 5; i++) {
+					pressKeyCode(PlatformUI.getWorkbench().getDisplay(), SWT.ARROW_UP);
 				}
 				TestUtil.delay(DELAY_1S);
-				scrollX = windowInternal.getScrollX();
 				scrollY = windowInternal.getScrollY();
-				assertEquals("After 15x PG_DOWN presses visual position is wrong", 23, scrollX); //$NON-NLS-1$
-				assertEquals("After 15x PG_DOWN presses visual position is wrong", 658, scrollY); //$NON-NLS-1$
+				assertTrue("Visual scrolling should be at the bottom of the page", scrollY > halfHeight); //$NON-NLS-1$
 		        /*
 		         * Set visual position -- source part should be scrolled.
 		         */
+				visualEditor.setFocus();
+				pressKeyCode(PlatformUI.getWorkbench().getDisplay(), SWT.ARROW_UP);
 				domWindow.scrollTo(0,0);
 				TestUtil.delay(DELAY_1S);
 				int topIndex = sourceEditor.getTextViewer().getTopIndex();
-				assertEquals("Top source line is wrong", 74, topIndex); //$NON-NLS-1$
-				domWindow.scrollTo(0, windowInternal.getScrollMaxY()/2);
+				assertTrue("Top source line is wrong", topIndex < 100); //$NON-NLS-1$
+				domWindow.scrollTo(0, halfHeight);
 				TestUtil.delay(DELAY_1S);
 				topIndex = sourceEditor.getTextViewer().getTopIndex();
-				assertEquals("Top source line for the middle position is wrong", 638, topIndex); //$NON-NLS-1$
+				assertTrue("Top source line for the middle position is wrong", topIndex < 700); //$NON-NLS-1$
 				testFinished = true;
 			}
         }
         assertTrue("Test hasn't passed all steps", testFinished); //$NON-NLS-1$
+	}
+	
+	public static void pressCtrlEnd(Display display) {
+		Event keyPressed = new Event();
+		keyPressed.keyCode = SWT.CTRL;
+		keyPressed.display = display;
+		keyPressed.type = SWT.KeyDown;
+		display.post(keyPressed);
+		
+		keyPressed = new Event();
+		keyPressed.keyCode = SWT.END;
+		keyPressed.display = display;
+		keyPressed.type = SWT.KeyDown;
+		display.post(keyPressed);
+		
+		Event keyReleased = new Event();
+		keyReleased.keyCode = SWT.END;
+		keyPressed.display = display;
+		keyReleased.type = SWT.KeyUp;
+		
+		keyReleased = new Event();
+		keyReleased.keyCode = SWT.CTRL;
+		keyPressed.display = display;
+		keyReleased.type = SWT.KeyUp;
+		
+		display.post(keyReleased);
 	}
 	
 	public static void pressKeyCode(Display display, int keyCode) {
