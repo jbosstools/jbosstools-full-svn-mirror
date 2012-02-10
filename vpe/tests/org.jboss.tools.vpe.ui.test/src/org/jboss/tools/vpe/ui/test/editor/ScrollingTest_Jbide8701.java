@@ -107,11 +107,11 @@ public class ScrollingTest_Jbide8701 extends VpeTest {
 				domWindow.scrollTo(0,0);
 				TestUtil.delay(DELAY_1S);
 				int topIndex = sourceEditor.getTextViewer().getTopIndex();
-				assertTrue("Top source line is wrong", topIndex < 100); //$NON-NLS-1$
+				assertTrue("Top source line is wrong, top line is " + topIndex + ", but should be less than 100", topIndex < 100); //$NON-NLS-1$ //$NON-NLS-2$
 				domWindow.scrollTo(0, halfHeight);
 				TestUtil.delay(DELAY_1S);
 				topIndex = sourceEditor.getTextViewer().getTopIndex();
-				assertTrue("Top source line for the middle position is wrong", topIndex < 700); //$NON-NLS-1$
+				assertTrue("Top source line for the middle position is wrong, top line is " + topIndex + ", but should be less than 700", topIndex < 700); //$NON-NLS-1$ //$NON-NLS-2$
 				testFinished = true;
 			}
         }
