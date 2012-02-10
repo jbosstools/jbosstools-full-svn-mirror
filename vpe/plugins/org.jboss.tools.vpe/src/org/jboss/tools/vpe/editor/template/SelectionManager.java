@@ -159,6 +159,7 @@ public class SelectionManager implements ISelectionManager {
 	 * source selection to visual selection).
 	 */
 	final public void refreshVisualSelection() {
+		setUpdateSelectionEventFlag(true);
 		refreshVisualNodeSelection();
 		refreshVisualTextSelection();
 	}
@@ -203,7 +204,6 @@ public class SelectionManager implements ISelectionManager {
 	 * Selects text in the Visual Part Visual Part according to source selection.
 	 */
 	private void refreshVisualTextSelection() {
-		setUpdateSelectionEventFlag(true);
 		// checks for null, for case when we close editor and background
 		// update job is running
 		if (getSourceEditor().getTextViewer() == null) {
@@ -239,7 +239,6 @@ public class SelectionManager implements ISelectionManager {
 				restoreVisualCursorPosition(elementMapping.getTemplate(), nodeData, range);
 			}
 		}
-		setUpdateSelectionEventFlag(false);
 	}
 
 	/**
