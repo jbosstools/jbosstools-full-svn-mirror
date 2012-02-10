@@ -72,11 +72,6 @@ public class ScrollingTest_Jbide8701 extends VpeTest {
 				nsIDOMWindowInternal windowInternal = org.jboss.tools.vpe.xulrunner.util.XPCOM
 						.queryInterface(domWindow, nsIDOMWindowInternal.class);
 				/*
-				 * Set property to enable scroll correlation
-				 */
-				JspEditorPlugin.getDefault().getPreferenceStore().setValue(
-						IVpePreferencesPage.SYNCHRONIZE_SCROLLING_BETWEEN_SOURCE_VISUAL_PANES, true);
-				/*
 				 * Set source position -- visual part should be scrolled.
 				 */
 				int scrollY = windowInternal.getScrollY();
@@ -154,4 +149,26 @@ public class ScrollingTest_Jbide8701 extends VpeTest {
 		keyReleased.type = SWT.KeyUp;
 		display.post(keyReleased);
 	}
+
+	@Override
+	protected void setUp() throws Exception {
+		super.setUp();
+		/*
+		 * Set property to enable scroll correlation
+		 */
+		JspEditorPlugin.getDefault().getPreferenceStore().setValue(
+				IVpePreferencesPage.SYNCHRONIZE_SCROLLING_BETWEEN_SOURCE_VISUAL_PANES, true);
+	}
+
+	@Override
+	protected void tearDown() throws Exception {
+		super.tearDown();
+		 /*
+		 * Disable scroll correlation at the end
+		 */
+		JspEditorPlugin.getDefault().getPreferenceStore().setValue(
+				IVpePreferencesPage.SYNCHRONIZE_SCROLLING_BETWEEN_SOURCE_VISUAL_PANES, false);
+	}
+	
+	
 }
