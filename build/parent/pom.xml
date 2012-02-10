@@ -465,6 +465,11 @@
 			without needing to use a local.site file -->
 		<profile>
 			<id>local.site</id>
+			<activation>
+				<property>
+						<name>BUILD_NUMBER</name>
+				</property>
+			</activation>
 			<repositories>
 				<repository>
 					<id>local.site</id>
@@ -762,30 +767,28 @@
 				</plugins>
 			</build>
 		</profile>
+		<profile>
+			<id>default</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<repositories>
+				<!-- Single repo containing contents of unified.target, but without using 
+					the target file -->
+				<repository>
+					<id>jbosstools-target-site</id>
+					<url>${jbosstools-target-site}</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+			</repositories>
+		</profile>
 	</profiles>
-
-	<repositories>
-
-		<!-- Single repo containing contents of unified.target, but without using 
-			the target file -->
-		<repository>
-			<id>jbosstools-target-site</id>
-			<url>${jbosstools-target-site}</url>
-			<layout>p2</layout>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
-		<!-- do not needed because parent pom is not required anymore -->
-		<!-- repository> <id>jboss-public-repository-group</id> <name>JBoss Public 
-			Repository Group</name> <url>http://repository.jboss.org/nexus/content/groups/public/</url> 
-			<layout>default</layout> <releases> <enabled>true</enabled> <updatePolicy>never</updatePolicy> 
-			</releases> <snapshots> <enabled>true</enabled> <updatePolicy>never</updatePolicy> 
-			</snapshots> </repository -->
-	</repositories>
 
 	<!-- Additional m2 repos to resolve things like org.eclipse.tycho:tycho-maven-plugin:0.13.0-SNAPSHOT -->
 	<pluginRepositories>
