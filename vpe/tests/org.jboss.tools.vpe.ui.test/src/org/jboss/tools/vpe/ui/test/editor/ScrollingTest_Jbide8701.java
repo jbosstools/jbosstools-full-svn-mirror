@@ -41,7 +41,7 @@ public class ScrollingTest_Jbide8701 extends VpeTest {
 		super(name);
 	}
 	
-	public void testScrolling_Jbide8701() throws Throwable {
+	public void _testScrolling_Jbide8701() throws Throwable {
 		boolean testFinished = false;
 		IFile file = (IFile) TestUtil.getComponentPath(FILE_NAME,
             	VpeUiTests.IMPORT_PROJECT_NAME);
@@ -83,6 +83,7 @@ public class ScrollingTest_Jbide8701 extends VpeTest {
 				int scrollY = windowInternal.getScrollY();
 				assertEquals("Initital visual position is wrong", 0, scrollX); //$NON-NLS-1$
 				assertEquals("Initital visual position is wrong", 0, scrollY); //$NON-NLS-1$
+				
 				sourceEditor.setFocus();
 				for (int i = 0; i < 15; i++) {
 					pressKeyCode(PlatformUI.getWorkbench().getDisplay(), SWT.PAGE_DOWN);
