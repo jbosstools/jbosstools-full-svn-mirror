@@ -326,10 +326,68 @@
 </inlinemediaobject> button at the bottom left of the tab window. A screen will then appear offering you the option of deselecting a part of the component if you wish. 
 		</para>
 		<figure>
-			<title>Software/Update tab</title>
+			<title>Component selection</title>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/getting_started/jboss_central_15.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>
+			You will then be asked to confirm the selection of components to install. To accept the selection press the <guibutton>Next</guibutton> button. You can change the components by pressing the <guibutton>Back</guibutton> button.
+		</para>
+		<figure>
+			<title>Component verification</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/getting_started/jboss_central_16.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>
+			After pressing the <guibutton>Next</guibutton> button you will need to <guilabel>accept the terms of the license agreement</guilabel> for the associated software being installed. To do this select the corresponding radio button.
+		</para>
+		<para>
+			Click <guibutton>Finish</guibutton> to begin installation.
+		</para>
+		<figure>
+			<title>Licenses review</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/getting_started/jboss_central_17.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>
+			As the installation process takes place you can choose to have further details displayed or run the installation in the background. 
+		</para>
+		<figure>
+			<title>Licenses review</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/getting_started/jboss_central_18.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>
+			After the software has been downloaded, you will be asked to verify the installation of the components if the contents are unsigned. Install unsigned third-party components with discretion. 
+		</para>
+		<figure>
+			<title>Installing unsigned content</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/getting_started/jboss_central_19.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<para>
+			Once installation is complete, restart JBoss Developer Studio by pressing the <guibutton>Restart Now</guibutton> button that appears. 
+		</para>
+		<figure>
+			<title> </title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/getting_started/jboss_central_20.png" scale="90"/>
 				</imageobject>
 			</mediaobject>
 		</figure>
