@@ -3,7 +3,7 @@
 <repository name='JBoss Tools Requirements - Composite Indigo SR1 Mirror' type='org.eclipse.equinox.internal.p2.metadata.repository.CompositeMetadataRepository' version='1.0.0'>
 <properties size='2'>
 <property name='p2.compressed' value='true'/>
-<property name='p2.timestamp' value='1328335352000'/>
+<property name='p2.timestamp' value='1328892709000'/>
 </properties>
 <children size='15'>
 <child location='../../requirements/indigo/201202012328-SR1-M/'/>
@@ -17,8 +17,8 @@
 <child location='../../requirements/emf/2.7.2.v20120130-0943/'/>
 <!-- <child location='http://dl.google.com/eclipse/plugin/3.7/'/> -->
 <child location='../../requirements/gwt/2.5.0.v201201120043-rel-r37/'/>
-<!-- includes m2e, m2e-extras, m2e-wtp -->
-<child location='../../requirements/m2eclipse/20111005-1500/'/>
+<!-- includes m2e, m2e-extras, m2e-wtp, m2e-jdt-compiler -->
+<child location='../../requirements/m2eclipse/20120208-1400/'/>
 
 <child location='../../requirements/mylyn/3.6.5.I20120201-0822/'/>
 <child location='../../requirements/orbit/R20110523182458/'/>
