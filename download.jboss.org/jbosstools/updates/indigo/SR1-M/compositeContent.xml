@@ -3,11 +3,11 @@
 <repository name='JBoss Tools Requirements - Composite Indigo SR1 Mirror' type='org.eclipse.equinox.internal.p2.metadata.repository.CompositeMetadataRepository' version='1.0.0'>
 <properties size='2'>
 <property name='p2.compressed' value='true'/>
-<property name='p2.timestamp' value='1328896394000'/>
+<property name='p2.timestamp' value='1328938728000'/>
 </properties>
 <children size='15'>
 <child location='../../requirements/indigo/201202012328-SR1-M/'/>
-<child location='../../requirements/birt/3.7.1/'/>
+<child location='../../requirements/birt/3.7.2.v20120207/'/>
 <child location='../../requirements/bpel/0.8.0.v20120202-0453-H135-CI/'/>
 <child location='../../requirements/bpmn2-modeler/201201302358/'/>
 <child location='../../requirements/ecf/3.5.4/'/>
