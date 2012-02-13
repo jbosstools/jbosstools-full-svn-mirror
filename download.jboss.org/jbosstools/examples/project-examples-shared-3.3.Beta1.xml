@@ -268,7 +268,7 @@ It includes a persistence unit and some sample persistence and transaction code 
         <tags>wizard</tags>
         <icon path="icons/spring_wiz.gif" />
     </project>
-    <!--
+    
 	<project>
 		<category>Java EE 6 Quickstarts</category>
 		<name>gwt-webapp</name>
@@ -302,8 +302,8 @@ It includes a persistence unit and some sample persistence and transaction code 
 				<property name="connectorIds">org.jboss.tools.maven.feature,org.jboss.tools.maven.cdi.feature</property>
 			</fix>
 			<fix type="plugin">
-				<property name="id">com.google.gwt.eclipse</property>
-				<property name="versions">[2.5,)</property>
+				<property name="id">com.google.gwt.eclipse.core</property>
+				<property name="versions">[2.4,)</property>
 				<property name="description">This project example requires Google Plugin for Eclipse</property>
 				<property name="connectorIds">com.google.gwt.eclipse.sdkbundle.e37.feature,com.google.gdt.eclipse.suite.e37.feature</property>
 			</fix>            
@@ -312,16 +312,16 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<importTypeDescription>The project example requires the m2e, m2eclipse-wtp, JBoss Maven Integration and Google Plugin for Eclipse features.</importTypeDescription>
 		<mavenArchetype>
 			<archetypeGroupId>org.jboss.errai.archetypes</archetypeGroupId>
-			<archetypeArtifactId>****</archetypeArtifactId>
-			<archetypeVersion>1.0.0-SNAPSHOT</archetypeVersion>
-			<archetypeRepository>http://repository.jboss.org/nexus/content/repositories/snapshots/</archetypeRepository>
+			<archetypeArtifactId>kitchensink-quickstart</archetypeArtifactId>
+			<archetypeVersion>2.0-SNAPSHOT</archetypeVersion>
+			<archetypeRepository>https://repository.jboss.org/nexus/content/groups/public/</archetypeRepository>
 			<groupId>org.jboss.tools.example</groupId>
-			<artifactId>gwt-helloworld</artifactId>
+			<artifactId>gwt-kitchensink</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-			<javaPackage>org.jboss.tools.example.gwt.helloworld</javaPackage>
+			<javaPackage>org.jboss.tools.gwt.kitchensink</javaPackage>
 		</mavenArchetype>
         <tags>wizard</tags>
         <icon path="icons/new-gdt-project.png" />
     </project>
-    -->
+
 </projects>
