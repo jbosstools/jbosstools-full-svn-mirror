@@ -4,7 +4,9 @@
 [
 <!ENTITY getting_started SYSTEM "getting_started.xml">
 <!ENTITY jbossinstall SYSTEM "jbossinstall.xml">
-<!ENTITY  manage SYSTEM "manage.xml">
+<!ENTITY jbosscentral SYSTEM "jboss_central.xml">
+<!ENTITY jbossperspective SYSTEM "jboss_perspective.xml">
+<!ENTITY manage SYSTEM "manage.xml">
 <!ENTITY first_seam  SYSTEM "first_seam.xml">
 <!ENTITY jsp_application  SYSTEM "jsp_application.xml">
 <!ENTITY rad_jsf_application  SYSTEM "rad_jsf_application.xml">
@@ -42,14 +44,14 @@
   <title>Getting Started Guide</title>
   
   <copyright>
-   <year>2011</year>
+   <year>2012</year>
    <holder>JBoss by Red Hat</holder>
   </copyright>
-  <releaseinfo>Version: 3.3.0.M5</releaseinfo>
+  <releaseinfo>Version: 3.3.0.Beta1</releaseinfo>
  <abstract>
    <title/>
        <para>
-           <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/GettingStartedGuide/pdf/Getting_Started_Guide.pdf">PDF version</ulink>
+		   <!--     <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/GettingStartedGuide/pdf/Getting_Started_Guide.pdf">PDF version</ulink> -->
        </para>
 </abstract>
 
@@ -61,6 +63,8 @@
 
  <!--&getting_started;-->
  &jbossinstall;
+ &jbosscentral;
+ &jbossperspective;
  &manage; 
  &first_seam; 
  &jsp_application;
