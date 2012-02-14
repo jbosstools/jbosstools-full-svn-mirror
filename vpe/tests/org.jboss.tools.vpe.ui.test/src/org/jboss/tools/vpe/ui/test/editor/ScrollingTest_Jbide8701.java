@@ -16,6 +16,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.intro.IIntroManager;
+import org.eclipse.ui.intro.IIntroPart;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.wst.sse.ui.StructuredTextEditor;
 import org.jboss.tools.jst.jsp.JspEditorPlugin;
@@ -36,6 +38,7 @@ public class ScrollingTest_Jbide8701 extends VpeTest {
 	private final String INITIALIZATION_FAILED = "Initialization failed!"; //$NON-NLS-1$
 	private final String FILE_NAME = "facets.jsp"; //$NON-NLS-1$
 	private final long DELAY_1S = 1*1000L;
+	private final long DELAY_5S = 5*1000L;
 	
 	public ScrollingTest_Jbide8701(String name) {
 		super(name);
@@ -79,7 +82,7 @@ public class ScrollingTest_Jbide8701 extends VpeTest {
 				assertEquals("Initital visual position is wrong", 0, scrollY); //$NON-NLS-1$
 				
 				sourceEditor.setFocus();
-				TestUtil.delay(DELAY_1S);
+				TestUtil.delay(DELAY_5S);
 				/*
 				 * Press CTRL+END to get to the end of the page
 				 */
@@ -93,20 +96,24 @@ public class ScrollingTest_Jbide8701 extends VpeTest {
 				}
 				TestUtil.delay(DELAY_1S);
 				scrollY = windowInternal.getScrollY();
-				assertTrue("Visual scrolling should be at the bottom of the page", scrollY > halfHeight); //$NON-NLS-1$
+				assertTrue("Visual scrolling should be at the bottom of the page,\ncurrent scrolling opstion is "  //$NON-NLS-1$
+						+ scrollY + ", but should be more than " + halfHeight, scrollY > halfHeight); //$NON-NLS-1$
 		        /*
 		         * Set visual position -- source part should be scrolled.
 		         */
 				visualEditor.setFocus();
 				pressKeyCode(PlatformUI.getWorkbench().getDisplay(), SWT.ARROW_UP);
-				domWindow.scrollTo(0,0);
 				TestUtil.delay(DELAY_1S);
+				domWindow.scrollTo(0,0);
+				TestUtil.delay(DELAY_5S);
 				int topIndex = sourceEditor.getTextViewer().getTopIndex();
-				assertTrue("Top source line is wrong, top line is " + topIndex + ", but should be less than 100", topIndex < 100); //$NON-NLS-1$ //$NON-NLS-2$
+				assertTrue("Top source line is wrong, top line is " + topIndex  //$NON-NLS-1$
+						+ ", but should be less than 100", topIndex < 100); //$NON-NLS-1$
 				domWindow.scrollTo(0, halfHeight);
 				TestUtil.delay(DELAY_1S);
 				topIndex = sourceEditor.getTextViewer().getTopIndex();
-				assertTrue("Top source line for the middle position is wrong, top line is " + topIndex + ", but should be less than 700", topIndex < 700); //$NON-NLS-1$ //$NON-NLS-2$
+				assertTrue("Top source line for the middle position is wrong, top line is "  //$NON-NLS-1$
+						+ topIndex + ", but should be less than 700", topIndex < 700); //$NON-NLS-1$
 				testFinished = true;
 			}
         }
@@ -154,10 +161,17 @@ public class ScrollingTest_Jbide8701 extends VpeTest {
 	protected void setUp() throws Exception {
 		super.setUp();
 		/*
+		 * Close Welcome screen if it's opened.
+		 */
+		final IIntroManager introManager = 
+				PlatformUI.getWorkbench().getIntroManager();
+		IIntroPart part = introManager.getIntro();
+		introManager.closeIntro(part);
+		/*
 		 * Set property to enable scroll correlation
 		 */
 		JspEditorPlugin.getDefault().getPreferenceStore().setValue(
-				IVpePreferencesPage.SYNCHRONIZE_SCROLLING_BETWEEN_SOURCE_VISUAL_PANES, true);
+				IVpePreferencesPage.SYNCHRONIZE_SCROLLING_BETWEEN_SOURCE_VISUAL_PANES, true);  
 	}
 
 	@Override
