@@ -37,6 +37,7 @@
 		<category name="AbridgedTools" />
 		<category name="SOATools" />
 	</feature>
+	<!-- jBPM4 is only in JBT -->
 	<feature url="features/org.jboss.tools.jbpm4.feature_0.0.0.jar" id="org.jboss.tools.jbpm4.feature" version="0.0.0">
 		<category name="AbridgedTools" />
 		<category name="SOATools" />
@@ -69,7 +70,7 @@
 		<description>
 			Contains most of the JBoss Tools - SOA Tooling features.
 			Excluded are those related to integration with 3rd party
-			plugins. Selecting this category will give you all tools 
+			plugins. Selecting this category will give you all tools
 			needed for SOA Development.
       </description>
 	</category-def>
