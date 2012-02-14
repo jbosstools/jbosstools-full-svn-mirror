@@ -1,0 +1,226 @@
+<project default="collect.test.results.for.hudson" basedir="." name="Generate test results even when no tests were run. Prevents build from failing if tests are disabled.">
+	<!-- ****************************** Configuration ****************************** -->
+
+	<!-- override for local build -->
+	<condition property="isInHudson" value="true">
+		<or>
+			<contains string="${user.dir}" substring="hudson" />
+			<contains string="${user.name}" substring="hudson" />
+			<contains string="${user.home}" substring="hudson" />
+		</or>
+	</condition>
+	<target name="local" unless="isInHudson">
+		<property name="WORKINGDIR" value="${basedir}" />
+		<property name="COMMON_TOOLS" value="${java.io.tmpdir}" />
+	</target>
+
+	<target name="get.ant-contrib" unless="ant-contrib.jar.exists">
+		<property name="ANTCONTRIB_MIRROR" value="http://downloads.sourceforge.net/ant-contrib/" />
+		<get usetimestamp="true" dest="${COMMON_TOOLS}/ant-contrib-1.0b2-bin.zip" src="${ANTCONTRIB_MIRROR}/ant-contrib-1.0b2-bin.zip" />
+		<touch file="${COMMON_TOOLS}/ant-contrib-1.0b2-bin.zip" />
+		<mkdir dir="${java.io.tmpdir}/ant-contrib-1.0b2-bin.zip_" />
+		<unzip src="${COMMON_TOOLS}/ant-contrib-1.0b2-bin.zip" dest="${java.io.tmpdir}/ant-contrib-1.0b2-bin.zip_" overwrite="true" />
+		<copy file="${java.io.tmpdir}/ant-contrib-1.0b2-bin.zip_/ant-contrib/lib/ant-contrib.jar" tofile="${COMMON_TOOLS}/ant-contrib.jar" failonerror="true" />
+		<delete dir="${java.io.tmpdir}/ant-contrib-1.0b2-bin.zip_" includeemptydirs="true" quiet="true" />
+	</target>
+
+	<target name="init" depends="local">
+		<!-- https://jira.jboss.org/jira/browse/JBQA-3313 Use static, shared space outside workspace, instead of working directly in the workspace -->
+		<condition property="WORKINGDIR" value="/home/hudson/static_build_env/jbds/tools/sources" else="${basedir}">
+			<available file="/home/hudson/static_build_env/jbds" type="dir" />
+		</condition>
+		<mkdir dir="${WORKINGDIR}" />
+		<echo level="info">WORKINGDIR = ${WORKINGDIR}</echo>
+
+		<condition property="COMMON_TOOLS" value="/home/hudson/static_build_env/jbds/tools" else="${WORKINGDIR}/../tools">
+			<available file="/home/hudson/static_build_env/jbds" type="dir" />
+		</condition>
+		<mkdir dir="${COMMON_TOOLS}" />
+		<echo level="info">COMMON_TOOLS = ${COMMON_TOOLS}</echo>
+
+		<available file="${COMMON_TOOLS}/ant-contrib.jar" type="file" property="ant-contrib.jar.exists" />
+		<antcall target="get.ant-contrib" />
+		<taskdef resource="net/sf/antcontrib/antlib.xml">
+			<classpath>
+				<pathelement location="${COMMON_TOOLS}/ant-contrib.jar" />
+			</classpath>
+		</taskdef>
+
+	</target>
+
+	<!-- ***** The methods below are used in Hudson/Jenkins jobs to generate test results even when no tests were run. Prevents build from failing if tests are disabled. ***** -->
+
+	<!--
+		To run this after a maven build in Hudson, set these properties:
+			basedir=${WORKSPACE}/sources
+			WORKINGDIR=${WORKSPACE}/sources
+			COMPONENT=.
+			move.test.results=true 
+	-->
+	<target name="collect.test.results.for.hudson" depends="init" if="isInHudson" description="collect test results after a pure maven build so Hudson has something to see">
+		<property name="basedir" value="${WORKSPACE}/sources" />
+		<property name="WORKINGDIR" value="${WORKSPACE}/sources" />
+		<property name="COMPONENT" value="." />
+		<property name="move.test.results" value="true" />
+		<var name="tests.results.found" value="false" />
+		<echo level="debug">basedir = ${basedir}
+WORKINGDIR = ${WORKINGDIR}
+COMPONENT = ${COMPONENT}</echo>
+		<delete dir="${basedir}/surefire-reports/NoTestsRun" includeemptydirs="true" />
+		<for param="test.xml.files" delimiter=", 
+	">
+			<path>
+				<fileset dir="${WORKINGDIR}" includes="**/target/surefire-reports/TEST-*.xml, **/**/target/surefire-reports/TEST-*.xml" excludes="**/TEST-*NoTestsRun.xml, **/**/TEST-*NoTestsRun.xml" />
+			</path>
+			<sequential>
+				<var name="tests.results.found" value="true" />
+			</sequential>
+		</for>
+		<if>
+			<equals arg1="${tests.results.found}" arg2="true" />
+			<then>
+				<antcall target="collect.test.results">
+					<param name="COMPONENT" value="." />
+				</antcall>
+				<antcall target="collect.all.test.results" />
+			</then>
+			<else>
+				<antcall target="create.empty.test.results.file" />
+				<property name="no.tests.run" value="true" />
+			</else>
+		</if>
+	</target>
+
+	<target name="create.empty.test.results.file">
+		<!-- create fake test result file to avoid Hudson failure -->
+		<delete dir="${basedir}/surefire-reports/NoTestsRun" includeemptydirs="true" />
+		<mkdir dir="${basedir}/surefire-reports/NoTestsRun" />
+		<echo file="${basedir}/surefire-reports/NoTestsRun/TEST-org.jboss.tools.NoTestsRun.xml">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;testsuite failures="0" time="0.001" errors="0" skipped="0" tests="1" name="org.jboss.tools.NoTestsRun"&gt;
+&lt;testcase time="0.001" classname="org.jboss.tools.NoTestsRun" name="NoTestsRun"/&gt;
+&lt;/testsuite&gt;
+</echo>
+	</target>
+
+	<target name="collect.test.results">
+		<delete dir="${basedir}/surefire-reports/NoTestsRun" includeemptydirs="true" />
+		<property name="COMPONENT" value="" />
+		<!-- collect test results by copying ${WORKINGDIR}/${COMPONENT}/**/target/surefire-reports/*.xml into ${basedir}/surefire-reports/${COMPONENT} -->
+		<delete dir="${basedir}/surefire-reports/${COMPONENT}" includeemptydirs="true" />
+		<mkdir dir="${basedir}/surefire-reports/${COMPONENT}" />
+		<copy todir="${basedir}/surefire-reports/${COMPONENT}" flatten="true" preservelastmodified="true" overwrite="true">
+			<fileset dir="${WORKINGDIR}/${COMPONENT}" includes="**/target/surefire-reports/TEST-*.xml" />
+		</copy>
+		<if>
+			<isset property="move.test.results" />
+			<then>
+				<delete dir="${WORKINGDIR}/${COMPONENT}" includes="**/target/surefire-reports" />
+			</then>
+		</if>
+	</target>
+
+	<target name="collect.all.test.results" unless="no.tests.run">
+		<var name="test.results.all" value="" />
+		<var name="test.results.errors.failures.skipped" value="" />
+
+		<!-- Parse this: <testsuite errors="0" skipped="0" tests="10" time="0.042" failures="0" name="org.jboss.tools.jmx.ui.JMXUIAllTests"> -->
+		<for param="testresultfile" delimiter=", 
+		">
+			<path>
+				<fileset dir="${basedir}/surefire-reports/" includes="**/TEST-*.xml" />
+			</path>
+			<sequential>
+				<var name="testsuite.name" unset="true" />
+				<var name="testsuite.tests" unset="true" />
+				<var name="testsuite.time" unset="true" />
+				<var name="testsuite.skipped" unset="true" />
+				<var name="testsuite.errors" unset="true" />
+				<var name="testsuite.failures" unset="true" />
+				<xmlproperty file="@{testresultfile}" keepRoot="true" collapseAttributes="true" />
+				<for param="ts" list="testsuite.skipped, testsuite.errors, testsuite.failures" delimiter=", ">
+					<sequential>
+						<propertyregex override="true"
+						               property="ts.label"
+						               defaultvalue="@{ts}"
+						               input="@{ts}"
+						               regexp="testsuite\.(.+)"
+						               replace="\1"
+						/>
+						<if>
+							<isset property="@{ts}" />
+							<then>
+								<if>
+									<equals arg1="${@{ts}}" arg2="0" />
+									<then>
+										<var name="@{ts}" value="" />
+									</then>
+									<else>
+										<var name="@{ts}" value="; ${@{ts}} ${ts.label}" />
+									</else>
+								</if>
+							</then>
+						</if>
+
+					</sequential>
+				</for>
+				<if>
+					<or>
+						<not>
+							<equals arg1="${testsuite.skipped}" arg2="" />
+						</not>
+						<not>
+							<equals arg1="${testsuite.errors}" arg2="" />
+						</not>
+						<not>
+							<equals arg1="${testsuite.failures}" arg2="" />
+						</not>
+					</or>
+					<then>
+						<var name="test.results.errors.failures.skipped"
+						     value="${test.results.errors.failures.skipped}${testsuite.name} ran ${testsuite.tests} tests in ${testsuite.time}s${testsuite.skipped}${testsuite.errors}${testsuite.failures}${line.separator}"
+						/>
+					</then>
+				</if>
+				<if>
+					<isset property="testsuite.name" />
+					<then>
+						<var name="test.results.all"
+						     value="${test.results.all}${testsuite.name} ran ${testsuite.tests} tests in ${testsuite.time}s${testsuite.skipped}${testsuite.errors}${testsuite.failures}${line.separator}"
+						/>
+					</then>
+				</if>
+				<var name="testsuite.name" unset="true" />
+				<var name="testsuite.tests" unset="true" />
+				<var name="testsuite.time" unset="true" />
+				<var name="testsuite.skipped" unset="true" />
+				<var name="testsuite.errors" unset="true" />
+				<var name="testsuite.failures" unset="true" />
+			</sequential>
+		</for>
+		<echo level="verbose">-------------------------------------------------------
+ A L L   T E S T   R E S U L T S 
+-------------------------------------------------------
+${test.results.all}
+-------------------------------------------------------
+
+</echo>
+		<if>
+			<and>
+				<isset property="test.results.errors.failures.skipped" />
+				<not>
+					<equals arg1="${test.results.errors.failures.skipped}" arg2="" />
+				</not>
+			</and>
+			<then>
+				<echo level="error">-------------------------------------------------------
+ T E S T   R E S U L T S 
+-------------------------------------------------------
+${test.results.errors.failures.skipped}
+-------------------------------------------------------
+
+</echo>
+			</then>
+		</if>
+	</target>
+
+</project>
