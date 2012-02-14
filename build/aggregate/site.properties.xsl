@@ -4,6 +4,9 @@
 	extension-element-prefixes="saxon">
 	<xsl:output method="text" indent="yes" />
 	<xsl:template match="/site">
+# This file lists features in the site. Its purpose is to facilitate publishing JBoss Tools to the Eclipse Marketplace.
+# See http://anonsvn.jboss.org/repos/jbosstools/trunk/build/aggregate/build.xml and http://anonsvn.jboss.org/repos/jbosstools/trunk/build/aggregate/site.properties.xsl
+#
 		<xsl:for-each select="category-def">
 			<xsl:sort select="@name" />
 			<xsl:variable name="catg"><xsl:value-of select="@name"/></xsl:variable>
