@@ -631,13 +631,12 @@ public class VpeController implements INodeAdapter,
 			Object feature, Object oldValue, Object newValue, int pos) {
 		if (editPart.getVisualMode() != VpeEditorPart.SOURCE_MODE) {
 			if (VpeDebug.PRINT_SOURCE_MUTATION_EVENT) {
-				VpeDebugUtil.printSourceEvent(notifier, eventType, feature, oldValue,
-						newValue, pos);
+				VpeDebugUtil.printSourceEvent(
+						notifier, eventType, feature, oldValue, newValue, pos);
 			}
 			if (visualBuilder == null) {
 				return;
 			}
-			// visualBuilder.rebuildFlag = false;
 			switch (eventType) {
 			case INodeNotifier.CHANGE:
 				sourceChangeFlag = true;
@@ -650,30 +649,29 @@ public class VpeController implements INodeAdapter,
 					boolean update = visualBuilder.setText((Node) notifier);
 					visualEditor.showResizer();
 					// Added by Max Areshkau JBIDE-1554
-					if (!update)
+					if (!update) {
 						visualBuilder.updateNode((Node) notifier);
+					}
 				} else if (type == Node.COMMENT_NODE) {
 					if ("yes".equals(VpePreference.SHOW_COMMENTS.getValue())) { //$NON-NLS-1$
 						visualBuilder.clearSelectionRectangle();
 						visualBuilder.updateNode((Node) notifier);
 					}
-				} else if (feature != null
+				} else if ((feature != null)
 						&& ((Node) feature).getNodeType() == Node.ATTRIBUTE_NODE) {
 					if (newValue != null) {
 						String attrName = ((Attr) feature).getName();
 						if ((Attr) feature == lastRemovedAttr
 								&& !attrName.equals(lastRemovedAttrName)) {
 							lastRemovedAttr = null;
-							visualBuilder.removeAttribute((Element) notifier,
-									lastRemovedAttrName);
+							visualBuilder.removeAttribute((Element) notifier, lastRemovedAttrName);
 						}
 						visualBuilder.setAttribute((Element) notifier,
 								((Attr) feature).getName(), (String) newValue);
 					} else {
 						lastRemovedAttr = (Attr) feature;
 						lastRemovedAttrName = ((Attr) feature).getName();
-						visualBuilder.removeAttribute((Element) notifier,
-								lastRemovedAttrName);
+						visualBuilder.removeAttribute((Element) notifier, lastRemovedAttrName);
 					}
 				}
 				visualEditor.showResizer();
@@ -715,13 +713,11 @@ public class VpeController implements INodeAdapter,
 
 			case INodeNotifier.STRUCTURE_CHANGED:
 				/*
-				 * https://jira.jboss.org/jira/browse/JBIDE-4102 Do not update
-				 * parent tag when a comment was changed,
-				 */
-				
-				/*
-				 * https://jira.jboss.org/jira/browse/JBIDE-6067 Update if action
-				 * is connected with add or remove comment
+				 * https://jira.jboss.org/jira/browse/JBIDE-4102
+				 * Do not update parent tag when a comment was changed,
+				 * 
+				 * https://jira.jboss.org/jira/browse/JBIDE-6067 
+				 * Update if action is connected with add or remove comment
 				 */
 				if (!commentNodeChanged ||(commentNodeChanged && (commentAddCount != 1 || commentRemoveCount != 1))) {
 					visualEditor.hideResizer();
@@ -1093,7 +1089,7 @@ public class VpeController implements INodeAdapter,
 			removeSourceScrollListener();
 			visualScrollEventFlag = true;
 			int line = scrollCoordinator.computeSourcePositionFromVisual();
-			if ((line != -1) && (sourceEditor.getTextViewer() != null)){
+			if ((line != -1) && (sourceEditor.getTextViewer() != null)) {
 				sourceEditor.getTextViewer().setTopIndex(line);
 			}
 			addSourceScrollListener();

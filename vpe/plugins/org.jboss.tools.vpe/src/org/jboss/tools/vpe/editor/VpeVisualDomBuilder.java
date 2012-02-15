@@ -98,16 +98,8 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 
 	private MozillaEditor visualEditor;
 	private XulRunnerEditor xulRunnerEditor;
-
-	// JBIDE-2170 Sergey Dzmitrovich
-	// private nsIDOMElement visualContentArea;
 	private VpePageContext pageContext;
-	// JBIDE-2170 Sergey Dzmitrovich
-	// private nsIDOMNode headNode;
 	private List<VpeIncludeInfo> includeStack;
-	// TODO Max Areshkau JBIDE-1457
-	// boolean rebuildFlag = false;
-
 
 	private static final String ATTR_VPE = "vpe"; //$NON-NLS-1$
 	private static final String ATTR_VPE_INLINE_LINK_VALUE = "inlinelink"; //$NON-NLS-1$
@@ -142,29 +134,17 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 	private boolean showBorderForUnknownTags;
 	public static final List<nsIDOMNode> EMPTY_SELECTION = Collections.unmodifiableList(new ArrayList<nsIDOMNode>(0));
 
-	public VpeVisualDomBuilder(VpeDomMapping domMapping,
-			INodeAdapter sorceAdapter,
+	public VpeVisualDomBuilder(VpeDomMapping domMapping, INodeAdapter sorceAdapter,
 			MozillaEditor visualEditor, VpePageContext pageContext) {
 
 		super(domMapping, sorceAdapter);
 		this.visualEditor = visualEditor;
 		xulRunnerEditor = visualEditor.getXulRunnerEditor();
-
-		// this.visualContentArea = visualEditor.getContentArea();
 		this.pageContext = pageContext;
-		// this.headNode = visualEditor.getHeadNode();
-
-//		if (isFacelet()) {
-//			faceletFile = true;
-//		} else {
-//			faceletFile = false;
-//		}
-
 		this.showInvisibleTags = JspEditorPlugin.getDefault().getPreferenceStore().getBoolean(
 				IVpePreferencesPage.SHOW_NON_VISUAL_TAGS);
 		this.showBorderForUnknownTags = JspEditorPlugin.getDefault().getPreferenceStore().getBoolean(
 				IVpePreferencesPage.SHOW_BORDER_FOR_UNKNOWN_TAGS);
-		
 	}
 
 	public void buildDom(Document sourceDocument) {
