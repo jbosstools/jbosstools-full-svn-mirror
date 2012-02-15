@@ -914,9 +914,13 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 		}
 
 		Element sourceElement = (Element) sourceNode;
-		VpeElementMapping elementMapping = (VpeElementMapping) domMapping
-				.getNodeMapping(sourceElement);
-		if (elementMapping != null) {
+		VpeElementMapping elementMapping = (VpeElementMapping) 
+				domMapping.getNodeMapping(sourceElement);
+		/*
+		 * https://issues.jboss.org/browse/JBIDE-9790
+		 */
+		if ((elementMapping != null) && 
+				(elementMapping.getTemplate() instanceof VpeTemplateSafeWrapper)) {
 			VpeToggableTemplate toggableTemplate = (VpeToggableTemplate) ((VpeTemplateSafeWrapper) 
 					elementMapping.getTemplate()).getAdapter(VpeToggableTemplate.class);
 			if (toggableTemplate != null) {
@@ -979,7 +983,7 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 				? sourceNode
 				: sourceNode.getParentNode());
 		/*
-		 * Fixes JBIDE-1823 author dmaliarevich
+		 * Fixes JBIDE-1823
 		 * Template is looked according to <code>selectedElem</code>
 		 * so <code>toggleLookupAttr</code> should be retrieved
 		 * from this element
@@ -990,27 +994,36 @@ public class VpeVisualDomBuilder extends VpeDomBuilder {
 			if (attr != null) {
 				toggleLookup = "true".equalsIgnoreCase(attr.getNodeValue()); //$NON-NLS-1$
 			}
-		}
-		// end of fix
+		} // end of fix JBIDE-1823
 		if (elementMapping != null) {
-			VpeToggableTemplate toggableTemplate = (VpeToggableTemplate) ((VpeTemplateSafeWrapper)
-					elementMapping.getTemplate()).getAdapter(VpeToggableTemplate.class);
+			VpeToggableTemplate toggableTemplate = null;
+			/*
+			 * https://issues.jboss.org/browse/JBIDE-9790
+			 */
+			if (elementMapping.getTemplate() instanceof VpeTemplateSafeWrapper) {
+				toggableTemplate = (VpeToggableTemplate) ((VpeTemplateSafeWrapper)
+						elementMapping.getTemplate()).getAdapter(VpeToggableTemplate.class);
+			} // End of fix JBIDE-9790 
 			while (toggleLookup && (sourceElement != null) && (toggableTemplate == null)) {
 				sourceElement = (Element) sourceElement.getParentNode();
 				if (sourceElement == null) {
 					break;
 				}
-				// Fixes JBIDE-1823 author dmaliarevich
+				// Fixes JBIDE-1823
 				nodeMapping = domMapping.getNodeMapping(sourceElement);
 				if (nodeMapping instanceof VpeElementMapping) {
 					elementMapping = (VpeElementMapping) nodeMapping;
-				}
-				// end of fix
+				} // end of fix JBIDE-1823
 				if (elementMapping == null) {
 					continue;
 				}
-				toggableTemplate = (VpeToggableTemplate) ((VpeTemplateSafeWrapper)
-						elementMapping.getTemplate()).getAdapter(VpeToggableTemplate.class);
+				/*
+				 * https://issues.jboss.org/browse/JBIDE-9790
+				 */
+				if (elementMapping.getTemplate() instanceof VpeTemplateSafeWrapper) {
+					toggableTemplate = (VpeToggableTemplate) ((VpeTemplateSafeWrapper)
+							elementMapping.getTemplate()).getAdapter(VpeToggableTemplate.class);
+				} // End of fix JBIDE-9790
 			}
 			if (toggableTemplate != null) {
 				toggableTemplate.toggle(this, sourceElement, toggleId);
