@@ -1,4 +1,10 @@
 <project default="run" basedir="." name="build.xml to wrap maven">
+<!-- 
+     	This file is deprecated per JBIDE-10690 - if nothing breaks after renaming this file, it will be safe to delete.
+	Note that the "init" target has been reimplemented in build/results/build.xml and build/aggregate/build.xml, and that the 
+	"collect.test.results.for.hudson" target has moved to build/results/collect-test-results.xml
+-->
+
 	<!-- ****************************** Configuration ****************************** -->
 
 	<!-- default maven version -->
