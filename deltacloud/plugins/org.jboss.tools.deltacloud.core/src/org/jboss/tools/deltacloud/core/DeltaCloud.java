@@ -601,8 +601,14 @@ public class DeltaCloud extends ObservablePojo {
 		return null;
 	}
 
-	public void dispose() throws DeltaCloudException {
-		passwordStore.remove();
+	@Override
+	public void dispose()  {
+		super.dispose();
+		try {
+			passwordStore.remove();
+		} catch(DeltaCloudException e) {
+			Activator.log(e);
+		}
 	}
 
 	public String toString() {
