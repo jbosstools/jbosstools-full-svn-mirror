@@ -125,20 +125,24 @@ public class DndUtil {
      */
 	public static DragTransferData getDragTransferData(String... flavors) {
 		nsIDragSession dragSession = getCurrentDragSession();
-		String []supportedFlavors = getSupportedDataFlavors(dragSession, flavors);
-		if (supportedFlavors.length > 0) {
-	        nsITransferable iTransferable = createTransferable(supportedFlavors);
-	
-	        String[] aFlavor = new String[1];
-	        nsISupports[] aValue = new nsISupports[1];
-	        long[] aDataLen = new long[1];
-	        
-	        dragSession.getData(iTransferable, 0);
-	        iTransferable.getAnyTransferData(aFlavor, aValue, aDataLen);
-	        return new DragTransferData(aFlavor[0], aValue[0], aDataLen[0]);
-		} else {
-			return null;
+		/*
+		 * https://issues.jboss.org/browse/JBIDE-10728
+		 */
+		if (dragSession != null) {
+			String []supportedFlavors = getSupportedDataFlavors(dragSession, flavors);
+			if (supportedFlavors.length > 0) {
+				nsITransferable iTransferable = createTransferable(supportedFlavors);
+				
+				String[] aFlavor = new String[1];
+				nsISupports[] aValue = new nsISupports[1];
+				long[] aDataLen = new long[1];
+				
+				dragSession.getData(iTransferable, 0);
+				iTransferable.getAnyTransferData(aFlavor, aValue, aDataLen);
+				return new DragTransferData(aFlavor[0], aValue[0], aDataLen[0]);
+			}
 		}
+		return null;
 	}
 	
 	public static String getDragTransferDataAsString(String... flavors) {
@@ -171,14 +175,19 @@ public class DndUtil {
 		return iTransferable;
 	}
 
-	public static String []getSupportedDataFlavors(
+	public static String[] getSupportedDataFlavors(
 			final nsIDragSession dragSession, String... flavors) {
 		final List<String> supportedDataFlavors = new ArrayList<String>();
-        for (final String flavor : flavors) {
-        	if (dragSession.isDataFlavorSupported(flavor)) {
-        		supportedDataFlavors.add(flavor);
-        	}
-        }
+		/*
+		 * https://issues.jboss.org/browse/JBIDE-10728
+		 */
+		if (dragSession != null) {
+			for (final String flavor : flavors) {
+				if (dragSession.isDataFlavorSupported(flavor)) {
+					supportedDataFlavors.add(flavor);
+				}
+			}
+		}
 		return supportedDataFlavors.toArray(new String[supportedDataFlavors.size()]);
 	}
 
