@@ -1,4 +1,5 @@
 <project default="custom.build" name="site build.xml">
+	<!-- marked deprecated on 2012-02-15 by nboldt. If nothing breaks, safe to delete. probably an orphaned script. -->
 
 	<!-- pass in properties to Maven/Ant via Hudson job:
 		-DJOB_NAME=${JOB_NAME} 
