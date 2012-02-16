@@ -313,7 +313,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<mavenArchetype>
 			<archetypeGroupId>org.jboss.errai.archetypes</archetypeGroupId>
 			<archetypeArtifactId>kitchensink-quickstart</archetypeArtifactId>
-			<archetypeVersion>2.0-SNAPSHOT</archetypeVersion>
+			<archetypeVersion>2.0.Beta1</archetypeVersion>
 			<archetypeRepository>https://repository.jboss.org/nexus/content/groups/public/</archetypeRepository>
 			<groupId>org.jboss.tools.example</groupId>
 			<artifactId>gwt-kitchensink</artifactId>
