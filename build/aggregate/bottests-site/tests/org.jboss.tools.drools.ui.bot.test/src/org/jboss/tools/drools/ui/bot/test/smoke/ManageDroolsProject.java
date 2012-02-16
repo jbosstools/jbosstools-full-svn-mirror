@@ -13,22 +13,21 @@ package org.jboss.tools.drools.ui.bot.test.smoke;
 
 import java.io.File;
 
-import org.jboss.tools.ui.bot.ext.SWTTestExt;
+import org.eclipse.swtbot.swt.finder.SWTBot;
+import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotCheckBox;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
+import org.jboss.tools.drools.ui.bot.test.DroolsAllBotTests;
 import org.jboss.tools.ui.bot.ext.SWTEclipseExt;
-import org.jboss.tools.ui.bot.ext.Timing;
+import org.jboss.tools.ui.bot.ext.SWTTestExt;
 import org.jboss.tools.ui.bot.ext.helper.FileRenameHelper;
 import org.jboss.tools.ui.bot.ext.types.EntityType;
 import org.jboss.tools.ui.bot.ext.types.IDELabel;
 import org.jboss.tools.ui.bot.ext.types.ViewType;
 import org.jboss.tools.ui.bot.ext.view.ProblemsView;
 import org.jboss.tools.ui.bot.test.WidgetVariables;
-import org.jboss.tools.drools.ui.bot.test.DroolsAllBotTests;
 import org.junit.Test;
-import org.eclipse.swtbot.swt.finder.SWTBot;
-import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
-import org.eclipse.swtbot.swt.finder.widgets.SWTBotCheckBox;
-import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
-import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 /**
  * Test managing of Drools Project
  * @author Vladimir Pakan
@@ -39,6 +38,7 @@ public class ManageDroolsProject extends SWTTestExt{
    * Test manage Drools project
    */
   private static final String RENAMED_DROOLS_PROJECT = DroolsAllBotTests.DROOLS_PROJECT_NAME + "-renamed";
+
   @Test
   public void testManageDroolsProject() {
     createDroolsProjectTest (DroolsAllBotTests.DROOLS_PROJECT_NAME);
@@ -87,9 +87,9 @@ public class ManageDroolsProject extends SWTTestExt{
    * @param droolsProjectName
    */
   private void createDroolsProjectTest(String droolsProjectName){
-	  createDroolsProject(droolsProjectName);
+    createDroolsProject(droolsProjectName);
     SWTTestExt.util.waitForAll(30*1000L);
-    bot.sleep(Timing.time10S());
+    bot.waitForNumberOfShells(1);
     assertTrue("Project "
       + droolsProjectName 
       + " was not created properly.",SWTEclipseExt.isProjectInPackageExplorer(bot,droolsProjectName));
