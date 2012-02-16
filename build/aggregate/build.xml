@@ -29,6 +29,8 @@
 	<property file="${associate.properties}" />
 	<echo level="verbose">Loaded associate sites from ${associate.properties}</echo>
 	<property name="web.content.files" value="index.html, web/*.css, README*, *directory.xml, site.xml, site.properties" />
+	
+	<property name="target.zip" value="${output.dir}/target/repository.zip"/>
 
 	<target name="init">
 		<available file="${COMMON_TOOLS}/ant-contrib.jar" type="file" property="ant-contrib.jar.exists" />
@@ -421,34 +423,42 @@ DEST = ${aggregate.zips.dir}/@{zipPath}
 	</target>
 
 	<target name="unpack.zip">
-		<unzip src="${output.dir}/target/site_assembly.zip" dest="${update.site.source.dir}" />
+		<unzip src="${target.zip}" dest="${update.site.source.dir}" />
 	</target>
 
 	<target name="pack.zip">
-		<zip destfile="${output.dir}/target/site_assembly.zip" update="true" basedir="${update.site.source.dir}" includes="content.*, ${web.content.files}" />
+		<zip destfile="${target.zip}" update="true" basedir="${update.site.source.dir}" includes="content.*, ${web.content.files}" />
 	</target>
 
 	<target name="check.target">
 		<if>
-			<or>
-				<not>
-					<available file="${output.dir}/target/site" type="dir" />
-				</not>
-				<not>
+			<and>
+				<available file="${output.dir}/target/site" type="dir" />
+				<or>
+					<available file="${output.dir}/target/repository.zip" type="file" />
 					<available file="${output.dir}/target/site_assembly.zip" type="file" />
-				</not>
-			</or>
+				</or>
+			</and>
 			<then>
+				<if>
+					<available file="${output.dir}/target/site_assembly.zip" type="file" />
+					<then>
+						<var name="target.zip" unset="true"/>
+						<var name="target.zip" value="${output.dir}/target/site_assembly.zip"/>
+					</then>
+				</if>
+			</then>
+			<else>
 				<fail>
 --
-Could not find ${output.dir}/target/site or ${output.dir}/target/site_assembly.zip
+Could not find ${output.dir}/target/site, ${output.dir}/target/site_assembly.zip or ${output.dir}/target/repository.zip
 --
 This script must ONLY be called via the pom.xml in this directory, not run directly. 
 Cannot adjust an update site w/o first building it!
 --
 To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
 </fail>
-			</then>
+			</else>
 		</if>
 	</target>
 
