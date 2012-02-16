@@ -43,14 +43,26 @@ rm -fr ${WORKSPACE}/results; mkdir -p ${STAGINGDIR}
 
 # check for aggregate zip or overall zip
 z=""
-if [[ -d ${WORKSPACE}/sources/aggregate/site/target ]]; then
-	siteZip=${WORKSPACE}/sources/aggregate/site/target/site_assembly.zip
+if [[ -d     ${WORKSPACE}/sources/aggregate/site/target ]]; then
+	if [[ -f ${WORKSPACE}/sources/aggregate/site/target/site_assembly.zip ]]; then
+	 siteZip=${WORKSPACE}/sources/aggregate/site/target/site_assembly.zip
+	else
+	 siteZip=${WORKSPACE}/sources/aggregate/site/target/repository.zip
+	fi
 	z=$siteZip
-elif [[ -d ${WORKSPACE}/sources/aggregate/site/site/target ]]; then
-	siteZip=${WORKSPACE}/sources/aggregate/site/site/target/site_assembly.zip
+elif [[ -d   ${WORKSPACE}/sources/aggregate/site/site/target ]]; then
+	if [[ -f ${WORKSPACE}/sources/aggregate/site/site/target/site_assembly.zip ]]; then
+	 siteZip=${WORKSPACE}/sources/aggregate/site/site/target/site_assembly.zip
+	else
+	 siteZip=${WORKSPACE}/sources/aggregate/site/site/target/repository.zip
+	fi
 	z=$siteZip
-elif [[ -d ${WORKSPACE}/sources/site/target ]]; then
-	siteZip=${WORKSPACE}/sources/site/target/site_assembly.zip
+elif [[ -d   ${WORKSPACE}/sources/site/target ]]; then
+	if [[ -f ${WORKSPACE}/sources/site/target/site_assembly.zip ]]; then
+	 siteZip=${WORKSPACE}/sources/site/target/site_assembly.zip
+	else
+	 siteZip=${WORKSPACE}/sources/site/target/repository.zip
+	fi
 	z=$siteZip
 fi
 
@@ -109,8 +121,8 @@ if [[ $z != "" ]] && [[ -f $z ]] ; then
 fi
 z=""
 
-# if component zips exist, copy site_assembly.zip too
-for z in $(find ${WORKSPACE}/sources/*/site/target -type f -name "site_assembly.zip"); do 
+# if component zips exist, copy repository.zip (or site_assembly.zip) too
+for z in $(find ${WORKSPACE}/sources/*/site/target -type f -name "repository.zip" -o -name "site_assembly.zip"); do 
 	y=${z%%/site/target/*}; y=${y##*/}
 	if [[ $y != "aggregate" ]]; then # prevent duplicate nested sites
 		#echo "[$y] $z ..."
@@ -194,7 +206,7 @@ if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]] && [[ -d ${WORKSPACE}/sources/agg
 fi
 
 # JBIDE-9870 check if there's a sources update site and rename it if found (note, bottests-site/site/sources won't work; use bottests-site/souces)
-for z in $(find ${WORKSPACE}/sources/aggregate/*/sources/target/ -name "site_assembly.zip"); do
+for z in $(find ${WORKSPACE}/sources/aggregate/*/sources/target/ -name "repository.zip" -o -name "site_assembly.zip"); do
 	echo "Collect sources from update site in $z"
 	mv $z ${STAGINGDIR}/all/${SRCSNAME/-Sources-/-Update-Sources-}
 	for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done 
