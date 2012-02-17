@@ -580,6 +580,7 @@
 				<module>../runtime</module>
 				<module>../freemarker</module>
 				<module>../hibernatetools</module>
+				<module>../usage</module>
 				<module>../jst</module>
 				<module>../vpe</module>
 				<module>../jsf</module>
