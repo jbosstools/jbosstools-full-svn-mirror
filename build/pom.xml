@@ -487,8 +487,12 @@
 		<profile>
 			<id>examples-bootstrap</id>
 			<modules>
-				<module>../tests</module>
-				<module>../examples</module>
+                               	<module>../tests</module>
+                                <module>../common</module>
+                                <module>../jmx</module>
+                                <module>../usage</module>
+                                <module>../runtime</module>
+                                <module>../examples</module>
 			</modules>
 		</profile>
 
@@ -647,7 +651,6 @@
 				<module>../common</module>
 				<module>../jmx</module>
 				<module>../usage</module>
-				<module>../examples</module>
 				<module>../runtime</module>
 			</modules>
 		</profile>
