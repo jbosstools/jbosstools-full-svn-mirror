@@ -712,6 +712,7 @@
 				<module>../esb</module>
 				<module>../jbpm</module>
 				<module>../flow</module>
+				<module>../maven</module>
 				<module>../central</module>
 			</modules>
 		</profile>
