@@ -321,9 +321,6 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 			#fi
 		fi
 
-		# and create/replace a snapshot dir outside Hudson which is file:// accessible
-		date; rsync -arzq --delete ${STAGINGDIR}/* $INTRNALDEST/builds/staging/${JOB_NAME}.next
-
 		# and create/replace a snapshot dir w/ static URL
 		date; rsync -arzq --protocol=28 --delete ${STAGINGDIR}/* $DESTINATION/builds/staging/${JOB_NAME}.next
 
@@ -405,6 +402,17 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 		echo $metadata >> ${STAGINGDIR}/all/compositeContent.xml
 		echo $metadata >> ${STAGINGDIR}/all/compositeArtifacts.xml
 		date; rsync -arzq --protocol=28 ${STAGINGDIR}/all/composite*.xml $DESTINATION/builds/staging/${JOB_NAME}/all/
+
+		# create a snapshot dir outside Hudson which is file:// accessible
+		date; rsync -arzq --delete ${STAGINGDIR}/* $INTRNALDEST/builds/staging/${JOB_NAME}.next
+
+		# cycle internal copy of ${JOB_NAME} in staging and staging.previous
+		# purge contents of /builds/staging.previous/${JOB_NAME} and remove empty dir
+		rm -fr $INTRNALDEST/builds/staging.previous/${JOB_NAME}/
+		# move contents of /builds/staging/${JOB_NAME} into /builds/staging.previous/${JOB_NAME}
+		mv $INTRNALDEST/builds/staging/${JOB_NAME} $INTRNALDEST/builds/staging.previous/${JOB_NAME}
+		# move contents of /builds/staging/${JOB_NAME}.next into /builds/staging/${JOB_NAME}
+		mv $INTRNALDEST/builds/staging/${JOB_NAME}.next $INTRNALDEST/builds/staging/${JOB_NAME}
 	fi
 
 	# extra publish step for aggregate update sites ONLY
