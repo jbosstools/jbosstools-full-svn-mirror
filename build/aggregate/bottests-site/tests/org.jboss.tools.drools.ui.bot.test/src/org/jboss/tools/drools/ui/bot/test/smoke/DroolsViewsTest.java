@@ -180,10 +180,46 @@ public class DroolsViewsTest extends SWTTestExt {
         assertTrue("Log file '" + LOG_FILE + "' was not created.", packageExplorer.existsResource(PROJECT_NAME, LOG_FILE));
         SWTBotTreeItem treeItem = packageExplorer.selectTreeItem(LOG_FILE, new String[] {PROJECT_NAME});
         DragAndDropHelper.dragAndDropOnTo(treeItem.widget, auditView.getWidget());
-        assertTrue("Tree in Audit view should not be empty, but it was.", auditView.bot().tree().getAllItems().length > 0);
+        SWTBotTreeItem[] auditTreeItems = auditView.bot().tree().getAllItems();
+        assertTrue("Tree in Audit view should not be empty, but it was.", auditTreeItems.length > 0);
         assertFalse("Log file '" + LOG_FILE + "' was not loaded properly into Audit view.",
-                "The selected audit log is empty.".equals(auditView.bot().tree().getAllItems()[0].getText()));
-        fail("Error with Audit was probably resolved. This should be completed now.");
+                "The selected audit log is empty.".equals(auditTreeItems[0].getText()));
+        assertEquals("Tree in Audit view has wrong number of items.", 4, auditTreeItems.length);
+        int index = 0;
+        assertTrue("The first node of the audit view's tree does not contain right text.",
+                auditTreeItems[index].getText().startsWith("Object inserted"));
+        assertEquals("The first node has wrong number of items", 1, auditTreeItems[index].getItems().length);
+        assertTrue("Child node of the first node does not contain right text.",
+                auditTreeItems[index].getItems()[0].getText().startsWith("Activation created: Rule Hello World"));
+        index = 1;
+        assertTrue("The second node does not contain the right text.",
+                auditTreeItems[index].getText().startsWith("Activation executed: Rule Hello World"));
+        assertEquals("The second node has wrong number of items.", 1, auditTreeItems[index].getItems().length);
+        assertTrue("Child node of the second node does not contain the right text.",
+                auditTreeItems[index].getItems()[0].getText().startsWith("Object updated"));
+        assertEquals("Child node of the second node has wrong number of items.", 2, auditTreeItems[index].getItems()[0].getItems().length);
+        assertTrue("Child node of the second node does not contain the right text.",
+                auditTreeItems[index].getItems()[0].getItems()[0].getText().startsWith("Activation created: Rule GoodBye"));
+        assertTrue("Child node of the second node does not contain the right text.",
+                auditTreeItems[index].getItems()[0].getItems()[1].getText().startsWith("Activation created: Rule Bye Bye"));
+        index = 2;
+        assertTrue("The third node does not contain the right text.",
+                auditTreeItems[index].getText().startsWith("Activation executed: Rule Bye Bye"));
+        assertEquals("The third node has wrong number of items.", 1, auditTreeItems[index].getItems().length);
+        assertTrue("Child node of the third node does not contain the right text.",
+                auditTreeItems[index].getItems()[0].getText().startsWith("Object updated"));
+        assertEquals("Child node of the third node has wrong number of items.", 2, auditTreeItems[index].getItems()[0].getItems().length);
+        assertTrue("Child node of the third node does not contain the right text.",
+                auditTreeItems[index].getItems()[0].getItems()[0].getText().startsWith("Activation created: Rule Finish rule"));
+        assertTrue("Child node of the third node does not contain the right text.",
+                auditTreeItems[index].getItems()[0].getItems()[1].getText().startsWith("Activation cancelled: Rule GoodBye"));
+        index = 3;
+        assertTrue("The fourth node does not contain the right text.",
+                auditTreeItems[index].getText().startsWith("Activation executed: Rule Finish rule"));
+        assertEquals("The fourth node has wrong number of items.", 0, auditTreeItems[index].getItems().length);
+
+        auditView.toolbarButton("Clear Log").click();
+        assertEquals("Tree should be empty, but it was not.", 0, auditView.bot().tree().getAllItems().length);
     }
 
     /**
@@ -230,7 +266,7 @@ public class DroolsViewsTest extends SWTTestExt {
         showView(IDELabel.View.CONSOLE);
         showView(IDELabel.View.WORKING_MEMORY);
         assertEquals("Working memory view should be empty. Maybe it was not refreshed.",
-        		expectedWorkingMemorySet, getWorkingMemoryItems(rootItemText));
+                expectedWorkingMemorySet, getWorkingMemoryItems(rootItemText));
     }
 
     /**
@@ -356,12 +392,12 @@ public class DroolsViewsTest extends SWTTestExt {
         boolean isViewOpened = false;
         for (final SWTBotView view : bot.views()) {
             if (viewTitle.equals(view.getTitle())) {
-            	view.getWidget().getDisplay().syncExec(new Runnable() {
-					public void run() {
-						view.show();
-		                view.setFocus();
-					}
-				});
+                view.getWidget().getDisplay().syncExec(new Runnable() {
+                    public void run() {
+                        view.show();
+                        view.setFocus();
+                    }
+                });
                 isViewOpened = true;
                 break;
             }
