@@ -29,21 +29,21 @@ install riftsaw
 	</target>
 	<target name="install-jbossas" >
 		<property file="../jbossas/build.properties" />
-		<unzip src="${requirement.build.root}/../download/jbossas/${jboss51.build.archive}" dest="${unzip.dest}" >
-			<mapper type="glob" from="${jboss51.build.name}/*" to="${jboss51.build.name}-riftsaw-2.3.0.Final/*"/>
+		<unzip src="${requirement.build.root}/../download/jbossas/${jboss60.build.archive}" dest="${unzip.dest}" >
+			<mapper type="glob" from="jboss-6.0.0.Final/*" to="${jboss60.build.name}-riftsaw-2.3.0.Final/*"/>
 		</unzip>
 	</target>
 	<target name="install-jbossesb" >
 		<property file="../jbossesb-4.10/build.properties" prefix="jbossesb-4.10" />
 		<ant dir="${unzip.dest}/${jbossesb-4.10.build.archive.root}/install" target="deploy">
-			<property name="org.jboss.esb.server.home" value="${unzip.dest}/${jboss51.build.name}-riftsaw-2.3.0.Final" />
+			<property name="org.jboss.esb.server.home" value="${unzip.dest}/${jboss60.build.name}-riftsaw-2.3.0.Final" />
 			<property name="org.jboss.esb.server.config" value="default" />
 		</ant>
 	</target>
 	<target name="install-riftsaw" >
 		<property file="../riftsaw-2.3.0.Final/build.properties" prefix="riftsaw-2.3.0.Final" />
 		<ant dir="${unzip.dest}/${riftsaw-2.3.0.Final.build.archive.root}/install" target="deploy">
-			<property name="org.jboss.as.home" value="${unzip.dest}/${jboss51.build.name}-riftsaw-2.3.0.Final" />
+			<property name="org.jboss.as.home" value="${unzip.dest}/${jboss60.build.name}-riftsaw-2.3.0.Final" />
 			<property name="org.jboss.as.config" value="default" />
 			<property name="org.jboss.esb.home" value="${unzip.dest}/${jbossesb.build.archive.root}" />
 			<property name="databasev" value="hsql" />
