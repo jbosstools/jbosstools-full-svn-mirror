@@ -334,7 +334,7 @@
       <!-- TODO: change URL to http://download.jboss.org/jbosstools/updates/indigo/ for/after Beta1 -->
       <connectorDescriptor
             categoryId="org.jboss.tools.central.discovery.web"
-            description="Google Plugin for Eclipse (GPE) + Google Web Toolkit SDK (GWT)"
+            description="Google Plugin for Eclipse (GPE) 2.5.1 + Google Web Toolkit SDK (GWT) 2.4.0"
             id="com.google.gwt.eclipse.sdkbundle.e37.feature"
             kind="task"
             license="EPL, Other"
