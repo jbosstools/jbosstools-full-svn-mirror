@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../whatsnew.css"/>
+<title>WS Tools 3.3.0 Beta1 What's New</title>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17645367-5']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script></head>
+<body>
+<h1>WS tools 3.3.0 Beta1 What's New</h1>
+
+<p align="right"><a href="../index.html">&lt; Main Index</a></p>
+
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+
+  <tr>
+    <td colspan="2">
+      <hr/>
+      <h3>Web Service Tester</h3>
+	<hr/>
+    </td>
+  </tr>
+
+  <tr>
+
+    <td valign="top" align="right"><a name="itemname1"
+    id="itemname1"></a><b>Better Tooling Integration - JAX-RS</b></td>
+    <td valign="top">
+
+      <p>We recently had an opportunity to add some better shortcuts to get to the Web Service Tester from common access points in the UI.</p>
+      
+      <p>Most importantly to go with our AS7 support, we now have right-click integration with the JAX-RS tooling for RESTful services. Now you can right-click on one of the exposed REST methods implemented by the service and select Run As...->Run on Server.</p>
+      <img src="./images/JAX-RS-WS-Tester_Run_As.jpg" style="width : 826px; height : 287px;"/>
+      <p>This does three things:</p>
+      <ol><li>If the Web Service Tester isn't open, it will open it in the current perspective.</li>
+      <li>It allows you to select which runtime to deploy the service to (and specify a default for future runs).</li>
+      <li>And it automatically sets the URL for the RESTful operation as well as the method drop-down to match. For instance, if you are testing a GET method, it will set the drop-down to GET. A PUT to a PUT, etc. So all you have to do is click the Invoke button on the toolbar (the little green play button) to execute the operation.</li>
+      </ol>
+
+	  <p>A couple of caveats:</p>
+	  <ul><li>If you need to specify a request header (for instance, setting the request to use an XML content type - "content-type=application/xml"), it doesn't know to do this automatically.</li>
+	  <li>The JAX-RS tooling doesn't know how to interpret some configuration options, such as Servlet Mapping Prefixes, but this support is coming soon. </li>
+	  </ul>
+      
+      <img src="./images/JAX-RS-WS-Tester.jpg" style="width : 826px; height : 287px;"/>
+	
+  	  <p><small><a href="https://jira.jboss.org/browse/JBIDE-10609">Related Jira</a></small></p>
+    </td>
+  </tr>
+ </tr>
+
+ <tr>
+   <td colspan="2">
+      <hr/>
+   </td>
+  </tr>
+
+ <tr>
+    <td valign="top" align="right"><a name="itemname2"
+    id="itemname2"></a><b>Partial WSDL file integration</b></td>
+    <td valign="top">
+      <p>In addition, you can now right-click on a WSDL and select Web Services -> Test in JBoss Web Service Tester. This action does two things:</p>
+      <ol><li>If the Web Service Tester isn't open, it will open the view in the current perspective.</li>
+      <li>And it automatically sets the URL for the WSDL file as well as the method drop-down to "JAX-WS". So all you have to do is click the Invoke button on the toolbar (the little green play button) to specify which port/operation combination you want to test with.</li></ol>
+      <img src="./images/WSDL-WS-Tester_WSMenu.jpg" style="width : 504px; height : 639px;"/>
+      <p>Unfortunately you can't quite run it in this state yet. It's a work in progress. I suspect we will implement a solution similar to the JAX-RS tooling integration where you specify the server on which to run the service and we'll figure out the URL dynamically.</p>
+      <img src="./images/WSDL-WS-Tester.jpg" style=" width : 647px; height : 262px;"/>
+      <p>You'll still need to look at your deployed services in the web console to determine the url to the service you want to test, then add "?WSDL" to the end so the tester can find the WSDL file in the running service. But it works the same as the WTP-provided Web Services Explorer.</p>
+  	  <p><small><a href="https://issues.jboss.org/browse/JBIDE-10485">Related Jira</a></small></p>
+    </td>
+ </tr>
+  
+ <tr>
+   <td colspan="2">
+      <hr/>
+   </td>
+  </tr>
+
+ <tr>
+    <td valign="top" align="right"><a name="itemname3"
+    id="itemname3"></a><b>Better Test History Tracking</b></td>
+    <td valign="top">
+      <p>Whereas before we would only remember the URLs for the services tested in the current session, we now remember much more for each successful test:</p>
+      <ul><li>The Method (JAX-WS or JAX-RS method name)</li>
+      <li>Any Request Headers</li>
+      <li>The Request Body</li>
+      <li>Plus the Response Headers and Response Body for the most recent test run.</li>
+      </ul>
+      <p>So now you can step back and forth through recent tests much easier. If you change something from a previous test run, that change is persisted so the next time you come back to that URL, you see your most recent settings.</p>
+	
+  	  <p><small><a href="https://jira.jboss.org/browse/JBIDE-10883">Related Jira</a></small></p>
+    </td>
+ </tr>
+
+</table>
+
+</body>
+
+</html>
+
+
