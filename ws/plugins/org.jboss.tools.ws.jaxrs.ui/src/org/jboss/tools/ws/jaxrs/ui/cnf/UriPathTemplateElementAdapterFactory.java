@@ -1,3 +1,4 @@
+
 package org.jboss.tools.ws.jaxrs.ui.cnf;
 
 import org.eclipse.core.runtime.IAdapterFactory;
