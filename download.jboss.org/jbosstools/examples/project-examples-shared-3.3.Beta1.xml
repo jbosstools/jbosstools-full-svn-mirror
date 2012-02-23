@@ -1,7 +1,7 @@
 <projects>
 	
 	<project>
-		<category>Java EE 6 Quickstarts</category>
+		<category>JBoss Maven Archetypes</category>
 		<name>jboss-javaee6-webapp</name>
 		<included-projects>jboss-javaee6-webapp</included-projects>
 		<shortDescription>Java EE Web Project</shortDescription>
@@ -59,7 +59,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 	</project>
 	<!-- Temporary EE6 project - replace with Pete's new archetype when it's ready -->
 	<project>
-		<category>Java EE 6 Quickstarts</category>
+		<category>JBoss Maven Archetypes</category>
 		<name>multi-javaee6-archetype</name>
 		<included-projects>multi-javaee6-archetype</included-projects>
 		<shortDescription>Java EE Project</shortDescription>
@@ -111,7 +111,7 @@ It includes a persistence unit and some sample persistence and transaction code 
     </project>		
 	<!-- Temporary POH5 project - replace with Pete's new archetype when it's ready -->
 	<project>
-		<category>Java EE 6 Quickstarts</category>
+		<category>JBoss Maven Archetypes</category>
 		<name>jboss-javaee6-poh5-archetype</name>
 		<included-projects>jboss-javaee6-poh5</included-projects>
 		<shortDescription>HTML5 Project</shortDescription>
@@ -163,7 +163,7 @@ It includes a persistence unit and some sample persistence and transaction code 
     </project>		
 	<!-- Richfaces project  -->
 	<project>
-		<category>Java EE 6 Quickstarts</category>
+		<category>JBoss Maven Archetypes</category>
 		<name>richfaces-archetype-simpleapp</name>
 		<included-projects>richfaces-archetype-simpleapp</included-projects>
 		<shortDescription>RichFaces Project</shortDescription>
@@ -221,7 +221,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 	</project>
     <!-- Spring MVC -->
 	<project>
-		<category>Java EE 6 Quickstarts</category>
+		<category>JBoss Maven Archetypes</category>
 		<name>spring-mvc-webapp</name>
 		<included-projects>spring-mvc-webapp</included-projects>
 		<shortDescription>Spring MVC Project</shortDescription>
@@ -270,7 +270,7 @@ It includes a persistence unit and some sample persistence and transaction code 
     </project>
     
 	<project>
-		<category>Java EE 6 Quickstarts</category>
+		<category>JBoss Maven Archetypes</category>
 		<name>gwt-webapp</name>
 		<included-projects>gwt-webapp</included-projects>
 		<shortDescription>GWT Web Project</shortDescription>
