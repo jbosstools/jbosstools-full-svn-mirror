@@ -1,10 +1,15 @@
 <projects>
-	
-	<project>
+	<!-----------------------------------------------------------------------------
+    Beware : the project name MUST NOT be changed. It's referenced in JBoss Central
+    ------------------------------------------------------------------------------->
+    
+    <!-- Java EE Web Project -->
+    <project>
 		<category>JBoss Maven Archetypes</category>
 		<name>jboss-javaee6-webapp</name>
 		<included-projects>jboss-javaee6-webapp</included-projects>
 		<shortDescription>Java EE Web Project</shortDescription>
+        <priority>1</priority>
 		<description>
 This is your project! It's a sample, deployable Maven 3 project to help you get your foot in the door developing with Java EE 6 on JBoss AS 7.
 This project is setup to allow you to create a compliant Java EE 6 application using JSF 2.0, CDI 1.0, EJB 3.1, JPA 2.0 and Bean Validation 1.0.
@@ -57,12 +62,13 @@ It includes a persistence unit and some sample persistence and transaction code 
         <tags>wizard</tags>
         <icon path="icons/newwebprj_wiz.gif" />
 	</project>
-	<!-- Temporary EE6 project - replace with Pete's new archetype when it's ready -->
+    <!-- Java EE Project -->
 	<project>
 		<category>JBoss Maven Archetypes</category>
 		<name>multi-javaee6-archetype</name>
 		<included-projects>multi-javaee6-archetype</included-projects>
 		<shortDescription>Java EE Project</shortDescription>
+        <priority>2</priority>
 		<description>An archetype that generates a starter Java EE 6 webapp project for JBoss AS 7 / EAP 6. The project is an EAR, with an EJB-JAR and WAR</description>
 		<size>13806</size>
 		<url/>
@@ -109,12 +115,13 @@ It includes a persistence unit and some sample persistence and transaction code 
         <tags>wizard</tags>
         <icon path="icons/ear-wiz-icon.gif" />
     </project>		
-	<!-- Temporary POH5 project - replace with Pete's new archetype when it's ready -->
-	<project>
+	<!-- HTML5 project  -->
+    <project>
 		<category>JBoss Maven Archetypes</category>
 		<name>jboss-javaee6-poh5-archetype</name>
 		<included-projects>jboss-javaee6-poh5</included-projects>
 		<shortDescription>HTML5 Project</shortDescription>
+        <priority>3/priority>
 		<description>An archetype that generates a Java EE 6 HTML5 Mobile Webapp project for JBoss AS 7 / EAP 6</description>
 		<size>165567</size>
 		<url/>
@@ -167,6 +174,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<name>richfaces-archetype-simpleapp</name>
 		<included-projects>richfaces-archetype-simpleapp</included-projects>
 		<shortDescription>RichFaces Project</shortDescription>
+        <priority>4</priority>
 		<description>An archetype that generates a simple Richfaces application</description>
 		<size>165567</size>
 		<url/>
@@ -225,6 +233,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<name>spring-mvc-webapp</name>
 		<included-projects>spring-mvc-webapp</included-projects>
 		<shortDescription>Spring MVC Project</shortDescription>
+        <priority>5</priority>
 		<description>An archetype that generates a starter Spring MVC application with Java EE persistence settings (server bootstrapped JPA, JTA transaction management) for JBoss AS7 / EAP 6</description>
 		<size>165567</size>
 		<url/>
@@ -268,11 +277,12 @@ It includes a persistence unit and some sample persistence and transaction code 
         <tags>wizard</tags>
         <icon path="icons/spring_wiz.gif" />
     </project>
-    
+   <!-- GWT/Errai Project -->    
 	<project>
 		<category>JBoss Maven Archetypes</category>
 		<name>gwt-webapp</name>
 		<included-projects>gwt-webapp</included-projects>
+        <priority>6</priority>
 		<shortDescription>GWT Web Project</shortDescription>
 		<description>An archetype that generates a starter GWT application</description>
 		<size>165567</size>
