@@ -1,7 +1,7 @@
 <projects>
-	<!-----------------------------------------------------------------------------
+	<!--
     Beware : the project name MUST NOT be changed. It's referenced in JBoss Central
-    ------------------------------------------------------------------------------->
+    -->
     
     <!-- Java EE Web Project -->
     <project>
