@@ -30,6 +30,52 @@
   <tr>
     <td colspan="2">
       <hr/>
+      <h3>JAX-RS Tooling</h3>
+	<hr/>
+    </td>
+  </tr>
+
+  <tr>
+
+    <td valign="top" align="right"><a name="itemname1" id="itemname1"></a><b>Support for @ApplicationPath and web.xml overwrite</b></td>
+    <td valign="top">
+      <p>Support for javax.ws.rs.core.Application subclass annotated with @ApplicationPath is now available, along with support for standard JEE6 overwrite in the web app deployment descriptor. The JAX-RS Tooling will include the @ApplicationPath annotation value in your endpoints' URI Path Template if you provide a JAX-RS Application class as below:
+      <pre>
+      @ApplicationPath("/mypath")
+      public class MyApplication extends Application {
+        ...
+      }
+      </pre></p>
+      <p>Or if you define the application's root path for the JAX-RS endpoint in the web application's web.xml in the one of the following manners:</p>
+      <pre>
+      &lt;servlet-mapping&gt;
+        &lt;servlet-name>com.acme.MyApplication&lt;/servlet-name&gt;
+        &lt;url-pattern&gt;/hello/*&lt;/url-pattern&gt;
+      &lt;/servlet-mapping&gt;
+      </pre>
+      <p>or</p>
+      <pre>
+      &lt;servlet-mapping&gt;
+        &lt;servlet-name&gt;javax.ws.rs.core.Application&lt;/servlet-name&gt;
+        &lt;url-pattern&gt;/hello/*&lt;/url-pattern&gt;
+      &lt;/servlet-mapping&gt;
+      </pre>
+      <p>As defined in the JAX-RS 1.1 specification, the web.xml approach takes precedence over the annotation-based configuration.</p>
+      <img src="./images/JAXRS-ApplicationPath.png"/>
+      <p><small><a href="https://jira.jboss.org/browse/JBIDE-10609">Related Jira</a></small></p>
+    </td>
+  </tr>
+ </tr>
+
+ <tr>
+   <td colspan="2">
+     <hr/>
+   </td>
+ </tr>
+  
+  <tr>
+    <td colspan="2">
+      <hr/>
       <h3>Web Service Tester</h3>
 	<hr/>
     </td>
@@ -37,8 +83,7 @@
 
   <tr>
 
-    <td valign="top" align="right"><a name="itemname1"
-    id="itemname1"></a><b>Better Tooling Integration - JAX-RS</b></td>
+    <td valign="top" align="right"><a name="itemname2" id="itemname2"></a><b>Better Tooling Integration - JAX-RS</b></td>
     <td valign="top">
 
       <p>We recently had an opportunity to add some better shortcuts to get to the Web Service Tester from common access points in the UI.</p>
@@ -70,8 +115,7 @@
   </tr>
 
  <tr>
-    <td valign="top" align="right"><a name="itemname2"
-    id="itemname2"></a><b>Partial WSDL file integration</b></td>
+    <td valign="top" align="right"><a name="itemname3" id="itemname3"></a><b>Partial WSDL file integration</b></td>
     <td valign="top">
       <p>In addition, you can now right-click on a WSDL and select Web Services -> Test in JBoss Web Service Tester. This action does two things:</p>
       <ol><li>If the Web Service Tester isn't open, it will open the view in the current perspective.</li>
@@ -91,8 +135,7 @@
   </tr>
 
  <tr>
-    <td valign="top" align="right"><a name="itemname3"
-    id="itemname3"></a><b>Better Test History Tracking</b></td>
+    <td valign="top" align="right"><a name="itemname4" id="itemname4"></a><b>Better Test History Tracking</b></td>
     <td valign="top">
       <p>Whereas before we would only remember the URLs for the services tested in the current session, we now remember much more for each successful test:</p>
       <ul><li>The Method (JAX-WS or JAX-RS method name)</li>
