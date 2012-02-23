@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jboss.tools</groupId>
 	<artifactId>org.jboss.tools.parent.pom</artifactId>
-	<version>0.0.3-SNAPSHOT</version>
+	<version>0.0.4-SNAPSHOT</version>
 	<name>JBoss Tools Parent</name>
 	<packaging>pom</packaging>
 	<modules>
@@ -14,7 +14,7 @@
 	<properties>
 		<!-- to build w/ latest 0.14.0-SNAPSHOT, run `mvn install -DtychoVersion=0.14.0-SNAPSHOT`, 
 			or uncomment this property: <tychoVersion>0.14.0-SNAPSHOT</tychoVersion> -->
-		<tychoVersion>0.13.0</tychoVersion>
+		<tychoVersion>0.14.0</tychoVersion>
 		<scmBranch>trunk</scmBranch>
 		<JBT_VERSION>3.3.0</JBT_VERSION>
 		<JBDS_VERSION>5.0.0</JBDS_VERSION>
@@ -220,12 +220,7 @@
 					<!-- <target>1.6</target> -->
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.sonatype.tycho</groupId>
-				<artifactId>maven-osgi-source-plugin</artifactId>
-				<version>${tychoVersion}</version>
-			</plugin>
-			<!-- enable source bundle generation -->
+			<!-- source for bundles -->
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-source-plugin</artifactId>
