@@ -37,11 +37,6 @@
 		<category name="AbridgedTools" />
 		<category name="SOATools" />
 	</feature>
-	<!-- jBPM4 is only in JBT -->
-	<feature url="features/org.jboss.tools.jbpm4.feature_0.0.0.jar" id="org.jboss.tools.jbpm4.feature" version="0.0.0">
-		<category name="AbridgedTools" />
-		<category name="SOATools" />
-	</feature>
 	<feature url="features/org.jbpm.eclipse.feature_0.0.0.jar" id="org.jbpm.eclipse.feature" version="0.0.0">
 		<category name="AbridgedTools" />
 		<category name="SOATools" />
