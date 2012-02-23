@@ -121,7 +121,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<name>jboss-javaee6-poh5-archetype</name>
 		<included-projects>jboss-javaee6-poh5</included-projects>
 		<shortDescription>HTML5 Project</shortDescription>
-        <priority>3/priority>
+        <priority>3</priority>
 		<description>An archetype that generates a Java EE 6 HTML5 Mobile Webapp project for JBoss AS 7 / EAP 6</description>
 		<size>165567</size>
 		<url/>
