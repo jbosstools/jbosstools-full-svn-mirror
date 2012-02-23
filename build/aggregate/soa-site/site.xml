@@ -37,6 +37,7 @@
 		<category name="AbridgedTools" />
 		<category name="SOATools" />
 	</feature>
+	<!-- JBDS-2012 remove jBPM4 from JBT/JBDS -->
 	<feature url="features/org.jbpm.eclipse.feature_0.0.0.jar" id="org.jbpm.eclipse.feature" version="0.0.0">
 		<category name="AbridgedTools" />
 		<category name="SOATools" />
