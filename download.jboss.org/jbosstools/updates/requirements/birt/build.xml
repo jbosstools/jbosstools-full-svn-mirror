@@ -28,7 +28,7 @@
 		<property name="compress" value="true" />
 
 		<p2.mirror>
-			<repository location="file:${destination}/3.7.2.v20120207/" name="Extra BIRT plugins for Eclipse 3.7 (Not in Indigo)" />
+			<repository location="file:${destination}/3.7.2.v20120214/" name="Extra BIRT plugins for Eclipse 3.7 (Not in Indigo)" />
 			<source>
 				<repository location="${URL}" />
 			</source>
@@ -43,9 +43,9 @@
 		</p2.mirror>
 
 		<delete>
-			<fileset dir="${destination}/3.7.2.v20120207/" includes="**/artifacts.jar, **/contents.jar"/>
+			<fileset dir="${destination}/3.7.2.v20120214/" includes="**/artifacts.jar, **/contents.jar"/>
 		</delete>
 
-		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/3.7.2.v20120207/" artifactRepository="file:${destination}/3.7.2.v20120207/" publishartifacts="true" source="${destination}/3.7.2.v20120207/" compress="${compress}" />
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/3.7.2.v20120214/" artifactRepository="file:${destination}/3.7.2.v20120214/" publishartifacts="true" source="${destination}/3.7.2.v20120214/" compress="${compress}" />
 	</target>
 </project>

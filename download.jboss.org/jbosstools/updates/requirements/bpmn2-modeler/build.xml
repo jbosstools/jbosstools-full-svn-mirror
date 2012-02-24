@@ -24,16 +24,22 @@
 	-->
 	<target name="mirror">
 		<!-- 0.7.0 and 0.0.1, nightly versions -->
+		<!--
 		<property name="URL1" value="https://hudson.eclipse.org/hudson/job/bpmn2-nightly/ws/org.eclipse.bpmn2.site/target/site/" />
 		<property name="URL2" value="https://hudson.eclipse.org/hudson/job/tycho-bpmn2modeler-0.0.1-nightly/lastSuccessfulBuild/artifact/org.eclipse.bpmn2.modeler.updatesite.feature/target/site/" />
+		-->
 		<!-- 0.7.0 and 0.0.1, published versions -->
 		<property name="URL1" value="http://download.eclipse.org/bpmn2-modeler/bpmn2/site/" />
 		<property name="URL2" value="http://download.eclipse.org/bpmn2-modeler/site/" />
 		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/bpmn2-modeler/" />
 		<property name="compress" value="true" />
 
+		<!-- LAST CHECKED BUILD IDs: 
+		     0.7.0 H1   (Nov 9, 2011 11:16:41 AM - 0.7.0.201111091619)
+		     0.0.1 H197 (Feb 20, 2012 4:41:37 PM - 0.0.1.201202172142) 
+		-->
 		<p2.mirror>
-			<repository location="file:${destination}/201201302358/" name="Eclipse BPEL for Eclipse 3.7 (Not in Indigo)" />
+			<repository location="file:${destination}/201202231559/" name="Eclipse BPEL for Eclipse 3.7 (Not in Indigo)" />
 			<source>
 				<repository location="${URL1}" />
 				<repository location="${URL2}" />
@@ -43,9 +49,9 @@
 		</p2.mirror>
 
 		<delete>
-			<fileset dir="${destination}/201201302358/" includes="**/artifacts.jar, **/contents.jar"/>
+			<fileset dir="${destination}/201202231559/" includes="**/artifacts.jar, **/contents.jar"/>
 		</delete>
 
-		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/201201302358/" artifactRepository="file:${destination}/201201302358/" publishartifacts="true" source="${destination}/201201302358/" compress="${compress}" />
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/201202231559/" artifactRepository="file:${destination}/201202231559/" publishartifacts="true" source="${destination}/201202231559/" compress="${compress}" />
 	</target>
 </project>

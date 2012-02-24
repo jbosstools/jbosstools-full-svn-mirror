@@ -17,16 +17,16 @@
 	-->
 	<target name="run" depends="mirror,regen"/>
 	<target name="mirror">
-		<!-- <property name="URL" value="http://download.eclipse.org/releases/indigo/201202012328-SR1-M/" /> -->
+		<!-- <property name="URL" value="http://download.eclipse.org/releases/indigo/201202240900/" /> -->
 		<!-- must include BOTH Indigo and Eclipse in the same repo now, since the Indigo site is broken (refs an old Eclipse build which is gone) -->
-		<property name="URL1" value="http://download.eclipse.org/releases/maintenance/" />
-                <property name="URL2" value="file:///home/hudson/RHDS/updates/requirements/indigo/eclipse-repo-M20120127-0800/" />
+		<property name="URL1" value="http://download.eclipse.org/releases/indigo/201202240900/" />
+		<property name="URL2" value="http://download.eclipse.org/eclipse/updates/3.7/R-3.7.2-201202080800/"/>
 
 		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/indigo/" />
 		<property name="compress" value="true" />
 
 		<p2.mirror>
-			<repository location="file:${destination}/201202012328-SR1-M/" name="Indigo 201202012328-SR1-M" />
+			<repository location="file:${destination}/201202240900-SR2/" name="Indigo 201202240900-SR2" />
 			<source>
 				<repository location="${URL1}" />
 				<repository location="${URL2}" />
@@ -38,8 +38,8 @@
 	<target name="regen">
 		<!-- remove OTDT patched version of o.e.jdt.core -->
 		<delete>
-			<fileset dir="${destination}/201202012328-SR1-M/" includes="**/org.eclipse.jdt.core_*OTDT*.jar*"/>
+			<fileset dir="${destination}/201202240900-SR2/" includes="**/org.eclipse.jdt.core_*OTDT*.jar*"/>
 		</delete>
-		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/201202012328-SR1-M/" artifactRepository="file:${destination}/201202012328-SR1-M/" publishartifacts="true" source="${destination}/201202012328-SR1-M/" compress="${compress}" />
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/201202240900-SR2/" artifactRepository="file:${destination}/201202240900-SR2/" publishartifacts="true" source="${destination}/201202240900-SR2/" compress="${compress}" />
 	</target>
 </project>
