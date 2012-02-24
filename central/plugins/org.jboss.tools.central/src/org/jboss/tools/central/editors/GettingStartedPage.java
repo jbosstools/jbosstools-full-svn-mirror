@@ -14,6 +14,7 @@ package org.jboss.tools.central.editors;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -553,22 +554,28 @@ public class GettingStartedPage extends AbstractJBossCentralPage {
 	    IExtensionPoint extensionPoint = extensionRegistry.getExtensionPoint("org.eclipse.ui.newWizards");
 	    IExtension[] extensions = extensionPoint.getExtensions();
 	    
-	    List<String> wizardIDs = ProjectExamplesActivator.getDefault().getConfigurator().getWizardIds();
+	    List<String> sortedWizardIds = ProjectExamplesActivator.getDefault().getConfigurator().getWizardIds();
 	    
-	    List<String> createdIDs = new ArrayList<String>();
+	    Map<String, IConfigurationElement> wizards = new HashMap<String, IConfigurationElement>(sortedWizardIds.size());
 		for (IExtension extension : extensions) {
-			IConfigurationElement[] elements = extension
-					.getConfigurationElements();
+			IConfigurationElement[] elements = extension.getConfigurationElements();
 			for (IConfigurationElement element : elements) {
 				String id = element.getAttribute("id");
-				if (wizardIDs.contains(id) && !createdIDs.contains(id)) {
-					createProjectLink(toolkit, projectsComposite, element);
-					createdIDs.add(id);
+				if (sortedWizardIds.contains(id) && wizards.get(id) == null) {
+					wizards.put(id, element);
 				}
 			}
 		}
+		for (String wid : sortedWizardIds){
+			IConfigurationElement element = wizards.get(wid);
+			if (element != null) {
+				createProjectLink(toolkit, projectsComposite, element);
+			}
+		}
+		
 		projectsSection.setClient(projectsComposite);
 	}
+
 
 	private void createProjectLink(FormToolkit toolkit, Composite composite,
 			final IConfigurationElement element) {
@@ -1235,14 +1242,7 @@ public class GettingStartedPage extends AbstractJBossCentralPage {
 					}
 					setBusyIndicator(tutorialsLoadingComposite, false);
 					refreshTutorials();
-					
-					//TEMPORARY HACK FOR JBIDE-10053 (Java EE6 archetypes in the project section)
-					//Should be removed once these archetype tutorials are changed to use wizards as per JBIDE-10264  
-//					RefreshTutorialsJob job = RefreshTutorialsJob.INSTANCE;
-//					List<ProjectExample> wizardProjects = job.getWizardProjects();
-//					if (wizardProjects != null){
-//						updateNewProjects(wizardProjects);						
-//					}
+
 				}
 			});
 			
