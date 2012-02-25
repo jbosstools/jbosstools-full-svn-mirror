@@ -8,7 +8,7 @@
  * Contributors:
  *     Red Hat, Inc. - initial API and implementation
  ******************************************************************************/
-package org.jboss.tools.cdi.ui.marker;
+package org.jboss.tools.common.refactoring;
 
 import org.eclipse.core.resources.IMarker;
 
