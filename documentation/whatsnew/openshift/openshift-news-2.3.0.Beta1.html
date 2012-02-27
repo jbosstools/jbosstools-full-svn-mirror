@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../whatsnew.css" />
+<title>OpenShift Tools 2.3.0.Beta1 What's New</title>
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push([ '_setAccount', 'UA-17645367-5' ]);
+	_gaq.push([ '_trackPageview' ]);
+
+	(function() {
+		var ga = document.createElement('script');
+		ga.type = 'text/javascript';
+		ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl'
+				: 'http://www')
+				+ '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(ga, s);
+	})();
+</script>
+</head>
+<body>
+	<h1>OpenShift 2.3.0.Beta1 What's New</h1>
+
+	<p align="right">
+		<a href="../index.html">&lt; Main Index</a> <a
+			href="../as/as-news-3.3.0.Beta1.html">Server Tools &gt;</a>
+	</p>
+	<table border="0" cellpadding="10" cellspacing="0" width="80%">
+
+		<tr>
+			<td colspan="2">
+				<hr />
+				<h3>OpenShift Express Console</h3>
+				<hr />
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" align="left">
+				<a name="itemname3" id="itemname3"></a>
+				<b>OpenShift Express Console</b>
+			</td>
+			<td valign="top">
+			    We reworked the whole UI for OpenShift in JBoss Tools 3.3.0 Beta1. Was was a single wizard in M5 is now split up
+				into different parts with concise aims. The central entry point is now what we call the <b>OpenShift Express console</b>.
+				<p>
+					<img src="images/openshift-console.png"	alt="OpenShift Express Console" />
+				</p> 
+				The OpenShift Express console will list your accounts and
+				applications and allow you to manage your resources on the Red Hat
+				PaaS. Actions in the context menu allow you to create new users,
+				manage domains, applications, etc. The OpenShift console also allows
+				you to import OpenShift applications to projects in your local
+				workspace, to create Eclipse WTP server adapters etc. <br />
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a>
+				<b>Properties</b>
+			</td>
+			<td valign="top">Details to what's selected in the in the
+				OpenShift Express console are shown in the <b>Properties view</b>
+				<p>
+					<img src="images/openshift-properties.png" alt="OpenShift Express Properties" />
+				</p>
+				<p>
+					<small> <a
+						href="https://issues.jboss.org/browse/JBIDE-10528">Related
+							Jira</a>
+					</small>
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<hr />
+				<h3>OpenShift Server</h3>
+				<hr />
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a>
+				<b>OpenShift Server Runtime</b></td>
+			<td valign="top">
+				You may now create the server adapter for an <b>OpenShift
+				Express Application</b> by choosing <b>Create a Server Adapter</b> in the
+				context menu of the <b>OpenShift Express Console</b>
+				<p>
+					<img src="images/console-create-a-server-adapter.png" alt="create server adapter" />
+				</p>
+				<p>
+					<small>
+						<a href="https://issues.jboss.org/browse/JBIDE-10716">Related Jira</a>
+					</small>
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<hr />
+			</td>
+		</tr>
+		<tr>
+				<td valign="top" align="left"><a name="itemname3"
+					id="itemname3"></a><b>Tail files/logs</b></td>
+				<td valign="top">
+					<p>
+						You can now tail the live logs from the remote JBossAS7 instance
+						running on OpenShift right into your Eclipse Console view. This
+						feature is available from the <b>"Show In>Remote Console"</b>
+						contextual menu item of the Server Adapter associated with your
+						OpenShift Application.
+					</p>
+					<p>
+						<image src="images/show-in-remote-console.png" alt="Show In Remote Console" />
+					</p>
+					<p>
+						This works in the same manner as the '<b>rhc-tail-files</b>'
+						command line tool, which means that the underlying action issues a
+						single 'ssh tail' command on the remote VM, and thus may prompt
+						you for the passphrase associated with your OpenShift SSH Key if
+						it was not previously loaded during the Eclipse session.
+					</p>
+					<p>Both the 'boot.log' and 'server.log' will be shown in the
+						console, including their 100 previous lines.</p>
+					<p>
+						<img src="images/remote-console.png" alt="Remote Console" />
+					</p>
+					<p>You can stop the 'ssh tail' command from the console by
+						clicking on the 'Close Console' button.</p>
+					<p>
+						<small><a
+							href="https://issues.jboss.org/browse/JBIDE-10152">Related
+								Jira</a></small>
+					</p>
+
+
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan="2">
+				<hr />
+				<h3>OpenShift Express Application Wizard</h3>
+				<hr />
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Use
+					Existing Projects</b></td>
+			<td valign="top">
+				<p>The OpenShift Express Application wizard previously only
+					allowed you to import the existing application installed to
+					OpenShift into your workspace.</p>
+				<p>It was then up to you to merge the demo with your own
+					application and push things to the OpenShift PaaS. Our tooling did
+					not assist you in that case.</p>
+				<p>
+					M5 we now support to setup your own application directly for
+					deployment to OpenShift. Just uncheck <b>"Create New Project"</b>
+					and choose an existing project from your workspace, that you want
+					to publish to OpenShift. The wizard will then copy OpenShift
+					configurations and enable git on the project. You'll then be able
+					to push it to OpenShift via git or let the OpenShift Server Adapter
+					do that job for you.
+				</p>
+
+				<p>
+					<img src="images/push-existing-project.png"
+						alt="push existing project" />
+				</p>
+				<p>
+					<small><a
+						href="https://issues.jboss.org/browse/JBIDE-10171">Related
+							Jira</a></small>
+				</p>
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan="2">
+				<hr />
+				<h3>Cartridges</h3>
+				<hr />
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Embed
+					Cartridges</b></td>
+			<td valign="top">You can now manage cartridges for your
+				OpenShift applition directly from JBoss Tools. Cartridges add
+				capabilities to your application. A typical usecase is to add a
+				mysql database. You allow your application to use a mysql database
+				by embedding the mysql cartridge to it. The OpenShift Express
+				Application wizard will list all available cartridges and allow you
+				to add/remove cartridges at will.
+				<p>
+					<img src="images/embed-cartridge.png" alt="embed cartridge" />
+				</p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<hr />
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Embed
+					Jenkins</b></td>
+			<td valign="top">OpenShift now has support for Jenkins, turning
+				OpenShift into an Continous Integration server. Anytime you push
+				changes to OpenShift, a jenkins CI server will build your
+				application. The OpenShift Express Application wizard allows you to
+				embed the jenkins client. It will verify behind the scenes that you
+				already have a jenkins application and prompt you to create one if
+				you haven't yet.
+
+				<p>
+					<img src="images/create-jenkins.png" alt="create jenkins" />
+				</p> Credentials and url of your new jenkins instance will get reported
+				to you - keep those for future reference.
+				<p>
+					<img src="images/jenkins-creation-log.png"
+						alt="jenkins creation log" />
+				</p>
+				<p>
+					<small><a href="https://issues.jboss.org/browse/JBIDE-9927">Related
+							Jira</a></small>
+				</p>
+			</td>
+		</tr>
+
+
+
+		<tr>
+			<td colspan="2">
+				<hr />
+				<h3>Maven pom.xml editor</h3>
+				<hr />
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>New
+					OpenShift Express profile template</b></td>
+			<td valign="top">If you want to deploy your Web application to
+				OpenShift Express, you will need to define an <strong><i>openshift</i></strong>
+				maven profile. It basically configures the maven build to generate a
+				ROOT.war archive in the deployments folder of your project.
+				<p>
+					In the pom.xml editor, create a &lt;profiles&gt; section if it
+					doesn't exist and press <strong>CTRL+&lt;space&gt;</strong> to
+					trigger auto-completion, an OpenShift Express Maven profile
+					template is now available :
+				</p>
+				<p></p> <img src="images/openshift-profile.png"
+				alt="new OpenShift Express maven profile template" />
+				</p> Press enter to select and insert the <strong><i>openshift</i></strong>
+				profile in your pom.xml.
+				<p>
+					<small><a
+						href="https://issues.jboss.org/browse/JBIDE-10354">Related
+							Jira</a></small>
+				</p>
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan="2">
+				<hr />
+				<h3>OpenShift Express REST client</h3>
+				<hr />
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>REST
+					Client</b></td>
+			<td valign="top">We developed a client for the OpenShift Express
+				REST service in M4. It offers most features that are currently
+				available in the rhc-* command line tools (create/rename a domain,
+				create/destroy applications, list all existing applications,
+				available cartridges, read the application log, embed cartridges
+				etc.). <br /> We moved it to github and joined forces with the
+				OpenShift team. The official client is now maintained at <a
+				href="https://github.com/bdecoste/openshift-java-client">https://github.com/bdecoste/openshift-java-client</a>
+				<p>
+					<small><a
+						href="https://issues.jboss.org/browse/JBIDE-10068">Related
+							Jira</a>, <a href="https://issues.jboss.org/browse/JBIDE-10455">Related
+							Jira</a></small>
+				</p>
+			</td>
+		</tr>
+
+	</table>
+</body>
+
+</html>
+
+
