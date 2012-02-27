@@ -66,7 +66,7 @@
 
         <p>
 		<small>
-		  See <a href="https://issues.jboss.org/browse/JBIDE-10750">JBIDE-10750</a> , for more details. 
+		  See <a href="https://issues.jboss.org/browse/JBIDE-10750">JBIDE-10750</a>  for more details. 
 		</small></p>
 	    </td>
 	</tr>
@@ -87,7 +87,7 @@
         </p>
 		<p>
 		<small>
-		  See <a href="https://issues.jboss.org/browse/JBIDE-9688">JBIDE-9688</a> , for more details. 
+		  See <a href="https://issues.jboss.org/browse/JBIDE-9688">JBIDE-9688</a>  for more details. 
 		</small>
         </p>        
 	    </td>
@@ -98,6 +98,35 @@
 	    </td>
 	</tr>
 
+    	<tr>
+            <td valign="top" align="left">
+		<a name="itemname3" id="itemname4"></a><b>Better Maven conversion</b></td>
+		<td valign="top">
+		<p>Installing the JBoss Maven Facet to an Eclipse project will create a much better, cleaner pom.xml :
+        <ul>
+        <li>does not add plugin configuration when the existing values correspond to maven defaults</li>
+        <li>locks down plugin versions</li>
+        <li>remove java nature from EAR, POM projects</li>
+        <li>adds children projects to parent's dependency management section</li>
+        <li>makes the plugin configurations respect the corresponding eclipse facet version</li>
+        <li>removes custom output directory settings, everything goes to target/classes now</li>
+        <li>JBoss Seam is now referenced as an ejb type dependency everywhere.</li>
+        <li>adds support for web fragments</li>
+        </ul>
+        </p>
+		<p>
+		<small>
+		  See <a href="https://issues.jboss.org/browse/JBIDE-10762">JBIDE-10762</a> for more details. 
+		</small>
+        </p>        
+	    </td>
+	</tr>
+	<tr>
+	    <td colspan="2">
+	      <hr/>
+	    </td>
+	</tr>
+    
 </table>
 
 </body>
