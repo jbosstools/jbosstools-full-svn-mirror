@@ -10,6 +10,8 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.editor.preferences;
 
+import org.eclipse.core.commands.Command;
+import org.eclipse.core.commands.State;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.SWT;
@@ -22,12 +24,19 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.commands.ICommandService;
 import org.jboss.tools.jst.jsp.JspEditorPlugin;
 import org.jboss.tools.jst.jsp.editor.IVisualEditor;
 import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
 import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeEditorPart;
+import org.jboss.tools.vpe.handlers.ScrollLockSourceVisualHandler;
+import org.jboss.tools.vpe.handlers.ShowBorderHandler;
+import org.jboss.tools.vpe.handlers.ShowBundleAsELHandler;
+import org.jboss.tools.vpe.handlers.ShowNonVisualTagsHandler;
+import org.jboss.tools.vpe.handlers.ShowTextFormattingHandler;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 
 public class VpePreferencesPage extends FieldEditorPreferencePage implements
@@ -56,6 +65,8 @@ public class VpePreferencesPage extends FieldEditorPreferencePage implements
 	private Group tabsGroup;
 	private Group visualEditorToolbarGroup;
 
+	private ICommandService commandService = null;
+	
 	public VpePreferencesPage() {
 		super();
 		setPreferenceStore(getPreferenceStore());
@@ -171,11 +182,47 @@ public class VpePreferencesPage extends FieldEditorPreferencePage implements
 					 * only for newly opened.
 					 */
 					// mpe.updatePartAccordingToPreferences();
+					
+					/*
+					 * https://issues.jboss.org/browse/JBIDE-10745
+					 */
+					boolean presfShowBorderForUnknownTags = JspEditorPlugin.getDefault()
+							.getPreferenceStore().getBoolean(IVpePreferencesPage.SHOW_BORDER_FOR_UNKNOWN_TAGS);
+					boolean prefsShowNonVisualTags = JspEditorPlugin.getDefault()
+							.getPreferenceStore().getBoolean(IVpePreferencesPage.SHOW_NON_VISUAL_TAGS);
+					boolean prefsShowTextFormattingBar = JspEditorPlugin.getDefault()
+							.getPreferenceStore().getBoolean(IVpePreferencesPage.SHOW_TEXT_FORMATTING);
+					boolean prefsShowBundlesAsEL = JspEditorPlugin.getDefault()
+							.getPreferenceStore().getBoolean(IVpePreferencesPage.SHOW_RESOURCE_BUNDLES_USAGE_AS_EL);
+					boolean prefsSynchronizeScrolling = JspEditorPlugin.getDefault()
+							.getPreferenceStore().getBoolean(IVpePreferencesPage.SYNCHRONIZE_SCROLLING_BETWEEN_SOURCE_VISUAL_PANES);
+					
+					setCommandToggleState(ShowBorderHandler.COMMAND_ID, presfShowBorderForUnknownTags);
+					setCommandToggleState(ShowNonVisualTagsHandler.COMMAND_ID, prefsShowNonVisualTags);
+					setCommandToggleState(ShowTextFormattingHandler.COMMAND_ID, prefsShowTextFormattingBar);
+					setCommandToggleState(ShowBundleAsELHandler.COMMAND_ID, prefsShowBundlesAsEL);
+					setCommandToggleState(ScrollLockSourceVisualHandler.COMMAND_ID, prefsSynchronizeScrolling);
 				}
 			}
 		}
-
 		return true;
+	}
+	
+	/**
+	 * Set toolbar command state after Preferences Page has been changed.
+	 * @param commandId command id
+	 * @param newState new command state
+	 */
+	private void setCommandToggleState(String commandId, boolean newState) {
+		if (commandService == null) {
+			commandService = (ICommandService) PlatformUI.getWorkbench().getService(ICommandService.class);
+		}
+		Command command = commandService.getCommand(commandId);
+		State state = command.getState("org.eclipse.ui.commands.toggleState"); //$NON-NLS-1$
+		boolean oldState = ((Boolean) state.getValue()).booleanValue();
+		if (oldState != newState) {
+			state.setValue(new Boolean(newState));
+		}
 	}
 
 	@Override
