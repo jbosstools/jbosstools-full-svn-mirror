@@ -28,20 +28,14 @@ import static org.jboss.ide.eclipse.as.core.util.IJBossToolingConstants.WEB_PORT
 import static org.jboss.ide.eclipse.as.core.util.IJBossToolingConstants.WEB_PORT_DETECT;
 import static org.jboss.ide.eclipse.as.core.util.IJBossToolingConstants.WEB_PORT_DETECT_XPATH;
 
-import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.Date;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.equinox.security.storage.EncodingUtils;
-import org.eclipse.equinox.security.storage.ISecurePreferences;
-import org.eclipse.equinox.security.storage.SecurePreferencesFactory;
-import org.eclipse.equinox.security.storage.StorageException;
 import org.eclipse.jst.server.core.IWebModule;
 import org.eclipse.wst.server.core.IModule;
 import org.eclipse.wst.server.core.IServer;
@@ -250,7 +244,7 @@ public class JBossServer extends DeployableServer
 	
 	// first class parameters
 	public String getUsername() {
-		return getAttribute(SERVER_USERNAME, ""); //$NON-NLS-1$
+		return getAttribute(SERVER_USERNAME, "admin"); //$NON-NLS-1$
 	}
 	public void setUsername(String name) {
 		setAttribute(SERVER_USERNAME, name);
