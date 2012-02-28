@@ -19,6 +19,7 @@ import org.jboss.tools.vpe.ui.test.dialog.VpeResourcesDialogTest;
 import org.jboss.tools.vpe.ui.test.editor.CustomSashFormTest;
 import org.jboss.tools.vpe.ui.test.editor.MultipleSelectionTest;
 import org.jboss.tools.vpe.ui.test.editor.ScrollingTest_Jbide8701;
+import org.jboss.tools.vpe.ui.test.editor.ToggleClassCastTest_Jbide9790;
 import org.jboss.tools.vpe.ui.test.handlers.VpeCommandsTests;
 import org.jboss.tools.vpe.ui.test.preferences.VpeEditorPreferencesPageTest;
 
@@ -38,6 +39,7 @@ public class VpeUiTests {
 		suite.addTestSuite(VpeEditAnyDialogTest.class);
 		suite.addTestSuite(MultipleSelectionTest.class);
 //		suite.addTestSuite(ScrollingTest_Jbide8701.class);
+		suite.addTestSuite(ToggleClassCastTest_Jbide9790.class);
 		return new VpeTestSetup(suite);
 	}
 }

@@ -1301,16 +1301,8 @@ HHHHHHH222Text2222222
 			<h:outputText> Download speed 100 Mbit/s </h:outputText>
 			<h:outputText> last text </h:outputText>
 		</rich:progressBar>
-		
 		<rich:progressBar value="30" >
 		</rich:progressBar>
-		
 		<rich:progressBar value="45">
 		</rich:progressBar>
-		
-</h:panelGrid>    
-		
-		
-</f:view>
-</body>
-</html>
+</h:panelGrid> </f:view> </body> </html>
