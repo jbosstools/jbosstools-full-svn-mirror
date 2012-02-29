@@ -122,14 +122,14 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<included-projects>jboss-javaee6-poh5</included-projects>
 		<shortDescription>HTML5 Project</shortDescription>
         <priority>3</priority>
-		<description>An archetype that generates a Java EE 6 HTML5 Mobile Webapp project for JBoss AS 7 / EAP 6</description>
+		<description>An archetype that generates a Java EE 6 HTML5 Mobile Webapp project for JBoss AS 7.1 / EAP 6</description>
 		<size>165567</size>
 		<url/>
 		<fixes>
 			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70, org.jboss.ide.eclipse.as.runtime.71, org.jboss.ide.eclipse.as.runtime.eap.60</property>
-				<property name="description">This project example requires JBoss AS 7.0/7.1 or EAP 6 </property>
-				<property name="downloadId">org.jboss.tools.runtime.core.as.702</property>
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.71, org.jboss.ide.eclipse.as.runtime.eap.60</property>
+				<property name="description">This project example requires JBoss AS 7.1 or EAP 6 </property>
+				<property name="downloadId">org.jboss.tools.runtime.core.as.710</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.eclipse.m2e.core</property>
@@ -156,10 +156,10 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<mavenArchetype>
 			<archetypeGroupId>org.jboss.aerogear.archetypes</archetypeGroupId>
 			<archetypeArtifactId>jboss-html5-mobile-archetype</archetypeArtifactId>
-			<archetypeVersion>1.0.0.M1</archetypeVersion>
-            <!--
+			<archetypeVersion>1.0.0.M2</archetypeVersion>
+            
 			<archetypeRepository>http://repository.jboss.org/nexus/content/repositories/releases/</archetypeRepository>
-            -->
+            
             <groupId>org.jboss.tools.example</groupId>
 			<artifactId>poh5</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
