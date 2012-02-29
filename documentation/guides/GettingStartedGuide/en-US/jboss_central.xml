@@ -39,7 +39,7 @@
 			</mediaobject>
 		</figure>
 		<para>
-			From the <guilabel>Create Projects</guilabel> section you can create a <guilabel>Dynamic Web Project</guilabel>, <guilabel>OpenShift Express Application</guilabel>, <guilabel>Java EE Web Project</guilabel>, <guilabel>Java EE Project</guilabel>, <guilabel>HTML5 Project</guilabel>, <guilabel>Spring MVC Project</guilabel>, <guilabel>RichFaces Project</guilabel>, or any one of many <guilabel>Project Examples</guilabel>. To access a complete list of projects you can create, click on the window icon at the top-right of the <guilabel>Create Projects</guilabel> section <inlinemediaobject>
+			From the <guilabel>Create Projects</guilabel> section you can create a <guilabel>Dynamic Web Project</guilabel>, <guilabel>OpenShift Express Application</guilabel>, <guilabel>Java EE Web Project</guilabel>, <guilabel>Java EE Project</guilabel>, <guilabel>HTML5 Project</guilabel>, <guilabel>Spring MVC Project</guilabel>, <guilabel>RichFaces Project</guilabel>, <guilabel>GWT Web Project</guilabel>, or any one of many <guilabel>Project Examples</guilabel>. To access a complete list of projects you can create, click on the window icon at the top-right of the <guilabel>Create Projects</guilabel> section <inlinemediaobject>
 				<imageobject>
 					<imagedata fileref="images/getting_started/jboss_central_icon_01.png"/>
 				</imageobject>
@@ -55,6 +55,20 @@
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="images/getting_started/jboss_central_04.png" scale="90"/>
+				</imageobject>
+			</mediaobject>
+		</figure>
+		<formalpara>
+			<title>GWT (Google Web Toolkit) Web Project creation</title>
+			<para>
+				To create a GWT web project, the latest m2e-wtp and Google plug-ins have to be installed. If these plug-ins have not been previously installed, the first page of the GWT web project wizard will provide you with the ability to install the plug-ins.
+			</para>
+		</formalpara>
+		<figure>
+			<title>GWT Web Project creation: plug-in page</title>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/getting_started/jboss_central_05a_gwt.png" scale="90"/>
 				</imageobject>
 			</mediaobject>
 		</figure>
