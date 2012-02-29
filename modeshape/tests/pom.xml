@@ -12,6 +12,7 @@
 	<name>modeshape.tests</name>
 	<packaging>pom</packaging>
 	<modules>
+		<module>org.jboss.tools.modeshape.jcr.test</module>
 		<module>org.jboss.tools.modeshape.rest.test</module>
 		<module>org.jboss.tools.modeshape.rest.ui.bot.test</module>
 	</modules>
