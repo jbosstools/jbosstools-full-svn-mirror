@@ -339,6 +339,10 @@ public class JaxrsResourceMethod extends JaxrsResourceElement<IMethod>
 			int severity, final int offset, int length) throws JavaModelException {
 		final ValidatorMessage validationMsg = ValidatorMessage.create(msg,
 				this.getResource());
+		validationMsg.setType(JaxrsMetamodelBuilder.JAXRS_PROBLEM);
+		final ICompilationUnit compilationUnit = this.getJavaElement().getCompilationUnit();
+		final CompilationUnit ast = CompilationUnitsRepository.getInstance().getAST(compilationUnit);
+		validationMsg.setAttribute(IMarker.LOCATION, NLS.bind(ValidationMessages.LINE_NUMBER, ast.getLineNumber(offset)));
 		validationMsg.setAttribute(IMarker.MARKER,
 				JaxrsMetamodelBuilder.JAXRS_PROBLEM);
 		validationMsg.setAttribute(IMarker.SEVERITY, severity);
