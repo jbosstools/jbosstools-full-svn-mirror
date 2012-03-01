@@ -38,7 +38,7 @@ public class VpeUiTests {
 //		suite.addTestSuite(VpePopupMenuTest.class);
 		suite.addTestSuite(VpeEditAnyDialogTest.class);
 		suite.addTestSuite(MultipleSelectionTest.class);
-//		suite.addTestSuite(ScrollingTest_Jbide8701.class);
+		suite.addTestSuite(ScrollingTest_Jbide8701.class);
 		suite.addTestSuite(ToggleClassCastTest_Jbide9790.class);
 		return new VpeTestSetup(suite);
 	}
