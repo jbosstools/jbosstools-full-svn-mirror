@@ -12,7 +12,7 @@
 	
 	<packaging>eclipse-plugin</packaging>
 	<properties>
-		<emma.filter />
+		<coverage.filter />
 		<emma.instrument.bundles />
 	</properties>
 	<build>

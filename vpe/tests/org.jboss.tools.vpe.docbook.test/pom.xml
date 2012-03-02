@@ -11,7 +11,7 @@
 	
 	<packaging>eclipse-test-plugin</packaging>
 	<properties>
-		<emma.filter>org.jboss.tools.vpe.docbook*</emma.filter>
+		<coverage.filter>org.jboss.tools.vpe.docbook*</coverage.filter>
 		<emma.instrument.bundles>org.jboss.tools.vpe.docbook</emma.instrument.bundles>
 	</properties>	
 </project>

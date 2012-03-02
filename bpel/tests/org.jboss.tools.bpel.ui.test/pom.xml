@@ -12,7 +12,7 @@
 	<packaging>eclipse-test-plugin</packaging>
 	
 	<properties>
-		<emma.filter>org.eclipse.bpel*</emma.filter>
+		<coverage.filter>org.eclipse.bpel*</coverage.filter>
 		<emma.instrument.bundles>org.eclipse.bpel.ui,org.eclipse.bpel.common.ui,org.eclipse.bpel.common.model,org.eclipse.bpel.model</emma.instrument.bundles>
 	</properties>
 	

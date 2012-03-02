@@ -14,7 +14,7 @@
 
 	<properties>
 		<emma.session.out.file>${project.build.directory}/emma/coverage.es</emma.session.out.file>
-		<emma.filter>org.jboss.tools.portlet.core*</emma.filter>
+		<coverage.filter>org.jboss.tools.portlet.core*</coverage.filter>
 		<emma.instrument.bundles>org.jboss.tools.portlet.core</emma.instrument.bundles>
 	</properties>
 
