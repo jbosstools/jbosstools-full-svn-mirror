@@ -29,7 +29,7 @@ public class ShowInWebManagementActionProvider extends AbstractOpenBrowserServer
 	
 	protected boolean shouldAddForSelection(IStructuredSelection sel) {
 		IServer server = getSingleServer(sel);
-		return accepts(server);
+		return server != null && accepts(server);
 	}
 
 	protected boolean accepts(IServer server) {
