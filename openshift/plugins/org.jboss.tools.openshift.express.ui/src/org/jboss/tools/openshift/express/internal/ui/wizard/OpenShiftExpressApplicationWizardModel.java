@@ -184,10 +184,12 @@ public class OpenShiftExpressApplicationWizardModel extends ObservableUIPojo imp
 	private void createServerAdapter(IProgressMonitor monitor, List<IProject> importedProjects)
 			throws OpenShiftException {
 		Assert.isTrue(importedProjects.size() > 0);
-		IProject project = importedProjects.get(0);
-		new ServerAdapterFactory().create(project, this, monitor);
+		if (isCreateServerAdapter()) {	
+			IProject project = importedProjects.get(0);
+			new ServerAdapterFactory().create(project, this, monitor);
+		}
 	}
-
+	
 	@Override
 	public File getRepositoryFile() {
 		String repositoryPath = getRepositoryPath();
