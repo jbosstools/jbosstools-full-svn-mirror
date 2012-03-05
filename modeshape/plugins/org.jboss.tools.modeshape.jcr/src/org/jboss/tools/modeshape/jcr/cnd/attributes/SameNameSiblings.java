@@ -9,8 +9,14 @@ package org.jboss.tools.modeshape.jcr.cnd.attributes;
 
 import org.jboss.tools.modeshape.jcr.cnd.CndElement;
 
+/**
+ * The same named siblings attribute used by child node definitions.
+ */
 public class SameNameSiblings extends AttributeState {
 
+    /**
+     * The CND notation for each notation type.
+     */
     public static final String[] NOTATION = new String[] { "sns", "*", "*" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
     /**

@@ -13,7 +13,7 @@ import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences;
 import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences.Preference;
 
 /**
- * 
+ * Property attributes of a node type definitions.
  */
 public class NodeTypeAttributes implements CndElement {
 
@@ -27,6 +27,9 @@ public class NodeTypeAttributes implements CndElement {
 
     private Queryable queryable;
 
+    /**
+     * Constructs a node type definition's attribute collection all set to there default values.
+     */
     public NodeTypeAttributes() {
         this.orderable = new Orderable();
         this.mixin = new Mixin();
@@ -42,11 +45,11 @@ public class NodeTypeAttributes implements CndElement {
      * @param initialQueryable the initial queryable value (can be <code>null</code>)
      * @param initialPrimaryItem the initial primary item value (can be <code>null</code>)
      */
-    public NodeTypeAttributes( Orderable initialOrderable,
-                               Mixin initialMixin,
-                               Abstract initialAbstract,
-                               Queryable initialQueryable,
-                               PrimaryItem initialPrimaryItem ) {
+    public NodeTypeAttributes( final Orderable initialOrderable,
+                               final Mixin initialMixin,
+                               final Abstract initialAbstract,
+                               final Queryable initialQueryable,
+                               final PrimaryItem initialPrimaryItem ) {
         this();
 
         if (!this.orderable.equals(initialOrderable)) {
@@ -76,7 +79,7 @@ public class NodeTypeAttributes implements CndElement {
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
-    public boolean equals( Object obj ) {
+    public boolean equals( final Object obj ) {
         if ((obj == null) || !getClass().equals(obj.getClass())) {
             return false;
         }
@@ -85,12 +88,15 @@ public class NodeTypeAttributes implements CndElement {
             return true;
         }
 
-        NodeTypeAttributes that = (NodeTypeAttributes)obj;
+        final NodeTypeAttributes that = (NodeTypeAttributes)obj;
 
         return (this.mixin.equals(that.mixin) && this.notConcrete.equals(that.notConcrete) && this.orderable.equals(that.orderable)
                 && this.queryable.equals(that.queryable) && this.primaryItem.equals(that.primaryItem));
     }
 
+    /**
+     * @return the abstract attribute (never <code>null</code>)
+     */
     public Abstract getAbstract() {
         return this.notConcrete;
     }
@@ -99,18 +105,30 @@ public class NodeTypeAttributes implements CndElement {
         return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.NODE_TYPE_DEFINITION_ATTRIBUTES_DELIMITER);
     }
 
+    /**
+     * @return the mixin attribute (never <code>null</code>)
+     */
     public Mixin getMixin() {
         return this.mixin;
     }
 
+    /**
+     * @return the orderable attribute (never <code>null</code>)
+     */
     public Orderable getOrderable() {
         return this.orderable;
     }
 
+    /**
+     * @return the primary item attribute (never <code>null</code>)
+     */
     public PrimaryItem getPrimaryItem() {
         return this.primaryItem;
     }
 
+    /**
+     * @return the queryable attribute (never <code>null</code>)
+     */
     public Queryable getQueryable() {
         return this.queryable;
     }
@@ -125,31 +143,53 @@ public class NodeTypeAttributes implements CndElement {
         return Utils.hashCode(this.mixin, this.notConcrete, this.orderable, this.queryable, this.primaryItem);
     }
 
-    public boolean isPrimaryItemVariant() {
-        return this.primaryItem.isVariant();
-    }
-
-    public boolean setAbstract( AttributeState.Value newState ) {
+    /**
+     * @param newState the proposed new state of the abstract attribute (cannot be <code>null</code>)
+     * @return <code>true</code> if the state was changed
+     */
+    public boolean setAbstract( final AttributeState.Value newState ) {
         return this.notConcrete.set(newState);
     }
 
-    public boolean setMixin( AttributeState.Value newState ) {
+    /**
+     * @param newState the proposed new state of the mixin attribute (cannot be <code>null</code>)
+     * @return <code>true</code> if the state was changed
+     */
+    public boolean setMixin( final AttributeState.Value newState ) {
         return this.mixin.set(newState);
     }
 
-    public boolean setOrderable( AttributeState.Value newState ) {
+    /**
+     * @param newState the proposed new state of the orderable attribute (cannot be <code>null</code>)
+     * @return <code>true</code> if the state was changed
+     */
+    public boolean setOrderable( final AttributeState.Value newState ) {
         return this.orderable.set(newState);
     }
 
-    public boolean setPrimaryItem( AttributeState.Value newState ) {
+    /**
+     * <strong>Can only be used to set to variant state.</strong>
+     * 
+     * @param newState the proposed new state of the primary item attribute (cannot be <code>null</code>)
+     * @return <code>true</code> if the state was changed
+     */
+    public boolean setPrimaryItem( final AttributeState.Value newState ) {
         return this.primaryItem.set(newState);
     }
 
-    public boolean setPrimaryItem( String newPrimaryItem ) {
+    /**
+     * @param newPrimaryItem the proposed new value for the primary item (can be <code>null</code> or empty)
+     * @return <code>true</code> if primary item was changed
+     */
+    public boolean setPrimaryItem( final String newPrimaryItem ) {
         return this.primaryItem.setPrimaryItem(newPrimaryItem);
     }
 
-    public boolean setQueryable( AttributeState.Value newState ) {
+    /**
+     * @param newState the proposed new state of the queryable attribute (cannot be <code>null</code>)
+     * @return <code>true</code> if the state was changed
+     */
+    public boolean setQueryable( final AttributeState.Value newState ) {
         return this.queryable.set(newState);
     }
 
@@ -159,9 +199,9 @@ public class NodeTypeAttributes implements CndElement {
      * @see org.jboss.tools.modeshape.jcr.cnd.CndElement#toCndNotation(org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType)
      */
     @Override
-    public String toCndNotation( NotationType notationType ) {
+    public String toCndNotation( final NotationType notationType ) {
         final String DELIM = getFormatDelimiter();
-        StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder();
 
         boolean addDelim = Utils.build(builder, false, DELIM, this.orderable.toCndNotation(notationType));
         addDelim = Utils.build(builder, addDelim, DELIM, this.mixin.toCndNotation(notationType));

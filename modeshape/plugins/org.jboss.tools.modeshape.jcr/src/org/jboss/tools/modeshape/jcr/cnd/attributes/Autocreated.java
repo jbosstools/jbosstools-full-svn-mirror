@@ -9,8 +9,15 @@ package org.jboss.tools.modeshape.jcr.cnd.attributes;
 
 import org.jboss.tools.modeshape.jcr.cnd.CndElement;
 
+/**
+ * The autocreated attribute used by property definitions and child node definitions. When set, the property is automatically
+ * created when the parent node is created. It mandates that a default value is set.
+ */
 public class Autocreated extends AttributeState {
 
+    /**
+     * The CND notation for each notation type.
+     */
     public static final String[] NOTATION = new String[] { "autocreated", "aut", "a" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
     /**

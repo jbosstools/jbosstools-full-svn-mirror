@@ -56,13 +56,18 @@ public class CndTokenizer implements Tokenizer {
      */
     public static final int VENDOR_EXTENSION = 7;
 
-    private final boolean useComments;
-    private final boolean useVendorExtensions;
+    private final boolean useComments = false;
+    private final boolean useVendorExtensions = false;
 
+    /**
+     * <strong>Currently comments and vendor extensions are not supported by the framework.</strong>
+     * @param useComments a flag indicating if comments should be used
+     * @param useVendorExtensions a flag indicating if vendor extensions should be used
+     */
     public CndTokenizer( boolean useComments,
                          boolean useVendorExtensions ) {
-        this.useComments = useComments;
-        this.useVendorExtensions = useVendorExtensions;
+//        this.useComments = useComments;
+//        this.useVendorExtensions = useVendorExtensions;
     }
 
     /**

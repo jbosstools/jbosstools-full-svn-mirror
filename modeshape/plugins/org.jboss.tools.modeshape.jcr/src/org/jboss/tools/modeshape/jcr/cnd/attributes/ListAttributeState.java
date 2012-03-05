@@ -18,7 +18,7 @@ import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences;
 import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences.Preference;
 
 /**
- * 
+ * @param <E> the class of the list items
  */
 public abstract class ListAttributeState<E extends Comparable> extends AttributeState {
 
@@ -31,7 +31,7 @@ public abstract class ListAttributeState<E extends Comparable> extends Attribute
      * @param item the item being added (cannot be <code>null</code>)
      * @return <code>true</code> if successfully added
      */
-    public boolean add( E item ) {
+    public boolean add( final E item ) {
         Utils.isNotNull(item, "item"); //$NON-NLS-1$
 
         if (this.supported == null) {
@@ -75,7 +75,7 @@ public abstract class ListAttributeState<E extends Comparable> extends Attribute
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
-    public boolean equals( Object obj ) {
+    public boolean equals( final Object obj ) {
         if ((obj == null) || !getClass().equals(obj.getClass())) {
             return false;
         }
@@ -84,9 +84,9 @@ public abstract class ListAttributeState<E extends Comparable> extends Attribute
             return true;
         }
 
-        ListAttributeState that = (ListAttributeState)obj;
-        List<E> thatSupportedItems = that.getSupportedItems();
-        List<E> thisSupportedItems = getSupportedItems();
+        final ListAttributeState that = (ListAttributeState)obj;
+        final List<E> thatSupportedItems = that.getSupportedItems();
+        final List<E> thisSupportedItems = getSupportedItems();
 
         if (Utils.isEmpty(thisSupportedItems)) {
             return Utils.isEmpty(thatSupportedItems);
@@ -103,9 +103,17 @@ public abstract class ListAttributeState<E extends Comparable> extends Attribute
         return thisSupportedItems.containsAll(thatSupportedItems);
     }
 
+    /**
+     * @param notationType the notation type whose CND notation prefix is being requested (cannot be <code>null</code>)
+     * @return the CND notation prefix (can be <code>null</code> or empty)
+     */
     protected abstract String getCndNotationPrefix( NotationType notationType );
 
-    protected String getCndNotationSuffix( NotationType notationType ) {
+    /**
+     * @param notationType the notation type whose CND notation suffix is being requested (cannot be <code>null</code>)
+     * @return the CND notation suffix (can be <code>null</code> or empty)
+     */
+    protected String getCndNotationSuffix( final NotationType notationType ) {
         return Utils.EMPTY_STRING;
     }
 
@@ -129,7 +137,10 @@ public abstract class ListAttributeState<E extends Comparable> extends Attribute
         throw new UnsupportedOperationException();
     }
 
-    protected String getDelimiter() {
+    /**
+     * @return the delimiter used after the list prefix (never <code>null</code> but can be empty)
+     */
+    protected String getListPrefixEndDelimiter() {
         return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_PREFIX_END_DELIMITER);
     }
 
@@ -178,14 +189,14 @@ public abstract class ListAttributeState<E extends Comparable> extends Attribute
      * @param item the item being removed (cannot be <code>null</code>)
      * @return <code>true</code> if successfully removed
      */
-    public boolean remove( E item ) {
+    public boolean remove( final E item ) {
         Utils.isNotNull(item, "item"); //$NON-NLS-1$
 
         if (this.supported == null) {
             return false;
         }
 
-        boolean removed = this.supported.remove(item);
+        final boolean removed = this.supported.remove(item);
 
         if (this.supported.isEmpty()) {
             this.supported = null;
@@ -204,7 +215,7 @@ public abstract class ListAttributeState<E extends Comparable> extends Attribute
      * @see org.jboss.tools.modeshape.jcr.cnd.attributes.AttributeState#set(org.jboss.tools.modeshape.jcr.cnd.attributes.AttributeState.Value)
      */
     @Override
-    public final boolean set( Value newState ) {
+    public final boolean set( final Value newState ) {
         if (Value.VARIANT == newState) {
             clear();
             return super.set(Value.VARIANT);
@@ -213,8 +224,12 @@ public abstract class ListAttributeState<E extends Comparable> extends Attribute
         return false; // other states set by adding and removing supported items
     }
 
-    protected String supportedItemsCndNotation( NotationType notationType ) {
-        List<E> items = new ArrayList<E>(getSupportedItems());
+    /**
+     * @param notationType the CND notation type to use (cannot be <code>null</code>)
+     * @return the CND notation (never <code>null</code> but can be empty)
+     */
+    protected String supportedItemsCndNotation( final NotationType notationType ) {
+        final List<E> items = new ArrayList<E>(getSupportedItems());
         Collections.sort(items);
 
         if (items.isEmpty()) {
@@ -222,7 +237,7 @@ public abstract class ListAttributeState<E extends Comparable> extends Attribute
         }
 
         if (items.size() == 1) {
-            E firstItem = items.iterator().next();
+            final E firstItem = items.iterator().next();
 
             if (firstItem instanceof CndElement) {
                 return ((CndElement)firstItem).toCndNotation(notationType);
@@ -231,10 +246,10 @@ public abstract class ListAttributeState<E extends Comparable> extends Attribute
             return firstItem.toString();
         }
 
-        StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder();
 
-        for (Iterator<E> itr = items.iterator(); itr.hasNext();) {
-            E item = itr.next();
+        for (final Iterator<E> itr = items.iterator(); itr.hasNext();) {
+            final E item = itr.next();
 
             if (item instanceof CndElement) {
                 builder.append(((CndElement)item).toCndNotation(notationType));
@@ -243,7 +258,7 @@ public abstract class ListAttributeState<E extends Comparable> extends Attribute
             }
 
             if (itr.hasNext()) {
-                builder.append(CndElement.LIST_DELIMITER);
+                builder.append(Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER);
             }
         }
 
@@ -252,9 +267,9 @@ public abstract class ListAttributeState<E extends Comparable> extends Attribute
 
     /**
      * @param item the item being checked (cannot be <code>null</code>)
-     * @return
+     * @return <code>true</code> if item is contained in list
      */
-    public boolean supports( E item ) {
+    public boolean supports( final E item ) {
         Utils.isNotNull(item, "item"); //$NON-NLS-1$
         return this.supported.contains(item);
     }
@@ -265,15 +280,15 @@ public abstract class ListAttributeState<E extends Comparable> extends Attribute
      * @see org.jboss.tools.modeshape.jcr.cnd.CndElement#toCndNotation(org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType)
      */
     @Override
-    public String toCndNotation( NotationType notationType ) {
+    public String toCndNotation( final NotationType notationType ) {
         if (hasCndNotation()) {
-            StringBuilder builder = new StringBuilder();
+            final StringBuilder builder = new StringBuilder();
 
             if (!Utils.isEmpty(getCndNotationPrefix(notationType))) {
                 builder.append(getCndNotationPrefix(notationType));
             }
 
-            String delim = getDelimiter();
+            final String delim = getListPrefixEndDelimiter();
 
             if (!Utils.isEmpty(delim)) {
                 builder.append(delim);

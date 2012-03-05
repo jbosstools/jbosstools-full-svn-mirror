@@ -9,8 +9,14 @@ package org.jboss.tools.modeshape.jcr.cnd.attributes;
 
 import org.jboss.tools.modeshape.jcr.cnd.CndElement;
 
+/**
+ * The abstract attribute used by node type definitions.
+ */
 public class Abstract extends AttributeState {
 
+    /**
+     * The CND notation for each notation type.
+     */
     public static final String[] NOTATION = new String[] { "abstract", "abs", "a" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
     /**

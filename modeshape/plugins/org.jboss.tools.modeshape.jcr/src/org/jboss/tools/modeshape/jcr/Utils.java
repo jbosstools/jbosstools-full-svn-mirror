@@ -18,16 +18,29 @@ import org.modeshape.common.util.HashCode;
  */
 public final class Utils {
 
+    /**
+     * An empty string constant.
+     */
     public static final String EMPTY_STRING = ""; //$NON-NLS-1$
 
+    /**
+     * And empty string array.
+     */
     public static final String[] EMPTY_STRING_ARRAY = new String[0];
 
-    public static boolean build( StringBuilder builder,
-                                 boolean addDelimiter,
-                                 String delimiter,
-                                 String text ) {
+    /**
+     * @param builder the builder where the text will be appended (cannot be <code>null</code>)
+     * @param addDelimiter the flag indicating if a delimiter should be added
+     * @param delimiter the delimiter string added before the text if there is text (can be <code>null</code> or empty)
+     * @param text the text being appended (can be <code>null</code> or empty
+     * @return <code>true</code> if text was appened
+     */
+    public static boolean build( final StringBuilder builder,
+                                 final boolean addDelimiter,
+                                 final String delimiter,
+                                 final String text ) {
         if (!Utils.isEmpty(text)) {
-            if (addDelimiter) {
+            if (addDelimiter && !Utils.isEmpty(delimiter)) {
                 builder.append(delimiter);
             }
 
@@ -38,8 +51,13 @@ public final class Utils {
         return false;
     }
 
-    public static boolean equals( Object thisObject,
-                                  Object thatObject ) {
+    /**
+     * @param thisObject the object being compared to the second object (can be <code>null</code>)
+     * @param thatObject the object being compared with the first object (can be <code>null</code>)
+     * @return <code>true</code> if both objects are <code>null</code> or are equal
+     */
+    public static boolean equals( final Object thisObject,
+                                  final Object thatObject ) {
         if (thisObject == null) {
             return (thatObject == null);
         }
@@ -51,8 +69,13 @@ public final class Utils {
         return thisObject.equals(thatObject);
     }
 
-    public static boolean equivalent( Collection<?> thisCollection,
-                                      Collection<?> thatCollection ) {
+    /**
+     * @param thisCollection the collection being compared to the second collection (can be <code>null</code>)
+     * @param thatCollection the collection being compared to the first collection (can be <code>null</code>)
+     * @return <code>true</code> if both collections are <code>null</code>, both are empty, or both contain the same items
+     */
+    public static boolean equivalent( final Collection<?> thisCollection,
+                                      final Collection<?> thatCollection ) {
         if (isEmpty(thisCollection)) {
             return isEmpty(thatCollection);
         }
@@ -68,8 +91,13 @@ public final class Utils {
         return thisCollection.containsAll(thatCollection);
     }
 
-    public static boolean equivalent( String thisString,
-                                      String thatString ) {
+    /**
+     * @param thisString the string being compared with the second string (can be <code>null</code> or empty)
+     * @param thatString the string being compared with the first string (can be <code>null</code> or empty)
+     * @return <code>true</code> if both are <code>null</code> or empty, or they are equal
+     */
+    public static boolean equivalent( final String thisString,
+                                      final String thatString ) {
         if (isEmpty(thisString)) {
             return isEmpty(thatString);
         }
@@ -81,49 +109,83 @@ public final class Utils {
         return thisString.equals(thatString);
     }
 
-    public static final int hashCode( Object... x ) {
+    /**
+     * @param x the objects used to construct the hashcode (can contain <code>null</code> objects)
+     * @return the hashcode
+     */
+    public static final int hashCode( final Object... x ) {
         return HashCode.compute(x);
     }
 
-    public static boolean isEmpty( Object[] items ) {
-        return ((items == null) || (items.length == 0));
-    }
-
-    public static boolean isEmpty( Collection<?> items ) {
+    /**
+     * @param items the collection being checked (can be <code>null</code> or empty)
+     * @return <code>true</code> if <code>null</code> or empty
+     */
+    public static boolean isEmpty( final Collection<?> items ) {
         return ((items == null) || items.isEmpty());
     }
 
-    public static boolean isEmpty( String text ) {
+    /**
+     * @param items the array being checked (can be <code>null</code> or empty)
+     * @return <code>true</code> if <code>null</code> or empty
+     */
+    public static boolean isEmpty( final Object[] items ) {
+        return ((items == null) || (items.length == 0));
+    }
+
+    /**
+     * @param text the string being checked (can be <code>null</code> or empty)
+     * @return <code>true</code> if <code>null</code> or empty
+     */
+    public static boolean isEmpty( final String text ) {
         return ((text == null) || text.isEmpty());
     }
 
-    public static void isNotNull( Object objectBeingChecked,
+    /**
+     * @param object the object being checked (can be <code>null</code>)
+     * @param name the name of the object to use in the error message (cannot be <code>null</code>)
+     * @throws IllegalArgumentException if the object is <code>null</code>
+     */
+    public static void isNotNull( final Object object,
                                   String name ) {
-        assert ((name != null) && !name.isEmpty()) : "name is null"; //$NON-NLS-1$
+        if ((name == null) || name.isEmpty()) {
+            name = Utils.EMPTY_STRING;
+        }
 
-        if (objectBeingChecked == null) {
+        if (object == null) {
             throw new IllegalArgumentException(NLS.bind(Messages.objectIsNull, name));
         }
     }
 
-    public static String[] toUpperCase(String[] items) {
+    /**
+     * @param items the items being upper-cased (cannot be <code>null</code>)
+     * @return a new collection of upper-cased items
+     */
+    public static String[] toUpperCase( final String[] items ) {
         Utils.isNotNull(items, "items"); //$NON-NLS-1$
 
-        String result[] = new String[items.length];
+        final String result[] = new String[items.length];
         int i = 0;
 
-        for (String item : items) {
+        for (final String item : items) {
             result[i++] = item.toUpperCase();
         }
 
         return result;
     }
 
-    public static void verifyIsNotEmpty( String objectBeingChecked,
+    /**
+     * @param text the string being checked (can be <code>null</code> or empty)
+     * @param name the name of the object to use in the error message (cannot be <code>null</code>)
+     * @throws IllegalArgumentException if the text is <code>null</code> or empty
+     */
+    public static void verifyIsNotEmpty( final String text,
                                          String name ) {
-        assert ((name != null) && !name.isEmpty()) : "name is null"; //$NON-NLS-1$
+        if ((name == null) || name.isEmpty()) {
+            name = Utils.EMPTY_STRING;
+        }
 
-        if (isEmpty(objectBeingChecked)) {
+        if (isEmpty(text)) {
             throw new IllegalArgumentException(NLS.bind(Messages.stringIsEmpty, name));
         }
     }

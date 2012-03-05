@@ -14,22 +14,23 @@ import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences.Preference;
 import org.jboss.tools.modeshape.jcr.cnd.attributes.AttributeState.Value;
 
 /**
- * 
+ * The child node definition attribute collection.
  */
 public class NodeAttributes implements CndElement {
 
-    public static final char DEFAULT_FORMAT_DELIMITER = ' ';
+    private final Autocreated autocreated;
 
-    private Autocreated autocreated;
+    private final Mandatory mandatory;
 
-    private Mandatory mandatory;
-
-    private Protected notDeletable;
+    private final Protected notDeletable;
 
     private OnParentVersion opv;
 
-    private SameNameSiblings sns;
+    private final SameNameSiblings sns;
 
+    /**
+     * Constructs node attributes all set to default values.
+     */
     public NodeAttributes() {
         this.autocreated = new Autocreated();
         this.mandatory = new Mandatory();
@@ -44,7 +45,7 @@ public class NodeAttributes implements CndElement {
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
-    public boolean equals( Object obj ) {
+    public boolean equals( final Object obj ) {
         if ((obj == null) || !getClass().equals(obj.getClass())) {
             return false;
         }
@@ -53,12 +54,15 @@ public class NodeAttributes implements CndElement {
             return true;
         }
 
-        NodeAttributes that = (NodeAttributes)obj;
+        final NodeAttributes that = (NodeAttributes)obj;
 
         return (this.autocreated.equals(that.autocreated) && this.mandatory.equals(that.mandatory)
                 && this.notDeletable.equals(that.notDeletable) && (this.opv == that.opv) && this.sns.equals(that.sns));
     }
 
+    /**
+     * @return the autocreated attribute (never <code>null</code>)
+     */
     public Autocreated getAutocreated() {
         return this.autocreated;
     }
@@ -67,18 +71,30 @@ public class NodeAttributes implements CndElement {
         return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.CHILD_NODE_ATTRIBUTES_DELIMITER);
     }
 
+    /**
+     * @return the mandatory attribute (never <code>null</code>)
+     */
     public Mandatory getMandatory() {
         return this.mandatory;
     }
 
+    /**
+     * @return the on parent version attribute (never <code>null</code>)
+     */
     public OnParentVersion getOnParentVersion() {
         return this.opv;
     }
 
+    /**
+     * @return the protected attribute (never <code>null</code>)
+     */
     public Protected getProtected() {
         return this.notDeletable;
     }
 
+    /**
+     * @return the same named siblings attribute (never <code>null</code>)
+     */
     public SameNameSiblings getSameNameSiblings() {
         return this.sns;
     }
@@ -93,15 +109,29 @@ public class NodeAttributes implements CndElement {
         return Utils.hashCode(this.autocreated, this.mandatory, this.notDeletable, this.opv, this.sns);
     }
 
-    public boolean setAutocreated( Value newState ) {
+    /**
+     * @param newState the new value to set the autocreated attribute state to (cannot be <code>null</code>)
+     * @return <code>true</code> if the state changed
+     */
+    public boolean setAutocreated( final Value newState ) {
         return this.autocreated.set(newState);
     }
 
-    public boolean setMandatory( Value newState ) {
+    /**
+     * @param newState the new value to set the mandatory attribute state to (cannot be <code>null</code>)
+     * @return <code>true</code> if state changed
+     */
+    public boolean setMandatory( final Value newState ) {
         return this.mandatory.set(newState);
     }
 
-    public boolean setOnParentVersion( OnParentVersion newOpv ) {
+    /**
+     * @param newOpv the new value to set the on parent version attribute to (cannot be <code>null</code>)
+     * @return <code>true</code> if changed
+     */
+    public boolean setOnParentVersion( final OnParentVersion newOpv ) {
+        Utils.isNotNull(newOpv, "newOpv"); //$NON-NLS-1$
+
         if (this.opv != newOpv) {
             this.opv = newOpv;
             return true;
@@ -110,11 +140,19 @@ public class NodeAttributes implements CndElement {
         return false;
     }
 
-    public boolean setProtected( Value newState ) {
+    /**
+     * @param newState the new value to set the protected attribute state to (cannot be <code>null</code>)
+     * @return <code>true</code> if state changed
+     */
+    public boolean setProtected( final Value newState ) {
         return this.notDeletable.set(newState);
     }
 
-    public boolean setSameNameSibling( Value newState ) {
+    /**
+     * @param newState the new value to set the same named siblings attribute state to (cannot be <code>null</code>)
+     * @return <code>true</code> if state changed
+     */
+    public boolean setSameNameSibling( final Value newState ) {
         return this.sns.set(newState);
     }
 
@@ -124,9 +162,9 @@ public class NodeAttributes implements CndElement {
      * @see org.jboss.tools.modeshape.jcr.cnd.CndElement#toCndNotation(org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType)
      */
     @Override
-    public String toCndNotation( NotationType notationType ) {
-        String delim = getFormatDelimiter();
-        StringBuilder builder = new StringBuilder();
+    public String toCndNotation( final NotationType notationType ) {
+        final String delim = getFormatDelimiter();
+        final StringBuilder builder = new StringBuilder();
         boolean addDelim = false;
 
         { // autocreated
@@ -134,7 +172,7 @@ public class NodeAttributes implements CndElement {
                 builder.append(delim);
             }
 
-            String notation = this.autocreated.toCndNotation(notationType);
+            final String notation = this.autocreated.toCndNotation(notationType);
 
             if (!Utils.isEmpty(notation)) {
                 builder.append(notation);
@@ -147,7 +185,7 @@ public class NodeAttributes implements CndElement {
                 builder.append(delim);
             }
 
-            String notation = this.mandatory.toCndNotation(notationType);
+            final String notation = this.mandatory.toCndNotation(notationType);
 
             if (!Utils.isEmpty(notation)) {
                 builder.append(notation);
@@ -160,7 +198,7 @@ public class NodeAttributes implements CndElement {
                 builder.append(delim);
             }
 
-            String notation = this.notDeletable.toCndNotation(notationType);
+            final String notation = this.notDeletable.toCndNotation(notationType);
 
             if (!Utils.isEmpty(notation)) {
                 builder.append(notation);
@@ -173,7 +211,7 @@ public class NodeAttributes implements CndElement {
                 builder.append(delim);
             }
 
-            String notation = this.opv.toCndNotation(notationType);
+            final String notation = this.opv.toCndNotation(notationType);
 
             if (!Utils.isEmpty(notation)) {
                 builder.append(notation);
@@ -186,7 +224,7 @@ public class NodeAttributes implements CndElement {
                 builder.append(delim);
             }
 
-            String notation = this.sns.toCndNotation(notationType);
+            final String notation = this.sns.toCndNotation(notationType);
 
             if (!Utils.isEmpty(notation)) {
                 builder.append(notation);

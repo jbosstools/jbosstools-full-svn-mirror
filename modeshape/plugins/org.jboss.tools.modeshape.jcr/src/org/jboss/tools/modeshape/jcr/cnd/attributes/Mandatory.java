@@ -9,8 +9,15 @@ package org.jboss.tools.modeshape.jcr.cnd.attributes;
 
 import org.jboss.tools.modeshape.jcr.cnd.CndElement;
 
+/**
+ * The mandatory attribute used by property definitions and child node definitions. When set, the property is mandatory, meaning it
+ * must be present in order to save the node.
+ */
 public class Mandatory extends AttributeState {
 
+    /**
+     * The CND notation for each notation type.
+     */
     public static final String[] NOTATION = new String[] { "mandatory", "man", "m" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
     /**

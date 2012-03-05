@@ -11,20 +11,26 @@ import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.cnd.CndElement;
 import org.jboss.tools.modeshape.jcr.cnd.LocalName;
 
+/**
+ * The primary item attribute used by node type definitions. This primary item may be a child node or a property.
+ */
 public class PrimaryItem extends AttributeState {
 
+    /**
+     * The CND notation for each notation type.
+     */
     public static final String[] NOTATION = new String[] { "primaryitem", "!", "!" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
     private final LocalName primaryItem = new LocalName();
 
     /**
      * {@inheritDoc}
-     *
+     * 
      * @see org.jboss.tools.modeshape.jcr.cnd.attributes.AttributeState#get()
      */
     @Override
     public Value get() {
-        Value state = super.get();
+        final Value state = super.get();
 
         if (state == Value.VARIANT) {
             return Value.VARIANT;
@@ -67,18 +73,20 @@ public class PrimaryItem extends AttributeState {
         return NOTATION[CndElement.NotationType.LONG_INDEX];
     }
 
+    /**
+     * @return the primary item (can be <code>null</code> or empty)
+     */
     public String getPrimaryItem() {
         return this.primaryItem.get();
     }
 
     /**
-     * {@inheritDoc}
-     * Only can be used to set to variant state.
-     *
+     * {@inheritDoc} Only can be used to set to variant state.
+     * 
      * @see org.jboss.tools.modeshape.jcr.cnd.attributes.AttributeState#set(org.jboss.tools.modeshape.jcr.cnd.attributes.AttributeState.Value)
      */
     @Override
-    public boolean set( Value newState ) {
+    public boolean set( final Value newState ) {
         if (newState == Value.VARIANT) {
             if (super.set(Value.VARIANT)) {
                 return true;
@@ -88,7 +96,11 @@ public class PrimaryItem extends AttributeState {
         return false;
     }
 
-    public boolean setPrimaryItem( String newPrimaryItem ) {
+    /**
+     * @param newPrimaryItem the proposed new primary item (can be <code>null</code> or empty)
+     * @return <code>true</code> if the primary item was changed
+     */
+    public boolean setPrimaryItem( final String newPrimaryItem ) {
         if (this.primaryItem.set(newPrimaryItem)) {
             if (Utils.isEmpty(newPrimaryItem) && !isVariant()) {
                 super.set(Value.IS_NOT);
@@ -108,7 +120,7 @@ public class PrimaryItem extends AttributeState {
      * @see org.jboss.tools.modeshape.jcr.cnd.attributes.AttributeState#toCndNotation(org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType)
      */
     @Override
-    public String toCndNotation( NotationType notationType ) {
+    public String toCndNotation( final NotationType notationType ) {
         String notation = super.toCndNotation(notationType);
 
         if (!isVariant() && is()) {
@@ -117,14 +129,14 @@ public class PrimaryItem extends AttributeState {
 
         return notation;
     }
-    
+
     /**
      * {@inheritDoc}
-     *
+     * 
      * @see org.jboss.tools.modeshape.jcr.cnd.attributes.AttributeState#toVariantCndNotation(java.lang.String)
      */
     @Override
-    protected String toVariantCndNotation( String cndNotation ) {
+    protected String toVariantCndNotation( final String cndNotation ) {
         return cndNotation + ' ' + AttributeState.VARIANT_CHAR;
     }
 }

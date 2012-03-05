@@ -9,8 +9,14 @@ package org.jboss.tools.modeshape.jcr.cnd.attributes;
 
 import org.jboss.tools.modeshape.jcr.cnd.CndElement;
 
+/**
+ * The no full text search attribute used by the property definitions.
+ */
 public class NoFullText extends AttributeState {
 
+    /**
+     * The CND notation for each notation type.
+     */
     public static final String[] NOTATION = new String[] { "nofulltext", "nof", "nof" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
     /**

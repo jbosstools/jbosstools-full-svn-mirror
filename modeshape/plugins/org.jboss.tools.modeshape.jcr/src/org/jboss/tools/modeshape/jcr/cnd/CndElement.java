@@ -8,13 +8,9 @@
 package org.jboss.tools.modeshape.jcr.cnd;
 
 /**
- * 
+ * An element that can be found in a CND file.
  */
 public interface CndElement {
-
-    char DELIMITER = ' ';
-
-    String LIST_DELIMITER = ", "; //$NON-NLS-1$
 
     /**
      * @param notationType the notation type (cannot be <code>null</code>)
@@ -22,9 +18,24 @@ public interface CndElement {
      */
     String toCndNotation( NotationType notationType );
 
+    /**
+     * The type of CND notation to use.
+     */
     enum NotationType {
+
+        /**
+         * The shortest form.
+         */
         COMPACT,
+
+        /**
+         * An intermediate-sized form.
+         */
         COMPRESSED,
+
+        /**
+         * The longest form.
+         */
         LONG;
 
         /**

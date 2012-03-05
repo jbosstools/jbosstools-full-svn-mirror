@@ -14,40 +14,6 @@ import org.jboss.tools.modeshape.jcr.Utils;
  */
 public class LocalName implements CndElement {
 
-    public enum Mode {
-
-        /**
-         * The name is not surrounded by quotes in the CND notation.
-         */
-        UNQOUTED(Utils.EMPTY_STRING),
-
-        /**
-         * The name is surrounded by single quotes in the CND notation.
-         */
-        SINGLE_QUOTED("'"), //$NON-NLS-1$
-
-        /**
-         * The name is surrounded by double quotes in the CND notation.
-         */
-        DOUBLE_QUOTED("\""); //$NON-NLS-1$
-
-        private final String delim;
-
-        private Mode( String delim ) {
-            this.delim = delim;
-        }
-
-        /**
-         * {@inheritDoc}
-         * 
-         * @see java.lang.Enum#toString()
-         */
-        @Override
-        public String toString() {
-            return this.delim;
-        }
-    }
-
     private Mode mode = Mode.UNQOUTED;
 
     private String value;
@@ -62,7 +28,7 @@ public class LocalName implements CndElement {
     /**
      * @param initialValue the initial name value (can be <code>null</code> or empty)
      */
-    public LocalName( String initialValue ) {
+    public LocalName( final String initialValue ) {
         this.value = initialValue;
     }
 
@@ -72,7 +38,7 @@ public class LocalName implements CndElement {
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
-    public boolean equals( Object obj ) {
+    public boolean equals( final Object obj ) {
         if (this == obj) {
             return true;
         }
@@ -81,7 +47,7 @@ public class LocalName implements CndElement {
             return false;
         }
 
-        LocalName that = (LocalName)obj;
+        final LocalName that = (LocalName)obj;
         return Utils.equals(this.value, that.value);
     }
 
@@ -144,7 +110,7 @@ public class LocalName implements CndElement {
      * @param newMode the new mode (cannot be <code>null</code>)
      * @return <code>true</code> if the model was changed
      */
-    public boolean setMode( Mode newMode ) {
+    public boolean setMode( final Mode newMode ) {
         Utils.isNotNull(newMode, "newMode"); //$NON-NLS-1$
 
         if (this.mode != newMode) {
@@ -161,8 +127,8 @@ public class LocalName implements CndElement {
      * @see org.jboss.tools.modeshape.jcr.cnd.CndElement#toCndNotation(org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType)
      */
     @Override
-    public String toCndNotation( NotationType notationType ) {
-        StringBuilder builder = new StringBuilder();
+    public String toCndNotation( final NotationType notationType ) {
+        final StringBuilder builder = new StringBuilder();
         Mode notationMode = this.mode;
 
         if (!Utils.isEmpty(this.value) && this.value.contains(" ") && (this.mode == Mode.UNQOUTED)) { //$NON-NLS-1$
@@ -174,6 +140,43 @@ public class LocalName implements CndElement {
         builder.append(notationMode);
 
         return builder.toString();
+    }
+
+    /**
+     * The quotation preference when using the name in CND notation.
+     */
+    public enum Mode {
+
+        /**
+         * The name is not surrounded by quotes in the CND notation.
+         */
+        UNQOUTED(Utils.EMPTY_STRING),
+
+        /**
+         * The name is surrounded by single quotes in the CND notation.
+         */
+        SINGLE_QUOTED("'"), //$NON-NLS-1$
+
+        /**
+         * The name is surrounded by double quotes in the CND notation.
+         */
+        DOUBLE_QUOTED("\""); //$NON-NLS-1$
+
+        private final String delim;
+
+        private Mode( final String delim ) {
+            this.delim = delim;
+        }
+
+        /**
+         * {@inheritDoc}
+         * 
+         * @see java.lang.Enum#toString()
+         */
+        @Override
+        public String toString() {
+            return this.delim;
+        }
     }
 
 }

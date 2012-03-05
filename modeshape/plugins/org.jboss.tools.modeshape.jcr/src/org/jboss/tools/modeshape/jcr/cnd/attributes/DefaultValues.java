@@ -16,19 +16,25 @@ import org.jboss.tools.modeshape.jcr.Utils;
  */
 public final class DefaultValues extends ListAttributeState<String> {
 
+    /**
+     * The CND list prefix.
+     */
     public static final String NOTATION_PREFIX = "="; //$NON-NLS-1$
 
+    /**
+     * @return the JCR value for each default value (never <code>null</code>)
+     */
     public javax.jcr.Value[] asJcrValues() {
-        Collection<String> defaultValues = getSupportedItems();
+        final Collection<String> defaultValues = getSupportedItems();
 
         if (Utils.isEmpty(defaultValues)) {
             return new javax.jcr.Value[0];
         }
 
-        javax.jcr.Value[] jcrValues = new javax.jcr.Value[defaultValues.size()];
+        final javax.jcr.Value[] jcrValues = new javax.jcr.Value[defaultValues.size()];
         int i = 0;
 
-        for (String defaultValue : defaultValues) {
+        for (final String defaultValue : defaultValues) {
             jcrValues[i++] = new PropertyValue(PropertyType.STRING.asJcrValue(), defaultValue);
         }
 
@@ -41,7 +47,7 @@ public final class DefaultValues extends ListAttributeState<String> {
      * @see org.jboss.tools.modeshape.jcr.cnd.attributes.ListAttributeState#getCndNotationPrefix(org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType)
      */
     @Override
-    protected String getCndNotationPrefix( NotationType notationType ) {
+    protected String getCndNotationPrefix( final NotationType notationType ) {
         return NOTATION_PREFIX;
     }
 

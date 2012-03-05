@@ -12,10 +12,13 @@ import java.util.List;
 import org.jboss.tools.modeshape.jcr.Utils;
 
 /**
- * 
+ * The value constraints of a property definition.
  */
 public final class ValueConstraints extends ListAttributeState<String> {
 
+    /**
+     * The CND list suffix.
+     */
     public static final String NOTATION_PREFIX = "<"; //$NON-NLS-1$
 
     /**
@@ -24,21 +27,24 @@ public final class ValueConstraints extends ListAttributeState<String> {
      * @see org.jboss.tools.modeshape.jcr.cnd.attributes.ListAttributeState#getCndNotationPrefix(org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType)
      */
     @Override
-    protected String getCndNotationPrefix( NotationType notationType ) {
+    protected String getCndNotationPrefix( final NotationType notationType ) {
         return NOTATION_PREFIX;
     }
 
+    /**
+     * @return the collection of value constraints (never <code>null</code>)
+     */
     public String[] toArray() {
-        List<String> constraints = getSupportedItems();
+        final List<String> constraints = getSupportedItems();
 
         if (Utils.isEmpty(constraints)) {
             return Utils.EMPTY_STRING_ARRAY;
         }
 
-        String[] result = new String[constraints.size()];
+        final String[] result = new String[constraints.size()];
         int i = 0;
 
-        for (String constraint : constraints) {
+        for (final String constraint : constraints) {
             result[i++] = constraint;
         }
 

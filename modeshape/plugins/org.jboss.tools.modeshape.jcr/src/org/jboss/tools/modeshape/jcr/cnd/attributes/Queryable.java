@@ -10,24 +10,26 @@ package org.jboss.tools.modeshape.jcr.cnd.attributes;
 import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.cnd.CndElement;
 
+/**
+ * The queryable attribute used by child node definitions.
+ */
 public class Queryable extends AttributeState {
 
+    /**
+     * The CND notation for each notation type for when queryable.
+     */
     public static final String[] QUERY_NOTATION = new String[] { "query", "q", "q" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
+    /**
+     * The CND notation for each notation type for when not queryable..
+     */
     public static final String[] NO_QUERY_NOTATION = new String[] { "noquery", "nq", "nq" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
+    /**
+     * Constructs a queryable attribute set to be a variant (the default).
+     */
     public Queryable() {
         set(Value.VARIANT);
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see org.jboss.tools.modeshape.jcr.cnd.attributes.AttributeState#hasCndNotation()
-     */
-    @Override
-    protected boolean hasCndNotation() {
-        return !isVariant();
     }
 
     /**
@@ -82,6 +84,16 @@ public class Queryable extends AttributeState {
         }
 
         return Utils.EMPTY_STRING;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.jboss.tools.modeshape.jcr.cnd.attributes.AttributeState#hasCndNotation()
+     */
+    @Override
+    protected boolean hasCndNotation() {
+        return !isVariant();
     }
 
 }

@@ -29,60 +29,9 @@ import org.jboss.tools.modeshape.jcr.cnd.attributes.NodeTypeAttributes;
 import org.jboss.tools.modeshape.jcr.cnd.attributes.SuperTypes;
 
 /**
- * 
+ * Represents a CND node type definition.
  */
 public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
-
-    /**
-     * The property names whose <code>toString()</code> is used in {@link PropertyChangeEvent}s.
-     */
-    public enum PropertyName {
-
-        /**
-         * The abstract attribute.
-         */
-        ABSTRACT,
-
-        /**
-         * The collection for child node definitions.
-         */
-        CHILD_NODES,
-
-        /**
-         * The mixin attribute.
-         */
-        MIXIN,
-
-        /**
-         * The node type name.
-         */
-        NAME,
-
-        /**
-         * The orderable attribute.
-         */
-        ORDERABLE,
-
-        /**
-         * The primary item attribute.
-         */
-        PRIMARY_ITEM,
-
-        /**
-         * The collection of property definitions.
-         */
-        PROPERTY_DEFINITIONS,
-
-        /**
-         * The queryable attribute.
-         */
-        QUERYABLE,
-
-        /**
-         * The collection for super types.
-         */
-        SUPERTYPES
-    }
 
     /**
      * Then node type name prefix used in the CND notation.
@@ -124,6 +73,9 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
      */
     private final SuperTypes superTypes;
 
+    /**
+     * Constructs a node type definition having default values for all attributes and properties.
+     */
     public NodeTypeDefinition() {
         this.attributes = new NodeTypeAttributes();
         this.name = new LocalName();
@@ -137,7 +89,7 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
      * @param childNodeDefinitionBeingAdded the child node definition being added (cannot be <code>null</code>)
      * @return <code>true</code> if successfully added
      */
-    public boolean addChildNodeDefinition( ChildNodeDefinition childNodeDefinitionBeingAdded ) {
+    public boolean addChildNodeDefinition( final ChildNodeDefinition childNodeDefinitionBeingAdded ) {
         Utils.isNotNull(childNodeDefinitionBeingAdded, "childNodeDefinitionBeingAdded"); //$NON-NLS-1$
 
         if (this.childNodesDefinitions == null) {
@@ -156,7 +108,7 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
      * @param newListener the listener being added (cannot be <code>null</code>)
      * @return <code>true</code> if successfully added
      */
-    public boolean addListener( PropertyChangeListener newListener ) {
+    public boolean addListener( final PropertyChangeListener newListener ) {
         Utils.isNotNull(newListener, "newListener"); //$NON-NLS-1$
         return this.listeners.addIfAbsent(newListener);
     }
@@ -167,7 +119,7 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
      * @param properyDefinitionBeingAdded the property definition being added (cannot be <code>null</code>)
      * @return <code>true</code> if successfully added
      */
-    public boolean addPropertyDefinition( PropertyDefinition properyDefinitionBeingAdded ) {
+    public boolean addPropertyDefinition( final PropertyDefinition properyDefinitionBeingAdded ) {
         Utils.isNotNull(properyDefinitionBeingAdded, "properyDefinitionBeingAdded"); //$NON-NLS-1$
 
         if (this.propertyDefinitions == null) {
@@ -188,7 +140,7 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
      * @param superTypeBeingAdded the super type name being added (cannot be <code>null</code> or empty)
      * @return <code>true</code> if successfully added
      */
-    public boolean addSuperType( String superTypeBeingAdded ) {
+    public boolean addSuperType( final String superTypeBeingAdded ) {
         Utils.verifyIsNotEmpty(superTypeBeingAdded, "superTypeBeingAdded"); //$NON-NLS-1$
 
         if (this.superTypes.add(superTypeBeingAdded)) {
@@ -207,13 +159,13 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
      * @param newState the new state (cannot be <code>null</code>)
      * @return <code>true</code> if the attribute state was changed
      */
-    public boolean changeState( PropertyName propertyName,
-                                Value newState ) {
+    public boolean changeState( final PropertyName propertyName,
+                                final Value newState ) {
         Utils.isNotNull(propertyName, "propertyName"); //$NON-NLS-1$
         Utils.isNotNull(newState, "newState"); //$NON-NLS-1$
 
         Object oldValue = null;
-        Object newValue = newState;
+        final Object newValue = newState;
         boolean changed = false;
 
         if (PropertyName.ABSTRACT == propertyName) {
@@ -254,8 +206,8 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
             return false; // nothing to clear
         }
 
-        List<ChildNodeDefinition> childNodes = new ArrayList<ChildNodeDefinition>(getChildNodeDefinitions());
-        boolean cleared = !this.childNodesDefinitions.isEmpty();
+        final List<ChildNodeDefinition> childNodes = new ArrayList<ChildNodeDefinition>(getChildNodeDefinitions());
+        final boolean cleared = !this.childNodesDefinitions.isEmpty();
         this.childNodesDefinitions = null;
 
         if (cleared) {
@@ -275,8 +227,8 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
             return false; // nothing to clear
         }
 
-        List<PropertyDefinition> propDefns = new ArrayList<PropertyDefinition>(getPropertyDefinitions());
-        boolean cleared = !this.propertyDefinitions.isEmpty();
+        final List<PropertyDefinition> propDefns = new ArrayList<PropertyDefinition>(getPropertyDefinitions());
+        final boolean cleared = !this.propertyDefinitions.isEmpty();
         this.propertyDefinitions = null;
 
         if (cleared) {
@@ -292,7 +244,7 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
      * @return <code>true</code> if there was at least one super type before clearing
      */
     public boolean clearSuperTypes() {
-        List<String> types = new ArrayList<String>(this.superTypes.getSupportedItems());
+        final List<String> types = new ArrayList<String>(this.superTypes.getSupportedItems());
 
         if (this.superTypes.clear()) {
             notifyChangeListeners(PropertyName.SUPERTYPES, types, null);
@@ -324,7 +276,7 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
      */
     @Override
     public NodeDefinition[] getDeclaredChildNodeDefinitions() {
-        List<ChildNodeDefinition> childNodes = getChildNodeDefinitions();
+        final List<ChildNodeDefinition> childNodes = getChildNodeDefinitions();
         return childNodes.toArray(new NodeDefinition[childNodes.size()]);
     }
 
@@ -335,7 +287,7 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
      */
     @Override
     public PropertyDefinition[] getDeclaredPropertyDefinitions() {
-        List<PropertyDefinition> propDefns = getPropertyDefinitions();
+        final List<PropertyDefinition> propDefns = getPropertyDefinitions();
         return propDefns.toArray(new PropertyDefinition[propDefns.size()]);
     }
 
@@ -396,7 +348,7 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
      */
     @Override
     public String getPrimaryItemName() {
-        String primaryItem = this.attributes.getPrimaryItem().getPrimaryItem();
+        final String primaryItem = this.attributes.getPrimaryItem().getPrimaryItem();
 
         // API states to return null
         if (Utils.isEmpty(primaryItem)) {
@@ -439,7 +391,7 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
      * @return the attribute state (never <code>null</code>)
      * @throws IllegalArgumentException if a property that does not have an attribute state is specified
      */
-    public Value getState( PropertyName propertyName ) {
+    public Value getState( final PropertyName propertyName ) {
         Utils.isNotNull(propertyName, "propertyName"); //$NON-NLS-1$
 
         if (PropertyName.ABSTRACT == propertyName) {
@@ -513,7 +465,7 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
      * @param propertyName the property being checked (cannot be <code>null</code>)
      * @return <code>true</code> if property is a variant
      */
-    public boolean isVariant( PropertyName propertyName ) {
+    public boolean isVariant( final PropertyName propertyName ) {
         Utils.isNotNull(propertyName, "propertyName"); //$NON-NLS-1$
         return (getState(propertyName) == Value.VARIANT);
     }
@@ -526,12 +478,12 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
     private void notifyChangeListeners( final PropertyName property,
                                         final Object oldValue,
                                         final Object newValue ) {
-        PropertyChangeEvent event = new PropertyChangeEvent(this, property.toString(), oldValue, newValue);
+        final PropertyChangeEvent event = new PropertyChangeEvent(this, property.toString(), oldValue, newValue);
 
         for (final Object listener : this.listeners.toArray()) {
             try {
                 ((PropertyChangeListener)listener).propertyChange(event);
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 // TODO log this
                 this.listeners.remove(listener);
             }
@@ -544,7 +496,7 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
      * @param childNodeDefinitionBeingRemoved the child node definition being removed (cannot be <code>null</code>)
      * @return <code>true</code> if successfully removed
      */
-    public boolean removeChildNodeDefinition( ChildNodeDefinition childNodeDefinitionBeingRemoved ) {
+    public boolean removeChildNodeDefinition( final ChildNodeDefinition childNodeDefinitionBeingRemoved ) {
         Utils.isNotNull(childNodeDefinitionBeingRemoved, "childNodeDefinitionBeingRemoved"); //$NON-NLS-1$
 
         if (this.childNodesDefinitions == null) {
@@ -568,7 +520,7 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
      * @param listener the listener who no longer will receive property change events (cannot be <code>null</code>)
      * @return <code>true</code> if successfully removed
      */
-    public boolean removeListener( PropertyChangeListener listener ) {
+    public boolean removeListener( final PropertyChangeListener listener ) {
         Utils.isNotNull(listener, "listener"); //$NON-NLS-1$
         return this.listeners.remove(listener);
     }
@@ -579,7 +531,7 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
      * @param propertyDefinitionBeingRemoved the property definition being removed (cannot be <code>null</code>)
      * @return <code>true</code> if successfully removed
      */
-    public boolean removePropertyDefinition( PropertyDefinition propertyDefinitionBeingRemoved ) {
+    public boolean removePropertyDefinition( final PropertyDefinition propertyDefinitionBeingRemoved ) {
         Utils.isNotNull(propertyDefinitionBeingRemoved, "propertyDefinitionBeingRemoved"); //$NON-NLS-1$
 
         if (this.propertyDefinitions == null) {
@@ -605,7 +557,7 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
      * @param superTypeBeingRemoved the super type name being removed (cannot be <code>null</code>)
      * @return <code>true</code> if successfully removed
      */
-    public boolean removeSuperType( String superTypeBeingRemoved ) {
+    public boolean removeSuperType( final String superTypeBeingRemoved ) {
         if (this.superTypes.remove(superTypeBeingRemoved)) {
             notifyChangeListeners(PropertyName.SUPERTYPES, superTypeBeingRemoved, null);
             return true; // removed
@@ -620,8 +572,8 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
      * @see javax.jcr.nodetype.NodeTypeTemplate#setAbstract(boolean)
      */
     @Override
-    public void setAbstract( boolean newAbstract ) {
-        AttributeState.Value newState = (newAbstract ? AttributeState.Value.IS : AttributeState.Value.IS_NOT);
+    public void setAbstract( final boolean newAbstract ) {
+        final AttributeState.Value newState = (newAbstract ? AttributeState.Value.IS : AttributeState.Value.IS_NOT);
         changeState(PropertyName.ABSTRACT, newState);
     }
 
@@ -631,12 +583,12 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
      * @see javax.jcr.nodetype.NodeTypeTemplate#setDeclaredSuperTypeNames(java.lang.String[])
      */
     @Override
-    public void setDeclaredSuperTypeNames( String[] newSuperTypes ) {
-        List<String> oldValue = this.superTypes.getSupportedItems();
+    public void setDeclaredSuperTypeNames( final String[] newSuperTypes ) {
+        final List<String> oldValue = this.superTypes.getSupportedItems();
         boolean changed = this.superTypes.clear();
 
         if (!Utils.isEmpty(newSuperTypes)) {
-            for (String superType : newSuperTypes) {
+            for (final String superType : newSuperTypes) {
                 if (this.superTypes.add(superType)) {
                     changed = true;
                 }
@@ -654,8 +606,8 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
      * @see javax.jcr.nodetype.NodeTypeTemplate#setMixin(boolean)
      */
     @Override
-    public void setMixin( boolean newMixin ) {
-        AttributeState.Value newState = (newMixin ? AttributeState.Value.IS : AttributeState.Value.IS_NOT);
+    public void setMixin( final boolean newMixin ) {
+        final AttributeState.Value newState = (newMixin ? AttributeState.Value.IS : AttributeState.Value.IS_NOT);
         changeState(PropertyName.MIXIN, newState);
     }
 
@@ -665,8 +617,8 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
      * @see javax.jcr.nodetype.NodeTypeTemplate#setName(java.lang.String)
      */
     @Override
-    public void setName( String newName ) {
-        Object oldValue = this.name.get();
+    public void setName( final String newName ) {
+        final Object oldValue = this.name.get();
 
         if (this.name.set(newName)) {
             notifyChangeListeners(PropertyName.NAME, oldValue, newName);
@@ -679,8 +631,8 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
      * @see javax.jcr.nodetype.NodeTypeTemplate#setOrderableChildNodes(boolean)
      */
     @Override
-    public void setOrderableChildNodes( boolean newOrderable ) {
-        AttributeState.Value newState = (newOrderable ? AttributeState.Value.IS : AttributeState.Value.IS_NOT);
+    public void setOrderableChildNodes( final boolean newOrderable ) {
+        final AttributeState.Value newState = (newOrderable ? AttributeState.Value.IS : AttributeState.Value.IS_NOT);
         changeState(PropertyName.ORDERABLE, newState);
     }
 
@@ -690,8 +642,8 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
      * @see javax.jcr.nodetype.NodeTypeTemplate#setPrimaryItemName(java.lang.String)
      */
     @Override
-    public void setPrimaryItemName( String newPrimaryItem ) {
-        String oldName = this.attributes.getPrimaryItem().getPrimaryItem();
+    public void setPrimaryItemName( final String newPrimaryItem ) {
+        final String oldName = this.attributes.getPrimaryItem().getPrimaryItem();
 
         if (this.attributes.getPrimaryItem().setPrimaryItem(newPrimaryItem)) {
             notifyChangeListeners(PropertyName.PRIMARY_ITEM, oldName, newPrimaryItem);
@@ -704,8 +656,8 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
      * @see javax.jcr.nodetype.NodeTypeTemplate#setQueryable(boolean)
      */
     @Override
-    public void setQueryable( boolean newQueryable ) {
-        AttributeState.Value newState = (newQueryable ? AttributeState.Value.IS : AttributeState.Value.IS_NOT);
+    public void setQueryable( final boolean newQueryable ) {
+        final AttributeState.Value newState = (newQueryable ? AttributeState.Value.IS : AttributeState.Value.IS_NOT);
         changeState(PropertyName.QUERYABLE, newState);
     }
 
@@ -715,8 +667,8 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
      * @see org.jboss.tools.modeshape.jcr.cnd.CndElement#toCndNotation(org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType)
      */
     @Override
-    public String toCndNotation( NotationType notationType ) {
-        StringBuilder builder = new StringBuilder("- "); //$NON-NLS-1$
+    public String toCndNotation( final NotationType notationType ) {
+        final StringBuilder builder = new StringBuilder("- "); //$NON-NLS-1$
 
         { // name
             builder.append(NAME_NOTATION_PREFIX)
@@ -726,7 +678,7 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
         }
 
         { // super types
-            String notation = this.superTypes.toCndNotation(notationType);
+            final String notation = this.superTypes.toCndNotation(notationType);
 
             if (!Utils.isEmpty(notation)) {
                 builder.append(notation).append(getEndSuperTypesDelimiter());
@@ -734,7 +686,7 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
         }
 
         { // attributes
-            String notation = this.attributes.toCndNotation(notationType);
+            final String notation = this.attributes.toCndNotation(notationType);
 
             if (!Utils.isEmpty(notation)) {
                 builder.append(notation).append(getEndAttributesDelimiter());
@@ -745,7 +697,7 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
             if (!Utils.isEmpty(this.propertyDefinitions)) {
                 final String PD_DELIM = getPropertyDefinitionDelimiter();
 
-                for (PropertyDefinition propDefn : this.propertyDefinitions) {
+                for (final PropertyDefinition propDefn : this.propertyDefinitions) {
                     builder.append(propDefn.toCndNotation(notationType)).append(PD_DELIM);
                 }
 
@@ -757,7 +709,7 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
             if (!Utils.isEmpty(this.childNodesDefinitions)) {
                 final String CND_DELIM = getChildNodeDefinitionDelimiter();
 
-                for (ChildNodeDefinition childNodeDefn : this.childNodesDefinitions) {
+                for (final ChildNodeDefinition childNodeDefn : this.childNodesDefinitions) {
                     builder.append(childNodeDefn.toCndNotation(notationType)).append(CND_DELIM);
                 }
 
@@ -766,6 +718,57 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
         }
 
         return builder.toString();
+    }
+
+    /**
+     * The property names whose <code>toString()</code> is used in {@link PropertyChangeEvent}s.
+     */
+    public enum PropertyName {
+
+        /**
+         * The abstract attribute.
+         */
+        ABSTRACT,
+
+        /**
+         * The collection for child node definitions.
+         */
+        CHILD_NODES,
+
+        /**
+         * The mixin attribute.
+         */
+        MIXIN,
+
+        /**
+         * The node type name.
+         */
+        NAME,
+
+        /**
+         * The orderable attribute.
+         */
+        ORDERABLE,
+
+        /**
+         * The primary item attribute.
+         */
+        PRIMARY_ITEM,
+
+        /**
+         * The collection of property definitions.
+         */
+        PROPERTY_DEFINITIONS,
+
+        /**
+         * The queryable attribute.
+         */
+        QUERYABLE,
+
+        /**
+         * The collection for super types.
+         */
+        SUPERTYPES
     }
 
 }

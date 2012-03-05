@@ -12,12 +12,18 @@ import java.util.List;
 import org.jboss.tools.modeshape.jcr.Utils;
 
 /**
- * 
+ * The required types of a child node definition.
  */
 public final class RequiredTypes extends ListAttributeState<String> {
 
+    /**
+     * The CND list prefix.
+     */
     public static final String NOTATION_PREFIX = "("; //$NON-NLS-1$;
 
+    /**
+     * The CND list suffix.
+     */
     public static final String NOTATION_SUFFIX = ")"; //$NON-NLS-1$
 
     /**
@@ -26,7 +32,7 @@ public final class RequiredTypes extends ListAttributeState<String> {
      * @see org.jboss.tools.modeshape.jcr.cnd.attributes.ListAttributeState#getCndNotationPrefix(org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType)
      */
     @Override
-    protected String getCndNotationPrefix( NotationType notationType ) {
+    protected String getCndNotationPrefix( final NotationType notationType ) {
         return NOTATION_PREFIX;
     }
 
@@ -36,35 +42,38 @@ public final class RequiredTypes extends ListAttributeState<String> {
      * @see org.jboss.tools.modeshape.jcr.cnd.attributes.ListAttributeState#getCndNotationSuffix(org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType)
      */
     @Override
-    protected String getCndNotationSuffix( NotationType notationType ) {
+    protected String getCndNotationSuffix( final NotationType notationType ) {
         return NOTATION_SUFFIX;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.jboss.tools.modeshape.jcr.cnd.attributes.ListAttributeState#getListPrefixEndDelimiter()
+     */
+    @Override
+    protected String getListPrefixEndDelimiter() {
+        return Utils.EMPTY_STRING;
+    }
+
+    /**
+     * @return the collection of required types (never <code>null</code>)
+     */
     public String[] toArray() {
-        List<String> typeNames = getSupportedItems();
+        final List<String> typeNames = getSupportedItems();
 
         if (Utils.isEmpty(typeNames)) {
             return Utils.EMPTY_STRING_ARRAY;
         }
 
-        String[] result = new String[typeNames.size()];
+        final String[] result = new String[typeNames.size()];
         int i = 0;
 
-        for (String typeName : typeNames) {
+        for (final String typeName : typeNames) {
             result[i++] = typeName;
         }
 
         return result;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @see org.jboss.tools.modeshape.jcr.cnd.attributes.ListAttributeState#getDelimiter()
-     */
-    @Override
-    protected String getDelimiter() {
-        return Utils.EMPTY_STRING;
     }
 
 }

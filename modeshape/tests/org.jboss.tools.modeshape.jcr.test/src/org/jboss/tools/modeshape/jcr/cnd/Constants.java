@@ -42,9 +42,9 @@ public interface Constants {
     String AUTOCREATED_VARIANT_COMPRESSED_FORM = Autocreated.NOTATION[NotationType.COMPRESSED_INDEX] + VARIANT;
     String AUTOCREATED_VARIANT_LONG_FORM = Autocreated.NOTATION[NotationType.LONG_INDEX] + VARIANT;
 
-    String DEFAULT_TYPE_VARIANT_FORM = DefaultType.NOTATION + ' ' + VARIANT;
+    String DEFAULT_TYPE_VARIANT_FORM = DefaultType.NOTATION + VARIANT;
     String DEFAULT_TYPE = "jcr:data"; //$NON-NLS-1$
-    String DEFAULT_TYPE_TYPE_FORM = DefaultType.NOTATION + ' ' + DEFAULT_TYPE;
+    String DEFAULT_TYPE_TYPE_FORM = DefaultType.NOTATION + DEFAULT_TYPE;
 
     String MANDATORY_VARIANT_COMPACT_FORM = Mandatory.NOTATION[NotationType.COMPACT_INDEX] + VARIANT;
     String MANDATORY_VARIANT_COMPRESSED_FORM = Mandatory.NOTATION[NotationType.COMPRESSED_INDEX] + VARIANT;
@@ -96,17 +96,23 @@ public interface Constants {
     String QUERY_OPS_ONE_OPERATOR_COMPRESSED_FORM = QUERY_OPS_COMPRESSED_FORM + " '" //$NON-NLS-1$
             + OPERATOR_ONE.toCndNotation(NotationType.COMPRESSED) + '\'';
     String QUERY_OPS_ONE_OPERATOR_LONG_FORM = QUERY_OPS_LONG_FORM + " '" + OPERATOR_ONE.toCndNotation(NotationType.LONG) + '\''; //$NON-NLS-1$
-    String QUERY_OPS_THREE_OPERATOR_COMPACT_FORM = QUERY_OPS_COMPACT_FORM + " '" + OPERATOR_ONE.toCndNotation(NotationType.COMPACT) //$NON-NLS-1$
-            + CndElement.LIST_DELIMITER + OPERATOR_TWO.toCndNotation(NotationType.COMPACT) + CndElement.LIST_DELIMITER
+    String QUERY_OPS_THREE_OPERATOR_COMPACT_FORM = QUERY_OPS_COMPACT_FORM
+            + " '" + OPERATOR_ONE.toCndNotation(NotationType.COMPACT) //$NON-NLS-1$
+            + CndNotationPreferences.Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER + OPERATOR_TWO.toCndNotation(NotationType.COMPACT)
+            + CndNotationPreferences.Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER
             + OPERATOR_THREE.toCndNotation(NotationType.COMPACT) + '\'';
     String QUERY_OPS_THREE_OPERATOR_COMPRESSED_FORM = QUERY_OPS_COMPRESSED_FORM
             + " '" //$NON-NLS-1$
-            + OPERATOR_ONE.toCndNotation(NotationType.COMPRESSED) + CndElement.LIST_DELIMITER
-            + OPERATOR_TWO.toCndNotation(NotationType.COMPRESSED) + CndElement.LIST_DELIMITER
+            + OPERATOR_ONE.toCndNotation(NotationType.COMPRESSED)
+            + CndNotationPreferences.Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER
+            + OPERATOR_TWO.toCndNotation(NotationType.COMPRESSED)
+            + CndNotationPreferences.Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER
             + OPERATOR_THREE.toCndNotation(NotationType.COMPRESSED) + '\'';
-    String QUERY_OPS_THREE_OPERATOR_LONG_FORM = QUERY_OPS_LONG_FORM + " '" + OPERATOR_ONE.toCndNotation(NotationType.LONG) //$NON-NLS-1$
-            + CndElement.LIST_DELIMITER + OPERATOR_TWO.toCndNotation(NotationType.LONG) + CndElement.LIST_DELIMITER
-            + OPERATOR_THREE.toCndNotation(NotationType.LONG) + '\'';
+    String QUERY_OPS_THREE_OPERATOR_LONG_FORM = QUERY_OPS_LONG_FORM
+            + " '" + OPERATOR_ONE.toCndNotation(NotationType.LONG) //$NON-NLS-1$
+            + CndNotationPreferences.Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER + OPERATOR_TWO.toCndNotation(NotationType.LONG)
+            + CndNotationPreferences.Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER + OPERATOR_THREE.toCndNotation(NotationType.LONG)
+            + '\'';
 
     String SAME_NAME_SIBLINGS_VARIANT_COMPACT_FORM = SameNameSiblings.NOTATION[NotationType.COMPACT_INDEX] + VARIANT;
     String SAME_NAME_SIBLINGS_VARIANT_COMPRESSED_FORM = SameNameSiblings.NOTATION[NotationType.COMPRESSED_INDEX] + VARIANT;
@@ -116,8 +122,8 @@ public interface Constants {
     String ITEM_TWO = "item2"; //$NON-NLS-1$ 
     String ITEM_THREE = "item3"; //$NON-NLS-1$
     String ONE_ITEM_SINGLE_QUOTED_FORM = '\'' + ITEM_ONE + '\'';
-    String THREE_ITEM_SINGLE_QUOTED_FORM = '\'' + ITEM_ONE + CndElement.LIST_DELIMITER + ITEM_TWO + CndElement.LIST_DELIMITER
-            + ITEM_THREE + '\'';
+    String THREE_ITEM_SINGLE_QUOTED_FORM = '\'' + ITEM_ONE + CndNotationPreferences.Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER
+            + ITEM_TWO + CndNotationPreferences.Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER + ITEM_THREE + '\'';
 
     String DEFAULT_VALUES_VARIANT = DefaultValues.NOTATION_PREFIX + ' ' + VARIANT;
     String DEFAULT_VALUES_ONE_ITEM_FORM = DefaultValues.NOTATION_PREFIX + ' ' + ONE_ITEM_SINGLE_QUOTED_FORM;

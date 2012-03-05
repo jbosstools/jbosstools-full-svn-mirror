@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 
+ * A validation status that can contain other statuses.
  */
 public class MultiValidationStatus extends ValidationStatus {
 
@@ -19,15 +19,24 @@ public class MultiValidationStatus extends ValidationStatus {
 
     private ValidationStatus primary = null;
 
+    /**
+     * Constructs an OK status.
+     */
     public MultiValidationStatus() {
         super(Severity.OK, Messages.okValidationMsg);
     }
 
-    public MultiValidationStatus( ValidationStatus status ) {
+    /**
+     * @param status the status used to construct (cannot be <code>null</code>)
+     */
+    public MultiValidationStatus( final ValidationStatus status ) {
         super(status.getSeverity(), status.getMessage());
     }
 
-    public void add( ValidationStatus statusBeingAdded ) {
+    /**
+     * @param statusBeingAdded the status being added (cannot be <code>null</code>)
+     */
+    public void add( final ValidationStatus statusBeingAdded ) {
         this.errors.add(statusBeingAdded);
 
         if ((this.primary == null) || statusBeingAdded.getSeverity().isMoreSevere(getSeverity())) {
@@ -37,6 +46,9 @@ public class MultiValidationStatus extends ValidationStatus {
         }
     }
 
+    /**
+     * @return a collection of all contained statuses (never <code>null</code>)
+     */
     public List<ValidationStatus> getAll() {
         return this.errors;
     }

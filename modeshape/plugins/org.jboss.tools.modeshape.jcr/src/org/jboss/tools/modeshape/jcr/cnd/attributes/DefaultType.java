@@ -10,8 +10,14 @@ package org.jboss.tools.modeshape.jcr.cnd.attributes;
 import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.cnd.LocalName;
 
+/**
+ * The child node definitions default type property.
+ */
 public class DefaultType extends AttributeState {
 
+    /**
+     * The CND notation for each notation type.
+     */
     public static final String NOTATION = "="; //$NON-NLS-1$
 
     private final LocalName defaultType = new LocalName();
@@ -23,7 +29,7 @@ public class DefaultType extends AttributeState {
      */
     @Override
     public Value get() {
-        Value state = super.get();
+        final Value state = super.get();
 
         if (state == Value.VARIANT) {
             return Value.VARIANT;
@@ -43,7 +49,7 @@ public class DefaultType extends AttributeState {
      */
     @Override
     protected String getCompactCndNotation() {
-        return NOTATION;
+        return getLongCndNotation();
     }
 
     /**
@@ -53,9 +59,12 @@ public class DefaultType extends AttributeState {
      */
     @Override
     protected String getCompressedCndNotation() {
-        return NOTATION;
+        return getLongCndNotation();
     }
 
+    /**
+     * @return the default type (can be <code>null</code> or empty)
+     */
     public String getDefaultType() {
         return this.defaultType.get();
     }
@@ -67,16 +76,23 @@ public class DefaultType extends AttributeState {
      */
     @Override
     protected String getLongCndNotation() {
-        return NOTATION;
+        String defaultType = getDefaultType();
+
+        if (Utils.isEmpty(defaultType)) {
+            return NOTATION;
+        }
+ 
+        return NOTATION + defaultType;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc} <strong>Can only be used to change to a variant state. Use {@link DefaultType#setDefaultType(String)} to set to
+     * other states</strong>
      * 
      * @see org.jboss.tools.modeshape.jcr.cnd.attributes.AttributeState#set(org.jboss.tools.modeshape.jcr.cnd.attributes.AttributeState.Value)
      */
     @Override
-    public boolean set( Value newState ) {
+    public boolean set( final Value newState ) {
         if (newState == Value.VARIANT) {
             if (super.set(Value.VARIANT)) {
                 return true;
@@ -86,7 +102,11 @@ public class DefaultType extends AttributeState {
         return false;
     }
 
-    public boolean setDefaultType( String newDefaultType ) {
+    /**
+     * @param newDefaultType the proposed new value for the default type (can be <code>null</code> or empty)
+     * @return <code>true</code> if changed
+     */
+    public boolean setDefaultType( final String newDefaultType ) {
         if (this.defaultType.set(newDefaultType)) {
             if (Utils.isEmpty(newDefaultType) && !isVariant()) {
                 super.set(Value.IS_NOT);
@@ -103,26 +123,10 @@ public class DefaultType extends AttributeState {
     /**
      * {@inheritDoc}
      * 
-     * @see org.jboss.tools.modeshape.jcr.cnd.attributes.AttributeState#toCndNotation(org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType)
-     */
-    @Override
-    public String toCndNotation( NotationType notationType ) {
-        String notation = super.toCndNotation(notationType);
-
-        if (!isVariant() && is()) {
-            notation += ' ' + this.defaultType.toCndNotation(notationType);
-        }
-
-        return notation;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
      * @see org.jboss.tools.modeshape.jcr.cnd.attributes.AttributeState#toVariantCndNotation(java.lang.String)
      */
     @Override
-    protected String toVariantCndNotation( String cndNotation ) {
-        return cndNotation + ' ' + AttributeState.VARIANT_CHAR;
+    protected String toVariantCndNotation( final String cndNotation ) {
+        return cndNotation + AttributeState.VARIANT_CHAR;
     }
 }

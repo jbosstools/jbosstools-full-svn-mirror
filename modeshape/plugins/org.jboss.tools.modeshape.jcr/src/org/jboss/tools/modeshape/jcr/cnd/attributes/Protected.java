@@ -9,8 +9,15 @@ package org.jboss.tools.modeshape.jcr.cnd.attributes;
 
 import org.jboss.tools.modeshape.jcr.cnd.CndElement;
 
+/**
+ * The protected attribute used by property definitions and child node definitions. Protected properties cannot be removed from
+ * their parent node unless the parent node is deleted.
+ */
 public class Protected extends AttributeState {
 
+    /**
+     * The CND notation for each notation type.
+     */
     public static final String[] NOTATION = new String[] { "protected", "pro", "p" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
     /**

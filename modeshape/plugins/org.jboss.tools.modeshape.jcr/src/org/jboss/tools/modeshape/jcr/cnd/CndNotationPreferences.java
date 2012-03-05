@@ -19,7 +19,15 @@ import org.jboss.tools.modeshape.jcr.Utils;
  */
 public class CndNotationPreferences {
 
+    /**
+     * All preferences used during CND notation construction.
+     */
     public enum Preference {
+
+        /**
+         * The delimiter between list items.
+         */
+        ATTRIBUTE_LIST_ELEMENT_DELIMITER,
 
         /**
          * The delimiter after the prefix to attribute lists.
@@ -151,6 +159,7 @@ public class CndNotationPreferences {
     private void loadDefaults( Map<Preference, String> map ) {
         assert (map != null) : "preference map is null"; //$NON-NLS-1$
 
+        map.put(Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER, ", "); //$NON-NLS-1$
         map.put(Preference.CHILD_NODE_DEFINITION_DELIMITER, "\n"); //$NON-NLS-1$
         map.put(Preference.CHILD_NODE_PROPERTY_DELIMITER, "\n"); //$NON-NLS-1$
         map.put(Preference.CHILD_NODE_DEFINITION_SECTION_END_DELIMITER, "\n"); //$NON-NLS-1$

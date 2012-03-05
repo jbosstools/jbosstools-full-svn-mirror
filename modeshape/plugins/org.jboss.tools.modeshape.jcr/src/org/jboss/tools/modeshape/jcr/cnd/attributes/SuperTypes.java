@@ -16,6 +16,9 @@ import org.jboss.tools.modeshape.jcr.Utils;
  */
 public final class SuperTypes extends ListAttributeState<String> {
 
+    /**
+     * The CND list suffix.
+     */
     public static final String NOTATION_PREFIX = ">"; //$NON-NLS-1$
 
     /**
@@ -24,21 +27,24 @@ public final class SuperTypes extends ListAttributeState<String> {
      * @see org.jboss.tools.modeshape.jcr.cnd.attributes.ListAttributeState#getCndNotationPrefix(org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType)
      */
     @Override
-    protected String getCndNotationPrefix( NotationType notationType ) {
+    protected String getCndNotationPrefix( final NotationType notationType ) {
         return NOTATION_PREFIX;
     }
 
+    /**
+     * @return the collection of super types (never <code>null</code>)
+     */
     public String[] toArray() {
-        List<String> superTypes = getSupportedItems();
+        final List<String> superTypes = getSupportedItems();
 
         if (Utils.isEmpty(superTypes)) {
             return Utils.EMPTY_STRING_ARRAY;
         }
 
-        String[] result = new String[superTypes.size()];
+        final String[] result = new String[superTypes.size()];
         int i = 0;
 
-        for (String superType : superTypes) {
+        for (final String superType : superTypes) {
             result[i++] = superType;
         }
 

@@ -18,21 +18,60 @@ import org.jboss.tools.modeshape.jcr.cnd.CndElement;
 import org.jboss.tools.modeshape.jcr.cnd.attributes.QueryOperators.QueryOperator;
 
 /**
- * 
+ * The primary item attribute used by property definitions.
  */
 public final class QueryOperators extends ListAttributeState<QueryOperator> {
 
+    /**
+     * The CND notation for each notation type.
+     */
     public static final String[] NOTATION = new String[] { "queryops", "qop", "qop" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
+    /**
+     * The valid query operators.
+     */
     public enum QueryOperator implements CndElement {
+
+        /**
+         * The equals sign.
+         */
         EQUALS("=", QueryObjectModelConstants.JCR_OPERATOR_EQUAL_TO), //$NON-NLS-1$
+
+        /**
+         * The greater than sign.
+         */
         GREATER_THAN(">", QueryObjectModelConstants.JCR_OPERATOR_EQUAL_TO), //$NON-NLS-1$
+
+        /**
+         * The greater than or equal to sign.
+         */
         GREATER_THAN_EQUALS(">=", QueryObjectModelConstants.JCR_OPERATOR_EQUAL_TO), //$NON-NLS-1$
+
+        /**
+         * The less than sign.
+         */
         LESS_THAN("<", QueryObjectModelConstants.JCR_OPERATOR_EQUAL_TO), //$NON-NLS-1$
+
+        /**
+         * The less than or equal to sign.
+         */
         LESS_THAN_EQUALS("<=", QueryObjectModelConstants.JCR_OPERATOR_EQUAL_TO), //$NON-NLS-1$
+
+        /**
+         * The LIKE sign.
+         */
         LIKE("LIKE", QueryObjectModelConstants.JCR_OPERATOR_EQUAL_TO), //$NON-NLS-1$
+
+        /**
+         * The not equals sign.
+         */
         NOT_EQUALS("<>", QueryObjectModelConstants.JCR_OPERATOR_EQUAL_TO); //$NON-NLS-1$
 
+        /**
+         * @param notation the operator's CND notation (cannot be <code>null</code> or empty)
+         * @return the query operator (never <code>null</code>)
+         * @throws IllegalArgumentException if an invalid CND notation
+         */
         public static QueryOperator find( String notation ) {
             for (QueryOperator operator : QueryOperator.values()) {
                 if (operator.notation.equals(notation)) {
@@ -43,6 +82,11 @@ public final class QueryOperators extends ListAttributeState<QueryOperator> {
             throw new IllegalArgumentException(NLS.bind(Messages.invalidFindRequest, notation));
         }
 
+        /**
+         * @param jcrValue the {@link QueryObjectModelConstants} value of the query operator (cannot be <code>null</code> or empty)
+         * @return the query operator (never <code>null</code>)
+         * @throws IllegalArgumentException if an invalid JCR value
+         */
         public static QueryOperator findUsingJcrValue( String jcrValue ) {
             for (QueryOperator operator : QueryOperator.values()) {
                 if (operator.asJcrValue().equals(jcrValue)) {
@@ -62,6 +106,9 @@ public final class QueryOperators extends ListAttributeState<QueryOperator> {
             this.jcrValue = jcrValue;
         }
 
+        /**
+         * @return the {@link QueryObjectModelConstants} value (never <code>null</code> or empty)
+         */
         public String asJcrValue() {
             return this.jcrValue;
         }

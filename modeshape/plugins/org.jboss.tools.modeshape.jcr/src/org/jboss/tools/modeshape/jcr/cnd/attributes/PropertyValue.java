@@ -29,26 +29,33 @@ import org.modeshape.web.jcr.rest.client.RestClientI18n;
  */
 public class PropertyValue implements Value {
 
-    private int type;
+    private final int type;
     private String value;
 
-    public PropertyValue( int jcrType ) {
+    /**
+     * @param jcrType the {@link PropertyType} used to create the value
+     */
+    public PropertyValue( final int jcrType ) {
         this.type = jcrType;
     }
 
-    public PropertyValue( int jcrType,
-                          String initialValue ) {
+    /**
+     * @param jcrType the {@link PropertyType} used to create the value
+     * @param initialValue the initial property value (can be <code>null</code> or empty)
+     */
+    public PropertyValue( final int jcrType,
+                          final String initialValue ) {
         this(jcrType);
         this.value = initialValue;
     }
 
     /**
      * {@inheritDoc}
-     *
+     * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
-    public boolean equals( Object obj ) {
+    public boolean equals( final Object obj ) {
         if ((obj == null) || !getClass().equals(obj.getClass())) {
             return false;
         }
@@ -57,7 +64,7 @@ public class PropertyValue implements Value {
             return true;
         }
 
-        PropertyValue that = (PropertyValue)obj;
+        final PropertyValue that = (PropertyValue)obj;
         return (Utils.equals(this.type, that.type) && Utils.equals(this.value, that.value));
     }
 
@@ -106,8 +113,8 @@ public class PropertyValue implements Value {
              * @see javax.jcr.Binary#read(byte[], long)
              */
             @Override
-            public int read( byte[] b,
-                             long position ) throws IOException {
+            public int read( final byte[] b,
+                             final long position ) throws IOException {
                 if (getSize() <= position) {
                     return -1;
                 }
@@ -121,7 +128,7 @@ public class PropertyValue implements Value {
                     long skip = position;
 
                     while (skip > 0) {
-                        long skipped = stream.skip(skip);
+                        final long skipped = stream.skip(skip);
 
                         if (skipped <= 0) {
                             return -1;
@@ -131,19 +138,19 @@ public class PropertyValue implements Value {
                     }
 
                     return stream.read(b);
-                } catch (IOException e) {
+                } catch (final IOException e) {
                     error = e;
                     throw e;
                 } finally {
                     if (stream != null) {
                         try {
                             stream.close();
-                        } catch (RuntimeException t) {
+                        } catch (final RuntimeException t) {
                             // Only throw if we've not already thrown an exception ...
                             if (error == null) {
                                 throw t;
                             }
-                        } catch (IOException t) {
+                        } catch (final IOException t) {
                             // Only throw if we've not already thrown an exception ...
                             if (error == null) {
                                 throw t;
@@ -184,14 +191,14 @@ public class PropertyValue implements Value {
     public Calendar getDate() throws ValueFormatException {
         try {
             // TODO how do you determine the format here
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss"); //$NON-NLS-1$
-            Calendar cal = Calendar.getInstance();
-            Date d1 = df.parse(this.value);
+            final SimpleDateFormat df = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss"); //$NON-NLS-1$
+            final Calendar cal = Calendar.getInstance();
+            final Date d1 = df.parse(this.value);
             cal.setTime(d1);
             return cal;
-        } catch (Exception e) {
-            String from = PropertyType.nameFromValue(getType());
-            String to = PropertyType.nameFromValue(PropertyType.LONG);
+        } catch (final Exception e) {
+            final String from = PropertyType.nameFromValue(getType());
+            final String to = PropertyType.nameFromValue(PropertyType.LONG);
             throw new ValueFormatException(RestClientI18n.unableToConvertValue.text(this.value, from, to), e);
         }
     }
@@ -205,10 +212,10 @@ public class PropertyValue implements Value {
     public BigDecimal getDecimal() throws ValueFormatException {
         try {
             return new BigDecimal(this.value);
-        } catch (NumberFormatException t) {
-            String from = PropertyType.nameFromValue(getType());
-            String to = PropertyType.nameFromValue(PropertyType.DECIMAL);
-            throw new ValueFormatException(RestClientI18n.unableToConvertValue.text(value, from, to), t);
+        } catch (final NumberFormatException t) {
+            final String from = PropertyType.nameFromValue(getType());
+            final String to = PropertyType.nameFromValue(PropertyType.DECIMAL);
+            throw new ValueFormatException(RestClientI18n.unableToConvertValue.text(this.value, from, to), t);
         }
     }
 
@@ -221,10 +228,10 @@ public class PropertyValue implements Value {
     public double getDouble() throws ValueFormatException {
         try {
             return Double.parseDouble(this.value);
-        } catch (NumberFormatException t) {
-            String from = PropertyType.nameFromValue(getType());
-            String to = PropertyType.nameFromValue(PropertyType.DOUBLE);
-            throw new ValueFormatException(RestClientI18n.unableToConvertValue.text(value, from, to), t);
+        } catch (final NumberFormatException t) {
+            final String from = PropertyType.nameFromValue(getType());
+            final String to = PropertyType.nameFromValue(PropertyType.DOUBLE);
+            throw new ValueFormatException(RestClientI18n.unableToConvertValue.text(this.value, from, to), t);
         }
     }
 
@@ -237,10 +244,10 @@ public class PropertyValue implements Value {
     public long getLong() throws ValueFormatException {
         try {
             return Long.parseLong(this.value);
-        } catch (NumberFormatException t) {
-            String from = PropertyType.nameFromValue(getType());
-            String to = PropertyType.nameFromValue(PropertyType.LONG);
-            throw new ValueFormatException(RestClientI18n.unableToConvertValue.text(value, from, to), t);
+        } catch (final NumberFormatException t) {
+            final String from = PropertyType.nameFromValue(getType());
+            final String to = PropertyType.nameFromValue(PropertyType.LONG);
+            throw new ValueFormatException(RestClientI18n.unableToConvertValue.text(this.value, from, to), t);
         }
     }
 
@@ -278,7 +285,7 @@ public class PropertyValue implements Value {
 
     /**
      * {@inheritDoc}
-     *
+     * 
      * @see java.lang.Object#hashCode()
      */
     @Override

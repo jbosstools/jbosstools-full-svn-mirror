@@ -11,16 +11,50 @@ import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.cnd.CndElement;
 
 /**
- * 
+ * An attribute will have either a supported, unsupported, or variant state.
  */
 public abstract class AttributeState implements CndElement {
 
+    /**
+     * The attribute state possible values.
+     */
+    public enum Value {
+
+        /**
+         * Indicates the attribute is supported.
+         */
+        IS,
+
+        /**
+         * Indicates the attribute is not supported.
+         */
+        IS_NOT,
+
+        /**
+         * Indicates the attribute is a variant.
+         */
+        VARIANT
+    }
+
+    /**
+     * The character used in CND notation to indicate the attribute is a variant.
+     */
     public static final char VARIANT_CHAR = '?';
 
+    /**
+     * The CND variant character as a string.
+     * 
+     * @see #VARIANT_CHAR
+     */
     public static final String VARIANT_STRING = Character.toString(VARIANT_CHAR);
 
     private Value state;
 
+    /**
+     * Constructs a not supported attribute state.
+     * 
+     * @see Value#IS_NOT
+     */
     public AttributeState() {
         this.state = Value.IS_NOT;
     }
@@ -31,25 +65,40 @@ public abstract class AttributeState implements CndElement {
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
-    public boolean equals( Object obj ) {
+    public boolean equals( final Object obj ) {
         if ((obj == null) || !getClass().equals(obj.getClass())) {
             return false;
         }
 
-        AttributeState that = (AttributeState)obj;
+        final AttributeState that = (AttributeState)obj;
         return (this.state == that.state);
     }
 
+    /**
+     * @return the attribute state (never <code>null</code>)
+     */
     public Value get() {
         return this.state;
     }
 
+    /**
+     * @return the attribute's compact CND notation (can be <code>null</code> or empty)
+     */
     protected abstract String getCompactCndNotation();
 
+    /**
+     * @return the attribute's compressed CND notation (can be <code>null</code> or empty)
+     */
     protected abstract String getCompressedCndNotation();
 
+    /**
+     * @return the attribute's long CND notation (can be <code>null</code> or empty)
+     */
     protected abstract String getLongCndNotation();
 
+    /**
+     * @return <code>true</code> if the CND notation is not empty
+     */
     protected boolean hasCndNotation() {
         return !isNot();
     }
@@ -64,19 +113,34 @@ public abstract class AttributeState implements CndElement {
         return super.hashCode();
     }
 
+    /**
+     * @return <code>true</code> if attribute state is {@link Value#IS}.
+     */
     public boolean is() {
         return (this.state == Value.IS);
     }
 
+    /**
+     * @return <code>true</code> if attribute state is {@link Value#IS_NOT}.
+     */
     public boolean isNot() {
         return (this.state == Value.IS_NOT);
     }
 
+    /**
+     * @return <code>true</code> if attribute state is {@link Value#VARIANT}.
+     */
     public boolean isVariant() {
         return (this.state == Value.VARIANT);
     }
 
-    public boolean set( Value newState ) {
+    /**
+     * @param newState the proposed new state (cannot be <code>null</code>)
+     * @return <code>true</code> if state was changed
+     */
+    public boolean set( final Value newState ) {
+        Utils.isNotNull(newState, "newState"); //$NON-NLS-1$
+
         if (this.state != newState) {
             this.state = newState;
             return true;
@@ -91,7 +155,7 @@ public abstract class AttributeState implements CndElement {
      * @see org.jboss.tools.modeshape.jcr.cnd.CndElement#toCndNotation(org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType)
      */
     @Override
-    public String toCndNotation( NotationType notationType ) {
+    public String toCndNotation( final NotationType notationType ) {
         if (hasCndNotation()) {
             String notation = Utils.EMPTY_STRING;
 
@@ -113,17 +177,15 @@ public abstract class AttributeState implements CndElement {
         return Utils.EMPTY_STRING;
     }
 
-    protected String toVariantCndNotation( String cndNotation ) {
+    /**
+     * @param cndNotation the CND notation without the variant indicator (can be <code>null</code> or empty)
+     * @return the variant CND notation (never <code>null</code> or empty)
+     */
+    protected String toVariantCndNotation( final String cndNotation ) {
         if (Utils.isEmpty(cndNotation)) {
             return String.valueOf(AttributeState.VARIANT_CHAR);
         }
 
         return cndNotation + AttributeState.VARIANT_CHAR;
-    }
-
-    public enum Value {
-        IS,
-        IS_NOT,
-        VARIANT
     }
 }

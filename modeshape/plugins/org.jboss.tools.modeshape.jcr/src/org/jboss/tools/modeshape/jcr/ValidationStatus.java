@@ -12,30 +12,6 @@ package org.jboss.tools.modeshape.jcr;
  */
 public class ValidationStatus implements Comparable<ValidationStatus> {
 
-    public enum Severity {
-        ERROR,
-        INFO,
-        OK,
-        WARNING;
-
-        public boolean isMoreSevere( Severity that ) {
-            if ((this == that) || (this == WARNING)) {
-                return false;
-            }
-
-            if (this == ERROR) {
-                return true;
-            }
-
-            if (this == INFO) {
-                return (that == OK);
-            }
-
-            // this == OK
-            return (that == WARNING);
-        }
-    }
-
     /**
      * An OK validation status with a standard, localized message.
      */
@@ -73,15 +49,26 @@ public class ValidationStatus implements Comparable<ValidationStatus> {
         return new ValidationStatus(Severity.WARNING, message);
     }
 
+    /**
+     * The localized message which can be displayed to the user (never <code>null</code>).
+     */
     protected String message;
+
+    /**
+     * The status severity (never <code>null</code>).
+     */
     protected Severity severity;
 
-    protected ValidationStatus( Severity type,
+    /**
+     * @param severity the status severity (cannot be <code>null</code>)
+     * @param message the status localized user message (cannot be <code>null</code>)
+     */
+    protected ValidationStatus( Severity severity,
                                 String message ) {
-        assert (type != null) : "severity is null"; //$NON-NLS-1$
+        assert (severity != null) : "severity is null"; //$NON-NLS-1$
         Utils.verifyIsNotEmpty(message, "message"); //$NON-NLS-1$
 
-        this.severity = type;
+        this.severity = severity;
         this.message = message;
     }
 
@@ -151,6 +138,9 @@ public class ValidationStatus implements Comparable<ValidationStatus> {
         return this.message;
     }
 
+    /**
+     * @return the status severity (never <code>null</code>)
+     */
     protected Severity getSeverity() {
         return this.severity;
     }
@@ -181,6 +171,55 @@ public class ValidationStatus implements Comparable<ValidationStatus> {
      */
     public boolean isWarning() {
         return (Severity.WARNING == this.severity);
+    }
+
+    /**
+     * The validation status severity.
+     */
+    public enum Severity {
+
+        /**
+         * Indicates the status is an error.
+         */
+        ERROR,
+
+        /**
+         * Indicates the status is an info.
+         */
+        INFO,
+
+        /**
+         * Indicates the status is a OK.
+         */
+        OK,
+
+        /**
+         * Indicates the status is a warning.
+         */
+        WARNING;
+
+        /**
+         * @param that the validation being compared (cannot be <code>null</code>)
+         * @return <code>true</code> if this status more severe
+         */
+        public boolean isMoreSevere( Severity that ) {
+            Utils.isNotNull(that, "that"); //$NON-NLS-1$
+
+            if ((this == that) || (this == WARNING)) {
+                return false;
+            }
+
+            if (this == ERROR) {
+                return true;
+            }
+
+            if (this == INFO) {
+                return (that == OK);
+            }
+
+            // this == OK
+            return (that == WARNING);
+        }
     }
 
 }
