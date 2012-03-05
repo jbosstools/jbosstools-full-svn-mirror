@@ -16,7 +16,7 @@
 <?dbhtml filename="ConfigJavaEnvironment.html"?>
     <title>Configuring Your Java Environment</title> 
     <para>
-      You must have a working installation of JDK before you install <property>JBoss Developer Studio</property>. Thus in this guide we will show you how to install a 32-bit Sun JDK 6 on a Linux Platform and Microsoft Windows Platform.
+      You must have a working installation of JDK before you install <property>JBoss Developer Studio</property>. In this guide we will show you how to install a 32-bit Sun JDK 6 on a Linux Platform and Microsoft Windows Platform.
     </para>
      
     <section id="InstallJDK60onLinux">
@@ -79,7 +79,7 @@ export PATH=$PATH:$JAVA_HOME/bin]]>
       <note>
         <title>Note:</title> 
         <para>
-          ﻿ If you have JDK already installed and added in your system path, you should add <filename>$JAVA_HOME/bin</filename> before the old <emphasis>$PATH</emphasis> (not after it) so that the new version of JDK can be found first, i. e. <code>export PATH=$JAVA_HOME/bin:$PATH</code> This way, the machine will pick up the new JVM first. You only need to run "alternative" as a safe guard for the right JVM.
+          ﻿ If you have a JDK already installed and added in your system path, you should add <filename>$JAVA_HOME/bin</filename> before the old <emphasis>$PATH</emphasis> (not after it) so that the new version of JDK can be found first, i. e. <code>export PATH=$JAVA_HOME/bin:$PATH</code> This way, the machine will pick up the new JVM first. You only need to run "alternative" as a safe guard for the right JVM.
         </para>
       </note>
        

@@ -46,11 +46,11 @@
 				<para>1 GB RAM</para>
 			</listitem>
 			<listitem>
-				<para>450 MB of hard disk space for the non-EAP version</para>
+				<para>450 MB of hard disk space</para>
 			</listitem>
-			<listitem>
+	<!--		<listitem>
 				<para>800 MB of hard disk space for the EAP version</para>
-			</listitem>
+			</listitem> -->
 		</itemizedlist>
 	</para>
 	
@@ -59,6 +59,9 @@
 		<itemizedlist>
 			<listitem>
 				<para>4 GB RAM</para>
+			</listitem>
+			<listitem>
+				<para>1 GB of hard disk space</para>
 			</listitem>
 		</itemizedlist>
 	</para>

@@ -13,10 +13,10 @@
 	<section id="intro1">
 		<title>What JBoss Developer Studio is</title>
 		<para>
-			<property>JBoss Developer Studio</property> is a set of Eclipse based development tools that have been pre-configured for JBoss Enterprise Middleware Platforms and Red Hat Enterprise Linux. Developers are not required to use <property>JBoss Developer Studio</property> to develop on JBoss Enterprise Middleware and/or Red Hat Linux. Many do find these preconfigured tools save time and offer significant value, making them more productive and reducing deployment times.
+			<property>JBoss Developer Studio</property> is a set of Eclipse based development tools that have been pre-configured for JBoss Enterprise Middleware Platforms and Red Hat Enterprise Linux. These preconfigured tools save time and offer significant value, improving productivity and reducing deployment times.
 		</para>
 		<para>
-			This guide covers the first steps required to get started with <property>JBoss Developer Studio</property>. You will learn how to install and configure the software necessary for your OS (currently Linux, Microsoft Windows or Mac OSX), including detailed information on how to install, configure and use JDK, JBoss Developer Studio and JBoss Tools.
+			This guide covers the foundation of getting started with <property>JBoss Developer Studio</property>. You will learn how to install and configure the software necessary for your OS (currently Linux, Microsoft Windows or Mac OSX), including detailed information on how to install, configure and use this toolset, as well as the Java Development Kit (JDK).
 		</para>
 	</section>
 
@@ -42,7 +42,7 @@
 
 				<tbody>
 
-					<row>
+		<!--			<row>
 						<entry>
 							<para>JBoss Enterprise Application Platform</para>
 						</entry>
@@ -51,9 +51,9 @@
 								JBoss Developer Studio includes and integrates JBoss Enterprise Application Platform, the same version of the middleware platform that Red Hat supports in production for 5 years.
 							</para>
 						</entry>
-					</row>
+					</row> -->
 
-					<row>
+			<!--		<row>
 						<entry>
 							<para>New Seam Tools</para>
 						</entry>
@@ -62,8 +62,30 @@
 								JBoss Developer Studio includes brand new tools for Seam. They provide wizards for creating new Seam projects, validation tools, expression language code completion, testing tools, and wizards for generating entity objects.
 							</para>
 						</entry>
-					</row>
+					</row> -->
 
+					<row>
+						<entry>
+							<para>JBoss Central</para>
+						</entry>
+						<entry>
+							<para>
+								Your first interaction with the tooling suite, JBoss Central is at the heart ofthe JBoss tooling; providing the latest software updates, news, and project creation.
+							</para>
+						</entry>
+					</row>
+					
+					<row>
+						<entry>
+							<para>CDI Tooling</para>
+						</entry>
+						<entry>
+							<para>
+								Context Dependency Injection (CDI) tooling allows you to create associated projects and add artifacts to existing projects. Validation and code completion is also included.
+							</para>
+						</entry>
+					</row>
+					
 					<row>
 						<entry>
 							<para>Visual Page Editor</para>
@@ -130,7 +152,7 @@
 						</entry>
 						<entry>
 							<para>
-								JBoss Developer Studio’s advanced JBoss AS adapter includes features like incremental deployment for fast development and is pre-configured for the included JBoss Application server.
+								JBoss Developer Studio’s advanced JBoss AS adapter includes features like incremental deployment for fast development.
 							</para>
 						</entry>
 					</row>
@@ -181,7 +203,7 @@
 		</table>
 
 		<para>
-			<property>JBoss Developer Studio</property> requires JDK 5+ (JDK 6 in case of EAP 5.0). Also it&apos;s important that the JVM&apos;s architecture matches the particular <property>JBoss Developer Studio</property> build, i.e. if you&apos;re on a 64-bit system and use the 64-bit JVM, you need the 64-bit JBoss Developer Studio.
+			<property>JBoss Developer Studio</property> requires JDK 5+ (JDK 6 in case of JBoss Enterprise Application Platform 5.0 and above). Also it is important that the  architecture of the Java Virtual Machine (JVM) matches the particular <property>JBoss Developer Studio</property> build. For example, if you are using a 64-bit system and use the 64-bit JVM, you need the 64-bit JBoss Developer Studio.
 		</para>
 	
 		<para>
@@ -191,7 +213,7 @@
 		<note>
 			<title>Note:</title>
 			<para>
-				On Linux system with 64-bit JVM the visual editor may fail to start. In this case you need the <literal>libstdc++.so.5</literal> library. See also the <link linkend="question_1">FAQ</link>.
+				On Linux systems with a 64-bit JVM, the visual editor may fail to start. In this case you will need the <literal>libstdc++.so.5</literal> library. See the <link linkend="question_1">FAQ</link> for further details.
 			</para>
 		</note>
 	</section>
