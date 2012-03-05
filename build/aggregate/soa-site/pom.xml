@@ -16,7 +16,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-antrun-plugin</artifactId>
-				<version>${maven.antrun.plugin.version}</version>
+				<version>1.7</version>
 				<executions>
 					<execution>
 						<id>install</id>
@@ -49,27 +49,27 @@
 					<dependency>
 						<groupId>org.apache.ant</groupId>
 						<artifactId>ant</artifactId>
-						<version>1.7.1</version>
+						<version>1.8.2</version>
 					</dependency>
 					<dependency>
 						<groupId>org.apache.ant</groupId>
 						<artifactId>ant-nodeps</artifactId>
-						<version>1.7.1</version>
+						<version>1.8.1</version>
 					</dependency>
 					<dependency>
 						<groupId>org.apache.ant</groupId>
 						<artifactId>ant-trax</artifactId>
-						<version>1.7.1</version>
+						<version>1.8.0</version>
 					</dependency>
 					<dependency>
 						<groupId>org.apache.ant</groupId>
 						<artifactId>ant-commons-net</artifactId>
-						<version>1.7.1</version>
+						<version>1.8.2</version>
 					</dependency>
 					<dependency>
 						<groupId>org.apache.ant</groupId>
 						<artifactId>ant-apache-regexp</artifactId>
-						<version>1.7.1</version>
+						<version>1.8.2</version>
 					</dependency>
 					<dependency>
 						<groupId>ant-contrib</groupId>

@@ -5,6 +5,7 @@
 		
 	Or, to run just the ant script:
 		$ cd ~/tru/build/aggregate/webtools-site; ant basic.build -f ../build.xml -Doutput.dir=`pwd`
+		$ cd ~/tru/build/aggregate/site; ant custom.build -f ../build.xml -Doutput.dir=`pwd` -DinputRepo=http://download.jboss.org/jbosstools/builds/staging/_composite_/core/trunk/
 	-->
 
 	<!-- if ${WORKSPACE}/site folder exists, target that folder; else generate here. -->
@@ -33,6 +34,13 @@
 	<property name="target.zip" value="${output.dir}/target/repository.zip"/>
 
 	<target name="init">
+		<echo>
+This script requires Ant 1.8+ and JDK 1.6+.
+-------------------------------------------
+$ant.version = ${ant.version}
+$ant.home = ${ant.home}
+$ant.java.version = ${ant.java.version}
+$java.home = ${java.home}</echo>
 		<available file="${COMMON_TOOLS}/ant-contrib.jar" type="file" property="ant-contrib.jar.exists" />
 		<antcall target="get.ant-contrib" />
 		<taskdef resource="net/sf/antcontrib/antlib.xml">
@@ -82,13 +90,14 @@
 			<echo level="verbose">repo = ${location.cleaned}</echo>
 			<!-- fetch zip.list.txt file, if available -->
 			<var unset="true" name="ALL_ZIPS" />
-			<var unset="true" name="wget.return" />
+			<!-- <var unset="true" name="wget.return" /> -->
 			<if>
 				<contains string="${location.cleaned}" substring=":/" />
 				<then>
-					<exec executable="wget" dir="${aggregate.zips.dir}" failonerror="false" failifexecutionfails="false" resultproperty="wget.return" outputproperty="null">
-						<arg line="${location.cleaned}/logs/zip.list.txt -q --no-clobber --tries=3" />
-					</exec>
+					<!-- <exec executable="wget" dir="${aggregate.zips.dir}" failonerror="false" failifexecutionfails="false" resultproperty="wget.return" outputproperty="null">
+						<arg line="${location.cleaned}/logs/zip.list.txt -q - -no-clobber - -tries=3" />
+					</exec> -->
+					<get src="${location.cleaned}/logs/zip.list.txt" dest="${aggregate.zips.dir}/zip.list.txt" retries="3" usetimestamp="true" ignoreerrors="true" />
 				</then>
 				<else>
 					<copy todir="${aggregate.zips.dir}" failonerror="false" file="${location.cleaned}/logs/zip.list.txt" />
@@ -100,9 +109,10 @@
 			<if>
 				<contains string="${location.cleaned}" substring=":/" />
 				<then>
-					<exec executable="wget" dir="${aggregate.zips.dir}" failonerror="false" failifexecutionfails="false" resultproperty="wget.return" outputproperty="null">
-						<arg line="${location.cleaned}/logs/SVN_REVISION.txt -q --no-clobber --tries=3" />
-					</exec>
+					<!-- <exec executable="wget" dir="${aggregate.zips.dir}" failonerror="false" failifexecutionfails="false" resultproperty="wget.return" outputproperty="null">
+						<arg line="${location.cleaned}/logs/SVN_REVISION.txt -q - -no-clobber - -tries=3" />
+					</exec> -->
+					<get src="${location.cleaned}/logs/SVN_REVISION.txt" dest="${aggregate.zips.dir}/SVN_REVISION.txt" retries="3" usetimestamp="true" ignoreerrors="true" />
 				</then>
 				<else>
 					<copy todir="${aggregate.zips.dir}" failonerror="false" file="${location.cleaned}/logs/SVN_REVISION.txt" />
@@ -114,9 +124,10 @@
 			<if>
 				<contains string="${location.cleaned}" substring=":/" />
 				<then>
-					<exec executable="wget" dir="${aggregate.zips.dir}" failonerror="false" failifexecutionfails="false" resultproperty="wget.return" outputproperty="null">
-						<arg line="${location.cleaned}/logs/SVN_REVISION.xml -q --no-clobber --tries=3" />
-					</exec>
+					<!-- <exec executable="wget" dir="${aggregate.zips.dir}" failonerror="false" failifexecutionfails="false" resultproperty="wget.return" outputproperty="null">
+						<arg line="${location.cleaned}/logs/SVN_REVISION.xml -q - -no-clobber - -tries=3" />
+					</exec> -->
+					<get src="${location.cleaned}/logs/SVN_REVISION.xml" dest="${aggregate.zips.dir}/SVN_REVISION.xml" retries="3" usetimestamp="true" ignoreerrors="true" />
 				</then>
 				<else>
 					<copy todir="${aggregate.zips.dir}" failonerror="false" file="${location.cleaned}/logs/SVN_REVISION.xml" />
@@ -128,9 +139,10 @@
 			<if>
 				<contains string="${location.cleaned}" substring=":/" />
 				<then>
-					<exec executable="wget" dir="${aggregate.zips.dir}" failonerror="false" failifexecutionfails="false" resultproperty="wget.return" outputproperty="null">
-						<arg line="${location.cleaned}/logs/build.properties -q --no-clobber --tries=3" />
-					</exec>
+					<!-- <exec executable="wget" dir="${aggregate.zips.dir}" failonerror="false" failifexecutionfails="false" resultproperty="wget.return" outputproperty="null">
+						<arg line="${location.cleaned}/logs/build.properties -q - -no-clobber - -tries=3" />
+					</exec> -->
+					<get src="${location.cleaned}/logs/build.properties" dest="${aggregate.zips.dir}/build.properties" retries="3" usetimestamp="true" ignoreerrors="true" />
 				</then>
 				<else>
 					<copy todir="${aggregate.zips.dir}" failonerror="false" file="${location.cleaned}/logs/build.properties" />
@@ -141,7 +153,7 @@
 				<or>
 					<and>
 						<contains string="${location.cleaned}" substring=":/" />
-						<equals arg1="${wget.return}" arg2="0" />
+						<!-- <equals arg1="${wget.return}" arg2="0" /> -->
 						<available file="${aggregate.zips.dir}/zip.list.txt" type="file" />
 					</and>
 					<and>
@@ -192,16 +204,36 @@ DEST = ${aggregate.zips.dir}/@{zipPath}
 												<contains string="${location.cleaned}" substring=":/" />
 												<then>
 
-													<var name="wget.return" unset="true" />
-													<exec executable="wget" dir="${aggregate.zips.dir}/${relativePath}" failonerror="false" failifexecutionfails="false" resultproperty="wget.return" outputproperty="null">
-														<arg line="${location.cleaned}/@{zipPath} -q --no-clobber --tries=3" />
-													</exec>
+													<!-- <var name="wget.return" unset="true" /> -->
+													<!-- <exec executable="wget" dir="${aggregate.zips.dir}/${relativePath}" failonerror="false" failifexecutionfails="false" resultproperty="wget.return" outputproperty="null">
+														<arg line="${location.cleaned}/@{zipPath} -q - -no-clobber - -tries=3" />
+													</exec> -->
+													<!-- <echo>&lt;get&gt; From: 
+* $location.cleaned: ${location.cleaned}
+* @zipPath: @{zipPath}
+To:
+* $aggregate.zips.dir: ${aggregate.zips.dir}
+* $relativePath: ${relativePath}
+* @zipPath: @{zipPath}
+</echo> -->
+													<!--
+     [echo] <get> From: 
+     [echo] * $location.cleaned: http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.3_trunk.component- -archives
+     [echo] * @zipPath: all/jbosstools-3.3_trunk.component- -archives-Update-SNAPSHOT.zip
+     [echo] To:
+     [echo] * $aggregate.zips.dir: /home/nboldt/eclipse/workspace-jboss/jbosstools_trunk/build/aggregate/site/zips
+     [echo] * $relativePath: all
+     [echo] * @zipPath: all/jbosstools-3.3_trunk.component- -archives-Update-SNAPSHOT.zip
+													-->
+													<get src="${location.cleaned}/@{zipPath}" dest="${aggregate.zips.dir}/@{zipPath}" retries="3" usetimestamp="true" ignoreerrors="true" />
 													<if>
 														<not>
-															<equals arg1="${wget.return}" arg2="0" />
+															<!-- <equals arg1="${wget.return}" arg2="0" /> -->
+															<available file="${aggregate.zips.dir}/@{zipPath}" type="file" />
 														</not>
 														<then>
-															<echo> ** Error [${wget.return}] ** Could not wget ${location.cleaned}/@{zipPath}</echo>
+															<!-- <echo> ** Error [${wget.return}] ** Could not wget ${location.cleaned}/@{zipPath}</echo> -->
+															<echo> ** Error: could not get ${location.cleaned}/@{zipPath}</echo>
 														</then>
 													</if>
 												</then>
@@ -267,7 +299,8 @@ DEST = ${aggregate.zips.dir}/@{zipPath}
 					<var unset="true" name="ALL_ZIPS" />
 				</then>
 				<else>
-					<echo> ** Error [${wget.return}] ** Could not wget ${location.cleaned}/logs/zip.list.txt</echo>
+					<!-- <echo> ** Error [${wget.return}] ** Could not wget ${location.cleaned}/logs/zip.list.txt</echo> -->
+					<echo> ** Error: could not get ${location.cleaned}/logs/zip.list.txt</echo>
 				</else>
 			</if>
 			<var name="location.cleaned" unset="true" />
@@ -287,13 +320,14 @@ DEST = ${aggregate.zips.dir}/@{zipPath}
 			<var name="location.cleaned" value="@{repo}" />
 			<echo level="verbose">repo = ${location.cleaned}</echo>
 			<!-- if no zip.list.txt from the inputRepo, then fetch from ${location.cleaned}/compositeArtifacts.xml instead -->
-			<var name="wget.return" unset="true" />
-			<exec executable="wget" dir="${aggregate.zips.dir}" failonerror="false" failifexecutionfails="false" resultproperty="wget.return" outputproperty="null">
-				<arg line="${location.cleaned}/compositeArtifacts.xml -q --no-clobber --tries=3" />
-			</exec>
+			<!-- <var name="wget.return" unset="true" /> -->
+			<!-- <exec executable="wget" dir="${aggregate.zips.dir}" failonerror="false" failifexecutionfails="false" resultproperty="wget.return" outputproperty="null">
+				<arg line="${location.cleaned}/compositeArtifacts.xml -q - -no-clobber - -tries=3" />
+			</exec> -->
+			<get src="${location.cleaned}/compositeArtifacts.xml" dest="${aggregate.zips.dir}/compositeArtifacts.xml" retries="3" usetimestamp="true" ignoreerrors="true" />
 			<if>
 				<and>
-					<equals arg1="${wget.return}" arg2="0" />
+					<!-- <equals arg1="${wget.return}" arg2="0" /> -->
 					<available file="${aggregate.zips.dir}/compositeArtifacts.xml" type="file" />
 				</and>
 				<then>
@@ -342,11 +376,11 @@ DEST = ${aggregate.zips.dir}/@{zipPath}
 					</for>
 					<var name="counter" unset="true" />
 					<var name="i" unset="true" />
-
 					<delete file="${aggregate.zips.dir}/compositeArtifacts.xml" quiet="true" />
 				</then>
 				<else>
-					<echo> ** Error [${wget.return}] ** Could not wget ${location.cleaned}/compositeArtifacts.xml</echo>
+					<!-- <echo> ** Error [${wget.return}] ** Could not wget ${location.cleaned}/compositeArtifacts.xml</echo> -->
+					<echo> ** Error: could not get ${location.cleaned}/compositeArtifacts.xml</echo>
 				</else>
 			</if>
 		</sequential>
@@ -452,11 +486,12 @@ DEST = ${aggregate.zips.dir}/@{zipPath}
 				<fail>
 --
 Could not find ${output.dir}/target/site and one of ${output.dir}/target/site_assembly.zip or ${output.dir}/target/repository.zip
---
-This script must ONLY be called via the pom.xml in this directory, not run directly. 
 Cannot adjust an update site w/o first building it!
 --
-To run this build, use Tycho. Try `mvn3 clean install -U -B -fae -q -e`
+Using maven: mvn3 clean install -U -B -fae -q -e
+OR
+Using ant:   ant basic.build -f ../build.xml -Doutput.dir=`pwd`
+Using ant:   ant custom.build -f ../build.xml -Doutput.dir=`pwd` -DinputRepo=http://download.jboss.org/jbosstools/builds/staging/_composite_/core/trunk/
 </fail>
 			</else>
 		</if>
