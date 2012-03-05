@@ -85,13 +85,14 @@ public class DroolsViewsTest extends SWTTestExt {
     private void manageProject() {
         //packageExplorer.deleteAllProjects();
         ManageDroolsProject.createDroolsProject(PROJECT_NAME);
+
         Widget openingProjectWidget = null;
         try {
             openingProjectWidget = bot.widget(withLabel("Drools Runtime"));
         } catch (WidgetNotFoundException wnfe) {
             // openingProjectWidget should be null in this case
         }
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 30; i++) {
             if (openingProjectWidget == null || (openingProjectWidget.isDisposed()
                     && packageExplorer.bot().tree().getAllItems().length > 0)) {
                 break;
