@@ -174,7 +174,7 @@ public class DroolsAllBotTests extends SWTTestExt {
         delete(new File(pathToDirectoryWithRepository + "repository"));
     }
 
-    private static boolean delete(final File file) {
+    public static boolean delete(final File file) {
         if (!file.exists()) {
             return false;
         }

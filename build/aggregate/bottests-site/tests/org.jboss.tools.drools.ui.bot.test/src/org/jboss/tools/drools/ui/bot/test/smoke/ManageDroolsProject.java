@@ -21,6 +21,7 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.jboss.tools.drools.ui.bot.test.DroolsAllBotTests;
 import org.jboss.tools.ui.bot.ext.SWTEclipseExt;
 import org.jboss.tools.ui.bot.ext.SWTTestExt;
+import org.jboss.tools.ui.bot.ext.Timing;
 import org.jboss.tools.ui.bot.ext.helper.FileRenameHelper;
 import org.jboss.tools.ui.bot.ext.types.EntityType;
 import org.jboss.tools.ui.bot.ext.types.IDELabel;
@@ -89,7 +90,7 @@ public class ManageDroolsProject extends SWTTestExt{
   private void createDroolsProjectTest(String droolsProjectName){
     createDroolsProject(droolsProjectName);
     SWTTestExt.util.waitForAll(30*1000L);
-    bot.waitForNumberOfShells(1);
+    bot.waitForNumberOfShells(1, 60);
     assertTrue("Project "
       + droolsProjectName 
       + " was not created properly.",SWTEclipseExt.isProjectInPackageExplorer(bot,droolsProjectName));
@@ -151,21 +152,16 @@ public class ManageDroolsProject extends SWTTestExt{
     assertNull(checkResult,checkResult);
   }
 
-  /**
-   * Deletes Drools project and check result
-   * @param droolsProjectName
-   */
-  private void deleteDroolsProject(String droolsProjectName){
-
-    packageExplorer.deleteProject(droolsProjectName, true);
-    boolean notFound = false;
-    try{
-      packageExplorer.selectProject(droolsProjectName);
-    }catch (WidgetNotFoundException wnf){
-      notFound = true;
+    /**
+     * Deletes Drools project and check result
+     * 
+     * @param droolsProjectName
+     */
+    private void deleteDroolsProject(final String droolsProjectName) {
+    	bot.sleep(Timing.time10S()); // because of NFS filesystem
+        packageExplorer.deleteProject(droolsProjectName, true);
+        assertFalse("Drools project: " + droolsProjectName + " was not deleted properly",
+        		packageExplorer.existsResource(droolsProjectName));
     }
-    assertTrue("Drools project: " + droolsProjectName +
-      " was not deleted properly",notFound);
-  }
 }
 

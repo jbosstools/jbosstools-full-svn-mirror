@@ -154,7 +154,7 @@ public class GuvnorRepositoriesTest extends SWTTestExt{
     bot.sleep(Timing.time1S());
     KeyboardHelper.pressKeyCodeUsingAWT(KeyEvent.VK_ENTER);
     KeyboardHelper.releaseKeyCodeUsingAWT(KeyEvent.VK_ENTER);
-    bot.sleep(Timing.time20S());
+    bot.sleep(Timing.time30S()); // so long because of NFS filesystem on remote machines
     KeyboardHelper.pressKeyCodeUsingAWT(KeyEvent.VK_ENTER);
     KeyboardHelper.releaseKeyCodeUsingAWT(KeyEvent.VK_ENTER);
   }
