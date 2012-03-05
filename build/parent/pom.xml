@@ -12,9 +12,8 @@
 	</modules>
 
 	<properties>
-		<!-- to build w/ latest 0.14.0-SNAPSHOT, run `mvn install -DtychoVersion=0.14.0-SNAPSHOT`, 
-			or uncomment this property: <tychoVersion>0.14.0-SNAPSHOT</tychoVersion> -->
-		<tychoVersion>0.14.0</tychoVersion>
+		<!-- to build w/ latest 0.15.0-SNAPSHOT, run `mvn install -DtychoVersion=0.15.0-SNAPSHOT` -->
+		<tychoVersion>0.14.1</tychoVersion>
 		<scmBranch>trunk</scmBranch>
 		<JBT_VERSION>3.3.0</JBT_VERSION>
 		<JBDS_VERSION>5.0.0</JBDS_VERSION>
