@@ -321,7 +321,9 @@ public class NewProjectExamplesRequirementsPage extends WizardPage {
 								|| ProjectFix.SEAM_RUNTIME.equals(fix.getType())) {
 							DownloadRuntime downloadRuntime = getDownloadRuntime(fix);
 							downloadAndInstall.setEnabled(downloadRuntime != null);
-							downloadAndInstall.setToolTipText("Download and install " + downloadRuntime.getName());
+							if (downloadRuntime != null) {
+								downloadAndInstall.setToolTipText("Download and install " + downloadRuntime.getName());
+							}
 							install.setEnabled(true);
 							install.setToolTipText("JBoss Runtime Detection");
 						} else if (ProjectFix.PLUGIN_TYPE.equals(fix.getType())) {
