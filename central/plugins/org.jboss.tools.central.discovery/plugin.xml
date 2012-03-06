@@ -23,7 +23,8 @@
             license="Free, EPL"
             name="JBoss Maven Integration"
             provider="JBoss by Red Hat"
-            siteUrl="http://download.jboss.org/jbosstools/updates/development/indigo">
+            siteUrl="http://download.jboss.org/jbosstools/updates/development/indigo/">
+            <iu id="org.jboss.tools.maven.feature"/>
          <icon
                image32="images/jbosstools_icon32.png">
          </icon>
@@ -40,7 +41,8 @@
             license="Free, EPL"
             name="JBoss Maven CDI Configurator"
             provider="JBoss by Red Hat"
-            siteUrl="http://download.jboss.org/jbosstools/updates/development/indigo">
+            siteUrl="http://download.jboss.org/jbosstools/updates/development/indigo/">
+            <iu id="org.jboss.tools.maven.cdi.feature"/>
          <icon
                image32="images/jbosstools_icon32.png">
          </icon>
@@ -57,7 +59,8 @@
             license="Free, EPL"
             name="JBoss Maven Hibernate Configurator"
             provider="JBoss by Red Hat"
-            siteUrl="http://download.jboss.org/jbosstools/updates/development/indigo">
+            siteUrl="http://download.jboss.org/jbosstools/updates/development/indigo/">
+            <iu id="org.jboss.tools.maven.hibernate.feature"/>
          <icon
                image32="images/jbosstools_icon32.png">
          </icon>
@@ -74,7 +77,8 @@
             license="Free, EPL"
             name="JBoss Maven JAX-RS Configurator"
             provider="JBoss by Red Hat"
-            siteUrl="http://download.jboss.org/jbosstools/updates/development/indigo">
+            siteUrl="http://download.jboss.org/jbosstools/updates/development/indigo/">
+            <iu id="org.jboss.tools.maven.jaxrs.feature"/>
          <icon
                image32="images/jbosstools_icon32.png">
          </icon>
@@ -91,7 +95,8 @@
             license="Free, EPL"
             name="JBoss Maven JSF Configurator"
             provider="JBoss by Red Hat"
-            siteUrl="http://download.jboss.org/jbosstools/updates/development/indigo">
+            siteUrl="http://download.jboss.org/jbosstools/updates/development/indigo/">
+            <iu id="org.jboss.tools.maven.jsf.feature"/>
          <icon
                image32="images/jbosstools_icon32.png">
          </icon>
@@ -108,7 +113,8 @@
             license="Free, EPL"
             name="JBoss Maven Portlet Configurator"
             provider="JBoss by Red Hat"
-            siteUrl="http://download.jboss.org/jbosstools/updates/development/indigo">
+            siteUrl="http://download.jboss.org/jbosstools/updates/development/indigo/">
+            <iu id="org.jboss.tools.maven.portlet.feature"/>
          <icon
                image32="images/jbosstools_icon32.png">
          </icon>
@@ -125,7 +131,8 @@
             license="Free, EPL"
             name="JBoss Maven Seam Configurator"
             provider="JBoss by Red Hat"
-            siteUrl="http://download.jboss.org/jbosstools/updates/development/indigo">
+            siteUrl="http://download.jboss.org/jbosstools/updates/development/indigo/">
+            <iu id="org.jboss.tools.maven.seam.feature"/>
          <icon
                image32="images/jbosstools_icon32.png">
          </icon>
@@ -133,7 +140,7 @@
                url="http://www.jboss.org/tools">
          </overview>
       </connectorDescriptor>
-       <connectorDescriptor
+      <connectorDescriptor
             categoryId="org.jboss.tools.central.discovery.maven"
             groupId="org.jboss.tools.central.discovery.maven.configurators"
             description="JBoss Maven JPA Configurator"
@@ -142,7 +149,8 @@
             license="Free, EPL"
             name="JBoss Maven JPA Configurator"
             provider="JBoss by Red Hat"
-            siteUrl="http://download.jboss.org/jbosstools/updates/development/indigo">
+            siteUrl="http://download.jboss.org/jbosstools/updates/development/indigo/">
+            <iu id="org.jboss.tools.maven.jpa.feature"/>
          <icon
                image32="images/jbosstools_icon32.png">
          </icon>
@@ -159,7 +167,8 @@
             license="Free, EPL"
             name="Maven Profile Management UI"
             provider="JBoss by Red Hat"
-            siteUrl="http://download.jboss.org/jbosstools/updates/development/indigo">
+            siteUrl="http://download.jboss.org/jbosstools/updates/development/indigo/">
+            <iu id="org.jboss.tools.maven.profiles.feature"/>
          <icon
                image32="images/jbosstools_icon32.png">
          </icon>
@@ -178,6 +187,7 @@
             name="Maven Integration for Eclipse (m2e)"
             provider="eclipse.org"
             siteUrl="http://download.jboss.org/jbosstools/updates/indigo/">
+	    <iu id="org.eclipse.m2e.feature"/>
          <icon
                image32="images/m2e_32.gif">
          </icon>
@@ -195,6 +205,7 @@
             name="Maven Integration for Web Tools (m2e-wtp)"
             provider="eclipse.org"
             siteUrl="http://download.jboss.org/jbosstools/updates/indigo/">
+	    <iu id="org.maven.ide.eclipse.wtp.feature"/>
          <icon
                image32="images/m2e_32.gif">
          </icon>
@@ -222,7 +233,8 @@
             license="Free, EPL"
             name="Eclipse EGit"
             provider="eclipse.org"
-            siteUrl="http://download.jboss.org/jbosstools/updates/indigo/">
+            siteUrl="http://download.jboss.org/jbosstools/updates/indigo/SR2/">
+	    <iu id="org.eclipse.egit"/>
          <icon
                image32="images/egit_32.png">
          </icon>
@@ -257,12 +269,13 @@
             id="org.jboss.tools.central.discovery.testing"
             name="Testing"
             relevance="60">
- 			<group id="bundled" /> 
- 			<group id="extra" />
+ 			<group id="org.jboss.tools.central.discovery.testing.local" />
+ 			<group id="org.jboss.tools.central.discovery.testing.remote" />
       </connectorCategory>
       
       <connectorDescriptor
             categoryId="org.jboss.tools.central.discovery.testing"
+            groupId="org.jboss.tools.central.discovery.testing.local"
             description="Tool support for FindBugs"
             id="edu.umd.cs.findbugs.plugin.eclipse"
             kind="task"
@@ -270,6 +283,7 @@
             name="FindBugs"
             provider="FindBugs Project"
             siteUrl="http://download.jboss.org/jbosstools/updates/indigo/extras/">
+	    <iu id="edu.umd.cs.findbugs.plugin.eclipse"/>
          <icon
                image32="images/findbugs_32.png">
          </icon>
@@ -279,7 +293,68 @@
       </connectorDescriptor>
       <connectorDescriptor
             categoryId="org.jboss.tools.central.discovery.testing"
-            description="Tool support for JRebel"
+            groupId="org.jboss.tools.central.discovery.testing.local"
+            description="Tool support for JSLint"
+            id="com.rockstarapps.workbench.branding.feature"
+            kind="task"
+            license="Free, ASL"
+            name="JSLint"
+            provider="Rockstarapps.com"
+            siteUrl="http://download.jboss.org/jbosstools/updates/indigo/extras/">
+            <iu id="com.rockstarapps.aws.feature"/>
+	    <iu id="com.rockstarapps.html.core.feature"/>
+	    <iu id="com.rockstarapps.jsLex"/>
+	    <iu id="com.rockstarapps.jsLint"/>
+	    <iu id="com.rockstarapps.workbench.branding.feature"/>
+         <icon
+               image32="images/jslint_32.png">
+         </icon>
+         <overview
+               url="http://www.jslint.com/">
+         </overview>
+      </connectorDescriptor>
+      <connectorDescriptor
+            categoryId="org.jboss.tools.central.discovery.testing"
+            groupId="org.jboss.tools.central.discovery.testing.local"
+            description="Tool support for PMD"
+            id="net.sourceforge.pmd.eclipse"
+            kind="task"
+            license="Free, PMD License"
+            name="PMD"
+            provider="PMD Developers"
+            siteUrl="http://download.jboss.org/jbosstools/updates/indigo/extras/">
+	    <iu id="net.sourceforge.pmd.eclipse"/>
+         <icon
+               image32="images/pmd_32.png">
+         </icon>
+         <overview
+               url="http://pmd.sourceforge.net/">
+         </overview>
+      </connectorDescriptor>
+	  <connectorDescriptor
+            categoryId="org.jboss.tools.central.discovery.testing"
+            groupId="org.jboss.tools.central.discovery.testing.local"
+            description="Tool support for TestNG"
+            id="org.testng.eclipse"
+            kind="task"
+            license="Free, ASL"
+            name="TestNG"
+            provider="Cedric Beust"
+            siteUrl="http://download.jboss.org/jbosstools/updates/indigo/extras/">
+	    <iu id="org.testng.eclipse"/>
+         <icon
+               image32="images/testng_32.gif">
+         </icon>
+         <overview
+         	   summary="TestNG plug-in for Eclipse"
+         	   screenshot="images/testng_screenshot.png"
+               url="http://testng.org/">
+         </overview>
+      </connectorDescriptor>
+      <connectorDescriptor
+            categoryId="org.jboss.tools.central.discovery.testing"
+            groupId="org.jboss.tools.central.discovery.testing.remote"
+            description="Tool support for JRebel - requires JST Server"
             id="org.zeroturnaround.eclipse.feature"
             kind="task"
             license="Commercial"
@@ -298,61 +373,6 @@
                url="http://zeroturnaround.com/jrebel/current/">
          </overview>
       </connectorDescriptor>
-      <connectorDescriptor
-            categoryId="org.jboss.tools.central.discovery.testing"
-            description="Tool support for JSLint"
-            id="com.rockstarapps.workbench.branding.feature"
-            kind="task"
-            license="Free, ASL"
-            name="JSLint"
-            provider="Rockstarapps.com"
-            siteUrl="http://download.jboss.org/jbosstools/updates/indigo/extras/">
-            <iu id="com.rockstarapps.aws.feature"/>
-			<iu id="com.rockstarapps.html.core.feature"/>
-			<iu id="com.rockstarapps.jsLex"/>
-			<iu id="com.rockstarapps.jsLint"/>
-			<iu id="com.rockstarapps.workbench.branding.feature"/>
-         <icon
-               image32="images/jslint_32.png">
-         </icon>
-         <overview
-               url="http://www.jslint.com/">
-         </overview>
-      </connectorDescriptor>
-      <connectorDescriptor
-            categoryId="org.jboss.tools.central.discovery.testing"
-            description="Tool support for PMD"
-            id="net.sourceforge.pmd.eclipse"
-            kind="task"
-            license="Free, PMD License"
-            name="PMD"
-            provider="PMD Developers"
-            siteUrl="http://download.jboss.org/jbosstools/updates/indigo/extras/">
-         <icon
-               image32="images/pmd_32.png">
-         </icon>
-         <overview
-               url="http://pmd.sourceforge.net/">
-         </overview>
-      </connectorDescriptor>
-	  <connectorDescriptor
-            categoryId="org.jboss.tools.central.discovery.testing"
-            description="Tool support for TestNG"
-            id="org.testng.eclipse"
-            kind="task"
-            license="Free, ASL"
-            name="TestNG"
-            provider="Cedric Beust"
-            siteUrl="http://download.jboss.org/jbosstools/updates/indigo/extras/">
-         <icon
-               image32="images/testng_32.gif">
-         </icon>
-         <overview
-         	   summary="TestNG plug-in for Eclipse"
-         	   screenshot="images/testng_screenshot.png"
-               url="http://testng.org/">
-         </overview>
-      </connectorDescriptor>
       
       <!-- Web -->
 
@@ -361,20 +381,43 @@
             id="org.jboss.tools.central.discovery.web"
             name="Web Development"
             relevance="60">
- 			<group id="bundled" /> 
- 			<group id="extra" />
+ 			<group id="org.jboss.tools.central.discovery.web.core" /> 
+ 			<group id="org.jboss.tools.central.discovery.web.extras" />
       </connectorCategory>
 
-      <!-- TODO: change URL to http://download.jboss.org/jbosstools/updates/indigo/ for/after Beta1 -->
       <connectorDescriptor
             categoryId="org.jboss.tools.central.discovery.web"
-            description="Google Plugin for Eclipse (GPE) 2.5.1 + Google Web Toolkit SDK (GWT) 2.4.0"
+            groupId="org.jboss.tools.central.discovery.web.core"
+            description="JST Server Core, UI, Adapters, Extensions, User Doc"
+            id="org.eclipse.jst.server_core.feature"
+            kind="task"
+            license="Free, EPL, Other"
+            name="JST Server"
+            provider="Eclipse.org"
+            siteUrl="http://download.jboss.org/jbosstools/updates/indigo/SR2/">
+            <iu id="org.eclipse.jst.server_adapters.ext.feature"/>
+            <iu id="org.eclipse.jst.server_adapters.feature"/>
+            <iu id="org.eclipse.jst.server_core.feature"/>
+            <iu id="org.eclipse.jst.server_ui.feature"/>
+            <iu id="org.eclipse.jst.server_userdoc.feature"/>
+         <icon
+               image32="images/wtp_32.png">
+         </icon>
+         <overview
+               url="http://eclipse.org/webtools/">
+         </overview>
+      </connectorDescriptor>
+
+      <connectorDescriptor
+            categoryId="org.jboss.tools.central.discovery.web"
+            groupId="org.jboss.tools.central.discovery.web.extras"
+            description="Google Plugin for Eclipse (GPE) + Google Web Toolkit SDK (GWT)"
             id="com.google.gwt.eclipse.sdkbundle.e37.feature"
             kind="task"
             license="EPL, Other"
             name="Google Plugin + Web Toolkit"
             provider="Google, Inc."
-            siteUrl="http://download.jboss.org/jbosstools/updates/requirements/gwt/2.5.0.v201201120043-rel-r37/">
+            siteUrl="http://download.jboss.org/jbosstools/updates/indigo/SR2/">
             <iu id="com.google.gwt.eclipse.sdkbundle.e37.feature"/>
             <iu id="com.google.gdt.eclipse.suite.e37.feature"/>
          <icon
@@ -386,6 +429,7 @@
       </connectorDescriptor>
       <connectorDescriptor
             categoryId="org.jboss.tools.central.discovery.web"
+            groupId="org.jboss.tools.central.discovery.web.extras"
             description="Tool support for the Spring Framework"
             id="org.springframework.ide.eclipse.feature"
             kind="task"
@@ -407,6 +451,8 @@
                url="http://www.springsource.com/developer">
          </overview>
       </connectorDescriptor>
+      
+      <!-- TODO: change URLs from http://download.jboss.org/jbosstools/updates/indigo/SR2/ to http://download.jboss.org/jbosstools/updates/indigo/ after Beta1 -->
       
 	</extension>
 </plugin>
