@@ -60,8 +60,8 @@ public class JaxrsResourceMethod extends JaxrsResourceElement<IMethod>
 	private final static List<String> CONTEXT_TYPE_NAMES = new ArrayList<String>(
 			Arrays.asList("javax.ws.rs.core.HttpHeaders",
 					"javax.ws.rs.core.UriInfo", "javax.ws.rs.core.Request",
-					"javax.servlet.HttpServletRequest",
-					"javax.servlet.HttpServletResponse",
+					"javax.servlet.http.HttpServletRequest",
+					"javax.servlet.http.HttpServletResponse",
 					"javax.servlet.ServletConfig",
 					"javax.servlet.ServletContext",
 					"javax.ws.rs.core.SecurityContext"));
