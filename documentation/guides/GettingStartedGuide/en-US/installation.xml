@@ -235,7 +235,7 @@ Java HotSpot(TM) Server VM (build 19.1-b02, mixed mode)]]>
 <?dbhtml filename="InstallingRHDS.html"?>
     <title>JBoss Developer Studio Installation</title> 
     <para>
-      This chapter will provide you with detailed information on how to install <property>JBoss Developer Studio</property>.
+      This section will provide you with detailed information on how to install <property>JBoss Developer Studio</property>.
     </para>
 	<important>
 		<para>
@@ -254,16 +254,16 @@ Java HotSpot(TM) Server VM (build 19.1-b02, mixed mode)]]>
 	</important>
 	<important>
 		<para>
-			When installing JBoss Developer Studio on the 64-bit edition of MacOSX Leopard, only the 64-bit edition of JBoss Developer Studio is supported. Though the 32-bit edition will install, many features will not work correctly due to Java 1.6 being specific to 64-bit applications on Leopard and JBoss Developer Studio requiring Java 1.6 for all features to function.
+			When installing JBoss Developer Studio on the 64-bit edition of MacOS X Snow Leopard or Lion, only the 64-bit edition of JBoss Developer Studio is supported. Though the 32-bit edition will install, many features will not work correctly due to Java 1.6 being specific to 64-bit applications on Leopard and JBoss Developer Studio requiring Java 1.6 for all features to function.
 		</para>
 	</important>
 	<section id="Installing_JBoss_Developer_Studio-Automated_Installation">
 		<title>Automated Installation</title>
 		<para>
-			Parameters for automated installation are defined in the <filename>InstallConfigRecord.xml</filename> file. Defined in this file is the path to the installation folder, the packages to be installed and the shortcuts to be created.
+			Parameters for automated installation are defined in the <filename>InstallConfigRecord.xml</filename> file. These parameters include the path to the installation folder, the packages to be installed and the shortcuts to be created.
 		</para>
 		<para>
-			Within the <filename>InstallConfigRecord.xml</filename> file are three parameters that can be modified for specific installation options:
+			Within the <filename>InstallConfigRecord.xml</filename> file is three parameters that can be modified for specific installation options:
 		</para>
 		<itemizedlist>
 			<listitem>
@@ -346,6 +346,34 @@ java -jar /path/to/installer.jar /path/to/InstallConfigRecord.xml
 				Automated installation does not check if the specified installation path already exists. If the path does exist, any files will be overwritten without notice.
 			</para>
 		</warning>
+		<para>
+			An example of an <filename>InstallConfigRecord.xml</filename> file is available below: 
+		</para>
+<programlisting><![CDATA[
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<AutomatedInstallation langpack="eng">
+	<com.jboss.jbds.installer.HTMLInfoPanelWithRootWarning id="introduction"/>
+	<com.izforge.izpack.panels.HTMLLicencePanel id="licence"/>
+	<com.jboss.jbds.installer.PathInputPanel id="target">
+		<installpath>/opt/local/JBDS5/beta1</installpath>
+	</com.jboss.jbds.installer.PathInputPanel>
+	<com.jboss.jbds.installer.JREPathPanel id="jre"/>
+	<com.jboss.jbds.installer.JBossAsSelectPanel id="as">
+		<installgroup>jbds</installgroup>
+	</com.jboss.jbds.installer.JBossAsSelectPanel>
+	<com.jboss.jbds.installer.UpdatePacksPanel id="updatepacks"/>
+	<com.jboss.jbds.installer.DiskSpaceCheckPanel id="diskspacecheck"/>
+	<com.izforge.izpack.panels.SummaryPanel id="summary"/>
+	<com.izforge.izpack.panels.InstallPanel id="install"/>
+	<com.jboss.jbds.installer.CreateLinkPanel id="createlink">
+		<jrelocation>/usr/lib/jvm/java-1.6.0-sun-1.6.0.30.x86_64/jre/bin/java</jrelocation>
+	</com.jboss.jbds.installer.CreateLinkPanel>
+	<com.izforge.izpack.panels.ShortcutPanel id="shortcut"/>
+	<com.jboss.jbds.installer.ShortcutPanelPatch id="shortcutpatch"/>
+	<com.izforge.izpack.panels.SimpleFinishPanel id="finish"/>
+</AutomatedInstallation>	
+]]>
+</programlisting>
 	</section>
 	<section id="Installing_JBoss_Developer_Studio-Manual_Installation">
 		<title>Manual Installation</title>
@@ -408,15 +436,15 @@ java -jar /path/to/installer.jar /path/to/InstallConfigRecord.xml
     </note>
      
     <para>
-      Selecting <emphasis> <property>Specific Java VM</property> </emphasis> you can provide the path to non-default Java VM.
+      Selecting the <emphasis> <property>Specific Java VM</property> </emphasis> option will allow you to provide the path to a specific Java VM installation.
     </para>
      
-    <note>
+<!--    <note>
       <title>Note:</title> 
       <para>
         JBoss Developer Studio 4.0 comes integrated with JBoss EAP 5.1 that requires JDK 6.0 to run and &quot;gij&quot; isn&apos;t available on every platform.
       </para>
-    </note>
+  </note> -->
      
     <figure>
       <title>Select Java VM</title> 
@@ -429,7 +457,7 @@ java -jar /path/to/installer.jar /path/to/InstallConfigRecord.xml
      
     <itemizedlist>
       <listitem>
-        <para>
+ <!--       <para>
           As part of the installation you can choose to install <ulink url="http://www.jboss.com/products/platforms/application">JBoss Enterprise Application Platform</ulink>. Select <emphasis><property>Yes</property></emphasis> to use it in JBoss Developer Studio.
         </para>
          
@@ -438,7 +466,7 @@ java -jar /path/to/installer.jar /path/to/InstallConfigRecord.xml
           <para>
             Like in the previous version of JBoss Developer Studio, version 4.0.0.GA comes integrated with JBoss EAP 5.1 that supports EAP 5 adapter and Seam 2.2.
           </para>
-        </note>
+	  </note> -->
          
         <para>
           This step lets you configure locally available JBoss Application Servers:
@@ -675,7 +703,7 @@ java -jar /path/to/installer.jar /path/to/InstallConfigRecord.xml
     </para>
 	<note>
 		<para>
-			At the time of the JBoss Developer Studio 4.1 release, the technical preview site does not contain any components.
+			At the time of the JBoss Developer Studio 5.0 release, the technical preview site does not contain any components.
 		</para>
 	</note>
      

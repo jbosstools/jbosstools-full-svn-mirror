@@ -95,10 +95,10 @@
 	<section id="Upgrading">
 		<?dbhtml filename="Upgrading.html"?>
 		<title>Upgrading</title>
-		<para>Because JBoss Developer Studio 3.0x and 4.0 use different versions of Eclipse, it is not possible to directly upgrade from an older version to JBoss Developer Studio 4.0.</para>
+		<para>Because JBoss Developer Studio 4.0x and 5.0 use different versions of Eclipse, it is not possible to directly upgrade from an older version to JBoss Developer Studio 5.0.</para>
 		<note>
 			<title>Tip</title>
-			<para>It is possible to run JBoss Developer Studio 3.0x and 4.0 side by side, as long as they have been installed into separate directories.</para>
+			<para>It is possible to run JBoss Developer Studio 4.0x and 5.0 side by side, as long as they have been installed into separate directories.</para>
 		</note>
 
 	</section>
