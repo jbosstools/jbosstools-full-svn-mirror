@@ -38,7 +38,7 @@
         <para>
             In oder to add a new project example you need to select the <property>User sites</property> option and press the <guibutton>Add</guibutton> button to the right.
         </para>
-        <para>When the <guibutton>Add</guibutton> button is pressed the <property>Add Project Example Site</property> dialog is displayed. The dialog contains two input fields: <property>Name</property>, where you need to specify the name of the new entry and <property>URL</property>,which has to point to the XML file that contains example project(s) properties. The structure of the XML file is discussed in more detail in a later chapter of this guide. Alternatively, if the XML is stored on your local machine, you can hit the <guibutton>Browse</guibutton> button to select the file in the file system.</para>
+        <para>When the <guibutton>Add</guibutton> button is pressed the <property>Add Project Example Site</property> dialog is displayed. The dialog contains two input fields: <property>Name</property>, where you need to specify the name of the new entry and <property>URL</property>,which has to point to the XML file that contains the example project properties. Alternatively, if the XML is stored on your local machine, you can hit the <guibutton>Browse</guibutton> button to select the file in the file system.</para>
         <para>Here is an example of the XML file that holds  project example settings:</para>
     
     <programlisting role="XML"><![CDATA[<projects>

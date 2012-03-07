@@ -143,7 +143,7 @@
 	</section>
 
 
-	<section id="OtherRelevantResourcesOnTheTopic33">
+<!--	<section id="OtherRelevantResourcesOnTheTopic33">
 		<?dbhtml filename="OtherRelevantResourcesOnTheTopic33.html"?>
 		<title>Other relevant resources on the topic</title>
 		<para>JBoss Developer Studio on RedHat: <ulink url="http://www.redhat.com/developer_studio">JBoss Developer Studio</ulink>
@@ -156,6 +156,6 @@
 		<para>
 			<ulink url="http://www.jboss.org/community/wiki/MatrixofsupportedplatformsruntimesandtechnologiesinJBossToolsJBDS">Matrix of supported platforms, runtimes and technologies in JBossTools and JBoss Developer Studio</ulink>
 		</para>
-	</section>
+	</section> -->
 
 </chapter>

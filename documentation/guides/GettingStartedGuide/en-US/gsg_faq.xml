@@ -115,14 +115,14 @@ If you are sure that your project does not need JSF capabilities, just disable t
 	
 	</section>
 
-	<section id="question_2">
+<!--	<section id="question_2">
 		<title>Do I need to have JBoss Server installed to run JBoss Developer Studio?</title>
 
 		<para>No. <property>JBoss Developer Studio</property> already comes bundled with JBoss Server. We bundle it together so that you don&apos;t need to download any additional software and can test your application in a Web browser right away.</para>
 		<para>If you want to use a different JBoss server installation, after <property>JBoss Developer Studio</property> is installed open Servers View (select <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Show View</guimenuitem><guimenuitem>Others</guimenuitem><guimenuitem>Server</guimenuitem><guimenuitem>Servers</guimenuitem></menuchoice>), then right click and select <menuchoice><guimenuitem>View</guimenuitem><guimenuitem>New</guimenuitem><guimenuitem>Server</guimenuitem></menuchoice> and follow the wizards steps to point to another Jboss Server installation.</para>
 		<para>
 			<property>JBoss Developer Studio</property> works with any servlet container, not just JBoss. For more information on deployment, please see the Deploying Your Application section.</para>
-	</section>
+		</section> -->
 
 	<section id="question_3">
 		<title>I have an existing Seam 1.2.1 project. Can I migrate or import the project into a JBoss Developer Studio Seam project?</title>

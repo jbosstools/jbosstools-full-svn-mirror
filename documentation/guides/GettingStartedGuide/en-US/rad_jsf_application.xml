@@ -292,7 +292,7 @@ tryagain_bigger=Oops..incorrect guess. Please try a bigger number.
 
 	<section id="CreatingJavaBean">
 		<?dbhtml filename="CreatingJavaBean.html"?>
-		<title>Creating Java Bean</title>
+		<title>Creating a Java Bean</title>
 		<para>In this section you&apos;ll learn how to create a Java bean that will hold business logic of our application.</para>
 		<itemizedlist>
 			<listitem>
@@ -314,7 +314,7 @@ tryagain_bigger=Oops..incorrect guess. Please try a bigger number.
 		</itemizedlist>
 		<programlisting role="JAVA"><![CDATA[Integer userNumber;
 ]]></programlisting>
-<para>JBoss Developer Studio allows to quickly generate getters and setters for java bean.</para>
+<para>JBoss Developer Studio allows for quick generation of getters and setters for java bean.</para>
 		<itemizedlist>
 			<listitem>
 				<para>Right click the <filename>NumberBean.java</filename> file in the Package Explorer view</para>
@@ -395,7 +395,7 @@ import javax.servlet.http.HttpSession;
 import javax.faces.application.FacesMessage;
 import java.util.ResourceBundle;
 ]]></programlisting>
-		<para>The whole java bean contain the following code:</para>
+		<para>The Java Bean contains the following code:</para>
 		<programlisting role="JAVA"><![CDATA[package game;
 
 import javax.faces.context.FacesContext;
