@@ -13,9 +13,10 @@ package org.jboss.tools.openshift.express.internal.ui.viewer.property;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
+import org.jboss.tools.openshift.express.internal.core.console.UserDelegate;
+import org.jboss.tools.openshift.express.internal.ui.messages.OpenShiftExpressUIMessages;
 import org.jboss.tools.openshift.express.internal.ui.utils.Logger;
 
-import com.openshift.express.client.IUser;
 import com.openshift.express.client.OpenShiftException;
 
 /**
@@ -23,9 +24,9 @@ import com.openshift.express.client.OpenShiftException;
  */
 public class UserPropertySource implements IPropertySource {
 
-	private final IUser user;
+	private final UserDelegate user;
 
-	public UserPropertySource(IUser user) {
+	public UserPropertySource(UserDelegate user) {
 		this.user = user;
 	}
 
