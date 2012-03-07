@@ -823,23 +823,20 @@
 		</pluginRepository>
 	</pluginRepositories>
 
-	<!-- commented to check if it is added by default on hudson but with https:// -->
-	<!-- pluginRepositories> <pluginRepository> <id>jboss-public-repository-group</id> 
-		<name>JBoss Public Repository Group</name> <url>http://repository.jboss.org/nexus/content/groups/public/</url> 
-		<releases> <enabled>true</enabled> </releases> <snapshots> <enabled>true</enabled> 
-		</snapshots> </pluginRepository> </pluginRepositories -->
-
+	<!-- To deploy parent to Nexus -->
+	<!--  Don't change "id" since it should match credentials entry in $M2_REPO/settings.xml -->
 	<distributionManagement>
 		<snapshotRepository>
 			<id>jboss-snapshots-repository</id>
 			<name>JBoss Snapshots Repository</name>
 			<url>https://repository.jboss.org/nexus/content/repositories/snapshots/</url>
+			<uniqueVersion>false</uniqueVersion>
 		</snapshotRepository>
-		<!-- <repository> <id>jboss-releases-repository</id> <name>JBoss Releases 
-			Repository</name> <uniqueVersion>false</uniqueVersion> <url>https://repository.jboss.org/nexus/content/repositories/releases/</url> 
-			<layout>default</layout> </repository> <snapshotRepository> <id>jboss-snapshots-repository</id> 
-			<name>JBoss Snapshot Repository</name> <uniqueVersion>false</uniqueVersion> 
-			<url>https://repository.jboss.org/nexus/content/repositories/snapshots/</url> 
-			<layout>default</layout> </snapshotRepository> -->
+		<repository>
+			<id>jboss-staging-repository</id>
+			<name>JBoss Staging Repository</name>
+			<uniqueVersion>false</uniqueVersion>
+			<url>https://repository.jboss.org/nexus/content/groups/staging/</url> 
+		</repository>
 	</distributionManagement>
 </project>
