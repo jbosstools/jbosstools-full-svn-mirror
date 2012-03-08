@@ -5,8 +5,12 @@
 	<property name="requirement.root" value="${basedir}" />
 	<property name="requirement.download.root" value="${requirement.root}/download" />
 	<property name="requirement.build.root" value="${requirement.root}/target" />
+	
 	<condition property="skipRequirementBuild">
-		<equals arg1="${maven.test.skip}" arg2="true" />
+		<or>
+			<isset property="maven.test.skip" />
+			<isset property="skipTests" />
+		</or>
 	</condition>
 
 	<target name="all" description="fetch all requirements defined by subdirs with a build.properties file">
