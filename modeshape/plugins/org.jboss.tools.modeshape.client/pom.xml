@@ -9,4 +9,5 @@
     </parent>
     <groupId>org.jboss.tools.modeshape.plugins</groupId>
     <artifactId>org.jboss.tools.modeshape.client</artifactId>
+    <packaging>eclipse-plugin</packaging>
  </project>
