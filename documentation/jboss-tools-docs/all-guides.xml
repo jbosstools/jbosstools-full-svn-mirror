@@ -188,6 +188,19 @@
 				<directoryMode>0755</directoryMode>
 			</fileSet>
 			<fileSet>
+				<directory>../../seam/docs/tutorial/target/docbook/publish/en-US</directory>
+				<outputDirectory>/seam_tutorial</outputDirectory>
+				<filtered>false</filtered>
+				<lineEnding>keep</lineEnding>
+				<includes>
+					<include>**/*.*</include>
+				</includes>
+				<useStrictFiltering>false</useStrictFiltering>
+				<useDefaultExcludes>true</useDefaultExcludes>
+				<fileMode>0644</fileMode>
+				<directoryMode>0755</directoryMode>
+			</fileSet>
+			<fileSet>
 				<directory>../../jsf/docs/jsf_tools_ref_guide/target/docbook/publish/en-US</directory>
 				<outputDirectory>/jsf_tools_ref_guide</outputDirectory>
 				<filtered>false</filtered>

@@ -134,6 +134,14 @@
 		</indexentry>
 		
 		<indexentry>
+			<primaryie>Seam Tools Tutorial<ulink url="en/seam_tutorial/html/index.html"
+				>(html)</ulink>
+				<ulink url="en/seam_tutorial/html_single/index.html">(html single)</ulink>
+				<ulink url="en/seam_tutorial/pdf/Seam_Reference_Guide.pdf">(pdf)</ulink>
+			</primaryie>
+		</indexentry>
+
+		<indexentry>
 			<primaryie>Smooks Reference Guide<ulink
 				url="en/jboss_smooks_plugin_ref_guide/html/index.html">(html)</ulink>
 				<ulink url="en/jboss_smooks_plugin_ref_guide/html_single/index.html">(html single)</ulink>
