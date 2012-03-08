@@ -11,16 +11,15 @@
     </keywordset>
   </chapterinfo>
    <title>Developing a simple JSP web application</title> 
-  <note>
+<!--  <note>
     <title>Note:</title> 
     <para>
       We highly recommend developing in <property>Seam</property>. This chapter is for users who for some reason cannot use Seam.
     </para>
-  </note>
+</note> -->
    
   <para>
-    In this chapter you'll find out how to create a simple <ulink
-		url="http://java.sun.com/products/jsp/">JSP</ulink> application using <property>JBoss Developer Studio</property>. The application will show a classic &quot;Hello World!&quot; on the page.
+    In this chapter you'll find out how to create a simple JSP application using <property>JBoss Developer Studio</property>. The application will show a classic &quot;Hello World!&quot; on the page.
   </para>
    
   <para>
@@ -263,7 +262,7 @@
 <?dbhtml filename="DeployTheProject.html"?>
       <title>Deploying the project</title> 
       <para>
-        Writing ant scripts and managing the packaging process can be quite a complicated and time consuming task for even the most trivial web applications. However, <property>JBoss Developer Studio</property> relieves you of this burden. All you need is to start <property>JBoss Server</property> and launch your application in your favorite browser.
+        Writing ant scripts and managing the packaging process can be quite a complicated and time consuming task for even the most trivial web applications. However, <property>JBoss Developer Studio</property> relieves you of this burden. All you need is to start your <property>JBoss Server</property> and launch your application in your favorite browser.
       </para>
        
       <para>
@@ -274,7 +273,7 @@
 <?dbhtml filename="JarConfig.html"?>
         <title>JAR Config</title> 
         <para>
-          Project archives managing is available through Project Archives view.
+          Project archives managing is available through the Project Archives view.
         </para>
          
         <itemizedlist>
@@ -376,7 +375,7 @@
 <?dbhtml filename="AutoRedeploy.html"?>
         <title>Auto redeploy</title> 
         <para>
-			When you are creating a web application and register it on <property>JBoss Server</property> it is automatically deployed into the <filename>/deploy</filename> directory of the server. JBoss Developer Studio comes with the feature of auto-redeploy. It means that you don&apos;t need to restart <property>JBoss Server</property>. Any changes made in the application in exploded format will trigger a redeployment on the server.
+			When you create a web application and register it on the <property>JBoss Server</property> as it is automatically deployed into the <filename>/deploy</filename> directory of the server. JBoss Developer Studio's auto-redeploy feature ensures you do not need to restart the server. Any changes made in the application in exploded format will trigger a redeployment on the server.
         </para>
          
         <para>
@@ -450,13 +449,13 @@
 <?dbhtml filename="LaunchingTheProject.html"?>
       <title>Launch JSP Project</title> 
       <para>
-        Let&apos;s now launch our project on server. We&apos;ll use <property>JBoss Server</property> that is shipped with <property>JBoss Developer Studio</property>. You can do it by performing one of the following actions:
+        Now launch the project onto a JBoss server:
       </para>
        
       <itemizedlist>
         <listitem>
           <para>
-            Start JBoss Server from Servers view by clicking the Start the server icon ( 
+            Start a JBoss Server from the Servers view by clicking the Start the server icon ( 
             <inlinemediaobject>
               <imageobject>
                 <imagedata fileref="images/jsp_application/jsp_application_18.png"/>
@@ -499,7 +498,7 @@
       </figure>
        
       <para>
-		  Thus with the help of this chapter you&apos;ve learnt how to organize a Dynamic Web Project with a minimal configuration, add new elements to it (in our case it&apos;s just one JSP page) and deploy and run it on the <property>JBoss Server</property> shipped with <property>JBoss Developer Studio</property>.
+		  You have learnt how to organize a Dynamic Web Project with a minimal configuration, add new elements to it (in our case it is a JSP page), deploy, and run it on a JBoss Server from within JBoss Developer Studio.
       </para>
     </section>
   </section>

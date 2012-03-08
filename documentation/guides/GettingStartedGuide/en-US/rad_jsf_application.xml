@@ -9,24 +9,23 @@
 			<keyword>RAD</keyword>
 		</keywordset>
 	</chapterinfo>
-	<title>RAD development of a simple JSF application</title>
+	<title>Rapid Application Development of a JSF application</title>
 
-	<note>
+<!--	<note>
 		<title>Note:</title>
 		<para>We highly recommend developing in <property>Seam</property>. This chapter is for users
             who for some reason cannot use <property>Seam</property>.</para>
-	</note>
+		</note> -->
 
-	<para>In this chapter you will learn how to create a simple JSF application being based on the
-            <property>&quot;RAD&quot;</property> philosophy. We will create the familiar
+	<para>In this chapter you will learn how to create a JSF application being based on the Rapid Application Development (RAD) philosophy. We will create the familiar
         Guess Number application. The game is played according to the following rules. You are asked to guess a number
         between 0 and 100. If the guess is correct, a success page is displayed with a link to play
         again. If the guess is incorrect, a message is printed notifying that a smaller or a larger
         number should be entered and the game continues.</para>
-	<para>We&apos;ll show you how to create such an application from scratch, along the way
+	<para>You will now learn how to create such an application from scratch, along the way
         demonstrating the powerful features included in JBoss Developer Studio such as project templating, Visual
         Page Editor, code completion and others. You will design the JSF application and then run
-        the application from inside JBoss Developer Studio using the bundled JBoss server.</para>
+        the application from inside JBoss Developer Studio using a JBoss server.</para>
 
 	<section id="SettingUpTheProject12">
 		<?dbhtml filename="SettingUpTheProject12.html"?>
@@ -80,7 +79,7 @@
             should be tried. The second page is called <filename>success.jsp</filename>. This page will be shown after you guess
             the number correctly. From this page you also have the option to play the game again.</para>
 
-		<para>Now, we will guide you through the steps on how to do this.</para>
+		<para>Steps for adding two pages to your application:</para>
 		<itemizedlist>
 			<listitem>
 				<para>First a folder called <filename>pages</filename> needs to be created under the <filename>WebContent</filename> folder. To do this right click on the <filename>WebContent</filename> folder in the Package Explorer view and select <menuchoice><guimenuitem>New</guimenuitem><guimenuitem>Folder</guimenuitem></menuchoice>. Set the <guilabel>Folder Name</guilabel> to <filename>pages</filename> and click the <guibutton>Finish</guibutton> button.</para>
@@ -185,9 +184,9 @@
 	<section id="CreatingResourceFile">
 		<?dbhtml filename="CreatingResourceFile.html"?>
 		<title>Creating Resource File</title>
-		<para>A resource file is just a file with a <emphasis>.properties</emphasis> extension for
+		<para>A resource file is a file with a <emphasis>.properties</emphasis> extension for
             collecting text messages in one central place. JBoss Developer Studio allows you to
-            create quickly a resource file. The messages stored in resource file can be displayed to
+            create quickly a resource file. The messages stored in a resource file can be displayed to
             you on a Web page during application execution. </para>
 		<para>
 			With resource file you don&apos;t hard code anything into the JSP pages. It also makes it easier to translate your application to other languages. All you have to do is to translate all your messages to the other language and save them in a new properties file with a name that ends with the appropriate ISO-639 language code.
