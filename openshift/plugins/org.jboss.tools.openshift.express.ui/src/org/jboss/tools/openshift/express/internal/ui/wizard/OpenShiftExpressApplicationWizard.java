@@ -27,7 +27,6 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.eclipse.jgit.errors.TransportException;
@@ -134,19 +133,22 @@ public abstract class OpenShiftExpressApplicationWizard extends Wizard implement
 
 	@Override
 	public void addPages() {
-		if( getWizardModel().getUser() == null)
+		if( getWizardModel().getUser() == null) {
 			getWizardModel().setUser(initialUser);
-		addPage(new CredentialsWizardPage(this, getWizardModel()));
+		}
+		if(initialUser == null) {
+			addPage(new CredentialsWizardPage(this, getWizardModel()));
+		}
 		addPage(new ApplicationConfigurationWizardPage(this, getWizardModel()));
 		addPage(new ProjectAndServerAdapterSettingsWizardPage(this, getWizardModel()));
 		addPage(new GitCloningSettingsWizardPage(this, getWizardModel()));
 	}
 
-	@Override
+	/*@Override
 	public IWizardPage getStartingPage() {
 		IWizardPage[] pages = getPages();
 		return initialUser == null ? pages[0] : pages[1];
-	}
+	}*/
 
 	public void setInitialUser(UserDelegate user) {
 		this.initialUser = user;
