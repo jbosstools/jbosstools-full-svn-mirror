@@ -321,6 +321,7 @@ public class ExpressDetailsComposite {
 					}
 					callback.execute(new SetApplicationCommand(server));
 					resetDeployProjectCombo();
+					enableImportLink();
 					postLongRunningValidate();
 				}
 			};
@@ -456,9 +457,13 @@ public class ExpressDetailsComposite {
 				appNameCombo.select(select);
 			}
 		}
+		enableImportLink();
+		resetDeployProjectCombo();
+	}
+
+	private void enableImportLink() {
 		IProject[] p = ExpressServerUtils.findProjectsForApplication(fapplication);
 		importLink.setEnabled(p == null || p.length == 0);
-		resetDeployProjectCombo();
 	}
 	
 	private void postLongRunningValidate() {
