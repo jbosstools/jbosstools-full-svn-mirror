@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Language" content="en-us" />
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <link rel="stylesheet" href="../whatsnew.css" />
-<title>OpenShift Tools 2.3.0.Beta1 What's New</title>
+<title>OpenShift Tools 3.3.0.Beta1 What's New</title>
 <script type="text/javascript">
 	var _gaq = _gaq || [];
 	_gaq.push([ '_setAccount', 'UA-17645367-5' ]);
@@ -25,7 +25,7 @@
 </script>
 </head>
 <body>
-	<h1>OpenShift 2.3.0.Beta1 What's New</h1>
+	<h1>OpenShift 3.3.0.Beta1 What's New</h1>
 
 	<p align="right">
 		<a href="../index.html">&lt; Main Index</a> <a
@@ -33,6 +33,24 @@
 	</p>
 	<table border="0" cellpadding="10" cellspacing="0" width="80%">
 
+		<tr>
+			<td colspan="2">
+				<hr />
+				<h3>General</h3>
+				<hr />
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" align="left">
+				<a name="itemname3" id="itemname3"></a>
+				<b>Complete overhaul</b>
+			</td>
+			<td valign="top">
+			Beta1 brought big changes to the <b>OpenShift Tools</b> in JBoss Tools. We tackled three times the amount of tickets we did in M5 (a total of 160). 
+			We introduced the new <b>OpenShift Express console</b>, we split the single <b>wizard</b> into several ones with concise aims and
+			we brought a new <b>OpenShift Server adapter</b> with its own runtime. The new adapter may publish source and binary artifacts to the PaaS.    
+			</td>
+		</tr>
 		<tr>
 			<td colspan="2">
 				<hr />
@@ -46,15 +64,11 @@
 				<b>OpenShift Express Console</b>
 			</td>
 			<td valign="top">
-			    We reworked the whole UI for OpenShift in JBoss Tools 3.3.0 Beta1. What was a single wizard in M5 is now split up
-				into different parts with concise aims. The central entry point is now what we call the <b>OpenShift Express console</b>.
-				<p>
+			    The central entry point is now what we call the <b>OpenShift Express console</b>.
+				It lists your accounts and applications. Actions in the context menu allow you manage your user accounts, domains, applications, embedded cartridges etc.<p>
 					<img src="images/openshift-console.png"	alt="OpenShift Express Console" />
 				</p> 
-				The OpenShift Express console will list your accounts and
-				applications.  It allows you to manage your resources on the Red Hat
-				PaaS. Actions in the context menu allow you to create new users,
-				manage domains, applications, etc. <br />
+				 <br />
 				<p>
 					<small>
 						<a href="https://issues.jboss.org/browse/JBIDE-10528">Related Jira</a>
@@ -62,6 +76,7 @@
 				</p>
 			</td>
 		</tr>
+		<tr><td colspan="2"><hr/></td></tr>
 		<tr>
 			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a>
 				<b>Properties</b>
@@ -77,12 +92,13 @@
 				</p>
 			</td>
 		</tr>
+		<tr><td colspan="2"><hr/></td></tr>
 		<tr>
 			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a>
 				<b>User passwords</b>
 			</td>
 			<td valign="top">
-				We now allow you to store your OpenShift user password in the secure storage. 
+				We now allow you to store your OpenShift user password in the <b>secure storage</b>. 
 				You wont have to retype it over and over again. 
 				<p>
 					<img src="images/secure-storage.png"/>
@@ -94,19 +110,62 @@
 				</p>
 			</td>
 		</tr>
+		<tr><td colspan="2"><hr/></td></tr>
 		<tr>
 			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a>
 				<b>Embedded cartridges</b>
 			</td>
 			<td valign="top">
-				You may now add embed or remove cartridges from an existing application by choosing the appropriate
-				entry in the context menu. We now offer a separate wizard for that sake.
-				<p>
-					<img src="images/menu-edit-embedded-cartridges.png"/>
-				</p>
+				You may now add or remove embedded cartridges for your applications. Beta1 offers it's own wizard for that sake.
 				<p>
 					<img src="images/edit-embedded-cartridges.png"/>
 				</p>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<hr />
+				<h3>Creation and Import Wizards</h3>
+				<hr />
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a>
+				<b>Create Application</b></td>
+			<td valign="top">
+			You may now create a new <b>OpenShift application</b> and import it to your workspace in a single hop. 
+			Choose name, type, embedded cartridges and get over to the settings for your local project.
+			<p>
+				<img src="images/wizard-new-application.png"/>
+			</p>
+			The next page allows you to choose to import the application to a <b>new project</b> 
+			or to enable OpenShift for an existing project in your workspace. 
+			<br /><p>
+				<img src="images/wizard-project.png" />
+			</p>
+			On last wizard page, you're able to pick custom settings when dealing with the OpenShift <b>git application repository</b>.
+			The default settings are usually just fine and you can leave them alone. 
+			<p>
+				<img src="images/wizard-git.png" />
+			</p>
+			A further option allows you to create the <b>OpenShift Express Server</b> adapter for easy publishing.
+			<br /><br />As soon as you finish the wizard, the whole process is executed: the tolling will create the application, import it to your workspace
+			and create the server adapter for you.
+			</td>
+		</tr>
+		<tr><td colspan="2"><hr/></td></tr>
+		<tr>
+			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a>
+				<b>Import Application</b></td>
+			<td valign="top">
+			When importing, the application creation wizard will preselect the application you've chosen in the express console.
+			<p>
+				<img src="images/wizard-import.png" />
+			</p>
+			You may of course also make up your mind and choose another OpenShift application. A separate dialog allows you to pick among the applications you're currently running on your your Paas.
+			<p>
+				<img src="images/wizard-select-existing.png" />
+			</p>
 			</td>
 		</tr>
 		<tr>
@@ -120,21 +179,28 @@
 			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a>
 				<b>OpenShift Server Runtime</b></td>
 			<td valign="top">
-				You may now create the server adapter for an <b>OpenShift
-				Express Application</b> by choosing <b>Create a Server Adapter</b> in the
-				context menu of the <b>OpenShift Express Console</b>
+				In M5 the <b>server adapter</b> was only created when importing an OpenShift application. 
+				Beta1 improves this a lot and allows you to exclusively create the server adapter. 
+				Choose <b>Create a Server Adapter</b> in the
+				context menu of the <b>OpenShift Express Console</b> and here you go, you get a fresh adapter for your
+				existing OpenShift applciation.
 				<p>
 					<img src="images/console-create-a-server-adapter.png" alt="create server adapter" />
 				</p>
-				You may now also create the server adapter like any other Eclipse WTP server adapter by invoking the <b>new server wizard</b>
+				We always tried to stick to the Eclipse standards and therefore now also allow you to create the adapter like 
+				any other Eclipse WTP server adapter. Choose the Eclipse <b>new server wizard</b> and pick the
+				<b>OpenShift Express Server</b>.
 				<p>
 					<img src="images/server-adapter-wizard.png" />
 				</p>
+				The second wizard page configures all OpenShift specific settings: Your credentials, the OpenShift applicaton 
+				and your workspace project. 
 				<p>
 					<img src="images/server-adapter-wizard-2.png" />
 				</p>
-				The new OpenShift Server Adapter is not bound to JBoss AS7 any longer, it has it's own runtime. 
-				The adapter may therefore now also publish to non-java applications.
+				The new OpenShift Server Adapter is not bound to JBoss AS7 any more, it has it's own runtime. 
+				You may therefore use it to publish to <b>any OpenShift application</b>. The prior limitation that restricted 
+				you to publish to jbossas-7 applications only, is gone. 
 				<p>
 					<small>
 						<a href="https://issues.jboss.org/browse/JBIDE-10716">Related Jira</a>
@@ -142,16 +208,17 @@
 				</p>
 			</td>
 		</tr>
+		<tr><td colspan="2"><hr/></td></tr>
 		<tr>
 			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a>
 				<b>OpenShift Server Editor</b></td>
 			<td valign="top">
-				The OpenShift <b>Server Editor</b> now reports
+				The <b>Server Editor</b> now reports all relevant informations that are involved when publishing the 
+				workspace project to the OpenShift PaaS. 
+				You'll find the project, the OpenShift application, the host, user name, git branch and deployments directory.
 				<p>
 					<img src="images/server-editor.png" />
 				</p>
-				The <b>Server Editor</b> now reports all relevant details of the <b>workspace project</b> it will publish to the <b>OpenShift PaaS</b>. 
-				You'll find the project, the OpenShift application, the host, user name, git branch and deployments directory.
 				<p>
 					<small>
 						<a href="https://issues.jboss.org/browse/JBIDE-10716">Related Jira</a>
@@ -159,6 +226,7 @@
 				</p>
 			</td>
 		</tr>
+		<tr><td colspan="2"><hr/></td></tr>
 		<tr>
 			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a>
 				<b>Source & Binary Deployment</b></td>
@@ -171,23 +239,10 @@
 				you always could with  Eclipse WTP server adapters.
 				The adapter will build wars for these projects, 
 				copy them to the <b>deployments</b> folder of your project (the project the adapter is bound to)
-				and push them to the OpenShift application. JBoss AS7.1, will then pick those wars and deploy them. 
+				and push them to the OpenShift application. The JBoss AS7.1 will then pick those wars and deploy them. 
 				This is what we call the <b>binary</b> mode where binary artifacts are published to OpenShift.
 			</td>
 		</tr>
-		<tr>
-			<td colspan="2">
-				<hr />
-				<h3>Import wizards</h3>
-				<hr />
-			</td>
-		</tr>
-		<tr>
-			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a>
-				<b>Existing projects</b></td>
-			<td valign="top">
-			
-			</td>
 	</table>
 </body>
 
