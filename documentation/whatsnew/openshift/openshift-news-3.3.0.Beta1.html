@@ -143,13 +143,14 @@
 			<br /><p>
 				<img src="images/wizard-project.png" />
 			</p>
+			A further option allows you to create the <b>OpenShift Express Server</b> adapter for easy publishing.
+			<br /><br/>
 			On last wizard page, you're able to pick custom settings when dealing with the OpenShift <b>git application repository</b>.
 			The default settings are usually just fine and you can leave them alone. 
 			<p>
 				<img src="images/wizard-git.png" />
 			</p>
-			A further option allows you to create the <b>OpenShift Express Server</b> adapter for easy publishing.
-			<br /><br />As soon as you finish the wizard, the whole process is executed: the tolling will create the application, import it to your workspace
+			<br />As soon as you finish the wizard, the whole process is executed: the tolling will create the application, import it to your workspace
 			and create the server adapter for you.
 			</td>
 		</tr>
@@ -241,6 +242,11 @@
 				copy them to the <b>deployments</b> folder of your project (the project the adapter is bound to)
 				and push them to the OpenShift application. The JBoss AS7.1 will then pick those wars and deploy them. 
 				This is what we call the <b>binary</b> mode where binary artifacts are published to OpenShift.
+				<p>
+					<small>
+						<a href="https://issues.jboss.org/browse/JBIDE-10480">Related Jira</a>
+					</small>
+				</p>
 			</td>
 		</tr>
 	</table>
