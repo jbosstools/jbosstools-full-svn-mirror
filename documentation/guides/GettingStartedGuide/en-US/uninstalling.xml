@@ -1,0 +1,11 @@
+<chapter id="Uninstalling">
+		<title>Uninstalling the JBoss Developer Studio</title>
+		<itemizedlist>
+			<listitem>
+				<para>Ensure <property>JBoss Developer Studio</property> is not running</para>
+			</listitem>
+			<listitem>
+				<para>Run the Uninstaller</para>
+			</listitem>
+		</itemizedlist>
+</chapter>
