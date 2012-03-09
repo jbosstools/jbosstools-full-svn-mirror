@@ -13,7 +13,7 @@
 <!ENTITY gsg_faq  SYSTEM "gsg_faq.xml">
 <!ENTITY further_reading  SYSTEM "further_reading.xml">
 <!ENTITY project_examples  SYSTEM "project_examples.xml">
-
+<!ENTITY uninstalling  SYSTEM "uninstalling.xml">
 <!ENTITY usage_stats_intro  SYSTEM "usage_stats_jbt_intro.xml">
 
 
@@ -69,6 +69,7 @@
  &jsp_application;
  &rad_jsf_application; 
  &project_examples;
+ &uninstalling;
  &gsg_faq;
  &further_reading; 
 

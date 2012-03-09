@@ -9,10 +9,10 @@
 			<keyword>JBoss</keyword>
 		</keywordset>
 	</chapterinfo>
-	<title>Getting Started with JBoss Developer Studio</title>
+	<title>First launch of the JBoss Developer Studio</title>
 
 	<section id="Welcome">
-		<title>Welcome to JBoss Developer Studio</title>
+		<title>Welcome</title>
 		<para>In this section we'll show you how to work with the welcome page of the <property>JBoss Developer Studio</property>.</para>
 		<para>The welcome page is the first page you see when you first launch <property>JBoss Developer Studio</property>. </para>
 
@@ -92,33 +92,11 @@
 
 	</section>
 
-	<section id="Upgrading">
-		<?dbhtml filename="Upgrading.html"?>
-		<title>Upgrading</title>
-		<para>Because JBoss Developer Studio 4.0x and 5.0 use different versions of Eclipse, it is not possible to directly upgrade from an older version to JBoss Developer Studio 5.0.</para>
-		<note>
-			<title>Tip</title>
-			<para>It is possible to run JBoss Developer Studio 4.0x and 5.0 side by side, as long as they have been installed into separate directories.</para>
-		</note>
-
-	</section>
-
-	<section id="Uninstalling">
-		<?dbhtml filename="Uninstalling.html"?>
-		<title>Uninstalling</title>
-		<itemizedlist>
-			<listitem>
-				<para>Make sure <property>JBoss Developer Studio</property> is not running</para>
-			</listitem>
-			<listitem>
-				<para>Uninstall your current version of <property>JBoss Developer Studio</property> by running the Uninstaller</para>
-			</listitem>
-		</itemizedlist>
-	</section>
-
 	<xi:include href="usage_reporting.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
 	
-	<section id="Support">
+	<!-- Don't need the Support section, we have the 'feedback' chapter for that -->
+	
+<!--	<section id="Support">
 		<?dbhtml filename="Support.html"?>
 		<title>Support</title>
 		<para>
@@ -140,7 +118,7 @@
 		<para>
 			<property>JBoss Developer Studio</property> subscribers can get additional support on our <ulink url="https://network.jboss.com/jbossnetwork/login.html">Support Portal</ulink>.
 		</para>
-	</section>
+	</section> -->
 
 
 <!--	<section id="OtherRelevantResourcesOnTheTopic33">

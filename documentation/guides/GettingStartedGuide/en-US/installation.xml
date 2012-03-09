@@ -632,7 +632,8 @@ java -jar /path/to/installer.jar /path/to/InstallConfigRecord.xml
     </figure>
 </section>
   </section>
-  <section id="extras_site">
+  <!-- Commenting out as we recommend using JBoss Central now and there is no point in mentioning two ways to achieve the one thing if we only want users doing things a certain way -->
+<!--  <section id="extras_site">
 	  <title>Accessing the additional supported tooling</title> 
 	  <para>
 	  A number of components are supported, but do not come as part of the standard installation. These extra components are available for individual installation through the JBoss Developer Studio extras site. To access the extras site, select <menuchoice>
@@ -706,19 +707,23 @@ java -jar /path/to/installer.jar /path/to/InstallConfigRecord.xml
 			At the time of the JBoss Developer Studio 5.0 release, the technical preview site does not contain any components.
 		</para>
 	</note>
-     
-<!--    <note>
-      <title>Note</title> 
-      <para>
-        If you are prompted for credentials when accessing the Tech Preview Update Site, enter the username and password that were supplied in an email or shown in the Update Guide available on the <ulink url="http://access.redhat.com">Customer Service Portal</ulink>. If you experience any issues accessing the Tech Preview Update Site please contact technical support.
-      </para>
-  </note> -->
-  </section>
+ </section> -->
+ 
+	 <section id="Upgrading">
+		 <?dbhtml filename="Upgrading.html"?>
+			 <title>Upgrading</title>
+			 <para>Because JBoss Developer Studio 4.0x and 5.0 use different versions of Eclipse, it is not possible to directly upgrade from an older version to JBoss Developer Studio 5.0.</para>
+			 <note>
+				 <title>Tip</title>
+				 <para>It is possible to run JBoss Developer Studio 4.0x and 5.0 side by side, as long as they have been installed into separate directories.</para>
+			 </note>
+			 
+		 </section>
    
   <section>
     <title>Updating JBoss Developer Studio</title> 
     <para>
-      Updates to JBoss Developer Studio can be installed by selecting <menuchoice><guimenuitem>Help</guimenuitem><guimenuitem>Check For Updates</guimenuitem></menuchoice> from within Eclipse. You may be prompted for a username and password. These are the same credentials that are required to access the Tech Preview update site (see <xref linkend="tech_previews"/>).
+		Updates to JBoss Developer Studio can be installed by selecting <menuchoice><guimenuitem>Help</guimenuitem><guimenuitem>Check For Updates</guimenuitem></menuchoice> from within Eclipse. <!-- You may be prompted for a username and password. These are the same credentials that are required to access the Tech Preview update site (see <xref linkend="tech_previews"/>). -->
     </para>
   </section>
 <!--section id="jbds_jbosstools">

@@ -11,9 +11,8 @@
 		</keywordset>
 	</chapterinfo>
 
-	<title condition="jbds">Manage JBoss AS from JBoss Developer Studio</title>
-	<title condition="jbt">Manage JBoss AS with JBoss Tools</title>
-
+	<title condition="jbds">Manage a JBoss Server within JBoss Developer Studio</title>
+	<title condition="jbt">Manage a JBoss Server within JBoss Tools</title>
 	<para>
 		In this chapter we&apos;ll focus more on how to operate the <property>JBoss AS</property> from <property condition="jbds">JBoss Developer Studio</property><property condition="jbt">JBoss Tools</property>.
 	</para>
@@ -38,7 +37,7 @@
 
 	<section id="JBossbundled">
 		<?dbhtml filename="JBossbundled.html"?>
-			<title condition="jbds">How to Manage the JBoss AS Bundled in JBoss Developer Studio</title>
+			<title condition="jbds">How to Manage the JBoss Server Bundled in JBoss Developer Studio</title>
 		<title condition="jbt">How to Manage JBoss AS with JBoss Tools</title>
 		<para>This section covers the basics of working with the <property>JBoss Server</property>
 		supported directly by <property>JBoss Developer Studio</property> via bundled AS plug-in. The server points to 
@@ -112,7 +111,7 @@
 
 		<section id="StoppingJBoss">
 			<?dbhtml filename="StoppingJBoss.html"?>
-			<title>Stopping JBoss Server</title>
+			<title>Stopping the JBoss Server</title>
 			<para>To stop the server, click the <guibutton>Stop</guibutton> button icon in <property>Servers</property> or right click the server name and press <guimenuitem>Stop</guimenuitem>.
 			</para>
 
@@ -152,7 +151,7 @@
 
 	<section id="JBossInstances">
 		<?dbhtml filename="JBossInstances.html"?>
-			<title>How to Use Your Own JBoss AS Instance with JBoss Developer Studio</title>
+			<title>How to Use Your Own JBoss Server Instance with JBoss Developer Studio</title>
 		<para>Although <property>JBoss Developer Studio</property> works closely with
                 <property>JBoss EAP 5</property> we do not ultimately tie you to any particular
             server for deployment. There are some servers that Studio supports directly (via the
@@ -161,7 +160,7 @@
                 server</property>. First of all you need to install it.</para>
 		<section id="JBossInstalling">
 			<?dbhtml filename="JBossInstalling.html"?>
-			<title>JBoss AS Installation</title>
+			<title>JBoss Server Installation</title>
 			<itemizedlist>
 				<listitem>
 					<para>Download the binary package of JBoss AS, e.g. <property>JBoss 4.2.3</property> and save
