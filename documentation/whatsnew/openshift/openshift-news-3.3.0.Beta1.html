@@ -131,49 +131,64 @@
 		</tr>
 		<tr>
 			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a>
-				<b>Create Application</b></td>
+				<b>Create Application</b>
+			</td>
 			<td valign="top">
-			You may now create a new <b>OpenShift application</b> and import it to your workspace in a single hop. 
-			Choose name, type, embedded cartridges and get over to the settings for your local project.
-			<p>
-				<img src="images/wizard-new-application.png"/>
-			</p>
-			The next page allows you to choose to import the application to a <b>new project</b> 
-			or to enable OpenShift for an existing project in your workspace. 
-			<br /><p>
-				<img src="images/wizard-project.png" />
-			</p>
-			A further option allows you to create the <b>OpenShift Express Server</b> adapter for easy publishing.
-			<br /><br/>
-			On last wizard page, you're able to pick custom settings when dealing with the OpenShift <b>git application repository</b>.
-			The default settings are usually just fine and you can leave them alone. 
-			<p>
-				<img src="images/wizard-git.png" />
-			</p>
-			<br />As soon as you finish the wizard, the whole process is executed: the tolling will create the application, import it to your workspace
-			and create the server adapter for you.
+				You may now create a new <b>OpenShift application</b> and import it to your workspace in a single hop. 
+				Choose name, type, embedded cartridges and get over to the settings for your local project.
+				<p>
+					<img src="images/wizard-new-application.png"/>
+				</p>
+			</td>
+		<tr><td colspan="2"><hr/></td></tr>
+		<tr>
+			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a>
+				<b>Import Application</b></td>
+			<td valign="top">
+				When importing, the application creation wizard will preselect the application you've chosen in the express console.
+				<p>
+					<img src="images/wizard-import.png" />
+				</p>
+				You may of course also make up your mind and choose another OpenShift application. 
+				A separate dialog allows you to pick among the applications you're currently running on your your Paas.
+				<p>
+					<img src="images/wizard-select-existing.png" />
+				</p>
 				<p>
 					<small>
 						<a href="https://issues.jboss.org/browse/JBIDE-10479">Related Jira</a>
 					</small>
 				</p>
 			</td>
+		</tr>	
+		<tr><td colspan="2"><hr/></td></tr>
+		<tr>
+			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a>
+				<b>Workspace project</b></td>
+			<td valign="top">
+				When you create or import an OpenShift application, you may choose to either import it to a new <b>new project</b> 
+				or to enable OpenShift for an <b>existing project</b> in your workspace. 
+				We currently allow you to enable OpenShift for <b>Eclipse WTP</b> projects but we'll widen this up in upcoming releases.<br />
+				<p>
+					<img src="images/wizard-project.png" />
+				</p>
+			</td>
 		</tr>
 		<tr><td colspan="2"><hr/></td></tr>
 		<tr>
 			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a>
-				<b>Import Application</b></td>
+				<b>OpenShift Maven Profile</b></td>
 			<td valign="top">
-			When importing, the application creation wizard will preselect the application you've chosen in the express console.
-			<p>
-				<img src="images/wizard-import.png" />
-			</p>
-			You may of course also make up your mind and choose another OpenShift application. A separate dialog allows you to pick among the applications you're currently running on your your Paas.
-			<p>
-				<img src="images/wizard-select-existing.png" />
-			</p>
+				When you enable OpenShift for an existing maven project in your workspace, we'll make shure it has the required
+				maven <b>openshift</b> profile. We add it to the pom if it's not present yet. 
+				<p>
+					<small>
+						<a href="https://issues.jboss.org/browse/JBIDE-10444">Related Jira</a>
+					</small>
+				</p>
 			</td>
 		</tr>
+		<tr><td colspan="2"><hr/></td></tr>
 		<tr>
 			<td colspan="2">
 				<hr />
