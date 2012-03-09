@@ -45,16 +45,16 @@ It will create the jboss-javaee6-webapp project in your workspace based on the o
 		<included-projects>jboss-as-helloworld</included-projects>
 		<shortDescription>Helloworld</shortDescription>
 		<description>
-This example demonstrates the use of CDI 1.0 and Servlet 3 in JBoss AS 7.
+This example demonstrates the use of CDI 1.0 and Servlet 3 in JBoss AS 7.1.
 The example can be deployed using Maven from the command line or from Eclipse using JBoss Tools.
 		</description>
 		<size>8192</size>
 		<url>http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/jbossas7-examples/helloworld.zip</url>
 		<fixes>
 			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70, org.jboss.ide.eclipse.as.runtime.71</property>
-				<property name="description">works with JBoss AS 7.0/7.1</property>
-				<property name="downloadId">org.jboss.tools.runtime.core.as.702</property>
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.71</property>
+				<property name="description">works with JBoss 7.1</property>
+				<property name="downloadId">org.jboss.tools.runtime.core.as.710</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.eclipse.m2e.core</property>
@@ -99,9 +99,9 @@ You will see a Hello AS7 World!! message appear on the console when this is done
 		<url>http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/jbossas7-examples/helloworld-osgi.zip</url>
 		<fixes>
 			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70, org.jboss.ide.eclipse.as.runtime.71</property>
-				<property name="description">works with JBoss AS 7.0/7.1</property>
-				<property name="downloadId">org.jboss.tools.runtime.core.as.702</property>
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.71</property>
+				<property name="description">works with JBoss AS 7.1</property>
+				<property name="downloadId">org.jboss.tools.runtime.core.as.710</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.eclipse.m2e.core</property>
@@ -144,7 +144,7 @@ The example can be deployed using Maven from the command line or from Eclipse us
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70, org.jboss.ide.eclipse.as.runtime.71</property>
 				<property name="description">works with JBoss AS 7.0/7.1</property>
-				<property name="downloadId">org.jboss.tools.runtime.core.as.702</property>
+				<property name="downloadId">org.jboss.tools.runtime.core.as.710</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.eclipse.m2e.core</property>
@@ -186,9 +186,9 @@ The example can be deployed using Maven from the command line or from Eclipse us
 		<url>http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/jbossas7-examples/numberguess.zip</url>
 		<fixes>
 			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70, org.jboss.ide.eclipse.as.runtime.71</property>
-				<property name="description">works with JBoss AS 7.0/7.1</property>
-				<property name="downloadId">org.jboss.tools.runtime.core.as.702</property>
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.71</property>
+				<property name="description">works with JBoss AS 7.1</property>
+				<property name="downloadId">org.jboss.tools.runtime.core.as.710</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.eclipse.m2e.core</property>
@@ -230,9 +230,9 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<url>http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/jbossas7-examples/kitchensink.zip</url>
 		<fixes>
 			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70, org.jboss.ide.eclipse.as.runtime.71</property>
-				<property name="description">works with JBoss AS 7.0/7.1</property>
-				<property name="downloadId">org.jboss.tools.runtime.core.as.702</property>
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.71</property>
+				<property name="description">works with JBoss AS 7.1</property>
+				<property name="downloadId">org.jboss.tools.runtime.core.as.710</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.eclipse.m2e.core</property>
@@ -261,19 +261,19 @@ It includes a persistence unit and some sample persistence and transaction code 
     </project>
 	<project>
 		<category>JBoss Quickstarts</category>
-		<name>poh5-helloworld</name>
+		<name>helloworld-html5</name>
 		<priority>5</priority>
-		<included-projects>poh5-helloworld</included-projects>
+		<included-projects>helloworld-html5</included-projects>
 		<shortDescription>HTML5</shortDescription>
 		<description>This example demonstrates the use of *CDI 1.0* and *JAX-RS* in *JBoss AS 7* using the Plain Old HTML5 (POH5) architecture.
 POH5 is basically a smart, HTML5+CSS3+JavaScript front-end using RESTful services on the backend.</description>
         <size>7266</size>
-		<url>http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/jbossas7-examples/poh5-helloworld.zip</url>
+		<url>http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/jbossas7-examples/helloworld-html5.zip</url>
 		<fixes>
 			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70, org.jboss.ide.eclipse.as.runtime.71</property>
-				<property name="description">works with JBoss AS 7.0/7.1</property>
-				<property name="downloadId">org.jboss.tools.runtime.core.as.702</property>
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.71</property>
+				<property name="description">works with JBoss AS 7.1</property>
+				<property name="downloadId">org.jboss.tools.runtime.core.as.710</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.eclipse.m2e.core</property>
@@ -297,7 +297,7 @@ POH5 is basically a smart, HTML5+CSS3+JavaScript front-end using RESTful service
 		<importType>maven</importType>
 		<importTypeDescription>The project example requires the m2eclipse, m2eclipse-wtp and JBoss Maven Project Examples feature.</importTypeDescription>
         <!-- no cheatsheet yet
-        <welcome type="cheatsheets" url="/poh5-helloworld/cheatsheets/poh5-helloworld.xml"/> 
+        <welcome type="cheatsheets" url="/helloworld-html5/cheatsheets/helloworld-html5.xml"/> 
         -->
         <tags>central</tags>
         <icon path="icons/jboss.png" />
