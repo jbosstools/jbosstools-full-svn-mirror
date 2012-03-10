@@ -299,6 +299,7 @@ POH5 is basically a smart, HTML5+CSS3+JavaScript front-end using RESTful service
         <!-- no cheatsheet yet
         <welcome type="cheatsheets" url="/helloworld-html5/cheatsheets/helloworld-html5.xml"/> 
         -->
+        <welcome type="editor" url="/helloworld-html5/README.md"/>
         <tags>central</tags>
         <icon path="icons/jboss.png" />
  </project>
