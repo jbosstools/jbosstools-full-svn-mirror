@@ -157,9 +157,9 @@ It includes a persistence unit and some sample persistence and transaction code 
 			<archetypeGroupId>org.jboss.aerogear.archetypes</archetypeGroupId>
 			<archetypeArtifactId>jboss-html5-mobile-archetype</archetypeArtifactId>
 			<archetypeVersion>1.0.0.M2b</archetypeVersion>
-
+            <!--
 			<archetypeRepository>http://repository.jboss.org/nexus/content/repositories/releases/</archetypeRepository>
-
+            -->
             <groupId>org.jboss.tools.example</groupId>
 			<artifactId>poh5</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
