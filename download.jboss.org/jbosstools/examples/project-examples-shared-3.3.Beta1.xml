@@ -47,10 +47,10 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<mavenArchetype>
 			<archetypeGroupId>org.jboss.spec.archetypes</archetypeGroupId>
 			<archetypeArtifactId>jboss-javaee6-webapp-archetype</archetypeArtifactId>
-			<archetypeVersion>7.0.2.CR2</archetypeVersion>
-            <!--
+			<archetypeVersion>7.0.2.CR2b</archetypeVersion>
+            
             <archetypeRepository>http://anonsvn.jboss.org/repos/jbosstools/workspace/fred/repositories/snapshot/</archetypeRepository>
-            -->
+            
             <groupId>org.jboss.tools.examples</groupId>
 			<artifactId>jboss-javaee6-webapp</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
