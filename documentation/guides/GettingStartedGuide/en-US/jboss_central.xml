@@ -84,6 +84,9 @@
 			</mediaobject>
 		</figure>
 		<para>
+			For an in-depth look into the installation of project examples go to <xref linkend="jboss_central-project_examples-indepth" />.
+		</para>
+		<para>
 			You can also download other examples and install and set runtime preferences through the <guilabel>Project Examples</guilabel> section by using the five buttons at the top-right. The first button <inlinemediaobject>
 				<imageobject>
 					<imagedata fileref="images/getting_started/jboss_central_icon_02.png"/>
@@ -116,22 +119,10 @@
 		<para>
 			The third <inlinemediaobject>
 				<imageobject>
-					<imagedata fileref="images/getting_started/jboss_central_icon_04.png"/>
-				</imageobject>
-			</inlinemediaobject> and fourth <inlinemediaobject>
-				<imageobject>
 					<imagedata fileref="images/getting_started/jboss_central_icon_05.png"/>
 				</imageobject>
-			</inlinemediaobject> buttons take you directly to the <guilabel>Seam 2</guilabel> runtime and <guilabel>Server Runtime Environments</guilabel> preference dialogs respectively.
+			</inlinemediaobject> button takes you directly to the  <guilabel>Server Runtime Environments</guilabel> preferences dialog.
 		</para>
-		<figure>
-			<title>Seam 2 runtime preferences</title>
-			<mediaobject>
-				<imageobject>
-					<imagedata fileref="images/getting_started/jboss_central_08.png" scale="90"/>
-				</imageobject>
-			</mediaobject>
-		</figure>
 		<figure>
 			<title>Server Runtime Environments preferences</title>
 			<mediaobject>
@@ -287,5 +278,56 @@
 			</imageobject>
 		</mediaobject>
 	</figure>
+</section>
+<section id="jboss_central-project_examples-indepth">
+	<title>Project Example Installation</title>
+	<para>
+		To install an example from within JBoss Central, navigate to the <guimenuitem>Project Examples</guimenuitem> section and select an example from the list.
+	</para>
+	<figure>
+		<title>Project Examples</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/getting_started/jboss_central_05.png" scale="90"/>
+			</imageobject>
+		</mediaobject>
+	</figure>
+	<para>
+		This section will guide you through the installation of the <guimenuitem>Helloworld</guimenuitem> example.
+	</para>
+	<para>
+		Click on the <guimenuitem>Helloworld</guimenuitem> item in the <guimenuitem>Quickstarts</guimenuitem> list.
+	</para>
+	<para>
+		An installation wizard for the example will open and automatically search for required components on your system. If a particular component is not found (a plug-in or a required version of the JBoss server), the component will be automatically downloaded for you during example installation.
+	</para>
+	<figure>
+		<title>Project Examples</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/getting_started/jboss_central-project_examples_01.png" scale="90"/>
+			</imageobject>
+		</mediaobject>
+	</figure>
+	<para>
+		Click the <guibutton>Next</guibutton> button.
+	</para>
+	<para>
+		You will be asked to define the install location for the example. Your curent workspace will be selected by default.
+	</para>
+	<figure>
+		<title>Project Examples</title>
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/getting_started/jboss_central-project_examples_02.png" scale="90"/>
+			</imageobject>
+		</mediaobject>
+	</figure>
+	<para>
+		Click the <guibutton>Finish</guibutton> button to begin installation of the example.
+	</para>
+	<para>
+		Once the example has been installed it will appear in the list of projects within your <guilabel>Project Explorer</guilabel>.
+	</para>
 </section>
 </chapter>

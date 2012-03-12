@@ -24,10 +24,10 @@
 	</menuchoice> and the context menu for a project. 
 </para>
 <para>
-	The menu items for <menuchoice>
+	A selection of the menu items for <menuchoice>
 		<guimenuitem>File</guimenuitem>
 		<guimenuitem>New</guimenuitem>
-	</menuchoice> can be seen in <xref linkend="figure-jboss_perspective_02" />
+	</menuchoice> can be seen in <xref linkend="figure-jboss_perspective_02" />.
 </para>
 <figure id="figure-jboss_perspective_02">
 <title>JBoss Perspective: <menuchoice>
@@ -42,10 +42,10 @@
 </mediaobject>
 		</figure>
 		<para>
-			The menu items for <menuchoice>
+			A selection of the menu items for <menuchoice>
 				<guimenuitem>Window</guimenuitem>
 				<guimenuitem>Show View</guimenuitem>
-			</menuchoice> can be seen in <xref linkend="figure-jboss_perspective_03" />
+			</menuchoice> can be seen in <xref linkend="figure-jboss_perspective_03" />.
 		</para>
 		<figure id="figure-jboss_perspective_03">
 			<title>JBoss Perspective: <menuchoice>
@@ -60,12 +60,12 @@
 		</mediaobject>
 	</figure>
 	<para>
-		The menu items for the context menu of a project can be seen in <xref linkend="figure-jboss_perspective_04" />
+		A selection of the menu items for the context menu of a project can be seen in <xref linkend="figure-jboss_perspective_04" />.
 	</para>
 	<figure id="figure-jboss_perspective_04">
 		<title>JBoss Perspective: <menuchoice>
-			<guimenuitem>Window</guimenuitem>
-				<guimenuitem>Show View</guimenuitem>
+			<guimenuitem>Context Menu</guimenuitem>
+				<guimenuitem>New</guimenuitem>
 			</menuchoice>
 		</title>
 		<mediaobject>

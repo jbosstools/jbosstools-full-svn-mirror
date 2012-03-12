@@ -61,14 +61,14 @@
 
 
 
- <!--&getting_started;-->
+	<!--&getting_started;-->
  &jbossinstall;
  &jbosscentral;
  &jbossperspective;
  &manage; 
  &jsp_application;
  &rad_jsf_application; 
- &project_examples;
+	 <!--&project_examples;-->
  &uninstalling;
  &gsg_faq;
  &further_reading; 
