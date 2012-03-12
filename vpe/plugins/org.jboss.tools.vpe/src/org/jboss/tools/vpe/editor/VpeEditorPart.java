@@ -64,6 +64,7 @@ import org.jboss.tools.common.model.ui.util.ModelUtilities;
 import org.jboss.tools.jst.jsp.JspEditorPlugin;
 import org.jboss.tools.jst.jsp.bundle.BundleMap;
 import org.jboss.tools.jst.jsp.editor.IVisualEditor;
+import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
 import org.jboss.tools.jst.jsp.jspeditor.StorageRevisionEditorInputAdapter;
 import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
 import org.jboss.tools.jst.jsp.preferences.VpePreference;
@@ -76,6 +77,7 @@ import org.jboss.tools.vpe.editor.xpl.CustomSashForm;
 import org.jboss.tools.vpe.editor.xpl.CustomSashForm.ICustomSashFormListener;
 import org.jboss.tools.vpe.editor.xpl.EditorSettings;
 import org.jboss.tools.vpe.editor.xpl.SashSetting;
+import org.jboss.tools.vpe.xulrunner.browser.XulRunnerBrowser;
 
 @SuppressWarnings("restriction")
 public class VpeEditorPart extends EditorPart implements 
@@ -764,6 +766,18 @@ public class VpeEditorPart extends EditorPart implements
 			previewWebBrowser.createPartControl(previewContent);
 		} catch (PartInitException e) {
 			VpePlugin.reportProblem(e);
+		}
+		/*
+		 * https://issues.jboss.org/browse/JBIDE-10711
+		 */
+		if (!XulRunnerBrowser.isCurrentPlatformOfficiallySupported()) {
+			if (multiPageEditor instanceof JSPMultiPageEditor) {
+				JSPMultiPageEditor jspMultiPageEditor = (JSPMultiPageEditor) multiPageEditor;
+				/*
+				 * Set the flag in JSPMultiPageEditor
+				 */
+				jspMultiPageEditor.setXulRunnerBrowserIsNotSupported(true);
+			}
 		}
 	}
 
