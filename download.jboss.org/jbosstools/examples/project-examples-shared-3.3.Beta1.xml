@@ -180,9 +180,9 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<url/>
 		<fixes>
 			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70, org.jboss.ide.eclipse.as.runtime.71, org.jboss.ide.eclipse.as.runtime.eap.60</property>
-				<property name="description">This project example requires JBoss AS 7.0/7.1 or EAP 6 </property>
-				<property name="downloadId">org.jboss.tools.runtime.core.as.702</property>
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.71, org.jboss.ide.eclipse.as.runtime.eap.60</property>
+				<property name="description">This project example requires JBoss AS 7.1 or EAP 6 </property>
+				<property name="downloadId">org.jboss.tools.runtime.core.as.710</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.eclipse.m2e.core</property>
@@ -208,8 +208,9 @@ It includes a persistence unit and some sample persistence and transaction code 
         <defaultMavenProfiles>jee6</defaultMavenProfiles>
 		<mavenArchetype>
 			<archetypeGroupId>org.richfaces.archetypes</archetypeGroupId>
-			<archetypeArtifactId>richfaces-archetype-simpleapp</archetypeArtifactId>
-			<archetypeVersion>4.2.0.Final</archetypeVersion>
+			<archetypeArtifactId>richfaces-archetype-kitchensink</archetypeArtifactId>
+			<archetypeVersion>4.2.0.Final-2-SNAPSHOT</archetypeVersion>
+			<archetypeRepository>http://repository.jboss.org/nexus/content/repositories/snapshots/</archetypeRepository>
             <!--
 			<archetypeRepository>http://repository.jboss.org/nexus/content/repositories/releases/</archetypeRepository>
             <archetypeRepository>http://anonsvn.jboss.org/repos/jbosstools/workspace/fred/repositories/snapshot/</archetypeRepository>
