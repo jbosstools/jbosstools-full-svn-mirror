@@ -230,7 +230,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 		</mavenArchetype>
         <tags>wizard</tags>
         <icon path="icons/rf_logo.png" />
-        <welcome type="editor" url="/${project[0]}/readme.txt"/>
+        <welcome type="editor" url="/${project[0]}/README.md"/>
 	</project>
     <!-- Spring MVC -->
 	<project>
