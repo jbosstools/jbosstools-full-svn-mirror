@@ -806,7 +806,18 @@ public class VpeEditorPart extends EditorPart implements
 		
 			toolBar = visualEditor.createVisualToolbar(verticalToolbarSplitter);
 			visualEditor.createPartControl(visualContent);
-
+			/*
+			 * https://issues.jboss.org/browse/JBIDE-10711
+			 */
+			if (!XulRunnerBrowser.isCurrentPlatformOfficiallySupported()) {
+				if (multiPageEditor instanceof JSPMultiPageEditor) {
+					JSPMultiPageEditor jspMultiPageEditor = (JSPMultiPageEditor) multiPageEditor;
+					/*
+					 * Set the flag in JSPMultiPageEditor
+					 */
+					jspMultiPageEditor.setXulRunnerBrowserIsNotSupported(true);
+				}
+			}
 			// initialize editor
 			// this method must be invoked before any visual
 			// node is created, see JBIDE-5105
