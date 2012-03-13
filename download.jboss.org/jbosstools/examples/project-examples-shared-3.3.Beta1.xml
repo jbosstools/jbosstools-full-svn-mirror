@@ -61,7 +61,9 @@ It includes a persistence unit and some sample persistence and transaction code 
 		</mavenArchetype>
         <tags>wizard</tags>
         <icon path="icons/newwebprj_wiz.gif" />
+        <!-- broken in 3.3.0.Beta1
         <welcome type="editor" url="/${project[0]}/readme.md"/>
+        -->
 	</project>
     <!-- Java EE Project -->
 	<project>
@@ -115,7 +117,9 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<!--targetProjectFacet facet="jst.ear" version="6.0"/-->
         <tags>wizard</tags>
         <icon path="icons/ear-wiz-icon.gif" />
+        <!--
         <welcome type="editor" url="/${project[0]}/README.md"/>
+        -->
     </project>		
 	<!-- HTML5 project  -->
     <project>
@@ -169,7 +173,9 @@ It includes a persistence unit and some sample persistence and transaction code 
 		</mavenArchetype>
         <tags>wizard</tags>
         <icon path="icons/html5.png" />
-        <welcome type="editor" url="/${project[0]}/README.md"/>
+         <!--       
+         <welcome type="editor" url="/${project[0]}/README.md"/>
+         -->
     </project>		
 	<!-- Richfaces project  -->
 	<project>
@@ -230,7 +236,9 @@ It includes a persistence unit and some sample persistence and transaction code 
 		</mavenArchetype>
         <tags>wizard</tags>
         <icon path="icons/rf_logo.png" />
+        <!--
         <welcome type="editor" url="/${project[0]}/readme.txt"/>
+        -->
 	</project>
     <!-- Spring MVC -->
 	<project>
@@ -339,7 +347,9 @@ It includes a persistence unit and some sample persistence and transaction code 
 		</mavenArchetype>
         <tags>wizard</tags>
         <icon path="icons/new-gdt-project.png" />
+        <!--
         <welcome type="editor" url="/${project[0]}/README.md"/>
+        -->
     </project>
 
 </projects>
