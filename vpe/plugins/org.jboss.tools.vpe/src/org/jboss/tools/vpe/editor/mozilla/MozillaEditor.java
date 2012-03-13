@@ -22,15 +22,24 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.ToolBarManager;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTError;
 import org.eclipse.swt.browser.ProgressEvent;
 import org.eclipse.swt.browser.ProgressListener;
 import org.eclipse.swt.custom.BusyIndicator;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.graphics.Color;
@@ -40,25 +49,34 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
+import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IReusableEditor;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.browser.IWorkbenchBrowserSupport;
+import org.eclipse.ui.editors.text.ILocationProvider;
 import org.eclipse.ui.internal.part.StatusPart;
 import org.eclipse.ui.part.EditorPart;
+import org.eclipse.ui.statushandlers.StatusAdapter;
+import org.jboss.tools.jst.jsp.JspEditorPlugin;
+import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.editor.mozilla.listener.EditorLoadWindowListener;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaResizeListener;
 import org.jboss.tools.vpe.editor.mozilla.listener.MozillaTooltipListener;
+import org.jboss.tools.vpe.editor.preferences.VpeEditorPreferencesPage;
+import org.jboss.tools.vpe.editor.preferences.VpeResourcesDialogFactory;
 import org.jboss.tools.vpe.editor.toolbar.IVpeToolBarManager;
 import org.jboss.tools.vpe.editor.toolbar.VpeDropDownMenu;
 import org.jboss.tools.vpe.editor.toolbar.VpeToolBarManager;
 import org.jboss.tools.vpe.editor.toolbar.format.FormatControllerManager;
 import org.jboss.tools.vpe.editor.toolbar.format.TextFormattingToolBar;
 import org.jboss.tools.vpe.editor.util.DocTypeUtil;
+import org.jboss.tools.vpe.editor.util.FileUtil;
 import org.jboss.tools.vpe.editor.util.HTML;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 import org.jboss.tools.vpe.xulrunner.XulRunnerException;
@@ -80,32 +98,99 @@ import org.mozilla.interfaces.nsIHTMLObjectResizer;
 import org.mozilla.interfaces.nsIPlaintextEditor;
 
 public class MozillaEditor extends EditorPart implements IReusableEditor {
-	
+	/**
+	 * 
+	 */
 	protected static final File INIT_FILE = new File(VpePlugin.getDefault().getResourcePath("ve"), "init.html"); //$NON-NLS-1$ //$NON-NLS-2$
 	public static final String CONTENT_AREA_ID = "__content__area__"; //$NON-NLS-1$
 	
+	/*
+	 * Paths for tool bar icons
+	 */
+	public static final String ICON_PREFERENCE = "icons/preference.gif"; //$NON-NLS-1$
+	public static final String ICON_PREFERENCE_DISABLED = "icons/preference_disabled.gif"; //$NON-NLS-1$
+	public static final String ICON_REFRESH = "icons/refresh.gif"; //$NON-NLS-1$
+	public static final String ICON_REFRESH_DISABLED = "icons/refresh_disabled.gif"; //$NON-NLS-1$
+	public static final String ICON_PAGE_DESIGN_OPTIONS = "icons/point_to_css.gif"; //$NON-NLS-1$
+	public static final String ICON_PAGE_DESIGN_OPTIONS_DISABLED = "icons/point_to_css_disabled.gif"; //$NON-NLS-1$
+	public static final String ICON_ORIENTATION_SOURCE_LEFT = "icons/source_left.gif"; //$NON-NLS-1$
+	public static final String ICON_ORIENTATION_SOURCE_TOP = "icons/source_top.gif"; //$NON-NLS-1$
+	public static final String ICON_ORIENTATION_VISUAL_LEFT = "icons/visual_left.gif"; //$NON-NLS-1$
+	public static final String ICON_ORIENTATION_VISUAI_TOP = "icons/visual_top.gif"; //$NON-NLS-1$
+	public static final String ICON_ORIENTATION_SOURCE_LEFT_DISABLED = "icons/source_left_disabled.gif"; //$NON-NLS-1$
+	public static final String ICON_SHOW_BORDER_FOR_UNKNOWN_TAGS = "icons/border.gif"; //$NON-NLS-1$
+	public static final String ICON_NON_VISUAL_TAGS = "icons/non-visusal-tags.gif"; //$NON-NLS-1$
+	public static final String ICON_TEXT_FORMATTING = "icons/text-formatting.gif"; //$NON-NLS-1$
+	public static final String ICON_BUNDLE_AS_EL= "icons/bundle-as-el.gif"; //$NON-NLS-1$
+
 	private XulRunnerEditor xulRunnerEditor;
 	private nsIDOMElement contentArea;
 	private nsIDOMNode headNode;
 	private MozillaEventAdapter mozillaEventAdapter = createMozillaEventAdapter();
+
 	private EditorLoadWindowListener editorLoadWindowListener;
+
 	private IVpeToolBarManager vpeToolBarManager;
 	private FormatControllerManager formatControllerManager = new FormatControllerManager();
 	private VpeController controller;
 	private boolean isRefreshPage = false;
 	private String doctype;
 	
+	private static Map<String, String> layoutIcons;
+	private static Map<String, String> layoutNames;
+	private static List<String> layoutValues;
+	private int currentOrientationIndex = 1;
+	private Action openVPEPreferencesAction;
+	private Action visualRefreshAction;
+	private Action showResouceDialogAction;
+	private Action rotateEditorsAction;
+	private Action showBorderAction;
+	private Action showNonVisualTagsAction;
+	private Action showTextFormattingAction;
+	private Action showBundleAsELAction;
+
+	
+	static {
+		/*
+		 * Values from <code>layoutValues</code> should correspond to the order
+		 * when increasing the index of the array will cause 
+		 * the source editor rotation 
+		 */
+	    layoutIcons = new HashMap<String, String>();
+	    layoutIcons.put(IVpePreferencesPage.SPLITTING_HORIZ_LEFT_SOURCE_VALUE, ICON_ORIENTATION_SOURCE_LEFT);
+	    layoutIcons.put(IVpePreferencesPage.SPLITTING_VERT_TOP_SOURCE_VALUE, ICON_ORIENTATION_SOURCE_TOP);
+	    layoutIcons.put(IVpePreferencesPage.SPLITTING_HORIZ_LEFT_VISUAL_VALUE, ICON_ORIENTATION_VISUAL_LEFT);
+	    layoutIcons.put(IVpePreferencesPage.SPLITTING_VERT_TOP_VISUAL_VALUE, ICON_ORIENTATION_VISUAI_TOP);
+	    
+	    layoutNames = new HashMap<String, String>();
+	    layoutNames.put(IVpePreferencesPage.SPLITTING_HORIZ_LEFT_SOURCE_VALUE, VpeUIMessages.SPLITTING_HORIZ_LEFT_SOURCE_TOOLTIP);
+	    layoutNames.put(IVpePreferencesPage.SPLITTING_VERT_TOP_SOURCE_VALUE, VpeUIMessages.SPLITTING_VERT_TOP_SOURCE_TOOLTIP);
+	    layoutNames.put(IVpePreferencesPage.SPLITTING_HORIZ_LEFT_VISUAL_VALUE, VpeUIMessages.SPLITTING_HORIZ_LEFT_VISUAL_TOOLTIP);
+	    layoutNames.put(IVpePreferencesPage.SPLITTING_VERT_TOP_VISUAL_VALUE, VpeUIMessages.SPLITTING_VERT_TOP_VISUAL_TOOLTIP);
+
+	    layoutValues= new ArrayList<String>();
+	    layoutValues.add(IVpePreferencesPage.SPLITTING_HORIZ_LEFT_SOURCE_VALUE);
+	    layoutValues.add(IVpePreferencesPage.SPLITTING_VERT_TOP_SOURCE_VALUE);
+	    layoutValues.add(IVpePreferencesPage.SPLITTING_HORIZ_LEFT_VISUAL_VALUE);
+	    layoutValues.add(IVpePreferencesPage.SPLITTING_VERT_TOP_VISUAL_VALUE);
+
+	}
+	
 	/**
-	 * Used for manipulation of browser in design mode,
+	 * Used for manupalation of browser in design mode,
 	 * for example enable or disable readOnlyMode
 	 */
 	private nsIEditor editor;
 	private VpeDropDownMenu dropDownMenu = null;
+	private ToolBar verBar = null;
 	private MozillaResizeListener resizeListener;
 	private MozillaTooltipListener tooltipListener;
 
-	public void doSave(IProgressMonitor monitor) {}
-	public void doSaveAs() {}
+	public void doSave(IProgressMonitor monitor) {
+	}
+
+	public void doSaveAs() {
+	}
 
 	public void init(IEditorSite site, IEditorInput input) throws PartInitException {
 		super.setSite(site);
@@ -132,6 +217,259 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		controller.setToolbarFormatControllerManager(formatControllerManager);
 	}
 	
+	public ToolBar createVisualToolbar(Composite parent) {
+		final ToolBarManager toolBarManager = new ToolBarManager(SWT.VERTICAL | SWT.FLAT);
+		verBar = toolBarManager.createControl(parent);
+		
+		/*
+		 * Create OPEN VPE PREFERENCES tool bar item
+		 */
+		openVPEPreferencesAction = new Action(VpeUIMessages.PREFERENCES,
+				IAction.AS_PUSH_BUTTON) {
+			@Override
+			public void run() {
+				VpeEditorPreferencesPage.openPreferenceDialog();
+			}
+		};
+		openVPEPreferencesAction.setImageDescriptor(ImageDescriptor.createFromFile(MozillaEditor.class,
+				ICON_PREFERENCE));
+		openVPEPreferencesAction.setToolTipText(VpeUIMessages.PREFERENCES);
+		toolBarManager.add(openVPEPreferencesAction);
+		
+		/*
+		 * Create VPE VISUAL REFRESH tool bar item
+		 */
+		visualRefreshAction = new Action(VpeUIMessages.REFRESH,
+				IAction.AS_PUSH_BUTTON) {
+			@Override
+			public void run() {
+				if (controller != null) {
+					controller.visualRefresh();
+				}
+			}
+		};
+		visualRefreshAction.setImageDescriptor(ImageDescriptor.createFromFile(MozillaEditor.class,
+				ICON_REFRESH));
+		visualRefreshAction.setToolTipText(VpeUIMessages.REFRESH);
+		toolBarManager.add(visualRefreshAction);
+		
+		/*
+		 * Create SHOW RESOURCE DIALOG tool bar item
+		 * 
+		 * https://jira.jboss.org/jira/browse/JBIDE-3966
+		 * Disabling Page Design Options for external files. 
+		 */
+		IEditorInput input = getEditorInput();
+		IFile file = null;
+		if (input instanceof IFileEditorInput) {
+			file = ((IFileEditorInput) input).getFile();
+		} else if (input instanceof ILocationProvider) {
+			ILocationProvider provider = (ILocationProvider) input;
+			IPath path = provider.getPath(input);
+			if (path != null) {
+			    file = FileUtil.getFile(input, path.lastSegment());
+			}
+		}
+		boolean fileExistsInWorkspace = ((file != null) && (file.exists()));
+		showResouceDialogAction = new Action(VpeUIMessages.PAGE_DESIGN_OPTIONS,
+				IAction.AS_PUSH_BUTTON) {
+			@Override
+			public void run() {
+				VpeResourcesDialogFactory.openVpeResourcesDialog(getEditorInput());
+			}
+		};
+		showResouceDialogAction.setImageDescriptor(ImageDescriptor.createFromFile(MozillaEditor.class,
+				fileExistsInWorkspace ? ICON_PAGE_DESIGN_OPTIONS : ICON_PAGE_DESIGN_OPTIONS_DISABLED));
+		if (!fileExistsInWorkspace) {
+			showResouceDialogAction.setEnabled(false);
+		}
+		showResouceDialogAction.setToolTipText(VpeUIMessages.PAGE_DESIGN_OPTIONS);
+		toolBarManager.add(showResouceDialogAction);
+		
+		
+		/*
+		 * Create ROTATE EDITORS tool bar item
+		 * 
+		 * https://jira.jboss.org/jira/browse/JBIDE-4152
+		 * Compute initial icon state and add it to the tool bar.
+		 */
+		String newOrientation = JspEditorPlugin
+		.getDefault().getPreferenceStore().getString(
+				IVpePreferencesPage.VISUAL_SOURCE_EDITORS_SPLITTING);
+		currentOrientationIndex = layoutValues.indexOf(newOrientation);
+		rotateEditorsAction = new Action(
+				VpeUIMessages.VISUAL_SOURCE_EDITORS_SPLITTING,
+				IAction.AS_PUSH_BUTTON) {
+			@Override
+			public void run() {
+				/*
+				 * Rotate editors orientation clockwise.
+				 */
+		    	currentOrientationIndex++;
+				if (currentOrientationIndex >= layoutValues.size()) {
+					currentOrientationIndex = currentOrientationIndex % layoutValues.size();
+				}
+				String newOrientation = layoutValues.get(currentOrientationIndex);
+				/*
+				 * Update icon and tooltip
+				 */
+				this.setImageDescriptor(ImageDescriptor.createFromFile(
+						MozillaEditor.class, layoutIcons.get(newOrientation)));
+				
+				this.setToolTipText(layoutNames.get(newOrientation));
+				/*
+				 * Call <code>filContainer()</code> from VpeEditorPart
+				 * to redraw CustomSashForm with new layout.
+				 */
+				getController().getPageContext().getEditPart().fillContainer(true, newOrientation);
+				JspEditorPlugin.getDefault().getPreferenceStore().
+					setValue(IVpePreferencesPage.VISUAL_SOURCE_EDITORS_SPLITTING, newOrientation);
+			}
+		};
+		rotateEditorsAction.setImageDescriptor(ImageDescriptor.createFromFile(MozillaEditor.class,
+				layoutIcons.get(newOrientation)));
+		rotateEditorsAction.setToolTipText(layoutNames.get(newOrientation));
+		toolBarManager.add(rotateEditorsAction);
+		
+		/*
+		 * Create SHOW BORDER FOR UNKNOWN TAGS tool bar item
+		 */
+		showBorderAction = new Action(
+				VpeUIMessages.SHOW_BORDER_FOR_UNKNOWN_TAGS,
+				IAction.AS_CHECK_BOX) {
+		    @Override
+		    public void run() {
+		    	/*
+		    	 * Set new value to VpeVisualDomBuilder.
+		    	 */
+		    	getController().getVisualBuilder().setShowBorderForUnknownTags(this.isChecked());
+		        /*
+				 * Update VPE
+				 */
+		        controller.visualRefresh();
+				JspEditorPlugin.getDefault().getPreferenceStore().
+				setValue(IVpePreferencesPage.SHOW_BORDER_FOR_UNKNOWN_TAGS, this.isChecked());
+		    }
+		};
+		showBorderAction.setImageDescriptor(ImageDescriptor.createFromFile(MozillaEditor.class,
+				ICON_SHOW_BORDER_FOR_UNKNOWN_TAGS));
+		showBorderAction.setToolTipText(VpeUIMessages.SHOW_BORDER_FOR_UNKNOWN_TAGS);
+		toolBarManager.add(showBorderAction);
+
+		/*
+		 * Create SHOW INVISIBLE TAGS tool bar item
+		 */
+		showNonVisualTagsAction = new Action(
+				VpeUIMessages.SHOW_NON_VISUAL_TAGS, IAction.AS_CHECK_BOX) {
+			@Override
+			public void run() {
+				
+				/*
+				 * Change flag
+				 */
+				controller.getVisualBuilder().setShowInvisibleTags(
+						this.isChecked());
+				/*
+				 * Update VPE
+				 */
+				controller.visualRefresh();
+				JspEditorPlugin.getDefault().getPreferenceStore().
+				setValue(IVpePreferencesPage.SHOW_NON_VISUAL_TAGS, this.isChecked());
+			}
+		};
+		showNonVisualTagsAction.setImageDescriptor(ImageDescriptor.createFromFile(MozillaEditor.class,
+				ICON_NON_VISUAL_TAGS));
+		showNonVisualTagsAction.setToolTipText(VpeUIMessages.SHOW_NON_VISUAL_TAGS);
+		toolBarManager.add(showNonVisualTagsAction);
+
+		/*
+		 * Create SHOW TEXT FORMATTING tool bar item
+		 */
+		showTextFormattingAction = new Action(
+				VpeUIMessages.SHOW_TEXT_FORMATTING, IAction.AS_CHECK_BOX) {
+			@Override
+			public void run() {
+				/*
+				 * Update Text Formatting Bar 
+				 */
+				vpeToolBarManager.setToolbarVisibility(this.isChecked());
+				JspEditorPlugin.getDefault().getPreferenceStore().
+				setValue(IVpePreferencesPage.SHOW_TEXT_FORMATTING, this.isChecked());
+			}
+		};
+		showTextFormattingAction.setImageDescriptor(ImageDescriptor.createFromFile(MozillaEditor.class,
+				ICON_TEXT_FORMATTING));
+		showTextFormattingAction.setToolTipText(VpeUIMessages.SHOW_TEXT_FORMATTING);
+		toolBarManager.add(showTextFormattingAction);
+
+		/*
+		 * Create SHOW BUNDLE'S MESSAGES AS EL tool bar item
+		 */
+		showBundleAsELAction = new Action(VpeUIMessages.SHOW_BUNDLES_AS_EL,
+				IAction.AS_CHECK_BOX) {
+			@Override
+			public void run() {
+				/*
+				 * Update bundle messages. 
+				 */
+				controller.getPageContext().getBundle().updateShowBundleUsageAsEL(this.isChecked());
+				controller.visualRefresh();
+				JspEditorPlugin.getDefault().getPreferenceStore().
+				setValue(IVpePreferencesPage.SHOW_RESOURCE_BUNDLES_USAGE_AS_EL, this.isChecked());
+			}
+		};
+		showBundleAsELAction.setImageDescriptor(ImageDescriptor.createFromFile(MozillaEditor.class,
+				ICON_BUNDLE_AS_EL));
+		showBundleAsELAction.setToolTipText(VpeUIMessages.SHOW_BUNDLES_AS_EL);
+		toolBarManager.add(showBundleAsELAction);
+		
+		/*
+		 * Create EXTERNALIZE STRINGS tool bar item
+		 */
+//		externalizeStringsAction = new Action(JstUIMessages.EXTERNALIZE_STRINGS,
+//				IAction.AS_PUSH_BUTTON) {
+//			@Override
+//			public void run() {
+//				/*
+//				 * Externalize strings action.
+//				 * Show a dialog to add properties key and value.
+//				 * When selection is correct show the dialog
+//				 * otherwise the toolbar icon will be disabled.
+//				 */
+//				ExternalizeStringsDialog dlg = new ExternalizeStringsDialog(
+//						PlatformUI.getWorkbench().getDisplay().getActiveShell(),
+//						new ExternalizeStringsWizard(controller.getSourceEditor(), 
+//								controller.getPageContext().getBundle()));
+//				dlg.open();
+//			}
+//		};
+//		externalizeStringsAction.setImageDescriptor(ImageDescriptor.createFromFile(MozillaEditor.class,
+//				ICON_EXTERNALIZE_STRINGS));
+//		externalizeStringsAction.setToolTipText(JstUIMessages.EXTERNALIZE_STRINGS);
+//		toolBarManager.add(externalizeStringsAction);
+
+		updateToolbarItemsAccordingToPreferences();
+		toolBarManager.update(true);
+
+		parent.addDisposeListener(new DisposeListener() {
+			
+			public void widgetDisposed(DisposeEvent e) {
+				toolBarManager.dispose();
+				toolBarManager.removeAll();
+				openVPEPreferencesAction = null;
+				visualRefreshAction = null;
+				showResouceDialogAction = null;
+				rotateEditorsAction = null;;
+				showBorderAction = null;
+				showNonVisualTagsAction = null;
+				showTextFormattingAction = null;
+				showBundleAsELAction = null;
+//				externalizeStringsAction = null;
+			}
+		});
+		return verBar;
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * @see org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets.Composite)
@@ -156,14 +494,20 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		layoutEdTl.marginWidth = 0;
 		cmpEdTl.setLayout(layoutEdTl);
 		cmpEdTl.setLayoutData(new GridData(GridData.FILL_BOTH));
-		
+
 		/*
-		 * Create VPETextFormattingToolBar
+		 * https://jira.jboss.org/jira/browse/JBIDE-4429
+		 * Toolbar was moved to VpeEditorPart.
+		 *  'verBar' should be created in createVisualToolbar(..) in VpeEditorPart
+		 *  and only after that MozillaEditor should be created itself. 
 		 */
-		vpeToolBarManager = new VpeToolBarManager();
-		if (vpeToolBarManager != null) {
-			vpeToolBarManager.createToolBarComposite(cmpEdTl);
-			vpeToolBarManager.addToolBar(new TextFormattingToolBar(formatControllerManager));
+		if (null != verBar) {
+			// Use vpeToolBarManager to create a horizontal toolbar.
+			vpeToolBarManager = new VpeToolBarManager();
+			if (vpeToolBarManager != null) {
+				vpeToolBarManager.createToolBarComposite(cmpEdTl);
+				vpeToolBarManager.addToolBar(new TextFormattingToolBar(formatControllerManager));
+			}
 		}
 
 		//Create a composite to the Editor
@@ -186,7 +530,10 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		try {
 			xulRunnerEditor = new XulRunnerEditor2(cmpEd, this);
 			xulRunnerEditor.getBrowser().addProgressListener(new ProgressListener() {
-				public void changed(ProgressEvent event) {}
+
+				public void changed(ProgressEvent event) {
+				}
+
 				public void completed(ProgressEvent event) {
 					if (MozillaEditor.this.getXulRunnerEditor().getWebBrowser() != null) {
 						//process this code only in case when editor hasn't been disposed,
@@ -196,9 +543,17 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 					}
 				}
 			});
+
 			setInitialContent();
 			xulRunnerEditor.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+			
 		} catch (Throwable t) {
+			/*
+			 * Disable VPE toolbar
+			 */
+			if (verBar != null) {
+				verBar.setEnabled(false);
+			}
 			showXulRunnerError(cmpEd, t);
 		}
 	}
@@ -287,6 +642,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				BusyIndicator.showWhile(link.getDisplay(), new Runnable() {
 					public void run() {
 						URL theURL = null;
+						;
 						try {
 							theURL = new URL(VpeUIMessages.MOZILLA_LOADING_ERROR_LINK);
 						} catch (MalformedURLException e) {
@@ -301,8 +657,11 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 					}
 				});
 			}
-			public void mouseDoubleClick(MouseEvent e) {}
-			public void mouseUp(MouseEvent e) {}
+
+			public void mouseDoubleClick(MouseEvent e) {
+			}
+			public void mouseUp(MouseEvent e) {
+			}
 		});
 	}
 	
@@ -426,6 +785,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				if (node.getNodeType() != nsIDOMNode.ELEMENT_NODE) {
 					throw new RuntimeException("The content area node should by element node."); //$NON-NLS-1$
 				}
+
 				area = queryInterface(node, nsIDOMElement.class);
 				break;
 			}
@@ -435,8 +795,11 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 			area = xulRunnerEditor.getDOMDocument().createElement(HTML.TAG_BODY);
 			xulRunnerEditor.getDOMDocument().getDocumentElement().appendChild(area);
 		}
+
 		nsIDOMNode root = xulRunnerEditor.getDOMDocument().getDocumentElement();
+		
 		headNode = findHeadNode(root);
+
 		return area;
 	}
 
@@ -545,6 +908,9 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		return mozillaEventAdapter;
 	}
 	
+	/**
+	 * 
+	 */
 	public void onReloadWindow() {
 		detachMozillaEventAdapter();
 		xulRunnerEditor.removeResizeListener();
@@ -554,13 +920,16 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		controller.reinit();
 	}
 	
+	/**
+	 * 
+	 */
 	public void reload() {
+		
 		doctype = DocTypeUtil.getDoctype(getEditorInput());
-		//cause page to be refreshed
+		//coused page to be refreshed
 		setRefreshPage(true);
 		setInitialContent();
 	}
-	
 	/**
 	 * Initialized design mode in visual refresh
 	 */
@@ -635,6 +1004,41 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 
 	public VpeDropDownMenu getDropDownMenu() {
 		return dropDownMenu;
+	}
+
+	public void updateToolbarItemsAccordingToPreferences() {
+		String prefsOrientation = JspEditorPlugin
+		.getDefault().getPreferenceStore().getString(
+				IVpePreferencesPage.VISUAL_SOURCE_EDITORS_SPLITTING);
+		int prefsOrientationIndex = layoutValues.indexOf(prefsOrientation);
+		
+		boolean prefsShowBorderForUnknownTags = JspEditorPlugin.getDefault().getPreferenceStore()
+				.getBoolean(IVpePreferencesPage.SHOW_BORDER_FOR_UNKNOWN_TAGS);
+		boolean prefsShowNonVisualTags = JspEditorPlugin.getDefault().getPreferenceStore()
+				.getBoolean(IVpePreferencesPage.SHOW_NON_VISUAL_TAGS);
+		boolean prefsShowTextFormatting = JspEditorPlugin.getDefault().getPreferenceStore()
+				.getBoolean(IVpePreferencesPage.SHOW_TEXT_FORMATTING);
+		boolean prefsShowBundlesAsEL = JspEditorPlugin.getDefault().getPreferenceStore()
+				.getBoolean(IVpePreferencesPage.SHOW_RESOURCE_BUNDLES_USAGE_AS_EL);
+		
+		if (showBorderAction != null) {
+			showBorderAction.setChecked(prefsShowBorderForUnknownTags);
+		}
+		if (showNonVisualTagsAction != null) {
+			showNonVisualTagsAction.setChecked(prefsShowNonVisualTags);
+		}
+		if (showTextFormattingAction != null) {
+			showTextFormattingAction.setChecked(prefsShowTextFormatting);
+		}
+		if (showBundleAsELAction != null) {
+			showBundleAsELAction.setChecked(prefsShowBundlesAsEL);
+		}
+		if (rotateEditorsAction != null) {
+			currentOrientationIndex = prefsOrientationIndex;
+			rotateEditorsAction.setImageDescriptor(ImageDescriptor.createFromFile(
+					MozillaEditor.class, layoutIcons.get(prefsOrientation)));
+			rotateEditorsAction.setToolTipText(layoutNames.get(prefsOrientation));
+		}
 	}
 
 	public void setResizeListener(MozillaResizeListener resizeListener) {

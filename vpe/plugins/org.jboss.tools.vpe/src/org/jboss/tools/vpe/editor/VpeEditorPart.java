@@ -10,6 +10,7 @@
  ******************************************************************************/
 package org.jboss.tools.vpe.editor;
 
+import org.eclipse.compare.Splitter;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -33,6 +34,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
@@ -112,6 +114,9 @@ public class VpeEditorPart extends EditorPart implements
 	private Composite sourceContent = null;
 	private Composite visualContent = null;
 	private Composite previewContent = null;
+	private Splitter verticalToolbarSplitter = null;
+	private Composite verticalToolbarEmpty = null;
+	private ToolBar toolBar = null;
 
 	public StructuredTextEditor getSourceEditor() {
 		return sourceEditor;
@@ -219,6 +224,9 @@ public class VpeEditorPart extends EditorPart implements
 			 * Restore the state after switching from Preview, for example.
 			 */
 //			selectionBar.setVisible(selectionBar.getAlwaysVisibleOption());
+//			setVerticalToolbarVisible(true);
+			setVerticalToolbarVisible(JspEditorPlugin.getDefault().getPreferenceStore()
+					.getBoolean(IVpePreferencesPage.SHOW_VISUAL_TOOLBAR));
 			/*
 			 * Fixes https://jira.jboss.org/jira/browse/JBIDE-3140
 			 * author Denis Maliarevich.
@@ -250,6 +258,7 @@ public class VpeEditorPart extends EditorPart implements
 
 		case SOURCE_MODE:
 //			selectionBar.setVisible(selectionBar.getAlwaysVisibleOption());
+			setVerticalToolbarVisible(false);
 			if (sourceContent != null) {
 				sourceContent.setVisible(true);
 				if (sourceEditor != null) {
@@ -284,6 +293,7 @@ public class VpeEditorPart extends EditorPart implements
 //			if (selectionBar != null) {
 //				selectionBar.setVisible(false);
 //			}
+			setVerticalToolbarVisible(false);
 			/*
 			 * Fixes https://jira.jboss.org/jira/browse/JBIDE-3140
 			 * author Denis Maliarevich.
@@ -326,15 +336,37 @@ public class VpeEditorPart extends EditorPart implements
 		return visualMode;
 	}
 	
-	public void createPartControl(final Composite parent) {
-		controlCount++;
-		if (controlCount > 1) {
+	/**
+	 * Sets the visibility of the vertical toolbar for visual editor part.
+	 * 
+	 * @param visible if visible
+	 */
+	public void setVerticalToolbarVisible(boolean visible) {
+		if ((null == verticalToolbarSplitter) || (null == verticalToolbarEmpty)
+				|| (null == toolBar)) {
 			return;
 		}
+		if (visible) {
+			verticalToolbarSplitter.setVisible(toolBar, true);
+			verticalToolbarSplitter.setVisible(verticalToolbarEmpty, false);
+		} else {
+			verticalToolbarSplitter.setVisible(toolBar, false);
+			verticalToolbarSplitter.setVisible(verticalToolbarEmpty, true);
+		}
+		verticalToolbarSplitter.getParent().layout(true, true);
+	}
+	
+	public void createPartControl(final Composite parent) {
+		
+		controlCount++;
+		if (controlCount > 1)
+			return;
 		
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(parent, IVpeHelpContextIds.VISUAL_PAGE_EDITOR);
 		/*
-		 *  cmpEdTl -- is a container composite for editor part.
+		 * Container composite for editor part
+		 */
+		/*
 		 *  Fix for https://jira.jboss.org/jira/browse/JBIDE-5744
 		 *  Where is a problem with composite parent redrawing in a case
 		 *  cmpEdTl = new Composite (parent, SWT.NONE)
@@ -342,7 +374,7 @@ public class VpeEditorPart extends EditorPart implements
 		 *  see https://bugs.eclipse.org/bugs/show_bug.cgi?id=302950
 		 */
 		cmpEdTl =  parent;
-		GridLayout layoutEdTl = new GridLayout(1, false);
+		GridLayout layoutEdTl = new GridLayout(2, false);
 		layoutEdTl.verticalSpacing = 0;
 		layoutEdTl.marginHeight = 0;
 		layoutEdTl.marginBottom = 3;
@@ -350,6 +382,32 @@ public class VpeEditorPart extends EditorPart implements
 		cmpEdTl.setLayout(layoutEdTl);
 		cmpEdTl.setLayoutData(new GridData(GridData.FILL_BOTH));
 
+		/*
+		 * https://jira.jboss.org/jira/browse/JBIDE-4429
+		 *  Composite for the left vertical toolbar
+		 */
+		verticalToolbarSplitter = new Splitter(cmpEdTl, SWT.NONE);
+		GridLayout layout = new GridLayout(1,false);
+		layout.marginHeight = 2;
+		layout.marginWidth = 0;
+		layout.verticalSpacing = 0;		
+		layout.horizontalSpacing = 0;		
+		verticalToolbarSplitter.setLayout(layout);
+		verticalToolbarSplitter.setLayoutData(new GridData(SWT.CENTER, SWT.TOP | SWT.FILL, false, true, 1, 2));
+		
+		/*
+		 * The empty vertical toolbar component
+		 */
+		verticalToolbarEmpty = new Composite(verticalToolbarSplitter, SWT.NONE) {
+			public Point computeSize(int wHint, int hHint, boolean changed) {
+				Point point = super.computeSize(wHint, hHint, changed);
+				point.x = 1;
+				return point;
+			}
+		};
+		verticalToolbarEmpty.setLayoutData(new GridData(GridData.FILL_VERTICAL));
+		verticalToolbarEmpty.setVisible(true);
+		
 		/*
 		 * The Visual Page Editor itself
 		 */
@@ -441,8 +499,11 @@ public class VpeEditorPart extends EditorPart implements
 				visualContent.removeDisposeListener(this);
 			}
 		});
+
 		// createVisualEditor();
+
 		// createPreviewBrowser();
+
 		try {
 			sourceEditor.addPropertyListener(new IPropertyListener() {
 				public void propertyChanged(Object source, int propId) {
@@ -743,13 +804,15 @@ public class VpeEditorPart extends EditorPart implements
 			}
 		});
 		
-		visualEditor.createPartControl(visualContent);
-		// initialize editor
-		// this method must be invoked before any visual
-		// node is created, see JBIDE-5105
-		// this method should be called after browser was loading
-		// see JBIDE-5161
-		// visualEditor.getEditor();
+			toolBar = visualEditor.createVisualToolbar(verticalToolbarSplitter);
+			visualEditor.createPartControl(visualContent);
+
+			// initialize editor
+			// this method must be invoked before any visual
+			// node is created, see JBIDE-5105
+			// this method should be called after browser was loading
+			// see JBIDE-5161
+			// visualEditor.getEditor();
 	}
 
 	public void createPreviewBrowser() {
@@ -797,7 +860,12 @@ public class VpeEditorPart extends EditorPart implements
 		visualMaxmin = null;
 		jumpingActivation = null;
 		jumping = null;
-		
+		if (verticalToolbarEmpty != null) {
+			if (!verticalToolbarEmpty.isDisposed()) {
+				verticalToolbarEmpty.dispose();
+			}
+			verticalToolbarEmpty = null;
+		}
 		if (optionsObject != null) {
 			optionsObject.getModel().removeModelTreeListener(listener);
 			listener=null;
@@ -1018,6 +1086,12 @@ public class VpeEditorPart extends EditorPart implements
 	 * has been pressed.
 	 */
 	public void updatePartAccordingToPreferences() {
+		/*
+		 * Update MozillaEditor's toolbar items
+		 */
+		if (visualEditor != null) {
+			visualEditor.updateToolbarItemsAccordingToPreferences();
+		}
 		/*
 		 * When switching from Source view to Visual/Source controller could be null.
 		 */
