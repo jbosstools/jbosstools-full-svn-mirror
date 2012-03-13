@@ -23,7 +23,8 @@
 <body>
 <h1>WS tools 3.3.0 Beta1 What's New</h1>
 
-<p align="right"><a href="../index.html">&lt; Main Index</a></p>
+<p align="right"><a href="../index.html">&lt; Main Index</a> <a
+href="../jst/jst-news-3.3.0.Beta1.html">JST Tools &gt;</a></p>
 
 <table border="0" cellpadding="10" cellspacing="0" width="80%">
 
@@ -37,9 +38,9 @@
 
   <tr>
 
-    <td valign="top" align="right"><a name="itemname1" id="itemname1"></a><b>Support for @ApplicationPath and web.xml overwrite</b></td>
+    <td valign="top" align="right"><a name="itemname1" id="itemname1"></a><b>Support for @ApplicationPath and web.xml override</b></td>
     <td valign="top">
-      <p>Support for javax.ws.rs.core.Application subclass annotated with @ApplicationPath is now available, along with support for standard JEE6 overwrite in the web app deployment descriptor. The JAX-RS Tooling will include the @ApplicationPath annotation value in your endpoints' URI Path Template if you provide a JAX-RS Application class as below:
+      <p>Support for javax.ws.rs.core.Application subclass annotated with @ApplicationPath is now available, along with support for standard JEE6 override in the web app deployment descriptor. The JAX-RS Tooling will include the @ApplicationPath annotation value in your endpoints' URI Path Template if you provide a JAX-RS Application class as below:
       <pre>
       @ApplicationPath("/mypath")
       public class MyApplication extends Application {
@@ -84,9 +85,12 @@
       
       <p>Most importantly to go with our AS7 support, we now have right-click integration with the JAX-RS tooling for RESTful services. Now you can right-click on one of the exposed REST methods implemented by the service and select Run As...->Run on Server.</p>
       <img src="./images/JAX-RS-WS-Tester_Run_As.jpg" style="width : 826px; height : 287px;"/>
-      <p>This does three things:</p>
-      <ol><li>If the Web Service Tester isn't open, it will open it in the current perspective.</li>
-      <li>It allows you to select which runtime to deploy the service to (and specify a default for future runs).</li>
+      <p>This does a few things:</p>
+      <ol>
+	<li>If the server is not running it will get started.</li>
+	<li>If the application is not deployed to the server it will
+      be deployed</li>
+      <li>If the Web Service Tester isn't open, it will open it in the current perspective.</li>
       <li>And it automatically sets the URL for the RESTful operation as well as the method drop-down to match. For instance, if you are testing a GET method, it will set the drop-down to GET. A PUT to a PUT, etc. So all you have to do is click the Invoke button on the toolbar (the little green play button) to execute the operation.</li>
       </ol>
 
