@@ -33,24 +33,7 @@
 	</p>
 	<table border="0" cellpadding="10" cellspacing="0" width="80%">
 
-		<tr>
-			<td colspan="2">
-				<hr />
-				<h3>General</h3>
-				<hr />
-			</td>
-		</tr>
-		<tr>
-			<td valign="top" align="left">
-				<a name="itemname3" id="itemname3"></a>
-				<b>Complete overhaul</b>
-			</td>
-			<td valign="top">
-			Beta1 brought big changes to the <b>OpenShift Tools</b> in JBoss Tools. We tackled three times the amount of tickets we did in M5 (a total of 160). 
-			We introduced the new <b>OpenShift Express console</b>, we split the single <b>wizard</b> into several ones with concise aims and
-			we brought a new <b>OpenShift Server adapter</b> with its own runtime. The new adapter may publish source and binary artifacts to the PaaS.    
-			</td>
-		</tr>
+	
 		<tr>
 			<td colspan="2">
 				<hr />
@@ -64,11 +47,18 @@
 				<b>OpenShift Express Console</b>
 			</td>
 			<td valign="top">
-			    The central entry point is now what we call the <b>OpenShift Express console</b>.
-				It lists your accounts and applications. Actions in the context menu allow you manage your user accounts, domains, applications, embedded cartridges etc.<p>
-					<img src="images/openshift-console.png"	alt="OpenShift Express Console" />
-				</p> 
-				 <br />
+
+			  <p> <b>OpenShift Express console</b> is a
+			  view where you can get easy access to your
+			  existing OpenShift accounts and applications.
+			  Actions in the context menu
+			  allow you manage your user accounts,
+			  domains, applications, embedded cartridges
+			  etc.<p>
+
+			  <img src="images/openshift-console.png" alt="OpenShift Express Console" />
+
+			  <br />
 				<p>
 					<small>
 						<a href="https://issues.jboss.org/browse/JBIDE-10528">Related Jira</a>
@@ -76,6 +66,47 @@
 				</p>
 			</td>
 		</tr>
+			<tr><td colspan="2"><hr/></td></tr>
+		<tr>
+			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a>
+				<b>Context menu for Applications</b></td>
+			<td valign="top">
+				<p>Right click on Applications for
+				easy access to common operations.
+				<p>
+			  <p>
+			  
+			  <img
+			  src="../images/importapp_via_console.png"/
+			  height=258 width=424> </p>
+
+			  <p>
+			  These operations currently include:
+
+			  <ul>
+			    <li>Web Browser - opens the rhcloud.com url
+			    for the application.</li>
+			    <li>Remote Console - opens the remote
+			    console for the application - this tails
+			    the logging files for your
+			    application.</li>
+			    <li>Edit embeddable Cartridges - allow you
+			    to add/remove cartridges from your
+			    application.</li>
+			    <li>Import application - starts the
+			    OpenShift wizard preconfigured to import
+			    the selected application</li>
+			    <li>Create a server Adapter - setup a
+			    server adapter for the applictation</li>
+			    <li>Properties - shows the properties view</li>
+			    </ul>
+			    
+			  </p>
+
+			    </td>
+			  </tr>
+
+	
 		<tr><td colspan="2"><hr/></td></tr>
 		<tr>
 			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a>
@@ -87,20 +118,26 @@
 				</p>
 				<p>
 					<small> <a
-						href="https://issues.jboss.org/browse/JBIDE-10528">Related	Jira</a>
+						href="https://issues.jboss.org/browse/JBIDE-10528">Related
+				Jira</a>
 					</small>
 				</p>
 			</td>
 		</tr>
-		<tr><td colspan="2"><hr/></td></tr>
+
+			<td colspan="2">
+		
+				<hr />
+			</td>
+		</tr>
 		<tr>
 			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a>
-				<b>User passwords</b>
+				<b>Save password</b>
 			</td>
 			<td valign="top">
-				We now allow you to store your OpenShift user password in the <b>secure storage</b>. 
-				You wont have to retype it over and over again. 
-				<p>
+				You can now optionally save your OpenShift user password in the <b>secure storage</b>. 
+				Avoiding you to have to type in the
+				password on every interaction with OpenShift.<p>
 					<img src="images/secure-storage.png"/>
 				</p>
 				<p>
@@ -116,7 +153,10 @@
 				<b>Embedded cartridges</b>
 			</td>
 			<td valign="top">
-				You may now add or remove embedded cartridges for your applications. Beta1 offers it's own wizard for that sake.
+				"Edit embed cartridges" allow you to add or remove embedded
+				cartridges for your applications. This
+				is available by right-clicking on the
+				application in the Express Console.
 				<p>
 					<img src="images/edit-embedded-cartridges.png"/>
 				</p>
@@ -131,47 +171,52 @@
 		</tr>
 		<tr>
 			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a>
-				<b>Create Application</b>
+				<b>Create or Use Existing Application</b>
 			</td>
 			<td valign="top">
-				You may now create a new <b>OpenShift application</b> and import it to your workspace in a single hop. 
-				Choose name, type, embedded cartridges and get over to the settings for your local project.
+				You may now create a new <b>OpenShift application</b> and import it to your workspace in a single flow. 
+				Choose name, type, any embedded
+				cartridges you want active on the
+				project and the wizard will create the
+				application on OpenShift and import it
+				into Eclipse.
 				<p>
 					<img src="images/wizard-new-application.png"/>
 				</p>
+
+			        <p>You can also choose to use an
+			existing application.</p>
+
+			  <p>
+			     <img src="images/wizard-import.png"/>
+			  </p>
+
+			  <p>Using the Browse... button you can choose
+			from existing applications.</p>
+
+			  <p><img src="images/wizard-select-existing.png"/></p>
 			</td>
 		<tr><td colspan="2"><hr/></td></tr>
-		<tr>
-			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a>
-				<b>Import Application</b></td>
-			<td valign="top">
-				When importing, the application creation wizard will preselect the application you've chosen in the express console.
-				<p>
-					<img src="images/wizard-import.png" />
-				</p>
-				You may of course also make up your mind and choose another OpenShift application. 
-				A separate dialog allows you to pick among the applications you're currently running on your PaaS.
-				<p>
-					<img src="images/wizard-select-existing.png" />
-				</p>
-				<p>
-					<small>
-						<a href="https://issues.jboss.org/browse/JBIDE-10479">Related Jira</a>
-					</small>
-				</p>
-			</td>
-		</tr>	
-		<tr><td colspan="2"><hr/></td></tr>
+	
 		<tr>
 			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a>
 				<b>Workspace project</b></td>
 			<td valign="top">
 				When you create or import an OpenShift application, you may choose to either import it into a <b>new project</b> 
-				or to enable OpenShift for an <b>existing project</b> in your workspace. 
+				or to have the wizard enable the
+			select OpenShift Application on an <b>existing
+			local project</b> in your workspace. 
 				We currently allow you to enable OpenShift for <b>Eclipse WTP</b> projects but we'll widen this up in upcoming releases.<br />
 				<p>
 					<img src="images/wizard-project.png" />
 				</p>
+
+			  <p>When you use an existing project what
+			happens behind the scenes is that the project
+			contents gets merged with the key metadata
+			files from the OpenShift application and you
+			can then deploy your own local application
+			into OpenShift.</p>
 			</td>
 		</tr>
 		<tr><td colspan="2"><hr/></td></tr>
@@ -179,8 +224,14 @@
 			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a>
 				<b>OpenShift Maven Profile</b></td>
 			<td valign="top">
-				When you enable OpenShift for an existing maven project in your workspace, we'll make sure it has the required
-				maven <b>openshift</b> profile. We add it to the pom if it's not present yet. 
+				When you enable OpenShift for an
+			existing maven project in your workspace,
+			we'll make sure it has a 
+				maven <b>openshift</b> profile which
+			is used when the project is built on
+			OpenShift.
+
+			  Note: We only add it to the pom if it's not present yet. 
 				<p>
 					<small>
 						<a href="https://issues.jboss.org/browse/JBIDE-10444">Related Jira</a>
@@ -199,11 +250,17 @@
 			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a>
 				<b>OpenShift Server Runtime</b></td>
 			<td valign="top">
-				In M5 the <b>server adapter</b> was only created when importing an OpenShift application. 
-				Beta1 improves this a lot and allows you to exclusively create the server adapter. 
+
+			  <p> In M5 the <b>server adapter</b> was only
+			  created when importing an OpenShift
+			  application.  Beta1 improves this a lot and
+			  allows you to create the server adapter
+			  independently of the application import.</p>
+
+			  <p>
 				Choose <b>Create a Server Adapter</b> in the
 				context menu of the <b>OpenShift Express Console</b> and here you go, you get a fresh adapter for your
-				existing OpenShift application.
+				existing OpenShift application. </p>
 				<p>
 					<img src="images/console-create-a-server-adapter.png" alt="create server adapter" />
 				</p>
@@ -218,9 +275,19 @@
 				<p>
 					<img src="images/server-adapter-wizard-2.png" />
 				</p>
-				The new OpenShift Server Adapter is not bound to JBoss AS7 any more, it has its own runtime. 
-				You may therefore use it to publish to <b>any OpenShift application</b>. The prior limitation that restricted 
-				you to publish to jbossas-7 applications only, is gone. 
+
+		</tr>
+			<tr><td colspan="2"><hr/></td></tr>
+			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a>
+				<b>Any Application Deployed</b></td>
+			<td valign="top">
+
+			 <p>The new OpenShift Server Adapter is
+				not bound to JBoss AS7 any more, it
+				has no runtime connection.
+			  </p>
+			<p>
+			  You may therefore use it to publish to <b>any OpenShift application</b>. The prior limitation that restricted you to publish to jbossas-7 applications only, is gone. 
 				<p>
 					<small>
 						<a href="https://issues.jboss.org/browse/JBIDE-10716">Related Jira</a>
@@ -251,16 +318,48 @@
 			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a>
 				<b>Source & Binary Deployment</b></td>
 			<td valign="top">
-				The new <b>OpenShift Server adapter</b> is now able to publish source and binary artifacts. 
-				When you create the adapter, you bind it to a project in your workspace. 
-				He'll (git) push any changes in the <b>source</b> of this project and publish them to the OpenShift application. 
-				That's what we call the source publishing mode. <br/>
-				Given a <b>jbossas-7</b> application, you may also drag and drop projects to the adapter as 
-				you always could with  Eclipse WTP server adapters.
-				The adapter will build wars for these projects, 
-				copy them to the <b>deployments</b> folder of your project (the project the adapter is bound to)
-				and push them to the OpenShift application. The JBoss AS7.1 will then pick those wars and deploy them. 
-				This is what we call the <b>binary</b> mode where binary artifacts are published to OpenShift.
+			  <p>
+				The new <b>OpenShift Server
+				adapter</b> is now able to publish
+				source and binary artifacts.
+			  </p>
+
+			  <p>
+				When you create the adapter, it will
+				be associated to a git enabled
+				OpenShift project in your
+				workspace.</p>
+
+			  <p>This project is used as the "source"
+				deployment, thus any changes within
+				this project is expected to be
+				built via OpenShift source build
+				process when git push occurs.</p>
+
+			  <p>In addition we now also support you to
+				drag any existing deployable artifact
+				such as WTP projects, deployable
+				datasources etc. to the OpenShift
+				server. If these artifacts are not
+				part of the "source" project the
+				server adapter will package them up
+				and place by default inside the
+				<code>/deployments</code> folder of
+				the project. Then when git push occurs
+				these binaries will be part of the
+				deployments on OpenShift for the
+				"source" project.</p>
+
+			  <p>This is what we call "binary" deployment
+			  and is useful for applications that for any
+			  reasons or another cannot be build remotely.
+			  </p>
+
+			  <p>Note: OpenShift have a storage limit thus
+			  storing to many binaries or doing too many
+			  binary changes will make you reach this
+			  limit faster so be careful.</p>
+
 				<p>
 					<small>
 						<a href="https://issues.jboss.org/browse/JBIDE-10480">Related Jira</a>
