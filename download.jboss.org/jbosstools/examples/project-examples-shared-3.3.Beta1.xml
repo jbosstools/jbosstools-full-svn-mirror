@@ -158,10 +158,10 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<mavenArchetype>
 			<archetypeGroupId>org.jboss.aerogear.archetypes</archetypeGroupId>
 			<archetypeArtifactId>jboss-html5-mobile-archetype</archetypeArtifactId>
-			<archetypeVersion>1.0.0.M2b</archetypeVersion>
-            <!--
-			<archetypeRepository>http://repository.jboss.org/nexus/content/repositories/releases/</archetypeRepository>
-            -->
+			<archetypeVersion>1.0.0.M2c</archetypeVersion>
+
+            <archetypeRepository>http://repository.jboss.org/nexus/content/repositories/releases/</archetypeRepository>
+            
             <groupId>org.jboss.tools.example</groupId>
 			<artifactId>poh5</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
@@ -328,9 +328,11 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<mavenArchetype>
 			<archetypeGroupId>org.jboss.errai.archetypes</archetypeGroupId>
 			<archetypeArtifactId>kitchensink-quickstart</archetypeArtifactId>
-			<archetypeVersion>2.0.Beta1</archetypeVersion>
+			<archetypeVersion>2.0.Beta3</archetypeVersion>
+            <!--
 			<archetypeRepository>https://repository.jboss.org/nexus/content/groups/public/</archetypeRepository>
-			<groupId>org.jboss.tools.example</groupId>
+			-->
+            <groupId>org.jboss.tools.example</groupId>
 			<artifactId>gwt-kitchensink</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<javaPackage>org.jboss.tools.gwt.kitchensink</javaPackage>
