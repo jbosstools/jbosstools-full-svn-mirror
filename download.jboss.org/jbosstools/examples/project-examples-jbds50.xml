@@ -37,7 +37,6 @@ The example can be deployed using Maven from the command line or from Eclipse us
 		</fixes>
 		<importType>maven</importType>
 		<importTypeDescription>The project example requires the m2eclipse, m2eclipse-wtp and JBoss Maven Project Examples feature.</importTypeDescription>
-		<welcome type="cheatsheets" url="/jboss-as-helloworld/.cheatsheet.xml"/> 
 		<tags>central</tags>
         <icon path="icons/jboss.png" />           
 	</project>
@@ -169,7 +168,6 @@ The example can be deployed using Maven from the command line or from Eclipse us
 		</fixes>
 		<importType>maven</importType>
 		<importTypeDescription>The project example requires the m2eclipse, m2eclipse-wtp and JBoss Maven Project Examples feature.</importTypeDescription>
-		<welcome type="cheatsheets" url="/jboss-as-numberguess/.cheatsheet.xml"/>
 		<tags>central</tags>
         <icon path="icons/jboss.png" />           
 	</project>
@@ -213,7 +211,6 @@ It includes a persistence unit and some sample persistence and transaction code 
 		</fixes>
 		<importType>maven</importType>
 		<importTypeDescription>The project example requires the m2eclipse, m2eclipse-wtp and JBoss Maven Project Examples feature.</importTypeDescription>
-		<welcome type="cheatsheets" url="/jboss-as-kitchensink/.cheatsheet.xml"/>
 		<tags>central</tags>
         <icon path="icons/jboss.png" />           
 	</project>
@@ -256,7 +253,6 @@ POH5 is basically a smart, HTML5+CSS3+JavaScript front-end using RESTful service
         <!-- no cheatsheet yet
         <welcome type="cheatsheets" url="/helloworld-html5/cheatsheets/helloworld-html5.xml"/> 
         -->
-        <welcome type="editor" url="/helloworld-html5/README.md"/>
         <tags>central</tags>
         <icon path="icons/jboss.png" />           
 	</project>
