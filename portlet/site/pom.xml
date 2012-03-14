@@ -11,5 +11,5 @@
 	<artifactId>portlet.site</artifactId>
 	<name>portlet.site</name>
 	
-	<packaging>eclipse-update-site</packaging>
+	<packaging>eclipse-repository</packaging>
 </project>

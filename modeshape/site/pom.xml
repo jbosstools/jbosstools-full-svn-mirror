@@ -11,5 +11,5 @@
 	<artifactId>modeshape.site</artifactId>
 	<name>modeshape.site</name>
 	
-	<packaging>eclipse-update-site</packaging>
+	<packaging>eclipse-repository</packaging>
 </project>

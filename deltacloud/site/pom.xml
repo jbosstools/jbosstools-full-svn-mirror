@@ -11,5 +11,5 @@
 	<artifactId>deltacloud.site</artifactId>
 	<name>deltacloud.site</name>
 	
-	<packaging>eclipse-update-site</packaging>
+	<packaging>eclipse-repository</packaging>
 </project>

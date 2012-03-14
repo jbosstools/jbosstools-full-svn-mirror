@@ -11,5 +11,5 @@
 	<artifactId>gwt.site</artifactId>
 	<name>gwt.site</name>
 	
-	<packaging>eclipse-update-site</packaging>
+	<packaging>eclipse-repository</packaging>
 </project>
