@@ -62,6 +62,11 @@ elif [[ -d   ${WORKSPACE}/sources/site/target ]]; then
 	 siteZip=${WORKSPACE}/sources/site/target/site_assembly.zip
 	else
 	 siteZip=${WORKSPACE}/sources/site/target/repository.zip
+	 # JBIDE-10923
+	 currentDir=$(pwd)
+	 cd ${WORKSPACE}/sources/site/target/repository
+	 zip -r $siteZip .
+	 cd $currentDir
 	fi
 	z=$siteZip
 fi
