@@ -51,8 +51,10 @@ import org.junit.runners.Suite.SuiteClasses;
     ManageDroolsRules.class,
     DroolsRulesEditorTest.class,
     // GuidedDroolsRulesEditorTest.class,
-    DomainSpecificLanguageEditorTest.class, RuleFlowTest.class,
-    DecisionTableTest.class, GuvnorRepositoriesTest.class,
+    DomainSpecificLanguageEditorTest.class,
+    RuleFlowTest.class,
+    DecisionTableTest.class,
+    GuvnorRepositoriesTest.class,
     DroolsViewsTest.class
 })
 public class DroolsAllBotTests extends SWTTestExt {

@@ -65,9 +65,15 @@ public class DroolsViewsTest extends SWTTestExt {
             }    
         }
 
-        while (eclipse.isDebugging() && !eclipse.isSuspendedAtBreakpoint()) {
-            bot.sleep(Timing.time2S());
+        // waits for running debugging
+        while (!eclipse.isDebugging()) {
+            bot.sleep(Timing.time500MS());
         }
+        // waits for stopping at breakpoint
+        while (!eclipse.isSuspendedAtBreakpoint()) {
+            bot.sleep(Timing.time1S());
+        }
+
         isFirstTimeRun = false;
     }
 
