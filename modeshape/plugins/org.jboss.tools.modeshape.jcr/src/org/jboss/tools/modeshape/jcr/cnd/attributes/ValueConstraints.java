@@ -10,6 +10,8 @@ package org.jboss.tools.modeshape.jcr.cnd.attributes;
 import java.util.List;
 
 import org.jboss.tools.modeshape.jcr.Utils;
+import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences;
+import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences.Preference;
 
 /**
  * The value constraints of a property definition.
@@ -29,6 +31,16 @@ public final class ValueConstraints extends ListAttributeState<String> {
     @Override
     protected String getCndNotationPrefix( final NotationType notationType ) {
         return NOTATION_PREFIX;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.jboss.tools.modeshape.jcr.cnd.attributes.ListAttributeState#getItemQuoteCharacter()
+     */
+    @Override
+    protected String getItemQuoteCharacter() {
+        return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.VALUE_CONSTRAINTS_ITEM_QUOTE_CHARACTER);
     }
 
     /**

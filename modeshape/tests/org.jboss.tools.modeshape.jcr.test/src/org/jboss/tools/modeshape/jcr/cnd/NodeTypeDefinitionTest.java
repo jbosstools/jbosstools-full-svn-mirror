@@ -430,13 +430,14 @@ public class NodeTypeDefinitionTest {
         Listener l = new Listener();
         assertTrue(this.nodeTypeDefinition.addListener(l));
 
+        final String OLD_NAME = this.nodeTypeDefinition.getName();
         final String NEW_NAME = "newName"; //$NON-NLS-1$
         this.nodeTypeDefinition.setName(NEW_NAME);
 
         assertEquals(1, l.getCount());
         assertEquals(PropertyName.NAME.toString(), l.getPropertyName());
         assertEquals(NEW_NAME, l.getNewValue());
-        assertNull(l.getOldValue());
+        assertEquals(OLD_NAME, l.getOldValue());
     }
 
     @Test

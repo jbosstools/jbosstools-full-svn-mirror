@@ -15,6 +15,7 @@ import org.jboss.tools.modeshape.jcr.cnd.CompactNodeTypeDefinitionTest;
 import org.jboss.tools.modeshape.jcr.cnd.LocalNameTest;
 import org.jboss.tools.modeshape.jcr.cnd.NamespaceMappingTest;
 import org.jboss.tools.modeshape.jcr.cnd.PropertyDefinitionTest;
+import org.jboss.tools.modeshape.jcr.cnd.QualifiedNameTest;
 import org.jboss.tools.modeshape.jcr.cnd.attributes.AbstractTest;
 import org.jboss.tools.modeshape.jcr.cnd.attributes.AutocreatedTest;
 import org.jboss.tools.modeshape.jcr.cnd.attributes.DefaultTypeTest;
@@ -46,11 +47,11 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({ ChildNodeDefinitionTest.class, CndImporterTest.class, CndTokenizerTest.class, CndValidatorTest.class,
         CompactNodeTypeDefinitionTest.class, LocalNameTest.class, NamespaceMappingTest.class, PropertyDefinitionTest.class,
-        AbstractTest.class, AutocreatedTest.class, DefaultTypeTest.class, DefaultValuesTest.class, MandatoryTest.class,
-        MixinTest.class, MultipleTest.class, NodeAttributesTest.class, NodeTypeAttributesTest.class, NoFullTextTest.class,
-        NoQueryOrderTest.class, OnParentValueTest.class, OrderableTest.class, PrimaryItemTest.class, PropertyAttributesTest.class,
-        ProtectedTest.class, QueryableTest.class, QueryOperatorsTest.class, RequiredTypesTest.class, SameNameSiblingsTest.class,
-        SuperTypesTest.class, ValueConstraintsTest.class })
+        QualifiedNameTest.class, AbstractTest.class, AutocreatedTest.class, DefaultTypeTest.class, DefaultValuesTest.class,
+        MandatoryTest.class, MixinTest.class, MultipleTest.class, NodeAttributesTest.class, NodeTypeAttributesTest.class,
+        NoFullTextTest.class, NoQueryOrderTest.class, OnParentValueTest.class, OrderableTest.class, PrimaryItemTest.class,
+        PropertyAttributesTest.class, ProtectedTest.class, QueryableTest.class, QueryOperatorsTest.class, RequiredTypesTest.class,
+        SameNameSiblingsTest.class, SuperTypesTest.class, ValueConstraintsTest.class })
 public class AllTests {
     // nothing to do
 }

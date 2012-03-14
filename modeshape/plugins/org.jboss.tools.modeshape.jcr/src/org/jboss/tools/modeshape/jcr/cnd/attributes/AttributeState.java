@@ -16,27 +16,6 @@ import org.jboss.tools.modeshape.jcr.cnd.CndElement;
 public abstract class AttributeState implements CndElement {
 
     /**
-     * The attribute state possible values.
-     */
-    public enum Value {
-
-        /**
-         * Indicates the attribute is supported.
-         */
-        IS,
-
-        /**
-         * Indicates the attribute is not supported.
-         */
-        IS_NOT,
-
-        /**
-         * Indicates the attribute is a variant.
-         */
-        VARIANT
-    }
-
-    /**
      * The character used in CND notation to indicate the attribute is a variant.
      */
     public static final char VARIANT_CHAR = '?';
@@ -139,7 +118,7 @@ public abstract class AttributeState implements CndElement {
      * @return <code>true</code> if state was changed
      */
     public boolean set( final Value newState ) {
-        Utils.isNotNull(newState, "newState"); //$NON-NLS-1$
+        Utils.verifyIsNotNull(newState, "newState"); //$NON-NLS-1$
 
         if (this.state != newState) {
             this.state = newState;
@@ -187,5 +166,26 @@ public abstract class AttributeState implements CndElement {
         }
 
         return cndNotation + AttributeState.VARIANT_CHAR;
+    }
+
+    /**
+     * The attribute state possible values.
+     */
+    public enum Value {
+
+        /**
+         * Indicates the attribute is supported.
+         */
+        IS,
+
+        /**
+         * Indicates the attribute is not supported.
+         */
+        IS_NOT,
+
+        /**
+         * Indicates the attribute is a variant.
+         */
+        VARIANT
     }
 }

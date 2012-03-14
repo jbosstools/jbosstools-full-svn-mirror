@@ -10,11 +10,12 @@ package org.jboss.tools.modeshape.jcr.cnd.attributes;
 import java.util.List;
 
 import org.jboss.tools.modeshape.jcr.Utils;
+import org.jboss.tools.modeshape.jcr.cnd.QualifiedName;
 
 /**
  * The required types of a child node definition.
  */
-public final class RequiredTypes extends ListAttributeState<String> {
+public final class RequiredTypes extends ListAttributeState<QualifiedName> {
 
     /**
      * The CND list prefix.
@@ -60,7 +61,7 @@ public final class RequiredTypes extends ListAttributeState<String> {
      * @return the collection of required types (never <code>null</code>)
      */
     public String[] toArray() {
-        final List<String> typeNames = getSupportedItems();
+        final List<QualifiedName> typeNames = getSupportedItems();
 
         if (Utils.isEmpty(typeNames)) {
             return Utils.EMPTY_STRING_ARRAY;
@@ -69,8 +70,8 @@ public final class RequiredTypes extends ListAttributeState<String> {
         final String[] result = new String[typeNames.size()];
         int i = 0;
 
-        for (final String typeName : typeNames) {
-            result[i++] = typeName;
+        for (final QualifiedName typeName : typeNames) {
+            result[i++] = typeName.get();
         }
 
         return result;

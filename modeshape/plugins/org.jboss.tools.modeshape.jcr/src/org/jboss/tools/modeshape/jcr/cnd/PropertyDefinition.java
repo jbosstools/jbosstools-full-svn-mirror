@@ -33,78 +33,7 @@ import org.jboss.tools.modeshape.jcr.cnd.attributes.ValueConstraints;
 /**
  * The <code>PropertyDefinition</code> class represents node type property definition.
  */
-public class PropertyDefinition implements CndElement, PropertyDefinitionTemplate {
-
-    /**
-     * The property names whose <code>toString()</code> is used in {@link PropertyChangeEvent}s.
-     */
-    public enum PropertyName {
-
-        /**
-         * The autocreated attribute.
-         */
-        AUTOCREATED,
-
-        /**
-         * A collection of default values.
-         */
-        DEFAULT_VALUES,
-
-        /**
-         * The mandatory attribute.
-         */
-        MANDATORY,
-
-        /**
-         * The multiple attribute.
-         */
-        MULTIPLE,
-
-        /**
-         * The property name.
-         */
-        NAME,
-
-        /**
-         * The does not support full text search attribute.
-         */
-        NO_FULL_TEXT,
-
-        /**
-         * The does not support query order attribute.
-         */
-        NO_QUERY_ORDER,
-
-        /**
-         * The on parent version value.
-         */
-        ON_PARENT_VERSION,
-
-        /**
-         * The protected attribute.
-         */
-        PROTECTED,
-
-        /**
-         * The collection of supported query operators.
-         */
-        QUERY_OPS,
-
-        /**
-         * The property type.
-         */
-        TYPE,
-
-        /**
-         * The collection of property constraints.
-         */
-        VALUE_CONSTRAINTS
-    }
-
-    /**
-     * Name for a residual property definition.
-     */
-    public static final String RESIDUAL_PROPERTY_NAME = "*"; //$NON-NLS-1$
+public class PropertyDefinition implements CndElement, Comparable, PropertyDefinitionTemplate {
 
     /**
      * The prefix used in CND notation before the property definition.
@@ -112,14 +41,19 @@ public class PropertyDefinition implements CndElement, PropertyDefinitionTemplat
     public static final String NOTATION_PREFIX = "-"; //$NON-NLS-1$
 
     /**
+     * Name for a residual property definition.
+     */
+    public static final String RESIDUAL_PROPERTY_NAME = "*"; //$NON-NLS-1$
+
+    /**
      * The property attributes (never <code>null</code>).
      */
-    private PropertyAttributes attributes;
+    private final PropertyAttributes attributes;
 
     /**
      * The property default values (never <code>null</code>).
      */
-    private DefaultValues defaultValues;
+    private final DefaultValues defaultValues;
 
     /**
      * The registered property change listeners (never <code>null</code>).
@@ -129,7 +63,7 @@ public class PropertyDefinition implements CndElement, PropertyDefinitionTemplat
     /**
      * The property identifier (can be <code>null</code> or empty).
      */
-    private final LocalName name;
+    private final QualifiedName name;
 
     /**
      * The property type (never <code>null</code>).
@@ -139,14 +73,14 @@ public class PropertyDefinition implements CndElement, PropertyDefinitionTemplat
     /**
      * The property value constraints (never <code>null</code>).
      */
-    private ValueConstraints valueConstraints;
+    private final ValueConstraints valueConstraints;
 
     /**
      * Constructs an instance with a default type of {@link PropertyType#STRING}.
      */
     public PropertyDefinition() {
         this.type = PropertyType.DEFAULT_VALUE;
-        this.name = new LocalName();
+        this.name = new QualifiedName();
         this.attributes = new PropertyAttributes();
         this.defaultValues = new DefaultValues();
         this.valueConstraints = new ValueConstraints();
@@ -160,7 +94,7 @@ public class PropertyDefinition implements CndElement, PropertyDefinitionTemplat
      * @param defaultValueBeingAdded the default value being added (cannot be <code>null</code>)
      * @return <code>true</code> if added
      */
-    public boolean addDefaultValue( String defaultValueBeingAdded ) {
+    public boolean addDefaultValue( final String defaultValueBeingAdded ) {
         if (this.defaultValues.add(defaultValueBeingAdded)) {
             notifyChangeListeners(PropertyName.DEFAULT_VALUES, null, defaultValueBeingAdded);
             return true; // added
@@ -173,8 +107,8 @@ public class PropertyDefinition implements CndElement, PropertyDefinitionTemplat
      * @param newListener the listener being registered (cannot be <code>null</code>)
      * @return <code>true</code> if registered
      */
-    public boolean addListener( PropertyChangeListener newListener ) {
-        Utils.isNotNull(newListener, "newListener"); //$NON-NLS-1$
+    public boolean addListener( final PropertyChangeListener newListener ) {
+        Utils.verifyIsNotNull(newListener, "newListener"); //$NON-NLS-1$
         return this.listeners.addIfAbsent(newListener);
     }
 
@@ -182,7 +116,7 @@ public class PropertyDefinition implements CndElement, PropertyDefinitionTemplat
      * @param operator the query operator being added (cannot be <code>null</code>)
      * @return <code>true</code> if added
      */
-    public boolean addQueryOperator( QueryOperator operator ) {
+    public boolean addQueryOperator( final QueryOperator operator ) {
         if (this.attributes.getQueryOps().add(operator)) {
             notifyChangeListeners(PropertyName.QUERY_OPS, null, operator);
             return true; // added
@@ -198,7 +132,7 @@ public class PropertyDefinition implements CndElement, PropertyDefinitionTemplat
      * @param valueConstraintBeingAdded the value constraint being added (cannot be <code>null</code>)
      * @return <code>true</code> if added
      */
-    public boolean addValueConstraint( String valueConstraintBeingAdded ) {
+    public boolean addValueConstraint( final String valueConstraintBeingAdded ) {
         if (this.valueConstraints.add(valueConstraintBeingAdded)) {
             notifyChangeListeners(PropertyName.VALUE_CONSTRAINTS, null, valueConstraintBeingAdded);
             return true; // added
@@ -216,10 +150,10 @@ public class PropertyDefinition implements CndElement, PropertyDefinitionTemplat
      * @param newState the new attribute state (cannot be <code>null</code>)
      * @return <code>true</code> if the attribute state was changed
      */
-    public boolean changeState( PropertyName propertyName,
-                                AttributeState.Value newState ) {
-        Utils.isNotNull(propertyName, "propertyName"); //$NON-NLS-1$
-        Utils.isNotNull(newState, "newState"); //$NON-NLS-1$
+    public boolean changeState( final PropertyName propertyName,
+                                final AttributeState.Value newState ) {
+        Utils.verifyIsNotNull(propertyName, "propertyName"); //$NON-NLS-1$
+        Utils.verifyIsNotNull(newState, "newState"); //$NON-NLS-1$
 
         Object oldValue = null;
         Object newValue = newState;
@@ -279,7 +213,7 @@ public class PropertyDefinition implements CndElement, PropertyDefinitionTemplat
      * @return <code>true</code> if at least one default value was removed
      */
     public boolean clearDefaultValues() {
-        List<String> oldValue = new ArrayList<String>(this.defaultValues.getSupportedItems());
+        final List<String> oldValue = new ArrayList<String>(this.defaultValues.getSupportedItems());
 
         if (this.defaultValues.clear()) {
             notifyChangeListeners(PropertyName.DEFAULT_VALUES, oldValue, null);
@@ -296,7 +230,7 @@ public class PropertyDefinition implements CndElement, PropertyDefinitionTemplat
      * @return <code>true</code> if at least one value constraint was removed
      */
     public boolean clearValueConstraints() {
-        List<String> oldValue = new ArrayList<String>(valueConstraints.getSupportedItems());
+        final List<String> oldValue = new ArrayList<String>(this.valueConstraints.getSupportedItems());
 
         if (this.valueConstraints.clear()) {
             notifyChangeListeners(PropertyName.VALUE_CONSTRAINTS, oldValue, null);
@@ -304,6 +238,49 @@ public class PropertyDefinition implements CndElement, PropertyDefinitionTemplat
         }
 
         return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     */
+    @Override
+    public int compareTo( final Object object ) {
+        final PropertyDefinition that = (PropertyDefinition)object;
+        final String thisName = getName();
+        final String thatName = that.getName();
+
+        if (Utils.isEmpty(thisName)) {
+            if (Utils.isEmpty(thatName)) {
+                return 0;
+            }
+
+            // thatName is not empty
+            return 1;
+        }
+
+        // thisName is not empty
+        if (thatName == null) {
+            return 1;
+        }
+
+        // thisName and thatName are not empty
+        return thisName.compareTo(thatName);
+    }
+
+    /**
+     * @param notationType the notation type being requested (cannot be <code>null</code>)
+     * @return the CND notation (never <code>null</code>)
+     */
+    public String getAttributesCndNotation( final NotationType notationType ) {
+        final String cndNotation = this.attributes.toCndNotation(notationType);
+
+        if (cndNotation == null) {
+            return Utils.EMPTY_STRING;
+        }
+
+        return cndNotation;
     }
 
     /**
@@ -320,18 +297,11 @@ public class PropertyDefinition implements CndElement, PropertyDefinitionTemplat
      * {@inheritDoc}
      * 
      * @see javax.jcr.nodetype.ItemDefinition#getDeclaringNodeType()
+     * @throws UnsupportedOperationException if method is called
      */
     @Override
     public NodeType getDeclaringNodeType() {
-        // TODO implement
-        return null;
-    }
-
-    /**
-     * @return the default values (never <code>null</code>)
-     */
-    public List<String> getDefaultValuesAsStrings() {
-        return this.defaultValues.getSupportedItems();
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -342,6 +312,13 @@ public class PropertyDefinition implements CndElement, PropertyDefinitionTemplat
     @Override
     public javax.jcr.Value[] getDefaultValues() {
         return this.defaultValues.asJcrValues();
+    }
+
+    /**
+     * @return the default values (never <code>null</code>)
+     */
+    public List<String> getDefaultValuesAsStrings() {
+        return this.defaultValues.getSupportedItems();
     }
 
     private String getDelimiter() {
@@ -373,6 +350,10 @@ public class PropertyDefinition implements CndElement, PropertyDefinitionTemplat
         return this.attributes.getOnParentVersion().asJcrValue();
     }
 
+    private String getPrefixEndDelimiter() {
+        return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.PROPERTY_DEFINITION_END_PREFIX_DELIMITER);
+    }
+
     /**
      * {@inheritDoc}
      * 
@@ -391,8 +372,8 @@ public class PropertyDefinition implements CndElement, PropertyDefinitionTemplat
      * @return the attribute state (never <code>null</code>)
      * @throws IllegalArgumentException if a property that does not have an attribute state is specified
      */
-    public Value getState( PropertyName propertyName ) {
-        Utils.isNotNull(propertyName, "propertyName"); //$NON-NLS-1$
+    public Value getState( final PropertyName propertyName ) {
+        Utils.verifyIsNotNull(propertyName, "propertyName"); //$NON-NLS-1$
 
         if (PropertyName.AUTOCREATED == propertyName) {
             return this.attributes.getAutocreated().get();
@@ -459,6 +440,14 @@ public class PropertyDefinition implements CndElement, PropertyDefinitionTemplat
     }
 
     /**
+     * @param notationType
+     * @return the CND notation for the value constraints (never <code>null</code> but can be empty)
+     */
+    public String getValueConstraintsCndNotation( final NotationType notationType ) {
+        return this.valueConstraints.toCndNotation(notationType);
+    }
+
+    /**
      * {@inheritDoc}
      * 
      * @see javax.jcr.nodetype.ItemDefinition#isAutoCreated()
@@ -522,8 +511,8 @@ public class PropertyDefinition implements CndElement, PropertyDefinitionTemplat
      * @param propertyName the property being checked (cannot be <code>null</code>)
      * @return <code>true</code> if property is a variant
      */
-    public boolean isVariant( PropertyName propertyName ) {
-        Utils.isNotNull(propertyName, "propertyName"); //$NON-NLS-1$
+    public boolean isVariant( final PropertyName propertyName ) {
+        Utils.verifyIsNotNull(propertyName, "propertyName"); //$NON-NLS-1$
 
         if (PropertyName.ON_PARENT_VERSION == propertyName) {
             return (this.attributes.getOnParentVersion() == OnParentVersion.VARIANT);
@@ -544,12 +533,12 @@ public class PropertyDefinition implements CndElement, PropertyDefinitionTemplat
     private void notifyChangeListeners( final PropertyName property,
                                         final Object oldValue,
                                         final Object newValue ) {
-        PropertyChangeEvent event = new PropertyChangeEvent(this, property.toString(), oldValue, newValue);
+        final PropertyChangeEvent event = new PropertyChangeEvent(this, property.toString(), oldValue, newValue);
 
         for (final Object listener : this.listeners.toArray()) {
             try {
                 ((PropertyChangeListener)listener).propertyChange(event);
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 // TODO log this
                 this.listeners.remove(listener);
             }
@@ -563,7 +552,7 @@ public class PropertyDefinition implements CndElement, PropertyDefinitionTemplat
      * @param defaultValueBeingRemoved the default value being removed (cannot be <code>null</code>)
      * @return <code>true</code> if removed
      */
-    public boolean removeDefaultValue( String defaultValueBeingRemoved ) {
+    public boolean removeDefaultValue( final String defaultValueBeingRemoved ) {
         if (this.defaultValues.remove(defaultValueBeingRemoved)) {
             notifyChangeListeners(PropertyName.DEFAULT_VALUES, defaultValueBeingRemoved, null);
             return true; // removed
@@ -576,8 +565,8 @@ public class PropertyDefinition implements CndElement, PropertyDefinitionTemplat
      * @param listener the listener being unregistered (cannot be <code>null</code>)
      * @return <code>true</code> if removed
      */
-    public boolean removeListener( PropertyChangeListener listener ) {
-        Utils.isNotNull(listener, "listener"); //$NON-NLS-1$
+    public boolean removeListener( final PropertyChangeListener listener ) {
+        Utils.verifyIsNotNull(listener, "listener"); //$NON-NLS-1$
         return this.listeners.remove(listener);
     }
 
@@ -585,7 +574,7 @@ public class PropertyDefinition implements CndElement, PropertyDefinitionTemplat
      * @param operator the query operator being removed (cannot be <code>null</code>)
      * @return <code>true</code> if removed
      */
-    public boolean removeQueryOperator( QueryOperator operator ) {
+    public boolean removeQueryOperator( final QueryOperator operator ) {
         if (this.attributes.getQueryOps().remove(operator)) {
             notifyChangeListeners(PropertyName.QUERY_OPS, operator, null);
             return true; // removed
@@ -601,7 +590,7 @@ public class PropertyDefinition implements CndElement, PropertyDefinitionTemplat
      * @param valueConstraintBeingRemoved the value constraint being removed (cannot be <code>null</code>)
      * @return <code>true</code> if removed
      */
-    public boolean removeValueConstraint( String valueConstraintBeingRemoved ) {
+    public boolean removeValueConstraint( final String valueConstraintBeingRemoved ) {
         if (this.valueConstraints.remove(valueConstraintBeingRemoved)) {
             notifyChangeListeners(PropertyName.VALUE_CONSTRAINTS, valueConstraintBeingRemoved, null);
             return true; // removed
@@ -616,8 +605,8 @@ public class PropertyDefinition implements CndElement, PropertyDefinitionTemplat
      * @see javax.jcr.nodetype.PropertyDefinitionTemplate#setAutoCreated(boolean)
      */
     @Override
-    public void setAutoCreated( boolean newAutocreated ) {
-        AttributeState.Value newState = (newAutocreated ? AttributeState.Value.IS : AttributeState.Value.IS_NOT);
+    public void setAutoCreated( final boolean newAutocreated ) {
+        final AttributeState.Value newState = (newAutocreated ? AttributeState.Value.IS : AttributeState.Value.IS_NOT);
         changeState(PropertyName.AUTOCREATED, newState);
     }
 
@@ -627,18 +616,18 @@ public class PropertyDefinition implements CndElement, PropertyDefinitionTemplat
      * @see javax.jcr.nodetype.PropertyDefinitionTemplate#setAvailableQueryOperators(java.lang.String[])
      */
     @Override
-    public void setAvailableQueryOperators( String[] newOperators ) {
-        QueryOperators queryOps = this.attributes.getQueryOps();
-        List<QueryOperator> oldOperators = queryOps.getSupportedItems();
+    public void setAvailableQueryOperators( final String[] newOperators ) {
+        final QueryOperators queryOps = this.attributes.getQueryOps();
+        final List<QueryOperator> oldOperators = queryOps.getSupportedItems();
         boolean changed = queryOps.clear();
 
         if (!Utils.isEmpty(newOperators)) {
-            for (String operator : newOperators) {
+            for (final String operator : newOperators) {
                 try {
                     if (queryOps.add(operator.trim())) {
                         changed = true;
                     }
-                } catch (Exception e) {
+                } catch (final Exception e) {
                     // TODO log the invalid query operator
                 }
             }
@@ -655,17 +644,17 @@ public class PropertyDefinition implements CndElement, PropertyDefinitionTemplat
      * @see javax.jcr.nodetype.PropertyDefinitionTemplate#setDefaultValues(javax.jcr.Value[])
      */
     @Override
-    public void setDefaultValues( javax.jcr.Value[] newDefaultValues ) {
-        List<String> items = this.defaultValues.getSupportedItems();
+    public void setDefaultValues( final javax.jcr.Value[] newDefaultValues ) {
+        final List<String> items = this.defaultValues.getSupportedItems();
         boolean changed = this.defaultValues.clear();
 
         if (!Utils.isEmpty(newDefaultValues)) {
-            for (javax.jcr.Value defaultValue : newDefaultValues) {
+            for (final javax.jcr.Value defaultValue : newDefaultValues) {
                 try {
                     if (this.defaultValues.add(defaultValue.getString())) {
                         changed = true;
                     }
-                } catch (Exception e) {
+                } catch (final Exception e) {
                     // TODO log this
                 }
             }
@@ -682,8 +671,8 @@ public class PropertyDefinition implements CndElement, PropertyDefinitionTemplat
      * @see javax.jcr.nodetype.PropertyDefinitionTemplate#setFullTextSearchable(boolean)
      */
     @Override
-    public void setFullTextSearchable( boolean newFullTextSearchable ) {
-        AttributeState.Value newState = (newFullTextSearchable ? AttributeState.Value.IS_NOT : AttributeState.Value.IS);
+    public void setFullTextSearchable( final boolean newFullTextSearchable ) {
+        final AttributeState.Value newState = (newFullTextSearchable ? AttributeState.Value.IS_NOT : AttributeState.Value.IS);
         changeState(PropertyName.NO_FULL_TEXT, newState);
     }
 
@@ -693,8 +682,8 @@ public class PropertyDefinition implements CndElement, PropertyDefinitionTemplat
      * @see javax.jcr.nodetype.PropertyDefinitionTemplate#setMandatory(boolean)
      */
     @Override
-    public void setMandatory( boolean newMandatory ) {
-        AttributeState.Value newState = (newMandatory ? AttributeState.Value.IS : AttributeState.Value.IS_NOT);
+    public void setMandatory( final boolean newMandatory ) {
+        final AttributeState.Value newState = (newMandatory ? AttributeState.Value.IS : AttributeState.Value.IS_NOT);
         changeState(PropertyName.MANDATORY, newState);
     }
 
@@ -704,8 +693,8 @@ public class PropertyDefinition implements CndElement, PropertyDefinitionTemplat
      * @see javax.jcr.nodetype.PropertyDefinitionTemplate#setMultiple(boolean)
      */
     @Override
-    public void setMultiple( boolean newMultiple ) {
-        AttributeState.Value newState = (newMultiple ? AttributeState.Value.IS : AttributeState.Value.IS_NOT);
+    public void setMultiple( final boolean newMultiple ) {
+        final AttributeState.Value newState = (newMultiple ? AttributeState.Value.IS : AttributeState.Value.IS_NOT);
         changeState(PropertyName.MULTIPLE, newState);
     }
 
@@ -713,8 +702,8 @@ public class PropertyDefinition implements CndElement, PropertyDefinitionTemplat
      * @param newName the new node name (can be <code>null</code> or empty)
      */
     @Override
-    public void setName( String newName ) {
-        Object oldValue = this.name.get();
+    public void setName( final String newName ) {
+        final Object oldValue = getName();
 
         if (this.name.set(newName)) {
             notifyChangeListeners(PropertyName.NAME, oldValue, newName);
@@ -727,8 +716,8 @@ public class PropertyDefinition implements CndElement, PropertyDefinitionTemplat
      * @see javax.jcr.nodetype.PropertyDefinitionTemplate#setOnParentVersion(int)
      */
     @Override
-    public void setOnParentVersion( int newOpv ) {
-        OnParentVersion oldValue = this.attributes.getOnParentVersion();
+    public void setOnParentVersion( final int newOpv ) {
+        final OnParentVersion oldValue = this.attributes.getOnParentVersion();
 
         if (this.attributes.setOnParentVersion(OnParentVersion.findUsingJcrValue(newOpv))) {
             notifyChangeListeners(PropertyName.ON_PARENT_VERSION, oldValue, newOpv);
@@ -741,8 +730,8 @@ public class PropertyDefinition implements CndElement, PropertyDefinitionTemplat
      * @param newOpv the new OPV value (cannot be <code>null</code>)
      * @return <code>true</code> if successfully changed
      */
-    public boolean setOnParentVersion( String newOpv ) {
-        OnParentVersion oldValue = this.attributes.getOnParentVersion();
+    public boolean setOnParentVersion( final String newOpv ) {
+        final OnParentVersion oldValue = this.attributes.getOnParentVersion();
 
         if (this.attributes.setOnParentVersion(OnParentVersion.find(newOpv))) {
             notifyChangeListeners(PropertyName.ON_PARENT_VERSION, oldValue, newOpv);
@@ -758,8 +747,8 @@ public class PropertyDefinition implements CndElement, PropertyDefinitionTemplat
      * @see javax.jcr.nodetype.PropertyDefinitionTemplate#setProtected(boolean)
      */
     @Override
-    public void setProtected( boolean newProtected ) {
-        AttributeState.Value newState = (newProtected ? AttributeState.Value.IS : AttributeState.Value.IS_NOT);
+    public void setProtected( final boolean newProtected ) {
+        final AttributeState.Value newState = (newProtected ? AttributeState.Value.IS : AttributeState.Value.IS_NOT);
         changeState(PropertyName.PROTECTED, newState);
     }
 
@@ -769,8 +758,8 @@ public class PropertyDefinition implements CndElement, PropertyDefinitionTemplat
      * @see javax.jcr.nodetype.PropertyDefinitionTemplate#setQueryOrderable(boolean)
      */
     @Override
-    public void setQueryOrderable( boolean newQueryOrderable ) {
-        AttributeState.Value newState = (newQueryOrderable ? AttributeState.Value.IS_NOT : AttributeState.Value.IS);
+    public void setQueryOrderable( final boolean newQueryOrderable ) {
+        final AttributeState.Value newState = (newQueryOrderable ? AttributeState.Value.IS_NOT : AttributeState.Value.IS);
         changeState(PropertyName.NO_QUERY_ORDER, newState);
     }
 
@@ -780,7 +769,7 @@ public class PropertyDefinition implements CndElement, PropertyDefinitionTemplat
      * @see javax.jcr.nodetype.PropertyDefinitionTemplate#setRequiredType(int)
      */
     @Override
-    public void setRequiredType( int newPropertyType ) {
+    public void setRequiredType( final int newPropertyType ) {
         setType(PropertyType.findUsingJcrValue(newPropertyType));
     }
 
@@ -790,9 +779,9 @@ public class PropertyDefinition implements CndElement, PropertyDefinitionTemplat
      * @param newType the proposed new type (cannot be <code>null</code>)
      * @return <code>true</code> if the type was changed
      */
-    public boolean setType( PropertyType newType ) {
+    public boolean setType( final PropertyType newType ) {
         if (this.type != newType) {
-            PropertyType oldValue = this.type;
+            final PropertyType oldValue = this.type;
             this.type = newType;
             notifyChangeListeners(PropertyName.TYPE, oldValue, this.type);
             return true; // type changed
@@ -807,12 +796,12 @@ public class PropertyDefinition implements CndElement, PropertyDefinitionTemplat
      * @see javax.jcr.nodetype.PropertyDefinitionTemplate#setValueConstraints(java.lang.String[])
      */
     @Override
-    public void setValueConstraints( String[] newConstraints ) {
-        List<String> items = this.valueConstraints.getSupportedItems();
+    public void setValueConstraints( final String[] newConstraints ) {
+        final List<String> items = this.valueConstraints.getSupportedItems();
         boolean changed = this.valueConstraints.clear();
 
         if (!Utils.isEmpty(newConstraints)) {
-            for (String constraint : newConstraints) {
+            for (final String constraint : newConstraints) {
                 if (this.valueConstraints.add(constraint)) {
                     changed = true;
                 }
@@ -830,43 +819,85 @@ public class PropertyDefinition implements CndElement, PropertyDefinitionTemplat
      * @see org.jboss.tools.modeshape.jcr.cnd.CndElement#toCndNotation(org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType)
      */
     @Override
-    public String toCndNotation( NotationType notationType ) {
-        StringBuilder builder = new StringBuilder(NOTATION_PREFIX);
+    public String toCndNotation( final NotationType notationType ) {
+        final StringBuilder builder = new StringBuilder(NOTATION_PREFIX);
+        builder.append(getPrefixEndDelimiter());
+
         final String DELIM = getDelimiter();
 
-        { // name
-            builder.append(this.name.toCndNotation(notationType));
-        }
-
-        { // type
-            builder.append(DELIM).append(getType().toCndNotation(notationType));
-        }
-
-        { // default values
-            String notation = this.defaultValues.toCndNotation(notationType);
-
-            if (!Utils.isEmpty(notation)) {
-                builder.append(DELIM).append(notation);
-            }
-        }
-
-        { // attributes
-            String notation = this.attributes.toCndNotation(notationType);
-
-            if (!Utils.isEmpty(notation)) {
-                builder.append(DELIM).append(notation);
-            }
-        }
-
-        { // value constraints
-            String notation = this.valueConstraints.toCndNotation(notationType);
-
-            if (!Utils.isEmpty(notation)) {
-                builder.append(DELIM).append(notation);
-            }
-        }
+        builder.append(this.name.toCndNotation(notationType));
+        Utils.build(builder, true, DELIM, this.type.toCndNotation(notationType));
+        Utils.build(builder, true, DELIM, this.defaultValues.toCndNotation(notationType));
+        Utils.build(builder, true, DELIM, this.attributes.toCndNotation(notationType));
+        Utils.build(builder, true, DELIM, this.valueConstraints.toCndNotation(notationType));
 
         return builder.toString();
+    }
+
+    /**
+     * The property names whose <code>toString()</code> is used in {@link PropertyChangeEvent}s.
+     */
+    public enum PropertyName {
+
+        /**
+         * The autocreated attribute.
+         */
+        AUTOCREATED,
+
+        /**
+         * A collection of default values.
+         */
+        DEFAULT_VALUES,
+
+        /**
+         * The mandatory attribute.
+         */
+        MANDATORY,
+
+        /**
+         * The multiple attribute.
+         */
+        MULTIPLE,
+
+        /**
+         * The property name.
+         */
+        NAME,
+
+        /**
+         * The does not support full text search attribute.
+         */
+        NO_FULL_TEXT,
+
+        /**
+         * The does not support query order attribute.
+         */
+        NO_QUERY_ORDER,
+
+        /**
+         * The on parent version value.
+         */
+        ON_PARENT_VERSION,
+
+        /**
+         * The protected attribute.
+         */
+        PROTECTED,
+
+        /**
+         * The collection of supported query operators.
+         */
+        QUERY_OPS,
+
+        /**
+         * The property type.
+         */
+        TYPE,
+
+        /**
+         * The collection of property constraints.
+         */
+        VALUE_CONSTRAINTS
     }
 
 }

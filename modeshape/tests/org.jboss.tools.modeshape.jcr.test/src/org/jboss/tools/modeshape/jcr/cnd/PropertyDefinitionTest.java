@@ -479,13 +479,13 @@ public class PropertyDefinitionTest {
         Listener l = new Listener();
         assertTrue(this.propDefn.addListener(l));
 
-        final String NAME = "name"; //$NON-NLS-1$
-        this.propDefn.setName(NAME);
+        final String NEW_NAME = "name"; //$NON-NLS-1$
+        this.propDefn.setName(NEW_NAME);
 
-        assertEquals(NAME, this.propDefn.getName());
+        assertEquals(NEW_NAME, this.propDefn.getName());
         assertEquals(1, l.getCount());
         assertEquals(PropertyName.NAME.toString(), l.getPropertyName());
-        assertEquals(NAME, l.getNewValue());
+        assertEquals(NEW_NAME, l.getNewValue());
         assertNull(l.getOldValue());
     }
 

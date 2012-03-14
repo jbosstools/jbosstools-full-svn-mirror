@@ -130,7 +130,7 @@ public class NodeAttributes implements CndElement {
      * @return <code>true</code> if changed
      */
     public boolean setOnParentVersion( final OnParentVersion newOpv ) {
-        Utils.isNotNull(newOpv, "newOpv"); //$NON-NLS-1$
+        Utils.verifyIsNotNull(newOpv, "newOpv"); //$NON-NLS-1$
 
         if (this.opv != newOpv) {
             this.opv = newOpv;
@@ -163,73 +163,25 @@ public class NodeAttributes implements CndElement {
      */
     @Override
     public String toCndNotation( final NotationType notationType ) {
-        final String delim = getFormatDelimiter();
+        final String DELIM = getFormatDelimiter();
         final StringBuilder builder = new StringBuilder();
-        boolean addDelim = false;
 
-        { // autocreated
-            if (addDelim) {
-                builder.append(delim);
-            }
+        boolean addDelim = Utils.build(builder, false, DELIM, this.autocreated.toCndNotation(notationType));
 
-            final String notation = this.autocreated.toCndNotation(notationType);
-
-            if (!Utils.isEmpty(notation)) {
-                builder.append(notation);
-                addDelim = true;
-            }
+        if (Utils.build(builder, addDelim, DELIM, this.mandatory.toCndNotation(notationType))) {
+            addDelim = true;
         }
 
-        { // mandatory
-            if (addDelim) {
-                builder.append(delim);
-            }
-
-            final String notation = this.mandatory.toCndNotation(notationType);
-
-            if (!Utils.isEmpty(notation)) {
-                builder.append(notation);
-                addDelim = true;
-            }
+        if (Utils.build(builder, addDelim, DELIM, this.notDeletable.toCndNotation(notationType))) {
+            addDelim = true;
         }
 
-        { // protected
-            if (addDelim) {
-                builder.append(delim);
-            }
-
-            final String notation = this.notDeletable.toCndNotation(notationType);
-
-            if (!Utils.isEmpty(notation)) {
-                builder.append(notation);
-                addDelim = true;
-            }
+        if (Utils.build(builder, addDelim, DELIM, this.opv.toCndNotation(notationType))) {
+            addDelim = true;
         }
 
-        { // on parent value
-            if (addDelim) {
-                builder.append(delim);
-            }
-
-            final String notation = this.opv.toCndNotation(notationType);
-
-            if (!Utils.isEmpty(notation)) {
-                builder.append(notation);
-                addDelim = true;
-            }
-        }
-
-        { // same name siblings
-            if (addDelim) {
-                builder.append(delim);
-            }
-
-            final String notation = this.sns.toCndNotation(notationType);
-
-            if (!Utils.isEmpty(notation)) {
-                builder.append(notation);
-                addDelim = true;
-            }
+        if (Utils.build(builder, addDelim, DELIM, this.sns.toCndNotation(notationType))) {
+            addDelim = true;
         }
 
         return builder.toString().trim();

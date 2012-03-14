@@ -12,7 +12,7 @@ import org.jboss.tools.modeshape.jcr.Utils;
 /**
  * 
  */
-public class LocalName implements CndElement {
+public class LocalName implements CndElement, Comparable<LocalName> {
 
     private Mode mode = Mode.UNQOUTED;
 
@@ -30,6 +30,29 @@ public class LocalName implements CndElement {
      */
     public LocalName( final String initialValue ) {
         this.value = initialValue;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     */
+    @Override
+    public int compareTo( final LocalName that ) {
+        if (equals(that) || Utils.equivalent(get(), that.get())) {
+            return 0;
+        }
+
+        // both can't be empty
+        if (Utils.isEmpty(this.value)) {
+            return -1;
+        }
+
+        if (Utils.isEmpty(that.value)) {
+            return 1;
+        }
+
+        return this.value.compareTo(that.value);
     }
 
     /**
@@ -108,10 +131,10 @@ public class LocalName implements CndElement {
 
     /**
      * @param newMode the new mode (cannot be <code>null</code>)
-     * @return <code>true</code> if the model was changed
+     * @return <code>true</code> if the mode was changed
      */
     public boolean setMode( final Mode newMode ) {
-        Utils.isNotNull(newMode, "newMode"); //$NON-NLS-1$
+        Utils.verifyIsNotNull(newMode, "newMode"); //$NON-NLS-1$
 
         if (this.mode != newMode) {
             this.mode = newMode;
@@ -131,7 +154,7 @@ public class LocalName implements CndElement {
         final StringBuilder builder = new StringBuilder();
         Mode notationMode = this.mode;
 
-        if (!Utils.isEmpty(this.value) && this.value.contains(" ") && (this.mode == Mode.UNQOUTED)) { //$NON-NLS-1$
+        if (!Utils.isEmpty(this.value) && this.value.contains(Utils.SPACE_STRING) && (this.mode == Mode.UNQOUTED)) {
             notationMode = Mode.SINGLE_QUOTED;
         }
 
@@ -143,14 +166,28 @@ public class LocalName implements CndElement {
     }
 
     /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        if (Utils.isEmpty(this.value)) {
+            return Utils.EMPTY_STRING;
+        }
+
+        return this.value;
+    }
+
+    /**
      * The quotation preference when using the name in CND notation.
      */
     public enum Mode {
 
         /**
-         * The name is not surrounded by quotes in the CND notation.
+         * The name is surrounded by double quotes in the CND notation.
          */
-        UNQOUTED(Utils.EMPTY_STRING),
+        DOUBLE_QUOTED("\""), //$NON-NLS-1$
 
         /**
          * The name is surrounded by single quotes in the CND notation.
@@ -158,9 +195,9 @@ public class LocalName implements CndElement {
         SINGLE_QUOTED("'"), //$NON-NLS-1$
 
         /**
-         * The name is surrounded by double quotes in the CND notation.
+         * The name is not surrounded by quotes in the CND notation.
          */
-        DOUBLE_QUOTED("\""); //$NON-NLS-1$
+        UNQOUTED(Utils.EMPTY_STRING);
 
         private final String delim;
 
@@ -178,5 +215,4 @@ public class LocalName implements CndElement {
             return this.delim;
         }
     }
-
 }

@@ -102,7 +102,7 @@ public class NodeTypeAttributes implements CndElement {
     }
 
     private String getFormatDelimiter() {
-        return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.NODE_TYPE_DEFINITION_ATTRIBUTES_DELIMITER);
+        return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.NODE_TYPE_DEFINITION_ATTRIBUTES_END_DELIMITER);
     }
 
     /**
@@ -204,10 +204,22 @@ public class NodeTypeAttributes implements CndElement {
         final StringBuilder builder = new StringBuilder();
 
         boolean addDelim = Utils.build(builder, false, DELIM, this.orderable.toCndNotation(notationType));
-        addDelim = Utils.build(builder, addDelim, DELIM, this.mixin.toCndNotation(notationType));
-        addDelim = Utils.build(builder, addDelim, DELIM, this.notConcrete.toCndNotation(notationType));
-        addDelim = Utils.build(builder, addDelim, DELIM, this.queryable.toCndNotation(notationType));
-        addDelim = Utils.build(builder, addDelim, DELIM, this.primaryItem.toCndNotation(notationType));
+
+        if (Utils.build(builder, addDelim, DELIM, this.mixin.toCndNotation(notationType))) {
+            addDelim = true;
+        }
+
+        if (Utils.build(builder, addDelim, DELIM, this.notConcrete.toCndNotation(notationType))) {
+            addDelim = true;
+        }
+
+        if (Utils.build(builder, addDelim, DELIM, this.queryable.toCndNotation(notationType))) {
+            addDelim = true;
+        }
+
+        if (Utils.build(builder, addDelim, DELIM, this.primaryItem.toCndNotation(notationType))) {
+            addDelim = true;
+        }
 
         return builder.toString().trim();
     }

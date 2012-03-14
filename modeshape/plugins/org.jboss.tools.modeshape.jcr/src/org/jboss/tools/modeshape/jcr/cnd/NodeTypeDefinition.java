@@ -31,7 +31,7 @@ import org.jboss.tools.modeshape.jcr.cnd.attributes.SuperTypes;
 /**
  * Represents a CND node type definition.
  */
-public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
+public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTemplate {
 
     /**
      * Then node type name prefix used in the CND notation.
@@ -61,7 +61,7 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
     /**
      * The node type name (never <code>null</code> but can have a <code>null</code> or empty value).
      */
-    private final LocalName name;
+    private final QualifiedName name;
 
     /**
      * The collection of property definitions (can be <code>null</code>).
@@ -78,7 +78,7 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
      */
     public NodeTypeDefinition() {
         this.attributes = new NodeTypeAttributes();
-        this.name = new LocalName();
+        this.name = new QualifiedName();
         this.superTypes = new SuperTypes();
         this.listeners = new CopyOnWriteArrayList<PropertyChangeListener>();
     }
@@ -90,7 +90,7 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
      * @return <code>true</code> if successfully added
      */
     public boolean addChildNodeDefinition( final ChildNodeDefinition childNodeDefinitionBeingAdded ) {
-        Utils.isNotNull(childNodeDefinitionBeingAdded, "childNodeDefinitionBeingAdded"); //$NON-NLS-1$
+        Utils.verifyIsNotNull(childNodeDefinitionBeingAdded, "childNodeDefinitionBeingAdded"); //$NON-NLS-1$
 
         if (this.childNodesDefinitions == null) {
             this.childNodesDefinitions = new ArrayList<ChildNodeDefinition>();
@@ -109,7 +109,7 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
      * @return <code>true</code> if successfully added
      */
     public boolean addListener( final PropertyChangeListener newListener ) {
-        Utils.isNotNull(newListener, "newListener"); //$NON-NLS-1$
+        Utils.verifyIsNotNull(newListener, "newListener"); //$NON-NLS-1$
         return this.listeners.addIfAbsent(newListener);
     }
 
@@ -120,7 +120,7 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
      * @return <code>true</code> if successfully added
      */
     public boolean addPropertyDefinition( final PropertyDefinition properyDefinitionBeingAdded ) {
-        Utils.isNotNull(properyDefinitionBeingAdded, "properyDefinitionBeingAdded"); //$NON-NLS-1$
+        Utils.verifyIsNotNull(properyDefinitionBeingAdded, "properyDefinitionBeingAdded"); //$NON-NLS-1$
 
         if (this.propertyDefinitions == null) {
             this.propertyDefinitions = new ArrayList<PropertyDefinition>();
@@ -161,8 +161,8 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
      */
     public boolean changeState( final PropertyName propertyName,
                                 final Value newState ) {
-        Utils.isNotNull(propertyName, "propertyName"); //$NON-NLS-1$
-        Utils.isNotNull(newState, "newState"); //$NON-NLS-1$
+        Utils.verifyIsNotNull(propertyName, "propertyName"); //$NON-NLS-1$
+        Utils.verifyIsNotNull(newState, "newState"); //$NON-NLS-1$
 
         Object oldValue = null;
         final Object newValue = newState;
@@ -254,6 +254,35 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     */
+    @Override
+    public int compareTo( final Object object ) {
+        final NodeTypeDefinition that = (NodeTypeDefinition)object;
+        final String thisName = getName();
+        final String thatName = that.getName();
+
+        if (Utils.isEmpty(thisName)) {
+            if (Utils.isEmpty(thatName)) {
+                return 0;
+            }
+
+            // thatName is not empty
+            return 1;
+        }
+
+        // thisName is not empty
+        if (thatName == null) {
+            return 1;
+        }
+
+        // thisName and thatName are not empty
+        return thisName.compareTo(thatName);
+    }
+
     private String getChildNodeDefinitionDelimiter() {
         return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.CHILD_NODE_DEFINITION_DELIMITER);
     }
@@ -302,7 +331,7 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
     }
 
     private String getEndAttributesDelimiter() {
-        return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.NODE_TYPE_DEFINITION_ATTRIBUTES_DELIMITER);
+        return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.NODE_TYPE_DEFINITION_ATTRIBUTES_END_DELIMITER);
     }
 
     private String getEndChildNodeDefinitionsDelimiter() {
@@ -373,6 +402,10 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
         return this.propertyDefinitions;
     }
 
+    private String getPropertyDefinitionStartDelimiter() {
+        return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.PROPERTY_DEFINITION_START_DELIMITER);
+    }
+
     /**
      * {@inheritDoc}
      * 
@@ -381,6 +414,10 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
     @Override
     public List getPropertyDefinitionTemplates() {
         return new ArrayList<PropertyDefinitionTemplate>(getPropertyDefinitions());
+    }
+
+    private String getStartChildNodeDefinitionDelimiter() {
+        return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.CHILD_NODE_DEFINITION_START_DELIMITER);
     }
 
     /**
@@ -392,7 +429,7 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
      * @throws IllegalArgumentException if a property that does not have an attribute state is specified
      */
     public Value getState( final PropertyName propertyName ) {
-        Utils.isNotNull(propertyName, "propertyName"); //$NON-NLS-1$
+        Utils.verifyIsNotNull(propertyName, "propertyName"); //$NON-NLS-1$
 
         if (PropertyName.ABSTRACT == propertyName) {
             return this.attributes.getAbstract().get();
@@ -466,7 +503,7 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
      * @return <code>true</code> if property is a variant
      */
     public boolean isVariant( final PropertyName propertyName ) {
-        Utils.isNotNull(propertyName, "propertyName"); //$NON-NLS-1$
+        Utils.verifyIsNotNull(propertyName, "propertyName"); //$NON-NLS-1$
         return (getState(propertyName) == Value.VARIANT);
     }
 
@@ -497,7 +534,7 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
      * @return <code>true</code> if successfully removed
      */
     public boolean removeChildNodeDefinition( final ChildNodeDefinition childNodeDefinitionBeingRemoved ) {
-        Utils.isNotNull(childNodeDefinitionBeingRemoved, "childNodeDefinitionBeingRemoved"); //$NON-NLS-1$
+        Utils.verifyIsNotNull(childNodeDefinitionBeingRemoved, "childNodeDefinitionBeingRemoved"); //$NON-NLS-1$
 
         if (this.childNodesDefinitions == null) {
             return false;
@@ -521,7 +558,7 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
      * @return <code>true</code> if successfully removed
      */
     public boolean removeListener( final PropertyChangeListener listener ) {
-        Utils.isNotNull(listener, "listener"); //$NON-NLS-1$
+        Utils.verifyIsNotNull(listener, "listener"); //$NON-NLS-1$
         return this.listeners.remove(listener);
     }
 
@@ -532,7 +569,7 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
      * @return <code>true</code> if successfully removed
      */
     public boolean removePropertyDefinition( final PropertyDefinition propertyDefinitionBeingRemoved ) {
-        Utils.isNotNull(propertyDefinitionBeingRemoved, "propertyDefinitionBeingRemoved"); //$NON-NLS-1$
+        Utils.verifyIsNotNull(propertyDefinitionBeingRemoved, "propertyDefinitionBeingRemoved"); //$NON-NLS-1$
 
         if (this.propertyDefinitions == null) {
             return false;
@@ -668,7 +705,7 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
      */
     @Override
     public String toCndNotation( final NotationType notationType ) {
-        final StringBuilder builder = new StringBuilder("- "); //$NON-NLS-1$
+        final StringBuilder builder = new StringBuilder();
 
         { // name
             builder.append(NAME_NOTATION_PREFIX)
@@ -689,16 +726,18 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
             final String notation = this.attributes.toCndNotation(notationType);
 
             if (!Utils.isEmpty(notation)) {
-                builder.append(notation).append(getEndAttributesDelimiter());
+                builder.append(notation);
             }
+
+            builder.append(getEndAttributesDelimiter());
         }
 
         { // property definitions
             if (!Utils.isEmpty(this.propertyDefinitions)) {
-                final String PD_DELIM = getPropertyDefinitionDelimiter();
-
                 for (final PropertyDefinition propDefn : this.propertyDefinitions) {
-                    builder.append(propDefn.toCndNotation(notationType)).append(PD_DELIM);
+                    builder.append(getPropertyDefinitionStartDelimiter());
+                    builder.append(propDefn.toCndNotation(notationType));
+                    builder.append(getPropertyDefinitionDelimiter());
                 }
 
                 builder.append(getEndPropertyDefinitionsDelimiter());
@@ -707,10 +746,10 @@ public class NodeTypeDefinition implements CndElement, NodeTypeTemplate {
 
         { // child node definitions
             if (!Utils.isEmpty(this.childNodesDefinitions)) {
-                final String CND_DELIM = getChildNodeDefinitionDelimiter();
-
                 for (final ChildNodeDefinition childNodeDefn : this.childNodesDefinitions) {
-                    builder.append(childNodeDefn.toCndNotation(notationType)).append(CND_DELIM);
+                    builder.append(getStartChildNodeDefinitionDelimiter());
+                    builder.append(childNodeDefn.toCndNotation(notationType));
+                    builder.append(getChildNodeDefinitionDelimiter());
                 }
 
                 builder.append(getEndChildNodeDefinitionsDelimiter());

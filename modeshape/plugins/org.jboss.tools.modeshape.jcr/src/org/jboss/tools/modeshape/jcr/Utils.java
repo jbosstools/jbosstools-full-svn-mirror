@@ -19,6 +19,11 @@ import org.modeshape.common.util.HashCode;
 public final class Utils {
 
     /**
+     * And empty object array.
+     */
+    public static final Object[] EMPTY_OBJECT_ARRAY = new Object[0];
+
+    /**
      * An empty string constant.
      */
     public static final String EMPTY_STRING = ""; //$NON-NLS-1$
@@ -29,11 +34,16 @@ public final class Utils {
     public static final String[] EMPTY_STRING_ARRAY = new String[0];
 
     /**
+     * A string with one space character.
+     */
+    public static final String SPACE_STRING = " "; //$NON-NLS-1$ 
+
+    /**
      * @param builder the builder where the text will be appended (cannot be <code>null</code>)
      * @param addDelimiter the flag indicating if a delimiter should be added
      * @param delimiter the delimiter string added before the text if there is text (can be <code>null</code> or empty)
      * @param text the text being appended (can be <code>null</code> or empty
-     * @return <code>true</code> if text was appened
+     * @return <code>true</code> if text was appended
      */
     public static boolean build( final StringBuilder builder,
                                  final boolean addDelimiter,
@@ -142,27 +152,11 @@ public final class Utils {
     }
 
     /**
-     * @param object the object being checked (can be <code>null</code>)
-     * @param name the name of the object to use in the error message (cannot be <code>null</code>)
-     * @throws IllegalArgumentException if the object is <code>null</code>
-     */
-    public static void isNotNull( final Object object,
-                                  String name ) {
-        if ((name == null) || name.isEmpty()) {
-            name = Utils.EMPTY_STRING;
-        }
-
-        if (object == null) {
-            throw new IllegalArgumentException(NLS.bind(Messages.objectIsNull, name));
-        }
-    }
-
-    /**
      * @param items the items being upper-cased (cannot be <code>null</code>)
      * @return a new collection of upper-cased items
      */
     public static String[] toUpperCase( final String[] items ) {
-        Utils.isNotNull(items, "items"); //$NON-NLS-1$
+        Utils.verifyIsNotNull(items, "items"); //$NON-NLS-1$
 
         final String result[] = new String[items.length];
         int i = 0;
@@ -181,12 +175,28 @@ public final class Utils {
      */
     public static void verifyIsNotEmpty( final String text,
                                          String name ) {
-        if ((name == null) || name.isEmpty()) {
-            name = Utils.EMPTY_STRING;
-        }
-
         if (isEmpty(text)) {
+            if ((name == null) || name.isEmpty()) {
+                name = Utils.EMPTY_STRING;
+            }
+
             throw new IllegalArgumentException(NLS.bind(Messages.stringIsEmpty, name));
+        }
+    }
+
+    /**
+     * @param object the object being checked (can be <code>null</code>)
+     * @param name the name of the object to use in the error message (cannot be <code>null</code>)
+     * @throws IllegalArgumentException if the object is <code>null</code>
+     */
+    public static void verifyIsNotNull( final Object object,
+                                        String name ) {
+        if (object == null) {
+            if ((name == null) || name.isEmpty()) {
+                name = Utils.EMPTY_STRING;
+            }
+
+            throw new IllegalArgumentException(NLS.bind(Messages.objectIsNull, name));
         }
     }
 

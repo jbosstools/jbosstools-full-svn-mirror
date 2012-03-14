@@ -23,22 +23,6 @@ import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences.Preference;
 public class CompactNodeTypeDefinition implements CndElement {
 
     /**
-     * The property names whose <code>toString()</code> is used in {@link PropertyChangeEvent}s.
-     */
-    public enum PropertyName {
-
-        /**
-         * The namespace mappings property.
-         */
-        NAMESPACE_MAPPINGS,
-
-        /**
-         * The node type definitions property.
-         */
-        NODE_TYPE_DEFINITIONS
-    }
-
-    /**
      * The registered property change listeners (never <code>null</code>).
      */
     private final CopyOnWriteArrayList<PropertyChangeListener> listeners;
@@ -64,8 +48,8 @@ public class CompactNodeTypeDefinition implements CndElement {
      * @param newListener the listener being registered (cannot be <code>null</code>)
      * @return <code>true</code> if registered
      */
-    public boolean addListener( PropertyChangeListener newListener ) {
-        Utils.isNotNull(newListener, "newListener"); //$NON-NLS-1$
+    public boolean addListener( final PropertyChangeListener newListener ) {
+        Utils.verifyIsNotNull(newListener, "newListener"); //$NON-NLS-1$
         return this.listeners.addIfAbsent(newListener);
     }
 
@@ -76,8 +60,8 @@ public class CompactNodeTypeDefinition implements CndElement {
      * @param namespaceMappingToAdd the namespace mapping being added (cannot be <code>null</code>)
      * @return <code>true</code> if added
      */
-    public boolean addNamespaceMapping( NamespaceMapping namespaceMappingToAdd ) {
-        Utils.isNotNull(namespaceMappingToAdd, "namespaceMappingToAdd"); //$NON-NLS-1$
+    public boolean addNamespaceMapping( final NamespaceMapping namespaceMappingToAdd ) {
+        Utils.verifyIsNotNull(namespaceMappingToAdd, "namespaceMappingToAdd"); //$NON-NLS-1$
 
         if (this.namespaceMappings == null) {
             this.namespaceMappings = new ArrayList<NamespaceMapping>();
@@ -98,8 +82,8 @@ public class CompactNodeTypeDefinition implements CndElement {
      * @param nodeTypeDefinitionToAdd the node type definition being added (cannot be <code>null</code>)
      * @return <code>true</code> if added
      */
-    public boolean addNodeTypeDefinition( NodeTypeDefinition nodeTypeDefinitionToAdd ) {
-        Utils.isNotNull(nodeTypeDefinitionToAdd, "nodeTypeDefinitionToAdd"); //$NON-NLS-1$
+    public boolean addNodeTypeDefinition( final NodeTypeDefinition nodeTypeDefinitionToAdd ) {
+        Utils.verifyIsNotNull(nodeTypeDefinitionToAdd, "nodeTypeDefinitionToAdd"); //$NON-NLS-1$
 
         if (this.nodeTypeDefinitions == null) {
             this.nodeTypeDefinitions = new ArrayList<NodeTypeDefinition>();
@@ -127,7 +111,7 @@ public class CompactNodeTypeDefinition implements CndElement {
         boolean wasCleared = false;
 
         if (!this.namespaceMappings.isEmpty()) {
-            Object oldValue = new ArrayList<NamespaceMapping>(this.namespaceMappings);
+            final Object oldValue = new ArrayList<NamespaceMapping>(this.namespaceMappings);
             wasCleared = true;
             this.namespaceMappings.clear();
             notifyChangeListeners(PropertyName.NAMESPACE_MAPPINGS, oldValue, null);
@@ -151,7 +135,7 @@ public class CompactNodeTypeDefinition implements CndElement {
         boolean wasCleared = false;
 
         if (!this.nodeTypeDefinitions.isEmpty()) {
-            Object oldValue = new ArrayList<NodeTypeDefinition>(nodeTypeDefinitions);
+            final Object oldValue = new ArrayList<NodeTypeDefinition>(this.nodeTypeDefinitions);
             wasCleared = true;
             this.nodeTypeDefinitions.clear();
             notifyChangeListeners(PropertyName.NODE_TYPE_DEFINITIONS, oldValue, null);
@@ -209,12 +193,12 @@ public class CompactNodeTypeDefinition implements CndElement {
                                         final Object newValue ) {
         assert (property != null) : "property is null"; //$NON-NLS-1$
 
-        PropertyChangeEvent event = new PropertyChangeEvent(this, property.toString(), oldValue, newValue);
+        final PropertyChangeEvent event = new PropertyChangeEvent(this, property.toString(), oldValue, newValue);
 
         for (final Object listener : this.listeners.toArray()) {
             try {
                 ((PropertyChangeListener)listener).propertyChange(event);
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 // TODO log this
                 this.listeners.remove(listener);
             }
@@ -225,8 +209,8 @@ public class CompactNodeTypeDefinition implements CndElement {
      * @param listener the listener being unregistered (cannot be <code>null</code>)
      * @return <code>true</code> if removed
      */
-    public boolean removeListener( PropertyChangeListener listener ) {
-        Utils.isNotNull(listener, "listener"); //$NON-NLS-1$
+    public boolean removeListener( final PropertyChangeListener listener ) {
+        Utils.verifyIsNotNull(listener, "listener"); //$NON-NLS-1$
         return this.listeners.remove(listener);
     }
 
@@ -237,8 +221,8 @@ public class CompactNodeTypeDefinition implements CndElement {
      * @param namespaceMappingToRemove the namespace mapping being removed (cannot be <code>null</code>)
      * @return <code>true</code> if removed
      */
-    public boolean removeNamespaceMapping( NamespaceMapping namespaceMappingToRemove ) {
-        Utils.isNotNull(namespaceMappingToRemove, "namespaceMappingToRemove"); //$NON-NLS-1$
+    public boolean removeNamespaceMapping( final NamespaceMapping namespaceMappingToRemove ) {
+        Utils.verifyIsNotNull(namespaceMappingToRemove, "namespaceMappingToRemove"); //$NON-NLS-1$
 
         if ((this.namespaceMappings != null) && this.namespaceMappings.remove(namespaceMappingToRemove)) {
             notifyChangeListeners(PropertyName.NAMESPACE_MAPPINGS, namespaceMappingToRemove, null);
@@ -260,8 +244,8 @@ public class CompactNodeTypeDefinition implements CndElement {
      * @param nodeTypeDefinitionToRemove the node type definition being removed (cannot be <code>null</code>)
      * @return <code>true</code> if removed
      */
-    public boolean removeNodeTypeDefinition( NodeTypeDefinition nodeTypeDefinitionToRemove ) {
-        Utils.isNotNull(nodeTypeDefinitionToRemove, "nodeTypeDefinitionToRemove"); //$NON-NLS-1$
+    public boolean removeNodeTypeDefinition( final NodeTypeDefinition nodeTypeDefinitionToRemove ) {
+        Utils.verifyIsNotNull(nodeTypeDefinitionToRemove, "nodeTypeDefinitionToRemove"); //$NON-NLS-1$
 
         if ((this.nodeTypeDefinitions != null) && this.nodeTypeDefinitions.remove(nodeTypeDefinitionToRemove)) {
             notifyChangeListeners(PropertyName.NODE_TYPE_DEFINITIONS, nodeTypeDefinitionToRemove, null);
@@ -282,16 +266,18 @@ public class CompactNodeTypeDefinition implements CndElement {
      * @see org.jboss.tools.modeshape.jcr.cnd.CndElement#toCndNotation(org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType)
      */
     @Override
-    public String toCndNotation( NotationType notationType ) {
-        StringBuilder builder = new StringBuilder();
+    public String toCndNotation( final NotationType notationType ) {
+        final StringBuilder builder = new StringBuilder();
         boolean addDelim = false;
 
         { // namespace mappings
             if (!Utils.isEmpty(this.namespaceMappings)) {
                 final String DELIM = getNamespaceMappingDelimiter();
 
-                for (NamespaceMapping namespaceMapping : this.namespaceMappings) {
-                    addDelim = Utils.build(builder, addDelim, DELIM, namespaceMapping.toCndNotation(notationType));
+                for (final NamespaceMapping namespaceMapping : this.namespaceMappings) {
+                    if (Utils.build(builder, addDelim, DELIM, namespaceMapping.toCndNotation(notationType))) {
+                        addDelim = true;
+                    }
                 }
 
                 builder.append(getEndNamespaceMappingSectionDelimiter());
@@ -302,8 +288,10 @@ public class CompactNodeTypeDefinition implements CndElement {
             if (!Utils.isEmpty(this.nodeTypeDefinitions)) {
                 final String DELIM = getNodeTypeDefinitionDelimiter();
 
-                for (NodeTypeDefinition nodeTypeDefinition : this.nodeTypeDefinitions) {
-                    addDelim = Utils.build(builder, addDelim, DELIM, nodeTypeDefinition.toCndNotation(notationType));
+                for (final NodeTypeDefinition nodeTypeDefinition : this.nodeTypeDefinitions) {
+                    if (Utils.build(builder, addDelim, DELIM, nodeTypeDefinition.toCndNotation(notationType))) {
+                        addDelim = true;
+                    }
                 }
 
                 builder.append(getEndNodeTypeDefinitionSectionDelimiter());
@@ -311,6 +299,22 @@ public class CompactNodeTypeDefinition implements CndElement {
         }
 
         return builder.toString();
+    }
+
+    /**
+     * The property names whose <code>toString()</code> is used in {@link PropertyChangeEvent}s.
+     */
+    public enum PropertyName {
+
+        /**
+         * The namespace mappings property.
+         */
+        NAMESPACE_MAPPINGS,
+
+        /**
+         * The node type definitions property.
+         */
+        NODE_TYPE_DEFINITIONS
     }
 
 }

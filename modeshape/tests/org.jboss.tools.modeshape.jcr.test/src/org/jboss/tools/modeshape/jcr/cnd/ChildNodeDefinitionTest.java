@@ -12,9 +12,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Collection;
-import java.util.Collections;
-
 import org.jboss.tools.modeshape.jcr.Listener;
 import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.cnd.ChildNodeDefinition.PropertyName;
@@ -187,7 +184,7 @@ public class ChildNodeDefinitionTest {
     public void shouldReceiveEventAfterClearingSuperTypes() {
         final String REQUIRED_TYPE = "requiredType"; //$NON-NLS-1$
         assertTrue(this.childNodeDefinition.addRequiredType(REQUIRED_TYPE));
-        Collection<String> oldValue = Collections.singletonList(REQUIRED_TYPE);
+        String[] oldValue = new String[] {REQUIRED_TYPE};
 
         Listener l = new Listener();
         assertTrue(this.childNodeDefinition.addListener(l));
@@ -196,7 +193,7 @@ public class ChildNodeDefinitionTest {
         assertEquals(1, l.getCount());
         assertEquals(PropertyName.REQUIRED_TYPES.toString(), l.getPropertyName());
         assertNull(l.getNewValue());
-        assertEquals(oldValue, l.getOldValue());
+        assertEquals(oldValue[0], ((String[])l.getOldValue())[0]);
     }
 
     @Test

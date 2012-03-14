@@ -21,7 +21,7 @@ public class ValidationStatus implements Comparable<ValidationStatus> {
      * @param message the validation message (cannot be <code>null</code> or empty)
      * @return the error validation message (never <code>null</code>)
      */
-    public static ValidationStatus createErrorMessage( String message ) {
+    public static ValidationStatus createErrorMessage( final String message ) {
         return new ValidationStatus(Severity.ERROR, message);
     }
 
@@ -29,7 +29,7 @@ public class ValidationStatus implements Comparable<ValidationStatus> {
      * @param message the validation message (cannot be <code>null</code> or empty)
      * @return the information validation message (never <code>null</code>)
      */
-    public static ValidationStatus createInfoMessage( String message ) {
+    public static ValidationStatus createInfoMessage( final String message ) {
         return new ValidationStatus(Severity.INFO, message);
     }
 
@@ -37,7 +37,7 @@ public class ValidationStatus implements Comparable<ValidationStatus> {
      * @param message the validation message (cannot be <code>null</code> or empty)
      * @return the OK validation message (never <code>null</code>)
      */
-    public static ValidationStatus createOkMessage( String message ) {
+    public static ValidationStatus createOkMessage( final String message ) {
         return new ValidationStatus(Severity.OK, message);
     }
 
@@ -45,7 +45,7 @@ public class ValidationStatus implements Comparable<ValidationStatus> {
      * @param message the validation message (cannot be <code>null</code> or empty)
      * @return the warning validation message (never <code>null</code>)
      */
-    public static ValidationStatus createWarningMessage( String message ) {
+    public static ValidationStatus createWarningMessage( final String message ) {
         return new ValidationStatus(Severity.WARNING, message);
     }
 
@@ -63,8 +63,8 @@ public class ValidationStatus implements Comparable<ValidationStatus> {
      * @param severity the status severity (cannot be <code>null</code>)
      * @param message the status localized user message (cannot be <code>null</code>)
      */
-    protected ValidationStatus( Severity severity,
-                                String message ) {
+    protected ValidationStatus( final Severity severity,
+                                final String message ) {
         assert (severity != null) : "severity is null"; //$NON-NLS-1$
         Utils.verifyIsNotEmpty(message, "message"); //$NON-NLS-1$
 
@@ -78,7 +78,7 @@ public class ValidationStatus implements Comparable<ValidationStatus> {
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     @Override
-    public int compareTo( ValidationStatus that ) {
+    public int compareTo( final ValidationStatus that ) {
         if ((this == that) || (this.severity == that.severity)) {
             return getMessage().compareTo(that.getMessage());
         }
@@ -202,8 +202,8 @@ public class ValidationStatus implements Comparable<ValidationStatus> {
          * @param that the validation being compared (cannot be <code>null</code>)
          * @return <code>true</code> if this status more severe
          */
-        public boolean isMoreSevere( Severity that ) {
-            Utils.isNotNull(that, "that"); //$NON-NLS-1$
+        public boolean isMoreSevere( final Severity that ) {
+            Utils.verifyIsNotNull(that, "that"); //$NON-NLS-1$
 
             if ((this == that) || (this == WARNING)) {
                 return false;

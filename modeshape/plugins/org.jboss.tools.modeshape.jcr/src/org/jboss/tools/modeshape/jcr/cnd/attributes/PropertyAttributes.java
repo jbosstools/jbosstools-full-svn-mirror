@@ -266,13 +266,34 @@ public class PropertyAttributes implements CndElement {
         StringBuilder builder = new StringBuilder();
 
         boolean addDelim = Utils.build(builder, false, DELIM, this.autocreated.toCndNotation(notationType));
-        addDelim = Utils.build(builder, addDelim, DELIM, this.mandatory.toCndNotation(notationType));
-        addDelim = Utils.build(builder, addDelim, DELIM, this.notDeletable.toCndNotation(notationType));
-        addDelim = Utils.build(builder, addDelim, DELIM, this.multiple.toCndNotation(notationType));
-        addDelim = Utils.build(builder, addDelim, DELIM, this.opv.toCndNotation(notationType));
-        addDelim = Utils.build(builder, addDelim, DELIM, this.noFullText.toCndNotation(notationType));
-        addDelim = Utils.build(builder, addDelim, DELIM, this.noQueryOrder.toCndNotation(notationType));
-        addDelim = Utils.build(builder, addDelim, DELIM, this.queryOps.toCndNotation(notationType));
+
+        if (Utils.build(builder, addDelim, DELIM, this.mandatory.toCndNotation(notationType))) {
+            addDelim = true;
+        }
+
+        if (Utils.build(builder, addDelim, DELIM, this.notDeletable.toCndNotation(notationType))) {
+            addDelim = true;
+        }
+
+        if (Utils.build(builder, addDelim, DELIM, this.multiple.toCndNotation(notationType))) {
+            addDelim = true;
+        }
+
+        if (Utils.build(builder, addDelim, DELIM, this.opv.toCndNotation(notationType))) {
+            addDelim = true;
+        }
+
+        if (Utils.build(builder, addDelim, DELIM, this.noFullText.toCndNotation(notationType))) {
+            addDelim = true;
+        }
+
+        if (Utils.build(builder, addDelim, DELIM, this.noQueryOrder.toCndNotation(notationType))) {
+            addDelim = true;
+        }
+
+        if (Utils.build(builder, addDelim, DELIM, this.queryOps.toCndNotation(notationType))) {
+            addDelim = true;
+        }
 
         return builder.toString().trim();
     }

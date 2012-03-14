@@ -62,7 +62,7 @@ public final class CndImporter {
      * Constructs an importer that is not JCR 170 compatible.
      */
     public CndImporter() {
-        this.jcr170 = false;
+        this.jcr170 = true;
     }
 
     /**
@@ -130,7 +130,7 @@ public final class CndImporter {
      * @throws ParsingException if there is a problem parsing the content
      */
     public CompactNodeTypeDefinition parse( final String content ) {
-        Utils.isNotNull(content, "content is null"); //$NON-NLS-1$
+        Utils.verifyIsNotNull(content, "content is null"); //$NON-NLS-1$
 
         final CompactNodeTypeDefinition cnd = new CompactNodeTypeDefinition();
         final Tokenizer tokenizer = new CndTokenizer(false, false);

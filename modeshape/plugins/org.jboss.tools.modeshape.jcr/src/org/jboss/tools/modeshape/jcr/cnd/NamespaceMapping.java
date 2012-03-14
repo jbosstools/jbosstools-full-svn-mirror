@@ -16,32 +16,17 @@ import org.jboss.tools.modeshape.jcr.Utils;
 /**
  * The <code>NamespaceMapping</code> class represents a namespace. Each namespace mapping includes a prefix and a URI.
  */
-public class NamespaceMapping implements CndElement {
-
-    /**
-     * The property names whose <code>toString()</code> is used in {@link PropertyChangeEvent}s.
-     */
-    public enum PropertyName {
-        /**
-         * The namespace prefix.
-         */
-        PREFIX,
-
-        /**
-         * The namespace URI.
-         */
-        URI
-    }
-
-    /**
-     * The prefix used in CND notation before the namespace mapping.
-     */
-    public static final String NOTATION_PREFIX = "<"; //$NON-NLS-1$
+public class NamespaceMapping implements CndElement, Comparable {
 
     /**
      * The delimeter used to separate the prefix from the URI.
      */
     public static final String NOTATION_DELIMITER = "="; //$NON-NLS-1$
+
+    /**
+     * The prefix used in CND notation before the namespace mapping.
+     */
+    public static final String NOTATION_PREFIX = "<"; //$NON-NLS-1$
 
     /**
      * The suffix used in CND notation after the namespace mapping.
@@ -78,8 +63,8 @@ public class NamespaceMapping implements CndElement {
      * @param initialPrefix the initial prefix (can be <code>null</code> or empty)
      * @param initialUri the initial URI (can be <code>null</code> or empty)
      */
-    public NamespaceMapping( String initialPrefix,
-                             String initialUri ) {
+    public NamespaceMapping( final String initialPrefix,
+                             final String initialUri ) {
         this();
         this.prefix.set(initialPrefix);
         this.uri.set(initialUri);
@@ -89,9 +74,38 @@ public class NamespaceMapping implements CndElement {
      * @param newListener the listener being registered (cannot be <code>null</code>)
      * @return <code>true</code> if registered
      */
-    public boolean addListener( PropertyChangeListener newListener ) {
-        Utils.isNotNull(newListener, "newListener"); //$NON-NLS-1$
+    public boolean addListener( final PropertyChangeListener newListener ) {
+        Utils.verifyIsNotNull(newListener, "newListener"); //$NON-NLS-1$
         return this.listeners.addIfAbsent(newListener);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     */
+    @Override
+    public int compareTo( final Object object ) {
+        final NamespaceMapping that = (NamespaceMapping)object;
+        final String thisPrefix = getPrefix();
+        final String thatPrefix = that.getPrefix();
+
+        if (Utils.isEmpty(thisPrefix)) {
+            if (Utils.isEmpty(thatPrefix)) {
+                return 0;
+            }
+
+            // thatName is not empty
+            return 1;
+        }
+
+        // thisName is not empty
+        if (thatPrefix == null) {
+            return 1;
+        }
+
+        // thisName and thatName are not empty
+        return thisPrefix.compareTo(thatPrefix);
     }
 
     /**
@@ -100,9 +114,9 @@ public class NamespaceMapping implements CndElement {
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
-    public boolean equals( Object obj ) {
+    public boolean equals( final Object obj ) {
         if ((obj != null) && getClass().equals(obj.getClass())) {
-            NamespaceMapping that = (NamespaceMapping)obj;
+            final NamespaceMapping that = (NamespaceMapping)obj;
             return (this.prefix.equals(that.prefix) && this.uri.equals(that.uri));
         }
 
@@ -143,12 +157,12 @@ public class NamespaceMapping implements CndElement {
                                         final Object newValue ) {
         assert (property != null) : "property is null"; //$NON-NLS-1$
 
-        PropertyChangeEvent event = new PropertyChangeEvent(this, property.toString(), oldValue, newValue);
+        final PropertyChangeEvent event = new PropertyChangeEvent(this, property.toString(), oldValue, newValue);
 
         for (final Object listener : this.listeners.toArray()) {
             try {
                 ((PropertyChangeListener)listener).propertyChange(event);
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 // TODO log this
                 this.listeners.remove(listener);
             }
@@ -159,8 +173,8 @@ public class NamespaceMapping implements CndElement {
      * @param listener the listener being unregistered (cannot be <code>null</code>)
      * @return <code>true</code> if removed
      */
-    public boolean removeListener( PropertyChangeListener listener ) {
-        Utils.isNotNull(listener, "listener"); //$NON-NLS-1$
+    public boolean removeListener( final PropertyChangeListener listener ) {
+        Utils.verifyIsNotNull(listener, "listener"); //$NON-NLS-1$
         return this.listeners.remove(listener);
     }
 
@@ -168,9 +182,9 @@ public class NamespaceMapping implements CndElement {
      * @param newPrefix the new prefix value (can be <code>null</code> or empty)
      * @return true if the prefix was changed
      */
-    public boolean setPrefix( String newPrefix ) {
-        Object oldValue = this.prefix.get();
-        boolean changed = this.prefix.set(newPrefix);
+    public boolean setPrefix( final String newPrefix ) {
+        final Object oldValue = this.prefix.get();
+        final boolean changed = this.prefix.set(newPrefix);
 
         if (changed) {
             notifyChangeListeners(PropertyName.PREFIX, oldValue, newPrefix);
@@ -183,9 +197,9 @@ public class NamespaceMapping implements CndElement {
      * @param newUri then new URI value (can be <code>null</code> or empty)
      * @return <code>true</code> if the URI was changed
      */
-    public boolean setUri( String newUri ) {
-        Object oldValue = this.uri.get();
-        boolean changed = this.uri.set(newUri);
+    public boolean setUri( final String newUri ) {
+        final Object oldValue = this.uri.get();
+        final boolean changed = this.uri.set(newUri);
 
         if (changed) {
             notifyChangeListeners(PropertyName.URI, oldValue, newUri);
@@ -200,8 +214,8 @@ public class NamespaceMapping implements CndElement {
      * @see org.jboss.tools.modeshape.jcr.cnd.CndElement#toCndNotation(org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType)
      */
     @Override
-    public String toCndNotation( NotationType notationType ) {
-        StringBuilder builder = new StringBuilder();
+    public String toCndNotation( final NotationType notationType ) {
+        final StringBuilder builder = new StringBuilder();
         builder.append(NOTATION_PREFIX);
         builder.append(this.prefix.toCndNotation(notationType));
         builder.append(NOTATION_DELIMITER);
@@ -209,6 +223,21 @@ public class NamespaceMapping implements CndElement {
         builder.append(NOTATION_SUFFIX);
 
         return builder.toString();
+    }
+
+    /**
+     * The property names whose <code>toString()</code> is used in {@link PropertyChangeEvent}s.
+     */
+    public enum PropertyName {
+        /**
+         * The namespace prefix.
+         */
+        PREFIX,
+
+        /**
+         * The namespace URI.
+         */
+        URI
     }
 
 }

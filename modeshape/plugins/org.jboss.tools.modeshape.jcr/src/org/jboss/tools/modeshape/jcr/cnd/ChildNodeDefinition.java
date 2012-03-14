@@ -9,8 +9,6 @@ package org.jboss.tools.modeshape.jcr.cnd;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.jcr.nodetype.NodeDefinitionTemplate;
@@ -29,52 +27,7 @@ import org.jboss.tools.modeshape.jcr.cnd.attributes.RequiredTypes;
 /**
  * 
  */
-public class ChildNodeDefinition implements CndElement, NodeDefinitionTemplate {
-
-    /**
-     * The property names whose <code>toString()</code> is used in {@link PropertyChangeEvent}s.
-     */
-    public enum PropertyName {
-        /**
-         * The autocreated indicator.
-         */
-        AUTOCREATED,
-
-        /**
-         * The default type.
-         */
-        DEFAULT_TYPE,
-
-        /**
-         * The mandatory indicator.
-         */
-        MANDATORY,
-
-        /**
-         * The property name.
-         */
-        NAME,
-
-        /**
-         * The on parent version value.
-         */
-        ON_PARENT_VERSION,
-
-        /**
-         * The protected indicator.
-         */
-        PROTECTED,
-
-        /**
-         * The collection of required types.
-         */
-        REQUIRED_TYPES,
-
-        /**
-         * The supports same name siblings indicator.
-         */
-        SAME_NAME_SIBLINGS,
-    }
+public class ChildNodeDefinition implements CndElement, Comparable, NodeDefinitionTemplate {
 
     /**
      * The prefix used in CND notation before the property definition.
@@ -84,12 +37,12 @@ public class ChildNodeDefinition implements CndElement, NodeDefinitionTemplate {
     /**
      * The node attributes (never <code>null</code>).
      */
-    private NodeAttributes attributes;
+    private final NodeAttributes attributes;
 
     /**
      * The node default type (never <code>null</code>).
      */
-    private DefaultType defaultType;
+    private final DefaultType defaultType;
 
     /**
      * The registered property change listeners (never <code>null</code>).
@@ -99,19 +52,19 @@ public class ChildNodeDefinition implements CndElement, NodeDefinitionTemplate {
     /**
      * The node identifier (can be <code>null</code> or empty).
      */
-    private final LocalName name;
+    private final QualifiedName name;
 
     /**
      * The node required types (never <code>null</code>).
      */
-    private RequiredTypes requiredTypes;
+    private final RequiredTypes requiredTypes;
 
     /**
      * Constructs an instance set to all defaults.
      */
     public ChildNodeDefinition() {
         this.attributes = new NodeAttributes();
-        this.name = new LocalName();
+        this.name = new QualifiedName();
         this.defaultType = new DefaultType();
         this.requiredTypes = new RequiredTypes();
         this.listeners = new CopyOnWriteArrayList<PropertyChangeListener>();
@@ -121,8 +74,8 @@ public class ChildNodeDefinition implements CndElement, NodeDefinitionTemplate {
      * @param newListener the listener being added (cannot be <code>null</code>)
      * @return <code>true</code> if successfully added
      */
-    public boolean addListener( PropertyChangeListener newListener ) {
-        Utils.isNotNull(newListener, "newListener"); //$NON-NLS-1$
+    public boolean addListener( final PropertyChangeListener newListener ) {
+        Utils.verifyIsNotNull(newListener, "newListener"); //$NON-NLS-1$
         return this.listeners.addIfAbsent(newListener);
     }
 
@@ -133,8 +86,8 @@ public class ChildNodeDefinition implements CndElement, NodeDefinitionTemplate {
      * @param requiredTypeBeingAdded the required type being added (cannot be <code>null</code>)
      * @return <code>true</code> if added
      */
-    public boolean addRequiredType( String requiredTypeBeingAdded ) {
-        if (this.requiredTypes.add(requiredTypeBeingAdded)) {
+    public boolean addRequiredType( final String requiredTypeBeingAdded ) {
+        if (this.requiredTypes.add(QualifiedName.parse(requiredTypeBeingAdded))) {
             notifyChangeListeners(PropertyName.REQUIRED_TYPES, null, requiredTypeBeingAdded);
             return true; // added
         }
@@ -161,10 +114,10 @@ public class ChildNodeDefinition implements CndElement, NodeDefinitionTemplate {
      * @param newState the new attribute state (cannot be <code>null</code>)
      * @return <code>true</code> if the attribute state was changed
      */
-    public boolean changeState( PropertyName propertyName,
-                                Value newState ) {
-        Utils.isNotNull(propertyName, "propertyName"); //$NON-NLS-1$
-        Utils.isNotNull(newState, "newState"); //$NON-NLS-1$
+    public boolean changeState( final PropertyName propertyName,
+                                final Value newState ) {
+        Utils.verifyIsNotNull(propertyName, "propertyName"); //$NON-NLS-1$
+        Utils.verifyIsNotNull(newState, "newState"); //$NON-NLS-1$
 
         Object oldValue = null;
         Object newValue = newState;
@@ -211,7 +164,7 @@ public class ChildNodeDefinition implements CndElement, NodeDefinitionTemplate {
      * @return <code>true</code> if at least one required type was removed
      */
     public boolean clearRequiredTypes() {
-        List<String> oldValue = new ArrayList<String>(requiredTypes.getSupportedItems());
+        final String[] oldValue = this.requiredTypes.toArray();
 
         if (this.requiredTypes.clear()) {
             notifyChangeListeners(PropertyName.REQUIRED_TYPES, oldValue, null);
@@ -224,23 +177,66 @@ public class ChildNodeDefinition implements CndElement, NodeDefinitionTemplate {
     /**
      * {@inheritDoc}
      * 
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     */
+    @Override
+    public int compareTo( final Object object ) {
+        final ChildNodeDefinition that = (ChildNodeDefinition)object;
+        final String thisName = getName();
+        final String thatName = that.getName();
+
+        if (Utils.isEmpty(thisName)) {
+            if (Utils.isEmpty(thatName)) {
+                return 0;
+            }
+
+            // thatName is not empty
+            return 1;
+        }
+
+        // thisName is not empty
+        if (thatName == null) {
+            return 1;
+        }
+
+        // thisName and thatName are not empty
+        return thisName.compareTo(thatName);
+    }
+
+    /**
+     * @param notationType the notation type being requested (cannot be <code>null</code>)
+     * @return the CND notation (never <code>null</code>)
+     */
+    public String getAttributesCndNotation( final NotationType notationType ) {
+        final String cndNotation = this.attributes.toCndNotation(notationType);
+
+        if (cndNotation == null) {
+            return Utils.EMPTY_STRING;
+        }
+
+        return cndNotation;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
      * @see javax.jcr.nodetype.ItemDefinition#getDeclaringNodeType()
+     * @throws UnsupportedOperationException if method is called
      */
     @Override
     public NodeType getDeclaringNodeType() {
-        // TODO implement
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     /**
      * {@inheritDoc}
      * 
      * @see javax.jcr.nodetype.NodeDefinition#getDefaultPrimaryType()
+     * @throws UnsupportedOperationException if method is called
      */
     @Override
     public NodeType getDefaultPrimaryType() {
-        // TODO implement
-        return null;
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -250,7 +246,7 @@ public class ChildNodeDefinition implements CndElement, NodeDefinitionTemplate {
      */
     @Override
     public String getDefaultPrimaryTypeName() {
-        String primaryType = this.defaultType.getDefaultType();
+        final String primaryType = this.defaultType.getDefaultType();
 
         // per API should return null if empty
         if (Utils.isEmpty(primaryType)) {
@@ -296,6 +292,10 @@ public class ChildNodeDefinition implements CndElement, NodeDefinitionTemplate {
         return this.attributes.getOnParentVersion().asJcrValue();
     }
 
+    private String getPrefixEndDelimiter() {
+        return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.CHILD_NODE_DEFINITION_END_PREFIX_DELIMITER);
+    }
+
     /**
      * {@inheritDoc}
      * 
@@ -310,11 +310,25 @@ public class ChildNodeDefinition implements CndElement, NodeDefinitionTemplate {
      * {@inheritDoc}
      * 
      * @see javax.jcr.nodetype.NodeDefinition#getRequiredPrimaryTypes()
+     * @throws UnsupportedOperationException if method is called
      */
     @Override
     public NodeType[] getRequiredPrimaryTypes() {
-        // TODO implement
-        return null;
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * @param notationType the notation type being requested (cannot be <code>null</code>)
+     * @return the CND notation (never <code>null</code>)
+     */
+    public String getRequiredTypesCndNotation( final NotationType notationType ) {
+        final String cndNotation = this.requiredTypes.toCndNotation(notationType);
+
+        if (cndNotation == null) {
+            return Utils.EMPTY_STRING;
+        }
+
+        return cndNotation;
     }
 
     /**
@@ -325,8 +339,8 @@ public class ChildNodeDefinition implements CndElement, NodeDefinitionTemplate {
      * @return the attribute state (never <code>null</code>)
      * @throws IllegalArgumentException if a property that does not have an attribute state is specified
      */
-    public Value getState( PropertyName propertyName ) {
-        Utils.isNotNull(propertyName, "propertyName"); //$NON-NLS-1$
+    public Value getState( final PropertyName propertyName ) {
+        Utils.verifyIsNotNull(propertyName, "propertyName"); //$NON-NLS-1$
 
         if (PropertyName.AUTOCREATED == propertyName) {
             return this.attributes.getAutocreated().get();
@@ -397,8 +411,8 @@ public class ChildNodeDefinition implements CndElement, NodeDefinitionTemplate {
      * @param propertyName the property being checked (cannot be <code>null</code>)
      * @return <code>true</code> if property is a variant
      */
-    public boolean isVariant( PropertyName propertyName ) {
-        Utils.isNotNull(propertyName, "propertyName"); //$NON-NLS-1$
+    public boolean isVariant( final PropertyName propertyName ) {
+        Utils.verifyIsNotNull(propertyName, "propertyName"); //$NON-NLS-1$
 
         if (PropertyName.ON_PARENT_VERSION == propertyName) {
             return (this.attributes.getOnParentVersion() == OnParentVersion.VARIANT);
@@ -415,12 +429,12 @@ public class ChildNodeDefinition implements CndElement, NodeDefinitionTemplate {
     private void notifyChangeListeners( final PropertyName property,
                                         final Object oldValue,
                                         final Object newValue ) {
-        PropertyChangeEvent event = new PropertyChangeEvent(this, property.toString(), oldValue, newValue);
+        final PropertyChangeEvent event = new PropertyChangeEvent(this, property.toString(), oldValue, newValue);
 
         for (final Object listener : this.listeners.toArray()) {
             try {
                 ((PropertyChangeListener)listener).propertyChange(event);
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 // TODO log this
                 this.listeners.remove(listener);
             }
@@ -431,8 +445,8 @@ public class ChildNodeDefinition implements CndElement, NodeDefinitionTemplate {
      * @param listener the listener who no longer will receive property change events (cannot be <code>null</code>)
      * @return <code>true</code> if successfully removed
      */
-    public boolean removeListener( PropertyChangeListener listener ) {
-        Utils.isNotNull(listener, "listener"); //$NON-NLS-1$
+    public boolean removeListener( final PropertyChangeListener listener ) {
+        Utils.verifyIsNotNull(listener, "listener"); //$NON-NLS-1$
         return this.listeners.remove(listener);
     }
 
@@ -443,8 +457,10 @@ public class ChildNodeDefinition implements CndElement, NodeDefinitionTemplate {
      * @param requiredTypeBeingRemoved the required type being removed (cannot be <code>null</code>)
      * @return <code>true</code> if removed
      */
-    public boolean removeRequiredType( String requiredTypeBeingRemoved ) {
-        if (this.requiredTypes.remove(requiredTypeBeingRemoved)) {
+    public boolean removeRequiredType( final String requiredTypeBeingRemoved ) {
+        final QualifiedName qname = QualifiedName.parse(requiredTypeBeingRemoved);
+
+        if (this.requiredTypes.remove(qname)) {
             notifyChangeListeners(PropertyName.REQUIRED_TYPES, requiredTypeBeingRemoved, null);
             return true; // removed
         }
@@ -458,8 +474,8 @@ public class ChildNodeDefinition implements CndElement, NodeDefinitionTemplate {
      * @see javax.jcr.nodetype.NodeDefinitionTemplate#setAutoCreated(boolean)
      */
     @Override
-    public void setAutoCreated( boolean newAutocreated ) {
-        Value newState = (newAutocreated ? Value.IS : Value.IS_NOT);
+    public void setAutoCreated( final boolean newAutocreated ) {
+        final Value newState = (newAutocreated ? Value.IS : Value.IS_NOT);
         changeState(PropertyName.AUTOCREATED, newState);
     }
 
@@ -469,8 +485,8 @@ public class ChildNodeDefinition implements CndElement, NodeDefinitionTemplate {
      * @see javax.jcr.nodetype.NodeDefinitionTemplate#setDefaultPrimaryTypeName(java.lang.String)
      */
     @Override
-    public void setDefaultPrimaryTypeName( String newTypeName ) {
-        String oldValue = this.defaultType.getDefaultType();
+    public void setDefaultPrimaryTypeName( final String newTypeName ) {
+        final String oldValue = this.defaultType.getDefaultType();
 
         if (this.defaultType.setDefaultType(newTypeName)) {
             notifyChangeListeners(PropertyName.DEFAULT_TYPE, oldValue, newTypeName);
@@ -483,8 +499,8 @@ public class ChildNodeDefinition implements CndElement, NodeDefinitionTemplate {
      * @see javax.jcr.nodetype.NodeDefinitionTemplate#setMandatory(boolean)
      */
     @Override
-    public void setMandatory( boolean newMandatory ) {
-        Value newState = (newMandatory ? Value.IS : Value.IS_NOT);
+    public void setMandatory( final boolean newMandatory ) {
+        final Value newState = (newMandatory ? Value.IS : Value.IS_NOT);
         changeState(PropertyName.MANDATORY, newState);
     }
 
@@ -494,8 +510,8 @@ public class ChildNodeDefinition implements CndElement, NodeDefinitionTemplate {
      * @see javax.jcr.nodetype.NodeDefinitionTemplate#setName(java.lang.String)
      */
     @Override
-    public void setName( String newName ) {
-        Object oldValue = this.name.get();
+    public void setName( final String newName ) {
+        final Object oldValue = getName();
 
         if (this.name.set(newName)) {
             notifyChangeListeners(PropertyName.NAME, oldValue, newName);
@@ -508,8 +524,8 @@ public class ChildNodeDefinition implements CndElement, NodeDefinitionTemplate {
      * @see javax.jcr.nodetype.NodeDefinitionTemplate#setOnParentVersion(int)
      */
     @Override
-    public void setOnParentVersion( int newOpv ) {
-        OnParentVersion oldValue = this.attributes.getOnParentVersion();
+    public void setOnParentVersion( final int newOpv ) {
+        final OnParentVersion oldValue = this.attributes.getOnParentVersion();
 
         if (this.attributes.setOnParentVersion(OnParentVersion.findUsingJcrValue(newOpv))) {
             notifyChangeListeners(PropertyName.ON_PARENT_VERSION, oldValue, newOpv);
@@ -522,8 +538,8 @@ public class ChildNodeDefinition implements CndElement, NodeDefinitionTemplate {
      * @param newOpv the new OPV value (cannot be <code>null</code>)
      * @return <code>true</code> if successfully changed
      */
-    public boolean setOnParentVersion( String newOpv ) {
-        OnParentVersion oldValue = this.attributes.getOnParentVersion();
+    public boolean setOnParentVersion( final String newOpv ) {
+        final OnParentVersion oldValue = this.attributes.getOnParentVersion();
 
         if (this.attributes.setOnParentVersion(OnParentVersion.find(newOpv))) {
             notifyChangeListeners(PropertyName.ON_PARENT_VERSION, oldValue, newOpv);
@@ -539,8 +555,8 @@ public class ChildNodeDefinition implements CndElement, NodeDefinitionTemplate {
      * @see javax.jcr.nodetype.NodeDefinitionTemplate#setProtected(boolean)
      */
     @Override
-    public void setProtected( boolean newProtected ) {
-        Value newState = (newProtected ? Value.IS : Value.IS_NOT);
+    public void setProtected( final boolean newProtected ) {
+        final Value newState = (newProtected ? Value.IS : Value.IS_NOT);
         changeState(PropertyName.PROTECTED, newState);
     }
 
@@ -550,13 +566,13 @@ public class ChildNodeDefinition implements CndElement, NodeDefinitionTemplate {
      * @see javax.jcr.nodetype.NodeDefinitionTemplate#setRequiredPrimaryTypeNames(java.lang.String[])
      */
     @Override
-    public void setRequiredPrimaryTypeNames( String[] newTypeNames ) {
-        List<String> items = this.requiredTypes.getSupportedItems();
+    public void setRequiredPrimaryTypeNames( final String[] newTypeNames ) {
+        final String[] items = this.requiredTypes.toArray();
         boolean changed = this.requiredTypes.clear();
 
         if (!Utils.isEmpty(newTypeNames)) {
-            for (String typeName : newTypeNames) {
-                if (this.requiredTypes.add(typeName)) {
+            for (final String typeName : newTypeNames) {
+                if (this.requiredTypes.add(QualifiedName.parse(typeName))) {
                     changed = true;
                 }
             }
@@ -573,8 +589,8 @@ public class ChildNodeDefinition implements CndElement, NodeDefinitionTemplate {
      * @see javax.jcr.nodetype.NodeDefinitionTemplate#setSameNameSiblings(boolean)
      */
     @Override
-    public void setSameNameSiblings( boolean newAllowSameNameSiblings ) {
-        Value newState = (newAllowSameNameSiblings ? Value.IS : Value.IS_NOT);
+    public void setSameNameSiblings( final boolean newAllowSameNameSiblings ) {
+        final Value newState = (newAllowSameNameSiblings ? Value.IS : Value.IS_NOT);
         changeState(PropertyName.SAME_NAME_SIBLINGS, newState);
     }
 
@@ -584,16 +600,63 @@ public class ChildNodeDefinition implements CndElement, NodeDefinitionTemplate {
      * @see org.jboss.tools.modeshape.jcr.cnd.CndElement#toCndNotation(org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType)
      */
     @Override
-    public String toCndNotation( NotationType notationType ) {
-        final String DELIM = getFormatDelimiter();
-        StringBuilder builder = new StringBuilder();
+    public String toCndNotation( final NotationType notationType ) {
+        final StringBuilder builder = new StringBuilder(NOTATION_PREFIX);
+        builder.append(getPrefixEndDelimiter());
 
-        builder.append(NOTATION_PREFIX).append(this.name.toCndNotation(notationType));
-        boolean addDelim = Utils.build(builder, false, DELIM, this.requiredTypes.toCndNotation(notationType));
-        addDelim = Utils.build(builder, addDelim, DELIM, this.defaultType.toCndNotation(notationType));
-        addDelim = Utils.build(builder, addDelim, DELIM, this.attributes.toCndNotation(notationType));
+        final String DELIM = getFormatDelimiter();
+
+        builder.append(this.name.toCndNotation(notationType));
+        Utils.build(builder, true, DELIM, this.requiredTypes.toCndNotation(notationType));
+        Utils.build(builder, true, DELIM, this.defaultType.toCndNotation(notationType));
+        Utils.build(builder, true, DELIM, this.attributes.toCndNotation(notationType));
 
         return builder.toString();
+    }
+
+    /**
+     * The property names whose <code>toString()</code> is used in {@link PropertyChangeEvent}s.
+     */
+    public enum PropertyName {
+        /**
+         * The autocreated indicator.
+         */
+        AUTOCREATED,
+
+        /**
+         * The default type.
+         */
+        DEFAULT_TYPE,
+
+        /**
+         * The mandatory indicator.
+         */
+        MANDATORY,
+
+        /**
+         * The property name.
+         */
+        NAME,
+
+        /**
+         * The on parent version value.
+         */
+        ON_PARENT_VERSION,
+
+        /**
+         * The protected indicator.
+         */
+        PROTECTED,
+
+        /**
+         * The collection of required types.
+         */
+        REQUIRED_TYPES,
+
+        /**
+         * The supports same name siblings indicator.
+         */
+        SAME_NAME_SIBLINGS,
     }
 
 }

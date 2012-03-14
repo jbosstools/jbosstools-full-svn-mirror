@@ -36,7 +36,7 @@ public final class CndValidator {
     public static ValidationStatus isValid( final String value,
                                             final PropertyType propertyType,
                                             final String propertyName ) {
-        Utils.isNotNull(propertyType, "propertyType"); //$NON-NLS-1$
+        Utils.verifyIsNotNull(propertyType, "propertyType"); //$NON-NLS-1$
 
         if (Utils.isEmpty(value)) {
             return ValidationStatus.createErrorMessage(NLS.bind(Messages.emptyValue, propertyName));
@@ -44,11 +44,11 @@ public final class CndValidator {
 
         try {
             if (PropertyType.STRING == propertyType) {
-                return ValidationStatus.OK_STATUS;
+                return ValidationStatus.OK_STATUS; // always valid
             }
 
             if (PropertyType.BINARY == propertyType) {
-                // TODO implement BINARY validation
+                return ValidationStatus.OK_STATUS; // always valid
             } else if (PropertyType.BOOLEAN == propertyType) {
                 if (!value.equalsIgnoreCase(Boolean.TRUE.toString()) && !value.equalsIgnoreCase(Boolean.FALSE.toString())) {
                     return ValidationStatus.createErrorMessage(NLS.bind(Messages.invalidPropertyValueForType, new Object[] { value,
@@ -87,13 +87,13 @@ public final class CndValidator {
             } else if (PropertyType.PATH == propertyType) {
                 // TODO implement PATH validation
             } else if (PropertyType.REFERENCE == propertyType) {
-                // TODO implement REFERENCE validation
+                return ValidationStatus.OK_STATUS; // always valid
             } else if (PropertyType.UNDEFINED == propertyType) {
-                // TODO implement UNDEFINED validation
+                return ValidationStatus.OK_STATUS; // always valid
             } else if (PropertyType.URI == propertyType) {
                 return validateUri(value, propertyName);
             } else if (PropertyType.WEAKREFERENCE == propertyType) {
-                // TODO implement WEAKREFERENCE validation
+                return ValidationStatus.OK_STATUS; // always valid
             }
 
             return ValidationStatus.OK_STATUS;
@@ -125,7 +125,7 @@ public final class CndValidator {
      * @return the status (never <code>null</code>)
      */
     public static ValidationStatus validateChildNodeDefinition( final ChildNodeDefinition childNodeDefinition ) {
-        Utils.isNotNull(childNodeDefinition, "childNodeDefinition"); //$NON-NLS-1$
+        Utils.verifyIsNotNull(childNodeDefinition, "childNodeDefinition"); //$NON-NLS-1$
 
         /**
          * <pre>
@@ -212,11 +212,71 @@ public final class CndValidator {
     }
 
     /**
+     * @param nodeTypeName the node type name whose child node definitions are being checked (cannot be <code>null</code> or empty)
+     * @param childNodeDefinitions the collection of a node type definition's child node definitions to validate (can be
+     *            <code>null</code> or empty)
+     * @return the status (never <code>null</code>)
+     */
+    public static MultiValidationStatus validateChildNodeDefinitions( final String nodeTypeName,
+                                                                      final List<ChildNodeDefinition> childNodeDefinitions ) {
+        Utils.verifyIsNotEmpty(nodeTypeName, "nodeTypeName"); //$NON-NLS-1$
+
+        /**
+         * <pre>
+         *     ERROR - Duplicate child node definition names
+         * </pre>
+         */
+
+        // OK to have none
+        if (Utils.isEmpty(childNodeDefinitions)) {
+            return MultiValidationStatus.OK_STATUS;
+        }
+
+        final MultiValidationStatus status = new MultiValidationStatus();
+        final List<String> childNodeNames = new ArrayList<String>(childNodeDefinitions.size());
+
+        for (final ChildNodeDefinition childNodeDefn : childNodeDefinitions) {
+            validateChildNodeDefinition(childNodeDefn, status);
+
+            { // ERROR - Duplicate child node definition names
+                final String childNodeName = childNodeDefn.getName();
+
+                if (!Utils.isEmpty(childNodeName)) {
+                    if (childNodeNames.contains(childNodeName)) {
+                        status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.duplicateChildNodeDefinitionName,
+                                                                                nodeTypeName, childNodeName)));
+                    } else {
+                        childNodeNames.add(childNodeName);
+                    }
+                }
+            }
+        }
+
+        return status;
+    }
+
+    /**
+     * @param nodeTypeName the node type name whose child node definitions are being checked (cannot be <code>null</code> or empty)
+     * @param childNodeDefinitions the collection of a node type definition's child node definitions to validate (can be
+     *            <code>null</code> or empty)
+     * @param status the status to add the new status to (never <code>null</code>)
+     */
+    public static void validateChildNodeDefinitions( final String nodeTypeName,
+                                                     final List<ChildNodeDefinition> childNodeDefinitions,
+                                                     final MultiValidationStatus status ) {
+        final MultiValidationStatus newStatus = validateChildNodeDefinitions(nodeTypeName, childNodeDefinitions);
+
+        if (!newStatus.isOk()) {
+            status.add(newStatus);
+        }
+    }
+
+    /**
      * @param cnd the CND being validated (cannot be <code>null</code>)
      * @return the status (never <code>null</code>)
      */
     public static ValidationStatus validateCnd( final CompactNodeTypeDefinition cnd ) {
-        Utils.isNotNull(cnd, "cnd"); //$NON-NLS-1$
+        Utils.verifyIsNotNull(cnd, "cnd"); //$NON-NLS-1$
 
         /**
          * <pre>
@@ -325,7 +385,7 @@ public final class CndValidator {
      * @return the status (never <code>null</code>)
      */
     public static ValidationStatus validateNamespaceMapping( final NamespaceMapping namespaceMapping ) {
-        Utils.isNotNull(namespaceMapping, "namespaceMapping"); //$NON-NLS-1$
+        Utils.verifyIsNotNull(namespaceMapping, "namespaceMapping"); //$NON-NLS-1$
 
         /**
          * <pre>
@@ -370,13 +430,12 @@ public final class CndValidator {
          * </pre>
          */
 
-        final MultiValidationStatus status = new MultiValidationStatus();
-
         // OK not to have namespaces
         if (Utils.isEmpty(namespaceMappings)) {
-            return status;
+            return MultiValidationStatus.OK_STATUS;
         }
 
+        final MultiValidationStatus status = new MultiValidationStatus();
         final List<String> prefixes = new ArrayList<String>(namespaceMappings.size());
         final List<String> uris = new ArrayList<String>(namespaceMappings.size());
 
@@ -429,7 +488,7 @@ public final class CndValidator {
      * @return the status (never <code>null</code>)
      */
     public static ValidationStatus validateNodeTypeDefinition( final NodeTypeDefinition nodeTypeDefinition ) {
-        Utils.isNotNull(nodeTypeDefinition, "nodeTypeDefinition"); //$NON-NLS-1$
+        Utils.verifyIsNotNull(nodeTypeDefinition, "nodeTypeDefinition"); //$NON-NLS-1$
 
         /**
          * <pre>
@@ -465,28 +524,8 @@ public final class CndValidator {
                     status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.emptySuperTypes, nodeTypeDefinitionName)));
                 }
             } else {
-                final List<String> names = new ArrayList<String>(superTypeNames.length);
-
-                for (final String superTypeName : superTypeNames) {
-                    // ERROR - Invalid super type name
-                    validateLocalName(superTypeName, Messages.superTypeName, status);
-
-                    if (!Utils.isEmpty(superTypeName)) {
-                        // ERROR - Duplicate super type name
-                        if (names.contains(superTypeName)) {
-                            status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.duplicateSuperType,
-                                                                                    nodeTypeDefinitionName, superTypeName)));
-                        } else {
-                            names.add(superTypeName);
-                        }
-                    }
-                }
-
-                // ERROR - Cannot have explicit super types when super types is marked as a variant
-                if (nodeTypeDefinition.getState(NodeTypeDefinition.PropertyName.SUPERTYPES) != Value.IS) {
-                    status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.superTypesExistButMarkedAsVariant,
-                                                                            nodeTypeDefinitionName)));
-                }
+                validateSuperTypes(nodeTypeDefinitionName, nodeTypeDefinition.getState(NodeTypeDefinition.PropertyName.SUPERTYPES),
+                                   superTypeNames, status);
             }
         }
 
@@ -512,24 +551,7 @@ public final class CndValidator {
             if (Utils.isEmpty(propertyDefinitions)) {
                 noPropertyDefinitions = true;
             } else {
-                final List<String> propNames = new ArrayList<String>(propertyDefinitions.size());
-
-                for (final PropertyDefinition propertyDefn : propertyDefinitions) {
-                    validatePropertyDefinition(propertyDefn, status);
-
-                    { // ERROR - Duplicate property definition names
-                        final String propName = propertyDefn.getName();
-
-                        if (!Utils.isEmpty(propName)) {
-                            if (propNames.contains(propName)) {
-                                status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.duplicatePropertyDefinitionName,
-                                                                                        nodeTypeDefinitionName, propName)));
-                            } else {
-                                propNames.add(propName);
-                            }
-                        }
-                    }
-                }
+                validatePropertyDefinitions(nodeTypeDefinitionName, propertyDefinitions, status);
             }
         }
 
@@ -539,24 +561,7 @@ public final class CndValidator {
             if (Utils.isEmpty(childNodeDefinitions)) {
                 noChildNodeDefinitions = true;
             } else {
-                final List<String> childNodeNames = new ArrayList<String>(childNodeDefinitions.size());
-
-                for (final ChildNodeDefinition childNodeDefn : childNodeDefinitions) {
-                    validateChildNodeDefinition(childNodeDefn, status);
-
-                    { // ERROR - Duplicate child node definition names
-                        final String childNodeName = childNodeDefn.getName();
-
-                        if (!Utils.isEmpty(childNodeName)) {
-                            if (childNodeNames.contains(childNodeName)) {
-                                status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.duplicateChildNodeDefinitionName,
-                                                                                        nodeTypeDefinitionName, childNodeName)));
-                            } else {
-                                childNodeNames.add(childNodeName);
-                            }
-                        }
-                    }
-                }
+                validateChildNodeDefinitions(nodeTypeDefinitionName, childNodeDefinitions, status);
             }
         }
 
@@ -585,20 +590,19 @@ public final class CndValidator {
      * @param nodeTypeDefinitions the collection of namespace mappings to validate (can be <code>null</code> or empty)
      * @return the status (never <code>null</code>)
      */
-    public static ValidationStatus validateNodeTypeDefinitions( final List<NodeTypeDefinition> nodeTypeDefinitions ) {
+    public static MultiValidationStatus validateNodeTypeDefinitions( final List<NodeTypeDefinition> nodeTypeDefinitions ) {
         /**
          * <pre>
          *     ERROR - Duplicate node type definition names
          * </pre>
          */
 
-        final MultiValidationStatus status = new MultiValidationStatus();
-
         // OK not to have node type definitions
         if (Utils.isEmpty(nodeTypeDefinitions)) {
-            return status;
+            return MultiValidationStatus.OK_STATUS;
         }
 
+        final MultiValidationStatus status = new MultiValidationStatus();
         final List<String> names = new ArrayList<String>(nodeTypeDefinitions.size());
 
         for (final NodeTypeDefinition nodeTypeDefinition : nodeTypeDefinitions) {
@@ -638,7 +642,7 @@ public final class CndValidator {
      * @return the status (never <code>null</code>)
      */
     public static ValidationStatus validatePropertyDefinition( final PropertyDefinition propertyDefinition ) {
-        Utils.isNotNull(propertyDefinition, "propertyDefinition"); //$NON-NLS-1$
+        Utils.verifyIsNotNull(propertyDefinition, "propertyDefinition"); //$NON-NLS-1$
 
         /**
          * <pre>
@@ -797,6 +801,121 @@ public final class CndValidator {
     }
 
     /**
+     * @param nodeTypeName the node type name whose property definitions are being checked (cannot be <code>null</code> or empty)
+     * @param propertyDefinitions the collection of a node type definition's property definitions to validate (can be
+     *            <code>null</code> or empty)
+     * @return the status (never <code>null</code>)
+     */
+    public static MultiValidationStatus validatePropertyDefinitions( final String nodeTypeName,
+                                                                     final List<PropertyDefinition> propertyDefinitions ) {
+        Utils.verifyIsNotEmpty(nodeTypeName, "nodeTypeName"); //$NON-NLS-1$
+
+        /**
+         * <pre>
+         *     ERROR - Duplicate property definition names
+         * </pre>
+         */
+
+        // OK to have none
+        if (Utils.isEmpty(propertyDefinitions)) {
+            return MultiValidationStatus.OK_STATUS;
+        }
+
+        final MultiValidationStatus status = new MultiValidationStatus();
+        final List<String> propNames = new ArrayList<String>(propertyDefinitions.size());
+
+        for (final PropertyDefinition propertyDefn : propertyDefinitions) {
+            validatePropertyDefinition(propertyDefn, status);
+
+            { // ERROR - Duplicate property definition names
+                final String propName = propertyDefn.getName();
+
+                if (!Utils.isEmpty(propName)) {
+                    if (propNames.contains(propName)) {
+                        status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.duplicatePropertyDefinitionName,
+                                                                                nodeTypeName, propName)));
+                    } else {
+                        propNames.add(propName);
+                    }
+                }
+            }
+        }
+
+        return status;
+    }
+
+    /**
+     * @param nodeTypeName the node type name whose property definitions are being checked (cannot be <code>null</code> or empty)
+     * @param propertyDefinitions the collection of a node type definition's property definitions to validate (can be
+     *            <code>null</code> or empty)
+     * @param status the status to add the new status to (never <code>null</code>)
+     */
+    public static void validatePropertyDefinitions( final String nodeTypeName,
+                                                    final List<PropertyDefinition> propertyDefinitions,
+                                                    final MultiValidationStatus status ) {
+        final MultiValidationStatus newStatus = validatePropertyDefinitions(nodeTypeName, propertyDefinitions);
+
+        if (!newStatus.isOk()) {
+            status.add(newStatus);
+        }
+    }
+
+    /**
+     * @param qname the qualified name being validated (cannot be <code>null</code>)
+     * @param propertyName the name to use to identify the qualified name (cannot be <code>null</code> empty)
+     * @return the status (never <code>null</code>)
+     */
+    public static MultiValidationStatus validateQualifiedName( final QualifiedName qname,
+                                                               String propertyName ) {
+        Utils.verifyIsNotNull(qname, "qname"); //$NON-NLS-1$
+
+        final MultiValidationStatus status = new MultiValidationStatus();
+
+        { // qualifier part
+            final String qualifier = qname.getQualifier();
+
+            if (!Utils.isEmpty(qualifier)) {
+                final ValidationStatus qualifierStatus = validateLocalName(qualifier, propertyName);
+
+                if (!qualifierStatus.isOk()) {
+                    status.add(qualifierStatus);
+                }
+            }
+        }
+
+        { // unqualified name part
+            final String unqualifiedName = qname.getUnqualifiedName();
+
+            if (Utils.isEmpty(unqualifiedName)) {
+                 status.add(ValidationStatus.createErrorMessage(Messages.emptyUnqualifiedName));
+            } else {
+                final ValidationStatus nameStatus = validateLocalName(unqualifiedName, propertyName);
+
+                if (!nameStatus.isOk()) {
+                    status.add(nameStatus);
+                }
+            }
+        }
+
+        return status;
+    }
+
+    /**
+     * @param qname the qualified name being validated (cannot be <code>null</code>)
+     * @param propertyName the name to use to identify the qualified name (cannot be <code>null</code> empty)
+     * @param status the status to add the new status to (never <code>null</code>)
+     */
+    public static void validateQualifiedName( final QualifiedName qname,
+                                              String propertyName,
+                                              final MultiValidationStatus status ) {
+        final MultiValidationStatus newStatus = validateQualifiedName(qname, propertyName);
+
+        if (!newStatus.isOk()) {
+            status.add(newStatus);
+        }
+    }
+
+    /**
      * @param operator the query operator being validated (can be <code>null</code> or empty)
      * @return the status (never <code>null</code>)
      */
@@ -819,6 +938,75 @@ public final class CndValidator {
     public static void validateQueryOperator( final String operator,
                                               final MultiValidationStatus status ) {
         final ValidationStatus newStatus = validateQueryOperator(operator);
+
+        if (!newStatus.isOk()) {
+            status.add(newStatus);
+        }
+    }
+
+    /**
+     * @param nodeTypeDefinitionName the node type name whose supertypes are being checked (cannot be <code>null</code> or empty)
+     * @param superTypesState the supertypes property state (cannot be <code>null</code>)
+     * @param superTypeNames the collection of a node type definition's supertypes to validate (can be <code>null</code> or empty)
+     * @return the status (never <code>null</code>)
+     */
+    public static MultiValidationStatus validateSuperTypes( final String nodeTypeDefinitionName,
+                                                            final Value superTypesState,
+                                                            final String[] superTypeNames ) {
+        Utils.verifyIsNotEmpty(nodeTypeDefinitionName, "nodeTypeDefinitionName"); //$NON-NLS-1$
+        Utils.verifyIsNotNull(superTypesState, "superTypesState"); //$NON-NLS-1$
+
+        /**
+         * <pre>
+         *     ERROR - Invalid super type name
+         *     ERROR - Duplicate super type name
+         *     ERROR - Cannot have explicit super types when super types is marked as a variant
+         * </pre>
+         */
+
+        // OK to have none
+        if (Utils.isEmpty(superTypeNames)) {
+            return MultiValidationStatus.OK_STATUS;
+        }
+
+        final MultiValidationStatus status = new MultiValidationStatus();
+        final List<String> names = new ArrayList<String>(superTypeNames.length);
+
+        for (final String superTypeName : superTypeNames) {
+            // ERROR - Invalid super type name
+            validateLocalName(superTypeName, Messages.superTypeName, status);
+
+            if (!Utils.isEmpty(superTypeName)) {
+                // ERROR - Duplicate super type name
+                if (names.contains(superTypeName)) {
+                    status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.duplicateSuperType, nodeTypeDefinitionName,
+                                                                            superTypeName)));
+                } else {
+                    names.add(superTypeName);
+                }
+            }
+        }
+
+        // ERROR - Cannot have explicit super types when super types is marked as a variant
+        if (superTypesState != Value.IS) {
+            status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.superTypesExistButMarkedAsVariant,
+                                                                    nodeTypeDefinitionName)));
+        }
+
+        return status;
+    }
+
+    /**
+     * @param nodeTypeDefinitionName the node type name whose supertypes are being checked (cannot be <code>null</code> or empty)
+     * @param superTypesState the supertypes property state (cannot be <code>null</code>)
+     * @param superTypeNames the collection of a node type definition's supertypes to validate (can be <code>null</code> or empty)
+     * @param status the status to add the new status to (never <code>null</code>)
+     */
+    public static void validateSuperTypes( final String nodeTypeDefinitionName,
+                                           final Value superTypesState,
+                                           final String[] superTypeNames,
+                                           final MultiValidationStatus status ) {
+        final MultiValidationStatus newStatus = validateSuperTypes(nodeTypeDefinitionName, superTypesState, superTypeNames);
 
         if (!newStatus.isOk()) {
             status.add(newStatus);
@@ -854,8 +1042,8 @@ public final class CndValidator {
     public static ValidationStatus validateValueConstraint( final String constraint ) {
         Utils.verifyIsNotEmpty(constraint, "constraint"); //$NON-NLS-1$
 
-        // TODO implement
-        return null;
+        // TODO implement validateValueConstraint
+        return ValidationStatus.OK_STATUS;
     }
 
     /**

@@ -15,6 +15,11 @@ import java.util.List;
  */
 public class MultiValidationStatus extends ValidationStatus {
 
+    /**
+     * An OK multi-validation status with a standard, localized message.
+     */
+    public static MultiValidationStatus OK_STATUS = new MultiValidationStatus();
+
     private final List<ValidationStatus> errors = new ArrayList<ValidationStatus>();
 
     private ValidationStatus primary = null;

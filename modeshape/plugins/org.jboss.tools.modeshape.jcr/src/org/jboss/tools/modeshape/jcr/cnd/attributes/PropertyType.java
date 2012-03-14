@@ -203,14 +203,4 @@ public enum PropertyType implements CndElement {
 
         return builder.append(NOTATION_SUFFIX).toString();
     }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see java.lang.Enum#toString()
-     */
-    @Override
-    public String toString() {
-        return javax.jcr.PropertyType.nameFromValue(asJcrValue());
-    }
 }

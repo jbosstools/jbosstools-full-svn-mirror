@@ -141,6 +141,11 @@ public final class Messages extends NLS {
     public static String emptySuperTypes;
 
     /**
+     * A message indicating the unqualified name part of a qualified name is empty. One parameter, the name or type of qualified
+     * name, is required.
+     */
+    public static String emptyUnqualifiedName;
+    /**
      * A message indicating a missing value was found. One parameter, a string identifying what the value is, is required.
      */
     public static String emptyValue;

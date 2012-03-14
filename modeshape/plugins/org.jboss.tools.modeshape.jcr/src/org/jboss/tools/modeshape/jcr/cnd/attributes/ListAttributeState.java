@@ -32,7 +32,7 @@ public abstract class ListAttributeState<E extends Comparable> extends Attribute
      * @return <code>true</code> if successfully added
      */
     public boolean add( final E item ) {
-        Utils.isNotNull(item, "item"); //$NON-NLS-1$
+        Utils.verifyIsNotNull(item, "item"); //$NON-NLS-1$
 
         if (this.supported == null) {
             this.supported = new ArrayList<E>();
@@ -138,6 +138,13 @@ public abstract class ListAttributeState<E extends Comparable> extends Attribute
     }
 
     /**
+     * @return the quote character (empty, single, or double) surrounding each item of the list (cannot be <code>null</code>)
+     */
+    protected String getItemQuoteCharacter() {
+        return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ITEM_QUOTE_CHAR);
+    }
+
+    /**
      * @return the delimiter used after the list prefix (never <code>null</code> but can be empty)
      */
     protected String getListPrefixEndDelimiter() {
@@ -152,6 +159,13 @@ public abstract class ListAttributeState<E extends Comparable> extends Attribute
     @Override
     protected String getLongCndNotation() {
         throw new UnsupportedOperationException();
+    }
+
+    /**
+     * @return the quote character (empty, single, double) surrounding the elements of the list (cannot be <code>null</code>)
+     */
+    protected String getQuoteCharacter() {
+        return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_QUOTE_CHAR);
     }
 
     /**
@@ -190,7 +204,7 @@ public abstract class ListAttributeState<E extends Comparable> extends Attribute
      * @return <code>true</code> if successfully removed
      */
     public boolean remove( final E item ) {
-        Utils.isNotNull(item, "item"); //$NON-NLS-1$
+        Utils.verifyIsNotNull(item, "item"); //$NON-NLS-1$
 
         if (this.supported == null) {
             return false;
@@ -236,20 +250,16 @@ public abstract class ListAttributeState<E extends Comparable> extends Attribute
             return Utils.EMPTY_STRING;
         }
 
-        if (items.size() == 1) {
-            final E firstItem = items.iterator().next();
-
-            if (firstItem instanceof CndElement) {
-                return ((CndElement)firstItem).toCndNotation(notationType);
-            }
-
-            return firstItem.toString();
-        }
-
+        final String itemQuote = getItemQuoteCharacter();
+        final boolean useQuote = !Utils.isEmpty(itemQuote);
         final StringBuilder builder = new StringBuilder();
 
         for (final Iterator<E> itr = items.iterator(); itr.hasNext();) {
             final E item = itr.next();
+
+            if (useQuote) {
+                builder.append(itemQuote);
+            }
 
             if (item instanceof CndElement) {
                 builder.append(((CndElement)item).toCndNotation(notationType));
@@ -257,8 +267,12 @@ public abstract class ListAttributeState<E extends Comparable> extends Attribute
                 builder.append(item.toString());
             }
 
+            if (useQuote) {
+                builder.append(itemQuote);
+            }
+
             if (itr.hasNext()) {
-                builder.append(Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER);
+                builder.append(CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER));
             }
         }
 
@@ -270,7 +284,7 @@ public abstract class ListAttributeState<E extends Comparable> extends Attribute
      * @return <code>true</code> if item is contained in list
      */
     public boolean supports( final E item ) {
-        Utils.isNotNull(item, "item"); //$NON-NLS-1$
+        Utils.verifyIsNotNull(item, "item"); //$NON-NLS-1$
         return this.supported.contains(item);
     }
 
@@ -298,9 +312,9 @@ public abstract class ListAttributeState<E extends Comparable> extends Attribute
                 builder.append(AttributeState.VARIANT_CHAR);
             } else {
                 // add the delimited list
-                builder.append(CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_QUOTE_CHAR));
+                builder.append(getQuoteCharacter());
                 builder.append(supportedItemsCndNotation(notationType));
-                builder.append(CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_QUOTE_CHAR));
+                builder.append(getQuoteCharacter());
             }
 
             if (!Utils.isEmpty(getCndNotationSuffix(notationType))) {

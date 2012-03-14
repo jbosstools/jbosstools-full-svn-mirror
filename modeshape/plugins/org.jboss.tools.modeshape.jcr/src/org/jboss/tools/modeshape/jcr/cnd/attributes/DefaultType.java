@@ -8,6 +8,8 @@
 package org.jboss.tools.modeshape.jcr.cnd.attributes;
 
 import org.jboss.tools.modeshape.jcr.Utils;
+import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences;
+import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences.Preference;
 import org.jboss.tools.modeshape.jcr.cnd.LocalName;
 
 /**
@@ -76,13 +78,27 @@ public class DefaultType extends AttributeState {
      */
     @Override
     protected String getLongCndNotation() {
+        if (isVariant()) {
+            return getPrefix();
+        }
+
         String defaultType = getDefaultType();
 
         if (Utils.isEmpty(defaultType)) {
-            return NOTATION;
+            return Utils.EMPTY_STRING;
         }
  
-        return NOTATION + defaultType;
+        return getPrefix() + defaultType;
+    }
+
+    private String getPrefix() {
+        String delim = CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.DEFAULT_TYPE_END_PREFIX_DELIMITER);
+
+        if (Utils.isEmpty(delim)) {
+            return NOTATION;
+        }
+
+        return (NOTATION + delim);
     }
 
     /**
