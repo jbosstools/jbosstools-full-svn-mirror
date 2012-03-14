@@ -16,9 +16,10 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		<module>plugins</module>
 		<module>tests</module>
 		<module>features</module>
-       </modules>
+    </modules>
+    
 	<repositories>
-
+		<!-- TODO: is this authorized? Should use JBoss Tools mirror repo -->
 		<repository>
 			<id>indigo</id>
 			<url>http://download.eclipse.org/modeling/gmf/updates/milestones/</url>
@@ -30,6 +31,18 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 				<enabled>true</enabled>
 			</releases>
 		</repository>
+		<!-- To resolve parent artifact -->
+	    <repository>
+      		<id>jboss-public-repository-group</id>
+      		<name>JBoss Public Repository Group</name>
+      		<url>http://repository.jboss.org/nexus/content/groups/public/</url>
+    	</repository>
+    	<repository>
+			<id>jboss-snapshots-repository</id>
+			<name>JBoss Snapshots Repository</name>
+			<url>https://repository.jboss.org/nexus/content/repositories/snapshots/</url>
+		</repository>
+	</repositories>
 
 	</repositories>
 

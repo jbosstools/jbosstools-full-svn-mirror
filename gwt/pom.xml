@@ -19,13 +19,25 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		<module>site</module>
 	</modules>
 	<repositories>
-                <!--  Cannot redistribute GWT plugins due to license therefore cannot be included in target platform; must reference as 3rd party URL -->
+        <!--  Cannot redistribute GWT plugins due to license therefore cannot be included in target platform; must reference as 3rd party URL -->
+        <!--  TODO: is this Ok? Shouldn't it use our JBoss dependencies repository -->
 		<repository>
 			<id>gwt-e37</id>
 			<url>http://dl.google.com/eclipse/plugin/3.7/</url>
 			<layout>p2</layout>
 			<snapshots><enabled>true</enabled></snapshots>
 			<releases><enabled>true</enabled></releases>
+		</repository>
+		<!-- To resolve parent artifact -->
+	    <repository>
+      		<id>jboss-public-repository-group</id>
+      		<name>JBoss Public Repository Group</name>
+      		<url>http://repository.jboss.org/nexus/content/groups/public/</url>
+    	</repository>
+    	<repository>
+			<id>jboss-snapshots-repository</id>
+			<name>JBoss Snapshots Repository</name>
+			<url>https://repository.jboss.org/nexus/content/repositories/snapshots/</url>
 		</repository>
 	</repositories>
 </project>
