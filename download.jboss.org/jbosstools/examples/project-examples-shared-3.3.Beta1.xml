@@ -21,7 +21,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70, org.jboss.ide.eclipse.as.runtime.71, org.jboss.ide.eclipse.as.runtime.eap.60</property>
 				<property name="description">This project example requires JBoss AS 7.0/7.1 or EAP 6 </property>
-				<property name="downloadId">org.jboss.tools.runtime.core.as.702</property>
+				<property name="downloadId">org.jboss.tools.runtime.core.as.710</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.eclipse.m2e.core</property>
@@ -77,7 +77,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70, org.jboss.ide.eclipse.as.runtime.71, org.jboss.ide.eclipse.as.runtime.eap.60</property>
 				<property name="description">This project example requires JBoss AS 7.0/7.1 or EAP 6 </property>
-				<property name="downloadId">org.jboss.tools.runtime.core.as.702</property>
+				<property name="downloadId">org.jboss.tools.runtime.core.as.710</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.eclipse.m2e.core</property>
@@ -246,7 +246,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70, org.jboss.ide.eclipse.as.runtime.71, org.jboss.ide.eclipse.as.runtime.eap.60</property>
 				<property name="description">This project example requires JBoss AS 7.0/7.1 or EAP 6 </property>
-				<property name="downloadId">org.jboss.tools.runtime.core.as.702</property>
+				<property name="downloadId">org.jboss.tools.runtime.core.as.710</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.eclipse.m2e.core</property>
@@ -298,7 +298,7 @@ Make sure you read the deployment instructions in README.md</description>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70, org.jboss.ide.eclipse.as.runtime.71, org.jboss.ide.eclipse.as.runtime.eap.60</property>
 				<property name="description">This project example requires JBoss AS 7.0/7.1 or EAP 6 </property>
-				<property name="downloadId">org.jboss.tools.runtime.core.as.702</property>
+				<property name="downloadId">org.jboss.tools.runtime.core.as.710</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.eclipse.m2e.core</property>
