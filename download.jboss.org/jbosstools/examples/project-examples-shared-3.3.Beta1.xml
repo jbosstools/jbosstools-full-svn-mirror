@@ -159,9 +159,9 @@ It includes a persistence unit and some sample persistence and transaction code 
 			<archetypeGroupId>org.jboss.aerogear.archetypes</archetypeGroupId>
 			<archetypeArtifactId>jboss-html5-mobile-archetype</archetypeArtifactId>
 			<archetypeVersion>1.0.0.M2c</archetypeVersion>
-
+            <!--
             <archetypeRepository>http://repository.jboss.org/nexus/content/repositories/releases/</archetypeRepository>
-            
+            -->
             <groupId>org.jboss.tools.example</groupId>
 			<artifactId>poh5</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
@@ -213,8 +213,8 @@ It includes a persistence unit and some sample persistence and transaction code 
 			<archetypeGroupId>org.richfaces.archetypes</archetypeGroupId>
 			<archetypeArtifactId>richfaces-archetype-kitchensink</archetypeArtifactId>
 			<archetypeVersion>4.2.0.Final-2</archetypeVersion>
-			<archetypeRepository>http://repository.jboss.org/nexus/content/repositories/releases/</archetypeRepository>
             <!--
+			<archetypeRepository>http://repository.jboss.org/nexus/content/repositories/releases/</archetypeRepository>
 			<archetypeRepository>http://repository.jboss.org/nexus/content/repositories/snapshots/</archetypeRepository>
             <archetypeRepository>http://anonsvn.jboss.org/repos/jbosstools/workspace/fred/repositories/snapshot/</archetypeRepository>
 			-->
