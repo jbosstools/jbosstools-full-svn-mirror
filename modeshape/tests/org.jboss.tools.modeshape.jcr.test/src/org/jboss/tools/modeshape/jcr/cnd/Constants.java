@@ -7,6 +7,9 @@
  */
 package org.jboss.tools.modeshape.jcr.cnd;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType;
 import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences.Preference;
 import org.jboss.tools.modeshape.jcr.cnd.attributes.Abstract;
@@ -45,6 +48,7 @@ public interface Constants {
     QualifiedName QUALIFIED_NAME1 = new QualifiedName(QUALIFIER1, UNQUALIFIED_NAME1);
     QualifiedName QUALIFIED_NAME2 = new QualifiedName(QUALIFIER2, UNQUALIFIED_NAME2);
     QualifiedName QUALIFIED_NAME3 = new QualifiedName(QUALIFIER3, UNQUALIFIED_NAME3);
+    QualifiedName NAME_WITH_EMPTY_QUALIFIER = new QualifiedName(null, UNQUALIFIED_NAME1);
 
     String VARIANT = AttributeState.VARIANT_STRING;
 
@@ -218,4 +222,14 @@ public interface Constants {
             + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.VALUE_CONSTRAINTS_ITEM_QUOTE_CHARACTER) + ITEM_THREE
             + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.VALUE_CONSTRAINTS_ITEM_QUOTE_CHARACTER)
             + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_QUOTE_CHAR);
+
+    class Helper {
+        public static List<String> getDefaultQualifiers() {
+            List<String> qualifiers = new ArrayList<String>();
+            qualifiers.add(QUALIFIER1);
+            qualifiers.add(QUALIFIER2);
+            qualifiers.add(QUALIFIER3);
+            return qualifiers;
+        }
+    }
 }

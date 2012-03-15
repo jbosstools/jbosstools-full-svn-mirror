@@ -704,7 +704,8 @@ public final class CndImporter {
                 if (operator != null) {
                     operators.add(operatorValue);
                 } else {
-                    throw new ParsingException(tokens.previousPosition(), NLS.bind(Messages.invalidQueryOperator, operator));
+                    throw new ParsingException(tokens.previousPosition(), NLS.bind(Messages.invalidQueryOperator, operator,
+                                                                                   propDefn.getName()));
                 }
             }
 

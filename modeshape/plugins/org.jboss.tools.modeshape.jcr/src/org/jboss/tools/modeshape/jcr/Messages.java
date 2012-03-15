@@ -53,8 +53,8 @@ public final class Messages extends NLS {
     public static String duplicateChildNodeDefinitionName;
 
     /**
-     * A message indicating a property definition has duplicate default values. Parameters for the duplicate value and the property
-     * definition name are required.
+     * A message indicating a property definition has duplicate default values. Two parameters, the property definition name and the
+     * duplicate value, are required.
      */
     public static String duplicateDefaultValue;
 
@@ -187,15 +187,16 @@ public final class Messages extends NLS {
     public static String invalidGetStateRequest;
 
     /**
-     * A message indicating an invalid query operator CND notation was found. One parameter, the invalid value, is required.
-     */
-    public static String invalidQueryOperator;
-
-    /**
      * A message indicating an invalid property valid was found. The parameters of invalid property value, property type, and
      * property definition name are required.
      */
     public static String invalidPropertyValueForType;
+
+    /**
+     * A message indicating an invalid query operator CND notation was found. Two parameters, the invalid value and the property
+     * definition name, are required.
+     */
+    public static String invalidQueryOperator;
 
     /**
      * A message indicating an invalid URI was found. One parameter, the invalid URI, is required.
@@ -230,6 +231,12 @@ public final class Messages extends NLS {
     public static String multipleKeywordNotValidInJcr2CndFormat;
 
     /**
+     * A message indicating the qualifier of a qualified name is not a namespace mapping prefix in the CND. Two parameters, the
+     * name/type of the qualified name and the qualifier, are required.
+     */
+    public static String nameQualifierNotFound;
+
+    /**
      * A message used for the namespace prefix attribute.
      */
     public static String namespacePrefix;
@@ -251,14 +258,14 @@ public final class Messages extends NLS {
     public static String nodeTypeDefinitionName;
 
     /**
-     * A message indicating no errors, warnings, or info validation messages were found.
-     */
-    public static String okValidationMsg;
-
-    /**
      * A message indicating a <code>null</code> was found. One parameter, a string identifying the object, is required.
      */
     public static String objectIsNull;
+
+    /**
+     * A message indicating no errors, warnings, or info validation messages were found.
+     */
+    public static String okValidationMsg;
 
     /**
      * A message indicating a node type definition has a primary item but has been marked as a variant. One parameter, the node type

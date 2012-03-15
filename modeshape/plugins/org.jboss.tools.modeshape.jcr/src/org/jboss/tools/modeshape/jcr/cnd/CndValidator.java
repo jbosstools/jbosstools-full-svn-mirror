@@ -763,7 +763,7 @@ public final class CndValidator {
 
                 for (final String operator : queryOperators) {
                     // ERROR - Invalid query operator
-                    validateQueryOperator(operator, status);
+                    validateQueryOperator(operator, propertyDefinitionName, status);
 
                     if (!Utils.isEmpty(operator)) {
                         // ERROR - Duplicate query operator
@@ -866,7 +866,7 @@ public final class CndValidator {
      * @return the status (never <code>null</code>)
      */
     public static MultiValidationStatus validateQualifiedName( final QualifiedName qname,
-                                                               String propertyName ) {
+                                                               final String propertyName ) {
         Utils.verifyIsNotNull(qname, "qname"); //$NON-NLS-1$
 
         final MultiValidationStatus status = new MultiValidationStatus();
@@ -887,7 +887,7 @@ public final class CndValidator {
             final String unqualifiedName = qname.getUnqualifiedName();
 
             if (Utils.isEmpty(unqualifiedName)) {
-                 status.add(ValidationStatus.createErrorMessage(Messages.emptyUnqualifiedName));
+                status.add(ValidationStatus.createErrorMessage(Messages.emptyUnqualifiedName));
             } else {
                 final ValidationStatus nameStatus = validateLocalName(unqualifiedName, propertyName);
 
@@ -903,10 +903,49 @@ public final class CndValidator {
     /**
      * @param qname the qualified name being validated (cannot be <code>null</code>)
      * @param propertyName the name to use to identify the qualified name (cannot be <code>null</code> empty)
+     * @param validNamespacePrefixes a collection of namespace prefixes that the qualified name must match (can be <code>null</code>
+     *            or empty)
+     * @return the status (never <code>null</code>)
+     */
+    public static MultiValidationStatus validateQualifiedName( final QualifiedName qname,
+                                                               final String propertyName,
+                                                               final List<String> validNamespacePrefixes ) {
+        final MultiValidationStatus status = new MultiValidationStatus();
+        validateQualifiedName(qname, propertyName, validNamespacePrefixes, status);
+        return status;
+    }
+
+    /**
+     * @param qname the qualified name being validated (cannot be <code>null</code>)
+     * @param propertyName the name to use to identify the qualified name (cannot be <code>null</code> empty)
+     * @param validNamespacePrefixes a collection of namespace prefixes that the qualified name must match (can be <code>null</code>
+     *            or empty)
      * @param status the status to add the new status to (never <code>null</code>)
      */
     public static void validateQualifiedName( final QualifiedName qname,
-                                              String propertyName,
+                                              final String propertyName,
+                                              final List<String> validNamespacePrefixes,
+                                              final MultiValidationStatus status ) {
+        validateQualifiedName(qname, propertyName, status);
+
+        if (!Utils.isEmpty(validNamespacePrefixes)) {
+            final String qualifier = qname.getQualifier();
+
+            if (!Utils.isEmpty(qualifier) && !validNamespacePrefixes.contains(qualifier)) {
+                final ValidationStatus newStatus = ValidationStatus.createErrorMessage(NLS.bind(Messages.nameQualifierNotFound,
+                                                                                                propertyName, qualifier));
+                status.add(newStatus);
+            }
+        }
+    }
+
+    /**
+     * @param qname the qualified name being validated (cannot be <code>null</code>)
+     * @param propertyName the name to use to identify the qualified name (cannot be <code>null</code> empty)
+     * @param status the status to add the new status to (never <code>null</code>)
+     */
+    public static void validateQualifiedName( final QualifiedName qname,
+                                              final String propertyName,
                                               final MultiValidationStatus status ) {
         final MultiValidationStatus newStatus = validateQualifiedName(qname, propertyName);
 
@@ -917,15 +956,20 @@ public final class CndValidator {
 
     /**
      * @param operator the query operator being validated (can be <code>null</code> or empty)
+     * @param propertyDefinitionName the name of the property definition the query operator belongs to (cannot be <code>null</code>
+     *            or empty)
      * @return the status (never <code>null</code>)
      */
-    public static ValidationStatus validateQueryOperator( final String operator ) {
-        Utils.verifyIsNotEmpty(operator, "operator"); //$NON-NLS-1$
+    public static ValidationStatus validateQueryOperator( final String operator,
+                                                          final String propertyDefinitionName ) {
+        if (Utils.isEmpty(operator)) {
+            return ValidationStatus.createErrorMessage(Messages.emptyQueryOperator);
+        }
 
         try {
             QueryOperator.find(operator);
         } catch (final Exception e) {
-            return ValidationStatus.createErrorMessage(Messages.invalidQueryOperator);
+            return ValidationStatus.createErrorMessage(NLS.bind(Messages.invalidQueryOperator, operator, propertyDefinitionName));
         }
 
         return ValidationStatus.OK_STATUS;
@@ -933,11 +977,14 @@ public final class CndValidator {
 
     /**
      * @param operator the query operator being validated (can be <code>null</code> or empty)
+     * @param propertyDefinitionName the name of the property definition the query operator belongs to (cannot be <code>null</code>
+     *            or empty)
      * @param status the status to add the new status to (never <code>null</code>)
      */
     public static void validateQueryOperator( final String operator,
+                                              final String propertyDefinitionName,
                                               final MultiValidationStatus status ) {
-        final ValidationStatus newStatus = validateQueryOperator(operator);
+        final ValidationStatus newStatus = validateQueryOperator(operator, propertyDefinitionName);
 
         if (!newStatus.isOk()) {
             status.add(newStatus);
