@@ -8,13 +8,13 @@
 	<feature url="features/org.jboss.tools.birt.feature_0.0.0.jar" id="org.jboss.tools.birt.feature" version="0.0.0">
 		<category name="JBoss Tools birt Nightly Build Update Site"/>
 	</feature>
-	<feature url="features/org.jboss.tools.birt.source.feature_0.0.0.jar" id="org.jboss.tools.birt.source.feature" version="0.0.0">
+	<feature url="features/org.jboss.tools.birt.feature.source_0.0.0.jar" id="org.jboss.tools.birt.feature.source" version="0.0.0">
 		<category name="JBoss Tools birt Nightly Build Update Site"/>
 	</feature>
 	<feature url="features/org.jboss.tools.birt.test.feature_0.0.0.jar" id="org.jboss.tools.birt.test.feature" version="0.0.0">
 		<category name="JBoss Tools birt Nightly Build Update Site"/>
 	</feature>
-	<feature url="features/org.jboss.tools.birt.test.source.feature_0.0.0.jar" id="org.jboss.tools.birt.test.source.feature" version="0.0.0">
+	<feature url="features/org.jboss.tools.birt.test.feature.source_0.0.0.jar" id="org.jboss.tools.birt.test.feature.source" version="0.0.0">
 		<category name="JBoss Tools birt Nightly Build Update Site"/>
 	</feature>
 
