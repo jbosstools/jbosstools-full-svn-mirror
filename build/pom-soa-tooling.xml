@@ -126,6 +126,28 @@
 		</profile>
 
 		<profile>
+			<id>runtime-soa</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../runtime-soa</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>runtime-soa-bootstrap</id>
+			<modules>
+                                <module>../tests</module>
+                                <module>../common</module>
+                                <module>../jmx</module>
+                                <module>../usage</module>
+				<module>../runtime</module>
+				<module>../runtime-soa</module>
+			</modules>
+		</profile>
+
+		<profile>
 			<id>smooks</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
