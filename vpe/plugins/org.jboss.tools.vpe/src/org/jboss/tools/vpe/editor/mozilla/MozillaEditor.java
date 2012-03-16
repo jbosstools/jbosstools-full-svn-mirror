@@ -122,6 +122,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	public static final String ICON_NON_VISUAL_TAGS = "icons/non-visusal-tags.gif"; //$NON-NLS-1$
 	public static final String ICON_TEXT_FORMATTING = "icons/text-formatting.gif"; //$NON-NLS-1$
 	public static final String ICON_BUNDLE_AS_EL= "icons/bundle-as-el.gif"; //$NON-NLS-1$
+	public static final String ICON_SCROLL_LOCK= "icons/scroll_lock.gif"; //$NON-NLS-1$
 
 	private XulRunnerEditor xulRunnerEditor;
 	private nsIDOMElement contentArea;
@@ -148,7 +149,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	private Action showNonVisualTagsAction;
 	private Action showTextFormattingAction;
 	private Action showBundleAsELAction;
-
+	private Action scrollLockAction;
 	
 	static {
 		/*
@@ -418,10 +419,32 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				setValue(IVpePreferencesPage.SHOW_RESOURCE_BUNDLES_USAGE_AS_EL, this.isChecked());
 			}
 		};
-		showBundleAsELAction.setImageDescriptor(ImageDescriptor.createFromFile(MozillaEditor.class,
-				ICON_BUNDLE_AS_EL));
+		showBundleAsELAction.setImageDescriptor(ImageDescriptor.createFromFile(
+				MozillaEditor.class, ICON_BUNDLE_AS_EL));
 		showBundleAsELAction.setToolTipText(VpeUIMessages.SHOW_BUNDLES_AS_EL);
 		toolBarManager.add(showBundleAsELAction);
+		
+		/*
+		 * https://issues.jboss.org/browse/JBIDE-11302
+		 * Create SYNCHRONIZE_SCROLLING_BETWEEN_SOURCE_VISUAL_PANES tool bar item
+		 */
+		scrollLockAction = new Action(
+				VpeUIMessages.SYNCHRONIZE_SCROLLING_BETWEEN_SOURCE_VISUAL_PANES,
+				IAction.AS_CHECK_BOX) {
+			@Override
+			public void run() {
+				/*
+				 * Change the enabled state, listeners in VpeController will do the rest
+				 */
+				JspEditorPlugin.getDefault().getPreferenceStore().setValue(
+						IVpePreferencesPage.SYNCHRONIZE_SCROLLING_BETWEEN_SOURCE_VISUAL_PANES,
+						this.isChecked());
+			}
+		};
+		scrollLockAction.setImageDescriptor(ImageDescriptor.createFromFile(
+				MozillaEditor.class, ICON_SCROLL_LOCK));
+		scrollLockAction.setToolTipText(VpeUIMessages.SYNCHRONIZE_SCROLLING_BETWEEN_SOURCE_VISUAL_PANES);
+		toolBarManager.add(scrollLockAction);
 		
 		/*
 		 * Create EXTERNALIZE STRINGS tool bar item
@@ -447,7 +470,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 //				ICON_EXTERNALIZE_STRINGS));
 //		externalizeStringsAction.setToolTipText(JstUIMessages.EXTERNALIZE_STRINGS);
 //		toolBarManager.add(externalizeStringsAction);
-
+		
 		updateToolbarItemsAccordingToPreferences();
 		toolBarManager.update(true);
 
@@ -1020,6 +1043,8 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				.getBoolean(IVpePreferencesPage.SHOW_TEXT_FORMATTING);
 		boolean prefsShowBundlesAsEL = JspEditorPlugin.getDefault().getPreferenceStore()
 				.getBoolean(IVpePreferencesPage.SHOW_RESOURCE_BUNDLES_USAGE_AS_EL);
+		boolean scrollLockEditors = JspEditorPlugin.getDefault().getPreferenceStore()
+				.getBoolean(IVpePreferencesPage.SYNCHRONIZE_SCROLLING_BETWEEN_SOURCE_VISUAL_PANES);
 		
 		if (showBorderAction != null) {
 			showBorderAction.setChecked(prefsShowBorderForUnknownTags);
@@ -1032,6 +1057,9 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		}
 		if (showBundleAsELAction != null) {
 			showBundleAsELAction.setChecked(prefsShowBundlesAsEL);
+		}
+		if (scrollLockAction != null) {
+			scrollLockAction.setChecked(scrollLockEditors);
 		}
 		if (rotateEditorsAction != null) {
 			currentOrientationIndex = prefsOrientationIndex;
