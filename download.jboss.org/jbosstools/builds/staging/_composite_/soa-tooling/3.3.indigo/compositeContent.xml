@@ -7,18 +7,20 @@
      get new time w/ 
       date +%s000
 -->
-<property name='p2.timestamp' value='1327343495000'/>
+<property name='p2.timestamp' value='1331922270000'/>
 </properties>
-<children size='9'>
+<children size='10'>
 
-<!-- SOA Tooling : 9 x 1 = 9 -->
+<!-- SOA Tooling : 10 x 1 = 10 -->
 
 <child location='../../../../staging/jbosstools-3.3_stable_branch.component--bpel/all/repo/'/>
 <child location='../../../../staging/jbosstools-drools-5.3_stable_branch/all/repo/'/>
 <child location='../../../../staging/jbosstools-3.3_stable_branch.component--esb/all/repo/'/>
 <child location='../../../../staging/jbosstools-3.3_stable_branch.component--flow/all/repo/'/>
 <child location='../../../../staging/jbosstools-3.3_stable_branch.component--jbpm/all/repo/'/>
+
 <child location='../../../../staging/jbosstools-3.3_stable_branch.component--modeshape/all/repo/'/>
+<child location='../../../../staging/jbosstools-3.3_stable_branch.component--runtime-soa/all/repo/'/>
 <child location='http://download.jboss.org/savara/releases/updates/2.0.x/' />
 <child location='../../../../staging/SwitchYard-Tools/eclipse/'/>
 <child location='../../../../staging/jbosstools-teiid-designer-7.6_stable_branch/all/repo/'/>
