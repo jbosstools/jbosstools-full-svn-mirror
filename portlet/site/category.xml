@@ -11,5 +11,11 @@
 	<feature url="features/org.jboss.tools.portlet.test.feature_0.0.0.jar" id="org.jboss.tools.portlet.test.feature" version="0.0.0">
 		<category name="JBoss Tools portlet Nightly Build Update Site"/>
 	</feature>
-
+	<!-- Sources -->
+	<feature url="features/org.jboss.tools.portlet.feature.source_0.0.0.jar" id="org.jboss.tools.portlet.feature.source" version="0.0.0">
+		<category name="JBoss Tools portlet Nightly Build Update Site"/>
+	</feature>
+	<feature url="features/org.jboss.tools.portlet.test.feature.source_0.0.0.jar" id="org.jboss.tools.portlet.test.feature.source" version="0.0.0">
+		<category name="JBoss Tools portlet Nightly Build Update Site"/>
+	</feature>
 </site>

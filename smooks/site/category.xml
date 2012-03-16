@@ -11,5 +11,12 @@
 	<feature url="features/org.jboss.tools.smooks.test.feature_0.0.0.jar" id="org.jboss.tools.smooks.test.feature" version="0.0.0">
 		<category name="JBoss Tools smooks Nightly Build Update Site"/>
 	</feature>
+	<!-- Sources -->
+	<feature url="features/org.jboss.tools.smooks.feature.source_0.0.0.jar" id="org.jboss.tools.smooks.feature.source" version="0.0.0">
+		<category name="JBoss Tools smooks Nightly Build Update Site"/>
+	</feature>
+	<feature url="features/org.jboss.tools.smooks.test.feature.source_0.0.0.jar" id="org.jboss.tools.smooks.test.feature.source" version="0.0.0">
+		<category name="JBoss Tools smooks Nightly Build Update Site"/>
+	</feature>
 
 </site>

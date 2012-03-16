@@ -51,19 +51,19 @@
 		<category name="AllSources" />
 	</feature>
 	-->
-	<feature url="features/org.jboss.tools.jmx.source.feature_0.0.0.jar" id="org.jboss.tools.jmx.source.feature" version="0.0.0">
+	<feature url="features/org.jboss.tools.jmx.feature.source_0.0.0.jar" id="org.jboss.tools.jmx.feature.source" version="0.0.0">
 		<category name="AllSources" />
 	</feature>
 	<feature url="features/org.jboss.ide.eclipse.as.source.feature_0.0.0.jar" id="org.jboss.ide.eclipse.as.source.feature" version="0.0.0">
 		<category name="AllSources" />
 	</feature>
-	<feature url="features/org.jboss.tools.openshift.express.source.feature_0.0.0.jar" id="org.jboss.tools.openshift.express.source.feature" version="0.0.0">
+	<feature url="features/org.jboss.tools.openshift.express.feature.source_0.0.0.jar" id="org.jboss.tools.openshift.express.feature.source" version="0.0.0">
         <category name="AllSources" />
 	</feature>
-	<feature url="features/org.jboss.tools.openshift.egit.integration.source.feature_0.0.0.jar" id="org.jboss.tools.openshift.egit.integration.source.feature" version="0.0.0">
+	<feature url="features/org.jboss.tools.openshift.egit.integration.feature.source_0.0.0.jar" id="org.jboss.tools.openshift.egit.integration.feature.source" version="0.0.0">
 		<category name="AllSources" />
 	</feature>
-	<feature url="features/org.jboss.ide.eclipse.archives.source.feature_0.0.0.jar" id="org.jboss.ide.eclipse.archives.source.feature" version="0.0.0">
+	<feature url="features/org.jboss.ide.eclipse.archives.feature.source_0.0.0.jar" id="org.jboss.ide.eclipse.archives.feature.source" version="0.0.0">
 		<category name="AllSources" />
 	</feature>
 	<!--
@@ -135,13 +135,13 @@
 		<category name="AllSources" />
 	</feature>
 	-->
-	<feature url="features/org.jboss.tools.common.jdt.source.feature_0.0.0.jar" id="org.jboss.tools.common.jdt.source.feature" version="0.0.0">
+	<feature url="features/org.jboss.tools.common.jdt.feature.source_0.0.0.jar" id="org.jboss.tools.common.jdt.feature.source" version="0.0.0">
 		<category name="AllSources" />
 	</feature>
-	<feature url="features/org.jboss.tools.common.mylyn.source.feature_0.0.0.jar" id="org.jboss.tools.common.mylyn.source.feature" version="0.0.0">
+	<feature url="features/org.jboss.tools.common.mylyn.feature.source_0.0.0.jar" id="org.jboss.tools.common.mylyn.feature.source" version="0.0.0">
 		<category name="AllSources" />
 	</feature>
-	<feature url="features/org.jboss.tools.common.all.source.feature_0.0.0.jar" id="org.jboss.tools.common.all.source.feature" version="0.0.0">
+	<feature url="features/org.jboss.tools.common.all.feature.source_0.0.0.jar" id="org.jboss.tools.common.all.feature.source" version="0.0.0">
 		<category name="AllSources" />
 	</feature>
 	<!--
