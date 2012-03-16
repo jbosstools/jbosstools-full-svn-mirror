@@ -81,6 +81,12 @@ public final class Messages extends NLS {
     public static String duplicatePropertyDefinitionName;
 
     /**
+     * A message indicating duplicate qualified names exist. Two parameters, the type of qualified name and the duplicate qualified
+     * name, are required.
+     */
+    public static String duplicateQualifiedName;
+
+    /**
      * A message indicating duplicate query operators of a property definition exist. The parameters of property definition name and
      * the duplicate query operator are required.
      */

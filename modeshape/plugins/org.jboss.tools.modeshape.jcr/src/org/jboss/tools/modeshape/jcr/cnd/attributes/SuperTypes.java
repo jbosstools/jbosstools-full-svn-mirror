@@ -10,11 +10,12 @@ package org.jboss.tools.modeshape.jcr.cnd.attributes;
 import java.util.List;
 
 import org.jboss.tools.modeshape.jcr.Utils;
+import org.jboss.tools.modeshape.jcr.cnd.QualifiedName;
 
 /**
  * 
  */
-public final class SuperTypes extends ListAttributeState<String> {
+public final class SuperTypes extends ListAttributeState<QualifiedName> {
 
     /**
      * The CND list suffix.
@@ -35,7 +36,7 @@ public final class SuperTypes extends ListAttributeState<String> {
      * @return the collection of super types (never <code>null</code>)
      */
     public String[] toArray() {
-        final List<String> superTypes = getSupportedItems();
+        final List<QualifiedName> superTypes = getSupportedItems();
 
         if (Utils.isEmpty(superTypes)) {
             return Utils.EMPTY_STRING_ARRAY;
@@ -44,8 +45,8 @@ public final class SuperTypes extends ListAttributeState<String> {
         final String[] result = new String[superTypes.size()];
         int i = 0;
 
-        for (final String superType : superTypes) {
-            result[i++] = superType;
+        for (final QualifiedName superType : superTypes) {
+            result[i++] = superType.get();
         }
 
         return result;

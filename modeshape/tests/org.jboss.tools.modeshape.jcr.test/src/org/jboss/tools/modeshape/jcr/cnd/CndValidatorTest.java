@@ -82,9 +82,8 @@ public class CndValidatorTest {
 
     @Test
     public void emptyQualifiedNameQualifierShouldBeValid() {
-
         assertTrue(CndValidator.validateQualifiedName(Constants.NAME_WITH_EMPTY_QUALIFIER, "propertyName", //$NON-NLS-1$
-                                                      Constants.Helper.getDefaultQualifiers()).isOk());
+                                                      Constants.Helper.getDefaultQualifiers(), null).isOk());
     }
 
     @Test
@@ -95,7 +94,7 @@ public class CndValidatorTest {
     @Test
     public void invalidQualifiedNameQualifierShouldBeAnError() {
         final QualifiedName qname = new QualifiedName(Constants.QUALIFIER1 + "Changed", Constants.UNQUALIFIED_NAME1); //$NON-NLS-1$
-        assertTrue(CndValidator.validateQualifiedName(qname, "propertyName", Constants.Helper.getDefaultQualifiers()).isError()); //$NON-NLS-1$
+        assertTrue(CndValidator.validateQualifiedName(qname, "propertyName", Constants.Helper.getDefaultQualifiers(), null).isError()); //$NON-NLS-1$
     }
 
     @Test
@@ -239,6 +238,26 @@ public class CndValidatorTest {
         this.propertyDefinition.addDefaultValue("defaultValue2"); //$NON-NLS-1$
 
         assertTrue(CndValidator.validatePropertyDefinition(this.propertyDefinition).isError());
+    }
+
+    @Test
+    public void shouldNotAllDuplicateNamespacePrefixes() {
+        // create a namespace mapping with a prefix that already exists and a URI that doesn't exist in the default namespaces
+        final NamespaceMapping namespaceMapping = new NamespaceMapping(Constants.NAMESPACE_PREFIX1, "xyz"); //$NON-NLS-1$
+        assertTrue(CndValidator.validateNamespaceMapping(namespaceMapping, Constants.Helper.getDefaultNamespaces()).isError());
+    }
+
+    @Test
+    public void shouldNotAllDuplicateNamespaceUris() {
+        // create a namespace mapping with a URI that already exists and a prefix that doesn't exist in the default namespaces
+        final NamespaceMapping namespaceMapping = new NamespaceMapping("xyz", Constants.NAMESPACE_URI1); //$NON-NLS-1$
+        assertTrue(CndValidator.validateNamespaceMapping(namespaceMapping, Constants.Helper.getDefaultNamespaces()).isError());
+    }
+
+    @Test
+    public void shouldNotAllDuplicateQualifiedNames() {
+        assertTrue(CndValidator.validateQualifiedName(Constants.QUALIFIED_NAME1,
+                                                      "propertyName", Constants.Helper.getDefaultQualifiers(), Constants.Helper.getDefaultQualifiedNames()).isError()); //$NON-NLS-1$
     }
 
     @Test

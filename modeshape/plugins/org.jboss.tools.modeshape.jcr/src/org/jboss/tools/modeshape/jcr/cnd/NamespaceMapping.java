@@ -226,6 +226,21 @@ public class NamespaceMapping implements CndElement, Comparable {
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(this.prefix);
+        builder.append(NOTATION_DELIMITER);
+        builder.append(this.uri);
+
+        return builder.toString();
+    }
+
+    /**
      * The property names whose <code>toString()</code> is used in {@link PropertyChangeEvent}s.
      */
     public enum PropertyName {

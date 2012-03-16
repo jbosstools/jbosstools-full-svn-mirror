@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import java.net.URI;
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 import org.eclipse.osgi.util.NLS;
 import org.jboss.tools.modeshape.jcr.Messages;
@@ -124,7 +124,7 @@ public final class CndValidator {
      * @param childNodeDefinition the child node definition being validated (cannot be <code>null</code>)
      * @return the status (never <code>null</code>)
      */
-    public static ValidationStatus validateChildNodeDefinition( final ChildNodeDefinition childNodeDefinition ) {
+    public static MultiValidationStatus validateChildNodeDefinition( final ChildNodeDefinition childNodeDefinition ) {
         Utils.verifyIsNotNull(childNodeDefinition, "childNodeDefinition"); //$NON-NLS-1$
 
         /**
@@ -158,7 +158,7 @@ public final class CndValidator {
                     status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.emptyRequiredTypes, childNodeName)));
                 }
             } else {
-                final List<String> names = new ArrayList<String>(requiredTypeNames.length);
+                final Collection<String> names = new ArrayList<String>(requiredTypeNames.length);
 
                 for (final String requiredTypeName : requiredTypeNames) {
                     // ERROR - Invalid required type name
@@ -218,7 +218,7 @@ public final class CndValidator {
      * @return the status (never <code>null</code>)
      */
     public static MultiValidationStatus validateChildNodeDefinitions( final String nodeTypeName,
-                                                                      final List<ChildNodeDefinition> childNodeDefinitions ) {
+                                                                      final Collection<ChildNodeDefinition> childNodeDefinitions ) {
         Utils.verifyIsNotEmpty(nodeTypeName, "nodeTypeName"); //$NON-NLS-1$
 
         /**
@@ -233,7 +233,7 @@ public final class CndValidator {
         }
 
         final MultiValidationStatus status = new MultiValidationStatus();
-        final List<String> childNodeNames = new ArrayList<String>(childNodeDefinitions.size());
+        final Collection<String> childNodeNames = new ArrayList<String>(childNodeDefinitions.size());
 
         for (final ChildNodeDefinition childNodeDefn : childNodeDefinitions) {
             validateChildNodeDefinition(childNodeDefn, status);
@@ -262,7 +262,7 @@ public final class CndValidator {
      * @param status the status to add the new status to (never <code>null</code>)
      */
     public static void validateChildNodeDefinitions( final String nodeTypeName,
-                                                     final List<ChildNodeDefinition> childNodeDefinitions,
+                                                     final Collection<ChildNodeDefinition> childNodeDefinitions,
                                                      final MultiValidationStatus status ) {
         final MultiValidationStatus newStatus = validateChildNodeDefinitions(nodeTypeName, childNodeDefinitions);
 
@@ -275,7 +275,7 @@ public final class CndValidator {
      * @param cnd the CND being validated (cannot be <code>null</code>)
      * @return the status (never <code>null</code>)
      */
-    public static ValidationStatus validateCnd( final CompactNodeTypeDefinition cnd ) {
+    public static MultiValidationStatus validateCnd( final CompactNodeTypeDefinition cnd ) {
         Utils.verifyIsNotNull(cnd, "cnd"); //$NON-NLS-1$
 
         /**
@@ -289,7 +289,7 @@ public final class CndValidator {
         boolean noNodeTypeDefinitions = false;
 
         { // namespace mappings
-            final List<NamespaceMapping> namespaceMappings = cnd.getNamespaceMappings();
+            final Collection<NamespaceMapping> namespaceMappings = cnd.getNamespaceMappings();
 
             if (Utils.isEmpty(namespaceMappings)) {
                 noNamespaceMappings = true;
@@ -299,7 +299,7 @@ public final class CndValidator {
         }
 
         { // node type definitions
-            final List<NodeTypeDefinition> nodeTypeDefinitions = cnd.getNodeTypeDefinitions();
+            final Collection<NodeTypeDefinition> nodeTypeDefinitions = cnd.getNodeTypeDefinitions();
 
             if (Utils.isEmpty(nodeTypeDefinitions)) {
                 noNodeTypeDefinitions = true;
@@ -384,7 +384,7 @@ public final class CndValidator {
      * @param namespaceMapping the namespace mapping being validated (cannot be <code>null</code>)
      * @return the status (never <code>null</code>)
      */
-    public static ValidationStatus validateNamespaceMapping( final NamespaceMapping namespaceMapping ) {
+    public static MultiValidationStatus validateNamespaceMapping( final NamespaceMapping namespaceMapping ) {
         Utils.verifyIsNotNull(namespaceMapping, "namespaceMapping"); //$NON-NLS-1$
 
         /**
@@ -400,9 +400,72 @@ public final class CndValidator {
         validateLocalName(namespaceMapping.getPrefix(), Messages.namespacePrefix, status);
 
         // ERROR - Empty or invalid URI
-        validateLocalName(namespaceMapping.getUri(), Messages.namespaceUri, status);
+        ValidationStatus uriStatus = validateUri(namespaceMapping.getUri(), Messages.namespaceUri);
+
+        if (!uriStatus.isOk()) {
+            status.add(uriStatus);
+        }
 
         return status;
+    }
+
+    /**
+     * @param namespaceMapping the namespace mapping being validated (cannot be <code>null</code>)
+     * @param existingNamespaces the existing namespaces whose prefixes and URIs will be checked against (can be <code>null</code>
+     *            or empty)
+     * @return the status (never <code>null</code>)
+     */
+    public static MultiValidationStatus validateNamespaceMapping( final NamespaceMapping namespaceMapping,
+                                                                  final Collection<NamespaceMapping> existingNamespaces ) {
+        final MultiValidationStatus status = validateNamespaceMapping(namespaceMapping);
+
+        // check for duplicate prefix or URI
+        if (!Utils.isEmpty(existingNamespaces)) {
+            boolean checkPrefix = true;
+            boolean checkUri = true;
+
+            for (final NamespaceMapping namespace : existingNamespaces) {
+                if (checkPrefix && Utils.equivalent(namespaceMapping.getPrefix(), namespace.getPrefix())) {
+                    checkPrefix = false;
+                    String prefix = namespaceMapping.getPrefix();
+
+                    if (prefix == null) {
+                        prefix = Utils.EMPTY_STRING;
+                    }
+
+                    status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.duplicateNamespacePrefix, prefix)));
+                }
+
+                if (checkUri && Utils.equivalent(namespaceMapping.getUri(), namespace.getUri())) {
+                    checkUri = false;
+                    String uri = namespaceMapping.getUri();
+
+                    if (uri == null) {
+                        uri = Utils.EMPTY_STRING;
+                    }
+
+                    status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.duplicateNamespaceUri, uri)));
+                }
+            }
+        }
+
+        return status;
+    }
+
+    /**
+     * @param namespaceMapping the namespace mapping being validated (cannot be <code>null</code>)
+     * @param existingNamespaces the existing namespaces whose prefixes and URIs will be checked against (can be <code>null</code>
+     *            or empty)
+     * @param status the status to add the new status to (never <code>null</code>)
+     */
+    public static void validateNamespaceMapping( final NamespaceMapping namespaceMapping,
+                                                 final Collection<NamespaceMapping> existingNamespaces,
+                                                 final MultiValidationStatus status ) {
+        final ValidationStatus newStatus = validateNamespaceMapping(namespaceMapping, existingNamespaces);
+
+        if (!newStatus.isOk()) {
+            status.add(newStatus);
+        }
     }
 
     /**
@@ -422,7 +485,7 @@ public final class CndValidator {
      * @param namespaceMappings the collection of namespace mappings being validated (can be <code>null</code> or empty)
      * @return the status (never <code>null</code>)
      */
-    public static MultiValidationStatus validateNamespaceMappings( final List<NamespaceMapping> namespaceMappings ) {
+    public static MultiValidationStatus validateNamespaceMappings( final Collection<NamespaceMapping> namespaceMappings ) {
         /**
          * <pre>
          *     ERROR - Duplicate namespace mapping prefix
@@ -436,8 +499,8 @@ public final class CndValidator {
         }
 
         final MultiValidationStatus status = new MultiValidationStatus();
-        final List<String> prefixes = new ArrayList<String>(namespaceMappings.size());
-        final List<String> uris = new ArrayList<String>(namespaceMappings.size());
+        final Collection<String> prefixes = new ArrayList<String>(namespaceMappings.size());
+        final Collection<String> uris = new ArrayList<String>(namespaceMappings.size());
 
         for (final NamespaceMapping namespaceMapping : namespaceMappings) {
             validateNamespaceMapping(namespaceMapping, status);
@@ -474,7 +537,7 @@ public final class CndValidator {
      * @param namespaceMappings the collection of namespace mappings being validated (can be <code>null</code> or empty)
      * @param status the status to add the new status to (never <code>null</code>)
      */
-    public static void validateNamespaceMappings( final List<NamespaceMapping> namespaceMappings,
+    public static void validateNamespaceMappings( final Collection<NamespaceMapping> namespaceMappings,
                                                   final MultiValidationStatus status ) {
         final ValidationStatus newStatus = validateNamespaceMappings(namespaceMappings);
 
@@ -487,7 +550,7 @@ public final class CndValidator {
      * @param nodeTypeDefinition the node type definition being validated (cannot be <code>null</code>)
      * @return the status (never <code>null</code>)
      */
-    public static ValidationStatus validateNodeTypeDefinition( final NodeTypeDefinition nodeTypeDefinition ) {
+    public static MultiValidationStatus validateNodeTypeDefinition( final NodeTypeDefinition nodeTypeDefinition ) {
         Utils.verifyIsNotNull(nodeTypeDefinition, "nodeTypeDefinition"); //$NON-NLS-1$
 
         /**
@@ -546,7 +609,7 @@ public final class CndValidator {
         boolean noChildNodeDefinitions = false;
 
         { // property definitions
-            final List<PropertyDefinition> propertyDefinitions = nodeTypeDefinition.getPropertyDefinitions();
+            final Collection<PropertyDefinition> propertyDefinitions = nodeTypeDefinition.getPropertyDefinitions();
 
             if (Utils.isEmpty(propertyDefinitions)) {
                 noPropertyDefinitions = true;
@@ -556,7 +619,7 @@ public final class CndValidator {
         }
 
         { // child node definitions
-            final List<ChildNodeDefinition> childNodeDefinitions = nodeTypeDefinition.getChildNodeDefinitions();
+            final Collection<ChildNodeDefinition> childNodeDefinitions = nodeTypeDefinition.getChildNodeDefinitions();
 
             if (Utils.isEmpty(childNodeDefinitions)) {
                 noChildNodeDefinitions = true;
@@ -590,7 +653,7 @@ public final class CndValidator {
      * @param nodeTypeDefinitions the collection of namespace mappings to validate (can be <code>null</code> or empty)
      * @return the status (never <code>null</code>)
      */
-    public static MultiValidationStatus validateNodeTypeDefinitions( final List<NodeTypeDefinition> nodeTypeDefinitions ) {
+    public static MultiValidationStatus validateNodeTypeDefinitions( final Collection<NodeTypeDefinition> nodeTypeDefinitions ) {
         /**
          * <pre>
          *     ERROR - Duplicate node type definition names
@@ -603,7 +666,7 @@ public final class CndValidator {
         }
 
         final MultiValidationStatus status = new MultiValidationStatus();
-        final List<String> names = new ArrayList<String>(nodeTypeDefinitions.size());
+        final Collection<String> names = new ArrayList<String>(nodeTypeDefinitions.size());
 
         for (final NodeTypeDefinition nodeTypeDefinition : nodeTypeDefinitions) {
             validateNodeTypeDefinition(nodeTypeDefinition, status);
@@ -628,7 +691,7 @@ public final class CndValidator {
      * @param nodeTypeDefinitions the collection of namespace mappings to validate (can be <code>null</code> or empty)
      * @param status the status to add the new status to (never <code>null</code>)
      */
-    public static void validateNodeTypeDefinitions( final List<NodeTypeDefinition> nodeTypeDefinitions,
+    public static void validateNodeTypeDefinitions( final Collection<NodeTypeDefinition> nodeTypeDefinitions,
                                                     final MultiValidationStatus status ) {
         final ValidationStatus newStatus = validateNodeTypeDefinitions(nodeTypeDefinitions);
 
@@ -641,7 +704,7 @@ public final class CndValidator {
      * @param propertyDefinition the property definition being validated (never <code>null</code>)
      * @return the status (never <code>null</code>)
      */
-    public static ValidationStatus validatePropertyDefinition( final PropertyDefinition propertyDefinition ) {
+    public static MultiValidationStatus validatePropertyDefinition( final PropertyDefinition propertyDefinition ) {
         Utils.verifyIsNotNull(propertyDefinition, "propertyDefinition"); //$NON-NLS-1$
 
         /**
@@ -679,7 +742,7 @@ public final class CndValidator {
         }
 
         { // default values
-            final List<String> defaultValues = propertyDefinition.getDefaultValuesAsStrings();
+            final Collection<String> defaultValues = propertyDefinition.getDefaultValuesAsStrings();
 
             if (Utils.isEmpty(defaultValues)) {
                 if (propertyDefinition.getState(PropertyDefinition.PropertyName.DEFAULT_VALUES) == Value.IS) {
@@ -693,7 +756,7 @@ public final class CndValidator {
                                                                             propertyDefinitionName)));
                 }
 
-                final List<String> values = new ArrayList<String>(defaultValues.size());
+                final Collection<String> values = new ArrayList<String>(defaultValues.size());
 
                 for (final String defaultValue : defaultValues) {
                     // ERROR - Default value is not valid for the property definition type
@@ -726,7 +789,7 @@ public final class CndValidator {
                     status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.emptyValueConstraints, propertyDefinitionName)));
                 }
             } else {
-                final List<String> constraints = new ArrayList<String>(valueConstraints.length);
+                final Collection<String> constraints = new ArrayList<String>(valueConstraints.length);
 
                 for (final String constraint : valueConstraints) {
                     // ERROR - Invalid value constraint
@@ -759,7 +822,7 @@ public final class CndValidator {
                     status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.emptyQueryOperators, propertyDefinitionName)));
                 }
             } else {
-                final List<String> operators = new ArrayList<String>(queryOperators.length);
+                final Collection<String> operators = new ArrayList<String>(queryOperators.length);
 
                 for (final String operator : queryOperators) {
                     // ERROR - Invalid query operator
@@ -807,7 +870,7 @@ public final class CndValidator {
      * @return the status (never <code>null</code>)
      */
     public static MultiValidationStatus validatePropertyDefinitions( final String nodeTypeName,
-                                                                     final List<PropertyDefinition> propertyDefinitions ) {
+                                                                     final Collection<PropertyDefinition> propertyDefinitions ) {
         Utils.verifyIsNotEmpty(nodeTypeName, "nodeTypeName"); //$NON-NLS-1$
 
         /**
@@ -822,7 +885,7 @@ public final class CndValidator {
         }
 
         final MultiValidationStatus status = new MultiValidationStatus();
-        final List<String> propNames = new ArrayList<String>(propertyDefinitions.size());
+        final Collection<String> propNames = new ArrayList<String>(propertyDefinitions.size());
 
         for (final PropertyDefinition propertyDefn : propertyDefinitions) {
             validatePropertyDefinition(propertyDefn, status);
@@ -851,7 +914,7 @@ public final class CndValidator {
      * @param status the status to add the new status to (never <code>null</code>)
      */
     public static void validatePropertyDefinitions( final String nodeTypeName,
-                                                    final List<PropertyDefinition> propertyDefinitions,
+                                                    final Collection<PropertyDefinition> propertyDefinitions,
                                                     final MultiValidationStatus status ) {
         final MultiValidationStatus newStatus = validatePropertyDefinitions(nodeTypeName, propertyDefinitions);
 
@@ -887,7 +950,7 @@ public final class CndValidator {
             final String unqualifiedName = qname.getUnqualifiedName();
 
             if (Utils.isEmpty(unqualifiedName)) {
-                status.add(ValidationStatus.createErrorMessage(Messages.emptyUnqualifiedName));
+                status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.emptyUnqualifiedName, propertyName)));
             } else {
                 final ValidationStatus nameStatus = validateLocalName(unqualifiedName, propertyName);
 
@@ -905,13 +968,16 @@ public final class CndValidator {
      * @param propertyName the name to use to identify the qualified name (cannot be <code>null</code> empty)
      * @param validNamespacePrefixes a collection of namespace prefixes that the qualified name must match (can be <code>null</code>
      *            or empty)
+     * @param existingQNames a list of existing qualified names used to make sure the name being validated is not a duplicate (can
+     *            be <code>null</code> or empty)
      * @return the status (never <code>null</code>)
      */
     public static MultiValidationStatus validateQualifiedName( final QualifiedName qname,
                                                                final String propertyName,
-                                                               final List<String> validNamespacePrefixes ) {
+                                                               final Collection<String> validNamespacePrefixes,
+                                                               final Collection<QualifiedName> existingQNames ) {
         final MultiValidationStatus status = new MultiValidationStatus();
-        validateQualifiedName(qname, propertyName, validNamespacePrefixes, status);
+        validateQualifiedName(qname, propertyName, validNamespacePrefixes, existingQNames, status);
         return status;
     }
 
@@ -920,14 +986,18 @@ public final class CndValidator {
      * @param propertyName the name to use to identify the qualified name (cannot be <code>null</code> empty)
      * @param validNamespacePrefixes a collection of namespace prefixes that the qualified name must match (can be <code>null</code>
      *            or empty)
+     * @param existingQNames a list of existing qualified names used to make sure the name being validated is not a duplicate (can
+     *            be <code>null</code> or empty)
      * @param status the status to add the new status to (never <code>null</code>)
      */
     public static void validateQualifiedName( final QualifiedName qname,
                                               final String propertyName,
-                                              final List<String> validNamespacePrefixes,
+                                              final Collection<String> validNamespacePrefixes,
+                                              final Collection<QualifiedName> existingQNames,
                                               final MultiValidationStatus status ) {
         validateQualifiedName(qname, propertyName, status);
 
+        // make sure qualifier is valid
         if (!Utils.isEmpty(validNamespacePrefixes)) {
             final String qualifier = qname.getQualifier();
 
@@ -936,6 +1006,13 @@ public final class CndValidator {
                                                                                                 propertyName, qualifier));
                 status.add(newStatus);
             }
+        }
+
+        // make sure qname is not a duplicate
+        if (!Utils.isEmpty(existingQNames) && existingQNames.contains(qname)) {
+            final ValidationStatus newStatus = ValidationStatus.createErrorMessage(NLS.bind(Messages.duplicateQualifiedName,
+                                                                                            propertyName, qname));
+            status.add(newStatus);
         }
     }
 
@@ -1017,7 +1094,7 @@ public final class CndValidator {
         }
 
         final MultiValidationStatus status = new MultiValidationStatus();
-        final List<String> names = new ArrayList<String>(superTypeNames.length);
+        final Collection<String> names = new ArrayList<String>(superTypeNames.length);
 
         for (final String superTypeName : superTypeNames) {
             // ERROR - Invalid super type name

@@ -290,7 +290,7 @@ public class NodeTypeDefinitionTest {
     public void shouldReceiveEventAfterClearingSuperTypes() {
         final String SUPER_TYPE = "superType"; //$NON-NLS-1$
         assertTrue(this.nodeTypeDefinition.addSuperType(SUPER_TYPE));
-        Collection<String> oldValue = Collections.singletonList(SUPER_TYPE);
+        Collection<QualifiedName> oldValue = this.nodeTypeDefinition.getSupertypes();
 
         Listener l = new Listener();
         assertTrue(this.nodeTypeDefinition.addListener(l));

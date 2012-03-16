@@ -40,6 +40,6 @@ public interface UiConstants {
         /**
          * The relative path from the plugin folder to the icon used for creating new objects.
          */
-        String NEW_16X = ICONS_FOLDER + "new-16x.gif"; //$NON-NLS-1$
+        String NEW_16X = ICONS_FOLDER + "new-16x.png"; //$NON-NLS-1$
     }
 }

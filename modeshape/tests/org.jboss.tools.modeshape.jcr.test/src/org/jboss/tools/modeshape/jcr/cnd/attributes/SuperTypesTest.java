@@ -15,6 +15,7 @@ import static org.junit.Assert.fail;
 import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.cnd.CndElement;
 import org.jboss.tools.modeshape.jcr.cnd.Constants;
+import org.jboss.tools.modeshape.jcr.cnd.QualifiedName;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,14 +26,14 @@ public class SuperTypesTest implements Constants {
 
     private SuperTypes attribute;
 
-    private void add( String item ) {
-        if (!this.attribute.add(item)) {
+    private void add( QualifiedName qname ) {
+        if (!this.attribute.add(qname)) {
             fail();
         }
     }
 
-    private void remove( String item ) {
-        if (!this.attribute.remove(item)) {
+    private void remove( QualifiedName qname ) {
+        if (!this.attribute.remove(qname)) {
             fail();
         }
     }
@@ -52,11 +53,11 @@ public class SuperTypesTest implements Constants {
     @Test
     public void verifyAddedItem() {
         // setup
-        add(ITEM_ONE);
+        add(QUALIFIED_NAME1);
 
         // tests
         assertEquals(1, this.attribute.getSupportedItems().size());
-        assertTrue(this.attribute.getSupportedItems().contains(ITEM_ONE));
+        assertTrue(this.attribute.getSupportedItems().contains(QUALIFIED_NAME1));
     }
 
     @Test
@@ -72,9 +73,9 @@ public class SuperTypesTest implements Constants {
     @Test
     public void verifyMultipleElementsCndNotation() {
         // setup
-        add(ITEM_ONE);
-        add(ITEM_TWO);
-        add(ITEM_THREE);
+        add(QUALIFIED_NAME1);
+        add(QUALIFIED_NAME2);
+        add(QUALIFIED_NAME3);
 
         // tests
         assertEquals(SUPER_TYPES_THREE_ITEM_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPACT));
@@ -85,7 +86,7 @@ public class SuperTypesTest implements Constants {
     @Test
     public void verifyOneElementCndNotation() {
         // setup
-        add(ITEM_ONE);
+        add(QUALIFIED_NAME1);
 
         // tests
         assertEquals(SUPER_TYPES_ONE_ITEM_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPACT));
@@ -96,21 +97,21 @@ public class SuperTypesTest implements Constants {
     @Test
     public void verifyRemoveItem() {
         // setup
-        add(ITEM_ONE);
-        add(ITEM_TWO);
-        remove(ITEM_ONE);
+        add(QUALIFIED_NAME1);
+        add(QUALIFIED_NAME2);
+        remove(QUALIFIED_NAME1);
 
         // tests
-        assertFalse(this.attribute.getSupportedItems().contains(ITEM_ONE));
+        assertFalse(this.attribute.getSupportedItems().contains(QUALIFIED_NAME1));
     }
 
     @Test
     public void verifySameElementIsNotAdded() {
         // setup
-        add(ITEM_ONE);
+        add(QUALIFIED_NAME1);
 
         // tests
-        if (this.attribute.add(ITEM_ONE)) {
+        if (this.attribute.add(QUALIFIED_NAME1)) {
             fail();
         }
 
@@ -120,7 +121,7 @@ public class SuperTypesTest implements Constants {
     @Test
     public void verifyStateShouldBeIsAfterAdd() {
         // setup
-        add(ITEM_ONE);
+        add(QUALIFIED_NAME1);
 
         // tests
         assertEquals(AttributeState.Value.IS, this.attribute.get());
@@ -129,8 +130,8 @@ public class SuperTypesTest implements Constants {
     @Test
     public void verifyStateShouldBeIsNotWhenEmpty() {
         // setup
-        add(ITEM_ONE);
-        remove(ITEM_ONE);
+        add(QUALIFIED_NAME1);
+        remove(QUALIFIED_NAME1);
 
         // tests
         assertEquals(0, this.attribute.getSupportedItems().size());

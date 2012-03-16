@@ -79,7 +79,6 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
     private ScrolledForm scrolledForm;
 
     private final CndEditorPage formsPage;
-//    private final CndEditorPage sourcePage;
 
     /**
      * Constructs a CND editor.

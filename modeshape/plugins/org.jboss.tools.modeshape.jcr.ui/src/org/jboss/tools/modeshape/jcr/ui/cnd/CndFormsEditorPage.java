@@ -16,6 +16,7 @@ import java.util.List;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
@@ -31,6 +32,7 @@ import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.viewers.ViewerSorter;
+import org.eclipse.jface.window.Window;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
@@ -71,6 +73,7 @@ import org.jboss.tools.modeshape.jcr.cnd.QualifiedName;
 import org.jboss.tools.modeshape.jcr.ui.JcrUiUtils;
 import org.jboss.tools.modeshape.ui.Activator;
 import org.jboss.tools.modeshape.ui.UiConstants;
+import org.jboss.tools.modeshape.ui.UiMessages;
 import org.jboss.tools.modeshape.ui.UiUtils;
 import org.jboss.tools.modeshape.ui.forms.ErrorMessage;
 import org.jboss.tools.modeshape.ui.forms.FormUtils;
@@ -85,35 +88,26 @@ class CndFormsEditorPage extends CndEditorPage {
     private IAction addChildNode;
     private IAction addNamespace;
     private IAction addNodeType;
-
     private IAction addProperty;
     private IAction addSuperType;
-    // node type attributes
     private Button btnAbstract;
-
     private Button btnMixin;
     private Button btnOrderable;
     private Button btnQueryable;
-
-    // node type details
     private CCombo cbxNamePrefix;
     private Section childNodeSection;
     private final ErrorMessage childNodesError;
-
     private TableViewer childNodeViewer;
     private IAction deleteChildNode;
     private IAction deleteNamespace;
-
     private IAction deleteNodeType;
     private IAction deleteProperty;
     private IAction deleteSuperType;
     private Section detailsSection;
     private IAction editChildNode;
-
     private IAction editNamespace;
     private IAction editNodeType;
     private IAction editProperty;
-
     private IAction editSuperType;
     private final ErrorMessage namespacesError;
     private TableViewer namespaceViewer;
@@ -121,14 +115,11 @@ class CndFormsEditorPage extends CndEditorPage {
     private String nodeTypeNameFilterPattern;
     private final ErrorMessage nodeTypeNamePrefixError;
     private final ErrorMessage nodeTypesError;
-
     private TableViewer nodeTypeViewer;
-
     private final ErrorMessage propertiesError;
     private Section propertiesSection;
     private TableViewer propertyViewer;
     private final ErrorMessage superTypesError;
-
     private TableViewer superTypesViewer;
     private Text txtName;
 
@@ -181,6 +172,7 @@ class CndFormsEditorPage extends CndEditorPage {
             }
         };
         this.addChildNode.setEnabled(false);
+        this.addChildNode.setText(CndMessages.addChildNodeMenuText);
         this.addChildNode.setToolTipText(CndMessages.addChildNodeToolTip);
         this.addChildNode.setImageDescriptor(Activator.getSharedInstance().getImageDescriptor(UiConstants.Images.NEW_16X));
 
@@ -197,6 +189,7 @@ class CndFormsEditorPage extends CndEditorPage {
             }
         };
         this.deleteChildNode.setEnabled(false);
+        this.deleteChildNode.setText(CndMessages.deleteChildNodeMenuText);
         this.deleteChildNode.setToolTipText(CndMessages.deleteChildNodeToolTip);
         this.deleteChildNode.setImageDescriptor(Activator.getSharedInstance().getImageDescriptor(UiConstants.Images.DELETE_16X));
 
@@ -213,6 +206,7 @@ class CndFormsEditorPage extends CndEditorPage {
             }
         };
         this.editChildNode.setEnabled(false);
+        this.editChildNode.setText(CndMessages.editChildNodeMenuText);
         this.editChildNode.setToolTipText(CndMessages.editChildNodeToolTip);
         this.editChildNode.setImageDescriptor(Activator.getSharedInstance().getImageDescriptor(UiConstants.Images.EDIT_16X));
     }
@@ -241,6 +235,13 @@ class CndFormsEditorPage extends CndEditorPage {
 
         final Table table = FormUtils.createTable(toolkit, container);
         ((GridData)table.getLayoutData()).heightHint = table.getItemHeight() * 5;
+
+        // table context menu
+        MenuManager menuManager = new MenuManager();
+        menuManager.add(this.addChildNode);
+        menuManager.add(this.editChildNode);
+        menuManager.add(this.deleteChildNode);
+        table.setMenu(menuManager.createContextMenu(table));
 
         createChildNodeViewer(table);
         this.childNodesError.setControl(table);
@@ -534,7 +535,7 @@ class CndFormsEditorPage extends CndEditorPage {
                 this.btnQueryable.setToolTipText(CndMessages.queryableAttributeToolTip);
 
                 // fill with data from CND
-                refreshNameControls(true); // fill control with data from CND
+                refreshNameControls();
                 refreshAttributeControls();
             }
         }
@@ -556,6 +557,14 @@ class CndFormsEditorPage extends CndEditorPage {
             this.superTypesError.setControl(table);
 
             createSuperTypesActions();
+
+            // table context menu
+            MenuManager menuManager = new MenuManager();
+            menuManager.add(this.addSuperType);
+            menuManager.add(this.editSuperType);
+            menuManager.add(this.deleteSuperType);
+            table.setMenu(menuManager.createContextMenu(table));
+
             createSuperTypesViewer(table);
 
             // add toolbar buttons (add, edit, delete)
@@ -588,6 +597,7 @@ class CndFormsEditorPage extends CndEditorPage {
                 handleAddNamespace();
             }
         };
+        this.addNamespace.setText(CndMessages.addNamespaceMenuText);
         this.addNamespace.setToolTipText(CndMessages.addNamespaceToolTip);
         this.addNamespace.setImageDescriptor(Activator.getSharedInstance().getImageDescriptor(UiConstants.Images.NEW_16X));
 
@@ -604,6 +614,7 @@ class CndFormsEditorPage extends CndEditorPage {
             }
         };
         this.deleteNamespace.setEnabled(false);
+        this.deleteNamespace.setText(CndMessages.deleteNamespaceMenuText);
         this.deleteNamespace.setToolTipText(CndMessages.deleteNamespaceToolTip);
         this.deleteNamespace.setImageDescriptor(Activator.getSharedInstance().getImageDescriptor(UiConstants.Images.DELETE_16X));
 
@@ -620,6 +631,7 @@ class CndFormsEditorPage extends CndEditorPage {
             }
         };
         this.editNamespace.setEnabled(false);
+        this.editNamespace.setText(CndMessages.editNamespaceMenuText);
         this.editNamespace.setToolTipText(CndMessages.editNamespaceToolTip);
         this.editNamespace.setImageDescriptor(Activator.getSharedInstance().getImageDescriptor(UiConstants.Images.EDIT_16X));
     }
@@ -649,6 +661,13 @@ class CndFormsEditorPage extends CndEditorPage {
 
         final Table table = FormUtils.createTable(toolkit, container);
         ((GridData)table.getLayoutData()).heightHint = table.getItemHeight() * 5;
+
+        // table context menu
+        MenuManager menuManager = new MenuManager();
+        menuManager.add(this.addNamespace);
+        menuManager.add(this.editNamespace);
+        menuManager.add(this.deleteNamespace);
+        table.setMenu(menuManager.createContextMenu(table));
 
         createNamespaceViewer(table);
         this.namespacesError.setControl(table);
@@ -787,6 +806,7 @@ class CndFormsEditorPage extends CndEditorPage {
                 handleAddNodeType();
             }
         };
+        this.addNodeType.setText(CndMessages.addNodeTypeMenuText);
         this.addNodeType.setToolTipText(CndMessages.addNodeTypeToolTip);
         this.addNodeType.setImageDescriptor(Activator.getSharedInstance().getImageDescriptor(UiConstants.Images.NEW_16X));
 
@@ -803,6 +823,7 @@ class CndFormsEditorPage extends CndEditorPage {
             }
         };
         this.deleteNodeType.setEnabled(false);
+        this.deleteNodeType.setText(CndMessages.deleteNodeTypeMenuText);
         this.deleteNodeType.setToolTipText(CndMessages.deleteNodeTypeToolTip);
         this.deleteNodeType.setImageDescriptor(Activator.getSharedInstance().getImageDescriptor(UiConstants.Images.DELETE_16X));
 
@@ -819,6 +840,7 @@ class CndFormsEditorPage extends CndEditorPage {
             }
         };
         this.editNodeType.setEnabled(false);
+        this.editNodeType.setText(CndMessages.editNodeTypeMenuText);
         this.editNodeType.setToolTipText(CndMessages.editNodeTypeToolTip);
         this.editNodeType.setImageDescriptor(Activator.getSharedInstance().getImageDescriptor(UiConstants.Images.EDIT_16X));
     }
@@ -880,6 +902,13 @@ class CndFormsEditorPage extends CndEditorPage {
 
             final Table table = FormUtils.createTable(toolkit, viewerContainer);
             table.setLinesVisible(false);
+
+            // table context menu
+            MenuManager menuManager = new MenuManager();
+            menuManager.add(this.addNodeType);
+            menuManager.add(this.editNodeType);
+            menuManager.add(this.deleteNodeType);
+            table.setMenu(menuManager.createContextMenu(table));
 
             createNodeTypeViewer(table);
             this.nodeTypesError.setControl(table);
@@ -1056,6 +1085,7 @@ class CndFormsEditorPage extends CndEditorPage {
             }
         };
         this.addProperty.setEnabled(false);
+        this.addProperty.setText(CndMessages.addPropertyMenuText);
         this.addProperty.setToolTipText(CndMessages.addPropertyToolTip);
         this.addProperty.setImageDescriptor(Activator.getSharedInstance().getImageDescriptor(UiConstants.Images.NEW_16X));
 
@@ -1072,6 +1102,7 @@ class CndFormsEditorPage extends CndEditorPage {
             }
         };
         this.deleteProperty.setEnabled(false);
+        this.deleteProperty.setText(CndMessages.deletePropertyMenuText);
         this.deleteProperty.setToolTipText(CndMessages.deletePropertyToolTip);
         this.deleteProperty.setImageDescriptor(Activator.getSharedInstance().getImageDescriptor(UiConstants.Images.DELETE_16X));
 
@@ -1088,6 +1119,7 @@ class CndFormsEditorPage extends CndEditorPage {
             }
         };
         this.editProperty.setEnabled(false);
+        this.editProperty.setText(CndMessages.editPropertyMenuText);
         this.editProperty.setToolTipText(CndMessages.editPropertyToolTip);
         this.editProperty.setImageDescriptor(Activator.getSharedInstance().getImageDescriptor(UiConstants.Images.EDIT_16X));
     }
@@ -1117,6 +1149,13 @@ class CndFormsEditorPage extends CndEditorPage {
 
         final Table table = FormUtils.createTable(toolkit, container);
         ((GridData)table.getLayoutData()).heightHint = table.getItemHeight() * 5;
+
+        // table context menu
+        MenuManager menuManager = new MenuManager();
+        menuManager.add(this.addProperty);
+        menuManager.add(this.editProperty);
+        menuManager.add(this.deleteProperty);
+        table.setMenu(menuManager.createContextMenu(table));
 
         createPropertyViewer(table);
         this.propertiesError.setControl(table);
@@ -1296,6 +1335,7 @@ class CndFormsEditorPage extends CndEditorPage {
             }
         };
         this.addSuperType.setEnabled(false);
+        this.addSuperType.setText(CndMessages.addSuperTypeMenuText);
         this.addSuperType.setToolTipText(CndMessages.addSuperTypeToolTip);
         this.addSuperType.setImageDescriptor(Activator.getSharedInstance().getImageDescriptor(UiConstants.Images.NEW_16X));
 
@@ -1312,6 +1352,7 @@ class CndFormsEditorPage extends CndEditorPage {
             }
         };
         this.deleteSuperType.setEnabled(false);
+        this.deleteSuperType.setText(CndMessages.deleteSuperTypeMenuText);
         this.deleteSuperType.setToolTipText(CndMessages.deleteSuperTypeToolTip);
         this.deleteSuperType.setImageDescriptor(Activator.getSharedInstance().getImageDescriptor(UiConstants.Images.DELETE_16X));
 
@@ -1328,6 +1369,7 @@ class CndFormsEditorPage extends CndEditorPage {
             }
         };
         this.editSuperType.setEnabled(false);
+        this.editSuperType.setText(CndMessages.editSuperTypeMenuText);
         this.editSuperType.setToolTipText(CndMessages.editSuperTypeToolTip);
         this.editSuperType.setImageDescriptor(Activator.getSharedInstance().getImageDescriptor(UiConstants.Images.EDIT_16X));
     }
@@ -1402,6 +1444,27 @@ class CndFormsEditorPage extends CndEditorPage {
                 handleSuperTypeSelected();
             }
         });
+    }
+
+    private Image getCndEditorImage() {
+        return org.jboss.tools.modeshape.jcr.ui.Activator.getSharedInstance()
+                                                         .getImage(org.jboss.tools.modeshape.jcr.ui.UiConstants.Images.CND_EDITOR);
+    }
+
+    private List<String> getNamespacePrefixes() {
+        final List<NamespaceMapping> namespaces = getCnd().getNamespaceMappings();
+
+        if (namespaces.isEmpty()) {
+            return null;
+        }
+
+        final List<String> prefixes = new ArrayList<String>(namespaces.size());
+
+        for (final NamespaceMapping namespace : namespaces) {
+            prefixes.add(namespace.getPrefix());
+        }
+
+        return prefixes;
     }
 
     /**
@@ -1496,8 +1559,20 @@ class CndFormsEditorPage extends CndEditorPage {
     }
 
     void handleAddNamespace() {
-        // TODO handleAddNamespace
-        MessageFormDialog.openInfo(getShell(), "Not Implemented Yet", null, "method has not be implemented");
+        final NamespaceMappingDialog dialog = new NamespaceMappingDialog(getShell(), getCnd().getNamespaceMappings());
+        dialog.create();
+        dialog.getShell().pack();
+
+        if (dialog.open() == Window.OK) {
+            final NamespaceMapping namespaceMapping = dialog.getNamespaceMapping();
+
+            if (getCnd().addNamespaceMapping(namespaceMapping)) {
+                this.namespaceViewer.refresh();
+            } else {
+                MessageFormDialog.openError(getShell(), UiMessages.errorDialogTitle, getCndEditorImage(),
+                                            NLS.bind(CndMessages.errorAddingNamespaceMapping, namespaceMapping));
+            }
+        }
     }
 
     void handleAddNodeType() {
@@ -1511,8 +1586,27 @@ class CndFormsEditorPage extends CndEditorPage {
     }
 
     void handleAddSuperType() {
-        // TODO handleAddSuperType
-        MessageFormDialog.openInfo(getShell(), "Not Implemented Yet", null, "method has not be implemented");
+        assert (getSelectedNodeType() != null) : "add supertype button is enabled when there is no selected node type"; //$NON-NLS-1$
+
+        final QualifiedNameDialog dialog = new QualifiedNameDialog(getShell(),
+                                                                   CndMessages.newSuperTypeDialogTitle,
+                                                                   Messages.superTypeName,
+                                                                   getNamespacePrefixes());
+        dialog.setExistingQNames(getSelectedNodeType().getSupertypes());
+        dialog.create();
+        dialog.getShell().pack();
+
+        if (dialog.open() == Window.OK) {
+            final NodeTypeDefinition nodeTypeDefinition = getSelectedNodeType();
+            final QualifiedName newQName = dialog.getQualifiedName();
+
+            if (nodeTypeDefinition.addSuperType(newQName.get())) {
+                this.superTypesViewer.refresh();
+            } else {
+                MessageFormDialog.openError(getShell(), UiMessages.errorDialogTitle, getCndEditorImage(),
+                                            NLS.bind(CndMessages.errorAddingSupertype, newQName));
+            }
+        }
     }
 
     void handleChildNodeSelected() {
@@ -1543,7 +1637,7 @@ class CndFormsEditorPage extends CndEditorPage {
     public void handleCndReloaded() {
         // make sure GUI has been constructed before refreshing
         if (this.propertyViewer != null) {
-            refreshNameControls(true);
+            refreshNameControls();
             refreshAttributeControls();
             refreshSuperTypes();
             refreshPropertyViewer();
@@ -1556,8 +1650,6 @@ class CndFormsEditorPage extends CndEditorPage {
         assert (getSelectedChildNode() != null) : "Delete child node button is enabled and there is no child node selected"; //$NON-NLS-1$
 
         final ChildNodeDefinition childNodeDefinition = getSelectedChildNode();
-        final Image image = org.jboss.tools.modeshape.jcr.ui.Activator.getSharedInstance()
-                                                                      .getImage(org.jboss.tools.modeshape.jcr.ui.UiConstants.Images.CND_EDITOR);
         String name = childNodeDefinition.getName();
 
         if (Utils.isEmpty(name)) {
@@ -1565,7 +1657,7 @@ class CndFormsEditorPage extends CndEditorPage {
         }
 
         // show confirmation dialog
-        if (MessageFormDialog.openQuestion(getShell(), CndMessages.deleteChildNodeDialogTitle, image,
+        if (MessageFormDialog.openQuestion(getShell(), CndMessages.deleteChildNodeDialogTitle, getCndEditorImage(),
                                            NLS.bind(CndMessages.deleteChildNodeDialogMessage, name))) {
             getSelectedNodeType().removeChildNodeDefinition(childNodeDefinition);
         }
@@ -1575,8 +1667,6 @@ class CndFormsEditorPage extends CndEditorPage {
         assert (getSelectedNamespace() != null) : "Delete namespace button is enabled and there is no namespace selected"; //$NON-NLS-1$
 
         final NamespaceMapping namespaceMapping = getSelectedNamespace();
-        final Image image = org.jboss.tools.modeshape.jcr.ui.Activator.getSharedInstance()
-                                                                      .getImage(org.jboss.tools.modeshape.jcr.ui.UiConstants.Images.CND_EDITOR);
         String prefix = namespaceMapping.getPrefix();
 
         if (Utils.isEmpty(prefix)) {
@@ -1584,7 +1674,7 @@ class CndFormsEditorPage extends CndEditorPage {
         }
 
         // show confirmation dialog
-        if (MessageFormDialog.openQuestion(getShell(), CndMessages.deleteNamespaceDialogTitle, image,
+        if (MessageFormDialog.openQuestion(getShell(), CndMessages.deleteNamespaceDialogTitle, getCndEditorImage(),
                                            NLS.bind(CndMessages.deleteNamespaceDialogMessage, prefix))) {
             getCnd().removeNamespaceMapping(namespaceMapping);
         }
@@ -1594,8 +1684,6 @@ class CndFormsEditorPage extends CndEditorPage {
         assert (getSelectedNodeType() != null) : "Delete node type button is enabled and there is no node type selected"; //$NON-NLS-1$
 
         final NodeTypeDefinition nodeTypeDefinition = getSelectedNodeType();
-        final Image image = org.jboss.tools.modeshape.jcr.ui.Activator.getSharedInstance()
-                                                                      .getImage(org.jboss.tools.modeshape.jcr.ui.UiConstants.Images.CND_EDITOR);
         String name = nodeTypeDefinition.getName();
 
         if (Utils.isEmpty(name)) {
@@ -1603,7 +1691,7 @@ class CndFormsEditorPage extends CndEditorPage {
         }
 
         // show confirmation dialog
-        if (MessageFormDialog.openQuestion(getShell(), CndMessages.deleteNodeTypeDialogTitle, image,
+        if (MessageFormDialog.openQuestion(getShell(), CndMessages.deleteNodeTypeDialogTitle, getCndEditorImage(),
                                            NLS.bind(CndMessages.deleteNodeTypeDialogMessage, name))) {
             getCnd().removeNodeTypeDefinition(nodeTypeDefinition);
         }
@@ -1614,8 +1702,6 @@ class CndFormsEditorPage extends CndEditorPage {
         assert (getSelectedProperty() != null) : "Delete property button is enabled and there is no property selected"; //$NON-NLS-1$
 
         final PropertyDefinition propertyDefinition = getSelectedProperty();
-        final Image image = org.jboss.tools.modeshape.jcr.ui.Activator.getSharedInstance()
-                                                                      .getImage(org.jboss.tools.modeshape.jcr.ui.UiConstants.Images.CND_EDITOR);
         String name = propertyDefinition.getName();
 
         if (Utils.isEmpty(name)) {
@@ -1623,7 +1709,7 @@ class CndFormsEditorPage extends CndEditorPage {
         }
 
         // show confirmation dialog
-        if (MessageFormDialog.openQuestion(getShell(), CndMessages.deletePropertyDialogTitle, image,
+        if (MessageFormDialog.openQuestion(getShell(), CndMessages.deletePropertyDialogTitle, getCndEditorImage(),
                                            NLS.bind(CndMessages.deletePropertyDialogMessage, name))) {
             getSelectedNodeType().removePropertyDefinition(propertyDefinition);
         }
@@ -1634,43 +1720,109 @@ class CndFormsEditorPage extends CndEditorPage {
         assert (getSelectedSuperType() != null) : "Delete super type button is enabled and there is no super type selected"; //$NON-NLS-1$
 
         String superTypeName = getSelectedSuperType();
-        final Image image = org.jboss.tools.modeshape.jcr.ui.Activator.getSharedInstance()
-                                                                      .getImage(org.jboss.tools.modeshape.jcr.ui.UiConstants.Images.CND_EDITOR);
 
         if (Utils.isEmpty(superTypeName)) {
             superTypeName = Messages.missingName;
         }
 
         // show confirmation dialog
-        if (MessageFormDialog.openQuestion(getShell(), CndMessages.deleteSuperTypeDialogTitle, image,
+        if (MessageFormDialog.openQuestion(getShell(), CndMessages.deleteSuperTypeDialogTitle, getCndEditorImage(),
                                            NLS.bind(CndMessages.deleteSuperTypeDialogMessage, superTypeName))) {
             getSelectedNodeType().removeSuperType(superTypeName);
         }
     }
 
     void handleEditChildNode() {
+        assert (getSelectedChildNode() != null) : "Edit child node handler has been called when there is no child node selected"; //$NON-NLS-1$
         // TODO handleEditChildNode
         MessageFormDialog.openInfo(getShell(), "Not Implemented Yet", null, "method has not be implemented");
     }
 
     void handleEditNamespace() {
-        // TODO handleEditNamespace
-        MessageFormDialog.openInfo(getShell(), "Not Implemented Yet", null, "method has not be implemented");
+        assert (getSelectedNamespace() != null) : "Edit namespace handler has been called when there is no namespace selected"; //$NON-NLS-1$
+        final NamespaceMapping selectedNamespace = getSelectedNamespace();
+
+        // TODO if prefix is changed should qualified names with old prefix be automatically updated?
+        final NamespaceMappingDialog dialog = new NamespaceMappingDialog(getShell(),
+                                                                         getCnd().getNamespaceMappings(),
+                                                                         selectedNamespace);
+        dialog.create();
+        dialog.getShell().pack();
+
+        if (dialog.open() == Window.OK) {
+            final NamespaceMapping modifiedNamespaceMapping = dialog.getNamespaceMapping();
+            boolean removed = false;
+            boolean added = false;
+
+            // remove existing and add in new
+            if (getCnd().removeNamespaceMapping(selectedNamespace)) {
+                removed = true;
+
+                if (getCnd().addNamespaceMapping(modifiedNamespaceMapping)) {
+                    added = true;
+                    this.namespaceViewer.refresh();
+                }
+            }
+
+            if (!removed || !added) {
+                MessageFormDialog.openError(getShell(),
+                                            UiMessages.errorDialogTitle,
+                                            getCndEditorImage(),
+                                            NLS.bind(CndMessages.errorEditingNamespaceMapping, new Object[] {
+                                                    modifiedNamespaceMapping, removed, added }));
+            }
+        }
     }
 
     void handleEditNodeType() {
+        assert (getSelectedNodeType() != null) : "Edit node type handler has been called when there is no node type selected"; //$NON-NLS-1$
         // TODO handleEditNodeType
         MessageFormDialog.openInfo(getShell(), "Not Implemented Yet", null, "method has not be implemented");
     }
 
     void handleEditProperty() {
+        assert (getSelectedProperty() != null) : "Edit property handler has been called when there is no property selected"; //$NON-NLS-1$
         // TODO handleEditProperty
         MessageFormDialog.openInfo(getShell(), "Not Implemented Yet", null, "method has not be implemented");
     }
 
     void handleEditSuperType() {
-        // TODO handleEditSuperType
-        MessageFormDialog.openInfo(getShell(), "Not Implemented Yet", null, "method has not be implemented");
+        assert (getSelectedSuperType() != null) : "Edit super type handler has been called when there is no super type selected"; //$NON-NLS-1$
+        final String selectedSupertype = getSelectedSuperType();
+
+        final QualifiedNameDialog dialog = new QualifiedNameDialog(getShell(),
+                                                                   CndMessages.editSuperTypeDialogTitle,
+                                                                   Messages.superTypeName,
+                                                                   getNamespacePrefixes(),
+                                                                   QualifiedName.parse(selectedSupertype));
+        dialog.setExistingQNames(getSelectedNodeType().getSupertypes());
+        dialog.create();
+        dialog.getShell().pack();
+
+        if (dialog.open() == Window.OK) {
+            final NodeTypeDefinition nodeTypeDefinition = getSelectedNodeType();
+            final QualifiedName modifiedSuperType = dialog.getQualifiedName();
+            boolean removed = false;
+            boolean added = false;
+
+            // remove existing and add in new
+            if (nodeTypeDefinition.removeSuperType(selectedSupertype)) {
+                removed = true;
+
+                if (nodeTypeDefinition.addSuperType(modifiedSuperType.get())) {
+                    added = true;
+                    this.superTypesViewer.refresh();
+                }
+            }
+
+            if (!removed || !added) {
+                MessageFormDialog.openError(getShell(),
+                                            UiMessages.errorDialogTitle,
+                                            getCndEditorImage(),
+                                            NLS.bind(CndMessages.errorEditingSupertype, new Object[] { modifiedSuperType, removed,
+                                                    added }));
+            }
+        }
     }
 
     void handleMixinChanged( final boolean newValue ) {
@@ -1762,7 +1914,7 @@ class CndFormsEditorPage extends CndEditorPage {
         }
 
         // populate details section
-        refreshNameControls(false);
+        refreshNameControls();
         refreshAttributeControls();
         refreshSuperTypes();
         refreshPropertyViewer();
@@ -1801,7 +1953,7 @@ class CndFormsEditorPage extends CndEditorPage {
         } else if (NodeTypeDefinition.PropertyName.PRIMARY_ITEM.toString().equals(propName)) {
             // TODO primary item has not been code for in this class yet
         } else if (NodeTypeDefinition.PropertyName.PROPERTY_DEFINITIONS.toString().equals(propName)) {
-            
+
         } else if (NodeTypeDefinition.PropertyName.QUERYABLE.toString().equals(propName)) {
 
         } else if (NodeTypeDefinition.PropertyName.SUPERTYPES.toString().equals(propName)) {
@@ -1834,13 +1986,7 @@ class CndFormsEditorPage extends CndEditorPage {
 
     void handleSuperTypeSelected() {
         // update button enablements
-        boolean enable = (getSelectedNodeType() != null);
-
-        if (this.addSuperType.isEnabled() != enable) {
-            this.addSuperType.setEnabled(enable);
-        }
-
-        enable = (getSelectedSuperType() != null);
+        final boolean enable = (getSelectedSuperType() != null);
 
         if (this.editSuperType.isEnabled() != enable) {
             this.editSuperType.setEnabled(enable);
@@ -1914,7 +2060,7 @@ class CndFormsEditorPage extends CndEditorPage {
         }
     }
 
-    private void refreshNameControls( final boolean loadNamespaces ) {
+    private void refreshNameControls() {
         final NodeTypeDefinition nodeTypeDefinition = getSelectedNodeType();
 
         if ((nodeTypeDefinition == null) || Utils.isEmpty(nodeTypeDefinition.getName())) {
@@ -1922,22 +2068,20 @@ class CndFormsEditorPage extends CndEditorPage {
             this.txtName.setText(Utils.EMPTY_STRING);
         } else {
             // load qualifiers with namespace prefixes
-            if (loadNamespaces) {
-                final List<NamespaceMapping> namespaceMappings = getCnd().getNamespaceMappings();
-                final List<String> prefixes = new ArrayList<String>(namespaceMappings.size() + 1); // add one for empty qualifier
-                prefixes.add(CndMessages.noNameQualifierChoice);
+            final List<NamespaceMapping> namespaceMappings = getCnd().getNamespaceMappings();
+            final List<String> prefixes = new ArrayList<String>(namespaceMappings.size() + 1); // add one for empty qualifier
+            prefixes.add(CndMessages.noNameQualifierChoice);
 
-                for (final NamespaceMapping namespaceMapping : namespaceMappings) {
-                    prefixes.add(namespaceMapping.getPrefix());
-                }
+            for (final NamespaceMapping namespaceMapping : namespaceMappings) {
+                prefixes.add(namespaceMapping.getPrefix());
+            }
 
-                // set qualifier choices if they have changed
-                final String[] currentItems = this.cbxNamePrefix.getItems();
+            // set qualifier choices if they have changed
+            final String[] currentItems = this.cbxNamePrefix.getItems();
 
-                // only reload qualifiers if different
-                if ((prefixes.size() != currentItems.length) || !prefixes.containsAll(Arrays.asList(currentItems))) {
-                    this.cbxNamePrefix.setItems(prefixes.toArray(new String[prefixes.size()]));
-                }
+            // only reload qualifiers if different
+            if ((prefixes.size() != currentItems.length) || !prefixes.containsAll(Arrays.asList(currentItems))) {
+                this.cbxNamePrefix.setItems(prefixes.toArray(new String[prefixes.size()]));
             }
 
             // load name
@@ -2014,12 +2158,19 @@ class CndFormsEditorPage extends CndEditorPage {
             return;
         }
 
-        boolean enable = !getCndEditor().isReadOnly();
+        final boolean cndWritable = !getCndEditor().isReadOnly();
+        final boolean enableWithNodeTypeSelected = (cndWritable && (getSelectedNodeType() != null));
 
         { // namespaces section
-            if (this.addNamespace.isEnabled() != enable) {
-                this.addNamespace.setEnabled(enable);
+            if (this.addNamespace.isEnabled() != cndWritable) {
+                this.addNamespace.setEnabled(cndWritable);
             }
+
+            if (this.namespaceViewer.getTable().isEnabled() != cndWritable) {
+                this.namespaceViewer.getTable().setEnabled(cndWritable);
+            }
+
+            final boolean enable = (cndWritable && (getSelectedNamespace() != null));
 
             if (this.editNamespace.isEnabled() != enable) {
                 this.editNamespace.setEnabled(enable);
@@ -2028,66 +2179,80 @@ class CndFormsEditorPage extends CndEditorPage {
             if (this.deleteNamespace.isEnabled() != enable) {
                 this.deleteNamespace.setEnabled(enable);
             }
-
-            if (this.namespaceViewer.getTable().isEnabled() != enable) {
-                this.namespaceViewer.getTable().setEnabled(enable);
-            }
         }
 
-        { // nodetypes section
-            if (this.addNodeType.isEnabled() != enable) {
-                this.addNodeType.setEnabled(enable);
+        { // node types section
+            if (this.addNodeType.isEnabled() != cndWritable) {
+                this.addNodeType.setEnabled(cndWritable);
             }
 
-            if (this.editNodeType.isEnabled() != enable) {
-                this.editNodeType.setEnabled(enable);
+            if (this.nodeTypeViewer.getTable().isEnabled() != cndWritable) {
+                this.nodeTypeViewer.getTable().setEnabled(cndWritable);
             }
 
-            if (this.deleteNodeType.isEnabled() != enable) {
-                this.deleteNodeType.setEnabled(enable);
+            if (this.editNodeType.isEnabled() != enableWithNodeTypeSelected) {
+                this.editNodeType.setEnabled(enableWithNodeTypeSelected);
             }
 
-            if (this.nodeTypeViewer.getTable().isEnabled() != enable) {
-                this.nodeTypeViewer.getTable().setEnabled(enable);
+            if (this.deleteNodeType.isEnabled() != enableWithNodeTypeSelected) {
+                this.deleteNodeType.setEnabled(enableWithNodeTypeSelected);
             }
         }
-
-        enable = (enable && (getSelectedNodeType() != null));
 
         { // details section
-            if (this.cbxNamePrefix.isEnabled() != enable) {
-                this.cbxNamePrefix.setEnabled(enable);
+            if (this.cbxNamePrefix.isEnabled() != enableWithNodeTypeSelected) {
+                this.cbxNamePrefix.setEnabled(enableWithNodeTypeSelected);
             }
 
-            if (this.txtName.isEnabled() != enable) {
-                this.txtName.setEnabled(enable);
+            if (this.txtName.isEnabled() != enableWithNodeTypeSelected) {
+                this.txtName.setEnabled(enableWithNodeTypeSelected);
             }
 
-            if (this.btnAbstract.isEnabled() != enable) {
-                this.btnAbstract.setEnabled(enable);
+            if (this.btnAbstract.isEnabled() != enableWithNodeTypeSelected) {
+                this.btnAbstract.setEnabled(enableWithNodeTypeSelected);
             }
 
-            if (this.btnMixin.isEnabled() != enable) {
-                this.btnMixin.setEnabled(enable);
+            if (this.btnMixin.isEnabled() != enableWithNodeTypeSelected) {
+                this.btnMixin.setEnabled(enableWithNodeTypeSelected);
             }
 
-            if (this.btnOrderable.isEnabled() != enable) {
-                this.btnOrderable.setEnabled(enable);
+            if (this.btnOrderable.isEnabled() != enableWithNodeTypeSelected) {
+                this.btnOrderable.setEnabled(enableWithNodeTypeSelected);
             }
 
-            if (this.btnQueryable.isEnabled() != enable) {
-                this.btnQueryable.setEnabled(enable);
+            if (this.btnQueryable.isEnabled() != enableWithNodeTypeSelected) {
+                this.btnQueryable.setEnabled(enableWithNodeTypeSelected);
             }
 
-            if (this.superTypesViewer.getTable().isEnabled() != enable) {
-                this.superTypesViewer.getTable().setEnabled(enable);
+            if (this.addSuperType.isEnabled() != enableWithNodeTypeSelected) {
+                this.addSuperType.setEnabled(enableWithNodeTypeSelected);
+            }
+
+            if (this.superTypesViewer.getTable().isEnabled() != enableWithNodeTypeSelected) {
+                this.superTypesViewer.getTable().setEnabled(enableWithNodeTypeSelected);
+            }
+
+            final boolean enable = (enableWithNodeTypeSelected && (getSelectedSuperType() != null));
+
+            if (this.editSuperType.isEnabled() != enable) {
+                this.editSuperType.setEnabled(enable);
+            }
+
+            if (this.deleteSuperType.isEnabled() != enable) {
+                this.deleteSuperType.setEnabled(enable);
             }
         }
 
         { // properties section
-            if (this.addProperty.isEnabled() != enable) {
-                this.addProperty.setEnabled(enable);
+            if (this.addProperty.isEnabled() != enableWithNodeTypeSelected) {
+                this.addProperty.setEnabled(enableWithNodeTypeSelected);
             }
+
+            if (this.propertyViewer.getTable().isEnabled() != enableWithNodeTypeSelected) {
+                this.propertyViewer.getTable().setEnabled(enableWithNodeTypeSelected);
+            }
+
+            final boolean enable = (enableWithNodeTypeSelected && (getSelectedProperty() != null));
 
             if (this.editProperty.isEnabled() != enable) {
                 this.editProperty.setEnabled(enable);
@@ -2096,16 +2261,18 @@ class CndFormsEditorPage extends CndEditorPage {
             if (this.deleteProperty.isEnabled() != enable) {
                 this.deleteProperty.setEnabled(enable);
             }
-
-            if (this.propertyViewer.getTable().isEnabled() != enable) {
-                this.propertyViewer.getTable().setEnabled(enable);
-            }
         }
 
         { // child nodes section
-            if (this.addChildNode.isEnabled() != enable) {
-                this.addChildNode.setEnabled(enable);
+            if (this.addChildNode.isEnabled() != enableWithNodeTypeSelected) {
+                this.addChildNode.setEnabled(enableWithNodeTypeSelected);
             }
+
+            if (this.childNodeViewer.getTable().isEnabled() != enableWithNodeTypeSelected) {
+                this.childNodeViewer.getTable().setEnabled(enableWithNodeTypeSelected);
+            }
+
+            final boolean enable = (enableWithNodeTypeSelected && (getSelectedChildNode() != null));
 
             if (this.editChildNode.isEnabled() != enable) {
                 this.editChildNode.setEnabled(enable);
@@ -2113,10 +2280,6 @@ class CndFormsEditorPage extends CndEditorPage {
 
             if (this.deleteChildNode.isEnabled() != enable) {
                 this.deleteChildNode.setEnabled(enable);
-            }
-
-            if (this.childNodeViewer.getTable().isEnabled() != enable) {
-                this.childNodeViewer.getTable().setEnabled(enable);
             }
         }
     }

@@ -8,7 +8,7 @@
 package org.jboss.tools.modeshape.jcr.cnd;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 import org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType;
 import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences.Preference;
@@ -37,6 +37,18 @@ import org.jboss.tools.modeshape.jcr.cnd.attributes.ValueConstraints;
  */
 public interface Constants {
 
+    String NAMESPACE_PREFIX1 = "NAMESPACE_PREFIX1"; //$NON-NLS-1$
+    String NAMESPACE_PREFIX2 = "NAMESPACE_PREFIX2"; //$NON-NLS-1$
+    String NAMESPACE_PREFIX3 = "NAMESPACE_PREFIX3"; //$NON-NLS-1$
+
+    String NAMESPACE_URI1 = "NAMESPACE_URI1"; //$NON-NLS-1$
+    String NAMESPACE_URI2 = "NAMESPACE_URI2"; //$NON-NLS-1$
+    String NAMESPACE_URI3 = "NAMESPACE_URI3"; //$NON-NLS-1$
+
+    NamespaceMapping NAMESPACE1 = new NamespaceMapping(NAMESPACE_PREFIX1, NAMESPACE_URI1);
+    NamespaceMapping NAMESPACE2 = new NamespaceMapping(NAMESPACE_PREFIX2, NAMESPACE_URI2);
+    NamespaceMapping NAMESPACE3 = new NamespaceMapping(NAMESPACE_PREFIX3, NAMESPACE_URI3);
+    
     String QUALIFIER1 = "QUALIFIER1"; //$NON-NLS-1$
     String QUALIFIER2 = "QUALIFIER2"; //$NON-NLS-1$
     String QUALIFIER3 = "QUALIFIER3"; //$NON-NLS-1$
@@ -187,20 +199,22 @@ public interface Constants {
             + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.DEFAULT_VALUES_QUOTE_CHARACTER);
 
     String REQUIRED_TYPES_VARIANT = RequiredTypes.NOTATION_PREFIX + VARIANT + RequiredTypes.NOTATION_SUFFIX;
-    String REQUIRED_TYPES_ONE_ITEM_FORM = RequiredTypes.NOTATION_PREFIX + QUALIFIED_NAME1.get() + RequiredTypes.NOTATION_SUFFIX;
-    String REQUIRED_TYPES_THREE_ITEM_FORM = RequiredTypes.NOTATION_PREFIX + QUALIFIED_NAME1.get()
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER) + QUALIFIED_NAME2.get()
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER) + QUALIFIED_NAME3.get()
+    String REQUIRED_TYPES_ONE_ITEM_FORM = RequiredTypes.NOTATION_PREFIX + QUALIFIED_NAME1 + RequiredTypes.NOTATION_SUFFIX;
+    String REQUIRED_TYPES_THREE_ITEM_FORM = RequiredTypes.NOTATION_PREFIX + QUALIFIED_NAME1
+            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER) + QUALIFIED_NAME2
+            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER) + QUALIFIED_NAME3
             + RequiredTypes.NOTATION_SUFFIX;
 
     String SUPER_TYPES_VARIANT = SuperTypes.NOTATION_PREFIX
             + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_PREFIX_END_DELIMITER) + VARIANT;
     String SUPER_TYPES_ONE_ITEM_FORM = SuperTypes.NOTATION_PREFIX
             + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_PREFIX_END_DELIMITER)
-            + ONE_ITEM_SINGLE_QUOTED_FORM;
+            + QUALIFIED_NAME1;
     String SUPER_TYPES_THREE_ITEM_FORM = SuperTypes.NOTATION_PREFIX
             + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_PREFIX_END_DELIMITER)
-            + THREE_ITEM_SINGLE_QUOTED_FORM;
+            + QUALIFIED_NAME1
+            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER) + QUALIFIED_NAME2
+            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER) + QUALIFIED_NAME3;
 
     String VALUE_CONSTRAINTS_VARIANT = ValueConstraints.NOTATION_PREFIX
             + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_PREFIX_END_DELIMITER) + VARIANT;
@@ -224,12 +238,29 @@ public interface Constants {
             + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_QUOTE_CHAR);
 
     class Helper {
-        public static List<String> getDefaultQualifiers() {
-            List<String> qualifiers = new ArrayList<String>();
+        public static Collection<NamespaceMapping> getDefaultNamespaces() {
+            Collection<NamespaceMapping> namespaces = new ArrayList<NamespaceMapping>();
+            namespaces.add(NAMESPACE1);
+            namespaces.add(NAMESPACE2);
+            namespaces.add(NAMESPACE3);
+            return namespaces;
+        }
+
+        public static Collection<QualifiedName> getDefaultQualifiedNames() {
+            Collection<QualifiedName> qualifiedNames = new ArrayList<QualifiedName>();
+            qualifiedNames.add(QUALIFIED_NAME1);
+            qualifiedNames.add(QUALIFIED_NAME2);
+            qualifiedNames.add(QUALIFIED_NAME3);
+            return qualifiedNames;
+        }
+
+        public static Collection<String> getDefaultQualifiers() {
+            Collection<String> qualifiers = new ArrayList<String>();
             qualifiers.add(QUALIFIER1);
             qualifiers.add(QUALIFIER2);
             qualifiers.add(QUALIFIER3);
             return qualifiers;
         }
+
     }
 }

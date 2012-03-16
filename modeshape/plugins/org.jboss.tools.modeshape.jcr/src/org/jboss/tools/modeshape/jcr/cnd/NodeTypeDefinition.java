@@ -143,7 +143,7 @@ public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTempl
     public boolean addSuperType( final String superTypeBeingAdded ) {
         Utils.verifyIsNotEmpty(superTypeBeingAdded, "superTypeBeingAdded"); //$NON-NLS-1$
 
-        if (this.superTypes.add(superTypeBeingAdded)) {
+        if (this.superTypes.add(QualifiedName.parse(superTypeBeingAdded))) {
             notifyChangeListeners(PropertyName.SUPERTYPES, null, superTypeBeingAdded);
             return true; // added
         }
@@ -244,7 +244,7 @@ public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTempl
      * @return <code>true</code> if there was at least one super type before clearing
      */
     public boolean clearSuperTypes() {
-        final List<String> types = new ArrayList<String>(this.superTypes.getSupportedItems());
+        final List<QualifiedName> types = new ArrayList<QualifiedName>(this.superTypes.getSupportedItems());
 
         if (this.superTypes.clear()) {
             notifyChangeListeners(PropertyName.SUPERTYPES, types, null);
@@ -459,6 +459,13 @@ public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTempl
     }
 
     /**
+     * @return the qualified names of the supertypes (never <code>null</code> but can be empty)
+     */
+    public List<QualifiedName> getSupertypes() {
+        return this.superTypes.getSupportedItems();
+    }
+
+    /**
      * {@inheritDoc}
      * 
      * @see javax.jcr.nodetype.NodeTypeDefinition#hasOrderableChildNodes()
@@ -595,7 +602,7 @@ public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTempl
      * @return <code>true</code> if successfully removed
      */
     public boolean removeSuperType( final String superTypeBeingRemoved ) {
-        if (this.superTypes.remove(superTypeBeingRemoved)) {
+        if (this.superTypes.remove(QualifiedName.parse(superTypeBeingRemoved))) {
             notifyChangeListeners(PropertyName.SUPERTYPES, superTypeBeingRemoved, null);
             return true; // removed
         }
@@ -621,12 +628,12 @@ public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTempl
      */
     @Override
     public void setDeclaredSuperTypeNames( final String[] newSuperTypes ) {
-        final List<String> oldValue = this.superTypes.getSupportedItems();
+        final List<QualifiedName> oldValue = this.superTypes.getSupportedItems();
         boolean changed = this.superTypes.clear();
 
         if (!Utils.isEmpty(newSuperTypes)) {
             for (final String superType : newSuperTypes) {
-                if (this.superTypes.add(superType)) {
+                if (this.superTypes.add(QualifiedName.parse(superType))) {
                     changed = true;
                 }
             }
