@@ -334,6 +334,7 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 		# JBIDE-8667 move current to previous; move next to current
 		if [[ ${DESTINATION##*@*:*} == "" ]]; then # user@server, do remote op
 			# create folders if not already there (could be empty)
+			echo -e "mkdir ${JOB_NAME}" | sftp $DESTINATION/builds/staging/
 			echo -e "mkdir ${JOB_NAME}" | sftp $DESTINATION/builds/staging.previous/
 			#echo -e "mkdir ${JOB_NAME}.2" | sftp $DESTINATION/builds/staging.previous/
 
@@ -360,6 +361,7 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 			echo -e "rename ${JOB_NAME}.next ${JOB_NAME}" | sftp $DESTINATION/builds/staging/
 		else # work locally
 			# create folders if not already there (could be empty)
+			mkdir -p $DESTINATION/builds/staging/${JOB_NAME}
 			mkdir -p $DESTINATION/builds/staging.previous/${JOB_NAME}
 			#mkdir -p $DESTINATION/builds/staging.previous/${JOB_NAME}.2
 
