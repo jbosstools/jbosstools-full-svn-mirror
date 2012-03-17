@@ -57,7 +57,7 @@ $java.home = ${java.home}</echo>
 	<target name="custom.build" description="JBT aggregate update site extra processing steps" depends="basic.build,collect.zips,collect.metadata,create.summary.file" />
 
 	<target name="get.ant-contrib" unless="ant-contrib.jar.exists">
-		<property name="ANTCONTRIB_MIRROR" value="http://downloads.sourceforge.net/ant-contrib/" />
+		<property name="ANTCONTRIB_MIRROR" value="http://sourceforge.net/projects/ant-contrib/files/ant-contrib/ant-contrib-1.0b2" />
 		<get usetimestamp="true" dest="${COMMON_TOOLS}/ant-contrib-1.0b2-bin.zip" src="${ANTCONTRIB_MIRROR}/ant-contrib-1.0b2-bin.zip" />
 		<touch file="${COMMON_TOOLS}/ant-contrib-1.0b2-bin.zip" />
 		<mkdir dir="${java.io.tmpdir}/ant-contrib-1.0b2-bin.zip_" />
