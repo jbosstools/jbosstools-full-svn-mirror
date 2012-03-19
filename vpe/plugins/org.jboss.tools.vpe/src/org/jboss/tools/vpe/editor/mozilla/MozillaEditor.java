@@ -33,6 +33,7 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTError;
 import org.eclipse.swt.browser.ProgressEvent;
@@ -62,6 +63,10 @@ import org.eclipse.ui.internal.part.StatusPart;
 import org.eclipse.ui.part.EditorPart;
 import org.eclipse.ui.statushandlers.StatusAdapter;
 import org.jboss.tools.jst.jsp.JspEditorPlugin;
+import org.jboss.tools.jst.jsp.i18n.ExternalizeStringsDialog;
+import org.jboss.tools.jst.jsp.i18n.ExternalizeStringsUtils;
+import org.jboss.tools.jst.jsp.i18n.ExternalizeStringsWizard;
+import org.jboss.tools.jst.jsp.messages.JstUIMessages;
 import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeController;
@@ -123,7 +128,8 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	public static final String ICON_TEXT_FORMATTING = "icons/text-formatting.gif"; //$NON-NLS-1$
 	public static final String ICON_BUNDLE_AS_EL= "icons/bundle-as-el.gif"; //$NON-NLS-1$
 	public static final String ICON_SCROLL_LOCK= "icons/scroll_lock.gif"; //$NON-NLS-1$
-
+	public static final String ICON_EXTERNALIZE_STRINGS= "icons/externalize.png"; //$NON-NLS-1$
+	
 	private XulRunnerEditor xulRunnerEditor;
 	private nsIDOMElement contentArea;
 	private nsIDOMNode headNode;
@@ -150,6 +156,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 	private Action showTextFormattingAction;
 	private Action showBundleAsELAction;
 	private Action scrollLockAction;
+	private Action externalizeStringsAction;
 	
 	static {
 		/*
@@ -449,27 +456,28 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		/*
 		 * Create EXTERNALIZE STRINGS tool bar item
 		 */
-//		externalizeStringsAction = new Action(JstUIMessages.EXTERNALIZE_STRINGS,
-//				IAction.AS_PUSH_BUTTON) {
-//			@Override
-//			public void run() {
-//				/*
-//				 * Externalize strings action.
-//				 * Show a dialog to add properties key and value.
-//				 * When selection is correct show the dialog
-//				 * otherwise the toolbar icon will be disabled.
-//				 */
-//				ExternalizeStringsDialog dlg = new ExternalizeStringsDialog(
-//						PlatformUI.getWorkbench().getDisplay().getActiveShell(),
-//						new ExternalizeStringsWizard(controller.getSourceEditor(), 
-//								controller.getPageContext().getBundle()));
-//				dlg.open();
-//			}
-//		};
-//		externalizeStringsAction.setImageDescriptor(ImageDescriptor.createFromFile(MozillaEditor.class,
-//				ICON_EXTERNALIZE_STRINGS));
-//		externalizeStringsAction.setToolTipText(JstUIMessages.EXTERNALIZE_STRINGS);
-//		toolBarManager.add(externalizeStringsAction);
+		externalizeStringsAction = new Action(JstUIMessages.EXTERNALIZE_STRINGS,
+				IAction.AS_PUSH_BUTTON) {
+			
+			@Override
+			public void run() {
+				/*
+				 * Externalize strings action.
+				 * Show a dialog to add properties key and value.
+				 * When selection is correct show the dialog
+				 * otherwise the toolbar icon will be disabled.
+				 */
+				ExternalizeStringsDialog dlg = new ExternalizeStringsDialog(
+						PlatformUI.getWorkbench().getDisplay().getActiveShell(),
+						new ExternalizeStringsWizard(controller.getSourceEditor(), 
+								controller.getPageContext().getBundle()));
+				dlg.open();
+			}
+		};
+		externalizeStringsAction.setImageDescriptor(ImageDescriptor.createFromFile(MozillaEditor.class,
+				ICON_EXTERNALIZE_STRINGS));
+		externalizeStringsAction.setToolTipText(JstUIMessages.EXTERNALIZE_STRINGS);
+		toolBarManager.add(externalizeStringsAction);
 		
 		updateToolbarItemsAccordingToPreferences();
 		toolBarManager.update(true);
@@ -487,7 +495,7 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				showNonVisualTagsAction = null;
 				showTextFormattingAction = null;
 				showBundleAsELAction = null;
-//				externalizeStringsAction = null;
+				externalizeStringsAction = null;
 			}
 		});
 		return verBar;
@@ -1029,6 +1037,20 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 		return dropDownMenu;
 	}
 
+	/**
+	 * Update Externalize Strings toolbar icon state.
+	 * <p>
+	 * Enables the button when suitable text is selected.
+	 * Disabled otherwise.
+	 */
+	public void updateExternalizeStringsToolbarIconState(ISelection selection) {
+		if (ExternalizeStringsUtils.isExternalizeStringsCommandEnabled(selection)) {
+			externalizeStringsAction.setEnabled(true);
+		} else {
+			externalizeStringsAction.setEnabled(false);
+		}
+	}
+	
 	public void updateToolbarItemsAccordingToPreferences() {
 		String prefsOrientation = JspEditorPlugin
 		.getDefault().getPreferenceStore().getString(

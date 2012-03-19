@@ -431,6 +431,12 @@ public class VpeController implements INodeAdapter,
 		sourceSelectionChanged(true);
 		refreshCommands();
 		/*
+		 * Enable/disable "Externalize strings" toolbar icon 
+		 * after after initialization
+		 */
+		visualEditor.updateExternalizeStringsToolbarIconState(
+				sourceEditor.getSelectionProvider().getSelection());		
+		/*
 		 * Reset the flag, to enable scroll synchronizing right after init
 		 */
 		selectionManager.setUpdateSelectionEventFlag(false);
@@ -1627,6 +1633,12 @@ public class VpeController implements INodeAdapter,
 			// synced = false;
 			return;
 		}
+		/*
+		 * Enable/disable "Externalize strings" toolbar icon 
+		 * after selection has been changed
+		 */
+		visualEditor.updateExternalizeStringsToolbarIconState(
+				sourceEditor.getSelectionProvider().getSelection());
 		/*
 		 * Update Text Formatting Toolbar state
 		 */
