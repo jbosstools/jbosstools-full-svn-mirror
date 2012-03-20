@@ -18,6 +18,7 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.osgi.util.NLS;
 import org.jboss.tools.common.ui.WizardUtils;
 import org.jboss.tools.openshift.express.internal.ui.OpenShiftUIActivator;
+import org.jboss.tools.openshift.express.internal.ui.utils.Logger;
 
 import com.openshift.express.client.IUser;
 import com.openshift.express.client.OpenShiftEndpointException;
@@ -36,12 +37,14 @@ public class NewDomainDialog extends Wizard {
 
 	@Override
 	public boolean performFinish() {
+		final boolean result[] = new boolean[]{false};
 		try {
 			WizardUtils.runInWizard(new Job("Creating domain...") {
 				@Override
 				protected IStatus run(IProgressMonitor monitor) {
 					try {
 						model.createDomain();
+						result[0] = true;
 					} catch (OpenShiftEndpointException e) {
 						return OpenShiftUIActivator.createErrorStatus(NLS.bind(
 								"Could not create domain \"{0}\": {1}", model.getNamespace(), e.getResponseResult()), e);
@@ -53,8 +56,9 @@ public class NewDomainDialog extends Wizard {
 				}
 			}, getContainer());
 		} catch (Exception e) {
+			Logger.error("Could not create domain", e);
 		}
-		return true;
+		return result[0];
 	}
 
 	@Override
