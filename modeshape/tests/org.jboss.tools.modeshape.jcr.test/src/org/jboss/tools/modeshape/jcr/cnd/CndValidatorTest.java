@@ -47,7 +47,7 @@ public class CndValidatorTest {
     @Test
     public void childNodeDefinitionWithInvalidDefaultTypeNameShouldBeAnError() {
         this.childNodeDefinition.setName("name"); //$NON-NLS-1$
-        this.childNodeDefinition.setDefaultPrimaryTypeName("invalid:name"); //$NON-NLS-1$
+        this.childNodeDefinition.setDefaultPrimaryTypeName("missingName:"); //$NON-NLS-1$
         assertTrue(CndValidator.validateChildNodeDefinition(this.childNodeDefinition).isError());
     }
 
@@ -60,7 +60,7 @@ public class CndValidatorTest {
     @Test
     public void childNodeDefinitionWithInvalidRequiredTypeNameShouldBeAnError() {
         this.childNodeDefinition.setName("name"); //$NON-NLS-1$
-        this.childNodeDefinition.addRequiredType("invalid:name"); //$NON-NLS-1$
+        this.childNodeDefinition.addRequiredType("missingName:"); //$NON-NLS-1$
         assertTrue(CndValidator.validateChildNodeDefinition(this.childNodeDefinition).isError());
     }
 

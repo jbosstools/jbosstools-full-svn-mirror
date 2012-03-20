@@ -18,6 +18,20 @@ import org.jboss.tools.modeshape.jcr.cnd.attributes.AttributeState.Value;
  */
 public class NodeAttributes implements CndElement {
 
+    /**
+     * @param attributesToCopy the attributes being copied (cannot be <code>null</code>)
+     * @return the copy (never <code>null</code>)
+     */
+    public static NodeAttributes copy( NodeAttributes attributesToCopy ) {
+        NodeAttributes copy = new NodeAttributes();
+        copy.autocreated.set(attributesToCopy.getAutocreated().get());
+        copy.mandatory.set(attributesToCopy.getMandatory().get());
+        copy.notDeletable.set(attributesToCopy.getProtected().get());
+        copy.opv = attributesToCopy.getOnParentVersion();
+        copy.sns.set(attributesToCopy.getSameNameSiblings().get());
+        return copy;
+    }
+
     private final Autocreated autocreated;
 
     private final Mandatory mandatory;

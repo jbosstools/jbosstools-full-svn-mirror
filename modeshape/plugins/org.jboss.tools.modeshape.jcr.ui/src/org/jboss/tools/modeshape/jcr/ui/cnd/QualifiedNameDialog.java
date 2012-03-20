@@ -36,7 +36,7 @@ import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.cnd.CndValidator;
 import org.jboss.tools.modeshape.jcr.cnd.QualifiedName;
 import org.jboss.tools.modeshape.jcr.ui.Activator;
-import org.jboss.tools.modeshape.jcr.ui.UiConstants;
+import org.jboss.tools.modeshape.jcr.ui.JcrUiConstants;
 import org.jboss.tools.modeshape.ui.forms.FormUtils.Styles;
 
 /**
@@ -47,10 +47,10 @@ class QualifiedNameDialog extends FormDialog {
     private Button btnOk;
 
     /**
-     * An optional list of existing qualified names. When this is non-empty, it is checked to make sure the qualified name being
-     * edited is not a duplicate.
+     * An optional collection of existing qualified names. When this is non-empty, it is checked to make sure the qualified name
+     * being edited is not a duplicate.
      */
-    private List<QualifiedName> existingQNames;
+    private Collection<QualifiedName> existingQNames;
 
     /**
      * The qualified name being edited or <code>null</code> when creating a qualified name.
@@ -121,7 +121,7 @@ class QualifiedNameDialog extends FormDialog {
      * @see org.eclipse.jface.window.Window#configureShell(org.eclipse.swt.widgets.Shell)
      */
     @Override
-    protected void configureShell( Shell newShell ) {
+    protected void configureShell( final Shell newShell ) {
         super.configureShell(newShell);
         newShell.setText(CndMessages.qualifiedNameDialogTitle);
     }
@@ -156,7 +156,7 @@ class QualifiedNameDialog extends FormDialog {
     protected void createFormContent( final IManagedForm managedForm ) {
         this.scrolledForm = managedForm.getForm();
         this.scrolledForm.setText(this.title);
-        this.scrolledForm.setImage(Activator.getSharedInstance().getImage(UiConstants.Images.CND_EDITOR));
+        this.scrolledForm.setImage(Activator.getSharedInstance().getImage(JcrUiConstants.Images.CND_EDITOR));
         this.scrolledForm.setMessage(NLS.bind(CndMessages.qualifiedNameDialogMsg, this.qualifiedNameType), IMessageProvider.NONE);
 
         final FormToolkit toolkit = managedForm.getToolkit();
@@ -273,10 +273,16 @@ class QualifiedNameDialog extends FormDialog {
     /**
      * @param existingQNames used to check against for duplicate qualified names (can be <code>null</code> or empty)
      */
-    void setExistingQNames( final List<QualifiedName> existingQNames ) {
-        if (!Utils.isEmpty(this.existingQNames) && isEditMode()) {
+    void setExistingQNames( final Collection<QualifiedName> existingQNames ) {
+        if (Utils.isEmpty(existingQNames)) {
+            this.existingQNames = null;
+        } else {
             this.existingQNames = new ArrayList<QualifiedName>(existingQNames);
-            this.existingQNames.remove(this.qnameBeingEdited); // so that validating won't show it as a duplicate
+
+            // so that validating won't show it as a duplicate
+            if (isEditMode()) {
+                this.existingQNames.remove(this.qnameBeingEdited);
+            }
         }
     }
 

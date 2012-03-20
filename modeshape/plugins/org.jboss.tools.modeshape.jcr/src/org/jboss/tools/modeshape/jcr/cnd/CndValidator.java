@@ -107,7 +107,7 @@ public final class CndValidator {
      * @param value the value being checked (can be <code>null</code> or empty)
      * @param propertyType the property type of the property definition the value is for (cannot be <code>null</code>)
      * @param propertyName the name to use to identify the property definition (cannot be <code>null</code> empty)
-     * @param status the status to add the new status to (never <code>null</code>)
+     * @param status the status to add the new status to (cannot be <code>null</code>)
      */
     public static void isValid( final String value,
                                 final PropertyType propertyType,
@@ -145,55 +145,14 @@ public final class CndValidator {
             childNodeName = Messages.missingName;
         }
 
-        { // name
-          // ERROR - Empty or invalid child node definition name
-            validateLocalName(childNodeDefinition.getName(), Messages.childDefinitionName, status);
-        }
+        // name
+        validateName(childNodeDefinition, status);
 
-        { // required types
-            final String[] requiredTypeNames = childNodeDefinition.getRequiredPrimaryTypeNames();
+        // required types
+        validateRequiredTypes(childNodeDefinition, status);
 
-            if (Utils.isEmpty(requiredTypeNames)) {
-                if (childNodeDefinition.getState(ChildNodeDefinition.PropertyName.REQUIRED_TYPES) == Value.IS) {
-                    status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.emptyRequiredTypes, childNodeName)));
-                }
-            } else {
-                final Collection<String> names = new ArrayList<String>(requiredTypeNames.length);
-
-                for (final String requiredTypeName : requiredTypeNames) {
-                    // ERROR - Invalid required type name
-                    validateLocalName(requiredTypeName, Messages.requiredTypeName, status);
-
-                    if (!Utils.isEmpty(requiredTypeName)) {
-                        // ERROR - Duplicate required type name
-                        if (names.contains(requiredTypeName)) {
-                            status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.duplicateRequiredType, childNodeName,
-                                                                                    requiredTypeName)));
-                        } else {
-                            names.add(requiredTypeName);
-                        }
-                    }
-                }
-
-                // ERROR - Cannot have explicit required types when required types is marked as a variant
-                if (childNodeDefinition.getState(ChildNodeDefinition.PropertyName.REQUIRED_TYPES) != Value.IS) {
-                    status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.requiredTypesExistButMarkedAsVariant,
-                                                                            childNodeName)));
-                }
-            }
-        }
-
-        { // default type
-            final String defaultType = childNodeDefinition.getDefaultPrimaryTypeName();
-
-            if (childNodeDefinition.getState(ChildNodeDefinition.PropertyName.DEFAULT_TYPE) == Value.IS) {
-                // ERROR - Invalid default type name
-                validateLocalName(defaultType, Messages.defaultTypeName, status);
-            } else if (!Utils.isEmpty(defaultType)) {
-                // ERROR - Cannot have explicit default type when default type is marked as a variant
-                status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.defaultTypeExistsButMarkedAsVariant, childNodeName)));
-            }
-        }
+        // default type
+        validateDefaultType(childNodeDefinition, status);
 
         return status;
     }
@@ -330,6 +289,62 @@ public final class CndValidator {
     }
 
     /**
+     * @param childNodeDefinition the child node definition whose name is being validated (cannot be <code>null</code>)
+     * @param status the status to add the new status to (cannot be <code>null</code>)
+     */
+    public static void validateName( final ChildNodeDefinition childNodeDefinition,
+                                     final MultiValidationStatus status ) {
+        // ERROR - Empty or invalid child node definition name
+        validateQualifiedName(childNodeDefinition.getQualifiedName(), Messages.childDefinitionName, status);
+    }
+
+    /**
+     * @param childNodeDefinition the child node definition whose name is being validated (cannot be <code>null</code>)
+     * @return the status (never <code>null</code>)
+     */
+    public static MultiValidationStatus validateName( final ChildNodeDefinition childNodeDefinition ) {
+        final MultiValidationStatus status = new MultiValidationStatus();
+        validateName(childNodeDefinition, status);
+        return status;
+    }
+
+    /**
+     * @param childNodeDefinition the child node definition whose default type is being validated (cannot be <code>null</code>)
+     * @return the status (never <code>null</code>)
+     */
+    public static MultiValidationStatus validateDefaultType( final ChildNodeDefinition childNodeDefinition ) {
+        final MultiValidationStatus status = new MultiValidationStatus();
+        validateDefaultType(childNodeDefinition, status);
+        return status;
+    }
+
+    /**
+     * @param childNodeDefinition the child node definition whose default type is being validated (cannot be <code>null</code>)
+     * @param status the status to add the new status to (cannot be <code>null</code>)
+     */
+    public static void validateDefaultType( final ChildNodeDefinition childNodeDefinition,
+                                            final MultiValidationStatus status ) {
+        Utils.verifyIsNotNull(childNodeDefinition, "childNodeDefinition"); //$NON-NLS-1$
+        Utils.verifyIsNotNull(status, "status"); //$NON-NLS-1$
+
+        final String defaultType = childNodeDefinition.getDefaultPrimaryTypeName();
+
+        if (childNodeDefinition.getState(ChildNodeDefinition.PropertyName.DEFAULT_TYPE) == Value.IS) {
+            // ERROR - Invalid default type name
+            validateQualifiedName(childNodeDefinition.getDefaultType().getDefaultType(), Messages.defaultTypeName, status);
+        } else if (!Utils.isEmpty(defaultType)) {
+            String childNodeName = childNodeDefinition.getName();
+
+            if (Utils.isEmpty(childNodeName)) {
+                childNodeName = Messages.missingName;
+            }
+
+            // ERROR - Cannot have explicit default type when default type is marked as a variant
+            status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.defaultTypeExistsButMarkedAsVariant, childNodeName)));
+        }
+    }
+
+    /**
      * @param localName the local name being validated (cannot be <code>null</code>)
      * @param propertyName the name to use in the validation message (cannot be <code>null</code>)
      * @return the status (never <code>null</code>)
@@ -400,7 +415,7 @@ public final class CndValidator {
         validateLocalName(namespaceMapping.getPrefix(), Messages.namespacePrefix, status);
 
         // ERROR - Empty or invalid URI
-        ValidationStatus uriStatus = validateUri(namespaceMapping.getUri(), Messages.namespaceUri);
+        final ValidationStatus uriStatus = validateUri(namespaceMapping.getUri(), Messages.namespaceUri);
 
         if (!uriStatus.isOk()) {
             status.add(uriStatus);
@@ -1065,6 +1080,60 @@ public final class CndValidator {
 
         if (!newStatus.isOk()) {
             status.add(newStatus);
+        }
+    }
+
+    /**
+     * @param childNodeDefinition the child node definition whose required types are being validated (cannot be <code>null</code>)
+     * @return the status (never <code>null</code>)
+     */
+    public static MultiValidationStatus validateRequiredTypes( final ChildNodeDefinition childNodeDefinition ) {
+        final MultiValidationStatus status = new MultiValidationStatus();
+        validateRequiredTypes(childNodeDefinition, status);
+        return status;
+    }
+
+    /**
+     * @param childNodeDefinition the child node definition whose required types are being validated (cannot be <code>null</code>)
+     * @param status the status to add the new status to (cannot be <code>null</code>)
+     */
+    public static void validateRequiredTypes( final ChildNodeDefinition childNodeDefinition,
+                                              final MultiValidationStatus status ) {
+        Utils.verifyIsNotNull(childNodeDefinition, "childNodeDefinition"); //$NON-NLS-1$
+        Utils.verifyIsNotNull(status, "status"); //$NON-NLS-1$
+
+        final String[] requiredTypeNames = childNodeDefinition.getRequiredPrimaryTypeNames();
+        String childNodeName = childNodeDefinition.getName();
+
+        if (Utils.isEmpty(childNodeName)) {
+            childNodeName = Messages.missingName;
+        }
+
+        if (Utils.isEmpty(requiredTypeNames)) {
+            if (childNodeDefinition.getState(ChildNodeDefinition.PropertyName.REQUIRED_TYPES) == Value.IS) {
+                status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.emptyRequiredTypes, childNodeName)));
+            }
+        } else {
+            final Collection<QualifiedName> requiredTypes = new ArrayList<QualifiedName>(requiredTypeNames.length);
+
+            for (final QualifiedName requiredType : childNodeDefinition.getRequiredTypes()) {
+                // ERROR - Invalid required type name
+                validateQualifiedName(requiredType, Messages.requiredTypeName, status);
+
+                // ERROR - Duplicate required type name
+                if (requiredTypes.contains(requiredType)) {
+                    status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.duplicateRequiredType, childNodeName,
+                                                                            requiredType)));
+                } else {
+                    requiredTypes.add(requiredType);
+                }
+            }
+
+            // ERROR - Cannot have explicit required types when required types is marked as a variant
+            if (childNodeDefinition.getState(ChildNodeDefinition.PropertyName.REQUIRED_TYPES) != Value.IS) {
+                status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.requiredTypesExistButMarkedAsVariant,
+                                                                        childNodeName)));
+            }
         }
     }
 

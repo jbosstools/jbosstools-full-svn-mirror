@@ -16,12 +16,12 @@ import org.eclipse.osgi.util.NLS;
 class CndMessages extends NLS {
 
     /**
-     * The abstract attribute name suitable for a radio or check button.
+     * A name for the abstract attribute name for a radio or check button.
      */
     public static String abstractAttribute;
 
     /**
-     * The tool tip message of the node type definition's abstract attribute.
+     * A tool tip message of the node type definition's abstract attribute.
      */
     public static String abstractAttributeToolTip;
 
@@ -77,12 +77,22 @@ class CndMessages extends NLS {
     public static String addPropertyToolTip;
 
     /**
+     * The context menu item text for the add required type action.
+     */
+    public static String addRequiredTypeMenuText;
+
+    /**
+     * The tool tip message of the add required type action.
+     */
+    public static String addRequiredTypeToolTip;
+
+    /**
      * The context menu item text for the add supertype action.
      */
     public static String addSuperTypeMenuText;
 
     /**
-     * The tool tip message of the add property definition action.
+     * The tool tip message of the add supertype action.
      */
     public static String addSuperTypeToolTip;
 
@@ -92,14 +102,49 @@ class CndMessages extends NLS {
     public static String attributesHeaderText;
 
     /**
+     * A name for the autocreated attribute suitable for a radio or check button.
+     */
+    public static String autocreatedAttribute;
+
+    /**
+     * A tool tip message of a child node definition's and property definition's autocreated attribute.
+     */
+    public static String autocreatedAttributeToolTip;
+
+    /**
      * The tool tip for the attributes of a child node definition.
      */
     public static String childNodeAttributesToolTip;
 
     /**
+     * A label for the default type of a child node definition.
+     */
+    public static String childNodeDefaultTypeLabel;
+
+    /**
      * The tool tip text for the default type of a child node definition.
      */
     public static String childNodeDefaultTypeToolTip;
+
+    /**
+     * The message area title of the child node definition dialog when creating a new child node.
+     */
+    public static String childNodeDialogCreateTitle;
+
+    /**
+     * The message area title of the child node definition dialog when an existing child node is being edited.
+     */
+    public static String childNodeDialogEditTitle;
+
+    /**
+     * The message displayed in the child node dialog when first displayed.
+     */
+    public static String childNodeDialogMsg;
+
+    /**
+     * The title of the child node definition dialog.
+     */
+    public static String childNodeDialogTitle;
 
     /**
      * The tool tip for a child node definition name.
@@ -112,16 +157,16 @@ class CndMessages extends NLS {
     public static String childNodeRequiredTypesToolTip;
 
     /**
-     * The title of the dialog shown within the CND editor when the editor notices that the CND file has been changed outside the
-     * editor.
-     */
-    public static String cndChangedOnFileSystemDialogTitle;
-
-    /**
      * The message of the dialog shown within the CND editor when the editor notices that the CND file has been changed outside the
      * editor. One parameter, the file name, is expected.
      */
     public static String cndChangedOnFileSystemDialogMsg;
+
+    /**
+     * The title of the dialog shown within the CND editor when the editor notices that the CND file has been changed outside the
+     * editor.
+     */
+    public static String cndChangedOnFileSystemDialogTitle;
 
     /**
      * The description of the child node definition section in the CND editor's form page.
@@ -202,14 +247,14 @@ class CndMessages extends NLS {
     public static String cndEditorPropertySectionTitle;
 
     /**
-     * The title of the dialog shown when refreshing the CND editor with the CND file from the file system fails.
-     */
-    public static String cndEditorRefreshErrorTitle;
-
-    /**
      * The message of the dialog shown when refreshing the CND editor with the CND file from the file system fails.
      */
     public static String cndEditorRefreshErrorMsg;
+
+    /**
+     * The title of the dialog shown when refreshing the CND editor with the CND file from the file system fails.
+     */
+    public static String cndEditorRefreshErrorTitle;
 
     /**
      * The message of an error dialog shown when saving the CND editor fails.
@@ -320,12 +365,32 @@ class CndMessages extends NLS {
     public static String deletePropertyToolTip;
 
     /**
-     * The question message of the dialog for deleting a super type. One parameter, the super type name, is required.
+     * The question message of the dialog for deleting a required type. One parameter, the required type name, is required.
+     */
+    public static String deleteRequiredTypeDialogMessage;
+
+    /**
+     * The title of the dialog for deleting a required type.
+     */
+    public static String deleteRequiredTypeDialogTitle;
+
+    /**
+     * The context menu item text for the delete required type action.
+     */
+    public static String deleteRequiredTypeMenuText;
+
+    /**
+     * The tool tip message of the delete required type action.
+     */
+    public static String deleteRequiredTypeToolTip;
+
+    /**
+     * The question message of the dialog for deleting a supertype. One parameter, the super type name, is required.
      */
     public static String deleteSuperTypeDialogMessage;
 
     /**
-     * The title of the dialog for deleting a super type.
+     * The title of the dialog for deleting a supertype.
      */
     public static String deleteSuperTypeDialogTitle;
 
@@ -335,7 +400,7 @@ class CndMessages extends NLS {
     public static String deleteSuperTypeMenuText;
 
     /**
-     * The tool tip message of the delete super type action.
+     * The tool tip message of the delete supertype action.
      */
     public static String deleteSuperTypeToolTip;
 
@@ -385,6 +450,21 @@ class CndMessages extends NLS {
     public static String editPropertyToolTip;
 
     /**
+     * The qualified name editor dialog message area title when editing an existing required type.
+     */
+    public static String editRequiredTypeDialogTitle;
+
+    /**
+     * The context menu item text for the edit required type action.
+     */
+    public static String editRequiredTypeMenuText;
+
+    /**
+     * The tool tip message of the edit required type action.
+     */
+    public static String editRequiredTypeToolTip;
+
+    /**
      * The qualified name editor dialog message area title when editing an existing supertype.
      */
     public static String editSuperTypeDialogTitle;
@@ -395,27 +475,9 @@ class CndMessages extends NLS {
     public static String editSuperTypeMenuText;
 
     /**
-     * The tool tip message of the edit super type action.
+     * The tool tip message of the edit supertype action.
      */
     public static String editSuperTypeToolTip;
-
-    /**
-     * An error message indicating the updated namespace mapping did not get saved to the CND. Three parameters, the namespace
-     * mapping, a flag indicating if the remove succeeded, and a flag indicating if the add succeeded, are required.
-     */
-    public static String errorEditingNamespaceMapping;
-
-    /**
-     * An error message indicating the updated supertype did not get saved to the CND. Three parameters, the supertype, a flag
-     * indicating if the remove succeeded, and a flag indicating if the add succeeded, are required.
-     */
-    public static String errorEditingSupertype;
-
-    /**
-     * An error message indicating the new supertype was not added to the node type definition. One parameter, the supertype, is
-     * required.
-     */
-    public static String errorAddingSupertype;
 
     /**
      * An error message indicating the new namespace mapping was not added to the CND. One parameter, the namespace mapping, is
@@ -424,9 +486,49 @@ class CndMessages extends NLS {
     public static String errorAddingNamespaceMapping;
 
     /**
+     * An error message indicating the new required type was not added to the child node definition. One parameter, the required
+     * type, is required.
+     */
+    public static String errorAddingRequiredType;
+
+    /**
+     * An error message indicating the new supertype was not added to the node type definition. One parameter, the supertype, is
+     * required.
+     */
+    public static String errorAddingSupertype;
+
+    /**
+     * An error message indicating the updated namespace mapping did not get saved to the CND. Three parameters, the namespace
+     * mapping, a flag indicating if the remove succeeded, and a flag indicating if the add succeeded, are required.
+     */
+    public static String errorEditingNamespaceMapping;
+
+    /**
+     * An error message indicating the updated required type did not get saved to the CND. Three parameters, the required type, a
+     * flag indicating if the remove succeeded, and a flag indicating if the add succeeded, are required.
+     */
+    public static String errorEditingRequiredType;
+
+    /**
+     * An error message indicating the updated supertype did not get saved to the CND. Three parameters, the supertype, a flag
+     * indicating if the remove succeeded, and a flag indicating if the add succeeded, are required.
+     */
+    public static String errorEditingSupertype;
+
+    /**
      * The error message when the CND editor could not be opened.
      */
     public static String errorOpeningCndEditor;
+
+    /**
+     * A name for the mandatory attribute suitable for a radio or check button.
+     */
+    public static String mandatoryAttribute;
+
+    /**
+     * A tool tip message of the child node definition's and property definition's mandatory attribute.
+     */
+    public static String mandatoryAttributeToolTip;
 
     /**
      * A message indicating there is no value.
@@ -434,12 +536,12 @@ class CndMessages extends NLS {
     public static String missingValue;
 
     /**
-     * The mixin attribute name suitable for a radio or check button.
+     * A name for the mixin attribute suitable for a radio or check button.
      */
     public static String mixinAttribute;
 
     /**
-     * The tool tip message of the node type definition's mixin attribute.
+     * A tool tip message of the node type definition's mixin attribute.
      */
     public static String mixinAttributeToolTip;
 
@@ -447,6 +549,11 @@ class CndMessages extends NLS {
      * The column header text for a generic name property or attribute.
      */
     public static String nameHeaderText;
+
+    /**
+     * A label for a generic name control.
+     */
+    public static String nameLabel;
 
     /**
      * The message displayed in the namespace mapping dialog when first displayed.
@@ -457,11 +564,6 @@ class CndMessages extends NLS {
      * The title of the namespace mapping dialog.
      */
     public static String namespaceDialogTitle;
-
-    /**
-     * A label for a generic name control.
-     */
-    public static String nameLabel;
 
     /**
      * A label for a namespace mapping control.
@@ -494,14 +596,14 @@ class CndMessages extends NLS {
     public static String namespaceUriToolTip;
 
     /**
-     * The message displayed in the node type name pattern filter when the pattern is empty.
-     */
-    public static String nodeTypeNamePatternMessage;
-
-    /**
      * The namespace editor dialog message area title when creating a new namespace mapping.
      */
     public static String newNamespaceDialogTitle;
+
+    /**
+     * The qualified name editor dialog message area title when creating a new required type.
+     */
+    public static String newRequiredTypeDialogTitle;
 
     /**
      * The qualified name editor dialog message area title when creating a new supertype.
@@ -514,6 +616,11 @@ class CndMessages extends NLS {
     public static String nodeTypeNameHeaderText;
 
     /**
+     * The message displayed in the node type name pattern filter when the pattern is empty.
+     */
+    public static String nodeTypeNamePatternMessage;
+
+    /**
      * The tool tip for a node type definition name.
      */
     public static String nodeTypeNameToolTip;
@@ -524,12 +631,22 @@ class CndMessages extends NLS {
     public static String noNameQualifierChoice;
 
     /**
-     * The orderable attribute name suitable for a radio or check button.
+     * A label for an on parent version attribute control.
+     */
+    public static String onParentVersionLabel;
+
+    /**
+     * A tool tip message of a child node definition's and property definition's on parent version attribute.
+     */
+    public static String onParentVersionToolTip;
+
+    /**
+     * A name for the orderable attribute suitable for a radio or check button.
      */
     public static String orderableAttribute;
 
     /**
-     * The tool tip message of the node type definition's orderable attribute.
+     * A tool tip message of the node type definition's orderable attribute.
      */
     public static String orderableAttributeToolTip;
 
@@ -559,6 +676,16 @@ class CndMessages extends NLS {
     public static String propertyValueConstraintsToolTip;
 
     /**
+     * A name for the protected attribute suitable for a radio or check button.
+     */
+    public static String protectedAttribute;
+
+    /**
+     * A tool tip message of the child node definition's and property definition's protected attribute.
+     */
+    public static String protectedAttributeToolTip;
+
+    /**
      * The message displayed in the qualified name dialog when first displayed. One parameter, the type of qualified name, is
      * required.
      */
@@ -575,12 +702,12 @@ class CndMessages extends NLS {
     public static String qualifierLabel;
 
     /**
-     * The queryable attribute name suitable for a radio or check button.
+     * A name for the queryable attribute suitable for a radio or check button.
      */
     public static String queryableAttribute;
 
     /**
-     * The tool tip message of the node type definition's queryable attribute.
+     * A tool tip message of the node type definition's queryable attribute.
      */
     public static String queryableAttributeToolTip;
 
@@ -588,6 +715,21 @@ class CndMessages extends NLS {
      * The column header text for the required types of a child node definition.
      */
     public static String requiredTypesHeaderText;
+
+    /**
+     * A label for a required types control.
+     */
+    public static String requiredTypesLabel;
+
+    /**
+     * A name for the same named siblings attribute suitable for a radio or check button.
+     */
+    public static String sameNamedSiblingsAttribute;
+
+    /**
+     * A tool tip message of a child node definition's same named siblings attribute.
+     */
+    public static String sameNamedSiblingsAttributeToolTip;
 
     /**
      * A label for a supertypes control.

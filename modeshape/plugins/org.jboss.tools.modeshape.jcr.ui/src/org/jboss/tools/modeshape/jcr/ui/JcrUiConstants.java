@@ -7,15 +7,16 @@
  */
 package org.jboss.tools.modeshape.jcr.ui;
 
+
 /**
  * Constants used within the <code>org.jboss.tools.modeshape.jcr.ui</code> plug-in.
  */
-public interface UiConstants {
+public interface JcrUiConstants {
 
     /**
      * The plug-in bundle's symbolic name.
      */
-    String PLUGIN_ID = UiConstants.class.getPackage().getName();
+    String PLUGIN_ID = JcrUiConstants.class.getPackage().getName();
 
     /**
      * The identifiers for the CND editor-related parts.

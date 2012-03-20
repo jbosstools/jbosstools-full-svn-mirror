@@ -13,6 +13,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType;
+import org.jboss.tools.modeshape.jcr.cnd.Constants;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -69,5 +70,37 @@ public class NodeAttributesTest {
     public void defaultAttributesShouldHaveEmptyCompressedAndCompactCndNotation() {
         assertTrue(Utils.isEmpty(this.attributes.toCndNotation(NotationType.COMPRESSED)));
         assertTrue(Utils.isEmpty(this.attributes.toCndNotation(NotationType.COMPACT)));
+    }
+
+    @Test
+    public void copiesShouldBeEqual() {
+        NodeAttributes copy = NodeAttributes.copy(this.attributes);
+        assertEquals(this.attributes, copy);
+
+        Constants.Helper.changeValue(this.attributes.getAutocreated());
+        copy.setAutocreated(this.attributes.getAutocreated().get());
+        assertEquals(this.attributes, copy);
+
+        Constants.Helper.changeValue(this.attributes.getMandatory());
+        copy.setMandatory(this.attributes.getMandatory().get());
+        assertEquals(this.attributes, copy);
+
+        Constants.Helper.changeValue(this.attributes.getProtected());
+        copy.setProtected(this.attributes.getProtected().get());
+        assertEquals(this.attributes, copy);
+
+        Constants.Helper.changeValue(this.attributes.getSameNameSiblings());
+        copy.setSameNameSibling(this.attributes.getSameNameSiblings().get());
+        assertEquals(this.attributes, copy);
+
+        this.attributes.setOnParentVersion(OnParentVersion.ABORT);
+        copy.setOnParentVersion(this.attributes.getOnParentVersion());
+        assertEquals(this.attributes, copy);
+    }
+
+    @Test
+    public void equalInstancesShouldHaveSameHashCode() {
+        NodeAttributes second = new NodeAttributes();
+        assertEquals(this.attributes.hashCode(), second.hashCode());
     }
 }

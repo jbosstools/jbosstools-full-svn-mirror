@@ -89,7 +89,7 @@ public abstract class AttributeState implements CndElement {
      */
     @Override
     public int hashCode() {
-        return super.hashCode();
+        return this.state.hashCode();
     }
 
     /**

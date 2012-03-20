@@ -10,10 +10,10 @@ package org.jboss.tools.modeshape.jcr.cnd.attributes;
 import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences;
 import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences.Preference;
-import org.jboss.tools.modeshape.jcr.cnd.LocalName;
+import org.jboss.tools.modeshape.jcr.cnd.QualifiedName;
 
 /**
- * The child node definitions default type property.
+ * The child node definition's default type property.
  */
 public class DefaultType extends AttributeState {
 
@@ -22,7 +22,7 @@ public class DefaultType extends AttributeState {
      */
     public static final String NOTATION = "="; //$NON-NLS-1$
 
-    private final LocalName defaultType = new LocalName();
+    private final QualifiedName defaultType = new QualifiedName();
 
     /**
      * {@inheritDoc}
@@ -65,10 +65,24 @@ public class DefaultType extends AttributeState {
     }
 
     /**
-     * @return the default type (can be <code>null</code> or empty)
+     * @return the default type's qualified name (never <code>null</code>)
      */
-    public String getDefaultType() {
-        return this.defaultType.get();
+    public QualifiedName getDefaultType() {
+        return this.defaultType;
+    }
+
+    /**
+     * @return the default type name (can be <code>null</code> or empty)
+     */
+    public String getDefaultTypeName() {
+        String defaultTypeName = this.defaultType.get();
+
+        // per API return null if it doesn't exist
+        if (Utils.isEmpty(defaultTypeName)) {
+            return null;
+        }
+
+        return defaultTypeName;
     }
 
     /**
@@ -82,7 +96,7 @@ public class DefaultType extends AttributeState {
             return getPrefix();
         }
 
-        String defaultType = getDefaultType();
+        String defaultType = getDefaultTypeName();
 
         if (Utils.isEmpty(defaultType)) {
             return Utils.EMPTY_STRING;

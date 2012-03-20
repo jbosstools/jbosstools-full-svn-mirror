@@ -48,8 +48,8 @@ import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.jboss.tools.modeshape.jcr.cnd.CndImporter;
 import org.jboss.tools.modeshape.jcr.cnd.CompactNodeTypeDefinition;
 import org.jboss.tools.modeshape.jcr.ui.Activator;
-import org.jboss.tools.modeshape.jcr.ui.UiConstants;
-import org.jboss.tools.modeshape.jcr.ui.UiConstants.Images;
+import org.jboss.tools.modeshape.jcr.ui.JcrUiConstants;
+import org.jboss.tools.modeshape.jcr.ui.JcrUiConstants.Images;
 import org.jboss.tools.modeshape.ui.UiMessages;
 import org.jboss.tools.modeshape.ui.forms.MessageFormDialog;
 
@@ -204,7 +204,7 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
     @Override
     protected void createHeaderContents( final IManagedForm headerForm ) {
         this.scrolledForm = headerForm.getForm();
-        this.scrolledForm.setImage(Activator.getSharedInstance().getImage(UiConstants.Images.CND_EDITOR));
+        this.scrolledForm.setImage(Activator.getSharedInstance().getImage(JcrUiConstants.Images.CND_EDITOR));
         this.scrolledForm.setText(CndMessages.cndEditorTitle);
 
         final Form form = this.scrolledForm.getForm();
@@ -270,7 +270,7 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
         // IStatus status = null;
         //
         // if (!(e instanceof CoreException)) {
-        // status = new Status(IStatus.ERROR, UiConstants.PLUGIN_ID, e.getLocalizedMessage());
+        // status = new Status(IStatus.ERROR, JcrUiConstants.PLUGIN_ID, e.getLocalizedMessage());
         // } else {
         // status = ((CoreException)e).getStatus();
         // }
@@ -367,7 +367,7 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
             IStatus status = null;
 
             if (!(e instanceof CoreException)) {
-                status = new Status(IStatus.ERROR, UiConstants.PLUGIN_ID, e.getLocalizedMessage());
+                status = new Status(IStatus.ERROR, JcrUiConstants.PLUGIN_ID, e.getLocalizedMessage());
             } else {
                 status = ((CoreException)e).getStatus();
             }

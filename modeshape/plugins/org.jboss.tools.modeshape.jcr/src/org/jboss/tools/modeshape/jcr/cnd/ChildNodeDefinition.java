@@ -9,6 +9,7 @@ package org.jboss.tools.modeshape.jcr.cnd;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.jcr.nodetype.NodeDefinitionTemplate;
@@ -33,6 +34,23 @@ public class ChildNodeDefinition implements CndElement, Comparable, NodeDefiniti
      * The prefix used in CND notation before the property definition.
      */
     public static final String NOTATION_PREFIX = "+"; //$NON-NLS-1$
+
+    /**
+     * @param childNodeToCopy the child node definition being copied (cannot be <code>null</code>)
+     * @return the copy (never <code>null</code>)
+     */
+    public static ChildNodeDefinition copy( ChildNodeDefinition childNodeToCopy ) {
+        ChildNodeDefinition copy = new ChildNodeDefinition();
+        copy.setAutoCreated(childNodeToCopy.isAutoCreated());
+        copy.setMandatory(childNodeToCopy.isMandatory());
+        copy.setProtected(childNodeToCopy.isProtected());
+        copy.setOnParentVersion(childNodeToCopy.getOnParentVersion());
+        copy.setSameNameSiblings(childNodeToCopy.allowsSameNameSiblings());
+        copy.setName(childNodeToCopy.getName());
+        copy.setDefaultPrimaryTypeName(childNodeToCopy.getDefaultPrimaryTypeName());
+        copy.setRequiredPrimaryTypeNames(childNodeToCopy.getRequiredPrimaryTypeNames());
+        return copy;
+    }
 
     /**
      * The node attributes (never <code>null</code>).
@@ -204,6 +222,38 @@ public class ChildNodeDefinition implements CndElement, Comparable, NodeDefiniti
     }
 
     /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals( Object obj ) {
+        if (this == obj) {
+            return true;
+        }
+
+        if ((obj == null) || !getClass().equals(obj.getClass())) {
+            return false;
+        }
+
+        ChildNodeDefinition that = (ChildNodeDefinition)obj;
+
+        if (!this.attributes.equals(that.attributes)) {
+            return false;
+        }
+
+        if (!Utils.equals(getName(), that.getName())) {
+            return false;
+        }
+
+        if (!Utils.equals(getDefaultPrimaryTypeName(), that.getDefaultPrimaryTypeName())) {
+            return false;
+        }
+
+        return Utils.equivalent(this.getRequiredPrimaryTypeNames(), that.getRequiredPrimaryTypeNames());
+    }
+
+    /**
      * @param notationType the notation type being requested (cannot be <code>null</code>)
      * @return the CND notation (never <code>null</code>)
      */
@@ -246,7 +296,7 @@ public class ChildNodeDefinition implements CndElement, Comparable, NodeDefiniti
      */
     @Override
     public String getDefaultPrimaryTypeName() {
-        final String primaryType = this.defaultType.getDefaultType();
+        final String primaryType = this.defaultType.getDefaultTypeName();
 
         // per API should return null if empty
         if (Utils.isEmpty(primaryType)) {
@@ -318,6 +368,20 @@ public class ChildNodeDefinition implements CndElement, Comparable, NodeDefiniti
     }
 
     /**
+     * @return the qualified name (never <code>null</code>)
+     */
+    public QualifiedName getQualifiedName() {
+        return this.name;
+    }
+
+    /**
+     * @return the list of required types (never <code>null</code> but can be empty)
+     */
+    public List<QualifiedName> getRequiredTypes() {
+        return this.requiredTypes.getSupportedItems();
+    }
+
+    /**
      * @param notationType the notation type being requested (cannot be <code>null</code>)
      * @return the CND notation (never <code>null</code>)
      */
@@ -375,6 +439,16 @@ public class ChildNodeDefinition implements CndElement, Comparable, NodeDefiniti
         }
 
         throw new IllegalArgumentException(NLS.bind(Messages.invalidGetStateRequest, propertyName));
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        return Utils.hashCode(this.attributes, this.name, this.defaultType, this.requiredTypes);
     }
 
     /**
@@ -486,7 +560,7 @@ public class ChildNodeDefinition implements CndElement, Comparable, NodeDefiniti
      */
     @Override
     public void setDefaultPrimaryTypeName( final String newTypeName ) {
-        final String oldValue = this.defaultType.getDefaultType();
+        final String oldValue = this.defaultType.getDefaultTypeName();
 
         if (this.defaultType.setDefaultType(newTypeName)) {
             notifyChangeListeners(PropertyName.DEFAULT_TYPE, oldValue, newTypeName);

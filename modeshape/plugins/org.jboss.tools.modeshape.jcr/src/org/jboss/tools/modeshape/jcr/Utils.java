@@ -1,5 +1,6 @@
 package org.jboss.tools.modeshape.jcr;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.eclipse.osgi.util.NLS;
@@ -99,6 +100,28 @@ public final class Utils {
         }
 
         return thisCollection.containsAll(thatCollection);
+    }
+
+    /**
+     * @param thisArray the array being compared to the second array (can be <code>null</code>)
+     * @param thatArray the array being compared to the first array (can be <code>null</code>)
+     * @return <code>true</code> if both arrays are <code>null</code>, both are empty, or both contain the same items
+     */
+    public static boolean equivalent( final Object[] thisArray,
+                                      final Object[] thatArray ) {
+        if (isEmpty(thisArray)) {
+            return isEmpty(thatArray);
+        }
+
+        if (isEmpty(thatArray)) {
+            return false;
+        }
+
+        if (thisArray.length != thatArray.length) {
+            return false;
+        }
+
+        return Arrays.asList(thisArray).containsAll(Arrays.asList(thatArray));
     }
 
     /**

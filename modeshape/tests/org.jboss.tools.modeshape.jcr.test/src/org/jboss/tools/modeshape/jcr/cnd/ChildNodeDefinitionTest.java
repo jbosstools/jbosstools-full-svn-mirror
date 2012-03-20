@@ -184,7 +184,7 @@ public class ChildNodeDefinitionTest {
     public void shouldReceiveEventAfterClearingSuperTypes() {
         final String REQUIRED_TYPE = "requiredType"; //$NON-NLS-1$
         assertTrue(this.childNodeDefinition.addRequiredType(REQUIRED_TYPE));
-        String[] oldValue = new String[] {REQUIRED_TYPE};
+        String[] oldValue = new String[] { REQUIRED_TYPE };
 
         Listener l = new Listener();
         assertTrue(this.childNodeDefinition.addListener(l));
@@ -406,4 +406,84 @@ public class ChildNodeDefinitionTest {
         assertTrue(this.childNodeDefinition.getState(PropertyName.SAME_NAME_SIBLINGS) == Value.IS_NOT);
     }
 
+    @Test
+    public void differentInstancesWithSameValuesShouldBeEqual() {
+        ChildNodeDefinition that = new ChildNodeDefinition();
+        assertEquals(this.childNodeDefinition, that);
+
+        this.childNodeDefinition.setName(Constants.QUALIFIED_NAME1.get());
+        that.setName(this.childNodeDefinition.getName());
+        assertEquals(this.childNodeDefinition, that);
+
+        this.childNodeDefinition.setDefaultPrimaryTypeName(Constants.DEFAULT_TYPE);
+        that.setDefaultPrimaryTypeName(this.childNodeDefinition.getDefaultPrimaryTypeName());
+        assertEquals(this.childNodeDefinition, that);
+        
+        this.childNodeDefinition.setAutoCreated(!this.childNodeDefinition.isAutoCreated());
+        that.setAutoCreated(this.childNodeDefinition.isAutoCreated());
+        assertEquals(this.childNodeDefinition, that);
+
+        this.childNodeDefinition.setMandatory(!this.childNodeDefinition.isMandatory());
+        that.setMandatory(this.childNodeDefinition.isMandatory());
+        assertEquals(this.childNodeDefinition, that);
+
+        this.childNodeDefinition.setProtected(!this.childNodeDefinition.isProtected());
+        that.setProtected(this.childNodeDefinition.isProtected());
+        assertEquals(this.childNodeDefinition, that);
+
+        this.childNodeDefinition.setSameNameSiblings(!this.childNodeDefinition.allowsSameNameSiblings());
+        that.setSameNameSiblings(this.childNodeDefinition.allowsSameNameSiblings());
+        assertEquals(this.childNodeDefinition, that);
+
+        this.childNodeDefinition.setOnParentVersion(OnParentVersion.ABORT.asJcrValue());
+        that.setOnParentVersion(this.childNodeDefinition.getOnParentVersion());
+        assertEquals(this.childNodeDefinition, that);
+
+        this.childNodeDefinition.setRequiredPrimaryTypeNames(Constants.Helper.getDefaultQualifiedNamesAsArray());
+        that.setRequiredPrimaryTypeNames(this.childNodeDefinition.getRequiredPrimaryTypeNames());
+        assertEquals(this.childNodeDefinition, that);
+    }
+
+    @Test
+    public void differentInstancesWithSameValuesShouldHaveSameHashCode() {
+        assertEquals(this.childNodeDefinition.hashCode(), new ChildNodeDefinition().hashCode());
+    }
+
+    @Test
+    public void copiesShouldBeEqual() {
+        ChildNodeDefinition that = ChildNodeDefinition.copy(this.childNodeDefinition);
+        assertEquals(this.childNodeDefinition, that);
+
+        this.childNodeDefinition.setName(Constants.QUALIFIED_NAME1.get());
+        that = ChildNodeDefinition.copy(this.childNodeDefinition);
+        assertEquals(this.childNodeDefinition, that);
+
+        this.childNodeDefinition.setDefaultPrimaryTypeName(Constants.DEFAULT_TYPE);
+        that = ChildNodeDefinition.copy(this.childNodeDefinition);
+        assertEquals(this.childNodeDefinition, that);
+        
+        this.childNodeDefinition.setAutoCreated(!this.childNodeDefinition.isAutoCreated());
+        that = ChildNodeDefinition.copy(this.childNodeDefinition);
+        assertEquals(this.childNodeDefinition, that);
+
+        this.childNodeDefinition.setMandatory(!this.childNodeDefinition.isMandatory());
+        that = ChildNodeDefinition.copy(this.childNodeDefinition);
+        assertEquals(this.childNodeDefinition, that);
+
+        this.childNodeDefinition.setProtected(!this.childNodeDefinition.isProtected());
+        that = ChildNodeDefinition.copy(this.childNodeDefinition);
+        assertEquals(this.childNodeDefinition, that);
+
+        this.childNodeDefinition.setSameNameSiblings(!this.childNodeDefinition.allowsSameNameSiblings());
+        that = ChildNodeDefinition.copy(this.childNodeDefinition);
+        assertEquals(this.childNodeDefinition, that);
+
+        this.childNodeDefinition.setOnParentVersion(OnParentVersion.ABORT.asJcrValue());
+        that = ChildNodeDefinition.copy(this.childNodeDefinition);
+        assertEquals(this.childNodeDefinition, that);
+
+        this.childNodeDefinition.setRequiredPrimaryTypeNames(Constants.Helper.getDefaultQualifiedNamesAsArray());
+        that = ChildNodeDefinition.copy(this.childNodeDefinition);
+        assertEquals(this.childNodeDefinition, that);
+    }
 }

@@ -32,7 +32,7 @@ import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.cnd.CndValidator;
 import org.jboss.tools.modeshape.jcr.cnd.NamespaceMapping;
 import org.jboss.tools.modeshape.jcr.ui.Activator;
-import org.jboss.tools.modeshape.jcr.ui.UiConstants;
+import org.jboss.tools.modeshape.jcr.ui.JcrUiConstants;
 import org.jboss.tools.modeshape.ui.forms.FormUtils.Styles;
 
 /**
@@ -135,7 +135,7 @@ class NamespaceMappingDialog extends FormDialog {
     protected void createFormContent( final IManagedForm managedForm ) {
         this.scrolledForm = managedForm.getForm();
         this.scrolledForm.setText(isEditMode() ? CndMessages.editNamespaceDialogTitle : CndMessages.newNamespaceDialogTitle);
-        this.scrolledForm.setImage(Activator.getSharedInstance().getImage(UiConstants.Images.CND_EDITOR));
+        this.scrolledForm.setImage(Activator.getSharedInstance().getImage(JcrUiConstants.Images.CND_EDITOR));
         this.scrolledForm.setMessage(CndMessages.namespaceDialogMsg, IMessageProvider.NONE);
 
         final FormToolkit toolkit = managedForm.getToolkit();

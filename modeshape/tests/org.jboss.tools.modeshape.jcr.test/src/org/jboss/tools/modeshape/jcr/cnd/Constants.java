@@ -14,6 +14,7 @@ import org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType;
 import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences.Preference;
 import org.jboss.tools.modeshape.jcr.cnd.attributes.Abstract;
 import org.jboss.tools.modeshape.jcr.cnd.attributes.AttributeState;
+import org.jboss.tools.modeshape.jcr.cnd.attributes.AttributeState.Value;
 import org.jboss.tools.modeshape.jcr.cnd.attributes.Autocreated;
 import org.jboss.tools.modeshape.jcr.cnd.attributes.DefaultType;
 import org.jboss.tools.modeshape.jcr.cnd.attributes.DefaultValues;
@@ -48,7 +49,7 @@ public interface Constants {
     NamespaceMapping NAMESPACE1 = new NamespaceMapping(NAMESPACE_PREFIX1, NAMESPACE_URI1);
     NamespaceMapping NAMESPACE2 = new NamespaceMapping(NAMESPACE_PREFIX2, NAMESPACE_URI2);
     NamespaceMapping NAMESPACE3 = new NamespaceMapping(NAMESPACE_PREFIX3, NAMESPACE_URI3);
-    
+
     String QUALIFIER1 = "QUALIFIER1"; //$NON-NLS-1$
     String QUALIFIER2 = "QUALIFIER2"; //$NON-NLS-1$
     String QUALIFIER3 = "QUALIFIER3"; //$NON-NLS-1$
@@ -208,11 +209,9 @@ public interface Constants {
     String SUPER_TYPES_VARIANT = SuperTypes.NOTATION_PREFIX
             + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_PREFIX_END_DELIMITER) + VARIANT;
     String SUPER_TYPES_ONE_ITEM_FORM = SuperTypes.NOTATION_PREFIX
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_PREFIX_END_DELIMITER)
-            + QUALIFIED_NAME1;
+            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_PREFIX_END_DELIMITER) + QUALIFIED_NAME1;
     String SUPER_TYPES_THREE_ITEM_FORM = SuperTypes.NOTATION_PREFIX
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_PREFIX_END_DELIMITER)
-            + QUALIFIED_NAME1
+            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_PREFIX_END_DELIMITER) + QUALIFIED_NAME1
             + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER) + QUALIFIED_NAME2
             + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER) + QUALIFIED_NAME3;
 
@@ -238,6 +237,16 @@ public interface Constants {
             + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_QUOTE_CHAR);
 
     class Helper {
+        public static void changeValue( AttributeState attribute ) {
+            if (attribute.is()) {
+                attribute.set(Value.IS_NOT);
+            } else if (attribute.isNot()) {
+                attribute.set(Value.IS);
+            } else {
+                attribute.set(Value.IS);
+            }
+        }
+
         public static Collection<NamespaceMapping> getDefaultNamespaces() {
             Collection<NamespaceMapping> namespaces = new ArrayList<NamespaceMapping>();
             namespaces.add(NAMESPACE1);
@@ -252,6 +261,10 @@ public interface Constants {
             qualifiedNames.add(QUALIFIED_NAME2);
             qualifiedNames.add(QUALIFIED_NAME3);
             return qualifiedNames;
+        }
+
+        public static String[] getDefaultQualifiedNamesAsArray() {
+            return new String[] { QUALIFIED_NAME1.get(), QUALIFIED_NAME2.get(), QUALIFIED_NAME3.get() };
         }
 
         public static Collection<String> getDefaultQualifiers() {
