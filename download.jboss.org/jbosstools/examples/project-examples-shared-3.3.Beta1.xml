@@ -330,7 +330,7 @@ Make sure you read the deployment instructions in README.md</description>
 		<mavenArchetype>
 			<archetypeGroupId>org.jboss.errai.archetypes</archetypeGroupId>
 			<archetypeArtifactId>kitchensink-quickstart</archetypeArtifactId>
-			<archetypeVersion>2.0-SNAPSHOT</archetypeVersion>
+			<archetypeVersion>2.0-Beta3-jbt</archetypeVersion>
             <archetypeRepository>http://anonsvn.jboss.org/repos/jbosstools/workspace/fred/repositories/snapshot/</archetypeRepository>
             <!--
 			<archetypeRepository>https://repository.jboss.org/nexus/content/groups/public/</archetypeRepository>
