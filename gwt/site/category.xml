@@ -8,5 +8,8 @@
 	<feature url="features/org.jboss.tools.gwt.feature_0.0.0.jar" id="org.jboss.tools.gwt.feature" version="0.0.0">
 		<category name="JBoss Tools GWT Integration Nightly Build Update Site"/>
 	</feature>
-
+	<!-- Sources -->
+	<feature url="features/org.jboss.tools.gwt.feature.source_0.0.0.jar" id="org.jboss.tools.gwt.feature.source" version="0.0.0">
+		<category name="JBoss Tools GWT Integration Nightly Build Update Site"/>
+	</feature>
 </site>
