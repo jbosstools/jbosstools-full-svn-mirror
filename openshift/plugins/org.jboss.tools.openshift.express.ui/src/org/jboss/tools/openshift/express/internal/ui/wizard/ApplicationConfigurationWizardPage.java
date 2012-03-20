@@ -119,7 +119,7 @@ public class ApplicationConfigurationWizardPage extends
 			OpenShiftExpressApplicationWizardModel wizardModel) {
 		super(
 				"Setup OpenShift Application",
-				"Select an existing or create a new OpenShift Express Application.",
+				"Enter a name and select a type for your new OpenShift Express application.",
 				"Setup OpenShift Application", wizard);
 		try {
 			this.pageModel = new ApplicationConfigurationWizardPageModel(
@@ -234,8 +234,7 @@ public class ApplicationConfigurationWizardPage extends
 							.getSelectedApplication();
 					if (selectedApplication != null) {
 						try {
-							pageModel
-									.setExistingApplication(selectedApplication);
+							pageModel.setExistingApplicationName(selectedApplication.getName());
 						} catch (OpenShiftException ex) {
 							OpenShiftUIActivator
 									.log(OpenShiftUIActivator.createErrorStatus(
