@@ -8,7 +8,7 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/ 
-package org.jboss.tools.common.text.xml;
+package org.jboss.tools.common.text.xml.quickfix;
 
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.jface.text.IDocument;

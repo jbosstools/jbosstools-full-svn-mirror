@@ -8,7 +8,7 @@
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
  ******************************************************************************/ 
-package org.jboss.tools.common.text.xml;
+package org.jboss.tools.common.text.xml.quickfix;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -67,13 +67,18 @@ public class MarkerAnnotationInfo {
 		
 		List<ICompletionProposal> allProposals = new ArrayList<ICompletionProposal>();
 		List<IQuickAssistProcessor> processors = new ArrayList<IQuickAssistProcessor>();
-		if (canFix(annotation)) {
+		//if (canFix(annotation)) {
 			Object o = annotation.getAdditionalFixInfo();
 			if (o instanceof IQuickAssistProcessor) {
 				processors.add((IQuickAssistProcessor)o);
 			}
-
+			
 			// get all relevant quick fixes for this annotation
+			if(QuickFixManager.getInstance().hasProposals(annotation)){
+				List<ICompletionProposal> proposals = QuickFixManager.getInstance().getProposals(annotation);
+				allProposals.addAll(proposals);
+			}
+
 			QuickFixRegistry registry = QuickFixRegistry.getInstance();
 			processors.addAll(Arrays.asList(registry.getQuickFixProcessors(annotation)));
 
@@ -92,7 +97,7 @@ public class MarkerAnnotationInfo {
 				}
 			}
 
-		}
+		//}
 
 		return allProposals;
 	}
