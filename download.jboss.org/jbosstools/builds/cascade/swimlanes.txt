@@ -26,27 +26,38 @@ jbpm -> flow, common -> tests
 
 esb -> jst -> common -> tests
 
-gwt, runtime, tests, usage, drools, pi4soa, savara, teiid -> [none]
+gwt, runtime, tests, usage, drools, pi4soa, savara, teiid -> [NONE]
 
 ------------------------
 
-New in 3.3:
+New in 3.3 (Core):
 
-forge -> [none]
-examples -> portlet, jst, runtime
-teiid, runtime -> tests
-portlet -> seam, as, tests, usage
 tptp [REMOVED]
-smooks [removed from JBDS, still in JBT]
+forge -> [NONE]
+(all but common and tests) -> usage
+
+examples -> portlet, jst, runtime
+portlet -> seam, as, tests, usage
 seam -> hibernate, jsf 
 central -> examples, portlet, seam, as, archives, jmx, jsf, vpe, jst, hibernate, freemarker, runtime, common, tests, maven, usage
 runtime -> common, tests, jmx, as, seam
-esb -> as, jst, common, tests
 cdi -> jst
-(all but common and tests) -> usage
 usage -> common, tests
 ws -> common
 maven -> examples
 openshift -> as, jmx, archives, common, tests
 
 ------------------------
+
+New in 3.3 (SOA Tooling):
+
+smooks [REMOVED]
+
+bpel -> archives
+esb -> as, jst, common, tests
+jbpm -> flow, common -> tests 
+runtime-soa -> runtime
+teiid, modeshape -> tests
+
+(also includes SwitchYard, Drools, Savara)
+
