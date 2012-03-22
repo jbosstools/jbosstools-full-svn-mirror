@@ -58,19 +58,19 @@ consequently the ability to update using the update site, are provided to users 
       	    </listitem>
       	    <listitem>
       	      <para>
-      	        Enter the <acronym>url</acronym> of the update site in the <guilabel>Location</guilabel> field. The user has the option of the following two options:
+				  Enter the <acronym>url</acronym> of the update site in the <guilabel>Location</guilabel> field.<!-- The user has the option of the following two options: -->
       	      </para>
       	      <itemizedlist>
       	        <listitem>
       	          <para>
-      	           https://devstudio.jboss.com/updates/3.0/
+      	           https://devstudio.jboss.com/updates/5.0/
       	          </para>
       	        </listitem>
-      	        <listitem>
+      <!--	        <listitem>
       	          <para>
       	           http://devstudio.jboss.com/updates/3.0/
       	          </para>
-      	        </listitem>
+			  </listitem> -->
       	      </itemizedlist>
               <figure id="figure-Add-Site_01">
                 <title>Add Site Dialog</title>

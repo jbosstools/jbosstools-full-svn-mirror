@@ -2,10 +2,10 @@
 <!DOCTYPE Book PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
 ]>
 <authorgroup>
-  <author>
+<!--  <author>
     <firstname>Ben</firstname>
     <surname>Clare</surname>
-  </author>
+  </author> -->
   <author>
     <firstname>Isaac</firstname>
     <surname>Rooskov</surname>

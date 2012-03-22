@@ -3,14 +3,14 @@
 ]>
 <bookinfo>
 	<title>Update Guide</title>
-	<subtitle>Updating from 4.0 to 4.1.x</subtitle>
+	<subtitle>Updating from 5.0 to 5.1.x</subtitle>
 	<productname>JBoss Developer Studio</productname>
-	<productnumber>4.1</productnumber>
-	<edition>4.1.0</edition>
+	<productnumber>5.0</productnumber>
+	<edition>5.1.0</edition>
 	<pubsnumber>5</pubsnumber>
 	<abstract>
 		<para>
-      The Update Guide explains how to upgrade from JBoss Developer Studio 4.0 to JBoss Developer Studio 4.1.x
+      The Update Guide explains how to upgrade from JBoss Developer Studio 5.0 to JBoss Developer Studio 5.1.x
     </para>
 	</abstract>
 	<corpauthor>
