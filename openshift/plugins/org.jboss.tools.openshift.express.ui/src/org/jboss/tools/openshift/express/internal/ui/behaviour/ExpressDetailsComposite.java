@@ -125,6 +125,10 @@ public class ExpressDetailsComposite {
 		return composite;
 	}
 
+	public String getError() {
+		return error;
+	}
+
 	private void initModel() {
 		String nameFromExistingServer = ExpressServerUtils.getExpressUsername(server);
 		if (nameFromExistingServer == null) {

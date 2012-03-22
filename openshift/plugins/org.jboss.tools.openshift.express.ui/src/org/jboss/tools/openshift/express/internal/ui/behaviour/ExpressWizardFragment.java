@@ -43,7 +43,7 @@ public class ExpressWizardFragment extends WizardFragment implements ICompletabl
 	}
 
 	public boolean isComplete() {
-		return getTaskModel().getObject(ExpressServerUtils.TASK_WIZARD_ATTR_SELECTED_APP) != null;
+		return composite.getApplication() != null && composite.getError() == null;
 	}
 	
 	public Composite createComposite(Composite parent, IWizardHandle handle) {
