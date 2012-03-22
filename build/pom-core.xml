@@ -68,6 +68,7 @@
 			<modules>
 				<module>../tests</module>
 				<module>../jmx</module>
+				<module>../usage</module>
 			</modules>
 		</profile>
 
@@ -89,6 +90,7 @@
 			<modules>
 				<module>../tests</module>
 				<module>../archives</module>
+				<module>../usage</module>
 			</modules>
 		</profile>
 
@@ -113,6 +115,7 @@
 				<module>../archives</module>
 				<module>../jmx</module>
 				<module>../as</module>
+				<module>../usage</module>
 			</modules>
 		</profile>
 
@@ -138,6 +141,7 @@
 				<module>../jmx</module>
 				<module>../as</module>
 				<module>../openshift</module>
+				<module>../usage</module>
 			</modules>
 		</profile>
 
@@ -175,6 +179,7 @@
 				<module>../tests</module>
 				<module>../common</module>
 				<module>../jst</module>
+				<module>../usage</module>
 			</modules>
 		</profile>
 
@@ -214,6 +219,7 @@
 				<module>../jst</module>
 				<module>../xulrunner</module>
 				<module>../vpe</module>
+				<module>../usage</module>
 			</modules>
 		</profile>
 
@@ -236,6 +242,7 @@
 				<module>../xulrunner</module>
 				<module>../vpe</module>
 				<module>../jsf</module>
+				<module>../usage</module>
 			</modules>
 		</profile>
 
@@ -254,6 +261,7 @@
 			<modules>
 				<module>../tests</module>
 				<module>../freemarker</module>
+				<module>../usage</module>
 			</modules>
 		</profile>
 
@@ -273,6 +281,7 @@
 				<module>../tests</module>
 				<module>../freemarker</module>
 				<module>../hibernatetools</module>
+				<module>../usage</module>
 			</modules>
 		</profile>
 
@@ -324,6 +333,7 @@
 				<module>../xulrunner</module>
 				<module>../vpe</module>
 				<module>../struts</module>
+				<module>../usage</module>
 			</modules>
 		</profile>
 
@@ -341,6 +351,7 @@
 			<id>forge-bootstrap</id>
 			<modules>
 				<module>../forge</module>
+				<module>../usage</module>
 			</modules>
 		</profile>
 
@@ -355,12 +366,22 @@
 		</profile>
 
 		<profile>
+			<id>cdi-tests</id>
+			<modules>
+				<module>libs</module>
+				<module>../cdi/tests</module>
+				<module>reports/emma-coverage</module>
+			</modules>
+		</profile>
+
+		<profile>
 			<id>cdi-bootstrap</id>
 			<modules>
 				<module>../tests</module>
 				<module>../common</module>
 				<module>../jst</module>
 				<module>../cdi</module>
+				<module>../usage</module>
 			</modules>
 		</profile>
 
@@ -379,6 +400,7 @@
 			<modules>
 				<module>../tests</module>
 				<module>../birt</module>
+				<module>../usage</module>
 			</modules>
 		</profile>
 
@@ -406,6 +428,7 @@
 				<module>../vpe</module>
 				<module>../jsf</module>
 				<module>../seam</module>
+				<module>../usage</module>
 			</modules>
 		</profile>
 
@@ -422,7 +445,7 @@
 		<profile>
 			<id>examples-bootstrap</id>
 			<modules>
-                                <module>../tests</module>
+				<module>../tests</module>
                                 <module>../common</module>
                                 <module>../jmx</module>
                                 <module>../usage</module>
@@ -479,6 +502,7 @@
 				<module>../common</module>
 				<module>../as</module>
 				<module>../ws</module>
+				<module>../usage</module>
 			</modules>
 		</profile>
 
@@ -508,6 +532,7 @@
 				<module>../tests</module>
 				<module>../as</module>
 				<module>../deltacloud</module>
+				<module>../usage</module>
 			</modules>
 		</profile>
 
@@ -554,6 +579,7 @@
 				<module>../jst</module>
 				<module>../vpe</module>
 				<module>../jsf</module>
+				<module>../usage</module>
 			</modules>
 		</profile>
 

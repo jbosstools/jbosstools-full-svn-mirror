@@ -64,6 +64,7 @@
 			<modules>
 				<module>../tests</module>
 				<module>../jmx</module>
+				<module>../usage</module>
 			</modules>
 		</profile>
 
@@ -85,6 +86,7 @@
 			<modules>
 				<module>../tests</module>
 				<module>../archives</module>
+				<module>../usage</module>
 			</modules>
 		</profile>
 
@@ -122,6 +124,7 @@
 				<module>../tests</module>
 				<module>../common</module>
 				<module>../jst</module>
+				<module>../usage</module>
 			</modules>
 		</profile>
 
@@ -171,6 +174,7 @@
 				<module>../tests</module>
 				<module>../common</module>
 				<module>../smooks</module>
+				<module>../usage</module>
 			</modules>
 		</profile>
 
@@ -189,6 +193,7 @@
 			<modules>
 				<module>../tests</module>
 				<module>../bpel</module>
+				<module>../usage</module>
 			</modules>
 		</profile>
 
@@ -208,6 +213,7 @@
 				<module>../tests</module>
 				<module>../common</module>
 				<module>../esb</module>
+				<module>../usage</module>
 			</modules>
 		</profile>
 
@@ -226,6 +232,7 @@
 			<modules>
 				<module>../tests</module>
 				<module>../modeshape</module>
+				<module>../usage</module>
 			</modules>
 		</profile>
 
@@ -244,6 +251,7 @@
 			<modules>
 				<module>../tests</module>
 				<module>../flow</module>
+				<module>../usage</module>
 			</modules>
 		</profile>
 
@@ -263,6 +271,7 @@
 				<module>../tests</module>
 				<module>../flow</module>
 				<module>../jbpm</module>
+				<module>../usage</module>
 			</modules>
 		</profile>
 
@@ -282,6 +291,7 @@
 				<module>../tests</module>
 				<module>../as</module>
 				<module>../deltacloud</module>
+				<module>../usage</module>
 			</modules>
 		</profile>
 
@@ -299,6 +309,9 @@
 			<id>aggregate-coverage</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>coverage</name>
+				</property>
 			</activation>
 			<modules>
 				<module>reports/emma-coverage</module>
