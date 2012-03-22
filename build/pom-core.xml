@@ -530,6 +530,14 @@
 				<module>../tests</module>
 				<module>../common</module>
 				<module>../jmx</module>
+				<module>../archives</module>
+				<module>../as</module>
+				<module>../hibernatetools</module>
+				<module>../jst</module>
+				<module>../xulrunner</module>
+				<module>../vpe</module>
+				<module>../jsf</module>
+				<module>../seam</module>
 				<module>../usage</module>
 				<module>../runtime</module>
 			</modules>
