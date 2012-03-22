@@ -493,11 +493,11 @@ public class AddPortletOperation extends AddWebClassOperationEx {
 						.hasNext();) {
 					String[] arrayString = (String[]) iterator.next();
 					Element initParam = addNode(document,portlet,"init-param",null); //$NON-NLS-1$
-					addNode(document,initParam,"name",arrayString[0]); //$NON-NLS-1$
-					addNode(document,initParam,"value",arrayString[1]); //$NON-NLS-1$
 					if (arrayString[2] != null && arrayString[2].length() > 0) {
 						addNode(document,initParam,"description",arrayString[2]); //$NON-NLS-1$
 					}
+					addNode(document,initParam,"name",arrayString[0]); //$NON-NLS-1$
+					addNode(document,initParam,"value",arrayString[1]); //$NON-NLS-1$
 				}
 			}
 			// supports
