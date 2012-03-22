@@ -192,7 +192,7 @@
         	</dynamic>
         </menuContribution>
         <menuContribution
-              locationURI="toolbar:org.jboss.tools.jst.jsp.toolbars.sampleToolbar?after=org.jboss.tools.jst.jsp.toolbars.i18">
+              locationURI="toolbar:org.jboss.tools.jst.jsp.toolbars.sampleToolbar?before=org.jboss.tools.jst.jsp.toolbars.i18">
             <command
 	            	commandId="org.jboss.tools.vpe.commands.preferencesCommand"
 	                icon="icons/preferences.gif"

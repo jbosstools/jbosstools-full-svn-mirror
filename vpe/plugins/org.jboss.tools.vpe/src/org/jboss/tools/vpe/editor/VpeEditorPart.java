@@ -70,6 +70,7 @@ import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
 import org.jboss.tools.jst.jsp.jspeditor.StorageRevisionEditorInputAdapter;
 import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
 import org.jboss.tools.jst.jsp.preferences.VpePreference;
+import org.jboss.tools.jst.jsp.selection.bar.SelectionBar;
 import org.jboss.tools.vpe.IVpeHelpContextIds;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
@@ -98,7 +99,7 @@ public class VpeEditorPart extends EditorPart implements
 	private ControlListener controlListener;
 	private XModelTreeListener listener;
 	private XModelObject optionsObject;
-//	private SelectionBar selectionBar = new SelectionBar();
+	private SelectionBar selectionBar; // should be get from o.j.t.jst.jsp plugin
 	private ActivationListener activationListener = new ActivationListener();
 	private int visualMode;
 	private EditorPart multiPageEditor;
@@ -806,12 +807,16 @@ public class VpeEditorPart extends EditorPart implements
 		
 			toolBar = visualEditor.createVisualToolbar(verticalToolbarSplitter);
 			visualEditor.createPartControl(visualContent);
-			/*
-			 * https://issues.jboss.org/browse/JBIDE-10711
-			 */
-			if (!XulRunnerBrowser.isCurrentPlatformOfficiallySupported()) {
-				if (multiPageEditor instanceof JSPMultiPageEditor) {
-					JSPMultiPageEditor jspMultiPageEditor = (JSPMultiPageEditor) multiPageEditor;
+			if (multiPageEditor instanceof JSPMultiPageEditor) {
+				JSPMultiPageEditor jspMultiPageEditor = (JSPMultiPageEditor) multiPageEditor;
+				/*
+				 * https://issues.jboss.org/browse/JBIDE-11302
+				 */
+				selectionBar = jspMultiPageEditor.getSelectionBar();
+				/*
+				 * https://issues.jboss.org/browse/JBIDE-10711
+				 */
+				if (!XulRunnerBrowser.isCurrentPlatformOfficiallySupported()) {
 					/*
 					 * Set the flag in JSPMultiPageEditor
 					 */
@@ -1124,27 +1129,24 @@ public class VpeEditorPart extends EditorPart implements
 //				doVisualRefresh = true;
 //			}
 	
-			boolean prefsShowNonVisualTags = JspEditorPlugin.getDefault()
-					.getPreferenceStore().getBoolean(
-							IVpePreferencesPage.SHOW_NON_VISUAL_TAGS);
-			if (prefsShowNonVisualTags != getController().getVisualBuilder()
-					.isShowInvisibleTags()) {
-				getController().getVisualBuilder().setShowInvisibleTags(
-						prefsShowNonVisualTags);
+			boolean prefsShowNonVisualTags = JspEditorPlugin.getDefault().getPreferenceStore().
+					getBoolean(IVpePreferencesPage.SHOW_NON_VISUAL_TAGS);
+			if (prefsShowNonVisualTags != getController().getVisualBuilder().isShowInvisibleTags()) {
+				getController().getVisualBuilder().setShowInvisibleTags(prefsShowNonVisualTags);
 				doVisualRefresh = true;
 			}
 			
-			boolean prefsShowBundlesAsEL = JspEditorPlugin
-					.getDefault()
-					.getPreferenceStore()
-					.getBoolean(
-							IVpePreferencesPage.SHOW_RESOURCE_BUNDLES_USAGE_AS_EL);
-			if (prefsShowBundlesAsEL != getController().getPageContext()
-					.getBundle().isShowBundleUsageAsEL()) {
-				getController().getPageContext().getBundle()
-						.updateShowBundleUsageAsEL(prefsShowBundlesAsEL);
+			boolean prefsShowBundlesAsEL = JspEditorPlugin.getDefault().getPreferenceStore()
+					.getBoolean(IVpePreferencesPage.SHOW_RESOURCE_BUNDLES_USAGE_AS_EL);
+			if (prefsShowBundlesAsEL != getController().getPageContext().getBundle().isShowBundleUsageAsEL()) {
+				getController().getPageContext().getBundle().updateShowBundleUsageAsEL(prefsShowBundlesAsEL);
 				doVisualRefresh = true;
 			}
+			
+			boolean prefsShowVPEToolBar = JspEditorPlugin.getDefault().getPreferenceStore()
+					.getBoolean(IVpePreferencesPage.SHOW_VISUAL_TOOLBAR);
+			setVerticalToolbarVisible(prefsShowVPEToolBar);
+			
 			/*
 			 * Visual refresh is only needed when some options have changed.
 			 */
@@ -1155,13 +1157,13 @@ public class VpeEditorPart extends EditorPart implements
 		}
 	}
 	
-//	public void updateSelectionBar(boolean isSelectionBarVisible) {
-//		if (selectionBar != null) {
-//			selectionBar.setVisible(isSelectionBarVisible);
-//		} else {
-//			VpePlugin.getDefault().logError("VPE Selection Bar is not initialized."); //$NON-NLS-1$
-//		}
-//	}
+	public void updateSelectionBar(boolean isSelectionBarVisible) {
+		if (selectionBar != null) {
+			selectionBar.setVisible(isSelectionBarVisible);
+		} else {
+			VpePlugin.getDefault().logError("VPE Selection Bar is not initialized."); //$NON-NLS-1$
+		}
+	}
 
 	private void deactivateServices() {
 		IWorkbench workbench = PlatformUI.getWorkbench();

@@ -30,6 +30,7 @@ import org.jboss.tools.jst.jsp.JspEditorPlugin;
 import org.jboss.tools.jst.jsp.editor.IVisualEditor;
 import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
 import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
+import org.jboss.tools.jst.jsp.selection.bar.SelectionBarHandler;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeEditorPart;
 import org.jboss.tools.vpe.handlers.ScrollLockSourceVisualHandler;
@@ -134,6 +135,8 @@ public class VpePreferencesPage extends FieldEditorPreferencePage implements
 				visualAppearanceGroup));
 		addField(new VpeBooleanFieldEditor(SHOW_NON_VISUAL_TAGS,
 				VpeUIMessages.SHOW_NON_VISUAL_TAGS, visualAppearanceGroup));
+		addField(new VpeBooleanFieldEditor(SHOW_SELECTION_TAG_BAR,
+				VpeUIMessages.SHOW_SELECTION_TAG_BAR, visualAppearanceGroup));
 		addField(new VpeBooleanFieldEditor(SHOW_TEXT_FORMATTING,
 				VpeUIMessages.SHOW_TEXT_FORMATTING, visualAppearanceGroup));
 		addField(new VpeBooleanFieldEditor(SHOW_RESOURCE_BUNDLES_USAGE_AS_EL,
@@ -190,6 +193,8 @@ public class VpePreferencesPage extends FieldEditorPreferencePage implements
 							.getPreferenceStore().getBoolean(IVpePreferencesPage.SHOW_BORDER_FOR_UNKNOWN_TAGS);
 					boolean prefsShowNonVisualTags = JspEditorPlugin.getDefault()
 							.getPreferenceStore().getBoolean(IVpePreferencesPage.SHOW_NON_VISUAL_TAGS);
+					boolean prefsShowSelectionBar = JspEditorPlugin.getDefault()
+							.getPreferenceStore().getBoolean(IVpePreferencesPage.SHOW_SELECTION_TAG_BAR);
 					boolean prefsShowTextFormattingBar = JspEditorPlugin.getDefault()
 							.getPreferenceStore().getBoolean(IVpePreferencesPage.SHOW_TEXT_FORMATTING);
 					boolean prefsShowBundlesAsEL = JspEditorPlugin.getDefault()
@@ -199,6 +204,7 @@ public class VpePreferencesPage extends FieldEditorPreferencePage implements
 					
 					setCommandToggleState(ShowBorderHandler.COMMAND_ID, presfShowBorderForUnknownTags);
 					setCommandToggleState(ShowNonVisualTagsHandler.COMMAND_ID, prefsShowNonVisualTags);
+					setCommandToggleState(SelectionBarHandler.COMMAND_ID, prefsShowSelectionBar);
 					setCommandToggleState(ShowTextFormattingHandler.COMMAND_ID, prefsShowTextFormattingBar);
 					setCommandToggleState(ShowBundleAsELHandler.COMMAND_ID, prefsShowBundlesAsEL);
 					setCommandToggleState(ScrollLockSourceVisualHandler.COMMAND_ID, prefsSynchronizeScrolling);
