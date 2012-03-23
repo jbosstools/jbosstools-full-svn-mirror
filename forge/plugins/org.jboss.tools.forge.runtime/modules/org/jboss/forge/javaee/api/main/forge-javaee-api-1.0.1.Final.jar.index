@@ -1,0 +1,12 @@
+
+META-INF
+org
+org/jboss
+org/jboss/forge
+org/jboss/forge/spec
+org/jboss/forge/spec/javaee
+org/jboss/forge/spec/javaee/util
+org/jboss/forge/spec/javaee/descriptor
+META-INF/maven
+META-INF/maven/org.jboss.forge
+META-INF/maven/org.jboss.forge/forge-javaee-api
