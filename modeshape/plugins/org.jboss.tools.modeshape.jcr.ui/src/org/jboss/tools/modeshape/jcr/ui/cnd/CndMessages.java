@@ -26,6 +26,12 @@ class CndMessages extends NLS {
     public static String abstractAttributeToolTip;
 
     /**
+     * A dialog message indicating the default value has been changed and asks the user to OK the dialog. One parameter, the default
+     * value, is required.
+     */
+    public static String acceptDefaultValueDialogMsg;
+
+    /**
      * A dialog message indicating the namespace mapping has been changed and asks the user to OK the dialog.
      */
     public static String acceptNamespaceDialogMsg;
@@ -37,6 +43,12 @@ class CndMessages extends NLS {
     public static String acceptQualifiedNameDialogMsg;
 
     /**
+     * A dialog message indicating the value constraint has been changed and asks the user to OK the dialog. One parameter, the
+     * value constraint, is required.
+     */
+    public static String acceptValueConstraintDialogMsg;
+
+    /**
      * The context menu item text for the add child node definition action.
      */
     public static String addChildNodeMenuText;
@@ -45,6 +57,16 @@ class CndMessages extends NLS {
      * The tool tip message of the add child node definition action.
      */
     public static String addChildNodeToolTip;
+
+    /**
+     * The context menu item text for the add default value action.
+     */
+    public static String addDefaultValueMenuText;
+
+    /**
+     * The tool tip message of the add default value action.
+     */
+    public static String addDefaultValueToolTip;
 
     /**
      * The context menu item text for the add namespace mapping action.
@@ -95,6 +117,16 @@ class CndMessages extends NLS {
      * The tool tip message of the add supertype action.
      */
     public static String addSuperTypeToolTip;
+
+    /**
+     * The context menu item text for the add value constraint action.
+     */
+    public static String addValueConstraintMenuText;
+
+    /**
+     * The tool tip message of the add value constraint action.
+     */
+    public static String addValueConstraintToolTip;
 
     /**
      * The column header text for attributes.
@@ -277,9 +309,44 @@ class CndMessages extends NLS {
     public static String defaultTypeHeaderText;
 
     /**
+     * The message area title of the default value dialog when creating a new default value.
+     */
+    public static String defaultValueDialogCreateMsg;
+
+    /**
+     * The message area title of the default value dialog when an existing default value is being edited.
+     */
+    public static String defaultValueDialogEditMsg;
+
+    /**
+     * The message displayed in the default value dialog when first displayed.
+     */
+    public static String defaultValueDialogMsg;
+
+    /**
+     * A label for a default value control.
+     */
+    public static String defaultValueLabel;
+
+    /**
      * The column header text of the default values of a property definition.
      */
     public static String defaultValuesHeaderText;
+
+    /**
+     * A label for a default values control.
+     */
+    public static String defaultValuesLabel;
+
+    /**
+     * A tool tip message of a property definition's default value.
+     */
+    public static String defaultValuesToolTip;
+
+    /**
+     * A tool tip message for one default value of a property definition.
+     */
+    public static String defaultValueToolTip;
 
     /**
      * The question message of the dialog for deleting a child node definition. One parameter, the child node definition name, is
@@ -301,6 +368,26 @@ class CndMessages extends NLS {
      * The tool tip message of the delete child node definition action.
      */
     public static String deleteChildNodeToolTip;
+
+    /**
+     * The question message of the dialog for deleting a default value. One parameter, the default value, is required.
+     */
+    public static String deleteDefaultValueDialogMessage;
+
+    /**
+     * The title of the dialog for deleting a default value.
+     */
+    public static String deleteDefaultValueDialogTitle;
+
+    /**
+     * The context menu item text for the delete default value action.
+     */
+    public static String deleteDefaultValueMenuText;
+
+    /**
+     * The tool tip message of the delete default value action.
+     */
+    public static String deleteDefaultValueToolTip;
 
     /**
      * The question message of the dialog for deleting a namespace mapping. One parameter, the namespace prefix, is required.
@@ -405,6 +492,26 @@ class CndMessages extends NLS {
     public static String deleteSuperTypeToolTip;
 
     /**
+     * The question message of the dialog for deleting a value constraint. One parameter, the value constraint, is required.
+     */
+    public static String deleteValueConstraintDialogMessage;
+
+    /**
+     * The title of the dialog for deleting a value constraint.
+     */
+    public static String deleteValueConstraintDialogTitle;
+
+    /**
+     * The context menu item text for the delete value constraint action.
+     */
+    public static String deleteValueConstraintMenuText;
+
+    /**
+     * The tool tip message of the delete value constraint action.
+     */
+    public static String deleteValueConstraintToolTip;
+
+    /**
      * The context menu item text for the edit child node definition action.
      */
     public static String editChildNodeMenuText;
@@ -413,6 +520,16 @@ class CndMessages extends NLS {
      * The tool tip message of the edit child node definition action.
      */
     public static String editChildNodeToolTip;
+
+    /**
+     * The context menu item text for the edit default value action.
+     */
+    public static String editDefaultValueMenuText;
+
+    /**
+     * The tool tip message of the edit default value action.
+     */
+    public static String editDefaultValueToolTip;
 
     /**
      * The namespace editor dialog message area title when editing an existing namespace mapping.
@@ -480,10 +597,44 @@ class CndMessages extends NLS {
     public static String editSuperTypeToolTip;
 
     /**
+     * The context menu item text for the edit value constraint action.
+     */
+    public static String editValueConstraintMenuText;
+
+    /**
+     * The tool tip message of the edit value constraint action.
+     */
+    public static String editValueConstraintToolTip;
+
+    /**
+     * An error message indicating the new child node definition was not added to the node type definition. One parameter, the child
+     * definition name, is required.
+     */
+    public static String errorAddingChildNode;
+
+    /**
+     * An error message indicating the new default value was not added to the property definition. One parameter, the default value,
+     * is required.
+     */
+    public static String errorAddingDefaultValue;
+
+    /**
      * An error message indicating the new namespace mapping was not added to the CND. One parameter, the namespace mapping, is
      * required.
      */
     public static String errorAddingNamespaceMapping;
+
+    /**
+     * An error message indicating the new node type definition was not added to the CND. One parameter, the node type definition
+     * name, is required.
+     */
+    public static String errorAddingNodeType;
+
+    /**
+     * An error message indicating the new property definition was not added to the node type definition. One parameter, the
+     * property name, is required.
+     */
+    public static String errorAddingProperty;
 
     /**
      * An error message indicating the new required type was not added to the child node definition. One parameter, the required
@@ -498,10 +649,76 @@ class CndMessages extends NLS {
     public static String errorAddingSupertype;
 
     /**
+     * An error message indicating the new value constraint was not added to the property definition. One parameter, the value
+     * constraint, is required.
+     */
+    public static String errorAddingValueConstraint;
+
+    /**
+     * An error message indicating deleting the child node definition did not get saved. One parameter, the child node definition
+     * name, is required.
+     */
+    public static String errorDeletingChildNode;
+
+    /**
+     * An error message indicating deleting the default value did not get saved. One parameter, the default value, is required.
+     */
+    public static String errorDeletingDefaultValue;
+
+    /**
+     * An error message indicating deleting the namespace mapping did not get saved. One parameter, the namespace prefix, is
+     * required.
+     */
+    public static String errorDeletingNamespace;
+
+    /**
+     * An error message indicating deleting the node type definition did not get saved. One parameter, the node type definition
+     * name, is required.
+     */
+    public static String errorDeletingNodeType;
+
+    /**
+     * An error message indicating deleting the property definition did not get saved. One parameter, the property definition name,
+     * is required.
+     */
+    public static String errorDeletingProperty;
+
+    /**
+     * An error message indicating deleting the supertype did not get saved. One parameter, the supertype name, is required.
+     */
+    public static String errorDeletingSupertype;
+
+    /**
+     * An error message indicating deleting the value constraint did not get saved. One parameter, the value constraint, is
+     * required.
+     */
+    public static String errorDeletingValueConstraint;
+
+    /**
+     * An error message indicating the updated child node definition did not get saved to the node type definition. Three
+     * parameters, the child node definition name, a flag indicating if the remove succeeded, and a flag indicating if the add
+     * succeeded, are required.
+     */
+    public static String errorEditingChildNode;
+
+    /**
+     * An error message indicating the updated default value did not get saved to the CND. Three parameters, the default value, a
+     * flag indicating if the remove succeeded, and a flag indicating if the add succeeded, are required.
+     */
+    public static String errorEditingDefaultValue;
+
+    /**
      * An error message indicating the updated namespace mapping did not get saved to the CND. Three parameters, the namespace
      * mapping, a flag indicating if the remove succeeded, and a flag indicating if the add succeeded, are required.
      */
     public static String errorEditingNamespaceMapping;
+
+    /**
+     * An error message indicating the updated property definition did not get saved to the node type definition. Three parameters,
+     * the property definition name, a flag indicating if the remove succeeded, and a flag indicating if the add succeeded, are
+     * required.
+     */
+    public static String errorEditingProperty;
 
     /**
      * An error message indicating the updated required type did not get saved to the CND. Three parameters, the required type, a
@@ -514,6 +731,12 @@ class CndMessages extends NLS {
      * indicating if the remove succeeded, and a flag indicating if the add succeeded, are required.
      */
     public static String errorEditingSupertype;
+
+    /**
+     * An error message indicating the updated value constraint did not get saved to the CND. Three parameters, the value
+     * constraint, a flag indicating if the remove succeeded, and a flag indicating if the add succeeded, are required.
+     */
+    public static String errorEditingValueConstraint;
 
     /**
      * The error message when the CND editor could not be opened.
@@ -544,6 +767,16 @@ class CndMessages extends NLS {
      * A tool tip message of the node type definition's mixin attribute.
      */
     public static String mixinAttributeToolTip;
+
+    /**
+     * A name for the multiple attribute suitable for a radio or check button.
+     */
+    public static String multipleAttribute;
+
+    /**
+     * A tool tip message of the property definition's multiple attribute.
+     */
+    public static String multipleAttributeToolTip;
 
     /**
      * The column header text for a generic name property or attribute.
@@ -601,6 +834,11 @@ class CndMessages extends NLS {
     public static String newNamespaceDialogTitle;
 
     /**
+     * The qualified name editor dialog message area title when creating a new node type definition.
+     */
+    public static String newNodeTypeDialogTitle;
+
+    /**
      * The qualified name editor dialog message area title when creating a new required type.
      */
     public static String newRequiredTypeDialogTitle;
@@ -626,9 +864,29 @@ class CndMessages extends NLS {
     public static String nodeTypeNameToolTip;
 
     /**
+     * A name for the noFullText attribute suitable for a radio or check button.
+     */
+    public static String noFullTextAttribute;
+
+    /**
+     * A tool tip message of the property definition's noFullText attribute.
+     */
+    public static String noFullTextAttributeToolTip;
+
+    /**
      * The text indicating the qualified name does not have a qualifier.
      */
     public static String noNameQualifierChoice;
+
+    /**
+     * A name for the noQueryOrder attribute suitable for a radio or check button.
+     */
+    public static String noQueryOrderAttribute;
+
+    /**
+     * A tool tip message of the property definition's noQueryOrder attribute.
+     */
+    public static String noQueryOrderAttributeToolTip;
 
     /**
      * A label for an on parent version attribute control.
@@ -659,6 +917,26 @@ class CndMessages extends NLS {
      * The tool tip for the default values of a property definition.
      */
     public static String propertyDefaultValuesToolTip;
+
+    /**
+     * The message area title of the property definition dialog when creating a new property.
+     */
+    public static String propertyDialogCreateTitle;
+
+    /**
+     * The message area title of the property definition dialog when an existing property is being edited.
+     */
+    public static String propertyDialogEditTitle;
+
+    /**
+     * The message displayed in the property dialog when first displayed.
+     */
+    public static String propertyDialogMsg;
+
+    /**
+     * The title of the property definition dialog.
+     */
+    public static String propertyDialogTitle;
 
     /**
      * The tool tip for a property definition name.
@@ -737,9 +1015,19 @@ class CndMessages extends NLS {
     public static String supertypesLabel;
 
     /**
+     * A tool tip message of a node type definition's supertypes property.
+     */
+    public static String supertypesToolTip;
+
+    /**
      * The column header text for a type.
      */
     public static String typeHeaderText;
+
+    /**
+     * A label for a type control.
+     */
+    public static String typeLabel;
 
     /**
      * A tooltip message for the control where the name of the qualified name is being edited.
@@ -752,9 +1040,49 @@ class CndMessages extends NLS {
     public static String validQualifiersToolTip;
 
     /**
+     * The message area title of the value constraint dialog when creating a new value constraint.
+     */
+    public static String valueConstraintDialogCreateMsg;
+
+    /**
+     * The message area title of the value constraint dialog when an existing value constraint is being edited.
+     */
+    public static String valueConstraintDialogEditMsg;
+
+    /**
+     * The message displayed in the value constraint dialog when first displayed.
+     */
+    public static String valueConstraintDialogMsg;
+
+    /**
+     * A label for a value constraint control.
+     */
+    public static String valueConstraintLabel;
+
+    /**
      * The column header text for the value constraints of a property definition.
      */
     public static String valueConstraintsHeaderText;
+
+    /**
+     * A label for a value constraints control.
+     */
+    public static String valueConstraintsLabel;
+
+    /**
+     * A tool tip message of a property definition's value constraints.
+     */
+    public static String valueConstraintsToolTip;
+
+    /**
+     * A tool tip message for one value constraint of a property definition.
+     */
+    public static String valueConstraintToolTip;
+
+    /**
+     * The title of the string value editor dialog.
+     */
+    public static String valueEditorDialogTitle;
 
     static {
         NLS.initializeMessages("org.jboss.tools.modeshape.jcr.ui.cnd.cndMessages", CndMessages.class); //$NON-NLS-1$

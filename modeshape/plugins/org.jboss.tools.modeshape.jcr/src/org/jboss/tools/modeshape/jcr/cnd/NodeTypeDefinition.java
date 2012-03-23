@@ -416,6 +416,13 @@ public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTempl
         return new ArrayList<PropertyDefinitionTemplate>(getPropertyDefinitions());
     }
 
+    /**
+     * @return the node type definition's qualified name (never <code>null</code>)
+     */
+    public QualifiedName getQualifiedName() {
+        return this.name;
+    }
+
     private String getStartChildNodeDefinitionDelimiter() {
         return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.CHILD_NODE_DEFINITION_START_DELIMITER);
     }
@@ -814,7 +821,17 @@ public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTempl
         /**
          * The collection for super types.
          */
-        SUPERTYPES
+        SUPERTYPES;
+
+        /**
+         * {@inheritDoc}
+         * 
+         * @see java.lang.Enum#toString()
+         */
+        @Override
+        public String toString() {
+            return (getClass().getSimpleName() + super.toString());
+        }
     }
 
 }

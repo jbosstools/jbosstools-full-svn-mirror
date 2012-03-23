@@ -38,30 +38,30 @@ public class CndValidatorTest {
     @Test
     public void childNodeDefinitionWithEmptyNameShouldBeAnError() {
         this.childNodeDefinition.setName(null);
-        assertTrue(CndValidator.validateChildNodeDefinition(this.childNodeDefinition).isError());
+        assertTrue(CndValidator.validateChildNodeDefinition(this.childNodeDefinition, null).isError());
 
         this.childNodeDefinition.setName(Utils.EMPTY_STRING);
-        assertTrue(CndValidator.validateChildNodeDefinition(this.childNodeDefinition).isError());
+        assertTrue(CndValidator.validateChildNodeDefinition(this.childNodeDefinition, null).isError());
     }
 
     @Test
     public void childNodeDefinitionWithInvalidDefaultTypeNameShouldBeAnError() {
         this.childNodeDefinition.setName("name"); //$NON-NLS-1$
         this.childNodeDefinition.setDefaultPrimaryTypeName("missingName:"); //$NON-NLS-1$
-        assertTrue(CndValidator.validateChildNodeDefinition(this.childNodeDefinition).isError());
+        assertTrue(CndValidator.validateChildNodeDefinition(this.childNodeDefinition, null).isError());
     }
 
     @Test
     public void childNodeDefinitionWithInvalidNameShouldBeAnError() {
         this.childNodeDefinition.setName("invalid/name"); //$NON-NLS-1$
-        assertTrue(CndValidator.validateChildNodeDefinition(this.childNodeDefinition).isError());
+        assertTrue(CndValidator.validateChildNodeDefinition(this.childNodeDefinition, null).isError());
     }
 
     @Test
     public void childNodeDefinitionWithInvalidRequiredTypeNameShouldBeAnError() {
         this.childNodeDefinition.setName("name"); //$NON-NLS-1$
         this.childNodeDefinition.addRequiredType("missingName:"); //$NON-NLS-1$
-        assertTrue(CndValidator.validateChildNodeDefinition(this.childNodeDefinition).isError());
+        assertTrue(CndValidator.validateChildNodeDefinition(this.childNodeDefinition, null).isError());
     }
 
     @Test
@@ -210,10 +210,10 @@ public class CndValidatorTest {
     @Test
     public void propertyDefinitionWithEmptyNameShouldNotBeValid() {
         this.propertyDefinition.setName(null);
-        assertTrue(CndValidator.validatePropertyDefinition(this.propertyDefinition).isError());
+        assertTrue(CndValidator.validatePropertyDefinition(this.propertyDefinition, null).isError());
 
         this.propertyDefinition.setName(Utils.EMPTY_STRING);
-        assertTrue(CndValidator.validatePropertyDefinition(this.propertyDefinition).isError());
+        assertTrue(CndValidator.validatePropertyDefinition(this.propertyDefinition, null).isError());
     }
 
     @Test
@@ -222,13 +222,13 @@ public class CndValidatorTest {
         this.propertyDefinition.setType(PropertyType.LONG);
         this.propertyDefinition.addDefaultValue("notALongValue"); //$NON-NLS-1$
 
-        assertTrue(CndValidator.validatePropertyDefinition(this.propertyDefinition).isError());
+        assertTrue(CndValidator.validatePropertyDefinition(this.propertyDefinition, null).isError());
     }
 
     @Test
     public void propertyDefinitionWithInvalidNameShouldBeAnError() {
         this.propertyDefinition.setName("invalid/name"); //$NON-NLS-1$
-        assertTrue(CndValidator.validatePropertyDefinition(this.propertyDefinition).isError());
+        assertTrue(CndValidator.validatePropertyDefinition(this.propertyDefinition, null).isError());
     }
 
     @Test
@@ -237,7 +237,7 @@ public class CndValidatorTest {
         this.propertyDefinition.addDefaultValue("defaultValue1"); //$NON-NLS-1$
         this.propertyDefinition.addDefaultValue("defaultValue2"); //$NON-NLS-1$
 
-        assertTrue(CndValidator.validatePropertyDefinition(this.propertyDefinition).isError());
+        assertTrue(CndValidator.validatePropertyDefinition(this.propertyDefinition, null).isError());
     }
 
     @Test

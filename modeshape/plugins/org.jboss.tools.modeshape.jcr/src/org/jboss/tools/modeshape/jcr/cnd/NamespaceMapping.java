@@ -227,7 +227,7 @@ public class NamespaceMapping implements CndElement, Comparable {
 
     /**
      * {@inheritDoc}
-     *
+     * 
      * @see java.lang.Object#toString()
      */
     @Override
@@ -244,6 +244,7 @@ public class NamespaceMapping implements CndElement, Comparable {
      * The property names whose <code>toString()</code> is used in {@link PropertyChangeEvent}s.
      */
     public enum PropertyName {
+
         /**
          * The namespace prefix.
          */
@@ -252,7 +253,16 @@ public class NamespaceMapping implements CndElement, Comparable {
         /**
          * The namespace URI.
          */
-        URI
-    }
+        URI;
 
+        /**
+         * {@inheritDoc}
+         * 
+         * @see java.lang.Enum#toString()
+         */
+        @Override
+        public String toString() {
+            return (getClass().getSimpleName() + super.toString());
+        }
+    }
 }

@@ -42,8 +42,10 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
@@ -71,9 +73,9 @@ import org.jboss.tools.modeshape.ui.forms.FormUtils.Styles;
 import org.jboss.tools.modeshape.ui.forms.MessageFormDialog;
 
 /**
- * 
+ * A dialog used to create and edit {@link ChildNodeDefinition}s.
  */
-class ChildNodeDialog extends FormDialog {
+final class ChildNodeDialog extends FormDialog {
 
     private IAction addRequiredType;
     private Button btnOk;
@@ -81,16 +83,17 @@ class ChildNodeDialog extends FormDialog {
     private final ErrorMessage defaultTypeError;
     private IAction deleteRequiredType;
     private IAction editRequiredType;
-
     /**
      * The existing child node definition names contained in the CND (never <code>null</code> but can be empty).
      */
-    private Collection<QualifiedName> existingChildNodeNames;
+    private final Collection<QualifiedName> existingChildNodeNames;
 
     /**
      * The existing namespace prefixes contained in the CND (never <code>null</code> but can be empty).
      */
-    private Collection<String> existingNamespacePrefixes;
+    private final Collection<String> existingNamespacePrefixes;
+
+    private QualifiedNameEditor nameEditor;
 
     private final ErrorMessage nameError;
 
@@ -123,19 +126,12 @@ class ChildNodeDialog extends FormDialog {
     }
 
     /**
-     * @return the child node definition represented by the dialog UI controls (never <code>null</code>)
-     */
-    public ChildNodeDefinition getChildNodeDefinition() {
-        return this.childNodeBeingEdited;
-    }
-
-    /**
-     * Used to create a new child node definition.
+     * Used to edit a child node definition.
      * 
      * @param parentShell the parent shell (can be <code>null</code>)
      * @param existingChildNodeNames the existing child node names (can be <code>null</code> or empty)
-     * @param childNodeBeingEdited the child node definition being edited (cannot be <code>null</code>)
      * @param existingNamespacePrefixes the existing CND namespace prefixes (can be <code>null</code> or empty)
+     * @param childNodeBeingEdited the child node definition being edited (cannot be <code>null</code>)
      */
     public ChildNodeDialog( final Shell parentShell,
                             final Collection<QualifiedName> existingChildNodeNames,
@@ -151,7 +147,7 @@ class ChildNodeDialog extends FormDialog {
 
         // remove name from existing names so that validation won't show it as a duplicate
         if (!Utils.isEmpty(this.childNodeBeingEdited.getName())) {
-            this.existingChildNodeNames.remove(this.childNodeBeingEdited.getName());
+            this.existingChildNodeNames.remove(this.childNodeBeingEdited.getQualifiedName());
         }
     }
 
@@ -216,35 +212,27 @@ class ChildNodeDialog extends FormDialog {
             toolkit.paintBordersFor(leftContainer);
 
             { // name
-                toolkit.createLabel(leftContainer, CndMessages.nameLabel);
-                final Text txtName = toolkit.createText(leftContainer, Utils.EMPTY_STRING, Styles.TEXT_STYLE);
-                txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-                txtName.setToolTipText(CndMessages.childNodeNameToolTip);
-
-                if (isEditMode()) {
-                    String currentValue = this.childNodeBeingEdited.getName();
-
-                    if (currentValue == null) {
-                        currentValue = Utils.EMPTY_STRING;
-                    }
-
-                    txtName.setText(currentValue);
-                }
-
-                txtName.addModifyListener(new ModifyListener() {
+                this.nameEditor = new QualifiedNameEditor(leftContainer,
+                                                          SWT.NONE,
+                                                          toolkit,
+                                                          Messages.propertyDefinitionName,
+                                                          this.existingNamespacePrefixes,
+                                                          this.childNodeBeingEdited.getQualifiedName());
+                ((GridData)this.nameEditor.getLayoutData()).horizontalSpan = 2;
+                this.nameEditor.addListener(SWT.Modify, new Listener() {
 
                     /**
                      * {@inheritDoc}
                      * 
-                     * @see org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse.swt.events.ModifyEvent)
+                     * @see org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.Event)
                      */
                     @Override
-                    public void modifyText( final ModifyEvent e ) {
-                        handleNameChanged(((Text)e.widget).getText());
+                    public void handleEvent( final Event e ) {
+                        handleNameChanged(e.text);
                     }
                 });
 
-                this.nameError.setControl(txtName);
+                this.nameError.setControl(this.nameEditor);
             }
 
             { // default type
@@ -283,7 +271,7 @@ class ChildNodeDialog extends FormDialog {
                 final Group attributesContainer = new Group(leftContainer, SWT.SHADOW_NONE);
                 attributesContainer.setText(CndMessages.attributesHeaderText);
                 attributesContainer.setLayout(new GridLayout(2, true));
-                GridData gd = new GridData(SWT.FILL, SWT.CENTER, true, false);
+                final GridData gd = new GridData(SWT.FILL, SWT.CENTER, true, false);
                 gd.horizontalSpan = 2;
                 attributesContainer.setLayoutData(gd);
                 toolkit.adapt(attributesContainer);
@@ -374,11 +362,10 @@ class ChildNodeDialog extends FormDialog {
                 });
                 btnSameNamedSiblings.setToolTipText(CndMessages.sameNamedSiblingsAttributeToolTip);
 
-                
                 { // opv
                     final Composite opvContainer = toolkit.createComposite(attributesContainer);
                     opvContainer.setLayout(new GridLayout(2, false));
-                    GridData gdOpv = new GridData(SWT.FILL, SWT.CENTER, true, false);
+                    final GridData gdOpv = new GridData(SWT.FILL, SWT.CENTER, true, false);
                     gdOpv.horizontalSpan = 2;
                     opvContainer.setLayoutData(gdOpv);
                     toolkit.paintBordersFor(opvContainer);
@@ -389,6 +376,7 @@ class ChildNodeDialog extends FormDialog {
                     final CCombo cbxOpvs = new CCombo(opvContainer, Styles.COMBO_STYLE);
                     toolkit.adapt(cbxOpvs, true, false);
                     cbxOpvs.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+                    ((GridData)cbxOpvs.getLayoutData()).heightHint = cbxOpvs.getItemHeight() + 4;
                     cbxOpvs.setToolTipText(CndMessages.onParentVersionToolTip);
 
                     // populate opv values
@@ -613,6 +601,15 @@ class ChildNodeDialog extends FormDialog {
     }
 
     /**
+     * <strong>Should only be called after the dialog's <code>OK</code> button has been selected.</strong>
+     * 
+     * @return the child node definition represented by the dialog UI controls (never <code>null</code>)
+     */
+    public ChildNodeDefinition getChildNodeDefinition() {
+        return this.childNodeBeingEdited;
+    }
+
+    /**
      * @return the selected required type or <code>null</code> if the viewer has an empty selection
      */
     private String getSelectedRequiredType() {
@@ -639,9 +636,7 @@ class ChildNodeDialog extends FormDialog {
         if (dialog.open() == Window.OK) {
             final QualifiedName newQName = dialog.getQualifiedName();
 
-            if (this.childNodeBeingEdited.addRequiredType(newQName.get())) {
-                this.requiredTypesViewer.refresh();
-            } else {
+            if (!this.childNodeBeingEdited.addRequiredType(newQName.get())) {
                 MessageFormDialog.openError(getShell(), UiMessages.errorDialogTitle, JcrUiUtils.getCndEditorImage(),
                                             NLS.bind(CndMessages.errorAddingRequiredType, newQName));
             }
@@ -764,26 +759,10 @@ class ChildNodeDialog extends FormDialog {
     }
 
     private boolean isEditMode() {
-        return (this.childNodeBeingEdited != null);
+        return (this.originalChildNode != null);
     }
 
-    private void validateAttributes() {
-        // no validation required
-    }
-
-    private void validateDefaultType() {
-        updateMessage(CndValidator.validateDefaultType(this.childNodeBeingEdited), this.defaultTypeError);
-    }
-
-    private void validateName() {
-        updateMessage(CndValidator.validateName(this.childNodeBeingEdited), this.nameError);
-    }
-
-    private void validateRequiredTypes() {
-        updateMessage(CndValidator.validateRequiredTypes(this.childNodeBeingEdited), this.requiredTypesError);
-    }
-
-    private void updateMessage( final ValidationStatus status, 
+    private void updateMessage( final ValidationStatus status,
                                 final ErrorMessage errorMsg ) {
         JcrUiUtils.setMessage(status, errorMsg);
 
@@ -796,7 +775,7 @@ class ChildNodeDialog extends FormDialog {
     }
 
     private void updateState() {
-        int messageType = this.scrolledForm.getMessageType();
+        final int messageType = this.scrolledForm.getMessageType();
         boolean enable = (messageType != IMessageProvider.ERROR);
 
         if (enable && isEditMode() && this.originalChildNode.equals(this.childNodeBeingEdited)) {
@@ -807,5 +786,21 @@ class ChildNodeDialog extends FormDialog {
         if (this.btnOk.getEnabled() != enable) {
             this.btnOk.setEnabled(enable);
         }
+    }
+
+    private void validateAttributes() {
+        // no validation required since user cannot enter an invalid value
+    }
+
+    private void validateDefaultType() {
+        updateMessage(CndValidator.validateDefaultType(this.childNodeBeingEdited), this.defaultTypeError);
+    }
+
+    private void validateName() {
+        updateMessage(this.nameEditor.getStatus(), this.nameError);
+    }
+
+    private void validateRequiredTypes() {
+        updateMessage(CndValidator.validateRequiredTypes(this.childNodeBeingEdited), this.requiredTypesError);
     }
 }

@@ -27,22 +27,43 @@ public class DelegateAction extends Action {
      * The delegate action (never <code>null</code>).
      */
     private final IAction delegate;
+    
+    private final boolean styleOverridden;
 
     /**
      * @param delegate the delegate action (cannot be <code>null</code>)
      */
     public DelegateAction( final IAction delegate ) {
         this.delegate = delegate;
+        this.styleOverridden = false;
     }
 
     /**
-     * @param text
-     * @param delegate
+     * Overrides the delegate action's text.
+     * 
+     * @param text the action text (can be <code>null</code> or empty)
+     * @param delegate the action delegate (cannot be <code>null</code>)
      */
     public DelegateAction( final String text,
                            final IAction delegate ) {
         super(text);
         this.delegate = delegate;
+        this.styleOverridden = false;
+    }
+
+    /**
+     * Overrides the delegate action's text and style.
+     * 
+     * @param text the action text (can be <code>null</code> or empty)
+     * @param style the action style
+     * @param delegate the action delegate (cannot be <code>null</code>)
+     */
+    public DelegateAction( final String text,
+                           final int style,
+                           final IAction delegate ) {
+        super(text, style);
+        this.delegate = delegate;
+        this.styleOverridden = true;
     }
 
     /**
@@ -62,7 +83,7 @@ public class DelegateAction extends Action {
      */
     @Override
     public int getAccelerator() {
-        if (super.getAccelerator() == -1) {
+        if (super.getAccelerator() == 0) {
             return this.delegate.getAccelerator();
         }
 
@@ -188,11 +209,11 @@ public class DelegateAction extends Action {
      */
     @Override
     public int getStyle() {
-        if (super.getStyle() == IAction.AS_PUSH_BUTTON) {
-            return this.delegate.getStyle();
+        if (this.styleOverridden) {
+            return super.getStyle();
         }
 
-        return super.getStyle();
+        return this.delegate.getStyle();
     }
 
     /**
@@ -207,6 +228,30 @@ public class DelegateAction extends Action {
         }
 
         return super.getToolTipText();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see org.eclipse.jface.action.Action#isChecked()
+     */
+    @Override
+    public boolean isChecked() {
+        if (this.styleOverridden) {
+            return super.isChecked();
+        }
+
+        return this.delegate.isChecked();
+    }
+    
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.eclipse.jface.action.Action#isEnabled()
+     */
+    @Override
+    public boolean isEnabled() {
+        return this.delegate.isEnabled();
     }
 
     /**

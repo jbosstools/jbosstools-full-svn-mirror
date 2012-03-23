@@ -39,18 +39,137 @@ public class PropertyDefinitionTest {
     }
 
     @Test
-    public void shouldNotHaveDefaultValuesAfterConstruction() {
-        assertEquals(0, this.propDefn.getDefaultValues().length);
+    public void copiesShouldBeEqual() {
+        PropertyDefinition thatPropDefn = PropertyDefinition.copy(this.propDefn);
+        assertEquals(this.propDefn, thatPropDefn);
+
+        this.propDefn.setAvailableQueryOperators(Constants.Helper.getDefaultQueryOperators());
+        thatPropDefn = PropertyDefinition.copy(this.propDefn);
+        assertEquals(this.propDefn, thatPropDefn);
+
+        this.propDefn.setAutoCreated(!this.propDefn.isAutoCreated());
+        thatPropDefn = PropertyDefinition.copy(this.propDefn);
+        assertEquals(this.propDefn, thatPropDefn);
+
+        this.propDefn.setDefaultValues(Constants.Helper.getDefaultStringValues());
+        thatPropDefn = PropertyDefinition.copy(this.propDefn);
+        assertEquals(this.propDefn, thatPropDefn);
+
+        this.propDefn.setFullTextSearchable(!this.propDefn.isFullTextSearchable());
+        thatPropDefn = PropertyDefinition.copy(this.propDefn);
+        assertEquals(this.propDefn, thatPropDefn);
+
+        this.propDefn.setMandatory(!this.propDefn.isMandatory());
+        thatPropDefn = PropertyDefinition.copy(this.propDefn);
+        assertEquals(this.propDefn, thatPropDefn);
+
+        this.propDefn.setMultiple(!this.propDefn.isMultiple());
+        thatPropDefn = PropertyDefinition.copy(this.propDefn);
+        assertEquals(this.propDefn, thatPropDefn);
+
+        this.propDefn.setName(Constants.QUALIFIED_NAME1.get());
+        thatPropDefn = PropertyDefinition.copy(this.propDefn);
+        assertEquals(this.propDefn, thatPropDefn);
+
+        this.propDefn.setOnParentVersion(OnParentVersion.COMPUTE.asJcrValue());
+        thatPropDefn = PropertyDefinition.copy(this.propDefn);
+        assertEquals(this.propDefn, thatPropDefn);
+
+        this.propDefn.setProtected(!this.propDefn.isProtected());
+        thatPropDefn = PropertyDefinition.copy(this.propDefn);
+        assertEquals(this.propDefn, thatPropDefn);
+
+        this.propDefn.setQueryOrderable(!this.propDefn.isQueryOrderable());
+        thatPropDefn = PropertyDefinition.copy(this.propDefn);
+        assertEquals(this.propDefn, thatPropDefn);
+
+        this.propDefn.setRequiredType(PropertyType.BINARY.asJcrValue());
+        thatPropDefn = PropertyDefinition.copy(this.propDefn);
+        assertEquals(this.propDefn, thatPropDefn);
+
+        this.propDefn.setValueConstraints(Constants.Helper.getDefaultValueConstraints());
+        thatPropDefn = PropertyDefinition.copy(this.propDefn);
+        assertEquals(this.propDefn, thatPropDefn);
     }
 
     @Test
-    public void shouldNotHaveValueConstraintsAfterConstruction() {
-        assertEquals(0, this.propDefn.getValueConstraints().length);
+    public void differentInstancesWithSameValuesShouldBeEqual() {
+        final PropertyDefinition thatPropDefn = new PropertyDefinition();
+        assertEquals(this.propDefn, thatPropDefn);
+
+        this.propDefn.setAvailableQueryOperators(Constants.Helper.getDefaultQueryOperators());
+        thatPropDefn.setAvailableQueryOperators(this.propDefn.getAvailableQueryOperators());
+        assertEquals(this.propDefn, thatPropDefn);
+
+        this.propDefn.setAutoCreated(!this.propDefn.isAutoCreated());
+        thatPropDefn.setAutoCreated(this.propDefn.isAutoCreated());
+        assertEquals(this.propDefn, thatPropDefn);
+
+        this.propDefn.setDefaultValues(Constants.Helper.getDefaultStringValues());
+        thatPropDefn.setDefaultValues(this.propDefn.getDefaultValues());
+        assertEquals(this.propDefn, thatPropDefn);
+
+        this.propDefn.setFullTextSearchable(!this.propDefn.isFullTextSearchable());
+        thatPropDefn.setFullTextSearchable(this.propDefn.isFullTextSearchable());
+        assertEquals(this.propDefn, thatPropDefn);
+
+        this.propDefn.setMandatory(!this.propDefn.isMandatory());
+        thatPropDefn.setMandatory(this.propDefn.isMandatory());
+        assertEquals(this.propDefn, thatPropDefn);
+
+        this.propDefn.setMultiple(!this.propDefn.isMultiple());
+        thatPropDefn.setMultiple(this.propDefn.isMultiple());
+        assertEquals(this.propDefn, thatPropDefn);
+
+        this.propDefn.setName(Constants.QUALIFIED_NAME1.get());
+        thatPropDefn.setName(this.propDefn.getName());
+        assertEquals(this.propDefn, thatPropDefn);
+
+        this.propDefn.setOnParentVersion(OnParentVersion.COMPUTE.asJcrValue());
+        thatPropDefn.setOnParentVersion(this.propDefn.getOnParentVersion());
+        assertEquals(this.propDefn, thatPropDefn);
+
+        this.propDefn.setProtected(!this.propDefn.isProtected());
+        thatPropDefn.setProtected(this.propDefn.isProtected());
+        assertEquals(this.propDefn, thatPropDefn);
+
+        this.propDefn.setQueryOrderable(!this.propDefn.isQueryOrderable());
+        thatPropDefn.setQueryOrderable(this.propDefn.isQueryOrderable());
+        assertEquals(this.propDefn, thatPropDefn);
+
+        this.propDefn.setRequiredType(PropertyType.BINARY.asJcrValue());
+        thatPropDefn.setRequiredType(this.propDefn.getRequiredType());
+        assertEquals(this.propDefn, thatPropDefn);
+
+        this.propDefn.setValueConstraints(Constants.Helper.getDefaultValueConstraints());
+        thatPropDefn.setValueConstraints(this.propDefn.getValueConstraints());
+        assertEquals(this.propDefn, thatPropDefn);
     }
 
     @Test
-    public void shouldNotHaveNameAfterConstruction() {
-        assertTrue(Utils.isEmpty(this.propDefn.getName()));
+    public void differentInstancesWithSameValuesShouldHaveSameHashCode() {
+        assertEquals(this.propDefn.hashCode(), new PropertyDefinition().hashCode());
+    }
+
+    @Test
+    public void onParentVersionDefaultValueShouldBeCopy() {
+        assertEquals(OnParentVersion.COPY, OnParentVersion.DEFAULT_VALUE);
+    }
+
+    @Test
+    public void onParentVersionShouldBeSetToDefaultAfterConstruction() {
+        assertTrue(this.propDefn.getOnParentVersion() == OnParentVersion.DEFAULT_VALUE.asJcrValue());
+    }
+
+    @Test
+    public void propertyTypeDefaultValueShouldBeString() {
+        assertEquals(PropertyType.STRING, PropertyType.DEFAULT_VALUE);
+    }
+
+    @Test
+    public void propertyTypeShouldBeSetToDefaultAfterConstruction() {
+        assertTrue(this.propDefn.getType() == PropertyType.DEFAULT_VALUE);
+        assertEquals(PropertyType.DEFAULT_VALUE.asJcrValue(), this.propDefn.getRequiredType());
     }
 
     @Test
@@ -62,77 +181,11 @@ public class PropertyDefinitionTest {
     }
 
     @Test
-    public void shouldRemoveDefaultValue() {
-        final String VALUE = "value"; //$NON-NLS-1$
-        assertTrue(this.propDefn.addDefaultValue(VALUE));
-        assertTrue(this.propDefn.removeDefaultValue(VALUE));
-        assertEquals(0, this.propDefn.getDefaultValues().length);
-    }
-
-    @Test
-    public void shouldNotRemoveDefaultValueThatDoesNotExist() {
-        assertFalse(this.propDefn.removeDefaultValue("defaultValueDoesNotExist")); //$NON-NLS-1$
-    }
-
-    @Test
-    public void shouldReceiveEventAfterRemovingDefaultValue() {
-        final String VALUE = "value"; //$NON-NLS-1$
-        assertTrue(this.propDefn.addDefaultValue(VALUE));
-
-        Listener l = new Listener();
-        assertTrue(this.propDefn.addListener(l));
-
-        assertTrue(this.propDefn.removeDefaultValue(VALUE));
-        assertEquals(1, l.getCount());
-        assertEquals(PropertyName.DEFAULT_VALUES.toString(), l.getPropertyName());
-        assertEquals(VALUE, l.getOldValue());
-        assertNull(l.getNewValue());
-    }
-
-    @Test
-    public void shouldReceiveEventAfterAddingDefaultValue() {
-        Listener l = new Listener();
-        assertTrue(this.propDefn.addListener(l));
-
-        final String VALUE = "value"; //$NON-NLS-1$
-        assertTrue(this.propDefn.addDefaultValue(VALUE));
-
-        assertEquals(1, l.getCount());
-        assertEquals(PropertyName.DEFAULT_VALUES.toString(), l.getPropertyName());
-        assertEquals(VALUE, l.getNewValue());
-        assertNull(l.getOldValue());
-    }
-
-    @Test
-    public void shouldNotReceiveEventAfterUnregistering() {
-        Listener l = new Listener();
-        assertTrue(this.propDefn.addListener(l));
-        assertTrue(this.propDefn.removeListener(l));
-
-        final String VALUE = "value"; //$NON-NLS-1$
-        assertTrue(this.propDefn.addDefaultValue(VALUE));
-
-        assertEquals(0, l.getCount());
-    }
-
-    @Test
-    public void shouldNotAddSameDefaultValue() {
-        final String VALUE = "value"; //$NON-NLS-1$
-        assertTrue(this.propDefn.addDefaultValue(VALUE));
-        assertFalse(this.propDefn.addDefaultValue(VALUE));
-    }
-
-    @Test
-    public void shouldNotUnregisterAnUnregisteredListener() {
-        Listener l = new Listener();
-        assertFalse(this.propDefn.removeListener(l));
-    }
-
-    @Test
-    public void shouldNotRegisterAnAlreadyRegisteredListener() {
-        Listener l = new Listener();
-        assertTrue(this.propDefn.addListener(l));
-        assertFalse(this.propDefn.addListener(l));
+    public void shouldAddQueryOperator() {
+        final QueryOperator OP = QueryOperator.GREATER_THAN_EQUALS;
+        assertTrue(this.propDefn.addQueryOperator(OP));
+        assertEquals(1, this.propDefn.getAvailableQueryOperators().length);
+        assertEquals(OP.toString(), this.propDefn.getAvailableQueryOperators()[0]);
     }
 
     @Test
@@ -144,52 +197,10 @@ public class PropertyDefinitionTest {
     }
 
     @Test
-    public void shouldReceiveEventAfterAddingValueConstraint() {
-        Listener l = new Listener();
-        assertTrue(this.propDefn.addListener(l));
+    public void shouldAllowNullEmptyName() {
+        this.propDefn.setName(null);
+        this.propDefn.setName(""); //$NON-NLS-1$
 
-        final String CONSTRAINT = "constraint"; //$NON-NLS-1$
-        assertTrue(this.propDefn.addValueConstraint(CONSTRAINT));
-
-        assertEquals(1, l.getCount());
-        assertEquals(PropertyName.VALUE_CONSTRAINTS.toString(), l.getPropertyName());
-        assertEquals(CONSTRAINT, l.getNewValue());
-        assertNull(l.getOldValue());
-    }
-
-    @Test
-    public void shouldNotAddSameValueConstraint() {
-        final String CONSTRAINT = "constraint"; //$NON-NLS-1$
-        assertTrue(this.propDefn.addValueConstraint(CONSTRAINT));
-        assertFalse(this.propDefn.addValueConstraint(CONSTRAINT));
-    }
-
-    @Test
-    public void shouldRemoveValueConstraint() {
-        final String CONSTRAINT = "constraint"; //$NON-NLS-1$
-        assertTrue(this.propDefn.addValueConstraint(CONSTRAINT));
-        assertTrue(this.propDefn.removeValueConstraint(CONSTRAINT));
-        assertEquals(0, this.propDefn.getValueConstraints().length);
-    }
-
-    @Test
-    public void shouldNotRemoveValueConstraintThatDoesNotExist() {
-        assertFalse(this.propDefn.removeValueConstraint("valueConstraintdoesNotExist")); //$NON-NLS-1$
-    }
-
-    @Test
-    public void shouldReceiveEventAfterRemovingValueConstraint() {
-        final String CONSTRAINT = "constraint"; //$NON-NLS-1$
-        assertTrue(this.propDefn.addValueConstraint(CONSTRAINT));
-
-        Listener l = new Listener();
-        assertTrue(this.propDefn.addListener(l));
-
-        assertTrue(this.propDefn.removeValueConstraint(CONSTRAINT));
-        assertEquals(1, l.getCount());
-        assertEquals(PropertyName.VALUE_CONSTRAINTS.toString(), l.getPropertyName());
-        assertEquals(CONSTRAINT, l.getOldValue());
-        assertNull(l.getNewValue());
     }
 
     @Test
@@ -345,17 +356,157 @@ public class PropertyDefinitionTest {
     }
 
     @Test
+    public void shouldClearValueConstraints() {
+        assertTrue(this.propDefn.addValueConstraint("value")); //$NON-NLS-1$
+        assertTrue(this.propDefn.clearValueConstraints());
+        assertEquals(0, this.propDefn.getValueConstraints().length);
+    }
+
+    @Test
+    public void shouldNotAddDuplicateQueryOperator() {
+        final QueryOperator OP = QueryOperator.GREATER_THAN_EQUALS;
+        assertTrue(this.propDefn.addQueryOperator(OP));
+        assertFalse(this.propDefn.addQueryOperator(OP));
+    }
+
+    @Test
+    public void shouldNotAddSameDefaultValue() {
+        final String VALUE = "value"; //$NON-NLS-1$
+        assertTrue(this.propDefn.addDefaultValue(VALUE));
+        assertFalse(this.propDefn.addDefaultValue(VALUE));
+    }
+
+    @Test
+    public void shouldNotAddSameValueConstraint() {
+        final String CONSTRAINT = "constraint"; //$NON-NLS-1$
+        assertTrue(this.propDefn.addValueConstraint(CONSTRAINT));
+        assertFalse(this.propDefn.addValueConstraint(CONSTRAINT));
+    }
+
+    @Test
     public void shouldNotClearDefaultValuesWhenEmpty() {
         assertFalse(this.propDefn.clearDefaultValues());
+    }
+
+    @Test
+    public void shouldNotClearValueConstraintsWhenEmpty() {
+        assertFalse(this.propDefn.clearValueConstraints());
+    }
+
+    @Test
+    public void shouldNotHaveDefaultValuesAfterConstruction() {
+        assertEquals(0, this.propDefn.getDefaultValues().length);
+    }
+
+    @Test
+    public void shouldNotHaveNameAfterConstruction() {
+        assertTrue(Utils.isEmpty(this.propDefn.getName()));
+    }
+
+    @Test
+    public void shouldNotHaveValueConstraintsAfterConstruction() {
+        assertEquals(0, this.propDefn.getValueConstraints().length);
+    }
+
+    @Test
+    public void shouldNotReceiveEventAfterUnregistering() {
+        final Listener l = new Listener();
+        assertTrue(this.propDefn.addListener(l));
+        assertTrue(this.propDefn.removeListener(l));
+
+        final String VALUE = "value"; //$NON-NLS-1$
+        assertTrue(this.propDefn.addDefaultValue(VALUE));
+
+        assertEquals(0, l.getCount());
+    }
+
+    @Test
+    public void shouldNotReceiveEventWhenNameIsNotChanged() {
+        final String NAME = "name"; //$NON-NLS-1$
+        this.propDefn.setName(NAME);
+
+        final Listener l = new Listener();
+        assertTrue(this.propDefn.addListener(l));
+
+        this.propDefn.setName(NAME); // same value
+        assertEquals(0, l.getCount());
+    }
+
+    @Test
+    public void shouldNotRegisterAnAlreadyRegisteredListener() {
+        final Listener l = new Listener();
+        assertTrue(this.propDefn.addListener(l));
+        assertFalse(this.propDefn.addListener(l));
+    }
+
+    @Test
+    public void shouldNotRemoveDefaultValueThatDoesNotExist() {
+        assertFalse(this.propDefn.removeDefaultValue("defaultValueDoesNotExist")); //$NON-NLS-1$
+    }
+
+    @Test
+    public void shouldNotRemoveQueryOperatorThatDoesNotExist() {
+        assertFalse(this.propDefn.removeQueryOperator(QueryOperator.GREATER_THAN_EQUALS));
+    }
+
+    @Test
+    public void shouldNotRemoveValueConstraintThatDoesNotExist() {
+        assertFalse(this.propDefn.removeValueConstraint("valueConstraintdoesNotExist")); //$NON-NLS-1$
+    }
+
+    @Test
+    public void shouldNotSetInvalidQueryOperators() {
+        final String GOOD_OP = QueryOperator.EQUALS.toString();
+        final String BAD_OP = "badOp"; //$NON-NLS-1$
+        final String[] NEW_OPERATORS = new String[] { GOOD_OP, BAD_OP };
+        this.propDefn.setAvailableQueryOperators(NEW_OPERATORS);
+
+        final String[] queryOperators = this.propDefn.getAvailableQueryOperators();
+        assertEquals((NEW_OPERATORS.length - 1), queryOperators.length);
+        assertEquals(NEW_OPERATORS[0], queryOperators[0]);
+    }
+
+    @Test
+    public void shouldNotUnregisterAnUnregisteredListener() {
+        final Listener l = new Listener();
+        assertFalse(this.propDefn.removeListener(l));
+    }
+
+    @Test
+    public void shouldReceiveEventAfterAddingDefaultValue() {
+        final Listener l = new Listener();
+        assertTrue(this.propDefn.addListener(l));
+
+        final String VALUE = "value"; //$NON-NLS-1$
+        assertTrue(this.propDefn.addDefaultValue(VALUE));
+
+        assertEquals(1, l.getCount());
+        assertEquals(PropertyName.DEFAULT_VALUES.toString(), l.getPropertyName());
+        assertEquals(VALUE, l.getNewValue());
+        assertNull(l.getOldValue());
+    }
+
+    @Test
+    public void shouldReceiveEventAfterAddingValueConstraint() {
+        final Listener l = new Listener();
+        assertTrue(this.propDefn.addListener(l));
+
+        final String CONSTRAINT = "constraint"; //$NON-NLS-1$
+        assertTrue(this.propDefn.addValueConstraint(CONSTRAINT));
+
+        assertEquals(1, l.getCount());
+        assertEquals(PropertyName.VALUE_CONSTRAINTS.toString(), l.getPropertyName());
+        assertEquals(CONSTRAINT, l.getNewValue());
+        assertNull(l.getOldValue());
     }
 
     @Test
     public void shouldReceiveEventAfterClearingDefaultValues() {
         final String VALUE = "value"; //$NON-NLS-1$
         assertTrue(this.propDefn.addDefaultValue(VALUE));
-        Collection<String> oldValue = Collections.singletonList(VALUE);
+        final Collection<String> oldValue = Collections.singletonList(VALUE);
 
-        Listener l = new Listener();
+        final Listener l = new Listener();
         assertTrue(this.propDefn.addListener(l));
 
         assertTrue(this.propDefn.clearDefaultValues());
@@ -366,24 +517,12 @@ public class PropertyDefinitionTest {
     }
 
     @Test
-    public void shouldClearValueConstraints() {
-        assertTrue(this.propDefn.addValueConstraint("value")); //$NON-NLS-1$
-        assertTrue(this.propDefn.clearValueConstraints());
-        assertEquals(0, this.propDefn.getValueConstraints().length);
-    }
-
-    @Test
-    public void shouldNotClearValueConstraintsWhenEmpty() {
-        assertFalse(this.propDefn.clearValueConstraints());
-    }
-
-    @Test
     public void shouldReceiveEventAfterClearingValueConstraints() {
         final String CONSTRAINT = "constraint"; //$NON-NLS-1$
         assertTrue(this.propDefn.addValueConstraint(CONSTRAINT));
-        Collection<String> oldValue = Collections.singletonList(CONSTRAINT);
+        final Collection<String> oldValue = Collections.singletonList(CONSTRAINT);
 
-        Listener l = new Listener();
+        final Listener l = new Listener();
         assertTrue(this.propDefn.addListener(l));
 
         assertTrue(this.propDefn.clearValueConstraints());
@@ -391,6 +530,131 @@ public class PropertyDefinitionTest {
         assertEquals(PropertyName.VALUE_CONSTRAINTS.toString(), l.getPropertyName());
         assertNull(l.getNewValue());
         assertEquals(oldValue, l.getOldValue());
+    }
+
+    @Test
+    public void shouldReceiveEventAfterRemovingDefaultValue() {
+        final String VALUE = "value"; //$NON-NLS-1$
+        assertTrue(this.propDefn.addDefaultValue(VALUE));
+
+        final Listener l = new Listener();
+        assertTrue(this.propDefn.addListener(l));
+
+        assertTrue(this.propDefn.removeDefaultValue(VALUE));
+        assertEquals(1, l.getCount());
+        assertEquals(PropertyName.DEFAULT_VALUES.toString(), l.getPropertyName());
+        assertEquals(VALUE, l.getOldValue());
+        assertNull(l.getNewValue());
+    }
+
+    @Test
+    public void shouldReceiveEventAfterRemovingValueConstraint() {
+        final String CONSTRAINT = "constraint"; //$NON-NLS-1$
+        assertTrue(this.propDefn.addValueConstraint(CONSTRAINT));
+
+        final Listener l = new Listener();
+        assertTrue(this.propDefn.addListener(l));
+
+        assertTrue(this.propDefn.removeValueConstraint(CONSTRAINT));
+        assertEquals(1, l.getCount());
+        assertEquals(PropertyName.VALUE_CONSTRAINTS.toString(), l.getPropertyName());
+        assertEquals(CONSTRAINT, l.getOldValue());
+        assertNull(l.getNewValue());
+    }
+
+    @Test
+    public void shouldReceiveEventWhenNameIsChanged() {
+        final Listener l = new Listener();
+        assertTrue(this.propDefn.addListener(l));
+
+        final String NEW_NAME = "name"; //$NON-NLS-1$
+        this.propDefn.setName(NEW_NAME);
+
+        assertEquals(NEW_NAME, this.propDefn.getName());
+        assertEquals(1, l.getCount());
+        assertEquals(PropertyName.NAME.toString(), l.getPropertyName());
+        assertEquals(NEW_NAME, l.getNewValue());
+        assertNull(l.getOldValue());
+    }
+
+    @Test
+    public void shouldReceiveEventWhenOnParentVersionIsChanged() {
+        final Listener l = new Listener();
+        assertTrue(this.propDefn.addListener(l));
+
+        final int OPV = OnParentVersion.COMPUTE.asJcrValue();
+        this.propDefn.setOnParentVersion(OPV);
+
+        assertEquals(1, l.getCount());
+        assertEquals(PropertyName.ON_PARENT_VERSION.toString(), l.getPropertyName());
+        assertEquals(OPV, l.getNewValue());
+        assertEquals(OnParentVersion.DEFAULT_VALUE, l.getOldValue());
+    }
+
+    @Test
+    public void shouldReceiveEventWhenPropertyTypeIsChanged() {
+        final Listener l = new Listener();
+        assertTrue(this.propDefn.addListener(l));
+
+        final PropertyType TYPE = PropertyType.BINARY;
+        this.propDefn.setRequiredType(TYPE.asJcrValue());
+
+        assertEquals(1, l.getCount());
+        assertEquals(PropertyName.TYPE.toString(), l.getPropertyName());
+        assertEquals(TYPE, l.getNewValue());
+        assertEquals(PropertyType.DEFAULT_VALUE, l.getOldValue());
+    }
+
+    @Test
+    public void shouldReceiveEventWhenQueryOperatorIsAdded() {
+        final Listener l = new Listener();
+        assertTrue(this.propDefn.addListener(l));
+
+        final QueryOperator OP = QueryOperator.GREATER_THAN_EQUALS;
+        assertTrue(this.propDefn.addQueryOperator(OP));
+
+        assertEquals(1, l.getCount());
+        assertEquals(PropertyName.QUERY_OPS.toString(), l.getPropertyName());
+        assertEquals(OP, l.getNewValue());
+        assertNull(l.getOldValue());
+    }
+
+    @Test
+    public void shouldReceiveEventWhenQueryOperatorIsRemoved() {
+        final QueryOperator OP = QueryOperator.GREATER_THAN_EQUALS;
+        assertTrue(this.propDefn.addQueryOperator(OP));
+
+        final Listener l = new Listener();
+        assertTrue(this.propDefn.addListener(l));
+
+        assertTrue(this.propDefn.removeQueryOperator(OP));
+        assertEquals(1, l.getCount());
+        assertEquals(PropertyName.QUERY_OPS.toString(), l.getPropertyName());
+        assertNull(l.getNewValue());
+        assertEquals(OP, l.getOldValue());
+    }
+
+    @Test
+    public void shouldRemoveDefaultValue() {
+        final String VALUE = "value"; //$NON-NLS-1$
+        assertTrue(this.propDefn.addDefaultValue(VALUE));
+        assertTrue(this.propDefn.removeDefaultValue(VALUE));
+        assertEquals(0, this.propDefn.getDefaultValues().length);
+    }
+
+    @Test
+    public void shouldRemoveQueryOperator() {
+        final QueryOperator OP = QueryOperator.GREATER_THAN_EQUALS;
+        assertTrue(this.propDefn.addQueryOperator(OP));
+        assertTrue(this.propDefn.removeQueryOperator(OP));
+    }
+
+    @Test
+    public void shouldRemoveValueConstraint() {
+        final String CONSTRAINT = "constraint"; //$NON-NLS-1$
+        assertTrue(this.propDefn.addValueConstraint(CONSTRAINT));
+        assertTrue(this.propDefn.removeValueConstraint(CONSTRAINT));
+        assertEquals(0, this.propDefn.getValueConstraints().length);
     }
 
     @Test
@@ -402,6 +666,38 @@ public class PropertyDefinitionTest {
         this.propDefn.setAutoCreated(false);
         assertFalse(this.propDefn.isAutoCreated());
         assertTrue(this.propDefn.getState(PropertyName.AUTOCREATED) == Value.IS_NOT);
+    }
+
+    @Test
+    public void shouldSetDefaultValues() {
+        assertTrue(this.propDefn.addDefaultValue("defaultValueBeingOverridden")); //$NON-NLS-1$
+
+        final PropertyValue VALUE1 = new PropertyValue(PropertyType.STRING.asJcrValue(), "value1"); //$NON-NLS-1$
+        final PropertyValue VALUE2 = new PropertyValue(PropertyType.STRING.asJcrValue(), "value2"); //$NON-NLS-1$
+        final PropertyValue VALUE3 = new PropertyValue(PropertyType.STRING.asJcrValue(), "value3"); //$NON-NLS-1$
+        final PropertyValue[] NEW_VALUES = new PropertyValue[] { VALUE1, VALUE2, VALUE3 };
+        this.propDefn.setDefaultValues(NEW_VALUES);
+
+        final javax.jcr.Value[] defaultValues = this.propDefn.getDefaultValues();
+        assertEquals(NEW_VALUES.length, defaultValues.length);
+
+        for (int i = 0; i < NEW_VALUES.length; ++i) {
+            assertEquals(NEW_VALUES[i], defaultValues[i]);
+        }
+
+        assertEquals(Value.IS, this.propDefn.getState(PropertyName.DEFAULT_VALUES));
+    }
+
+    @Test
+    public void shouldSetDefaultValuesWithEmptyArray() {
+        this.propDefn.setDefaultValues(new javax.jcr.Value[0]);
+        assertEquals(0, this.propDefn.getDefaultValues().length);
+    }
+
+    @Test
+    public void shouldSetDefaultValuesWithNull() {
+        this.propDefn.setDefaultValues(null);
+        assertEquals(0, this.propDefn.getDefaultValues().length);
     }
 
     @Test
@@ -438,6 +734,54 @@ public class PropertyDefinitionTest {
     }
 
     @Test
+    public void shouldSetName() {
+        final String NAME = "name"; //$NON-NLS-1$
+        this.propDefn.setName(NAME);
+        assertEquals(NAME, this.propDefn.getName());
+
+    }
+
+    @Test
+    public void shouldSetOnParentVersionUsingInt() {
+        for (final OnParentVersion opv : OnParentVersion.values()) {
+            if (opv != OnParentVersion.VARIANT) {
+                this.propDefn.setOnParentVersion(opv.asJcrValue());
+                assertEquals(opv.asJcrValue(), this.propDefn.getOnParentVersion());
+            }
+        }
+    }
+
+    @Test
+    public void shouldSetOnParentVersionUsingString() {
+        for (final OnParentVersion opv : OnParentVersion.values()) {
+            if (opv != OnParentVersion.VARIANT) {
+                assertTrue(this.propDefn.setOnParentVersion(opv.toString()));
+                assertEquals(opv.asJcrValue(), this.propDefn.getOnParentVersion());
+            }
+        }
+    }
+
+    @Test
+    public void shouldSetPropertyType() {
+        for (final PropertyType type : PropertyType.values()) {
+            if (type != PropertyType.VARIANT) {
+                assertTrue(this.propDefn.setType(type));
+                assertEquals(type.asJcrValue(), this.propDefn.getRequiredType());
+            }
+        }
+    }
+
+    @Test
+    public void shouldSetPropertyTypeUsingInt() {
+        for (final PropertyType type : PropertyType.values()) {
+            if (type != PropertyType.VARIANT) {
+                this.propDefn.setRequiredType(type.asJcrValue());
+                assertEquals(type.asJcrValue(), this.propDefn.getRequiredType());
+            }
+        }
+    }
+
+    @Test
     public void shouldSetProtected() {
         this.propDefn.setProtected(true);
         assertTrue(this.propDefn.isProtected());
@@ -446,6 +790,36 @@ public class PropertyDefinitionTest {
         this.propDefn.setProtected(false);
         assertFalse(this.propDefn.isProtected());
         assertTrue(this.propDefn.getState(PropertyName.PROTECTED) == Value.IS_NOT);
+    }
+
+    @Test
+    public void shouldSetQueryOperators() {
+        assertTrue(this.propDefn.addQueryOperator(QueryOperator.GREATER_THAN_EQUALS));
+
+        final String OP1 = QueryOperator.EQUALS.toString();
+        final String OP2 = QueryOperator.LESS_THAN.toString();
+        final String OP3 = QueryOperator.GREATER_THAN.toString();
+        final String[] NEW_OPERATORS = new String[] { OP1, OP2, OP3 };
+        this.propDefn.setAvailableQueryOperators(NEW_OPERATORS);
+
+        final String[] queryOperators = this.propDefn.getAvailableQueryOperators();
+        assertEquals(NEW_OPERATORS.length, queryOperators.length);
+
+        for (int i = 0; i < NEW_OPERATORS.length; ++i) {
+            assertEquals(NEW_OPERATORS[i], queryOperators[i]);
+        }
+    }
+
+    @Test
+    public void shouldSetQueryOperatorsWithEmptyArray() {
+        this.propDefn.setAvailableQueryOperators(new String[0]);
+        assertEquals(0, this.propDefn.getAvailableQueryOperators().length);
+    }
+
+    @Test
+    public void shouldSetQueryOperatorsWithNull() {
+        this.propDefn.setAvailableQueryOperators(null);
+        assertEquals(0, this.propDefn.getAvailableQueryOperators().length);
     }
 
     @Test
@@ -460,149 +834,6 @@ public class PropertyDefinitionTest {
     }
 
     @Test
-    public void shouldSetName() {
-        final String NAME = "name"; //$NON-NLS-1$
-        this.propDefn.setName(NAME);
-        assertEquals(NAME, this.propDefn.getName());
-
-    }
-
-    @Test
-    public void shouldAllowNullEmptyName() {
-        this.propDefn.setName(null);
-        this.propDefn.setName(""); //$NON-NLS-1$
-
-    }
-
-    @Test
-    public void shouldReceiveEventWhenNameIsChanged() {
-        Listener l = new Listener();
-        assertTrue(this.propDefn.addListener(l));
-
-        final String NEW_NAME = "name"; //$NON-NLS-1$
-        this.propDefn.setName(NEW_NAME);
-
-        assertEquals(NEW_NAME, this.propDefn.getName());
-        assertEquals(1, l.getCount());
-        assertEquals(PropertyName.NAME.toString(), l.getPropertyName());
-        assertEquals(NEW_NAME, l.getNewValue());
-        assertNull(l.getOldValue());
-    }
-
-    @Test
-    public void shouldNotReceiveEventWhenNameIsNotChanged() {
-        final String NAME = "name"; //$NON-NLS-1$
-        this.propDefn.setName(NAME);
-
-        Listener l = new Listener();
-        assertTrue(this.propDefn.addListener(l));
-
-        this.propDefn.setName(NAME); // same value
-        assertEquals(0, l.getCount());
-    }
-
-    @Test
-    public void onParentVersionShouldBeSetToDefaultAfterConstruction() {
-        assertTrue(this.propDefn.getOnParentVersion() == OnParentVersion.DEFAULT_VALUE.asJcrValue());
-    }
-
-    @Test
-    public void onParentVersionDefaultValueShouldBeCopy() {
-        assertEquals(OnParentVersion.COPY, OnParentVersion.DEFAULT_VALUE);
-    }
-
-    @Test
-    public void shouldSetOnParentVersionUsingInt() {
-        for (OnParentVersion opv : OnParentVersion.values()) {
-            if (opv != OnParentVersion.VARIANT) {
-                this.propDefn.setOnParentVersion(opv.asJcrValue());
-                assertEquals(opv.asJcrValue(), this.propDefn.getOnParentVersion());
-            }
-        }
-    }
-
-    @Test
-    public void shouldSetOnParentVersionUsingString() {
-        for (OnParentVersion opv : OnParentVersion.values()) {
-            if (opv != OnParentVersion.VARIANT) {
-                assertTrue(this.propDefn.setOnParentVersion(opv.toString()));
-                assertEquals(opv.asJcrValue(), this.propDefn.getOnParentVersion());
-            }
-        }
-    }
-
-    @Test
-    public void shouldReceiveEventWhenOnParentVersionIsChanged() {
-        Listener l = new Listener();
-        assertTrue(this.propDefn.addListener(l));
-
-        final int OPV = OnParentVersion.COMPUTE.asJcrValue();
-        this.propDefn.setOnParentVersion(OPV);
-
-        assertEquals(1, l.getCount());
-        assertEquals(PropertyName.ON_PARENT_VERSION.toString(), l.getPropertyName());
-        assertEquals(OPV, l.getNewValue());
-        assertEquals(OnParentVersion.DEFAULT_VALUE, l.getOldValue());
-    }
-
-    @Test
-    public void propertyTypeShouldBeSetToDefaultAfterConstruction() {
-        assertTrue(this.propDefn.getType() == PropertyType.DEFAULT_VALUE);
-        assertEquals(PropertyType.DEFAULT_VALUE.asJcrValue(), this.propDefn.getRequiredType());
-    }
-
-    @Test
-    public void propertyTypeDefaultValueShouldBeString() {
-        assertEquals(PropertyType.STRING, PropertyType.DEFAULT_VALUE);
-    }
-
-    @Test
-    public void shouldSetPropertyTypeUsingInt() {
-        for (PropertyType type : PropertyType.values()) {
-            if (type != PropertyType.VARIANT) {
-                this.propDefn.setRequiredType(type.asJcrValue());
-                assertEquals(type.asJcrValue(), this.propDefn.getRequiredType());
-            }
-        }
-    }
-
-    @Test
-    public void shouldSetPropertyType() {
-        for (PropertyType type : PropertyType.values()) {
-            if (type != PropertyType.VARIANT) {
-                assertTrue(this.propDefn.setType(type));
-                assertEquals(type.asJcrValue(), this.propDefn.getRequiredType());
-            }
-        }
-    }
-
-    @Test
-    public void shouldReceiveEventWhenPropertyTypeIsChanged() {
-        Listener l = new Listener();
-        assertTrue(this.propDefn.addListener(l));
-
-        final PropertyType TYPE = PropertyType.BINARY;
-        this.propDefn.setRequiredType(TYPE.asJcrValue());
-
-        assertEquals(1, l.getCount());
-        assertEquals(PropertyName.TYPE.toString(), l.getPropertyName());
-        assertEquals(TYPE, l.getNewValue());
-        assertEquals(PropertyType.DEFAULT_VALUE, l.getOldValue());
-    }
-
-    @Test
-    public void shouldSetValueContraintsWithNull() {
-        this.propDefn.setValueConstraints(null);
-        assertEquals(0, this.propDefn.getValueConstraints().length);
-    }
-
-    @Test
-    public void shouldSetValueContraintsWithEmptyArray() {
-        this.propDefn.setValueConstraints(new String[0]);
-        assertEquals(0, this.propDefn.getValueConstraints().length);
-    }
-
-    @Test
     public void shouldSetValueContraints() {
         assertTrue(this.propDefn.addValueConstraint("constraintBeingOverridden")); //$NON-NLS-1$
 
@@ -612,7 +843,7 @@ public class PropertyDefinitionTest {
         final String[] NEW_CONSTRAINTS = new String[] { CONSTRAINT1, CONSTRAINT2, CONSTRAINT3 };
         this.propDefn.setValueConstraints(NEW_CONSTRAINTS);
 
-        String[] constraints = this.propDefn.getValueConstraints();
+        final String[] constraints = this.propDefn.getValueConstraints();
         assertEquals(NEW_CONSTRAINTS.length, constraints.length);
 
         for (int i = 0; i < NEW_CONSTRAINTS.length; ++i) {
@@ -621,133 +852,14 @@ public class PropertyDefinitionTest {
     }
 
     @Test
-    public void shouldSetDefaultValuesWithNull() {
-        this.propDefn.setDefaultValues(null);
-        assertEquals(0, this.propDefn.getDefaultValues().length);
+    public void shouldSetValueContraintsWithEmptyArray() {
+        this.propDefn.setValueConstraints(new String[0]);
+        assertEquals(0, this.propDefn.getValueConstraints().length);
     }
 
     @Test
-    public void shouldSetDefaultValuesWithEmptyArray() {
-        this.propDefn.setDefaultValues(new javax.jcr.Value[0]);
-        assertEquals(0, this.propDefn.getDefaultValues().length);
+    public void shouldSetValueContraintsWithNull() {
+        this.propDefn.setValueConstraints(null);
+        assertEquals(0, this.propDefn.getValueConstraints().length);
     }
-
-    @Test
-    public void shouldSetDefaultValues() {
-        assertTrue(this.propDefn.addDefaultValue("defaultValueBeingOverridden")); //$NON-NLS-1$
-
-        final PropertyValue VALUE1 = new PropertyValue(PropertyType.STRING.asJcrValue(), "value1"); //$NON-NLS-1$
-        final PropertyValue VALUE2 = new PropertyValue(PropertyType.STRING.asJcrValue(), "value2"); //$NON-NLS-1$
-        final PropertyValue VALUE3 = new PropertyValue(PropertyType.STRING.asJcrValue(), "value3"); //$NON-NLS-1$
-        final PropertyValue[] NEW_VALUES = new PropertyValue[] { VALUE1, VALUE2, VALUE3 };
-        this.propDefn.setDefaultValues(NEW_VALUES);
-
-        javax.jcr.Value[] defaultValues = this.propDefn.getDefaultValues();
-        assertEquals(NEW_VALUES.length, defaultValues.length);
-
-        for (int i = 0; i < NEW_VALUES.length; ++i) {
-            assertEquals(NEW_VALUES[i], defaultValues[i]);
-        }
-
-        assertEquals(Value.IS, this.propDefn.getState(PropertyName.DEFAULT_VALUES));
-    }
-
-    @Test
-    public void shouldSetQueryOperatorsWithNull() {
-        this.propDefn.setAvailableQueryOperators(null);
-        assertEquals(0, this.propDefn.getAvailableQueryOperators().length);
-    }
-
-    @Test
-    public void shouldSetQueryOperatorsWithEmptyArray() {
-        this.propDefn.setAvailableQueryOperators(new String[0]);
-        assertEquals(0, this.propDefn.getAvailableQueryOperators().length);
-    }
-
-    @Test
-    public void shouldAddQueryOperator() {
-        final QueryOperator OP = QueryOperator.GREATER_THAN_EQUALS;
-        assertTrue(this.propDefn.addQueryOperator(OP));
-        assertEquals(1, this.propDefn.getAvailableQueryOperators().length);
-        assertEquals(OP.toString(), this.propDefn.getAvailableQueryOperators()[0]);
-    }
-
-    @Test
-    public void shouldRemoveQueryOperator() {
-        final QueryOperator OP = QueryOperator.GREATER_THAN_EQUALS;
-        assertTrue(this.propDefn.addQueryOperator(OP));
-        assertTrue(this.propDefn.removeQueryOperator(OP));
-    }
-
-    @Test
-    public void shouldNotRemoveQueryOperatorThatDoesNotExist() {
-        assertFalse(this.propDefn.removeQueryOperator(QueryOperator.GREATER_THAN_EQUALS));
-    }
-
-    @Test
-    public void shouldNotAddDuplicateQueryOperator() {
-        final QueryOperator OP = QueryOperator.GREATER_THAN_EQUALS;
-        assertTrue(this.propDefn.addQueryOperator(OP));
-        assertFalse(this.propDefn.addQueryOperator(OP));
-    }
-
-    @Test
-    public void shouldReceiveEventWhenQueryOperatorIsAdded() {
-        Listener l = new Listener();
-        assertTrue(this.propDefn.addListener(l));
-
-        final QueryOperator OP = QueryOperator.GREATER_THAN_EQUALS;
-        assertTrue(this.propDefn.addQueryOperator(OP));
-
-        assertEquals(1, l.getCount());
-        assertEquals(PropertyName.QUERY_OPS.toString(), l.getPropertyName());
-        assertEquals(OP, l.getNewValue());
-        assertNull(l.getOldValue());
-    }
-
-    @Test
-    public void shouldReceiveEventWhenQueryOperatorIsRemoved() {
-        final QueryOperator OP = QueryOperator.GREATER_THAN_EQUALS;
-        assertTrue(this.propDefn.addQueryOperator(OP));
-
-        Listener l = new Listener();
-        assertTrue(this.propDefn.addListener(l));
-
-        assertTrue(this.propDefn.removeQueryOperator(OP));
-        assertEquals(1, l.getCount());
-        assertEquals(PropertyName.QUERY_OPS.toString(), l.getPropertyName());
-        assertNull(l.getNewValue());
-        assertEquals(OP, l.getOldValue());
-    }
-
-    @Test
-    public void shouldSetQueryOperators() {
-        assertTrue(this.propDefn.addQueryOperator(QueryOperator.GREATER_THAN_EQUALS));
-
-        final String OP1 = QueryOperator.EQUALS.toString();
-        final String OP2 = QueryOperator.LESS_THAN.toString();
-        final String OP3 = QueryOperator.GREATER_THAN.toString();
-        final String[] NEW_OPERATORS = new String[] { OP1, OP2, OP3 };
-        this.propDefn.setAvailableQueryOperators(NEW_OPERATORS);
-
-        String[] queryOperators = this.propDefn.getAvailableQueryOperators();
-        assertEquals(NEW_OPERATORS.length, queryOperators.length);
-
-        for (int i = 0; i < NEW_OPERATORS.length; ++i) {
-            assertEquals(NEW_OPERATORS[i], queryOperators[i]);
-        }
-    }
-
-    @Test
-    public void shouldNotSetInvalidQueryOperators() {
-        final String GOOD_OP = QueryOperator.EQUALS.toString();
-        final String BAD_OP = "badOp"; //$NON-NLS-1$
-        final String[] NEW_OPERATORS = new String[] { GOOD_OP, BAD_OP };
-        this.propDefn.setAvailableQueryOperators(NEW_OPERATORS);
-
-        String[] queryOperators = this.propDefn.getAvailableQueryOperators();
-        assertEquals((NEW_OPERATORS.length - 1), queryOperators.length);
-        assertEquals(NEW_OPERATORS[0], queryOperators[0]);
-    }
-
 }

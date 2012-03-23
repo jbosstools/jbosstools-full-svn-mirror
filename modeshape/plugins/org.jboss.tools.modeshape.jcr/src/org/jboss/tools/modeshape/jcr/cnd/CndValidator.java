@@ -35,8 +35,12 @@ public final class CndValidator {
      */
     public static ValidationStatus isValid( final String value,
                                             final PropertyType propertyType,
-                                            final String propertyName ) {
+                                            String propertyName ) {
         Utils.verifyIsNotNull(propertyType, "propertyType"); //$NON-NLS-1$
+
+        if (Utils.isEmpty(propertyName)) {
+            propertyName = Messages.missingName;
+        }
 
         if (Utils.isEmpty(value)) {
             return ValidationStatus.createErrorMessage(NLS.bind(Messages.emptyValue, propertyName));
@@ -122,9 +126,11 @@ public final class CndValidator {
 
     /**
      * @param childNodeDefinition the child node definition being validated (cannot be <code>null</code>)
+     * @param existingChildNodeNames the existing child node names used to check for a duplicate (can be <code>null</code> or empty)
      * @return the status (never <code>null</code>)
      */
-    public static MultiValidationStatus validateChildNodeDefinition( final ChildNodeDefinition childNodeDefinition ) {
+    public static MultiValidationStatus validateChildNodeDefinition( final ChildNodeDefinition childNodeDefinition,
+                                                                     final Collection<QualifiedName> existingChildNodeNames ) {
         Utils.verifyIsNotNull(childNodeDefinition, "childNodeDefinition"); //$NON-NLS-1$
 
         /**
@@ -146,7 +152,7 @@ public final class CndValidator {
         }
 
         // name
-        validateName(childNodeDefinition, status);
+        validateName(childNodeDefinition, existingChildNodeNames, status);
 
         // required types
         validateRequiredTypes(childNodeDefinition, status);
@@ -159,11 +165,13 @@ public final class CndValidator {
 
     /**
      * @param childNodeDefinition the child node definition being validated (cannot be <code>null</code>)
+     * @param existingChildNodeNames the existing child node names used to check for a duplicate (can be <code>null</code> or empty)
      * @param status the status to add the new status to (never <code>null</code>)
      */
     public static void validateChildNodeDefinition( final ChildNodeDefinition childNodeDefinition,
+                                                    final Collection<QualifiedName> existingChildNodeNames,
                                                     final MultiValidationStatus status ) {
-        final ValidationStatus newStatus = validateChildNodeDefinition(childNodeDefinition);
+        final ValidationStatus newStatus = validateChildNodeDefinition(childNodeDefinition, existingChildNodeNames);
 
         if (!newStatus.isOk()) {
             status.add(newStatus);
@@ -195,7 +203,7 @@ public final class CndValidator {
         final Collection<String> childNodeNames = new ArrayList<String>(childNodeDefinitions.size());
 
         for (final ChildNodeDefinition childNodeDefn : childNodeDefinitions) {
-            validateChildNodeDefinition(childNodeDefn, status);
+            validateChildNodeDefinition(childNodeDefn, null, status);
 
             { // ERROR - Duplicate child node definition names
                 final String childNodeName = childNodeDefn.getName();
@@ -290,21 +298,59 @@ public final class CndValidator {
 
     /**
      * @param childNodeDefinition the child node definition whose name is being validated (cannot be <code>null</code>)
+     * @param existingChildNodeNames the existing child node names used to check for a duplicate (can be <code>null</code> or empty)
      * @param status the status to add the new status to (cannot be <code>null</code>)
      */
     public static void validateName( final ChildNodeDefinition childNodeDefinition,
+                                     final Collection<QualifiedName> existingChildNodeNames,
                                      final MultiValidationStatus status ) {
         // ERROR - Empty or invalid child node definition name
         validateQualifiedName(childNodeDefinition.getQualifiedName(), Messages.childDefinitionName, status);
+
+        if (!Utils.isEmpty(existingChildNodeNames) && existingChildNodeNames.contains(childNodeDefinition.getQualifiedName())) {
+            status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.duplicateChildNodeDefinitionName,
+                                                                    childNodeDefinition.getName())));
+        }
     }
 
     /**
      * @param childNodeDefinition the child node definition whose name is being validated (cannot be <code>null</code>)
+     * @param existingChildNodeNames the existing child node names used to check for a duplicate (can be <code>null</code> or empty)
      * @return the status (never <code>null</code>)
      */
-    public static MultiValidationStatus validateName( final ChildNodeDefinition childNodeDefinition ) {
+    public static MultiValidationStatus validateName( final ChildNodeDefinition childNodeDefinition,
+                                                      final Collection<QualifiedName> existingChildNodeNames ) {
         final MultiValidationStatus status = new MultiValidationStatus();
-        validateName(childNodeDefinition, status);
+        validateName(childNodeDefinition, existingChildNodeNames, status);
+        return status;
+    }
+
+    /**
+     * @param propertyDefinition the property definition whose name is being validated (cannot be <code>null</code>)
+     * @param existingPropertyNames the existing property names used to check for a duplicate (can be <code>null</code> or empty)
+     * @param status the status to add the new status to (cannot be <code>null</code>)
+     */
+    public static void validateName( final PropertyDefinition propertyDefinition,
+                                     final Collection<QualifiedName> existingPropertyNames,
+                                     final MultiValidationStatus status ) {
+        // ERROR - Empty or invalid child node definition name
+        validateQualifiedName(propertyDefinition.getQualifiedName(), Messages.propertyDefinitionName, status);
+
+        if (!Utils.isEmpty(existingPropertyNames) && existingPropertyNames.contains(propertyDefinition.getQualifiedName())) {
+            status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.duplicateChildNodeDefinitionName,
+                                                                    propertyDefinition.getName())));
+        }
+    }
+
+    /**
+     * @param propertyDefinition the property definition whose name is being validated (cannot be <code>null</code>)
+     * @param existingPropertyNames the existing property names used to check for a duplicate (can be <code>null</code> or empty)
+     * @return the status (never <code>null</code>)
+     */
+    public static MultiValidationStatus validateName( final PropertyDefinition propertyDefinition,
+                                                      final Collection<QualifiedName> existingPropertyNames ) {
+        final MultiValidationStatus status = new MultiValidationStatus();
+        validateName(propertyDefinition, existingPropertyNames, status);
         return status;
     }
 
@@ -717,9 +763,11 @@ public final class CndValidator {
 
     /**
      * @param propertyDefinition the property definition being validated (never <code>null</code>)
+     * @param existingPropertyNames the existing property names used to check for a duplicate (can be <code>null</code> or empty)
      * @return the status (never <code>null</code>)
      */
-    public static MultiValidationStatus validatePropertyDefinition( final PropertyDefinition propertyDefinition ) {
+    public static MultiValidationStatus validatePropertyDefinition( final PropertyDefinition propertyDefinition,
+                                                                    final Collection<QualifiedName> existingPropertyNames ) {
         Utils.verifyIsNotNull(propertyDefinition, "propertyDefinition"); //$NON-NLS-1$
 
         /**
@@ -748,7 +796,7 @@ public final class CndValidator {
 
         { // name
           // ERROR - Empty or invalid property definition name
-            validateLocalName(propertyDefinition.getName(), Messages.propertyDefinitionName, status);
+            validateName(propertyDefinition, existingPropertyNames, status);
         }
 
         { // property type
@@ -757,76 +805,11 @@ public final class CndValidator {
         }
 
         { // default values
-            final Collection<String> defaultValues = propertyDefinition.getDefaultValuesAsStrings();
-
-            if (Utils.isEmpty(defaultValues)) {
-                if (propertyDefinition.getState(PropertyDefinition.PropertyName.DEFAULT_VALUES) == Value.IS) {
-                    status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.emptyDefaultValues, propertyDefinitionName)));
-                }
-            } else {
-                // ERROR - Cannot have multiple default values when the property definition is single-valued
-                if ((defaultValues.size() > 1)
-                        && (propertyDefinition.getState(PropertyDefinition.PropertyName.MULTIPLE) == Value.IS_NOT)) {
-                    status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.multipleDefaultValuesForSingleValuedProperty,
-                                                                            propertyDefinitionName)));
-                }
-
-                final Collection<String> values = new ArrayList<String>(defaultValues.size());
-
-                for (final String defaultValue : defaultValues) {
-                    // ERROR - Default value is not valid for the property definition type
-                    isValid(defaultValue, propertyDefinition.getType(), Messages.defaultValue, status);
-
-                    if (!Utils.isEmpty(defaultValue)) {
-                        // ERROR - Duplicate default value
-                        if (values.contains(defaultValue)) {
-                            status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.duplicateDefaultValue,
-                                                                                    propertyDefinitionName, defaultValue)));
-                        } else {
-                            values.add(defaultValue);
-                        }
-                    }
-                }
-
-                // ERROR - Cannot have explicit default values when default values is marked as a variant
-                if (propertyDefinition.getState(PropertyDefinition.PropertyName.DEFAULT_VALUES) != Value.IS) {
-                    status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.defaultValuesExistButMarkedAsVariant,
-                                                                            propertyDefinition)));
-                }
-            }
+            validateDefaultValues(propertyDefinition, status);
         }
 
         { // value constraints
-            final String[] valueConstraints = propertyDefinition.getValueConstraints();
-
-            if (Utils.isEmpty(valueConstraints)) {
-                if (propertyDefinition.getState(PropertyDefinition.PropertyName.VALUE_CONSTRAINTS) == Value.IS) {
-                    status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.emptyValueConstraints, propertyDefinitionName)));
-                }
-            } else {
-                final Collection<String> constraints = new ArrayList<String>(valueConstraints.length);
-
-                for (final String constraint : valueConstraints) {
-                    // ERROR - Invalid value constraint
-                    validateValueConstraint(constraint, status);
-
-                    if (!Utils.isEmpty(constraint)) {
-                        // ERROR - Duplicate value constraint
-                        if (constraints.contains(constraint)) {
-                            status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.duplicateValueConstraint,
-                                                                                    propertyDefinitionName, constraint)));
-                        } else {
-                            constraints.add(constraint);
-                        }
-                    }
-                }
-
-                // ERROR - Cannot have explicit value constraints when value constraints is marked as a variant
-                if (propertyDefinition.getState(PropertyDefinition.PropertyName.VALUE_CONSTRAINTS) != Value.IS) {
-                    status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.valueConstraintsExistButMarkedAsVariant,
-                                                                            propertyDefinition)));
-                }
-            }
+            validateValueConstraints(propertyDefinition, status);
         }
 
         { // query operators
@@ -867,11 +850,13 @@ public final class CndValidator {
 
     /**
      * @param propertyDefinition the property definition being validated (never <code>null</code>)
+     * @param existingPropertyNames the existing property names used to check for a duplicate (can be <code>null</code> or empty)
      * @param status the status to add the new status to (never <code>null</code>)
      */
     public static void validatePropertyDefinition( final PropertyDefinition propertyDefinition,
+                                                   final Collection<QualifiedName> existingPropertyNames,
                                                    final MultiValidationStatus status ) {
-        final ValidationStatus newStatus = validatePropertyDefinition(propertyDefinition);
+        final ValidationStatus newStatus = validatePropertyDefinition(propertyDefinition, existingPropertyNames);
 
         if (!newStatus.isOk()) {
             status.add(newStatus);
@@ -903,7 +888,7 @@ public final class CndValidator {
         final Collection<String> propNames = new ArrayList<String>(propertyDefinitions.size());
 
         for (final PropertyDefinition propertyDefn : propertyDefinitions) {
-            validatePropertyDefinition(propertyDefn, status);
+            validatePropertyDefinition(propertyDefn, null, status);
 
             { // ERROR - Duplicate property definition names
                 final String propName = propertyDefn.getName();
@@ -1138,6 +1123,70 @@ public final class CndValidator {
     }
 
     /**
+     * @param propertyDefinition the property definition whose default values are being validated (cannot be <code>null</code>)
+     * @return the status (never <code>null</code>)
+     */
+    public static MultiValidationStatus validateDefaultValues( final PropertyDefinition propertyDefinition ) {
+        final MultiValidationStatus status = new MultiValidationStatus();
+        validateDefaultValues(propertyDefinition, status);
+        return status;
+    }
+
+    /**
+     * @param propertyDefinition the property definition whose default values are being validated (cannot be <code>null</code>)
+     * @param status the status to add the new status to (cannot be <code>null</code>)
+     */
+    public static void validateDefaultValues( final PropertyDefinition propertyDefinition,
+                                              final MultiValidationStatus status ) {
+        Utils.verifyIsNotNull(propertyDefinition, "propertyDefinition"); //$NON-NLS-1$
+        Utils.verifyIsNotNull(status, "status"); //$NON-NLS-1$
+
+        String propertyName = propertyDefinition.getName();
+
+        if (Utils.isEmpty(propertyName)) {
+            propertyName = Messages.missingName;
+        }
+
+        final Collection<String> defaultValues = propertyDefinition.getDefaultValuesAsStrings();
+
+        if (Utils.isEmpty(defaultValues)) {
+            if (propertyDefinition.getState(PropertyDefinition.PropertyName.DEFAULT_VALUES) == Value.IS) {
+                status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.emptyDefaultValues, propertyName)));
+            }
+        } else {
+            // ERROR - Cannot have multiple default values when the property definition is single-valued
+            if ((defaultValues.size() > 1)
+                    && (propertyDefinition.getState(PropertyDefinition.PropertyName.MULTIPLE) == Value.IS_NOT)) {
+                status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.multipleDefaultValuesForSingleValuedProperty,
+                                                                        propertyName)));
+            }
+
+            final Collection<String> values = new ArrayList<String>(defaultValues.size());
+
+            for (final String defaultValue : defaultValues) {
+                // ERROR - Default value is not valid for the property definition type
+                isValid(defaultValue, propertyDefinition.getType(), Messages.defaultValue, status);
+
+                if (!Utils.isEmpty(defaultValue)) {
+                    // ERROR - Duplicate default value
+                    if (values.contains(defaultValue)) {
+                        status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.duplicateDefaultValue, propertyName,
+                                                                                defaultValue)));
+                    } else {
+                        values.add(defaultValue);
+                    }
+                }
+            }
+
+            // ERROR - Cannot have explicit default values when default values is marked as a variant
+            if (propertyDefinition.getState(PropertyDefinition.PropertyName.DEFAULT_VALUES) != Value.IS) {
+                status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.defaultValuesExistButMarkedAsVariant,
+                                                                        propertyDefinition)));
+            }
+        }
+    }
+
+    /**
      * @param nodeTypeDefinitionName the node type name whose supertypes are being checked (cannot be <code>null</code> or empty)
      * @param superTypesState the supertypes property state (cannot be <code>null</code>)
      * @param superTypeNames the collection of a node type definition's supertypes to validate (can be <code>null</code> or empty)
@@ -1235,7 +1284,7 @@ public final class CndValidator {
     public static ValidationStatus validateValueConstraint( final String constraint ) {
         Utils.verifyIsNotEmpty(constraint, "constraint"); //$NON-NLS-1$
 
-        // TODO implement validateValueConstraint
+        // TODO implement validateValueConstraint to make sure constraint is property syntax
         return ValidationStatus.OK_STATUS;
     }
 
@@ -1249,6 +1298,63 @@ public final class CndValidator {
 
         if (!newStatus.isOk()) {
             status.add(newStatus);
+        }
+    }
+
+    /**
+     * @param propertyDefinition the property definition whose value constraints are being validated (cannot be <code>null</code>)
+     * @return the status (never <code>null</code>)
+     */
+    public static MultiValidationStatus validateValueConstraints( final PropertyDefinition propertyDefinition ) {
+        final MultiValidationStatus status = new MultiValidationStatus();
+        validateValueConstraints(propertyDefinition, status);
+        return status;
+    }
+
+    /**
+     * @param propertyDefinition the property definition whose value constraints are being validated (cannot be <code>null</code>)
+     * @param status the status to add the new status to (cannot be <code>null</code>)
+     */
+    public static void validateValueConstraints( final PropertyDefinition propertyDefinition,
+                                                 final MultiValidationStatus status ) {
+        Utils.verifyIsNotNull(propertyDefinition, "propertyDefinition"); //$NON-NLS-1$
+        Utils.verifyIsNotNull(status, "status"); //$NON-NLS-1$
+
+        String propertyName = propertyDefinition.getName();
+
+        if (Utils.isEmpty(propertyName)) {
+            propertyName = Messages.missingName;
+        }
+
+        final String[] valueConstraints = propertyDefinition.getValueConstraints();
+
+        if (Utils.isEmpty(valueConstraints)) {
+            if (propertyDefinition.getState(PropertyDefinition.PropertyName.VALUE_CONSTRAINTS) == Value.IS) {
+                status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.emptyValueConstraints, propertyName)));
+            }
+        } else {
+            final Collection<String> constraints = new ArrayList<String>(valueConstraints.length);
+
+            for (final String constraint : valueConstraints) {
+                // ERROR - Invalid value constraint
+                validateValueConstraint(constraint, status);
+
+                if (!Utils.isEmpty(constraint)) {
+                    // ERROR - Duplicate value constraint
+                    if (constraints.contains(constraint)) {
+                        status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.duplicateValueConstraint,
+                                                                                propertyName, constraint)));
+                    } else {
+                        constraints.add(constraint);
+                    }
+                }
+            }
+
+            // ERROR - Cannot have explicit value constraints when value constraints is marked as a variant
+            if (propertyDefinition.getState(PropertyDefinition.PropertyName.VALUE_CONSTRAINTS) != Value.IS) {
+                status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.valueConstraintsExistButMarkedAsVariant,
+                                                                        propertyDefinition)));
+            }
         }
     }
 

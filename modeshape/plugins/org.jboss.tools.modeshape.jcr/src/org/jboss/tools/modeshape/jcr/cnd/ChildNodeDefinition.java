@@ -36,19 +36,19 @@ public class ChildNodeDefinition implements CndElement, Comparable, NodeDefiniti
     public static final String NOTATION_PREFIX = "+"; //$NON-NLS-1$
 
     /**
-     * @param childNodeToCopy the child node definition being copied (cannot be <code>null</code>)
+     * @param childNodeBeingCopied the child node definition being copied (cannot be <code>null</code>)
      * @return the copy (never <code>null</code>)
      */
-    public static ChildNodeDefinition copy( ChildNodeDefinition childNodeToCopy ) {
-        ChildNodeDefinition copy = new ChildNodeDefinition();
-        copy.setAutoCreated(childNodeToCopy.isAutoCreated());
-        copy.setMandatory(childNodeToCopy.isMandatory());
-        copy.setProtected(childNodeToCopy.isProtected());
-        copy.setOnParentVersion(childNodeToCopy.getOnParentVersion());
-        copy.setSameNameSiblings(childNodeToCopy.allowsSameNameSiblings());
-        copy.setName(childNodeToCopy.getName());
-        copy.setDefaultPrimaryTypeName(childNodeToCopy.getDefaultPrimaryTypeName());
-        copy.setRequiredPrimaryTypeNames(childNodeToCopy.getRequiredPrimaryTypeNames());
+    public static ChildNodeDefinition copy( final ChildNodeDefinition childNodeBeingCopied ) {
+        final ChildNodeDefinition copy = new ChildNodeDefinition();
+        copy.setAutoCreated(childNodeBeingCopied.isAutoCreated());
+        copy.setMandatory(childNodeBeingCopied.isMandatory());
+        copy.setProtected(childNodeBeingCopied.isProtected());
+        copy.setOnParentVersion(childNodeBeingCopied.getOnParentVersion());
+        copy.setSameNameSiblings(childNodeBeingCopied.allowsSameNameSiblings());
+        copy.setName(childNodeBeingCopied.getName());
+        copy.setDefaultPrimaryTypeName(childNodeBeingCopied.getDefaultPrimaryTypeName());
+        copy.setRequiredPrimaryTypeNames(childNodeBeingCopied.getRequiredPrimaryTypeNames());
         return copy;
     }
 
@@ -227,7 +227,7 @@ public class ChildNodeDefinition implements CndElement, Comparable, NodeDefiniti
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
-    public boolean equals( Object obj ) {
+    public boolean equals( final Object obj ) {
         if (this == obj) {
             return true;
         }
@@ -236,7 +236,7 @@ public class ChildNodeDefinition implements CndElement, Comparable, NodeDefiniti
             return false;
         }
 
-        ChildNodeDefinition that = (ChildNodeDefinition)obj;
+        final ChildNodeDefinition that = (ChildNodeDefinition)obj;
 
         if (!this.attributes.equals(that.attributes)) {
             return false;
@@ -250,7 +250,7 @@ public class ChildNodeDefinition implements CndElement, Comparable, NodeDefiniti
             return false;
         }
 
-        return Utils.equivalent(this.getRequiredPrimaryTypeNames(), that.getRequiredPrimaryTypeNames());
+        return this.requiredTypes.equals(that.requiredTypes);
     }
 
     /**
@@ -347,6 +347,13 @@ public class ChildNodeDefinition implements CndElement, Comparable, NodeDefiniti
     }
 
     /**
+     * @return the qualified name (never <code>null</code>)
+     */
+    public QualifiedName getQualifiedName() {
+        return this.name;
+    }
+
+    /**
      * {@inheritDoc}
      * 
      * @see javax.jcr.nodetype.NodeDefinition#getRequiredPrimaryTypeNames()
@@ -365,13 +372,6 @@ public class ChildNodeDefinition implements CndElement, Comparable, NodeDefiniti
     @Override
     public NodeType[] getRequiredPrimaryTypes() {
         throw new UnsupportedOperationException();
-    }
-
-    /**
-     * @return the qualified name (never <code>null</code>)
-     */
-    public QualifiedName getQualifiedName() {
-        return this.name;
     }
 
     /**
@@ -730,7 +730,16 @@ public class ChildNodeDefinition implements CndElement, Comparable, NodeDefiniti
         /**
          * The supports same name siblings indicator.
          */
-        SAME_NAME_SIBLINGS,
-    }
+        SAME_NAME_SIBLINGS;
 
+        /**
+         * {@inheritDoc}
+         * 
+         * @see java.lang.Enum#toString()
+         */
+        @Override
+        public String toString() {
+            return (getClass().getSimpleName() + super.toString());
+        }
+    }
 }

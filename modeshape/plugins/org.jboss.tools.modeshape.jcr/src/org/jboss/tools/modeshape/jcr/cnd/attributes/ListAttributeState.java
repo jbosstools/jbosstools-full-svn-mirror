@@ -104,6 +104,15 @@ public abstract class ListAttributeState<E extends Comparable> extends Attribute
     }
 
     /**
+     * @param item the item being checked to see if it is already supported (cannot be <code>null</code>)
+     * @return <code>true</code> if already exists
+     */
+    public boolean exists( E item ) {
+        Utils.verifyIsNotNull(item, "item"); //$NON-NLS-1$
+        return getSupportedItems().contains(item);
+    }
+
+    /**
      * @param notationType the notation type whose CND notation prefix is being requested (cannot be <code>null</code>)
      * @return the CND notation prefix (can be <code>null</code> or empty)
      */
@@ -285,7 +294,7 @@ public abstract class ListAttributeState<E extends Comparable> extends Attribute
      */
     public boolean supports( final E item ) {
         Utils.verifyIsNotNull(item, "item"); //$NON-NLS-1$
-        return this.supported.contains(item);
+        return getSupportedItems().contains(item);
     }
 
     /**

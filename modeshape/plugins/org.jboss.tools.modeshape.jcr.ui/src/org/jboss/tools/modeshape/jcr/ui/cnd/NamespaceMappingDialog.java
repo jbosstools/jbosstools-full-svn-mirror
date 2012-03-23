@@ -38,7 +38,7 @@ import org.jboss.tools.modeshape.ui.forms.FormUtils.Styles;
 /**
  * The <code>NamespaceMappingDialog</code> is used to create or edit a namespace mapping.
  */
-class NamespaceMappingDialog extends FormDialog {
+final class NamespaceMappingDialog extends FormDialog {
 
     private Button btnOk;
 

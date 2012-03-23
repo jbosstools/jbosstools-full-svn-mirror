@@ -46,6 +46,27 @@ public class PropertyDefinition implements CndElement, Comparable, PropertyDefin
     public static final String RESIDUAL_PROPERTY_NAME = "*"; //$NON-NLS-1$
 
     /**
+     * @param propertyBeingCopied the property definition being copied (cannot be <code>null</code>)
+     * @return the copy (never <code>null</code>)
+     */
+    public static final PropertyDefinition copy( final PropertyDefinition propertyBeingCopied ) {
+        final PropertyDefinition copy = new PropertyDefinition();
+        copy.setName(propertyBeingCopied.getName());
+        copy.setAutoCreated(propertyBeingCopied.isAutoCreated());
+        copy.setAvailableQueryOperators(propertyBeingCopied.getAvailableQueryOperators());
+        copy.setDefaultValues(propertyBeingCopied.getDefaultValues());
+        copy.setFullTextSearchable(propertyBeingCopied.isFullTextSearchable());
+        copy.setMandatory(propertyBeingCopied.isMandatory());
+        copy.setMultiple(propertyBeingCopied.isMultiple());
+        copy.setOnParentVersion(propertyBeingCopied.getOnParentVersion());
+        copy.setProtected(propertyBeingCopied.isProtected());
+        copy.setQueryOrderable(propertyBeingCopied.isQueryOrderable());
+        copy.setRequiredType(propertyBeingCopied.getRequiredType());
+        copy.setValueConstraints(propertyBeingCopied.getValueConstraints());
+        return copy;
+    }
+
+    /**
      * The property attributes (never <code>null</code>).
      */
     private final PropertyAttributes attributes;
@@ -270,6 +291,44 @@ public class PropertyDefinition implements CndElement, Comparable, PropertyDefin
     }
 
     /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals( final Object obj ) {
+        if (this == obj) {
+            return true;
+        }
+
+        if ((obj == null) || !getClass().equals(obj.getClass())) {
+            return false;
+        }
+
+        final PropertyDefinition that = (PropertyDefinition)obj;
+        // this.defaultValues = new DefaultValues();
+        // this.valueConstraints = new ValueConstraints();
+
+        if (!this.attributes.equals(that.attributes)) {
+            return false;
+        }
+
+        if (!Utils.equals(getName(), that.getName())) {
+            return false;
+        }
+
+        if (this.type != that.type) {
+            return false;
+        }
+
+        if (!this.defaultValues.equals(that.defaultValues)) {
+            return false;
+        }
+
+        return this.valueConstraints.equals(that.valueConstraints);
+    }
+
+    /**
      * @param notationType the notation type being requested (cannot be <code>null</code>)
      * @return the CND notation (never <code>null</code>)
      */
@@ -352,6 +411,13 @@ public class PropertyDefinition implements CndElement, Comparable, PropertyDefin
 
     private String getPrefixEndDelimiter() {
         return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.PROPERTY_DEFINITION_END_PREFIX_DELIMITER);
+    }
+
+    /**
+     * @return the qualified name (never <code>null</code>)
+     */
+    public QualifiedName getQualifiedName() {
+        return this.name;
     }
 
     /**
@@ -445,6 +511,16 @@ public class PropertyDefinition implements CndElement, Comparable, PropertyDefin
      */
     public String getValueConstraintsCndNotation( final NotationType notationType ) {
         return this.valueConstraints.toCndNotation(notationType);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        return Utils.hashCode(this.attributes, this.name, this.defaultValues, this.type, this.valueConstraints);
     }
 
     /**
@@ -897,7 +973,16 @@ public class PropertyDefinition implements CndElement, Comparable, PropertyDefin
         /**
          * The collection of property constraints.
          */
-        VALUE_CONSTRAINTS
-    }
+        VALUE_CONSTRAINTS;
 
+        /**
+         * {@inheritDoc}
+         * 
+         * @see java.lang.Enum#toString()
+         */
+        @Override
+        public String toString() {
+            return (getClass().getSimpleName() + super.toString());
+        }
+    }
 }

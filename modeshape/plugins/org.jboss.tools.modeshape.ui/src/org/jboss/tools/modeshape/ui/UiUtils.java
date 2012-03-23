@@ -7,6 +7,9 @@
  */
 package org.jboss.tools.modeshape.ui;
 
+import java.util.Collection;
+import java.util.Iterator;
+
 import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
@@ -21,6 +24,11 @@ public final class UiUtils {
      * An empty string constant.
      */
     public static final String EMPTY_STRING = ""; //$NON-NLS-1$
+
+    /**
+     * A delimiter used to join a collection of object string representations. Default value is "{@value} ".
+     */
+    public static final String DEFAULT_JOIN_DELIMITER = ","; //$NON-NLS-1$
 
     /**
      * The column will be packed using the header text.
@@ -55,6 +63,42 @@ public final class UiUtils {
      */
     public static boolean isEmpty( final String stringBeingChecked ) {
         return ((stringBeingChecked == null) || stringBeingChecked.isEmpty());
+    }
+
+    /**
+     * An item within the items that are <code>null</code> are treated like an empty string. If a delimiter is not passed in the
+     * {@link #DEFAULT_JOIN_DELIMITER default delimiter} is used.
+     * 
+     * @param items the items whose string representation are being joined (cannot be <code>null</code>)
+     * @param delimiter the delimiter separating the items (can be <code>null</code> or empty)
+     * @return the string representation of each item separated by the specified delimiter (never <code>null</code>)
+     * @throws IllegalArgumentException if items is <code>null</code>
+     */
+    public static String join( Collection<?> items,
+                               String delimiter ) {
+        if (items == null) {
+            throw new IllegalArgumentException("items is null"); //$NON-NLS-1$
+        }
+
+        delimiter = (((delimiter == null) || delimiter.isEmpty()) ? DEFAULT_JOIN_DELIMITER : delimiter);
+        StringBuilder builder = new StringBuilder();
+
+        for (Iterator<?> itr = items.iterator(); itr.hasNext();) {
+            Object item = itr.next();
+
+            if (item == null) {
+                item = EMPTY_STRING;
+            }
+
+            builder.append(item.toString());
+
+            // add delimiter
+            if (itr.hasNext()) {
+                builder.append(delimiter);
+            }
+        }
+
+        return builder.toString();
     }
 
     /**

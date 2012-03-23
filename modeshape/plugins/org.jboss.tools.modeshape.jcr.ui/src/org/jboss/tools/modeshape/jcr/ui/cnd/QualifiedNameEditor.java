@@ -1,0 +1,292 @@
+/*
+ * JBoss, Home of Professional Open Source.
+ *
+ * See the LEGAL.txt file distributed with this work for information regarding copyright ownership and licensing.
+ *
+ * See the AUTHORS.txt file distributed with this work for a full listing of individual contributors.
+ */
+package org.jboss.tools.modeshape.jcr.ui.cnd;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CCombo;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.jboss.tools.modeshape.jcr.Utils;
+import org.jboss.tools.modeshape.jcr.ValidationStatus;
+import org.jboss.tools.modeshape.jcr.cnd.CndValidator;
+import org.jboss.tools.modeshape.jcr.cnd.QualifiedName;
+import org.jboss.tools.modeshape.ui.forms.FormUtils.Styles;
+
+/**
+ * A UI container that can be used to edit or create a qualified name. To receive notification of when a change was made in the
+ * editor, register using {@link #addListener(int, org.eclipse.swt.widgets.Listener)} using {@link SWT#Modify} as the event type.
+ * After notification, a call to {@link #getStatus()} will have the latest validation results.
+ */
+final class QualifiedNameEditor extends Composite {
+
+    private CCombo cbxQualifiers;
+
+    /**
+     * An optional collection of existing qualified names. When this is non-empty, it is checked to make sure the qualified name
+     * being edited is not a duplicate.
+     */
+    private Collection<QualifiedName> existingQNames;
+
+    private Label lblName;
+
+    private Label lblQualifier;
+
+    /**
+     * The qualified name being edited or <code>null</code> when creating a qualified name.
+     */
+    private QualifiedName qnameBeingEdited;
+
+    private final String qualifiedNameType;
+
+    private String qualifier;
+
+    private ValidationStatus status;
+
+    private final FormToolkit toolkit;
+
+    private Text txtName;
+
+    private String unqualifiedName;
+
+    /**
+     * A collection of known qualifiers/namespace prefixes to the CND (never <code>null</code>).
+     */
+    private List<String> validQualifiers;
+
+    /**
+     * Used to edit an existing or create a new qualified name.
+     * 
+     * @param parent the parent container (cannot be <code>null</code>)
+     * @param style the composite style
+     * @param toolkit the toolkit (cannot be <code>null</code>)
+     * @param qualifiedNameType a word describing what the qualified name represents (cannot be <code>null</code> or empty)
+     * @param existingQualifiers the existing qualifies (can be <code>null</code> or empty)
+     * @param qnameBeingEdited the qualified name being edited or <code>null</code> if creating a new name
+     */
+    public QualifiedNameEditor( final Composite parent,
+                                final int style,
+                                final FormToolkit toolkit,
+                                final String qualifiedNameType,
+                                final Collection<String> existingQualifiers,
+                                final QualifiedName qnameBeingEdited ) {
+        super(parent, style);
+        Utils.verifyIsNotNull(qualifiedNameType, "qualifiedNameType"); //$NON-NLS-1$
+        Utils.verifyIsNotNull(toolkit, "toolkit"); //$NON-NLS-1$
+
+        this.qualifiedNameType = qualifiedNameType;
+        this.toolkit = toolkit;
+        this.toolkit.adapt(this);
+
+        this.toolkit.adapt(this);
+        this.toolkit.paintBordersFor(this);
+
+        setLayout(new GridLayout(2, false));
+        setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
+
+        constructEditor();
+        setValidQualifiers(existingQualifiers);
+        setNameBeingEdited(qnameBeingEdited);
+    }
+
+    private void constructEditor() {
+        { // qualifier
+            this.lblQualifier = this.toolkit.createLabel(this, CndMessages.qualifierLabel, SWT.NONE);
+            this.lblQualifier.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
+
+            this.cbxQualifiers = new CCombo(this, Styles.COMBO_STYLE);
+            this.toolkit.adapt(this.cbxQualifiers, true, false);
+            this.cbxQualifiers.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+            ((GridData)this.cbxQualifiers.getLayoutData()).heightHint = this.cbxQualifiers.getItemHeight() + 4;
+            this.cbxQualifiers.setToolTipText(CndMessages.validQualifiersToolTip);
+
+            this.cbxQualifiers.addModifyListener(new ModifyListener() {
+
+                /**
+                 * {@inheritDoc}
+                 * 
+                 * @see org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse.swt.events.ModifyEvent)
+                 */
+                @Override
+                public void modifyText( final ModifyEvent e ) {
+                    final String newQualifier = ((CCombo)e.widget).getText();
+                    handleQualifierChanged(newQualifier);
+                }
+            });
+        }
+
+        { // unqualified name
+            this.lblName = this.toolkit.createLabel(this, CndMessages.nameLabel, SWT.NONE);
+            this.lblName.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
+
+            this.txtName = this.toolkit.createText(this, null, Styles.TEXT_STYLE);
+            this.txtName.setToolTipText(CndMessages.unqualifiedNameToolTip);
+            this.txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+            this.txtName.addModifyListener(new ModifyListener() {
+
+                /**
+                 * {@inheritDoc}
+                 * 
+                 * @see org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse.swt.events.ModifyEvent)
+                 */
+                @Override
+                public void modifyText( final ModifyEvent e ) {
+                    handleNameChanged(((Text)e.widget).getText());
+                }
+            });
+
+            this.txtName.setFocus();
+        }
+    }
+
+    /**
+     * @return the new or edited qualified name (never <code>null</code>)
+     */
+    public QualifiedName getQualifiedName() {
+        return new QualifiedName(this.qualifier, this.unqualifiedName);
+    }
+
+    /**
+     * @return the latest validation results (never <code>null</code>)
+     */
+    public ValidationStatus getStatus() {
+        return this.status;
+    }
+
+    void handleNameChanged( final String newName ) {
+        this.unqualifiedName = newName;
+        validate();
+    }
+
+    void handleQualifierChanged( final String newQualifier ) {
+        this.qualifier = newQualifier;
+        validate();
+    }
+
+    private boolean isEditMode() {
+        return (this.qnameBeingEdited != null);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.eclipse.swt.widgets.Control#setEnabled(boolean)
+     */
+    @Override
+    public void setEnabled( final boolean enable ) {
+        super.setEnabled(enable);
+
+        // all controls have the same enablement
+        if (this.txtName.getEnabled() != enable) {
+            this.lblQualifier.setEnabled(enable);
+            this.cbxQualifiers.setEnabled(enable);
+            this.lblName.setEnabled(enable);
+            this.txtName.setEnabled(enable);
+        }
+    }
+
+    /**
+     * @param existingQNames used to check against for duplicate qualified names (can be <code>null</code> or empty)
+     */
+    void setExistingQNames( final Collection<QualifiedName> existingQNames ) {
+        if (Utils.isEmpty(existingQNames)) {
+            this.existingQNames = null;
+        } else {
+            this.existingQNames = new ArrayList<QualifiedName>(existingQNames);
+
+            // so that validating won't show it as a duplicate
+            if (isEditMode()) {
+                this.existingQNames.remove(this.qnameBeingEdited);
+            }
+        }
+    }
+
+    public void setNameBeingEdited( final QualifiedName qnameBeingEdited ) {
+        this.qnameBeingEdited = qnameBeingEdited;
+
+        if (this.qnameBeingEdited == null) {
+            this.qualifier = null;
+            this.unqualifiedName = null;
+        } else {
+            this.qualifier = this.qnameBeingEdited.getQualifier();
+            this.unqualifiedName = this.qnameBeingEdited.getUnqualifiedName();
+        }
+
+        updateUi();
+        validate();
+    }
+
+    /**
+     * @param validQualifiers the valid qualifiers (can be <code>null</code> or empty)
+     */
+    void setValidQualifiers( final Collection<String> validQualifiers ) {
+        this.validQualifiers = ((validQualifiers == null) ? new ArrayList<String>(1) : new ArrayList<String>(validQualifiers));
+        this.validQualifiers.add(0, CndMessages.noNameQualifierChoice); // include empty qualifier at index 0
+        updateUi();
+    }
+
+    private void updateUi() {
+        // set qualifier choices if they have changed
+        final String[] currentItems = this.cbxQualifiers.getItems();
+
+        // only reload qualifiers if different
+        if ((this.validQualifiers.size() != currentItems.length) || !this.validQualifiers.containsAll(Arrays.asList(currentItems))) {
+            this.cbxQualifiers.setItems(this.validQualifiers.toArray(new String[this.validQualifiers.size()]));
+        }
+
+        // select the current qualifier
+        if (isEditMode()) {
+            final String currentQualifier = this.qnameBeingEdited.getQualifier();
+
+            if (Utils.isEmpty(currentQualifier)) {
+                this.cbxQualifiers.select(0);
+            } else {
+                final int index = this.cbxQualifiers.indexOf(currentQualifier);
+
+                if (index == -1) {
+                    // not a valid qualifier but add and select
+                    this.cbxQualifiers.add(currentQualifier);
+                    this.cbxQualifiers.select(this.cbxQualifiers.getItemCount() - 1);
+                } else {
+                    this.cbxQualifiers.select(index);
+                }
+            }
+        } else {
+            this.cbxQualifiers.select(0);
+        }
+
+        if (isEditMode()) {
+            final String name = this.qnameBeingEdited.getUnqualifiedName();
+            this.txtName.setText(Utils.isEmpty(name) ? Utils.EMPTY_STRING : name);
+        } else {
+            this.txtName.setText(Utils.EMPTY_STRING);
+        }
+    }
+
+    private void validate() {
+        final QualifiedName currentQName = new QualifiedName(this.qualifier, this.unqualifiedName);
+        this.status = CndValidator.validateQualifiedName(currentQName, this.qualifiedNameType, this.validQualifiers,
+                                                         this.existingQNames);
+        final Event e = new Event();
+        e.widget = this;
+        e.type = SWT.Modify;
+        e.text = getQualifiedName().get();
+        notifyListeners(SWT.Modify, e);
+    }
+}

@@ -24,7 +24,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.osgi.util.NLS;
@@ -194,6 +193,7 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
         List<Throwable> errors = new ArrayList<Throwable>();
         this.cndBeingEdited = importer.importFrom(getFile().getContents(), errors, getFile().getName());
         // TODO implement
+        this.cndBeingEdited.addListener(this);
     }
 
     /**
@@ -233,7 +233,7 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
     @Override
     public void doSaveAs() {
         // TODO implement doSaveAs
-        final IProgressMonitor progressMonitor = getProgressMonitor();
+//        final IProgressMonitor progressMonitor = getProgressMonitor();
         // SaveAsDialog dialog = new SaveAsDialog(getShell());
         // dialog.setOriginalFile(getFile());
         // dialog.create();
@@ -299,11 +299,11 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
     IMessageManager getMessageManager() {
         return this.scrolledForm.getMessageManager();
     }
-
-    private IProgressMonitor getProgressMonitor() {
-        final IStatusLineManager statusLineMgr = getEditorSite().getActionBars().getStatusLineManager();
-        return ((statusLineMgr == null) ? null : statusLineMgr.getProgressMonitor());
-    }
+//
+//    private IProgressMonitor getProgressMonitor() {
+//        final IStatusLineManager statusLineMgr = getEditorSite().getActionBars().getStatusLineManager();
+//        return ((statusLineMgr == null) ? null : statusLineMgr.getProgressMonitor());
+//    }
 
     /**
      * @return the editor's shell (never <code>null</code>)
@@ -427,7 +427,6 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
     public void propertyChange( final PropertyChangeEvent e ) {
         refreshDirtyState();
         this.formsPage.handlePropertyChanged(e);
-//        this.sourcePage.handlePropertyChanged(e);
     }
 
     void refreshCnd() {
@@ -444,7 +443,6 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
                     createCnd();
 
                     this.formsPage.handleCndReloaded();
-//                    this.sourcePage.handleCndReloaded();
                 } catch (final Exception e) {
                     // TODO log this
                     MessageFormDialog.openError(getShell(), CndMessages.cndEditorRefreshErrorTitle,
@@ -481,9 +479,6 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
 
             this.formsPage.setResourceReadOnly(this.readOnly);
             this.formsPage.getManagedForm().refresh();
-//
-//            this.sourcePage.setResourceReadOnly(this.readOnly);
-//            this.sourcePage.getManagedForm().refresh();
         }
     }
 

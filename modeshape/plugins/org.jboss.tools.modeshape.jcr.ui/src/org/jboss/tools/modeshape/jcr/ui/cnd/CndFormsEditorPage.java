@@ -38,7 +38,6 @@ import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.jface.window.Window;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -53,17 +52,20 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.IManagedForm;
+import org.eclipse.ui.forms.IMessageManager;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
 import org.jboss.tools.modeshape.jcr.Messages;
 import org.jboss.tools.modeshape.jcr.MultiValidationStatus;
 import org.jboss.tools.modeshape.jcr.Utils;
+import org.jboss.tools.modeshape.jcr.ValidationStatus;
 import org.jboss.tools.modeshape.jcr.cnd.ChildNodeDefinition;
 import org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType;
 import org.jboss.tools.modeshape.jcr.cnd.CndValidator;
@@ -95,7 +97,6 @@ class CndFormsEditorPage extends CndEditorPage {
     private Button btnMixin;
     private Button btnOrderable;
     private Button btnQueryable;
-    private CCombo cbxNamePrefix;
     private Section childNodeSection;
     private final ErrorMessage childNodesError;
     private TableViewer childNodeViewer;
@@ -107,14 +108,13 @@ class CndFormsEditorPage extends CndEditorPage {
     private Section detailsSection;
     private IAction editChildNode;
     private IAction editNamespace;
-    private IAction editNodeType;
     private IAction editProperty;
     private IAction editSuperType;
+    private QualifiedNameEditor nameEditor;
     private final ErrorMessage namespacesError;
     private TableViewer namespaceViewer;
     private final ErrorMessage nodeTypeNameError;
     private String nodeTypeNameFilterPattern;
-    private final ErrorMessage nodeTypeNamePrefixError;
     private final ErrorMessage nodeTypesError;
     private TableViewer nodeTypeViewer;
     private final ErrorMessage propertiesError;
@@ -122,7 +122,6 @@ class CndFormsEditorPage extends CndEditorPage {
     private TableViewer propertyViewer;
     private final ErrorMessage superTypesError;
     private TableViewer superTypesViewer;
-    private Text txtName;
 
     /**
      * @param cndEditor the CND editor this page belongs to (cannot be <code>null</code>)
@@ -135,7 +134,6 @@ class CndFormsEditorPage extends CndEditorPage {
         this.namespacesError = new ErrorMessage();
         this.nodeTypesError = new ErrorMessage();
         this.nodeTypeNameError = new ErrorMessage();
-        this.nodeTypeNamePrefixError = new ErrorMessage();
         this.propertiesError = new ErrorMessage();
         this.superTypesError = new ErrorMessage();
     }
@@ -235,7 +233,7 @@ class CndFormsEditorPage extends CndEditorPage {
         ((GridData)table.getLayoutData()).heightHint = table.getItemHeight() * 5;
 
         // table context menu
-        MenuManager menuManager = new MenuManager();
+        final MenuManager menuManager = new MenuManager();
         menuManager.add(new DelegateAction(CndMessages.addChildNodeMenuText, this.addChildNode));
         menuManager.add(new DelegateAction(CndMessages.editChildNodeMenuText, this.editChildNode));
         menuManager.add(new DelegateAction(CndMessages.deleteChildNodeMenuText, this.deleteChildNode));
@@ -416,46 +414,29 @@ class CndFormsEditorPage extends CndEditorPage {
             leftContainer.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
             toolkit.paintBordersFor(leftContainer);
 
-            { // name qualifier
-                toolkit.createLabel(leftContainer, CndMessages.namespaceLabel);
-                this.cbxNamePrefix = new CCombo(leftContainer, Styles.COMBO_STYLE);
-                toolkit.adapt(this.cbxNamePrefix, true, false);
-                this.nodeTypeNamePrefixError.setControl(this.cbxNamePrefix);
-                this.cbxNamePrefix.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-                ((GridData)this.cbxNamePrefix.getLayoutData()).heightHint = this.cbxNamePrefix.getItemHeight() + 4;
-
-                this.cbxNamePrefix.addModifyListener(new ModifyListener() {
-
-                    /**
-                     * {@inheritDoc}
-                     * 
-                     * @see org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse.swt.events.ModifyEvent)
-                     */
-                    @Override
-                    public void modifyText( final ModifyEvent e ) {
-                        handleNameQualifierChanged(((CCombo)e.widget).getText());
-                    }
-                });
-            }
-
             { // name
-                toolkit.createLabel(leftContainer, CndMessages.nameLabel);
-                this.txtName = toolkit.createText(leftContainer, Utils.EMPTY_STRING, Styles.TEXT_STYLE);
-                this.txtName.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-                this.txtName.addModifyListener(new ModifyListener() {
+                this.nameEditor = new QualifiedNameEditor(leftContainer,
+                                                          SWT.NONE,
+                                                          toolkit,
+                                                          Messages.propertyDefinitionName,
+                                                          getNamespacePrefixes(),
+                                                          null);
+                ((GridData)this.nameEditor.getLayoutData()).horizontalSpan = 2;
+                this.nameEditor.addListener(SWT.Modify, new Listener() {
 
                     /**
                      * {@inheritDoc}
                      * 
-                     * @see org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse.swt.events.ModifyEvent)
+                     * @see org.eclipse.swt.widgets.Listener#handleEvent(org.eclipse.swt.widgets.Event)
                      */
                     @Override
-                    public void modifyText( final ModifyEvent e ) {
-                        handleNodeTypeNameChanged(((Text)e.widget).getText());
+                    public void handleEvent( final Event e ) {
+                        handleNodeTypeNameChanged(e.text);
                     }
                 });
 
-                this.nodeTypeNameError.setControl(this.txtName);
+                this.nodeTypeNameError.setControl(this.nameEditor);
+                refreshNameControls(); // populate name editor controls
             }
 
             { // attributes
@@ -533,7 +514,6 @@ class CndFormsEditorPage extends CndEditorPage {
                 this.btnQueryable.setToolTipText(CndMessages.queryableAttributeToolTip);
 
                 // fill with data from CND
-                refreshNameControls();
                 refreshAttributeControls();
             }
         }
@@ -552,12 +532,13 @@ class CndFormsEditorPage extends CndEditorPage {
             table.setHeaderVisible(false);
             table.setLinesVisible(false);
             ((GridData)table.getLayoutData()).heightHint = table.getItemHeight() * 2;
+            table.setToolTipText(CndMessages.supertypesToolTip);
             this.superTypesError.setControl(table);
 
             createSuperTypesActions();
 
             // table context menu
-            MenuManager menuManager = new MenuManager();
+            final MenuManager menuManager = new MenuManager();
             menuManager.add(new DelegateAction(CndMessages.addSuperTypeMenuText, this.addSuperType));
             menuManager.add(new DelegateAction(CndMessages.editSuperTypeMenuText, this.editSuperType));
             menuManager.add(new DelegateAction(CndMessages.deleteSuperTypeMenuText, this.deleteSuperType));
@@ -658,7 +639,7 @@ class CndFormsEditorPage extends CndEditorPage {
         ((GridData)table.getLayoutData()).heightHint = table.getItemHeight() * 5;
 
         // table context menu
-        MenuManager menuManager = new MenuManager();
+        final MenuManager menuManager = new MenuManager();
         menuManager.add(new DelegateAction(CndMessages.addNamespaceMenuText, this.addNamespace));
         menuManager.add(new DelegateAction(CndMessages.editNamespaceMenuText, this.editNamespace));
         menuManager.add(new DelegateAction(CndMessages.deleteNamespaceMenuText, this.deleteNamespace));
@@ -819,22 +800,6 @@ class CndFormsEditorPage extends CndEditorPage {
         this.deleteNodeType.setEnabled(false);
         this.deleteNodeType.setToolTipText(CndMessages.deleteNodeTypeToolTip);
         this.deleteNodeType.setImageDescriptor(JcrUiUtils.getDeleteImageDescriptor());
-
-        this.editNodeType = new Action(Utils.EMPTY_STRING) {
-
-            /**
-             * {@inheritDoc}
-             * 
-             * @see org.eclipse.jface.action.Action#run()
-             */
-            @Override
-            public void run() {
-                handleEditNodeType();
-            }
-        };
-        this.editNodeType.setEnabled(false);
-        this.editNodeType.setToolTipText(CndMessages.editNodeTypeToolTip);
-        this.editNodeType.setImageDescriptor(JcrUiUtils.getEditImageDescriptor());
     }
 
     @SuppressWarnings("unused")
@@ -851,7 +816,7 @@ class CndFormsEditorPage extends CndEditorPage {
         createNodeTypeActions();
 
         // create toolbar
-        FormUtils.createSectionToolBar(section, toolkit, new IAction[] { this.addNodeType, this.editNodeType, this.deleteNodeType });
+        FormUtils.createSectionToolBar(section, toolkit, new IAction[] { this.addNodeType, this.deleteNodeType });
 
         // splitter has node type table on left and node type detail, properties, and child nodes on right
         final SashForm splitter = new SashForm(section, SWT.HORIZONTAL);
@@ -896,9 +861,8 @@ class CndFormsEditorPage extends CndEditorPage {
             table.setLinesVisible(false);
 
             // table context menu
-            MenuManager menuManager = new MenuManager();
+            final MenuManager menuManager = new MenuManager();
             menuManager.add(new DelegateAction(CndMessages.addNodeTypeMenuText, this.addNodeType));
-            menuManager.add(new DelegateAction(CndMessages.editNodeTypeMenuText, this.editNodeType));
             menuManager.add(new DelegateAction(CndMessages.deleteNodeTypeMenuText, this.deleteNodeType));
             table.setMenu(menuManager.createContextMenu(table));
 
@@ -978,20 +942,6 @@ class CndFormsEditorPage extends CndEditorPage {
                                       final Object oldInput,
                                       final Object newInput ) {
                 // nothing to do
-            }
-        });
-
-        // open edit namespace on double click
-        this.nodeTypeViewer.addDoubleClickListener(new IDoubleClickListener() {
-
-            /**
-             * {@inheritDoc}
-             * 
-             * @see org.eclipse.jface.viewers.IDoubleClickListener#doubleClick(org.eclipse.jface.viewers.DoubleClickEvent)
-             */
-            @Override
-            public void doubleClick( final DoubleClickEvent event ) {
-                handleEditNodeType();
             }
         });
 
@@ -1140,7 +1090,7 @@ class CndFormsEditorPage extends CndEditorPage {
         ((GridData)table.getLayoutData()).heightHint = table.getItemHeight() * 5;
 
         // table context menu
-        MenuManager menuManager = new MenuManager();
+        final MenuManager menuManager = new MenuManager();
         menuManager.add(new DelegateAction(CndMessages.addPropertyMenuText, this.addProperty));
         menuManager.add(new DelegateAction(CndMessages.editPropertyMenuText, this.editProperty));
         menuManager.add(new DelegateAction(CndMessages.deletePropertyMenuText, this.deleteProperty));
@@ -1176,7 +1126,7 @@ class CndFormsEditorPage extends CndEditorPage {
                 final NotationType notationType = NotationType.LONG;
 
                 if (this.columnIndex == PropertyColumnIndexes.TYPE) {
-                    return propertyDefinition.getType().toCndNotation(notationType);
+                    return propertyDefinition.getType().toString();
                 }
 
                 if (this.columnIndex == PropertyColumnIndexes.ATTRIBUTES) {
@@ -1184,7 +1134,13 @@ class CndFormsEditorPage extends CndEditorPage {
                 }
 
                 if (this.columnIndex == PropertyColumnIndexes.DEFAULT_VALUES) {
-                    return propertyDefinition.getType().toCndNotation(NotationType.LONG);
+                    final List<String> defaultValues = propertyDefinition.getDefaultValuesAsStrings();
+
+                    if (Utils.isEmpty(defaultValues)) {
+                        return Utils.EMPTY_STRING;
+                    }
+
+                    return UiUtils.join(defaultValues, null);
                 }
 
                 assert (this.columnIndex == PropertyColumnIndexes.CONSTRAINTS) : "Unexpected property column index"; //$NON-NLS-1$
@@ -1432,6 +1388,25 @@ class CndFormsEditorPage extends CndEditorPage {
         });
     }
 
+    Collection<QualifiedName> getChildNodeNames() {
+        assert (getSelectedNodeType() != null) : "getChildNodeNames called but no selected node type"; //$NON-NLS-1$
+        final Collection<ChildNodeDefinition> childNodes = getSelectedNodeType().getChildNodeDefinitions();
+
+        if (childNodes.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        final Collection<QualifiedName> childNodeNames = new ArrayList<QualifiedName>(childNodes.size());
+
+        for (final ChildNodeDefinition childNode : childNodes) {
+            if (!Utils.isEmpty(childNode.getName())) {
+                childNodeNames.add(childNode.getQualifiedName());
+            }
+        }
+
+        return childNodeNames;
+    }
+
     private List<String> getNamespacePrefixes() {
         final List<NamespaceMapping> namespaces = getCnd().getNamespaceMappings();
 
@@ -1453,6 +1428,43 @@ class CndFormsEditorPage extends CndEditorPage {
      */
     String getNodeTypeNameFilterPattern() {
         return this.nodeTypeNameFilterPattern;
+    }
+
+    Collection<QualifiedName> getNodeTypeNames() {
+        final Collection<NodeTypeDefinition> nodeTypes = getCnd().getNodeTypeDefinitions();
+
+        if (nodeTypes.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        final Collection<QualifiedName> nodeTypeNames = new ArrayList<QualifiedName>(nodeTypes.size());
+
+        for (final NodeTypeDefinition nodeType : nodeTypes) {
+            if (!Utils.isEmpty(nodeType.getName())) {
+                nodeTypeNames.add(nodeType.getQualifiedName());
+            }
+        }
+
+        return nodeTypeNames;
+    }
+
+    Collection<QualifiedName> getPropertyNames() {
+        assert (getSelectedNodeType() != null) : "getPropertyNames called but no selected node type"; //$NON-NLS-1$
+        final Collection<PropertyDefinition> propDefns = getSelectedNodeType().getPropertyDefinitions();
+
+        if (propDefns.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        final Collection<QualifiedName> propDefnNames = new ArrayList<QualifiedName>(propDefns.size());
+
+        for (final PropertyDefinition propDefn : propDefns) {
+            if (!Utils.isEmpty(propDefn.getName())) {
+                propDefnNames.add(propDefn.getQualifiedName());
+            }
+        }
+
+        return propDefnNames;
     }
 
     /**
@@ -1534,38 +1546,22 @@ class CndFormsEditorPage extends CndEditorPage {
         getSelectedNodeType().setAbstract(newValue);
     }
 
-    Collection<QualifiedName> getChildNodeNames() {
-        assert (getSelectedNodeType() != null) : "Add child node handler called but no selected node type"; //$NON-NLS-1$
-        Collection<ChildNodeDefinition> childNodes = getSelectedNodeType().getChildNodeDefinitions();
-
-        if (childNodes.isEmpty()) {
-            return Collections.emptyList();
-        }
-
-        Collection<QualifiedName> childNodeNames = new ArrayList<QualifiedName>(childNodes.size());
-
-        for (ChildNodeDefinition childNode : childNodes) {
-            if (!Utils.isEmpty(childNode.getName())) {
-                childNodeNames.add(childNode.getQualifiedName());
-            }
-        }
-
-        return childNodeNames;
-    }
-
     void handleAddChildNode() {
         assert (getSelectedNodeType() != null) : "add child node handler called but there is no selected node type"; //$NON-NLS-1$
 
-        ChildNodeDialog dialog = new ChildNodeDialog(getShell(), getChildNodeNames(), getNamespacePrefixes());
+        final ChildNodeDialog dialog = new ChildNodeDialog(getShell(), getChildNodeNames(), getNamespacePrefixes());
         dialog.create();
         dialog.getShell().pack();
 
         if (dialog.open() == Window.OK) {
-            ChildNodeDefinition newChildNodeDefinition = dialog.getChildNodeDefinition();
+            final ChildNodeDefinition newChildNodeDefinition = dialog.getChildNodeDefinition();
 
-            // select new child node definition
+            // add and select new child node definition
             if (getSelectedNodeType().addChildNodeDefinition(newChildNodeDefinition)) {
                 this.childNodeViewer.setSelection(new StructuredSelection(newChildNodeDefinition));
+            } else {
+                MessageFormDialog.openError(getShell(), UiMessages.errorDialogTitle, JcrUiUtils.getCndEditorImage(),
+                                            NLS.bind(CndMessages.errorAddingChildNode, newChildNodeDefinition.getName()));
             }
         }
     }
@@ -1576,25 +1572,59 @@ class CndFormsEditorPage extends CndEditorPage {
         dialog.getShell().pack();
 
         if (dialog.open() == Window.OK) {
-            final NamespaceMapping namespaceMapping = dialog.getNamespaceMapping();
+            final NamespaceMapping newNamespaceMapping = dialog.getNamespaceMapping();
 
-            if (getCnd().addNamespaceMapping(namespaceMapping)) {
-                this.namespaceViewer.refresh();
+            if (getCnd().addNamespaceMapping(newNamespaceMapping)) {
+                this.namespaceViewer.setSelection(new StructuredSelection(newNamespaceMapping));
             } else {
                 MessageFormDialog.openError(getShell(), UiMessages.errorDialogTitle, JcrUiUtils.getCndEditorImage(),
-                                            NLS.bind(CndMessages.errorAddingNamespaceMapping, namespaceMapping));
+                                            NLS.bind(CndMessages.errorAddingNamespaceMapping, newNamespaceMapping));
             }
         }
     }
 
     void handleAddNodeType() {
-        // TODO handleAddNodeType
-        MessageFormDialog.openInfo(getShell(), "Not Implemented Yet", null, "method has not be implemented"); //$NON-NLS-1$ //$NON-NLS-2$
+        final QualifiedNameDialog dialog = new QualifiedNameDialog(getShell(),
+                                                                   CndMessages.newNodeTypeDialogTitle,
+                                                                   Messages.nodeTypeDefinitionName,
+                                                                   getNamespacePrefixes());
+        dialog.setExistingQNames(getNodeTypeNames());
+        dialog.create();
+        dialog.getShell().pack();
+
+        if (dialog.open() == Window.OK) {
+            final QualifiedName newNodeTypeName = dialog.getQualifiedName();
+            final NodeTypeDefinition newNodeTypeDefinition = new NodeTypeDefinition();
+            newNodeTypeDefinition.setName(newNodeTypeName.get());
+
+            // add and select new node type definition
+            if (getCnd().addNodeTypeDefinition(newNodeTypeDefinition)) {
+                this.nodeTypeViewer.setSelection(new StructuredSelection(newNodeTypeDefinition));
+            } else {
+                MessageFormDialog.openError(getShell(), UiMessages.errorDialogTitle, JcrUiUtils.getCndEditorImage(),
+                                            NLS.bind(CndMessages.errorAddingNodeType, newNodeTypeName));
+            }
+        }
     }
 
     void handleAddProperty() {
-        // TODO handleAddProperty
-        MessageFormDialog.openInfo(getShell(), "Not Implemented Yet", null, "method has not be implemented"); //$NON-NLS-1$ //$NON-NLS-2$
+        assert (getSelectedNodeType() != null) : "add property handler called but there is no selected node type"; //$NON-NLS-1$
+
+        final PropertyDialog dialog = new PropertyDialog(getShell(), getPropertyNames(), getNamespacePrefixes());
+        dialog.create();
+        dialog.getShell().pack();
+
+        if (dialog.open() == Window.OK) {
+            final PropertyDefinition newPropertyDefinition = dialog.getPropertyDefinition();
+
+            // add and select new property definition
+            if (getSelectedNodeType().addPropertyDefinition(newPropertyDefinition)) {
+                this.propertyViewer.setSelection(new StructuredSelection(newPropertyDefinition));
+            } else {
+                MessageFormDialog.openError(getShell(), UiMessages.errorDialogTitle, JcrUiUtils.getCndEditorImage(),
+                                            NLS.bind(CndMessages.errorAddingProperty, newPropertyDefinition.getName()));
+            }
+        }
     }
 
     void handleAddSuperType() {
@@ -1610,13 +1640,14 @@ class CndFormsEditorPage extends CndEditorPage {
 
         if (dialog.open() == Window.OK) {
             final NodeTypeDefinition nodeTypeDefinition = getSelectedNodeType();
-            final QualifiedName newQName = dialog.getQualifiedName();
+            final QualifiedName newSupertype = dialog.getQualifiedName();
 
-            if (nodeTypeDefinition.addSuperType(newQName.get())) {
-                this.superTypesViewer.refresh();
+            // add and select new supertype
+            if (nodeTypeDefinition.addSuperType(newSupertype.get())) {
+                this.superTypesViewer.setSelection(new StructuredSelection(newSupertype.get()));
             } else {
                 MessageFormDialog.openError(getShell(), UiMessages.errorDialogTitle, JcrUiUtils.getCndEditorImage(),
-                                            NLS.bind(CndMessages.errorAddingSupertype, newQName));
+                                            NLS.bind(CndMessages.errorAddingSupertype, newSupertype));
             }
         }
     }
@@ -1671,7 +1702,10 @@ class CndFormsEditorPage extends CndEditorPage {
         // show confirmation dialog
         if (MessageFormDialog.openQuestion(getShell(), CndMessages.deleteChildNodeDialogTitle, JcrUiUtils.getCndEditorImage(),
                                            NLS.bind(CndMessages.deleteChildNodeDialogMessage, name))) {
-            getSelectedNodeType().removeChildNodeDefinition(childNodeDefinition);
+            if (!getSelectedNodeType().removeChildNodeDefinition(childNodeDefinition)) {
+                MessageFormDialog.openError(getShell(), UiMessages.errorDialogTitle, JcrUiUtils.getCndEditorImage(),
+                                            NLS.bind(CndMessages.errorDeletingChildNode, name));
+            }
         }
     }
 
@@ -1688,7 +1722,10 @@ class CndFormsEditorPage extends CndEditorPage {
         // show confirmation dialog
         if (MessageFormDialog.openQuestion(getShell(), CndMessages.deleteNamespaceDialogTitle, JcrUiUtils.getCndEditorImage(),
                                            NLS.bind(CndMessages.deleteNamespaceDialogMessage, prefix))) {
-            getCnd().removeNamespaceMapping(namespaceMapping);
+            if (!getCnd().removeNamespaceMapping(namespaceMapping)) {
+                MessageFormDialog.openError(getShell(), UiMessages.errorDialogTitle, JcrUiUtils.getCndEditorImage(),
+                                            NLS.bind(CndMessages.errorDeletingNamespace, prefix));
+            }
         }
     }
 
@@ -1705,7 +1742,10 @@ class CndFormsEditorPage extends CndEditorPage {
         // show confirmation dialog
         if (MessageFormDialog.openQuestion(getShell(), CndMessages.deleteNodeTypeDialogTitle, JcrUiUtils.getCndEditorImage(),
                                            NLS.bind(CndMessages.deleteNodeTypeDialogMessage, name))) {
-            getCnd().removeNodeTypeDefinition(nodeTypeDefinition);
+            if (!getCnd().removeNodeTypeDefinition(nodeTypeDefinition)) {
+                MessageFormDialog.openError(getShell(), UiMessages.errorDialogTitle, JcrUiUtils.getCndEditorImage(),
+                                            NLS.bind(CndMessages.errorDeletingNodeType, name));
+            }
         }
     }
 
@@ -1723,7 +1763,10 @@ class CndFormsEditorPage extends CndEditorPage {
         // show confirmation dialog
         if (MessageFormDialog.openQuestion(getShell(), CndMessages.deletePropertyDialogTitle, JcrUiUtils.getCndEditorImage(),
                                            NLS.bind(CndMessages.deletePropertyDialogMessage, name))) {
-            getSelectedNodeType().removePropertyDefinition(propertyDefinition);
+            if (!getSelectedNodeType().removePropertyDefinition(propertyDefinition)) {
+                MessageFormDialog.openError(getShell(), UiMessages.errorDialogTitle, JcrUiUtils.getCndEditorImage(),
+                                            NLS.bind(CndMessages.errorDeletingProperty, name));
+            }
         }
     }
 
@@ -1741,7 +1784,10 @@ class CndFormsEditorPage extends CndEditorPage {
         // show confirmation dialog
         if (MessageFormDialog.openQuestion(getShell(), CndMessages.deleteSuperTypeDialogTitle, JcrUiUtils.getCndEditorImage(),
                                            NLS.bind(CndMessages.deleteSuperTypeDialogMessage, superTypeName))) {
-            getSelectedNodeType().removeSuperType(superTypeName);
+            if (!getSelectedNodeType().removeSuperType(superTypeName)) {
+                MessageFormDialog.openError(getShell(), UiMessages.errorDialogTitle, JcrUiUtils.getCndEditorImage(),
+                                            NLS.bind(CndMessages.errorDeletingSupertype, superTypeName));
+            }
         }
     }
 
@@ -1749,16 +1795,35 @@ class CndFormsEditorPage extends CndEditorPage {
         assert (getSelectedNodeType() != null) : "edit child node handler called but there is no selected node type"; //$NON-NLS-1$
         assert (getSelectedChildNode() != null) : "edit child node handler has been called when there is no child node selected"; //$NON-NLS-1$
 
-        ChildNodeDefinition childNodeBeingEdited = getSelectedChildNode();
-        ChildNodeDialog dialog = new ChildNodeDialog(getShell(), getChildNodeNames(), getNamespacePrefixes(), childNodeBeingEdited);
+        final ChildNodeDefinition childNodeBeingEdited = getSelectedChildNode();
+        final ChildNodeDialog dialog = new ChildNodeDialog(getShell(),
+                                                           getChildNodeNames(),
+                                                           getNamespacePrefixes(),
+                                                           childNodeBeingEdited);
         dialog.create();
         dialog.getShell().pack();
 
         if (dialog.open() == Window.OK) {
-            NodeTypeDefinition nodeTypeDefinition = getSelectedNodeType();
-            ChildNodeDefinition newChildNodeDefinition = dialog.getChildNodeDefinition();
-            nodeTypeDefinition.removeChildNodeDefinition(childNodeBeingEdited);
-            nodeTypeDefinition.addChildNodeDefinition(newChildNodeDefinition);
+            final NodeTypeDefinition nodeTypeDefinition = getSelectedNodeType();
+            final ChildNodeDefinition newChildNodeDefinition = dialog.getChildNodeDefinition();
+            boolean removed = false;
+            boolean added = false;
+
+            if (nodeTypeDefinition.removeChildNodeDefinition(childNodeBeingEdited)) {
+                removed = true;
+
+                if (nodeTypeDefinition.addChildNodeDefinition(newChildNodeDefinition)) {
+                    added = true;
+                }
+            }
+
+            if (!removed || !added) {
+                MessageFormDialog.openError(getShell(),
+                                            UiMessages.errorDialogTitle,
+                                            JcrUiUtils.getCndEditorImage(),
+                                            NLS.bind(CndMessages.errorEditingChildNode,
+                                                     new Object[] { childNodeBeingEdited.getName(), removed, added }));
+            }
         }
     }
 
@@ -1797,16 +1862,40 @@ class CndFormsEditorPage extends CndEditorPage {
         }
     }
 
-    void handleEditNodeType() {
-        assert (getSelectedNodeType() != null) : "Edit node type handler has been called when there is no node type selected"; //$NON-NLS-1$
-        // TODO handleEditNodeType
-        MessageFormDialog.openInfo(getShell(), "Not Implemented Yet", null, "method has not be implemented"); //$NON-NLS-1$ //$NON-NLS-2$
-    }
-
     void handleEditProperty() {
+        assert (getSelectedNodeType() != null) : "Edit property handler called but there is no selected node type"; //$NON-NLS-1$
         assert (getSelectedProperty() != null) : "Edit property handler has been called when there is no property selected"; //$NON-NLS-1$
-        // TODO handleEditProperty
-        MessageFormDialog.openInfo(getShell(), "Not Implemented Yet", null, "method has not be implemented"); //$NON-NLS-1$ //$NON-NLS-2$
+
+        final PropertyDefinition propertyBeingEdited = getSelectedProperty();
+        final PropertyDialog dialog = new PropertyDialog(getShell(),
+                                                         getPropertyNames(),
+                                                         getNamespacePrefixes(),
+                                                         propertyBeingEdited);
+        dialog.create();
+        dialog.getShell().pack();
+
+        if (dialog.open() == Window.OK) {
+            final NodeTypeDefinition nodeTypeDefinition = getSelectedNodeType();
+            final PropertyDefinition newPropertyDefinition = dialog.getPropertyDefinition();
+            boolean removed = false;
+            boolean added = false;
+
+            if (nodeTypeDefinition.removePropertyDefinition(propertyBeingEdited)) {
+                removed = true;
+
+                if (nodeTypeDefinition.addPropertyDefinition(newPropertyDefinition)) {
+                    added = true;
+                }
+            }
+
+            if (!removed || !added) {
+                MessageFormDialog.openError(getShell(),
+                                            UiMessages.errorDialogTitle,
+                                            JcrUiUtils.getCndEditorImage(),
+                                            NLS.bind(CndMessages.errorEditingProperty, new Object[] {
+                                                    propertyBeingEdited.getName(), removed, added }));
+            }
+        }
     }
 
     void handleEditSuperType() {
@@ -1851,23 +1940,6 @@ class CndFormsEditorPage extends CndEditorPage {
         getSelectedNodeType().setMixin(newValue);
     }
 
-    /**
-     * @param newQualifier the new node type definition qualifier/prefix (can be <code>null</code> or empty
-     */
-    protected void handleNameQualifierChanged( String newQualifier ) {
-        if (!Utils.isEmpty(newQualifier) && (getSelectedNodeType() != null)) {
-            final String name = this.txtName.getText();
-
-            // if prefix indicates no qualifier should be used just use the name otherwise use prefix and name
-            if (CndMessages.noNameQualifierChoice.equals(newQualifier)) {
-                newQualifier = Utils.EMPTY_STRING;
-            }
-
-            final String newName = new QualifiedName(newQualifier, name).get();
-            getSelectedNodeType().setName(newName);
-        }
-    }
-
     void handleNamespaceSelected() {
         // update button enablements
         final boolean enable = (getSelectedNamespace() != null);
@@ -1885,15 +1957,7 @@ class CndFormsEditorPage extends CndEditorPage {
 
     void handleNodeTypeNameChanged( final String newNodeTypeName ) {
         if (getSelectedNodeType() != null) {
-            String qualifier = this.cbxNamePrefix.getText();
-
-            // if prefix indicates no qualifier should be used just use the name otherwise use prefix and name
-            if (CndMessages.noNameQualifierChoice.equals(qualifier)) {
-                qualifier = Utils.EMPTY_STRING;
-            }
-
-            final String newName = new QualifiedName(qualifier, newNodeTypeName).get();
-            getSelectedNodeType().setName(newName);
+            getSelectedNodeType().setName(newNodeTypeName);
         }
     }
 
@@ -1917,22 +1981,10 @@ class CndFormsEditorPage extends CndEditorPage {
                 name = Messages.missingName;
             }
 
+            this.nameEditor.setNameBeingEdited(getSelectedNodeType().getQualifiedName());
             this.detailsSection.setDescription(NLS.bind(CndMessages.cndEditorChildNodeSectionDescriptionWithNodeTypeName, name));
             this.propertiesSection.setDescription(NLS.bind(CndMessages.cndEditorChildNodeSectionDescriptionWithNodeTypeName, name));
             this.childNodeSection.setDescription(NLS.bind(CndMessages.cndEditorPropertySectionDescriptionWithNodeTypeName, name));
-        }
-
-        // update button enablements
-        final boolean enable = (getSelectedNodeType() != null);
-
-        // this.addNodeType always enabled
-
-        if (this.editNodeType.isEnabled() != enable) {
-            this.editNodeType.setEnabled(enable);
-        }
-
-        if (this.deleteNodeType.isEnabled() != enable) {
-            this.deleteNodeType.setEnabled(enable);
         }
 
         // populate details section
@@ -1959,27 +2011,34 @@ class CndFormsEditorPage extends CndEditorPage {
             return;
         }
 
-        // TODO implement handlePropertyChanged
+        final Object source = e.getSource();
         final String propName = e.getPropertyName();
 
-        if (NodeTypeDefinition.PropertyName.ABSTRACT.toString().equals(propName)) {
-
-        } else if (NodeTypeDefinition.PropertyName.CHILD_NODES.toString().equals(propName)) {
-
-        } else if (NodeTypeDefinition.PropertyName.MIXIN.toString().equals(propName)) {
-
-        } else if (NodeTypeDefinition.PropertyName.NAME.toString().equals(propName)) {
-
-        } else if (NodeTypeDefinition.PropertyName.ORDERABLE.toString().equals(propName)) {
-
-        } else if (NodeTypeDefinition.PropertyName.PRIMARY_ITEM.toString().equals(propName)) {
-            // TODO primary item has not been code for in this class yet
-        } else if (NodeTypeDefinition.PropertyName.PROPERTY_DEFINITIONS.toString().equals(propName)) {
-
-        } else if (NodeTypeDefinition.PropertyName.QUERYABLE.toString().equals(propName)) {
-
-        } else if (NodeTypeDefinition.PropertyName.SUPERTYPES.toString().equals(propName)) {
-
+        if (source instanceof NodeTypeDefinition) {
+            if (NodeTypeDefinition.PropertyName.ABSTRACT.toString().equals(propName)
+                    || NodeTypeDefinition.PropertyName.MIXIN.toString().equals(propName)
+                    || NodeTypeDefinition.PropertyName.ORDERABLE.toString().equals(propName)
+                    || NodeTypeDefinition.PropertyName.QUERYABLE.toString().equals(propName)
+                    || NodeTypeDefinition.PropertyName.PRIMARY_ITEM.toString().equals(propName)) {
+                validateAttributes();
+            } else if (NodeTypeDefinition.PropertyName.CHILD_NODES.toString().equals(propName)) {
+                validateChildNodes();
+                this.childNodeViewer.refresh();
+            } else if (NodeTypeDefinition.PropertyName.NAME.toString().equals(propName)) {
+                validateName();
+            } else if (NodeTypeDefinition.PropertyName.PROPERTY_DEFINITIONS.toString().equals(propName)) {
+                validateProperties();
+                this.propertyViewer.refresh();
+            } else if (NodeTypeDefinition.PropertyName.SUPERTYPES.toString().equals(propName)) {
+                validateSuperTypes();
+                this.superTypesViewer.refresh();
+            }
+        } else if (source instanceof NamespaceMapping) {
+            this.namespaceViewer.refresh(source);
+        } else if (source instanceof PropertyDefinition) {
+            this.propertyViewer.refresh(source);
+        } else if (source instanceof ChildNodeDefinition) {
+            this.childNodeViewer.refresh(source);
         }
     }
 
@@ -2078,60 +2137,20 @@ class CndFormsEditorPage extends CndEditorPage {
         if (this.childNodeViewer != null) {
             this.childNodeViewer.setInput(this);
             UiUtils.pack(this.childNodeViewer);
-            validateChildNodeDefinitions();
+            validateChildNodes();
         }
     }
 
     private void refreshNameControls() {
         final NodeTypeDefinition nodeTypeDefinition = getSelectedNodeType();
 
-        if ((nodeTypeDefinition == null) || Utils.isEmpty(nodeTypeDefinition.getName())) {
-            this.cbxNamePrefix.removeAll();
-            this.txtName.setText(Utils.EMPTY_STRING);
+        if (nodeTypeDefinition == null) {
+            this.nameEditor.setNameBeingEdited(null);
         } else {
-            // load qualifiers with namespace prefixes
-            final List<NamespaceMapping> namespaceMappings = getCnd().getNamespaceMappings();
-            final List<String> prefixes = new ArrayList<String>(namespaceMappings.size() + 1); // add one for empty qualifier
-            prefixes.add(CndMessages.noNameQualifierChoice);
-
-            for (final NamespaceMapping namespaceMapping : namespaceMappings) {
-                prefixes.add(namespaceMapping.getPrefix());
-            }
-
-            // set qualifier choices if they have changed
-            final String[] currentItems = this.cbxNamePrefix.getItems();
-
-            // only reload qualifiers if different
-            if ((prefixes.size() != currentItems.length) || !prefixes.containsAll(Arrays.asList(currentItems))) {
-                this.cbxNamePrefix.setItems(prefixes.toArray(new String[prefixes.size()]));
-            }
-
-            // load name
-            final String name = nodeTypeDefinition.getName();
-            final QualifiedName qname = QualifiedName.parse(name);
-
-            // set qualifier
-            final String qualifier = ((qname.getQualifier() == null) ? Utils.EMPTY_STRING : qname.getQualifier());
-
-            if (!Utils.isEmpty(qualifier)) {
-                int index = this.cbxNamePrefix.indexOf(qualifier);
-
-                if (index == -1) {
-                    index = this.cbxNamePrefix.getItemCount();
-                    this.cbxNamePrefix.add(qualifier);
-                    this.cbxNamePrefix.select(index);
-                } else if (this.cbxNamePrefix.getSelectionIndex() != index) { // only select if currently not selected
-                    this.cbxNamePrefix.select(index);
-                }
-            }
-
-            // set unqualified name
-            final String unqualifiedName = ((qname.getUnqualifiedName() == null) ? Utils.EMPTY_STRING : qname.getUnqualifiedName());
-
-            // only set text field if different
-            if (!this.txtName.getText().equals(unqualifiedName)) {
-                this.txtName.setText(unqualifiedName);
-            }
+            // load name editor with current namespace prefixes, current node type names, and selected node type name
+            this.nameEditor.setNameBeingEdited(nodeTypeDefinition.getQualifiedName());
+            this.nameEditor.setValidQualifiers(getNamespacePrefixes());
+            this.nameEditor.setExistingQNames(getNodeTypeNames());
         }
     }
 
@@ -2168,7 +2187,7 @@ class CndFormsEditorPage extends CndEditorPage {
      */
     @Override
     protected void updateAllMessages() {
-        validateChildNodeDefinitions();
+        validateChildNodes();
         validateNamespaces();
         validateNodeTypes();
         validateProperties();
@@ -2212,22 +2231,14 @@ class CndFormsEditorPage extends CndEditorPage {
                 this.nodeTypeViewer.getTable().setEnabled(cndWritable);
             }
 
-            if (this.editNodeType.isEnabled() != enableWithNodeTypeSelected) {
-                this.editNodeType.setEnabled(enableWithNodeTypeSelected);
-            }
-
             if (this.deleteNodeType.isEnabled() != enableWithNodeTypeSelected) {
                 this.deleteNodeType.setEnabled(enableWithNodeTypeSelected);
             }
         }
 
         { // details section
-            if (this.cbxNamePrefix.isEnabled() != enableWithNodeTypeSelected) {
-                this.cbxNamePrefix.setEnabled(enableWithNodeTypeSelected);
-            }
-
-            if (this.txtName.isEnabled() != enableWithNodeTypeSelected) {
-                this.txtName.setEnabled(enableWithNodeTypeSelected);
+            if (this.nameEditor.isEnabled() != enableWithNodeTypeSelected) {
+                this.nameEditor.setEnabled(enableWithNodeTypeSelected);
             }
 
             if (this.btnAbstract.isEnabled() != enableWithNodeTypeSelected) {
@@ -2306,24 +2317,56 @@ class CndFormsEditorPage extends CndEditorPage {
         }
     }
 
-    private void validateChildNodeDefinitions() {
+    private void updateMessage( final ValidationStatus status,
+                                final ErrorMessage errorMessage ) {
+        final IMessageManager msgMgr = getCndEditor().getMessageManager();
+        JcrUiUtils.setMessage(status, errorMessage);
+
+        if (errorMessage.isOk()) {
+            if (errorMessage.getControl() == null) {
+                msgMgr.removeMessage(errorMessage.getKey());
+            } else {
+                msgMgr.removeMessage(errorMessage.getKey(), errorMessage.getControl());
+            }
+        } else {
+            if (errorMessage.getControl() == null) {
+                msgMgr.addMessage(errorMessage.getKey(), errorMessage.getMessage(), errorMessage.getData(),
+                                  errorMessage.getMessageType());
+            } else {
+                msgMgr.addMessage(errorMessage.getKey(), errorMessage.getMessage(), errorMessage.getData(),
+                                  errorMessage.getMessageType(), errorMessage.getControl());
+            }
+        }
+    }
+
+    private void validateAttributes() {
+        // TODO primary item
+    }
+
+    private void validateChildNodes() {
         final NodeTypeDefinition nodeTypeDefinition = getSelectedNodeType();
 
         if (nodeTypeDefinition == null) {
             this.nodeTypesError.setOkMessage(null);
         } else {
-            // CndValidator.validateChildNodeDefinitions(nodeTypeDefinition.getChildNodeDefinitions());
+            final MultiValidationStatus status = CndValidator.validateChildNodeDefinitions(nodeTypeDefinition.getName(),
+                                                                                           nodeTypeDefinition.getChildNodeDefinitions());
+            updateMessage(status, this.nodeTypesError);
         }
+    }
+
+    private void validateName() {
+        updateMessage(this.nameEditor.getStatus(), this.nodeTypeNameError);
     }
 
     private void validateNamespaces() {
         final MultiValidationStatus status = CndValidator.validateNamespaceMappings(getCnd().getNamespaceMappings());
-        JcrUiUtils.setMessage(status, this.namespacesError);
+        updateMessage(status, this.namespacesError);
     }
 
     private void validateNodeTypes() {
         final MultiValidationStatus status = CndValidator.validateNodeTypeDefinitions(getCnd().getNodeTypeDefinitions());
-        JcrUiUtils.setMessage(status, this.nodeTypesError);
+        updateMessage(status, this.nodeTypesError);
     }
 
     private void validateProperties() {
@@ -2334,7 +2377,7 @@ class CndFormsEditorPage extends CndEditorPage {
         } else {
             final MultiValidationStatus status = CndValidator.validatePropertyDefinitions(nodeTypeDefinition.getName(),
                                                                                           nodeTypeDefinition.getPropertyDefinitions());
-            JcrUiUtils.setMessage(status, this.propertiesError);
+            updateMessage(status, this.propertiesError);
         }
     }
 
@@ -2353,7 +2396,7 @@ class CndFormsEditorPage extends CndEditorPage {
             final MultiValidationStatus status = CndValidator.validateSuperTypes(nodeTypeName,
                                                                                  nodeTypeDefinition.getState(PropertyName.SUPERTYPES),
                                                                                  nodeTypeDefinition.getDeclaredSupertypeNames());
-            JcrUiUtils.setMessage(status, this.superTypesError);
+            updateMessage(status, this.superTypesError);
         }
     }
 

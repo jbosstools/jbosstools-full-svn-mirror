@@ -314,7 +314,17 @@ public class CompactNodeTypeDefinition implements CndElement {
         /**
          * The node type definitions property.
          */
-        NODE_TYPE_DEFINITIONS
+        NODE_TYPE_DEFINITIONS;
+
+        /**
+         * {@inheritDoc}
+         * 
+         * @see java.lang.Enum#toString()
+         */
+        @Override
+        public String toString() {
+            return (getClass().getSimpleName() + super.toString());
+        }
     }
 
 }

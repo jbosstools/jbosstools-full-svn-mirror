@@ -10,6 +10,8 @@ package org.jboss.tools.modeshape.jcr.cnd;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.jcr.PropertyType;
+
 import org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType;
 import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences.Preference;
 import org.jboss.tools.modeshape.jcr.cnd.attributes.Abstract;
@@ -25,6 +27,7 @@ import org.jboss.tools.modeshape.jcr.cnd.attributes.NoFullText;
 import org.jboss.tools.modeshape.jcr.cnd.attributes.NoQueryOrder;
 import org.jboss.tools.modeshape.jcr.cnd.attributes.Orderable;
 import org.jboss.tools.modeshape.jcr.cnd.attributes.PrimaryItem;
+import org.jboss.tools.modeshape.jcr.cnd.attributes.PropertyValue;
 import org.jboss.tools.modeshape.jcr.cnd.attributes.Protected;
 import org.jboss.tools.modeshape.jcr.cnd.attributes.QueryOperators;
 import org.jboss.tools.modeshape.jcr.cnd.attributes.QueryOperators.QueryOperator;
@@ -215,24 +218,27 @@ public interface Constants {
             + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER) + QUALIFIED_NAME2
             + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER) + QUALIFIED_NAME3;
 
+    String VALUE_CONSTRAINT1 = "(19|20)\\d{2}"; //$NON-NLS-1$
+    String VALUE_CONSTRAINT2 = "[$]\\d{1,3}[,]?\\d{3}([.]\\d{2})?"; //$NON-NLS-1$
+    String VALUE_CONSTRAINT3 = "[1,5]"; //$NON-NLS-1$
     String VALUE_CONSTRAINTS_VARIANT = ValueConstraints.NOTATION_PREFIX
             + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_PREFIX_END_DELIMITER) + VARIANT;
     String VALUE_CONSTRAINTS_ONE_ITEM_FORM = ValueConstraints.NOTATION_PREFIX
             + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_PREFIX_END_DELIMITER)
             + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_QUOTE_CHAR)
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.VALUE_CONSTRAINTS_ITEM_QUOTE_CHARACTER) + ITEM_ONE
+            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.VALUE_CONSTRAINTS_ITEM_QUOTE_CHARACTER) + VALUE_CONSTRAINT1
             + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.VALUE_CONSTRAINTS_ITEM_QUOTE_CHARACTER)
             + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_QUOTE_CHAR);
     String VALUE_CONSTRAINTS_THREE_ITEM_FORM = ValueConstraints.NOTATION_PREFIX
             + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_PREFIX_END_DELIMITER)
             + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_QUOTE_CHAR)
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.VALUE_CONSTRAINTS_ITEM_QUOTE_CHARACTER) + ITEM_ONE
+            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.VALUE_CONSTRAINTS_ITEM_QUOTE_CHARACTER) + VALUE_CONSTRAINT1
             + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.VALUE_CONSTRAINTS_ITEM_QUOTE_CHARACTER)
             + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER)
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.VALUE_CONSTRAINTS_ITEM_QUOTE_CHARACTER) + ITEM_TWO
+            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.VALUE_CONSTRAINTS_ITEM_QUOTE_CHARACTER) + VALUE_CONSTRAINT2
             + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.VALUE_CONSTRAINTS_ITEM_QUOTE_CHARACTER)
             + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER)
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.VALUE_CONSTRAINTS_ITEM_QUOTE_CHARACTER) + ITEM_THREE
+            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.VALUE_CONSTRAINTS_ITEM_QUOTE_CHARACTER) + VALUE_CONSTRAINT3
             + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.VALUE_CONSTRAINTS_ITEM_QUOTE_CHARACTER)
             + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_QUOTE_CHAR);
 
@@ -275,5 +281,17 @@ public interface Constants {
             return qualifiers;
         }
 
+        public static String[] getDefaultQueryOperators() {
+            return new String[] { OPERATOR_ONE.toString(), OPERATOR_TWO.toString(), OPERATOR_THREE.toString() };
+        }
+
+        public static javax.jcr.Value[] getDefaultStringValues() {
+            return new PropertyValue[] { new PropertyValue(PropertyType.STRING, ITEM_ONE),
+                    new PropertyValue(PropertyType.STRING, ITEM_TWO), new PropertyValue(PropertyType.STRING, ITEM_THREE) };
+        }
+
+        public static String[] getDefaultValueConstraints() {
+            return new String[] { VALUE_CONSTRAINT1, VALUE_CONSTRAINT2, VALUE_CONSTRAINT3 };
+        }
     }
 }
