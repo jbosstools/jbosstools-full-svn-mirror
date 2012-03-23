@@ -522,4 +522,56 @@ public class NodeTypeDefinitionTest {
         assertEquals(SUPER_TYPE2, superTypeNames[1]);
         assertEquals(SUPER_TYPE3, superTypeNames[2]);
     }
+
+    @Test
+    public void copiesShouldBeEqualAndHaveSameHashCode() {
+        NodeTypeDefinition thatNodeTypeDefinition = NodeTypeDefinition.copy(this.nodeTypeDefinition);
+        assertEquals(this.nodeTypeDefinition, thatNodeTypeDefinition);
+        assertEquals(this.nodeTypeDefinition.hashCode(), thatNodeTypeDefinition.hashCode());
+        
+        this.nodeTypeDefinition.setName("newName"); //$NON-NLS-1$
+        thatNodeTypeDefinition = NodeTypeDefinition.copy(this.nodeTypeDefinition);
+        assertEquals(this.nodeTypeDefinition, thatNodeTypeDefinition);
+        assertEquals(this.nodeTypeDefinition.hashCode(), thatNodeTypeDefinition.hashCode());
+        
+        this.nodeTypeDefinition.setAbstract(!this.nodeTypeDefinition.isAbstract());
+        thatNodeTypeDefinition = NodeTypeDefinition.copy(this.nodeTypeDefinition);
+        assertEquals(this.nodeTypeDefinition, thatNodeTypeDefinition);
+        assertEquals(this.nodeTypeDefinition.hashCode(), thatNodeTypeDefinition.hashCode());
+        
+        this.nodeTypeDefinition.setMixin(!this.nodeTypeDefinition.isMixin());
+        thatNodeTypeDefinition = NodeTypeDefinition.copy(this.nodeTypeDefinition);
+        assertEquals(this.nodeTypeDefinition, thatNodeTypeDefinition);
+        assertEquals(this.nodeTypeDefinition.hashCode(), thatNodeTypeDefinition.hashCode());
+        
+        this.nodeTypeDefinition.setOrderableChildNodes(!this.nodeTypeDefinition.hasOrderableChildNodes());
+        thatNodeTypeDefinition = NodeTypeDefinition.copy(this.nodeTypeDefinition);
+        assertEquals(this.nodeTypeDefinition, thatNodeTypeDefinition);
+        assertEquals(this.nodeTypeDefinition.hashCode(), thatNodeTypeDefinition.hashCode());
+        
+        this.nodeTypeDefinition.setQueryable(!this.nodeTypeDefinition.isQueryable());
+        thatNodeTypeDefinition = NodeTypeDefinition.copy(this.nodeTypeDefinition);
+        assertEquals(this.nodeTypeDefinition, thatNodeTypeDefinition);
+        assertEquals(this.nodeTypeDefinition.hashCode(), thatNodeTypeDefinition.hashCode());
+        
+        this.nodeTypeDefinition.setPrimaryItemName("newPrimaryItem"); //$NON-NLS-1$
+        thatNodeTypeDefinition = NodeTypeDefinition.copy(this.nodeTypeDefinition);
+        assertEquals(this.nodeTypeDefinition, thatNodeTypeDefinition);
+        assertEquals(this.nodeTypeDefinition.hashCode(), thatNodeTypeDefinition.hashCode());
+
+        this.nodeTypeDefinition.addSuperType(Constants.QUALIFIED_NAME1.get());
+        thatNodeTypeDefinition = NodeTypeDefinition.copy(this.nodeTypeDefinition);
+        assertEquals(this.nodeTypeDefinition, thatNodeTypeDefinition);
+        assertEquals(this.nodeTypeDefinition.hashCode(), thatNodeTypeDefinition.hashCode());
+
+        this.nodeTypeDefinition.addChildNodeDefinition(new ChildNodeDefinition());
+        thatNodeTypeDefinition = NodeTypeDefinition.copy(this.nodeTypeDefinition);
+        assertEquals(this.nodeTypeDefinition, thatNodeTypeDefinition);
+        assertEquals(this.nodeTypeDefinition.hashCode(), thatNodeTypeDefinition.hashCode());
+
+        this.nodeTypeDefinition.addPropertyDefinition(new PropertyDefinition());
+        thatNodeTypeDefinition = NodeTypeDefinition.copy(this.nodeTypeDefinition);
+        assertEquals(this.nodeTypeDefinition, thatNodeTypeDefinition);
+        assertEquals(this.nodeTypeDefinition.hashCode(), thatNodeTypeDefinition.hashCode());
+    }
 }

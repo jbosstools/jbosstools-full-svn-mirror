@@ -196,4 +196,20 @@ public class NamespaceMappingTest {
         assertEquals(namespace1.hashCode(), namespace2.hashCode());
     }
 
+    @Test
+    public void copiesShouldBeEqualAndHaveSameHashCode() {
+        NamespaceMapping thatNamespaceMapping = NamespaceMapping.copy(this.namespaceMapping);
+        assertEquals(this.namespaceMapping, thatNamespaceMapping);
+        assertEquals(this.namespaceMapping.hashCode(), thatNamespaceMapping.hashCode());
+        
+        assertTrue(this.namespaceMapping.setPrefix(Constants.NAMESPACE_PREFIX1));
+        thatNamespaceMapping = NamespaceMapping.copy(this.namespaceMapping);
+        assertEquals(this.namespaceMapping, thatNamespaceMapping);
+        assertEquals(this.namespaceMapping.hashCode(), thatNamespaceMapping.hashCode());
+        
+        assertTrue(this.namespaceMapping.setUri(Constants.NAMESPACE_URI1));
+        thatNamespaceMapping = NamespaceMapping.copy(this.namespaceMapping);
+        assertEquals(this.namespaceMapping, thatNamespaceMapping);
+        assertEquals(this.namespaceMapping.hashCode(), thatNamespaceMapping.hashCode());
+    }
 }

@@ -41,14 +41,28 @@ public class ChildNodeDefinition implements CndElement, Comparable, NodeDefiniti
      */
     public static ChildNodeDefinition copy( final ChildNodeDefinition childNodeBeingCopied ) {
         final ChildNodeDefinition copy = new ChildNodeDefinition();
-        copy.setAutoCreated(childNodeBeingCopied.isAutoCreated());
-        copy.setMandatory(childNodeBeingCopied.isMandatory());
-        copy.setProtected(childNodeBeingCopied.isProtected());
-        copy.setOnParentVersion(childNodeBeingCopied.getOnParentVersion());
-        copy.setSameNameSiblings(childNodeBeingCopied.allowsSameNameSiblings());
+
+        // name
         copy.setName(childNodeBeingCopied.getName());
-        copy.setDefaultPrimaryTypeName(childNodeBeingCopied.getDefaultPrimaryTypeName());
-        copy.setRequiredPrimaryTypeNames(childNodeBeingCopied.getRequiredPrimaryTypeNames());
+
+        // attributes
+        copy.attributes.getAutocreated().set(childNodeBeingCopied.attributes.getAutocreated().get());
+        copy.attributes.getMandatory().set(childNodeBeingCopied.attributes.getMandatory().get());
+        copy.attributes.getProtected().set(childNodeBeingCopied.attributes.getProtected().get());
+        copy.attributes.getSameNameSiblings().set(childNodeBeingCopied.attributes.getSameNameSiblings().get());
+        copy.attributes.setOnParentVersion(childNodeBeingCopied.attributes.getOnParentVersion());
+
+        // default type
+        copy.defaultType.set(childNodeBeingCopied.defaultType.get());
+        copy.defaultType.setDefaultType(childNodeBeingCopied.getDefaultPrimaryTypeName());
+
+        // required types
+        copy.requiredTypes.set(childNodeBeingCopied.requiredTypes.get());
+
+        for (final String requiredTypeName : childNodeBeingCopied.getRequiredPrimaryTypeNames()) {
+            copy.addRequiredType(requiredTypeName);
+        }
+
         return copy;
     }
 
@@ -739,7 +753,7 @@ public class ChildNodeDefinition implements CndElement, Comparable, NodeDefiniti
          */
         @Override
         public String toString() {
-            return (getClass().getSimpleName() + super.toString());
+            return (getClass().getName() + super.toString());
         }
     }
 }

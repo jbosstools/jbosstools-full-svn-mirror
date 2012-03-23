@@ -51,18 +51,41 @@ public class PropertyDefinition implements CndElement, Comparable, PropertyDefin
      */
     public static final PropertyDefinition copy( final PropertyDefinition propertyBeingCopied ) {
         final PropertyDefinition copy = new PropertyDefinition();
+
+        // name
         copy.setName(propertyBeingCopied.getName());
-        copy.setAutoCreated(propertyBeingCopied.isAutoCreated());
-        copy.setAvailableQueryOperators(propertyBeingCopied.getAvailableQueryOperators());
-        copy.setDefaultValues(propertyBeingCopied.getDefaultValues());
-        copy.setFullTextSearchable(propertyBeingCopied.isFullTextSearchable());
-        copy.setMandatory(propertyBeingCopied.isMandatory());
-        copy.setMultiple(propertyBeingCopied.isMultiple());
-        copy.setOnParentVersion(propertyBeingCopied.getOnParentVersion());
-        copy.setProtected(propertyBeingCopied.isProtected());
-        copy.setQueryOrderable(propertyBeingCopied.isQueryOrderable());
-        copy.setRequiredType(propertyBeingCopied.getRequiredType());
-        copy.setValueConstraints(propertyBeingCopied.getValueConstraints());
+
+        // attributes
+        copy.attributes.getAutocreated().set(propertyBeingCopied.attributes.getAutocreated().get());
+        copy.attributes.getMandatory().set(propertyBeingCopied.attributes.getMandatory().get());
+        copy.attributes.getMultiple().set(propertyBeingCopied.attributes.getMultiple().get());
+        copy.attributes.getNoFullText().set(propertyBeingCopied.attributes.getNoFullText().get());
+        copy.attributes.getNoQueryOrder().set(propertyBeingCopied.attributes.getNoQueryOrder().get());
+        copy.attributes.getProtected().set(propertyBeingCopied.attributes.getProtected().get());
+        copy.attributes.setOnParentVersion(propertyBeingCopied.attributes.getOnParentVersion());
+        copy.attributes.getQueryOps().set(propertyBeingCopied.attributes.getQueryOps().get());
+
+        for (final QueryOperator operator : propertyBeingCopied.attributes.getQueryOps().getSupportedItems()) {
+            copy.attributes.getQueryOps().add(operator);
+        }
+
+        // default values
+        copy.defaultValues.set(propertyBeingCopied.defaultValues.get());
+
+        for (final String defaultValue : propertyBeingCopied.getDefaultValuesAsStrings()) {
+            copy.defaultValues.add(defaultValue);
+        }
+
+        // required type
+        copy.type = propertyBeingCopied.type;
+
+        // value constraints
+        copy.valueConstraints.set(propertyBeingCopied.valueConstraints.get());
+
+        for (final String constraint : propertyBeingCopied.getValueConstraints()) {
+            copy.valueConstraints.add(constraint);
+        }
+
         return copy;
     }
 
@@ -982,7 +1005,7 @@ public class PropertyDefinition implements CndElement, Comparable, PropertyDefin
          */
         @Override
         public String toString() {
-            return (getClass().getSimpleName() + super.toString());
+            return (getClass().getName() + super.toString());
         }
     }
 }

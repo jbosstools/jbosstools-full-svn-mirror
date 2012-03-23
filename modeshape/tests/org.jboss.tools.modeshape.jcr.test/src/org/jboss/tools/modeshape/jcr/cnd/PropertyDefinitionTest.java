@@ -39,57 +39,70 @@ public class PropertyDefinitionTest {
     }
 
     @Test
-    public void copiesShouldBeEqual() {
+    public void copiesShouldBeEqualAndHaveSameHashCode() {
         PropertyDefinition thatPropDefn = PropertyDefinition.copy(this.propDefn);
         assertEquals(this.propDefn, thatPropDefn);
+        assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
 
         this.propDefn.setAvailableQueryOperators(Constants.Helper.getDefaultQueryOperators());
         thatPropDefn = PropertyDefinition.copy(this.propDefn);
         assertEquals(this.propDefn, thatPropDefn);
+        assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
 
         this.propDefn.setAutoCreated(!this.propDefn.isAutoCreated());
         thatPropDefn = PropertyDefinition.copy(this.propDefn);
         assertEquals(this.propDefn, thatPropDefn);
+        assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
 
         this.propDefn.setDefaultValues(Constants.Helper.getDefaultStringValues());
         thatPropDefn = PropertyDefinition.copy(this.propDefn);
         assertEquals(this.propDefn, thatPropDefn);
+        assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
 
         this.propDefn.setFullTextSearchable(!this.propDefn.isFullTextSearchable());
         thatPropDefn = PropertyDefinition.copy(this.propDefn);
         assertEquals(this.propDefn, thatPropDefn);
+        assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
 
         this.propDefn.setMandatory(!this.propDefn.isMandatory());
         thatPropDefn = PropertyDefinition.copy(this.propDefn);
         assertEquals(this.propDefn, thatPropDefn);
+        assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
 
         this.propDefn.setMultiple(!this.propDefn.isMultiple());
         thatPropDefn = PropertyDefinition.copy(this.propDefn);
         assertEquals(this.propDefn, thatPropDefn);
+        assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
 
         this.propDefn.setName(Constants.QUALIFIED_NAME1.get());
         thatPropDefn = PropertyDefinition.copy(this.propDefn);
         assertEquals(this.propDefn, thatPropDefn);
+        assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
 
         this.propDefn.setOnParentVersion(OnParentVersion.COMPUTE.asJcrValue());
         thatPropDefn = PropertyDefinition.copy(this.propDefn);
         assertEquals(this.propDefn, thatPropDefn);
+        assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
 
         this.propDefn.setProtected(!this.propDefn.isProtected());
         thatPropDefn = PropertyDefinition.copy(this.propDefn);
         assertEquals(this.propDefn, thatPropDefn);
+        assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
 
         this.propDefn.setQueryOrderable(!this.propDefn.isQueryOrderable());
         thatPropDefn = PropertyDefinition.copy(this.propDefn);
         assertEquals(this.propDefn, thatPropDefn);
+        assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
 
         this.propDefn.setRequiredType(PropertyType.BINARY.asJcrValue());
         thatPropDefn = PropertyDefinition.copy(this.propDefn);
         assertEquals(this.propDefn, thatPropDefn);
+        assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
 
         this.propDefn.setValueConstraints(Constants.Helper.getDefaultValueConstraints());
         thatPropDefn = PropertyDefinition.copy(this.propDefn);
         assertEquals(this.propDefn, thatPropDefn);
+        assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
     }
 
     @Test

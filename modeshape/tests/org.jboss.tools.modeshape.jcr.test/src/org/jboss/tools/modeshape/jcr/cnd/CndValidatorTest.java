@@ -147,7 +147,7 @@ public class CndValidatorTest {
         this.nodeTypeDefinition.addChildNodeDefinition(this.childNodeDefinition);
         this.nodeTypeDefinition.addChildNodeDefinition(child2);
 
-        assertTrue(CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition).isError());
+        assertTrue(CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition, null).isError());
     }
 
     @Test
@@ -162,22 +162,22 @@ public class CndValidatorTest {
         this.nodeTypeDefinition.addPropertyDefinition(this.propertyDefinition);
         this.nodeTypeDefinition.addPropertyDefinition(prop2);
 
-        assertTrue(CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition).isError());
+        assertTrue(CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition, null).isError());
     }
 
     @Test
     public void nodeTypeDefinitionWithEmptyNameShouldAnError() {
         this.nodeTypeDefinition.setName(null);
-        assertTrue(CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition).isError());
+        assertTrue(CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition, null).isError());
 
         this.nodeTypeDefinition.setName(Utils.EMPTY_STRING);
-        assertTrue(CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition).isError());
+        assertTrue(CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition, null).isError());
     }
 
     @Test
     public void nodeTypeDefinitionWithInvalidNameShouldBeAnError() {
         this.nodeTypeDefinition.setName("invalid/name"); //$NON-NLS-1$
-        assertTrue(CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition).isError());
+        assertTrue(CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition, null).isError());
     }
 
     @Test
@@ -185,7 +185,7 @@ public class CndValidatorTest {
         this.nodeTypeDefinition.setName("nodeTypeName"); //$NON-NLS-1$
         this.nodeTypeDefinition.setPrimaryItemName("invalid/name"); //$NON-NLS-1$
 
-        assertTrue(CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition).isError());
+        assertTrue(CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition, null).isError());
     }
 
     @Test
@@ -193,13 +193,13 @@ public class CndValidatorTest {
         this.nodeTypeDefinition.setName("nodeTypeName"); //$NON-NLS-1$
         this.nodeTypeDefinition.addSuperType("invalid/name"); //$NON-NLS-1$
 
-        assertTrue(CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition).isError());
+        assertTrue(CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition, null).isError());
     }
 
     @Test
     public void nodeTypeDefinitionWithoutPropertiesAndChildNodesShouldBeAWarning() {
         this.nodeTypeDefinition.setName("name"); //$NON-NLS-1$
-        assertTrue(CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition).isWarning());
+        assertTrue(CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition, null).isWarning());
     }
 
     @Test

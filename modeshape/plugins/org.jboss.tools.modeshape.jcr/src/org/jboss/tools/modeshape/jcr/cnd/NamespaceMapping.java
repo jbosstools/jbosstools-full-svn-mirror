@@ -19,6 +19,14 @@ import org.jboss.tools.modeshape.jcr.Utils;
 public class NamespaceMapping implements CndElement, Comparable {
 
     /**
+     * @param namespaceMappingToCopy the namespace mapping being copied (cannot be <code>null</code>)
+     * @return a new namespace mapping exactly equal to the one that was copied (never <code>null</code>)
+     */
+    public static NamespaceMapping copy( NamespaceMapping namespaceMappingToCopy ) {
+        return new NamespaceMapping(namespaceMappingToCopy.getPrefix(), namespaceMappingToCopy.getUri());
+    }
+
+    /**
      * The delimeter used to separate the prefix from the URI.
      */
     public static final String NOTATION_DELIMITER = "="; //$NON-NLS-1$
@@ -262,7 +270,7 @@ public class NamespaceMapping implements CndElement, Comparable {
          */
         @Override
         public String toString() {
-            return (getClass().getSimpleName() + super.toString());
+            return (getClass().getName() + super.toString());
         }
     }
 }

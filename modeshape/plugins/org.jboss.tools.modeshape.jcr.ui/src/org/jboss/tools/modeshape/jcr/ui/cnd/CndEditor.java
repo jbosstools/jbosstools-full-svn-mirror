@@ -191,8 +191,17 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
         // TODO implement createCnd
         CndImporter importer = new CndImporter();
         List<Throwable> errors = new ArrayList<Throwable>();
-        this.cndBeingEdited = importer.importFrom(getFile().getContents(), errors, getFile().getName());
-        // TODO implement
+        this.originalCnd = importer.importFrom(getFile().getContents(), errors, getFile().getName());
+
+        // TODO process parse errors here
+        
+        // unhook lstening to current CND being edited
+        if (this.cndBeingEdited != null)  {
+            this.cndBeingEdited.removeListener(this);
+        }
+
+        // copy over CND
+        this.cndBeingEdited = CompactNodeTypeDefinition.copy(this.originalCnd);
         this.cndBeingEdited.addListener(this);
     }
 

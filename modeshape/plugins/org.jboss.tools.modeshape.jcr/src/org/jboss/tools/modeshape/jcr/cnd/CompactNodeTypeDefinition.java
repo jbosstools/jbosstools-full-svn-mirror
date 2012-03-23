@@ -23,6 +23,28 @@ import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences.Preference;
 public class CompactNodeTypeDefinition implements CndElement {
 
     /**
+     * @param cndToCopy the CND being copied (cannot be <code>null</code>)
+     * @return a CND exactly equals to the CND that was copied (never <code>null</code>)
+     */
+    public static CompactNodeTypeDefinition copy( final CompactNodeTypeDefinition cndToCopy ) {
+        Utils.verifyIsNotNull(cndToCopy, "cndToCopy"); //$NON-NLS-1$
+
+        final CompactNodeTypeDefinition copy = new CompactNodeTypeDefinition();
+
+        // namespace mappings
+        for (final NamespaceMapping namespaceMapping : cndToCopy.getNamespaceMappings()) {
+            copy.addNamespaceMapping(NamespaceMapping.copy(namespaceMapping));
+        }
+
+        // node type definitions
+        for (final NodeTypeDefinition nodeTypeDefinition : cndToCopy.getNodeTypeDefinitions()) {
+            copy.addNodeTypeDefinition(NodeTypeDefinition.copy(nodeTypeDefinition));
+        }
+
+        return copy;
+    }
+
+    /**
      * The registered property change listeners (never <code>null</code>).
      */
     private final CopyOnWriteArrayList<PropertyChangeListener> listeners;
@@ -145,6 +167,44 @@ public class CompactNodeTypeDefinition implements CndElement {
         return wasCleared;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals( final Object obj ) {
+        if (this == obj) {
+            return true;
+        }
+
+        if ((obj == null) || !getClass().equals(obj.getClass())) {
+            return false;
+        }
+
+        final CompactNodeTypeDefinition that = (CompactNodeTypeDefinition)obj;
+
+        { // compare namespace mappings
+            final List<NamespaceMapping> thisNamespaces = getNamespaceMappings();
+            final List<NamespaceMapping> thatNamespaces = that.getNamespaceMappings();
+
+            if (!Utils.equivalent(thisNamespaces, thatNamespaces)) {
+                return false;
+            }
+        }
+
+        { // compare node type definitions
+            final List<NodeTypeDefinition> thisNodeTypes = getNodeTypeDefinitions();
+            final List<NodeTypeDefinition> thatNodeTypes = that.getNodeTypeDefinitions();
+
+            if (!Utils.equivalent(thisNodeTypes, thatNodeTypes)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     private String getEndNamespaceMappingSectionDelimiter() {
         return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.NAMESPACE_MAPPING_SECTION_END_DELIMITER);
     }
@@ -181,6 +241,18 @@ public class CompactNodeTypeDefinition implements CndElement {
         }
 
         return this.nodeTypeDefinitions;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int result1 = Utils.hashCode(getNamespaceMappings().toArray());
+        final int result2 = Utils.hashCode(getNodeTypeDefinitions().toArray());
+        return Utils.hashCode(result1, result2);
     }
 
     /**
@@ -323,7 +395,7 @@ public class CompactNodeTypeDefinition implements CndElement {
          */
         @Override
         public String toString() {
-            return (getClass().getSimpleName() + super.toString());
+            return (getClass().getName() + super.toString());
         }
     }
 

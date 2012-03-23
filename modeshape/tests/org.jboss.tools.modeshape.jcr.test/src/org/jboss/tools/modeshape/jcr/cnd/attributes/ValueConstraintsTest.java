@@ -72,9 +72,9 @@ public class ValueConstraintsTest implements Constants {
     @Test
     public void verifyMultipleElementsCndNotation() {
         // setup
-        add(ITEM_ONE);
-        add(ITEM_TWO);
-        add(ITEM_THREE);
+        add(VALUE_CONSTRAINT1);
+        add(VALUE_CONSTRAINT2);
+        add(VALUE_CONSTRAINT3);
 
         // tests
         assertEquals(VALUE_CONSTRAINTS_THREE_ITEM_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPACT));
@@ -85,7 +85,7 @@ public class ValueConstraintsTest implements Constants {
     @Test
     public void verifyOneElementCndNotation() {
         // setup
-        add(ITEM_ONE);
+        add(VALUE_CONSTRAINT1);
 
         // tests
         assertEquals(VALUE_CONSTRAINTS_ONE_ITEM_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPACT));

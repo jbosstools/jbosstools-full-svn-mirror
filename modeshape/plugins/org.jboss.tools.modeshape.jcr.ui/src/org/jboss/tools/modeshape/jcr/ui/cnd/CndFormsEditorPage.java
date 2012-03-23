@@ -10,6 +10,7 @@ package org.jboss.tools.modeshape.jcr.ui.cnd;
 import static org.jboss.tools.modeshape.jcr.ui.JcrUiConstants.EditorIds.CND_FORMS_PAGE;
 
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -69,6 +70,7 @@ import org.jboss.tools.modeshape.jcr.ValidationStatus;
 import org.jboss.tools.modeshape.jcr.cnd.ChildNodeDefinition;
 import org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType;
 import org.jboss.tools.modeshape.jcr.cnd.CndValidator;
+import org.jboss.tools.modeshape.jcr.cnd.CompactNodeTypeDefinition;
 import org.jboss.tools.modeshape.jcr.cnd.NamespaceMapping;
 import org.jboss.tools.modeshape.jcr.cnd.NodeTypeDefinition;
 import org.jboss.tools.modeshape.jcr.cnd.NodeTypeDefinition.PropertyName;
@@ -86,7 +88,7 @@ import org.jboss.tools.modeshape.ui.forms.MessageFormDialog;
 /**
  * The GUI part of the CND editor.
  */
-class CndFormsEditorPage extends CndEditorPage {
+class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener {
 
     private IAction addChildNode;
     private IAction addNamespace;
@@ -120,6 +122,7 @@ class CndFormsEditorPage extends CndEditorPage {
     private final ErrorMessage propertiesError;
     private Section propertiesSection;
     private TableViewer propertyViewer;
+    private NodeTypeDefinition selectedNodeType; // needed for property changes (can be null)
     private final ErrorMessage superTypesError;
     private TableViewer superTypesViewer;
 
@@ -1967,21 +1970,34 @@ class CndFormsEditorPage extends CndEditorPage {
     }
 
     void handleNodeTypeSelected() {
+        final NodeTypeDefinition prevNodeType = this.selectedNodeType;
+        this.selectedNodeType = getSelectedNodeType();
+
+        // unhook property change listening from previously selected node type
+        if (prevNodeType != null) {
+            prevNodeType.removeListener(this);
+        }
+
+        // hook property change listening to new selected node type
+        if (this.selectedNodeType != null) {
+            this.selectedNodeType.addListener(this);
+        }
+
         updateEnabledState();
 
         // update section descriptions
-        if (getSelectedNodeType() == null) {
+        if (this.selectedNodeType == null) {
             this.detailsSection.setDescription(CndMessages.cndEditorDetailsSectionDescription);
             this.propertiesSection.setDescription(CndMessages.cndEditorChildNodeSectionDescription);
             this.childNodeSection.setDescription(CndMessages.cndEditorPropertySectionDescription);
         } else {
-            String name = getSelectedNodeType().getName();
+            String name = this.selectedNodeType.getName();
 
             if (Utils.isEmpty(name)) {
                 name = Messages.missingName;
             }
 
-            this.nameEditor.setNameBeingEdited(getSelectedNodeType().getQualifiedName());
+            this.nameEditor.setNameBeingEdited(this.selectedNodeType.getQualifiedName());
             this.detailsSection.setDescription(NLS.bind(CndMessages.cndEditorChildNodeSectionDescriptionWithNodeTypeName, name));
             this.propertiesSection.setDescription(NLS.bind(CndMessages.cndEditorChildNodeSectionDescriptionWithNodeTypeName, name));
             this.childNodeSection.setDescription(NLS.bind(CndMessages.cndEditorPropertySectionDescriptionWithNodeTypeName, name));
@@ -2026,6 +2042,7 @@ class CndFormsEditorPage extends CndEditorPage {
                 this.childNodeViewer.refresh();
             } else if (NodeTypeDefinition.PropertyName.NAME.toString().equals(propName)) {
                 validateName();
+                this.nodeTypeViewer.refresh(source);
             } else if (NodeTypeDefinition.PropertyName.PROPERTY_DEFINITIONS.toString().equals(propName)) {
                 validateProperties();
                 this.propertyViewer.refresh();
@@ -2033,12 +2050,17 @@ class CndFormsEditorPage extends CndEditorPage {
                 validateSuperTypes();
                 this.superTypesViewer.refresh();
             }
+
+            // tell editor about node type definition change
+            getCndEditor().refreshDirtyState();
         } else if (source instanceof NamespaceMapping) {
             this.namespaceViewer.refresh(source);
-        } else if (source instanceof PropertyDefinition) {
-            this.propertyViewer.refresh(source);
-        } else if (source instanceof ChildNodeDefinition) {
-            this.childNodeViewer.refresh(source);
+        } else if (source instanceof CompactNodeTypeDefinition) {
+            if (CompactNodeTypeDefinition.PropertyName.NAMESPACE_MAPPINGS.toString().equals(propName)) {
+                this.namespaceViewer.refresh();
+            } else if (CompactNodeTypeDefinition.PropertyName.NODE_TYPE_DEFINITIONS.toString().equals(propName)) {
+                this.nodeTypeViewer.refresh();
+            }
         }
     }
 
@@ -2091,6 +2113,16 @@ class CndFormsEditorPage extends CndEditorPage {
             e.widget = this.nodeTypeViewer.getTable();
             this.nodeTypeViewer.getTable().notifyListeners(SWT.Selection, e);
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
+     */
+    @Override
+    public void propertyChange( final PropertyChangeEvent e ) {
+        handlePropertyChanged(e);
     }
 
     private void refreshAttributeControls() {

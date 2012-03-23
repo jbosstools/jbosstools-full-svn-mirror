@@ -44,6 +44,46 @@ public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTempl
     public static final String NAME_NOTATION_SUFFIX = "]"; //$NON-NLS-1$
 
     /**
+     * @param nodeTypeToCopy the node type defition being copied (cannot be <code>null</code>)
+     * @return a new node type definition exactly equal to the one copied (never <code>null</code>)
+     */
+    public static NodeTypeDefinition copy( final NodeTypeDefinition nodeTypeToCopy ) {
+        Utils.verifyIsNotNull(nodeTypeToCopy, "nodeTypeToCopy"); //$NON-NLS-1$
+
+        final NodeTypeDefinition copy = new NodeTypeDefinition();
+
+        // name
+        copy.setName(nodeTypeToCopy.getName());
+
+        // attributes
+        copy.attributes.setAbstract(nodeTypeToCopy.attributes.getAbstract().get());
+        copy.attributes.setMixin(nodeTypeToCopy.attributes.getMixin().get());
+        copy.attributes.setOrderable(nodeTypeToCopy.attributes.getOrderable().get());
+        copy.attributes.setQueryable(nodeTypeToCopy.attributes.getQueryable().get());
+        copy.attributes.setPrimaryItem(nodeTypeToCopy.getPrimaryItemName());
+        copy.attributes.getPrimaryItem().set(nodeTypeToCopy.attributes.getPrimaryItem().get());
+
+        // child nodes
+        for (final ChildNodeDefinition childNode : nodeTypeToCopy.getChildNodeDefinitions()) {
+            copy.addChildNodeDefinition(ChildNodeDefinition.copy(childNode));
+        }
+
+        // properties
+        for (final PropertyDefinition property : nodeTypeToCopy.getPropertyDefinitions()) {
+            copy.addPropertyDefinition(PropertyDefinition.copy(property));
+        }
+
+        // supertypes
+        copy.superTypes.set(nodeTypeToCopy.superTypes.get());
+
+        for (final QualifiedName supertype : nodeTypeToCopy.getSupertypes()) {
+            copy.addSuperType(supertype.get());
+        }
+
+        return copy;
+    }
+
+    /**
      * The node type attributes (never <code>null</code>).
      */
     private final NodeTypeAttributes attributes;
@@ -283,6 +323,62 @@ public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTempl
         return thisName.compareTo(thatName);
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals( final Object obj ) {
+        if (this == obj) {
+            return true;
+        }
+
+        if ((obj == null) || !getClass().equals(obj.getClass())) {
+            return false;
+        }
+
+        final NodeTypeDefinition that = (NodeTypeDefinition)obj;
+
+        { // name
+            if (!this.name.equals(that.name)) {
+                return false;
+            }
+        }
+
+        { // attributes
+            if (!this.attributes.equals(that.attributes)) {
+                return false;
+            }
+        }
+
+        { // child nodes
+            final List<ChildNodeDefinition> thisChildNodes = getChildNodeDefinitions();
+            final List<ChildNodeDefinition> thatChildNodes = that.getChildNodeDefinitions();
+
+            if (!Utils.equivalent(thisChildNodes, thatChildNodes)) {
+                return false;
+            }
+        }
+
+        { // properties
+            final List<PropertyDefinition> thisProps = getPropertyDefinitions();
+            final List<PropertyDefinition> thatProps = that.getPropertyDefinitions();
+
+            if (!Utils.equivalent(thisProps, thatProps)) {
+                return false;
+            }
+        }
+
+        { // supertypes
+            if (!this.superTypes.equals(that.superTypes)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     private String getChildNodeDefinitionDelimiter() {
         return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.CHILD_NODE_DEFINITION_DELIMITER);
     }
@@ -470,6 +566,20 @@ public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTempl
      */
     public List<QualifiedName> getSupertypes() {
         return this.superTypes.getSupportedItems();
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        final int result1 = Utils.hashCode(this.name, this.attributes, this.superTypes);
+        final int result2 = Utils.hashCode(getChildNodeDefinitions().toArray());
+        final int result3 = Utils.hashCode(getPropertyDefinitions().toArray());
+
+        return Utils.hashCode(result1, result2, result3);
     }
 
     /**
@@ -830,7 +940,7 @@ public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTempl
          */
         @Override
         public String toString() {
-            return (getClass().getSimpleName() + super.toString());
+            return (getClass().getName() + super.toString());
         }
     }
 
