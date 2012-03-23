@@ -13,8 +13,8 @@
 			this profile (excluding all others); currently parent pom includes target-platform build too, so only need to build the parent
 			 
 			mvn clean install -P parent,\!libs,\!tests,\!jmx,\!archives,\!as,\!common,\!jst,\!xulrunner,\!vpe \
-			-P \!jsf,\!freemarker,\!hibernatetools,\!portlet,\!struts,\!smooks,\!cdi,\!birt,\!bpel,\!esb,\!seam,\!examples \
-			-P \!maven,\!ws,\!modeshape,\!flow,\!jbpm,\!gwt,\!deltacloud,\!runtime,\!usage,\!central,\!aggregate-coverage
+			-P \!jsf,\!freemarker,\!hibernatetools,\!portlet,\!struts,\!cdi,\!birt,\!seam,\!examples \
+			-P \!maven,\!ws,\!gwt,\!deltacloud,\!runtime,\!usage,\!central,\!aggregate-coverage
 			
 		-->
 		<profile>
@@ -337,26 +337,6 @@
 		</profile>
 
 		<profile>
-			<id>smooks</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<modules>
-				<module>../smooks</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>smooks-bootstrap</id>
-			<modules>
-				<module>../tests</module>
-				<module>../common</module>
-				<module>../smooks</module>
-				<module>../usage</module>
-			</modules>
-		</profile>
-
-		<profile>
 			<id>forge</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
@@ -419,45 +399,6 @@
 			<modules>
 				<module>../tests</module>
 				<module>../birt</module>
-				<module>../usage</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>bpel</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<modules>
-				<module>../bpel</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>bpel-bootstrap</id>
-			<modules>
-				<module>../tests</module>
-				<module>../bpel</module>
-				<module>../usage</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>esb</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<modules>
-				<module>../esb</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>esb-bootstrap</id>
-			<modules>
-				<module>../tests</module>
-				<module>../common</module>
-				<module>../esb</module>
 				<module>../usage</module>
 			</modules>
 		</profile>
@@ -560,64 +501,6 @@
 				<module>../common</module>
 				<module>../as</module>
 				<module>../ws</module>
-				<module>../usage</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>modeshape</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<modules>
-				<module>../modeshape</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>modeshape-bootstrap</id>
-			<modules>
-				<module>../tests</module>
-				<module>../modeshape</module>
-				<module>../usage</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>flow</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<modules>
-				<module>../flow</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>flow-bootstrap</id>
-			<modules>
-				<module>../tests</module>
-				<module>../flow</module>
-				<module>../usage</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>jbpm</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<modules>
-				<module>../jbpm</module>
-			</modules>
-		</profile>
-
-		<profile>
-			<id>jbpm-bootstrap</id>
-			<modules>
-				<module>../tests</module>
-				<module>../flow</module>
-				<module>../jbpm</module>
 				<module>../usage</module>
 			</modules>
 		</profile>

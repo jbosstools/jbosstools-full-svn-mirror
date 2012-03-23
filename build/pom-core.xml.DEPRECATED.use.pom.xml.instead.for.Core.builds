@@ -183,7 +183,6 @@
 			</modules>
 		</profile>
 
-
 		<profile>
 			<id>xulrunner</id>
 			<activation>
