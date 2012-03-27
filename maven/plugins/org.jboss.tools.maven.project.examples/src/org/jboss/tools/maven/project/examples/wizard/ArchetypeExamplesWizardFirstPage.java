@@ -470,13 +470,6 @@ public class ArchetypeExamplesWizardFirstPage extends MavenProjectWizardLocation
 			if (projectExample.getDescription() != null) {
 				setDescription(ProjectExamplesActivator.getShortDescription(projectExample.getDescription()));
 			}
-			ProjectImportConfiguration configuration = getImportConfiguration();
-			if (configuration != null) {
-				String profiles = projectExample.getDefaultProfiles();
-			    if (profiles != null && profiles.trim().length() > 0) {
-			    	configuration.getResolverConfiguration().setActiveProfiles(profiles);
-			    }
-			}
 			initDefaultValues();
 		} 
 	}

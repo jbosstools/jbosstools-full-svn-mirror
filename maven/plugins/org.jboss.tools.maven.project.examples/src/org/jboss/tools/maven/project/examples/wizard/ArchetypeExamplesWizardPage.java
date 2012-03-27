@@ -497,6 +497,13 @@ public class ArchetypeExamplesWizardPage extends
 				setDescription(ProjectExamplesActivator
 						.getShortDescription(projectExample.getDescription()));
 			}
+			ProjectImportConfiguration configuration = getImportConfiguration();
+			if (configuration != null) {
+				String profiles = projectExample.getDefaultProfiles();
+			    if (profiles != null && profiles.trim().length() > 0) {
+			    	configuration.getResolverConfiguration().setActiveProfiles(profiles);
+			    }
+			}
 			projectDescription = projectExample;
 			if (getContainer() != null) {
 				initialize();
