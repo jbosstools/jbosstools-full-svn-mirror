@@ -33,7 +33,7 @@ import org.jboss.tools.modeshape.jcr.cnd.attributes.ValueConstraints;
 /**
  * The <code>PropertyDefinition</code> class represents node type property definition.
  */
-public class PropertyDefinition implements CndElement, Comparable, PropertyDefinitionTemplate {
+public class PropertyDefinition implements ItemDefinition, Comparable, PropertyDefinitionTemplate {
 
     /**
      * The prefix used in CND notation before the property definition.
@@ -409,7 +409,7 @@ public class PropertyDefinition implements CndElement, Comparable, PropertyDefin
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see javax.jcr.nodetype.ItemDefinition#getName()
      */
     @Override
@@ -437,8 +437,11 @@ public class PropertyDefinition implements CndElement, Comparable, PropertyDefin
     }
 
     /**
-     * @return the qualified name (never <code>null</code>)
+     * {@inheritDoc}
+     *
+     * @see org.jboss.tools.modeshape.jcr.cnd.ItemDefinition#getQualifiedName()
      */
+    @Override
     public QualifiedName getQualifiedName() {
         return this.name;
     }

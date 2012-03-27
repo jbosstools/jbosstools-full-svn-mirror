@@ -9,7 +9,7 @@ package org.jboss.tools.modeshape.jcr.cnd.attributes;
 
 import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.cnd.CndElement;
-import org.jboss.tools.modeshape.jcr.cnd.LocalName;
+import org.jboss.tools.modeshape.jcr.cnd.QualifiedName;
 
 /**
  * The primary item attribute used by node type definitions. This primary item may be a child node or a property.
@@ -21,7 +21,7 @@ public class PrimaryItem extends AttributeState {
      */
     public static final String[] NOTATION = new String[] { "primaryitem", "!", "!" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
-    private final LocalName primaryItem = new LocalName();
+    private final QualifiedName primaryItem = new QualifiedName();
 
     /**
      * {@inheritDoc}
@@ -74,10 +74,10 @@ public class PrimaryItem extends AttributeState {
     }
 
     /**
-     * @return the primary item (can be <code>null</code> or empty)
+     * @return the primary item (never <code>null</code>)
      */
-    public String getPrimaryItem() {
-        return this.primaryItem.get();
+    public QualifiedName getPrimaryItem() {
+        return this.primaryItem;
     }
 
     /**
@@ -102,7 +102,7 @@ public class PrimaryItem extends AttributeState {
      */
     public boolean setPrimaryItem( final String newPrimaryItem ) {
         if (this.primaryItem.set(newPrimaryItem)) {
-            if (Utils.isEmpty(newPrimaryItem) && !isVariant()) {
+            if (Utils.isEmpty(this.primaryItem.get()) && !isVariant()) {
                 super.set(Value.IS_NOT);
             } else {
                 super.set(Value.IS);

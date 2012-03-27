@@ -18,6 +18,11 @@ import org.jboss.tools.modeshape.ui.UiUtils;
 public class ErrorMessage implements IMessage {
 
     /**
+     * Used to hold additional information (can be <code>null</code>).
+     */
+    private Object data;
+
+    /**
      * The error message (can be <code>null</code> or empty)
      */
     private String message;
@@ -56,7 +61,7 @@ public class ErrorMessage implements IMessage {
      */
     @Override
     public Object getData() {
-        return null;
+        return this.data;
     }
 
     /**
@@ -132,6 +137,13 @@ public class ErrorMessage implements IMessage {
      */
     public void setControl( final Control newControl ) {
         this.widget = newControl;
+    }
+
+    /**
+     * @param data any additional information needed by the error message (can be <code>null</code>)
+     */
+    public void setData( Object data ) {
+        this.data = data;
     }
 
     /**

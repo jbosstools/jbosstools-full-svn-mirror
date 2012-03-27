@@ -925,7 +925,7 @@ final class PropertyDialog extends FormDialog {
         if (dialog.open() == Window.OK) {
             final String newDefaultValue = dialog.getValue();
 
-            if (!this.propertyBeingEdited.addValueConstraint(newDefaultValue)) {
+            if (!this.propertyBeingEdited.addDefaultValue(newDefaultValue)) {
                 MessageFormDialog.openError(getShell(), UiMessages.errorDialogTitle, JcrUiUtils.getCndEditorImage(),
                                             NLS.bind(CndMessages.errorAddingDefaultValue, newDefaultValue));
             }

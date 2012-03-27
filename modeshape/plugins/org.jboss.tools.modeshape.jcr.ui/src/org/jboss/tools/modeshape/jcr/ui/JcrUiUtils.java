@@ -7,8 +7,10 @@
  */
 package org.jboss.tools.modeshape.jcr.ui;
 
+import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
+import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.ValidationStatus;
 import org.jboss.tools.modeshape.ui.forms.ErrorMessage;
 
@@ -41,6 +43,33 @@ public class JcrUiUtils {
     }
 
     /**
+     * @param status the validation status whose severity is being converted to a form message area message type
+     * @return the message type
+     */
+    public static int getMessageType( final ValidationStatus status ) {
+        Utils.verifyIsNotNull(status, "status"); //$NON-NLS-1$
+
+        if (status.isOk()) {
+            return IMessageProvider.NONE;
+        }
+
+        if (status.isError()) {
+            return IMessageProvider.ERROR;
+        }
+
+        if (status.isWarning()) {
+            return IMessageProvider.WARNING;
+        }
+
+        if (status.isInfo()) {
+            return IMessageProvider.INFORMATION;
+        }
+
+        assert false : "Unexpected severity type"; //$NON-NLS-1$
+        return IMessageProvider.ERROR;
+    }
+
+    /**
      * @return the generic new toolbar/menu icon (never <code>null</code>)
      */
     public static ImageDescriptor getNewImageDescriptor() {
@@ -52,9 +81,8 @@ public class JcrUiUtils {
      * @param status the status being used to set the message (cannot be <code>null</code>)
      * @param message the message being set (cannot be <code>null</code>)
      */
-    public static void setMessage( ValidationStatus status,
-                                   ErrorMessage message ) {
-        // TODO need to figure out how to get all the MultiValidationStatus errors to display
+    public static void setMessage( final ValidationStatus status,
+                                   final ErrorMessage message ) {
         if (status.isError()) {
             message.setErrorMessage(status.getMessage());
         } else if (status.isWarning()) {

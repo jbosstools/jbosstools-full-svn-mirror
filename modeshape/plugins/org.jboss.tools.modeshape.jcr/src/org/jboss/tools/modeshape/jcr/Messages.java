@@ -215,7 +215,8 @@ public final class Messages extends NLS {
     public static String localNameEqualToSelfOrParent;
 
     /**
-     * A message indicating a with invalid characters was found. One parameter, a string identifying the name, is required.
+     * A message indicating a with invalid characters was found. Two parameters, the name of the owner object and a string
+     * identifying the type of name, are required.
      */
     public static String localNameHasInvalidCharacters;
 
@@ -262,7 +263,7 @@ public final class Messages extends NLS {
      * A message used for the node type definition name property.
      */
     public static String nodeTypeDefinitionName;
-
+    
     /**
      * A message indicating a <code>null</code> was found. One parameter, a string identifying the object, is required.
      */

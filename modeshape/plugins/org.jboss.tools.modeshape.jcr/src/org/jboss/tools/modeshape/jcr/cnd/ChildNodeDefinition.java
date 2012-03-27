@@ -28,7 +28,7 @@ import org.jboss.tools.modeshape.jcr.cnd.attributes.RequiredTypes;
 /**
  * 
  */
-public class ChildNodeDefinition implements CndElement, Comparable, NodeDefinitionTemplate {
+public class ChildNodeDefinition implements ItemDefinition, Comparable, NodeDefinitionTemplate {
 
     /**
      * The prefix used in CND notation before the property definition.
@@ -361,8 +361,11 @@ public class ChildNodeDefinition implements CndElement, Comparable, NodeDefiniti
     }
 
     /**
-     * @return the qualified name (never <code>null</code>)
+     * {@inheritDoc}
+     *
+     * @see org.jboss.tools.modeshape.jcr.cnd.ItemDefinition#getQualifiedName()
      */
+    @Override
     public QualifiedName getQualifiedName() {
         return this.name;
     }

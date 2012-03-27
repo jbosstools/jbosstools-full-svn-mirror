@@ -132,6 +132,25 @@ public class ValidationStatus implements Comparable<ValidationStatus> {
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals( Object obj ) {
+        if (this == obj) {
+            return true;
+        }
+
+        if ((obj == null) || !getClass().equals(obj.getClass())) {
+            return false;
+        }
+
+        ValidationStatus that = (ValidationStatus)obj;
+        return (this.severity.equals(that.severity) && this.message.equals(that.message));
+    }
+    
+    /**
      * @return the message pertaining to the worse validation severity (never <code>null</code>)
      */
     public String getMessage() {
@@ -141,10 +160,20 @@ public class ValidationStatus implements Comparable<ValidationStatus> {
     /**
      * @return the status severity (never <code>null</code>)
      */
-    protected Severity getSeverity() {
+    public Severity getSeverity() {
         return this.severity;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        return Utils.hashCode(this.severity, this.message);
+    }
+    
     /**
      * @return <code>true</code> if the validation status has an error severity
      */

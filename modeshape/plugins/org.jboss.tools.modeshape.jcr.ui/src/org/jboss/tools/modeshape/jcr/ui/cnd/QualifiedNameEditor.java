@@ -175,7 +175,12 @@ final class QualifiedNameEditor extends Composite {
     }
 
     void handleQualifierChanged( final String newQualifier ) {
-        this.qualifier = newQualifier;
+        if (CndMessages.noNameQualifierChoice.equals(newQualifier)) {
+            this.qualifier = Utils.EMPTY_STRING;
+        } else {
+            this.qualifier = newQualifier;
+        }
+
         validate();
     }
 

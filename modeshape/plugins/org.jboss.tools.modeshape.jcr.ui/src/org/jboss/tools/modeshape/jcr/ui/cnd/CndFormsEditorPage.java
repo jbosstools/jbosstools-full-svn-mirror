@@ -49,6 +49,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
@@ -57,6 +58,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.ui.IMemento;
 import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.IMessageManager;
@@ -73,7 +75,6 @@ import org.jboss.tools.modeshape.jcr.cnd.CndValidator;
 import org.jboss.tools.modeshape.jcr.cnd.CompactNodeTypeDefinition;
 import org.jboss.tools.modeshape.jcr.cnd.NamespaceMapping;
 import org.jboss.tools.modeshape.jcr.cnd.NodeTypeDefinition;
-import org.jboss.tools.modeshape.jcr.cnd.NodeTypeDefinition.PropertyName;
 import org.jboss.tools.modeshape.jcr.cnd.PropertyDefinition;
 import org.jboss.tools.modeshape.jcr.cnd.QualifiedName;
 import org.jboss.tools.modeshape.jcr.ui.JcrUiUtils;
@@ -91,6 +92,7 @@ import org.jboss.tools.modeshape.ui.forms.MessageFormDialog;
 class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener {
 
     private IAction addChildNode;
+
     private IAction addNamespace;
     private IAction addNodeType;
     private IAction addProperty;
@@ -100,7 +102,6 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
     private Button btnOrderable;
     private Button btnQueryable;
     private Section childNodeSection;
-    private final ErrorMessage childNodesError;
     private TableViewer childNodeViewer;
     private IAction deleteChildNode;
     private IAction deleteNamespace;
@@ -113,18 +114,18 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
     private IAction editProperty;
     private IAction editSuperType;
     private QualifiedNameEditor nameEditor;
+    private Section namespaceSection;
     private final ErrorMessage namespacesError;
     private TableViewer namespaceViewer;
-    private final ErrorMessage nodeTypeNameError;
     private String nodeTypeNameFilterPattern;
+    private Section nodeTypeSection;
     private final ErrorMessage nodeTypesError;
     private TableViewer nodeTypeViewer;
-    private final ErrorMessage propertiesError;
     private Section propertiesSection;
     private TableViewer propertyViewer;
     private NodeTypeDefinition selectedNodeType; // needed for property changes (can be null)
-    private final ErrorMessage superTypesError;
     private TableViewer superTypesViewer;
+    private Text txtFilter;
 
     /**
      * @param cndEditor the CND editor this page belongs to (cannot be <code>null</code>)
@@ -133,12 +134,8 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
         super(cndEditor, CND_FORMS_PAGE, CndMessages.cndEditorFormsPageTitle);
 
         // construct form messages
-        this.childNodesError = new ErrorMessage();
         this.namespacesError = new ErrorMessage();
         this.nodeTypesError = new ErrorMessage();
-        this.nodeTypeNameError = new ErrorMessage();
-        this.propertiesError = new ErrorMessage();
-        this.superTypesError = new ErrorMessage();
     }
 
     /**
@@ -158,6 +155,9 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
 
         // fill GUI with CND
         populateUi();
+
+        // clear any initial messages that were created before the control was set
+        getCndEditor().getMessageManager().removeAllMessages();
     }
 
     private void createChildNodeActions() {
@@ -213,9 +213,22 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
     private void createChildNodeSection( final IManagedForm managedForm,
                                          final FormToolkit toolkit,
                                          final Composite parent ) {
+        // restore expansion state
+        int sectionStyle = Styles.SECTION_STYLE;
+
+        if (this.memento == null) {
+            // don't expand
+            sectionStyle = sectionStyle & ~ExpandableComposite.EXPANDED;
+        } else {
+            final Boolean expanded = this.memento.getBoolean(MementoKeys.CHILD_NODE_SECTION_EXPANDED);
+
+            if ((expanded != null) && !expanded.booleanValue()) {
+                sectionStyle = sectionStyle & ~ExpandableComposite.EXPANDED;
+            }
+        }
+
         this.childNodeSection = FormUtils.createSection(managedForm, toolkit, parent, CndMessages.cndEditorChildNodeSectionTitle,
-                                                        CndMessages.cndEditorChildNodeSectionDescription, Styles.SECTION_STYLE
-                                                                & ~ExpandableComposite.EXPANDED, true);
+                                                        CndMessages.cndEditorChildNodeSectionDescription, sectionStyle, true);
         toolkit.paintBordersFor(this.childNodeSection);
 
         // create actions
@@ -243,7 +256,6 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
         table.setMenu(menuManager.createContextMenu(table));
 
         createChildNodeViewer(table);
-        this.childNodesError.setControl(table);
     }
 
     private void createChildNodeViewer( final Table childNodeTable ) {
@@ -421,7 +433,7 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
                 this.nameEditor = new QualifiedNameEditor(leftContainer,
                                                           SWT.NONE,
                                                           toolkit,
-                                                          Messages.propertyDefinitionName,
+                                                          Messages.nodeTypeDefinitionName,
                                                           getNamespacePrefixes(),
                                                           null);
                 ((GridData)this.nameEditor.getLayoutData()).horizontalSpan = 2;
@@ -438,7 +450,6 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
                     }
                 });
 
-                this.nodeTypeNameError.setControl(this.nameEditor);
                 refreshNameControls(); // populate name editor controls
             }
 
@@ -449,7 +460,6 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
                 attributesContainer.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
                 ((GridData)attributesContainer.getLayoutData()).horizontalSpan = 2;
                 toolkit.adapt(attributesContainer);
-                // attributesContainer.setBackground(toolkit.getColors().getColor(IFormColors.H_HOVER_LIGHT));
                 toolkit.paintBordersFor(attributesContainer);
 
                 this.btnAbstract = toolkit.createButton(attributesContainer, CndMessages.abstractAttribute, SWT.CHECK);
@@ -536,7 +546,6 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
             table.setLinesVisible(false);
             ((GridData)table.getLayoutData()).heightHint = table.getItemHeight() * 2;
             table.setToolTipText(CndMessages.supertypesToolTip);
-            this.superTypesError.setControl(table);
 
             createSuperTypesActions();
 
@@ -618,24 +627,38 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
     private void createNamespaceSection( final IManagedForm managedForm,
                                          final FormToolkit toolkit,
                                          final Composite parent ) {
+        // restore expansion state
+        int sectionStyle = Styles.SECTION_STYLE;
+
+        if (this.memento == null) {
+            // don't expand
+            sectionStyle = sectionStyle & ~ExpandableComposite.EXPANDED;
+        } else {
+            final Boolean expanded = this.memento.getBoolean(MementoKeys.NAMESPACE_SECTION_EXPANDED);
+
+            if ((expanded != null) && !expanded.booleanValue()) {
+                sectionStyle = sectionStyle & ~ExpandableComposite.EXPANDED;
+            }
+        }
+
         // create section
-        final Section section = FormUtils.createSection(managedForm, toolkit, parent, CndMessages.cndEditorNamespacesSectionTitle,
-                                                        CndMessages.cndEditorNamespacesSectionDescription, Styles.SECTION_STYLE
-                                                                & ~ExpandableComposite.EXPANDED, true);
-        toolkit.paintBordersFor(section);
+        this.namespaceSection = FormUtils.createSection(managedForm, toolkit, parent, CndMessages.cndEditorNamespacesSectionTitle,
+                                                        CndMessages.cndEditorNamespacesSectionDescription, sectionStyle, true);
+        toolkit.paintBordersFor(this.namespaceSection);
+        this.namespacesError.setControl(this.namespaceSection.getDescriptionControl());
 
         // create actions
         createNamespaceActions();
 
         // create toolbar
-        FormUtils.createSectionToolBar(section, toolkit, new IAction[] { this.addNamespace, this.editNamespace,
+        FormUtils.createSectionToolBar(this.namespaceSection, toolkit, new IAction[] { this.addNamespace, this.editNamespace,
                 this.deleteNamespace });
 
         // create viewer
-        final Composite container = toolkit.createComposite(section);
+        final Composite container = toolkit.createComposite(this.namespaceSection);
         container.setLayout(new GridLayout());
         container.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        section.setClient(container);
+        this.namespaceSection.setClient(container);
         toolkit.paintBordersFor(container);
 
         final Table table = FormUtils.createTable(toolkit, container);
@@ -649,7 +672,6 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
         table.setMenu(menuManager.createContextMenu(table));
 
         createNamespaceViewer(table);
-        this.namespacesError.setControl(table);
     }
 
     private void createNamespaceViewer( final Table namespaceTable ) {
@@ -810,23 +832,24 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
                                         final FormToolkit toolkit,
                                         final Composite parent ) {
         // create section
-        final Section section = FormUtils.createSection(managedForm, toolkit, parent, CndMessages.cndEditorNodeTypeSectionTitle,
-                                                        CndMessages.cndEditorNodeTypeSectionDescription, Styles.SECTION_STYLE
-                                                                & ~ExpandableComposite.TWISTIE, false);
-        toolkit.paintBordersFor(section);
+        this.nodeTypeSection = FormUtils.createSection(managedForm, toolkit, parent, CndMessages.cndEditorNodeTypeSectionTitle,
+                                                       CndMessages.cndEditorNodeTypeSectionDescription, Styles.SECTION_STYLE
+                                                               & ~ExpandableComposite.TWISTIE, false);
+        toolkit.paintBordersFor(this.nodeTypeSection);
+        this.nodeTypesError.setControl(this.nodeTypeSection.getDescriptionControl());
 
         // create actions
         createNodeTypeActions();
 
         // create toolbar
-        FormUtils.createSectionToolBar(section, toolkit, new IAction[] { this.addNodeType, this.deleteNodeType });
+        FormUtils.createSectionToolBar(this.nodeTypeSection, toolkit, new IAction[] { this.addNodeType, this.deleteNodeType });
 
         // splitter has node type table on left and node type detail, properties, and child nodes on right
-        final SashForm splitter = new SashForm(section, SWT.HORIZONTAL);
+        final SashForm splitter = new SashForm(this.nodeTypeSection, SWT.HORIZONTAL);
         toolkit.adapt(splitter);
         splitter.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         splitter.setBackground(toolkit.getColors().getColor(IFormColors.SEPARATOR));
-        section.setClient(splitter);
+        this.nodeTypeSection.setClient(splitter);
 
         // left side is node type name filter and node type name table
         final Composite leftContainer = toolkit.createComposite(splitter);
@@ -835,12 +858,11 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
         toolkit.paintBordersFor(leftContainer);
 
         FILTER: {
-            final Text txtFilter = toolkit.createText(leftContainer, Utils.EMPTY_STRING, Styles.TEXT_STYLE | SWT.SEARCH
-                    | SWT.ICON_CANCEL);
-            txtFilter.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-            txtFilter.setMessage(CndMessages.nodeTypeNamePatternMessage);
-            txtFilter.setFont(JFaceResources.getDialogFont());
-            txtFilter.addModifyListener(new ModifyListener() {
+            this.txtFilter = toolkit.createText(leftContainer, Utils.EMPTY_STRING, Styles.TEXT_STYLE | SWT.SEARCH | SWT.ICON_CANCEL);
+            this.txtFilter.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+            this.txtFilter.setMessage(CndMessages.nodeTypeNamePatternMessage);
+            this.txtFilter.setFont(JFaceResources.getDialogFont());
+            this.txtFilter.addModifyListener(new ModifyListener() {
 
                 /**
                  * {@inheritDoc}
@@ -849,12 +871,12 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
                  */
                 @Override
                 public void modifyText( final ModifyEvent e ) {
-                    handleNodeTypeNameFilterModified(txtFilter.getText());
+                    handleNodeTypeNameFilterModified(((Text)e.widget).getText());
                 }
             });
         }
 
-        VIEWER: {
+        VIEWER: { // left-side
             final Composite viewerContainer = toolkit.createComposite(leftContainer);
             viewerContainer.setLayout(new GridLayout());
             viewerContainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -870,7 +892,6 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
             table.setMenu(menuManager.createContextMenu(table));
 
             createNodeTypeViewer(table);
-            this.nodeTypesError.setControl(table);
         }
 
         RIGHT_SIDE: {
@@ -879,17 +900,10 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
             container.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
             toolkit.paintBordersFor(container);
 
-            DETAILS: {
-                createDetailsSection(managedForm, toolkit, container);
-            }
-
-            PROPERTIES: {
-                createPropertySection(managedForm, toolkit, container);
-            }
-
-            CHILD_NODES: {
-                createChildNodeSection(managedForm, toolkit, container);
-            }
+            // create sections
+            createDetailsSection(managedForm, toolkit, container);
+            createPropertySection(managedForm, toolkit, container);
+            createChildNodeSection(managedForm, toolkit, container);
         }
 
         splitter.setWeights(new int[] { 20, 80 });
@@ -907,7 +921,13 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
             @Override
             public String getText( final Object element ) {
                 final NodeTypeDefinition nodeTypeDefinition = (NodeTypeDefinition)element;
-                return nodeTypeDefinition.getName();
+                String name = nodeTypeDefinition.getName();
+
+                if (Utils.isEmpty(name)) {
+                    name = Messages.missingName;
+                }
+
+                return name;
             }
         }
 
@@ -1069,10 +1089,22 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
     private void createPropertySection( final IManagedForm managedForm,
                                         final FormToolkit toolkit,
                                         final Composite parent ) {
-        // create section
+        // restore expansion state
+        int sectionStyle = Styles.SECTION_STYLE;
+
+        if (this.memento == null) {
+            // don't expand
+            sectionStyle = sectionStyle & ~ExpandableComposite.EXPANDED;
+        } else {
+            final Boolean expanded = this.memento.getBoolean(MementoKeys.PROPERTY_SECTION_EXPANDED);
+
+            if ((expanded != null) && !expanded.booleanValue()) {
+                sectionStyle = sectionStyle & ~ExpandableComposite.EXPANDED;
+            }
+        }
+
         this.propertiesSection = FormUtils.createSection(managedForm, toolkit, parent, CndMessages.cndEditorPropertySectionTitle,
-                                                         CndMessages.cndEditorPropertySectionDescription, Styles.SECTION_STYLE
-                                                                 & ~ExpandableComposite.EXPANDED, true);
+                                                         CndMessages.cndEditorPropertySectionDescription, sectionStyle, true);
         toolkit.paintBordersFor(this.propertiesSection);
 
         // create actions
@@ -1100,7 +1132,6 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
         table.setMenu(menuManager.createContextMenu(table));
 
         createPropertyViewer(table);
-        this.propertiesError.setControl(table);
     }
 
     private void createPropertyViewer( final Table propertyTable ) {
@@ -1147,7 +1178,13 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
                 }
 
                 assert (this.columnIndex == PropertyColumnIndexes.CONSTRAINTS) : "Unexpected property column index"; //$NON-NLS-1$
-                return propertyDefinition.getValueConstraintsCndNotation(notationType);
+                final String[] constraints = propertyDefinition.getValueConstraints();
+
+                if (Utils.isEmpty(constraints)) {
+                    return Utils.EMPTY_STRING;
+                }
+
+                return UiUtils.join(Arrays.asList(constraints), null);
             }
         }
 
@@ -1683,11 +1720,8 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
     public void handleCndReloaded() {
         // make sure GUI has been constructed before refreshing
         if (this.propertyViewer != null) {
-            refreshNameControls();
-            refreshAttributeControls();
-            refreshSuperTypes();
-            refreshPropertyViewer();
-            refreshChildNodeViewer();
+            refreshNamespaceControls();
+            refreshNodeTypeControls();
         }
     }
 
@@ -1947,8 +1981,6 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
         // update button enablements
         final boolean enable = (getSelectedNamespace() != null);
 
-        // this.addNamespace is always enabled
-
         if (this.editNamespace.isEnabled() != enable) {
             this.editNamespace.setEnabled(enable);
         }
@@ -1966,7 +1998,7 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
 
     void handleNodeTypeNameFilterModified( final String namePattern ) {
         this.nodeTypeNameFilterPattern = namePattern;
-        this.nodeTypeViewer.refresh();
+        refreshNodeTypeControls();
     }
 
     void handleNodeTypeSelected() {
@@ -2043,6 +2075,7 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
             } else if (NodeTypeDefinition.PropertyName.NAME.toString().equals(propName)) {
                 validateName();
                 this.nodeTypeViewer.refresh(source);
+                UiUtils.pack(this.nodeTypeViewer);
             } else if (NodeTypeDefinition.PropertyName.PROPERTY_DEFINITIONS.toString().equals(propName)) {
                 validateProperties();
                 this.propertyViewer.refresh();
@@ -2054,12 +2087,15 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
             // tell editor about node type definition change
             getCndEditor().refreshDirtyState();
         } else if (source instanceof NamespaceMapping) {
+            validateNamespaces();
             this.namespaceViewer.refresh(source);
+            UiUtils.pack(this.namespaceViewer);
         } else if (source instanceof CompactNodeTypeDefinition) {
             if (CompactNodeTypeDefinition.PropertyName.NAMESPACE_MAPPINGS.toString().equals(propName)) {
-                this.namespaceViewer.refresh();
+                validateNamespaces();
+                refreshNamespaceControls();
             } else if (CompactNodeTypeDefinition.PropertyName.NODE_TYPE_DEFINITIONS.toString().equals(propName)) {
-                this.nodeTypeViewer.refresh();
+                refreshNodeTypeControls();
             }
         }
     }
@@ -2107,11 +2143,33 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
         // size columns to the data
         UiUtils.pack(this.namespaceViewer, this.nodeTypeViewer);
 
-        if (this.nodeTypeViewer.getTable().getItemCount() != 0) {
-            this.nodeTypeViewer.getTable().select(0);
-            final Event e = new Event();
-            e.widget = this.nodeTypeViewer.getTable();
-            this.nodeTypeViewer.getTable().notifyListeners(SWT.Selection, e);
+        // restore selected node type and node type name pattern
+        if (this.memento == null) {
+            if (this.nodeTypeViewer.getTable().getItemCount() != 0) {
+                this.nodeTypeViewer.getTable().select(0);
+                final Event e = new Event();
+                e.widget = this.nodeTypeViewer.getTable();
+                this.nodeTypeViewer.getTable().notifyListeners(SWT.Selection, e);
+            }
+        } else {
+            final String nodeTypeName = this.memento.getString(MementoKeys.SELECTED_NODE_TYPE);
+
+            if (!Utils.isEmpty(nodeTypeName)) {
+                for (final NodeTypeDefinition nodeTypeDefinition : getCnd().getNodeTypeDefinitions()) {
+                    if (nodeTypeName.equals(nodeTypeDefinition.getName())) {
+                        this.nodeTypeViewer.setSelection(new StructuredSelection(nodeTypeDefinition));
+                        break;
+                    }
+                }
+
+            }
+
+            // set last used node type filter pattern
+            final String filter = this.memento.getString(MementoKeys.NODE_TYPE_FILTER);
+
+            if (!Utils.isEmpty(filter)) {
+                this.txtFilter.setText(filter);
+            }
         }
     }
 
@@ -2186,6 +2244,29 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
         }
     }
 
+    private void refreshNamespaceControls() {
+        this.namespaceViewer.refresh();
+    }
+
+    private void refreshNodeTypeControls() {
+        final NodeTypeDefinition selectedNodeType = getSelectedNodeType();
+        this.nodeTypeViewer.refresh(); // this will deselect node type
+
+        // reselect node type by name
+        if (selectedNodeType != null) {
+            final String name = selectedNodeType.getName();
+
+            // should always have a name but just make sure
+            if (!Utils.isEmpty(name)) {
+                for (final NodeTypeDefinition nodeType : getCnd().getNodeTypeDefinitions()) {
+                    if (name.equals(nodeType.getName())) {
+                        this.nodeTypeViewer.setSelection(new StructuredSelection(nodeType));
+                    }
+                }
+            }
+        }
+    }
+
     private void refreshPropertyViewer() {
         if (this.propertyViewer != null) {
             this.propertyViewer.setInput(this);
@@ -2199,6 +2280,32 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
             this.superTypesViewer.setInput(this);
             UiUtils.pack(this.superTypesViewer);
             validateSuperTypes();
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.eclipse.ui.IPersistable#saveState(org.eclipse.ui.IMemento)
+     */
+    @Override
+    public void saveState( final IMemento memento ) {
+        memento.putBoolean(MementoKeys.CHILD_NODE_SECTION_EXPANDED, this.childNodeSection.isExpanded());
+        memento.putBoolean(MementoKeys.NAMESPACE_SECTION_EXPANDED, this.namespaceSection.isExpanded());
+        memento.putBoolean(MementoKeys.PROPERTY_SECTION_EXPANDED, this.propertiesSection.isExpanded());
+
+        // selected node type
+        final NodeTypeDefinition nodeTypeDefinition = getSelectedNodeType();
+
+        if (nodeTypeDefinition == null) {
+            memento.putString(MementoKeys.SELECTED_NODE_TYPE, Utils.EMPTY_STRING);
+        } else {
+            memento.putString(MementoKeys.SELECTED_NODE_TYPE, nodeTypeDefinition.getName());
+        }
+
+        // node type filter
+        if (!Utils.isEmpty(this.nodeTypeNameFilterPattern)) {
+            memento.putString(MementoKeys.NODE_TYPE_FILTER, this.nodeTypeNameFilterPattern);
         }
     }
 
@@ -2352,23 +2459,30 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
     private void updateMessage( final ValidationStatus status,
                                 final ErrorMessage errorMessage ) {
         final IMessageManager msgMgr = getCndEditor().getMessageManager();
+        msgMgr.setAutoUpdate(false);
+        final Control control = errorMessage.getControl();
+        msgMgr.removeMessages(control);
+
         JcrUiUtils.setMessage(status, errorMessage);
 
-        if (errorMessage.isOk()) {
-            if (errorMessage.getControl() == null) {
-                msgMgr.removeMessage(errorMessage.getKey());
-            } else {
-                msgMgr.removeMessage(errorMessage.getKey(), errorMessage.getControl());
-            }
-        } else {
-            if (errorMessage.getControl() == null) {
-                msgMgr.addMessage(errorMessage.getKey(), errorMessage.getMessage(), errorMessage.getData(),
-                                  errorMessage.getMessageType());
+        if (!errorMessage.isOk()) {
+            if (status instanceof MultiValidationStatus) {
+                final Object data = errorMessage.getData();
+                final MultiValidationStatus multiStatus = (MultiValidationStatus)status;
+
+                for (final ValidationStatus singleStatus : multiStatus.getAll()) {
+                    if (!singleStatus.isOk()) {
+                        msgMgr.addMessage(singleStatus.getMessage(), singleStatus.getMessage(), data,
+                                          JcrUiUtils.getMessageType(singleStatus), control);
+                    }
+                }
             } else {
                 msgMgr.addMessage(errorMessage.getKey(), errorMessage.getMessage(), errorMessage.getData(),
                                   errorMessage.getMessageType(), errorMessage.getControl());
             }
         }
+
+        msgMgr.setAutoUpdate(true);
     }
 
     private void validateAttributes() {
@@ -2376,19 +2490,11 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
     }
 
     private void validateChildNodes() {
-        final NodeTypeDefinition nodeTypeDefinition = getSelectedNodeType();
-
-        if (nodeTypeDefinition == null) {
-            this.nodeTypesError.setOkMessage(null);
-        } else {
-            final MultiValidationStatus status = CndValidator.validateChildNodeDefinitions(nodeTypeDefinition.getName(),
-                                                                                           nodeTypeDefinition.getChildNodeDefinitions());
-            updateMessage(status, this.nodeTypesError);
-        }
+        validateNodeTypes();
     }
 
     private void validateName() {
-        updateMessage(this.nameEditor.getStatus(), this.nodeTypeNameError);
+        validateNodeTypes();
     }
 
     private void validateNamespaces() {
@@ -2397,39 +2503,16 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
     }
 
     private void validateNodeTypes() {
-        final MultiValidationStatus status = CndValidator.validateNodeTypeDefinitions(getCnd().getNodeTypeDefinitions());
+        final MultiValidationStatus status = CndValidator.validateNodeTypeDefinitions(getCnd().getNodeTypeDefinitions(), true);
         updateMessage(status, this.nodeTypesError);
     }
 
     private void validateProperties() {
-        final NodeTypeDefinition nodeTypeDefinition = getSelectedNodeType();
-
-        if (nodeTypeDefinition == null) {
-            this.propertiesError.setOkMessage(null);
-        } else {
-            final MultiValidationStatus status = CndValidator.validatePropertyDefinitions(nodeTypeDefinition.getName(),
-                                                                                          nodeTypeDefinition.getPropertyDefinitions());
-            updateMessage(status, this.propertiesError);
-        }
+        validateNodeTypes();
     }
 
     private void validateSuperTypes() {
-        final NodeTypeDefinition nodeTypeDefinition = getSelectedNodeType();
-
-        if (nodeTypeDefinition == null) {
-            this.superTypesError.setOkMessage(null);
-        } else {
-            String nodeTypeName = nodeTypeDefinition.getName();
-
-            if (Utils.isEmpty(nodeTypeName)) {
-                nodeTypeName = Messages.missingName;
-            }
-
-            final MultiValidationStatus status = CndValidator.validateSuperTypes(nodeTypeName,
-                                                                                 nodeTypeDefinition.getState(PropertyName.SUPERTYPES),
-                                                                                 nodeTypeDefinition.getDeclaredSupertypeNames());
-            updateMessage(status, this.superTypesError);
-        }
+        validateNodeTypes();
     }
 
     interface ChildNodeColumnIndexes {
@@ -2437,6 +2520,17 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
         int DEFAULT_TYPE = 2;
         int NAME = 0;
         int REQUIRED_TYPES = 1;
+    }
+
+    /**
+     * The memento keys for saving and restoring editor state.
+     */
+    private interface MementoKeys {
+        String CHILD_NODE_SECTION_EXPANDED = "CHILD_NODE_SECTION_EXPANDED"; //$NON-NLS-1$
+        String NAMESPACE_SECTION_EXPANDED = "NAMESPACE_SECTION_EXPANDED"; //$NON-NLS-1$
+        String NODE_TYPE_FILTER = "NODE_TYPE_FILTER"; //$NON-NLS-1$
+        String PROPERTY_SECTION_EXPANDED = "PROPERTY_SECTION_EXPANDED"; //$NON-NLS-1$
+        String SELECTED_NODE_TYPE = "SELECTED_NODE_TYPE"; //$NON-NLS-1$
     }
 
     interface NamespaceColumnIndexes {

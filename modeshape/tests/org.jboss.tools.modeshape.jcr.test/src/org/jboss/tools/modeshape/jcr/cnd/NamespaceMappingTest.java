@@ -34,7 +34,7 @@ public class NamespaceMappingTest {
         final String PREFIX = "prefix"; //$NON-NLS-1$
         final String URI = "uri"; //$NON-NLS-1$
         this.namespaceMapping = new NamespaceMapping(PREFIX, URI);
-        assertEquals(NamespaceMapping.NOTATION_PREFIX + PREFIX + NamespaceMapping.NOTATION_DELIMITER + URI
+        assertEquals(NamespaceMapping.NOTATION_PREFIX + PREFIX + NamespaceMapping.NOTATION_DELIMITER + '\'' + URI + '\''
                 + NamespaceMapping.NOTATION_SUFFIX, this.namespaceMapping.toCndNotation(NotationType.COMPACT));
     }
 
@@ -43,7 +43,7 @@ public class NamespaceMappingTest {
         final String PREFIX = "prefix"; //$NON-NLS-1$
         final String URI = "uri"; //$NON-NLS-1$
         this.namespaceMapping = new NamespaceMapping(PREFIX, URI);
-        assertEquals(NamespaceMapping.NOTATION_PREFIX + PREFIX + NamespaceMapping.NOTATION_DELIMITER + URI
+        assertEquals(NamespaceMapping.NOTATION_PREFIX + PREFIX + NamespaceMapping.NOTATION_DELIMITER + '\'' + URI + '\''
                 + NamespaceMapping.NOTATION_SUFFIX, this.namespaceMapping.toCndNotation(NotationType.COMPRESSED));
     }
 
@@ -52,7 +52,7 @@ public class NamespaceMappingTest {
         final String PREFIX = "prefix"; //$NON-NLS-1$
         final String URI = "uri"; //$NON-NLS-1$
         this.namespaceMapping = new NamespaceMapping(PREFIX, URI);
-        assertEquals(NamespaceMapping.NOTATION_PREFIX + PREFIX + NamespaceMapping.NOTATION_DELIMITER + URI
+        assertEquals(NamespaceMapping.NOTATION_PREFIX + PREFIX + NamespaceMapping.NOTATION_DELIMITER + '\'' + URI + '\''
                 + NamespaceMapping.NOTATION_SUFFIX, this.namespaceMapping.toCndNotation(NotationType.LONG));
     }
 
@@ -201,12 +201,12 @@ public class NamespaceMappingTest {
         NamespaceMapping thatNamespaceMapping = NamespaceMapping.copy(this.namespaceMapping);
         assertEquals(this.namespaceMapping, thatNamespaceMapping);
         assertEquals(this.namespaceMapping.hashCode(), thatNamespaceMapping.hashCode());
-        
+
         assertTrue(this.namespaceMapping.setPrefix(Constants.NAMESPACE_PREFIX1));
         thatNamespaceMapping = NamespaceMapping.copy(this.namespaceMapping);
         assertEquals(this.namespaceMapping, thatNamespaceMapping);
         assertEquals(this.namespaceMapping.hashCode(), thatNamespaceMapping.hashCode());
-        
+
         assertTrue(this.namespaceMapping.setUri(Constants.NAMESPACE_URI1));
         thatNamespaceMapping = NamespaceMapping.copy(this.namespaceMapping);
         assertEquals(this.namespaceMapping, thatNamespaceMapping);

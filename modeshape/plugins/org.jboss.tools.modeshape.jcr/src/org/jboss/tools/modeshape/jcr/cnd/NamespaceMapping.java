@@ -225,9 +225,11 @@ public class NamespaceMapping implements CndElement, Comparable {
     public String toCndNotation( final NotationType notationType ) {
         final StringBuilder builder = new StringBuilder();
         builder.append(NOTATION_PREFIX);
-        builder.append(this.prefix.toCndNotation(notationType));
+        builder.append(this.prefix.get());
         builder.append(NOTATION_DELIMITER);
-        builder.append(this.uri.toCndNotation(notationType));
+        builder.append(LocalName.Mode.SINGLE_QUOTED); // the CND parser seems to require URI surrounded by quotes
+        builder.append(this.uri.get());
+        builder.append(LocalName.Mode.SINGLE_QUOTED);
         builder.append(NOTATION_SUFFIX);
 
         return builder.toString();

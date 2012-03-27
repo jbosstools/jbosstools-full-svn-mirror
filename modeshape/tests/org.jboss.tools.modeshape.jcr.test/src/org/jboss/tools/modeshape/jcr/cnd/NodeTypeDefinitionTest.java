@@ -481,7 +481,7 @@ public class NodeTypeDefinitionTest {
         assertEquals(1, l.getCount());
         assertEquals(PropertyName.PRIMARY_ITEM.toString(), l.getPropertyName());
         assertEquals(PRIMARY_ITEM, l.getNewValue());
-        assertNull(l.getOldValue());
+        assertTrue(Utils.isEmpty((String)l.getOldValue()));
     }
 
     @Test

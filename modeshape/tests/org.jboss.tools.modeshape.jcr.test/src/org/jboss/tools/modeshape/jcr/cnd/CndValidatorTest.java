@@ -147,7 +147,7 @@ public class CndValidatorTest {
         this.nodeTypeDefinition.addChildNodeDefinition(this.childNodeDefinition);
         this.nodeTypeDefinition.addChildNodeDefinition(child2);
 
-        assertTrue(CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition, null).isError());
+        assertTrue(CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition, null, true).isError());
     }
 
     @Test
@@ -162,22 +162,22 @@ public class CndValidatorTest {
         this.nodeTypeDefinition.addPropertyDefinition(this.propertyDefinition);
         this.nodeTypeDefinition.addPropertyDefinition(prop2);
 
-        assertTrue(CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition, null).isError());
+        assertTrue(CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition, null, true).isError());
     }
 
     @Test
     public void nodeTypeDefinitionWithEmptyNameShouldAnError() {
         this.nodeTypeDefinition.setName(null);
-        assertTrue(CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition, null).isError());
+        assertTrue(CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition, null, false).isError());
 
         this.nodeTypeDefinition.setName(Utils.EMPTY_STRING);
-        assertTrue(CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition, null).isError());
+        assertTrue(CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition, null, false).isError());
     }
 
     @Test
     public void nodeTypeDefinitionWithInvalidNameShouldBeAnError() {
         this.nodeTypeDefinition.setName("invalid/name"); //$NON-NLS-1$
-        assertTrue(CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition, null).isError());
+        assertTrue(CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition, null, false).isError());
     }
 
     @Test
@@ -185,7 +185,7 @@ public class CndValidatorTest {
         this.nodeTypeDefinition.setName("nodeTypeName"); //$NON-NLS-1$
         this.nodeTypeDefinition.setPrimaryItemName("invalid/name"); //$NON-NLS-1$
 
-        assertTrue(CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition, null).isError());
+        assertTrue(CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition, null, false).isError());
     }
 
     @Test
@@ -193,13 +193,13 @@ public class CndValidatorTest {
         this.nodeTypeDefinition.setName("nodeTypeName"); //$NON-NLS-1$
         this.nodeTypeDefinition.addSuperType("invalid/name"); //$NON-NLS-1$
 
-        assertTrue(CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition, null).isError());
+        assertTrue(CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition, null, false).isError());
     }
 
     @Test
     public void nodeTypeDefinitionWithoutPropertiesAndChildNodesShouldBeAWarning() {
         this.nodeTypeDefinition.setName("name"); //$NON-NLS-1$
-        assertTrue(CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition, null).isWarning());
+        assertTrue(CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition, null, false).isWarning());
     }
 
     @Test
@@ -241,23 +241,83 @@ public class CndValidatorTest {
     }
 
     @Test
-    public void shouldNotAllDuplicateNamespacePrefixes() {
+    public void shouldAllowChildNodeDefinitionsWithResidualNames() {
+        this.childNodeDefinition.setName(ItemDefinition.RESIDUAL_NAME);
+        assertTrue(CndValidator.validateName(this.childNodeDefinition, null).isOk());
+    }
+
+    @Test
+    public void shouldAllowMultipleChildNodeDefinitionsWithResidualNames() {
+        this.nodeTypeDefinition.setName("nodeName"); //$NON-NLS-1$
+        this.childNodeDefinition.setName(ItemDefinition.RESIDUAL_NAME);
+        final ChildNodeDefinition childNode2 = new ChildNodeDefinition();
+        childNode2.setName(ItemDefinition.RESIDUAL_NAME);
+        this.nodeTypeDefinition.addChildNodeDefinition(this.childNodeDefinition);
+        this.nodeTypeDefinition.addChildNodeDefinition(childNode2);
+        assertTrue(CndValidator.validateChildNodeDefinitions(this.nodeTypeDefinition.getName(),
+                                                             this.nodeTypeDefinition.getChildNodeDefinitions()).isOk());
+    }
+
+    @Test
+    public void shouldAllowMultiplePropertyDefinitionsWithResidualNames() {
+        this.nodeTypeDefinition.setName("nodeName"); //$NON-NLS-1$
+        this.propertyDefinition.setName(ItemDefinition.RESIDUAL_NAME);
+        final PropertyDefinition propDefn2 = new PropertyDefinition();
+        propDefn2.setName(ItemDefinition.RESIDUAL_NAME);
+        this.nodeTypeDefinition.addPropertyDefinition(this.propertyDefinition);
+        this.nodeTypeDefinition.addPropertyDefinition(propDefn2);
+        assertTrue(CndValidator.validatePropertyDefinitions(this.nodeTypeDefinition.getName(),
+                                                            this.nodeTypeDefinition.getPropertyDefinitions()).isOk());
+    }
+
+    @Test
+    public void shouldAllowPropertyDefinitionsWithResidualNames() {
+        this.propertyDefinition.setName(ItemDefinition.RESIDUAL_NAME);
+        assertTrue(CndValidator.validateName(this.propertyDefinition, null).isOk());
+    }
+
+    @Test
+    public void shouldNotAllowChildNodeDefinitionsWithSameName() {
+        this.nodeTypeDefinition.setName("nodeName"); //$NON-NLS-1$
+        this.childNodeDefinition.setName("name"); //$NON-NLS-1$
+        final ChildNodeDefinition childNode2 = new ChildNodeDefinition();
+        childNode2.setName(this.childNodeDefinition.getName());
+        this.nodeTypeDefinition.addChildNodeDefinition(this.childNodeDefinition);
+        this.nodeTypeDefinition.addChildNodeDefinition(childNode2);
+        assertTrue(CndValidator.validateChildNodeDefinitions(this.nodeTypeDefinition.getName(),
+                                                             this.nodeTypeDefinition.getChildNodeDefinitions()).isError());
+    }
+
+    @Test
+    public void shouldNotAllowDuplicateNamespacePrefixes() {
         // create a namespace mapping with a prefix that already exists and a URI that doesn't exist in the default namespaces
         final NamespaceMapping namespaceMapping = new NamespaceMapping(Constants.NAMESPACE_PREFIX1, "xyz"); //$NON-NLS-1$
         assertTrue(CndValidator.validateNamespaceMapping(namespaceMapping, Constants.Helper.getDefaultNamespaces()).isError());
     }
 
     @Test
-    public void shouldNotAllDuplicateNamespaceUris() {
+    public void shouldNotAllowDuplicateNamespaceUris() {
         // create a namespace mapping with a URI that already exists and a prefix that doesn't exist in the default namespaces
         final NamespaceMapping namespaceMapping = new NamespaceMapping("xyz", Constants.NAMESPACE_URI1); //$NON-NLS-1$
         assertTrue(CndValidator.validateNamespaceMapping(namespaceMapping, Constants.Helper.getDefaultNamespaces()).isError());
     }
 
     @Test
-    public void shouldNotAllDuplicateQualifiedNames() {
+    public void shouldNotAllowDuplicateQualifiedNames() {
         assertTrue(CndValidator.validateQualifiedName(Constants.QUALIFIED_NAME1,
                                                       "propertyName", Constants.Helper.getDefaultQualifiers(), Constants.Helper.getDefaultQualifiedNames()).isError()); //$NON-NLS-1$
+    }
+
+    @Test
+    public void shouldNotAllowPropertyDefinitionsWithSameName() {
+        this.nodeTypeDefinition.setName("nodeName"); //$NON-NLS-1$
+        this.propertyDefinition.setName("name"); //$NON-NLS-1$
+        final PropertyDefinition propDefn2 = new PropertyDefinition();
+        propDefn2.setName(this.propertyDefinition.getName());
+        this.nodeTypeDefinition.addPropertyDefinition(this.propertyDefinition);
+        this.nodeTypeDefinition.addPropertyDefinition(propDefn2);
+        assertTrue(CndValidator.validatePropertyDefinitions(this.nodeTypeDefinition.getName(),
+                                                            this.nodeTypeDefinition.getPropertyDefinitions()).isError());
     }
 
     @Test

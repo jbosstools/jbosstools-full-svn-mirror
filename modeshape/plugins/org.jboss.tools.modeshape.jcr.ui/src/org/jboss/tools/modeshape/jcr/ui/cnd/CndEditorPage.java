@@ -16,6 +16,8 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IMemento;
+import org.eclipse.ui.IPersistableEditor;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.IMessageManager;
 import org.eclipse.ui.forms.editor.FormPage;
@@ -24,9 +26,14 @@ import org.jboss.tools.modeshape.jcr.cnd.CompactNodeTypeDefinition;
 import org.jboss.tools.modeshape.ui.forms.ErrorMessage;
 
 /**
- * 
+ * The CND editor's form page(s) base class.
  */
-public abstract class CndEditorPage extends FormPage {
+public abstract class CndEditorPage extends FormPage implements IPersistableEditor {
+
+    /**
+     * The memento used to restore editor state (can be <code>null</code>).
+     */
+    protected IMemento memento;
 
     /**
      * @param cndEditor the CND editor (cannot be <code>null</code>)
@@ -112,6 +119,26 @@ public abstract class CndEditorPage extends FormPage {
      */
     protected boolean isReadonly() {
         return getCndEditor().isReadOnly();
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.eclipse.ui.IPersistableEditor#restoreState(org.eclipse.ui.IMemento)
+     */
+    @Override
+    public final void restoreState( IMemento memento ) {
+        this.memento = memento;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.eclipse.ui.IPersistable#saveState(org.eclipse.ui.IMemento)
+     */
+    @Override
+    public void saveState( IMemento memento ) {
+        // nothing to do. subclassses can override.
     }
 
     /**

@@ -467,13 +467,20 @@ public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTempl
     }
 
     /**
+     * @return the qualified primary item name (never <code>null</code>)
+     */
+    public QualifiedName getPrimaryItem() {
+        return this.attributes.getPrimaryItem().getPrimaryItem();
+    }
+
+    /**
      * {@inheritDoc}
      * 
      * @see javax.jcr.nodetype.NodeTypeDefinition#getPrimaryItemName()
      */
     @Override
     public String getPrimaryItemName() {
-        final String primaryItem = this.attributes.getPrimaryItem().getPrimaryItem();
+        final String primaryItem = this.attributes.getPrimaryItem().getPrimaryItem().get();
 
         // API states to return null
         if (Utils.isEmpty(primaryItem)) {
@@ -804,7 +811,7 @@ public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTempl
      */
     @Override
     public void setPrimaryItemName( final String newPrimaryItem ) {
-        final String oldName = this.attributes.getPrimaryItem().getPrimaryItem();
+        final String oldName = this.attributes.getPrimaryItem().getPrimaryItem().get();
 
         if (this.attributes.getPrimaryItem().setPrimaryItem(newPrimaryItem)) {
             notifyChangeListeners(PropertyName.PRIMARY_ITEM, oldName, newPrimaryItem);

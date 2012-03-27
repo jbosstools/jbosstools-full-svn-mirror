@@ -40,6 +40,22 @@ public interface JcrUiConstants {
     }
 
     /**
+     * The file extensions for JCR-related files.
+     */
+    interface FileExtensions {
+
+        /**
+         * File extension for Compact Node Definition (CND) files.
+         */
+        String CND = "cnd"; //$NON-NLS-1$
+
+        /**
+         * File extension for Compact Node Definition (CND) files prefixed with a dot.
+         */
+        String DOT_CND = '.' + CND;
+    }
+
+    /**
      * The image paths.
      */
     interface Images {

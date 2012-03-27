@@ -50,6 +50,9 @@ public class PrimaryItemTest implements Constants {
     public void stateShouldBeIsNotWhenSettingEmptyPrimaryItem() {
         assertTrue(this.attribute.setPrimaryItem("primaryItem")); //$NON-NLS-1$
         assertTrue(this.attribute.setPrimaryItem(Utils.EMPTY_STRING));
+        assertTrue(this.attribute.isNot());
+
+        assertTrue(this.attribute.setPrimaryItem("primaryItem")); //$NON-NLS-1$
         assertTrue(this.attribute.setPrimaryItem(null));
         assertTrue(this.attribute.isNot());
     }

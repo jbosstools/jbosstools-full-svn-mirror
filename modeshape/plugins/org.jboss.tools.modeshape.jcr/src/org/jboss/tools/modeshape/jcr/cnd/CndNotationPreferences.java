@@ -83,7 +83,7 @@ public class CndNotationPreferences {
         map.put(Preference.NAMESPACE_MAPPING_DELIMITER, "\n"); //$NON-NLS-1$
         map.put(Preference.NAMESPACE_MAPPING_SECTION_END_DELIMITER, "\n"); //$NON-NLS-1$
         map.put(Preference.CHILD_NODE_ATTRIBUTES_DELIMITER, Utils.SPACE_STRING);
-        map.put(Preference.NODE_TYPE_DEFINITION_ATTRIBUTES_END_DELIMITER, "\n"); //$NON-NLS-1$
+        map.put(Preference.NODE_TYPE_DEFINITION_ATTRIBUTES_END_DELIMITER, Utils.SPACE_STRING);
         map.put(Preference.NODE_TYPE_DEFINITION_DELIMITER, "\n"); //$NON-NLS-1$
         map.put(Preference.NODE_TYPE_DEFINITION_NAME_END_DELIMITER, Utils.SPACE_STRING);
         map.put(Preference.NODE_TYPE_DEFINITION_SECTION_END_DELIMITER, "\n"); //$NON-NLS-1$

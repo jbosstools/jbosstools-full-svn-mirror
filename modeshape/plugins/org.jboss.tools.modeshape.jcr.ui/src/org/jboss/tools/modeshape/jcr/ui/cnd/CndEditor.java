@@ -9,6 +9,8 @@ package org.jboss.tools.modeshape.jcr.ui.cnd;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,14 +20,19 @@ import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
+import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourceAttributes;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.source.IAnnotationModel;
+import org.eclipse.jface.window.Window;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Event;
@@ -37,6 +44,7 @@ import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.IPersistableEditor;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.editors.text.FileDocumentProvider;
 import org.eclipse.ui.editors.text.TextEditor;
 import org.eclipse.ui.forms.IManagedForm;
@@ -44,6 +52,8 @@ import org.eclipse.ui.forms.IMessageManager;
 import org.eclipse.ui.forms.editor.SharedHeaderFormEditor;
 import org.eclipse.ui.forms.widgets.Form;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
+import org.eclipse.ui.part.FileEditorInput;
+import org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType;
 import org.jboss.tools.modeshape.jcr.cnd.CndImporter;
 import org.jboss.tools.modeshape.jcr.cnd.CompactNodeTypeDefinition;
 import org.jboss.tools.modeshape.jcr.ui.Activator;
@@ -58,26 +68,21 @@ import org.jboss.tools.modeshape.ui.forms.MessageFormDialog;
 public final class CndEditor extends SharedHeaderFormEditor implements IPersistableEditor, IResourceChangeListener,
         PropertyChangeListener {
 
-    /**
-     * The memento key for the index of the selected editor.
-     */
-    private static final String SELECTED_PAGE = "SELECTED_PAGE"; //$NON-NLS-1$
-
-    private boolean dirty = false;
-    private boolean readOnly = false;
-
-    private IMemento memento;
-
-    private final FileDocumentProvider documentProvider = new FileDocumentProvider();
-    private long modificationStamp = 0;
-    private Listener refreshListener;
-
-    private CompactNodeTypeDefinition originalCnd;
     private CompactNodeTypeDefinition cndBeingEdited;
 
-    private ScrolledForm scrolledForm;
+    private boolean dirty = false;
+    private final FileDocumentProvider documentProvider = new FileDocumentProvider();
 
     private final CndEditorPage formsPage;
+
+    private IMemento memento;
+    private long modificationStamp = 0;
+    private CompactNodeTypeDefinition originalCnd;
+
+    private boolean readOnly = false;
+    private Listener refreshListener;
+
+    private ScrolledForm scrolledForm;
 
     /**
      * Constructs a CND editor.
@@ -105,7 +110,8 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
         try {
             addPage(0, this.formsPage); // Page 0: Forms Editor Page
 
-            TextEditor sourceEditor = new TextEditor() {
+            final TextEditor sourceEditor = new TextEditor() {
+
                 /**
                  * {@inheritDoc}
                  * 
@@ -142,7 +148,7 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
             int selectedPageNum = 0;
 
             if (this.memento != null) {
-                final int value = this.memento.getInteger(SELECTED_PAGE);
+                final int value = this.memento.getInteger(MementoKeys.SELECTED_PAGE);
 
                 if (value != -1) {
                     selectedPageNum = value;
@@ -154,6 +160,33 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
             // this will open a "Could not open editor" page with exception details
             throw new RuntimeException(CndMessages.errorOpeningCndEditor, e);
         }
+    }
+
+    private void createCnd() throws Exception {
+        final CndImporter importer = new CndImporter();
+        final List<Throwable> errors = new ArrayList<Throwable>();
+        this.originalCnd = importer.importFrom(getFile().getContents(), errors, getFile().getName());
+
+        // check for parse errors
+        if (!errors.isEmpty()) {
+            final Throwable t = errors.iterator().next();
+
+            if (t.getCause() == null) {
+                throw new RuntimeException(t);
+            }
+
+            throw new RuntimeException(t.getCause());
+        }
+
+        // unhook lstening to current CND being edited
+        if (this.cndBeingEdited != null) {
+            this.cndBeingEdited.removeListener(this);
+        }
+
+        // copy over CND
+        this.cndBeingEdited = CompactNodeTypeDefinition.copy(this.originalCnd);
+        this.cndBeingEdited.addListener(this);
+        this.formsPage.handleCndReloaded();
     }
 
     //
@@ -187,24 +220,6 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
     // this.showRegistryViewAction = new ShowModelExtensionRegistryViewAction();
     // }
 
-    private void createCnd() throws Exception {
-        // TODO implement createCnd
-        CndImporter importer = new CndImporter();
-        List<Throwable> errors = new ArrayList<Throwable>();
-        this.originalCnd = importer.importFrom(getFile().getContents(), errors, getFile().getName());
-
-        // TODO process parse errors here
-        
-        // unhook lstening to current CND being edited
-        if (this.cndBeingEdited != null)  {
-            this.cndBeingEdited.removeListener(this);
-        }
-
-        // copy over CND
-        this.cndBeingEdited = CompactNodeTypeDefinition.copy(this.originalCnd);
-        this.cndBeingEdited.addListener(this);
-    }
-
     /**
      * {@inheritDoc}
      * 
@@ -227,6 +242,17 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
     /**
      * {@inheritDoc}
      * 
+     * @see org.eclipse.ui.forms.editor.SharedHeaderFormEditor#dispose()
+     */
+    @Override
+    public void dispose() {
+        ResourcesPlugin.getWorkspace().removeResourceChangeListener(this);
+        super.dispose();
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
      * @see org.eclipse.ui.part.EditorPart#doSave(org.eclipse.core.runtime.IProgressMonitor)
      */
     @Override
@@ -241,51 +267,50 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
      */
     @Override
     public void doSaveAs() {
-        // TODO implement doSaveAs
-//        final IProgressMonitor progressMonitor = getProgressMonitor();
-        // SaveAsDialog dialog = new SaveAsDialog(getShell());
-        // dialog.setOriginalFile(getFile());
-        // dialog.create();
-        //
-        // // dialog was canceled
-        // if (dialog.open() == Window.CANCEL) {
-        // if (progressMonitor != null) {
-        // progressMonitor.setCanceled(true);
-        // }
-        //
-        // return;
-        // }
-        //
-        // // dialog OK'd
-        // IPath filePath = dialog.getResult();
-        //
-        // // make sure that file has the right extension
-        // if (!ExtensionConstants.MED_EXTENSION.equals(filePath.getFileExtension())) {
-        // filePath = filePath.addFileExtension(ExtensionConstants.MED_EXTENSION);
-        // }
-        //
-        // IWorkspace workspace = ResourcesPlugin.getWorkspace();
-        // IFile file = workspace.getRoot().getFile(filePath);
-        //
-        // try {
-        // // create set new editor input file
-        // InputStream emptyStream = new ByteArrayInputStream(new byte[0]);
-        // file.create(emptyStream, true, progressMonitor);
-        // setInput(new FileEditorInput(file));
-        //
-        // // save MED in new file
-        // internalSave(progressMonitor);
-        // } catch (Exception e) {
-        // IStatus status = null;
-        //
-        // if (!(e instanceof CoreException)) {
-        // status = new Status(IStatus.ERROR, JcrUiConstants.PLUGIN_ID, e.getLocalizedMessage());
-        // } else {
-        // status = ((CoreException)e).getStatus();
-        // }
-        //
-        // ErrorDialog.openError(getShell(), UiMessages.errorDialogTitle, CndMessages.cndEditorSaveError, status);
-        // }
+        final IProgressMonitor progressMonitor = getProgressMonitor();
+        final SaveAsDialog dialog = new SaveAsDialog(getShell());
+        dialog.setOriginalFile(getFile());
+        dialog.create();
+
+        // dialog was canceled
+        if (dialog.open() == Window.CANCEL) {
+            if (progressMonitor != null) {
+                progressMonitor.setCanceled(true);
+            }
+
+            return;
+        }
+
+        // dialog OK'd
+        IPath filePath = dialog.getResult();
+
+        // make sure that file has the right extension
+        if (!JcrUiConstants.FileExtensions.CND.equals(filePath.getFileExtension())) {
+            filePath = filePath.addFileExtension(JcrUiConstants.FileExtensions.CND);
+        }
+
+        final IWorkspace workspace = ResourcesPlugin.getWorkspace();
+        final IFile file = workspace.getRoot().getFile(filePath);
+
+        try {
+            // create set new editor input file
+            final InputStream emptyStream = new ByteArrayInputStream(new byte[0]);
+            file.create(emptyStream, true, progressMonitor);
+            setInput(new FileEditorInput(file));
+
+            // save CND in new file
+            internalSave(progressMonitor);
+        } catch (final Exception e) {
+            IStatus status = null;
+
+            if (!(e instanceof CoreException)) {
+                status = new Status(IStatus.ERROR, JcrUiConstants.PLUGIN_ID, e.getLocalizedMessage());
+            } else {
+                status = ((CoreException)e).getStatus();
+            }
+
+            ErrorDialog.openError(getShell(), UiMessages.errorDialogTitle, CndMessages.cndEditorSaveError, status);
+        }
     }
 
     /**
@@ -308,11 +333,11 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
     IMessageManager getMessageManager() {
         return this.scrolledForm.getMessageManager();
     }
-//
-//    private IProgressMonitor getProgressMonitor() {
-//        final IStatusLineManager statusLineMgr = getEditorSite().getActionBars().getStatusLineManager();
-//        return ((statusLineMgr == null) ? null : statusLineMgr.getProgressMonitor());
-//    }
+
+    private IProgressMonitor getProgressMonitor() {
+        final IStatusLineManager statusLineMgr = getEditorSite().getActionBars().getStatusLineManager();
+        return ((statusLineMgr == null) ? null : statusLineMgr.getProgressMonitor());
+    }
 
     /**
      * @return the editor's shell (never <code>null</code>)
@@ -320,15 +345,6 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
     Shell getShell() {
         return getEditorSite().getShell();
     }
-//
-//    /**
-//     * Handler for page change listener.
-//     */
-//    void handlePageChanged() {
-//        final FormPage page = (FormPage)getSelectedPage();
-//        this.scrolledForm.setText(page.getTitle());
-//        page.setFocus();
-//    }
 
     /**
      * Registers an editor activation listener.
@@ -336,6 +352,16 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
     private void hookRefreshListener() {
         getContainer().addListener(SWT.Activate, this.refreshListener);
     }
+
+    //
+    // /**
+    // * Handler for page change listener.
+    // */
+    // void handlePageChanged() {
+    // final FormPage page = (FormPage)getSelectedPage();
+    // this.scrolledForm.setText(page.getTitle());
+    // page.setFocus();
+    // }
 
     /**
      * {@inheritDoc}
@@ -360,15 +386,12 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
         final IEditorInput input = getEditorInput();
 
         try {
-            // TODO need a CND writer
-            // ModelExtensionDefinitionWriter writer = new ModelExtensionDefinitionWriter();
-            // String medAsString = writer.writeAsText(this.cndBeingEdited);
-            // IDocument document = this.documentProvider.getDocument(input);
-            // document.set(medAsString);
-            //
-            // this.documentProvider.aboutToChange(input);
-            // this.documentProvider.saveDocument(progressMonitor, input, document, true);
-            // this.modificationStamp = this.documentProvider.getModificationStamp(input);
+            final IDocument document = this.documentProvider.getDocument(input);
+            document.set(getCnd().toCndNotation(NotationType.LONG)); // TODO hook this to notation type preference
+
+            this.documentProvider.aboutToChange(input);
+            this.documentProvider.saveDocument(progressMonitor, input, document, true);
+            this.modificationStamp = this.documentProvider.getModificationStamp(input);
 
             // create new original CND that that will then be copied over to the CND being edited
             createCnd();
@@ -451,7 +474,7 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
 
                     createCnd();
 
-                    this.formsPage.handleCndReloaded();
+                    // this.formsPage.handleCndReloaded();
                 } catch (final Exception e) {
                     // TODO log this
                     MessageFormDialog.openError(getShell(), CndMessages.cndEditorRefreshErrorTitle,
@@ -572,6 +595,7 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
     @Override
     public void restoreState( final IMemento memento ) {
         this.memento = memento;
+        this.formsPage.restoreState(this.memento);
     }
 
     /**
@@ -582,7 +606,8 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
     @Override
     public void saveState( final IMemento memento ) {
         final int selectedPageNum = getActivePage();
-        memento.putInteger(SELECTED_PAGE, selectedPageNum);
+        memento.putInteger(MementoKeys.SELECTED_PAGE, selectedPageNum);
+        this.formsPage.saveState(memento);
     }
 
     /**
@@ -636,5 +661,12 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
         if (!getContainer().isDisposed()) {
             getContainer().removeListener(SWT.Activate, this.refreshListener);
         }
+    }
+
+    /**
+     * The memento keys for saving and restoring editor state.
+     */
+    private interface MementoKeys {
+        String SELECTED_PAGE = "SELECTED_PAGE"; //$NON-NLS-1$
     }
 }
