@@ -22,6 +22,7 @@
 		mvn clean install -f site/sources/pom.xml
 		mvn clean install -f webtools-site/pom.xml
 		mvn clean install -f bottests-site/pom.xml
+		mvn clean install -f coretests-site/pom.xml
 		...
 	-->
 </project>
