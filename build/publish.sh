@@ -305,6 +305,18 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 		if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]]; then
 			echo "<meta http-equiv=\"refresh\" content=\"0;url=${BUILD_ID}-H${BUILD_NUMBER}/\">" > $tmpdir/latestBuild.html
 			if [[ ${PUBLISHPATHSUFFIX} ]]; then
+				date
+				# create folders if not already there
+				if [[ ${DESTINATION##*@*:*} == "" ]]; then # user@server, do remote op
+					seg="." 
+					for d in ${PUBLISHPATHSUFFIX/\// }; do 
+						seg=$seg/$d
+						echo -e "mkdir ${seg:2}" | sftp $DESTINATION/builds/nightly/
+					done
+					seg=""
+				else
+					mkdir -p $DESTINATION/builds/nightly/${PUBLISHPATHSUFFIX}
+				fi
 				date; rsync -arzq --protocol=28 --delete ${STAGINGDIR}/* $DESTINATION/builds/nightly/${PUBLISHPATHSUFFIX}/${BUILD_ID}-H${BUILD_NUMBER}/
 				# sftp only works with user@server, not with local $DESTINATIONS, so use rsync to push symlink instead
 				# echo -e "rm latest\nln ${BUILD_ID}-H${BUILD_NUMBER} latest" | sftp ${DESTINATIONREDUX}/builds/nightly/${PUBLISHPATHSUFFIX}/ 
