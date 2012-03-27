@@ -308,12 +308,7 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 				date
 				# create folders if not already there
 				if [[ ${DESTINATION##*@*:*} == "" ]]; then # user@server, do remote op
-					seg="." 
-					for d in ${PUBLISHPATHSUFFIX/\// }; do 
-						seg=$seg/$d
-						echo -e "mkdir ${seg:2}" | sftp $DESTINATION/builds/nightly/
-					done
-					seg=""
+					seg="."; for d in ${PUBLISHPATHSUFFIX/\// }; do seg=$seg/$d; echo -e "mkdir ${seg:2}" | sftp $DESTINATION/builds/nightly/; done; seg=""
 				else
 					mkdir -p $DESTINATION/builds/nightly/${PUBLISHPATHSUFFIX}
 				fi
@@ -438,7 +433,13 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 	# extra publish step for aggregate update sites ONLY
 	if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]]; then
 		if [[ ${PUBLISHPATHSUFFIX} ]]; then 
-			date; rsync -arzq --protocol=28 --delete ${STAGINGDIR}/all/repo/* $DESTINATION/updates/nightly/${PUBLISHPATHSUFFIX}/
+			# create folders if not already there
+			if [[ ${DESTINATION##*@*:*} == "" ]]; then # user@server, do remote op
+				seg="."; for d in ${PUBLISHPATHSUFFIX/\// }; do seg=$seg/$d; echo -e "mkdir ${seg:2}" | sftp $DESTINATION/updates/nightly/; done; seg=""
+			else
+				mkdir -p $DESTINATION/updates/nightly/${PUBLISHPATHSUFFIX}
+			fi
+		date; rsync -arzq --protocol=28 --delete ${STAGINGDIR}/all/repo/* $DESTINATION/updates/nightly/${PUBLISHPATHSUFFIX}/
 		else
 			date; rsync -arzq --protocol=28 --delete ${STAGINGDIR}/all/repo/* $DESTINATION/updates/nightly/${JOBNAMEREDUX}/
 		fi
