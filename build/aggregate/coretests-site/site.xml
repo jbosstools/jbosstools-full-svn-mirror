@@ -17,7 +17,6 @@
 		</description>
 	</category-def>
 
-<!-- TODO: includes feature.source features -->
 <feature url="features/org.jboss.ide.eclipse.archives.test.feature_0.0.0.jar" id="org.jboss.ide.eclipse.archives.test.feature" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
 <feature url="features/org.jboss.ide.eclipse.as.test.feature_0.0.0.jar" id="org.jboss.ide.eclipse.as.test.feature" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
 <feature url="features/org.jboss.tools.birt.test.feature_0.0.0.jar" id="org.jboss.tools.birt.test.feature" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
@@ -42,6 +41,31 @@
 <feature url="features/org.jboss.tools.usage.test.feature_0.0.0.jar" id="org.jboss.tools.usage.test.feature" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
 <feature url="features/org.jboss.tools.vpe.test.feature_0.0.0.jar" id="org.jboss.tools.vpe.test.feature" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
 <feature url="features/org.jboss.tools.ws.test.feature_0.0.0.jar" id="org.jboss.tools.ws.test.feature" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
+
+<feature url="features/org.jboss.ide.eclipse.archives.test.feature.source_0.0.0.jar" id="org.jboss.ide.eclipse.archives.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
+<feature url="features/org.jboss.ide.eclipse.as.test.feature.source_0.0.0.jar" id="org.jboss.ide.eclipse.as.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
+<feature url="features/org.jboss.tools.birt.test.feature.source_0.0.0.jar" id="org.jboss.tools.birt.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
+<feature url="features/org.jboss.tools.cdi.seam.test.feature.source_0.0.0.jar" id="org.jboss.tools.cdi.seam.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
+<feature url="features/org.jboss.tools.cdi.test.feature.source_0.0.0.jar" id="org.jboss.tools.cdi.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
+<!-- TODO add central sources <feature url="features/org.jboss.tools.central.test.feature.source_0.0.0.jar" id="org.jboss.tools.central.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature> -->
+<feature url="features/org.jboss.tools.common.all.test.feature.source_0.0.0.jar" id="org.jboss.tools.common.all.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
+<feature url="features/org.jboss.tools.project.examples.test.feature.source_0.0.0.jar" id="org.jboss.tools.project.examples.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
+<feature url="features/org.jboss.tools.forge.test.feature.source_0.0.0.jar" id="org.jboss.tools.forge.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
+<feature url="features/org.jboss.ide.eclipse.freemarker.test.feature.source_0.0.0.jar" id="org.jboss.ide.eclipse.freemarker.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
+<feature url="features/org.hibernate.eclipse.test.feature.source_0.0.0.jar" id="org.hibernate.eclipse.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
+<feature url="features/org.jboss.tools.jmx.test.feature.source_0.0.0.jar" id="org.jboss.tools.jmx.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
+<feature url="features/org.jboss.tools.jsf.test.feature.source_0.0.0.jar" id="org.jboss.tools.jsf.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
+<feature url="features/org.jboss.tools.jst.test.feature.source_0.0.0.jar" id="org.jboss.tools.jst.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
+<feature url="features/org.jboss.tools.maven.test.feature.source_0.0.0.jar" id="org.jboss.tools.maven.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
+<feature url="features/org.jboss.tools.openshift.express.test.feature.source_0.0.0.jar" id="org.jboss.tools.openshift.express.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
+<feature url="features/org.jboss.tools.portlet.test.feature.source_0.0.0.jar" id="org.jboss.tools.portlet.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
+<!-- TODO: add <feature url="features/org.jboss.tools.runtime.test.feature.source_0.0.0.jar" id="org.jboss.tools.runtime.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature> -->
+<feature url="features/org.jboss.tools.seam.test.feature.source_0.0.0.jar" id="org.jboss.tools.seam.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
+<feature url="features/org.jboss.tools.struts.test.feature.source_0.0.0.jar" id="org.jboss.tools.struts.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
+<feature url="features/org.jboss.tools.test.feature.source_0.0.0.jar" id="org.jboss.tools.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
+<feature url="features/org.jboss.tools.usage.test.feature.source_0.0.0.jar" id="org.jboss.tools.usage.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
+<!-- TODO: add <feature url="features/org.jboss.tools.vpe.test.feature.source_0.0.0.jar" id="org.jboss.tools.vpe.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature> -->
+<feature url="features/org.jboss.tools.ws.test.feature.source_0.0.0.jar" id="org.jboss.tools.ws.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
 
 <!-- These should be on a SOA Tooling tests site, so they can be used by downstream
 <feature url="features/org.jboss.tools.bpel.test.feature_0.0.0.jar" id="org.jboss.tools.bpel.test.feature" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
