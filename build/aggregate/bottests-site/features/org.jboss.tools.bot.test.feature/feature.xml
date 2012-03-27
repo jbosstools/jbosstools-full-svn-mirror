@@ -30,29 +30,30 @@ Raleigh NC 27606 USA.
 	 Can source these from http://download.jboss.org/jbosstools/builds/staging/_composite_/trunk/
 	 -->
 
-	<!-- bpmn is not yet being built so this can't be available upstream -->
-<!--	<plugin id="org.jboss.tools.bpmn.ui.bot.test" download-size="0" install-size="0" version="0.0.0" /> -->
-
 	<plugin id="org.jboss.tools.tests" download-size="0" install-size="0" version="0.0.0" />
 	<plugin id="org.jboss.tools.ui.bot.ext" download-size="0" install-size="0" version="0.0.0" />
 	<plugin id="org.jboss.tools.ui.bot.ext.test" download-size="0" install-size="0" version="0.0.0" />
-	<plugin id="org.teiid.designer.ui.bot.ext" download-size="0" install-size="0" version="0.0.0" />
 
-	<plugin id="org.jboss.tools.bpel.ui.bot.test" download-size="0" install-size="0" version="0.0.0" />
 	<plugin id="org.jboss.tools.cdi.bot.test" download-size="0" install-size="0" version="0.0.0" />  
-	<plugin id="org.jboss.tools.deltacloud.ui.bot.test" download-size="0" install-size="0" version="0.0.0" /> 
-	<plugin id="org.jboss.tools.drools.ui.bot.test" download-size="0" install-size="0" version="0.0.0" /> 
-	<!-- TODO JBIDE-9464 add this back in after test is fixed <plugin id="org.jboss.tools.esb.ui.bot.test" download-size="0" install-size="0" version="0.0.0" />  -->
 	<plugin id="org.jboss.tools.hibernate.ui.bot.test" download-size="0" install-size="0" version="0.0.0" /> 
-	<plugin id="org.jboss.tools.jbpm.ui.bot.test" download-size="0" install-size="0" version="0.0.0" /> 
 	<plugin id="org.jboss.tools.jsf.ui.bot.test" download-size="0" install-size="0" version="0.0.0" /> 
 	<plugin id="org.jboss.tools.jst.ui.bot.test" download-size="0" install-size="0" version="0.0.0" /> 
-<!--	<plugin id="org.jboss.tools.maven.ui.bot.test" download-size="0" install-size="0" version="0.0.0" /> -->
-	<plugin id="org.jboss.tools.modeshape.rest.ui.bot.test" download-size="0" install-size="0" version="0.0.0" />
+	<!--	<plugin id="org.jboss.tools.maven.ui.bot.test" download-size="0" install-size="0" version="0.0.0" /> -->
 	<plugin id="org.jboss.tools.seam.ui.bot.test" download-size="0" install-size="0" version="0.0.0" /> 
-	<plugin id="org.jboss.tools.smooks.ui.bot.test" download-size="0" install-size="0" version="0.0.0" /> 
 	<plugin id="org.jboss.tools.struts.ui.bot.test" download-size="0" install-size="0" version="0.0.0" /> 
 	<plugin id="org.jboss.tools.vpe.ui.bot.test" download-size="0" install-size="0" version="0.0.0" /> 
 	<plugin id="org.jboss.tools.ws.ui.bot.test" download-size="0" install-size="0" version="0.0.0" />  
+
+	<!-- SOA Tooling tests -->
+	<plugin id="org.jboss.tools.bpel.ui.bot.test" download-size="0" install-size="0" version="0.0.0" />
+	<plugin id="org.jboss.tools.drools.ui.bot.test" download-size="0" install-size="0" version="0.0.0" /> 
+	<!-- TODO JBIDE-9464 add this back in after test is fixed <plugin id="org.jboss.tools.esb.ui.bot.test" download-size="0" install-size="0" version="0.0.0" />  -->
+	<plugin id="org.jboss.tools.jbpm.ui.bot.test" download-size="0" install-size="0" version="0.0.0" /> 
+	<plugin id="org.jboss.tools.modeshape.rest.ui.bot.test" download-size="0" install-size="0" version="0.0.0" />
+	<plugin id="org.teiid.designer.ui.bot.ext" download-size="0" install-size="0" version="0.0.0" />
 	<plugin id="org.teiid.designer.ui.bot.tests" download-size="0" install-size="0" version="0.0.0" />
+
+	<!-- removed/deprecated -->
+	<!-- JBIDE-10422 remove <plugin id="org.jboss.tools.deltacloud.ui.bot.test" download-size="0" install-size="0" version="0.0.0" /> -->
+	<!-- JBIDE-11088 remove <plugin id="org.jboss.tools.smooks.ui.bot.test" download-size="0" install-size="0" version="0.0.0" /> -->
 </feature>
