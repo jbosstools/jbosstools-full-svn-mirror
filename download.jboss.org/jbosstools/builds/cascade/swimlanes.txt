@@ -36,6 +36,7 @@ tptp [REMOVED]
 forge -> [NONE]
 (all but common and tests) -> usage
 
+jmx -> tests, common, usage
 examples -> portlet, jst, runtime
 portlet -> seam, as, tests, usage
 seam -> hibernate, jsf 
