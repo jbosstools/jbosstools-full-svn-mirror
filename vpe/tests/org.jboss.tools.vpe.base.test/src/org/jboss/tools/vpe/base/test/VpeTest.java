@@ -39,6 +39,7 @@ import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
 import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
 import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeController;
+import org.jboss.tools.vpe.editor.VpeSourceDomBuilder;
 import org.jboss.tools.vpe.editor.mapping.VpeDomMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeElementMapping;
 import org.jboss.tools.vpe.editor.mapping.VpeNodeMapping;
@@ -70,12 +71,9 @@ public class VpeTest extends TestCase implements ILogListener {
 
 	// FIX for JBIDE-1628
 	static {
-		JspEditorPlugin
-				.getDefault()
-				.getPreferenceStore()
-				.setValue(
-						IVpePreferencesPage.INFORM_WHEN_PROJECT_MIGHT_NOT_BE_CONFIGURED_PROPERLY_FOR_VPE,
-						false);
+		JspEditorPlugin.getDefault().getPreferenceStore().setValue(
+			IVpePreferencesPage.INFORM_WHEN_PROJECT_MIGHT_NOT_BE_CONFIGURED_PROPERLY_FOR_VPE,
+			false);
 	}
 
 	/**
@@ -178,9 +176,15 @@ public class VpeTest extends TestCase implements ILogListener {
 	 * @return source document
 	 */
 	protected Document getSourceDocument(VpeController controller) {
-
-		return controller.getSourceBuilder().getSourceDocument();
-
+		/*
+		 * https://issues.jboss.org/browse/JBIDE-11360
+		 * Check that VpeController and VpeSourceDomBuilder
+		 * are created.
+		 */
+		assertNotNull("VpeController is not initialized.", controller); //$NON-NLS-1$
+		VpeSourceDomBuilder vpeSourceDomBuilder = controller.getSourceBuilder();
+		assertNotNull("VpeSourceDomBuilder is not initialized.", vpeSourceDomBuilder); //$NON-NLS-1$
+		return vpeSourceDomBuilder.getSourceDocument();
 	}
 
 	/**
@@ -417,9 +421,7 @@ public class VpeTest extends TestCase implements ILogListener {
 	 * @param elementId
 	 * @return
 	 */
-	protected Element findSourceElementById(VpeController controller,
-			String elementId) {
-
+	protected Element findSourceElementById(VpeController controller, String elementId) {
 		return getSourceDocument(controller).getElementById(elementId);
 	}
 
@@ -432,6 +434,7 @@ public class VpeTest extends TestCase implements ILogListener {
 	 */
 	protected nsIDOMElement findElementById(VpeController controller,String elementId) {
 		Element sourceElement = findSourceElementById(controller, elementId);
+		assertNotNull("Source element with id='" + elementId + "' cannot be found.", sourceElement); //$NON-NLS-1$ //$NON-NLS-2$ 
 		nsIDOMElement element = null;
 		VpeNodeMapping nodeMapping = controller
 				.getDomMapping().getNodeMapping(sourceElement);
@@ -453,6 +456,7 @@ public class VpeTest extends TestCase implements ILogListener {
 	protected String getEditorID(){
 		return EDITOR_ID;
 	}
+	
 	/**
 	 * @author mareshkau
 	 * @param xulRunnerEditor
