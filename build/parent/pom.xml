@@ -35,9 +35,10 @@
 		<!-- 1a. URL of latest JBT target platform site -->
 		<jbosstools-target-site>http://download.jboss.org/jbosstools/updates/target-platform_3.3.indigo.SR2/latest/</jbosstools-target-site>
 
-		<!-- 1b. or use -Plocal.site -Dlocal.site=file:///home/$user/trunk/build/target-platform/REPO/ -->
+		<!-- 1b. or use -Plocal.site -Dlocal.site=file:///${HOME}/trunk/build/target-platform/REPO/ -->
 		<!-- TODO: don't forget to update JBDS .updatesite jobs when this value changes! -->
-		<local.site>file:///home/hudson/static_build_env/jbds/target-platform_3.3.indigo.SR2/e372M-wtp332M.target/</local.site>
+		<!-- TODO: see also 'hudson' profile below for other default value -->
+		<local.site>file:///${user.home}/.m2/jbosstools-target-platform_3.3.indigo.SR2/</local.site>
 
 		<!-- 2a. URL of latest JBT nightly staging composite site (all the components 
 			in once place) -->
@@ -585,6 +586,9 @@
 					<name>BUILD_NUMBER</name>
 				</property>
 			</activation>
+			<properties>
+				<local.site>file:///home/hudson/static_build_env/jbds/target-platform_3.3.indigo.SR2/e372M-wtp332M.target/</local.site>
+			</properties>
 			<build>
 				<plugins>
 					<plugin>
