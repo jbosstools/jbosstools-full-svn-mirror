@@ -44,6 +44,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 		</fixes>
 		<importType>mavenArchetype</importType>
 		<importTypeDescription>The project example requires the m2e, m2eclipse-wtp and JBoss Maven Integration features.</importTypeDescription>
+        <defaultMavenProfiles>arq-jbossas-remote</defaultMavenProfiles>        
 		<mavenArchetype>
 			<archetypeGroupId>org.jboss.spec.archetypes</archetypeGroupId>
 			<archetypeArtifactId>jboss-javaee6-webapp-archetype</archetypeArtifactId>
@@ -100,7 +101,8 @@ It includes a persistence unit and some sample persistence and transaction code 
 		</fixes>
 		<importType>mavenArchetype</importType>
 		<importTypeDescription>The project example requires the m2e, m2eclipse-wtp and JBoss Maven Integration features.</importTypeDescription>
-		<mavenArchetype>
+        <defaultMavenProfiles>arq-jbossas-remote</defaultMavenProfiles>
+        <mavenArchetype>
 			<archetypeGroupId>org.jboss.spec.archetypes</archetypeGroupId>
 			<archetypeArtifactId>jboss-javaee6-webapp-ear-archetype</archetypeArtifactId>
 			<archetypeVersion>7.0.2.CR2</archetypeVersion>
@@ -208,8 +210,8 @@ It includes a persistence unit and some sample persistence and transaction code 
 		</fixes>
 		<importType>mavenArchetype</importType>
 		<importTypeDescription>The project example requires the m2e, m2eclipse-wtp and JBoss Maven Integration features.</importTypeDescription>
-        <defaultMavenProfiles>jee6</defaultMavenProfiles>
-		<mavenArchetype>
+        <defaultMavenProfiles>arq-jbossas-remote</defaultMavenProfiles>
+        <mavenArchetype>
 			<archetypeGroupId>org.richfaces.archetypes</archetypeGroupId>
 			<archetypeArtifactId>richfaces-archetype-kitchensink</archetypeArtifactId>
 			<archetypeVersion>4.2.0.Final-2</archetypeVersion>
@@ -327,7 +329,11 @@ Make sure you read the deployment instructions in README.md</description>
 		</fixes>
 		<importType>mavenArchetype</importType>
 		<importTypeDescription>The project example requires the m2e, m2eclipse-wtp, JBoss Maven Integration and Google Plugin for Eclipse features.</importTypeDescription>
-		<mavenArchetype>
+        <!-- Activating the profile causes a build error :
+        'dependencies.dependency.version' for org.jboss.as:jboss-as-arquillian-container-remote:jar is missing.
+        <defaultMavenProfiles>arq-jbossas-remote</defaultMavenProfiles>
+        -->
+        <mavenArchetype>
 			<archetypeGroupId>org.jboss.errai.archetypes</archetypeGroupId>
 			<archetypeArtifactId>kitchensink-quickstart</archetypeArtifactId>
 			<archetypeVersion>2.0-Beta3-jbt</archetypeVersion>
