@@ -422,7 +422,13 @@ public class VpeTest extends TestCase implements ILogListener {
 	 * @return
 	 */
 	protected Element findSourceElementById(VpeController controller, String elementId) {
-		return getSourceDocument(controller).getElementById(elementId);
+		/*
+		 * https://issues.jboss.org/browse/JBIDE-11360
+		 * Check that SourceDocument is found.
+		 */
+		Document document = getSourceDocument(controller);
+		assertNotNull("SourceDocument is not found.", document); //$NON-NLS-1$
+		return document.getElementById(elementId);
 	}
 
 	/**
