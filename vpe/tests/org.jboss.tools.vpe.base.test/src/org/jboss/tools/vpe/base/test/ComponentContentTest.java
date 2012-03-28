@@ -83,6 +83,11 @@ public abstract class ComponentContentTest extends VpeTest {
 		assertNotNull("Editor should be opened.", editor); //$NON-NLS-1$
 		VpeController controller = TestUtil.getVpeController((JSPMultiPageEditor) editor);
 		/*
+		 * https://issues.jboss.org/browse/JBIDE-11360
+		 * Check that VpeController is created.
+		 */
+		assertNotNull("VpeController is not initialized.", controller); //$NON-NLS-1$
+		/*
 		 * Get xml test file
 		 */
 		IResource xmlFile =TestUtil.getComponentFileByFullPath(elementPagePath + XML_FILE_EXTENSION, getTestProjectName());
