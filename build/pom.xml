@@ -67,6 +67,7 @@
 			<id>jmx-bootstrap</id>
 			<modules>
 				<module>../tests</module>
+				<module>../common</module>
 				<module>../jmx</module>
 				<module>../usage</module>
 			</modules>
