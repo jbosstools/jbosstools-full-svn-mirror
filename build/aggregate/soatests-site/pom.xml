@@ -94,6 +94,17 @@
 			</releases>
 		</repository>
 		<repository>
+			<id>jbosstools-nightly-staging-composite-soa-tooling</id>
+			<url>${jbosstools-nightly-staging-composite-soa-tooling}</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		<repository>
 			<id>jbosstools-target-site</id>
 			<url>${jbosstools-target-site}</url>
 			<layout>p2</layout>
