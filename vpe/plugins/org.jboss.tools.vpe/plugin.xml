@@ -135,23 +135,16 @@
   	<extension point="org.eclipse.core.expressions.definitions">
 			<definition id="org.jboss.tools.ui.vpe.editor">
 			<and>
-					<or>
 					<with variable="activeEditorId">
-							<equals value="org.jboss.tools.jst.jsp.jspeditor.JSPTextEditor"/>
-					</with>
-					<with variable="activeEditorId">
-							<equals value="org.jboss.tools.jst.jsp.jspeditor.HTMLTextEditor"/>
-					</with>
-					<with variable="activeEditorId">
-							<equals value="org.jboss.tools.jst.jsp.jspeditor.DocBookEditor"/>
-					</with>
-					</or>
-				<with
-                        variable="selection">
-                        <test
-                              property="org.jboss.tools.vpe.showiconsonmaintoolbar">
-                        </test>
-                </with>
+                                 <or>
+	                                 <equals value="org.jboss.tools.jst.jsp.jspeditor.JSPTextEditor"/>
+	                                 <equals value="org.jboss.tools.jst.jsp.jspeditor.HTMLTextEditor"/>
+	                                 <equals value="org.jboss.tools.jst.jsp.jspeditor.DocBookEditor"/>
+                                 </or>
+                    </with>
+					<with variable="selection">
+                        <test property="org.jboss.tools.vpe.showiconsonmaintoolbar" />
+                	</with>
 			</and>
 			</definition>
 		</extension>
