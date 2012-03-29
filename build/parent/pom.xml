@@ -61,7 +61,7 @@
 		<!-- 4. published aggregate update sites go here, for consumption by QE 
 			and downstream JBDS builds -->
 		<jbosstools-nightly>http://download.jboss.org/jbosstools/updates/nightly/core/trunk/</jbosstools-nightly>
-		<jbosstools-nightly-tests>http://download.jboss.org/jbosstools/updates/nightly/coretests/trunk/</jbosstools-nightly>
+		<jbosstools-nightly-tests>http://download.jboss.org/jbosstools/updates/nightly/coretests/trunk/</jbosstools-nightly-tests>
 		<!-- these sites are not enabled by default as SOA Tooling is a downstream project (sorta). -->
 		<jbosstools-nightly-soa-tooling>http://download.jboss.org/jbosstools/updates/nightly/soa-tooling/trunk/</jbosstools-nightly-soa-tooling>
 		<jbosstools-nightly-soa-tooling-tests>http://download.jboss.org/jbosstools/updates/nightly/soatests/trunk/</jbosstools-nightly-soa-tooling-tests>
