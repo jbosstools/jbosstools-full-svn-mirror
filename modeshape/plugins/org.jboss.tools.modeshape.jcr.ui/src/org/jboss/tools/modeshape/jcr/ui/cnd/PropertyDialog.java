@@ -368,8 +368,7 @@ final class PropertyDialog extends FormDialog {
 
                 // select the current type
                 if (isEditMode()) {
-                    final String currentType = OnParentVersion.findUsingJcrValue(this.propertyBeingEdited.getOnParentVersion())
-                                                              .toString();
+                    final String currentType = this.propertyBeingEdited.getType().toString();
                     final int index = cbxType.indexOf(currentType);
 
                     if (index == -1) {
@@ -615,16 +614,29 @@ final class PropertyDialog extends FormDialog {
 
                 final Label label = toolkit.createLabel(defaultValuesContainer, CndMessages.defaultValuesLabel);
                 label.setLayoutData(new GridData(SWT.BEGINNING, SWT.TOP, false, false));
-                ((GridData)label.getLayoutData()).horizontalSpan = 2;
+
+                createDefaultValuesActions();
+
+                // add toolbar buttons (add, edit, delete)
+                final ToolBarManager toolBarManager = new ToolBarManager(SWT.FLAT | SWT.HORIZONTAL);
+                final ToolBar toolBar = toolBarManager.createControl(defaultValuesContainer);
+                toolBar.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false));
+                toolkit.adapt(toolBar);
+
+                final Cursor handCursor = new Cursor(Display.getCurrent(), SWT.CURSOR_HAND);
+                toolBar.setCursor(handCursor);
+                toolBarManager.add(this.addDefaultValue);
+                toolBarManager.add(this.editDefaultValue);
+                toolBarManager.add(this.deleteDefaultValue);
+                toolBarManager.update(true);
 
                 final Table table = FormUtils.createTable(toolkit, defaultValuesContainer);
                 table.setHeaderVisible(false);
                 table.setLinesVisible(false);
                 ((GridData)table.getLayoutData()).heightHint = table.getItemHeight() * 4;
+                ((GridData)table.getLayoutData()).horizontalSpan = 2;
                 table.setToolTipText(CndMessages.defaultValuesToolTip);
                 this.defaultValuesError.setControl(table);
-
-                createDefaultValuesActions();
 
                 // table context menu
                 final MenuManager menuManager = new MenuManager();
@@ -634,18 +646,6 @@ final class PropertyDialog extends FormDialog {
                 table.setMenu(menuManager.createContextMenu(table));
 
                 createDefaultValuesViewer(table);
-
-                // add toolbar buttons (add, edit, delete)
-                final ToolBarManager toolBarManager = new ToolBarManager(SWT.FLAT | SWT.VERTICAL);
-                final ToolBar toolBar = toolBarManager.createControl(defaultValuesContainer);
-                toolkit.adapt(toolBar);
-
-                final Cursor handCursor = new Cursor(Display.getCurrent(), SWT.CURSOR_HAND);
-                toolBar.setCursor(handCursor);
-                toolBarManager.add(this.addDefaultValue);
-                toolBarManager.add(this.editDefaultValue);
-                toolBarManager.add(this.deleteDefaultValue);
-                toolBarManager.update(true);
 
                 // fill with data
                 this.defaultValuesViewer.setInput(this);
@@ -659,16 +659,29 @@ final class PropertyDialog extends FormDialog {
 
                 final Label label = toolkit.createLabel(valueConstraintsContainer, CndMessages.valueConstraintsLabel);
                 label.setLayoutData(new GridData(SWT.BEGINNING, SWT.TOP, false, false));
-                ((GridData)label.getLayoutData()).horizontalSpan = 2;
+
+                createValueConstraintsActions();
+
+                // add toolbar buttons (add, edit, delete)
+                final ToolBarManager toolBarManager = new ToolBarManager(SWT.FLAT | SWT.HORIZONTAL);
+                final ToolBar toolBar = toolBarManager.createControl(valueConstraintsContainer);
+                toolBar.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false));
+                toolkit.adapt(toolBar);
+
+                final Cursor handCursor = new Cursor(Display.getCurrent(), SWT.CURSOR_HAND);
+                toolBar.setCursor(handCursor);
+                toolBarManager.add(this.addValueConstraint);
+                toolBarManager.add(this.editValueConstraint);
+                toolBarManager.add(this.deleteValueConstraint);
+                toolBarManager.update(true);
 
                 final Table table = FormUtils.createTable(toolkit, valueConstraintsContainer);
                 table.setHeaderVisible(false);
                 table.setLinesVisible(false);
                 ((GridData)table.getLayoutData()).heightHint = table.getItemHeight() * 4;
+                ((GridData)table.getLayoutData()).horizontalSpan = 2;
                 table.setToolTipText(CndMessages.valueConstraintsToolTip);
                 this.valueConstraintsError.setControl(table);
-
-                createValueConstraintsActions();
 
                 // table context menu
                 final MenuManager menuManager = new MenuManager();
@@ -678,18 +691,6 @@ final class PropertyDialog extends FormDialog {
                 table.setMenu(menuManager.createContextMenu(table));
 
                 createValueConstraintsViewer(table);
-
-                // add toolbar buttons (add, edit, delete)
-                final ToolBarManager toolBarManager = new ToolBarManager(SWT.FLAT | SWT.VERTICAL);
-                final ToolBar toolBar = toolBarManager.createControl(valueConstraintsContainer);
-                toolkit.adapt(toolBar);
-
-                final Cursor handCursor = new Cursor(Display.getCurrent(), SWT.CURSOR_HAND);
-                toolBar.setCursor(handCursor);
-                toolBarManager.add(this.addValueConstraint);
-                toolBarManager.add(this.editValueConstraint);
-                toolBarManager.add(this.deleteValueConstraint);
-                toolBarManager.update(true);
 
                 // fill with data
                 this.valueConstraintsViewer.setInput(this);

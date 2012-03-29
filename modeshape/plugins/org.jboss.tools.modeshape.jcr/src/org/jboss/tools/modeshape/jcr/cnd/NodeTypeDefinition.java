@@ -447,6 +447,17 @@ public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTempl
     }
 
     /**
+     * @return the child node definitions and property definitions contained in this node type definition (never <code>null</code>
+     *         but can be empty)
+     */
+    public List<ItemDefinition> getItemDefinitions() {
+        // TODO this needs to be a field and getters for items need to filter this field appropriately
+        final List<ItemDefinition> currentItems = new ArrayList<ItemDefinition>(getChildNodeDefinitions());
+        currentItems.addAll(getPropertyDefinitions());
+        return currentItems;
+    }
+
+    /**
      * {@inheritDoc}
      * 
      * @see javax.jcr.nodetype.NodeTypeDefinition#getName()

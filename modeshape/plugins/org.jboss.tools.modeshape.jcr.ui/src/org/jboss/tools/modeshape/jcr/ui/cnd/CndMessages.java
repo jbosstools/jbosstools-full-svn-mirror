@@ -819,6 +819,11 @@ class CndMessages extends NLS {
     public static String namespacePrefixToolTip;
 
     /**
+     * The tool tip for a namespace mappings table.
+     */
+    public static String namespacesTableToolTip;
+
+    /**
      * The column header text for a namespace URI.
      */
     public static String namespaceUriHeaderText;
@@ -879,6 +884,11 @@ class CndMessages extends NLS {
     public static String noNameQualifierChoice;
 
     /**
+     * The text indicating the node type definition has not assigned a primary item.
+     */
+    public static String noPrimaryItemChoice;
+
+    /**
      * A name for the noQueryOrder attribute suitable for a radio or check button.
      */
     public static String noQueryOrderAttribute;
@@ -907,6 +917,16 @@ class CndMessages extends NLS {
      * A tool tip message of the node type definition's orderable attribute.
      */
     public static String orderableAttributeToolTip;
+
+    /**
+     * A label for a primary item control.
+     */
+    public static String primaryItemLabel;
+
+    /**
+     * A tool tip message of the node type definition's primary item attribute.
+     */
+    public static String primaryItemToolTip;
 
     /**
      * The tool tip for the attributes of a property definition.

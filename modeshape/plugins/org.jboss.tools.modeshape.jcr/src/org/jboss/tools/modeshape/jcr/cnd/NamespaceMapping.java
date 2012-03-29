@@ -19,11 +19,34 @@ import org.jboss.tools.modeshape.jcr.Utils;
 public class NamespaceMapping implements CndElement, Comparable {
 
     /**
-     * @param namespaceMappingToCopy the namespace mapping being copied (cannot be <code>null</code>)
-     * @return a new namespace mapping exactly equal to the one that was copied (never <code>null</code>)
+     * The built-in namespace mappings.
      */
-    public static NamespaceMapping copy( NamespaceMapping namespaceMappingToCopy ) {
-        return new NamespaceMapping(namespaceMappingToCopy.getPrefix(), namespaceMappingToCopy.getUri());
+    public interface BuiltIns {
+
+        /**
+         * Reserved for items defined within built-in node types.
+         */
+        NamespaceMapping JCR = new NamespaceMapping("jcr", "http://www.jcp.org/jcr/1.0"); //$NON-NLS-1$ //$NON-NLS-2$
+
+        /**
+         * Reserved for the names of built-in mixin node types.
+         */
+        NamespaceMapping MIX = new NamespaceMapping("mix", "http://www.jcp.org/jcr/mix/1.0"); //$NON-NLS-1$ //$NON-NLS-2$
+
+        /**
+         * Reserved for the names of built-in primary node types.
+         */
+        NamespaceMapping NT = new NamespaceMapping("nt", "http://www.jcp.org/jcr/nt/1.0"); //$NON-NLS-1$ //$NON-NLS-2$
+
+        /**
+         * Reserved for reasons of compatibility with XML.
+         */
+        NamespaceMapping XML = new NamespaceMapping("xml", "http://www.w3.org/XML/1998/namespace"); //$NON-NLS-1$ //$NON-NLS-2$
+
+        /**
+         * A collection of all built-in namespace mappings.
+         */
+        NamespaceMapping[] ALL_BUILT_INS = new NamespaceMapping[] { JCR, NT, MIX, XML };
     }
 
     /**
@@ -40,6 +63,14 @@ public class NamespaceMapping implements CndElement, Comparable {
      * The suffix used in CND notation after the namespace mapping.
      */
     public static final String NOTATION_SUFFIX = ">"; //$NON-NLS-1$
+
+    /**
+     * @param namespaceMappingToCopy the namespace mapping being copied (cannot be <code>null</code>)
+     * @return a new namespace mapping exactly equal to the one that was copied (never <code>null</code>)
+     */
+    public static NamespaceMapping copy( final NamespaceMapping namespaceMappingToCopy ) {
+        return new NamespaceMapping(namespaceMappingToCopy.getPrefix(), namespaceMappingToCopy.getUri());
+    }
 
     /**
      * The registered property change listeners (never <code>null</code>).

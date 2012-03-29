@@ -101,10 +101,6 @@ public class NodeTypeAttributes implements CndElement {
         return this.notConcrete;
     }
 
-    private String getFormatDelimiter() {
-        return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.NODE_TYPE_DEFINITION_ATTRIBUTES_END_DELIMITER);
-    }
-
     /**
      * @return the mixin attribute (never <code>null</code>)
      */
@@ -200,7 +196,7 @@ public class NodeTypeAttributes implements CndElement {
      */
     @Override
     public String toCndNotation( final NotationType notationType ) {
-        final String DELIM = getFormatDelimiter();
+        final String DELIM = CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.NODE_TYPE_DEFINITION_ATTRIBUTES_DELIMITER);
         final StringBuilder builder = new StringBuilder();
 
         boolean addDelim = Utils.build(builder, false, DELIM, this.orderable.toCndNotation(notationType));

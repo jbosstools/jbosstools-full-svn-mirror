@@ -422,15 +422,27 @@ final class ChildNodeDialog extends FormDialog {
 
             final Label label = toolkit.createLabel(rightContainer, CndMessages.requiredTypesLabel);
             label.setLayoutData(new GridData(SWT.BEGINNING, SWT.TOP, false, false));
-            ((GridData)label.getLayoutData()).horizontalSpan = 2;
+
+            createRequiredTypesActions();
+
+            // add toolbar buttons (add, edit, delete)
+            final ToolBarManager toolBarManager = new ToolBarManager(SWT.FLAT | SWT.HORIZONTAL);
+            final ToolBar toolBar = toolBarManager.createControl(rightContainer);
+            toolkit.adapt(toolBar);
+
+            final Cursor handCursor = new Cursor(Display.getCurrent(), SWT.CURSOR_HAND);
+            toolBar.setCursor(handCursor);
+            toolBarManager.add(this.addRequiredType);
+            toolBarManager.add(this.editRequiredType);
+            toolBarManager.add(this.deleteRequiredType);
+            toolBarManager.update(true);
 
             final Table table = FormUtils.createTable(toolkit, rightContainer);
             table.setHeaderVisible(false);
             table.setLinesVisible(false);
+            ((GridData)table.getLayoutData()).horizontalSpan = 2;
             ((GridData)table.getLayoutData()).heightHint = table.getItemHeight() * 2;
             this.requiredTypesError.setControl(table);
-
-            createRequiredTypesActions();
 
             // table context menu
             final MenuManager menuManager = new MenuManager();
@@ -440,18 +452,6 @@ final class ChildNodeDialog extends FormDialog {
             table.setMenu(menuManager.createContextMenu(table));
 
             createRequiredTypesViewer(table);
-
-            // add toolbar buttons (add, edit, delete)
-            final ToolBarManager toolBarManager = new ToolBarManager(SWT.FLAT | SWT.VERTICAL);
-            final ToolBar toolBar = toolBarManager.createControl(rightContainer);
-
-            toolkit.adapt(toolBar);
-            final Cursor handCursor = new Cursor(Display.getCurrent(), SWT.CURSOR_HAND);
-            toolBar.setCursor(handCursor);
-            toolBarManager.add(this.addRequiredType);
-            toolBarManager.add(this.editRequiredType);
-            toolBarManager.add(this.deleteRequiredType);
-            toolBarManager.update(true);
 
             // fill with data
             this.requiredTypesViewer.setInput(this);
@@ -793,7 +793,8 @@ final class ChildNodeDialog extends FormDialog {
     }
 
     private void validateDefaultType() {
-        updateMessage(CndValidator.validateDefaultType(this.childNodeBeingEdited), this.defaultTypeError);
+        updateMessage(CndValidator.validateDefaultType(this.childNodeBeingEdited, this.existingNamespacePrefixes),
+                      this.defaultTypeError);
     }
 
     private void validateName() {
@@ -801,6 +802,7 @@ final class ChildNodeDialog extends FormDialog {
     }
 
     private void validateRequiredTypes() {
-        updateMessage(CndValidator.validateRequiredTypes(this.childNodeBeingEdited), this.requiredTypesError);
+        updateMessage(CndValidator.validateRequiredTypes(this.childNodeBeingEdited, this.existingNamespacePrefixes),
+                      this.requiredTypesError);
     }
 }

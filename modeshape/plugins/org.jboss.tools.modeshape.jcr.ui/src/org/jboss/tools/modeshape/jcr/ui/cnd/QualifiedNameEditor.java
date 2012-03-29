@@ -255,7 +255,7 @@ final class QualifiedNameEditor extends Composite {
             this.cbxQualifiers.setItems(this.validQualifiers.toArray(new String[this.validQualifiers.size()]));
         }
 
-        // select the current qualifier
+        // select the current qualifier and set the name
         if (isEditMode()) {
             final String currentQualifier = this.qnameBeingEdited.getQualifier();
 
@@ -272,14 +272,11 @@ final class QualifiedNameEditor extends Composite {
                     this.cbxQualifiers.select(index);
                 }
             }
-        } else {
-            this.cbxQualifiers.select(0);
-        }
 
-        if (isEditMode()) {
             final String name = this.qnameBeingEdited.getUnqualifiedName();
             this.txtName.setText(Utils.isEmpty(name) ? Utils.EMPTY_STRING : name);
         } else {
+            this.cbxQualifiers.select(0);
             this.txtName.setText(Utils.EMPTY_STRING);
         }
     }

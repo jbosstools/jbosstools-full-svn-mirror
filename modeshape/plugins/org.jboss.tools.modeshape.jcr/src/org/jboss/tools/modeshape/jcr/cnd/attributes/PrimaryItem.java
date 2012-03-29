@@ -25,6 +25,25 @@ public class PrimaryItem extends AttributeState {
 
     /**
      * {@inheritDoc}
+     *
+     * @see org.jboss.tools.modeshape.jcr.cnd.attributes.AttributeState#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals( Object obj ) {
+        if ((obj == null) || !getClass().equals(obj.getClass())) {
+            return false;
+        }
+
+        if (this == obj) {
+            return true;
+        }
+
+        PrimaryItem that = (PrimaryItem)obj;
+        return (super.equals(obj) && getPrimaryItem().equals(that.getPrimaryItem()));
+    }
+
+    /**
+     * {@inheritDoc}
      * 
      * @see org.jboss.tools.modeshape.jcr.cnd.attributes.AttributeState#get()
      */
@@ -78,6 +97,16 @@ public class PrimaryItem extends AttributeState {
      */
     public QualifiedName getPrimaryItem() {
         return this.primaryItem;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @see org.jboss.tools.modeshape.jcr.cnd.attributes.AttributeState#hashCode()
+     */
+    @Override
+    public int hashCode() {
+        return Utils.hashCode(super.hashCode(), this.primaryItem);
     }
 
     /**

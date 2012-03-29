@@ -439,7 +439,7 @@ public class ChildNodeDefinitionTest {
         that.setOnParentVersion(this.childNodeDefinition.getOnParentVersion());
         assertEquals(this.childNodeDefinition, that);
 
-        this.childNodeDefinition.setRequiredPrimaryTypeNames(Constants.Helper.getDefaultQualifiedNamesAsArray());
+        this.childNodeDefinition.setRequiredPrimaryTypeNames(Constants.Helper.getDefaultQualifiedNamesAsStringArray());
         that.setRequiredPrimaryTypeNames(this.childNodeDefinition.getRequiredPrimaryTypeNames());
         assertEquals(this.childNodeDefinition, that);
     }
@@ -490,7 +490,7 @@ public class ChildNodeDefinitionTest {
         assertEquals(this.childNodeDefinition, thatChildNodeDefinition);
         assertEquals(this.childNodeDefinition.hashCode(), thatChildNodeDefinition.hashCode());
 
-        this.childNodeDefinition.setRequiredPrimaryTypeNames(Constants.Helper.getDefaultQualifiedNamesAsArray());
+        this.childNodeDefinition.setRequiredPrimaryTypeNames(Constants.Helper.getDefaultQualifiedNamesAsStringArray());
         thatChildNodeDefinition = ChildNodeDefinition.copy(this.childNodeDefinition);
         assertEquals(this.childNodeDefinition, thatChildNodeDefinition);
         assertEquals(this.childNodeDefinition.hashCode(), thatChildNodeDefinition.hashCode());

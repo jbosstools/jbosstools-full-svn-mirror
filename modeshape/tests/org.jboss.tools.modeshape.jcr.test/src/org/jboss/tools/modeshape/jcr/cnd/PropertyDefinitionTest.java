@@ -99,7 +99,7 @@ public class PropertyDefinitionTest {
         assertEquals(this.propDefn, thatPropDefn);
         assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
 
-        this.propDefn.setValueConstraints(Constants.Helper.getDefaultValueConstraints());
+        this.propDefn.setValueConstraints(Constants.DEFAULT_VALUE_CONSTRAINTS);
         thatPropDefn = PropertyDefinition.copy(this.propDefn);
         assertEquals(this.propDefn, thatPropDefn);
         assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
@@ -154,7 +154,7 @@ public class PropertyDefinitionTest {
         thatPropDefn.setRequiredType(this.propDefn.getRequiredType());
         assertEquals(this.propDefn, thatPropDefn);
 
-        this.propDefn.setValueConstraints(Constants.Helper.getDefaultValueConstraints());
+        this.propDefn.setValueConstraints(Constants.DEFAULT_VALUE_CONSTRAINTS);
         thatPropDefn.setValueConstraints(this.propDefn.getValueConstraints());
         assertEquals(this.propDefn, thatPropDefn);
     }

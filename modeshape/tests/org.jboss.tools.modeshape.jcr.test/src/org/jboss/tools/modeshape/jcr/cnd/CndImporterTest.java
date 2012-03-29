@@ -38,9 +38,145 @@ public class CndImporterTest {
 
     public static final String CND_FILE_PATH = "testdata/"; //$NON-NLS-1$
 
+    public static final String[] NO_DEFAULTS = {};
+    public static final String NO_PRIMARY_NAME = null;
+    public static final String[] NO_SUPERTYPES = {};
+
+    public static final String[] NO_VALUE_CONSTRAINTS = {};
+
+    //
+    // protected Name name( String name ) {
+    // return context.getValueFactories().getNameFactory().create(name);
+    // }
+
     private CompactNodeTypeDefinition cnd;
+
     private CndImporter importer;
+
     private Collection<Throwable> problems;
+
+    private void assertChild( final String nodeTypeName,
+                              final String childName,
+                              final String requiredType,
+                              final String defaultPrimaryType,
+                              final OnParentVersion onParentVersioning,
+                              final ChildOptions... childOptions ) {
+        assertChild(nodeTypeName, childName, new String[] { requiredType }, defaultPrimaryType, childOptions, onParentVersioning);
+    }
+
+    private void assertChild( final String nodeTypeName,
+                              final String childName,
+                              final String[] requiredTypes,
+                              final String defaultPrimaryType,
+                              final ChildOptions[] childOptions,
+                              final OnParentVersion onParentVersioning ) {
+        final Set<ChildOptions> options = new HashSet<ChildOptions>();
+        for (final ChildOptions option : childOptions) {
+            options.add(option);
+        }
+
+        final NodeTypeDefinition defn = defn(nodeTypeName);
+        final NodeDefinition childDefn = childDefn(defn, childName);
+
+        assertEquals(childDefn.getName(), childName);
+        assertEquals(childDefn.getDefaultPrimaryTypeName(), defaultPrimaryType);
+        assertEquals(childDefn.isMandatory(), options.contains(ChildOptions.Mandatory));
+        assertEquals(childDefn.isAutoCreated(), options.contains(ChildOptions.Autocreated));
+        assertEquals(childDefn.isProtected(), options.contains(ChildOptions.Protected));
+        assertEquals(childDefn.allowsSameNameSiblings(), options.contains(ChildOptions.Sns));
+        assertEquals(childDefn.getOnParentVersion(), opv(onParentVersioning));
+        assertArrayEquals(childDefn.getRequiredPrimaryTypeNames(), requiredTypes);
+    }
+
+    private void assertNodeType( final String name,
+                                 final String[] superTypes,
+                                 final String primaryItemName,
+                                 final NodeOptions... nodeOptions ) {
+        final Set<NodeOptions> options = new HashSet<NodeOptions>();
+
+        for (final NodeOptions option : nodeOptions) {
+            options.add(option);
+        }
+
+        final NodeTypeDefinition defn = defn(name);
+        assertEquals(defn.getName(), name);
+        assertEquals(defn.isAbstract(), options.contains(NodeOptions.Abstract));
+        assertEquals(defn.hasOrderableChildNodes(), options.contains(NodeOptions.Ordered));
+        assertEquals(defn.isMixin(), options.contains(NodeOptions.Mixin));
+        // assertEquals(defn.isQueryable(), options.contains(NodeOptions.Queryable)); // defaults to variant
+        assertTrue(defn.getState(NodeTypeDefinition.PropertyName.QUERYABLE) == org.jboss.tools.modeshape.jcr.cnd.attributes.AttributeState.Value.VARIANT);
+        assertEquals(defn.getPrimaryItemName(), primaryItemName);
+        final String[] supertypeNames = defn.getDeclaredSupertypeNames();
+        assertArrayEquals(supertypeNames, superTypes);
+    }
+
+    //
+    // @Test(expected = ParsingException.class)
+    // public void shouldReportErrorIfTheNodeTypeNameUsesInvalidNamespace() {
+    //        String cnd = "<ns = 'http://namespace.com/ns'> [xyz:acme] abstract"; //$NON-NLS-1$
+    // this.importer.parse(cnd);
+    // }
+
+    private void assertProperty( final String nodeTypeName,
+                                 final String propertyName,
+                                 final String requiredType,
+                                 final String[] defaultValues,
+                                 final OnParentVersion onParentVersion,
+                                 final PropertyOptions... propertyOptions ) throws RepositoryException {
+        assertProperty(nodeTypeName, propertyName, requiredType, defaultValues, propertyOptions, onParentVersion);
+    }
+
+    private void assertProperty( final String nodeTypeName,
+                                 final String propertyName,
+                                 final String requiredType,
+                                 final String[] defaultValues,
+                                 final PropertyOptions... propertyOptions ) throws RepositoryException {
+        assertProperty(nodeTypeName, propertyName, requiredType, defaultValues, propertyOptions, null);
+    }
+
+    private void assertProperty( final String nodeTypeName,
+                                 final String propertyName,
+                                 final String requiredType,
+                                 final String[] defaultValues,
+                                 final PropertyOptions[] propertyOptions,
+                                 final OnParentVersion onParentVersioning,
+                                 final String... valueConstraints ) throws RepositoryException {
+        final Set<PropertyOptions> options = new HashSet<PropertyOptions>();
+        for (final PropertyOptions option : propertyOptions) {
+            options.add(option);
+        }
+
+        final NodeTypeDefinition defn = defn(nodeTypeName);
+        final PropertyDefinition propDefn = propDefn(defn, propertyName);
+
+        assertEquals(propDefn.getName(), propertyName);
+        assertEquals(propDefn.getRequiredType(), jcrPropertyType(requiredType));
+        assertEquals(propDefn.isMandatory(), options.contains(PropertyOptions.Mandatory));
+        assertEquals(propDefn.isAutoCreated(), options.contains(PropertyOptions.Autocreated));
+        assertEquals(propDefn.isProtected(), options.contains(PropertyOptions.Protected));
+        assertEquals(propDefn.isMultiple(), options.contains(PropertyOptions.Multiple));
+        assertEquals(propDefn.isFullTextSearchable(), options.contains(PropertyOptions.FullTextSearchable));
+        assertEquals(propDefn.isQueryOrderable(), options.contains(PropertyOptions.QueryOrderable));
+
+        final int opv = opv(onParentVersioning);
+        assertEquals(propDefn.getOnParentVersion(), opv);
+
+        if ((defaultValues == null) || (defaultValues.length == 0)) {
+            assertTrue(propDefn.getDefaultValues().length == 0);
+        } else {
+            int i = 0;
+
+            for (final Value defaultValue : propDefn.getDefaultValues()) {
+                assertEquals(defaultValues[i++], defaultValue.getString());
+            }
+        }
+
+        if ((valueConstraints == null) || (valueConstraints.length == 0)) {
+            assertTrue(propDefn.getValueConstraints().length == 0);
+        } else {
+            assertArrayEquals(propDefn.getValueConstraints(), valueConstraints);
+        }
+    }
 
     @Before
     public void beforeEach() {
@@ -51,234 +187,47 @@ public class CndImporterTest {
         this.importer = new CndImporter(true);
     }
 
-    //
-    // protected Name name( String name ) {
-    // return context.getValueFactories().getNameFactory().create(name);
-    // }
-
-    protected void printProblems() {
-        for (Throwable problem : this.problems) {
-            System.out.println(problem.getLocalizedMessage());
+    private NodeDefinition childDefn( final NodeTypeDefinition nodeType,
+                                      final String name ) {
+        for (final NodeDefinition defn : nodeType.getDeclaredChildNodeDefinitions()) {
+            if (defn.getName().equals(name)) {
+                return defn;
+            }
         }
+
+        assertFalse("Failed to find child node definition \"" + name + "\"", false); //$NON-NLS-1$ //$NON-NLS-2$
+        return null;
     }
 
-    protected InputStream openCndStream( String cndFileName ) {
-        return this.getClass().getClassLoader().getResourceAsStream("cnd/" + cndFileName); //$NON-NLS-1$
+    private NodeTypeDefinition defn( final String name ) {
+        NodeTypeDefinition result = null;
+
+        for (final NodeTypeDefinition defn : this.cnd.getNodeTypeDefinitions()) {
+            if (defn.getName().equals(name)) {
+                result = defn;
+                break;
+            }
+        }
+
+        assertNotNull("Failed to find node type definition \"" + name + "\"", result); //$NON-NLS-1$ //$NON-NLS-2$
+        return result;
     }
 
-    protected File openCndFile( String cndFileName ) {
-        File result = new File(CND_FILE_PATH + cndFileName);
+    private int jcrPropertyType( final String typeName ) {
+        final PropertyType type = PropertyType.find(typeName);
+        return type.asJcrValue();
+        // org.modeshape.jcr.value.PropertyType type = org.modeshape.jcr.value.PropertyType.valueFor(typeName.toLowerCase());
+        // return PropertyTypeUtil.jcrPropertyTypeFor(type);
+    }
+
+    protected File openCndFile( final String cndFileName ) {
+        final File result = new File(CND_FILE_PATH + cndFileName);
         assertTrue(result.exists());
         return result;
     }
 
-    @Test(expected = ParsingException.class)
-    public void shouldReportErrorIfTheNodeTypeNameIsEmpty() {
-        String content = "<ns = 'http://namespace.com/ns'> [] abstract"; //$NON-NLS-1$
-        this.importer.parse(content);
-    }
-
-    @Test(expected = ParsingException.class)
-    public void shouldReportErrorIfTheNodeTypeNameIsBlank() {
-        String content = "<ns = 'http://namespace.com/ns'> [ ] abstract"; //$NON-NLS-1$
-        this.importer.parse(content);
-    }
-
-    @Test(expected = ParsingException.class)
-    public void shouldReportErrorIfTheNodeTypeNameIsNotFollowedByClosingBracket() {
-        String content = "<ns = 'http://namespace.com/ns'> [  abstract"; //$NON-NLS-1$
-        this.importer.parse(content);
-    }
-
-    //
-    // @Test(expected = ParsingException.class)
-    // public void shouldReportErrorIfTheNodeTypeNameUsesInvalidNamespace() {
-    //        String cnd = "<ns = 'http://namespace.com/ns'> [xyz:acme] abstract"; //$NON-NLS-1$
-    // this.importer.parse(cnd);
-    // }
-
-    @Test
-    public void shouldParseNamespaceDeclarationWithQuotedUriAndQuotedPrefix() {
-        String content = "<'ns' = 'http://namespace.com/ns'>"; //$NON-NLS-1$
-        this.cnd = this.importer.parse(content);
-
-        List<NamespaceMapping> namespaces = this.cnd.getNamespaceMappings();
-        assertEquals(1, namespaces.size());
-
-        NamespaceMapping namespace = namespaces.iterator().next();
-        assertEquals("ns", namespace.getPrefix()); //$NON-NLS-1$
-        assertEquals("http://namespace.com/ns", namespace.getUri()); //$NON-NLS-1$
-    }
-
-    @Test
-    public void shouldParseNamespaceDeclarationWithUnquotedUriAndQuotedPrefix() {
-        String content = "<'ns' = http_namespace.com_ns>"; //$NON-NLS-1$
-        this.cnd = this.importer.parse(content);
-
-        List<NamespaceMapping> namespaces = this.cnd.getNamespaceMappings();
-        assertEquals(1, namespaces.size());
-
-        NamespaceMapping namespace = namespaces.iterator().next();
-        assertEquals("ns", namespace.getPrefix()); //$NON-NLS-1$
-        assertEquals("http_namespace.com_ns", namespace.getUri()); //$NON-NLS-1$
-    }
-
-    @Test
-    public void shouldParseNamespaceDeclarationWithQuotedUriAndUnquotedPrefix() {
-        String content = "<ns = 'http://namespace.com/ns'>"; //$NON-NLS-1$
-        this.cnd = this.importer.parse(content);
-
-        List<NamespaceMapping> namespaces = this.cnd.getNamespaceMappings();
-        assertEquals(1, namespaces.size());
-
-        NamespaceMapping namespace = namespaces.iterator().next();
-        assertEquals("ns", namespace.getPrefix()); //$NON-NLS-1$
-        assertEquals("http://namespace.com/ns", namespace.getUri()); //$NON-NLS-1$
-    }
-
-    @Test
-    public void shouldParseNamespaceDeclarationWithUnquotedUriAndUnquotedPrefix() {
-        String content = "<ns = http_namespace.com_ns>"; //$NON-NLS-1$
-        this.cnd = this.importer.parse(content);
-
-        List<NamespaceMapping> namespaces = this.cnd.getNamespaceMappings();
-        assertEquals(1, namespaces.size());
-
-        NamespaceMapping namespace = namespaces.iterator().next();
-        assertEquals("ns", namespace.getPrefix()); //$NON-NLS-1$
-        assertEquals("http_namespace.com_ns", namespace.getUri()); //$NON-NLS-1$
-    }
-
-    @Test
-    public void shouldParseMinimalNodeDefinition() {
-        String content = "[nodeTypeName]"; //$NON-NLS-1$
-        this.cnd = this.importer.parse(content);
-
-        List<NodeTypeDefinition> nodeTypeDefns = this.cnd.getNodeTypeDefinitions();
-        assertEquals(1, nodeTypeDefns.size());
-
-        NodeTypeDefinition nodeTypeDefn = nodeTypeDefns.iterator().next();
-        assertEquals("nodeTypeName", nodeTypeDefn.getName()); //$NON-NLS-1$
-    }
-
-    @Test
-    public void shouldParseMinimalNodeDefinitionWithSupertype() {
-        String cnd = "[nodeTypeName] > supertype"; //$NON-NLS-1$
-        this.cnd = this.importer.parse(cnd);
-
-        List<NodeTypeDefinition> nodeTypeDefns = this.cnd.getNodeTypeDefinitions();
-        assertEquals(1, nodeTypeDefns.size());
-
-        NodeTypeDefinition nodeTypeDefn = nodeTypeDefns.iterator().next();
-        assertEquals("nodeTypeName", nodeTypeDefn.getName()); //$NON-NLS-1$
-
-        String[] superTypes = nodeTypeDefn.getDeclaredSupertypeNames();
-        assertEquals(1, superTypes.length);
-        assertEquals("supertype", superTypes[0]); //$NON-NLS-1$
-    }
-
-    @Test
-    public void shouldParseMinimalNodeDefinitionWithSupertypes() {
-        String cnd = "[nodeTypeName] > supertype1, supertype2"; //$NON-NLS-1$
-        this.cnd = this.importer.parse(cnd);
-
-        List<NodeTypeDefinition> nodeTypeDefns = this.cnd.getNodeTypeDefinitions();
-        assertEquals(1, nodeTypeDefns.size());
-
-        NodeTypeDefinition nodeTypeDefn = nodeTypeDefns.iterator().next();
-        assertEquals("nodeTypeName", nodeTypeDefn.getName()); //$NON-NLS-1$
-
-        String[] superTypes = nodeTypeDefn.getDeclaredSupertypeNames();
-        assertEquals(2, superTypes.length);
-        assertEquals("supertype1", superTypes[0]); //$NON-NLS-1$
-        assertEquals("supertype2", superTypes[1]); //$NON-NLS-1$
-    }
-
-    @Test
-    public void shouldParseNodeDefinitionWithNameThatIsKeyword() {
-        String cnd = "[abstract] > supertype1, supertype2"; //$NON-NLS-1$
-        this.cnd = this.importer.parse(cnd);
-
-        List<NodeTypeDefinition> nodeTypeDefns = this.cnd.getNodeTypeDefinitions();
-        assertEquals(1, nodeTypeDefns.size());
-
-        NodeTypeDefinition nodeTypeDefn = nodeTypeDefns.iterator().next();
-        assertEquals("abstract", nodeTypeDefn.getName()); //$NON-NLS-1$
-    }
-
-    @Test
-    public void shouldImportCndThatUsesAllFeatures() throws RepositoryException {
-        // this.importer.setDebug(true);
-        String content = "<ex = 'http://namespace.com/ns'>\n" //$NON-NLS-1$
-                + "[ex:NodeType] > ex:ParentType1, ex:ParentType2 abstract orderable mixin noquery primaryitem ex:property\n" //$NON-NLS-1$
-                + "- ex:property (STRING) = 'default1', 'default2' mandatory autocreated protected multiple VERSION\n" //$NON-NLS-1$
-                + " queryops '=, <>, <, <=, >, >=, LIKE' nofulltext noqueryorder < 'constraint1', 'constraint2'" //$NON-NLS-1$
-                + "+ ex:node (ex:reqType1, ex:reqType2) = ex:defaultType mandatory autocreated protected sns version"; //$NON-NLS-1$
-        this.cnd = this.importer.importFrom(content, this.problems, "string"); //$NON-NLS-1$
-
-        if (!this.problems.isEmpty()) {
-            printProblems();
-        }
-
-        // check the namespace
-        assertEquals(this.cnd.getNamespaceMappings().size(), 1);
-        NamespaceMapping ns = this.cnd.getNamespaceMappings().iterator().next();
-        assertEquals(ns.getUri(), "http://namespace.com/ns"); //$NON-NLS-1$
-
-        List<NodeTypeDefinition> defns = this.cnd.getNodeTypeDefinitions();
-        assertEquals(defns.size(), 1);
-
-        NodeTypeDefinition defn = defns.iterator().next();
-        assertEquals(defn.getName(), "ex:NodeType"); //$NON-NLS-1$
-        assertTrue(defn.isAbstract());
-        assertTrue(defn.hasOrderableChildNodes());
-        assertTrue(defn.isMixin());
-        assertFalse(defn.isQueryable());
-        assertEquals(defn.getPrimaryItemName(), "ex:property"); //$NON-NLS-1$
-        String[] supertypeNames = defn.getDeclaredSupertypeNames();
-        assertEquals(supertypeNames[0], "ex:ParentType1"); //$NON-NLS-1$
-        assertEquals(supertypeNames[1], "ex:ParentType2"); //$NON-NLS-1$
-
-        PropertyDefinition[] propDefns = defn.getDeclaredPropertyDefinitions();
-        assertEquals(propDefns.length, 1);
-        PropertyDefinition propDefn = propDefns[0];
-        assertEquals(propDefn.getName(), "ex:property"); //$NON-NLS-1$
-        assertEquals(propDefn.getRequiredType(), PropertyType.STRING.asJcrValue());
-        assertTrue(propDefn.isMandatory());
-        assertTrue(propDefn.isAutoCreated());
-        assertTrue(propDefn.isProtected());
-        assertTrue(propDefn.isMultiple());
-        assertEquals(propDefn.getOnParentVersion(), OnParentVersionAction.VERSION);
-        assertFalse(propDefn.isFullTextSearchable());
-        assertFalse(propDefn.isQueryOrderable());
-        Value[] defaultValues = propDefn.getDefaultValues();
-        assertEquals(defaultValues[0].getString(), "default1"); //$NON-NLS-1$
-        assertEquals(defaultValues[1].getString(), "default2"); //$NON-NLS-1$
-        String[] queryOps = propDefn.getAvailableQueryOperators();
-        assertEquals(queryOps[0], "="); //$NON-NLS-1$
-        assertEquals(queryOps[1], "<>"); //$NON-NLS-1$
-        assertEquals(queryOps[2], "<"); //$NON-NLS-1$
-        assertEquals(queryOps[3], "<="); //$NON-NLS-1$
-        assertEquals(queryOps[4], ">"); //$NON-NLS-1$
-        assertEquals(queryOps[5], ">="); //$NON-NLS-1$
-        assertEquals(queryOps[6], "LIKE"); //$NON-NLS-1$
-        String[] constraints = propDefn.getValueConstraints();
-        assertEquals(constraints[0], "constraint1"); //$NON-NLS-1$
-        assertEquals(constraints[1], "constraint2"); //$NON-NLS-1$
-
-        NodeDefinition[] childDefns = defn.getDeclaredChildNodeDefinitions();
-        assertEquals(childDefns.length, 1);
-        NodeDefinition childDefn = childDefns[0];
-        assertEquals(childDefn.getName(), "ex:node"); //$NON-NLS-1$
-        assertEquals(childDefn.getDefaultPrimaryTypeName(), "ex:defaultType"); //$NON-NLS-1$
-        assertTrue(childDefn.isMandatory());
-        assertTrue(childDefn.isAutoCreated());
-        assertTrue(childDefn.isProtected());
-        assertTrue(childDefn.allowsSameNameSiblings());
-        assertEquals(childDefn.getOnParentVersion(), OnParentVersionAction.VERSION);
-        String[] requiredTypeNames = childDefn.getRequiredPrimaryTypeNames();
-        assertEquals(requiredTypeNames[0], "ex:reqType1"); //$NON-NLS-1$
-        assertEquals(requiredTypeNames[1], "ex:reqType2"); //$NON-NLS-1$
+    protected InputStream openCndStream( final String cndFileName ) {
+        return this.getClass().getClassLoader().getResourceAsStream("cnd/" + cndFileName); //$NON-NLS-1$
     }
 
     //
@@ -353,9 +302,159 @@ public class CndImporterTest {
     //        assertEquals(requiredTypeNames[1], "ex:reqType2"); //$NON-NLS-1$
     // }
 
+    protected int opv( final OnParentVersion onParentVersioning ) {
+        int opv = OnParentVersionAction.COPY;
+        if (onParentVersioning != null) {
+            switch (onParentVersioning) {
+            case Abort:
+                opv = OnParentVersionAction.ABORT;
+                break;
+            case Compute:
+                opv = OnParentVersionAction.COMPUTE;
+                break;
+            case Copy:
+                opv = OnParentVersionAction.COPY;
+                break;
+            case Ignore:
+                opv = OnParentVersionAction.IGNORE;
+                break;
+            case Initialize:
+                opv = OnParentVersionAction.INITIALIZE;
+                break;
+            case Version:
+                opv = OnParentVersionAction.VERSION;
+                break;
+            }
+        }
+        return opv;
+    }
+
+    protected void printProblems() {
+        for (final Throwable problem : this.problems) {
+            System.out.println(problem.getLocalizedMessage());
+        }
+    }
+
+    private PropertyDefinition propDefn( final NodeTypeDefinition nodeType,
+                                         final String name ) {
+        for (final PropertyDefinition defn : nodeType.getDeclaredPropertyDefinitions()) {
+            if (defn.getName().equals(name)) {
+                return defn;
+            }
+        }
+
+        assertFalse("Failed to find property type definition \"" + name + "\"", false); //$NON-NLS-1$ //$NON-NLS-2$
+        return null;
+    }
+
+    @Test
+    public void shouldImportCndForAircraft() throws Exception {
+        this.importer.importFrom(openCndFile("aircraft.cnd"), this.problems); //$NON-NLS-1$
+
+        if (this.problems.size() != 0) {
+            printProblems();
+        }
+
+        assertEquals(0, this.problems.size());
+    }
+
+    //
+    // @Test
+    // public void shouldImportBuiltInNodeTypes() throws Exception {
+    // this.importer.importBuiltIns(this.problems);
+    // if (this.problems.size() != 0)
+    // printProblems();
+    // assertThat(this.problems.size(), is(0));
+    //
+    // // Verify a select few from the JCR and ModeShape builtin types ...
+    // registerImportedNamespaces();
+    // assertNodeType("nt:base", new String[] {}, NO_PRIMARY_NAME, NodeOptions.Abstract, NodeOptions.Queryable);
+    // assertNodeType("mode:root", new String[] { "nt:base", "mix:referenceable" }, NO_PRIMARY_NAME, NodeOptions.Queryable,
+    // NodeOptions.Ordered);
+    // }
+
+    @Test
+    public void shouldImportCndForCars() throws Exception {
+        this.importer.importFrom(openCndFile("cars.cnd"), this.problems); //$NON-NLS-1$
+
+        if (this.problems.size() != 0) {
+            printProblems();
+        }
+
+        assertEquals(0, this.problems.size());
+    }
+
+    @Test
+    public void shouldImportCndForImageSequencer() throws Exception {
+        this.importer.importFrom(openCndFile("images.cnd"), this.problems); //$NON-NLS-1$
+
+        if (this.problems.size() != 0) {
+            printProblems();
+        }
+
+        assertEquals(0, this.problems.size());
+    }
+
+    @Test
+    public void shouldImportCndForJavaSequencer() throws Exception {
+        this.importer.importFrom(openCndFile("javaSource.cnd"), this.problems); //$NON-NLS-1$
+
+        if (this.problems.size() != 0) {
+            printProblems();
+        }
+
+        assertEquals(0, this.problems.size());
+    }
+
+    @Test
+    public void shouldImportCndForMp3Sequencer() throws Exception {
+        this.importer.importFrom(openCndFile("mp3.cnd"), this.problems); //$NON-NLS-1$
+
+        if (this.problems.size() != 0) {
+            printProblems();
+        }
+
+        assertEquals(0, this.problems.size());
+    }
+
+    @Test
+    public void shouldImportCndForTeiidSequencer() throws Exception {
+        this.cnd = this.importer.importFrom(openCndFile("teiid.cnd"), this.problems); //$NON-NLS-1$
+
+        if (this.problems.size() != 0) {
+            printProblems();
+        }
+
+        // registerImportedNamespaces();
+        assertEquals(0, this.problems.size());
+        assertNodeType("relational:catalog", new String[] { "nt:unstructured", "relational:relationalEntity" }, NO_PRIMARY_NAME, //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                       NodeOptions.Queryable, NodeOptions.Ordered);
+    }
+
+    @Test
+    public void shouldImportCndThatHasNoChildren() {
+        final String cnd = "<ns = 'http://namespace.com/ns'>\n" //$NON-NLS-1$
+                + "<ex = 'http://namespace.com/ex'>\n" //$NON-NLS-1$
+                + "[ns:NodeType] > ns:ParentType1, ns:ParentType2 abstract orderable mixin noquery primaryitem ex:property\n" //$NON-NLS-1$
+                + "- ex:property (STRING) = 'default1', 'default2' mandatory autocreated protected multiple VERSION < 'constraint1', 'constraint2'\n" //$NON-NLS-1$
+                + " queryops '=, <>, <, <=, >, >=, LIKE' nofulltext noqueryorder"; //$NON-NLS-1$
+        this.importer.importFrom(cnd, this.problems, "string"); //$NON-NLS-1$
+    }
+
+    @Test
+    public void shouldImportCndThatIsEmpty() throws Exception {
+        this.importer.importFrom(openCndFile("empty.cnd"), this.problems); //$NON-NLS-1$
+
+        if (this.problems.size() != 0) {
+            printProblems();
+        }
+
+        assertEquals(0, this.problems.size());
+    }
+
     @Test
     public void shouldImportCndThatIsOnOneLine() {
-        String cnd = "<ns = 'http://namespace.com/ns'> " //$NON-NLS-1$
+        final String cnd = "<ns = 'http://namespace.com/ns'> " //$NON-NLS-1$
                 + "<ex = 'http://namespace.com/ex'>\n" //$NON-NLS-1$
                 + "[ns:NodeType] > ns:ParentType1, ns:ParentType2 abstract orderable mixin noquery primaryitem ex:property " //$NON-NLS-1$
                 + "- ex:property (STRING) = 'default1', 'default2' mandatory autocreated protected multiple VERSION < 'constraint1', 'constraint2' " //$NON-NLS-1$
@@ -365,13 +464,89 @@ public class CndImporterTest {
     }
 
     @Test
-    public void shouldImportCndThatHasNoChildren() {
-        String cnd = "<ns = 'http://namespace.com/ns'>\n" //$NON-NLS-1$
-                + "<ex = 'http://namespace.com/ex'>\n" //$NON-NLS-1$
-                + "[ns:NodeType] > ns:ParentType1, ns:ParentType2 abstract orderable mixin noquery primaryitem ex:property\n" //$NON-NLS-1$
-                + "- ex:property (STRING) = 'default1', 'default2' mandatory autocreated protected multiple VERSION < 'constraint1', 'constraint2'\n" //$NON-NLS-1$
-                + " queryops '=, <>, <, <=, >, >=, LIKE' nofulltext noqueryorder"; //$NON-NLS-1$
-        this.importer.importFrom(cnd, this.problems, "string"); //$NON-NLS-1$
+    public void shouldImportCndThatUsesAllFeatures() throws RepositoryException {
+        // this.importer.setDebug(true);
+        final String content = "<ex = 'http://namespace.com/ns'>\n" //$NON-NLS-1$
+                + "[ex:NodeType] > ex:ParentType1, ex:ParentType2 abstract orderable mixin noquery primaryitem ex:property\n" //$NON-NLS-1$
+                + "- ex:property (STRING) = 'default1', 'default2' mandatory autocreated protected multiple VERSION\n" //$NON-NLS-1$
+                + " queryops '=, <>, <, <=, >, >=, LIKE' nofulltext noqueryorder < 'constraint1', 'constraint2'" //$NON-NLS-1$
+                + "+ ex:node (ex:reqType1, ex:reqType2) = ex:defaultType mandatory autocreated protected sns version"; //$NON-NLS-1$
+        this.cnd = this.importer.importFrom(content, this.problems, "string"); //$NON-NLS-1$
+
+        if (!this.problems.isEmpty()) {
+            printProblems();
+        }
+
+        // check the namespace
+        assertEquals(this.cnd.getNamespaceMappings().size(), 1);
+        final NamespaceMapping ns = this.cnd.getNamespaceMappings().iterator().next();
+        assertEquals(ns.getUri(), "http://namespace.com/ns"); //$NON-NLS-1$
+
+        final List<NodeTypeDefinition> defns = this.cnd.getNodeTypeDefinitions();
+        assertEquals(defns.size(), 1);
+
+        final NodeTypeDefinition defn = defns.iterator().next();
+        assertEquals(defn.getName(), "ex:NodeType"); //$NON-NLS-1$
+        assertTrue(defn.isAbstract());
+        assertTrue(defn.hasOrderableChildNodes());
+        assertTrue(defn.isMixin());
+        assertFalse(defn.isQueryable());
+        assertEquals(defn.getPrimaryItemName(), "ex:property"); //$NON-NLS-1$
+        final String[] supertypeNames = defn.getDeclaredSupertypeNames();
+        assertEquals(supertypeNames[0], "ex:ParentType1"); //$NON-NLS-1$
+        assertEquals(supertypeNames[1], "ex:ParentType2"); //$NON-NLS-1$
+
+        final PropertyDefinition[] propDefns = defn.getDeclaredPropertyDefinitions();
+        assertEquals(propDefns.length, 1);
+        final PropertyDefinition propDefn = propDefns[0];
+        assertEquals(propDefn.getName(), "ex:property"); //$NON-NLS-1$
+        assertEquals(propDefn.getRequiredType(), PropertyType.STRING.asJcrValue());
+        assertTrue(propDefn.isMandatory());
+        assertTrue(propDefn.isAutoCreated());
+        assertTrue(propDefn.isProtected());
+        assertTrue(propDefn.isMultiple());
+        assertEquals(propDefn.getOnParentVersion(), OnParentVersionAction.VERSION);
+        assertFalse(propDefn.isFullTextSearchable());
+        assertFalse(propDefn.isQueryOrderable());
+        final Value[] defaultValues = propDefn.getDefaultValues();
+        assertEquals(defaultValues[0].getString(), "default1"); //$NON-NLS-1$
+        assertEquals(defaultValues[1].getString(), "default2"); //$NON-NLS-1$
+        final String[] queryOps = propDefn.getAvailableQueryOperators();
+        assertEquals(queryOps[0], "="); //$NON-NLS-1$
+        assertEquals(queryOps[1], "<>"); //$NON-NLS-1$
+        assertEquals(queryOps[2], "<"); //$NON-NLS-1$
+        assertEquals(queryOps[3], "<="); //$NON-NLS-1$
+        assertEquals(queryOps[4], ">"); //$NON-NLS-1$
+        assertEquals(queryOps[5], ">="); //$NON-NLS-1$
+        assertEquals(queryOps[6], "LIKE"); //$NON-NLS-1$
+        final String[] constraints = propDefn.getValueConstraints();
+        assertEquals(constraints[0], "constraint1"); //$NON-NLS-1$
+        assertEquals(constraints[1], "constraint2"); //$NON-NLS-1$
+
+        final NodeDefinition[] childDefns = defn.getDeclaredChildNodeDefinitions();
+        assertEquals(childDefns.length, 1);
+        final NodeDefinition childDefn = childDefns[0];
+        assertEquals(childDefn.getName(), "ex:node"); //$NON-NLS-1$
+        assertEquals(childDefn.getDefaultPrimaryTypeName(), "ex:defaultType"); //$NON-NLS-1$
+        assertTrue(childDefn.isMandatory());
+        assertTrue(childDefn.isAutoCreated());
+        assertTrue(childDefn.isProtected());
+        assertTrue(childDefn.allowsSameNameSiblings());
+        assertEquals(childDefn.getOnParentVersion(), OnParentVersionAction.VERSION);
+        final String[] requiredTypeNames = childDefn.getRequiredPrimaryTypeNames();
+        assertEquals(requiredTypeNames[0], "ex:reqType1"); //$NON-NLS-1$
+        assertEquals(requiredTypeNames[1], "ex:reqType2"); //$NON-NLS-1$
+    }
+
+    @Test
+    public void shouldImportDerbyDdlCnd() throws Exception {
+        this.importer.importFrom(openCndFile("DerbyDdl.cnd"), this.problems); //$NON-NLS-1$
+
+        if (this.problems.size() != 0) {
+            printProblems();
+        }
+
+        assertEquals(0, this.problems.size());
     }
 
     @Test
@@ -556,23 +731,15 @@ public class CndImporterTest {
     }
 
     //
-    // @Test
-    // public void shouldImportBuiltInNodeTypes() throws Exception {
-    // this.importer.importBuiltIns(this.problems);
-    // if (this.problems.size() != 0)
-    // printProblems();
-    // assertThat(this.problems.size(), is(0));
-    //
-    // // Verify a select few from the JCR and ModeShape builtin types ...
-    // registerImportedNamespaces();
-    // assertNodeType("nt:base", new String[] {}, NO_PRIMARY_NAME, NodeOptions.Abstract, NodeOptions.Queryable);
-    // assertNodeType("mode:root", new String[] { "nt:base", "mix:referenceable" }, NO_PRIMARY_NAME, NodeOptions.Queryable,
-    // NodeOptions.Ordered);
+    // protected void registerImportedNamespaces() {
+    // for (NamespaceRegistry.Namespace ns : this.importer.getNamespaces()) {
+    // context.getNamespaceRegistry().register(ns.getPrefix(), ns.getNamespaceUri());
+    // }
     // }
 
     @Test
-    public void shouldImportCndThatIsEmpty() throws Exception {
-        this.importer.importFrom(openCndFile("empty.cnd"), this.problems); //$NON-NLS-1$
+    public void shouldImportOracleDdlCnd() throws Exception {
+        this.importer.importFrom(openCndFile("OracleDdl.cnd"), this.problems); //$NON-NLS-1$
 
         if (this.problems.size() != 0) {
             printProblems();
@@ -582,8 +749,8 @@ public class CndImporterTest {
     }
 
     @Test
-    public void shouldImportCndForImageSequencer() throws Exception {
-        this.importer.importFrom(openCndFile("images.cnd"), this.problems); //$NON-NLS-1$
+    public void shouldImportPostgresDdlCnd() throws Exception {
+        this.importer.importFrom(openCndFile("PostgresDdl.cnd"), this.problems); //$NON-NLS-1$
 
         if (this.problems.size() != 0) {
             printProblems();
@@ -593,28 +760,14 @@ public class CndImporterTest {
     }
 
     @Test
-    public void shouldImportCndForMp3Sequencer() throws Exception {
-        this.importer.importFrom(openCndFile("mp3.cnd"), this.problems); //$NON-NLS-1$
+    public void shouldImportStandardDdlCnd() throws Exception {
+        this.importer.importFrom(openCndFile("StandardDdl.cnd"), this.problems); //$NON-NLS-1$
 
         if (this.problems.size() != 0) {
             printProblems();
         }
 
         assertEquals(0, this.problems.size());
-    }
-
-    @Test
-    public void shouldImportCndForTeiidSequencer() throws Exception {
-        this.cnd = this.importer.importFrom(openCndFile("teiid.cnd"), this.problems); //$NON-NLS-1$
-
-        if (this.problems.size() != 0) {
-            printProblems();
-        }
-
-        // registerImportedNamespaces();
-        assertEquals(0, this.problems.size());
-        assertNodeType("relational:catalog", new String[] { "nt:unstructured", "relational:relationalEntity" }, NO_PRIMARY_NAME, //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                       NodeOptions.Queryable, NodeOptions.Ordered);
     }
 
     @Test
@@ -624,64 +777,137 @@ public class CndImporterTest {
     }
 
     @Test
-    public void shouldImportCndForAircraft() throws Exception {
-        this.importer.importFrom(openCndFile("aircraft.cnd"), this.problems); //$NON-NLS-1$
+    public void shouldParseMinimalNodeDefinition() {
+        final String content = "[nodeTypeName]"; //$NON-NLS-1$
+        this.cnd = this.importer.parse(content);
 
-        if (this.problems.size() != 0) {
-            printProblems();
-        }
+        final List<NodeTypeDefinition> nodeTypeDefns = this.cnd.getNodeTypeDefinitions();
+        assertEquals(1, nodeTypeDefns.size());
 
-        assertEquals(0, this.problems.size());
+        final NodeTypeDefinition nodeTypeDefn = nodeTypeDefns.iterator().next();
+        assertEquals("nodeTypeName", nodeTypeDefn.getName()); //$NON-NLS-1$
     }
 
     @Test
-    public void shouldImportCndForCars() throws Exception {
-        this.importer.importFrom(openCndFile("cars.cnd"), this.problems); //$NON-NLS-1$
+    public void shouldParseMinimalNodeDefinitionWithSupertype() {
+        final String cnd = "[nodeTypeName] > supertype"; //$NON-NLS-1$
+        this.cnd = this.importer.parse(cnd);
 
-        if (this.problems.size() != 0) {
-            printProblems();
-        }
+        final List<NodeTypeDefinition> nodeTypeDefns = this.cnd.getNodeTypeDefinitions();
+        assertEquals(1, nodeTypeDefns.size());
 
-        assertEquals(0, this.problems.size());
+        final NodeTypeDefinition nodeTypeDefn = nodeTypeDefns.iterator().next();
+        assertEquals("nodeTypeName", nodeTypeDefn.getName()); //$NON-NLS-1$
+
+        final String[] superTypes = nodeTypeDefn.getDeclaredSupertypeNames();
+        assertEquals(1, superTypes.length);
+        assertEquals("supertype", superTypes[0]); //$NON-NLS-1$
     }
 
     @Test
-    public void shouldImportCndForJavaSequencer() throws Exception {
-        this.importer.importFrom(openCndFile("javaSource.cnd"), this.problems); //$NON-NLS-1$
+    public void shouldParseMinimalNodeDefinitionWithSupertypes() {
+        final String cnd = "[nodeTypeName] > supertype1, supertype2"; //$NON-NLS-1$
+        this.cnd = this.importer.parse(cnd);
 
-        if (this.problems.size() != 0) {
-            printProblems();
-        }
+        final List<NodeTypeDefinition> nodeTypeDefns = this.cnd.getNodeTypeDefinitions();
+        assertEquals(1, nodeTypeDefns.size());
 
-        assertEquals(0, this.problems.size());
+        final NodeTypeDefinition nodeTypeDefn = nodeTypeDefns.iterator().next();
+        assertEquals("nodeTypeName", nodeTypeDefn.getName()); //$NON-NLS-1$
+
+        final String[] superTypes = nodeTypeDefn.getDeclaredSupertypeNames();
+        assertEquals(2, superTypes.length);
+        assertEquals("supertype1", superTypes[0]); //$NON-NLS-1$
+        assertEquals("supertype2", superTypes[1]); //$NON-NLS-1$
     }
 
-    //
-    // protected void registerImportedNamespaces() {
-    // for (NamespaceRegistry.Namespace ns : this.importer.getNamespaces()) {
-    // context.getNamespaceRegistry().register(ns.getPrefix(), ns.getNamespaceUri());
-    // }
-    // }
+    @Test
+    public void shouldParseNamespaceDeclarationWithQuotedUriAndQuotedPrefix() {
+        final String content = "<'ns' = 'http://namespace.com/ns'>"; //$NON-NLS-1$
+        this.cnd = this.importer.parse(content);
 
-    public static final String[] NO_DEFAULTS = {};
-    public static final String[] NO_SUPERTYPES = {};
-    public static final String[] NO_VALUE_CONSTRAINTS = {};
-    public static final String NO_PRIMARY_NAME = null;
+        final List<NamespaceMapping> namespaces = this.cnd.getNamespaceMappings();
+        assertEquals(1, namespaces.size());
 
-    public static enum PropertyOptions {
-        Mandatory,
-        Autocreated,
-        Protected,
-        Multiple,
-        FullTextSearchable,
-        QueryOrderable
+        final NamespaceMapping namespace = namespaces.iterator().next();
+        assertEquals("ns", namespace.getPrefix()); //$NON-NLS-1$
+        assertEquals("http://namespace.com/ns", namespace.getUri()); //$NON-NLS-1$
+    }
+
+    @Test
+    public void shouldParseNamespaceDeclarationWithQuotedUriAndUnquotedPrefix() {
+        final String content = "<ns = 'http://namespace.com/ns'>"; //$NON-NLS-1$
+        this.cnd = this.importer.parse(content);
+
+        final List<NamespaceMapping> namespaces = this.cnd.getNamespaceMappings();
+        assertEquals(1, namespaces.size());
+
+        final NamespaceMapping namespace = namespaces.iterator().next();
+        assertEquals("ns", namespace.getPrefix()); //$NON-NLS-1$
+        assertEquals("http://namespace.com/ns", namespace.getUri()); //$NON-NLS-1$
+    }
+
+    @Test
+    public void shouldParseNamespaceDeclarationWithUnquotedUriAndQuotedPrefix() {
+        final String content = "<'ns' = http_namespace.com_ns>"; //$NON-NLS-1$
+        this.cnd = this.importer.parse(content);
+
+        final List<NamespaceMapping> namespaces = this.cnd.getNamespaceMappings();
+        assertEquals(1, namespaces.size());
+
+        final NamespaceMapping namespace = namespaces.iterator().next();
+        assertEquals("ns", namespace.getPrefix()); //$NON-NLS-1$
+        assertEquals("http_namespace.com_ns", namespace.getUri()); //$NON-NLS-1$
+    }
+
+    @Test
+    public void shouldParseNamespaceDeclarationWithUnquotedUriAndUnquotedPrefix() {
+        final String content = "<ns = http_namespace.com_ns>"; //$NON-NLS-1$
+        this.cnd = this.importer.parse(content);
+
+        final List<NamespaceMapping> namespaces = this.cnd.getNamespaceMappings();
+        assertEquals(1, namespaces.size());
+
+        final NamespaceMapping namespace = namespaces.iterator().next();
+        assertEquals("ns", namespace.getPrefix()); //$NON-NLS-1$
+        assertEquals("http_namespace.com_ns", namespace.getUri()); //$NON-NLS-1$
+    }
+
+    @Test
+    public void shouldParseNodeDefinitionWithNameThatIsKeyword() {
+        final String cnd = "[abstract] > supertype1, supertype2"; //$NON-NLS-1$
+        this.cnd = this.importer.parse(cnd);
+
+        final List<NodeTypeDefinition> nodeTypeDefns = this.cnd.getNodeTypeDefinitions();
+        assertEquals(1, nodeTypeDefns.size());
+
+        final NodeTypeDefinition nodeTypeDefn = nodeTypeDefns.iterator().next();
+        assertEquals("abstract", nodeTypeDefn.getName()); //$NON-NLS-1$
+    }
+
+    @Test(expected = ParsingException.class)
+    public void shouldReportErrorIfTheNodeTypeNameIsBlank() {
+        final String content = "<ns = 'http://namespace.com/ns'> [ ] abstract"; //$NON-NLS-1$
+        this.importer.parse(content);
+    }
+
+    @Test(expected = ParsingException.class)
+    public void shouldReportErrorIfTheNodeTypeNameIsEmpty() {
+        final String content = "<ns = 'http://namespace.com/ns'> [] abstract"; //$NON-NLS-1$
+        this.importer.parse(content);
+    }
+
+    @Test(expected = ParsingException.class)
+    public void shouldReportErrorIfTheNodeTypeNameIsNotFollowedByClosingBracket() {
+        final String content = "<ns = 'http://namespace.com/ns'> [  abstract"; //$NON-NLS-1$
+        this.importer.parse(content);
     }
 
     public static enum ChildOptions {
-        Mandatory,
         Autocreated,
-        Protected,
+        Mandatory,
         Multiple,
+        Protected,
         Sns
     }
 
@@ -690,169 +916,6 @@ public class CndImporterTest {
         Mixin,
         Ordered,
         Queryable
-    }
-
-    public static enum OnParentVersion {
-        Copy,
-        Version,
-        Initialize,
-        Compute,
-        Ignore,
-        Abort
-    }
-
-    protected int opv( OnParentVersion onParentVersioning ) {
-        int opv = OnParentVersionAction.COPY;
-        if (onParentVersioning != null) {
-            switch (onParentVersioning) {
-            case Abort:
-                opv = OnParentVersionAction.ABORT;
-                break;
-            case Compute:
-                opv = OnParentVersionAction.COMPUTE;
-                break;
-            case Copy:
-                opv = OnParentVersionAction.COPY;
-                break;
-            case Ignore:
-                opv = OnParentVersionAction.IGNORE;
-                break;
-            case Initialize:
-                opv = OnParentVersionAction.INITIALIZE;
-                break;
-            case Version:
-                opv = OnParentVersionAction.VERSION;
-                break;
-            }
-        }
-        return opv;
-    }
-
-    private NodeTypeDefinition defn( String name ) {
-        NodeTypeDefinition result = null;
-
-        for (NodeTypeDefinition defn : this.cnd.getNodeTypeDefinitions()) {
-            if (defn.getName().equals(name)) {
-                result = defn;
-                break;
-            }
-        }
-
-        assertNotNull("Failed to find node type definition \"" + name + "\"", result); //$NON-NLS-1$ //$NON-NLS-2$
-        return result;
-    }
-
-    private PropertyDefinition propDefn( NodeTypeDefinition nodeType,
-                                         String name ) {
-        for (PropertyDefinition defn : nodeType.getDeclaredPropertyDefinitions()) {
-            if (defn.getName().equals(name)) {
-                return defn;
-            }
-        }
-
-        assertFalse("Failed to find property type definition \"" + name + "\"", false); //$NON-NLS-1$ //$NON-NLS-2$
-        return null;
-    }
-
-    private NodeDefinition childDefn( NodeTypeDefinition nodeType,
-                                      String name ) {
-        for (NodeDefinition defn : nodeType.getDeclaredChildNodeDefinitions()) {
-            if (defn.getName().equals(name)) {
-                return defn;
-            }
-        }
-
-        assertFalse("Failed to find child node definition \"" + name + "\"", false); //$NON-NLS-1$ //$NON-NLS-2$
-        return null;
-    }
-
-    private void assertNodeType( String name,
-                                 String[] superTypes,
-                                 String primaryItemName,
-                                 NodeOptions... nodeOptions ) {
-        Set<NodeOptions> options = new HashSet<NodeOptions>();
-
-        for (NodeOptions option : nodeOptions) {
-            options.add(option);
-        }
-
-        NodeTypeDefinition defn = defn(name);
-        assertEquals(defn.getName(), name);
-        assertEquals(defn.isAbstract(), options.contains(NodeOptions.Abstract));
-        assertEquals(defn.hasOrderableChildNodes(), options.contains(NodeOptions.Ordered));
-        assertEquals(defn.isMixin(), options.contains(NodeOptions.Mixin));
-        // assertEquals(defn.isQueryable(), options.contains(NodeOptions.Queryable)); // defaults to variant
-        assertTrue(defn.getState(NodeTypeDefinition.PropertyName.QUERYABLE) == org.jboss.tools.modeshape.jcr.cnd.attributes.AttributeState.Value.VARIANT);
-        assertEquals(defn.getPrimaryItemName(), primaryItemName);
-        String[] supertypeNames = defn.getDeclaredSupertypeNames();
-        assertArrayEquals(supertypeNames, superTypes);
-    }
-
-    private void assertProperty( String nodeTypeName,
-                                 String propertyName,
-                                 String requiredType,
-                                 String[] defaultValues,
-                                 PropertyOptions... propertyOptions ) throws RepositoryException {
-        assertProperty(nodeTypeName, propertyName, requiredType, defaultValues, propertyOptions, null);
-    }
-
-    private void assertProperty( String nodeTypeName,
-                                 String propertyName,
-                                 String requiredType,
-                                 String[] defaultValues,
-                                 OnParentVersion onParentVersion,
-                                 PropertyOptions... propertyOptions ) throws RepositoryException {
-        assertProperty(nodeTypeName, propertyName, requiredType, defaultValues, propertyOptions, onParentVersion);
-    }
-
-    private int jcrPropertyType( String typeName ) {
-        PropertyType type = PropertyType.find(typeName);
-        return type.asJcrValue();
-        // org.modeshape.jcr.value.PropertyType type = org.modeshape.jcr.value.PropertyType.valueFor(typeName.toLowerCase());
-        // return PropertyTypeUtil.jcrPropertyTypeFor(type);
-    }
-
-    private void assertProperty( String nodeTypeName,
-                                 String propertyName,
-                                 String requiredType,
-                                 String[] defaultValues,
-                                 PropertyOptions[] propertyOptions,
-                                 OnParentVersion onParentVersioning,
-                                 String... valueConstraints ) throws RepositoryException {
-        Set<PropertyOptions> options = new HashSet<PropertyOptions>();
-        for (PropertyOptions option : propertyOptions)
-            options.add(option);
-
-        NodeTypeDefinition defn = defn(nodeTypeName);
-        PropertyDefinition propDefn = propDefn(defn, propertyName);
-
-        assertEquals(propDefn.getName(), propertyName);
-        assertEquals(propDefn.getRequiredType(), jcrPropertyType(requiredType));
-        assertEquals(propDefn.isMandatory(), options.contains(PropertyOptions.Mandatory));
-        assertEquals(propDefn.isAutoCreated(), options.contains(PropertyOptions.Autocreated));
-        assertEquals(propDefn.isProtected(), options.contains(PropertyOptions.Protected));
-        assertEquals(propDefn.isMultiple(), options.contains(PropertyOptions.Multiple));
-        assertEquals(propDefn.isFullTextSearchable(), options.contains(PropertyOptions.FullTextSearchable));
-        assertEquals(propDefn.isQueryOrderable(), options.contains(PropertyOptions.QueryOrderable));
-
-        int opv = opv(onParentVersioning);
-        assertEquals(propDefn.getOnParentVersion(), opv);
-
-        if ((defaultValues == null) || (defaultValues.length == 0)) {
-            assertTrue(propDefn.getDefaultValues().length == 0);
-        } else {
-            int i = 0;
-
-            for (Value defaultValue : propDefn.getDefaultValues()) {
-                assertEquals(defaultValues[i++], defaultValue.getString());
-            }
-        }
-
-        if ((valueConstraints == null) || (valueConstraints.length == 0)) {
-            assertTrue(propDefn.getValueConstraints().length == 0);
-        } else {
-            assertArrayEquals(propDefn.getValueConstraints(), valueConstraints);
-        }
     }
 
     //
@@ -865,35 +928,21 @@ public class CndImporterTest {
     // assertChild(nodeTypeName, childName, new String[] { requiredType }, defaultPrimaryType, childOptions, onParentVersioning);
     // }
 
-    private void assertChild( String nodeTypeName,
-                              String childName,
-                              String requiredType,
-                              String defaultPrimaryType,
-                              OnParentVersion onParentVersioning,
-                              ChildOptions... childOptions ) {
-        assertChild(nodeTypeName, childName, new String[] { requiredType }, defaultPrimaryType, childOptions, onParentVersioning);
+    public static enum OnParentVersion {
+        Abort,
+        Compute,
+        Copy,
+        Ignore,
+        Initialize,
+        Version
     }
 
-    private void assertChild( String nodeTypeName,
-                              String childName,
-                              String[] requiredTypes,
-                              String defaultPrimaryType,
-                              ChildOptions[] childOptions,
-                              OnParentVersion onParentVersioning ) {
-        Set<ChildOptions> options = new HashSet<ChildOptions>();
-        for (ChildOptions option : childOptions)
-            options.add(option);
-
-        NodeTypeDefinition defn = defn(nodeTypeName);
-        NodeDefinition childDefn = childDefn(defn, childName);
-
-        assertEquals(childDefn.getName(), childName);
-        assertEquals(childDefn.getDefaultPrimaryTypeName(), defaultPrimaryType);
-        assertEquals(childDefn.isMandatory(), options.contains(ChildOptions.Mandatory));
-        assertEquals(childDefn.isAutoCreated(), options.contains(ChildOptions.Autocreated));
-        assertEquals(childDefn.isProtected(), options.contains(ChildOptions.Protected));
-        assertEquals(childDefn.allowsSameNameSiblings(), options.contains(ChildOptions.Sns));
-        assertEquals(childDefn.getOnParentVersion(), opv(onParentVersioning));
-        assertArrayEquals(childDefn.getRequiredPrimaryTypeNames(), requiredTypes);
+    public static enum PropertyOptions {
+        Autocreated,
+        FullTextSearchable,
+        Mandatory,
+        Multiple,
+        Protected,
+        QueryOrderable
     }
 }

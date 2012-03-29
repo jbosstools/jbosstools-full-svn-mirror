@@ -10,6 +10,7 @@ package org.jboss.tools.modeshape.jcr.cnd;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -215,6 +216,25 @@ public class CompactNodeTypeDefinition implements CndElement {
 
     private String getNamespaceMappingDelimiter() {
         return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.NAMESPACE_MAPPING_DELIMITER);
+    }
+
+    /**
+     * @return the prefixes of all the namespace mappings (never <code>null</code> but can be empty)
+     */
+    public Collection<String> getNamespacePrefixes() {
+        final List<NamespaceMapping> namespaces = getNamespaceMappings();
+
+        if (namespaces.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        final List<String> prefixes = new ArrayList<String>(namespaces.size());
+
+        for (final NamespaceMapping namespace : namespaces) {
+            prefixes.add(namespace.getPrefix());
+        }
+
+        return prefixes;
     }
 
     /**

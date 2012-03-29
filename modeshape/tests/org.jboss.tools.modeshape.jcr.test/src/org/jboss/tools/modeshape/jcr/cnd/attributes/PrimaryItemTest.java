@@ -8,6 +8,7 @@
 package org.jboss.tools.modeshape.jcr.cnd.attributes;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.jboss.tools.modeshape.jcr.Utils;
@@ -93,4 +94,27 @@ public class PrimaryItemTest implements Constants {
         assertEquals(PRIMARY_ITEM_VARIANT_LONG_FORM, this.attribute.toCndNotation(CndElement.NotationType.LONG));
     }
 
+    @Test
+    public void newInstancesShouldBeEqualAndHaveSameHashCode() {
+        assertEquals(this.attribute, new PrimaryItem());
+        assertEquals(this.attribute.hashCode(), new PrimaryItem().hashCode());
+    }
+
+    @Test
+    public void instancesWithSamePrimaryItemNameShouldBeEqualAndHaveSameHashCode() {
+        this.attribute.setPrimaryItem(Constants.QUALIFIED_NAME1.get());
+        PrimaryItem that = new PrimaryItem();
+        that.setPrimaryItem(this.attribute.getPrimaryItem().get());
+        assertEquals(this.attribute, that);
+        assertEquals(this.attribute.hashCode(), that.hashCode());
+    }
+
+    @Test
+    public void instancesWithDifferentPrimaryItemNamesShouldNotBeEqualAndHaveDifferentHashCodes() {
+        this.attribute.setPrimaryItem(Constants.QUALIFIED_NAME1.get());
+        PrimaryItem that = new PrimaryItem();
+        that.setPrimaryItem(this.attribute.getPrimaryItem().get() + "changed"); //$NON-NLS-1$
+        assertFalse(this.attribute.equals(that));
+        assertFalse(this.attribute.hashCode() == that.hashCode());
+    }
 }

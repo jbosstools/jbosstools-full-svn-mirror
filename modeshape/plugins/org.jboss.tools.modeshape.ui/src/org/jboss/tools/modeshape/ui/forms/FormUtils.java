@@ -120,9 +120,48 @@ public final class FormUtils {
         });
 
         for (final IAction action : actions) {
-            toolBarManager.add(action);            
+            toolBarManager.add(action);
         }
 
+        toolBarManager.update(true);
+        return toolBarManager;
+    }
+
+    /**
+     * @param parent the parent whose toolbar is being created (cannot <code>null</code>)
+     * @param toolkit the toolkit used to create the form objects (cannot be <code>null</code>)
+     * @param actions the actions used to create the toolbar buttons from (cannot be <code>null</code> or empty)
+     * @return the toolbar manager of the new toolbar (never <code>null</code>)
+     */
+    public static IToolBarManager createToolBar( final Composite parent,
+                                                 final FormToolkit toolkit,
+                                                 final IAction[] actions ) {
+        final ToolBarManager toolBarManager = new ToolBarManager(SWT.FLAT);
+        final ToolBar toolBar = toolBarManager.createControl(parent);
+        toolBar.setLayoutData(new GridData(SWT.FILL, SWT.LEFT, true, false));
+        toolkit.adapt(toolBar);
+        final Cursor handCursor = new Cursor(Display.getCurrent(), SWT.CURSOR_HAND);
+        toolBar.setCursor(handCursor);
+
+        // Cursor needs to be explicitly disposed
+        toolBar.addDisposeListener(new DisposeListener() {
+
+            /**
+             * {@inheritDoc}
+             * 
+             * @see org.eclipse.swt.events.DisposeListener#widgetDisposed(org.eclipse.swt.events.DisposeEvent)
+             */
+            @Override
+            public void widgetDisposed( final DisposeEvent e ) {
+                if (!handCursor.isDisposed()) {
+                    handCursor.dispose();
+                }
+            }
+        });
+
+        for (final IAction action : actions) {
+            toolBarManager.add(action);
+        }
         toolBarManager.update(true);
         return toolBarManager;
     }

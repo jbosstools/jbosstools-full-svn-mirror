@@ -7,7 +7,7 @@
  */
 package org.jboss.tools.modeshape.jcr.cnd;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 import javax.jcr.PropertyType;
@@ -44,27 +44,34 @@ public interface Constants {
     String NAMESPACE_PREFIX1 = "NAMESPACE_PREFIX1"; //$NON-NLS-1$
     String NAMESPACE_PREFIX2 = "NAMESPACE_PREFIX2"; //$NON-NLS-1$
     String NAMESPACE_PREFIX3 = "NAMESPACE_PREFIX3"; //$NON-NLS-1$
+    String[] DEFAULT_NAMESPACE_PREFIXES = new String[] { NAMESPACE_PREFIX1, NAMESPACE_PREFIX2, NAMESPACE_PREFIX3 };
 
     String NAMESPACE_URI1 = "NAMESPACE_URI1"; //$NON-NLS-1$
     String NAMESPACE_URI2 = "NAMESPACE_URI2"; //$NON-NLS-1$
     String NAMESPACE_URI3 = "NAMESPACE_URI3"; //$NON-NLS-1$
+    String[] DEFAULT_NAMESPACE_URIS = new String[] { NAMESPACE_URI1, NAMESPACE_URI2, NAMESPACE_URI3 };
 
     NamespaceMapping NAMESPACE1 = new NamespaceMapping(NAMESPACE_PREFIX1, NAMESPACE_URI1);
     NamespaceMapping NAMESPACE2 = new NamespaceMapping(NAMESPACE_PREFIX2, NAMESPACE_URI2);
     NamespaceMapping NAMESPACE3 = new NamespaceMapping(NAMESPACE_PREFIX3, NAMESPACE_URI3);
+    NamespaceMapping[] DEFAULT_NAMESPACE_MAPPINGS = new NamespaceMapping[] { NAMESPACE1, NAMESPACE2, NAMESPACE3 };
 
-    String QUALIFIER1 = "QUALIFIER1"; //$NON-NLS-1$
-    String QUALIFIER2 = "QUALIFIER2"; //$NON-NLS-1$
-    String QUALIFIER3 = "QUALIFIER3"; //$NON-NLS-1$
+    String QUALIFIER1 = NAMESPACE_PREFIX1;
+    String QUALIFIER2 = NAMESPACE_PREFIX2;
+    String QUALIFIER3 = NAMESPACE_PREFIX3;
+    String[] DEFAULT_QUALIFIERS = DEFAULT_NAMESPACE_PREFIXES;
 
     String UNQUALIFIED_NAME1 = "UNQUALIFIED_NAME1"; //$NON-NLS-1$
     String UNQUALIFIED_NAME2 = "UNQUALIFIED_NAME2"; //$NON-NLS-1$
     String UNQUALIFIED_NAME3 = "UNQUALIFIED_NAME3"; //$NON-NLS-1$
+    String[] DEFAULT_UNQUALIFIED_NAMES = new String[] { UNQUALIFIED_NAME1, UNQUALIFIED_NAME2, UNQUALIFIED_NAME3 };
 
     QualifiedName QUALIFIED_NAME1 = new QualifiedName(QUALIFIER1, UNQUALIFIED_NAME1);
     QualifiedName QUALIFIED_NAME2 = new QualifiedName(QUALIFIER2, UNQUALIFIED_NAME2);
     QualifiedName QUALIFIED_NAME3 = new QualifiedName(QUALIFIER3, UNQUALIFIED_NAME3);
+    QualifiedName[] DEFAULT_QUALIFIED_NAMES = new QualifiedName[] { QUALIFIED_NAME1, QUALIFIED_NAME2, QUALIFIED_NAME3 };
     QualifiedName NAME_WITH_EMPTY_QUALIFIER = new QualifiedName(null, UNQUALIFIED_NAME1);
+    QualifiedName NAME_WITH_NON_DEFAULT_QUALIFIER = new QualifiedName(QUALIFIER1 + "changed", UNQUALIFIED_NAME1); //$NON-NLS-1$
 
     String VARIANT = AttributeState.VARIANT_STRING;
 
@@ -127,9 +134,12 @@ public interface Constants {
     String QUERY_OPS_VARIANT_COMPACT_FORM = QUERY_OPS_COMPACT_FORM + VARIANT;
     String QUERY_OPS_VARIANT_COMPRESSED_FORM = QUERY_OPS_COMPRESSED_FORM + VARIANT;
     String QUERY_OPS_VARIANT_LONG_FORM = QUERY_OPS_LONG_FORM + VARIANT;
+
     QueryOperator OPERATOR_ONE = QueryOperator.EQUALS;
     QueryOperator OPERATOR_TWO = QueryOperator.GREATER_THAN;
     QueryOperator OPERATOR_THREE = QueryOperator.LESS_THAN;
+    QueryOperator[] DEFAULT_OPERATORS = new QueryOperator[] { OPERATOR_ONE, OPERATOR_TWO, OPERATOR_THREE };
+
     String QUERY_OPS_ONE_OPERATOR_COMPACT_FORM = QUERY_OPS_COMPACT_FORM
             + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ITEM_QUOTE_CHAR)
             + OPERATOR_ONE.toCndNotation(NotationType.COMPACT)
@@ -221,6 +231,8 @@ public interface Constants {
     String VALUE_CONSTRAINT1 = "(19|20)\\d{2}"; //$NON-NLS-1$
     String VALUE_CONSTRAINT2 = "[$]\\d{1,3}[,]?\\d{3}([.]\\d{2})?"; //$NON-NLS-1$
     String VALUE_CONSTRAINT3 = "[1,5]"; //$NON-NLS-1$
+    String[] DEFAULT_VALUE_CONSTRAINTS = new String[] {VALUE_CONSTRAINT1, VALUE_CONSTRAINT2, VALUE_CONSTRAINT3};
+    
     String VALUE_CONSTRAINTS_VARIANT = ValueConstraints.NOTATION_PREFIX
             + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_PREFIX_END_DELIMITER) + VARIANT;
     String VALUE_CONSTRAINTS_ONE_ITEM_FORM = ValueConstraints.NOTATION_PREFIX
@@ -254,44 +266,46 @@ public interface Constants {
         }
 
         public static Collection<NamespaceMapping> getDefaultNamespaces() {
-            Collection<NamespaceMapping> namespaces = new ArrayList<NamespaceMapping>();
-            namespaces.add(NAMESPACE1);
-            namespaces.add(NAMESPACE2);
-            namespaces.add(NAMESPACE3);
-            return namespaces;
+            return Arrays.asList(DEFAULT_NAMESPACE_MAPPINGS);
         }
 
         public static Collection<QualifiedName> getDefaultQualifiedNames() {
-            Collection<QualifiedName> qualifiedNames = new ArrayList<QualifiedName>();
-            qualifiedNames.add(QUALIFIED_NAME1);
-            qualifiedNames.add(QUALIFIED_NAME2);
-            qualifiedNames.add(QUALIFIED_NAME3);
-            return qualifiedNames;
+            return Arrays.asList(DEFAULT_QUALIFIED_NAMES);
         }
 
-        public static String[] getDefaultQualifiedNamesAsArray() {
-            return new String[] { QUALIFIED_NAME1.get(), QUALIFIED_NAME2.get(), QUALIFIED_NAME3.get() };
+        public static String[] getDefaultQualifiedNamesAsStringArray() {
+            String[] names = new String[DEFAULT_QUALIFIED_NAMES.length];
+            int i = 0;
+            
+            for (QualifiedName qname : DEFAULT_QUALIFIED_NAMES) {
+                names[i++] = qname.get();
+            }
+
+            return names;
+        }
+
+        public static Collection<String> getDefaultNamespacePrefixes() {
+            return Arrays.asList(DEFAULT_NAMESPACE_PREFIXES);
         }
 
         public static Collection<String> getDefaultQualifiers() {
-            Collection<String> qualifiers = new ArrayList<String>();
-            qualifiers.add(QUALIFIER1);
-            qualifiers.add(QUALIFIER2);
-            qualifiers.add(QUALIFIER3);
-            return qualifiers;
+            return Arrays.asList(DEFAULT_QUALIFIERS);
         }
 
         public static String[] getDefaultQueryOperators() {
-            return new String[] { OPERATOR_ONE.toString(), OPERATOR_TWO.toString(), OPERATOR_THREE.toString() };
+            String[] result = new String[DEFAULT_OPERATORS.length];
+            int i = 0;
+
+            for (QueryOperator operator : DEFAULT_OPERATORS) {
+                result[i++] = operator.toString();
+            }
+
+            return result;
         }
 
         public static javax.jcr.Value[] getDefaultStringValues() {
             return new PropertyValue[] { new PropertyValue(PropertyType.STRING, ITEM_ONE),
                     new PropertyValue(PropertyType.STRING, ITEM_TWO), new PropertyValue(PropertyType.STRING, ITEM_THREE) };
-        }
-
-        public static String[] getDefaultValueConstraints() {
-            return new String[] { VALUE_CONSTRAINT1, VALUE_CONSTRAINT2, VALUE_CONSTRAINT3 };
         }
     }
 }
