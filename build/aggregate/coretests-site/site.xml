@@ -67,20 +67,8 @@
 <!-- TODO: add <feature url="features/org.jboss.tools.vpe.test.feature.source_0.0.0.jar" id="org.jboss.tools.vpe.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature> -->
 <feature url="features/org.jboss.tools.ws.test.feature.source_0.0.0.jar" id="org.jboss.tools.ws.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
 
-<!-- These should be on a SOA Tooling tests site, so they can be used by downstream
-<feature url="features/org.jboss.tools.bpel.test.feature_0.0.0.jar" id="org.jboss.tools.bpel.test.feature" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
-<feature url="features/org.jboss.tools.bpel.test.source.feature_0.0.0.jar" id="org.jboss.tools.bpel.test.source.feature" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
-<feature url="features/org.jboss.tools.esb.test.feature_0.0.0.jar" id="org.jboss.tools.esb.test.feature" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
-<feature url="features/org.jboss.tools.flow.common.test.feature_0.0.0.jar" id="org.jboss.tools.flow.common.test.feature" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
-<feature url="features/org.jboss.tools.jbpm3.test.feature_0.0.0.jar" id="org.jboss.tools.jbpm3.test.feature" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
-<feature url="features/org.jboss.tools.jbpm4.test.feature_0.0.0.jar" id="org.jboss.tools.jbpm4.test.feature" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
-<feature url="features/org.jboss.tools.modeshape.rest.test.feature_0.0.0.jar" id="org.jboss.tools.modeshape.rest.test.feature" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
-<feature url="features/org.jboss.tools.runtime.soa.test.feature_0.0.0.jar" id="org.jboss.tools.runtime.soa.test.feature" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
--->
-
 <!-- disabled/deprecated/not included
 <feature url="features/org.jboss.tools.deltacloud.test.feature_0.0.0.jar" id="org.jboss.tools.deltacloud.test.feature" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
-<feature url="features/org.jboss.tools.smooks.test.feature_0.0.0.jar" id="org.jboss.tools.smooks.test.feature" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
 -->
 
 </site>
