@@ -99,13 +99,12 @@ public class TestUtil {
 		return null;
 	}
 
-	public static IResource getResource(String path,
-			String projectName) throws CoreException, IOException {
+	public static IResource getResource(String path, String projectName) 
+			throws CoreException, IOException {
 		IProject project = ProjectsLoader.getInstance().getProject(projectName);
 		if (project != null) {
 			return project.findMember(path);
 		}
-
 		return null;
 	}
 
@@ -306,11 +305,14 @@ public class TestUtil {
      * @return nsIDOMDocument
      */
     public static nsIDOMDocument getVpeVisualDocument(JSPMultiPageEditor part) {
+    	nsIDOMDocument document = null;
         VpeController vpeController = TestUtil.getVpeController(part);
-        // get xulRunner editor
-        XulRunnerEditor xulRunnerEditor = vpeController.getXulRunnerEditor();
-        // get dom document
-        nsIDOMDocument document = xulRunnerEditor.getDOMDocument();
+        if (vpeController != null) {
+        	XulRunnerEditor xulRunnerEditor = vpeController.getXulRunnerEditor();
+        	if (xulRunnerEditor != null) {
+    			document = xulRunnerEditor.getDOMDocument();
+    		}
+		} 
         return document;
     }
 
