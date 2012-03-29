@@ -59,7 +59,7 @@
 <feature url="features/org.jboss.tools.maven.test.feature.source_0.0.0.jar" id="org.jboss.tools.maven.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
 <feature url="features/org.jboss.tools.openshift.express.test.feature.source_0.0.0.jar" id="org.jboss.tools.openshift.express.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
 <feature url="features/org.jboss.tools.portlet.test.feature.source_0.0.0.jar" id="org.jboss.tools.portlet.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
-<!-- TODO: add <feature url="features/org.jboss.tools.runtime.test.feature.source_0.0.0.jar" id="org.jboss.tools.runtime.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature> -->
+<feature url="features/org.jboss.tools.runtime.test.feature.source_0.0.0.jar" id="org.jboss.tools.runtime.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
 <feature url="features/org.jboss.tools.seam.test.feature.source_0.0.0.jar" id="org.jboss.tools.seam.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
 <feature url="features/org.jboss.tools.struts.test.feature.source_0.0.0.jar" id="org.jboss.tools.struts.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
 <feature url="features/org.jboss.tools.test.feature.source_0.0.0.jar" id="org.jboss.tools.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
