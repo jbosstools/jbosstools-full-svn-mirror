@@ -7,9 +7,9 @@
  */
 package org.jboss.tools.modeshape.jcr.cnd.attributes;
 
+import org.jboss.tools.modeshape.jcr.QualifiedName;
 import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.cnd.CndElement;
-import org.jboss.tools.modeshape.jcr.cnd.QualifiedName;
 
 /**
  * The primary item attribute used by node type definitions. This primary item may be a child node or a property.

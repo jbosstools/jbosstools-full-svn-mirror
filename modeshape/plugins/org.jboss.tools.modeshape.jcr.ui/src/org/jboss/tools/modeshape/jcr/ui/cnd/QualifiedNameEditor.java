@@ -23,10 +23,10 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.jboss.tools.modeshape.jcr.QualifiedName;
 import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.ValidationStatus;
 import org.jboss.tools.modeshape.jcr.cnd.CndValidator;
-import org.jboss.tools.modeshape.jcr.cnd.QualifiedName;
 import org.jboss.tools.modeshape.ui.forms.FormUtils.Styles;
 
 /**

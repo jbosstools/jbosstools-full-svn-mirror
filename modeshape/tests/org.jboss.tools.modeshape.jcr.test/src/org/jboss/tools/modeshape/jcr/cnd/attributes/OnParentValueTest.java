@@ -11,6 +11,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.jboss.tools.modeshape.jcr.Utils;
+import org.jboss.tools.modeshape.jcr.attributes.OnParentVersion;
 import org.jboss.tools.modeshape.jcr.cnd.CndElement;
 import org.jboss.tools.modeshape.jcr.cnd.Constants;
 import org.junit.Test;

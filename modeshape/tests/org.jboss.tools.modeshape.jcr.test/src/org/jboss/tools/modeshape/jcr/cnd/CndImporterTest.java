@@ -26,7 +26,10 @@ import javax.jcr.Value;
 import javax.jcr.nodetype.NodeDefinition;
 import javax.jcr.version.OnParentVersionAction;
 
-import org.jboss.tools.modeshape.jcr.cnd.attributes.PropertyType;
+import org.jboss.tools.modeshape.jcr.NamespaceMapping;
+import org.jboss.tools.modeshape.jcr.NodeTypeDefinition;
+import org.jboss.tools.modeshape.jcr.PropertyDefinition;
+import org.jboss.tools.modeshape.jcr.attributes.PropertyType;
 import org.junit.Before;
 import org.junit.Test;
 import org.modeshape.common.text.ParsingException;
@@ -104,7 +107,7 @@ public class CndImporterTest {
         assertEquals(defn.hasOrderableChildNodes(), options.contains(NodeOptions.Ordered));
         assertEquals(defn.isMixin(), options.contains(NodeOptions.Mixin));
         // assertEquals(defn.isQueryable(), options.contains(NodeOptions.Queryable)); // defaults to variant
-        assertTrue(defn.getState(NodeTypeDefinition.PropertyName.QUERYABLE) == org.jboss.tools.modeshape.jcr.cnd.attributes.AttributeState.Value.VARIANT);
+        assertTrue(defn.getState(NodeTypeDefinition.PropertyName.QUERYABLE) == org.jboss.tools.modeshape.jcr.attributes.AttributeState.Value.VARIANT);
         assertEquals(defn.getPrimaryItemName(), primaryItemName);
         final String[] supertypeNames = defn.getDeclaredSupertypeNames();
         assertArrayEquals(supertypeNames, superTypes);

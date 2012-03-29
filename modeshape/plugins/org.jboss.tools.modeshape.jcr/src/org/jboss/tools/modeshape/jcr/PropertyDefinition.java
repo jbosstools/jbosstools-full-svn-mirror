@@ -5,7 +5,7 @@
  *
  * See the AUTHORS.txt file distributed with this work for a full listing of individual contributors.
  */
-package org.jboss.tools.modeshape.jcr.cnd;
+package org.jboss.tools.modeshape.jcr;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -17,18 +17,17 @@ import javax.jcr.nodetype.NodeType;
 import javax.jcr.nodetype.PropertyDefinitionTemplate;
 
 import org.eclipse.osgi.util.NLS;
-import org.jboss.tools.modeshape.jcr.Messages;
-import org.jboss.tools.modeshape.jcr.Utils;
+import org.jboss.tools.modeshape.jcr.attributes.AttributeState;
+import org.jboss.tools.modeshape.jcr.attributes.AttributeState.Value;
+import org.jboss.tools.modeshape.jcr.attributes.DefaultValues;
+import org.jboss.tools.modeshape.jcr.attributes.OnParentVersion;
+import org.jboss.tools.modeshape.jcr.attributes.PropertyAttributes;
+import org.jboss.tools.modeshape.jcr.attributes.PropertyType;
+import org.jboss.tools.modeshape.jcr.attributes.QueryOperators;
+import org.jboss.tools.modeshape.jcr.attributes.QueryOperators.QueryOperator;
+import org.jboss.tools.modeshape.jcr.attributes.ValueConstraints;
+import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences;
 import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences.Preference;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.AttributeState;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.AttributeState.Value;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.DefaultValues;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.OnParentVersion;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.PropertyAttributes;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.PropertyType;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.QueryOperators;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.QueryOperators.QueryOperator;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.ValueConstraints;
 
 /**
  * The <code>PropertyDefinition</code> class represents node type property definition.
@@ -409,7 +408,7 @@ public class PropertyDefinition implements ItemDefinition, Comparable, PropertyD
 
     /**
      * {@inheritDoc}
-     *
+     * 
      * @see javax.jcr.nodetype.ItemDefinition#getName()
      */
     @Override
@@ -438,8 +437,8 @@ public class PropertyDefinition implements ItemDefinition, Comparable, PropertyD
 
     /**
      * {@inheritDoc}
-     *
-     * @see org.jboss.tools.modeshape.jcr.cnd.ItemDefinition#getQualifiedName()
+     * 
+     * @see org.jboss.tools.modeshape.jcr.ItemDefinition#getQualifiedName()
      */
     @Override
     public QualifiedName getQualifiedName() {
@@ -1008,7 +1007,7 @@ public class PropertyDefinition implements ItemDefinition, Comparable, PropertyD
          */
         @Override
         public String toString() {
-            return (getClass().getName() + super.toString());
+            return (getClass().getName() + '.' + super.toString());
         }
     }
 }

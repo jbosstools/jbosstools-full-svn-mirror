@@ -12,29 +12,31 @@ import java.util.Collection;
 
 import javax.jcr.PropertyType;
 
+import org.jboss.tools.modeshape.jcr.NamespaceMapping;
+import org.jboss.tools.modeshape.jcr.QualifiedName;
+import org.jboss.tools.modeshape.jcr.attributes.Abstract;
+import org.jboss.tools.modeshape.jcr.attributes.AttributeState;
+import org.jboss.tools.modeshape.jcr.attributes.Autocreated;
+import org.jboss.tools.modeshape.jcr.attributes.DefaultType;
+import org.jboss.tools.modeshape.jcr.attributes.DefaultValues;
+import org.jboss.tools.modeshape.jcr.attributes.Mandatory;
+import org.jboss.tools.modeshape.jcr.attributes.Mixin;
+import org.jboss.tools.modeshape.jcr.attributes.Multiple;
+import org.jboss.tools.modeshape.jcr.attributes.NoFullText;
+import org.jboss.tools.modeshape.jcr.attributes.NoQueryOrder;
+import org.jboss.tools.modeshape.jcr.attributes.Orderable;
+import org.jboss.tools.modeshape.jcr.attributes.PrimaryItem;
+import org.jboss.tools.modeshape.jcr.attributes.PropertyValue;
+import org.jboss.tools.modeshape.jcr.attributes.Protected;
+import org.jboss.tools.modeshape.jcr.attributes.QueryOperators;
+import org.jboss.tools.modeshape.jcr.attributes.RequiredTypes;
+import org.jboss.tools.modeshape.jcr.attributes.SameNameSiblings;
+import org.jboss.tools.modeshape.jcr.attributes.SuperTypes;
+import org.jboss.tools.modeshape.jcr.attributes.ValueConstraints;
+import org.jboss.tools.modeshape.jcr.attributes.AttributeState.Value;
+import org.jboss.tools.modeshape.jcr.attributes.QueryOperators.QueryOperator;
 import org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType;
 import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences.Preference;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.Abstract;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.AttributeState;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.AttributeState.Value;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.Autocreated;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.DefaultType;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.DefaultValues;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.Mandatory;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.Mixin;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.Multiple;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.NoFullText;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.NoQueryOrder;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.Orderable;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.PrimaryItem;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.PropertyValue;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.Protected;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.QueryOperators;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.QueryOperators.QueryOperator;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.RequiredTypes;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.SameNameSiblings;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.SuperTypes;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.ValueConstraints;
 
 /**
  * 

@@ -11,6 +11,12 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.jboss.tools.modeshape.jcr.Utils;
+import org.jboss.tools.modeshape.jcr.attributes.Abstract;
+import org.jboss.tools.modeshape.jcr.attributes.Mixin;
+import org.jboss.tools.modeshape.jcr.attributes.NodeTypeAttributes;
+import org.jboss.tools.modeshape.jcr.attributes.Orderable;
+import org.jboss.tools.modeshape.jcr.attributes.PrimaryItem;
+import org.jboss.tools.modeshape.jcr.attributes.Queryable;
 import org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,8 +34,23 @@ public class NodeTypeAttributesTest {
     }
 
     @Test
-    public void shouldNotBeOrderableAfterConstruction() {
-        Orderable attribute = this.attributes.getOrderable();
+    public void defaultAttributesShouldHaveEmptyCndNotation() {
+        assertTrue(Utils.isEmpty(this.attributes.toCndNotation(NotationType.LONG)));
+        assertTrue(Utils.isEmpty(this.attributes.toCndNotation(NotationType.COMPRESSED)));
+        assertTrue(Utils.isEmpty(this.attributes.toCndNotation(NotationType.COMPACT)));
+    }
+
+    @Test
+    public void queryShouldBeVariantAfterConstruction() {
+        final Queryable attribute = this.attributes.getQueryable();
+        assertTrue(attribute.isVariant());
+        assertFalse(attribute.is());
+        assertFalse(attribute.isNot());
+    }
+
+    @Test
+    public void shouldNotBeAbstractAfterConstruction() {
+        final Abstract attribute = this.attributes.getAbstract();
         assertTrue(attribute.isNot());
         assertFalse(attribute.is());
         assertFalse(attribute.isVariant());
@@ -37,41 +58,26 @@ public class NodeTypeAttributesTest {
 
     @Test
     public void shouldNotBeMixinAfterConstruction() {
-        Mixin attribute = this.attributes.getMixin();
+        final Mixin attribute = this.attributes.getMixin();
         assertTrue(attribute.isNot());
         assertFalse(attribute.is());
         assertFalse(attribute.isVariant());
     }
 
     @Test
-    public void shouldNotBeAbstractAfterConstruction() {
-        Abstract attribute = this.attributes.getAbstract();
+    public void shouldNotBeOrderableAfterConstruction() {
+        final Orderable attribute = this.attributes.getOrderable();
         assertTrue(attribute.isNot());
         assertFalse(attribute.is());
         assertFalse(attribute.isVariant());
-    }
-
-    @Test
-    public void queryShouldBeVariantAfterConstruction() {
-        Queryable attribute = this.attributes.getQueryable();
-        assertTrue(attribute.isVariant());
-        assertFalse(attribute.is());
-        assertFalse(attribute.isNot());
     }
 
     @Test
     public void shouldNotSupportPrimaryItemAfterConstruction() {
-        PrimaryItem attribute = this.attributes.getPrimaryItem();
+        final PrimaryItem attribute = this.attributes.getPrimaryItem();
         assertTrue(attribute.isNot());
         assertFalse(attribute.is());
         assertFalse(attribute.isVariant());
-    }
-
-    @Test
-    public void defaultAttributesShouldHaveEmptyCndNotation() {
-        assertTrue(Utils.isEmpty(this.attributes.toCndNotation(NotationType.LONG)));
-        assertTrue(Utils.isEmpty(this.attributes.toCndNotation(NotationType.COMPRESSED)));
-        assertTrue(Utils.isEmpty(this.attributes.toCndNotation(NotationType.COMPACT)));
     }
 
 }

@@ -66,19 +66,19 @@ import org.eclipse.ui.forms.IMessageManager;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.Section;
+import org.jboss.tools.modeshape.jcr.ChildNodeDefinition;
+import org.jboss.tools.modeshape.jcr.ItemDefinition;
 import org.jboss.tools.modeshape.jcr.Messages;
 import org.jboss.tools.modeshape.jcr.MultiValidationStatus;
+import org.jboss.tools.modeshape.jcr.NamespaceMapping;
+import org.jboss.tools.modeshape.jcr.NodeTypeDefinition;
+import org.jboss.tools.modeshape.jcr.PropertyDefinition;
+import org.jboss.tools.modeshape.jcr.QualifiedName;
 import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.ValidationStatus;
-import org.jboss.tools.modeshape.jcr.cnd.ChildNodeDefinition;
 import org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType;
 import org.jboss.tools.modeshape.jcr.cnd.CndValidator;
 import org.jboss.tools.modeshape.jcr.cnd.CompactNodeTypeDefinition;
-import org.jboss.tools.modeshape.jcr.cnd.ItemDefinition;
-import org.jboss.tools.modeshape.jcr.cnd.NamespaceMapping;
-import org.jboss.tools.modeshape.jcr.cnd.NodeTypeDefinition;
-import org.jboss.tools.modeshape.jcr.cnd.PropertyDefinition;
-import org.jboss.tools.modeshape.jcr.cnd.QualifiedName;
 import org.jboss.tools.modeshape.jcr.ui.JcrUiUtils;
 import org.jboss.tools.modeshape.ui.UiMessages;
 import org.jboss.tools.modeshape.ui.UiUtils;
@@ -2243,6 +2243,24 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
         }
     }
 
+    private void processStatus( final IMessageManager msgMgr,
+                                final ValidationStatus status,
+                                final Control c ) {
+        if (status.isOk()) {
+            return;
+        }
+
+        if (status instanceof MultiValidationStatus) {
+            final MultiValidationStatus multiStatus = (MultiValidationStatus)status;
+
+            for (final ValidationStatus embeddedStatus : multiStatus.getAll()) {
+                processStatus(msgMgr, embeddedStatus, c);
+            }
+        } else {
+            msgMgr.addMessage(status.getMessage(), status.getMessage(), null, JcrUiUtils.getMessageType(status), c);
+        }
+    }
+
     /**
      * {@inheritDoc}
      * 
@@ -2282,7 +2300,7 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
             final List<ItemDefinition> currentItems = nodeTypeDefinition.getItemDefinitions();
 
             // take out any items with residual names
-            for (ItemDefinition item : new ArrayList<ItemDefinition>(currentItems)) {
+            for (final ItemDefinition item : new ArrayList<ItemDefinition>(currentItems)) {
                 if (ItemDefinition.RESIDUAL_NAME.equals(item.getQualifiedName().get())) {
                     currentItems.remove(item);
                 }
@@ -2575,24 +2593,6 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
             if (this.deleteChildNode.isEnabled() != enable) {
                 this.deleteChildNode.setEnabled(enable);
             }
-        }
-    }
-
-    private void processStatus( IMessageManager msgMgr,
-                                final ValidationStatus status,
-                                final Control c ) {
-        if (status.isOk()) {
-            return;
-        }
-
-        if (status instanceof MultiValidationStatus) {
-            final MultiValidationStatus multiStatus = (MultiValidationStatus)status;
-
-            for (final ValidationStatus embeddedStatus : multiStatus.getAll()) {
-                processStatus(msgMgr, embeddedStatus, c);
-            }
-        } else {
-            msgMgr.addMessage(status.getMessage(), status.getMessage(), null, JcrUiUtils.getMessageType(status), c);
         }
     }
 

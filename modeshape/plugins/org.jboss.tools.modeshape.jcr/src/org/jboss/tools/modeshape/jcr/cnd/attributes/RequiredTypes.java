@@ -9,8 +9,8 @@ package org.jboss.tools.modeshape.jcr.cnd.attributes;
 
 import java.util.List;
 
+import org.jboss.tools.modeshape.jcr.QualifiedName;
 import org.jboss.tools.modeshape.jcr.Utils;
-import org.jboss.tools.modeshape.jcr.cnd.QualifiedName;
 
 /**
  * The required types of a child node definition.

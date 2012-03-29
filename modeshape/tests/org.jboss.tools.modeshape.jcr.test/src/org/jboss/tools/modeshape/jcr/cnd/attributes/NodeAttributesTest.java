@@ -12,6 +12,12 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.jboss.tools.modeshape.jcr.Utils;
+import org.jboss.tools.modeshape.jcr.attributes.Autocreated;
+import org.jboss.tools.modeshape.jcr.attributes.Mandatory;
+import org.jboss.tools.modeshape.jcr.attributes.NodeAttributes;
+import org.jboss.tools.modeshape.jcr.attributes.OnParentVersion;
+import org.jboss.tools.modeshape.jcr.attributes.Protected;
+import org.jboss.tools.modeshape.jcr.attributes.SameNameSiblings;
 import org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,27 +35,15 @@ public class NodeAttributesTest {
     }
 
     @Test
-    public void shouldNotBeAutocreatedAfterConstruction() {
-        Autocreated attribute = this.attributes.getAutocreated();
-        assertTrue(attribute.isNot());
-        assertFalse(attribute.is());
-        assertFalse(attribute.isVariant());
+    public void defaultAttributesShouldHaveEmptyCompressedAndCompactCndNotation() {
+        assertTrue(Utils.isEmpty(this.attributes.toCndNotation(NotationType.COMPRESSED)));
+        assertTrue(Utils.isEmpty(this.attributes.toCndNotation(NotationType.COMPACT)));
     }
 
     @Test
-    public void shouldNotBeMandatoryAfterConstruction() {
-        Mandatory attribute = this.attributes.getMandatory();
-        assertTrue(attribute.isNot());
-        assertFalse(attribute.is());
-        assertFalse(attribute.isVariant());
-    }
-
-    @Test
-    public void shouldNotBeProtectedAfterConstruction() {
-        Protected attribute = this.attributes.getProtected();
-        assertTrue(attribute.isNot());
-        assertFalse(attribute.is());
-        assertFalse(attribute.isVariant());
+    public void equalInstancesShouldHaveSameHashCode() {
+        final NodeAttributes second = new NodeAttributes();
+        assertEquals(this.attributes.hashCode(), second.hashCode());
     }
 
     @Test
@@ -58,22 +52,34 @@ public class NodeAttributesTest {
     }
 
     @Test
-    public void shouldNotBeSameNameSiblingsAfterConstruction() {
-        SameNameSiblings attribute = this.attributes.getSameNameSiblings();
+    public void shouldNotBeAutocreatedAfterConstruction() {
+        final Autocreated attribute = this.attributes.getAutocreated();
         assertTrue(attribute.isNot());
         assertFalse(attribute.is());
         assertFalse(attribute.isVariant());
     }
 
     @Test
-    public void defaultAttributesShouldHaveEmptyCompressedAndCompactCndNotation() {
-        assertTrue(Utils.isEmpty(this.attributes.toCndNotation(NotationType.COMPRESSED)));
-        assertTrue(Utils.isEmpty(this.attributes.toCndNotation(NotationType.COMPACT)));
+    public void shouldNotBeMandatoryAfterConstruction() {
+        final Mandatory attribute = this.attributes.getMandatory();
+        assertTrue(attribute.isNot());
+        assertFalse(attribute.is());
+        assertFalse(attribute.isVariant());
     }
 
     @Test
-    public void equalInstancesShouldHaveSameHashCode() {
-        NodeAttributes second = new NodeAttributes();
-        assertEquals(this.attributes.hashCode(), second.hashCode());
+    public void shouldNotBeProtectedAfterConstruction() {
+        final Protected attribute = this.attributes.getProtected();
+        assertTrue(attribute.isNot());
+        assertFalse(attribute.is());
+        assertFalse(attribute.isVariant());
+    }
+
+    @Test
+    public void shouldNotBeSameNameSiblingsAfterConstruction() {
+        final SameNameSiblings attribute = this.attributes.getSameNameSiblings();
+        assertTrue(attribute.isNot());
+        assertFalse(attribute.is());
+        assertFalse(attribute.isVariant());
     }
 }

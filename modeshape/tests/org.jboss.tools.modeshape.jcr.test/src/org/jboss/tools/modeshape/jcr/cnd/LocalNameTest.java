@@ -12,6 +12,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import org.jboss.tools.modeshape.jcr.LocalName;
 import org.jboss.tools.modeshape.jcr.Utils;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,7 +33,7 @@ public class LocalNameTest {
     public void differentModesDifferentValuesShouldNotBeEqual() {
         final String VALUE = "value"; //$NON-NLS-1$
         this.localName.set(VALUE);
-        LocalName thatLocalName = new LocalName(VALUE + "Changed"); //$NON-NLS-1$
+        final LocalName thatLocalName = new LocalName(VALUE + "Changed"); //$NON-NLS-1$
         thatLocalName.setMode(LocalName.Mode.DOUBLE_QUOTED);
         assertFalse(this.localName.equals(thatLocalName));
     }
@@ -41,7 +42,7 @@ public class LocalNameTest {
     public void differentModesSameValuesShouldBeEqual() {
         final String VALUE = "value"; //$NON-NLS-1$
         this.localName.set(VALUE);
-        LocalName thatLocalName = new LocalName(VALUE);
+        final LocalName thatLocalName = new LocalName(VALUE);
         thatLocalName.setMode(LocalName.Mode.DOUBLE_QUOTED);
         assertTrue(this.localName.equals(thatLocalName));
     }
@@ -67,7 +68,7 @@ public class LocalNameTest {
     public void sameModesDifferentValuesShouldNotBeEqual() {
         final String VALUE = "value"; //$NON-NLS-1$
         this.localName.set(VALUE);
-        LocalName thatLocalName = new LocalName(VALUE + "Changed"); //$NON-NLS-1$
+        final LocalName thatLocalName = new LocalName(VALUE + "Changed"); //$NON-NLS-1$
         assertFalse(this.localName.equals(thatLocalName));
     }
 
@@ -75,7 +76,7 @@ public class LocalNameTest {
     public void sameModesSameValuesShouldBeEqual() {
         final String VALUE = "value"; //$NON-NLS-1$
         this.localName.set(VALUE);
-        LocalName thatLocalName = new LocalName(VALUE);
+        final LocalName thatLocalName = new LocalName(VALUE);
         assertTrue(this.localName.equals(thatLocalName));
     }
 
@@ -104,7 +105,7 @@ public class LocalNameTest {
 
     @Test
     public void shouldHaveSameHashCodeWhenEqual() {
-        LocalName thatLocalName = new LocalName();
+        final LocalName thatLocalName = new LocalName();
         assertEquals(this.localName.hashCode(), thatLocalName.hashCode());
 
         final String VALUE = "value"; //$NON-NLS-1$
@@ -116,6 +117,14 @@ public class LocalNameTest {
     @Test
     public void shouldNotSetModeToSameValue() {
         assertFalse(this.localName.setMode(LocalName.Mode.UNQOUTED));
+    }
+
+    @Test
+    public void shouldQuoteIfContainsSpacesAndModeIsUnquoted() {
+        final String NEW_VALUE = "new value"; //$NON-NLS-1$
+        this.localName.set(NEW_VALUE);
+        assertTrue(this.localName.isUnquoted());
+        assertEquals('\'' + NEW_VALUE + '\'', this.localName.toCndNotation(null));
     }
 
     @Test
@@ -155,14 +164,6 @@ public class LocalNameTest {
         final String NULL_VALUE = null;
         this.localName.set(NULL_VALUE);
         assertNull(this.localName.get());
-    }
-
-    @Test
-    public void shouldQuoteIfContainsSpacesAndModeIsUnquoted() {
-        final String NEW_VALUE = "new value"; //$NON-NLS-1$
-        this.localName.set(NEW_VALUE);
-        assertTrue(this.localName.isUnquoted());
-        assertEquals('\'' + NEW_VALUE + '\'', this.localName.toCndNotation(null));
     }
 
 }

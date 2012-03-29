@@ -9,9 +9,15 @@ package org.jboss.tools.modeshape.jcr.cnd;
 
 import static org.junit.Assert.assertTrue;
 
+import org.jboss.tools.modeshape.jcr.ChildNodeDefinition;
+import org.jboss.tools.modeshape.jcr.ItemDefinition;
+import org.jboss.tools.modeshape.jcr.NamespaceMapping;
+import org.jboss.tools.modeshape.jcr.NodeTypeDefinition;
+import org.jboss.tools.modeshape.jcr.PropertyDefinition;
+import org.jboss.tools.modeshape.jcr.QualifiedName;
 import org.jboss.tools.modeshape.jcr.Utils;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.PropertyType;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.QueryOperators.QueryOperator;
+import org.jboss.tools.modeshape.jcr.attributes.PropertyType;
+import org.jboss.tools.modeshape.jcr.attributes.QueryOperators.QueryOperator;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -71,8 +77,23 @@ public class CndValidatorTest {
     }
 
     @Test
+    public void childNodeNameWithNonMatchingQualifierShouldBeAnError() {
+        this.childNodeDefinition.setName(Constants.NAME_WITH_NON_DEFAULT_QUALIFIER.get());
+        assertTrue(CndValidator.validateName(this.childNodeDefinition, Constants.Helper.getDefaultNamespacePrefixes(), null)
+                               .isError());
+    }
+
+    @Test
     public void cndWithoutNamespaceMappingsAndNodeTypeDefintionsShouldBeAWarning() {
         assertTrue(CndValidator.validateCnd(this.cnd).isWarning());
+    }
+
+    @Test
+    public void defaultTypeNameWithNonMatchingQualifierShouldBeAnError() {
+        this.childNodeDefinition.setName(Constants.QUALIFIED_NAME1.get());
+        this.childNodeDefinition.setDefaultPrimaryTypeName(Constants.NAME_WITH_NON_DEFAULT_QUALIFIER.get());
+        assertTrue(CndValidator.validateDefaultType(this.childNodeDefinition, Constants.Helper.getDefaultNamespacePrefixes())
+                               .isError());
     }
 
     @Test
@@ -209,8 +230,23 @@ public class CndValidatorTest {
     }
 
     @Test
+    public void nodeTypeNameWithNonMatchingQualifierShouldBeAnError() {
+        this.nodeTypeDefinition.setName(Constants.NAME_WITH_NON_DEFAULT_QUALIFIER.get());
+        assertTrue(CndValidator.validateName(this.nodeTypeDefinition, Constants.Helper.getDefaultNamespacePrefixes(), null)
+                               .isError());
+    }
+
+    @Test
     public void nullQueryOperatorShouldBeAnError() {
         assertTrue(CndValidator.validateQueryOperator(null, "propName").isError()); //$NON-NLS-1$
+    }
+
+    @Test
+    public void primaryItemNameWithNonMatchingQualifierShouldBeAnError() {
+        this.nodeTypeDefinition.setName(Constants.QUALIFIED_NAME1.get());
+        this.nodeTypeDefinition.setPrimaryItemName(Constants.NAME_WITH_NON_DEFAULT_QUALIFIER.get());
+        assertTrue(CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition, Constants.Helper.getDefaultNamespacePrefixes(),
+                                                           null, false).isError());
     }
 
     @Test
@@ -244,6 +280,21 @@ public class CndValidatorTest {
         this.propertyDefinition.addDefaultValue("defaultValue2"); //$NON-NLS-1$
 
         assertTrue(CndValidator.validatePropertyDefinition(this.propertyDefinition, null, null).isError());
+    }
+
+    @Test
+    public void propertyNameWithNonMatchingQualifierShouldBeAnError() {
+        this.propertyDefinition.setName(Constants.NAME_WITH_NON_DEFAULT_QUALIFIER.get());
+        assertTrue(CndValidator.validateName(this.propertyDefinition, Constants.Helper.getDefaultNamespacePrefixes(), null)
+                               .isError());
+    }
+
+    @Test
+    public void requiredTypeNameWithNonMatchingQualifierShouldBeAnError() {
+        this.childNodeDefinition.setName(Constants.QUALIFIED_NAME1.get());
+        this.childNodeDefinition.addRequiredType(Constants.NAME_WITH_NON_DEFAULT_QUALIFIER.get());
+        assertTrue(CndValidator.validateRequiredTypes(this.childNodeDefinition, Constants.Helper.getDefaultNamespacePrefixes())
+                               .isError());
     }
 
     @Test
@@ -331,51 +382,6 @@ public class CndValidatorTest {
         for (final QueryOperator operator : QueryOperator.values()) {
             assertTrue(CndValidator.validateQueryOperator(operator.toString(), "propName").isOk()); //$NON-NLS-1$
         }
-    }
-
-    @Test
-    public void childNodeNameWithNonMatchingQualifierShouldBeAnError() {
-        this.childNodeDefinition.setName(Constants.NAME_WITH_NON_DEFAULT_QUALIFIER.get());
-        assertTrue(CndValidator.validateName(this.childNodeDefinition, Constants.Helper.getDefaultNamespacePrefixes(), null)
-                               .isError());
-    }
-
-    @Test
-    public void propertyNameWithNonMatchingQualifierShouldBeAnError() {
-        this.propertyDefinition.setName(Constants.NAME_WITH_NON_DEFAULT_QUALIFIER.get());
-        assertTrue(CndValidator.validateName(this.propertyDefinition, Constants.Helper.getDefaultNamespacePrefixes(), null)
-                               .isError());
-    }
-
-    @Test
-    public void nodeTypeNameWithNonMatchingQualifierShouldBeAnError() {
-        this.nodeTypeDefinition.setName(Constants.NAME_WITH_NON_DEFAULT_QUALIFIER.get());
-        assertTrue(CndValidator.validateName(this.nodeTypeDefinition, Constants.Helper.getDefaultNamespacePrefixes(), null)
-                               .isError());
-    }
-
-    @Test
-    public void defaultTypeNameWithNonMatchingQualifierShouldBeAnError() {
-        this.childNodeDefinition.setName(Constants.QUALIFIED_NAME1.get());
-        this.childNodeDefinition.setDefaultPrimaryTypeName(Constants.NAME_WITH_NON_DEFAULT_QUALIFIER.get());
-        assertTrue(CndValidator.validateDefaultType(this.childNodeDefinition, Constants.Helper.getDefaultNamespacePrefixes())
-                               .isError());
-    }
-
-    @Test
-    public void primaryItemNameWithNonMatchingQualifierShouldBeAnError() {
-        this.nodeTypeDefinition.setName(Constants.QUALIFIED_NAME1.get());
-        this.nodeTypeDefinition.setPrimaryItemName(Constants.NAME_WITH_NON_DEFAULT_QUALIFIER.get());
-        assertTrue(CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition,
-                                                            Constants.Helper.getDefaultNamespacePrefixes(), null, false).isError());
-    }
-
-    @Test
-    public void requiredTypeNameWithNonMatchingQualifierShouldBeAnError() {
-        this.childNodeDefinition.setName(Constants.QUALIFIED_NAME1.get());
-        this.childNodeDefinition.addRequiredType(Constants.NAME_WITH_NON_DEFAULT_QUALIFIER.get());
-        assertTrue(CndValidator.validateRequiredTypes(this.childNodeDefinition, Constants.Helper.getDefaultNamespacePrefixes())
-                               .isError());
     }
 
     @Test

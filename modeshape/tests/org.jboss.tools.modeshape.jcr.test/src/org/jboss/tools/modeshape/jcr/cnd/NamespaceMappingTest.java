@@ -12,6 +12,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.jboss.tools.modeshape.jcr.Listener;
+import org.jboss.tools.modeshape.jcr.NamespaceMapping;
 import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType;
 import org.junit.Before;
@@ -48,6 +49,23 @@ public class NamespaceMappingTest {
     }
 
     @Test
+    public void copiesShouldBeEqualAndHaveSameHashCode() {
+        NamespaceMapping thatNamespaceMapping = NamespaceMapping.copy(this.namespaceMapping);
+        assertEquals(this.namespaceMapping, thatNamespaceMapping);
+        assertEquals(this.namespaceMapping.hashCode(), thatNamespaceMapping.hashCode());
+
+        assertTrue(this.namespaceMapping.setPrefix(Constants.NAMESPACE_PREFIX1));
+        thatNamespaceMapping = NamespaceMapping.copy(this.namespaceMapping);
+        assertEquals(this.namespaceMapping, thatNamespaceMapping);
+        assertEquals(this.namespaceMapping.hashCode(), thatNamespaceMapping.hashCode());
+
+        assertTrue(this.namespaceMapping.setUri(Constants.NAMESPACE_URI1));
+        thatNamespaceMapping = NamespaceMapping.copy(this.namespaceMapping);
+        assertEquals(this.namespaceMapping, thatNamespaceMapping);
+        assertEquals(this.namespaceMapping.hashCode(), thatNamespaceMapping.hashCode());
+    }
+
+    @Test
     public void longCndNotationShouldBeCorrect() {
         final String PREFIX = "prefix"; //$NON-NLS-1$
         final String URI = "uri"; //$NON-NLS-1$
@@ -68,7 +86,7 @@ public class NamespaceMappingTest {
 
     @Test
     public void shouldNotReceivePropertyChangeEventsWhenUnregistered() {
-        Listener l = new Listener();
+        final Listener l = new Listener();
         this.namespaceMapping.addListener(l);
         this.namespaceMapping.removeListener(l);
 
@@ -94,7 +112,7 @@ public class NamespaceMappingTest {
 
     @Test
     public void shouldReceivePropertyChangeEventWhenPrefixIsChanged() {
-        Listener l = new Listener();
+        final Listener l = new Listener();
         this.namespaceMapping.addListener(l);
 
         final String OLD_VALUE = this.namespaceMapping.getPrefix();
@@ -108,7 +126,7 @@ public class NamespaceMappingTest {
 
     @Test
     public void shouldReceivePropertyChangeEventWhenUriIsChanged() {
-        Listener l = new Listener();
+        final Listener l = new Listener();
         this.namespaceMapping.addListener(l);
 
         final String OLD_VALUE = this.namespaceMapping.getUri();
@@ -150,66 +168,49 @@ public class NamespaceMappingTest {
 
     @Test
     public void twoNamespaceMappingsWithDifferentPrefixesAndSameUriShouldHaveDifferentHashCodes() {
-        NamespaceMapping namespace1 = new NamespaceMapping("prefix", "uri"); //$NON-NLS-1$ //$NON-NLS-2$
-        NamespaceMapping namespace2 = new NamespaceMapping(namespace1.getPrefix() + "different", namespace1.getUri()); //$NON-NLS-1$
+        final NamespaceMapping namespace1 = new NamespaceMapping("prefix", "uri"); //$NON-NLS-1$ //$NON-NLS-2$
+        final NamespaceMapping namespace2 = new NamespaceMapping(namespace1.getPrefix() + "different", namespace1.getUri()); //$NON-NLS-1$
 
         assertFalse(namespace1.hashCode() == namespace2.hashCode());
     }
 
     @Test
     public void twoNamespaceMappingsWithDifferentPrefixesAndSameUriShouldNotBeEqual() {
-        NamespaceMapping namespace1 = new NamespaceMapping("prefix", "uri"); //$NON-NLS-1$ //$NON-NLS-2$
-        NamespaceMapping namespace2 = new NamespaceMapping(namespace1.getPrefix() + "different", namespace1.getUri()); //$NON-NLS-1$
+        final NamespaceMapping namespace1 = new NamespaceMapping("prefix", "uri"); //$NON-NLS-1$ //$NON-NLS-2$
+        final NamespaceMapping namespace2 = new NamespaceMapping(namespace1.getPrefix() + "different", namespace1.getUri()); //$NON-NLS-1$
 
         assertFalse(namespace1.equals(namespace2));
     }
 
     @Test
     public void twoNamespaceMappingsWithSamePrefixAndDifferentUrisShouldNotBeEqual() {
-        NamespaceMapping namespace1 = new NamespaceMapping("prefix", "uri"); //$NON-NLS-1$ //$NON-NLS-2$
-        NamespaceMapping namespace2 = new NamespaceMapping(namespace1.getPrefix(), namespace1.getUri() + "different"); //$NON-NLS-1$
+        final NamespaceMapping namespace1 = new NamespaceMapping("prefix", "uri"); //$NON-NLS-1$ //$NON-NLS-2$
+        final NamespaceMapping namespace2 = new NamespaceMapping(namespace1.getPrefix(), namespace1.getUri() + "different"); //$NON-NLS-1$
 
         assertFalse(namespace1.equals(namespace2));
     }
 
     @Test
     public void twoNamespaceMappingsWithSamePrefixAndDifferentUrisShouldNotHaveSameHashCode() {
-        NamespaceMapping namespace1 = new NamespaceMapping("prefix", "uri"); //$NON-NLS-1$ //$NON-NLS-2$
-        NamespaceMapping namespace2 = new NamespaceMapping(namespace1.getPrefix(), namespace1.getUri() + "different"); //$NON-NLS-1$
+        final NamespaceMapping namespace1 = new NamespaceMapping("prefix", "uri"); //$NON-NLS-1$ //$NON-NLS-2$
+        final NamespaceMapping namespace2 = new NamespaceMapping(namespace1.getPrefix(), namespace1.getUri() + "different"); //$NON-NLS-1$
 
         assertFalse(namespace1.hashCode() == namespace2.hashCode());
     }
 
     @Test
     public void twoNamespaceMappingsWithSamePrefixAndSameUriShouldBeEqual() {
-        NamespaceMapping namespace1 = new NamespaceMapping("prefix", "uri"); //$NON-NLS-1$ //$NON-NLS-2$
-        NamespaceMapping namespace2 = new NamespaceMapping(namespace1.getPrefix(), namespace1.getUri());
+        final NamespaceMapping namespace1 = new NamespaceMapping("prefix", "uri"); //$NON-NLS-1$ //$NON-NLS-2$
+        final NamespaceMapping namespace2 = new NamespaceMapping(namespace1.getPrefix(), namespace1.getUri());
 
         assertTrue(namespace1.equals(namespace2));
     }
 
     @Test
     public void twoNamespaceMappingsWithSamePrefixAndSameUriShouldHaveSameHashCode() {
-        NamespaceMapping namespace1 = new NamespaceMapping("prefix", "uri"); //$NON-NLS-1$ //$NON-NLS-2$
-        NamespaceMapping namespace2 = new NamespaceMapping(namespace1.getPrefix(), namespace1.getUri());
+        final NamespaceMapping namespace1 = new NamespaceMapping("prefix", "uri"); //$NON-NLS-1$ //$NON-NLS-2$
+        final NamespaceMapping namespace2 = new NamespaceMapping(namespace1.getPrefix(), namespace1.getUri());
 
         assertEquals(namespace1.hashCode(), namespace2.hashCode());
-    }
-
-    @Test
-    public void copiesShouldBeEqualAndHaveSameHashCode() {
-        NamespaceMapping thatNamespaceMapping = NamespaceMapping.copy(this.namespaceMapping);
-        assertEquals(this.namespaceMapping, thatNamespaceMapping);
-        assertEquals(this.namespaceMapping.hashCode(), thatNamespaceMapping.hashCode());
-
-        assertTrue(this.namespaceMapping.setPrefix(Constants.NAMESPACE_PREFIX1));
-        thatNamespaceMapping = NamespaceMapping.copy(this.namespaceMapping);
-        assertEquals(this.namespaceMapping, thatNamespaceMapping);
-        assertEquals(this.namespaceMapping.hashCode(), thatNamespaceMapping.hashCode());
-
-        assertTrue(this.namespaceMapping.setUri(Constants.NAMESPACE_URI1));
-        thatNamespaceMapping = NamespaceMapping.copy(this.namespaceMapping);
-        assertEquals(this.namespaceMapping, thatNamespaceMapping);
-        assertEquals(this.namespaceMapping.hashCode(), thatNamespaceMapping.hashCode());
     }
 }

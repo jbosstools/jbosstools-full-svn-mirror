@@ -15,6 +15,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.jboss.tools.modeshape.jcr.NamespaceMapping;
+import org.jboss.tools.modeshape.jcr.NodeTypeDefinition;
 import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences.Preference;
 
@@ -219,6 +221,17 @@ public class CompactNodeTypeDefinition implements CndElement {
     }
 
     /**
+     * @return the namespace mappings (never <code>null</code>)
+     */
+    public List<NamespaceMapping> getNamespaceMappings() {
+        if (this.namespaceMappings == null) {
+            return Collections.emptyList();
+        }
+
+        return this.namespaceMappings;
+    }
+
+    /**
      * @return the prefixes of all the namespace mappings (never <code>null</code> but can be empty)
      */
     public Collection<String> getNamespacePrefixes() {
@@ -235,17 +248,6 @@ public class CompactNodeTypeDefinition implements CndElement {
         }
 
         return prefixes;
-    }
-
-    /**
-     * @return the namespace mappings (never <code>null</code>)
-     */
-    public List<NamespaceMapping> getNamespaceMappings() {
-        if (this.namespaceMappings == null) {
-            return Collections.emptyList();
-        }
-
-        return this.namespaceMappings;
     }
 
     private String getNodeTypeDefinitionDelimiter() {

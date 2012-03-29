@@ -12,10 +12,12 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import org.jboss.tools.modeshape.jcr.QualifiedName;
 import org.jboss.tools.modeshape.jcr.Utils;
+import org.jboss.tools.modeshape.jcr.attributes.AttributeState;
+import org.jboss.tools.modeshape.jcr.attributes.SuperTypes;
 import org.jboss.tools.modeshape.jcr.cnd.CndElement;
 import org.jboss.tools.modeshape.jcr.cnd.Constants;
-import org.jboss.tools.modeshape.jcr.cnd.QualifiedName;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,14 +28,8 @@ public class SuperTypesTest implements Constants {
 
     private SuperTypes attribute;
 
-    private void add( QualifiedName qname ) {
+    private void add( final QualifiedName qname ) {
         if (!this.attribute.add(qname)) {
-            fail();
-        }
-    }
-
-    private void remove( QualifiedName qname ) {
-        if (!this.attribute.remove(qname)) {
             fail();
         }
     }
@@ -48,6 +44,12 @@ public class SuperTypesTest implements Constants {
         assertTrue(Utils.isEmpty(this.attribute.toCndNotation(CndElement.NotationType.LONG)));
         assertTrue(Utils.isEmpty(this.attribute.toCndNotation(CndElement.NotationType.COMPRESSED)));
         assertTrue(Utils.isEmpty(this.attribute.toCndNotation(CndElement.NotationType.COMPACT)));
+    }
+
+    private void remove( final QualifiedName qname ) {
+        if (!this.attribute.remove(qname)) {
+            fail();
+        }
     }
 
     @Test

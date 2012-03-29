@@ -25,9 +25,9 @@ import org.eclipse.ui.forms.FormDialog;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
+import org.jboss.tools.modeshape.jcr.QualifiedName;
 import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.ValidationStatus;
-import org.jboss.tools.modeshape.jcr.cnd.QualifiedName;
 import org.jboss.tools.modeshape.jcr.ui.Activator;
 import org.jboss.tools.modeshape.jcr.ui.JcrUiConstants;
 
@@ -44,6 +44,8 @@ final class QualifiedNameDialog extends FormDialog {
      */
     private Collection<QualifiedName> existingQNames;
 
+    private QualifiedNameEditor nameEditor;
+
     /**
      * The qualified name being edited or <code>null</code> when creating a qualified name.
      */
@@ -59,8 +61,6 @@ final class QualifiedNameDialog extends FormDialog {
      * A collection of known qualifiers/namespace prefixes to the CND (never <code>null</code>).
      */
     private final List<String> validQualifiers;
-
-    private QualifiedNameEditor nameEditor;
 
     /**
      * Used to construct a new qualified name.

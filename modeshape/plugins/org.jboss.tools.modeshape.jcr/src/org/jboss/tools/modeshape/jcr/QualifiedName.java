@@ -5,10 +5,10 @@
  *
  * See the AUTHORS.txt file distributed with this work for a full listing of individual contributors.
  */
-package org.jboss.tools.modeshape.jcr.cnd;
+package org.jboss.tools.modeshape.jcr;
 
-import org.jboss.tools.modeshape.jcr.Utils;
-import org.jboss.tools.modeshape.jcr.cnd.LocalName.Mode;
+import org.jboss.tools.modeshape.jcr.LocalName.Mode;
+import org.jboss.tools.modeshape.jcr.cnd.CndElement;
 
 /**
  * A name that may or may not have a qualifier.

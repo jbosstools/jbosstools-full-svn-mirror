@@ -12,10 +12,12 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import org.jboss.tools.modeshape.jcr.QualifiedName;
 import org.jboss.tools.modeshape.jcr.Utils;
+import org.jboss.tools.modeshape.jcr.attributes.AttributeState;
+import org.jboss.tools.modeshape.jcr.attributes.RequiredTypes;
 import org.jboss.tools.modeshape.jcr.cnd.CndElement;
 import org.jboss.tools.modeshape.jcr.cnd.Constants;
-import org.jboss.tools.modeshape.jcr.cnd.QualifiedName;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,14 +28,8 @@ public class RequiredTypesTest implements Constants {
 
     private RequiredTypes attribute;
 
-    private void add( QualifiedName item ) {
+    private void add( final QualifiedName item ) {
         if (!this.attribute.add(item)) {
-            fail();
-        }
-    }
-
-    private void remove( QualifiedName item ) {
-        if (!this.attribute.remove(item)) {
             fail();
         }
     }
@@ -48,6 +44,12 @@ public class RequiredTypesTest implements Constants {
         assertTrue(Utils.isEmpty(this.attribute.toCndNotation(CndElement.NotationType.LONG)));
         assertTrue(Utils.isEmpty(this.attribute.toCndNotation(CndElement.NotationType.COMPRESSED)));
         assertTrue(Utils.isEmpty(this.attribute.toCndNotation(CndElement.NotationType.COMPACT)));
+    }
+
+    private void remove( final QualifiedName item ) {
+        if (!this.attribute.remove(item)) {
+            fail();
+        }
     }
 
     @Test

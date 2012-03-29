@@ -14,13 +14,19 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.eclipse.osgi.util.NLS;
+import org.jboss.tools.modeshape.jcr.ChildNodeDefinition;
+import org.jboss.tools.modeshape.jcr.ItemDefinition;
 import org.jboss.tools.modeshape.jcr.Messages;
 import org.jboss.tools.modeshape.jcr.MultiValidationStatus;
+import org.jboss.tools.modeshape.jcr.NamespaceMapping;
+import org.jboss.tools.modeshape.jcr.NodeTypeDefinition;
+import org.jboss.tools.modeshape.jcr.PropertyDefinition;
+import org.jboss.tools.modeshape.jcr.QualifiedName;
 import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.ValidationStatus;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.AttributeState.Value;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.PropertyType;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.QueryOperators.QueryOperator;
+import org.jboss.tools.modeshape.jcr.attributes.AttributeState.Value;
+import org.jboss.tools.modeshape.jcr.attributes.PropertyType;
+import org.jboss.tools.modeshape.jcr.attributes.QueryOperators.QueryOperator;
 
 /**
  * Used to validate values stored in a CND.
@@ -161,7 +167,7 @@ public final class CndValidator {
 
         // default type
         validateDefaultType(childNodeDefinition, validNamespacePrefixes, status);
-        
+
         return status;
     }
 

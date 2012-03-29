@@ -16,13 +16,14 @@ import java.util.Collection;
 import java.util.Collections;
 
 import org.jboss.tools.modeshape.jcr.Listener;
+import org.jboss.tools.modeshape.jcr.PropertyDefinition;
+import org.jboss.tools.modeshape.jcr.PropertyDefinition.PropertyName;
 import org.jboss.tools.modeshape.jcr.Utils;
-import org.jboss.tools.modeshape.jcr.cnd.PropertyDefinition.PropertyName;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.AttributeState.Value;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.OnParentVersion;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.PropertyType;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.PropertyValue;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.QueryOperators.QueryOperator;
+import org.jboss.tools.modeshape.jcr.attributes.AttributeState.Value;
+import org.jboss.tools.modeshape.jcr.attributes.OnParentVersion;
+import org.jboss.tools.modeshape.jcr.attributes.PropertyType;
+import org.jboss.tools.modeshape.jcr.attributes.PropertyValue;
+import org.jboss.tools.modeshape.jcr.attributes.QueryOperators.QueryOperator;
 import org.junit.Before;
 import org.junit.Test;
 

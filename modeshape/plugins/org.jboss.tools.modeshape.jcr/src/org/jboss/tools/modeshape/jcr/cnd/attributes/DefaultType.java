@@ -7,10 +7,10 @@
  */
 package org.jboss.tools.modeshape.jcr.cnd.attributes;
 
+import org.jboss.tools.modeshape.jcr.QualifiedName;
 import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences;
 import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences.Preference;
-import org.jboss.tools.modeshape.jcr.cnd.QualifiedName;
 
 /**
  * The child node definition's default type property.

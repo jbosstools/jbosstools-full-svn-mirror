@@ -13,6 +13,8 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.jboss.tools.modeshape.jcr.Utils;
+import org.jboss.tools.modeshape.jcr.attributes.AttributeState;
+import org.jboss.tools.modeshape.jcr.attributes.ValueConstraints;
 import org.jboss.tools.modeshape.jcr.cnd.CndElement;
 import org.jboss.tools.modeshape.jcr.cnd.Constants;
 import org.junit.Before;
@@ -25,14 +27,8 @@ public class ValueConstraintsTest implements Constants {
 
     private ValueConstraints attribute;
 
-    private void add( String item ) {
+    private void add( final String item ) {
         if (!this.attribute.add(item)) {
-            fail();
-        }
-    }
-
-    private void remove( String item ) {
-        if (!this.attribute.remove(item)) {
             fail();
         }
     }
@@ -47,6 +43,12 @@ public class ValueConstraintsTest implements Constants {
         assertTrue(Utils.isEmpty(this.attribute.toCndNotation(CndElement.NotationType.LONG)));
         assertTrue(Utils.isEmpty(this.attribute.toCndNotation(CndElement.NotationType.COMPRESSED)));
         assertTrue(Utils.isEmpty(this.attribute.toCndNotation(CndElement.NotationType.COMPACT)));
+    }
+
+    private void remove( final String item ) {
+        if (!this.attribute.remove(item)) {
+            fail();
+        }
     }
 
     @Test

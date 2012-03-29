@@ -5,7 +5,7 @@
  *
  * See the AUTHORS.txt file distributed with this work for a full listing of individual contributors.
  */
-package org.jboss.tools.modeshape.jcr.cnd;
+package org.jboss.tools.modeshape.jcr;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -16,14 +16,13 @@ import javax.jcr.nodetype.NodeDefinitionTemplate;
 import javax.jcr.nodetype.NodeType;
 
 import org.eclipse.osgi.util.NLS;
-import org.jboss.tools.modeshape.jcr.Messages;
-import org.jboss.tools.modeshape.jcr.Utils;
+import org.jboss.tools.modeshape.jcr.attributes.AttributeState.Value;
+import org.jboss.tools.modeshape.jcr.attributes.DefaultType;
+import org.jboss.tools.modeshape.jcr.attributes.NodeAttributes;
+import org.jboss.tools.modeshape.jcr.attributes.OnParentVersion;
+import org.jboss.tools.modeshape.jcr.attributes.RequiredTypes;
+import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences;
 import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences.Preference;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.AttributeState.Value;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.DefaultType;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.NodeAttributes;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.OnParentVersion;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.RequiredTypes;
 
 /**
  * 
@@ -362,8 +361,8 @@ public class ChildNodeDefinition implements ItemDefinition, Comparable, NodeDefi
 
     /**
      * {@inheritDoc}
-     *
-     * @see org.jboss.tools.modeshape.jcr.cnd.ItemDefinition#getQualifiedName()
+     * 
+     * @see org.jboss.tools.modeshape.jcr.ItemDefinition#getQualifiedName()
      */
     @Override
     public QualifiedName getQualifiedName() {
@@ -756,7 +755,7 @@ public class ChildNodeDefinition implements ItemDefinition, Comparable, NodeDefi
          */
         @Override
         public String toString() {
-            return (getClass().getName() + super.toString());
+            return (getClass().getName() + '.' + super.toString());
         }
     }
 }

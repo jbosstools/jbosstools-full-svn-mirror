@@ -11,6 +11,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.jboss.tools.modeshape.jcr.Utils;
+import org.jboss.tools.modeshape.jcr.attributes.AttributeState;
+import org.jboss.tools.modeshape.jcr.attributes.SameNameSiblings;
 import org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType;
 import org.jboss.tools.modeshape.jcr.cnd.Constants;
 import org.junit.Before;

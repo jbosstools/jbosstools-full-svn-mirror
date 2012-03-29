@@ -13,9 +13,11 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.jboss.tools.modeshape.jcr.Utils;
+import org.jboss.tools.modeshape.jcr.attributes.AttributeState;
+import org.jboss.tools.modeshape.jcr.attributes.QueryOperators;
+import org.jboss.tools.modeshape.jcr.attributes.QueryOperators.QueryOperator;
 import org.jboss.tools.modeshape.jcr.cnd.CndElement;
 import org.jboss.tools.modeshape.jcr.cnd.Constants;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.QueryOperators.QueryOperator;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,14 +28,8 @@ public class QueryOperatorsTest implements Constants {
 
     private QueryOperators attribute;
 
-    private void add( QueryOperator operator ) {
+    private void add( final QueryOperator operator ) {
         if (!this.attribute.add(operator)) {
-            fail();
-        }
-    }
-
-    private void remove( QueryOperator operator ) {
-        if (!this.attribute.remove(operator)) {
             fail();
         }
     }
@@ -48,6 +44,12 @@ public class QueryOperatorsTest implements Constants {
         assertTrue(Utils.isEmpty(this.attribute.toCndNotation(CndElement.NotationType.LONG)));
         assertTrue(Utils.isEmpty(this.attribute.toCndNotation(CndElement.NotationType.COMPRESSED)));
         assertTrue(Utils.isEmpty(this.attribute.toCndNotation(CndElement.NotationType.COMPACT)));
+    }
+
+    private void remove( final QueryOperator operator ) {
+        if (!this.attribute.remove(operator)) {
+            fail();
+        }
     }
 
     @Test

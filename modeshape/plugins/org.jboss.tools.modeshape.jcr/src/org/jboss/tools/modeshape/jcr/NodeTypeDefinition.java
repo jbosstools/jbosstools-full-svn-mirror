@@ -5,7 +5,7 @@
  *
  * See the AUTHORS.txt file distributed with this work for a full listing of individual contributors.
  */
-package org.jboss.tools.modeshape.jcr.cnd;
+package org.jboss.tools.modeshape.jcr;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -20,13 +20,13 @@ import javax.jcr.nodetype.NodeTypeTemplate;
 import javax.jcr.nodetype.PropertyDefinitionTemplate;
 
 import org.eclipse.osgi.util.NLS;
-import org.jboss.tools.modeshape.jcr.Messages;
-import org.jboss.tools.modeshape.jcr.Utils;
+import org.jboss.tools.modeshape.jcr.attributes.AttributeState;
+import org.jboss.tools.modeshape.jcr.attributes.AttributeState.Value;
+import org.jboss.tools.modeshape.jcr.attributes.NodeTypeAttributes;
+import org.jboss.tools.modeshape.jcr.attributes.SuperTypes;
+import org.jboss.tools.modeshape.jcr.cnd.CndElement;
+import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences;
 import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences.Preference;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.AttributeState;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.AttributeState.Value;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.NodeTypeAttributes;
-import org.jboss.tools.modeshape.jcr.cnd.attributes.SuperTypes;
 
 /**
  * Represents a CND node type definition.
@@ -958,7 +958,7 @@ public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTempl
          */
         @Override
         public String toString() {
-            return (getClass().getName() + super.toString());
+            return (getClass().getName() + '.' + super.toString());
         }
     }
 

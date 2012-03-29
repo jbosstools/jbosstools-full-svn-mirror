@@ -16,6 +16,8 @@ import java.util.Collection;
 import java.util.Collections;
 
 import org.jboss.tools.modeshape.jcr.Listener;
+import org.jboss.tools.modeshape.jcr.NamespaceMapping;
+import org.jboss.tools.modeshape.jcr.NodeTypeDefinition;
 import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.cnd.CompactNodeTypeDefinition.PropertyName;
 import org.junit.Before;
@@ -42,11 +44,6 @@ public class CompactNodeTypeDefinitionTest {
         assertTrue(CndValidator.validateCnd(this.cnd).isWarning());
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void shouldNotAllowNullNamespaceToBeAdded() {
-        this.cnd.addNamespaceMapping(null);
-    }
-
     @Test
     public void shouldAddNamespace() {
         assertTrue(this.cnd.addNamespaceMapping(this.namespaceMapping));
@@ -54,8 +51,66 @@ public class CompactNodeTypeDefinitionTest {
     }
 
     @Test
+    public void shouldAddNodeTypeDefinition() {
+        assertTrue(this.cnd.addNodeTypeDefinition(this.nodeTypeDefinition));
+        assertEquals(this.nodeTypeDefinition, this.cnd.getNodeTypeDefinitions().iterator().next());
+    }
+
+    @Test
+    public void shouldClearNamespaceMappings() {
+        assertTrue(this.cnd.addNamespaceMapping(this.namespaceMapping));
+        assertTrue(this.cnd.clearNamespaceMappings());
+    }
+
+    @Test
+    public void shouldClearNodeTypeDefinitions() {
+        assertTrue(this.cnd.addNodeTypeDefinition(this.nodeTypeDefinition));
+        assertTrue(this.cnd.clearNodeTypeDefinitions());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldNotAllowNullNamespaceToBeAdded() {
+        this.cnd.addNamespaceMapping(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldNotAllowNullNodeTypeDefinitionToBeAdded() {
+        this.cnd.addNodeTypeDefinition(null);
+    }
+
+    @Test
+    public void shouldNotClearNamespaceMappingsWhenEmpty() {
+        assertFalse(this.cnd.clearNamespaceMappings());
+    }
+
+    @Test
+    public void shouldNotClearNodeTypeDefinitionsWhenEmpty() {
+        assertFalse(this.cnd.clearNodeTypeDefinitions());
+    }
+
+    @Test
+    public void shouldNotReceiveEventAfterUnregistering() {
+        final Listener l = new Listener();
+        assertTrue(this.cnd.addListener(l));
+        assertTrue(this.cnd.removeListener(l));
+
+        assertTrue(this.cnd.addNamespaceMapping(this.namespaceMapping));
+        assertEquals(0, l.getCount());
+    }
+
+    @Test
+    public void shouldNotRemoveNamespaceMappingThatDoesNotExist() {
+        assertFalse(this.cnd.removeNamespaceMapping(this.namespaceMapping));
+    }
+
+    @Test
+    public void shouldNotRemoveNodeTypeDefinitionThatDoesNotExist() {
+        assertFalse(this.cnd.removeNodeTypeDefinition(this.nodeTypeDefinition));
+    }
+
+    @Test
     public void shouldReceiveEventAfterAddingNamespace() {
-        Listener l = new Listener();
+        final Listener l = new Listener();
         assertTrue(this.cnd.addListener(l));
 
         assertTrue(this.cnd.addNamespaceMapping(this.namespaceMapping));
@@ -67,29 +122,8 @@ public class CompactNodeTypeDefinitionTest {
     }
 
     @Test
-    public void shouldNotReceiveEventAfterUnregistering() {
-        Listener l = new Listener();
-        assertTrue(this.cnd.addListener(l));
-        assertTrue(this.cnd.removeListener(l));
-
-        assertTrue(this.cnd.addNamespaceMapping(this.namespaceMapping));
-        assertEquals(0, l.getCount());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void shouldNotAllowNullNodeTypeDefinitionToBeAdded() {
-        this.cnd.addNodeTypeDefinition(null);
-    }
-
-    @Test
-    public void shouldAddNodeTypeDefinition() {
-        assertTrue(this.cnd.addNodeTypeDefinition(this.nodeTypeDefinition));
-        assertEquals(this.nodeTypeDefinition, this.cnd.getNodeTypeDefinitions().iterator().next());
-    }
-
-    @Test
     public void shouldReceiveEventAfterAddingNodeTypeDefinition() {
-        Listener l = new Listener();
+        final Listener l = new Listener();
         assertTrue(this.cnd.addListener(l));
 
         assertTrue(this.cnd.addNodeTypeDefinition(this.nodeTypeDefinition));
@@ -101,22 +135,11 @@ public class CompactNodeTypeDefinitionTest {
     }
 
     @Test
-    public void shouldClearNamespaceMappings() {
-        assertTrue(this.cnd.addNamespaceMapping(this.namespaceMapping));
-        assertTrue(this.cnd.clearNamespaceMappings());
-    }
-
-    @Test
-    public void shouldNotClearNamespaceMappingsWhenEmpty() {
-        assertFalse(this.cnd.clearNamespaceMappings());
-    }
-
-    @Test
     public void shouldReceiveEventAfterClearingNamespaceMappings() {
         assertTrue(this.cnd.addNamespaceMapping(this.namespaceMapping));
-        Collection<NamespaceMapping> oldValue = Collections.singletonList(this.namespaceMapping);
+        final Collection<NamespaceMapping> oldValue = Collections.singletonList(this.namespaceMapping);
 
-        Listener l = new Listener();
+        final Listener l = new Listener();
         assertTrue(this.cnd.addListener(l));
 
         assertTrue(this.cnd.clearNamespaceMappings());
@@ -127,22 +150,11 @@ public class CompactNodeTypeDefinitionTest {
     }
 
     @Test
-    public void shouldClearNodeTypeDefinitions() {
-        assertTrue(this.cnd.addNodeTypeDefinition(this.nodeTypeDefinition));
-        assertTrue(this.cnd.clearNodeTypeDefinitions());
-    }
-
-    @Test
-    public void shouldNotClearNodeTypeDefinitionsWhenEmpty() {
-        assertFalse(this.cnd.clearNodeTypeDefinitions());
-    }
-
-    @Test
     public void shouldReceiveEventAfterClearingNodeTypeDefinitions() {
         assertTrue(this.cnd.addNodeTypeDefinition(this.nodeTypeDefinition));
-        Collection<NodeTypeDefinition> oldValue = Collections.singletonList(this.nodeTypeDefinition);
+        final Collection<NodeTypeDefinition> oldValue = Collections.singletonList(this.nodeTypeDefinition);
 
-        Listener l = new Listener();
+        final Listener l = new Listener();
         assertTrue(this.cnd.addListener(l));
 
         assertTrue(this.cnd.clearNodeTypeDefinitions());
@@ -156,13 +168,27 @@ public class CompactNodeTypeDefinitionTest {
     public void shouldReceiveEventAfterRemoveNamespaceMapping() {
         assertTrue(this.cnd.addNamespaceMapping(this.namespaceMapping));
 
-        Listener l = new Listener();
+        final Listener l = new Listener();
         assertTrue(this.cnd.addListener(l));
 
         assertTrue(this.cnd.removeNamespaceMapping(this.namespaceMapping));
         assertEquals(1, l.getCount());
         assertEquals(PropertyName.NAMESPACE_MAPPINGS.toString(), l.getPropertyName());
         assertEquals(this.namespaceMapping, l.getOldValue());
+        assertNull(l.getNewValue());
+    }
+
+    @Test
+    public void shouldReceiveEventAfterRemoveNodeTypeDefinition() {
+        assertTrue(this.cnd.addNodeTypeDefinition(this.nodeTypeDefinition));
+
+        final Listener l = new Listener();
+        assertTrue(this.cnd.addListener(l));
+
+        assertTrue(this.cnd.removeNodeTypeDefinition(this.nodeTypeDefinition));
+        assertEquals(1, l.getCount());
+        assertEquals(PropertyName.NODE_TYPE_DEFINITIONS.toString(), l.getPropertyName());
+        assertEquals(this.nodeTypeDefinition, l.getOldValue());
         assertNull(l.getNewValue());
     }
 
@@ -174,33 +200,9 @@ public class CompactNodeTypeDefinitionTest {
     }
 
     @Test
-    public void shouldNotRemoveNamespaceMappingThatDoesNotExist() {
-        assertFalse(this.cnd.removeNamespaceMapping(this.namespaceMapping));
-    }
-
-    @Test
-    public void shouldReceiveEventAfterRemoveNodeTypeDefinition() {
-        assertTrue(this.cnd.addNodeTypeDefinition(this.nodeTypeDefinition));
-
-        Listener l = new Listener();
-        assertTrue(this.cnd.addListener(l));
-
-        assertTrue(this.cnd.removeNodeTypeDefinition(this.nodeTypeDefinition));
-        assertEquals(1, l.getCount());
-        assertEquals(PropertyName.NODE_TYPE_DEFINITIONS.toString(), l.getPropertyName());
-        assertEquals(this.nodeTypeDefinition, l.getOldValue());
-        assertNull(l.getNewValue());
-    }
-
-    @Test
     public void shouldRemoveNodeTypeDefinition() {
         assertTrue(this.cnd.addNodeTypeDefinition(this.nodeTypeDefinition));
         assertTrue(this.cnd.removeNodeTypeDefinition(this.nodeTypeDefinition));
         assertEquals(0, this.cnd.getNodeTypeDefinitions().size());
-    }
-
-    @Test
-    public void shouldNotRemoveNodeTypeDefinitionThatDoesNotExist() {
-        assertFalse(this.cnd.removeNodeTypeDefinition(this.nodeTypeDefinition));
     }
 }

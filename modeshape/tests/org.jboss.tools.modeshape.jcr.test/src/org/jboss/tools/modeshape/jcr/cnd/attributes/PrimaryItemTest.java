@@ -12,6 +12,8 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.jboss.tools.modeshape.jcr.Utils;
+import org.jboss.tools.modeshape.jcr.attributes.AttributeState;
+import org.jboss.tools.modeshape.jcr.attributes.PrimaryItem;
 import org.jboss.tools.modeshape.jcr.cnd.CndElement;
 import org.jboss.tools.modeshape.jcr.cnd.Constants;
 import org.junit.Before;
@@ -42,9 +44,27 @@ public class PrimaryItemTest implements Constants {
     }
 
     @Test
-    public void stateShouldBeIsWhenSettingNonEmptyPrimaryItem() {
-        assertTrue(this.attribute.setPrimaryItem("primaryItem")); //$NON-NLS-1$
-        assertTrue(this.attribute.is());
+    public void instancesWithDifferentPrimaryItemNamesShouldNotBeEqualAndHaveDifferentHashCodes() {
+        this.attribute.setPrimaryItem(Constants.QUALIFIED_NAME1.get());
+        final PrimaryItem that = new PrimaryItem();
+        that.setPrimaryItem(this.attribute.getPrimaryItem().get() + "changed"); //$NON-NLS-1$
+        assertFalse(this.attribute.equals(that));
+        assertFalse(this.attribute.hashCode() == that.hashCode());
+    }
+
+    @Test
+    public void instancesWithSamePrimaryItemNameShouldBeEqualAndHaveSameHashCode() {
+        this.attribute.setPrimaryItem(Constants.QUALIFIED_NAME1.get());
+        final PrimaryItem that = new PrimaryItem();
+        that.setPrimaryItem(this.attribute.getPrimaryItem().get());
+        assertEquals(this.attribute, that);
+        assertEquals(this.attribute.hashCode(), that.hashCode());
+    }
+
+    @Test
+    public void newInstancesShouldBeEqualAndHaveSameHashCode() {
+        assertEquals(this.attribute, new PrimaryItem());
+        assertEquals(this.attribute.hashCode(), new PrimaryItem().hashCode());
     }
 
     @Test
@@ -56,6 +76,12 @@ public class PrimaryItemTest implements Constants {
         assertTrue(this.attribute.setPrimaryItem("primaryItem")); //$NON-NLS-1$
         assertTrue(this.attribute.setPrimaryItem(null));
         assertTrue(this.attribute.isNot());
+    }
+
+    @Test
+    public void stateShouldBeIsWhenSettingNonEmptyPrimaryItem() {
+        assertTrue(this.attribute.setPrimaryItem("primaryItem")); //$NON-NLS-1$
+        assertTrue(this.attribute.is());
     }
 
     @Test
@@ -92,29 +118,5 @@ public class PrimaryItemTest implements Constants {
     public void verifyVariantLongCndNotation() {
         this.attribute.set(AttributeState.Value.VARIANT);
         assertEquals(PRIMARY_ITEM_VARIANT_LONG_FORM, this.attribute.toCndNotation(CndElement.NotationType.LONG));
-    }
-
-    @Test
-    public void newInstancesShouldBeEqualAndHaveSameHashCode() {
-        assertEquals(this.attribute, new PrimaryItem());
-        assertEquals(this.attribute.hashCode(), new PrimaryItem().hashCode());
-    }
-
-    @Test
-    public void instancesWithSamePrimaryItemNameShouldBeEqualAndHaveSameHashCode() {
-        this.attribute.setPrimaryItem(Constants.QUALIFIED_NAME1.get());
-        PrimaryItem that = new PrimaryItem();
-        that.setPrimaryItem(this.attribute.getPrimaryItem().get());
-        assertEquals(this.attribute, that);
-        assertEquals(this.attribute.hashCode(), that.hashCode());
-    }
-
-    @Test
-    public void instancesWithDifferentPrimaryItemNamesShouldNotBeEqualAndHaveDifferentHashCodes() {
-        this.attribute.setPrimaryItem(Constants.QUALIFIED_NAME1.get());
-        PrimaryItem that = new PrimaryItem();
-        that.setPrimaryItem(this.attribute.getPrimaryItem().get() + "changed"); //$NON-NLS-1$
-        assertFalse(this.attribute.equals(that));
-        assertFalse(this.attribute.hashCode() == that.hashCode());
     }
 }

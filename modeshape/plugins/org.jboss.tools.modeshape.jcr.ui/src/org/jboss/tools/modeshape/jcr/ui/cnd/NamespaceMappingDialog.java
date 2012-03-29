@@ -28,9 +28,9 @@ import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.jboss.tools.modeshape.jcr.MultiValidationStatus;
+import org.jboss.tools.modeshape.jcr.NamespaceMapping;
 import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.cnd.CndValidator;
-import org.jboss.tools.modeshape.jcr.cnd.NamespaceMapping;
 import org.jboss.tools.modeshape.jcr.ui.Activator;
 import org.jboss.tools.modeshape.jcr.ui.JcrUiConstants;
 import org.jboss.tools.modeshape.ui.forms.FormUtils.Styles;
@@ -100,7 +100,7 @@ final class NamespaceMappingDialog extends FormDialog {
      * @see org.eclipse.jface.window.Window#configureShell(org.eclipse.swt.widgets.Shell)
      */
     @Override
-    protected void configureShell( Shell newShell ) {
+    protected void configureShell( final Shell newShell ) {
         super.configureShell(newShell);
         newShell.setText(CndMessages.namespaceDialogTitle);
     }
