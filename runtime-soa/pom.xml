@@ -15,9 +15,9 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>plugins</module>
+		<module>tests</module>
 		<module>features</module>
 		<module>site</module>
-		<module>tests</module>
 	</modules>
 	<!-- to build, need to resolve TP and upstream components
 	     mvn clean install -f ../build/pom-soa-tooling.xml -Pruntime-soa-bootstrap,local.site,jbosstools-nightly-staging-composite,jbosstools-nightly-staging-composite-soa-tooling
