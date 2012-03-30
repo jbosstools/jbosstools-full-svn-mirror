@@ -7,6 +7,7 @@
  */
 package org.jboss.tools.modeshape.jcr.cnd;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.jboss.tools.modeshape.jcr.ChildNodeDefinition;
@@ -392,5 +393,25 @@ public class CndValidatorTest {
                                                    Constants.Helper.getDefaultNamespacePrefixes(),
                                                    this.nodeTypeDefinition.getState(NodeTypeDefinition.PropertyName.SUPERTYPES),
                                                    this.nodeTypeDefinition.getSupertypes()).isError());
+    }
+
+    @Test
+    public void shouldValidatePathsWithNoErrors() {
+        final String PROP_NAME = "testProperty"; //$NON-NLS-1$
+        assertFalse(CndValidator.validatePath("A", PROP_NAME).isError()); //$NON-NLS-1$
+        assertFalse(CndValidator.validatePath("A/B/C[1]/D[2]", PROP_NAME).isError()); //$NON-NLS-1$
+        assertFalse(CndValidator.validatePath("A/B/C[1]/../../D[2]", PROP_NAME).isError()); //$NON-NLS-1$
+        assertFalse(CndValidator.validatePath("A/B/C[1]/././D[2]", PROP_NAME).isError()); //$NON-NLS-1$
+        assertFalse(CndValidator.validatePath("A/B/C[1]/../D[2]/./E/..", PROP_NAME).isError()); //$NON-NLS-1$
+        assertFalse(CndValidator.validatePath("A/../../../B", PROP_NAME).isError()); //$NON-NLS-1$
+        assertFalse(CndValidator.validatePath("../../B", PROP_NAME).isError()); //$NON-NLS-1$
+        assertFalse(CndValidator.validatePath("A/./../../B/.", PROP_NAME).isError()); //$NON-NLS-1$
+        assertFalse(CndValidator.validatePath("/.", PROP_NAME).isError()); //$NON-NLS-1$
+        assertFalse(CndValidator.validatePath(".", PROP_NAME).isError()); //$NON-NLS-1$
+        assertFalse(CndValidator.validatePath("/A", PROP_NAME).isError()); //$NON-NLS-1$
+        assertFalse(CndValidator.validatePath("/A/B/C[1]/D[2]", PROP_NAME).isError()); //$NON-NLS-1$
+        assertFalse(CndValidator.validatePath("/A/B/C[1]/../../D[2]", PROP_NAME).isError()); //$NON-NLS-1$
+        assertFalse(CndValidator.validatePath("/A/B/C[1]/././D[2]", PROP_NAME).isError()); //$NON-NLS-1$
+        assertFalse(CndValidator.validatePath("/A/B/C[1]/../D[2]/./E/..", PROP_NAME).isError()); //$NON-NLS-1$
     }
 }

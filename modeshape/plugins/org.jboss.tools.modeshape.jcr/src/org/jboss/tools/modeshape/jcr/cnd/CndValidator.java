@@ -12,6 +12,7 @@ import java.net.URI;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.StringTokenizer;
 
 import org.eclipse.osgi.util.NLS;
 import org.jboss.tools.modeshape.jcr.ChildNodeDefinition;
@@ -32,6 +33,9 @@ import org.jboss.tools.modeshape.jcr.attributes.QueryOperators.QueryOperator;
  * Used to validate values stored in a CND.
  */
 public final class CndValidator {
+
+    private static final String PARENT_PATH_SEGMENT = ".."; //$NON-NLS-1$
+    private static final String SELF_PATH_SEGMENT = "."; //$NON-NLS-1$
 
     /**
      * @param value the value being checked (can be <code>null</code> or empty)
@@ -95,7 +99,7 @@ public final class CndValidator {
             } else if (PropertyType.NAME == propertyType) {
                 return validateLocalName(value, propertyName);
             } else if (PropertyType.PATH == propertyType) {
-                // TODO implement PATH validation
+                return validatePath(value, propertyName);
             } else if (PropertyType.REFERENCE == propertyType) {
                 return ValidationStatus.OK_STATUS; // always valid
             } else if (PropertyType.UNDEFINED == propertyType) {
@@ -432,7 +436,7 @@ public final class CndValidator {
         }
 
         // ERROR Local name cannot be self or parent
-        if (localName.equals(".") || localName.equals("..")) { //$NON-NLS-1$ //$NON-NLS-2$
+        if (localName.equals(SELF_PATH_SEGMENT) || localName.equals(PARENT_PATH_SEGMENT)) {
             return ValidationStatus.createErrorMessage(NLS.bind(Messages.localNameEqualToSelfOrParent, messagePrefix));
         }
 
@@ -917,6 +921,105 @@ public final class CndValidator {
         if (!newStatus.isOk()) {
             status.add(newStatus);
         }
+    }
+
+    /**
+     * @param path the path value being validated (can be <code>null</code> or empty)
+     * @param propertyName the property name whose path value is being validated (cannot be <code>null</code> or empty)
+     * @return the validation status (never <code>null</code>)
+     */
+    public static ValidationStatus validatePath( String path,
+                                                 String propertyName ) {
+        Utils.verifyIsNotNull(propertyName, "propertyName"); //$NON-NLS-1$
+
+        if (Utils.isEmpty(propertyName)) {
+            propertyName = Messages.missingName;
+        }
+
+        if (Utils.isEmpty(path)) {
+            return ValidationStatus.createErrorMessage(NLS.bind(Messages.emptyValue, propertyName));
+        }
+
+        StringTokenizer pathTokenizer = new StringTokenizer(path, "/"); //$NON-NLS-1$
+
+        if (pathTokenizer.hasMoreTokens()) {
+            while (pathTokenizer.hasMoreElements()) {
+                String segment = pathTokenizer.nextToken();
+
+                if (Utils.isEmpty(segment)) {
+                    if (pathTokenizer.hasMoreTokens()) {
+                        // found empty segment
+                        return ValidationStatus.createErrorMessage(NLS.bind(Messages.invalidPropertyValueForType, path,
+                                                                            PropertyType.PATH));
+                    }
+                } else {
+                    StringTokenizer segmentTokenizer = new StringTokenizer(segment, "[]"); //$NON-NLS-1$
+
+                    if (segmentTokenizer.countTokens() == 2) {
+                        // has SNS index
+                        String qualifiedName = segmentTokenizer.nextToken();
+
+                        if (Utils.isEmpty(qualifiedName)) {
+                            // found SNS but now qualified name
+                            return ValidationStatus.createErrorMessage(NLS.bind(Messages.invalidPropertyValueForType, path,
+                                                                                PropertyType.PATH));
+                        }
+
+                        // OK if segment is self or parent
+                        if (PARENT_PATH_SEGMENT.equals(qualifiedName) || SELF_PATH_SEGMENT.equals(qualifiedName)) {
+                            continue;
+                        }
+
+                        // validate qualified name
+                        QualifiedName qname = QualifiedName.parse(qualifiedName);
+                        MultiValidationStatus status = validateQualifiedName(qname, propertyName, null, null);
+
+                        // return if invalid qualified
+                        if (status.isError()) {
+                            return status;
+                        }
+
+                        // valid qualified name so check SNS index
+                        if (segmentTokenizer.countTokens() == 1) {
+                            String snsIndex = segmentTokenizer.nextToken();
+
+                            // make sure SNS index is a number
+                            for (char c : snsIndex.toCharArray()) {
+                                if (!Character.isDigit(c)) {
+                                    // found invalid character
+                                    return ValidationStatus.createErrorMessage(NLS.bind(Messages.invalidPropertyValueForType, path,
+                                                                                        PropertyType.PATH));
+                                }
+                            }
+                        } else {
+                            // no ending SNS bracket
+                            return ValidationStatus.createErrorMessage(NLS.bind(Messages.invalidPropertyValueForType, path,
+                                                                                PropertyType.PATH));
+                        }
+                    } else {
+                        // OK if segment is self or parent
+                        if (PARENT_PATH_SEGMENT.equals(segment) || SELF_PATH_SEGMENT.equals(segment)) {
+                            continue;
+                        }
+
+                        // no SNS index
+                        QualifiedName qname = QualifiedName.parse(segment);
+                        MultiValidationStatus status = validateQualifiedName(qname, propertyName, null, null);
+
+                        // return if invalid segment
+                        if (status.isError()) {
+                            return status;
+                        }
+                    }
+                }
+            }
+        } else {
+            // only one segment
+            QualifiedName qname = QualifiedName.parse(path);
+            return validateQualifiedName(qname, propertyName, null, null);
+        }
+
+        return ValidationStatus.OK_STATUS;
     }
 
     /**

@@ -12,15 +12,11 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.util.Collection;
-import java.util.Collections;
-
 import org.jboss.tools.modeshape.jcr.ChildNodeDefinition;
 import org.jboss.tools.modeshape.jcr.Listener;
 import org.jboss.tools.modeshape.jcr.NodeTypeDefinition;
 import org.jboss.tools.modeshape.jcr.NodeTypeDefinition.PropertyName;
 import org.jboss.tools.modeshape.jcr.PropertyDefinition;
-import org.jboss.tools.modeshape.jcr.QualifiedName;
 import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.attributes.AttributeState.Value;
 import org.junit.Before;
@@ -183,29 +179,6 @@ public class NodeTypeDefinitionTest {
     }
 
     @Test
-    public void shouldClearChildNodeDefinitions() {
-        assertTrue(this.nodeTypeDefinition.addChildNodeDefinition(this.childNodeDefinition));
-        assertTrue(this.nodeTypeDefinition.clearChildNodeDefinitions());
-        assertEquals(0, this.nodeTypeDefinition.getChildNodeDefinitions().size());
-        assertEquals(0, this.nodeTypeDefinition.getDeclaredChildNodeDefinitions().length);
-    }
-
-    @Test
-    public void shouldClearPropertyDefinitions() {
-        assertTrue(this.nodeTypeDefinition.addPropertyDefinition(this.propertyDefinition));
-        assertTrue(this.nodeTypeDefinition.clearPropertyDefinitions());
-        assertEquals(0, this.nodeTypeDefinition.getPropertyDefinitions().size());
-        assertEquals(0, this.nodeTypeDefinition.getDeclaredPropertyDefinitions().length);
-    }
-
-    @Test
-    public void shouldClearSuperTypes() {
-        assertTrue(this.nodeTypeDefinition.addSuperType("superType")); //$NON-NLS-1$
-        assertTrue(this.nodeTypeDefinition.clearSuperTypes());
-        assertEquals(0, this.nodeTypeDefinition.getDeclaredSupertypeNames().length);
-    }
-
-    @Test
     public void shouldNotAllowDuplicateSuperType() {
         final String SUPER_TYPE = "superType"; //$NON-NLS-1$
         assertTrue(this.nodeTypeDefinition.addSuperType(SUPER_TYPE));
@@ -225,21 +198,6 @@ public class NodeTypeDefinitionTest {
     @Test(expected = IllegalArgumentException.class)
     public void shouldNotAllowNullSuperTypeToBeAdded() {
         this.nodeTypeDefinition.addSuperType(null);
-    }
-
-    @Test
-    public void shouldNotClearChildNodeDefinitionsWhenEmpty() {
-        assertFalse(this.nodeTypeDefinition.clearChildNodeDefinitions());
-    }
-
-    @Test
-    public void shouldNotClearPropertyDefinitionsWhenEmpty() {
-        assertFalse(this.nodeTypeDefinition.clearPropertyDefinitions());
-    }
-
-    @Test
-    public void shouldNotClearSuperTypesWhenEmpty() {
-        assertFalse(this.nodeTypeDefinition.clearSuperTypes());
     }
 
     @Test
@@ -354,52 +312,6 @@ public class NodeTypeDefinitionTest {
         assertEquals(PropertyName.PRIMARY_ITEM.toString(), l.getPropertyName());
         assertEquals(PRIMARY_ITEM, l.getNewValue());
         assertTrue(Utils.isEmpty((String)l.getOldValue()));
-    }
-
-    @Test
-    public void shouldReceiveEventAfterClearingChildNodeDefinitions() {
-        assertTrue(this.nodeTypeDefinition.addChildNodeDefinition(this.childNodeDefinition));
-        final Collection<ChildNodeDefinition> oldValue = Collections.singletonList(this.childNodeDefinition);
-
-        final Listener l = new Listener();
-        assertTrue(this.nodeTypeDefinition.addListener(l));
-
-        assertTrue(this.nodeTypeDefinition.clearChildNodeDefinitions());
-        assertEquals(1, l.getCount());
-        assertEquals(PropertyName.CHILD_NODES.toString(), l.getPropertyName());
-        assertNull(l.getNewValue());
-        assertEquals(oldValue, l.getOldValue());
-    }
-
-    @Test
-    public void shouldReceiveEventAfterClearingPropertyDefinitions() {
-        assertTrue(this.nodeTypeDefinition.addPropertyDefinition(this.propertyDefinition));
-        final Collection<PropertyDefinition> oldValue = Collections.singletonList(this.propertyDefinition);
-
-        final Listener l = new Listener();
-        assertTrue(this.nodeTypeDefinition.addListener(l));
-
-        assertTrue(this.nodeTypeDefinition.clearPropertyDefinitions());
-        assertEquals(1, l.getCount());
-        assertEquals(PropertyName.PROPERTY_DEFINITIONS.toString(), l.getPropertyName());
-        assertNull(l.getNewValue());
-        assertEquals(oldValue, l.getOldValue());
-    }
-
-    @Test
-    public void shouldReceiveEventAfterClearingSuperTypes() {
-        final String SUPER_TYPE = "superType"; //$NON-NLS-1$
-        assertTrue(this.nodeTypeDefinition.addSuperType(SUPER_TYPE));
-        final Collection<QualifiedName> oldValue = this.nodeTypeDefinition.getSupertypes();
-
-        final Listener l = new Listener();
-        assertTrue(this.nodeTypeDefinition.addListener(l));
-
-        assertTrue(this.nodeTypeDefinition.clearSuperTypes());
-        assertEquals(1, l.getCount());
-        assertEquals(PropertyName.SUPERTYPES.toString(), l.getPropertyName());
-        assertNull(l.getNewValue());
-        assertEquals(oldValue, l.getOldValue());
     }
 
     @Test

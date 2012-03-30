@@ -89,9 +89,14 @@ public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTempl
     private final NodeTypeAttributes attributes;
 
     /**
-     * The collection of child node definitions (can be <code>null</code>).
+     * The collection of CND elements (can be <code>null</code>).
      */
-    private List<ChildNodeDefinition> childNodesDefinitions;
+    private List<CndElement> cndElements;
+    //
+    // /**
+    // * The collection of child node definitions (can be <code>null</code>).
+    // */
+    // private List<ChildNodeDefinition> childNodesDefinitions;
 
     /**
      * The collection of property change listeners (never <code>null</code>).
@@ -102,11 +107,11 @@ public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTempl
      * The node type name (never <code>null</code> but can have a <code>null</code> or empty value).
      */
     private final QualifiedName name;
-
-    /**
-     * The collection of property definitions (can be <code>null</code>).
-     */
-    private List<PropertyDefinition> propertyDefinitions;
+    //
+    // /**
+    // * The collection of property definitions (can be <code>null</code>).
+    // */
+    // private List<PropertyDefinition> propertyDefinitions;
 
     /**
      * The super types (never <code>null</code>).
@@ -132,11 +137,11 @@ public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTempl
     public boolean addChildNodeDefinition( final ChildNodeDefinition childNodeDefinitionBeingAdded ) {
         Utils.verifyIsNotNull(childNodeDefinitionBeingAdded, "childNodeDefinitionBeingAdded"); //$NON-NLS-1$
 
-        if (this.childNodesDefinitions == null) {
-            this.childNodesDefinitions = new ArrayList<ChildNodeDefinition>();
+        if (this.cndElements == null) {
+            this.cndElements = new ArrayList<CndElement>();
         }
 
-        if (this.childNodesDefinitions.add(childNodeDefinitionBeingAdded)) {
+        if (this.cndElements.add(childNodeDefinitionBeingAdded)) {
             notifyChangeListeners(PropertyName.CHILD_NODES, null, childNodeDefinitionBeingAdded);
             return true; // added
         }
@@ -162,11 +167,11 @@ public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTempl
     public boolean addPropertyDefinition( final PropertyDefinition properyDefinitionBeingAdded ) {
         Utils.verifyIsNotNull(properyDefinitionBeingAdded, "properyDefinitionBeingAdded"); //$NON-NLS-1$
 
-        if (this.propertyDefinitions == null) {
-            this.propertyDefinitions = new ArrayList<PropertyDefinition>();
+        if (this.cndElements == null) {
+            this.cndElements = new ArrayList<CndElement>();
         }
 
-        if (this.propertyDefinitions.add(properyDefinitionBeingAdded)) {
+        if (this.cndElements.add(properyDefinitionBeingAdded)) {
             notifyChangeListeners(PropertyName.PROPERTY_DEFINITIONS, null, properyDefinitionBeingAdded);
             return true; // added
         }
@@ -234,64 +239,6 @@ public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTempl
         }
 
         return false; // did not change state
-    }
-
-    /**
-     * If cleared, a property change event is broadcast to all registered listeners.
-     * 
-     * @return <code>true</code> if there was at least one child node before clearing
-     */
-    public boolean clearChildNodeDefinitions() {
-        if (this.childNodesDefinitions == null) {
-            return false; // nothing to clear
-        }
-
-        final List<ChildNodeDefinition> childNodes = new ArrayList<ChildNodeDefinition>(getChildNodeDefinitions());
-        final boolean cleared = !this.childNodesDefinitions.isEmpty();
-        this.childNodesDefinitions = null;
-
-        if (cleared) {
-            notifyChangeListeners(PropertyName.CHILD_NODES, childNodes, null);
-        }
-
-        return cleared;
-    }
-
-    /**
-     * If cleared, a property change event is broadcast to all registered listeners.
-     * 
-     * @return <code>true</code> if there was at least one property definition before clearing
-     */
-    public boolean clearPropertyDefinitions() {
-        if (this.propertyDefinitions == null) {
-            return false; // nothing to clear
-        }
-
-        final List<PropertyDefinition> propDefns = new ArrayList<PropertyDefinition>(getPropertyDefinitions());
-        final boolean cleared = !this.propertyDefinitions.isEmpty();
-        this.propertyDefinitions = null;
-
-        if (cleared) {
-            notifyChangeListeners(PropertyName.PROPERTY_DEFINITIONS, propDefns, null);
-        }
-
-        return cleared;
-    }
-
-    /**
-     * If cleared, a property change event is broadcast to all registered listeners.
-     * 
-     * @return <code>true</code> if there was at least one super type before clearing
-     */
-    public boolean clearSuperTypes() {
-        final List<QualifiedName> types = new ArrayList<QualifiedName>(this.superTypes.getSupportedItems());
-
-        if (this.superTypes.clear()) {
-            notifyChangeListeners(PropertyName.SUPERTYPES, types, null);
-            return true;
-        }
-
-        return false;
     }
 
     /**
@@ -379,19 +326,23 @@ public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTempl
         return true;
     }
 
-    private String getChildNodeDefinitionDelimiter() {
-        return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.CHILD_NODE_DEFINITION_DELIMITER);
-    }
-
     /**
      * @return the child node definitions (never <code>null</code>)
      */
     public List<ChildNodeDefinition> getChildNodeDefinitions() {
-        if (this.childNodesDefinitions == null) {
+        if (this.cndElements == null) {
             return Collections.emptyList();
         }
 
-        return this.childNodesDefinitions;
+        final List<ChildNodeDefinition> childNodeDefinitions = new ArrayList<ChildNodeDefinition>();
+
+        for (final CndElement element : this.cndElements) {
+            if (element instanceof ChildNodeDefinition) {
+                childNodeDefinitions.add((ChildNodeDefinition)element);
+            }
+        }
+
+        return childNodeDefinitions;
     }
 
     /**
@@ -426,24 +377,12 @@ public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTempl
         return this.superTypes.toArray();
     }
 
-    private String getEndAttributesDelimiter() {
-        return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.NODE_TYPE_DEFINITION_ATTRIBUTES_END_DELIMITER);
-    }
+    private List<CndElement> getElements() {
+        if (this.cndElements == null) {
+            return Collections.emptyList();
+        }
 
-    private String getEndChildNodeDefinitionsDelimiter() {
-        return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.CHILD_NODE_DEFINITION_SECTION_END_DELIMITER);
-    }
-
-    private String getEndNameDelimiter() {
-        return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.NODE_TYPE_DEFINITION_NAME_END_DELIMITER);
-    }
-
-    private String getEndPropertyDefinitionsDelimiter() {
-        return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.PROPERTY_DEFINITION_SECTION_END_DELIMITER);
-    }
-
-    private String getEndSuperTypesDelimiter() {
-        return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.SUPER_TYPES_END_DELIMITER);
+        return this.cndElements;
     }
 
     /**
@@ -451,10 +390,19 @@ public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTempl
      *         but can be empty)
      */
     public List<ItemDefinition> getItemDefinitions() {
-        // TODO this needs to be a field and getters for items need to filter this field appropriately
-        final List<ItemDefinition> currentItems = new ArrayList<ItemDefinition>(getChildNodeDefinitions());
-        currentItems.addAll(getPropertyDefinitions());
-        return currentItems;
+        if (this.cndElements == null) {
+            return Collections.emptyList();
+        }
+
+        final List<ItemDefinition> itemDefinitions = new ArrayList<ItemDefinition>();
+
+        for (final CndElement element : this.cndElements) {
+            if (element instanceof ItemDefinition) {
+                itemDefinitions.add((ItemDefinition)element);
+            }
+        }
+
+        return itemDefinitions;
     }
 
     /**
@@ -501,23 +449,23 @@ public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTempl
         return primaryItem;
     }
 
-    private String getPropertyDefinitionDelimiter() {
-        return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.PROPERTY_DEFINITION_DELIMITER);
-    }
-
     /**
      * @return the property definitions (never <code>null</code>)
      */
     public List<PropertyDefinition> getPropertyDefinitions() {
-        if (this.propertyDefinitions == null) {
+        if (this.cndElements == null) {
             return Collections.emptyList();
         }
 
-        return this.propertyDefinitions;
-    }
+        final List<PropertyDefinition> propertyDefinitions = new ArrayList<PropertyDefinition>();
 
-    private String getPropertyDefinitionStartDelimiter() {
-        return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.PROPERTY_DEFINITION_START_DELIMITER);
+        for (final CndElement element : this.cndElements) {
+            if (element instanceof PropertyDefinition) {
+                propertyDefinitions.add((PropertyDefinition)element);
+            }
+        }
+
+        return propertyDefinitions;
     }
 
     /**
@@ -535,10 +483,6 @@ public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTempl
      */
     public QualifiedName getQualifiedName() {
         return this.name;
-    }
-
-    private String getStartChildNodeDefinitionDelimiter() {
-        return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.CHILD_NODE_DEFINITION_START_DELIMITER);
     }
 
     /**
@@ -677,16 +621,17 @@ public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTempl
      */
     public boolean removeChildNodeDefinition( final ChildNodeDefinition childNodeDefinitionBeingRemoved ) {
         Utils.verifyIsNotNull(childNodeDefinitionBeingRemoved, "childNodeDefinitionBeingRemoved"); //$NON-NLS-1$
+        final List<ChildNodeDefinition> childNodeDefinitions = getChildNodeDefinitions();
 
-        if (this.childNodesDefinitions == null) {
+        if (childNodeDefinitions.isEmpty()) {
             return false;
         }
 
-        if (this.childNodesDefinitions.remove(childNodeDefinitionBeingRemoved)) {
+        if (this.cndElements.remove(childNodeDefinitionBeingRemoved)) {
             notifyChangeListeners(PropertyName.CHILD_NODES, childNodeDefinitionBeingRemoved, null);
 
-            if (this.childNodesDefinitions.isEmpty()) {
-                this.childNodesDefinitions = null;
+            if (this.cndElements.isEmpty()) {
+                this.cndElements = null;
             }
 
             return true; // removed
@@ -712,16 +657,17 @@ public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTempl
      */
     public boolean removePropertyDefinition( final PropertyDefinition propertyDefinitionBeingRemoved ) {
         Utils.verifyIsNotNull(propertyDefinitionBeingRemoved, "propertyDefinitionBeingRemoved"); //$NON-NLS-1$
+        final List<PropertyDefinition> propertyDefinitions = getPropertyDefinitions();
 
-        if (this.propertyDefinitions == null) {
+        if (propertyDefinitions.isEmpty()) {
             return false;
         }
 
-        if (this.propertyDefinitions.remove(propertyDefinitionBeingRemoved)) {
+        if (this.cndElements.remove(propertyDefinitionBeingRemoved)) {
             notifyChangeListeners(PropertyName.PROPERTY_DEFINITIONS, propertyDefinitionBeingRemoved, null);
 
-            if (this.propertyDefinitions.isEmpty()) {
-                this.propertyDefinitions = null;
+            if (this.cndElements.isEmpty()) {
+                this.cndElements = null;
             }
 
             return true; // removed
@@ -853,14 +799,15 @@ public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTempl
             builder.append(NAME_NOTATION_PREFIX)
                    .append(this.name.toCndNotation(notationType))
                    .append(NAME_NOTATION_SUFFIX)
-                   .append(getEndNameDelimiter());
+                   .append(CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.NODE_TYPE_DEFINITION_NAME_END_DELIMITER));
         }
 
         { // super types
             final String notation = this.superTypes.toCndNotation(notationType);
 
             if (!Utils.isEmpty(notation)) {
-                builder.append(notation).append(getEndSuperTypesDelimiter());
+                builder.append(notation)
+                       .append(CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.SUPER_TYPES_END_DELIMITER));
             }
         }
 
@@ -871,30 +818,22 @@ public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTempl
                 builder.append(notation);
             }
 
-            builder.append(getEndAttributesDelimiter());
+            builder.append(CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.NODE_TYPE_DEFINITION_ATTRIBUTES_END_DELIMITER));
         }
 
-        { // property definitions
-            if (!Utils.isEmpty(this.propertyDefinitions)) {
-                for (final PropertyDefinition propDefn : this.propertyDefinitions) {
-                    builder.append(getPropertyDefinitionStartDelimiter());
-                    builder.append(propDefn.toCndNotation(notationType));
-                    builder.append(getPropertyDefinitionDelimiter());
+        { // elements
+            final String elementStartDelimiter = CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ELEMENTS_START_DELIMITER);
+            final String elementDelimiter = CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ELEMENT_DELIMITER);
+            final List<CndElement> elements = getElements();
+
+            if (!Utils.isEmpty(elements)) {
+                for (final CndElement element : elements) {
+                    builder.append(elementStartDelimiter);
+                    builder.append(element.toCndNotation(notationType));
+                    builder.append(elementDelimiter);
                 }
 
-                builder.append(getEndPropertyDefinitionsDelimiter());
-            }
-        }
-
-        { // child node definitions
-            if (!Utils.isEmpty(this.childNodesDefinitions)) {
-                for (final ChildNodeDefinition childNodeDefn : this.childNodesDefinitions) {
-                    builder.append(getStartChildNodeDefinitionDelimiter());
-                    builder.append(childNodeDefn.toCndNotation(notationType));
-                    builder.append(getChildNodeDefinitionDelimiter());
-                }
-
-                builder.append(getEndChildNodeDefinitionsDelimiter());
+                builder.append(CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ELEMENTS_END_DELIMITER));
             }
         }
 
