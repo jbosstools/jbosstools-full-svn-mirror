@@ -304,6 +304,22 @@ class CndMessages extends NLS {
     public static String cndEditorTitle;
 
     /**
+     * The message area message of the CND validation message dialog. Four parameters, the name of the CND, the number of errors,
+     * the number of warnings, and the number of info messages, are required.
+     */
+    public static String cndMessageDialogMessageAreaMessage;
+
+    /**
+     * The message area title of the CND validation message dialog.
+     */
+    public static String cndMessageDialogMessageAreaTitle;
+
+    /**
+     * The title of the CND validation message dialog.
+     */
+    public static String cndMessageDialogTitle;
+
+    /**
      * The column header text of the default type of a child node definition.
      */
     public static String defaultTypeHeaderText;
@@ -1008,6 +1024,11 @@ class CndMessages extends NLS {
      * A tool tip message of the node type definition's queryable attribute.
      */
     public static String queryableAttributeToolTip;
+
+    /**
+     * A label for a query operators control.
+     */
+    public static String queryOperatorsLabel;
 
     /**
      * The column header text for the required types of a child node definition.

@@ -63,10 +63,7 @@ public class PropertyDefinition implements ItemDefinition, Comparable, PropertyD
         copy.attributes.getProtected().set(propertyBeingCopied.attributes.getProtected().get());
         copy.attributes.setOnParentVersion(propertyBeingCopied.attributes.getOnParentVersion());
         copy.attributes.getQueryOps().set(propertyBeingCopied.attributes.getQueryOps().get());
-
-        for (final QueryOperator operator : propertyBeingCopied.attributes.getQueryOps().getSupportedItems()) {
-            copy.attributes.getQueryOps().add(operator);
-        }
+        copy.setAvailableQueryOperators(propertyBeingCopied.getAvailableQueryOperators());
 
         // default values
         copy.defaultValues.set(propertyBeingCopied.defaultValues.get());

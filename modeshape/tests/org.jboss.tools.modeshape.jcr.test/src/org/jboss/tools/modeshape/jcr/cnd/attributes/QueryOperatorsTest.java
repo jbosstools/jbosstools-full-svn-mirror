@@ -36,7 +36,14 @@ public class QueryOperatorsTest implements Constants {
 
     @Before
     public void beforeEach() {
-        this.attribute = new QueryOperators();
+        this.attribute = new QueryOperators(); // initially supports all operators
+    }
+
+    @Test
+    public void shouldSupportAllOperatorsAfterConstruction() {
+        for (final QueryOperator operator : QueryOperator.values()) {
+            assertTrue(this.attribute.supports(operator));
+        }
     }
 
     @Test
@@ -53,28 +60,39 @@ public class QueryOperatorsTest implements Constants {
     }
 
     @Test
+    public void shouldAddUsingOperatorNotation() {
+        // setup
+        remove(OPERATOR_ONE);
+        assertTrue(this.attribute.add(OPERATOR_ONE.toString()));
+
+        // test
+        assertTrue(this.attribute.supports(OPERATOR_ONE));
+    }
+
+    @Test
+    public void shouldRemoveUsingOperatorNotation() {
+        assertTrue(this.attribute.remove(OPERATOR_ONE.toString()));
+    }
+
+    @Test
     public void verifyAddedItem() {
         // setup
+        remove(OPERATOR_ONE);
         add(OPERATOR_ONE);
 
         // tests
-        assertEquals(1, this.attribute.getSupportedItems().size());
-        assertTrue(this.attribute.getSupportedItems().contains(OPERATOR_ONE));
+        assertTrue(this.attribute.supports(OPERATOR_ONE));
     }
 
     @Test
-    public void verifyInitiallyNoSupportedItems() {
-        assertEquals(0, this.attribute.getSupportedItems().size());
-    }
-
-    @Test
-    public void verifyInitialStateShouldBeIsNot() {
-        assertEquals(AttributeState.Value.IS_NOT, this.attribute.get());
+    public void verifyInitialStateShouldBeIs() {
+        assertEquals(AttributeState.Value.IS, this.attribute.get());
     }
 
     @Test
     public void verifyMultipleElementsCndNotation() {
         // setup
+        assertTrue(this.attribute.clear());
         add(OPERATOR_ONE);
         add(OPERATOR_TWO);
         add(OPERATOR_THREE);
@@ -88,6 +106,7 @@ public class QueryOperatorsTest implements Constants {
     @Test
     public void verifyOneElementCndNotation() {
         // setup
+        assertTrue(this.attribute.clear());
         add(OPERATOR_ONE);
 
         // tests
@@ -99,44 +118,26 @@ public class QueryOperatorsTest implements Constants {
     @Test
     public void verifyRemoveItem() {
         // setup
-        add(OPERATOR_ONE);
-        add(OPERATOR_TWO);
         remove(OPERATOR_ONE);
 
         // tests
-        assertFalse(this.attribute.getSupportedItems().contains(OPERATOR_ONE));
+        assertFalse(this.attribute.supports(OPERATOR_ONE));
     }
 
     @Test
     public void verifySameElementIsNotAdded() {
-        // setup
-        add(OPERATOR_ONE);
-
         // tests
         if (this.attribute.add(OPERATOR_ONE)) {
             fail();
         }
-
-        assertEquals(1, this.attribute.getSupportedItems().size());
     }
 
     @Test
-    public void verifyStateShouldBeIsAfterAdd() {
+    public void verifyStateShouldBeIsNotAfterClear() {
         // setup
-        add(QueryOperator.EQUALS);
+        assertTrue(this.attribute.clear());
 
         // tests
-        assertEquals(AttributeState.Value.IS, this.attribute.get());
-    }
-
-    @Test
-    public void verifyStateShouldBeIsNotWhenEmpty() {
-        // setup
-        add(OPERATOR_ONE);
-        remove(OPERATOR_ONE);
-
-        // tests
-        assertEquals(0, this.attribute.getSupportedItems().size());
         assertEquals(AttributeState.Value.IS_NOT, this.attribute.get());
     }
 
@@ -150,5 +151,4 @@ public class QueryOperatorsTest implements Constants {
         assertEquals(QUERY_OPS_VARIANT_COMPRESSED_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPRESSED));
         assertEquals(QUERY_OPS_VARIANT_LONG_FORM, this.attribute.toCndNotation(CndElement.NotationType.LONG));
     }
-
 }

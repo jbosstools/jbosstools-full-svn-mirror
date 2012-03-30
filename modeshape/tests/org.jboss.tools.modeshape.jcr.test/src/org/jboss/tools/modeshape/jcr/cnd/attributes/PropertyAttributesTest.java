@@ -97,10 +97,10 @@ public class PropertyAttributesTest {
     }
 
     @Test
-    public void shouldNotHaveQueryOpsAfterConstruction() {
+    public void shouldSupportQueryOpsAfterConstruction() {
         final QueryOperators attribute = this.attributes.getQueryOps();
-        assertTrue(attribute.isNot());
-        assertFalse(attribute.is());
+        assertTrue(attribute.is());
+        assertFalse(attribute.isNot());
         assertFalse(attribute.isVariant());
     }
 

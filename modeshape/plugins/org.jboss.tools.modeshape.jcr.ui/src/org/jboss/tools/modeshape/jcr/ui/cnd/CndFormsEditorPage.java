@@ -1912,6 +1912,8 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
                 if (nodeTypeDefinition.addChildNodeDefinition(newChildNodeDefinition)) {
                     added = true;
                 }
+
+                UiUtils.pack(this.childNodeViewer);
             }
 
             if (!removed || !added) {
@@ -1947,6 +1949,8 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
                 if (getCnd().addNamespaceMapping(modifiedNamespaceMapping)) {
                     added = true;
                 }
+
+                UiUtils.pack(this.namespaceViewer);
             }
 
             if (!removed || !added) {
@@ -1983,6 +1987,8 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
                 if (nodeTypeDefinition.addPropertyDefinition(newPropertyDefinition)) {
                     added = true;
                 }
+
+                UiUtils.pack(this.propertyViewer);
             }
 
             if (!removed || !added) {

@@ -60,6 +60,7 @@ import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.ValidationStatus;
 import org.jboss.tools.modeshape.jcr.attributes.OnParentVersion;
 import org.jboss.tools.modeshape.jcr.attributes.PropertyType;
+import org.jboss.tools.modeshape.jcr.attributes.QueryOperators.QueryOperator;
 import org.jboss.tools.modeshape.jcr.cnd.CndValidator;
 import org.jboss.tools.modeshape.jcr.ui.Activator;
 import org.jboss.tools.modeshape.jcr.ui.JcrUiConstants;
@@ -550,14 +551,17 @@ final class PropertyDialog extends FormDialog {
             { // opv
                 final Composite opvContainer = toolkit.createComposite(attributesContainer);
                 opvContainer.setLayout(new GridLayout(2, false));
-                opvContainer.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, true));
+                ((GridLayout)opvContainer.getLayout()).marginHeight = 0;
+                ((GridLayout)opvContainer.getLayout()).marginWidth = 0;
+                opvContainer.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+                ((GridData)opvContainer.getLayoutData()).horizontalSpan = 2;
                 toolkit.paintBordersFor(opvContainer);
 
                 final Label lblOpv = toolkit.createLabel(opvContainer, CndMessages.onParentVersionLabel, SWT.NONE);
                 lblOpv.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
 
                 final CCombo cbxOpvs = new CCombo(opvContainer, Styles.COMBO_STYLE);
-                cbxOpvs.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+                cbxOpvs.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
                 ((GridData)cbxOpvs.getLayoutData()).heightHint = cbxOpvs.getItemHeight() + 4;
                 cbxOpvs.setToolTipText(CndMessages.onParentVersionToolTip);
                 toolkit.adapt(cbxOpvs, true, false);
@@ -596,7 +600,163 @@ final class PropertyDialog extends FormDialog {
             }
 
             { // queryOps
-              // TODO implement queryOps controls
+                final Collection<String> supportedQueryOps = Arrays.asList(this.propertyBeingEdited.getAvailableQueryOperators());
+                final Composite queryOpsContainer = toolkit.createComposite(attributesContainer);
+                queryOpsContainer.setLayout(new GridLayout(7, false));
+                ((GridLayout)queryOpsContainer.getLayout()).marginHeight = 0;
+                ((GridLayout)queryOpsContainer.getLayout()).marginWidth = 0;
+                queryOpsContainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+                toolkit.paintBordersFor(queryOpsContainer);
+                toolkit.createLabel(queryOpsContainer, CndMessages.queryOperatorsLabel);
+
+                { // equals query operator
+                    final Button btnEquals = toolkit.createButton(queryOpsContainer, QueryOperator.EQUALS.toString(), SWT.CHECK);
+                    btnEquals.setBackground(attributesContainer.getBackground());
+
+                    if (supportedQueryOps.contains(btnEquals.getText())) {
+                        btnEquals.setSelection(true);
+                    }
+
+                    btnEquals.addSelectionListener(new SelectionAdapter() {
+
+                        /**
+                         * {@inheritDoc}
+                         * 
+                         * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+                         */
+                        @Override
+                        public void widgetSelected( final SelectionEvent e ) {
+                            Button btn = (Button)e.widget;
+                            handleQueryOperatorChanged(btn.getText(), btn.getSelection());
+                        }
+                    });
+                    // btnEquals.setToolTipText(CndMessages.multipleAttributeToolTip);
+                }
+
+                { // not equals query operator
+                    final Button btnNotEquals = toolkit.createButton(queryOpsContainer, QueryOperator.NOT_EQUALS.toString(),
+                                                                     SWT.CHECK);
+                    btnNotEquals.setBackground(attributesContainer.getBackground());
+
+                    if (supportedQueryOps.contains(btnNotEquals.getText())) {
+                        btnNotEquals.setSelection(true);
+                    }
+
+                    btnNotEquals.addSelectionListener(new SelectionAdapter() {
+
+                        /**
+                         * {@inheritDoc}
+                         * 
+                         * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+                         */
+                        @Override
+                        public void widgetSelected( final SelectionEvent e ) {
+                            Button btn = (Button)e.widget;
+                            handleQueryOperatorChanged(btn.getText(), btn.getSelection());
+                        }
+                    });
+                    // btnNotEquals.setToolTipText(CndMessages.multipleAttributeToolTip);
+                }
+
+                { // greater than query operator
+                    final Button btnGreaterThan = toolkit.createButton(queryOpsContainer, QueryOperator.GREATER_THAN.toString(),
+                                                                       SWT.CHECK);
+                    btnGreaterThan.setBackground(attributesContainer.getBackground());
+
+                    if (supportedQueryOps.contains(btnGreaterThan.getText())) {
+                        btnGreaterThan.setSelection(true);
+                    }
+
+                    btnGreaterThan.addSelectionListener(new SelectionAdapter() {
+
+                        /**
+                         * {@inheritDoc}
+                         * 
+                         * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+                         */
+                        @Override
+                        public void widgetSelected( final SelectionEvent e ) {
+                            Button btn = (Button)e.widget;
+                            handleQueryOperatorChanged(btn.getText(), btn.getSelection());
+                        }
+                    });
+                    // btnGreater.setToolTipText(CndMessages.multipleAttributeToolTip);
+                }
+
+                { // less than query operator
+                    final Button btnLessThan = toolkit.createButton(queryOpsContainer, QueryOperator.LESS_THAN.toString(),
+                                                                    SWT.CHECK);
+                    btnLessThan.setBackground(attributesContainer.getBackground());
+
+                    if (supportedQueryOps.contains(btnLessThan.getText())) {
+                        btnLessThan.setSelection(true);
+                    }
+
+                    btnLessThan.addSelectionListener(new SelectionAdapter() {
+
+                        /**
+                         * {@inheritDoc}
+                         * 
+                         * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+                         */
+                        @Override
+                        public void widgetSelected( final SelectionEvent e ) {
+                            Button btn = (Button)e.widget;
+                            handleQueryOperatorChanged(btn.getText(), btn.getSelection());
+                        }
+                    });
+                    // btnLess.setToolTipText(CndMessages.multipleAttributeToolTip);
+                }
+
+                { // greater than or equal query operator
+                    final Button btnGreaterThanEqual = toolkit.createButton(queryOpsContainer,
+                                                                            QueryOperator.GREATER_THAN_EQUALS.toString(), SWT.CHECK);
+                    btnGreaterThanEqual.setBackground(attributesContainer.getBackground());
+
+                    if (supportedQueryOps.contains(btnGreaterThanEqual.getText())) {
+                        btnGreaterThanEqual.setSelection(true);
+                    }
+
+                    btnGreaterThanEqual.addSelectionListener(new SelectionAdapter() {
+
+                        /**
+                         * {@inheritDoc}
+                         * 
+                         * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+                         */
+                        @Override
+                        public void widgetSelected( final SelectionEvent e ) {
+                            Button btn = (Button)e.widget;
+                            handleQueryOperatorChanged(btn.getText(), btn.getSelection());
+                        }
+                    });
+                    // btnGreaterEqual.setToolTipText(CndMessages.multipleAttributeToolTip);
+                }
+
+                { // less than or equals query operator
+                    final Button btnLessThanEqual = toolkit.createButton(queryOpsContainer,
+                                                                         QueryOperator.LESS_THAN_EQUALS.toString(), SWT.CHECK);
+                    btnLessThanEqual.setBackground(attributesContainer.getBackground());
+
+                    if (supportedQueryOps.contains(btnLessThanEqual.getText())) {
+                        btnLessThanEqual.setSelection(true);
+                    }
+
+                    btnLessThanEqual.addSelectionListener(new SelectionAdapter() {
+
+                        /**
+                         * {@inheritDoc}
+                         * 
+                         * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+                         */
+                        @Override
+                        public void widgetSelected( final SelectionEvent e ) {
+                            Button btn = (Button)e.widget;
+                            handleQueryOperatorChanged(btn.getText(), btn.getSelection());
+                        }
+                    });
+                    // btnLessThanEqual.setToolTipText(CndMessages.multipleAttributeToolTip);
+                }
             }
         }
 
@@ -717,6 +877,19 @@ final class PropertyDialog extends FormDialog {
         validateDefaultValues();
         validateValueConstraints();
         validateType();
+    }
+
+    /**
+     * @param text
+     * @param selection
+     */
+    protected void handleQueryOperatorChanged( String text,
+                                               boolean selection ) {
+        if (selection) {
+            this.propertyBeingEdited.addQueryOperator(QueryOperator.find(text));
+        } else {
+            this.propertyBeingEdited.removeQueryOperator(QueryOperator.find(text));
+        }
     }
 
     void createValueConstraintsActions() {

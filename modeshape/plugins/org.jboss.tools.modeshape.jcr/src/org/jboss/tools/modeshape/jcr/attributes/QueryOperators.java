@@ -18,7 +18,7 @@ import org.jboss.tools.modeshape.jcr.attributes.QueryOperators.QueryOperator;
 import org.jboss.tools.modeshape.jcr.cnd.CndElement;
 
 /**
- * The primary item attribute used by property definitions.
+ * The query operators attribute used by property definitions. Initially a property supports all operators.
  */
 public final class QueryOperators extends ListAttributeState<QueryOperator> {
 
@@ -26,6 +26,15 @@ public final class QueryOperators extends ListAttributeState<QueryOperator> {
      * The CND notation for each notation type.
      */
     public static final String[] NOTATION = new String[] { "queryops", "qop", "qop" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+
+    /**
+     * Constructs a query operators attribute that supports all operators.
+     */
+    public QueryOperators() {
+        for (final QueryOperator operator : QueryOperator.values()) {
+            add(operator);
+        }
+    }
 
     /**
      * @param operator the operator notation (cannot be <code>null</code> or empty)
@@ -72,6 +81,26 @@ public final class QueryOperators extends ListAttributeState<QueryOperator> {
 
         return super.hashCode();
     }
+    
+    /**
+     * @param operator the operator notation of the operator being removed (cannot be <code>null</code> or empty)
+     * @return <code>true</code> if removed
+     * @throws IllegalArgumentException if an invalid operator notation
+     */
+    public boolean remove( final String operator ) {
+        Utils.verifyIsNotEmpty(operator, "operator"); //$NON-NLS-1$
+        return remove(QueryOperator.find(operator));
+    }
+
+    private boolean supportsAll() {
+        for (QueryOperator operator : QueryOperator.values()) {
+            if (!supports(operator)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
     /**
      * @return a list of supported operator notations (never <code>null</code> but can be empty)
@@ -91,6 +120,20 @@ public final class QueryOperators extends ListAttributeState<QueryOperator> {
         }
 
         return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.jboss.tools.modeshape.jcr.attributes.ListAttributeState#toCndNotation(org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType)
+     */
+    @Override
+    public String toCndNotation( NotationType notationType ) {
+        if (supportsAll()) {
+            return Utils.EMPTY_STRING;
+        }
+
+        return super.toCndNotation(notationType);
     }
 
     /**

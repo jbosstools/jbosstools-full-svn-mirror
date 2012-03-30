@@ -30,6 +30,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.jface.window.Window;
@@ -47,9 +48,13 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.editors.text.FileDocumentProvider;
 import org.eclipse.ui.editors.text.TextEditor;
+import org.eclipse.ui.forms.FormDialog;
 import org.eclipse.ui.forms.IManagedForm;
+import org.eclipse.ui.forms.IMessage;
 import org.eclipse.ui.forms.IMessageManager;
 import org.eclipse.ui.forms.editor.SharedHeaderFormEditor;
+import org.eclipse.ui.forms.events.HyperlinkAdapter;
+import org.eclipse.ui.forms.events.HyperlinkEvent;
 import org.eclipse.ui.forms.widgets.Form;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.part.FileEditorInput;
@@ -61,6 +66,7 @@ import org.jboss.tools.modeshape.jcr.ui.JcrUiConstants;
 import org.jboss.tools.modeshape.jcr.ui.JcrUiConstants.Images;
 import org.jboss.tools.modeshape.ui.UiMessages;
 import org.jboss.tools.modeshape.ui.forms.MessageFormDialog;
+import org.jboss.tools.modeshape.ui.forms.MessageSummaryDialog;
 
 /**
  * 
@@ -233,6 +239,19 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
 
         final Form form = this.scrolledForm.getForm();
         getToolkit().decorateFormHeading(form);
+        form.addMessageHyperlinkListener(new HyperlinkAdapter() {
+
+            /**
+             * {@inheritDoc}
+             * 
+             * @see org.eclipse.ui.forms.events.HyperlinkAdapter#linkActivated(org.eclipse.ui.forms.events.HyperlinkEvent)
+             */
+            @Override
+            public void linkActivated( final HyperlinkEvent e ) {
+                handleDisplayMessageDialog((IMessage[])e.data);
+            }
+        });
+
         //
         // createActions();
         // contributeToToolBar(form.getToolBarManager());
@@ -346,22 +365,54 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
         return getEditorSite().getShell();
     }
 
+    void handleDisplayMessageDialog( final IMessage[] data ) {
+        // configure message and message type
+        int numErrors = 0;
+        int numWarnings = 0;
+        int numInfos = 0;
+        int messageType = IMessageProvider.ERROR;
+
+        for (final IMessage message : data) {
+            if (message.getMessageType() == IMessageProvider.ERROR) {
+                ++numErrors;
+            } else if (message.getMessageType() == IMessageProvider.WARNING) {
+                ++numWarnings;
+            } else if (message.getMessageType() == IMessageProvider.INFORMATION) {
+                ++numInfos;
+            }
+        }
+
+        if (numErrors == 0) {
+            if (numWarnings != 0) {
+                messageType = IMessageProvider.WARNING;
+            } else if (numInfos != 0) {
+                messageType = IMessageProvider.INFORMATION;
+            } else {
+                messageType = IMessageProvider.NONE;
+            }
+        }
+
+        final String message = NLS.bind(CndMessages.cndMessageDialogMessageAreaMessage, new Object[] { getFile().getName(),
+                numErrors, numWarnings, numInfos });
+
+        // show dialog
+        final FormDialog dialog = new MessageSummaryDialog(getShell(),
+                                                           CndMessages.cndMessageDialogTitle,
+                                                           CndMessages.cndMessageDialogMessageAreaTitle,
+                                                           message,
+                                                           messageType,
+                                                           data);
+        dialog.create();
+        dialog.getShell().pack();
+        dialog.open();
+    }
+
     /**
      * Registers an editor activation listener.
      */
     private void hookRefreshListener() {
         getContainer().addListener(SWT.Activate, this.refreshListener);
     }
-
-    //
-    // /**
-    // * Handler for page change listener.
-    // */
-    // void handlePageChanged() {
-    // final FormPage page = (FormPage)getSelectedPage();
-    // this.scrolledForm.setText(page.getTitle());
-    // page.setFocus();
-    // }
 
     /**
      * {@inheritDoc}

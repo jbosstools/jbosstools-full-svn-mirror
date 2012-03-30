@@ -195,11 +195,16 @@ public class PropertyDefinitionTest {
     }
 
     @Test
-    public void shouldAddQueryOperator() {
-        final QueryOperator OP = QueryOperator.GREATER_THAN_EQUALS;
-        assertTrue(this.propDefn.addQueryOperator(OP));
-        assertEquals(1, this.propDefn.getAvailableQueryOperators().length);
-        assertEquals(OP.toString(), this.propDefn.getAvailableQueryOperators()[0]);
+    public void shouldSupportAllQueryOperatorsInitially() {
+        // setup
+        String[] queryOps = this.propDefn.getAvailableQueryOperators();
+        QueryOperator[] allOperators = QueryOperator.values();
+
+        assertEquals(allOperators.length, queryOps.length);
+
+        for (String queryOp : queryOps) {
+            QueryOperator.find(queryOp); // throws exception if not found
+        }
     }
 
     @Test
@@ -378,9 +383,7 @@ public class PropertyDefinitionTest {
 
     @Test
     public void shouldNotAddDuplicateQueryOperator() {
-        final QueryOperator OP = QueryOperator.GREATER_THAN_EQUALS;
-        assertTrue(this.propDefn.addQueryOperator(OP));
-        assertFalse(this.propDefn.addQueryOperator(OP));
+        assertFalse(this.propDefn.addQueryOperator(QueryOperator.EQUALS));
     }
 
     @Test
@@ -460,6 +463,7 @@ public class PropertyDefinitionTest {
 
     @Test
     public void shouldNotRemoveQueryOperatorThatDoesNotExist() {
+        assertTrue(this.propDefn.removeQueryOperator(QueryOperator.GREATER_THAN_EQUALS));
         assertFalse(this.propDefn.removeQueryOperator(QueryOperator.GREATER_THAN_EQUALS));
     }
 
@@ -621,12 +625,15 @@ public class PropertyDefinitionTest {
 
     @Test
     public void shouldReceiveEventWhenQueryOperatorIsAdded() {
+        // setup
+        final QueryOperator OP = QueryOperator.GREATER_THAN_EQUALS;
+        assertTrue(this.propDefn.removeQueryOperator(OP));
+
         final Listener l = new Listener();
         assertTrue(this.propDefn.addListener(l));
 
-        final QueryOperator OP = QueryOperator.GREATER_THAN_EQUALS;
+        // test
         assertTrue(this.propDefn.addQueryOperator(OP));
-
         assertEquals(1, l.getCount());
         assertEquals(PropertyName.QUERY_OPS.toString(), l.getPropertyName());
         assertEquals(OP, l.getNewValue());
@@ -636,8 +643,6 @@ public class PropertyDefinitionTest {
     @Test
     public void shouldReceiveEventWhenQueryOperatorIsRemoved() {
         final QueryOperator OP = QueryOperator.GREATER_THAN_EQUALS;
-        assertTrue(this.propDefn.addQueryOperator(OP));
-
         final Listener l = new Listener();
         assertTrue(this.propDefn.addListener(l));
 
@@ -658,9 +663,7 @@ public class PropertyDefinitionTest {
 
     @Test
     public void shouldRemoveQueryOperator() {
-        final QueryOperator OP = QueryOperator.GREATER_THAN_EQUALS;
-        assertTrue(this.propDefn.addQueryOperator(OP));
-        assertTrue(this.propDefn.removeQueryOperator(OP));
+        assertTrue(this.propDefn.removeQueryOperator(QueryOperator.GREATER_THAN_EQUALS));
     }
 
     @Test
@@ -808,8 +811,6 @@ public class PropertyDefinitionTest {
 
     @Test
     public void shouldSetQueryOperators() {
-        assertTrue(this.propDefn.addQueryOperator(QueryOperator.GREATER_THAN_EQUALS));
-
         final String OP1 = QueryOperator.EQUALS.toString();
         final String OP2 = QueryOperator.LESS_THAN.toString();
         final String OP3 = QueryOperator.GREATER_THAN.toString();

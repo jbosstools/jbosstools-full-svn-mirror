@@ -25,6 +25,11 @@ public class UiMessages extends NLS {
     public static String infoDialogTitle;
 
     /**
+     * The table column header title for a message.
+     */
+    public static String messageColumnHeader;
+
+    /**
      * The title of a generic question message dialog.
      */
     public static String questionDialogTitle;
