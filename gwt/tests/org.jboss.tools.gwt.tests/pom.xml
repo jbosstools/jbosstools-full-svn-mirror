@@ -7,13 +7,7 @@
 		<artifactId>gwt</artifactId>
 		<version>1.0.2-SNAPSHOT</version>
 	</parent>
-	<groupId>org.jboss.tools.gwt</groupId>
-	<artifactId>tests</artifactId>
-	<name>gwt.tests</name>
-	
-	<packaging>pom</packaging>
-	<modules>
-		<module>org.jboss.tools.gwt.tests</module>
-	</modules>
+	<groupId>org.jboss.tools.gwt.tests</groupId>
+	<artifactId>org.jboss.tools.gwt.tests</artifactId>
+	<packaging>eclipse-test-plugin</packaging>
 </project>
-	
