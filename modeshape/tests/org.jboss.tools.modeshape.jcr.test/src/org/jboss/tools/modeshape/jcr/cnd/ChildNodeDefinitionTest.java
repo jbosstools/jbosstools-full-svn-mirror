@@ -15,6 +15,8 @@ import static org.junit.Assert.assertTrue;
 import org.jboss.tools.modeshape.jcr.ChildNodeDefinition;
 import org.jboss.tools.modeshape.jcr.ChildNodeDefinition.PropertyName;
 import org.jboss.tools.modeshape.jcr.Listener;
+import org.jboss.tools.modeshape.jcr.NodeTypeDefinition;
+import org.jboss.tools.modeshape.jcr.QualifiedName;
 import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.attributes.AttributeState.Value;
 import org.jboss.tools.modeshape.jcr.attributes.OnParentVersion;
@@ -26,63 +28,68 @@ import org.junit.Test;
  */
 public class ChildNodeDefinitionTest {
 
+    private static final QualifiedName OWNER_NAME = Constants.QUALIFIED_NAME1;
+
+    private NodeTypeDefinition owner;
     private ChildNodeDefinition childNodeDefinition;
 
     @Before
     public void beforeEach() {
-        this.childNodeDefinition = new ChildNodeDefinition();
+        this.owner = new NodeTypeDefinition();
+        this.owner.setName(OWNER_NAME.get());
+        this.childNodeDefinition = new ChildNodeDefinition(owner);
     }
 
     @Test
     public void copiesShouldBeEqualAndHaveSameHashCode() {
-        ChildNodeDefinition thatChildNodeDefinition = ChildNodeDefinition.copy(this.childNodeDefinition);
+        ChildNodeDefinition thatChildNodeDefinition = ChildNodeDefinition.copy(this.childNodeDefinition, this.owner);
         assertEquals(this.childNodeDefinition, thatChildNodeDefinition);
         assertEquals(this.childNodeDefinition.hashCode(), thatChildNodeDefinition.hashCode());
 
         this.childNodeDefinition.setName(Constants.QUALIFIED_NAME1.get());
-        thatChildNodeDefinition = ChildNodeDefinition.copy(this.childNodeDefinition);
+        thatChildNodeDefinition = ChildNodeDefinition.copy(this.childNodeDefinition, this.owner);
         assertEquals(this.childNodeDefinition, thatChildNodeDefinition);
         assertEquals(this.childNodeDefinition.hashCode(), thatChildNodeDefinition.hashCode());
 
         this.childNodeDefinition.setDefaultPrimaryTypeName(Constants.DEFAULT_TYPE);
-        thatChildNodeDefinition = ChildNodeDefinition.copy(this.childNodeDefinition);
+        thatChildNodeDefinition = ChildNodeDefinition.copy(this.childNodeDefinition, this.owner);
         assertEquals(this.childNodeDefinition, thatChildNodeDefinition);
         assertEquals(this.childNodeDefinition.hashCode(), thatChildNodeDefinition.hashCode());
 
         this.childNodeDefinition.setAutoCreated(!this.childNodeDefinition.isAutoCreated());
-        thatChildNodeDefinition = ChildNodeDefinition.copy(this.childNodeDefinition);
+        thatChildNodeDefinition = ChildNodeDefinition.copy(this.childNodeDefinition, this.owner);
         assertEquals(this.childNodeDefinition, thatChildNodeDefinition);
         assertEquals(this.childNodeDefinition.hashCode(), thatChildNodeDefinition.hashCode());
 
         this.childNodeDefinition.setMandatory(!this.childNodeDefinition.isMandatory());
-        thatChildNodeDefinition = ChildNodeDefinition.copy(this.childNodeDefinition);
+        thatChildNodeDefinition = ChildNodeDefinition.copy(this.childNodeDefinition, this.owner);
         assertEquals(this.childNodeDefinition, thatChildNodeDefinition);
         assertEquals(this.childNodeDefinition.hashCode(), thatChildNodeDefinition.hashCode());
 
         this.childNodeDefinition.setProtected(!this.childNodeDefinition.isProtected());
-        thatChildNodeDefinition = ChildNodeDefinition.copy(this.childNodeDefinition);
+        thatChildNodeDefinition = ChildNodeDefinition.copy(this.childNodeDefinition, this.owner);
         assertEquals(this.childNodeDefinition, thatChildNodeDefinition);
         assertEquals(this.childNodeDefinition.hashCode(), thatChildNodeDefinition.hashCode());
 
         this.childNodeDefinition.setSameNameSiblings(!this.childNodeDefinition.allowsSameNameSiblings());
-        thatChildNodeDefinition = ChildNodeDefinition.copy(this.childNodeDefinition);
+        thatChildNodeDefinition = ChildNodeDefinition.copy(this.childNodeDefinition, this.owner);
         assertEquals(this.childNodeDefinition, thatChildNodeDefinition);
         assertEquals(this.childNodeDefinition.hashCode(), thatChildNodeDefinition.hashCode());
 
         this.childNodeDefinition.setOnParentVersion(OnParentVersion.ABORT.asJcrValue());
-        thatChildNodeDefinition = ChildNodeDefinition.copy(this.childNodeDefinition);
+        thatChildNodeDefinition = ChildNodeDefinition.copy(this.childNodeDefinition, this.owner);
         assertEquals(this.childNodeDefinition, thatChildNodeDefinition);
         assertEquals(this.childNodeDefinition.hashCode(), thatChildNodeDefinition.hashCode());
 
         this.childNodeDefinition.setRequiredPrimaryTypeNames(Constants.Helper.getDefaultQualifiedNamesAsStringArray());
-        thatChildNodeDefinition = ChildNodeDefinition.copy(this.childNodeDefinition);
+        thatChildNodeDefinition = ChildNodeDefinition.copy(this.childNodeDefinition, this.owner);
         assertEquals(this.childNodeDefinition, thatChildNodeDefinition);
         assertEquals(this.childNodeDefinition.hashCode(), thatChildNodeDefinition.hashCode());
     }
 
     @Test
     public void differentInstancesWithSameValuesShouldBeEqual() {
-        final ChildNodeDefinition that = new ChildNodeDefinition();
+        final ChildNodeDefinition that = new ChildNodeDefinition(this.owner);
         assertEquals(this.childNodeDefinition, that);
 
         this.childNodeDefinition.setName(Constants.QUALIFIED_NAME1.get());
@@ -120,7 +127,7 @@ public class ChildNodeDefinitionTest {
 
     @Test
     public void differentInstancesWithSameValuesShouldHaveSameHashCode() {
-        assertEquals(this.childNodeDefinition.hashCode(), new ChildNodeDefinition().hashCode());
+        assertEquals(this.childNodeDefinition.hashCode(), new ChildNodeDefinition(this.owner).hashCode());
     }
 
     @Test

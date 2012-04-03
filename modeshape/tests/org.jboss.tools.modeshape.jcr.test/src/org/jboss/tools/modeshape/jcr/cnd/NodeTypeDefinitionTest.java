@@ -33,9 +33,9 @@ public class NodeTypeDefinitionTest {
 
     @Before
     public void beforeEach() {
-        this.childNodeDefinition = new ChildNodeDefinition();
         this.nodeTypeDefinition = new NodeTypeDefinition();
-        this.propertyDefinition = new PropertyDefinition();
+        this.childNodeDefinition = new ChildNodeDefinition(this.nodeTypeDefinition);
+        this.propertyDefinition = new PropertyDefinition(this.nodeTypeDefinition);
     }
 
     @Test
@@ -79,12 +79,12 @@ public class NodeTypeDefinitionTest {
         assertEquals(this.nodeTypeDefinition, thatNodeTypeDefinition);
         assertEquals(this.nodeTypeDefinition.hashCode(), thatNodeTypeDefinition.hashCode());
 
-        this.nodeTypeDefinition.addChildNodeDefinition(new ChildNodeDefinition());
+        this.nodeTypeDefinition.addChildNodeDefinition(new ChildNodeDefinition(this.nodeTypeDefinition));
         thatNodeTypeDefinition = NodeTypeDefinition.copy(this.nodeTypeDefinition);
         assertEquals(this.nodeTypeDefinition, thatNodeTypeDefinition);
         assertEquals(this.nodeTypeDefinition.hashCode(), thatNodeTypeDefinition.hashCode());
 
-        this.nodeTypeDefinition.addPropertyDefinition(new PropertyDefinition());
+        this.nodeTypeDefinition.addPropertyDefinition(new PropertyDefinition(this.nodeTypeDefinition));
         thatNodeTypeDefinition = NodeTypeDefinition.copy(this.nodeTypeDefinition);
         assertEquals(this.nodeTypeDefinition, thatNodeTypeDefinition);
         assertEquals(this.nodeTypeDefinition.hashCode(), thatNodeTypeDefinition.hashCode());

@@ -172,7 +172,7 @@ public final class CndImporter {
         assert (nodeTypeDefn != null) : "nodeTypeDefn is null"; //$NON-NLS-1$
 
         tokens.consume(ChildNodeDefinition.NOTATION_PREFIX);
-        final ChildNodeDefinition childNodeDefn = new ChildNodeDefinition();
+        final ChildNodeDefinition childNodeDefn = new ChildNodeDefinition(nodeTypeDefn);
 
         // name
         final String name = parseName(tokens);
@@ -610,7 +610,7 @@ public final class CndImporter {
         assert (nodeTypeDefn != null) : "nodeTypeDefn is null"; //$NON-NLS-1$
 
         tokens.consume(PropertyDefinition.NOTATION_PREFIX);
-        final PropertyDefinition propDefn = new PropertyDefinition();
+        final PropertyDefinition propDefn = new PropertyDefinition(nodeTypeDefn);
 
         // name
         final String name = parseName(tokens);

@@ -31,7 +31,7 @@ import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences.Preference;
 /**
  * Represents a CND node type definition.
  */
-public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTemplate {
+public class NodeTypeDefinition implements CndElement, Comparable, ItemOwnerProvider, NodeTypeTemplate {
 
     /**
      * Then node type name prefix used in the CND notation.
@@ -65,12 +65,12 @@ public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTempl
 
         // child nodes
         for (final ChildNodeDefinition childNode : nodeTypeToCopy.getChildNodeDefinitions()) {
-            copy.addChildNodeDefinition(ChildNodeDefinition.copy(childNode));
+            copy.addChildNodeDefinition(ChildNodeDefinition.copy(childNode, copy));
         }
 
         // properties
         for (final PropertyDefinition property : nodeTypeToCopy.getPropertyDefinitions()) {
-            copy.addPropertyDefinition(PropertyDefinition.copy(property));
+            copy.addPropertyDefinition(PropertyDefinition.copy(property, copy));
         }
 
         // supertypes
@@ -317,7 +317,7 @@ public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTempl
     }
 
     /**
-     * @return the child node definitions (never <code>null</code>)
+     * @return the declared child node definitions (never <code>null</code>)
      */
     public List<ChildNodeDefinition> getChildNodeDefinitions() {
         if (this.cndElements == null) {
@@ -416,6 +416,16 @@ public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTempl
     }
 
     /**
+     * {@inheritDoc}
+     * 
+     * @see org.jboss.tools.modeshape.jcr.ItemOwnerProvider#getOwnerQualifiedName()
+     */
+    @Override
+    public QualifiedName getOwnerQualifiedName() {
+        return getQualifiedName();
+    }
+
+    /**
      * @return the qualified primary item name (never <code>null</code>)
      */
     public QualifiedName getPrimaryItem() {
@@ -440,7 +450,7 @@ public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTempl
     }
 
     /**
-     * @return the property definitions (never <code>null</code>)
+     * @return the declared property definitions (never <code>null</code>)
      */
     public List<PropertyDefinition> getPropertyDefinitions() {
         if (this.cndElements == null) {

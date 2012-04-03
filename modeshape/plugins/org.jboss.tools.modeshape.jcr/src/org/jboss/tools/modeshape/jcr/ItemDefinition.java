@@ -12,12 +12,17 @@ import org.jboss.tools.modeshape.jcr.cnd.CndElement;
 /**
  * An interface for property definitions and child node definitions.
  */
-public interface ItemDefinition extends CndElement {
+public interface ItemDefinition extends CndElement, Comparable {
 
     /**
      * Defines a residual set of child items.
      */
     String RESIDUAL_NAME = "*"; //$NON-NLS-1$
+
+    /**
+     * @return the name of the node type definition where this item definition is defined (never <code>null</code>)
+     */
+    QualifiedName getDeclaringNodeTypeDefinitionName();
 
     /**
      * @return the qualified name (never <code>null</code>)

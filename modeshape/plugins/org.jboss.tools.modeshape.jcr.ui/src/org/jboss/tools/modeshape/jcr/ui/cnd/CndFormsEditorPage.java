@@ -293,13 +293,14 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
              * @see org.eclipse.jface.viewers.ColumnLabelProvider#getBackground(java.lang.Object)
              */
             @Override
-            public Color getBackground( Object element ) {
+            public Color getBackground( final Object element ) {
                 final ChildNodeDefinition childNodeDefinition = (ChildNodeDefinition)element;
 
                 if (shouldShowInheritedChildNodes()) {
-                    NodeTypeDefinition nodeTypeDefinition = getSelectedNodeType();
+                    final NodeTypeDefinition nodeTypeDefinition = getSelectedNodeType();
 
-                    if (!nodeTypeDefinition.hasDeclaredChildNodeDefinition(childNodeDefinition.getName())) {
+                    if (Utils.equivalent(nodeTypeDefinition.getName(), childNodeDefinition.getDeclaringNodeTypeDefinitionName()
+                                                                                          .get())) {
                         return getShell().getDisplay().getSystemColor(SWT.COLOR_WIDGET_LIGHT_SHADOW);
                     }
                 }
@@ -313,13 +314,14 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
              * @see org.eclipse.jface.viewers.ColumnLabelProvider#getFont(java.lang.Object)
              */
             @Override
-            public Font getFont( Object element ) {
+            public Font getFont( final Object element ) {
                 final ChildNodeDefinition childNodeDefinition = (ChildNodeDefinition)element;
 
                 if (shouldShowInheritedChildNodes()) {
-                    NodeTypeDefinition nodeTypeDefinition = getSelectedNodeType();
+                    final NodeTypeDefinition nodeTypeDefinition = getSelectedNodeType();
 
-                    if (!nodeTypeDefinition.hasDeclaredChildNodeDefinition(childNodeDefinition.getName())) {
+                    if (Utils.equivalent(nodeTypeDefinition.getName(), childNodeDefinition.getDeclaringNodeTypeDefinitionName()
+                                                                                          .get())) {
                         return JFaceResources.getFontRegistry().getItalic(JFaceResources.TEXT_FONT);
                     }
                 }
@@ -341,6 +343,15 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
                 }
 
                 final NotationType notationType = NotationType.LONG;
+
+                if (this.columnIndex == ChildNodeColumnIndexes.DECLARING_NODE_TYPE) {
+                    if (Utils.equivalent(getSelectedNodeType().getName(), childNodeDefinition.getDeclaringNodeTypeDefinitionName()
+                                                                                             .get())) {
+                        return childNodeDefinition.getDeclaringNodeTypeDefinitionName().get();
+                    }
+
+                    return Utils.EMPTY_STRING;
+                }
 
                 if (this.columnIndex == ChildNodeColumnIndexes.DEFAULT_TYPE) {
                     return childNodeDefinition.getDefaultType().getDefaultType().get();
@@ -387,7 +398,7 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
                     try {
                         return getCnd().getChildNodeDefinitions(nodeTypeDefinition.getName(), shouldShowInheritedChildNodes())
                                        .toArray();
-                    } catch (Exception e) {
+                    } catch (final Exception e) {
                         Activator.getSharedInstance()
                                  .getLog()
                                  .log(new Status(IStatus.ERROR,
@@ -417,7 +428,7 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
 
         // open edit child node on double click
         final IAction editAction = this.editChildNode;
-        
+
         this.childNodeViewer.addDoubleClickListener(new IDoubleClickListener() {
 
             /**
@@ -469,6 +480,12 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
             final TableViewerColumn attributesColumn = new TableViewerColumn(this.childNodeViewer, SWT.LEFT);
             UiUtils.configureColumn(attributesColumn, new ChildNodeLabelProvider(ChildNodeColumnIndexes.ATTRIBUTES),
                                     CndMessages.attributesHeaderText, CndMessages.childNodeAttributesToolTip, false, true);
+        }
+
+        { // create declaring node type column
+            final TableViewerColumn nodeTypeColumn = new TableViewerColumn(this.childNodeViewer, SWT.LEFT);
+            UiUtils.configureColumn(nodeTypeColumn, new ChildNodeLabelProvider(ChildNodeColumnIndexes.DECLARING_NODE_TYPE),
+                                    CndMessages.declaringNodeTypeHeaderText, CndMessages.declaringNodeTypeToolTip, false, true);
         }
 
         // this will sort by child node name
@@ -1286,13 +1303,14 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
              * @see org.eclipse.jface.viewers.ColumnLabelProvider#getBackground(java.lang.Object)
              */
             @Override
-            public Color getBackground( Object element ) {
+            public Color getBackground( final Object element ) {
                 final PropertyDefinition propertyDefinition = (PropertyDefinition)element;
 
                 if (shouldShowInheritedProperties()) {
-                    NodeTypeDefinition nodeTypeDefinition = getSelectedNodeType();
+                    final NodeTypeDefinition nodeTypeDefinition = getSelectedNodeType();
 
-                    if (!nodeTypeDefinition.hasDeclaredPropertyDefinition(propertyDefinition.getName())) {
+                    if (!Utils.equivalent(nodeTypeDefinition.getName(), propertyDefinition.getDeclaringNodeTypeDefinitionName()
+                                                                                          .get())) {
                         return getShell().getDisplay().getSystemColor(SWT.COLOR_WIDGET_LIGHT_SHADOW);
                     }
                 }
@@ -1306,13 +1324,14 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
              * @see org.eclipse.jface.viewers.ColumnLabelProvider#getFont(java.lang.Object)
              */
             @Override
-            public Font getFont( Object element ) {
+            public Font getFont( final Object element ) {
                 final PropertyDefinition propertyDefinition = (PropertyDefinition)element;
 
                 if (shouldShowInheritedProperties()) {
-                    NodeTypeDefinition nodeTypeDefinition = getSelectedNodeType();
+                    final NodeTypeDefinition nodeTypeDefinition = getSelectedNodeType();
 
-                    if (!nodeTypeDefinition.hasDeclaredPropertyDefinition(propertyDefinition.getName())) {
+                    if (!Utils.equivalent(nodeTypeDefinition.getName(), propertyDefinition.getDeclaringNodeTypeDefinitionName()
+                                                                                          .get())) {
                         return JFaceResources.getFontRegistry().getItalic(JFaceResources.TEXT_FONT);
                     }
                 }
@@ -1341,6 +1360,15 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
 
                 if (this.columnIndex == PropertyColumnIndexes.ATTRIBUTES) {
                     return propertyDefinition.getAttributesCndNotation(notationType);
+                }
+
+                if (this.columnIndex == PropertyColumnIndexes.DECLARING_NODE_TYPE) {
+                    if (!Utils.equivalent(getSelectedNodeType().getName(), propertyDefinition.getDeclaringNodeTypeDefinitionName()
+                                                                                             .get())) {
+                        return propertyDefinition.getDeclaringNodeTypeDefinitionName().get();
+                    }
+
+                    return Utils.EMPTY_STRING;
                 }
 
                 if (this.columnIndex == PropertyColumnIndexes.DEFAULT_VALUES) {
@@ -1390,7 +1418,7 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
                     try {
                         return getCnd().getPropertyDefinitions(nodeTypeDefinition.getName(), shouldShowInheritedProperties())
                                        .toArray();
-                    } catch (Exception e) {
+                    } catch (final Exception e) {
                         Activator.getSharedInstance()
                                  .getLog()
                                  .log(new Status(IStatus.ERROR,
@@ -1479,6 +1507,12 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
             UiUtils.configureColumn(constraintsColumn, new PropertyLabelProvider(PropertyColumnIndexes.CONSTRAINTS),
                                     CndMessages.valueConstraintsHeaderText, CndMessages.propertyValueConstraintsToolTip, false,
                                     true);
+        }
+
+        { // create declaring node type column
+            final TableViewerColumn nodeTypeColumn = new TableViewerColumn(this.propertyViewer, SWT.LEFT);
+            UiUtils.configureColumn(nodeTypeColumn, new PropertyLabelProvider(PropertyColumnIndexes.DECLARING_NODE_TYPE),
+                                    CndMessages.declaringNodeTypeHeaderText, CndMessages.declaringNodeTypeToolTip, false, true);
         }
 
         // this will sort by property name
@@ -1768,7 +1802,10 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
     void handleAddChildNode() {
         assert (getSelectedNodeType() != null) : "add child node handler called but there is no selected node type"; //$NON-NLS-1$
 
-        final ChildNodeDialog dialog = new ChildNodeDialog(getShell(), getChildNodeNames(), getCnd().getNamespacePrefixes());
+        final ChildNodeDialog dialog = new ChildNodeDialog(getShell(),
+                                                           getSelectedNodeType(),
+                                                           getChildNodeNames(),
+                                                           getCnd().getNamespacePrefixes());
         dialog.create();
         dialog.getShell().pack();
 
@@ -1854,6 +1891,7 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
 
         final NodeTypeDefinition nodeTypeDefinition = getSelectedNodeType();
         final PropertyDialog dialog = new PropertyDialog(getShell(),
+                                                         getSelectedNodeType(),
                                                          getPropertyNames(),
                                                          getCnd().getNamespacePrefixes(),
                                                          nodeTypeDefinition.isQueryable());
@@ -2062,6 +2100,7 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
 
         final ChildNodeDefinition childNodeBeingEdited = getSelectedChildNode();
         final ChildNodeDialog dialog = new ChildNodeDialog(getShell(),
+                                                           getSelectedNodeType(),
                                                            getChildNodeNames(),
                                                            getCnd().getNamespacePrefixes(),
                                                            childNodeBeingEdited);
@@ -2138,6 +2177,7 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
         final NodeTypeDefinition nodeTypeDefinition = getSelectedNodeType();
         final PropertyDefinition propertyBeingEdited = getSelectedProperty();
         final PropertyDialog dialog = new PropertyDialog(getShell(),
+                                                         getSelectedNodeType(),
                                                          getPropertyNames(),
                                                          getCnd().getNamespacePrefixes(),
                                                          nodeTypeDefinition.isQueryable(),
@@ -2848,6 +2888,7 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
 
     interface ChildNodeColumnIndexes {
         int ATTRIBUTES = 3;
+        int DECLARING_NODE_TYPE = 4;
         int DEFAULT_TYPE = 2;
         int NAME = 0;
         int REQUIRED_TYPES = 1;
@@ -2872,6 +2913,7 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
     interface PropertyColumnIndexes {
         int ATTRIBUTES = 3;
         int CONSTRAINTS = 4;
+        int DECLARING_NODE_TYPE = 5;
         int DEFAULT_VALUES = 2;
         int NAME = 0;
         int TYPE = 1;

@@ -35,16 +35,16 @@ public class CndValidatorTest {
 
     @Before
     public void beforeEach() {
-        this.childNodeDefinition = new ChildNodeDefinition();
-        this.childNodeDefinition.setName(Constants.QUALIFIED_NAME1.get());
-
         this.cnd = new CompactNodeTypeDefinition();
         this.namespaceMapping = new NamespaceMapping();
 
         this.nodeTypeDefinition = new NodeTypeDefinition();
         this.nodeTypeDefinition.setName(Constants.QUALIFIED_NAME1.get());
 
-        this.propertyDefinition = new PropertyDefinition();
+        this.childNodeDefinition = new ChildNodeDefinition(this.nodeTypeDefinition);
+        this.childNodeDefinition.setName(Constants.QUALIFIED_NAME1.get());
+
+        this.propertyDefinition = new PropertyDefinition(this.nodeTypeDefinition);
         this.propertyDefinition.setName(Constants.QUALIFIED_NAME1.get());
     }
 
@@ -177,7 +177,7 @@ public class CndValidatorTest {
 
         final String NAME = "name"; //$NON-NLS-1$
         this.childNodeDefinition.setName(NAME);
-        final ChildNodeDefinition child2 = new ChildNodeDefinition();
+        final ChildNodeDefinition child2 = new ChildNodeDefinition(this.nodeTypeDefinition);
         child2.setName(NAME);
 
         this.nodeTypeDefinition.addChildNodeDefinition(this.childNodeDefinition);
@@ -192,7 +192,7 @@ public class CndValidatorTest {
 
         final String NAME = "name"; //$NON-NLS-1$
         this.propertyDefinition.setName(NAME);
-        final PropertyDefinition prop2 = new PropertyDefinition();
+        final PropertyDefinition prop2 = new PropertyDefinition(this.nodeTypeDefinition);
         prop2.setName(NAME);
 
         this.nodeTypeDefinition.addPropertyDefinition(this.propertyDefinition);
@@ -316,7 +316,7 @@ public class CndValidatorTest {
     public void shouldAllowMultipleChildNodeDefinitionsWithResidualNames() {
         this.nodeTypeDefinition.setName("nodeName"); //$NON-NLS-1$
         this.childNodeDefinition.setName(ItemDefinition.RESIDUAL_NAME);
-        final ChildNodeDefinition childNode2 = new ChildNodeDefinition();
+        final ChildNodeDefinition childNode2 = new ChildNodeDefinition(this.nodeTypeDefinition);
         childNode2.setName(ItemDefinition.RESIDUAL_NAME);
         this.nodeTypeDefinition.addChildNodeDefinition(this.childNodeDefinition);
         this.nodeTypeDefinition.addChildNodeDefinition(childNode2);
@@ -328,7 +328,7 @@ public class CndValidatorTest {
     public void shouldAllowMultiplePropertyDefinitionsWithResidualNames() {
         this.nodeTypeDefinition.setName("nodeName"); //$NON-NLS-1$
         this.propertyDefinition.setName(ItemDefinition.RESIDUAL_NAME);
-        final PropertyDefinition propDefn2 = new PropertyDefinition();
+        final PropertyDefinition propDefn2 = new PropertyDefinition(this.nodeTypeDefinition);
         propDefn2.setName(ItemDefinition.RESIDUAL_NAME);
         this.nodeTypeDefinition.addPropertyDefinition(this.propertyDefinition);
         this.nodeTypeDefinition.addPropertyDefinition(propDefn2);
@@ -346,7 +346,7 @@ public class CndValidatorTest {
     public void shouldNotAllowChildNodeDefinitionsWithSameName() {
         this.nodeTypeDefinition.setName("nodeName"); //$NON-NLS-1$
         this.childNodeDefinition.setName("name"); //$NON-NLS-1$
-        final ChildNodeDefinition childNode2 = new ChildNodeDefinition();
+        final ChildNodeDefinition childNode2 = new ChildNodeDefinition(this.nodeTypeDefinition);
         childNode2.setName(this.childNodeDefinition.getName());
         this.nodeTypeDefinition.addChildNodeDefinition(this.childNodeDefinition);
         this.nodeTypeDefinition.addChildNodeDefinition(childNode2);
@@ -378,7 +378,7 @@ public class CndValidatorTest {
     public void shouldNotAllowPropertyDefinitionsWithSameName() {
         this.nodeTypeDefinition.setName("nodeName"); //$NON-NLS-1$
         this.propertyDefinition.setName("name"); //$NON-NLS-1$
-        final PropertyDefinition propDefn2 = new PropertyDefinition();
+        final PropertyDefinition propDefn2 = new PropertyDefinition(this.nodeTypeDefinition);
         propDefn2.setName(this.propertyDefinition.getName());
         this.nodeTypeDefinition.addPropertyDefinition(this.propertyDefinition);
         this.nodeTypeDefinition.addPropertyDefinition(propDefn2);

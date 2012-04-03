@@ -320,6 +320,16 @@ class CndMessages extends NLS {
     public static String cndMessageDialogTitle;
 
     /**
+     * The column header text of the declaring node type of an item definition.
+     */
+    public static String declaringNodeTypeHeaderText;
+
+    /**
+     * The tool tip message of the declaring node type of an item definition.
+     */
+    public static String declaringNodeTypeToolTip;
+
+    /**
      * The column header text of the default type of a child node definition.
      */
     public static String defaultTypeHeaderText;

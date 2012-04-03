@@ -32,7 +32,7 @@ import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences.Preference;
 /**
  * The <code>PropertyDefinition</code> class represents node type property definition.
  */
-public class PropertyDefinition implements ItemDefinition, Comparable, PropertyDefinitionTemplate {
+public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTemplate {
 
     /**
      * The prefix used in CND notation before the property definition.
@@ -46,10 +46,12 @@ public class PropertyDefinition implements ItemDefinition, Comparable, PropertyD
 
     /**
      * @param propertyBeingCopied the property definition being copied (cannot be <code>null</code>)
+     * @param ownerProvider the item owner provider that owns this property (cannot be <code>null</code>)
      * @return the copy (never <code>null</code>)
      */
-    public static final PropertyDefinition copy( final PropertyDefinition propertyBeingCopied ) {
-        final PropertyDefinition copy = new PropertyDefinition();
+    public static final PropertyDefinition copy( final PropertyDefinition propertyBeingCopied,
+                                                 final ItemOwnerProvider ownerProvider ) {
+        final PropertyDefinition copy = new PropertyDefinition(ownerProvider);
 
         // name
         copy.setName(propertyBeingCopied.getName());
@@ -106,6 +108,11 @@ public class PropertyDefinition implements ItemDefinition, Comparable, PropertyD
     private final QualifiedName name;
 
     /**
+     * An owner provider for this property (never <code>null</code>).
+     */
+    private final ItemOwnerProvider ownerProvider;
+
+    /**
      * The property type (never <code>null</code>).
      */
     private PropertyType type;
@@ -117,8 +124,13 @@ public class PropertyDefinition implements ItemDefinition, Comparable, PropertyD
 
     /**
      * Constructs an instance with a default type of {@link PropertyType#STRING}.
+     * 
+     * @param ownerProvider the item owner provider that owns this property (cannot be <code>null</code>)
      */
-    public PropertyDefinition() {
+    public PropertyDefinition( final ItemOwnerProvider ownerProvider ) {
+        Utils.verifyIsNotNull(ownerProvider, "ownerProvider"); //$NON-NLS-1$
+
+        this.ownerProvider = ownerProvider;
         this.type = PropertyType.DEFAULT_VALUE;
         this.name = new QualifiedName();
         this.attributes = new PropertyAttributes();
@@ -325,8 +337,6 @@ public class PropertyDefinition implements ItemDefinition, Comparable, PropertyD
         }
 
         final PropertyDefinition that = (PropertyDefinition)obj;
-        // this.defaultValues = new DefaultValues();
-        // this.valueConstraints = new ValueConstraints();
 
         if (!this.attributes.equals(that.attributes)) {
             return false;
@@ -341,6 +351,10 @@ public class PropertyDefinition implements ItemDefinition, Comparable, PropertyD
         }
 
         if (!this.defaultValues.equals(that.defaultValues)) {
+            return false;
+        }
+
+        if (!Utils.equals(getDeclaringNodeTypeDefinitionName(), that.getDeclaringNodeTypeDefinitionName())) {
             return false;
         }
 
@@ -380,6 +394,16 @@ public class PropertyDefinition implements ItemDefinition, Comparable, PropertyD
     @Override
     public NodeType getDeclaringNodeType() {
         throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.jboss.tools.modeshape.jcr.ItemDefinition#getDeclaringNodeTypeDefinitionName()
+     */
+    @Override
+    public QualifiedName getDeclaringNodeTypeDefinitionName() {
+        return this.ownerProvider.getOwnerQualifiedName();
     }
 
     /**
@@ -542,7 +566,8 @@ public class PropertyDefinition implements ItemDefinition, Comparable, PropertyD
      */
     @Override
     public int hashCode() {
-        return Utils.hashCode(this.attributes, this.name, this.defaultValues, this.type, this.valueConstraints);
+        return Utils.hashCode(this.attributes, this.name, this.defaultValues, this.type, this.valueConstraints,
+                              getDeclaringNodeTypeDefinitionName());
     }
 
     /**

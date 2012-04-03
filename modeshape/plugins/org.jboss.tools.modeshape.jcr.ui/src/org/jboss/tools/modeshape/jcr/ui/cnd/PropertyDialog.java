@@ -52,6 +52,7 @@ import org.eclipse.ui.forms.FormDialog;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
+import org.jboss.tools.modeshape.jcr.ItemOwnerProvider;
 import org.jboss.tools.modeshape.jcr.Messages;
 import org.jboss.tools.modeshape.jcr.PropertyDefinition;
 import org.jboss.tools.modeshape.jcr.PropertyDefinition.PropertyName;
@@ -107,11 +108,13 @@ final class PropertyDialog extends FormDialog {
      * Used to create a new property definition.
      * 
      * @param parentShell the parent shell (can be <code>null</code>)
+     * @param ownerProvider an item owner provider for the new property (cannot be <code>null</code>)
      * @param existingPropertyNames the existing property names (can be <code>null</code> or empty)
      * @param existingNamespacePrefixes the existing CND namespace prefixes (can be <code>null</code> or empty)
      * @param nodeTypeQueryable indicates if node type of the property being created is queryable
      */
     public PropertyDialog( final Shell parentShell,
+                           final ItemOwnerProvider ownerProvider,
                            final Collection<QualifiedName> existingPropertyNames,
                            final Collection<String> existingNamespacePrefixes,
                            final boolean nodeTypeQueryable ) {
@@ -124,30 +127,32 @@ final class PropertyDialog extends FormDialog {
         this.defaultValuesError = new ErrorMessage();
         this.nameError = new ErrorMessage();
         this.valueConstraintsError = new ErrorMessage();
-        this.propertyBeingEdited = new PropertyDefinition();
+        this.propertyBeingEdited = new PropertyDefinition(ownerProvider);
     }
 
     /**
      * Used to edit a property definition.
      * 
      * @param parentShell the parent shell (can be <code>null</code>)
+     * @param ownerProvider an item owner provider for the new property (cannot be <code>null</code>)
      * @param existingPropertyNames the existing property names (can be <code>null</code> or empty)
      * @param existingNamespacePrefixes the existing CND namespace prefixes (can be <code>null</code> or empty)
      * @param nodeTypeQueryable indicates if node type of the property being edited is queryable
      * @param propertyDefinitionBeingEdited the property definition being edited (cannot be <code>null</code>)
      */
     public PropertyDialog( final Shell parentShell,
+                           final ItemOwnerProvider ownerProvider,
                            final Collection<QualifiedName> existingPropertyNames,
                            final Collection<String> existingNamespacePrefixes,
                            final boolean nodeTypeQueryable,
                            final PropertyDefinition propertyDefinitionBeingEdited ) {
-        this(parentShell, existingPropertyNames, existingNamespacePrefixes, nodeTypeQueryable);
+        this(parentShell, ownerProvider, existingPropertyNames, existingNamespacePrefixes, nodeTypeQueryable);
 
         Utils.verifyIsNotNull(propertyDefinitionBeingEdited, "propertyDefinitionBeingEdited"); //$NON-NLS-1$
         this.originalProperty = propertyDefinitionBeingEdited;
 
         // create copy of property being edited
-        this.propertyBeingEdited = PropertyDefinition.copy(this.originalProperty);
+        this.propertyBeingEdited = PropertyDefinition.copy(this.originalProperty, ownerProvider);
 
         // remove name from existing names so that validation won't show it as a duplicate
         if (!Utils.isEmpty(this.propertyBeingEdited.getName())) {
@@ -633,7 +638,7 @@ final class PropertyDialog extends FormDialog {
                              */
                             @Override
                             public void widgetSelected( final SelectionEvent e ) {
-                                Button btn = (Button)e.widget;
+                                final Button btn = (Button)e.widget;
                                 handleQueryOperatorChanged(btn.getText(), btn.getSelection());
                             }
                         });
@@ -658,7 +663,7 @@ final class PropertyDialog extends FormDialog {
                              */
                             @Override
                             public void widgetSelected( final SelectionEvent e ) {
-                                Button btn = (Button)e.widget;
+                                final Button btn = (Button)e.widget;
                                 handleQueryOperatorChanged(btn.getText(), btn.getSelection());
                             }
                         });
@@ -683,7 +688,7 @@ final class PropertyDialog extends FormDialog {
                              */
                             @Override
                             public void widgetSelected( final SelectionEvent e ) {
-                                Button btn = (Button)e.widget;
+                                final Button btn = (Button)e.widget;
                                 handleQueryOperatorChanged(btn.getText(), btn.getSelection());
                             }
                         });
@@ -708,7 +713,7 @@ final class PropertyDialog extends FormDialog {
                              */
                             @Override
                             public void widgetSelected( final SelectionEvent e ) {
-                                Button btn = (Button)e.widget;
+                                final Button btn = (Button)e.widget;
                                 handleQueryOperatorChanged(btn.getText(), btn.getSelection());
                             }
                         });
@@ -734,7 +739,7 @@ final class PropertyDialog extends FormDialog {
                              */
                             @Override
                             public void widgetSelected( final SelectionEvent e ) {
-                                Button btn = (Button)e.widget;
+                                final Button btn = (Button)e.widget;
                                 handleQueryOperatorChanged(btn.getText(), btn.getSelection());
                             }
                         });
@@ -759,7 +764,7 @@ final class PropertyDialog extends FormDialog {
                              */
                             @Override
                             public void widgetSelected( final SelectionEvent e ) {
-                                Button btn = (Button)e.widget;
+                                final Button btn = (Button)e.widget;
                                 handleQueryOperatorChanged(btn.getText(), btn.getSelection());
                             }
                         });
@@ -886,19 +891,6 @@ final class PropertyDialog extends FormDialog {
         validateDefaultValues();
         validateValueConstraints();
         validateType();
-    }
-
-    /**
-     * @param text
-     * @param selection
-     */
-    protected void handleQueryOperatorChanged( String text,
-                                               boolean selection ) {
-        if (selection) {
-            this.propertyBeingEdited.addQueryOperator(QueryOperator.find(text));
-        } else {
-            this.propertyBeingEdited.removeQueryOperator(QueryOperator.find(text));
-        }
     }
 
     void createValueConstraintsActions() {
@@ -1429,6 +1421,19 @@ final class PropertyDialog extends FormDialog {
         this.propertyBeingEdited.setProtected(newProtected);
     }
 
+    /**
+     * @param text
+     * @param selection
+     */
+    protected void handleQueryOperatorChanged( final String text,
+                                               final boolean selection ) {
+        if (selection) {
+            this.propertyBeingEdited.addQueryOperator(QueryOperator.find(text));
+        } else {
+            this.propertyBeingEdited.removeQueryOperator(QueryOperator.find(text));
+        }
+    }
+
     void handleTypeChanged( final String newType ) {
         this.propertyBeingEdited.setType(PropertyType.valueOf(newType));
     }
@@ -1481,7 +1486,7 @@ final class PropertyDialog extends FormDialog {
     }
 
     private void validateDefaultValues() {
-        updateMessage(CndValidator.validateDefaultValues(this.propertyBeingEdited, existingNamespacePrefixes),
+        updateMessage(CndValidator.validateDefaultValues(this.propertyBeingEdited, this.existingNamespacePrefixes),
                       this.defaultValuesError);
     }
 

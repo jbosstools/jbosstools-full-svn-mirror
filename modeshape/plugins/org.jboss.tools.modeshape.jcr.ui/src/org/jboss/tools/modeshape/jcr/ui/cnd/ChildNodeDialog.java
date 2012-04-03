@@ -56,6 +56,7 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.jboss.tools.modeshape.jcr.ChildNodeDefinition;
 import org.jboss.tools.modeshape.jcr.ChildNodeDefinition.PropertyName;
+import org.jboss.tools.modeshape.jcr.ItemOwnerProvider;
 import org.jboss.tools.modeshape.jcr.Messages;
 import org.jboss.tools.modeshape.jcr.QualifiedName;
 import org.jboss.tools.modeshape.jcr.Utils;
@@ -108,13 +109,17 @@ final class ChildNodeDialog extends FormDialog {
      * Used to create a new child node definition.
      * 
      * @param parentShell the parent shell (can be <code>null</code>)
+     * @param ownerProvider an item owner provider for the new child node (cannot be <code>null</code>)
      * @param existingChildNodeNames the existing child node names (can be <code>null</code> or empty)
      * @param existingNamespacePrefixes the existing CND namespace prefixes (can be <code>null</code> or empty)
      */
     public ChildNodeDialog( final Shell parentShell,
+                            final ItemOwnerProvider ownerProvider,
                             final Collection<QualifiedName> existingChildNodeNames,
                             final Collection<String> existingNamespacePrefixes ) {
         super(parentShell);
+        Utils.verifyIsNotNull(ownerProvider, "ownerProvider"); //$NON-NLS-1$
+
         this.existingChildNodeNames = ((existingChildNodeNames == null) ? Collections.<QualifiedName> emptyList()
                                                                        : new ArrayList<QualifiedName>(existingChildNodeNames));
         this.existingNamespacePrefixes = ((existingNamespacePrefixes == null) ? Collections.<String> emptyList()
@@ -122,28 +127,30 @@ final class ChildNodeDialog extends FormDialog {
         this.nameError = new ErrorMessage();
         this.defaultTypeError = new ErrorMessage();
         this.requiredTypesError = new ErrorMessage();
-        this.childNodeBeingEdited = new ChildNodeDefinition();
+        this.childNodeBeingEdited = new ChildNodeDefinition(ownerProvider);
     }
 
     /**
      * Used to edit a child node definition.
      * 
      * @param parentShell the parent shell (can be <code>null</code>)
+     * @param ownerProvider an item owner provider for the new child node (cannot be <code>null</code>)
      * @param existingChildNodeNames the existing child node names (can be <code>null</code> or empty)
      * @param existingNamespacePrefixes the existing CND namespace prefixes (can be <code>null</code> or empty)
      * @param childNodeBeingEdited the child node definition being edited (cannot be <code>null</code>)
      */
     public ChildNodeDialog( final Shell parentShell,
+                            final ItemOwnerProvider ownerProvider,
                             final Collection<QualifiedName> existingChildNodeNames,
                             final Collection<String> existingNamespacePrefixes,
                             final ChildNodeDefinition childNodeBeingEdited ) {
-        this(parentShell, existingChildNodeNames, existingNamespacePrefixes);
+        this(parentShell, ownerProvider, existingChildNodeNames, existingNamespacePrefixes);
 
         Utils.verifyIsNotNull(childNodeBeingEdited, "childNodeBeingEdited"); //$NON-NLS-1$
         this.originalChildNode = childNodeBeingEdited;
 
         // create copy of child node being edited
-        this.childNodeBeingEdited = ChildNodeDefinition.copy(this.originalChildNode);
+        this.childNodeBeingEdited = ChildNodeDefinition.copy(this.originalChildNode, ownerProvider);
 
         // remove name from existing names so that validation won't show it as a duplicate
         if (!Utils.isEmpty(this.childNodeBeingEdited.getName())) {

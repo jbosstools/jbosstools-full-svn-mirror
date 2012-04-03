@@ -25,9 +25,9 @@ import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences;
 import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences.Preference;
 
 /**
- * 
+ * The <code>ChildNodeDefinition</code> class represents node type child node definition.
  */
-public class ChildNodeDefinition implements ItemDefinition, Comparable, NodeDefinitionTemplate {
+public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTemplate {
 
     /**
      * The prefix used in CND notation before the property definition.
@@ -36,10 +36,12 @@ public class ChildNodeDefinition implements ItemDefinition, Comparable, NodeDefi
 
     /**
      * @param childNodeBeingCopied the child node definition being copied (cannot be <code>null</code>)
+     * @param ownerProvider the owner provider that owns this child node (cannot be <code>null</code>)
      * @return the copy (never <code>null</code>)
      */
-    public static ChildNodeDefinition copy( final ChildNodeDefinition childNodeBeingCopied ) {
-        final ChildNodeDefinition copy = new ChildNodeDefinition();
+    public static ChildNodeDefinition copy( final ChildNodeDefinition childNodeBeingCopied,
+                                            final ItemOwnerProvider ownerProvider ) {
+        final ChildNodeDefinition copy = new ChildNodeDefinition(ownerProvider);
 
         // name
         copy.setName(childNodeBeingCopied.getName());
@@ -86,14 +88,24 @@ public class ChildNodeDefinition implements ItemDefinition, Comparable, NodeDefi
     private final QualifiedName name;
 
     /**
+     * An owner provider for this property (never <code>null</code>).
+     */
+    private final ItemOwnerProvider ownerProvider;
+
+    /**
      * The node required types (never <code>null</code>).
      */
     private final RequiredTypes requiredTypes;
 
     /**
      * Constructs an instance set to all defaults.
+     * 
+     * @param ownerProvider the item owner provider that owns this child node (cannot be <code>null</code>)
      */
-    public ChildNodeDefinition() {
+    public ChildNodeDefinition( final ItemOwnerProvider ownerProvider ) {
+        Utils.verifyIsNotNull(ownerProvider, "ownerProvider"); //$NON-NLS-1$
+
+        this.ownerProvider = ownerProvider;
         this.attributes = new NodeAttributes();
         this.name = new QualifiedName();
         this.defaultType = new DefaultType();
@@ -263,6 +275,10 @@ public class ChildNodeDefinition implements ItemDefinition, Comparable, NodeDefi
             return false;
         }
 
+        if (!Utils.equals(getDeclaringNodeTypeDefinitionName(), that.getDeclaringNodeTypeDefinitionName())) {
+            return false;
+        }
+
         return this.requiredTypes.equals(that.requiredTypes);
     }
 
@@ -289,6 +305,16 @@ public class ChildNodeDefinition implements ItemDefinition, Comparable, NodeDefi
     @Override
     public NodeType getDeclaringNodeType() {
         throw new UnsupportedOperationException();
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.jboss.tools.modeshape.jcr.ItemDefinition#getDeclaringNodeTypeDefinitionName()
+     */
+    @Override
+    public QualifiedName getDeclaringNodeTypeDefinitionName() {
+        return this.ownerProvider.getOwnerQualifiedName();
     }
 
     /**
@@ -464,7 +490,8 @@ public class ChildNodeDefinition implements ItemDefinition, Comparable, NodeDefi
      */
     @Override
     public int hashCode() {
-        return Utils.hashCode(this.attributes, this.name, this.defaultType, this.requiredTypes);
+        return Utils.hashCode(this.attributes, this.name, this.defaultType, this.requiredTypes,
+                              getDeclaringNodeTypeDefinitionName());
     }
 
     /**
