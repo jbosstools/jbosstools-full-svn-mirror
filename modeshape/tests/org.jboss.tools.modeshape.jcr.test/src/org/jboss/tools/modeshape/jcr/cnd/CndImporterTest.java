@@ -838,6 +838,22 @@ public class CndImporterTest {
     }
 
     @Test
+    public void shouldParseNamespacesAndNodeTypesInAnyOrder() {
+        final String content = "[foo] > supertype1, supertype2\n" //$NON-NLS-1$
+                + "<ns1 = 'http://namespace1.com/ns1'>\n" //$NON-NLS-1$
+                + "<ns2 = 'http://namespace2.com/ns2'>\n" //$NON-NLS-1$
+                + "[bar] > supertype1, supertype2\n" //$NON-NLS-1$
+                + "<ns3 = 'http://namespace3.com/ns3'>"; //$NON-NLS-1$
+        this.cnd = this.importer.parse(content);
+
+        final List<NamespaceMapping> namespaces = this.cnd.getNamespaceMappings();
+        assertEquals(3, namespaces.size());
+
+        final List<NodeTypeDefinition> nodeTypes = this.cnd.getNodeTypeDefinitions();
+        assertEquals(2, nodeTypes.size());
+    }
+
+    @Test
     public void shouldParseNamespaceDeclarationWithQuotedUriAndUnquotedPrefix() {
         final String content = "<ns = 'http://namespace.com/ns'>"; //$NON-NLS-1$
         this.cnd = this.importer.parse(content);

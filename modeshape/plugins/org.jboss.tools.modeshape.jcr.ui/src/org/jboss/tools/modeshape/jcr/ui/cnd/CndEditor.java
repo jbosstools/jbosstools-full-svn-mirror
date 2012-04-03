@@ -536,6 +536,8 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
 
             hookRefreshListener();
         }
+
+        refreshReadOnlyState();
     }
 
     /**
@@ -670,7 +672,6 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
     public void setFocus() {
         super.setFocus();
         refreshCnd();
-        refreshReadOnlyState();
     }
 
     /**

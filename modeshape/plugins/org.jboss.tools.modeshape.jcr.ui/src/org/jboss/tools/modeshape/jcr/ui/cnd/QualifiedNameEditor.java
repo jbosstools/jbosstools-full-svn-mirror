@@ -242,7 +242,11 @@ final class QualifiedNameEditor extends Composite {
      */
     void setValidQualifiers( final Collection<String> validQualifiers ) {
         this.validQualifiers = ((validQualifiers == null) ? new ArrayList<String>(1) : new ArrayList<String>(validQualifiers));
-        this.validQualifiers.add(0, CndMessages.noNameQualifierChoice); // include empty qualifier at index 0
+
+        if (!this.validQualifiers.contains(CndMessages.noNameQualifierChoice)) {
+            this.validQualifiers.add(0, CndMessages.noNameQualifierChoice); // include empty qualifier at index 0
+        }
+
         updateUi();
     }
 
@@ -252,7 +256,9 @@ final class QualifiedNameEditor extends Composite {
 
         // only reload qualifiers if different
         if ((this.validQualifiers.size() != currentItems.length) || !this.validQualifiers.containsAll(Arrays.asList(currentItems))) {
-            this.cbxQualifiers.setItems(this.validQualifiers.toArray(new String[this.validQualifiers.size()]));
+            String[] newQualifiers = this.validQualifiers.toArray(new String[this.validQualifiers.size()]);
+            Arrays.sort(newQualifiers);
+            this.cbxQualifiers.setItems(newQualifiers);
         }
 
         // select the current qualifier and set the name

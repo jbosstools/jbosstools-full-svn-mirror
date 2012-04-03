@@ -180,4 +180,4 @@
   - jcr:description (string)  
 
 [mix:language] mixin 
-  - jcr:language (string)
+  - jcr:language (string) 

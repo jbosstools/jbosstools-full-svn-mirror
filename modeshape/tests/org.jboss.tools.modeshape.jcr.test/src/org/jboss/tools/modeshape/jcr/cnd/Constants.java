@@ -16,6 +16,7 @@ import org.jboss.tools.modeshape.jcr.NamespaceMapping;
 import org.jboss.tools.modeshape.jcr.QualifiedName;
 import org.jboss.tools.modeshape.jcr.attributes.Abstract;
 import org.jboss.tools.modeshape.jcr.attributes.AttributeState;
+import org.jboss.tools.modeshape.jcr.attributes.AttributeState.Value;
 import org.jboss.tools.modeshape.jcr.attributes.Autocreated;
 import org.jboss.tools.modeshape.jcr.attributes.DefaultType;
 import org.jboss.tools.modeshape.jcr.attributes.DefaultValues;
@@ -29,12 +30,11 @@ import org.jboss.tools.modeshape.jcr.attributes.PrimaryItem;
 import org.jboss.tools.modeshape.jcr.attributes.PropertyValue;
 import org.jboss.tools.modeshape.jcr.attributes.Protected;
 import org.jboss.tools.modeshape.jcr.attributes.QueryOperators;
+import org.jboss.tools.modeshape.jcr.attributes.QueryOperators.QueryOperator;
 import org.jboss.tools.modeshape.jcr.attributes.RequiredTypes;
 import org.jboss.tools.modeshape.jcr.attributes.SameNameSiblings;
 import org.jboss.tools.modeshape.jcr.attributes.SuperTypes;
 import org.jboss.tools.modeshape.jcr.attributes.ValueConstraints;
-import org.jboss.tools.modeshape.jcr.attributes.AttributeState.Value;
-import org.jboss.tools.modeshape.jcr.attributes.QueryOperators.QueryOperator;
 import org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType;
 import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences.Preference;
 
@@ -309,5 +309,36 @@ public interface Constants {
             return new PropertyValue[] { new PropertyValue(PropertyType.STRING, ITEM_ONE),
                     new PropertyValue(PropertyType.STRING, ITEM_TWO), new PropertyValue(PropertyType.STRING, ITEM_THREE) };
         }
+    }
+
+    /**
+     * The built-in namespace mappings.
+     */
+    public interface BuiltInNamespaces {
+
+        /**
+         * Reserved for items defined within built-in node types.
+         */
+        NamespaceMapping JCR = new NamespaceMapping("jcr", "http://www.jcp.org/jcr/1.0"); //$NON-NLS-1$ //$NON-NLS-2$
+
+        /**
+         * Reserved for the names of built-in mixin node types.
+         */
+        NamespaceMapping MIX = new NamespaceMapping("mix", "http://www.jcp.org/jcr/mix/1.0"); //$NON-NLS-1$ //$NON-NLS-2$
+
+        /**
+         * Reserved for the names of built-in primary node types.
+         */
+        NamespaceMapping NT = new NamespaceMapping("nt", "http://www.jcp.org/jcr/nt/1.0"); //$NON-NLS-1$ //$NON-NLS-2$
+
+        /**
+         * Reserved for reasons of compatibility with XML.
+         */
+        NamespaceMapping XML = new NamespaceMapping("xml", "http://www.w3.org/XML/1998/namespace"); //$NON-NLS-1$ //$NON-NLS-2$
+
+        /**
+         * A collection of all built-in namespace mappings.
+         */
+        NamespaceMapping[] ALL_BUILT_INS = new NamespaceMapping[] { JCR, NT, MIX, XML };
     }
 }

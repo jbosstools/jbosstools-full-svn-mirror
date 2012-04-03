@@ -193,6 +193,12 @@ public final class Messages extends NLS {
     public static String invalidGetStateRequest;
 
     /**
+     * A message indicating a default value of a property definition with a NAME type has an invalid qualifier. Two parameters, the
+     * property definition name and the default value, are required.
+     */
+    public static String invalidQualifierForDefaultValue;
+
+    /**
      * A message indicating an invalid property valid was found. The parameters of invalid property value, property type, and
      * property definition name are required.
      */
@@ -208,6 +214,18 @@ public final class Messages extends NLS {
      * A message indicating an invalid URI was found. One parameter, the invalid URI, is required.
      */
     public static String invalidUri;
+
+    /**
+     * An error message indicating that the JSR built-ins CND could not be found in the workspace. One parameter, the path of the
+     * CND file, is required.
+     */
+    public static String jsrBuiltInsCndFileNotFound;
+
+    /**
+     * An error message indicating that the JSR built-ins CND could not be found in the filesystem. One parameter, the path of the
+     * CND file, is required.
+     */
+    public static String jsrBuiltInsCndFileNotFoundInFilesystem;
 
     /**
      * A message indicating a name equal to parent or self was found. One parameter, a string identifying the name, is required.
@@ -263,7 +281,7 @@ public final class Messages extends NLS {
      * A message used for the node type definition name property.
      */
     public static String nodeTypeDefinitionName;
-    
+
     /**
      * A message indicating a <code>null</code> was found. One parameter, a string identifying the object, is required.
      */

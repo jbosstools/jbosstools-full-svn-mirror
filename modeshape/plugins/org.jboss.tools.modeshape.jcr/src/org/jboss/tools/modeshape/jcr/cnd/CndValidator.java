@@ -97,7 +97,7 @@ public final class CndValidator {
                                                                         PropertyType.LONG));
                 }
             } else if (PropertyType.NAME == propertyType) {
-                return validateLocalName(value, propertyName);
+                return validateQualifiedName(QualifiedName.parse(value), propertyName, null, null);
             } else if (PropertyType.PATH == propertyType) {
                 return validatePath(value, propertyName);
             } else if (PropertyType.REFERENCE == propertyType) {
@@ -359,19 +359,23 @@ public final class CndValidator {
 
     /**
      * @param propertyDefinition the property definition whose default values are being validated (cannot be <code>null</code>)
+     * @param validNamespacePrefixes the valid namespace prefixes (can be <code>null</code> or empty)
      * @return the status (never <code>null</code>)
      */
-    public static MultiValidationStatus validateDefaultValues( final PropertyDefinition propertyDefinition ) {
+    public static MultiValidationStatus validateDefaultValues( final PropertyDefinition propertyDefinition,
+                                                               final Collection<String> validNamespacePrefixes ) {
         final MultiValidationStatus status = new MultiValidationStatus();
-        validateDefaultValues(propertyDefinition, status);
+        validateDefaultValues(propertyDefinition, validNamespacePrefixes, status);
         return status;
     }
 
     /**
      * @param propertyDefinition the property definition whose default values are being validated (cannot be <code>null</code>)
+     * @param validNamespacePrefixes the valid namespace prefixes (can be <code>null</code> or empty)
      * @param status the status to add the new status to (cannot be <code>null</code>)
      */
     public static void validateDefaultValues( final PropertyDefinition propertyDefinition,
+                                              final Collection<String> validNamespacePrefixes,
                                               final MultiValidationStatus status ) {
         Utils.verifyIsNotNull(propertyDefinition, "propertyDefinition"); //$NON-NLS-1$
         Utils.verifyIsNotNull(status, "status"); //$NON-NLS-1$
@@ -401,6 +405,27 @@ public final class CndValidator {
             for (final String defaultValue : defaultValues) {
                 // ERROR - Default value is not valid for the property definition type
                 isValid(defaultValue, propertyDefinition.getType(), Messages.defaultValue, status);
+
+                // make sure if NAME type the qualifier is valid
+                if (!Utils.isEmpty(validNamespacePrefixes) && propertyDefinition.getType() == PropertyType.NAME) {
+                    QualifiedName qname = QualifiedName.parse(defaultValue);
+                    String qualifier = qname.getQualifier();
+                    boolean valid = false;
+
+                    if (!Utils.isEmpty(qualifier)) {
+                        for (String validQualifier : validNamespacePrefixes) {
+                            if (validQualifier.equals(qualifier)) {
+                                valid = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (!valid) {
+                        status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.invalidQualifierForDefaultValue,
+                                                                                propertyName, defaultValue)));
+                    }
+                }
 
                 if (!Utils.isEmpty(defaultValue)) {
                     // ERROR - Duplicate default value
@@ -1068,7 +1093,7 @@ public final class CndValidator {
         }
 
         { // default values
-            validateDefaultValues(propertyDefinition, status);
+            validateDefaultValues(propertyDefinition, validNamespacePrefixes, status);
         }
 
         { // value constraints

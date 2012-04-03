@@ -89,14 +89,9 @@ public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTempl
     private final NodeTypeAttributes attributes;
 
     /**
-     * The collection of CND elements (can be <code>null</code>).
+     * The collection of property definitions and child node definitions (can be <code>null</code>).
      */
     private List<CndElement> cndElements;
-    //
-    // /**
-    // * The collection of child node definitions (can be <code>null</code>).
-    // */
-    // private List<ChildNodeDefinition> childNodesDefinitions;
 
     /**
      * The collection of property change listeners (never <code>null</code>).
@@ -107,11 +102,6 @@ public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTempl
      * The node type name (never <code>null</code> but can have a <code>null</code> or empty value).
      */
     private final QualifiedName name;
-    //
-    // /**
-    // * The collection of property definitions (can be <code>null</code>).
-    // */
-    // private List<PropertyDefinition> propertyDefinitions;
 
     /**
      * The super types (never <code>null</code>).
@@ -531,6 +521,42 @@ public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTempl
     }
 
     /**
+     * Inherited child node definitions are not checked.
+     * 
+     * @param name the child node definition name being searched for (cannot be <code>null</code> or empty)
+     * @return <code>true</code> if a child node definition with the specified name was found
+     */
+    public boolean hasDeclaredChildNodeDefinition( final String name ) {
+        Utils.verifyIsNotEmpty(name, "name"); //$NON-NLS-1$
+
+        for (final ChildNodeDefinition childNode : getChildNodeDefinitions()) {
+            if (name.equals(childNode.getName())) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Inherited property definitions are not checked.
+     * 
+     * @param name the property definition name being searched for (cannot be <code>null</code> or empty)
+     * @return <code>true</code> if a property definition with the specified name was found
+     */
+    public boolean hasDeclaredPropertyDefinition( final String name ) {
+        Utils.verifyIsNotEmpty(name, "name"); //$NON-NLS-1$
+
+        for (final PropertyDefinition prop : getPropertyDefinitions()) {
+            if (name.equals(prop.getName())) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * {@inheritDoc}
      * 
      * @see java.lang.Object#hashCode()
@@ -538,10 +564,8 @@ public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTempl
     @Override
     public int hashCode() {
         final int result1 = Utils.hashCode(this.name, this.attributes, this.superTypes);
-        final int result2 = Utils.hashCode(getChildNodeDefinitions().toArray());
-        final int result3 = Utils.hashCode(getPropertyDefinitions().toArray());
-
-        return Utils.hashCode(result1, result2, result3);
+        final int result2 = Utils.hashCode(getElements().toArray());
+        return Utils.hashCode(result1, result2);
     }
 
     /**
@@ -822,11 +846,12 @@ public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTempl
         }
 
         { // elements
-            final String elementStartDelimiter = CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ELEMENTS_START_DELIMITER);
-            final String elementDelimiter = CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ELEMENT_DELIMITER);
             final List<CndElement> elements = getElements();
 
             if (!Utils.isEmpty(elements)) {
+                final String elementStartDelimiter = CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ELEMENTS_START_DELIMITER);
+                final String elementDelimiter = CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ELEMENT_DELIMITER);
+
                 for (final CndElement element : elements) {
                     builder.append(elementStartDelimiter);
                     builder.append(element.toCndNotation(notationType));
@@ -900,5 +925,4 @@ public class NodeTypeDefinition implements CndElement, Comparable, NodeTypeTempl
             return (getClass().getName() + '.' + super.toString());
         }
     }
-
 }

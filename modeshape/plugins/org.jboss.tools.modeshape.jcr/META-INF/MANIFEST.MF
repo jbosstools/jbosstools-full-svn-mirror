@@ -8,7 +8,8 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
 Import-Package: org.eclipse.osgi.util
-Require-Bundle: org.jboss.tools.modeshape.client
+Require-Bundle: org.jboss.tools.modeshape.client,
+ org.eclipse.core.runtime
 Export-Package: org.jboss.tools.modeshape.jcr,
  org.jboss.tools.modeshape.jcr.attributes,
  org.jboss.tools.modeshape.jcr.cnd

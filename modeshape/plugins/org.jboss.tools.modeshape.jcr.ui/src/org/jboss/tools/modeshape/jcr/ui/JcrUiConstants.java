@@ -69,5 +69,10 @@ public interface JcrUiConstants {
          * The relative path from the plugin folder to the icon used for the CND editor.
          */
         String CND_EDITOR = ICONS_FOLDER + "cnd-editor-16x.png"; //$NON-NLS-1$
+
+        /**
+         * The relative path from the plugin folder to the icon used to show inherited properties and child nodes.
+         */
+        String SHOW_INHERITED = ICONS_FOLDER + "show-inherited-16x.gif"; //$NON-NLS-1$
     }
 }

@@ -98,6 +98,14 @@ public class CndValidatorTest {
     }
 
     @Test
+    public void defaultValueWithInvalidQualifierShouldBeAnError() {
+        assertTrue(this.propertyDefinition.setType(PropertyType.NAME));
+        assertTrue(this.propertyDefinition.addDefaultValue("bogus:value")); //$NON-NLS-1$
+        assertTrue(CndValidator.validateDefaultValues(this.propertyDefinition, Constants.Helper.getDefaultNamespacePrefixes())
+                               .isError());
+    }
+
+    @Test
     public void emptyNamespaceMappingPrefixShouldBeAnError() {
         assertTrue(CndValidator.validateNamespaceMapping(this.namespaceMapping).isError());
     }

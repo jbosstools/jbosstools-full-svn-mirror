@@ -16,6 +16,7 @@ import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -30,6 +31,7 @@ import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.jboss.tools.modeshape.jcr.MultiValidationStatus;
 import org.jboss.tools.modeshape.jcr.NamespaceMapping;
 import org.jboss.tools.modeshape.jcr.Utils;
+import org.jboss.tools.modeshape.jcr.WorkspaceRegistry;
 import org.jboss.tools.modeshape.jcr.cnd.CndValidator;
 import org.jboss.tools.modeshape.jcr.ui.Activator;
 import org.jboss.tools.modeshape.jcr.ui.JcrUiConstants;
@@ -55,7 +57,11 @@ final class NamespaceMappingDialog extends FormDialog {
 
     private String prefix;
 
+    private String saveUri = Utils.EMPTY_STRING;
+
     private ScrolledForm scrolledForm;
+
+    private Text txtUri;
 
     private String uri;
 
@@ -176,21 +182,21 @@ final class NamespaceMappingDialog extends FormDialog {
         }
 
         { // URI
-            final Label lblUri = toolkit.createLabel(body, CndMessages.nameLabel, SWT.NONE);
+            final Label lblUri = toolkit.createLabel(body, CndMessages.uriLabel, SWT.NONE);
             lblUri.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
 
-            final Text txtUri = toolkit.createText(body, null, Styles.TEXT_STYLE);
-            txtUri.setToolTipText(CndMessages.namespaceUriToolTip);
+            this.txtUri = toolkit.createText(body, null, Styles.TEXT_STYLE);
+            this.txtUri.setToolTipText(CndMessages.namespaceUriToolTip);
 
             final GridData gd = new GridData(SWT.FILL, SWT.CENTER, true, false);
             gd.verticalIndent += ((GridLayout)body.getLayout()).verticalSpacing;
-            txtUri.setLayoutData(gd);
+            this.txtUri.setLayoutData(gd);
 
             if (isEditMode()) {
-                txtUri.setText(this.namespaceBeingEdited.getUri());
+                this.txtUri.setText(this.namespaceBeingEdited.getUri());
             }
 
-            txtUri.addModifyListener(new ModifyListener() {
+            this.txtUri.addModifyListener(new ModifyListener() {
 
                 /**
                  * {@inheritDoc}
@@ -216,6 +222,20 @@ final class NamespaceMappingDialog extends FormDialog {
 
     void handlePrefixChanged( final String newPrefix ) {
         this.prefix = newPrefix;
+
+        try {
+            if (!Utils.isEmpty(this.prefix)) {
+                if (!Utils.isEmpty(this.saveUri) && WorkspaceRegistry.get().getUri(this.prefix) == null) {
+                    this.txtUri.setText(this.saveUri);
+                    this.saveUri = Utils.EMPTY_STRING;
+                } else {
+                    this.saveUri = this.txtUri.getText();
+                    this.txtUri.setText(WorkspaceRegistry.get().getUri(this.prefix));
+                }
+            }
+        } catch (final Exception e) {
+        }
+
         updateState();
     }
 
@@ -240,6 +260,11 @@ final class NamespaceMappingDialog extends FormDialog {
 
         if (!enable) {
             this.scrolledForm.setMessage(status.getMessage(), IMessageProvider.ERROR);
+            Point preferredSize = getShell().computeSize(SWT.DEFAULT, SWT.DEFAULT);
+
+            if (preferredSize.x > getShell().getSize().x) {
+                getShell().pack();
+            }
         } else if ((isEditMode() && currentNamespace.equals(this.namespaceBeingEdited))
                 || (!isEditMode() && Utils.isEmpty(this.prefix) && Utils.isEmpty(this.uri))) {
             enable = false;

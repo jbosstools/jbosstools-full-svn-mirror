@@ -20,6 +20,10 @@ import org.modeshape.common.util.HashCode;
 public final class Utils {
 
     /**
+     * The plug-in bundle's symbolic name.
+     */
+    public static final String PLUGIN_ID = Utils.class.getPackage().getName();
+    /**
      * And empty object array.
      */
     public static final Object[] EMPTY_OBJECT_ARRAY = new Object[0];

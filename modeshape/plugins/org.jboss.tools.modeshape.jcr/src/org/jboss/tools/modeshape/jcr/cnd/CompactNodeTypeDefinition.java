@@ -15,9 +15,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.jboss.tools.modeshape.jcr.ChildNodeDefinition;
 import org.jboss.tools.modeshape.jcr.NamespaceMapping;
 import org.jboss.tools.modeshape.jcr.NodeTypeDefinition;
+import org.jboss.tools.modeshape.jcr.PropertyDefinition;
+import org.jboss.tools.modeshape.jcr.QualifiedName;
 import org.jboss.tools.modeshape.jcr.Utils;
+import org.jboss.tools.modeshape.jcr.WorkspaceRegistry;
 import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences.Preference;
 
 /**
@@ -208,6 +212,43 @@ public class CompactNodeTypeDefinition implements CndElement {
         return true;
     }
 
+    /**
+     * The node type definition must exist in this CND for it to return child nodes.
+     * 
+     * @param nodeTypeDefinitionName the name of the node type definition whose child nodes are being requested (cannot be
+     *            <code>null</code> or empty)
+     * @param includeInherited indicates if inherited child nodes should be included
+     * @return the child nodes (never <code>null</code>)
+     * @throws Exception if there is a problem obtaining the inherited child node definitions
+     */
+    public Collection<ChildNodeDefinition> getChildNodeDefinitions( final String nodeTypeDefinitionName,
+                                                                    final boolean includeInherited ) throws Exception {
+        final NodeTypeDefinition nodeType = getNodeTypeDefinition(nodeTypeDefinitionName);
+
+        // if not found in CND return empty collection
+        if (nodeType == null) {
+            return Collections.emptyList();
+        }
+
+        // first add declared child nodes
+        final Collection<ChildNodeDefinition> childNodes = new ArrayList<ChildNodeDefinition>(nodeType.getChildNodeDefinitions());
+
+        // now add inherited child nodes
+        if (includeInherited) {
+            for (final QualifiedName superType : nodeType.getSupertypes()) {
+                final NodeTypeDefinition superTypeNodeType = getNodeTypeDefinition(superType.get());
+
+                if (superTypeNodeType == null) {
+                    childNodes.addAll(WorkspaceRegistry.get().getChildNodeDefinitions(nodeTypeDefinitionName, true));
+                } else {
+                    childNodes.addAll(getChildNodeDefinitions(superTypeNodeType.getName(), true));
+                }
+            }
+        }
+
+        return childNodes;
+    }
+
     private String getEndNamespaceMappingSectionDelimiter() {
         return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.NAMESPACE_MAPPING_SECTION_END_DELIMITER);
     }
@@ -250,6 +291,22 @@ public class CompactNodeTypeDefinition implements CndElement {
         return prefixes;
     }
 
+    /**
+     * @param name the name of the node type definition being requested (cannot be <code>null</code> or empty)
+     * @return the node type definition or <code>null</code> if not found
+     */
+    public NodeTypeDefinition getNodeTypeDefinition( final String name ) {
+        Utils.verifyIsNotEmpty(name, "name"); //$NON-NLS-1$
+
+        for (final NodeTypeDefinition ntd : getNodeTypeDefinitions()) {
+            if (name.equals(ntd.getName())) {
+                return ntd;
+            }
+        }
+
+        return null;
+    }
+
     private String getNodeTypeDefinitionDelimiter() {
         return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.NODE_TYPE_DEFINITION_DELIMITER);
     }
@@ -263,6 +320,43 @@ public class CompactNodeTypeDefinition implements CndElement {
         }
 
         return this.nodeTypeDefinitions;
+    }
+
+    /**
+     * The node type definition must exist in this CND for it to return properties.
+     * 
+     * @param nodeTypeDefinitionName the name of the node type definition whose properties are being requested (cannot be
+     *            <code>null</code> or empty)
+     * @param includeInherited indicates if inherited properties should be included
+     * @return the properties (never <code>null</code>)
+     * @throws Exception if there is a problem obtaining inherited property definitions
+     */
+    public Collection<PropertyDefinition> getPropertyDefinitions( final String nodeTypeDefinitionName,
+                                                                  final boolean includeInherited ) throws Exception {
+        final NodeTypeDefinition nodeType = getNodeTypeDefinition(nodeTypeDefinitionName);
+
+        // if not found in CND return empty collection
+        if (nodeType == null) {
+            return Collections.emptyList();
+        }
+
+        // first add declared properties
+        final Collection<PropertyDefinition> properties = new ArrayList<PropertyDefinition>(nodeType.getPropertyDefinitions());
+
+        // now add inherited properties
+        if (includeInherited) {
+            for (final QualifiedName superType : nodeType.getSupertypes()) {
+                final NodeTypeDefinition superTypeNodeType = getNodeTypeDefinition(superType.get());
+
+                if (superTypeNodeType == null) {
+                    properties.addAll(WorkspaceRegistry.get().getPropertyDefinitions(nodeTypeDefinitionName, true));
+                } else {
+                    properties.addAll(getPropertyDefinitions(superTypeNodeType.getName(), true));
+                }
+            }
+        }
+
+        return properties;
     }
 
     /**

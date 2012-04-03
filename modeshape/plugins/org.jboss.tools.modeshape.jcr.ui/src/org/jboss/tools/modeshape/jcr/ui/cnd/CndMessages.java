@@ -623,6 +623,11 @@ class CndMessages extends NLS {
     public static String editValueConstraintToolTip;
 
     /**
+     * A tool tip message for the "equals" query operator.
+     */
+    public static String equalsOperatorToolTip;
+
+    /**
      * An error message indicating the new child node definition was not added to the node type definition. One parameter, the child
      * definition name, is required.
      */
@@ -755,9 +760,35 @@ class CndMessages extends NLS {
     public static String errorEditingValueConstraint;
 
     /**
+     * The error message when there was a problem obtaining the node type definition's inherited properties and child nodes. One
+     * parameter, the node type definition name, is required.
+     */
+    public static String errorObtainingInheritedItemDefinitions;
+
+    /**
      * The error message when the CND editor could not be opened.
      */
     public static String errorOpeningCndEditor;
+
+    /**
+     * A tool tip message for the "greater than or equals to" query operator.
+     */
+    public static String greaterThanEqualsOperatorToolTip;
+
+    /**
+     * A tool tip message for the "greater than" query operator.
+     */
+    public static String greaterThanOperatorToolTip;
+
+    /**
+     * A tool tip message for the "less than or equals to" query operator.
+     */
+    public static String lessThanEqualsOperatorToolTip;
+
+    /**
+     * A tool tip message for the "less than" query operator.
+     */
+    public static String lessThanOperatorToolTip;
 
     /**
      * A name for the mandatory attribute suitable for a radio or check button.
@@ -915,6 +946,11 @@ class CndMessages extends NLS {
     public static String noQueryOrderAttributeToolTip;
 
     /**
+     * A tool tip message for the "not equals" query operator.
+     */
+    public static String notEqualsOperatorToolTip;
+
+    /**
      * A label for an on parent version attribute control.
      */
     public static String onParentVersionLabel;
@@ -1051,6 +1087,16 @@ class CndMessages extends NLS {
     public static String sameNamedSiblingsAttributeToolTip;
 
     /**
+     * A tool tip message for the show inherited child node action.
+     */
+    public static String showInheritedChildNodesToolTip;
+
+    /**
+     * A tool tip message for the show inherited properties action.
+     */
+    public static String showInheritedPropertiesToolTip;
+    
+    /**
      * A label for a supertypes control.
      */
     public static String supertypesLabel;
@@ -1074,6 +1120,11 @@ class CndMessages extends NLS {
      * A tooltip message for the control where the name of the qualified name is being edited.
      */
     public static String unqualifiedNameToolTip;
+
+    /**
+     * A label for a URI control.
+     */
+    public static String uriLabel;
 
     /**
      * A tooltip message for a control containing all the valid qualifed name qualifiers in a CND.

@@ -251,37 +251,6 @@ public class NamespaceMapping implements CndElement, Comparable {
     }
 
     /**
-     * The built-in namespace mappings.
-     */
-    public interface BuiltIns {
-
-        /**
-         * Reserved for items defined within built-in node types.
-         */
-        NamespaceMapping JCR = new NamespaceMapping("jcr", "http://www.jcp.org/jcr/1.0"); //$NON-NLS-1$ //$NON-NLS-2$
-
-        /**
-         * Reserved for the names of built-in mixin node types.
-         */
-        NamespaceMapping MIX = new NamespaceMapping("mix", "http://www.jcp.org/jcr/mix/1.0"); //$NON-NLS-1$ //$NON-NLS-2$
-
-        /**
-         * Reserved for the names of built-in primary node types.
-         */
-        NamespaceMapping NT = new NamespaceMapping("nt", "http://www.jcp.org/jcr/nt/1.0"); //$NON-NLS-1$ //$NON-NLS-2$
-
-        /**
-         * Reserved for reasons of compatibility with XML.
-         */
-        NamespaceMapping XML = new NamespaceMapping("xml", "http://www.w3.org/XML/1998/namespace"); //$NON-NLS-1$ //$NON-NLS-2$
-
-        /**
-         * A collection of all built-in namespace mappings.
-         */
-        NamespaceMapping[] ALL_BUILT_INS = new NamespaceMapping[] { JCR, NT, MIX, XML };
-    }
-
-    /**
      * The property names whose <code>toString()</code> is used in {@link PropertyChangeEvent}s.
      */
     public enum PropertyName {
