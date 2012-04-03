@@ -260,13 +260,13 @@
 							<goal>prepare-agent</goal>
 						</goals>
 						<configuration>
-							<!-- Where to put jacoco coverage report, basically in the tests/target folder
+							<!- Where to put jacoco coverage report, basically in the tests/target folder
 								for each component ->
 							<destFile>../target/jacoco.exec</destFile>
 							<includes>
 								<include>${coverage.filter}</include>
 							</includes>
-							<!-- Merge reports from all executions ->
+							<!- Merge reports from all executions ->
 							<append>true</append>
 						</configuration>
 					</execution>
