@@ -7,7 +7,6 @@
  */
 package org.jboss.tools.modeshape.jcr.ui;
 
-
 /**
  * Constants used within the <code>org.jboss.tools.modeshape.jcr.ui</code> plug-in.
  */
@@ -69,6 +68,12 @@ public interface JcrUiConstants {
          * The relative path from the plugin folder to the icon used for the CND editor.
          */
         String CND_EDITOR = ICONS_FOLDER + "cnd-editor-16x.png"; //$NON-NLS-1$
+
+        /**
+         * The relative path from the plugin folder to the icon used to select the declaring node type definition of an inherited
+         * property definition or child node definition.
+         */
+        String OPEN_DECLARING_NODE_TYPE = ICONS_FOLDER + "open-declaring-node-type-16x.gif"; //$NON-NLS-1$
 
         /**
          * The relative path from the plugin folder to the icon used to show inherited properties and child nodes.

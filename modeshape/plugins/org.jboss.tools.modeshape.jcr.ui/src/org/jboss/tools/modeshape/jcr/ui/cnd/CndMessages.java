@@ -971,6 +971,16 @@ class CndMessages extends NLS {
     public static String onParentVersionToolTip;
 
     /**
+     * The context menu item text for the open declaring node type action.
+     */
+    public static String openDeclaringNodeTypeMenuText;
+    
+    /**
+     * A tool tip message of the open declaring node type action.
+     */
+    public static String openDeclaringNodeTypeToolTip;
+    
+    /**
      * A name for the orderable attribute suitable for a radio or check button.
      */
     public static String orderableAttribute;
