@@ -176,7 +176,7 @@
 					<useUIHarness>true</useUIHarness>
 					<useUIThread>true</useUIThread>
 					<!-- THE FOLLOWING LINE MUST NOT BE BROKEN BY AUTOFORMATTING -->
-					<appArgLine>${memoryOptions1} ${memoryOptions2} ${systemProperties} -Dusage_reporting_enabled=false</appArgLine>
+					<argLine>${memoryOptions1} ${memoryOptions2} ${systemProperties} -Dusage_reporting_enabled=false</argLine>
 					<!-- https://docs.sonatype.org/display/TYCHO/How+to+run+SWTBot+tests+with+Tycho -->
 					<!-- set useUIThread=true for regular ui tests -->
 					<!-- set useUIThread=false for swtbot tests (?) -->
