@@ -10,4 +10,16 @@
 	<groupId>org.jboss.tools.gwt.tests</groupId>
 	<artifactId>org.jboss.tools.gwt.tests</artifactId>
 	<packaging>eclipse-test-plugin</packaging>
+	
+		<build>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-surefire-plugin</artifactId>
+				<configuration>
+					<product>org.jboss.tools.gwt.tests.product</product>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

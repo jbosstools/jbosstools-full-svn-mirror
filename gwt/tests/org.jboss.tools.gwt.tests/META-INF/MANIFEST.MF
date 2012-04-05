@@ -1,11 +1,12 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Tests for GWT integration
-Bundle-SymbolicName: org.jboss.tools.gwt.tests
+Bundle-SymbolicName: org.jboss.tools.gwt.tests;singleton:=true
 Bundle-Version: 1.0.2.qualifier
 Bundle-Vendor: JBoss by Red Hat
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.junit;bundle-version="4.8.2",
  org.eclipse.core.runtime;bundle-version="3.7.0",
  org.jboss.tools.gwt.core;bundle-version="1.0.0",
- org.jboss.tools.gwt.ui;bundle-version="1.0.0"
+ org.jboss.tools.gwt.ui;bundle-version="1.0.0",
+ org.eclipse.ui.ide.application;bundle-version="1.0.300"
