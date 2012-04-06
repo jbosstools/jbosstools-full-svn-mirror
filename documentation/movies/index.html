@@ -1,0 +1,77 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+ <link rel="stylesheet" href="css/movies.css" type="text/css"/>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+
+<script type="text/javascript">
+  $(document).ready(function() {
+  
+ $('.videocontrol').click(function(e) {
+   e.preventDefault(); //prevent href from actually loading
+   var href = $(this).attr('href');
+   $('#player').load(href, function() {
+         $('iframe').attr('src', href);
+    });
+
+    return;
+  });
+})
+</script>
+
+</head>
+
+<body>
+
+<div class="book">
+
+<h1><img
+  src="images/community/jbosstools_horiz_450.png"/></h1>
+  <h2 align="center">Video Tutorials</h2>
+  
+<div id="player">
+  <center>
+    <iframe src="http://player.vimeo.com/video/39743315?portrait=0"
+  width="480" height="324" frameborder="0" webkitAllowFullScreen
+  mozallowfullscreen allowFullScreen></iframe>
+  </center>
+</div>
+
+<br/>
+<div id="directory">
+  <h2>Installation</h2>
+
+  <ul class="multicolumns"> 
+    <li class="videoListItem"><a class="videocontrol" href="http://player.vimeo.com/video/39743315?portrait=0">Eclipse Marketplace</a> </li>
+    <li class="videoListItem"> <a class="videocontrol" href="http://player.vimeo.com/video/39606090?portrait=0">Developer Studio</a></li>
+  </ul>
+
+  <h2>Technology Introductions</h2>
+
+   <ul class="multicolumns">
+    <li class="videoListItem"> <a class="videocontrol" href="http://player.vimeo.com/video/39607154?portrait=0">Java EE 6 + Arquillian</a></li>
+    <li class="videoListItem"> <a class="videocontrol" href="http://player.vimeo.com/video/39607711?portrait=0">Richfaces 4 Desktop & Mobile</a></li>
+    <li class="videoListItem"> <a class="videocontrol" href="http://player.vimeo.com/video/39608223?portrait=0">Forge</a></li>
+   <li class="videoListItem"> <a class="videocontrol" href="http://player.vimeo.com/video/39743919?portrait=0">Google Web Toolkit</a></li>
+  </ul>
+
+  <h2>Reverse Engineering/CRUD Generation</h2>
+
+   <ul class="multicolumns">
+    <li class="videoListItem"> <a class="videocontrol" href="http://player.vimeo.com/video/39608294?portrait=0">Hibernate Tools Reverse Engineering</a></li>
+    <li class="videoListItem"> <a class="videocontrol" href="http://player.vimeo.com/video/39608326?portrait=0">Forge Reverse Engineering</a></li>
+  </h2>
+    
+</div>
+<div>
+
+  <br/><br/>
+<p>Looking for a different video ? Try look in our <a
+  href="../archive/movies">archive</a></p>
+  </div>
+</div>
+</body>
+</html>
