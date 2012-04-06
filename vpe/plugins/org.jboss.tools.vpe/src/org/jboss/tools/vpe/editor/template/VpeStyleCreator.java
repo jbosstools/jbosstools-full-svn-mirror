@@ -46,7 +46,7 @@ public class VpeStyleCreator extends VpeAbstractCreator {
 			text = VpeStyleUtil.removeAllCssComments(text);
 			List<String> imports = VpeStyleUtil.findCssImportConstruction(text, pageContext);
 			VpeVisualDomBuilder vvdb = pageContext.getVisualBuilder();
-			if (imports.size() > 0) {
+			if (!imports.isEmpty()) {
 				for (String key : imports) {
 					/*
 					 * Add inline <style> element for each found css @import.

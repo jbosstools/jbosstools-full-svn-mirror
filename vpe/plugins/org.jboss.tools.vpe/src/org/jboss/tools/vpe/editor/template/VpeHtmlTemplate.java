@@ -564,7 +564,7 @@ public class VpeHtmlTemplate extends VpeAbstractTemplate {
 	@Override
 	public IRegion getSourceRegionForOpenOn(VpePageContext pageContext,
 			Node sourceNode, nsIDOMNode domNode) {
-		if(sourceNode != null && sourceNode instanceof Element) {
+		if(sourceNode instanceof Element) {
 			Element sourceElement = (Element) sourceNode;
 		    String templateName = VpeTemplateManager.getInstance()
 		    		.getTemplateName(pageContext, sourceElement);

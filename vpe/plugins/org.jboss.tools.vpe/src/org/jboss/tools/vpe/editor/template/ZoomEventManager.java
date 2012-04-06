@@ -27,13 +27,13 @@ import org.mozilla.interfaces.nsIWebNavigation;
 
 public class ZoomEventManager implements IZoomEventManager{
 
-	private final float basicZoom = 1f;
-	private final float minZoom = 0.3f;
-	private final float maxZoom = 4f;
+	private static final float basicZoom = 1f;
+	private static final float minZoom = 0.3f;
+	private static final float maxZoom = 4f;
 	private float[] availableZoomValues;
 	private int currentZoomPos = 5;
-	private final float decreaseValue = 0.14f;
-	private final float increaseValue = 0.375f;
+	private static final float decreaseValue = 0.14f;
+	private static final float increaseValue = 0.375f;
 	private nsIMarkupDocumentViewer documentViewer;
 
 	public ZoomEventManager(XulRunnerEditor editor) {

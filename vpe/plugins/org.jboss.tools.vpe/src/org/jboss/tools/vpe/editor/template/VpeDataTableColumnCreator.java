@@ -202,7 +202,7 @@ public class VpeDataTableColumnCreator extends VpeAbstractCreator {
 	@Override
 	public void removeElement(VpePageContext pageContext, Element sourceElement, Map visualNodeMap) {
 		Object elements = visualNodeMap.get(this);
-		if (elements != null && elements instanceof VisualColumnElements) {
+		if (elements instanceof VisualColumnElements) {
 			removeChild(((VisualColumnElements)elements).getHeaderCell());
 			removeChild(((VisualColumnElements)elements).getBodyCell());
 			removeChild(((VisualColumnElements)elements).getFooterCell());
