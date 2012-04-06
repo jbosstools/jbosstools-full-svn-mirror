@@ -73,12 +73,7 @@ public abstract class VpeAbstractBodyTemplate extends VpeAbstractTemplate {
 						 */
 						div.setAttribute(targetAttributeName, attributeValue);
 					}
-					//FIX FOR JBIDE-1568, added by Max Areshkau
-					try {
-						body.setAttribute(targetAttributeName, attributeValue);
-					} catch(XPCOMException ex ) {
-						// Ignored
-					}
+					body.setAttribute(targetAttributeName, attributeValue);
 				}
 			}
 		}
