@@ -28,8 +28,6 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
-import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
 import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IMessageProvider;
@@ -75,8 +73,8 @@ import org.jboss.tools.modeshape.ui.forms.MessageSummaryDialog;
 /**
  * 
  */
-public final class CndEditor extends SharedHeaderFormEditor implements IPersistableEditor, IPreferenceChangeListener,
-        IResourceChangeListener, PropertyChangeListener {
+public final class CndEditor extends SharedHeaderFormEditor implements IPersistableEditor, IResourceChangeListener,
+        PropertyChangeListener {
 
     private CompactNodeTypeDefinition cndBeingEdited;
 
@@ -99,7 +97,6 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
      */
     public CndEditor() {
         this.formsPage = new CndFormsEditorPage(this);
-        JcrPreferenceStore.addPreferenceChangeListener(this);
     }
 
     /**
@@ -271,7 +268,6 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
     @Override
     public void dispose() {
         ResourcesPlugin.getWorkspace().removeResourceChangeListener(this);
-        JcrPreferenceStore.removePreferenceChangeListener(this);
         super.dispose();
     }
 
@@ -506,20 +502,6 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
     boolean isSynchronized() {
         final long currentModifiedStamp = this.documentProvider.getModificationStamp(getEditorInput());
         return (this.modificationStamp == currentModifiedStamp);
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener#preferenceChange(org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent)
-     */
-    @Override
-    public void preferenceChange( final PreferenceChangeEvent event ) {
-        try {
-            saveDocument(getEditorInput(), getProgressMonitor());
-        } catch (final Exception e) {
-            Activator.getSharedInstance().getLog().log(new Status(IStatus.ERROR, JcrUiConstants.PLUGIN_ID, null, e));
-        }
     }
 
     /**
