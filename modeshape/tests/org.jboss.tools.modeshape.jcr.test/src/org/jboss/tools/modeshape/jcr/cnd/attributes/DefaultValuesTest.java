@@ -79,8 +79,8 @@ public class DefaultValuesTest implements Constants {
         add(ITEM_THREE);
 
         // tests
-        assertEquals(DEFAULT_VALUES_THREE_ITEM_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPACT));
-        assertEquals(DEFAULT_VALUES_THREE_ITEM_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPRESSED));
+        assertEquals(DEFAULT_VALUES_THREE_ITEM_SHORT_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPACT));
+        assertEquals(DEFAULT_VALUES_THREE_ITEM_SHORT_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPRESSED));
         assertEquals(DEFAULT_VALUES_THREE_ITEM_FORM, this.attribute.toCndNotation(CndElement.NotationType.LONG));
     }
 
@@ -90,8 +90,8 @@ public class DefaultValuesTest implements Constants {
         add(ITEM_ONE);
 
         // tests
-        assertEquals(DEFAULT_VALUES_ONE_ITEM_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPACT));
-        assertEquals(DEFAULT_VALUES_ONE_ITEM_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPRESSED));
+        assertEquals(DEFAULT_VALUES_ONE_ITEM_SHORT_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPACT));
+        assertEquals(DEFAULT_VALUES_ONE_ITEM_SHORT_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPRESSED));
         assertEquals(DEFAULT_VALUES_ONE_ITEM_FORM, this.attribute.toCndNotation(CndElement.NotationType.LONG));
     }
 
@@ -145,8 +145,8 @@ public class DefaultValuesTest implements Constants {
         this.attribute.set(AttributeState.Value.VARIANT);
 
         // tests
-        assertEquals(DEFAULT_VALUES_VARIANT, this.attribute.toCndNotation(CndElement.NotationType.COMPACT));
-        assertEquals(DEFAULT_VALUES_VARIANT, this.attribute.toCndNotation(CndElement.NotationType.COMPRESSED));
+        assertEquals(DEFAULT_VALUES_SHORT_VARIANT, this.attribute.toCndNotation(CndElement.NotationType.COMPACT));
+        assertEquals(DEFAULT_VALUES_SHORT_VARIANT, this.attribute.toCndNotation(CndElement.NotationType.COMPRESSED));
         assertEquals(DEFAULT_VALUES_VARIANT, this.attribute.toCndNotation(CndElement.NotationType.LONG));
     }
 

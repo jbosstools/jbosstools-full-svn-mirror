@@ -467,6 +467,16 @@ public class CndImporterTest {
     }
 
     @Test
+    public void shouldParseEmptyNodeType() {
+        final String content = "[]"; //$NON-NLS-1$
+        this.cnd = this.importer.importFrom(content, this.problems, "string"); //$NON-NLS-1$
+
+        if (!this.problems.isEmpty()) {
+            printProblems();
+        }
+    }
+
+    @Test
     public void shouldImportCndThatUsesAllFeatures() throws RepositoryException {
         // this.importer.setDebug(true);
         final String content = "<ex = 'http://namespace.com/ns'>\n" //$NON-NLS-1$
@@ -902,18 +912,6 @@ public class CndImporterTest {
 
         final NodeTypeDefinition nodeTypeDefn = nodeTypeDefns.iterator().next();
         assertEquals("abstract", nodeTypeDefn.getName()); //$NON-NLS-1$
-    }
-
-    @Test(expected = ParsingException.class)
-    public void shouldReportErrorIfTheNodeTypeNameIsBlank() {
-        final String content = "<ns = 'http://namespace.com/ns'> [ ] abstract"; //$NON-NLS-1$
-        this.importer.parse(content);
-    }
-
-    @Test(expected = ParsingException.class)
-    public void shouldReportErrorIfTheNodeTypeNameIsEmpty() {
-        final String content = "<ns = 'http://namespace.com/ns'> [] abstract"; //$NON-NLS-1$
-        this.importer.parse(content);
     }
 
     @Test(expected = ParsingException.class)

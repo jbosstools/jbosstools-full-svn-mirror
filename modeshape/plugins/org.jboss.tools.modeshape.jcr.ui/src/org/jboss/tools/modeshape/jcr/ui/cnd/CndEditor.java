@@ -28,6 +28,8 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
 import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IMessageProvider;
@@ -61,6 +63,8 @@ import org.eclipse.ui.part.FileEditorInput;
 import org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType;
 import org.jboss.tools.modeshape.jcr.cnd.CndImporter;
 import org.jboss.tools.modeshape.jcr.cnd.CompactNodeTypeDefinition;
+import org.jboss.tools.modeshape.jcr.preference.JcrPreferenceConstants;
+import org.jboss.tools.modeshape.jcr.preference.JcrPreferenceStore;
 import org.jboss.tools.modeshape.jcr.ui.Activator;
 import org.jboss.tools.modeshape.jcr.ui.JcrUiConstants;
 import org.jboss.tools.modeshape.jcr.ui.JcrUiConstants.Images;
@@ -71,8 +75,8 @@ import org.jboss.tools.modeshape.ui.forms.MessageSummaryDialog;
 /**
  * 
  */
-public final class CndEditor extends SharedHeaderFormEditor implements IPersistableEditor, IResourceChangeListener,
-        PropertyChangeListener {
+public final class CndEditor extends SharedHeaderFormEditor implements IPersistableEditor, IPreferenceChangeListener,
+        IResourceChangeListener, PropertyChangeListener {
 
     private CompactNodeTypeDefinition cndBeingEdited;
 
@@ -95,6 +99,7 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
      */
     public CndEditor() {
         this.formsPage = new CndFormsEditorPage(this);
+        JcrPreferenceStore.addPreferenceChangeListener(this);
     }
 
     /**
@@ -168,33 +173,6 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
         }
     }
 
-    private void createCnd() throws Exception {
-        final CndImporter importer = new CndImporter();
-        final List<Throwable> errors = new ArrayList<Throwable>();
-        this.originalCnd = importer.importFrom(getFile().getContents(), errors, getFile().getName());
-
-        // check for parse errors
-        if (!errors.isEmpty()) {
-            final Throwable t = errors.iterator().next();
-
-            if (t.getCause() == null) {
-                throw new RuntimeException(t);
-            }
-
-            throw new RuntimeException(t.getCause());
-        }
-
-        // unhook lstening to current CND being edited
-        if (this.cndBeingEdited != null) {
-            this.cndBeingEdited.removeListener(this);
-        }
-
-        // copy over CND
-        this.cndBeingEdited = CompactNodeTypeDefinition.copy(this.originalCnd);
-        this.cndBeingEdited.addListener(this);
-        this.formsPage.handleCndReloaded();
-    }
-
     //
     // private void contributeToMenu( IMenuManager menuMgr ) {
     // menuMgr.add(this.updateRegisteryAction);
@@ -225,6 +203,33 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
     //
     // this.showRegistryViewAction = new ShowModelExtensionRegistryViewAction();
     // }
+
+    private void createCnd() throws Exception {
+        final CndImporter importer = new CndImporter();
+        final List<Throwable> errors = new ArrayList<Throwable>();
+        this.originalCnd = importer.importFrom(getFile().getContents(), errors, getFile().getName());
+
+        // check for parse errors
+        if (!errors.isEmpty()) {
+            final Throwable t = errors.iterator().next();
+
+            if (t.getCause() == null) {
+                throw new RuntimeException(t);
+            }
+
+            throw new RuntimeException(t.getCause());
+        }
+
+        // unhook lstening to current CND being edited
+        if (this.cndBeingEdited != null) {
+            this.cndBeingEdited.removeListener(this);
+        }
+
+        // copy over CND
+        this.cndBeingEdited = CompactNodeTypeDefinition.copy(this.originalCnd);
+        this.cndBeingEdited.addListener(this);
+        this.formsPage.handleCndReloaded();
+    }
 
     /**
      * {@inheritDoc}
@@ -266,6 +271,7 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
     @Override
     public void dispose() {
         ResourcesPlugin.getWorkspace().removeResourceChangeListener(this);
+        JcrPreferenceStore.removePreferenceChangeListener(this);
         super.dispose();
     }
 
@@ -353,6 +359,11 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
         return this.scrolledForm.getMessageManager();
     }
 
+    private NotationType getNotationTypePreference() {
+        final String notationTypeString = JcrPreferenceStore.get().get(JcrPreferenceConstants.CndPreference.NOTATION_TYPE);
+        return NotationType.valueOf(notationTypeString);
+    }
+
     private IProgressMonitor getProgressMonitor() {
         final IStatusLineManager statusLineMgr = getEditorSite().getActionBars().getStatusLineManager();
         return ((statusLineMgr == null) ? null : statusLineMgr.getProgressMonitor());
@@ -437,12 +448,8 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
         final IEditorInput input = getEditorInput();
 
         try {
-            final IDocument document = this.documentProvider.getDocument(input);
-            document.set(getCnd().toCndNotation(NotationType.LONG)); // TODO hook this to notation type preference
-
-            this.documentProvider.aboutToChange(input);
-            this.documentProvider.saveDocument(progressMonitor, input, document, true);
-            this.modificationStamp = this.documentProvider.getModificationStamp(input);
+            // create the new text document
+            saveDocument(input, progressMonitor);
 
             // create new original CND that that will then be copied over to the CND being edited
             createCnd();
@@ -504,6 +511,20 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
     /**
      * {@inheritDoc}
      * 
+     * @see org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener#preferenceChange(org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent)
+     */
+    @Override
+    public void preferenceChange( final PreferenceChangeEvent event ) {
+        try {
+            saveDocument(getEditorInput(), getProgressMonitor());
+        } catch (final Exception e) {
+            Activator.getSharedInstance().getLog().log(new Status(IStatus.ERROR, JcrUiConstants.PLUGIN_ID, null, e));
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
      * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
      */
     @Override
@@ -524,10 +545,8 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
                     this.modificationStamp = this.documentProvider.getModificationStamp(getEditorInput());
 
                     createCnd();
-
-                    // this.formsPage.handleCndReloaded();
                 } catch (final Exception e) {
-                    // TODO log this
+                    Activator.getSharedInstance().getLog().log(new Status(IStatus.ERROR, JcrUiConstants.PLUGIN_ID, null, e));
                     MessageFormDialog.openError(getShell(), CndMessages.cndEditorRefreshErrorTitle,
                                                 Activator.getSharedInstance().getImage(Images.CND_EDITOR),
                                                 CndMessages.cndEditorRefreshErrorMsg);
@@ -635,7 +654,7 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
                     }
                 });
             } catch (final Exception e) {
-                // TODO log this
+                Activator.getSharedInstance().getLog().log(new Status(IStatus.ERROR, JcrUiConstants.PLUGIN_ID, null, e));
             }
         }
     }
@@ -649,6 +668,15 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
     public void restoreState( final IMemento memento ) {
         this.memento = memento;
         this.formsPage.restoreState(this.memento);
+    }
+
+    private void saveDocument( final IEditorInput input,
+                               final IProgressMonitor progressMonitor ) throws Exception {
+        final IDocument document = this.documentProvider.getDocument(input);
+        document.set(getCnd().toCndNotation(getNotationTypePreference()));
+        this.documentProvider.aboutToChange(input);
+        this.documentProvider.saveDocument(progressMonitor, input, document, true);
+        this.modificationStamp = this.documentProvider.getModificationStamp(input);
     }
 
     /**

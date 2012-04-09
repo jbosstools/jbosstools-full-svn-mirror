@@ -14,12 +14,14 @@ import javax.jcr.PropertyType;
 
 import org.jboss.tools.modeshape.jcr.NamespaceMapping;
 import org.jboss.tools.modeshape.jcr.QualifiedName;
+import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.attributes.Abstract;
 import org.jboss.tools.modeshape.jcr.attributes.AttributeState;
 import org.jboss.tools.modeshape.jcr.attributes.AttributeState.Value;
 import org.jboss.tools.modeshape.jcr.attributes.Autocreated;
 import org.jboss.tools.modeshape.jcr.attributes.DefaultType;
 import org.jboss.tools.modeshape.jcr.attributes.DefaultValues;
+import org.jboss.tools.modeshape.jcr.attributes.ListAttributeState;
 import org.jboss.tools.modeshape.jcr.attributes.Mandatory;
 import org.jboss.tools.modeshape.jcr.attributes.Mixin;
 import org.jboss.tools.modeshape.jcr.attributes.Multiple;
@@ -36,12 +38,43 @@ import org.jboss.tools.modeshape.jcr.attributes.SameNameSiblings;
 import org.jboss.tools.modeshape.jcr.attributes.SuperTypes;
 import org.jboss.tools.modeshape.jcr.attributes.ValueConstraints;
 import org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType;
-import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences.Preference;
+import org.jboss.tools.modeshape.jcr.preference.JcrPreferenceConstants.CndPreference;
+import org.jboss.tools.modeshape.jcr.preference.JcrPreferenceStore;
 
 /**
  * 
  */
 public interface Constants {
+
+    JcrPreferenceStore prefStore = JcrPreferenceStore.get();
+
+    interface Preferences {
+        //        String ATTRIBUTE_LIST_ELEMENT_DELIMITER = ", "; //$NON-NLS-1$
+        // String ATTRIBUTE_LIST_ITEM_QUOTE_CHAR = Utils.EMPTY_STRING;
+        String CHILD_NODE_DEFINITION_END_PREFIX_DELIMITER = " "; //$NON-NLS-1$
+        String CHILD_NODE_PROPERTY_DELIMITER = Utils.SPACE_STRING;
+        String DEFAULT_VALUES_END_PREFIX_DELIMITER = Utils.SPACE_STRING;
+        String DEFAULT_VALUES_QUOTE_CHARACTER = "'"; //$NON-NLS-1$
+        String DEFAULT_TYPE_END_PREFIX_DELIMITER = Utils.SPACE_STRING;
+        String ATTRIBUTE_LIST_PREFIX_END_DELIMITER = Utils.SPACE_STRING;
+        // String ATTRIBUTE_LIST_QUOTE_CHAR = Utils.EMPTY_STRING;
+        String ELEMENT_DELIMITER = "\n"; //$NON-NLS-1$
+        String ELEMENTS_END_DELIMITER = Utils.EMPTY_STRING;
+        String ELEMENTS_START_DELIMITER = "\t"; //$NON-NLS-1$
+        String NAMESPACE_MAPPING_DELIMITER = "\n"; //$NON-NLS-1$
+        String NAMESPACE_MAPPING_SECTION_END_DELIMITER = "\n"; //$NON-NLS-1$
+        String CHILD_NODE_ATTRIBUTES_DELIMITER = Utils.SPACE_STRING;
+        String NODE_TYPE_DEFINITION_ATTRIBUTES_DELIMITER = Utils.SPACE_STRING;
+        String NODE_TYPE_DEFINITION_ATTRIBUTES_END_DELIMITER = "\n"; //$NON-NLS-1$
+        String NODE_TYPE_DEFINITION_DELIMITER = "\n"; //$NON-NLS-1$
+        String NODE_TYPE_DEFINITION_NAME_END_DELIMITER = Utils.SPACE_STRING;
+        String NODE_TYPE_DEFINITION_SECTION_END_DELIMITER = "\n"; //$NON-NLS-1$
+        String PROPERTY_DEFINITION_ATTRIBUTES_DELIMITER = Utils.SPACE_STRING;
+        String PROPERTY_DEFINITION_END_PREFIX_DELIMITER = Utils.SPACE_STRING;
+        String REQUIRED_TYPES_END_PREFIX_DELIMITER = Utils.EMPTY_STRING;
+        String SUPER_TYPES_END_DELIMITER = Utils.SPACE_STRING;
+        //        String VALUE_CONSTRAINTS_ITEM_QUOTE_CHARACTER = "'"; //$NON-NLS-1$
+    }
 
     String NAMESPACE_PREFIX1 = "NAMESPACE_PREFIX1"; //$NON-NLS-1$
     String NAMESPACE_PREFIX2 = "NAMESPACE_PREFIX2"; //$NON-NLS-1$
@@ -85,11 +118,11 @@ public interface Constants {
     String AUTOCREATED_VARIANT_COMPRESSED_FORM = Autocreated.NOTATION[NotationType.COMPRESSED_INDEX] + VARIANT;
     String AUTOCREATED_VARIANT_LONG_FORM = Autocreated.NOTATION[NotationType.LONG_INDEX] + VARIANT;
 
-    String DEFAULT_TYPE_VARIANT_FORM = DefaultType.NOTATION
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.DEFAULT_TYPE_END_PREFIX_DELIMITER) + VARIANT;
+    String DEFAULT_TYPE_VARIANT_FORM = DefaultType.NOTATION + Preferences.DEFAULT_TYPE_END_PREFIX_DELIMITER + VARIANT;
+    String DEFAULT_TYPE_VARIANT_SHORT_FORM = DefaultType.NOTATION + VARIANT;
     String DEFAULT_TYPE = "jcr:data"; //$NON-NLS-1$
-    String DEFAULT_TYPE_TYPE_FORM = DefaultType.NOTATION
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.DEFAULT_TYPE_END_PREFIX_DELIMITER) + DEFAULT_TYPE;
+    String DEFAULT_TYPE_TYPE_FORM = DefaultType.NOTATION + Preferences.DEFAULT_TYPE_END_PREFIX_DELIMITER + DEFAULT_TYPE;
+    String DEFAULT_TYPE_TYPE_SHORT_FORM = DefaultType.NOTATION + DEFAULT_TYPE;
 
     String MANDATORY_VARIANT_COMPACT_FORM = Mandatory.NOTATION[NotationType.COMPACT_INDEX] + VARIANT;
     String MANDATORY_VARIANT_COMPRESSED_FORM = Mandatory.NOTATION[NotationType.COMPRESSED_INDEX] + VARIANT;
@@ -127,12 +160,9 @@ public interface Constants {
     String PROTECTED_VARIANT_COMPRESSED_FORM = Protected.NOTATION[NotationType.COMPRESSED_INDEX] + VARIANT;
     String PROTECTED_VARIANT_LONG_FORM = Protected.NOTATION[NotationType.LONG_INDEX] + VARIANT;
 
-    String QUERY_OPS_COMPACT_FORM = QueryOperators.NOTATION[NotationType.COMPACT_INDEX]
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_PREFIX_END_DELIMITER);
-    String QUERY_OPS_COMPRESSED_FORM = QueryOperators.NOTATION[NotationType.COMPRESSED_INDEX]
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_PREFIX_END_DELIMITER);
-    String QUERY_OPS_LONG_FORM = QueryOperators.NOTATION[NotationType.LONG_INDEX]
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_PREFIX_END_DELIMITER);
+    String QUERY_OPS_COMPACT_FORM = QueryOperators.NOTATION[NotationType.COMPACT_INDEX] + Utils.SPACE_STRING;
+    String QUERY_OPS_COMPRESSED_FORM = QueryOperators.NOTATION[NotationType.COMPRESSED_INDEX] + Utils.SPACE_STRING;
+    String QUERY_OPS_LONG_FORM = QueryOperators.NOTATION[NotationType.LONG_INDEX] + Utils.SPACE_STRING;
     String QUERY_OPS_VARIANT_COMPACT_FORM = QUERY_OPS_COMPACT_FORM + VARIANT;
     String QUERY_OPS_VARIANT_COMPRESSED_FORM = QUERY_OPS_COMPRESSED_FORM + VARIANT;
     String QUERY_OPS_VARIANT_LONG_FORM = QUERY_OPS_LONG_FORM + VARIANT;
@@ -142,42 +172,26 @@ public interface Constants {
     QueryOperator OPERATOR_THREE = QueryOperator.LESS_THAN;
     QueryOperator[] DEFAULT_OPERATORS = new QueryOperator[] { OPERATOR_ONE, OPERATOR_TWO, OPERATOR_THREE };
 
-    String QUERY_OPS_ONE_OPERATOR_COMPACT_FORM = QUERY_OPS_COMPACT_FORM
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ITEM_QUOTE_CHAR)
-            + OPERATOR_ONE.toCndNotation(NotationType.COMPACT)
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ITEM_QUOTE_CHAR);
-    String QUERY_OPS_ONE_OPERATOR_COMPRESSED_FORM = QUERY_OPS_COMPRESSED_FORM
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ITEM_QUOTE_CHAR)
+    String QUERY_OPS_ONE_OPERATOR_COMPACT_FORM = QUERY_OPS_COMPACT_FORM + Utils.SINGLE_QUOTE
+            + OPERATOR_ONE.toCndNotation(NotationType.COMPACT) + Utils.SINGLE_QUOTE;
+    String QUERY_OPS_ONE_OPERATOR_COMPRESSED_FORM = QUERY_OPS_COMPRESSED_FORM + Utils.SINGLE_QUOTE
+            + OPERATOR_ONE.toCndNotation(NotationType.COMPRESSED) + Utils.SINGLE_QUOTE;
+    String QUERY_OPS_ONE_OPERATOR_LONG_FORM = QUERY_OPS_LONG_FORM + Utils.SINGLE_QUOTE
+            + OPERATOR_ONE.toCndNotation(NotationType.LONG) + Utils.SINGLE_QUOTE;
+    String QUERY_OPS_THREE_OPERATOR_COMPACT_FORM = QUERY_OPS_COMPACT_FORM + Utils.SINGLE_QUOTE
+            + OPERATOR_ONE.toCndNotation(NotationType.COMPACT) + ListAttributeState.ITEM_DELIM_NOTATION[NotationType.COMPACT_INDEX]
+            + OPERATOR_TWO.toCndNotation(NotationType.COMPACT) + ListAttributeState.ITEM_DELIM_NOTATION[NotationType.COMPACT_INDEX]
+            + OPERATOR_THREE.toCndNotation(NotationType.COMPACT) + Utils.SINGLE_QUOTE;
+    String QUERY_OPS_THREE_OPERATOR_COMPRESSED_FORM = QUERY_OPS_COMPRESSED_FORM + Utils.SINGLE_QUOTE
             + OPERATOR_ONE.toCndNotation(NotationType.COMPRESSED)
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ITEM_QUOTE_CHAR);
-    String QUERY_OPS_ONE_OPERATOR_LONG_FORM = QUERY_OPS_LONG_FORM
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ITEM_QUOTE_CHAR)
-            + OPERATOR_ONE.toCndNotation(NotationType.LONG)
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ITEM_QUOTE_CHAR);
-    String QUERY_OPS_THREE_OPERATOR_COMPACT_FORM = QUERY_OPS_COMPACT_FORM
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ITEM_QUOTE_CHAR)
-            + OPERATOR_ONE.toCndNotation(NotationType.COMPACT)
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER)
-            + OPERATOR_TWO.toCndNotation(NotationType.COMPACT)
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER)
-            + OPERATOR_THREE.toCndNotation(NotationType.COMPACT)
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ITEM_QUOTE_CHAR);
-    String QUERY_OPS_THREE_OPERATOR_COMPRESSED_FORM = QUERY_OPS_COMPRESSED_FORM
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ITEM_QUOTE_CHAR)
-            + OPERATOR_ONE.toCndNotation(NotationType.COMPRESSED)
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER)
+            + ListAttributeState.ITEM_DELIM_NOTATION[NotationType.COMPRESSED_INDEX]
             + OPERATOR_TWO.toCndNotation(NotationType.COMPRESSED)
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER)
-            + OPERATOR_THREE.toCndNotation(NotationType.COMPRESSED)
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ITEM_QUOTE_CHAR);
-    String QUERY_OPS_THREE_OPERATOR_LONG_FORM = QUERY_OPS_LONG_FORM
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ITEM_QUOTE_CHAR)
-            + OPERATOR_ONE.toCndNotation(NotationType.LONG)
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER)
-            + OPERATOR_TWO.toCndNotation(NotationType.LONG)
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER)
-            + OPERATOR_THREE.toCndNotation(NotationType.LONG)
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ITEM_QUOTE_CHAR);
+            + ListAttributeState.ITEM_DELIM_NOTATION[NotationType.COMPRESSED_INDEX]
+            + OPERATOR_THREE.toCndNotation(NotationType.COMPRESSED) + Utils.SINGLE_QUOTE;
+    String QUERY_OPS_THREE_OPERATOR_LONG_FORM = QUERY_OPS_LONG_FORM + Utils.SINGLE_QUOTE
+            + OPERATOR_ONE.toCndNotation(NotationType.LONG) + ListAttributeState.ITEM_DELIM_NOTATION[NotationType.LONG_INDEX]
+            + OPERATOR_TWO.toCndNotation(NotationType.LONG) + ListAttributeState.ITEM_DELIM_NOTATION[NotationType.LONG_INDEX]
+            + OPERATOR_THREE.toCndNotation(NotationType.LONG) + Utils.SINGLE_QUOTE;
 
     String SAME_NAME_SIBLINGS_VARIANT_COMPACT_FORM = SameNameSiblings.NOTATION[NotationType.COMPACT_INDEX] + VARIANT;
     String SAME_NAME_SIBLINGS_VARIANT_COMPRESSED_FORM = SameNameSiblings.NOTATION[NotationType.COMPRESSED_INDEX] + VARIANT;
@@ -186,75 +200,74 @@ public interface Constants {
     String ITEM_ONE = "item1"; //$NON-NLS-1$ 
     String ITEM_TWO = "item2"; //$NON-NLS-1$ 
     String ITEM_THREE = "item3"; //$NON-NLS-1$
-    String ONE_ITEM_SINGLE_QUOTED_FORM = CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_QUOTE_CHAR)
-            + ITEM_ONE + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_QUOTE_CHAR);
-    String THREE_ITEM_SINGLE_QUOTED_FORM = CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_QUOTE_CHAR)
-            + ITEM_ONE + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER) + ITEM_TWO
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER) + ITEM_THREE
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_QUOTE_CHAR);
+    String ONE_ITEM_SINGLE_QUOTED_FORM = prefStore.get(CndPreference.ATTRIBUTE_LIST_ITEM_QUOTE_CHAR) + ITEM_ONE
+            + prefStore.get(CndPreference.ATTRIBUTE_LIST_ITEM_QUOTE_CHAR);
+    String THREE_ITEM_SINGLE_QUOTED_FORM = prefStore.get(CndPreference.ATTRIBUTE_LIST_ITEM_QUOTE_CHAR) + ITEM_ONE
+            + prefStore.get(CndPreference.ATTRIBUTE_LIST_ITEM_QUOTE_CHAR)
+            + ListAttributeState.ITEM_DELIM_NOTATION[NotationType.LONG_INDEX]
+            + prefStore.get(CndPreference.ATTRIBUTE_LIST_ITEM_QUOTE_CHAR) + ITEM_TWO
+            + prefStore.get(CndPreference.ATTRIBUTE_LIST_ITEM_QUOTE_CHAR)
+            + ListAttributeState.ITEM_DELIM_NOTATION[NotationType.LONG_INDEX]
+            + prefStore.get(CndPreference.ATTRIBUTE_LIST_ITEM_QUOTE_CHAR) + ITEM_THREE
+            + prefStore.get(CndPreference.ATTRIBUTE_LIST_ITEM_QUOTE_CHAR);
 
-    String DEFAULT_VALUES_VARIANT = DefaultValues.NOTATION_PREFIX
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.DEFAULT_VALUES_END_PREFIX_DELIMITER) + VARIANT;
-    String DEFAULT_VALUES_ONE_ITEM_FORM = DefaultValues.NOTATION_PREFIX
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.DEFAULT_VALUES_END_PREFIX_DELIMITER)
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.DEFAULT_VALUES_QUOTE_CHARACTER)
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ITEM_QUOTE_CHAR) + ITEM_ONE
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ITEM_QUOTE_CHAR)
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.DEFAULT_VALUES_QUOTE_CHARACTER);
-    String DEFAULT_VALUES_THREE_ITEM_FORM = DefaultValues.NOTATION_PREFIX
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.DEFAULT_VALUES_END_PREFIX_DELIMITER)
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.DEFAULT_VALUES_QUOTE_CHARACTER)
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ITEM_QUOTE_CHAR) + ITEM_ONE
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ITEM_QUOTE_CHAR)
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER)
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ITEM_QUOTE_CHAR) + ITEM_TWO
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ITEM_QUOTE_CHAR)
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER)
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ITEM_QUOTE_CHAR) + ITEM_THREE
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ITEM_QUOTE_CHAR)
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.DEFAULT_VALUES_QUOTE_CHARACTER);
+    String DEFAULT_VALUES_VARIANT = DefaultValues.NOTATION_PREFIX + Preferences.DEFAULT_VALUES_END_PREFIX_DELIMITER + VARIANT;
+    String DEFAULT_VALUES_SHORT_VARIANT = DefaultValues.NOTATION_PREFIX + VARIANT;
+    String DEFAULT_VALUES_ONE_ITEM_FORM = DefaultValues.NOTATION_PREFIX + Preferences.DEFAULT_VALUES_END_PREFIX_DELIMITER
+            + Utils.SINGLE_QUOTE + ITEM_ONE + Utils.SINGLE_QUOTE;
+    String DEFAULT_VALUES_ONE_ITEM_SHORT_FORM = DefaultValues.NOTATION_PREFIX + Utils.SINGLE_QUOTE + ITEM_ONE + Utils.SINGLE_QUOTE;
+    String DEFAULT_VALUES_THREE_ITEM_FORM = DefaultValues.NOTATION_PREFIX + Preferences.DEFAULT_VALUES_END_PREFIX_DELIMITER
+            + Utils.SINGLE_QUOTE + ITEM_ONE + Utils.SINGLE_QUOTE + ListAttributeState.ITEM_DELIM_NOTATION[NotationType.LONG_INDEX]
+            + Utils.SINGLE_QUOTE + ITEM_TWO + Utils.SINGLE_QUOTE + ListAttributeState.ITEM_DELIM_NOTATION[NotationType.LONG_INDEX]
+            + Utils.SINGLE_QUOTE + ITEM_THREE + Utils.SINGLE_QUOTE;
+    String DEFAULT_VALUES_THREE_ITEM_SHORT_FORM = DefaultValues.NOTATION_PREFIX + Utils.SINGLE_QUOTE + ITEM_ONE
+            + Utils.SINGLE_QUOTE + ListAttributeState.ITEM_DELIM_NOTATION[NotationType.COMPACT_INDEX] + Utils.SINGLE_QUOTE
+            + ITEM_TWO + Utils.SINGLE_QUOTE + ListAttributeState.ITEM_DELIM_NOTATION[NotationType.COMPACT_INDEX]
+            + Utils.SINGLE_QUOTE + ITEM_THREE + Utils.SINGLE_QUOTE;
 
-    String REQUIRED_TYPES_VARIANT = RequiredTypes.NOTATION_PREFIX + VARIANT + RequiredTypes.NOTATION_SUFFIX;
-    String REQUIRED_TYPES_ONE_ITEM_FORM = RequiredTypes.NOTATION_PREFIX + QUALIFIED_NAME1 + RequiredTypes.NOTATION_SUFFIX;
-    String REQUIRED_TYPES_THREE_ITEM_FORM = RequiredTypes.NOTATION_PREFIX + QUALIFIED_NAME1
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER) + QUALIFIED_NAME2
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER) + QUALIFIED_NAME3
-            + RequiredTypes.NOTATION_SUFFIX;
+    String REQUIRED_TYPES_SHORT_VARIANT = RequiredTypes.NOTATION_PREFIX + VARIANT + RequiredTypes.NOTATION_SUFFIX;
+    String REQUIRED_TYPES_VARIANT = RequiredTypes.NOTATION_PREFIX + Utils.SPACE_STRING + VARIANT + RequiredTypes.NOTATION_SUFFIX;
+    String REQUIRED_TYPES_ONE_ITEM_FORM = RequiredTypes.NOTATION_PREFIX + Utils.SPACE_STRING + QUALIFIED_NAME1 + RequiredTypes.NOTATION_SUFFIX;
+    String REQUIRED_TYPES_ONE_ITEM_SHORT_FORM = RequiredTypes.NOTATION_PREFIX + QUALIFIED_NAME1 + RequiredTypes.NOTATION_SUFFIX;
+    String REQUIRED_TYPES_THREE_ITEM_SHORT_FORM = RequiredTypes.NOTATION_PREFIX + QUALIFIED_NAME1
+            + ListAttributeState.ITEM_DELIM_NOTATION[NotationType.COMPACT_INDEX] + QUALIFIED_NAME2
+            + ListAttributeState.ITEM_DELIM_NOTATION[NotationType.COMPACT_INDEX] + QUALIFIED_NAME3 + RequiredTypes.NOTATION_SUFFIX;
+    String REQUIRED_TYPES_THREE_ITEM_FORM = RequiredTypes.NOTATION_PREFIX + Utils.SPACE_STRING + QUALIFIED_NAME1
+            + ListAttributeState.ITEM_DELIM_NOTATION[NotationType.LONG_INDEX] + QUALIFIED_NAME2
+            + ListAttributeState.ITEM_DELIM_NOTATION[NotationType.LONG_INDEX] + QUALIFIED_NAME3 + RequiredTypes.NOTATION_SUFFIX;
 
-    String SUPER_TYPES_VARIANT = SuperTypes.NOTATION_PREFIX
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_PREFIX_END_DELIMITER) + VARIANT;
-    String SUPER_TYPES_ONE_ITEM_FORM = SuperTypes.NOTATION_PREFIX
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_PREFIX_END_DELIMITER) + QUALIFIED_NAME1;
-    String SUPER_TYPES_THREE_ITEM_FORM = SuperTypes.NOTATION_PREFIX
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_PREFIX_END_DELIMITER) + QUALIFIED_NAME1
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER) + QUALIFIED_NAME2
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER) + QUALIFIED_NAME3;
+    String SUPER_TYPES_VARIANT = SuperTypes.NOTATION_PREFIX + Preferences.ATTRIBUTE_LIST_PREFIX_END_DELIMITER + VARIANT;
+    String SUPER_TYPES_SHORT_VARIANT = SuperTypes.NOTATION_PREFIX + VARIANT;
+    String SUPER_TYPES_ONE_ITEM_FORM = SuperTypes.NOTATION_PREFIX + Preferences.ATTRIBUTE_LIST_PREFIX_END_DELIMITER
+            + QUALIFIED_NAME1;
+    String SUPER_TYPES_ONE_ITEM_SHORT_FORM = SuperTypes.NOTATION_PREFIX + QUALIFIED_NAME1;
+    String SUPER_TYPES_THREE_ITEM_FORM = SuperTypes.NOTATION_PREFIX + Preferences.ATTRIBUTE_LIST_PREFIX_END_DELIMITER
+            + QUALIFIED_NAME1 + ListAttributeState.ITEM_DELIM_NOTATION[NotationType.LONG_INDEX] + QUALIFIED_NAME2
+            + ListAttributeState.ITEM_DELIM_NOTATION[NotationType.LONG_INDEX] + QUALIFIED_NAME3;
+    String SUPER_TYPES_THREE_ITEM_SHORT_FORM = SuperTypes.NOTATION_PREFIX + QUALIFIED_NAME1
+            + ListAttributeState.ITEM_DELIM_NOTATION[NotationType.COMPACT_INDEX] + QUALIFIED_NAME2
+            + ListAttributeState.ITEM_DELIM_NOTATION[NotationType.COMPACT_INDEX] + QUALIFIED_NAME3;
 
     String VALUE_CONSTRAINT1 = "(19|20)\\d{2}"; //$NON-NLS-1$
     String VALUE_CONSTRAINT2 = "[$]\\d{1,3}[,]?\\d{3}([.]\\d{2})?"; //$NON-NLS-1$
     String VALUE_CONSTRAINT3 = "[1,5]"; //$NON-NLS-1$
-    String[] DEFAULT_VALUE_CONSTRAINTS = new String[] {VALUE_CONSTRAINT1, VALUE_CONSTRAINT2, VALUE_CONSTRAINT3};
-    
-    String VALUE_CONSTRAINTS_VARIANT = ValueConstraints.NOTATION_PREFIX
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_PREFIX_END_DELIMITER) + VARIANT;
-    String VALUE_CONSTRAINTS_ONE_ITEM_FORM = ValueConstraints.NOTATION_PREFIX
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_PREFIX_END_DELIMITER)
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_QUOTE_CHAR)
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.VALUE_CONSTRAINTS_ITEM_QUOTE_CHARACTER) + VALUE_CONSTRAINT1
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.VALUE_CONSTRAINTS_ITEM_QUOTE_CHARACTER)
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_QUOTE_CHAR);
-    String VALUE_CONSTRAINTS_THREE_ITEM_FORM = ValueConstraints.NOTATION_PREFIX
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_PREFIX_END_DELIMITER)
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_QUOTE_CHAR)
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.VALUE_CONSTRAINTS_ITEM_QUOTE_CHARACTER) + VALUE_CONSTRAINT1
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.VALUE_CONSTRAINTS_ITEM_QUOTE_CHARACTER)
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER)
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.VALUE_CONSTRAINTS_ITEM_QUOTE_CHARACTER) + VALUE_CONSTRAINT2
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.VALUE_CONSTRAINTS_ITEM_QUOTE_CHARACTER)
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER)
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.VALUE_CONSTRAINTS_ITEM_QUOTE_CHARACTER) + VALUE_CONSTRAINT3
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.VALUE_CONSTRAINTS_ITEM_QUOTE_CHARACTER)
-            + CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_QUOTE_CHAR);
+    String[] DEFAULT_VALUE_CONSTRAINTS = new String[] { VALUE_CONSTRAINT1, VALUE_CONSTRAINT2, VALUE_CONSTRAINT3 };
+
+    String VALUE_CONSTRAINTS_VARIANT = ValueConstraints.NOTATION_PREFIX + Preferences.ATTRIBUTE_LIST_PREFIX_END_DELIMITER + VARIANT;
+    String VALUE_CONSTRAINTS_SHORT_VARIANT = ValueConstraints.NOTATION_PREFIX + VARIANT;
+    String VALUE_CONSTRAINTS_ONE_ITEM_FORM = ValueConstraints.NOTATION_PREFIX + Preferences.ATTRIBUTE_LIST_PREFIX_END_DELIMITER
+            + Utils.SINGLE_QUOTE + VALUE_CONSTRAINT1 + Utils.SINGLE_QUOTE;
+    String VALUE_CONSTRAINTS_ONE_ITEM_SHORT_FORM = ValueConstraints.NOTATION_PREFIX + Utils.SINGLE_QUOTE + VALUE_CONSTRAINT1
+            + Utils.SINGLE_QUOTE;
+    String VALUE_CONSTRAINTS_THREE_ITEM_FORM = ValueConstraints.NOTATION_PREFIX + Preferences.ATTRIBUTE_LIST_PREFIX_END_DELIMITER
+            + Utils.SINGLE_QUOTE + VALUE_CONSTRAINT1 + Utils.SINGLE_QUOTE
+            + ListAttributeState.ITEM_DELIM_NOTATION[NotationType.LONG_INDEX] + Utils.SINGLE_QUOTE + VALUE_CONSTRAINT2
+            + Utils.SINGLE_QUOTE + ListAttributeState.ITEM_DELIM_NOTATION[NotationType.LONG_INDEX] + Utils.SINGLE_QUOTE
+            + VALUE_CONSTRAINT3 + Utils.SINGLE_QUOTE;
+    String VALUE_CONSTRAINTS_THREE_ITEM_SHORT_FORM = ValueConstraints.NOTATION_PREFIX + Utils.SINGLE_QUOTE + VALUE_CONSTRAINT1
+            + Utils.SINGLE_QUOTE + ListAttributeState.ITEM_DELIM_NOTATION[NotationType.COMPACT_INDEX] + Utils.SINGLE_QUOTE
+            + VALUE_CONSTRAINT2 + Utils.SINGLE_QUOTE + ListAttributeState.ITEM_DELIM_NOTATION[NotationType.COMPACT_INDEX]
+            + Utils.SINGLE_QUOTE + VALUE_CONSTRAINT3 + Utils.SINGLE_QUOTE;
 
     class Helper {
         public static void changeValue( AttributeState attribute ) {
@@ -278,7 +291,7 @@ public interface Constants {
         public static String[] getDefaultQualifiedNamesAsStringArray() {
             String[] names = new String[DEFAULT_QUALIFIED_NAMES.length];
             int i = 0;
-            
+
             for (QualifiedName qname : DEFAULT_QUALIFIED_NAMES) {
                 names[i++] = qname.get();
             }

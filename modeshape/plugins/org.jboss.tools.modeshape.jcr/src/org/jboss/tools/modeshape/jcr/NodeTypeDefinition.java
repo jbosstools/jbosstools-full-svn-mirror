@@ -25,8 +25,8 @@ import org.jboss.tools.modeshape.jcr.attributes.AttributeState.Value;
 import org.jboss.tools.modeshape.jcr.attributes.NodeTypeAttributes;
 import org.jboss.tools.modeshape.jcr.attributes.SuperTypes;
 import org.jboss.tools.modeshape.jcr.cnd.CndElement;
-import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences;
-import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences.Preference;
+import org.jboss.tools.modeshape.jcr.preference.JcrPreferenceConstants;
+import org.jboss.tools.modeshape.jcr.preference.JcrPreferenceStore;
 
 /**
  * Represents a CND node type definition.
@@ -827,21 +827,21 @@ public class NodeTypeDefinition implements CndElement, Comparable, ItemOwnerProv
      */
     @Override
     public String toCndNotation( final NotationType notationType ) {
+        final JcrPreferenceStore prefStore = JcrPreferenceStore.get();
         final StringBuilder builder = new StringBuilder();
 
         { // name
             builder.append(NAME_NOTATION_PREFIX)
                    .append(this.name.toCndNotation(notationType))
                    .append(NAME_NOTATION_SUFFIX)
-                   .append(CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.NODE_TYPE_DEFINITION_NAME_END_DELIMITER));
+                   .append(prefStore.get(JcrPreferenceConstants.CndPreference.NODE_TYPE_DEFINITION_NAME_END_DELIMITER));
         }
 
         { // super types
             final String notation = this.superTypes.toCndNotation(notationType);
 
             if (!Utils.isEmpty(notation)) {
-                builder.append(notation)
-                       .append(CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.SUPER_TYPES_END_DELIMITER));
+                builder.append(notation).append(prefStore.get(JcrPreferenceConstants.CndPreference.SUPER_TYPES_END_DELIMITER));
             }
         }
 
@@ -852,15 +852,15 @@ public class NodeTypeDefinition implements CndElement, Comparable, ItemOwnerProv
                 builder.append(notation);
             }
 
-            builder.append(CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.NODE_TYPE_DEFINITION_ATTRIBUTES_END_DELIMITER));
+            builder.append(prefStore.get(JcrPreferenceConstants.CndPreference.NODE_TYPE_DEFINITION_ATTRIBUTES_END_DELIMITER));
         }
 
         { // elements
             final List<CndElement> elements = getElements();
 
             if (!Utils.isEmpty(elements)) {
-                final String elementStartDelimiter = CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ELEMENTS_START_DELIMITER);
-                final String elementDelimiter = CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ELEMENT_DELIMITER);
+                final String elementStartDelimiter = prefStore.get(JcrPreferenceConstants.CndPreference.ELEMENTS_START_DELIMITER);
+                final String elementDelimiter = prefStore.get(JcrPreferenceConstants.CndPreference.ELEMENT_DELIMITER);
 
                 for (final CndElement element : elements) {
                     builder.append(elementStartDelimiter);
@@ -868,7 +868,7 @@ public class NodeTypeDefinition implements CndElement, Comparable, ItemOwnerProv
                     builder.append(elementDelimiter);
                 }
 
-                builder.append(CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ELEMENTS_END_DELIMITER));
+                builder.append(prefStore.get(JcrPreferenceConstants.CndPreference.ELEMENTS_END_DELIMITER));
             }
         }
 

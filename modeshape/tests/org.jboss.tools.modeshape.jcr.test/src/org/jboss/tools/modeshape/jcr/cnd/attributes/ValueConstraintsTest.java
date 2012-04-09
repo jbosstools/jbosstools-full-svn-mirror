@@ -79,8 +79,8 @@ public class ValueConstraintsTest implements Constants {
         add(VALUE_CONSTRAINT3);
 
         // tests
-        assertEquals(VALUE_CONSTRAINTS_THREE_ITEM_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPACT));
-        assertEquals(VALUE_CONSTRAINTS_THREE_ITEM_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPRESSED));
+        assertEquals(VALUE_CONSTRAINTS_THREE_ITEM_SHORT_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPACT));
+        assertEquals(VALUE_CONSTRAINTS_THREE_ITEM_SHORT_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPRESSED));
         assertEquals(VALUE_CONSTRAINTS_THREE_ITEM_FORM, this.attribute.toCndNotation(CndElement.NotationType.LONG));
     }
 
@@ -90,8 +90,8 @@ public class ValueConstraintsTest implements Constants {
         add(VALUE_CONSTRAINT1);
 
         // tests
-        assertEquals(VALUE_CONSTRAINTS_ONE_ITEM_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPACT));
-        assertEquals(VALUE_CONSTRAINTS_ONE_ITEM_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPRESSED));
+        assertEquals(VALUE_CONSTRAINTS_ONE_ITEM_SHORT_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPACT));
+        assertEquals(VALUE_CONSTRAINTS_ONE_ITEM_SHORT_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPRESSED));
         assertEquals(VALUE_CONSTRAINTS_ONE_ITEM_FORM, this.attribute.toCndNotation(CndElement.NotationType.LONG));
     }
 
@@ -145,8 +145,8 @@ public class ValueConstraintsTest implements Constants {
         this.attribute.set(AttributeState.Value.VARIANT);
 
         // tests
-        assertEquals(VALUE_CONSTRAINTS_VARIANT, this.attribute.toCndNotation(CndElement.NotationType.COMPACT));
-        assertEquals(VALUE_CONSTRAINTS_VARIANT, this.attribute.toCndNotation(CndElement.NotationType.COMPRESSED));
+        assertEquals(VALUE_CONSTRAINTS_SHORT_VARIANT, this.attribute.toCndNotation(CndElement.NotationType.COMPACT));
+        assertEquals(VALUE_CONSTRAINTS_SHORT_VARIANT, this.attribute.toCndNotation(CndElement.NotationType.COMPRESSED));
         assertEquals(VALUE_CONSTRAINTS_VARIANT, this.attribute.toCndNotation(CndElement.NotationType.LONG));
     }
 

@@ -9,8 +9,8 @@ package org.jboss.tools.modeshape.jcr.attributes;
 
 import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.cnd.CndElement;
-import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences;
-import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences.Preference;
+import org.jboss.tools.modeshape.jcr.preference.JcrPreferenceConstants;
+import org.jboss.tools.modeshape.jcr.preference.JcrPreferenceStore;
 
 /**
  * Property attributes of a property definitions.
@@ -128,10 +128,6 @@ public class PropertyAttributes implements CndElement {
      */
     public Autocreated getAutocreated() {
         return this.autocreated;
-    }
-
-    private String getFormatDelimiter() {
-        return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.PROPERTY_DEFINITION_ATTRIBUTES_DELIMITER);
     }
 
     /**
@@ -262,7 +258,8 @@ public class PropertyAttributes implements CndElement {
      */
     @Override
     public String toCndNotation( final NotationType notationType ) {
-        final String DELIM = getFormatDelimiter();
+        final JcrPreferenceStore prefStore = JcrPreferenceStore.get();
+        final String DELIM = prefStore.get(JcrPreferenceConstants.CndPreference.PROPERTY_DEFINITION_ATTRIBUTES_DELIMITER);
         final StringBuilder builder = new StringBuilder();
 
         boolean addDelim = Utils.build(builder, false, DELIM, this.autocreated.toCndNotation(notationType));

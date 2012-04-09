@@ -13,7 +13,7 @@ import org.eclipse.osgi.util.NLS;
 /**
  * Localized messages used by classes in the <code>org.jboss.tools.modeshape.jcr.ui.cnd</code> package.
  */
-class CndMessages extends NLS {
+public class CndMessages extends NLS {
 
     /**
      * A name for the abstract attribute name for a radio or check button.
@@ -24,6 +24,11 @@ class CndMessages extends NLS {
      * A tool tip message of the node type definition's abstract attribute.
      */
     public static String abstractAttributeToolTip;
+
+    /**
+     * A dialog message indicating the namespace mapping is a built-in and asks the user to OK the dialog.
+     */
+    public static String acceptBuiltInNamespaceDialogMsg;
 
     /**
      * A dialog message indicating the default value has been changed and asks the user to OK the dialog. One parameter, the default
@@ -319,6 +324,21 @@ class CndMessages extends NLS {
      */
     public static String cndMessageDialogTitle;
 
+    /**
+     * The description of the CND preference page.
+     */
+    public static String cndPrefPageDescription;
+
+    /**
+     * The message of the CND preference page.
+     */
+    public static String cndPrefPageMessage;
+
+    /**
+     * The title of the CND prefrence page.
+     */
+    public static String cndPrefPageTitle;
+    
     /**
      * The column header text of the declaring node type of an item definition.
      */
@@ -941,11 +961,6 @@ class CndMessages extends NLS {
     public static String noNameQualifierChoice;
 
     /**
-     * The text indicating the node type definition has not assigned a primary item.
-     */
-    public static String noPrimaryItemChoice;
-
-    /**
      * A name for the noQueryOrder attribute suitable for a radio or check button.
      */
     public static String noQueryOrderAttribute;
@@ -954,6 +969,21 @@ class CndMessages extends NLS {
      * A tool tip message of the property definition's noQueryOrder attribute.
      */
     public static String noQueryOrderAttributeToolTip;
+
+    /**
+     * The text indicating a choice has not been made.
+     */
+    public static String notAssignedItemChoice;
+
+    /**
+     * A label for a notation type choice control.
+     */
+    public static String notationTypeLabel;
+
+    /**
+     * A tool tip for CND notation type.
+     */
+    public static String notationTypeToolTip;
 
     /**
      * A tool tip message for the "not equals" query operator.
@@ -974,12 +1004,12 @@ class CndMessages extends NLS {
      * The context menu item text for the open declaring node type action.
      */
     public static String openDeclaringNodeTypeMenuText;
-    
+
     /**
      * A tool tip message of the open declaring node type action.
      */
     public static String openDeclaringNodeTypeToolTip;
-    
+
     /**
      * A name for the orderable attribute suitable for a radio or check button.
      */
@@ -1087,6 +1117,31 @@ class CndMessages extends NLS {
     public static String queryOperatorsLabel;
 
     /**
+     * Choice text for using a double quote character.
+     */
+    public static String quoteCharDoubleChoiceLabel;
+
+    /**
+     * Choice text for not using a quote character.
+     */
+    public static String quoteCharNoneChoiceLabel;
+
+    /**
+     * A label for a quote character control.
+     */
+    public static String quoteCharPolicyLabel;
+
+    /**
+     * A tool tip for a quote character choice control.
+     */
+    public static String quoteCharPolicyToolTip;
+
+    /**
+     * Choice text for using a single quote character.
+     */
+    public static String quoteCharSingleChoiceLabel;
+
+    /**
      * The column header text for the required types of a child node definition.
      */
     public static String requiredTypesHeaderText;
@@ -1115,7 +1170,7 @@ class CndMessages extends NLS {
      * A tool tip message for the show inherited properties action.
      */
     public static String showInheritedPropertiesToolTip;
-    
+
     /**
      * A label for a supertypes control.
      */

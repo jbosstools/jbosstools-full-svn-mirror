@@ -7,7 +7,6 @@
  */
 package org.jboss.tools.modeshape.jcr.attributes;
 
-import org.jboss.tools.modeshape.jcr.cnd.CndElement;
 
 /**
  * The abstract attribute used by node type definitions.
@@ -26,7 +25,7 @@ public class Abstract extends AttributeState {
      */
     @Override
     protected String getCompactCndNotation() {
-        return NOTATION[CndElement.NotationType.COMPACT_INDEX];
+        return NOTATION[NotationType.COMPACT_INDEX];
     }
 
     /**
@@ -36,7 +35,7 @@ public class Abstract extends AttributeState {
      */
     @Override
     protected String getCompressedCndNotation() {
-        return NOTATION[CndElement.NotationType.COMPRESSED_INDEX];
+        return NOTATION[NotationType.COMPRESSED_INDEX];
     }
 
     /**
@@ -46,7 +45,7 @@ public class Abstract extends AttributeState {
      */
     @Override
     protected String getLongCndNotation() {
-        return NOTATION[CndElement.NotationType.LONG_INDEX];
+        return NOTATION[NotationType.LONG_INDEX];
     }
 
 }

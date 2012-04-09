@@ -20,9 +20,10 @@ import org.modeshape.common.util.HashCode;
 public final class Utils {
 
     /**
-     * The plug-in bundle's symbolic name.
+     * A double quote character string.
      */
-    public static final String PLUGIN_ID = Utils.class.getPackage().getName();
+    public static final String DOUBLE_QUOTE = "\""; //$NON-NLS-1$ 
+
     /**
      * And empty object array.
      */
@@ -37,6 +38,11 @@ public final class Utils {
      * And empty string array.
      */
     public static final String[] EMPTY_STRING_ARRAY = new String[0];
+
+    /**
+     * A single quote character string.
+     */
+    public static final String SINGLE_QUOTE = "'"; //$NON-NLS-1$ 
 
     /**
      * A string with one space character.

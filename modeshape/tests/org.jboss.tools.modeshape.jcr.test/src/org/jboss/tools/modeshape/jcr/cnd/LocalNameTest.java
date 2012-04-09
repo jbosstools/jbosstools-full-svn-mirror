@@ -14,6 +14,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.jboss.tools.modeshape.jcr.LocalName;
 import org.jboss.tools.modeshape.jcr.Utils;
+import org.jboss.tools.modeshape.jcr.preference.JcrPreferenceConstants;
+import org.jboss.tools.modeshape.jcr.preference.JcrPreferenceStore;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -30,29 +32,6 @@ public class LocalNameTest {
     }
 
     @Test
-    public void differentModesDifferentValuesShouldNotBeEqual() {
-        final String VALUE = "value"; //$NON-NLS-1$
-        this.localName.set(VALUE);
-        final LocalName thatLocalName = new LocalName(VALUE + "Changed"); //$NON-NLS-1$
-        thatLocalName.setMode(LocalName.Mode.DOUBLE_QUOTED);
-        assertFalse(this.localName.equals(thatLocalName));
-    }
-
-    @Test
-    public void differentModesSameValuesShouldBeEqual() {
-        final String VALUE = "value"; //$NON-NLS-1$
-        this.localName.set(VALUE);
-        final LocalName thatLocalName = new LocalName(VALUE);
-        thatLocalName.setMode(LocalName.Mode.DOUBLE_QUOTED);
-        assertTrue(this.localName.equals(thatLocalName));
-    }
-
-    @Test
-    public void initialModeShouldBeUnquoted() {
-        assertTrue(this.localName.isUnquoted());
-    }
-
-    @Test
     public void initialValueShouldBeCorrectWhenSet() {
         final String INITIAL_VALUE = "initialValue"; //$NON-NLS-1$
         this.localName = new LocalName(INITIAL_VALUE);
@@ -60,8 +39,8 @@ public class LocalNameTest {
     }
 
     @Test
-    public void initialValueShouldBeNull() {
-        assertNull(this.localName.get());
+    public void initialValueShouldBeEmpty() {
+        assertEquals(Utils.EMPTY_STRING, this.localName.get());
     }
 
     @Test
@@ -84,7 +63,7 @@ public class LocalNameTest {
     public void shouldHaveCorrectDoubleQuotedCndNotation() {
         final String VALUE = "value"; //$NON-NLS-1$
         this.localName.set(VALUE);
-        this.localName.setMode(LocalName.Mode.DOUBLE_QUOTED);
+        JcrPreferenceStore.get().set(JcrPreferenceConstants.CndPreference.QUOTE_CHAR, Utils.DOUBLE_QUOTE);
         assertEquals('"' + VALUE + '"', this.localName.toCndNotation(null));
     }
 
@@ -92,13 +71,14 @@ public class LocalNameTest {
     public void shouldHaveCorrectSingleQuotedCndNotation() {
         final String VALUE = "value"; //$NON-NLS-1$
         this.localName.set(VALUE);
-        this.localName.setMode(LocalName.Mode.SINGLE_QUOTED);
+        JcrPreferenceStore.get().set(JcrPreferenceConstants.CndPreference.QUOTE_CHAR, Utils.SINGLE_QUOTE);
         assertEquals('\'' + VALUE + '\'', this.localName.toCndNotation(null));
     }
 
     @Test
     public void shouldHaveCorrectUnquotedCndNotation() {
         final String VALUE = "value"; //$NON-NLS-1$
+        JcrPreferenceStore.get().set(JcrPreferenceConstants.CndPreference.QUOTE_CHAR, Utils.EMPTY_STRING);
         this.localName.set(VALUE);
         assertEquals(VALUE, this.localName.toCndNotation(null));
     }
@@ -115,35 +95,11 @@ public class LocalNameTest {
     }
 
     @Test
-    public void shouldNotSetModeToSameValue() {
-        assertFalse(this.localName.setMode(LocalName.Mode.UNQOUTED));
-    }
-
-    @Test
     public void shouldQuoteIfContainsSpacesAndModeIsUnquoted() {
         final String NEW_VALUE = "new value"; //$NON-NLS-1$
         this.localName.set(NEW_VALUE);
-        assertTrue(this.localName.isUnquoted());
+        JcrPreferenceStore.get().set(JcrPreferenceConstants.CndPreference.QUOTE_CHAR, Utils.EMPTY_STRING);
         assertEquals('\'' + NEW_VALUE + '\'', this.localName.toCndNotation(null));
-    }
-
-    @Test
-    public void shouldSetModeToDoubleQuoted() {
-        assertTrue(this.localName.setMode(LocalName.Mode.DOUBLE_QUOTED));
-        assertTrue(this.localName.isDoubleQuoted());
-    }
-
-    @Test
-    public void shouldSetModeToSingleQuoted() {
-        assertTrue(this.localName.setMode(LocalName.Mode.SINGLE_QUOTED));
-        assertTrue(this.localName.isSingleQuoted());
-    }
-
-    @Test
-    public void shouldSetModeToUnquoted() {
-        this.localName.setMode(LocalName.Mode.SINGLE_QUOTED);
-        assertTrue(this.localName.setMode(LocalName.Mode.UNQOUTED));
-        assertTrue(this.localName.isUnquoted());
     }
 
     @Test

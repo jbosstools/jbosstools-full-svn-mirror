@@ -9,8 +9,8 @@ package org.jboss.tools.modeshape.jcr.attributes;
 
 import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.cnd.CndElement;
-import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences;
-import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences.Preference;
+import org.jboss.tools.modeshape.jcr.preference.JcrPreferenceConstants;
+import org.jboss.tools.modeshape.jcr.preference.JcrPreferenceStore;
 
 /**
  * Property attributes of a node type definitions.
@@ -196,7 +196,8 @@ public class NodeTypeAttributes implements CndElement {
      */
     @Override
     public String toCndNotation( final NotationType notationType ) {
-        final String DELIM = CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.NODE_TYPE_DEFINITION_ATTRIBUTES_DELIMITER);
+        final JcrPreferenceStore prefStore = JcrPreferenceStore.get();
+        final String DELIM = prefStore.get(JcrPreferenceConstants.CndPreference.NODE_TYPE_DEFINITION_ATTRIBUTES_DELIMITER);
         final StringBuilder builder = new StringBuilder();
 
         boolean addDelim = Utils.build(builder, false, DELIM, this.orderable.toCndNotation(notationType));

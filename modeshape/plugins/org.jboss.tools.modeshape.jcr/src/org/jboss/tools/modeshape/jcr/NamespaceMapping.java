@@ -11,6 +11,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.jboss.tools.modeshape.jcr.cnd.CndElement;
 
 /**
@@ -171,7 +173,7 @@ public class NamespaceMapping implements CndElement, Comparable {
             try {
                 ((PropertyChangeListener)listener).propertyChange(event);
             } catch (final Exception e) {
-                // TODO log this
+                Activator.get().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, null, e));
                 this.listeners.remove(listener);
             }
         }
@@ -225,11 +227,11 @@ public class NamespaceMapping implements CndElement, Comparable {
     public String toCndNotation( final NotationType notationType ) {
         final StringBuilder builder = new StringBuilder();
         builder.append(NOTATION_PREFIX);
-        builder.append(this.prefix.get());
+        builder.append(this.prefix.toCndNotation(notationType));
         builder.append(NOTATION_DELIMITER);
-        builder.append(LocalName.Mode.SINGLE_QUOTED); // the CND parser seems to require URI surrounded by quotes
+        builder.append(Utils.SINGLE_QUOTE);
         builder.append(this.uri.get());
-        builder.append(LocalName.Mode.SINGLE_QUOTED);
+        builder.append(Utils.SINGLE_QUOTE);
         builder.append(NOTATION_SUFFIX);
 
         return builder.toString();

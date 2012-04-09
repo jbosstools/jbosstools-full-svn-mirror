@@ -26,8 +26,8 @@ import org.jboss.tools.modeshape.jcr.attributes.PropertyType;
 import org.jboss.tools.modeshape.jcr.attributes.QueryOperators;
 import org.jboss.tools.modeshape.jcr.attributes.QueryOperators.QueryOperator;
 import org.jboss.tools.modeshape.jcr.attributes.ValueConstraints;
-import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences;
-import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences.Preference;
+import org.jboss.tools.modeshape.jcr.preference.JcrPreferenceConstants;
+import org.jboss.tools.modeshape.jcr.preference.JcrPreferenceStore;
 
 /**
  * The <code>PropertyDefinition</code> class represents node type property definition.
@@ -298,27 +298,8 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     @Override
-    public int compareTo( final Object object ) {
-        final PropertyDefinition that = (PropertyDefinition)object;
-        final String thisName = getName();
-        final String thatName = that.getName();
-
-        if (Utils.isEmpty(thisName)) {
-            if (Utils.isEmpty(thatName)) {
-                return 0;
-            }
-
-            // thatName is not empty
-            return 1;
-        }
-
-        // thisName is not empty
-        if (thatName == null) {
-            return 1;
-        }
-
-        // thisName and thatName are not empty
-        return thisName.compareTo(thatName);
+    public int compareTo( final ItemDefinition itemDefinition ) {
+        return getQualifiedName().compareTo(itemDefinition.getQualifiedName());
     }
 
     /**
@@ -423,10 +404,6 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
         return this.defaultValues.getSupportedItems();
     }
 
-    private String getDelimiter() {
-        return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.PROPERTY_DEFINITION_ATTRIBUTES_DELIMITER);
-    }
-
     /**
      * {@inheritDoc}
      * 
@@ -450,10 +427,6 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
     @Override
     public int getOnParentVersion() {
         return this.attributes.getOnParentVersion().asJcrValue();
-    }
-
-    private String getPrefixEndDelimiter() {
-        return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.PROPERTY_DEFINITION_END_PREFIX_DELIMITER);
     }
 
     /**
@@ -943,12 +916,14 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
      */
     @Override
     public String toCndNotation( final NotationType notationType ) {
+        final JcrPreferenceStore prefStore = JcrPreferenceStore.get();
+
         final StringBuilder builder = new StringBuilder(NOTATION_PREFIX);
-        builder.append(getPrefixEndDelimiter());
+        builder.append((NotationType.LONG == notationType) ? Utils.SPACE_STRING : Utils.EMPTY_STRING);
 
-        final String DELIM = getDelimiter();
-
+        final String DELIM = prefStore.get(JcrPreferenceConstants.CndPreference.PROPERTY_DEFINITION_ATTRIBUTES_DELIMITER);
         builder.append(this.name.toCndNotation(notationType));
+
         Utils.build(builder, true, DELIM, this.type.toCndNotation(notationType));
         Utils.build(builder, true, DELIM, this.defaultValues.toCndNotation(notationType));
         Utils.build(builder, true, DELIM, this.attributes.toCndNotation(notationType));

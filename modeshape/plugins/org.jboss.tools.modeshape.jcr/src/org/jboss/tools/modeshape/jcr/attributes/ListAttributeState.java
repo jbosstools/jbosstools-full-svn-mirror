@@ -14,13 +14,24 @@ import java.util.List;
 
 import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.cnd.CndElement;
-import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences;
-import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences.Preference;
+import org.jboss.tools.modeshape.jcr.preference.JcrPreferenceConstants;
+import org.jboss.tools.modeshape.jcr.preference.JcrPreferenceStore;
 
 /**
  * @param <E> the class of the list items
  */
 public abstract class ListAttributeState<E extends Comparable> extends AttributeState {
+
+    /**
+     * The CND notation for each notation type.
+     */
+    public static final String[] ITEM_DELIM_NOTATION = new String[] { ", ", ",", "," }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+
+    /**
+     * The CND notation for each notation type.
+     */
+    public static final String[] PREFIX_END_DELIM_NOTATION = new String[] { Utils.SPACE_STRING, Utils.EMPTY_STRING,
+            Utils.EMPTY_STRING };
 
     /**
      * A list of supported items (can be <code>null</code>).
@@ -150,14 +161,8 @@ public abstract class ListAttributeState<E extends Comparable> extends Attribute
      * @return the quote character (empty, single, or double) surrounding each item of the list (cannot be <code>null</code>)
      */
     protected String getItemQuoteCharacter() {
-        return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ITEM_QUOTE_CHAR);
-    }
-
-    /**
-     * @return the delimiter used after the list prefix (never <code>null</code> but can be empty)
-     */
-    protected String getListPrefixEndDelimiter() {
-        return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_PREFIX_END_DELIMITER);
+        final JcrPreferenceStore prefStore = JcrPreferenceStore.get();
+        return prefStore.get(JcrPreferenceConstants.CndPreference.ATTRIBUTE_LIST_ITEM_QUOTE_CHAR);
     }
 
     /**
@@ -171,10 +176,19 @@ public abstract class ListAttributeState<E extends Comparable> extends Attribute
     }
 
     /**
-     * @return the quote character (empty, single, double) surrounding the elements of the list (cannot be <code>null</code>)
+     * @param notationType the notation type (cannot be <code>null</code>)
+     * @return the delimiter after the prefix (never <code>null</code> but can be empty)
      */
-    protected String getQuoteCharacter() {
-        return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_QUOTE_CHAR);
+    protected String getPrefixEndDelimiter(NotationType notationType) {
+        if (NotationType.LONG == notationType) {
+            return PREFIX_END_DELIM_NOTATION[NotationType.LONG_INDEX];
+        }
+        
+        if (NotationType.COMPRESSED == notationType) {
+            return PREFIX_END_DELIM_NOTATION[NotationType.COMPRESSED_INDEX];
+        }
+        
+        return PREFIX_END_DELIM_NOTATION[NotationType.COMPACT_INDEX];
     }
 
     /**
@@ -259,6 +273,16 @@ public abstract class ListAttributeState<E extends Comparable> extends Attribute
             return Utils.EMPTY_STRING;
         }
 
+        String delimiter = null;
+
+        if (NotationType.LONG == notationType) {
+            delimiter = ITEM_DELIM_NOTATION[NotationType.LONG_INDEX];
+        } else if (NotationType.COMPRESSED == notationType) {
+            delimiter = ITEM_DELIM_NOTATION[NotationType.COMPRESSED_INDEX];
+        } else {
+            delimiter = ITEM_DELIM_NOTATION[NotationType.COMPACT_INDEX];
+        }
+
         final String itemQuote = getItemQuoteCharacter();
         final boolean useQuote = !Utils.isEmpty(itemQuote);
         final StringBuilder builder = new StringBuilder();
@@ -281,7 +305,7 @@ public abstract class ListAttributeState<E extends Comparable> extends Attribute
             }
 
             if (itr.hasNext()) {
-                builder.append(CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.ATTRIBUTE_LIST_ELEMENT_DELIMITER));
+                builder.append(delimiter);
             }
         }
 
@@ -311,19 +335,13 @@ public abstract class ListAttributeState<E extends Comparable> extends Attribute
                 builder.append(getCndNotationPrefix(notationType));
             }
 
-            final String delim = getListPrefixEndDelimiter();
-
-            if (!Utils.isEmpty(delim)) {
-                builder.append(delim);
-            }
+            builder.append(getPrefixEndDelimiter(notationType));
 
             if (isVariant()) {
                 builder.append(AttributeState.VARIANT_CHAR);
             } else {
                 // add the delimited list
-                builder.append(getQuoteCharacter());
                 builder.append(supportedItemsCndNotation(notationType));
-                builder.append(getQuoteCharacter());
             }
 
             if (!Utils.isEmpty(getCndNotationSuffix(notationType))) {

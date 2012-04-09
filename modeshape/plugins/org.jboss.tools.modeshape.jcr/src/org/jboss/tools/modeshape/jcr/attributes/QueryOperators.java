@@ -67,6 +67,36 @@ public final class QueryOperators extends ListAttributeState<QueryOperator> {
     /**
      * {@inheritDoc}
      * 
+     * @see org.jboss.tools.modeshape.jcr.attributes.ListAttributeState#getCndNotationSuffix(org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType)
+     */
+    @Override
+    protected String getCndNotationSuffix( NotationType notationType ) {
+        return (isVariant() ? Utils.EMPTY_STRING : Utils.SINGLE_QUOTE);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.jboss.tools.modeshape.jcr.attributes.ListAttributeState#getItemQuoteCharacter()
+     */
+    @Override
+    protected String getItemQuoteCharacter() {
+        return Utils.EMPTY_STRING;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.jboss.tools.modeshape.jcr.attributes.ListAttributeState#getPrefixEndDelimiter(org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType)
+     */
+    @Override
+    protected String getPrefixEndDelimiter( NotationType notationType ) {
+        return (Utils.SPACE_STRING + (isVariant() ? Utils.EMPTY_STRING : Utils.SINGLE_QUOTE));
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -81,7 +111,7 @@ public final class QueryOperators extends ListAttributeState<QueryOperator> {
 
         return super.hashCode();
     }
-    
+
     /**
      * @param operator the operator notation of the operator being removed (cannot be <code>null</code> or empty)
      * @return <code>true</code> if removed

@@ -7,8 +7,6 @@
  */
 package org.jboss.tools.modeshape.jcr.attributes;
 
-import org.jboss.tools.modeshape.jcr.cnd.CndElement;
-
 /**
  * The autocreated attribute used by property definitions and child node definitions. When set, the property is automatically
  * created when the parent node is created. It mandates that a default value is set.
@@ -27,7 +25,7 @@ public class Autocreated extends AttributeState {
      */
     @Override
     protected String getCompactCndNotation() {
-        return NOTATION[CndElement.NotationType.COMPACT_INDEX];
+        return NOTATION[NotationType.COMPACT_INDEX];
     }
 
     /**
@@ -37,7 +35,7 @@ public class Autocreated extends AttributeState {
      */
     @Override
     protected String getCompressedCndNotation() {
-        return NOTATION[CndElement.NotationType.COMPRESSED_INDEX];
+        return NOTATION[NotationType.COMPRESSED_INDEX];
     }
 
     /**
@@ -47,7 +45,7 @@ public class Autocreated extends AttributeState {
      */
     @Override
     protected String getLongCndNotation() {
-        return NOTATION[CndElement.NotationType.LONG_INDEX];
+        return NOTATION[NotationType.LONG_INDEX];
     }
 
 }

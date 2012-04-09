@@ -9,8 +9,6 @@ package org.jboss.tools.modeshape.jcr.attributes;
 
 import org.jboss.tools.modeshape.jcr.QualifiedName;
 import org.jboss.tools.modeshape.jcr.Utils;
-import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences;
-import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences.Preference;
 
 /**
  * The child node definition's default type property.
@@ -51,7 +49,7 @@ public class DefaultType extends AttributeState {
      */
     @Override
     protected String getCompactCndNotation() {
-        return getLongCndNotation();
+        return getNotation(NotationType.COMPACT);
     }
 
     /**
@@ -61,7 +59,7 @@ public class DefaultType extends AttributeState {
      */
     @Override
     protected String getCompressedCndNotation() {
-        return getLongCndNotation();
+        return getNotation(NotationType.COMPRESSED);
     }
 
     /**
@@ -92,8 +90,12 @@ public class DefaultType extends AttributeState {
      */
     @Override
     protected String getLongCndNotation() {
+        return getNotation(NotationType.LONG);
+    }
+
+    private String getNotation( final NotationType notationType ) {
         if (isVariant()) {
-            return getPrefix();
+            return getPrefix(notationType);
         }
 
         final String defaultType = getDefaultTypeName();
@@ -102,17 +104,12 @@ public class DefaultType extends AttributeState {
             return Utils.EMPTY_STRING;
         }
 
-        return getPrefix() + defaultType;
+        return getPrefix(notationType) + defaultType;
     }
 
-    private String getPrefix() {
-        final String delim = CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.DEFAULT_TYPE_END_PREFIX_DELIMITER);
-
-        if (Utils.isEmpty(delim)) {
-            return NOTATION;
-        }
-
-        return (NOTATION + delim);
+    private String getPrefix( final NotationType notationType ) {
+        final String delim = ((NotationType.LONG == notationType) ? Utils.SPACE_STRING : Utils.EMPTY_STRING);
+        return (Utils.isEmpty(delim) ? NOTATION : (NOTATION + delim));
     }
 
     /**

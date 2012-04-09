@@ -10,6 +10,7 @@ package org.jboss.tools.modeshape.jcr.ui.cnd;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -32,8 +33,6 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Cursor;
@@ -48,7 +47,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.ui.forms.FormDialog;
 import org.eclipse.ui.forms.IManagedForm;
@@ -80,6 +78,7 @@ final class ChildNodeDialog extends FormDialog {
 
     private IAction addRequiredType;
     private Button btnOk;
+    private CCombo cbxDefaultType;
     private ChildNodeDefinition childNodeBeingEdited;
     private final ErrorMessage defaultTypeError;
     private IAction deleteRequiredType;
@@ -222,10 +221,11 @@ final class ChildNodeDialog extends FormDialog {
                 this.nameEditor = new QualifiedNameEditor(leftContainer,
                                                           SWT.NONE,
                                                           toolkit,
-                                                          Messages.propertyDefinitionName,
+                                                          Messages.childNodeDefinitionName,
                                                           this.existingNamespacePrefixes,
                                                           this.childNodeBeingEdited.getQualifiedName());
                 ((GridData)this.nameEditor.getLayoutData()).horizontalSpan = 2;
+                this.nameEditor.setAllowsResidualName(true);
                 this.nameEditor.addListener(SWT.Modify, new Listener() {
 
                     /**
@@ -243,35 +243,43 @@ final class ChildNodeDialog extends FormDialog {
             }
 
             { // default type
-                toolkit.createLabel(leftContainer, CndMessages.childNodeDefaultTypeLabel);
-                final Text txtDefaultType = toolkit.createText(leftContainer, Utils.EMPTY_STRING, Styles.TEXT_STYLE);
-                txtDefaultType.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-                txtDefaultType.setToolTipText(CndMessages.childNodeDefaultTypeToolTip);
+                final Composite defaultTypeContainer = toolkit.createComposite(leftContainer);
+                defaultTypeContainer.setLayout(new GridLayout(2, false));
+                defaultTypeContainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+                ((GridData)defaultTypeContainer.getLayoutData()).horizontalSpan = 2;
+                toolkit.paintBordersFor(defaultTypeContainer);
 
-                if (isEditMode()) {
-                    String currentValue = this.childNodeBeingEdited.getDefaultPrimaryTypeName();
+                final Label lblDefaultType = toolkit.createLabel(defaultTypeContainer, CndMessages.childNodeDefaultTypeLabel,
+                                                                 SWT.NONE);
+                lblDefaultType.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
 
-                    if (currentValue == null) {
-                        currentValue = Utils.EMPTY_STRING;
-                    }
+                this.cbxDefaultType = new CCombo(defaultTypeContainer, Styles.COMBO_STYLE);
+                this.cbxDefaultType.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+                ((GridData)this.cbxDefaultType.getLayoutData()).heightHint = this.cbxDefaultType.getItemHeight() + 4;
+                this.cbxDefaultType.setToolTipText(CndMessages.childNodeDefaultTypeToolTip);
+                toolkit.adapt(this.cbxDefaultType, true, false);
 
-                    txtDefaultType.setText(currentValue);
-                }
-
-                txtDefaultType.addModifyListener(new ModifyListener() {
+                this.cbxDefaultType.addSelectionListener(new SelectionAdapter() {
 
                     /**
                      * {@inheritDoc}
                      * 
-                     * @see org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse.swt.events.ModifyEvent)
+                     * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
                      */
                     @Override
-                    public void modifyText( final ModifyEvent e ) {
-                        handleDefaultTypeChanged(((Text)e.widget).getText());
+                    public void widgetSelected( final SelectionEvent e ) {
+                        String newDefaultType = ((CCombo)e.widget).getText();
+
+                        if (CndMessages.notAssignedItemChoice.equals(newDefaultType)) {
+                            newDefaultType = Utils.EMPTY_STRING;
+                        }
+
+                        handleDefaultTypeChanged(newDefaultType);
                     }
                 });
 
-                this.defaultTypeError.setControl(txtDefaultType);
+                refreshDefaultTypes(); // populate default type choices
+                this.defaultTypeError.setControl(this.cbxDefaultType);
             }
 
             { // attributes
@@ -739,6 +747,7 @@ final class ChildNodeDialog extends FormDialog {
         } else if (PropertyName.REQUIRED_TYPES.toString().equals(propName)) {
             validateRequiredTypes();
             this.requiredTypesViewer.refresh();
+            validateDefaultType();
         }
 
         updateState();
@@ -767,6 +776,39 @@ final class ChildNodeDialog extends FormDialog {
 
     private boolean isEditMode() {
         return (this.originalChildNode != null);
+    }
+
+    private void refreshDefaultTypes() {
+        // set default type choices if they have changed
+        final String[] temp = this.childNodeBeingEdited.getRequiredPrimaryTypeNames();
+        final String[] currentRequiredTypes = new String[temp.length + 1];
+        currentRequiredTypes[0] = CndMessages.notAssignedItemChoice;
+
+        if (temp.length != 0) {
+            System.arraycopy(temp, 0, currentRequiredTypes, 1, temp.length);
+        }
+
+        if ((this.cbxDefaultType.getItemCount() != currentRequiredTypes.length)
+                || !Arrays.asList(currentRequiredTypes).containsAll(Arrays.asList(this.cbxDefaultType.getItems()))) {
+            this.cbxDefaultType.setItems(currentRequiredTypes);
+        }
+
+        // select the current default type
+        final String defaultTypeName = this.childNodeBeingEdited.getDefaultPrimaryTypeName();
+
+        if (Utils.isEmpty(defaultTypeName)) {
+            this.cbxDefaultType.select(0); // select no default type assigned
+        } else {
+            final int index = this.cbxDefaultType.indexOf(defaultTypeName);
+
+            if (index == -1) {
+                // not a valid primary item but add and select
+                this.cbxDefaultType.add(defaultTypeName);
+                this.cbxDefaultType.select(this.cbxDefaultType.getItemCount() - 1);
+            } else {
+                this.cbxDefaultType.select(index);
+            }
+        }
     }
 
     private void updateMessage( final ValidationStatus status,

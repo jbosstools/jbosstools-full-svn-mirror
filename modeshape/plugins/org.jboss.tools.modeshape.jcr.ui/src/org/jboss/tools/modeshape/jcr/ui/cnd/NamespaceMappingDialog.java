@@ -278,7 +278,15 @@ final class NamespaceMappingDialog extends FormDialog {
             } else if (status.isInfo()) {
                 severity = IMessageProvider.INFORMATION;
             } else {
-                message = CndMessages.acceptNamespaceDialogMsg;
+                try {
+                    if (WorkspaceRegistry.get().isBuiltIn(currentNamespace)) {
+                        message = CndMessages.acceptBuiltInNamespaceDialogMsg;
+                    } else {
+                        message = CndMessages.acceptNamespaceDialogMsg;
+                    }
+                } catch (Exception e) {
+                    message = CndMessages.acceptNamespaceDialogMsg;
+                }
             }
 
             this.scrolledForm.setMessage(message, severity);

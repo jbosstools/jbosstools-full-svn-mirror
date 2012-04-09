@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.jboss.tools.modeshape.jcr.ItemDefinition;
 import org.jboss.tools.modeshape.jcr.QualifiedName;
 import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.ValidationStatus;
@@ -56,6 +57,8 @@ final class QualifiedNameEditor extends Composite {
     private final String qualifiedNameType;
 
     private String qualifier;
+
+    private boolean residualNameAllowed = false;
 
     private ValidationStatus status;
 
@@ -189,6 +192,14 @@ final class QualifiedNameEditor extends Composite {
     }
 
     /**
+     * @param newValue indicates if and unqualified name equal to {@link ItemDefinition#RESIDUAL_NAME} is allowed.
+     */
+    public void setAllowsResidualName(boolean newValue) {
+        this.residualNameAllowed = newValue;
+        validate();
+    }
+
+    /**
      * {@inheritDoc}
      * 
      * @see org.eclipse.swt.widgets.Control#setEnabled(boolean)
@@ -288,9 +299,14 @@ final class QualifiedNameEditor extends Composite {
     }
 
     private void validate() {
-        final QualifiedName currentQName = new QualifiedName(this.qualifier, this.unqualifiedName);
-        this.status = CndValidator.validateQualifiedName(currentQName, this.qualifiedNameType, this.validQualifiers,
-                                                         this.existingQNames);
+        if (ItemDefinition.RESIDUAL_NAME.equals(this.unqualifiedName) && this.residualNameAllowed) {
+            this.status = ValidationStatus.OK_STATUS;
+        } else {
+            final QualifiedName currentQName = new QualifiedName(this.qualifier, this.unqualifiedName);
+            this.status = CndValidator.validateQualifiedName(currentQName, this.qualifiedNameType, this.validQualifiers,
+                                                             this.existingQNames);
+        }
+
         final Event e = new Event();
         e.widget = this;
         e.type = SWT.Modify;

@@ -45,13 +45,13 @@ public class DefaultTypeTest implements Constants {
     @Test
     public void verifyCompactCndNotation() {
         this.attribute.setDefaultType(DEFAULT_TYPE);
-        assertEquals(DEFAULT_TYPE_TYPE_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPACT));
+        assertEquals(DEFAULT_TYPE_TYPE_SHORT_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPACT));
     }
 
     @Test
     public void verifyCompressedCndNotation() {
         this.attribute.setDefaultType(DEFAULT_TYPE);
-        assertEquals(DEFAULT_TYPE_TYPE_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPRESSED));
+        assertEquals(DEFAULT_TYPE_TYPE_SHORT_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPRESSED));
     }
 
     @Test
@@ -63,13 +63,13 @@ public class DefaultTypeTest implements Constants {
     @Test
     public void verifyVariantCompactCndNotation() {
         this.attribute.set(AttributeState.Value.VARIANT);
-        assertEquals(DEFAULT_TYPE_VARIANT_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPACT));
+        assertEquals(DEFAULT_TYPE_VARIANT_SHORT_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPACT));
     }
 
     @Test
     public void verifyVariantCompressedCndNotation() {
         this.attribute.set(AttributeState.Value.VARIANT);
-        assertEquals(DEFAULT_TYPE_VARIANT_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPRESSED));
+        assertEquals(DEFAULT_TYPE_VARIANT_SHORT_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPRESSED));
     }
 
     @Test

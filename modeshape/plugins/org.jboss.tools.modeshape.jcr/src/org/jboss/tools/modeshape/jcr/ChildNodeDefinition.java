@@ -21,8 +21,8 @@ import org.jboss.tools.modeshape.jcr.attributes.DefaultType;
 import org.jboss.tools.modeshape.jcr.attributes.NodeAttributes;
 import org.jboss.tools.modeshape.jcr.attributes.OnParentVersion;
 import org.jboss.tools.modeshape.jcr.attributes.RequiredTypes;
-import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences;
-import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences.Preference;
+import org.jboss.tools.modeshape.jcr.preference.JcrPreferenceConstants;
+import org.jboss.tools.modeshape.jcr.preference.JcrPreferenceStore;
 
 /**
  * The <code>ChildNodeDefinition</code> class represents node type child node definition.
@@ -223,27 +223,8 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     @Override
-    public int compareTo( final Object object ) {
-        final ChildNodeDefinition that = (ChildNodeDefinition)object;
-        final String thisName = getName();
-        final String thatName = that.getName();
-
-        if (Utils.isEmpty(thisName)) {
-            if (Utils.isEmpty(thatName)) {
-                return 0;
-            }
-
-            // thatName is not empty
-            return 1;
-        }
-
-        // thisName is not empty
-        if (thatName == null) {
-            return 1;
-        }
-
-        // thisName and thatName are not empty
-        return thisName.compareTo(thatName);
+    public int compareTo( final ItemDefinition itemDefinition ) {
+        return getQualifiedName().compareTo(itemDefinition.getQualifiedName());
     }
 
     /**
@@ -352,10 +333,6 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
         return this.defaultType;
     }
 
-    private String getFormatDelimiter() {
-        return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.CHILD_NODE_PROPERTY_DELIMITER);
-    }
-
     /**
      * {@inheritDoc}
      * 
@@ -379,10 +356,6 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
     @Override
     public int getOnParentVersion() {
         return this.attributes.getOnParentVersion().asJcrValue();
-    }
-
-    private String getPrefixEndDelimiter() {
-        return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.CHILD_NODE_DEFINITION_END_PREFIX_DELIMITER);
     }
 
     /**
@@ -718,12 +691,14 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
      */
     @Override
     public String toCndNotation( final NotationType notationType ) {
+        JcrPreferenceStore prefStore = JcrPreferenceStore.get();
+
         final StringBuilder builder = new StringBuilder(NOTATION_PREFIX);
-        builder.append(getPrefixEndDelimiter());
+        builder.append((NotationType.LONG == notationType) ? Utils.SPACE_STRING : Utils.EMPTY_STRING);
 
-        final String DELIM = getFormatDelimiter();
-
+        final String DELIM = prefStore.get(JcrPreferenceConstants.CndPreference.CHILD_NODE_PROPERTY_DELIMITER);
         builder.append(this.name.toCndNotation(notationType));
+
         Utils.build(builder, true, DELIM, this.requiredTypes.toCndNotation(notationType));
         Utils.build(builder, true, DELIM, this.defaultType.toCndNotation(notationType));
         Utils.build(builder, true, DELIM, this.attributes.toCndNotation(notationType));

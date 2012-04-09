@@ -14,7 +14,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.StringTokenizer;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.osgi.util.NLS;
+import org.jboss.tools.modeshape.jcr.Activator;
 import org.jboss.tools.modeshape.jcr.ChildNodeDefinition;
 import org.jboss.tools.modeshape.jcr.ItemDefinition;
 import org.jboss.tools.modeshape.jcr.Messages;
@@ -25,6 +28,7 @@ import org.jboss.tools.modeshape.jcr.PropertyDefinition;
 import org.jboss.tools.modeshape.jcr.QualifiedName;
 import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.ValidationStatus;
+import org.jboss.tools.modeshape.jcr.WorkspaceRegistry;
 import org.jboss.tools.modeshape.jcr.attributes.AttributeState.Value;
 import org.jboss.tools.modeshape.jcr.attributes.PropertyType;
 import org.jboss.tools.modeshape.jcr.attributes.QueryOperators.QueryOperator;
@@ -339,19 +343,39 @@ public final class CndValidator {
         Utils.verifyIsNotNull(childNodeDefinition, "childNodeDefinition"); //$NON-NLS-1$
         Utils.verifyIsNotNull(status, "status"); //$NON-NLS-1$
 
-        final String defaultType = childNodeDefinition.getDefaultPrimaryTypeName();
+        String childNodeName = childNodeDefinition.getName();
+
+        if (Utils.isEmpty(childNodeName)) {
+            childNodeName = Messages.missingName;
+        }
+
+        final String defaultTypeName = childNodeDefinition.getDefaultPrimaryTypeName();
 
         if (childNodeDefinition.getState(ChildNodeDefinition.PropertyName.DEFAULT_TYPE) == Value.IS) {
-            // ERROR - Invalid default type name
+            // ERROR - Invalid default type name (cannot be empty)
             validateQualifiedName(childNodeDefinition.getDefaultType().getDefaultType(), Messages.defaultTypeName,
                                   validNamespacePrefixes, null, status);
-        } else if (!Utils.isEmpty(defaultType)) {
-            String childNodeName = childNodeDefinition.getName();
 
-            if (Utils.isEmpty(childNodeName)) {
-                childNodeName = Messages.missingName;
+            // ERROR - Must be equal to a required type if not a residual
+            if (!ItemDefinition.RESIDUAL_NAME.equals(childNodeName)) {
+                final String[] requiredTypes = childNodeDefinition.getRequiredPrimaryTypeNames();
+                boolean foundMatch = false;
+
+                if (!Utils.isEmpty(defaultTypeName)) {
+                    for (final String requiredType : requiredTypes) {
+                        if (defaultTypeName.equals(requiredType)) {
+                            foundMatch = true;
+                            break;
+                        }
+                    }
+
+                    if (!foundMatch) {
+                        status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.defaultTypeDoesNotMatchRequiredType,
+                                                                                childNodeName, defaultTypeName)));
+                    }
+                }
             }
-
+        } else if (!Utils.isEmpty(defaultTypeName)) {
             // ERROR - Cannot have explicit default type when default type is marked as a variant
             status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.defaultTypeExistsButMarkedAsVariant, childNodeName)));
         }
@@ -407,13 +431,13 @@ public final class CndValidator {
                 isValid(defaultValue, propertyDefinition.getType(), Messages.defaultValue, status);
 
                 // make sure if NAME type the qualifier is valid
-                if (!Utils.isEmpty(validNamespacePrefixes) && propertyDefinition.getType() == PropertyType.NAME) {
-                    QualifiedName qname = QualifiedName.parse(defaultValue);
-                    String qualifier = qname.getQualifier();
+                if (!Utils.isEmpty(validNamespacePrefixes) && (propertyDefinition.getType() == PropertyType.NAME)) {
+                    final QualifiedName qname = QualifiedName.parse(defaultValue);
+                    final String qualifier = qname.getQualifier();
                     boolean valid = false;
 
                     if (!Utils.isEmpty(qualifier)) {
-                        for (String validQualifier : validNamespacePrefixes) {
+                        for (final String validQualifier : validNamespacePrefixes) {
                             if (validQualifier.equals(qualifier)) {
                                 valid = true;
                                 break;
@@ -528,7 +552,7 @@ public final class CndValidator {
         // allow residual name
         if (!ItemDefinition.RESIDUAL_NAME.equals(childNodeDefinition.getName())) {
             // ERROR - Empty or invalid child node definition name
-            validateQualifiedName(childNodeDefinition.getQualifiedName(), Messages.childDefinitionName, validNamespacePrefixes,
+            validateQualifiedName(childNodeDefinition.getQualifiedName(), Messages.childNodeDefinitionName, validNamespacePrefixes,
                                   existingChildNodeNames, status);
         }
     }
@@ -611,15 +635,39 @@ public final class CndValidator {
          */
 
         final MultiValidationStatus status = new MultiValidationStatus();
+        final String prefix = namespaceMapping.getPrefix();
+        final String uri = namespaceMapping.getUri();
 
         // ERROR - Empty or invalid prefix
-        validateLocalName(namespaceMapping.getPrefix(), Messages.namespacePrefix, status);
+        validateLocalName(prefix, Messages.namespacePrefix, status);
 
         // ERROR - Empty or invalid URI
-        final ValidationStatus uriStatus = validateUri(namespaceMapping.getUri(), Messages.namespaceUri);
+        final ValidationStatus uriStatus = validateUri(uri, Messages.namespaceUri);
 
         if (!uriStatus.isOk()) {
             status.add(uriStatus);
+        }
+
+        // ERROR - prefix matches a built-in but URI does not match
+        try {
+            if (!Utils.isEmpty(prefix) && WorkspaceRegistry.get().isBuiltInNamespacePrefix(prefix)) {
+                if (!Utils.equals(uri, WorkspaceRegistry.get().getUri(prefix))) {
+                    status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.invalidUriForBuiltInNamespacePrefix,
+                                                                            new Object[] { uri, prefix,
+                                                                                    WorkspaceRegistry.get().getUri(prefix) })));
+                }
+            }
+
+            // ERROR - URI matches a built-in but prefix does not match
+            if (!Utils.isEmpty(uri) && WorkspaceRegistry.get().isBuiltInNamespaceUri(uri)) {
+                if (!Utils.equals(prefix, WorkspaceRegistry.get().getPrefix(uri))) {
+                    status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.invalidPrefixForBuiltInNamespaceUri,
+                                                                            new Object[] { prefix, uri,
+                                                                                    WorkspaceRegistry.get().getPrefix(uri) })));
+                }
+            }
+        } catch (final Exception e) {
+            Activator.get().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, null, e));
         }
 
         return status;
@@ -828,16 +876,11 @@ public final class CndValidator {
             }
         }
 
-        boolean noPropertyDefinitions = false;
-        boolean noChildNodeDefinitions = false;
-
         if (validateEachPropertyAndChildNode) {
             { // property definitions
                 final Collection<PropertyDefinition> propertyDefinitions = nodeTypeDefinition.getPropertyDefinitions();
 
-                if (Utils.isEmpty(propertyDefinitions)) {
-                    noPropertyDefinitions = true;
-                } else {
+                if (!Utils.isEmpty(propertyDefinitions)) {
                     validatePropertyDefinitions(nodeTypeDefinitionName, validNamespacePrefixes, propertyDefinitions, status);
                 }
             }
@@ -845,21 +888,10 @@ public final class CndValidator {
             { // child node definitions
                 final Collection<ChildNodeDefinition> childNodeDefinitions = nodeTypeDefinition.getChildNodeDefinitions();
 
-                if (Utils.isEmpty(childNodeDefinitions)) {
-                    noChildNodeDefinitions = true;
-                } else {
+                if (!Utils.isEmpty(childNodeDefinitions)) {
                     validateChildNodeDefinitions(nodeTypeDefinitionName, validNamespacePrefixes, childNodeDefinitions, status);
                 }
             }
-        } else {
-            noPropertyDefinitions = nodeTypeDefinition.getPropertyDefinitions().isEmpty();
-            noChildNodeDefinitions = nodeTypeDefinition.getChildNodeDefinitions().isEmpty();
-        }
-
-        // WARNING - No property definitions or child node definitions exist
-        if (noPropertyDefinitions && noChildNodeDefinitions) {
-            status.add(ValidationStatus.createWarningMessage(NLS.bind(Messages.nodeTypeDefinitionHasNoPropertyDefinitionsOrChildNodeDefinitions,
-                                                                      nodeTypeDefinitionName)));
         }
 
         return status;
@@ -953,7 +985,7 @@ public final class CndValidator {
      * @param propertyName the property name whose path value is being validated (cannot be <code>null</code> or empty)
      * @return the validation status (never <code>null</code>)
      */
-    public static ValidationStatus validatePath( String path,
+    public static ValidationStatus validatePath( final String path,
                                                  String propertyName ) {
         Utils.verifyIsNotNull(propertyName, "propertyName"); //$NON-NLS-1$
 
@@ -965,11 +997,11 @@ public final class CndValidator {
             return ValidationStatus.createErrorMessage(NLS.bind(Messages.emptyValue, propertyName));
         }
 
-        StringTokenizer pathTokenizer = new StringTokenizer(path, "/"); //$NON-NLS-1$
+        final StringTokenizer pathTokenizer = new StringTokenizer(path, "/"); //$NON-NLS-1$
 
         if (pathTokenizer.hasMoreTokens()) {
             while (pathTokenizer.hasMoreElements()) {
-                String segment = pathTokenizer.nextToken();
+                final String segment = pathTokenizer.nextToken();
 
                 if (Utils.isEmpty(segment)) {
                     if (pathTokenizer.hasMoreTokens()) {
@@ -978,11 +1010,11 @@ public final class CndValidator {
                                                                             PropertyType.PATH));
                     }
                 } else {
-                    StringTokenizer segmentTokenizer = new StringTokenizer(segment, "[]"); //$NON-NLS-1$
+                    final StringTokenizer segmentTokenizer = new StringTokenizer(segment, "[]"); //$NON-NLS-1$
 
                     if (segmentTokenizer.countTokens() == 2) {
                         // has SNS index
-                        String qualifiedName = segmentTokenizer.nextToken();
+                        final String qualifiedName = segmentTokenizer.nextToken();
 
                         if (Utils.isEmpty(qualifiedName)) {
                             // found SNS but now qualified name
@@ -996,8 +1028,8 @@ public final class CndValidator {
                         }
 
                         // validate qualified name
-                        QualifiedName qname = QualifiedName.parse(qualifiedName);
-                        MultiValidationStatus status = validateQualifiedName(qname, propertyName, null, null);
+                        final QualifiedName qname = QualifiedName.parse(qualifiedName);
+                        final MultiValidationStatus status = validateQualifiedName(qname, propertyName, null, null);
 
                         // return if invalid qualified
                         if (status.isError()) {
@@ -1006,10 +1038,10 @@ public final class CndValidator {
 
                         // valid qualified name so check SNS index
                         if (segmentTokenizer.countTokens() == 1) {
-                            String snsIndex = segmentTokenizer.nextToken();
+                            final String snsIndex = segmentTokenizer.nextToken();
 
                             // make sure SNS index is a number
-                            for (char c : snsIndex.toCharArray()) {
+                            for (final char c : snsIndex.toCharArray()) {
                                 if (!Character.isDigit(c)) {
                                     // found invalid character
                                     return ValidationStatus.createErrorMessage(NLS.bind(Messages.invalidPropertyValueForType, path,
@@ -1028,8 +1060,8 @@ public final class CndValidator {
                         }
 
                         // no SNS index
-                        QualifiedName qname = QualifiedName.parse(segment);
-                        MultiValidationStatus status = validateQualifiedName(qname, propertyName, null, null);
+                        final QualifiedName qname = QualifiedName.parse(segment);
+                        final MultiValidationStatus status = validateQualifiedName(qname, propertyName, null, null);
 
                         // return if invalid segment
                         if (status.isError()) {
@@ -1040,7 +1072,7 @@ public final class CndValidator {
             }
         } else {
             // only one segment
-            QualifiedName qname = QualifiedName.parse(path);
+            final QualifiedName qname = QualifiedName.parse(path);
             return validateQualifiedName(qname, propertyName, null, null);
         }
 

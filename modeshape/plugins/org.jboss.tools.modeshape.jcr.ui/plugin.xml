@@ -24,6 +24,17 @@
       </editor>
    </extension>
 
+<!-- CND Preference Page -->
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            name="%cndPreferencePage.name"
+            category="modeShapePreferencePage"
+            class="org.jboss.tools.modeshape.jcr.ui.preferences.CndPreferencePage"
+            id="org.jboss.tools.modeshape.jcr.ui.jcrPreferencePage">
+      </page>
+   </extension>
+
 <!-- New wizards
    <extension
          point="org.eclipse.ui.newWizards">

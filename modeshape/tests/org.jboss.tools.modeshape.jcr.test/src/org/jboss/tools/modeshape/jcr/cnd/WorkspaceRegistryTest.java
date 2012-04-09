@@ -15,6 +15,7 @@ import static org.junit.Assert.fail;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.jboss.tools.modeshape.jcr.NamespaceMapping;
 import org.jboss.tools.modeshape.jcr.PropertyDefinition;
 import org.jboss.tools.modeshape.jcr.WorkspaceRegistry;
 import org.junit.Before;
@@ -34,6 +35,9 @@ public class WorkspaceRegistryTest {
 
     @Test
     public void jcrNamespaceShouldBeRegistered() {
+        assertTrue(this.registry.isBuiltIn(new NamespaceMapping(Constants.BuiltInNamespaces.JCR.getPrefix(),
+                                                                Constants.BuiltInNamespaces.JCR.getUri())));
+        assertTrue(this.registry.isBuiltInNamespacePrefix(Constants.BuiltInNamespaces.JCR.getPrefix()));
         assertNotNull(this.registry.getNamespaceMapping(Constants.BuiltInNamespaces.JCR.getPrefix()));
         assertEquals(Constants.BuiltInNamespaces.JCR.getPrefix(), this.registry.getPrefix(Constants.BuiltInNamespaces.JCR.getUri()));
         assertEquals(Constants.BuiltInNamespaces.JCR.getUri(), this.registry.getUri(Constants.BuiltInNamespaces.JCR.getPrefix()));
@@ -41,6 +45,9 @@ public class WorkspaceRegistryTest {
 
     @Test
     public void mixNamespaceShouldBeRegistered() {
+        assertTrue(this.registry.isBuiltIn(new NamespaceMapping(Constants.BuiltInNamespaces.MIX.getPrefix(),
+                                                                Constants.BuiltInNamespaces.MIX.getUri())));
+        assertTrue(this.registry.isBuiltInNamespacePrefix(Constants.BuiltInNamespaces.MIX.getPrefix()));
         assertNotNull(this.registry.getNamespaceMapping(Constants.BuiltInNamespaces.MIX.getPrefix()));
         assertEquals(Constants.BuiltInNamespaces.MIX.getPrefix(), this.registry.getPrefix(Constants.BuiltInNamespaces.MIX.getUri()));
         assertEquals(Constants.BuiltInNamespaces.MIX.getUri(), this.registry.getUri(Constants.BuiltInNamespaces.MIX.getPrefix()));
@@ -48,6 +55,9 @@ public class WorkspaceRegistryTest {
 
     @Test
     public void ntNamespaceShouldBeRegistered() {
+        assertTrue(this.registry.isBuiltIn(new NamespaceMapping(Constants.BuiltInNamespaces.NT.getPrefix(),
+                                                                Constants.BuiltInNamespaces.NT.getUri())));
+        assertTrue(this.registry.isBuiltInNamespacePrefix(Constants.BuiltInNamespaces.NT.getPrefix()));
         assertNotNull(this.registry.getNamespaceMapping(Constants.BuiltInNamespaces.NT.getPrefix()));
         assertEquals(Constants.BuiltInNamespaces.NT.getPrefix(), this.registry.getPrefix(Constants.BuiltInNamespaces.NT.getUri()));
         assertEquals(Constants.BuiltInNamespaces.NT.getUri(), this.registry.getUri(Constants.BuiltInNamespaces.NT.getPrefix()));

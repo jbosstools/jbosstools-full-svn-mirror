@@ -245,7 +245,7 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
         this.openChildNodeDeclaringNodeType.setEnabled(false);
         this.openChildNodeDeclaringNodeType.setToolTipText(CndMessages.openDeclaringNodeTypeToolTip);
         this.openChildNodeDeclaringNodeType.setImageDescriptor(Activator.getSharedInstance()
-                                                                       .getImageDescriptor(JcrUiConstants.Images.OPEN_DECLARING_NODE_TYPE));
+                                                                        .getImageDescriptor(JcrUiConstants.Images.OPEN_DECLARING_NODE_TYPE));
     }
 
     private void createChildNodeSection( final IManagedForm managedForm,
@@ -320,7 +320,7 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
                     final NodeTypeDefinition nodeTypeDefinition = getSelectedNodeType();
 
                     if (!Utils.equivalent(nodeTypeDefinition.getName(), childNodeDefinition.getDeclaringNodeTypeDefinitionName()
-                                                                                          .get())) {
+                                                                                           .get())) {
                         return getShell().getDisplay().getSystemColor(SWT.COLOR_WIDGET_LIGHT_SHADOW);
                     }
                 }
@@ -341,7 +341,7 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
                     final NodeTypeDefinition nodeTypeDefinition = getSelectedNodeType();
 
                     if (!Utils.equivalent(nodeTypeDefinition.getName(), childNodeDefinition.getDeclaringNodeTypeDefinitionName()
-                                                                                          .get())) {
+                                                                                           .get())) {
                         return JFaceResources.getFontRegistry().getItalic(JFaceResources.TEXT_FONT);
                     }
                 }
@@ -366,7 +366,7 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
 
                 if (this.columnIndex == ChildNodeColumnIndexes.DECLARING_NODE_TYPE) {
                     if (!Utils.equivalent(getSelectedNodeType().getName(), childNodeDefinition.getDeclaringNodeTypeDefinitionName()
-                                                                                             .get())) {
+                                                                                              .get())) {
                         return childNodeDefinition.getDeclaringNodeTypeDefinitionName().get();
                     }
 
@@ -666,7 +666,7 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
                         public void widgetSelected( final SelectionEvent e ) {
                             String newPrimaryItem = ((CCombo)e.widget).getText();
 
-                            if (CndMessages.noPrimaryItemChoice.equals(newPrimaryItem)) {
+                            if (CndMessages.notAssignedItemChoice.equals(newPrimaryItem)) {
                                 newPrimaryItem = Utils.EMPTY_STRING;
                             }
 
@@ -1984,16 +1984,16 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
 
     void handleChildNodeSelected() {
         // update button enablements
-        boolean enable = (getSelectedNodeType() != null);
+        final boolean enable = (getSelectedNodeType() != null);
 
         if (this.addChildNode.isEnabled() != enable) {
             this.addChildNode.setEnabled(enable);
         }
 
-        boolean enableWithChildNodeSelected = (enable && (getSelectedChildNode() != null));
-        boolean enableInheritedChildNode = enableWithChildNodeSelected
+        final boolean enableWithChildNodeSelected = (enable && (getSelectedChildNode() != null));
+        final boolean enableInheritedChildNode = enableWithChildNodeSelected
                 && !getSelectedNodeType().hasDeclaredChildNodeDefinition(getSelectedChildNode().getName());
-        boolean enableDeclaredChildNode = enableWithChildNodeSelected
+        final boolean enableDeclaredChildNode = enableWithChildNodeSelected
                 && getSelectedNodeType().hasDeclaredChildNodeDefinition(getSelectedChildNode().getName());
 
         // enable if selected child node is not inherited
@@ -2403,6 +2403,16 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
             } else if (NodeTypeDefinition.PropertyName.SUPERTYPES.toString().equals(propName)) {
                 validateSuperTypes();
                 this.superTypesViewer.refresh();
+
+                // refresh properties if showing inherited
+                if (shouldShowInheritedProperties()) {
+                    this.propertyViewer.refresh();
+                }
+
+                // refresh child nodes if showing inherited
+                if (shouldShowInheritedChildNodes()) {
+                    this.childNodeViewer.refresh();
+                }
             }
 
             // tell editor about node type definition change
@@ -2424,16 +2434,16 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
 
     void handlePropertySelected() {
         // update button enablements
-        boolean enable = (getSelectedNodeType() != null);
+        final boolean enable = (getSelectedNodeType() != null);
 
         if (this.addProperty.isEnabled() != enable) {
             this.addProperty.setEnabled(enable);
         }
 
-        boolean enableWithPropertySelected = (enable && (getSelectedProperty() != null));
-        boolean enableInheritedProperty = enableWithPropertySelected
+        final boolean enableWithPropertySelected = (enable && (getSelectedProperty() != null));
+        final boolean enableInheritedProperty = enableWithPropertySelected
                 && !getSelectedNodeType().hasDeclaredPropertyDefinition(getSelectedProperty().getName());
-        boolean enableDeclaredProperty = enableWithPropertySelected
+        final boolean enableDeclaredProperty = enableWithPropertySelected
                 && getSelectedNodeType().hasDeclaredPropertyDefinition(getSelectedProperty().getName());
 
         // enable if selected property is not inherited
@@ -2458,8 +2468,8 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
 
     void handleSelectPropertyDeclaringNodeType() {
         assert (getSelectedProperty() != null) : "handleSelectPropertyDeclaringNodeType called and no property selected"; //$NON-NLS-1$
-        QualifiedName qname = getSelectedProperty().getDeclaringNodeTypeDefinitionName();
-        NodeTypeDefinition nodeType = getCnd().getNodeTypeDefinition(qname.get());
+        final QualifiedName qname = getSelectedProperty().getDeclaringNodeTypeDefinitionName();
+        final NodeTypeDefinition nodeType = getCnd().getNodeTypeDefinition(qname.get());
 
         if (nodeType == null) {
 
@@ -2583,27 +2593,38 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
             }
 
             // set primary item choices if they have changed
-            final List<ItemDefinition> currentItems = nodeTypeDefinition.getItemDefinitions();
+            try {
+                final Collection<ItemDefinition> currentItems = getCnd().getItemDefinitions(nodeTypeDefinition.getName(), true);
 
-            // take out any items with residual names
-            for (final ItemDefinition item : new ArrayList<ItemDefinition>(currentItems)) {
-                if (ItemDefinition.RESIDUAL_NAME.equals(item.getQualifiedName().get())) {
-                    currentItems.remove(item);
+                // take out any items with residual names
+                for (final ItemDefinition item : new ArrayList<ItemDefinition>(currentItems)) {
+                    if (ItemDefinition.RESIDUAL_NAME.equals(item.getQualifiedName().get())) {
+                        currentItems.remove(item);
+                    }
                 }
-            }
 
-            final String[] itemNames = new String[currentItems.size() + 1];
-            itemNames[0] = CndMessages.noPrimaryItemChoice;
-            int i = 1;
+                final String[] itemNames = new String[currentItems.size() + 1];
+                itemNames[0] = CndMessages.notAssignedItemChoice;
+                int i = 1;
 
-            for (final ItemDefinition item : currentItems) {
-                itemNames[i++] = item.getQualifiedName().get();
-            }
+                for (final ItemDefinition item : currentItems) {
+                    itemNames[i++] = item.getQualifiedName().get();
+                }
 
-            // only reload primary item names if different
-            if ((this.cbxPrimaryItem.getItemCount() != itemNames.length)
-                    || !Arrays.asList(itemNames).containsAll(Arrays.asList(this.cbxPrimaryItem.getItems()))) {
-                this.cbxPrimaryItem.setItems(itemNames);
+                // only reload primary item names if different
+                if ((this.cbxPrimaryItem.getItemCount() != itemNames.length)
+                        || !Arrays.asList(itemNames).containsAll(Arrays.asList(this.cbxPrimaryItem.getItems()))) {
+                    this.cbxPrimaryItem.setItems(itemNames);
+                }
+            } catch (final Exception e) {
+                Activator.getSharedInstance()
+                         .getLog()
+                         .log(new Status(IStatus.ERROR,
+                                         JcrUiConstants.PLUGIN_ID,
+                                         NLS.bind(CndMessages.errorObtainingInheritedItemDefinitions, nodeTypeDefinition.getName()),
+                                         e));
+
+                this.cbxPrimaryItem.setItems(new String[] { CndMessages.notAssignedItemChoice });
             }
 
             // select the current primary item name
@@ -2858,10 +2879,10 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
                 this.propertyViewer.getTable().setEnabled(enableWithNodeTypeSelected);
             }
 
-            boolean enableWithPropertySelected = (enableWithNodeTypeSelected && (getSelectedProperty() != null));
-            boolean enableInheritedProperty = enableWithPropertySelected
+            final boolean enableWithPropertySelected = (enableWithNodeTypeSelected && (getSelectedProperty() != null));
+            final boolean enableInheritedProperty = enableWithPropertySelected
                     && !getSelectedNodeType().hasDeclaredPropertyDefinition(getSelectedProperty().getName());
-            boolean enableDeclaredProperty = enableWithPropertySelected
+            final boolean enableDeclaredProperty = enableWithPropertySelected
                     && getSelectedNodeType().hasDeclaredPropertyDefinition(getSelectedProperty().getName());
 
             // enable if selected property is not inherited

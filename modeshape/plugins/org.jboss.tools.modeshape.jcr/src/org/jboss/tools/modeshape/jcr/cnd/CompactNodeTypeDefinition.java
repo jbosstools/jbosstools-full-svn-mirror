@@ -16,13 +16,15 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.jboss.tools.modeshape.jcr.ChildNodeDefinition;
+import org.jboss.tools.modeshape.jcr.ItemDefinition;
 import org.jboss.tools.modeshape.jcr.NamespaceMapping;
 import org.jboss.tools.modeshape.jcr.NodeTypeDefinition;
 import org.jboss.tools.modeshape.jcr.PropertyDefinition;
 import org.jboss.tools.modeshape.jcr.QualifiedName;
 import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.WorkspaceRegistry;
-import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences.Preference;
+import org.jboss.tools.modeshape.jcr.preference.JcrPreferenceConstants;
+import org.jboss.tools.modeshape.jcr.preference.JcrPreferenceStore;
 
 /**
  * The <code>CompactNodeTypeDefinition</code> class represents one CND file.
@@ -239,7 +241,8 @@ public class CompactNodeTypeDefinition implements CndElement {
                 final NodeTypeDefinition superTypeNodeType = getNodeTypeDefinition(superType.get());
 
                 if (superTypeNodeType == null) {
-                    childNodes.addAll(WorkspaceRegistry.get().getChildNodeDefinitions(nodeTypeDefinitionName, true));
+                    // super type not found in CND so see if it is a built-in
+                    childNodes.addAll(WorkspaceRegistry.get().getChildNodeDefinitions(superType.get(), true));
                 } else {
                     childNodes.addAll(getChildNodeDefinitions(superTypeNodeType.getName(), true));
                 }
@@ -249,16 +252,22 @@ public class CompactNodeTypeDefinition implements CndElement {
         return childNodes;
     }
 
-    private String getEndNamespaceMappingSectionDelimiter() {
-        return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.NAMESPACE_MAPPING_SECTION_END_DELIMITER);
-    }
-
-    private String getEndNodeTypeDefinitionSectionDelimiter() {
-        return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.NODE_TYPE_DEFINITION_SECTION_END_DELIMITER);
-    }
-
-    private String getNamespaceMappingDelimiter() {
-        return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.NAMESPACE_MAPPING_DELIMITER);
+    /**
+     * The node type definition must exist in this CND for it to return child nodes.
+     * 
+     * @param nodeTypeDefinitionName the name of the node type definition whose item definitions are being requested (cannot be
+     *            <code>null</code> or empty)
+     * @param includeInherited indicates if inherited item definitions should be included
+     * @return the item definitions (never <code>null</code>)
+     * @throws Exception if there is a problem obtaining the inherited item definitions
+     */
+    public Collection<ItemDefinition> getItemDefinitions( final String nodeTypeDefinitionName,
+                                                          final boolean includeInherited ) throws Exception {
+        final List<ItemDefinition> itemDefinitions = new ArrayList<ItemDefinition>(getChildNodeDefinitions(nodeTypeDefinitionName,
+                                                                                                           includeInherited));
+        itemDefinitions.addAll(getPropertyDefinitions(nodeTypeDefinitionName, includeInherited));
+        Collections.sort(itemDefinitions);
+        return itemDefinitions;
     }
 
     /**
@@ -307,10 +316,6 @@ public class CompactNodeTypeDefinition implements CndElement {
         return null;
     }
 
-    private String getNodeTypeDefinitionDelimiter() {
-        return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.NODE_TYPE_DEFINITION_DELIMITER);
-    }
-
     /**
      * @return the node type definitions (never <code>null</code>)
      */
@@ -349,7 +354,8 @@ public class CompactNodeTypeDefinition implements CndElement {
                 final NodeTypeDefinition superTypeNodeType = getNodeTypeDefinition(superType.get());
 
                 if (superTypeNodeType == null) {
-                    properties.addAll(WorkspaceRegistry.get().getPropertyDefinitions(nodeTypeDefinitionName, true));
+                    // super type not found in CND so see if it is a built-in
+                    properties.addAll(WorkspaceRegistry.get().getPropertyDefinitions(superType.get(), true));
                 } else {
                     properties.addAll(getPropertyDefinitions(superTypeNodeType.getName(), true));
                 }
@@ -455,12 +461,13 @@ public class CompactNodeTypeDefinition implements CndElement {
      */
     @Override
     public String toCndNotation( final NotationType notationType ) {
+        final JcrPreferenceStore prefStore = JcrPreferenceStore.get();
         final StringBuilder builder = new StringBuilder();
         boolean addDelim = false;
 
         { // namespace mappings
             if (!Utils.isEmpty(this.namespaceMappings)) {
-                final String DELIM = getNamespaceMappingDelimiter();
+                final String DELIM = prefStore.get(JcrPreferenceConstants.CndPreference.NAMESPACE_MAPPING_DELIMITER);
 
                 for (final NamespaceMapping namespaceMapping : this.namespaceMappings) {
                     if (Utils.build(builder, addDelim, DELIM, namespaceMapping.toCndNotation(notationType))) {
@@ -468,13 +475,13 @@ public class CompactNodeTypeDefinition implements CndElement {
                     }
                 }
 
-                builder.append(getEndNamespaceMappingSectionDelimiter());
+                builder.append(prefStore.get(JcrPreferenceConstants.CndPreference.NAMESPACE_MAPPING_SECTION_END_DELIMITER));
             }
         }
 
         { // node type definitions
             if (!Utils.isEmpty(this.nodeTypeDefinitions)) {
-                final String DELIM = getNodeTypeDefinitionDelimiter();
+                final String DELIM = prefStore.get(JcrPreferenceConstants.CndPreference.NODE_TYPE_DEFINITION_DELIMITER);
 
                 for (final NodeTypeDefinition nodeTypeDefinition : this.nodeTypeDefinitions) {
                     if (Utils.build(builder, addDelim, DELIM, nodeTypeDefinition.toCndNotation(notationType))) {
@@ -482,7 +489,7 @@ public class CompactNodeTypeDefinition implements CndElement {
                     }
                 }
 
-                builder.append(getEndNodeTypeDefinitionSectionDelimiter());
+                builder.append(prefStore.get(JcrPreferenceConstants.CndPreference.NODE_TYPE_DEFINITION_SECTION_END_DELIMITER));
             }
         }
 

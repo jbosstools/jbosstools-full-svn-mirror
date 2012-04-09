@@ -17,7 +17,6 @@ import java.util.List;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.osgi.util.NLS;
 import org.jboss.tools.modeshape.jcr.cnd.CndImporter;
-import org.jboss.tools.modeshape.jcr.cnd.CndValidator;
 import org.jboss.tools.modeshape.jcr.cnd.CompactNodeTypeDefinition;
 import org.osgi.framework.Bundle;
 
@@ -56,7 +55,7 @@ public class WorkspaceRegistry {
         File builtInsCndFile = null;
 
         if (Platform.isRunning()) {
-            Bundle bundle = Platform.getBundle(Utils.PLUGIN_ID);
+            Bundle bundle = Platform.getBundle(Activator.PLUGIN_ID);
             URL url = bundle.getEntry(BUILT_INS_CND_FILE_NAME);
     
             if (url == null) {
@@ -91,14 +90,11 @@ public class WorkspaceRegistry {
 
         // register namespace mappings
         for (final NamespaceMapping namespace : jsrBuiltIns.getNamespaceMappings()) {
-            assert !CndValidator.validateNamespaceMapping(namespace).isError() : "Invalid namespace " + namespace; //$NON-NLS-1$
             this.namespaces.add(namespace);
         }
 
         // register node type definitions
         for (final NodeTypeDefinition nodeType : jsrBuiltIns.getNodeTypeDefinitions()) {
-            assert !CndValidator.validateNodeTypeDefinition(nodeType, getPrefixes(), null, true).isError() : "Invalid node type definition " //$NON-NLS-1$
-                    + nodeType.getName();
             this.nodeTypes.add(nodeType);
         }
     }
@@ -263,5 +259,33 @@ public class WorkspaceRegistry {
         }
 
         return uris;
+    }
+
+    /**
+     * @param namespaceMapping the namespace mapping being checked (cannot be <code>null</code>)
+     * @return <code>true</code> if a built-in namespace mapping
+     */
+    public boolean isBuiltIn(NamespaceMapping namespaceMapping) {
+        Utils.verifyIsNotNull(namespaceMapping, "namespaceMapping"); //$NON-NLS-1$
+        NamespaceMapping builtIn = getNamespaceMapping(namespaceMapping.getPrefix());
+        return ((builtIn != null) && builtIn.equals(namespaceMapping));
+    }
+
+    /**
+     * @param prefix the prefix being checked (cannot be <code>null</code> or empty)
+     * @return <code>true</code> if the prefix matches one of a built-in namespace mapping
+     */
+    public boolean isBuiltInNamespacePrefix(String prefix) {
+        Utils.verifyIsNotNull(prefix, "prefix"); //$NON-NLS-1$
+        return (getUri(prefix) != null);
+    }
+
+    /**
+     * @param uri the URI being checked (cannot be <code>null</code> or empty)
+     * @return <code>true</code> if the URI matches one of a built-in namespace mapping
+     */
+    public boolean isBuiltInNamespaceUri(String uri) {
+        Utils.verifyIsNotNull(uri, "uri"); //$NON-NLS-1$
+        return (getPrefix(uri) != null);
     }
 }

@@ -17,7 +17,7 @@ public final class Messages extends NLS {
     /**
      * The name for the child definition's name property.
      */
-    public static String childDefinitionName;
+    public static String childNodeDefinitionName;
 
     /**
      * A message indicating the CND has no namespace or node type definitions.
@@ -30,6 +30,12 @@ public final class Messages extends NLS {
      */
     public static String defaultTypeExistsButMarkedAsVariant;
 
+    /**
+     * A message indicating a child node definition has a default type but that it does not match a required type. Two parameters, the
+     * child node definition name and the default type name, are required.
+     */
+    public static String defaultTypeDoesNotMatchRequiredType;
+    
     /**
      * The name for the child definition's default type property.
      */
@@ -211,9 +217,21 @@ public final class Messages extends NLS {
     public static String invalidQueryOperator;
 
     /**
+     * A message indicating the prefix is invalid for a built-in namespace mapping URI. Two parameters, the invalid prefix and the
+     * built-in namespace mapping URI, are required.
+     */
+    public static String invalidPrefixForBuiltInNamespaceUri;
+
+    /**
      * A message indicating an invalid URI was found. One parameter, the invalid URI, is required.
      */
     public static String invalidUri;
+
+    /**
+     * A message indicating the URI is invalid for a built-in namespace mapping prefix. Two parameters, the invalid URI and the
+     * built-in namespace mapping prefix, are required.
+     */
+    public static String invalidUriForBuiltInNamespacePrefix;
 
     /**
      * An error message indicating that the JSR built-ins CND could not be found in the workspace. One parameter, the path of the

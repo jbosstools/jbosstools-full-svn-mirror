@@ -7,7 +7,6 @@
  */
 package org.jboss.tools.modeshape.jcr;
 
-import org.jboss.tools.modeshape.jcr.LocalName.Mode;
 import org.jboss.tools.modeshape.jcr.cnd.CndElement;
 
 /**
@@ -30,8 +29,8 @@ public class QualifiedName implements CndElement, Comparable<QualifiedName> {
      * @return the qualified name (never <code>null</code>)
      */
     public static QualifiedName parse( final String qualifiedName ) {
-        String qualifier = null;
-        String name = null;
+        String qualifier = Utils.EMPTY_STRING;
+        String name = Utils.EMPTY_STRING;
 
         if (!Utils.isEmpty(qualifiedName)) {
             final int index = qualifiedName.indexOf(DELIM_STRING);
@@ -49,11 +48,6 @@ public class QualifiedName implements CndElement, Comparable<QualifiedName> {
 
         return new QualifiedName(qualifier, name);
     }
-
-    /**
-     * The quotation mode for the CND notation.
-     */
-    private Mode mode = Mode.UNQOUTED;
 
     /**
      * The part of the name that comes after the delimiter (never <code>null</code>).
@@ -220,21 +214,6 @@ public class QualifiedName implements CndElement, Comparable<QualifiedName> {
     }
 
     /**
-     * @param newMode the new mode (cannot be <code>null</code>)
-     * @return <code>true</code> if the mode was changed
-     */
-    public boolean setMode( final Mode newMode ) {
-        Utils.verifyIsNotNull(newMode, "newMode"); //$NON-NLS-1$
-
-        if (this.mode != newMode) {
-            this.mode = newMode;
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
      * @param newQualifier the proposed new qualifier (can be <code>null</code> or empty)
      * @return <code>true</code> if the qualifier part was changed
      */
@@ -257,19 +236,18 @@ public class QualifiedName implements CndElement, Comparable<QualifiedName> {
      */
     @Override
     public String toCndNotation( final NotationType notationType ) {
-        final String unqualifiedName = get();
-
-        if (Utils.isEmpty(unqualifiedName)) {
-            return Utils.EMPTY_STRING;
+        StringBuilder builder = new StringBuilder();
+        
+        if (!Utils.isEmpty(this.qualifier.get())) {
+            builder.append(this.qualifier.toCndNotation(notationType));
+            builder.append(DELIM);
         }
 
-        Mode notationMode = this.mode;
-
-        if ((this.mode == Mode.UNQOUTED) && unqualifiedName.contains(Utils.SPACE_STRING)) {
-            notationMode = Mode.SINGLE_QUOTED;
+        if (!Utils.isEmpty(this.name.get())) {
+            builder.append(this.name.toCndNotation(notationType));
         }
 
-        return (notationMode + unqualifiedName + notationMode);
+        return builder.toString();
     }
 
     /**

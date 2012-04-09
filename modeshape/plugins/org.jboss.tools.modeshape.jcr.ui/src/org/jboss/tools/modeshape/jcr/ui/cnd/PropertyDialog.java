@@ -345,6 +345,7 @@ final class PropertyDialog extends FormDialog {
                                                           this.existingNamespacePrefixes,
                                                           this.propertyBeingEdited.getQualifiedName());
                 ((GridData)this.nameEditor.getLayoutData()).horizontalSpan = 2;
+                this.nameEditor.setAllowsResidualName(true);
                 this.nameEditor.addListener(SWT.Modify, new Listener() {
 
                     /**
@@ -1482,7 +1483,7 @@ final class PropertyDialog extends FormDialog {
     }
 
     private void validateAttributes() {
-        // TODO primary item
+        // nothing to do
     }
 
     private void validateDefaultValues() {

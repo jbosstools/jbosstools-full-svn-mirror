@@ -149,6 +149,9 @@ public final class CndImporter {
             } else if (tokens.matches(NodeTypeDefinition.NAME_NOTATION_PREFIX, TokenStream.ANY_VALUE,
                                       NodeTypeDefinition.NAME_NOTATION_SUFFIX)) {
                 parseNodeTypeDefinition(tokens, cnd);
+            } else if (tokens.matches(NodeTypeDefinition.NAME_NOTATION_PREFIX, NodeTypeDefinition.NAME_NOTATION_SUFFIX)) {
+                // empty node type name (no problem recorded here but editor validation will have an error)
+                parseNodeTypeDefinition(tokens, cnd);
             } else {
                 final Position position = tokens.previousPosition();
                 final Object[] args = new Object[] { tokens.consume(), position.getLine(), position.getColumn() };
@@ -505,6 +508,12 @@ public final class CndImporter {
 
         tokens.consume(NodeTypeDefinition.NAME_NOTATION_PREFIX);
         final String name = parseName(tokens);
+
+        // if empty name then suffix will be found next
+        if (NodeTypeDefinition.NAME_NOTATION_SUFFIX.equals(name)) {
+            return Utils.EMPTY_STRING; // empty node type name
+        }
+
         tokens.consume(NodeTypeDefinition.NAME_NOTATION_SUFFIX);
         return name;
     }

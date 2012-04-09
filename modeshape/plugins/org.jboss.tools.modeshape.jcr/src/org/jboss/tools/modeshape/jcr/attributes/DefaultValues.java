@@ -10,8 +10,6 @@ package org.jboss.tools.modeshape.jcr.attributes;
 import java.util.Collection;
 
 import org.jboss.tools.modeshape.jcr.Utils;
-import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences;
-import org.jboss.tools.modeshape.jcr.cnd.CndNotationPreferences.Preference;
 
 /**
  * 
@@ -55,11 +53,11 @@ public final class DefaultValues extends ListAttributeState<String> {
 
     /**
      * {@inheritDoc}
-     * 
-     * @see org.jboss.tools.modeshape.jcr.attributes.ListAttributeState#getQuoteCharacter()
+     *
+     * @see org.jboss.tools.modeshape.jcr.attributes.ListAttributeState#getItemQuoteCharacter()
      */
     @Override
-    protected String getQuoteCharacter() {
-        return CndNotationPreferences.DEFAULT_PREFERENCES.get(Preference.DEFAULT_VALUES_QUOTE_CHARACTER);
+    protected String getItemQuoteCharacter() {
+        return Utils.SINGLE_QUOTE;
     }
 }

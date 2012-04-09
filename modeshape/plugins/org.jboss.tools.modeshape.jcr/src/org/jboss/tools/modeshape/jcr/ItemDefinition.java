@@ -12,7 +12,7 @@ import org.jboss.tools.modeshape.jcr.cnd.CndElement;
 /**
  * An interface for property definitions and child node definitions.
  */
-public interface ItemDefinition extends CndElement, Comparable {
+public interface ItemDefinition extends CndElement, Comparable<ItemDefinition> {
 
     /**
      * Defines a residual set of child items.

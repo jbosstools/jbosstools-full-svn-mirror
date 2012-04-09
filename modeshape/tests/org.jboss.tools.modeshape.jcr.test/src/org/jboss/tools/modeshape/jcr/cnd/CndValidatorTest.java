@@ -90,6 +90,15 @@ public class CndValidatorTest {
     }
 
     @Test
+    public void defaultTypeNameShoudMatchRequiredType() {
+        this.childNodeDefinition.setName(Constants.QUALIFIED_NAME1.get());
+        this.childNodeDefinition.addRequiredType(Constants.QUALIFIED_NAME1.get());
+        this.childNodeDefinition.setDefaultPrimaryTypeName(Constants.QUALIFIED_NAME2.get());
+        assertTrue(CndValidator.validateDefaultType(this.childNodeDefinition, Constants.Helper.getDefaultNamespacePrefixes())
+                               .isError());
+    }
+
+    @Test
     public void defaultTypeNameWithNonMatchingQualifierShouldBeAnError() {
         this.childNodeDefinition.setName(Constants.QUALIFIED_NAME1.get());
         this.childNodeDefinition.setDefaultPrimaryTypeName(Constants.NAME_WITH_NON_DEFAULT_QUALIFIER.get());
@@ -233,12 +242,6 @@ public class CndValidatorTest {
     }
 
     @Test
-    public void nodeTypeDefinitionWithoutPropertiesAndChildNodesShouldBeAWarning() {
-        this.nodeTypeDefinition.setName("name"); //$NON-NLS-1$
-        assertTrue(CndValidator.validateNodeTypeDefinition(this.nodeTypeDefinition, null, null, false).isWarning());
-    }
-
-    @Test
     public void nodeTypeNameWithNonMatchingQualifierShouldBeAnError() {
         this.nodeTypeDefinition.setName(Constants.NAME_WITH_NON_DEFAULT_QUALIFIER.get());
         assertTrue(CndValidator.validateName(this.nodeTypeDefinition, Constants.Helper.getDefaultNamespacePrefixes(), null)
@@ -307,6 +310,14 @@ public class CndValidatorTest {
     }
 
     @Test
+    public void residualChildNodeDoesNotNeedDefaultType() {
+        this.childNodeDefinition.setName(ItemDefinition.RESIDUAL_NAME);
+        this.childNodeDefinition.addRequiredType(Constants.QUALIFIED_NAME1.get());
+        assertFalse(CndValidator.validateDefaultType(this.childNodeDefinition, Constants.Helper.getDefaultNamespacePrefixes())
+                                .isError());
+    }
+
+    @Test
     public void shouldAllowChildNodeDefinitionsWithResidualNames() {
         this.childNodeDefinition.setName(ItemDefinition.RESIDUAL_NAME);
         assertTrue(CndValidator.validateName(this.childNodeDefinition, null, null).isOk());
@@ -340,6 +351,20 @@ public class CndValidatorTest {
     public void shouldAllowPropertyDefinitionsWithResidualNames() {
         this.propertyDefinition.setName(ItemDefinition.RESIDUAL_NAME);
         assertTrue(CndValidator.validateName(this.propertyDefinition, null, null).isOk());
+    }
+
+    @Test
+    public void shouldNotAllowBuiltInPrefixWithIncorrectUri() {
+        this.namespaceMapping.setPrefix(Constants.BuiltInNamespaces.JCR.getPrefix());
+        this.namespaceMapping.setUri("foo"); //$NON-NLS-1$
+        assertTrue(CndValidator.validateNamespaceMapping(this.namespaceMapping).isError());
+    }
+
+    @Test
+    public void shouldNotAllowBuiltInUriWithIncorrectPrefix() {
+        this.namespaceMapping.setPrefix("foo"); //$NON-NLS-1$
+        this.namespaceMapping.setUri(Constants.BuiltInNamespaces.JCR.getUri());
+        assertTrue(CndValidator.validateNamespaceMapping(this.namespaceMapping).isError());
     }
 
     @Test
@@ -394,16 +419,6 @@ public class CndValidatorTest {
     }
 
     @Test
-    public void superTypeNameWithNonMatchingQualifierShouldBeAnError() {
-        this.nodeTypeDefinition.setName(Constants.QUALIFIED_NAME1.get());
-        this.nodeTypeDefinition.addSuperType(Constants.NAME_WITH_NON_DEFAULT_QUALIFIER.get());
-        assertTrue(CndValidator.validateSuperTypes(this.nodeTypeDefinition.getName(),
-                                                   Constants.Helper.getDefaultNamespacePrefixes(),
-                                                   this.nodeTypeDefinition.getState(NodeTypeDefinition.PropertyName.SUPERTYPES),
-                                                   this.nodeTypeDefinition.getSupertypes()).isError());
-    }
-
-    @Test
     public void shouldValidatePathsWithNoErrors() {
         final String PROP_NAME = "testProperty"; //$NON-NLS-1$
         assertFalse(CndValidator.validatePath("A", PROP_NAME).isError()); //$NON-NLS-1$
@@ -421,5 +436,15 @@ public class CndValidatorTest {
         assertFalse(CndValidator.validatePath("/A/B/C[1]/../../D[2]", PROP_NAME).isError()); //$NON-NLS-1$
         assertFalse(CndValidator.validatePath("/A/B/C[1]/././D[2]", PROP_NAME).isError()); //$NON-NLS-1$
         assertFalse(CndValidator.validatePath("/A/B/C[1]/../D[2]/./E/..", PROP_NAME).isError()); //$NON-NLS-1$
+    }
+
+    @Test
+    public void superTypeNameWithNonMatchingQualifierShouldBeAnError() {
+        this.nodeTypeDefinition.setName(Constants.QUALIFIED_NAME1.get());
+        this.nodeTypeDefinition.addSuperType(Constants.NAME_WITH_NON_DEFAULT_QUALIFIER.get());
+        assertTrue(CndValidator.validateSuperTypes(this.nodeTypeDefinition.getName(),
+                                                   Constants.Helper.getDefaultNamespacePrefixes(),
+                                                   this.nodeTypeDefinition.getState(NodeTypeDefinition.PropertyName.SUPERTYPES),
+                                                   this.nodeTypeDefinition.getSupertypes()).isError());
     }
 }

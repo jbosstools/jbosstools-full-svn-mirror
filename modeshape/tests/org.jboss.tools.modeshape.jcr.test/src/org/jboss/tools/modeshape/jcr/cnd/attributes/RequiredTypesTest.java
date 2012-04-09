@@ -80,8 +80,8 @@ public class RequiredTypesTest implements Constants {
         add(QUALIFIED_NAME3);
 
         // tests
-        assertEquals(REQUIRED_TYPES_THREE_ITEM_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPACT));
-        assertEquals(REQUIRED_TYPES_THREE_ITEM_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPRESSED));
+        assertEquals(REQUIRED_TYPES_THREE_ITEM_SHORT_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPACT));
+        assertEquals(REQUIRED_TYPES_THREE_ITEM_SHORT_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPRESSED));
         assertEquals(REQUIRED_TYPES_THREE_ITEM_FORM, this.attribute.toCndNotation(CndElement.NotationType.LONG));
     }
 
@@ -91,8 +91,8 @@ public class RequiredTypesTest implements Constants {
         add(QUALIFIED_NAME1);
 
         // tests
-        assertEquals(REQUIRED_TYPES_ONE_ITEM_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPACT));
-        assertEquals(REQUIRED_TYPES_ONE_ITEM_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPRESSED));
+        assertEquals(REQUIRED_TYPES_ONE_ITEM_SHORT_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPACT));
+        assertEquals(REQUIRED_TYPES_ONE_ITEM_SHORT_FORM, this.attribute.toCndNotation(CndElement.NotationType.COMPRESSED));
         assertEquals(REQUIRED_TYPES_ONE_ITEM_FORM, this.attribute.toCndNotation(CndElement.NotationType.LONG));
     }
 
@@ -146,8 +146,8 @@ public class RequiredTypesTest implements Constants {
         this.attribute.set(AttributeState.Value.VARIANT);
 
         // tests
-        assertEquals(REQUIRED_TYPES_VARIANT, this.attribute.toCndNotation(CndElement.NotationType.COMPACT));
-        assertEquals(REQUIRED_TYPES_VARIANT, this.attribute.toCndNotation(CndElement.NotationType.COMPRESSED));
+        assertEquals(REQUIRED_TYPES_SHORT_VARIANT, this.attribute.toCndNotation(CndElement.NotationType.COMPACT));
+        assertEquals(REQUIRED_TYPES_SHORT_VARIANT, this.attribute.toCndNotation(CndElement.NotationType.COMPRESSED));
         assertEquals(REQUIRED_TYPES_VARIANT, this.attribute.toCndNotation(CndElement.NotationType.LONG));
     }
 
