@@ -548,28 +548,6 @@
 			</repositories>
 		</profile>
 
-		<!-- GWT dependencies which we can't mirror and must reference directly. -->
-		<!-- still needed? JBIDE-10595 vs. JBIDE-10742 -->
-		<profile>
-			<id>gwt</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<repositories>
-				<repository>
-					<id>gwt</id>
-					<url>http://dl.google.com/eclipse/plugin/3.7/</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-			</repositories>
-		</profile>
-
 		<profile>
 			<id>osx</id>
 			<activation>
