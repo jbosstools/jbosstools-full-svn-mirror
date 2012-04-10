@@ -45,14 +45,17 @@ public class JSFPortletbridgeRuntimeLibraryProviderInstallOperationConfig extend
 		String[] fileList = folder.list(new FilenameFilter() {
 
 			public boolean accept(File dir, String name) {
-				if (name.startsWith("portletbridge") || name.endsWith(".jar")) { //$NON-NLS-1$ //$NON-NLS-2$
+				if (name.startsWith("portletbridge") && name.endsWith(".jar")) { //$NON-NLS-1$ //$NON-NLS-2$
+					return true;
+				}
+				if (name.equals("examples")) { //$NON-NLS-1$
 					return true;
 				}
 				return false;
 			}
 
 		});
-		if (fileList.length < 2) {
+		if (fileList.length < 3) {
 			return getInvalidPortletbridgeRuntime();
 		}
 		return Status.OK_STATUS;
