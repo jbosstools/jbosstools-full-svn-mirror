@@ -199,6 +199,30 @@
 		</vpe:template>
 	</vpe:tag>
 
+	<vpe:tag name="bdi" case-sensitive="no">
+		<vpe:template children="yes" modify="yes">
+			<div style="display: inline;"/>
+			<vpe:dnd>
+				<vpe:drag start-enable="yes" />
+				<vpe:drop container="yes" />
+			</vpe:dnd>
+			<vpe:textFormatting use-default-formats="yes">
+				<vpe:format type="BlockFormat" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.BlockFormatHandler" />
+				<vpe:format type="BoldFormat">
+					<vpe:formatAttribute type="style" />
+				</vpe:format>
+				<vpe:format type="UnderlineFormat" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.UnderlineFormatHandler" />
+				<vpe:format type="UnderlineFormat">
+					<vpe:formatAttribute type="style" />
+				</vpe:format>
+				<vpe:format type="ItalicFormat" addChildren="allow" handler="org.jboss.tools.vpe.editor.toolbar.format.handler.ItalicFormatHandler" />				
+				<vpe:format type="ItalicFormat">
+					<vpe:formatAttribute type="style" />
+				</vpe:format>
+			</vpe:textFormatting>
+		</vpe:template>
+	</vpe:tag>
+
 	<vpe:tag name="bdo" case-sensitive="no">
 		<vpe:template children="yes" modify="yes">
 			<vpe:copy />
