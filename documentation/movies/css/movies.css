@@ -8,7 +8,7 @@ body {
 
     font-family:'Lucida Grande', Geneva, Verdana, Arial, sans-serif;
     font-size:12px;
-    max-width:55em;
+    max-width:100em;
     padding:0em 2em;
     color:#333;
     line-height:150%;
@@ -23,7 +23,7 @@ div.book{
     color:#333;
     line-height:150%;
     text-align:justify;
-    width: 57em;
+    align: center;
    }
    
 div.chapter, #title{
@@ -32,18 +32,10 @@ div.chapter, #title{
 }
 
 .multicolumns {
-	-moz-column-count: 2; -moz-column-gap: 20px; 
-	-webkit-column-count: 2; -webkit-column-gap: 20px; 
-	column-count: 2; column-gap: 20px;
+	-moz-column-count: 3; -moz-column-gap: 20px; 
+	-webkit-column-count: 3; -webkit-column-gap: 20px; 
+	column-count: 3; column-gap: 20px;
 }
-
-ul.docnav {
-    margin:0px;
-    width: 57em;
-    ! height:40px;
-    display:block;
-}
-
 
 
 /* Links */
@@ -74,7 +66,6 @@ h1 {
     color:#182737;
     font-size:2em;
     padding:1.5em;
-    text-align: center;
 }
 
 h2 {font-size:1.6em;}
