@@ -1,0 +1,9 @@
+<tests>
+	<test id="bdi1">
+		<DIV STYLE="display: inline; -moz-user-modify: read-write;">
+			<SPAN CLASS="vpe-text">
+				&#1573;&#1610;&#1575;&#1606;
+			</SPAN>
+		</DIV>
+	</test>
+</tests>

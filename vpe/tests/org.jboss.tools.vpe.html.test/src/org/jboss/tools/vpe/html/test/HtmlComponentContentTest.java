@@ -37,6 +37,9 @@ public class HtmlComponentContentTest extends ComponentContentTest {
 	public void testAudio() throws Throwable {
 		performContentTest("components/html5/audio.html"); //$NON-NLS-1$
 	}
+	public void testBdi() throws Throwable {
+		performContentTest("components/html5/bdi.html"); //$NON-NLS-1$
+	}
 	public void testCommand() throws Throwable {
 		performContentTest("components/html5/command.html"); //$NON-NLS-1$
 	}
