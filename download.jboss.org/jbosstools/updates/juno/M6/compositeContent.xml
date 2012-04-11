@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <?compositeMetadataRepository version='1.0.0'?>
-<repository name='JBoss Tools Requirements - Composite Juno SR2 Mirror' type='org.eclipse.equinox.internal.p2.metadata.repository.CompositeMetadataRepository' version='1.0.0'>
+<repository name='JBoss Tools Requirements - Composite Juno M6 Mirror' type='org.eclipse.equinox.internal.p2.metadata.repository.CompositeMetadataRepository' version='1.0.0'>
 <properties size='2'>
 <property name='p2.compressed' value='true'/>
 <property name='p2.timestamp' value='1331076072000'/>
