@@ -23,9 +23,29 @@
 
 	-->
 	<target name="mirror">
+		<property name="URL" value="http://download.eclipse.org/birt/update-site/3.7-interim/" />
 		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/birt/" />
 		<property name="compress" value="true" />
 
-		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/3.7M6/" artifactRepository="file:${destination}/3.7M6/" publishartifacts="true" source="${destination}/3.7M6/" compress="${compress}" />
+		<p2.mirror>
+			<repository location="file:${destination}/3.7.2.v20120214/" name="Extra BIRT plugins for Eclipse 3.7 (Not in Indigo)" />
+			<source>
+				<repository location="${URL}" />
+			</source>
+
+			<slicingOptions includeFeatures="true" followStrict="true" />
+
+			<iu id="org.eclipse.birt.osgi.runtime.sdk.feature.group" />
+			<iu id="org.eclipse.birt.feature.group" />
+			<iu id="org.eclipse.birt.integration.wtp.feature.group" />
+			<iu id="org.eclipse.birt.chart.feature.group" />
+			<iu id="org.eclipse.birt.chart.integration.wtp.feature.group" />
+		</p2.mirror>
+
+		<delete>
+			<fileset dir="${destination}/3.7.2.v20120214/" includes="**/artifacts.jar, **/contents.jar"/>
+		</delete>
+
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/3.7.2.v20120214/" artifactRepository="file:${destination}/3.7.2.v20120214/" publishartifacts="true" source="${destination}/3.7.2.v20120214/" compress="${compress}" />
 	</target>
 </project>

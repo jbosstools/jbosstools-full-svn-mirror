@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project default="mirror">
+<project default="nothing-to-do">
 	<!-- run locally in Eclipse (to resolve p2 tasks) using these commandline options:
 	
 		-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} 
@@ -15,19 +15,25 @@
 			-application org.eclipse.ant.core.antRunner \
 			-f ~/RHDS/updates/requirements/mylyn/build.xml -Ddestination=/tmp/mylyn-repo
 	-->
+	
+	<target name="nothing-to-do">
+	<echo>Mylyn content is all on the Juno site except the Atlassian connectors for JIRA, CVS, Subclipse/Subversive. 
+Therefore there is no need to produce this mirror any more. See ../atlassian/build.xml</echo>
+	</target>
+	
 	<target name="mirror">
 		<!-- core mylyn, if not on Indigo site; includes Bugzilla -->
 		<!-- <property name="URL1" value="http://download.eclipse.org/mylyn/snapshots/weekly/" /> -->
 		<!-- <property name="URL1" value="http://download.eclipse.org/mylyn/archive/3.6.0/v20110608-1400/" /> -->
-		<property name="URL1" value="http://download.eclipse.org/mylyn/drops/3.6.5/v20120215-0100/" />
+		<property name="URL1" value="http://download.eclipse.org/mylyn/releases/latest" />
 		<!-- JIRA connector; note that Subclipse connector is on Subclipse req site, ../subclipse/ -->
 		<!-- <property name="URL2" value="http://update.atlassian.com/atlassian-eclipse-plugin/weekly/e3.6/" /> -->
 		<property name="URL2" value="http://update.atlassian.com/atlassian-eclipse-plugin/e3.7" />
-		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/mylyn/3.6.5/" />
+		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/mylyn/3.7.0.v20120319-0200/" />
 		<property name="compress" value="true" />
 
 		<p2.mirror>
-			<repository location="file:${destination}/3.6.5.v20120215-0100" name="mylyn plugins for Eclipse 3.6 - 3.7" />
+			<repository location="file:${destination}/3.7.0.v20120319-0200" name="Mylyn 3.7.0.v20120319-0200" />
 			<source>
 				<repository location="${URL1}" />
 				<repository location="${URL2}" />
@@ -58,6 +64,6 @@
 			<iu id="com.atlassian.connector.eclipse.subversive.feature.group" />
 		</p2.mirror>
 
-		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/3.6.5.v20120215-0100/" artifactRepository="file:${destination}/3.6.5.v20120215-0100/" publishartifacts="true" source="${destination}/3.6.5.v20120215-0100/" compress="${compress}" />
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/3.7.0.v20120319-0200/" artifactRepository="file:${destination}/3.7.0.v20120319-0200/" publishartifacts="true" source="${destination}/3.7.0.v20120319-0200/" compress="${compress}" />
 	</target>
 </project>

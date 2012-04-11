@@ -29,7 +29,7 @@
 		<property name="compress" value="true" />
 
 		<p2.mirror>
-			<repository location="file:${destination}/S-3.4.0M6-20120319200442/" name="Web Tools plugins for Eclipse Juno" />
+			<repository location="file:${destination}/S-3.4.0M6-20120319200442/" name="Web Tools S-3.4.0M6-20120319200442" />
 			<source>
 				<repository location="${URL}" />
 			</source>
