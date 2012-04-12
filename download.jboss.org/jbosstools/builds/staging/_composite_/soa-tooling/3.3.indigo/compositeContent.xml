@@ -23,7 +23,7 @@
 <child location='../../../../staging/jbosstools-3.3_stable_branch.component--runtime-soa/all/repo/'/>
 <child location='http://download.jboss.org/savara/releases/updates/2.0.x/' />
 <child location='../../../../staging/SwitchYard-Tools/eclipse/'/>
-<child location='../../../../staging/jbosstools-teiid-designer-7.6_stable_branch/all/repo/'/>
+<child location='../../../../staging/jbosstools-teiid-designer-7.7_stable_branch/all/repo/'/>
 
 <!-- <child location='../../savara-tools-eclipse-master/all/repo/'/> -->
 
