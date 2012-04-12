@@ -89,7 +89,22 @@ public class DropableArea {
 				&& mouseY < bounds.y + bounds.height) {
 			highlightedDropTarget = DropTarget.END;
 		} else {
-			highlightedDropTarget = null;
+			/*
+			 * https://issues.jboss.org/browse/JBIDE-8965
+			 * When user didn't drag to any side of the element
+			 * highlight one side by default.
+			 */
+			if (dropTargets.contains(DropTarget.END)) {
+				highlightedDropTarget = DropTarget.END;
+			} else if (dropTargets.contains(DropTarget.AFTER)) {
+				highlightedDropTarget = DropTarget.AFTER;
+			}  else if (dropTargets.contains(DropTarget.BEFORE)) {
+				highlightedDropTarget = DropTarget.BEFORE;
+			}  else if (dropTargets.contains(DropTarget.BEGIN)) {
+				highlightedDropTarget = DropTarget.BEGIN;
+			} else {
+				highlightedDropTarget = null;
+			}
 		}
 	}
 
