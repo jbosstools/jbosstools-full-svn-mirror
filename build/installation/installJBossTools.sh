@@ -29,8 +29,7 @@ exit
 http://download.eclipse.org/releases/helios/,\
 http://download.eclipse.org/birt/update-site/2.6/,\
 http://m2eclipse.sonatype.org/sites/m2e/,\
-http://m2eclipse.sonatype.org/sites/m2e-extras/,\
-http://dl.google.com/eclipse/plugin/3.6/
+http://m2eclipse.sonatype.org/sites/m2e-extras/
 exit
 
 ## more features; note that some require addition of -DotherRepos to resolve missing dependencies (ie., BIRT, Maven)

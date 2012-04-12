@@ -33,8 +33,7 @@ http://download.eclipse.org/releases/helios/,\
 http://download.eclipse.org/birt/update-site/2.6/,\
 http://m2eclipse.sonatype.org/sites/m2e/,\
 http://m2eclipse.sonatype.org/sites/m2e-extras/,\
-http://subclipse.tigris.org/update_1.6.x,\
-http://dl.google.com/eclipse/plugin/3.6/ \
+http://subclipse.tigris.org/update_1.6.x\
 	-vm /opt/jdk1.5.0_19/bin/java -vmargs -Xms128M \
 	-Xmx256M -XX:PermSize=128M -XX:MaxPermSize=256M \
 	2>&1 | tee "$target/eclipse.log.`date`.txt"

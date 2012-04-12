@@ -27,8 +27,7 @@ c:\eclipse\36clean\eclipse\eclipse.exe -consolelog -nosplash -data c:\tmp ^
 http://download.eclipse.org/releases/helios/,^
 http://download.eclipse.org/birt/update-site/2.6/,^
 http://m2eclipse.sonatype.org/sites/m2e/,^
-http://m2eclipse.sonatype.org/sites/m2e-extras/,^
-http://dl.google.com/eclipse/plugin/3.6/
+http://m2eclipse.sonatype.org/sites/m2e-extras/
 
 :: more features; note that some require addition of -DotherRepos to resolve missing dependencies (ie., BIRT, Maven)
 ::   -Dinstall=org.drools.eclipse.feature.feature.group,org.drools.eclipse.task.feature.feature.group,org.guvnor.tools.feature.feature.group,\
