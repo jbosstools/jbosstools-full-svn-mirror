@@ -376,6 +376,54 @@
 			</repositories>
 		</profile>
 
+		<!-- Profiles to resolve deps on other JBT components against latest aggregate site
+		Recommanded for local builds, see https://issues.jboss.org/browse/JBIDE-11516 and
+		https://community.jboss.org/wiki/HowToBuildJBossToolsWithMaven3#Build_a_component_resolving_to_a_recent_aggregation_build_for_other_JBT_dependencies_Recommanded -->
+		<profile>
+			<id>jbosstools-staging-aggregate</id>
+			<activation>
+				<property>
+					<name>swtbot.test.skip</name>
+					<value>false</value>
+				</property>
+			</activation>
+			<repositories>
+				<repository>
+					<id>jbosstools-nightly</id>
+					<url>${jbosstools-nightly}</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+			</repositories>
+		</profile>
+		<profile>
+			<id>jbosstools-staging-aggregate-soa-tooling</id>
+			<activation>
+				<property>
+					<name>swtbot.test.skip</name>
+					<value>false</value>
+				</property>
+			</activation>
+			<repositories>
+				<repository>
+					<id>jbosstools-nightly-soa-tooling</id>
+					<url>${jbosstools-nightly-soa-tooling}</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+			</repositories>
+		</profile>
+
 		<!-- same contents as jboss-requirements-composite-mirror, but locally 
 			available (to improve network lag) -->
 		<profile>
