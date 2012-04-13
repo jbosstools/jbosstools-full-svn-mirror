@@ -31,9 +31,9 @@ import org.jboss.tools.modeshape.jcr.ui.cnd.CndMessages;
  * 
  */
 public final class CndPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
-
-    private static String[] QUOTE_CHAR_LABELS = new String[] { CndMessages.quoteCharNoneChoiceLabel,
-            CndMessages.quoteCharSingleChoiceLabel, CndMessages.quoteCharDoubleChoiceLabel };
+//
+//    private static String[] QUOTE_CHAR_LABELS = new String[] { CndMessages.quoteCharNoneChoiceLabel,
+//            CndMessages.quoteCharSingleChoiceLabel, CndMessages.quoteCharDoubleChoiceLabel };
 
     /**
      * The editor used to choose the notation type for the CND format.

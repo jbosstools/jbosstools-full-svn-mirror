@@ -15,5 +15,5 @@ Require-Bundle: org.jboss.tools.modeshape.jcr,
  org.eclipse.ui.editors,
  org.eclipse.jface.text,
  org.eclipse.ui.ide,
- org.jboss.tools.modeshape.client;bundle-version="1.1.0"
+ org.jboss.tools.modeshape.client
 Bundle-Activator: org.jboss.tools.modeshape.jcr.ui.Activator
