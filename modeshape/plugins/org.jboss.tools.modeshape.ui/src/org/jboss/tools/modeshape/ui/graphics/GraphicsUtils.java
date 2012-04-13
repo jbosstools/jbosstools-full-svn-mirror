@@ -11,6 +11,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.jboss.tools.modeshape.ui.UiUtils;
 
 /**
  * 
@@ -35,9 +36,12 @@ public final class GraphicsUtils {
      * @param uiPlugin the UI Plug-in instance (cannot be <code>null</code>)
      * @param pathToImage the path to the image file relative to the specified plug-in's folder (can be <code>null</code>)
      * @return the requested image or a standard "missing image" image (never <code>null</code>)
+     * @throws IllegalArgumentException if the plugin is <code>null</code>
      */
     public static final Image getImage( final AbstractUIPlugin uiPlugin,
                                         final String pathToImage ) {
+        UiUtils.verifyIsNotNull(uiPlugin, "uiPlugin"); //$NON-NLS-1$
+
         final ImageRegistry imageRegistry = uiPlugin.getImageRegistry();
         Image image = imageRegistry.get(pathToImage);
 

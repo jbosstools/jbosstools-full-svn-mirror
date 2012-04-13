@@ -13,6 +13,7 @@ import java.util.Iterator;
 import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.widgets.TableColumn;
 
 /**
@@ -35,10 +36,11 @@ public final class UiUtils {
      * 
      * @param viewerColumn the viewer column (cannot be <code>null</code>)
      * @param labelProvider the column label provider (cannot be <code>null</code>
-     * @param headerText the header text (cannot be <code>null</code>)
-     * @param headerToolTip (can be <code>null</code>)
+     * @param headerText the header text (can be <code>null</code> or empty)
+     * @param headerToolTip (can be <code>null</code> or empty)
      * @param moveable a flag indicating if the column can be moved
      * @param resizable a flag indicating if the column can be resized
+     * @throws IllegalArgumentException if either the column or label provider is <code>null</code>
      */
     public static void configureColumn( final TableViewerColumn viewerColumn,
                                         final CellLabelProvider labelProvider,
@@ -46,11 +48,18 @@ public final class UiUtils {
                                         final String headerToolTip,
                                         final boolean moveable,
                                         final boolean resizable ) {
+        verifyIsNotNull(viewerColumn, "viewerColumn"); //$NON-NLS-1$
+        verifyIsNotNull(labelProvider, "labelProvider"); //$NON-NLS-1$
+
         viewerColumn.setLabelProvider(labelProvider);
 
         // configure column
         final TableColumn column = viewerColumn.getColumn();
-        column.setText(headerText);
+
+        if (!isEmpty(headerText)) {
+            column.setText(headerText);
+        }
+
         column.setToolTipText(headerToolTip);
         column.setMoveable(false);
         column.setResizable(resizable);
@@ -76,9 +85,7 @@ public final class UiUtils {
      */
     public static String join( Collection<?> items,
                                String delimiter ) {
-        if (items == null) {
-            throw new IllegalArgumentException("items is null"); //$NON-NLS-1$
-        }
+        verifyIsNotNull(items, "items"); //$NON-NLS-1$
 
         delimiter = (((delimiter == null) || delimiter.isEmpty()) ? DEFAULT_JOIN_DELIMITER : delimiter);
         StringBuilder builder = new StringBuilder();
@@ -103,12 +110,47 @@ public final class UiUtils {
 
     /**
      * @param viewers the viewers whose columns will be packed (cannot be <code>null</code>)
+     * @throws IllegalArgumentException if a viewer is <code>null</code>
      */
     public static void pack( final TableViewer... viewers ) {
         for (final TableViewer viewer : viewers) {
+            verifyIsNotNull(viewer, "viewer"); //$NON-NLS-1$
+
             for (final TableColumn column : viewer.getTable().getColumns()) {
                 column.pack();
             }
+        }
+    }
+
+    /**
+     * @param text the string being checked (can be <code>null</code> or empty)
+     * @param name the name of the object to use in the error message (cannot be <code>null</code>)
+     * @throws IllegalArgumentException if the text is <code>null</code> or empty
+     */
+    public static void verifyIsNotEmpty( final String text,
+                                         String name ) {
+        if (isEmpty(text)) {
+            if ((name == null) || name.isEmpty()) {
+                name = EMPTY_STRING;
+            }
+
+            throw new IllegalArgumentException(NLS.bind(UiMessages.stringIsEmpty, name));
+        }
+    }
+
+    /**
+     * @param object the object being checked (can be <code>null</code>)
+     * @param name the name of the object to use in the error message (cannot be <code>null</code>)
+     * @throws IllegalArgumentException if the object is <code>null</code>
+     */
+    public static void verifyIsNotNull( final Object object,
+                                        String name ) {
+        if (object == null) {
+            if ((name == null) || name.isEmpty()) {
+                name = EMPTY_STRING;
+            }
+
+            throw new IllegalArgumentException(NLS.bind(UiMessages.objectIsNull, name));
         }
     }
 

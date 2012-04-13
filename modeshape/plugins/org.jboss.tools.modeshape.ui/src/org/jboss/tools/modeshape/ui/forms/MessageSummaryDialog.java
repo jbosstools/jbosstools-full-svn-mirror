@@ -7,6 +7,11 @@
  */
 package org.jboss.tools.modeshape.ui.forms;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
@@ -15,9 +20,13 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.ui.forms.FormDialog;
@@ -25,6 +34,8 @@ import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.IMessage;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
+import org.jboss.tools.modeshape.ui.Activator;
+import org.jboss.tools.modeshape.ui.UiConstants;
 import org.jboss.tools.modeshape.ui.UiMessages;
 import org.jboss.tools.modeshape.ui.UiUtils;
 
@@ -48,12 +59,14 @@ public class MessageSummaryDialog extends FormDialog {
      * @param messages the messages being displayed (cannot be <code>null</code>)
      */
     public MessageSummaryDialog( final Shell parent,
-                              final String dialogTitle,
-                              final String messageAreaTitle,
-                              final String messageAreaMessage,
-                              final int messageType,
-                              final IMessage[] messages ) {
+                                 final String dialogTitle,
+                                 final String messageAreaTitle,
+                                 final String messageAreaMessage,
+                                 final int messageType,
+                                 final IMessage[] messages ) {
         super(parent);
+        UiUtils.verifyIsNotNull(messages, "messages"); //$NON-NLS-1$
+
         this.dialogTitle = dialogTitle;
         this.messages = messages;
         this.messageAreaTitle = messageAreaTitle;
@@ -69,7 +82,7 @@ public class MessageSummaryDialog extends FormDialog {
     @Override
     protected void configureShell( final Shell newShell ) {
         super.configureShell(newShell);
-        newShell.setText(this.dialogTitle);
+        newShell.setText(dialogTitle);
     }
 
     /**
@@ -78,8 +91,24 @@ public class MessageSummaryDialog extends FormDialog {
      * @see org.eclipse.jface.dialogs.Dialog#createButtonsForButtonBar(org.eclipse.swt.widgets.Composite)
      */
     @Override
-    protected void createButtonsForButtonBar( Composite parent ) {
+    protected void createButtonsForButtonBar( final Composite parent ) {
         createButton(parent, IDialogConstants.OK_ID, IDialogConstants.OK_LABEL, true);
+
+        // export button
+        final Button btn = createButton(parent, IDialogConstants.CLIENT_ID, UiMessages.export, false);
+        btn.setToolTipText(UiMessages.exportMessagesToolTip);
+        btn.addSelectionListener(new SelectionAdapter() {
+
+            /**
+             * {@inheritDoc}
+             * 
+             * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
+             */
+            @Override
+            public void widgetSelected( final SelectionEvent e ) {
+                handleExportMessages();
+            }
+        });
     }
 
     /**
@@ -90,8 +119,8 @@ public class MessageSummaryDialog extends FormDialog {
     @Override
     protected void createFormContent( final IManagedForm managedForm ) {
         final ScrolledForm scrolledForm = managedForm.getForm();
-        scrolledForm.setText(this.messageAreaTitle); // set header area title
-        scrolledForm.setMessage(this.messageAreaMessage, this.messageType, this.messages);
+        scrolledForm.setText(messageAreaTitle); // set header area title
+        scrolledForm.setMessage(messageAreaMessage, messageType, messages);
         scrolledForm.getBody().setLayout(new GridLayout());
         scrolledForm.getBody().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
@@ -101,7 +130,7 @@ public class MessageSummaryDialog extends FormDialog {
         container.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         toolkit.paintBordersFor(container);
 
-        int count = this.messages.length;
+        int count = messages.length;
 
         if (count > 20) {
             count = 20;
@@ -175,6 +204,51 @@ public class MessageSummaryDialog extends FormDialog {
     }
 
     IMessage[] getMessages() {
-        return this.messages;
+        return messages;
+    }
+
+    void handleExportMessages() {
+        final FileDialog dlg = new FileDialog(getShell(), SWT.SAVE);
+        dlg.setFilterExtensions(new String[] { "*.txt" }); //$NON-NLS-1$
+        dlg.setText(UiMessages.exportMessagesDialogTitle);
+        dlg.setFileName(UiMessages.exportMessagesDialogDefaultFileName);
+        final String fileName = dlg.open();
+
+        if (fileName != null) {
+            final String delim = " - "; //$NON-NLS-1$
+            final StringBuilder builder = new StringBuilder();
+
+            for (final IMessage message : messages) {
+                final int messageType = message.getMessageType();
+
+                if (messageType == IMessageProvider.ERROR) {
+                    builder.append(UiMessages.errorDialogTitle).append(delim);
+                } else if (messageType == IMessageProvider.WARNING) {
+                    builder.append(UiMessages.errorDialogTitle).append(delim);
+                } else if (messageType == IMessageProvider.INFORMATION) {
+                    builder.append(UiMessages.errorDialogTitle).append(delim);
+                }
+
+                builder.append(message.getMessage()).append('\n');
+            }
+
+            BufferedWriter out = null;
+
+            try {
+                out = new BufferedWriter(new FileWriter(fileName));
+                out.write(builder.toString());
+                out.flush();
+            } catch (final Exception e) {
+                Activator.getSharedInstance().getLog().log(new Status(IStatus.ERROR, UiConstants.PLUGIN_ID, null, e));
+            } finally {
+                try {
+                    if (out != null) {
+                        out.close();
+                    }
+                } catch (final java.io.IOException e) {
+                    // ignore
+                }
+            }
+        }
     }
 }
