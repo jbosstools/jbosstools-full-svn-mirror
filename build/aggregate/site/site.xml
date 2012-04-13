@@ -204,7 +204,7 @@
 
 	<feature url="features/org.jboss.tools.common.jdt.feature_0.0.0.jar" id="org.jboss.tools.common.jdt.feature" version="0.0.0">
 		<category name="AbridgedTools" />
-                <category name="GeneralTools"/>
+        <category name="GeneralTools"/>
 	</feature>
 
 	<!-- include but do not categorize -->
@@ -235,54 +235,12 @@
 		<category name="AbridgedTools" />
 		<category name="GeneralTools"/>
 	</feature>
-
-	<category-def name="AbridgedTools" label="Abridged JBoss Tools 3.3">
-		<description>Contains most of the JBoss Tools features. 
-                        Excluded are those related to integration with 3rd party
-			plugins. Selecting this category will give you all tools 
-			needed for Web and Seam Development.
-		</description>
-	</category-def>
-
-	<category-def name="WebTools" label="JBoss Web and Java EE Development">
-		<description>Tools to help create web and enterprise applications,
-			using JSF, Facelets,
-			Seam, Hibernate/JPA, CSS, Webservices and more.
-		</description>
-	</category-def>
-
-	<category-def name="GeneralTools" label="JBoss Application Development">
-		<description>Tools for general application development.</description>
-	</category-def>
-
-	<category-def name="DataTools" label="JBoss Data Services">
-		<description>Tools related to data services such as persistence and transformation.</description>
-	</category-def>
-
-	<category-def name="MavenTools" label="JBoss Maven Support">
-		<description>Plugins related to Maven and m2eclipse support. Use these
-			to enable use of Maven.</description>
-	</category-def>
-	<category-def name="CloudTools" label="JBoss Cloud Development Tools">
-		<description>Tools for Cloud Development.
-		</description>
-	</category-def>
-	<!-- Only in JBT -->
-	<category-def name="ReportTools" label="JBoss Business Intelligence, Reporting and Charting">
-		<description>Business Intelligence, Reporting and Charting. Use these 
-			if you plan to integrate Hibernate or Seam with Eclipse BIRT.
-		</description>
-	</category-def>
 	
-	
-	<!------------->
+		
+	<!-- ####### -->
 	<!-- SOURCES -->
-	<!------------->
-	<category-def name="AllSources" label="Sources">
-		<description>Source code for JBoss Tools features</description>
-	</category-def>
-	
-   	<!--
+	<!-- ####### -->
+	<!--
 	<feature url="features/org.jboss.tools.central.feature.source_0.0.0.jar" id="org.jboss.tools.central.feature.source" version="0.0.0">
 		<category name="AllSources"/>
 	</feature>
@@ -417,21 +375,61 @@
 		<category name="AllSources" />
 	</feature>
 	
-	<feature url="features/org.jboss.tools.runtime.core.feature.source_0.0.0.jar" id="org.jboss.tools.runtime.core.feature.source" version="0.0.0">
 		<category name="AllSources" />
 	</feature>
 	
 	<feature url="features/org.jboss.tools.runtime.as.detector.feature.source_0.0.0.jar" id="org.jboss.tools.runtime.as.detector.feature.source" version="0.0.0">
 		<category name="AllSources" />
 	</feature>
-	
 	<feature url="features/org.jboss.tools.runtime.seam.detector.feature.source_0.0.0.jar" id="org.jboss.tools.runtime.seam.detector.feature.source" version="0.0.0">
 		<category name="AllSources" />
 	</feature>
-
 	<feature url="features/org.jboss.tools.usage.feature.source_0.0.0.jar" id="org.jboss.tools.usage.feature.source" version="0.0.0">
 		<category name="AllSources" />
 	</feature>
 	-->
+	
+
+	<category-def name="AbridgedTools" label="Abridged JBoss Tools 3.3">
+		<description>Contains most of the JBoss Tools features. 
+                        Excluded are those related to integration with 3rd party
+			plugins. Selecting this category will give you all tools 
+			needed for Web and Seam Development.
+		</description>
+	</category-def>
+
+	<category-def name="WebTools" label="JBoss Web and Java EE Development">
+		<description>Tools to help create web and enterprise applications,
+			using JSF, Facelets,
+			Seam, Hibernate/JPA, CSS, Webservices and more.
+		</description>
+	</category-def>
+
+	<category-def name="GeneralTools" label="JBoss Application Development">
+		<description>Tools for general application development.</description>
+	</category-def>
+
+	<category-def name="DataTools" label="JBoss Data Services">
+		<description>Tools related to data services such as persistence and transformation.</description>
+	</category-def>
+
+	<category-def name="MavenTools" label="JBoss Maven Support">
+		<description>Plugins related to Maven and m2eclipse support. Use these
+			to enable use of Maven.</description>
+	</category-def>
+	<category-def name="CloudTools" label="JBoss Cloud Development Tools">
+		<description>Tools for Cloud Development.
+		</description>
+	</category-def>
+	<!-- Only in JBT -->
+	<category-def name="ReportTools" label="JBoss Business Intelligence, Reporting and Charting">
+		<description>Business Intelligence, Reporting and Charting. Use these 
+			if you plan to integrate Hibernate or Seam with Eclipse BIRT.
+		</description>
+	</category-def>
+	
+	<category-def name="AllSources" label="Sources">
+		<description>Source code for JBoss Tools features</description>
+	</category-def>
 
 </site>
