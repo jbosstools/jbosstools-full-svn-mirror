@@ -161,7 +161,7 @@
 		<profile>
 			<id>smooks</id>
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 			</activation>
 			<modules>
 				<module>../smooks</module>
