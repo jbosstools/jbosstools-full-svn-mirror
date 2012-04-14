@@ -34,7 +34,7 @@
 	<target name="regen">
 		<!-- remove OTDT patched version of o.e.jdt.core, and all other o.e.ot.otdt features/plugins -->
 		<delete>
-			<fileset dir="${destination}/201203230900-M6/" includes="**/org.eclipse.jdt.core_*OTDT*.jar*, **/org.eclipse.objectteams.otdt*.jar.*"/>
+			<fileset dir="${destination}/201203230900-M6/" includes="**/org.eclipse.jdt.core_*OTDT*.jar*, **/org.eclipse.objectteams.otdt*.jar*"/>
 		</delete>
 		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/201203230900-M6/" artifactRepository="file:${destination}/201203230900-M6/" publishartifacts="true" source="${destination}/201203230900-M6/" compress="${compress}" />
 	</target>
