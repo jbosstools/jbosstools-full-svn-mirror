@@ -15,12 +15,12 @@
 			-application org.eclipse.ant.core.antRunner \
 			-f ~/RHDS/updates/requirements/juno/build.xml -Ddestination=/tmp/juno-repo
 	-->
+	<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/juno/" />
+	<property name="compress" value="true" />
+	<property name="URL1" value="http://download.eclipse.org/releases/juno/201203230900/" />
+
 	<target name="run" depends="mirror,regen"/>
 	<target name="mirror">
-		<property name="URL1" value="http://download.eclipse.org/releases/juno/201203230900/" />
-
-		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/juno/" />
-		<property name="compress" value="true" />
 
 		<p2.mirror>
 			<repository location="file:${destination}/201203230900-M6/" name="Juno 201203230900-M6" />
@@ -32,6 +32,7 @@
 		</p2.mirror>
 	</target>
 	<target name="regen">
+
 		<!-- remove OTDT patched version of o.e.jdt.core, and all other o.e.ot.otdt features/plugins -->
 		<delete>
 			<fileset dir="${destination}/201203230900-M6/" includes="**/org.eclipse.jdt.core_*OTDT*.jar*, **/org.eclipse.objectteams.otdt*.jar*"/>
