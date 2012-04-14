@@ -21,7 +21,6 @@
 
 	<target name="run" depends="mirror,regen"/>
 	<target name="mirror">
-
 		<p2.mirror>
 			<repository location="file:${destination}/201203230900-M6/" name="Juno 201203230900-M6" />
 			<source>
