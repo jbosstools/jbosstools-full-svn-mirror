@@ -44,9 +44,6 @@
 			<id>tests</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
-				<property>
-					<name>as-bootstrap</name>
-				</property>
 			</activation>
 			<modules>
 				<module>../tests</module>
@@ -77,9 +74,6 @@
 			<id>archives</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
-				<property>
-					<name>as-bootstrap</name>
-				</property>
 			</activation>
 			<modules>
 				<module>../archives</module>
@@ -99,9 +93,6 @@
 			<id>as</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
-				<property>
-					<name>as-bootstrap</name>
-				</property>
 			</activation>
 			<modules>
 				<module>../as</module>
@@ -124,9 +115,6 @@
 			<id>openshift</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
-				<property>
-					<name>openshift-bootstrap</name>
-				</property>
 			</activation>
 			<modules>
 				<module>../openshift</module>
