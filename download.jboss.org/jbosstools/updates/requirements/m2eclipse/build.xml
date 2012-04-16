@@ -17,7 +17,8 @@
 	-->
 	<target name="mirror">
 		<!-- <property name="URL1" value="http://download.jboss.org/jbosstools/updates/m2eclipse-wtp/"/> -->
-		<property name="URL1" value="http://download.eclipse.org/technology/m2e/milestones/1.1/1.1.0.20120320-0058/"/>
+                <property name="URL1" value="file:///home/hudson/RHDS/updates/requirements/m2eclipse/1.1.0.20120320-0058/"/>
+                <!-- <property name="URL1" value="http://download.eclipse.org/technology/m2e/milestones/1.1/1.1.0.20120320-0058/"/> -->
 		<property name="URL2" value="https://repository.sonatype.org/content/sites/forge-sites/m2e-extras/0.15.0/N/0.15.0.201202141716/"/>
 		<property name="URL3" value="http://download.jboss.org/jbosstools/updates/requirements/m2eclipse/m2eclipse-wtp-0.15.2/"/>
 		<property name="URL4" value="http://download.jboss.org/jbosstools/updates/m2e-jdt-compiler/"/>
