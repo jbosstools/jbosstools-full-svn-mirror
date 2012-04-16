@@ -13,41 +13,59 @@ package org.jboss.tools.modeshape.jcr;
 public class ValidationStatus implements Comparable<ValidationStatus> {
 
     /**
-     * An OK validation status with a standard, localized message.
+     * The default code for an OK message. Value is {@value} .
      */
-    public static final ValidationStatus OK_STATUS = createOkMessage(Messages.okValidationMsg);
+    public static final int OK_CODE = 0;
 
     /**
+     * An OK validation status with a standard, localized message.
+     */
+    public static final ValidationStatus OK_STATUS = createOkMessage(OK_CODE, Messages.okValidationMsg);
+
+    /**
+     * @param code a code uniquely identifying the status
      * @param message the validation message (cannot be <code>null</code> or empty)
      * @return the error validation message (never <code>null</code>)
      */
-    public static ValidationStatus createErrorMessage( final String message ) {
-        return new ValidationStatus(Severity.ERROR, message);
+    public static ValidationStatus createErrorMessage( int code,
+                                                       final String message ) {
+        return new ValidationStatus(Severity.ERROR, code, message);
     }
 
     /**
+     * @param code a code uniquely identifying the status
      * @param message the validation message (cannot be <code>null</code> or empty)
      * @return the information validation message (never <code>null</code>)
      */
-    public static ValidationStatus createInfoMessage( final String message ) {
-        return new ValidationStatus(Severity.INFO, message);
+    public static ValidationStatus createInfoMessage( int code,
+                                                      final String message ) {
+        return new ValidationStatus(Severity.INFO, code, message);
     }
 
     /**
+     * @param code a code uniquely identifying the status
      * @param message the validation message (cannot be <code>null</code> or empty)
      * @return the OK validation message (never <code>null</code>)
      */
-    public static ValidationStatus createOkMessage( final String message ) {
-        return new ValidationStatus(Severity.OK, message);
+    public static ValidationStatus createOkMessage( int code,
+                                                    final String message ) {
+        return new ValidationStatus(Severity.OK, code, message);
     }
 
     /**
+     * @param code a code uniquely identifying the status
      * @param message the validation message (cannot be <code>null</code> or empty)
      * @return the warning validation message (never <code>null</code>)
      */
-    public static ValidationStatus createWarningMessage( final String message ) {
-        return new ValidationStatus(Severity.WARNING, message);
+    public static ValidationStatus createWarningMessage( int code,
+                                                         final String message ) {
+        return new ValidationStatus(Severity.WARNING, code, message);
     }
+
+    /**
+     * A code uniquely identifying the status.
+     */
+    protected int code;
 
     /**
      * The localized message which can be displayed to the user (never <code>null</code>).
@@ -61,13 +79,16 @@ public class ValidationStatus implements Comparable<ValidationStatus> {
 
     /**
      * @param severity the status severity (cannot be <code>null</code>)
+     * @param code a code uniquely identifying the status
      * @param message the status localized user message (cannot be <code>null</code>)
      */
     protected ValidationStatus( final Severity severity,
+                                int code,
                                 final String message ) {
         assert (severity != null) : "severity is null"; //$NON-NLS-1$
         Utils.verifyIsNotEmpty(message, "message"); //$NON-NLS-1$
 
+        this.code = code;
         this.severity = severity;
         this.message = message;
     }
@@ -132,8 +153,16 @@ public class ValidationStatus implements Comparable<ValidationStatus> {
     }
 
     /**
+     * @param code the code being checked for
+     * @return <code>true</code> if the code is found
+     */
+    public boolean containsCode(int code) {
+        return (getCode() == code);
+    }
+
+    /**
      * {@inheritDoc}
-     *
+     * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -149,7 +178,14 @@ public class ValidationStatus implements Comparable<ValidationStatus> {
         ValidationStatus that = (ValidationStatus)obj;
         return (this.severity.equals(that.severity) && this.message.equals(that.message));
     }
-    
+
+    /**
+     * @return the unique code for this status
+     */
+    public int getCode() {
+        return this.code;
+    }
+
     /**
      * @return the message pertaining to the worse validation severity (never <code>null</code>)
      */
@@ -166,14 +202,14 @@ public class ValidationStatus implements Comparable<ValidationStatus> {
 
     /**
      * {@inheritDoc}
-     *
+     * 
      * @see java.lang.Object#hashCode()
      */
     @Override
     public int hashCode() {
         return Utils.hashCode(this.severity, this.message);
     }
-    
+
     /**
      * @return <code>true</code> if the validation status has an error severity
      */

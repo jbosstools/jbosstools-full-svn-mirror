@@ -11,7 +11,9 @@ import java.math.BigDecimal;
 import java.net.URI;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.StringTokenizer;
 
 import org.eclipse.core.runtime.IStatus;
@@ -39,6 +41,7 @@ import org.jboss.tools.modeshape.jcr.attributes.QueryOperators.QueryOperator;
 public final class CndValidator {
 
     private static final String PARENT_PATH_SEGMENT = ".."; //$NON-NLS-1$
+
     private static final String SELF_PATH_SEGMENT = "."; //$NON-NLS-1$
 
     /**
@@ -57,7 +60,7 @@ public final class CndValidator {
         }
 
         if (Utils.isEmpty(value)) {
-            return ValidationStatus.createErrorMessage(NLS.bind(Messages.emptyValue, propertyName));
+            return ValidationStatus.createErrorMessage(StatusCodes.EMPTY_VALUE, NLS.bind(Messages.emptyValue, propertyName));
         }
 
         try {
@@ -69,35 +72,40 @@ public final class CndValidator {
                 return ValidationStatus.OK_STATUS; // always valid
             } else if (PropertyType.BOOLEAN == propertyType) {
                 if (!value.equalsIgnoreCase(Boolean.TRUE.toString()) && !value.equalsIgnoreCase(Boolean.FALSE.toString())) {
-                    return ValidationStatus.createErrorMessage(NLS.bind(Messages.invalidPropertyValueForType, new Object[] { value,
-                            PropertyType.BOOLEAN, propertyName }));
+                    return ValidationStatus.createErrorMessage(StatusCodes.INVALID_PROPERTY_VALUE_FOR_TYPE,
+                                                               NLS.bind(Messages.invalidPropertyValueForType, new Object[] { value,
+                                                                       PropertyType.BOOLEAN, propertyName }));
                 }
             } else if (PropertyType.DATE == propertyType) {
                 try {
                     Date.valueOf(value);
                 } catch (final Exception e) {
-                    return ValidationStatus.createErrorMessage(NLS.bind(Messages.invalidPropertyValueForType, new Object[] { value,
-                            PropertyType.DATE, propertyName }));
+                    return ValidationStatus.createErrorMessage(StatusCodes.INVALID_PROPERTY_VALUE_FOR_TYPE,
+                                                               NLS.bind(Messages.invalidPropertyValueForType, new Object[] { value,
+                                                                       PropertyType.DATE, propertyName }));
                 }
             } else if (PropertyType.DECIMAL == propertyType) {
                 try {
                     new BigDecimal(value);
                 } catch (final Exception e) {
-                    return ValidationStatus.createErrorMessage(NLS.bind(Messages.invalidPropertyValueForType, value,
+                    return ValidationStatus.createErrorMessage(StatusCodes.INVALID_PROPERTY_VALUE_FOR_TYPE,
+                                                               NLS.bind(Messages.invalidPropertyValueForType, value,
                                                                         PropertyType.DECIMAL));
                 }
             } else if (PropertyType.DOUBLE == propertyType) {
                 try {
                     Double.parseDouble(value);
                 } catch (final Exception e) {
-                    return ValidationStatus.createErrorMessage(NLS.bind(Messages.invalidPropertyValueForType, value,
+                    return ValidationStatus.createErrorMessage(StatusCodes.INVALID_PROPERTY_VALUE_FOR_TYPE,
+                                                               NLS.bind(Messages.invalidPropertyValueForType, value,
                                                                         PropertyType.DOUBLE));
                 }
             } else if (PropertyType.LONG == propertyType) {
                 try {
                     Long.parseLong(value);
                 } catch (final Exception e) {
-                    return ValidationStatus.createErrorMessage(NLS.bind(Messages.invalidPropertyValueForType, value,
+                    return ValidationStatus.createErrorMessage(StatusCodes.INVALID_PROPERTY_VALUE_FOR_TYPE,
+                                                               NLS.bind(Messages.invalidPropertyValueForType, value,
                                                                         PropertyType.LONG));
                 }
             } else if (PropertyType.NAME == propertyType) {
@@ -116,8 +124,9 @@ public final class CndValidator {
 
             return ValidationStatus.OK_STATUS;
         } catch (final Exception e) {
-            return ValidationStatus.createErrorMessage(NLS.bind(Messages.errorValidatingPropertyValueForType, new Object[] { value,
-                    propertyType, propertyName }));
+            return ValidationStatus.createErrorMessage(StatusCodes.ERROR_VALIDATING_PROPERTY_VALUE_FOR_TYPE,
+                                                       NLS.bind(Messages.errorValidatingPropertyValueForType, new Object[] { value,
+                                                               propertyType, propertyName }));
         }
     }
 
@@ -231,7 +240,8 @@ public final class CndValidator {
 
                 if (!Utils.isEmpty(childNodeName) && !ItemDefinition.RESIDUAL_NAME.equals(childNodeName)) {
                     if (childNodeNames.contains(childNodeName)) {
-                        status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.duplicateChildNodeDefinitionName,
+                        status.add(ValidationStatus.createErrorMessage(StatusCodes.DUPLICATE_CHILD_NODE_DEFINITION_NAME,
+                                                                       NLS.bind(Messages.duplicateChildNodeDefinitionName,
                                                                                 nodeTypeName, childNodeName)));
                     } else {
                         childNodeNames.add(childNodeName);
@@ -301,7 +311,8 @@ public final class CndValidator {
 
         // WARNING - No namespace declarations or node type definitions exist
         if (noNamespaceMappings && noNodeTypeDefinitions) {
-            status.add(ValidationStatus.createWarningMessage(Messages.cndHasNoNamespacesOrNodeTypeDefinitions));
+            status.add(ValidationStatus.createWarningMessage(StatusCodes.CND_HAS_NO_NAMESPACES_OR_NODE_TYPE_DEFINITIONS,
+                                                             Messages.cndHasNoNamespacesOrNodeTypeDefinitions));
         }
 
         return status;
@@ -370,14 +381,16 @@ public final class CndValidator {
                     }
 
                     if (!foundMatch) {
-                        status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.defaultTypeDoesNotMatchRequiredType,
+                        status.add(ValidationStatus.createErrorMessage(StatusCodes.DEFAULT_TYPE_DOES_NOT_MATCH_REQUIRED_TYPE,
+                                                                       NLS.bind(Messages.defaultTypeDoesNotMatchRequiredType,
                                                                                 childNodeName, defaultTypeName)));
                     }
                 }
             }
         } else if (!Utils.isEmpty(defaultTypeName)) {
             // ERROR - Cannot have explicit default type when default type is marked as a variant
-            status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.defaultTypeExistsButMarkedAsVariant, childNodeName)));
+            status.add(ValidationStatus.createErrorMessage(StatusCodes.DEFAULT_TYPE_EXISTS_BUT_MARKED_AS_VARIANT,
+                                                           NLS.bind(Messages.defaultTypeExistsButMarkedAsVariant, childNodeName)));
         }
     }
 
@@ -414,30 +427,85 @@ public final class CndValidator {
 
         if (Utils.isEmpty(defaultValues)) {
             if (propertyDefinition.getState(PropertyDefinition.PropertyName.DEFAULT_VALUES) == Value.IS) {
-                status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.emptyDefaultValues, propertyName)));
+                status.add(ValidationStatus.createErrorMessage(StatusCodes.EMPTY_DEFAULT_VALUES,
+                                                               NLS.bind(Messages.emptyDefaultValues, propertyName)));
             }
         } else {
             // ERROR - Cannot have multiple default values when the property definition is single-valued
             if ((defaultValues.size() > 1)
                     && (propertyDefinition.getState(PropertyDefinition.PropertyName.MULTIPLE) == Value.IS_NOT)) {
-                status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.multipleDefaultValuesForSingleValuedProperty,
+                status.add(ValidationStatus.createErrorMessage(StatusCodes.MULTIPLE_DEFAULT_VALUES_FOR_SINGLE_VALUED_PROPERTY,
+                                                               NLS.bind(Messages.multipleDefaultValuesForSingleValuedProperty,
                                                                         propertyName)));
             }
 
+            validateDefaultValues(propertyName, propertyDefinition.getType(), defaultValues, validNamespacePrefixes, status);
+
+            // ERROR - Cannot have explicit default values when default values is marked as a variant
+            if (propertyDefinition.getState(PropertyDefinition.PropertyName.DEFAULT_VALUES) != Value.IS) {
+                status.add(ValidationStatus.createErrorMessage(StatusCodes.DEFAULT_VALUES_EXIST_BUT_MARKED_AS_VARIANT,
+                                                               NLS.bind(Messages.defaultValuesExistButMarkedAsVariant,
+                                                                        propertyDefinition)));
+            }
+        }
+    }
+
+    /**
+     * Checks for duplicates and correct value for type.
+     * 
+     * @param propertyName the name of the property definition (can be <code>null</code> or empty)
+     * @param propertyType the property definition's property type (cannot be <code>null</code>)
+     * @param defaultValues the default values (can be <code>null</code>)
+     * @param validNamespacePrefixes the valid namespace prefixes (can be <code>null</code> or empty)
+     * @return the status (never <code>null</code>)
+     */
+    public static MultiValidationStatus validateDefaultValues( final String propertyName,
+                                                               final PropertyType propertyType,
+                                                               final Collection<String> defaultValues,
+                                                               final Collection<String> validNamespacePrefixes ) {
+        final MultiValidationStatus status = new MultiValidationStatus();
+        validateDefaultValues(propertyName, propertyType, defaultValues, validNamespacePrefixes, status);
+        return status;
+    }
+
+    /**
+     * Checks for duplicates and correct value for type.
+     * 
+     * @param propertyName the name of the property definition (cannot be <code>null</code> or empty)
+     * @param propertyType the property definition's property type (cannot be <code>null</code>)
+     * @param defaultValues the default values (can be <code>null</code>)
+     * @param validNamespacePrefixes the valid namespace prefixes (can be <code>null</code> or empty)
+     * @param status the status to add the new status to (cannot be <code>null</code>)
+     */
+    public static void validateDefaultValues( String propertyName,
+                                              final PropertyType propertyType,
+                                              final Collection<String> defaultValues,
+                                              final Collection<String> validNamespacePrefixes,
+                                              final MultiValidationStatus status ) {
+        Utils.verifyIsNotNull(propertyType, "propertyType"); //$NON-NLS-1$
+
+        if (propertyName == null) {
+            propertyName = Messages.missingName;
+        }
+
+        if (!Utils.isEmpty(defaultValues)) {
             final Collection<String> values = new ArrayList<String>(defaultValues.size());
 
             for (final String defaultValue : defaultValues) {
                 // ERROR - Default value is not valid for the property definition type
-                isValid(defaultValue, propertyDefinition.getType(), Messages.defaultValue, status);
+                isValid(defaultValue, propertyType, Messages.defaultValue, status);
 
                 // make sure if NAME type the qualifier is valid
-                if (!Utils.isEmpty(validNamespacePrefixes) && (propertyDefinition.getType() == PropertyType.NAME)) {
+                final Collection<String> qualifiers = (Utils.isEmpty(validNamespacePrefixes) ? Collections.<String> emptyList()
+                                                                                            : validNamespacePrefixes);
+
+                if (propertyType == PropertyType.NAME) {
                     final QualifiedName qname = QualifiedName.parse(defaultValue);
                     final String qualifier = qname.getQualifier();
                     boolean valid = false;
 
                     if (!Utils.isEmpty(qualifier)) {
-                        for (final String validQualifier : validNamespacePrefixes) {
+                        for (final String validQualifier : qualifiers) {
                             if (validQualifier.equals(qualifier)) {
                                 valid = true;
                                 break;
@@ -446,7 +514,8 @@ public final class CndValidator {
                     }
 
                     if (!valid) {
-                        status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.invalidQualifierForDefaultValue,
+                        status.add(ValidationStatus.createErrorMessage(StatusCodes.INVALID_QUALIFIER_FOR_DEFAULT_VALUE,
+                                                                       NLS.bind(Messages.invalidQualifierForDefaultValue,
                                                                                 propertyName, defaultValue)));
                     }
                 }
@@ -454,18 +523,13 @@ public final class CndValidator {
                 if (!Utils.isEmpty(defaultValue)) {
                     // ERROR - Duplicate default value
                     if (values.contains(defaultValue)) {
-                        status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.duplicateDefaultValue, propertyName,
+                        status.add(ValidationStatus.createErrorMessage(StatusCodes.DUPLICATE_DEFAULT_VALUE,
+                                                                       NLS.bind(Messages.duplicateDefaultValue, propertyName,
                                                                                 defaultValue)));
                     } else {
                         values.add(defaultValue);
                     }
                 }
-            }
-
-            // ERROR - Cannot have explicit default values when default values is marked as a variant
-            if (propertyDefinition.getState(PropertyDefinition.PropertyName.DEFAULT_VALUES) != Value.IS) {
-                status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.defaultValuesExistButMarkedAsVariant,
-                                                                        propertyDefinition)));
             }
         }
     }
@@ -481,12 +545,14 @@ public final class CndValidator {
         Utils.verifyIsNotEmpty(messagePrefix, messagePrefix);
 
         if (Utils.isEmpty(localName)) {
-            return ValidationStatus.createErrorMessage(NLS.bind(Messages.emptyLocalName, messagePrefix));
+            return ValidationStatus.createErrorMessage(StatusCodes.EMPTY_LOCAL_NAME,
+                                                       NLS.bind(Messages.emptyLocalName, messagePrefix));
         }
 
         // ERROR Local name cannot be self or parent
         if (localName.equals(SELF_PATH_SEGMENT) || localName.equals(PARENT_PATH_SEGMENT)) {
-            return ValidationStatus.createErrorMessage(NLS.bind(Messages.localNameEqualToSelfOrParent, messagePrefix));
+            return ValidationStatus.createErrorMessage(StatusCodes.LOCAL_NAME_EQUAL_TO_SELF_OR_PARENT,
+                                                       NLS.bind(Messages.localNameEqualToSelfOrParent, messagePrefix));
         }
 
         for (final char c : localName.toCharArray()) {
@@ -498,7 +564,8 @@ public final class CndValidator {
             case '|':
             case '*':
                 // ERROR invalid character
-                return ValidationStatus.createErrorMessage(NLS.bind(Messages.localNameHasInvalidCharacters, messagePrefix,
+                return ValidationStatus.createErrorMessage(StatusCodes.LOCAL_NAME_HAS_INVALID_CHARACTERS,
+                                                           NLS.bind(Messages.localNameHasInvalidCharacters, messagePrefix,
                                                                     localName));
             default:
                 continue;
@@ -652,7 +719,8 @@ public final class CndValidator {
         try {
             if (!Utils.isEmpty(prefix) && WorkspaceRegistry.get().isBuiltInNamespacePrefix(prefix)) {
                 if (!Utils.equals(uri, WorkspaceRegistry.get().getUri(prefix))) {
-                    status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.invalidUriForBuiltInNamespacePrefix,
+                    status.add(ValidationStatus.createErrorMessage(StatusCodes.INVALID_URI_FOR_BUILT_IN_NAMESPACE_PREFIX,
+                                                                   NLS.bind(Messages.invalidUriForBuiltInNamespacePrefix,
                                                                             new Object[] { uri, prefix,
                                                                                     WorkspaceRegistry.get().getUri(prefix) })));
                 }
@@ -661,7 +729,8 @@ public final class CndValidator {
             // ERROR - URI matches a built-in but prefix does not match
             if (!Utils.isEmpty(uri) && WorkspaceRegistry.get().isBuiltInNamespaceUri(uri)) {
                 if (!Utils.equals(prefix, WorkspaceRegistry.get().getPrefix(uri))) {
-                    status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.invalidPrefixForBuiltInNamespaceUri,
+                    status.add(ValidationStatus.createErrorMessage(StatusCodes.INVALID_PREFIX_FOR_BUILT_IN_NAMESPACE_URI,
+                                                                   NLS.bind(Messages.invalidPrefixForBuiltInNamespaceUri,
                                                                             new Object[] { prefix, uri,
                                                                                     WorkspaceRegistry.get().getPrefix(uri) })));
                 }
@@ -697,7 +766,8 @@ public final class CndValidator {
                         prefix = Utils.EMPTY_STRING;
                     }
 
-                    status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.duplicateNamespacePrefix, prefix)));
+                    status.add(ValidationStatus.createErrorMessage(StatusCodes.DUPLICATE_NAMESPACE_PREFIX,
+                                                                   NLS.bind(Messages.duplicateNamespacePrefix, prefix)));
                 }
 
                 if (checkUri && Utils.equivalent(namespaceMapping.getUri(), namespace.getUri())) {
@@ -708,7 +778,8 @@ public final class CndValidator {
                         uri = Utils.EMPTY_STRING;
                     }
 
-                    status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.duplicateNamespaceUri, uri)));
+                    status.add(ValidationStatus.createErrorMessage(StatusCodes.DUPLICATE_NAMESPACE_URI,
+                                                                   NLS.bind(Messages.duplicateNamespaceUri, uri)));
                 }
             }
         }
@@ -774,7 +845,8 @@ public final class CndValidator {
 
                 if (!Utils.isEmpty(prefix)) {
                     if (prefixes.contains(prefix)) {
-                        status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.duplicateNamespacePrefix, prefix)));
+                        status.add(ValidationStatus.createErrorMessage(StatusCodes.DUPLICATE_NAMESPACE_PREFIX,
+                                                                       NLS.bind(Messages.duplicateNamespacePrefix, prefix)));
                     } else {
                         prefixes.add(prefix);
                     }
@@ -786,7 +858,8 @@ public final class CndValidator {
 
                 if (!Utils.isEmpty(uri)) {
                     if (uris.contains(uri)) {
-                        status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.duplicateNamespaceUri, uri)));
+                        status.add(ValidationStatus.createErrorMessage(StatusCodes.DUPLICATE_NAMESPACE_URI,
+                                                                       NLS.bind(Messages.duplicateNamespaceUri, uri)));
                     } else {
                         uris.add(uri);
                     }
@@ -855,7 +928,8 @@ public final class CndValidator {
 
             if (Utils.isEmpty(superTypeNames)) {
                 if (nodeTypeDefinition.getState(NodeTypeDefinition.PropertyName.SUPERTYPES) == Value.IS) {
-                    status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.emptySuperTypes, nodeTypeDefinitionName)));
+                    status.add(ValidationStatus.createErrorMessage(StatusCodes.EMPTY_SUPER_TYPES,
+                                                                   NLS.bind(Messages.emptySuperTypes, nodeTypeDefinitionName)));
                 }
             } else {
                 validateSuperTypes(nodeTypeDefinitionName, validNamespacePrefixes,
@@ -871,7 +945,8 @@ public final class CndValidator {
                 validateQualifiedName(primaryItemName, Messages.primaryItemName, validNamespacePrefixes, null, status);
             } else if (!Utils.isEmpty(primaryItemName.get())) {
                 // ERROR Cannot have a primary item name when the primary item node type attribute is marked as a variant
-                status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.primaryItemExistsButMarkedAsVariant,
+                status.add(ValidationStatus.createErrorMessage(StatusCodes.PRIMARY_ITEM_EXISTS_BUT_MARKED_AS_VARIANT,
+                                                               NLS.bind(Messages.primaryItemExistsButMarkedAsVariant,
                                                                         nodeTypeDefinitionName)));
             }
         }
@@ -950,7 +1025,8 @@ public final class CndValidator {
 
                 if (!Utils.isEmpty(name)) {
                     if (names.contains(name)) {
-                        status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.duplicateNodeTypeDefinitionName, name)));
+                        status.add(ValidationStatus.createErrorMessage(StatusCodes.DUPLICATE_NODE_TYPE_DEFINITION_NAME,
+                                                                       NLS.bind(Messages.duplicateNodeTypeDefinitionName, name)));
                     } else {
                         names.add(name);
                     }
@@ -994,7 +1070,7 @@ public final class CndValidator {
         }
 
         if (Utils.isEmpty(path)) {
-            return ValidationStatus.createErrorMessage(NLS.bind(Messages.emptyValue, propertyName));
+            return ValidationStatus.createErrorMessage(StatusCodes.EMPTY_VALUE, NLS.bind(Messages.emptyValue, propertyName));
         }
 
         final StringTokenizer pathTokenizer = new StringTokenizer(path, "/"); //$NON-NLS-1$
@@ -1006,7 +1082,8 @@ public final class CndValidator {
                 if (Utils.isEmpty(segment)) {
                     if (pathTokenizer.hasMoreTokens()) {
                         // found empty segment
-                        return ValidationStatus.createErrorMessage(NLS.bind(Messages.invalidPropertyValueForType, path,
+                        return ValidationStatus.createErrorMessage(StatusCodes.INVALID_PROPERTY_VALUE_FOR_TYPE,
+                                                                   NLS.bind(Messages.invalidPropertyValueForType, path,
                                                                             PropertyType.PATH));
                     }
                 } else {
@@ -1018,7 +1095,8 @@ public final class CndValidator {
 
                         if (Utils.isEmpty(qualifiedName)) {
                             // found SNS but now qualified name
-                            return ValidationStatus.createErrorMessage(NLS.bind(Messages.invalidPropertyValueForType, path,
+                            return ValidationStatus.createErrorMessage(StatusCodes.INVALID_PROPERTY_VALUE_FOR_TYPE,
+                                                                       NLS.bind(Messages.invalidPropertyValueForType, path,
                                                                                 PropertyType.PATH));
                         }
 
@@ -1044,13 +1122,15 @@ public final class CndValidator {
                             for (final char c : snsIndex.toCharArray()) {
                                 if (!Character.isDigit(c)) {
                                     // found invalid character
-                                    return ValidationStatus.createErrorMessage(NLS.bind(Messages.invalidPropertyValueForType, path,
+                                    return ValidationStatus.createErrorMessage(StatusCodes.INVALID_PROPERTY_VALUE_FOR_TYPE,
+                                                                               NLS.bind(Messages.invalidPropertyValueForType, path,
                                                                                         PropertyType.PATH));
                                 }
                             }
                         } else {
                             // no ending SNS bracket
-                            return ValidationStatus.createErrorMessage(NLS.bind(Messages.invalidPropertyValueForType, path,
+                            return ValidationStatus.createErrorMessage(StatusCodes.INVALID_PROPERTY_VALUE_FOR_TYPE,
+                                                                       NLS.bind(Messages.invalidPropertyValueForType, path,
                                                                                 PropertyType.PATH));
                         }
                     } else {
@@ -1137,7 +1217,8 @@ public final class CndValidator {
 
             if (Utils.isEmpty(queryOperators)) {
                 if (propertyDefinition.getState(PropertyDefinition.PropertyName.QUERY_OPS) == Value.IS) {
-                    status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.emptyQueryOperators, propertyDefinitionName)));
+                    status.add(ValidationStatus.createErrorMessage(StatusCodes.EMPTY_QUERY_OPERATORS,
+                                                                   NLS.bind(Messages.emptyQueryOperators, propertyDefinitionName)));
                 }
             } else {
                 final Collection<String> operators = new ArrayList<String>(queryOperators.length);
@@ -1149,7 +1230,8 @@ public final class CndValidator {
                     if (!Utils.isEmpty(operator)) {
                         // ERROR - Duplicate query operator
                         if (operators.contains(operator)) {
-                            status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.duplicateQueryOperator,
+                            status.add(ValidationStatus.createErrorMessage(StatusCodes.DUPLICATE_QUERY_OPERATOR,
+                                                                           NLS.bind(Messages.duplicateQueryOperator,
                                                                                     propertyDefinitionName, operator)));
                         } else {
                             operators.add(operator);
@@ -1159,7 +1241,8 @@ public final class CndValidator {
 
                 // ERROR - Cannot have explicit query operators when query operators is marked as a variant
                 if (propertyDefinition.getState(PropertyDefinition.PropertyName.QUERY_OPS) != Value.IS) {
-                    status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.queryOperatorsExistButMarkedAsVariant,
+                    status.add(ValidationStatus.createErrorMessage(StatusCodes.QUERY_OPERATORS_EXIST_BUT_MARKED_AS_VARIANT,
+                                                                   NLS.bind(Messages.queryOperatorsExistButMarkedAsVariant,
                                                                             propertyDefinition)));
                 }
             }
@@ -1220,7 +1303,8 @@ public final class CndValidator {
 
                 if (!Utils.isEmpty(propName) && !ItemDefinition.RESIDUAL_NAME.equals(propName)) {
                     if (propNames.contains(propName)) {
-                        status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.duplicatePropertyDefinitionName,
+                        status.add(ValidationStatus.createErrorMessage(StatusCodes.DUPLICATE_PROPERTY_DEFINITION_NAME,
+                                                                       NLS.bind(Messages.duplicatePropertyDefinitionName,
                                                                                 nodeTypeName, propName)));
                     } else {
                         propNames.add(propName);
@@ -1299,7 +1383,8 @@ public final class CndValidator {
             final String unqualifiedName = qname.getUnqualifiedName();
 
             if (Utils.isEmpty(unqualifiedName)) {
-                status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.emptyUnqualifiedName, propertyName)));
+                status.add(ValidationStatus.createErrorMessage(StatusCodes.EMPTY_UNQUALIFIED_NAME,
+                                                               NLS.bind(Messages.emptyUnqualifiedName, propertyName)));
             } else {
                 final ValidationStatus nameStatus = validateLocalName(unqualifiedName, propertyName);
 
@@ -1314,7 +1399,8 @@ public final class CndValidator {
             final String qualifier = qname.getQualifier();
 
             if (!Utils.isEmpty(qualifier) && !validNamespacePrefixes.contains(qualifier)) {
-                final ValidationStatus newStatus = ValidationStatus.createErrorMessage(NLS.bind(Messages.nameQualifierNotFound,
+                final ValidationStatus newStatus = ValidationStatus.createErrorMessage(StatusCodes.NAME_QUALIFIER_NOT_FOUND,
+                                                                                       NLS.bind(Messages.nameQualifierNotFound,
                                                                                                 propertyName, qualifier));
                 status.add(newStatus);
             }
@@ -1322,7 +1408,8 @@ public final class CndValidator {
 
         // make sure qname is not a duplicate
         if (!Utils.isEmpty(existingQNames) && existingQNames.contains(qname)) {
-            final ValidationStatus newStatus = ValidationStatus.createErrorMessage(NLS.bind(Messages.duplicateQualifiedName,
+            final ValidationStatus newStatus = ValidationStatus.createErrorMessage(StatusCodes.DUPLICATE_QUALIFIED_NAME,
+                                                                                   NLS.bind(Messages.duplicateQualifiedName,
                                                                                             propertyName, qname));
             status.add(newStatus);
         }
@@ -1337,13 +1424,14 @@ public final class CndValidator {
     public static ValidationStatus validateQueryOperator( final String operator,
                                                           final String propertyDefinitionName ) {
         if (Utils.isEmpty(operator)) {
-            return ValidationStatus.createErrorMessage(Messages.emptyQueryOperator);
+            return ValidationStatus.createErrorMessage(StatusCodes.EMPTY_QUERY_OPERATOR, Messages.emptyQueryOperator);
         }
 
         try {
             QueryOperator.find(operator);
         } catch (final Exception e) {
-            return ValidationStatus.createErrorMessage(NLS.bind(Messages.invalidQueryOperator, operator, propertyDefinitionName));
+            return ValidationStatus.createErrorMessage(StatusCodes.INVALID_QUERY_OPERATOR,
+                                                       NLS.bind(Messages.invalidQueryOperator, operator, propertyDefinitionName));
         }
 
         return ValidationStatus.OK_STATUS;
@@ -1397,7 +1485,8 @@ public final class CndValidator {
 
         if (Utils.isEmpty(requiredTypeNames)) {
             if (childNodeDefinition.getState(ChildNodeDefinition.PropertyName.REQUIRED_TYPES) == Value.IS) {
-                status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.emptyRequiredTypes, childNodeName)));
+                status.add(ValidationStatus.createErrorMessage(StatusCodes.EMPTY_REQUIRED_TYPES,
+                                                               NLS.bind(Messages.emptyRequiredTypes, childNodeName)));
             }
         } else {
             final Collection<QualifiedName> requiredTypes = new ArrayList<QualifiedName>(requiredTypeNames.length);
@@ -1408,7 +1497,8 @@ public final class CndValidator {
 
                 // ERROR - Duplicate required type name
                 if (requiredTypes.contains(requiredType)) {
-                    status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.duplicateRequiredType, childNodeName,
+                    status.add(ValidationStatus.createErrorMessage(StatusCodes.DUPLICATE_REQUIRED_TYPE,
+                                                                   NLS.bind(Messages.duplicateRequiredType, childNodeName,
                                                                             requiredType)));
                 } else {
                     requiredTypes.add(requiredType);
@@ -1417,7 +1507,8 @@ public final class CndValidator {
 
             // ERROR - Cannot have explicit required types when required types is marked as a variant
             if (childNodeDefinition.getState(ChildNodeDefinition.PropertyName.REQUIRED_TYPES) != Value.IS) {
-                status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.requiredTypesExistButMarkedAsVariant,
+                status.add(ValidationStatus.createErrorMessage(StatusCodes.REQUIRED_TYPES_EXIST_BUT_MARKED_AS_VARIANT,
+                                                               NLS.bind(Messages.requiredTypesExistButMarkedAsVariant,
                                                                         childNodeName)));
             }
         }
@@ -1461,7 +1552,8 @@ public final class CndValidator {
             if (!Utils.isEmpty(superTypeName.get())) {
                 // ERROR - Duplicate super type name
                 if (names.contains(superTypeName)) {
-                    status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.duplicateSuperType, nodeTypeDefinitionName,
+                    status.add(ValidationStatus.createErrorMessage(StatusCodes.DUPLICATE_SUPER_TYPE,
+                                                                   NLS.bind(Messages.duplicateSuperType, nodeTypeDefinitionName,
                                                                             superTypeName)));
                 } else {
                     names.add(superTypeName);
@@ -1471,7 +1563,8 @@ public final class CndValidator {
 
         // ERROR - Cannot have explicit super types when super types is marked as a variant
         if (superTypesState != Value.IS) {
-            status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.superTypesExistButMarkedAsVariant,
+            status.add(ValidationStatus.createErrorMessage(StatusCodes.SUPER_TYPES_EXIST_BUT_MARKED_AS_VARIANT,
+                                                           NLS.bind(Messages.superTypesExistButMarkedAsVariant,
                                                                     nodeTypeDefinitionName)));
         }
 
@@ -1509,13 +1602,13 @@ public final class CndValidator {
         Utils.verifyIsNotEmpty(propertyName, "propertyName"); //$NON-NLS-1$
 
         if (Utils.isEmpty(uri) || uri.contains(" ")) { //$NON-NLS-1$
-            return ValidationStatus.createErrorMessage(NLS.bind(Messages.emptyValue, propertyName));
+            return ValidationStatus.createErrorMessage(StatusCodes.EMPTY_VALUE, NLS.bind(Messages.emptyValue, propertyName));
         }
 
         try {
             URI.create(uri);
         } catch (final Exception e) {
-            return ValidationStatus.createErrorMessage(NLS.bind(Messages.invalidUri, propertyName));
+            return ValidationStatus.createErrorMessage(StatusCodes.INVALID_URI, NLS.bind(Messages.invalidUri, propertyName));
         }
 
         return ValidationStatus.OK_STATUS;
@@ -1574,10 +1667,51 @@ public final class CndValidator {
 
         if (Utils.isEmpty(valueConstraints)) {
             if (propertyDefinition.getState(PropertyDefinition.PropertyName.VALUE_CONSTRAINTS) == Value.IS) {
-                status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.emptyValueConstraints, propertyName)));
+                status.add(ValidationStatus.createErrorMessage(StatusCodes.EMPTY_VALUE_CONSTRAINTS,
+                                                               NLS.bind(Messages.emptyValueConstraints, propertyName)));
             }
         } else {
-            final Collection<String> constraints = new ArrayList<String>(valueConstraints.length);
+            validateValueConstraints(propertyName, Arrays.asList(valueConstraints), status);
+
+            // ERROR - Cannot have explicit value constraints when value constraints is marked as a variant
+            if (propertyDefinition.getState(PropertyDefinition.PropertyName.VALUE_CONSTRAINTS) != Value.IS) {
+                status.add(ValidationStatus.createErrorMessage(StatusCodes.VALUE_CONSTRAINTS_EXIST_BUT_MARKED_AS_VARIANT,
+                                                               NLS.bind(Messages.valueConstraintsExistButMarkedAsVariant,
+                                                                        propertyDefinition)));
+            }
+        }
+    }
+
+    /**
+     * Checks for valid constraint and duplicates.
+     * 
+     * @param propertyName the property definition name (can be <code>null</code> or empty)
+     * @param valueConstraints the value constraints (can be <code>null</code> or empty)
+     * @return the status (never <code>null</code>)
+     */
+    public static MultiValidationStatus validateValueConstraints( final String propertyName,
+                                                                  final Collection<String> valueConstraints ) {
+        final MultiValidationStatus status = new MultiValidationStatus();
+        validateValueConstraints(propertyName, valueConstraints, status);
+        return status;
+    }
+
+    /**
+     * Checks for valid constraint and duplicates.
+     * 
+     * @param propertyName the property definition name (can be <code>null</code> or empty)
+     * @param valueConstraints the value constraints (can be <code>null</code> or empty)
+     * @param status the status to add the new status to (cannot be <code>null</code>)
+     */
+    public static void validateValueConstraints( String propertyName,
+                                                 final Collection<String> valueConstraints,
+                                                 final MultiValidationStatus status ) {
+        if (propertyName == null) {
+            propertyName = Messages.missingName;
+        }
+
+        if (!Utils.isEmpty(valueConstraints)) {
+            final Collection<String> constraints = new ArrayList<String>(valueConstraints.size());
 
             for (final String constraint : valueConstraints) {
                 // ERROR - Invalid value constraint
@@ -1586,18 +1720,13 @@ public final class CndValidator {
                 if (!Utils.isEmpty(constraint)) {
                     // ERROR - Duplicate value constraint
                     if (constraints.contains(constraint)) {
-                        status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.duplicateValueConstraint, propertyName,
+                        status.add(ValidationStatus.createErrorMessage(StatusCodes.DUPLICATE_VALUE_CONSTRAINT,
+                                                                       NLS.bind(Messages.duplicateValueConstraint, propertyName,
                                                                                 constraint)));
                     } else {
                         constraints.add(constraint);
                     }
                 }
-            }
-
-            // ERROR - Cannot have explicit value constraints when value constraints is marked as a variant
-            if (propertyDefinition.getState(PropertyDefinition.PropertyName.VALUE_CONSTRAINTS) != Value.IS) {
-                status.add(ValidationStatus.createErrorMessage(NLS.bind(Messages.valueConstraintsExistButMarkedAsVariant,
-                                                                        propertyDefinition)));
             }
         }
     }
@@ -1607,6 +1736,49 @@ public final class CndValidator {
      */
     private CndValidator() {
         // nothing to do
+    }
+
+    interface StatusCodes {
+        int EMPTY_VALUE = 100;
+        int INVALID_PROPERTY_VALUE_FOR_TYPE = 105;
+        int ERROR_VALIDATING_PROPERTY_VALUE_FOR_TYPE = 110;
+        int DUPLICATE_CHILD_NODE_DEFINITION_NAME = 115;
+        int CND_HAS_NO_NAMESPACES_OR_NODE_TYPE_DEFINITIONS = 120;
+        int DEFAULT_TYPE_DOES_NOT_MATCH_REQUIRED_TYPE = 125;
+        int DEFAULT_TYPE_EXISTS_BUT_MARKED_AS_VARIANT = 130;
+        int EMPTY_DEFAULT_VALUES = 135;
+        int MULTIPLE_DEFAULT_VALUES_FOR_SINGLE_VALUED_PROPERTY = 140;
+        int INVALID_QUALIFIER_FOR_DEFAULT_VALUE = 145;
+        int DUPLICATE_DEFAULT_VALUE = 150;
+        int DEFAULT_VALUES_EXIST_BUT_MARKED_AS_VARIANT = 155;
+        int EMPTY_LOCAL_NAME = 160;
+        int LOCAL_NAME_EQUAL_TO_SELF_OR_PARENT = 165;
+        int LOCAL_NAME_HAS_INVALID_CHARACTERS = 170;
+        int INVALID_URI_FOR_BUILT_IN_NAMESPACE_PREFIX = 175;
+        int INVALID_PREFIX_FOR_BUILT_IN_NAMESPACE_URI = 180;
+        int DUPLICATE_NAMESPACE_PREFIX = 185;
+        int DUPLICATE_NAMESPACE_URI = 190;
+        int EMPTY_SUPER_TYPES = 195;
+        int PRIMARY_ITEM_EXISTS_BUT_MARKED_AS_VARIANT = 200;
+        int DUPLICATE_NODE_TYPE_DEFINITION_NAME = 205;
+        int EMPTY_QUERY_OPERATORS = 210;
+        int DUPLICATE_QUERY_OPERATOR = 215;
+        int QUERY_OPERATORS_EXIST_BUT_MARKED_AS_VARIANT = 220;
+        int DUPLICATE_PROPERTY_DEFINITION_NAME = 225;
+        int EMPTY_UNQUALIFIED_NAME = 230;
+        int NAME_QUALIFIER_NOT_FOUND = 235;
+        int DUPLICATE_QUALIFIED_NAME = 240;
+        int EMPTY_QUERY_OPERATOR = 245;
+        int INVALID_QUERY_OPERATOR = 250;
+        int EMPTY_REQUIRED_TYPES = 255;
+        int DUPLICATE_REQUIRED_TYPE = 260;
+        int REQUIRED_TYPES_EXIST_BUT_MARKED_AS_VARIANT = 265;
+        int DUPLICATE_SUPER_TYPE = 270;
+        int SUPER_TYPES_EXIST_BUT_MARKED_AS_VARIANT = 275;
+        int INVALID_URI = 280;
+        int EMPTY_VALUE_CONSTRAINTS = 285;
+        int DUPLICATE_VALUE_CONSTRAINT = 290;
+        int VALUE_CONSTRAINTS_EXIST_BUT_MARKED_AS_VARIANT = 295;
     }
 
 }

@@ -7,6 +7,7 @@
  */
 package org.jboss.tools.modeshape.jcr.test;
 
+import org.jboss.tools.modeshape.jcr.MultiValidationStatusTest;
 import org.jboss.tools.modeshape.jcr.cnd.ChildNodeDefinitionTest;
 import org.jboss.tools.modeshape.jcr.cnd.CndImporterTest;
 import org.jboss.tools.modeshape.jcr.cnd.CndTokenizerTest;
@@ -54,6 +55,7 @@ import org.junit.runners.Suite;
     CndValidatorTest.class,
     CompactNodeTypeDefinitionTest.class, 
     LocalNameTest.class, 
+    MultiValidationStatusTest.class,
     NamespaceMappingTest.class, 
     NodeTypeDefinitionTest.class,
     PropertyDefinitionTest.class,

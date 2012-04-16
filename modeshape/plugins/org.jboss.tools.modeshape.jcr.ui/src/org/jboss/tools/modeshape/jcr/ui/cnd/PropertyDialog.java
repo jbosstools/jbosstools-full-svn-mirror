@@ -164,6 +164,10 @@ final class PropertyDialog extends FormDialog {
         return this.propertyBeingEdited;
     }
 
+    Collection<String> accessExistingNamespacePrefixes() {
+        return this.existingNamespacePrefixes;
+    }
+
     /**
      * {@inheritDoc}
      * 
@@ -1051,7 +1055,7 @@ final class PropertyDialog extends FormDialog {
 
     void handleAddDefaultValue() {
         final PropertyDefinition propDefn = getPropertyDefinition();
-        final Collection<String> currentDefaultValues = propDefn.getDefaultValuesAsStrings();
+        final Collection<String> currentDefaultValues = new ArrayList<String>(propDefn.getDefaultValuesAsStrings());
         final StringValueEditorDialog dialog = new StringValueEditorDialog(getShell()) {
             /**
              * {@inheritDoc}
@@ -1082,12 +1086,9 @@ final class PropertyDialog extends FormDialog {
                         }
 
                         // check for duplicate
-                        if (currentDefaultValues.contains(newValue)) {
-                            return ValidationStatus.createErrorMessage(NLS.bind(Messages.duplicateDefaultValue, propDefn.getName(),
-                                                                                newValue));
-                        }
-
-                        return ValidationStatus.OK_STATUS;
+                        currentDefaultValues.add(newValue);
+                        return CndValidator.validateDefaultValues(propDefn.getName(), propDefn.getType(), currentDefaultValues,
+                                                                  accessExistingNamespacePrefixes());
                     }
                 };
 
@@ -1142,12 +1143,8 @@ final class PropertyDialog extends FormDialog {
                         }
 
                         // check for duplicate
-                        if (currentConstraints.contains(newValue)) {
-                            return ValidationStatus.createErrorMessage(NLS.bind(Messages.duplicateValueConstraint,
-                                                                                propDefn.getName(), newValue));
-                        }
-
-                        return ValidationStatus.OK_STATUS;
+                        currentConstraints.add(newValue);
+                        return CndValidator.validateValueConstraints(propDefn.getName(), currentConstraints);
                     }
                 };
 
@@ -1252,12 +1249,9 @@ final class PropertyDialog extends FormDialog {
                         }
 
                         // check for duplicate
-                        if (currentDefaultValues.contains(newValue)) {
-                            return ValidationStatus.createErrorMessage(NLS.bind(Messages.duplicateDefaultValue, propDefn.getName(),
-                                                                                newValue));
-                        }
-
-                        return ValidationStatus.OK_STATUS;
+                        currentDefaultValues.add(newValue);
+                        return CndValidator.validateDefaultValues(propDefn.getName(), propDefn.getType(), currentDefaultValues,
+                                                                  accessExistingNamespacePrefixes());
                     }
                 };
 
@@ -1332,12 +1326,8 @@ final class PropertyDialog extends FormDialog {
                         }
 
                         // check for duplicate
-                        if (currentConstraints.contains(newValue)) {
-                            return ValidationStatus.createErrorMessage(NLS.bind(Messages.duplicateValueConstraint,
-                                                                                propDefn.getName(), newValue));
-                        }
-
-                        return ValidationStatus.OK_STATUS;
+                        currentConstraints.add(newValue);
+                        return CndValidator.validateValueConstraints(propDefn.getName(), currentConstraints);
                     }
                 };
 
