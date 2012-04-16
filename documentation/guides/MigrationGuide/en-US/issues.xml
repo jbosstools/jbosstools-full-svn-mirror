@@ -53,13 +53,13 @@
 			XulRunner 1.9.1.2 is supported on Windows 32-bit and 64bit, Linux 32-bit and 64-bit and Max OSZ Cocoa 32-bit. The JBoss Developer Studio distribution for Mac OSX Cocoa 64-bit does not include the Visual Page Editor.
 		</para>
     </section>
-    <section>
+<!--    <section>
         <title>Problems with <emphasis>not "JBDS"</emphasis> plugins</title>
         <para>Some additional plugins that are not supplied by JBoss Developer Studio and work on JBDS 2.X may not work on 3.0.0.GA</para>
         <itemizedlist>
             <listitem><para>To solve the problem check whether the plugin is compatible with Eclipse 3.5.</para></listitem>
             <listitem><para>But because such pugins are not supported by JBoss Developer Studio, we can not guarantee its proper work.</para></listitem>
         </itemizedlist>
-    </section>
+	</section> -->
     
 </chapter>

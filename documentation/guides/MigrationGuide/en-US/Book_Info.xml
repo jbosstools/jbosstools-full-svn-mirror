@@ -3,10 +3,10 @@
 ]>
 <bookinfo>
 	<title>Migration Guide</title>
-	<subtitle>JBoss Developer Studio 3.0x to 4.0.</subtitle>
+	<subtitle>JBoss Developer Studio 4.x to 5.0.</subtitle>
 	<productname>JBoss Developer Studio</productname>
-	<productnumber>4.1</productnumber>
-	<edition>4.1.0</edition>
+	<productnumber>5.0</productnumber>
+	<edition>5.0.0</edition>
 	<pubsnumber>1</pubsnumber>
 	<abstract>
 		<para>The JBoss Developer Studio Migration Guide explains how to migrate from the previous version of the JBoss Developer Studio to the latest version.</para>

@@ -11,7 +11,7 @@
 	
 	<title>Introduction </title>
 	<para>
-		This document is intended to help you to easily migrate from <property>JBoss Developer Studio</property> 3.0x to 4.0. It also describes some common issues that can occur in the migration process, along with their solutions.
+		This document is intended to help you to easily migrate from <property>JBoss Developer Studio</property> 4.x to 5.0. It also describes some common issues that can occur in the migration process, along with their solutions.
 	</para>
 	
 	<section>
