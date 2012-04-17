@@ -275,7 +275,7 @@
 			</modules>
 		</profile>
 
-		<profile>
+		<!-- <profile>
 			<id>deltacloud</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
@@ -293,7 +293,7 @@
 				<module>../deltacloud</module>
 				<module>../usage</module>
 			</modules>
-		</profile>
+		</profile> -->
 
 		<profile>
 			<id>usage</id>
