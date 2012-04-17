@@ -1,68 +1,137 @@
-<html xmlns="http://www.w3.org/1999/xhtml">
 
+<!DOCTYPE html>
+<html lang="en">
 <head>
-	<title>JBoss Tools - Video Tutorials</title>
+<meta charset="utf-8">
+<title>JBoss Tools - Video Tutorials</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="JBoss Tools - Video Tutorials">
+<meta name="author" content="JBoss Tools">
+<meta name="keywords"
+	content="Community driven open source middleware JBoss Tools Video Tutorials" />
+<meta name="robots" content="all" />
 
- <link rel="stylesheet" href="css/movies.css" type="text/css"/>
+<!-- Le styles -->
+<link href="./css/bootstrap.css" rel="stylesheet">
+<style type="text/css">
+body {
+	padding-top: 10px;
+	padding-bottom: 40px;
+}
+</style>
+<link href="./css/bootstrap-responsive.css" rel="stylesheet">
+<link href="./css/movies.css" rel="stylesheet">
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-
-
-<script type="text/javascript">
-  $(document).ready(function() {
-  
- $('.videocontrol').click(function(e) {
-   e.preventDefault(); //prevent href from actually loading
-   var href = $(this).attr('href');
-   $('#player').load(href, function() {
-         $('iframe').attr('src', href);
-    });
-
-    return;
-  });
-})
-</script>
-
+<!-- Le fav and touch icons -->
+<link rel="shortcut icon" href="../assets/ico/favicon.ico">
+<link rel="apple-touch-icon-precomposed" sizes="114x114"
+	href="../assets/ico/apple-touch-icon-114-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72"
+	href="../assets/ico/apple-touch-icon-72-precomposed.png">
+<link rel="apple-touch-icon-precomposed"
+	href="../assets/ico/apple-touch-icon-57-precomposed.png">
 </head>
 
 <body>
 
-<div class="book" style="align:center">
+	<div class="container">
 
-	<br/> <p> &#160; &#160; &#160; <img border="0" src="images/community/jbosstools_horiz_450.png"/></p>
-	<h2 style="margin-left:150px">Video Tutorials</h2>
-  
-	<div id="player"> <iframe src="http://player.vimeo.com/video/39743315?portrait=0" width="940" height="529" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe> </div>
+		<div class="jbosstools-header">
+			<h1>Video Tutorials</h1>
+		</div>
+		<div class="box">
+			<div id="player">
+				<iframe src="http://player.vimeo.com/video/39743315?portrait=0"
+					webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+			</div>
+		</div>
 
-	<br/>
-	<div id="directory" align="left">
-	  <h2>Installation</h2>
 
-	  <ul class="multicolumns"> 
-	    <li class="videoListItem"><a class="videocontrol" href="http://player.vimeo.com/video/39743315?portrait=0">Eclipse Marketplace</a> </li>
-	    <li class="videoListItem"> <a class="videocontrol" href="http://player.vimeo.com/video/39606090?portrait=0">Developer Studio</a></li>
-	  </ul>
+		<!-- Videos -->
+		<div class="row-fluid">
+			<div class="thumbnails span4">
+				<h2>Installation</h2>
+				<ul class="items">
+					<li><a class="videocontrol"
+						data-toggle="modal"
+						href="http://player.vimeo.com/video/39743315?portrait=0">Eclipse
+							Marketplace</a></li>
+					<li><a class="videocontrol" data-toggle="modal"
+						href="http://player.vimeo.com/video/39606090?portrait=0">JBDS
+							5 Installation, HTML5, Mobile &amp; OpenShift</a></li>
+				</ul>
+			</div>
+			<div class="thumbnails span4">
+				<h2>Technology Introductions</h2>
+				<ul class="items">
+					<li><a class="videocontrol" data-toggle="modal"
+						href="http://player.vimeo.com/video/39607154?portrait=0">Java
+							EE 6 + Arquillian</a></li>
+					<li><a class="videocontrol" data-toggle="modal"
+						href="http://player.vimeo.com/video/39607711?portrait=0">Richfaces
+							4 Desktop &amp; Mobile</a></li>
+					<li><a class="videocontrol" data-toggle="modal"
+						href="http://player.vimeo.com/video/39608223?portrait=0">Forge
+							in JBoss Developer Studio 5</a></li>
+					<li><a class="videocontrol" data-toggle="modal"
+						href="http://player.vimeo.com/video/39743919?portrait=0">Google
+							Web Toolkit</a></li>
+				</ul>
+			</div>
+			<div class="thumbnails span4">
+				<h2>Reverse Engineering/CRUD Generation</h2>
+				<ul class="items">
+					<li><a class="videocontrol" data-toggle="modal"
+						href="http://player.vimeo.com/video/39608294?portrait=0">Hibernate
+							Tools Reverse Engineering</a></li>
+					<li><a class="videocontrol" data-toggle="modal"
+						href="http://player.vimeo.com/video/39608326?portrait=0">Forge
+							Reverse Engineering</a></li>
 
-	  <h2>Technology Introductions</h2>
 
-	   <ul class="multicolumns">
-	    <li class="videoListItem"> <a class="videocontrol" href="http://player.vimeo.com/video/39607154?portrait=0">Java EE 6 + Arquillian</a></li>
-	    <li class="videoListItem"> <a class="videocontrol" href="http://player.vimeo.com/video/39607711?portrait=0">Richfaces 4 Desktop & Mobile</a></li>
-	    <li class="videoListItem"> <a class="videocontrol" href="http://player.vimeo.com/video/39608223?portrait=0">Forge</a></li>
-	   <li class="videoListItem"> <a class="videocontrol" href="http://player.vimeo.com/video/39743919?portrait=0">Google Web Toolkit</a></li>
-<li class="videoListItem"> <a class="videocontrol" href="http://player.vimeo.com/video/39796236?portrait=0">Maven</a></li>	  </ul>
 
-	  <h2>Reverse Engineering/CRUD Generation</h2>
+				</ul>
+			</div>
+		</div>
 
-	   <ul class="multicolumns">
-	    <li class="videoListItem"> <a class="videocontrol" href="http://player.vimeo.com/video/39608294?portrait=0">Hibernate Tools Reverse Engineering</a></li>
-	    <li class="videoListItem"> <a class="videocontrol" href="http://player.vimeo.com/video/39608326?portrait=0">Forge Reverse Engineering</a></li>
-	  </h2>
-    
+		<div class="row-fluid">
+			<p>
+				Looking for a different video ? Try look in our <a
+					href="../archive/movies">archive</a>
+			</p>
+		</div>
+
+
 	</div>
+	<!-- /container -->
 
-	 <br/><p>More videos available in our <a href="../archive/movies">archive</a>.</p>
-</div>
+	<!-- Le javascript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script type="text/javascript" src="./scripts/jquery.js"></script>
+	<script type="text/javascript">
+	!function ($) {
+	  $(function(){
 
+	  })
+	}(window.jQuery)
+	
+		$(document).ready(function() {
+  
+$('.videocontrol').click(function(e) {
+   e.preventDefault(); //prevent href from actually loading
+   var href = $(this).attr('href');
+   $('#player').load(href, function() {
+         $('iframe').attr('src', href);
+   $('#player').modal('show')
+    });
+    return;
+  });
+})
+	</script>
 </body>
 </html>
