@@ -56,44 +56,32 @@ body {
 			<div class="thumbnails span4">
 				<h2>Installation</h2>
 				<ul class="items">
-					<li><a class="videocontrol"
-						data-toggle="modal"
-						href="http://player.vimeo.com/video/39743315?portrait=0">Eclipse
+					<li><a class="videocontrol" href="39743315">Eclipse
 							Marketplace</a></li>
-					<li><a class="videocontrol" data-toggle="modal"
-						href="http://player.vimeo.com/video/39606090?portrait=0">JBDS
-							5 Installation, HTML5, Mobile &amp; OpenShift</a></li>
+					<li><a class="videocontrol" href="39606090">JBDS 5
+							Installation, HTML5, Mobile &amp; OpenShift</a></li>
 				</ul>
 			</div>
 			<div class="thumbnails span4">
 				<h2>Technology Introductions</h2>
 				<ul class="items">
-					<li><a class="videocontrol" data-toggle="modal"
-						href="http://player.vimeo.com/video/39607154?portrait=0">Java
-							EE 6 + Arquillian</a></li>
-					<li><a class="videocontrol" data-toggle="modal"
-						href="http://player.vimeo.com/video/39607711?portrait=0">Richfaces
-							4 Desktop &amp; Mobile</a></li>
-					<li><a class="videocontrol" data-toggle="modal"
-						href="http://player.vimeo.com/video/39608223?portrait=0">Forge
-							in JBoss Developer Studio 5</a></li>
-					<li><a class="videocontrol" data-toggle="modal"
-						href="http://player.vimeo.com/video/39743919?portrait=0">Google
-							Web Toolkit</a></li>
+					<li><a class="videocontrol" href="39607154">Java EE 6 +
+							Arquillian</a></li>
+					<li><a class="videocontrol" href="39607711">Richfaces 4
+							Desktop &amp; Mobile</a></li>
+					<li><a class="videocontrol" href="39608223">Forge in JBoss
+							Developer Studio 5</a></li>
+					<li><a class="videocontrol" href="39743919">Google Web
+							Toolkit</a></li>
 				</ul>
 			</div>
 			<div class="thumbnails span4">
 				<h2>Reverse Engineering/CRUD Generation</h2>
 				<ul class="items">
-					<li><a class="videocontrol" data-toggle="modal"
-						href="http://player.vimeo.com/video/39608294?portrait=0">Hibernate
+					<li><a class="videocontrol" href="39608294">Hibernate
 							Tools Reverse Engineering</a></li>
-					<li><a class="videocontrol" data-toggle="modal"
-						href="http://player.vimeo.com/video/39608326?portrait=0">Forge
-							Reverse Engineering</a></li>
-
-
-
+					<li><a class="videocontrol" href="39608326">Forge Reverse
+							Engineering</a></li>
 				</ul>
 			</div>
 		</div>
@@ -115,23 +103,30 @@ body {
 	<script type="text/javascript" src="./scripts/jquery.js"></script>
 	<script type="text/javascript">
 	!function ($) {
-	  $(function(){
-
-	  })
+		$(function(){
+			var href=location.hash;
+			if(href != "") {
+				play(href.replace('#',''));
+			}
+		})
 	}(window.jQuery)
 	
-		$(document).ready(function() {
-  
-$('.videocontrol').click(function(e) {
-   e.preventDefault(); //prevent href from actually loading
-   var href = $(this).attr('href');
-   $('#player').load(href, function() {
-         $('iframe').attr('src', href);
-   $('#player').modal('show')
-    });
-    return;
-  });
-})
+	$(document).ready(function() {
+		$('.videocontrol').click(function(e) {
+			e.preventDefault(); //prevent href from actually loading
+			var href = $(this).attr('href');
+			location.hash = href;
+			play(href);
+		});
+	})
+	
+	function play(videoId) {
+		var videoURL = "http://player.vimeo.com/video/" + videoId + "?portrait=0";
+		$('#player').load(videoURL, function() {
+			$('iframe').attr('src', videoURL);
+		});
+		return;
+	}
 	</script>
 </body>
 </html>
