@@ -354,9 +354,6 @@
 	<feature url="features/org.jboss.tools.maven.project.examples.feature.source_0.0.0.jar" id="org.jboss.tools.maven.project.examples.feature.source" version="0.0.0">
 		<category name="AllSources" />
 	</feature>
-	<feature url="features/org.jboss.tools.deltacloud.feature.source_0.0.0.jar" id="org.jboss.tools.deltacloud.feature.source" version="0.0.0">
-		<category name="AllSources" />
-	</feature>
 	<feature url="features/org.jboss.tools.gwt.feature.source_0.0.0.jar" id="org.jboss.tools.gwt.feature.source" version="0.0.0">
 		<category name="AllSources" />
 	</feature>
