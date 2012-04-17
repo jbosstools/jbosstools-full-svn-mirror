@@ -67,8 +67,4 @@
 <feature url="features/org.jboss.tools.vpe.test.feature.source_0.0.0.jar" id="org.jboss.tools.vpe.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
 <feature url="features/org.jboss.tools.ws.test.feature.source_0.0.0.jar" id="org.jboss.tools.ws.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
 
-<!-- disabled/deprecated/not included
-<feature url="features/org.jboss.tools.deltacloud.test.feature_0.0.0.jar" id="org.jboss.tools.deltacloud.test.feature" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
--->
-
 </site>
