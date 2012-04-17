@@ -612,9 +612,6 @@
 				<module>../seam</module>
 				<module>../portlet</module>
 				<module>../examples</module>
-				<module>../esb</module>
-				<module>../jbpm</module>
-				<module>../flow</module>
 				<module>../maven</module>
 				<module>../central</module>
 			</modules>
