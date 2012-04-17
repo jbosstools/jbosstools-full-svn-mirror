@@ -478,9 +478,9 @@ public class MozillaEditor extends EditorPart implements IReusableEditor {
 				dlg.open();
 			}
 		};
-		externalizeStringsAction.setImageDescriptor(ImageDescriptor.createFromFile(MozillaEditor.class,
-				ICON_EXTERNALIZE_STRINGS));
-		externalizeStringsAction.setToolTipText(JstUIMessages.EXTERNALIZE_STRINGS);
+		externalizeStringsAction.setImageDescriptor(ImageDescriptor.createFromFile(
+				MozillaEditor.class, ICON_EXTERNALIZE_STRINGS));
+		externalizeStringsAction.setToolTipText(JstUIMessages.EXTERNALIZE_STRINGS_POPUP_MENU_TITLE);
 		toolBarManager.add(externalizeStringsAction);
 
 		/*
