@@ -56,31 +56,31 @@ body {
 			<div class="thumbnails span4">
 				<h2>Installation</h2>
 				<ul class="items">
-					<li><a class="videocontrol" href="39743315">Eclipse
+					<li><a class="videocontrol" href="marketplace">Eclipse
 							Marketplace</a></li>
-					<li><a class="videocontrol" href="39606090">JBDS 5
+					<li><a class="videocontrol" href="installation">JBDS 5
 							Installation, HTML5, Mobile &amp; OpenShift</a></li>
 				</ul>
 			</div>
 			<div class="thumbnails span4">
 				<h2>Technology Introductions</h2>
 				<ul class="items">
-					<li><a class="videocontrol" href="39607154">Java EE 6 +
+					<li><a class="videocontrol" href="jee6arquillian">Java EE 6 +
 							Arquillian</a></li>
-					<li><a class="videocontrol" href="39607711">Richfaces 4
+					<li><a class="videocontrol" href="richfaces">Richfaces 4
 							Desktop &amp; Mobile</a></li>
-					<li><a class="videocontrol" href="39608223">Forge in JBoss
+					<li><a class="videocontrol" href="forge">Forge in JBoss
 							Developer Studio 5</a></li>
-					<li><a class="videocontrol" href="39743919">Google Web
+					<li><a class="videocontrol" href="gwt">Google Web
 							Toolkit</a></li>
 				</ul>
 			</div>
 			<div class="thumbnails span4">
 				<h2>Reverse Engineering/CRUD Generation</h2>
 				<ul class="items">
-					<li><a class="videocontrol" href="39608294">Hibernate
+					<li><a class="videocontrol" href="hibreveng">Hibernate
 							Tools Reverse Engineering</a></li>
-					<li><a class="videocontrol" href="39608326">Forge Reverse
+					<li><a class="videocontrol" href="forgereveng">Forge Reverse
 							Engineering</a></li>
 				</ul>
 			</div>
@@ -101,32 +101,6 @@ body {
     ================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script type="text/javascript" src="./scripts/jquery.js"></script>
-	<script type="text/javascript">
-	!function ($) {
-		$(function(){
-			var href=location.hash;
-			if(href != "") {
-				play(href.replace('#',''));
-			}
-		})
-	}(window.jQuery)
-	
-	$(document).ready(function() {
-		$('.videocontrol').click(function(e) {
-			e.preventDefault(); //prevent href from actually loading
-			var href = $(this).attr('href');
-			location.hash = href;
-			play(href);
-		});
-	})
-	
-	function play(videoId) {
-		var videoURL = "http://player.vimeo.com/video/" + videoId + "?portrait=0";
-		$('#player').load(videoURL, function() {
-			$('iframe').attr('src', videoURL);
-		});
-		return;
-	}
-	</script>
+	<script type="text/javascript" src="./scripts/application.js"></script>
 </body>
 </html>
