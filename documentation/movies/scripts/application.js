@@ -23,8 +23,8 @@ var videosJSON = {"videos":[
 		{"id": "39607711", "ref": "richfacesintro"},
 		{"id": "39608223", "ref": "forgeintro"},
 		{"id": "39743919", "ref": "gwtintro"},
-		{"id": "39608294", "ref": "hibrevengintro"},
-		{"id": "39608326", "ref": "forgerevengintro"}
+		{"id": "39608294", "ref": "hibreveng"},
+		{"id": "39608326", "ref": "forgereveng"}
 		]};
 
 function play(videoRef) {
