@@ -16,9 +16,15 @@ h1,h2,h3,h4,h5,h6 {
 	background-image: url("../images/community/jbosstools_horiz_450.png");
 	background-repeat: no-repeat;
 	background-position: center;
-	padding-top: 150px;
+	padding-top: 100px;
 	padding-bottom: 20px;
 	text-align: center;
+}
+
+.container-reduced {
+	width:75%; 
+	margin-left: auto;
+	margin-right: auto;
 }
 
 #player iframe {
@@ -42,7 +48,7 @@ h1,h2,h3,h4,h5,h6 {
 
 .box #player {
 	width: 100%;
-	height: 648px;
+	height: 400px;
 	background: black;
 	border: 1px solid black;
 	margin-left: auto;
