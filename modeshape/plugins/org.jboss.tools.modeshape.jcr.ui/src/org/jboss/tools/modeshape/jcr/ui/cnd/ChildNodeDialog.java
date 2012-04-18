@@ -98,6 +98,9 @@ final class ChildNodeDialog extends FormDialog {
     private final ErrorMessage nameError;
 
     private ChildNodeDefinition originalChildNode;
+    
+    private QualifiedNameProposalProvider requiredTypeProposalProvider;
+    
     private final ErrorMessage requiredTypesError;
 
     private TableViewer requiredTypesViewer;
@@ -645,6 +648,7 @@ final class ChildNodeDialog extends FormDialog {
                                                                    Messages.requiredTypeName,
                                                                    this.existingNamespacePrefixes);
         dialog.setExistingQNames(this.childNodeBeingEdited.getRequiredTypes());
+        dialog.setProposalProvider(this.requiredTypeProposalProvider);
         dialog.create();
         dialog.getShell().pack();
 
@@ -693,6 +697,7 @@ final class ChildNodeDialog extends FormDialog {
                                                                    this.existingNamespacePrefixes,
                                                                    QualifiedName.parse(selectedRequiredType));
         dialog.setExistingQNames(this.childNodeBeingEdited.getRequiredTypes());
+        dialog.setProposalProvider(this.requiredTypeProposalProvider);
         dialog.create();
         dialog.getShell().pack();
 
@@ -809,6 +814,13 @@ final class ChildNodeDialog extends FormDialog {
                 this.cbxDefaultType.select(index);
             }
         }
+    }
+
+    /**
+     * @param proposalProvider the required type proposal provider (can be <code>null</code>)
+     */
+    public void setRequiredTypeProposalProvider( final QualifiedNameProposalProvider proposalProvider ) {
+        this.requiredTypeProposalProvider = proposalProvider;
     }
 
     private void updateMessage( final ValidationStatus status,

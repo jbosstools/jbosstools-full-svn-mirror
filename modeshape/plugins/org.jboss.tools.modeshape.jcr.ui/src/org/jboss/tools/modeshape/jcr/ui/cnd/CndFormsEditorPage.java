@@ -1754,6 +1754,41 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
         return propDefnNames;
     }
 
+    private QualifiedNameProposalProvider getProposalProvider() {
+        return new QualifiedNameProposalProvider() {
+
+            /**
+             * {@inheritDoc}
+             * 
+             * @see org.jboss.tools.modeshape.jcr.ui.cnd.QualifiedNameProposalProvider#qnameStartsWith(java.lang.String,
+             *      java.lang.String)
+             */
+            @Override
+            protected List<QualifiedName> qnameStartsWith( final String qualifier,
+                                                           final String namePattern ) {
+                final List<NodeTypeDefinition> nodeTypes = getCnd().getMatchingNodeTypeDefinitions(qualifier, true);
+
+                if (nodeTypes.isEmpty()) {
+                    return Collections.emptyList();
+                }
+
+                final List<QualifiedName> matches = new ArrayList<QualifiedName>();
+                final boolean acceptAll = Utils.isEmpty(namePattern);
+
+                for (final NodeTypeDefinition nodeType : nodeTypes) {
+                    final QualifiedName qname = nodeType.getQualifiedName();
+
+                    if (acceptAll
+                            || (!Utils.isEmpty(qname.getUnqualifiedName()) && qname.getUnqualifiedName().startsWith(namePattern))) {
+                        matches.add(qname);
+                    }
+                }
+
+                return matches;
+            }
+        };
+    }
+
     /**
      * @return the selected child node definition or <code>null</code> if the viewer has an empty selection
      */
@@ -1840,6 +1875,7 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
                                                            getSelectedNodeType(),
                                                            getChildNodeNames(),
                                                            getCnd().getNamespacePrefixes());
+        dialog.setRequiredTypeProposalProvider(getProposalProvider());
         dialog.create();
         dialog.getShell().pack();
 
@@ -1962,6 +1998,7 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
                                                                    Messages.superTypeName,
                                                                    getCnd().getNamespacePrefixes());
         dialog.setExistingQNames(getSelectedNodeType().getSupertypes());
+        dialog.setProposalProvider(getProposalProvider());
         dialog.create();
         dialog.getShell().pack();
 
@@ -2144,6 +2181,7 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
                                                            getChildNodeNames(),
                                                            getCnd().getNamespacePrefixes(),
                                                            childNodeBeingEdited);
+        dialog.setRequiredTypeProposalProvider(getProposalProvider());
         dialog.create();
         dialog.getShell().pack();
 
@@ -2260,6 +2298,7 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
                                                                    getCnd().getNamespacePrefixes(),
                                                                    QualifiedName.parse(selectedSupertype));
         dialog.setExistingQNames(getSelectedNodeType().getSupertypes());
+        dialog.setProposalProvider(getProposalProvider());
         dialog.create();
         dialog.getShell().pack();
 

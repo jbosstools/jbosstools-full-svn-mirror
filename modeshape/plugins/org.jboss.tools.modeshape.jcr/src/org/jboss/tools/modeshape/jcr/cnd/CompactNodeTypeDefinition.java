@@ -15,6 +15,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.jboss.tools.modeshape.jcr.Activator;
 import org.jboss.tools.modeshape.jcr.ChildNodeDefinition;
 import org.jboss.tools.modeshape.jcr.ItemDefinition;
 import org.jboss.tools.modeshape.jcr.NamespaceMapping;
@@ -271,6 +274,36 @@ public class CompactNodeTypeDefinition implements CndElement {
     }
 
     /**
+     * @param namespacePrefix the namespace prefix of the node type definitions being requested (cannot be <code>null</code> or
+     *            empty)
+     * @param includeInherited indicates if inherited node type definitions should be included
+     * @return the requested node type definitions (never <code>null</code> but can be empty)
+     */
+    public List<NodeTypeDefinition> getMatchingNodeTypeDefinitions( final String namespacePrefix,
+                                                                    final boolean includeInherited ) {
+        Utils.verifyIsNotEmpty(namespacePrefix, "namespacePrefix"); //$NON-NLS-1$
+        final List<NodeTypeDefinition> matches = new ArrayList<NodeTypeDefinition>();
+
+        // collect local matches
+        for (final NodeTypeDefinition nodeType : getNodeTypeDefinitions()) {
+            if (namespacePrefix.equals(nodeType.getQualifiedName().getQualifier())) {
+                matches.add(nodeType);
+            }
+        }
+
+        // collect inherited matches
+        if (includeInherited) {
+            try {
+                matches.addAll(WorkspaceRegistry.get().getMatchingNodeTypeDefinitions(namespacePrefix));
+            } catch (final Exception e) {
+                Activator.get().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, null, e));
+            }
+        }
+
+        return matches;
+    }
+
+    /**
      * @return the namespace mappings (never <code>null</code>)
      */
     public List<NamespaceMapping> getNamespaceMappings() {
@@ -393,7 +426,7 @@ public class CompactNodeTypeDefinition implements CndElement {
             try {
                 ((PropertyChangeListener)listener).propertyChange(event);
             } catch (final Exception e) {
-                // TODO log this
+                Activator.get().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, null, e));
                 this.listeners.remove(listener);
             }
         }

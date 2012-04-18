@@ -12,6 +12,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import org.eclipse.jface.bindings.keys.KeyStroke;
+import org.eclipse.jface.fieldassist.ContentProposalAdapter;
+import org.eclipse.jface.fieldassist.TextContentAdapter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.events.ModifyEvent;
@@ -57,6 +60,10 @@ final class QualifiedNameEditor extends Composite {
     private final String qualifiedNameType;
 
     private String qualifier;
+
+    private ContentProposalAdapter proposalAdapter;
+
+    private QualifiedNameProposalProvider proposalProvider;
 
     private boolean residualNameAllowed = false;
 
@@ -154,6 +161,13 @@ final class QualifiedNameEditor extends Composite {
                 }
             });
 
+            this.proposalAdapter = new ContentProposalAdapter(this.txtName,
+                                                              new TextContentAdapter(),
+                                                              null,
+                                                              KeyStroke.getInstance(SWT.CTRL, ' '),
+                                                              CndValidator.LOCAL_NAME_VALID_CHARS.toCharArray());
+            this.proposalAdapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
+
             this.txtName.setFocus();
         }
     }
@@ -184,6 +198,11 @@ final class QualifiedNameEditor extends Composite {
             this.qualifier = newQualifier;
         }
 
+        // let the proposal provider know
+        if (this.proposalProvider != null) {
+            this.proposalProvider.setQualifier(this.qualifier);
+        }
+
         validate();
     }
 
@@ -194,7 +213,7 @@ final class QualifiedNameEditor extends Composite {
     /**
      * @param newValue indicates if and unqualified name equal to {@link ItemDefinition#RESIDUAL_NAME} is allowed.
      */
-    public void setAllowsResidualName(boolean newValue) {
+    public void setAllowsResidualName( final boolean newValue ) {
         this.residualNameAllowed = newValue;
         validate();
     }
@@ -249,6 +268,14 @@ final class QualifiedNameEditor extends Composite {
     }
 
     /**
+     * @param proposalProvider the proposal provider (can be <code>null</code>)
+     */
+    public void setProposalProvider( final QualifiedNameProposalProvider proposalProvider ) {
+        this.proposalProvider = proposalProvider;
+        this.proposalAdapter.setContentProposalProvider(proposalProvider);
+    }
+
+    /**
      * @param validQualifiers the valid qualifiers (can be <code>null</code> or empty)
      */
     void setValidQualifiers( final Collection<String> validQualifiers ) {
@@ -267,7 +294,7 @@ final class QualifiedNameEditor extends Composite {
 
         // only reload qualifiers if different
         if ((this.validQualifiers.size() != currentItems.length) || !this.validQualifiers.containsAll(Arrays.asList(currentItems))) {
-            String[] newQualifiers = this.validQualifiers.toArray(new String[this.validQualifiers.size()]);
+            final String[] newQualifiers = this.validQualifiers.toArray(new String[this.validQualifiers.size()]);
             Arrays.sort(newQualifiers);
             this.cbxQualifiers.setItems(newQualifiers);
         }

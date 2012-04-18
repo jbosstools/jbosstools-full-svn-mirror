@@ -53,6 +53,8 @@ final class QualifiedNameDialog extends FormDialog {
 
     private final String qualifiedNameType;
 
+    private QualifiedNameProposalProvider proposalProvider;
+
     private ScrolledForm scrolledForm;
 
     private final String title;
@@ -172,6 +174,7 @@ final class QualifiedNameDialog extends FormDialog {
                 handleNameChanged(e.text);
             }
         });
+        this.nameEditor.setProposalProvider(this.proposalProvider);
     }
 
     /**
@@ -199,6 +202,17 @@ final class QualifiedNameDialog extends FormDialog {
             this.existingQNames = existingQNames;
         } else {
             this.nameEditor.setExistingQNames(existingQNames);
+        }
+    }
+
+    /**
+     * @param proposalProvider the proposal provider (can be <code>null</code>)
+     */
+    public void setProposalProvider( final QualifiedNameProposalProvider proposalProvider ) {
+        if (this.nameEditor == null) {
+          this.proposalProvider = proposalProvider;
+        } else {
+            this.nameEditor.setProposalProvider(proposalProvider);
         }
     }
 

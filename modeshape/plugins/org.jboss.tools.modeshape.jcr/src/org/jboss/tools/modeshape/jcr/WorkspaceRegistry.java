@@ -55,15 +55,15 @@ public class WorkspaceRegistry {
         File builtInsCndFile = null;
 
         if (Platform.isRunning()) {
-            Bundle bundle = Platform.getBundle(Activator.PLUGIN_ID);
-            URL url = bundle.getEntry(BUILT_INS_CND_FILE_NAME);
-    
+            final Bundle bundle = Platform.getBundle(Activator.PLUGIN_ID);
+            final URL url = bundle.getEntry(BUILT_INS_CND_FILE_NAME);
+
             if (url == null) {
                 throw new Exception(NLS.bind(Messages.jsrBuiltInsCndFileNotFound, BUILT_INS_CND_FILE_NAME));
             }
-    
+
             builtInsCndFile = new File(org.eclipse.core.runtime.FileLocator.toFileURL(url).getFile());
-    
+
             if (!builtInsCndFile.exists()) {
                 throw new Exception(NLS.bind(Messages.jsrBuiltInsCndFileNotFoundInFilesystem, BUILT_INS_CND_FILE_NAME));
             }
@@ -126,6 +126,26 @@ public class WorkspaceRegistry {
         }
 
         return childNodes;
+    }
+
+    /**
+     * Obtains the node type definitions registered to the specified namespace.
+     * 
+     * @param namespacePrefix the namespace prefix of the node type definitions being requested (cannot be <code>null</code> or
+     *            empty)
+     * @return the requested node type definitions (never <code>null</code> but can be empty)
+     */
+    public List<NodeTypeDefinition> getMatchingNodeTypeDefinitions( final String namespacePrefix ) {
+        Utils.verifyIsNotEmpty(namespacePrefix, "namespacePrefix"); //$NON-NLS-1$
+        final List<NodeTypeDefinition> matches = new ArrayList<NodeTypeDefinition>();
+
+        for (final NodeTypeDefinition nodeType : getNodeTypeDefinitions()) {
+            if (namespacePrefix.equals(nodeType.getQualifiedName().getQualifier())) {
+                matches.add(nodeType);
+            }
+        }
+
+        return matches;
     }
 
     /**
@@ -265,9 +285,9 @@ public class WorkspaceRegistry {
      * @param namespaceMapping the namespace mapping being checked (cannot be <code>null</code>)
      * @return <code>true</code> if a built-in namespace mapping
      */
-    public boolean isBuiltIn(NamespaceMapping namespaceMapping) {
+    public boolean isBuiltIn( final NamespaceMapping namespaceMapping ) {
         Utils.verifyIsNotNull(namespaceMapping, "namespaceMapping"); //$NON-NLS-1$
-        NamespaceMapping builtIn = getNamespaceMapping(namespaceMapping.getPrefix());
+        final NamespaceMapping builtIn = getNamespaceMapping(namespaceMapping.getPrefix());
         return ((builtIn != null) && builtIn.equals(namespaceMapping));
     }
 
@@ -275,7 +295,7 @@ public class WorkspaceRegistry {
      * @param prefix the prefix being checked (cannot be <code>null</code> or empty)
      * @return <code>true</code> if the prefix matches one of a built-in namespace mapping
      */
-    public boolean isBuiltInNamespacePrefix(String prefix) {
+    public boolean isBuiltInNamespacePrefix( final String prefix ) {
         Utils.verifyIsNotNull(prefix, "prefix"); //$NON-NLS-1$
         return (getUri(prefix) != null);
     }
@@ -284,7 +304,7 @@ public class WorkspaceRegistry {
      * @param uri the URI being checked (cannot be <code>null</code> or empty)
      * @return <code>true</code> if the URI matches one of a built-in namespace mapping
      */
-    public boolean isBuiltInNamespaceUri(String uri) {
+    public boolean isBuiltInNamespaceUri( final String uri ) {
         Utils.verifyIsNotNull(uri, "uri"); //$NON-NLS-1$
         return (getPrefix(uri) != null);
     }

@@ -40,6 +40,11 @@ import org.jboss.tools.modeshape.jcr.attributes.QueryOperators.QueryOperator;
  */
 public final class CndValidator {
 
+    /**
+     * The valid characters allowed in a local name.
+     */
+    public static final String LOCAL_NAME_VALID_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_."; //$NON-NLS-1$
+    
     private static final String PARENT_PATH_SEGMENT = ".."; //$NON-NLS-1$
 
     private static final String SELF_PATH_SEGMENT = "."; //$NON-NLS-1$
