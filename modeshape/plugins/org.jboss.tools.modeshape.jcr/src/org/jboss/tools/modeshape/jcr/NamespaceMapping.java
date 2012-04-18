@@ -228,7 +228,17 @@ public class NamespaceMapping implements CndElement, Comparable {
         final StringBuilder builder = new StringBuilder();
         builder.append(NOTATION_PREFIX);
         builder.append(this.prefix.toCndNotation(notationType));
+        
+        if (NotationType.LONG == notationType) {
+            builder.append(Utils.SPACE_STRING);
+        }
+
         builder.append(NOTATION_DELIMITER);
+        
+        if (NotationType.LONG == notationType) {
+            builder.append(Utils.SPACE_STRING);
+        }
+
         builder.append(Utils.SINGLE_QUOTE);
         builder.append(this.uri.get());
         builder.append(Utils.SINGLE_QUOTE);

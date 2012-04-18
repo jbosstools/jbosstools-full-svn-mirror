@@ -10,7 +10,7 @@ package org.jboss.tools.modeshape.jcr;
 import org.eclipse.osgi.util.NLS;
 
 /**
- * 
+ * i18n messages for the ModeShape JCR plugin.
  */
 public final class Messages extends NLS {
 
@@ -31,11 +31,11 @@ public final class Messages extends NLS {
     public static String defaultTypeExistsButMarkedAsVariant;
 
     /**
-     * A message indicating a child node definition has a default type but that it does not match a required type. Two parameters, the
-     * child node definition name and the default type name, are required.
+     * A message indicating a child node definition has a default type but that it does not match a required type. Two parameters,
+     * the child node definition name and the default type name, are required.
      */
     public static String defaultTypeDoesNotMatchRequiredType;
-    
+
     /**
      * The name for the child definition's default type property.
      */

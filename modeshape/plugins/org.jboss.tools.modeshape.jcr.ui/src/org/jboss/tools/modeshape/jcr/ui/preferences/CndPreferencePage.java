@@ -7,6 +7,11 @@
  */
 package org.jboss.tools.modeshape.jcr.ui.preferences;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.swt.SWT;
@@ -19,35 +24,61 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.jboss.tools.modeshape.jcr.cnd.CndElement;
+import org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType;
+import org.jboss.tools.modeshape.jcr.cnd.CndImporter;
+import org.jboss.tools.modeshape.jcr.cnd.CompactNodeTypeDefinition;
 import org.jboss.tools.modeshape.jcr.preference.JcrPreferenceConstants.CndPreference;
 import org.jboss.tools.modeshape.jcr.preference.JcrPreferenceStore;
+import org.jboss.tools.modeshape.jcr.ui.Activator;
+import org.jboss.tools.modeshape.jcr.ui.JcrUiConstants;
 import org.jboss.tools.modeshape.jcr.ui.JcrUiUtils;
 import org.jboss.tools.modeshape.jcr.ui.cnd.CndMessages;
 
 /**
- * 
+ * The preference page that allows editing the settings of how CND files are formatted.
  */
 public final class CndPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
-//
-//    private static String[] QUOTE_CHAR_LABELS = new String[] { CndMessages.quoteCharNoneChoiceLabel,
-//            CndMessages.quoteCharSingleChoiceLabel, CndMessages.quoteCharDoubleChoiceLabel };
+
+    private static CompactNodeTypeDefinition _previewCnd;
 
     /**
      * The editor used to choose the notation type for the CND format.
      */
     private Combo cbxNotationType;
-//
-//    /**
-//     * The editor used to choose the quote character.
-//     */
-//    private Combo cbxQuoteChar;
 
     private String notationType;
-//
-//    private String quoteString;
+
+    private Text txtPreview;
+
+    /**
+     * Constructs a CND preference page.
+     */
+    public CndPreferencePage() {
+        if (_previewCnd == null) {
+            _previewCnd = new CompactNodeTypeDefinition();
+
+            final String content = "<ex = 'http://namespace.com/ns'>\n" //$NON-NLS-1$
+                    + "[ex:NodeType] > ex:ParentType1, ex:ParentType2 abstract orderable mixin noquery primaryitem ex:property\n" //$NON-NLS-1$
+                    + "- ex:property (STRING) = 'default1', 'default2' mandatory autocreated protected multiple VERSION\n" //$NON-NLS-1$
+                    + " queryops '=, <>, <, <=, >, >=, LIKE' nofulltext noqueryorder < 'constraint1', 'constraint2'" //$NON-NLS-1$
+                    + "+ ex:node (ex:reqType1, ex:reqType2) = ex:defaultType mandatory autocreated protected sns version"; //$NON-NLS-1$
+
+            CndImporter importer = new CndImporter(true);
+            Collection<Throwable> problems = new ArrayList<Throwable>();
+
+            _previewCnd = importer.importFrom(content, problems, "string"); //$NON-NLS-1$
+            
+            if (_previewCnd == null) {
+                for (Throwable e : problems) {
+                    Activator.getSharedInstance().getLog().log(new Status(IStatus.ERROR, JcrUiConstants.PLUGIN_ID, null, e));
+                }
+            }
+        }
+    }
 
     /**
      * {@inheritDoc}
@@ -94,39 +125,19 @@ public final class CndPreferencePage extends PreferencePage implements IWorkbenc
             });
         }
 
-        { // quote chars
-//            final Label lbl = new Label(panel, SWT.NONE);
-//            lbl.setText(CndMessages.quoteCharPolicyLabel);
-//
-//            this.cbxQuoteChar = new Combo(panel, SWT.NONE);
-//            this.cbxQuoteChar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-//            this.cbxQuoteChar.setItems(QUOTE_CHAR_LABELS);
-//            this.cbxQuoteChar.setToolTipText(CndMessages.quoteCharPolicyToolTip);
-//
-//            // set current value
-//            this.quoteString = JcrPreferenceStore.get().get(CndPreference.QUOTE_CHAR);
-//
-//            if (Utils.DOUBLE_QUOTE.equals(this.quoteString)) {
-//                this.cbxQuoteChar.setText(CndMessages.quoteCharDoubleChoiceLabel);
-//            } else if (Utils.SINGLE_QUOTE.equals(this.quoteString)) {
-//                this.cbxQuoteChar.setText(CndMessages.quoteCharSingleChoiceLabel);
-//            } else {
-//                this.cbxQuoteChar.setText(CndMessages.quoteCharNoneChoiceLabel);
-//            }
-//
-//            // add selection listener
-//            this.cbxQuoteChar.addSelectionListener(new SelectionAdapter() {
-//
-//                /**
-//                 * {@inheritDoc}
-//                 * 
-//                 * @see org.eclipse.swt.events.SelectionAdapter#widgetSelected(org.eclipse.swt.events.SelectionEvent)
-//                 */
-//                @Override
-//                public void widgetSelected( final SelectionEvent e ) {
-//                    handleQuotationCharacterChanged();
-//                }
-//            });
+        { // preview text
+            final Composite previewPanel = new Composite(parent, SWT.NONE);
+            previewPanel.setLayout(new GridLayout());
+            previewPanel.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
+            Label lblPreview = new Label(previewPanel, SWT.NONE);
+            lblPreview.setText(CndMessages.previewLabel);
+
+            this.txtPreview = new Text(previewPanel, SWT.READ_ONLY | SWT.MULTI | SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+            this.txtPreview.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+            this.txtPreview.setBackground(getShell().getDisplay().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND));
+            ((GridData)this.txtPreview.getLayoutData()).widthHint = convertWidthInCharsToPixels(120);
+            refreshPreview();
         }
 
         return panel;
@@ -171,20 +182,6 @@ public final class CndPreferencePage extends PreferencePage implements IWorkbenc
     public IPreferenceStore getPreferenceStore() {
         return null;
     }
-//
-//    private String getQuoteStringFromSelection() {
-//        final String quoteSelection = this.cbxQuoteChar.getText();
-//
-//        if (CndMessages.quoteCharNoneChoiceLabel.equals(quoteSelection)) {
-//            return Utils.EMPTY_STRING;
-//        }
-//
-//        if (CndMessages.quoteCharSingleChoiceLabel.equals(quoteSelection)) {
-//            return Utils.SINGLE_QUOTE;
-//        }
-//
-//        return Utils.DOUBLE_QUOTE;
-//    }
 
     /**
      * {@inheritDoc}
@@ -198,11 +195,8 @@ public final class CndPreferencePage extends PreferencePage implements IWorkbenc
 
     void handleNotationTypeChanged() {
         this.notationType = this.cbxNotationType.getText();
+        refreshPreview();
     }
-//
-//    void handleQuotationCharacterChanged() {
-//        this.quoteString = getQuoteStringFromSelection();
-//    }
 
     /**
      * {@inheritDoc}
@@ -234,18 +228,6 @@ public final class CndPreferencePage extends PreferencePage implements IWorkbenc
             this.cbxNotationType.setText(defaultNotationType);
         }
 
-        { // quote character
-//            final String quoteSelection = prefStore.getDefault(CndPreference.QUOTE_CHAR);
-//
-//            if (Utils.EMPTY_STRING.equals(quoteSelection)) {
-//                this.cbxQuoteChar.setText(CndMessages.quoteCharNoneChoiceLabel);
-//            } else if (Utils.SINGLE_QUOTE.equals(quoteSelection)) {
-//                this.cbxQuoteChar.setText(CndMessages.quoteCharSingleChoiceLabel);
-//            } else {
-//                this.cbxQuoteChar.setText(CndMessages.quoteCharDoubleChoiceLabel);
-//            }
-        }
-
         super.performDefaults();
     }
 
@@ -257,7 +239,14 @@ public final class CndPreferencePage extends PreferencePage implements IWorkbenc
     @Override
     public boolean performOk() {
         JcrPreferenceStore.get().set(CndPreference.NOTATION_TYPE, this.notationType);
-//        JcrPreferenceStore.get().set(CndPreference.QUOTE_CHAR, this.quoteString);
         return super.performOk();
+    }
+
+    private void refreshPreview() {
+        if (_previewCnd == null) {
+            this.txtPreview.setText(CndMessages.previewNotAvailableMessage);
+        } else {
+            this.txtPreview.setText(_previewCnd.toCndNotation(NotationType.valueOf(notationType)));
+        }
     }
 }

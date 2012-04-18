@@ -1011,6 +1011,11 @@ public class CndMessages extends NLS {
     public static String openDeclaringNodeTypeToolTip;
 
     /**
+     * A label of a hyperlink that opens the CND Editor preferences.
+     */
+    public static String openCndEditorPreferencesHyperlink;
+
+    /**
      * A name for the orderable attribute suitable for a radio or check button.
      */
     public static String orderableAttribute;
@@ -1020,6 +1025,16 @@ public class CndMessages extends NLS {
      */
     public static String orderableAttributeToolTip;
 
+    /**
+     * A label suitable for a preview control.
+     */
+    public static String previewLabel;
+
+    /**
+     * A message stating that preview is not available.
+     */
+    public static String previewNotAvailableMessage;
+    
     /**
      * A label for a primary item control.
      */

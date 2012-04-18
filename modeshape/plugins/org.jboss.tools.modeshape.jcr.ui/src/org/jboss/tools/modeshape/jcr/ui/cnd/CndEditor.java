@@ -28,6 +28,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.action.ControlContribution;
 import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.dialogs.IMessageProvider;
@@ -36,6 +37,8 @@ import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.jface.window.Window;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
@@ -45,6 +48,7 @@ import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.IPersistableEditor;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.editors.text.FileDocumentProvider;
 import org.eclipse.ui.editors.text.TextEditor;
@@ -56,6 +60,7 @@ import org.eclipse.ui.forms.editor.SharedHeaderFormEditor;
 import org.eclipse.ui.forms.events.HyperlinkAdapter;
 import org.eclipse.ui.forms.events.HyperlinkEvent;
 import org.eclipse.ui.forms.widgets.Form;
+import org.eclipse.ui.forms.widgets.Hyperlink;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.part.FileEditorInput;
 import org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType;
@@ -254,10 +259,33 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
             }
         });
 
-        //
-        // createActions();
-        // contributeToToolBar(form.getToolBarManager());
-        // contributeToMenu(form.getMenuManager());
+        form.getToolBarManager().add(new ControlContribution(null) {
+
+            /**
+             * {@inheritDoc}
+             * 
+             * @see org.eclipse.jface.action.ControlContribution#createControl(org.eclipse.swt.widgets.Composite)
+             */
+            @Override
+            protected Control createControl( final Composite parent ) {
+                final Hyperlink hlink = getToolkit().createHyperlink(parent, CndMessages.openCndEditorPreferencesHyperlink,
+                                                                     SWT.NULL);
+                hlink.addHyperlinkListener(new HyperlinkAdapter() {
+
+                    /**
+                     * {@inheritDoc}
+                     * 
+                     * @see org.eclipse.ui.forms.events.HyperlinkAdapter#linkActivated(org.eclipse.ui.forms.events.HyperlinkEvent)
+                     */
+                    @Override
+                    public void linkActivated( final HyperlinkEvent e ) {
+                        handleOpenCndPreferencesPage();
+                    }
+                });
+                return hlink;
+            }
+        });
+        form.getToolBarManager().update(true);
     }
 
     /**
@@ -414,6 +442,11 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
         dialog.open();
     }
 
+    void handleOpenCndPreferencesPage() {
+        PreferencesUtil.createPreferenceDialogOn(getShell(), JcrUiConstants.PreferenceIds.CND_PREFERENCE_PAGE,
+                                                 new String[] { JcrUiConstants.PreferenceIds.CND_PREFERENCE_PAGE }, null).open();
+    }
+
     /**
      * Registers an editor activation listener.
      */
@@ -435,6 +468,7 @@ public final class CndEditor extends SharedHeaderFormEditor implements IPersista
         try {
             createCnd();
             ResourcesPlugin.getWorkspace().addResourceChangeListener(this);
+            JcrPreferenceStore.get();
         } catch (final Exception e) {
             throw new PartInitException(CndMessages.errorOpeningCndEditor, e);
         }

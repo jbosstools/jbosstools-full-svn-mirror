@@ -80,4 +80,11 @@ public interface JcrUiConstants {
          */
         String SHOW_INHERITED = ICONS_FOLDER + "show-inherited-16x.gif"; //$NON-NLS-1$
     }
+
+    /**
+     * Constants relating to JCR preferences.
+     */
+    interface PreferenceIds {
+        String CND_PREFERENCE_PAGE = "org.jboss.tools.modeshape.jcr.ui.jcrPreferencePage"; //$NON-NLS-1$
+    }
 }
