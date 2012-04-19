@@ -3,18 +3,20 @@
 <plugin>
    <extension
          point="org.eclipse.mylyn.discovery.core.connectorDiscovery">
+      <!-- JBDS only
       <connectorCategory
-            description="All-In-One Install: Tools for use with JBoss SOA runtimes"
+            description="Collections of tools associated with JBoss products"
             id="com.jboss.jbds.central.discovery.soatooling.bundle"
-            name="JBoss Developer Studio - SOA Tooling"
+            name="JBoss Product Tooling"
             relevance="60">
          <group id="com.jboss.jbds.central.discovery.soatooling.bundle.a" /> 
          <group id="com.jboss.jbds.central.discovery.soatooling.bundle.b" /> 
       </connectorCategory>
+      -->
       <connectorCategory
-            description="Individual Install: Tools for use with JBoss SOA runtimes"
+            description="Tools for use with individual JBoss projects (or products)"
             id="com.jboss.jbds.central.discovery.soatooling"
-            name="JBoss Developer Studio - SOA Tooling - Components"
+            name="JBoss Project Tooling"
             relevance="60">
             <!-- use groups to reorder items in a category; otherwise default to alpha order -->
  			<group id="com.jboss.jbds.central.discovery.soatooling.bdgj" /> 
@@ -22,6 +24,7 @@
  			<group id="com.jboss.jbds.central.discovery.soatooling.r" /> 
       </connectorCategory>
       
+      <!-- JBDS only
       <connectorDescriptor
             categoryId="com.jboss.jbds.central.discovery.soatooling.bundle"
             groupId="com.jboss.jbds.central.discovery.soatooling.bundle.a"
@@ -95,7 +98,9 @@
                url="http://devstudio.jboss.com/">
          </overview>
       </connectorDescriptor>
+      -->
 
+      <!-- JBT only -->
       <connectorDescriptor
             categoryId="com.jboss.jbds.central.discovery.soatooling"
             groupId="com.jboss.jbds.central.discovery.soatooling.bdgj"
@@ -224,7 +229,7 @@
             license="Free, EPL"
             provider="JBoss by Red Hat"
             siteUrl="%jboss.soa.update.url"
-            name="JBoss ModeShape JCR REST Tools"
+            name="JBoss ModeShape Tooling"
             description="Resource (un)publishing to ModeShape repositories"
             id="org.jboss.tools.modeshape.rest.feature">
             <iu id="org.jboss.tools.modeshape.rest.feature"/>
@@ -276,6 +281,5 @@
                url="http://devstudio.jboss.com/">
          </overview>
       </connectorDescriptor>
-      
 	</extension>
 </plugin>
