@@ -48,6 +48,16 @@ public final class RequiredTypes extends ListAttributeState<QualifiedName> {
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @see org.jboss.tools.modeshape.jcr.attributes.ListAttributeState#getPrefixEndDelimiter(org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType)
+     */
+    @Override
+    protected String getPrefixEndDelimiter( NotationType notationType ) {
+        return Utils.EMPTY_STRING;
+    }
+    
+    /**
      * @return the collection of required types (never <code>null</code>)
      */
     public String[] toArray() {

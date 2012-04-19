@@ -65,7 +65,7 @@ public interface JcrPreferenceConstants {
         ELEMENTS_END_DELIMITER,
 
         /**
-         * The delimiter before the first CND element.
+         * The delimiter before each node type definition's item definitions (properties, child nodes).
          */
         ELEMENTS_START_DELIMITER,
 

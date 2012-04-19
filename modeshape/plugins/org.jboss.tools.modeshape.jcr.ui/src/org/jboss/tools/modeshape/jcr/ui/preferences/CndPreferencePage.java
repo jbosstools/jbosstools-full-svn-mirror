@@ -61,17 +61,23 @@ public final class CndPreferencePage extends PreferencePage implements IWorkbenc
         if (_previewCnd == null) {
             _previewCnd = new CompactNodeTypeDefinition();
 
-            final String content = "<ex = 'http://namespace.com/ns'>\n" //$NON-NLS-1$
-                    + "[ex:NodeType] > ex:ParentType1, ex:ParentType2 abstract orderable mixin noquery primaryitem ex:property\n" //$NON-NLS-1$
-                    + "- ex:property (STRING) = 'default1', 'default2' mandatory autocreated protected multiple VERSION\n" //$NON-NLS-1$
+            final String content = "<abc = 'http://namespace.com/abc/1.0'>\n" //$NON-NLS-1$
+                    + "<xyz = 'http://namespace.com/xyz/1.0'>\n" //$NON-NLS-1$
+                    + "[abc:NodeType] > abc:ParentType1, abc:ParentType2 abstract orderable mixin noquery primaryitem abc:propertyABC\n" //$NON-NLS-1$
+                    + "- abc:propertyABC (STRING) = 'default1', 'default2' mandatory autocreated protected multiple VERSION\n" //$NON-NLS-1$
                     + " queryops '=, <>, <, <=, >, >=, LIKE' nofulltext noqueryorder < 'constraint1', 'constraint2'" //$NON-NLS-1$
-                    + "+ ex:node (ex:reqType1, ex:reqType2) = ex:defaultType mandatory autocreated protected sns version"; //$NON-NLS-1$
+                    + "+ abc:node (abc:reqType1, abc:reqType2) = abc:defaultType mandatory autocreated protected sns version\n" //$NON-NLS-1$
+                    + "[xyz:NodeTypeX]\n" //$NON-NLS-1$
+                    + "- xyz:propertyX" //$NON-NLS-1$
+                    + "[xyz:NodeTypeY]\n" //$NON-NLS-1$
+                    + "- xyz:propertyY (LONG)" //$NON-NLS-1$
+                    + "+ xyz:childNodeY"; //$NON-NLS-1$
 
             CndImporter importer = new CndImporter(true);
             Collection<Throwable> problems = new ArrayList<Throwable>();
 
             _previewCnd = importer.importFrom(content, problems, "string"); //$NON-NLS-1$
-            
+
             if (_previewCnd == null) {
                 for (Throwable e : problems) {
                     Activator.getSharedInstance().getLog().log(new Status(IStatus.ERROR, JcrUiConstants.PLUGIN_ID, null, e));

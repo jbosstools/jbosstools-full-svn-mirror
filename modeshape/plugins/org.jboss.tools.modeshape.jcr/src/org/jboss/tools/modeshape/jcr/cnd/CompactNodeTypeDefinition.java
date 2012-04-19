@@ -508,7 +508,9 @@ public class CompactNodeTypeDefinition implements CndElement {
                     }
                 }
 
-                builder.append(prefStore.get(JcrPreferenceConstants.CndPreference.NAMESPACE_MAPPING_SECTION_END_DELIMITER));
+                if (NotationType.COMPACT != notationType) {
+                    builder.append(prefStore.get(JcrPreferenceConstants.CndPreference.NAMESPACE_MAPPING_SECTION_END_DELIMITER));
+                }
             }
         }
 
@@ -518,11 +520,13 @@ public class CompactNodeTypeDefinition implements CndElement {
 
                 for (final NodeTypeDefinition nodeTypeDefinition : this.nodeTypeDefinitions) {
                     if (Utils.build(builder, addDelim, DELIM, nodeTypeDefinition.toCndNotation(notationType))) {
-                        addDelim = true;
+                        addDelim = (NotationType.COMPACT != notationType);
                     }
                 }
 
-                builder.append(prefStore.get(JcrPreferenceConstants.CndPreference.NODE_TYPE_DEFINITION_SECTION_END_DELIMITER));
+                if (NotationType.COMPACT != notationType) {
+                    builder.append(prefStore.get(JcrPreferenceConstants.CndPreference.NODE_TYPE_DEFINITION_SECTION_END_DELIMITER));
+                }
             }
         }
 

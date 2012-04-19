@@ -831,10 +831,11 @@ public class NodeTypeDefinition implements CndElement, Comparable, ItemOwnerProv
         final StringBuilder builder = new StringBuilder();
 
         { // name
-            builder.append(NAME_NOTATION_PREFIX)
-                   .append(this.name.toCndNotation(notationType))
-                   .append(NAME_NOTATION_SUFFIX)
-                   .append(prefStore.get(JcrPreferenceConstants.CndPreference.NODE_TYPE_DEFINITION_NAME_END_DELIMITER));
+            builder.append(NAME_NOTATION_PREFIX).append(this.name.toCndNotation(notationType)).append(NAME_NOTATION_SUFFIX);
+
+            if (NotationType.LONG == notationType) {
+                builder.append(prefStore.get(JcrPreferenceConstants.CndPreference.NODE_TYPE_DEFINITION_NAME_END_DELIMITER));
+            }
         }
 
         { // super types
@@ -863,12 +864,17 @@ public class NodeTypeDefinition implements CndElement, Comparable, ItemOwnerProv
                 final String elementDelimiter = prefStore.get(JcrPreferenceConstants.CndPreference.ELEMENT_DELIMITER);
 
                 for (final CndElement element : elements) {
-                    builder.append(elementStartDelimiter);
+                    if (NotationType.LONG == notationType) {
+                        builder.append(elementStartDelimiter);
+                    }
+
                     builder.append(element.toCndNotation(notationType));
                     builder.append(elementDelimiter);
                 }
 
-                builder.append(prefStore.get(JcrPreferenceConstants.CndPreference.ELEMENTS_END_DELIMITER));
+                if (NotationType.COMPACT != notationType) {
+                    builder.append(prefStore.get(JcrPreferenceConstants.CndPreference.ELEMENTS_END_DELIMITER));
+                }
             }
         }
 

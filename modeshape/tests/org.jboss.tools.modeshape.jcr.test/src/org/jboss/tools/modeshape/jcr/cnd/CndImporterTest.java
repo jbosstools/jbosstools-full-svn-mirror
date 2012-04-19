@@ -563,6 +563,17 @@ public class CndImporterTest {
     }
 
     @Test
+    public void shouldImportJackRabbitCndReaderTestCnd() throws Exception {
+        this.importer.importFrom(openCndFile("cnd-reader-test-input.cnd"), this.problems); //$NON-NLS-1$
+
+        if (this.problems.size() != 0) {
+            printProblems();
+        }
+
+        assertEquals(0, this.problems.size());
+    }
+
+    @Test
     public void shouldImportJcrBuiltinNodeTypesForJSR170() throws Exception {
         this.cnd = this.importer.importFrom(openCndFile("jcr-builtins-170.cnd"), this.problems); //$NON-NLS-1$
 
