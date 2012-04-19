@@ -578,6 +578,7 @@ Using ant:   ant custom.build -f ../build.xml -Doutput.dir=`pwd` -DinputRepo=htt
 	<path id="central.discovery.jar.id">
 		<fileset dir="${update.site.source.dir}/plugins">
 			<include name="org.jboss.tools.central.discovery_*.jar" />
+			<include name="org.jboss.tools.central.discovery.soa-tooling_*.jar" />
 		</fileset>
 	</path>
 	<property name="central.discovery.path" refid="central.discovery.jar.id" />
