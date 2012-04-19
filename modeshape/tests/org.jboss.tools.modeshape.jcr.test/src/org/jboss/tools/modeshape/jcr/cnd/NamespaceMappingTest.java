@@ -70,8 +70,9 @@ public class NamespaceMappingTest {
         final String PREFIX = "prefix"; //$NON-NLS-1$
         final String URI = "uri"; //$NON-NLS-1$
         this.namespaceMapping = new NamespaceMapping(PREFIX, URI);
-        assertEquals(NamespaceMapping.NOTATION_PREFIX + PREFIX + NamespaceMapping.NOTATION_DELIMITER + '\'' + URI + '\''
-                + NamespaceMapping.NOTATION_SUFFIX, this.namespaceMapping.toCndNotation(NotationType.LONG));
+        assertEquals(NamespaceMapping.NOTATION_PREFIX + PREFIX + Utils.SPACE_STRING + NamespaceMapping.NOTATION_DELIMITER
+                             + Utils.SPACE_STRING + '\'' + URI + '\'' + NamespaceMapping.NOTATION_SUFFIX,
+                     this.namespaceMapping.toCndNotation(NotationType.LONG));
     }
 
     @Test
