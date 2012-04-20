@@ -198,7 +198,6 @@
 		<category name="GeneralTools" />
 	</feature>
 	<feature url="features/org.jboss.tools.common.mylyn.feature_0.0.0.jar" id="org.jboss.tools.common.mylyn.feature" version="0.0.0">
-		<category name="AbridgedTools" />
 		<category name="GeneralTools"/>
 	</feature>
 
