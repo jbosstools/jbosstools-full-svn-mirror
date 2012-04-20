@@ -28,6 +28,7 @@ import org.jboss.tools.drools.ui.bot.test.smoke.RuleFlowTest;
 import org.jboss.tools.ui.bot.ext.RequirementAwareSuite;
 import org.jboss.tools.ui.bot.ext.SWTTestExt;
 import org.jboss.tools.ui.bot.ext.SWTUtilExt;
+import org.jboss.tools.ui.bot.ext.config.ServerBean;
 import org.jboss.tools.ui.bot.ext.config.TestConfigurator;
 import org.jboss.tools.ui.bot.ext.types.IDELabel;
 import org.jboss.tools.ui.bot.ext.types.PerspectiveType;
@@ -73,8 +74,7 @@ public class DroolsAllBotTests extends SWTTestExt {
     public static final String RULE_FLOW_JAVA_TEST_FILE_NAME = "ProcessTest.java";
     public static final String RULE_FLOW_RF_FILE_NAME = "ruleflow.rf";
     public static final String RULE_FLOW_SAMPLE_FILE_NAME = "sample.bpmn";
-    // this variable should be set in ManageDroolsProject class according to
-    // used Drools version
+    // this variable should be set in ManageDroolsProject class according to used Drools version
     public static String RULE_FLOW_FILE_NAME = RULE_FLOW_SAMPLE_FILE_NAME; // default choice
     public static final String DECISION_TABLE_JAVA_TEST_FILE_NAME = "DecisionTableTest.java";
     public static final String USE_EXTERNAL_DROOLS_RUNTIME_PROPERTY_NAME = "use-external-drools-runtime";
@@ -143,8 +143,7 @@ public class DroolsAllBotTests extends SWTTestExt {
             DroolsAllBotTests.DROOLS_RUNTIME_LOCATION = droolsRuntimeLocation;
         }
         DroolsAllBotTests.CREATE_DROOLS_RUNTIME_LOCATION = tmpDir + File.separator + "drools";
-        // Create directory for Drools Runtime which will be created as a part
-        // of test
+        // Create directory for Drools Runtime which will be created as a part of test
         new File(DroolsAllBotTests.CREATE_DROOLS_RUNTIME_LOCATION).mkdir();
         try {
             bot.button(IDELabel.Button.NO).click();
@@ -168,9 +167,12 @@ public class DroolsAllBotTests extends SWTTestExt {
         eclipse.maximizeActiveShell();
 
         // Removes legacy files after previous run
-        final String serverHome = TestConfigurator.currentConfig.getServer().runtimeHome;
-        if (serverHome != null) {
-            deleteGuvnorRepositoryIfExists(serverHome + "/bin/");
+        ServerBean server = TestConfigurator.currentConfig.getServer();
+        if (server != null) {
+            final String serverHome = server.runtimeHome;
+            if (serverHome != null) {
+                deleteGuvnorRepositoryIfExists(serverHome + "/bin/");
+            }
         }
     }
 

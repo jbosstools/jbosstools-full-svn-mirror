@@ -69,12 +69,14 @@ public class DroolsViewsTest extends SWTTestExt {
         while (!eclipse.isDebugging()) {
             bot.sleep(Timing.time500MS());
         }
+
         // waits for stopping at breakpoint
         while (!eclipse.isSuspendedAtBreakpoint()) {
             bot.sleep(Timing.time1S());
         }
 
         isFirstTimeRun = false;
+        bot.sleep(Timing.time1S());
     }
 
     /**
@@ -91,7 +93,6 @@ public class DroolsViewsTest extends SWTTestExt {
      * and creates brand new project.
      */
     private void manageProject() {
-        //packageExplorer.deleteAllProjects();
         ManageDroolsProject.createDroolsProject(PROJECT_NAME);
 
         Widget openingProjectWidget = null;
