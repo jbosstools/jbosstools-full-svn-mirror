@@ -63,17 +63,20 @@ public final class CndPreferencePage extends PreferencePage implements IWorkbenc
 
             final String content = "<abc = 'http://namespace.com/abc/1.0'>\n" //$NON-NLS-1$
                     + "<xyz = 'http://namespace.com/xyz/1.0'>\n" //$NON-NLS-1$
+                    + "/* This is a comment for node type definition abc:NodeType. */\n" //$NON-NLS-1$
                     + "[abc:NodeType] > abc:ParentType1, abc:ParentType2 abstract orderable mixin noquery primaryitem abc:propertyABC\n" //$NON-NLS-1$
                     + "- abc:propertyABC (STRING) = 'default1', 'default2' mandatory autocreated protected multiple VERSION\n" //$NON-NLS-1$
                     + " queryops '=, <>, <, <=, >, >=, LIKE' nofulltext noqueryorder < 'constraint1', 'constraint2'" //$NON-NLS-1$
                     + "+ abc:node (abc:reqType1, abc:reqType2) = abc:defaultType mandatory autocreated protected sns version\n" //$NON-NLS-1$
                     + "[xyz:NodeTypeX]\n" //$NON-NLS-1$
-                    + "- xyz:propertyX" //$NON-NLS-1$
+                    + "/* This is a comment for property definition xyz:propertyX. */\n" //$NON-NLS-1$
+                    + "- xyz:propertyX\n" //$NON-NLS-1$
                     + "[xyz:NodeTypeY]\n" //$NON-NLS-1$
-                    + "- xyz:propertyY (LONG)" //$NON-NLS-1$
-                    + "+ xyz:childNodeY"; //$NON-NLS-1$
+                    + "- xyz:propertyY (LONG)\n" //$NON-NLS-1$
+                    + "/* This is a comment for child node definition xyz:childNodeX. */\n" //$NON-NLS-1$
+                    + "+ xyz:childNodeY\n"; //$NON-NLS-1$
 
-            CndImporter importer = new CndImporter(true);
+            CndImporter importer = new CndImporter();
             Collection<Throwable> problems = new ArrayList<Throwable>();
 
             _previewCnd = importer.importFrom(content, problems, "string"); //$NON-NLS-1$
@@ -142,7 +145,8 @@ public final class CndPreferencePage extends PreferencePage implements IWorkbenc
             this.txtPreview = new Text(previewPanel, SWT.READ_ONLY | SWT.MULTI | SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
             this.txtPreview.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
             this.txtPreview.setBackground(getShell().getDisplay().getSystemColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND));
-            ((GridData)this.txtPreview.getLayoutData()).widthHint = convertWidthInCharsToPixels(120);
+            ((GridData)this.txtPreview.getLayoutData()).widthHint = convertWidthInCharsToPixels(100);
+            ((GridData)this.txtPreview.getLayoutData()).heightHint = convertHeightInCharsToPixels(20);
             refreshPreview();
         }
 

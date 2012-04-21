@@ -15,12 +15,16 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import javax.jcr.nodetype.NodeDefinitionTemplate;
 import javax.jcr.nodetype.NodeType;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.osgi.util.NLS;
 import org.jboss.tools.modeshape.jcr.attributes.AttributeState.Value;
 import org.jboss.tools.modeshape.jcr.attributes.DefaultType;
 import org.jboss.tools.modeshape.jcr.attributes.NodeAttributes;
 import org.jboss.tools.modeshape.jcr.attributes.OnParentVersion;
 import org.jboss.tools.modeshape.jcr.attributes.RequiredTypes;
+import org.jboss.tools.modeshape.jcr.cnd.CommentedCndElement;
 import org.jboss.tools.modeshape.jcr.preference.JcrPreferenceConstants;
 import org.jboss.tools.modeshape.jcr.preference.JcrPreferenceStore;
 
@@ -45,6 +49,9 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
 
         // name
         copy.setName(childNodeBeingCopied.getName());
+
+        // comment
+        copy.comment = childNodeBeingCopied.comment;
 
         // attributes
         copy.attributes.getAutocreated().set(childNodeBeingCopied.attributes.getAutocreated().get());
@@ -71,6 +78,11 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
      * The node attributes (never <code>null</code>).
      */
     private final NodeAttributes attributes;
+
+    /**
+     * An optional comment (can be <code>null</code> or empty).
+     */
+    private String comment;
 
     /**
      * The node default type (never <code>null</code>).
@@ -260,7 +272,11 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
             return false;
         }
 
-        return this.requiredTypes.equals(that.requiredTypes);
+        if (!this.requiredTypes.equals(that.requiredTypes)) {
+            return false;
+        }
+
+        return Utils.equals(this.comment, that.comment);
     }
 
     /**
@@ -275,6 +291,16 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
         }
 
         return cndNotation;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.jboss.tools.modeshape.jcr.cnd.CommentedCndElement#getComment()
+     */
+    @Override
+    public String getComment() {
+        return this.comment;
     }
 
     /**
@@ -464,7 +490,7 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
     @Override
     public int hashCode() {
         return Utils.hashCode(this.attributes, this.name, this.defaultType, this.requiredTypes,
-                              getDeclaringNodeTypeDefinitionName());
+                              getDeclaringNodeTypeDefinitionName(), this.comment);
     }
 
     /**
@@ -525,7 +551,12 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
             try {
                 ((PropertyChangeListener)listener).propertyChange(event);
             } catch (final Exception e) {
-                // TODO log this
+                if (Platform.isRunning()) {
+                    Activator.get().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, null, e));
+                } else {
+                    System.err.print(e.getMessage());
+                }
+
                 this.listeners.remove(listener);
             }
         }
@@ -567,6 +598,28 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
     public void setAutoCreated( final boolean newAutocreated ) {
         final Value newState = (newAutocreated ? Value.IS : Value.IS_NOT);
         changeState(PropertyName.AUTOCREATED, newState);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.jboss.tools.modeshape.jcr.cnd.CommentedCndElement#setComment(java.lang.String)
+     */
+    @Override
+    public boolean setComment( String newComment ) {
+        if (!Utils.isEmpty(newComment)) {
+            newComment = newComment.trim();
+        }
+
+        final Object oldValue = this.comment;
+        final boolean changed = !Utils.equivalent(this.comment, newComment);
+
+        if (changed) {
+            this.comment = newComment;
+            notifyChangeListeners(PropertyName.COMMENT, oldValue, newComment);
+        }
+
+        return changed;
     }
 
     /**
@@ -691,9 +744,34 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
      */
     @Override
     public String toCndNotation( final NotationType notationType ) {
-        JcrPreferenceStore prefStore = JcrPreferenceStore.get();
+        final JcrPreferenceStore prefStore = JcrPreferenceStore.get();
+        final StringBuilder builder = new StringBuilder();
+        String indent = Utils.EMPTY_STRING;
 
-        final StringBuilder builder = new StringBuilder(NOTATION_PREFIX);
+        if (NotationType.LONG == notationType) {
+            indent = prefStore.get(JcrPreferenceConstants.CndPreference.ELEMENTS_START_DELIMITER);
+        }
+
+        { // comment
+            if (!Utils.isEmpty(this.comment)) {
+                String commentNotation = Utils.EMPTY_STRING;
+
+                if (NotationType.LONG == notationType) {
+                    commentNotation += '\n';
+                }
+
+                commentNotation += CommentedCndElement.Helper.addCommentCharacters(this.comment, indent) + '\n';
+
+                // add comment above node type
+                builder.append(commentNotation);
+
+                if (NotationType.LONG == notationType) {
+                    builder.append(indent);
+                }
+            }
+        }
+
+        builder.append(NOTATION_PREFIX);
         builder.append((NotationType.LONG == notationType) ? Utils.SPACE_STRING : Utils.EMPTY_STRING);
 
         final String DELIM = prefStore.get(JcrPreferenceConstants.CndPreference.CHILD_NODE_PROPERTY_DELIMITER);
@@ -714,6 +792,11 @@ public class ChildNodeDefinition implements ItemDefinition, NodeDefinitionTempla
          * The autocreated indicator.
          */
         AUTOCREATED,
+
+        /**
+         * The comment.
+         */
+        COMMENT,
 
         /**
          * The default type.

@@ -7,12 +7,12 @@
  */
 package org.jboss.tools.modeshape.jcr;
 
-import org.jboss.tools.modeshape.jcr.cnd.CndElement;
+import org.jboss.tools.modeshape.jcr.cnd.CommentedCndElement;
 
 /**
  * An interface for property definitions and child node definitions.
  */
-public interface ItemDefinition extends CndElement, Comparable<ItemDefinition> {
+public interface ItemDefinition extends CommentedCndElement, Comparable<ItemDefinition> {
 
     /**
      * Defines a residual set of child items.

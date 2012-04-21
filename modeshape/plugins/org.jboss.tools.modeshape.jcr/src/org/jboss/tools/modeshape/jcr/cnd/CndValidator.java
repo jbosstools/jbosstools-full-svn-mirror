@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.StringTokenizer;
 
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.osgi.util.NLS;
 import org.jboss.tools.modeshape.jcr.Activator;
@@ -741,7 +742,11 @@ public final class CndValidator {
                 }
             }
         } catch (final Exception e) {
-            Activator.get().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, null, e));
+            if (Platform.isRunning()) {
+                Activator.get().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, null, e));
+            } else {
+                System.err.print(e.getMessage());
+            }
         }
 
         return status;

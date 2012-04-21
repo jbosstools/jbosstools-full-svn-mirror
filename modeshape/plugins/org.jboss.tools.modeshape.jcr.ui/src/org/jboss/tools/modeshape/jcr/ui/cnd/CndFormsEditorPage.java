@@ -25,6 +25,8 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.ColumnViewer;
+import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -82,6 +84,7 @@ import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.ValidationStatus;
 import org.jboss.tools.modeshape.jcr.cnd.CndElement.NotationType;
 import org.jboss.tools.modeshape.jcr.cnd.CndValidator;
+import org.jboss.tools.modeshape.jcr.cnd.CommentedCndElement;
 import org.jboss.tools.modeshape.jcr.cnd.CompactNodeTypeDefinition;
 import org.jboss.tools.modeshape.jcr.ui.Activator;
 import org.jboss.tools.modeshape.jcr.ui.JcrUiConstants;
@@ -92,6 +95,7 @@ import org.jboss.tools.modeshape.ui.actions.DelegateAction;
 import org.jboss.tools.modeshape.ui.forms.FormUtils;
 import org.jboss.tools.modeshape.ui.forms.FormUtils.Styles;
 import org.jboss.tools.modeshape.ui.forms.MessageFormDialog;
+import org.jboss.tools.modeshape.ui.viewers.CheckBoxLabelProvider;
 
 /**
  * The GUI part of the CND editor.
@@ -134,6 +138,7 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
     private IAction showInheritedChildNodes;
     private IAction showInheritedProperties;
     private TableViewer superTypesViewer;
+    private Text txtComment;
     private Text txtFilter;
 
     /**
@@ -390,9 +395,21 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
                 assert (this.columnIndex == ChildNodeColumnIndexes.ATTRIBUTES) : "Unexpected child node column index"; //$NON-NLS-1$
                 return childNodeDefinition.getAttributesCndNotation(notationType);
             }
+            
+            /**
+             * {@inheritDoc}
+             *
+             * @see org.eclipse.jface.viewers.CellLabelProvider#getToolTipText(java.lang.Object)
+             */
+            @Override
+            public String getToolTipText( Object element ) {
+                final ChildNodeDefinition childNodeDefinition = (ChildNodeDefinition)element;
+                return childNodeDefinition.toCndNotation(NotationType.LONG);
+            }
         }
 
         this.childNodeViewer = new TableViewer(childNodeTable);
+        ColumnViewerToolTipSupport.enableFor(this.childNodeViewer);
         this.childNodeViewer.setContentProvider(new IStructuredContentProvider() {
 
             /**
@@ -478,34 +495,40 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
             }
         });
 
-        { // create name column
+        { // name column
             final TableViewerColumn nameColumn = new TableViewerColumn(this.childNodeViewer, SWT.LEFT);
             UiUtils.configureColumn(nameColumn, new ChildNodeLabelProvider(ChildNodeColumnIndexes.NAME),
                                     CndMessages.nameHeaderText, CndMessages.childNodeNameToolTip, false, true);
         }
 
-        { // create type column
+        { // type column
             final TableViewerColumn typeColumn = new TableViewerColumn(this.childNodeViewer, SWT.LEFT);
             UiUtils.configureColumn(typeColumn, new ChildNodeLabelProvider(ChildNodeColumnIndexes.REQUIRED_TYPES),
                                     CndMessages.requiredTypesHeaderText, CndMessages.childNodeRequiredTypesToolTip, false, true);
         }
 
-        { // create default values column
+        { // default values column
             final TableViewerColumn defaultValuesColumn = new TableViewerColumn(this.childNodeViewer, SWT.LEFT);
             UiUtils.configureColumn(defaultValuesColumn, new ChildNodeLabelProvider(ChildNodeColumnIndexes.DEFAULT_TYPE),
                                     CndMessages.defaultTypeHeaderText, CndMessages.childNodeDefaultTypeToolTip, false, true);
         }
 
-        { // create attributes column
+        { // attributes column
             final TableViewerColumn attributesColumn = new TableViewerColumn(this.childNodeViewer, SWT.LEFT);
             UiUtils.configureColumn(attributesColumn, new ChildNodeLabelProvider(ChildNodeColumnIndexes.ATTRIBUTES),
                                     CndMessages.attributesHeaderText, CndMessages.childNodeAttributesToolTip, false, true);
         }
 
-        { // create declaring node type column
+        { // declaring node type column
             final TableViewerColumn nodeTypeColumn = new TableViewerColumn(this.childNodeViewer, SWT.LEFT);
             UiUtils.configureColumn(nodeTypeColumn, new ChildNodeLabelProvider(ChildNodeColumnIndexes.DECLARING_NODE_TYPE),
                                     CndMessages.declaringNodeTypeHeaderText, CndMessages.declaringNodeTypeToolTip, false, true);
+        }
+
+        { // create comment column
+            final TableViewerColumn commentColumn = new TableViewerColumn(this.childNodeViewer, SWT.RIGHT);
+            UiUtils.configureColumn(commentColumn, new CommentLabelProvider(this.childNodeViewer), CndMessages.commentedHeaderText,
+                                    CndMessages.commentedToolTip, false, false);
         }
 
         // this will sort by child node name
@@ -686,42 +709,83 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
             rightContainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
             toolkit.paintBordersFor(rightContainer);
 
-            final Label label = toolkit.createLabel(rightContainer, CndMessages.supertypesLabel);
-            label.setLayoutData(new GridData(SWT.BEGINNING, SWT.TOP, false, false));
+            { // supertypes
+                final Label label = toolkit.createLabel(rightContainer, CndMessages.supertypesLabel);
+                label.setLayoutData(new GridData(SWT.BEGINNING, SWT.TOP, false, false));
 
-            createSuperTypesActions();
+                createSuperTypesActions();
 
-            // add toolbar buttons (add, edit, delete)
-            final ToolBarManager toolBarManager = new ToolBarManager(SWT.FLAT | SWT.HORIZONTAL);
-            final ToolBar toolBar = toolBarManager.createControl(rightContainer);
-            toolBar.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false));
-            toolkit.adapt(toolBar);
+                // add toolbar buttons (add, edit, delete)
+                final ToolBarManager toolBarManager = new ToolBarManager(SWT.FLAT | SWT.HORIZONTAL);
+                final ToolBar toolBar = toolBarManager.createControl(rightContainer);
+                toolBar.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false));
+                toolkit.adapt(toolBar);
 
-            final Cursor handCursor = new Cursor(Display.getCurrent(), SWT.CURSOR_HAND);
-            toolBar.setCursor(handCursor);
-            toolBarManager.add(this.addSuperType);
-            toolBarManager.add(this.editSuperType);
-            toolBarManager.add(this.deleteSuperType);
-            toolBarManager.update(true);
+                final Cursor handCursor = new Cursor(Display.getCurrent(), SWT.CURSOR_HAND);
+                toolBar.setCursor(handCursor);
+                toolBarManager.add(this.addSuperType);
+                toolBarManager.add(this.editSuperType);
+                toolBarManager.add(this.deleteSuperType);
+                toolBarManager.update(true);
 
-            final Table table = FormUtils.createTable(toolkit, rightContainer);
-            table.setHeaderVisible(false);
-            table.setLinesVisible(false);
-            ((GridData)table.getLayoutData()).horizontalSpan = 2;
-            ((GridData)table.getLayoutData()).heightHint = table.getItemHeight() * 4;
-            table.setToolTipText(CndMessages.supertypesToolTip);
+                final Table table = FormUtils.createTable(toolkit, rightContainer);
+                table.setHeaderVisible(false);
+                table.setLinesVisible(false);
+                GridData gd = (GridData)table.getLayoutData();
+                gd.horizontalSpan = 2;
+                gd.heightHint = table.getItemHeight() * 4;
+                gd.widthHint = UiUtils.convertWidthInCharsToPixels(table, 40);
+                table.setToolTipText(CndMessages.supertypesToolTip);
 
-            // table context menu
-            final MenuManager menuManager = new MenuManager();
-            menuManager.add(new DelegateAction(CndMessages.addSuperTypeMenuText, this.addSuperType));
-            menuManager.add(new DelegateAction(CndMessages.editSuperTypeMenuText, this.editSuperType));
-            menuManager.add(new DelegateAction(CndMessages.deleteSuperTypeMenuText, this.deleteSuperType));
-            table.setMenu(menuManager.createContextMenu(table));
+                // table context menu
+                final MenuManager menuManager = new MenuManager();
+                menuManager.add(new DelegateAction(CndMessages.addSuperTypeMenuText, this.addSuperType));
+                menuManager.add(new DelegateAction(CndMessages.editSuperTypeMenuText, this.editSuperType));
+                menuManager.add(new DelegateAction(CndMessages.deleteSuperTypeMenuText, this.deleteSuperType));
+                table.setMenu(menuManager.createContextMenu(table));
 
-            createSuperTypesViewer(table);
+                createSuperTypesViewer(table);
+
+                // fill with data from CND
+                refreshSuperTypes();
+            }
+        }
+
+        { // bottom of details section (comments)
+            final Composite commentsContainer = toolkit.createComposite(detailsContainer);
+            commentsContainer.setLayout(new GridLayout());
+            commentsContainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+            ((GridData)commentsContainer.getLayoutData()).horizontalSpan = 2;
+            toolkit.paintBordersFor(commentsContainer);
+
+            final Label lblComment = toolkit.createLabel(commentsContainer, CndMessages.commentLabel, SWT.NONE);
+            lblComment.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
+
+            this.txtComment = toolkit.createText(commentsContainer, null, Styles.TEXT_STYLE | SWT.MULTI | SWT.H_SCROLL
+                    | SWT.V_SCROLL);
+            this.txtComment.setToolTipText(CndMessages.commentedToolTip);
+
+            final GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true);
+            gd.verticalIndent += ((GridLayout)detailsContainer.getLayout()).verticalSpacing;
+            gd.heightHint = this.txtComment.getLineHeight() * 3;
+            gd.widthHint = UiUtils.convertWidthInCharsToPixels(this.txtComment, 80);
+            this.txtComment.setLayoutData(gd);
+
+            this.txtComment.addModifyListener(new ModifyListener() {
+
+                /**
+                 * {@inheritDoc}
+                 * 
+                 * @see org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse.swt.events.ModifyEvent)
+                 */
+                @Override
+                public void modifyText( final ModifyEvent e ) {
+                    handleCommentChanged(((Text)e.widget).getText());
+                }
+            });
 
             // fill with data from CND
-            refreshSuperTypes();
+            refreshComments();
         }
     }
 
@@ -847,11 +911,27 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
                     return namespaceMapping.getPrefix();
                 }
 
-                return namespaceMapping.getUri();
+                if (this.columnIndex == NamespaceColumnIndexes.URI) {
+                    return namespaceMapping.getUri();
+                }
+
+                return Utils.EMPTY_STRING;
+            }
+            
+            /**
+             * {@inheritDoc}
+             *
+             * @see org.eclipse.jface.viewers.CellLabelProvider#getToolTipText(java.lang.Object)
+             */
+            @Override
+            public String getToolTipText( Object element ) {
+                final NamespaceMapping namespaceMapping = (NamespaceMapping)element;
+                return namespaceMapping.toCndNotation(NotationType.LONG);
             }
         }
 
         this.namespaceViewer = new TableViewer(namespaceTable);
+        ColumnViewerToolTipSupport.enableFor(this.namespaceViewer);
         this.namespaceViewer.setContentProvider(new IStructuredContentProvider() {
 
             /**
@@ -930,6 +1010,12 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
             final TableViewerColumn uriColumn = new TableViewerColumn(this.namespaceViewer, SWT.LEFT);
             UiUtils.configureColumn(uriColumn, new NamespaceLabelProvider(NamespaceColumnIndexes.URI),
                                     CndMessages.namespaceUriHeaderText, CndMessages.namespaceUriToolTip, false, true);
+        }
+
+        { // create comment column
+            final TableViewerColumn commentColumn = new TableViewerColumn(this.namespaceViewer, SWT.RIGHT);
+            UiUtils.configureColumn(commentColumn, new CommentLabelProvider(this.namespaceViewer), CndMessages.commentedHeaderText,
+                                    CndMessages.commentedToolTip, false, false);
         }
 
         // this will sort by prefix
@@ -1037,6 +1123,7 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
 
             final Table table = FormUtils.createTable(toolkit, viewerContainer);
             table.setLinesVisible(false);
+            ((GridData)table.getLayoutData()).widthHint = UiUtils.convertWidthInCharsToPixels(table, 30);
 
             // table context menu
             final MenuManager menuManager = new MenuManager();
@@ -1082,9 +1169,21 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
 
                 return name;
             }
+            
+            /**
+             * {@inheritDoc}
+             *
+             * @see org.eclipse.jface.viewers.CellLabelProvider#getToolTipText(java.lang.Object)
+             */
+            @Override
+            public String getToolTipText( Object element ) {
+                final NodeTypeDefinition nodeTypeDefinition = (NodeTypeDefinition)element;
+                return nodeTypeDefinition.toCndNotation(NotationType.LONG);
+            }
         }
 
         this.nodeTypeViewer = new TableViewer(nodeTypeTable);
+        ColumnViewerToolTipSupport.enableFor(this.nodeTypeViewer);
         this.nodeTypeViewer.setContentProvider(new IStructuredContentProvider() {
 
             /**
@@ -1424,9 +1523,21 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
 
                 return UiUtils.join(Arrays.asList(constraints), null);
             }
+            
+            /**
+             * {@inheritDoc}
+             *
+             * @see org.eclipse.jface.viewers.CellLabelProvider#getToolTipText(java.lang.Object)
+             */
+            @Override
+            public String getToolTipText( Object element ) {
+                final PropertyDefinition propertyDefinition = (PropertyDefinition)element;
+                return propertyDefinition.toCndNotation(NotationType.LONG);
+            }
         }
 
         this.propertyViewer = new TableViewer(propertyTable);
+        ColumnViewerToolTipSupport.enableFor(this.propertyViewer);
         this.propertyViewer.setContentProvider(new IStructuredContentProvider() {
 
             /**
@@ -1547,6 +1658,12 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
             final TableViewerColumn nodeTypeColumn = new TableViewerColumn(this.propertyViewer, SWT.LEFT);
             UiUtils.configureColumn(nodeTypeColumn, new PropertyLabelProvider(PropertyColumnIndexes.DECLARING_NODE_TYPE),
                                     CndMessages.declaringNodeTypeHeaderText, CndMessages.declaringNodeTypeToolTip, false, true);
+        }
+
+        { // create comment column
+            final TableViewerColumn commentColumn = new TableViewerColumn(this.propertyViewer, SWT.RIGHT);
+            UiUtils.configureColumn(commentColumn, new CommentLabelProvider(this.propertyViewer), CndMessages.commentedHeaderText,
+                                    CndMessages.commentedToolTip, false, false);
         }
 
         // this will sort by property name
@@ -2063,6 +2180,14 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
         }
     }
 
+    void handleCommentChanged( final String newComment ) {
+        final NodeTypeDefinition nodeType = getSelectedNodeType();
+
+        if (nodeType != null) {
+            nodeType.setComment(newComment);
+        }
+    }
+
     void handleDeleteChildNode() {
         assert (getSelectedNodeType() != null) : "Delete child node button is enabled and there is no node type selected"; //$NON-NLS-1$
         assert (getSelectedChildNode() != null) : "Delete child node button is enabled and there is no child node selected"; //$NON-NLS-1$
@@ -2214,8 +2339,6 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
     void handleEditNamespace() {
         assert (getSelectedNamespace() != null) : "Edit namespace handler has been called when there is no namespace selected"; //$NON-NLS-1$
         final NamespaceMapping selectedNamespace = getSelectedNamespace();
-
-        // TODO if prefix is changed should qualified names with old prefix be automatically updated?
         final NamespaceMappingDialog dialog = new NamespaceMappingDialog(getShell(),
                                                                          getCnd().getNamespaceMappings(),
                                                                          selectedNamespace);
@@ -2393,6 +2516,7 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
         refreshNameControls();
         refreshAttributeControls();
         refreshSuperTypes();
+        refreshComments();
         refreshPropertyViewer();
         refreshChildNodeViewer();
     }
@@ -2540,9 +2664,6 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
 
     private void populateUi() {
         this.namespaceViewer.setInput(this);
-        this.namespaceViewer.getTable().setToolTipText(NLS.bind(CndMessages.namespacesTableToolTip, getCnd().getNamespaceMappings()
-                                                                                                            .size()));
-
         this.nodeTypeViewer.setInput(this);
 
         // size columns to the data
@@ -2711,6 +2832,22 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
         }
     }
 
+    private void refreshComments() {
+        final NodeTypeDefinition nodeTypeDefinition = getSelectedNodeType();
+
+        if (nodeTypeDefinition == null) {
+            if (!Utils.isEmpty(this.txtComment.getText())) {
+                this.txtComment.setText(Utils.EMPTY_STRING);
+            }
+        } else {
+            String comment = nodeTypeDefinition.getComment();
+
+            if (!Utils.equivalent(comment, this.txtComment.getText())) {
+                this.txtComment.setText((comment == null) ? Utils.EMPTY_STRING : comment);
+            }
+        }
+    }
+
     private void refreshNameControls() {
         final NodeTypeDefinition nodeTypeDefinition = getSelectedNodeType();
 
@@ -2726,8 +2863,6 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
 
     private void refreshNamespaceControls() {
         this.namespaceViewer.refresh();
-        this.namespaceViewer.getTable().setToolTipText(NLS.bind(CndMessages.namespacesTableToolTip, getCnd().getNamespaceMappings()
-                                                                                                            .size()));
     }
 
     private void refreshNodeTypeControls() {
@@ -3012,10 +3147,32 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
 
     interface ChildNodeColumnIndexes {
         int ATTRIBUTES = 3;
+        int COMMENTS = 5;
         int DECLARING_NODE_TYPE = 4;
         int DEFAULT_TYPE = 2;
         int NAME = 0;
         int REQUIRED_TYPES = 1;
+    }
+
+    class CommentLabelProvider extends CheckBoxLabelProvider {
+
+        /**
+         * @param viewer the viewer (cannot be <code>null</code>)
+         */
+        public CommentLabelProvider( final ColumnViewer viewer ) {
+            super(viewer);
+        }
+
+        /**
+         * {@inheritDoc}
+         * 
+         * @see org.jboss.tools.modeshape.ui.viewers.CheckBoxLabelProvider#isChecked(java.lang.Object)
+         */
+        @Override
+        protected boolean isChecked( final Object element ) {
+            final CommentedCndElement cndElement = (CommentedCndElement)element;
+            return !Utils.isEmpty(cndElement.getComment());
+        }
     }
 
     /**
@@ -3030,14 +3187,16 @@ class CndFormsEditorPage extends CndEditorPage implements PropertyChangeListener
     }
 
     interface NamespaceColumnIndexes {
+        int COMMENT = 2;
         int PREFIX = 0;
         int URI = 1;
     }
 
     interface PropertyColumnIndexes {
         int ATTRIBUTES = 3;
-        int CONSTRAINTS = 4;
-        int DECLARING_NODE_TYPE = 5;
+        int COMMENT = 6;
+        int CONSTRAINTS = 5;
+        int DECLARING_NODE_TYPE = 4;
         int DEFAULT_VALUES = 2;
         int NAME = 0;
         int TYPE = 1;

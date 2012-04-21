@@ -49,6 +49,11 @@ public class NodeTypeDefinitionTest {
         assertEquals(this.nodeTypeDefinition, thatNodeTypeDefinition);
         assertEquals(this.nodeTypeDefinition.hashCode(), thatNodeTypeDefinition.hashCode());
 
+        this.nodeTypeDefinition.setComment("comment goes here"); //$NON-NLS-1$
+        thatNodeTypeDefinition = NodeTypeDefinition.copy(this.nodeTypeDefinition);
+        assertEquals(this.nodeTypeDefinition, thatNodeTypeDefinition);
+        assertEquals(this.nodeTypeDefinition.hashCode(), thatNodeTypeDefinition.hashCode());
+
         this.nodeTypeDefinition.setAbstract(!this.nodeTypeDefinition.isAbstract());
         thatNodeTypeDefinition = NodeTypeDefinition.copy(this.nodeTypeDefinition);
         assertEquals(this.nodeTypeDefinition, thatNodeTypeDefinition);
@@ -109,6 +114,13 @@ public class NodeTypeDefinitionTest {
         final String SUPER_TYPE = "superType"; //$NON-NLS-1$
         assertTrue(this.nodeTypeDefinition.addSuperType(SUPER_TYPE));
         assertEquals(SUPER_TYPE, this.nodeTypeDefinition.getDeclaredSupertypeNames()[0]);
+    }
+
+    @Test
+    public void shouldAllowNullEmptyComment() {
+        this.nodeTypeDefinition.setComment(null);
+        this.nodeTypeDefinition.setComment(Utils.EMPTY_STRING);
+
     }
 
     @Test
@@ -198,6 +210,12 @@ public class NodeTypeDefinitionTest {
     @Test(expected = IllegalArgumentException.class)
     public void shouldNotAllowNullSuperTypeToBeAdded() {
         this.nodeTypeDefinition.addSuperType(null);
+    }
+
+    @Test
+    public void shouldNotChangeCommentToSameValue() {
+        this.nodeTypeDefinition.setComment("newComment"); //$NON-NLS-1$
+        assertFalse(this.nodeTypeDefinition.setComment(this.nodeTypeDefinition.getComment()));
     }
 
     @Test
@@ -358,6 +376,21 @@ public class NodeTypeDefinitionTest {
     }
 
     @Test
+    public void shouldReceiveEventWhenCommentIsChanged() {
+        final Listener l = new Listener();
+        assertTrue(this.nodeTypeDefinition.addListener(l));
+
+        final String NEW_COMMENT = "comment"; //$NON-NLS-1$
+        this.nodeTypeDefinition.setComment(NEW_COMMENT);
+
+        assertEquals(NEW_COMMENT, this.nodeTypeDefinition.getComment());
+        assertEquals(1, l.getCount());
+        assertEquals(PropertyName.COMMENT.toString(), l.getPropertyName());
+        assertEquals(NEW_COMMENT, l.getNewValue());
+        assertNull(l.getOldValue());
+    }
+
+    @Test
     public void shouldRemoveChildNodeDefinition() {
         assertTrue(this.nodeTypeDefinition.addChildNodeDefinition(this.childNodeDefinition));
         assertTrue(this.nodeTypeDefinition.removeChildNodeDefinition(this.childNodeDefinition));
@@ -390,6 +423,13 @@ public class NodeTypeDefinitionTest {
         this.nodeTypeDefinition.setAbstract(false);
         assertFalse(this.nodeTypeDefinition.isAbstract());
         assertEquals(this.nodeTypeDefinition.getState(PropertyName.ABSTRACT), Value.IS_NOT);
+    }
+
+    @Test
+    public void shouldSetComment() {
+        final String NEW_COMMENT = "newComment"; //$NON-NLS-1$
+        assertTrue(this.nodeTypeDefinition.setComment(NEW_COMMENT));
+        assertEquals(NEW_COMMENT, this.nodeTypeDefinition.getComment());
     }
 
     @Test

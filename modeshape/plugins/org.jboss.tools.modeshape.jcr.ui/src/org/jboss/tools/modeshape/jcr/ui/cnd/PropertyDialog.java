@@ -33,6 +33,8 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Cursor;
@@ -47,6 +49,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.ui.forms.FormDialog;
 import org.eclipse.ui.forms.IManagedForm;
@@ -63,10 +66,12 @@ import org.jboss.tools.modeshape.jcr.attributes.OnParentVersion;
 import org.jboss.tools.modeshape.jcr.attributes.PropertyType;
 import org.jboss.tools.modeshape.jcr.attributes.QueryOperators.QueryOperator;
 import org.jboss.tools.modeshape.jcr.cnd.CndValidator;
+import org.jboss.tools.modeshape.jcr.cnd.CommentedCndElement;
 import org.jboss.tools.modeshape.jcr.ui.Activator;
 import org.jboss.tools.modeshape.jcr.ui.JcrUiConstants;
 import org.jboss.tools.modeshape.jcr.ui.JcrUiUtils;
 import org.jboss.tools.modeshape.ui.UiMessages;
+import org.jboss.tools.modeshape.ui.UiUtils;
 import org.jboss.tools.modeshape.ui.actions.DelegateAction;
 import org.jboss.tools.modeshape.ui.forms.ErrorMessage;
 import org.jboss.tools.modeshape.ui.forms.FormUtils;
@@ -779,9 +784,9 @@ final class PropertyDialog extends FormDialog {
             }
         }
 
-        { // bottom (default values, value constraints)
+        { // bottom (default values, value constraints, comments)
             final Composite bottomContainer = toolkit.createComposite(body);
-            bottomContainer.setLayout(new GridLayout(2, true));
+            bottomContainer.setLayout(new GridLayout(2, false));
             bottomContainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
             toolkit.paintBordersFor(bottomContainer);
 
@@ -812,8 +817,10 @@ final class PropertyDialog extends FormDialog {
                 final Table table = FormUtils.createTable(toolkit, defaultValuesContainer);
                 table.setHeaderVisible(false);
                 table.setLinesVisible(false);
-                ((GridData)table.getLayoutData()).heightHint = table.getItemHeight() * 4;
-                ((GridData)table.getLayoutData()).horizontalSpan = 2;
+                GridData gd = (GridData)table.getLayoutData();
+                gd.heightHint = table.getItemHeight() * 4;
+                gd.horizontalSpan = 2;
+                gd.widthHint = UiUtils.convertWidthInCharsToPixels(table, 40);
                 table.setToolTipText(CndMessages.defaultValuesToolTip);
                 this.defaultValuesError.setControl(table);
 
@@ -857,8 +864,10 @@ final class PropertyDialog extends FormDialog {
                 final Table table = FormUtils.createTable(toolkit, valueConstraintsContainer);
                 table.setHeaderVisible(false);
                 table.setLinesVisible(false);
-                ((GridData)table.getLayoutData()).heightHint = table.getItemHeight() * 4;
-                ((GridData)table.getLayoutData()).horizontalSpan = 2;
+                GridData gd = (GridData)table.getLayoutData();
+                gd.heightHint = table.getItemHeight() * 4;
+                gd.horizontalSpan = 2;
+                gd.widthHint = UiUtils.convertWidthInCharsToPixels(table, 40);
                 table.setToolTipText(CndMessages.valueConstraintsToolTip);
                 this.valueConstraintsError.setControl(table);
 
@@ -873,6 +882,44 @@ final class PropertyDialog extends FormDialog {
 
                 // fill with data
                 this.valueConstraintsViewer.setInput(this);
+            }
+
+            { // comments
+                final Composite commentsContainer = toolkit.createComposite(bottomContainer);
+                commentsContainer.setLayout(new GridLayout(2, false));
+                commentsContainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+                ((GridData)commentsContainer.getLayoutData()).horizontalSpan = 2;
+                toolkit.paintBordersFor(commentsContainer);
+
+                final Label lblComment = toolkit.createLabel(commentsContainer, CndMessages.commentLabel, SWT.NONE);
+                lblComment.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
+
+                Text txtComment = toolkit.createText(commentsContainer, null, Styles.TEXT_STYLE | SWT.MULTI | SWT.H_SCROLL
+                        | SWT.V_SCROLL);
+                txtComment.setToolTipText(CndMessages.commentedToolTip);
+
+                final GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true);
+                gd.verticalIndent += ((GridLayout)body.getLayout()).verticalSpacing;
+                gd.heightHint = txtComment.getLineHeight() * 3;
+                gd.widthHint = UiUtils.convertWidthInCharsToPixels(txtComment, 80);
+                txtComment.setLayoutData(gd);
+
+                if (isEditMode() && !Utils.isEmpty(this.propertyBeingEdited.getComment())) {
+                    txtComment.setText(CommentedCndElement.Helper.removeCommentCharacters(this.propertyBeingEdited.getComment()));
+                }
+
+                txtComment.addModifyListener(new ModifyListener() {
+
+                    /**
+                     * {@inheritDoc}
+                     * 
+                     * @see org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse.swt.events.ModifyEvent)
+                     */
+                    @Override
+                    public void modifyText( final ModifyEvent e ) {
+                        handleCommentChanged(((Text)e.widget).getText());
+                    }
+                });
             }
         }
 
@@ -1166,6 +1213,10 @@ final class PropertyDialog extends FormDialog {
 
     void handleAutocreatedChanged( final boolean newAutocreated ) {
         this.propertyBeingEdited.setAutoCreated(newAutocreated);
+    }
+
+    void handleCommentChanged( final String newComment ) {
+        this.propertyBeingEdited.setComment(newComment);
     }
 
     void handleDefaultValueSelected() {

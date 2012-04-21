@@ -37,7 +37,7 @@ public class ChildNodeDefinitionTest {
     public void beforeEach() {
         this.owner = new NodeTypeDefinition();
         this.owner.setName(OWNER_NAME.get());
-        this.childNodeDefinition = new ChildNodeDefinition(owner);
+        this.childNodeDefinition = new ChildNodeDefinition(this.owner);
     }
 
     @Test
@@ -47,6 +47,11 @@ public class ChildNodeDefinitionTest {
         assertEquals(this.childNodeDefinition.hashCode(), thatChildNodeDefinition.hashCode());
 
         this.childNodeDefinition.setName(Constants.QUALIFIED_NAME1.get());
+        thatChildNodeDefinition = ChildNodeDefinition.copy(this.childNodeDefinition, this.owner);
+        assertEquals(this.childNodeDefinition, thatChildNodeDefinition);
+        assertEquals(this.childNodeDefinition.hashCode(), thatChildNodeDefinition.hashCode());
+
+        this.childNodeDefinition.setComment("comment goes here"); //$NON-NLS-1$
         thatChildNodeDefinition = ChildNodeDefinition.copy(this.childNodeDefinition, this.owner);
         assertEquals(this.childNodeDefinition, thatChildNodeDefinition);
         assertEquals(this.childNodeDefinition.hashCode(), thatChildNodeDefinition.hashCode());
@@ -94,6 +99,10 @@ public class ChildNodeDefinitionTest {
 
         this.childNodeDefinition.setName(Constants.QUALIFIED_NAME1.get());
         that.setName(this.childNodeDefinition.getName());
+        assertEquals(this.childNodeDefinition, that);
+
+        this.childNodeDefinition.setComment("comment goes here"); //$NON-NLS-1$
+        that.setComment(this.childNodeDefinition.getComment());
         assertEquals(this.childNodeDefinition, that);
 
         this.childNodeDefinition.setDefaultPrimaryTypeName(Constants.DEFAULT_TYPE);
@@ -145,6 +154,13 @@ public class ChildNodeDefinitionTest {
         final String REQUIRED_TYPE = "requiredType"; //$NON-NLS-1$
         assertTrue(this.childNodeDefinition.addRequiredType(REQUIRED_TYPE));
         assertEquals(REQUIRED_TYPE, this.childNodeDefinition.getRequiredPrimaryTypeNames()[0]);
+    }
+
+    @Test
+    public void shouldAllowNullEmptyComment() {
+        this.childNodeDefinition.setComment(null);
+        this.childNodeDefinition.setComment(Utils.EMPTY_STRING);
+
     }
 
     @Test
@@ -255,6 +271,12 @@ public class ChildNodeDefinitionTest {
     }
 
     @Test
+    public void shouldNotChangeCommentToSameValue() {
+        this.childNodeDefinition.setComment("newComment"); //$NON-NLS-1$
+        assertFalse(this.childNodeDefinition.setComment(this.childNodeDefinition.getComment()));
+    }
+
+    @Test
     public void shouldNotClearSuperTypesWhenEmpty() {
         assertFalse(this.childNodeDefinition.clearRequiredTypes());
     }
@@ -353,6 +375,21 @@ public class ChildNodeDefinitionTest {
     }
 
     @Test
+    public void shouldReceiveEventWhenCommentIsChanged() {
+        final Listener l = new Listener();
+        assertTrue(this.childNodeDefinition.addListener(l));
+
+        final String NEW_COMMENT = "comment"; //$NON-NLS-1$
+        this.childNodeDefinition.setComment(NEW_COMMENT);
+
+        assertEquals(NEW_COMMENT, this.childNodeDefinition.getComment());
+        assertEquals(1, l.getCount());
+        assertEquals(PropertyName.COMMENT.toString(), l.getPropertyName());
+        assertEquals(NEW_COMMENT, l.getNewValue());
+        assertNull(l.getOldValue());
+    }
+
+    @Test
     public void shouldReceiveEventWhenOnParentVersionIsChanged() {
         final Listener l = new Listener();
         assertTrue(this.childNodeDefinition.addListener(l));
@@ -383,6 +420,13 @@ public class ChildNodeDefinitionTest {
         this.childNodeDefinition.setAutoCreated(false);
         assertFalse(this.childNodeDefinition.isAutoCreated());
         assertTrue(this.childNodeDefinition.getState(PropertyName.AUTOCREATED) == Value.IS_NOT);
+    }
+
+    @Test
+    public void shouldSetComment() {
+        final String NEW_COMMENT = "newComment"; //$NON-NLS-1$
+        assertTrue(this.childNodeDefinition.setComment(NEW_COMMENT));
+        assertEquals(NEW_COMMENT, this.childNodeDefinition.getComment());
     }
 
     @Test

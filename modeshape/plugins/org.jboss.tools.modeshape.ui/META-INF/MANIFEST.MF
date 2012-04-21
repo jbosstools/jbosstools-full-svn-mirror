@@ -14,5 +14,6 @@ Require-Bundle: org.eclipse.jface,
 Export-Package: org.jboss.tools.modeshape.ui,
  org.jboss.tools.modeshape.ui.actions,
  org.jboss.tools.modeshape.ui.forms,
- org.jboss.tools.modeshape.ui.graphics
+ org.jboss.tools.modeshape.ui.graphics,
+ org.jboss.tools.modeshape.ui.viewers
 Bundle-Activator: org.jboss.tools.modeshape.ui.Activator

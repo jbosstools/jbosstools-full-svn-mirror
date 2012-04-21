@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Stack;
 
 import org.eclipse.osgi.util.NLS;
 import org.jboss.tools.modeshape.jcr.ChildNodeDefinition;
@@ -60,21 +61,11 @@ import org.modeshape.common.util.IoUtil;
 @NotThreadSafe
 public final class CndImporter {
 
-    private final boolean jcr170;
+    private final boolean jcr170 = true;
 
-    /**
-     * Constructs an importer that is not JCR 170 compatible.
-     */
-    public CndImporter() {
-        this.jcr170 = true;
-    }
+    private final Stack<CndElement> cndElements = new Stack<CndElement>();
 
-    /**
-     * @param compatibleWithPreJcr2 indicates if the importer should be compatible with pre JCR 2 CND notation
-     */
-    public CndImporter( final boolean compatibleWithPreJcr2 ) {
-        this.jcr170 = compatibleWithPreJcr2;
-    }
+    private String currentComment;
 
     /**
      * Import the CND content from the supplied stream, placing the content into the importer's destination.
@@ -137,7 +128,10 @@ public final class CndImporter {
         Utils.verifyIsNotNull(content, "content is null"); //$NON-NLS-1$
 
         final CompactNodeTypeDefinition cnd = new CompactNodeTypeDefinition();
-        final Tokenizer tokenizer = new CndTokenizer(false, false);
+
+        // start processing CND
+        push(cnd);
+        final Tokenizer tokenizer = new CndTokenizer();
         final TokenStream tokens = new TokenStream(content, tokenizer, false);
         tokens.start();
 
@@ -152,6 +146,8 @@ public final class CndImporter {
             } else if (tokens.matches(NodeTypeDefinition.NAME_NOTATION_PREFIX, NodeTypeDefinition.NAME_NOTATION_SUFFIX)) {
                 // empty node type name (no problem recorded here but editor validation will have an error)
                 parseNodeTypeDefinition(tokens, cnd);
+            } else if (tokens.matches(CndTokenizer.COMMENT)) {
+                parseComment(tokens);
             } else {
                 final Position position = tokens.previousPosition();
                 final Object[] args = new Object[] { tokens.consume(), position.getLine(), position.getColumn() };
@@ -159,6 +155,9 @@ public final class CndImporter {
             }
         }
 
+        // finished processing CND
+        final CndElement cndElement = pop();
+        assert (cnd == cndElement) : "CND Element not the expected CND: " + cndElement.toCndNotation(NotationType.LONG); //$NON-NLS-1$
         return cnd;
     }
 
@@ -177,6 +176,9 @@ public final class CndImporter {
         tokens.consume(ChildNodeDefinition.NOTATION_PREFIX);
         final ChildNodeDefinition childNodeDefn = new ChildNodeDefinition(nodeTypeDefn);
 
+        // start processing child node
+        push(childNodeDefn);
+
         // name
         final String name = parseName(tokens);
 
@@ -184,17 +186,39 @@ public final class CndImporter {
             childNodeDefn.setName(name);
         }
 
+        parseComment(tokens); // comment before required types
+
         // required types
         parseRequiredPrimaryTypes(tokens, childNodeDefn);
 
+        parseComment(tokens); // comment before default type
+
         // default types
         parseDefaultType(tokens, childNodeDefn.getDefaultType());
+
+        parseComment(tokens); // comment before attributes
 
         // attributes
         parseNodeAttributes(tokens, nodeTypeDefn, childNodeDefn);
 
         // add child node definition
         nodeTypeDefn.addChildNodeDefinition(childNodeDefn);
+
+        // finished processing child node
+        final CndElement cndElement = pop();
+        assert (childNodeDefn == cndElement) : "Element not expected child node: " + cndElement.toCndNotation(NotationType.LONG); //$NON-NLS-1$
+    }
+
+    private void parseComment( final TokenStream tokens ) {
+        if (tokens.matches(CndTokenizer.COMMENT)) {
+            final String newComment = CommentedCndElement.Helper.removeCommentCharacters(tokens.consume());
+
+            if (Utils.isEmpty(this.currentComment)) {
+                this.currentComment = newComment;
+            } else {
+                this.currentComment += '\n' + newComment;
+            }
+        }
     }
 
     /**
@@ -209,6 +233,9 @@ public final class CndImporter {
         assert (tokens != null) : "tokens is null"; //$NON-NLS-1$
         assert (defaultType != null) : "defaultType is null"; //$NON-NLS-1$
 
+        // start processing default type
+        push(defaultType);
+
         if (tokens.canConsume(DefaultType.NOTATION)) {
             if (tokens.canConsume(AttributeState.VARIANT_CHAR)) {
                 defaultType.set(Value.VARIANT);
@@ -220,6 +247,10 @@ public final class CndImporter {
                 }
             }
         }
+
+        // finished processing default type
+        final CndElement cndElement = pop();
+        assert (defaultType == cndElement) : "Element not expected default type: " + cndElement.toCndNotation(NotationType.LONG); //$NON-NLS-1$
     }
 
     /**
@@ -297,14 +328,25 @@ public final class CndImporter {
         assert (tokens != null) : "tokens is null"; //$NON-NLS-1$
         assert (cnd != null) : "cnd is null"; //$NON-NLS-1$
 
+        final NamespaceMapping namespaceMapping = new NamespaceMapping();
+
+        // start processing namespace mapping
+        push(namespaceMapping);
+
         tokens.consume(NamespaceMapping.NOTATION_PREFIX);
         final String prefix = removeQuotes(tokens.consume());
+        namespaceMapping.setPrefix(prefix);
 
         tokens.consume(NamespaceMapping.NOTATION_DELIMITER);
         final String uri = removeQuotes(tokens.consume());
+        namespaceMapping.setUri(uri);
 
         tokens.consume(NamespaceMapping.NOTATION_SUFFIX);
-        cnd.addNamespaceMapping(new NamespaceMapping(prefix, uri));
+        cnd.addNamespaceMapping(namespaceMapping);
+
+        // finished processing namespace mapping
+        final CndElement cndElement = pop();
+        assert (namespaceMapping == cndElement) : "Element not expected namespace mapping: " + cndElement.toCndNotation(NotationType.LONG); //$NON-NLS-1$
     }
 
     /**
@@ -472,6 +514,9 @@ public final class CndImporter {
 
         final NodeTypeDefinition nodeType = new NodeTypeDefinition();
 
+        // start processing node type
+        push(nodeType);
+
         // name
         final String name = parseNodeTypeName(tokens);
 
@@ -487,13 +532,22 @@ public final class CndImporter {
                 nodeType.addSuperType(superType);
             }
         }
+
+        parseComment(tokens); // comment before attributes
+
         // Read the node type options (and vendor extensions) ...
         parseNodeTypeAttributes(tokens, nodeType);
+
+        parseComment(tokens); // comment before item definitions
 
         // Parse property and child node definitions ...
         parsePropertyOrChildNodeDefinitions(tokens, nodeType);
 
         cnd.addNodeTypeDefinition(nodeType);
+
+        // finished processing node type
+        final CndElement cndElement = pop();
+        assert (nodeType == cndElement) : "Element not expected node type: " + cndElement.toCndNotation(NotationType.LONG); //$NON-NLS-1$
     }
 
     /**
@@ -621,6 +675,9 @@ public final class CndImporter {
         tokens.consume(PropertyDefinition.NOTATION_PREFIX);
         final PropertyDefinition propDefn = new PropertyDefinition(nodeTypeDefn);
 
+        // start processing property
+        push(propDefn);
+
         // name
         final String name = parseName(tokens);
 
@@ -628,19 +685,31 @@ public final class CndImporter {
             propDefn.setName(name);
         }
 
+        parseComment(tokens); // comment before type
+
         // required type
         parsePropertyType(tokens, propDefn);
+
+        parseComment(tokens); // comment before default values
 
         // Parse the default values ...
         parseDefaultValues(tokens, propDefn);
 
+        parseComment(tokens); // comment before attributes
+
         // Parse the property attributes (and vendor extensions) ...
         parsePropertyAttributes(tokens, nodeTypeDefn, propDefn);
+
+        parseComment(tokens); // comment before value constraints
 
         // Parse the property constraints ...
         parseValueConstraints(tokens, propDefn);
 
         nodeTypeDefn.addPropertyDefinition(propDefn);
+
+        // finished processing property
+        final CndElement cndElement = pop();
+        assert (propDefn == cndElement) : "Element not expected property: " + cndElement.toCndNotation(NotationType.LONG); //$NON-NLS-1$
     }
 
     /**
@@ -661,6 +730,8 @@ public final class CndImporter {
                 parsePropertyDefinition(tokens, nodeTypeDefn);
             } else if (tokens.matches(ChildNodeDefinition.NOTATION_PREFIX)) {
                 parseChildNodeDefinition(tokens, nodeTypeDefn);
+            } else if (tokens.matches(CndTokenizer.COMMENT)) {
+                parseComment(tokens);
             } else {
                 // The next token does not signal either one of these, so stop ...
                 break;
@@ -825,6 +896,43 @@ public final class CndImporter {
                 }
             }
         }
+    }
+
+    private CndElement pop() {
+        return this.cndElements.pop();
+    }
+
+    private void push( final CndElement cndElement ) {
+        // set comment if one exists
+        if (!Utils.isEmpty(this.currentComment)) {
+            CommentedCndElement commentedElement = null;
+
+            if (cndElement instanceof CommentedCndElement) {
+                commentedElement = (CommentedCndElement)cndElement;
+            } else if (!this.cndElements.isEmpty()) {
+                // this should probably look back in the stack until it finds a CommentedCndElement
+                CndElement top = this.cndElements.peek();
+
+                if (top instanceof CommentedCndElement) {
+                    commentedElement = (CommentedCndElement)top;
+                }
+            }
+
+            if (commentedElement != null) {
+                String cndElementComment = commentedElement.getComment();
+
+                if (cndElementComment == null) {
+                    cndElementComment = Utils.EMPTY_STRING;
+                } else if (!cndElementComment.endsWith("\n")) { //$NON-NLS-1$
+                    cndElementComment += '\n';
+                }
+
+                commentedElement.setComment(cndElementComment + this.currentComment);
+                this.currentComment = null;
+            }
+        }
+
+        this.cndElements.push(cndElement);
     }
 
     private final String removeQuotes( final String text ) {

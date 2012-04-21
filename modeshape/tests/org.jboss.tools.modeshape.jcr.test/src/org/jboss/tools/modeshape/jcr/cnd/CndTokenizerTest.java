@@ -30,7 +30,7 @@ public class CndTokenizerTest {
 
     @Before
     public void beforeEach() {
-        this.tokenizer = new CndTokenizer(false, false);
+        this.tokenizer = new CndTokenizer();
         final LinkedList<int[]> tokenValues = new LinkedList<int[]>();
         this.tokenFactory = new Tokens() {
             @Override

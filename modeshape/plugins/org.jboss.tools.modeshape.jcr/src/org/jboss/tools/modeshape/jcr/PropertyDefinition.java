@@ -16,6 +16,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import javax.jcr.nodetype.NodeType;
 import javax.jcr.nodetype.PropertyDefinitionTemplate;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.osgi.util.NLS;
 import org.jboss.tools.modeshape.jcr.attributes.AttributeState;
 import org.jboss.tools.modeshape.jcr.attributes.AttributeState.Value;
@@ -26,6 +29,7 @@ import org.jboss.tools.modeshape.jcr.attributes.PropertyType;
 import org.jboss.tools.modeshape.jcr.attributes.QueryOperators;
 import org.jboss.tools.modeshape.jcr.attributes.QueryOperators.QueryOperator;
 import org.jboss.tools.modeshape.jcr.attributes.ValueConstraints;
+import org.jboss.tools.modeshape.jcr.cnd.CommentedCndElement;
 import org.jboss.tools.modeshape.jcr.preference.JcrPreferenceConstants;
 import org.jboss.tools.modeshape.jcr.preference.JcrPreferenceStore;
 
@@ -55,6 +59,9 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
 
         // name
         copy.setName(propertyBeingCopied.getName());
+
+        // comment
+        copy.comment = propertyBeingCopied.comment;
 
         // attributes
         copy.attributes.getAutocreated().set(propertyBeingCopied.attributes.getAutocreated().get());
@@ -91,6 +98,11 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
      * The property attributes (never <code>null</code>).
      */
     private final PropertyAttributes attributes;
+
+    /**
+     * An optional comment (can be <code>null</code> or empty).
+     */
+    private String comment;
 
     /**
      * The property default values (never <code>null</code>).
@@ -339,7 +351,11 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
             return false;
         }
 
-        return this.valueConstraints.equals(that.valueConstraints);
+        if (!this.valueConstraints.equals(that.valueConstraints)) {
+            return false;
+        }
+
+        return Utils.equals(this.comment, that.comment);
     }
 
     /**
@@ -364,6 +380,16 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
     @Override
     public String[] getAvailableQueryOperators() {
         return this.attributes.getQueryOps().toArray();
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.jboss.tools.modeshape.jcr.cnd.CommentedCndElement#getComment()
+     */
+    @Override
+    public String getComment() {
+        return this.comment;
     }
 
     /**
@@ -540,7 +566,7 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
     @Override
     public int hashCode() {
         return Utils.hashCode(this.attributes, this.name, this.defaultValues, this.type, this.valueConstraints,
-                              getDeclaringNodeTypeDefinitionName());
+                              getDeclaringNodeTypeDefinitionName(), this.comment);
     }
 
     /**
@@ -635,7 +661,12 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
             try {
                 ((PropertyChangeListener)listener).propertyChange(event);
             } catch (final Exception e) {
-                // TODO log this
+                if (Platform.isRunning()) {
+                    Activator.get().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, null, e));
+                } else {
+                    System.err.print(e.getMessage());
+                }
+
                 this.listeners.remove(listener);
             }
         }
@@ -724,7 +755,11 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
                         changed = true;
                     }
                 } catch (final Exception e) {
-                    // TODO log the invalid query operator
+                    if (Platform.isRunning()) {
+                        Activator.get().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, null, e));
+                    } else {
+                        System.err.print(e.getMessage());
+                    }
                 }
             }
         }
@@ -732,6 +767,28 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
         if (changed) {
             notifyChangeListeners(PropertyName.QUERY_OPS, oldOperators, queryOps.getSupportedItems());
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.jboss.tools.modeshape.jcr.cnd.CommentedCndElement#setComment(java.lang.String)
+     */
+    @Override
+    public boolean setComment( String newComment ) {
+        if (!Utils.isEmpty(newComment)) {
+            newComment = newComment.trim();
+        }
+
+        final Object oldValue = this.comment;
+        final boolean changed = !Utils.equivalent(this.comment, newComment);
+
+        if (changed) {
+            this.comment = newComment;
+            notifyChangeListeners(PropertyName.COMMENT, oldValue, newComment);
+        }
+
+        return changed;
     }
 
     /**
@@ -751,7 +808,11 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
                         changed = true;
                     }
                 } catch (final Exception e) {
-                    // TODO log this
+                    if (Platform.isRunning()) {
+                        Activator.get().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, null, e));
+                    } else {
+                        System.err.print(e.getMessage());
+                    }
                 }
             }
         }
@@ -917,8 +978,33 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
     @Override
     public String toCndNotation( final NotationType notationType ) {
         final JcrPreferenceStore prefStore = JcrPreferenceStore.get();
+        final StringBuilder builder = new StringBuilder();
+        String indent = Utils.EMPTY_STRING;
 
-        final StringBuilder builder = new StringBuilder(NOTATION_PREFIX);
+        if (NotationType.LONG == notationType) {
+            indent = prefStore.get(JcrPreferenceConstants.CndPreference.ELEMENTS_START_DELIMITER);
+        }
+
+        { // comment
+            if (!Utils.isEmpty(this.comment)) {
+                String commentNotation = Utils.EMPTY_STRING;
+
+                if (NotationType.LONG == notationType) {
+                    commentNotation += '\n';
+                }
+
+                commentNotation += CommentedCndElement.Helper.addCommentCharacters(this.comment, indent) + '\n';
+
+                // add comment above node type
+                builder.append(commentNotation);
+
+                if (NotationType.LONG == notationType) {
+                    builder.append(indent);
+                }
+            }
+        }
+
+        builder.append(NOTATION_PREFIX);
         builder.append((NotationType.LONG == notationType) ? Utils.SPACE_STRING : Utils.EMPTY_STRING);
 
         final String DELIM = prefStore.get(JcrPreferenceConstants.CndPreference.PROPERTY_DEFINITION_ATTRIBUTES_DELIMITER);
@@ -941,6 +1027,11 @@ public class PropertyDefinition implements ItemDefinition, PropertyDefinitionTem
          * The autocreated attribute.
          */
         AUTOCREATED,
+
+        /**
+         * The comment.
+         */
+        COMMENT,
 
         /**
          * A collection of default values.

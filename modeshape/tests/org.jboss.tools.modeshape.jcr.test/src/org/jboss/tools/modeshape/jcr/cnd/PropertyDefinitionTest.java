@@ -52,6 +52,11 @@ public class PropertyDefinitionTest {
         assertEquals(this.propDefn, thatPropDefn);
         assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
 
+        this.propDefn.setComment("comment goes here"); //$NON-NLS-1$
+        thatPropDefn = PropertyDefinition.copy(this.propDefn, this.owner);
+        assertEquals(this.propDefn, thatPropDefn);
+        assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
+
         this.propDefn.setAvailableQueryOperators(Constants.Helper.getDefaultQueryOperators());
         thatPropDefn = PropertyDefinition.copy(this.propDefn, this.owner);
         assertEquals(this.propDefn, thatPropDefn);
@@ -117,59 +122,72 @@ public class PropertyDefinitionTest {
     public void differentInstancesWithSameValuesShouldBeEqual() {
         final PropertyDefinition thatPropDefn = new PropertyDefinition(this.owner);
         assertEquals(this.propDefn, thatPropDefn);
+        assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
 
         this.propDefn.setAvailableQueryOperators(Constants.Helper.getDefaultQueryOperators());
         thatPropDefn.setAvailableQueryOperators(this.propDefn.getAvailableQueryOperators());
         assertEquals(this.propDefn, thatPropDefn);
+        assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
 
         this.propDefn.setAutoCreated(!this.propDefn.isAutoCreated());
         thatPropDefn.setAutoCreated(this.propDefn.isAutoCreated());
         assertEquals(this.propDefn, thatPropDefn);
+        assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
+
+        this.propDefn.setComment("comment"); //$NON-NLS-1$
+        thatPropDefn.setComment(this.propDefn.getComment());
+        assertEquals(this.propDefn, thatPropDefn);
+        assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
 
         this.propDefn.setDefaultValues(Constants.Helper.getDefaultStringValues());
         thatPropDefn.setDefaultValues(this.propDefn.getDefaultValues());
         assertEquals(this.propDefn, thatPropDefn);
+        assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
 
         this.propDefn.setFullTextSearchable(!this.propDefn.isFullTextSearchable());
         thatPropDefn.setFullTextSearchable(this.propDefn.isFullTextSearchable());
         assertEquals(this.propDefn, thatPropDefn);
+        assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
 
         this.propDefn.setMandatory(!this.propDefn.isMandatory());
         thatPropDefn.setMandatory(this.propDefn.isMandatory());
         assertEquals(this.propDefn, thatPropDefn);
+        assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
 
         this.propDefn.setMultiple(!this.propDefn.isMultiple());
         thatPropDefn.setMultiple(this.propDefn.isMultiple());
         assertEquals(this.propDefn, thatPropDefn);
+        assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
 
         this.propDefn.setName(Constants.QUALIFIED_NAME1.get());
         thatPropDefn.setName(this.propDefn.getName());
         assertEquals(this.propDefn, thatPropDefn);
+        assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
 
         this.propDefn.setOnParentVersion(OnParentVersion.COMPUTE.asJcrValue());
         thatPropDefn.setOnParentVersion(this.propDefn.getOnParentVersion());
         assertEquals(this.propDefn, thatPropDefn);
+        assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
 
         this.propDefn.setProtected(!this.propDefn.isProtected());
         thatPropDefn.setProtected(this.propDefn.isProtected());
         assertEquals(this.propDefn, thatPropDefn);
+        assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
 
         this.propDefn.setQueryOrderable(!this.propDefn.isQueryOrderable());
         thatPropDefn.setQueryOrderable(this.propDefn.isQueryOrderable());
         assertEquals(this.propDefn, thatPropDefn);
+        assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
 
         this.propDefn.setRequiredType(PropertyType.BINARY.asJcrValue());
         thatPropDefn.setRequiredType(this.propDefn.getRequiredType());
         assertEquals(this.propDefn, thatPropDefn);
+        assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
 
         this.propDefn.setValueConstraints(Constants.DEFAULT_VALUE_CONSTRAINTS);
         thatPropDefn.setValueConstraints(this.propDefn.getValueConstraints());
         assertEquals(this.propDefn, thatPropDefn);
-    }
-
-    @Test
-    public void differentInstancesWithSameValuesShouldHaveSameHashCode() {
-        assertEquals(this.propDefn.hashCode(), new PropertyDefinition(this.owner).hashCode());
+        assertEquals(this.propDefn.hashCode(), thatPropDefn.hashCode());
     }
 
     @Test
@@ -202,30 +220,24 @@ public class PropertyDefinitionTest {
     }
 
     @Test
-    public void shouldSupportAllQueryOperatorsInitially() {
-        // setup
-        String[] queryOps = this.propDefn.getAvailableQueryOperators();
-        QueryOperator[] allOperators = QueryOperator.values();
-
-        assertEquals(allOperators.length, queryOps.length);
-
-        for (String queryOp : queryOps) {
-            QueryOperator.find(queryOp); // throws exception if not found
-        }
-    }
-
-    @Test
     public void shouldAddValueConstraint() {
-        final String CONSTRAINT = "constraint"; //$NON-NLS-1$
+        final String CONSTRAINT = Constants.VALUE_CONSTRAINT1;
         assertTrue(this.propDefn.addValueConstraint(CONSTRAINT));
         assertEquals(1, this.propDefn.getValueConstraints().length);
         assertEquals(CONSTRAINT, this.propDefn.getValueConstraints()[0]);
     }
 
     @Test
+    public void shouldAllowNullEmptyComment() {
+        this.propDefn.setComment(null);
+        this.propDefn.setComment(Utils.EMPTY_STRING);
+
+    }
+
+    @Test
     public void shouldAllowNullEmptyName() {
         this.propDefn.setName(null);
-        this.propDefn.setName(""); //$NON-NLS-1$
+        this.propDefn.setName(Utils.EMPTY_STRING);
 
     }
 
@@ -405,6 +417,12 @@ public class PropertyDefinitionTest {
         final String CONSTRAINT = "constraint"; //$NON-NLS-1$
         assertTrue(this.propDefn.addValueConstraint(CONSTRAINT));
         assertFalse(this.propDefn.addValueConstraint(CONSTRAINT));
+    }
+
+    @Test
+    public void shouldNotChangeCommentToSameValue() {
+        this.propDefn.setComment("newComment"); //$NON-NLS-1$
+        assertFalse(this.propDefn.setComment(this.propDefn.getComment()));
     }
 
     @Test
@@ -588,6 +606,21 @@ public class PropertyDefinitionTest {
     }
 
     @Test
+    public void shouldReceiveEventWhenCommentIsChanged() {
+        final Listener l = new Listener();
+        assertTrue(this.propDefn.addListener(l));
+
+        final String NEW_COMMENT = "comment"; //$NON-NLS-1$
+        this.propDefn.setComment(NEW_COMMENT);
+
+        assertEquals(NEW_COMMENT, this.propDefn.getComment());
+        assertEquals(1, l.getCount());
+        assertEquals(PropertyName.COMMENT.toString(), l.getPropertyName());
+        assertEquals(NEW_COMMENT, l.getNewValue());
+        assertNull(l.getOldValue());
+    }
+
+    @Test
     public void shouldReceiveEventWhenNameIsChanged() {
         final Listener l = new Listener();
         assertTrue(this.propDefn.addListener(l));
@@ -690,6 +723,13 @@ public class PropertyDefinitionTest {
         this.propDefn.setAutoCreated(false);
         assertFalse(this.propDefn.isAutoCreated());
         assertTrue(this.propDefn.getState(PropertyName.AUTOCREATED) == Value.IS_NOT);
+    }
+
+    @Test
+    public void shouldSetComment() {
+        final String NEW_COMMENT = "newComment"; //$NON-NLS-1$
+        assertTrue(this.propDefn.setComment(NEW_COMMENT));
+        assertEquals(NEW_COMMENT, this.propDefn.getComment());
     }
 
     @Test
@@ -883,5 +923,18 @@ public class PropertyDefinitionTest {
     public void shouldSetValueContraintsWithNull() {
         this.propDefn.setValueConstraints(null);
         assertEquals(0, this.propDefn.getValueConstraints().length);
+    }
+
+    @Test
+    public void shouldSupportAllQueryOperatorsInitially() {
+        // setup
+        final String[] queryOps = this.propDefn.getAvailableQueryOperators();
+        final QueryOperator[] allOperators = QueryOperator.values();
+
+        assertEquals(allOperators.length, queryOps.length);
+
+        for (final String queryOp : queryOps) {
+            QueryOperator.find(queryOp); // throws exception if not found
+        }
     }
 }

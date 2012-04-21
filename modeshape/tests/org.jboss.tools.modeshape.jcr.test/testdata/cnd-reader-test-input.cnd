@@ -16,23 +16,25 @@
  */
 <ex = "http://example.org/jackrabbit/example">
 <jcr='http://www.jcp.org/jcr/1.0'>
-<mix='http://www.jcp.org/jcr/mix/1.0'>
+<mix='http://www.jcp.org/jcr/mix/1.0'> // added since no auto-registering
 <nt='http://www.jcp.org/jcr/nt/1.0'>
 
 // test remapping
 <REP='internal'>
-
-// omit this namespace to test auto-registering
-// <mix='http://www.jcp.org/jcr/mix/1.0'>
 
 //------------------------------------------------------------------------------
 // E X A M P L E  T Y P E S
 //------------------------------------------------------------------------------
 
 [ex:NodeType] > ex:ParentNodeType1, ex:ParentNodeType2
+// node type comment
   orderable mixin
-  - ex:property (long) = '1', '2' primary mandatory autocreated protected multiple version < '[1,10]'
-  + ex:node (ex:RequiredNodeType1, ex:RequiredNodeType2) = ex:RequiredNodeType1 mandatory autocreated protected multiple version
+  - ex:property 
+  // property comment
+  (long) = '1', '2' primary mandatory autocreated protected multiple version < '[1,10]'
+  + ex:node 
+  // child node comment
+  (ex:RequiredNodeType1, ex:RequiredNodeType2) = ex:RequiredNodeType1 mandatory autocreated protected multiple version
 
 [ex:AnotherNodeType] > ex:NodeType
   - * (string) = 'a residual property' multiple

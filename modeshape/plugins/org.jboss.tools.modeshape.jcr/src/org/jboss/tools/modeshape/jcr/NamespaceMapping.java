@@ -12,13 +12,14 @@ import java.beans.PropertyChangeListener;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
-import org.jboss.tools.modeshape.jcr.cnd.CndElement;
+import org.jboss.tools.modeshape.jcr.cnd.CommentedCndElement;
 
 /**
  * The <code>NamespaceMapping</code> class represents a namespace. Each namespace mapping includes a prefix and a URI.
  */
-public class NamespaceMapping implements CndElement, Comparable {
+public class NamespaceMapping implements CommentedCndElement, Comparable {
 
     /**
      * The delimeter used to separate the prefix from the URI.
@@ -40,8 +41,15 @@ public class NamespaceMapping implements CndElement, Comparable {
      * @return a new namespace mapping exactly equal to the one that was copied (never <code>null</code>)
      */
     public static NamespaceMapping copy( final NamespaceMapping namespaceMappingToCopy ) {
-        return new NamespaceMapping(namespaceMappingToCopy.getPrefix(), namespaceMappingToCopy.getUri());
+        final NamespaceMapping copy = new NamespaceMapping(namespaceMappingToCopy.getPrefix(), namespaceMappingToCopy.getUri());
+        copy.comment = namespaceMappingToCopy.comment;
+        return copy;
     }
+
+    /**
+     * An optional comment (can be <code>null</code> or empty).
+     */
+    private String comment;
 
     /**
      * The registered property change listeners (never <code>null</code>).
@@ -127,10 +135,23 @@ public class NamespaceMapping implements CndElement, Comparable {
     public boolean equals( final Object obj ) {
         if ((obj != null) && getClass().equals(obj.getClass())) {
             final NamespaceMapping that = (NamespaceMapping)obj;
-            return (this.prefix.equals(that.prefix) && this.uri.equals(that.uri));
+
+            if (this.prefix.equals(that.prefix) && this.uri.equals(that.uri)) {
+                return Utils.equals(this.comment, that.comment);
+            }
         }
 
         return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.jboss.tools.modeshape.jcr.cnd.CommentedCndElement#getComment()
+     */
+    @Override
+    public String getComment() {
+        return this.comment;
     }
 
     /**
@@ -154,7 +175,7 @@ public class NamespaceMapping implements CndElement, Comparable {
      */
     @Override
     public int hashCode() {
-        return Utils.hashCode(this.prefix, this.uri);
+        return Utils.hashCode(this.prefix, this.uri, this.comment);
     }
 
     /**
@@ -173,7 +194,12 @@ public class NamespaceMapping implements CndElement, Comparable {
             try {
                 ((PropertyChangeListener)listener).propertyChange(event);
             } catch (final Exception e) {
-                Activator.get().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, null, e));
+                if (Platform.isRunning()) {
+                    Activator.get().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, null, e));
+                } else {
+                    System.err.print(e.getMessage());
+                }
+
                 this.listeners.remove(listener);
             }
         }
@@ -186,6 +212,28 @@ public class NamespaceMapping implements CndElement, Comparable {
     public boolean removeListener( final PropertyChangeListener listener ) {
         Utils.verifyIsNotNull(listener, "listener"); //$NON-NLS-1$
         return this.listeners.remove(listener);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.jboss.tools.modeshape.jcr.cnd.CommentedCndElement#setComment(java.lang.String)
+     */
+    @Override
+    public boolean setComment( String newComment ) {
+        if (!Utils.isEmpty(newComment)) {
+            newComment = newComment.trim();
+        }
+
+        final Object oldValue = this.comment;
+        final boolean changed = !Utils.equivalent(this.comment, newComment);
+
+        if (changed) {
+            this.comment = newComment;
+            notifyChangeListeners(PropertyName.COMMENT, oldValue, newComment);
+        }
+
+        return changed;
     }
 
     /**
@@ -226,15 +274,31 @@ public class NamespaceMapping implements CndElement, Comparable {
     @Override
     public String toCndNotation( final NotationType notationType ) {
         final StringBuilder builder = new StringBuilder();
+
+        // comment
+        if (!Utils.isEmpty(this.comment)) {
+            String commentNotation = Utils.EMPTY_STRING;
+
+            if (NotationType.LONG == notationType) {
+                commentNotation += '\n';
+            }
+
+            commentNotation += CommentedCndElement.Helper.addCommentCharacters(this.comment, null) + '\n';
+
+            // add comment above namespace
+            builder.append(commentNotation);
+        }
+
+        // namespace mapping
         builder.append(NOTATION_PREFIX);
         builder.append(this.prefix.toCndNotation(notationType));
-        
+
         if (NotationType.LONG == notationType) {
             builder.append(Utils.SPACE_STRING);
         }
 
         builder.append(NOTATION_DELIMITER);
-        
+
         if (NotationType.LONG == notationType) {
             builder.append(Utils.SPACE_STRING);
         }
@@ -266,6 +330,11 @@ public class NamespaceMapping implements CndElement, Comparable {
      * The property names whose <code>toString()</code> is used in {@link PropertyChangeEvent}s.
      */
     public enum PropertyName {
+
+        /**
+         * The comment.
+         */
+        COMMENT,
 
         /**
          * The namespace prefix.

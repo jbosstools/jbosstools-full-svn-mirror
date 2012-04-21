@@ -33,6 +33,8 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Cursor;
@@ -47,6 +49,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.ui.forms.FormDialog;
 import org.eclipse.ui.forms.IManagedForm;
@@ -61,10 +64,12 @@ import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.ValidationStatus;
 import org.jboss.tools.modeshape.jcr.attributes.OnParentVersion;
 import org.jboss.tools.modeshape.jcr.cnd.CndValidator;
+import org.jboss.tools.modeshape.jcr.cnd.CommentedCndElement;
 import org.jboss.tools.modeshape.jcr.ui.Activator;
 import org.jboss.tools.modeshape.jcr.ui.JcrUiConstants;
 import org.jboss.tools.modeshape.jcr.ui.JcrUiUtils;
 import org.jboss.tools.modeshape.ui.UiMessages;
+import org.jboss.tools.modeshape.ui.UiUtils;
 import org.jboss.tools.modeshape.ui.actions.DelegateAction;
 import org.jboss.tools.modeshape.ui.forms.ErrorMessage;
 import org.jboss.tools.modeshape.ui.forms.FormUtils;
@@ -98,9 +103,9 @@ final class ChildNodeDialog extends FormDialog {
     private final ErrorMessage nameError;
 
     private ChildNodeDefinition originalChildNode;
-    
+
     private QualifiedNameProposalProvider requiredTypeProposalProvider;
-    
+
     private final ErrorMessage requiredTypesError;
 
     private TableViewer requiredTypesViewer;
@@ -458,8 +463,10 @@ final class ChildNodeDialog extends FormDialog {
             final Table table = FormUtils.createTable(toolkit, rightContainer);
             table.setHeaderVisible(false);
             table.setLinesVisible(false);
-            ((GridData)table.getLayoutData()).horizontalSpan = 2;
-            ((GridData)table.getLayoutData()).heightHint = table.getItemHeight() * 2;
+            GridData gd = (GridData)table.getLayoutData();
+            gd.horizontalSpan = 2;
+            gd.heightHint = table.getItemHeight() * 4;
+            gd.widthHint = UiUtils.convertWidthInCharsToPixels(table, 40);
             this.requiredTypesError.setControl(table);
 
             // table context menu
@@ -473,6 +480,44 @@ final class ChildNodeDialog extends FormDialog {
 
             // fill with data
             this.requiredTypesViewer.setInput(this);
+        }
+
+        { // bottom - comments
+            final Composite commentsContainer = toolkit.createComposite(body);
+            commentsContainer.setLayout(new GridLayout(2, false));
+            commentsContainer.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+            ((GridData)commentsContainer.getLayoutData()).horizontalSpan = 2;
+            toolkit.paintBordersFor(commentsContainer);
+
+            final Label lblComment = toolkit.createLabel(commentsContainer, CndMessages.commentLabel, SWT.NONE);
+            lblComment.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
+
+            Text txtComment = toolkit.createText(commentsContainer, null, Styles.TEXT_STYLE | SWT.MULTI | SWT.H_SCROLL
+                    | SWT.V_SCROLL);
+            txtComment.setToolTipText(CndMessages.commentedToolTip);
+
+            final GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true);
+            gd.verticalIndent += ((GridLayout)body.getLayout()).verticalSpacing;
+            gd.heightHint = txtComment.getLineHeight() * 3;
+            gd.widthHint = UiUtils.convertWidthInCharsToPixels(txtComment, 80);
+            txtComment.setLayoutData(gd);
+
+            if (isEditMode() && !Utils.isEmpty(this.childNodeBeingEdited.getComment())) {
+                txtComment.setText(CommentedCndElement.Helper.removeCommentCharacters(this.childNodeBeingEdited.getComment()));
+            }
+
+            txtComment.addModifyListener(new ModifyListener() {
+
+                /**
+                 * {@inheritDoc}
+                 * 
+                 * @see org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse.swt.events.ModifyEvent)
+                 */
+                @Override
+                public void modifyText( final ModifyEvent e ) {
+                    handleCommentChanged(((Text)e.widget).getText());
+                }
+            });
         }
 
         // must be done after constructor
@@ -664,6 +709,10 @@ final class ChildNodeDialog extends FormDialog {
 
     void handleAutocreatedChanged( final boolean newAutocreated ) {
         this.childNodeBeingEdited.setAutoCreated(newAutocreated);
+    }
+
+    void handleCommentChanged( final String newComment ) {
+        this.childNodeBeingEdited.setComment(newComment);
     }
 
     void handleDefaultTypeChanged( final String newDefaultType ) {

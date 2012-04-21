@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.jboss.tools.modeshape.jcr.Activator;
 import org.jboss.tools.modeshape.jcr.ChildNodeDefinition;
@@ -296,7 +297,11 @@ public class CompactNodeTypeDefinition implements CndElement {
             try {
                 matches.addAll(WorkspaceRegistry.get().getMatchingNodeTypeDefinitions(namespacePrefix));
             } catch (final Exception e) {
-                Activator.get().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, null, e));
+                if (Platform.isRunning()) {
+                    Activator.get().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, null, e));
+                } else {
+                    System.err.print(e.getMessage());
+                }
             }
         }
 
@@ -426,7 +431,12 @@ public class CompactNodeTypeDefinition implements CndElement {
             try {
                 ((PropertyChangeListener)listener).propertyChange(event);
             } catch (final Exception e) {
-                Activator.get().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, null, e));
+                if (Platform.isRunning()) {
+                    Activator.get().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, null, e));
+                } else {
+                    System.err.print(e.getMessage());
+                }
+
                 this.listeners.remove(listener);
             }
         }

@@ -189,7 +189,11 @@ public final class JcrPreferenceStore extends AbstractPreferenceInitializer {
             try {
                 this.prefs.flush();
             } catch (final BackingStoreException e) {
-                Activator.get().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, null, e));
+                if (Platform.isRunning()) {
+                    Activator.get().getLog().log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, null, e));
+                } else {
+                    System.err.print(e.getMessage());
+                }
             }
         } else {
             // test mode

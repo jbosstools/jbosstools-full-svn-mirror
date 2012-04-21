@@ -25,13 +25,14 @@ import org.jboss.tools.modeshape.jcr.attributes.AttributeState.Value;
 import org.jboss.tools.modeshape.jcr.attributes.NodeTypeAttributes;
 import org.jboss.tools.modeshape.jcr.attributes.SuperTypes;
 import org.jboss.tools.modeshape.jcr.cnd.CndElement;
+import org.jboss.tools.modeshape.jcr.cnd.CommentedCndElement;
 import org.jboss.tools.modeshape.jcr.preference.JcrPreferenceConstants;
 import org.jboss.tools.modeshape.jcr.preference.JcrPreferenceStore;
 
 /**
  * Represents a CND node type definition.
  */
-public class NodeTypeDefinition implements CndElement, Comparable, ItemOwnerProvider, NodeTypeTemplate {
+public class NodeTypeDefinition implements CommentedCndElement, Comparable, ItemOwnerProvider, NodeTypeTemplate {
 
     /**
      * Then node type name prefix used in the CND notation.
@@ -54,6 +55,9 @@ public class NodeTypeDefinition implements CndElement, Comparable, ItemOwnerProv
 
         // name
         copy.setName(nodeTypeToCopy.getName());
+
+        // comment
+        copy.comment = nodeTypeToCopy.comment;
 
         // attributes
         copy.attributes.setAbstract(nodeTypeToCopy.attributes.getAbstract().get());
@@ -92,6 +96,11 @@ public class NodeTypeDefinition implements CndElement, Comparable, ItemOwnerProv
      * The collection of property definitions and child node definitions (can be <code>null</code>).
      */
     private List<CndElement> cndElements;
+
+    /**
+     * An optional comment (can be <code>null</code> or empty).
+     */
+    private String comment;
 
     /**
      * The collection of property change listeners (never <code>null</code>).
@@ -313,7 +322,7 @@ public class NodeTypeDefinition implements CndElement, Comparable, ItemOwnerProv
             }
         }
 
-        return true;
+        return Utils.equals(this.comment, that.comment);
     }
 
     /**
@@ -333,6 +342,16 @@ public class NodeTypeDefinition implements CndElement, Comparable, ItemOwnerProv
         }
 
         return childNodeDefinitions;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @see org.jboss.tools.modeshape.jcr.cnd.CommentedCndElement#getComment()
+     */
+    @Override
+    public String getComment() {
+        return this.comment;
     }
 
     /**
@@ -573,7 +592,7 @@ public class NodeTypeDefinition implements CndElement, Comparable, ItemOwnerProv
      */
     @Override
     public int hashCode() {
-        final int result1 = Utils.hashCode(this.name, this.attributes, this.superTypes);
+        final int result1 = Utils.hashCode(this.name, this.attributes, this.superTypes, this.comment);
         final int result2 = Utils.hashCode(getElements().toArray());
         return Utils.hashCode(result1, result2);
     }
@@ -739,6 +758,28 @@ public class NodeTypeDefinition implements CndElement, Comparable, ItemOwnerProv
     /**
      * {@inheritDoc}
      * 
+     * @see org.jboss.tools.modeshape.jcr.cnd.CommentedCndElement#setComment(java.lang.String)
+     */
+    @Override
+    public boolean setComment( String newComment ) {
+        if (!Utils.isEmpty(newComment)) {
+            newComment = newComment.trim();
+        }
+
+        final Object oldValue = this.comment;
+        final boolean changed = !Utils.equivalent(this.comment, newComment);
+
+        if (changed) {
+            this.comment = newComment;
+            notifyChangeListeners(PropertyName.COMMENT, oldValue, newComment);
+        }
+
+        return changed;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
      * @see javax.jcr.nodetype.NodeTypeTemplate#setDeclaredSuperTypeNames(java.lang.String[])
      */
     @Override
@@ -830,6 +871,21 @@ public class NodeTypeDefinition implements CndElement, Comparable, ItemOwnerProv
         final JcrPreferenceStore prefStore = JcrPreferenceStore.get();
         final StringBuilder builder = new StringBuilder();
 
+        { // comment
+            if (!Utils.isEmpty(this.comment)) {
+                String commentNotation = Utils.EMPTY_STRING;
+
+                if (NotationType.LONG == notationType) {
+                    commentNotation += '\n';
+                }
+
+                commentNotation += CommentedCndElement.Helper.addCommentCharacters(this.comment, null) + '\n';
+
+                // add comment above node type
+                builder.append(commentNotation);
+            }
+        }
+
         { // name
             builder.append(NAME_NOTATION_PREFIX).append(this.name.toCndNotation(notationType)).append(NAME_NOTATION_SUFFIX);
 
@@ -895,6 +951,11 @@ public class NodeTypeDefinition implements CndElement, Comparable, ItemOwnerProv
          * The collection for child node definitions.
          */
         CHILD_NODES,
+
+        /**
+         * The comment.
+         */
+        COMMENT,
 
         /**
          * The mixin attribute.

@@ -10,10 +10,14 @@ package org.jboss.tools.modeshape.ui;
 import java.util.Collection;
 import java.util.Iterator;
 
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.swt.graphics.FontMetrics;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.TableColumn;
 
 /**
@@ -64,6 +68,21 @@ public final class UiUtils {
         column.setMoveable(false);
         column.setResizable(resizable);
         column.pack();
+    }
+
+    /**
+     * @param control the control whose font will be used during calculation (cannot be <code>null</code>)
+     * @param numChars the number of characters whose pixel width is being requested
+     * @return the number of pixels corresponding to the width of the given number of characters
+     */
+    public static int convertWidthInCharsToPixels( Control control,
+                                                   int numChars ) {
+        verifyIsNotNull(control, "control"); //$NON-NLS-1$
+        GC gc = new GC(control);
+        gc.setFont(control.getFont());
+        FontMetrics fontMetrics = gc.getFontMetrics();
+        gc.dispose();
+        return Dialog.convertWidthInCharsToPixels(fontMetrics, numChars);
     }
 
     /**

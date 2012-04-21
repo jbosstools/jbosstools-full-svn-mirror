@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.swt.SWT;
@@ -33,6 +35,7 @@ import org.jboss.tools.modeshape.jcr.NamespaceMapping;
 import org.jboss.tools.modeshape.jcr.Utils;
 import org.jboss.tools.modeshape.jcr.WorkspaceRegistry;
 import org.jboss.tools.modeshape.jcr.cnd.CndValidator;
+import org.jboss.tools.modeshape.jcr.cnd.CommentedCndElement;
 import org.jboss.tools.modeshape.jcr.ui.Activator;
 import org.jboss.tools.modeshape.jcr.ui.JcrUiConstants;
 import org.jboss.tools.modeshape.ui.forms.FormUtils.Styles;
@@ -43,6 +46,8 @@ import org.jboss.tools.modeshape.ui.forms.FormUtils.Styles;
 final class NamespaceMappingDialog extends FormDialog {
 
     private Button btnOk;
+
+    private String comment;
 
     /**
      * An optional list of existing namespace mappings. When this is non-empty, it is checked to make sure the prefix and URI being
@@ -95,6 +100,7 @@ final class NamespaceMappingDialog extends FormDialog {
         this.namespaceBeingEdited = namespaceBeingEdited;
         this.prefix = this.namespaceBeingEdited.getPrefix();
         this.uri = this.namespaceBeingEdited.getUri();
+        this.comment = this.namespaceBeingEdited.getComment();
 
         // remove the namespace mapping being edited so validating doesn't show it as a duplicate
         this.existingNamespaces.remove(this.namespaceBeingEdited);
@@ -209,6 +215,36 @@ final class NamespaceMappingDialog extends FormDialog {
                 }
             });
         }
+
+        { // comment
+            final Label lblComment = toolkit.createLabel(body, CndMessages.commentLabel, SWT.NONE);
+            lblComment.setLayoutData(new GridData(SWT.LEFT, SWT.TOP, false, false));
+
+            Text txtComment = toolkit.createText(body, null, Styles.TEXT_STYLE | SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
+            txtComment.setToolTipText(CndMessages.commentedToolTip);
+
+            final GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true);
+            gd.verticalIndent += ((GridLayout)body.getLayout()).verticalSpacing;
+            gd.heightHint = txtComment.getLineHeight() * 3;
+            txtComment.setLayoutData(gd);
+
+            if (isEditMode() && !Utils.isEmpty(this.namespaceBeingEdited.getComment())) {
+                txtComment.setText(CommentedCndElement.Helper.removeCommentCharacters(this.namespaceBeingEdited.getComment()));
+            }
+
+            txtComment.addModifyListener(new ModifyListener() {
+
+                /**
+                 * {@inheritDoc}
+                 * 
+                 * @see org.eclipse.swt.events.ModifyListener#modifyText(org.eclipse.swt.events.ModifyEvent)
+                 */
+                @Override
+                public void modifyText( final ModifyEvent e ) {
+                    handleCommentChanged(((Text)e.widget).getText());
+                }
+            });
+        }
     }
 
     /**
@@ -217,7 +253,14 @@ final class NamespaceMappingDialog extends FormDialog {
      * @return a namespace mapping representing the dialog changes (never <code>null</code>)
      */
     public NamespaceMapping getNamespaceMapping() {
-        return new NamespaceMapping(this.prefix, this.uri);
+        NamespaceMapping namespaceMapping = new NamespaceMapping(this.prefix, this.uri);
+        namespaceMapping.setComment(this.comment);
+        return namespaceMapping;
+    }
+
+    void handleCommentChanged( final String newComment ) {
+        this.comment = newComment;
+        updateState();
     }
 
     void handlePrefixChanged( final String newPrefix ) {
@@ -234,6 +277,7 @@ final class NamespaceMappingDialog extends FormDialog {
                 }
             }
         } catch (final Exception e) {
+            Activator.getSharedInstance().getLog().log(new Status(IStatus.ERROR, JcrUiConstants.PLUGIN_ID, null, e));
         }
 
         updateState();

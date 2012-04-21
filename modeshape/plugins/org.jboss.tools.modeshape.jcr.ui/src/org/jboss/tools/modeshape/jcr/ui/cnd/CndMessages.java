@@ -338,6 +338,21 @@ public class CndMessages extends NLS {
      * The title of the CND prefrence page.
      */
     public static String cndPrefPageTitle;
+
+    /**
+     * The column header text indicating if a CND element has a comment.
+     */
+    public static String commentedHeaderText;
+
+    /**
+     * The tool tip message indicating the CND element has a comment.
+     */
+    public static String commentedToolTip;
+
+    /**
+     * A label for a control that shows a CND comment.
+     */
+    public static String commentLabel;
     
     /**
      * The column header text of the declaring node type of an item definition.
@@ -894,11 +909,6 @@ public class CndMessages extends NLS {
      * The tool tip for a namespace prefix.
      */
     public static String namespacePrefixToolTip;
-
-    /**
-     * The tool tip for a namespace mappings table.
-     */
-    public static String namespacesTableToolTip;
 
     /**
      * The column header text for a namespace URI.

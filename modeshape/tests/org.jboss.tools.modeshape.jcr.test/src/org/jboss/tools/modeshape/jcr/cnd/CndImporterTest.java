@@ -187,7 +187,7 @@ public class CndImporterTest {
         this.problems = new ArrayList<Throwable>();
 
         // Set up the importer ...
-        this.importer = new CndImporter(true);
+        this.importer = new CndImporter();
     }
 
     private NodeDefinition childDefn( final NodeTypeDefinition nodeType,
