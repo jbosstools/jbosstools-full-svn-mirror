@@ -19,7 +19,6 @@
 
 		mvn clean install -f site/pom.xml -Dcollect.zips.skip
 		mvn clean install -f soa-site/pom.xml -Dcollect.zips.skip
-		mvn clean install -f site/sources/pom.xml
 		mvn clean install -f webtools-site/pom.xml
 		mvn clean install -f bottests-site/pom.xml
 		mvn clean install -f coretests-site/pom.xml
