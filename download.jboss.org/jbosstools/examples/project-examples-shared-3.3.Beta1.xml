@@ -160,7 +160,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<mavenArchetype>
 			<archetypeGroupId>org.jboss.aerogear.archetypes</archetypeGroupId>
 			<archetypeArtifactId>jboss-html5-mobile-archetype</archetypeArtifactId>
-			<archetypeVersion>1.0.0.M2c</archetypeVersion>
+			<archetypeVersion>1.0.0.M3</archetypeVersion>
             <!--
             <archetypeRepository>http://repository.jboss.org/nexus/content/repositories/releases/</archetypeRepository>
             -->
