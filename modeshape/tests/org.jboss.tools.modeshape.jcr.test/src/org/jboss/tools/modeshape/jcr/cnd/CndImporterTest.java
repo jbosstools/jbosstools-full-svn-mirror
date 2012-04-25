@@ -26,6 +26,7 @@ import javax.jcr.Value;
 import javax.jcr.nodetype.NodeDefinition;
 import javax.jcr.version.OnParentVersionAction;
 
+import org.jboss.tools.modeshape.jcr.ChildNodeDefinition;
 import org.jboss.tools.modeshape.jcr.NamespaceMapping;
 import org.jboss.tools.modeshape.jcr.NodeTypeDefinition;
 import org.jboss.tools.modeshape.jcr.PropertyDefinition;
@@ -385,6 +386,75 @@ public class CndImporterTest {
         }
 
         assertEquals(0, this.problems.size());
+    }
+
+    @Test
+    public void shouldImportCndForCommentsTest() throws Exception {
+        final CompactNodeTypeDefinition cnd = this.importer.importFrom(openCndFile("commentsTest.cnd"), this.problems); //$NON-NLS-1$
+        final NodeTypeDefinition nodeType = cnd.getNodeTypeDefinitions().get(0);
+
+        if (this.problems.size() != 0) {
+            printProblems();
+        }
+
+        assertEquals(0, this.problems.size());
+
+        { // check node type comments
+            final String expected = "comment above node type\n" + "comment same line as node type name\n" + "comment above supertypes\n" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                    + "comment same line as first supertype\n" + "comment between 2 supertypes\n" //$NON-NLS-1$ //$NON-NLS-2$
+                    + "comment same line as last supertype\n" + "comment above node type attributes\n" //$NON-NLS-1$ //$NON-NLS-2$
+                    + "comment same line as abstract node type attribute\n" //$NON-NLS-1$
+                    + "comment between abstract and orderable node type attributes\n" //$NON-NLS-1$
+                    + "comment same line as orderable node type attribute\n" //$NON-NLS-1$
+                    + "comment between orderable and mixin node type attributes\n" //$NON-NLS-1$
+                    + "comment same line as mixin node type attribute\n" //$NON-NLS-1$
+                    + "comment between mixin and noquery node type attributes\n" //$NON-NLS-1$
+                    + "comment same line as noquery node type attribute\n" //$NON-NLS-1$
+                    + "comment between noquery and primaryitem node type attributes\n" //$NON-NLS-1$
+                    + "comment same line as primaryitem node type attribute"; //$NON-NLS-1$
+            assertEquals(expected, nodeType.getComment());
+        }
+
+        { // check property comments
+            final PropertyDefinition property = nodeType.getPropertyDefinitions().get(0);
+            final String expected = "comment above property\n" + "comment same line as property name\n" + "comment above property type\n" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                    + "comment above default values\n" + "comment same line as first default value\n" //$NON-NLS-1$ //$NON-NLS-2$
+                    + "comment between default values\n" + "comment same line as last default value\n" //$NON-NLS-1$ //$NON-NLS-2$
+                    + "comment above property attributes\n" + "comment same line as mandatory property attribute\n" //$NON-NLS-1$ //$NON-NLS-2$
+                    + "comment between mandatory and autocreated property attributes\n" //$NON-NLS-1$
+                    + "comment same line as autocreated property attribute\n" //$NON-NLS-1$
+                    + "comment between autocreated and protected property attributes\n" //$NON-NLS-1$
+                    + "comment same line as protected property attribute\n" //$NON-NLS-1$
+                    + "comment between protected and multiple property attributes\n" //$NON-NLS-1$
+                    + "comment same line as multiple property attribute\n" //$NON-NLS-1$
+                    + "comment between multiple and VERSION property attributes\n" //$NON-NLS-1$
+                    + "comment same line as VERSION property attribute\n" //$NON-NLS-1$
+                    + "comment between VERSION and queryops property attributes\n" //$NON-NLS-1$
+                    + "comment same line as queryops property attribute\n" //$NON-NLS-1$
+                    + "comment between queryops and nofulltext property attributes\n" //$NON-NLS-1$
+                    + "comment same line as nofulltext property attribute\n" //$NON-NLS-1$
+                    + "comment between nofulltext and noqueryorder property attributes\n" //$NON-NLS-1$
+                    + "comment same line as noqueryorder property attribute\n" + "comment above value constraints\n" //$NON-NLS-1$ //$NON-NLS-2$
+                    + "comment same line as first value constraint\n" + "comment between value constraints\n" //$NON-NLS-1$ //$NON-NLS-2$
+                    + "comment same line as last value constraint"; //$NON-NLS-1$
+            assertEquals(expected, property.getComment());
+        }
+
+        { // check child node comments
+            final ChildNodeDefinition childNode = nodeType.getChildNodeDefinitions().get(0);
+            final String expected = "comment above child node\n" + "comment same line as child node name\n" //$NON-NLS-1$ //$NON-NLS-2$
+                    + "comment above required types\n" + "comment same line as required types\n" + "comment above default type\n" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                    + "comment same line as default type\n" + "comment above child node attributes\n" //$NON-NLS-1$ //$NON-NLS-2$
+                    + "comment same line as mandatory child node attribute\n" //$NON-NLS-1$
+                    + "comment between mandatory and autocreated child node attributes\n" //$NON-NLS-1$
+                    + "comment same line as autocreated child node attribute\n" //$NON-NLS-1$
+                    + "comment between autocreated and protected child node attributes\n" //$NON-NLS-1$
+                    + "comment same line as protected child node attribute\n" //$NON-NLS-1$
+                    + "comment between protected and sns child node attributes\n" //$NON-NLS-1$
+                    + "comment same line as sns child node attribute\n" + "comment between sns and version child node attributes\n" //$NON-NLS-1$ //$NON-NLS-2$
+                    + "comment same line as version child node attribute"; //$NON-NLS-1$
+            assertEquals(expected, childNode.getComment());
+        }
     }
 
     @Test

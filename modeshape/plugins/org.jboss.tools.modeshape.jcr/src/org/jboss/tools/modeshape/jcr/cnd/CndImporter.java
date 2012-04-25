@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Stack;
 
 import org.eclipse.osgi.util.NLS;
@@ -63,9 +64,11 @@ public final class CndImporter {
 
     private final boolean jcr170 = true;
 
-    private final Stack<CndElement> cndElements = new Stack<CndElement>();
+    private final Stack<CommentedCndElement> cndElements = new Stack<CommentedCndElement>();
 
     private String currentComment;
+
+    private CommentedCndElement previousElement;
 
     /**
      * Import the CND content from the supplied stream, placing the content into the importer's destination.
@@ -129,8 +132,6 @@ public final class CndImporter {
 
         final CompactNodeTypeDefinition cnd = new CompactNodeTypeDefinition();
 
-        // start processing CND
-        push(cnd);
         final Tokenizer tokenizer = new CndTokenizer();
         final TokenStream tokens = new TokenStream(content, tokenizer, false);
         tokens.start();
@@ -155,9 +156,6 @@ public final class CndImporter {
             }
         }
 
-        // finished processing CND
-        final CndElement cndElement = pop();
-        assert (cnd == cndElement) : "CND Element not the expected CND: " + cndElement.toCndNotation(NotationType.LONG); //$NON-NLS-1$
         return cnd;
     }
 
@@ -209,16 +207,67 @@ public final class CndImporter {
         assert (childNodeDefn == cndElement) : "Element not expected child node: " + cndElement.toCndNotation(NotationType.LONG); //$NON-NLS-1$
     }
 
-    private void parseComment( final TokenStream tokens ) {
+    private boolean parseComment( final TokenStream tokens ) {
         if (tokens.matches(CndTokenizer.COMMENT)) {
-            final String newComment = CommentedCndElement.Helper.removeCommentCharacters(tokens.consume());
+            do {
+                boolean sameLine = false;
 
-            if (Utils.isEmpty(this.currentComment)) {
-                this.currentComment = newComment;
-            } else {
-                this.currentComment += '\n' + newComment;
-            }
+                try {
+                    sameLine = tokens.nextPosition().getLine() == tokens.previousPosition().getLine();
+                } catch (NoSuchElementException e) {
+                    // ignore
+                }
+
+                String newComment = CommentedCndElement.Helper.removeCommentCharacters(tokens.consume());
+
+                // same line comment
+                if (sameLine || (!Utils.isEmpty(this.currentComment) && !this.cndElements.isEmpty())) {
+                    // concatenate this comment with existing comment
+                    if (Utils.isEmpty(this.currentComment)) {
+                        this.currentComment = Utils.EMPTY_STRING;
+                    } else if (!this.currentComment.endsWith("\n")) { //$NON-NLS-1$
+                        this.currentComment += '\n';
+                    }
+
+                    this.currentComment += newComment;
+
+                    CommentedCndElement cndElement = null;
+                    
+                    if (this.cndElements.isEmpty()) {
+                        cndElement = this.previousElement;
+                    } else {
+                        cndElement = this.cndElements.peek();
+                    }
+
+                    String comment = cndElement.getComment();
+
+                    if (Utils.isEmpty(comment)) {
+                        comment = this.currentComment;
+                    } else {
+                        if (!comment.endsWith("\n")) { //$NON-NLS-1$
+                            comment += '\n';
+                        }
+
+                        comment += this.currentComment;
+                    }
+
+                    cndElement.setComment(comment);
+                    this.currentComment = null;
+                } else {
+                    if (this.currentComment == null) {
+                        this.currentComment = Utils.EMPTY_STRING;
+                    } else if (!this.currentComment.endsWith("\n")) { //$NON-NLS-1$
+                        this.currentComment += '\n';
+                    }
+
+                    this.currentComment += newComment;
+                }
+            } while (tokens.matches(CndTokenizer.COMMENT));
+
+            return true;
         }
+
+        return false;
     }
 
     /**
@@ -233,9 +282,6 @@ public final class CndImporter {
         assert (tokens != null) : "tokens is null"; //$NON-NLS-1$
         assert (defaultType != null) : "defaultType is null"; //$NON-NLS-1$
 
-        // start processing default type
-        push(defaultType);
-
         if (tokens.canConsume(DefaultType.NOTATION)) {
             if (tokens.canConsume(AttributeState.VARIANT_CHAR)) {
                 defaultType.set(Value.VARIANT);
@@ -247,10 +293,6 @@ public final class CndImporter {
                 }
             }
         }
-
-        // finished processing default type
-        final CndElement cndElement = pop();
-        assert (defaultType == cndElement) : "Element not expected default type: " + cndElement.toCndNotation(NotationType.LONG); //$NON-NLS-1$
     }
 
     /**
@@ -264,6 +306,8 @@ public final class CndImporter {
                                      final PropertyDefinition propDefn ) {
         assert (tokens != null) : "tokens is null"; //$NON-NLS-1$
         assert (propDefn != null) : "propDefn is null"; //$NON-NLS-1$
+
+        parseComment(tokens);
 
         if (tokens.canConsume(DefaultValues.NOTATION_PREFIX)) {
             final List<String> values = parseStringList(tokens);
@@ -308,9 +352,22 @@ public final class CndImporter {
             names.add(AttributeState.VARIANT_STRING);
         } else {
             // Read names until we see a ','
+            boolean foundComma = false;
+            boolean saveComma = false;
+
             do {
-                names.add(parseName(tokens));
-            } while (tokens.canConsume(','));
+                if (tokens.matches(CndTokenizer.COMMENT)) {
+                    parseComment(tokens);
+                    saveComma = true;
+                } else {
+                    names.add(parseName(tokens));
+                    saveComma = false;
+                }
+
+                if (!saveComma) {
+                    foundComma = tokens.matches(',');
+                }
+            } while (tokens.canConsume(',') || tokens.matches(CndTokenizer.COMMENT) || foundComma);
         }
 
         return names;
@@ -415,6 +472,8 @@ public final class CndImporter {
             } else if (tokens.matchesAnyOf(Utils.toUpperCase(OnParentVersion.toArray()))) {
                 final String opv = tokens.consume();
                 childNodeDefn.setOnParentVersion(opv);
+            } else if (tokens.matches(CndTokenizer.COMMENT)) {
+                parseComment(tokens);
             } else if (tokens.canConsumeAnyOf("PRIMARYITEM", "PRIMARY", "PRI", "!")) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
                 if (!this.jcr170) {
                     final Position pos = tokens.previousPosition();
@@ -493,6 +552,8 @@ public final class CndImporter {
                 } else {
                     nodeTypeDefn.setPrimaryItemName(removeQuotes(tokens.consume()));
                 }
+            } else if (tokens.matches(CndTokenizer.COMMENT)) {
+                parseComment(tokens);
             } else {
                 // No more valid options on the stream, so stop ...
                 break;
@@ -523,6 +584,8 @@ public final class CndImporter {
         if (!Utils.isEmpty(name)) {
             nodeType.setName(name);
         }
+
+        parseComment(tokens); // comment before supertypes
 
         // supertypes
         final List<String> superTypes = parseSupertypes(tokens);
@@ -642,6 +705,8 @@ public final class CndImporter {
                                               QueryOperators.NOTATION[NotationType.COMPRESSED_INDEX].toUpperCase(),
                                               QueryOperators.NOTATION[NotationType.COMPACT_INDEX].toUpperCase())) {
                 parseQueryOperators(tokens, propDefn);
+            } else if (tokens.matches(CndTokenizer.COMMENT)) {
+                parseComment(tokens);
             } else if (tokens.canConsumeAnyOf("PRIMARY", "PRI", "!")) { //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 // these keywords are no longer property attributes in JCR 2.0
                 if (!this.jcr170) {
@@ -731,7 +796,18 @@ public final class CndImporter {
             } else if (tokens.matches(ChildNodeDefinition.NOTATION_PREFIX)) {
                 parseChildNodeDefinition(tokens, nodeTypeDefn);
             } else if (tokens.matches(CndTokenizer.COMMENT)) {
-                parseComment(tokens);
+                if (parseComment(tokens) && (this.previousElement != null)) {
+                    String comment = this.previousElement.getComment();
+
+                    if (comment == null) {
+                        comment = Utils.EMPTY_STRING;
+                    } else if (!comment.endsWith("\n")) { //$NON-NLS-1$
+                        comment += '\n';
+                    }
+
+                    this.previousElement.setComment(comment + this.currentComment);
+                    this.currentComment = null;
+                }
             } else {
                 // The next token does not signal either one of these, so stop ...
                 break;
@@ -750,6 +826,8 @@ public final class CndImporter {
                                     final PropertyDefinition propDefn ) {
         assert (tokens != null) : "tokens is null"; //$NON-NLS-1$
         assert (propDefn != null) : "propDefn is null"; //$NON-NLS-1$
+
+        parseComment(tokens);
 
         if (tokens.canConsume(PropertyType.NOTATION_PREFIX)) {
             // Parse the (optional) property type ...
@@ -777,6 +855,8 @@ public final class CndImporter {
         if (tokens.canConsume(AttributeState.VARIANT_CHAR)) {
             propDefn.changeState(PropertyDefinition.PropertyName.QUERY_OPS, Value.VARIANT);
         } else {
+            parseComment(tokens);
+
             // The query operators are expected to be enclosed in a single quote, so therefore will be a single token ...
             final String operatorList = removeQuotes(tokens.consume());
             final List<String> operators = new ArrayList<String>();
@@ -810,6 +890,8 @@ public final class CndImporter {
                                             final ChildNodeDefinition childNodeDefn ) {
         assert (tokens != null) : "tokens is null"; //$NON-NLS-1$
         assert (childNodeDefn != null) : "childNodeDefn is null"; //$NON-NLS-1$
+
+        parseComment(tokens);
 
         if (tokens.canConsume(RequiredTypes.NOTATION_PREFIX)) {
             final List<String> requiredTypeNames = parseNameList(tokens);
@@ -845,9 +927,25 @@ public final class CndImporter {
             strings.add(AttributeState.VARIANT_STRING);
         } else {
             // Read names until we see a ','
+            boolean foundComma = false;
+            boolean saveComma = false;
+            boolean firstTime = true;
+
             do {
-                strings.add(removeQuotes(tokens.consume()));
-            } while (tokens.canConsume(','));
+                if (tokens.matches(CndTokenizer.COMMENT)) {
+                    parseComment(tokens);
+                    saveComma = true;
+                } else if (firstTime || foundComma) {
+                    strings.add(removeQuotes(tokens.consume()));
+                    saveComma = false;
+                }
+
+                if (!saveComma) {
+                    foundComma = tokens.matches(',');
+                }
+                
+                firstTime = false;
+            } while (tokens.canConsume(',') || parseComment(tokens) || foundComma);
         }
 
         return strings;
@@ -862,6 +960,8 @@ public final class CndImporter {
      */
     private List<String> parseSupertypes( final TokenStream tokens ) {
         assert (tokens != null) : "tokens is null"; //$NON-NLS-1$
+
+        parseComment(tokens);
 
         if (tokens.canConsume(SuperTypes.NOTATION_PREFIX)) {
             // There is at least one supertype ...
@@ -899,40 +999,26 @@ public final class CndImporter {
     }
 
     private CndElement pop() {
-        return this.cndElements.pop();
+        this.previousElement = this.cndElements.pop();
+        return this.previousElement;
     }
 
-    private void push( final CndElement cndElement ) {
+    private void push( final CommentedCndElement commentedElement ) {
         // set comment if one exists
         if (!Utils.isEmpty(this.currentComment)) {
-            CommentedCndElement commentedElement = null;
+            String cndElementComment = commentedElement.getComment();
 
-            if (cndElement instanceof CommentedCndElement) {
-                commentedElement = (CommentedCndElement)cndElement;
-            } else if (!this.cndElements.isEmpty()) {
-                // this should probably look back in the stack until it finds a CommentedCndElement
-                CndElement top = this.cndElements.peek();
-
-                if (top instanceof CommentedCndElement) {
-                    commentedElement = (CommentedCndElement)top;
-                }
+            if (cndElementComment == null) {
+                cndElementComment = Utils.EMPTY_STRING;
+            } else if (!cndElementComment.endsWith("\n")) { //$NON-NLS-1$
+                cndElementComment += '\n';
             }
 
-            if (commentedElement != null) {
-                String cndElementComment = commentedElement.getComment();
-
-                if (cndElementComment == null) {
-                    cndElementComment = Utils.EMPTY_STRING;
-                } else if (!cndElementComment.endsWith("\n")) { //$NON-NLS-1$
-                    cndElementComment += '\n';
-                }
-
-                commentedElement.setComment(cndElementComment + this.currentComment);
-                this.currentComment = null;
-            }
+            commentedElement.setComment(cndElementComment + this.currentComment);
+            this.currentComment = null;
         }
 
-        this.cndElements.push(cndElement);
+        this.cndElements.push(commentedElement);
     }
 
     private final String removeQuotes( final String text ) {
