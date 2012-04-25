@@ -328,8 +328,7 @@
 		<category name="AllSources" />
 	</feature>
 	<feature url="features/org.jboss.tools.maven.portlet.feature.source_0.0.0.jar" id="org.jboss.tools.maven.portlet.feature.source" version="0.0.0">
-		<category name="AbridgedTools" />
-		<category name="MavenTools" />
+		<category name="AllSources" />
 	</feature>
 	<feature url="features/org.jboss.tools.maven.seam.feature.source_0.0.0.jar" id="org.jboss.tools.maven.seam.feature.source" version="0.0.0">
 		<category name="AllSources" />
