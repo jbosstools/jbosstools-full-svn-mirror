@@ -71,16 +71,14 @@
 		
 		<!-- Default coverage filter, to be overriden when necessary -->
 		<coverage.filter>org.jboss.tools.*</coverage.filter>
+		<requirements.root>${basedir}/../../../requirements</requirements.root>
+		<requirement.build.root>${requirements.root}/target</requirement.build.root>
+		
 	</properties>
 
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
-			<plugin>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<version>${maven.antrun.plugin.version}</version>
-			</plugin>
-
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-packaging-plugin</artifactId>
@@ -267,6 +265,66 @@
 							</includes>
 							<!-- Merge reports from all executions -->
 							<append>true</append>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<dependencies>
+					<dependency>
+						<groupId>ant-contrib</groupId>
+						<artifactId>ant-contrib</artifactId>
+						<version>1.0b3</version>
+						<exclusions>
+							<exclusion>
+								<groupId>ant</groupId>
+								<artifactId>ant</artifactId>
+							</exclusion>
+						</exclusions>
+					</dependency>
+					<dependency>
+							<groupId>ant</groupId>
+							<artifactId>ant-optional</artifactId>
+							<version>1.5.3-1</version>
+							<exclusions>
+								<exclusion>
+									<groupId>ant</groupId>
+									<artifactId>ant</artifactId>
+								</exclusion>
+							</exclusions>
+					</dependency>
+				</dependencies>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>${maven.antrun.plugin.version}</version>
+				<executions>
+					<execution>
+						<id>download-plugin-requirements</id>
+						<phase>generate-test-resources</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<taskdef resource="net/sf/antcontrib/antcontrib.properties" />
+								<if>
+									<and>
+										<available file="${requirements.root}" type="dir" />
+										<available file="requirements.properties" type="file" />
+									</and>
+									<then>
+										<property file="requirements.properties" />
+										<echo>Requirements build</echo>
+										<ant dir="${requirements.root}" inheritAll="true">
+											<property name="requirements" value="${requirements}" />
+											<property name="settings.offline" value="${settings.offline}" />
+											<property name="skipDownload" value="${skipDownload}" />
+										</ant>
+									</then>
+									<else>
+										<echo>No requrements.properties file</echo>
+									</else>
+								</if>
+							</tasks>
 						</configuration>
 					</execution>
 				</executions>
@@ -776,76 +834,6 @@
 														<echo>No coverage report found </echo>
 													</else>
 												</if>
-											</then>
-										</if>
-									</tasks>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-		<profile>
-			<id>requirements</id>
-			<activation>
-				<file>
-					<exists>${basedir}/requirements.properties</exists>
-				</file>
-			</activation>
-			<properties>
-				<requirements.root>${basedir}/../../../requirements</requirements.root>
-				<requirement.build.root>${requirements.root}/target</requirement.build.root>
-			</properties>
-			<build>
-				<plugins>
-					<plugin>
-						<dependencies>
-							<dependency>
-								<groupId>ant-contrib</groupId>
-								<artifactId>ant-contrib</artifactId>
-								<version>1.0b3</version>
-								<exclusions>
-									<exclusion>
-										<groupId>ant</groupId>
-										<artifactId>ant</artifactId>
-									</exclusion>
-								</exclusions>
-							</dependency>
-							<dependency>
-									<groupId>ant</groupId>
-									<artifactId>ant-optional</artifactId>
-									<version>1.5.3-1</version>
-									<exclusions>
-										<exclusion>
-											<groupId>ant</groupId>
-											<artifactId>ant</artifactId>
-										</exclusion>
-									</exclusions>
-							</dependency>
-						</dependencies>
-						<artifactId>maven-antrun-plugin</artifactId>
-						<version>${maven.antrun.plugin.version}</version>
-						<executions>
-							<execution>
-								<id>download-plugin-requirements</id>
-								<phase>generate-test-resources</phase>
-								<goals>
-									<goal>run</goal>
-								</goals>
-								<configuration>
-									<tasks>
-										<taskdef resource="net/sf/antcontrib/antcontrib.properties" />
-										<if>
-											<available file="${requirements.root}" type="dir" />
-											<then>
-												<property file="requirements.properties" />
-												<echo>Requirements build</echo>
-												<ant dir="${requirements.root}" inheritAll="true">
-													<property name="requirements" value="${requirements}" />
-													<property name="settings.offline" value="${settings.offline}" />
-													<property name="skipDownload" value="${skipDownload}" />
-												</ant>
 											</then>
 										</if>
 									</tasks>
