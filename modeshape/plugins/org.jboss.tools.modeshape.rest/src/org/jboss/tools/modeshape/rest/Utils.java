@@ -17,6 +17,7 @@ import java.net.URL;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.ISharedImages;
 import org.modeshape.common.util.CheckArg;
@@ -150,7 +151,7 @@ public final class Utils {
      */
     public static Status isUrlValid( String url ) {
         if ((url == null) || (url.length() == 0)) {
-            return new Status(Severity.ERROR, RestClientI18n.serverEmptyUrlMsg.text(), null);
+            return new Status(Severity.ERROR, RestClientI18n.serverEmptyUrlMsg, null);
         }
 
         try {
@@ -160,17 +161,17 @@ public final class Utils {
             String host = testUrl.getHost();
 
             if ((host == null) || "".equals(host)) { //$NON-NLS-1$
-                return new Status(Severity.ERROR, RestClientI18n.serverInvalidUrlHostMsg.text(), null);
+                return new Status(Severity.ERROR, RestClientI18n.serverInvalidUrlHostMsg, null);
             }
 
             // make sure there is a port
             int port = testUrl.getPort();
 
             if (port == -1) {
-                return new Status(Severity.ERROR, RestClientI18n.serverInvalidUrlPortMsg.text(), null);
+                return new Status(Severity.ERROR, RestClientI18n.serverInvalidUrlPortMsg, null);
             }
         } catch (Exception e) {
-            return new Status(Severity.ERROR, RestClientI18n.serverInvalidUrlMsg.text(url), e);
+            return new Status(Severity.ERROR, NLS.bind(RestClientI18n.serverInvalidUrlMsg, url), e);
         }
 
         return Status.OK_STATUS;
@@ -182,7 +183,7 @@ public final class Utils {
      */
     public static Status isUserValid( String user ) {
         if ((user == null) || (user.length() == 0)) {
-            return new Status(Severity.ERROR, RestClientI18n.serverEmptyUserMsg.text(), null);
+            return new Status(Severity.ERROR, RestClientI18n.serverEmptyUserMsg, null);
         }
 
         return Status.OK_STATUS;

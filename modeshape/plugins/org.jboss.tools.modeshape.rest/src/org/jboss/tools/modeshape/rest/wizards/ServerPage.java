@@ -18,6 +18,7 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.swt.custom.StyledText;
@@ -88,7 +89,7 @@ public final class ServerPage extends WizardPage {
      */
     public ServerPage() {
         super(ServerPage.class.getSimpleName());
-        setTitle(RestClientI18n.serverPageTitle.text());
+        setTitle(RestClientI18n.serverPageTitle);
         setPageComplete(false);
     }
 
@@ -99,7 +100,7 @@ public final class ServerPage extends WizardPage {
      */
     public ServerPage( ModeShapeServer server ) {
         super(ServerPage.class.getSimpleName());
-        setTitle(RestClientI18n.serverPageTitle.text());
+        setTitle(RestClientI18n.serverPageTitle);
 
         this.server = server;
         this.url = server.getUrl();
@@ -110,18 +111,18 @@ public final class ServerPage extends WizardPage {
 
     private void constructAuthenticationPanel( Composite parent ) {
         Group pnl = new Group(parent, SWT.NONE);
-        pnl.setText(RestClientI18n.serverPageAuthenticationGroupTitle.text());
+        pnl.setText(RestClientI18n.serverPageAuthenticationGroupTitle);
         pnl.setLayout(new GridLayout(2, false));
         pnl.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
         { // user row
             Label lblUser = new Label(pnl, SWT.LEFT);
             lblUser.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
-            lblUser.setText(RestClientI18n.serverPageUserLabel.text());
+            lblUser.setText(RestClientI18n.serverPageUserLabel);
 
             Text txtUser = new Text(pnl, SWT.BORDER);
             txtUser.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
-            txtUser.setToolTipText(RestClientI18n.serverPageUserToolTip.text());
+            txtUser.setToolTipText(RestClientI18n.serverPageUserToolTip);
 
             // set initial value
             if (this.user != null) {
@@ -144,11 +145,11 @@ public final class ServerPage extends WizardPage {
         { // password row
             Label lblPassword = new Label(pnl, SWT.LEFT);
             lblPassword.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
-            lblPassword.setText(RestClientI18n.serverPagePasswordLabel.text());
+            lblPassword.setText(RestClientI18n.serverPagePasswordLabel);
 
             Text txtPassword = new Text(pnl, SWT.BORDER);
             txtPassword.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-            txtPassword.setToolTipText(RestClientI18n.serverPagePasswordToolTip.text());
+            txtPassword.setToolTipText(RestClientI18n.serverPagePasswordToolTip);
             txtPassword.setEchoChar('*');
 
             // set initial value before hooking up listener
@@ -174,8 +175,8 @@ public final class ServerPage extends WizardPage {
             final Button btn = new Button(pnl, SWT.CHECK | SWT.LEFT);
             btn.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
             ((GridData)btn.getLayoutData()).horizontalSpan = 2;
-            btn.setText(RestClientI18n.serverPageSavePasswordButton.text());
-            btn.setToolTipText(RestClientI18n.serverPageSavePasswordToolTip.text());
+            btn.setText(RestClientI18n.serverPageSavePasswordButton);
+            btn.setToolTipText(RestClientI18n.serverPageSavePasswordToolTip);
 
             // set initial value before hooking up listeners
             if (this.savePassword) {
@@ -216,7 +217,7 @@ public final class ServerPage extends WizardPage {
             lblImage.setImage(Display.getDefault().getSystemImage(SWT.ICON_INFORMATION));
 
             StyledText st = new StyledText(pnl, SWT.READ_ONLY | SWT.MULTI | SWT.NO_FOCUS | SWT.WRAP);
-            st.setText(RestClientI18n.serverPageSavePasswordLabel.text());
+            st.setText(RestClientI18n.serverPageSavePasswordLabel);
             st.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
             st.setCaret(null);
             st.setEnabled(false);
@@ -236,11 +237,11 @@ public final class ServerPage extends WizardPage {
 
         Label lbl = new Label(pnl, SWT.LEFT);
         lbl.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
-        lbl.setText(RestClientI18n.serverPageTestConnectionLabel.text());
+        lbl.setText(RestClientI18n.serverPageTestConnectionLabel);
 
         this.btnTestConnection = new Button(pnl, SWT.PUSH);
-        this.btnTestConnection.setText(RestClientI18n.serverPageTestConnectionButton.text());
-        this.btnTestConnection.setToolTipText(RestClientI18n.serverPageTestConnectionButtonToolTip.text());
+        this.btnTestConnection.setText(RestClientI18n.serverPageTestConnectionButton);
+        this.btnTestConnection.setToolTipText(RestClientI18n.serverPageTestConnectionButtonToolTip);
 
         // add margins to the side of the text
         GridData gd = new GridData(SWT.LEFT, SWT.CENTER, false, false);
@@ -269,11 +270,11 @@ public final class ServerPage extends WizardPage {
 
         Label lblUrl = new Label(pnl, SWT.LEFT);
         lblUrl.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
-        lblUrl.setText(RestClientI18n.serverPageUrlLabel.text());
+        lblUrl.setText(RestClientI18n.serverPageUrlLabel);
 
         Text txtUrl = new Text(pnl, SWT.BORDER);
         txtUrl.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        txtUrl.setToolTipText(RestClientI18n.serverPageUrlToolTip.text());
+        txtUrl.setToolTipText(RestClientI18n.serverPageUrlToolTip);
 
         // set initial value
         if (this.url != null) {
@@ -299,7 +300,7 @@ public final class ServerPage extends WizardPage {
 
         // add the text on the URL format
         StyledText st = new StyledText(pnl, SWT.READ_ONLY | SWT.MULTI | SWT.NO_FOCUS | SWT.WRAP);
-        st.setText(RestClientI18n.serverPageUrlTemplateLabel.text());
+        st.setText(RestClientI18n.serverPageUrlTemplateLabel);
         st.setBackground(Display.getDefault().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
         st.setCaret(null);
         st.setEnabled(false);
@@ -342,7 +343,7 @@ public final class ServerPage extends WizardPage {
         }
 
         // should never be called if error status
-        throw new RuntimeException(RestClientI18n.serverPageInvalidServerProperties.text());
+        throw new RuntimeException(RestClientI18n.serverPageInvalidServerProperties);
     }
 
     /**
@@ -391,12 +392,12 @@ public final class ServerPage extends WizardPage {
 
         if (success[0]) {
             MessageDialog.openInformation(getShell(),
-                                          RestClientI18n.serverPageTestConnectionDialogTitle.text(),
-                                          RestClientI18n.serverPageTestConnectionDialogSuccessMsg.text());
+                                          RestClientI18n.serverPageTestConnectionDialogTitle,
+                                          RestClientI18n.serverPageTestConnectionDialogSuccessMsg);
         } else {
             MessageDialog.openError(getShell(),
-                                    RestClientI18n.serverPageTestConnectionDialogTitle.text(),
-                                    RestClientI18n.serverPageTestConnectionDialogFailureMsg.text());
+                                    RestClientI18n.serverPageTestConnectionDialogTitle,
+                                    RestClientI18n.serverPageTestConnectionDialogFailureMsg);
         }
     }
 
@@ -424,7 +425,7 @@ public final class ServerPage extends WizardPage {
      * If the initial message is being displayed do a validation.
      */
     void updateInitialMessage() {
-        if (RestClientI18n.serverPageOkStatusMsg.text().equals(getMessage())) {
+        if (RestClientI18n.serverPageOkStatusMsg.equals(getMessage())) {
             updateState();
         }
     }
@@ -443,7 +444,7 @@ public final class ServerPage extends WizardPage {
             validate();
 
             // set initial message
-            setMessage(RestClientI18n.serverPageOkStatusMsg.text());
+            setMessage(RestClientI18n.serverPageOkStatusMsg);
         }
     }
 
@@ -466,7 +467,7 @@ public final class ServerPage extends WizardPage {
             } else if (this.status.isInfo()) {
                 setMessage(this.status.getMessage(), IMessageProvider.INFORMATION);
             } else {
-                setMessage(RestClientI18n.serverPageOkStatusMsg.text());
+                setMessage(RestClientI18n.serverPageOkStatusMsg);
             }
         }
     }
@@ -484,7 +485,7 @@ public final class ServerPage extends WizardPage {
             // don't check if modifying existing server and identifying properties have not changed
             if (((this.server == null) || !this.server.hasSameKey(changedServer)) && getServerManager().isRegistered(changedServer)) {
                 this.status = new Status(Severity.ERROR,
-                                         RestClientI18n.serverExistsMsg.text(changedServer.getShortDescription()),
+                                         NLS.bind(RestClientI18n.serverExistsMsg, changedServer.getShortDescription()),
                                          null);
             }
         }

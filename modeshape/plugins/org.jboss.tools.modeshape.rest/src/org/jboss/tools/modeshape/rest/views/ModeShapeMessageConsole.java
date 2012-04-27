@@ -23,6 +23,7 @@ import org.eclipse.jface.text.FindReplaceDocumentAdapter;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IDocumentListener;
 import org.eclipse.jface.text.IRegion;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.console.AbstractConsole;
@@ -61,7 +62,7 @@ public final class ModeShapeMessageConsole extends IOConsole {
     /**
      * The message console name.
      */
-    private static final String NAME = RestClientI18n.publishingConsoleName.text();
+    private static final String NAME = RestClientI18n.publishingConsoleName;
 
     /**
      * Note: The <code>ModeShapeMessageConsole</code> should <strong>NOT</strong> be cached as the user can open/close/create instances.
@@ -218,7 +219,7 @@ public final class ModeShapeMessageConsole extends IOConsole {
                             }
                         } catch (IOException e) {
                             Activator.getDefault().log(new Status(Severity.ERROR,
-                                                                  RestClientI18n.publishingConsoleProblemMsg.text(),
+                                                                  RestClientI18n.publishingConsoleProblemMsg,
                                                                   e));
                         } finally {
                             if (stream != null) {
@@ -227,7 +228,7 @@ public final class ModeShapeMessageConsole extends IOConsole {
                                         stream.close();
                                     } catch (IOException e) {
                                         Activator.getDefault().log(new Status(Severity.ERROR,
-                                                                              RestClientI18n.publishingConsoleProblemMsg.text(),
+                                                                              RestClientI18n.publishingConsoleProblemMsg,
                                                                               e));
                                     }
                                 }
@@ -301,7 +302,7 @@ public final class ModeShapeMessageConsole extends IOConsole {
                     int index = this.message.indexOf(target);
 
                     if (index == -1) {
-                        throw new BadLocationException(RestClientI18n.publishingConsoleFilePathNotFoundMsg.text(target));
+                        throw new BadLocationException(NLS.bind(RestClientI18n.publishingConsoleFilePathNotFoundMsg, target));
                     }
 
                     this.console.addHyperlink(new FileLink(file, null, -1, -1, -1), (region.getOffset() + index), target.length());
@@ -311,7 +312,7 @@ public final class ModeShapeMessageConsole extends IOConsole {
                 }
             } catch (BadLocationException e) {
                 Activator.getDefault().log(new Status(Severity.ERROR,
-                                                      RestClientI18n.publishingConsoleProblemCreatingHyperlinkMsg.text(), e));
+                                                      RestClientI18n.publishingConsoleProblemCreatingHyperlinkMsg, e));
                 document.removeDocumentListener(this);
             }
         }

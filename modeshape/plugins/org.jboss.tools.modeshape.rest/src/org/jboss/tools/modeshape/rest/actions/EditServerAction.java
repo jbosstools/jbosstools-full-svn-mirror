@@ -50,8 +50,8 @@ public final class EditServerAction extends BaseSelectionListenerAction {
      */
     public EditServerAction( Shell shell,
                              ServerManager serverManager ) {
-        super(RestClientI18n.editServerActionText.text());
-        setToolTipText(RestClientI18n.editServerActionToolTip.text());
+        super(RestClientI18n.editServerActionText);
+        setToolTipText(RestClientI18n.editServerActionToolTip);
         setImageDescriptor(Activator.getDefault().getImageDescriptor(EDIT_SERVER_IMAGE));
         setEnabled(false);
 

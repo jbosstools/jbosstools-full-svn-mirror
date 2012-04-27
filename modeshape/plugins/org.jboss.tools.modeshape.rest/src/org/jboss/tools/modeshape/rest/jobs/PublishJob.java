@@ -23,6 +23,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.osgi.util.NLS;
 import org.jboss.tools.modeshape.rest.Activator;
 import org.jboss.tools.modeshape.rest.PublishedResourceHelper;
 import org.jboss.tools.modeshape.rest.RestClientI18n;
@@ -68,11 +69,11 @@ public final class PublishJob extends Job {
         CheckArg.isNotNull(type, "type"); //$NON-NLS-1$
 
         if (Type.PUBLISH == type) {
-            return RestClientI18n.publishJobPublishName.text(jobId);
+            return NLS.bind(RestClientI18n.publishJobPublishName, jobId);
         }
 
         // unpublish
-        return RestClientI18n.publishJobUnpublishName.text(jobId);
+        return NLS.bind(RestClientI18n.publishJobUnpublishName, jobId);
     }
 
     /**
@@ -178,8 +179,8 @@ public final class PublishJob extends Job {
 
         try {
             int fileCount = this.files.size();
-            String name = (isPublishing() ? RestClientI18n.publishJobPublishTaskName.text(this.jobId)
-                                         : RestClientI18n.publishJobUnpublishTaskName.text(this.jobId));
+            String name = (isPublishing() ? NLS.bind(RestClientI18n.publishJobPublishTaskName, this.jobId)
+                                         : NLS.bind(RestClientI18n.publishJobUnpublishTaskName, this.jobId));
             monitor.beginTask(name, fileCount);
             monitor.setTaskName(name);
 
@@ -189,11 +190,11 @@ public final class PublishJob extends Job {
 
             // write initial message to console
             if (isPublishing()) {
-                ModeShapeMessageConsole.writeln(RestClientI18n.publishJobPublish.text(this.jobId, serverUrl, repositoryName,
-                                                                                      workspaceName, fileCount));
+                ModeShapeMessageConsole.writeln(NLS.bind(RestClientI18n.publishJobPublish, new Object[] { this.jobId, serverUrl,
+                        repositoryName, workspaceName, fileCount }));
             } else {
-                ModeShapeMessageConsole.writeln(RestClientI18n.publishJobUnpublish.text(this.jobId, serverUrl, repositoryName,
-                                                                                        workspaceName, fileCount));
+                ModeShapeMessageConsole.writeln(NLS.bind(RestClientI18n.publishJobUnpublish, new Object[] { this.jobId, serverUrl,
+                        repositoryName, workspaceName, fileCount }));
             }
 
             PublishedResourceHelper resourceHelper = new PublishedResourceHelper(getServerManager());
@@ -202,7 +203,7 @@ public final class PublishJob extends Job {
             for (IFile eclipseFile : this.files) {
                 if (monitor.isCanceled()) {
                     canceled = true;
-                    throw new InterruptedException(RestClientI18n.publishJobCanceled.text(jobId));
+                    throw new InterruptedException(NLS.bind(RestClientI18n.publishJobCanceled, jobId));
                 }
 
                 File file = eclipseFile.getLocation().toFile();
@@ -251,7 +252,7 @@ public final class PublishJob extends Job {
             if (e instanceof InterruptedException) {
                 msg = e.getLocalizedMessage();
             } else {
-                msg = RestClientI18n.publishJobUnexpectedErrorMsg.text();
+                msg = RestClientI18n.publishJobUnexpectedErrorMsg;
             }
 
             return new org.eclipse.core.runtime.Status(IStatus.INFO, PLUGIN_ID, msg, e);
@@ -266,28 +267,28 @@ public final class PublishJob extends Job {
             long seconds = ((milliseconds % (1000 * 60 * 60)) % (1000 * 60)) / 1000;
 
             if (hours > 0) {
-                duration = RestClientI18n.publishJobDurationMsg.text(hours, minutes, seconds);
+                duration = NLS.bind(RestClientI18n.publishJobDurationMsg, new Object[] {hours, minutes, seconds});
             } else if (minutes > 0) {
-                duration = RestClientI18n.publishJobDurationNoHoursMsg.text(minutes, seconds);
+                duration = NLS.bind(RestClientI18n.publishJobDurationNoHoursMsg, minutes, seconds);
             } else if (seconds > 0) {
-                duration = RestClientI18n.publishJobDurationNoHoursNoMinutesMsg.text(seconds);
+                duration = NLS.bind(RestClientI18n.publishJobDurationNoHoursNoMinutesMsg, seconds);
             } else {
-                duration = RestClientI18n.publishJobDurationShortMsg.text();
+                duration = RestClientI18n.publishJobDurationShortMsg;
             }
 
             if (canceled) {
                 if (isPublishing()) {
-                    ModeShapeMessageConsole.writeln(RestClientI18n.publishJobPublishCanceledMsg.text(this.jobId, numProcessed,
-                                                                                                     this.files.size(), duration));
+                    ModeShapeMessageConsole.writeln(NLS.bind(RestClientI18n.publishJobPublishCanceledMsg, new Object[] {
+                            this.jobId, numProcessed, this.files.size(), duration }));
                 } else {
-                    ModeShapeMessageConsole.writeln(RestClientI18n.publishJobUnpublishCanceledMsg.text(this.jobId, numProcessed,
-                                                                                                       this.files.size(), duration));
+                    ModeShapeMessageConsole.writeln(NLS.bind(RestClientI18n.publishJobUnpublishCanceledMsg, new Object[] {
+                            this.jobId, numProcessed, this.files.size(), duration }));
                 }
             } else {
                 if (isPublishing()) {
-                    ModeShapeMessageConsole.writeln(RestClientI18n.publishJobPublishFinishedMsg.text(this.jobId, duration));
+                    ModeShapeMessageConsole.writeln(NLS.bind(RestClientI18n.publishJobPublishFinishedMsg, this.jobId, duration));
                 } else {
-                    ModeShapeMessageConsole.writeln(RestClientI18n.publishJobUnpublishFinishedMsg.text(this.jobId, duration));
+                    ModeShapeMessageConsole.writeln(NLS.bind(RestClientI18n.publishJobUnpublishFinishedMsg, this.jobId, duration));
                 }
             }
         }
@@ -307,33 +308,34 @@ public final class PublishJob extends Job {
 
         if (status.isOk()) {
             if (isPublishing()) {
-                message = RestClientI18n.publishJobPublishFile.text(this.jobId, file.getFullPath(), url.toString());
+                message = NLS.bind(RestClientI18n.publishJobPublishFile,
+                                   new Object[] { this.jobId, file.getFullPath(), url.toString() });
             } else {
-                message = RestClientI18n.publishJobUnpublishFile.text(this.jobId, file.getFullPath());
+                message = NLS.bind(RestClientI18n.publishJobUnpublishFile, this.jobId, file.getFullPath());
             }
         } else if (status.isError()) {
             if (isPublishing()) {
-                message = RestClientI18n.publishJobPublishFileFailed.text(this.jobId, file.getFullPath());
+                message = NLS.bind(RestClientI18n.publishJobPublishFileFailed, this.jobId, file.getFullPath());
             } else {
-                message = RestClientI18n.publishJobUnpublishFileFailed.text(this.jobId, file.getFullPath());
+                message = NLS.bind(RestClientI18n.publishJobUnpublishFileFailed, this.jobId, file.getFullPath());
             }
 
             // log
             Activator.getDefault().log(status);
         } else if (status.isWarning()) {
             if (isPublishing()) {
-                message = RestClientI18n.publishJobPublishFileWarning.text(this.jobId, file.getFullPath());
+                message = NLS.bind(RestClientI18n.publishJobPublishFileWarning, this.jobId, file.getFullPath());
             } else {
-                message = RestClientI18n.publishJobUnpublishFileWarning.text(this.jobId, file.getFullPath());
+                message = NLS.bind(RestClientI18n.publishJobUnpublishFileWarning, this.jobId, file.getFullPath());
             }
 
             // log
             Activator.getDefault().log(status);
         } else {
             if (isPublishing()) {
-                message = RestClientI18n.publishJobPublishFileInfo.text(this.jobId, file.getFullPath());
+                message = NLS.bind(RestClientI18n.publishJobPublishFileInfo, this.jobId, file.getFullPath());
             } else {
-                message = RestClientI18n.publishJobUnpublishFileInfo.text(this.jobId, file.getFullPath());
+                message = NLS.bind(RestClientI18n.publishJobUnpublishFileInfo, this.jobId, file.getFullPath());
             }
 
             // log

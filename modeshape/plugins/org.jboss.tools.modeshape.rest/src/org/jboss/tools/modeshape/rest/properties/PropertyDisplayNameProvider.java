@@ -87,7 +87,7 @@ public final class PropertyDisplayNameProvider {
         try {
             bundle = ResourceBundle.getBundle(RESOURCE_BUNDLE);
         } catch (Exception e) {
-            Activator.getDefault().log(new Status(Severity.ERROR, RestClientI18n.propertiesBundleLoadErrorMsg.text(), e));
+            Activator.getDefault().log(new Status(Severity.ERROR, RestClientI18n.propertiesBundleLoadErrorMsg, e));
         }
     }
 

@@ -17,6 +17,7 @@ import java.net.URL;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
@@ -69,7 +70,7 @@ public final class Activator extends AbstractUIPlugin implements IUiConstants {
             URL url = new URL(getBundle().getEntry("/").toString() + key); //$NON-NLS-1$
             return ImageDescriptor.createFromURL(url);
         } catch (final MalformedURLException e) {
-            log(new Status(Severity.ERROR, RestClientI18n.missingImage.text(key), e));
+            log(new Status(Severity.ERROR, NLS.bind(RestClientI18n.missingImage, key), e));
             return null;
         }
     }

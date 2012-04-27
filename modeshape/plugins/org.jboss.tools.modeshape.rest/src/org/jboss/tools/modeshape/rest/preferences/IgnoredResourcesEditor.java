@@ -75,7 +75,7 @@ public final class IgnoredResourcesEditor extends FieldEditor {
      * @param parent the parent control
      */
     public IgnoredResourcesEditor( Composite parent ) {
-        super(IGNORED_RESOURCES_PREFERENCE, ignoredResourcesPreferencePageLabel.text(), parent);
+        super(IGNORED_RESOURCES_PREFERENCE, ignoredResourcesPreferencePageLabel, parent);
     }
 
     /**
@@ -407,7 +407,7 @@ public final class IgnoredResourcesEditor extends FieldEditor {
          */
         @Override
         protected void configureShell( Shell newShell ) {
-            newShell.setText(newIgnoredResourceDialogTitle.text());
+            newShell.setText(newIgnoredResourceDialogTitle);
             super.configureShell(newShell);
         }
 
@@ -445,7 +445,7 @@ public final class IgnoredResourcesEditor extends FieldEditor {
 
             Label label = new Label(pnlEditor, SWT.NONE);
             label.setLayoutData(new GridData(SWT.LEFT, SWT.NONE, false, false));
-            label.setText(newIgnoredResourceDialogLabel.text());
+            label.setText(newIgnoredResourceDialogLabel);
 
             Text textField = new Text(pnlEditor, SWT.BORDER);
             textField.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
@@ -494,7 +494,7 @@ public final class IgnoredResourcesEditor extends FieldEditor {
             super.initializeBounds();
 
             // resize shell to be twice the width needed for the title (without this the title maybe cropped)
-            int width = (4 * convertWidthInCharsToPixels(newIgnoredResourceDialogTitle.text().length()));
+            int width = (4 * convertWidthInCharsToPixels(newIgnoredResourceDialogTitle.length()));
             Rectangle rectangle = getShell().getBounds();
             getShell().setBounds(rectangle.x, rectangle.y, width, rectangle.height);
         }
@@ -522,7 +522,7 @@ public final class IgnoredResourcesEditor extends FieldEditor {
                     if (this.newPattern.equals(pattern.getPattern())) {
                         enable = false;
                         this.lblMessage.setImage(Activator.getDefault().getSharedImage(ISharedImages.IMG_OBJS_INFO_TSK));
-                        this.lblMessage.setText(RestClientI18n.newItemDialogValueExists.text());
+                        this.lblMessage.setText(RestClientI18n.newItemDialogValueExists);
                         break;
                     }
                 }

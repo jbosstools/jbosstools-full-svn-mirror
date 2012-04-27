@@ -51,7 +51,7 @@ public final class ServerWizard extends Wizard {
         this.serverManager = serverManager;
 
         setDefaultPageImageDescriptor(Activator.getDefault().getImageDescriptor(WIZARD_BANNER_IMAGE));
-        setWindowTitle(RestClientI18n.serverWizardNewServerTitle.text());
+        setWindowTitle(RestClientI18n.serverWizardNewServerTitle);
     }
 
     /**
@@ -67,7 +67,7 @@ public final class ServerWizard extends Wizard {
         this.existingServer = server;
 
         setDefaultPageImageDescriptor(Activator.getDefault().getImageDescriptor(WIZARD_BANNER_IMAGE));
-        setWindowTitle(RestClientI18n.serverWizardEditServerTitle.text());
+        setWindowTitle(RestClientI18n.serverWizardEditServerTitle);
     }
 
     /**
@@ -102,16 +102,16 @@ public final class ServerWizard extends Wizard {
 
             if (status.isError()) {
                 MessageDialog.openError(getShell(),
-                                        RestClientI18n.errorDialogTitle.text(),
-                                        RestClientI18n.serverWizardEditServerErrorMsg.text());
+                                        RestClientI18n.errorDialogTitle,
+                                        RestClientI18n.serverWizardEditServerErrorMsg);
             }
         } else if (!this.existingServer.equals(server)) {
             status = this.serverManager.updateServer(this.existingServer, server);
 
             if (status.isError()) {
                 MessageDialog.openError(getShell(),
-                                        RestClientI18n.errorDialogTitle.text(),
-                                        RestClientI18n.serverWizardNewServerErrorMsg.text());
+                                        RestClientI18n.errorDialogTitle,
+                                        RestClientI18n.serverWizardNewServerErrorMsg);
             }
         }
 

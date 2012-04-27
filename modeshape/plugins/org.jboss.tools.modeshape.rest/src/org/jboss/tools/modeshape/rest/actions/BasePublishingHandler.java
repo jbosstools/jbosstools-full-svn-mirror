@@ -9,8 +9,10 @@
 package org.jboss.tools.modeshape.rest.actions;
 
 import static org.jboss.tools.modeshape.rest.IUiConstants.ModeShape_IMAGE_16x;
+
 import java.util.Collections;
 import java.util.List;
+
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.commands.IHandlerListener;
@@ -110,13 +112,13 @@ abstract class BasePublishingHandler implements IHandler {
             String msg = null;
 
             if (this.type == Type.PUBLISH) {
-                msg = RestClientI18n.basePublishingActionPublishingWizardErrorMsg.text();
+                msg = RestClientI18n.basePublishingActionPublishingWizardErrorMsg;
             } else {
-                msg = RestClientI18n.basePublishingActionUnpublishingWizardErrorMsg.text();
+                msg = RestClientI18n.basePublishingActionUnpublishingWizardErrorMsg;
             }
 
             Activator.getDefault().log(new Status(Severity.ERROR, msg, e));
-            MessageDialog.openError(shell, RestClientI18n.errorDialogTitle.text(), msg);
+            MessageDialog.openError(shell, RestClientI18n.errorDialogTitle, msg);
         }
 
         // per javadoc must return null

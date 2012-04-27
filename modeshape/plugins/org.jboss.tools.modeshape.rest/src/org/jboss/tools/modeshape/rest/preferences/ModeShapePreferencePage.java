@@ -57,10 +57,10 @@ public final class ModeShapePreferencePage extends PreferencePage implements IWo
 
         // create the field editor
         this.enableVersioningEditor = new BooleanFieldEditor(ENABLE_RESOURCE_VERSIONING,
-                                                             preferencePageEnableVersioningEditor.text(),
+                                                             preferencePageEnableVersioningEditor,
                                                              panel);
         this.enableVersioningEditor.setPreferenceStore(getPreferenceStore());
-        this.enableVersioningEditor.getDescriptionControl(panel).setToolTipText(preferencePageEnableVersioningEditorToolTip.text());
+        this.enableVersioningEditor.getDescriptionControl(panel).setToolTipText(preferencePageEnableVersioningEditorToolTip);
 
         // populate the editor with current preference value
         this.enableVersioningEditor.load();
@@ -79,7 +79,7 @@ public final class ModeShapePreferencePage extends PreferencePage implements IWo
      */
     @Override
     public String getDescription() {
-        return preferencePageDescription.text();
+        return preferencePageDescription;
     }
 
     /**
@@ -99,7 +99,7 @@ public final class ModeShapePreferencePage extends PreferencePage implements IWo
      */
     @Override
     public String getMessage() {
-        return preferencePageMessage.text();
+        return preferencePageMessage;
     }
 
     /**
@@ -119,7 +119,7 @@ public final class ModeShapePreferencePage extends PreferencePage implements IWo
      */
     @Override
     public String getTitle() {
-        return preferencePageTitle.text();
+        return preferencePageTitle;
     }
 
     /**

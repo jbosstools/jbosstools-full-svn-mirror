@@ -31,6 +31,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableLayout;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
@@ -92,11 +93,11 @@ public final class PublishedLocationsDialog extends MessageDialog {
     /**
      * The column headers.
      */
-    private static final String[] HEADERS = {RestClientI18n.publishedLocationsDialogServerUrlColumnHeader.text(),
-        RestClientI18n.publishedLocationsDialogUserColumnHeader.text(),
-        RestClientI18n.publishedLocationsDialogRepositoryColumnHeader.text(),
-        RestClientI18n.publishedLocationsDialogWorkspaceColumnHeader.text(),
-        RestClientI18n.publishedLocationsDialogFileUrlColumnHeader.text(),};
+    private static final String[] HEADERS = {RestClientI18n.publishedLocationsDialogServerUrlColumnHeader,
+        RestClientI18n.publishedLocationsDialogUserColumnHeader,
+        RestClientI18n.publishedLocationsDialogRepositoryColumnHeader,
+        RestClientI18n.publishedLocationsDialogWorkspaceColumnHeader,
+        RestClientI18n.publishedLocationsDialogFileUrlColumnHeader};
 
     /**
      * The button that copies the file URL to the clipboard.
@@ -121,9 +122,9 @@ public final class PublishedLocationsDialog extends MessageDialog {
     public PublishedLocationsDialog( Shell parentShell,
                                      IFile file,
                                      Collection<WorkspaceLocation> workspaceLocations ) {
-        super(parentShell, RestClientI18n.publishedLocationsDialogTitle.text(),
+        super(parentShell, RestClientI18n.publishedLocationsDialogTitle,
               Activator.getDefault().getImage(ModeShape_IMAGE_16x),
-              RestClientI18n.publishedLocationsDialogMsg.text(file.getFullPath()), MessageDialog.INFORMATION,
+              NLS.bind(RestClientI18n.publishedLocationsDialogMsg, file.getFullPath()), MessageDialog.INFORMATION,
               new String[] {IDialogConstants.OK_LABEL}, 0);
 
         CheckArg.isNotNull(workspaceLocations, "workspaceLocations"); //$NON-NLS-1$
@@ -213,8 +214,8 @@ public final class PublishedLocationsDialog extends MessageDialog {
         //
 
         this.btnCopy = new Button(panel, SWT.PUSH);
-        this.btnCopy.setText(RestClientI18n.publishedLocationsDialogCopyUrlButton.text());
-        this.btnCopy.setToolTipText(RestClientI18n.publishedLocationsDialogCopyUrlButtonToolTip.text());
+        this.btnCopy.setText(RestClientI18n.publishedLocationsDialogCopyUrlButton);
+        this.btnCopy.setToolTipText(RestClientI18n.publishedLocationsDialogCopyUrlButtonToolTip);
         this.btnCopy.setEnabled(false);
         this.btnCopy.addSelectionListener(new SelectionAdapter() {
             /**

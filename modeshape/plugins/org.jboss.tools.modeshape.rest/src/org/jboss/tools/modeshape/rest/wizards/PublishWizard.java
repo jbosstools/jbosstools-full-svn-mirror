@@ -67,8 +67,8 @@ public final class PublishWizard extends Wizard {
         this.page = new PublishPage(type, resources);
         this.serverManager = serverManager;
 
-        setWindowTitle((type == Type.PUBLISH) ? RestClientI18n.publishWizardPublishTitle.text()
-                                             : RestClientI18n.publishWizardUnpublishTitle.text());
+        setWindowTitle((type == Type.PUBLISH) ? RestClientI18n.publishWizardPublishTitle
+                                             : RestClientI18n.publishWizardUnpublishTitle);
         setDefaultPageImageDescriptor(Activator.getDefault().getImageDescriptor(WIZARD_BANNER_IMAGE));
     }
 
@@ -124,7 +124,7 @@ public final class PublishWizard extends Wizard {
             this.page.wizardFinished();
         } catch (Exception e) {
             // don't let this error stop the publishing operation
-            Activator.getDefault().log(new Status(Severity.ERROR, RestClientI18n.publishPageFinishedErrorMsg.text(), e));
+            Activator.getDefault().log(new Status(Severity.ERROR, RestClientI18n.publishPageFinishedErrorMsg, e));
         }
 
         // run publish job

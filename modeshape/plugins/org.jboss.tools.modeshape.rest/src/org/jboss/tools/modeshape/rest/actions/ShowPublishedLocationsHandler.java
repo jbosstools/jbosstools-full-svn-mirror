@@ -9,6 +9,7 @@
 package org.jboss.tools.modeshape.rest.actions;
 
 import java.util.Set;
+
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.resources.IFile;
@@ -19,9 +20,9 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.jboss.tools.modeshape.rest.Activator;
 import org.jboss.tools.modeshape.rest.PublishedResourceHelper;
+import org.jboss.tools.modeshape.rest.PublishedResourceHelper.WorkspaceLocation;
 import org.jboss.tools.modeshape.rest.RestClientI18n;
 import org.jboss.tools.modeshape.rest.ServerManager;
-import org.jboss.tools.modeshape.rest.PublishedResourceHelper.WorkspaceLocation;
 import org.jboss.tools.modeshape.rest.dialogs.PublishedLocationsDialog;
 import org.modeshape.web.jcr.rest.client.Status;
 import org.modeshape.web.jcr.rest.client.Status.Severity;
@@ -59,10 +60,10 @@ public final class ShowPublishedLocationsHandler extends AbstractHandler {
                                                                            workspaceLocations);
             dialog.open();
         } catch (Exception e) {
-            Activator.getDefault().log(new Status(Severity.ERROR, RestClientI18n.showPublishedLocationsErrorMsg.text(), e));
+            Activator.getDefault().log(new Status(Severity.ERROR, RestClientI18n.showPublishedLocationsErrorMsg, e));
             MessageDialog.openError(shell,
-                                    RestClientI18n.errorDialogTitle.text(),
-                                    RestClientI18n.showPublishedLocationsErrorMsg.text());
+                                    RestClientI18n.errorDialogTitle,
+                                    RestClientI18n.showPublishedLocationsErrorMsg);
         }
 
         // per javadoc must return null

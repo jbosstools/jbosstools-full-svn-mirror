@@ -9,7 +9,6 @@ package org.jboss.tools.modeshape.jcr.cnd;
 
 import org.eclipse.osgi.util.NLS;
 import org.jboss.tools.modeshape.jcr.Messages;
-import org.modeshape.common.CommonI18n;
 import org.modeshape.common.text.ParsingException;
 import org.modeshape.common.text.Position;
 import org.modeshape.common.text.TokenStream.CharacterStream;
@@ -129,9 +128,8 @@ public class CndTokenizer implements Tokenizer {
                     }
                 }
                 if (!foundClosingQuote) {
-                    String msg = CommonI18n.noMatchingDoubleQuoteFound.text(startingPosition.getLine(),
-                                                                            startingPosition.getColumn());
-                    throw new ParsingException(startingPosition, msg);
+                    throw new ParsingException(startingPosition, NLS.bind(Messages.noMatchingDoubleQuoteFound,
+                                                                          startingPosition.getLine(), startingPosition.getColumn()));
                 }
                 endIndex = input.index() + 1; // beyond last character read
                 tokens.addToken(startingPosition, startIndex, endIndex, DOUBLE_QUOTED_STRING);
@@ -150,9 +148,8 @@ public class CndTokenizer implements Tokenizer {
                     }
                 }
                 if (!foundClosingQuote) {
-                    String msg = CommonI18n.noMatchingSingleQuoteFound.text(startingPosition.getLine(),
-                                                                            startingPosition.getColumn());
-                    throw new ParsingException(startingPosition, msg);
+                    throw new ParsingException(startingPosition, NLS.bind(Messages.noMatchingSingleQuoteFound,
+                                                                          startingPosition.getLine(), startingPosition.getColumn()));
                 }
                 endIndex = input.index() + 1; // beyond last character read
                 tokens.addToken(startingPosition, startIndex, endIndex, SINGLE_QUOTED_STRING);

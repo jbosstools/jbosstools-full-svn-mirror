@@ -301,6 +301,18 @@ public final class Messages extends NLS {
     public static String nodeTypeDefinitionName;
 
     /**
+     * A CND parser exception message for missing double quote. Two parameters, the line number and the column number where the
+     * error occurred, is required.
+     */
+    public static String noMatchingDoubleQuoteFound;
+
+    /**
+     * A CND parser exception message for missing single quote. Two parameters, the line number and the column number where the
+     * error occurred, is required.
+     */
+    public static String noMatchingSingleQuoteFound;
+
+    /**
      * A message indicating a <code>null</code> was found. One parameter, a string identifying the object, is required.
      */
     public static String objectIsNull;
@@ -365,6 +377,12 @@ public final class Messages extends NLS {
      * definition name, is required.
      */
     public static String superTypesExistButMarkedAsVariant;
+
+    /**
+     * A message indicating that a property value couldn't be converted from one data type to another. Three parameters, the
+     * property value, the from data type, and the to data type, are required.
+     */
+    public static String unableToConvertValue;
 
     /**
      * A message indicating a property definition has identified value constraints but has been marked as a variant. One parameter,

@@ -34,6 +34,7 @@ import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -392,8 +393,8 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
                         List<IResource> resources ) throws CoreException {
         super(PublishPage.class.getSimpleName());
         CheckArg.isNotNull(resources, "resources"); //$NON-NLS-1$
-        setTitle((type == Type.PUBLISH) ? RestClientI18n.publishPagePublishTitle.text()
-                                       : RestClientI18n.publishPageUnpublishTitle.text());
+        setTitle((type == Type.PUBLISH) ? RestClientI18n.publishPagePublishTitle
+                                       : RestClientI18n.publishPageUnpublishTitle);
         setPageComplete(false);
 
         this.type = type;
@@ -407,7 +408,7 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
 
     private void constructLocationPanel( Composite parent ) {
         Group pnl = new Group(parent, SWT.NONE);
-        pnl.setText(RestClientI18n.publishPageLocationGroupTitle.text());
+        pnl.setText(RestClientI18n.publishPageLocationGroupTitle);
         pnl.setLayout(new GridLayout(2, false));
         pnl.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
@@ -428,16 +429,16 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
 
             Label lblServer = new Label(pnlServer, SWT.LEFT);
             lblServer.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
-            lblServer.setText(RestClientI18n.publishPageServerLabel.text());
+            lblServer.setText(RestClientI18n.publishPageServerLabel);
 
             this.cbxServer = new Combo(pnlServer, SWT.DROP_DOWN | SWT.READ_ONLY);
             this.cbxServer.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
-            this.cbxServer.setToolTipText(RestClientI18n.publishPageServerToolTip.text());
+            this.cbxServer.setToolTipText(RestClientI18n.publishPageServerToolTip);
 
             final IAction action = new NewServerAction(this.getShell(), getServerManager());
             final Button btnNewServer = new Button(pnlServer, SWT.PUSH);
             btnNewServer.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
-            btnNewServer.setText(RestClientI18n.publishPageNewServerButton.text());
+            btnNewServer.setText(RestClientI18n.publishPageNewServerButton);
             btnNewServer.setToolTipText(action.getToolTipText());
             btnNewServer.addSelectionListener(new SelectionAdapter() {
                 /**
@@ -470,36 +471,36 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
         { // row 2: repository row
             Label lblRepository = new Label(pnl, SWT.LEFT);
             lblRepository.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
-            lblRepository.setText(RestClientI18n.publishPageRepositoryLabel.text());
+            lblRepository.setText(RestClientI18n.publishPageRepositoryLabel);
 
             this.cbxRepository = new Combo(pnl, SWT.DROP_DOWN | SWT.READ_ONLY);
             this.cbxRepository.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
-            this.cbxRepository.setToolTipText(RestClientI18n.publishPageRepositoryToolTip.text());
+            this.cbxRepository.setToolTipText(RestClientI18n.publishPageRepositoryToolTip);
         }
 
         { // row 3: workspace row
             Label lblWorkspace = new Label(pnl, SWT.LEFT);
             lblWorkspace.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
-            lblWorkspace.setText(RestClientI18n.publishPageWorkspaceLabel.text());
+            lblWorkspace.setText(RestClientI18n.publishPageWorkspaceLabel);
 
             this.cbxWorkspace = new Combo(pnl, SWT.DROP_DOWN | SWT.READ_ONLY);
             this.cbxWorkspace.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
 
             if (type == Type.PUBLISH) {
-                this.cbxWorkspace.setToolTipText(RestClientI18n.publishPageWorkspacePublishToolTip.text());
+                this.cbxWorkspace.setToolTipText(RestClientI18n.publishPageWorkspacePublishToolTip);
             } else {
-                this.cbxWorkspace.setToolTipText(RestClientI18n.publishPageWorkspaceUnpublishToolTip.text());
+                this.cbxWorkspace.setToolTipText(RestClientI18n.publishPageWorkspaceUnpublishToolTip);
             }
         }
 
         { // row 4: workspace area
             Label lblWorkspaceArea = new Label(pnl, SWT.LEFT);
             lblWorkspaceArea.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
-            lblWorkspaceArea.setText(RestClientI18n.publishPageWorkspaceAreaLabel.text());
+            lblWorkspaceArea.setText(RestClientI18n.publishPageWorkspaceAreaLabel);
 
             this.cbxWorkspaceAreas = new Combo(pnl, SWT.DROP_DOWN);
             this.cbxWorkspaceAreas.setLayoutData(new GridData(SWT.FILL, SWT.TOP, true, false));
-            this.cbxWorkspaceAreas.setToolTipText(RestClientI18n.publishPageWorkspaceAreaToolTip.text());
+            this.cbxWorkspaceAreas.setToolTipText(RestClientI18n.publishPageWorkspaceAreaToolTip);
         }
     }
 
@@ -519,9 +520,9 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
             lbl.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
 
             if (type == Type.PUBLISH) {
-                lbl.setText(RestClientI18n.publishPagePublishResourcesLabel.text());
+                lbl.setText(RestClientI18n.publishPagePublishResourcesLabel);
             } else {
-                lbl.setText(RestClientI18n.publishPageUnpublishResourcesLabel.text());
+                lbl.setText(RestClientI18n.publishPageUnpublishResourcesLabel);
             }
         }
 
@@ -561,8 +562,8 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
         { // row 3 recurse chkbox
             Button chkRecurse = new Button(pnl, SWT.CHECK);
             chkRecurse.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
-            chkRecurse.setText(RestClientI18n.publishPageRecurseCheckBox.text());
-            chkRecurse.setToolTipText(RestClientI18n.publishPageRecurseCheckBoxToolTip.text());
+            chkRecurse.setText(RestClientI18n.publishPageRecurseCheckBox);
+            chkRecurse.setToolTipText(RestClientI18n.publishPageRecurseCheckBoxToolTip);
 
             // set the recurse flag based on dialog settings
             if (getDialogSettings().get(RECURSE_KEY) != null) {
@@ -608,8 +609,8 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
 
             this.chkVersioning = new Button(pnlVersioning, SWT.CHECK);
             this.chkVersioning.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
-            this.chkVersioning.setText(RestClientI18n.publishPageVersionCheckBox.text());
-            this.chkVersioning.setToolTipText(RestClientI18n.publishPageVersionCheckBoxToolTip.text());
+            this.chkVersioning.setText(RestClientI18n.publishPageVersionCheckBox);
+            this.chkVersioning.setToolTipText(RestClientI18n.publishPageVersionCheckBoxToolTip);
 
             // set the version flag based on preference
             this.versioning = Activator.getDefault().getPreferenceStore().getBoolean(ENABLE_RESOURCE_VERSIONING);
@@ -629,7 +630,7 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
             });
 
             this.linkPrefs = new Link(pnlVersioning, SWT.WRAP);
-            this.linkPrefs.setText(RestClientI18n.publishPageOpenPreferencePageLink.text());
+            this.linkPrefs.setText(RestClientI18n.publishPageOpenPreferencePageLink);
             this.linkPrefs.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false));
             this.linkPrefs.setEnabled(false);
             this.linkPrefs.addSelectionListener(new SelectionAdapter() {
@@ -736,11 +737,11 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
             this.files = processResources(this.resources, isRecursing(), filter);
             loadFiles();
         } catch (CoreException e) {
-            Activator.getDefault().log(new Status(Severity.ERROR, RestClientI18n.publishPageRecurseProcessingErrorMsg.text(), e));
+            Activator.getDefault().log(new Status(Severity.ERROR, RestClientI18n.publishPageRecurseProcessingErrorMsg, e));
 
             if (getControl().isVisible()) {
-                MessageDialog.openError(getShell(), RestClientI18n.errorDialogTitle.text(),
-                                        RestClientI18n.publishPageRecurseProcessingErrorMsg.text());
+                MessageDialog.openError(getShell(), RestClientI18n.errorDialogTitle,
+                                        RestClientI18n.publishPageRecurseProcessingErrorMsg);
             }
         }
     }
@@ -827,7 +828,7 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
                 } catch (Exception e) {
                     Activator.getDefault()
                              .log(new Status(Severity.ERROR,
-                                             RestClientI18n.publishPageUnableToObtainWorkspaceAreas.text(this.workspace),
+                                             NLS.bind(RestClientI18n.publishPageUnableToObtainWorkspaceAreas, this.workspace),
                                              e));
                 }
 
@@ -917,7 +918,7 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
                 this.repositories = new ArrayList<ModeShapeRepository>(getServerManager().getRepositories(this.server));
             } catch (Exception e) {
                 this.repositories = Collections.emptyList();
-                String msg = RestClientI18n.serverManagerGetRepositoriesExceptionMsg.text(this.server.getShortDescription());
+                String msg = NLS.bind(RestClientI18n.serverManagerGetRepositoriesExceptionMsg, this.server.getShortDescription());
                 Activator.getDefault().log(new Status(Severity.ERROR, msg, e));
             }
         }
@@ -1013,7 +1014,7 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
                 this.workspaces = new ArrayList<ModeShapeWorkspace>(getServerManager().getWorkspaces(this.repository));
             } catch (Exception e) {
                 this.workspaces = Collections.emptyList();
-                String msg = RestClientI18n.serverManagerGetWorkspacesExceptionMsg.text(this.repository);
+                String msg = NLS.bind(RestClientI18n.serverManagerGetWorkspacesExceptionMsg, this.repository);
                 Activator.getDefault().log(new Status(Severity.ERROR, msg, e));
             }
         }
@@ -1096,8 +1097,8 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
 
             // set initial message
             if (this.status.isOk()) {
-                String msg = ((this.type == Type.PUBLISH) ? RestClientI18n.publishPagePublishOkStatusMsg.text()
-                                                         : RestClientI18n.publishPageUnpublishOkStatusMsg.text());
+                String msg = ((this.type == Type.PUBLISH) ? RestClientI18n.publishPagePublishOkStatusMsg
+                                                         : RestClientI18n.publishPageUnpublishOkStatusMsg);
                 setMessage(msg, IMessageProvider.NONE);
             } else {
                 setMessage(this.status.getMessage(), IMessageProvider.ERROR);
@@ -1117,7 +1118,7 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
         try {
             this.files = processResources(this.resources, isRecursing(), this.filter);
         } catch (CoreException e) {
-            Activator.getDefault().log(new Status(Severity.ERROR, RestClientI18n.publishPageRecurseProcessingErrorMsg.text(), e));
+            Activator.getDefault().log(new Status(Severity.ERROR, RestClientI18n.publishPageRecurseProcessingErrorMsg, e));
         }
     }
 
@@ -1125,8 +1126,8 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
      * Updates the initial page message.
      */
     void updateInitialMessage() {
-        String msg = ((this.type == Type.PUBLISH) ? RestClientI18n.publishPagePublishOkStatusMsg.text()
-                                                 : RestClientI18n.publishPageUnpublishOkStatusMsg.text());
+        String msg = ((this.type == Type.PUBLISH) ? RestClientI18n.publishPagePublishOkStatusMsg
+                                                 : RestClientI18n.publishPageUnpublishOkStatusMsg);
 
         if (msg.equals(getMessage())) {
             updateState();
@@ -1191,24 +1192,24 @@ public final class PublishPage extends WizardPage implements IServerRegistryList
         Severity severity = Severity.ERROR;
 
         if ((this.resources == null) || this.resources.isEmpty() || this.files.isEmpty()) {
-            msg = ((type == Type.PUBLISH) ? RestClientI18n.publishPageNoResourcesToPublishStatusMsg.text()
-                                         : RestClientI18n.publishPageNoResourcesToUnpublishStatusMsg.text());
+            msg = ((type == Type.PUBLISH) ? RestClientI18n.publishPageNoResourcesToPublishStatusMsg
+                                         : RestClientI18n.publishPageNoResourcesToUnpublishStatusMsg);
         } else if (this.server == null) {
             int count = this.cbxServer.getItemCount();
-            msg = ((count == 0) ? RestClientI18n.publishPageNoAvailableServersStatusMsg.text()
-                               : RestClientI18n.publishPageMissingServerStatusMsg.text());
+            msg = ((count == 0) ? RestClientI18n.publishPageNoAvailableServersStatusMsg
+                               : RestClientI18n.publishPageMissingServerStatusMsg);
         } else if (this.repository == null) {
             int count = this.cbxRepository.getItemCount();
-            msg = ((count == 0) ? RestClientI18n.publishPageNoAvailableRepositoriesStatusMsg.text()
-                               : RestClientI18n.publishPageMissingRepositoryStatusMsg.text());
+            msg = ((count == 0) ? RestClientI18n.publishPageNoAvailableRepositoriesStatusMsg
+                               : RestClientI18n.publishPageMissingRepositoryStatusMsg);
         } else if (this.workspace == null) {
             int count = this.cbxWorkspace.getItemCount();
-            msg = ((count == 0) ? RestClientI18n.publishPageNoAvailableWorkspacesStatusMsg.text()
-                               : RestClientI18n.publishPageMissingWorkspaceStatusMsg.text());
+            msg = ((count == 0) ? RestClientI18n.publishPageNoAvailableWorkspacesStatusMsg
+                               : RestClientI18n.publishPageMissingWorkspaceStatusMsg);
         } else {
             severity = Severity.OK;
-            msg = ((type == Type.PUBLISH) ? RestClientI18n.publishPagePublishOkStatusMsg.text()
-                                         : RestClientI18n.publishPageUnpublishOkStatusMsg.text());
+            msg = ((type == Type.PUBLISH) ? RestClientI18n.publishPagePublishOkStatusMsg
+                                         : RestClientI18n.publishPageUnpublishOkStatusMsg);
         }
 
         this.status = new Status(severity, msg, null);

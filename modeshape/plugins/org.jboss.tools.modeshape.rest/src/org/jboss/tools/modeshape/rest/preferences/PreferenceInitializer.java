@@ -18,6 +18,7 @@ import java.util.Properties;
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.osgi.util.NLS;
 import org.jboss.tools.modeshape.rest.Activator;
 import org.modeshape.web.jcr.rest.client.Status;
 import org.modeshape.web.jcr.rest.client.Status.Severity;
@@ -48,7 +49,7 @@ public final class PreferenceInitializer extends AbstractPreferenceInitializer {
 
         if (defaultValues == null) {
             // would only happen if PLUGIN_ID is wrong
-            Activator.getDefault().log(new Status(Severity.ERROR, preferenceDefaultScopeNotFound.text(PLUGIN_ID), null));
+            Activator.getDefault().log(new Status(Severity.ERROR, NLS.bind(preferenceDefaultScopeNotFound, PLUGIN_ID), null));
         } else {
             load();
 
@@ -67,12 +68,12 @@ public final class PreferenceInitializer extends AbstractPreferenceInitializer {
             input = getClass().getResource(PREFERENCES_FILE).openStream();
 
             if (input == null) {
-                Activator.getDefault().log(new Status(Severity.ERROR, preferenceFileNotFound.text(PREFERENCES_FILE), null));
+                Activator.getDefault().log(new Status(Severity.ERROR, NLS.bind(preferenceFileNotFound, PREFERENCES_FILE), null));
             } else {
                 this.preferenceDefaults.load(input);
             }
         } catch (IOException e) {
-            Activator.getDefault().log(new Status(Severity.ERROR, preferenceFileNotFound.text(PREFERENCES_FILE), null));
+            Activator.getDefault().log(new Status(Severity.ERROR, NLS.bind(preferenceFileNotFound, PREFERENCES_FILE), null));
         } finally {
             try {
                 if (input != null) {

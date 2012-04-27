@@ -100,7 +100,7 @@ public final class ServerView extends ViewPart implements IServerRegistryListene
             }
         };
 
-        this.collapseAllAction.setToolTipText(RestClientI18n.collapseActionToolTip.text());
+        this.collapseAllAction.setToolTipText(RestClientI18n.collapseActionToolTip);
         this.collapseAllAction.setImageDescriptor(Activator.getDefault().getImageDescriptor(COLLAPSE_ALL_IMAGE));
 
         // the reconnect action tries to ping a selected server
@@ -198,7 +198,7 @@ public final class ServerView extends ViewPart implements IServerRegistryListene
         constructContextMenu();
         hookGlobalActions();
 
-        setTitleToolTip(RestClientI18n.serverViewToolTip.text());
+        setTitleToolTip(RestClientI18n.serverViewToolTip);
 
         // register to receive changes to the server registry
         getServerManager().addRegistryListener(this);

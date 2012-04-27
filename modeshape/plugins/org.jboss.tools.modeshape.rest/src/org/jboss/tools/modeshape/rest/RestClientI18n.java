@@ -11,204 +11,200 @@
  */
 package org.jboss.tools.modeshape.rest;
 
-import org.modeshape.common.i18n.I18n;
+import org.eclipse.osgi.util.NLS;
 
 /**
  * The <code>RestClientI18n</code> class provides localized messages.
  */
-public final class RestClientI18n {
+public final class RestClientI18n extends NLS {
 
-    public static I18n basePublishingActionPublishingWizardErrorMsg;
-    public static I18n basePublishingActionUnpublishingWizardErrorMsg;
+    public static String basePublishingActionPublishingWizardErrorMsg;
+    public static String basePublishingActionUnpublishingWizardErrorMsg;
 
-    public static I18n collapseActionToolTip;
+    public static String collapseActionToolTip;
 
-    public static I18n deleteServerActionText;
-    public static I18n deleteServerActionToolTip;
+    public static String deleteServerActionText;
+    public static String deleteServerActionToolTip;
 
-    public static I18n deleteServerDialogErrorsOccurredMsg;
-    public static I18n deleteServerDialogMultipleServersMsg;
-    public static I18n deleteServerDialogOneServerMsg;
-    public static I18n deleteServerDialogTitle;
+    public static String deleteServerDialogErrorsOccurredMsg;
+    public static String deleteServerDialogMultipleServersMsg;
+    public static String deleteServerDialogOneServerMsg;
+    public static String deleteServerDialogTitle;
 
-    public static I18n editServerActionText;
-    public static I18n editServerActionToolTip;
-    public static I18n errorDeletingServerRegistryFile;
-    public static I18n errorDialogTitle;
-    public static I18n errorRestoringServerRegistry;
-    public static I18n errorSavingServerRegistry;
+    public static String editServerActionText;
+    public static String editServerActionToolTip;
+    public static String errorDeletingServerRegistryFile;
+    public static String errorDialogTitle;
+    public static String errorRestoringServerRegistry;
+    public static String errorSavingServerRegistry;
 
-    public static I18n ignoredResourcesPreferencePageDescription;
-    public static I18n ignoredResourcesPreferencePageLabel;
-    public static I18n ignoredResourcesPreferencePageMessage;
-    public static I18n ignoredResourcesPreferencePageTitle;
+    public static String ignoredResourcesPreferencePageDescription;
+    public static String ignoredResourcesPreferencePageLabel;
+    public static String ignoredResourcesPreferencePageMessage;
+    public static String ignoredResourcesPreferencePageTitle;
 
-    public static I18n missingImage;
+    public static String missingImage;
 
-    public static I18n newIgnoredResourceDialogLabel;
-    public static I18n newIgnoredResourceDialogTitle;
-    
-    public static I18n newItemDialogValueExists;
+    public static String newIgnoredResourceDialogLabel;
+    public static String newIgnoredResourceDialogTitle;
 
-    public static I18n newServerActionText;
-    public static I18n newServerActionToolTip;
+    public static String newItemDialogValueExists;
 
-    public static I18n publishedLocationsDialogCopyUrlButton;
-    public static I18n publishedLocationsDialogCopyUrlButtonToolTip;
-    public static I18n publishedLocationsDialogFileUrlColumnHeader;
-    public static I18n publishedLocationsDialogMsg;
-    public static I18n publishedLocationsDialogRepositoryColumnHeader;
-    public static I18n publishedLocationsDialogServerUrlColumnHeader;
-    public static I18n publishedLocationsDialogTitle;
-    public static I18n publishedLocationsDialogUserColumnHeader;
-    public static I18n publishedLocationsDialogWorkspaceColumnHeader;
+    public static String newServerActionText;
+    public static String newServerActionToolTip;
 
-    public static I18n publishedResourcePropertyErrorMsg;
+    public static String publishedLocationsDialogCopyUrlButton;
+    public static String publishedLocationsDialogCopyUrlButtonToolTip;
+    public static String publishedLocationsDialogFileUrlColumnHeader;
+    public static String publishedLocationsDialogMsg;
+    public static String publishedLocationsDialogRepositoryColumnHeader;
+    public static String publishedLocationsDialogServerUrlColumnHeader;
+    public static String publishedLocationsDialogTitle;
+    public static String publishedLocationsDialogUserColumnHeader;
+    public static String publishedLocationsDialogWorkspaceColumnHeader;
 
-    public static I18n publishingConsoleName;
-    public static I18n publishingConsoleProblemMsg;
-    public static I18n publishingConsoleProblemCreatingHyperlinkMsg;
-    public static I18n publishingConsoleFilePathNotFoundMsg;
+    public static String publishedResourcePropertyErrorMsg;
 
-    public static I18n preferenceDefaultScopeNotFound;
-    public static I18n preferenceFileNotFound;
-    public static I18n preferenceNotFound;
+    public static String publishingConsoleName;
+    public static String publishingConsoleProblemMsg;
+    public static String publishingConsoleProblemCreatingHyperlinkMsg;
+    public static String publishingConsoleFilePathNotFoundMsg;
 
-    public static I18n preferencePageDescription;
-    public static I18n preferencePageEnableVersioningEditor;
-    public static I18n preferencePageEnableVersioningEditorToolTip;
-    public static I18n preferencePageMessage;
-    public static I18n preferencePageTitle;
-    
-    public static I18n propertiesBundleLoadErrorMsg;
+    public static String preferenceDefaultScopeNotFound;
+    public static String preferenceFileNotFound;
+    public static String preferenceNotFound;
 
-    public static I18n publishJobCanceled;
-    public static I18n publishJobDurationMsg;
-    public static I18n publishJobDurationNoHoursMsg;
-    public static I18n publishJobDurationNoHoursNoMinutesMsg;
-    public static I18n publishJobDurationShortMsg;
-    public static I18n publishJobPublish;
-    public static I18n publishJobPublishCanceledMsg;
-    public static I18n publishJobPublishFile;
-    public static I18n publishJobPublishFileFailed;
-    public static I18n publishJobPublishFileInfo;
-    public static I18n publishJobPublishFileWarning;
-    public static I18n publishJobPublishFinishedMsg;
-    public static I18n publishJobPublishName;
-    public static I18n publishJobPublishTaskName;
-    public static I18n publishJobUnexpectedErrorMsg;
-    public static I18n publishJobUnpublish;
-    public static I18n publishJobUnpublishCanceledMsg;
-    public static I18n publishJobUnpublishFile;
-    public static I18n publishJobUnpublishFileFailed;
-    public static I18n publishJobUnpublishFileInfo;
-    public static I18n publishJobUnpublishFileWarning;
-    public static I18n publishJobUnpublishFinishedMsg;
-    public static I18n publishJobUnpublishName;
-    public static I18n publishJobUnpublishTaskName;
+    public static String preferencePageDescription;
+    public static String preferencePageEnableVersioningEditor;
+    public static String preferencePageEnableVersioningEditorToolTip;
+    public static String preferencePageMessage;
+    public static String preferencePageTitle;
 
-    public static I18n publishPagePublishTitle;
-    public static I18n publishPageLocationGroupTitle;
-    public static I18n publishPageMissingRepositoryStatusMsg;
-    public static I18n publishPageMissingServerStatusMsg;
-    public static I18n publishPageMissingWorkspaceStatusMsg;
-    public static I18n publishPageNewServerButton;
-    public static I18n publishPageNoAvailableRepositoriesStatusMsg;
-    public static I18n publishPageNoAvailableServersStatusMsg;
-    public static I18n publishPageNoAvailableWorkspacesStatusMsg;
-    public static I18n publishPageNoResourcesToPublishStatusMsg;
-    public static I18n publishPageNoResourcesToUnpublishStatusMsg;
-    public static I18n publishPageOpenPreferencePageLink;
-    public static I18n publishPagePublishOkStatusMsg;
-    public static I18n publishPagePublishResourcesLabel;
-    public static I18n publishPageRecurseCheckBox;
-    public static I18n publishPageRecurseCheckBoxToolTip;
-    public static I18n publishPageRecurseProcessingErrorMsg;
-    public static I18n publishPageRepositoryLabel;
-    public static I18n publishPageRepositoryToolTip;
-    public static I18n publishPageServerLabel;
-    public static I18n publishPageServerToolTip;
-    public static I18n publishPageUnableToObtainWorkspaceAreas;
-    public static I18n publishPageUnpublishOkStatusMsg;
-    public static I18n publishPageUnpublishResourcesLabel;
-    public static I18n publishPageUnpublishTitle;
-    public static I18n publishPageVersionCheckBox;
-    public static I18n publishPageVersionCheckBoxToolTip;
-    public static I18n publishPageWorkspaceLabel;
-    public static I18n publishPageWorkspacePublishToolTip;
-    public static I18n publishPageWorkspaceUnpublishToolTip;
-    public static I18n publishPageWorkspaceAreaLabel;
-    public static I18n publishPageWorkspaceAreaToolTip;
-    public static I18n publishPageFinishedErrorMsg;
+    public static String propertiesBundleLoadErrorMsg;
 
-    public static I18n publishWizardPublishErrorMsg;
-    public static I18n publishWizardPublishTitle;
-    public static I18n publishWizardUnpublishTitle;
-    public static I18n publishWizardUnpublishErrorMsg;
+    public static String publishJobCanceled;
+    public static String publishJobDurationMsg;
+    public static String publishJobDurationNoHoursMsg;
+    public static String publishJobDurationNoHoursNoMinutesMsg;
+    public static String publishJobDurationShortMsg;
+    public static String publishJobPublish;
+    public static String publishJobPublishCanceledMsg;
+    public static String publishJobPublishFile;
+    public static String publishJobPublishFileFailed;
+    public static String publishJobPublishFileInfo;
+    public static String publishJobPublishFileWarning;
+    public static String publishJobPublishFinishedMsg;
+    public static String publishJobPublishName;
+    public static String publishJobPublishTaskName;
+    public static String publishJobUnexpectedErrorMsg;
+    public static String publishJobUnpublish;
+    public static String publishJobUnpublishCanceledMsg;
+    public static String publishJobUnpublishFile;
+    public static String publishJobUnpublishFileFailed;
+    public static String publishJobUnpublishFileInfo;
+    public static String publishJobUnpublishFileWarning;
+    public static String publishJobUnpublishFinishedMsg;
+    public static String publishJobUnpublishName;
+    public static String publishJobUnpublishTaskName;
 
-    public static I18n reconnectJobTaskName;
+    public static String publishPagePublishTitle;
+    public static String publishPageLocationGroupTitle;
+    public static String publishPageMissingRepositoryStatusMsg;
+    public static String publishPageMissingServerStatusMsg;
+    public static String publishPageMissingWorkspaceStatusMsg;
+    public static String publishPageNewServerButton;
+    public static String publishPageNoAvailableRepositoriesStatusMsg;
+    public static String publishPageNoAvailableServersStatusMsg;
+    public static String publishPageNoAvailableWorkspacesStatusMsg;
+    public static String publishPageNoResourcesToPublishStatusMsg;
+    public static String publishPageNoResourcesToUnpublishStatusMsg;
+    public static String publishPageOpenPreferencePageLink;
+    public static String publishPagePublishOkStatusMsg;
+    public static String publishPagePublishResourcesLabel;
+    public static String publishPageRecurseCheckBox;
+    public static String publishPageRecurseCheckBoxToolTip;
+    public static String publishPageRecurseProcessingErrorMsg;
+    public static String publishPageRepositoryLabel;
+    public static String publishPageRepositoryToolTip;
+    public static String publishPageServerLabel;
+    public static String publishPageServerToolTip;
+    public static String publishPageUnableToObtainWorkspaceAreas;
+    public static String publishPageUnpublishOkStatusMsg;
+    public static String publishPageUnpublishResourcesLabel;
+    public static String publishPageUnpublishTitle;
+    public static String publishPageVersionCheckBox;
+    public static String publishPageVersionCheckBoxToolTip;
+    public static String publishPageWorkspaceLabel;
+    public static String publishPageWorkspacePublishToolTip;
+    public static String publishPageWorkspaceUnpublishToolTip;
+    public static String publishPageWorkspaceAreaLabel;
+    public static String publishPageWorkspaceAreaToolTip;
+    public static String publishPageFinishedErrorMsg;
 
-    public static I18n serverEmptyUrlMsg;
-    public static I18n serverEmptyUserMsg;
-    public static I18n serverExistsMsg;
-    public static I18n serverInvalidUrlMsg;
-    public static I18n serverInvalidUrlHostMsg;
-    public static I18n serverInvalidUrlPortMsg;
+    public static String publishWizardPublishErrorMsg;
+    public static String publishWizardPublishTitle;
+    public static String publishWizardUnpublishTitle;
+    public static String publishWizardUnpublishErrorMsg;
 
-    public static I18n serverManagerConnectionEstablishedMsg;
-    public static I18n serverManagerConnectionFailedMsg;
-    public static I18n serverManagerGetRepositoriesExceptionMsg;
-    public static I18n serverManagerGetWorkspacesExceptionMsg;
-    public static I18n serverManagerRegistryAddUnexpectedError;
-    public static I18n serverManagerRegistryListenerError;
-    public static I18n serverManagerRegistryListenerErrorsOccurred;
-    public static I18n serverManagerRegistryRemoveUnexpectedError;
-    public static I18n serverManagerRegistryUpdateAddError;
-    public static I18n serverManagerRegistryUpdateRemoveError;
-    public static I18n serverManagerUnregisteredServer;
+    public static String reconnectJobTaskName;
 
-    public static I18n serverPageAuthenticationGroupTitle;
-    public static I18n serverPageInvalidServerProperties;
-    public static I18n serverPageOkStatusMsg;
-    public static I18n serverPagePasswordLabel;
-    public static I18n serverPagePasswordToolTip;
-    public static I18n serverPageSavePasswordButton;
-    public static I18n serverPageSavePasswordLabel;
-    public static I18n serverPageSavePasswordToolTip;
-    public static I18n serverPageTestConnectionLabel;
-    public static I18n serverPageTestConnectionButton;
-    public static I18n serverPageTestConnectionButtonToolTip;
-    public static I18n serverPageTestConnectionDialogFailureMsg;
-    public static I18n serverPageTestConnectionDialogTitle;
-    public static I18n serverPageTestConnectionDialogSuccessMsg;
-    public static I18n serverPageTitle;
-    public static I18n serverPageUrlLabel;
-    public static I18n serverPageUrlTemplateLabel;
-    public static I18n serverPageUrlToolTip;
-    public static I18n serverPageUserLabel;
-    public static I18n serverPageUserToolTip;
+    public static String serverEmptyUrlMsg;
+    public static String serverEmptyUserMsg;
+    public static String serverExistsMsg;
+    public static String serverInvalidUrlMsg;
+    public static String serverInvalidUrlHostMsg;
+    public static String serverInvalidUrlPortMsg;
 
-    public static I18n serverReconnectActionText;
-    public static I18n serverReconnectActionToolTip;
+    public static String serverManagerConnectionEstablishedMsg;
+    public static String serverManagerConnectionFailedMsg;
+    public static String serverManagerGetRepositoriesExceptionMsg;
+    public static String serverManagerGetWorkspacesExceptionMsg;
+    public static String serverManagerRegistryAddUnexpectedError;
+    public static String serverManagerRegistryListenerError;
+    public static String serverManagerRegistryListenerErrorsOccurred;
+    public static String serverManagerRegistryRemoveUnexpectedError;
+    public static String serverManagerRegistryUpdateAddError;
+    public static String serverManagerRegistryUpdateRemoveError;
+    public static String serverManagerUnregisteredServer;
 
-    public static I18n serverViewToolTip;
+    public static String serverPageAuthenticationGroupTitle;
+    public static String serverPageInvalidServerProperties;
+    public static String serverPageOkStatusMsg;
+    public static String serverPagePasswordLabel;
+    public static String serverPagePasswordToolTip;
+    public static String serverPageSavePasswordButton;
+    public static String serverPageSavePasswordLabel;
+    public static String serverPageSavePasswordToolTip;
+    public static String serverPageTestConnectionLabel;
+    public static String serverPageTestConnectionButton;
+    public static String serverPageTestConnectionButtonToolTip;
+    public static String serverPageTestConnectionDialogFailureMsg;
+    public static String serverPageTestConnectionDialogTitle;
+    public static String serverPageTestConnectionDialogSuccessMsg;
+    public static String serverPageTitle;
+    public static String serverPageUrlLabel;
+    public static String serverPageUrlTemplateLabel;
+    public static String serverPageUrlToolTip;
+    public static String serverPageUserLabel;
+    public static String serverPageUserToolTip;
 
-    public static I18n serverWizardEditServerErrorMsg;
-    public static I18n serverWizardEditServerTitle;
-    public static I18n serverWizardNewServerErrorMsg;
-    public static I18n serverWizardNewServerTitle;
+    public static String serverReconnectActionText;
+    public static String serverReconnectActionToolTip;
 
-    public static I18n showPublishedLocationsErrorMsg;
+    public static String serverViewToolTip;
 
-    public static I18n testServerActionText;
-    public static I18n testServerActionToolTip;
+    public static String serverWizardEditServerErrorMsg;
+    public static String serverWizardEditServerTitle;
+    public static String serverWizardNewServerErrorMsg;
+    public static String serverWizardNewServerTitle;
+
+    public static String showPublishedLocationsErrorMsg;
+
+    public static String testServerActionText;
+    public static String testServerActionToolTip;
 
     static {
-        try {
-            I18n.initialize(RestClientI18n.class);
-        } catch (Exception e) {
-            System.err.println(e);
-        }
+        NLS.initializeMessages("org.jboss.tools.modeshape.rest.RestClientI18n", RestClientI18n.class); //$NON-NLS-1$
     }
 
 }

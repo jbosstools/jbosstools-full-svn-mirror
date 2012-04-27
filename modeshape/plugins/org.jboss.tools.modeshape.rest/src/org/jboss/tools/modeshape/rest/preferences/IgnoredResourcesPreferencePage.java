@@ -72,7 +72,7 @@ public final class IgnoredResourcesPreferencePage extends PreferencePage impleme
      */
     @Override
     public String getDescription() {
-        return ignoredResourcesPreferencePageDescription.text();
+        return ignoredResourcesPreferencePageDescription;
     }
 
     /**
@@ -92,7 +92,7 @@ public final class IgnoredResourcesPreferencePage extends PreferencePage impleme
      */
     @Override
     public String getMessage() {
-        return ignoredResourcesPreferencePageMessage.text();
+        return ignoredResourcesPreferencePageMessage;
     }
 
     /**
@@ -112,7 +112,7 @@ public final class IgnoredResourcesPreferencePage extends PreferencePage impleme
      */
     @Override
     public String getTitle() {
-        return ignoredResourcesPreferencePageTitle.text();
+        return ignoredResourcesPreferencePageTitle;
     }
 
     /**

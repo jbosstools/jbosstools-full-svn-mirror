@@ -34,13 +34,15 @@ import javax.xml.transform.stream.StreamResult;
 import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
 
+import org.eclipse.core.runtime.ILog;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.osgi.util.NLS;
 import org.jboss.tools.modeshape.rest.domain.ModeShapeRepository;
 import org.jboss.tools.modeshape.rest.domain.ModeShapeServer;
 import org.jboss.tools.modeshape.rest.domain.ModeShapeWorkspace;
 import org.jboss.tools.modeshape.rest.domain.WorkspaceArea;
 import org.modeshape.common.util.Base64;
 import org.modeshape.common.util.CheckArg;
-import org.modeshape.common.util.Logger;
 import org.modeshape.web.jcr.rest.client.IJcrConstants;
 import org.modeshape.web.jcr.rest.client.IRestClient;
 import org.modeshape.web.jcr.rest.client.Status;
@@ -106,11 +108,6 @@ public final class ServerManager {
      * Executes the commands run on the ModeShape REST server.
      */
     private final IRestClient delegate;
-
-    /**
-     * The logger.
-     */
-    private final Logger logger = Logger.getLogger(ServerManager.class);
 
     /**
      * The path where the server registry is persisted or <code>null</code> if not persisted.
@@ -250,7 +247,7 @@ public final class ServerManager {
             }
 
             // server must be registered in order to obtain it's repositories
-            throw new RuntimeException(RestClientI18n.serverManagerUnregisteredServer.text(server.getShortDescription()));
+            throw new RuntimeException(NLS.bind(RestClientI18n.serverManagerUnregisteredServer, server.getShortDescription()));
         } finally {
             this.serverLock.readLock().unlock();
         }
@@ -313,7 +310,7 @@ public final class ServerManager {
             }
 
             // a repository's server must be registered in order to obtain it's workspaces
-            String msg = RestClientI18n.serverManagerUnregisteredServer.text(repository.getServer().getShortDescription());
+            String msg = NLS.bind(RestClientI18n.serverManagerUnregisteredServer, repository.getServer().getShortDescription());
             throw new RuntimeException(msg);
         } finally {
             this.serverLock.readLock().unlock();
@@ -360,7 +357,7 @@ public final class ServerManager {
         }
 
         // server already exists
-        return new Status(Severity.ERROR, RestClientI18n.serverExistsMsg.text(server.getShortDescription()), null);
+        return new Status(Severity.ERROR, NLS.bind(RestClientI18n.serverExistsMsg, server.getShortDescription()), null);
     }
 
     /**
@@ -403,7 +400,7 @@ public final class ServerManager {
 
         // server could not be removed
         return new Status(Severity.ERROR,
-                          RestClientI18n.serverManagerRegistryRemoveUnexpectedError.text(server.getShortDescription()),
+                          NLS.bind(RestClientI18n.serverManagerRegistryRemoveUnexpectedError, server.getShortDescription()),
                           null);
     }
 
@@ -473,11 +470,16 @@ public final class ServerManager {
             return Status.OK_STATUS;
         }
 
+        ILog logger = Activator.getDefault().getLog();
+
         for (Exception error : errors) {
-            this.logger.error(error, RestClientI18n.serverManagerRegistryListenerError);
+            logger.log(new org.eclipse.core.runtime.Status(IStatus.ERROR,
+                                                           IUiConstants.PLUGIN_ID,
+                                                           RestClientI18n.serverManagerRegistryListenerError,
+                                                           error));
         }
 
-        return new Status(Severity.WARNING, RestClientI18n.serverManagerRegistryListenerErrorsOccurred.text(), null);
+        return new Status(Severity.WARNING, RestClientI18n.serverManagerRegistryListenerErrorsOccurred, null);
     }
 
     /**
@@ -492,9 +494,9 @@ public final class ServerManager {
 
         try {
             this.delegate.getRepositories(server.getDelegate());
-            return new Status(Severity.OK, RestClientI18n.serverManagerConnectionEstablishedMsg.text(), null);
+            return new Status(Severity.OK, RestClientI18n.serverManagerConnectionEstablishedMsg, null);
         } catch (Exception e) {
-            return new Status(Severity.ERROR, RestClientI18n.serverManagerConnectionFailedMsg.text(e), null);
+            return new Status(Severity.ERROR, NLS.bind(RestClientI18n.serverManagerConnectionFailedMsg, e), null);
         }
     }
 
@@ -528,7 +530,7 @@ public final class ServerManager {
         }
 
         // server must be registered in order to publish
-        throw new RuntimeException(RestClientI18n.serverManagerUnregisteredServer.text(server.getShortDescription()));
+        throw new RuntimeException(NLS.bind(RestClientI18n.serverManagerUnregisteredServer, server.getShortDescription()));
     }
 
     /**
@@ -582,7 +584,7 @@ public final class ServerManager {
                         }
                     }
                 } catch (Exception e) {
-                    return new Status(Severity.ERROR, RestClientI18n.errorRestoringServerRegistry.text(getStateFileName()), e);
+                    return new Status(Severity.ERROR, NLS.bind(RestClientI18n.errorRestoringServerRegistry, getStateFileName()), e);
                 }
             }
         }
@@ -627,14 +629,14 @@ public final class ServerManager {
                 transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2"); //$NON-NLS-1$ //$NON-NLS-2$
                 transformer.transform(source, resultXML);
             } catch (Exception e) {
-                return new Status(Severity.ERROR, RestClientI18n.errorSavingServerRegistry.text(getStateFileName()), e);
+                return new Status(Severity.ERROR, NLS.bind(RestClientI18n.errorSavingServerRegistry, getStateFileName()), e);
             }
         } else if ((this.stateLocationPath != null) && stateFileExists()) {
             // delete current registry file since all servers have been deleted
             try {
                 new File(getStateFileName()).delete();
             } catch (Exception e) {
-                return new Status(Severity.ERROR, RestClientI18n.errorDeletingServerRegistryFile.text(getStateFileName()), e);
+                return new Status(Severity.ERROR, NLS.bind(RestClientI18n.errorDeletingServerRegistryFile, getStateFileName()), e);
             }
         }
 
@@ -668,7 +670,7 @@ public final class ServerManager {
         }
 
         // server must be registered in order to unpublish
-        throw new RuntimeException(RestClientI18n.serverManagerUnregisteredServer.text(server.getShortDescription()));
+        throw new RuntimeException(NLS.bind(RestClientI18n.serverManagerUnregisteredServer, server.getShortDescription()));
     }
 
     /**
@@ -701,7 +703,7 @@ public final class ServerManager {
 
                 // unexpected problem adding new version of server to registry
                 return new Status(Severity.ERROR,
-                                  RestClientI18n.serverManagerRegistryUpdateAddError.text(status.getMessage()),
+                                  NLS.bind(RestClientI18n.serverManagerRegistryUpdateAddError, status.getMessage()),
                                   status.getException());
             }
         } finally {
@@ -710,7 +712,7 @@ public final class ServerManager {
 
         // unexpected problem removing server from registry
         return new Status(Severity.ERROR,
-                          RestClientI18n.serverManagerRegistryUpdateRemoveError.text(status.getMessage()),
+                          NLS.bind(RestClientI18n.serverManagerRegistryUpdateRemoveError, status.getMessage()),
                           status.getException());
     }
 

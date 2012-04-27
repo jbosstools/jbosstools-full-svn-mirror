@@ -44,8 +44,8 @@ public final class NewServerAction extends Action {
      */
     public NewServerAction( Shell shell,
                             ServerManager serverManager ) {
-        super(RestClientI18n.newServerActionText.text());
-        setToolTipText(RestClientI18n.newServerActionToolTip.text());
+        super(RestClientI18n.newServerActionText);
+        setToolTipText(RestClientI18n.newServerActionToolTip);
         setImageDescriptor(Activator.getDefault().getImageDescriptor(NEW_SERVER_IMAGE));
 
         this.shell = shell;

@@ -19,6 +19,7 @@ import java.util.StringTokenizer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.QualifiedName;
+import org.eclipse.osgi.util.NLS;
 import org.jboss.tools.modeshape.rest.domain.ModeShapeRepository;
 import org.jboss.tools.modeshape.rest.domain.ModeShapeServer;
 import org.jboss.tools.modeshape.rest.domain.ModeShapeWorkspace;
@@ -190,7 +191,9 @@ public final class PublishedResourceHelper {
         try {
             return !getPublishedWorkspaceLocations(file).isEmpty();
         } catch (Exception e) {
-            Activator.getDefault().log(new Status(Severity.ERROR, RestClientI18n.publishedResourcePropertyErrorMsg.text(file), e));
+            Activator.getDefault().log(new Status(Severity.ERROR,
+                                                  NLS.bind(RestClientI18n.publishedResourcePropertyErrorMsg, file),
+                                                  e));
         }
 
         return false;

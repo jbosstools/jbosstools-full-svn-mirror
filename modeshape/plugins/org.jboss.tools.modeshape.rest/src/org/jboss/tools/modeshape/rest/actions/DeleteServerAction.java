@@ -55,8 +55,8 @@ public final class DeleteServerAction extends BaseSelectionListenerAction {
      */
     public DeleteServerAction( Shell shell,
                                ServerManager serverManager ) {
-        super(RestClientI18n.deleteServerActionText.text());
-        setToolTipText(RestClientI18n.deleteServerActionToolTip.text());
+        super(RestClientI18n.deleteServerActionText);
+        setToolTipText(RestClientI18n.deleteServerActionToolTip);
         setImageDescriptor(Activator.getDefault().getImageDescriptor(DELETE_SERVER_IMAGE));
         setEnabled(false);
 
@@ -90,9 +90,8 @@ public final class DeleteServerAction extends BaseSelectionListenerAction {
             }
 
             if (errorsOccurred) {
-                MessageDialog.openError(this.shell,
-                                        RestClientI18n.errorDialogTitle.text(),
-                                        RestClientI18n.deleteServerDialogErrorsOccurredMsg.text());
+                MessageDialog.openError(this.shell, RestClientI18n.errorDialogTitle,
+                                        RestClientI18n.deleteServerDialogErrorsOccurredMsg);
             }
         }
     }

@@ -17,6 +17,7 @@ import java.util.Collection;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
@@ -45,7 +46,7 @@ public final class DeleteServerDialog extends MessageDialog {
      */
     public DeleteServerDialog( Shell parentShell,
                                Collection<ModeShapeServer> serversBeingDeleted ) {
-        super(parentShell, RestClientI18n.deleteServerDialogTitle.text(), Activator.getDefault().getImage(ModeShape_IMAGE_16x),
+        super(parentShell, RestClientI18n.deleteServerDialogTitle, Activator.getDefault().getImage(ModeShape_IMAGE_16x),
                 null, MessageDialog.QUESTION, new String[] { IDialogConstants.OK_LABEL, IDialogConstants.CANCEL_LABEL }, 0);
 
         CheckArg.isNotNull(serversBeingDeleted, "serversBeingDeleted"); //$NON-NLS-1$
@@ -69,9 +70,9 @@ public final class DeleteServerDialog extends MessageDialog {
 
         if (this.serversBeingDeleted.size() == 1) {
             ModeShapeServer server = this.serversBeingDeleted.iterator().next();
-            msg = RestClientI18n.deleteServerDialogOneServerMsg.text(server.getName(), server.getUser());
+            msg = NLS.bind(RestClientI18n.deleteServerDialogOneServerMsg, server.getName(), server.getUser());
         } else {
-            msg = RestClientI18n.deleteServerDialogMultipleServersMsg.text(this.serversBeingDeleted.size());
+            msg = NLS.bind(RestClientI18n.deleteServerDialogMultipleServersMsg, this.serversBeingDeleted.size());
         }
 
         this.message = msg;

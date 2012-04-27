@@ -28,6 +28,7 @@ import org.eclipse.jface.viewers.ILightweightLabelDecorator;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IDecoratorManager;
@@ -174,7 +175,7 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider implemen
                         return getServerManager().getRepositories(server).toArray();
                     } catch (Exception e) {
                         addOfflineServer(server);
-                        String msg = RestClientI18n.serverManagerGetRepositoriesExceptionMsg.text(server.getShortDescription());
+                        String msg = NLS.bind(RestClientI18n.serverManagerGetRepositoriesExceptionMsg, server.getShortDescription());
                         Activator.getDefault().log(new Status(Severity.ERROR, msg, e));
                     }
                 }
@@ -186,7 +187,7 @@ public final class ModeShapeContentProvider extends ColumnLabelProvider implemen
                         return getServerManager().getWorkspaces(repository).toArray();
                     } catch (Exception e) {
                         addOfflineServer(repository.getServer());
-                        String msg = RestClientI18n.serverManagerGetWorkspacesExceptionMsg.text(repository.getShortDescription());
+                        String msg = NLS.bind(RestClientI18n.serverManagerGetWorkspacesExceptionMsg, repository.getShortDescription());
                         Activator.getDefault().log(new Status(Severity.ERROR, msg, e));
                     }
                 }

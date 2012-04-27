@@ -21,8 +21,9 @@ import javax.jcr.RepositoryException;
 import javax.jcr.Value;
 import javax.jcr.ValueFormatException;
 
+import org.eclipse.osgi.util.NLS;
+import org.jboss.tools.modeshape.jcr.Messages;
 import org.jboss.tools.modeshape.jcr.Utils;
-import org.modeshape.web.jcr.rest.client.RestClientI18n;
 
 /**
  * 
@@ -199,7 +200,7 @@ public class PropertyValue implements Value {
         } catch (final Exception e) {
             final String from = PropertyType.nameFromValue(getType());
             final String to = PropertyType.nameFromValue(PropertyType.LONG);
-            throw new ValueFormatException(RestClientI18n.unableToConvertValue.text(this.value, from, to), e);
+            throw new ValueFormatException(NLS.bind(Messages.unableToConvertValue, new Object[] {this.value, from, to}), e);
         }
     }
 
@@ -215,7 +216,7 @@ public class PropertyValue implements Value {
         } catch (final NumberFormatException t) {
             final String from = PropertyType.nameFromValue(getType());
             final String to = PropertyType.nameFromValue(PropertyType.DECIMAL);
-            throw new ValueFormatException(RestClientI18n.unableToConvertValue.text(this.value, from, to), t);
+            throw new ValueFormatException(NLS.bind(Messages.unableToConvertValue, new Object[] {this.value, from, to}), t);
         }
     }
 
@@ -231,7 +232,7 @@ public class PropertyValue implements Value {
         } catch (final NumberFormatException t) {
             final String from = PropertyType.nameFromValue(getType());
             final String to = PropertyType.nameFromValue(PropertyType.DOUBLE);
-            throw new ValueFormatException(RestClientI18n.unableToConvertValue.text(this.value, from, to), t);
+            throw new ValueFormatException(NLS.bind(Messages.unableToConvertValue, new Object[] {this.value, from, to}), t);
         }
     }
 
@@ -247,7 +248,7 @@ public class PropertyValue implements Value {
         } catch (final NumberFormatException t) {
             final String from = PropertyType.nameFromValue(getType());
             final String to = PropertyType.nameFromValue(PropertyType.LONG);
-            throw new ValueFormatException(RestClientI18n.unableToConvertValue.text(this.value, from, to), t);
+            throw new ValueFormatException(NLS.bind(Messages.unableToConvertValue, new Object[] {this.value, from, to}), t);
         }
     }
 
