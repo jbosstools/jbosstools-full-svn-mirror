@@ -77,7 +77,9 @@ public final class EclipseLogger implements Logger {
     @Override
     public void debug( String pattern,
                        Object[] arguments ) {
-        debug(MessageFormat.format(pattern, arguments), arguments);
+        if (isDebugEnabled()) {
+            info(MessageFormat.format(pattern, arguments), arguments);
+        }
     }
 
     /**

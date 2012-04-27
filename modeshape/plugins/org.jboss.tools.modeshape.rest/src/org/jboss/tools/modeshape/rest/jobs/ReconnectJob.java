@@ -18,6 +18,7 @@ import static org.jboss.tools.modeshape.rest.RestClientI18n.reconnectJobTaskName
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.osgi.util.NLS;
 import org.jboss.tools.modeshape.rest.Activator;
 import org.jboss.tools.modeshape.rest.RestClientI18n;
 import org.jboss.tools.modeshape.rest.ServerManager;
@@ -39,7 +40,7 @@ public final class ReconnectJob extends Job {
      * @param server the server being connected to (never <code>null</code>)
      */
     public ReconnectJob( ModeShapeServer server ) {
-        super(reconnectJobTaskName.text(server.getShortDescription()));
+        super(NLS.bind(reconnectJobTaskName, server.getShortDescription()));
         this.server = server;
     }
 
@@ -64,21 +65,16 @@ public final class ReconnectJob extends Job {
         ServerManager serverManager = Activator.getDefault().getServerManager();
 
         try {
-            String taskName = reconnectJobTaskName.text(this.server.getShortDescription());
+            String taskName = NLS.bind(reconnectJobTaskName, this.server.getShortDescription());
             monitor.beginTask(taskName, 1);
             monitor.setTaskName(taskName);
             Status status = serverManager.ping(this.server);
             result = Utils.convert(status);
         } catch (Exception e) {
-            String msg = null;
-
-            if (e instanceof InterruptedException) {
-                msg = e.getLocalizedMessage();
-            } else {
-                msg = RestClientI18n.publishJobUnexpectedErrorMsg.text();
-            }
-
-            result = new org.eclipse.core.runtime.Status(IStatus.ERROR, PLUGIN_ID, msg, e);
+            result = new org.eclipse.core.runtime.Status(IStatus.ERROR,
+                                                         PLUGIN_ID,
+                                                         RestClientI18n.publishJobUnexpectedErrorMsg,
+                                                         e);
         } finally {
             monitor.done();
             done(result);

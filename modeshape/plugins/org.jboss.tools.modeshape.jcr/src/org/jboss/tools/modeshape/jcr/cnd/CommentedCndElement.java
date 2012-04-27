@@ -118,10 +118,8 @@ public interface CommentedCndElement extends CndElement {
                     // remove beginning inner comment chars
                     if (result.startsWith(BLOCK_COMMENT_INNER_CHARS)) {
                         result = result.substring(BLOCK_COMMENT_INNER_CHARS.length());
-                        result.trim();
                     } else if (result.startsWith(BLOCK_COMMENT_INNER_CHARS2)) {
                         result = result.substring(BLOCK_COMMENT_INNER_CHARS2.length());
-                        result.trim();
                     }
 
                     // remove other inner comment chars

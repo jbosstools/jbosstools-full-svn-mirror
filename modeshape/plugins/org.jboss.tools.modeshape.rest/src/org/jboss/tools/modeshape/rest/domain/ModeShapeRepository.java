@@ -50,7 +50,12 @@ public final class ModeShapeRepository implements IAdaptable, ModeShapeDomainObj
      */
     @Override
     public boolean equals( Object obj ) {
-        return this.delegate.equals(obj);
+        if ((obj == null) || !getClass().equals(obj.getClass())) {
+            return false;
+        }
+
+        ModeShapeRepository that = (ModeShapeRepository)obj;
+        return this.delegate.equals(that.delegate);
     }
 
     /**

@@ -39,8 +39,8 @@ public final class ReconnectToServerAction extends BaseSelectionListenerAction {
      * @param viewer the server view tree viewer
      */
     public ReconnectToServerAction( TreeViewer viewer ) {
-        super(RestClientI18n.serverReconnectActionText.text());
-        setToolTipText(RestClientI18n.serverReconnectActionToolTip.text());
+        super(RestClientI18n.serverReconnectActionText);
+        setToolTipText(RestClientI18n.serverReconnectActionToolTip);
         setImageDescriptor(Activator.getDefault().getImageDescriptor(REFRESH_IMAGE));
         setEnabled(false);
 
@@ -102,7 +102,7 @@ public final class ReconnectToServerAction extends BaseSelectionListenerAction {
 
         // run job in own thread not in the UI thread
         Thread t = new Thread();
-        t.run();
+        t.start();
         job.setThread(t);
         job.schedule();
     }

@@ -48,7 +48,12 @@ public final class ModeShapeWorkspace implements IAdaptable, ModeShapeDomainObje
      */
     @Override
     public boolean equals( Object obj ) {
-        return this.delegate.equals(obj);
+        if ((obj == null) || !getClass().equals(obj.getClass())) {
+            return false;
+        }
+
+        ModeShapeWorkspace that = (ModeShapeWorkspace)obj;
+        return this.delegate.equals(that.delegate);
     }
 
     /**
