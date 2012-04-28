@@ -187,7 +187,7 @@
 		<category name="AbridgedTools" />
 		<category name="MavenTools" />
 	</feature> 
-	<feature url="features/org.jboss.tools.maven.sourcelookup.feature_0.0.0.jar" id="org.jboss.tools.maven.sourcelokup.feature" version="0.0.0">
+	<feature url="features/org.jboss.tools.maven.sourcelookup.feature_0.0.0.jar" id="org.jboss.tools.maven.sourcelookup.feature" version="0.0.0">
 		<category name="AbridgedTools" />
 		<category name="MavenTools" />
 	</feature>      
