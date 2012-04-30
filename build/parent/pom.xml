@@ -49,7 +49,8 @@
 
 		<!-- 2b. or use -Plocal.composite -Dlocal.composite=file:///path/to/mirror/of/composite/staging/site/ -->
 		<!-- for trunk use _composite_/trunk; for 3.3_stable_branch, use _composite_/3.3.indigo -->
-		<local.composite>file:///home/hudson/static_build_env/jbds/builds/staging/_composite_/trunk/</local.composite>
+		<local.composite>file:///home/hudson/static_build_env/jbds/builds/staging/_composite_/core/trunk/</local.composite>
+		<local.composite-soa-tooling>file:///home/hudson/static_build_env/jbds/builds/staging/_composite_/soa-tooling/trunk/</local.composite-soa-tooling>
 
 		<!-- 3a. URL of latest JBT requirements composite mirror -->
 		<!-- TODO: don't forget to update this in ../aggregate/*/associate.properties too (5 files)! -->
