@@ -17,11 +17,11 @@ import java.io.IOException;
 import org.eclipse.core.runtime.Preferences;
 import org.eclipse.jsch.internal.core.IConstants;
 import org.eclipse.jsch.internal.core.JSchCorePlugin;
-import org.jboss.tools.common.ui.databinding.ObservableUIPojo;
 import org.jboss.tools.openshift.express.internal.core.console.UserDelegate;
 import org.jboss.tools.openshift.express.internal.ui.utils.FileUtils;
 
 import com.openshift.client.IDomain;
+import com.openshift.client.IOpenShiftSSHKey;
 import com.openshift.client.ISSHPublicKey;
 import com.openshift.client.OpenShiftException;
 import com.openshift.client.SSHKeyPair;
@@ -34,6 +34,8 @@ public class NewDomainWizardPageModel extends ObservableUIPojo {
 
 	public static final String LIBRA_KEY = "libra_id_rsa";
 	private static final String PUBLIC_KEY_SUFFIX = ".pub";
+
+	private static final String SSHKEY_DEFAULT_NAME = "jbosstools"; //$NON-NLS-1$
 
 	public static final String PROPERTY_DOMAIN_ID = "domainId";
 	public static final String PROPERTY_SSHKEY = "sshKey";
@@ -99,7 +101,12 @@ public class NewDomainWizardPageModel extends ObservableUIPojo {
 	}
 
 	public void createDomain() throws OpenShiftException, IOException {
-		IDomain domain = user.createDomain(domainId);
+		user.createDomain(domainId);
+		ISSHPublicKey sshKey = loadSshKey();
+		IOpenShiftSSHKey sshKeyResource = user.getSSHKeyByPublicKey(sshKey.getPublicKey());
+		if (sshKeyResource == null) {
+			user.putSSHKey(SSHKEY_DEFAULT_NAME, sshKey);
+		}
 	}
 
 	public String getSshKey() {
