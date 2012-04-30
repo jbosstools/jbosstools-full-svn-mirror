@@ -2,10 +2,12 @@
 TMP=`mktemp -d`
 destfolder=`pwd`
 scriptname=${destfolder}/build.xml
+#eclipse=~/eclipse
+eclipse=/home/hudson/STATIC/jbds/tools/sources/eclipse-3.7.2/eclipse
 
 if [[ $# -lt 1 ]] || [[ $1 == "." ]]; then
 	echo "Usage: $0 <scriptname> <destfolder>"
-	echo "Usage: $0 - (to use defaults of build.xml and .)"
+	echo "Usage: $0 - (to use defaults of build.xml and ${destfolder})"
 	exit
 else
 	if [[ $1 != "-" ]]; then
@@ -14,8 +16,8 @@ else
 	fi
 fi
 export JAVA_HOME=$HOME/bin/sun-java2-6.0
-${JAVA_HOME}/bin/java -cp ~/eclipse/plugins/org.eclipse.equinox.launcher_*.jar org.eclipse.equinox.launcher.Main -vm ${JAVA_HOME} -consoleLog -nosplash -data $TMP -application org.eclipse.ant.core.antRunner -f $scriptname -Ddestination=$destfolder -Declipse.p2.mirrors=false $3 $4 $5
-#${JAVA_HOME}/bin/java -cp ~/eclipse/plugins/org.eclipse.equinox.launcher_*.jar org.eclipse.equinox.launcher.Main -vm ${JAVA_HOME} -consoleLog -nosplash -data $TMP -application org.eclipse.ant.core.antRunner -f $scriptname -Ddestination=$destfolder -Declipse.p2.mirrors=true
+${JAVA_HOME}/bin/java -cp ${eclipse}/plugins/org.eclipse.equinox.launcher_*.jar org.eclipse.equinox.launcher.Main -vm ${JAVA_HOME} -consoleLog -nosplash -data $TMP -application org.eclipse.ant.core.antRunner -f $scriptname -Ddestination=$destfolder -Declipse.p2.mirrors=false -Dp2.mirror=false $3 $4 $5
+#${JAVA_HOME}/bin/java -cp ${eclipse}/plugins/org.eclipse.equinox.launcher_*.jar org.eclipse.equinox.launcher.Main -vm ${JAVA_HOME} -consoleLog -nosplash -data $TMP -application org.eclipse.ant.core.antRunner -f $scriptname -Ddestination=$destfolder -Declipse.p2.mirrors=true
 
 # cleanup
 rm -fr $TMP
