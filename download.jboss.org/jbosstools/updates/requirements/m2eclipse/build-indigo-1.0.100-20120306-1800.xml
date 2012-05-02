@@ -18,7 +18,6 @@
 	<target name="mirror">
 		<property name="URL1" value="http://download.jboss.org/jbosstools/updates/m2eclipse-wtp/"/> 
 		<property name="URL2" value="http://download.jboss.org/jbosstools/updates/m2e-jdt-compiler/"/>
-		<property name="URL3" value="http://download.jboss.org/jbosstools/updates/requirements/m2eclipse/m2eclipse-wtp-0.15.2/"/>
 	  
 		<!--
 		<property name="URL1" value="http://download.eclipse.org/technology/m2e/releases/"/>
@@ -33,7 +32,6 @@
 			<source>
 				<repository location="${URL1}" />
 				<repository location="${URL2}" />
-				<repository location="${URL3}" />
 			</source>
 
 			<slicingOptions includeFeatures="true" followStrict="true" />
