@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="mirror">
+	<!-- run locally in Eclipse (to resolve p2 tasks) using these commandline options:
+	
+		-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} 
+		-consoleLog -nosplash -data /tmp
+		-application org.eclipse.ant.core.antRunner
+		-f "/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/m2eclipse/build.xml"
+		
+		or, run headless on qa01 server, where Eclipse is installed into ~/eclipse:
+		
+		export JAVA_HOME=/opt/jdk1.6.0; \
+		${JAVA_HOME}/bin/java -cp ~/eclipse/plugins/org.eclipse.equinox.launcher_*.jar \
+			org.eclipse.equinox.launcher.Main -vm ${JAVA_HOME} -consoleLog -nosplash -data /tmp \
+			-application org.eclipse.ant.core.antRunner \
+			-f ~/RHDS/updates/requirements/m2eclipse/build.xml -Ddestination=/tmp/m2eclipse-repo
+	-->
+	<target name="mirror">
+		<!-- <property name="URL1" value="http://download.jboss.org/jbosstools/updates/m2eclipse-wtp/"/> -->
+                <property name="URL1" value="file:///home/hudson/RHDS/updates/requirements/m2eclipse/1.1.0.20120320-0058/"/>
+                <!-- <property name="URL1" value="http://download.eclipse.org/technology/m2e/milestones/1.1/1.1.0.20120320-0058/"/> -->
+		<property name="URL2" value="https://repository.sonatype.org/content/sites/forge-sites/m2e-extras/0.15.0/N/0.15.0.201202141716/"/>
+		<property name="URL3" value="http://download.jboss.org/jbosstools/updates/requirements/m2eclipse/m2eclipse-wtp-0.15.2/"/>
+		<property name="URL4" value="http://download.jboss.org/jbosstools/updates/m2e-jdt-compiler/"/>
+		<property name="URL5" value="http://download.jboss.org/jbosstools/updates/requirements/m2eclipse/m2e-apt-1.0.0-2012-05-02_13-33-26-H9/"/>
+	  
+		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/m2eclipse/" />
+		<property name="compress" value="true" />
+
+		<p2.mirror>
+			<repository location="file:${destination}/20120502-1415" name="m2e 1.1, m2e-extras 0.15.0.N, m2e-wtp 0.15.2, m2e-jdt-compiler 1.0 (for use with Indigo + Juno; mirrored 20120502-1415)" />
+			<source>
+				<repository location="${URL1}" />
+				<repository location="${URL2}" />
+				<repository location="${URL3}" />
+				<repository location="${URL4}" />
+				<repository location="${URL5}" />
+			</source>
+
+			<slicingOptions includeFeatures="true" followStrict="true" />
+		</p2.mirror>
+
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/20120502-1415/" artifactRepository="file:${destination}/20120502-1415/" 
+			publishartifacts="true" source="${destination}/20120502-1415/" compress="${compress}" />
+	</target>
+</project>

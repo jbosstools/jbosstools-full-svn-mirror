@@ -1,0 +1,112 @@
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.jboss.tools</groupId>
+	<artifactId>org.jboss.tools.requirements.m2e</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<properties>
+		<!-- TODO: when there's enough of these scripts, externalize these to a 
+			parent pom in ../ -->
+		<tychoVersion>0.14.0</tychoVersion>
+		<maven.antrun.plugin.version>1.3</maven.antrun.plugin.version>
+
+		<!-- TODO: update this every time you use this script against a new target 
+			version + resulting folder -->
+		<URL1>file:///home/hudson/RHDS/updates/requirements/m2eclipse/1.1.0.20120320-0058/</URL1>
+		<URL2>https://repository.sonatype.org/content/sites/forge-sites/m2e-extras/0.15.0/N/0.15.0.201202141716/</URL2>
+		<URL3>http://download.jboss.org/jbosstools/updates/requirements/m2eclipse/m2eclipse-wtp-0.15.2/</URL3>
+		<URL4>http://download.jboss.org/jbosstools/updates/m2e-jdt-compiler/</URL4>
+		<URL5>http://download.jboss.org/jbosstools/updates/requirements/m2eclipse/m2e-apt-1.0.0-2012-05-02_13-33-26-H9/</URL5>
+		<siteVersion>20120502-1415</siteVersion>
+		<destination>${project.build.directory}/../${siteVersion}</destination>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<!-- see http://wiki.eclipse.org/Tycho/Additional_Tools -->
+				<groupId>org.eclipse.tycho.extras</groupId>
+				<artifactId>tycho-p2-extras-plugin</artifactId>
+				<version>${tychoVersion}</version>
+				<executions>
+					<execution>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>mirror</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<source>
+						<repository>
+							<url>${URL1}</url>
+							<layout>p2</layout>
+						</repository>
+						<repository>
+							<url>${URL2}</url>
+							<layout>p2</layout>
+						</repository>
+						<repository>
+							<url>${URL3}</url>
+							<layout>p2</layout>
+						</repository>
+						<repository>
+							<url>${URL4}</url>
+							<layout>p2</layout>
+						</repository>
+						<repository>
+							<url>${URL5}</url>
+							<layout>p2</layout>
+						</repository>
+					</source>
+
+					<!-- List of IUs to mirror. If omitted, all IUs will be mirrored. -->
+					<!-- Omitted IU version element means latest version of the IU -->
+					<!-- <ius>
+						<iu>
+							<id>org.foo.feature.feature.group</id>
+						</iu>
+					</ius> -->
+					<!-- The destination directory to mirror to. -->
+					<destination>${destination}</destination>
+					<!-- Whether only strict dependencies should be followed. -->
+					<!-- "strict" means perfect version match -->
+					<followStrictOnly>true</followStrictOnly>
+					<!-- Whether or not to follow optional requirements. -->
+					<includeOptional>true</includeOptional>
+					<!-- Whether or not to follow non-greedy requirements. -->
+					<includeNonGreedy>true</includeNonGreedy>
+					<!-- filter properties. E.g. filter only one platform -->
+					<!-- <filter> <osgi.os>linux</osgi.os> <osgi.ws>gtk</osgi.ws> <osgi.arch>x86_64</osgi.arch> 
+						</filter> -->
+					<latestVersionOnly>true</latestVersionOnly>
+					<mirrorMetadataOnly>false</mirrorMetadataOnly>
+					<compress>true</compress>
+					<append>false</append>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>${maven.antrun.plugin.version}</version>
+				<executions>
+					<execution>
+						<id>install</id>
+						<phase>install</phase>
+						<configuration>
+							<quiet>true</quiet>
+							<tasks>
+								<!-- do stuff w/ ant here -->
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
