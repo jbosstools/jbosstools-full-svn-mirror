@@ -214,7 +214,7 @@ It includes a persistence unit and some sample persistence and transaction code 
         <mavenArchetype>
 			<archetypeGroupId>org.richfaces.archetypes</archetypeGroupId>
 			<archetypeArtifactId>richfaces-archetype-kitchensink</archetypeArtifactId>
-			<archetypeVersion>4.2.1.Final</archetypeVersion>
+			<archetypeVersion>4.2.0.Final-2</archetypeVersion>
             <!--
 			<archetypeRepository>http://repository.jboss.org/nexus/content/repositories/releases/</archetypeRepository>
 			<archetypeRepository>http://repository.jboss.org/nexus/content/repositories/snapshots/</archetypeRepository>
