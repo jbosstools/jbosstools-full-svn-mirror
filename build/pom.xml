@@ -468,6 +468,8 @@
 				<module>../hibernatetools</module>
 				<module>../common</module>
 				<module>../examples</module>
+				<module>../portlet</module>
+				<module>../runtime</module>
 				<module>../jst</module>
 				<module>../xulrunner</module>
 				<module>../vpe</module>
