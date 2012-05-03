@@ -1,7 +1,7 @@
 <xsl:stylesheet version="2.0"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xalan="http://xml.apache.org/xalan"
-	xmlns:saxon="http://saxon.sf.net/" xmlns="http://www.w3.org/1999/xhtml"
-	extension-element-prefixes="saxon" exclude-result-prefixes="xsl xalan saxon xmlns">
+	xmlns:saxon="http://saxon.sf.net/" xmlns:xhtml="http://www.w3.org/1999/xhtml"
+	extension-element-prefixes="saxon" exclude-result-prefixes="xsl xalan saxon xhtml">
 	<xsl:output method="html" indent="no" />
 	<xsl:template match="/"><xsl:apply-templates select="*"/></xsl:template>
 	<xsl:template match="*">
