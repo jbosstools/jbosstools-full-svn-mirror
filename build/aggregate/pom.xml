@@ -23,5 +23,11 @@
 		mvn clean install -f coretests-site/pom.xml
 		mvn clean install -f soatests-site/pom.xml
 		...
+
+	     to build against local sources, use these properties:
+
+		mvn clean install ... \
+			-Djbosstools-nightly-staging-composite=file:///home/nboldt/tru/build/aggregate/local-site/ \
+			-Djboss-requirements-composite-mirror=file:///home/nboldt/tru/build/target-platform/REPO/
 	-->
 </project>
