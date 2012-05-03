@@ -94,7 +94,7 @@ public class SelectionUtil {
 	 * @param offset
 	 * @param length
 	 */
-	public static void setSourceSelection(VpePageContext pageContext,
+	public static void setSourceSelection(VpePageContext pageContext, 
 			Node node, int offset, int length) {
 		int start = NodesManagingUtil.getStartOffsetNode(node);
 		setSourceSelection(pageContext, start + offset, length);
@@ -106,8 +106,7 @@ public class SelectionUtil {
 	 * @param node
 	 * @param offset
 	 */
-	public static void setSourceSelection(VpePageContext pageContext,
-			Node node, int offset) {
+	public static void setSourceSelection(VpePageContext pageContext, Node node, int offset) {
 		int start = NodesManagingUtil.getStartOffsetNode(node);
 		pageContext.getSourceBuilder().getStructuredTextViewer()
 				.getTextWidget().setSelection(start + offset);
@@ -121,10 +120,10 @@ public class SelectionUtil {
 	 */
 	public static void setSourceSelection(VpePageContext pageContext,
 			int offset, int length) {
-		pageContext.getSourceBuilder().getStructuredTextViewer()
-				.setSelectedRange(offset, length);
-		pageContext.getSourceBuilder().getStructuredTextViewer().revealRange(
-				offset, length);
+		pageContext.getSourceBuilder().getStructuredTextViewer().
+				setSelectedRange(offset, length);
+		pageContext.getSourceBuilder().getStructuredTextViewer().
+				revealRange(offset, length);
 	}
 
 	/**
@@ -211,12 +210,15 @@ public class SelectionUtil {
 	 * Return source editor part selection range, range returns relatively to
 	 * start of text in source, not for start of document
 	 * 
-	 * @param selection
-	 *            the selection in visual part of editor
-	 * @return source editor selection range
+	 * @param focusedNode visual node
+	 * @param startOffset visual node start offset
+	 * @param endOffset visual node end offset
+	 * @param sourceNode corresponding source node
+	 *            
+	 * @return source editor text selection range [startOffset, endOffset]
 	 */
 	public static Point getSourceSelectionRange(nsIDOMNode focusedNode,
-			int focusOffset, int anchorOffset, Node sourceNode) {
+			int startOffset, int endOffset, Node sourceNode) {
 		// gets visual selection range
 		Point sourceRange = new Point(0, 0);
 		// converts to source selection
@@ -224,10 +226,9 @@ public class SelectionUtil {
 			//fix for JBIDE-3650
 			NodeImpl nodeImpl = (NodeImpl) sourceNode;
 			sourceRange.x = TextUtil.sourcePosition(nodeImpl.getValueSource(),
-					focusedNode.getNodeValue(), focusOffset);
+					focusedNode.getNodeValue(), startOffset);
 			sourceRange.y = TextUtil.sourcePosition(nodeImpl.getValueSource(),
-					focusedNode.getNodeValue(), anchorOffset)
-					- sourceRange.x;
+					focusedNode.getNodeValue(), endOffset);
 		}
 		return sourceRange;
 	}
@@ -235,8 +236,8 @@ public class SelectionUtil {
 	
 	public static VpeNodeMapping getNodeMappingBySourceSelection(
 			StructuredTextEditor sourceEditor, VpeDomMapping domMapping) {
-		List<VpeNodeMapping> mappings
-				= getNodeMappingsBySourceSelection(sourceEditor, domMapping);
+		List<VpeNodeMapping> mappings = 
+				getNodeMappingsBySourceSelection(sourceEditor, domMapping);
 		if (!mappings.isEmpty()) {
 			return mappings.get(0);
 		} else {
@@ -360,8 +361,7 @@ public class SelectionUtil {
 	 *            StructuredTextEditor object
 	 * @return sourceSelectionRange
 	 */
-	public static Point getSourceSelectionRange(
-			StructuredTextEditor sourceEditor) {
+	public static Point getSourceSelectionRange(StructuredTextEditor sourceEditor) {
 		ITextViewer textViewer = sourceEditor.getTextViewer();
 		if (textViewer != null) {
 			return textViewer.getSelectedRange();

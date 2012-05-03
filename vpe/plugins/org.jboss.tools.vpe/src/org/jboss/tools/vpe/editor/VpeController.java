@@ -175,6 +175,11 @@ public class VpeController implements INodeAdapter,
 	private ScrollBar sourceEditorVerticalScrollBar;
 	private boolean sourceScrollEventFlag = false;
 	private boolean visualScrollEventFlag = false;
+	/*
+	 * https://issues.jboss.org/browse/JBIDE-11137
+	 * flag to indicate that visual selection is being updated.
+	 */
+	boolean visualSelectionIsAlreadyInProgress = false;
 	
 	public static final int DEFAULT_UPDATE_DELAY_TIME = 400;
 	private boolean visualEditorVisible = true;
@@ -426,9 +431,9 @@ public class VpeController implements INodeAdapter,
 
 		// pageContext.fireTaglibsChanged();
 
-		// yradtsevich: we have to refresh VPE selection on init (fix of
-		// JBIDE-4037)
-		sourceSelectionChanged(true);
+		// yradtsevich: we have to refresh VPE selection on init 
+		// (fix of JBIDE-4037)
+		sourceSelectionChanged();
 		refreshCommands();
 		/*
 		 * Enable/disable "Externalize strings" toolbar icon 
@@ -816,23 +821,19 @@ public class VpeController implements INodeAdapter,
 	}
 
 	public void sourceSelectionChanged() {
-		sourceSelectionChanged(false);
-	}
-
-	public void sourceSelectionChanged(boolean showCaret) {
 		// we should processed if we have correct view in visual editor,
 		// otherwise we shouldn't process this event
 		if (getChangeEvents().size() > 0) {
 			return;
 		}
-
-		if (selectionManager != null)
+		if (selectionManager != null && !visualSelectionIsAlreadyInProgress) {
 			selectionManager.refreshVisualSelection();
+		}
 	}
 
-	public void sourceSelectionToVisualSelection(boolean showCaret) {
+	public void sourceSelectionToVisualSelection() {
 		if (editPart.getVisualMode() != VpeEditorPart.SOURCE_MODE) {
-			sourceSelectionChanged(showCaret);
+			sourceSelectionChanged();
 		}
 	}
 
@@ -886,34 +887,40 @@ public class VpeController implements INodeAdapter,
 
 	public void notifySelectionChanged(nsIDOMDocument doc,
 		nsISelection selection, short reason) {
-		mouseUpSelectionReasonFlag = (reason & nsISelectionListener.MOUSEUP_REASON) != 0;
-		if (
-				// commited by Dzmitrovich - experimental
-				// TODO check selection and if are appear errors then
-				// uncommented next code
-			    // reason != nsISelectionListener.NO_REASON
-				(reason & (nsISelectionListener.KEYPRESS_REASON
-						| nsISelectionListener.SELECTALL_REASON
-						| nsISelectionListener.MOUSEDOWN_REASON)) != 0) {
-			if (VpeDebug.PRINT_VISUAL_SELECTION_EVENT) {
-				System.out
-						.println("<<< notifySelectionChanged: " + reason); //$NON-NLS-1$
+		if (!visualSelectionIsAlreadyInProgress) {
+			visualSelectionIsAlreadyInProgress = true;
+			
+			mouseUpSelectionReasonFlag = (reason & nsISelectionListener.MOUSEUP_REASON) != 0;
+			if (
+					// commited by Dzmitrovich - experimental
+					// TODO check selection and if are appear errors then
+					// uncommented next code
+//					 reason != nsISelectionListener.NO_REASON)
+					(reason & (nsISelectionListener.KEYPRESS_REASON
+							| nsISelectionListener.SELECTALL_REASON
+							| nsISelectionListener.MOUSEDOWN_REASON)) != 0) 
+			{
+				if (VpeDebug.PRINT_VISUAL_SELECTION_EVENT) {
+					System.out
+					.println("<<< notifySelectionChanged: " + reason); //$NON-NLS-1$
+				}
+				nsIDOMNode node = SelectionUtil.getSelectedNode(selection);
+				/*
+				 * Fixes https://jira.jboss.org/jira/browse/JBIDE-2571
+				 * Checking if the node is of text type was removed to allow
+				 * <select> node to be selected on the first click.
+				 */
+				if (node != null) {
+					selectionManager.setSelection(SelectionUtil.getSelectedNode(selection),
+							selection.getFocusOffset(), selection.getAnchorOffset());
+				}
 			}
-			nsIDOMNode node = SelectionUtil.getSelectedNode(selection);
-			/*
-			 * Fixes https://jira.jboss.org/jira/browse/JBIDE-2571
-			 * Checking if the node is of text type was removed to allow
-			 * <select> node to be selected on the first click.
-			 */
-			if (node != null) {
-				selectionManager.setSelection(SelectionUtil.getSelectedNode(selection),
-						selection.getFocusOffset(), selection.getAnchorOffset());
-			}
+			// enables cursor on selection event
+			visualSelectionController.setCaretEnabled(true);
+			// enables cursor on selection event
+			visualSelectionController.setCaretEnabled(true);
+			visualSelectionIsAlreadyInProgress = false;
 		}
-		// enables cursor on selection event
-		visualSelectionController.setCaretEnabled(true);
-		// enables cursor on selection event
-		visualSelectionController.setCaretEnabled(true);
 	}
 
 	public void mouseDown(nsIDOMMouseEvent mouseEvent) {

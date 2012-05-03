@@ -309,8 +309,8 @@ public class KeyEventManager implements IKeyEventHandler {
 			if (range.y == 0) {
 				int offset = getEscOffset(visibleSourceNode, range, delete);
 				if (offset != 0)
-					SelectionUtil.setSourceSelection(pageContext, range.x,
-							offset);
+					SelectionUtil.setSourceSelection(
+							pageContext, range.x, offset);
 
 			}
 			sourceEditor.getTextViewer().getTextWidget().invokeAction(delete);

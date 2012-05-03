@@ -40,7 +40,7 @@ abstract public class FormatController implements IFormatController {
 		manager.setControllerNotifedSelectionChange(true);
 		run();
 //		manager.getVpeController().sourceSelectionChanged(true);
-		manager.getVpeController().sourceSelectionToVisualSelection(true);
+		manager.getVpeController().sourceSelectionToVisualSelection();
 		manager.setControllerNotifedSelectionChange(false);
 	}
 
