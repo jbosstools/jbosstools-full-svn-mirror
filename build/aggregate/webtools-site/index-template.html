@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>JBoss Tools - Web Tools - Nightly Build Update Site</title>
+<title>${update.site.name} - ${update.site.description} Update Site${update.site.version}</title>
 <style>
 @import url("http://download.jboss.org/jbosstools/updates/web/site.css");
 </style>
@@ -21,16 +21,16 @@
 	<tr>
 		<td>&#160;&#160;&#160;&#160;&#160;&#160;</td>
 		<td>
-		<h2 class="title">JBoss Tools - Web Tools - Nightly Build Update Site</h2>
+		<h2 class="title">${update.site.name} - ${update.site.description} Update Site</h2>
 		<table width="100%">
 			<tr class="header">
-				<td class="sub-header" width="100%"><span>Latest Build</span></td>
+				<td class="sub-header" width="100%"><span>Latest Build${update.site.version}</span></td>
 			</tr>
 
 			<tr class="light-row" style="height: 30px">
 				<td class="bodyText">
-				<p class="bodyText">This is the <b>Nightly Build</b>
-				Update Site for JBoss Tools - Web Tools.
+				<p class="bodyText">This is the <b>${update.site.description}</b>
+				Update Site for ${update.site.name}.
 				<p align="center"><span style="padding:4px;color:white;background-color:red;font-weight:bold">NOTE:This site was built using Indigo (Eclipse 3.7.2), but SHOULD work with Juno (Eclipse 4.2M6+) too.</span></p>
 								<blockquote style="border: 1px dashed #1778be; padding: 2px">
 									<ol>
@@ -71,55 +71,7 @@
 	<tr>
 		<td></td>
 		<td>
-	        <table xmlns="http://www.w3.org/1999/xhtml" xmlns:xalan="http://xml.apache.org/xalan" cellspacing="2" cellpadding="0" border="0">
-   <tr style="background-color:#DDDDDD">
-      <th style="font-size:small">Feature</th>
-      <th style="font-size:small">Version</th>
-      <th style="font-size:small">
-         						Feature Categor(ies)
-         					
-      </th>
-   </tr>
-   <tr style="background-color:&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;#EEEEEE&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;">
-      <td class="rowLine"><a href="features/org.jboss.ide.eclipse.archives.feature_3.2.1.v20120503-1259-H887-CR1.jar" style="font-size:x-small">org.jboss.ide.eclipse.archives.feature</a></td>
-      <td><span style="font-size:x-small">3.2.1.v20120503-1259-H887-CR1</span></td>
-      <td></td>
-   </tr>
-   <tr style="background-color:&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;#FFFFFF&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;">
-      <td class="rowLine"><a href="features/org.jboss.ide.eclipse.as.feature_2.3.0.v20120503-1439-H1297-CR1.jar" style="font-size:x-small">org.jboss.ide.eclipse.as.feature</a></td>
-      <td><span style="font-size:x-small">2.3.0.v20120503-1439-H1297-CR1</span></td>
-      <td><span style="font-size:x-small">
-            											|
-            											org.eclipse.wst.server.core.serverAdapter</span></td>
-   </tr>
-   <tr style="background-color:&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;#EEEEEE&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;">
-      <td class="rowLine"><a href="features/org.jboss.tools.jmx.feature_1.2.0.v20120503-1250-H807-CR1.jar" style="font-size:x-small">org.jboss.tools.jmx.feature</a></td>
-      <td><span style="font-size:x-small">1.2.0.v20120503-1250-H807-CR1</span></td>
-      <td></td>
-   </tr>
-   <tr style="background-color:#DDDDDD">
-      <th colspan="1" style="font-size:small">Metadata</th>
-      <th colspan="1" style="font-size:small"></th>
-      <th colspan="1" style="font-size:small"></th>
-   </tr>
-   <tr style="background-color:#EEEEEE">
-      <td class="rowLine" colspan="1"><a href="site.xml" style="font-size:x-small">site.xml</a>
-         					::
-         					<a href="artifacts.jar" style="font-size:x-small">artifacts.jar</a>
-         					::
-         					<a href="content.jar" style="font-size:x-small">content.jar</a></td>
-      <td class="rowLine" colspan="1">
-         					::
-         					<a href="plugins/" style="font-size:x-small">plugins</a>
-         					::
-         					<a href="features/" style="font-size:x-small">features</a></td>
-      <td class="rowLine" colspan="1">
-         					
-         					:: <a href="site.properties" style="font-size:x-small">site.properties</a>
-         				
-      </td>
-   </tr>
-</table><br xmlns="http://www.w3.org/1999/xhtml" xmlns:xalan="http://xml.apache.org/xalan"></br>
+	        ${site.contents}
 		</td>
 		<td></td>
 	</tr>
