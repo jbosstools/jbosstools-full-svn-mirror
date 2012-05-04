@@ -544,8 +544,11 @@ Using ant:   ant custom.build -f ../build.xml -Doutput.dir=`pwd` -DinputRepo=htt
 		
 		<antcallback target="generate.directory.xml" return="directory.xml.html"/>
 		
+	        <condition property="index-template.html" value="${output.dir}/index-template.html" else="${basedir}/index-template.html">
+        	        <available file="${output.dir}/index-template.html" />
+	        </condition>
 		<copy todir="${output.dir}" overwrite="true">
-			<fileset file="${basedir}/index-template.html" />
+			<fileset file="${index-template.html}" />
 			<mapper type="merge" to="index.html" />
 			<filterchain>
 				<expandproperties />
