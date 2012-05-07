@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../whatsnew.css"/>
+<title>ModeShape What's New</title>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17645367-5']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script></head>
+<body>
+<h1>ModeShape 3.3.0.Beta3 What's New</h1>
+<p align="right">
+<a href="../index.html">&lt; Main Index</a>
+<a href="../vpe/vpe-news-3.3.0.Beta3.html">Visual Page Editor &gt;</a>
+</p>
+<p>Last revised May 7, 2012</p>
+
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+  <tr>
+      <td colspan="2"><hr /></td>
+  </tr>
+
+  <tr>
+      <td valign="top" align="left">
+        <p>
+        <a name="cndEditor"><b>JCR CND Editor</b></a>
+        </p>
+      </td>
+
+      <td valign="top">
+        <p>
+        The ModeShape Tools Java Content Repository (JCR) Compact Node Type Definition (CND) Editor is a 2-page editor for
+        <code>*.cnd</code> files. The first page is a form-based view of the CND file; while the second page is a readonly, source view.
+        </p>
+
+        <p>
+        Here is what the <i>CND Editor</i> looks like:
+        </p>
+        
+        <p>
+        <img src="images/CndEditor.png" alt="ModeShape CND Editor"/>
+        </p>
+        
+        <p>
+        The CND Editor's form page consists of the following sections:
+           <ul>
+              <li>a <a href="#cndEditorHeaderSection">header section</a>, which displays error messages and a link to open the CND preference page,</li>
+              <li>a <a href="#cndEditorNamespacesSection">namespaces section</a>, which displays and allows editing of the namespace mappings defined in the CND, and</li>
+              <li>a <a href="#cndEditorNodeTypesSection">node types section</a>, which displays and allows editing of the node type definitions defined in the CND.</li>
+           </ul> 
+        </p>
+
+        <h3><a name="cndEditorHeaderSection">Header Section</a></h3>
+        
+        <p>
+        The header section contains a hyperlink that, when activated, opens the <a href="#cndPreferencePage">CND notation preference page</a>.
+        Also, if the CND being edited has validation errors, the header section will have another hyperlink that identifies the total
+        number of validation errors found. Clicking the errors hyperlink opens a dialog that lists the specific validation errors
+        and provides a way to export those validation messages to a file.
+        </p>
+        
+        <p>Here is what the header section will look like when the CND has one validation error:
+        </p>
+        
+        <p>
+        <center>
+        <img src="images/CndEditorHeader.png" alt="CND Editor Header"/>
+        </center>
+        </p>
+
+        <h3><a name="cndEditorNamespacesSection">Namespaces Section</a></h3>
+
+        <p>
+        The namespaces section is a collapseable area used to create and maintain the namespace mappings declared in the CND file. 
+        A namespace mapping consists of a unique prefix, a unique URI, and an optional comment. The namespace section looks like this:
+        </p>
+        
+        <p>
+        <center>
+        <img src="images/CndNamespacesTable.png" alt="CND Editor Namespaces Table"/>
+        </center>
+        </p>
+
+        <p>
+        Namespace mappings are editing using the following dialog:
+        </p>
+        
+        <p>
+        <center>
+        <img src="images/CndNamespaceEditor.png" alt="CND Editor Namespace Editor"/>
+        </center>
+        </p>
+        
+        <h3><a name="cndEditorNodeTypesSection">Node Types Section</a></h3>
+
+        <p>
+        The node types section is used to create and maintain the node type definitions declared in the CND file. The node types
+        section consists of, along the left-side, a table containing all the declared node type definitions, and a node type name
+        filter box which allows the user to limit the number of node types being displayed. The node type table can be used to 
+        delete a selected node type. The node type table, with the name filter on top, looks like this:
+        </p>
+        
+        <p>
+        <center>
+        <img src="images/CndNodeTypeFilter.png" alt="CND Editor Node Type Filter"/>
+        </center>
+        </p>
+
+        <p>
+        The right-side of the node types section consists of a details area, as well as, collapseable areas for property and child 
+        node definitions. When a node type definition is selected, it's corresponding information is used to populate the details, 
+        properties, and child nodes areas. The details area is used to edit a node type's namespace, name, supertypes, attributes, 
+        and an optional comment. The details area looks like this:
+        </p>
+        
+        <p>
+        <center>
+        <img src="images/CndNodeTypeDetails.png" alt="CND Editor Node Type Details"/>
+        </center>
+        </p>
+
+        <p>
+        A node type definition can contain zero or more property definitions. When the properties area is expanded, the 
+        following table will show the declared property definitions for the selected node type definition:
+        </p>
+        
+        <p>
+        <center>
+        <img src="images/CndPropertiesTable.png" alt="CND Editor Properties Table"/>
+        </center>
+        </p>
+
+        <p>
+        The properties table can be used to delete a selected property definition and can optionally show inherited properties. A 
+        property definition can be created or edited using the property definition editor shown here:
+        </p>
+        
+        <p>
+        <center>
+        <img src="images/CndPropertyEditor.png" alt="CND Editor Child Node Editor"/>
+        </center>
+        </p>
+
+        <p>
+        A node type definition can contain zero or more child node definitions. When the child nodes area is expanded, the 
+        following table will show the declared child node definitions for the selected node type definition:
+        </p>
+        
+        <p>
+        <center>
+        <img src="images/CndChildNodesTable.png" alt="CND Editor Child Nodes Table"/>
+        </center>
+        </p>
+
+        <p>
+        The child nodes table can be used to delete a selected child node definition and can optionally show inherited child 
+        nodes. A child node definition can be created or edited using the child node definition editor shown here:
+        </p>
+        
+        <p>
+        <center>
+        <img src="images/CndChildNodeEditor.png" alt="CND Editor Child Node Editor"/>
+        </center>
+        </p>
+      </td>
+  </tr>
+
+  <tr>
+    <td colspan="2"><hr /></td>
+  </tr>
+
+  <tr>
+      <td valign="top" align="left">
+        <p>
+        <b><a name="cndPreferencePage">CND Notation Preference Page</a></b>
+        </p>
+      </td>
+
+      <td valign="top">
+        <p>
+        When a CND Editor is saved, the CND notation type preference determines the specific format to save the CND file. Choose
+        between long, compressed, or compact depending on your needs. The preview area on the preference page gives you an idea 
+        just how the CND file will be saved. Here is what the ModeShape CND Notation preference page looks like:
+        </p>
+        
+        <p>
+        <center>
+        <img src="images/CndPreferences.png" alt="ModeShape CND Preference Page"/>
+        </center>
+        </p>
+      </td>
+  </tr>
+
+  <tr>
+    <td colspan="2"><hr /></td>
+  </tr>
+</table>
+
+</body>
+
+</html>
+
+
