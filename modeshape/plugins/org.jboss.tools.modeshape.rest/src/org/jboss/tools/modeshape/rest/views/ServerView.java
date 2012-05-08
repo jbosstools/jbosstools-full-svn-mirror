@@ -147,8 +147,10 @@ public final class ServerView extends ViewPart implements IServerRegistryListene
      * @param parent the viewer's parent
      */
     private void constructTreeViewer( Composite parent ) {
+        this.viewer = new TreeViewer(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.MULTI | SWT.VIRTUAL);
+        this.viewer.setUseHashlookup(true);
         this.provider = new ModeShapeContentProvider();
-        this.viewer = new TreeViewer(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.MULTI);
+        this.provider.setViewer(this.viewer);
 
         this.viewer.setContentProvider(this.provider);
         ILabelDecorator decorator = Activator.getDefault().getWorkbench().getDecoratorManager().getLabelDecorator();
@@ -178,8 +180,8 @@ public final class ServerView extends ViewPart implements IServerRegistryListene
             }
         });
 
-        // need to call this (doesn't matter what the param is) to bootstrap the provider.
-        this.viewer.setInput(this);
+        // need to call this to populate tree
+        this.viewer.setInput(getServerManager());
 
         // need to do this so that properties page will work
         getSite().setSelectionProvider(this.viewer);

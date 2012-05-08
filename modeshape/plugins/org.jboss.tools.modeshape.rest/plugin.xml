@@ -189,6 +189,9 @@
          <enablement>
          <or>
             <objectClass
+                  name="org.jboss.tools.modeshape.rest.domain.ModeShapeServer">
+            </objectClass>
+            <objectClass
                   name="org.modeshape.web.jcr.rest.client.domain.IModeShapeObject">
             </objectClass>
             <objectClass

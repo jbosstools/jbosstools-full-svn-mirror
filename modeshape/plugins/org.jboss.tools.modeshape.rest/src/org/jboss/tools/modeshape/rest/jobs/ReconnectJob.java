@@ -22,7 +22,6 @@ import org.eclipse.osgi.util.NLS;
 import org.jboss.tools.modeshape.rest.Activator;
 import org.jboss.tools.modeshape.rest.RestClientI18n;
 import org.jboss.tools.modeshape.rest.ServerManager;
-import org.jboss.tools.modeshape.rest.Utils;
 import org.jboss.tools.modeshape.rest.domain.ModeShapeServer;
 import org.modeshape.web.jcr.rest.client.Status;
 
@@ -61,7 +60,6 @@ public final class ReconnectJob extends Job {
      */
     @Override
     protected IStatus run( IProgressMonitor monitor ) {
-        IStatus result = null;
         ServerManager serverManager = Activator.getDefault().getServerManager();
 
         try {
@@ -69,18 +67,21 @@ public final class ReconnectJob extends Job {
             monitor.beginTask(taskName, 1);
             monitor.setTaskName(taskName);
             Status status = serverManager.ping(this.server);
-            result = Utils.convert(status);
+
+            if (status.isError()) {
+                Activator.getDefault().log(status);
+            }
         } catch (Exception e) {
-            result = new org.eclipse.core.runtime.Status(IStatus.ERROR,
+            Activator.getDefault().getLog().log(new org.eclipse.core.runtime.Status(IStatus.ERROR,
                                                          PLUGIN_ID,
                                                          RestClientI18n.publishJobUnexpectedErrorMsg,
-                                                         e);
+                                                         e));
         } finally {
             monitor.done();
-            done(result);
         }
 
-        return result;
+        // if an error status is returned a dialog is displayed by the UI event loop so we don't want that
+        return org.eclipse.core.runtime.Status.OK_STATUS;
     }
 
 }

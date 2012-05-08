@@ -44,6 +44,9 @@ public final class RestClientI18n extends NLS {
     public static String ignoredResourcesPreferencePageTitle;
 
     public static String missingImage;
+    
+    public static String missingServerPasswordDialogMsg;
+    public static String missingServerPasswordDialogTitle;
 
     public static String newIgnoredResourceDialogLabel;
     public static String newIgnoredResourceDialogTitle;
@@ -147,6 +150,15 @@ public final class RestClientI18n extends NLS {
     public static String publishWizardUnpublishErrorMsg;
 
     public static String reconnectJobTaskName;
+
+    public static String requestDialogTitle;
+    public static String runningRepositoriesQueryMsg;
+    public static String runningServerRequestErrorMsg;
+    public static String runningServerRequestErrorDialogMsg;
+    public static String runningServerRequestErrorDialogTitle;
+    public static String runningServerRequestNewPasswordDialogMsg;
+    public static String runningServerRequestNewPasswordDialogTitle;
+    public static String runningWorkspacesQueryMsg;
 
     public static String serverEmptyUrlMsg;
     public static String serverEmptyUserMsg;

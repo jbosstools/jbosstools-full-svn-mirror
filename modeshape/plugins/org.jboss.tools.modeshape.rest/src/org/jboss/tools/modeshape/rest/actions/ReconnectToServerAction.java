@@ -102,7 +102,7 @@ public final class ReconnectToServerAction extends BaseSelectionListenerAction {
 
         // run job in own thread not in the UI thread
         Thread t = new Thread();
-        t.start();
+        t.run();
         job.setThread(t);
         job.schedule();
     }

@@ -58,15 +58,7 @@ public final class ModeShapeServer implements IAdaptable, ModeShapeDomainObject 
      */
     @Override
     public boolean equals( Object obj ) {
-        if (this == obj) {
-            return true;
-        }
-
-        if (obj == null) {
-            return false;
-        }
-
-        if (!this.getClass().equals(obj.getClass())) {
+        if ((obj == null) || !getClass().equals(obj.getClass())) {
             return false;
         }
 
