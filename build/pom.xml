@@ -443,6 +443,8 @@
                                 <module>../common</module>
                                 <module>../jmx</module>
 				<module>../archives</module>
+				<module>../portlet</module>
+				<module>../jst</module>
 				<module>../as</module>
                                 <module>../usage</module>
 				<module>../runtime</module>
