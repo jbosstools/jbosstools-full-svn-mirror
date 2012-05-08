@@ -442,6 +442,8 @@
 				<module>../tests</module>
                                 <module>../common</module>
                                 <module>../jmx</module>
+				<module>../archives</module>
+				<module>../as</module>
                                 <module>../usage</module>
 				<module>../runtime</module>
 				<module>../examples</module>
