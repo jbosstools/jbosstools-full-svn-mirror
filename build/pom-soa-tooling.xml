@@ -197,7 +197,11 @@
 		<profile>
 			<id>bpel-bootstrap</id>
 			<modules>
-				<module>../tests</module>
+                                <module>../tests</module>
+                                <module>../common</module>
+                                <module>../jmx</module>
+                                <module>../archives</module>
+                                <module>../as</module>
 				<module>../bpel</module>
 				<module>../usage</module>
 			</modules>
