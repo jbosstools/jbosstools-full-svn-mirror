@@ -291,30 +291,33 @@ final class QualifiedNameEditor extends Composite {
     private void updateUi() {
         // set qualifier choices if they have changed
         final String[] currentItems = this.cbxQualifiers.getItems();
+        final List<String> allQualifiers = new ArrayList<String>(this.validQualifiers);
+        String currentQualifier = null;
+        
+        if (isEditMode()) {
+            currentQualifier = this.qnameBeingEdited.getQualifier();
+            
+            if (!Utils.isEmpty(currentQualifier) && !this.validQualifiers.contains(currentQualifier)) {
+                allQualifiers.add(currentQualifier);
+            }                
+        }
 
         // only reload qualifiers if different
-        if ((this.validQualifiers.size() != currentItems.length) || !this.validQualifiers.containsAll(Arrays.asList(currentItems))) {
-            final String[] newQualifiers = this.validQualifiers.toArray(new String[this.validQualifiers.size()]);
+        if ((allQualifiers.size() != currentItems.length) || !allQualifiers.containsAll(Arrays.asList(currentItems))) {
+            final String[] newQualifiers = allQualifiers.toArray(new String[allQualifiers.size()]);
             Arrays.sort(newQualifiers);
             this.cbxQualifiers.setItems(newQualifiers);
         }
 
         // select the current qualifier and set the name
         if (isEditMode()) {
-            final String currentQualifier = this.qnameBeingEdited.getQualifier();
-
             if (Utils.isEmpty(currentQualifier)) {
                 this.cbxQualifiers.select(0);
             } else {
                 final int index = this.cbxQualifiers.indexOf(currentQualifier);
-
-                if (index == -1) {
-                    // not a valid qualifier but add and select
-                    this.cbxQualifiers.add(currentQualifier);
-                    this.cbxQualifiers.select(this.cbxQualifiers.getItemCount() - 1);
-                } else {
-                    this.cbxQualifiers.select(index);
-                }
+                // qualifier should already be a valid selection
+                assert (index != -1) : "qualifier not found=" + currentQualifier; //$NON-NLS-1$
+                this.cbxQualifiers.select(index);
             }
 
             final String name = this.qnameBeingEdited.getUnqualifiedName();
