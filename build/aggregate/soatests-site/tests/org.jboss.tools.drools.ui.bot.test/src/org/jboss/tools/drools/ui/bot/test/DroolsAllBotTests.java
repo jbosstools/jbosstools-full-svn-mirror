@@ -15,6 +15,7 @@ import java.io.File;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotEditor;
 import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
+import org.eclipse.swtbot.swt.finder.widgets.SWTBotShell;
 import org.jboss.tools.drools.ui.bot.test.smoke.DecisionTableTest;
 import org.jboss.tools.drools.ui.bot.test.smoke.DomainSpecificLanguageEditorTest;
 import org.jboss.tools.drools.ui.bot.test.smoke.DroolsRulesEditorTest;
@@ -160,6 +161,13 @@ public class DroolsAllBotTests extends SWTTestExt {
         for (SWTBotEditor editor : bot.editors()) {
             if (IDELabel.View.JBOSS_CENTRAL.equals(editor.getTitle())) {
                 editor.close();
+                break;
+            }
+        }
+        for (SWTBotShell shell : bot.shells()) {
+            if (IDELabel.Shell.SUBCLIPSE_USAGE.equals(shell.getText())) {
+                shell.bot().checkBox().deselect();
+                shell.bot().button(IDELabel.Button.OK).click();
                 break;
             }
         }

@@ -2,6 +2,8 @@ package org.jboss.tools.drools.ui.bot.test.smoke;
 
 import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.withLabel;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -130,7 +132,14 @@ public class DroolsViewsTest extends SWTTestExt {
     public void agendaTest() {
         bot.editorByTitle(RULES_FILE).show();
         eclipse.stepOver();
+        // Some hacks to read output stream and check exception
+        PrintStream defaultOutputStream = System.out;
+        ByteArrayOutputStream pipeOut = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(pipeOut));
         openView(IDELabel.View.AGENDA);
+        System.setOut(defaultOutputStream);
+        String output = new String(pipeOut.toByteArray());
+        System.out.print(output);
         HashSet<Activation> expectedSet = new HashSet<Activation>(2);
         // indicies are not compared
         expectedSet.add(new Activation(0, "Bye Bye"));
@@ -150,6 +159,7 @@ public class DroolsViewsTest extends SWTTestExt {
         eclipse.finishDebug();
         assertTrue(CONSOLE_TEXT_MESSAGE_1 + EXPECTED_CONSOLE_TEXT_1 + EXPECTED_CONSOLE_TEXT_2 + CONSOLE_TEXT_MESSAGE_2
                 + console.getConsoleText(), (EXPECTED_CONSOLE_TEXT_1 + EXPECTED_CONSOLE_TEXT_2).equals(console.getConsoleText()));
+        assertFalse("Opening agenda view throws DebugException", output.contains("DebugException"));
     }
 
     /**
@@ -230,6 +240,7 @@ public class DroolsViewsTest extends SWTTestExt {
 
         auditView.toolbarButton("Clear Log").click();
         assertEquals("Tree should be empty, but it was not.", 0, auditView.bot().tree().getAllItems().length);
+        packageExplorer.selectTreeItem(PROJECT_NAME, null).contextMenu(IDELabel.Menu.REFRESH).click();
     }
 
     /**

@@ -124,9 +124,11 @@ public class DomainSpecificLanguageEditorTest extends SWTTestExt{
       drlDroolsEditor.insertText(lineNumber,0,">");
     }
     drlDroolsEditor.selectLine(18);
-    bot.sleep(Timing.time1S());
-    KeyboardHelper.pressKeyCode(bot.getDisplay(),(int)SWT.DEL);
-    bot.sleep(Timing.time1S());
+    // pressing DELETE was malfunctioning
+    bot.menu(IDELabel.Menu.EDIT).menu(IDELabel.Menu.DELETE).click();
+    //bot.sleep(Timing.time1S());
+    //KeyboardHelper.pressKeyCode(bot.getDisplay(),(int)SWT.DEL);
+    //bot.sleep(Timing.time1S());
     drlDroolsEditor.insertText(18, 0, "        Message m of type Message.GOODBYE contains myMessage");
     drlDroolsEditor.save();
     util.waitForJobs(Timing.time10S(), JobName.BUILDING_WS);
