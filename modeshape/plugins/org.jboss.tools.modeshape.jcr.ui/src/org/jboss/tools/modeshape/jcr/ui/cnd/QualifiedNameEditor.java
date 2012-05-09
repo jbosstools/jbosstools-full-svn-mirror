@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.fieldassist.ContentProposalAdapter;
+import org.eclipse.jface.fieldassist.SimpleContentProposalProvider;
 import org.eclipse.jface.fieldassist.TextContentAdapter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
@@ -163,7 +164,7 @@ final class QualifiedNameEditor extends Composite {
 
             this.proposalAdapter = new ContentProposalAdapter(this.txtName,
                                                               new TextContentAdapter(),
-                                                              null,
+                                                              new SimpleContentProposalProvider(new String[0]),
                                                               KeyStroke.getInstance(SWT.CTRL, ' '),
                                                               CndValidator.LOCAL_NAME_VALID_CHARS.toCharArray());
             this.proposalAdapter.setProposalAcceptanceStyle(ContentProposalAdapter.PROPOSAL_REPLACE);
