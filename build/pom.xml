@@ -517,6 +517,18 @@
 		</profile>
 
 		<profile>
+			<id>gwt-bootstrap</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../tests</module>
+				<module>../gwt</module>
+				<module>../usage</module>
+			</modules>
+		</profile>
+
+		<profile>
 			<id>deltacloud</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
