@@ -20,7 +20,7 @@
 			<!-- m2e, m2e-wtp + deps -->
 			<unit id="org.eclipse.m2e.sdk.feature.feature.group" version="1.0.100.20110804-1717"/>
 			<unit id="org.eclipse.m2e.feature.feature.group" version="1.0.200.20111228-1245"/>
-			<unit id="org.maven.ide.eclipse.wtp.feature.feature.group" version="0.15.1.20120208-1300"/>
+			<unit id="org.maven.ide.eclipse.wtp.feature.feature.group" version="0.15.2.20120306-2040"/>
 			<unit id="org.sonatype.m2e.mavenarchiver.feature.feature.group" version="0.15.0.201109290002"/>
 			<unit id="ch.qos.logback.classic" version="0.9.27.v20110224-1110"/>
 			<unit id="ch.qos.logback.core" version="0.9.27.v20110224-1110"/>
@@ -291,8 +291,8 @@
 			<unit id="org.mortbay.jetty.util" version="6.1.23.v201012071420"/>
 			<unit id="org.apache.jasper" version="5.5.17.v201101211617"/>
 			<unit id="org.joda.time" version="1.6.0.v20081202-0100"/>
-			<unit id="javax.servlet" version="3.0.0.v201103241727"/>
-			<unit id="javax.servlet.jsp" version="2.0.0.v201101211617"/>
+			<unit id="javax.servlet" version="2.5.0.v201103041518"/>
+			<unit id="javax.servlet.jsp" version="2.2.0.v201103241009"/>
 			<unit id="javax.xml.rpc" version="1.1.0.v201005080400"/>
 			<unit id="javax.el" version="2.2.0.v201105051105"/>
 
