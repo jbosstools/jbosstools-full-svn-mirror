@@ -11,7 +11,7 @@
 
 package org.jboss.tools.drools.ui.bot.test.smoke;
 
-import java.awt.event.KeyEvent;
+//import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
@@ -41,7 +41,7 @@ import org.jboss.tools.ui.bot.ext.SWTTestExt;
 import org.jboss.tools.ui.bot.ext.SWTUtilExt;
 import org.jboss.tools.ui.bot.ext.Timing;
 import org.jboss.tools.ui.bot.ext.gen.ActionItem;
-import org.jboss.tools.ui.bot.ext.helper.KeyboardHelper;
+//import org.jboss.tools.ui.bot.ext.helper.KeyboardHelper;
 import org.jboss.tools.ui.bot.ext.types.IDELabel;
 import org.jboss.tools.ui.bot.ext.types.ViewType;
 import org.junit.Test;
@@ -175,12 +175,14 @@ public class RuleFlowTest extends SWTTestExt{
       " Name=" + name, id.equals("1") && name.equals("Start"));
     // Delete each component
     gefEditor.activateTool("Select");
+    bot.sleep(Timing.time1S());
     for (int toolIndex = 0;toolIndex < tools.length;toolIndex++){
       gefEditor.click(xspacing * (toolIndex % 3) + xoffset + 10, 
         yspacing * (toolIndex / 3) + yoffset + 10);
       gefEditor.setFocus();
-      bot.sleep(Timing.time1S());
-      KeyboardHelper.typeKeyCodeUsingAWT(KeyEvent.VK_DELETE);
+      //bot.sleep(Timing.time1S());
+      //KeyboardHelper.typeKeyCodeUsingAWT(KeyEvent.VK_DELETE);
+      bot.menu(IDELabel.Menu.EDIT).menu(IDELabel.Menu.DELETE).click();
     }
     // Restore maximized editor
     bot.menu(IDELabel.Menu.WINDOW)
@@ -666,14 +668,16 @@ public class RuleFlowTest extends SWTTestExt{
         errorDescription = checkNodeName(nodesNode, NODES_NODE_NAME);
         if (errorDescription == null) {
           List<Node> nodes = removeTextNodes(nodesNode.getChildNodes());
+          bot.sleep(Timing.time1S());
           for (Node node : nodes){
             NamedNodeMap attributes = node.getAttributes();
             int xPos = Integer.parseInt(attributes.getNamedItem("x").getNodeValue());
             int yPos = Integer.parseInt(attributes.getNamedItem("y").getNodeValue());
             gefEditor.click(xPos + 3, yPos + 3);
-            bot.sleep(Timing.time1S());
-            KeyboardHelper.typeKeyCodeUsingAWT(KeyEvent.VK_DELETE);
-            bot.sleep(Timing.time1S());
+            //bot.sleep(Timing.time1S());
+            bot.menu(IDELabel.Menu.EDIT).menu(IDELabel.Menu.DELETE).click();
+            //KeyboardHelper.typeKeyCodeUsingAWT(KeyEvent.VK_DELETE);
+            //bot.sleep(Timing.time1S());
           }
         }
       } else {
@@ -708,8 +712,9 @@ public class RuleFlowTest extends SWTTestExt{
                 final int OFFSET = 3;
                 gefEditor.click(x + OFFSET, y + OFFSET);
                 bot.sleep(Timing.time1S());
-                KeyboardHelper.typeKeyCodeUsingAWT(KeyEvent.VK_DELETE);
-                bot.sleep(Timing.time1S());
+                bot.menu(IDELabel.Menu.EDIT).menu(IDELabel.Menu.DELETE).click();
+                //KeyboardHelper.typeKeyCodeUsingAWT(KeyEvent.VK_DELETE);
+                //bot.sleep(Timing.time1S());
             }
         }
     }
