@@ -27,6 +27,8 @@ fi
 
 # define target update zip filename
 SNAPNAME="${JOB_NAME}-Update-${ZIPSUFFIX}.zip"
+# define target sources zip filename
+SRCSNAME="${JOB_NAME}-Sources-${ZIPSUFFIX}.zip"
 # define suffix to use for additional update sites
 SUFFNAME="-Update-${ZIPSUFFIX}.zip"
 
@@ -159,6 +161,20 @@ if [[ ! -f ${STAGINGDIR}/all/${SNAPNAME} ]]; then
 	done
 fi
 
+# create sources zip
+pushd ${WORKSPACE}/sources
+mkdir -p ${STAGINGDIR}/all
+if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]] && [[ -d ${WORKSPACE}/sources/aggregate/site/zips ]]; then
+	srczipname=${SRCSNAME/-Sources-/-Additional-Sources-}
+else
+	srczipname=${SRCSNAME}
+fi
+zip ${STAGINGDIR}/all/${srczipname} -q -r * -x hudson_workspace\* -x documentation\* -x download.jboss.org\* -x requirements\* \
+  -x workingset\* -x labs\* -x build\* -x \*test\* -x \*target\* -x \*.class -x \*.svn\* -x \*classes\* -x \*bin\* -x \*.zip \
+  -x \*docs\* -x \*reference\* -x \*releng\* -x \*.git\* -x \*/lib/\*.jar
+popd
+z=${STAGINGDIR}/all/${srczipname}; for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done
+
 mkdir -p ${STAGINGDIR}/logs
 
 # collect component zips from upstream aggregated build jobs
@@ -170,16 +186,41 @@ if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]] && [[ -d ${WORKSPACE}/sources/agg
 		mv $z ${z}.MD5 ${STAGINGDIR}/components
 	done
 	
+	# TODO :: JBIDE-9870 When we have a -Update-Sources- zip, this can be removed
+	mkdir -p ${STAGINGDIR}/all/sources	
+	# unpack component source zips like jbosstools-pi4soa-3.1_trunk-Sources-SNAPSHOT.zip or jbosstools-3.2_trunk.component--ws-Sources-SNAPSHOT.zip
+	for z in $(find ${WORKSPACE}/sources/aggregate/site/zips -name "*Sources*.zip"); do
+		zn=${z%*-Sources*.zip}; zn=${zn#*--}; zn=${zn##*/}; zn=${zn#jbosstools-}; 
+		# zn=${zn%_trunk}; zn=${zn%_stable_branch};
+		mkdir -p ${STAGINGDIR}/all/sources/${zn}/
+		unzip -qq -o -d ${STAGINGDIR}/all/sources/${zn}/ $z
+	done
+	# add component sources into sources zip
+	pushd ${STAGINGDIR}/all/sources
+	zip ${STAGINGDIR}/all/${SRCSNAME} -q -r * -x hudson_workspace\* -x documentation\* -x download.jboss.org\* -x requirements\* \
+	  -x workingset\* -x labs\* -x build\* -x \*test\* -x \*target\* -x \*.class -x \*.svn\* -x \*classes\* -x \*bin\* -x \*.zip \
+	  -x \*docs\* -x \*reference\* -x \*releng\* -x \*.git\* -x \*/lib/\*.jar
+	popd
+	rm -fr ${STAGINGDIR}/all/sources
+	z=${STAGINGDIR}/all/${SRCSNAME}; for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done
+
 	# JBIDE-7444 get aggregate metadata xml properties file
 	if [[ -f ${WORKSPACE}/sources/aggregate/site/zips/build.properties.all.xml ]]; then
 		rsync -aq ${WORKSPACE}/sources/aggregate/site/zips/build.properties.all.xml ${STAGINGDIR}/logs/
 	fi
 fi
 
+# JBIDE-9870 check if there's a sources update site and rename it if found (note, bottests-site/site/sources won't work; use bottests-site/souces)
+for z in $(find ${WORKSPACE}/sources/aggregate/*/sources/target/ -name "repository.zip" -o -name "site_assembly.zip"); do
+	echo "Collect sources from update site in $z"
+	mv $z ${STAGINGDIR}/all/${SRCSNAME/-Sources-/-Update-Sources-}
+	for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done 
+done
+
 # generate list of zips in this job
 METAFILE=zip.list.txt
 echo "ALL_ZIPS = \\" >> ${STAGINGDIR}/logs/${METAFILE}
-for z in $(find ${STAGINGDIR} -name "*Update*.zip"); do
+for z in $(find ${STAGINGDIR} -name "*Update*.zip") $(find ${STAGINGDIR} -name "*Sources*.zip"); do
 	# list zips in staging dir
 	echo "${z##${STAGINGDIR}/},\\"  >> ${STAGINGDIR}/logs/${METAFILE}
 done
@@ -189,8 +230,12 @@ echo ""  >> ${STAGINGDIR}/logs/${METAFILE}
 md5sumsFile=${STAGINGDIR}/logs/md5sums.txt
 echo "# Update Site Zips" > ${md5sumsFile}
 echo "# ----------------" >> ${md5sumsFile}
-md5sum $(find . -name "*Update*.zip" | egrep -v "nightly-Update") >> ${md5sumsFile}
+md5sum $(find . -name "*Update*.zip" | egrep -v "aggregate-Sources|nightly-Update") >> ${md5sumsFile}
 echo "  " >> ${md5sumsFile}
+echo "# Source Zips" >> ${md5sumsFile}
+echo "# -----------" >> ${md5sumsFile}
+md5sum $(find . -name "*Source*.zip" | egrep -v "aggregate-Sources|nightly-Update") >> ${md5sumsFile}
+echo " " >> ${md5sumsFile}
 
 mkdir -p ${STAGINGDIR}/logs
 
