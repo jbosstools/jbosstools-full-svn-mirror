@@ -32,7 +32,7 @@
             license="Free, EPL"
             provider="JBoss by Red Hat"
             siteUrl="%jboss.soa.update.url"
-            name="SOA-P Tooling"
+            name="SOA and Data Services Tooling"
             description="BPEL, Drools, Guvnor, ESB, jBPM 3, ModeShape, Teiid, Runtime"
             id="com.jboss.jbds.soatooling.bundle.soap">
 
@@ -64,7 +64,7 @@
                image32="images/jbds_icon32.png">
          </icon>
          <overview
-               summary="SOA-P Tooling for Eclipse - includes support for BPEL, Drools, Guvnor, ESB, jBPM 3, ModeShape, Teiid Designer, and Runtime Detection"
+               summary="SOA and Data Services Tooling for Eclipse - includes support for BPEL, Drools, Guvnor, ESB, jBPM 3, ModeShape, Teiid Designer, and Runtime Detection"
                screenshot="images/jbds_soa-p_brms.png"
                url="http://devstudio.jboss.com/">
          </overview>
@@ -77,7 +77,7 @@
             license="Free, EPL"
             provider="JBoss by Red Hat"
             siteUrl="%jboss.soa.update.url"
-            name="BRMS Tooling"
+            name="Business Rules Tooling"
             description="Drools, jBPM 5, Runtime"
             id="com.jboss.jbds.soatooling.bundle.brms">
 
@@ -93,7 +93,7 @@
                image32="images/jbds_icon32.png">
          </icon>
          <overview
-               summary="BRMS Tooling for Eclipse - includes support for Drools, jBPM 5, and Runtime Detection"
+               summary="Business Rules Tooling for Eclipse - includes support for Drools, jBPM 5, and Runtime Detection"
                screenshot="images/jbds_soa-p_brms.png"
                url="http://devstudio.jboss.com/">
          </overview>
