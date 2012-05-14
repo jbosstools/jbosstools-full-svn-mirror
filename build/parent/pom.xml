@@ -75,6 +75,9 @@
 		<coverage.filter>org.jboss.tools.*</coverage.filter>
 		<requirements.root>${basedir}/../../../requirements</requirements.root>
 		<requirement.build.root>${requirements.root}/target</requirement.build.root>
+
+		<!-- JBIDE-11700: latest stable build of m2e-apt for use with JBDS product builds -->		
+		<m2e-apt>http://download.jboss.org/jbosstools/updates/requirements/m2eclipse/m2e-apt-1.0.0-2012-05-02_13-33-26-H9/</m2e-apt>
 		
 	</properties>
 
