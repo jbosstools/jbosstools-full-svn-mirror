@@ -67,6 +67,8 @@ public class DroolsViewsTest extends SWTTestExt {
             }    
         }
 
+        bot.waitForNumberOfShells(1);
+        
         // waits for running debugging
         while (!eclipse.isDebugging()) {
             bot.sleep(Timing.time500MS());
