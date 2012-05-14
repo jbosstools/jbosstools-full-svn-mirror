@@ -205,7 +205,7 @@ public class CreateServerFromRSEJob extends ChainedJob {
 				String rtId = data[1];
 				IRuntime runtime = ServerCore.findRuntime(rtId);
 				IServer newServer = null;
-				newServer = ServerCreationUtils.createServer2(instance.getAlias(), runtime);
+				newServer = ServerCreationUtils.createServer2(runtime,instance.getAlias());
 				newServer = RSEUtils.setServerToRSEMode(newServer, host, home, config);
 				return;
 			}
@@ -268,7 +268,7 @@ public class CreateServerFromRSEJob extends ChainedJob {
 		String config = data[1];
 		String rtId = data[2];
 		IRuntime runtime = ServerCore.findRuntime(rtId);
-		IServer newServer = ServerCreationUtils.createServer2(instance.getAlias(), runtime);
+		IServer newServer = ServerCreationUtils.createServer2(runtime,instance.getAlias());
 		newServer = RSEUtils.setServerToRSEMode(newServer, host, home, config);
 	}
 
