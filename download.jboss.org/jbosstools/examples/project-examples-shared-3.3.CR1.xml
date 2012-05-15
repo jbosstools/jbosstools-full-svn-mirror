@@ -11,7 +11,7 @@
 		<shortDescription>Java EE Web Project</shortDescription>
         <priority>1</priority>
 		<description>
-This is your project! It's a sample, deployable Maven 3 project to help you get your foot in the door developing with Java EE 6 on JBoss AS 7.
+This is your project! It's a sample, deployable Maven 3 project to help you get your foot in the door developing with Java EE 6 on JBoss AS 7.1.
 This project is setup to allow you to create a compliant Java EE 6 application using JSF 2.0, CDI 1.0, EJB 3.1, JPA 2.0 and Bean Validation 1.0.
 It includes a persistence unit and some sample persistence and transaction code to help you get your feet wet with database access in enterprise Java.
 		</description>
@@ -19,9 +19,9 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<url/>
 		<fixes>
 			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70, org.jboss.ide.eclipse.as.runtime.71, org.jboss.ide.eclipse.as.runtime.eap.60</property>
-				<property name="description">This project example requires JBoss AS 7.0/7.1 or EAP 6 </property>
-				<property name="downloadId">org.jboss.tools.runtime.core.as.710</property>
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.71, org.jboss.ide.eclipse.as.runtime.eap.60</property>
+				<property name="description">This project example requires JBoss AS 7.1 or EAP 6 </property>
+				<property name="downloadId">org.jboss.tools.runtime.core.as.711</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.eclipse.m2e.core</property>
@@ -48,7 +48,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<mavenArchetype>
 			<archetypeGroupId>org.jboss.spec.archetypes</archetypeGroupId>
 			<archetypeArtifactId>jboss-javaee6-webapp-archetype</archetypeArtifactId>
-			<archetypeVersion>7.0.2.CR2b</archetypeVersion>
+			<archetypeVersion>7.1.1-Beta1-JBT</archetypeVersion>
             
             <archetypeRepository>http://anonsvn.jboss.org/repos/jbosstools/workspace/fred/repositories/snapshot/</archetypeRepository>
             
@@ -105,7 +105,8 @@ It includes a persistence unit and some sample persistence and transaction code 
         <mavenArchetype>
 			<archetypeGroupId>org.jboss.spec.archetypes</archetypeGroupId>
 			<archetypeArtifactId>jboss-javaee6-webapp-ear-archetype</archetypeArtifactId>
-			<archetypeVersion>7.0.2.CR2</archetypeVersion>
+			<archetypeVersion>7.1.1-Beta1-JBT</archetypeVersion>
+			<archetypeRepository>http://anonsvn.jboss.org/repos/jbosstools/workspace/fred/repositories/snapshot/</archetypeRepository>
             <!--
 			<archetypeRepository>http://anonsvn.jboss.org/repos/jbosstools/workspace/fred/repositories/snapshot/</archetypeRepository>
 			-->
@@ -160,7 +161,8 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<mavenArchetype>
 			<archetypeGroupId>org.jboss.aerogear.archetypes</archetypeGroupId>
 			<archetypeArtifactId>jboss-html5-mobile-archetype</archetypeArtifactId>
-			<archetypeVersion>1.0.0.M3b</archetypeVersion>
+			<archetypeVersion>1.0.0.M3-JBT</archetypeVersion>
+            <archetypeRepository>http://anonsvn.jboss.org/repos/jbosstools/workspace/fred/repositories/snapshot/</archetypeRepository>
             <!--
             <archetypeRepository>http://repository.jboss.org/nexus/content/repositories/releases/</archetypeRepository>
             -->
@@ -214,23 +216,24 @@ It includes a persistence unit and some sample persistence and transaction code 
         <mavenArchetype>
 			<archetypeGroupId>org.richfaces.archetypes</archetypeGroupId>
 			<archetypeArtifactId>richfaces-archetype-kitchensink</archetypeArtifactId>
-			<archetypeVersion>4.2.0.Final-2</archetypeVersion>
+			<archetypeVersion>4.2.2.Final-JBT</archetypeVersion>
+            <archetypeRepository>http://anonsvn.jboss.org/repos/jbosstools/workspace/fred/repositories/snapshot/</archetypeRepository>
             <!--
 			<archetypeRepository>http://repository.jboss.org/nexus/content/repositories/releases/</archetypeRepository>
 			<archetypeRepository>http://repository.jboss.org/nexus/content/repositories/snapshots/</archetypeRepository>
-            <archetypeRepository>http://anonsvn.jboss.org/repos/jbosstools/workspace/fred/repositories/snapshot/</archetypeRepository>
 			-->
             <groupId>org.jboss.tools.example</groupId>
 			<artifactId>richfaces-webapp</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<javaPackage>org.jboss.tools.example.richfaces</javaPackage>
-            <!--
             <properties>
-              <property name="richfaces-enterprise-version" value="4.2.0.Final" />    
+              <property name="richfaces-enterprise-version" value="4.2.1.Final" /> <!-- RF is broken in WFK / WFK repo not available-->
+              <property name="richfaces-version" value="4.2.1.Final" />    
             </properties>
-            -->
 		</mavenArchetype>
-        <essentialEnterpriseDependencies>org.richfaces:richfaces-bom:pom:4.2.0.Final-redhat-1::,</essentialEnterpriseDependencies>
+        <!--
+        <essentialEnterpriseDependencies>org.richfaces:richfaces-bom:pom:4.2.1.Final-redhat-1::,</essentialEnterpriseDependencies>
+        -->
         <tags>wizard</tags>
         <icon path="icons/rf_logo.png" />
         <welcome type="editor" url="/${project[0]}/README.md"/>
@@ -247,8 +250,8 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<url/>
 		<fixes>
 			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70, org.jboss.ide.eclipse.as.runtime.71, org.jboss.ide.eclipse.as.runtime.eap.60</property>
-				<property name="description">This project example requires JBoss AS 7.0/7.1 or EAP 6 </property>
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.71, org.jboss.ide.eclipse.as.runtime.eap.60</property>
+				<property name="description">This project example requires JBoss AS 7.1 or EAP 6 </property>
 				<property name="downloadId">org.jboss.tools.runtime.core.as.710</property>
 			</fix>
 			<fix type="plugin">
@@ -275,9 +278,12 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<mavenArchetype>
 			<archetypeGroupId>org.jboss.spring.archetypes</archetypeGroupId>
 			<archetypeArtifactId>spring-mvc-webapp</archetypeArtifactId>
-			<archetypeVersion>1.0.0.CR3</archetypeVersion>
+			<archetypeVersion>1.0.0-CR4-JBT</archetypeVersion>
+   			<archetypeRepository>http://anonsvn.jboss.org/repos/jbosstools/workspace/fred/repositories/snapshot/</archetypeRepository>
+            <!--
 			<archetypeRepository>http://repository.jboss.org/nexus/content/repositories/releases/</archetypeRepository>
-			<groupId>org.jboss.tools.example</groupId>
+			-->
+            <groupId>org.jboss.tools.example</groupId>
 			<artifactId>springmvc</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<javaPackage>org.jboss.tools.example.springmvc</javaPackage>
@@ -337,7 +343,7 @@ Make sure you read the deployment instructions in README.md</description>
         <mavenArchetype>
 			<archetypeGroupId>org.jboss.errai.archetypes</archetypeGroupId>
 			<archetypeArtifactId>kitchensink-quickstart</archetypeArtifactId>
-			<archetypeVersion>2.0-Beta3-jbt</archetypeVersion>
+			<archetypeVersion>2.0.0.Final-JBT</archetypeVersion>
             <archetypeRepository>http://anonsvn.jboss.org/repos/jbosstools/workspace/fred/repositories/snapshot/</archetypeRepository>
             <!--
 			<archetypeRepository>https://repository.jboss.org/nexus/content/groups/public/</archetypeRepository>
