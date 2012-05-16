@@ -57,7 +57,7 @@ href="../ws/openshift-news-2.3.0.Beta3">OpenShift Tools &gt;</a></p>
         Since Annotation Processing is managed by Eclipse JDT APT by default, a change in your source classes triggers incremental processing automatically. The downside of using JDT APT is, there's no separation between main and test classes (the way maven-processor-plugin handles them). To mitigate that limitation, you can change the workspace or project preferences to delegate annotation processing to maven, instead of JDT APT (Note this only works when using maven-processor-plugin). This will result in slower incremental builds (all classes will be processed) but will provide identical results to maven command line builds. <br/><br/>Automatic Annotation Processing configuration from the maven pom.xml can also be disabled altogether. In this case, your manual settings for Eclipse JDT APT will remain untouched. <br/><br/>Go to Window &gt; Preferences &gt; Maven &gt; Annotation processing or right-click on your project &gt; Properties &gt; Maven &gt; Annotation processing to select the Annotation Processing strategy of your choice. 
         </p>
         <img src="../images/m2e-apt-prefs.png" />
-		
+		<p>
         <small>
 		  See <a href="https://issues.jboss.org/browse/JBIDE-8208">JBIDE-8208</a> for more details.
 		</small></p>
@@ -110,8 +110,31 @@ href="../ws/openshift-news-2.3.0.Beta3">OpenShift Tools &gt;</a></p>
             <td valign="top" align="left">
 		<a name="itemname3" id="itemname4"></a><b>New Hibernate 3.6.x and 4.x maven provided libraries</b></td>
 		<td valign="top">
-		<p>TODO Fred</p>
-		<p>
+		<p>When you start a project and you need to add Hibernate as your JPA provider, adding the Hibernate dependencies manually one by one can be a chore. 
+            Now if your project is Facet enabled, adding both the JBoss Maven and the JPA Facet will give you access to new JPA library providers for the Hibernate platform.
+        </p>
+        <p>
+        <ul><li>Right-click on your project > Properties > Project Facets </li>
+        <li>Convert to Faceted form if necessary</li>
+        <li>Select both the JBoss Maven and JPA Facet</li>
+        <li>Click on the "Further Configuration required/available..." link</li>
+        <li>On the JPA Facet page, select the Hibernate JPA 2.X platorm and the type of JPA implementation</li>
+        <li>Hibernate 4.1.0 or 3.6.10 libraries are available</li>
+        </ul>
+        <img src="../images/hibernate-lib-provider.png" />
+        <br/><br/>
+        </p>
+        <p>
+        You can change the dependencies version and exclusions :<br/>
+        </p>        
+        <img src="../images/hibernate-4-lib-provider.png" />
+        <p>
+        Once you finish the Facets configuration, your project will have the Hibernate dependencies added to its pom.xml <br/>
+        </p>        
+
+        <img src="../images/hibernate-lib-provider-pom.png" />
+
+		<p>      
 		<small>
 		  See <a href="https://issues.jboss.org/browse/JBIDE-10911">JBIDE-10911</a> for more details. 
 		</small>
