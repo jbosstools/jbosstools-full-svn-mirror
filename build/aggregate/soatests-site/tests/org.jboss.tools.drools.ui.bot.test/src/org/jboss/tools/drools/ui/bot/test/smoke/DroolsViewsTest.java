@@ -68,7 +68,7 @@ public class DroolsViewsTest extends SWTTestExt {
         }
 
         bot.waitForNumberOfShells(1);
-        
+
         // waits for running debugging
         while (!eclipse.isDebugging()) {
             bot.sleep(Timing.time500MS());
@@ -166,6 +166,9 @@ public class DroolsViewsTest extends SWTTestExt {
 
     /**
      * Tests refreshing of Agenda view.
+     * 
+     * This test is ignored because it's not a bug, it should be feature
+     * https://issues.jboss.org/browse/JBIDE-10682
      */
     @Test
     @Ignore
