@@ -47,7 +47,12 @@
 				<b>Show environment</b>
 			</td>
 			<td valign="top">
-				some content<br />
+				<p>There is now a "Show environment
+			variables" action that will open a console
+			which shows the environment variables
+			currently set on your application. This menu
+			available is available on all applications in
+			OpenShift Explorer.</p>
 				<img src="images/show-environment.png" alt="show environment" />
 				<img src="images/environment-variables.png" alt="environment variables""/>
 				<p>
@@ -63,10 +68,38 @@
 				<b>Port forwarding</b>
 			</td>
 			<td valign="top">
-				some content<br />
-				<img src="images/port-forwarding-menu.png" alt="port forwarding menu" />
-				<img src="images/port-forwarding.png" alt="port forwarding""/>
+				<p>You can now enable port forwarding
+			for OpenShift applications. You start it via
+			the context menu in OpenShift Explorer.</p>
+				<img
+			src="images/port-forwarding-menu.png"
+			alt="port forwarding menu" />
+
+			  <p>When starting port forwarding a dialog
+				will show up with the ports that are
+				possible to forward.</p>
+				<img src="images/port-forwarding.png"
+				alt="port forwarding""/>
+			  <p>In here you can press "Start All" and
+				port forwarding will begin. To stop
+				Port forwarding just open this dialog
+				again and press "Stop All".</p>
+
+			  <p>The default local address is set to
+				127.0.0.1 and in case the remote port
+				is not available a random one will be
+				found for it.</p>
+
+			  <p>In case your OS supports it you can
+				uncheck 'Use 127.0.0.1 as the local
+				address for all services' to make it
+				use the same local address as remote.</p>
 				<p>
+
+			  <p>Finally you can click 'Find free ports
+					for all services' in case
+					you do not want to use the
+					default remote port numbers.</p>
 					<small>
 						<a href="https://issues.jboss.org/browse/JBIDE-11073">Related Jira</a>,
 					</small>
@@ -79,7 +112,15 @@
 				<b>Delete Domain</b>
 			</td>
 			<td valign="top">
-				Delete domain with all applications</br>
+			  <p>You can now Delete a domain including
+					all its application by
+					checking "Force application
+					deletion" in the Delete domain
+					action.</p>
+			  <p>Be aware that this action is not possible
+					to undo. Thus be sure you have
+					proper backup of the data you
+					need from these applications.</br>
 				<img src="images/delete-domain.png" alt="delete domain" />
 				<p>
 					<small>
@@ -98,11 +139,25 @@
 		<tr>
 			<td valign="top" align="left">
 				<a name="itemname3" id="itemname3"></a>
-				<b>Import to existing project</b>
+				<b>Import into any existing project</b>
+
+			  <p
 			</td>
 			<td valign="top">
-				some content
-				<img src="images/select-existing-project.png" alt="select any project" />
+			  <p>Import of OpenShift applications is
+					now no longer limited to use
+					specific project types besides
+					requiring it is either shared
+					with Git or not Team shared at
+					all. Previous versions require
+			it to be java/WTP project.</p>
+				<img
+			src="images/select-existing-project.png"
+			alt="select any project" />
+
+			  <p>B3 has a typo in the label - it is not
+				only git shared projects, you can also
+				select non-shared projects.</p>
 				<p>
 					<small>
 						<a href="https://issues.jboss.org/browse/JBIDE-11162">Related Jira</a>
@@ -116,6 +171,18 @@
 				<b>Scalable applications</b>
 			</td>
 			<td valign="top">
+			  <p>Recent versions of OpenShift allows
+				creation of scalable applications and
+				also specify the size of the gear your
+				application will run on.</p>
+
+			  <p>The application wizard now supports this
+				and the settings available to you
+				depend on your account type.</p>
+
+			  <p>If you do not care for scaling or gear
+				size then simply just leave the
+				default values as is.</p>
 				<img src="images/create-scalable-applications.png" alt="create scalable applications" />
 				<p>
 					<small>
@@ -137,7 +204,10 @@
 				<b>Multimodule projects</b>
 			</td>
 			<td valign="top">
-				some content
+				OpenShift applications can now be
+				multimodule maven projects and is
+				handled both by the import wizard and
+				server adapter.
 				<p>
 					<small>
 						<a href="https://issues.jboss.org/browse/JBIDE-11166">Related Jira</a>
