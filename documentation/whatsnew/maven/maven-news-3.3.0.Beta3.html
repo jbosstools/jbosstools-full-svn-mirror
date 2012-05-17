@@ -74,10 +74,24 @@ href="../ws/openshift-news-2.3.0.Beta3">OpenShift Tools &gt;</a></p>
 	    <td valign="top" align="left">
 		<a name="itemname2" id="itemname2"></a><b>New GWT configurator</b></td>
 		<td valign="top">
-		<p>TODO Denis</p>
+		<p>You can enable/disable GWT Project Configurator by using follow preference:</p>
+		<img src="../images/jboss_maven_integration_gwt.png" />
+		<p>GWT Project Configurator scans configuration "gwt-maven-plugin" in pom.xml for modules and adds them to the configuration.<br/>
+		For example, to define module(s) in pom.xml you can either set:<br/><br/>
+		</p>
+		<img src="../images/gwt_module_definition.png" />
+		<p>or</p>
+		<img src="../images/gwt_modules_definition.png" />
+        <p>If there is no modules defined in pom.xml then Configurator adds all existing modules to configuration.</p>
+        <p>GWT Project Configurator sets GWT Compiler output to the same folder which Maven Compiler uses.</p>
+        <p>You can use Maven or GWT Compiler to compile your application and whatever you do after that (Deploy on Server or Running on an External Server) it does not required additional compilation.</p>
         <p>
 		<small>
-		  See <a href="https://issues.jboss.org/browse/JBIDE-11224">JBIDE-11224</a> and  <a href="https://issues.jboss.org/browse/JBIDE-11224">JBIDE-11224</a> for more details. 
+		See:
+			<ul>
+		  <li><a href="https://issues.jboss.org/browse/JBIDE-11224">Ensure GWT tooling and m2e-wtp are configured for same output directory</a></li>
+		  <li><a href="https://issues.jboss.org/browse/JBIDE-11244">Auto-discover all the modules and add them to the configuration on GWT project import</a></li>
+		  	</ul> 
 		</small></p>
 	    </td>
 	</tr>
