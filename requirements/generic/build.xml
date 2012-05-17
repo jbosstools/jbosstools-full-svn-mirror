@@ -6,8 +6,35 @@
 	
 	<property name="driver.dest" value="${requirement.download.root}/${requirement}"/>
 	
-	<target name="init" />
-	
+	<target name="init">
+		<condition property="output.dir" value="${WORKSPACE}/results" else="${basedir}">
+		<available file="${WORKSPACE}/results" />
+		</condition>
+
+		<condition property="COMMON_TOOLS" value="/home/hudson/static_build_env/jbds/tools" else="${java.io.tmpdir}">
+			<available file="/home/hudson/static_build_env/jbds" type="dir" />
+		</condition>
+		<mkdir dir="${COMMON_TOOLS}" />
+
+		<available file="${COMMON_TOOLS}/ant-contrib.jar" type="file" property="ant-contrib.jar.exists" />
+		<antcall target="get.ant-contrib" />
+		<taskdef resource="net/sf/antcontrib/antlib.xml">
+			<classpath>
+				<pathelement location="${COMMON_TOOLS}/ant-contrib.jar" />
+			</classpath>
+		</taskdef>
+	</target>
+
+	<target name="get.ant-contrib" unless="ant-contrib.jar.exists">
+		<property name="ANTCONTRIB_MIRROR" value="http://sourceforge.net/projects/ant-contrib/files/ant-contrib/ant-contrib-1.0b2" />
+		<get usetimestamp="true" dest="${COMMON_TOOLS}/ant-contrib-1.0b2-bin.zip" src="${ANTCONTRIB_MIRROR}/ant-contrib-1.0b2-bin.zip" />
+		<touch file="${COMMON_TOOLS}/ant-contrib-1.0b2-bin.zip" />
+		<mkdir dir="${java.io.tmpdir}/ant-contrib-1.0b2-bin.zip_" />
+		<unzip src="${COMMON_TOOLS}/ant-contrib-1.0b2-bin.zip" dest="${java.io.tmpdir}/ant-contrib-1.0b2-bin.zip_" overwrite="true" />
+		<copy file="${java.io.tmpdir}/ant-contrib-1.0b2-bin.zip_/ant-contrib/lib/ant-contrib.jar" tofile="${COMMON_TOOLS}/ant-contrib.jar" failonerror="true" />
+		<delete dir="${java.io.tmpdir}/ant-contrib-1.0b2-bin.zip_" includeemptydirs="true" quiet="true" />
+	</target>
+
 	<target name="build.requirement" depends="build.driver" />
 
 	<target name="unpack.requirement" depends="unzip.archive" />	
@@ -16,7 +43,7 @@
 	
 	<target name="build.driver" depends="unzip.archive" />	
 	
-	<target name="unzip.archive" depends="download.archive">
+	<target name="unzip.archive" depends="download.archive,defaults">
 		<property name="ext" value="zip"/>
 		<echo level="debug">Unpacking ${driver.dest}/${build.archive} to ${unzip.dest}</echo>
 		<if>
@@ -33,15 +60,57 @@
 	<target name="post.unpack.requirement">
 	</target>
 	
-	<target name="unpack-tar.gz">
+	<target name="unpack-tar.gz" depends="defaults">
 		<untar compression="gzip" src="${driver.dest}/${build.archive}" dest="${unzip.dest}"  />
 	</target>
 	
-	<target name="unpack-zip">
+	<target name="unpack-zip" depends="defaults">
 		<unzip src="${driver.dest}/${build.archive}" dest="${unzip.dest}" />
 	</target>
 	
-	<target name="check.archive" depends="init">
+	<target name="defaults">
+		<if>
+			<or>
+				<contains string="${driver.dest}" substring="{requirement.download.root"/>
+				<contains string="${driver.dest}" substring="{requirement"/>
+			</or>
+			<then>
+				<var name="driver.dest" unset="true"/>
+				<var name="requirement.name" unset="true"/>
+				<var name="requirement" unset="true"/>
+				<basename property="requirement.name" file="${basedir}"/>
+				<basename property="requirement" file="${basedir}"/>
+				<property name="driver.dest" value="${basedir}/../download/${requirement.name}"/>
+				<echo>WARING! requirement, requirement.name, and driver.dest are not specified in 
+	requirements/${requirement.name}/build.properties or 
+	requirements/${requirement.name}/buildRequirement.xml.
+	Falling back to default assumptions.
+-
+requirement = ${requirement}
+driver.dest = ${driver.dest}</echo>
+			</then>
+		</if>
+		<if>
+			<or>
+				<not>
+					<isset property="unzip.dest"/>
+				</not>
+				<contains string="${unzip.dest}" substring="{unzip.dest"/>
+			</or>
+			<then>
+				<var name="unzip.dest" unset="true"/>
+				<var name="unzip.dest" value="${basedir}/../target/${requirement}"/>
+				<echo>WARING! unzip.dest is not specified in 
+	requirements/${requirement.name}/build.properties or 
+	requirements/${requirement.name}/buildRequirement.xml.
+	Falling back to default assumption.
+-
+unzip.dest = ${unzip.dest}</echo>
+			</then>
+		</if>
+	</target>
+
+	<target name="check.archive" depends="init,defaults">
 		<echo>Checking the requirement's archive ${build.archive}</echo>
 		<if>
 			<available file="${driver.dest}/${build.archive}" />
