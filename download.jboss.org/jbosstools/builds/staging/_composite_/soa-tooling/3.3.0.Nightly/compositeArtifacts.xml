@@ -13,17 +13,16 @@
 
 <!-- SOA Tooling : 10 x 1 = 10 -->
 
-<child location='../../../../staging/soatools-3.3.0.Nightly--bpel/all/repo/'/>
-<child location='../../../../staging/soatools-3.3.0.Nightly--droolsjbpm/all/repo/'/>
-<child location='../../../../staging/soatools-3.3.0.Nightly--esb/all/repo/'/>
-<child location='../../../../staging/soatools-3.3.0.Nightly--flow/all/repo/'/>
-<child location='../../../../staging/soatools-3.3.0.Nightly--jbpm/all/repo/'/>
-
-<child location='../../../../staging/soatools-3.3.0.Nightly--modeshape/all/repo/'/>
-<child location='../../../../staging/soatools-3.3.0.Nightly--runtime-soa/all/repo/'/>
+<child location='../../../../staging/soatools-3.3.0.Nightly.component--bpel/all/repo/'/>
+<child location='../../../../staging/soatools-3.3.0.Nightly.component--droolsjbpm/all/repo/'/>
+<child location='../../../../staging/soatools-3.3.0.Nightly.component--esb/all/repo/'/>
+<child location='../../../../staging/soatools-3.3.0.Nightly.component--flow/all/repo/'/>
+<child location='../../../../staging/soatools-3.3.0.Nightly.component--jbpm/all/repo/'/>
+<child location='../../../../staging/soatools-3.3.0.Nightly.component--modeshape/all/repo/'/>
+<child location='../../../../staging/soatools-3.3.0.Nightly.component--runtime-soa/all/repo/'/>
+<child location='../../../../staging/soatools-3.3.0.Nightly.component--teiid-designer/all/repo/'/>
 <child location='http://download.jboss.org/savara/releases/updates/2.0.x/' />
 <child location='../../../../staging/SwitchYard-Tools/eclipse/'/>
-<child location='../../../../staging/soatools-3.3.0.Nightly--teiid-designer/all/repo/'/>
 
 </children>
 </repository>
