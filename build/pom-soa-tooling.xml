@@ -160,6 +160,10 @@
 				<module>../seam</module>
 				<module>../usage</module>
 				<module>../runtime</module>
+				<module>../esb</module>
+				<module>../flow</module>
+				<module>../jbpm</module>
+				<!-- also needs drools but that's only available as binary upstream so be sure to build it first and resolve from composite staging site -->
 				<module>../runtime-soa</module>
 			</modules>
 		</profile>
