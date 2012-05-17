@@ -872,6 +872,17 @@
 		</profile>
 	</profiles>
 
+	<repositories>
+		<repository>
+			<id>jboss-releases</id>
+			<name>JBoss Releases Maven Repository</name>
+			<url>https://repository.jboss.org/nexus/content/repositories/releases/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+	</repositories>
+
 	<!-- Additional m2 repos to resolve things like org.eclipse.tycho:tycho-maven-plugin:0.13.0-SNAPSHOT -->
 	<pluginRepositories>
 		<pluginRepository>
