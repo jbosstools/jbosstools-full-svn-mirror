@@ -151,6 +151,14 @@
 						</para>
 					</listitem>
 				</varlistentry>
+				<varlistentry>
+					<term>JBoss Central Enabled</term>
+					<listitem>
+						<para>
+							The <guilabel>JBoss Central Enabled</guilabel> field reports whether JBoss Central is set to be seen upon startup or not. Returned value is either true or false.
+						</para>
+					</listitem>
+				</varlistentry>
 			</variablelist>
 		</section>
 	</section>

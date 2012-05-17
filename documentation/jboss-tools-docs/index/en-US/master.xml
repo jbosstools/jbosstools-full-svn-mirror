@@ -57,13 +57,13 @@
 				</primaryie>
 			</indexentry>
 			
-			<indexentry>
+	<!--		<indexentry>
 				<primaryie>Exadel Studio Migration Guide <ulink
 					url="en/Exadel-migration/html/index.html">(html)</ulink>
 					<ulink url="en/Exadel-migration/html_single/index.html">(html single)</ulink>
 					<ulink url="en/Exadel-migration/pdf/Exadel_Studio_Migration_Guide.pdf">(pdf)</ulink>
 				</primaryie>
-			</indexentry>
+			</indexentry> -->
 			
 			<indexentry>
 				<primaryie>Hibernate Tools Reference Guide 

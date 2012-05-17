@@ -11,7 +11,7 @@
 	<name>All_Userguides</name>
 
 	<modules>
-        <module>../guides/Exadel-migration</module>
+		<!--    <module>../guides/Exadel-migration</module> -->
 		<module>../guides/GettingStartedGuide</module>
 		<module>../guides/Beginners_Guide</module>
 		<module>../../cdi/docs/reference</module>

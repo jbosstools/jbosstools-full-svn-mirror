@@ -6,7 +6,7 @@
     <format>dir</format>
   </formats>
   <includeBaseDirectory>false</includeBaseDirectory>
-		<fileSets>
+	<!--	<fileSets>
 			<fileSet>
 				<directory>../guides/Exadel-migration/target/docbook/publish/en-US</directory>
 				<outputDirectory>/Exadel-migration</outputDirectory>
@@ -29,7 +29,7 @@
 				<useDefaultExcludes>true</useDefaultExcludes>
 				<fileMode>0644</fileMode>
 				<directoryMode>0755</directoryMode>
-			</fileSet>
+			</fileSet> -->
 
             <!-- Maybe it is unnecessary fileSet and it could be removed at all? -->
             <!--fileSet>
