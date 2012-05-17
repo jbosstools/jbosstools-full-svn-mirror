@@ -20,7 +20,12 @@ public class BPELModuleContentProvider implements ITreeContentProvider {
 			String typeId = mod.getModuleType().getId();
 			// https://jira.jboss.org/browse/JBIDE-7486
 			// if project was closed or deleted, mod.getProject() is null - ignore
-			if( mod != null && mod.getProject() != null && typeId.equals(IBPELModuleFacetConstants.BPEL_MODULE_TYPE)) {
+			if( mod != null && mod.getProject() != null &&
+				(
+					typeId.equals(IBPELModuleFacetConstants.JBT_BPEL_MODULE_TYPE) ||
+					typeId.equals(IBPELModuleFacetConstants.BPEL_MODULE_TYPE)
+				)
+			) {
 				// we have a bpel module deployed to a server. List the children
 				String[] versions = JBTBPELPublisher.getDeployedPathsFromDescriptor(s, mod.getProject());
 				return wrap((ModuleServer)parentElement, versions);

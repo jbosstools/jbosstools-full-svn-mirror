@@ -22,14 +22,15 @@ public interface IBPELModuleFacetConstants {
 
 
 	// module types
-	public final static String BPEL_MODULE_TYPE = "jbt.bpel.module"; //$NON-NLS-1$
+	public final static String JBT_BPEL_MODULE_TYPE = "jbt.bpel.module"; //$NON-NLS-1$
+	public final static String BPEL_MODULE_TYPE = "bpel.module"; //$NON-NLS-1$
 	
 	// module type versions
 	public final static String BPEL11_VERSION = "1.1"; // $NON-NLS-1$
 	public final static String BPEL20_VERSION = "2.0"; // $NON-NLS-1$
 	
 	// facet template
-	public final static String BPEL20_FACET_TEMPLATE = "jbt.template.bpel.core";  //$NON-NLS-1$
+	public final static String JBT_BPEL_FACET_TEMPLATE = "jbt.template.bpel.core";  //$NON-NLS-1$
 	
 	// facet
 	// this facet has been deprecated

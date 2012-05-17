@@ -74,8 +74,8 @@ public class JBTBPELPublisher implements IJBossServerPublisher {
 				&& module != null && module.length > 0 
 				&& module[module.length-1] != null  
 				&& (
-						module[module.length-1].getModuleType().getId().equals(IBPELModuleFacetConstants.BPEL_MODULE_TYPE) ||
-						module[module.length-1].getModuleType().getId().equals("bpel.module"))
+						module[module.length-1].getModuleType().getId().equals(IBPELModuleFacetConstants.JBT_BPEL_MODULE_TYPE) ||
+						module[module.length-1].getModuleType().getId().equals(IBPELModuleFacetConstants.BPEL_MODULE_TYPE))
 					)
 			return true;
 		return false;

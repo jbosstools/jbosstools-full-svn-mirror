@@ -50,9 +50,9 @@ public class NewBPELProjectWizardPage1 extends DataModelFacetCreationWizardPage 
 		top.setLayout(new GridLayout());
 		top.setLayoutData(new GridData(GridData.FILL_BOTH));
 		createProjectGroup(top);
-//		createServerTargetComposite(top);
+		createServerTargetComposite(top);
 //		createPrimaryFacetComposite(top);
-//      createPresetPanel(top);
+		createPresetPanel(top);
         return top;
 	}
 }

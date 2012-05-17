@@ -17,7 +17,7 @@
 <!--=========================================================================-->
 <!-- New BPEL Project Wizard			 									 -->
 <!--=========================================================================-->
-   
+   <!-- This is not the New BPEL Project Wizard you are looking for...move along!
    <extension
          point="org.eclipse.ui.newWizards">
       <wizard
@@ -32,6 +32,8 @@
             <description>%NEW_BPEL_PROJECT_DESCRIPTION</description>
       </wizard>
    </extension>
+   -->
+   
    <!--
    <extension point="org.eclipse.wst.common.project.facet.ui.wizardPages">
     <wizard-pages action="bpel.facet.core.install">
@@ -59,7 +61,7 @@
 	<extension point="org.eclipse.wst.server.ui.serverImages">
 		<image
 			id="org.jboss.tools.bpel.runtimes.jbt.bpel.module"
-			typeIds="jbt.bpel.module,bpel.module"
+			typeIds="jbt.bpel.module"
 			icon="icons/obj16/bpelfacet.gif"/>
 	</extension>
 
@@ -205,10 +207,11 @@
 		<moduleFactory
             projects="true"
             class="org.jboss.tools.bpel.runtimes.module.BPELModuleFactoryDelegate"
-            id="org.jboss.tools.bpel.runtimes.module.moduleFactory">
+            id="org.jboss.tools.bpel.runtimes.module.moduleFactory"
+            order="1">
      		<moduleType
                versions="1.1, 2.0"
-               types="jbt.bpel.module,bpel.module">
+               types="bpel.module,jbt.bpel.module">
 			</moduleType>
  		</moduleFactory>
      </extension>
@@ -220,7 +223,8 @@
 	<extension point="org.eclipse.wst.server.core.moduleArtifactAdapters">
 		<moduleArtifactAdapter
 			id="org.jboss.tools.bpel.runtimes.module.artifactAdapter1"
-            class="org.jboss.tools.bpel.runtimes.module.BPELDeployableArtifactAdapterFactory">
+            class="org.jboss.tools.bpel.runtimes.module.BPELDeployableArtifactAdapterFactory"
+            priority="100">
 			<enablement>
 				<with variable="selection">
 					<adapt type="org.eclipse.core.resources.IProject"/>
@@ -229,7 +233,8 @@
 		</moduleArtifactAdapter>
 		<moduleArtifactAdapter
 			id="org.jboss.tools.bpel.runtimes.module.artifactAdapter2"
-            class="org.jboss.tools.bpel.runtimes.module.BPELDeployableArtifactAdapterFactory">
+            class="org.jboss.tools.bpel.runtimes.module.BPELDeployableArtifactAdapterFactory"
+            priority="100">
 			<enablement>
 				<with variable="selection">
              		<adapt type="org.eclipse.core.resources.IFile"/>
@@ -254,14 +259,20 @@
             <adapter type="org.eclipse.debug.ui.actions.ILaunchable"/>
        </factory>
    </extension>
- <extension
-       point="org.jboss.ide.eclipse.as.core.publishers">
-    <publisher
-          class="org.jboss.tools.bpel.runtimes.module.JBTBPELPublisher"
-          priority="10"
-          zipDelegate="false">
-    </publisher>
- </extension> 
+   
+	<!--
+	The priority needs to be above that of JBoss7JSTPublisher publisher, which currently is 15.
+	Note that the JBoss 7 publisher does not actually accept a bpel.module - its accept method
+	defaults to AbstractServerToolsPublisher.accept() which (in this case) always returns true
+	-->
+	<extension
+		point="org.jboss.ide.eclipse.as.core.publishers">
+		<publisher
+			class="org.jboss.tools.bpel.runtimes.module.JBTBPELPublisher"
+			priority="100"
+			zipDelegate="true">
+		</publisher>
+	</extension> 
 
 <!--=========================================================================-->
 <!-- TO MAKE PROCESSES ACTUALLY LAUNCHABLE VIA RUN ON SERVER				 -->

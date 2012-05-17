@@ -39,7 +39,7 @@ public class BPELModuleFactoryDelegate  extends ProjectModuleFactoryDelegate imp
 	protected Map <IModule, FlatComponentDeployable> moduleDelegates = new HashMap<IModule, FlatComponentDeployable>(5);
 
 	public static final String FACTORY_ID = "org.jboss.tools.bpel.runtimes.module.moduleFactory";
-	public static final String MODULE_TYPE = IBPELModuleFacetConstants.BPEL_MODULE_TYPE;
+
 	public static BPELModuleFactoryDelegate FACTORY;
 	public static BPELModuleFactoryDelegate factoryInstance() {
 		if( FACTORY == null ) {
@@ -75,7 +75,6 @@ public class BPELModuleFactoryDelegate  extends ProjectModuleFactoryDelegate imp
 		return null;
 	}
 
-
 	@Override
 	public ModuleDelegate getModuleDelegate(IModule module) {
 		if (module == null)
@@ -95,7 +94,7 @@ public class BPELModuleFactoryDelegate  extends ProjectModuleFactoryDelegate imp
 	protected boolean canHandleProject(IProject p) {
 		// https://issues.jboss.org/browse/JBIDE-8533
 		// Added support for deprecated jbt.bpel.facet.core
-		return //FacetedProjectUtilities.isProjectOfType(p, IBPELModuleFacetConstants.BPEL_PROJECT_FACET) ||
+		return FacetedProjectUtilities.isProjectOfType(p, IBPELModuleFacetConstants.BPEL_PROJECT_FACET) ||
 			FacetedProjectUtilities.isProjectOfType(p, IBPELModuleFacetConstants.JBT_BPEL_PROJECT_FACET);
 	}
 	

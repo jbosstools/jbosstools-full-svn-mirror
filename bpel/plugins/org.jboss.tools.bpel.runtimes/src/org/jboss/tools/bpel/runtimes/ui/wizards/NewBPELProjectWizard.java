@@ -91,7 +91,7 @@ public class NewBPELProjectWizard extends NewProjectDataModelFacetWizard
 	 */
 	@Override
 	protected IFacetedProjectTemplate getTemplate() {
-		return ProjectFacetsManager.getTemplate(IBPELModuleFacetConstants.BPEL20_FACET_TEMPLATE); 
+		return ProjectFacetsManager.getTemplate(IBPELModuleFacetConstants.JBT_BPEL_FACET_TEMPLATE); 
 	}
 
 

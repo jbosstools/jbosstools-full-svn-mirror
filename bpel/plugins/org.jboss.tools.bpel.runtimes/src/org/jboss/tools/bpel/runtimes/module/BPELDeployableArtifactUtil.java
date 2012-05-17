@@ -60,7 +60,7 @@ public class BPELDeployableArtifactUtil {
 //		
 //		if (IStatus.OK != fileStatus.getCode()) return null; // not a valid BPEL file
 //		
-//		IModule[] modules = ServerUtil.getModules(IBPELModuleFacetConstants.BPEL_MODULE_TYPE);
+//		IModule[] modules = ServerUtil.getModules(IBPELModuleFacetConstants.JBT_BPEL_MODULE_TYPE);
 //		
 //		for (int i=0; i<modules.length; i++) {
 //			
