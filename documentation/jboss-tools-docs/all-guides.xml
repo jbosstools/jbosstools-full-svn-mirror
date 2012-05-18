@@ -6,8 +6,8 @@
     <format>dir</format>
   </formats>
   <includeBaseDirectory>false</includeBaseDirectory>
-	<!--	<fileSets>
-			<fileSet>
+		<fileSets>
+			<!--		<fileSet>
 				<directory>../guides/Exadel-migration/target/docbook/publish/en-US</directory>
 				<outputDirectory>/Exadel-migration</outputDirectory>
 				<filtered>false</filtered>
