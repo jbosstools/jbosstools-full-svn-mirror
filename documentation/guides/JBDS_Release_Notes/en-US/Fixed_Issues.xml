@@ -4,8 +4,7 @@
         Features added and issues fixed in version 5.0.0
     </title>
 	<variablelist>
-		
-		
+
 		<!-- JBIDE-11635 -->
 		<varlistentry>
 		<term>
@@ -17,61 +16,36 @@
 			</para>
 		</listitem>
 	</varlistentry>
-	
-	
-	<!-- JBIDE-11244 -->
+
+	<!-- JBIDE-11064 -->
 	<varlistentry>
 	<term>
-		<ulink url="https://issues.jboss.org/jira/browse/JBIDE-11244">JBIDE-11244</ulink>
+		<ulink url="https://issues.jboss.org/jira/browse/JBIDE-11064">JBIDE-11064</ulink>
 	</term>
 	<listitem>
 		<para>
-			<remark>No doc status set yet, this JIRA probably  hasn't been reviewed by the docs team yet.</remark>
+			Only customers who downloaded and used the Beta release of JBoss Developer Studio 5 may have noticed this issue, that has since been resolved.
 		</para>
 		<para>
-		<warning>
-			<para>Release Note Text expected but missing!!! The Release Notes Text JIRA field is expected to have been filled in by the assigned Writer but doesn't appear to have been done.</para>
-		</warning>
-	</para>
-</listitem>
-   </varlistentry>
-   
-   
-   
-   <!-- JBIDE-11162 -->
+			The JBoss Developer Studio 5.0.Beta JMX tooling was unable to connect to JBoss Application Server 7.1.0 correctly as the ability to connect to the new connector and URL for the server had not been incorporated. New classes have been created for interaction between JMX and JBoss Application Server 7.1.0 and area available as part of JBoss Developer Studio 5.0.
+		</para>
+	</listitem>
+</varlistentry>
+
+
+   <!-- JBIDE-10947 -->
    <varlistentry>
    <term>
-	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-11162">JBIDE-11162</ulink>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-10947">JBIDE-10947</ulink>
    </term>
    <listitem>
 	   <para>
-		   <remark>No doc status set yet, this JIRA probably  hasn't been reviewed by the docs team yet.</remark>
+		   XML and JSON (JavaScript Object Notation) output from executed web services readability has been improved through the addition of carriage returns, line feeds, and indentation.
 	   </para>
-	   <para>
-	   <warning>
-		   <para>Release Note Text expected but missing!!! The Release Notes Text JIRA field is expected to have been filled in by the assigned Writer but doesn't appear to have been done.</para>
-	   </warning>
-   </para>
    </listitem>
    </varlistentry>
    
    
-   <!-- JBIDE-10945 -->
-   <varlistentry>
-   <term>
-	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-10945">JBIDE-10945</ulink>
-   </term>
-   <listitem>
-	   <para>
-		   <remark>No doc status set yet, this JIRA probably  hasn't been reviewed by the docs team yet.</remark>
-	   </para>
-	   <para>
-	   <warning>
-		   <para>Release Note Text expected but missing!!! The Release Notes Text JIRA field is expected to have been filled in by the assigned Writer but doesn't appear to have been done.</para>
-	   </warning>
-   </para>
-   </listitem>
-   </varlistentry>
    
    <!-- JBIDE-10390 -->
    <varlistentry>
@@ -783,14 +757,14 @@
    <varlistentry>
    <term>
 	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-8519">JBIDE-8519</ulink>
-       </term>
-      <listitem>
-         <para>
-         In previous versions of JBoss Developer Studio the functions ?floor, ?ceiling and ?round caused parse errors. This issue has been fixed by updating the Freemarker runtime to version 2.3.18, which corrects this issue.
-         </para>
-      </listitem>
+   </term>
+   <listitem>
+	   <para>
+		   In previous versions of JBoss Developer Studio the functions ?floor, ?ceiling and ?round caused parse errors. This issue has been fixed by updating the Freemarker runtime to version 2.3.18, which corrects this issue.
+	   </para>
+   </listitem>
    </varlistentry>
-
+   
    <!-- JBIDE-8421 -->
    <varlistentry>
       <term><ulink url="https://issues.jboss.org/jira/browse/JBIDE-8421">JBIDE-8421</ulink></term>
@@ -816,6 +790,7 @@
          </para>
       </listitem>
    </varlistentry>
+
 
    <!-- JBIDE-8195 -->
    <varlistentry>
@@ -908,6 +883,4 @@
    </varlistentry>
 
 </variablelist>
-
-
 </section>
