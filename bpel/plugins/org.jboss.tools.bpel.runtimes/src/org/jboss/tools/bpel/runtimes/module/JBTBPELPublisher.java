@@ -99,8 +99,9 @@ public class JBTBPELPublisher implements IJBossServerPublisher {
         	status = publish(module, delta, publishType, monitor);
         	publishState = IServer.PUBLISH_STATE_NONE;
         } else if( publishType == INCREMENTAL_PUBLISH ) {
-        	// Do nothing. This is intentional
-        	publishState = IServer.PUBLISH_STATE_INCREMENTAL;
+        	// Incremental is treated like Full Publish
+        	status = publish(module, delta, publishType, monitor);
+        	publishState = IServer.PUBLISH_STATE_NONE;
         }
         // https://issues.jboss.org/browse/JBDS-1573
         // hack: display a warning dialog.

@@ -16,6 +16,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
+import org.eclipse.wst.common.project.facet.core.ProjectFacetsManager;
 import org.eclipse.wst.web.ui.internal.wizards.DataModelFacetCreationWizardPage;
 import org.jboss.tools.bpel.runtimes.IBPELModuleFacetConstants;
 import org.jboss.tools.bpel.runtimes.IRuntimesUIConstants;
@@ -52,6 +53,7 @@ public class NewBPELProjectWizardPage1 extends DataModelFacetCreationWizardPage 
 		createProjectGroup(top);
 		createServerTargetComposite(top);
 //		createPrimaryFacetComposite(top);
+		primaryProjectFacet = ProjectFacetsManager.getProjectFacet( getModuleFacetID() );
 		createPresetPanel(top);
         return top;
 	}
