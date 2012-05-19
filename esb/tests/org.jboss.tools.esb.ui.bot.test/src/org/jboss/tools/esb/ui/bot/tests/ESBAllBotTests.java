@@ -29,16 +29,16 @@ import org.junit.runners.Suite.SuiteClasses;
 	CreateRuntimeFromSOA.class,
 	NewProjectUsingRuntime.class,
 	NewProjectUsingBundledInEAP.class,
-	Editing.class,  // https://issues.jboss.org/browse/JBIDE-11616
+	//Editing.class,  // https://issues.jboss.org/browse/JBIDE-11616
 	HelloWorld.class,
 	HelloWorldAction.class,
-	HelloWorldFileAction.class,
-	SmooksCSV2XML.class,
-	SmooksXML2POJO.class,
-	SmooksXML2XMLDateManipulation.class,
-	SmooksXML2XMLSimple.class,
-	WebServiceConsumer1.class,
-	WebServiceProducer.class
+	HelloWorldFileAction.class
+//	SmooksCSV2XML.class,
+//	SmooksXML2POJO.class,
+//	SmooksXML2XMLDateManipulation.class,
+//	SmooksXML2XMLSimple.class,
+//	WebServiceConsumer1.class,
+//	WebServiceProducer.class
 	//SimpleEAPTest.class
 	})
 @RunWith(RequirementAwareSuite.class)
