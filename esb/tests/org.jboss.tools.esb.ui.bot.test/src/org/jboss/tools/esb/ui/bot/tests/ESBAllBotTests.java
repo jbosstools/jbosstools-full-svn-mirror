@@ -33,12 +33,12 @@ import org.junit.runners.Suite.SuiteClasses;
 	HelloWorld.class,
 	HelloWorldAction.class,
 	HelloWorldFileAction.class
-//	SmooksCSV2XML.class,
-//	SmooksXML2POJO.class,
-//	SmooksXML2XMLDateManipulation.class,
-//	SmooksXML2XMLSimple.class,
-//	WebServiceConsumer1.class,
-//	WebServiceProducer.class
+	SmooksCSV2XML.class,
+	SmooksXML2POJO.class,
+	SmooksXML2XMLDateManipulation.class,
+	SmooksXML2XMLSimple.class,
+	WebServiceConsumer1.class,
+	WebServiceProducer.class
 	//SimpleEAPTest.class
 	})
 @RunWith(RequirementAwareSuite.class)
