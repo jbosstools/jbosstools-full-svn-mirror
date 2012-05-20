@@ -10,7 +10,7 @@
 		<itemizedlist>
 			<listitem>
 				<para>
-					OpenShift Express support
+					OpenShift support
 					<!-- https://issues.jboss.org/browse/JBDS-1896 -->
 				</para>
 			</listitem>

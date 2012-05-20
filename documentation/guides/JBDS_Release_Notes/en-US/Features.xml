@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <section id="Issues-fixed-in-this-release">
     <title>
-        Features of version 5.0.0.Beta1
+        Features of version 5.0.0
     </title>
 <!--    <para>
         The following list highlights new features that have been added to this release, as well as listing notable bug fixes. You can find a complete list of bug fixes <ulink url="https://issues.jboss.org/browse/JBIDE">here</ulink>.
@@ -27,7 +27,7 @@
 		<formalpara>
 			<title>JBoss Enterprise Application Platform 6 tooling</title>
 			<para>
-				The tooling in JBoss Developer Studio 5.0.0.Beta1 works with the early access JBoss Enterprise Application Platform 6.0.0.Alpha2.
+				The tooling in JBoss Developer Studio 5 works with the Beta version of JBoss Enterprise Application Platform 6.
 			</para>
 		</formalpara>
 <!--	<formalpara>
@@ -84,7 +84,7 @@
 			<itemizedlist>
 				<listitem>
 					<para>
-						New tooling is now available that allows you to interact with Red Hats cloud offering as if it were a local server.
+						New tooling is now available that allows you to interact with Red Hat's cloud offering as if it were a local server.
 					</para>
 				</listitem>
 			</itemizedlist>

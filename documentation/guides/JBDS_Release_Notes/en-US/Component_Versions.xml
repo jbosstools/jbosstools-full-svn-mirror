@@ -12,7 +12,7 @@
 			</listitem>
 			<listitem>
 				<para>
-					JBoss Tools 3.3.0.Beta1
+					JBoss Tools 3.3.0.GA
 				</para>
 			</listitem>
 <!--			<listitem>
@@ -21,9 +21,9 @@
 				</para>
 			</listitem>  -->
 		</itemizedlist>
-		<note>
+	<!--	<note>
 			<para>
 				The Enterprise Application Platform Server has been redefined for the enterprise market to a level where direct association to a community release can no longer be drawn.
 			</para>
-		</note>
+		</note> -->
 </section>
