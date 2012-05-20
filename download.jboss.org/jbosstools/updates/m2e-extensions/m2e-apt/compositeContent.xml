@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?compositeMetadataRepository version='1.0.0'?>
+<repository name='m2e-apt updates' type='org.eclipse.equinox.internal.p2.metadata.repository.CompositeMetadataRepository' version='1.0.0'>
+<properties size='2'>
+<property name='p2.compressed' value='true'/>
+<property name='p2.timestamp' value='1328708112209'/>
+</properties>
+<children size='1'>
+<child location='http://download.jboss.org/jbosstools/updates/requirements/m2eclipse/m2e-apt-1.0.0-2012-05-02_13-33-26-H9/'/>
+</children>
+</repository>
+
