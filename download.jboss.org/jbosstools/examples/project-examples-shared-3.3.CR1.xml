@@ -214,9 +214,9 @@ It includes a persistence unit and some sample persistence and transaction code 
 			<archetypeGroupId>org.richfaces.archetypes</archetypeGroupId>
 			<archetypeArtifactId>richfaces-archetype-kitchensink</archetypeArtifactId>
 			<archetypeVersion>4.2.2.Final-1</archetypeVersion>
-            <archetypeRepository>https://repository.jboss.org/nexus/content/repositories/jboss_releases_staging_profile-048/</archetypeRepository>
+            <archetypeRepository>http://repository.jboss.org/nexus/content/repositories/releases/</archetypeRepository>
             <!--
-			<archetypeRepository>http://repository.jboss.org/nexus/content/repositories/releases/</archetypeRepository>
+			<archetypeRepository>https://repository.jboss.org/nexus/content/repositories/jboss_releases_staging_profile-048/</archetypeRepository>
 			<archetypeRepository>http://repository.jboss.org/nexus/content/repositories/snapshots/</archetypeRepository>
 			-->
             <groupId>org.jboss.tools.example</groupId>
