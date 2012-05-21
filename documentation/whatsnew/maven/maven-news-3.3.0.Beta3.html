@@ -24,7 +24,7 @@
 <h1>Maven Tools</h1>
 
 <p align="right"><a href="../index.html">&lt; Main Index</a> <a
-href="../ws/openshift-news-2.3.0.Beta3">OpenShift Tools &gt;</a></p>
+href="../vpe/vpe-news-3.3.0.Beta3.html">Visual Page Editor/BrowserSim &gt;</a></p>
 <table border="0" cellpadding="10" cellspacing="0" width="80%">
 	<tr>
 		<td colspan="2">
@@ -33,6 +33,53 @@ href="../ws/openshift-news-2.3.0.Beta3">OpenShift Tools &gt;</a></p>
 		<hr />
 		</td>
 	</tr>
+	<tr>
+	    <td valign="top" align="left">
+		<a name="itemname3" id="itemname3"></a><b>JBoss Source Lookup</b></td>
+		<td valign="top">
+		  <p>JBoss Source lookup utilizes the Maven metadata
+	    found in Jar's to locate source code found in runtime
+	    directories.</p>
+
+		  <p>Normal m2e source lookup only does this for
+	    launch configurations related to a Maven project and on
+	    Maven classpaths. This source lookup is useful for all
+	    launch configurations which uses jar's (with Maven metadata) from one or more
+	    directories which are not even on your project
+	    classpath. This is the case for many runtimes these days.</p>
+
+		  <p>The Source lookup feature automatically
+		  recognizes JBoss AS runtimes, but if you are using
+		  other runtimes (such as Glassfish or Tomcat) you can point it at a
+		  directory and source lookup will recursively scan
+		  this directorys jar and look for maven metadata to
+		  use against the list of known repositories.</p>
+
+		  <p>It will use standard maven artifact id lookups to
+		  find matching source artifacts and if that does not
+		  work it will do a checksum lookup to try and locate
+		  the source.</p>
+
+		  <p>To enable it for all JBoss AS launch
+		configurations you need to go enable it in the
+		preferences.</p>
+
+		  <p><img src="../images/sourcelookuppreferences.png"/></p>
+		<p>There are more about this feature in the <a
+		href="https://community.jboss.org/en/tools/blog/2012/01/24/jboss-source-lookup">JBoss
+		Source Lookup</a> wiki.
+		</p>
+		<p>
+		<small>
+		  Related <a href="https://issues.jboss.org/browse/JBIDE-9309">jira</a>. 
+		</small>
+        </p>        
+	    </td>
+	</tr>
+	<td colspan="2">
+      <hr/>
+    </td>
+ 
 	<tr>
 		<td valign="top" align="left">
 		<a name="itemname1" id="itemname1"></a><b>Annotation Processing support</b></td>
@@ -72,7 +119,7 @@ href="../ws/openshift-news-2.3.0.Beta3">OpenShift Tools &gt;</a></p>
 
 	<tr>
 	    <td valign="top" align="left">
-		<a name="itemname2" id="itemname2"></a><b>New GWT configurator</b></td>
+		<a name="itemname2" id="itemname2"></a><b>GWT configurator</b></td>
 		<td valign="top">
 		<p>You can enable/disable GWT Project Configurator by using follow preference:</p>
 		<img src="../images/jboss_maven_integration_gwt.png" />
@@ -82,7 +129,7 @@ href="../ws/openshift-news-2.3.0.Beta3">OpenShift Tools &gt;</a></p>
 		<img src="../images/gwt_module_definition.png" />
 		<p>or</p>
 		<img src="../images/gwt_modules_definition.png" />
-        <p>If there is no modules defined in pom.xml then Configurator adds all existing modules to configuration.</p>
+        <p>If there are no modules defined in pom.xml then Configurator adds all existing modules to configuration.</p>
         <p>GWT Project Configurator sets GWT Compiler output folder to the same folder which is used by Maven Compiler.</p>
         <p>You can use Maven or GWT Compiler to compile your application and Deploy to Server or Running on an External Server, it does not require additional compilation.</p>
         <p>
@@ -102,28 +149,10 @@ href="../ws/openshift-news-2.3.0.Beta3">OpenShift Tools &gt;</a></p>
 	</tr>
 
 
-	<tr>
-	    <td valign="top" align="left">
-		<a name="itemname3" id="itemname3"></a><b>JBoss Source Lookup</b></td>
-		<td valign="top">
-		<p>See <a href="https://community.jboss.org/en/tools/blog/2012/01/24/jboss-source-lookup">JBoss Source Lookup</a> for more details.
-		</p>
-		<p>
-		<small>
-		  Related <a href="https://issues.jboss.org/browse/JBIDE-9309">jira</a>. 
-		</small>
-        </p>        
-	    </td>
-	</tr>
-	<tr>
-	    <td colspan="2">
-	      <hr/>
-	    </td>
-	</tr>
 
     	<tr>
             <td valign="top" align="left">
-		<a name="itemname3" id="itemname4"></a><b>New Hibernate 3.6.x and 4.x maven provided libraries</b></td>
+		<a name="itemname3" id="itemname4"></a><b>Hibernate 3.6.x and 4.x maven provided libraries</b></td>
 		<td valign="top">
 		<p>When you start a project and you need to add Hibernate as your JPA provider, adding the Hibernate dependencies manually one by one can be a chore. 
             Now if your project is Facet enabled, adding both the JBoss Maven and the JPA Facet will give you access to new JPA library providers for the Hibernate platform.
