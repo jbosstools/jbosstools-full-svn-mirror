@@ -40,7 +40,7 @@
 		<category name="SOATools" />
 	</feature>
         <!-- ESB requires zest -->
-        <feature url="features/org.eclipse.zest.feature_0.0.0.jar" id="org.eclise.zest.feature" version="0.0.0"/>
+        <feature url="features/org.eclipse.zest_0.0.0.jar" id="org.eclise.zest.feature" version="0.0.0"/>
 
 	<feature url="features/org.jboss.tools.bpel.feature_0.0.0.jar" id="org.jboss.tools.bpel.feature" version="0.0.0">
 		<category name="SOATools" />
