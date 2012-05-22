@@ -274,10 +274,10 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<mavenArchetype>
 			<archetypeGroupId>org.jboss.spring.archetypes</archetypeGroupId>
 			<archetypeArtifactId>spring-mvc-webapp</archetypeArtifactId>
-			<archetypeVersion>1.0.0.CR4</archetypeVersion>
-   			
+			<archetypeVersion>1.0.0.CR5</archetypeVersion>
+   			<!--
 			<archetypeRepository>http://repository.jboss.org/nexus/content/repositories/releases/</archetypeRepository>
-			
+			-->
             <groupId>org.jboss.tools.example</groupId>
 			<artifactId>springmvc</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
