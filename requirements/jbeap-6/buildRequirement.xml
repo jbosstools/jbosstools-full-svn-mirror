@@ -1,0 +1,17 @@
+<project default="build.requirement">
+	<import file="../generic/build.xml" />
+
+	<target name="download.requirement" depends="download.archive">
+		<!-- patch from JBPAPP-4385 and JBDS-1222 -->
+		<!-- DISABLED - probably not needed for EAP 5.1.0
+		<echo level="info">Patch ${build.archive} from ${build.archive.patch}</echo>
+		<if>
+			<not>
+				<available file="${driver.dest}/${build.archive.patch}" type="file" />
+			</not>
+			<then>
+				<copy file="${build.archive.patch}" todir="${driver.dest}" overwrite="false" />
+			</then>
+		</if> -->
+	</target>
+</project>
