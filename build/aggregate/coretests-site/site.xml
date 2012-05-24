@@ -21,6 +21,7 @@
 <feature url="features/org.jboss.ide.eclipse.as.test.feature_0.0.0.jar" id="org.jboss.ide.eclipse.as.test.feature" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
 <feature url="features/org.jboss.tools.birt.test.feature_0.0.0.jar" id="org.jboss.tools.birt.test.feature" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
 <feature url="features/org.jboss.tools.cdi.seam.test.feature_0.0.0.jar" id="org.jboss.tools.cdi.seam.test.feature" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
+<feature url="features/org.jboss.tools.cdi.deltaspike.test.feature_0.0.0.jar" id="org.jboss.tools.cdi.deltaspike.test.feature" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
 <feature url="features/org.jboss.tools.cdi.test.feature_0.0.0.jar" id="org.jboss.tools.cdi.test.feature" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
 <feature url="features/org.jboss.tools.central.test.feature_0.0.0.jar" id="org.jboss.tools.central.test.feature" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
 <feature url="features/org.jboss.tools.common.all.test.feature_0.0.0.jar" id="org.jboss.tools.common.all.test.feature" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
