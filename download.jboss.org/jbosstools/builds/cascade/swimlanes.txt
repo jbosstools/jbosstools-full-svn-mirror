@@ -40,7 +40,7 @@ jmx -> tests, common, usage
 examples -> portlet, jst, runtime, as, archives, jmx, hibernate, xulrunner, vpe, jsf, seam
 portlet -> seam, as, tests, usage
 seam -> hibernate, jsf 
-central -> examples, portlet, seam, as, archives, jmx, jsf, vpe, jst, hibernate, freemarker, runtime, common, tests, maven, usage
+central -> examples, portlet, seam, as, archives, jmx, jsf, vpe, jst, hibernate, freemarker, runtime, common, tests, maven, cdi, usage
 runtime -> common, tests, jmx, as, seam
 cdi -> jst
 usage -> common, tests
