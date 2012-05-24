@@ -1,4 +1,4 @@
-Revised swimlanes, as implemented in 3.2_stable_branch, 3.3_stable_branch and 3.3_trunk jobs, 2012/05/17
+Revised swimlanes, as implemented in 3.2_stable_branch, 3.3_stable_branch and 3.3_trunk jobs, 2012/05/24
 
 See also https://svn.jboss.org/repos/jbosstools/trunk/build/ -> pom*.xml
 
@@ -37,7 +37,7 @@ forge -> [NONE]
 (all but common and tests) -> usage
 
 jmx -> tests, common, usage
-examples -> portlet, jst, runtime, as, archives, jmx
+examples -> portlet, jst, runtime, as, archives, jmx, hibernate, xulrunner, vpe, jsf, seam
 portlet -> seam, as, tests, usage
 seam -> hibernate, jsf 
 central -> examples, portlet, seam, as, archives, jmx, jsf, vpe, jst, hibernate, freemarker, runtime, common, tests, maven, usage
