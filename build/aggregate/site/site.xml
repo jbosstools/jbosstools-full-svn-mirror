@@ -66,6 +66,11 @@
 		<category name="WebTools" />
 		<category name="GeneralTools" />
 	</feature>
+	<feature url="features/org.jboss.tools.cdi.deltaspike.feature_0.0.0.jar" id="org.jboss.tools.cdi.deltaspike.feature" version="0.0.0">
+		<category name="AbridgedTools" />
+		<category name="WebTools" />
+		<category name="GeneralTools" />
+	</feature>
 	<feature url="features/org.jboss.tools.jmx.feature_0.0.0.jar" id="org.jboss.tools.jmx.feature" version="0.0.0">
 		<category name="AbridgedTools" />
 		<category name="GeneralTools" />
@@ -274,6 +279,9 @@
 		<category name="AllSources" />
 	</feature>
 	<feature url="features/org.jboss.tools.cdi.seam.feature.source_0.0.0.jar" id="org.jboss.tools.cdi.seam.feature.source" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+	<feature url="features/org.jboss.tools.cdi.deltaspike.feature.source_0.0.0.jar" id="org.jboss.tools.cdi.deltaspike.feature.source" version="0.0.0">
 		<category name="AllSources" />
 	</feature>
 	<feature url="features/org.jboss.tools.jmx.feature.source_0.0.0.jar" id="org.jboss.tools.jmx.feature.source" version="0.0.0">
