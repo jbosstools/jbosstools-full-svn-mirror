@@ -440,13 +440,18 @@
 			<id>examples-bootstrap</id>
 			<modules>
 				<module>../tests</module>
-                                <module>../common</module>
-                                <module>../jmx</module>
+				<module>../common</module>
+				<module>../jmx</module>
 				<module>../archives</module>
 				<module>../portlet</module>
+				<module>../hibernatetools</module>
+				<module>../xulrunner</module>
+				<module>../vpe</module>
+				<module>../jsf</module>
+				<module>../seam</module>
 				<module>../jst</module>
 				<module>../as</module>
-                                <module>../usage</module>
+				<module>../usage</module>
 				<module>../runtime</module>
 				<module>../examples</module>
 			</modules>
