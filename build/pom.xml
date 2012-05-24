@@ -642,6 +642,7 @@
 				<module>../portlet</module>
 				<module>../examples</module>
 				<module>../maven</module>
+				<module>../cdi</module>
 				<module>../central</module>
 			</modules>
 		</profile>
