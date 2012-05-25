@@ -56,6 +56,7 @@
 		<!-- 3a. URL of latest JBT requirements composite mirror -->
 		<!-- TODO: don't forget to update this in ../aggregate/*/associate.properties too (5 files)! -->
 		<jboss-requirements-composite-mirror>http://download.jboss.org/jbosstools/updates/indigo/SR2/</jboss-requirements-composite-mirror>
+		<jboss-requirements-composite-soa-tooling-mirror>http://download.jboss.org/jbosstools/updates/indigo/soa-tooling/SR2/</jboss-requirements-composite-soa-tooling-mirror>
 
 		<!-- 3b., or use -Plocal.requirements -Dlocal.requirements=file:///path/to/mirror/of/composite/requirements/site -->
 		<local.requirements>file:///qa/services/http/binaries/RHDS/updates/indigo/</local.requirements>
