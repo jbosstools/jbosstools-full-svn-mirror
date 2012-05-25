@@ -460,6 +460,17 @@
 						<enabled>true</enabled>
 					</releases>
 				</repository>
+				<repository>
+					<id>jbosstools-nightly-tests</id>
+					<url>${jbosstools-nightly-tests}</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
 			</repositories>
 		</profile>
 		<profile>
@@ -474,6 +485,17 @@
 				<repository>
 					<id>jbosstools-nightly-soa-tooling</id>
 					<url>${jbosstools-nightly-soa-tooling}</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<repository>
+					<id>jbosstools-nightly-soa-tooling-tests</id>
+					<url>${jbosstools-nightly-soa-tooling-tests}</url>
 					<layout>p2</layout>
 					<snapshots>
 						<enabled>true</enabled>
