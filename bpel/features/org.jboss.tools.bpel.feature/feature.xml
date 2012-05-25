@@ -58,7 +58,7 @@
 		<import plugin="org.eclipse.ui.navigator" />
 		<import plugin="org.eclipse.ui" version="3.4.0" match="compatible" />
 		<import plugin="org.eclipse.gef" version="3.4.0" match="compatible" />
-		<import feature="org.eclipse.bpel.feature" version="0.8.0" match="compatible" />
+		<import feature="org.eclipse.bpel.feature" version="1.0.0" match="compatible" />
 		<import feature="org.eclipse.bpel.common.feature" version="1.0.0" match="compatible" />
 		<import feature="org.eclipse.bpel.apache.ode.runtime.feature" version="1.0.0" match="compatible" />
 	</requires>
