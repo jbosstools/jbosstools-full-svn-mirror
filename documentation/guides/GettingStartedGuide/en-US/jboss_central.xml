@@ -171,6 +171,11 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
+		<note>
+			<para>
+				After using JBoss Central once, the current content will be available offline. This includes project example archives and descriptors, maven artifacts, and news and blog feeds.
+			</para>
+		</note>
 	</section>
 	<section>
 		<title>Software installation and updates from within JBoss Central</title>
