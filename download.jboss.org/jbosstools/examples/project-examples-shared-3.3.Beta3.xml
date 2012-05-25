@@ -48,9 +48,9 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<mavenArchetype>
 			<archetypeGroupId>org.jboss.spec.archetypes</archetypeGroupId>
 			<archetypeArtifactId>jboss-javaee6-webapp-archetype</archetypeArtifactId>
-			<archetypeVersion>7.1.1-Beta1-JBT</archetypeVersion>
+			<archetypeVersion>7.1.1.Beta2</archetypeVersion>
             
-            <archetypeRepository>http://anonsvn.jboss.org/repos/jbosstools/workspace/fred/repositories/snapshot/</archetypeRepository>
+            <archetypeRepository>http://repository.jboss.org/nexus/content/repositories/releases/</archetypeRepository>
             
             <groupId>org.jboss.tools.examples</groupId>
 			<artifactId>jboss-javaee6-webapp</artifactId>
@@ -104,8 +104,8 @@ It includes a persistence unit and some sample persistence and transaction code 
         <mavenArchetype>
 			<archetypeGroupId>org.jboss.spec.archetypes</archetypeGroupId>
 			<archetypeArtifactId>jboss-javaee6-webapp-ear-archetype</archetypeArtifactId>
-			<archetypeVersion>7.1.1-Beta1-JBT</archetypeVersion>
-			<archetypeRepository>http://anonsvn.jboss.org/repos/jbosstools/workspace/fred/repositories/snapshot/</archetypeRepository>
+			<archetypeVersion>7.1.1.Beta2</archetypeVersion>
+			<archetypeRepository>http://repository.jboss.org/nexus/content/repositories/releases/</archetypeRepository>
             <!--
 			<archetypeRepository>http://anonsvn.jboss.org/repos/jbosstools/workspace/fred/repositories/snapshot/</archetypeRepository>
 			-->
@@ -213,10 +213,10 @@ It includes a persistence unit and some sample persistence and transaction code 
         <mavenArchetype>
 			<archetypeGroupId>org.richfaces.archetypes</archetypeGroupId>
 			<archetypeArtifactId>richfaces-archetype-kitchensink</archetypeArtifactId>
-			<archetypeVersion>4.2.2.Final-JBT</archetypeVersion>
-            <archetypeRepository>http://anonsvn.jboss.org/repos/jbosstools/workspace/fred/repositories/snapshot/</archetypeRepository>
+			<archetypeVersion>4.2.2.Final-1</archetypeVersion>
+            <archetypeRepository>http://repository.jboss.org/nexus/content/repositories/releases/</archetypeRepository>
             <!--
-			<archetypeRepository>http://repository.jboss.org/nexus/content/repositories/releases/</archetypeRepository>
+			<archetypeRepository>https://repository.jboss.org/nexus/content/repositories/jboss_releases_staging_profile-048/</archetypeRepository>
 			<archetypeRepository>http://repository.jboss.org/nexus/content/repositories/snapshots/</archetypeRepository>
 			-->
             <groupId>org.jboss.tools.example</groupId>
@@ -225,7 +225,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 			<javaPackage>org.jboss.tools.example.richfaces</javaPackage>
             <properties>
               <property name="richfaces-enterprise-version" value="4.2.1.Final" /> <!-- RF is broken in WFK / WFK repo not available-->
-              <property name="richfaces-version" value="4.2.1.Final" />    
+              <property name="richfaces-version" value="4.2.2.Final" />    
             </properties>
 		</mavenArchetype>
         <!--
@@ -275,14 +275,19 @@ It includes a persistence unit and some sample persistence and transaction code 
 			<archetypeGroupId>org.jboss.spring.archetypes</archetypeGroupId>
 			<archetypeArtifactId>spring-mvc-webapp</archetypeArtifactId>
 			<archetypeVersion>1.0.0.CR5</archetypeVersion>
-   			<!--
+			<!--
 			<archetypeRepository>http://repository.jboss.org/nexus/content/repositories/releases/</archetypeRepository>
 			-->
             <groupId>org.jboss.tools.example</groupId>
 			<artifactId>springmvc</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<javaPackage>org.jboss.tools.example.springmvc</javaPackage>
-		</mavenArchetype>
+            <!--
+            <properties>
+              <property name="springBomVersion" value="2.0.0-redhat-5" />
+            </properties>
+            -->
+          </mavenArchetype>
         <tags>wizard</tags>
         <icon path="icons/spring_wiz.gif" />
     </project>
