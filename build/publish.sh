@@ -144,6 +144,12 @@ for z in $(find ${WORKSPACE}/sources/*/site/target -type f -name "repository.zip
 	fi
 done
 
+# if installer jars exist (should be 2 installers, 2 md5sums)
+for z in $(find ${WORKSPACE}/sources/product/installer/target -type f -name "jbdevstudio-product*-universal*.jar*"); do 
+	mkdir -p ${STAGINGDIR}/installer/
+	rsync -aq $z ${STAGINGDIR}/installer/
+done
+
 # if zips exist produced & renamed by ant script, copy them too
 if [[ ! -f ${STAGINGDIR}/all/${SNAPNAME} ]]; then
 	for z in $(find ${WORKSPACE} -maxdepth 5 -mindepth 3 -name "*Update*.zip" | sort | tail -1); do 
