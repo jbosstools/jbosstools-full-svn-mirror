@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "JBoss_Tools_Reference_Guide_Template.ent">
+%BOOK_ENTITIES;
+]>
+<section id="error_and_warning_messages-managed_beans">
+  <title>Managed beans</title>
+  <para>
+    The procedures listed in <xref linkend="tasks-managed_beans"></xref> may return the following errors:
+  </para>
+    <note><title>***Design Note***</title>
+      <para>
+         Itemize according to the relevant task relating to the parent concept - Managed beans. 
+         Perhaps chunk this down into individual sections depending on the extent of the content - for Context Sensitive Help. 
+      </para>
+  </note>
+  <formalpara><title>Error messages</title>
+  <para>
+  </para>
+  </formalpara>
+  
+  <variablelist>
+   <title>Configuring Managed Beans in JSF Tools</title>
+	<varlistentry>
+		<term>Attribute Cannot be resolved</term>
+		<listitem>
+			<para>
+			  An attempt was made to do things incorrectly which resulted in the error.
+			</para>
+			<para>
+			  Perform this action to rectify the error. 
+			</para>
+			<para>
+			  This task is described in <xref linkend="proc-jsf-new_managed_bean"></xref>  
+			</para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>Attribute Cannot be resolved</term>
+		<listitem>
+			<para>
+			  An attempt was made to do things incorrectly which resulted in the error.
+			</para>
+			<para>
+			  Perform this action to rectify the error 
+			</para>
+			<para>
+			  This task is described in <xref linkend="proc-jsf-new_managed_bean"></xref>  
+			</para>
+		</listitem>
+	</varlistentry>
+	</variablelist>
+  <formalpara><title>Warning messages</title>
+  <para>
+  </para>
+  </formalpara>
+  <variablelist>
+   <title>Configuring Managed Beans in JSF Tools</title>
+	<varlistentry>
+		<term>Attribute Cannot be resolved</term>
+		<listitem>
+			<para>
+			  An attempt was made to do things incorrectly which resulted in the error.
+			</para>
+			<para>
+			  Perform this action to rectify the error. 
+			</para>
+			<para>
+			  This task is described in <xref linkend="proc-jsf-new_managed_bean"></xref>  
+			</para>
+		</listitem>
+	</varlistentry>
+	<varlistentry>
+		<term>Attribute Cannot be resolved</term>
+		<listitem>
+			<para>
+			  An attempt was made to do things incorrectly which resulted in the error.
+			</para>
+			<para>
+			  Perform this action to rectify the error 
+			</para>
+			<para>
+			  This task is described in <xref linkend="proc-jsf-new_managed_bean"></xref>  
+			</para>
+		</listitem>
+  </varlistentry>
+  </variablelist>
+  <para>&FEEDBACK-error_and_warning_messages-managed_beans;</para>
+</section>

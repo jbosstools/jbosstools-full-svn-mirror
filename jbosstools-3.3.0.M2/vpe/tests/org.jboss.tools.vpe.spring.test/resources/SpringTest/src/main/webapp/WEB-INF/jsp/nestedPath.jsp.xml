@@ -1,0 +1,45 @@
+<tests>
+	<test id="userNestedPath">
+		<DIV ID="userNestedPath">
+			<TABLE>
+				<TR>
+					<TD>
+						<SPAN CLASS="vpe-text">
+							First Name:
+						</SPAN>
+					</TD>
+					<TD>
+						<INPUT TYPE="text" VALUE="firstName" />
+
+					</TD>
+					<TD>
+						<SPAN CLASS="redText" ID="firstNameErrors">
+							Errors for firstName field.
+						</SPAN>
+					</TD>
+				</TR>
+				<TR>
+					<TD>
+						<SPAN CLASS="vpe-text">
+							Last Name:
+						</SPAN>
+					</TD>
+					<TD>
+						<INPUT TYPE="text" VALUE="lastName" />
+
+					</TD>
+					<TD>
+						<SPAN CLASS="redText" ID="lastNameErrors">
+							Errors for lastName field.
+						</SPAN>
+					</TD>
+				</TR>
+				<TR>
+					<TD ALIGN="right" COLSPAN="2">
+						<INPUT TYPE="submit" VALUE="Test" />
+					</TD>
+				</TR>
+			</TABLE>
+		</DIV>
+	</test>
+</tests>

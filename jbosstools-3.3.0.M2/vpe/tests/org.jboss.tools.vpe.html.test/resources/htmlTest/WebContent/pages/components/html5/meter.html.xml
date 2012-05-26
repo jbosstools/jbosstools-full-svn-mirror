@@ -1,0 +1,9 @@
+<tests>
+	<test id="meter-id">
+<METER ID="meter-id" VALUE="2" MIN="0" MAX="10" STYLE="-moz-user-modify: read-write;">
+<SPAN CLASS="vpe-text">
+2 out of 10
+</SPAN>
+</METER>
+	</test>
+</tests>

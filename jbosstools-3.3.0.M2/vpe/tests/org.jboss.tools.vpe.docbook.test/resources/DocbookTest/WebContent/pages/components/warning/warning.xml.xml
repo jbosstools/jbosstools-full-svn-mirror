@@ -1,0 +1,26 @@
+<tests>
+	<test id="warning01">
+		<DIV ID="warning01" STYLE="border: 1px solid red; background-color: rgb(236, 243, 255);">
+			<H1>WARNING</H1>
+			<P>
+				<SPAN>
+					Striking your thumb with a hammer may cause severe pain and discomfort.
+				</SPAN>
+			</P>
+		</DIV>
+	</test>
+	<test id="warning02">
+		<DIV ID="warning02" STYLE="border: 1px solid red; background-color: rgb(236, 243, 255);">
+			<H1>
+				<SPAN>
+					Title
+				</SPAN>
+			</H1>
+			<P>
+				<SPAN>
+					Striking your thumb with a hammer may cause severe pain and discomfort.
+				</SPAN>
+			</P>
+		</DIV>
+	</test>
+</tests>

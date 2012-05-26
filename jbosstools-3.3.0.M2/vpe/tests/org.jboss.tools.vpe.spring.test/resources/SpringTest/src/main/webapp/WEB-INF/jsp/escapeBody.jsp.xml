@@ -1,0 +1,13 @@
+<tests>
+	<test id="escapeBody">
+		<SPAN ID="escapeBody">
+			<SPAN CLASS="vpe-text">
+				<INPUT TYPE="button" VALUE="button1"/>
+				<INPUT TYPE="button" VALUE="button2"/>
+			</SPAN>
+			<SPAN CLASS="vpe-text">
+				<INPUT TYPE="button" VALUE="button3"/>
+			</SPAN>
+		</SPAN>
+	</test>
+</tests>

@@ -1,0 +1,16 @@
+<tests>
+	<test id="hgroup-id">
+		<HGROUP ID="hgroup-id">
+<H1>
+<SPAN CLASS="vpe-text">
+Welcome to my WWF
+</SPAN>
+</H1>
+<H2>
+<SPAN CLASS="vpe-text">
+For a living planet
+</SPAN>
+</H2>
+</HGROUP>
+	</test>
+</tests>

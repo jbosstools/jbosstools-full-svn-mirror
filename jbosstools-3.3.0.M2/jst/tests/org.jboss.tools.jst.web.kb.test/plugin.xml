@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+   <extension
+         point="org.jboss.tools.jst.web.kb.validator">
+         <validator
+               class="org.jboss.tools.jst.web.kb.test.validation.TestValidator"
+               id="org.jboss.tools.jst.web.kb.test.TestValidator"
+               name="Test Validator"
+               dependent="true">
+         </validator>
+   </extension>
+
+  <extension
+       id="org.jboss.tools.jsf.KbRequire"
+       point="org.jboss.tools.jst.web.kb.KbRequire">
+       <require
+             description="%KB_REQUIRED_FOR_FACET"
+             forNature="org.eclipse.wst.common.project.facet.core.nature">
+       </require>
+ </extension>
+
+	<extension point="org.jboss.tools.jst.web.kb.KbIncludeContext">
+		<include uri="http://java.sun.com/jsf/facelets">
+			<tag name="composition">
+	        	<attribute name="template" />
+			</tag>
+		</include>
+   </extension>
+
+</plugin>

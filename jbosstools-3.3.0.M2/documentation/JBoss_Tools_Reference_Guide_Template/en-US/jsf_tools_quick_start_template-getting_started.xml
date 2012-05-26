@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "JBoss_Tools_Reference_Guide_Template.ent">
+%BOOK_ENTITIES;
+]>
+<section id="getting_started-quick_start-jsf_tools_quick_start_template">
+  <title>JSF tools quick start template</title>
+  <para>
+    A description of a "quick start" following on from the previous view or possibly a new "quick start" that is considered important enough to discuss.   
+  </para>
+  <xi:include href="proc-jsf-template_two.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <para>&FEEDBACK-getting_started-quick_start-jsf_tools_quick_start_template;</para>
+</section>

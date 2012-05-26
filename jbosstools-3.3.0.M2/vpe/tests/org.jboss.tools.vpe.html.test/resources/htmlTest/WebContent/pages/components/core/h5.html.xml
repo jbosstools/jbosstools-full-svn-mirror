@@ -1,0 +1,9 @@
+<tests>
+	<test id="h5">
+		<H5 ALIGN="left" CLASS="h1Class" DIR="ltr" ID="h5" STYLE="color: red; -moz-user-modify: read-write;">
+<SPAN>
+h5
+</SPAN>
+</H5>
+	</test>
+</tests>

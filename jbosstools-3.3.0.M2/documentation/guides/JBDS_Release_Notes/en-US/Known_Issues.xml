@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<section id="Known_Issues_with_this_release">
+	<title>
+			Known Issues in version 4.1.0
+	</title>
+	<para> 
+			Following is a list of known issues at the time of release.
+	</para>
+	<formalpara>
+		<title>General Known Issues</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</formalpara>
+</section>

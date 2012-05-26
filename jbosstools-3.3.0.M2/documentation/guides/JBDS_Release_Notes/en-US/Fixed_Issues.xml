@@ -1,0 +1,344 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<section id="Issues-fixed-in-this-release">
+    <title>
+        Features added and issues fixed in version 4.1.0
+    </title>
+<!--    <para>
+        The following list highlights new features that have been added to this release, as well as listing notable bug fixes. You can find a complete list of bug fixes <ulink url="https://issues.jboss.org/browse/JBIDE">here</ulink>.
+	</para> -->
+	<formalpara>
+      <title>BPEL</title>
+        <para>
+			<itemizedlist>					
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1610">JBDS-1610</ulink>: BPEL tooling is now supported as an additional tool for JBoss Developer Studio. Many bug fixes and enhancements have been applied to it in order to bring it from a technology preview to a supported component. 
+					</para>
+				</listitem>
+            </itemizedlist>
+        </para>
+    </formalpara>
+    <formalpara>
+      <title>Contexts and Dependency Injection (CDI)</title>
+        <para>
+			<itemizedlist>					
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-3126">JBIDE-3126</ulink>: Validation for the serializablity of injected beans into passive-scoped beans has been added. This ensures that if a bean belongs to <property>@SessionScoped</property>, <property>@ConversationScope</property> or any <property>@NormalScope(passivating=true)</property> and it is not stateful (<property>@Stateful</property>), the bean is checked to see if it implements <classname>java.io.Serializible</classname>. If it does implement the Serializible class, then it is marked as an error.
+					</para>
+				</listitem>
+            </itemizedlist>
+        </para>
+    </formalpara>
+	<!-- Deltacloud is only shipped with JBoss.org -->
+	<!--
+	<formalpara>
+		<title>Deltacloud</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</formalpara> -->
+ <!--   <formalpara>
+        <title>Drools</title>
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+	</formalpara> -->
+    <formalpara>
+        <title>ESB</title>
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-8569">JBIDE-8569</ulink>: Classes within the JBoss ESB Editor and ESB Message Persister are now filtered within the <guilabel>Select class</guilabel> dialog that is invoked through the <guilabel>Browse</guilabel> button. Content assist proposals are also filtered within the text field instead of a drop-down list, providing a significant performance enhancement over previously voiced solutions.
+                    </para>
+                </listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-8567">JBIDE-8567</ulink>: A drop-down list has been added to the JBoss ESB Editor and Route in order to allow selection of a predefined <guilabel>Service Category</guilabel> or <guilabel>Service Name</guilabel>. 
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-8466">JBIDE-8466</ulink>: The <guilabel>Rule Agent Properties</guilabel> property has been added to the <guilabel>Content Based Router Action</guilabel> section of the JBoss ESB Editor. The following actions are now also supported through drop-down lists: <property>org.jboss.soa.esb.actions.ContentBasedWiretap</property> and <property>org.jboss.soa.esb.actions.MessageFilter</property>.
+					</para>
+				</listitem>
+            </itemizedlist>
+        </para>
+    </formalpara>
+	<!-- Google Web Toolkit is only shipped with JBoss.org -->
+    <!--
+    <formalpara>
+        <title>Google Web Toolkit</title>
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:				
+                    </para>
+				</listitem>
+            </itemizedlist>
+        </para>
+    </formalpara> -->
+    <!--<formalpara>
+        <title>Hibernate</title>
+        <para>
+            <itemizedlist>
+				<listitem>
+                    <para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+    </formalpara>-->
+    <!--<formalpara>
+        <title>jBPM</title>
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+    </formalpara>-->
+	<!--<formalpara>
+		<title>JBoss Enterprise Portal Platform</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</formalpara>-->
+   <!-- <formalpara>
+        <title>JavaServer Faces (JSF)</title>
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+    </formalpara>-->
+   <!-- <formalpara>
+        <title>JBoss Application Server</title>
+        <para>
+            <itemizedlist>
+            	<listitem>
+                    <para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+    </formalpara>-->
+    <!-- Include in JBT Release Notes only!!! -->
+    <!--	
+	<formalpara>
+		<title>Maven</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+					</para>
+				</listitem>
+	        </itemizedlist>
+		</para>
+    </formalpara> -->
+    	
+	<!--<formalpara>
+		<title>Portlet</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</formalpara>-->
+	<formalpara>
+		<title>RichFaces</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-8617">JBIDE-8617</ulink>: A new RichFaces 4 palette is available to assist with RichFaces 4 components. This palette is hidden by default.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</formalpara>
+	<!--<formalpara>
+        <title>Seam</title>
+        	<para>
+          	<itemizedlist>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+					</para>	
+                </listitem>
+            </itemizedlist>
+        </para>
+    </formalpara>	-->
+	<!--<formalpara>
+		<title>Smooks</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</formalpara>-->
+   <!-- <formalpara>
+		<title>Struts</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</formalpara>-->
+	<formalpara>
+		<title>Teiid Designer</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-8399">JBIDE-8399</ulink>: The engine behind the incorporated project examples that are distributed with the tools can now recognize a Teiid instance within a JBoss server. This has allowed for Teiid requirements to be added to Teiid Designer project examples.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-934">TEIIDDES-934</ulink>: An error was apparent in previous releases of Teiid Designer where the number of models added to a VDB could grow so large that data roles became inaccessible from the menu. This was caused because no scrollbar existed for the menu, meaning menu items would persist past the bottom of the screen without any way for the user to see them. This issue has been corrected in this latest release. 
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-877">TEIIDDES-877</ulink>: When creating a new Teiid project, the Teiid Designer perspective would not be opened by default. In this version, a user is asked if they would like to open the corresponding Teiid Designer perspective when they have created a new Teiid project.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-869">TEIIDDES-869</ulink>: The Web Service model that was generated by the <guilabel>New Model Wizard</guilabel> was incorrect, with errors in the <methodname>invoke</methodname> and <methodname>invokeHTTP</methodname> procedures. These errors meant that the resulting parameters from the methods would be modeled as <property>IN</property>, rather than as a <property>result</property>. It also meant that the <property>contenttype</property> of the <methodname>invokeHttp</methodname> should be an <property>OUT</property> parameter. These errors have been corrected in this release.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/TEIIDDES-859">TEIIDDES-859</ulink>: In an example project, the ability to preview data would fail due to the preview jobs starting before the auto-build and locking model resources. Scheduling of the preview jobs are now delayed in order to ensure there is enough time for the auto-build to start.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</formalpara>
+	<!--<formalpara>
+		<title>Usage</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+				    <para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+				    </para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</formalpara>-->
+   <!-- <formalpara>
+        <title>Visual Page Editor</title>
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+    </formalpara>-->
+    <formalpara>
+        <title>Web Tools Platform</title>
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1602">JBDS-1602</ulink>: The Web Service Tester tool included as part of the Web Tools Platform contained an issue that would generate incorrect SOAP code, causing marshaling issues expressed as a <exceptionname>NullPointerException</exceptionname>. Multiple namespaces can now be handled without error and correct SOAP code is generated, removing marshaling issues. 
+                    </para>
+                </listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-8770">JBIDE-8770</ulink>: Sample input has been provided for Web Service Definition Language (WSDL) with a Simple Object Access Protocol (SOAP) header definition. This allows users a foundation to create their own WSDL applications that utilize SOAP definitions.
+					</para>
+				</listitem>
+            </itemizedlist>
+        </para>
+    </formalpara>
+    <!--<formalpara>
+		<title>XHTML Editor</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</formalpara>-->
+   <!-- <formalpara>
+        <title>XML Structured Editor</title>
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+    </formalpara>-->
+    <formalpara>
+        <title>General Issues</title>
+        <para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1268">JBDS-1268</ulink>: The JBoss Developer Studio can now be installed by passing the installer a settings file named <filename>InstallConfigRecord.xml</filename>. To undertake this, setup an <filename>InstallConfigRecord.xml</filename> and run the following on a command line: <code>java -jar jbdevstudio-4.1.0.GA.jar InstallConfigRecord.xml</code>. This allows for an automated and reproducible installation. For further information consult the <emphasis>Getting Started Guide</emphasis>.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-8596">JBIDE-8596</ulink>: The Properties editor for project files has been improved by allowing the <keycap>Enter</keycap> key to be pressed on a cell to begin editing its contents. Likewise, by performing a single mouse click a user can also edit the contents of a cell (previously a user had to double click to edit a cell).
+					</para>
+				</listitem>
+			</itemizedlist>
+        </para>
+    </formalpara>
+</section>

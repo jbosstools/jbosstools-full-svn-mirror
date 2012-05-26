@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "JBoss_Tools_Reference_Guide_Template.ent">
+%BOOK_ENTITIES;
+]>
+<section id="reference-preferences_pages-questionable_to_include_preferences_pages">
+  <title>Questionable to include preferences pages</title>
+    <note><title>**Design Note***</title>
+    <para>
+      Preferences pages won't be included in the reference section as they should be sufficiently discussed in the Tasks section. Leaving this section in the document in case there is a need for it.
+    </para>
+  </note>
+  <para>
+
+  </para>
+  <para>&FEEDBACK-reference-preferences_pages-questionable_to_include_preferences_pages;</para>
+</section>

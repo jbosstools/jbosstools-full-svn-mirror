@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+	<extension
+         point="org.eclipse.m2e.core.lifecycleMappingMetadataSource">
+   </extension>
+   
+   <extension
+         point="org.eclipse.m2e.core.lifecycleMappings">
+      <lifecycleMapping
+            class="org.jboss.tools.maven.hibernate.HibernateLifecycleMapping"
+            id="org.jboss.tools.maven.hibernate.HibernateLifecycleMapping"
+            name="Hibernate Lifecycle mapping">
+      </lifecycleMapping>
+   </extension>
+   
+	<extension point="org.eclipse.m2e.core.projectConfigurators">
+      <configurator 
+          id="org.jboss.tools.maven.hibernate.configurator"
+          class="org.jboss.tools.maven.hibernate.configurators.HibernateProjectConfigurator"
+          name="%Hibernate_Project_configurator" 
+          secondaryTo="org.eclipse.m2e.jdt.javaConfigurator"/>
+    </extension>
+    
+</plugin>

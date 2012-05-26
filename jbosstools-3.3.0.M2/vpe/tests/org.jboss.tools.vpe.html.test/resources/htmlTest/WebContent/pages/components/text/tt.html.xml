@@ -1,0 +1,10 @@
+<tests>
+	<test id="tt">
+		<TT ID="tt" CLASS="ttClass" STYLE="color: red; -moz-user-modify: read-write;" DIR="ltr">
+<SPAN>
+some
+text
+</SPAN>
+</TT>
+	</test>
+</tests>

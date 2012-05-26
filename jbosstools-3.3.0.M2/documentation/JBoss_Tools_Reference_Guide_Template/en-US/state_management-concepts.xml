@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "JBoss_Tools_Reference_Guide_Template.ent">
+%BOOK_ENTITIES;
+]>
+<section id="concepts-state_management">
+  <title>State management</title>
+  <para>State management is the ability to maintain the state of an object or variable between requests.....</para>
+   <xi:include href="state_management_and_java_server_faces-concepts.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <!-- <para>&FEEDBACK-concepts-state_management;</para>  -->
+</section>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="mirror">
+	<!-- run locally in Eclipse (to resolve p2 tasks) using these commandline options:
+	
+		-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} 
+		-consoleLog -nosplash -data /tmp
+		-application org.eclipse.ant.core.antRunner
+		-f "/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/subversive/build.xml"
+		
+		or, run headless on qa01 server, where Eclipse is installed into ~/eclipse:
+		
+		export JAVA_HOME=/opt/jdk1.6.0; \
+		${JAVA_HOME}/bin/java -cp ~/eclipse/plugins/org.eclipse.equinox.launcher_*.jar \
+			org.eclipse.equinox.launcher.Main -vm ${JAVA_HOME} -consoleLog -nosplash -data /tmp \
+			-application org.eclipse.ant.core.antRunner \
+			-f ~/RHDS/updates/requirements/subversive/build.xml -Ddestination=/tmp/subversive-repo
+	-->
+	<target name="mirror">
+		<property name="URL1" value="http://www.polarion.org/projects/subversive/download/eclipse/2.0/update-site/" />
+		<property name="URL2" value="http://download.eclipse.org/technology/subversive/0.7/indigo-site/" />
+		<property name="URL3" value="http://download.eclipse.org/technology/subversive/0.7/pde-update-site/" />
+		<property name="URL4" value="http://eclipse.svnkit.com/1.3.x/" />
+
+		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/subversive/" />
+		<property name="compress" value="true" />
+
+		<p2.mirror>
+			<repository location="file:${destination}/0.7.9_2.2.2_1.3/" name="Subversive Team/PDE Providers 0.7.9 + Subversive Connectors 2.2.2 + SVNKit 1.3 plugins for Eclipse 3.6" />
+			<source>
+				<repository location="${URL1}" />
+				<repository location="${URL2}" />
+				<repository location="${URL3}" />
+				<repository location="${URL4}" />
+			</source>
+
+			<slicingOptions includeFeatures="true" followStrict="true" />
+		</p2.mirror>
+
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/0.7.9_2.2.2_1.3/" artifactRepository="file:${destination}/0.7.9_2.2.2_1.3/" publishartifacts="true" source="${destination}/0.7.9_2.2.2_1.3/" compress="${compress}" />
+	</target>
+</project>

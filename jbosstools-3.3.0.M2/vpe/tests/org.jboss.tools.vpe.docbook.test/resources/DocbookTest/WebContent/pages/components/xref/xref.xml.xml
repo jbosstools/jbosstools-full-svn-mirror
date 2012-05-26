@@ -1,0 +1,20 @@
+<tests>
+	<test id="xref01">
+		<A HREF="#ch02">This is  The Second Chapter</A>
+	</test>
+	<test id="xref02">
+		<A HREF="#ch03">Chapter the Third</A>
+	</test>
+	<test id="xref03">
+		<A HREF="#ch04short">Chapter 4</A>
+	</test>
+	<test id="xref04">
+		<SPAN>&lt;xref linkend=""/&gt;</SPAN>
+	</test>
+	<test id="xref05">
+		<SPAN>&lt;xref linkend="ch05"/&gt;</SPAN>
+	</test>
+	<test id="xref06">
+		<SPAN>&lt;xref linkend="ch_none"/&gt;</SPAN>
+	</test>
+</tests>

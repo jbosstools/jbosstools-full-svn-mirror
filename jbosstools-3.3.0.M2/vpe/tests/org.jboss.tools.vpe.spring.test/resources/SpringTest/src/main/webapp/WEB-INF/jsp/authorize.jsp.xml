@@ -1,0 +1,16 @@
+<tests>
+	<test id="authorize1">
+		<DIV ID="authorize1">
+			<DIV><A>
+				<SPAN CLASS="vpe-text">Logout</SPAN></A>
+			</DIV>
+		</DIV>
+	</test>
+	<test id="authorize2">
+		<DIV ID="authorize2">
+			<DIV>
+				<A><SPAN CLASS="vpe-text">Login</SPAN></A>
+			</DIV>
+		</DIV>
+	</test>
+</tests>

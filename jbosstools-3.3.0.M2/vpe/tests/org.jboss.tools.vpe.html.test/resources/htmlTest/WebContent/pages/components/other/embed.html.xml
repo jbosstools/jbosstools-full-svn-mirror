@@ -1,0 +1,7 @@
+<tests>
+	<test id="embed">
+		<EMBED SRC="someSrc" PLUGINSPAGE="http://www.macromedia.com/go/getflashplayer"
+			STYLE="-moz-user-modify: read-only;" >
+		</EMBED>
+	</test>
+</tests>
