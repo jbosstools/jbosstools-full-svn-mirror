@@ -1,0 +1,24 @@
+<html>
+<body>
+<!-- Check that this url will be added to style and JBDS will put the full file path in it -->
+<!-- Checking escaping slashes in this case -->
+<div ID="id1" style="background: url(../../img/jbide9975\(\ pic\ \).png);">
+[GOOD] Checking escaping slashes in this case
+</div>
+<!-- Check that this url will be added to style and JBDS will put the full file path in it -->
+<!-- Checking putting url into quotes -->
+<div ID="id2" style="background: url('jbide9975( pic ).png');">
+[GOOD] Checking putting url into quotes
+</div>
+<!-- Check that this url will NOT be added to style and JBDS will ignore it also -->
+<!-- Checking bad escaping example -->
+<div ID="id3" style="background: url(../../img/jbide9975( pic\ \).png);">
+[BAD] Checking bad escaping example
+</div>
+<!-- Check that this url will NOT be added to style and JBDS will ignore it also -->
+<!-- Checking example with no escaping at all-->
+<div ID="id4" style="background: url(jbide9975( pic ).png);">
+[BAD] Checking example with no escaping at all
+</div>
+</body>
+</html>

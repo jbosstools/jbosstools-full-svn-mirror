@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension-point id="tutorials" name="%Tutorials" schema="schema/tutorials.exsd"/>
+   <extension-point id="configurators" name="JBoss Central Configurator" schema="schema/configurators.exsd"/>
+   
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            name="JBoss Central"
+            icon="icons/jboss.gif"
+            contributorClass="org.jboss.tools.central.editors.JBossCentralEditorContributor"
+            class="org.jboss.tools.central.editors.JBossCentralEditor"
+            id="org.jboss.tools.central.editors.JBossCentralEditor">
+      </editor>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup class="org.jboss.tools.central.ShowJBossCentral">
+      </startup>
+   </extension>
+   
+   <extension
+        point="org.eclipse.ui.preferencePages">
+     <page
+           category="org.jboss.tools.common.model.ui.MainPreferencePage"
+           class="org.jboss.tools.central.preferences.JBossCentralPreferencePage"
+           id="org.jboss.tools.central.preferences.JBossCentralPreferencePage"
+           name="JBoss Central"/>
+   </extension>
+
+   <!--
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:help?before=group.intro">
+            <command
+                  commandId="org.jboss.tools.central.show"
+                  icon="icons/jboss.gif"
+                  id="org.jboss.tools.central.show">
+            </command>
+      </menuContribution>
+   </extension>
+   -->
+   <extension point="org.eclipse.ui.actionSets">
+		<actionSet
+				id="org.jboss.tools.central"
+				label="JBoss Central"
+				visible="true">
+			<action
+					class="org.jboss.tools.central.actions.ShowJBossCentralHandler"
+					icon="icons/jboss.gif"
+					id="org.jboss.tools.central.actions.ShowJBossCentralHandler"
+					label="JBoss Central"
+					toolbarPath="org.eclipse.ui.workbench.help/group.application"
+					menubarPath="help/group.intro"
+					tooltip="JBoss Central" />
+		</actionSet>
+   </extension>   
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+      		defaultHandler="org.jboss.tools.central.actions.ShowJBossCentralHandler"
+            name="JBoss Central"
+            id="org.jboss.tools.central.show">
+      </command>
+      <command
+      		defaultHandler="org.jboss.tools.central.actions.OpenJBossToolsHomeHandler"
+            name="JBoss Tools Home"
+            id="org.jboss.tools.central.openJBossToolsHome">
+      </command>
+      
+      <command
+      		defaultHandler="org.jboss.tools.central.actions.OpenJBossBlogsHandler"
+            name="Blogs"
+            id="org.jboss.tools.central.openJBossBlogs">
+      </command>
+      
+      <command
+      		defaultHandler="org.jboss.tools.central.actions.OpenJBossNewsHandler"
+            name="News"
+            id="org.jboss.tools.central.openJBossNews">
+      </command>
+      
+      <command
+      		defaultHandler="org.jboss.tools.central.actions.RefreshJBossTutorialsHandler"
+            name="Refresh"
+            id="org.jboss.tools.central.refreshJBossTutorials">
+      </command>
+      <command
+      		defaultHandler="org.jboss.tools.central.actions.RefreshJBossBlogsHandler"
+            name="Refresh"
+            id="org.jboss.tools.central.refreshJBossBlogs">
+      </command>
+      <command
+      		defaultHandler="org.jboss.tools.central.actions.RefreshJBossNewsHandler"
+            name="Refresh"
+            id="org.jboss.tools.central.refreshJBossNews">
+      </command>
+      <command
+      		defaultHandler="org.jboss.tools.central.actions.RefreshDiscoveryHandler"
+            name="Refresh"
+            id="org.jboss.tools.central.refreshDiscovery">
+      </command>
+      
+      
+      <command
+      		defaultHandler="org.jboss.tools.central.actions.OpenJBossToolsTwitterHandler"
+            name="Twitter"
+            id="org.jboss.tools.central.openJBossToolsTwitter">
+      </command>
+      
+      <command
+      		defaultHandler="org.jboss.tools.central.actions.NewProjectExamplesWizardHandler"
+            name="Project Examples Wizard"
+            id="org.jboss.tools.central.newProjectExamplesWizard">
+      </command>
+      
+      <command
+      		defaultHandler="org.jboss.tools.central.actions.FavoriteAtEclipseMarketplaceHandler"
+            name="Favorite this @ Eclipse Marketplace"
+            id="org.jboss.tools.central.favoriteAtEclipseMarketplace">
+      </command>
+      
+      <command
+      		defaultHandler="org.jboss.tools.central.actions.JBossCentralPreferencesHandler"
+            name="Preferences"
+            id="org.jboss.tools.central.preferences">
+      </command>
+      
+      <command
+      		defaultHandler="org.jboss.tools.central.actions.JBossRuntimeDetectionPreferencesHandler"
+            name="JBoss Runtime Detection"
+            id="org.jboss.tools.runtime.preferences">
+      </command>
+      
+      <command
+      		defaultHandler="org.jboss.tools.central.actions.JBossSeamRuntimePreferencesHandler"
+            name="JBoss Seam 2 Runtime Preferences"
+            id="org.jboss.tools.seam.runtime.preferences">
+      </command>
+      
+      
+      <command
+      		defaultHandler="org.jboss.tools.central.actions.WTPRuntimePreferencesHandler"
+            name="WTP Runtime Preferences"
+            id="org.jboss.tools.wtp.runtime.preferences">
+      </command>
+      <command
+      		name="Warning"
+            id="org.jboss.tools.central.newsWarning">
+      </command>
+      <command
+      		name="Warning"
+            id="org.jboss.tools.central.blogsWarning">
+      </command>
+      
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.commandImages">
+      <image
+            commandId="org.jboss.tools.central.openJBossToolsHome"
+            icon="icons/jbosstools_icon16.png">
+      </image>
+      <image
+            commandId="org.jboss.tools.central.openJBossBlogs"
+            icon="icons/blogs.gif">
+      </image>
+      <image
+            commandId="org.jboss.tools.central.openJBossNews"
+            icon="icons/news.png">
+      </image>
+      <image
+            commandId="org.jboss.tools.central.refreshJBossBlogs"
+            icon="icons/refresh.gif">
+      </image>
+      <image
+            commandId="org.jboss.tools.central.refreshJBossNews"
+            icon="icons/refresh.gif">
+      </image>
+      <image
+            commandId="org.jboss.tools.central.refreshJBossTutorials"
+            icon="icons/refresh.gif">
+      </image>
+      <image
+            commandId="org.jboss.tools.central.refreshDiscovery"
+            icon="icons/refresh.gif">
+      </image>
+      
+      <image
+            commandId="org.jboss.tools.central.openJBossToolsTwitter"
+            icon="icons/twitter.png">
+      </image>
+      <image
+            commandId="org.jboss.tools.central.favoriteAtEclipseMarketplace"
+            icon="icons/star.png">
+      </image>
+      <image
+            commandId="org.jboss.tools.central.preferences"
+            icon="icons/preferences.gif">
+      </image>
+      <image
+            commandId="org.jboss.tools.runtime.preferences"
+            icon="icons/search_local.png">
+      </image>
+      
+      <image
+            commandId="org.jboss.tools.wtp.runtime.preferences"
+            icon="icons/wtp_server.gif">
+      </image>
+      
+      <image
+            commandId="org.jboss.tools.seam.runtime.preferences"
+            icon="icons/seam16.png">
+      </image>
+      
+      <image
+            commandId="org.jboss.tools.central.newProjectExamplesWizard"
+            icon="icons/examples_wiz.gif">
+      </image>
+   </extension>
+   
+   <extension
+         point="org.jboss.tools.central.tutorials">
+      <category 
+      		id="org.jboss.tools.central.javaee6.quickstart"
+      		name="Java EE Archetypes"
+      		priority="1" />
+      <tutorial
+            id="org.jboss.tools.central.jbossas.quickstart.jbossJavaee6Webapp"
+            categoryId="org.jboss.tools.central.javaee6.quickstart"
+            name="Java EE Web Project"
+            type="projectExample"
+            priority="1"
+            icon="icons/newwebprj_wiz.gif"
+            reference="Java EE 6 Quickstarts::jboss-javaee6-webapp"/>
+
+      <tutorial
+            id="org.jboss.tools.central.jbossas.quickstart.jbossJavaee6Ear"
+            categoryId="org.jboss.tools.central.javaee6.quickstart"
+            name="Java EE Project"
+            type="projectExample"
+            priority="2"
+            icon="icons/ear-wiz-icon.gif"
+            reference="Java EE 6 Quickstarts::multi-javaee6-archetype"/>
+
+      <tutorial
+            id="org.jboss.tools.central.jbossas.quickstart.jbossJavaee6Poh5"
+            categoryId="org.jboss.tools.central.javaee6.quickstart"
+            name="HTML5 Project"
+            type="projectExample"
+            priority="3"
+            icon="icons/html5.png"
+            reference="Java EE 6 Quickstarts::jboss-javaee6-poh5-archetype"/>
+
+      <tutorial
+            id="org.jboss.tools.central.jbossas.quickstart.jbossJavaee6SpringMvc"
+            categoryId="org.jboss.tools.central.javaee6.quickstart"
+            name="Spring MVC Project"
+            type="projectExample"
+            priority="4"
+            icon="icons/spring_wiz.gif"
+            reference="Java EE 6 Quickstarts::spring-mvc-webapp"/>
+                  
+      <tutorial
+            id="org.jboss.tools.central.jbossas.quickstart.jbossJavaee6Richfaces"
+            categoryId="org.jboss.tools.central.javaee6.quickstart"
+            name="RichFaces Project"
+            type="projectExample"
+            priority="5"
+            icon="icons/rf_logo.png"
+            reference="Java EE 6 Quickstarts::richfaces-archetype-simpleapp"/>
+   </extension>
+   
+</plugin>

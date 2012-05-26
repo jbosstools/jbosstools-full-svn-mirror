@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.jboss.ide.eclipse.as.ui.DeployMethodUI">
+      <ui deployMethodId="openshift"
+          class="org.jboss.tools.openshift.express.internal.ui.behaviour.OpenShiftDeployUI"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="org.jboss.ide.eclipse.as.openshift.express.ui.wizard.category"
+            name="OpenShift">
+      </category>
+      <wizard
+            category="org.jboss.ide.eclipse.as.openshift.express.ui.wizard.category"
+            class="org.jboss.tools.openshift.express.internal.ui.wizard.ImportProjectWizard"
+            icon="icons/openshift-logo-white-icon.png"
+            id="org.jboss.ide.eclipse.as.openshift.express.ui.wizard.ImportProjectNewWizard"
+            name="OpenShift Express Application">
+      </wizard>
+   </extension>
+   <extension
+		point="org.eclipse.ui.perspectiveExtensions">
+		<perspectiveExtension
+			targetID="org.jboss.tools.common.ui.JBossPerspective">
+			<newWizardShortcut
+				id="org.jboss.ide.eclipse.as.openshift.express.ui.wizard.ImportProjectNewWizard">
+			</newWizardShortcut>
+		</perspectiveExtension>
+   </extension>
+   
+   <extension
+         point="org.eclipse.wst.server.ui.serverImages">
+      <image
+            icon="$nl$/icons/openshift-logo-white-icon.png"
+            typeIds="org.jboss.tools.openshift.express.openshift.server.type,org.jboss.tools.openshift.express.internal.OpenShiftRuntime"
+            id="org.jboss.ide.eclipse.as.ui.jbossIcon"/>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+      <launchConfigurationTabGroup
+            class="org.jboss.tools.openshift.express.internal.ui.behaviour.OpenshiftLaunchTabGroup"
+            description="OpenShift Launch"
+            id="org.jboss.tools.openshift.express.internal.ui.behaviour.OpenshiftLaunchTabGroup"
+            type="org.jboss.tools.openshift.express.internal.core.behaviour.launchType"/>
+   </extension>
+   
+   <!-- Core Extensions, should be moved out one day -->
+   <extension
+         point="org.jboss.ide.eclipse.as.core.behaviourExtension">
+      <behaviour
+            behaviourDelegate="org.jboss.tools.openshift.express.internal.core.behaviour.ExpressBehaviourDelegate"
+            launchDelegate="org.jboss.tools.openshift.express.internal.core.behaviour.ExpressLaunchDelegate"
+            name="OpenShift Express"
+            publishMethod="org.jboss.tools.openshift.express.internal.core.behaviour.ExpressPublishMethod"
+            serverTypes="org.jboss.tools.openshift.express.openshift.server.type"
+            typeId="openshift">
+      </behaviour>
+   </extension>
+
+   <extension
+         point="org.eclipse.wst.server.core.serverTypes">
+      <serverType
+            behaviourClass="org.jboss.tools.openshift.express.internal.core.behaviour.ExpressBehaviour"
+            class="org.jboss.ide.eclipse.as.core.server.internal.JBossServer"
+            name="%openshift.express.name"
+            description="%openshift.express.description"
+            hasConfiguration="false"
+            id="org.jboss.tools.openshift.express.openshift.server.type"
+            initialState="started"
+            launchConfigId="org.jboss.tools.openshift.express.internal.core.behaviour.launchType"
+            launchModes="run,debug,profile"
+            runtime="false"
+            runtimeTypeId="org.jboss.tools.openshift.express.internal.OpenShiftRuntime"
+            startBeforePublish="false"
+            startTimeout="450000"
+            stopTimeout="450000"
+            supportsRemoteHosts="true"/>
+    </extension>
+    <extension
+         point="org.eclipse.wst.server.core.runtimeTypes">
+      <runtimeType
+             vendor="%providerName"
+             class="org.jboss.tools.openshift.express.internal.core.behaviour.OpenShiftRuntime"
+             description="%openshift.express.runtime.name"
+             name="%openshift.express.runtime.name"
+             id="org.jboss.tools.openshift.express.internal.OpenShiftRuntime"
+             version="1.0">
+          <moduleType types="jst.appclient" versions="5.0, 6.0"/>
+          <moduleType types="wst.web" versions="1.0,1.2,1.3,1.4"/>
+          <moduleType types="jst.web" versions="2.2, 2.3, 2.4, 2.5, 3.0"/>
+          <moduleType types="jst.ejb" versions="1.0, 1.1, 2.0, 2.1, 3.0, 3.1"/>
+          <moduleType types="jst.ear" versions="1.2, 1.3, 1.4, 5.0, 6.0"/>
+          <moduleType types="jst.connector" versions="1.0, 1.5, 1.6"/>
+	      <moduleType types="jst.utility" versions="1.0"/>
+          <moduleType types="jboss.package" versions="1.0"/>
+          <moduleType types="jboss.singlefile" versions="1.0"/>
+          <moduleType types="jst.jboss.esb" versions="4.2,4.3,4.4,4.5,4.6,4.7,4.9"/>
+          <moduleType types="jst.jboss.sar" versions="1.0"/>
+          <moduleType types="jbt.bpel.module" versions="1.1, 2.0"/>
+          <moduleType types="bpel.module" versions="1.1, 2.0"/>
+          <moduleType types="jboss.osgi" versions="1.0"/>          
+      </runtimeType>
+    </extension>
+    <extension
+         point="org.eclipse.jst.server.core.runtimeFacetMappings">
+      <runtimeFacetMapping
+            runtimeTypeId="org.jboss.tools.openshift.express.internal.OpenShiftRuntime"
+            runtime-component="org.jboss.tools.openshift.express.internal.OpenShiftRuntime.component"
+            version="1.0"/>
+    </extension>
+   <extension
+         point="org.eclipse.wst.common.project.facet.core.runtimes">
+      <runtime-component-type id="org.jboss.tools.openshift.express.internal.OpenShiftRuntime.component"/>
+      <runtime-component-version
+            type="org.jboss.tools.openshift.express.internal.OpenShiftRuntime.component"
+            version="1.0"/>
+      <supported>
+        <runtime-component
+         	id="org.jboss.tools.openshift.express.internal.OpenShiftRuntime.component"
+         	version="1.0"/>
+       <facet id="wst.web"  version="1.0,1.2,1.3,1.4"/>
+       <facet id="jst.web"  version="2.2,2.3,2.4,2.5,3.0"/>
+       <facet id="jst.java" version="5.0,6.0,1.7"/>
+       <facet id="jst.utility" version="1.0"/>
+       <facet id="jst.connector" version="1.0,1.5,1.6"/>
+       <facet id="jst.ejb" version="2.0,2.1,3.0,3.1"/>
+       <facet id="jst.ear" version="1.2,1.3,1.4,5.0,6.0"/>
+       <facet id="jst.appclient" version="1.2,1.3,1.4,5.0,6.0"/>
+       <facet id="jst.webfragment" version="3.0"/>
+     </supported>
+   </extension>
+   <extension
+         point="org.eclipse.debug.core.launchConfigurationTypes">
+      <launchConfigurationType
+            category="JBoss"
+            delegate="org.jboss.tools.openshift.express.internal.core.behaviour.OpenshiftDelegatingStartLaunchConfiguration"
+            id="org.jboss.tools.openshift.express.internal.core.behaviour.launchType"
+            modes="run,debug,profile"
+            name="JBoss OpenShift Server Startup Configuration"
+            public="true"
+            sourceLocatorId="org.eclipse.jdt.launching.sourceLocator.JavaSourceLookupDirector"
+            sourcePathComputerId="org.eclipse.jst.server.generic.core.sourcePathComputer"/>
+    </extension>
+    
+    <!-- Extensions to Server View to provide 'tail' of the remote server.log file -->
+    
+	<extension point="org.eclipse.ui.navigator.navigatorContent">
+		<actionProvider
+				class="org.jboss.tools.openshift.express.internal.ui.console.TailServerLogActionProvider"
+				id="org.jboss.tools.openshift.express.ui.internal.ui.console.tailServerLogActionProvider">
+			<enablement>
+		      <and>
+		         <instanceof
+		               value="org.eclipse.wst.server.core.IServer">
+		         </instanceof>
+		         <test
+		               forcePluginActivation="true"
+		               property="org.jboss.tools.openshift.express.isOpenShiftServer">
+		         </test>
+		      </and>
+			</enablement>
+		</actionProvider>
+    </extension>
+	
+	<extension point="org.eclipse.ui.navigator.viewer">
+		<viewerContentBinding viewerId="org.eclipse.wst.server.ui.ServersView">
+		</viewerContentBinding>
+    	<viewerActionBinding viewerId="org.eclipse.wst.server.ui.ServersView">
+       <includes>
+          <actionExtension
+                pattern="org.jboss.tools.openshift.express.ui.internal.ui.console.tailServerLogActionProvider"/>
+       </includes>
+    </viewerActionBinding>
+	</extension>
+	
+    <extension
+          point="org.eclipse.ui.console.consolePageParticipants">
+       <consolePageParticipant
+             class="org.jboss.tools.openshift.express.internal.ui.console.TailConsolePageParticipant"
+             id="org.jboss.tools.openshift.express.ui.tailConsolePageParticipant">
+          <enablement>
+          		<and>
+		         <instanceof
+		               value="org.eclipse.ui.console.MessageConsole">
+		         </instanceof>
+		         <test
+		               forcePluginActivation="true"
+		               property="org.jboss.tools.openshift.express.isOpenShiftConsole">
+		         </test>
+		      </and>
+          </enablement>
+       </consolePageParticipant>
+    </extension>
+    
+    
+    <extension
+       point="org.eclipse.core.expressions.propertyTesters">
+      <propertyTester
+          class="org.jboss.tools.openshift.express.internal.ui.console.ServerTypePropertyTester"
+          id="org.jboss.tools.openshift.express.ui.serverTypePropertyTester"
+          namespace="org.jboss.tools.openshift.express"
+          properties="isOpenShiftServer"
+          type="org.eclipse.wst.server.core.IServer">
+      </propertyTester>
+      <propertyTester
+          class="org.jboss.tools.openshift.express.internal.ui.console.ConsoleTypePropertyTester"
+          id="org.jboss.tools.openshift.express.ui.consoleTypePropertyTester"
+          namespace="org.jboss.tools.openshift.express"
+          properties="isOpenShiftConsole"
+          type="org.eclipse.ui.console.MessageConsole">
+      </propertyTester>
+    </extension>
+  
+    <extension  point="org.eclipse.ui.editors.templates">    
+        <template id="org.jboss.tools.maven.editor.xml.templates.profiles.openshift"
+         contextTypeId="org.eclipse.m2e.editor.xml.templates.contextType.profiles"
+         name="OpenShift Express profile" 
+         description="OpenShift Express profile">
+         <pattern>             &lt;profile&gt;
+  &lt;!-- When built in OpenShift the &#39;openshift&#39; profile will be used when invoking mvn. --&gt;
+  &lt;!-- Use this profile for any OpenShift specific customization your app will need. --&gt;
+  &lt;!-- By default that is to put the resulting archive into the &#39;deployments&#39; folder. --&gt;
+  &lt;!-- http://maven.apache.org/guides/mini/guide-building-for-different-environments.html --&gt;
+  &lt;id&gt;openshift&lt;/id&gt;
+    &lt;build&gt;
+      &lt;plugins&gt;
+        &lt;plugin&gt;
+          &lt;artifactId&gt;maven-war-plugin&lt;/artifactId&gt;
+          &lt;version&gt;2.1.1&lt;/version&gt;
+          &lt;configuration&gt;
+            &lt;outputDirectory&gt;deployments&lt;/outputDirectory&gt;
+            &lt;warName&gt;ROOT&lt;/warName&gt;
+          &lt;/configuration&gt;
+        &lt;/plugin&gt;
+      &lt;/plugins&gt;
+    &lt;/build&gt;
+&lt;/profile&gt;</pattern>
+       </template>
+    </extension>      
+</plugin>

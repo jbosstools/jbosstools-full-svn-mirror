@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "JBoss_Tools_Reference_Guide_Template.ent">
+%BOOK_ENTITIES;
+]>
+<procedure id="proc-jsf-editor_faces-config">
+    <title>Accessing the JSF configuration file editor</title>
+      <step id="open_faces-config.xml">
+        <title>Access the Editor</title>
+        <orderedlist numeration="loweralpha">
+          <listitem>
+            <para>
+              Access the <guilabel>faces-config</guilabel> file by expanding the <menuchoice><guimenu>Project Name</guimenu><guisubmenu>WebContent</guisubmenu><guisubmenu>WEB_INF</guisubmenu></menuchoice> folders in the <guilabel>Package Explorer</guilabel> view
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              Double click the <guilabel>faces-config</guilabel> file.
+            </para>
+          </listitem>
+        </orderedlist>
+        <formalpara><title>Result:</title>
+          <para>
+            The <filename>faces-config</filename> file is opened in its custom editor, defaulting to the <guilabel>Diagram</guilabel> view
+          </para>
+        </formalpara>
+        <figure id="figure-jsf-editor_faces-config_01.png">
+          <title>The Tool faces-config Editor</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/image-jsf-editor_faces-config_01.png" format="PNG"/>
+            </imageobject>
+            <textobject>
+              <para>The faces-config editor - Diagram view</para>
+            </textobject>
+          </mediaobject>
+        </figure>
+        <para>
+          For an example of the use of the Diagram view to create pages refer to <xref linkend="getting_started-quick_start-creating_jsp_pages"></xref>
+        </para>    
+      <para>&HORIZ_LINE;</para>
+        </step>
+      <step><title>Explore the different views</title>
+        <orderedlist numeration = "loweralpha">
+          <listitem>
+            <para>
+              Click the <guilabel>Tree</guilabel> tab to render the Tree view.
+            </para>
+            <formalpara><title>Result:</title>
+              <para>
+               The <filename>faces-config</filename> file is opened in the <guilabel>Tree</guilabel> view
+              </para>
+            </formalpara>
+            <figure id="figure-jsf-editor_faces-config_02">
+              <title>The Tool faces-config editor - Tree view</title>
+              <mediaobject>
+                <imageobject>
+                  <imagedata fileref="images/image-jsf-editor_faces-config_02.png" format="PNG"/>
+                </imageobject>
+                <textobject>
+                  <para>The faces-config editor - Tree view</para>
+                </textobject>
+          </mediaobject>
+        </figure>
+        </listitem>
+        <listitem>
+          <para>
+              Click the <guilabel>Source</guilabel> tab to render the Source view.
+            </para>
+            <formalpara><title>Result:</title>
+              <para>
+               The <filename>faces-config</filename> file is opened in the <guilabel>Source</guilabel> view
+              </para>
+            </formalpara>
+            <figure id="figure-jsf-editor_faces-config_03">
+              <title>The Tool faces-config editor - Source view</title>
+              <mediaobject>
+                <imageobject>
+                  <imagedata fileref="images/image-jsf-editor_faces-config_03.png" format="PNG"/>
+                </imageobject>
+                <textobject>
+                  <para>The faces-config editor - Source view</para>
+                </textobject>
+          </mediaobject>
+        </figure>
+        </listitem>
+        </orderedlist>
+         <para>&HORIZ_LINE;</para>
+        </step>
+      </procedure>

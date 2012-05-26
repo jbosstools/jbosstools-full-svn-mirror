@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../whatsnew.css" />
+<title>JST/JSF 3.3.0.M3 What's New</title>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17645367-5']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script></head>
+<body>
+<h1>JST/JSF 3.3.0.M3 What's New</h1>
+
+<p align="right"><a href="../index.html">&lt; Main
+    Index</a> <a href="../vpe/vpe-news-3.3.0.M3.html">VPE Tools &gt</a></p>
+
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+
+	<tr>
+		<td colspan="2">
+		<hr />
+		<h3>JSF 2</h3>
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+		<p><b>@ManagedBean support</b></p>
+		</td>
+		<td valign="top">
+		  <p>JSF Tools now support managed beans annotated
+		@ManagedBean. This support includes EL code
+		completion, validation, refactoring, OpenOns
+		(Ctrl+Click) and searching (Ctrl+Shift+G).</p>
+
+		<img src="images/3.3.0.M3/ca.png"/>
+		<p>With this existing
+		applications and examples will no longer have error
+		markers for EL expressions that refer to
+		@ManagedBeans. For new development consider use CDI
+		beans with @Named instead for fuller integration.</p><p><small><a
+			href="https://jira.jboss.org/browse/JBIDE-5045">Related Jira</a></small></p>
+		</td>
+	</tr>
+
+	<tr>
+		<td colspan="2">
+		<hr />
+		</td>
+	</tr>
+
+	<tr>
+		<td valign="top" align="left">
+		<p><b>&lt;faces-config metadata-complete="true"&gt;</b></p>
+		</td>
+		<td valign="top">
+		<p> <code>&lt;faces-config
+		metadata-complete="true"&gt;</code> in faces-config.xml JSF Tools will ignore bean annotated @ManagedBean according to JSF-2 spec.</p>
+		<p><small><a href="https://jira.jboss.org/browse/JBIDE-8280">Related Jira</a></small></p>
+		</td>
+	</tr>
+
+	<tr>
+		<td colspan="2">
+		<hr />
+		<h3>JSF capabilities</h3>
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+			<p><b>Projects w/ no web.xml</b></p>
+		</td>
+		<td valign="top">
+			<p>
+			 <b>Add JSF Capability</b> dialog which were
+		used to enable JSF on projects required an web.xml
+		even for JavaEE projects. That limitation and dialog
+		has now been removed. Now all you need to enable JBoss
+		JSF Tools support is to install JSF facet into the
+		project and things will just work.
+		  </p>
+		<p>Project->Configuration->Add JSF Capability will
+		lead you to Project Properties->Facets property
+		page. Web.xml is not required for this. 
+			</p>
+		  
+			<p>
+				<small>
+					<a href="https://jira.jboss.org/browse/JBIDE-9198">Related Jira</a>
+				</small>
+			</p>
+
+		  </td>
+		  </tr>
+
+		  	<tr>
+		<td colspan="2">
+		<hr />
+		</td>
+	</tr>
+		   	<tr>
+			  <td valign="top" align="left">
+			    <p><b>Resources in related non-WTP projects</b></p>
+			  </td>
+		<td valign=top>
+			<p>If your project have resources in related
+		projects which does not have JBoss Tools Knowledgebase
+		Builder installed JBoss Tools cannot "see" the
+		resources inside these projects and you might get
+		false warnings.</p>
+
+		  <p>To help avoid this problem JBoss Tools now warns
+				if it detects project dependencies
+				which should have the knowledgebase
+				builder enabled to make it visible to
+				JBoss Tools and be available in code
+				completion, validation and resource lookups.</p>
+		  
+		  <p>A QuickFix is available for the warning so it is
+			easy to fix and of course if you do not wish
+			your projects to have the build you can
+			disable the Warning in Preferences.    
+			</p>
+			<img src="images/3.3.0.M3/qf.png"/>
+			<p>
+				It is also possible to enable the
+			support via project properties page:
+			</p>
+			<img src="images/3.3.0.M3/properties.png"/>
+			<p>
+				If you missed the warning you will be
+			asked to fix the configuration problem when
+			you are opening any XHTML or JSP page with
+			JBoss Tools Visual Page Editor. 
+			</p>
+			<img src="images/3.3.0.M3/nature.png"/>
+			<p>
+				<small>
+					Related jira <a
+			href="https://jira.jboss.org/browse/JBIDE-9120">1</a>,<a
+			href="https://jira.jboss.org/browse/JBIDE-9198">2</a>,<a
+			href="https://jira.jboss.org/browse/JBIDE-9427">3</a>
+		  
+				</small>
+			</p>
+		
+		</td>
+		
+	</tr>
+
+	<tr>
+		<td colspan="2">
+		<hr />
+		<h3>RichFaces</h3>
+		<hr />
+		</td>
+	</tr>
+	<tr>
+		<td valign="top" align="left">
+		</td>
+		<td valign="top">
+			<p>
+				RichFaces 4 tag library is now shown in Palette by default istead of RichFaces 3. You can switch it to RichFace 3 via Show/Hide dialog.    
+			</p>
+			<img src="images/3.3.0.M3/palette.png"/>
+			<p>
+				<small>
+					<a href="https://jira.jboss.org/browse/JBIDE-9259">Related Jira</a>
+				</small>
+			</p>
+		</td>
+		
+	</tr>
+
+</table>
+
+</body>
+
+</html>

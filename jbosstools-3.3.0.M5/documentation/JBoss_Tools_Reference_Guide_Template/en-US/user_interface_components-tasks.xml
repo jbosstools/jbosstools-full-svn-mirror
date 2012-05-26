@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "JBoss_Tools_Reference_Guide_Template.ent">
+%BOOK_ENTITIES;
+]>
+<section id="tasks-user_interface_components">
+  <title>User interface components</title>
+  <formalpara><title>Description</title>
+  <para>
+    As described in <xref linkend="concepts-user_interface_components"></xref> JavaServer Pages supports four types of user interface components....The following sections describe the use of these components in JSF Tools.     
+  </para>
+  </formalpara>
+  <xi:include href="base-tasks.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <xi:include href="custom-tasks.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <xi:include href="extended-tasks.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <xi:include href="reusable-tasks.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+
+</section>

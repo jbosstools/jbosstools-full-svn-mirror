@@ -1,0 +1,7 @@
+# Tracing options for the org.jboss.tools.bpmn2.process.diagram plug-in
+
+# Common issues
+org.jboss.tools.bpmn2.process.diagram/debug=false
+
+# Visual IDs
+org.jboss.tools.bpmn2.process.diagram/debug/visualID=false

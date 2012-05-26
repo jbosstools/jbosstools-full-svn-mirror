@@ -1,0 +1,26 @@
+<tests>
+	<test id="radiobutton1">
+		<SPAN CLASS="vpe-text">
+			<INPUT TYPE="radio" ID="radiobutton1" />			
+			<LABEL>
+			</LABEL>
+		</SPAN>
+	</test>
+	<test id="radiobutton2">
+		<SPAN CLASS="vpe-text">
+			<INPUT TYPE="radio" CLASS="tall-radiobutton" ID="radiobutton2"
+				STYLE="width: 30px;" />
+			<LABEL>
+				form:radiobutton with id, path, cssStyle, cssClass and label attributes. (Must look as a big circle.)
+			</LABEL>
+		</SPAN>
+	</test>
+	<test id="radiobutton3">
+		<SPAN CLASS="vpe-text">
+			<INPUT TYPE="radio" DISABLED="disabled" ID="radiobutton3" />
+			<LABEL>
+				form:radiobutton with id, path and disabled='true' attributes.
+			</LABEL>
+		</SPAN>
+	</test>
+</tests>

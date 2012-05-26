@@ -1,0 +1,511 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?metadataRepository version='1.1.0'?>
+<repository name='JBoss SWT Patches' type='org.eclipse.equinox.internal.p2.metadata.repository.LocalMetadataRepository' version='1.0.0'>
+  <properties size='2'>
+    <property name='p2.timestamp' value='1321472430287'/>
+    <property name='p2.compressed' value='false'/>
+  </properties>
+  <units size='13'>
+    <unit id='org.eclipse.rcp.patch.JBDS1648.x86_64.feature.feature.jar' version='3.6.2.v3660-patched_JBDS-1648'>
+      <properties size='8'>
+        <property name='org.eclipse.equinox.p2.name' value='%featureName'/>
+        <property name='org.eclipse.equinox.p2.description' value='%description'/>
+        <property name='org.eclipse.equinox.p2.provider' value='%providerName'/>
+        <property name='df_LT.featureName' value='SWT TaskBar Crash Prevention Patch for Windows 32-bit (on 64-bit arch)'/>
+        <property name='df_LT.providerName' value='JBoss by Red Hat'/>
+        <property name='df_LT.description' value='Patch to prevent JBDS crashing due to SWT TaskBar (See https://issues.jboss.org/browse/JBDS-1648)'/>
+        <property name='df_LT.copyright' value='Copyright (c) 2011 Red Hat, Inc. and others.&#xA;All rights reserved. This program and the accompanying materials&#xA;are made available under the terms of the Eclipse Public License v1.0&#xA;which accompanies this distribution, and is available at&#xA;http://www.eclipse.org/legal/epl-v10.html&#xA;&#xA;Contributors:&#xA;JBoss by Red Hat - Initial implementation.'/>
+        <property name='df_LT.license' value='Red Hat, Inc. licenses these features and plugins to you under certain open source licenses (or aggregations of such licenses), which in a particular case may include the Eclipse Public License, the GNU Lesser General Public License, and/or certain other open source licenses. For precise licensing details, consult the corresponding source code, or contact Red Hat Legal Affairs, 1801 Varsity Drive, Raleigh NC 27606 USA.'/>
+      </properties>
+      <provides size='3'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.rcp.patch.JBDS1648.x86_64.feature.feature.jar' version='3.6.2.v3660-patched_JBDS-1648'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='feature' version='1.0.0'/>
+        <provided namespace='org.eclipse.update.feature' name='org.eclipse.rcp.patch.JBDS1648.x86_64.feature' version='3.6.2.v3660-patched_JBDS-1648'/>
+      </provides>
+      <filter>
+        (org.eclipse.update.install.features=true)
+      </filter>
+      <artifacts size='1'>
+        <artifact classifier='org.eclipse.update.feature' id='org.eclipse.rcp.patch.JBDS1648.x86_64.feature' version='3.6.2.v3660-patched_JBDS-1648'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='1'>
+          <instruction key='zipped'>
+            true
+          </instruction>
+        </instructions>
+      </touchpointData>
+      <licenses size='1'>
+        <license uri='%25licenseURL' url='%25licenseURL'>
+          %license
+        </license>
+      </licenses>
+      <copyright>
+        %copyright
+      </copyright>
+    </unit>
+    <unit id='file:/home/nboldt/eclipse/workspace-jboss/jbosstools_trunk/download.jboss.org/jbosstools/updates/requirements/swt/3.6.2.v3660-patched_JBDS-1648_source/site.xml.JBoss SWT Patches' version='1.0.0.7N7k7EcLSsaSDUcz0z0ECivC7kMAVjl0p7Mz0lD'>
+      <properties size='3'>
+        <property name='org.eclipse.equinox.p2.name' value='JBoss SWT Patches'/>
+        <property name='org.eclipse.equinox.p2.description' value='JBoss SWT Patches: contains all features in this build.'/>
+        <property name='org.eclipse.equinox.p2.type.category' value='true'/>
+      </properties>
+      <provides size='1'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='file:/home/nboldt/eclipse/workspace-jboss/jbosstools_trunk/download.jboss.org/jbosstools/updates/requirements/swt/3.6.2.v3660-patched_JBDS-1648_source/site.xml.JBoss SWT Patches' version='1.0.0.7N7k7EcLSsaSDUcz0z0ECivC7kMAVjl0p7Mz0lD'/>
+      </provides>
+      <requires size='4'>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.rcp.patch.JBDS1648.x86.feature.feature.group' range='[3.6.2.v3660-patched_JBDS-1648,3.6.2.v3660-patched_JBDS-1648]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.rcp.patch.JBDS1648.x86.source.feature.feature.group' range='[3.6.2.v3660-patched_JBDS-1648,3.6.2.v3660-patched_JBDS-1648]'>
+          <filter>
+            (&amp;(osgi.arch=x86)(osgi.os=win32)(osgi.ws=win32))
+          </filter>
+        </required>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.rcp.patch.JBDS1648.x86_64.source.feature.feature.group' range='[3.6.2.v3660-patched_JBDS-1648,3.6.2.v3660-patched_JBDS-1648]'>
+          <filter>
+            (&amp;(osgi.os=win32)(osgi.ws=win32)(|(osgi.arch=x86)(osgi.arch=x86_64)))
+          </filter>
+        </required>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.rcp.patch.JBDS1648.x86_64.feature.feature.group' range='[3.6.2.v3660-patched_JBDS-1648,3.6.2.v3660-patched_JBDS-1648]'/>
+      </requires>
+      <touchpoint id='null' version='0.0.0'/>
+    </unit>
+    <unit id='org.eclipse.swt.win32.win32.x86_64' version='3.6.2.v3660'>
+      <update id='org.eclipse.swt.win32.win32.x86_64' range='[0.0.0,3.6.2.v3660)' severity='0'/>
+      <properties size='5'>
+        <property name='df_LT.providerName' value='Eclipse.org'/>
+        <property name='df_LT.fragmentName' value='Standard Widget Toolkit for Windows'/>
+        <property name='org.eclipse.equinox.p2.name' value='%fragmentName'/>
+        <property name='org.eclipse.equinox.p2.provider' value='%providerName'/>
+        <property name='org.eclipse.equinox.p2.bundle.localization' value='fragment'/>
+      </properties>
+      <provides size='10'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.swt.win32.win32.x86_64' version='3.6.2.v3660'/>
+        <provided namespace='osgi.bundle' name='org.eclipse.swt.win32.win32.x86_64' version='3.6.2.v3660'/>
+        <provided namespace='java.package' name='org.eclipse.swt.ole.win32' version='0.0.0'/>
+        <provided namespace='java.package' name='org.eclipse.swt.internal.gdip' version='0.0.0'/>
+        <provided namespace='java.package' name='org.eclipse.swt.internal.ole.win32' version='0.0.0'/>
+        <provided namespace='java.package' name='org.eclipse.swt.internal.win32' version='0.0.0'/>
+        <provided namespace='java.package' name='org.eclipse.swt.internal.opengl.win32' version='0.0.0'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+        <provided namespace='osgi.fragment' name='org.eclipse.swt' version='3.6.2.v3660'/>
+        <provided namespace='org.eclipse.equinox.p2.localization' name='df_LT' version='1.0.0'/>
+      </provides>
+      <requires size='1'>
+        <required namespace='osgi.bundle' name='org.eclipse.swt' range='[3.0.0,4.0.0)'/>
+      </requires>
+      <filter>
+        (&amp;(osgi.arch=x86_64)(osgi.os=win32)(osgi.ws=win32))
+      </filter>
+      <artifacts size='1'>
+        <artifact classifier='osgi.bundle' id='org.eclipse.swt.win32.win32.x86_64' version='3.6.2.v3660'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='1'>
+          <instruction key='manifest'>
+            Bundle-SymbolicName: org.eclipse.swt.win32.win32.x86_64; singleton:=true&#xA;Bundle-Version: 3.6.2.v3660&#xA;Fragment-Host: org.eclipse.swt; bundle-version=&quot;[3.0.0,4.0.0)&quot;&#xA;
+          </instruction>
+        </instructions>
+      </touchpointData>
+    </unit>
+    <unit id='org.eclipse.rcp.patch.JBDS1648.x86.feature.feature.jar' version='3.6.2.v3660-patched_JBDS-1648'>
+      <properties size='8'>
+        <property name='org.eclipse.equinox.p2.name' value='%featureName'/>
+        <property name='org.eclipse.equinox.p2.description' value='%description'/>
+        <property name='org.eclipse.equinox.p2.provider' value='%providerName'/>
+        <property name='df_LT.featureName' value='SWT TaskBar Crash Prevention Patch for Windows 32-bit'/>
+        <property name='df_LT.providerName' value='JBoss by Red Hat'/>
+        <property name='df_LT.description' value='Patch to prevent JBDS crashing due to SWT TaskBar (See https://issues.jboss.org/browse/JBDS-1648)'/>
+        <property name='df_LT.copyright' value='Copyright (c) 2011 Red Hat, Inc. and others.&#xA;All rights reserved. This program and the accompanying materials&#xA;are made available under the terms of the Eclipse Public License v1.0&#xA;which accompanies this distribution, and is available at&#xA;http://www.eclipse.org/legal/epl-v10.html&#xA;&#xA;Contributors:&#xA;JBoss by Red Hat - Initial implementation.'/>
+        <property name='df_LT.license' value='Red Hat, Inc. licenses these features and plugins to you under certain open source licenses (or aggregations of such licenses), which in a particular case may include the Eclipse Public License, the GNU Lesser General Public License, and/or certain other open source licenses. For precise licensing details, consult the corresponding source code, or contact Red Hat Legal Affairs, 1801 Varsity Drive, Raleigh NC 27606 USA.'/>
+      </properties>
+      <provides size='3'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.rcp.patch.JBDS1648.x86.feature.feature.jar' version='3.6.2.v3660-patched_JBDS-1648'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='feature' version='1.0.0'/>
+        <provided namespace='org.eclipse.update.feature' name='org.eclipse.rcp.patch.JBDS1648.x86.feature' version='3.6.2.v3660-patched_JBDS-1648'/>
+      </provides>
+      <filter>
+        (org.eclipse.update.install.features=true)
+      </filter>
+      <artifacts size='1'>
+        <artifact classifier='org.eclipse.update.feature' id='org.eclipse.rcp.patch.JBDS1648.x86.feature' version='3.6.2.v3660-patched_JBDS-1648'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='1'>
+          <instruction key='zipped'>
+            true
+          </instruction>
+        </instructions>
+      </touchpointData>
+      <licenses size='1'>
+        <license uri='%25licenseURL' url='%25licenseURL'>
+          %license
+        </license>
+      </licenses>
+      <copyright>
+        %copyright
+      </copyright>
+    </unit>
+    <unit id='org.eclipse.rcp.patch.JBDS1648.x86_64.source.feature.feature.group' version='3.6.2.v3660-patched_JBDS-1648' singleton='false'>
+      <update id='org.eclipse.rcp.patch.JBDS1648.x86_64.source.feature.feature.group' range='[0.0.0,3.6.2.v3660-patched_JBDS-1648)' severity='0'/>
+      <properties size='9'>
+        <property name='org.eclipse.equinox.p2.name' value='%featureName'/>
+        <property name='org.eclipse.equinox.p2.description' value='%description'/>
+        <property name='org.eclipse.equinox.p2.provider' value='%providerName'/>
+        <property name='org.eclipse.equinox.p2.type.group' value='true'/>
+        <property name='df_LT.featureName' value='SWT TaskBar Crash Prevention Patch for Windows 32-bit (on 64-bit arch) [sources]'/>
+        <property name='df_LT.providerName' value='JBoss by Red Hat'/>
+        <property name='df_LT.description' value='Patch to prevent JBDS crashing due to SWT TaskBar (See https://issues.jboss.org/browse/JBDS-1648) [sources]'/>
+        <property name='df_LT.copyright' value='Copyright (c) 2011 Red Hat, Inc. and others.&#xA;All rights reserved. This program and the accompanying materials&#xA;are made available under the terms of the Eclipse Public License v1.0&#xA;which accompanies this distribution, and is available at&#xA;http://www.eclipse.org/legal/epl-v10.html&#xA;&#xA;Contributors:&#xA;JBoss by Red Hat - Initial implementation.'/>
+        <property name='df_LT.license' value='Red Hat, Inc. licenses these features and plugins to you under certain open source licenses (or aggregations of such licenses), which in a particular case may include the Eclipse Public License, the GNU Lesser General Public License, and/or certain other open source licenses. For precise licensing details, consult the corresponding source code, or contact Red Hat Legal Affairs, 1801 Varsity Drive, Raleigh NC 27606 USA.'/>
+      </properties>
+      <provides size='2'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.rcp.patch.JBDS1648.x86_64.source.feature.feature.group' version='3.6.2.v3660-patched_JBDS-1648'/>
+        <provided namespace='org.eclipse.equinox.p2.localization' name='df_LT' version='1.0.0'/>
+      </provides>
+      <requires size='2'>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.swt.win32.win32.x86_64.source' range='[3.6.2.v3660,3.6.2.v3660]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.rcp.patch.JBDS1648.x86_64.source.feature.feature.jar' range='[3.6.2.v3660-patched_JBDS-1648,3.6.2.v3660-patched_JBDS-1648]'>
+          <filter>
+            (org.eclipse.update.install.features=true)
+          </filter>
+        </required>
+      </requires>
+      <filter>
+        (&amp;(osgi.os=win32)(osgi.ws=win32)(|(osgi.arch=x86)(osgi.arch=x86_64)))
+      </filter>
+      <touchpoint id='null' version='0.0.0'/>
+      <licenses size='1'>
+        <license uri='%25licenseURL' url='%25licenseURL'>
+          %license
+        </license>
+      </licenses>
+      <copyright>
+        %copyright
+      </copyright>
+    </unit>
+    <unit id='org.eclipse.rcp.patch.JBDS1648.x86.source.feature.feature.group' version='3.6.2.v3660-patched_JBDS-1648' singleton='false'>
+      <update id='org.eclipse.rcp.patch.JBDS1648.x86.source.feature.feature.group' range='[0.0.0,3.6.2.v3660-patched_JBDS-1648)' severity='0'/>
+      <properties size='9'>
+        <property name='org.eclipse.equinox.p2.name' value='%featureName'/>
+        <property name='org.eclipse.equinox.p2.description' value='%description'/>
+        <property name='org.eclipse.equinox.p2.provider' value='%providerName'/>
+        <property name='org.eclipse.equinox.p2.type.group' value='true'/>
+        <property name='df_LT.featureName' value='SWT TaskBar Crash Prevention Patch for Windows 32-bit [sources]'/>
+        <property name='df_LT.providerName' value='JBoss by Red Hat'/>
+        <property name='df_LT.description' value='Patch to prevent JBDS crashing due to SWT TaskBar (See https://issues.jboss.org/browse/JBDS-1648) [sources]'/>
+        <property name='df_LT.copyright' value='Copyright (c) 2011 Red Hat, Inc. and others.&#xA;All rights reserved. This program and the accompanying materials&#xA;are made available under the terms of the Eclipse Public License v1.0&#xA;which accompanies this distribution, and is available at&#xA;http://www.eclipse.org/legal/epl-v10.html&#xA;&#xA;Contributors:&#xA;JBoss by Red Hat - Initial implementation.'/>
+        <property name='df_LT.license' value='Red Hat, Inc. licenses these features and plugins to you under certain open source licenses (or aggregations of such licenses), which in a particular case may include the Eclipse Public License, the GNU Lesser General Public License, and/or certain other open source licenses. For precise licensing details, consult the corresponding source code, or contact Red Hat Legal Affairs, 1801 Varsity Drive, Raleigh NC 27606 USA.'/>
+      </properties>
+      <provides size='2'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.rcp.patch.JBDS1648.x86.source.feature.feature.group' version='3.6.2.v3660-patched_JBDS-1648'/>
+        <provided namespace='org.eclipse.equinox.p2.localization' name='df_LT' version='1.0.0'/>
+      </provides>
+      <requires size='2'>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.swt.win32.win32.x86.source' range='[3.6.2.v3660,3.6.2.v3660]'/>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.rcp.patch.JBDS1648.x86.source.feature.feature.jar' range='[3.6.2.v3660-patched_JBDS-1648,3.6.2.v3660-patched_JBDS-1648]'>
+          <filter>
+            (org.eclipse.update.install.features=true)
+          </filter>
+        </required>
+      </requires>
+      <filter>
+        (&amp;(osgi.arch=x86)(osgi.os=win32)(osgi.ws=win32))
+      </filter>
+      <touchpoint id='null' version='0.0.0'/>
+      <licenses size='1'>
+        <license uri='%25licenseURL' url='%25licenseURL'>
+          %license
+        </license>
+      </licenses>
+      <copyright>
+        %copyright
+      </copyright>
+    </unit>
+    <unit id='org.eclipse.swt.win32.win32.x86' version='3.6.2.v3660'>
+      <update id='org.eclipse.swt.win32.win32.x86' range='[0.0.0,3.6.2.v3660)' severity='0'/>
+      <properties size='5'>
+        <property name='df_LT.providerName' value='Eclipse.org'/>
+        <property name='df_LT.fragmentName' value='Standard Widget Toolkit for Windows'/>
+        <property name='org.eclipse.equinox.p2.name' value='%fragmentName'/>
+        <property name='org.eclipse.equinox.p2.provider' value='%providerName'/>
+        <property name='org.eclipse.equinox.p2.bundle.localization' value='fragment'/>
+      </properties>
+      <provides size='10'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.swt.win32.win32.x86' version='3.6.2.v3660'/>
+        <provided namespace='osgi.bundle' name='org.eclipse.swt.win32.win32.x86' version='3.6.2.v3660'/>
+        <provided namespace='java.package' name='org.eclipse.swt.ole.win32' version='0.0.0'/>
+        <provided namespace='java.package' name='org.eclipse.swt.internal.gdip' version='0.0.0'/>
+        <provided namespace='java.package' name='org.eclipse.swt.internal.ole.win32' version='0.0.0'/>
+        <provided namespace='java.package' name='org.eclipse.swt.internal.win32' version='0.0.0'/>
+        <provided namespace='java.package' name='org.eclipse.swt.internal.opengl.win32' version='0.0.0'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+        <provided namespace='osgi.fragment' name='org.eclipse.swt' version='3.6.2.v3660'/>
+        <provided namespace='org.eclipse.equinox.p2.localization' name='df_LT' version='1.0.0'/>
+      </provides>
+      <requires size='1'>
+        <required namespace='osgi.bundle' name='org.eclipse.swt' range='[3.0.0,4.0.0)'/>
+      </requires>
+      <filter>
+        (&amp;(osgi.arch=x86)(osgi.os=win32)(osgi.ws=win32))
+      </filter>
+      <artifacts size='1'>
+        <artifact classifier='osgi.bundle' id='org.eclipse.swt.win32.win32.x86' version='3.6.2.v3660'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='1'>
+          <instruction key='manifest'>
+            Bundle-SymbolicName: org.eclipse.swt.win32.win32.x86; singleton:=true&#xA;Bundle-Version: 3.6.2.v3660&#xA;Fragment-Host: org.eclipse.swt; bundle-version=&quot;[3.0.0,4.0.0)&quot;&#xA;
+          </instruction>
+        </instructions>
+      </touchpointData>
+    </unit>
+    <unit id='org.eclipse.swt.win32.win32.x86_64.source' version='3.6.2.v3660' singleton='false'>
+      <update id='org.eclipse.swt.win32.win32.x86_64.source' range='[0.0.0,3.6.2.v3660)' severity='0'/>
+      <properties size='3'>
+        <property name='df_LT.pluginName' value='org.eclipse.swt.win32.win32.x86_64.source'/>
+        <property name='org.eclipse.equinox.p2.name' value='%pluginName'/>
+        <property name='org.eclipse.equinox.p2.bundle.localization' value='plugin'/>
+      </properties>
+      <provides size='4'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.swt.win32.win32.x86_64.source' version='3.6.2.v3660'/>
+        <provided namespace='osgi.bundle' name='org.eclipse.swt.win32.win32.x86_64.source' version='3.6.2.v3660'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='source' version='1.0.0'/>
+        <provided namespace='org.eclipse.equinox.p2.localization' name='df_LT' version='1.0.0'/>
+      </provides>
+      <filter>
+        (&amp;(osgi.arch=x86_64)(osgi.os=win32)(osgi.ws=win32))
+      </filter>
+      <artifacts size='1'>
+        <artifact classifier='osgi.bundle' id='org.eclipse.swt.win32.win32.x86_64.source' version='3.6.2.v3660'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='1'>
+          <instruction key='manifest'>
+            Bundle-SymbolicName: org.eclipse.swt.win32.win32.x86_64.source&#xA;Bundle-Version: 3.6.2.v3660&#xA;
+          </instruction>
+        </instructions>
+      </touchpointData>
+    </unit>
+    <unit id='org.eclipse.swt.win32.win32.x86.source' version='3.6.2.v3660' singleton='false'>
+      <update id='org.eclipse.swt.win32.win32.x86.source' range='[0.0.0,3.6.2.v3660)' severity='0'/>
+      <properties size='3'>
+        <property name='df_LT.pluginName' value='org.eclipse.swt.win32.win32.x86.source'/>
+        <property name='org.eclipse.equinox.p2.name' value='%pluginName'/>
+        <property name='org.eclipse.equinox.p2.bundle.localization' value='plugin'/>
+      </properties>
+      <provides size='4'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.swt.win32.win32.x86.source' version='3.6.2.v3660'/>
+        <provided namespace='osgi.bundle' name='org.eclipse.swt.win32.win32.x86.source' version='3.6.2.v3660'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='source' version='1.0.0'/>
+        <provided namespace='org.eclipse.equinox.p2.localization' name='df_LT' version='1.0.0'/>
+      </provides>
+      <filter>
+        (&amp;(osgi.arch=x86)(osgi.os=win32)(osgi.ws=win32))
+      </filter>
+      <artifacts size='1'>
+        <artifact classifier='osgi.bundle' id='org.eclipse.swt.win32.win32.x86.source' version='3.6.2.v3660'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='1'>
+          <instruction key='manifest'>
+            Bundle-SymbolicName: org.eclipse.swt.win32.win32.x86.source&#xA;Bundle-Version: 3.6.2.v3660&#xA;
+          </instruction>
+        </instructions>
+      </touchpointData>
+    </unit>
+    <unit id='org.eclipse.rcp.patch.JBDS1648.x86_64.feature.feature.group' version='3.6.2.v3660-patched_JBDS-1648' singleton='false'>
+      <patchScope>
+        <scope>
+          <requires size='1'>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.rcp.feature.group' range='0.0.0'/>
+          </requires>
+        </scope>
+      </patchScope>
+      <changes>
+        <change>
+          <from>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.swt.win32.win32.x86_64' range='0.0.0'/>
+          </from>
+          <to>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.swt.win32.win32.x86_64' range='[3.6.2.v3660,3.6.2.v3660]'/>
+          </to>
+        </change>
+      </changes>
+      <lifeCycle>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.rcp.feature.group' range='0.0.0' greedy='false'/>
+      </lifeCycle>
+      <update id='org.eclipse.rcp.patch.JBDS1648.x86_64.feature.feature.group' range='[0.0.0,3.6.2.v3660-patched_JBDS-1648)' severity='0'/>
+      <properties size='10'>
+        <property name='org.eclipse.equinox.p2.type.patch' value='true'/>
+        <property name='org.eclipse.equinox.p2.name' value='%featureName'/>
+        <property name='org.eclipse.equinox.p2.description' value='%description'/>
+        <property name='org.eclipse.equinox.p2.provider' value='%providerName'/>
+        <property name='org.eclipse.equinox.p2.type.group' value='true'/>
+        <property name='df_LT.featureName' value='SWT TaskBar Crash Prevention Patch for Windows 32-bit (on 64-bit arch)'/>
+        <property name='df_LT.providerName' value='JBoss by Red Hat'/>
+        <property name='df_LT.description' value='Patch to prevent JBDS crashing due to SWT TaskBar (See https://issues.jboss.org/browse/JBDS-1648)'/>
+        <property name='df_LT.copyright' value='Copyright (c) 2011 Red Hat, Inc. and others.&#xA;All rights reserved. This program and the accompanying materials&#xA;are made available under the terms of the Eclipse Public License v1.0&#xA;which accompanies this distribution, and is available at&#xA;http://www.eclipse.org/legal/epl-v10.html&#xA;&#xA;Contributors:&#xA;JBoss by Red Hat - Initial implementation.'/>
+        <property name='df_LT.license' value='Red Hat, Inc. licenses these features and plugins to you under certain open source licenses (or aggregations of such licenses), which in a particular case may include the Eclipse Public License, the GNU Lesser General Public License, and/or certain other open source licenses. For precise licensing details, consult the corresponding source code, or contact Red Hat Legal Affairs, 1801 Varsity Drive, Raleigh NC 27606 USA.'/>
+      </properties>
+      <provides size='2'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.rcp.patch.JBDS1648.x86_64.feature.feature.group' version='3.6.2.v3660-patched_JBDS-1648'/>
+        <provided namespace='org.eclipse.equinox.p2.localization' name='df_LT' version='1.0.0'/>
+      </provides>
+      <requires size='1'>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.rcp.patch.JBDS1648.x86_64.feature.feature.jar' range='[3.6.2.v3660-patched_JBDS-1648,3.6.2.v3660-patched_JBDS-1648]'>
+          <filter>
+            (org.eclipse.update.install.features=true)
+          </filter>
+        </required>
+      </requires>
+      <touchpoint id='null' version='0.0.0'/>
+      <licenses size='1'>
+        <license uri='%25licenseURL' url='%25licenseURL'>
+          %license
+        </license>
+      </licenses>
+      <copyright>
+        %copyright
+      </copyright>
+    </unit>
+    <unit id='org.eclipse.rcp.patch.JBDS1648.x86.feature.feature.group' version='3.6.2.v3660-patched_JBDS-1648' singleton='false'>
+      <patchScope>
+        <scope>
+          <requires size='1'>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.rcp.feature.group' range='0.0.0'/>
+          </requires>
+        </scope>
+      </patchScope>
+      <changes>
+        <change>
+          <from>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.swt.win32.win32.x86' range='0.0.0'/>
+          </from>
+          <to>
+            <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.swt.win32.win32.x86' range='[3.6.2.v3660,3.6.2.v3660]'/>
+          </to>
+        </change>
+      </changes>
+      <lifeCycle>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.rcp.feature.group' range='0.0.0' greedy='false'/>
+      </lifeCycle>
+      <update id='org.eclipse.rcp.patch.JBDS1648.x86.feature.feature.group' range='[0.0.0,3.6.2.v3660-patched_JBDS-1648)' severity='0'/>
+      <properties size='10'>
+        <property name='org.eclipse.equinox.p2.type.patch' value='true'/>
+        <property name='org.eclipse.equinox.p2.name' value='%featureName'/>
+        <property name='org.eclipse.equinox.p2.description' value='%description'/>
+        <property name='org.eclipse.equinox.p2.provider' value='%providerName'/>
+        <property name='org.eclipse.equinox.p2.type.group' value='true'/>
+        <property name='df_LT.featureName' value='SWT TaskBar Crash Prevention Patch for Windows 32-bit'/>
+        <property name='df_LT.providerName' value='JBoss by Red Hat'/>
+        <property name='df_LT.description' value='Patch to prevent JBDS crashing due to SWT TaskBar (See https://issues.jboss.org/browse/JBDS-1648)'/>
+        <property name='df_LT.copyright' value='Copyright (c) 2011 Red Hat, Inc. and others.&#xA;All rights reserved. This program and the accompanying materials&#xA;are made available under the terms of the Eclipse Public License v1.0&#xA;which accompanies this distribution, and is available at&#xA;http://www.eclipse.org/legal/epl-v10.html&#xA;&#xA;Contributors:&#xA;JBoss by Red Hat - Initial implementation.'/>
+        <property name='df_LT.license' value='Red Hat, Inc. licenses these features and plugins to you under certain open source licenses (or aggregations of such licenses), which in a particular case may include the Eclipse Public License, the GNU Lesser General Public License, and/or certain other open source licenses. For precise licensing details, consult the corresponding source code, or contact Red Hat Legal Affairs, 1801 Varsity Drive, Raleigh NC 27606 USA.'/>
+      </properties>
+      <provides size='2'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.rcp.patch.JBDS1648.x86.feature.feature.group' version='3.6.2.v3660-patched_JBDS-1648'/>
+        <provided namespace='org.eclipse.equinox.p2.localization' name='df_LT' version='1.0.0'/>
+      </provides>
+      <requires size='1'>
+        <required namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.rcp.patch.JBDS1648.x86.feature.feature.jar' range='[3.6.2.v3660-patched_JBDS-1648,3.6.2.v3660-patched_JBDS-1648]'>
+          <filter>
+            (org.eclipse.update.install.features=true)
+          </filter>
+        </required>
+      </requires>
+      <touchpoint id='null' version='0.0.0'/>
+      <licenses size='1'>
+        <license uri='%25licenseURL' url='%25licenseURL'>
+          %license
+        </license>
+      </licenses>
+      <copyright>
+        %copyright
+      </copyright>
+    </unit>
+    <unit id='org.eclipse.rcp.patch.JBDS1648.x86.source.feature.feature.jar' version='3.6.2.v3660-patched_JBDS-1648'>
+      <properties size='8'>
+        <property name='org.eclipse.equinox.p2.name' value='%featureName'/>
+        <property name='org.eclipse.equinox.p2.description' value='%description'/>
+        <property name='org.eclipse.equinox.p2.provider' value='%providerName'/>
+        <property name='df_LT.featureName' value='SWT TaskBar Crash Prevention Patch for Windows 32-bit [sources]'/>
+        <property name='df_LT.providerName' value='JBoss by Red Hat'/>
+        <property name='df_LT.description' value='Patch to prevent JBDS crashing due to SWT TaskBar (See https://issues.jboss.org/browse/JBDS-1648) [sources]'/>
+        <property name='df_LT.copyright' value='Copyright (c) 2011 Red Hat, Inc. and others.&#xA;All rights reserved. This program and the accompanying materials&#xA;are made available under the terms of the Eclipse Public License v1.0&#xA;which accompanies this distribution, and is available at&#xA;http://www.eclipse.org/legal/epl-v10.html&#xA;&#xA;Contributors:&#xA;JBoss by Red Hat - Initial implementation.'/>
+        <property name='df_LT.license' value='Red Hat, Inc. licenses these features and plugins to you under certain open source licenses (or aggregations of such licenses), which in a particular case may include the Eclipse Public License, the GNU Lesser General Public License, and/or certain other open source licenses. For precise licensing details, consult the corresponding source code, or contact Red Hat Legal Affairs, 1801 Varsity Drive, Raleigh NC 27606 USA.'/>
+      </properties>
+      <provides size='3'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.rcp.patch.JBDS1648.x86.source.feature.feature.jar' version='3.6.2.v3660-patched_JBDS-1648'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='feature' version='1.0.0'/>
+        <provided namespace='org.eclipse.update.feature' name='org.eclipse.rcp.patch.JBDS1648.x86.source.feature' version='3.6.2.v3660-patched_JBDS-1648'/>
+      </provides>
+      <filter>
+        (org.eclipse.update.install.features=true)
+      </filter>
+      <artifacts size='1'>
+        <artifact classifier='org.eclipse.update.feature' id='org.eclipse.rcp.patch.JBDS1648.x86.source.feature' version='3.6.2.v3660-patched_JBDS-1648'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='1'>
+          <instruction key='zipped'>
+            true
+          </instruction>
+        </instructions>
+      </touchpointData>
+      <licenses size='1'>
+        <license uri='%25licenseURL' url='%25licenseURL'>
+          %license
+        </license>
+      </licenses>
+      <copyright>
+        %copyright
+      </copyright>
+    </unit>
+    <unit id='org.eclipse.rcp.patch.JBDS1648.x86_64.source.feature.feature.jar' version='3.6.2.v3660-patched_JBDS-1648'>
+      <properties size='8'>
+        <property name='org.eclipse.equinox.p2.name' value='%featureName'/>
+        <property name='org.eclipse.equinox.p2.description' value='%description'/>
+        <property name='org.eclipse.equinox.p2.provider' value='%providerName'/>
+        <property name='df_LT.featureName' value='SWT TaskBar Crash Prevention Patch for Windows 32-bit (on 64-bit arch) [sources]'/>
+        <property name='df_LT.providerName' value='JBoss by Red Hat'/>
+        <property name='df_LT.description' value='Patch to prevent JBDS crashing due to SWT TaskBar (See https://issues.jboss.org/browse/JBDS-1648) [sources]'/>
+        <property name='df_LT.copyright' value='Copyright (c) 2011 Red Hat, Inc. and others.&#xA;All rights reserved. This program and the accompanying materials&#xA;are made available under the terms of the Eclipse Public License v1.0&#xA;which accompanies this distribution, and is available at&#xA;http://www.eclipse.org/legal/epl-v10.html&#xA;&#xA;Contributors:&#xA;JBoss by Red Hat - Initial implementation.'/>
+        <property name='df_LT.license' value='Red Hat, Inc. licenses these features and plugins to you under certain open source licenses (or aggregations of such licenses), which in a particular case may include the Eclipse Public License, the GNU Lesser General Public License, and/or certain other open source licenses. For precise licensing details, consult the corresponding source code, or contact Red Hat Legal Affairs, 1801 Varsity Drive, Raleigh NC 27606 USA.'/>
+      </properties>
+      <provides size='3'>
+        <provided namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.rcp.patch.JBDS1648.x86_64.source.feature.feature.jar' version='3.6.2.v3660-patched_JBDS-1648'/>
+        <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='feature' version='1.0.0'/>
+        <provided namespace='org.eclipse.update.feature' name='org.eclipse.rcp.patch.JBDS1648.x86_64.source.feature' version='3.6.2.v3660-patched_JBDS-1648'/>
+      </provides>
+      <filter>
+        (org.eclipse.update.install.features=true)
+      </filter>
+      <artifacts size='1'>
+        <artifact classifier='org.eclipse.update.feature' id='org.eclipse.rcp.patch.JBDS1648.x86_64.source.feature' version='3.6.2.v3660-patched_JBDS-1648'/>
+      </artifacts>
+      <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+      <touchpointData size='1'>
+        <instructions size='1'>
+          <instruction key='zipped'>
+            true
+          </instruction>
+        </instructions>
+      </touchpointData>
+      <licenses size='1'>
+        <license uri='%25licenseURL' url='%25licenseURL'>
+          %license
+        </license>
+      </licenses>
+      <copyright>
+        %copyright
+      </copyright>
+    </unit>
+  </units>
+</repository>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="mirror">
+	<!-- run locally in Eclipse (to resolve p2 tasks) using these commandline options:
+	
+		-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} 
+		-consoleLog -nosplash -data /tmp
+		-application org.eclipse.ant.core.antRunner
+		-f "/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/swt/build.xml"
+		
+		or, run headless on qa01 server, where Eclipse is installed into ~/eclipse:
+		
+		export JAVA_HOME=/opt/jdk1.6.0; \
+		${JAVA_HOME}/bin/java -cp ~/eclipse/plugins/org.eclipse.equinox.launcher_*.jar \
+			org.eclipse.equinox.launcher.Main -vm ${JAVA_HOME} -consoleLog -nosplash -data /tmp \
+			-application org.eclipse.ant.core.antRunner \
+			-f ~/RHDS/updates/requirements/swt/build.xml -Ddestination=/tmp/swt-repo
+
+		or, headless on local:
+	
+		java -cp /home/nboldt/eclipse/eclipse37/plugins/org.eclipse.equinox.launcher_*.jar \
+			org.eclipse.equinox.launcher.Main -consoleLog -nosplash -data /tmp \
+			-application org.eclipse.ant.core.antRunner -f build.xml
+
+	-->
+	<target name="mirror">
+		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/swt/" />
+		<property name="compress" value="false" />
+
+		<delete>
+			<fileset dir="${destination}/3.7.0.v3735b-201106220-1614/" includes="**/artifacts.jar, **/content.jar"/>
+		</delete>
+
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/3.7.0.v3735b-201106220-1614/" artifactRepository="file:${destination}/3.7.0.v3735b-201106220-1614/" publishartifacts="true" source="${destination}/3.7.0.v3735b-201106220-1614/" compress="${compress}" />
+	</target>
+</project>

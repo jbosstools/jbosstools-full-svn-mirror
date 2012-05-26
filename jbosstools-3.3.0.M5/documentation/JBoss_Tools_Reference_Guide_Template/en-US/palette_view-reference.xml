@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "JBoss_Tools_Reference_Guide_Template.ent">
+%BOOK_ENTITIES;
+]>
+<section id="reference-views-palette_view">
+  <title>Palette view</title>
+  <para>
+    The <guilabel>Palette</guilabel> view is activated when a Java Server Page (.jsp) file is selected. The <guilabel>Palette</guilabel> view is displayed in <xref linkend="figure-jbt-palette_view"></xref>.
+  </para>
+  <figure id="figure-jbt-palette_view">
+    <title>Web Development Perspective - Palette View</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/image-jbt-palette_view_01.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <para>Palette View</para>
+        </textobject>
+    </mediaobject>
+  </figure>
+  <para>
+    These tabs refer to the tag set available for insertion into the jsp page. Once the tab is selected, the list will be expanded and a tag can be inserted. Further palettes may be selected by clicking on the <guilabel>Palette Editor</guilabel> icon listed in <xref linkend="table-jbt-palette_view_01"></xref>  
+  </para>
+   <formalpara><title>Icons</title>
+    <para>
+      The icons associated with the <guilabel>Web Projects</guilabel> view are listed in <xref linkend="table-jbt-palette_view_01"></xref> 
+    </para>
+  </formalpara>
+  <table id="table-jbt-palette_view_01" frame='all'>
+            <title>Web Development Perspective - Web Projects View</title>
+    	    <tgroup cols='3' align='left' colsep='1' rowsep='1'>
+      		  <colspec colname='c1' colwidth="1*"/>
+              <colspec colname='c2' colwidth="4*"/>
+              <colspec colname='c3' colwidth="6*"/>
+              <thead>
+                <row>
+                  <entry>Icon</entry>
+                  <entry>Mouse-Over Description</entry>
+                  <entry>Result</entry>
+                </row>
+              </thead> 
+           
+              <tbody>
+                <row>
+                  <entry>
+                        <mediaobject>
+                          <imageobject>
+                            <imagedata fileref="images/icon-jbt-pv-palette_editor_01.png" format="PNG"/>
+                          </imageobject>
+                          <textobject>
+                            <para>Palette Editor Icon</para>
+                          </textobject>
+                        </mediaobject>
+                  </entry>
+                  <entry><guilabel>Palette Editor</guilabel></entry>
+                  <entry><xref linkend="hints-placeholder_for_a_link"></xref></entry>
+                </row>
+                <row>
+                  <entry>
+                        <mediaobject>
+                          <imageobject>
+                            <imagedata fileref="images/icon-jbt-pv-show_hide_01.png" format="PNG"/>
+                          </imageobject>
+                          <textobject>
+                            <para>Show/Hide Icon</para>
+                          </textobject>
+                        </mediaobject>
+                  </entry>
+                  <entry><guilabel>Show/Hide</guilabel></entry>
+                  <entry><xref linkend="hints-placeholder_for_a_link"></xref></entry>
+                </row>
+                 <row>
+                  <entry>
+                        <mediaobject>
+                          <imageobject>
+                            <imagedata fileref="images/icon-jbt-pv-import_01.png" format="PNG"/>
+                          </imageobject>
+                          <textobject>
+                            <para>Import Icon</para>
+                          </textobject>
+                        </mediaobject>
+                  </entry>
+                  <entry><guilabel>Import</guilabel></entry>
+                  <entry><xref linkend="hints-placeholder_for_a_link"></xref></entry>
+                </row>
+              </tbody>
+            </tgroup>
+          </table>
+          <note><title>**Design Note***</title>
+       <para>
+        A link to the relevant "Documentation navigation" section (as in the tasks section) would be relevant where the view relates to a single feature (or concept) detailed in the Concepts chapter.    
+       </para>
+  </note>
+  <para>&FEEDBACK-reference-views-palette_view;</para>
+</section>

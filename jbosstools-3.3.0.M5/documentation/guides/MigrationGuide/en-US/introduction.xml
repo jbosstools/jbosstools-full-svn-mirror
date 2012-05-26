@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="introduction" xreflabel="introduction">
+	<?dbhtml filename="introduction.html"?>
+	<chapterinfo>
+		<keywordset>
+			<keyword>JBoss Developer Studio</keyword>
+			<keyword>JBDS</keyword>
+			<keyword>Exadel Studio Pro</keyword>
+		</keywordset>
+	</chapterinfo>
+	
+	<title>Introduction </title>
+	<para>
+		This document is intended to help you to easily migrate from <property>JBoss Developer Studio</property> 3.0x to 4.0. It also describes some common issues that can occur in the migration process, along with their solutions.
+	</para>
+	
+	<section>
+		<title>Other relevant resources on the topic</title>
+		<para>All JBoss Developer Studio release documentation you can find at <ulink url="http://www.redhat.com/docs/en-US/JBoss_Developer_Studio/">http://www.redhat.com/docs/en-US/JBoss_Developer_Studio</ulink> in the corresponding release directory.</para>
+		<para>For more information about JBoss Developer Studio please visit 
+   <ulink url="http://www.jboss.com/products/devstudio/">http://www.jboss.com/products/devstudio/</ulink>.</para>
+		<para>If your problem is not described in the guide or you have questions or suggestions concerned both the documentation and studio behavior, you are welcome at <ulink url="http://community.jboss.org/en/jbossdevstudio?view=discussions">JBoss Users forum</ulink>. 
+  </para>
+	</section>
+</chapter>

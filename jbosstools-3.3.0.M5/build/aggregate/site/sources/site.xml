@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+	<description>JBoss Tools 3.3 Sources</description>
+
+	<!-- PLEASE NOTE!
+		When updating this file, please be sure that it parses as valid XML before committing it.
+		To test, just run `mvn clean install` in this folder. 
+		
+		Please also remember to add matching feature entries to ../site.xml
+	-->
+
+	<!-- only in JBDS
+	<feature url="features/com.jboss.jbds.product.feature_0.0.0.jar" id="com.jboss.jbds.product.feature" version="0.0.0" patch="false">
+	</feature>
+	-->
+
+   	<!--
+	<feature url="features/org.jboss.tools.central.source.feature_0.0.0.jar" id="org.jboss.tools.central.source.feature" version="0.0.0">
+		<category name="AllSources"/>
+	</feature>
+	<feature url="features/org.jboss.tools.community.central.source.feature_0.0.0.jar" id="org.jboss.tools.community.central.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+	<feature url="features/org.jboss.tools.central.discovery.source.feature_0.0.0.jar" id="org.jboss.tools.central.discovery.source.feature" version="0.0.0">
+	</feature>
+       	<feature url="features/org.jboss.tools.richfaces.source.feature_0.0.0.jar" id="org.jboss.tools.richfaces.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+	<feature url="features/org.jboss.tools.jst.source.feature_0.0.0.jar" id="org.jboss.tools.jst.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+	<feature url="features/org.jboss.tools.vpe.source.feature_0.0.0.jar" id="org.jboss.tools.vpe.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+	<feature url="features/org.jboss.tools.jsf.source.feature_0.0.0.jar" id="org.jboss.tools.jsf.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+	<feature url="features/org.jboss.tools.xulrunner.source.feature_0.0.0.jar" id="org.jboss.tools.xulrunner.source.feature" version="0.0.0">
+			<category name="AllSources" />
+	</feature>
+	<feature url="features/org.mozilla.xulrunner.source.feature_0.0.0.jar" id="org.mozilla.xulrunner.source.feature" version="0.0.0">
+			<category name="AllSources" />
+	</feature>
+    <feature url="features/org.jboss.tools.seam.source.feature_0.0.0.jar" id="org.jboss.tools.seam.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+	<feature url="features/org.jboss.tools.cdi.source.feature_0.0.0.jar" id="org.jboss.tools.cdi.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+	<feature url="features/org.jboss.tools.cdi.seam.source.feature_0.0.0.jar" id="org.jboss.tools.cdi.seam.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+	-->
+	<feature url="features/org.jboss.tools.jmx.source.feature_0.0.0.jar" id="org.jboss.tools.jmx.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+	<feature url="features/org.jboss.ide.eclipse.as.source.feature_0.0.0.jar" id="org.jboss.ide.eclipse.as.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+	<feature url="features/org.jboss.tools.openshift.express.source.feature_0.0.0.jar" id="org.jboss.tools.openshift.express.source.feature" version="0.0.0">
+        <category name="AllSources" />
+	</feature>
+	<feature url="features/org.jboss.tools.openshift.egit.integration.source.feature_0.0.0.jar" id="org.jboss.tools.openshift.egit.integration.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+	<feature url="features/org.jboss.ide.eclipse.archives.source.feature_0.0.0.jar" id="org.jboss.ide.eclipse.archives.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+	<!--
+	<feature url="features/org.hibernate.eclipse.source.feature_0.0.0.jar" id="org.hibernate.eclipse.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+	<feature url="features/org.jboss.ide.eclipse.freemarker.source.feature_0.0.0.jar" id="org.jboss.ide.eclipse.freemarker.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+	<feature url="features/org.jboss.tools.struts.source.feature_0.0.0.jar" id="org.jboss.tools.struts.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+	<feature url="features/org.jboss.tools.ws.source.feature_0.0.0.jar" id="org.jboss.tools.ws.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+	<feature url="features/org.jboss.tools.ws.jaxrs.source.feature_0.0.0.jar" id="org.jboss.tools.ws.jaxrs.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+	<feature url="features/org.jboss.tools.portlet.source.feature_0.0.0.jar" id="org.jboss.tools.portlet.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+	<feature url="features/org.jboss.tools.project.examples.source.feature_0.0.0.jar" id="org.jboss.tools.project.examples.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+	<feature url="features/org.jboss.tools.forge.source.feature_0.0.0.jar" id="org.jboss.tools.forge.source.feature" version="0.0.0">
+        </feature>
+	<feature url="features/org.jboss.tools.community.project.examples.source.feature_0.0.0.jar" id="org.jboss.tools.community.project.examples.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+	-->
+	<feature url="features/org.jboss.tools.birt.source.feature_0.0.0.jar" id="org.jboss.tools.birt.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+	<!--
+	<feature url="features/org.jboss.tools.maven.source.feature_0.0.0.jar" id="org.jboss.tools.maven.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+	<feature url="features/org.jboss.tools.maven.seam.source.feature_0.0.0.jar" id="org.jboss.tools.maven.seam.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+	<feature url="features/org.jboss.tools.maven.jsf.source.feature_0.0.0.jar" id="org.jboss.tools.maven.jsf.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+	<feature url="features/org.jboss.tools.maven.cdi.source.feature_0.0.0.jar" id="org.jboss.tools.maven.cdi.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+	<feature url="features/org.jboss.tools.maven.hibernate.source.feature_0.0.0.jar" id="org.jboss.tools.maven.hibernate.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+	<feature url="features/org.jboss.tools.maven.portlet.source.feature_0.0.0.jar" id="org.jboss.tools.maven.portlet.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+	<feature url="features/org.jboss.tools.maven.jaxrs.source.feature_0.0.0.jar" id="org.jboss.tools.maven.jaxrs.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+	<feature url="features/org.jboss.tools.maven.jbosspackaging.source.feature_0.0.0.jar" id="org.jboss.tools.maven.jbosspackaging.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>	
+	<feature url="features/org.jboss.tools.maven.project.examples.source.feature_0.0.0.jar" id="org.jboss.tools.maven.project.examples.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+	<feature url="features/org.jboss.tools.deltacloud.source.feature_0.0.0.jar" id="org.jboss.tools.deltacloud.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+	<feature url="features/org.jboss.tools.gwt.source.feature_0.0.0.jar" id="org.jboss.tools.gwt.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+	-->
+	<feature url="features/org.jboss.tools.common.jdt.source.feature_0.0.0.jar" id="org.jboss.tools.common.jdt.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+	<feature url="features/org.jboss.tools.common.mylyn.source.feature_0.0.0.jar" id="org.jboss.tools.common.mylyn.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+	<feature url="features/org.jboss.tools.common.all.source.feature_0.0.0.jar" id="org.jboss.tools.common.all.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+	<!--
+	<feature url="features/org.jboss.tools.runtime.source.feature_0.0.0.jar" id="org.jboss.tools.runtime.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+	
+	<feature url="features/org.jboss.tools.runtime.core.source.feature_0.0.0.jar" id="org.jboss.tools.runtime.core.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+	
+	<feature url="features/org.jboss.tools.runtime.as.detector.source.feature_0.0.0.jar" id="org.jboss.tools.runtime.as.detector.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+	
+	<feature url="features/org.jboss.tools.runtime.seam.detector.source.feature_0.0.0.jar" id="org.jboss.tools.runtime.seam.detector.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+
+	<feature url="features/org.jboss.tools.usage.source.feature_0.0.0.jar" id="org.jboss.tools.usage.source.feature" version="0.0.0">
+		<category name="AllSources" />
+	</feature>
+	-->
+
+	<category-def name="AllSources" label="JBoss Tools 3.3 [Sources]">
+		<description>[Sources] Contains JBoss Tools feature sources.</description>
+	</category-def>
+</site>

@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?compositeMetadataRepository version='1.0.0'?>
+<repository name='JBoss Tools Staging Repository' type='org.eclipse.equinox.internal.p2.metadata.repository.CompositeMetadataRepository' version='1.0.0'>
+<properties size='2'>
+<property name='p2.compressed' value='true'/>
+<!-- 
+     get new time w/ 
+      date +%s000
+-->
+<property name='p2.timestamp' value='1306350337000'/>
+</properties>
+<children size='31'>
+
+<child location='../../../archives/site/target/site/'/>
+<child location='../../../as/site/target/site/'/>
+<child location='../../../birt/site/target/site/'/>
+<child location='../../../bpel/site/target/site/'/>
+<child location='../../../cdi/site/target/site/'/>
+
+<child location='../../../common/site/target/site/'/>
+<child location='../../../deltacloud/site/target/site/'/>
+<child location='../../../esb/site/target/site/'/>
+<child location='../../../examples/site/target/site/'/>
+<child location='../../../flow/site/target/site/'/>
+
+<child location='../../../forge/site/target/site/'/>
+<child location='../../../freemarker/site/target/site/'/>
+<child location='../../../gwt/site/target/site/'/>
+<child location='../../../hibernatetools/site/target/site/'/>
+<child location='../../../jbpm/site/target/site/'/>
+
+<child location='../../../jmx/site/target/site/'/>
+<child location='../../../jsf/site/target/site/'/>
+<child location='../../../jst/site/target/site/'/>
+<child location='../../../maven/site/target/site/'/>
+<child location='../../../modeshape/site/target/site/'/>
+
+<child location='../../../portlet/site/target/site/'/>
+<child location='../../../runtime/site/target/site/'/>
+<child location='../../../seam/site/target/site/'/>
+<child location='../../../smooks/site/target/site/'/>
+<child location='../../../struts/site/target/site/'/>
+
+<child location='../../../tests/site/target/site/'/>
+<child location='../../../usage/site/target/site/'/>
+<child location='../../../vpe/site/target/site/'/>
+<child location='../../../ws/site/target/site/'/>
+<child location='../../../xulrunner/site/target/site/'/>
+
+<!-- not included are local sites for savara. teiid, drools -->
+
+<child location='http://download.jboss.org/jbosstools/builds/staging/_composite_/trunk/'/>
+
+</children>
+</repository>

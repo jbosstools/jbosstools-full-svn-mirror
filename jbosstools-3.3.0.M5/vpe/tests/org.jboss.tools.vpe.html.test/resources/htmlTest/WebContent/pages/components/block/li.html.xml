@@ -1,0 +1,10 @@
+<tests>
+	<test id="li">
+		
+<LI TYPE="square" ID="li" CLASS="liClass" DIR="ltr" VALUE="2" STYLE="color: red; -moz-user-modify: read-write;">
+<SPAN>
+text 1
+</SPAN>
+</LI>
+	</test>
+</tests>

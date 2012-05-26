@@ -1,0 +1,52 @@
+Revised swimlanes, as implemented in 3.2_stable_branch, 3.3_stable_branch and 3.3_trunk jobs, 2011/10/24
+
+See also https://svn.jboss.org/repos/jbosstools/trunk/build/ -> pom*.xml
+
+------------------------
+
+In 3.2 / 3.3:
+
+maven   -> cdi  -> jst -> common -> tests
+	-> seam  -> jst -> common -> tests
+    	-> seam -> as -> archives, jmx -> tests
+        -> hibernate -> freemarker -> tests
+        -> jsf -> vpe -> jst -> common -> tests
+
+struts -> vpe -> xulrunner
+
+examples -> portlet
+
+birt, portlet, modeshape, profiler, smooks, tptp -> tests
+
+ws, deltacloud -> as -> archives, jmx -> tests
+
+bpel -> archives
+
+jbpm -> flow, common -> tests 
+
+esb -> jst -> common -> tests
+
+gwt, runtime, tests, usage, drools, pi4soa, savara, teiid -> [none]
+
+------------------------
+
+New in 3.3:
+
+forge -> [none]
+examples -> portlet, jst
+teiid, runtime -> tests
+portlet -> seam, as, tests, usage
+tptp [REMOVED]
+smooks [removed from JBDS, still in JBT]
+seam -> hibernate, jsf 
+central -> examples, portlet, seam, as, archives, jmx, jsf, vpe, jst, hibernate, freemarker, runtime, common, tests
+runtime -> common, tests, jmx, examples
+esb -> as, jst, common, tests
+cdi -> jst
+(all but common and tests) -> usage
+usage -> common, tests
+ws -> common
+maven -> examples
+openshift -> as, jmx, archives, common, tests
+
+------------------------

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="default">
+<target name="default">
+<echo>
+1. You need a folder local to this one called 3.6.2.v3660-patched_JBDS-1648_source. You can create it as an rsync copy of 3.6.2.v3660-patched_JBDS-1648.
+
+2. Run this script to regen metadata:
+
+java -cp /home/nboldt/eclipse/37clean/eclipse/plugins/org.eclipse.equinox.launcher_*.jar org.eclipse.equinox.launcher.Main -consoleLog -nosplash -data /tmp -application org.eclipse.equinox.p2.publisher.UpdateSitePublisher -metadataRepository file://${basedir}/3.6.2.v3660-patched_JBDS-1648 -artifactRepository file://${basedir}/3.6.2.v3660-patched_JBDS-1648 -source ${basedir}/3.6.2.v3660-patched_JBDS-1648_source -publishArtifacts 
+
+3. Because p2 ignores the metadataRepositoryName, artifactRepositoryName, and repositoryName flags, you'll have to go edit the metadata files yourself. p2.publish.* ant tasks don't work either.
+	
+Look for "result - metadata" and fix that value to be "JBoss SWT Patches".
+
+4. Commit changes and push to download.jboss.org.
+
+NOTE that this patch is not needed w/ Eclipse 3.7 as this bug is fixed there.
+</echo>
+</target>
+</project>

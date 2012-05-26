@@ -1,0 +1,367 @@
+/******************************************************************************* 
+ * Copyright (c) 2007 Red Hat, Inc. 
+ * Distributed under license by Red Hat, Inc. All rights reserved. 
+ * This program is made available under the terms of the 
+ * Eclipse Public License v1.0 which accompanies this distribution, 
+ * and is available at http://www.eclipse.org/legal/epl-v10.html 
+ * 
+ * Contributors: 
+ * Red Hat, Inc. - initial API and implementation 
+ ******************************************************************************/ 
+package org.jboss.ide.eclipse.as.core;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.management.MBeanServerConnection;
+
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.MultiStatus;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.wst.server.core.IModule;
+import org.eclipse.wst.server.core.IServer;
+import org.eclipse.wst.server.core.IServerType;
+import org.jboss.ide.eclipse.as.core.server.IJBossServerPublisher;
+import org.jboss.ide.eclipse.as.core.server.IProvideCredentials;
+import org.jboss.ide.eclipse.as.core.server.IServerAlreadyStartedHandler;
+import org.jboss.ide.eclipse.as.core.server.IServerProvider;
+import org.jboss.ide.eclipse.as.core.server.internal.ServerStatePollerType;
+
+/**
+ * Manages the extensions for this plugin
+ * @author rob.stryker@jboss.com
+ */
+public class ExtensionManager {
+	
+	/** Singleton instance of the manager */
+	private static ExtensionManager instance;
+	
+	/** Singleton getter */
+	public static ExtensionManager getDefault() {
+		if( instance == null ) 
+			instance = new ExtensionManager();
+		return instance;
+	}
+	
+	/** The map of pollerID -> PollerObject */
+	private HashMap<String, ServerStatePollerType> pollers;
+	
+	/** The map of pollerID -> PollerObject */
+	private HashMap<String, IProvideCredentials> credentialProviders;
+
+	/** The method used to load / instantiate the pollers */
+	public void loadPollers() {
+		pollers = new HashMap<String, ServerStatePollerType>();
+		IExtensionRegistry registry = Platform.getExtensionRegistry();
+		IConfigurationElement[] cf = registry.getConfigurationElementsFor(JBossServerCorePlugin.PLUGIN_ID, "pollers"); //$NON-NLS-1$
+		for( int i = 0; i < cf.length; i++ ) {
+			pollers.put(cf[i].getAttribute("id"), new ServerStatePollerType(cf[i])); //$NON-NLS-1$
+		}
+	}
+	
+	/**
+	 * Get a poller with the specified ID
+	 * @param id the id
+	 * @return the poller
+	 */
+	public ServerStatePollerType getPollerType(String id) {
+		if( pollers == null ) 
+			loadPollers();
+		return pollers.get(id);
+	}
+	
+	/** Get only the pollers that can poll for startups */
+	public ServerStatePollerType[] getStartupPollers(IServerType serverType) {
+		if( pollers == null ) 
+			loadPollers();
+		ArrayList<ServerStatePollerType> list = new ArrayList<ServerStatePollerType>();
+		Iterator<ServerStatePollerType> i = pollers.values().iterator();
+		ServerStatePollerType type;
+		while(i.hasNext()) {
+			type = i.next();
+			if( type.supportsStartup() && pollerSupportsServerType(type, serverType))
+				list.add(type);
+		}
+		return list.toArray(new ServerStatePollerType[list.size()]);
+	}
+	
+	/** Get only the pollers that can poll for shutdowns */
+	public ServerStatePollerType[] getShutdownPollers(IServerType serverType) {
+		if( pollers == null ) 
+			loadPollers();
+		ArrayList<ServerStatePollerType> list = new ArrayList<ServerStatePollerType>();
+		Iterator<ServerStatePollerType> i = pollers.values().iterator();
+		ServerStatePollerType type;
+		while(i.hasNext()) {
+			type = i.next();
+			if( type.supportsShutdown()  && pollerSupportsServerType(type, serverType))
+				list.add(type);
+		}
+		return list.toArray(new ServerStatePollerType[list.size()]);
+	}
+	
+
+	protected boolean pollerSupportsServerType(ServerStatePollerType type, IServerType serverType) {
+		String sTypes = type.getServerTypes();
+		if(sTypes == null || sTypes.equals("")) //$NON-NLS-1$
+			return true;
+		String[] allTypes = sTypes.split(","); //$NON-NLS-1$
+		for( int i = 0; i < allTypes.length; i++ ) {
+			if( allTypes[i].trim().equals(serverType.getId())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/** The method used to load / instantiate the failure handlers */
+	public void loadCredentialProviders() {
+		credentialProviders = new HashMap<String, IProvideCredentials>();
+		IExtensionRegistry registry = Platform.getExtensionRegistry();
+		IConfigurationElement[] cf = registry.getConfigurationElementsFor(JBossServerCorePlugin.PLUGIN_ID, "pollerFailureHandler"); //$NON-NLS-1$
+		for( int i = 0; i < cf.length; i++ ) {
+			try {
+				credentialProviders.put(cf[i].getAttribute("id"),  //$NON-NLS-1$
+						(IProvideCredentials)cf[i].createExecutableExtension("class")); //$NON-NLS-1$
+			} catch( CoreException e ) {
+				// TODO ERROR LOG
+			} catch( ClassCastException cce ) {
+				// TODO ERROR LOG
+			}
+		}
+	}
+
+	public IProvideCredentials[] getCredentialProviders() {
+		if( credentialProviders == null ) 
+			loadCredentialProviders();
+		Collection<IProvideCredentials> c = credentialProviders.values();
+		return c.toArray(new IProvideCredentials[c.size()]);
+	}
+	
+	public IProvideCredentials getFirstCredentialProvider(IServerProvider serverProvider, List<String> requiredProperties) {
+		IProvideCredentials[] handlers = getCredentialProviders();
+		for( int i = 0; i < handlers.length; i++ ) {
+			if( handlers[i].accepts(serverProvider, requiredProperties)) {
+				return handlers[i];
+			}
+		}
+		return null;
+	}
+	
+	private ArrayList<PublisherWrapper> publishers;	
+	public IJBossServerPublisher getPublisher(IServer server, IModule[] module, String deployMethod) {
+		if( publishers == null ) 
+			loadPublishers();
+		Iterator<PublisherWrapper> i = publishers.iterator();
+		PublisherWrapper wrapper;
+		while(i.hasNext()) {
+			wrapper = i.next();
+			IJBossServerPublisher publisher = wrapper.publisher;
+			if( publisher.accepts(deployMethod, server, module))
+				return wrapper.getNewInstance();
+		}
+		return null;
+	}
+
+	private void loadPublishers() {
+		ArrayList<PublisherWrapper> publishers = new ArrayList<PublisherWrapper>();
+		IExtensionRegistry registry = Platform.getExtensionRegistry();
+		IConfigurationElement[] cf = registry.getConfigurationElementsFor(JBossServerCorePlugin.PLUGIN_ID, "publishers"); //$NON-NLS-1$
+		for( int i = 0; i < cf.length; i++ ) {
+			try {
+				Object clazz = cf[i].createExecutableExtension("class"); //$NON-NLS-1$
+				String priority = cf[i].getAttribute("priority"); //$NON-NLS-1$
+				String zipDelegate = cf[i].getAttribute("zipDelegate"); //$NON-NLS-1$
+				int p = -1; 
+				try {
+					p = Integer.parseInt(priority);
+				} catch( NumberFormatException nfe) {}
+				publishers.add(new PublisherWrapper(p, zipDelegate, (IJBossServerPublisher)clazz, cf[i]));
+			} catch( CoreException e ) {
+				IStatus status = new MultiStatus(
+						JBossServerCorePlugin.PLUGIN_ID, IStatus.ERROR,
+						new IStatus[] { e.getStatus() },
+						Messages.ExtensionManager_could_not_load_publishers, e);
+				JBossServerCorePlugin.getDefault().getLog().log(status);
+			} catch( ClassCastException cce ) {
+			}
+		}
+		this.publishers = publishers;
+		Comparator<PublisherWrapper> comparator = new Comparator<PublisherWrapper>() {
+			public int compare(PublisherWrapper o1, PublisherWrapper o2) {
+				return o2.priority - o1.priority;
+			} 
+		};
+		Collections.sort(this.publishers, comparator);
+	}
+	
+	private class PublisherWrapper {
+		private int priority;
+		private IJBossServerPublisher publisher;
+		private boolean isZipDelegate = false;
+		private IConfigurationElement element;
+		private PublisherWrapper(int priority, String zipDelegate, IJBossServerPublisher publisher, IConfigurationElement element) {
+			this.priority = priority;
+			this.publisher = publisher;
+			isZipDelegate = Boolean.parseBoolean(zipDelegate);
+			this.element = element;
+		}
+		private IJBossServerPublisher getNewInstance() {
+			try {
+				Object clazz = element.createExecutableExtension("class"); //$NON-NLS-1$
+				return (IJBossServerPublisher)clazz;
+			} catch( CoreException ce ) {
+			}
+			return publisher;
+		}
+		public String toString() {
+			return element.getAttribute("class"); //$NON-NLS-1$
+		}
+	}
+	
+	
+	public IJBossServerPublisher[] getZippedPublishers() {
+		if( publishers == null ) 
+			loadPublishers();
+		ArrayList<IJBossServerPublisher> list = new ArrayList<IJBossServerPublisher>();
+		Iterator<PublisherWrapper> i = publishers.iterator();
+		PublisherWrapper wrapper;
+		while(i.hasNext()) {
+			wrapper = i.next();
+			if( wrapper.isZipDelegate )
+				list.add( wrapper.getNewInstance() );
+		}
+		return list.toArray(new IJBossServerPublisher[list.size()]);
+	}
+	
+
+//	
+//	private ServerPublishMethodType[] publishMethodTypes;
+//	public ServerPublishMethodType[] getPublishMethodTypes() {
+//		if(publishMethodTypes == null ) 
+//			publishMethodTypes = loadPublishMethodTypes();
+//		return publishMethodTypes;
+//	}
+//	
+//	public ServerPublishMethodType[] loadPublishMethodTypes() {
+//		ArrayList<ServerPublishMethodType> types = new ArrayList<ServerPublishMethodType>();
+//		IExtensionRegistry registry = Platform.getExtensionRegistry();
+//		IConfigurationElement[] cf = registry.getConfigurationElementsFor(JBossServerCorePlugin.PLUGIN_ID, "publishMethod"); //$NON-NLS-1$
+//		for( int i = 0; i < cf.length; i++ ) {
+//			types.add(new ServerPublishMethodType(cf[i]));
+//		}
+//		return types.toArray(new ServerPublishMethodType[types.size()]);
+//	}
+//	
+//	public IJBossServerPublishMethodType getPublishMethod(String id) {
+//		ServerPublishMethodType[] publishMethods = getPublishMethodTypes();
+//		for( int i = 0; i < publishMethods.length; i++ ) 
+//			if( publishMethods[i].getId().equals(id))
+//				return publishMethods[i];
+//		return null;
+//	}
+//	public IJBossServerPublishMethodType[] findPossiblePublishMethods(IServerType type) {
+//		ArrayList<IJBossServerPublishMethodType> list = new ArrayList<IJBossServerPublishMethodType>();
+//		list.addAll(Arrays.asList(getPublishMethodTypes()));
+//		Iterator<IJBossServerPublishMethodType> i = list.iterator();
+//		while(i.hasNext()) {
+//			if( !i.next().accepts(type.getId()))
+//				i.remove();
+//		}
+//		return list.toArray(new IJBossServerPublishMethodType[list.size()]);
+//	}
+//	
+//	public IJBossServerPublishMethodType[] findPossiblePublishMethods(IServer server) {
+//		return findPossiblePublishMethods(server.getServerType());
+//	}
+	
+	// API extension
+	public static interface IServerJMXRunnable {
+		public void run(MBeanServerConnection connection) throws Exception;
+	}
+	
+	public static interface IServerJMXRunner {
+		public void run(IServer server, IServerJMXRunnable runnable) throws CoreException;
+		public void beginTransaction(IServer server, Object lock);
+		public void endTransaction(IServer server, Object lock);
+	}
+	
+	private IServerJMXRunner jmxRunner = null;
+	private Object JMX_RUNNER_NOT_FOUND = null;
+	public IServerJMXRunner getJMXRunner() {
+		if( jmxRunner != null )
+			return this.jmxRunner;
+		if( JMX_RUNNER_NOT_FOUND != null)
+			return null;
+		
+		// find runner
+		IExtensionRegistry registry = Platform.getExtensionRegistry();
+		IConfigurationElement[] cf = registry.getConfigurationElementsFor(JBossServerCorePlugin.PLUGIN_ID, "jmxRunner"); //$NON-NLS-1$
+		for( int i = 0; i < cf.length; i++ ) {
+			try {
+				Object o = cf[i].createExecutableExtension("class"); //$NON-NLS-1$
+				if( o != null && (o instanceof IServerJMXRunner))
+					return ((IServerJMXRunner)o);
+			} catch(Exception e) {
+			}
+		}
+		JMX_RUNNER_NOT_FOUND = new Object();
+		return null;
+	}
+	
+	
+	// TODO Replace with extension point or cleaner API
+	// Should have an array of possible handlers
+	// Should ask each handler if they 'accept' this handler, etc
+	private IServerAlreadyStartedHandler defaultAlreadyStartedHandler;
+	public IServerAlreadyStartedHandler getAlreadyStartedHandler(IServer server) {
+		return defaultAlreadyStartedHandler;
+	}
+	public void setAlreadyStartedHandler(IServerAlreadyStartedHandler handler) {
+		defaultAlreadyStartedHandler = handler;
+	}
+	
+	
+//	/**
+//	 * Temporary home for start launch setup participants and launch configs
+//	 * Should eventually be replaced by an extension point of some type
+//	 * 
+//	 * TODO Convert this into a suitable fixed API
+//	 */
+//	public static HashMap<String, IStartLaunchDelegate> JBoss7launchDelegates;
+//	public static ArrayList<IStartLaunchSetupParticipant> JBoss7setupParticipants;
+//	public static HashMap<String, IStartLaunchDelegate> JBossLaunchDelegates;
+//	public static ArrayList<IStartLaunchSetupParticipant> JBossSetupParticipants;
+//	static {
+//		JBoss7setupParticipants = new ArrayList<IStartLaunchSetupParticipant>();
+//		JBoss7launchDelegates = new HashMap<String, IStartLaunchDelegate>();
+//		JBoss7setupParticipants.add(new LocalJBoss7StartLaunchDelegate());
+//		JBoss7launchDelegates.put(LocalPublishMethod.LOCAL_PUBLISH_METHOD, new LocalJBoss7StartLaunchDelegate());
+//
+//		JBossSetupParticipants = new ArrayList<IStartLaunchSetupParticipant>();
+//		JBossLaunchDelegates = new HashMap<String, IStartLaunchDelegate>();
+//		JBossSetupParticipants.add(new LocalJBossStartLaunchDelegate());
+//		JBossLaunchDelegates.put(LocalPublishMethod.LOCAL_PUBLISH_METHOD, new LocalJBossStartLaunchDelegate());
+//	}
+//	public HashMap<String, IStartLaunchDelegate> getLaunchDelegates(IServer server) {
+//		if( server.getServerType().getId().equals(IJBossToolingConstants.SERVER_AS_70)) {
+//			return JBoss7launchDelegates;
+//		}
+//		return JBossLaunchDelegates;
+//	}
+//	public ArrayList<IStartLaunchSetupParticipant> getSetupParticipants(IServer server) {
+//		if( ServerUtil.isJBoss7(server)) {
+//			return JBoss7setupParticipants;
+//		}
+//		return JBossSetupParticipants;
+//	}
+//	
+}

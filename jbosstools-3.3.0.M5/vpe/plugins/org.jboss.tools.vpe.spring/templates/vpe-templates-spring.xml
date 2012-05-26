@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<vpe:templates xmlns:vpe="http://org.jboss.org/tools/vpe/template"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<vpe:template-taglib uri="http://www.springframework.org/tags/form"
+		prefix="form" />
+	<vpe:template-taglib uri="http://www.springframework.org/tags"
+		prefix="spring" />
+	<vpe:template-taglib uri="http://www.springframework.org/security/tags"
+		prefix="security" />
+
+	<vpe:tag name="form:checkbox" case-sensitive="yes">
+		<vpe:if test="@disabled='true'">
+			<vpe:template children="no" modify="no">
+				<span class="vpe-text">
+					<input type="checkbox" id="{@id}" style="{@cssStyle}" class="{@cssClass}"
+						disabled="disabled" />
+					<label>
+						<vpe:value expr="{@label}" />
+					</label>
+				</span>
+				<vpe:dnd>
+					<vpe:drag start-enable="yes" />
+				</vpe:dnd>
+			</vpe:template>
+		</vpe:if>
+		<vpe:template children="no" modify="no">
+			<span class="vpe-text">
+				<input type="checkbox" id="{@id}" style="{@cssStyle}" class="{@cssClass}" />
+				<label>
+					<vpe:value expr="{@label}" />
+				</label>
+			</span>
+			<vpe:dnd>
+				<vpe:drag start-enable="yes" />
+			</vpe:dnd>
+		</vpe:template>
+	</vpe:tag>
+
+	<vpe:tag name="form:checkboxes" case-sensitive="yes">
+		<vpe:if test="@disabled='true'">
+			<vpe:if test="attrpresent('itemLabel')">
+				<vpe:template children="no" modify="no">
+					<span class="vpe-text">
+						<input type="checkbox" id="{@id}1" style="{@cssStyle}" class="{@cssClass}"
+							disabled="disabled" />
+						<label>
+							<vpe:value expr="{@items}.{@itemLabel}" />
+						</label>
+					</span>
+					<vpe:dnd>
+						<vpe:drag start-enable="yes" />
+					</vpe:dnd>
+				</vpe:template>
+			</vpe:if>
+			<vpe:template children="no" modify="no">
+				<span class="vpe-text">
+					<input type="checkbox" id="{@id}1" style="{@cssStyle}" class="{@cssClass}"
+						disabled="disabled" />
+					<label>
+						<vpe:value expr="{@items}" />
+					</label>
+				</span>
+				<vpe:dnd>
+					<vpe:drag start-enable="yes" />
+				</vpe:dnd>
+			</vpe:template>
+		</vpe:if>
+		<vpe:if test="attrpresent('itemLabel')">
+			<vpe:template children="no" modify="no">
+				<span class="vpe-text">
+					<input type="checkbox" id="{@id}1" style="{@cssStyle}" class="{@cssClass}" />
+					<label>
+						<vpe:value expr="{@items}.{@itemLabel}" />
+					</label>
+				</span>
+				<vpe:dnd>
+					<vpe:drag start-enable="yes" />
+				</vpe:dnd>
+			</vpe:template>
+		</vpe:if>
+		<vpe:template children="no" modify="no">
+			<span class="vpe-text">
+				<input type="checkbox" id="{@id}1" style="{@cssStyle}" class="{@cssClass}" />
+				<label>
+					<vpe:value expr="{@items}" />
+				</label>
+			</span>
+			<vpe:dnd>
+				<vpe:drag start-enable="yes" />
+			</vpe:dnd>
+		</vpe:template>
+	</vpe:tag>
+	
+	<vpe:tag name="form:errors" case-sensitive="yes">
+		<vpe:if test="@path='*'">
+			<vpe:template children="no" modify="no">
+				<span id="{@id}" style="{@cssStyle}" class="{@cssClass}">
+					Errors for all validated fields.
+				</span>
+				<vpe:dnd>
+					<vpe:drag start-enable="yes" />
+				</vpe:dnd>
+			</vpe:template>
+		</vpe:if>
+		<vpe:template children="no" modify="no">
+			<span id="{@id}" style="{@cssStyle}" class="{@cssClass}">
+				<vpe:value expr="Errors for {@path} field." />
+			</span>
+			<vpe:dnd>
+				<vpe:drag start-enable="yes" />
+			</vpe:dnd>
+		</vpe:template>
+	</vpe:tag>
+
+	<vpe:tag name="form:form" case-sensitive="yes">
+		<vpe:template children="yes" modify="yes">
+			<form id="{@id}" style="{@cssStyle}" class="{@cssClass}" />
+			<vpe:dnd>
+				<vpe:drag start-enable="yes" />
+				<vpe:drop container="yes" />
+			</vpe:dnd>
+		</vpe:template>
+	</vpe:tag>
+
+	<vpe:tag name="form:input" case-sensitive="yes">
+		<vpe:if test="@disabled='true'">
+			<vpe:template children="no" modify="no">
+				<input type="text" id="{@id}" class="{@cssClass}" style="{@cssStyle}"
+					size="{@size}" dir="{@dir}" value="{@path}"
+					disabled="disabled" />
+				<vpe:resize>
+					<vpe:width width-attr="cssStyle.width" />
+					<vpe:height height-attr="cssStyle.height" />
+				</vpe:resize>
+				<vpe:dnd>
+					<vpe:drag start-enable="yes" />
+				</vpe:dnd>
+				<vpe:textFormatting use-default-formats="yes">
+				</vpe:textFormatting>
+			</vpe:template>
+		</vpe:if>
+		<vpe:template children="no" modify="no">
+			<input type="text" id="{@id}" class="{@cssClass}" style="{@cssStyle}"
+				size="{@size}" dir="{@dir}" value="{@path}"/>
+				<vpe:resize>
+					<vpe:width width-attr="cssStyle.width" />
+					<vpe:height height-attr="cssStyle.height" />
+				</vpe:resize>
+				<vpe:dnd>
+					<vpe:drag start-enable="yes" />
+				</vpe:dnd>
+				<vpe:textFormatting use-default-formats="yes">
+				</vpe:textFormatting>
+		</vpe:template>
+	</vpe:tag>
+
+	<vpe:tag name="form:password" case-sensitive="yes">
+		<vpe:if test="@showPassword='true'">
+			<vpe:if test="@disabled='true'">
+				<!-- showPassword(+) and disabled(+) -->
+				<vpe:template children="no" modify="no">
+					<input type="text" id="{@id}" class="{@cssClass}" style="{@cssStyle}"
+						size="{@size}" dir="{@dir}" value="{@path}" disabled="disabled" />
+					<vpe:resize>
+						<vpe:width width-attr="cssStyle.width" />
+						<vpe:height height-attr="cssStyle.height" />
+					</vpe:resize>
+					<vpe:dnd>
+						<vpe:drag start-enable="yes" />
+					</vpe:dnd>
+					<vpe:textFormatting use-default-formats="yes">
+					</vpe:textFormatting>
+				</vpe:template>
+			</vpe:if>
+			<!-- showPassword(+) and disabled(-) -->
+			<vpe:template children="no" modify="no">
+				<input type="text" id="{@id}" class="{@cssClass}" style="{@cssStyle}"
+					size="{@size}" dir="{@dir}" value="{@path}" />
+				<vpe:resize>
+					<vpe:width width-attr="cssStyle.width" />
+					<vpe:height height-attr="cssStyle.height" />
+				</vpe:resize>
+				<vpe:dnd>
+					<vpe:drag start-enable="yes" />
+				</vpe:dnd>
+				<vpe:textFormatting use-default-formats="yes">
+				</vpe:textFormatting>
+			</vpe:template>
+		</vpe:if>
+		<vpe:if test="@disabled='true'">
+			<!-- showPassword(-) and disabled(+) -->
+			<vpe:template children="no" modify="no">
+				<input type="password" id="{@id}" class="{@cssClass}" style="{@cssStyle}"
+					size="{@size}" dir="{@dir}" value="{@path}" disabled="disabled" />
+				<vpe:resize>
+					<vpe:width width-attr="cssStyle.width" />
+					<vpe:height height-attr="cssStyle.height" />
+				</vpe:resize>
+				<vpe:dnd>
+					<vpe:drag start-enable="yes" />
+				</vpe:dnd>
+				<vpe:textFormatting use-default-formats="yes">
+				</vpe:textFormatting>
+			</vpe:template>
+		</vpe:if>
+		<!-- showPassword(-) and disabled(-) -->
+		<vpe:template children="no" modify="no">
+			<input type="password" id="{@id}" class="{@cssClass}" style="{@cssStyle}"
+				size="{@size}" dir="{@dir}" value="{@path}" />
+			<vpe:resize>
+				<vpe:width width-attr="cssStyle.width" />
+				<vpe:height height-attr="cssStyle.height" />
+			</vpe:resize>
+			<vpe:dnd>
+				<vpe:drag start-enable="yes" />
+			</vpe:dnd>
+			<vpe:textFormatting use-default-formats="yes">
+			</vpe:textFormatting>
+		</vpe:template>
+	</vpe:tag>
+
+	<vpe:tag name="form:label" case-sensitive="yes">
+		<vpe:template children="yes" modify="yes">
+			<label id="{@id}" class="{@cssClass}" style="{@cssStyle}" for="{@for}"
+				dir="{@dir}">
+			</label>
+			<vpe:resize>
+				<vpe:width width-attr="cssStyle.width" />
+				<vpe:height height-attr="cssStyle.height" />
+			</vpe:resize>
+			<vpe:dnd>
+				<vpe:drag start-enable="yes" />
+			</vpe:dnd>
+			<vpe:textFormatting use-default-formats="yes">
+			</vpe:textFormatting>
+		</vpe:template>
+	</vpe:tag>
+	
+	<vpe:tag name="form:hidden" case-sensitive="yes">
+		<vpe:template children="no" modify="no" >
+		</vpe:template>
+	</vpe:tag>
+	
+	<vpe:tag name="form:select" case-sensitive="yes">
+		<vpe:template children="yes" modify="yes"
+				class="org.jboss.tools.vpe.spring.template.SpringFormSelectTemplate">
+			<vpe:resize>
+				<vpe:width width-attr="cssStyle.width" />
+				<vpe:height height-attr="cssStyle.height" />
+			</vpe:resize>
+			<vpe:dnd>
+				<vpe:drag start-enable="yes" />
+				<vpe:drop container="yes"></vpe:drop>
+			</vpe:dnd>
+		</vpe:template>
+	</vpe:tag>
+	
+	<vpe:tag name="form:option" case-sensitive="yes">
+		<vpe:if test="@disabled='true'">
+			<vpe:template children="yes" modify="yes">
+				<option id="{@id}" class="{@cssClass}" style="{@cssStyle}"
+					 dir="{@dir}" disabled="disabled">
+					 <vpe:value expr="{@label}" />
+				</option>
+			</vpe:template>
+		</vpe:if>
+		<vpe:template children="yes" modify="yes">
+				<option id="{@id}" class="{@cssClass}" style="{@cssStyle}"
+					 dir="{@dir}">
+					 <vpe:value expr="{@label}" />
+				</option>
+		</vpe:template>
+	</vpe:tag>
+	
+	<vpe:tag name="form:options" case-sensitive="yes">
+		<vpe:if test="@disabled='true'">
+			<vpe:if test="attrpresent('itemLabel')">
+				<vpe:template children="yes" modify="yes">
+					<option id="{@id}1" class="{@cssClass}" style="{@cssStyle}"
+							dir="{@dir}" disabled="disabled">
+						<vpe:value expr="{@items}.{@itemLabel}" />
+					</option>
+				</vpe:template>
+			</vpe:if>
+			<vpe:template children="yes" modify="yes">
+				<option id="{@id}1" class="{@cssClass}" style="{@cssStyle}"
+						dir="{@dir}" disabled="disabled">
+					<vpe:value expr="{@items}" />
+				</option>
+			</vpe:template>
+		</vpe:if>
+		<vpe:if test="attrpresent('itemLabel')">
+			<vpe:template children="yes" modify="yes">
+				<option id="{@id}1" class="{@cssClass}" style="{@cssStyle}"
+						dir="{@dir}">
+					<vpe:value expr="{@items}.{@itemLabel}" />
+				</option>
+			</vpe:template>
+		</vpe:if>
+		<vpe:template children="yes" modify="yes">
+			<option id="{@id}1" class="{@cssClass}" style="{@cssStyle}"
+					dir="{@dir}">
+				<vpe:value expr="{@items}" />
+			</option>
+		</vpe:template>
+	</vpe:tag>
+	
+	<vpe:tag name="form:radiobutton" case-sensitive="yes">
+		<vpe:if test="@disabled='true'">
+			<vpe:template children="no" modify="no">
+				<span class="vpe-text">
+					<input type="radio" id="{@id}" style="{@cssStyle}" class="{@cssClass}"
+						disabled="disabled" name="{@path}"/>
+					<label>
+						<vpe:value expr="{@label}" />
+					</label>
+				</span>
+				<vpe:dnd>
+					<vpe:drag start-enable="yes" />
+				</vpe:dnd>
+			</vpe:template>
+		</vpe:if>
+		<vpe:template children="no" modify="no">
+			<span class="vpe-text">
+				<input type="radio" id="{@id}" style="{@cssStyle}" class="{@cssClass}"
+						name="{@path}" />
+				<label>
+					<vpe:value expr="{@label}" />
+				</label>
+			</span>
+			<vpe:dnd>
+				<vpe:drag start-enable="yes" />
+			</vpe:dnd>
+		</vpe:template>
+	</vpe:tag>
+	
+	<vpe:tag name="form:radiobuttons" case-sensitive="yes">
+		<vpe:if test="@disabled='true'">
+			<vpe:if test="attrpresent('itemLabel')">
+				<vpe:template children="no" modify="no">
+					<span class="vpe-text">
+						<input type="radio" id="{@id}1" style="{@cssStyle}" class="{@cssClass}"
+							disabled="disabled" name="{@path}"/>
+						<label>
+							<vpe:value expr="{@items}.{@itemLabel}" />
+						</label>
+					</span>
+					<vpe:dnd>
+						<vpe:drag start-enable="yes" />
+					</vpe:dnd>
+				</vpe:template>
+			</vpe:if>
+			<vpe:template children="no" modify="no">
+					<span class="vpe-text">
+						<input type="radio" id="{@id}1" style="{@cssStyle}" class="{@cssClass}"
+							disabled="disabled" name="{@path}"/>
+						<label>
+							<vpe:value expr="{@items}" />
+						</label>
+					</span>
+					<vpe:dnd>
+						<vpe:drag start-enable="yes" />
+					</vpe:dnd>
+			</vpe:template>
+		</vpe:if>
+		<vpe:if test="attrpresent('itemLabel')">
+			<vpe:template children="no" modify="no">
+				<span class="vpe-text">
+					<input type="radio" id="{@id}1" style="{@cssStyle}" class="{@cssClass}"
+						name="{@path}"/>
+					<label>
+						<vpe:value expr="{@items}.{@itemLabel}" />
+					</label>
+				</span>
+				<vpe:dnd>
+					<vpe:drag start-enable="yes" />
+				</vpe:dnd>
+			</vpe:template>
+		</vpe:if>
+		<vpe:template children="no" modify="no">
+			<span class="vpe-text">
+				<input type="radio" id="{@id}1" style="{@cssStyle}" class="{@cssClass}"
+					name="{@path}"/>
+				<label>
+					<vpe:value expr="{@items}" />
+				</label>
+			</span>
+			<vpe:dnd>
+				<vpe:drag start-enable="yes" />
+			</vpe:dnd>
+		</vpe:template>
+	</vpe:tag>
+
+	<vpe:tag name="form:textarea" case-sensitive="yes">
+		<vpe:template children="no" modify="no"
+			class="org.jboss.tools.vpe.spring.template.SpringTextAreaTemplate">
+			<vpe:resize>
+				<vpe:width width-attr="cssStyle.width" />
+				<vpe:height height-attr="cssStyle.height" />
+			</vpe:resize>
+			<vpe:dnd>
+				<vpe:drag start-enable="yes" />
+			</vpe:dnd>
+			<vpe:textFormatting use-default-formats="yes">
+			</vpe:textFormatting>
+		</vpe:template>
+	</vpe:tag>
+
+	<vpe:tag name="spring:message" case-sensitive="yes">
+		<vpe:template children="no" modify="no">
+			<span class="vpe-text">
+				<vpe:value expr="{@code}" />
+			</span>
+		</vpe:template>
+	</vpe:tag>	 
+
+	<vpe:tag name="spring:theme" case-sensitive="yes">
+		<vpe:template children="no" modify="no">
+			<span class="vpe-text">
+				<vpe:value expr="{@code}" />
+			</span>
+		</vpe:template>
+	</vpe:tag>	 
+	
+	<vpe:tag name="spring:bind" case-sensitive="yes">
+		<vpe:template children="yes" modify="yes">
+			<span class="vpe-text"/>
+		</vpe:template>
+	</vpe:tag>
+	
+	<vpe:tag name="spring:escapeBody" case-sensitive="yes">
+		<vpe:template children="yes" modify="yes">
+			<span class="vpe-text"/>
+		</vpe:template>
+	</vpe:tag>
+	
+	<vpe:tag name="spring:hasBindErrors" case-sensitive="yes">
+		<vpe:template children="yes" modify="no" />
+	</vpe:tag>
+	
+	<vpe:tag name="spring:htmlEscape" case-sensitive="yes">
+		<vpe:template children="no" modify="no" />
+	</vpe:tag>
+	
+	<vpe:tag name="spring:nestedPath" case-sensitive="yes">
+		<vpe:template children="yes" modify="no" />
+	</vpe:tag>
+	
+	<vpe:tag name="spring:transform" case-sensitive="yes">
+		<vpe:template children="no" modify="no" />
+	</vpe:tag>
+	
+	<vpe:tag name="spring:eval" case-sensitive="yes">
+		<vpe:if test="attrpresent('var')">
+			<vpe:template children="no" modify="yes" />
+		</vpe:if>
+		<vpe:template children="no" modify="yes">
+			<span class="vpe-text">
+				<vpe:value expr="{@expression}" />
+			</span>
+		</vpe:template>
+	</vpe:tag>
+
+	<vpe:tag name="spring:url" case-sensitive="yes">
+		<vpe:template children="no" modify="yes"
+	       class="org.jboss.tools.vpe.spring.template.SpringUrlTemplate">
+		</vpe:template>
+	</vpe:tag>
+	
+	<vpe:tag name="spring:param" case-sensitive="yes">
+		<vpe:template children="no" modify="no" />
+	</vpe:tag>
+	
+	<vpe:tag name="security:authorize" case-sensitive="yes">
+		<vpe:template children="yes" modify="yes">
+			<div/>
+		</vpe:template>
+	</vpe:tag>
+	
+	<vpe:tag name="security:authentication" case-sensitive="yes">
+		<vpe:template children="no" modify="yes">
+			<span class="vpe-text">
+				<vpe:value expr="{@property}" />
+			</span>
+		</vpe:template>
+	</vpe:tag>
+
+	<vpe:tag name="security:accesscontrollist" case-sensitive="yes">
+		<vpe:template children="yes" modify="yes">
+			<div/>
+		</vpe:template>
+	</vpe:tag>
+</vpe:templates>

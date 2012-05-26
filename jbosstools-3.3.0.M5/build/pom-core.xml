@@ -1,0 +1,622 @@
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.jboss.tools</groupId>
+	<artifactId>org.jboss.tools.build</artifactId>
+	<name>org.jboss.tools.build</name>
+	<version>0.0.2</version>
+	<packaging>pom</packaging>
+
+	<profiles>
+		<!-- for bootstrapping the parent and target-platform poms via Mead, we need to be able to fetch from this folder and run 
+			this profile (excluding all others); currently parent pom includes target-platform build too, so only need to build the parent
+			 
+			mvn clean install -P parent,\!libs,\!tests,\!jmx,\!archives,\!as,\!common,\!jst,\!xulrunner,\!vpe \
+			-P \!jsf,\!freemarker,\!hibernatetools,\!portlet,\!struts,\!cdi,\!birt,\!seam,\!examples \
+			-P \!maven,\!ws,\!gwt,\!deltacloud,\!runtime,\!usage,\!central,\!aggregate-coverage
+			
+		-->
+		<profile>
+			<id>parent</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<modules>
+				<module>parent</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>libs</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>coverage</name>
+				</property>
+			</activation>
+			<modules>
+				<module>libs</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>tests</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>as-bootstrap</name>
+				</property>
+			</activation>
+			<modules>
+				<module>../tests</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>jmx</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../jmx</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>jmx-bootstrap</id>
+			<modules>
+				<module>../tests</module>
+				<module>../jmx</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>archives</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>as-bootstrap</name>
+				</property>
+			</activation>
+			<modules>
+				<module>../archives</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>archives-bootstrap</id>
+			<modules>
+				<module>../tests</module>
+				<module>../archives</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>as</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>as-bootstrap</name>
+				</property>
+			</activation>
+			<modules>
+				<module>../as</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>as-bootstrap</id>
+			<modules>
+				<module>../tests</module>
+				<module>../common</module>
+				<module>../archives</module>
+				<module>../jmx</module>
+				<module>../as</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>openshift</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>openshift-bootstrap</name>
+				</property>
+			</activation>
+			<modules>
+				<module>../openshift</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>openshift-bootstrap</id>
+			<modules>
+				<module>../tests</module>
+				<module>../common</module>
+				<module>../archives</module>
+				<module>../jmx</module>
+				<module>../as</module>
+				<module>../openshift</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>common</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../common</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>common-bootstrap</id>
+			<modules>
+				<module>../tests</module>
+				<module>../common</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>jst</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../jst</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>jst-bootstrap</id>
+			<modules>
+				<module>../tests</module>
+				<module>../common</module>
+				<module>../jst</module>
+			</modules>
+		</profile>
+
+
+		<profile>
+			<id>xulrunner</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../xulrunner</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>xulrunner-bootstrap</id>
+			<modules>
+				<module>../xulrunner</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>vpe</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../vpe</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>vpe-bootstrap</id>
+			<modules>
+				<module>../tests</module>
+				<module>../common</module>
+				<module>../jst</module>
+				<module>../xulrunner</module>
+				<module>../vpe</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>jsf</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../jsf</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>jsf-bootstrap</id>
+			<modules>
+				<module>../tests</module>
+				<module>../common</module>
+				<module>../jst</module>
+				<module>../xulrunner</module>
+				<module>../vpe</module>
+				<module>../jsf</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>freemarker</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../freemarker</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>freemarker-bootstrap</id>
+			<modules>
+				<module>../tests</module>
+				<module>../freemarker</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>hibernatetools</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../hibernatetools</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>hibernatetools-bootstrap</id>
+			<modules>
+				<module>../tests</module>
+				<module>../freemarker</module>
+				<module>../hibernatetools</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>portlet</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../portlet</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>portlet-bootstrap</id>
+			<modules>
+				<module>../tests</module>
+				<module>../jmx</module>
+				<module>../archives</module>
+				<module>../as</module>
+				<module>../hibernatetools</module>
+				<module>../common</module>
+				<module>../jst</module>
+				<module>../xulrunner</module>
+				<module>../vpe</module>
+				<module>../jsf</module>
+				<module>../usage</module>
+				<module>../seam</module>
+				<module>../portlet</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>struts</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../struts</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>struts-bootstrap</id>
+			<modules>
+				<module>../tests</module>
+				<module>../common</module>
+				<module>../jst</module>
+				<module>../xulrunner</module>
+				<module>../vpe</module>
+				<module>../struts</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>forge</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../forge</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>forge-bootstrap</id>
+			<modules>
+				<module>../forge</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>cdi</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../cdi</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>cdi-bootstrap</id>
+			<modules>
+				<module>../tests</module>
+				<module>../common</module>
+				<module>../jst</module>
+				<module>../cdi</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>birt</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../birt</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>birt-bootstrap</id>
+			<modules>
+				<module>../tests</module>
+				<module>../birt</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>seam</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../seam</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>seam-bootstrap</id>
+			<modules>
+				<module>../tests</module>
+				<module>../jmx</module>
+				<module>../archives</module>
+				<module>../as</module>
+				<module>../hibernatetools</module>
+				<module>../common</module>
+				<module>../jst</module>
+				<module>../xulrunner</module>
+				<module>../vpe</module>
+				<module>../jsf</module>
+				<module>../seam</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>examples</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../examples</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>examples-bootstrap</id>
+			<modules>
+				<module>../tests</module>
+				<module>../examples</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>maven</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../maven</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>maven-bootstrap</id>
+			<modules>
+				<module>../tests</module>
+				<module>../jmx</module>
+				<module>../archives</module>
+				<module>../as</module>
+				<module>../hibernatetools</module>
+				<module>../common</module>
+				<module>../examples</module>
+				<module>../jst</module>
+				<module>../xulrunner</module>
+				<module>../vpe</module>
+				<module>../jsf</module>
+				<module>../seam</module>
+				<module>../usage</module>
+				<module>../cdi</module>
+				<module>../maven</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>ws</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../ws</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>ws-bootstrap</id>
+			<modules>
+				<module>../tests</module>
+				<module>../common</module>
+				<module>../as</module>
+				<module>../ws</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>gwt</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../gwt</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>deltacloud</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../deltacloud</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>deltacloud-bootstrap</id>
+			<modules>
+				<module>../tests</module>
+				<module>../as</module>
+				<module>../deltacloud</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>runtime</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../runtime</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>runtime-bootstrap</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../tests</module>
+				<module>../common</module>
+				<module>../jmx</module>
+				<module>../usage</module>
+				<module>../examples</module>
+				<module>../runtime</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>usage</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../usage</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>central</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../central</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>central-bootstrap</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>../tests</module>
+				<module>../common</module>
+				<module>../runtime</module>
+				<module>../freemarker</module>
+				<module>../hibernatetools</module>
+				<module>../jst</module>
+				<module>../vpe</module>
+				<module>../jsf</module>
+				<module>../jmx</module>
+				<module>../archives</module>
+				<module>../as</module>
+				<module>../seam</module>
+				<module>../portlet</module>
+				<module>../examples</module>
+				<module>../esb</module>
+				<module>../jbpm</module>
+				<module>../flow</module>
+				<module>../central</module>
+			</modules>
+		</profile>
+
+		<profile>
+			<id>aggregate-coverage</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>coverage</name>
+				</property>
+			</activation>
+			<modules>
+				<module>reports/emma-coverage</module>
+			</modules>
+		</profile>
+	</profiles>
+
+	<repositories>
+		<!--  Cannot redistribute GWT plugins due to license therefore cannot be included in target platform; must reference as 3rd party URL -->
+		<repository>
+			<id>gwt-e37</id>
+			<url>http://dl.google.com/eclipse/plugin/3.7/</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		<!-- no longer needed (https://issues.jboss.org/browse/JBIDE-9585) <repository>
+			<id>egit11</id>
+			<url>http://download.jboss.org/jbosstools/updates/requirements/egit/1.1.0.201108230343/</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository> -->
+	</repositories>
+</project>
+	

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="mirror">
+	<!-- run locally in Eclipse (to resolve p2 tasks) using these commandline options:
+	
+		-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} 
+		-consoleLog -nosplash -data /tmp
+		-application org.eclipse.ant.core.antRunner
+		-f "/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/gwt/build.xml"
+		
+		or, run headless on qa01 server, where Eclipse is installed into ~/eclipse:
+		
+		export JAVA_HOME=/opt/jdk1.6.0; \
+		${JAVA_HOME}/bin/java -cp ~/eclipse/plugins/org.eclipse.equinox.launcher_*.jar \
+			org.eclipse.equinox.launcher.Main -vm ${JAVA_HOME} -consoleLog -nosplash -data /tmp \
+			-application org.eclipse.ant.core.antRunner \
+			-f ~/RHDS/updates/requirements/gwt/build.xml -Ddestination=/tmp/gwt-repo
+	-->
+	<target name="mirror">
+		<!-- note: this site no longer contains the 20111201-2000 release of GWT, since Google removes old versions -->
+		<property name="URL" value="http://dl.google.com/eclipse/plugin/3.7" />
+		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/gwt/" />
+		<property name="compress" value="true" />
+
+		<p2.mirror>
+			<repository location="file:${destination}/20111201-2000" name="Google plugins for Eclipse 3.7" />
+			<source>
+				<repository location="${URL}" />
+			</source>
+
+			<!-- 
+			<iu id="com.google.gwt.eclipse.sdkbundle.e36.feature.2.2.0.feature.group" />
+			<iu id="com.google.appengine.eclipse.sdkbundle.e36.feature.1.4.2.feature.group" />
+			<iu id="com.google.gdt.eclipse.suite.e36.feature.feature.group" /> 
+			-->
+
+			<slicingOptions includeFeatures="true" followStrict="true" />
+		</p2.mirror>
+
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/20111201-2000" artifactRepository="file:${destination}/20111201-2000" publishartifacts="true" source="${destination}/20111201-2000" compress="${compress}" />
+	</target>
+</project>

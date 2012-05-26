@@ -1,0 +1,8 @@
+#Sun Jan 23 15:34:09 CET 2011
+eclipse.preferences.version=1
+gmf_dashboard/domainGenerationModel=platform\:/resource/org.eclipse.bpmn2/model/BPMN20.genmodel
+gmf_dashboard/domainModel=platform\:/resource/org.eclipse.bpmn2/model/BPMN20.ecore
+gmf_dashboard/generationModel=platform\:/resource/org.jboss.tools.bpmn2.model/model/bpmn.process.gmfgen
+gmf_dashboard/graphicalDefinitionModel=platform\:/resource/org.jboss.tools.bpmn2.model/model/bpmn.gmfgraph
+gmf_dashboard/mappingModel=platform\:/resource/org.jboss.tools.bpmn2.model/model/bpmn.process.gmfmap
+gmf_dashboard/toolingDefinitionModel=platform\:/resource/org.jboss.tools.bpmn2.model/model/bpmn.process.gmftool
