@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<chapter id="overview">
+	<title>JBoss BPEL project Overview</title>
+
+	<para>JBoss BPEL is based on WS-BPEL 2.0, and provides a way to create, edit, validate and deploy BPEL files to JBoss BPEL runtime. It is based on Eclipse <ulink url="http://www.eclipse.org/bpel/">BPEL project</ulink>. </para>
+
+	<para>It improves the Eclipse BPEL project in the following ways: </para>
+	<itemizedlist>
+		<listitem>
+			<para> Implements close integration with JBoss BPEL runtime, and adds a new project type for the deployment to the JBoss BPEL runtime.</para>
+		</listitem>
+		<listitem>
+			<para> Supports two deployment methods. The first method is to deploy a BPEL project directly to the JBoss BPEL runtime. The second method is to deploy BPEL files in JBoss ESB project to the JBoss BPEL runtime. </para>
+		</listitem>
+		<listitem>
+			<para>Enhances the BPEL validator and improves the quality of the Eclipse BPEL editor. </para>
+		</listitem>
+	</itemizedlist>
+
+	<para>
+		<ulink url="http://docs.oasis-open.org/wsbpel/2.0/OS/wsbpel-v2.0-OS.html">WS-BPEL 2.0</ulink> stands for Web Service Business Process Execution Language. Like EAI, BPEL is an XML-based language, but BPEL is more specific and targeted. BPEL is used by developers to join sometimes disparate functions into an integrated process, resulting in a seamless use of the Internet to conduct business transactions ranging from simple money exchanges to complex calculations and asset reallocation.
+   </para>
+
+	<section>
+		<title>Key Features of JBoss BPEL project</title>
+		<para>The table below lists the main features of the JBoss BPEL editor: </para>
+
+		<table>
+
+			<title>Key Functionality for JBoss BPEL editor project</title>
+			<tgroup cols="2">
+				<colspec colnum="1" align="left" colwidth="2*"/>
+				<colspec colnum="2" colwidth="4*"/>
+				<thead>
+					<row>
+						<entry>Feature</entry>
+						<entry>Benefit</entry>
+
+					</row>
+				</thead>
+				<tbody>
+					<row>
+						<entry>
+							<para>WS-BPEL 2.0 support</para>
+						</entry>
+						<entry>
+							<para>JBoss BPEL project supports the most recent WS-BPEL 2.0 specifications. </para>
+						</entry>
+					</row>
+					<row>
+						<entry>
+							<para>Close integration with JBoss BPEL runtime</para>
+						</entry>
+						<entry>
+							<para>There are two methods to deploy BPEL files to JBoss BPEL runtime. The user can deploy a BPEL project as a whole and can deploy BPEL files in a JBoss ESB project to the JBoss BPEL runtime. </para>
+						</entry>
+					</row>
+					<row>
+						<entry>
+							<para>BPEL file editor</para>
+						</entry>
+						<entry>
+							<para>The editor can be used separately to edit a BPEL file. </para>
+						</entry>
+					</row>
+					<row>
+						<entry>
+							<para>BPEL file validator</para>
+						</entry>
+						<entry>
+							<para>The validator displays a list of BPEL file errors. </para>
+						</entry>
+					</row>
+				</tbody>
+			</tgroup>
+		</table>
+
+	</section>
+
+</chapter>

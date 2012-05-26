@@ -1,0 +1,9 @@
+<tests>
+	<test id="samp">
+		<SAMP ID="samp" CLASS="sampClass" STYLE="color: red; -moz-user-modify: read-write;" DIR="ltr">
+<SPAN>
+Some Text
+</SPAN>
+</SAMP>
+	</test>
+</tests>

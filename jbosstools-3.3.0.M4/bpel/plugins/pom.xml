@@ -1,0 +1,30 @@
+<project
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.jboss.tools</groupId>
+		<artifactId>bpel</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<groupId>org.jboss.tools.bpel</groupId>
+	<artifactId>plugins</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>bpel.plugins</name>
+	<packaging>pom</packaging>
+	<modules>
+		<!-- no longer included in build per JBDS-1810 :: see ../../bpel-old/ folder
+		<module>org.eclipse.bpel.apache.ode.deploy.model</module>
+		<module>org.eclipse.bpel.apache.ode.deploy.ui</module>
+		<module>org.eclipse.bpel.common.model</module>
+		<module>org.eclipse.bpel.common.ui</module>
+		<module>org.eclipse.bpel.model</module>
+		<module>org.eclipse.bpel.ui</module>
+		<module>org.eclipse.bpel.validator</module>
+		<module>org.eclipse.bpel.wsil.model</module>
+		<module>org.eclipse.bpel.xpath10</module>
+		<module>org.jboss.tools.bpel.cheatsheet</module>
+		-->
+		<module>org.jboss.tools.bpel.runtimes</module>
+	</modules>
+</project>
+	

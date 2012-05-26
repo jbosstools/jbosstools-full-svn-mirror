@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../whatsnew.css" />
+<title>Deltacloud Development Tools 0.2.0.M1 What's New</title>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17645367-5']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script></head>
+<body>
+<h1>Deltacloud Development Tools 0.2.0.M1 What's New</h1>
+
+<p align="right"><a href="../index.html">&lt; Main Index</a> <a
+	 href="../gwt/gwt-news-1.1.0.M1.html">GWT Integration
+	&gt;</a></p> 
+	<table border="0" cellpadding="10" cellspacing="0" width="80%"> 
+		<tr> 
+			<td colspan="2"> <hr />
+				<h3>Deltacloud Tools</h3> <hr /> 
+			</td> 
+		</tr> 
+		<tr> 
+			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Work done</b></td> 
+			<td valign="top"> 
+				We fixed a lot of bugs and provided slight improvements of the tooling. Furthermore
+				we extracted the Deltacloud client component to its own bundle so that it may be used by any 
+				java project that wants to communicate with the Deltacloud REST API.
+			</td>
+		</tr>	
+		<tr> 
+			<td colspan="2"> <hr />
+				<h3>Cloud Connection</h3><hr /> 
+			</td> 
+		</tr> 
+		<tr> 
+			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Content assist</b></td> 
+			<td valign="top"> 
+				We added content assist to the fields in the cloud connection wizard. This will spare you from typing in many cases since 
+				you can now choose among prior entries and reuse them.
+				<p><img src="images/cloudconnection-content-assist.png"></img></p>
+			</td>
+		</tr>	
+		<tr> 
+			<td colspan="2"> <hr />
+				<h3>Filter instances, filter images</h3><hr /> 
+			</td> 
+		</tr> 
+		<tr> 
+			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Bug fixes</b></td> 
+			<td valign="top"> 
+				We fixed a lot of bugs that prevented filtering to be fully used in a reliable manner
+			</td>
+		</tr>	
+		<tr> 
+			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Error decorations</b></td> 
+			<td valign="top"> 
+				Filter fields must contain valid filtering expressions. Invalid entries are now shown by error decorations
+				and messages in the dialog.
+				<p><img src="images/filter-instances.png"></img></p>
+				<p><small><a href="https://issues.jboss.org/browse/JBIDE-8332">Related Jira</a></small></p>
+			</td>
+		</tr>	
+		<tr> 
+			<td colspan="2"> <hr />
+				<h3>Launch instance wizard</h3><hr /> 
+			</td> 
+		</tr> 
+		<tr> 
+			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>Error decorations, Content assist</b></td> 
+			<td valign="top"> 
+				The second page in the wizard that allows you to launch an instance was enhanced UI-wise. It now offers content assist
+				and error decorations like all the other forms in Deltacloud tools.
+				<p><img src="images/launch-instance.png"></img></p>
+				<p><small><a href="https://issues.jboss.org/browse/JBIDE-8341">Related Jira</a></small></p>
+			</td>
+		</tr>	
+		<tr> 
+			<td colspan="2"> <hr />
+				<h3>Deltacloud client</h3><hr /> 
+			</td> 
+		</tr> 
+		<tr> 
+			<td valign="top" align="left"><a name="itemname3" id="itemname3"></a><b>In its own plugin</b></td> 
+			<td valign="top"> 
+				We finally extracted the Deltacloud client to its own plugin. Since OSGI bundles are basically 
+				jar's on steroids there's nothing that would prevent classic java projects to use this client. 
+				Our client would allow them to interact with the Deltacloud REST API. 
+				<p>The code is pretty mature and well tested.</p>
+				<p><small><a href="https://issues.jboss.org/browse/JBIDE-7589">Related Jira</a></small></p>
+			</td>
+		</tr>	
+</body>
+
+</html>
+
+

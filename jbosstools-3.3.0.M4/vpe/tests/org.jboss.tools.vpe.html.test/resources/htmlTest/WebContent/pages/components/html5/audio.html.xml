@@ -1,0 +1,7 @@
+<tests>
+	<test id="audio-id">
+		<AUDIO ID="audio-id" SRC="http://www.w3schools.com/html5/horse.ogg" CONTROLS="controls" STYLE="-moz-us
+er-modify: read-only;" TABINDEX="0">
+</AUDIO>
+	</test>
+</tests>

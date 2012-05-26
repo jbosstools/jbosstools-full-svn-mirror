@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "JBoss_Tools_Reference_Guide_Template.ent">
+%BOOK_ENTITIES;
+]>
+<section id="reference-wizards-new_jsf_project_wizard">
+  <title>New JSF project wizard</title>
+  <para>
+    Some brief and useful information regarding a JSF project and the wizard in general. Include the image recycled from the procedure/task.
+  </para>
+   <figure id="figure-reference-wizards-new_jsf_project_wizar">
+     <title>The Tool Project Attributes</title>
+       <mediaobject>
+         <imageobject>
+           <imagedata fileref="images/image-jsf-new_jsf_project_01.png" format="PNG"/>
+         </imageobject>
+         <textobject>
+           <para>The New JSF Project Wizard.</para>
+         </textobject>
+       </mediaobject>
+   </figure>
+   <note><title>***Design Note***</title>
+    <para>
+      Link to the relevant task (procedure id) relating to the wizard. 
+    </para>
+  </note>  
+  <para>
+    Use of the <guilabel>New JSF project wizard</guilabel> is detailed in  <xref linkend="proc-jsf-new_jsf_project"></xref>.
+  </para>
+   
+    <note><title>***Design Note***</title>
+    <para>
+      For reference material relating to material covered in the Concepts chapter link to the relevant "Document navigation section" 
+    </para>
+  </note>  
+  <formalpara><title>Related material</title>
+    <para>
+      Further tasks and information relating to this task are accessible from:  <xref linkend="hints-placeholder_for_a_link"/>.
+    </para>
+  </formalpara>
+  <para>&FEEDBACK-reference-wizards-new_jsf_project_wizard;</para>
+</section>

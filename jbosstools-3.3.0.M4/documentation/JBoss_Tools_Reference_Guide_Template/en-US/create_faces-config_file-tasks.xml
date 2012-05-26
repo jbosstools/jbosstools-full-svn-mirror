@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "JBoss_Tools_Reference_Guide_Template.ent">
+%BOOK_ENTITIES;
+]>
+<section id="tasks-basic_tasks-create_faces-config_file">
+  <title>Create faces-config file</title>
+  <para>
+    The user has the option to define a new faces-config.xml file  and to register that file in the web.xml file. The use of this wizard is discussed in the following procedures:
+  </para>
+   <xi:include href="proc-jbt-new_other.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+   <xi:include href="proc-jsf-new_faces_config.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <para>&FEEDBACK-tasks-basic_tasks-create_faces-config_file;</para>
+</section>

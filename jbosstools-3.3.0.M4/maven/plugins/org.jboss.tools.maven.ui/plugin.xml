@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+  <extension 
+        point="org.eclipse.wst.common.project.facet.ui.wizardPages">
+    <wizard-pages action="jboss.m2.install">
+        <page class="org.jboss.tools.maven.ui.internal.project.facet.MavenFacetInstallPage"/>
+    </wizard-pages>
+  </extension> 
+  
+  <extension point="org.eclipse.jst.common.project.facet.ui.libraryProviderActionPanels">
+    <panel 
+      provider="maven-library-provider"
+      class="org.jboss.tools.maven.ui.internal.libprov.MavenUserLibraryProviderInstallPanel"/>
+  </extension>
+  
+  <extension
+        point="org.eclipse.ui.preferencePages">
+     <page
+           category="org.jboss.tools.common.model.ui.MainPreferencePage"
+           class="org.jboss.tools.maven.ui.preferences.ConfiguratorPreferencePage"
+           id="org.jboss.tools.maven.ui.preferences.ConfiguratorPreferencePage"
+           name="%JBoss_Maven_Integration"/>
+    </extension>
+    
+    <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer class="org.jboss.tools.maven.ui.preferences.ConfiguratorPreferencesInitializer"/>
+   </extension>
+   
+   <!-- Maven Profile Selection-->
+    <extension
+          point="org.eclipse.ui.commands">
+       <command
+             categoryId="org.eclipse.ui.category.window"
+             id="org.jboss.tools.maven.ui.commands.selectMavenProfileCommand"
+             name="%Select_Maven_Profiles_Cmd">
+       </command>
+    </extension>
+    
+    <extension
+          point="org.eclipse.ui.handlers">
+       <handler
+             class="org.jboss.tools.maven.ui.internal.profiles.ProfileSelectionHandler"
+             commandId="org.jboss.tools.maven.ui.commands.selectMavenProfileCommand">
+       </handler>
+    </extension>
+    <extension
+          point="org.eclipse.ui.bindings">
+       <key
+             commandId="org.jboss.tools.maven.ui.commands.selectMavenProfileCommand"
+             contextId="org.eclipse.ui.contexts.window"
+             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+             sequence="Ctrl+Alt+P">
+       </key>
+    </extension>
+   
+   <extension point="org.eclipse.ui.popupMenus">
+        <objectContribution id="org.jboss.tools.maven.ui.profiles.selectFromProject"
+                          objectClass="org.eclipse.core.resources.IProject"
+                          adaptable="true">
+         <action id="org.jboss.tools.maven.ui.commands.selectMavenProfileAction"
+                 class="org.jboss.tools.maven.ui.generic.GenericCommandActionDelegate:org.jboss.tools.maven.ui.commands.selectMavenProfileCommand"
+                 label="%Select_Maven_Profiles_Menu"
+                 style="push"
+                 definitionId="org.jboss.tools.maven.ui.commands.selectMavenProfileCommand"
+                 menubarPath="org.eclipse.m2e.core.mavenMenu/open"
+                 enablesFor="+"/>
+         <visibility>
+           <and>
+             <objectState name="open" value="true"/>
+             <objectState name="nature" value="org.eclipse.m2e.core.maven2Nature"/>
+           </and>
+         </visibility>
+      </objectContribution>
+      
+       <objectContribution id="org.jboss.tools.maven.ui.profiles.selectFromPom"
+                          objectClass="org.eclipse.core.resources.IFile"
+                          adaptable="true">
+         <action id="org.jboss.tools.maven.ui.commands.selectMavenProfileAction"
+                 class="org.jboss.tools.maven.ui.generic.GenericCommandActionDelegate:org.jboss.tools.maven.ui.commands.selectMavenProfileCommand"
+                 label="%Select_Maven_Profiles_Menu"
+                 style="push"
+                 definitionId="org.jboss.tools.maven.ui.commands.selectMavenProfileCommand"
+                 menubarPath="org.eclipse.m2e.core.fileMenu/open"
+                 enablesFor="+"/>
+         <visibility>
+            <objectState name="name" value="pom.xml"/>
+         </visibility>
+      </objectContribution>
+      
+      <objectContribution id="org.jboss.tools.maven.ui.profiles.selectFromWorkingSet"
+      	     adaptable="true"
+             objectClass="org.eclipse.ui.IWorkingSet">
+         <action id="org.jboss.tools.maven.ui.commands.selectMavenProfileAction"
+                 class="org.jboss.tools.maven.ui.generic.GenericCommandActionDelegate:org.jboss.tools.maven.ui.commands.selectMavenProfileCommand"
+                 label="%Select_Maven_Profiles_Menu"
+                 style="push"
+                 definitionId="org.jboss.tools.maven.ui.commands.selectMavenProfileCommand"
+                 menubarPath="org.eclipse.m2e.core.workingSetMenu/open"
+                 enablesFor="+"/>
+      </objectContribution>
+      
+  </extension>
+    
+     <extension
+          point="org.eclipse.ui.menus">  
+           <menuContribution
+             locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+          <toolbar
+                id="org.jboss.tools.maven.ui.toolbars.selectMavenProfilesToolbar">
+             <command
+                   commandId="org.jboss.tools.maven.ui.commands.selectMavenProfileCommand"
+                   icon="icons/maven-profiles.gif"
+                   id="org.jboss.tools.maven.ui.toolbars.selectMavenProfilesCommand"
+                   tooltip="%Select_Maven_Profiles_Cmd">
+             </command>
+          </toolbar>
+       </menuContribution>
+     </extension>
+        
+  <extension  point="org.eclipse.ui.editors.templates">    
+        <template id="org.jboss.tools.maven.editor.xml.templates.repository.jboss.public"
+         contextTypeId="org.eclipse.m2e.editor.xml.templates.contextType.repositories"
+         name="%JBoss_Public_Repo_name" 
+         description="%JBoss_Public_Repo_description">
+      <pattern>             &lt;!-- You should seriously consider using a repository manager or declare repositories in your settings.xml.
+              See http://www.sonatype.com/people/2009/02/why-putting-repositories-in-your-poms-is-a-bad-idea/   --&gt;
+     &lt;repository&gt;
+        &lt;!-- The JBoss Public repository is a composite repository of several major repositories. 
+              See http://community.jboss.org/wiki/MavenGettingStarted-Users --&gt;
+        &lt;id&gt;${cursor}jboss-public-repository&lt;/id&gt;
+        &lt;url&gt;http://repository.jboss.org/nexus/content/groups/public&lt;/url&gt;
+        &lt;releases&gt;
+           &lt;enabled&gt;true&lt;/enabled&gt;
+        &lt;/releases&gt;
+        &lt;!-- You can disable snapshot resolution to speed up your builds --&gt;
+        &lt;snapshots&gt;
+          &lt;enabled&gt;true&lt;/enabled&gt;
+        &lt;/snapshots&gt;        
+     &lt;/repository&gt;</pattern>
+    </template>
+  </extension>
+  <extension  point="org.eclipse.ui.editors.templates">    
+        <template id="org.jboss.tools.maven.editor.xml.templates.repository.jboss.releases"
+         contextTypeId="org.eclipse.m2e.editor.xml.templates.contextType.repositories"
+         name="%JBoss_Releases_Repo_name" 
+         description="%JBoss_Releases_Repo_description">
+      <pattern>             &lt;!-- You should seriously consider using a repository manager or declare repositories in your settings.xml.
+              See http://www.sonatype.com/people/2009/02/why-putting-repositories-in-your-poms-is-a-bad-idea/   --&gt;
+     &lt;repository&gt;
+        &lt;!-- The JBoss Release repository mostly contains JBoss projects artifacts. 
+              See http://community.jboss.org/wiki/MavenGettingStarted-Users --&gt;
+        &lt;id&gt;${cursor}jboss-releases-repository&lt;/id&gt;
+        &lt;url&gt;https://repository.jboss.org/nexus/content/repositories/releases/&lt;/url&gt;
+        &lt;releases&gt;
+           &lt;enabled&gt;true&lt;/enabled&gt;
+        &lt;/releases&gt;
+        &lt;snapshots&gt;
+          &lt;enabled&gt;false&lt;/enabled&gt;
+        &lt;/snapshots&gt;        
+     &lt;/repository&gt;</pattern>
+    </template>
+  </extension>  
+  <!--
+     <extension
+         point="org.eclipse.ui.navigator.viewer">
+      <viewerContentBinding
+            viewerId="org.eclipse.ui.navigator.ProjectExplorer">
+         <includes>
+            <contentExtension
+                  isRoot="false"
+                  pattern="org.jboss.tools.maven.profiles.navigatorContent">
+            </contentExtension>
+         </includes>
+      </viewerContentBinding>
+      </extension>
+  
+  
+     <extension point="org.eclipse.ui.navigator.navigatorContent">
+      <navigatorContent id="org.jboss.tools.maven.profiles.navigatorContent"
+            contentProvider="org.jboss.tools.maven.ui.internal.profiles.ActiveProfilesContentProvider"
+            labelProvider="org.jboss.tools.maven.ui.internal.profiles.ActiveProfilesLabelProvider"
+            appearsBefore="org.eclipse.jdt.java.ui.javaContent"
+            name="Active Maven Profiles"
+            activeByDefault="true"
+            icon="icons/maven-profiles.gif"
+            priority="normal">
+       
+        <possibleChildren>
+          <instanceof value="org.jboss.tools.maven.ui.internal.profiles.ActiveMavenProfilesNode"/>
+        </possibleChildren>
+           
+        <triggerPoints>
+        <or>
+        	<instanceof
+               value="org.jboss.tools.maven.ui.internal.profiles.ActiveMavenProfilesNode">
+        	</instanceof>
+            <and>
+              <instanceof
+                    value="org.eclipse.core.resources.IProject">
+              </instanceof>
+              <test
+	                forcePluginActivation="true"
+	                property="org.eclipse.core.resources.projectNature"
+	                value="org.eclipse.m2e.core.maven2Nature">
+              </test>
+            </and>
+            </or>
+        </triggerPoints>
+        
+      </navigatorContent>
+   </extension>
+  -->
+  
+</plugin>

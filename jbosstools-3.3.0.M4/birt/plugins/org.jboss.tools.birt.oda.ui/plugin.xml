@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+
+   
+   <extension
+         point="org.eclipse.datatools.connectivity.connectionProfile">
+      <newWizard
+            name="%newwizard.name"
+            icon="icons/new_oda_dswiz.ico"
+            profile="%oda.data.source.id"
+            description="%newwizard.description"
+            class="org.eclipse.datatools.connectivity.oda.design.ui.wizards.NewDataSourceWizard"
+            id="%oda.data.source.id">
+      </newWizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.propertyPages">
+      <page
+            objectClass="org.eclipse.datatools.connectivity.IConnectionProfile"
+            name="%profile.propertypage.name"
+            class="org.jboss.tools.birt.oda.ui.impl.HibernateDataSourcePropertyPage"
+            id="%oda.data.source.id">
+         <filter
+               name="org.eclipse.datatools.profile.property.id"
+               value="%oda.data.source.id">
+         </filter>
+      </page>
+   </extension>
+   
+   <extension
+         point="org.eclipse.datatools.connectivity.oda.design.ui.dataSource">
+      <dataSourceUI
+            id="%oda.data.source.id">
+         <newDataSourceWizard
+               pageClass="org.jboss.tools.birt.oda.ui.impl.HibernateDataSourceWizardPage"
+               includesProgressMonitor="false"
+               pageTitle="%wizard.data.source.page.title"
+               windowTitle="%wizard.window.title">
+         </newDataSourceWizard>
+      </dataSourceUI>
+      <dataSetUI
+            supportsOutParameters="false"
+            supportsInParameters="true"
+            initialPageId="org.jboss.tools.birt.oda.dataSet.page1"
+            id="org.jboss.tools.birt.oda.dataSet">
+         <dataSetWizard
+               class="org.eclipse.datatools.connectivity.oda.design.ui.wizards.DataSetWizard"
+               windowTitle="%wizard.data.set.window.title">
+         </dataSetWizard>
+         <dataSetPage
+               displayName="%wizard.data.set.page.title"
+               icon="icons/datasetpage.ico"
+               wizardPageClass="org.jboss.tools.birt.oda.ui.impl.CustomDataSetWizardPage"
+               path="/"
+               id="org.jboss.tools.birt.oda.dataSet.page1">
+         </dataSetPage>
+      </dataSetUI>
+   </extension>
+
+</plugin>

@@ -1,0 +1,11 @@
+<tests>
+	<test id="options1">
+		<option id="options11">${formBean.availableCategories}</option>
+	</test>
+	<test id="options2">
+		<option id="options21" class="tall-options" style="width: 30px;" disabled="disabled"></option>
+	</test>
+	<test id="options3">
+		<option id="options31">${formBean.favoriteCategories}.id</option>
+	</test>
+</tests>

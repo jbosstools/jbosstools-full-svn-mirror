@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "JBoss_Tools_Reference_Guide_Template.ent">
+%BOOK_ENTITIES;
+]>
+<section id="latest_developments-new_feature_template">
+  <title>New feature template</title>
+  	  <para>
+		The Tool now supports this feature. It allows.....   
+  	  </para>
+  	<note><title>***Design Note***</title>
+      <para>
+       
+  	        The procedure below is based on procedure template one:
+  	  </para>
+  	  <para>
+  	         * Basic steps which render a new basic dialog 
+      </para>
+    </note>	 
+   <xi:include href="proc-jsf-template_one.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <para>&FEEDBACK-latest_developments-new_feature_template;</para>
+</section>

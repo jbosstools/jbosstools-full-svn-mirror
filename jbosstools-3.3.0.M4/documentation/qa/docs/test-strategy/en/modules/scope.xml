@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.3CR3//EN"
+		"http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<chapter id="scope">
+	<title>Scope</title>
+	<para>
+		JBoss Tools related functionality should be tested first.
+		<itemizedlist>
+			<listitem>
+				<para>Seam</para>
+			</listitem>
+			<listitem>
+				<para>Hibernate</para>
+			</listitem>
+			<listitem>
+				<para><important><para>TBD: list JBossTools Modules</para></important></para>
+			</listitem>
+		</itemizedlist>
+	</para>
+	<para>
+		Third-party bundled software listed below should go through integration
+		testing:
+		<itemizedlist>
+			<listitem>
+				<para>Test NG</para>
+			</listitem>
+			<listitem>
+				<para>Spring IDE</para>
+			</listitem>
+		</itemizedlist>
+	</para>
+	<para>
+		All guides related to JBoss Tools must be reviewed against released
+		JBossTools version:
+		<itemizedlist>
+			<listitem>
+				<para>Seam Reference Guide</para>
+			</listitem>
+			<listitem>
+				<para>JSF and Struts</para>
+			</listitem>
+			<listitem>
+				<para>Hibernate</para>
+			</listitem>
+			<listitem>
+				<para>JBoss AS adapter</para>
+			</listitem>
+		</itemizedlist>
+	</para>
+	<para>
+		That is not test team responsibility to test bundled third party
+		software listed below:
+		<itemizedlist>
+			<listitem>
+				<para>Web Tools</para>
+			</listitem>
+			<listitem>
+				<para>Team Plugin for SVN support</para>
+			</listitem>
+		</itemizedlist>
+		But if an issue suspected to be third-party related it must be reported
+		twice: in JBIDE JIRA project and in third-party bug tracking system.
+		JBIDE JIRA issue must contain link to related issue in third-party bug
+		tracking system.
+	</para>
+	<para></para>
+</chapter>

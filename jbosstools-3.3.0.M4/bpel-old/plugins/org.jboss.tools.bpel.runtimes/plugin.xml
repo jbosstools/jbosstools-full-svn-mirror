@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+
+<!--=========================================================================-->
+<!-- BPEL Designer Runtime Extension Point 									 -->
+<!--																		 -->
+<!-- Copyright (c) 2006 University College London.							 -->
+<!-- All rights reserved. This program and the accompanying materials 		 -->
+<!-- are made available under the terms of the Eclipse Public License v1.0	 -->
+<!-- which accompanies this distribution, and is available at				 -->
+<!-- http://www.eclipse.org/legal/epl-v10.html								 -->
+<!--																		 -->
+<!--=========================================================================-->
+
+<plugin>
+
+<!--=========================================================================-->
+<!-- New BPEL Project Wizard			 									 -->
+<!--=========================================================================-->
+   
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            name="%NEW_BPEL_PROJECT"
+            icon="icons/ctool16/new_bpelprj.gif"
+            category="org.eclipse.bpel.wizards"
+            project="true"
+            class="org.jboss.tools.bpel.runtimes.ui.wizards.NewBPELProjectWizard"
+            finalPerspective="org.eclipse.bpel.ui.perspective"
+            preferredPerspectives="org.eclipse.bpel.ui.perspective"
+            id="org.jboss.tools.bpel.runtimes.wizards.newBPELProject">
+            <description>%NEW_BPEL_PROJECT_DESCRIPTION</description>
+      </wizard>
+   </extension>
+   
+   <extension point="org.eclipse.wst.common.project.facet.ui.wizardPages">
+    <wizard-pages action="bpel.facet.core.install">
+      <page class="org.jboss.tools.bpel.runtimes.ui.wizards.BPELFacetInstallPage"/>
+    </wizard-pages>
+  </extension>
+
+   
+<!--=========================================================================-->
+<!-- BPEL ModuleType							 							 -->
+<!--=========================================================================-->   
+   
+   <extension point="org.eclipse.wst.server.core.moduleTypes">
+      <moduleType
+            id="jbt.bpel.module"
+            name="%OLD_MODULE_TYPE_NAME"
+            description="%OLD_MODULE_TYPE_DESCRIPTION">
+      </moduleType>
+   </extension>
+   
+<!-- The following is needed to make icons for deployable modules occur in   -->
+<!-- the Add and Remove Projects wizard										 -->
+   
+	<extension point="org.eclipse.wst.server.ui.serverImages">
+		<image
+			id="org.jboss.tools.bpel.runtimes.jbt.bpel.module"
+			typeIds="jbt.bpel.module,bpel.module"
+			icon="icons/obj16/bpelfacet.gif"/>
+	</extension>
+
+   
+   <extension point="org.eclipse.wst.server.core.moduleTypes">
+      <moduleType
+            id="bpel.module"
+            name="%NEW_MODULE_TYPE_NAME"
+            description="%NEW_MODULE_TYPE_DESCRIPTION">
+      </moduleType>
+   </extension>
+   
+<!-- The following is needed to make icons for deployable modules occur in   -->
+<!-- the Add and Remove Projects wizard										 -->
+   
+	<extension point="org.eclipse.wst.server.ui.serverImages">
+		<image
+			id="org.jboss.tools.bpel.runtimes.bpel.module"
+			typeIds="bpel.module"
+			icon="icons/obj16/bpelfacet.gif"/>
+	</extension>
+   
+<!--=========================================================================-->
+<!-- BPEL Facet							 									 -->
+<!--=========================================================================-->
+
+	<!--
+	This facet is now the same as the one defined by the eclipse.org BPEL editor.
+	An uninstall action was added to allow the facet to be swapped out with the
+	deprecated jbt.bpel.facet.core facet, or to be removed altogether
+	-->
+	<extension point="org.eclipse.wst.common.project.facet.core.facets">
+		
+		<project-facet id="bpel.facet.core">
+		  <label>%BPEL_CORE_FACET_LABEL</label>
+		  <description>%BPEL_CORE_FACET_DESCRIPTION</description>
+		</project-facet>
+		
+		<project-facet-version facet="bpel.facet.core" version="2.0">
+          <group-member
+               id="modules">
+          </group-member>
+          <constraint>
+            <and>
+               <conflicts group="modules"/>
+            </and>
+          </constraint>
+        </project-facet-version>
+                
+        <action facet="bpel.facet.core" version="2.0" type="INSTALL" id="bpel.facet.core.install">
+               <delegate class="org.jboss.tools.bpel.runtimes.facets.BPELCoreFacetInstallDelegate"/>
+               <config-factory class="org.jboss.tools.bpel.runtimes.facets.BPELFacetInstallDataModelProvider"/>
+        </action>
+
+        <action facet="bpel.facet.core" version="2.0" type="UNINSTALL" id="bpel.facet.core.uninstall">
+               <delegate class="org.jboss.tools.bpel.runtimes.facets.BPELCoreFacetUninstallDelegate"/>
+        </action>
+
+		<category id="bpel.category">
+		  <label>%BPEL_FACET_CATEGORY_LABEL</label>
+		  <description>%BPEL_CORE_FACET_DESCRIPTION</description>
+		</category>
+		
+		<template id="jbt.template.bpel.core">
+    		<label>%BPEL_FACET_TEMPLATE_LABEL</label>
+       		<fixed facet="bpel.facet.core"/>
+	   </template>
+    	
+	</extension>
+
+	<!--
+	This facet is has been deprecated, but retained for backward compatibility
+	with JBoss 5.1.0 and SOA-P 5.1 and earlier
+	-->
+	<extension point="org.eclipse.wst.common.project.facet.core.facets">
+		
+		<project-facet id="jbt.bpel.facet.core">
+		  <label>%OLD_BPEL_CORE_FACET_LABEL</label>
+		  <description>%OLD_BPEL_CORE_FACET_DESCRIPTION</description>
+		</project-facet>
+		
+		<project-facet-version facet="jbt.bpel.facet.core" version="2.0">
+          <group-member
+               id="modules">
+          </group-member>
+          <constraint>
+            <and>
+               <conflicts group="modules"/>
+            </and>
+          </constraint>
+        </project-facet-version>
+        
+		<category id="bpel.category">
+		  <label>%OLD_BPEL_FACET_CATEGORY_LABEL</label>
+		  <description>%OLD_BPEL_CORE_FACET_DESCRIPTION</description>
+		</category>
+                
+        <action facet="jbt.bpel.facet.core" version="2.0" type="INSTALL" id="jbt.bpel.facet.core.install">
+               <delegate class="org.jboss.tools.bpel.runtimes.facets.BPELCoreFacetInstallDelegate"/>
+               <config-factory class="org.jboss.tools.bpel.runtimes.facets.JBT_BPELFacetInstallDataModelProvider"/>
+        </action>
+
+        <action facet="jbt.bpel.facet.core" version="2.0" type="UNINSTALL" id="jbt.bpel.facet.core.uninstall">
+               <delegate class="org.jboss.tools.bpel.runtimes.facets.BPELCoreFacetUninstallDelegate"/>
+        </action>
+		
+		<template id="jbt.template.bpel.core">
+    		<label>%OLD_BPEL_FACET_TEMPLATE_LABEL</label>
+       		<fixed facet="jbt.bpel.facet.core"/>
+	   </template>
+    	
+	</extension>
+
+<!--=========================================================================-->
+<!-- BPEL Virtual Component				 									 -->
+<!--=========================================================================-->		
+
+    <extension
+         point="org.eclipse.wst.common.modulecore.componentimpl">
+      <componentimpl
+            typeID="bpel.facet.core"
+            class="org.jboss.tools.bpel.runtimes.facets.BPELVirtualComponent">
+      </componentimpl>
+   </extension>
+
+
+<!--=========================================================================-->
+<!-- BPEL Facet	Image					 									 -->
+<!--=========================================================================-->		
+			
+	<extension point="org.eclipse.wst.common.project.facet.ui.images">
+    	<image facet="bpel.facet.core" path="icons/obj16/bpelfacet.gif"/>
+    </extension>
+
+<!--=========================================================================-->
+<!-- BPEL Module Factory													 -->
+<!--=========================================================================-->
+
+	<extension
+         point="org.eclipse.wst.server.core.moduleFactories">
+		<moduleFactory
+            projects="true"
+            class="org.jboss.tools.bpel.runtimes.module.BPELModuleFactoryDelegate"
+            id="org.jboss.tools.bpel.runtimes.module.moduleFactory">
+     		<moduleType
+               versions="1.1, 2.0"
+               types="jbt.bpel.module,bpel.module">
+			</moduleType>
+ 		</moduleFactory>
+     </extension>
+     
+<!--=========================================================================-->
+<!-- BPEL Module ArtifactAdapters											 -->
+<!--=========================================================================-->
+     
+	<extension point="org.eclipse.wst.server.core.moduleArtifactAdapters">
+		<moduleArtifactAdapter
+			id="org.jboss.tools.bpel.runtimes.module.artifactAdapter1"
+            class="org.jboss.tools.bpel.runtimes.module.BPELDeployableArtifactAdapterFactory">
+			<enablement>
+				<with variable="selection">
+					<adapt type="org.eclipse.core.resources.IProject"/>
+				</with>
+			</enablement>
+		</moduleArtifactAdapter>
+		<moduleArtifactAdapter
+			id="org.jboss.tools.bpel.runtimes.module.artifactAdapter2"
+            class="org.jboss.tools.bpel.runtimes.module.BPELDeployableArtifactAdapterFactory">
+			<enablement>
+				<with variable="selection">
+             		<adapt type="org.eclipse.core.resources.IFile"/>
+           		</with>
+         	</enablement>
+      	</moduleArtifactAdapter>   
+   </extension>
+
+<!--=========================================================================-->
+<!-- BPEL Runtime Adapters													 -->
+<!--=========================================================================-->
+
+	<extension point="org.eclipse.core.runtime.adapters">
+		<factory
+			class="org.jboss.tools.bpel.runtimes.module.BPELDeployableArtifactAdapterFactory"
+			adaptableType="org.eclipse.core.resources.IProject">
+			<adapter type="org.eclipse.debug.ui.actions.ILaunchable"/>
+        </factory>
+        <factory
+             class="org.jboss.tools.bpel.runtimes.module.BPELDeployableArtifactAdapterFactory"
+             adaptableType="org.eclipse.core.resources.IFile">
+            <adapter type="org.eclipse.debug.ui.actions.ILaunchable"/>
+       </factory>
+   </extension>
+ <extension
+       point="org.jboss.ide.eclipse.as.core.publishers">
+    <publisher
+          class="org.jboss.tools.bpel.runtimes.module.JBTBPELPublisher"
+          priority="10"
+          zipDelegate="false">
+    </publisher>
+ </extension> 
+
+<!--=========================================================================-->
+<!-- TO MAKE PROCESSES ACTUALLY LAUNCHABLE VIA RUN ON SERVER				 -->
+<!-- 																		 -->
+<!-- Implement org.eclipse.wst.server.core.clients in order to specify the	 -->
+<!-- the client app to be used for launching.								 -->
+<!-- 																		 -->
+<!-- Implement org.eclipse.wst.server.core.launchableAdapters. Might have to -->
+<!-- do this in server-specific way or maybe can resuse some generic server	 -->
+<!-- framework stuff or maybe can come up with some interface that would	 -->
+<!-- allow us to implement in runtimes plug-in.								 -->
+<!-- 																		 -->
+<!-- N.B. Launching here means launching a Web service. Hence, can do this	 -->
+<!-- via the corresponding WTP feature with no code at all from our end.  	 -->
+<!-- 																		 -->
+<!-- 																		 -->
+<!-- 																		 -->
+<!--=========================================================================-->
+
+	<extension
+      point="org.eclipse.ui.navigator.navigatorContent">
+	   <navigatorContent
+	         id="org.jboss.tools.bpel.runtimes.ui.view.server.content"
+	         activeByDefault="true"
+	         contentProvider="org.jboss.tools.bpel.runtimes.ui.view.server.BPELModuleContentProvider"
+	         icon="icons/obj16/bpelfacet.gif"
+	         labelProvider="org.jboss.tools.bpel.runtimes.ui.view.server.BPELModuleLabelProvider"
+	         name="BPEL Modules"
+	         priority="highest">
+	      <triggerPoints>
+	         <instanceof
+	               value="java.lang.Object">
+	         </instanceof>
+	      </triggerPoints>
+	      <possibleChildren>
+             <instanceof
+                value="java.lang.Object">
+             </instanceof>
+          </possibleChildren>
+	      <actionProvider
+	            class="org.jboss.tools.bpel.runtimes.ui.view.server.BPELModuleActionProvider"
+	            id="org.jboss.tools.bpel.runtimes.ui.view.server.BPELModuleActionProvider"
+	            priority="highest">
+			<enablement>
+             <or>
+                <instanceof
+                      value="org.eclipse.wst.server.core.IServer">
+                </instanceof>
+                <instanceof
+                      value="org.eclipse.wst.server.ui.internal.view.servers.ModuleServer">
+                </instanceof>
+                <instanceof
+                      value="org.eclipse.core.resources.IWorkspaceRoot">
+                </instanceof>
+               <adapt type="java.util.Collection">
+                  <count value="0"/>
+               </adapt>
+               <instanceof
+                     value="org.jboss.tools.bpel.runtimes.ui.view.server.BPELModuleContentProvider$BPELVersionDeployment">
+               </instanceof>
+             </or>
+            </enablement>
+	      </actionProvider>
+	   </navigatorContent>
+	</extension>
+	<extension
+	      point="org.eclipse.ui.navigator.viewer">
+	   <viewerContentBinding
+	         viewerId="org.eclipse.wst.server.ui.ServersView">
+	      <includes>
+	         <contentExtension
+	               isRoot="true"
+	               pattern="org.jboss.tools.bpel.runtimes.ui.view.server.content">
+	         </contentExtension>
+	      </includes>
+	   </viewerContentBinding>
+	</extension>
+ 
+ 
+ 
+ 
+ <extension
+         point="org.eclipse.wst.common.project.facet.core.runtimes">
+      <runtime-component-type id="org.jboss.ide.eclipse.as.runtime.stripped.component"/>
+      <runtime-component-version
+            type="org.jboss.ide.eclipse.as.runtime.stripped.component"
+            version="1.0"/>
+      <supported>
+        <runtime-component
+         	id="org.jboss.ide.eclipse.as.runtime.stripped.component"
+         	version="1.0"/>
+       <facet id="bpel.facet.core" version="1.2,2.0"/>
+     </supported>
+ </extension>
+
+   <extension
+         point="org.eclipse.wst.common.project.facet.core.runtimes">
+      		<runtime-component-type id="org.jboss.ide.eclipse.eap.runtime.component"/>
+      		<runtime-component-version
+            	type="org.jboss.ide.eclipse.eap.runtime.component"
+            	version="5.0"/>
+   			<supported>
+        		<runtime-component
+         			id="org.jboss.ide.eclipse.eap.runtime.component"
+         			version="5.0"/>
+                <facet id="bpel.facet.core" version="1.2,2.0"/>
+     		</supported>
+   </extension>
+		
+   <extension
+         point="org.eclipse.wst.common.project.facet.core.runtimes">
+      <runtime-component-type id="org.jboss.ide.eclipse.as.runtime.component"/>
+      <runtime-component-version
+            type="org.jboss.ide.eclipse.as.runtime.component"
+            version="5.1"/>
+      <runtime-component-version
+            type="org.jboss.ide.eclipse.as.runtime.component"
+            version="6.0"/>
+      <runtime-component-version
+            type="org.jboss.ide.eclipse.as.runtime.component"
+            version="7.0"/>
+
+      <supported>
+        <runtime-component version="5.1"
+         	id="org.jboss.ide.eclipse.as.runtime.component"/>
+        <facet id="bpel.facet.core" version="1.2,2.0"/>
+     </supported>
+
+      <supported>
+        <runtime-component version="5.1"
+         	id="org.jboss.ide.eclipse.as.runtime.component"/>
+        <facet id="jbt.bpel.facet.core" version="1.2,2.0"/>
+     </supported>
+
+      <supported>
+        <runtime-component version="6.0"
+         	id="org.jboss.ide.eclipse.as.runtime.component"/>
+        <facet id="bpel.facet.core" version="1.2,2.0"/>
+     </supported>
+
+      <supported>
+        <runtime-component version="7.0"
+         	id="org.jboss.ide.eclipse.as.runtime.component"/>
+        <facet id="bpel.facet.core" version="1.2,2.0"/>
+     </supported>
+
+   </extension>
+ 
+ 
+ 
+</plugin>

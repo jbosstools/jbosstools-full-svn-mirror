@@ -1,0 +1,9 @@
+<tests>
+	<test id="var">
+		<VAR ID="var" CLASS="varClass" STYLE="color: red; -moz-user-modify: read-only;" DIR="ltr">
+<SPAN>
+someVariable
+</SPAN>
+</VAR>
+	</test>
+</tests>

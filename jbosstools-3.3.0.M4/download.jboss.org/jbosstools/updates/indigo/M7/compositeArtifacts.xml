@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?compositeArtifactRepository version='1.0.0'?>
+<repository name='JBoss Tools Requirements - Composite Indigo M7 Mirror' type='org.eclipse.equinox.internal.p2.artifact.repository.CompositeArtifactRepository' version='1.0.0'>
+<properties size='2'>
+<property name='p2.compressed' value='true'/>
+<property name='p2.timestamp' value='1308003100000'/>
+</properties>
+<children size='10'>
+<child location='../../requirements/indigo/201105060900-M7/'/>
+<child location='../../requirements/birt/3.7M7/'/>
+<child location='../../requirements/eclipse/3.7M7/'/>
+<child location='../../requirements/emf/2.7M7/'/>
+<child location='../../requirements/webtools/3.3M7/'/>
+
+<child location='../../requirements/m2eclipse/0.13.0.201105091504/'/>
+<child location='../../requirements/orbit/S20110515001817/'/>
+<child location='../../requirements/ecf/3.5/'/>
+<child location='../../requirements/swtbot/2.0.4/'/>
+<child location='../../requirements/xulrunner-1.9.2/'/>
+</children>
+</repository>
+

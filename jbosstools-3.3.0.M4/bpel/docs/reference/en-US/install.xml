@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='utf-8' ?>
+
+<chapter>
+	<title>Installation Instructions</title>
+<!--	<section condition="jbt">
+					
+			<title>Installing JBoss Tools Plugins</title>
+	
+			<para>
+				The BPEL Tools plugin can be installed into Eclipse from the JBoss Tools extras site. For more information, please read the <ulink url="http://download.jboss.org/jbosstools/nightly-docs/en/GettingStartedGuide/html_single/index.html#d0e27">Getting Started Guide</ulink>.
+			</para>
+		
+	</section> -->
+
+	<section condition="jbds">
+					
+			<title>Installing BPEL Tools in JBoss Developer Studio</title>
+			
+			<para>
+				The BPEL Tools plugin is now officially supported in JBoss Developer Studio 4.1, available as a separate download from the JBoss Developer Studio extras site.
+			</para>
+			
+			<para>
+				Instructions for accessing the extras site can be found in the <ulink url="http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/4.1/html-single/Getting_Started_Guide/index.html#extras_site">Getting Started Guide</ulink>.
+			</para>
+			
+	</section>
+
+</chapter>
+
+

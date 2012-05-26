@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.jboss.tools</groupId>
+		<artifactId>bot.tests</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<groupId>org.jboss.tools.bot.tests</groupId>
+	<artifactId>org.jboss.tools.bot.tests.site</artifactId>
+	<name>JBoss Tools - Bot Tests Site</name>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>eclipse-update-site</packaging>
+
+	<!-- to build against locally built sources, use: mvn clean install to build 
+		against http://download.jboss.org/jbosstools/builds/staging/_composite_/trunk/, 
+		use: mvn clean install -Pjbosstools-nightly-staging-composite -->
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>${maven.antrun.plugin.version}</version>
+				<executions>
+					<execution>
+						<id>install</id>
+						<phase>install</phase>
+						<configuration>
+							<quiet>true</quiet>
+							<tasks>
+								<!-- called AFTER generating update site + zip to add in extra content -->
+								<ant antfile="build.xml">
+									<property name="JBT_VERSION" value="${JBT_VERSION}" />
+									<property name="BUILD_ALIAS" value="${BUILD_ALIAS}" />
+								</ant>
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>commons-net</groupId>
+						<artifactId>commons-net</artifactId>
+						<version>1.4.1</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.ant</groupId>
+						<artifactId>ant</artifactId>
+						<version>1.7.1</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.ant</groupId>
+						<artifactId>ant-nodeps</artifactId>
+						<version>1.7.1</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.ant</groupId>
+						<artifactId>ant-trax</artifactId>
+						<version>1.7.1</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.ant</groupId>
+						<artifactId>ant-commons-net</artifactId>
+						<version>1.7.1</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.ant</groupId>
+						<artifactId>ant-apache-regexp</artifactId>
+						<version>1.7.1</version>
+					</dependency>
+					<dependency>
+						<groupId>ant-contrib</groupId>
+						<artifactId>ant-contrib</artifactId>
+						<version>1.0b3</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
+
+	<repositories>
+		<!-- add more inputRepo# here, ref'd above; need variables so that these 
+			can be referred to in Ant script later -->
+		<repository>
+			<id>jbosstools-requirements-composite-mirror</id>
+			<url>http://download.jboss.org/jbosstools/updates/indigo/SR1/</url>
+			<layout>p2</layout>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+	</repositories>
+</project>

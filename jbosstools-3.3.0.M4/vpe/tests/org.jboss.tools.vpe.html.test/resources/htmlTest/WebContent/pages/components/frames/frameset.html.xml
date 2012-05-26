@@ -1,0 +1,16 @@
+<tests>
+	<test id="frameset">
+		<FRAMESET COLS="100,*,20%" STYLE="-moz-user-modify: read-only;">
+			<FRAME NAME="leftFrame" SRC="/.*temp/left.html/" STYLE="-moz-user-modify: read-only;" />
+
+			<FRAME FRAMEBORDER="0" NAME="mainFrame" SRC="/.*temp/right.html/"
+				STYLE="-moz-user-modify: read-only;" />
+
+			<NOFRAMES STYLE="-moz-user-modify: read-only;">
+				<SPAN>
+					your browser don't support frames
+			</SPAN>
+			</NOFRAMES>
+		</FRAMESET>
+	</test>
+</tests>

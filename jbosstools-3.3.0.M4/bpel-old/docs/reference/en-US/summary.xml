@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<chapter>
+    <?dbhtml filename="summary.html"?>
+    <title>Summary</title>
+    <para>
+    		This document highlights the capabilities of BPEL Tools, as well as providing the steps required to create and configure BPEL process and deployment descriptor files. If you have questions or suggestions concerned both the documentation and tools behavior please visit the JBoss Tools Users forum.
+    </para>
+    
+    <section>
+        <title>Other relevant resources on the topic</title>
+        <para>All JBoss Tools release documentation you can find at
+            <ulink url="http://docs.jboss.org/tools">http://docs.jboss.org/tools</ulink> in the corresponding release directory.
+        </para>   
+        <para>The latest documentation builds are available at <ulink url="http://download.jboss.org/jbosstools/nightly-docs">http://download.jboss.org/jbosstools/nightly-docs</ulink>. </para>
+
+        </section>
+</chapter>

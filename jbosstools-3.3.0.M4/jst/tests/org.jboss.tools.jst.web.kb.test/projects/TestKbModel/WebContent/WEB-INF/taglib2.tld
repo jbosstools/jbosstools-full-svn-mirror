@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib version="2.1" xmlns="http://java.sun.com/xml/ns/javaee"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd">
+ 
+ <tlib-version>1.0</tlib-version>
+ <short-name>taglib2</short-name>
+ <uri>taglib2</uri>
+ <tag>
+  <description>Tag A</description>
+  <name>tagA</name>
+  <tag-class>com.TagA</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <function>
+  <name>f1</name>
+  <function-class>String</function-class>
+  <function-signature>s1</function-signature>
+ </function>
+</taglib>

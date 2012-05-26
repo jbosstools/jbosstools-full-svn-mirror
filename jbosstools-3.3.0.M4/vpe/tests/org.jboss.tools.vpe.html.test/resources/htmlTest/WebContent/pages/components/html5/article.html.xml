@@ -1,0 +1,5 @@
+<tests>
+	<test id="article-id">
+		<ARTICLE ID="article-id"><A><SPAN CLASS="vpe-text">Netscape is dead</SPAN></A><BR/></ARTICLE>
+	</test>
+</tests>

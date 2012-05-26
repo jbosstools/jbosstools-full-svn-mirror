@@ -1,0 +1,17 @@
+<tests>
+	<test id="label1">
+		<LABEL CLASS="green" ID="label1" STYLE="font-weight: bold;">
+			<SPAN CLASS="vpe-text">
+				Label 1
+			</SPAN>
+		</LABEL>
+	</test>
+	<test id="label2">
+		<LABEL CLASS="blue" FOR="text" ID="label2" STYLE="font-style: italic;">
+			<SPAN CLASS="vpe-text">
+				Label 2
+			</SPAN>
+		</LABEL>
+	</test>
+
+</tests>

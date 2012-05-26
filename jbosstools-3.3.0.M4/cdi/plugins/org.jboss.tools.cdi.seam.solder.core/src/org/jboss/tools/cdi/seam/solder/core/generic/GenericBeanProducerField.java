@@ -1,0 +1,46 @@
+/******************************************************************************* 
+ * Copyright (c) 2011 Red Hat, Inc. 
+ * Distributed under license by Red Hat, Inc. All rights reserved. 
+ * This program is made available under the terms of the 
+ * Eclipse Public License v1.0 which accompanies this distribution, 
+ * and is available at http://www.eclipse.org/legal/epl-v10.html 
+ * 
+ * Contributors: 
+ * Red Hat, Inc. - initial API and implementation 
+ ******************************************************************************/
+package org.jboss.tools.cdi.seam.solder.core.generic;
+
+import org.jboss.tools.cdi.core.IBean;
+import org.jboss.tools.cdi.core.IScope;
+import org.jboss.tools.cdi.internal.core.impl.ProducerField;
+import org.jboss.tools.cdi.seam.solder.core.Version;
+
+/**
+ * 
+ * @author Viacheslav Kabanovich
+ *
+ */
+public class GenericBeanProducerField extends ProducerField implements IGenericBean {
+	Version version;
+
+	public GenericBeanProducerField(Version version) {
+		this.version = version;
+	}
+
+	@Override
+	public IScope getScope() {
+		IScope result = null;
+		if(definition.isAnnotationPresent(version.getApplyScopeAnnotationTypeName())) {
+			if(getParent() instanceof GenericClassBean) {
+				IBean generic = ((GenericClassBean)getParent()).getGenericProducerBean();
+				if(generic != null) {
+					result = generic.getScope();
+				}
+			}
+		}
+		if(result == null) {
+			result = super.getScope();
+		}
+		return result;
+	}
+}
