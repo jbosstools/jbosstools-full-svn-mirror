@@ -1,0 +1,141 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "JBoss_Tools_Reference_Guide_Template.ent">
+%BOOK_ENTITIES;
+]>
+<section id="reference-views-web_projects_view">
+  <title>Web projects view</title> 
+  <para>
+    The <guilabel>Web Projects</guilabel> view presents each web project in a format suitable for navigating through the various attributes of a typical web project such as <guilabel>Tag Libraries</guilabel> and <guilabel>web.xml</guilabel> properties. The <guilabel>Web Projects</guilabel> view is displayed in <xref linkend="figure-jbt-web_projects_view"></xref>   
+  </para>
+  <figure id="figure-jbt-web_projects_view">
+    <title>Web Development Perspective - Web Projects View</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="images/image-jbt-web_projects_view_01.png" format="PNG"/>
+        </imageobject>
+        <textobject>
+          <para>Web Projects View</para>
+        </textobject>
+    </mediaobject>
+  </figure>
+  <!-- 
+  <para>
+    Details regarding the components displayed in this view can be accessed from <xref linkend="link_sets-views_link_sets-web_projects_view_links"></xref> 
+  </para>
+   -->
+   <note><title>**Design Note***</title>
+      <para> 
+       Icons are included in the reference section rather than within a particular task as they include links to other tasks. This single location for links will minimise document maintenance. Additionally, while performing the task, the user can "mouse over" the icon to obtain a description unlike the field descriptions. 
+      </para>
+      <para>
+      -
+      </para>
+      <para>
+       List the icons associated with the View in a table including the following fields:
+      </para>
+      <para>
+        * Icon | Mouse-Over Description | Result
+      </para>
+      <para> 
+        The "Result" field links to the relevant procedure.
+      </para>  
+  </note>
+  <formalpara><title>Icons</title>
+    <para>
+      The icons associated with the <guilabel>Web Projects</guilabel> view are listed in <xref linkend="table-jbt-web_projects_view_01"></xref> 
+    </para>
+  </formalpara>
+  <note><title>**Design Note***</title>
+      <para>
+        The icon file names are of the form icon-jbt-wpv-create_new_jsf_project_01.png to associate the icon image with the relevant view (wpv = web projects view). This means that the naming is not tied to a single book and the views and accompanying icons can be easily identified and reused in another book without renaming.   
+      </para>
+      <para>
+       - 
+      </para>
+      <para>
+       The name can be abbreviated to icon-wpv_01.png or icon-web_projects_view_01.png (considering changing to this convention depending on whether it is important to include the icon's function within the filename(?) ).
+      </para>
+  </note>
+  <table id="table-jbt-web_projects_view_01" frame='all'>
+    <title>Web Development Perspective - Web Projects View</title>
+      <tgroup cols='3' align='left' colsep='1' rowsep='1'>
+        <colspec colname='c1' colwidth="1*"/>
+        <colspec colname='c2' colwidth="4*"/>
+        <colspec colname='c3' colwidth="6*"/>
+        <thead>
+          <row>
+            <entry>Icon</entry>
+            <entry>Mouse-Over Description</entry>
+            <entry>Result</entry>
+          </row>
+        </thead> 
+           
+        <tbody>
+          <row>
+            <entry>
+              <mediaobject>
+                <imageobject>
+                  <imagedata fileref="images/icon-jbt-wpv-create_new_jsf_project_01.png" format="PNG"/>
+                </imageobject>
+                <textobject>
+                  <para>New JSF Project Icon</para>
+                </textobject>
+              </mediaobject>
+            </entry>
+            <entry><guilabel>Create New JSF Project</guilabel></entry>
+            <entry><xref linkend="proc-jsf-new_jsf_project"></xref></entry>
+          </row>
+          <row>
+            <entry>
+              <mediaobject>
+                <imageobject>
+                  <imagedata fileref="images/icon-jbt-wpv-import_jsf_project_01.png" format="PNG"/>
+                </imageobject>
+                <textobject>
+                  <para>Import JSF Project Icon</para>
+                </textobject>
+              </mediaobject>
+            </entry>
+            <entry><guilabel>Import JSF Project</guilabel></entry>
+            <entry><xref linkend="hints-placeholder_for_a_link"></xref></entry>
+          </row>
+          <row>
+            <entry>
+              <mediaobject>
+                <imageobject>
+                  <imagedata fileref="images/icon-jbt-wpv-create_new_struts_project_01.png" format="PNG"/>
+                </imageobject>
+                <textobject>
+                  <para>Create New Struts Project Icon</para>
+                </textobject>
+              </mediaobject>
+            </entry>
+            <entry><guilabel>Create New Struts Project</guilabel></entry>
+            <entry><xref linkend="hints-placeholder_for_a_link"></xref></entry>
+          </row>
+          <row>
+            <entry>
+              <mediaobject>
+                <imageobject>
+                  <imagedata fileref="images/icon-jbt-wpv-import_struts_project_01.png" format="PNG"/>
+                </imageobject>
+                <textobject>
+                  <para>Import Struts Project Icon</para>
+                </textobject>
+              </mediaobject>
+            </entry>
+            <entry><guilabel>Import Struts Project</guilabel></entry>
+            <entry><xref linkend="hints-placeholder_for_a_link"></xref></entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table> 
+    <note><title>**Design Note***</title>
+       <para>
+        A link to the relevant "Documentation navigation" section (as in the tasks section) would be relevant where the view relates to a single feature (or concept) detailed in the Concepts chapter.    
+       </para>
+        
+  </note>
+  <para>&FEEDBACK-reference-views-web_projects_view;</para>
+</section>

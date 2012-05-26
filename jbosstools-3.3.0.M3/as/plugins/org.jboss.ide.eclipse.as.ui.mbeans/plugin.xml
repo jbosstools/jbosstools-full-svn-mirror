@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension-point id="ServiceXMLQuickFixProvider" name="org.jboss.ide.eclipse.as.ui.mbeans.serviceXMLQuickFixProvider" schema="schema/ServiceXMLQuickFixProvider.exsd"/>
+   <extension-point id="ServiceXMLOutlineMenuProvider" name="org.jboss.ide.eclipse.as.ui.mbeans.serviceXMLOutlineMenuProvider" schema="schema/ServiceXMLOutlineMenuProvider.exsd"/>
+   <extension
+         point="org.eclipse.core.runtime.contentTypes">
+      <content-type
+            base-type="org.eclipse.core.runtime.xml"
+            file-extensions="xml"
+            id="servicexml"
+            name="JBoss Service XML"
+            priority="normal">
+         <describer class="org.eclipse.core.runtime.content.XMLRootElementContentDescriber">
+            <parameter
+                  name="element"
+                  value="server"/>
+         </describer>
+      </content-type>
+   </extension>
+   <extension
+         point="org.eclipse.wst.sse.ui.editorConfiguration">
+      <sourceViewerConfiguration
+            class="org.jboss.ide.eclipse.as.ui.mbeans.editors.ServiceXMLEditorConfiguration"
+            target="org.jboss.ide.eclipse.as.ui.mbeans.servicexml"/>
+      <contentOutlineConfiguration
+            class="org.jboss.ide.eclipse.as.ui.mbeans.editors.ServiceXMLOutlineConfiguration"
+            target="org.jboss.ide.eclipse.as.ui.mbeans.servicexml"/>
+	<provisionalConfiguration
+			type="correctionassistant"
+			class="org.jboss.ide.eclipse.as.ui.mbeans.editors.ServiceXMLCorrectionAssistantProvider"
+			target="org.jboss.ide.eclipse.as.ui.mbeans.servicexml" />
+   </extension>
+   <extension
+         point="org.eclipse.wst.sse.core.modelHandler">
+      <modelHandler
+            associatedContentTypeId="org.jboss.ide.eclipse.as.ui.servicexml"
+            class="org.jboss.ide.eclipse.as.ui.mbeans.editors.ServicexmlModelHandler"
+            default="false"
+            id="org.jboss.ide.eclipse.as.ui.servicexmlModelHandler"/>
+   </extension>
+   <extension point="org.eclipse.wst.sse.ui.adapterFactoryDescription">
+		<adapterFactoryDescription
+				class="org.jboss.ide.eclipse.as.ui.mbeans.editors.AdaptorFactoryProviderForServiceXML"/>
+   </extension>
+
+      <extension
+            point="org.jboss.ide.eclipse.as.ui.mbeans.ServiceXMLQuickFixProvider">
+         <QuickFixProvider class="org.jboss.ide.eclipse.as.ui.mbeans.editors.proposals.internal.ConvertNodeToXPathDialogProvider"/>
+      </extension>
+      <extension
+            point="org.jboss.ide.eclipse.as.ui.mbeans.ServiceXMLOutlineMenuProvider">
+         <MenuProvider class="org.jboss.ide.eclipse.as.ui.mbeans.editors.proposals.internal.ConvertNodeToXPathDialogOutlineMenuItemProvider"/>
+      </extension>
+
+<!--   <extension
+         point="org.eclipse.ui.popupMenus">
+      <viewerContribution
+            id="org.jboss.ide.eclipse.packages.ui.jbossContribution"
+            targetID="org.jboss.ide.eclipse.packages.ui.newPackageMenu">
+         <action
+               class="org.jboss.ide.eclipse.as.ui.mbeans.packages.NewSARAction"
+               icon="icons/sar.gif"
+               id="org.jboss.ide.eclipse.packages.ui.newSARAction"
+               label="SAR"
+               menubarPath="additions"
+               style="push"/>
+      </viewerContribution>
+   </extension>-->
+   
+   
+   
+      <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="org.jboss.ide.eclipse.as.ui.MBeanComponentsCategory"
+            name="SAR / MBean Components"/>
+      <wizard
+            category="org.jboss.ide.eclipse.as.ui.MBeanComponentsCategory"
+            class="org.jboss.ide.eclipse.as.ui.mbeans.wizards.NewMBeanWizard"
+            icon="icons/mbean16.gif"
+            id="org.jboss.ide.eclipse.as.ui.MBeanComponents"
+            name="MBean Stubs"
+            project="false">
+		<description>
+            	Create an MBean Stubs
+        </description>
+      </wizard>          
+   </extension>
+   
+   
+   <extension point="org.eclipse.ui.newWizards">
+      <wizard
+            icon="icons/ctool16/newclass_wiz.gif"
+            class="org.jboss.ide.eclipse.as.ui.mbeans.wizards.NewSessionBeanWizard"
+            category="org.eclipse.jst.ejb.ui"
+            name="EJB3 Session Bean"
+            id="org.jboss.ide.eclipse.ejb3.wizards.ui.NewSessionBeanWizard"/>
+      <wizard
+            icon="icons/ctool16/newclass_wiz.gif"
+            class="org.jboss.ide.eclipse.as.ui.mbeans.wizards.NewMessageDrivenBeanWizard"
+            category="org.eclipse.jst.ejb.ui"
+            name="EJB3 Message Driven Bean"
+            id="org.jboss.ide.eclipse.ejb3.wizards.ui.NewMessageDrivenBeanWizard"/>
+   </extension>
+
+
+   <!-- 
+    SAR support
+   -->
+   
+      <extension
+         point="org.eclipse.wst.common.project.facet.core.facets">
+      <project-facet
+            id="jst.jboss.sar">
+         <label>
+            JBoss SAR
+         </label>
+      </project-facet>
+      <project-facet-version
+            facet="jst.jboss.sar"
+            version="1.0">
+         <group-member
+               id="modules">
+         </group-member>
+         <constraint>
+            <and>
+               <conflicts
+                     group="modules">
+               </conflicts>
+               <requires
+                     facet="jst.java"
+                     version="[5.0">
+               </requires>
+            </and>
+         </constraint>
+      </project-facet-version>
+         <action
+            facet="jst.jboss.sar"
+            id="jst.jboss.sar.install"
+            type="install">
+         <delegate
+               class="org.jboss.ide.eclipse.as.ui.mbeans.project.JBossSARFacetInstallationDelegate">
+         </delegate>
+         <config-factory
+               class="org.jboss.ide.eclipse.as.ui.mbeans.project.JBossSARFacetDataModelProvider">
+         </config-factory>
+      </action>
+      <template
+            id="template.jst.jboss.sar">
+         <label>
+            SAR Template
+         </label>
+         <fixed
+               facet="jst.java">
+         </fixed>
+         <fixed
+               facet="jst.jboss.sar">
+         </fixed>
+      </template>
+   </extension>
+       <extension
+          point="org.eclipse.wst.server.core.moduleTypes">
+       <moduleType
+             id="jst.jboss.sar"
+             name="JBoss SAR Module">
+       </moduleType>
+    </extension>
+    <extension
+          point="org.eclipse.wst.server.core.moduleFactories">
+       <moduleFactory
+             class="org.jboss.ide.eclipse.as.ui.mbeans.project.JBossSARModuleFactory"
+             id="org.jboss.ide.eclipse.as.core.modules.sar.moduleFactory"
+             projects="true">
+          <moduleType
+                types="jst.jboss.sar"
+                versions="1.0">
+          </moduleType>
+       </moduleFactory>
+    </extension>
+       <extension
+         point="org.eclipse.wst.common.modulecore.componentimpl">
+      <componentimpl
+            typeID="jst.jboss.sar"
+            class="org.jboss.ide.eclipse.as.ui.mbeans.project.SARVirtualComponent">
+      </componentimpl>
+   </extension>
+   
+   <extension
+         point="org.eclipse.wst.common.project.facet.core.runtimes">
+      <supported>
+         <facet
+               id="jst.jboss.sar"
+               version="1.0">
+         </facet>
+         <runtime-component
+               id="org.jboss.ide.eclipse.as.runtime.component"
+               version="4.2,5.0,5.1,6.0,7.0">
+         </runtime-component>
+      </supported>
+   </extension>
+
+
+
+   
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            category="org.jboss.ide.eclipse.as.ui.MBeanComponentsCategory"
+            class="org.jboss.ide.eclipse.as.ui.mbeans.project.ui.SARProjectWizard"
+            icon="$nl$/icons/sar.gif"
+            id="JBoss.SAR.Project.Wizard"
+            name="SAR Project"
+            project="true">
+      </wizard>
+   </extension>
+
+   <extension
+         point="org.eclipse.wst.common.project.facet.ui.wizardPages">
+      <wizard-pages
+            action="jst.jboss.sar.install">
+         <page
+               class="org.jboss.ide.eclipse.as.ui.mbeans.project.ui.SARFacetInstallationPage">
+         </page>
+      </wizard-pages>
+   </extension>
+   <extension
+         point="org.eclipse.wst.server.ui.serverImages">
+      <image
+            icon="icons/sar.gif"
+            id="org.jboss.ide.eclipse.as.ui.mbeans.sar.module"
+            typeIds="jst.jboss.sar"/>
+   </extension>
+
+</plugin>

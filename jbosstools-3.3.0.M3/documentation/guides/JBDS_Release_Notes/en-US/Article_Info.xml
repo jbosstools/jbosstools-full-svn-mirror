@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8' ?>
+
+<!-- Modify the title tag to change which book will be built -->
+
+<articleinfo>
+	<title>4.1.0 Release Notes</title>
+	<subtitle>Information about the changes made for this release of the JBoss Developer Studio.</subtitle>
+	<productname>JBoss Developer Studio</productname>
+	<productnumber>4.1</productnumber>
+	<edition>0</edition>
+	<pubsnumber>2</pubsnumber>
+	<abstract>
+		<para>
+			These release notes contain important information related to the JBoss Developer Studio. New features, known issues, resources, and other current issues are addressed here.
+		</para>
+	</abstract>
+	<corpauthor>
+		<inlinemediaobject>
+			<imageobject>
+				<imagedata fileref="Common_Content/images/title_logo.svg" format="SVG" />
+			</imageobject>
+		</inlinemediaobject>
+	</corpauthor>
+	<xi:include href="Common_Content/Legal_Notice.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
+	<xi:include href="Author_Group.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
+</articleinfo>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion> 
+	<parent>
+		<groupId>org.jboss.tools.hibernatetools</groupId>
+		<artifactId>tests</artifactId>
+		<version>3.4.0-SNAPSHOT</version>
+	</parent>
+	<groupId>org.jboss.tools.hibernatetools.tests</groupId>
+	<artifactId>org.hibernate.eclipse.console.test</artifactId> 
+	
+	<packaging>eclipse-test-plugin</packaging>
+
+	<properties>
+		<emma.filter>org.hibernate.eclipse*</emma.filter>
+		<emma.instrument.bundles>org.hibernate.eclipse.console</emma.instrument.bundles>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-surefire-plugin</artifactId>
+				<configuration>
+					<explodedBundles>
+						<bundle>org.hibernate.eclipse.console.test</bundle>
+						<bundle>org.hibernate.eclipse</bundle>
+					</explodedBundles>
+					<!-- timeout in seconds; default 1800 -->
+					<surefire.timeout>3600</surefire.timeout>
+					<forkedProcessTimeoutInSeconds>3600</forkedProcessTimeoutInSeconds>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>	
+</project>

@@ -1,0 +1,9 @@
+<tests>
+	<test id="nav-id">
+		<NAV ID="nav-id"><A CLASS=
+""><SPAN CLASS="vpe-text">Home</SPAN></A><A CLASS=""><SPAN CLASS
+="vpe-text">Previous</SPAN></A><A CLASS=""><SPAN CLASS="vpe-text
+">Next</SPAN></A>
+</NAV>
+	</test>
+</tests>

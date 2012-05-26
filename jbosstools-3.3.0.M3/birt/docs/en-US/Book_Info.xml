@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE bookinfo PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+]>
+<bookinfo id="book-JBoss_BIRT_Integration_User_Guide-JBoss_Business_Intelligence_and_Reporting_Tools_integration_User_Guide">
+<title>JBoss Business Intelligence and Reporting Tools Integration User Guide</title>
+<subtitle>Provides information about the use of the Business Intelligence and Reporting Tools (BIRT) plug-in as part of the JBoss Developer Studio.</subtitle>
+<productname>JBoss Developer Studio</productname>
+<productnumber>4.1</productnumber>
+<edition>4.1.0</edition>
+<pubsnumber>1</pubsnumber>
+<abstract>
+<para>
+This guide provides a reference for use of the Business Intelligence and Reporting Tools (BIRT) plug-in with the JBoss Developer Studio. The BIRT plug-in is an open source reporting system for web applications.
+</para>
+</abstract>
+<corpauthor>
+<inlinemediaobject>
+<imageobject>
+<imagedata fileref="Common_Content/images/title_logo.svg" format="SVG" />
+</imageobject>
+</inlinemediaobject>
+</corpauthor>
+<xi:include href="Common_Content/Legal_Notice.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+<xi:include href="Author_Group.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+</bookinfo>

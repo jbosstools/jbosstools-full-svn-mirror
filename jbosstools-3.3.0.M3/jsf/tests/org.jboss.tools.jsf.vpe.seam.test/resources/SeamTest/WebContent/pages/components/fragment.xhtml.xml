@@ -1,0 +1,9 @@
+<tests>
+	<test id="id1">
+		<SPAN CLASS="vpe-text" STYLE="-moz-user-modify: read-write;">
+			<SPAN CLASS="vpe-text">
+				Current bid:
+			</SPAN>
+		</SPAN>
+	</test>
+</tests>

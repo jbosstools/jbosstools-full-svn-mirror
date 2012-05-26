@@ -1,0 +1,29 @@
+<tests>
+	<test id="fieldset">
+
+		<FIELDSET ID="fieldset" CLASS="fieldsetClass" DIR="ltr"
+			STYLE="color: red; -moz-user-modify: read-only;">
+			<LEGEND STYLE="-moz-user-modify: read-write;">
+				<SPAN>
+					legend
+</SPAN>
+			</LEGEND>
+			<INPUT TYPE="checkbox" STYLE="-moz-user-modify: read-only;" />
+
+			<SPAN>
+				one
+</SPAN>
+			<BR STYLE="-moz-user-modify: read-write;" />
+
+			<INPUT TYPE="checkbox" STYLE="-moz-user-modify: read-only;" />
+
+			<SPAN>
+				two
+</SPAN>
+			<BR STYLE="-moz-user-modify: read-write;" />
+
+			<INPUT TYPE="submit" VALUE="submit" STYLE="-moz-user-modify: read-write;" />
+
+		</FIELDSET>
+	</test>
+</tests>

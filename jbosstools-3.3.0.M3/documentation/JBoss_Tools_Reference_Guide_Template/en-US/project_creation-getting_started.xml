@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "JBoss_Tools_Reference_Guide_Template.ent">
+%BOOK_ENTITIES;
+]>
+<section id="getting_started-quick_start-project_creation">
+  <title>Project creation</title>
+  <note><title>***Design Note***</title>
+    <para>
+      This first procedure relates to the parent Eclipse platform so is common to all Tools. 
+      It has been named proc-jbt-new_project.xml (jbt = JBoss Tools) to reflect this core (non-specific) behaviour. 
+    </para>
+  </note>  
+  <para>
+  <xref linkend="proc-jbt-new_project"/> describes the steps to create a new project in JBoss Tools.  
+  </para>
+   <xi:include href="proc-jbt-new_project.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+   <note><title>***Design Note***</title>
+    <para>
+      This procedure is specific to JSF Tools so is therefore named accordingly, proc-jsf-new_jsf_project.xml (jsf = Java Server Faces), and pulled in separately from the above common procedure. 
+    </para>
+  </note>  
+   <para>
+     Continue by defining The Tool project type as described in <xref linkend="proc-jsf-new_jsf_project"/>:
+   </para>
+   <xi:include href="proc-jsf-new_jsf_project.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+  <para>&FEEDBACK-getting_started-quick_start-project_creation;</para>
+</section>

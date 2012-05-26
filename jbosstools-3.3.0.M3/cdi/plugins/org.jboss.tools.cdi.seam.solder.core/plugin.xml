@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+	<extension
+	      point="org.jboss.tools.cdi.core.cdiextensions">
+    <cdiextension
+          class="org.jboss.tools.cdi.seam.solder.core.CDISeamSolderCoreExtension"
+          runtime="org.jboss.seam.solder.core.CoreExtension">
+    </cdiextension>
+
+    <cdiextension
+          class="org.jboss.tools.cdi.seam.solder.core.CDISeamSolderLoggerExtension"
+          runtime="org.jboss.seam.solder.logging.TypedMessageLoggerExtension">
+    </cdiextension>
+    
+    <cdiextension
+          class="org.jboss.tools.cdi.seam.solder.core.CDISeamSolderServiceHandlerExtension"
+          runtime="org.jboss.seam.solder.serviceHandler.ServiceHandlerExtension">
+    </cdiextension>
+
+    <cdiextension
+          class="org.jboss.tools.cdi.seam.solder.core.CDISeamSolderDefaultBeanExtension"
+          runtime="org.jboss.seam.solder.bean.defaultbean.DefaultBeanExtension">
+    </cdiextension>
+
+    <cdiextension
+          class="org.jboss.tools.cdi.seam.solder.core.CDISeamSolderUnwrapsExtension"
+          runtime="org.jboss.seam.solder.unwraps.UnwrapsExtension">
+    </cdiextension>
+
+    <cdiextension
+          class="org.jboss.tools.cdi.seam.solder.core.generic.CDISeamSolderGenericBeanExtension"
+          runtime="org.jboss.seam.solder.bean.generic.GenericBeanExtension">
+    </cdiextension>
+
+	</extension>
+
+   <extension point="org.eclipse.core.runtime.preferences">
+      <initializer class="org.jboss.tools.cdi.seam.solder.core.CDISeamSolderPreferenceInitializer"/>
+   </extension>
+
+</plugin>

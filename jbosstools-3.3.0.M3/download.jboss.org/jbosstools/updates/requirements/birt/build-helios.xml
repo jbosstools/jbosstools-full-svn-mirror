@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="mirror">
+	<!-- run locally in Eclipse (to resolve p2 tasks) using these commandline options:
+	
+		-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} 
+		-consoleLog -nosplash -data /tmp
+		-application org.eclipse.ant.core.antRunner
+		-f "/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/birt/build-helios.xml"
+		
+		or, run headless on qa01 server, where Eclipse is installed into ~/eclipse:
+		
+		export JAVA_HOME=/opt/jdk1.6.0; \
+		${JAVA_HOME}/bin/java -cp ~/eclipse/plugins/org.eclipse.equinox.launcher_*.jar \
+			org.eclipse.equinox.launcher.Main -vm ${JAVA_HOME} -consoleLog -nosplash -data /tmp \
+			-application org.eclipse.ant.core.antRunner \
+			-f ~/RHDS/updates/requirements/birt/build-helios.xml -Ddestination=/tmp/birt-repo
+
+		or, headless on local:
+	
+		java -cp /home/nboldt/eclipse/eclipse361/plugins/org.eclipse.equinox.launcher_*.jar \
+			org.eclipse.equinox.launcher.Main -consoleLog -nosplash -data /tmp \
+			-application org.eclipse.ant.core.antRunner -f build-helios.xml
+
+	-->
+	<target name="mirror">
+		<property name="URL" value="http://download.eclipse.org/birt/update-site/2.6/" />
+		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/birt/" />
+		<property name="compress" value="true" />
+
+		<p2.mirror>
+			<repository location="file:${destination}/2.6" name="Extra BIRT plugins for Eclipse 3.6 (Not in Helios)" />
+			<source>
+				<repository location="${URL}" />
+			</source>
+
+			<slicingOptions includeFeatures="true" followStrict="true" />
+
+			<iu id="org.eclipse.birt.osgi.runtime.sdk.feature.group" />
+			<iu id="org.eclipse.birt.feature.group" />
+			<iu id="org.eclipse.birt.integration.wtp.feature.group" />
+			<iu id="org.eclipse.birt.chart.feature.group" />
+			<iu id="org.eclipse.birt.chart.integration.wtp.feature.group" />
+
+		</p2.mirror>
+
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/2.6" artifactRepository="file:${destination}/2.6" publishartifacts="true" source="${destination}/2.6" compress="${compress}" />
+	</target>
+</project>

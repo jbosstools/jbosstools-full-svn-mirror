@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sect1 id="seam">
+	<title>Seam</title>
+	<sect2>
+		<title>
+			TEST-JBIDE-SEAM-0001-1.0 Create Seam Web Project in WAR
+			deployment configuration
+		</title>
+		<informaltable id="TEST-JBIDE-SEAM-0001-1.0" role="testcase" pgwide="1">
+			<tgroup cols="2" >
+				<colspec colname="names" column="1" colwidth="70pt"/>
+				<colspec colname="values" column="2"/>
+				<tbody valign="top">
+					<row>
+						<entry>Description</entry>
+						<entry>
+							Test is intended to verify that Seam Web Project in
+							WAR/EAR configuration can be created, deployed and
+							started. 
+						</entry>
+					</row>
+					<row>
+						<entry>Param: N/A</entry>
+						<entry>
+							<para></para>
+						</entry>
+					</row>
+					<row>
+						<entry>Number</entry>
+						<entry>
+							<para>1</para>
+						</entry>
+					</row>
+					<row>
+						<entry>Type</entry>
+						
+						<entry>Manual</entry>
+					</row>
+					<row>
+						<entry>Lavel</entry>
+						<entry>Smoke</entry>
+					</row>
+					<row>
+						<entry>Environment</entry>
+						<entry>
+							<para></para>
+						</entry>
+					</row>
+					<row>
+						<entry namest="names" nameend="values">
+							<orderedlist><title>Initialize</title>
+							<listitem>EXECUTE: Start Eclipse where all JBoss Tools Plug-ins installed on new Eclipse workspace</listitem>
+							<listitem>EXECUTE: Switch to Seam Perspective. Select <guimenu>Window/Open Perspective/Other ...</guimenu> and select Seam item in list.</listitem>
+							</orderedlist>
+						</entry>
+					</row>
+					<row>
+						<entry namest="names" nameend="values">
+							<orderedlist><title>Actions</title>
+								<listitem>EXECUTE: Select <guimenu>File/New/Seam Web Project</guimenu></listitem>
+								<listitem>ASSERT: New Seam Web Project wizard is shown</listitem>
+								<listitem>ASSERT: 'Project Name' field has focus</listitem>
+								<listitem>ASSERT: Button <guibutton>Finish</guibutton> is disabled</listitem>
+								<listitem>ASSERT: 'Dynamic Web Project with Seam 1.2' is selected in Configuration combobox</listitem>
+								<listitem>ASSERT: Select 'Dynamic Web Project with Seam 1.2' in Configuration combobox has description text under it</listitem>
+								<listitem>EXECUTE: Press <guibutton>New...</guibutton> in 'Target Runtime' group</listitem>
+								<listitem>EXECUTE: Select JBoss division of Red Hat/JBoss 4.2 Runtime item in tree and press <guibutton>Next</guibutton> button</listitem>
+								<listitem>EXECUTE: Fill 'Home Directory' field with real path to JBoss AS 4.2 and press <guibutton>Next</guibutton></listitem>
+								<listitem>EXECUTE: Leave 'Name' field unchanged and Press <guibutton>Finis</guibutton></listitem>
+								<listitem>ASSERT: Verify that created server appeared in 'Target Runtime' combobox and became selected</listitem>
+								<listitem>EXECUTE: Input 'seamwardeploy' in Project Name field</listitem>
+								<listitem>EXECUTE: Press <guibutton>Next</guibutton> button</listitem>
+								<listitem>EXECUTE: Leave Projects Facets page unchanged and Press <guibutton>Next</guibutton> button</listitem>
+								<listitem><para>EXECUTE: Change fields on page to:</para>
+									<itemizedlist spacing="normal"><listitem>'Context Root' field to 'seamwardeploycontext'</listitem>
+										<listitem>'Content Directory' field to 'web'</listitem>
+										<listitem>'Java Source Directory' field to 'java-src'</listitem>
+									</itemizedlist>
+								 <para>Press <guibutton>Next</guibutton> button</para></listitem>
+								<listitem>EXECUTE: Leave Projects Facets page unchanged and Press <guibutton>Next</guibutton> button</listitem>
+								<listitem>EXECUTE: Select 'Server Supplied JSF Implementation' radio and Press <guibutton>Next</guibutton></listitem>
+								<listitem>ASSERT: Verify default values for 'Seam Facet' wizard page
+									<itemizedlist>Default values:
+										<listitem>'Seam Runtime' is empty,</listitem>
+										<listitem>'Deploy as' is 'war',</listitem> 
+										<listitem>'Dtatbase Type' is 'HSQL',</listitem> 
+										<listitem>'Hibernate Dialect' is org.hibernate.dialect.HSQLDialect,</listitem> 
+										<listitem>'Connection profile' is empty,</listitem> 
+										<listitem>'Databases Schema Name' is empty,</listitem>
+										<listitem>'Database Catalog Name' is empty,</listitem> 
+										<listitem>'DB Tables already exists in DB' is not checked,</listitem> 
+										<listitem>'Recreate database tables and data on deploy' is not checked,</listitem>
+										<listitem>'Session Bean Package Name' contain default value created by pattern org.domain.seamwardeploy.session,</listitem>
+										<listitem>'Entity Bean Package Name' contain default value created by pattern org.domain.seamwardeploy.entity,</listitem>
+										<listitem>'Test Package Name' contain default value created by pattern org.domain.seamwardeploy.test</listitem>
+									</itemizedlist>
+								</listitem>
+								<listitem>EXECURE: Press <guibutton>Add</guibutton> at right from Seam runtime field</listitem>
+								<listitem>ASSERT: 'New Seam Runtime' dialog is shown</listitem>
+								<listitem>ASSERT: 'Name' field is empty, 'Version' field is prefilled with '1.2' version</listitem>
+								<listitem>EXECUTE: Fill name field as 'Seam 1.2' and 'Home Folder' valid path to Seam and press <guibutton>Finish</guibutton> </listitem>
+								<listitem>ASSERT: 'Seam 1.2` is added to 'Seam Runtime combo' and became selected</listitem>
+								<listitem>ASSERT: Error message 'Connection Profile is not selected' appears in wizard title.</listitem>
+								<listitem>TBD - write steps for creating connection profile</listitem>
+								<listitem>ASSERT: <guibutton>Finish</guibutton> button became enabled</listitem>
+								<listitem>EXECUTE: Press <guibutton>Finish</guibutton></listitem>
+								<listitem>ASSERT: Two projects are appeared in Java Package Navigator: 'seamwardeploy' and 'seamwardeploy-test'</listitem>
+								<listitem>ASSERT: Show Progress View. Select <guimenu>Window/Show View/Other</guimenu> menu item, select General/Progress tree item and press <guibutton>Ok</guibutton></listitem>
+								<listitem>ASSERT: Progress View is shown</listitem>
+								<listitem>EXECUTE: Wait until all jobs are done in progress view</listitem>
+								<listitem>EXECUTE: Select 'Problems' View</listitem>
+								<listitem>ASSERT: Verify there are no errors in 'Problems' View reported for created projects</listitem>
+							</orderedlist>
+						</entry>
+					</row>
+					<row>
+						<entry namest="names" nameend="values">
+							<orderedlist><title>Finish</title>
+								<listitem>Select <guimenu>Window/Show View/Other ...</guimenu></listitem>
+								<listitem>Select 'PDE Runtime/Error Log' view in tree of 'Show View' dialog and press <guibutton>OK</guibutton></listitem>
+								<listitem>EXECUTE: Select all projects in Eclipse Workspace</listitem>
+								<listitem>EXECUTE: Select 'Delete' action from pop up menu</listitem>
+								<listitem>CEANUP: Select 'Also delete contents in file system' in 'Confirm multiple project delete' dialog and press <guibutton>Yes</guibutton></listitem>
+								<listitem>ASSERT: There are no errors during the delete action execution logged to 'Error Log' view</listitem>
+								<listitem>ASSERT: There are no projects in Eclipse workspace after 'Delete' action is finished</listitem>
+							</orderedlist>
+						</entry>
+					</row>
+					<row>
+						<entry>Requirements</entry>
+						<entry>
+							<para></para>
+						</entry>
+					</row>
+					<row>
+						<entry>Time</entry>
+						<entry>
+							<para></para>
+						</entry>
+					</row>
+				</tbody>
+			</tgroup>
+		</informaltable>
+	</sect2>
+
+	<sect2>
+		<title>
+			TEST-JBIDE-SEAM-0010-1.0 Create Seam Web Project in EAR
+			deployment configuration
+		</title>
+		<para>Text1</para>
+	</sect2>
+</sect1>

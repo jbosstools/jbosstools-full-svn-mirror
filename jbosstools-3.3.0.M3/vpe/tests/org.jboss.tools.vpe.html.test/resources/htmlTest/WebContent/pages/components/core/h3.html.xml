@@ -1,0 +1,10 @@
+<tests>
+	<test id="h3">
+		<H3 ALIGN="left" CLASS="h1Class" DIR="ltr" ID="h3"
+			STYLE="color: red; -moz-user-modify: read-write;">
+			<SPAN>
+				h3
+			</SPAN>
+		</H3>
+	</test>
+</tests>

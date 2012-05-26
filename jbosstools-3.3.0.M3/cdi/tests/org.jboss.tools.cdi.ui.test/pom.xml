@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion> 
+	<parent>
+		<groupId>org.jboss.tools.cdi</groupId>
+		<artifactId>tests</artifactId>
+		<version>1.2.0-SNAPSHOT</version>
+	</parent>
+	<groupId>org.jboss.tools.cdi.tests</groupId>
+	<artifactId>org.jboss.tools.cdi.ui.test</artifactId> 
+	
+	<packaging>eclipse-test-plugin</packaging>
+
+	<properties>
+		<emma.filter>org.jboss.tools.cdi*</emma.filter>
+		<emma.instrument.bundles>org.jboss.tools.cdi.core,org.jboss.tools.cdi.ui</emma.instrument.bundles>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-surefire-plugin</artifactId>
+				<configuration>
+					<product>org.jboss.tools.tests.product</product>
+					<explodedBundles>
+						<bundle>org.jboss.tools.cdi.core.test</bundle>
+					</explodedBundles>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>profiler</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.eclipse.tycho</groupId>
+						<artifactId>tycho-surefire-plugin</artifactId>
+						<configuration>
+							<argLine>-XX:+UseLinuxPosixThreadCPUClocks -agentpath:/home/eskimo/Java/netbeans-7.0.1/profiler/lib/deployed/jdk16/linux-amd64/libprofilerinterface.so=/home/eskimo/Java/netbeans-7.0.1/profiler/lib,5140</argLine>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+</project>
