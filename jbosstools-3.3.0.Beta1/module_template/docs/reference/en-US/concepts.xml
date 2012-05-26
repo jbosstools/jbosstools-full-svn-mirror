@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8' ?>
+
+<chapter id="chap-template-concepts">
+	<title>Concepts</title>
+	<para>
+		This chapter discusses the underlying concepts behind the Tool. General information is provided here. The rules associated with the implementation of a particular feature or concept should be listed in the relevant section. e.g the requirement to have a zero argument constructor for a persistent class in Hibernate.
+	</para>
+	<para>
+		Begin with a general overview of the basis of the Tool, with a new section for each new concept
+	</para>
+	<section id="sect-template-concepts-first_new_concept">
+		<title>First new concept</title>
+		<para>
+			Concept information.
+		</para>
+		<para>
+			&lt;Link to a task that implements the concept&gt;
+		</para>
+	</section>
+	<section id="sect-template-concepts-second_new_concept">
+		<title>Second new concept</title>
+		<para>
+			Concept information.
+		</para>
+		<para>
+			&lt;Link to a task that implements the concept&gt;
+		</para>
+	</section>
+</chapter>
+

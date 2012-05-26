@@ -1,0 +1,50 @@
+<tests>
+	<test id="id1">
+		<DIV ID="id1">
+			<P CLASS="styleA" STYLE="-moz-user-modify: read-write;">
+				<SPAN CLASS="vpe-text">
+					.styleA {color: FF0000}
+				</SPAN>
+			</P>
+			<P CLASS="styleA" STYLE="-moz-user-modify: read-write;">
+				<SPAN CLASS="vpe-text">
+					.styleA {color: FF0000}
+				</SPAN>
+				<BR STYLE="-moz-user-modify: read-write;" />
+				<B CLASS="styleB" STYLE="-moz-user-modify: read-write;">
+					<SPAN CLASS="vpe-text">
+						.styleA .styleB {color: FF8000}
+					</SPAN>
+				</B>
+			</P>
+			<DIV CLASS="styleA" STYLE="-moz-user-modify: read-write;">
+				<SPAN CLASS="vpe-text">
+					div.styleA {color: FF0080}
+				</SPAN>
+			</DIV>
+			<DIV MYTITLE="x" CLASS="styleA" STYLE="-moz-user-modify: read-write;">
+				<SPAN CLASS="vpe-text">
+					div[myTitle="x"].styleA {color: 0000FF}
+				</SPAN>
+			</DIV>
+			<P STYLE="-moz-user-modify: read-write;">
+				<INPUT TYPE="button" CLASS="styleA" VALUE="p input.styleA {color: CCAA00}"
+					STYLE="-moz-user-modify: read-write;" />
+			</P>
+			<DIV STYLE="-moz-user-modify: read-write;">
+				<P STYLE="-moz-user-modify: read-write;">
+					<INPUT TYPE="button" CLASS="styleA"
+						VALUE="div p input.styleA {color: CC00FF}" STYLE="-moz-user-modify: read-write;" />
+				</P>
+			</DIV>
+			<DIV MYTITLE="y" STYLE="-moz-user-modify: read-write;">
+				<DIV STYLE="-moz-user-modify: read-write;">
+					<P STYLE="-moz-user-modify: read-write;">
+						<INPUT TYPE="button" CLASS="styleA"
+							VALUE="[myTitle='y'] div p input.styleA {color: 00CCFF}" STYLE="-moz-user-modify: read-write;" />
+					</P>
+				</DIV>
+			</DIV>
+		</DIV>
+	</test>
+</tests>

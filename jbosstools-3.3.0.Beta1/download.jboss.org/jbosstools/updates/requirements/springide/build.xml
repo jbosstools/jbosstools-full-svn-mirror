@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="default">
+	<!-- run locally in Eclipse (to resolve p2 tasks) using these commandline options:
+	
+		-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} 
+		-consoleLog -nosplash -data /tmp
+		-application org.eclipse.ant.core.antRunner
+		-f "/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/springide/build.xml"
+		
+		or, run headless on qa01 server, where Eclipse is installed into ~/eclipse:
+		
+		export JAVA_HOME=/opt/jdk1.6.0; \
+		${JAVA_HOME}/bin/java -cp ~/eclipse/plugins/org.eclipse.equinox.launcher_*.jar \
+			org.eclipse.equinox.launcher.Main -vm ${JAVA_HOME} -consoleLog -nosplash -data /tmp \
+			-application org.eclipse.ant.core.antRunner \
+			-f ~/RHDS/updates/requirements/springide/build.xml -Ddestination=/tmp/pmd-repo
+			
+		or, run local:
+
+		export JAVA_HOME=/opt/jdk1.6.0; \
+		java -cp ~/eclipse/eclipse371/plugins/org.eclipse.equinox.launcher_1.2.0.v20110502.jar \
+		org.eclipse.equinox.launcher.Main -vm ${JAVA_HOME} -consoleLog -nosplash -data /tmp \
+		-application org.eclipse.ant.core.antRunner -f build.xml \
+			init copy.patched.jars regenerate.metadata
+
+	-->
+	<target name="default" depends="init,mirror,apply.patch,copy.patched.jars,regenerate.metadata" />
+	<target name="patch.and.regen" depends="init,apply.patch,copy.patched.jars,regenerate.metadata" />
+
+	<target name="init">
+		<!-- Other URLs:
+		   http://dist.springframework.org/release/IDE/
+		   http://dist.springframework.org/snapshot/IDE/weekly/
+                   http://dist.springsource.com/release/TOOLS/update/e3.7/
+        	-->
+		<property name="URL" value="http://dist.springsource.com/release/TOOLS/update/e3.7/" />
+		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/springide/" />
+		<property name="siteVersion" value="2.7.2.201109122348" />
+		<property name="compress" value="true" />
+	</target>
+	
+	<target name="mirror">
+		<p2.mirror>
+			<repository location="file:${destination}/${siteVersion}/" name="springide plugins for Eclipse 3.7" />
+			<source>
+				<repository location="${URL}" />
+			</source>
+
+			<iu id="org.springframework.ide.eclipse.feature.feature.group" />
+			<iu id="org.springframework.ide.eclipse.aop.feature.feature.group" />
+			<iu id="org.springframework.ide.eclipse.osgi.feature.feature.group" />
+			<iu id="org.springframework.ide.eclipse.webflow.feature.feature.group" />
+			<iu id="org.springframework.ide.eclipse.batch.feature.feature.group" />
+			<iu id="org.springframework.ide.eclipse.integration.feature.feature.group" />
+			<iu id="org.springframework.ide.eclipse.security.feature.feature.group" />
+			<iu id="org.springframework.ide.eclipse.autowire.feature.feature.group" />
+			<iu id="org.springframework.ide.eclipse.mylyn.feature.feature.group" />
+
+			<slicingoptions includefeatures="true" followstrict="true" latestversiononly="false" platformfilter="true" />
+		</p2.mirror>
+	</target>
+
+	<target name="apply.patch">
+		<echo>JBDS-1838 :: Apply patch to disable SpringIDE welcome page</echo>
+		<!-- unzip jar
+	replace about.ini
+	replace MANIFEST.MF
+	delete welcome.xml META-INF/VMWARE.*
+	zip jar -->
+		<copy file="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse_${siteVersion}-RELEASE.jar" tofile="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse_${siteVersion}-RELEASE_ORIGINAL.jar" />
+		<unzip src="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse_${siteVersion}-RELEASE.jar" dest="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse" />
+		<echo file="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse/about.ini">
+aboutText=%title
+featureImage=feature_image.png
+</echo>
+		<echo file="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse/META-INF/MANIFEST.MF">Manifest-Version: 1.0
+Bundle-Name: %pluginName
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-Vendor: %providerName
+Bundle-Version: ${siteVersion}-RELEASE
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.springframework.ide.eclipse
+</echo>
+		<delete quiet="true">
+			<fileset dir="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse" includes="welcome.xml" />
+			<fileset dir="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse/META-INF" includes="eclipse.inf, VMWARE.RSA, VMWARE.SF" />
+		</delete>
+		<zip destfile="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse_${siteVersion}-RELEASE.jar" basedir="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse/" />
+		<delete dir="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse/" quiet="true" />
+	</target>
+
+	<target name="copy.patched.jars">
+		<property name="patch.suffix" value="-patched_JBDS-1838"/>
+		<copy file="${destination}/${siteVersion}.patch/plugins/org.springframework.ide.eclipse_${siteVersion}${patch.suffix}.jar" todir="${destination}/${siteVersion}/plugins/" />
+		<copy file="${destination}/${siteVersion}.patch/features/org.springframework.ide.eclipse.feature_${siteVersion}${patch.suffix}.jar" todir="${destination}/${siteVersion}/features/" />
+	</target>
+
+	<target name="regenerate.metadata">
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/${siteVersion}/" artifactRepository="file:${destination}/${siteVersion}/" publishartifacts="true" source="${destination}/${siteVersion}/" compress="${compress}" />
+	</target>
+
+</project>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+   <extension point="org.eclipse.core.runtime.preferences">
+      <initializer class="org.jboss.tools.esb.validator.ESBPreferenceInitializer"/>
+   </extension>
+
+   <extension id="esbproblem" name="%KBProblemName" point="org.eclipse.core.resources.markers">
+      <super type="org.jboss.tools.common.validation.JBTValidationProblem">
+      </super>
+      <persistent value="true">
+      </persistent>
+   </extension>
+
+   <extension
+         point="org.jboss.tools.common.validation.validator">
+         <validator
+               class="org.jboss.tools.esb.validator.ESBCoreValidator"
+               name="%ESBCoreValidator"
+               id="org.jboss.tools.esb.validator.ESBCoreValidator">
+         </validator>
+   </extension>
+
+   <extension point="org.eclipse.ui.preferencePages">
+      <page 
+         category="org.jboss.tools.common.model.ui.MainPreferencePage" 
+         class="org.jboss.tools.esb.validator.ui.ESBValidatorPreferencePage" 
+         id="org.jboss.tools.esb.validator.ui.ESBValidatorPreferencePage" 
+         name="%PreferencePage_Validator">
+      </page>
+   </extension>
+
+	<extension point="org.eclipse.ui.propertyPages">
+		<page
+			name="%PreferencePage_Validator"
+			class="org.jboss.tools.esb.validator.ui.ESBValidatorPreferencePage"
+			id="org.jboss.tools.esb.validator.ui.propertyPages.ESBValidatorPreferencePage">
+         	<enabledWhen>
+               	<and>
+					<adapt type="org.eclipse.core.resources.IProject">
+						<or> 
+							<test 
+								forcePluginActivation="true"
+								property="org.eclipse.wst.common.project.facet.core.projectFacet"
+								value="jst.jboss.esb" />
+						</or>
+					</adapt>
+				</and> 
+			</enabledWhen>
+         	<keywordReference id="org.eclipse.wst.html.ui.webcontent"/>
+		</page>
+	</extension>
+	
+
+</plugin>

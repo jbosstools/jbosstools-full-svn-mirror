@@ -1,0 +1,11 @@
+<tests>
+	<test id="sub">
+		<SUB ID="sub" CLASS="subClass" STYLE="color: red; -moz-user-modify: read-write;" DIR="ltr">
+<SMALL STYLE="-moz-user-modify: read-write;">
+<SPAN>
+2
+</SPAN>
+</SMALL>
+</SUB>
+	</test>
+</tests>

@@ -1,0 +1,633 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension-point id="EventLogLabelProvider" name="org.jboss.ide.as.ui.eventLogLabelProvider" schema="schema/EventLogLabelProvider.exsd"/>
+   <extension-point id="EventLogMajorType" name="org.jboss.ide.eclipse.as.ui.eventLogMajorType" schema="schema/EventLogMajorType.exsd"/>
+   <extension-point id="ServerEditorPortSection" name="org.jboss.ide.as.ui.editor.portSection" schema="schema/ServerEditorPortSection.exsd"/>
+   <extension-point id="DeployMethodUI" name="org.jboss.ide.as.ui.deployMethodUI" schema="schema/DeployMethodUI.exsd"/>
+
+   <extension
+         point="org.eclipse.wst.server.ui.serverImages">
+      <image
+            icon="$nl$/icons/jboss.png"
+            typeIds="%AllJBossServerTypes"
+            id="org.jboss.ide.eclipse.as.ui.jbossIcon"/>
+      <image
+            icon="$nl$/icons/jboss.png"
+            typeIds="%AllJBossRuntimeTypes"
+            id="org.jboss.ide.eclipse.as.ui.jbossIcon"/>
+
+      <image
+            icon="$nl$/icons/jboss.png"
+            typeIds="org.jboss.ide.eclipse.as.systemCopyServer"
+            id="org.jboss.ide.eclipse.as.ui.jbossIcon"/>
+      <image
+            icon="$nl$/icons/jboss.png"
+            typeIds="org.jboss.ide.eclipse.as.runtime.stripped"
+            id="org.jboss.ide.eclipse.as.ui.jbossIcon"/>
+   </extension>
+
+   <extension
+         point="org.eclipse.wst.server.ui.wizardFragments">
+      <fragment
+            class="org.jboss.ide.eclipse.as.ui.wizards.JBossRuntimeWizardFragment"
+            typeIds="%RuntimeTypesJBoss6OrLower"
+        	id="org.jboss.ide.eclipse.as.ui.JBossRuntimeWizardFragment"/>
+      <fragment
+            class="org.jboss.ide.eclipse.as.ui.wizards.JBossServerWizardFragment"
+            id="org.jboss.ide.eclipse.as.ui.jbossServerWizardFragment"
+            typeIds="%ServerTypesJBoss6OrLower"/>
+      <fragment
+            class="org.jboss.ide.eclipse.as.ui.wizards.JBoss7RuntimeWizardFragment"
+            id="org.jboss.ide.eclipse.as.ui.jboss7RuntimeWizardFragment"
+            typeIds="%RuntimeTypesJBoss7"/>
+      <fragment
+            class="org.jboss.ide.eclipse.as.ui.wizards.JBoss7ServerWizardFragment"
+            id="org.jboss.ide.eclipse.as.ui.jboss7ServerWizardFragment"
+            typeIds="%ServerTypesJBoss7"/>
+      <!-- NEW_SERVER_ADAPTER  Add the wizard fragment (if applicable) for the new server adapter above this line -->
+      <fragment
+             class="org.jboss.ide.eclipse.as.ui.wizards.StrippedServerWizardFragment"
+             id="org.jboss.ide.eclipse.as.ui.strippedServerWizardFragment"
+             typeIds="org.jboss.ide.eclipse.as.systemCopyServer"/>
+   </extension>
+
+   <extension point="org.eclipse.ui.startup">
+      <startup />
+   </extension>
+
+
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+      <launchConfigurationTabGroup
+            class="org.jboss.ide.eclipse.as.ui.launch.JBossLaunchConfigurationTabGroup"
+            description="%jbossLaunchconfigurationTabGroupDescription"
+            id="org.jboss.ide.eclipse.as.core.jbossLaunchTabGroup"
+            type="org.jboss.ide.eclipse.as.core.server.startupConfiguration"/>
+
+      <launchConfigurationTabGroup
+            class="org.jboss.ide.eclipse.as.ui.launch.JBoss7LaunchConfigurationTabGroup"
+            description="%jbossLaunchconfigurationTabGroupDescription"
+            id="org.jboss.ide.eclipse.as.core.jboss7LaunchTabGroup"
+            type="org.jboss.ide.eclipse.as.core.server.JBoss7StartupConfiguration"/>
+      <launchConfigurationTabGroup
+            class="org.jboss.ide.eclipse.as.ui.launch.DeployOnlyLaunchConfigGroup"
+            description="A no-op launch configuration"
+            id="org.jboss.ide.eclipse.as.systemCopyServer"
+            type="org.jboss.ide.eclipse.as.core.deployOnlyLaunchConfig">
+      </launchConfigurationTabGroup>
+   </extension>
+
+
+
+   <extension
+         point="org.eclipse.wst.server.ui.serverImages">
+      <image
+            icon="$nl$/icons/J2EEModule16.gif"
+            id="org.jboss.ide.eclipse.as.ui.packagedProject.image"
+            typeIds="jboss.package"/>
+      <image
+            icon="$nl$/icons/file.gif"
+            id="org.jboss.ide.eclipse.as.ui.simplefile.image"
+            typeIds="jboss.singlefile"/>
+      <image
+            icon="icons/osgi16.gif"
+            id="org.jboss.ide.eclipse.as.ui.osgi.image"
+            typeIds="jboss.osgi">
+      </image>
+   </extension>
+
+
+   <extension point="org.eclipse.wst.common.project.facet.core.runtimes">
+    <adapter>
+      <runtime-component id="org.jboss.ide.eclipse.as.runtime.component"/>
+      <factory class="org.eclipse.jst.server.ui.internal.RuntimeLabelProvider$Factory"/>
+      <type class="org.eclipse.wst.common.project.facet.ui.IRuntimeComponentLabelProvider"/>
+    </adapter>
+   </extension>
+   
+   <extension point="org.eclipse.wst.common.project.facet.core.runtimes">
+    <adapter>
+      <runtime-component id="org.jboss.ide.eclipse.eap.runtime.component"/>
+      <factory class="org.eclipse.jst.server.ui.internal.RuntimeLabelProvider$Factory"/>
+      <type class="org.eclipse.wst.common.project.facet.ui.IRuntimeComponentLabelProvider"/>
+    </adapter>
+   </extension>  
+
+   <extension point="org.eclipse.ui.ide.markerResolution">
+  		<markerResolutionGenerator
+     class="org.jboss.ide.eclipse.as.ui.marker.MarkerResolutionGenerator"
+     markerType="org.eclipse.wst.common.project.facet.core.validation.marker"/>
+   </extension>
+
+      <extension
+            point="org.eclipse.wst.server.ui.initialSelectionProvider">
+         <selectionProvider
+               class="org.jboss.ide.eclipse.as.ui.wizards.JBInitialSelectionProvider"
+               id="org.jboss.ide.eclipse.as.ui.jboss40SelectionProvider"/>
+      </extension>
+      <extension
+            point="org.jboss.ide.eclipse.as.ui.EventLogLabelProvider">
+         <labelProvider class="org.jboss.ide.eclipse.as.ui.views.server.providers.events.PollingLabelProvider"/>
+         <labelProvider class="org.jboss.ide.eclipse.as.ui.views.server.providers.events.PackagesPublishLabelProvider"/>
+      </extension>
+      <extension
+            point="org.jboss.ide.eclipse.as.ui.EventLogMajorType">
+         <MajorType
+               name="Build Events"
+               typeId="org.jboss.ide.eclipse.as.core.model.Packages"/>
+         <MajorType
+               name="Startup / Shutdown Events"
+               typeId="org.jboss.ide.eclipse.as.core.runtime.server.polling.MajorType"/>
+         <MajorType
+               name="Publish Events"
+               typeId="org.jboss.ide.eclipse.as.core.publishers.Events.MajorType"/>
+      </extension>
+    <extension
+          point="org.eclipse.wst.server.ui.editorPages">
+       <page
+             class="org.jboss.ide.eclipse.as.ui.editor.ModuleDeploymentPage"
+             id="org.jboss.ide.eclipse.as.ui.editor.deploymentPage"
+             name="Deployment"
+             typeIds="%AllJBTServerTypes">
+       </page>
+    </extension>
+
+      <extension
+         point="org.eclipse.wst.server.ui.editorPageSections">
+         <!--
+      <section
+            class="org.jboss.ide.eclipse.as.ui.editor.DeploySection"
+            id="org.jboss.ide.eclipse.as.ui.editor.deployServer.deployDir"
+            insertionId="org.eclipse.wst.server.editor.overview.left"
+            order="10"
+            typeIds="org.jboss.ide.eclipse.as.systemCopyServer, org.jboss.ide.eclipse.as.32, org.jboss.ide.eclipse.as.40, org.jboss.ide.eclipse.as.42, org.jboss.ide.eclipse.as.50,org.jboss.ide.eclipse.as.51,org.jboss.ide.eclipse.as.eap.43,org.jboss.ide.eclipse.as.eap.50"/>
+      -->
+      
+      <section
+            class="org.jboss.ide.eclipse.as.ui.editor.ModuleRestartSection"
+            id="org.jboss.ide.eclipse.as.ui.editor.moduleRestartSection"
+            insertionId="org.eclipse.wst.server.editor.overview.right"
+            order="9"
+            typeIds="%AllJBossServerTypes"/>
+      <section
+            class="org.jboss.ide.eclipse.as.ui.editor.PollerSection"
+            id="org.jboss.ide.eclipse.as.ui.editor.pollerSection"
+            insertionId="org.eclipse.wst.server.editor.overview.right"
+            order="10"
+            typeIds="%AllJBossServerTypes"/>
+      <section
+            class="org.jboss.ide.eclipse.as.ui.editor.PortSection"
+            id="org.jboss.ide.eclipse.as.ui.editor.portSection"
+            insertionId="org.eclipse.wst.server.editor.overview.right"
+            order="11"
+            typeIds="%AllJBossServerTypes"/>
+      <section
+            class="org.jboss.ide.eclipse.as.ui.editor.ServerPasswordSection"
+            id="org.jboss.ide.eclipse.as.ui.editor.passwordSection"
+            insertionId="org.eclipse.wst.server.editor.overview.left"
+            order="9"
+            typeIds="%AllJBossServerTypes"/>
+      <section
+            class="org.jboss.ide.eclipse.as.ui.editor.ServerModeSection"
+            id="org.jboss.ide.eclipse.as.ui.editor.serverModeSection"
+            insertionId="org.eclipse.wst.server.editor.overview.left"
+            order="10"
+            typeIds="%AllJBTServerTypes"/>
+            
+      <!-- NEW_SERVER_ADAPTER  Add the server editor sections for a new server above this line -->
+   </extension>
+
+
+
+
+
+   <extension
+         point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+      <launchConfigurationTypeImage
+            configTypeID="org.jboss.ide.eclipse.as.core.server.launchConfiguration"
+            icon="$nl$/icons/jboss.png"
+            id="org.jboss.ide.eclipse.as.ui.launchConfigurationImage1"/>
+   </extension>
+
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts 
+            file="InlineDocs/Twiddle/twiddleContext.xml">
+      </contexts>
+   </extension>
+
+   <extension point="org.eclipse.ui.popupMenus">
+	<objectContribution
+       adaptable="true"
+       id="org.jboss.ide.eclipse.as.ui.popups.makeDeployable.contrib"
+       nameFilter="*"
+       objectClass="org.eclipse.core.resources.IResource">
+      <action
+         id="org.jboss.ide.eclipse.as.ui.popups.makeDeployable.action"
+         label="Make Publishable"
+         icon="$nl$/icons/publish.gif"
+         menubarPath="additions"
+      class="org.jboss.ide.eclipse.as.ui.actions.DeployAction">
+      </action>
+   </objectContribution>
+</extension>
+   <extension
+         point="org.eclipse.ui.console.consolePatternMatchListeners">
+      <consolePatternMatchListener
+            class="org.jboss.ide.eclipse.as.ui.console.ELExceptionsMatcher"
+            id="org.jboss.ide.eclipse.as.ui.console.ELExceptionsMatcher"
+            regex="Exception.*: .* @[0-9]+,[0-9]+ ">
+         <enablement>
+         <or>
+			  <test property="org.eclipse.ui.console.consoleTypeTest" value="javaStackTraceConsole"/>
+               <test property="org.eclipse.debug.ui.processTypeTest" value="java"/>
+               <test property="org.eclipse.debug.ui.processTypeTest" value="org.eclipse.ant.ui.antProcess"/>
+            </or>
+         </enablement>
+      </consolePatternMatchListener>
+   </extension>
+   <extension
+         point="org.jboss.ide.eclipse.as.core.pollerFailureHandler">
+      <pollerHandler
+            class="org.jboss.ide.eclipse.as.ui.launch.UserPassCredentialProvider"
+            id="org.jboss.ide.eclipse.as.ui.launch.securityPollerHandler">
+      </pollerHandler>
+   </extension>
+
+
+
+
+   <extension point="org.eclipse.ui.actionSets">
+      <actionSet description="%actionSets.serverActions.description" id="org.jboss.tools.jst.web.ui.server.actionSet" label="%actionSets.serverActions.label" visible="true">
+         <action class="org.jboss.ide.eclipse.as.ui.actions.SelectServerActionDelegate" icon="$nl$/icons/actions/xpl/server.gif" id="org.jboss.tools.jst.web.ui.action.server.SelectServerActionDelegate" label="label1" style="pulldown" toolbarPath="Normal/SelectServer" tooltip="%actionSets.serverActions.selectServer.label">
+         </action>
+         <action class="org.jboss.ide.eclipse.as.ui.actions.ChangeTimeStampActionDelegate" icon="$nl$/icons/actions/webxml.gif" id="org.jboss.tools.jst.web.ui.action.server.ChangeTimeStampActionDelegate" label="label2" toolbarPath="Normal/server" tooltip="%actionSets.serverActions.changeWebXmlTimeStamp.label">
+         </action>
+         <action class="org.jboss.ide.eclipse.as.ui.actions.StopServerActionDelegate" icon="$nl$/icons/actions/stop.gif" id="org.jboss.tools.jst.web.ui.action.server.StopServerActionDelegate" label="label4" toolbarPath="Normal/server" tooltip="%actionSets.serverActions.stopServer.label">
+         </action>
+         <action class="org.jboss.ide.eclipse.as.ui.actions.DebugServerActionDelegate" icon="$nl$/icons/actions/xpl/debug.gif" id="org.jboss.tools.jst.web.ui.action.server.DebugServerActionDelegate" label="label6" toolbarPath="Normal/server" tooltip="%actionSets.serverActions.startServer.label">
+         </action>
+         <action class="org.jboss.ide.eclipse.as.ui.actions.RunServerActionDelegate" icon="$nl$/icons/actions/start.gif" id="org.jboss.tools.jst.web.ui.action.server.RunServerActionDelegate" label="label7" toolbarPath="Normal/server" tooltip="%actionSets.serverActions.startServer.label">
+         </action>
+      </actionSet>
+   </extension>
+   <extension
+         point="org.jboss.ide.eclipse.as.ui.ServerEditorPortSection">
+      <section
+            class="org.jboss.ide.eclipse.as.ui.editor.PortSection$JNDIPortEditorExtension"
+            serverIds="%ServerTypesJBoss6OrLower">
+      </section>
+      <section
+            class="org.jboss.ide.eclipse.as.ui.editor.PortSection$WebPortEditorExtension"
+            serverIds="%AllJBossServerTypes">
+      </section>
+      <section
+            class="org.jboss.ide.eclipse.as.ui.editor.PortSection$JBoss6JMXRMIPortEditorExtension"
+            serverIds="org.jboss.ide.eclipse.as.60">
+      </section>
+      <section
+            class="org.jboss.ide.eclipse.as.ui.editor.PortSection$JBoss7ManagementPortEditorExtension"
+            serverIds="%ServerTypesJBoss7">
+      </section>
+      
+      <!-- NEW_SERVER_ADAPTER  Add the new port sections in the server editor above this line -->
+   </extension>
+
+
+
+<!-- Provisional stuff to be contributed to Webtools -->
+
+   <extension point="org.eclipse.ui.views"> 
+      <view
+            category="org.eclipse.wst.server.ui"
+            class="org.jboss.ide.eclipse.as.ui.views.ServerLogView"
+            icon="$nl$/icons/console.gif"
+            id="org.jboss.ide.eclipse.as.ui.view.serverLogView"
+            name="%ViewName_ServerLog"
+            restorable="true">
+      </view>
+   </extension>
+   
+	<!-- Extensions to new Server View -->
+	<extension
+      point="org.eclipse.ui.navigator.navigatorContent">
+    <navigatorContent
+          activeByDefault="true"
+          contentProvider="org.jboss.ide.eclipse.as.ui.views.server.extensions.XPathTreeContentProvider"
+          icon="$nl$/icons/XMLFile.gif"
+          id="org.jboss.ide.eclipse.as.ui.extensions.xml"
+          labelProvider="org.jboss.ide.eclipse.as.ui.views.server.extensions.XPathTreeLabelProvider"
+          name="%NavigatorContent_XMLConfiguration"
+          priority="normal">
+       <triggerPoints>
+          <instanceof
+                value="org.eclipse.wst.server.core.IServer">
+          </instanceof>
+       </triggerPoints>
+       <possibleChildren>
+          <or>
+             <instanceof
+                   value="org.jboss.ide.eclipse.as.ui.views.server.extensions.XPathTreeContentProvider$ServerWrapper">
+             </instanceof>
+             <instanceof
+                   value="org.jboss.ide.eclipse.as.ui.views.server.extensions.XPathTreeContentProvider$DelayProxy">
+             </instanceof>
+             <instanceof
+                   value="org.jboss.ide.eclipse.as.core.extensions.descriptors.XPathCategory">
+             </instanceof>
+             <instanceof
+                   value="org.jboss.ide.eclipse.as.core.extensions.descriptors.XPathQuery">
+             </instanceof>
+             <instanceof
+                   value="org.jboss.ide.eclipse.as.core.extensions.descriptors.XPathFileResult">
+             </instanceof>
+             <instanceof
+                   value="org.jboss.ide.eclipse.as.core.extensions.descriptors.XPathFileResult$XPathResultNode">
+             </instanceof></or>
+       </possibleChildren>
+       <actionProvider
+             class="org.jboss.ide.eclipse.as.ui.views.server.extensions.XPathActionProvider"
+             id="org.jboss.ide.eclipse.as.ui.extensions.xml.actions"
+             priority="higher">
+       </actionProvider>
+    </navigatorContent>
+    <actionProvider
+          class="org.jboss.ide.eclipse.as.ui.views.server.extensions.ModuleActionProvider"
+          id="org.jboss.ide.eclipse.as.ui.extensions.modules">
+       <enablement>
+          <instanceof
+                value="org.eclipse.wst.server.ui.internal.view.servers.ModuleServer">
+          </instanceof>
+       </enablement>
+    </actionProvider>
+    <actionProvider
+	            class="org.jboss.tools.as.wst.server.ui.xpl.ExploreActionProvider"
+	            id="org.jboss.tools.as.wst.server.ui.ServersView.ExploreActionProvider"
+	            priority="higher">
+			<enablement>
+             <or>
+                <instanceof
+                      value="org.eclipse.wst.server.core.IServer">
+                </instanceof>
+                <instanceof
+                      value="org.eclipse.wst.server.ui.internal.view.servers.ModuleServer">
+                </instanceof>
+             </or>
+            </enablement>
+    </actionProvider>
+    <actionProvider
+          class="org.jboss.ide.eclipse.as.ui.views.server.extensions.ShowInJMXConsoleActionProvider"
+          id="org.jboss.ide.eclipse.as.ui.extensions.jmxConsole.showIn">
+       <enablement>
+          <instanceof
+                value="org.eclipse.wst.server.core.IServer">
+          </instanceof>
+       </enablement>
+    </actionProvider>
+    <actionProvider
+          class="org.jboss.ide.eclipse.as.ui.views.server.extensions.ShowInWebManagementActionProvider"
+          id="org.jboss.ide.eclipse.as.ui.extensions.managementConsole">
+       <enablement>
+          <instanceof
+                value="org.eclipse.wst.server.core.IServer">
+          </instanceof>
+       </enablement>
+    </actionProvider>
+    <actionProvider
+          class="org.jboss.ide.eclipse.as.ui.views.server.extensions.ShowInWelcomePageActionProvider"
+          id="org.jboss.ide.eclipse.as.ui.extensions.welcomePage">
+       <enablement>
+          <instanceof
+                value="org.eclipse.wst.server.core.IServer">
+          </instanceof>
+       </enablement>
+    </actionProvider>
+    <actionProvider
+          class="org.jboss.ide.eclipse.as.ui.views.server.extensions.ServerLogActionProvider"
+          id="org.jboss.ide.eclipse.as.ui.extensions.serverLog">
+       <enablement>
+          <instanceof
+                value="org.eclipse.wst.server.core.IServer">
+          </instanceof>
+       </enablement>
+    </actionProvider>
+	</extension>
+
+
+	<extension
+	      point="org.eclipse.ui.navigator.viewer">
+	   <viewerContentBinding
+	         viewerId="org.eclipse.wst.server.ui.ServersView">
+	      <includes>
+             <contentExtension
+                isRoot="false"
+                pattern="org.jboss.ide.eclipse.as.ui.extensions.xml">
+             </contentExtension>
+	      </includes>
+	   </viewerContentBinding>
+    <viewerActionBinding
+          viewerId="org.eclipse.wst.server.ui.ServersView">
+       <includes>
+          <actionExtension
+                pattern="org.jboss.ide.eclipse.as.ui.extensions.modules"/>
+          <actionExtension
+                pattern="org.jboss.ide.eclipse.as.ui.extensions.serverLog"/>
+          <actionExtension
+                pattern="org.jboss.tools.as.wst.server.ui.ServersView.ExploreActionProvider"/>
+          <actionExtension
+                pattern="org.jboss.ide.eclipse.as.ui.extensions.jmxConsole.showIn"/>
+          <actionExtension
+                pattern="org.jboss.ide.eclipse.as.ui.extensions.managementConsole"/>
+          <actionExtension
+                pattern="org.jboss.ide.eclipse.as.ui.extensions.welcomePage"/>
+       </includes>
+    </viewerActionBinding>
+	</extension>
+	
+	
+	<!-- Decorator for xpaths / xml-->
+	<extension point="org.eclipse.ui.decorators">
+      <decorator
+            class="org.jboss.ide.eclipse.as.ui.views.server.extensions.XPathDecorator"
+            id="org.jboss.ide.eclipse.as.ui.extensions.xml.decorator"
+            label="JBoss Server XML Configuration Decorator"
+            lightweight="true"
+            location="BOTTOM_RIGHT">
+         <enablement>
+            <or>
+               <objectClass name="org.jboss.ide.eclipse.as.core.extensions.descriptors.XPathQuery"/>
+               <objectClass
+                     name="org.jboss.ide.eclipse.as.core.extensions.descriptors.XPathFileResult">
+               </objectClass>
+               <objectClass
+                     name="org.jboss.ide.eclipse.as.core.extensions.descriptors.XPathFileResult$XPathResultNode">
+               </objectClass>
+            </or>
+         </enablement>
+      </decorator>
+   </extension>
+	
+	<!-- JMX Stuff 
+	   <extension
+         point="org.jboss.tools.jmx.ui.providerUI">
+      <providerUI
+            icon="$nl$/icons/jboss.png"
+            id="org.jboss.ide.eclipse.as.core.extensions.jmx.JBossServerConnectionProvider"
+            name="JBoss Server">
+      </providerUI>
+   </extension>-->
+    <extension
+          point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+       <launchConfigurationTypeImage
+             configTypeID="org.jboss.ide.eclipse.as.core.server.startupConfiguration"
+             icon="$nl$/icons/jboss.png"
+             id="org.jboss.ide.eclipse.as.ui.launchConfigurationTypeImage1">
+       </launchConfigurationTypeImage>
+    </extension>
+   <extension
+         point="org.eclipse.wst.server.core.runtimeLocators">
+      <runtimeLocator
+            class="org.jboss.ide.eclipse.as.ui.wizards.JBossRuntimeLocator"
+            id="org.jboss.ide.eclipse.as.ui.wizards.jboss.runtimeLocator"
+            typeIds="%AllJBossServerTypes">
+      </runtimeLocator>
+   </extension>
+   <extension
+         point="org.eclipse.wst.server.core.clients">
+      <client
+            class="org.jboss.ide.eclipse.as.ui.launch.JBTWebLaunchableClient"
+            description="Launches URLs in a web browser"
+            id="org.jboss.ide.eclipse.as.core.server.internal.launch.jbtLaunchClient"
+            launchable="org.jboss.ide.eclipse.as.core.server.internal.JBossLaunchAdapter$JBTCustomHttpLaunchable"
+            name="Web Launchable Client"
+            priority="20">
+      </client>
+   </extension>
+
+   <!-- AS v7+ specific server content -->
+	<extension
+      point="org.eclipse.ui.navigator.navigatorContent">
+    <navigatorContent
+          activeByDefault="true"
+          contentProvider="org.jboss.ide.eclipse.as.ui.views.as7.management.content.ServerContentTreeContentProvider"
+          id="org.jboss.ide.eclipse.as.ui.extensions.content"
+          labelProvider="org.jboss.ide.eclipse.as.ui.views.as7.management.content.ServerContentLabelProvider"
+          name="%NavigatorContent_ServerContent"
+          priority="normal">
+       <triggerPoints>
+          <and>
+             <instanceof
+                    value="org.eclipse.wst.server.core.IServer">
+             </instanceof>
+             <or>
+                 <test
+                       property="org.eclipse.wst.server.ui.serverType"
+                       value="org.jboss.ide.eclipse.as.70">
+                 </test>
+                 <test
+                       property="org.eclipse.wst.server.ui.serverType"
+                       value="org.jboss.ide.eclipse.as.71">
+                 </test>
+                 <test
+                       property="org.eclipse.wst.server.ui.serverType"
+                       value="org.jboss.ide.eclipse.as.eap.60">
+                 </test>
+             </or>
+          </and>
+       </triggerPoints>
+       <possibleChildren>
+          <instanceof
+                value="org.jboss.ide.eclipse.as.ui.views.as7.management.content.IContentNode">
+          </instanceof>
+       </possibleChildren>
+    </navigatorContent>
+    <actionProvider
+          class="org.jboss.ide.eclipse.as.ui.views.as7.management.content.RefreshActionProvider"
+          id="org.jboss.ide.eclipse.as.ui.extensions.content.container">
+       <enablement>
+          <instanceof
+                value="org.jboss.ide.eclipse.as.ui.views.as7.management.content.IContainerNode">
+          </instanceof>
+       </enablement>
+    </actionProvider>
+    <commonFilter
+          activeByDefault="true"
+          id="org.jboss.ide.eclipse.as.ui.extensions.content.filter.extensions"
+          name="JBoss AS7 Extensions Details"
+          visibleInUI="true">
+       <filterExpression>
+          <and>
+             <instanceof
+                   value="org.jboss.ide.eclipse.as.ui.views.as7.management.content.IContentNode">
+             </instanceof>
+             <test
+                   forcePluginActivation="true"
+                   property="org.jboss.ide.eclipse.as.ui.extensions.content.nodeAddress"
+                   value="/extension">
+             </test>
+          </and>
+       </filterExpression>
+    </commonFilter>
+    <commonFilter
+          activeByDefault="true"
+          id="org.jboss.ide.eclipse.as.ui.extensions.content.filter.deployment.artifact.details"
+          name="JBoss AS7 Deployment Artifact Details"
+          visibleInUI="true">
+       <filterExpression>
+          <and>
+             <instanceof
+                   value="org.jboss.ide.eclipse.as.ui.views.as7.management.content.IContentNode">
+             </instanceof>
+             <test
+                   forcePluginActivation="true"
+                   property="org.jboss.ide.eclipse.as.ui.extensions.content.nodeAddress"
+                   value="/deployment=.+/(subsystem|subdeployment|attributes)">
+             </test>
+          </and>
+       </filterExpression>
+    </commonFilter>
+	</extension>
+
+	<extension
+	      point="org.eclipse.ui.navigator.viewer">
+	   <viewerContentBinding
+	         viewerId="org.eclipse.wst.server.ui.ServersView">
+	      <includes>
+             <contentExtension
+                isRoot="false"
+                pattern="org.jboss.ide.eclipse.as.ui.extensions.content">
+             </contentExtension>
+             <contentExtension
+                isRoot="false"
+                pattern="org.jboss.ide.eclipse.as.ui.extensions.content.filter.*">
+             </contentExtension>
+	      </includes>
+	   </viewerContentBinding>
+    <viewerActionBinding
+          viewerId="org.eclipse.wst.server.ui.ServersView">
+       <includes>
+          <actionExtension
+                pattern="org.jboss.ide.eclipse.as.ui.extensions.content.*"/>
+       </includes>
+    </viewerActionBinding>
+	</extension>
+
+ <extension
+       point="org.eclipse.core.expressions.propertyTesters">
+    <propertyTester
+          class="org.jboss.ide.eclipse.as.ui.views.as7.management.content.ContentNodePropertyTester"
+          id="org.jboss.ide.eclipse.as.ui.extensions.content.propertyTester1"
+          namespace="org.jboss.ide.eclipse.as.ui.extensions.content"
+          properties="nodeName"
+          type="org.jboss.ide.eclipse.as.ui.views.as7.management.content.IContentNode">
+    </propertyTester>
+    <propertyTester
+          class="org.jboss.ide.eclipse.as.ui.views.as7.management.content.ContentNodePropertyTester"
+          id="org.jboss.ide.eclipse.as.ui.extensions.content.propertyTester2"
+          namespace="org.jboss.ide.eclipse.as.ui.extensions.content"
+          properties="nodeAddress"
+          type="org.jboss.ide.eclipse.as.ui.views.as7.management.content.IContentNode">
+    </propertyTester>
+ </extension>
+</plugin>

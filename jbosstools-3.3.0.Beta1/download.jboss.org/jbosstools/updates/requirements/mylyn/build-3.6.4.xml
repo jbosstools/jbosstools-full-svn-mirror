@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="mirror">
+	<!-- run locally in Eclipse (to resolve p2 tasks) using these commandline options:
+	
+		-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} 
+		-consoleLog -nosplash -data /tmp
+		-application org.eclipse.ant.core.antRunner
+		-f "/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/mylyn/build.xml"
+		
+		or, run headless on qa01 server, where Eclipse is installed into ~/eclipse:
+		
+		export JAVA_HOME=/opt/jdk1.6.0; \
+		${JAVA_HOME}/bin/java -cp ~/eclipse/plugins/org.eclipse.equinox.launcher_*.jar \
+			<iu id="org.eclipse.equinox.launcher.Main -vm ${JAVA_HOME} -consoleLog -nosplash -data /tmp \
+			-application org.eclipse.ant.core.antRunner \
+			-f ~/RHDS/updates/requirements/mylyn/build.xml -Ddestination=/tmp/mylyn-repo
+	-->
+	<target name="mirror">
+		<!-- core mylyn, if not on Indigo site; includes Bugzilla -->
+		<!-- <property name="URL1" value="http://download.eclipse.org/mylyn/snapshots/weekly/" /> -->
+		<!-- <property name="URL1" value="http://download.eclipse.org/mylyn/archive/3.6.0/v20110608-1400/" /> -->
+		<property name="URL1" value="http://download.eclipse.org/mylyn/drops/3.6.4/v20111118-0100/" />
+		<!-- JIRA connector; note that Subclipse connector is on Subclipse req site, ../subclipse/ -->
+		<!-- <property name="URL2" value="http://update.atlassian.com/atlassian-eclipse-plugin/weekly/e3.6/" /> -->
+		<property name="URL2" value="http://update.atlassian.com/atlassian-eclipse-plugin/e3.7" />
+		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/mylyn/3.6.4/" />
+		<property name="compress" value="true" />
+
+		<p2.mirror>
+			<repository location="file:${destination}/3.6.4.v20111118-0100" name="mylyn plugins for Eclipse 3.6 - 3.7" />
+			<source>
+				<repository location="${URL1}" />
+				<repository location="${URL2}" />
+			</source>
+
+			<slicingoptions includefeatures="true" followstrict="true" latestversiononly="true" />
+
+			<!-- available on indigo site but older version (3.6.2) -->
+			<iu id="org.eclipse.mylyn_feature.feature.group" />
+			<iu id="org.eclipse.mylyn.commons.feature.group" />
+			<iu id="org.eclipse.mylyn.context_feature.feature.group" />
+			<iu id="org.eclipse.mylyn.wikitext_feature.feature.group" />
+			<iu id="org.eclipse.mylyn.ide_feature.feature.group" />
+			<iu id="org.eclipse.mylyn.java_feature.feature.group" />
+			<iu id="org.eclipse.mylyn.pde_feature.feature.group" />
+			<iu id="org.eclipse.mylyn.team_feature.feature.group" />
+			<iu id="org.eclipse.mylyn.bugzilla_feature.feature.group" />
+			<iu id="org.eclipse.mylyn.versions.feature.group" />
+
+			<!-- not on indigo -->
+			<iu id="org.eclipse.mylyn.cvs.feature.group" />
+			<iu id="org.eclipse.mylyn.git.feature.group" />
+			<iu id="com.atlassian.connector.eclipse.feature.group" />
+			<iu id="com.atlassian.connector.eclipse.cvs.feature.group" />
+			<iu id="com.atlassian.connector.eclipse.jira.feature.group" />
+			<!-- these last two are described as "obsolete" on the update site -->
+			<iu id="com.atlassian.connector.eclipse.subclipse.feature.group" />
+			<iu id="com.atlassian.connector.eclipse.subversive.feature.group" />
+		</p2.mirror>
+
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/3.6.4.v20111118-0100/" artifactRepository="file:${destination}/3.6.4.v20111118-0100/" publishartifacts="true" source="${destination}/3.6.4.v20111118-0100/" compress="${compress}" />
+	</target>
+</project>

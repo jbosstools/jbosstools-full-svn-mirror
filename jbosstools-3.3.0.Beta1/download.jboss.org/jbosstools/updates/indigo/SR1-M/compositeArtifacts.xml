@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?compositeArtifactRepository version='1.0.0'?>
+<repository name='JBoss Tools Requirements - Composite Indigo SR1 Mirror' type='org.eclipse.equinox.internal.p2.artifact.repository.CompositeArtifactRepository' version='1.0.0'>
+<properties size='2'>
+<property name='p2.compressed' value='true'/>
+<property name='p2.timestamp' value='1328938726000'/>
+</properties>
+<children size='15'>
+<child location='../../requirements/indigo/201202012328-SR1-M/'/>
+<child location='../../requirements/birt/3.7.2.v20120207/'/>
+<child location='../../requirements/bpel/0.8.0.v20120202-0453-H135-CI/'/>
+<child location='../../requirements/bpmn2-modeler/201201302358/'/>
+<child location='../../requirements/ecf/3.5.4/'/>
+
+<child location='../../requirements/eclipse/3.7.2.M20120201-1336/'/>
+<child location='../../requirements/egit/1.2.0.201112131611/'/>
+<child location='../../requirements/emf/2.7.2.v20120130-0943/'/>
+<!-- <child location='http://dl.google.com/eclipse/plugin/3.7/'/> -->
+<child location='../../requirements/gwt/2.5.0.v201201120043-rel-r37/'/>
+<!-- includes m2e, m2e-extras, m2e-wtp, m2e-jdt-compiler -->
+<child location='../../requirements/m2eclipse/20120208-1400/'/>
+
+<child location='../../requirements/mylyn/3.6.5.I20120201-0822/'/>
+<child location='../../requirements/orbit/R20110523182458/'/>
+<child location='../../requirements/swtbot/2.0.5/'/>
+<child location='../../requirements/webtools/3.3.2-20120126205453/'/>
+<child location='../../requirements/xulrunner-1.9.2/'/>
+</children>
+</repository>
+

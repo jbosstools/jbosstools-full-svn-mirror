@@ -1,0 +1,74 @@
+<project
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.jboss.tools</groupId>
+		<artifactId>seam</artifactId>
+		<version>3.3.0-SNAPSHOT</version>
+	</parent>
+	<groupId>org.jboss.tools.seam</groupId>
+	<artifactId>tests</artifactId>
+	<name>seam.tests</name>
+	
+	<packaging>pom</packaging>
+	<modules>
+		<module>org.jboss.tools.seam.base.test</module>
+		<module>org.jboss.tools.seam.core.test</module>
+		<module>org.jboss.tools.seam.pages.xml.test</module>
+		<module>org.jboss.tools.seam.ui.bot.test</module>
+		<module>org.jboss.tools.seam.ui.test</module>
+		<module>org.jboss.tools.seam.xml.test</module>
+
+		<module>org.jboss.tools.seam121EAP.core.test</module>
+		<module>org.jboss.tools.seam121EAP.ui.test</module>
+
+		<module>org.jboss.tools.seam201GA.core.test</module>
+		<module>org.jboss.tools.seam201GA.ui.test</module>
+		<module>org.jboss.tools.seam202SP1.core.test</module>
+		<module>org.jboss.tools.seam202SP1.ui.test</module>
+		<module>org.jboss.tools.seam203CR1.core.test</module>
+		<module>org.jboss.tools.seam203CR1.ui.test</module>
+
+		<module>org.jboss.tools.seam211GA.core.test</module>
+		<module>org.jboss.tools.seam211GA.ui.test</module>
+		<module>org.jboss.tools.seam212GA.core.test</module>
+		<module>org.jboss.tools.seam212GA.ui.test</module>
+
+		<module>org.jboss.tools.seam220CR1.core.test</module>
+		<module>org.jboss.tools.seam220CR1.ui.test</module>
+		<module>org.jboss.tools.seam220GA.core.test</module>
+		<module>org.jboss.tools.seam220GA.ui.test</module>
+		<module>org.jboss.tools.seam221CR1.core.test</module>
+		<module>org.jboss.tools.seam221CR1.ui.test</module>
+		<module>org.jboss.tools.seam221CR2.core.test</module>
+		<module>org.jboss.tools.seam221CR2.ui.test</module>
+		<module>org.jboss.tools.seam230.core.test</module>
+		<module>org.jboss.tools.seam230.ui.test</module>
+
+		<module>org.jboss.tools.seamfp.core.test</module>
+		<module>org.jboss.tools.seamfp.ui.test</module>
+	</modules>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-surefire-plugin</artifactId>
+				<configuration>
+					<product>org.jboss.tools.tests.product</product>
+					<!-- default is 1800 sec = 30 min -->
+					<surefire.timeout>1800</surefire.timeout>
+					<forkedProcessTimeoutInSeconds>1800</forkedProcessTimeoutInSeconds>
+
+					<explodedBundles>
+						<bundle>org.jboss.tools.vpe</bundle>
+						<bundle>org.mozilla.xulrunner.cocoa.macosx</bundle>
+						<bundle>org.mozilla.xulrunner.gtk.linux.x86</bundle>
+						<bundle>org.mozilla.xulrunner.gtk.linux.x86_64</bundle>
+						<bundle>org.mozilla.xulrunner.win32.win32.x86</bundle>
+					</explodedBundles>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
+	

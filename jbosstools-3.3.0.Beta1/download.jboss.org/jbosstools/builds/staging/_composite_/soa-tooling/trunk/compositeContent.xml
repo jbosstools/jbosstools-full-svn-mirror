@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?compositeMetadataRepository version='1.0.0'?>
+<repository name='JBoss Tools - SOA Tooling - Staging Repository' type='org.eclipse.equinox.internal.p2.metadata.repository.CompositeMetadataRepository' version='1.0.0'>
+<properties size='2'>
+<property name='p2.compressed' value='true'/>
+<!-- 
+     get new time w/ 
+      date +%s000
+-->
+<property name='p2.timestamp' value='1327343490000'/>
+</properties>
+<children size='18'>
+
+<!-- SOA Tooling : 9 x 2 = 18 -->
+
+<child location='../../../../staging/jbosstools-3.3_trunk.component--bpel/all/repo/'/>
+<child location='../../../../staging/jbosstools-drools-5.3_trunk/all/repo/'/>
+<child location='../../../../staging/jbosstools-3.3_trunk.component--esb/all/repo/'/>
+<child location='../../../../staging/jbosstools-3.3_trunk.component--flow/all/repo/'/>
+<child location='../../../../staging/jbosstools-3.3_trunk.component--jbpm/all/repo/'/>
+<child location='../../../../staging/jbosstools-3.3_trunk.component--modeshape/all/repo/'/>
+<child location='../../../../staging/savara-tools-eclipse-master/all/repo/'/>
+<child location='../../../../staging/SwitchYard-Tools/eclipse/'/>
+<child location='../../../../staging/jbosstools-teiid-designer_trunk/all/repo/'/>
+
+<child location='../../../../staging.previous/jbosstools-3.3_trunk.component--bpel/all/repo/'/>
+<child location='../../../../staging.previous/jbosstools-3.3_trunk.component--esb/all/repo/'/>
+<child location='../../../../staging.previous/jbosstools-drools-5.3_trunk/all/repo/'/>
+<child location='../../../../staging.previous/jbosstools-3.3_trunk.component--flow/all/repo/'/>
+<child location='../../../../staging.previous/jbosstools-3.3_trunk.component--jbpm/all/repo/'/>
+<child location='../../../../staging.previous/jbosstools-3.3_trunk.component--modeshape/all/repo/'/>
+<child location='../../../../staging.previous/savara-tools-eclipse-master/all/repo/'/>
+<child location='../../../../staging.previous/SwitchYard-Tools/eclipse/'/>
+<child location='../../../../staging.previous/jbosstools-teiid-designer_trunk/all/repo/'/>
+
+<!-- <child location='http://download.jboss.org/savara/releases/updates/2.0.x/' /> -->
+
+</children>
+</repository>

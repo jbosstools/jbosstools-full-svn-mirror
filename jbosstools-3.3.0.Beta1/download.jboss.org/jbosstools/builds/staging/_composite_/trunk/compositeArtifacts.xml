@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?compositeArtifactRepository version='1.0.0'?>
+<repository name='JBoss Tools Staging Repository' type='org.eclipse.equinox.internal.p2.artifact.repository.CompositeArtifactRepository' version='1.0.0'>
+<properties size='2'>
+<property name='p2.compressed' value='true'/>
+<!-- 
+     get new time w/ 
+      date +%s000
+
+     JBIDE-10671: This file is deprecated. See ../core/trunk/ and ../soa-tooling/trunk/
+
+-->
+<property name='p2.timestamp' value='1327343910000'/>
+</properties>
+<children size='2'>
+<child location='../core/trunk/'/>
+<child location='../soa-tooling/trunk/'/>
+</children>
+</repository>

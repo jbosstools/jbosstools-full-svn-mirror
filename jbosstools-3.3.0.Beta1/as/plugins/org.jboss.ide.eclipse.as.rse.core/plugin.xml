@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.jboss.ide.eclipse.as.core.behaviourExtension">
+      <behaviour
+            name="%RSEMethodName"
+            publishMethod="org.jboss.ide.eclipse.as.rse.core.RSEPublishMethod"
+            serverTypes="org.jboss.ide.eclipse.as.systemCopyServer"
+            typeId="rse">
+      </behaviour>
+      <behaviour
+            behaviourDelegate="org.jboss.ide.eclipse.as.rse.core.RSEBehaviourDelegate"
+            launchDelegate="org.jboss.ide.eclipse.as.rse.core.RSEJBossStartLaunchDelegate"
+            name="%RSEMethodName"
+            publishMethod="org.jboss.ide.eclipse.as.rse.core.RSEPublishMethod"
+            serverTypes="%ServerTypesJBoss6OrLower"
+            typeId="rse">
+      </behaviour>
+      <behaviour
+            behaviourDelegate="org.jboss.ide.eclipse.as.rse.core.RSEJBoss7BehaviourDelegate"
+            launchDelegate="org.jboss.ide.eclipse.as.rse.core.RSEJBoss7StartLaunchDelegate"
+            name="%RSEMethodName"
+            publishMethod="org.jboss.ide.eclipse.as.rse.core.RSEPublishMethod"
+            serverTypes="%ServerTypesJBoss7"
+            typeId="rse">
+      </behaviour>
+   </extension>
+   <!-- NEW_SERVER_ADAPTER  Add the new RSE behaviour delegate if needed for the new server above this line -->
+</plugin>

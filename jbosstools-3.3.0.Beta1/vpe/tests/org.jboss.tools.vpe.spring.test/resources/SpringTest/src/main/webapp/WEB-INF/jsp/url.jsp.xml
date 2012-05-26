@@ -1,0 +1,23 @@
+<tests>
+	<test id="url1">
+		<DIV ID="url1">
+			<SPAN CLASS="vpe-text">
+				http://community.jboss.org/en/jbosstools?view=discussions
+			</SPAN>
+		</DIV>
+	</test>
+	<test id="url2">
+		<DIV ID="url2">
+			<SPAN CLASS="vpe-text">
+				http://community.jboss.org/en/jbosstools?view=discussions&amp;emptyParam2
+			</SPAN>
+		</DIV>
+	</test>
+	<test id="url3">
+		<DIV ID="url3">
+			<SPAN CLASS="vpe-text">
+				http://community.jboss.org/en/jbosstools?view=discussions&amp;emptyParam2
+			</SPAN>
+		</DIV>
+	</test>
+</tests>

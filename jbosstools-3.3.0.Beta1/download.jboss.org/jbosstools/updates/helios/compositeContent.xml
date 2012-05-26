@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?compositeMetadataRepository version='1.0.0'?>
+<repository name='JBoss Tools Requirements - Composite Helios Mirror' type='org.eclipse.equinox.internal.p2.metadata.repository.CompositeMetadataRepository' version='1.0.0'>
+<properties size='2'>
+<property name='p2.compressed' value='true'/>
+<!-- 
+" add this to your ~/.vimrc file, then use \ts to update timestamp to current
+fun! ReplaceTimestamp()
+	let tstamp = strftime("%s000")
+	exe ":%s#<property name='p2.timestamp' value='[0-9]\\+'/>#<property name='p2.timestamp' value='" . tstamp . "'/>#g"
+	echo "New time: " . tstamp
+endfun
+nnoremap <Leader>ts :call ReplaceTimestamp()<CR>
+-->
+<property name='p2.timestamp' value='1327466959000'/>
+</properties>
+<children size='13'>
+<child location='../requirements/helios/SR2/'/>
+<child location='../requirements/birt/2.6.2/'/>
+<child location='../requirements/ecf/3.4/'/>
+<child location='../requirements/eclipse/3.6/'/>
+<child location='../requirements/emf/2.6/'/>
+
+<child location='../requirements/gwt/201012211742/'/>
+<child location='../requirements/m2eclipse/20110728-1500/'/>
+<child location='../requirements/m2eclipse/m2eclipse-wtp-0.13.1/'/>
+<child location='../requirements/orbit/R20100519200754/'/>
+<!-- <child location='../requirements/swt/3.6.2.v3660-patched_JBDS-1648/'/> -->
+
+<child location='../requirements/swtbot/2.0.3/'/>
+<child location='../requirements/tptp/4.7/'/>
+<child location='../requirements/webtools/3.2.5-20110915223420/'/>
+<child location='../requirements/xulrunner-1.9.1.2/'/>
+</children>
+</repository>
+

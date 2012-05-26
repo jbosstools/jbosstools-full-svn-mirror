@@ -1,0 +1,827 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.jboss.tools</groupId>
+	<artifactId>org.jboss.tools.parent.pom</artifactId>
+	<version>0.0.3-SNAPSHOT</version>
+	<name>JBoss Tools Parent</name>
+	<packaging>pom</packaging>
+	<modules>
+		<module>../target-platform</module>
+	</modules>
+
+	<properties>
+		<!-- to build w/ latest 0.14.0-SNAPSHOT, run `mvn install -DtychoVersion=0.14.0-SNAPSHOT`, 
+			or uncomment this property: <tychoVersion>0.14.0-SNAPSHOT</tychoVersion> -->
+		<tychoVersion>0.13.0</tychoVersion>
+		<scmBranch>trunk</scmBranch>
+		<JBT_VERSION>3.3.0</JBT_VERSION>
+		<JBDS_VERSION>5.0.0</JBDS_VERSION>
+		<BUILD_ALIAS>Beta2</BUILD_ALIAS>
+		<memoryOptions1>-Xms512m -Xmx1024m -XX:PermSize=256m</memoryOptions1>
+		<memoryOptions2>-XX:MaxPermSize=256m</memoryOptions2>
+		<systemProperties></systemProperties>
+		<maven.antrun.plugin.version>1.3</maven.antrun.plugin.version>
+		<swtbot.test.skip>true</swtbot.test.skip>
+
+		<!-- target files available for building: multiple sites, 1 unified site, 
+			1 local mirrored site -->
+		<target.platform.classifier.unified>unified
+		</target.platform.classifier.unified>
+		<target.platform.classifier.local>local
+		</target.platform.classifier.local>
+
+		<!-- 1a. URL of latest JBT target platform site -->
+		<jbosstools-target-site>http://download.jboss.org/jbosstools/updates/target-platform_3.3.indigo.SR2/latest/</jbosstools-target-site>
+
+		<!-- 1b. or use -Plocal.site -Dlocal.site=file:///home/$user/3.3.indigo/build/target-platform/REPO/ -->
+		<!-- TODO: don't forget to update JBDS .updatesite jobs when this value changes! -->
+		<local.site>file:///home/hudson/static_build_env/jbds/target-platform_3.3.indigo.SR2/e372M-wtp332M.target/</local.site>
+
+		<!-- 2a. URL of latest JBT nightly staging composite site (all the components 
+			in once place) -->
+		<!-- for trunk use _composite_/3.3.indigo; for 3.3_stable_branch, use _composite_/3.3.indigo -->
+		<jbosstools-nightly-staging-composite>http://download.jboss.org/jbosstools/builds/staging/_composite_/core/3.3.indigo/</jbosstools-nightly-staging-composite>
+		<!-- this site is not enabled by default as SOA Tooling is a downstream project (sorta). -->
+		<jbosstools-nightly-staging-composite-soa-tooling>http://download.jboss.org/jbosstools/builds/staging/_composite_/soa-tooling/3.3.indigo/</jbosstools-nightly-staging-composite-soa-tooling>
+
+		<!-- 2b. or use -Plocal.composite -Dlocal.composite=file:///path/to/mirror/of/composite/staging/site/ -->
+		<!-- for trunk use _composite_/3.3.indigo; for 3.3_stable_branch, use _composite_/3.3.indigo -->
+		<local.composite>file:///home/hudson/static_build_env/jbds/builds/staging/_composite_/3.3.indigo/</local.composite>
+
+		<!-- 3a. URL of latest JBT requirements composite mirror -->
+		<!-- TODO: don't forget to update this in ../aggregate/*/associate.properties too (5 files)! -->
+		<jboss-requirements-composite-mirror>http://download.jboss.org/jbosstools/updates/indigo/SR2/</jboss-requirements-composite-mirror>
+
+		<!-- 3b., or use -Plocal.requirements -Dlocal.requirements=file:///path/to/mirror/of/composite/requirements/site -->
+		<local.requirements>file:///qa/services/http/binaries/RHDS/updates/indigo/</local.requirements>
+
+		<!-- 4. published aggregate update site goes here, for consumption by QE 
+			and downstream JBDS builds -->
+		<jbosstools-nightly>http://download.jboss.org/jbosstools/updates/nightly/core/3.3.indigo/</jbosstools-nightly>
+		<!-- this site is not enabled by default as SOA Tooling is a downstream project (sorta). -->
+		<jbosstools-nightly-soa-tooling>http://download.jboss.org/jbosstools/updates/nightly/soa-tooling/3.3.indigo/</jbosstools-nightly-soa-tooling>
+
+		<!-- 5. extra requirements (for 3rd party "Extras" site) -->
+		<jboss-requirements-composite-extras-mirror>http://download.jboss.org/jbosstools/updates/indigo/extras/SR1a/</jboss-requirements-composite-extras-mirror>
+	</properties>
+
+	<build>
+		<sourceDirectory>src</sourceDirectory>
+		<plugins>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>${maven.antrun.plugin.version}</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-packaging-plugin</artifactId>
+				<version>${tychoVersion}</version>
+				<configuration>
+					<format>'v'yyyyMMdd-HHmm'-${BUILD_ALIAS}'</format>
+					<archiveSite>true</archiveSite>
+					<environments>
+						<environment>
+							<os>macosx</os>
+							<ws>cocoa</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>macosx</os>
+							<ws>cocoa</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86_64</arch>
+						</environment>
+					</environments>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-maven-plugin</artifactId>
+				<version>${tychoVersion}</version>
+				<extensions>true</extensions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<version>${tychoVersion}</version>
+				<configuration>
+					<resolver>p2</resolver>
+					<ignoreTychoRepositories>true</ignoreTychoRepositories>
+					<environments>
+						<environment>
+							<os>macosx</os>
+							<ws>cocoa</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86_64</arch>
+						</environment>
+					</environments>
+				</configuration>
+			</plugin>
+
+			<!-- to skip running tests (compile only) use commandline flag: -Dmaven.test.skip 
+				To allow all tests in a pom to pass/fail, use commandline flag: -fae (fail 
+				at end) -->
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-surefire-plugin</artifactId>
+				<version>${tychoVersion}</version>
+				<configuration>
+					<!-- timeout in seconds -->
+					<surefire.timeout>1800</surefire.timeout>
+					<forkedProcessTimeoutInSeconds>1800</forkedProcessTimeoutInSeconds>
+					<useUIHarness>true</useUIHarness>
+					<useUIThread>true</useUIThread>
+					<!-- THE FOLLOWING LINE MUST NOT BE BROKEN BY AUTOFORMATTING -->
+					<argLine>${memoryOptions1} ${memoryOptions2} ${systemProperties} -Dusage_reporting_enabled=false</argLine>
+					<!-- https://docs.sonatype.org/display/TYCHO/How+to+run+SWTBot+tests+with+Tycho -->
+					<!-- set useUIThread=true for regular ui tests -->
+					<!-- set useUIThread=false for swtbot tests (?) -->
+
+					<!-- TODO: add new profile to permit running against JBDS product/application 
+						for JBDS tests, against Eclipse SDK for JBT -->
+					<product>org.eclipse.platform.ide</product>
+					<application>org.eclipse.ui.ide.workbench</application>
+					<dependencies>
+						<dependency>
+							<type>p2-installable-unit</type>
+							<artifactId>org.eclipse.platform.ide</artifactId>
+							<version>0.0.0</version>
+						</dependency>
+						<!-- http://www.jmock.org/maven.html -->
+						<dependency>
+							<groupId>org.jmock</groupId>
+							<artifactId>jmock-legacy</artifactId>
+							<version>2.5.1</version>
+						</dependency>
+						<dependency>
+							<groupId>org.jmock</groupId>
+							<artifactId>jmock-junit4</artifactId>
+							<version>2.5.1</version>
+						</dependency>
+					</dependencies>
+					<includes>
+						<include>**/AllTests.class</include>
+						<include>**/*AllTests*.class</include>
+						<include>**/*AllBotTests*.class</include>
+						<include>**/*TestSuite*.class</include>
+					</includes>
+					<parallel>true</parallel>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-compiler-plugin</artifactId>
+				<version>${tychoVersion}</version>
+				<configuration>
+					<encoding>UTF-8</encoding>
+					<!-- not strictly needed but this suppresses warnings when compiling 
+						that the default value (1.5) is being overwritten by the value in the MANIFEST.MF. 
+						You can use this in your plugins or their aggregator pom.xml files to set 
+						this for your plugins -->
+					<!-- <source>1.6</source> -->
+					<!-- <target>1.6</target> -->
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.sonatype.tycho</groupId>
+				<artifactId>maven-osgi-source-plugin</artifactId>
+				<version>${tychoVersion}</version>
+			</plugin>
+			<!-- enable source bundle generation -->
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-source-plugin</artifactId>
+				<version>${tychoVersion}</version>
+				<executions>
+					<execution>
+						<id>plugin-source</id>
+						<goals>
+							<goal>plugin-source</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.4.1</version>
+				<configuration>
+					<encoding>ISO-8859-1</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<scm>
+		<connection>scm:svn:http://anonsvn.jboss.org/repos/jbosstools/${scmBranch}
+		</connection>
+		<developerConnection>scm:svn:http://anonsvn.jboss.org/repos/jbosstools/${scmBranch}
+		</developerConnection>
+		<url>http://anonsvn.jboss.org/repos/jbosstools/${scmBranch}
+		</url>
+	</scm>
+
+	<issueManagement>
+		<system>jira</system>
+		<url>https://jira.jboss.org/jira/secure/</url>
+	</issueManagement>
+	<profiles>
+
+
+		<!-- Latest JBT work-in-progress component builds (CI builds), not yet 
+			pushed to the above nightly update site -->
+		<!-- disabled by default because it causes local compilation problems -->
+		<profile>
+			<id>jbosstools-nightly-staging-composite</id>
+			<activation>
+				<property>
+					<name>swtbot.test.skip</name>
+					<value>false</value>
+				</property>
+			</activation>
+			<repositories>
+				<repository>
+					<id>jbosstools-nightly-staging-composite</id>
+					<url>${jbosstools-nightly-staging-composite}</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+			</repositories>
+		</profile>
+		<profile>
+			<id>jbosstools-nightly-staging-composite-soa-tooling</id>
+			<activation>
+				<property>
+					<name>swtbot.test.skip</name>
+					<value>false</value>
+				</property>
+			</activation>
+			<repositories>
+				<repository>
+					<id>jbosstools-nightly-staging-composite-soa-tooling</id>
+					<url>${jbosstools-nightly-staging-composite-soa-tooling}</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+			</repositories>
+		</profile>
+
+		<!-- same contents as jboss-requirements-composite-mirror, but locally 
+			available (to improve network lag) -->
+		<profile>
+			<id>local.requirements</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<repositories>
+				<repository>
+					<id>local.requirements</id>
+					<url>${local.requirements}</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+			</repositories>
+		</profile>
+
+		<!-- same contents as jbosstools-nightly-staging-composite, but locally 
+			available (to improve network lag) -->
+		<profile>
+			<id>local.composite</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<repositories>
+				<repository>
+					<id>local.composite</id>
+					<url>${local.composite}</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+			</repositories>
+		</profile>
+
+		<!-- Contains all the Eclipse.org deps, mirrored onto download.jboss.org. 
+			This is the superset of sites from which the TP is created. Should be disabled 
+			closer to GA so we're only using the TP contents exclusively. -->
+		<!-- deactivated by default, because target platform should be enough to 
+			compile everything -->
+		<profile>
+			<id>jboss-requirements-composite-mirror</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<repositories>
+				<repository>
+					<id>jboss-requirements-composite-mirror</id>
+					<url>${jboss-requirements-composite-mirror}</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+			</repositories>
+		</profile>
+
+		<!-- Contains all the Third Party Extras deps. This is the superset of 
+			sites from which the JBDS Extras site is created. -->
+		<profile>
+			<id>jboss-requirements-composite-extras-mirror</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<repositories>
+				<repository>
+					<id>jboss-requirements-composite-extras-mirror</id>
+					<url>${jboss-requirements-composite-extras-mirror}</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+			</repositories>
+		</profile>
+
+		<!-- Target platform file pointing at a single update site from which to 
+			resolve. See unified.site if you want to resolve against a site w/o using 
+			the unified.target file -->
+		<profile>
+			<id>unified.target</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.eclipse.tycho</groupId>
+						<artifactId>target-platform-configuration</artifactId>
+						<version>${tychoVersion}</version>
+						<configuration>
+							<target>
+								<artifact>
+									<groupId>org.jboss.tools</groupId>
+									<artifactId>org.jboss.tools.target.platform</artifactId>
+									<version>0.0.2-SNAPSHOT</version>
+									<classifier>${target.platform.classifier.unified}</classifier>
+								</artifact>
+							</target>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<!-- To use this profile, must have first created a local.target file, 
+			which points to a local repo. You can do this by hand or generate it from 
+			multiple.target using: cd ~/3.3.indigo/build/target-platform; ant See also the 
+			README in target-platform/ folder for additional usage examples. You can 
+			also run `ant help`. If you want to build the target-platform/pom.xml AND 
+			generate a local repo + local.target file ALL AT THE SAME TIME, you can do: 
+			mvn clean install -Pget.local.target -f /path/to/target-platform/pom.xml -->
+		<profile>
+			<id>local.target</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.eclipse.tycho</groupId>
+						<artifactId>target-platform-configuration</artifactId>
+						<version>${tychoVersion}</version>
+						<configuration>
+							<target>
+								<artifact>
+									<groupId>org.jboss.tools</groupId>
+									<artifactId>org.jboss.tools.target.platform</artifactId>
+									<version>0.0.2-SNAPSHOT</version>
+									<classifier>${target.platform.classifier.local}</classifier>
+								</artifact>
+							</target>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<!-- if you have a local repo mirror of the unified.site, you can use this 
+			profile with the -Dlocal.site=file:///path/to/repo to resolve dependencies 
+			without needing to use a local.site file -->
+		<profile>
+			<id>local.site</id>
+			<activation>
+				<property>
+						<name>BUILD_NUMBER</name>
+				</property>
+			</activation>
+			<repositories>
+				<repository>
+					<id>local.site</id>
+					<url>${local.site}</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+			</repositories>
+		</profile>
+
+		<!-- GWT dependencies which we can't mirror and must reference directly. -->
+		<!-- still needed? JBIDE-10595 vs. JBIDE-10742 -->
+		<profile>
+			<id>gwt</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<repositories>
+				<repository>
+					<id>gwt</id>
+					<url>http://dl.google.com/eclipse/plugin/3.7/</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+			</repositories>
+		</profile>
+
+		<profile>
+			<id>osx</id>
+			<activation>
+				<property>
+					<name>java.vendor.url</name>
+					<value>http://www.apple.com/</value>
+				</property>
+			</activation>
+			<properties>
+				<!-- THE FOLLOWING LINE MUST NOT BE BROKEN BY AUTOFORMATTING -->
+				<systemProperties combine.children="append"> -d32 -Dosgi.arch=x86 -XstartOnFirstThread </systemProperties>
+			</properties>
+		</profile>
+
+		<profile>
+			<id>hudson</id>
+			<activation>
+				<property>
+					<name>BUILD_NUMBER</name>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.eclipse.tycho</groupId>
+						<artifactId>tycho-packaging-plugin</artifactId>
+						<version>${tychoVersion}</version>
+						<configuration>
+							<format>'v'yyyyMMdd-HHmm'-H${BUILD_NUMBER}-${BUILD_ALIAS}'</format>
+							<archiveSite>true</archiveSite>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>coverage</id>
+			<activation>
+				<property>
+					<name>coverage</name>
+				</property>
+			</activation>
+			<properties>
+				<emma.session.out.file>${project.build.directory}/emma/coverage.es</emma.session.out.file>
+				<emma.filter />
+				<emma.instrument.bundles />
+			</properties>
+			<build>
+				<plugins>
+					<!-- plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>build-helper-maven-plugin</artifactId> 
+						<executions> <execution> <id>attach-artifacts</id> <phase>package</phase> 
+						<goals> <goal>attach-artifact</goal> </goals> <configuration> <artifacts> 
+						<artifact> <file>${emma.session.out.file}</file> <type>es</type> </artifact> 
+						</artifacts> </configuration> </execution> </executions> </plugin -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-install-plugin</artifactId>
+						<version>2.3.1</version>
+						<configuration>
+							<file></file>
+							<groupId></groupId>
+							<artifactId></artifactId>
+							<version></version>
+							<packaging></packaging>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.eclipse.tycho</groupId>
+						<artifactId>tycho-surefire-plugin</artifactId>
+						<version>${tychoVersion}</version>
+						<configuration>
+							<systemProperties combine.children="append">
+								<emma.session.out.file>${emma.session.out.file}</emma.session.out.file>
+								<emma.filter>${emma.filter}</emma.filter>
+								<eclemma.instrument.bundles>${emma.instrument.bundles}</eclemma.instrument.bundles>
+							</systemProperties>
+							<frameworkExtensions>
+								<frameworkExtension>
+									<groupId>org.eclemma.runtime.equinox</groupId>
+									<artifactId>org.eclemma.runtime.equinox</artifactId>
+									<version>1.1.0.200908261008</version>
+								</frameworkExtension>
+							</frameworkExtensions>
+							<application>org.eclipse.ui.ide.workbench</application>
+							<dependencies>
+								<dependency>
+									<type>p2-installable-unit</type>
+									<artifactId>org.eclipse.platform.ide</artifactId>
+									<version>0.0.0</version>
+								</dependency>
+							</dependencies>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<version>${maven.antrun.plugin.version}</version>
+						<dependencies>
+							<dependency>
+								<groupId>emma</groupId>
+								<artifactId>emma_ant</artifactId>
+								<version>2.0.5312</version>
+							</dependency>
+							<dependency>
+								<groupId>emma</groupId>
+								<artifactId>emma</artifactId>
+								<version>2.0.5312</version>
+							</dependency>
+							<dependency>
+								<groupId>ant-contrib</groupId>
+								<artifactId>ant-contrib</artifactId>
+								<version>1.0b3</version>
+								<exclusions>
+									<exclusion>
+										<groupId>ant</groupId>
+										<artifactId>ant</artifactId>
+									</exclusion>
+								</exclusions>
+							</dependency>
+						</dependencies>
+						<executions>
+							<execution>
+								<id>emma-report</id>
+								<phase>post-integration-test</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<tasks>
+										<taskdef resource="emma_ant.properties" />
+										<taskdef resource="net/sf/antcontrib/antlib.xml" />
+										<if>
+											<available file="${project.build.directory}/emma"
+												type="dir" />
+											<then>
+												<echo>Process emma report...</echo>
+												<for list="${emma.instrument.bundles}" param="bundle">
+													<sequential>
+														<property name="@{bundle}-classes"
+															location="${project.build.directory}/../../../plugins/@{bundle}" />
+														<if>
+															<available file="${@{bundle}-classes}" type="dir" />
+															<then>
+																<echo>Generating coverage metadata for ${@{bundle}-classes}</echo>
+																<emma enabled="true">
+																	<instr metadatafile="${project.build.directory}/emma/@{bundle}-coverage.em"
+																		mode="copy" outdir="${project.build.directory}/instrumented-classes/@{bundle}">
+																		<instrpath>
+																			<dirset dir="${@{bundle}-classes}">
+			        															<include name="target/*classes"/>
+																			</dirset>
+																		</instrpath>
+																	</instr>
+																</emma>
+															</then>
+															<else>
+																<echo>Skipping coverage metadata generation for ${@{bundle}-classes}</echo>
+															</else>
+														</if>
+													</sequential>
+												</for>
+												<emma enabled="true">
+													<report>
+														<infileset dir="${project.build.directory}/emma"
+															includes="*.es,*.em" />
+														<txt outfile="${project.build.directory}/emma/coverage.txt" />
+														<xml outfile="${project.build.directory}/emma/coverage.xml" />
+														<html outfile="${project.build.directory}/emma/coverage.html" />
+													</report>
+												</emma>
+												<if>
+													<available file="${project.build.directory}/emma/coverage.txt" type="file" />
+													<then>
+														<loadfile property="emma.txt" srcFile="${project.build.directory}/emma/coverage.txt" failonerror="false" />
+														<echo>${emma.txt}</echo>
+													</then>
+													<else>
+														<echo>No coverage report found </echo>
+													</else>
+												</if>
+											</then>
+										</if>
+									</tasks>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>requirements</id>
+			<activation>
+				<file>
+					<exists>${basedir}/requirements.properties</exists>
+				</file>
+			</activation>
+			<properties>
+				<requirements.root>${basedir}/../../../requirements</requirements.root>
+				<requirement.build.root>${requirements.root}/target</requirement.build.root>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<dependencies>
+							<dependency>
+								<groupId>ant-contrib</groupId>
+								<artifactId>ant-contrib</artifactId>
+								<version>1.0b3</version>
+								<exclusions>
+									<exclusion>
+										<groupId>ant</groupId>
+										<artifactId>ant</artifactId>
+									</exclusion>
+								</exclusions>
+							</dependency>
+							<dependency>
+									<groupId>ant</groupId>
+									<artifactId>ant-optional</artifactId>
+									<version>1.5.3-1</version>
+									<exclusions>
+										<exclusion>
+											<groupId>ant</groupId>
+											<artifactId>ant</artifactId>
+										</exclusion>
+									</exclusions>
+							</dependency>
+						</dependencies>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<version>${maven.antrun.plugin.version}</version>
+						<executions>
+							<execution>
+								<id>download-plugin-requirements</id>
+								<phase>generate-test-resources</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<tasks>
+										<taskdef resource="net/sf/antcontrib/antcontrib.properties" />
+										<if>
+											<available file="${requirements.root}" type="dir" />
+											<then>
+												<property file="requirements.properties" />
+												<echo>Requirements build</echo>
+												<ant dir="${requirements.root}" inheritAll="true">
+													<property name="requirements" value="${requirements}" />
+													<property name="settings.offline" value="${settings.offline}" />
+													<property name="skipDownload" value="${skipDownload}" />
+												</ant>
+											</then>
+										</if>
+									</tasks>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>default</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<repositories>
+				<!-- Single repo containing contents of unified.target, but without using 
+					the target file -->
+				<repository>
+					<id>jbosstools-target-site</id>
+					<url>${jbosstools-target-site}</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+			</repositories>
+		</profile>
+	</profiles>
+
+	<!-- Additional m2 repos to resolve things like org.eclipse.tycho:tycho-maven-plugin:0.13.0-SNAPSHOT -->
+	<pluginRepositories>
+		<pluginRepository>
+			<id>sonatype-public-grid</id>
+			<name>sonatype-public-grid</name>
+			<url>https://repository.sonatype.org/content/groups/sonatype-public-grid</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>repository.sonatype.org-snapshots</id>
+			<name>repository.sonatype.org-snapshots</name>
+			<url>https://repository.sonatype.org/content/repositories/snapshots</url>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<!-- commented to check if it is added by default on hudson but with https:// -->
+	<!-- pluginRepositories> <pluginRepository> <id>jboss-public-repository-group</id> 
+		<name>JBoss Public Repository Group</name> <url>http://repository.jboss.org/nexus/content/groups/public/</url> 
+		<releases> <enabled>true</enabled> </releases> <snapshots> <enabled>true</enabled> 
+		</snapshots> </pluginRepository> </pluginRepositories -->
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>jboss-snapshots-repository</id>
+			<name>JBoss Snapshots Repository</name>
+			<url>https://repository.jboss.org/nexus/content/repositories/snapshots/</url>
+		</snapshotRepository>
+		<!-- <repository> <id>jboss-releases-repository</id> <name>JBoss Releases 
+			Repository</name> <uniqueVersion>false</uniqueVersion> <url>https://repository.jboss.org/nexus/content/repositories/releases/</url> 
+			<layout>default</layout> </repository> <snapshotRepository> <id>jboss-snapshots-repository</id> 
+			<name>JBoss Snapshot Repository</name> <uniqueVersion>false</uniqueVersion> 
+			<url>https://repository.jboss.org/nexus/content/repositories/snapshots/</url> 
+			<layout>default</layout> </snapshotRepository> -->
+	</distributionManagement>
+</project>

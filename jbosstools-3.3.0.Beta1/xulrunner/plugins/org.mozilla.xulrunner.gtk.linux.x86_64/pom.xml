@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion> 
+	<parent>
+		<groupId>org.jboss.tools.xulrunner</groupId>
+		<artifactId>plugins</artifactId>
+		<version>1.9.2-SNAPSHOT</version>
+	</parent>
+	<groupId>org.jboss.tools.xulrunner.plugins</groupId>
+	<artifactId>org.mozilla.xulrunner.gtk.linux.x86_64</artifactId>
+	<!--  1.9.2.19pre version is downloaded from XULRunner nightly builds
+		http://ftp.mozilla.org/pub/mozilla.org/xulrunner/nightly/latest-trunk/ .
+		This build  works on RHEL5 x86_64 unlike ones we compiled under Ununtu x86_64 (see JBIDE-9146)-->
+	<version>1.9.2.19pre</version>
+	<packaging>eclipse-plugin</packaging>
+	<build>
+	   <plugins>
+	     <plugin>
+  	       <groupId>org.eclipse.tycho</groupId>
+  	       <artifactId>target-platform-configuration</artifactId>
+  	       <version>${tychoVersion}</version>
+  	       <configuration>
+    	     <resolver>p2</resolver>
+    	     <environments>
+      	     <environment>
+        	     <os>linux</os>
+        	     <ws>gtk</ws>
+        	     <arch>x86_64</arch>
+      	     </environment>
+    	     </environments>
+  	       </configuration>
+	     </plugin>
+	   </plugins>
+	</build>
+</project>

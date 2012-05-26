@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?artifactRepository version='1.1.0'?>
+<repository name='JBoss SWT Patches' type='org.eclipse.equinox.p2.artifact.repository.simpleRepository' version='1.0.0'>
+  <properties size='2'>
+    <property name='p2.timestamp' value='1321473022637'/>
+    <property name='p2.compressed' value='false'/>
+  </properties>
+  <mappings size='3'>
+    <rule filter='(&amp; (classifier=osgi.bundle))' output='${repoUrl}/plugins/${id}_${version}.jar'/>
+    <rule filter='(&amp; (classifier=binary))' output='${repoUrl}/binary/${id}_${version}'/>
+    <rule filter='(&amp; (classifier=org.eclipse.update.feature))' output='${repoUrl}/features/${id}_${version}.jar'/>
+  </mappings>
+  <artifacts size='8'>
+    <artifact classifier='osgi.bundle' id='org.eclipse.swt.win32.win32.x86' version='3.6.2.v3660'>
+      <properties size='3'>
+        <property name='artifact.size' value='2407927'/>
+        <property name='download.size' value='2407927'/>
+        <property name='download.md5' value='e4b1c33b4c8074ceba8f9978f1c4a773'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.eclipse.swt.win32.win32.x86_64.source' version='3.6.2.v3660'>
+      <properties size='3'>
+        <property name='artifact.size' value='234934'/>
+        <property name='download.size' value='234934'/>
+        <property name='download.md5' value='4211c2ae1131d6d092955b5a6ea17d16'/>
+      </properties>
+    </artifact>
+    <artifact classifier='org.eclipse.update.feature' id='org.eclipse.rcp.patch.JBDS1648.x86.feature' version='3.6.2.v3660-patched_JBDS-1648'>
+      <properties size='4'>
+        <property name='artifact.size' value='2724'/>
+        <property name='download.size' value='2724'/>
+        <property name='download.md5' value='ae7c14e2e6d8d57cd80a24fa6b9f8014'/>
+        <property name='download.contentType' value='application/zip'/>
+      </properties>
+    </artifact>
+    <artifact classifier='org.eclipse.update.feature' id='org.eclipse.rcp.patch.JBDS1648.x86_64.source.feature' version='3.6.2.v3660-patched_JBDS-1648'>
+      <properties size='3'>
+        <property name='artifact.size' value='4096'/>
+        <property name='download.size' value='2648'/>
+        <property name='download.contentType' value='application/zip'/>
+      </properties>
+    </artifact>
+    <artifact classifier='org.eclipse.update.feature' id='org.eclipse.rcp.patch.JBDS1648.x86_64.feature' version='3.6.2.v3660-patched_JBDS-1648'>
+      <properties size='3'>
+        <property name='artifact.size' value='4096'/>
+        <property name='download.size' value='2614'/>
+        <property name='download.contentType' value='application/zip'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.eclipse.swt.win32.win32.x86_64' version='3.6.2.v3660'>
+      <properties size='3'>
+        <property name='artifact.size' value='242042'/>
+        <property name='download.size' value='242042'/>
+        <property name='download.md5' value='bb01a4f4fbe6b3d3faf32acfa4229503'/>
+      </properties>
+    </artifact>
+    <artifact classifier='org.eclipse.update.feature' id='org.eclipse.rcp.patch.JBDS1648.x86.source.feature' version='3.6.2.v3660-patched_JBDS-1648'>
+      <properties size='4'>
+        <property name='artifact.size' value='2807'/>
+        <property name='download.size' value='2807'/>
+        <property name='download.md5' value='4160ae386cf7764ed432417e20f5f6b3'/>
+        <property name='download.contentType' value='application/zip'/>
+      </properties>
+    </artifact>
+    <artifact classifier='osgi.bundle' id='org.eclipse.swt.win32.win32.x86.source' version='3.6.2.v3660'>
+      <properties size='3'>
+        <property name='artifact.size' value='1947282'/>
+        <property name='download.size' value='1947282'/>
+        <property name='download.md5' value='a755caef92608322b914a1c1effedc68'/>
+      </properties>
+    </artifact>
+  </artifacts>
+</repository>

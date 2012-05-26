@@ -1,0 +1,5 @@
+.blobstore
+.svn
+binary
+features/
+plugins/

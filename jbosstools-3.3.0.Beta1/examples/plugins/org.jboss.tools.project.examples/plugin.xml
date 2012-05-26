@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension-point id="projectExamplesXml" name="%ProjectExamples" schema="schema/projectExamplesXml.exsd"/>
+   <extension-point id="categories" name="%ProjectExampleCategories" schema="schema/categories.exsd"/>
+   <extension-point id="importProjectExamples" name="Import Project Examples" schema="schema/importProjectExample.exsd"/>
+   <extension-point id="downloadruntimes" name="Download Runtimes" schema="schema/downloadruntimes.exsd"/>
+   <extension-point id="configurators" name="JBoss Central Configurator" schema="schema/configurators.exsd"/>
+   <extension-point id="wizardpages" name="Project Examples Wizard Pages" schema="schema/wizardpages.exsd"/>
+   
+  <extension point="org.eclipse.ui.newWizards">
+    <category
+            name="%JBoss_Tools_category"
+            id="org.jboss.ide.eclipse.ui.wizards">
+      </category>
+    <!--
+    <wizard
+		id="org.jboss.tools.project.examples.wizard.NewProjectExamplesWizard"
+		name="%Project_Examples_wizard"
+		class="org.jboss.tools.project.examples.wizard.NewProjectExamplesWizard2"
+		category="org.jboss.ide.eclipse.ui.wizards"
+		icon="icons/examples_wiz.gif">	
+	</wizard>
+	-->
+    <wizard
+          category="org.eclipse.ui.Examples/org.jboss.tools.project.examples.category"
+          class="org.jboss.tools.project.examples.wizard.NewProjectExamplesWizard2"
+          icon="icons/examples_wiz.gif"
+          id="org.jboss.tools.project.examples.wizard.NewProjectExamplesWizard"
+          name="%Project_Examples_wizard">
+    </wizard>
+    <category
+          id="org.jboss.tools.project.examples.category"
+          name="%JBoss_Tools_category"
+          parentCategory="org.eclipse.ui.Examples">
+    </category>
+  </extension>
+  <extension
+         point="org.eclipse.ui.commands">
+      <command
+            name="%Project_Examples_command"
+            id="org.jboss.tools.project.examples">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            commandId="org.jboss.tools.project.examples"
+            class="org.jboss.tools.project.examples.actions.ProjectExamplesHandler">
+      </handler>
+   </extension>
+  <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:help?after=group.tutorials">
+            <command
+                  commandId="org.jboss.tools.project.examples"
+                  id="org.jboss.tools.project.examples">
+            </command>
+                        
+      </menuContribution>
+   </extension>
+  
+   <extension
+        point="org.eclipse.ui.preferencePages">
+     <page
+           category="org.jboss.tools.common.model.ui.MainPreferencePage"
+           class="org.jboss.tools.project.examples.preferences.ProjectExamplesPreferencePage"
+           id="org.jboss.tools.project.examples.preferences.projectExamplesPreferencePage"
+           name="%Project_Examples"/>
+    </extension>
+    
+    <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer class="org.jboss.tools.project.examples.preferences.ProjectExamplesPreferencesInitializer"/>
+   </extension>
+   
+    <extension
+        point="org.jboss.tools.project.examples.projectExamplesXml"
+        name="Shared examples">
+        <url>http://download.jboss.org/jbosstools/examples/project-examples-shared-3.3.Beta1.xml</url>
+        <experimental>false</experimental>
+    </extension>
+    
+    <extension
+        point="org.jboss.tools.project.examples.categories"
+        name="Project Examples Categories">
+        <url>http://download.jboss.org/jbosstools/examples/project-examples-category-3.3.xml</url>
+    </extension>
+    
+    <extension
+         point="org.jboss.tools.project.examples.downloadruntimes">
+      <runtime
+            id="org.jboss.tools.runtime.core.as.710" 
+            name="JBoss AS 7.1.0 Certified Java EE 6 Full Profile"
+            version="7.1.0.Final"
+            size="100MB"
+            url="http://download.jboss.org/jbossas/7.1/jboss-as-7.1.0.Final/jboss-as-7.1.0.Final.zip?use_mirror=autoselect"
+            disclaimer="true"/>
+      <runtime
+            id="org.jboss.tools.runtime.core.as.701" 
+            name="JBoss AS 7.0.1 Everything (NOT Java EE6 Certified)"
+            version="7.0.1.Final"
+            size="74MB"
+            url="http://download.jboss.org/jbossas/7.0/jboss-as-7.0.1.Final/jboss-as-7.0.1.Final.zip?use_mirror=autoselect"
+            disclaimer="true"/>
+      <runtime
+            id="org.jboss.tools.runtime.core.as.702" 
+            name="JBoss AS 7.0.2 Everything (NOT Java EE6 Certified)"
+            version="7.0.2.Final"
+            size="75MB"
+            url="http://download.jboss.org/jbossas/7.0/jboss-as-7.0.2.Final/jboss-as-7.0.2.Final.zip?use_mirror=autoselect"
+            disclaimer="true"/>
+      <runtime
+            id="org.jboss.tools.runtime.core.seam.222" 
+            name="JBoss Seam 2.2.2.Final"
+            version="2.2.2.Final"
+            size="113.2MB"
+            url="http://sourceforge.net/projects/jboss/files/JBoss%20Seam/2.2.2.Final/jboss-seam-2.2.2.Final.zip?use_mirror=autoselect"
+            disclaimer="true"/>
+      <runtime
+            id="org.jboss.tools.runtime.core.seam.202" 
+            name="JBoss Seam 2.0.2.SP1"
+            version="2.0.2.SP1"
+            size="92.3MB"
+            url="http://sourceforge.net/projects/jboss/files/JBoss%20Seam/2.0.2.SP1/jboss-seam-2.0.2.SP1.zip?use_mirror=autoselect"
+            disclaimer="true"/>
+      
+      <runtime
+            id="org.jboss.tools.runtime.core.as.610" 
+            name="JBoss AS 6.1.0"
+            version="6.1.0.Final"
+            size="183MB"
+            url="http://download.jboss.org/jbossas/6.1/jboss-as-distribution-6.1.0.Final.zip?use_mirror=autoselect"
+            disclaimer="true"/>
+      <runtime
+            id="org.jboss.tools.runtime.core.as.423" 
+            name="JBoss AS 4.2.3"
+            version="4.2.3"
+            size="100MB"
+            url="http://sourceforge.net/projects/jboss/files/JBoss/JBoss-4.2.3.GA/jboss-4.2.3.GA-jdk6.zip?use_mirror=autoselect"
+            disclaimer="true"/>
+      
+   </extension>
+   
+</plugin>

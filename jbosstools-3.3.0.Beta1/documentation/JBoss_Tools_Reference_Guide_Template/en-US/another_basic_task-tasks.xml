@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "JBoss_Tools_Reference_Guide_Template.ent">
+%BOOK_ENTITIES;
+]>
+<section id="tasks-basic_tasks-another_basic_task">
+  <title>Another basic task</title>
+   <note><title>***Design Note***</title>
+    <para>
+      The procedures described in this section are "Basic" in that they do not implement an underlying Java feature or concept such as Managed Beans or Persistence etc. They require no (or very little) technical explanation other than a description of how to perform the procedures in JBoss Tools.
+    </para>
+  </note>
+
+  <para>
+    JSF Tools provides the facility to .... This provides the user with ....   
+  </para>
+  <para>
+    Following the task/procedure..... as described in <xref linkend="proc-jsf-create_jsp_page"></xref>, this further task/procedure can be performed. This is described in <xref linkend="proc-jsf-create_new_connection"></xref>   
+  </para>
+  <xi:include href="proc-jsf-template_three.xml" xmlns:xi="http://www.w3.org/2001/XInclude" /> 
+  <para>&FEEDBACK-tasks-basic_tasks-another_basic_task;</para>
+</section>

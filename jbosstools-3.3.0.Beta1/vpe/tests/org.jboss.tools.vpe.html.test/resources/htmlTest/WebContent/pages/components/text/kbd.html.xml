@@ -1,0 +1,10 @@
+<tests>
+	<test id="kbd">
+		<KBD ID="kbd" CLASS="kbdClass" STYLE="color: red; -moz-user-modify: read-write;"
+			DIR="ltr">
+			<SPAN>
+&lt;Ctrl&gt;+&lt;Backspace&gt;
+</SPAN>
+</KBD>
+	</test>
+</tests>

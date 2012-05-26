@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.jboss.tools.portlet.feature"
+      label="%featureName"
+      version="1.2.0.qualifier"
+      provider-name="%providerName"
+      plugin="org.jboss.tools.portlet.ui">
+
+   <description>
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <requires>
+      <import feature="org.jboss.tools.seam.feature" version="3.2.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.jst.enterprise_ui.feature" version="3.3.1" match="greaterOrEqual"/>
+      <import feature="org.eclipse.jst.web_core.feature" version="3.3.1" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.wst.jsdt.web.core"/>
+      <import plugin="org.eclipse.wst.jsdt.web.support.jsp"/>
+      <import plugin="org.eclipse.wst.jsdt.web.ui"/>
+   </requires>
+
+   <plugin
+         id="org.jboss.tools.portlet.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.jboss.tools.portlet.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

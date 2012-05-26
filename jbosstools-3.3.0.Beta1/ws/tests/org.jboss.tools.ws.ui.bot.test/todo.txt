@@ -1,0 +1,4 @@
+* Fix AnnotationProperties to be able to change Annotation parameter value
+* Complete AnnotationPropertiesTest
+* Complete multiple tests run (against AS 7 and EAP 5.1)
+* Complete maven integration

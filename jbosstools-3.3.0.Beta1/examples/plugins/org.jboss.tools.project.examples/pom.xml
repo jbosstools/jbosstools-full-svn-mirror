@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.jboss.tools.examples</groupId>
+		<artifactId>plugins</artifactId>
+		<version>1.2.1-SNAPSHOT</version>
+	</parent>
+	<groupId>org.jboss.tools.examples.plugins</groupId>
+	<artifactId>org.jboss.tools.project.examples</artifactId>
+	
+			<properties>
+		<!-- TODO: for GA, change this from /development/indigo/ to /stable/indigo/ -->
+		<jboss.discovery.directory.url>http://download.jboss.org/jbosstools/updates/development/indigo/jbosstools-directory.xml</jboss.discovery.directory.url>
+	</properties>
+
+	<profiles>
+		<!--  _stable_branch jobs could use this profile but the above default (last stable milestone) is probably better -->
+		<profile>
+			<id>3.3.indigo</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<jboss.discovery.directory.url>http://download.jboss.org/jbosstools/updates/nightly/core/3.3.indigo/jbosstools-directory.xml</jboss.discovery.directory.url>
+			</properties>
+		</profile>
+
+		<!-- _trunk jobs should use this profile -->
+		<profile>
+			<id>trunk</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<jboss.discovery.directory.url>http://download.jboss.org/jbosstools/updates/nightly/core/trunk/jbosstools-directory.xml</jboss.discovery.directory.url>
+			</properties>
+		</profile>
+	</profiles>
+	<packaging>eclipse-plugin</packaging>
+	<build>
+		<plugins>
+			<!-- This will copy from the source folder to the template folder. Use only if no filtering/replacement has already been done in source folder 
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.5</version>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/template/</outputDirectory>
+							<resources>
+								<resource>
+									<directory>src/org/jboss/tools/project/examples/configurators/</directory>
+									<includes>
+										<include>**/DefaultJBossCentralConfigurator.java</include>
+									</includes>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin> -->
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.5</version>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/src/org/jboss/tools/project/examples/configurators/</outputDirectory>
+							<resources>
+								<resource>
+									<directory>template/</directory>
+									<includes>
+										<include>**/DefaultJBossCentralConfigurator.java</include>
+									</includes>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

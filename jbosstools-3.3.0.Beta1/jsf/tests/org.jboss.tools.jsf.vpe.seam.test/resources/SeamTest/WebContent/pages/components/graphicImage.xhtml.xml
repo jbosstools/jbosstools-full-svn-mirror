@@ -1,0 +1,6 @@
+<tests>
+	<test id="id1">
+		<IMG
+			SRC="/.*ve/unresolved_image.gif/"/>
+	</test>
+</tests>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="mirror">
+	<!-- run locally in Eclipse (to resolve p2 tasks) using these commandline options:
+	
+		-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} 
+		-consoleLog -nosplash -data /tmp
+		-application org.eclipse.ant.core.antRunner
+		-f "/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/ecf/build.xml"
+		
+		or, run headless on qa01 server, where Eclipse is installed into ~/eclipse:
+		
+		export JAVA_HOME=/opt/jdk1.6.0; \
+		${JAVA_HOME}/bin/java -cp ~/eclipse/plugins/org.eclipse.equinox.launcher_*.jar \
+			org.eclipse.equinox.launcher.Main -vm ${JAVA_HOME} -consoleLog -nosplash -data /tmp \
+			-application org.eclipse.ant.core.antRunner \
+			-f ~/RHDS/updates/requirements/ecf/build.xml -Ddestination=/tmp/ecf-repo
+	-->
+	<target name="mirror">
+		<!-- For Eclipse 3.5 through 3.6: <property name="URL" value="http://download.eclipse.org/rt/ecf/3.4/site.p2" /> -->
+		<property name="URL" value="http://download.eclipse.org/rt/ecf/3.5/site.p2" />
+		
+		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/ecf/" />
+		<property name="compress" value="true" />
+
+		<p2.mirror>
+			<repository location="file:${destination}/3.5/" name="ECF plugins for Eclipse 3.6 - 3.7" />
+			<source>
+				<repository location="${URL}" />
+			</source>
+
+			<slicingOptions includeFeatures="true" followStrict="true" />
+		</p2.mirror>
+
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/3.5/" artifactRepository="file:${destination}/3.5/" publishartifacts="true" source="${destination}/3.5/" compress="${compress}" />
+	</target>
+</project>

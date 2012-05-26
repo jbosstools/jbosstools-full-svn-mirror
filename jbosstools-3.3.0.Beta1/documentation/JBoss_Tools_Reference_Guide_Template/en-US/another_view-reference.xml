@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE section PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" [
+<!ENTITY % BOOK_ENTITIES SYSTEM "JBoss_Tools_Reference_Guide_Template.ent">
+%BOOK_ENTITIES;
+]>
+<section id="reference-views-another_view">
+  <title>Another view</title>
+  <para>
+    Document another view here.
+  </para>
+  <para>
+    Document another view here.
+  </para>
+  <para>
+    Document another view here.
+  </para>
+  <para>
+    Document another view here.
+  </para>
+  <para>
+    Document another view here.
+  </para>
+  <para>
+    Document another view here.
+  </para>
+  <para>
+    Document another view here.
+  </para>
+  <note><title>**Design Note***</title>
+       <para>
+        A link to the relevant "Documentation navigation" section (as in the tasks section) would be relevant where the view relates to a single feature (or concept) detailed in the Concepts chapter.    
+       </para>
+        
+  </note>
+  <para>&FEEDBACK-reference-views-another_view;</para>
+</section>

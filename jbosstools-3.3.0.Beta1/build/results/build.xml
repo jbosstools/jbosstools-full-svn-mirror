@@ -1,0 +1,184 @@
+<project default="buildResults.single">
+
+	<!-- should be set by script or in Hudson -->
+	<property name="ZIPSUFFIX" value="SNAPSHOT" />
+
+	<!-- should be set by Hudson -->
+	<!-- <property name="JOB_NAME" value="jbosstools-3.2.0.M2.continuous" /> -->
+
+	<!-- if ${WORKSPACE}/site folder exists, target that folder; else generate here. -->
+	<condition property="output.dir" value="${WORKSPACE}/results" else="${basedir}">
+		<available file="${WORKSPACE}/results" />
+	</condition>
+
+	<condition property="WORKINGDIR" value="${WORKSPACE}/sources" else="${basedir}/../..">
+		<available file="${WORKSPACE}/sources" type="dir" />
+	</condition>
+	<property name="input.dir" value="${WORKINGDIR}" />
+
+	<mkdir dir="${WORKINGDIR}" />
+
+	<condition property="COMMON_TOOLS" value="/home/hudson/static_build_env/jbds/tools">
+		<available file="/home/hudson/static_build_env/jbds" type="dir" />
+	</condition>
+	<condition property="COMMON_TOOLS" value="${WORKINGDIR}/../tools" else="${java.io.tmpdir}">
+		<available file="${WORKINGDIR}/../tools" type="dir" />
+	</condition>
+	<mkdir dir="${COMMON_TOOLS}" />
+
+	<target name="get.ant-contrib" unless="ant-contrib.jar.exists">
+		<property name="ANTCONTRIB_MIRROR" value="http://downloads.sourceforge.net/ant-contrib/" />
+		<get usetimestamp="true" dest="${COMMON_TOOLS}/ant-contrib-1.0b2-bin.zip" src="${ANTCONTRIB_MIRROR}/ant-contrib-1.0b2-bin.zip" />
+		<touch file="${COMMON_TOOLS}/ant-contrib-1.0b2-bin.zip" />
+		<mkdir dir="${java.io.tmpdir}/ant-contrib-1.0b2-bin.zip_" />
+		<unzip src="${COMMON_TOOLS}/ant-contrib-1.0b2-bin.zip" dest="${java.io.tmpdir}/ant-contrib-1.0b2-bin.zip_" overwrite="true" />
+		<copy file="${java.io.tmpdir}/ant-contrib-1.0b2-bin.zip_/ant-contrib/lib/ant-contrib.jar" tofile="${COMMON_TOOLS}/ant-contrib.jar" failonerror="true" />
+		<delete dir="${java.io.tmpdir}/ant-contrib-1.0b2-bin.zip_" includeemptydirs="true" quiet="true" />
+	</target>
+
+	<target name="get.saxon" unless="saxon.jar.exists">
+		<!-- or use http://downloads.sourceforge.net/saxon/saxonhe9-3-0-4j.zip ? -->
+		<property name="SAXON_MIRROR" value="http://downloads.sourceforge.net/project/saxon/Saxon-HE/9.3/saxonhe9-3-0-4j.zip?r=http%3A%2F%2Fsaxon.sourceforge.net%2F&amp;ts=1297812383&amp;use_mirror=softlayer" />
+		<get usetimestamp="true" dest="${COMMON_TOOLS}/saxonhe9-3-0-4j.zip" src="${SAXON_MIRROR}" />
+		<mkdir dir="${java.io.tmpdir}/saxonhe9-3-0-4j.zip_" />
+		<unzip src="${COMMON_TOOLS}/saxonhe9-3-0-4j.zip" dest="${java.io.tmpdir}/saxonhe9-3-0-4j.zip_" overwrite="true" />
+		<copy file="${java.io.tmpdir}/saxonhe9-3-0-4j.zip_/saxon9he.jar" tofile="${COMMON_TOOLS}/saxon.jar" failonerror="true" />
+		<delete dir="${java.io.tmpdir}/saxonhe9-3-0-4j.zip_" includeemptydirs="true" quiet="true" />
+	</target>
+
+	<target name="init">
+		<available file="${COMMON_TOOLS}/ant-contrib.jar" type="file" property="ant-contrib.jar.exists" />
+		<antcall target="get.ant-contrib" />
+		<taskdef resource="net/sf/antcontrib/antlib.xml">
+			<classpath>
+				<pathelement location="${COMMON_TOOLS}/ant-contrib.jar" />
+			</classpath>
+		</taskdef>
+
+		<available file="${COMMON_TOOLS}/saxon.jar" type="file" property="saxon.jar.exists" />
+		<antcall target="get.saxon" />
+
+		<condition property="aggregate_site_build.xml" value="${basedir}/../aggregate/build.xml">
+			<available file="${basedir}/../aggregate/build.xml" type="file" />
+		</condition>
+
+		<macrodef name="get.size">
+			<attribute name="file" />
+			<attribute name="property" />
+			<sequential>
+				<var name="size" unset="true" />
+				<var name="size-in-mb" unset="true" />
+				<if>
+					<available file="@{file}" />
+					<then>
+						<length file="@{file}" property="size" />
+						<math result="size-in-mb">
+							<op op="/">
+								<op op="floor">
+									<op op="*">
+										<op op="/">
+											<num value="${size}" />
+											<num value="1048576" />
+										</op>
+										<num value="100" />
+									</op>
+								</op>
+								<num value="100" />
+							</op>
+						</math>
+
+						<property name="@{property}" value="${size-in-mb}" />
+					</then>
+					<else>
+						<property name="@{property}" value="-1" />
+					</else>
+				</if>
+			</sequential>
+		</macrodef>
+	</target>
+
+	<!-- NEW STUFF HERE -->
+
+	<target name="buildResults.single" depends="init" description="generate buildResults.html from build properties">
+		<ant target="collect.zips" antfile="${aggregate_site_build.xml}">
+			<property name="inputRepos" value="2" />
+			<property name="inputRepo1" value="file://${input.dir}/all/repo/" />
+			<property name="inputRepo2" value="http://download.jboss.org/jbosstools/builds/staging/${JOB_NAME}/all/repo/" />
+		</ant>
+		<ant target="collect.metadata" antfile="${aggregate_site_build.xml}">
+		</ant>
+		<antcall target="buildResults" />
+	</target>
+
+	<target name="buildResults.aggregate" depends="init" description="generate buildResults.html from build properties">
+		<ant target="collect.zips" antfile="${aggregate_site_build.xml}">
+			<property name="inputRepos" value="2" />
+			<property name="inputRepo1" value="file://${input.dir}/all/repo/" />
+			<!-- for trunk use _composite_/trunk; for 3.3_stable_branch, use _composite_/3.3.indigo -->
+			<property name="inputRepo2" value="http://download.jboss.org/jbosstools/builds/staging/_composite_/trunk" />
+		</ant>
+		<ant target="collect.metadata" antfile="${aggregate_site_build.xml}">
+		</ant>
+		<antcall target="buildResults" />
+	</target>
+
+	<target name="test.buildResults.aggregate" depends="init" description="generate buildResults.html from build properties">
+		<property name="isTest" value="true" />
+		<ant target="collect.zips" antfile="${aggregate_site_build.xml}">
+			<property name="inputRepos" value="1" />
+			<!-- for trunk use _composite_/trunk; for 3.3_stable_branch, use _composite_/3.3.indigo -->
+			<property name="inputRepo1" value="http://download.jboss.org/jbosstools/builds/staging/_composite_/trunk" />
+		</ant>
+		<ant target="collect.metadata" antfile="${aggregate_site_build.xml}">
+		</ant>
+		<antcall target="buildResults" />
+	</target>
+
+	<target name="test.buildResults.single" depends="init" description="generate buildResults.html from build properties">
+		<property name="isTest" value="true" />
+		<ant target="collect.zips" antfile="${aggregate_site_build.xml}">
+			<property name="inputRepos" value="1" />
+			<property name="inputRepo1" value="http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.3_trunk.component--common/all/repo" />
+		</ant>
+		<ant target="collect.metadata" antfile="${aggregate_site_build.xml}">
+		</ant>
+		<antcall target="buildResults" />
+	</target>
+
+	<target name="buildResults" description="generate buildResults.html from build properties" depends="init">
+		<var name="propertiesFileFound" unset="true" />
+		<for param="propertiesFile" delimiter=", " list="${output.dir}/zips/build.properties.all.xml, zips/build.properties.all.xml, ../../logs/zips/build.properties.all.xml">
+			<sequential>
+				<if>
+					<and>
+						<available file="@{propertiesFile}" type="file" />
+						<not>
+							<isset property="propertiesFileFound" />
+						</not>
+					</and>
+					<then>
+						<var name="propertiesFileFound" value="true" />
+						<delete quiet="true" file="buildResults.html" />
+						<xslt in="@{propertiesFile}" out="buildResults.html" style="buildResults.xsl" force="true">
+							<classpath>
+								<pathelement location="${COMMON_TOOLS}/saxon.jar" />
+							</classpath>
+						</xslt>
+					</then>
+					<else>
+					</else>
+				</if>
+			</sequential>
+		</for>
+		<if>
+			<not>
+				<isset property="propertiesFileFound" />
+			</not>
+			<then>
+				<echo>Could not generate buildResults.html from zips/build.properties.all.xml - file does not exist!</echo>
+			</then>
+		</if>
+		<var name="propertiesFileFound" unset="true" />
+	</target>
+
+</project>
