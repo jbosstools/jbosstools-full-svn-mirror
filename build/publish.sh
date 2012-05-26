@@ -445,7 +445,7 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 			else
 				mkdir -p $DESTINATION/updates/nightly/${PUBLISHPATHSUFFIX}
 			fi
-		date; rsync -arzq --protocol=28 --delete ${STAGINGDIR}/all/repo/* $DESTINATION/updates/nightly/${PUBLISHPATHSUFFIX}/
+			date; rsync -arzq --protocol=28 --delete ${STAGINGDIR}/all/repo/* $DESTINATION/updates/nightly/${PUBLISHPATHSUFFIX}/
 		else
 			date; rsync -arzq --protocol=28 --delete ${STAGINGDIR}/all/repo/* $DESTINATION/updates/nightly/${JOBNAMEREDUX}/
 		fi

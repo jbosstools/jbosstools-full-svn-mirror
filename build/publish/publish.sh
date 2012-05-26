@@ -144,6 +144,12 @@ for z in $(find ${WORKSPACE}/sources/*/site/target -type f -name "repository.zip
 	fi
 done
 
+# if installer jars exist (should be 2 installers, 2 md5sums)
+for z in $(find ${WORKSPACE}/sources/product/installer/target -type f -name "jbdevstudio-product*-universal*.jar*"); do 
+	mkdir -p ${STAGINGDIR}/installer/
+	rsync -aq $z ${STAGINGDIR}/installer/
+done
+
 # if zips exist produced & renamed by ant script, copy them too
 if [[ ! -f ${STAGINGDIR}/all/${SNAPNAME} ]]; then
 	for z in $(find ${WORKSPACE} -maxdepth 5 -mindepth 3 -name "*Update*.zip" | sort | tail -1); do 
@@ -305,6 +311,13 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 		if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]]; then
 			echo "<meta http-equiv=\"refresh\" content=\"0;url=${BUILD_ID}-H${BUILD_NUMBER}/\">" > $tmpdir/latestBuild.html
 			if [[ ${PUBLISHPATHSUFFIX} ]]; then
+				date
+				# create folders if not already there
+				if [[ ${DESTINATION##*@*:*} == "" ]]; then # user@server, do remote op
+					seg="."; for d in ${PUBLISHPATHSUFFIX/\// }; do seg=$seg/$d; echo -e "mkdir ${seg:2}" | sftp $DESTINATION/builds/nightly/; done; seg=""
+				else
+					mkdir -p $DESTINATION/builds/nightly/${PUBLISHPATHSUFFIX}
+				fi
 				date; rsync -arzq --protocol=28 --delete ${STAGINGDIR}/* $DESTINATION/builds/nightly/${PUBLISHPATHSUFFIX}/${BUILD_ID}-H${BUILD_NUMBER}/
 				# sftp only works with user@server, not with local $DESTINATIONS, so use rsync to push symlink instead
 				# echo -e "rm latest\nln ${BUILD_ID}-H${BUILD_NUMBER} latest" | sftp ${DESTINATIONREDUX}/builds/nightly/${PUBLISHPATHSUFFIX}/ 
@@ -426,6 +439,12 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 	# extra publish step for aggregate update sites ONLY
 	if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]]; then
 		if [[ ${PUBLISHPATHSUFFIX} ]]; then 
+			# create folders if not already there
+			if [[ ${DESTINATION##*@*:*} == "" ]]; then # user@server, do remote op
+				seg="."; for d in ${PUBLISHPATHSUFFIX/\// }; do seg=$seg/$d; echo -e "mkdir ${seg:2}" | sftp $DESTINATION/updates/nightly/; done; seg=""
+			else
+				mkdir -p $DESTINATION/updates/nightly/${PUBLISHPATHSUFFIX}
+			fi
 			date; rsync -arzq --protocol=28 --delete ${STAGINGDIR}/all/repo/* $DESTINATION/updates/nightly/${PUBLISHPATHSUFFIX}/
 		else
 			date; rsync -arzq --protocol=28 --delete ${STAGINGDIR}/all/repo/* $DESTINATION/updates/nightly/${JOBNAMEREDUX}/
