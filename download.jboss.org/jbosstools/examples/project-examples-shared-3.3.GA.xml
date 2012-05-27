@@ -39,7 +39,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 				<property name="id">org.jboss.tools.maven.core</property>
 				<property name="versions">[1.3.0,1.4.0)</property>
 				<property name="description">This project example requires JBoss Maven Tools.</property>
-				<property name="connectorIds">org.jboss.tools.maven.feature,org.jboss.tools.maven.cdi.feature,org.jboss.tools.maven.hibernate.feature,org.jboss.tools.maven.jaxrs.feature,org.jboss.tools.maven.portlet.feature,org.jboss.tools.maven.seam.feature</property>
+				<property name="connectorIds">org.jboss.tools.maven.feature,org.jboss.tools.maven.cdi.feature,org.jboss.tools.maven.hibernate.feature,org.jboss.tools.maven.jaxrs.feature</property>
 			</fix>
 		</fixes>
 		<importType>mavenArchetype</importType>
@@ -49,9 +49,9 @@ It includes a persistence unit and some sample persistence and transaction code 
 			<archetypeGroupId>org.jboss.spec.archetypes</archetypeGroupId>
 			<archetypeArtifactId>jboss-javaee6-webapp-archetype</archetypeArtifactId>
 			<archetypeVersion>7.1.1.Beta2</archetypeVersion>
-            
+            <!--
             <archetypeRepository>http://repository.jboss.org/nexus/content/repositories/releases/</archetypeRepository>
-            
+            -->
             <groupId>org.jboss.tools.examples</groupId>
 			<artifactId>jboss-javaee6-webapp</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
@@ -105,9 +105,9 @@ It includes a persistence unit and some sample persistence and transaction code 
 			<archetypeGroupId>org.jboss.spec.archetypes</archetypeGroupId>
 			<archetypeArtifactId>jboss-javaee6-webapp-ear-archetype</archetypeArtifactId>
 			<archetypeVersion>7.1.1.Beta2</archetypeVersion>
+			<!--
 			<archetypeRepository>http://repository.jboss.org/nexus/content/repositories/releases/</archetypeRepository>
-            <!--
-			<archetypeRepository>http://anonsvn.jboss.org/repos/jbosstools/workspace/fred/repositories/snapshot/</archetypeRepository>
+            <archetypeRepository>http://anonsvn.jboss.org/repos/jbosstools/workspace/fred/repositories/snapshot/</archetypeRepository>
 			-->
             <groupId>org.jboss.tools.example</groupId>
 			<artifactId>multi</artifactId>
@@ -214,9 +214,9 @@ It includes a persistence unit and some sample persistence and transaction code 
 			<archetypeGroupId>org.richfaces.archetypes</archetypeGroupId>
 			<archetypeArtifactId>richfaces-archetype-kitchensink</archetypeArtifactId>
 			<archetypeVersion>4.2.2.Final-1</archetypeVersion>
-            <archetypeRepository>http://repository.jboss.org/nexus/content/repositories/releases/</archetypeRepository>
             <!--
-			<archetypeRepository>https://repository.jboss.org/nexus/content/repositories/jboss_releases_staging_profile-048/</archetypeRepository>
+			<archetypeRepository>http://repository.jboss.org/nexus/content/repositories/releases/</archetypeRepository>
+            <archetypeRepository>https://repository.jboss.org/nexus/content/repositories/jboss_releases_staging_profile-048/</archetypeRepository>
 			<archetypeRepository>http://repository.jboss.org/nexus/content/repositories/snapshots/</archetypeRepository>
 			-->
             <groupId>org.jboss.tools.example</groupId>
@@ -335,17 +335,17 @@ Make sure you read the deployment instructions in README.md</description>
 			</fix>            
 		</fixes>
 		<importType>mavenArchetype</importType>
-		<importTypeDescription>The project example requires the m2e, m2eclipse-wtp, JBoss Maven Integration and Google Plugin for Eclipse features.</importTypeDescription>
+		<importTypeDescription>The project example requires the m2e, m2eclipse-wtp, JBoss Maven GWT Integration and Google Plugin for Eclipse features.</importTypeDescription>
         <!-- Activating the profile causes a build error :
         'dependencies.dependency.version' for org.jboss.as:jboss-as-arquillian-container-remote:jar is missing.
         <defaultMavenProfiles>arq-jbossas-remote</defaultMavenProfiles>
         -->
         <mavenArchetype>
 			<archetypeGroupId>org.jboss.errai.archetypes</archetypeGroupId>
-			<archetypeArtifactId>kitchensink-quickstart</archetypeArtifactId>
-			<archetypeVersion>2.0.0.Final-JBT</archetypeVersion>
-            <archetypeRepository>http://anonsvn.jboss.org/repos/jbosstools/workspace/fred/repositories/snapshot/</archetypeRepository>
+			<archetypeArtifactId>jboss-errai-kitchensink-archetype</archetypeArtifactId>
+			<archetypeVersion>2.0.0.Final</archetypeVersion>
             <!--
+            <archetypeRepository>http://anonsvn.jboss.org/repos/jbosstools/workspace/fred/repositories/snapshot/</archetypeRepository>
 			<archetypeRepository>https://repository.jboss.org/nexus/content/groups/public/</archetypeRepository>
             -->
             <groupId>org.jboss.tools.example</groupId>
