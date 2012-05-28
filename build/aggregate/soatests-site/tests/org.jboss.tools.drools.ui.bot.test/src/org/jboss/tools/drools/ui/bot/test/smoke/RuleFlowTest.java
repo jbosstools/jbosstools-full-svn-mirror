@@ -41,7 +41,6 @@ import org.jboss.tools.ui.bot.ext.SWTTestExt;
 import org.jboss.tools.ui.bot.ext.SWTUtilExt;
 import org.jboss.tools.ui.bot.ext.Timing;
 import org.jboss.tools.ui.bot.ext.gen.ActionItem;
-//import org.jboss.tools.ui.bot.ext.helper.KeyboardHelper;
 import org.jboss.tools.ui.bot.ext.types.IDELabel;
 import org.jboss.tools.ui.bot.ext.types.ViewType;
 import org.junit.Test;
@@ -126,8 +125,11 @@ public class RuleFlowTest extends SWTTestExt{
    */
   private void ruleFlowEditorCheck(String ruleFlowFileName) {
     packageExplorer.show();
-    packageExplorer.openFile(DroolsAllBotTests.DROOLS_PROJECT_NAME ,
+    SWTUtilExt.startCapturingStandardOutput();
+    packageExplorer.openFile(DroolsAllBotTests.DROOLS_PROJECT_NAME,
       DroolsAllBotTests.SRC_MAIN_RULES_TREE_NODE, ruleFlowFileName);
+    final String capturedOutput = SWTUtilExt.stopCapturingStandardOutput();
+    System.out.print(capturedOutput);
     // Test if Rule Flow File is opened in editor
     assertTrue("Rule Flow File is not opened properly. File " + ruleFlowFileName + " is not opened in editor",
       SWTEclipseExt.existEditorWithLabel(bot, ruleFlowFileName));
@@ -193,6 +195,9 @@ public class RuleFlowTest extends SWTTestExt{
     gefEditor.save();
     gefEditor.close();
     checkEmptyRuleFile(DroolsAllBotTests.DROOLS_PROJECT_NAME , ruleFlowFileName);
+    assertFalse("Opening BPMN process throws IndexOutOfBoundsException exception."
+            + " Reported bug: https://issues.jboss.org/browse/JBIDE-11984",
+            capturedOutput.contains("IndexOutOfBoundsException"));
   }
 
     /**

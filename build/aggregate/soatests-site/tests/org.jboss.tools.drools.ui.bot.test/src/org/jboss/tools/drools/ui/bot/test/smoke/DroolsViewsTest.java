@@ -2,8 +2,6 @@ package org.jboss.tools.drools.ui.bot.test.smoke;
 
 import static org.eclipse.swtbot.swt.finder.matchers.WidgetMatcherFactory.withLabel;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -18,6 +16,7 @@ import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
 import org.jboss.tools.ui.bot.ext.SWTOpenExt;
 import org.jboss.tools.ui.bot.ext.SWTTestExt;
+import org.jboss.tools.ui.bot.ext.SWTUtilExt;
 import org.jboss.tools.ui.bot.ext.Timing;
 import org.jboss.tools.ui.bot.ext.gen.IView;
 import org.jboss.tools.ui.bot.ext.helper.DragAndDropHelper;
@@ -71,7 +70,10 @@ public class DroolsViewsTest extends SWTTestExt {
 
         // waits for running debugging
         while (!eclipse.isDebugging()) {
-            bot.sleep(Timing.time500MS());
+            bot.sleep(Timing.time1S());
+        	if (console.getConsoleText().contains("Finished")) {
+                fail("Probably debugging is not stopping at breakpoints.");
+            }
         }
 
         // waits for stopping at breakpoint
@@ -134,13 +136,9 @@ public class DroolsViewsTest extends SWTTestExt {
     public void agendaTest() {
         bot.editorByTitle(RULES_FILE).show();
         eclipse.stepOver();
-        // Some hacks to read output stream and check exception
-        PrintStream defaultOutputStream = System.out;
-        ByteArrayOutputStream pipeOut = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(pipeOut));
+        SWTUtilExt.startCapturingStandardOutput();
         openView(IDELabel.View.AGENDA);
-        System.setOut(defaultOutputStream);
-        String output = new String(pipeOut.toByteArray());
+        final String output = SWTUtilExt.stopCapturingStandardOutput();
         System.out.print(output);
         HashSet<Activation> expectedSet = new HashSet<Activation>(2);
         // indicies are not compared
