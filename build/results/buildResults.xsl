@@ -232,13 +232,13 @@
 									</td>
 									<td>
 										<a class="blue"
-											href="http://download.jboss.org/jbosstools/updates/target-platform_3.4.juno/latest/">Target Platform Update Site</a>
+											href="http://download.jboss.org/jbosstools/updates/target-platform_3.4.juno.M6/latest/">Target Platform Update Site</a>
 									</td>
 								</tr>
 								<tr>
 									<td>
 										<a class="blue"
-											href="http://download.jboss.org/jbosstools/updates/target-platform_3.4.juno/e42M6-wtp34M6.target.zip">Target Platform Update Zip</a>
+											href="http://download.jboss.org/jbosstools/updates/target-platform_3.4.juno.M6/e42M6-wtp34M6.target.zip">Target Platform Update Zip</a>
 									</td>
 								</tr>
 								<tr>
