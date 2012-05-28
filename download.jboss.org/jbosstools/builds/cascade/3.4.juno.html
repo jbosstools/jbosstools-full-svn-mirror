@@ -9,7 +9,7 @@
 </head>
 <!--
 	s#_trunk#_stable_branch#g
-	s#_Trunk#_3.3.indigo#g
+	s#_Trunk#_3.4.juno#g
 	s#/trunk#/3.4_stable_branch#g
 -->
 <body>
@@ -26,7 +26,7 @@
 	</tr>
 	<tr>
 		<td class="bodyText">&#160;&#160;</td>
-		<td class="bodyText"><h2 class="title">JBoss Tools 3.3.x <b style="color:black">/</b> <b style="color:red">JBoss Developer Studio 5.x</b> (Indigo)</h2></td>
+		<td class="bodyText"><h2 class="title">JBoss Tools 3.4.x <b style="color:black">/</b> <b style="color:red">JBoss Developer Studio 5.x</b> (Juno)</h2></td>
 	</tr>
 	<tr>
 		<td class="bodyText">&#160;&#160;</td>
@@ -36,8 +36,8 @@
 		<h2 class="title">Build Job Cascade:</h2>
 		<ul>
 			<li><a style="color: red"
-				href="https://hudson.qa.jboss.com/hudson/job/jbosstools-3.3_trunk.target-platform">Local
-			Target Platform build</a> (build + publish) 
+				href="https://hudson.qa.jboss.com/hudson/job/jbosstools-3.4_trunk.target-platform">Local
+			Target Platform build</a> (build + publish) <b>NOTE: same as trunk</b>
 			<ul>
 				<li><a style="color: red"
 					href="https://hudson.qa.jboss.com/hudson/job/jbosstools-3.4_stable_branch.continuous">Continuous
@@ -72,20 +72,20 @@
 			</ul>
 					<hr />
 			<li><a style="color: red"
-				href="https://hudson.qa.jboss.com/hudson/job/devstudio-5.0_trunk.target-platform">Local
-			JBDS Target Platform build</a> (build + publish) 
+				href="https://hudson.qa.jboss.com/hudson/job/devstudio-6.0_trunk.target-platform">Local
+			JBDS Target Platform build</a> (build + publish) <b>NOTE: same as trunk</b>
 			<ul>
 				<ul>
 					<li><a style="color: red"
-						href="https://hudson.qa.jboss.com/hudson/job/devstudio-5.0_stable_branch.soa-tooling.updatesite">JBDS
+						href="https://hudson.qa.jboss.com/hudson/job/devstudio-6.0_stable_branch.soa-tooling.updatesite">JBDS
 					SOA Tooling site build</a> (build site, then publish)
 					<li><a style="color: red"
-						href="https://hudson.qa.jboss.com/hudson/job/devstudio-5.0_stable_branch.updatesite">JBDS
+						href="https://hudson.qa.jboss.com/hudson/job/devstudio-6.0_stable_branch.updatesite">JBDS
 					Aggregate site build</a> (build Core Subset [JBT + JBDS], Extras, Tech Preview
 					sites, then publish)
 					<ul>
 						<li><a style="color: red"
-							href="https://hudson.qa.jboss.com/hudson/job/devstudio-5.0_stable_branch.product">JBDS
+							href="https://hudson.qa.jboss.com/hudson/job/devstudio-6.0_stable_branch.product">JBDS
 						Product builds</a> (combine JBDS components and TP into Core Site + Installers,
 						publish)</li>
 					</ul>
@@ -100,50 +100,51 @@
 		<h2 class="title">Results:</h2>
 		<ul>
 			<li><a
-				href="http://download.jboss.org/jbosstools/updates/target-platform_3.3.indigo.SR2/latest/">JBT Target Platform</a>
+				href="http://download.jboss.org/jbosstools/updates/target-platform_3.4.juno.M6/latest/">JBT Target Platform</a>
+				<b>NOTE: same as trunk</b>
 			<ul>
 				<li><a
 					href="http://download.jboss.org/jbosstools/builds/staging/">JBT Component builds</a> (staging)
 				:: <a
-					href="http://download.jboss.org/jbosstools/builds/staging/_composite_/3.3.indigo/">composite
+					href="http://download.jboss.org/jbosstools/builds/staging/_composite_/3.4.juno/">composite
 				update site</a>
 				<ul>
 					<li><a href="http://download.jboss.org/jbosstools/builds/nightly/soa-tooling/">JBT - SOA Tooling</a> (nightly)
-					:: <a href="http://download.jboss.org/jbosstools/builds/nightly/soa-tooling/3.3.indigo/latestBuild.html">latest builds</a>
-					:: <b><a href="http://download.jboss.org/jbosstools/updates/nightly/soa-tooling/3.3.indigo/">latest updates</a></b>
+					:: <a href="http://download.jboss.org/jbosstools/builds/nightly/soa-tooling/3.4.juno/latestBuild.html">latest builds</a>
+					:: <b><a href="http://download.jboss.org/jbosstools/updates/nightly/soa-tooling/3.4.juno/">latest updates</a></b>
 					
 					<li><a href="http://download.jboss.org/jbosstools/builds/nightly/core/">JBT - Core Tools</a> (nightly)
-					:: <a href="http://download.jboss.org/jbosstools/builds/nightly/core/3.3.indigo/latestBuild.html">latest builds</a> 
-					:: <b><a href="http://download.jboss.org/jbosstools/updates/nightly/core/3.3.indigo/">latest updates</a></b>
+					:: <a href="http://download.jboss.org/jbosstools/builds/nightly/core/3.4.juno/latestBuild.html">latest builds</a> 
+					:: <b><a href="http://download.jboss.org/jbosstools/updates/nightly/core/3.4.juno/">latest updates</a></b>
 
 					<li><a href="http://download.jboss.org/jbosstools/builds/nightly/webtools/">JBT - Web Tools</a> (nightly)
-					:: <a href="http://download.jboss.org/jbosstools/builds/nightly/webtools/3.3.indigo/latestBuild.html">latest builds</a>
-					:: <b><a href="http://download.jboss.org/jbosstools/updates/nightly/webtools/3.3.indigo/">latest updates</a></b>
+					:: <a href="http://download.jboss.org/jbosstools/builds/nightly/webtools/3.4.juno/latestBuild.html">latest builds</a>
+					:: <b><a href="http://download.jboss.org/jbosstools/updates/nightly/webtools/3.4.juno/">latest updates</a></b>
 					
 					<li><a href="http://download.jboss.org/jbosstools/builds/nightly/bottests/">JBT - Bot Tests</a> (nightly)
-					:: <a href="http://download.jboss.org/jbosstools/builds/nightly/bottests/3.3.indigo/latestBuild.html">latest builds</a>
-					:: <b><a href="http://download.jboss.org/jbosstools/updates/nightly/bottests/3.3.indigo/">latest updates</a></b>
+					:: <a href="http://download.jboss.org/jbosstools/builds/nightly/bottests/3.4.juno/latestBuild.html">latest builds</a>
+					:: <b><a href="http://download.jboss.org/jbosstools/updates/nightly/bottests/3.4.juno/">latest updates</a></b>
 					
 				</ul>
 			</ul>
 					<hr />
 			<li><a style="color: red"
-				href="http://www.qa.jboss.com/binaries/RHDS/updates/jbds-target-platform_3.3.indigo.SR2/">JBDS Target Platform</a>
+				href="http://www.qa.jboss.com/binaries/RHDS/updates/jbds-target-platform_3.4.juno.M6/">JBDS Target Platform</a>
 				<b>NOTE: same as trunk</b>
 			<ul>
 				<ul>
 					<li><b><a style="color: red"
-						href="http://www.qa.jboss.com/binaries/RHDS/builds/staging/devstudio-5.0_stable_branch.soa-tooling.updatesite/product-soa/">JBDS - SOA Tooling updates</a></b>
+						href="http://www.qa.jboss.com/binaries/RHDS/builds/staging/devstudio-6.0_stable_branch.soa-tooling.updatesite/product-soa/">JBDS - SOA Tooling updates</a></b>
 					</li>
 					<li>JBDS - <b><a style="color: red"
-						href="http://www.qa.jboss.com/binaries/RHDS/builds/staging/devstudio-5.0_stable_branch.updatesite/extras/">Extras</a></b> / Tech Preview 
+						href="http://www.qa.jboss.com/binaries/RHDS/builds/staging/devstudio-6.0_stable_branch.updatesite/extras/">Extras</a></b> / Tech Preview 
 						updates</a>
 					</li>
 					<ul>
 						<li><b><a style="color: red"
-							href="http://www.qa.jboss.com/binaries/RHDS/builds/staging/devstudio-5.0_stable_branch.product/builds/nightly/">JBDS Installers</a></b>
+							href="http://www.qa.jboss.com/binaries/RHDS/builds/staging/devstudio-6.0_stable_branch.product/builds/nightly/">JBDS Installers</a></b>
 						:: <b><a style="color: red"
-							href="http://www.qa.jboss.com/binaries/RHDS/builds/staging/devstudio-5.0_stable_branch.product/updates/nightly/">JBDS - Core Updates</a></b></li>
+							href="http://www.qa.jboss.com/binaries/RHDS/builds/staging/devstudio-6.0_stable_branch.product/updates/nightly/">JBDS - Core Updates</a></b></li>
 
 					</ul>
 				</ul>
