@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?compositeMetadataRepository version='1.0.0'?>
+<repository name='JBoss Tools - SOA Tooling - Staging Repository' type='org.eclipse.equinox.internal.p2.metadata.repository.CompositeMetadataRepository' version='1.0.0'>
+<properties size='2'>
+<property name='p2.compressed' value='true'/>
+<!-- 
+     get new time w/ 
+      date +%s000
+-->
+<property name='p2.timestamp' value='1331922270000'/>
+</properties>
+<children size='10'>
+
+<!-- SOA Tooling : 10 x 1 = 10 -->
+
+<child location='../../../../staging/jbosstools-3.4_stable_branch.component--bpel/all/repo/'/>
+<child location='../../../../staging/jbosstools-drools-5.3_stable_branch/all/repo/'/>
+<child location='../../../../staging/jbosstools-3.4_stable_branch.component--esb/all/repo/'/>
+<child location='../../../../staging/jbosstools-3.4_stable_branch.component--flow/all/repo/'/>
+<child location='../../../../staging/jbosstools-3.4_stable_branch.component--jbpm/all/repo/'/>
+
+<child location='../../../../staging/jbosstools-3.4_stable_branch.component--modeshape/all/repo/'/>
+<child location='../../../../staging/jbosstools-3.4_stable_branch.component--runtime-soa/all/repo/'/>
+<child location='http://download.jboss.org/savara/releases/updates/2.0.x/' />
+<child location='../../../../staging/SwitchYard-Tools/eclipse/'/>
+<child location='../../../../staging/jbosstools-teiid-designer-7.7_stable_branch/all/repo/'/>
+
+<!-- <child location='../../savara-tools-eclipse-master/all/repo/'/> -->
+
+</children>
+</repository>
