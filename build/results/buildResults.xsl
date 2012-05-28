@@ -81,8 +81,8 @@
 								</xsl:variable>
 								<xsl:variable name="COMPONENT">
 									<xsl:choose>
-										<!-- property name="jbosstools-3.3_trunk.component- -ws-SNAPSHOT.build.properties.JOB_NAME" 
-											value="jbosstools-3.3_trunk.component- -ws" -->
+										<!-- property name="jbosstools-3.4_trunk.component- -ws-SNAPSHOT.build.properties.JOB_NAME" 
+											value="jbosstools-3.4_trunk.component- -ws" -->
 										<xsl:when test="contains(@value,'component--')">
 											<xsl:value-of select="substring-after(@value,'component--')" />
 										</xsl:when>
@@ -138,8 +138,8 @@
 												<b>
 													<xsl:variable name="filelabel">
 														<xsl:choose>
-															<!-- property name="jbosstools-3.3_trunk.component- -ws-SNAPSHOT.build.properties.JOB_NAME" 
-																value="jbosstools-3.3_trunk.component- -ws" -->
+															<!-- property name="jbosstools-3.4_trunk.component- -ws-SNAPSHOT.build.properties.JOB_NAME" 
+																value="jbosstools-3.4_trunk.component- -ws" -->
 															<xsl:when test="contains(@value,'component--')">
 																<xsl:value-of select="substring-after(@value,'component--')" />
 															</xsl:when>
@@ -217,28 +217,28 @@
 							<br />
 							See
 							<a
-								href="http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.3_trunk.aggregate/logs/SVN_REVISION.txt">SVN_REVISION.txt</a>
+								href="http://download.jboss.org/jbosstools/builds/staging/jbosstools-3.4_trunk.aggregate/logs/SVN_REVISION.txt">SVN_REVISION.txt</a>
 						</div>
 						<div id="buildDrivers-blue">
 							<b>Target Platform</b>
 							<table>
 								<tr>
 									<td rowspan="3">
-										Eclipse Helios 3.7 +
+										Eclipse Juno 4.2 +
 										<br />
-										Web Tools 3.3 +
+										Web Tools 3.4 +
 										<br />
 										BIRT + DTP ...
 									</td>
 									<td>
 										<a class="blue"
-											href="http://download.jboss.org/jbosstools/updates/target-platform_3.3.indigo/latest/">Target Platform Update Site</a>
+											href="http://download.jboss.org/jbosstools/updates/target-platform_3.4.juno/latest/">Target Platform Update Site</a>
 									</td>
 								</tr>
 								<tr>
 									<td>
 										<a class="blue"
-											href="http://download.jboss.org/jbosstools/updates/target-platform_3.3.indigo/e370-wtp330.target.zip">Target Platform Update Zip</a>
+											href="http://download.jboss.org/jbosstools/updates/target-platform_3.4.juno/e42M6-wtp34M6.target.zip">Target Platform Update Zip</a>
 									</td>
 								</tr>
 								<tr>
@@ -255,7 +255,7 @@
 
 							See
 							<a
-								href="http://hudson.qa.jboss.com/hudson/view/DevStudio_Trunk/job/jbosstools-3.3_trunk.tests/">jbosstools-3.3_trunk.tests</a>
+								href="http://hudson.qa.jboss.com/hudson/job/jbosstools-3.4_trunk.tests/">jbosstools-3.4_trunk.tests</a>
 							<!-- <table> <tr> <td> <img src="images/test.gif" /> Tests </td> <td 
 								align="right">??? </td> </tr> <tr> <td> <img src="images/testerr.gif" /> 
 								Errors </td> <td align="right">???</td> </tr> <tr> <td> <img src="images/testfail.gif" 
