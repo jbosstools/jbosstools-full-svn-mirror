@@ -20,7 +20,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.71, org.jboss.ide.eclipse.as.runtime.eap.60</property>
-				<property name="description">This project example requires JBoss AS 7.1 or EAP 6 </property>
+				<property name="description">This project example requires JBoss Enterprise Application Platform 6 or JBoss Application Server 7.1</property>
 				<property name="downloadId">org.jboss.tools.runtime.core.as.711</property>
 			</fix>
 			<fix type="plugin">
@@ -70,13 +70,13 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<included-projects>multi-javaee6-archetype</included-projects>
 		<shortDescription>Java EE Project</shortDescription>
         <priority>2</priority>
-		<description>An archetype that generates a starter Java EE 6 webapp project for JBoss AS 7 / EAP 6. The project is an EAR, with an EJB-JAR and WAR</description>
+		<description>An archetype that generates a starter Java EE 6 webapp project for JBoss Enterprise Application Platform 6 or JBoss Application Server. The project is an EAR, with an EJB-JAR and WAR</description>
 		<size>13806</size>
 		<url/>
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70, org.jboss.ide.eclipse.as.runtime.71, org.jboss.ide.eclipse.as.runtime.eap.60</property>
-				<property name="description">This project example requires JBoss AS 7.0/7.1 or EAP 6 </property>
+				<property name="description">This project example requires JBoss Enterprise Application Platform 6 or JBoss Application Server 7.1</property>
 				<property name="downloadId">org.jboss.tools.runtime.core.as.710</property>
 			</fix>
 			<fix type="plugin">
@@ -125,13 +125,13 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<included-projects>jboss-javaee6-poh5</included-projects>
 		<shortDescription>HTML5 Project</shortDescription>
         <priority>3</priority>
-		<description>An archetype that generates a Java EE 6 HTML5 Mobile Webapp project for JBoss AS 7.1 / EAP 6</description>
+		<description>An archetype that generates a Java EE 6 HTML5 Mobile Webapp project for JBoss Enterprise Application Platform 6 or JBoss Application Server 7.1</description>
 		<size>165567</size>
 		<url/>
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.71, org.jboss.ide.eclipse.as.runtime.eap.60</property>
-				<property name="description">This project example requires JBoss AS 7.1 or EAP 6 </property>
+				<property name="description">This project example requires JBoss Enterprise Application Platform 6 or JBoss Application Server 7.1</property>
 				<property name="downloadId">org.jboss.tools.runtime.core.as.710</property>
 			</fix>
 			<fix type="plugin">
@@ -185,7 +185,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.71, org.jboss.ide.eclipse.as.runtime.eap.60</property>
-				<property name="description">This project example requires JBoss AS 7.1 or EAP 6 </property>
+				<property name="description">This project example requires  JBoss Enterprise Application Platform 6 or JBoss Application Server 7.1</property>
 				<property name="downloadId">org.jboss.tools.runtime.core.as.710</property>
 			</fix>
 			<fix type="plugin">
@@ -241,13 +241,13 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<included-projects>spring-mvc-webapp</included-projects>
 		<shortDescription>Spring MVC Project</shortDescription>
         <priority>5</priority>
-		<description>An archetype that generates a starter Spring MVC application with Java EE persistence settings (server bootstrapped JPA, JTA transaction management) for JBoss AS7 / EAP 6</description>
+		<description>An archetype that generates a starter Spring MVC application with Java EE persistence settings (server bootstrapped JPA, JTA transaction management) for JBoss Enterprise Application Platform 6 or JBoss Application Server 7.1</description>
 		<size>165567</size>
 		<url/>
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.71, org.jboss.ide.eclipse.as.runtime.eap.60</property>
-				<property name="description">This project example requires JBoss AS 7.1 or EAP 6 </property>
+				<property name="description">This project example requires JBoss Enterprise Application Platform 6 or JBoss Application Server 7.1</property>
 				<property name="downloadId">org.jboss.tools.runtime.core.as.710</property>
 			</fix>
 			<fix type="plugin">
@@ -306,7 +306,7 @@ Make sure you read the deployment instructions in README.md</description>
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70, org.jboss.ide.eclipse.as.runtime.71, org.jboss.ide.eclipse.as.runtime.eap.60</property>
-				<property name="description">This project example requires JBoss AS 7.0/7.1 or EAP 6 </property>
+				<property name="description">This project example requires  JBoss Enterprise Application Platform 6 or JBoss Application Server 7.1</property>
 				<property name="downloadId">org.jboss.tools.runtime.core.as.710</property>
 			</fix>
 			<fix type="plugin">

@@ -5,7 +5,7 @@
 		<included-projects>jboss-as-helloworld</included-projects>
 		<shortDescription>Helloworld</shortDescription>
 		<description>
-This example demonstrates the use of CDI 1.0 and Servlet 3 in JBoss AS 7.
+This example demonstrates the use of CDI 1.0 and Servlet 3 in JBoss Enterprise Application Platform 6 or JBoss Application Server 7.1.
 The example can be deployed using Maven from the command line or from Eclipse using JBoss Tools.
 		</description>
 		<size>8192</size>
@@ -13,7 +13,7 @@ The example can be deployed using Maven from the command line or from Eclipse us
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.71, org.jboss.ide.eclipse.as.runtime.eap.60</property>
-				<property name="description">works with JBoss AS 7.1 or EAP 6 </property>
+				<property name="description">works with JBoss Enterprise Application Platform 6 or JBoss Application Server 7.1</property>
 				<property name="downloadId">org.jboss.tools.runtime.core.as.710</property>
 			</fix>
 			<fix type="plugin">
@@ -48,10 +48,10 @@ The example can be deployed using Maven from the command line or from Eclipse us
 		<included-projects>jboss-as-helloworld-osgi</included-projects>
 		<shortDescription>Helloworld OSGi Example</shortDescription>
 		<description>
-This example demonstrates the use of OSGi in JBoss AS 7.
+This example demonstrates the use of OSGi in JBoss Application Server 7.1.
 The example can be deployed using Maven from the command line, by using the AS 7 web console or by dropping the OSGi bundle in the deployments folder.
 
-To deploy to JBoss AS 7 using JBoss Tools, start JBoss AS 7, right-click the project, select Run As>Maven build..., enter "package jboss-as:deploy" in the Goals field and click the Run button.
+To deploy to JBoss AS 7.1 using JBoss Tools, start JBoss AS 7.1, right-click the project, select Run As>Maven build..., enter "package jboss-as:deploy" in the Goals field and click the Run button.
 This will build, deploy and start the OSGi bundle.
 You will see a Hello AS7 World!! message appear on the console when this is done.
 		</description>
@@ -60,7 +60,7 @@ You will see a Hello AS7 World!! message appear on the console when this is done
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.71, org.jboss.ide.eclipse.as.runtime.eap.60</property>
-				<property name="description">works with JBoss AS 7.1 or EAP 6 </property>
+				<property name="description">works with JBoss Enterprise Application Platform 6 or JBoss Application Server 7.1</property>
 				<property name="downloadId">org.jboss.tools.runtime.core.as.710</property>
 			</fix>
 			<fix type="plugin">
@@ -94,7 +94,7 @@ You will see a Hello AS7 World!! message appear on the console when this is done
 		<included-projects>jboss-as-login</included-projects>
 		<shortDescription>Login</shortDescription>
 		<description>
-This example demonstrates the use of CDI 1.0, JPA 2.0, JTA 1.1, EJB 3.1 and JSF 2.0 in JBoss AS 7.
+This example demonstrates the use of CDI 1.0, JPA 2.0, JTA 1.1, EJB 3.1 and JSF 2.0 in JBoss Enterprise Application Platform 6 or JBoss Application Server 7.1.
 The example can be deployed using Maven from the command line or from Eclipse using JBoss Tools.		
 		</description>
 <size>8192</size>
@@ -102,7 +102,7 @@ The example can be deployed using Maven from the command line or from Eclipse us
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70, org.jboss.ide.eclipse.as.runtime.71, org.jboss.ide.eclipse.as.runtime.eap.60</property>
-				<property name="description">works with JBoss AS 7.0/7.1 or EAP 6 </property>
+				<property name="description">works with JBoss Enterprise Application Platform 6 or JBoss Application Server 7.1</property>
 				<property name="downloadId">org.jboss.tools.runtime.core.as.710</property>
 			</fix>
 			<fix type="plugin">
@@ -137,7 +137,7 @@ The example can be deployed using Maven from the command line or from Eclipse us
 		<included-projects>jboss-as-numberguess</included-projects>
 		<shortDescription>Numberguess</shortDescription>
 		<description>
-This example demonstrates the use of CDI 1.0 and JSF 2.0 in JBoss AS 7.
+This example demonstrates the use of CDI 1.0 and JSF 2.0 in JBoss Enterprise Application Platform 6 or JBoss Application Server 7.1.
 The example can be deployed using Maven from the command line or from Eclipse using JBoss Tools.
 		</description>
 <size>8192</size>
@@ -145,7 +145,7 @@ The example can be deployed using Maven from the command line or from Eclipse us
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.71, org.jboss.ide.eclipse.as.runtime.eap.60</property>
-				<property name="description">works with JBoss AS 7.1 or EAP 6 </property>
+				<property name="description">works with JBoss Enterprise Application Platform 6 or JBoss Application Server 7.1</property>
 				<property name="downloadId">org.jboss.tools.runtime.core.as.710</property>
 			</fix>
 			<fix type="plugin">
@@ -180,7 +180,7 @@ The example can be deployed using Maven from the command line or from Eclipse us
 		<included-projects>jboss-as-kitchensink</included-projects>
 		<shortDescription>Kitchensink</shortDescription>
 		<description>
-This is your project! It's a sample, deployable Maven 3 project to help you get your foot in the door developing with Java EE 6 on JBoss AS 7.
+This is your project! It's a sample, deployable Maven 3 project to help you get your foot in the door developing with Java EE 6 on JBoss Enterprise Application Platform 6 or JBoss Application Server 7.1.
 This project is setup to allow you to create a compliant Java EE 6 application using JSF 2.0, CDI 1.0, EJB 3.1, JPA 2.0 and Bean Validation 1.0.
 It includes a persistence unit and some sample persistence and transaction code to help you get your feet wet with database access in enterprise Java.
 		</description>
@@ -189,7 +189,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.71, org.jboss.ide.eclipse.as.runtime.eap.60</property>
-				<property name="description">works with JBoss AS 7.1 or EAP 6 </property>
+				<property name="description">works with JBoss Enterprise Application Platform 6 or JBoss Application Server 7.1</property>
 				<property name="downloadId">org.jboss.tools.runtime.core.as.710</property>
 			</fix>
 			<fix type="plugin">
@@ -229,7 +229,7 @@ POH5 is basically a smart, HTML5+CSS3+JavaScript front-end using RESTful service
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.71, org.jboss.ide.eclipse.as.runtime.eap.60</property>
-				<property name="description">works with JBoss AS 7.1 or EAP 6 </property>
+				<property name="description">works with JBoss Enterprise Application Platform 6 or JBoss Application Server 7.1</property>
 				<property name="downloadId">org.jboss.tools.runtime.core.as.710</property>
 			</fix>
 			<fix type="plugin">
