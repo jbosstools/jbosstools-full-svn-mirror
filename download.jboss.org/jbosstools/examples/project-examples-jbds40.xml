@@ -313,7 +313,7 @@ It includes the jboss-seam-jpa and jboss-seam-jpa-test projects.
 		<category>Portlet</category>
 		<name>testjavaportlet</name>
 		<shortDescription>JBoss Java Portlet Example</shortDescription>
-		<description>This example demonstrates the use of JBoss Java Portlet. It runs on JBoss EPP 4.3 or JBoss Portal 2.7.x.</description>
+		<description>This example demonstrates the use of JBoss Java Portlet. It runs on JBoss Enterprise Portal Platform 4.3 or JBoss Portal 2.7.x.</description>
 		<size>10000</size>
 		<url>
 
@@ -324,7 +324,7 @@ It includes the jboss-seam-jpa and jboss-seam-jpa-test projects.
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43, org.jboss.ide.eclipse.as.runtime.42</property>
 				<property name="eclipse-projects">testjavaportlet</property>
-				<property name="description">This project example requires the JBoss EPP 4.3 or JBoss Portal 2.7.x</property>
+				<property name="description">This project example requires the JBoss Enterprise Portal Platform 4.3 or JBoss Portal 2.7.x</property>
 			</fix>
 			
 		</fixes>
@@ -335,7 +335,7 @@ It includes the jboss-seam-jpa and jboss-seam-jpa-test projects.
 		<name>testjsfportlet</name>
 		<shortDescription>JBoss JSF Portlet Example</shortDescription>
 
-		<description>This example demonstrates the use of JBoss JSF Portlet. It runs on JBoss EPP 4.3 or JBoss Portal 2.7.x.</description>
+		<description>This example demonstrates the use of JBoss JSF Portlet. It runs on JBoss Enterprise Portal Platform 4.3 or JBoss Portal 2.7.x.</description>
 		<size>4000000</size>
 		<url>
 			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/portlet-examples/testjsfportlet.zip
@@ -344,7 +344,7 @@ It includes the jboss-seam-jpa and jboss-seam-jpa-test projects.
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43, org.jboss.ide.eclipse.as.runtime.42</property>
 				<property name="eclipse-projects">testjsfportlet</property>
-				<property name="description">This project example requires the JBoss EPP 4.3 or JBoss Portal 2.7.x</property>
+				<property name="description">This project example requires the JBoss Enterprise Portal Platform 4.3 or JBoss Portal 2.7.x</property>
 			</fix>
 			
 		</fixes>
@@ -355,7 +355,7 @@ It includes the jboss-seam-jpa and jboss-seam-jpa-test projects.
 
 		<name>testseamportlet</name>
 		<shortDescription>JBoss Seam Portlet Example</shortDescription>
-		<description>This example demonstrates the use of JBoss Seam Portlet. It runs on JBoss EPP 4.3/JBoss Portal 2.7.x and Seam 2.0.</description>
+		<description>This example demonstrates the use of JBoss Seam Portlet. It runs on JBoss Enterprise Portal Platform 4.3/JBoss Portal 2.7.x and Seam 2.0.</description>
 		<size>10000000</size>
 		<url>
 			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/portlet-examples/testseamportlet.zip
@@ -364,7 +364,7 @@ It includes the jboss-seam-jpa and jboss-seam-jpa-test projects.
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43, org.jboss.ide.eclipse.as.runtime.42</property>
 				<property name="eclipse-projects">testseamportlet</property>
-				<property name="description">This project example requires the JBoss EPP 4.3 or JBoss Portal 2.7.x</property>
+				<property name="description">This project example requires the JBoss Enterprise Portal Platform 4.3 or JBoss Portal 2.7.x</property>
 			</fix>
 			<fix type="seam">
 				<property name="allowed-versions">2.0.0, 2.0.1, 2.0.2</property>
@@ -909,7 +909,7 @@ The example provides the sample SOAP Service and a Teiid Designer project set th
 		<included-projects>JSFPortlet</included-projects>
 		<shortDescription>JBoss JSF RI Portlet</shortDescription>
 
-		<description>This example demonstrates the use of JBoss JSF Portlet. It runs on JBoss EPP 5.x or on GateIn 3.1.</description>
+		<description>This example demonstrates the use of JBoss JSF Portlet. It runs on JBoss Enterprise Portal Platform 5.x or on GateIn 3.1.</description>
 		<size>1372160</size>
 		<url>
 			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/portlet-examples/JSFPortlet.zip
@@ -919,7 +919,7 @@ The example provides the sample SOAP Service and a Teiid Designer project set th
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50, org.jboss.ide.eclipse.as.runtime.51</property>
 				<property name="eclipse-projects">JSFPortlet</property>
 				<property name="required-components">portlet</property>
-				<property name="description">This project example requires the JBoss EPP 5.x or GateIn 3.1</property>
+				<property name="description">This project example requires the JBoss Enterprise Portal Platform 5.x or GateIn 3.1</property>
 			</fix>
 			
 		</fixes>
@@ -931,7 +931,7 @@ The example provides the sample SOAP Service and a Teiid Designer project set th
 		<included-projects>RichfacesPortlet</included-projects>
 		<shortDescription>JBoss Portlet Bridge - RichFaces Application</shortDescription>
 
-		<description>This example demonstrates the use of JBoss JSF Portlet with RichFaces. It runs on JBoss EPP 5.x or on GateIn 3.1.</description>
+		<description>This example demonstrates the use of JBoss JSF Portlet with RichFaces. It runs on JBoss Enterprise Portal Platform 5.x or on GateIn 3.1.</description>
 		<size>7098368</size>
 		<url>
 			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/portlet-examples/RichFacesPortlet.zip
@@ -941,7 +941,7 @@ The example provides the sample SOAP Service and a Teiid Designer project set th
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50, org.jboss.ide.eclipse.as.runtime.51</property>
 				<property name="eclipse-projects">RichfacesPortlet</property>
 				<property name="required-components">portlet</property>
-				<property name="description">This project example requires the JBoss EPP 5.x or GateIn 3.1</property>
+				<property name="description">This project example requires the JBoss Enterprise Portal Platform 5.x or GateIn 3.1</property>
 			</fix>
 			
 		</fixes>
@@ -953,7 +953,7 @@ The example provides the sample SOAP Service and a Teiid Designer project set th
 		<included-projects>seam-portlet-ear,seam-portlet-ejb,seam-portlet-web</included-projects>
 		<shortDescription>JBoss Portlet Bridge - Seam Portlet</shortDescription>
 
-		<description>This example demonstrates the use of JBoss JSF Portlet with Seam. It runs on JBoss EPP 5.x or on GateIn 3.1.</description>
+		<description>This example demonstrates the use of JBoss JSF Portlet with Seam. It runs on JBoss Enterprise Portal Platform 5.x or on GateIn 3.1.</description>
 		<size>8978432</size>
 		<url>
 			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/portlet-examples/SeamPortlet.zip
@@ -963,7 +963,7 @@ The example provides the sample SOAP Service and a Teiid Designer project set th
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.50, org.jboss.ide.eclipse.as.runtime.51</property>
 				<property name="eclipse-projects">seam-portlet-ejb,seam-portlet-web,seam-portlet-ear</property>
 				<property name="required-components">portlet</property>
-				<property name="description">This project example requires the JBoss EPP 5.x or GateIn 3.1</property>
+				<property name="description">This project example requires the JBoss Enterprise Portal Platform 5.x or GateIn 3.1</property>
 			</fix>
 			<fix type="seam">
 				<property name="allowed-versions">2.2.0</property>

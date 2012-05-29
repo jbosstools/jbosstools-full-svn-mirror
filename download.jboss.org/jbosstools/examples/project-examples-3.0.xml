@@ -212,7 +212,7 @@ It includes the jboss-seam-jpa and jboss-seam-jpa-test projects.
 		<category>Portlet</category>
 		<name>testjavaportlet</name>
 		<shortDescription>JBoss Java Portlet Example</shortDescription>
-		<description>This example demonstrates the use of JBoss Java Portlet. It runs on JBoss EPP 4.3 or JBoss Portal 2.7.x.</description>
+		<description>This example demonstrates the use of JBoss Java Portlet. It runs on JBoss Enterprise Portal Platform 4.3 or JBoss Portal 2.7.x.</description>
 		<size>10000</size>
 		<url>
 
@@ -223,7 +223,7 @@ It includes the jboss-seam-jpa and jboss-seam-jpa-test projects.
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43, org.jboss.ide.eclipse.as.runtime.42</property>
 				<property name="eclipse-projects">testjavaportlet</property>
-				<property name="description">This project example requires the JBoss EPP 4.3 or JBoss Portal 2.7.x</property>
+				<property name="description">This project example requires the JBoss Enterprise Portal Platform 4.3 or JBoss Portal 2.7.x</property>
 			</fix>
 			
 		</fixes>
@@ -234,7 +234,7 @@ It includes the jboss-seam-jpa and jboss-seam-jpa-test projects.
 		<name>testjsfportlet</name>
 		<shortDescription>JBoss JSF Portlet Example</shortDescription>
 
-		<description>This example demonstrates the use of JBoss JSF Portlet. It runs on JBoss EPP 4.3 or JBoss Portal 2.7.x.</description>
+		<description>This example demonstrates the use of JBoss JSF Portlet. It runs on JBoss Enterprise Portal Platform 4.3 or JBoss Portal 2.7.x.</description>
 		<size>4000000</size>
 		<url>
 			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/portlet-examples/testjsfportlet.zip
@@ -243,7 +243,7 @@ It includes the jboss-seam-jpa and jboss-seam-jpa-test projects.
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43, org.jboss.ide.eclipse.as.runtime.42</property>
 				<property name="eclipse-projects">testjsfportlet</property>
-				<property name="description">This project example requires the JBoss EPP 4.3 or JBoss Portal 2.7.x</property>
+				<property name="description">This project example requires the JBoss Enterprise Portal Platform 4.3 or JBoss Portal 2.7.x</property>
 			</fix>
 			
 		</fixes>
@@ -254,7 +254,7 @@ It includes the jboss-seam-jpa and jboss-seam-jpa-test projects.
 
 		<name>testseamportlet</name>
 		<shortDescription>JBoss Seam Portlet Example</shortDescription>
-		<description>This example demonstrates the use of JBoss Seam Portlet. It runs on JBoss EPP 4.3/JBoss Portal 2.7.x and Seam 2.0.</description>
+		<description>This example demonstrates the use of JBoss Seam Portlet. It runs on JBoss Enterprise Portal Platform 4.3/JBoss Portal 2.7.x and Seam 2.0.</description>
 		<size>10000000</size>
 		<url>
 			http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/portlet-examples/testseamportlet.zip
@@ -263,7 +263,7 @@ It includes the jboss-seam-jpa and jboss-seam-jpa-test projects.
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43, org.jboss.ide.eclipse.as.runtime.42</property>
 				<property name="eclipse-projects">testseamportlet</property>
-				<property name="description">This project example requires the JBoss EPP 4.3 or JBoss Portal 2.7.x</property>
+				<property name="description">This project example requires the JBoss Enterprise Portal Platform 4.3 or JBoss Portal 2.7.x</property>
 			</fix>
 			<fix type="seam">
 				<property name="allowed-versions">2.0.0, 2.0.1, 2.0.2</property>
