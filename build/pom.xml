@@ -18,7 +18,7 @@
 		<!-- for bootstrapping the parent and target-platform poms via Mead, we need to be able to fetch from this folder and run 
 			this profile (excluding all others); currently parent pom includes target-platform build too, so only need to build the parent
 			 
-			mvn clean install -P parent,\!libs,\!tests,\!jmx,\!archives,\!as,\!common,\!jst,\!xulrunner,\!vpe \
+			mvn clean install -P parent,\!emma/lib,\!tests,\!jmx,\!archives,\!as,\!common,\!jst,\!xulrunner,\!vpe \
 			-P \!jsf,\!freemarker,\!hibernatetools,\!portlet,\!struts,\!cdi,\!birt,\!seam,\!examples \
 			-P \!maven,\!ws,\!gwt,\!deltacloud,\!runtime,\!usage,\!central,\!aggregate-coverage
 			
@@ -34,7 +34,7 @@
 		</profile>
 
 		<profile>
-			<id>libs</id>
+			<id>emma/lib</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 				<property>
@@ -42,7 +42,7 @@
 				</property>
 			</activation>
 			<modules>
-				<module>libs</module>
+				<module>emma/lib</module>
 			</modules>
 		</profile>
 
@@ -362,9 +362,9 @@
 		<profile>
 			<id>cdi-tests</id>
 			<modules>
-				<module>libs</module>
+				<module>emma/lib</module>
 				<module>../cdi/tests</module>
-				<module>reports/emma-coverage</module>
+				<module>emma/reports</module>
 			</modules>
 		</profile>
 
@@ -656,7 +656,7 @@
 				</property>
 			</activation>
 			<modules>
-				<module>reports/emma-coverage</module>
+				<module>emma/reports</module>
 			</modules>
 		</profile>
 	</profiles>
