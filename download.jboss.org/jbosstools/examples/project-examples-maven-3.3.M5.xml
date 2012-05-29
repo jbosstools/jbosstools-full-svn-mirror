@@ -14,7 +14,7 @@ It will create the jboss-javaee6-webapp project in your workspace based on the o
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.60</property>
-				<property name="description">This project example requires JBoss AS 6.0</property>
+				<property name="description">This project example requires JBoss Application Server 6.0</property>
 				<property name="downloadId">org.jboss.tools.runtime.core.as.610</property>
 			</fix>
 		</fixes>

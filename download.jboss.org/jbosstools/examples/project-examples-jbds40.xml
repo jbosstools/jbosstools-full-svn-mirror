@@ -376,7 +376,7 @@ It includes the jboss-seam-jpa and jboss-seam-jpa-test projects.
 	
 		
 	<project>
-		<category>ESB for SOA-P 4.3</category>
+		<category>ESB for JBoss Enterprise SOA Platform 4.3</category>
 		<name>helloworld</name>
 		<included-projects>	helloworld,helloworld_testclient </included-projects>
 		<shortDescription>JBoss ESB HelloWorld Example - ESB</shortDescription>
@@ -399,7 +399,7 @@ As well as to demonstrate the needed  minimal files to make a basic ESB componen
 	</project>	
 	
 	<project>
-		<category>ESB for SOA-P 4.3</category>
+		<category>ESB for JBoss Enterprise SOA Platform 4.3</category>
 		<name>helloworld_action</name>
 		<included-projects>helloworld_action,helloworld_action_client </included-projects>		
 		<shortDescription>JBoss ESB HelloWorld Action Example - ESB</shortDescription>
@@ -422,7 +422,7 @@ As well as to demonstrate the needed  minimal files to make a basic ESB componen
 	</project>
 	
 	<project>
-		<category>ESB for SOA-P 4.3</category>
+		<category>ESB for JBoss Enterprise SOA Platform 4.3</category>
 		<name>helloworld_file_action</name>
 		<included-projects>helloworld_file_action,helloworld_file_action_client </included-projects>		
 		<shortDescription>JBoss ESB HelloWorld File Action Example - ESB</shortDescription>
@@ -446,7 +446,7 @@ As well as to demonstrate the needed  minimal files to make a basic ESB componen
 	</project>	
 	
 	<project>
-		<category>ESB for SOA-P 4.3</category>
+		<category>ESB for JBoss Enterprise SOA Platform 4.3</category>
 		<name>webservice_consumer1</name>
 		<included-projects>webservice_consumer1,webservice_consumer1_client </included-projects>				
 		<shortDescription>JBoss ESB Web Service consumer1 Example</shortDescription>
@@ -471,7 +471,7 @@ As well as to demonstrate the needed  minimal files to make a basic ESB componen
 	</project>
 
 	<project>
-		<category>ESB for SOA-P 4.3</category>
+		<category>ESB for JBoss Enterprise SOA Platform 4.3</category>
 		<name>webservice_producer</name>
 		<included-projects>webservice_producer,webservice_producer_client </included-projects>						
 		<shortDescription>JBoss ESB Web Service producer Example</shortDescription>
@@ -494,7 +494,7 @@ As well as to demonstrate the needed  minimal files to make a basic ESB componen
 	</project>
 
 	<project>
-		<category>ESB for SOA-P 4.3</category>
+		<category>ESB for JBoss Enterprise SOA Platform 4.3</category>
 		<name>transform_CSV2XML</name>
 		<included-projects>transform_CSV2XML,transform_CSV2XML_client </included-projects>						
 		<shortDescription>JBoss ESB Smooks CSV->XML Example</shortDescription>
@@ -516,7 +516,7 @@ As well as to demonstrate the needed  minimal files to make a basic ESB componen
 	</project>
 
 	<project>
-		<category>ESB for SOA-P 4.3</category>
+		<category>ESB for JBoss Enterprise SOA Platform 4.3</category>
 		<name>transform_XML2POJO</name>
 		<included-projects>transform_XML2POJO,transform_XML2POJO_client </included-projects>		
 		<shortDescription>JBoss ESB Smooks XML->POJO Example</shortDescription>
@@ -540,7 +540,7 @@ Java POJOs.</description>
 	</project>
 
 	<project>
-		<category>ESB for SOA-P 4.3</category>
+		<category>ESB for JBoss Enterprise SOA Platform 4.3</category>
 		<name>transform_XML2XML_date_manipulation</name>
 		<included-projects>transform_XML2XML_date_manipulation,transform_XML2XML_date_manipulation_client </included-projects>
 		<shortDescription>JBoss ESB Smooks XML->XML date-manipulation Example</shortDescription>
@@ -571,7 +571,7 @@ Java POJOs.</description>
 	</project>
 
 	<project>
-		<category>ESB for SOA-P 4.3</category>
+		<category>ESB for JBoss Enterprise SOA Platform 4.3</category>
 		<name>transform_XML2XML_simple</name>
 		<included-projects>transform_XML2XML_simple,transform_XML2XML_simple_client </included-projects>		
 		<shortDescription>JBoss ESB Smooks XML->XML Example</shortDescription>
@@ -595,7 +595,7 @@ Java POJOs.</description>
 	</project>
 	
 	<project>
-		<category>ESB for SOA-P 5.0</category>
+		<category>ESB for JBoss Enterprise SOA Platform 5.0</category>
 		<name>helloworld</name>
 		<included-projects>	helloworld,helloworld_testclient </included-projects>
 		<shortDescription>JBoss ESB HelloWorld Example - ESB</shortDescription>
@@ -617,7 +617,7 @@ Example requires a SOA-P 5.x runtime.</description>
 	</project>	
 	
 	<project>
-		<category>ESB for SOA-P 5.0</category>
+		<category>ESB for JBoss Enterprise SOA Platform 5.0</category>
 		<name>helloworld_action</name>
 		<included-projects>helloworld_action,helloworld_action_client</included-projects>
 		<shortDescription>JBoss ESB HelloWorld Action Example - ESB</shortDescription>
@@ -640,7 +640,7 @@ classes. Example requires a SOA-P 5.x runtime.</description>
 	
 <!--  This example works only on SOA-P 5.1 due to some jar incompatibilities with other SOA-P versions -->
 <!-- <project>
-		<category>ESB for SOA-P 5.0</category>
+		<category>ESB for JBoss Enterprise SOA Platform 5.0</category>
 		<name>helloworld_mail</name>		
 		<included-projects>helloworld_mail,helloworld_mail_testclient</included-projects>
 		<shortDescription>JBoss ESB HelloWorld Email Example</shortDescription>
@@ -665,7 +665,7 @@ NOTE: Before you import this example, please make sure that there is a runtime n
 	</project>	
 -->
 	<project>
-		<category>ESB for SOA-P 5.0</category>
+		<category>ESB for JBoss Enterprise SOA Platform 5.0</category>
 		<name>helloworld_file_action</name>		
 		<included-projects>helloworld_file_action,helloworld_file_action_client</included-projects>
 		<shortDescription>JBoss ESB HelloWorld File Action Example - ESB</shortDescription>
@@ -688,7 +688,7 @@ Example requires a SOA-P 5.x runtime.</description>
 	</project>	
 	
 	<project>
-		<category>ESB for SOA-P 5.0</category>
+		<category>ESB for JBoss Enterprise SOA Platform 5.0</category>
 		<name>webservice_consumer1</name>		
 		<included-projects>webservice_consumer1,webservice_consumer1_client</included-projects>
 		<shortDescription>JBoss ESB Web Service consumer1 Example</shortDescription>
@@ -713,7 +713,7 @@ Example requires a SOA-P 5.x runtime.
 
 
 	<project>
-		<category>ESB for SOA-P 5.0</category>
+		<category>ESB for JBoss Enterprise SOA Platform 5.0</category>
 		<name>webservice_producer</name>		
 		<included-projects>webservice_producer,webservice_producer_client</included-projects>
 		<shortDescription>JBoss ESB Web Service producer Example</shortDescription>
@@ -736,7 +736,7 @@ Example requires a SOA-P 5.x runtime.
 
 
 	<project>
-		<category>ESB for SOA-P 5.0</category>
+		<category>ESB for JBoss Enterprise SOA Platform 5.0</category>
 		<name>transform_CSV2XML</name>
 		<included-projects>transform_CSV2XML,transform_CSV2XML_client</included-projects>		
 		<shortDescription>JBoss ESB Smooks CSV->XML Example</shortDescription>
@@ -760,7 +760,7 @@ the intermediate xml format to the target xml. Example requires a SOA-P 5.x runt
 	</project>
 
 	<project>
-		<category>ESB for SOA-P 5.0</category>
+		<category>ESB for JBoss Enterprise SOA Platform 5.0</category>
 		<name>transform_XML2POJO</name>
 		<included-projects>transform_XML2POJO,transform_XML2POJO_client</included-projects>				
 		<shortDescription>JBoss ESB Smooks XML->POJO Example</shortDescription>
@@ -783,7 +783,7 @@ Example requires a SOA-P 5.x runtime.
 	</project>
 
 	<project>
-		<category>ESB for SOA-P 5.0</category>
+		<category>ESB for JBoss Enterprise SOA Platform 5.0</category>
 		<name>transform_XML2XML_date_manipulation</name>
 		<included-projects>transform_XML2XML_date_manipulation,transform_XML2XML_date_manipulation_client</included-projects>						
 		<shortDescription>JBoss ESB Smooks XML->XML date-manipulation Example</shortDescription>
@@ -812,7 +812,7 @@ Example requires a SOA-P 5.x runtime.
 	</project>
 
 	<project>
-		<category>ESB for SOA-P 5.0</category>
+		<category>ESB for JBoss Enterprise SOA Platform 5.0</category>
 		<name>transform_XML2XML_simple</name>
 		<included-projects>transform_XML2XML_simple,transform_XML2XML_simple_client</included-projects>								
 		<shortDescription>JBoss ESB Smooks XML->XML Example</shortDescription>
@@ -904,7 +904,7 @@ The example provides the sample SOAP Service and a Teiid Designer project set th
         <perspectiveId>modelerPerspective</perspectiveId>
     </project>
     <project>
-		<category>Portlet for GateIn 3.1/EPP 5.x</category>
+		<category>Portlet for JBoss Enterprise Portal Platform 5.x/GateIn 3.1</category>
 		<name>JSFPortlet</name>
 		<included-projects>JSFPortlet</included-projects>
 		<shortDescription>JBoss JSF RI Portlet</shortDescription>
@@ -926,7 +926,7 @@ The example provides the sample SOAP Service and a Teiid Designer project set th
 	</project>
 	
 	<project>
-		<category>Portlet for GateIn 3.1/EPP 5.x</category>
+		<category>Portlet for JBoss Enterprise Portal Platform 5.x/GateIn 3.1</category>
 		<name>RichFacesPortlet</name>
 		<included-projects>RichfacesPortlet</included-projects>
 		<shortDescription>JBoss Portlet Bridge - RichFaces Application</shortDescription>
@@ -948,7 +948,7 @@ The example provides the sample SOAP Service and a Teiid Designer project set th
 	</project>
 	
 	<project>
-		<category>Portlet for GateIn 3.1/EPP 5.x</category>
+		<category>Portlet for JBoss Enterprise Portal Platform 5.x/GateIn 3.1</category>
 		<name>SeamPortlet</name>
 		<included-projects>seam-portlet-ear,seam-portlet-ejb,seam-portlet-web</included-projects>
 		<shortDescription>JBoss Portlet Bridge - Seam Portlet</shortDescription>

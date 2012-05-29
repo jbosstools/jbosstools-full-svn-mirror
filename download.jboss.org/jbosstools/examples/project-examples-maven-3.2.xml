@@ -1,7 +1,7 @@
 <projects>
 	
 	<project>
-		<category>Weld 1.0.1 for JBoss AS 6.0</category>
+		<category>Weld 1.0.1 for JBoss Application Server 6.0</category>
 		<name>weld-jsf-login</name>
 		<included-projects>weld-jsf-login</included-projects>
 		<shortDescription>Weld JSF login example</shortDescription>
@@ -14,7 +14,7 @@ It will create the weld-jsf-login project in your workspace.
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.60</property>
-				<property name="description">This project example requires JBoss AS 6.0</property>
+				<property name="description">This project example requires JBoss Application Server 6.0</property>
 			</fix>
 		</fixes>
 		<importType>maven</importType>
@@ -22,7 +22,7 @@ It will create the weld-jsf-login project in your workspace.
 	</project>
 	
 	<project>
-		<category>Weld 1.1.0 for JBoss AS 6.0</category>
+		<category>Weld 1.1.0 for JBoss Application Server 6.0</category>
 		<name>weld-jsf-login</name>
 		<included-projects>weld-jsf-login</included-projects>
 		<shortDescription>Weld JSF login example</shortDescription>
@@ -35,7 +35,7 @@ It will create the weld-jsf-login project in your workspace.
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.60</property>
-				<property name="description">This project example requires JBoss AS 6.0</property>
+				<property name="description">This project example requires JBoss Application Server 6.0</property>
 			</fix>
 		</fixes>
 		<importType>maven</importType>
@@ -43,7 +43,7 @@ It will create the weld-jsf-login project in your workspace.
 	</project>
 	
 	<project>
-		<category>Weld 1.1.0 for JBoss AS 6.0</category>
+		<category>Weld 1.1.0 for JBoss Application Server 6.0</category>
 		<name>weld-jsf-numberguess</name>
 		<included-projects>weld-jsf-numberguess</included-projects>
 		<shortDescription>Weld JSF Numberguess example</shortDescription>
@@ -57,14 +57,14 @@ It will create the weld-jsf-numberguess project in your workspace.
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.60</property>
-				<property name="description">This project example requires JBoss AS 6.0</property>
+				<property name="description">This project example requires JBoss Application Server 6.0</property>
 			</fix>
 		</fixes>
 		<importType>maven</importType>
 		<importTypeDescription>The project example requires the m2eclipse-core, m2eclipse-wtp and JBoss Maven Project Examples feature.</importTypeDescription> 
 	</project>
 	<project>
-		<category>Weld 1.1.0 for JBoss AS 6.0</category>
+		<category>Weld 1.1.0 for JBoss Application Server 6.0</category>
 		<name>weld-jsf-pastecode</name>
 		<included-projects>weld-jsf-pastecode</included-projects>
 		<shortDescription>Weld JSF pastecode example</shortDescription>
@@ -79,14 +79,14 @@ It will create the weld-jsf-pastecode project in your workspace.
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.60</property>
-				<property name="description">This project example requires JBoss AS 6.0</property>
+				<property name="description">This project example requires JBoss Application Server 6.0</property>
 			</fix>
 		</fixes>
 		<importType>maven</importType>
 		<importTypeDescription>The project example requires the m2eclipse-core, m2eclipse-wtp and JBoss Maven Project Examples feature.</importTypeDescription> 
 	</project>
 	<project>
-		<category>Weld 1.1.0 for JBoss AS 6.0</category>
+		<category>Weld 1.1.0 for JBoss Application Server 6.0</category>
 		<name>weld-jsf-permalink</name>
 		<included-projects>weld-jsf-permalink</included-projects>
 		<shortDescription>Weld JSF permalink example</shortDescription>
@@ -100,14 +100,14 @@ It will create the weld-jsf-permalink project in your workspace.
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.60</property>
-				<property name="description">This project example requires JBoss AS 6.0</property>
+				<property name="description">This project example requires JBoss Application Server 6.0</property>
 			</fix>
 		</fixes>
 		<importType>maven</importType>
 		<importTypeDescription>The project example requires the m2eclipse-core, m2eclipse-wtp and JBoss Maven Project Examples feature.</importTypeDescription> 
 	</project>
 	<project>
-		<category>Weld 1.1.0 for JBoss AS 6.0</category>
+		<category>Weld 1.1.0 for JBoss Application Server 6.0</category>
 		<name>weld-jsf-translator</name>
 		<included-projects>weld-jsf-translator-parent,weld-jsf-translator-ear,weld-jsf-translator-ejb,weld-jsf-translator-war</included-projects>
 		<shortDescription>Weld JSF translator example</shortDescription>
@@ -121,7 +121,7 @@ It will create the weld-jsf-translator-parent,weld-jsf-translator-ear,weld-jsf-t
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.60</property>
-				<property name="description">This project example requires JBoss AS 6.0</property>
+				<property name="description">This project example requires JBoss Application Server 6.0</property>
 			</fix>
 		</fixes>
 		<importType>maven</importType>

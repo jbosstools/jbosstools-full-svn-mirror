@@ -1,6 +1,6 @@
 <projects>
 	<project>
-		<category>ESB for SOA-P 5.0</category>
+		<category>ESB for JBoss Enterprise SOA Platform 5.0</category>
 		<name>helloworld</name>
 		<included-projects>	helloworld,helloworld_testclient </included-projects>
 		<shortDescription>JBoss ESB HelloWorld Example - ESB</shortDescription>
@@ -22,7 +22,7 @@ As well as to demonstrate the needed  minimal files to make a basic ESB componen
 	</project>	
 	
 	<project>
-		<category>ESB for SOA-P 5.0</category>
+		<category>ESB for JBoss Enterprise SOA Platform 5.0</category>
 		<name>helloworld_action</name>
 		<included-projects>helloworld_action,helloworld_action_client </included-projects>
 		<shortDescription>JBoss ESB HelloWorld Action Example - ESB</shortDescription>
@@ -45,7 +45,7 @@ As well as to demonstrate the needed  minimal files to make a basic ESB componen
 	</project>
 	
 	<project>
-		<category>ESB for SOA-P 5.0</category>
+		<category>ESB for JBoss Enterprise SOA Platform 5.0</category>
 		<name>helloworld_file_action</name>		
 		<included-projects>helloworld_file_action,helloworld_file_action_client</included-projects>
 		<shortDescription>JBoss ESB HelloWorld File Action Example - ESB</shortDescription>
@@ -68,7 +68,7 @@ As well as to demonstrate the needed  minimal files to make a basic ESB componen
 	</project>	
 	
 	<project>
-		<category>ESB for SOA-P 5.0</category>
+		<category>ESB for JBoss Enterprise SOA Platform 5.0</category>
 		<name>webservice_consumer1</name>		
 		<included-projects>webservice_consumer1,webservice_consumer1_client</included-projects>
 		<shortDescription>JBoss ESB Web Service consumer1 Example</shortDescription>
@@ -93,7 +93,7 @@ As well as to demonstrate the needed  minimal files to make a basic ESB componen
 
 
 	<project>
-		<category>ESB for SOA-P 5.0</category>
+		<category>ESB for JBoss Enterprise SOA Platform 5.0</category>
 		<name>webservice_producer</name>		
 		<included-projects>webservice_producer,webservice_producer_client</included-projects>
 		<shortDescription>JBoss ESB Web Service producer Example</shortDescription>
@@ -116,7 +116,7 @@ As well as to demonstrate the needed  minimal files to make a basic ESB componen
 
 
 	<project>
-		<category>ESB for SOA-P 5.0</category>
+		<category>ESB for JBoss Enterprise SOA Platform 5.0</category>
 		<name>transform_CSV2XML</name>
 		<included-projects>transform_CSV2XML,transform_CSV2XML_client</included-projects>		
 		<shortDescription>JBoss ESB Smooks CSV->XML Example</shortDescription>
@@ -140,7 +140,7 @@ As well as to demonstrate the needed  minimal files to make a basic ESB componen
 	</project>
 
 	<project>
-		<category>ESB for SOA-P 5.0</category>
+		<category>ESB for JBoss Enterprise SOA Platform 5.0</category>
 		<name>transform_XML2POJO</name>
 		<included-projects>transform_XML2POJO,transform_XML2POJO_client</included-projects>				
 		<shortDescription>JBoss ESB Smooks XML->POJO Example</shortDescription>
@@ -163,7 +163,7 @@ Java POJOs.</description>
 	</project>
 
 	<project>
-		<category>ESB for SOA-P 5.0</category>
+		<category>ESB for JBoss Enterprise SOA Platform 5.0</category>
 		<name>transform_XML2XML_date_manipulation</name>
 		<included-projects>transform_XML2XML_date_manipulation,transform_XML2XML_date_manipulation_client</included-projects>						
 		<shortDescription>JBoss ESB Smooks XML->XML date-manipulation Example</shortDescription>
@@ -193,7 +193,7 @@ Java POJOs.</description>
 	</project>
 
 	<project>
-		<category>ESB for SOA-P 5.0</category>
+		<category>ESB for JBoss Enterprise SOA Platform 5.0</category>
 		<name>transform_XML2XML_simple</name>
 		<included-projects>transform_XML2XML_simple,transform_XML2XML_simple_client</included-projects>								
 		<shortDescription>JBoss ESB Smooks XML->XML Example</shortDescription>
