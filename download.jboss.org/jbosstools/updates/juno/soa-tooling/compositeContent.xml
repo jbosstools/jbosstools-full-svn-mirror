@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <?compositeMetadataRepository version='1.0.0'?>
-<repository name='SOA Tools Requirements - Composite Indigo Mirror' type='org.eclipse.equinox.internal.p2.metadata.repository.CompositeMetadataRepository' version='1.0.0'>
+<repository name='SOA Tools Requirements - Composite Juno Mirror' type='org.eclipse.equinox.internal.p2.metadata.repository.CompositeMetadataRepository' version='1.0.0'>
 <properties size='2'>
 <property name='p2.compressed' value='true'/>
 <!-- 
@@ -12,9 +12,9 @@ fun! ReplaceTimestamp()
 endfun
 nnoremap <Leader>ts :call ReplaceTimestamp()<CR>
 -->
-<property name='p2.timestamp' value='1337957573000'/>
+<property name='p2.timestamp' value='1331663946000'/>
 </properties>
 <children size='1'>
-<child location='SR2/'/>
+<child location='M6/'/>
 </children>
 </repository>
