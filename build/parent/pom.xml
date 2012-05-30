@@ -504,7 +504,7 @@
 						<enabled>true</enabled>
 					</releases>
 				</repository>
-				<repository>
+				<!-- remove this to avoid circular dependency <repository>
 					<id>jbosstools-nightly-soa-tooling-tests</id>
 					<url>${jbosstools-nightly-soa-tooling-tests}</url>
 					<layout>p2</layout>
@@ -514,7 +514,7 @@
 					<releases>
 						<enabled>true</enabled>
 					</releases>
-				</repository>
+				</repository> -->
 			</repositories>
 		</profile>
 
