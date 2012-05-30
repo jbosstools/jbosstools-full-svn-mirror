@@ -484,39 +484,6 @@
 				</repository>
 			</repositories>
 		</profile>
-		<profile>
-			<id>jbosstools-staging-aggregate-soa-tooling</id>
-			<activation>
-				<property>
-					<name>swtbot.test.skip</name>
-					<value>false</value>
-				</property>
-			</activation>
-			<repositories>
-				<repository>
-					<id>jbosstools-nightly-soa-tooling</id>
-					<url>${jbosstools-nightly-soa-tooling}</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-				<!-- remove this to avoid circular dependency <repository>
-					<id>jbosstools-nightly-soa-tooling-tests</id>
-					<url>${jbosstools-nightly-soa-tooling-tests}</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository> -->
-			</repositories>
-		</profile>
 
 		<!-- same contents as jboss-requirements-composite-mirror, but locally 
 			available (to improve network lag) -->
