@@ -183,7 +183,7 @@
         	
 			<listitem>
 				<para>
-					The <property>Create Portlet</property> wizard is displayed (for more information about wizard options, see <xref linkend="jsf_seam_portlet_wizard"/> in the guide reference). As the Seam configuration is set for the project, the wizard enters the values for the for Seam portlet.
+					The <property>Create Portlet</property> wizard is displayed (for more information about wizard options, see <xref linkend="jsf_seam_portlet_wizard"/> in the guide reference). As the Seam configuration is set for the project, the wizard enters the values for the Seam portlet.
 				</para>
         		
 				<figure>

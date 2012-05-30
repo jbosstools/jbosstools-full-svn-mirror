@@ -9,7 +9,7 @@
 	<section>
 		<title>What JBoss Portal and Portlet Tools are</title>
 		<para>
-			<property>JBoss Portal</property> provides an open source platform for hosting and serving a portal's Web interface, publishing and managing its content, and customizing its experience. It supports a wide range of features, including standard portlets, single sign-on, clustering, and internationalization. More about <property>JBoss Portal</property> can be found by visiting its home page at: <ulink url="http://www.jboss.org/jbossportal/">http://www.jboss.org/jbossportal/</ulink>.
+			<property>JBoss Portal</property> provides an open source platform for hosting and serving a portal's Web interface, publishing and managing its content, and customizing its experience. It supports a wide range of features, including standard portlets, single sign-on, clustering, and internationalization. <!--More about <property>JBoss Portal</property> can be found by visiting its home page at: <ulink url="http://www.jboss.org/jbossportal/">http://www.jboss.org/jbossportal/</ulink>. -->
 		</para>
     	
 		<para>
@@ -85,7 +85,7 @@
 		</table>
 	</section>
 	
-	<section id="requirements_installation">
+<!--	<section id="requirements_installation">
 		<title>Requirements and Installation</title>
 		<para>
 			<property>JBoss Portlet Tools</property> needs the following minimum requirements:</para>
@@ -148,5 +148,5 @@
 				This guide will only refer to JBoss Portal from here, however you can use (and it is recommended to use) JBoss Enterprise Portal Platform or GateIn instead, as mentioned above.
 			</para>
 		</note>
-	</section>
+	</section> -->
 </chapter>
