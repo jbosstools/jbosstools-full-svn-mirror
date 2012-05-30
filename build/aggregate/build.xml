@@ -525,10 +525,10 @@ Using ant:   ant custom.build -f ../build.xml -Doutput.dir=`pwd` -DinputRepo=htt
 						<isset property="BUILD_ALIAS" />
 					</and>
 					<then>
-						<propertyregex override="true" property="update.site.version" defaultvalue="${JOB_NAME}" input="${JOB_NAME}" regexp="(jboss|soa)tools-([0-9.]+)(_.*?)\.(.*?)\.*aggregate" replace=": ${JBT_VERSION}.${BUILD_TS}-H${BUILD_NUMBER}-${BUILD_ALIAS}\4" />
+						<propertyregex override="true" property="update.site.version" defaultvalue="${JOB_NAME}" input="${JOB_NAME}" regexp="(jboss|soa)tools-([0-9x.]+)(_.*?)\.(.*?)\.*aggregate" replace=": ${JBT_VERSION}.${BUILD_TS}-H${BUILD_NUMBER}-${BUILD_ALIAS}\4" />
 					</then>
 					<else>
-						<propertyregex override="true" property="update.site.version" defaultvalue="${JOB_NAME}" input="${JOB_NAME}" regexp="(jboss|soa)tools-([0-9.]+)(.*).aggregate" replace=": \2.${BUILD_TS}-H${BUILD_NUMBER}\3" />
+						<propertyregex override="true" property="update.site.version" defaultvalue="${JOB_NAME}" input="${JOB_NAME}" regexp="(jboss|soa)tools-([0-9x.]+)(.*).aggregate" replace=": \2.${BUILD_TS}-H${BUILD_NUMBER}\3" />
 					</else>
 				</if>
 			</then>
