@@ -11,7 +11,7 @@
 		<shortDescription>Java EE Web Project</shortDescription>
         <priority>1</priority>
 		<description>
-This is your project! It's a sample, deployable Maven 3 project to help you get your foot in the door developing with Java EE 6 on JBoss AS 7.1.
+This is your project! It's a sample, deployable Maven 3 project to help you get your foot in the door developing with Java EE 6 on JBoss Enterprise Application Platform 6 or JBoss Application Server 7.1.
 This project is setup to allow you to create a compliant Java EE 6 application using JSF 2.0, CDI 1.0, EJB 3.1, JPA 2.0 and Bean Validation 1.0.
 It includes a persistence unit and some sample persistence and transaction code to help you get your feet wet with database access in enterprise Java.
 		</description>
@@ -75,7 +75,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<url/>
 		<fixes>
 			<fix type="wtpruntime">
-				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.70, org.jboss.ide.eclipse.as.runtime.71, org.jboss.ide.eclipse.as.runtime.eap.60</property>
+				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.71, org.jboss.ide.eclipse.as.runtime.eap.60</property>
 				<property name="description">This project example requires JBoss Enterprise Application Platform 6 or JBoss Application Server 7.1</property>
 				<property name="downloadId">org.jboss.tools.runtime.core.as.710</property>
 			</fix>

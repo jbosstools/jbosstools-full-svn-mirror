@@ -6,7 +6,7 @@
 		registration,registration-ejb,registration-ear,registration-test
 		</included-projects>
 		<shortDescription>Seam Registration Example - EAR (including a test project)</shortDescription>
-		<description>This is a trivial example for the Seam tutorial.  It runs on both JBoss AS and Tomcat.
+		<description>This is a trivial example for the Seam tutorial.  It runs on both JBoss Application Server and Tomcat.
 It includes the registration,registration-ejb,registration-ear,registration-test projects.
 </description>
 		<size>31657984</size>
@@ -22,7 +22,7 @@ It includes the registration,registration-ejb,registration-ear,registration-test
 		registration,registration-ejb,registration-ear
 		</included-projects>
 		<shortDescription>Seam Registration Example - EAR</shortDescription>
-		<description>This is a trivial example for the Seam tutorial.  It runs on both JBoss AS and Tomcat.
+		<description>This is a trivial example for the Seam tutorial.  It runs on both JBoss Application Server and Tomcat.
 The example creates the registration,registration-ejb,registration-ear projects.
 It includes a tutorial.
 </description>
@@ -40,7 +40,7 @@ It includes a tutorial.
 		messages,messages-ejb,messages-ear
 		</included-projects>
 		<shortDescription>Seam Messages Example - EAR</shortDescription>
-		<description>This is a simple example of the use of @DataModel for the Seam tutorial. It runs on JBoss AS as an EAR.
+		<description>This is a simple example of the use of @DataModel for the Seam tutorial. It runs on JBoss Application Server as an EAR.
 The example creates the messages,messages-ejb and messages-ear projects.
 It includes a tutorial.
 </description>
@@ -78,7 +78,7 @@ It includes a tutorial.
 		</included-projects>
 		<shortDescription>Seam pageflow: the numberguess example - EAR</shortDescription>
 		<description>This is a simple example for the Seam tutorial, demonstrating the use of
-jBPM-based page flow. It runs on both JBoss AS as an EAR and Tomcat with
+jBPM-based page flow. It runs on both JBoss Application Server as an EAR and Tomcat with
 Embedded JBoss as an EAR.
 The example creates the numberguess,numberguess-ejb and numberguess-ear projects.
 It includes a tutorial.
@@ -118,7 +118,7 @@ It includes the booking, booking-ear,booking-test and booking-ejb projects.
 		<shortDescription>Seam 2.2 Booking Example - EAR (including a tutorial)</shortDescription>
 		<description>This example demonstrates the use of Seam in a Java EE 5 environment. 
 Transaction and persistence context management is handled by the EJB container.
-This example has been tested on JBoss EAP 5.0.
+This example has been tested on JBoss Enterprise Application Platform 5.0.
 It includes the booking22, booking22-ear,booking22-test and booking22-ejb projects.
 </description>
 		<size>38203392</size>

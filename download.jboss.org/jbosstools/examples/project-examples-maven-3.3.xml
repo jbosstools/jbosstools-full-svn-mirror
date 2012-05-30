@@ -91,7 +91,7 @@ The example can be deployed using Maven from the command line or from Eclipse us
 This example demonstrates the use of OSGi in JBoss Application Server 7.
 The example can be deployed using Maven from the command line, by using the AS 7 web console or by dropping the OSGi bundle in the deployments folder.
 
-To deploy to JBoss AS 7 using JBoss Tools, start JBoss AS 7, right-click the project, select Run As>Maven build..., enter "package jboss-as:deploy" in the Goals field and click the Run button.
+To deploy to JBoss Application Server 7 using JBoss Tools, start JBoss Application Server 7, right-click the project, select Run As>Maven build..., enter "package jboss-as:deploy" in the Goals field and click the Run button.
 This will build, deploy and start the OSGi bundle.
 You will see a Hello AS7 World!! message appear on the console when this is done.
 		</description>
@@ -100,7 +100,7 @@ You will see a Hello AS7 World!! message appear on the console when this is done
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.71</property>
-				<property name="description">works with JBoss AS 7.1</property>
+				<property name="description">works with JBoss Application Server 7.1</property>
 				<property name="downloadId">org.jboss.tools.runtime.core.as.710</property>
 			</fix>
 			<fix type="plugin">
@@ -187,7 +187,7 @@ The example can be deployed using Maven from the command line or from Eclipse us
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.71</property>
-				<property name="description">works with JBoss AS 7.1</property>
+				<property name="description">works with JBoss Application Server 7.1</property>
 				<property name="downloadId">org.jboss.tools.runtime.core.as.710</property>
 			</fix>
 			<fix type="plugin">

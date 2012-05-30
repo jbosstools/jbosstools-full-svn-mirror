@@ -51,7 +51,7 @@ The example can be deployed using Maven from the command line or from Eclipse us
 This example demonstrates the use of OSGi in JBoss Application Server 7.1.
 The example can be deployed using Maven from the command line, by using the AS 7 web console or by dropping the OSGi bundle in the deployments folder.
 
-To deploy to JBoss AS 7.1 using JBoss Tools, start JBoss AS 7.1, right-click the project, select Run As>Maven build..., enter "package jboss-as:deploy" in the Goals field and click the Run button.
+To deploy to JBoss Application Server 7.1 using JBoss Tools, start JBoss Application Server 7.1, right-click the project, select Run As>Maven build..., enter "package jboss-as:deploy" in the Goals field and click the Run button.
 This will build, deploy and start the OSGi bundle.
 You will see a Hello AS7 World!! message appear on the console when this is done.
 		</description>
@@ -222,7 +222,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<name>helloworld-html5</name>
 		<included-projects>helloworld-html5</included-projects>
 		<shortDescription>HTML5</shortDescription>
-		<description>This example demonstrates the use of *CDI 1.0* and *JAX-RS* in *JBoss AS 7* using the Plain Old HTML5 (POH5) architecture.
+		<description>This example demonstrates the use of *CDI 1.0* and *JAX-RS* in *JBoss Application Server 7* using the Plain Old HTML5 (POH5) architecture.
 POH5 is basically a smart, HTML5+CSS3+JavaScript front-end using RESTful services on the backend.</description>
         <size>7266</size>
 		<url>http://anonsvn.jboss.org/repos/jbosstools/workspace/snjeza/jbossas7-examples/helloworld-html5.zip</url>
