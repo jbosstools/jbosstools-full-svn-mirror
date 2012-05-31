@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8' ?>
-<section id="Issues-fixed-in-this-release">
+<section id="Features">
     <title>
         Features of version 5.0.0
     </title>
-<!--    <para>
+    <para>
         The following list highlights new features that have been added to this release, as well as listing notable bug fixes. You can find a complete list of bug fixes <ulink url="https://issues.jboss.org/browse/JBIDE">here</ulink>.
-	</para> -->
+	</para>
 		<formalpara>
 			<title>JBoss Central</title>
 			<para>
@@ -30,18 +30,6 @@
 				The tooling in JBoss Developer Studio 5 works with the Beta version of JBoss Enterprise Application Platform 6.
 			</para>
 		</formalpara>
-<!--	<formalpara>
-      <title>BPEL</title>
-        <para>
-			<itemizedlist>					
-				<listitem>
-					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>: 
-					</para>
-				</listitem>
-            </itemizedlist>
-        </para>
-	</formalpara> -->
    <formalpara>
       <title>Contexts and Dependency Injection (CDI)</title>
         <para>
@@ -90,80 +78,30 @@
 			</itemizedlist>
 		</para>
 	</formalpara>
-<!--    <formalpara>
-        <title>ESB</title>
-        <para>
-            <itemizedlist>
-                <listitem>
-                    <para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
-                    </para>
-                </listitem>
-            </itemizedlist>
-        </para>
-	</formalpara> -->
-	<!-- Google Web Toolkit is only shipped with JBoss.org -->
-    <!--
     <formalpara>
         <title>Google Web Toolkit</title>
         <para>
             <itemizedlist>
                 <listitem>
                     <para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:				
+						Google Web Toolkit tooling integration is now provided.				
                     </para>
 				</listitem>
             </itemizedlist>
         </para>
-    </formalpara> -->
-    <!--<formalpara>
-        <title>Hibernate</title>
-        <para>
-            <itemizedlist>
-				<listitem>
-                    <para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
-                    </para>
-                </listitem>
-            </itemizedlist>
-        </para>
-    </formalpara>-->
-	<!--<formalpara>
-		<title>JBoss Enterprise Portal Platform</title>
-		<para>
-			<itemizedlist>
-				<listitem>
-					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
-					</para>
-				</listitem>
-			</itemizedlist>
-		</para>
-	</formalpara>-->
-   <!-- <formalpara>
+    </formalpara>
+  <formalpara>
         <title>JavaServer Faces (JSF)</title>
         <para>
             <itemizedlist>
                 <listitem>
                     <para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
+						JSF2 tooling is now available with this release.
                     </para>
                 </listitem>
             </itemizedlist>
         </para>
-    </formalpara>-->
-   <!-- <formalpara>
-        <title>JBoss Application Server</title>
-        <para>
-            <itemizedlist>
-            	<listitem>
-                    <para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
-                    </para>
-                </listitem>
-            </itemizedlist>
-        </para>
-    </formalpara>-->	
+    </formalpara>
 	<formalpara>
 		<title>Maven</title>
 		<para>
@@ -176,19 +114,6 @@
 	        </itemizedlist>
 		</para>
     </formalpara>
-    	
-	<!--<formalpara>
-		<title>Portlet</title>
-		<para>
-			<itemizedlist>
-				<listitem>
-					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
-					</para>
-				</listitem>
-			</itemizedlist>
-		</para>
-	</formalpara>-->
 <!--	<formalpara>
 		<title>RichFaces</title>
 		<para>
@@ -202,18 +127,6 @@
 		</para>
 	</formalpara> -->
 	<!--<formalpara>
-        <title>Seam</title>
-        	<para>
-          	<itemizedlist>
-				<listitem>
-					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
-					</para>	
-                </listitem>
-            </itemizedlist>
-        </para>
-    </formalpara>	-->
-	<!--<formalpara>
 		<title>Smooks</title>
 		<para>
 			<itemizedlist>
@@ -225,105 +138,16 @@
 			</itemizedlist>
 		</para>
 	</formalpara>-->
-   <!-- <formalpara>
-		<title>Struts</title>
-		<para>
-			<itemizedlist>
-				<listitem>
-					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
-					</para>
-				</listitem>
-			</itemizedlist>
-		</para>
-	</formalpara>-->
-<!--	<formalpara>
-		<title>Teiid Designer</title>
-		<para>
-			<itemizedlist>
-				<listitem>
-					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
-					</para>
-				</listitem>
-			</itemizedlist>
-		</para>
-	</formalpara> -->
-	<!--<formalpara>
-		<title>Usage</title>
-		<para>
-			<itemizedlist>
-				<listitem>
-				    <para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
-				    </para>
-				</listitem>
-			</itemizedlist>
-		</para>
-	</formalpara>-->
-<!--    <formalpara>
+    <formalpara>
         <title>Visual Page Editor</title>
         <para>
             <itemizedlist>
                 <listitem>
                     <para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>: 
+						A new feature is available as part of the Visual Page Editor called BrowserSim. This feature allows you to simulate application interaction on a range of mobile interfaces including mobiles and tablets.
                     </para>
                 </listitem>
             </itemizedlist>
         </para>
-	</formalpara> -->
-<!--    <formalpara>
-        <title>Web Tools Platform</title>
-        <para>
-            <itemizedlist>
-                <listitem>
-                    <para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
-                    </para>
-                </listitem>
-            </itemizedlist>
-        </para>
-	</formalpara> -->
-    <!--<formalpara>
-		<title>XHTML Editor</title>
-		<para>
-			<itemizedlist>
-				<listitem>
-					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
-					</para>
-				</listitem>
-			</itemizedlist>
-		</para>
-	</formalpara>-->
-   <!-- <formalpara>
-        <title>XML Structured Editor</title>
-        <para>
-            <itemizedlist>
-                <listitem>
-                    <para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-0000">JBIDE-0000</ulink>:
-                    </para>
-                </listitem>
-            </itemizedlist>
-        </para>
-    </formalpara>-->
-<!--    <formalpara>
-        <title>General Issues</title>
-        <para>
-			<itemizedlist>
-				<listitem>
-					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBDS-1673">JBDS-1673</ulink>: The JBoss Developer Studio installer server detection did not allign with runtime detection from within the tooling. When detection plug-ins were updated, new servers were not automatically detected due to the code split between detection through the product installation wizard and runtime detection within the user interface. In this release, on first start-up, the installer asks for a list of directories to scan for new servers. The directory selected will then be optionally scanned on every subsequent launch of the JBoss Developer Studio and new discovered servers will be displayed in a list to the user. This allows for new servers to be detected, while not having to duplicate the code and combine it with the runtime detection available from within JBoss Developer Studio.
-					</para>
-				</listitem>
-				<listitem>
-					<para>
-						<ulink url="http://jira.jboss.com/jira/browse/JBIDE-9497">JBIDE-9497</ulink>: JBoss Developer Studio now supports the deployment of standalone SAR projects. To undertake this a new wizard has been created to take a user through the process. For further information see the relevant documentation accompanying this release.
-					</para>
-				</listitem>
-			</itemizedlist>
-        </para>
-	</formalpara> -->
+	</formalpara>
 </section>

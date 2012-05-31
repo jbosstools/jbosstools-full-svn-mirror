@@ -1,10 +1,18 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <section id="Issues-fixed-in-this-release">
     <title>
-        Features added and issues fixed in version 5.0.0
+        Enhancements and fixed issues in version 5.0.0
     </title>
 	<variablelist>
-
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		<!-- JBIDE-11635 -->
 		<varlistentry>
 		<term>
@@ -16,23 +24,47 @@
 			</para>
 		</listitem>
 	</varlistentry>
-
-	<!-- JBIDE-11064 -->
+	
+	
+	
+	<!-- JBIDE-11552 -->
 	<varlistentry>
 	<term>
-		<ulink url="https://issues.jboss.org/jira/browse/JBIDE-11064">JBIDE-11064</ulink>
+		<ulink url="https://issues.jboss.org/jira/browse/JBIDE-11552">JBIDE-11552</ulink>
 	</term>
 	<listitem>
 		<para>
-			Only customers who downloaded and used the Beta release of JBoss Developer Studio 5 may have noticed this issue, that has since been resolved.
-		</para>
-		<para>
-			The JBoss Developer Studio 5.0.Beta JMX tooling was unable to connect to JBoss Application Server 7.1.0 correctly as the ability to connect to the new connector and URL for the server had not been incorporated. New classes have been created for interaction between JMX and JBoss Application Server 7.1.0 and area available as part of JBoss Developer Studio 5.0.
+			Support for DeltaSpike portable CDI extensions has been added to the CDI tooling for JBoss Developer Studio 5. This has been archived through the addition of a new org.jboss.tools.cdi.deltaspike feature. The CDI validation preferences page has been updated for DeltaSpike, including security extension validation.
 		</para>
 	</listitem>
 </varlistentry>
 
 
+
+
+
+
+
+
+
+
+
+   <!-- JBIDE-11064 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-11064">JBIDE-11064</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   Only customers who downloaded and used the Beta release of JBoss Developer Studio 5 may have noticed this issue, that has since been resolved.
+	   </para>
+	   <para>
+		   The JBoss Developer Studio 5.0.Beta JMX tooling was unable to connect to JBoss Application Server 7.1.0 correctly as the ability to connect to the new connector and URL for the server had not been incorporated. New classes have been created for interaction between JMX and JBoss Application Server 7.1.0 and are available as part of JBoss Developer Studio 5.0.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   
    <!-- JBIDE-10947 -->
    <varlistentry>
    <term>
@@ -44,6 +76,7 @@
 	   </para>
    </listitem>
    </varlistentry>
+   
    
    
    
@@ -764,7 +797,7 @@
 	   </para>
    </listitem>
    </varlistentry>
-   
+
    <!-- JBIDE-8421 -->
    <varlistentry>
       <term><ulink url="https://issues.jboss.org/jira/browse/JBIDE-8421">JBIDE-8421</ulink></term>
@@ -883,4 +916,5 @@
    </varlistentry>
 
 </variablelist>
+
 </section>
