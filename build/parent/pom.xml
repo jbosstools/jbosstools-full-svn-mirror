@@ -396,10 +396,12 @@
 		<profile>
 			<id>jbosstools-nightly-staging-composite</id>
 			<activation>
+				<!-- JBIDE-11663 disable automatic enablement when swtbot.test.skip = false 
 				<property>
 					<name>swtbot.test.skip</name>
 					<value>false</value>
 				</property>
+				-->
 			</activation>
 			<repositories>
 				<repository>
@@ -418,10 +420,12 @@
 		<profile>
 			<id>jbosstools-nightly-staging-composite-soa-tooling</id>
 			<activation>
+				<!-- JBIDE-11663 disable automatic enablement when swtbot.test.skip = false 
 				<property>
 					<name>swtbot.test.skip</name>
 					<value>false</value>
 				</property>
+				-->
 			</activation>
 			<repositories>
 				<repository>
@@ -444,10 +448,12 @@
 		<profile>
 			<id>jbosstools-staging-aggregate</id>
 			<activation>
+				<!-- JBIDE-11663 disable automatic enablement when swtbot.test.skip = false 
 				<property>
 					<name>swtbot.test.skip</name>
 					<value>false</value>
 				</property>
+				-->
 			</activation>
 			<repositories>
 				<repository>
