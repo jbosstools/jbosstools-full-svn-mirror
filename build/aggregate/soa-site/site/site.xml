@@ -20,6 +20,10 @@
 		<category name="AbridgedTools" />
                 <category name="SOATools" />
 	</feature>
+	<feature url="features/org.switchyard.tools.editor.feature_0.0.0.jar" id="org.switchyard.tools.editor.feature" version="0.0.0">
+		<category name="AbridgedTools" />
+                <category name="SOATools" />
+	</feature>
 
 	<!-- only in JBT -->
 	<feature url="features/org.pi4soa.core.feature_0.0.0.jar" id="org.pi4soa.core.feature" version="0.0.0">
