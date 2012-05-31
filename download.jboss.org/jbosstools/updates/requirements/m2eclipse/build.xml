@@ -18,7 +18,7 @@
 	<target name="mirror">
 		<property name="URL1" value="http://download.jboss.org/jbosstools/updates/m2eclipse-wtp/"/> 
 		<property name="URL2" value="http://download.jboss.org/jbosstools/updates/m2e-jdt-compiler/"/>
-		<property name="URL3" value="http://download.jboss.org/jbosstools/updates/requirements/m2eclipse/m2e-apt-1.0.0-2012-05-02_13-33-26-H9/"/>
+		<property name="URL3" value="http://download.jboss.org/jbosstools/updates/requirements/m2eclipse/m2e-apt-1.0.0-2012-05-15_15-45-38-H10/"/>
 	  
 		<!--
 		<property name="URL1" value="http://download.eclipse.org/technology/m2e/releases/"/>
@@ -29,7 +29,7 @@
 		<property name="compress" value="true" />
 
 		<p2.mirror>
-			<repository location="file:${destination}/20120502-1600" name="m2e 1.0,  m2e-wtp 0.15.2, m2e-extras 0.15, m2e-jdt-compiler 1.0, m2e-apt 1.0 (mirrored 20120502-1600)" />
+			<repository location="file:${destination}/20120531-1100" name="m2e 1.0,  m2e-wtp 0.15.2, m2e-extras 0.15, m2e-jdt-compiler 1.0, m2e-apt 1.0 (mirrored 20120531-1100)" />
 			<source>
 				<repository location="${URL1}" />
 				<repository location="${URL2}" />
@@ -39,7 +39,7 @@
 			<slicingOptions includeFeatures="true" followStrict="true" />
 		</p2.mirror>
 
-		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/20120502-1600/" artifactRepository="file:${destination}/20120502-1600/" 
-			publishartifacts="true" source="${destination}/20120502-1600/" compress="${compress}" />
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/20120531-1100/" artifactRepository="file:${destination}/20120531-1100/" 
+			publishartifacts="true" source="${destination}/20120531-1100/" compress="${compress}" />
 	</target>
 </project>
