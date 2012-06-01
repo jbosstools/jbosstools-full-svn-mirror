@@ -889,7 +889,7 @@
 		<pluginRepository>
 			<id>tycho-0.15-staging</id>
 			<name>tycho-0.15-staging</name>
-			<url>https://oss.sonatype.org/content/repositories/orgeclipsetycho-255/</url>
+			<url>https://oss.sonatype.org/content/repositories/orgeclipsetycho-115/</url>
 		</pluginRepository>
 		<pluginRepository>
 			<id>repository.sonatype.org-snapshots</id>
