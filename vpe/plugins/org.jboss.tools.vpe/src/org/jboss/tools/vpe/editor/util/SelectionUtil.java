@@ -359,7 +359,8 @@ public class SelectionUtil {
 	 * 
 	 * @param sourceEditor
 	 *            StructuredTextEditor object
-	 * @return sourceSelectionRange
+	 * @return a <code>Point</code> with x as the offset 
+	 * and y as the length of the current selection or <code>null</code>
 	 */
 	public static Point getSourceSelectionRange(StructuredTextEditor sourceEditor) {
 		ITextViewer textViewer = sourceEditor.getTextViewer();
