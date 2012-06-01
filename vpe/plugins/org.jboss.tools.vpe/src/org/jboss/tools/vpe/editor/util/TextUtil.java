@@ -319,7 +319,11 @@ public class TextUtil {
 
 	public static int visualPosition(String sourceText, int sourcePosition) {
 		int calcPosition = sourcePosition;
-		if (sourceText == null) {
+		/*
+		 * https://issues.jboss.org/browse/JBIDE-12052
+		 * Fix StringIndexOutOfBoundsException
+		 */
+		if ((sourceText == null) || (sourcePosition < 0)){
 			return 0;
 		}
 		int start = sourceText.indexOf(CHR_ESC_START);
