@@ -391,7 +391,7 @@ As well as to demonstrate the needed  minimal files to make a basic ESB componen
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43</property>
-				<property name="eclipse-projects">helloworld</property>
+				<property name="eclipse-projects">helloworld,helloworld_testclient</property>
 				<property name="required-components">esb</property>
 				<property name="description">This project example requires the JBoss Enterprise SOA Platform 4.3.0 and the runtime name should be "jboss-soa-p.4.3.0 Runtime"</property>
 			</fix>
@@ -413,7 +413,7 @@ As well as to demonstrate the needed  minimal files to make a basic ESB componen
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43</property>
-				<property name="eclipse-projects">helloworld_action</property>
+				<property name="eclipse-projects">helloworld_action,helloworld_action_client</property>
 				<property name="required-components">esb</property>
 				<property name="description">This project example requires the JBoss Enterprise SOA Platform 4.3.0 and the runtime name should be "jboss-soa-p.4.3.0 Runtime"</property>
 			</fix>
@@ -438,7 +438,7 @@ As well as to demonstrate the needed  minimal files to make a basic ESB componen
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43</property>
-				<property name="eclipse-projects">helloworld_file_action</property>
+				<property name="eclipse-projects">helloworld_file_action,helloworld_file_action_client</property>
 				<property name="required-components">esb</property>
 				<property name="description">This project example requires the JBoss Enterprise SOA Platform 4.3.0 and the runtime name should be "jboss-soa-p.4.3.0 Runtime"</property>
 			</fix>
@@ -485,7 +485,7 @@ As well as to demonstrate the needed  minimal files to make a basic ESB componen
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43</property>
-				<property name="eclipse-projects">webservice_producer</property>
+				<property name="eclipse-projects">webservice_producer, webservice_producer_client</property>
 				<property name="required-components">esb</property>
 				<property name="description">This project example requires the JBoss Enterprise SOA Platform 4.3.0 and the runtime name should be "jboss-soa-p.4.3.0 Runtime"</property>
 			</fix>
@@ -508,7 +508,7 @@ As well as to demonstrate the needed  minimal files to make a basic ESB componen
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43</property>
-				<property name="eclipse-projects">transform_CSV2XML</property>
+				<property name="eclipse-projects">transform_CSV2XML,transform_CSV2XML_client</property>
 				<property name="required-components">esb</property>
 				<property name="description">This project example requires the JBoss Enterprise SOA Platform 4.3.0 and the runtime name should be "jboss-soa-p.4.3.0 Runtime"</property>
 			</fix>
@@ -532,7 +532,7 @@ Java POJOs.</description>
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43</property>
-				<property name="eclipse-projects">transform_XML2POJO</property>
+				<property name="eclipse-projects">transform_XML2POJO,transform_XML2POJO_client</property>
 				<property name="required-components">esb</property>
 				<property name="description">This project example requires the JBoss Enterprise SOA Platform 4.3.0 and the runtime name should be "jboss-soa-p.4.3.0 Runtime"</property>
 			</fix>
@@ -563,7 +563,7 @@ Java POJOs.</description>
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43</property>
-				<property name="eclipse-projects">transform_XML2XML_date_manipulation</property>
+				<property name="eclipse-projects">transform_XML2XML_date_manipulation,transform_XML2XML_date_manipulation_client</property>
 				<property name="required-components">esb</property>
 				<property name="description">This project example requires the JBoss Enterprise SOA Platform 4.3.0 and the runtime name should be "jboss-soa-p.4.3.0 Runtime"</property>
 			</fix>
@@ -587,7 +587,7 @@ Java POJOs.</description>
 		<fixes>
 			<fix type="wtpruntime">
 				<property name="allowed-types">org.jboss.ide.eclipse.as.runtime.eap.43</property>
-				<property name="eclipse-projects">transform_XML2XML_simple</property>
+				<property name="eclipse-projects">transform_XML2XML_simple,transform_XML2XML_simple_client </property>
 				<property name="required-components">esb</property>
 				<property name="description">This project example requires the JBoss Enterprise SOA Platform 4.3.0 and the runtime name should be "jboss-soa-p.4.3.0 Runtime"</property>
 			</fix>
