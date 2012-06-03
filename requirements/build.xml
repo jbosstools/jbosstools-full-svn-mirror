@@ -32,7 +32,13 @@
 					<available file="@{subdir}/build.properties" />
 					<then>
 						<basename file="@{subdir}" property="subdir" />
-						<var name="requirements" value="${requirements},${subdir}" />
+						<!-- only include requirements/*/build.properties, not requirements/*/**/build.properties -->
+						<if>
+							 <available file="${basedir}/${subdir}/build.properties"/>
+							<then>
+								<var name="requirements" value="${requirements},${subdir}" />
+							</then>
+						</if>
 						<var name="subdir" unset="true" />
 					</then>
 				</if>
