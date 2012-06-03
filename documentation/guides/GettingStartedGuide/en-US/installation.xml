@@ -257,6 +257,11 @@ Java HotSpot(TM) Server VM (build 19.1-b02, mixed mode)]]>
 			When installing JBoss Developer Studio on the 64-bit edition of MacOS X Snow Leopard or Lion, only the 64-bit edition of JBoss Developer Studio is supported. Though the 32-bit edition will install, many features will not work correctly due to Java 1.6 being specific to 64-bit applications on Leopard and JBoss Developer Studio requiring Java 1.6 for all features to function.
 		</para>
 	</important>
+	<note>
+		<para>
+			The Visual Page Editor tools is only available in the 32-bit version of the JBoss Developer Studio. You may still run your application servers in 64-bit virtual machines (if needed), to insure compatibility with the production environment.
+		</para>
+	</note>
 	<section id="Installing_JBoss_Developer_Studio-Automated_Installation">
 		<title>Automated Installation</title>
 		<para>
