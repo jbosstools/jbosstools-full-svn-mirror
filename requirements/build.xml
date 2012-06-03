@@ -25,7 +25,7 @@
 		<!-- get all subdirs, and check each one for a build.properties file -->
 		<for param="subdir">
 			<path>
-				<dirset dir="${basedir}" excludes="bin, download, generic, lib, target" />
+				<dirset dir="${basedir}" excludes="bin, bin/**, download, download/**, generic, generic/**, lib, lib/**, target, target/**" />
 			</path>
 			<sequential>
 				<if>
