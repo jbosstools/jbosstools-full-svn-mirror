@@ -2,7 +2,7 @@
 	<import file="../generic/build.xml" />
 
 	<target name="unpack-zip" >
-		<unzip src="${driver.dest}/${build.archive}" dest="${unzip.dest}/teiid-8.0.0.Aplpha1" />
+		<unzip src="${driver.dest}/${build.archive}" dest="${unzip.dest}/teiid-8.0.0.Alpha1" />
 	</target>
 
 </project>
