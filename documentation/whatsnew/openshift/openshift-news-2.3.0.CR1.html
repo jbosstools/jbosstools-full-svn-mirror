@@ -29,7 +29,7 @@
 
 	<p align="right">
 		<a href="../index.html">&lt; Main Index</a> <a
-			href="../maven/maven-news-3.3.0.Beta3.html">Maven Tools &gt;</a>
+			href="../maven/maven-news-3.3.0.CR1.html">Maven Tools &gt;</a>
 	</p>
 	<table border="0" cellpadding="10" cellspacing="0" width="80%">
 
@@ -46,8 +46,66 @@
 				<b>Plenty of bugfixes</b>
 			</td>
 			<td valign="top">
-				As always when getting closer to GA, we very much focus on fixing bugs. 
+				As always when getting closer to GA, we very much focus on fixing bugs and stabilizing what we provide. 
 				We tackled a total of 82 issues and improvements in the CR1 iteration.
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<hr />
+				<h3>OpenShift Explorer</h3>
+				<hr />
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" align="left">
+				<b>Lazy loading users</b>
+			</td>
+			<td valign="top" align="left">
+				In Beta3 the OpenShift Explorer was too eager when loading the users you had. It was annoying you by triggering the secure storage password prompt too early. 
+				We fixed this in CR1. 
+				<p>
+					<small>
+						<a href="https://issues.jboss.org/browse/JBIDE-12006">Related Jira</a>
+					</small>
+				</p>
+				
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" align="left">
+				<b>Refresh a <br />user</b></td>
+			<td valign="top" align="left">
+				We now offer you to refresh your user in the OpenShift Explorer context menu. This allows you recover from errors that may have occurred while working with the paas. 
+				<p>
+					<img src="images/refresh-user.png" alt="refresh user" />
+				</p>
+				<p>
+					<small>
+						<a href="https://issues.jboss.org/browse/JBIDE-12006">Related Jira</a>
+					</small>
+				</p>
+				
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" align="left">
+				<b>Application details</b>
+			</td>
+			<td valign="top" align="left">
+				You can now inspect a given application in all details from the context-menu in the OpenShift Explorer.  
+				<p>
+					<img src="images/application-details-menu.png" alt="application details menu" />
+				</p>
+				<p>
+					<img src="images/application-details.png" alt="application details" />
+				</p>
+				<p>
+					<small>
+						<a href="https://issues.jboss.org/browse/JBIDE-11629">Related Jira</a>
+					</small>
+				</p>
+				
 			</td>
 		</tr>
 		<tr>
@@ -59,7 +117,18 @@
 		</tr>
 		<tr>
 			<td valign="top" align="left">
-				<b>Handling timeouts gracefully</b><p>
+				<b>Handling timeouts gracefully</b>
+			</td>
+			<td>
+				Previously a user would not be notified when the application wizard had timed out. 
+				Instead a user had to cancel the application wizard and use the import wizard to have the application 
+				added to their workspace. A new dialog box has since been added that asks a user if they wish to 
+				continue waiting for the remote application to become reachable or to close the wizard. 
+				This ensures that the user knows what state the wizard is in.				
+				<p>
+					<img src="images/keep-waiting.png" alt="keep waiting" />
+				</p>
+				<p>
 					<small>
 						<a href="https://issues.jboss.org/browse/JBIDE-11314">Related Jira</a>
 					</small>
@@ -100,7 +169,77 @@
 				</p>
 				
 			</td>
-		</tr>	</table>
+		</tr>
+		<tr>
+			<td valign="top" align="left">
+				<b>No user validation required</b>
+			</td>
+			<td>
+				If you launch the OpenShift application wizard from central or from the new wizards, you'll have to provide your credentials and have them validated.
+				This is no longer required if you launch the wizard from the OpenShift Explorer.  				
+				<p>
+					<small>
+						<a href="https://issues.jboss.org/browse/JBIDE-11222">Related Jira</a>
+					</small>
+				</p>
+				
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<hr />
+				<h3>OpenShift Domain Wizards</h3>
+				<hr />
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" align="left">
+				<b>Defaulting to id_rsa</b>
+			</td>
+			<td>
+				The former incarnation of the rhc command line tools used a fixed key name for SSH connections. 
+				The SSH configuration contained libra_id_rsa hard coded into the file /user/.ssh/config for SSH connections to OpenShift. 
+				This caused issues for users who already used a different SHH configuration. The rhc command line tools no longer include hard code keys, 
+				and instead uses the existing libra_id_rsa key or suggests using rsa_id if a key does not exist. 
+				This behaviour has been replicated in the tooling.
+				<p>
+					<img src="images/domain-ssh-key.png" alt="ssh key" />
+				</p>
+				<p>
+					<small>
+						<a href="https://issues.jboss.org/browse/JBIDE-11314">Related Jira</a>
+					</small>
+				</p>
+				
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<hr />
+				<h3>OpenShift Server Adapter</h3>
+				<hr />
+			</td>
+		</tr>
+		<tr>
+			<td valign="top" align="left">
+				<b>Application actions</b>
+			</td>
+			<td>
+				JBoss Tools allows you look at the log and the environment variables of a given OpenShift application. 
+				You may also configure the forwarded ports within a wizard dedicated to this task. Until Beta3 you'd had to go 
+				to the OpenShift Explorer to find these actions. Since CR1 you'll now also find them in the server adapter.   
+				<p>
+					<img src="images/server-adapter-actions.png" alt="application actions" />
+				</p>
+				<p>
+					<small>
+						<a href="https://issues.jboss.org/browse/JBIDE-11841">Related Jira</a>
+					</small>
+				</p>
+				
+			</td>
+		</tr>
+	</table>
 </body>
 
 </html>
