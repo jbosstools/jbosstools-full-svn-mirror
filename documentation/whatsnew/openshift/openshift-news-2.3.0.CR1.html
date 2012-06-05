@@ -62,7 +62,7 @@
 				<b>Lazy loading users</b>
 			</td>
 			<td valign="top" align="left">
-				In Beta3 the OpenShift Explorer was too eager when loading the users you had. It was annoying you by triggering the secure storage password prompt too early. 
+				In Beta3 the OpenShift Explorer was too eager when loading the users you had. It was prompting users to enter the secure storage password far too early. 
 				We fixed this in CR1. 
 				<p>
 					<small>
@@ -82,7 +82,7 @@
 				</p>
 				<p>
 					<small>
-						<a href="https://issues.jboss.org/browse/JBIDE-12006">Related Jira</a>
+						<a href="https://issues.jboss.org/browse/JBIDE-11791">Related Jira</a>
 					</small>
 				</p>
 				
@@ -93,8 +93,8 @@
 				<b>Application details</b>
 			</td>
 			<td valign="top" align="left">
-				You can now inspect a given application in all details from the context-menu in the OpenShift Explorer.  
-				<p>
+				You can now inspect a given application in all details by choosing &quot;Details&quot; in the OpenShift Explorer context-menu.  
+				It will report you the application name, type, embedded cartridges, web and git URL. URLs are clickable and launch a browser to the given internet address.<p>
 					<img src="images/application-details-menu.png" alt="application details menu" />
 				</p>
 				<p>
@@ -120,11 +120,10 @@
 				<b>Handling timeouts gracefully</b>
 			</td>
 			<td>
-				Previously a user would not be notified when the application wizard had timed out. 
-				Instead a user had to cancel the application wizard and use the import wizard to have the application 
-				added to their workspace. A new dialog box has since been added that asks a user if they wish to 
-				continue waiting for the remote application to become reachable or to close the wizard. 
-				This ensures that the user knows what state the wizard is in.				
+				Previously a user ran into an error dialog when the application wizard had timed out. 
+				He then could only cancel the creation wizard and use the import wizard to add the application to his workspace. 
+				<br />A new dialog box has since been added that asks a user if he'd wish to continue waiting for the remote 
+				application to become reachable or to close the wizard. This ensures that the user doesn't get stuck while creating and importing his OpenShift application.
 				<p>
 					<img src="images/keep-waiting.png" alt="keep waiting" />
 				</p>
@@ -159,7 +158,7 @@
 			<td valign="top">
 				OpenShift gears constrain the resources an application may consume. A small (standard) gear offers 512MB of RAM and 1GB of disk storage.
 				You may leverage more RAM and disk space by choosing a large gear. Standard user may currently only choose small gears though.
-				OpenShift may now also scale applications. It will then bundle several gears and offer even more resources to your application. JBoss Tools 
+				<br />OpenShift may now also scale applications. It will then bundle several gears and offer even more resources to your application. <br />JBoss Tools 
 				now offers you both options at creation time. You may choose among available gears and enable scaling when you create your application. 
 				<p><img src="images/gears-and-scaling.png" alt="gear and scaling"/></p>
 				<p>
@@ -198,16 +197,16 @@
 			</td>
 			<td>
 				The former incarnation of the rhc command line tools used a fixed key name for SSH connections. 
-				The SSH configuration contained libra_id_rsa hard coded into the file /user/.ssh/config for SSH connections to OpenShift. 
-				This caused issues for users who already used a different SHH configuration. The rhc command line tools no longer include hard code keys, 
-				and instead uses the existing libra_id_rsa key or suggests using rsa_id if a key does not exist. 
+				The SSH configuration contained &quot;libra_id_rsa&quot; hard coded into the file /user/.ssh/config for SSH connections to OpenShift. 
+				This caused issues for users who already used a different SSH configuration. The rhc command line tools no longer include hard code keys, 
+				and instead uses the existing &quot;libra_id_rsa&quot; key or suggests using rsa_id if a key does not exist. 
 				This behaviour has been replicated in the tooling.
 				<p>
 					<img src="images/domain-ssh-key.png" alt="ssh key" />
 				</p>
 				<p>
 					<small>
-						<a href="https://issues.jboss.org/browse/JBIDE-11314">Related Jira</a>
+						<a href="https://issues.jboss.org/browse/JBIDE-12031">Related Jira</a>
 					</small>
 				</p>
 				
