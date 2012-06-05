@@ -167,19 +167,29 @@ if [[ ! -f ${STAGINGDIR}/all/${SNAPNAME} ]]; then
 	done
 fi
 
-# create sources zip
-pushd ${WORKSPACE}/sources
-mkdir -p ${STAGINGDIR}/all
-if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]] && [[ -d ${WORKSPACE}/sources/aggregate/site/zips ]]; then
-	srczipname=${SRCSNAME/-Sources-/-Additional-Sources-}
+productSourcesZip="$(find ${WORKSPACE}/sources/product/sources/target -type f -name "jbdevstudio-product-sources-*.zip")"
+if [[ $productSourcesZip ]]; then
+	# for now, but the JBDS sources into the /installer/ folder
+	for z in $productSourcesZip; do
+		mkdir -p ${STAGINGDIR}/installer/
+		rsync -aq $z ${STAGINGDIR}/installer/
+		for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done
+	done
 else
-	srczipname=${SRCSNAME}
+	# create sources zip
+	pushd ${WORKSPACE}/sources
+	mkdir -p ${STAGINGDIR}/all
+	if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]] && [[ -d ${WORKSPACE}/sources/aggregate/site/zips ]]; then
+		srczipname=${SRCSNAME/-Sources-/-Additional-Sources-}
+	else
+		srczipname=${SRCSNAME}
+	fi
+	zip ${STAGINGDIR}/all/${srczipname} -q -r * -x hudson_workspace\* -x documentation\* -x download.jboss.org\* -x requirements\* \
+	  -x workingset\* -x labs\* -x build\* -x \*test\* -x \*target\* -x \*.class -x \*.svn\* -x \*classes\* -x \*bin\* -x \*.zip \
+	  -x \*docs\* -x \*reference\* -x \*releng\* -x \*.git\* -x \*/lib/\*.jar
+	popd
+	z=${STAGINGDIR}/all/${srczipname}; for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done
 fi
-zip ${STAGINGDIR}/all/${srczipname} -q -r * -x hudson_workspace\* -x documentation\* -x download.jboss.org\* -x requirements\* \
-  -x workingset\* -x labs\* -x build\* -x \*test\* -x \*target\* -x \*.class -x \*.svn\* -x \*classes\* -x \*bin\* -x \*.zip \
-  -x \*docs\* -x \*reference\* -x \*releng\* -x \*.git\* -x \*/lib/\*.jar
-popd
-z=${STAGINGDIR}/all/${srczipname}; for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done
 
 mkdir -p ${STAGINGDIR}/logs
 
