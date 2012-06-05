@@ -6,7 +6,7 @@
 <property name='p2.timestamp' value='1328708112209'/>
 </properties>
 <children size='1'>
-<child location='http://download.jboss.org/jbosstools/updates/requirements/m2eclipse/m2e-apt-1.0.0-2012-05-02_13-33-26-H9/'/>
+<child location='http://download.jboss.org/jbosstools/updates/requirements/m2eclipse/m2e-apt-1.0.0-2012-06-05_16-15-59-H16/'/>
 </children>
 </repository>
 
