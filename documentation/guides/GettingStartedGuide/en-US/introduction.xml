@@ -183,7 +183,7 @@
 						</entry>
 						<entry>
 							<para>
-								JBoss WS is a web service framework developed as a part of the JBoss Application Server. It implements the JAX-WS specification that defines a programming model and run-time architecture for implementing web services in Java, targeted at the Java Platform, Enterprise Edition 5 (Java EE 5).
+								JBoss WS is a web service framework developed as a part of the JBoss Application Server. It implements the JAX-WS specification that defines a programming model and run-time architecture for implementing web services in Java.
 							</para>
 						</entry>
 					</row>
@@ -203,7 +203,7 @@
 		</table>
 
 		<para>
-			<property>JBoss Developer Studio</property> requires JDK 5+ (JDK 6 in case of JBoss Enterprise Application Platform 5.0 and above). Also it is important that the  architecture of the Java Virtual Machine (JVM) matches the particular <property>JBoss Developer Studio</property> build. For example, if you are using a 64-bit system and use the 64-bit JVM, you need the 64-bit JBoss Developer Studio.
+			<property>JBoss Developer Studio</property> requires JDK 6 or above. It is important that the  architecture of the Java Virtual Machine (JVM) matches the particular <property>JBoss Developer Studio</property> build. For example, if you are using a 64-bit system and use the 64-bit JVM, you need the 64-bit JBoss Developer Studio.
 		</para>
 	
 		<para>
