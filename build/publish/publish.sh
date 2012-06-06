@@ -167,15 +167,15 @@ if [[ ! -f ${STAGINGDIR}/all/${SNAPNAME} ]]; then
 	done
 fi
 
-productSourcesZip="$(find ${WORKSPACE}/sources/product/sources/target -type f -name "jbdevstudio-product-sources-*.zip")"
-if [[ $productSourcesZip ]]; then
-	# for now, but the JBDS sources into the /installer/ folder
-	for z in $productSourcesZip; do
-		mkdir -p ${STAGINGDIR}/installer/
-		rsync -aq $z ${STAGINGDIR}/installer/
-		for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done
-	done
-else
+foundSourcesZip=0
+# for now, but the JBDS sources into the /installer/ folder
+for z in $(find ${WORKSPACE}/sources/product/sources/target -type f -name "jbdevstudio-product-sources-*.zip"); do
+	for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done
+	mkdir -p ${STAGINGDIR}/installer/
+	rsync -aq $z ${z}.MD5 ${STAGINGDIR}/installer/
+	foundSourcesZip=1
+done
+if [[ $foundSourcesZip -eq 0 ]]; then
 	# create sources zip
 	pushd ${WORKSPACE}/sources
 	mkdir -p ${STAGINGDIR}/all
