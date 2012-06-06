@@ -43,6 +43,18 @@
         </para>
 	</formalpara>
 	<formalpara>
+		<title>OpenShift</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						New tooling is now available that allows you to interact with Red Hat's cloud offering as if it were a local server.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</formalpara>
+	<formalpara>
 		<title>Forge</title>
 		<para>
 			<itemizedlist>					
@@ -61,18 +73,6 @@
 				<listitem>
 					<para>
 						Tooling for Hibernate 4 is now available within JBoss Developer Studio.
-					</para>
-				</listitem>
-			</itemizedlist>
-		</para>
-	</formalpara>
-	<formalpara>
-		<title>OpenShift</title>
-		<para>
-			<itemizedlist>
-				<listitem>
-					<para>
-						New tooling is now available that allows you to interact with Red Hat's cloud offering as if it were a local server.
 					</para>
 				</listitem>
 			</itemizedlist>
@@ -149,5 +149,17 @@
                 </listitem>
             </itemizedlist>
         </para>
+	</formalpara>
+	<formalpara>
+		<title>JAX-RS</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						JAX-RS tooling has been updated to allow for visualiation of your REST Endpoints in the Project Explorer, and support for Content Assist and Validation. It also operates with the Web Service Tester for execution of requests in both Run and Debug mode.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
 	</formalpara>
 </section>
