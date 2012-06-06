@@ -169,6 +169,7 @@ fi
 
 foundSourcesZip=0
 # for now, but the JBDS sources into the /installer/ folder
+date; ls -l ${WORKSPACE}/sources/product/sources/target
 for z in $(find ${WORKSPACE}/sources/product/sources/target -type f -name "jbdevstudio-product-sources-*.zip"); do
 	for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done
 	mkdir -p ${STAGINGDIR}/installer/
@@ -190,6 +191,7 @@ if [[ $foundSourcesZip -eq 0 ]]; then
 	popd
 	z=${STAGINGDIR}/all/${srczipname}; for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done
 fi
+date
 
 mkdir -p ${STAGINGDIR}/logs
 
