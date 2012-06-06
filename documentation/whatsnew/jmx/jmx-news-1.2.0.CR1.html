@@ -1,0 +1,82 @@
+<html>
+
+<head>
+<link rel="stylesheet" href="../whatsnew.css">
+<title>JMX Tools 1.2.0.CR1 News</title>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17645367-5']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script></head>
+
+<body>
+
+<h1>JMX Tools 1.2.0.CR1 - New and Noteworthy</h1>
+
+  <p align="right"><a href="../index.html">&lt; Main Index</a> <a href="../jst/jst-news-3.3.0.CR1-full.html">JST/JSF Tools News &gt;</a></p>
+
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+  <tr>
+    <td colspan="2">
+      <hr>
+      <h3>General</h3>
+      <hr>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="left">
+      <p align="right"><b>JMX Support for AS 7.x!</b></td>
+    <td valign="top">
+      <p> Support for JBoss AS 7.x has been completed for this release. Functioanlly, it will look exactly
+          as it does for AS 6 and below. When you start a server from the JBoss Servers view, and once
+          the startup completes, the MBean Explorer view will attempt to connect to the newly started
+          server. Several errors in the core JMX plugins were fixed to allow this. 
+      </p>
+      <p> As always, double-clicking on any mbean will allow it to open the editor for that bean</p>
+      <p><small>
+          Related Jiras: <a href="https://issues.jboss.org/browse/JBIDE-11483">JBIDE-11483</a>,
+                         <a href="https://issues.jboss.org/browse/JBIDE-11482">JBIDE-11482</a>,
+                         <a href="https://issues.jboss.org/browse/JBIDE-11481">JBIDE-11481</a>,
+                         <a href="https://issues.jboss.org/browse/JBIDE-11064">JBIDE-11064</a>,
+                         <a href="https://issues.jboss.org/browse/JBIDE-11872">JBIDE-11872</a>
+      </small></p>
+
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
+      <hr>
+    </td>
+  </tr>
+  <tr>
+    <td valign="top" align="left">
+      <p align="right"><b>Bugfixes</b></td>
+    <td valign="top">
+<p>  Small bugs were fixed as well. Expanding a node in the MBean Explorer will now use one connection 
+     to load the entire tree, rather than using a new connection for each MBean request. Also, the editor
+     was unable to handle an operation result of type java.lang.Boolean, which caused errors in the UI for users. 
+     A few other small optimizations too place as well. </p>
+      <p><small>
+          Related Jiras: <a href="https://issues.jboss.org/browse/JBIDE-11484">JBIDE-11484</a>,
+                         <a href="https://issues.jboss.org/browse/JBIDE-11480">JBIDE-11480</a></p>
+    </td>
+
+ </tr>
+
+
+</table>
+
+</body>
+
+</html>
+
+
