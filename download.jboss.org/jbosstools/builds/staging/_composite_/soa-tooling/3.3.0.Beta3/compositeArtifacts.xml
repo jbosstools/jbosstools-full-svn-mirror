@@ -13,14 +13,14 @@
 
 <!-- SOA Tooling : 10 x 1 = 10 -->
 
-<child location='../../../../staging/soatools-3.3.0.Beta3.component--bpel/all/repo/'/>
-<child location='../../../../staging/soatools-3.3.0.Beta3.component--droolsjbpm/all/repo/'/>
-<child location='../../../../staging/soatools-3.3.0.Beta3.component--esb/all/repo/'/>
-<child location='../../../../staging/soatools-3.3.0.Beta3.component--flow/all/repo/'/>
-<child location='../../../../staging/soatools-3.3.0.Beta3.component--jbpm/all/repo/'/>
-<child location='../../../../staging/soatools-3.3.0.Beta3.component--modeshape/all/repo/'/>
-<child location='../../../../staging/soatools-3.3.0.Beta3.component--runtime-soa/all/repo/'/>
-<child location='../../../../staging/soatools-3.3.0.Beta3.component--teiid-designer/all/repo/'/>
+<child location='../../../../staging/soatools-3.3.0_Beta3.component--bpel/all/repo/'/>
+<child location='../../../../staging/soatools-3.3.0_Beta3.component--droolsjbpm/all/repo/'/>
+<child location='../../../../staging/soatools-3.3.0_Beta3.component--esb/all/repo/'/>
+<child location='../../../../staging/soatools-3.3.0_Beta3.component--flow/all/repo/'/>
+<child location='../../../../staging/soatools-3.3.0_Beta3.component--jbpm/all/repo/'/>
+<child location='../../../../staging/soatools-3.3.0_Beta3.component--modeshape/all/repo/'/>
+<child location='../../../../staging/soatools-3.3.0_Beta3.component--runtime-soa/all/repo/'/>
+<child location='../../../../staging/soatools-3.3.0_Beta3.component--teiid-designer/all/repo/'/>
 <child location='http://download.jboss.org/savara/releases/updates/2.0.x/' />
 <child location='../../../../staging/SwitchYard-Tools/eclipse/'/>
 
