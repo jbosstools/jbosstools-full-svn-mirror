@@ -234,35 +234,37 @@ Java HotSpot(TM) Server VM (build 19.1-b02, mixed mode)]]>
    
   <section id="Installing_JBoss_Developer_Studio" condition="jbds">
 <?dbhtml filename="InstallingRHDS.html"?>
-    <title>JBoss Developer Studio Installation</title> 
-    <para>
-      This section will provide you with detailed information on how to install <property>JBoss Developer Studio</property>.
-    </para>
-	<important>
-		<para>
-			If you are installing on a Linux distribution you must set the following limits in <filename>/etc/security/limits.conf</filename> upon installation completion and before running JBoss Developer Studio:
-		</para>
+    <title>JBoss Developer Studio Installation</title>
+	<section>
+		<title>Important information before installation</title>
+		<itemizedlist>
+			<listitem>
+				<para>
+					The Visual Page Editor tooling is only available in the 32-bit versions of the JBoss Developer Studio for Windows and Mac OS X. You may still run your application servers in 64-bit virtual machines (if needed), to insure compatibility with the production environment.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					If you are installing on a Linux distribution you must set the following limits in <filename>/etc/security/limits.conf</filename> upon installation completion and before running JBoss Developer Studio:
+				</para>
 <programlisting>
 * soft nofile 9216
 * hard nofile 9216
 </programlisting>
-		<para>
-			These settings will ensure you do not encounter an error regarding maximum open files when starting JBoss Developer Studio.
-		</para>
-		<para>
-			A GUI interface is also necessary for JBoss Developer Studio to run correctly. Either Gnome or KDE are acceptable.
-		</para>
-	</important>
-	<important>
-		<para>
-			When installing JBoss Developer Studio on the 64-bit edition of MacOS X Snow Leopard or Lion, only the 64-bit edition of JBoss Developer Studio is supported. Though the 32-bit edition will install, many features will not work correctly due to Java 1.6 being specific to 64-bit applications on Leopard and JBoss Developer Studio requiring Java 1.6 for all features to function.
-		</para>
-	</important>
-	<note>
-		<para>
-			The Visual Page Editor tools is only available in the 32-bit version of the JBoss Developer Studio. You may still run your application servers in 64-bit virtual machines (if needed), to insure compatibility with the production environment.
-		</para>
-	</note>
+				<para>
+					These settings will ensure you do not encounter an error regarding maximum open files when starting JBoss Developer Studio.
+				</para>
+				<para>
+					A GUI interface is also necessary for JBoss Developer Studio to run correctly. Either Gnome or KDE are acceptable.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					When installing JBoss Developer Studio on the 64-bit edition of MacOS X Snow Leopard or Lion, only the 64-bit edition of JBoss Developer Studio is supported. Though the 32-bit edition will install, many features will not work correctly due to Java 1.6 being specific to 64-bit applications on Leopard and JBoss Developer Studio requiring Java 1.6 for all features to function.
+				</para>
+			</listitem>
+		</itemizedlist>
+	</section>
 	<section id="Installing_JBoss_Developer_Studio-Automated_Installation">
 		<title>Automated Installation</title>
 		<para>
@@ -279,9 +281,9 @@ Java HotSpot(TM) Server VM (build 19.1-b02, mixed mode)]]>
 			</listitem>
 			<listitem>
 				<para>
-					<property>AutomatedInstallation/com.jboss.jbds.installer.JBossAsSelectPanel/installgroup</property>: Software components to be installed
+					<property>AutomatedInstallation/com.jboss.jbds.installer.JBossAsSelectPanel/installgroup</property>: jbds
 				</para>
-				<para>
+			<!--	<para>
 					Options:
 				</para>
 				<itemizedlist>
@@ -295,7 +297,7 @@ Java HotSpot(TM) Server VM (build 19.1-b02, mixed mode)]]>
 							jbosseap: JBoss Developer Studio with JBoss Enterprise Application Platform 
 						</para>
 					</listitem>
-				</itemizedlist>
+				</itemizedlist> -->
 			</listitem>
 			<listitem>
 				<para>
@@ -361,7 +363,7 @@ java -jar /path/to/installer.jar /path/to/InstallConfigRecord.xml
 	<com.jboss.jbds.installer.HTMLInfoPanelWithRootWarning id="introduction"/>
 	<com.izforge.izpack.panels.HTMLLicencePanel id="licence"/>
 	<com.jboss.jbds.installer.PathInputPanel id="target">
-		<installpath>/opt/local/JBDS5/beta1</installpath>
+		<installpath>/opt/local/JBDS5/GA</installpath>
 	</com.jboss.jbds.installer.PathInputPanel>
 	<com.jboss.jbds.installer.JREPathPanel id="jre"/>
 	<com.jboss.jbds.installer.JBossAsSelectPanel id="as">
@@ -384,13 +386,13 @@ java -jar /path/to/installer.jar /path/to/InstallConfigRecord.xml
 	<section id="Installing_JBoss_Developer_Studio-Manual_Installation">
 		<title>Manual Installation</title>
     <para>
-      JBoss Developer Studio comes with a simple installer, bundled with tested and preconfigured versions of Eclipse, WTP, JBossEAP, Seam, and SpringIDE. The following steps show you how to install JBoss Developer Studio:
+      JBoss Developer Studio comes with a universal installer, allowing you to use the same file to install on Linux, Windows and Max OS X operating systems. The following steps show you how to install JBoss Developer Studio:
     </para>
      
     <itemizedlist>
       <listitem>
         <para>
-          First of all you need the appropriate installation file for your platform from <ulink url="https://www.redhat.com/apps/store/developers/jboss_developer_studio.html">Red Hat website</ulink>.
+			You can download the universal installer from here the <ulink url="https://access.redhat.com/jbossnetwork/restricted/listSoftware.html?downloadType=distributions&amp;product=jbossdeveloperstudio&amp;productChanged=yes">Red Hat Customer Portal</ulink>.
         </para>
       </listitem>
        
@@ -399,9 +401,9 @@ java -jar /path/to/installer.jar /path/to/InstallConfigRecord.xml
           Run the following command in a terminal window:
         </para>
          
-        <programlisting role="JAVA">
-<![CDATA[java -jar jbdevstudio-eap-linux-gtk-4.0.0.GA.jar]]>
-        </programlisting>
+<programlisting role="JAVA"><![CDATA[
+java -jar jbdevstudio-product-universal-5.0.0.GA.jar]]>
+</programlisting>
       </listitem>
        
       <listitem>
@@ -420,37 +422,46 @@ java -jar /path/to/installer.jar /path/to/InstallConfigRecord.xml
       </mediaobject>
     </figure>
      
-    <itemizedlist>
-      <listitem>
-        <para>
-          Provide the installation path
-        </para>
-      </listitem>
-       
-      <listitem>
-        <para>
-          Select the appropriate Java Virtual Machine
-        </para>
-      </listitem>
-    </itemizedlist>
+	<para>
+		Accept the license agreement.
+	</para>
+	
+	<figure>
+		<title>Accepting the license agreement</title> 
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/getting_started/getting_started_1b.png"/>
+			</imageobject>
+		</mediaobject>
+	</figure>	
+
+    <para>
+        Provide the installation path
+    </para>
+	
+	<figure>
+		<title>Set installation path</title> 
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/getting_started/getting_started_1c.png"/>
+			</imageobject>
+		</mediaobject>
+	</figure>
+	
+    <para>
+        Select the appropriate Java Virtual Machine
+    </para>
      
     <note>
       <title>Tip:</title> 
       <para>
-        By selecting <emphasis><property>Default Java VM</property></emphasis> you set default Java VM of your system (to verify your Java environment, type &quot;java -version&quot; in console).
+        By selecting <emphasis><property>Default Java VM</property></emphasis> you set the default Java VM of your system (to verify your Java environment, type &quot;java -version&quot; in console).
       </para>
     </note>
      
     <para>
       Selecting the <emphasis> <property>Specific Java VM</property> </emphasis> option will allow you to provide the path to a specific Java VM installation.
     </para>
-     
-<!--    <note>
-      <title>Note:</title> 
-      <para>
-        JBoss Developer Studio 4.0 comes integrated with JBoss EAP 5.1 that requires JDK 6.0 to run and &quot;gij&quot; isn&apos;t available on every platform.
-      </para>
-  </note> -->
      
     <figure>
       <title>Select Java VM</title> 
@@ -461,27 +472,12 @@ java -jar /path/to/installer.jar /path/to/InstallConfigRecord.xml
       </mediaobject>
     </figure>
      
-    <itemizedlist>
-      <listitem>
- <!--       <para>
-          As part of the installation you can choose to install <ulink url="http://www.jboss.com/products/platforms/application">JBoss Enterprise Application Platform</ulink>. Select <emphasis><property>Yes</property></emphasis> to use it in JBoss Developer Studio.
-        </para>
-         
-        <note>
-          <title>Note:</title> 
-          <para>
-            Like in the previous version of JBoss Developer Studio, version 4.0.0.GA comes integrated with JBoss EAP 5.1 that supports EAP 5 adapter and Seam 2.2.
-          </para>
-	  </note> -->
-         
-        <para>
-          This step lets you configure locally available JBoss Application Servers:
-        </para>
-      </listitem>
-    </itemizedlist>
+	<para>
+        This step lets you configure locally available JBoss servers:
+    </para>
      
     <figure>
-      <title>JBoss Enterprise Application Platform Installing</title> 
+      <title>Configuring a JBoss Enterprise Application Platform installation</title> 
       <mediaobject>
         <imageobject>
           <imagedata fileref="images/getting_started/getting_started_3.png"/>
@@ -489,8 +485,6 @@ java -jar /path/to/installer.jar /path/to/InstallConfigRecord.xml
       </mediaobject>
     </figure>
      
-    <itemizedlist>
-      <listitem>
         <para>
           You can fill the list automatically using the 
           <guibutton>
@@ -506,9 +500,7 @@ java -jar /path/to/installer.jar /path/to/InstallConfigRecord.xml
           </guibutton>
            button to select the chosen folder.
         </para>
-      </listitem>
-    </itemizedlist>
-     
+ <!--    
     <figure>
       <title>Finding Servers in the Selected Directory</title> 
       <mediaobject>
@@ -518,16 +510,12 @@ java -jar /path/to/installer.jar /path/to/InstallConfigRecord.xml
       </mediaobject>
     </figure>
      
-    <para/>
+	<para/> -->
      
-    <itemizedlist>
-      <listitem>
         <para>
-          All available servers in the selected directory will be added to the list with the following details: Name, Type, Version and Location.
+          All found servers will be added to the list with the following details: Name, Type, Version and Location.
         </para>
-      </listitem>
-    </itemizedlist>
-     
+ <!--    
     <itemizedlist>
       <listitem>
         <para>
@@ -599,15 +587,13 @@ java -jar /path/to/installer.jar /path/to/InstallConfigRecord.xml
       </mediaobject>
     </figure>
      
-    <para/>
+	<para/> -->
 <!--  <note>
    <title>Note:</title>
    <para>The installer installs JBoss Enterprise Application Platform for running your applications
     if you select this option during the installation process. If you want to use a different server
     than ours, you can change the setting in JBoss Developer Studio.</para>
     </note>-->
-    <itemizedlist>
-      <listitem>
         <para>
           Click the 
           <guibutton>
@@ -623,10 +609,6 @@ java -jar /path/to/installer.jar /path/to/InstallConfigRecord.xml
           </guibutton>
            button to start installation.
         </para>
-      </listitem>
-    </itemizedlist>
-     
-    <para/>
      
     <figure>
       <title>Summary Information</title> 
@@ -636,6 +618,45 @@ java -jar /path/to/installer.jar /path/to/InstallConfigRecord.xml
         </imageobject>
       </mediaobject>
     </figure>
+	
+	<para>
+		Installation will then take place.
+	</para>
+	
+	<figure>
+		<title>Installation</title> 
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/getting_started/getting_started_complete_install_01.png"/>
+			</imageobject>
+		</mediaobject>
+	</figure>
+	
+	<para>
+		Once installation completes you will have the option to create shortcuts to JBoss Developer Studio.
+	</para>
+	
+	<figure>
+		<title>Shortcut creation</title> 
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/getting_started/getting_started_complete_install_02.png"/>
+			</imageobject>
+		</mediaobject>
+	</figure>
+	
+	<para>
+		The final screen will declare that <guilabel>Installation has completed successfully</guilabel>. Click the <guibutton>Done</guibutton> button.
+	</para>
+	
+	<figure>
+		<title>Completion</title> 
+		<mediaobject>
+			<imageobject>
+				<imagedata fileref="images/getting_started/getting_started_complete_install_03.png"/>
+			</imageobject>
+		</mediaobject>
+	</figure>
 </section>
   </section>
   <!-- Commenting out as we recommend using JBoss Central now and there is no point in mentioning two ways to achieve the one thing if we only want users doing things a certain way -->
@@ -720,7 +741,6 @@ java -jar /path/to/installer.jar /path/to/InstallConfigRecord.xml
 			 <title>Upgrading</title>
 			 <para>Because JBoss Developer Studio 4.0x and 5.0 use different versions of Eclipse, it is not possible to directly upgrade from an older version to JBoss Developer Studio 5.0.</para>
 			 <note>
-				 <title>Tip</title>
 				 <para>It is possible to run JBoss Developer Studio 4.0x and 5.0 side by side, as long as they have been installed into separate directories.</para>
 			 </note>
 			 

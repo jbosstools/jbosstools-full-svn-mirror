@@ -26,13 +26,13 @@
 				<para>Red Hat Enterprise Linux 6 i386 running 32-bit Sun JDK 6 and OpenJDK 6</para>
 			</listitem>
 			<listitem>
-				<para>Red Hat Enterprise Linux 6 x86_64 running 64-bit Sun JDK 6 and OpenJDK 6 (*)</para>
+				<para>Red Hat Enterprise Linux 6 x86_64 running 64-bit Sun JDK 6 and OpenJDK 6</para>
 			</listitem>
 			<listitem>
 				<para>Red Hat Enterprise Linux 5 i386 running 32-bit Sun JDK 6 and OpenJDK 6</para>
 			</listitem>
 			<listitem>
-				<para>Red Hat Enterprise Linux 5 x86_64 running 64-bit Sun JDK 6 and OpenJDK 6 (*)</para>
+				<para>Red Hat Enterprise Linux 5 x86_64 running 64-bit Sun JDK 6 and OpenJDK 6</para>
 			</listitem>
 		</itemizedlist>
 	</para>

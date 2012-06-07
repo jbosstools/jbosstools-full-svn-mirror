@@ -13,7 +13,6 @@
 
 	<section id="Welcome">
 		<title>Welcome</title>
-		<para>In this section we'll show you how to work with the welcome page of the <property>JBoss Developer Studio</property>.</para>
 		<para>The welcome page is the first page you see when you first launch <property>JBoss Developer Studio</property>. </para>
 
 		<figure>
@@ -24,7 +23,11 @@
 				</imageobject>
 			</mediaobject>
 		</figure>
-
+		
+		<para>
+			Click <guibutton>Get started with JBoss Central</guibutton> to begin using JBoss Developer Studio.
+		</para>
+		<!--
 		<para>With the help of its page you will be able:</para>
 		<itemizedlist>
 			<listitem>
@@ -89,7 +92,7 @@
 		<para>
 			You can start working with <property>JBoss Developer Studio</property> by clicking on the <guibutton>Workbench</guibutton> button or simply closing the Welcome page.
 		</para>
-
+		-->
 	</section>
 
 	<xi:include href="usage_reporting.xml" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
