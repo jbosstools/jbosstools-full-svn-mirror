@@ -1,2 +1,3 @@
 #!/bin/bash
-./publish/publish.sh
+cd `pwd`/publish
+./publish.sh
