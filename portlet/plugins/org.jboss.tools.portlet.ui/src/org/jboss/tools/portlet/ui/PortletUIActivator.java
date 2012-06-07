@@ -16,6 +16,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jem.util.emf.workbench.ProjectUtilities;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.wst.common.componentcore.ComponentCore;
+import org.eclipse.wst.common.componentcore.internal.util.IModuleConstants;
 import org.eclipse.wst.common.componentcore.resources.IVirtualComponent;
 import org.eclipse.wst.common.componentcore.resources.IVirtualFile;
 import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
@@ -82,12 +83,20 @@ public class PortletUIActivator extends AbstractUIPlugin {
 	}
 	
 	public static IFile getPortletXmlFile(IProject project) {
+		try {
+			if (project == null || !project.hasNature(IModuleConstants.MODULE_NATURE_ID)) {
+				return null;
+			}
+		} catch (CoreException e) {
+			log(e);
+			return null;
+		}
 		IVirtualComponent component = ComponentCore.createComponent(project);
 		IVirtualFile portletVirtualFile = component.getRootFolder().getFile(
 				IPortletConstants.CONFIG_PATH);
 
 		if (!portletVirtualFile.getUnderlyingFile().exists()) {
-			log(new RuntimeException(Messages.PortletUIActivator_The_portlet_xml_file_doesnt_exist));
+			//log(new RuntimeException(Messages.PortletUIActivator_The_portlet_xml_file_doesnt_exist));
 			return null;
 		}
 
