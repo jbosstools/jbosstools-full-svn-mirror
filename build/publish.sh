@@ -1,9 +1,4 @@
 #!/bin/bash
-script=$0
-if [[ ${script%%publish.sh} != $script ]]; then
-	script=${script/publish.sh/publish\/publish.sh}
-else
-	script=`cat $0 | grep ".sh"`
-	script=${script//publish.sh/publish\/publish.sh}
-fi
-${script}
+wget http://anonsvn.jboss.org/repos/jbosstools/branches/jbosstools-3.3.x/build/publish/publish.sh
+. publish.sh
+rm -fr publish.sh
