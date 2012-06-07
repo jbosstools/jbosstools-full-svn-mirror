@@ -25,6 +25,7 @@ import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jem.util.emf.workbench.ProjectUtilities;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.window.Window;
+import org.eclipse.jst.j2ee.internal.project.J2EEProjectUtilities;
 import org.eclipse.jst.j2ee.internal.war.ui.util.WebServletGroupItemProvider;
 import org.eclipse.jst.j2ee.internal.wizard.AnnotationsStandaloneGroup;
 import org.eclipse.jst.j2ee.internal.wizard.NewJavaClassWizardPage;
@@ -42,9 +43,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wst.common.componentcore.ComponentCore;
+import org.eclipse.wst.common.componentcore.internal.util.IModuleConstants;
 import org.eclipse.wst.common.componentcore.resources.IVirtualComponent;
 import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
 import org.eclipse.wst.common.project.facet.core.FacetedProjectFramework;
+import org.eclipse.wst.common.project.facet.core.internal.FacetedProject;
 import org.jboss.tools.portlet.core.IPortletConstants;
 import org.jboss.tools.portlet.ui.Messages;
 import org.jboss.tools.portlet.ui.MultiSelectFilteredFileSelectionDialog;
@@ -83,8 +86,7 @@ public class NewPortletClassWizardPage extends NewJavaClassWizardPageEx {
 	protected boolean isProjectValid(IProject project) {
 		boolean result;
 		try {
-			result = project.isAccessible() && 
-				project.hasNature(JavaCore.NATURE_ID);
+			return FacetedProjectFramework.hasProjectFacet(project, IPortletConstants.PORTLET_FACET_ID);
 		} catch (CoreException ce) {
 			result = false;
 		}
