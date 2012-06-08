@@ -326,9 +326,9 @@ Make sure you read the deployment instructions in README.md</description>
 				<property name="connectorIds">org.maven.ide.eclipse.wtp</property>
 			</fix>
 			<fix type="plugin">
-				<property name="id">org.jboss.tools.maven.core</property>
+				<property name="id">org.jboss.tools.maven.gwt</property>
 				<property name="versions">[1.3.0,1.4.0)</property>
-				<property name="description">This project example requires JBoss Maven Tools.</property>
+				<property name="description">This project example requires JBoss Maven GWT Integration</property>
 				<property name="connectorIds">org.jboss.tools.maven.feature,org.jboss.tools.maven.cdi.feature,org.jboss.tools.maven.gwt.feature</property>
 			</fix>
 			<fix type="plugin">
