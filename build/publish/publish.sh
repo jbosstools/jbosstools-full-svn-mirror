@@ -254,7 +254,7 @@ md5sum $(find . -name "*Update*.zip" | egrep -v "aggregate-Sources|nightly-Updat
 echo "  " >> ${md5sumsFile}
 echo "# Source Zips" >> ${md5sumsFile}
 echo "# -----------" >> ${md5sumsFile}
-md5sum $(find . -name "*Source*.zip" | egrep -v "aggregate-Sources|nightly-Update") >> ${md5sumsFile}
+md5sum $(find . -iname "*source*.zip" | egrep -v "aggregate-Sources|nightly-Update") >> ${md5sumsFile}
 echo " " >> ${md5sumsFile}
 
 mkdir -p ${STAGINGDIR}/logs
