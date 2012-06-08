@@ -665,9 +665,9 @@ java -jar jbdevstudio-product-universal-5.0.0.GA.jar]]>
 		 <para>
 			 Once you have configured the <filename>InstallConfigRecord.xml</filename> file for your needs, the following command can be run on the command line to begin installation:
 		 </para>
-		 <programlisting>
-			 java -jar /path/to/installer.jar /path/to/InstallConfigRecord.xml
-		 </programlisting>
+<programlisting>
+java -jar /path/to/installer.jar /path/to/InstallConfigRecord.xml
+</programlisting>
 		 <formalpara>
 			 <title>Current limitations</title>
 			 <para>
