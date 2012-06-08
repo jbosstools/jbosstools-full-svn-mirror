@@ -168,12 +168,12 @@ if [[ ! -f ${STAGINGDIR}/all/${SNAPNAME} ]]; then
 fi
 
 foundSourcesZip=0
-# for now, but the JBDS sources into the /installer/ folder
+# for now, put the JBDS sources into the /installer/ folder
 for z in $(find ${WORKSPACE}/sources/product/sources/target -type f -name "jbdevstudio-product-sources-*.zip"); do
 	for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done
 	mkdir -p ${STAGINGDIR}/installer/
 	rsync -aq $z ${z}.MD5 ${STAGINGDIR}/installer/
-	# provide symlink so that the .product build can find the sources zip using a generic name, where SRCSNAME = ${JOB_NAME}-Sources-${ZIPSUFFIX}.zip
+	# [fix for DEPRECATED PDE installer build] provide symlink so that the .product build can find the sources zip using a generic name, where SRCSNAME = ${JOB_NAME}-Sources-${ZIPSUFFIX}.zip
 	mkdir -p ${STAGINGDIR}/all; cd ${STAGINGDIR}/all
 	ln -s ../installer/${z} ${SRCSNAME}
 	ln -s ../installer/${z}.MD5 ${SRCSNAME}.MD5
