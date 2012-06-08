@@ -168,11 +168,15 @@ if [[ ! -f ${STAGINGDIR}/all/${SNAPNAME} ]]; then
 fi
 
 foundSourcesZip=0
-# for now, but the JBDS sources into the /installer/ folder
+# for now, put the JBDS sources into the /installer/ folder
 for z in $(find ${WORKSPACE}/sources/product/sources/target -type f -name "jbdevstudio-product-sources-*.zip"); do
 	for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done
 	mkdir -p ${STAGINGDIR}/installer/
 	rsync -aq $z ${z}.MD5 ${STAGINGDIR}/installer/
+	# [fix for DEPRECATED PDE installer build] provide symlink so that the .product build can find the sources zip using a generic name, where SRCSNAME = ${JOB_NAME}-Sources-${ZIPSUFFIX}.zip
+	#mkdir -p ${STAGINGDIR}/all; cd ${STAGINGDIR}/all
+	#ln -s ../installer/${z} ${SRCSNAME}
+	#ln -s ../installer/${z}.MD5 ${SRCSNAME}.MD5
 	foundSourcesZip=1
 done
 if [[ $foundSourcesZip -eq 0 ]]; then
@@ -250,7 +254,7 @@ md5sum $(find . -name "*Update*.zip" | egrep -v "aggregate-Sources|nightly-Updat
 echo "  " >> ${md5sumsFile}
 echo "# Source Zips" >> ${md5sumsFile}
 echo "# -----------" >> ${md5sumsFile}
-md5sum $(find . -name "*Source*.zip" | egrep -v "aggregate-Sources|nightly-Update") >> ${md5sumsFile}
+md5sum $(find . -iname "*source*.zip" | egrep -v "aggregate-Sources|nightly-Update") >> ${md5sumsFile}
 echo " " >> ${md5sumsFile}
 
 mkdir -p ${STAGINGDIR}/logs
