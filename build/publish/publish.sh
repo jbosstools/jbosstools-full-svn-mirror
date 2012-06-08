@@ -173,6 +173,10 @@ for z in $(find ${WORKSPACE}/sources/product/sources/target -type f -name "jbdev
 	for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done
 	mkdir -p ${STAGINGDIR}/installer/
 	rsync -aq $z ${z}.MD5 ${STAGINGDIR}/installer/
+	# provide symlink so that the .product build can find the sources zip using a generic name, where SRCSNAME = ${JOB_NAME}-Sources-${ZIPSUFFIX}.zip
+	mkdir -p ${STAGINGDIR}/all; cd ${STAGINGDIR}/all
+	ln -s ../installer/${z} ${SRCSNAME}
+	ln -s ../installer/${z}.MD5 ${SRCSNAME}.MD5
 	foundSourcesZip=1
 done
 if [[ $foundSourcesZip -eq 0 ]]; then
