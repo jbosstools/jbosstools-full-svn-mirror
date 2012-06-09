@@ -195,6 +195,12 @@ if [[ $foundSourcesZip -eq 0 ]]; then
 	z=${STAGINGDIR}/all/${srczipname}; for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done
 fi
 
+# JBDS-1992 create results page in installer/ folder, including update site zip, sources zip, and installers
+if [[ -d ${WORKSPACE}/sources/product/results/target ]]; then
+	mkdir -p ${STAGINGDIR}/installer/
+	rsync -aq ${WORKSPACE}/sources/product/results/target/* ${STAGINGDIR}/installer/
+fi
+
 mkdir -p ${STAGINGDIR}/logs
 
 # collect component zips from upstream aggregated build jobs
