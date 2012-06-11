@@ -28,7 +28,7 @@ jbpm -> flow, common -> tests
 
 esb -> jst -> common -> tests
 
-gwt, runtime, tests, usage, drools, pi4soa, savara, teiid -> [NONE]
+runtime, tests, usage, drools, pi4soa, savara, teiid -> [NONE]
 
 ------------------------
 
@@ -50,6 +50,8 @@ ws -> common
 maven -> examples
 openshift -> as, jmx, archives, common, tests
 birt -> hibernatetools
+xulrunner, gwt, freemarker -> usage
+gwt -> xulrunner
 
 ------------------------
 
