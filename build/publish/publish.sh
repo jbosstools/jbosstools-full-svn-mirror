@@ -63,10 +63,9 @@ elif [[ -d   ${WORKSPACE}/sources/site/target ]]; then
 	else
 	 siteZip=${WORKSPACE}/sources/site/target/repository.zip
 	 # JBIDE-10923
-	 currentDir=$(pwd)
-	 cd ${WORKSPACE}/sources/site/target/repository
+	 pushd ${WORKSPACE}/sources/site/target/repository >/dev/null
 	 zip -r $siteZip .
-	 cd $currentDir
+	 popd >/dev/null
 	fi
 	z=$siteZip
 fi
@@ -174,9 +173,10 @@ for z in $(find ${WORKSPACE}/sources/product/sources/target -type f -name "jbdev
 	mkdir -p ${STAGINGDIR}/installer/
 	rsync -aq $z ${z}.MD5 ${STAGINGDIR}/installer/
 	# [fix for DEPRECATED PDE installer build] provide symlink so that the .product build can find the sources zip using a generic name, where SRCSNAME = ${JOB_NAME}-Sources-${ZIPSUFFIX}.zip
-	#mkdir -p ${STAGINGDIR}/all; cd ${STAGINGDIR}/all
-	#ln -s ../installer/${z} ${SRCSNAME}
-	#ln -s ../installer/${z}.MD5 ${SRCSNAME}.MD5
+	#mkdir -p ${STAGINGDIR}/all; pushd ${STAGINGDIR}/all >/dev/null
+	#ln -s ../installer/${z##*/} ${SRCSNAME}
+	#ln -s ../installer/${z##*/}.MD5 ${SRCSNAME}.MD5
+	#popd >/dev/null
 	foundSourcesZip=1
 done
 if [[ $foundSourcesZip -eq 0 ]]; then
@@ -193,6 +193,12 @@ if [[ $foundSourcesZip -eq 0 ]]; then
 	  -x \*docs\* -x \*reference\* -x \*releng\* -x \*.git\* -x \*/lib/\*.jar
 	popd
 	z=${STAGINGDIR}/all/${srczipname}; for m in $(md5sum ${z}); do if [[ $m != ${z} ]]; then echo $m > ${z}.MD5; fi; done
+fi
+
+# JBDS-1992 create results page in installer/ folder, including update site zip, sources zip, and installers
+if [[ -d ${WORKSPACE}/sources/product/results/target ]]; then
+	mkdir -p ${STAGINGDIR}/installer/
+	rsync -aq ${WORKSPACE}/sources/product/results/target/* ${STAGINGDIR}/installer/
 fi
 
 mkdir -p ${STAGINGDIR}/logs
@@ -247,6 +253,7 @@ done
 echo ""  >> ${STAGINGDIR}/logs/${METAFILE}
 
 # generate md5sums in a single file 
+pushd ${STAGINGDIR} >/dev/null
 md5sumsFile=${STAGINGDIR}/logs/md5sums.txt
 echo "# Update Site Zips" > ${md5sumsFile}
 echo "# ----------------" >> ${md5sumsFile}
@@ -256,6 +263,7 @@ echo "# Source Zips" >> ${md5sumsFile}
 echo "# -----------" >> ${md5sumsFile}
 md5sum $(find . -iname "*source*.zip" | egrep -v "aggregate-Sources|nightly-Update") >> ${md5sumsFile}
 echo " " >> ${md5sumsFile}
+popd >/dev/null
 
 mkdir -p ${STAGINGDIR}/logs
 
