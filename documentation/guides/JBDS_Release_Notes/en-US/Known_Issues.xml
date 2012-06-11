@@ -3,23 +3,23 @@
 	<title>
 			Known Issues in version 5.0.0
 	</title>
-	<para>
+<!--	<para>
 		There were no known issues at the time of release.
-	</para>
-<!--	<para> 
+	</para> -->
+	<para> 
 			Following is a list of known issues at the time of release.
-		</para> -->
-	<!--	<variablelist> -->
-		<!-- JBIDE-11635 -->
-	<!--	<varlistentry>
+		</para>
+		<variablelist> 
+			<!-- JBDS-2180 -->
+		<varlistentry>
 			<term>
-				<ulink url="https://issues.jboss.org/jira/browse/JBIDE-11635">JBIDE-11635</ulink>
+				<ulink url="https://issues.jboss.org/jira/browse/JBDS-2180">JBDS-2180</ulink>
 			</term>
 			<listitem>
 				<para>
-					When JAX-RS services are tested through JAX-RS Tooling and Web Service Tester integration, the URL of the service can include details about required parameters. If the included parameters require values to be specified, a dialog prompting for these values now appears to the user and validation of the values occurs if the service includes a Regular Expression. This new feature ensures all values are gathered and verified before testing the service, minimizing returned errors.
+					When installing JBoss Developer Studio 5 on Mac OS X, if you are running Java 7 you will only be able to install the 64bit version of JBoss Developer Studio. The current workaround o install the 32bit version is to use Java 6. 
 				</para>
 			</listitem>
 		</varlistentry>
-	</variablelist> -->
+	</variablelist>
 </section>
