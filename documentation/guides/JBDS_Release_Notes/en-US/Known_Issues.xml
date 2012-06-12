@@ -21,5 +21,16 @@
 				</para>
 			</listitem>
 		</varlistentry>
+		<!-- JBIDE-12071 -->
+		<varlistentry>
+			<term>
+				<ulink url="https://issues.jboss.org/jira/browse/JBIDE-12071">JBIDE-12071</ulink>
+			</term>
+			<listitem>
+				<para>
+					When adding a project to an OpenShift server using the context menu, or you remove a project from the OpenShift server, no dialog appears to publish or unpublish the project. The current workaround is to manually publish and unpublish a project after performing one of the above actions. 
+				</para>
+			</listitem>
+		</varlistentry>
 	</variablelist>
 </section>
