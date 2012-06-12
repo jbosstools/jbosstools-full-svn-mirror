@@ -9,8 +9,6 @@
 	</condition>
 	<mkdir dir="${COMMON_TOOLS}" />
 
-	<property name="tmpdir" value="${java.io.tmpdir}/jbosstools-results-build" />
-
 	<target name="get.ant-contrib" unless="ant-contrib.jar.exists">
 		<property name="ANTCONTRIB_MIRROR" value="http://sourceforge.net/projects/ant-contrib/files/ant-contrib/ant-contrib-1.0b2" />
 		<get usetimestamp="true" dest="${COMMON_TOOLS}/ant-contrib-1.0b2-bin.zip" src="${ANTCONTRIB_MIRROR}/ant-contrib-1.0b2-bin.zip" />
@@ -37,9 +35,10 @@ $java.home = ${java.home}</echo>
 			</classpath>
 		</taskdef>
 
-		<mkdir dir="${tmpdir}" />
-		<delete dir="target/" quiet="true" />
-		<mkdir dir="target/" />
+		<!-- run locally, or else target ${STAGINGDIR} folder if called from publish.sh -->
+		<property name="target.dir" value="./target/"/>
+		<delete dir="${target.dir}" quiet="true" />
+		<mkdir dir="${target.dir}" />
 	</target>
 
 	<target name="build" depends="init">
@@ -58,9 +57,15 @@ $java.home = ${java.home}</echo>
 				<if>
 					<contains string="${TIMESTAMP}" substring="maven.build.timestamp"/>
 					<then>
-						<tstamp>
-							<format property="TIMESTAMP" pattern="yyyyMMdd-HHmm" locale="en,US" timezone="GMT"/>
-						</tstamp>
+						<propertyregex property="TIMESTAMP" input="${BUILD_ID}" defaultvalue="${BUILD_ID}" regexp="(\d{4})-(\d{2})-(\d{2})_(\d{2})-(\d{2}).+" replace="\1\2\3-\4\5"/>
+						<if>
+							<contains string="${TIMESTAMP}" substring="BUILD_ID"/>
+							<then>
+								<tstamp>
+									<format property="TIMESTAMP" pattern="yyyyMMdd-HHmm" locale="en,US" timezone="GMT"/>
+								</tstamp>
+							</then>
+						</if>
 					</then>
 				</if>
 			</then>
@@ -90,8 +95,6 @@ $java.home = ${java.home}</echo>
 		<echo level="verbose">TIMESTAMP = ${TIMESTAMP}</echo>
 
 		<antcall target="generate.html" />
-
-		<antcall target="cleanup" />
 	</target>
 
 	<target name="generate.html">
@@ -119,19 +122,13 @@ $java.home = ${java.home}</echo>
 		</condition>
 
 		<!-- use locally built files with relative paths -->
-		<copy todir="target/" overwrite="true">
+		<copy todir="${target.dir}" overwrite="true">
 			<fileset file="index-template.html" />
 			<mapper type="merge" to="index.html" />
 			<filterchain>
 				<expandproperties />
 			</filterchain>
 		</copy>
-	</target>
-
-	<target name="cleanup">
-		<delete includeemptydirs="true" quiet="true">
-			<fileset dir="${tmpdir}" />
-		</delete>
 	</target>
 
 <!-- macros -->
