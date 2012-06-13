@@ -268,7 +268,7 @@ popd >/dev/null
 mkdir -p ${STAGINGDIR}/logs
 
 # generate results page for an aggregate build only
-if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]] && [[ -d ${WORKSPACE}/sources/results ]]; then
+if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]] && [[ -f ${WORKSPACE}/sources/results/pom.xml ]] && [[ -f ${WORKSPACE}/sources/results/build.xml ]]; then
 	pushd ${WORKSPACE}/sources/results >/dev/null
 	export JAVA_HOME=$(find /qa/tools/opt -maxdepth 1 -mindepth 1 -type d -name "jdk1.6.0_*" | sort | tail -1)
 	export M2_HOME=$(find /qa/tools/opt -maxdepth 1 -mindepth 1 -type d -name "apache-maven-3.0.*" | sort | tail -1)
