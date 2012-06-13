@@ -270,7 +270,9 @@ mkdir -p ${STAGINGDIR}/logs
 # generate results page for an aggregate build only
 if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]] && [[ -d ${WORKSPACE}/sources/results ]]; then
 	pushd ${WORKSPACE}/sources/results >/dev/null
-	mvn install -DJOB_NAME=${JOB_NAME} -DBUILD_NUMBER=${BUILD_NUMBER} -DBUILD_ID=${BUILD_ID} -Dtarget.dir=${STAGINGDIR}
+	export JAVA_HOME=$(find /qa/tools/opt -maxdepth 1 -mindepth 1 -type d -name "jdk1.6.0_*" | sort | tail -1)
+	mvn=$(find /qa/tools/opt -maxdepth 1 -mindepth 1 -type d -name "apache-maven-3.0.*" | sort | tail -1)
+	${mvn} install -DJOB_NAME=${JOB_NAME} -DBUILD_NUMBER=${BUILD_NUMBER} -DBUILD_ID=${BUILD_ID} -Dtarget.dir=${STAGINGDIR}
 	popd >/dev/null
 fi
 
