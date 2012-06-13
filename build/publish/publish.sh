@@ -267,33 +267,14 @@ popd >/dev/null
 
 mkdir -p ${STAGINGDIR}/logs
 
-if [[ ! $ANT_HOME ]]; then # find ant in PATH - select LAST entry if more than one
-	ANT_HOME=$(for d in $(echo ${PATH//:/ }); do if [[ ${d/ant/} != ${d} ]]; then echo -n " ${d%/bin}"; fi; done); ANT_HOME=${ANT_HOME##* }
-fi
-ANT_EXEC="ant"
-if [[ -d ${ANT_HOME} ]] && [[ -x ${ANT_HOME}/bin/ant ]]; then
-	export ANT_HOME=${ANT_HOME}
-	ANT_EXEC=${ANT_HOME}/bin/ant
-fi
-ANT_LIB="" # add COMMON_TOOLS folder to ant's lib folder
-if [[ -d /home/hudson/static_build_env/jbds/tools ]]; then
-	ANT_LIB=" -lib /home/hudson/static_build_env/jbds/tools"
-fi
-ANT_PARAMS=" -DZIPSUFFIX=${ZIPSUFFIX} -DJOB_NAME=${JOB_NAME} -Dinput.dir=${STAGINGDIR} -Doutput.dir=${STAGINGDIR}/logs -DWORKSPACE=${WORKSPACE}"
-for buildxml in ${WORKSPACE}/build/results/build.xml ${WORKSPACE}/sources/build/results/build.xml ${WORKSPACE}/sources/results/build.xml; do
-	if [[ -f ${buildxml} ]]; then
-		ANT_SCRIPT=${buildxml}
-		RESULTS_DIR=${buildxml/\/build.xml/}
-	fi
-done
-ANT_TARGET="buildResults.single"; if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]]; then ANT_TARGET="buildResults.aggregate"; fi
-if [[ ${ANT_SCRIPT} ]] && [[ -f ${ANT_SCRIPT} ]]; then ${ANT_EXEC}${ANT_LIB} -f ${ANT_SCRIPT} ${ANT_TARGET} ${ANT_PARAMS}; fi
-
-# copy buildResults.css, buildResults.html to ${STAGINGDIR}/logs
-if [[ ${RESULTS_DIR} ]] && [[ -d ${RESULTS_DIR} ]]; then
-	for f in buildResults.html buildResults.css; do
-		if [[ -f ${RESULTS_DIR}/${f} ]]; then rsync -arzq ${RESULTS_DIR}/${f} ${STAGINGDIR}/logs/; fi
-	done
+# generate results page for an aggregate build only
+if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]] && [[ -d ${WORKSPACE}/sources/results ]]; then
+	pushd ${WORKSPACE}/sources/results >/dev/null
+	export JAVA_HOME=$(find /qa/tools/opt -maxdepth 1 -mindepth 1 -type d -name "jdk1.6.0_*" | sort | tail -1)
+	export M2_HOME=$(find /qa/tools/opt -maxdepth 1 -mindepth 1 -type d -name "apache-maven-3.0.*" | sort | tail -1)
+	${M2_HOME}/bin/mvn -q -B install -DJOB_NAME=${JOB_NAME} -DBUILD_NUMBER=${BUILD_NUMBER} -DBUILD_ID=${BUILD_ID}
+	mv target/index.html ${STAGINGDIR}/index.html; rm -fr target
+	popd >/dev/null
 fi
 
 # purge duplicate zip files in logs/zips/all/*.zip
@@ -427,6 +408,7 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 			# /builds/staging.previous/${JOB_NAME}/all/repo/
 			# /builds/staging.previous/${JOB_NAME}.2/all/repo/
 		now=$(date +%s000)
+		mkdir -p ${STAGINGDIR}/all
 		echo "<?xml version='1.0' encoding='UTF-8'?>
 <?compositeMetadataRepository version='1.0.0'?>
 <repository name='JBoss Tools Staging - ${JOB_NAME} Composite' type='org.eclipse.equinox.internal.p2.metadata.repository.CompositeMetadataRepository' version='1.0.0'>
