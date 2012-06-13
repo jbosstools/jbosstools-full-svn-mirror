@@ -114,10 +114,10 @@ $java.home = ${java.home}</echo>
 
 		<!-- set IDs for the chart widgets from the views -->
 		<!-- TODO: will later need to add a third case for 6.0 stable_branch -->
-		<condition property="PORTLET.1" value="125" else="118">
+		<condition property="PORTLET.1" value="10" else="3">
 			<contains string="${JOB_NAME}" substring="_stable_branch" />
 		</condition>
-		<condition property="PORTLET.2" value="126" else="119">
+		<condition property="PORTLET.2" value="11" else="4">
 			<contains string="${JOB_NAME}" substring="_stable_branch" />
 		</condition>
 
