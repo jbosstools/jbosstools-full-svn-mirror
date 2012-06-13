@@ -272,7 +272,7 @@ if [[ ${JOB_NAME/.aggregate} != ${JOB_NAME} ]] && [[ -d ${WORKSPACE}/sources/res
 	pushd ${WORKSPACE}/sources/results >/dev/null
 	export JAVA_HOME=$(find /qa/tools/opt -maxdepth 1 -mindepth 1 -type d -name "jdk1.6.0_*" | sort | tail -1)
 	export M2_HOME=$(find /qa/tools/opt -maxdepth 1 -mindepth 1 -type d -name "apache-maven-3.0.*" | sort | tail -1)
-	${M2_HOME}/bin/mvn install -DJOB_NAME=${JOB_NAME} -DBUILD_NUMBER=${BUILD_NUMBER} -DBUILD_ID=${BUILD_ID} -Dtarget.dir=${STAGINGDIR}
+	${M2_HOME}/bin/mvn -q -B install -DJOB_NAME=${JOB_NAME} -DBUILD_NUMBER=${BUILD_NUMBER} -DBUILD_ID=${BUILD_ID} -Dtarget.dir=${STAGINGDIR}
 	popd >/dev/null
 fi
 
@@ -407,6 +407,7 @@ if [[ $ec == "0" ]] && [[ $fc == "0" ]]; then
 			# /builds/staging.previous/${JOB_NAME}/all/repo/
 			# /builds/staging.previous/${JOB_NAME}.2/all/repo/
 		now=$(date +%s000)
+		mkdir -p ${STAGINGDIR}/all
 		echo "<?xml version='1.0' encoding='UTF-8'?>
 <?compositeMetadataRepository version='1.0.0'?>
 <repository name='JBoss Tools Staging - ${JOB_NAME} Composite' type='org.eclipse.equinox.internal.p2.metadata.repository.CompositeMetadataRepository' version='1.0.0'>
