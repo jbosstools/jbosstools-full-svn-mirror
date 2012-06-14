@@ -19,6 +19,8 @@ public class Messages extends NLS {
 	public static String NewPortletClassDataModelProvider_The_portlet_already_exists;
 	public static String NewPortletClassWizardPage_Choose_a_portlet_class;
 	public static String NewPortletClassWizardPage_New_Portlet;
+	public static String NewPortletClassWizardPage_The_portlet_xml_file_doesn_t_exist;
+	public static String NewPortletClassWizardPage_Updating_web_xml_portlet_xml_is_not_possible_on_non_portlet_web_projects;
 	public static String NewPortletClassWizardPage_Use_an_existing_Portlet_class;
 	public static String NewPortletWizard_Specify_modifiers_interfaces_to_implement_and_method_stubs_to_generate;
 	public static String No_portlets_exist_to_add;
