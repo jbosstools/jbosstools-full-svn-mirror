@@ -80,8 +80,6 @@ import org.eclipse.wst.common.componentcore.internal.util.IModuleConstants;
 import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
 import org.eclipse.wst.common.frameworks.internal.datamodel.ui.DataModelWizardPage;
 import org.eclipse.wst.common.frameworks.internal.plugin.WTPCommonPlugin;
-import org.eclipse.wst.common.project.facet.core.FacetedProjectFramework;
-import org.jboss.tools.portlet.core.IPortletConstants;
 import org.jboss.tools.portlet.ui.PortletUIActivator;
 
 /**
@@ -241,7 +239,9 @@ public class NewJavaClassWizardPageEx extends DataModelWizardPage {
 	protected boolean isProjectValid(IProject project) {
 		boolean result;
 		try {
-			return FacetedProjectFramework.hasProjectFacet(project, IPortletConstants.JSFPORTLET_FACET_ID);
+			result = project.isAccessible() && 
+				project.hasNature(IModuleConstants.MODULE_NATURE_ID) && 
+			 	J2EEProjectUtilities.getJ2EEProjectType(project).equals(projectType);
 		} catch (CoreException ce) {
 			result = false;
 		}

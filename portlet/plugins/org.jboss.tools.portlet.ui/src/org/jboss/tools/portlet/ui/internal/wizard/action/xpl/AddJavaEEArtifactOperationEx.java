@@ -6,6 +6,7 @@ import static org.eclipse.wst.common.componentcore.internal.operation.IArtifactE
 
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -17,6 +18,7 @@ import org.eclipse.jst.j2ee.model.IModelProvider;
 import org.eclipse.jst.j2ee.model.ModelProviderManager;
 import org.eclipse.wst.common.frameworks.datamodel.AbstractDataModelOperation;
 import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
+import org.eclipse.wst.common.project.facet.core.FacetedProjectFramework;
 import org.jboss.tools.portlet.ui.PortletUIActivator;
 
 public abstract class AddJavaEEArtifactOperationEx extends AbstractDataModelOperation {
@@ -53,6 +55,14 @@ public abstract class AddJavaEEArtifactOperationEx extends AbstractDataModelOper
 	}
 	
 	private IModelProvider getModelProvider() {
+		IProject project = getTargetProject();
+		try {
+			if (!FacetedProjectFramework.isFacetedProject(project)) {
+				return null;
+			}
+		} catch (CoreException e1) {
+			return null;
+		}
 		IModelProvider modelProvider = null;
 		try {
 			modelProvider = ModelProviderManager.getModelProvider(getTargetProject());
