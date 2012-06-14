@@ -146,6 +146,7 @@ import org.mozilla.interfaces.nsIDOMMouseEvent;
 import org.mozilla.interfaces.nsIDOMMutationEvent;
 import org.mozilla.interfaces.nsIDOMNSUIEvent;
 import org.mozilla.interfaces.nsIDOMNode;
+import org.mozilla.interfaces.nsIDOMRange;
 import org.mozilla.interfaces.nsIDOMWindow;
 import org.mozilla.interfaces.nsIDOMWindowInternal;
 import org.mozilla.interfaces.nsISelection;
@@ -884,7 +885,30 @@ public class VpeController implements INodeAdapter,
 				VpeDebugUtil.printVisualEvent(mutationEvent);
 			}
 	}
-
+	
+	private String getVisualSelectionText(nsISelection selection) {
+		String result = null;
+		if (selection != null && selection.getRangeCount() > 0) {
+			nsIDOMRange firstSelectedRange = selection.getRangeAt(0);
+			nsIDOMNode selectedNode = selection.getFocusNode();
+			if (selectedNode.getNodeName().equals("#text")) { //$NON-NLS-1$
+				int startOffset = firstSelectedRange.getStartOffset();
+				int endOffset = firstSelectedRange.getEndOffset();
+				int beginIndex, endIndex;
+				if (startOffset > endOffset) {
+					beginIndex = endOffset;
+					endIndex = startOffset;
+				} else {
+					beginIndex = startOffset;
+					endIndex = endOffset;
+				}
+				result = selectedNode.getNodeValue()
+						.substring(beginIndex, endIndex);  
+			}
+		}
+		return result;
+	}
+	
 	public void notifySelectionChanged(nsIDOMDocument doc,
 		nsISelection selection, short reason) {
 		if (!visualSelectionIsAlreadyInProgress) {
@@ -911,8 +935,19 @@ public class VpeController implements INodeAdapter,
 				 * <select> node to be selected on the first click.
 				 */
 				if (node != null) {
+					int anchorOffset = selection.getAnchorOffset();
+					int focusOffset = selection.getFocusOffset();
+					/*
+					 * https://issues.jboss.org/browse/JBIDE-8062
+					 * Correct automatic selection after several clicks
+					 * in the mozilla editor.
+					 */
+					String text = getVisualSelectionText(selection);
+					if (text == null || text.length() == 0) {
+						focusOffset = anchorOffset;
+					}
 					selectionManager.setSelection(SelectionUtil.getSelectedNode(selection),
-							selection.getFocusOffset(), selection.getAnchorOffset());
+							focusOffset, anchorOffset);
 				}
 			}
 			// enables cursor on selection event
@@ -1764,13 +1799,13 @@ public class VpeController implements INodeAdapter,
 					visualBuilder.rebuildDom(null);
 				}
 				// reinits selection controller+ controller
-				visualSelectionController = new VpeSelectionController(visualEditor
-						.getEditor().getSelectionController());
-	
+				visualSelectionController = new VpeSelectionController(
+						visualEditor.getEditor().getSelectionController());	
+				
 				visualSelectionController.setSelectionFlags(nsISelectionDisplay.DISPLAY_ALL);
-	
-				selectionManager = new SelectionManager(pageContext, sourceEditor,
-						visualSelectionController);
+				
+				selectionManager = new SelectionManager(
+						pageContext, sourceEditor, visualSelectionController);
 				// selection should be restored after full refresh
 				selectionManager.refreshVisualSelection();
 	

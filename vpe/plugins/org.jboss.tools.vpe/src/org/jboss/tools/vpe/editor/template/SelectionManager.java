@@ -125,7 +125,7 @@ public class SelectionManager implements ISelectionManager {
 		refreshVisualNodeSelection();
 		setUpdateSelectionEventFlag(false);
 	}
-
+	
 	private SelectionData getSelectionData(nsIDOMNode visualNode) {
 		// get element mapping
 		VpeNodeMapping nodeMapping = VpeNodesManagingUtil.getNodeMapping(
@@ -227,9 +227,9 @@ public class SelectionManager implements ISelectionManager {
 		if (range == null) {
 			return;
 		}
-		
 		VpeNodeMapping nodeMapping = SelectionUtil
-				.getNodeMappingBySourceSelection(getSourceEditor(),	getDomMapping());
+				.getNodeMappingBySourceSelection(
+						getSourceEditor(), getDomMapping());
 		if (nodeMapping == null) {
 			return;
 		}
