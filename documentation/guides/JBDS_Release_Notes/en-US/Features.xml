@@ -20,23 +20,27 @@
 		</formalpara>
 		<formalpara>
 			<title>JBoss Perspective</title>
-			<itemizedlist>
-				<listitem>
-					<para>
-						The JBoss Perspective is designed to incorporate the views most often used by developers using JBoss, while also changing standard menu items to reflect what a JBoss devleoper would want and need. 
-					</para>
-				</listitem>
-			</itemizedlist>
+			<para>
+				<itemizedlist>
+					<listitem>
+						<para>
+							The JBoss Perspective is designed to incorporate the views most often used by developers using JBoss, while also changing standard menu items to reflect what a JBoss devleoper would want and need. 
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
 		</formalpara>
 		<formalpara>
 			<title>JBoss Enterprise Application Platform 6 tooling</title>
-			<itemizedlist>
-				<listitem>
-					<para>
-						The tooling in JBoss Developer Studio 5 works with the Beta version of JBoss Enterprise Application Platform 6.
-					</para>
-				</listitem>
-			</itemizedlist>
+			<para>
+				<itemizedlist>
+					<listitem>
+						<para>
+							The tooling in JBoss Developer Studio 5 works with the Beta version of JBoss Enterprise Application Platform 6.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
 		</formalpara>
    <formalpara>
       <title>Contexts and Dependency Injection (CDI)</title>
