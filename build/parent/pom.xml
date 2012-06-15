@@ -887,9 +887,14 @@
 			<url>https://repository.sonatype.org/content/groups/sonatype-public-grid</url>
 		</pluginRepository>
 		<pluginRepository>
-			<id>tycho-0.15-staging</id>
-			<name>tycho-0.15-staging</name>
-			<url>https://oss.sonatype.org/content/repositories/orgeclipsetycho-115/</url>
+			<id>sonatype-public-repository</id>
+			<url>https://oss.sonatype.org/content/groups/public</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
 		</pluginRepository>
 		<pluginRepository>
 			<id>repository.sonatype.org-snapshots</id>
