@@ -263,9 +263,9 @@
 							<goal>prepare-agent</goal>
 						</goals>
 						<configuration>
-							<!-- Where to put jacoco coverage report, basically in the tests/target folder
-								for each component -->
-							<destFile>../target/jacoco.exec</destFile>
+							<!-- Where to put jacoco coverage report, basically in the target/ folder
+								at the top-level for each component -->
+							<destFile>../../target/jacoco.exec</destFile>
 							<includes>
 								<include>${coverage.filter}</include>
 							</includes>
