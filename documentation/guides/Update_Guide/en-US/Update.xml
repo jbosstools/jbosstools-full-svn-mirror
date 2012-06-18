@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="chap-update_site_configuration">
+<?dbhtml filename="update_site_configuration.html"?>
+	<chapterinfo>
+		<keywordset>
+			<keyword>JBoss Developer Studio</keyword>
+			<keyword>Eclipse</keyword>
+			<keyword>Java</keyword>
+			<keyword>JBoss</keyword>
+		</keywordset>
+	</chapterinfo>
+	<title>Update site configuration</title>
+		
+	<section id="sect-update_site_configuration-Username_and_password">
+	   <title>Update site username and password</title>
+	   <para>
+	    Updating JBoss Developer Studio using the update site requires a username and password to be
+entered by the user as described in <xref linkend="proc-Adding_Update_Sites"/>. These details, and
+consequently the ability to update using the update site, are provided to users of the JBoss Developer Studio and customers of the JBoss Developer Studio Portfolio Edition. Information presented here regarding the addition of an update site and configuring automated updates can be applied to the installation of plug-ins in general. 
+       </para>
+	</section>
+	<section id="sect-update_site_configuration-Upgrading_using_the_update_site">
+	<title>Upgrading using the update site</title>
+	<para>
+	    JBoss Developer Studio provides the facility to update from version 3.0.x to the latest code fixes and enhancements without the need to download a complete installation. Updating can be achieved by adding the relevant remote update site to the list of available software sites then performing manual or scheduled updates. <!-- At present, the update site contains the latest 3.0.0.GA build so performing an update at this stage will leave your installation unchanged. -->
+	</para>
+	<para>
+	  <xref linkend="proc-Adding_Update_Sites"/> describes how to add the update site to the list of available sites. Configuring JBoss Developer Studio to check for and download updates is outlined in <xref linkend="proc-Configuring_Automatic_Updates"/>. Manual updates can be performed by selecting <menuchoice><guimenu>Help</guimenu><guisubmenu>Check For Updates</guisubmenu></menuchoice>.
+	</para>
+	<section id="sect-update_site_configuration-Upgrading_using_the_update_site-Adding_the_update_site">
+	<title>Adding the update site</title> 
+	
+	<!--  
+	<para>           
+      	Upgrading <application>JBoss Developer Studio</application> from version 3.0 to 3.0.x can be achieved by adding the relevant remote update site to the list of available software sites. This will require entering a username and password which are currently <literal>username</literal> and <literal>password</literal>. Software sites can be added according to the following procedure:
+    </para>
+    -->
+      <procedure id="proc-Adding_Update_Sites">
+        <title>Adding an Update Site</title>	
+        <step>
+          <title>Access the Install dialog box</title>
+          <para>
+            Select <menuchoice><guimenu>Help</guimenu><guisubmenu>Install New Software</guisubmenu></menuchoice>
+      	  </para>
+        </step>
+        <step>
+      	  <title>Enter the site information</title>
+      	  <orderedlist numeration="loweralpha">
+      	    <listitem>
+      	      <para>
+      	       Click the <menuchoice><guibutton>Add</guibutton></menuchoice> button.
+      	      </para>
+      	    </listitem>
+      	    <listitem>
+      	      <para>
+      	        Enter a name for the update site such as JBDS3.0 in the <guilabel>Name</guilabel> field.
+      	      </para>
+      	    </listitem>
+      	    <listitem>
+      	      <para>
+				  Enter the <acronym>url</acronym> of the update site in the <guilabel>Location</guilabel> field.<!-- The user has the option of the following two options: -->
+      	      </para>
+      	      <itemizedlist>
+      	        <listitem>
+      	          <para>
+      	           https://devstudio.jboss.com/updates/5.0/
+      	          </para>
+      	        </listitem>
+      <!--	        <listitem>
+      	          <para>
+      	           http://devstudio.jboss.com/updates/3.0/
+      	          </para>
+			  </listitem> -->
+      	      </itemizedlist>
+              <figure id="figure-Add-Site_01">
+                <title>Add Site Dialog</title>
+                <mediaobject>
+                  <imageobject>
+                    <imagedata fileref="images/migration-guide/Add-Site_01.png" format="PNG"/>
+                  </imageobject>
+                  <textobject>
+                    <para>Add Site</para>
+                  </textobject>
+                </mediaobject>
+              </figure>
+      	      <warning><title>Use the secure site where possible</title>
+      	        <para>
+      	         The unsecure site, http://devstudio.jboss.com/updates/3.0/, should only be used if the user is experiencing proxy problems or the user's firewall restricts access to https sites. The password will be sent in plain text if the http site is used.    
+      	        </para>
+      	      </warning>
+      	    </listitem>
+      	    
+      	  </orderedlist>
+      	</step>
+        <step>
+          <title>Add the site</title>
+          <orderedlist numeration="loweralpha">
+      	    <listitem>
+      	      <para>
+      	      Once the entered details have been verified, click the <menuchoice><guibutton>OK</guibutton></menuchoice> button to begin the installation.
+      	      </para>
+      	    </listitem>
+      	    <listitem>
+      	      <para>
+      	        Enter the username and password when prompted.
+      	      </para>
+      	      <figure id="figure-Add-Site_02">
+                <title>Enter Login Details</title>
+                <mediaobject>
+                  <imageobject>
+                    <imagedata fileref="images/migration-guide/Add-Site_02.png" format="PNG"/>
+                  </imageobject>
+                  <textobject>
+                    <para>Login Details</para>
+                  </textobject>
+                </mediaobject>
+              </figure>
+      	    </listitem>   
+      	    </orderedlist>
+      	    <para>
+      	    The plug-in details are retrieved by <application>JBoss Developer Studio</application> and the available plug-ins will be displayed in the main window of the <guilabel>Install</guilabel> dialog box.
+      	  </para>
+      	</step>
+      	<step>
+      	  <title>Select the plug-ins</title>
+      	  <orderedlist numeration="loweralpha">
+      	    <listitem>
+      	      <para> 	
+      	        Choose the required plug-ins and any <guilabel>Optional</guilabel> plug-ins listed by clicking the relevant checkboxes. Sub-items can be selected or deselected as required.
+      	      </para>
+      	    </listitem>
+      	    <listitem>
+      	      <para>
+      	        Click the <guibutton>Next</guibutton> button.
+      	      </para>
+      	    </listitem>
+      	  </orderedlist>
+      	</step>
+        <step>
+      	  <title>Review the plug-ins</title>
+      	  <orderedlist numeration="loweralpha">
+      	    <listitem>
+      	      <para> 	
+      	        The plug-ins to be installed will be displayed in the <guilabel>Install Details</guilabel> screen.
+      	      </para>
+      	    </listitem>
+      	    <listitem> 
+      	      <para>  
+      	        Choose the <guibutton>Next</guibutton> button to continue the installation or the <guibutton>Back</guibutton> button to revise the selection.
+      	      </para>
+      	    </listitem>
+      	  </orderedlist>
+        </step>
+        <step>
+          <title>Review the licenses</title>
+          <orderedlist numeration="loweralpha">
+            <listitem>
+      	      <para> 	
+      	        Read the license information presented on the screen. Click on the <guibutton>I accept</guibutton> radio button to proceed. 
+              </para>
+            </listitem>
+            <listitem>
+              <para>
+                Choose the <guibutton>Finish</guibutton> button to complete the installation or the <guibutton>Back</guibutton> button to revise the selection.  
+              </para>
+            </listitem>
+          </orderedlist>
+        </step>
+        <!--  
+        <step>
+          <title>Note any security warnings</title>
+          <orderedlist numeration="loweralpha">
+            <listitem>
+              <para>
+                Read the security warning. Click the <guibutton>Details</guibutton> button to obtain further details if required. 
+      	      </para>
+      	    </listitem>
+      	    <listitem>  
+      	      <para>
+                Once satisfied that the software is safe to install, click the <guibutton>OK</guibutton> button to accept the installation. 
+              </para>
+            </listitem>
+          </orderedlist>
+        </step>
+        -->
+        <step><title>Restart <application>JBoss Developer Studio</application></title>
+          <para>
+            When prompted, it is recommended to restart <application>JBoss Developer Studio</application> by clicking the <guibutton>Yes</guibutton> button.
+          </para>
+        </step>
+      </procedure>
+      <note><title>Download Delays</title>
+        <para>
+          In the event that delays are experienced while downloading the plug-ins due to a slow mirror or bandwidth issues, it is possible to shut down JBoss Developer Studio and restart the procedure from Step 1. Any errors returned during the subsequent installation attempt can be ignored as they will be resolved once the installation is completed.    
+        </para>
+      </note>
+      </section>
+      <section id="sect-update_site_configuration-Upgrading_using_the_update_site-Automatic_updates">
+        <title>Automatic updates</title>
+      <procedure id="proc-Configuring_Automatic_Updates">
+        <title>Automatic Updates</title>	
+        <step>
+          <title>Access the <guilabel>Preferences</guilabel> dialog</title>
+          <para>
+            Select <menuchoice><guimenu>Window</guimenu><guisubmenu>Preferences</guisubmenu></menuchoice>
+      	  </para>
+        </step>
+        <step>
+      	  <title>Access the Install/Update Options</title>
+      	  <orderedlist numeration="loweralpha">
+      	    <listitem>
+      	      <para>
+      	       Click the arrow adjacent to the <menuchoice><guibutton>Install/Update</guibutton></menuchoice> label in the left panel of the display. This will display the <guilabel>Automatic Updates</guilabel> and <guilabel>Available Software Sites</guilabel> options.
+      	      </para>
+      	    </listitem>
+      	    <listitem>
+      	      <para>
+      	        Click on the <guilabel>Automatically find new updates and notify me</guilabel> checkbox.
+      	      </para>
+      	    </listitem>
+      	    <listitem>
+      	      <para>
+      	        Configure the <guilabel>Update Schedule</guilabel>, <guilabel>Download Options</guilabel> and <guilabel>When updates are found</guilabel> options to suit your preferences.   
+      	      </para>  
+              <figure id="figure-Automatic-Update_01">
+                <title>Automatic Updates</title>
+                <mediaobject>
+                  <imageobject>
+                    <imagedata fileref="images/migration-guide/Automatic-Update_01.png" format="PNG"/>
+                  </imageobject>
+                  <textobject>
+                    <para>Configure Automatic Updates</para>
+                  </textobject>
+                </mediaobject>
+              </figure>
+      	    </listitem>
+      	    <listitem>
+      	      <para>
+      	        Click on the <guilabel>OK</guilabel> button to schedule the updates.
+      	      </para>
+      	      <note><title>Note: Available Software Sites</title>
+      	        <para>
+      	          Update sites can also be added by selecting <guilabel>Available Software Sites</guilabel> and clicking on the <guibutton>Add</guibutton> button of the resultant screen. The <guibutton>Add</guibutton> action is equivalent to Step 2 of <xref linkend="proc-Adding_Update_Sites"/>.     
+      	        </para> 
+      	    </note>
+      	    </listitem>
+      	    
+      	  </orderedlist>
+      	</step>
+      	</procedure>
+      	</section>
+      
+      <!-- 
+      <note><title>Unsigned Software</title>
+        <para> 	
+          The installation of plug-ins often involves unsigned content for which the validity of the software cannot be established. There are risks associated with the use of unsigned software and it is recommended that users acquaint themselves with the risks prior to finalising the installation.
+      	 </para>
+      </note>
+	 -->
+	  <!-- Keeping the original material for now bc.
+			<orderedlist>
+				<listitem>
+					<para>Start the JBoss Developer Studio
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						, then go to Help > Software Updates... >
+						Available Software > Manage Sites... > Add...
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Paste in the following URL:
+						<ulink url="https://devstudio.jboss.com/updates/2.1/">https://devstudio.jboss.com/updates/2.1/
+						</ulink>
+					</para>
+					<note>
+						<para>On some platforms, you may also be able to drag and drop
+							the link from your browser directly into Eclipse.
+						</para>
+					</note>
+					<figure>
+						<title>Help > Software Updates... > Available Software > Manage
+							Sites... > Add...</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/upgrade-guide/migration-guide_0.png" />
+							</imageobject>
+						</mediaobject>
+					</figure>
+				</listitem>
+
+				<listitem>
+					<para>
+						Enter your username and password. You may be prompted twice.
+					</para>
+					<figure>
+						<title>Password Required</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/upgrade-guide/migration-guide_1.png" />
+							</imageobject>
+						</mediaobject>
+					</figure>
+				</listitem>
+
+				<listitem>
+					<para>
+						Select features to update or install, then click Install...
+					</para>
+					<figure>
+						<title>Select features to install</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/upgrade-guide/migration-guide_2.png" />
+							</imageobject>
+						</mediaobject>
+					</figure>
+				</listitem>
+
+				<listitem>
+					<para>
+						Install. Restart when prompted.
+    					</para>
+					<figure>
+						<title>Installing...</title>
+						<mediaobject>
+							<imageobject>
+								<imagedata fileref="images/upgrade-guide/migration-guide_3.png" />
+							</imageobject>
+						</mediaobject>
+					</figure>
+				</listitem>
+
+				<listitem>
+					<para>If the install gets stuck on a particular jar download
+						(bandwidth saturation, slow mirror, etc.), you can shut down JBDS
+						and try again.
+						Ignore any errors you get when starting the second
+						time - a completed install should resolve them so that when you
+						restart the third time you will be ready to go.
+					</para>
+				</listitem>				
+			</orderedlist>
+		<note>
+			<para>
+				Installation of EAP 5 is not covered by this migration guide. See
+				<ulink url="http://www.redhat.com/docs/en-US/JBoss_Enterprise_Application_Platform/">http://www.redhat.com/docs/en-US/JBoss_Enterprise_Application_Platform/</ulink> for full details.
+			</para>
+		</note>
+		 -->
+  	</section>
+</chapter>
