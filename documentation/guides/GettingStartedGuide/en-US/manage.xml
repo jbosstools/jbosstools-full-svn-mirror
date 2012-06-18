@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="manage">
+			<title>Setting up a JBoss runtime and managing the server</title>
+		<para>Although <property>JBoss Developer Studio</property> works closely with
+                <property>JBoss Enterprise Application Platform 6</property> we do not ultimately tie you to any particular
+            server for deployment. There are some servers that Studio supports directly (via the
+            bundled Eclipse WTP plug-ins). In this chapter we discuss how to manage a JBoss server.</para>
+			<note>
+				<para>
+					This chapter assumes you have a JBoss application server installed on your system. If you do not, consult the installation instructions that accompanied your server.
+				</para>
+			</note>
+
+		<section id="AddingJBossServer">
+			<?dbhtml filename="AddingJBossServer.html"?>
+			<title>Adding and configuring a JBoss server runtime</title>
+			<itemizedlist>
+				<listitem>
+					<para>Select the <property>Servers</property> view by navigating to <menuchoice><guimenuitem>Window</guimenuitem><guimenuitem>Show View</guimenuitem><guimenuitem>Other</guimenuitem><guimenuitem>Server</guimenuitem><guimenuitem>Servers</guimenuitem></menuchoice>.
+					</para>
+				</listitem>
+				<listitem>
+					<para>Click the <guibutton>new server wizard</guibutton> text in the <guilabel>Servers</guilabel> view or if this is not your first server, right-click anywhere in the view and select <menuchoice><guimenuitem>New</guimenuitem><guimenuitem>Server</guimenuitem></menuchoice>.
+					</para>
+				</listitem>
+				<listitem>
+					<para>Select the server option that matches your installed server.
+					</para>
+				</listitem>
+			</itemizedlist>
+			<figure>
+				<title>Selecting Server Name and Server Type</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/manage/manage_9.png"/>
+					</imageobject>
+				</mediaobject>
+			</figure>
+
+			<itemizedlist>
+				<listitem>
+					<para>To setup the new runtime, click the <guibutton>Next</guibutton> button.
+					</para>
+				</listitem>
+			</itemizedlist>
+
+<!--			<itemizedlist>
+				<listitem>
+					<para>In the next step you need to specify the location of the Server and define the JDK to be used.</para>
+				</listitem>
+			</itemizedlist>
+			<figure>
+				<title>Defining JBoss Runtime</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/manage/manage_11.png"/>
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<note>
+				<title>Note:</title>
+				<para>When adding a new server you will need to specify what JDK to use. It is
+                    important to set this value to a full JDK, not JRE. Again, you need a full JDK
+                    to run Web applications, JRE will not be enough.</para>
+			</note>
+			-->
+			<itemizedlist>
+				<listitem>
+					<para>In the next dialog verify the specified information and set local or remote server information.</para>
+				</listitem>
+			</itemizedlist>
+			<figure>
+				<title>JBoss Runtime Summary</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/manage/manage_15.png"/>
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<itemizedlist>
+				<listitem>
+					<para>Lastly, a screen will appear that will allow you yo modify projects that are
+                        to be configured for the server. Click the <guibutton>Finish</guibutton> button.</para>
+				</listitem>
+			</itemizedlist>
+			<figure>
+				<title>Configuring Projects</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/manage/manage_16.png"/>
+					</imageobject>
+				</mediaobject>
+			</figure>
+			<para>A new <property>JBoss Server</property> should now appear in the <property>Servers</property> view.</para>
+			<figure>
+				<title>New JBoss Server</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/manage/manage_17.png"/>
+					</imageobject>
+				</mediaobject>
+			</figure>
+		</section>
+	<section id="StartingServer">
+		<?dbhtml filename="StartingServer.html"?>
+			<title>Starting JBoss Server</title>
+			<para>Starting <property>JBoss Server</property> is quite simple. <property>JBoss
+				Developer Studio</property> allows you to control its behavior with the help of
+				a special toolbar, where you could start it in a regular or debug mode, stop it or
+					restart it.</para>
+					
+					<itemizedlist>
+						<listitem>
+						<para>To launch the server click the green-with-white-arrow icon in the <property>Servers</property> view or right click server name in this view and click the <guibutton>Start</guibutton> button. If this view is not open, select <menuchoice>
+							<guimenuitem>Window</guimenuitem>
+							<guimenuitem>Show View</guimenuitem>
+							<guimenuitem>Other</guimenuitem>
+							<guimenuitem>Server</guimenuitem>
+							<guimenuitem>Servers</guimenuitem>
+						</menuchoice>
+					</para>
+				</listitem>
+			</itemizedlist>
+			<figure>
+				<title>Starting from Icon</title>
+				<mediaobject>
+					<imageobject>
+						<imagedata fileref="images/manage/manage_1.png"/>
+					</imageobject>
+				</mediaobject>
+			</figure>
+			
+			<para>While launching, server output is written to the <property>Console
+				view</property>:</para>
+				
+				<figure>
+					<title>Console Output</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/manage/manage_3.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<para>When the server is started you should see <emphasis>
+					<property>Started</property>
+				</emphasis> in the square brackets right next its name in the <property>Servers</property> view.</para>
+				
+				<figure>
+					<title>Server is Started</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/manage/manage_4.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+			</section>
+			
+			<section id="StoppingJBoss">
+				<?dbhtml filename="StoppingJBoss.html"?>
+					<title>Stopping the JBoss Server</title>
+					<para>To stop the server, click the <guibutton>Stop</guibutton> button icon in <property>Servers</property> or right click the server name and press <guimenuitem>Stop</guimenuitem>.
+				</para>
+				
+				<figure>
+					<title>Stopping Server</title>
+					<mediaobject>
+						<imageobject>
+							<imagedata fileref="images/manage/manage_6.png"/>
+						</imageobject>
+					</mediaobject>
+				</figure>
+				<para>When the server is stopped you will see <emphasis>
+					<property>Stopped</property>
+				</emphasis> in the square brackets next to its name.</para>
+			</section>
+			<section id="ServerPreferences">
+				<?dbhtml filename="ServerPreferences.html"?>
+					<title>Server Container Preferences</title>
+					<para>You can control how <property>JBoss Developer Studio</property> interacts with
+						server containers in the <property>Server editor</property>. Double-click the server
+							to open it in the editor.</para>
+							
+							<figure>
+								<title>Server Overview</title>
+								<mediaobject>
+									<imageobject>
+										<imagedata fileref="images/manage/manage_8.png"/>
+					</imageobject>
+				</mediaobject>
+			</figure>
+
+			<para>Here you can specify some common settings: host name, server name, runtime as well
+                as settings related to publishing, timeouts and server ports.</para>
+
+		</section>
+</chapter>
