@@ -21,6 +21,17 @@
 				</para>
 			</listitem>
 		</varlistentry>
+		<!-- JBIDE-12202 -->
+		<varlistentry>
+			<term>
+				<ulink url="https://issues.jboss.org/jira/browse/JBIDE-12202">JBIDE-12202</ulink>
+			</term>
+			<listitem>
+				<para>
+					When delpoying a project as an exploded archive the publishing process can be slow. It is recommended that users deploy projects as compressed archives. This can be enbled by double-clicking the server in the Servers view, navigating to the Deployment page and clicking the checkbox beside the option to Deploy projects as compressed archives. 
+				</para>
+			</listitem>
+		</varlistentry>
 		<!-- JBIDE-12071 -->
 		<varlistentry>
 			<term>
