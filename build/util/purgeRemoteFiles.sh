@@ -18,6 +18,6 @@ for l in $(cat ${inputfile}); do
 	echo "$l ..."; 
 	# make it editable
 	echo "chmod 777 $l" | sftp ${DESTINATION}
-	# remove the now-empty dir
+	# remove the now-empty file
 	echo "rm $l" | sftp ${DESTINATION}
 done
