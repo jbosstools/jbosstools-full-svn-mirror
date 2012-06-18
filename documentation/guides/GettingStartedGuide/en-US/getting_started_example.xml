@@ -9,7 +9,7 @@
 <ulink url="https://github.com/jboss/ticket-monster">https://github.com/jboss/ticket-monster</ulink>.</simpara>
 <simpara>Through this tutorial, you will:</simpara>
 <itemizedlist>
-	<listitem><para>Create of a Java EE 6 project via a Maven archetype</para></listitem>
+	<listitem><para>Create a Java EE 6 project via a Maven archetype</para></listitem>
 	<listitem><para>Leverage Maven to Eclipse infrastructure (m2e) and m2e-wtp</para></listitem>
 	<listitem><para>Create a JPA entity using Forge</para></listitem>
 	<listitem><para>Utilize Hibernate Tools</para></listitem>
@@ -292,7 +292,7 @@ The resulting command should be <literal>field string --named name</literal> and
 </section>
 <section id="_reviewing_persistence_xml_amp_updating_import_sql">
 <title>Reviewing persistence.xml and updating import.sql</title>
-<simpara>By default, with the way the <emphasis role="strong">jboss-javaee6-webapp</emphasis> project is configured, the entity classes become the database schema.  In an earlier section of this tutorial, we briefly described <emphasis role="strong">persistence.xml</emphasis>.  Please open up that file again and review its settings.   It is still under src/main/resources/META-INF.
+<simpara>By default, with the way the <emphasis role="strong">jboss-javaee6-webapp</emphasis> project is configured, the entity classes become the database schema. <emphasis role="strong">persistence.xml</emphasis>. Open up the <emphasis role="strong">persistence.xml</emphasis> file and review its settings. It is still under src/main/resources/META-INF.
 The two key settings are the &lt;jta-data-source&gt; and hibernate.hbm2ddl.auto.  The datasource setting must map to one already established in the src\main\webapp\jboss-javaee6-webapp–ds.xml descriptor file.
 The hibernate.hbm2ddl.auto=create-drop property indicates that missing tables &amp; columns will be created or updated inside the database schema itself.
 Open up the <emphasis role="strong">import.sql</emphasis> file, this file contains INSERT statements that will inject sample data into your initial database structure.  Add the following insert statements:</simpara>
