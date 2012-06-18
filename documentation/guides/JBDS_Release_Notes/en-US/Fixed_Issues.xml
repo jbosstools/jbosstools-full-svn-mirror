@@ -1,0 +1,920 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<section id="Issues-fixed-in-this-release">
+    <title>
+        Enhancements and fixed issues in version 5.0.0
+    </title>
+	<variablelist>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<!-- JBIDE-11635 -->
+		<varlistentry>
+		<term>
+			<ulink url="https://issues.jboss.org/jira/browse/JBIDE-11635">JBIDE-11635</ulink>
+		</term>
+		<listitem>
+			<para>
+				When JAX-RS services are tested through JAX-RS Tooling and Web Service Tester integration, the URL of the service can include details about required parameters. If the included parameters require values to be specified, a dialog prompting for these values now appears to the user and validation of the values occurs if the service includes a Regular Expression. This new feature ensures all values are gathered and verified before testing the service, minimizing returned errors.
+			</para>
+		</listitem>
+	</varlistentry>
+	
+	
+	
+	<!-- JBIDE-11552 -->
+	<varlistentry>
+	<term>
+		<ulink url="https://issues.jboss.org/jira/browse/JBIDE-11552">JBIDE-11552</ulink>
+	</term>
+	<listitem>
+		<para>
+			Support for DeltaSpike portable CDI extensions has been added to the CDI tooling for JBoss Developer Studio 5. This has been archived through the addition of a new org.jboss.tools.cdi.deltaspike feature. The CDI validation preferences page has been updated for DeltaSpike, including security extension validation.
+		</para>
+	</listitem>
+</varlistentry>
+
+
+
+
+
+
+
+
+
+
+
+   <!-- JBIDE-11064 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-11064">JBIDE-11064</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   Only customers who downloaded and used the Beta release of JBoss Developer Studio 5 may have noticed this issue, that has since been resolved.
+	   </para>
+	   <para>
+		   The JBoss Developer Studio 5.0.Beta JMX tooling was unable to connect to JBoss Application Server 7.1.0 correctly as the ability to connect to the new connector and URL for the server had not been incorporated. New classes have been created for interaction between JMX and JBoss Application Server 7.1.0 and are available as part of JBoss Developer Studio 5.0.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   
+   <!-- JBIDE-10947 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-10947">JBIDE-10947</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   XML and JSON (JavaScript Object Notation) output from executed web services readability has been improved through the addition of carriage returns, line feeds, and indentation.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   
+   
+   
+   <!-- JBIDE-10390 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-10390">JBIDE-10390</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   A new enhancement is included that allows JAX-RS tooling to display changes in the code being edited within the primary version. The entities of the project that appear in the Project Explorer section of the workbench will change as the code is edited.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   <!-- JBIDE-10354 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-10354">JBIDE-10354</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   A new OpenShift profile is available for use in the creation of a WAR archive. The template provides a structure compatible with OpenShift Express for the user, and can be inserted into the pom.xml file using Ctrl+Space.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   
+   <!-- JBIDE-10205 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-10205">JBIDE-10205</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   The option of disabling JAX-RS validation is now available to users through the Properties -&gt; Validation menu of a project. This option has been exposed to users in order to workaround false error and warnings that may be reported for JAX-RS. Someone using this feature should be able to identify a false positive.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   <!-- JBIDE-10199 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-10199">JBIDE-10199</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   This issue only affected users in the JBoss Developer Studio Early Access program. Users who did not participate in the early access program would not have encountered this issue.
+	   </para>
+	   <para>
+		   Create a Simple Web Service and Create a Sample RESTful Service wizards were not compatible with JBoss Application Server 7. This occurred as the wizards were unable to recognise required JAR files available in the classpath, when JBoss Application Server 7 was specified as the target runtime. To correct this issue the option of adding RESTeasy JARs from the runtime root now exists in the wizards and is enabled or disabled by default depending on the application server chosen. This allows for the wizards to function correctly.
+	   </para>
+	   <para>
+		   An option for the web.xml file to be updated has been added to the Dynamic Web Project wizard for when a user selects to use the facet version of RESTful services in their project. The option is enabled or disabled by default depending on the application server chosen.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   
+   <!-- JBIDE-10152 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-10152">JBIDE-10152</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   A new Remote Console has been implemented for OpenShift servers. By accessing the Remote Console, a user is able to see OpenShift server output as they would if it were a local server. For more information see the OpenShift Tools Reference Guide for this release.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   <!-- JBIDE-10098 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-10098">JBIDE-10098</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   Support for multiple versions of Hibernate has been updated to use the correct Hibernate tooling JAR file, for each version of Hibernate, when code completion is being undertaken. This update ensures that code completion suggestions are valid for the version of Hibernate in use.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   <!-- JBIDE-10086 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-10086">JBIDE-10086</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   A new filter, Eliminated @DefaultBean, has been added and appears as an option for all CDI projects that have the extension org.jboss.solder.bean.defaultbean.DefaultBeanExtension. When the filter is not selected for an eligible project, any default beans that have been assigned will be removed, in the presence of a non-standard eligible bean.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   <!-- JBIDE-10020 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-10020">JBIDE-10020</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   An enhancement has been made to the Visual Page Editor that allows a user to press F5 and Ctrl+R (Command+R on Macintosh) to update the editors visual view with the latest user edits from the source view.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   <!-- JBIDE-9941 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-9941">JBIDE-9941</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   Runtime detection now detects the embedded ESB runtime within the JBoss SOA-P product, and adds it to the list of defined ESB runtimes available to JBoss Developer Studio. This feature increases usability, ensuring all appropriate runtimes are correctly available for use by a user.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   
+   
+   <!-- JBIDE-9910 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-9910">JBIDE-9910</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   An information window for expression language message bundles now exists, similarly as it does for tooltips. This information allows a user to easily identify the current value of a resource being used within code and where the resource is coming from.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   <!-- JBIDE-9885 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-9885">JBIDE-9885</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   A new quick fix, Configure Problem Severity, has been added to assist in resolution of an issue in a projects code. When this quick fix item is selected, it will open the Preferences dialog to the Validation section for the tooling in question and allow the user to select the severity level of the current issue.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   
+   
+   <!-- JBIDE-9834 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-9834">JBIDE-9834</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   Validation has been added for the configuration of abstract types and types without bean constructors. This validation will inform the user if the interface or abstract type in question cannot be configured as a bean.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   
+   
+   <!-- JBIDE-9793 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-9793">JBIDE-9793</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   A new development tool has been created called the OpenShift Express Application wizard. This wizard allows the user to create an OpenShift Express application, import an existing OpenShift application to the workspace, create or rename an OpenShift domain, and clone an application repository and import the cloned repository to the workspace.
+	   </para>
+	   <para>
+		   OpenShift Express is a Red Hat Cloud service.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   
+   <!-- JBIDE-9734 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-9734">JBIDE-9734</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   The CDI validator would treat @Inject and @RestClient("...") ServiceInterface injection as unstatisfied dependencies. This caused an incorrect warning message to appear. To fix the issue, the CDI Seam Core Rest files have been modified to correctly validate @Inject and @RestClient("...") ServiceInterface properties, ensuring the warning message no longer appears.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   <!-- JBIDE-9731 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-9731">JBIDE-9731</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   A new feature has been implemented that produces tool-tips for expression language that references message bundles. The tool-tip provided functions in a similar manor to those already provided for expression language that references Java code.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   <!-- JBIDE-9708 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-9708">JBIDE-9708</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   Previously pointers to example file locations had to be re-written depending on how the examples were distributed. This could have caused a user to modify the code that pointed to an example location. For this release all locations in examples are set as relative paths. The result of this is that the example locations will work regardless of distribution and users do not need to modify code.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   <!-- JBIDE-9693 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-9693">JBIDE-9693</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   A link that opens the Remote System Explorer View has been added to the Server Behaviour section of the Server Editor. Following the link allows a user to easily remove server hosts.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   <!-- JBIDE-9685 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-9685">JBIDE-9685</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   A new feature has been added to the CDI validator making it aware of JMS resource injections. This ensures correct validation of JMS injections that also have a JMS destination.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   <!-- JBIDE-9674 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-9674">JBIDE-9674</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   An error existed where the special characters '\r' and '\n' that are part of the Property Key, were not displayed correctly when the Property Key contained more lines than initially shown. This caused the following error to appear: Unable to render embedded object: File (errorAfterWrongPropertyKeySelection.png) not found. The generated Property Key has been corrected by modifying the ExternalizeStringsUtils.java file by adding in single quotes as characters to be correctly replaced when formatting a web page. Property Key is now displayed correctly and the error no longer appears.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   <!-- JBIDE-9673 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-9673">JBIDE-9673</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   Before a user had to hold the Ctrl key and left-click on the needed bean in order to bring up the CDI menu concerning the annotation. Users found that this method was not as convenient as that used by other Eclipse-based software offerings. User interaction with the CDI menus has been modified so that the menu items Show All Generic Configuration Points, Show All Generic Beans, Show CDI Events and Show CDI Observer Methods now work as the Java Development Tools menu, Open Implementation, does. This ensures user interface consistency across Eclipse-based software offerings, enabling new users to have a lower barrier-to-entry.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   
+   <!-- JBIDE-9581 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-9581">JBIDE-9581</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   A new wizard has been added to the JBoss Developer Studio for the creation of CDI projects. Further information can be found in the CDI Tools Reference Guide.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   <!-- JBIDE-9560 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-9560">JBIDE-9560</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   A new feature has been added that implements the annotation @GenericGenerators. This annotation can contain many declarations of @GenericGenerator that describe any kind of Hibernate generator.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   <!-- JBIDE-9539 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-9539">JBIDE-9539</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   A new feature has been created that allows a user to test web pages as if viewed on portable devices. BrowserSim allows a user to select one of numerous devices and test the usability of a web page. This new feature allows for easy testing and debugging of sites and pages for mobile devices.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   <!-- JBIDE-9538 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-9538">JBIDE-9538</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   A regression existed where performing a drag and drop operation with a CSS file from the Package Explorer to the Source view of a JSP page would generate an exception, causing the Insert Tag dialog to not be shown. This issue has been corrected and the addition of Insert Tag dialog support for JS files has been added through the addition of the JsLinkAttributeValueLoader class, and the modification of the FileTagProposalLoader class.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   
+   
+   
+   <!-- JBIDE-9510 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-9510">JBIDE-9510</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   The server adaptor for JBoss Application Server 7 and JBoss Enterprise Application Server 6 includes support for deploying to OpenShift Express.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   <!-- JBIDE-9497 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-9497">JBIDE-9497</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   JBoss Developer Studio now supports the deployment of standalone SAR projects. To undertake this a new wizard has been created to take a user through the process. For further information see the relevant documentation accompanying this release.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   <!-- JBIDE-9486 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-9486">JBIDE-9486</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   The user interface for the new hibernate annotations (org.hibernate.annotation.TypeDef and TypeDefs) has been created as a new tab in the Hibernate editor called Type Definitions. This allows a user to graphically interact with and modify these new annotations.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   <!-- JBIDE-9485 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-9485">JBIDE-9485</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   Validation of org.hibernate.annotation.TypeDef annotation has been added to org.hibernate.annotation.Type. For this annotation to be valid it must have a typeClass attribute that contains the name of the class that implements (directly or indirectly) one of the following Hibernate attributes:
+	   </para>
+	   <para>
+		   * org.hibernate.type.Type
+	   </para>
+	   <para>
+		   * org.hibernate.usertype.UserType
+	   </para>
+	   <para>
+		   * org.hibernate.usertype.CompositeUserType
+	   </para>
+	   <para>
+		   * org.hibernate.usertype.UserCollectionType
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   <!-- JBIDE-9473 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-9473">JBIDE-9473</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   The Java source reference search facility did not work correctly for Expression Language within CDI projects. This consequently meant that users were unable to search within Expression Language elements. Correcting the issue has meant ensuring that the search participant works for any kind of Java project and delegates the search to Expression Language resolvers that will then search Expression Language elements. For the user this means that they are able to now perform a search using the Java source reference search facility and it will also search for their specified term within Expression Language elements.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   <!-- JBIDE-9436 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-9436">JBIDE-9436</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   The JPA Details user interface tab has been updated for the new hibernate annotations package-info.java. This allows a user to graphically interact with and modify these new annotations.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   <!-- JBIDE-9435 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-9435">JBIDE-9435</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   Package level annotation support has been added to the Java Persistence API component of the Hibernate tooling. This improves user experience by making it easier to annotate Hibernate files.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   
+   <!-- JBIDE-9408 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-9408">JBIDE-9408</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   A bug existed when a user had edited XML in the Source view and changed focus from the XML editor to the Project Explorer. When the focus changed the XML editor would revert any changes made in the Source view. This issue has been resolved by ensuring the Synchronized To Text state of the Source XML editor is correct when focus is changed. The Source view of the XML editor now synchronizes correctly and does not revert to old content when the focus is changed from the XML editor to the Project Explorer.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   <!-- JBIDE-9402 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-9402">JBIDE-9402</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   CDI tooling has been updated to allow extensions to be loaded dynamically and the CDI extension factory now recognizes interface features that are implemented by extensions. These improvements reduce the amount of code required for the implementation of new extensions.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   
+   <!-- JBIDE-9388 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-9388">JBIDE-9388</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   Tools have been added for use with the new Seam Servlet Module. This module supplies portable enhancements to the Servlet API used by Seam and the tooling allows for development around those enhancements.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   <!-- JBIDE-9375 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-9375">JBIDE-9375</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   @ForeignKey annotation can now be validated for the inverseName property of ManyToMany relationships.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   
+   <!-- JBIDE-9366 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-9366">JBIDE-9366</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   FacesConverter annotation has been added for JSF2. This support ensures no errors appear in XHTML when EL expressions are used.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   
+   <!-- JBIDE-9347 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-9347">JBIDE-9347</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   A new Assignable Beans dialogue has been implemented. The dialogue presents all beans that can be assigned to a particular annotation. Beans that are not able to be assigned appear greyed out and have the option to be hidden.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   
+   <!-- JBIDE-9310 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-9310">JBIDE-9310</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   Configuration of which JARs are to be returned for a runtime is now available. This ability ensures the correct libraries are available for a runtime configuration.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   <!-- JBIDE-9290 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-9290">JBIDE-9290</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   When a maven project has a dependency on any JAX-RS API, the JAX-RS Facet will be automatically applied to the project during configuration. This ensures that all dependencies are ready for use upon project creation or maven integration.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   <!-- JBIDE-9283 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-9283">JBIDE-9283</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   The ability to graphically set a custom value for the Hibernate @Type property has been added to the JPA details view. This allows a user to easily set any value required for this property.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   <!-- JBIDE-9259 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-9259">JBIDE-9259</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   The default RichFaces component that appears in the Palette has been changed from RichFaces 3 to RichFaces 4. Tooling for RichFaces 3 is still available, though it is hidden by default.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   <!-- JBIDE-9244 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-9244">JBIDE-9244</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   Validation of default Beans has been added when utilizing Seam Solder.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   
+   <!-- JBIDE-9209 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-9209">JBIDE-9209</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   A new feature has been added that allows a user to select from a list of quick fixes for issues shown when using the XML, JSP or XHTML editors. This feature is similar to the existing feature available for the Java editor.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   <!-- JBIDE-9203 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-9203">JBIDE-9203</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   Support for special and non-ASCII characters has been added to the JSP Externalize String Wizard. This allows code that is to be externalized to appear in the current code with indentation and contain such characters as line breaks, without causing error.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   <!-- JBIDE-9195 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-9195">JBIDE-9195</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   A filter has been added for validation preference pages, allowing a user to search available preferences based on key words.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   <!-- JBIDE-9187 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-9187">JBIDE-9187</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   New OpenOn functionality has been added for the s:Inject Seam tag. When this tag is used, a user can now Ctrl+Click on the tag to see a list of beans that can be injected.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   
+   <!-- JBIDE-9132 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-9132">JBIDE-9132</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   A bug existed that would show a user the files of the locally defined server when clicking the Explore item from the context menu of a remote server. The remote server adaptor has been updated in this release to display the Remote System Details view and appropriate remote server folder when choosing the Explore open for a remote server.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   <!-- JBIDE-9087 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-9087">JBIDE-9087</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   Bundle bean support has been added for the Seam International module. This added support allows users to have access to code completion, OpenOn and validation when using the Seam International module for application localization.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   
+   <!-- JBIDE-8969 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-8969">JBIDE-8969</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   The user interface has been improved for Maven profile selection. Instead of a user accessing Maven profiles through a projects Preferences screen, a dialog window has been added that can be accessed via the projects context menu.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   <!-- JBIDE-8950 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-8950">JBIDE-8950</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   Templates have been created for missing RichFaces 4 tags in the Visual Page Editor. The tags with added templates are: rich:collapsibleSubTable, rich:collapsibleSubTableToggler, rich:dragSource, rich:dropTarget, rich:hashParam, rich:treeModelAdaptor, rich:treeModelRecursiveAdaptor, rich:treeSelectionChangeListener, rich:treeToggleListener and rich:validator.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   
+   <!-- JBIDE-8770 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-8770">JBIDE-8770</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   Web Services Tester sample input is now provided for WSDLs, and includes SOAP header definition.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   <!-- JBIDE-8719 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-8719">JBIDE-8719</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   A new feature has been added when using the Page Design Options dialog of the Visual Page Editor. The default root folder is now displayed in the tab: Actual Run-Time Folders. This provides the user with relevant information in making a decision on whether the folder location should be changed.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   <!-- JBIDE-8705 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-8705">JBIDE-8705</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   A new CDI feature has bean implemented that allows a user to select a bean and press the key combination Ctrl+Shift+G in order to search for points where the bean has been injected. This works for bean classes, producer fields and producer methods.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   
+   
+   
+   <!-- JBIDE-8658 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-8658">JBIDE-8658</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   When attempting deployment to a remote host, the server adaptor would return a state of synchronization even if deployment failed. This issue has been fixed by ensuring that in the event of an exception, the module's publish state is set to republish and the running state to unknown. If this occurs, the server adaptor will attempt resynchronization.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   <!-- JBIDE-8548 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-8548">JBIDE-8548</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   Auto-discovery of remote processes for the purpose of debugging has been added for JBoss Developer Studio 5. This allows for easier testing of Java processes and applications.
+	   </para>
+   </listitem>
+   </varlistentry>
+   
+   <!-- JBIDE-8519 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-8519">JBIDE-8519</ulink>
+   </term>
+   <listitem>
+	   <para>
+		   In previous versions of JBoss Developer Studio the functions ?floor, ?ceiling and ?round caused parse errors. This issue has been fixed by updating the Freemarker runtime to version 2.3.18, which corrects this issue.
+	   </para>
+   </listitem>
+   </varlistentry>
+
+   <!-- JBIDE-8421 -->
+   <varlistentry>
+      <term><ulink url="https://issues.jboss.org/jira/browse/JBIDE-8421">JBIDE-8421</ulink></term>
+      <listitem>
+         <para>
+         A new feature has been added that outputs remote system explorer information to the console view. This allows a user to use the console view for a remote system as they would for a local server.
+         </para>
+      </listitem>
+   </varlistentry>
+
+   <!-- JBIDE-8280 -->
+   <varlistentry>
+      <term><ulink url="https://issues.jboss.org/jira/browse/JBIDE-8280">JBIDE-8280</ulink></term>
+      <listitem>
+         <para>
+         JavaServer Faces 2 has been updated with a new feature called metadata-complete. The metadata-complete attribute defines whether the JSF application is complete and the class files available to and packaged with this application should be examined for configuration annotations. If metadata-complete is not
+         </para>
+         <para>
+         specified or is set to a value of false, the JavaServer Faces runtime must examine the class files of the application
+         </para>
+         <para>
+         for annotations, as specified by the specification.
+         </para>
+      </listitem>
+   </varlistentry>
+
+
+   <!-- JBIDE-8195 -->
+   <varlistentry>
+      <term><ulink url="https://issues.jboss.org/jira/browse/JBIDE-8195">JBIDE-8195</ulink></term>
+      <listitem>
+         <para>
+         Support for Seam Solder extensions has been added to JBoss Developer Studio. By supporting Seam Solder extensions, general purpose configuration utilities, a resource loader and a typesafe logging framework are available for use with CDI tooling.
+         </para>
+      </listitem>
+   </varlistentry>
+
+   <!-- JBIDE-7892 -->
+   <varlistentry>
+      <term><ulink url="https://issues.jboss.org/jira/browse/JBIDE-7892">JBIDE-7892</ulink></term>
+      <listitem>
+         <para>
+         CDI tooling has been updated allowing users to search for @Namd beans using the new Open CDI Named Bean Dialog. To see if a bean has been successfully removed, a history update can be performed. Bean removal history is updated when a search is instigated and all labels are styled, and provide the path to search on for bean declaration.
+         </para>
+      </listitem>
+   </varlistentry>
+
+   <!-- JBIDE-7851 -->
+   <varlistentry>
+      <term><ulink url="https://issues.jboss.org/jira/browse/JBIDE-7851">JBIDE-7851</ulink></term>
+      <listitem>
+         <para>
+         The restart ability in the main toolbar has been renamed to restart-module and added to the context menu of a deployed archive. This feature touches the web.xml file of a selected module, forcing the module to refresh on the server.
+         </para>
+      </listitem>
+   </varlistentry>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   <!-- JBIDE-7141 -->
+   <varlistentry>
+      <term><ulink url="https://issues.jboss.org/jira/browse/JBIDE-7141">JBIDE-7141</ulink></term>
+      <listitem>
+         <para>
+         JBoss Web Services runtime implementation and version information has been added to the JBoss Web Services facet addition screen of project creation and when editing a JBoss Web Services runtime within JBoss Developer Studio Preferences. This information allows a user to make an informed decision when selecting a JBoss Web Services runtime for their project.
+         </para>
+      </listitem>
+   </varlistentry>
+
+   <!-- JBIDE-6327 -->
+   <varlistentry>
+      <term><ulink url="https://issues.jboss.org/jira/browse/JBIDE-6327">JBIDE-6327</ulink></term>
+      <listitem>
+         <para>
+         New features have been added that enhance the tooling for web services. A new raw message request format has been implemented  for readability. Any enhancements done to the raw XML (such as indenting), will be removed when the message is sent to the web service. This avoids issues encountered with web services that have issues interpreting XML containing spaces between tags.
+         </para>
+         <para>
+         A new button has also been added that displays hierarchical information for  XML formatted documents within a tree structure. Using the tree structure, a user can provide data for contained fields that display a question mark. Changes are reflected in the raw text of the request message.
+         </para>
+      </listitem>
+   </varlistentry>
+
+   <!-- JBIDE-5045 -->
+   <varlistentry>
+      <term><ulink url="https://issues.jboss.org/jira/browse/JBIDE-5045">JBIDE-5045</ulink></term>
+      <listitem>
+         <para>
+         Support for annotated manage beans has been added for JSF 2 projects.
+         </para>
+      </listitem>
+   </varlistentry>
+
+
+   <!-- JBDS-1673 -->
+   <varlistentry>
+      <term><ulink url="https://issues.jboss.org/jira/browse/JBDS-1673">JBDS-1673</ulink></term>
+      <listitem>
+         <para>
+         The JBoss Developer Studio installer server detection did not allign with runtime detection from within the tooling. When detection plug-ins were updated, new servers were not automatically detected due to the code split between detection through the product installation wizard and runtime detection within the user interface. In this release, on first start-up, the installer asks for a list of directories to scan for new servers. The directory selected will then be optionally scanned on every subsequent launch of the JBoss Developer Studio and new discovered servers will be displayed in a list to the user. This allows for new servers to be detected, while not having to duplicate the code and combine it with the runtime detection available from within JBoss Developer Studio.
+         </para>
+      </listitem>
+   </varlistentry>
+
+</variablelist>
+
+</section>

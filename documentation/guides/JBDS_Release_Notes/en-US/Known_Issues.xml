@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<section id="Known_Issues_with_this_release">
+	<title>
+			Known Issues in version 5.0.0
+	</title>
+<!--	<para>
+		There were no known issues at the time of release.
+	</para> -->
+	<para> 
+			Following is a list of known issues at the time of release.
+		</para>
+		<variablelist> 
+			<!-- JBDS-2180 -->
+		<varlistentry>
+			<term>
+				<ulink url="https://issues.jboss.org/jira/browse/JBDS-2180">JBDS-2180</ulink>
+			</term>
+			<listitem>
+				<para>
+					When installing JBoss Developer Studio 5 on Mac OS X, if you are running Java 7 you will only be able to install the 64bit version of JBoss Developer Studio. The current workaround o install the 32bit version is to use Java 6. 
+				</para>
+			</listitem>
+		</varlistentry>
+		<!-- JBIDE-12071 -->
+		<varlistentry>
+			<term>
+				<ulink url="https://issues.jboss.org/jira/browse/JBIDE-12071">JBIDE-12071</ulink>
+			</term>
+			<listitem>
+				<para>
+					When adding a project to an OpenShift server using the context menu, or you remove a project from the OpenShift server, no dialog appears to publish or unpublish the project. The current workaround is to manually publish and unpublish a project after performing one of the above actions. 
+				</para>
+			</listitem>
+		</varlistentry>
+	</variablelist>
+</section>

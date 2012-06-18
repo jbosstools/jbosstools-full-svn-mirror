@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<section id="Overview">
+		<title>Overview</title>
+		<para>			
+			JBoss Developer Studio 5.0 is a major release of the Eclipse based IDE developed and supported by Red Hat (the visual tooling components are supported for 3 years, and the runtime platform for 5 years). The IDE, which is available for Windows, Linux and OS X, provides tooling that allows for rapid Web 2.0 application development on the JBoss Enterprise Application Platform. This release also improves support for SOA application development with the JBoss Enterprise SOA Platform.
+		</para>
+		<para>
+			JBoss Developer Studio 5.0 contains many new features, including:
+		</para>
+		<itemizedlist>
+			<listitem>
+				<para>
+					OpenShift support
+					<!-- https://issues.jboss.org/browse/JBDS-1896 -->
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Maven support
+						<!-- https://issues.jboss.org/browse/JBIDE-9591 -->
+						</para>
+					</listitem>
+			<listitem>
+				<para>
+					SAR project deployment
+					<!-- https://issues.jboss.org/browse/JBIDE-9497 -->
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Seam Servlet module support
+						<!-- https://issues.jboss.org/browse/JBIDE-9388 -->
+				</para>
+			</listitem>
+		</itemizedlist>
+		<para>
+			JBoss Developer Studio 5 is supported on the following operating systems:
+		</para>
+		<itemizedlist>
+			<listitem>
+				<para>
+					Red Hat Enterprise Linux 6
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Windows XP (32 and 64bit)
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Windows 7 (32 and 64bit)
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Mac OS X 10.6
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Max OS X 10.7
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Fedora 15
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Fedora 16
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Ubuntu 10.4-LTS
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Ubuntu 11.04
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Ubuntu 11.10
+				</para>
+			</listitem>
+		</itemizedlist>
+		<important>
+			<para>
+				For Linux distributions, a Gnome interface is expected.
+			</para>
+		</important>
+		<para>
+			JBoss Developer Studio 5 requires Java Development Kit (JDK) 1.6.
+		</para>
+<!--		<important>
+			<para>
+				If you are installing on a Linux distribution you must set the following limits in <filename>/etc/security/limits.conf</filename> upon installation completion and before running JBoss Developer Studio:
+			</para>
+<programlisting>
+* soft nofile 9216
+* hard nofile 9216
+</programlisting>
+			<para>
+				These settings will ensure you do not encounter an error reguarding maximum open files when starting JBoss Developer Studio.
+			</para>
+			<para>
+				For further information concerning this issue, see <ulink url="https://issues.jboss.org/browse/JBIDE-8944">https://issues.jboss.org/browse/JBIDE-8944</ulink>
+			</para>
+			<para>
+				For further installation instructions see the Getting Started Guide for this release, available at: <ulink url="http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/index.html">http://docs.redhat.com/docs/en-US/JBoss_Developer_Studio/index.html</ulink>
+			</para>
+		</important> -->
+	</section>

@@ -1,0 +1,153 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<section id="Features">
+    <title>
+        Features of version 5.0.0
+    </title>
+    <para>
+        The following list highlights new features that have been added to this release, as well as listing notable bug fixes. You can find a complete list of bug fixes <ulink url="https://issues.jboss.org/browse/JBIDE">here</ulink>.
+	</para>
+		<formalpara>
+			<title>JBoss Central</title>
+			<para>
+				<itemizedlist>
+					<listitem>
+						<para>
+							JBoss Central is the new central hub for everything from getting started with JBoss, to keeping up with the latest news and even installing or updating JBoss Developer Studio and components.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</formalpara>
+		<formalpara>
+			<title>JBoss Perspective</title>
+			<para>
+				<itemizedlist>
+					<listitem>
+						<para>
+							The JBoss Perspective is designed to incorporate the views most often used by developers using JBoss, while also changing standard menu items to reflect what a JBoss devleoper would want and need. 
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</formalpara>
+		<formalpara>
+			<title>JBoss Enterprise Application Platform 6 tooling</title>
+			<para>
+				<itemizedlist>
+					<listitem>
+						<para>
+							The tooling in JBoss Developer Studio 5 works with the Beta version of JBoss Enterprise Application Platform 6.
+						</para>
+					</listitem>
+				</itemizedlist>
+			</para>
+		</formalpara>
+   <formalpara>
+      <title>Contexts and Dependency Injection (CDI)</title>
+        <para>
+			<itemizedlist>					
+				<listitem>
+					<para>
+						CDI Tools has become a major component for JBoss Developer Studio 5. A new CDI wizard is now available for appropriate project creation.
+					</para>
+				</listitem>
+            </itemizedlist>
+        </para>
+	</formalpara>
+	<formalpara>
+		<title>OpenShift</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						New tooling is now available that allows you to interact with Red Hat's cloud offering as if it were a local server.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</formalpara>
+	<formalpara>
+		<title>Forge</title>
+		<para>
+			<itemizedlist>					
+				<listitem>
+					<para>
+						Forge allows you to use the command line to create and manage projects, from within JBoss Developer Studio.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</formalpara>
+	<formalpara>
+		<title>Hibernate</title>
+		<para>
+			<itemizedlist>					
+				<listitem>
+					<para>
+						Tooling for Hibernate 4 is now available within JBoss Developer Studio.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</formalpara>
+    <formalpara>
+        <title>Google Web Toolkit</title>
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+						Google Web Toolkit tooling integration is now provided.				
+                    </para>
+				</listitem>
+            </itemizedlist>
+        </para>
+    </formalpara>
+  <formalpara>
+        <title>JavaServer Faces (JSF)</title>
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+						JSF2 tooling is now available with this release.
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+    </formalpara>
+	<formalpara>
+		<title>Maven</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						Maven is now a major component of JBoss Developer Studio 5. Creating a Maven-ready project allows you to utilize remote resources from Maven repositories.
+					</para>
+				</listitem>
+	        </itemizedlist>
+		</para>
+    </formalpara>
+    <formalpara>
+        <title>Visual Page Editor</title>
+        <para>
+            <itemizedlist>
+                <listitem>
+                    <para>
+						A new feature is available as part of the Visual Page Editor called BrowserSim. This feature allows you to simulate application interaction on a range of mobile interfaces including mobiles and tablets.
+                    </para>
+                </listitem>
+            </itemizedlist>
+        </para>
+	</formalpara>
+	<formalpara>
+		<title>JAX-RS</title>
+		<para>
+			<itemizedlist>
+				<listitem>
+					<para>
+						JAX-RS tooling has been updated to allow for visualiation of your REST Endpoints in the Project Explorer, and support for Content Assist and Validation. It also operates with the Web Service Tester for execution of requests in both Run and Debug mode.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+	</formalpara>
+</section>
