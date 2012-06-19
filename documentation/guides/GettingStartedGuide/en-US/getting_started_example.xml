@@ -5,7 +5,7 @@
 	   <title>Example of developing a Java EE6, HTML5, Maven application for mobile devices</title>
 <section id="_purpose_and_target_audience">
 <title>Purpose and Target Audience</title>
-<simpara>This tutorial sets the stage for the creation of TicketMonster. This sample application illustrates how to bring together the best features of <emphasis role="strong">Java EE 6, HTML5 and JBoss</emphasis> to create a rich, mobile-optimized and dynamic application
+<simpara>We illustrate here how to bring together the best features of <emphasis role="strong">Java EE 6, HTML5 and JBoss</emphasis> to create a rich, mobile-optimized and dynamic application
 <ulink url="https://github.com/jboss/ticket-monster">https://github.com/jboss/ticket-monster</ulink>.</simpara>
 <simpara>Through this tutorial, you will:</simpara>
 <itemizedlist>
