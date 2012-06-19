@@ -13,17 +13,18 @@ package org.jboss.tools.drools.ui.bot.test.smoke;
 
 import java.io.File;
 
-import org.jboss.tools.ui.bot.ext.SWTEclipseExt;
-import org.jboss.tools.ui.bot.ext.SWTTestExt;
-import org.jboss.tools.ui.bot.ext.types.IDELabel;
-import org.jboss.tools.ui.bot.ext.types.IDELabel.PreferencesDialog;
-import org.jboss.tools.drools.ui.bot.test.DroolsAllBotTests;
-import org.junit.Test;
-import org.eclipse.swtbot.swt.finder.widgets.SWTBotTreeItem;
+import org.drools.eclipse.util.DroolsRuntime;
+import org.drools.eclipse.util.DroolsRuntimeManager;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTable;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotText;
-import org.drools.eclipse.util.DroolsRuntimeManager;
-import org.drools.eclipse.util.DroolsRuntime;
+import org.jboss.tools.drools.ui.bot.test.DroolsAllBotTests;
+import org.jboss.tools.ui.bot.ext.SWTBotExt;
+import org.jboss.tools.ui.bot.ext.SWTEclipseExt;
+import org.jboss.tools.ui.bot.ext.SWTOpenExt;
+import org.jboss.tools.ui.bot.ext.SWTTestExt;
+import org.jboss.tools.ui.bot.ext.gen.ActionItem;
+import org.jboss.tools.ui.bot.ext.types.IDELabel;
+import org.junit.Test;
 /**
  * Test managing of Drools Runtime
  * @author Vladimir Pakan
@@ -81,10 +82,7 @@ public class ManageDroolsRuntime extends SWTTestExt{
    */
   private void selectDroolsPreferences(){
     jbt.delay();
-    bot.menu(IDELabel.Menu.WINDOW).menu(IDELabel.Menu.PREFERENCES).click();
-    bot.shell(IDELabel.Shell.PREFERENCES).activate();
-    SWTBotTreeItem tiDroolsGroup = bot.tree().expandNode(IDELabel.PreferencesDialog.DROOLS_GROUP);
-    tiDroolsGroup.select(PreferencesDialog.INSTALLED_DROOLS_RUNTIMES);
+    new SWTOpenExt(new SWTBotExt()).preferenceOpen(ActionItem.Preference.DroolsInstalledDroolsRuntimes.LABEL);
   }
   /**
    * Edits Drools Runtime
