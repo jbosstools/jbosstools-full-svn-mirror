@@ -27,7 +27,7 @@
 		<!--property name="URL2" value="https://hudson.eclipse.org/hudson/job/bpel-helios/lastSuccessfulBuild/artifact/site/target/" /-->
 		<property name="destination" value="${basedir}" />
 		<property name="compress" value="true" />
-                <property name="version" value="1.0.0.v20120518-1552-H175-CI"/>
+                <property name="version" value="1.0.1.v20120619-1916-H189-CI"/>
 
 		<p2.mirror>
 			<repository location="file:${destination}/${version}/" name="Eclipse BPEL for Eclipse 3.7 (Not in Indigo)" />
