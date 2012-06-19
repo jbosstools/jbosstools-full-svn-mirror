@@ -191,7 +191,7 @@ src/main/webapp you will find <emphasis role="strong">index.xhtml</emphasis>, th
 </section>-->
 <section id="_adding_a_new_entity_using_forge">
 <title>Adding a new entity using Forge</title>
-<simpara>Right-click on the model package in the Project Explorer and select <emphasis role="strong">Show In Forge Console</emphasis>.</simpara>
+<simpara>Right-click on the org.jboss.tools.examples.model package in the Project Explorer and select <emphasis role="strong">Show In Forge Console</emphasis>.</simpara>
 <figure id="show_in_forge_console_image"><title>Show In Forge Console</title>
 <mediaobject>
   <imageobject>
@@ -311,7 +311,7 @@ true,
 </section>
 <section id="_optional_adding_a_new_entity_as_a_pojo">
 <title>Optional: Adding a new entity as a POJO</title>
-<simpara>Right-click on the <guilabel>model</guilabel> package and select <menuchoice><guimenuitem>New</guimenuitem><guimenuitem>Class</guimenuitem></menuchoice>.  Enter the class name as <property>Venue</property>.</simpara>
+<simpara>Right-click on the <guilabel>org.jboss.tools.examples.model</guilabel> package and select <menuchoice><guimenuitem>New</guimenuitem><guimenuitem>Class</guimenuitem></menuchoice>.  Enter the class name as <property>Venue</property>.</simpara>
 <simpara>Add the private variables representing the columns in the Venue table.</simpara>
 <programlisting>package org.jboss.tools.examples.model;
 
@@ -450,7 +450,7 @@ Ensure that Venue is the class you are working on.</simpara>
 <section id="_adding_a_jax_rs_restful_web_service">
 <title>Adding a JAX-RS RESTful web service</title>
 <simpara>You will now create a POJO with the JAX-RS annotations that will become an endpoint, providing access to the Event data.</simpara>
-<simpara>Right-click on the <guilabel>rest</guilabel> package, and from the context menu select <menuchoice><guimenuitem>New</guimenuitem><guimenuitem>Class</guimenuitem></menuchoice>. Input <emphasis>EventService</emphasis> as the class name.</simpara>
+<simpara>Right-click on the <guilabel>org.jboss.tools.examples.rest</guilabel> package, and from the context menu select <menuchoice><guimenuitem>New</guimenuitem><guimenuitem>Class</guimenuitem></menuchoice>. Input <emphasis>EventService</emphasis> as the class name.</simpara>
 <figure id="new_class_eventservice_image"><title>New Class EventService</title>
 <mediaobject>
   <imageobject>
@@ -506,7 +506,7 @@ public class EventService {
 		</listitem>
 		<listitem>
 			<para>
-				org.jboss.tools.examples.Event
+				org.jboss.tools.examples.model.Event
 			</para>
 		</listitem>
 		<listitem>
