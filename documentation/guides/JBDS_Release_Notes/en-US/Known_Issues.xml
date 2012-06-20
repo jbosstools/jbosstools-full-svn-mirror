@@ -9,7 +9,18 @@
 	<para> 
 			Following is a list of known issues at the time of release.
 		</para>
-		<variablelist> 
+		<variablelist>
+			<!-- JBDS-2212 -->
+			<varlistentry>
+				<term>
+					<ulink url="https://issues.jboss.org/jira/browse/JBDS-2212">JBDS-2212<ulink>
+				</term>
+				<listitem>
+					<para>
+						Features of JBoss Developer Studio may show incorrect version numbers when viewing installation information. Under <menuchoice><guimenuitem>Help</guimenuitem><guimenuitem>About JBoss Developer Studio</guimenuitem><guimenuitem>Installation Details</guimenuitem><guimenuitem>Features</guimenuitem></menuchoice> some features will display a version number older than the previous release of JBoss Developer Studio. These numbers are incorrect and will be incremented correctly in the future.  
+					</para>
+				</listitem>
+			</varlistentry>
 			<!-- JBDS-2180 -->
 		<varlistentry>
 			<term>
