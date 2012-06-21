@@ -514,7 +514,7 @@
 		<profile>
 			<id>gwt</id>
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 			</activation>
 			<modules>
 				<module>../gwt</module>
@@ -524,7 +524,7 @@
 		<profile>
 			<id>gwt-bootstrap</id>
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 			</activation>
 			<modules>
 				<module>../tests</module>
