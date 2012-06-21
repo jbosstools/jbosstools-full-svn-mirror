@@ -160,9 +160,9 @@ It includes a persistence unit and some sample persistence and transaction code 
 		<mavenArchetype>
 			<archetypeGroupId>org.jboss.aerogear.archetypes</archetypeGroupId>
 			<archetypeArtifactId>jboss-html5-mobile-archetype</archetypeArtifactId>
-			<archetypeVersion>1.0.0.M4-JBT</archetypeVersion>
-            <archetypeRepository>http://anonsvn.jboss.org/repos/jbosstools/workspace/fred/repositories/snapshot/</archetypeRepository>
+			<archetypeVersion>1.0.0.M4b</archetypeVersion>
             <!--
+            <archetypeRepository>http://anonsvn.jboss.org/repos/jbosstools/workspace/fred/repositories/snapshot/</archetypeRepository>
             <archetypeRepository>http://repository.jboss.org/nexus/content/repositories/releases/</archetypeRepository>
             -->
             <groupId>org.jboss.tools.example</groupId>
@@ -214,9 +214,9 @@ It includes a persistence unit and some sample persistence and transaction code 
         <mavenArchetype>
 			<archetypeGroupId>org.richfaces.archetypes</archetypeGroupId>
 			<archetypeArtifactId>richfaces-archetype-kitchensink</archetypeArtifactId>
-			<archetypeVersion>4.2.2.Final-1-JBT</archetypeVersion>
-            <archetypeRepository>http://anonsvn.jboss.org/repos/jbosstools/workspace/fred/repositories/snapshot/</archetypeRepository>
+			<archetypeVersion>4.2.2.Final-2</archetypeVersion>
             <!--
+            <archetypeRepository>http://anonsvn.jboss.org/repos/jbosstools/workspace/fred/repositories/snapshot/</archetypeRepository>
 			<archetypeRepository>http://repository.jboss.org/nexus/content/repositories/releases/</archetypeRepository>
             <archetypeRepository>https://repository.jboss.org/nexus/content/repositories/jboss_releases_staging_profile-048/</archetypeRepository>
 			<archetypeRepository>http://repository.jboss.org/nexus/content/repositories/snapshots/</archetypeRepository>
@@ -226,12 +226,12 @@ It includes a persistence unit and some sample persistence and transaction code 
 			<version>0.0.1-SNAPSHOT</version>
 			<javaPackage>org.jboss.tools.example.richfaces</javaPackage>
             <properties>
-              <property name="richfaces-enterprise-version" value="4.2.1.Final" /> <!-- RF is broken in WFK / WFK repo not available-->
+              <property name="richfaces-enterprise-version" value="4.2.2.Final-redhat-1" /> <!-- RF is broken in WFK / WFK repo not available-->
               <property name="richfaces-version" value="4.2.2.Final" />   
               <property name="javaee6-with-tools-enterprise-version" value="1.0.0.M12-redhat-1" />
             </properties>
 		</mavenArchetype>
-        <essentialEnterpriseDependencies>org.jboss.bom:jboss-javaee-6.0-with-tools:pom:1.0.0.M12-redhat-1::,</essentialEnterpriseDependencies>
+        <essentialEnterpriseDependencies>org.jboss.bom:jboss-javaee-6.0-with-tools:pom:1.0.0.M12-redhat-1::,org.richfaces:richfaces-bom:pom:4.2.2.Final-redhat-1::,</essentialEnterpriseDependencies>
         <!--
         <essentialEnterpriseDependencies>org.richfaces:richfaces-bom:pom:4.2.1.Final-redhat-1::,</essentialEnterpriseDependencies>
         -->
