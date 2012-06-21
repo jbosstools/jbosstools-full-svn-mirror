@@ -33,7 +33,7 @@
 		<module>../../birt/docs</module>
 		<module>../../drools/docs/reference</module>
 		<module>../../drools/docs/guvnor_ref</module>
-		<module>../../smooks/docs/reference</module>
+		<module>../../maven/docs/reference</module>
 		<module>../../jbpm/docs/converter_ref</module>
 		<module>../../jmx/docs/reference</module>
 		<module>../../bpel/docs/reference</module>
