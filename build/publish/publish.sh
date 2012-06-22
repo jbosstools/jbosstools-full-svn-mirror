@@ -79,9 +79,9 @@ rm -f ${bl}; wget -q http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/${BUILD_N
 wgetParams="--timeout=900 --wait=10 --random-wait --tries=30 --retry-connrefused --no-check-certificate --server-response"
 rl=${STAGINGDIR}/logs/REVISION
 if [[ $(find ${WORKSPACE} -mindepth 2 -maxdepth 3 -name ".git") ]]; then
-	# Track git source revision through hudson api: /job/${JOB_NAME}/${BUILD_NUMBER}/api/xml?xpath=//lastBuiltRevision
+	# Track git source revision through hudson api: /job/${JOB_NAME}/${BUILD_NUMBER}/api/xml?xpath=(//lastBuiltRevision)[1]
 	rl=${STAGINGDIR}/logs/GIT_REVISION
-	rm -f ${rl}.txt ${rl}.xml; wget -O ${rl}.xml "http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/${BUILD_NUMBER}/api/xml?xpath=//lastBuiltRevision" ${wgetParams}
+	rm -f ${rl}.txt ${rl}.xml; wget -O ${rl}.xml "http://hudson.qa.jboss.com/hudson/job/${JOB_NAME}/${BUILD_NUMBER}/api/xml?xpath=%28//lastBuiltRevision%29[1]" ${wgetParams}
 	sed -e "s#<lastBuiltRevision><SHA1>\([a-f0-9]\+\)</SHA1><branch><SHA1>\([a-f0-9]\+\)</SHA1><name>\([^<>]\+\)</name></branch></lastBuiltRevision>#\3\@\1#g" ${rl}.xml | sed -e "s#<[^<>]\+>##g" > ${rl}.txt
 elif [[ $(find ${WORKSPACE} -mindepth 2 -maxdepth 3 -name ".svn") ]]; then
 	# Track svn source revision through hudson api: /job/${JOB_NAME}/api/xml?wrapper=changeSet&depth=1&xpath=//build[1]/changeSet/revision
