@@ -11,32 +11,23 @@
 	<name>All_Userguides</name>
 
 	<modules>
-		<!--    <module>../guides/Exadel-migration</module> -->
 		<module>../guides/GettingStartedGuide</module>
 		<module>../guides/Beginners_Guide</module>
 		<module>../../cdi/docs/reference</module>
 		<module>../../as/docs/reference</module>
 		<module>../../openshift/docs/reference</module>
 		<module>../../hibernatetools/docs/reference</module>
-		<module>../../jbpm/docs/reference</module>
 		<module>../../jsf/docs/userguide</module>
 		<module>../../jsf/docs/jsf_tools_ref_guide</module>
 		<module>../../jsf/docs/jsf_tools_tutorial</module>
 		<module>../../seam/docs/reference</module>
-		<module>../../seam/docs/tutorial</module>
-		<module>../../struts/docs/struts_tools_ref_guide</module>
-		<module>../../struts/docs/struts_tools_tutorial</module>
-		<module>../../esb/docs/esb_ref_guide</module>
+		<module>../../seam/docs/tutorial</module>	<module>../../struts/docs/struts_tools_ref_guide</module>	<module>../../struts/docs/struts_tools_tutorial</module>
 		<module>../../ws/docs/restful_reference</module>
 		<module>../../ws/docs/soap_reference</module>
 		<module>../../portlet/docs/reference</module>
 		<module>../../birt/docs</module>
-		<module>../../drools/docs/reference</module>
-		<module>../../drools/docs/guvnor_ref</module>
 		<module>../../maven/docs/reference</module>
-		<module>../../jbpm/docs/converter_ref</module>
 		<module>../../jmx/docs/reference</module>
-		<module>../../bpel/docs/reference</module>	<module>../../modeshape/docs/ModeShape_Tools_Reference_Guide</module>
 		<module>index</module>
 	</modules>
 
@@ -73,11 +64,8 @@
                         <fileset>
                             <directory>${pom.basedir}/target/docbook/publish/en-US/</directory>
                             <includes>
-                              <!--  <include>html/com/</include> -->
                                 <include>html/org/</include>
-                             <!--   <include>html_single/com/</include> -->
                                 <include>html_single/org/</include>
-                             <!--   <include>eclipse/com/</include> -->
                                 <include>eclipse/org/</include>
                             </includes>
                             <followSymlinks>false</followSymlinks>
