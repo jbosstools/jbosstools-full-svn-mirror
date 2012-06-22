@@ -186,7 +186,7 @@
 				</indexentry>
 
     </index>
-	<index>
+<!--	<index>
 		<title>JBoss Tools - SOA and Business Rules</title>
 		
 		<indexentry>
@@ -237,5 +237,5 @@
 		</primaryie>
 	</indexentry> 
 		
-	</index>
+</index> -->
 </book>
