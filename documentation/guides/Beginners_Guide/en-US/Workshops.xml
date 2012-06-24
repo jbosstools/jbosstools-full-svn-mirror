@@ -17,12 +17,12 @@
 				<itemizedlist>
 					<listitem>
 						<para>
-							<application>JBoss Developer Studio 4.0</application>
+							<application>JBoss Developer Studio 5.0</application>
 						</para>
 					</listitem>
 					<listitem>
 						<para>
-							<application>JBoss Enterprise Application Platform 5</application> or <application>JBoss Service Orientated Architecture Platform 5</application>
+							<application>JBoss Enterprise Application Platform 6</application> or <application>JBoss Service Orientated Architecture Platform 6</application>
 						</para>
 					</listitem>
 					<listitem>
@@ -376,7 +376,7 @@
 	<section id="sect-Beginners_Guide-Workshops-Seam">
 		<title>Seam</title>
 		<para>
-			The <application>JBoss Enterprise Application Platform </application> book titled the <emphasis>Seam Reference Guide</emphasis> contains an example of how to setup Seam for use with  <application>JBoss Developer Studio</application>. This workshop can be found here: <ulink url="http://docs.redhat.com/docs/en-US/JBoss_Enterprise_Application_Platform/5/html-single/Seam_Reference_Guide/index.html#gettingstartedwithjbosstools">Getting Started with Seam, using JBoss Tools</ulink>.
+			The <application>JBoss Enterprise Application Platform </application> book titled the <emphasis>Seam Reference Guide</emphasis> contains an example of how to setup Seam for use with  <application>JBoss Developer Studio</application>. <!--This workshop can be found here: <ulink url="http://docs.redhat.com/docs/en-US/JBoss_Enterprise_Application_Platform/5/html-single/Seam_Reference_Guide/index.html#gettingstartedwithjbosstools">Getting Started with Seam, using JBoss Tools</ulink>. -->
 		</para>
 	</section>
 </chapter>
