@@ -39,7 +39,7 @@
 			</term>
 			<listitem>
 				<para>
-					When delpoying a project as an exploded archive the publishing process can be slow. It is recommended that users deploy projects as compressed archives. This can be enbled by double-clicking the server in the Servers view, navigating to the Deployment page and clicking the checkbox beside the option to Deploy projects as compressed archives. 
+					When deploying a project as an exploded archive to a remote server, the publishing process can be slow. It is recommended that users deploy projects as compressed archives to remote servers. This can be enbled by double-clicking the server in the Servers view, navigating to the Deployment page and clicking the checkbox beside the option to Deploy projects as compressed archives. 
 				</para>
 			</listitem>
 		</varlistentry>
