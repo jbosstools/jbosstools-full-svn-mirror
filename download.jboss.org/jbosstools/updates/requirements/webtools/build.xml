@@ -23,13 +23,13 @@
 
 	-->
 	<target name="mirror">
-		<property name="URL" value="http://download.eclipse.org/webtools/downloads/drops/R3.4.0/S-3.4.0M6-20120319200442/repository/"/>
+		<property name="URL" value="http://download.eclipse.org/webtools/downloads/drops/R3.4.0/R-3.4.0-20120612174739/repository/"/>
 
 		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/webtools/" />
 		<property name="compress" value="true" />
 
 		<p2.mirror>
-			<repository location="file:${destination}/S-3.4.0M6-20120319200442/" name="Web Tools S-3.4.0M6-20120319200442" />
+			<repository location="file:${destination}/R-3.4.0-20120612174739/" name="Web Tools R-3.4.0-20120612174739" />
 			<source>
 				<repository location="${URL}" />
 			</source>
@@ -38,6 +38,6 @@
 
 		</p2.mirror>
 
-		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/S-3.4.0M6-20120319200442/" artifactRepository="file:${destination}/S-3.4.0M6-20120319200442/" publishartifacts="true" source="${destination}/S-3.4.0M6-20120319200442/" compress="${compress}" />
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/R-3.4.0-20120612174739/" artifactRepository="file:${destination}/R-3.4.0-20120612174739/" publishartifacts="true" source="${destination}/R-3.4.0-20120612174739/" compress="${compress}" />
 	</target>
 </project>

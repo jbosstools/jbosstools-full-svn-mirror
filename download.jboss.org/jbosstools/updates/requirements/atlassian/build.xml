@@ -22,11 +22,11 @@
 		<!-- <property name="URL1" value="http://download.eclipse.org/mylyn/releases/latest" /> -->
 		<!-- TODO: make sure that the version of Mylyn in Juno (or on the URL above?) is the same as the version used on the Atlassian site! -->
 		<property name="URL1" value="http://update.atlassian.com/atlassian-eclipse-plugin/e3.7" />
-		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/atlassian/3.0.4.v20120406/" />
+		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/atlassian/3.0.5.v20120518/" />
 		<property name="compress" value="true" />
 
 		<p2.mirror>
-			<repository location="file:${destination}/3.0.4.v20120406" name="atlassian 3.0.4.v20120406" />
+			<repository location="file:${destination}/3.0.5.v20120518" name="atlassian 3.0.5.v20120518" />
 			<source>
 				<repository location="${URL1}" />
 			</source>
@@ -41,6 +41,6 @@
 			<iu id="com.atlassian.connector.eclipse.subversive.feature.group" />
 		</p2.mirror>
 
-		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/3.0.4.v20120406/" artifactRepository="file:${destination}/3.0.4.v20120406/" publishartifacts="true" source="${destination}/3.0.4.v20120406/" compress="${compress}" />
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/3.0.5.v20120518/" artifactRepository="file:${destination}/3.0.5.v20120518/" publishartifacts="true" source="${destination}/3.0.5.v20120518/" compress="${compress}" />
 	</target>
 </project>
