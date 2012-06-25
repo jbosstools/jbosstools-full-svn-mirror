@@ -93,8 +93,10 @@
 	An uninstall action was added to allow the facet to be swapped out with the
 	deprecated jbt.bpel.facet.core facet, or to be removed altogether
 	-->
+	
 	<extension point="org.eclipse.wst.common.project.facet.core.facets">
 		
+<!--
 		<project-facet id="bpel.facet.core">
 		  <label>%BPEL_CORE_FACET_LABEL</label>
 		  <description>%BPEL_CORE_FACET_DESCRIPTION</description>
@@ -110,6 +112,7 @@
             </and>
           </constraint>
         </project-facet-version>
+-->
 
 <!--                
         <action facet="bpel.facet.core" version="2.0" type="INSTALL" id="bpel.facet.core.install">
