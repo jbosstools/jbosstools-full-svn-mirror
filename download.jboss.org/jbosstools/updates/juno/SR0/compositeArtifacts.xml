@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?compositeArtifactRepository version='1.0.0'?>
+<repository name='JBoss Tools Requirements - Composite Juno M6 Mirror' type='org.eclipse.equinox.internal.p2.artifact.repository.CompositeArtifactRepository' version='1.0.0'>
+<properties size='2'>
+<property name='p2.compressed' value='true'/>
+<property name='p2.timestamp' value='1340662507000'/>
+</properties>
+<children size='11'>
+<!-- new for Juno -->
+<child location='../../requirements/juno/201206270900-R/'/>
+<child location='../../requirements/atlassian/3.0.5.v20120518/'/>
+<child location='../../requirements/birt/4.2.0.v20120613/'/>
+<child location='../../requirements/eclipse/R-4.2-201206081400/'/>
+<child location='../../requirements/orbit/R20120526062928/'/>
+<child location='../../requirements/webtools/R-3.4.0-20120612174739/'/>
+<!--  removed egit as all its features are included in juno -->
+<!--  removed emf to see if it's still needed or if it's sufficient to include juno -->
+<!--  removed mylyn as all its features are included in juno; create new atlassian bucket instead -->
+
+<child location='../../requirements/gwt/2.5.2.v201202290255-rel-r37/'/>
+<!-- includes m2e, m2e-extras, m2e-wtp, m2e-jdt-compiler -->
+<child location='../../requirements/m2eclipse/20120531-1100/'/>
+
+<!-- unchanged since Indigo -->
+<child location='../../requirements/ecf/3.5.6/'/>
+<child location='../../requirements/swtbot/2.0.5/'/>
+<child location='../../requirements/xulrunner-1.9.2/'/>
+</children>
+</repository>
+
