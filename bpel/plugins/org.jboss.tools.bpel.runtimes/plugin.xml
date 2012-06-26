@@ -96,35 +96,6 @@
 	
 	<extension point="org.eclipse.wst.common.project.facet.core.facets">
 		
-<!--
-		<project-facet id="bpel.facet.core">
-		  <label>%BPEL_CORE_FACET_LABEL</label>
-		  <description>%BPEL_CORE_FACET_DESCRIPTION</description>
-		</project-facet>
-		
-		<project-facet-version facet="bpel.facet.core" version="2.0">
-          <group-member
-               id="modules">
-          </group-member>
-          <constraint>
-            <and>
-               <conflicts group="modules"/>
-            </and>
-          </constraint>
-        </project-facet-version>
--->
-
-<!--                
-        <action facet="bpel.facet.core" version="2.0" type="INSTALL" id="bpel.facet.core.install">
-               <delegate class="org.jboss.tools.bpel.runtimes.facets.BPELCoreFacetInstallDelegate"/>
-               <config-factory class="org.jboss.tools.bpel.runtimes.facets.BPELFacetInstallDataModelProvider"/>
-        </action>
-
-        <action facet="bpel.facet.core" version="2.0" type="UNINSTALL" id="bpel.facet.core.uninstall">
-               <delegate class="org.jboss.tools.bpel.runtimes.facets.BPELCoreFacetUninstallDelegate"/>
-        </action>
--->
-
 		<category id="bpel.category">
 		  <label>%BPEL_FACET_CATEGORY_LABEL</label>
 		  <description>%BPEL_CORE_FACET_DESCRIPTION</description>
