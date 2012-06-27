@@ -16,6 +16,7 @@ import static org.eclipse.jst.j2ee.internal.common.operations.INewJavaClassDataM
 import static org.eclipse.jst.j2ee.internal.web.operations.INewWebClassDataModelProperties.USE_EXISTING_CLASS;
 import static org.eclipse.jst.servlet.ui.internal.wizard.IWebWizardConstants.BROWSE_BUTTON_LABEL;
 import static org.eclipse.jst.servlet.ui.internal.wizard.IWebWizardConstants.CLASS_NAME_LABEL;
+import static org.eclipse.wst.common.componentcore.internal.operation.IArtifactEditOperationDataModelProperties.PROJECT_NAME;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
@@ -24,8 +25,8 @@ import org.eclipse.jdt.core.IType;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jem.util.emf.workbench.ProjectUtilities;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.IMessageProvider;
 import org.eclipse.jface.window.Window;
-import org.eclipse.jst.j2ee.internal.project.J2EEProjectUtilities;
 import org.eclipse.jst.j2ee.internal.war.ui.util.WebServletGroupItemProvider;
 import org.eclipse.jst.j2ee.internal.wizard.AnnotationsStandaloneGroup;
 import org.eclipse.jst.j2ee.internal.wizard.NewJavaClassWizardPage;
@@ -43,14 +44,13 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wst.common.componentcore.ComponentCore;
-import org.eclipse.wst.common.componentcore.internal.util.IModuleConstants;
 import org.eclipse.wst.common.componentcore.resources.IVirtualComponent;
 import org.eclipse.wst.common.frameworks.datamodel.IDataModel;
 import org.eclipse.wst.common.project.facet.core.FacetedProjectFramework;
-import org.eclipse.wst.common.project.facet.core.internal.FacetedProject;
 import org.jboss.tools.portlet.core.IPortletConstants;
 import org.jboss.tools.portlet.ui.Messages;
 import org.jboss.tools.portlet.ui.MultiSelectFilteredFileSelectionDialog;
+import org.jboss.tools.portlet.ui.PortletUIActivator;
 import org.jboss.tools.portlet.ui.internal.wizard.xpl.NewJavaClassWizardPageEx;
 
 public class NewPortletClassWizardPage extends NewJavaClassWizardPageEx {
@@ -86,7 +86,12 @@ public class NewPortletClassWizardPage extends NewJavaClassWizardPageEx {
 	protected boolean isProjectValid(IProject project) {
 		boolean result;
 		try {
-			return FacetedProjectFramework.hasProjectFacet(project, IPortletConstants.PORTLET_FACET_ID);
+			result = project.isAccessible() && 
+				project.hasNature(JavaCore.NATURE_ID);
+			if ("External Plug-in Libraries".equals(project.getName()) || //$NON-NLS-1$
+					".JETEmitters".equals(project.getName()) ) { //$NON-NLS-1$
+				result = false;
+			}
 		} catch (CoreException ce) {
 			result = false;
 		}

@@ -299,7 +299,7 @@ public class NewJSFPortletClassWizardPage extends NewJavaClassWizardPage {
 		if (!result)
 			return result;
 		try {
-			result = FacetedProjectFramework.hasProjectFacet(project, IPortletConstants.JSFPORTLET_FACET_ID);
+			result = project.isAccessible() && FacetedProjectFramework.hasProjectFacet(project, IPortletConstants.JSFPORTLET_FACET_ID);
 			if (!result) {
 				return result;
 			}
