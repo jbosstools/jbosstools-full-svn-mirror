@@ -3,7 +3,7 @@
 <repository name='JBoss Tools Requirements - Composite Juno M6 Mirror' type='org.eclipse.equinox.internal.p2.metadata.repository.CompositeMetadataRepository' version='1.0.0'>
 <properties size='2'>
 <property name='p2.compressed' value='true'/>
-<property name='p2.timestamp' value='1340662507000'/>
+<property name='p2.timestamp' value='1340820655000'/>
 </properties>
 <children size='11'>
 <!-- new for Juno -->
@@ -19,7 +19,7 @@
 
 <child location='../../requirements/gwt/2.5.2.v201202290255-rel-r37/'/>
 <!-- includes m2e, m2e-extras, m2e-wtp, m2e-jdt-compiler -->
-<child location='../../requirements/m2eclipse/20120531-1100/'/>
+<child location='../../requirements/m2eclipse/20120627-1400/'/>
 
 <!-- unchanged since Indigo -->
 <child location='../../requirements/ecf/3.5.6/'/>
