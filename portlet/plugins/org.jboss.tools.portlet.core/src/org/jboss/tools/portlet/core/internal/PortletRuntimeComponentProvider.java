@@ -83,6 +83,10 @@ public class PortletRuntimeComponentProvider extends
 			if (exists(configFile, IPortletConstants.SERVER_DEFAULT_DEPLOY_GATEIN)) {
 				return true;
 			}
+			// GateIn Portal Server 3.3 JBoss AS 7
+			if (exists(jbossLocation.toFile(), IPortletConstants.SERVER_DEFAULT_DEPLOY_GATEIN33)) {
+				return true;
+			}
 			return false;
 		}
 		// Tomcat portletcontainer

@@ -166,7 +166,10 @@ public class PortletRuntimeLibrariesContainerInitializer extends
 							if (libDirectory != null) {
 								libDirectory = new File(libDirectory, "lib"); //$NON-NLS-1$
 							} else {
+								libDirectory = getDirectory(jbossLocation.toFile(), IPortletConstants.GATEIN_MODULES_JAVAX_PORTLET_API_MAIN);
+								if (libDirectory == null) {
 								// Tomcat adds portlet-api.jar automatically
+								}
 							}
 						}
 					}
