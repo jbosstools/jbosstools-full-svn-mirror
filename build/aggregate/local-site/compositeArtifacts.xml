@@ -7,7 +7,7 @@
      get new time w/ 
       date +%s000
 -->
-<property name='p2.timestamp' value='1306350337000'/>
+<property name='p2.timestamp' value='1306350337001'/>
 </properties>
 <children size='31'>
 
@@ -38,16 +38,15 @@
 <child location='../../../portlet/site/target/repository/'/>
 <child location='../../../runtime/site/target/repository/'/>
 <child location='../../../seam/site/target/repository/'/>
-<child location='../../../smooks/site/target/repository/'/>
 <child location='../../../struts/site/target/repository/'/>
-
 <child location='../../../tests/site/target/repository/'/>
+
 <child location='../../../usage/site/target/repository/'/>
 <child location='../../../vpe/site/target/repository/'/>
 <child location='../../../ws/site/target/repository/'/>
 <child location='../../../xulrunner/site/target/repository/'/>
-
 <child location='../../../openshift/site/target/repository/'/>
+
 <child location='../../../central/site/target/site/'/>
 
 </children>
