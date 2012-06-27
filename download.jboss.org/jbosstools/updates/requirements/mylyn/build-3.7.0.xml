@@ -29,11 +29,11 @@ Therefore there is no need to produce this mirror any more. See ../atlassian/bui
 		<!-- JIRA connector; note that Subclipse connector is on Subclipse req site, ../subclipse/ -->
 		<!-- <property name="URL2" value="http://update.atlassian.com/atlassian-eclipse-plugin/weekly/e3.6/" /> -->
 		<property name="URL2" value="http://update.atlassian.com/atlassian-eclipse-plugin/e3.7" />
-		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/mylyn/3.8.0.v20120612-0600/" />
+		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/mylyn/3.7.0.v20120319-0200/" />
 		<property name="compress" value="true" />
 
 		<p2.mirror>
-			<repository location="file:${destination}/3.8.0.v20120612-0600" name="Mylyn 3.8.0.v20120612-0600" />
+			<repository location="file:${destination}/3.7.0.v20120319-0200" name="Mylyn 3.7.0.v20120319-0200" />
 			<source>
 				<repository location="${URL1}" />
 				<repository location="${URL2}" />
@@ -41,26 +41,21 @@ Therefore there is no need to produce this mirror any more. See ../atlassian/bui
 
 			<slicingoptions includefeatures="true" followstrict="true" latestversiononly="true" />
 
+			<!-- available on indigo site but older version (3.6.2) -->
 			<iu id="org.eclipse.mylyn_feature.feature.group" />
-
-			<iu id="org.eclipse.mylyn.bugzilla_feature.feature.group" />
-			<iu id="org.eclipse.mylyn.commons.compatibility.feature.group" />
 			<iu id="org.eclipse.mylyn.commons.feature.group" />
-			<iu id="org.eclipse.mylyn.commons.repositories.feature.group" />
-			<iu id="org.eclipse.mylyn.commons.repositories.http.feature.group" />
 			<iu id="org.eclipse.mylyn.context_feature.feature.group" />
-			<iu id="org.eclipse.mylyn.discovery.feature.group" />
-
+			<iu id="org.eclipse.mylyn.wikitext_feature.feature.group" />
 			<iu id="org.eclipse.mylyn.ide_feature.feature.group" />
 			<iu id="org.eclipse.mylyn.java_feature.feature.group" />
 			<iu id="org.eclipse.mylyn.pde_feature.feature.group" />
 			<iu id="org.eclipse.mylyn.team_feature.feature.group" />
+			<iu id="org.eclipse.mylyn.bugzilla_feature.feature.group" />
 			<iu id="org.eclipse.mylyn.versions.feature.group" />
-			<iu id="org.eclipse.mylyn.wikitext_feature.feature.group" />
 
+			<!-- not on indigo -->
 			<iu id="org.eclipse.mylyn.cvs.feature.group" />
 			<iu id="org.eclipse.mylyn.git.feature.group" />
-
 			<iu id="com.atlassian.connector.eclipse.feature.group" />
 			<iu id="com.atlassian.connector.eclipse.cvs.feature.group" />
 			<iu id="com.atlassian.connector.eclipse.jira.feature.group" />
@@ -69,6 +64,6 @@ Therefore there is no need to produce this mirror any more. See ../atlassian/bui
 			<iu id="com.atlassian.connector.eclipse.subversive.feature.group" />
 		</p2.mirror>
 
-		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/3.8.0.v20120612-0600/" artifactRepository="file:${destination}/3.8.0.v20120612-0600/" publishartifacts="true" source="${destination}/3.8.0.v20120612-0600/" compress="${compress}" />
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/3.7.0.v20120319-0200/" artifactRepository="file:${destination}/3.7.0.v20120319-0200/" publishartifacts="true" source="${destination}/3.7.0.v20120319-0200/" compress="${compress}" />
 	</target>
 </project>
