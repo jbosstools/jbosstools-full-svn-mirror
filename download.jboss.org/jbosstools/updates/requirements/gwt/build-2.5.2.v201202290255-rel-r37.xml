@@ -21,7 +21,7 @@
 		<property name="compress" value="true" />
 
 		<p2.mirror>
-			<repository location="file:${destination}/2.6.1.v201205091048-rel-r37" name="Google Plugin for Eclipse 3.7" />
+			<repository location="file:${destination}/2.5.2.v201202290255-rel-r37" name="Google Plugin for Eclipse 3.7" />
 			<source>
 				<repository location="${URL}" />
 			</source>
@@ -39,6 +39,6 @@
 			
 			<slicingOptions includeFeatures="true" followStrict="true" />
 		</p2.mirror>
-		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/2.6.1.v201205091048-rel-r37" artifactRepository="file:${destination}/2.6.1.v201205091048-rel-r37" publishartifacts="true" source="${destination}/2.6.1.v201205091048-rel-r37" compress="${compress}" />
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/2.5.2.v201202290255-rel-r37" artifactRepository="file:${destination}/2.5.2.v201202290255-rel-r37" publishartifacts="true" source="${destination}/2.5.2.v201202290255-rel-r37" compress="${compress}" />
 	</target>
 </project>
