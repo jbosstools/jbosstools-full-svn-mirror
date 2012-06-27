@@ -54,5 +54,16 @@
 				</para>
 			</listitem>
 		</varlistentry>
+		<!-- LOGTOOL-51 -->
+		<varlistentry>
+			<term>
+				<ulink url="https://issues.jboss.org/jira/browse/LOGTOOL-511">LOGTOOL-51</ulink>
+			</term>
+			<listitem>
+				<para>
+					If Maven integration with Eclipse JDT Annotation Processor Toolkit is used with an earlier version of jboss-logging-processor than 1.1.0.Beta1, the workspace may crash. This crash occurs because classes are loaded by reflection during APT processing. The current workaround is to use the 1.1.0.Beta1 or newer version of the jboss-logging-processor. 
+				</para>
+			</listitem>
+		</varlistentry>
 	</variablelist>
 </section>
