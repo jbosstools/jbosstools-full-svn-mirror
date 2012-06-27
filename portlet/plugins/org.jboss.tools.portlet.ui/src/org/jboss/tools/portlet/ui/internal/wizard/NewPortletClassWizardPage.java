@@ -201,4 +201,28 @@ public class NewPortletClassWizardPage extends NewJavaClassWizardPageEx {
 		superLabel.setEnabled(!enable);
 	}
 
+	@Override
+	protected void validatePage(boolean showMessage) {
+		super.validatePage(showMessage);
+		if (showMessage && getMessage() == null && getErrorMessage() == null) {
+			IProject project = getTargetProject();
+			boolean isFacetedProject = false;
+			try {
+				isFacetedProject = FacetedProjectFramework.isFacetedProject(project);
+			} catch (CoreException e) {
+				// ignore
+			}
+			if (!isFacetedProject) {
+				setMessage(Messages.NewPortletClassWizardPage_Updating_web_xml_portlet_xml_is_not_possible_on_non_portlet_web_projects, IMessageProvider.WARNING);
+			} else if (PortletUIActivator.getPortletXmlFile(project) == null) {
+				setMessage(Messages.NewPortletClassWizardPage_The_portlet_xml_file_doesn_t_exist, IMessageProvider.WARNING);
+			}
+		}
+	}
+	
+	public IProject getTargetProject() {
+		String projectName = model.getStringProperty(PROJECT_NAME);
+		return ProjectUtilities.getProject(projectName);
+	}
+
 }
