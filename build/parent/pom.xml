@@ -25,7 +25,7 @@
 		<platformSystemProperties></platformSystemProperties>
 		<maven.antrun.plugin.version>1.3</maven.antrun.plugin.version>
 		<swtbot.test.skip>true</swtbot.test.skip>
-		<!-- Requirements => JBIDE-11714 -->
+		<!-- Used to install 3rd-party runtimes for testing -->
 		<skipRequirements>${skipTests}</skipRequirements>
 		<requirementsDirectory>${project.build.directory}/requirements</requirementsDirectory>
 
@@ -77,8 +77,6 @@
 		
 		<!-- Default coverage filter, to be overriden when necessary -->
 		<coverage.filter>org.jboss.tools.*</coverage.filter>
-		<requirements.root>${basedir}/../../../requirements</requirements.root>
-		<requirement.build.root>${requirements.root}/target</requirement.build.root>
 
 		<!-- JBIDE-11700, JBIDE-11865: latest stable build of m2e-apt for use with JBDS product builds -->		
 		<m2e-apt>http://download.jboss.org/jbosstools/updates/requirements/m2eclipse/m2e-apt-1.0.0-2012-06-05_16-15-59-H16/</m2e-apt>
@@ -178,7 +176,7 @@
 				<version>${tychoVersion}</version>
 				<configuration>
 					<!-- timeout in seconds -->
-					<surefire.timeout>1800</surefire.timeout>
+					<surefire.timeout>2400</surefire.timeout>
 					<forkedProcessTimeoutInSeconds>1800</forkedProcessTimeoutInSeconds>
 					<useUIHarness>true</useUIHarness>
 					<useUIThread>true</useUIThread>
@@ -187,7 +185,7 @@
 					<argLine>${tycho.testArgLine} ${memoryOptions1} ${memoryOptions2} ${platformSystemProperties} ${systemProperties} -Dusage_reporting_enabled=false</argLine>
 					<!-- https://docs.sonatype.org/display/TYCHO/How+to+run+SWTBot+tests+with+Tycho -->
 					<!-- set useUIThread=true for regular ui tests -->
-					<!-- set useUIThread=false for swtbot tests (?) -->
+					<!-- set useUIThread=false for swtbot tests -->
 
 					<!-- TODO: add new profile to permit running against JBDS product/application 
 						for JBDS tests, against Eclipse SDK for JBT -->
@@ -226,12 +224,6 @@
 				<version>${tychoVersion}</version>
 				<configuration>
 					<encoding>UTF-8</encoding>
-					<!-- not strictly needed but this suppresses warnings when compiling 
-						that the default value (1.5) is being overwritten by the value in the MANIFEST.MF. 
-						You can use this in your plugins or their aggregator pom.xml files to set 
-						this for your plugins -->
-					<!-- <source>1.6</source> -->
-					<!-- <target>1.6</target> -->
 				</configuration>
 			</plugin>
 			<!-- source for bundles -->
@@ -278,68 +270,6 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<dependencies>
-					<dependency>
-						<groupId>ant-contrib</groupId>
-						<artifactId>ant-contrib</artifactId>
-						<version>1.0b3</version>
-						<exclusions>
-							<exclusion>
-								<groupId>ant</groupId>
-								<artifactId>ant</artifactId>
-							</exclusion>
-						</exclusions>
-					</dependency>
-					<dependency>
-							<groupId>ant</groupId>
-							<artifactId>ant-optional</artifactId>
-							<version>1.5.3-1</version>
-							<exclusions>
-								<exclusion>
-									<groupId>ant</groupId>
-									<artifactId>ant</artifactId>
-								</exclusion>
-							</exclusions>
-					</dependency>
-				</dependencies>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<version>${maven.antrun.plugin.version}</version>
-				<executions>
-					<execution>
-						<id>download-plugin-requirements</id>
-						<phase>pre-integration-test</phase>
-						<goals>
-							<goal>run</goal>
-						</goals>
-						<configuration>
-							<tasks>
-								<!-- JBIDE-11714: remove this execution -->
-								<fail message="requirements.properties not supported any more. If you read this, please comment JBIDE-11714"/>
-								<!-- taskdef resource="net/sf/antcontrib/antcontrib.properties" />
-								<if>
-									<and>
-										<available file="${requirements.root}" type="dir" />
-										<available file="requirements.properties" type="file" />
-									</and>
-									<then>
-										<property file="requirements.properties" />
-										<echo>Requirements build</echo>
-										<ant dir="${requirements.root}" inheritAll="true">
-											<property name="requirements" value="${requirements}" />
-											<property name="settings.offline" value="${settings.offline}" />
-											<property name="skipDownload" value="${skipDownload}" />
-										</ant>
-									</then>
-									<else>
-										<echo>No requrements.properties file</echo>
-									</else>
-								</if-->
-							</tasks>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
         
 		<pluginManagement>
@@ -376,7 +306,6 @@
 					</configuration>
 				</plugin>
 				<plugin>
-					<!-- JBIDE-11714 -->
 					<groupId>com.googlecode.maven-download-plugin</groupId>
 					<artifactId>maven-download-plugin</artifactId>
 					<version>0.2-SNAPSHOT</version>
@@ -728,23 +657,6 @@
 			</properties>
 			<build>
 				<plugins>
-					<!-- plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>build-helper-maven-plugin</artifactId> 
-						<executions> <execution> <id>attach-artifacts</id> <phase>package</phase> 
-						<goals> <goal>attach-artifact</goal> </goals> <configuration> <artifacts> 
-						<artifact> <file>${emma.session.out.file}</file> <type>es</type> </artifact> 
-						</artifacts> </configuration> </execution> </executions> </plugin -->
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-install-plugin</artifactId>
-						<version>2.3.1</version>
-						<configuration>
-							<file></file>
-							<groupId></groupId>
-							<artifactId></artifactId>
-							<version></version>
-							<packaging></packaging>
-						</configuration>
-					</plugin>
 					<plugin>
 						<groupId>org.eclipse.tycho</groupId>
 						<artifactId>tycho-surefire-plugin</artifactId>
