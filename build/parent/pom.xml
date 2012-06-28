@@ -314,7 +314,9 @@
 						</goals>
 						<configuration>
 							<tasks>
-								<taskdef resource="net/sf/antcontrib/antcontrib.properties" />
+								<!-- JBIDE-11714: remove this execution -->
+								<fail message="requirements.properties not supported any more. If you read this, please comment JBIDE-11714"/>
+								<!-- taskdef resource="net/sf/antcontrib/antcontrib.properties" />
 								<if>
 									<and>
 										<available file="${requirements.root}" type="dir" />
@@ -332,7 +334,7 @@
 									<else>
 										<echo>No requrements.properties file</echo>
 									</else>
-								</if>
+								</if-->
 							</tasks>
 						</configuration>
 					</execution>
