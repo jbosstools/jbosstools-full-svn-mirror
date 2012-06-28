@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<directory xmlns="http://www.eclipse.org/mylyn/discovery/directory/">
+<entry url="http://download.jboss.org/jbosstools/updates/soatools-3.3.0.CR1/plugins/org.jboss.tools.central.discovery.soa-tooling_1.0.0.v20120620-0912-H5-CR1-SOA.jar" permitCategories="true"/>
+</directory>
