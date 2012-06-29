@@ -58,11 +58,11 @@
 
 		<!-- 3a. URL of latest JBT requirements composite mirror -->
 		<!-- TODO: don't forget to update this in ../aggregate/*/associate.properties too (5 files)! -->
-		<jboss-requirements-composite-mirror>http://download.jboss.org/jbosstools/updates/indigo/SR2/</jboss-requirements-composite-mirror>
-		<jboss-requirements-composite-soa-tooling-mirror>http://download.jboss.org/jbosstools/updates/indigo/soa-tooling/SR2/</jboss-requirements-composite-soa-tooling-mirror>
+		<jboss-requirements-composite-mirror>http://download.jboss.org/jbosstools/updates/juno/SR0/</jboss-requirements-composite-mirror>
+		<jboss-requirements-composite-soa-tooling-mirror>http://download.jboss.org/jbosstools/updates/juno/soa-tooling/SR0/</jboss-requirements-composite-soa-tooling-mirror>
 
 		<!-- 3b., or use -Plocal.requirements -Dlocal.requirements=file:///path/to/mirror/of/composite/requirements/site -->
-		<local.requirements>file:///qa/services/http/binaries/RHDS/updates/indigo/</local.requirements>
+		<local.requirements>file:///qa/services/http/binaries/RHDS/updates/juno/</local.requirements>
 
 		<!-- 4. published aggregate update sites go here, for consumption by QE 
 			and downstream JBDS builds -->
@@ -73,7 +73,7 @@
 		<jbosstools-nightly-soa-tooling-tests>http://download.jboss.org/jbosstools/updates/nightly/soatests/trunk/</jbosstools-nightly-soa-tooling-tests>
 
 		<!-- 5. extra requirements (for 3rd party "Extras" site) -->
-		<jboss-requirements-composite-extras-mirror>http://download.jboss.org/jbosstools/updates/indigo/extras/SR1a/</jboss-requirements-composite-extras-mirror>
+		<jboss-requirements-composite-extras-mirror>http://download.jboss.org/jbosstools/updates/juno/extras/</jboss-requirements-composite-extras-mirror>
 		
 		<!-- Default coverage filter, to be overriden when necessary -->
 		<coverage.filter>org.jboss.tools.*</coverage.filter>
