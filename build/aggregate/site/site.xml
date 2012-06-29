@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-	<description>JBoss Tools 3.3 Updates - Core</description>
+	<description>JBoss Tools 3.4 (Juno) Updates - Core</description>
 
 	<!-- PLEASE NOTE!
 		When updating this file, please be sure that it parses as valid XML before committing it.
@@ -416,7 +416,7 @@
 	<!-- ########## -->
 	<!-- CATEGORIES -->
 	<!-- ########## -->
-	<category-def name="AbridgedTools" label="Abridged JBoss Tools 3.3">
+	<category-def name="AbridgedTools" label="Abridged JBoss Tools 3.4">
 		<description>Contains most of the JBoss Tools features. Excluded are those related to integration with 3rd party plugins. Selecting this category will give you all tools needed for Web and Seam Development.</description>
 	</category-def>
 
