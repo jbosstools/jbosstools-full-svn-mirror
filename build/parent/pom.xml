@@ -177,7 +177,7 @@
 				<configuration>
 					<!-- timeout in seconds -->
 					<surefire.timeout>2400</surefire.timeout>
-					<forkedProcessTimeoutInSeconds>1800</forkedProcessTimeoutInSeconds>
+					<forkedProcessTimeoutInSeconds>2400</forkedProcessTimeoutInSeconds>
 					<useUIHarness>true</useUIHarness>
 					<useUIThread>true</useUIThread>
 					<!-- THE FOLLOWING LINE MUST NOT BE BROKEN BY AUTOFORMATTING -->
