@@ -3,18 +3,31 @@
     <title>
         Enhancements and fixed issues in version 5.0.1
     </title>
-	<variablelist>
-		<!-- JBIDE-xxxxx -->
-		<varlistentry>
-		<term>
-			<ulink url="https://issues.jboss.org/jira/browse/JBIDE-xxxxx">JBIDE-xxxxx</ulink>
-		</term>
-		<listitem>
-			<para>
-				placeholder text
-			</para>
-		</listitem>
-	</varlistentry>
+<variablelist>
+
+	<!-- JBIDE-12177 -->
+	<varlistentry>
+	<term>
+		<ulink url="https://issues.jboss.org/jira/browse/JBIDE-12177">JBIDE-12177</ulink>
+	</term>
+	<listitem>
+		<para>
+			The feature to auto-complete code tags was broken in the Visual Editor. When attempting to auto-complete a code tag, invalid code would be generated. This has been corrected by modifying the content assist file XmlTagCompletionProposalComputer.java to ensure partner code tags are generated correctly when using auto-completion.
+		</para>
+	</listitem>
+</varlistentry>
+
+   <!-- JBIDE-12158 -->
+   <varlistentry>
+   <term>
+	   <ulink url="https://issues.jboss.org/jira/browse/JBIDE-12158">JBIDE-12158</ulink>
+   </term>
+   <listitem>
+	   <para>
+         An issue existed when creating a Dynamic Web Project and modifying the project to include the JBoss Core Portlet facet to the project. The portlet-api library was not detected in the target runtime, forcing the user to manually specify it via the user library. This has been corrected by adding the option, Portlet Target Runtime Provider, to the combo-box on the JBoss Portlet Capabilities wizard page.
+         </para>
+      </listitem>
+   </varlistentry>
 
 </variablelist>
 
