@@ -28,6 +28,12 @@
 		<module>../../birt/docs</module>
 		<module>../../maven/docs/reference</module>
 		<module>../../jmx/docs/reference</module>
+		<module>../../jbpm/docs/converter_ref</module>
+		<module>../../drools/docs/reference</module>
+		<module>../../drools/docs/govnor_ref</module>
+		<module>../../bpel/docs/reference</module>
+		<module>../../jbpm/docs/reference</module>
+		<module>../../modeshape/docs/ModeShape_Tools_Reference_Guide</module>
 		<module>index</module>
 	</modules>
 
