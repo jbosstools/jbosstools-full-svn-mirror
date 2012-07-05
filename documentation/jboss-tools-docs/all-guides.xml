@@ -7,44 +7,6 @@
   </formats>
   <includeBaseDirectory>false</includeBaseDirectory>
 		<fileSets>
-			<!--		<fileSet>
-				<directory>../guides/Exadel-migration/target/docbook/publish/en-US</directory>
-				<outputDirectory>/Exadel-migration</outputDirectory>
-				<filtered>false</filtered>
-				<lineEnding>keep</lineEnding>
-				<includes>
-					<include>**/*.*</include>
-				</includes>
-				<useStrictFiltering>false</useStrictFiltering>
-				<useDefaultExcludes>true</useDefaultExcludes>
-				<fileMode>0644</fileMode>
-				<directoryMode>0755</directoryMode>
-			</fileSet>
-			<fileSet>
-				<directory>index/target/docbook/publish/en-US/html_single/</directory>
-				<outputDirectory>../</outputDirectory>
-				<filtered>false</filtered>
-				<lineEnding>keep</lineEnding>
-				<useStrictFiltering>false</useStrictFiltering>
-				<useDefaultExcludes>true</useDefaultExcludes>
-				<fileMode>0644</fileMode>
-				<directoryMode>0755</directoryMode>
-			</fileSet> -->
-
-            <!-- Maybe it is unnecessary fileSet and it could be removed at all? -->
-            <!--fileSet>
-				<directory>../guides/GettingStartedGuide/en</directory>
-				<outputDirectory>/GettingStartedGuide</outputDirectory>
-				<filtered>false</filtered>
-				<includes>
-					<include>database.zip</include>
-				</includes>
-				<useStrictFiltering>false</useStrictFiltering>
-				<useDefaultExcludes>true</useDefaultExcludes>
-				<fileMode>0644</fileMode>
-				<directoryMode>0755</directoryMode>
-			</fileSet-->
-
             <fileSet>
 				<directory>../guides/GettingStartedGuide/target/docbook/publish/en-US</directory>
 				<outputDirectory>/GettingStartedGuide</outputDirectory>
@@ -356,6 +318,20 @@
 			<fileSet>
 				<directory>../../maven/docs/reference/target/docbook/publish/en-US</directory>
 				<outputDirectory>/maven_reference</outputDirectory>
+				<filtered>false</filtered>
+				<lineEnding>keep</lineEnding>
+				<includes>
+					<include>**/*.*</include>
+				</includes>
+				<useStrictFiltering>false</useStrictFiltering>
+				<useDefaultExcludes>true</useDefaultExcludes>
+				<fileMode>0644</fileMode>
+				<directoryMode>0755</directoryMode>
+			</fileSet>
+
+			<fileSet>
+				<directory>../../forge/docs/reference/target/docbook/publish/en-US</directory>
+				<outputDirectory>/forge_reference</outputDirectory>
 				<filtered>false</filtered>
 				<lineEnding>keep</lineEnding>
 				<includes>

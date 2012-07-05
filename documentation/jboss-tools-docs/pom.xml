@@ -25,6 +25,7 @@
 		<module>../../ws/docs/restful_reference</module>
 		<module>../../ws/docs/soap_reference</module>
 		<module>../../portlet/docs/reference</module>
+		<module>../../forge/docs/reference</module>
 		<module>../../birt/docs</module>
 		<module>../../maven/docs/reference</module>
 		<module>../../jmx/docs/reference</module>

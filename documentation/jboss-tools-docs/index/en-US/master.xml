@@ -58,6 +58,15 @@
 			</indexentry>
 			
 			<indexentry>
+				<primaryie>Forge Reference Guide<ulink
+
+					url="en/forge_reference/html/index.html">(html)</ulink>
+					<ulink url="en/forge_reference/html_single/index.html">(html single)</ulink>
+					<ulink url="en/forge_reference/pdf/Forge_Reference_Guide.pdf">(pdf)</ulink>
+				</primaryie>
+			</indexentry>
+
+			<indexentry>
 				<primaryie>Hibernate Tools Reference Guide 
 					<ulink url="en/hibernatetools/html/index.html">(html)</ulink>
 					<ulink url="en/hibernatetools/html_single/index.html">(html single)</ulink>
