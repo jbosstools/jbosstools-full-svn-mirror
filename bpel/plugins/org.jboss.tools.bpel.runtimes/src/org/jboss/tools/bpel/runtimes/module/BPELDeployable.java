@@ -24,7 +24,7 @@ public class BPELDeployable extends FlatComponentDeployable {
 	 * (non-Javadoc)
 	 * @see org.eclipse.bpel.runtimes.module.FlatComponentDeployable#getParticipants()
 	 */
-	protected IFlattenParticipant[] getParticipants() {
+	public IFlattenParticipant[] getParticipants() {
 		/*
 		 * No work really needs to be done here. The BPEL project
 		 * doesn't need to map source in instead, it doesn't need to 
