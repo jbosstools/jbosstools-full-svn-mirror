@@ -71,5 +71,8 @@
 <child location='../../../../staging.previous/jbosstools-3.3_trunk.component--ws/all/repo/'/>
 <child location='../../../../staging.previous/xulrunner-1.9.2/all/repo/'/>
 
+<!-- JBIDE-12292 Use m2e-wtp dev builds -->
+<child location='../../../../staging/m2e-wtp-juno/all/repo/'/>
+
 </children>
 </repository>
