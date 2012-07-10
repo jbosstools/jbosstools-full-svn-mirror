@@ -89,7 +89,8 @@ public class VpeStyleUtil {
 	/*
 	 * Pattern "|(//.*)" could be added at the end to remove single line comments.
 	 */
-	public static final Pattern CSS_COMMENT_PATTERN = Pattern.compile("(/\\*([^*]|["+LINE_SEPARATOR+"]|(\\*+([^*/]|["+LINE_SEPARATOR+"])))*\\*+/)"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ 
+	private static final String CSS_COMMENT_END = "*/"; //$NON-NLS-1$
+	private static final String CSS_COMMENT_START = "/*"; //$NON-NLS-1$
 	
 	public static String ATTR_URL = "url"; //$NON-NLS-1$
 	public static String OPEN_BRACKET = "("; //$NON-NLS-1$
@@ -949,12 +950,27 @@ public class VpeStyleUtil {
 	}
 	
 	/**
-	 * Removes all the CSS comments  from the text
+	 * Removes all the CSS comments from the text.
 	 * 
-	 * @param cssText the css text
+	 * @param css the CSS text
 	 * @return updated string
 	 */
 	public static String removeAllCssComments(String cssText) {
-		return CSS_COMMENT_PATTERN.matcher(cssText).replaceAll(Constants.EMPTY);
+		// It is too expensive to use regular expressions here, this is why they are not used. See JBIDE-12308
+		
+		StringBuilder cssBuilder = new StringBuilder(cssText);
+		int curIndex = 0;
+		int commentStartIndex;
+		while ((commentStartIndex = cssBuilder.indexOf(CSS_COMMENT_START, curIndex)) >= 0) {
+			int afterCommentEndIndex = cssBuilder.indexOf(CSS_COMMENT_END, commentStartIndex + CSS_COMMENT_START.length());
+			if (afterCommentEndIndex >= 0) {
+				afterCommentEndIndex += CSS_COMMENT_END.length();
+			} else {
+				afterCommentEndIndex = cssBuilder.length();
+			}
+			cssBuilder.replace(commentStartIndex, afterCommentEndIndex, " "); //$NON-NLS-1$
+			curIndex = commentStartIndex + 1;
+		}
+		return cssBuilder.toString();
 	}
 }
