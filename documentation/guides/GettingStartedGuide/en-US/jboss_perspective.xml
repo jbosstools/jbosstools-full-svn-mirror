@@ -12,7 +12,7 @@
 		</mediaobject>
 	</figure>
 	<para>
-		The JBoss perspective views include: <guilabel>Project Explorer</guilabel>, <guilabel>JBoss Central</guilabel>, <guilabel>Outline</guilabel>, <guilabel>Palette</guilabel>, <guilabel>Properties</guilabel> and <guilabel>Servers</guilabel>. 
+		The JBoss perspective views include: <guilabel>Project Explorer</guilabel>, <guilabel>Outline</guilabel>, <guilabel>Palette</guilabel>, <guilabel>Properties</guilabel> and <guilabel>Servers</guilabel>. 
 	</para>
 	<para>
 	Certain menus also see a change in available items. These menus include <menuchoice>
