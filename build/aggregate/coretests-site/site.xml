@@ -48,7 +48,7 @@
 <feature url="features/org.jboss.tools.birt.test.feature.source_0.0.0.jar" id="org.jboss.tools.birt.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
 <feature url="features/org.jboss.tools.cdi.seam.test.feature.source_0.0.0.jar" id="org.jboss.tools.cdi.seam.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
 <feature url="features/org.jboss.tools.cdi.test.feature.source_0.0.0.jar" id="org.jboss.tools.cdi.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
-<!-- TODO add central sources <feature url="features/org.jboss.tools.central.test.feature.source_0.0.0.jar" id="org.jboss.tools.central.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature> -->
+<feature url="features/org.jboss.tools.central.test.feature.source_0.0.0.jar" id="org.jboss.tools.central.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
 <feature url="features/org.jboss.tools.common.all.test.feature.source_0.0.0.jar" id="org.jboss.tools.common.all.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
 <feature url="features/org.jboss.tools.project.examples.test.feature.source_0.0.0.jar" id="org.jboss.tools.project.examples.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
 <feature url="features/org.jboss.tools.forge.test.feature.source_0.0.0.jar" id="org.jboss.tools.forge.test.feature.source" version="0.0.0"><category name="JBoss Tools - Core Tests"/></feature>
