@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <?compositeArtifactRepository version='1.0.0'?>
-<repository name='JBoss Tools Requirements - Composite Juno M6 Mirror' type='org.eclipse.equinox.internal.p2.artifact.repository.CompositeArtifactRepository' version='1.0.0'>
+<repository name='JBoss Tools Requirements - Composite Juno SR0 Mirror' type='org.eclipse.equinox.internal.p2.artifact.repository.CompositeArtifactRepository' version='1.0.0'>
 <properties size='2'>
 <property name='p2.compressed' value='true'/>
-<property name='p2.timestamp' value='1340820659000'/>
+<property name='p2.timestamp' value='1342036537000'/>
 </properties>
 <children size='11'>
 <!-- new for Juno -->
@@ -17,7 +17,7 @@
 <!--  removed emf to see if it's still needed or if it's sufficient to include juno -->
 <!--  removed mylyn as all its features are included in juno; create new atlassian bucket instead -->
 
-<child location='../../requirements/gwt/2.5.2.v201202290255-rel-r37/'/>
+<child location='../../requirements/gwt/3.0.1.v201206290132-rel-r42/'/>
 <!-- includes m2e, m2e-extras, m2e-wtp, m2e-jdt-compiler -->
 <child location='../../requirements/m2eclipse/20120627-1400/'/>
 
