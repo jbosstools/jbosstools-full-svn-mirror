@@ -11,6 +11,7 @@
 package org.jboss.tools.vpe.test;
 
 import org.jboss.tools.vpe.editor.template.VpeTemplateManagerTest;
+import org.jboss.tools.vpe.editor.util.VpeStyleUtilTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -25,6 +26,7 @@ public class VpeAllImportantTests {
 	public static Test suite() {
 		TestSuite suite = new TestSuite(VpeAllImportantTests.class.getName());
 		//$JUnit-BEGIN$
+		suite.addTestSuite(VpeStyleUtilTest.class);
 		suite.addTestSuite(TemplateLoadingTest.class);
 		suite.addTestSuite(TemplateSchemeValidateTest.class);
 		suite.addTestSuite(TemplatesExpressionParsingTest.class);
