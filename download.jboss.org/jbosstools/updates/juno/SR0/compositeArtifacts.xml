@@ -8,7 +8,7 @@
 <children size='11'>
 <!-- new for Juno -->
 <child location='../../requirements/juno/201206270900-R/'/>
-<child location='../../requirements/atlassian/3.0.5.v20120518/'/>
+<child location='../../requirements/atlassian/3.0.6.v20120628/'/>
 <child location='../../requirements/birt/4.2.0.v20120613/'/>
 <child location='../../requirements/eclipse/R-4.2-201206081400/'/>
 <child location='../../requirements/orbit/R20120526062928/'/>
