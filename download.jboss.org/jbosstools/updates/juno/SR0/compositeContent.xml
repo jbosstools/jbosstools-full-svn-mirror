@@ -3,15 +3,20 @@
 <repository name='JBoss Tools Requirements - Composite Juno SR0 Mirror' type='org.eclipse.equinox.internal.p2.metadata.repository.CompositeMetadataRepository' version='1.0.0'>
 <properties size='2'>
 <property name='p2.compressed' value='true'/>
-<property name='p2.timestamp' value='1342036556000'/>
+<property name='p2.timestamp' value='1342106152000'/>
 </properties>
-<children size='11'>
+<children size='12'>
 <!-- new for Juno -->
 <child location='../../requirements/juno/201206270900-R/'/>
 <child location='../../requirements/atlassian/3.0.6.v20120628/'/>
 <child location='../../requirements/birt/4.2.0.v20120613/'/>
 <child location='../../requirements/eclipse/R-4.2-201206081400/'/>
+
+<!-- need newer orbit for javax.servlet 3.0 -->
 <child location='../../requirements/orbit/R20120526062928/'/>
+<!-- need older orbit for javax.servlet 2.5 -->
+<child location='../../requirements/orbit/R20100519200754/'/>
+
 <child location='../../requirements/webtools/R-3.4.0-20120612174739/'/>
 <!--  removed egit as all its features are included in juno -->
 <!--  removed emf to see if it's still needed or if it's sufficient to include juno -->
