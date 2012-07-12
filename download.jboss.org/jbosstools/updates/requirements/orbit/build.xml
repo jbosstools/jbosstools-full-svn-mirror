@@ -26,7 +26,7 @@
 				<repository location="${URL1}" />
 			</source>
 
-			<slicingoptions includefeatures="true" followstrict="true" latestversiononly="true" />
+			<slicingoptions includefeatures="true" followstrict="true" latestversiononly="false" />
 		</p2.mirror>
 
 		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/R20120526062928/" artifactRepository="file:${destination}/R20120526062928/" publishartifacts="true" source="${destination}/R20120526062928/" compress="${compress}" />
