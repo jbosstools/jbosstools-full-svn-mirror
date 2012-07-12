@@ -7,9 +7,6 @@
 	<version>3.4.0.M1-SNAPSHOT</version>
 	<name>JBoss Tools Parent</name>
 	<packaging>pom</packaging>
-	<modules>
-		<module>../target-platform</module>
-	</modules>
 
 	<properties>
 		<!-- to build w/ latest 0.15.0-SNAPSHOT, run `mvn install -DtychoVersion=0.15.0-SNAPSHOT` -->
