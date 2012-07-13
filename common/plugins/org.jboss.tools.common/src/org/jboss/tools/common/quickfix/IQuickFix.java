@@ -1,5 +1,5 @@
 /******************************************************************************* 
- * Copyright (c) 2011 Red Hat, Inc. 
+ * Copyright (c) 2012 Red Hat, Inc. 
  * Distributed under license by Red Hat, Inc. All rights reserved. 
  * This program is made available under the terms of the 
  * Eclipse Public License v1.0 which accompanies this distribution, 
@@ -8,15 +8,11 @@
  * Contributors: 
  * Red Hat, Inc. - initial API and implementation 
  ******************************************************************************/
-package org.jboss.tools.cdi.ui.marker;
+package org.jboss.tools.common.quickfix;
 
-import java.util.List;
+import org.eclipse.jdt.ui.text.java.IJavaCompletionProposal;
+import org.eclipse.ui.IMarkerResolution2;
 
-import org.jboss.tools.cdi.core.IBean;
-import org.jboss.tools.common.quickfix.IQuickFix;
+public interface IQuickFix extends IMarkerResolution2, IJavaCompletionProposal{
 
-
-public interface ICDIMarkerResolutionGeneratorExtension{
-	public boolean shouldBeExtended(int id, IBean bean);
-	public List<IQuickFix> getResolutions(int id, IBean bean);
 }
