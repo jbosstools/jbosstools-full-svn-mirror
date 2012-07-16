@@ -29,6 +29,7 @@ import org.eclipse.ui.menus.UIElement;
 import org.jboss.tools.jst.jsp.JspEditorPlugin;
 import org.jboss.tools.jst.jsp.jspeditor.JSPMultiPageEditor;
 import org.jboss.tools.jst.jsp.preferences.IVpePreferencesPage;
+import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.VpeController;
 import org.jboss.tools.vpe.messages.VpeUIMessages;
 
@@ -85,13 +86,10 @@ public class RotateEditorsHandler extends VisualPartAbstractHandler{
 	 * from the application context.
 	 */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-
-		IPreferenceStore preferences = JspEditorPlugin.getDefault()
-				.getPreferenceStore();
-		String orientation = preferences
-				.getString(IVpePreferencesPage.VISUAL_SOURCE_EDITORS_SPLITTING);
+		IPreferenceStore preferences = JspEditorPlugin.getDefault().getPreferenceStore();
+		String orientation = preferences.getString
+				(IVpePreferencesPage.VISUAL_SOURCE_EDITORS_SPLITTING);
 		int currentOrientationIndex = layoutValues.indexOf(orientation);
-
 		/*
 		 * Rotate editors orientation clockwise.
 		 */
@@ -105,8 +103,8 @@ public class RotateEditorsHandler extends VisualPartAbstractHandler{
 				IVpePreferencesPage.VISUAL_SOURCE_EDITORS_SPLITTING,
 				newOrientation);
 		IEditorReference[] openedEditors = PlatformUI.getWorkbench()
-		.getActiveWorkbenchWindow().getActivePage()
-		.getEditorReferences();
+				.getActiveWorkbenchWindow().getActivePage()
+				.getEditorReferences();
 		for (IEditorReference openedEditor : openedEditors) {
 			IEditorPart editor = openedEditor.getEditor(true);
 			rotateEditor(editor, newOrientation);
@@ -128,16 +126,17 @@ public class RotateEditorsHandler extends VisualPartAbstractHandler{
 					IVpePreferencesPage.VISUAL_SOURCE_EDITORS_SPLITTING,
 					orientation);
 		}
-
 		/*
-		 * Update icon and tooltip
+		 * https://issues.jboss.org/browse/JBIDE-12329
+		 * 1) MenuHelper.getIconURI(..) used from SlaveCommandService
+		 * to set the icon to the element cannot always find the path 
+		 * to the icon used in ImageDescriptor(esp. from FileImageDescriptor).
+		 * Thus ImageDescriptor should be of type URLImageDescriptor
+		 * 2) Text is not required, icon is enough. 
 		 */
-		element.setIcon(ImageDescriptor.createFromFile(this.getClass(),
-				layoutIcons.get(orientation)));
-		String orientationName = layoutNamesAndTooltips.get(orientation);
-		element.setTooltip(orientationName);
-		element.setText(orientationName);
-
+		element.setIcon(VpePlugin.imageDescriptorFromPlugin(
+				VpePlugin.PLUGIN_ID, layoutIcons.get(orientation)));
+		element.setTooltip(layoutNamesAndTooltips.get(orientation));
 	}
 
 	private void rotateEditor(IEditorPart editor, String orientation) {
@@ -154,6 +153,5 @@ public class RotateEditorsHandler extends VisualPartAbstractHandler{
 		if (vpeController != null)
 			vpeController.getPageContext().getEditPart()
 					.fillContainer(true, orientation);
-
 	}
 }
