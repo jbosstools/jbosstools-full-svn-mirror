@@ -16,6 +16,7 @@
 		<JBT_VERSION>3.4.0</JBT_VERSION>
 		<JBDS_VERSION>6.0.0</JBDS_VERSION>
 		<BUILD_ALIAS>M1</BUILD_ALIAS>
+		<targetEclipseVersion>4.2</targetEclipseVersion>
 		<memoryOptions1>-Xms512m -Xmx1024m -XX:PermSize=256m</memoryOptions1>
 		<memoryOptions2>-XX:MaxPermSize=256m</memoryOptions2>
 		<systemProperties></systemProperties>
