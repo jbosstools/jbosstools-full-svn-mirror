@@ -1828,12 +1828,16 @@ public class VpeController implements INodeAdapter,
 	}
 
 	public void refreshCommands(){
-		ICommandService commandService = (ICommandService) PlatformUI
-				.getWorkbench().getService(ICommandService.class);
-
-		//just refresh state of commands
+		ICommandService commandService = (ICommandService) 
+				editPart.getSite().getService(ICommandService.class);
 		for (String commandId : getVpeCategoryCommands()) {
-			commandService.refreshElements(commandId, null);
+			/*
+			 * https://issues.jboss.org/browse/JBIDE-12290
+			 * In eclipse 4.2 commandService could be null.
+			 */
+			if (commandService != null) {
+				commandService.refreshElements(commandId, null);
+			} 
 		}
 	}
 

@@ -1166,15 +1166,20 @@ public class VpeEditorPart extends EditorPart implements
 	}
 
 	private void deactivateServices() {
-		IWorkbench workbench = PlatformUI.getWorkbench();
 		if (fContextActivation != null) {
-			IContextService contextService = (IContextService) workbench
-					.getAdapter(IContextService.class);
-			contextService.deactivateContext(fContextActivation);
+			IContextService contextService = (IContextService) 
+					getSite().getService(IContextService.class);
+			/*
+			 * https://issues.jboss.org/browse/JBIDE-12290
+			 * In eclipse 4.2 contextService could be null.
+			 */
+			if (contextService != null) {
+				contextService.deactivateContext(fContextActivation);
+			}
 		}
 
-		IHandlerService handlerService = (IHandlerService) workbench
-				.getService(IHandlerService.class);
+		IHandlerService handlerService = (IHandlerService) 
+				getSite().getService(IHandlerService.class);
 		if (handlerService != null) {
 			if (sourceActivation != null)
 				handlerService.deactivateHandler(sourceActivation);
