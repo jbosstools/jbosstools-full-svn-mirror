@@ -89,7 +89,7 @@
 				<artifactId>tycho-packaging-plugin</artifactId>
 				<version>${tychoVersion}</version>
 				<configuration>
-					<format>'v'yyyyMMdd-HHmm'-${BUILD_ALIAS}'</format>
+					<format>'${BUILD_ALIAS}-v'yyyyMMdd-HHmm</format>
 					<archiveSite>true</archiveSite>
 					<environments>
 						<environment>
@@ -635,7 +635,7 @@
 						<artifactId>tycho-packaging-plugin</artifactId>
 						<version>${tychoVersion}</version>
 						<configuration>
-							<format>'v'yyyyMMdd-HHmm'-H${BUILD_NUMBER}-${BUILD_ALIAS}'</format>
+							<format>'${BUILD_ALIAS}-v'yyyyMMdd-HHmm'-H${BUILD_NUMBER}'</format>
 							<archiveSite>true</archiveSite>
 						</configuration>
 					</plugin>
