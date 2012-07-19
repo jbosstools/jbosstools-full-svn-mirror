@@ -1830,23 +1830,25 @@ public class VpeController implements INodeAdapter,
 	public void refreshCommands(){
 		ICommandService commandService = (ICommandService) 
 				editPart.getSite().getService(ICommandService.class);
-		for (String commandId : getVpeCategoryCommands()) {
-			/*
-			 * https://issues.jboss.org/browse/JBIDE-12290
-			 * In eclipse 4.2 commandService could be null.
-			 */
-			if (commandService != null) {
+		/*
+		 * https://issues.jboss.org/browse/JBIDE-12290
+		 * In eclipse 4.2 commandService could be null.
+		 */
+		if (commandService != null) {
+			for (String commandId : getVpeCategoryCommands()) {
 				commandService.refreshElements(commandId, null);
 			} 
 		}
 	}
 
 	private List<String> getVpeCategoryCommands() {
-		ICommandService commandService = (ICommandService) PlatformUI
-				.getWorkbench().getService(ICommandService.class);
-		
-		//init VPE Commands List if its has not been initialized
+		/*
+		 * initialize  VPE Commands List 
+		 * if its has not been initialized yet
+		 */
 		if (vpeCategoryCommands == null) {
+			ICommandService commandService = (ICommandService) 
+					editPart.getSite().getService(ICommandService.class);
 			vpeCategoryCommands = new ArrayList<String>();
 			Command [] definedCommands = commandService.getDefinedCommands();
 			for (Command command : definedCommands) {
@@ -1860,7 +1862,6 @@ public class VpeController implements INodeAdapter,
 				}
 			}
 		}
-		
 		return vpeCategoryCommands;
 	}	
 

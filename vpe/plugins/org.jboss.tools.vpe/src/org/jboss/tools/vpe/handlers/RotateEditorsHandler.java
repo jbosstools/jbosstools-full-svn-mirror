@@ -19,8 +19,8 @@ import java.util.Map;
 import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.commands.HandlerEvent;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.PlatformUI;
@@ -137,6 +137,13 @@ public class RotateEditorsHandler extends VisualPartAbstractHandler{
 		element.setIcon(VpePlugin.imageDescriptorFromPlugin(
 				VpePlugin.PLUGIN_ID, layoutIcons.get(orientation)));
 		element.setTooltip(layoutNamesAndTooltips.get(orientation));
+		/*
+		 * https://issues.jboss.org/browse/JBIDE-12344
+		 * Listeners should get this event and update the icons state.
+		 * This method is overridden from VisualPartAbstractHandler, 
+		 *  so should fire the event also.
+		 */
+		fireHandlerChanged(new HandlerEvent(this, true, false));
 	}
 
 	private void rotateEditor(IEditorPart editor, String orientation) {
