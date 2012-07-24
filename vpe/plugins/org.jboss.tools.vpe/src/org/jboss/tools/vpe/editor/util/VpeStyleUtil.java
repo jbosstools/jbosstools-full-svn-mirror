@@ -30,6 +30,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.editors.text.ILocationProvider;
@@ -973,4 +974,29 @@ public class VpeStyleUtil {
 		}
 		return cssBuilder.toString();
 	}
+	
+	/**
+	 * Method for convert RGB to String
+	 *
+	 * @param rgb RGB color
+	 * @return String color
+	 */
+	public static String rgbToString(RGB rgb) {
+		String colorStr = "#0000FF"; //$NON-NLS-1$
+		if (rgb != null) {
+			colorStr = "#" //$NON-NLS-1$
+					+ (rgb.red < 10 ? "0" : Constants.EMPTY) //$NON-NLS-1$
+					+ Integer.toHexString(rgb.red)
+					+ (rgb.green < 10 ? "0" : Constants.EMPTY) //$NON-NLS-1$
+					+ Integer.toHexString(rgb.green)
+					+ Constants.EMPTY
+					+ (rgb.blue < 10 ? "0" : Constants.EMPTY) //$NON-NLS-1$
+					+ Integer.toHexString(rgb.blue);
+			colorStr = colorStr.toUpperCase();
+		} else {
+			VpePlugin.getDefault().logError("Cannot convert RGB color to string, because it is null"); //$NON-NLS-1$
+		}
+		return colorStr;
+	}
+	// org.jboss.tools.jst.css.dialog.common.Util.getColor(..)
 }

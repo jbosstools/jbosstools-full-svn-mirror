@@ -59,14 +59,13 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	/**
 	 * color which used for highlight elements which user can see, blue color
 	 */
-	private static final String FLASHER_VISUAL_ELEMENT_COLOR = "#0000ff"; //$NON-NLS-1$
+	private static String visibleSelectedElementColor = "#0000ff"; //$NON-NLS-1$
 
 	/**
 	 * color which used for highlight parent elements for elements which user,
 	 * red color can't see.
 	 */
-	private static final String FLASHER_HIDDEN_ELEMENT_COLOR = "#ff0000"; //$NON-NLS-1$
-
+	private static String hiddenSelectedElementColor = "#ff0000"; //$NON-NLS-1$
 	/**
 	 * Contains name of attribute for inIFLasher drawing
 	 */
@@ -411,18 +410,18 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 	
 	private FlasherData prepareFlasherData(nsIDOMNode domNode){
 		nsIDOMElement domElement = getElementForNode(domNode);
-		String selectionBorderColor = FLASHER_VISUAL_ELEMENT_COLOR;
+		String selectionBorderColor = getVisibleSelectedElementColor();
 		if (domElement != null) {
 			if (isVisible(domElement)) {
 				if (domElement.getAttribute(VPE_INVISIBLE_ELEMENT) == null
 						|| (!domElement.getAttribute(VPE_INVISIBLE_ELEMENT)
 								.equals(Boolean.TRUE.toString()))) {
-					selectionBorderColor = FLASHER_VISUAL_ELEMENT_COLOR;
+					selectionBorderColor = getVisibleSelectedElementColor();
 				} else {
-					selectionBorderColor = FLASHER_HIDDEN_ELEMENT_COLOR;
+					selectionBorderColor = getHiddenSelectedElementColor();
 				}			
 			} else {
-				selectionBorderColor = FLASHER_HIDDEN_ELEMENT_COLOR;
+				selectionBorderColor = getHiddenSelectedElementColor();
 				domElement = findVisibleParentElement(domElement);
 			}
 		}
@@ -521,4 +520,21 @@ public class XulRunnerEditor extends XulRunnerBrowser {
 		}
 		return keyboardEvent; 
 	}
+
+	public String getVisibleSelectedElementColor() {
+		return visibleSelectedElementColor;
+	}
+
+	public void setVisibleSelectedElementColor(String visibleSelectedElementColor) {
+		XulRunnerEditor.visibleSelectedElementColor = visibleSelectedElementColor;
+	}
+
+	public String getHiddenSelectedElementColor() {
+		return hiddenSelectedElementColor;
+	}
+
+	public void setHiddenSelectedElementColor(String hiddenSelectedElementColor) {
+		XulRunnerEditor.hiddenSelectedElementColor = hiddenSelectedElementColor;
+	}
+	
 }

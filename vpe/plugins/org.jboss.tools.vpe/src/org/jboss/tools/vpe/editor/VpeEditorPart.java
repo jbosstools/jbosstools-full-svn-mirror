@@ -18,6 +18,7 @@ import org.eclipse.core.commands.IHandler;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.jface.resource.StringConverter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.ControlEvent;
@@ -27,6 +28,7 @@ import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.ShellAdapter;
 import org.eclipse.swt.events.ShellEvent;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -76,6 +78,7 @@ import org.jboss.tools.vpe.VpePlugin;
 import org.jboss.tools.vpe.editor.mozilla.MozillaEditor;
 import org.jboss.tools.vpe.editor.mozilla.MozillaPreview;
 import org.jboss.tools.vpe.editor.mozilla.listener.EditorLoadWindowListener;
+import org.jboss.tools.vpe.editor.util.VpeStyleUtil;
 import org.jboss.tools.vpe.editor.xpl.CustomSashForm;
 import org.jboss.tools.vpe.editor.xpl.CustomSashForm.ICustomSashFormListener;
 import org.jboss.tools.vpe.editor.xpl.EditorSettings;
@@ -1113,9 +1116,8 @@ public class VpeEditorPart extends EditorPart implements
 		 */
 		if (getController() != null) {
 			boolean doVisualRefresh = false;
-			boolean presfShowBorderForUnknownTags = JspEditorPlugin.getDefault()
-			.getPreferenceStore().getBoolean(
-					IVpePreferencesPage.SHOW_BORDER_FOR_UNKNOWN_TAGS);
+			boolean presfShowBorderForUnknownTags = JspEditorPlugin.getDefault().getPreferenceStore()
+					.getBoolean(IVpePreferencesPage.SHOW_BORDER_FOR_UNKNOWN_TAGS);
 			if (presfShowBorderForUnknownTags != getController().getVisualBuilder().isShowBorderForUnknownTags()) {
 				/*
 				 * Templates should be rebuild.
@@ -1124,13 +1126,21 @@ public class VpeEditorPart extends EditorPart implements
 				doVisualRefresh = true;
 			}
 			
+			RGB rgb = StringConverter.asRGB(JspEditorPlugin.getDefault().getPreferenceStore()
+					.getString(IVpePreferencesPage.SELECTION_VISIBLE_BORDER_COLOR));
+			visualEditor.getXulRunnerEditor().setVisibleSelectedElementColor(VpeStyleUtil.rgbToString(rgb));
+
+			rgb = StringConverter.asRGB(JspEditorPlugin.getDefault().getPreferenceStore()
+					.getString(IVpePreferencesPage.SELECTION_HIDDEN_BORDER_COLOR));
+			visualEditor.getXulRunnerEditor().setHiddenSelectedElementColor(VpeStyleUtil.rgbToString(rgb));
+			
 //			if (presfShowSelectionBar != selectionBar.isVisible()) {
 //				selectionBar.setVisible(presfShowSelectionBar);
 //				doVisualRefresh = true;
 //			}
 	
-			boolean prefsShowNonVisualTags = JspEditorPlugin.getDefault().getPreferenceStore().
-					getBoolean(IVpePreferencesPage.SHOW_NON_VISUAL_TAGS);
+			boolean prefsShowNonVisualTags = JspEditorPlugin.getDefault().getPreferenceStore()
+					.getBoolean(IVpePreferencesPage.SHOW_NON_VISUAL_TAGS);
 			if (prefsShowNonVisualTags != getController().getVisualBuilder().isShowInvisibleTags()) {
 				getController().getVisualBuilder().setShowInvisibleTags(prefsShowNonVisualTags);
 				doVisualRefresh = true;

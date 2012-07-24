@@ -142,6 +142,12 @@ public class VpePreferencesPage extends FieldEditorPreferencePage implements
 		addField(new VpeBooleanFieldEditor(SHOW_RESOURCE_BUNDLES_USAGE_AS_EL,
 				VpeUIMessages.SHOW_RESOURCE_BUNDLES_USAGE_AS_EL,
 				visualAppearanceGroup));
+		
+		addField(new VpeColorFieldEditor(SELECTION_VISIBLE_BORDER_COLOR, 
+				VpeUIMessages.SELECTION_VISIBLE_BORDER_COLOR, visualAppearanceGroup));
+		addField(new VpeColorFieldEditor(SELECTION_HIDDEN_BORDER_COLOR, 
+				VpeUIMessages.SELECTION_HIDDEN_BORDER_COLOR, visualAppearanceGroup));
+		
 		addField(new VpeBooleanFieldEditor(ASK_TAG_ATTRIBUTES_ON_TAG_INSERT,
 				VpeUIMessages.ASK_TAG_ATTRIBUTES_ON_TAG_INSERT,
 				confirmationGroup));

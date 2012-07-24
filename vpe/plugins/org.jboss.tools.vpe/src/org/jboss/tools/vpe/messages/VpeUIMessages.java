@@ -134,6 +134,8 @@ public final class VpeUIMessages extends NLS {
 	public static String SHOW_RESOURCE_BUNDLES_USAGE_AS_EL;
 	public static String SHOW_BUNDLES_AS_EL;
 	public static String SHOW_BUNDLES_AS_MESSAGES;
+	public static String SELECTION_VISIBLE_BORDER_COLOR;
+	public static String SELECTION_HIDDEN_BORDER_COLOR;
 	public static String ASK_TAG_ATTRIBUTES_ON_TAG_INSERT;
 	public static String INFORM_WHEN_PROJECT_MIGHT_NOT_BE_CONFIGURED_PROPERLY_FOR_VPE;
 	public static String DEFAULT_VPE_TAB;
