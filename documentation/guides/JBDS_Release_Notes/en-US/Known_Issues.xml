@@ -1,11 +1,14 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <section id="Known_Issues_with_this_release">
 	<title>
-			Known Issues in version 5.0.0
+			Known Issues in version 5.0.1
 	</title>
 <!--	<para>
 		There were no known issues at the time of release.
 	</para> -->
+	
+	
+<!-- Below is the list of known issues as they were for JBDS 5.0.0 -->
 	<para> 
 			Following is a list of known issues at the time of release.
 		</para>

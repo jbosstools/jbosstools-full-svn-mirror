@@ -355,47 +355,28 @@ java -jar jbdevstudio-product-universal-5.0.0.GA.jar]]>
     </figure>
      
 	<para>
-        This step lets you configure locally available JBoss servers:
+        This step lets you select a location that will be used to search for locally available JBoss servers upon first running of JBoss Developer Studio:
     </para>
      
     <figure>
-      <title>Configuring a JBoss Enterprise Application Platform installation</title> 
+      <title>Selecting a location to search for JBoss servers</title> 
       <mediaobject>
         <imageobject>
           <imagedata fileref="images/getting_started/getting_started_3.png"/>
         </imageobject>
       </mediaobject>
     </figure>
-     
+	
         <para>
-          You can fill the list automatically using the 
+			To add a location click on the <guibutton>Add</guibutton> button. When the 
           <guibutton>
-            Find
-          </guibutton>
-           button. When the 
-          <guibutton>
-            Find
+            Add
           </guibutton>
            button is clicked you are prompted to select the folder from which to search for available JBoss Application Servers. Click the 
           <guibutton>
             OK
           </guibutton>
-           button to select the chosen folder.
-        </para>
- <!--    
-    <figure>
-      <title>Finding Servers in the Selected Directory</title> 
-      <mediaobject>
-        <imageobject>
-          <imagedata fileref="images/getting_started/getting_started_3_3_1.png"/>
-        </imageobject>
-      </mediaobject>
-    </figure>
-     
-	<para/> -->
-     
-        <para>
-          All found servers will be added to the list with the following details: Name, Type, Version and Location.
+		  button to select the chosen location. This location and subsequent directories will be searched for any JBoss server instances when you launch JBoss Developer Studio.
         </para>
  <!--    
     <itemizedlist>

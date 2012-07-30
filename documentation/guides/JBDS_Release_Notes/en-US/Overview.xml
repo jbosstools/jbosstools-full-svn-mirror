@@ -2,37 +2,38 @@
 <section id="Overview">
 		<title>Overview</title>
 		<para>			
-			JBoss Developer Studio 5.0 is a major release of the Eclipse based IDE developed and supported by Red Hat (the visual tooling components are supported for 3 years, and the runtime platform for 5 years). The IDE, which is available for Windows, Linux and OS X, provides tooling that allows for rapid Web 2.0 application development on the JBoss Enterprise Application Platform. <!-- This release also improves support for SOA application development with the JBoss Enterprise SOA Platform.-->
+			JBoss Developer Studio 5.0.1 is a minor release of the Eclipse based IDE developed and supported by Red Hat (the visual tooling components are supported for 3 years, and the runtime platform for 5 years). The IDE, which is available for Windows, Linux and OS X, provides tooling that allows for rapid Web 2.0 application development on the JBoss Enterprise Application Platform. 
 		</para>
+		
 		<para>
-			JBoss Developer Studio 5.0 contains many new features, including:
+			JBoss Developer Studio 5.0.1 corrects bugs and adds enhancements to the 5.0.0 release.
 		</para>
-		<itemizedlist>
+<!--	<itemizedlist>
 			<listitem>
 				<para>
 					OpenShift support
-					<!-- https://issues.jboss.org/browse/JBDS-1896 -->
+					
 				</para>
 			</listitem>
 			<listitem>
 				<para>
 					Maven support
-						<!-- https://issues.jboss.org/browse/JBIDE-9591 -->
+						
 						</para>
 					</listitem>
 			<listitem>
 				<para>
 					SAR project deployment
-					<!-- https://issues.jboss.org/browse/JBIDE-9497 -->
+					
 				</para>
 			</listitem>
 			<listitem>
 				<para>
 					Seam Servlet module support
-						<!-- https://issues.jboss.org/browse/JBIDE-9388 -->
+						
 				</para>
 			</listitem>
-		</itemizedlist>
+		</itemizedlist> -->
 		<para>
 			JBoss Developer Studio 5 is supported on the following operating systems:
 		</para>
