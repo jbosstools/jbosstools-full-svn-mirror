@@ -2,11 +2,11 @@
 <section id="Overview">
 		<title>Overview</title>
 		<para>			
-			JBoss Developer Studio 5.0.1 is a minor release of the Eclipse based IDE developed and supported by Red Hat (the visual tooling components are supported for 3 years, and the runtime platform for 5 years). The IDE, which is available for Windows, Linux and OS X, provides tooling that allows for rapid Web 2.0 application development on the JBoss Enterprise Application Platform. 
+			JBoss Developer Studio 5.0.2 is a minor release of the Eclipse based IDE developed and supported by Red Hat (the visual tooling components are supported for 3 years, and the runtime platform for 5 years). The IDE, which is available for Windows, Linux and OS X, provides tooling that allows for rapid Web 2.0 application development on the JBoss Enterprise Application Platform. 
 		</para>
 		
 		<para>
-			JBoss Developer Studio 5.0.1 corrects bugs and adds enhancements to the 5.0.0 release.
+			JBoss Developer Studio 5.0.2 corrects bugs and adds enhancements to the 5.0.1 release.
 		</para>
 <!--	<itemizedlist>
 			<listitem>
