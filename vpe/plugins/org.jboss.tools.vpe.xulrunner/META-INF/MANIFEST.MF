@@ -20,3 +20,4 @@ Export-Package: org.jboss.tools.vpe.xulrunner;uses:="org.eclipse.jface.resource,
 Bundle-Vendor: %Bundle-Vendor.0
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Eclipse-BundleShape: jar

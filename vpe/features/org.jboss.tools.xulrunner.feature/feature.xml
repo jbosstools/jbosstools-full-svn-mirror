@@ -22,7 +22,6 @@
          id="org.mozilla.xpcom"
          download-size="0"
          install-size="0"
-	 unpack="true"
          version="0.0.0"/>
 
    <plugin
@@ -32,7 +31,6 @@
          arch="x86"
          download-size="0"
          install-size="0"
-	 unpack="true"
          version="0.0.0"/>
 
    <plugin
@@ -42,7 +40,6 @@
          arch="x86"
          download-size="0"
          install-size="0"
-	 unpack="true"
          version="0.0.0"/>
 
    <plugin
@@ -52,7 +49,6 @@
          arch="x86_64"
          download-size="0"
          install-size="0"
-	 unpack="true"
          version="0.0.0"/>
 
    <plugin
@@ -62,7 +58,6 @@
          arch="x86"
          download-size="0"
          install-size="0"
-	 unpack="true"
          version="0.0.0"/>
 
    <plugin
@@ -70,14 +65,12 @@
          download-size="0"
          install-size="0"
          version="0.0.0"
-         fragment="true"
-         unpack="false"/>
+         fragment="true"/>
 
    <plugin
          id="org.jboss.tools.xulrunner"
          download-size="0"
          install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+         version="0.0.0"/>
 
 </feature>

@@ -19,3 +19,4 @@ Export-Package: org.jboss.tools.vpe.spring.test
 Bundle-Vendor: %Bundle-Vendor.0
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Eclipse-BundleShape: jar

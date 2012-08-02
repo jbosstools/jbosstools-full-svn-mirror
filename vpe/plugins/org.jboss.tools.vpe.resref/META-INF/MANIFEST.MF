@@ -18,3 +18,4 @@ Bundle-ActivationPolicy: lazy
 Export-Package: org.jboss.tools.vpe.resref,
  org.jboss.tools.vpe.resref.core
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Eclipse-BundleShape: jar
