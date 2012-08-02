@@ -25,7 +25,6 @@ public class VpeColorSelector extends ColorSelector {
 		colorText = new Text(parent, SWT.NONE);
 		colorText.setEditable(false);
 		colorText.setTextLimit(9);
-		colorText.setText(VpeStyleUtil.rgbToString(getColorValue()));
 	}
 	
 	@Override

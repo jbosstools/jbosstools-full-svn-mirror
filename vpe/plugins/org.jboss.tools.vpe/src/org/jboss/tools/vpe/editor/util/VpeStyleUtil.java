@@ -994,7 +994,7 @@ public class VpeStyleUtil {
 					+ Integer.toHexString(rgb.blue);
 			colorStr = colorStr.toUpperCase();
 		} else {
-			VpePlugin.getDefault().logError("Cannot convert RGB color to string, because it is null"); //$NON-NLS-1$
+			VpePlugin.getDefault().logWarning("VpeStyleUtil.rgbToString(RGB rgb) -> Cannot convert RGB color to string, because it is null"); //$NON-NLS-1$
 		}
 		return colorStr;
 	}
