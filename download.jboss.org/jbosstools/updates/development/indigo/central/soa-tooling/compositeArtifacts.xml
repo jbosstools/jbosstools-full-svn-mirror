@@ -7,7 +7,7 @@
      get new time w/ 
       date +%s000
 -->
-<property name='p2.timestamp' value='1337016291000'/>
+<property name='p2.timestamp' value='1344255288000'/>
 </properties>
 <children size='4'>
 <child location='http://download.jboss.org/jbosstools/updates/development/indigo/soa-tooling/'/>
