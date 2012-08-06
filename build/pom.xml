@@ -184,6 +184,7 @@
 			</activation>
 			<modules>
 				<module>../xulrunner</module>
+				<module>../usage</module>
 			</modules>
 		</profile>
 
