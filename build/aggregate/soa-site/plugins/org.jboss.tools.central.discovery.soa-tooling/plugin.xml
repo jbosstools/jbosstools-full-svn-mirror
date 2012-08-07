@@ -111,9 +111,7 @@
            name="JBoss BPEL Editor"
            description="BPEL Editor, examples and cheatsheets"
            id="com.jboss.jbds.bpel.feature">
-           <iu id="com.jboss.jbds.bpel.feature"/>
            <iu id="org.jboss.tools.bpel.feature"/>
-           <iu id="org.eclipse.bpel.apache.ode.runtime.feature"/>
            <icon
                image32="images/jbds_bpel_32.png">
            </icon>
@@ -209,7 +207,6 @@
             description="JBoss Tools for jBPM 3, BPMN Converter, Runtime Detection"
             id="org.jboss.tools.jbpm.common.feature">
             <iu id="org.jboss.tools.jbpm.common.feature"/>
-            <iu id="org.jboss.tools.flow.common.feature"/>
             <iu id="org.jboss.tools.jbpm.convert.feature"/>
             <iu id="org.jboss.tools.jbpm3.feature"/>
             <iu id="org.jboss.tools.runtime.jbpm.detector.feature"/>
