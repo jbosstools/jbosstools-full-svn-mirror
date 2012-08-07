@@ -101,26 +101,45 @@
       -->
 
       <!-- JBT only -->
-      <connectorDescriptor
-            categoryId="com.jboss.jbds.central.discovery.soatooling"
-            groupId="com.jboss.jbds.central.discovery.soatooling.bdgj"
-            kind="task"
-            license="Free, EPL"
-            provider="JBoss by Red Hat"
-            siteUrl="%jboss.soa.update.url"
-            name="JBoss BPEL Editor"
-            description="BPEL Editor, examples and cheatsheets"
-            id="com.jboss.jbds.bpel.feature">
-            <iu id="com.jboss.jbds.bpel.feature"/>
-            <iu id="org.jboss.tools.bpel.feature"/>
-            <iu id="org.eclipse.bpel.apache.ode.runtime.feature"/>
-         <icon
+       <connectorDescriptor
+           categoryId="com.jboss.jbds.central.discovery.soatooling"
+           groupId="com.jboss.jbds.central.discovery.soatooling.bdgj"
+           kind="task"
+           license="Free, EPL"
+           provider="JBoss by Red Hat"
+           siteUrl="%jboss.soa.update.url"
+           name="JBoss BPEL Editor"
+           description="BPEL Editor, examples and cheatsheets"
+           id="com.jboss.jbds.bpel.feature">
+           <iu id="com.jboss.jbds.bpel.feature"/>
+           <iu id="org.jboss.tools.bpel.feature"/>
+           <iu id="org.eclipse.bpel.apache.ode.runtime.feature"/>
+           <icon
                image32="images/jbds_bpel_32.png">
-         </icon>
-         <overview
+           </icon>
+           <overview
                url="http://devstudio.jboss.com/">
-         </overview>
-      </connectorDescriptor>
+           </overview>
+       </connectorDescriptor>
+       <connectorDescriptor
+           categoryId="com.jboss.jbds.central.discovery.soatooling"
+           groupId="com.jboss.jbds.central.discovery.soatooling.bdgj"
+           kind="task"
+           license="Free, EPL"
+           provider="JBoss by Red Hat"
+           siteUrl="%jboss.soa.update.url"
+           name="JBoss Savara Editor"
+           description="JBoss Savara Editor"
+           id="org.savara.tools.feature">
+           <iu id="org.savara.tools.feature"/>
+           <iu id="org.savara.tools.incubator.feature"/>
+           <icon
+               image32="images/jbds_savara_32.png">
+           </icon>
+           <overview
+               url="http://devstudio.jboss.com/">
+           </overview>
+       </connectorDescriptor>
       <connectorDescriptor
             categoryId="com.jboss.jbds.central.discovery.soatooling"
             groupId="com.jboss.jbds.central.discovery.soatooling.bdgj"
@@ -203,25 +222,44 @@
          </overview>
       </connectorDescriptor>
 
-      <connectorDescriptor
-            categoryId="com.jboss.jbds.central.discovery.soatooling"
-            groupId="com.jboss.jbds.central.discovery.soatooling.emt"
-            kind="task"
-            license="Free, EPL"
-            provider="JBoss by Red Hat"
-            siteUrl="%jboss.soa.update.url"
-            name="JBoss ESB Tools"
-            description="JBoss ESB Tools, Runtime Detection"
-            id="org.jboss.tools.esb.feature">
-            <iu id="org.jboss.tools.esb.feature"/>
-            <iu id="org.jboss.tools.runtime.esb.detector.feature"/>
-         <icon
+       <connectorDescriptor
+           categoryId="com.jboss.jbds.central.discovery.soatooling"
+           groupId="com.jboss.jbds.central.discovery.soatooling.emt"
+           kind="task"
+           license="Free, EPL"
+           provider="JBoss by Red Hat"
+           siteUrl="%jboss.soa.update.url"
+           name="JBoss ESB Tools"
+           description="JBoss ESB Tools, Runtime Detection"
+           id="org.jboss.tools.esb.feature">
+           <iu id="org.jboss.tools.esb.feature"/>
+           <iu id="org.jboss.tools.runtime.esb.detector.feature"/>
+           <icon
                image32="images/jbds_esb_32.png">
-         </icon>
-         <overview
+           </icon>
+           <overview
                url="http://devstudio.jboss.com/">
-         </overview>
-      </connectorDescriptor>
+           </overview>
+       </connectorDescriptor>
+       <connectorDescriptor
+           categoryId="com.jboss.jbds.central.discovery.soatooling"
+           groupId="com.jboss.jbds.central.discovery.soatooling.emt"
+           kind="task"
+           license="Free, EPL"
+           provider="JBoss by Red Hat"
+           siteUrl="%jboss.soa.update.url"
+           name="JBoss SwitchYard Tools"
+           description="JBoss SwitchYard Tools"
+           id="org.switchyard.tools.feature">
+           <iu id="org.switchyard.tools.feature"/>
+           <iu id="org.switchyard.tools.editor.feature"/>
+           <icon
+               image32="images/jbds_switchyard_32.png">
+           </icon>
+           <overview
+               url="http://devstudio.jboss.com/">
+           </overview>
+       </connectorDescriptor>
       <connectorDescriptor
             categoryId="com.jboss.jbds.central.discovery.soatooling"
             groupId="com.jboss.jbds.central.discovery.soatooling.emt"
