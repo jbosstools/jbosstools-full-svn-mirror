@@ -10,8 +10,8 @@
 <property name='p2.timestamp' value='1344255288000'/>
 </properties>
 <children size='4'>
-<child location='http://download.jboss.org/jbosstools/updates/development/indigo/soa-tooling/'/>
-<child location='http://download.jboss.org/jbosstools/updates/development/indigo/'/>
+<child location='http://download.jboss.org/jbosstools/updates/stable/indigo/soa-tooling/'/>
+<child location='http://download.jboss.org/jbosstools/updates/stable/indigo/'/>
 <child location='http://download.jboss.org/jbosstools/updates/indigo/'/>
 <child location='http://download.jboss.org/jbosstools/updates/indigo/extras/'/>
 </children>
