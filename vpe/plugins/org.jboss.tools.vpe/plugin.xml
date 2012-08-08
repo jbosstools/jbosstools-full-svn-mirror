@@ -33,13 +33,11 @@
             name="%PreferencePage_ElVariables">
       </page>
    	</extension>
-   	<extension
-       	point="org.eclipse.ui.contexts">
-    	<context
-          description="%vpe.editor.binding.context.description"
-          id="org.jboss.tools.vpe.editorContext"
-          name="%editor.binding.context.name"
-          parentId="org.eclipse.ui.textEditorScope">
+   	<extension point="org.eclipse.ui.contexts">
+    	<context  id="org.jboss.tools.vpe.editorContext"
+    		parentId="org.eclipse.ui.textEditorScope"
+    		name="%editor.binding.context.name" 
+    		description="%vpe.editor.binding.context.description">
     	</context>
     </extension>
     <extension id="org.jboss.tools.vpe.commands" point="org.eclipse.ui.commands">
@@ -123,10 +121,6 @@
 			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 			contextId="org.jboss.tools.vpe.editorContext"
 			sequence="M1+R"/>
-		<key commandId="org.jboss.tools.vpe.commands.refreshCommand"
-			schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-			contextId="org.jboss.tools.vpe.editorContext"
-			sequence="F5"/>
 	</extension>
   <extension
         point="org.jboss.tools.jst.jsp.visulaEditorImplementations"  id="org.jboss.tools.vpe.editor.VpeEditorPartFactory">
@@ -147,6 +141,15 @@
                 	</with>
 			</and>
 			</definition>
+			<definition id="org.jboss.tools.ui.vpe.editor.inView">
+         		<with variable="activePartId">
+         		<or>
+            		<equals value="org.jboss.tools.jst.jsp.jspeditor.JSPTextEditor"/>
+					<equals value="org.jboss.tools.jst.jsp.jspeditor.HTMLTextEditor"/>
+					<equals value="org.jboss.tools.jst.jsp.jspeditor.DocBookEditor"/>
+					</or>
+         		</with>
+      		</definition>
 		</extension>
    <extension
         point="org.eclipse.ui.menus">
@@ -305,7 +308,24 @@
              commandId="org.jboss.tools.vpe.commands.preferencesCommand"/>
        <handler
              class="org.jboss.tools.vpe.handlers.RefreshHandler"
-             commandId="org.jboss.tools.vpe.commands.refreshCommand"/>
+             commandId="org.jboss.tools.vpe.commands.refreshCommand">
+             <activeWhen>
+            	<reference definitionId="org.jboss.tools.ui.vpe.editor.inView">
+            	</reference>
+         </activeWhen>
+         </handler>
+       <!-- 
+       Bind VPE refresh handler for eclipse's File Refresh (F5) command
+       When the focus is in VPE
+       -->
+       <handler
+             class="org.jboss.tools.vpe.handlers.RefreshHandler" 
+             commandId="org.eclipse.ui.file.refresh">
+             <activeWhen>
+            	<reference definitionId="org.jboss.tools.ui.vpe.editor.inView">
+            	</reference>
+         </activeWhen>
+         </handler>
        <handler
              class="org.jboss.tools.vpe.handlers.PageDesignOptionsHandler"
              commandId="org.jboss.tools.vpe.commands.pageDesignOptionsCommand"/>

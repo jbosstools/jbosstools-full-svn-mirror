@@ -52,8 +52,17 @@ public class VisualDomUtil {
     public static String A4J_URI = "http://richfaces.org/a4j"; //$NON-NLS-1$
     public static String FACELETS_URI = "http://java.sun.com/jsf/facelets"; //$NON-NLS-1$
     
+    /**
+     * Flag for correct JSF components
+     */
      public static String FACET_JSF_TAG = "FACET-JSF-TAG"; //$NON-NLS-1$
+     /**
+      * Flag for RF, FACELETS, A4J tags
+      */
      public static String FACET_ODD_TAGS = "FACET-ODD-TAGS"; //$NON-NLS-1$
+     /**
+      * Flag for plain HTML tags and text nodes
+      */
      public static String FACET_HTML_TAGS = "FACET-HTML-TAGS"; //$NON-NLS-1$
 
 	private static final String ACCESSIBILITY_SERVICE_CONTRACT_ID = "@mozilla.org/accessibilityService;1"; //$NON-NLS-1$
