@@ -1,4 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <directory xmlns="http://www.eclipse.org/mylyn/discovery/directory/">
 <entry url="http://download.jboss.org/jbosstools/updates/JBossTools-3.3.1.Final.core/plugins/org.jboss.tools.central.discovery_1.0.1.v20120715-0355-H112-Final.jar" permitCategories="true"/>
+<entry url="http://download.jboss.org/jbosstools/updates/soatools-3.3.0.GA/plugins/org.jboss.tools.central.discovery.soa-tooling_1.0.0.v20120807-2345-H14-GA-SOA.jar" permitCategories="true"/>
 </directory>
