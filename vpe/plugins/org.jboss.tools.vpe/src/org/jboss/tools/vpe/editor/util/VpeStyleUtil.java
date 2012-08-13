@@ -178,8 +178,9 @@ public class VpeStyleUtil {
 		String parameter = sizeAttribute.substring(dotPosition + 1, sizeAttribute.length());
 
 		String style = sourceElement.getAttribute(attribute);
-		if (style == null || EMPTY_STRING.equals(style))
+		if (style == null || EMPTY_STRING.equals(style)) {
 			return -1;
+		}
 
 		int parameterPosition = style.indexOf(parameter);
 		if (parameterPosition >= 0) {
@@ -999,4 +1000,26 @@ public class VpeStyleUtil {
 		return colorStr;
 	}
 	// org.jboss.tools.jst.css.dialog.common.Util.getColor(..)
+	
+	/**
+	 * Converts "100px" to integer 100
+	 * 
+	 * @param sizeString string for width or height
+	 * @return size number
+	 */
+	public static int cssSizeToInt(String sizeString) {
+		int size = -1;
+		if (sizeString != null && !EMPTY_STRING.equalsIgnoreCase(sizeString)) {
+			int pxPosition = sizeString.indexOf(PX_STRING);
+			if (pxPosition >= 0) {
+				sizeString = sizeString.substring(0, pxPosition).trim();
+			}
+			try {
+				size = Integer.parseInt(sizeString);
+			} catch (NumberFormatException e) {
+				//do nothing
+			}
+		}
+		return size;
+	}
 }
