@@ -72,7 +72,9 @@
 
 		<!-- 5. extra requirements (for 3rd party "Extras" site) -->
 		<jboss-requirements-composite-extras-mirror>http://download.jboss.org/jbosstools/updates/juno/extras/</jboss-requirements-composite-extras-mirror>
-		
+
+		<!-- Tests Timeout in seconds -->
+		<surefire.timeout>2400</surefire.timeout>		
 		<!-- Default coverage filter, to be overriden when necessary -->
 		<coverage.filter>org.jboss.tools.*</coverage.filter>
 
@@ -173,9 +175,6 @@
 				<artifactId>tycho-surefire-plugin</artifactId>
 				<version>${tychoVersion}</version>
 				<configuration>
-					<!-- timeout in seconds -->
-					<surefire.timeout>2400</surefire.timeout>
-					<forkedProcessTimeoutInSeconds>2400</forkedProcessTimeoutInSeconds>
 					<useUIHarness>true</useUIHarness>
 					<useUIThread>true</useUIThread>
 					<!-- THE FOLLOWING LINE MUST NOT BE BROKEN BY AUTOFORMATTING -->
