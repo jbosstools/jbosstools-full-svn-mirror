@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="jacoco-reports" default="reports">
+
+	<taskdef name="report" classname="org.jacoco.ant.ReportTask">
+		<classpath path="${basedir}/jacocoant.jar" />
+	</taskdef>
+	
+    <!-- ================================= 
+          target: default              
+         ================================= -->
+    <target name="reports">
+    	<report>
+    		<executiondata>
+    			<fileset dir="${user.dir}/target">
+    				<include name="*.exec" />
+    			</fileset>
+    		</executiondata>
+    		<structure name="JaCoCo-Multi Project">
+    			<group name="JaCoCo-Multi">
+    				<classfiles>
+    					<dirset dir="${user.dir}/plugins" >
+    						<include name="*/target/classes"/>
+    					</dirset>
+						<dirset dir="${user.dir}/tests" >
+    						<include name="*/target/classes"/>
+    					</dirset>
+    				</classfiles>
+    				<sourcefiles encoding="UTF-8">
+						<dirset dir="${user.dir}/plugins" >
+    						<include name="*/src*"/>
+    					</dirset>
+						<dirset dir="${user.dir}/tests" >
+    						<include name="*/src*"/>
+    					</dirset>
+    				</sourcefiles>
+    			</group>
+    		</structure>
+    		<html destdir="${user.dir}/target/coverage-report/html" />
+    		<xml destfile="${user.dir}/target/coverage-report/coverage-report.xml" />
+    		<csv destfile="${user.dir}/target/coverage-report/coverage-report.csv" />
+    	</report>
+    </target>
+</project>
