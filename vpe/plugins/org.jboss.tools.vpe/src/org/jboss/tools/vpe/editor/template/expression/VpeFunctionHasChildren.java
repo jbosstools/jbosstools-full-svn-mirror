@@ -7,7 +7,7 @@
  *
  * Contributors:
  *     Exadel, Inc. and Red Hat, Inc. - initial API and implementation
- ******************************************************************************/ 
+ ******************************************************************************/
 package org.jboss.tools.vpe.editor.template.expression;
 
 import org.w3c.dom.Node;
@@ -17,17 +17,21 @@ import org.jboss.tools.vpe.editor.context.VpePageContext;
 
 public class VpeFunctionHasChildren extends VpeFunction {
 
-	public VpeValue exec(VpePageContext pageContext, Node sourceNode) {
+	public VpeValue exec(VpePageContext pageContext, Node sourceNode)  throws VpeExpressionException {
+		boolean includeTextNodes = "true".equalsIgnoreCase( //$NON-NLS-1$
+				getParameter(0).exec(pageContext, sourceNode).stringValue());
+		
 		boolean status = false;
-		if(sourceNode != null){
-			if(sourceNode.hasChildNodes()){
+		if (sourceNode != null) {
+			if (sourceNode.hasChildNodes()) {
 				NodeList list = sourceNode.getChildNodes();
-				if(list.getLength() == 1 && ((Node)list.item(0)).getNodeType() == Node.TEXT_NODE){
+				if (!includeTextNodes && (list.getLength() == 1)
+						&& ((Node) list.item(0)).getNodeType() == Node.TEXT_NODE) {
 					status = false;
-				}else status = true;
+				} else
+					status = true;
 			}
 		}
-		
 		return new VpeValue(status);
 	}
 }
