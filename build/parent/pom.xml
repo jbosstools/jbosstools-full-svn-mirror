@@ -616,6 +616,20 @@
 				<!-- THE FOLLOWING LINE MUST NOT BE BROKEN BY AUTOFORMATTING -->
 				<platformSystemProperties> -d32 -Dosgi.arch=x86 -XstartOnFirstThread </platformSystemProperties>
 			</properties>
+			<!-- This is required to have it working by default under mac osx for swtbot tests -->
+			<repositories>
+				<repository>
+					<id>jbosstools-target-site</id>
+					<url>${jbosstools-target-site}</url>
+					<layout>p2</layout>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+			</repositories>
 		</profile>
 
 		<profile>
@@ -785,8 +799,6 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<repositories>
-				<!-- Single repo containing contents of unified.target, but without using 
-					the target file -->
 				<repository>
 					<id>jbosstools-target-site</id>
 					<url>${jbosstools-target-site}</url>
