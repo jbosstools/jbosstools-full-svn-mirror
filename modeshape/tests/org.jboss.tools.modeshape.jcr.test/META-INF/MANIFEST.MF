@@ -6,5 +6,5 @@ Bundle-Version: 1.1.0.qualifier
 Bundle-Vendor: %bundleVendor
 Fragment-Host: org.jboss.tools.modeshape.jcr
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Require-Bundle: org.junit4
+Require-Bundle: org.junit;bundle-version="4.8.0"
 Bundle-ClassPath: .
