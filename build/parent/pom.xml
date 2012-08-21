@@ -180,7 +180,7 @@
 					<useUIThread>true</useUIThread>
 					<!-- THE FOLLOWING LINE MUST NOT BE BROKEN BY AUTOFORMATTING -->
 					<!-- tycho.testArgLine repeated to keep jacoco configuration for jacoco-maven-plugin -->
-					<argLine>${tycho.testArgLine} ${memoryOptions1} ${memoryOptions2} ${platformSystemProperties} ${systemProperties} -Dusage_reporting_enabled=false</argLine>
+					<argLine>${tycho.testArgLine} ${memoryOptions1} ${memoryOptions2} ${platformSystemProperties} ${systemProperties} -Dusage_reporting_enabled=false -Dorg.jboss.tools.tests.skipPrivateRequirements=${skipPrivateRequirements}</argLine>
 					<!-- https://docs.sonatype.org/display/TYCHO/How+to+run+SWTBot+tests+with+Tycho -->
 					<!-- set useUIThread=true for regular ui tests -->
 					<!-- set useUIThread=false for swtbot tests -->
