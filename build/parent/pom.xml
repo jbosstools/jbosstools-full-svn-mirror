@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jboss.tools</groupId>
 	<artifactId>parent</artifactId>
-	<version>3.4.0.M1-SNAPSHOT</version>
+	<version>4.0.0.M1-SNAPSHOT</version>
 	<name>JBoss Tools Parent</name>
 	<packaging>pom</packaging>
 
@@ -13,7 +13,7 @@
 		<tychoVersion>0.15.0</tychoVersion>
 		<tychoExtrasVersion>0.15.0</tychoExtrasVersion>
 		<scmBranch>trunk</scmBranch>
-		<JBT_VERSION>3.4.0</JBT_VERSION>
+		<JBT_VERSION>4.0.0</JBT_VERSION>
 		<JBDS_VERSION>6.0.0</JBDS_VERSION>
 		<BUILD_ALIAS>M1</BUILD_ALIAS>
 		<targetEclipseVersion>4.2</targetEclipseVersion>
