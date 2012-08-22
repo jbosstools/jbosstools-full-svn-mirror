@@ -100,7 +100,7 @@ $java.home = ${java.home}</echo>
 	<target name="generate.html">
 		<echo>Generate index pages using qualifier = ${qualifier}</echo>
 
-		<!-- replace links to jobs w/ correct stream (eg., 3.3_stable_branch, 3.4_stable_branch or 3.4_trunk) -->
+		<!-- replace links to jobs w/ correct stream (eg., 3.3_stable_branch, 4.0_stable_branch or 3.4_trunk) -->
 		<condition property="STREAM_SUFFIX" value="_stable_branch" else="_trunk">
 			<contains string="${JOB_NAME}" substring="_stable_branch" />
 		</condition>
