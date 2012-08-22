@@ -21,6 +21,8 @@
 		<memoryOptions2>-XX:MaxPermSize=256m</memoryOptions2>
 		<systemProperties></systemProperties>
 		<platformSystemProperties></platformSystemProperties>
+		<applejdkProperties></applejdkProperties>	
+	
 		<maven.antrun.plugin.version>1.3</maven.antrun.plugin.version>
 		
 		<swtbot.test.skip>true</swtbot.test.skip>
@@ -81,7 +83,7 @@
 
 		<!-- JBIDE-11700, JBIDE-11865: latest stable build of m2e-apt for use with JBDS product builds -->		
 		<m2e-apt>http://download.jboss.org/jbosstools/updates/requirements/m2eclipse/m2e-apt-1.0.0-2012-06-05_16-15-59-H16/</m2e-apt>
-		
+	
 	</properties>
 
 	<build>
@@ -180,7 +182,7 @@
 					<useUIThread>true</useUIThread>
 					<!-- THE FOLLOWING LINE MUST NOT BE BROKEN BY AUTOFORMATTING -->
 					<!-- tycho.testArgLine repeated to keep jacoco configuration for jacoco-maven-plugin -->
-					<argLine>${tycho.testArgLine} ${memoryOptions1} ${memoryOptions2} ${platformSystemProperties} ${systemProperties} -Dusage_reporting_enabled=false -Dorg.jboss.tools.tests.skipPrivateRequirements=${skipPrivateRequirements}</argLine>
+					<argLine>${tycho.testArgLine} ${memoryOptions1} ${memoryOptions2} ${applejdkProperties} ${platformSystemProperties} ${systemProperties} -Dusage_reporting_enabled=false -Dorg.jboss.tools.tests.skipPrivateRequirements=${skipPrivateRequirements}</argLine>
 					<!-- https://docs.sonatype.org/display/TYCHO/How+to+run+SWTBot+tests+with+Tycho -->
 					<!-- set useUIThread=true for regular ui tests -->
 					<!-- set useUIThread=false for swtbot tests -->
@@ -605,32 +607,46 @@
 		</profile>
 
 		<profile>
-			<id>osx</id>
+			<!-- JBIDE-12455 -->
+			<id>applejdk</id>
 			<activation>
-				<os>
-					<family>mac</family>
-				</os>
+				<property>
+					<name>java.vendor.url</name>
+					<value>http://www.apple.com/</value>
+				</property>
 			</activation>
 			<properties>
-				<!-- THE FOLLOWING LINE MUST NOT BE BROKEN BY AUTOFORMATTING -->
-				<platformSystemProperties> -d32 -Dosgi.arch=x86 -XstartOnFirstThread </platformSystemProperties>
+				<applejdkProperties> -d32 -Dosgi.arch=x86 </applejdkProperties>
 			</properties>
-			<!-- This is required to have it working by default under mac osx for swtbot tests -->
-			<repositories>
-				<repository>
-					<id>jbosstools-target-site</id>
-					<url>${jbosstools-target-site}</url>
-					<layout>p2</layout>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-				</repository>
-			</repositories>
 		</profile>
 
+		<profile>
+                	<id>osx</id>
+                        <activation>
+                        	<os>
+                                	<family>mac</family>
+                                </os>
+                        </activation>
+                        <properties>
+                        	<!-- THE FOLLOWING LINE MUST NOT BE BROKEN BY AUTOFORMATTING -->
+                                <platformSystemProperties> -XstartOnFirstThread </platformSystemProperties>
+                        </properties>
+                        <!-- This is required to have it working by default under mac osx for swtbot tests -->
+                        <repositories>
+                        	<repository>
+                                	<id>jbosstools-target-site</id>
+                                        <url>${jbosstools-target-site}</url>
+					<layout>p2</layout>
+                                        <snapshots>
+                                        	<enabled>true</enabled>
+                                        </snapshots>
+                                        <releases>
+                                        	<enabled>true</enabled>
+                                        </releases>
+                        	</repository>
+			</repositories>
+		</profile>
+	
 		<profile>
 			<id>hudson</id>
 			<activation>
