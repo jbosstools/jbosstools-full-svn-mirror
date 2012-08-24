@@ -468,6 +468,7 @@ To:
 		<if>
 			<and>
 				<available file="${output.dir}/target/site" type="dir" />
+				<available file="${output.dir}/target/repository" type="dir"/>
 				<or>
 					<available file="${output.dir}/target/repository.zip" type="file" />
 					<available file="${output.dir}/target/site_assembly.zip" type="file" />
