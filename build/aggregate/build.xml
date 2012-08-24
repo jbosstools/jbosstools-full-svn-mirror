@@ -466,14 +466,16 @@ To:
 
 	<target name="check.target">
 		<if>
-			<and>
-				<available file="${output.dir}/target/site" type="dir" />
-				<available file="${output.dir}/target/repository" type="dir"/>
-				<or>
-					<available file="${output.dir}/target/repository.zip" type="file" />
+			<or>
+				<and> <!-- Old school eclipse-update-site -->
+					<available file="${output.dir}/target/site" type="dir" />
 					<available file="${output.dir}/target/site_assembly.zip" type="file" />
-				</or>
-			</and>
+				</and>
+				<and> <!-- eclipse-repository -->
+					<available file="${output.dir}/target/repository" type="dir"/>
+					<available file="${output.dir}/target/repository.zip" type="file" />
+				</and>
+			</or>
 			<then>
 				<if>
 					<available file="${output.dir}/target/site_assembly.zip" type="file" />
