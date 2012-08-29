@@ -18,15 +18,15 @@
     		<structure name="JaCoCo-Multi Project">
     			<group name="JaCoCo-Multi">
     				<classfiles>
-    					<dirset dir="${user.dir}/plugins" >
-    						<include name="*/target/classes"/>
-    					</dirset>
-						<dirset dir="${user.dir}/tests" >
-    						<include name="*/target/classes"/>
-    					</dirset>
+    					<fileset dir="${user.dir}/plugins">
+						<include name="*/target/classes/**/*.class"/>
+    					</fileset>
+					<fileset dir="${user.dir}/tests" >
+						<include name="*/target/classes/**/*.class"/>
+    					</fileset>
     				</classfiles>
     				<sourcefiles encoding="UTF-8">
-						<dirset dir="${user.dir}/plugins" >
+					<dirset dir="${user.dir}/plugins" >
     						<include name="*/src*"/>
     					</dirset>
 						<dirset dir="${user.dir}/tests" >
