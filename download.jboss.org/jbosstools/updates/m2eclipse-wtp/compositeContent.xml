@@ -3,10 +3,10 @@
 <repository name='m2eclipse-wtp updates' type='org.eclipse.equinox.internal.p2.metadata.repository.CompositeMetadataRepository' version='1.0.0'>
 <properties size='2'>
 <property name='p2.compressed' value='true'/>
-<property name='p2.timestamp' value='1328708112210'/>
+<property name='p2.timestamp' value='1328708112211'/>
 </properties>
 <children size='3'>
-<child location='http://download.jboss.org/jbosstools/updates/requirements/m2eclipse/m2eclipse-wtp-0.15.2/'/>
+<child location='http://download.jboss.org/jbosstools/updates/requirements/m2eclipse/m2eclipse-wtp-0.15.3/'/>
 <child location='http://download.eclipse.org/technology/m2e/releases/'/>
 <child location='http://repository.tesla.io:8081/nexus/content/sites/m2e.extras/m2eclipse-mavenarchiver/0.15.0/N/0.15.0.201207090125/'/>
 </children>
