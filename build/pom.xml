@@ -109,6 +109,7 @@
 			<modules>
 				<module>../tests</module>
 				<module>../common</module>
+                                <module>../runtime</module>
 				<module>../archives</module>
 				<module>../jmx</module>
 				<module>../as</module>
@@ -417,6 +418,7 @@
 				<module>../as</module>
 				<module>../hibernatetools</module>
 				<module>../common</module>
+				<module>../runtime</module>
 				<module>../jst</module>
 				<module>../xulrunner</module>
 				<module>../vpe</module>
@@ -441,6 +443,7 @@
 			<modules>
 				<module>../tests</module>
 				<module>../common</module>
+                                <module>../runtime</module>
 				<module>../jmx</module>
 				<module>../archives</module>
 				<module>../portlet</module>
@@ -452,7 +455,6 @@
 				<module>../jst</module>
 				<module>../as</module>
 				<module>../usage</module>
-				<module>../runtime</module>
 				<module>../examples</module>
 			</modules>
 		</profile>
@@ -476,9 +478,9 @@
 				<module>../as</module>
 				<module>../hibernatetools</module>
 				<module>../common</module>
+                                <module>../runtime</module>
 				<module>../examples</module>
 				<module>../portlet</module>
-				<module>../runtime</module>
 				<module>../jst</module>
 				<module>../xulrunner</module>
 				<module>../vpe</module>
@@ -571,15 +573,6 @@
 			<modules>
 				<module>../tests</module>
 				<module>../common</module>
-				<module>../jmx</module>
-				<module>../archives</module>
-				<module>../as</module>
-				<module>../hibernatetools</module>
-				<module>../jst</module>
-				<module>../xulrunner</module>
-				<module>../vpe</module>
-				<module>../jsf</module>
-				<module>../seam</module>
 				<module>../usage</module>
 				<module>../runtime</module>
 			</modules>

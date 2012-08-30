@@ -8,14 +8,16 @@
  * Contributors:
  *     JBoss by Red Hat - Initial implementation.
  ************************************************************************************/
-package org.jboss.tools.runtime.test;
+package org.jboss.tools.runtime.seam.detector.test;
 
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 
-/**
- * 
- * @author snjeza
- * 
- */
-public class RuntimeDetectionTest {
-	// Logic moved to seam tests
+@RunWith(Suite.class)
+@SuiteClasses({
+	SeamRuntimeDetectionTest.class
+})
+public class SeamRuntimeDetectionAllTests {
+
 }
