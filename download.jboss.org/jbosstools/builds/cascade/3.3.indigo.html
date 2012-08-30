@@ -64,65 +64,65 @@ function toggle()
 		<h2 class="title">Build Job Cascade:</h2>
 		<ul>
 			<li><a style="color: red"
-				href="https://hudson.qa.jboss.com/hudson/job/jbosstools-3.3_trunk.target-platform">Local
+				href="https://jenkins.mw.lab.eng.bos.redhat.com/hudson/job/jbosstools-3.3_trunk.target-platform">Local
 			Target Platform build</a> (build + publish)
 			<ul>
 				<li><a style="color: red"
-					href="https://hudson.qa.jboss.com/hudson/job/jbosstools-3.3_stable_branch.continuous">Continuous
+					href="https://jenkins.mw.lab.eng.bos.redhat.com/hudson/job/jbosstools-3.3_stable_branch.continuous">Continuous
 				build</a> (build only, no tests, no publish)</li>
 				<li><a style="color: red"
-					href="https://hudson.qa.jboss.com/hudson/job/jbosstools-3.3_stable_branch.tests">Tests
+					href="https://jenkins.mw.lab.eng.bos.redhat.com/hudson/job/jbosstools-3.3_stable_branch.tests">Tests
 				build</a> (build + tests, no publish)</li>
 				<li><a style="color: red"
-					href="https://hudson.qa.jboss.com/hudson/view/DevStudio/view/DevStudio_5.0.indigo/">All
+					href="https://jenkins.mw.lab.eng.bos.redhat.com/hudson/view/DevStudio/view/DevStudio_5.0.indigo/">All
 				components' jobs, including JBT - Core, JBT - SOA Tooling, Drools, Teiid, pi4soa, Savara</a>
 				(build, test, publish) :: <b><a style="color: red"
-					href="https://hudson.qa.jboss.com/hudson/view/DevStudio/view/DevStudio_5.0.indigo/portlet/dashboard_portlet_238/">list
+					href="https://jenkins.mw.lab.eng.bos.redhat.com/hudson/view/DevStudio/view/DevStudio_5.0.indigo/portlet/dashboard_portlet_238/">list
 				of unstable jobs</a></b> - <a href=swimlanes.txt>Interdependencies between jobs, aka "swimlanes"</a></li>
 				<ul>
 					<li><a style="color: red"
-						href="https://hudson.qa.jboss.com/hudson/job/jbosstools-3.3_stable_branch.webtools.aggregate">JBT - Web Tools 
+						href="https://jenkins.mw.lab.eng.bos.redhat.com/hudson/job/jbosstools-3.3_stable_branch.webtools.aggregate">JBT - Web Tools 
 					build</a> (collect components into a single update site for use as WTP Server Adapter)
 					</li>
 					<ul>
 						<li><a style="color: red"
-						href="https://hudson.qa.jboss.com/hudson/job/jbosstools-3.3_stable_branch.aggregate">JBT - Core
+						href="https://jenkins.mw.lab.eng.bos.redhat.com/hudson/job/jbosstools-3.3_stable_branch.aggregate">JBT - Core
 					build</a> (collect components into a single update site for downstream use and publishing to sf.net)
 					</li>
 					<ul>
 						<li><a style="color: red"
-						href="https://hudson.qa.jboss.com/hudson/job/jbosstools-3.3_stable_branch.soa-tooling.aggregate">JBT - SOA Tooling
+						href="https://jenkins.mw.lab.eng.bos.redhat.com/hudson/job/jbosstools-3.3_stable_branch.soa-tooling.aggregate">JBT - SOA Tooling
 					build</a> (collect components into a single update site for downstream use and publishing to sf.net)
 					</li></ul>
 					</ul>
 					<li><a style="color: red"
-						href="https://hudson.qa.jboss.com/hudson/job/jbosstools-3.3_stable_branch.coretests.aggregate">JBT - Core Tests
+						href="https://jenkins.mw.lab.eng.bos.redhat.com/hudson/job/jbosstools-3.3_stable_branch.coretests.aggregate">JBT - Core Tests
 					build</a> (collect all tests into a single update site)
 					</li>
 					<ul><li><a style="color: red"
-						href="https://hudson.qa.jboss.com/hudson/job/jbosstools-3.3_stable_branch.soatests.aggregate">JBT - SOA Tests
+						href="https://jenkins.mw.lab.eng.bos.redhat.com/hudson/job/jbosstools-3.3_stable_branch.soatests.aggregate">JBT - SOA Tests
 					build</a> (collect all tests into a single update site)
 					</li></ul>
 				</ul>
 			</ul>
 					<hr />
 			<li><a style="color: red"
-				href="https://hudson.qa.jboss.com/hudson/job/devstudio-5.0_stable_branch.target-platform">Local
+				href="https://jenkins.mw.lab.eng.bos.redhat.com/hudson/job/devstudio-5.0_stable_branch.target-platform">Local
 			JBDS Target Platform build</a> (build + publish)
 			<ul>
 				<ul>
 					
 					<li><a style="color: red"
-						href="https://hudson.qa.jboss.com/hudson/job/devstudio-5.0_stable_branch.updatesite">JBDS
+						href="https://jenkins.mw.lab.eng.bos.redhat.com/hudson/job/devstudio-5.0_stable_branch.updatesite">JBDS
 					Aggregate site build</a> (build Core Subset [JBT + JBDS], Extras, Tech Preview
 					sites, then publish)
 					<ul>
 						<li><strike><a style="color: red"
-							href="https://hudson.qa.jboss.com/hudson/job/devstudio-5.0_stable_branch.product">JBDS
+							href="https://jenkins.mw.lab.eng.bos.redhat.com/hudson/job/devstudio-5.0_stable_branch.product">JBDS
 						Product builds</a> (combine JBDS components and TP into Core Site + Installers,
 						publish)</strike> <B>DEPRECATED after 5.0.0.GA</B></li>
 						<li><a style="color: red"
-						href="https://hudson.qa.jboss.com/hudson/job/devstudio-5.0_stable_branch.soa-tooling.updatesite">JBDS
+						href="https://jenkins.mw.lab.eng.bos.redhat.com/hudson/job/devstudio-5.0_stable_branch.soa-tooling.updatesite">JBDS
 					SOA Tooling site build</a> (build site, then publish)
 					</ul>
 					</li>
