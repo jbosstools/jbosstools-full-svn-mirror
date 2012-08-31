@@ -91,7 +91,7 @@ public class RuntimeDetectionTest implements IJBossRuntimePluginConstants {
 		}
 		RuntimeUIActivator.getDefault().saveRuntimePaths();
 		List<RuntimeDefinition> serverDefinitions = new ArrayList<RuntimeDefinition>();
-		Set<IRuntimeDetector> detectors = RuntimeCoreActivator
+		Set<IRuntimeDetector> detectors = RuntimeCoreActivator.getDefault()
 				.getRuntimeDetectors();
 		for (IRuntimeDetector detector : detectors) {
 			if (detector.isEnabled()) {
@@ -108,15 +108,15 @@ public class RuntimeDetectionTest implements IJBossRuntimePluginConstants {
 			List<RuntimeDefinition> serverDefinitions = locator
 					.searchForRuntimes(runtimePath.getPath(),
 							new NullProgressMonitor());
-			runtimePath.getServerDefinitions().clear();
+			runtimePath.getRuntimeDefinitions().clear();
 			for (RuntimeDefinition serverDefinition : serverDefinitions) {
 				serverDefinition.setRuntimePath(runtimePath);
 			}
-			runtimePath.getServerDefinitions().addAll(serverDefinitions);
+			runtimePath.getRuntimeDefinitions().addAll(serverDefinitions);
 		}
 		List<RuntimeDefinition> serverDefinitions = RuntimeUIActivator
 				.getDefault().getServerDefinitions();
-		Set<IRuntimeDetector> detectors = RuntimeCoreActivator
+		Set<IRuntimeDetector> detectors = RuntimeCoreActivator.getDefault()
 				.getRuntimeDetectors();
 		for (IRuntimeDetector detector : detectors) {
 			if (detector.isEnabled()) {
@@ -127,7 +127,7 @@ public class RuntimeDetectionTest implements IJBossRuntimePluginConstants {
 
 	@Test
 	public void testRuntimeDetectors() {
-		Set<IRuntimeDetector> detectors = RuntimeCoreActivator
+		Set<IRuntimeDetector> detectors = RuntimeCoreActivator.getDefault()
 				.getRuntimeDetectors();
 		assertTrue("Runtime detectors don't exist.", detectors.size() > 0);
 	}
@@ -394,7 +394,7 @@ public class RuntimeDetectionTest implements IJBossRuntimePluginConstants {
 	
 	@Test
 	public void testInvalidDetectors() {
-		Set<IRuntimeDetector> detectors = RuntimeCoreActivator.getDeclaredRuntimeDetectors();
+		Set<IRuntimeDetector> detectors = RuntimeCoreActivator.getDefault().getDeclaredRuntimeDetectors();
 		IRuntimeDetector invalidDetector = null;
 		for (IRuntimeDetector detector:detectors) {
 			if (detector instanceof InvalidRuntimeDetector) {
