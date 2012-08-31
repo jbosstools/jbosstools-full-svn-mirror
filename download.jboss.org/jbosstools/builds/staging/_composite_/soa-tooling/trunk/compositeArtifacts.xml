@@ -13,6 +13,7 @@
 
 <!-- SOA Tooling : 10 x 2 = 20 -->
 
+<!-- TODO: these jobs should all be renamed to 4.0_trunk instead of 3.3_trunk -->
 <child location='../../../../staging/jbosstools-3.3_trunk.component--bpel/all/repo/'/>
 <child location='../../../../staging/jbosstools-drools-5.3_trunk/all/repo/'/>
 <child location='../../../../staging/jbosstools-3.3_trunk.component--esb/all/repo/'/>
