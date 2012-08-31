@@ -30,31 +30,31 @@ public class JbpmHandler extends AbstractRuntimeDetector {
 	private static final String SOA_P = "SOA-P"; //$NON-NLS-1$
 	private static final String SOA_P_STD = "SOA-P-STD"; //$NON-NLS-1$
 	
-	public static File getJbpmRoot(RuntimeDefinition serverDefinition) {
-		String type = serverDefinition.getType();
+	public static File getJbpmRoot(RuntimeDefinition runtimeDefinition) {
+		String type = runtimeDefinition.getType();
 		if (SOA_P.equals(type) || SOA_P_STD.equals(type)) {
-			return new File(serverDefinition.getLocation(),"jbpm-jpdl"); //$NON-NLS-1$
+			return new File(runtimeDefinition.getLocation(),"jbpm-jpdl"); //$NON-NLS-1$
 		}
 		if (JBPM.equals(type)) {
-			return serverDefinition.getLocation();
+			return runtimeDefinition.getLocation();
 		}
 		return null;
 	}
 	
 	@Override
-	public void initializeRuntimes(List<RuntimeDefinition> serverDefinitions) {
-		for (RuntimeDefinition serverDefinition : serverDefinitions) {
-			if (serverDefinition.isEnabled() && !jbpmExists(serverDefinition)) {
-				File jbpmRoot = getJbpmRoot(serverDefinition);
+	public void initializeRuntimes(List<RuntimeDefinition> runtimeDefinitions) {
+		for (RuntimeDefinition runtimeDefinition : runtimeDefinitions) {
+			if (runtimeDefinition.isEnabled() && !jbpmExists(runtimeDefinition)) {
+				File jbpmRoot = getJbpmRoot(runtimeDefinition);
 				if (jbpmRoot == null || !jbpmRoot.isDirectory()) {
 					continue;
 				}
-				String type = serverDefinition.getType();
+				String type = runtimeDefinition.getType();
 				if (JBPM.equals(type)) {
-					PreferencesManager.getInstance().addJbpmInstallation(serverDefinition.getName(), jbpmRoot.getAbsolutePath(), serverDefinition.getVersion());
+					PreferencesManager.getInstance().addJbpmInstallation(runtimeDefinition.getName(), jbpmRoot.getAbsolutePath(), runtimeDefinition.getVersion());
 				}
 			}
-			initializeRuntimes(serverDefinition.getIncludedServerDefinitions());
+			initializeRuntimes(runtimeDefinition.getIncludedServerDefinitions());
 		}
 		
 	}
@@ -63,8 +63,8 @@ public class JbpmHandler extends AbstractRuntimeDetector {
 	 * @param serverDefinition
 	 * @return
 	 */
-	public static boolean jbpmExists(RuntimeDefinition serverDefinition) {
-		File jbpmRoot = getJbpmRoot(serverDefinition);
+	public static boolean jbpmExists(RuntimeDefinition runtimeDefinition) {
+		File jbpmRoot = getJbpmRoot(runtimeDefinition);
 		if (jbpmRoot == null || !jbpmRoot.isDirectory()) {
 			return false;
 		}
@@ -80,7 +80,7 @@ public class JbpmHandler extends AbstractRuntimeDetector {
 	}
 
 	@Override
-	public RuntimeDefinition getServerDefinition(File root,
+	public RuntimeDefinition getRuntimeDefinition(File root,
 			IProgressMonitor monitor) {
 		if (monitor.isCanceled() || root == null) {
 			return null;
@@ -125,20 +125,28 @@ public class JbpmHandler extends AbstractRuntimeDetector {
 		return jbpmExists(serverDefinition);
 	}
 
-	public static void calculateIncludedServerDefinition(
-			RuntimeDefinition serverDefinition) {
-		if (serverDefinition == null || !SOA_P.equals(serverDefinition.getType())) {
+	@Deprecated /* Does this belong as static? Nobody calls this */
+	public static void calculateIncludedRuntimeDefinition(
+			RuntimeDefinition runtimeDefinition) {
+		if (runtimeDefinition == null || !SOA_P.equals(runtimeDefinition.getType())) {
 			return;
 		}
-		File jbpmRoot = new File(serverDefinition.getLocation(),"jbpm-jpdl"); //$NON-NLS-1$
+		File jbpmRoot = new File(runtimeDefinition.getLocation(),"jbpm-jpdl"); //$NON-NLS-1$
 		if (jbpmRoot.isDirectory()) {
 			String version = JBPM3;
-			if (isJbpm4(serverDefinition.getLocation().getAbsolutePath())) {
+			if (isJbpm4(runtimeDefinition.getLocation().getAbsolutePath())) {
 				version = JBPM4;
 			}
-			RuntimeDefinition sd = new RuntimeDefinition(serverDefinition.getName(), version, JBPM, jbpmRoot);
-			sd.setParent(serverDefinition);
-			serverDefinition.getIncludedServerDefinitions().add(sd);
+			RuntimeDefinition sd = new RuntimeDefinition(runtimeDefinition.getName(), version, JBPM, jbpmRoot);
+			sd.setParent(runtimeDefinition);
+			runtimeDefinition.getIncludedServerDefinitions().add(sd);
 		}
 	}
+	
+	@Override
+	public void computeIncludedRuntimeDefinition(
+			RuntimeDefinition runtimeDefinition) {
+		calculateIncludedRuntimeDefinition(runtimeDefinition);
+	}
+
 }

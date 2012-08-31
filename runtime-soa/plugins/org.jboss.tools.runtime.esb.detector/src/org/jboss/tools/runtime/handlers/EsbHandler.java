@@ -24,21 +24,21 @@ public class EsbHandler extends AbstractRuntimeDetector {
 	private static final String DEFAULT_CONFIGURATION = "default";
 	private static final String ESB = "ESB"; //$NON-NLS-1$
 	
-	public void initializeRuntimes(List<RuntimeDefinition> serverDefinitions) {
-		for (RuntimeDefinition serverDefinition : serverDefinitions) {
-			String type = serverDefinition.getType();
-			if (serverDefinition.isEnabled() && !esbExists(serverDefinition)) {
+	public void initializeRuntimes(List<RuntimeDefinition> runtimeDefinitions) {
+		for (RuntimeDefinition runtimeDefinition : runtimeDefinitions) {
+			String type = runtimeDefinition.getType();
+			if (runtimeDefinition.isEnabled() && !esbExists(runtimeDefinition)) {
 				if (ESB.equals(type)) {
 					JBossESBRuntime runtime = new JBossESBRuntime();
-					runtime.setName("ESB - " + serverDefinition.getName()); //$NON-NLS-1$
-					runtime.setHomeDir(serverDefinition.getLocation()
+					runtime.setName("ESB - " + runtimeDefinition.getName()); //$NON-NLS-1$
+					runtime.setHomeDir(runtimeDefinition.getLocation()
 							.getAbsolutePath());
 					runtime.setConfiguration(DEFAULT_CONFIGURATION);
-					runtime.setVersion(serverDefinition.getVersion());
+					runtime.setVersion(runtimeDefinition.getVersion());
 					JBossRuntimeManager.getInstance().addRuntime(runtime);
 				}
 			}
-			initializeRuntimes(serverDefinition.getIncludedServerDefinitions());
+			initializeRuntimes(runtimeDefinition.getIncludedServerDefinitions());
 		}
 	}
 
@@ -46,11 +46,11 @@ public class EsbHandler extends AbstractRuntimeDetector {
 	 * @param serverDefinition
 	 * @return
 	 */
-	private static boolean esbExists(RuntimeDefinition serverDefinition) {
+	private static boolean esbExists(RuntimeDefinition runtimeDefinition) {
 		JBossESBRuntime[] runtimes = JBossRuntimeManager.getInstance().getRuntimes();
 		for (JBossESBRuntime runtime:runtimes) {
 			String location = runtime.getHomeDir();
-			if (location != null && location.equals(serverDefinition.getLocation().getAbsolutePath())) {
+			if (location != null && location.equals(runtimeDefinition.getLocation().getAbsolutePath())) {
 				return true;
 			}
 		}

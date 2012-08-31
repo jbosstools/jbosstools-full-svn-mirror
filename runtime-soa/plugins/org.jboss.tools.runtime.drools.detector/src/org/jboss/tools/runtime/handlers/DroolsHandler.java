@@ -44,16 +44,16 @@ public class DroolsHandler extends AbstractRuntimeDetector {
 
 	}
 
-	private void initializeInternal(List<RuntimeDefinition> serverDefinitions,
+	private void initializeInternal(List<RuntimeDefinition> runtimeDefinitions,
 			List<DroolsRuntime> droolsRuntimes) {
-		for (RuntimeDefinition serverDefinition : serverDefinitions) {
-			String type = serverDefinition.getType();
-			if (serverDefinition.isEnabled() && !droolsExists(serverDefinition)) {
+		for (RuntimeDefinition runtimeDefinition : runtimeDefinitions) {
+			String type = runtimeDefinition.getType();
+			if (runtimeDefinition.isEnabled() && !droolsExists(runtimeDefinition)) {
 				if (DROOLS.equals(type)) {
-					File droolsRoot = serverDefinition.getLocation(); //$NON-NLS-1$
+					File droolsRoot = runtimeDefinition.getLocation(); //$NON-NLS-1$
 					if (droolsRoot.isDirectory()) {
 						DroolsRuntime runtime = new DroolsRuntime();
-						runtime.setName("Drools " + serverDefinition.getVersion() + " - " + serverDefinition.getName()); //$NON-NLS-1$
+						runtime.setName("Drools " + runtimeDefinition.getVersion() + " - " + serverDefinition.getName()); //$NON-NLS-1$
 						runtime.setPath(droolsRoot.getAbsolutePath());
 						DroolsRuntimeManager.recognizeJars(runtime);
 						runtime.setDefault(true);
@@ -61,7 +61,7 @@ public class DroolsHandler extends AbstractRuntimeDetector {
 					}
 				}
 			}
-			initializeInternal(serverDefinition.getIncludedServerDefinitions(),
+			initializeInternal(runtimeDefinition.getIncludedServerDefinitions(),
 					droolsRuntimes);
 		}
 	}
@@ -70,13 +70,13 @@ public class DroolsHandler extends AbstractRuntimeDetector {
 	 * @param serverDefinition
 	 * @return
 	 */
-	private static boolean droolsExists(RuntimeDefinition serverDefinition) {
+	private static boolean droolsExists(RuntimeDefinition runtimeDefinition) {
 		DroolsRuntime[] droolsRuntimes = DroolsRuntimeManager
 				.getDroolsRuntimes();
 		for (DroolsRuntime dr : droolsRuntimes) {
 			String location = dr.getPath();
 			if (location != null
-					&& location.equals(serverDefinition.getLocation()
+					&& location.equals(runtimeDefinition.getLocation()
 							.getAbsolutePath())) {
 				return true;
 			}
@@ -85,7 +85,7 @@ public class DroolsHandler extends AbstractRuntimeDetector {
 	}
 
 	@Override
-	public RuntimeDefinition getServerDefinition(File root,
+	public RuntimeDefinition getRuntimeDefinition(File root,
 			IProgressMonitor monitor) {
 		if (monitor.isCanceled() || root == null) {
 			return null;
@@ -111,26 +111,33 @@ public class DroolsHandler extends AbstractRuntimeDetector {
 	}
 
 	@Override
-	public boolean exists(RuntimeDefinition serverDefinition) {
-		if (serverDefinition == null || serverDefinition.getLocation() == null) {
+	public boolean exists(RuntimeDefinition runtimeDefinition) {
+		if (runtimeDefinition == null || runtimeDefinition.getLocation() == null) {
 			return false;
 		}
-		return droolsExists(serverDefinition);
+		return droolsExists(runtimeDefinition);
+	}
+	
+	@Override
+	public void computeIncludedRuntimeDefinition(
+			RuntimeDefinition runtimeDefinition) {
+		calculateIncludedServerDefinition(runtimeDefinition);
 	}
 
+	@Deprecated /* Does this belong here? Static with no callers? */
 	public static void calculateIncludedServerDefinition(
-			RuntimeDefinition serverDefinition) {
-		if (serverDefinition == null
-				|| !SOA_P.equals(serverDefinition.getType())) {
+			RuntimeDefinition runtimeDefinition) {
+		if (runtimeDefinition == null
+				|| !SOA_P.equals(runtimeDefinition.getType())) {
 			return;
 		}
-		File droolsRoot = serverDefinition.getLocation(); //$NON-NLS-1$
+		File droolsRoot = runtimeDefinition.getLocation(); //$NON-NLS-1$
 		if (droolsRoot.isDirectory()) {
-			String name = "Drools - " + serverDefinition.getName(); //$NON-NLS-1$
+			String name = "Drools - " + runtimeDefinition.getName(); //$NON-NLS-1$
 			RuntimeDefinition sd = new RuntimeDefinition(name,
-					serverDefinition.getVersion(), DROOLS, droolsRoot);
-			sd.setParent(serverDefinition);
-			serverDefinition.getIncludedServerDefinitions().add(sd);
+					runtimeDefinition.getVersion(), DROOLS, droolsRoot);
+			sd.setParent(runtimeDefinition);
+			runtimeDefinition.getIncludedServerDefinitions().add(sd);
 		}
 	}
 
