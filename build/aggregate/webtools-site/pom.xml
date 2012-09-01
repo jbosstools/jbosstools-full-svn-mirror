@@ -11,6 +11,12 @@
 	<artifactId>org.jboss.tools.site.webtools</artifactId>
 	<name>JBoss Tools - Web Tools Site</name>
 	<packaging>eclipse-update-site</packaging>
+	<!-- to test output, use:
+		mvn install \
+		-DJOB_NAME=jbosstools-4.0_trunk.webtools.aggregate \
+		-DBUILD_ID=2012-12-12_01-02-03 -DBUILD_NUMBER=69 -DJBT_VERSION=4.0.99 \
+		-DBUILD_ALIAS=Alpha7 -Dupdate.site.description="Stable Milestone"
+	-->
 	<build>
 		<plugins>
 			<plugin>
