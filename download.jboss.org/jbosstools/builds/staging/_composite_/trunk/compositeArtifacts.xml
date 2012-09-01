@@ -10,7 +10,7 @@
      JBIDE-10671: This file is deprecated. See ../core/trunk/ and ../soa-tooling/trunk/
 
 -->
-<property name='p2.timestamp' value='1327343910000'/>
+<property name='p2.timestamp' value='1346507036000'/>
 </properties>
 <children size='2'>
 <child location='../core/trunk/'/>
