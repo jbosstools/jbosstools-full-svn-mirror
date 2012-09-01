@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-	<description>JBoss Tools 3.3 - SOA Tooling Tests</description>
+	<description>JBoss Tools 4.0 - SOA Tooling Tests</description>
 
 	<!-- PLEASE NOTE!
 		When updating this file, please be sure that it parses as valid XML before committing it.
