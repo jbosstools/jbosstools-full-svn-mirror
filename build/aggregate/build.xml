@@ -504,7 +504,7 @@ Using ant:   ant custom.build -f ../build.xml -Doutput.dir=`pwd` -DinputRepo=htt
 		<!-- 
 		Properties calculated here
 			from ${JOB_NAME} = jbosstools-3.2.0.M1.aggregate get 3.2.0.M1  
-			from ${BUILD_ID} and ${BUILD_NUMBER}, get .${BUILD_ID}-H${BUILD_NUMBER}
+			from ${BUILD_ID} and ${BUILD_NUMBER}, get .${BUILD_ID}-B${BUILD_NUMBER}
 			default update.site.description=Nightly Build
 			default update.site.version=(null)
 		-->
@@ -528,10 +528,10 @@ Using ant:   ant custom.build -f ../build.xml -Doutput.dir=`pwd` -DinputRepo=htt
 						<isset property="BUILD_ALIAS" />
 					</and>
 					<then>
-						<propertyregex override="true" property="update.site.version" defaultvalue="${JOB_NAME}" input="${JOB_NAME}" regexp="(jboss|soa)tools-([0-9x.]+)(_.*?)\.(.*?)\.*aggregate" replace=": ${JBT_VERSION}.${BUILD_TS}-H${BUILD_NUMBER}-${BUILD_ALIAS}\4" />
+						<propertyregex override="true" property="update.site.version" defaultvalue="${JOB_NAME}" input="${JOB_NAME}" regexp="(jboss|soa)tools-([0-9x.]+)(_.*?)\.(.*?)\.*aggregate" replace=": ${JBT_VERSION}.${BUILD_ALIAS}-${BUILD_TS}-B${BUILD_NUMBER}.\4" />
 					</then>
 					<else>
-						<propertyregex override="true" property="update.site.version" defaultvalue="${JOB_NAME}" input="${JOB_NAME}" regexp="(jboss|soa)tools-([0-9x.]+)(.*).aggregate" replace=": \2.${BUILD_TS}-H${BUILD_NUMBER}\3" />
+						<propertyregex override="true" property="update.site.version" defaultvalue="${JOB_NAME}" input="${JOB_NAME}" regexp="(jboss|soa)tools-([0-9x.]+)(.*).aggregate" replace=": \2.${BUILD_TS}-B${BUILD_NUMBER}.\3" />
 					</else>
 				</if>
 			</then>
