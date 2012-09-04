@@ -100,11 +100,11 @@ $java.home = ${java.home}</echo>
 	<target name="generate.html">
 		<echo>Generate index pages using qualifier = ${qualifier}</echo>
 
-		<!-- replace links to jobs w/ correct stream (eg., 3.3_stable_branch, 4.0_stable_branch or 3.4_trunk) -->
+		<!-- replace links to jobs w/ correct stream (eg., 4.0_stable_branch, 4.0_stable_branch or 4.0_trunk) -->
 		<condition property="STREAM_SUFFIX" value="_stable_branch" else="_trunk">
 			<contains string="${JOB_NAME}" substring="_stable_branch" />
 		</condition>
-		<condition property="STREAM_NAME" value="3.3.indigo" else="Trunk">
+		<condition property="STREAM_NAME" value="4.0.juno" else="Trunk">
 			<contains string="${JOB_NAME}" substring="_stable_branch" />
 		</condition>
 
@@ -114,10 +114,13 @@ $java.home = ${java.home}</echo>
 
 		<!-- set IDs for the chart widgets from the views -->
 		<!-- TODO: will later need to add a third case for 6.0 stable_branch -->
-		<condition property="PORTLET.1" value="10" else="3">
+
+		<!-- tests trend chart -->
+		<condition property="PORTLET.1" value="31" else="45">
 			<contains string="${JOB_NAME}" substring="_stable_branch" />
 		</condition>
-		<condition property="PORTLET.2" value="11" else="4">
+		<!-- tests pie chart -->
+		<condition property="PORTLET.2" value="32" else="46">
 			<contains string="${JOB_NAME}" substring="_stable_branch" />
 		</condition>
 
