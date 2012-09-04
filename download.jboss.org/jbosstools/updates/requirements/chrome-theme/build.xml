@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="mirror">
+	<!-- run locally in Eclipse (to resolve p2 tasks) using these commandline options:
+	
+		-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} 
+		-consoleLog -nosplash -data /tmp
+		-application org.eclipse.ant.core.antRunner
+		-f "/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/bpel/build-indigo.xml"
+		
+		or, run headless on qa01 server, where Eclipse is installed into ~/eclipse:
+		
+		export JAVA_HOME=/opt/jdk1.6.0; \
+		${JAVA_HOME}/bin/java -cp ~/eclipse/plugins/org.eclipse.equinox.launcher_*.jar \
+			org.eclipse.equinox.launcher.Main -vm ${JAVA_HOME} -consoleLog -nosplash -data /tmp \
+			-application org.eclipse.ant.core.antRunner \
+			-f ~/RHDS/updates/requirements/bpel/build-indigo.xml -Ddestination=/tmp/bpel-repo
+
+		or, headless on local:
+	
+		java -cp /home/nboldt/eclipse/eclipse361/plugins/org.eclipse.equinox.launcher_*.jar \
+			org.eclipse.equinox.launcher.Main -consoleLog -nosplash -data /tmp \
+			-application org.eclipse.ant.core.antRunner -f build-indigo.xml
+
+	-->
+	<target name="mirror">
+		<property name="URL1" value="https://raw.github.com/jeeeyul/eclipse-themes/master/net.jeeeyul.eclipse.themes.updatesite/" />
+		<property name="destination" value="${basedir}" />
+		<property name="compress" value="true" />
+        <property name="version" value="1.5"/>
+
+		<p2.mirror>
+			<repository location="file:${destination}/${version}/" name="Chrome Theme" />
+			<source>
+				<repository location="${URL1}" />
+			</source>
+
+			<slicingOptions includeFeatures="true" followStrict="true" latestversiononly="true" />
+		</p2.mirror>
+
+		<delete>
+			<fileset dir="${destination}/${version}/" includes="**/artifacts.jar, **/contents.jar"/>
+		</delete>
+
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/${version}/" artifactRepository="file:${destination}/${version}/" publishartifacts="true" source="${destination}/${version}/" compress="${compress}" />
+	</target>
+</project>
