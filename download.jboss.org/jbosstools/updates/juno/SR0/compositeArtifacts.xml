@@ -32,5 +32,9 @@
 <child location='../../requirements/swtbot/2.0.5/'/>
 <child location='../../requirements/xulrunner-1.9.2/'/>
 </children>
+
+<!-- Added for theming -->
+<child location='../../requirements/chrome-theme/1.5'/>
+
 </repository>
 
