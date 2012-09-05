@@ -8,14 +8,10 @@
  * Contributors:
  *     JBoss by Red Hat - Initial implementation.
  ************************************************************************************/
-package org.jboss.tools.project.examples.dialog;
+package org.jboss.tools.runtime.ui.download;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jface.dialogs.Dialog;
@@ -39,8 +35,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
-import org.jboss.tools.project.examples.ProjectExamplesActivator;
-import org.jboss.tools.project.examples.runtimes.DownloadRuntime;
+import org.jboss.tools.runtime.core.RuntimeCoreActivator;
+import org.jboss.tools.runtime.core.RuntimeExtensionManager;
+import org.jboss.tools.runtime.core.model.DownloadRuntime;
+import org.jboss.tools.runtime.ui.dialogs.AutoResizeTableLayout;
 
 /**
  * @author snjeza
@@ -55,8 +53,7 @@ public class DownloadRuntimeViewerDialog extends Dialog {
 		super(parentShell);
 		setShellStyle(SWT.CLOSE | SWT.MAX | SWT.TITLE | SWT.BORDER
 				| SWT.RESIZE | getDefaultOrientation());
-		// FIXME
-		downloadRuntimes = ProjectExamplesActivator.getDefault().getDownloadRuntimes();
+		downloadRuntimes = RuntimeCoreActivator.getDefault().getDownloadRuntimes(); 
 	}
 
 	@Override

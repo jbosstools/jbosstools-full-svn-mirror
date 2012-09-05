@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="org.jboss.tools.project.examples" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="org.jboss.tools.runtime.core" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
-         <meta.schema plugin="org.jboss.tools.project.examples" id="downloadruntimes" name="Download Runtimes"/>
+         <meta.schema plugin="org.jboss.tools.runtime.core" id="downloadruntimes" name="Download Runtimes"/>
       </appInfo>
       <documentation>
          Downloads a new Runtime

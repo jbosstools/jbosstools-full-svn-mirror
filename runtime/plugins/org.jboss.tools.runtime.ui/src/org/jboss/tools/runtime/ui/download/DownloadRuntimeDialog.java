@@ -8,7 +8,7 @@
  * Contributors:
  *     JBoss by Red Hat - Initial implementation.
  ************************************************************************************/
-package org.jboss.tools.project.examples.dialog;
+package org.jboss.tools.runtime.ui.download;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URL;
 import java.util.Enumeration;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.zip.ZipEntry;
@@ -33,7 +32,6 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.fieldassist.FieldDecoration;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
@@ -57,16 +55,15 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.browser.IWorkbenchBrowserSupport;
 import org.eclipse.ui.progress.IProgressService;
-import org.jboss.tools.project.examples.ProjectExamplesActivator;
-import org.jboss.tools.project.examples.filetransfer.ECFExamplesTransport;
-import org.jboss.tools.project.examples.runtimes.DownloadRuntime;
+import org.jboss.tools.common.zip.UnzipOperation;
 import org.jboss.tools.runtime.core.JBossRuntimeLocator;
 import org.jboss.tools.runtime.core.RuntimeCoreActivator;
+import org.jboss.tools.runtime.core.model.DownloadRuntime;
 import org.jboss.tools.runtime.core.model.IRuntimeDetector;
 import org.jboss.tools.runtime.core.model.RuntimeDefinition;
 import org.jboss.tools.runtime.core.model.RuntimePath;
+import org.jboss.tools.runtime.core.util.ECFTransport;
 import org.jboss.tools.runtime.ui.RuntimeUIActivator;
-import org.jboss.tools.runtime.ui.preferences.RuntimePreferencePage;
 
 /**
  * @author snjeza
@@ -97,7 +94,7 @@ public class DownloadRuntimeDialog extends Dialog {
 		super(parentShell);
 		setShellStyle(SWT.CLOSE | SWT.MAX | SWT.TITLE | SWT.BORDER
 				| SWT.RESIZE | getDefaultOrientation());
-		dialogSettings = ProjectExamplesActivator.getDefault().getDialogSettings();
+		dialogSettings = RuntimeUIActivator.getDefault().getDialogSettings();
 		this.downloadRuntime = downloadRuntime;
 	}
 
@@ -140,7 +137,7 @@ public class DownloadRuntimeDialog extends Dialog {
 							URL url = new URL("http://www.redhat.com/jboss/"); //$NON-NLS-1$
 							support.getExternalBrowser().openURL(url);
 						} catch (Exception e1) {
-							ProjectExamplesActivator.log(e1);
+							RuntimeUIActivator.log(e1);
 						}
 					}
 					
@@ -381,7 +378,7 @@ public class DownloadRuntimeDialog extends Dialog {
 			} else {
 				long cacheModified = file.lastModified();
 				try {
-					urlModified = ECFExamplesTransport.getInstance()
+					urlModified = ECFTransport.getInstance()
 							.getLastModified(url);
 					download = cacheModified <= 0 || cacheModified != urlModified;
 				} catch (CoreException e) {
@@ -394,7 +391,7 @@ public class DownloadRuntimeDialog extends Dialog {
 			IStatus result = null;
 			if (download) {
 				out = new BufferedOutputStream(new FileOutputStream(file));
-				result = ECFExamplesTransport.getInstance().download(
+				result = ECFTransport.getInstance().download(
 						file.getName(), url.toExternalForm(), out, monitor);
 				out.flush();
 				out.close();
@@ -412,9 +409,9 @@ public class DownloadRuntimeDialog extends Dialog {
 			if (!directory.isDirectory()) {
 				final String message = "The '" + directory + "' is not a directory.";
 				if (result != null) {
-					ProjectExamplesActivator.getDefault().getLog().log(result);
+					RuntimeUIActivator.getDefault().getLog().log(result);
 				} else {
-					ProjectExamplesActivator.getDefault().getLog().log(result);
+					RuntimeUIActivator.getDefault().getLog().log(result);
 				}
 				Display.getDefault().syncExec(new Runnable() {
 
@@ -428,9 +425,9 @@ public class DownloadRuntimeDialog extends Dialog {
 				file.delete();
 				return Status.CANCEL_STATUS;
 			}
-			ProjectExamplesActivator.extractZipFile(file, directory, monitor);
+			new UnzipOperation(file).execute(directory);
 			if (result != null && !result.isOK()) {
-				ProjectExamplesActivator.getDefault().getLog().log(result);
+				RuntimeUIActivator.getDefault().getLog().log(result);
 				final String message = getMessage(result);
 				Display.getDefault().syncExec(new Runnable() {
 
@@ -456,7 +453,7 @@ public class DownloadRuntimeDialog extends Dialog {
 			}
 			createRuntimes(selectedDirectory, monitor);
 		} catch (IOException e) {
-			ProjectExamplesActivator.log(e);
+			RuntimeUIActivator.log(e);
 			if (file != null && file.exists()) {
 				file.deleteOnExit();
 				file.delete();
@@ -525,7 +522,7 @@ public class DownloadRuntimeDialog extends Dialog {
 				}
 			}
 		} catch (IOException e) {
-			ProjectExamplesActivator.log(e);
+			RuntimeUIActivator.log(e);
 			return null;
 		} finally {
 			if (zipFile != null) {
