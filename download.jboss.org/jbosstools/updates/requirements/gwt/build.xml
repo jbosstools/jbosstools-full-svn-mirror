@@ -19,13 +19,13 @@
 		<property name="URL" value="http://dl.google.com/eclipse/plugin/4.2/"/>
 		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/gwt/" />
 		<property name="compress" value="true" />
-
 		<p2.mirror>
-			<repository location="file:${destination}/3.0.1.v201206290132-rel-r42" name="Google Plugin for Eclipse 4.2" />
+			<repository location="file:${destination}/3.1.0.v201208080121-rel-r42" name="Google Plugin for Eclipse 4.2" />
 			<source>
 				<repository location="${URL}" />
 			</source>
-			<!-- JBDS-1737: GPE and GWT SDK -->
+			<!--	Google App Engine Tools for Android	3.1.0.v201208080121-rel-r42
+				Google Web Toolkit SDK 2.4.0	2.4.0.v201208080121-rel-r42 -->
 			<iu id="com.google.gdt.eclipse.suite.e42.feature.feature.group"/>
 			<iu id="com.google.gwt.eclipse.sdkbundle.e42.feature.feature.group"/>
 
@@ -39,6 +39,6 @@
 			
 			<slicingOptions includeFeatures="true" followStrict="true" />
 		</p2.mirror>
-		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/3.0.1.v201206290132-rel-r42" artifactRepository="file:${destination}/3.0.1.v201206290132-rel-r42" publishartifacts="true" source="${destination}/3.0.1.v201206290132-rel-r42" compress="${compress}" />
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/3.1.0.v201208080121-rel-r42" artifactRepository="file:${destination}/3.1.0.v201208080121-rel-r42" publishartifacts="true" source="${destination}/3.1.0.v201208080121-rel-r42" compress="${compress}" />
 	</target>
 </project>

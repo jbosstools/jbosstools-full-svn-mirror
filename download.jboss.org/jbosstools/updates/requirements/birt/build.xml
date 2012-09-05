@@ -23,12 +23,13 @@
 
 	-->
 	<target name="mirror">
-		<property name="URL" value="http://download.eclipse.org/birt/update-site/4.2/" />
+		<!-- <property name="URL" value="http://download.eclipse.org/birt/update-site/4.2/" /> -->
+		<property name="URL" value="http://download.eclipse.org/birt/update-site/4.2-interim/" />
 		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/birt/" />
 		<property name="compress" value="true" />
 
 		<p2.mirror>
-			<repository location="file:${destination}/4.2.0.v20120613/" name="BIRT 4.2.0.v20120613 (Chart + WTP support only)" />
+			<repository location="file:${destination}/4.2.1.v20120904/" name="BIRT 4.2.1.v20120904 (Chart + WTP support only)" />
 			<source>
 				<repository location="${URL}" />
 			</source>
@@ -43,9 +44,9 @@
 		</p2.mirror>
 
 		<delete>
-			<fileset dir="${destination}/4.2.0.v20120613/" includes="**/artifacts.jar, **/contents.jar"/>
+			<fileset dir="${destination}/4.2.1.v20120904/" includes="**/artifacts.jar, **/contents.jar"/>
 		</delete>
 
-		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/4.2.0.v20120613/" artifactRepository="file:${destination}/4.2.0.v20120613/" publishartifacts="true" source="${destination}/4.2.0.v20120613/" compress="${compress}" />
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/4.2.1.v20120904/" artifactRepository="file:${destination}/4.2.1.v20120904/" publishartifacts="true" source="${destination}/4.2.1.v20120904/" compress="${compress}" />
 	</target>
 </project>
