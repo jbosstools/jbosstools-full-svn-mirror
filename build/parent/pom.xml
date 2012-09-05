@@ -43,7 +43,7 @@
 		<target.platform.classifier.local>local</target.platform.classifier.local>
 
 		<!-- 1a. URL of latest JBT target platform site -->
-		<jbosstools-target-site>http://download.jboss.org/jbosstools/updates/target-platform_4.0.juno.SR0/latest/</jbosstools-target-site>
+		<jbosstools-target-site>http://download.jboss.org/jbosstools/updates/target-platform_4.0.juno.SR0a/latest/</jbosstools-target-site>
 
 		<!-- 1b. or use -Plocal.site -Dlocal.site=file:///${HOME}/trunk/build/target-platform/REPO/ -->
 		<!-- TODO: don't forget to update JBDS .updatesite jobs when this value changes! -->
