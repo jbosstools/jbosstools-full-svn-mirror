@@ -22,7 +22,7 @@
 		<!-- <property name="URL1" value="http://download.eclipse.org/mylyn/releases/latest" /> -->
 		<!-- TODO: make sure that the version of Mylyn in Juno (or on the URL above?) is the same as the version used on the Atlassian site! -->
 		<property name="URL1" value="http://update.atlassian.com/atlassian-eclipse-plugin/e3.8" />
-		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/atlassian/3.0.5.v20120518/" />
+		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/atlassian/3.0.6.v20120628/" />
 		<property name="compress" value="true" />
 
 		<p2.mirror>
