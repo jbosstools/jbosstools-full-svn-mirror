@@ -3,9 +3,9 @@
 <repository name='JBoss Tools Requirements - Composite Juno SR0 Mirror' type='org.eclipse.equinox.internal.p2.metadata.repository.CompositeMetadataRepository' version='1.0.0'>
 <properties size='2'>
 <property name='p2.compressed' value='true'/>
-<property name='p2.timestamp' value='1342137618000'/>
+<property name='p2.timestamp' value='1346860335000'/>
 </properties>
-<children size='13'>
+<children size='14'>
 <!-- new for Juno -->
 <child location='../../requirements/juno/201206270900-R/'/>
 <child location='../../requirements/atlassian/3.0.6.v20120628/'/>
@@ -33,7 +33,7 @@
 <child location='../../requirements/xulrunner-1.9.2/'/>
 
 <!-- Added for theming -->
-<child location='../../requirements/chrome-theme/1.5'/>
+<child location='../../requirements/chrome-theme/1.5/'/>
 
 </children>
 </repository>
