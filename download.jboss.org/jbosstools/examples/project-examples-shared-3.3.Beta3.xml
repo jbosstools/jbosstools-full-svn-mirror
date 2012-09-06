@@ -33,7 +33,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 				<property name="id">org.maven.ide.eclipse.wtp</property>
 				<property name="versions">[0.13.1,0.17)</property>
 				<property name="description">This project example requires m2eclipse-wtp &gt;= 0.13.1.</property>
-				<property name="connectorIds">org.maven.ide.eclipse.wtp</property>
+				<property name="connectorIds">org.maven.ide.eclipse.wtp.feature</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.jboss.tools.maven.core</property>
@@ -89,7 +89,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 				<property name="id">org.maven.ide.eclipse.wtp</property>
 				<property name="versions">[0.13.1,0.17)</property>
 				<property name="description">This project example requires m2eclipse-wtp &gt;= 0.13.1.</property>
-				<property name="connectorIds">org.maven.ide.eclipse.wtp</property>
+				<property name="connectorIds">org.maven.ide.eclipse.wtp.feature</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.jboss.tools.maven.core</property>
@@ -144,7 +144,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 				<property name="id">org.maven.ide.eclipse.wtp</property>
 				<property name="versions">[0.13.1,0.15.0)</property>
 				<property name="description">This project example requires m2eclipse-wtp &gt;= 0.13.1.</property>
-				<property name="connectorIds">org.maven.ide.eclipse.wtp</property>
+				<property name="connectorIds">org.maven.ide.eclipse.wtp.feature</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.jboss.tools.maven.core</property>
@@ -198,7 +198,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 				<property name="id">org.maven.ide.eclipse.wtp</property>
 				<property name="versions">[0.13.1,0.17)</property>
 				<property name="description">This project example requires m2eclipse-wtp &gt;= 0.13.1.</property>
-				<property name="connectorIds">org.maven.ide.eclipse.wtp</property>
+				<property name="connectorIds">org.maven.ide.eclipse.wtp.feature</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.jboss.tools.maven.core</property>
@@ -260,7 +260,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 				<property name="id">org.maven.ide.eclipse.wtp</property>
 				<property name="versions">[0.13.1,0.17)</property>
 				<property name="description">This project example requires m2eclipse-wtp &gt;= 0.13.1.</property>
-				<property name="connectorIds">org.maven.ide.eclipse.wtp</property>
+				<property name="connectorIds">org.maven.ide.eclipse.wtp.feature</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.jboss.tools.maven.core</property>
@@ -319,7 +319,7 @@ Make sure you read the deployment instructions in README.md</description>
 				<property name="id">org.maven.ide.eclipse.wtp</property>
 				<property name="versions">[0.15.1,0.17)</property>
 				<property name="description">This project example requires m2eclipse-wtp &gt;= 0.15.</property>
-				<property name="connectorIds">org.maven.ide.eclipse.wtp</property>
+				<property name="connectorIds">org.maven.ide.eclipse.wtp.feature</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.jboss.tools.maven.core</property>

@@ -28,7 +28,7 @@ The example can be deployed using Maven from the command line or from Eclipse us
 				<property name="id">org.eclipse.m2e.wtp</property>
 				<property name="versions">[0.16,2.0)</property>
 				<property name="description">This project example requires m2e-wtp &gt;= 0.16.0.</property>
-				<property name="connectorIds">org.eclipse.m2e.wtp.feature</property>
+				<property name="connectorIds">org.maven.ide.eclipse.wtp.feature</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.jboss.tools.maven.core</property>
@@ -75,7 +75,7 @@ You will see a Hello AS7 World!! message appear on the console when this is done
 				<property name="id">org.eclipse.m2e.wtp</property>
 				<property name="versions">[0.16,2.0)</property>
 				<property name="description">This project example requires m2e-wtp &gt;= 0.16.0.</property>
-				<property name="connectorIds">org.eclipse.m2e.wtp.feature</property>
+				<property name="connectorIds">org.maven.ide.eclipse.wtp.feature</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.jboss.tools.maven.core</property>
@@ -118,7 +118,7 @@ The example can be deployed using Maven from the command line or from Eclipse us
 				<property name="id">org.eclipse.m2e.wtp</property>
 				<property name="versions">[0.16,2.0)</property>
 				<property name="description">This project example requires m2e-wtp &gt;= 0.16.0.</property>
-				<property name="connectorIds">org.eclipse.m2e.wtp.feature</property>
+				<property name="connectorIds">org.maven.ide.eclipse.wtp.feature</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.jboss.tools.maven.core</property>
@@ -162,7 +162,7 @@ The example can be deployed using Maven from the command line or from Eclipse us
 				<property name="id">org.eclipse.m2e.wtp</property>
 				<property name="versions">[0.16,2.0)</property>
 				<property name="description">This project example requires m2e-wtp &gt;= 0.16.0.</property>
-				<property name="connectorIds">org.eclipse.m2e.wtp.feature</property>
+				<property name="connectorIds">org.maven.ide.eclipse.wtp.feature</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.jboss.tools.maven.core</property>
@@ -207,7 +207,7 @@ It includes a persistence unit and some sample persistence and transaction code 
 				<property name="id">org.eclipse.m2e.wtp</property>
 				<property name="versions">[0.16,2.0)</property>
 				<property name="description">This project example requires m2e-wtp &gt;= 0.16.0.</property>
-				<property name="connectorIds">org.eclipse.m2e.wtp.feature</property>
+				<property name="connectorIds">org.maven.ide.eclipse.wtp.feature</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.jboss.tools.maven.core</property>
@@ -248,7 +248,7 @@ POH5 is basically a smart, HTML5+CSS3+JavaScript front-end using RESTful service
 				<property name="id">org.eclipse.m2e.wtp</property>
 				<property name="versions">[0.16,2.0)</property>
 				<property name="description">This project example requires m2e-wtp &gt;= 0.16.0.</property>
-				<property name="connectorIds">org.eclipse.m2e.wtp.feature</property>
+				<property name="connectorIds">org.maven.ide.eclipse.wtp.feature</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.jboss.tools.maven.core</property>

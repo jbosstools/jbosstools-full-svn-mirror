@@ -33,7 +33,7 @@ This project is based on the org.jboss.spec.archetypes:jboss-javaee6-webapp-arch
 				<property name="id">org.eclipse.m2e.wtp</property>
 				<property name="versions">[0.16,2.0)</property>
 				<property name="description">This project example requires m2e-wtp &gt;= 0.16.0.</property>
-				<property name="connectorIds">org.eclipse.m2e.wtp.feature</property>
+				<property name="connectorIds">org.maven.ide.eclipse.wtp.feature</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.jboss.tools.maven.core</property>
@@ -93,7 +93,7 @@ This project is based on the org.jboss.spec.archetypes:jboss-javaee6-webapp-ear-
 				<property name="id">org.eclipse.m2e.wtp</property>
 				<property name="versions">[0.16,2.0)</property>
 				<property name="description">This project example requires m2e-wtp &gt;= 0.16.0.</property>
-				<property name="connectorIds">org.eclipse.m2e.wtp.feature</property>
+				<property name="connectorIds">org.maven.ide.eclipse.wtp.feature</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.jboss.tools.maven.core</property>
@@ -151,7 +151,7 @@ This project is based on the org.jboss.aerogear.archetypes:jboss-html5-mobile-ar
 				<property name="id">org.eclipse.m2e.wtp</property>
 				<property name="versions">[0.16,2.0)</property>
 				<property name="description">This project example requires m2e-wtp &gt;= 0.16.0.</property>
-				<property name="connectorIds">org.eclipse.m2e.wtp.feature</property>
+				<property name="connectorIds">org.maven.ide.eclipse.wtp.feature</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.jboss.tools.maven.core</property>
@@ -207,7 +207,7 @@ This project is based on the org.richfaces.archetypes:richfaces-archetype-kitche
 				<property name="id">org.eclipse.m2e.wtp</property>
 				<property name="versions">[0.16,2.0)</property>
 				<property name="description">This project example requires m2e-wtp &gt;= 0.16.0.</property>
-				<property name="connectorIds">org.eclipse.m2e.wtp.feature</property>
+				<property name="connectorIds">org.maven.ide.eclipse.wtp.feature</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.jboss.tools.maven.core</property>
@@ -274,7 +274,7 @@ This project is based on the org.jboss.spring.archetypes:spring-mvc-webapp:1.0.0
 				<property name="id">org.eclipse.m2e.wtp</property>
 				<property name="versions">[0.16,2.0)</property>
 				<property name="description">This project example requires m2e-wtp &gt;= 0.16.0.</property>
-				<property name="connectorIds">org.eclipse.m2e.wtp.feature</property>
+				<property name="connectorIds">org.maven.ide.eclipse.wtp.feature</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.jboss.tools.maven.core</property>
@@ -334,7 +334,7 @@ This project is based on the org.jboss.errai.archetypes:jboss-errai-kitchensink-
 				<property name="id">org.eclipse.m2e.wtp</property>
 				<property name="versions">[0.16,2.0)</property>
 				<property name="description">This project example requires m2e-wtp &gt;= 0.16.0.</property>
-				<property name="connectorIds">org.eclipse.m2e.wtp.feature</property>
+				<property name="connectorIds">org.maven.ide.eclipse.wtp.feature</property>
 			</fix>
 			<fix type="plugin">
 				<property name="id">org.jboss.tools.maven.core</property>
