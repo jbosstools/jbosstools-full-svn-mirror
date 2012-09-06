@@ -18,16 +18,18 @@ import java.util.List;
 import org.drools.eclipse.util.DroolsRuntime;
 import org.drools.eclipse.util.DroolsRuntimeManager;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.jboss.tools.runtime.core.model.AbstractRuntimeDetector;
+import org.jboss.tools.runtime.core.model.AbstractRuntimeDetectorDelegate;
+import org.jboss.tools.runtime.core.model.IRuntimeDetectorDelegate;
 import org.jboss.tools.runtime.core.model.RuntimeDefinition;
+import org.jboss.tools.runtime.core.util.RuntimeJarUtil;
 
-public class DroolsHandler extends AbstractRuntimeDetector {
+public class DroolsHandler extends AbstractRuntimeDetectorDelegate {
 
 	private static final String DROOLS = "DROOLS"; // NON-NLS-1$
 	private static final String SOA_P = "SOA-P"; //$NON-NLS-1$
 
 	@Override
-	public void initializeRuntimes(List<RuntimeDefinition> serverDefinitions) {
+	public void initializeRuntimes(List<RuntimeDefinition> runtimeDefinitions) {
 		DroolsRuntime[] existingRuntimes = DroolsRuntimeManager
 				.getDroolsRuntimes();
 		List<DroolsRuntime> droolsRuntimes = new ArrayList<DroolsRuntime>();
@@ -36,7 +38,7 @@ public class DroolsHandler extends AbstractRuntimeDetector {
 				droolsRuntimes.add(runtime);
 			}
 		}
-		initializeInternal(serverDefinitions, droolsRuntimes);
+		initializeInternal(runtimeDefinitions, droolsRuntimes);
 		if (droolsRuntimes.size() > 0) {
 			DroolsRuntime[] dra = droolsRuntimes.toArray(new DroolsRuntime[0]);
 			DroolsRuntimeManager.setDroolsRuntimes(dra);
@@ -53,7 +55,7 @@ public class DroolsHandler extends AbstractRuntimeDetector {
 					File droolsRoot = runtimeDefinition.getLocation(); //$NON-NLS-1$
 					if (droolsRoot.isDirectory()) {
 						DroolsRuntime runtime = new DroolsRuntime();
-						runtime.setName("Drools " + runtimeDefinition.getVersion() + " - " + serverDefinition.getName()); //$NON-NLS-1$
+						runtime.setName("Drools " + runtimeDefinition.getVersion() + " - " + runtimeDefinition.getName()); //$NON-NLS-1$
 						runtime.setPath(droolsRoot.getAbsolutePath());
 						DroolsRuntimeManager.recognizeJars(runtime);
 						runtime.setDefault(true);
@@ -61,7 +63,7 @@ public class DroolsHandler extends AbstractRuntimeDetector {
 					}
 				}
 			}
-			initializeInternal(runtimeDefinition.getIncludedServerDefinitions(),
+			initializeInternal(runtimeDefinition.getIncludedRuntimeDefinitions(),
 					droolsRuntimes);
 		}
 	}
@@ -100,7 +102,7 @@ public class DroolsHandler extends AbstractRuntimeDetector {
 			}
 		});
 		if (files != null && files.length > 0) {
-			String version = getImplementationVersion(root, files[0]);
+			String version = RuntimeJarUtil.getImplementationVersion(root, files[0]);
 			if (version != null) {
 				version = version.substring(0, 3);
 				return new RuntimeDefinition(root.getName(), version, DROOLS,
@@ -121,12 +123,6 @@ public class DroolsHandler extends AbstractRuntimeDetector {
 	@Override
 	public void computeIncludedRuntimeDefinition(
 			RuntimeDefinition runtimeDefinition) {
-		calculateIncludedServerDefinition(runtimeDefinition);
-	}
-
-	@Deprecated /* Does this belong here? Static with no callers? */
-	public static void calculateIncludedServerDefinition(
-			RuntimeDefinition runtimeDefinition) {
 		if (runtimeDefinition == null
 				|| !SOA_P.equals(runtimeDefinition.getType())) {
 			return;
@@ -137,8 +133,7 @@ public class DroolsHandler extends AbstractRuntimeDetector {
 			RuntimeDefinition sd = new RuntimeDefinition(name,
 					runtimeDefinition.getVersion(), DROOLS, droolsRoot);
 			sd.setParent(runtimeDefinition);
-			runtimeDefinition.getIncludedServerDefinitions().add(sd);
+			runtimeDefinition.getIncludedRuntimeDefinitions().add(sd);
 		}
 	}
-
 }

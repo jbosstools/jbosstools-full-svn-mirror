@@ -19,10 +19,11 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.jboss.tools.jbpm.preferences.JbpmInstallation;
 import org.jboss.tools.jbpm.preferences.PreferencesManager;
-import org.jboss.tools.runtime.core.model.AbstractRuntimeDetector;
+import org.jboss.tools.runtime.core.model.AbstractRuntimeDetectorDelegate;
+import org.jboss.tools.runtime.core.model.IRuntimeDetectorDelegate;
 import org.jboss.tools.runtime.core.model.RuntimeDefinition;
 
-public class JbpmHandler extends AbstractRuntimeDetector {
+public class JbpmHandler extends AbstractRuntimeDetectorDelegate {
 	
 	private static final String JBPM3 = "jBPM3"; //$NON-NLS-1$
 	private static final String JBPM4 = "jBPM4"; //$NON-NLS-1$
@@ -54,7 +55,7 @@ public class JbpmHandler extends AbstractRuntimeDetector {
 					PreferencesManager.getInstance().addJbpmInstallation(runtimeDefinition.getName(), jbpmRoot.getAbsolutePath(), runtimeDefinition.getVersion());
 				}
 			}
-			initializeRuntimes(runtimeDefinition.getIncludedServerDefinitions());
+			initializeRuntimes(runtimeDefinition.getIncludedRuntimeDefinitions());
 		}
 		
 	}
@@ -118,15 +119,15 @@ public class JbpmHandler extends AbstractRuntimeDetector {
 	}
 	
 	@Override
-	public boolean exists(RuntimeDefinition serverDefinition) {
-		if (serverDefinition == null || serverDefinition.getLocation() == null) {
+	public boolean exists(RuntimeDefinition runtimeDefinition) {
+		if (runtimeDefinition == null || runtimeDefinition.getLocation() == null) {
 			return false;
 		}
-		return jbpmExists(serverDefinition);
+		return jbpmExists(runtimeDefinition);
 	}
 
-	@Deprecated /* Does this belong as static? Nobody calls this */
-	public static void calculateIncludedRuntimeDefinition(
+	@Override
+	public void computeIncludedRuntimeDefinition(
 			RuntimeDefinition runtimeDefinition) {
 		if (runtimeDefinition == null || !SOA_P.equals(runtimeDefinition.getType())) {
 			return;
@@ -139,14 +140,12 @@ public class JbpmHandler extends AbstractRuntimeDetector {
 			}
 			RuntimeDefinition sd = new RuntimeDefinition(runtimeDefinition.getName(), version, JBPM, jbpmRoot);
 			sd.setParent(runtimeDefinition);
-			runtimeDefinition.getIncludedServerDefinitions().add(sd);
+			runtimeDefinition.getIncludedRuntimeDefinitions().add(sd);
 		}
 	}
-	
-	@Override
-	public void computeIncludedRuntimeDefinition(
-			RuntimeDefinition runtimeDefinition) {
-		calculateIncludedRuntimeDefinition(runtimeDefinition);
-	}
 
+	@Override
+	public String getVersion(RuntimeDefinition runtimeDefinition) {
+		return runtimeDefinition.getVersion();
+	}
 }

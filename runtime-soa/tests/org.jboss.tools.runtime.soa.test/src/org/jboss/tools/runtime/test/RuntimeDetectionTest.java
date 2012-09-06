@@ -41,8 +41,8 @@ import org.jboss.ide.eclipse.as.core.util.IJBossToolingConstants;
 import org.jboss.tools.runtime.as.detector.IJBossRuntimePluginConstants;
 import org.jboss.tools.runtime.core.JBossRuntimeLocator;
 import org.jboss.tools.runtime.core.RuntimeCoreActivator;
+import org.jboss.tools.runtime.core.internal.InvalidRuntimeDetector;
 import org.jboss.tools.runtime.core.model.IRuntimeDetector;
-import org.jboss.tools.runtime.core.model.InvalidRuntimeDetector;
 import org.jboss.tools.runtime.core.model.RuntimePath;
 import org.jboss.tools.runtime.core.model.RuntimeDefinition;
 import org.jboss.tools.runtime.ui.RuntimeUIActivator;
@@ -329,8 +329,8 @@ public class RuntimeDetectionTest implements IJBossRuntimePluginConstants {
 		for (RuntimeDefinition serverDefinition:RuntimeUIActivator.getDefault().getServerDefinitions()){
 			String type = serverDefinition.getType();
 			if (EAP.equals(type)) {
-				assertTrue("EAP has to include server definitions", serverDefinition.getIncludedServerDefinitions().size() > 0);
-				for(RuntimeDefinition included:serverDefinition.getIncludedServerDefinitions()) {
+				assertTrue("EAP has to include server definitions", serverDefinition.getIncludedRuntimeDefinitions().size() > 0);
+				for(RuntimeDefinition included:serverDefinition.getIncludedRuntimeDefinitions()) {
 					assertTrue("Invalid parent definition", included.getParent() == serverDefinition);
 				}
 			}

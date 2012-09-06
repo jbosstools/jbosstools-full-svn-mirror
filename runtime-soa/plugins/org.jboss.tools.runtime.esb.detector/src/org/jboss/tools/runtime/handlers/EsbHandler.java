@@ -16,10 +16,10 @@ import java.util.List;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.jboss.tools.esb.core.runtime.JBossESBRuntime;
 import org.jboss.tools.esb.core.runtime.JBossRuntimeManager;
-import org.jboss.tools.runtime.core.model.AbstractRuntimeDetector;
+import org.jboss.tools.runtime.core.model.AbstractRuntimeDetectorDelegate;
 import org.jboss.tools.runtime.core.model.RuntimeDefinition;
 
-public class EsbHandler extends AbstractRuntimeDetector {
+public class EsbHandler extends AbstractRuntimeDetectorDelegate {
 
 	private static final String DEFAULT_CONFIGURATION = "default";
 	private static final String ESB = "ESB"; //$NON-NLS-1$
@@ -38,7 +38,7 @@ public class EsbHandler extends AbstractRuntimeDetector {
 					JBossRuntimeManager.getInstance().addRuntime(runtime);
 				}
 			}
-			initializeRuntimes(runtimeDefinition.getIncludedServerDefinitions());
+			initializeRuntimes(runtimeDefinition.getIncludedRuntimeDefinitions());
 		}
 	}
 
@@ -57,7 +57,24 @@ public class EsbHandler extends AbstractRuntimeDetector {
 		return false;
 	}
 
-	public RuntimeDefinition getServerDefinition(File root,
+	@Override
+	public boolean exists(RuntimeDefinition runtimeDefinition) {
+		if (runtimeDefinition == null || runtimeDefinition.getLocation() == null) {
+			return false;
+		}
+		return esbExists(runtimeDefinition);
+	}
+	
+	@Override
+	public String getVersion(RuntimeDefinition runtimeDefinition) {
+		if (runtimeDefinition == null || runtimeDefinition.getLocation() == null) {
+			return null;
+		}
+		return JBossRuntimeManager.getInstance().getVersion(runtimeDefinition.getLocation().getAbsolutePath(), DEFAULT_CONFIGURATION);
+	}
+
+	@Override
+	public RuntimeDefinition getRuntimeDefinition(File root,
 			IProgressMonitor monitor) {
 		if (monitor.isCanceled() || root == null) {
 			return null;
@@ -67,18 +84,7 @@ public class EsbHandler extends AbstractRuntimeDetector {
 	}
 
 	@Override
-	public boolean exists(RuntimeDefinition serverDefinition) {
-		if (serverDefinition == null || serverDefinition.getLocation() == null) {
-			return false;
-		}
-		return esbExists(serverDefinition);
-	}
-	
-	@Override
-	public String getVersion(RuntimeDefinition serverDefinition) {
-		if (serverDefinition == null || serverDefinition.getLocation() == null) {
-			return null;
-		}
-		return JBossRuntimeManager.getInstance().getVersion(serverDefinition.getLocation().getAbsolutePath(), DEFAULT_CONFIGURATION);
+	public void computeIncludedRuntimeDefinition(
+			RuntimeDefinition runtimeDefinition) {
 	}
 }
