@@ -23,9 +23,12 @@
 	<target name="run" depends="mirror,regen"/>
 	<target name="mirror">
 		<p2.mirror>
+			<!-- this did nothing to reduce the size of .blobstore <comparator><exclude><artifact><property name="format" value="packed" /></artifact></exclude></comparator> -->
 			<repository location="file:${destination}/201209031953-M/" name="Juno 201209031953-M" />
 			<source>
-				<repository location="${URL1}" />
+				<repository location="${URL1}"/>
+					<!-- despite the wiki, this is not allowed <properties size="1"><property name="publishPackFilesAsSiblings" value="true"/></properties>
+				</repository> -->
 			</source>
 
 			<slicingOptions includeFeatures="true" followStrict="true" />
@@ -33,9 +36,9 @@
 	</target>
 	<target name="regen">
 
-		<!-- remove OTDT patched version of o.e.jdt.core, and all other o.e.ot.otdt features/plugins -->
+		<!-- remove OTDT patched version of o.e.jdt.core, and all other o.e.ot.otdt features/plugins; remove pack.gz files too -->
 		<delete>
-			<fileset dir="${destination}/201209031953-M/" includes="**/org.eclipse.jdt.core_*OTDT*.jar*, **/org.eclipse.objectteams.otdt*.jar*"/>
+			<fileset dir="${destination}/201209031953-M/" includes="**/*.pack.gz, **/org.eclipse.jdt.core_*OTDT*.jar*, **/org.eclipse.objectteams.otdt*.jar*"/>
 		</delete>
 		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/201209031953-M/" artifactRepository="file:${destination}/201209031953-M/" publishartifacts="true" source="${destination}/201209031953-M/" compress="${compress}" />
 	</target>
