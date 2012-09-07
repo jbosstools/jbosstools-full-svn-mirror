@@ -3,11 +3,11 @@
 <repository name='JBoss Tools Requirements - Composite Juno SR0a Mirror' type='org.eclipse.equinox.internal.p2.artifact.repository.CompositeArtifactRepository' version='1.0.0'>
 <properties size='2'>
 <property name='p2.compressed' value='true'/>
-<property name='p2.timestamp' value='1346873920000'/>
+<property name='p2.timestamp' value='1347033375000'/>
 </properties>
 <children size='13'>
 <!-- new for Juno SR1 -->
-<child location='../../requirements/juno/201209031953-M/'/>
+<child location='../../requirements/juno/20120905-1534-M/'/>
 <child location='../../requirements/birt/4.2.1.v20120904/'/>
 <child location='../../requirements/eclipse/M20120829-1200/'/>
 <child location='../../requirements/webtools/M-3.4.1-20120831042944/'/>
