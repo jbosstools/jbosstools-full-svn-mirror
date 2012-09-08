@@ -3,13 +3,14 @@
 <repository name='JBoss Tools Requirements - Composite Indigo Mirror - Extras' type='org.eclipse.equinox.internal.p2.metadata.repository.CompositeMetadataRepository' version='1.0.0'>
 <properties size='2'>
 <property name='p2.compressed' value='true'/>
-<property name='p2.timestamp' value='1338842177000'/>
+<property name='p2.timestamp' value='1347138004000'/>
 </properties>
 <children size='7'>
 <child location='../../../requirements/eclipsecs/5.4.0.201109110000/'/>
 <child location='../../../requirements/findbugs/1.3.9/'/>
 <!-- JBDS-2189 remove <child location='../../../requirements/jslint/1.5/'/> -->
-<child location='../../../requirements/pmd/3.2.4/'/>
+<!-- JBIDE-12562 use pmd 3.2.6 instead of 3.2.4 -->
+<child location='../../../requirements/pmd/3.2.6/'/>
 <child location='../../../requirements/springide/2.7.2.201109122348/'/>
 
 <child location='../../../requirements/subclipse/1.6_1.3/'/>
