@@ -43,8 +43,8 @@ import org.jboss.tools.runtime.core.JBossRuntimeLocator;
 import org.jboss.tools.runtime.core.RuntimeCoreActivator;
 import org.jboss.tools.runtime.core.internal.InvalidRuntimeDetector;
 import org.jboss.tools.runtime.core.model.IRuntimeDetector;
-import org.jboss.tools.runtime.core.model.RuntimePath;
 import org.jboss.tools.runtime.core.model.RuntimeDefinition;
+import org.jboss.tools.runtime.core.model.RuntimePath;
 import org.jboss.tools.runtime.ui.RuntimeUIActivator;
 import org.jboss.tools.seam.core.project.facet.SeamRuntime;
 import org.jboss.tools.seam.core.project.facet.SeamRuntimeManager;
@@ -75,8 +75,7 @@ public class RuntimeDetectionTest implements IJBossRuntimePluginConstants {
 	}
 
 	private static void addRuntimePaths() {
-		Set<RuntimePath> runtimePaths = RuntimeUIActivator.getDefault()
-				.getRuntimePaths();
+		RuntimePath[] runtimePaths = RuntimeUIActivator.getRuntimePaths();
 		String[] paths = { IRuntimeDetectionConstants.JBOSS_42_HOME,
 				IRuntimeDetectionConstants.JBOSS_51_HOME,
 				IRuntimeDetectionConstants.JBOSS_70_HOME,
@@ -134,17 +133,15 @@ public class RuntimeDetectionTest implements IJBossRuntimePluginConstants {
 
 	@Test
 	public void testRuntimePaths() {
-		Set<RuntimePath> runtimePaths = RuntimeUIActivator.getDefault()
-				.getRuntimePaths();
+		RuntimePath[] runtimePaths = RuntimeUIActivator.getRuntimePaths();
 		assertTrue(
 				"runtimePaths.size()\nExpected: 6\nWas: " + runtimePaths.size(),
-				runtimePaths.size() == 6);
+				runtimePaths.length == 6);
 	}
 	
 	@Test
 	public void testRuntimePathsExists() {
-		Set<RuntimePath> runtimePaths = RuntimeUIActivator.getDefault()
-				.getRuntimePaths();
+		RuntimePath[] runtimePaths = RuntimeUIActivator.getRuntimePaths();
 		for (RuntimePath runtimePath:runtimePaths) {
 			String path = runtimePath.getPath();
 			File file = new File(path);
@@ -207,8 +204,7 @@ public class RuntimeDetectionTest implements IJBossRuntimePluginConstants {
 	public void testServerDefinitions() {
 		List<RuntimeDefinition> serverDefinitions = RuntimeUIActivator
 				.getDefault().getServerDefinitions();
-		Set<RuntimePath> runtimePaths = RuntimeUIActivator.getDefault()
-			.getRuntimePaths();
+		RuntimePath[] runtimePaths = RuntimeUIActivator.getRuntimePaths();
 		assertTrue("serverDefinitions.size()\nExpected: 6\nWas: "
 				+ serverDefinitions.size() + 
 				"\nserverDefinitions: " + serverDefinitions +
