@@ -3,9 +3,9 @@
 <repository name='JBoss Tools Requirements - Composite Juno Mirror - Extras' type='org.eclipse.equinox.internal.p2.artifact.repository.CompositeArtifactRepository' version='1.0.0'>
 <properties size='2'>
 <property name='p2.compressed' value='true'/>
-<property name='p2.timestamp' value='1321632890000'/>
+<property name='p2.timestamp' value='1347296280000'/>
 </properties>
 <children size='1'>
-<child location='../../indigo/extras/'/>
+<child location='SR0a/'/>
 </children>     
 </repository>
