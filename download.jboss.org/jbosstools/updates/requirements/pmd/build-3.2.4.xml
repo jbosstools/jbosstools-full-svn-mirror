@@ -16,19 +16,12 @@
 			-f ~/RHDS/updates/requirements/pmd/build.xml -Ddestination=/tmp/pmd-repo
 	-->
 	<target name="mirror">
-		<property name="URL" value="http://pmd.sourceforge.net/eclipse" />
-		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/pmd/3.2.6/" />
+
+		<!-- get PMD 3.2.4 from Sourceforge - download the zip and unpack it here, then use p2.publish to regen metadata -->
+
+		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/pmd/3.2.4/" />
 		<property name="compress" value="true" />
 
-		<p2.mirror>
-			<repository location="file:${destination}/3.2.6/" name="pmd plugins for Eclipse 3.6 - 3.7" />
-			<source>
-				<repository location="${URL}" />
-			</source>
-
-			<slicingoptions includefeatures="true" followstrict="true" latestversiononly="true" />
-		</p2.mirror>
-
-		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/3.2.6/" artifactRepository="file:${destination}/3.2.6/" publishartifacts="true" source="${destination}/3.2.6/" compress="${compress}" />
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/3.2.4/" artifactRepository="file:${destination}/3.2.4/" publishartifacts="true" source="${destination}/3.2.4/" compress="${compress}" />
 	</target>
 </project>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project default="mirror">
+<project default="run">
 	<!-- run locally in Eclipse (to resolve p2 tasks) using these commandline options:
 	
 		-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} 
@@ -15,13 +15,23 @@
 			-application org.eclipse.ant.core.antRunner \
 			-f ~/RHDS/updates/requirements/pmd/build.xml -Ddestination=/tmp/pmd-repo
 	-->
+	<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/pmd/3.2.6/" />
+	<property name="compress" value="true" />
+	<property name="URL1" value="http://pmd.sourceforge.net/eclipse" />
+	<target name="run" depends="mirror,regen"/>
 	<target name="mirror">
+		<p2.mirror>
+			<repository location="file:${destination}/3.2.6/" name="pmd plugin for Eclipse" />
+			<source>
+				<repository location="${URL1}" />
+			</source>
 
-		<!-- get PMD 3.2.4 from Sourceforge - download the zip and unpack it here, then use p2.publish to regen metadata -->
+			<slicingoptions includefeatures="true" followstrict="true" latestversiononly="true" />
+			<iu id="net.sourceforge.pmd.eclipse.feature.group" />
+		</p2.mirror>
+	</target>
+	<target name="regen">
 
-		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/pmd/3.2.4/" />
-		<property name="compress" value="true" />
-
-		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/3.2.4/" artifactRepository="file:${destination}/3.2.4/" publishartifacts="true" source="${destination}/3.2.4/" compress="${compress}" />
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/3.2.6/" artifactRepository="file:${destination}/3.2.6/" publishartifacts="true" source="${destination}/3.2.6/" compress="${compress}" />
 	</target>
 </project>
