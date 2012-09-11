@@ -72,8 +72,9 @@ public class VpeIncludeTemplate extends VpeAbstractTemplate {
 							Document document = pageContext.getVisualBuilder().getIncludeDocuments().get(file);
 							if (document == null) {
 								document = VpeCreatorUtil.getDocumentForRead(file);
-								if (document != null)
+								if (document != null) {
 									pageContext.getVisualBuilder().getIncludeDocuments().put(file, document);
+								}
 							}
 							if (document != null) {
 								VpeCreationData creationData = createInclude(document, visualDocument);
