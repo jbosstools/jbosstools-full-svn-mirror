@@ -90,13 +90,16 @@ clean ()
 		getSubDirs $sd 1; #return #getSubDirsReturn
 		getSubDirsCount $getSubDirsReturn; #return $getSubDirsCountReturn
 		if [[ $getSubDirsCountReturn -gt 0 ]]; 
+			echo "Generate metadata ${getSubDirsCountReturn} subdirs in $sd/" | tee -a $log	
 			mkdir -p /tmp/cleanup-fresh-metadata/
 			regenCompositeMetadata "$getSubDirsReturn" "$getSubDirsCountReturn" "org.eclipse.equinox.internal.p2.metadata.repository.CompositeMetadataRepository" "/tmp/cleanup-fresh-metadata/compositeContent.xml"
 			regenCompositeMetadata "$getSubDirsReturn" "$getSubDirsCountReturn" "org.eclipse.equinox.internal.p2.artifact.repository.CompositeArtifactRepository" "/tmp/cleanup-fresh-metadata/compositeArtifacts.xml"
 			rsync --rsh=ssh --protocol=28 -q /tmp/cleanup-fresh-metadata/composite*.xml tools@filemgmt.jboss.org:$sd/
 			rm -fr /tmp/cleanup-fresh-metadata/
 		else
+			echo "No subdirs found in $sd/" | tee -a $log	
 			# TODO delete composite*.xml from $sd/ folder if there are no subdirs present
+
 		fi
 	done
 	echo "" | tee -a $log	
