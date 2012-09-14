@@ -90,8 +90,8 @@ clean ()
 		getSubDirs $sd 1; #return #getSubDirsReturn
 		getSubDirsCount $getSubDirsReturn; #return $getSubDirsCountReturn
 		mkdir -p /tmp/cleanup-fresh-metadata/
-		regenCompositeMetadata $getSubDirsReturn $getSubDirsCountReturn org.eclipse.equinox.internal.p2.metadata.repository.CompositeMetadataRepository /tmp/cleanup-fresh-metadata/compositeContent.xml
-		regenCompositeMetadata $getSubDirsReturn $getSubDirsCountReturn org.eclipse.equinox.internal.p2.artifact.repository.CompositeArtifactRepository /tmp/cleanup-fresh-metadata/compositeArtifacts.xml
+		regenCompositeMetadata "$getSubDirsReturn" "$getSubDirsCountReturn" "org.eclipse.equinox.internal.p2.metadata.repository.CompositeMetadataRepository" "/tmp/cleanup-fresh-metadata/compositeContent.xml"
+		regenCompositeMetadata "$getSubDirsReturn" "$getSubDirsCountReturn" "org.eclipse.equinox.internal.p2.artifact.repository.CompositeArtifactRepository" "/tmp/cleanup-fresh-metadata/compositeArtifacts.xml"
 		rsync --rsh=ssh --protocol=28 -q /tmp/cleanup-fresh-metadata/composite*.xml tools@filemgmt.jboss.org:$sd/
 		rm -fr /tmp/cleanup-fresh-metadata/
 	done
@@ -122,8 +122,7 @@ regenCompositeMetadata ()
 	for ssd in $subsubdirs; do
 		echo "<child location='${ssd}/all/repo/'/>" >> ${fileName}
 	done
-echo "
-</children>
+	echo "</children>
 </repository>
 " >> ${fileName}
 }
