@@ -1,6 +1,6 @@
 #!/bin/bash
 # This script is run here: http://hudson.qa.jboss.com/hudson/job/devstudio-cleanup/configure
-# And archived here: https://svn.jboss.org/repos/devstudio/trunk/releng/org.jboss.ide.eclipse.releng/hudson/devstudio-cleanup.sh
+# And archived here: http://anonsvn.jboss.org/repos/jbosstools/trunk/build/util/cleanup/devstudio-product-cleanup.sh
 # --------------------------------------------------------------------------------
 # clean JBDS builds from fish://dev01.qa.atl2.redhat.com:/qa/services/http/binaries/RHDS/{nightly,release}
 
