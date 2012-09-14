@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Language" content="en-us" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../whatsnew.css"/>
+<title>WS Tools 3.3.0 M2 What's New</title>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17645367-5']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script></head>
+<body>
+<h1>WS tools 1.4.0.Alpha1 What's New</h1>
+
+<p align="right"><a href="../index.html">&lt; Main Index</a></p>
+
+<table border="0" cellpadding="10" cellspacing="0" width="80%">
+
+ <tr>
+    <td valign="top" align="right"><a name="itemname3"
+    id="itemname3"></a><b>JAX-RS Tooling Performance Improvements</b></td>
+    <td valign="top">
+      <p>Previous version of the JAX-RS tooling used to scan the classpath jars to build the whole metamodel, but this operation could take a little (or too much time) 
+         when binary dependencies where added into a project (for example, when adding a bunch of maven dependencies at the same time) because Eclipse needed to index the
+         jars before the search operation could be performed.</p>
+      <p>Starting with this new release, the JAX-RS tooling does not scan the jars and just focuses on the project sources, which means that adding jars in the project is a
+         no-cost operation.</p>
+      <p><small><a href="https://jira.jboss.org/browse/JBIDE-12224">Related Jira</a></small></p>
+
+    </td>
+ </tr>
+
+ <tr>
+    <td valign="top" align="right"><a name="itemname3"
+    id="itemname3"></a><b>JAX-RS Tooling Validation Refactored</b></td>
+    <td valign="top">
+      <p>The validation process is now aligned with other JBoss Tools plugin, which means that it allows for problem level configuration ("Error"/"Warning"/"Ingore") on all the
+         validation rules that have been implemented so far.</p>
+      <p>With this new validation framework in place, extra validation rules have been implemented, including:
+         <ul>
+           <li>detecting missing/wrong @Target and @Retention annotations on your custom HttpMethod @interfaces</li>
+           <li>missing JAX-RS Activator (your JEE6 web application needs a class annotated with @ApplicationPath or some web.xml servlet-mapping)</li>
+           <li>reporting better problems when the @PathParam contains surrounding '{' '}' characters, when the @PathParam specifies a value that does not match any of the @Path template parameters and the @Path specifies a template parameters that does not match any of the @PathParam values.</li>
+      <p><small><a href="https://jira.jboss.org/browse/JBIDE-12485">Related Jira</a></small>
+         <small><a href="https://jira.jboss.org/browse/JBIDE-12488">Related Jira</a></small>
+         <small><a href="https://jira.jboss.org/browse/JBIDE-12486">Related Jira</a></small>
+         <small><a href="https://jira.jboss.org/browse/JBIDE-12413">Related Jira</a></small></p>
+
+    </td>
+ </tr>
+  
+</table>
+
+</body>
+
+</html>
+
+
