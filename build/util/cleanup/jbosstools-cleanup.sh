@@ -88,12 +88,24 @@ clean ()
 
 		# generate metadata in the nightly/core/trunk/ folder to composite the remaining sites into one
 		getSubDirs $sd 1; #return #getSubDirsReturn
-		getSubDirsCount $getSubDirsReturn; #return $getSubDirsCountReturn
-		if [[ $getSubDirsCountReturn -gt 0 ]]; then
-			echo "Generate metadata ${getSubDirsCountReturn} subdirs in $sd/" | tee -a $log	
+		subsubdirs=$getSubDirsReturn
+		#echo $subsubdirs
+		tmp=`mktemp`
+		for ssd in $subsubdirs; do
+			if [[ ${ssd##$sd/201*} == "" ]]; then # a build dir
+				buildid=${ssd##*/};  
+				echo $buildid >> $tmp
+			fi
+		done
+		all=$(cat $tmp | sort -r) # check these
+		rm -f $tmp
+
+		getListSize $all; #return $getListSizeReturn
+		if [[ $getListSizeReturn -gt 0 ]]; then
+			echo "Generate metadata for ${getListSizeReturn} subdir(s) in $sd/" | tee -a $log	
 			mkdir -p /tmp/cleanup-fresh-metadata/
-			regenCompositeMetadata "$getSubDirsReturn" "$getSubDirsCountReturn" "org.eclipse.equinox.internal.p2.metadata.repository.CompositeMetadataRepository" "/tmp/cleanup-fresh-metadata/compositeContent.xml"
-			regenCompositeMetadata "$getSubDirsReturn" "$getSubDirsCountReturn" "org.eclipse.equinox.internal.p2.artifact.repository.CompositeArtifactRepository" "/tmp/cleanup-fresh-metadata/compositeArtifacts.xml"
+			regenCompositeMetadata "$all" "$getListSizeReturn" "org.eclipse.equinox.internal.p2.metadata.repository.CompositeMetadataRepository" "/tmp/cleanup-fresh-metadata/compositeContent.xml"
+			regenCompositeMetadata "$all" "$getListSizeReturn" "org.eclipse.equinox.internal.p2.artifact.repository.CompositeArtifactRepository" "/tmp/cleanup-fresh-metadata/compositeArtifacts.xml"
 			rsync --rsh=ssh --protocol=28 -q /tmp/cleanup-fresh-metadata/composite*.xml tools@filemgmt.jboss.org:$sd/
 			rm -fr /tmp/cleanup-fresh-metadata/
 		else
@@ -104,12 +116,12 @@ clean ()
 	echo "" | tee -a $log	
 }
 
-getSubDirsCount ()
+getListSize ()
 {
 	# need count of children
-	getSubDirsCountReturn=0;
+	getListSizeReturn=0;
 	for ssd in $subsubdirs; do
-		let getSubDirsCountReturn=getSubDirsCountReturn+1;
+		let getListSizeReturn=getListSizeReturn+1;
 	done
 }
 
