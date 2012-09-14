@@ -116,11 +116,12 @@ clean ()
 	echo "" | tee -a $log	
 }
 
+# determine the number of items in a space-separated list
 getListSize ()
 {
-	# need count of children
+	list=$1
 	getListSizeReturn=0;
-	for ssd in $subsubdirs; do
+	for item in $list; do
 		let getListSizeReturn=getListSizeReturn+1;
 	done
 }
