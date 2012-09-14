@@ -107,6 +107,7 @@ clean ()
 getSubDirsCount ()
 {
 	# need count of children
+	getSubDirsCountReturn=0;
 	for ssd in $subsubdirs; do
 		let getSubDirsCountReturn=getSubDirsCountReturn+1;
 	done
