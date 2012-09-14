@@ -1,6 +1,6 @@
 #!/bin/sh
 # This script is run here: http://hudson.qa.jboss.com/hudson/job/jbosstools-cleanup/configure
-# And archived here: https://svn.jboss.org/repos/devstudio/trunk/releng/org.jboss.ide.eclipse.releng/hudson/jbosstools-cleanup.sh
+# And archived here: http://anonsvn.jboss.org/repos/jbosstools/trunk/build/util/cleanup/jbosstools-cleanup.sh
 # --------------------------------------------------------------------------------
 # clean JBT builds from sftp://tools@filemgmt.jboss.org/downloads_htdocs/tools/builds/nightly
 
@@ -85,13 +85,48 @@ clean ()
 				echo "+ $sd/$dd (${day}d)" | tee -a $log
 			fi
 		done
+		getSubDirs $sd 1; #return #getSubDirsReturn
+		getSubDirsCount $getSubDirsReturn; #return $getSubDirsCountReturn
+		regenCompositeMetadata $getSubDirsReturn $getSubDirsCountReturn org.eclipse.equinox.internal.p2.metadata.repository.CompositeMetadataRepository compositeContent.xml
+		regenCompositeMetadata $getSubDirsReturn $getSubDirsCountReturn org.eclipse.equinox.internal.p2.artifact.repository.CompositeArtifactRepository compositeArtifacts.xml
+
 	done
 	echo "" | tee -a $log	
 }
+
+getSubDirCount ()
+{
+	# need count of children
+	for ssd in $subsubdirs; do
+		let getSubDirsCountReturn=getSubDirsCountReturn+1;
+	done
+}
+
+#regen metadata for remaining subdirs in this folder
+regenCompositeMetadata ()
+{
+	subsubdirs=$1
+	countChildren=$2
+	fileType=$3
+	fileName=$4
+	now=$(date +%s000)
+	
+	echo "<?xml version='1.0' encoding='UTF-8'?><?compositeArtifactRepository version='1.0.0'?>
+<repository name='JBoss Tools Builds - ${type}' type='${fileType}' version='1.0.0'>
+<properties size='2'><property name='p2.timestamp' value='${now}'/><property name='p2.compressed' value='true'/></properties>
+<children size='${countChildren}'>" > ${fileName}
+	for ssd in $subsubdirs; do
+		echo "<child location='${ssd}/all/repo/'/>" >> ${fileName}
+	done
+echo "
+</children>
+</repository>
+" >> ${fileName}
+}
+
 clean nightly/core 1 2
 clean nightly/coretests 1 2
 clean nightly/soa-tooling 1 2
 clean nightly/soatests 1 2
 clean nightly/webtools 1 2
 clean nightly/bottests 1 2
-
