@@ -76,7 +76,7 @@ clean ()
 				if [[ $USER == "hudson" ]]; then
 					# can't delete the dir, but can at least purge its contents
 					rm -fr /tmp/$dd; mkdir /tmp/$dd; pushd /tmp/$dd >/dev/null
-					rsync -r --delete . tools@filemgmt.jboss.org:$sd/$dd 2>&1 | tee -a $log
+					rsync --rsh=ssh --protocol=28 -r --delete . tools@filemgmt.jboss.org:$sd/$dd 2>&1 | tee -a $log
 					echo -e "rmdir $dd" | sftp tools@filemgmt.jboss.org:$sd/
 					popd >/dev/null; rm -fr /tmp/$dd
 				fi
@@ -92,13 +92,13 @@ clean ()
 		mkdir -p /tmp/cleanup-fresh-metadata/
 		regenCompositeMetadata $getSubDirsReturn $getSubDirsCountReturn org.eclipse.equinox.internal.p2.metadata.repository.CompositeMetadataRepository /tmp/cleanup-fresh-metadata/compositeContent.xml
 		regenCompositeMetadata $getSubDirsReturn $getSubDirsCountReturn org.eclipse.equinox.internal.p2.artifact.repository.CompositeArtifactRepository /tmp/cleanup-fresh-metadata/compositeArtifacts.xml
-		rsync -q /tmp/cleanup-fresh-metadata/composite*.xml tools@filemgmt.jboss.org:$sd/
+		rsync --rsh=ssh --protocol=28 -q /tmp/cleanup-fresh-metadata/composite*.xml tools@filemgmt.jboss.org:$sd/
 		rm -fr /tmp/cleanup-fresh-metadata/
 	done
 	echo "" | tee -a $log	
 }
 
-getSubDirCount ()
+getSubDirsCount ()
 {
 	# need count of children
 	for ssd in $subsubdirs; do
