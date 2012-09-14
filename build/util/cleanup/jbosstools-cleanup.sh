@@ -89,7 +89,7 @@ clean ()
 		# generate metadata in the nightly/core/trunk/ folder to composite the remaining sites into one
 		getSubDirs $sd 1; #return #getSubDirsReturn
 		getSubDirsCount $getSubDirsReturn; #return $getSubDirsCountReturn
-		if [[ $getSubDirsCountReturn -gt 0 ]]; 
+		if [[ $getSubDirsCountReturn -gt 0 ]]; then
 			echo "Generate metadata ${getSubDirsCountReturn} subdirs in $sd/" | tee -a $log	
 			mkdir -p /tmp/cleanup-fresh-metadata/
 			regenCompositeMetadata "$getSubDirsReturn" "$getSubDirsCountReturn" "org.eclipse.equinox.internal.p2.metadata.repository.CompositeMetadataRepository" "/tmp/cleanup-fresh-metadata/compositeContent.xml"
@@ -99,7 +99,6 @@ clean ()
 		else
 			echo "No subdirs found in $sd/" | tee -a $log	
 			# TODO delete composite*.xml from $sd/ folder if there are no subdirs present
-
 		fi
 	done
 	echo "" | tee -a $log	
