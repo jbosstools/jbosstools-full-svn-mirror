@@ -238,10 +238,6 @@
 	<feature url="features/org.jboss.tools.runtime.core.feature_0.0.0.jar" id="org.jboss.tools.runtime.core.feature" version="0.0.0">
 		<category name="AbridgedTools" />
 	</feature>
-	<feature url="features/org.jboss.tools.runtime.as.detector.feature_0.0.0.jar" id="org.jboss.tools.runtime.as.detector.feature" version="0.0.0">
-		<category name="AbridgedTools" />
-		<category name="WebTools" />
-	</feature>
 	<feature url="features/org.jboss.tools.runtime.seam.detector.feature_0.0.0.jar" id="org.jboss.tools.runtime.seam.detector.feature" version="0.0.0">
 		<category name="AbridgedTools" />
 		<category name="WebTools" />
@@ -378,9 +374,6 @@
 		<category name="AllSources" />
 	</feature>
 	<feature url="features/org.jboss.tools.runtime.core.featur.source_0.0.0.jar" id="org.jboss.tools.runtime.core.feature.source" version="0.0.0">
-		<category name="AllSources" />
-	</feature>
-	<feature url="features/org.jboss.tools.runtime.as.detector.feature.source_0.0.0.jar" id="org.jboss.tools.runtime.as.detector.feature.source" version="0.0.0">
 		<category name="AllSources" />
 	</feature>
 	<feature url="features/org.jboss.tools.runtime.seam.detector.feature.source_0.0.0.jar" id="org.jboss.tools.runtime.seam.detector.feature.source" version="0.0.0">
