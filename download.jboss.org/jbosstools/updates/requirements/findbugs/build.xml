@@ -5,7 +5,7 @@
 		-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} 
 		-consoleLog -nosplash -data /tmp
 		-application org.eclipse.ant.core.antRunner
-		-f "/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/eclipsecs/build.xml"
+		-f "/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/findbugs/build.xml"
 		
 		or, run headless on qa01 server, where Eclipse is installed into ~/eclipse:
 		
@@ -13,15 +13,15 @@
 		${JAVA_HOME}/bin/java -cp ~/eclipse/plugins/org.eclipse.equinox.launcher_*.jar \
 			org.eclipse.equinox.launcher.Main -vm ${JAVA_HOME} -consoleLog -nosplash -data /tmp \
 			-application org.eclipse.ant.core.antRunner \
-			-f ~/RHDS/updates/requirements/eclipsecs/build.xml -Ddestination=/tmp/eclipsecs-repo
+			-f ~/RHDS/updates/requirements/findbugs/build.xml -Ddestination=/tmp/findbugs-repo
 	-->
 	<target name="mirror">
 		<property name="URL" value="http://eclipse-cs.sf.net/update/" />
-		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/eclipsecs/5.5.0.201111092104/" />
+		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/findbugs/2.0.1.20120712/" />
 		<property name="compress" value="true" />
 
 		<p2.mirror>
-			<repository location="file:${destination}/5.5.0.201111092104/" name="eclipsecs plugins for Eclipse" />
+			<repository location="file:${destination}/2.0.1.20120712/" name="findbugs for Eclipse" />
 			<source>
 				<repository location="${URL}" />
 			</source>
@@ -29,6 +29,6 @@
 			<slicingOptions includeFeatures="true" followStrict="true" />
 		</p2.mirror>
 
-		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/5.5.0.201111092104/" artifactRepository="file:${destination}/5.5.0.201111092104/" publishartifacts="true" source="${destination}/5.5.0.201111092104/" compress="${compress}" />
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/2.0.1.20120712/" artifactRepository="file:${destination}/2.0.1.20120712/" publishartifacts="true" source="${destination}/2.0.1.20120712/" compress="${compress}" />
 	</target>
 </project>

@@ -17,11 +17,11 @@
 	-->
 	<target name="mirror">
 		<property name="URL" value="http://beust.com/eclipse/" />
-		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/testng/6.1.1.20110823_1537/" />
+		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/testng/6.7.0.20120825_1316/" />
 		<property name="compress" value="true" />
 
 		<p2.mirror>
-			<repository location="file:${destination}/6.1.1.20110823_1537/" name="testng plugins for Eclipse 3.6 - 3.7" />
+			<repository location="file:${destination}/6.7.0.20120825_1316/" name="testng plugins for Eclipse" />
 			<source>
 				<repository location="${URL}" />
 			</source>
@@ -29,6 +29,6 @@
 			<slicingoptions includefeatures="true" followstrict="true" latestversiononly="true" />
 		</p2.mirror>
 
-		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/6.1.1.20110823_1537/" artifactRepository="file:${destination}/6.1.1.20110823_1537/" publishartifacts="true" source="${destination}/6.1.1.20110823_1537/" compress="${compress}" />
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/6.7.0.20120825_1316/" artifactRepository="file:${destination}/6.7.0.20120825_1316/" publishartifacts="true" source="${destination}/6.7.0.20120825_1316/" compress="${compress}" />
 	</target>
 </project>

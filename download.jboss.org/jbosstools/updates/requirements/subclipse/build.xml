@@ -23,7 +23,7 @@
 		<property name="compress" value="true" />
 
 		<p2.mirror>
-			<repository location="file:${destination}/1.8_1.7/" name="Subclipse 1.8 + SVNKit 1.7 plugins for Subversion 1.7 and Eclipse 3.7" />
+			<repository location="file:${destination}/1.8.16_1.7.5.v1/" name="Subclipse 1.8 + SVNKit 1.7 plugins for Subversion 1.7 and Eclipse" />
 			<source>
 				<repository location="${URL1}" />
 				<repository location="${URL2}" />
@@ -32,6 +32,6 @@
 			<slicingOptions includeFeatures="true" followStrict="true" />
 		</p2.mirror>
 
-		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/1.8_1.7/" artifactRepository="file:${destination}/1.8_1.7/" publishartifacts="true" source="${destination}/1.8_1.7/" compress="${compress}" />
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/1.8.16_1.7.5.v1/" artifactRepository="file:${destination}/1.8.16_1.7.5.v1/" publishartifacts="true" source="${destination}/1.8.16_1.7.5.v1/" compress="${compress}" />
 	</target>
 </project>

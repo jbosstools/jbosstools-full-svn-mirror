@@ -18,28 +18,30 @@
 		or, run local:
 
 		export JAVA_HOME=/opt/jdk1.6.0; \
-		java -cp ~/eclipse/eclipse370/plugins/org.eclipse.equinox.launcher_1.2.0.v20110502.jar \
+		java -cp ~/eclipse/eclipse371/plugins/org.eclipse.equinox.launcher_1.2.0.v20110502.jar \
 		org.eclipse.equinox.launcher.Main -vm ${JAVA_HOME} -consoleLog -nosplash -data /tmp \
-		-application org.eclipse.ant.core.antRunner -f build.xml 
+		-application org.eclipse.ant.core.antRunner -f build.xml \
+			init copy.patched.jars regenerate.metadata
+
 	-->
-	<target name="default" depends="init,mirror" />
+	<target name="default" depends="init,mirror,apply.patch,copy.patched.jars,regenerate.metadata" />
 	<target name="patch.and.regen" depends="init,apply.patch,copy.patched.jars,regenerate.metadata" />
 
 	<target name="init">
 		<!-- Other URLs:
 		   http://dist.springframework.org/release/IDE/
 		   http://dist.springframework.org/snapshot/IDE/weekly/
-                   http://dist.springsource.com/release/TOOLS/update/e4.2/
+                   http://dist.springsource.com/release/TOOLS/update/e3.7/
         	-->
-		<property name="URL" value="http://dist.springsource.com/release/TOOLS/update/e4.2/" />
+		<property name="URL" value="http://dist.springsource.com/release/TOOLS/update/e3.7/" />
 		<property name="destination" value="/home/nboldt/tru/download.jboss.org/jbosstools/updates/requirements/springide/" />
-		<property name="siteVersion" value="3.0.0.201208090952-RELEASE" />
+		<property name="siteVersion" value="2.7.2.201109122348" />
 		<property name="compress" value="true" />
 	</target>
 	
 	<target name="mirror">
 		<p2.mirror>
-			<repository location="file:${destination}/${siteVersion}/" name="springide plugins for Eclipse 4.2" />
+			<repository location="file:${destination}/${siteVersion}/" name="springide plugins for Eclipse 3.7" />
 			<source>
 				<repository location="${URL}" />
 			</source>
@@ -65,8 +67,8 @@
 	replace MANIFEST.MF
 	delete welcome.xml META-INF/VMWARE.*
 	zip jar -->
-		<copy file="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse_${siteVersion}.jar" tofile="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse_${siteVersion}_ORIGINAL.jar" />
-		<unzip src="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse_${siteVersion}.jar" dest="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse" />
+		<copy file="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse_${siteVersion}-RELEASE.jar" tofile="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse_${siteVersion}-RELEASE_ORIGINAL.jar" />
+		<unzip src="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse_${siteVersion}-RELEASE.jar" dest="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse" />
 		<echo file="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse/about.ini">
 aboutText=%title
 featureImage=feature_image.png
@@ -76,7 +78,7 @@ Bundle-Name: %pluginName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: %providerName
-Bundle-Version: ${siteVersion}
+Bundle-Version: ${siteVersion}-RELEASE
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.springframework.ide.eclipse
 </echo>
@@ -84,12 +86,14 @@ Bundle-SymbolicName: org.springframework.ide.eclipse
 			<fileset dir="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse" includes="welcome.xml" />
 			<fileset dir="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse/META-INF" includes="eclipse.inf, VMWARE.RSA, VMWARE.SF" />
 		</delete>
-		<zip destfile="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse_${siteVersion}.jar" basedir="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse/" />
+		<zip destfile="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse_${siteVersion}-RELEASE.jar" basedir="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse/" />
 		<delete dir="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse/" quiet="true" />
 	</target>
 
 	<target name="copy.patched.jars">
-		<copy file="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse_${siteVersion}.jar" tofile="${destination}/${siteVersion}/plugins/org.springframework.ide.eclipse_${siteVersion}_ORIGINAL.jar" />
+		<property name="patch.suffix" value="-patched_JBDS-1838"/>
+		<copy file="${destination}/${siteVersion}.patch/plugins/org.springframework.ide.eclipse_${siteVersion}${patch.suffix}.jar" todir="${destination}/${siteVersion}/plugins/" />
+		<copy file="${destination}/${siteVersion}.patch/features/org.springframework.ide.eclipse.feature_${siteVersion}${patch.suffix}.jar" todir="${destination}/${siteVersion}/features/" />
 	</target>
 
 	<target name="regenerate.metadata">
