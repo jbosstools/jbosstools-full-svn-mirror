@@ -3,7 +3,7 @@
 <repository name='JBoss Tools Requirements - Composite Juno SR0a Mirror' type='org.eclipse.equinox.internal.p2.artifact.repository.CompositeArtifactRepository' version='1.0.0'>
 <properties size='2'>
 <property name='p2.compressed' value='true'/>
-<property name='p2.timestamp' value='1347033375000'/>
+<property name='p2.timestamp' value='1347900512000'/>
 </properties>
 <children size='13'>
 <!-- new for Juno SR1 -->
@@ -13,10 +13,8 @@
 <child location='../../requirements/webtools/M-3.4.1-20120831042944/'/>
 <child location='../../requirements/gwt/3.1.0.v201208080121-rel-r42/'/>
 <!-- includes m2e 1.2, m2e-extras 0.15, m2e-wtp 0.16, m2e-jdt-compiler 1.0, m2e-apt 1.0 -->
-<child location='../../requirements/m2eclipse/20120905-1550/'/>
-
-<!-- latest integration build -->
-<child location='../../requirements/m2eclipse/m2e-wtp-juno/'/>
+<child location='../../requirements/m2eclipse/20120917-1234/'/>
+<!-- JBIDE-12629 do not include latest integration build <child location='../../requirements/m2eclipse/m2e-wtp-juno/'/> -->
 
 <!-- same atlassian version in SR0 -->
 <child location='../../requirements/atlassian/3.0.6.v20120628/'/> 
