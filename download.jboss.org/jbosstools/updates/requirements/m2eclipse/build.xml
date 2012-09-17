@@ -20,7 +20,9 @@
 		<property name="URL1" value="http://download.eclipse.org/technology/m2e/milestones/1.2/1.2.0.20120903-1050/"/>
 		<property name="URL2" value="https://repository.sonatype.org/content/repositories/forge-sites/m2e-extras/0.15.0/N/0.15.0.201206251206/"/>
 
-		<property name="URL3" value="http://download.jboss.org/jbosstools/updates/requirements/m2eclipse/m2e-wtp-juno/"/> <!-- 0.16 -->
+		<property name="URL3" value="http://download.eclipse.org/m2e-wtp/milestones/0.16.0/"/> <!-- 0.16 milestone -->
+		<!-- <property name="URL3" value="http://download.jboss.org/jbosstools/updates/requirements/m2eclipse/m2e-wtp-juno/"/> --> <!-- 0.16 nightly -->
+
 		<property name="URL4" value="http://download.jboss.org/jbosstools/updates/requirements/m2eclipse/m2e-jdt-compiler-1.0.0/"/>
 		<property name="URL5" value="http://download.jboss.org/jbosstools/updates/requirements/m2eclipse/m2e-apt-1.0.0-2012-06-05_16-15-59-H16/"/>
 		
@@ -28,7 +30,7 @@
 		<property name="compress" value="true" />
 
 		<p2.mirror>
-			<repository location="file:${destination}/20120905-1550" name="m2e 1.2, m2e-extras 0.15, m2e-wtp 0.16, m2e-jdt-compiler 1.0, m2e-apt 1.0 (mirrored 20120905-1550)" />
+			<repository location="file:${destination}/20120917-1234" name="m2e 1.2, m2e-extras 0.15, m2e-wtp 0.16, m2e-jdt-compiler 1.0, m2e-apt 1.0 (mirrored 20120917-1234)" />
 			<source>
 				<repository location="${URL1}" />
 				<repository location="${URL2}" />
@@ -40,7 +42,7 @@
 			<slicingOptions includeFeatures="true" followStrict="true" />
 		</p2.mirror>
 
-		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/20120905-1550/" artifactRepository="file:${destination}/20120905-1550/" 
-			publishartifacts="true" source="${destination}/20120905-1550/" compress="${compress}" />
+		<p2.publish.featuresAndBundles metadataRepository="file:${destination}/20120917-1234/" artifactRepository="file:${destination}/20120917-1234/" 
+			publishartifacts="true" source="${destination}/20120917-1234/" compress="${compress}" />
 	</target>
 </project>
