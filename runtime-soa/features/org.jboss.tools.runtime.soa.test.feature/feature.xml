@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<feature id="org.jboss.tools.runtime.soa.test.feature" label="JBoss Tools - Tests - Runtime Detection" version="1.3.0.qualifier">
+<feature id="org.jboss.tools.runtime.soa.test.feature" label="JBoss Tools - Tests - Runtime Detection" version="1.4.0.qualifier">
 
 	<description>
       %description
@@ -18,10 +18,11 @@
      <import feature="org.jboss.tools.runtime.esb.detector.feature" version="1.3.0" match="compatible"/>
      <import feature="org.jboss.tools.runtime.jbpm.detector.feature" version="1.3.0" match="compatible"/>
    
-     <import feature="org.jboss.tools.runtime.test.feature" version="1.3.0" match="compatible"/>
-     <import feature="org.jboss.tools.runtime.core.feature" version="1.3.0" match="compatible"/>
-     <import feature="org.jboss.tools.runtime.as.detector.feature" version="1.3.0" match="compatible"/>
-     <import feature="org.jboss.ide.eclipse.as.serverAdapter.wtp.feature" version="2.3.0" match="compatible"/>
+     <import feature="org.jboss.tools.runtime.test.feature" version="2.0.0" match="compatible"/>
+     <import feature="org.jboss.tools.runtime.core.feature" version="2.0.0" match="compatible"/>
+	<!-- JBIDE-12583 o.j.t.runtime.as.detector classes are now in o.j.i.e.as.core, so use o.j.i.e.as.feature instead -->
+     <import feature="org.jboss.ide.eclipse.as.feature" version="2.4.0" match="compatible"/>
+     <import feature="org.jboss.ide.eclipse.as.serverAdapter.wtp.feature" version="2.4.0" match="compatible"/>
    </requires>
 
    <plugin id="org.jboss.tools.runtime.soa.test" download-size="0" install-size="0" version="0.0.0" unpack="false" />

@@ -9,6 +9,7 @@
 	</parent>
 	<groupId>org.jboss.tools.runtime-soa.features</groupId>
 	<artifactId>org.jboss.tools.runtime.soa.test.feature</artifactId>
+	<version>1.4.0-SNAPSHOT</version>
 	
 	<packaging>eclipse-feature</packaging>
 	
