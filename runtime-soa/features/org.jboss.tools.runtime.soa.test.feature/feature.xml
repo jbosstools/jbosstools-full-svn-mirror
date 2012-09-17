@@ -14,9 +14,9 @@
    </license>
 
    <requires>
-     <import feature="org.jboss.tools.runtime.drools.detector.feature" version="1.3.0" match="compatible"/>
-     <import feature="org.jboss.tools.runtime.esb.detector.feature" version="1.3.0" match="compatible"/>
-     <import feature="org.jboss.tools.runtime.jbpm.detector.feature" version="1.3.0" match="compatible"/>
+     <import feature="org.jboss.tools.runtime.drools.detector.feature" version="1.4.0" match="compatible"/>
+     <import feature="org.jboss.tools.runtime.esb.detector.feature" version="1.4.0" match="compatible"/>
+     <import feature="org.jboss.tools.runtime.jbpm.detector.feature" version="1.4.0" match="compatible"/>
    
      <import feature="org.jboss.tools.runtime.test.feature" version="2.0.0" match="compatible"/>
      <import feature="org.jboss.tools.runtime.core.feature" version="2.0.0" match="compatible"/>
