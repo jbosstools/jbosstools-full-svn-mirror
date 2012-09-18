@@ -10,6 +10,10 @@ log=/tmp/${0##*/}.log.`date +%Y%m%d-%H%M`.txt
 echo "Logfile: $log" | tee -a $log
 echo "" | tee -a $log
 
+#commandline options so we can call this by itself using `jbosstools-cleanup.sh 1 2` or call it from within publish.sh using `jbosstools-cleanup.sh 5 5`
+if [[ $1 ]] && [[ $1 -gt 0 ]]; then numbuildstokeep=$1; else numbuildstokeep=1; fi # number of builds to keep per branch
+if [[ $2 ]] && [[ $2 -gt 0 ]]; then threshholdwhendelete=$2; else threshholdwhendelete=2; fi # age at which a build is available for delete
+
 getSubDirs () 
 {
 	getSubDirsReturn="";
@@ -147,9 +151,7 @@ regenCompositeMetadata ()
 " >> ${fileName}
 }
 
-clean nightly/core 1 2
-clean nightly/coretests 1 2
-clean nightly/soa-tooling 1 2
-clean nightly/soatests 1 2
-clean nightly/webtools 1 2
-clean nightly/bottests 1 2
+# now that we have all the methods and vars defined, let's do some cleaning!
+for dir in nightly/core nightly/coretests nightly/soa-tooling nightly/soatests nightly/webtools; do
+	clean $dir $numbuildstokeep $threshholdwhendelete
+done
