@@ -38,8 +38,6 @@ import org.eclipse.wst.server.core.model.IModuleResourceDelta;
 import org.jboss.ide.eclipse.archives.webtools.modules.LocalZippedPublisherUtil;
 import org.jboss.ide.eclipse.as.core.JBossServerCorePlugin;
 import org.jboss.ide.eclipse.as.core.extensions.events.IEventCodes;
-import org.jboss.ide.eclipse.as.core.publishers.LocalPublishMethod;
-import org.jboss.ide.eclipse.as.core.publishers.PublishUtil;
 import org.jboss.ide.eclipse.as.core.server.IDeployableServer;
 import org.jboss.ide.eclipse.as.core.server.IJBossServerPublishMethod;
 import org.jboss.ide.eclipse.as.core.server.IJBossServerPublisher;
@@ -48,6 +46,7 @@ import org.jboss.ide.eclipse.as.core.server.xpl.PublishCopyUtil;
 import org.jboss.ide.eclipse.as.core.util.FileUtil;
 import org.jboss.ide.eclipse.as.core.util.IJBossToolingConstants;
 import org.jboss.ide.eclipse.as.core.util.IWTPConstants;
+import org.jboss.ide.eclipse.as.core.util.ModuleResourceUtil;
 import org.jboss.ide.eclipse.as.core.util.ServerConverter;
 import org.jboss.tools.bpel.runtimes.IBPELModuleFacetConstants;
 import org.jboss.tools.jmx.core.IMemento;
@@ -70,7 +69,7 @@ public class JBTBPELPublisher implements IJBossServerPublisher {
 	}
 	
 	public boolean accepts(String method, IServer server, IModule[] module) {
-		if( LocalPublishMethod.LOCAL_PUBLISH_METHOD.equals(method) 
+		if(IJBossToolingConstants.DEFAULT_DEPLOYMENT_METHOD_TYPE.equals(method) 
 				&& module != null && module.length > 0 
 				&& module[module.length-1] != null  
 				&& (
@@ -128,8 +127,8 @@ public class JBTBPELPublisher implements IJBossServerPublisher {
 		IDeployableServer ds = ServerConverter.getDeployableServer(server);
 		IModule last = moduleTree[moduleTree.length -1];
 		IPath deployPath = getDeployPath(moduleTree, ds);
-		IPath tempDeployPath = PublishUtil.getTempDeployFolder(moduleTree, ds);
-		IModuleResource[] members = PublishUtil.getResources(last, new NullProgressMonitor());
+		IPath tempDeployPath = ds.getTempDeploymentLocation(moduleTree, false);
+		IModuleResource[] members = ModuleResourceUtil.getResources(last, new NullProgressMonitor());
 		// https://issues.jboss.org/browse/JBDS-1573
 		// make sure the project has a deploy.xml (bpel-deploy.xml for backward compatibility).
 		boolean hasDeployXML = false;
@@ -147,16 +146,14 @@ public class JBTBPELPublisher implements IJBossServerPublisher {
 			return ms;
 		}
 		if( shouldZip() ) {
-			String deployRoot = PublishUtil.getDeployRootFolder(
-					moduleTree, ds, ds.getDeployFolder(),
-					IJBossToolingConstants.LOCAL_DEPLOYMENT_LOC);
+			IPath deployRoot = ds.getDeploymentLocation(moduleTree, false);
 			BPELZippedPublisherUtil util = new BPELZippedPublisherUtil(deployPath);
-			IStatus ret = util.publishModule(server, deployRoot, moduleTree, publishType, delta, monitor);
+			IStatus ret = util.publishModule(server, deployRoot.toString(), moduleTree, publishType, delta, monitor);
 			resultList.add(ret);
 		} else {
 			LocalCopyCallback handler = new LocalCopyCallback(server, deployPath, tempDeployPath);
 			PublishCopyUtil util = new PublishCopyUtil(handler);
-			resultList.addAll(Arrays.asList(util.initFullPublish(members, monitor)));
+			resultList.addAll(Arrays.asList(util.initFullPublish(members, null, monitor)));
 		}
 		addDeployedPathToDescriptor(server, last.getProject(), deployPath); // persist it
 		pruneList(resultList);
@@ -185,7 +182,7 @@ public class JBTBPELPublisher implements IJBossServerPublisher {
 	}
 	
 	public static IPath getDeployPath(IModule[] moduleTree, IDeployableServer server) {
-		IPath path = PublishUtil.getDeployPath(moduleTree, server);
+		IPath path = server.getDeploymentLocation(moduleTree, true);
 		path = path.removeLastSegments(1).append(getNewLastSegment(moduleTree));
 		return path;
 	}
